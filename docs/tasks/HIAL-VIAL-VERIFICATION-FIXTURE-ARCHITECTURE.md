@@ -2241,11 +2241,11 @@ decomposes the architecture needed to move beyond that bounded foundation.
   Children: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.1, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.2, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.4, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.5`
 
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.1`
-  Status: `active`
+  Status: `done`
   Goal: `Specify the private coordinator wire, resource and lifecycle contract.`
   Acceptance: `Select exact framing, stream/backpressure bounds, run/job/parent identities, inherited-context admission, endpoint locality and long-path handling, spawn publication, cancellation ordering, identity retirement and closed result reconstruction. Define a finite state machine and hostile oracle for every transition before process code changes; preserve existing adapter limits and caller contracts.`
-  Verification: `Protocol inspection exposes a prerequisite: process-group identity must remain reserved through the last possible signal even after the command leader is reaped. The selected Perl exposes neither waitid nor WNOWAIT; the read-only Darwin SDK declares both. Child .1 qualifies core-Perl reservation feasibility; sibling .2 remains the exact wire and lifecycle frontier.`
-  Commit: `pending`
+  Verification: `Child .1 qualifies current-host core-Perl identity reservation. Child .2 selects the exact private wire, context, resource, lifecycle and result contract below, with explicit implementation and independent-oracle obligations. No production coordinator or expanded nested guarantee is enabled.`
+  Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.1.2: specify private coordinator protocol`
   Children: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.1.1, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.1.2`
 
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.1.1`
@@ -2256,17 +2256,17 @@ decomposes the architecture needed to move beyond that bounded foundation.
   Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.1.1: qualify reserved group identity`
 
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.1.2`
-  Status: `pending`
+  Status: `done`
   Goal: `Finish exact coordinator framing, inherited execution context, bounded queues and lifecycle transitions.`
   Acceptance: `After the reservation oracle, specify byte-exact argv/environment transport, repository-local long-path-safe IPC, closed identities/messages, fixed finite connections/frames/jobs/depth/queues, monotonic cancellation and result reconstruction. Include oracle obligations for every partial publication, disconnect, identity retirement and cleanup transition before production extraction.`
-  Verification: `Pending sibling .1 identity-lifetime qualification; no coordinator or widened nested guarantee is implemented.`
-  Commit: `pending`
+  Verification: `The task-local private coordinator protocol specifies binary byte framing, run/parent authority, long-path-safe local IPC, bounded snapshots/queues/jobs/descriptors, per-call environment and umask, monotonic admission/cleanup/delivery, reserved group lifetime, closed result reconstruction and independent transition oracles. Inspection covers the shared engine and existing sealed Rust/HDL/test adapters; current book limitations stay accurate. Guarded initial and staged doctrine checks plus diff hygiene validate this design-only slice; logs are under .artifacts/logs/nested-coordinator-protocol-20260907/. Runtime implementation, hostile qualification and Linux evidence remain explicitly missing under following owners.`
+  Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.1.2: specify private coordinator protocol`
 
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.2`
   Status: `pending`
   Goal: `Extract the shared process state machine without changing current callers.`
   Acceptance: `After .2.1, separate launch, bounded stream polling, wait status, termination and result construction into one reusable asynchronous mechanism; retain a synchronous compatibility entrypoint and prove current success/failure/timing/cleanup shapes and both prerequisite fixes before coordinator integration.`
-  Verification: `Pending exact protocol selection in sibling .1.`
+  Verification: `Protocol selection in sibling .1 is complete. Next extract the asynchronous state machine while retaining the synchronous facade and current behavior; coordinator activation remains under later siblings.`
   Commit: `pending`
 
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3`
@@ -5443,3 +5443,322 @@ mdBook's current nested-cleanup limitation stays accurate and is unchanged.
   reports `[doctrine] all doctrine checks passed`, including fresh acceptance,
   task integrity, Knowledge Map and unchanged containment limits. Full CI and
   push remain blocked by the active nested and RAM-fixture frontiers.
+
+## Private coordinator protocol (.19.2.3.1.2.2.5.5.2.1.2)
+
+Selection boundary: this is an implementation contract for the following owned
+leaves, not a shipped nested-cleanup guarantee. Decisions `0087`/`0101`, the
+nested ownership selection above, and its group-reservation refinement remain
+binding. The existing synchronous facade and sealed adapters retain their
+arguments, schemas, command admission, walls and capture ceilings. VIAL's
+separate production lifecycle does not join this private protocol.
+
+### Transport and inherited authority
+
+The outermost invocation runs one coordinator in the calling process until
+its root job closes. Each supervised command receives one private environment
+variable, `FSMGEN_PROCESS_COORDINATOR_CONTEXT`, identifying this run and its
+own logical job. A nested sealed invocation connects as a client; it never
+forks its requested command. The coordinator is the direct parent of every
+command and every reservation child. There is no daemon, network transport,
+public runner, client-supplied signal target, or reconnect-and-replay facility.
+
+Use an AF_UNIX stream socket named `s` inside an exclusively created private
+directory below `.artifacts/tmp/process-coordinator/`. Create the directory
+with mode 0700 and the socket with mode 0600; reject symlinks, unexpected
+entries, different device/owner, and an existing name rather than replacing
+it. Run and per-job tokens are independently generated 16-byte and 32-byte
+values from the operating system random source. Reading that source is an
+explicit read-only OS dependency; no project data leaves the repository.
+Failure to obtain a complete token is a host failure before command launch.
+Never write tokens, argv, or environment values to diagnostics or task logs.
+
+Long checkout paths must not enter `sockaddr_un`. Bind/connect using the
+literal relative name `s` after entering the admitted endpoint directory,
+then restore the caller's saved directory before admitting or launching work.
+Save a directory handle and use handle-based restoration, including errors;
+mask catchable signals during this short cwd transaction and restore their
+exact mask afterward. Failure to restore is fatal, never a successful call.
+No callbacks, event-loop work or fork occurs during that transaction. This
+private engine supports single-threaded Unix callers; concurrent cwd mutation
+and arbitrary process-context mutation are outside its contract. The endpoint
+implementation must qualify actual long-path bind/connect and restoration on
+the supported host before activation, not merely shorten a displayed path.
+
+The context is one ASCII scalar with the exact form
+`1:<hex-relative-directory>:<run-hex>:<parent-id>:<token-hex>`. Hex uses lower
+case, two digits per byte; IDs are canonical nonzero decimal integers. The
+decoded directory must be the exact owned run directory under the fixed local
+root, with no empty, dot, parent, NUL, or symlink component. The context is
+bounded by the context limit below. Only absence permits a new outer run;
+an empty, partial, stale, malformed, foreign-root or unknown-version value
+returns `invocation_error` without fallback. A cached in-process coordinator
+handle is valid only in its creating PID. Forked copies cannot reuse it.
+
+A client's HELLO must match the run, a live admitted logical parent, and that
+parent's token. The token authorizes only submission under that parent; it
+never supplies a PID, PGID or alternate parent. Revocation precedes any parent
+cleanup. This is a cooperative same-user protocol, not authentication against
+arbitrary code that can read another process's memory or environment. A program
+that deliberately clears context or creates unregistered sessions/groups is
+outside the guarantee. All client/coordinator descriptors are close-on-exec;
+only the private context, never a connected socket, is inherited by commands.
+A forked client must close inherited connections it does not own.
+
+### Byte grammar and finite admission
+
+Use binary length framing rather than interpreting argv/environment as JSON
+text. `u32` is four bytes in network order; `u64` is eight bytes in network
+order. `b` is a u32 byte length followed by exactly that many octets. Vectors
+begin with a u32 item count. There is no native-endian integer, implicit text
+normalization, delimiter escape, trailing field, or optional unknown field.
+A frame is `u32(payload length), u8(version=1), u8(type), body`; payload length
+includes version/type and must be admitted before allocating or reading its
+body. A partial header/body has one fixed deadline from its first byte, never
+extended by progress. Each connection carries exactly one submission.
+
+The following are selected safety ceilings, not measured throughput or
+capacity claims. They are private constants with boundary-plus-one watchers
+required in `.5.5.2.3`/`.5.5.3`; callers cannot raise them.
+
+| Resource | Inclusive bound / rule |
+| --- | --- |
+| Live jobs and depth | Eight jobs including root; root depth is one; retiring/result-delivery jobs still occupy slots. |
+| Direct children | Two per live job, command plus reservation; at most sixteen; fork admission reserves both slots first. |
+| Connections | Eight accepted sockets including unauthenticated peers; listen backlog eight; one in-flight submission per socket; no user-space waiting-job queue. |
+| Private descriptors | At most 128 simultaneously owned by the coordinator, counting listener, streams, handshakes and accepted sockets; reject before exceeding it. |
+| Context / path bytes | 8,192 encoded context bytes; 4,096 decoded cwd bytes; the generated endpoint relative directory is at most 256 bytes. |
+| Request frame | 1,048,576 payload bytes; HELLO and all other control frames at most 8,192 bytes. |
+| Execution snapshot | At most 4,096 argv elements and 4,096 environment pairs; at most 65,536 bytes per scalar; at most 524,288 total argv/environment bytes. |
+| Policy metadata | Schema, stage and containment are nonempty ASCII scalars of at most 256 bytes each; timeout and capture are positive u32 values fixed by the sealed adapter. |
+| Stream chunk | At most 16,384 raw bytes per stdout/stderr frame; the unchanged adapter ceiling bounds their combined total. |
+| Pending stream output | 65,536 encoded bytes per job; no second complete output copy in the coordinator for nested jobs. |
+| Pending control output | 16,384 encoded bytes per connection, separately reserved so cancellation/results do not depend on stream credit. |
+| Framing, authentication and admission | Two seconds each, clipped to the requesting invocation's original deadline; there is no deadline renewal on another frame. |
+| Socket progress / result delivery | Two seconds without successful queued-byte delivery; terminal delivery/ACK has two seconds total, within the fixed closure envelope. |
+| Event-loop fairness | One accept and at most one control/read/write chunk per ready descriptor per pass; rotate job order and inspect signals/deadlines on every pass; idle wait at most 0.05 seconds. |
+| Identity space | Monotonic u32 job IDs starting at one; never reuse an ID in a run; exhaustion rejects admission before wrap. |
+
+Input frame storage is at most one partial frame per connection. Decode only
+one admitted request at a time and discard its wire buffer after admission;
+accepted snapshots remain bounded by the live-job count. Control and stream
+queue accounting includes headers and unsent partial frames, not just payload.
+Do not allocate a promised size, vector, or string before checking its bound.
+Resource exhaustion returns a closed failure, never waits for a slot while
+holding the caller's deadline open. Kernel backlog is not an ownership record.
+
+The closed message set is:
+
+| Type | Direction and exact body |
+| --- | --- |
+| 1 HELLO | Client to coordinator: raw 16-byte run ID, u32 parent ID, raw 32-byte parent token. |
+| 2 READY | Coordinator to client: raw run ID, u32 parent ID; confirms HELLO only, not job admission. |
+| 3 SPAWN | Client to coordinator: u64 invocation-start monotonic ns; b schema, b stage, b containment, b root-relative cwd; u32 timeout seconds, u32 capture ceiling, u32 umask; argv vector of b; environment vector of ordered b key/b value pairs. |
+| 4 ACCEPT | Coordinator to client: u32 allocated job ID; published after the ownership record exists and before exec release. |
+| 5 STDOUT / 6 STDERR | Coordinator to client: u32 job ID, u64 byte offset within that stream, b raw chunk. |
+| 7 CANCEL | Client to coordinator: u32 accepted job ID; cancellation is irreversible and restricted to this connection's job/subtree. |
+| 8 RESULT | Coordinator to client: u32 job ID, b canonical ASCII JSON terminal metadata described below; no embedded streams. |
+| 9 ACK | Client to coordinator: u32 job ID; acknowledges validated complete result delivery. |
+| 10 REJECT | Coordinator to client before ACCEPT: u8 class (1 invocation, 2 host), b diagnostic capped at 2,048 bytes. |
+| 11 STDOUT_END / 12 STDERR_END | Coordinator to client: u32 job ID, u64 final captured byte count. |
+
+Wrong direction, version, order, identity, offset, duplicate message or unknown
+field/type fails the connection. CANCEL is idempotent after its first valid
+occurrence, but can never reopen a terminal job. A failure before ACCEPT has
+no client-visible job ID; any partially created children still belong to the
+coordinator and must close. Loss of ACCEPT is cancellation, not authority for
+retransmission. Every accepted connection is polled for EOF even when its
+stream output is backpressured.
+
+### Execution snapshot and compatibility
+
+The sealed adapter validates argv/cwd and fixes schema/stage/containment/bounds
+before entering the engine. Snapshot its current environment for each call,
+not the coordinator's original environment: Rust's PATH, CARGO_HOME,
+CARGO_TARGET_DIR, RUSTC and temporary-root changes must reach the actual child.
+Send the complete environment in strictly increasing byte-key order, with no
+duplicate, empty, NUL-containing or equals-containing key and no NUL in a
+value. Absence and an empty value differ. Do not merge with coordinator state.
+Replace only the private context with the new job's authority. Preserve caller
+%ENV and cwd after every return; no snapshot value is persisted on disk.
+
+For each Perl scalar, stringify once into a private copy. Preserve an unflagged
+byte string exactly; encode a UTF8-flagged string once with Perl's UTF-8 byte
+encoding before framing. Reject NUL after conversion and reject values whose
+encoded size exceeds admission. Decode transport to unflagged byte strings
+before exec. Qualify this rule against an independent direct-exec oracle for
+empty arguments, spaces/newlines, quotes, high bytes, flagged Unicode and empty
+versus absent environment values. A codec round trip alone cannot prove exec
+compatibility. Schema/stage/containment remain bounded ASCII metadata.
+
+Snapshot umask without changing the caller's effective mask and restore it in
+the forked command. STDIN remains EOF; stdout/stderr remain separate captured
+pipes. The root invocation establishes the inherited signal dispositions,
+signal mask, credentials, resource limits and open-file policy; arbitrary
+nested changes to those process attributes are not a supported caller knob.
+Do not claim emulation of an unrestricted remote fork. Admission requires the
+default SIGCHLD disposition and no competing child reaper; otherwise refuse
+before creating a run. The coordinator ignores SIGPIPE only within its private
+I/O scope and treats EPIPE as connection loss; commands restore the original
+disposition. Existing sealed adapters
+change environment and command policy, not those attributes; qualify their
+current callsites before enabling routing. The child restores the root's
+exec-relevant signal state rather than inheriting coordinator-only handlers.
+All run-private and other-job handles must close in both child roles; the
+reservation receives no command environment or executable client authority.
+
+A nested invocation records its monotonic start before connecting. Admission,
+framing, group establishment and exec consume the adapter's existing wall;
+SPAWN timestamps must lie between HELLO receipt minus two seconds and HELLO
+receipt, inclusive, and cannot exceed the current coordinator monotonic time.
+They cannot extend the parent's remaining lifetime. Root start includes endpoint
+setup. Each job's execution deadline is the earlier of its own wall and all
+ancestor execution deadlines; a shorter outer deadline remains authoritative.
+
+### Lifecycle, identity and cancellation
+
+The run state moves only `OPEN -> CLOSING -> CLOSED` or `INCOMPLETE`. Job states
+move through the following transitions; a failure at any preterminal state
+latches its first cause and enters cancellation. Terminal identities never
+return to admission.
+
+| State / transition | Required ownership fact and independent oracle obligation |
+| --- | --- |
+| VALIDATED -> RESERVED | Record job/parent/connection and reserve bounded child/descriptor slots before any fork. Cancel between record insertion and the first fork; no unrecorded child may execute. |
+| RESERVED -> GROUP_READY | Fork and immediately record the reservation PID while signals are masked. Only the reservation establishes its own PGID and acknowledges actual membership. Inject fork and each handoff failure; positive-PID cleanup must leave the caller group untouched. |
+| GROUP_READY -> COMMAND_READY | Fork and record the command before releasing its join gate. Require actual command membership in the reserved group. Fail before/after join and prove the two direct-child identities independently. |
+| COMMAND_READY -> RESERVATION_MOVED | Instruct the reservation to return to the coordinator's group; require its actual departure acknowledgment. Before that acknowledgment never classify group absence as command cleanup; the reservation itself may still be a member. |
+| RESERVATION_MOVED -> RUNNING | Publish ACCEPT completely, then release the command's exec gate. Verify cancellation/disconnect after partial ACCEPT and before/after release; no client publication can erase coordinator ownership. |
+| RUNNING -> DRAINING | Harvest only the exact command wait status with nonblocking waitpid. Close parent admission immediately on command exit and cancel its unfinished logical descendants. An exited command with remaining descendants is failed, even if its own group is absent. |
+| Any active state -> CANCELLING | Revoke affected tokens and close admission first, then TERM all affected owned groups/unjoined direct children without serial per-job grace. Sweep new handoffs before any release. First timeout/overflow/host/exec/signal/nonzero cause remains latched. |
+| CANCELLING -> KILLING | After the existing two-second TERM grace, send KILL only to still-owned targets. Poll every affected job under one two-second KILL grace; job count cannot multiply that wall. |
+| DRAINING/KILLING -> GROUP_RETIRED | Require command reaping, closed capture, all logical descendants terminal, and actual absence of the reserved command group. Retire the PGID from all future signal paths before releasing its reservation. Unknown wait status or uncertain absence cannot produce success. |
+| GROUP_RETIRED -> RESULT_PENDING | Release/terminate and nonblockingly reap the exact reservation within the remaining fixed closure envelope; close all job handles. Serialize terminal metadata only after internal subtree and reservation closure checks. |
+| RESULT_PENDING -> RETIRED | Deliver stream endings then RESULT, validate ACK, close the connection and discard its state. Lost/late ACK cannot reopen or rerun the command; failure is retained and the slot closes under the delivery wall. |
+| Any cleanup deadline -> INCOMPLETE | Retain false cleanup facts and a failed status; issue no further signal after numeric identity retirement. Release remaining handles/endpoints only under the exact safety rules below. |
+
+The reservation is never reaped before the last possible group signal. EOF on
+its control pipe before normal release is a host failure; retain the dead
+child as unreaped identity while cancelling the command. Never use a general
+`waitpid(-1, ...)` or a SIGCHLD reaper. ECHILD is unknown ownership/status and
+fails closed. Never positively signal a harvested command PID. If the
+reservation unexpectedly shares the caller group, address it by its owned
+positive PID only. Before group establishment is acknowledged, cleanup may
+signal known direct children but never infer permission to signal a group.
+During cancellation before reservation departure, first stop the gated command
+and request the live reservation's departure; do not kill the reservation in
+its own group merely to accelerate normal cleanup. If it dies before departure,
+its unreaped group membership can prevent an absence proof. Finish the last
+owned signals, retire group signalling, reap exact children and retain
+INCOMPLETE rather than claiming a pre-release absence that was never observed.
+
+Root failure or a caught INT/TERM/HUP closes the whole run before signalling.
+For a nested job, an ordinary completed nonzero result may be handled by its
+caller; it cancels that job's descendants, not unrelated siblings. Client EOF,
+protocol failure or delivery failure cancels its connection-owned subtree.
+Logical parent exit cancels all its unfinished children even if a leaked socket
+would otherwise conceal client death. One job cannot cancel an ancestor or
+sibling. Cancellation and EOF remain serviced during saturated output.
+
+The closure envelope after an execution stops is at most the existing TERM
+and KILL graces plus the selected terminal-delivery interval. Reservation
+release/reaping shares that envelope; it does not start another unbounded wait
+or another grace for each job. On ordinary completion, lingering command-group
+members remain `surviving_descendants`; cleanup does not promote the result.
+Signals caught by the coordinator are deferred only for finite cleanup; then
+restore and invoke the prior disposition, including re-raising a default
+terminating signal. Originally ignored signals stay ignored. Do not turn a
+user interrupt into success or permanently replace the caller's handlers.
+
+### Streams, closed results and endpoint retirement
+
+The coordinator counts each raw output byte once against the job's unchanged
+aggregate capture limit. Retain the admitted prefix on overflow. Nested jobs
+stream bounded chunks to their client, which builds the single complete
+stdout/stderr pair required by the existing result facade. Stop reading a
+backpressured stream when its queue fills; continue control/EOF/deadline work.
+A stalled receiver fails under the socket-progress wall. The root job retains
+its own bounded capture directly. No spooling, retry or unbounded transcript
+is introduced. Per-stream offsets/end counts must equal received raw bytes.
+
+RESULT metadata is one canonical ASCII JSON object with exactly `result`,
+`reservation_reaped`, `subtree_closed` and `delivery_complete` keys. `result`
+is the existing `_finish_result` scalar/cleanup record with only `stdout` and
+`stderr` omitted; the other keys are integer booleans 0 or 1. Before ACK the
+last is false; the client requires the first two, validates all existing closed
+keys/types/counts/timestamps and reconstructs streams locally. ACK establishes
+delivery completion in coordinator state, not in a forged command result.
+Preserve command exit/signal truth independently of infrastructure failure.
+`leader_reaped` and `group_gone` continue to describe the command and its actual
+group; they do not become aliases for subtree closure. Internal closure failure
+forces `ok=0` and `host_error` or `cleanup_failed` while retaining any earlier
+failed status. Public result keys and schema versions do not change silently.
+
+Only ESRCH proves group absence; EPERM and unexpected probe errors preserve
+uncertainty. The reservation holds the numeric group identity until its last
+signal, even after command reaping. If a final group check remains uncertain,
+retire signalling before releasing the reservation and return INCOMPLETE; do
+not carry a numeric target into a future run. Unreaped children are reported
+as incomplete, never invented as reaped to permit success or workspace removal.
+
+On run closure, stop accepting first, cancel/drain owned jobs, close accepted
+sockets and listener, then unlink only the recorded socket with its unchanged
+file identity and remove only its empty owned directory. Unexpected files or
+identity replacement preserve evidence and fail cleanup; do not recursively
+remove a caller-supplied directory. A result with failed internal closure must
+not permit adapter workspace deletion. Root-owner KILL or kernel-uninterruptible
+loss cannot certify cleanup; document this final-owner limit without promising
+an external guardian. Ordinary startup cleanup does not delete another run's
+endpoint merely because its PID appears absent.
+
+### Required qualification and startup checks
+
+Every transition row above needs a deterministic failure injection plus a
+real-process counterexample under `.5.5.2.3` through `.5.5.3`. The independent
+observer must retain actual command/reservation identities and verify liveness,
+wait status, caller-group isolation and owned endpoint residue after return.
+Use model-only signal probes for PID reuse/retirement and unreapable children;
+do not signal unrelated processes or create an unkillable host fixture.
+Require deliberately RED controls for lost publication, unclosed descendants,
+released group identity, stream truncation, malformed framing, forged parent,
+slow peers, context loss and cwd/environment drift. Run current T1669, T1668,
+T1545 and T313, plus the Rust nested-tool controls, before routing is enabled.
+Linux execution remains a separate missing qualification leg until observed.
+
+Re-derive this selection from the shared engine, sealed adapters and retained
+escaped-group/reservation evidence. Falsify it with the independently observed
+process and direct-exec oracles above. Durability is this task, the existing
+fact-card route and Git; automated protocol/queue/lifecycle watchers are still
+missing and owned by the following implementation/qualification leaves. This
+selection alone does not unblock neutral-verifier acceptance or full CI.
+
+Startup review on 2026-09-07 followed the settled `SESSION-READING-SCOPE`
+decision: required doctrines, roadmap, live owner, relevant source/tests and
+book, plus CLI routing and its import architecture. The selected PGEN template
+was read-only on the repository volume; its digest still matches the changed
+input recorded in `CLAIM-VERIFICATION-TEMPLATE-REVIEW`. Local claim authority
+is unchanged. The containment adoption guide includes its latest stable-count
+integration rule; no new portable policy revision was found in that local
+source. The README remains the governed landing page. No project artifact is
+deleted while it owns pending failure or verification evidence.
+
+## Acceptance Checklist (.19.2.3.1.2.2.5.5.2.1.2 protocol selection)
+
+- [x] **ROOT CAUSE (WHY + WHERE)** — `git log -S 'setpgid(0, 0)'`
+  identifies the separately owned group mechanism already isolated by the
+  escaped-inner-group counterexample. The shared engine and Rust adapter show
+  why surviving ownership must retain per-call environment and exact command
+  wait truth. The preceding reservation oracle addresses numeric identity;
+  it does not supply transport, queue or lifecycle policy.
+- [x] **ADDRESSED (contract selected; implementation pending)** — The exact
+  task-local grammar, finite resource table, authority/context boundary,
+  transition obligations and result/identity retirement rules now constrain
+  the existing implementation leaves. The parent protocol node is complete
+  and the shared-engine extraction is next. No production source, test, public
+  result schema or shipped book behavior changes in this slice.
+- [x] **NO REGRESSION (design only)** — The guarded initial doctrine driver
+  reports `[doctrine] all doctrine checks passed`; task integrity also passed
+  independently. The staged driver and hook must pass before this slice can
+  commit. Diff hygiene is clean, the mdBook's nested-cleanup limitation is
+  unchanged, and the existing fact card points to this selected contract.
+  Evidence: `.artifacts/logs/nested-coordinator-protocol-20260907/`.

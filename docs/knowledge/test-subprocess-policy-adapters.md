@@ -69,6 +69,6 @@ own group gone. Group cleanup does not compose into nested-subtree cleanup.
 The exact escaped group was terminated and absence verified. HIAL/VIAL
 `.19.2.3.1.2.2.5.5` owns the required ownership design, repair and hostile
 watcher; neutral-verifier extraction remains provisional and blocked.
-The task-local selection chooses one launch coordinator, private nested clients
-and reserved group identities. T1669 proves identity-reservation feasibility;
-production protocol, implementation and hostile qualification remain pending.
+The task selects one launch coordinator, private clients, reserved identities
+and an exact bounded wire/context/lifecycle protocol. T1669 proves reservation
+feasibility; asynchronous extraction, routing and hostile qualification remain pending.
