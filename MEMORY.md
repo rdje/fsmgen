@@ -6,14 +6,14 @@ Status and evidence: `docs/tasks/`. The system itself: `MEMORY_ARCHITECTURE.md`.
 ## Resume
 
 - repository_revision: derive with `git log -1 --format='%H %s'`; never shadow `HEAD` here.
-- active_work_unit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3`
-  (`pending`; Rust/Verilator fixture startup diagnosis and repair)
-- next_action: Diagnose the sampled direct-Perl fixture startup boundary and select
-  a bounded repair under `.19.2.3.1.2.2.5.5.2.3.1.2.2.3` before another attempt.
+- active_work_unit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2`
+  (`blocked`; causal fixture-startup evidence and bounded repair)
+- next_action: Read the owning blocked node and its prerequisite investigation;
+  obtain a causal startup discriminator before selecting a repair or qualification run.
 - in_flight_uncommitted: none.
-- in_flight_background: none; the failed regression is terminal and recorded PIDs are absent.
-- blockers: Rust/Verilator fixture startup timeouts block the broader band; the historical
-  T1545 cause remains unknown. Wire qualification, nested containment, RAM fixture repair
-  and CI remain open. Evidence: owning task and
-  `.artifacts/logs/checker-launch-observation-20260907/`.
+- in_flight_background: none; the observed focused band and its guard are terminal.
+- blockers: Retained Rust/Verilator startup failures remain unexplained; fresh passing
+  observations cannot establish a repair. The historical T1545 cause is also unknown.
+  Wire qualification, nested containment, RAM fixture repair and complete CI remain open.
+  Evidence: owning task and `.artifacts/logs/fixture-startup-20260907/`.
   Full qualification and push remain blocked; retain configured RAM limits.

@@ -2330,11 +2330,27 @@ decomposes the architecture needed to move beyond that bounded foundation.
   Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.2: retain bounded checker launch observations`
 
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3`
-  Status: `pending`
+  Status: `active`
   Goal: `Diagnose and repair newly observed Rust and Verilator fixture startup timeouts before qualification.`
   Acceptance: `Retain the failed .2 regression unchanged; inspect available child identity and bounded operating-system startup samples before retrying. Distinguish the direct fixture launch path from fixture body and policy behavior, select a bounded repair with an independent failing control, preserve exact production tool identity and all sealed bounds/assertions, and split any change beyond a safe slice before implementation. A fresh passing run cannot erase the initial failed invocation or establish the missing historical T1545 cause.`
-  Verification: `The .2 regression passes T1545 but T1669 proxy_nonzero and proxy_decoy return timed_out; T1668 success and nonzero Perl fixtures also stall. A read-only process-tree census locates the running nonzero-runtime child under the still-active RAM-guarded invocation. Exact status, source comparison and any surviving startup sample are retained under .artifacts/logs/checker-launch-observation-20260907/. No repair has begun.`
-  Commit: `pending`
+  Verification: `Child .1 completes the bounded historical/source/launch investigation without reproducing the failure or identifying a safe repair. The original failed regression remains failed, and the fresh observed band passes without explaining it. Child .2 is blocked on causal startup evidence; no production command, fixture, limit, security setting or assertion changes. Parent wire qualification remains open.`
+  Commit: `pending causal repair`
+  Children: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.1, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2`
+
+- ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.1`
+  Status: `done`
+  Goal: `Inspect historical startup evidence and challenge the shebang and shared-supervisor hypotheses before selecting a repair.`
+  Acceptance: `Read the retained failure and live sample before another attempt; compare shebang and explicit-interpreter startup through shared and independent launchers, observe the unchanged focused band, preserve each invocation outcome, and record evidence limits without promoting a retry or inventing a correction.`
+  Verification: `The retained census and startup-7768.sample identify orphaning-runtime at _dyld_start, correcting this node's former nonzero-runtime attribution. A fixed body printing body-entered succeeds through the shared supervisor and Python subprocess, with both script-shebang and explicit /usr/bin/perl invocation. These exploratory arms do not reproduce the failure; they share a body/path and are not independent cold-start oracles. Their ignored instruments are not durability-qualified and support no timing, reliability or root-cause claim. The narrow historical OS query returns no matching records. An external read-only observer runs the unchanged T1545/T1669/T1668/T313 band under the configured RAM guard: All tests successful; the guard also exits zero. No targeted fixture survives long enough for sampling. The initial guard-census selector missed the executable naming and is rejected as evidence; the corrected census and final exact-PID check find no remaining observed process. Evidence and identity manifest: .artifacts/logs/fixture-startup-20260907/. Startup review follows SESSION-READING-SCOPE; literal CLI imports resolve and occur in the architecture note, selected claim-template hashes match existing review debt, and the containment guide already carries the current portability amendment. Product/book behavior is unchanged. The guarded staged doctrine driver reports all doctrine checks passed, with the documentation-only task-acceptance exemption; git diff --cached --check passes. The commit hook rechecks the final evidence. No implementation fix or complete qualification is claimed.`
+  Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.1: retain bounded startup investigation and causal blocker`
+
+- ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2`
+  Status: `blocked`
+  Goal: `Capture a causal fixture-startup failure and select a bounded repair before wire qualification.`
+  Acceptance: `Obtain a recurrence with exact live child identity, executable/fixture identity, independent process state and bounded startup sample sufficient to separate fixture-body, supervisor and host-startup causes. Preserve the first failed result. Select and independently falsify a project-correctable repair; split deeper host instrumentation or architecture changes into a reviewed slice before implementation. A later passing run cannot close this leaf.`
+  Blocked by: `The retained _dyld_start-only sample does not identify the wait's cause; the targeted historical OS query and fresh controlled observations supply no causal discriminator. Unblock with a reproducible startup failure or new host evidence that distinguishes a repairable mechanism. Do not repeat passing regression merely to seek qualification, widen bounds, replace production tool identity, or alter host security.`
+  Verification: `No evidence-backed repair is available from child .1. Original failed logs remain preserved; complete CI, push and coordinator endpoint work stay behind this prerequisite.`
+  Commit: `pending causal evidence and verified repair`
 
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.2`
   Status: `pending`
