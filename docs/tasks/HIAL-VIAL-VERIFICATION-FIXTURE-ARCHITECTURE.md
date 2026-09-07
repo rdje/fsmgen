@@ -2333,7 +2333,7 @@ decomposes the architecture needed to move beyond that bounded foundation.
   Status: `active`
   Goal: `Diagnose and repair newly observed Rust and Verilator fixture startup timeouts before qualification.`
   Acceptance: `Retain the failed .2 regression unchanged; inspect available child identity and bounded operating-system startup samples before retrying. Distinguish the direct fixture launch path from fixture body and policy behavior, select a bounded repair with an independent failing control, preserve exact production tool identity and all sealed bounds/assertions, and split any change beyond a safe slice before implementation. A fresh passing run cannot erase the initial failed invocation or establish the missing historical T1545 cause.`
-  Verification: `Child .1 completes the bounded historical/source/launch investigation without reproducing the failure or identifying a safe repair. The original failed regression remains failed, and the fresh observed band passes without explaining it. Child .2 is blocked on causal startup evidence. Child .3 selects targeted native kernel/user sampling; child .4 owns administrator-assisted capture before repair selection. Child .5 rejects a thread-state-only substitute after its independent stop control fails. Child .6 prepares the normal-user authenticated sampling session; child .7 captures an AppleSystemPolicy wait, verifies shutdown and returns a permission-experiment decision to child .2. No production command, fixture, limit, security setting or assertion changes. Parent wire qualification remains open.`
+  Verification: `Child .1 completes the bounded historical/source/launch investigation without reproducing the failure or identifying a safe repair. The original failed regression remains failed, and the fresh observed band passes without explaining it. Child .2 owns the unresolved causal startup evidence and approved host-policy experiment. Child .3 selects targeted native kernel/user sampling; child .4 owns administrator-assisted capture before repair selection. Child .5 rejects a thread-state-only substitute after its independent stop control fails. Child .6 prepares the normal-user authenticated sampling session; child .7 captures an AppleSystemPolicy wait, verifies shutdown and returns a permission-experiment decision to child .2. The director-approved iTerm2 permission experiment in child .2 passes its unchanged band but still observes exact-fixture XProtect scanning; no production command, fixture, limit or assertion changes. Parent wire qualification remains open.`
   Commit: `pending causal repair`
   Children: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.1, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.3, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.4, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.5, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.6, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.7`
 
@@ -2345,12 +2345,12 @@ decomposes the architecture needed to move beyond that bounded foundation.
   Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.1: retain bounded startup investigation and causal blocker`
 
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2`
-  Status: `blocked`
+  Status: `in_progress`
   Goal: `Capture a causal fixture-startup failure and select a bounded repair before wire qualification.`
   Acceptance: `Obtain a recurrence with exact live child identity, executable/fixture identity, independent process state and bounded startup sample sufficient to separate fixture-body, supervisor and host-startup causes. Preserve the first failed result. Select and independently falsify a project-correctable repair; split deeper host instrumentation or architecture changes into a reviewed slice before implementation. A later passing run cannot close this leaf.`
-  Blocked by: `Director decision on a controlled Developer Tools permission experiment for iTerm2, the observed launching app. This app-scoped host security change is outside the temporary sampler authorization and needs action-time confirmation. The read-only panel shows iTerm2 absent and Terminal off. Preserve original failures, configured bounds and exact tool identities; never infer a repair from passing reruns or change host policy without approval.`
-  Verification: `Sibling .7 supplies a native AppleSystemPolicy wait and exact-fixture syspolicyd XProtect/allowed records; it does not prove the original timeouts share that cause. Apple documents the per-app Developer Tools control at https://support.apple.com/en-au/guide/mac-help/mchlc5fb7f9c/mac. Proposed next action: authorize only iTerm2, then one unchanged guarded focused band with prospective policy records and exact observed-process cleanup; retain any failure and reassess the causal gap. No permission change, timeout increase or verified runtime repair has occurred. Complete CI, push and endpoints remain behind qualification.`
-  Commit: `pending causal evidence and verified repair`
+  Blocked by: `Historical timeout attribution and independently verified repair remain unresolved. The director completed the local macOS authentication dialog; adding iTerm shows its Developer Tools switch on, with Terminal and Tracing still off and no restart dialog observed. On 2026-09-07 the director explicitly approved the proposed iTerm2-only experiment: Yes please, you have my greenlight. This authorizes that app permission and one unchanged guarded focused band; preserve other settings, original failures, configured bounds and exact tool identities. Authentication credentials remain local to the user.`
+  Verification: `Approved iTerm2-only permission is verified on after local macOS authentication; Terminal and Tracing remain off, with no restart prompt. One unchanged guarded T1545/T1669/T1668/T313 band reports All tests successful; configured limits and tool identities are unchanged. Native observation binds orphaning-runtime PID 52395 (1788789905.050881), parent 51794, to .artifacts/tmp/tests/ju79K1mKs1/orphaning-runtime with the same source digest retained by sibling .7. Independent syspolicyd records name that exact fixture in XProtect results at 16:05:05.243719 +0200 and bind scan path identity 6bce9d1ba3a14e47 from queue through completion/waiter wakeup. Developer Tools therefore does not eliminate the observed scan path; a passing run cannot prove timing improvement, historical attribution or repair. The same-window TCC query returns no matching authorization records. Observer census finds every observed birth gone; independent guard/observer census is ESRCH. An initial stdin-only query executed no Python through the backgrounding RAM guard and is rejected; the saved explicit-script query succeeds. Evidence: .artifacts/logs/fixture-developer-tools-20260907/. Re-derivation uses native identity and retained unchanged test output; falsification uses independent exact-fixture OS records against scan-bypass inference; task/book/fact/Git retain the conclusion, while ignored scratch/raw logs remain a durability gap. Next: inspect fixture provenance and authoritative policy semantics before selecting another bounded causal discriminator. Full CI, push and endpoints remain behind qualification.`
+  Commit: `this authorization/observation checkpoint; causal repair remains pending`
 
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.3`
   Status: `done`
@@ -6366,32 +6366,34 @@ kernel evidence remain explicit missing legs owned by `.3.4`.
 
 ## Authenticated observation checkpoint (.19.2.3.1.2.2.5.5.2.3.1.2.2.3.4)
 
-The director's iTerm2 READY session matches native helper birth identity and
-tracked source digest in `session-d6ff2617c99a426db231c3715749ed84/session.json`;
-it is unexpired. No extra prompt or root test invocation is used. One unchanged
-guarded T1545/T1669/T1668/T313 band passes. The prospective observer binds guard/
-test births and watches their descendants; no admissible direct T1668 orphaning-
-runtime persists to the threshold. No request or kernel sample exists; original
-failures and wire qualification remain open. T1545's logged timeout is its
-deliberate held-before-exec control, whose enclosing subtest passes.
-The observer exits normally; native census finds observed test births gone,
-and independent follow-up finds observer/guard ESRCH. This sampled census
-cannot prove absence of unobserved/reparented nested descendants. Memory retains
-the live helper for the finite `.3.7` experiment and subsequent verified shutdown.
+The director's iTerm2 READY session matches native birth identity, tracked source
+digest and unexpired `session-d6ff2617c99a426db231c3715749ed84/session.json`.
+One unchanged guarded T1545/T1669/T1668/T313 band passes without another prompt
+or root tests. Its prospective native observer binds guard/test births; no direct
+T1668 orphaning-runtime persists to admission, so no request or sample exists.
+Original failures and qualification remain open. T1545's logged timeout is its
+passing held-before-exec control. Observed births disappear; independent observer/
+guard census is ESRCH, without proving unobserved/reparented nested cleanup.
+The then-live helper passes to `.3.7`, which records its subsequent shutdown.
 Evidence: `.artifacts/logs/fixture-kernel-observation-20260907/` (`regression.log`,
 `observer.log`, `events.jsonl`, `checkpoint-census.json`). Re-derivation uses the
 unchanged command and native observations; falsification retains original failure
 and independently checks birth identity. Task/Git preserve this negative result;
 ignored scratch instrument/raw logs have an explicit durability gap. No cause,
 repair or privileged sampler execution is claimed. Shipped behavior and book
-accuracy are unchanged. The first gate rejects a missing child reference; the
-second finds line-warning pressure. Add the child and compact this new checkpoint
-without dropping facts, then rerun doctrines and hook. No implementation checklist
-applies. Auto-review rejects a broad replacement command; this exact edit follows
-a read-only scope check and preserves surrounding evidence.
+accuracy are unchanged. Gates reject a missing child reference and line pressure;
+corrected child linkage and exact checkpoint compaction preserve the evidence.
+Auto-review rejects a broad replacement; a scoped patch resolves it. No
+implementation checklist applies; corrected doctrines and hook are required.
 
 ## Acceptance Checklist (.19.2.3.1.2.2.5.5.2.3.1.2.2.3.7 evidence projections; enforced)
 
 - [x] **ROOT CAUSE (WHY + WHERE)** — `git log -S 'noSymbolicate'` locates the sampler at `74c23d182`; its first admitted live report and independent exact-path OS records add kernel evidence beyond the book's prior user-only sample. The diagnostic changes only evidence projections and does not establish the original timeout cause.
 - [x] **ADDRESSED (verified)** — Update the owning statuses, bounded fact, book and exact book aggregate from the retained capture. Native report identity and OS records independently agree on the fixture; original empty queries and failed regression remain preserved. The Knowledge Map and independent claim census are regenerated; the book builds and its rendered observation/limitation paragraph is inspected in book-review.json.
 - [x] **NO REGRESSION** — The unchanged diagnostic band and every retained campaign invocation report `All tests successful`; they are observation results, not repair qualification. Helper/observer shutdown and exact command census are consumed. The book build and refreshed map/census pass; the new AppleSystemPolicy question resolves to the canonical card. The first staged driver rejects fact-card aggregate growth; duplicated task detail is routed back to its owner without raising limits, preserving exact capture identity and OS results in the compact card. The corrected staged driver and hook remain mandatory before commit; full CI and push remain pending.
+
+## Acceptance Checklist (.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2 permission observation; enforced)
+
+- [x] **ROOT CAUSE (WHY + WHERE)** — `git log -S 'The observed launcher is iTerm2'` locates the prior permission proposal at e2961d0ca43. Native capture identifies a policy wait; the approved experiment checks the app permission without claiming historical timeout attribution. The backgrounding RAM guard's stdin behavior explains the rejected empty query invocation; an explicit saved script fixes that diagnostic launch.
+- [x] **ADDRESSED (verified)** — System Settings verifies only iTerm enabled after local user authentication. The unchanged band passes, native fixture identity agrees with independent exact-path XProtect records, and both observer census and independent guard/observer ESRCH checks are consumed. Task, book, fact and book aggregate retain the still-open causal repair and scan-bypass falsification. Query/output digests are in evidence-manifest.json; raw logs and scratch producers have an explicit durability gap.
+- [x] **NO REGRESSION** — The unchanged band reports `All tests successful`; no test, supervisor, command or bounds changes. Focused observation is consumed and no sampler runs. Book build and rendered paragraph review pass; regenerated map and independent claim census agree. The staged driver reports all doctrine checks passed, including fresh task acceptance; the hook rechecks the final snapshot. Complete CI and push remain behind qualification.
