@@ -2311,9 +2311,9 @@ decomposes the architecture needed to move beyond that bounded foundation.
   Status: `active`
   Goal: `Capture and qualify the unexplained T1545 launch boundary before closing wire qualification.`
   Acceptance: `Keep .artifacts/logs/coordinator-wire-20260907/final-regression.log failed and distinguish unavailable historical evidence from a reproduced runtime cause. Select a bounded observation path for actual checker process identity and startup/main progress before another diagnostic attempt; preserve sealed commands, fixed limits and original fixture assertions. Use captured recurrence to own a concrete runtime repair, or explicitly establish the remaining qualification limit without claiming retry-based recovery. Endpoint implementation remains behind this leaf.`
-  Verification: `The original T1545 failure lacks retained structured status, child identity or process samples and remains unexplained. Child .1 independently repairs fabricated handoff timing and documents why control-pipe EOF cannot prove main entry. Child .2 owns prospective identity/startup observation and launch qualification; no fresh passing run diagnoses the historical invocation or enables endpoint implementation.`
+  Verification: `The original T1545 failure lacks retained structured status, child identity or process samples and remains unexplained. Child .1 independently repairs fabricated handoff timing and documents why control-pipe EOF cannot prove main entry. Child .2 qualifies prospective identity/startup observation but its broader band fails at unchanged Rust and Verilator fixture launches. Child .3 owns those concrete startup failures; no fresh passing run diagnoses the historical invocation or enables endpoint implementation.`
   Commit: `pending`
-  Children: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.1, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.2`
+  Children: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.1, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.2, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3`
 
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.1`
   Status: `done`
@@ -2323,10 +2323,17 @@ decomposes the architecture needed to move beyond that bounded foundation.
   Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.1: preserve unobserved handoff timing`
 
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.2`
-  Status: `pending`
+  Status: `done`
   Goal: `Select bounded checker identity and startup observation, then qualify the T1545 launch boundary.`
   Acceptance: `After timing-evidence qualification in sibling .1, select a bounded observation path for actual checker identity and startup/main progress before another diagnostic attempt. Preserve sealed commands, limits, fixture assertions and the original failed log. Capture recurrence under a concrete repair owner or retain the explicit qualification limit without retry-based recovery. Endpoint implementation remains behind this leaf.`
-  Verification: `Sibling .1 is verified; prospective observation remains unimplemented and the historical T1545 cause remains unestablished.`
+  Verification: `T1545 now retains a separate bounded launch record through test-private read-only state observation. Bash independently reports the same child PID; unmodified checker output establishes native progress; unrelated output and a pre-exec held child falsify invented progress and retries. RED fails on the old helper; the updated T1545 and unchanged T313 pass in the broader band, which remains failed because T1669 Rust proxy and T1668 Verilator fixtures time out. A live one-second sample locates T1668 orphaning-runtime at _dyld_start before main; the OS cause and earlier T1545 cause remain unknown. No shared engine, adapter, command or bounds change. The book builds and its rendered observation/qualification paragraphs are reviewed; exact disposable output is removed after identity capture. Recorded checker/watcher/sampled child PIDs are absent. Logs, source identity proof and sample: .artifacts/logs/checker-launch-observation-20260907/. Sibling .3 owns diagnosis and repair before broader qualification.`
+  Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.2: retain bounded checker launch observations`
+
+- ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3`
+  Status: `pending`
+  Goal: `Diagnose and repair newly observed Rust and Verilator fixture startup timeouts before qualification.`
+  Acceptance: `Retain the failed .2 regression unchanged; inspect available child identity and bounded operating-system startup samples before retrying. Distinguish the direct fixture launch path from fixture body and policy behavior, select a bounded repair with an independent failing control, preserve exact production tool identity and all sealed bounds/assertions, and split any change beyond a safe slice before implementation. A fresh passing run cannot erase the initial failed invocation or establish the missing historical T1545 cause.`
+  Verification: `The .2 regression passes T1545 but T1669 proxy_nonzero and proxy_decoy return timed_out; T1668 success and nonzero Perl fixtures also stall. A read-only process-tree census locates the running nonzero-runtime child under the still-active RAM-guarded invocation. Exact status, source comparison and any surviving startup sample are retained under .artifacts/logs/checker-launch-observation-20260907/. No repair has begun.`
   Commit: `pending`
 
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.2`
@@ -5983,3 +5990,85 @@ remain in force; their canonical policies and adoption guide were reviewed.
   process-inspection run and mistyped-test invocation remain failed/incomplete.
   The staged driver reports `[doctrine] all doctrine checks passed`, including
   fresh task acceptance; commit hooks recheck the final evidence snapshot.
+
+## Selected T1545 observation boundary (HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.2)
+
+Keep observation private to T1545's `run_checker`: scoped read-only wrappers
+around the existing start/advance functions retain the actual forked child PID
+and parent PID, launch cardinality, and fixed progress flags for observed
+control EOF, first output, native checker diagnostic, cleanup, and completion.
+The native diagnostic classifier comes from the checker's emitting `printf`
+calls: a line beginning `[task-acceptance] OK:` or `[task-acceptance] FAIL:`.
+No flag infers pre-main state from absent output or proves exec from EOF.
+
+Publish the bounded observation as a separate canonical JSON TAP diagnostic
+on every checker invocation. Keep the complete supervisor result unchanged and
+keep both metadata records out of checker-output assertions. Observation adds
+no command, callback API, process, file, stream capture, policy override, retry,
+fixture-source edit, environment change, or blocking OS sampler. It cannot
+recover a past PID/stack sample or promise a future native stack capture.
+
+Qualify PID identity independently with Bash's own `$$`, original checker
+progress with its unmodified output producer, and pre-exec timeout with a child
+held after actual group admission. The latter must retain unknown output/main
+progress and prove cleanup. Preserve the historical failed invocation and use
+any captured recurrence for a separately owned repair; a fresh pass alone does
+not unblock wire qualification.
+
+## Newly exposed fixture launch failure during checker observation
+
+The broader observation qualification is failed: T1669's unchanged Rust
+proxy controls return timeout instead of their scripted outcomes; T1668's
+unchanged direct Perl fixture launches also fail. Preserve the active RAM
+guard and fixed deadlines. Capture a bounded OS sample only from an identified
+live descendant of this invocation, then verify cleanup. Child `.1.2.2.3` owns
+root-cause selection and repair after the checker observation checkpoint;
+no retry-based recovery or endpoint activation is authorized by the passing
+T1545 subtest. This is a separate defect, not evidence for the missing historic
+T1545 runtime cause.
+
+## Acceptance Checklist (HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.2; enforced)
+
+- [x] **ROOT CAUSE (WHY + WHERE)** — `git log -S` traces `run_checker`'s
+  direct result projection to `d630261e6`; neither the original helper nor
+  the closed result retains child identity. The independent PID and native
+  diagnostic controls fail in `red.log` before observation is implemented.
+  This diagnoses missing prospective evidence, not the historical timeout.
+- [x] **ADDRESSED (verified)** — The same T1545 controls pass in
+  `regression.log`: Bash's own PID agrees with the observed fork; unrelated
+  output cannot establish native checker progress; an independently held
+  pre-exec child reaches the unchanged deadline with unknown output/main
+  progress, one launch, and completed cleanup. The separate canonical JSON
+  record round-trips exactly without entering checker-output assertions.
+- [x] **NO REGRESSION (focused observation; broader band failed)** — T1545
+  and T313 report `ok` in the guarded run (`Files=4, Tests=36`, `Result: FAIL`);
+  the changed test is syntax clean. T1669 and T1668 fail on unchanged
+  fixture-launch paths. The retained
+  independent OS sample places an actual T1668 child at `_dyld_start`; source
+  identities match HEAD and child `.3` owns repair before qualification.
+  No passing-band or full-CI claim is made. The mdBook builds and its rendered
+  paragraphs are inspected; exact output is removed after identity capture.
+  The corrected staged driver reports `[doctrine] all doctrine checks passed`;
+  commit hooks recheck the final evidence snapshot.
+
+Evidence is retained under `.artifacts/logs/checker-launch-observation-20260907/`.
+Re-derivation is the guarded tracked test and source/history comparison;
+falsification uses independent Bash PID, the held-child oracle and native
+output producer; durability is the test, this task, book, fact card and commit.
+The fresh broader failure has a native sample but lacks an OS root cause;
+the historical T1545 failure still lacks its discarded result and identity.
+Both missing legs remain explicit. The sampled PID and recorded observation
+PIDs are absent after the terminal run. The read-only host process inspector
+and OS sampling tool are required diagnostic dependencies; their outputs stay
+on the repository volume. The first reference-authority calculation stopped
+at its metadata header before writing; the corrected keyed traversal records
+the exact book delta without altering a containment ceiling.
+
+Commit this verified observation checkpoint before modifying either failing
+watcher or adapter. Child `.3` is the single next action; the broader band,
+wire qualification, nested containment and push remain blocked.
+
+The first staged gate rejects the fresh NO REGRESSION box because its prose
+omits the declared prove-summary signature. The corrected box quotes the actual
+failed-band summary and retains its explicit failures; no registry, assertion,
+or gate behavior changes.

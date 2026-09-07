@@ -474,6 +474,25 @@ the loss of failure evidence; it does not identify the cause of an earlier
 empty-output failure whose supervisor record was discarded. A later passing
 run cannot retroactively diagnose or erase that failed invocation.
 
+Every T1545 checker invocation also emits `fixture checker launch: ` followed
+by a separate canonical JSON observation. It retains the supervising test PID,
+actual forked child PID, launch count, and flags for observed control EOF,
+first output, a native `[task-acceptance] OK:` or `FAIL:` diagnostic, cleanup,
+and completion. Test-private wrappers read existing supervisor state; the
+checker command, environment, limits, streams, and result schema are unchanged.
+A missing flag means that progress was not observed: silence cannot locate a
+child before or after main, and EOF alone cannot prove exec. The record is
+emitted after return, so its PID is historical evidence, not authority to
+signal a process or a live stack sample. Bash's own PID, unmodified checker
+output, and an independently held pre-exec child qualify these distinctions.
+
+The observation qualification exposed fresh timeouts in the unchanged Rust
+proxy controls and Verilator Perl fixtures. A live OS sample placed one
+Verilator fixture at `_dyld_start` before its body ran. The failed broader run
+remains failed; this sample does not establish the OS cause or explain the
+earlier T1545 invocation. HIAL/VIAL `.19.2.3.1.2.2.5.5.2.3.1.2.2.3` owns repair
+before wire qualification can close.
+
 The quantitative statements above have three independent legs:
 
 - Re-derive the direct callsites and selected constants from `t/1545`, both

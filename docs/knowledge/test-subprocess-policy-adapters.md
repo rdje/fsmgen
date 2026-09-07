@@ -5,6 +5,7 @@ answers:
   - "how are FSMGen test subprocesses bounded?"
   - "why does t1545 not use IPC Cmd?"
   - "where does T1545 preserve empty-output checker failure diagnostics?"
+  - "where does T1545 retain actual checker PID and startup observations?"
   - "what does exec_handoff_monotonic_ns prove about child startup?"
   - "why does the task-acceptance fixture invoke Bash directly?"
   - "who may call the low-level test process supervisor?"
@@ -68,9 +69,16 @@ T1545 preserves each failed checker result in canonical JSON TAP diagnostics,
 apart from the checker-output string. Its real nonzero controls cover empty
 and split-stream output and full result recovery. An earlier empty-output
 failure discarded that record; its underlying cause remains unestablished.
+Its separate launch observation retains actual child identity and bounded
+progress flags without changing commands or results. Bash PID, native output,
+and held-child controls qualify it; absent progress remains unknown. The book
+defines the observation boundary and the active task owns qualification.
 The Verilator watcher uses canonical Perl fixture shebangs after an env-Perl
 fixture reached exec handoff but timed out before output. Only the entrypoint
 invoked through Perl by `prove` may retain an env shebang.
+Fresh direct-Perl fixture timeouts show that this shebang change is insufficient:
+HIAL/VIAL `.19.2.3.1.2.2.5.5.2.3.1.2.2.3` owns the live `_dyld_start` sample,
+Rust proxy/Verilator fixture diagnosis and repair. The OS cause remains unknown.
 T1595's env-Bash fake uname stalled at `_dyld_start` before measuring memory.
 Its sequential open3 capture, unbounded wait and exit-only projection remain
 owned by HIAL/VIAL `.19.2.3.1.2.2.6`. This does not diagnose the OS cause or

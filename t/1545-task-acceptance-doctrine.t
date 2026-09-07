@@ -10,6 +10,7 @@ use File::Path qw(make_path);
 use File::Spec;
 use FindBin;
 use JSON::PP ();
+use POSIX ();
 
 use lib File::Spec->catdir($FindBin::Bin, '..', 'perl');
 use lib File::Spec->catdir($FindBin::Bin, 'lib');
@@ -27,9 +28,11 @@ subtest 'documentation-only staged work validates config and remains exempt' => 
     write_file($repo, 'README.md', "fixture docs changed\n");
     git_ok($repo, 'add', '--', 'README.md');
 
-    my ($ok, $output) = run_checker($repo);
+    my ($ok, $output, undef, $observation) = run_checker($repo);
     ok($ok, 'checker accepts a docs-only staged change') or diag($output);
     like($output, qr/no configured implementation change staged/, 'exemption is explicit');
+    ok(ref($observation) eq 'HASH' && $observation->{checker_diagnostic_observed},
+        'unmodified checker output proves native diagnostic progress');
 };
 
 subtest 'project-native literal and ERE evidence passes in one fresh task file' => sub {
@@ -188,7 +191,7 @@ subtest 'failed checker diagnostics retain the complete supervisor result' => su
         ok(!$ok, 'deliberate nonzero checker remains failed');
         is($output, $streams ? 'stdout sentinelstderr sentinel' : '',
             'checker-output assertions receive only the original streams');
-        my $encoded = join('', @diagnostics);
+        my $encoded = join('', grep { /^fixture checker result: / } @diagnostics);
         like($encoded, qr/\Afixture checker result: /,
             'failure emits structured evidence even with empty streams');
         $encoded =~ s/\Afixture checker result: //;
@@ -208,6 +211,57 @@ subtest 'failed checker diagnostics retain the complete supervisor result' => su
         ok($record->{cleanup}{leader_reaped} && $record->{cleanup}{group_gone},
             'real failed control retains completed cleanup evidence');
     }
+};
+
+subtest 'launch observation retains independent identity and honest progress' => sub {
+    my $repo = make_fixture_repo();
+    write_file($repo, 'scripts/check_task_acceptance.sh',
+        "printf 'shell-pid=%s\\n' \"\$\$\"\nexit 23\n");
+    my (@diagnostics, $result, $observation);
+    {
+        no warnings 'redefine';
+        local *main::diag = sub { push @diagnostics, @_; return 1; };
+        (undef, undef, $result, $observation) = run_checker($repo);
+    }
+    ok(ref($observation) eq 'HASH', 'launch observation is retained separately') or return;
+    my ($shell_pid) = $result->{stdout} =~ /\Ashell-pid=([0-9]+)\n\z/;
+    ok(defined($shell_pid), 'Bash independently reports its own process identity') or return;
+    is($observation->{child_pid}, $shell_pid, 'observation names the actual executed child');
+    is($observation->{parent_pid}, $$, 'observation names the supervising test');
+    is($observation->{launch_count}, 1, 'one sealed checker launch is observed');
+    ok($observation->{control_eof_observed} && $observation->{first_output_observed},
+        'control closure and actual output are independently retained');
+    ok(!$observation->{checker_diagnostic_observed},
+        'unrelated output cannot impersonate a native checker diagnostic');
+    ok($observation->{finished_observed}, 'terminal observation is retained');
+    ok(!kill(0, $shell_pid), 'observed child is absent after result delivery');
+    my @encoded = grep { /^fixture checker launch: / } @diagnostics;
+    is(scalar(@encoded), 1, 'one separate JSON observation is emitted') or return;
+    $encoded[0] =~ s/\Afixture checker launch: //;
+    is_deeply(JSON::PP->new->decode($encoded[0]), $observation,
+        'TAP retains the complete bounded observation');
+
+    my $real_setpgid = \&POSIX::setpgid;
+    {
+        no warnings 'redefine';
+        local *FSM::Support::ProcessSupervisor::setpgid = sub {
+            my $return = $real_setpgid->(@_);
+            POSIX::pause() if $_[0] == 0; # The child cannot reach exec.
+            return $return;
+        };
+        (undef, undef, $result, $observation) = run_checker($repo);
+    }
+    is($result->{status}, 'timed_out', 'sealed checker deadline remains authoritative');
+    is($observation->{launch_count}, 1, 'timed-out attempt is never retried');
+    ok($observation->{child_pid}, 'identity survives an empty-output timeout') or return;
+    ok(!$observation->{control_eof_observed} && !$observation->{first_output_observed}
+            && !$observation->{checker_diagnostic_observed},
+        'pre-exec hold never fabricates launch or main progress');
+    ok($observation->{cleanup_observed} && $observation->{finished_observed},
+        'timeout cleanup and terminal progress remain visible');
+    ok(!kill(0, $observation->{child_pid}), 'timed-out child is independently absent');
+    ok($result->{cleanup}{leader_reaped} && $result->{cleanup}{group_gone},
+        'timed-out group cleanup is complete');
 };
 
 done_testing();
@@ -301,12 +355,57 @@ sub command_ok {
 
 sub run_checker {
     my ($repo) = @_;
-    my $result = run_fixture_checker($repo);
+    my $observation = {
+        schema => 'fsmgen.test.task_acceptance_launch_observation.v1',
+        schema_version => 1,
+        parent_pid => $$, child_pid => undef, launch_count => 0,
+        control_eof_observed => 0, first_output_observed => 0,
+        checker_diagnostic_observed => 0,
+        cleanup_observed => 0, finished_observed => 0,
+    };
+    # Test-private observation of existing state: no new child work, streams,
+    # waits, or policy controls. EOF is not proof of exec, and absent output
+    # cannot locate a silent child relative to main entry.
+    my $observe = sub {
+        my ($state) = @_;
+        $observation->{control_eof_observed} = 1 if defined $state->{exec_handoff};
+        $observation->{first_output_observed} = 1 if defined $state->{first_output};
+        if (!$observation->{checker_diagnostic_observed}) {
+            for my $stream (qw(stdout stderr)) {
+                $observation->{checker_diagnostic_observed} = 1
+                    if ($state->{$stream} // '') =~ /^\[task-acceptance\] (?:OK|FAIL):/m;
+            }
+        }
+        $observation->{cleanup_observed} = 1 if $state->{phase} eq 'cleanup';
+        $observation->{finished_observed} = 1 if $state->{phase} eq 'finished';
+    };
+    my $start = \&FSM::Support::ProcessSupervisor::_start_supervision;
+    my $advance = \&FSM::Support::ProcessSupervisor::_advance_supervision;
+    my $result;
+    {
+        no warnings 'redefine';
+        local *FSM::Support::ProcessSupervisor::_start_supervision = sub {
+            my $state = $start->(@_);
+            if (defined $state->{pid}) {
+                $observation->{child_pid} = $state->{pid};
+                ++$observation->{launch_count};
+            }
+            $observe->($state);
+            return $state;
+        };
+        local *FSM::Support::ProcessSupervisor::_advance_supervision = sub {
+            my $return = $advance->(@_);
+            $observe->($_[0]);
+            return $return;
+        };
+        $result = run_fixture_checker($repo);
+    }
     my $output = $result->{stdout} . $result->{stderr};
     # Diagnostics are TAP evidence, never checker output: the existing output
     # assertions must not accidentally match supervisor metadata. Preserve the
     # complete closed record even when the failed child produced no bytes.
     diag('fixture checker result: ' . JSON::PP->new->ascii->canonical->encode($result))
         unless $result->{ok};
-    return ($result->{ok} ? 1 : 0, $output, $result);
+    diag('fixture checker launch: ' . JSON::PP->new->ascii->canonical->encode($observation));
+    return ($result->{ok} ? 1 : 0, $output, $result, $observation);
 }
