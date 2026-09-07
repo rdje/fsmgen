@@ -2333,9 +2333,9 @@ decomposes the architecture needed to move beyond that bounded foundation.
   Status: `active`
   Goal: `Diagnose and repair newly observed Rust and Verilator fixture startup timeouts before qualification.`
   Acceptance: `Retain the failed .2 regression unchanged; inspect available child identity and bounded operating-system startup samples before retrying. Distinguish the direct fixture launch path from fixture body and policy behavior, select a bounded repair with an independent failing control, preserve exact production tool identity and all sealed bounds/assertions, and split any change beyond a safe slice before implementation. A fresh passing run cannot erase the initial failed invocation or establish the missing historical T1545 cause.`
-  Verification: `Child .1 completes the bounded historical/source/launch investigation without reproducing the failure or identifying a safe repair. The original failed regression remains failed, and the fresh observed band passes without explaining it. Child .2 is blocked on causal startup evidence. Child .3 selects targeted native kernel/user sampling; child .4 owns administrator-assisted capture before repair selection. Child .5 rejects a thread-state-only substitute after its independent stop control fails. No production command, fixture, limit, security setting or assertion changes. Parent wire qualification remains open.`
+  Verification: `Child .1 completes the bounded historical/source/launch investigation without reproducing the failure or identifying a safe repair. The original failed regression remains failed, and the fresh observed band passes without explaining it. Child .2 is blocked on causal startup evidence. Child .3 selects targeted native kernel/user sampling; child .4 owns administrator-assisted capture before repair selection. Child .5 rejects a thread-state-only substitute after its independent stop control fails. Child .6 prepares the normal-user authenticated sampling session requested by the director. No production command, fixture, limit, security setting or assertion changes. Parent wire qualification remains open.`
   Commit: `pending causal repair`
-  Children: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.1, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.3, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.4, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.5`
+  Children: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.1, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.3, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.4, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.5, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.6`
 
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.1`
   Status: `done`
@@ -2363,7 +2363,7 @@ decomposes the architecture needed to move beyond that bounded foundation.
   Status: `blocked`
   Goal: `Capture targeted native kernel and user wait evidence during a fixture-startup recurrence.`
   Acceptance: `With administrator-assisted sampling available, observe one bounded unchanged focused invocation under the configured RAM guard. Bind the live target to that invocation by ancestry, executable, fixture and fresh identity before sampling only that target. Keep all output repository-local, retain every original result, bound diagnostic duration and verify sampled-child and observer cleanup. Use the kernel/user evidence to distinguish a repairable cause or preserve the remaining unknown explicitly; return causal repair selection to sibling .2. Do not execute tests as root, repeat passing runs for qualification, widen limits or alter host security.`
-  Blocked by: `The selected native live kernel sampler requires root; non-interactive sudo cannot authenticate. Obtain director-assisted administrator authentication for the narrowly scoped sample, or a caller-supplied equivalent kernel-wait capture from an identified recurrence. Existing user-only evidence cannot select a repair. No dependent qualification or endpoint work may proceed.`
+  Blocked by: `The selected native live kernel sampler requires root. The director must launch bash scripts/await_fixture_kernel_samples.sh once in a repository-root Terminal and authenticate locally; sibling .6 supplies the expiring session for repeated fixed captures. Computer Use refused Terminal access, and a separate terminal's sudo -v does not authorize agent tool sessions. Existing user-only evidence cannot select a repair. No dependent qualification or endpoint work may proceed.`
   Verification: `Pending administrator-assisted capture; sibling .3 owns the native capability and permission evidence.`
   Commit: `pending`
 
@@ -2373,6 +2373,13 @@ decomposes the architecture needed to move beyond that bounded foundation.
   Acceptance: `Read the installed libproc and Mach declarations, probe native thread-state access on an exact owned controlled child, and distinguish a pipe wait from a waitpid-confirmed stop before interpreting any fixture. Bound process lifetime and every poll, preserve native return/error and child identity, and prove cleanup. If this adds a usable discriminator, select a separately owned bounded diagnostic observation; otherwise preserve the administrator prerequisite. Do not rerun qualification, infer a historical cause or alter production behavior.`
   Verification: `The initial probe fails because list-thread handles were passed to the unique-thread-ID flavor. Apple's producer test identifies the correct pairing. The corrected native call works, but the independent waitpid-confirmed SIGSTOP control still reports the same thread waiting state as its pipe wait. BSD process status changes separately; thread state alone is not the proposed discriminator. Both failed probes and successful exact-child cleanup are retained in fixture-thread-state-20260907. The rejected scratch instrument has an explicit durability gap; no fixture is rerun and no historical cause or repair is claimed. Sibling .4 remains the next blocked frontier.`
   Commit: `this commit (negative native calibration; no runtime change)`
+
+- ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.6`
+  Status: `done`
+  Goal: `Prepare a user-run authenticated sampler so the director has an executable unblocking step.`
+  Acceptance: `Keep authentication and the fixed native sampler in the same user-launched diagnostic session. The director rejects repeated manual commands/authentication: allow sequential bounded capture requests within an expiring, stoppable session after one authentication, with non-interactive refresh and fail-closed revocation. Never run the helper or tests as root. Reject stale/reused or foreign identities, non-fixture paths and invalid ancestry before sampling. Keep output and temporary data repository-local, bound session/request count and sampler lifetime, preserve failed outcomes, and test rejection paths before handing over the command. Record that Computer Use refused Terminal access and that authentication in an unrelated terminal does not authorize agent tool sessions. Actual live kernel capture and test/observer cleanup remain sibling .4.`
+  Verification: `The helper runs as the normal user under the configured RAM guard, authenticates through the controlling terminal and accepts fixed numbered capture requests during an expiring session. Fresh native child/parent identities, Perl executable identity, exact T1668 parent command and direct canonical orphaning-runtime source are required before root sampling. Focused Python controls pass, including a real Perl parent/fixture, stale/reused/foreign/racing identities, filesystem redirects/FIFOs, bounded TERM-resistant cleanup, repeated requests, non-interactive refresh, STOP and expiry. A planted interactive-refresh mutation fails the independent session control. Shell/Python syntax and the mdBook build pass; rendered command and shutdown guidance are checked, and the exact unused book output is removed. Source, tests, task, book and fact route are tracked; authentication and actual native kernel capture remain unqualified until sibling .4. Evidence: .artifacts/logs/fixture-capture-handoff-20260907/. No original fixture regression or privileged capture has run.`
+  Commit: `this commit (manual authenticated diagnostic session)`
 
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.2`
   Status: `pending`
@@ -6252,3 +6259,101 @@ The generated census's distinct legs are direct regeneration, the independent
 numeric census plus observed stale-digest rejection, and its tracked producer,
 inventory and registered doctrine watcher. They do not close the exploratory
 native calibration's separately stated durability gap.
+
+## Reusable authenticated capture handoff (.19.2.3.1.2.2.5.5.2.3.1.2.2.3.6)
+
+The director asks for an executable unblocking step and rejects repeated manual
+commands/password prompts for successive diagnostic captures. Computer Use
+refuses access to Terminal for safety reasons; no alternate terminal-control
+mechanism is used to bypass that refusal. The installed sudoers manual defines
+terminal/parent-scoped timestamp records, so authenticating in an unrelated
+Terminal cannot be assumed to authorize the agent's execution session.
+
+The prepared user action, from the repository root, is:
+
+```bash
+bash scripts/await_fixture_kernel_samples.sh
+```
+
+The wrapper configures project-local data and the normal RAM guard. The Python
+helper stays unprivileged and uses its controlling Terminal for initial
+`sudo -v`. Refreshes use non-interactive validation from that same helper; they
+never prompt again. Only the fixed native sampler command is elevated. There
+is no new sudoers rule, installation, root shell, saved password, or change to
+host security settings. The normal test runner remains separately owned by
+`.3.4`; the authentication helper does not launch or repeat tests.
+
+When the helper prints READY, `.3.4` must independently verify its live PID,
+start identity and source digest against `session.json` under the reported
+`.artifacts/logs/fixture-kernel-capture/session-*` directory. File state alone
+is not liveness proof. The controller must own a fresh guarded invocation and
+identify its direct T1668 `orphaning-runtime` child before publishing a request.
+Write each complete request atomically as `request-0001.json`, then the next
+number only after consuming the prior `capture-0001/result.json` and outputs.
+The closed schema consists of native integer `pid`, `start_sec`, `start_usec`,
+`parent_pid`, `parent_start_sec`, and `parent_start_usec` fields. No command,
+policy, environment or output path is accepted from a request. Never copy a
+historical PID into this protocol.
+
+The helper cross-checks child and parent birth identity, UID, executable,
+parent command, direct ancestry and canonical same-volume fixture source before
+sampling. The source digest and native identity observations accompany the
+result. Stale/reused/foreign/racing identities, unexpected commands, oversized
+or duplicate-field requests, symlinks and nonregular files reject before a
+sampler can start. Rejection is retained and requires a new numbered request;
+it does not promote a failed regression. Errors after launch stop the session.
+The fixed target-only, text-only native sampling command retains its native
+exit limit and repository-local output; outer waits and TERM/KILL waits are
+also bounded. Actual privileged subprocess behavior and kernel evidence remain
+unqualified until the user runs the session and `.3.4` consumes a live capture.
+In particular, this helper does not prove atomic PID authority across the OS
+sampler's launch or whole nested-test-subtree cleanup.
+
+The session has source-declared expiry and request limits. Ctrl+C or a STOP
+file in its own session directory requests shutdown. On orderly stop, expiry,
+quota completion or failure, the helper stops refreshing authentication and
+invalidates its timestamp. Capture results, refusal/error records and terminal
+session state remain on the repository volume. `.3.4` must consume sampler
+termination, target identity/sample contents, helper/observer termination and
+sampled-fixture cleanup before treating a diagnostic invocation as complete.
+Unknown or empty samples remain unknown; a subsequent passing test does not
+repair the original failure or qualify the private wire implementation.
+
+## Acceptance Checklist (.19.2.3.1.2.2.5.5.2.3.1.2.2.3.6; enforced)
+
+- [x] **ROOT CAUSE (WHY + WHERE)** — `git log -S 'non-interactive sudo cannot authenticate'`
+  identifies `65bb51a34` as the recorded authentication blocker. The live native
+  capability probe requires root, and the repeated non-interactive check reports
+  a password requirement. Computer Use then refuses Terminal access. The local
+  sudoers timestamp contract explains why a separate `sudo -v` instruction was
+  not a complete agent handoff; repeated manual captures also contradict the
+  director's stated workflow requirement.
+- [x] **ADDRESSED (verified)** — The tracked helper supplies one local launch and
+  initial authentication for a stoppable, expiring session of sequential fixed
+  capture requests. Guarded `python3 -B t/python/test_fixture_kernel_sampler.py`
+  passes in `controls-final.log`. Native Perl parent/fixture and independently
+  forked-child controls verify actual identity admission; controlled foreign,
+  stale, racing and redirected inputs reject. The session control exercises
+  repeated requests without repeating interactive validation. An in-memory
+  mutation changing refresh to interactive validation fails that control in
+  `red-refresh.log`; the original implementation passes. No sudo or live kernel
+  sampler runs during these controls.
+- [x] **NO REGRESSION** — Shell/Python syntax checks pass; focused controls also
+  exercise expiry, STOP, non-interactive refresh and a real TERM-resistant
+  child's bounded cleanup. The mdBook builds, its rendered launch/authentication/
+  shutdown guidance is inspected, and the exact disposable output is removed
+  after an empty open-file census. The regenerated map reports `knowledge-map: OK`
+  with query parity; the new question resolves to the canonical fact without
+  cache. Claim inventory and the exact maintained-book aggregate are rederived
+  without raising ceilings. The staged doctrine driver and commit hook remain
+  mandatory before this prepared handoff is committed; full CI and privileged
+  capture remain pending, and no original failed fixture run is reclassified.
+
+Evidence is under `.artifacts/logs/fixture-capture-handoff-20260907/`. Re-derivation
+uses the tracked helper and focused controls. Falsification uses native process
+and filesystem observations, independently owned children, and the observed
+interactive-refresh mutation failure. Durability is the tracked implementation,
+control source, task, book, fact route and Git; the focused command is rerunnable.
+The Python diagnostic controls are manually invoked, not added to the default
+Perl CI runner. Native authentication, privileged sampler cleanup and causal
+kernel evidence remain explicit missing legs owned by `.3.4`.

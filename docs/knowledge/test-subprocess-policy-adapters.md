@@ -7,6 +7,7 @@ answers:
   - "where does T1545 preserve empty-output checker failure diagnostics?"
   - "where does T1545 retain actual checker PID and startup observations?"
   - "can native thread state replace kernel sampling of fixture startup?"
+  - "how do I start an authenticated fixture sampling session?"
   - "what does exec_handoff_monotonic_ns prove about child startup?"
   - "why does the task-acceptance fixture invoke Bash directly?"
   - "who may call the low-level test process supervisor?"
@@ -30,6 +31,8 @@ evidence: >-
   t/lib/FSM/Test/VerilatorRuntime.pm;
   t/1545-task-acceptance-doctrine.t;
   t/1668-darwin-inline-verilator-test-runtime.t;
+  scripts/fixture_kernel_sampler.py;
+  t/python/test_fixture_kernel_sampler.py;
   t/1669-task-acceptance-fixture-runtime.t
 reverify: >-
   scripts/run_with_ram_guard.sh -- prove -Iperl -It/lib
@@ -84,6 +87,9 @@ child `.3.3` records targeted kernel sampling and its administrator-authenticati
 prerequisite, with capture owned by `.3.4` before causal repair selection.
 Child `.3.5` rejects a thread-state-only substitute: its independently stopped
 pipe reader still reports a waiting thread. This does not identify the OS cause.
+Child `.3.6` supplies `bash scripts/await_fixture_kernel_samples.sh`: a normal-user
+session for repeated fixed native captures after local authentication, with expiry,
+identity checks and STOP/Ctrl+C shutdown. Actual capture remains owned by `.3.4`.
 T1595's env-Bash fake uname stalled at `_dyld_start` before measuring memory.
 Its sequential open3 capture, unbounded wait and exit-only projection remain
 owned by HIAL/VIAL `.19.2.3.1.2.2.6`. This does not diagnose the OS cause or

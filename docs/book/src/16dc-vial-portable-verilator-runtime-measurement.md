@@ -493,6 +493,25 @@ remains failed; this sample does not establish the OS cause or explain the
 earlier T1545 invocation. HIAL/VIAL `.19.2.3.1.2.2.5.5.2.3.1.2.2.3` owns repair
 before wire qualification can close.
 
+For this Darwin startup investigation, an administrator can open a temporary
+sampling session from the repository root:
+
+```bash
+bash scripts/await_fixture_kernel_samples.sh
+```
+
+Enter the administrator password in Terminal and wait for `READY`. The helper
+runs as the normal user and authenticates the fixed native `spindump` operation;
+tests remain unprivileged. The engineer can submit subsequent capture requests
+without another interactive prompt while the session is active. Each request
+must identify the live T1668 parent and its direct `orphaning-runtime` child;
+PID reuse, unrelated commands, indirect paths and changed identities are rejected.
+Output stays under `.artifacts/logs/fixture-kernel-capture/`. Ctrl+C or the
+session's `STOP` file ends it; expiry and request limits also stop the helper.
+It invalidates its authentication timestamp on orderly shutdown. Authentication
+refresh is non-interactive and fails closed if access expires or is revoked.
+This is a diagnostic handoff, not a startup repair or qualification result.
+
 The quantitative statements above have three independent legs:
 
 - Re-derive the direct callsites and selected constants from `t/1545`, both
