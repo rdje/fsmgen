@@ -6,10 +6,11 @@ Status and evidence: `docs/tasks/`. The system itself: `MEMORY_ARCHITECTURE.md`.
 ## Resume
 
 - repository_revision: derive with `git log -1 --format='%H %s'`; never shadow `HEAD` here.
-- active_work_unit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.2.3.2`
-  (`pending`; implement inactive connection authority and admission)
-- next_action: Implement and independently verify connection authority/admission leaf .3.2.3.2.
-- in_flight_uncommitted: none after the owned connection-I/O commit workflow.
-- in_flight_background: none after consuming the connection-I/O commit checks.
+- active_work_unit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2`
+  (`blocked`; causal fixture-startup evidence and independently falsified repair)
+- next_action: Read the owning task's service-band recurrence and select a contemporaneous
+  causal discriminator before another startup qualification run.
+- in_flight_uncommitted: none after the service admission commit workflow.
+- in_flight_background: none after consuming the service commit checks.
 - blockers: Startup causal repair and parent wire qualification remain open;
-  runtime activation, complete CI and push stay gated. Inactive endpoints are approved.
+  reserved-group launch, runtime activation, complete CI and push stay gated.

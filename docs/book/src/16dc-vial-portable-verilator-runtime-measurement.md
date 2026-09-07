@@ -565,13 +565,32 @@ handler, mask and flags even after EPIPE or an exception.
 
 The mechanism uses the private Wire limits and performs no sleeping or blocking
 I/O in advancement. It neither authenticates a parent nor admits a command.
-Finite service admission and live authority checks remain the next owned slice;
-nested coordination, startup repair and runtime qualification remain open. The filesystem controls use real Unix socket peers on the current macOS
-host; foreign-owner/device cases are model-only and Linux execution is still
-unqualified. To reproduce the endpoint and existing wire/mechanism checks:
+The inactive `FSM::Support::ProcessSupervisor::Service` now owns finite accepted
+connections and validates HELLO against the exact run and a live parent token.
+It removes authority before closing affected sockets; root revocation closes
+all authority. Parent identities cannot be reused. Separate one-shot connections
+may share a live parent, but duplicate HELLO, repeated SPAWN and cancellation
+before ACCEPT fail. Connection outcomes occupy bounded slots until consumed;
+a full service leaves kernel backlog unaccepted, with no waiting-job queue.
+
+Authentication and admission use fixed Wire windows clipped to the original
+run and parent lifetimes. SPAWN timestamps must fit the HELLO window, and the
+request's own wall can only shorten its deadline. Receipt and snapshot transfer
+both recheck expiry. The service hands exact validated snapshots to its private
+owner without launching commands or sending ACCEPT; taking a snapshot does not
+renew admission. Job-slot reservation, command ownership, result delivery and
+runtime routing remain separate unfinished work. Reported socket-close failure
+keeps cleanup failed even when the endpoint files are successfully removed.
+
+These modules remain absent from production runner imports. Startup causal
+repair and broader runtime qualification remain open. The filesystem controls
+use real Unix socket peers on the current macOS host; foreign-owner/device
+cases are model-only and Linux execution is still unqualified. To reproduce
+the endpoint and existing wire/mechanism checks:
 
 ```bash
 bash scripts/run_with_ram_guard.sh -- prove -Iperl -It/lib \
+  t/1814-process-coordinator-service.t \
   t/1813-process-coordinator-connection.t \
   t/1812-process-coordinator-endpoint.t \
   t/1669-task-acceptance-fixture-runtime.t

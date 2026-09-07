@@ -2388,11 +2388,11 @@ decomposes the architecture needed to move beyond that bounded foundation.
   Commit: `this commit (authenticated native capture and bounded evidence)`
 
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.2`
-  Status: `active`
+  Status: `done`
   Goal: `Implement private repository-local endpoints and finite nonblocking connection handling.`
   Acceptance: `Director-approved prerequisite amendment on 2026-09-07: inactive endpoint implementation may follow the verified private Wire implementation .3.1.1 while parent wire qualification remains open. Retain exact run-directory/socket identity, independent run/job authority, close-on-exec descriptors, bounded connections/partial frames/queues and fixed progress walls. Prove actual long-path bind/connect, handle-based cwd restoration on success and failure, exact environment/signal-mask restoration, symlink/foreign/stale endpoint rejection and identity-safe endpoint cleanup. No supervised command launch, public routing or runtime activation is enabled; startup causal repair, complete CI and push remain blocked.`
-  Verification: `The director explicitly approved the recorded inactive-endpoint proposal. Child .1 durably records that exact dependency amendment and splits filesystem identity from bounded connection I/O; .2 and .3 own implementation and independent qualification without importing either module into the production supervisor.`
-  Commit: `pending endpoint implementation`
+  Verification: `Director approval db47806a3 authorizes only inactive endpoints after verified private Wire. Filesystem 467a40261, connection mechanics ef450a2e6 and the current service admission slice complete that scope. Independent endpoint watchers pass with retained RED controls, exact cleanup and book/fact evidence. The unchanged T1669 band recurs with startup timeouts; causal repair, parent Wire/runtime qualification, reserved-group launch, full CI and push remain blocked.`
+  Commit: `db47806a3 approval; 467a40261 filesystem; ef450a2e6 connection; this service admission slice`
   Children: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.2.1, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.2.2, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.2.3`
 
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.2.1`
@@ -2410,11 +2410,11 @@ decomposes the architecture needed to move beyond that bounded foundation.
   Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.2.2: implement inactive endpoint filesystem`
 
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.2.3`
-  Status: `active`
+  Status: `done`
   Goal: `Implement inactive finite nonblocking connection I/O over the qualified endpoint and Wire.`
   Acceptance: `After .2.2 commits, enforce fixed connection admission, close-on-exec/nonblocking ownership, incremental header/type admission before body storage, one partial frame per connection, separate bounded control/stream queues including unsent headers, finite authentication/framing/progress walls and one operation per ready descriptor per advancement. Preserve message bytes, EOF/EPIPE/failure truth and first failure. Validate run/parent authority through explicit private owner records; reject wrong or revoked authority and duplicate submission without launching commands. Independently exercise raw kernel peers, oversize prefixes, fragmented/slow peers, backpressure, queue boundary-plus-one, disconnects, signal-disposition restoration and identity-safe cleanup. Return no runtime/nested guarantee; activation, startup repair, complete CI and push remain gated.`
-  Verification: `Filesystem sibling .2 committed at 467a40261. Child .1 completes server-side framing/backpressure; child .2 owns remaining authority/admission. Each child retains its own source/test/book/fact evidence, failed controls and final focused results.`
-  Commit: `pending connection slice`
+  Verification: `Filesystem commit 467a40261 and Connection commit ef450a2e6 precede child .2, which completes inactive authority/admission. Each child owns its exact source/test/book/fact evidence and failing controls. The expanded endpoint watchers pass; unchanged T1669 recurrence remains an explicitly failed broader qualification result owned by startup .3.1.2.2.3.2. No runtime activation is implied.`
+  Commit: `ef450a2e6 connection mechanics; this service admission slice`
   Children: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.2.3.1, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.2.3.2`
 
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.2.3.1`
@@ -2425,18 +2425,20 @@ decomposes the architecture needed to move beyond that bounded foundation.
   Commit: `this connection-I/O slice`
 
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.2.3.2`
-  Status: `pending`
+  Status: `done`
   Goal: `Integrate finite accepted-connection admission and live-parent authority over the inactive transport.`
   Acceptance: `After sibling .1 commits, enforce the selected accepted-connection limit and fair bounded advancement over the qualified Endpoint and Connection. Admit HELLO against exact run and explicit live parent/token/deadline records, revoke authority before cleanup, reject stale/forged/duplicate context and multiple submissions, preserve original framing/authentication/admission deadlines and snapshot timestamp bounds, and deliver admitted requests to a private owner without command creation. Independently exercise raw peers, saturated connections, invalid/revoked parents, slow authentication, malformed/order-invalid frames and exact descriptor/endpoint cleanup. No daemon, runtime routing, supervised command launch, full-CI qualification or push.`
-  Verification: `Pending sibling .1 framing/backpressure qualification. Logs and fixtures belong under .artifacts/logs/coordinator-connection-admission-20260907/. Parent records in these controls are explicit transport models; actual job ownership remains the separately gated coordinator implementation.`
-  Commit: `pending connection admission`
+  Verification: `Sibling .1 is committed at ef450a2e6. Private Service owns finite accepted descriptors, bounded consumed-once outcomes and monotonic live parent authority; distinct one-shot connections may share a parent, while duplicate HELLO/SPAWN fail. Fixed authentication/admission, exact timestamp window, invocation/parent clipping, expiry rechecks, fair nonblocking advancement and revoke-before-close are implemented without command creation or ACCEPT. T1814 raw peers qualify exact bytes, live/wrong/revoked authority, both capacity boundaries, real slow authentication, concurrent healthy-peer progress, native descriptor flags, root/parent expiry and actual forked-copy refusal/reaping. Its first helper callback and Perl precedence failures are retained separately. The corrected oracle then falsifies the first implementation at T1814 lines 267/306: stale snapshot transfer and accepted-descriptor close failure could escape failure truth. Both are repaired; lifetime-cleanup-green.log reports Files=1, Tests=9. The expanded T1814, T1813 and T1812 each report ok in focused-regression.log, but unchanged T1669 fails subtests 9-10 with Rust proxy and legacy producer timeouts: the full Files=4, Tests=48 band is FAILED, not a qualification pass. Source identity and zero production import/residue censuses are checked; syntax passes. The recurrence is owned by startup .3.1.2.2.3.2 and retained in the service-band recurrence section below; no retry or causal repair is claimed. Re-derivation is literal kernel peers and source/history; falsification is real pressure plus stale/cleanup and blocking controls; durability is source/tests/book/fact/task/Git, with ignored raw logs an explicit gap. The book and fact are synchronized without ceiling growth; book build/render inspection, claim/map regeneration and the staged doctrine driver pass, including fresh git_history/prove_summary acceptance. The hook rechecks the final snapshot. Linux, actual job ownership, startup repair and broad runtime qualification remain missing. Logs: .artifacts/logs/coordinator-connection-admission-20260907/.`
+  Commit: `this inactive service admission slice`
 
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.3`
-  Status: `pending`
+  Status: `blocked`
   Goal: `Add asynchronous reserved-group launch gates inside the shared process owner.`
   Acceptance: `After .2, reserve both child slots and record each exact fork before release; qualify reservation group creation, command membership, reservation departure, exec gating and failed partial-start cleanup. Preserve the default synchronous legacy path while internal coordinator launches use the explicit private strategy. Never reap a group reservation before its last signal or infer group authority from an unacknowledged handoff. Prove descriptor closure, actual wait truth and caller-group isolation with independent real-process and model-only retirement controls.`
   Verification: `Pending endpoint/context qualification in sibling .2; existing T1669 reservation feasibility is a prerequisite, not production handoff proof.`
   Commit: `pending`
+
+  Blocked by: `Startup causal repair and full private Wire qualification in sibling .1 remain open. The director amendment in .2.1 admits inactive endpoints only; it does not waive the launch prerequisite. Endpoint completion does not qualify reserved-group command launch.`
 
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.4`
   Status: `pending`
@@ -3140,7 +3142,7 @@ decomposes the architecture needed to move beyond that bounded foundation.
 
 ## Current Frontier
 
-Current executable leaf: `.19.2.3.1.2.2.5.5.2.3.2.3.2` owns authority/admission after completed server-side connection I/O `.3.2.3.1`, inactive endpoint filesystem `.3.2.2` and director-approval checkpoint `.3.2.1`. Startup causal repair and wire qualification remain open; runtime activation, complete CI and push stay blocked.
+Current frontier: approved inactive endpoint container `.19.2.3.1.2.2.5.5.2.3.2` is complete. Startup causal repair `.3.1.2.2.3.2` remains blocked, with the new service-band recurrence recorded below. Reserved-group launch `.3.3`, parent wire qualification, runtime activation, complete CI and push remain gated; endpoint approval does not waive them.
 
 Architecture audit `.1` is complete. Decision `0032` selects one public
 `.vial` source language, private immutable `VIALSemanticIR` and
@@ -6259,3 +6261,40 @@ missing until child .2. Design-only selection changes no shipped behavior.
 - [x] **ROOT CAUSE (WHY + WHERE)** — The retained initial T1813 load reports `BEGIN failed--compilation aborted at t/1813-process-coordinator-connection.t line 8`: the qualified Endpoint has no framed connection owner. Raw peer tests independently require header/type admission, finite queues and unchanged framing across partial writes before parent admission can use the transport.
 - [x] **ADDRESSED (verified)** — The inactive Connection passes literal raw-peer, queue boundary-plus-one, fixed deadline, saturated EOF, native SIGPIPE and inherited-descriptor controls. An intentionally corrupt frame scheduler and blocking readiness/sleep controls fail the independent oracles; actual bounded advancement passes. No production runner imports this module.
 - [x] **NO REGRESSION** — Guarded T1813/T1812/T1669 report `All tests successful`, `Files=3, Tests=36`; existing supervisor and Wire sources are unchanged. The harmless single-use test-hook warning is scoped away before final focused recheck. Book behavior and canonical fact are synchronized without raising containment ceilings; rendered book, regenerated claim/map and the corrected staged doctrine driver pass. The initial signature-format rejection and its exact diagnostic repair are retained above. The task retains explicit missing Linux, admission and runtime qualification.
+
+## Acceptance Checklist (.19.2.3.1.2.2.5.5.2.3.2.3.2 inactive service admission)
+
+- [x] **ROOT CAUSE (WHY + WHERE)** — `git log -S 'sub new_connection'` locates ef450a2e6: framed I/O has no live parent/admission owner. The corrected raw-peer watcher then fails `at t/1814-process-coordinator-service.t line 267` and line 306 because the first Service transfers expired snapshots and returns endpoint cleanup success despite a reported connection-close failure. The earlier callback/precedence fixture errors are separate retained failures.
+- [x] **ADDRESSED (verified)** — Service rechecks fixed lifetime at receipt and transfer, revokes authority before closing, retains first failure and combines descriptor/endpoint cleanup truth. The failing lifetime/cleanup controls become GREEN (`All tests successful`, Files=1, Tests=9); expanded raw peers additionally pass real slow authentication, saturated fair progress, exact timestamp boundaries and actual fork-copy cleanup. No production runner imports the new modules.
+- [x] **NO REGRESSION (focused endpoint boundary; broader qualification failed)** — Service and T1814 syntax checks report syntax OK. Expanded T1814/T1813/T1812 each report ok; unchanged T1669 fails subtests 9-10 in the same band, so its Files=4, Tests=48 result remains FAILED. The exact source comparison is empty, endpoint residue is absent and the selected normal-user process census is empty. No retry, timeout widening or repaired-startup claim is made. The synchronized rendered book, claim/map projections and staged doctrine driver pass, including fresh evidence-backed acceptance; the hook rechecks the final snapshot. The recurrence remains owned below.
+
+## Service-band startup recurrence — owner `.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2`
+
+The service slice's guarded T1814/T1813/T1812/T1669 invocation fails overall.
+The first three watchers are ok; unchanged T1669 fails Rust proxy subtest 9
+and legacy RAM-capture subtest 10. Both proxy modes return timed_out instead
+of their distinct intended nonzero/admission failures. Legacy signal and
+stream producers lack their independent main-entry markers. The signal
+wrapper reports timed_out, empty streams, signal 15, observed handoff
+158067565197000, start 158067563881000 and finish 158072595410000 ns; its
+leader_reaped/group_gone are true. Handoff EOF does not prove main entry.
+
+The full band is Files=4, Tests=48, FAILED, SHA-256
+`b39f1e68a52aa72916cc92b4d9fd7b7b4904fbae19a5fc16f67eae58c9ab1428`.
+Artifacts: `.artifacts/logs/coordinator-connection-admission-20260907/`.
+Exact HEAD comparison finds no change in T1669, shared supervisor, Wire,
+RustParityRuntime or RamGuardFixtureRuntime. New modules have no production
+importer. Guard/test census after termination is empty and exact endpoint
+residue is absent. The bounded syspolicyd query restricted to this repository's
+Rust-proxy/legacy fixture paths returns no records; this does not exclude an
+OS wait. Live target birth identities, exact transient fixture paths and kernel
+wait chains were not captured, so historical causal attribution remains missing.
+Raw logs are ignored; tracked source/oracles, this exact result/hash and Git
+retain the durable evidence. No rerun turns the failed band into qualification.
+
+The existing startup owner must obtain a contemporaneous causal discriminator
+and independently falsify a repair before parent wire/runtime qualification.
+The old authenticated helper is stopped and only admits the earlier T1668
+target shape; another passing regression or an uninstrumented T1669 retry
+would not close that gap. The endpoint approval is fully implemented; launch,
+complete CI and push remain blocked.

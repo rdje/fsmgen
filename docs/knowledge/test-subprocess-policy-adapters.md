@@ -40,15 +40,15 @@ reverify: >-
   t/1545-task-acceptance-doctrine.t
   t/1668-darwin-inline-verilator-test-runtime.t
   t/1669-task-acceptance-fixture-runtime.t t/1812-process-coordinator-endpoint.t
-  t/1813-process-coordinator-connection.t
+  t/1813-process-coordinator-connection.t t/1814-process-coordinator-service.t
 ---
 
 Decisions `0087`/`0101` keep one engine in `FSM::Support::ProcessSupervisor`
-with private nonblocking advancement behind synchronous callers. It owns shell-free argv, same-volume
+with nonblocking advancement behind synchronous callers: shell-free argv, same-volume
 repository cwd, bounded split streams, exec handoff, monotonic time, one process
 group, first-failure status and TERM/KILL cleanup. Sealed adapters own commands,
 bounds, schemas and platform guards; T1669 watches exclusive ownership.
-The child checks the POSIX `setpgid` return and its actual group before exec.
+The child checks POSIX `setpgid` return and actual group before exec.
 Nonthrowing failure and false success reject with `exec_error` and no command
 execution; T1669 injects both plus an exception. The parent's race-closing
 attempt cannot replace child admission. Nested cleanup remains open below.
@@ -74,8 +74,8 @@ cleanup failures stay failed without retry; original fixture assertions pass.
 T1545 preserves each failed checker result in canonical JSON TAP diagnostics,
 apart from the checker-output string. Its real nonzero controls cover empty
 and split-stream output and full result recovery. An earlier empty-output failure discarded that record; cause remains unknown.
-The separate launch observation retains actual child identity and bounded progress
-flags with unchanged commands and results. Bash PID, native output and held-child
+Launch observation retains actual child identity and bounded progress flags
+with unchanged commands/results. Bash PID, native output and held-child
 controls qualify it; missing progress remains unknown. The book defines the boundary; the task owns qualification.
 The Verilator watcher uses canonical Perl fixture shebangs after an env-Perl
 fixture reached exec handoff but timed out before output. Only the entrypoint
@@ -102,8 +102,8 @@ The escaped group was terminated; absence verified. HIAL/VIAL
 `.19.2.3.1.2.2.5.5` owns the required ownership design, repair and hostile
 watcher; neutral-verifier extraction remains provisional and blocked.
 Selected: one launch coordinator, private clients, reserved identities and bounded wire/context/lifecycle protocol.
-T1669 proves reservation feasibility. Extraction, Wire, inactive Endpoint and server I/O are implemented;
-authority/admission, routing and hostile qualification (including T1545 diagnosis) remain pending.
+T1669 proves reservation feasibility. Extraction, Wire and inactive endpoint/service transport are implemented;
+coordination, routing and hostile qualification (including startup diagnosis) remain open.
 
 Native capture `.3.7` on 2026-09-07 binds normal-user Perl fixture PID `22778`
 (`1788787261.244839`) to T1668 parent `21913` (`1788787240.646851`). Source:
