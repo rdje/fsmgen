@@ -1,7 +1,7 @@
 # Knowledge Map: `test-subprocess`
 
 > **AUTO-GENERATED — DO NOT EDIT.** Return to the [Knowledge Map](../../KNOWLEDGE_MAP.md).
-> **1** facts · **16** uniquely owned question entries.
+> **1** facts · **17** uniquely owned question entries.
 
 ## Questions → facts
 
@@ -19,6 +19,7 @@
 - q="which ownership model is selected for nested supervision?" · facts=[test-subprocess-policy-adapters](../../docs/knowledge/test-subprocess-policy-adapters.md)
 - q="who may call the low-level test process supervisor?" · facts=[test-subprocess-policy-adapters](../../docs/knowledge/test-subprocess-policy-adapters.md)
 - q="why can T1595 stall before measuring host memory?" · facts=[test-subprocess-policy-adapters](../../docs/knowledge/test-subprocess-policy-adapters.md)
+- q="why did T1669 admission miss its workspace?" · facts=[test-subprocess-policy-adapters](../../docs/knowledge/test-subprocess-policy-adapters.md)
 - q="why does t1545 not use IPC Cmd?" · facts=[test-subprocess-policy-adapters](../../docs/knowledge/test-subprocess-policy-adapters.md)
 - q="why does the task-acceptance fixture invoke Bash directly?" · facts=[test-subprocess-policy-adapters](../../docs/knowledge/test-subprocess-policy-adapters.md)
 
@@ -28,5 +29,5 @@
 
 _Test subprocesses share one mechanism behind sealed policy adapters_
 
-- **date:** 2026-09-07 · **status:** current
+- **date:** 2026-09-08 · **status:** current
 - **source and verification:** [`docs/knowledge/test-subprocess-policy-adapters.md`](../../docs/knowledge/test-subprocess-policy-adapters.md)

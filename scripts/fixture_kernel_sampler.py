@@ -145,19 +145,22 @@ def _test_command(command, path, root):
     return command in ("/usr/bin/perl " + path, "/usr/bin/perl " + str(root / path))
 
 
-def _workspace(command, root, includes=False):
+def _workspace(command, root, includes=False, *, purpose="tests"):
+    directory = root / ".artifacts/tmp" / purpose
     prefix = "/usr/bin/perl " + ("-Iperl -It/lib " if includes else "")
-    prefix += str(root / ".artifacts/tmp/tests") + "/"
+    prefix += str(directory) + "/"
     match = re.match(re.escape(prefix) + r"([A-Za-z0-9_-]+)/", command)
     if not match:
         raise ValueError("target is not a selected repository-local generated fixture")
-    return root / ".artifacts/tmp/tests" / match[1]
+    return directory / match[1]
 
 
 def _supervisor_wrapper(command, root):
     """Literal argv shapes from T1669; no shell tokenization or free-form arguments."""
     includes = command.startswith("/usr/bin/perl -Iperl -It/lib ")
-    workspace = _workspace(command, root, includes)
+    # T1669 uses create_project_tempdir with this explicit purpose; T1668's
+    # direct File::Temp fixture retains the separate default tests directory.
+    workspace = _workspace(command, root, includes, purpose="process-supervisor-tests")
     if command == f"/usr/bin/perl -Iperl -It/lib {workspace}/rust-tool-resolution {workspace}/rust-tools":
         return "rust-wrapper", workspace, workspace / "rust-tool-resolution", None
     for mode in ("signal", "streams"):

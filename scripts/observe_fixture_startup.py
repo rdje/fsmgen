@@ -307,6 +307,8 @@ def observe(test, native, session, evidence, root):
                     evidence.record("capture_result", result=capture)
             time.sleep(POLL_SECONDS)
         evidence.record("test_gone", test=test)
+        if not seen:
+            raise RuntimeError("no selected fixture was observed; coverage is unestablished")
     except BaseException as error:
         evidence.problem("observation", error)
         raise
@@ -326,6 +328,7 @@ def observe(test, native, session, evidence, root):
             else:
                 raise RuntimeError("observer could not verify selected fixture/helper shutdown")
             evidence.record("settled", observed_fixtures_gone=True, helper_stopped=True,
+                            observed_fixture_count=len(seen),
                             capture_received=capture is not None,
                             original_test_result="caller_owned", unobserved_descendants="unknown")
         except BaseException as error:

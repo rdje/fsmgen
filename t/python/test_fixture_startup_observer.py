@@ -31,7 +31,7 @@ class Native:
         self.records = {pid: dict(pid=pid, start_sec=100 + pid, start_usec=200,
                                  ppid=parent, uid=os.getuid(), ruid=os.getuid())
                         for pid, parent in ((10, 1), (20, 10), (30, 20), (40, 1))}
-        workspace = root / ".artifacts/tmp/tests/controlled"
+        workspace = root / ".artifacts/tmp/process-supervisor-tests/controlled"
         workspace.mkdir(parents=True)
         if family == "rust":
             wrapper = workspace / "rust-tool-resolution"
@@ -161,6 +161,16 @@ class ObserverControls(unittest.TestCase):
         self.assertTrue(self.session.stop_called)
         self.assertEqual(self.session.requests, [])
         self.assertIn("exact normal-user", json.loads(
+            (self.evidence.directory / "failure.json").read_text())["failures"]["observation"])
+
+    def test_no_admitted_fixture_is_failed_coverage_after_helper_cleanup(self):
+        self.native.commands[20] = "/usr/bin/perl unrelated-control"
+        with self.assertRaisesRegex(RuntimeError, "no selected fixture was observed"):
+            self.run_observer()
+        self.assertTrue(self.session.stop_called)
+        self.assertEqual(self.session.requests, [])
+        self.assertEqual(self.events()[-1]["observed_fixture_count"], 0)
+        self.assertIn("no selected fixture", json.loads(
             (self.evidence.directory / "failure.json").read_text())["failures"]["observation"])
 
     def test_main_entry_is_rechecked_before_request_publication(self):

@@ -184,7 +184,11 @@ print STDERR "separate stderr\\n";
         self.assertFalse((self.root / "body-entered").exists())
 
     def test_original_success_and_ordering_are_retained_with_owned_reaping(self):
-        result = self.run_launcher()
+        # This minimal ordering body creates no selected fixtures. Isolate a
+        # successful observer result here; real missing coverage is tested below.
+        with patch.object(launcher.observer, "observe", return_value=None) as observed:
+            result = self.run_launcher()
+        observed.assert_called_once()
         self.assertEqual(result["returncode"], 0)
         self.assertTrue(result["leader_reaped"])
         rows = self.events()
@@ -201,12 +205,24 @@ print STDERR "separate stderr\\n";
 
     def test_original_failure_is_not_promoted_by_successful_observation(self):
         self.program(exit_code=23)
-        with self.assertRaisesRegex(RuntimeError, "original test failed"):
+        with patch.object(launcher.observer, "observe", return_value=None), \
+                self.assertRaisesRegex(RuntimeError, "original test failed"):
             self.run_launcher()
         result = json.loads((self.evidence.directory / "test-result.json").read_text())
         self.assertEqual(result["returncode"], 23)
         self.assertTrue(result["leader_reaped"])
         self.assertFalse(any(row["event"] == "caller_complete" for row in self.events()))
+
+    def test_passing_test_cannot_promote_missing_fixture_coverage(self):
+        with self.assertRaisesRegex(RuntimeError, "no selected fixture was observed"):
+            self.run_launcher()
+        result = json.loads((self.evidence.directory / "test-result.json").read_text())
+        self.assertEqual(result["returncode"], 0, "original passing TAP remains separate")
+        self.assertTrue(result["leader_reaped"])
+        self.assertGreater(self.session.stop_calls, 0)
+        self.assertFalse(any(row["event"] == "caller_complete" for row in self.events()))
+        self.assertIn("no selected fixture", json.loads(
+            (self.evidence.directory / "failure.json").read_text())["failures"]["observation"])
 
     def test_expired_helper_prevents_release_and_is_stopped(self):
         self.session.ready = False

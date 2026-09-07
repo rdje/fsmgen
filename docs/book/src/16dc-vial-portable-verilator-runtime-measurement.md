@@ -617,7 +617,10 @@ Nested requests include the test's `ancestor_pid`, `ancestor_start_sec` and
 
 Every process must use the selected system Perl as the normal user; commands
 and their arguments must match the generating test and a common fixture
-workspace. Each inspected source retains its digest and filesystem identity.
+workspace. T1668 fixtures stay under `.artifacts/tmp/tests/`; T1669 uses
+its explicit `.artifacts/tmp/process-supervisor-tests/` allocator root. Other
+allocator purposes and the former wrong T1669 root are rejected. Each inspected
+source retains its digest and filesystem identity.
 PID reuse, unrelated commands, cross-workspace arguments, indirect sources,
 reparenting and identity changes during inspection are rejected before sampling.
 
@@ -629,8 +632,12 @@ It invalidates its authentication timestamp on orderly shutdown. Authentication
 refresh is non-interactive and fails closed if access expires or is revoked.
 This is a diagnostic handoff, not a startup repair or qualification result.
 
-The T1669 admission controls exercise controlled native processes and hostile
-requests without privileged sampling. The tracked observer is
+The T1669 admission controls execute the original allocation call through an
+unchanged copy of the repository allocator in an isolated local root. The
+allocating Perl process retains ownership until normal cleanup; the sampler
+does not supply the expected path. Native held Rust and legacy wrapper/producer
+chains then exercise admission, alongside hostile requests, without privileged
+sampling. The tracked observer is
 `scripts/observe_fixture_startup.py`; inspect its argument contract with:
 
 ```bash
@@ -657,10 +664,13 @@ It stops the selected helper and verifies authentication invalidation and
 helper disappearance. Unobserved descendants remain unknown; neither a quiet
 process census nor a passing invocation establishes a causal repair.
 
-An attach-only observer can finish successfully after seeing no fixture if it
-was started too late. Keep launch and readiness evidence: successful observer
-shutdown alone does not establish coverage of the test invocation. A capture
-attempt with unobserved fixtures remains an open investigation.
+If the observer sees no selected fixture, it reports
+`no selected fixture was observed; coverage is unestablished` and fails after
+helper cleanup. Its settlement record includes `observed_fixture_count`, so an
+empty observation cannot silently claim fixture coverage. The original test
+result remains separate, including when the test itself passes. Seeing some
+fixtures still does not prove complete coverage of every transient process;
+keep launch, readiness and candidate evidence.
 
 For a new diagnostic invocation, the fixed caller
 `scripts/run_fixture_startup_observation.py` prepares the observer in its own
@@ -691,9 +701,10 @@ ordered readiness, but the observer admitted no fixtures. Investigation found
 an admission defect: T1669 allocates under
 `.artifacts/tmp/process-supervisor-tests/`, while the sampler and its controls
 assumed `.artifacts/tmp/tests/`. The earlier controlled admission result therefore
-does not qualify real T1669 coverage. Task `.3.8.5` owns the repair and a control
-using the actual allocator before another authenticated attempt. The failed
-original test remains failed; no kernel sample or causal repair is claimed.
+did not qualify real T1669 coverage. Task `.3.8.5` repairs that mismatch and
+qualifies the actual allocator path independently. The failed original test
+remains failed; a fresh authenticated attempt is still needed for native wait
+evidence, and no causal repair is claimed.
 The selected helper stopped and invalidated authentication.
 
 Capture requests and helper results are published only after their complete
@@ -701,8 +712,13 @@ JSON has been written, so a concurrent reader cannot consume a partial record.
 The hosted doctrine job discovers the fixture Python controls. Launcher
 controls exercise real pipes, exec and wait; birth metadata is native on Darwin
 and modeled on other platforms. Separate libproc controls are explicitly
-Darwin-only. Actual authenticated capture and causal repair remain open
-investigation steps.
+Darwin-only. Actual T1669 authenticated capture and causal repair remain open
+investigation steps. Run the focused unprivileged controls with:
+
+```bash
+bash scripts/run_with_ram_guard.sh -- python3 -B -m unittest discover \
+  -s t/python -p 'test_fixture_*.py' -v
+```
 
 The shared adapter's quantitative statements above have three independent legs:
 

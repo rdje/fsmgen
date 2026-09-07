@@ -6,6 +6,8 @@ import importlib.util
 import json
 import os
 from pathlib import Path
+import re
+import select
 import signal
 import subprocess
 import sys
@@ -66,8 +68,65 @@ class CaptureBoundary(unittest.TestCase):
         self.assertNotEqual(first["fixture_sha256"], changed["fixture_sha256"])
         self.assertEqual(first["fixture"], ".artifacts/tmp/tests/controlled/orphaning-runtime")
 
-    def supervisor_chain(self, family, nested):
-        workspace = self.fixture.parent
+    def allocated_supervisor_workspace(self):
+        """Exercise the unchanged allocator and original T1669 allocation call.
+
+        Copy the module into this isolated repository-shaped root; neither the
+        sampler's prefix nor this test's synthetic fixtures determine the path.
+        Hold the allocating Perl process until controls finish so File::Temp
+        keeps ownership of its directory and performs its ordinary cleanup.
+        """
+        module = self.root / "perl/FSM/ProjectDataLocality.pm"
+        module.parent.mkdir(parents=True, exist_ok=True)
+        module.write_bytes((ROOT / "perl/FSM/ProjectDataLocality.pm").read_bytes())
+        (self.root / "README.md").touch()
+        (self.root / "bin").mkdir(exist_ok=True)
+        (self.root / "bin/fsmgen").touch()
+        source = (ROOT / "t/1669-task-acceptance-fixture-runtime.t").read_text()
+        calls = re.findall(r"my \$workspace = create_project_tempdir\([\s\S]*?\);", source)
+        self.assertEqual(len(calls), 1, "original allocation must be unambiguous")
+        program = "$|=1; alarm 15;\n" + calls[0] + '''
+print "$workspace\\n";
+read(STDIN, my $release, 1) == 1 or die "allocator release missing";
+'''
+        allocator = subprocess.Popen(
+            ["/usr/bin/perl", "-Iperl", "-MFSM::ProjectDataLocality=create_project_tempdir",
+             "-e", program], cwd=self.root, stdin=subprocess.PIPE,
+            stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+        workspace = None
+
+        def finish():
+            try:
+                _, stderr = allocator.communicate(b"R", timeout=3)
+                self.assertEqual(allocator.returncode, 0, stderr.decode(errors="replace"))
+                if workspace is not None:
+                    self.assertFalse(workspace.exists(), "real allocator cleanup was incomplete")
+            finally:
+                if allocator.poll() is None:
+                    allocator.kill()
+                    allocator.communicate(timeout=3)
+
+        self.addCleanup(finish)
+        output = b""
+        deadline = time.monotonic() + 3
+        while time.monotonic() < deadline and not output.endswith(b"\n"):
+            if select.select([allocator.stdout], [], [], 0.1)[0]:
+                data = os.read(allocator.stdout.fileno(), 4096)
+                if not data:
+                    break
+                output += data
+                self.assertLessEqual(len(output), 4096)
+        self.assertTrue(output.endswith(b"\n"), "actual allocator did not report its directory")
+        workspace = Path(os.fsdecode(output).strip())
+        self.assertEqual(workspace.resolve(), workspace)
+        self.assertIn(self.root, workspace.parents)
+        self.assertEqual(workspace.stat().st_dev, self.root.stat().st_dev)
+        return workspace
+
+    def supervisor_chain(self, family, nested, workspace=None):
+        if workspace is None:
+            workspace = self.root / ".artifacts/tmp/process-supervisor-tests/controlled"
+            workspace.mkdir(parents=True, exist_ok=True)
         if family == "rust":
             wrapper = workspace / "rust-tool-resolution"
             producer = workspace / "rust-tools/rustup"
@@ -94,6 +153,29 @@ class CaptureBoundary(unittest.TestCase):
             self.native.commands[80] = "/usr/bin/perl " + SAMPLER.SUPERVISOR_TEST_PATH
             self.request.update(ancestor_pid=80, ancestor_start_sec=180, ancestor_start_usec=280)
         return wrapper, producer
+
+    def test_t1669_commands_follow_the_actual_allocator(self):
+        workspace = self.allocated_supervisor_workspace()
+        for family in ("rust", "signal", "streams"):
+            for nested in (False, True):
+                with self.subTest(family=family, nested=nested):
+                    self.native = NativeOracle(self.root, self.fixture)
+                    self.request = {key: value for key, value in self.request.items()
+                                    if key in SAMPLER.REQUEST_FIELDS}
+                    wrapper, producer = self.supervisor_chain(family, nested, workspace)
+                    evidence = SAMPLER.validate_target(self.request, self.native, self.root)
+                    self.assertEqual(evidence["fixture"], str(
+                        (producer if nested else wrapper).relative_to(self.root)))
+
+    def test_t1669_rejects_the_former_wrong_root_and_unrelated_purposes(self):
+        for family in ("rust", "signal", "streams"):
+            self.supervisor_chain(family, False)
+            command = self.native.commands[100]
+            for purpose in ("tests", "runtime", "process-supervisor-tests-other",
+                            "process-supervisor-tests/../tests"):
+                wrong = command.replace("/process-supervisor-tests/", "/" + purpose + "/")
+                with self.subTest(family=family, purpose=purpose), self.assertRaises(ValueError):
+                    SAMPLER._supervisor_wrapper(wrong, self.root)
 
     def test_supervisor_wrappers_and_exact_producers_retain_each_source(self):
         for family in ("rust", "signal", "streams"):
@@ -378,28 +460,50 @@ class CaptureBoundary(unittest.TestCase):
                 child.wait(timeout=3)
 
     @unittest.skipUnless(sys.platform == "darwin", "Darwin native identity contract")
-    def test_real_t1669_wrapper_and_nested_rust_proxy_are_admitted(self):
-        import select
-        workspace = self.fixture.parent
-        proxy = workspace / "rust-tools/rustup"
-        proxy.parent.mkdir()
-        proxy.write_text('$|=1; alarm 10; print "producer=$$\\n"; sleep 8;\n')
-        wrapper = workspace / "rust-tool-resolution"
-        wrapper.write_text('''$|=1; alarm 12; print "wrapper=$$\\n";
+    def test_real_t1669_wrappers_and_nested_producers_are_admitted(self):
+        workspace = self.allocated_supervisor_workspace()
+        for family in ("rust", "signal", "streams"):
+            with self.subTest(family=family):
+                self.assert_native_supervisor_chain(workspace, family)
+
+    def assert_native_supervisor_chain(self, workspace, family):
+        if family == "rust":
+            producer = workspace / "rust-tools/rustup"
+            producer.parent.mkdir()
+            wrapper = workspace / "rust-tool-resolution"
+            wrapper_body = '''
 my $tool = shift(@ARGV) . '/rustup';
 my $pid = fork(); defined $pid or die $!;
 if (!$pid) { exec '/usr/bin/perl', $tool, 'which', 'cargo'; die $!; }
 waitpid($pid, 0);
-''')
+'''
+            launch = "'/usr/bin/perl', '-Iperl', '-It/lib', " + \
+                '"$workspace/rust-tool-resolution", "$workspace/rust-tools"'
+            roles = ("rust-wrapper", "rust-proxy")
+        else:
+            producer = workspace / ("legacy-ram-" + family)
+            wrapper = workspace / "legacy-ram-capture"
+            wrapper_body = '''
+my ($workspace, $tool) = @ARGV;
+my $pid = fork(); defined $pid or die $!;
+if (!$pid) { exec '/usr/bin/perl', $tool, '--host-max-pct', '88',
+    '--process-max-rss-mb', '4096', '--poll-seconds', '0.02',
+    '--grace-seconds', '0', '--', 'unused'; die $!; }
+waitpid($pid, 0);
+'''
+            launch = "'/usr/bin/perl', " + \
+                f'"$workspace/legacy-ram-capture", $workspace, "$workspace/legacy-ram-{family}"'
+            roles = ("legacy-wrapper", "legacy-producer")
+        producer.write_text('$|=1; alarm 10; print "producer=$$\\n"; sleep 8;\n')
+        wrapper.write_text('$|=1; alarm 12; print "wrapper=$$\\n";\n' + wrapper_body)
         parent_path = self.root / SAMPLER.SUPERVISOR_TEST_PATH
-        parent_path.parent.mkdir()
+        parent_path.parent.mkdir(exist_ok=True)
         parent_path.write_text('''alarm 14;
 my $workspace = pack('H*', '%s');
 my $pid = fork(); defined $pid or die $!;
-if (!$pid) { exec '/usr/bin/perl', '-Iperl', '-It/lib',
-    "$workspace/rust-tool-resolution", "$workspace/rust-tools"; die $!; }
+if (!$pid) { exec %s; die $!; }
 waitpid($pid, 0);
-''' % os.fsencode(workspace).hex())
+''' % (os.fsencode(workspace).hex(), launch))
         parent = subprocess.Popen(["/usr/bin/perl", str(parent_path)], stdout=subprocess.PIPE,
                                   start_new_session=True)
         native = SAMPLER.NativeProcesses()
@@ -424,13 +528,13 @@ waitpid($pid, 0);
             request = {key: identities["wrapper"][key] for key in SAMPLER.IDENTITY_FIELDS}
             request.update({"parent_" + key: test[key] for key in SAMPLER.IDENTITY_FIELDS})
             self.assertEqual(SAMPLER.validate_target(request, native, self.root)["target_role"],
-                             "rust-wrapper")
+                             roles[0])
             request = {key: identities["producer"][key] for key in SAMPLER.IDENTITY_FIELDS}
             request.update({"parent_" + key: identities["wrapper"][key]
                             for key in SAMPLER.IDENTITY_FIELDS})
             request.update({"ancestor_" + key: test[key] for key in SAMPLER.IDENTITY_FIELDS})
             evidence = SAMPLER.validate_target(request, native, self.root)
-            self.assertEqual(evidence["target_role"], "rust-proxy")
+            self.assertEqual(evidence["target_role"], roles[1])
             self.assertEqual(evidence["ancestor"], test)
         finally:
             # Own one real process group for this control, including on missing readiness.
