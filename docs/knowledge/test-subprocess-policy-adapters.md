@@ -9,6 +9,7 @@ answers:
   - "can native thread state replace kernel sampling of fixture startup?"
   - "how do I start an authenticated fixture sampling session?"
   - "why did T1669 admission miss its workspace?"
+  - "how are fixture command-query exit races handled?"
   - "what does the AppleSystemPolicy fixture startup capture establish?"
   - "what does exec_handoff_monotonic_ns prove about child startup?"
   - "why does the task-acceptance fixture invoke Bash directly?"
@@ -28,8 +29,7 @@ evidence: >-
   docs/decisions/0087-test-subprocesses-use-shared-mechanism-and-sealed-policy-adapters.md;
   docs/tasks/DARWIN-INLINE-VERILATOR-RUNTIME-QUALIFICATION.md;
   docs/book/src/16dc-vial-portable-verilator-runtime-measurement.md;
-  t/lib/FSM/Test/ProcessSupervisor.pm;
-  t/lib/FSM/Test/TaskAcceptanceFixtureRuntime.pm; t/lib/FSM/Test/VerilatorRuntime.pm;
+  t/lib/FSM/Test/ProcessSupervisor.pm; t/lib/FSM/Test/TaskAcceptanceFixtureRuntime.pm; t/lib/FSM/Test/VerilatorRuntime.pm;
   t/1545-task-acceptance-doctrine.t;
   t/1668-darwin-inline-verilator-test-runtime.t;
   scripts/fixture_kernel_sampler.py; t/python/test_fixture_kernel_sampler.py;
@@ -76,31 +76,31 @@ recovery; the older discarded empty-output result has unknown cause.
 Launch observation retains child identity and bounded progress with unchanged
 commands/results. Bash PID, native output and held-child controls qualify it;
 missing progress stays unknown. Task/book own qualification and boundaries.
-The Verilator watcher uses canonical Perl fixture shebangs after an env-Perl
-fixture reached exec handoff but timed out before output. Only the entrypoint
-invoked through Perl by `prove` may retain an env shebang.
+After an env-Perl fixture reached exec handoff yet timed out before output,
+Verilator fixtures use canonical Perl shebangs. Only `prove`'s Perl-invoked
+entrypoint may retain an env shebang.
 Direct-Perl timeouts show the shebang repair is insufficient:
 HIAL/VIAL `.19.2.3.1.2.2.5.5.2.3.1.2.2.3` owns the live `_dyld_start` sample,
-Rust proxy/Verilator fixture diagnosis and repair. The OS cause remains unknown;
+Rust proxy/Verilator fixture diagnosis and repair. OS cause stays unknown;
 child `.3.3` records targeted kernel sampling and its administrator-authentication
 prerequisite, with capture owned by `.3.4` before causal repair selection.
 Child `.3.5` rejects a thread-state-only substitute: its independently stopped
 pipe reader still reports a waiting thread. This does not identify the OS cause.
-`.3.6` supplies `bash scripts/await_fixture_kernel_samples.sh`: locally authenticated,
+`.3.6`: `bash scripts/await_fixture_kernel_samples.sh` supplies local authentication,
 normal-user repeated fixed captures, identity checks, expiry and STOP/Ctrl+C.
-`.3.7` closes native capture/verified shutdown; `.3.2` owns causal repair.
+`.3.7` closes native capture/shutdown verification; `.3.2` owns causal repair.
 T1669 admission uses its real allocator's `.artifacts/tmp/process-supervisor-tests/` root.
 An empty observation fails coverage; `.3.8.5`/book own the contract.
-T1595's historical pre-main cause stays open. `.19.2.3.1.2.2.6.2` fixes its capture:
-`RamGuardFixtureRuntime` seals tools/argv, paths, bounds and full result truth.
-T1811/T1669 prove signal/stream failures and group cleanup; T1595 retains metrics.
+A `ps` no-match skips only native absence; `.3.8.6` retains other errors.
+T1595's pre-main cause stays open; `.19.2.3.1.2.2.6.2` fixes capture.
+`RamGuardFixtureRuntime` seals tools/argv, paths, bounds and full results.
+T1811/T1669 prove signal/stream failures and group cleanup; T1595 keeps metrics.
 No retry or production threshold change.
 
-A nested probe found an inner group alive after outer timeout reported its
-own group gone. Group cleanup does not compose into nested-subtree cleanup.
-The escaped group was terminated; absence verified. HIAL/VIAL
-`.19.2.3.1.2.2.5.5` owns the required ownership design, repair and hostile
-watcher; neutral-verifier extraction remains provisional and blocked.
+An outer timeout proved its group gone but left an inner group alive. That group
+was terminated; absence verified. Per-group cleanup cannot prove nested cleanup.
+HIAL/VIAL `.19.2.3.1.2.2.5.5` owns ownership design, repair and hostile controls;
+neutral-verifier extraction stays provisional/blocked.
 Selected: one launch coordinator, private clients, reserved identities and bounded wire/context/lifecycle protocol.
 T1669 proves reservation feasibility. Extraction, Wire and inactive endpoint/service transport are implemented;
 coordination, routing and hostile qualification (including startup diagnosis) remain open.
@@ -113,10 +113,10 @@ Report SHA-256: `e1306078fdb46858ce867f1411d83f52dc3d366e5971ff0384404d89da504d5
 sample interval: `15:21:02.594–15:21:03.596 +0200`. AppleSystemPolicy offsets:
 `33268 → 32024 → 27236 → 13740`, image UUID `8474AAC8-5327-3045-A969-9B20DBF588BD`.
 Kernel UUID `3F7964F9-C5A6-39D4-942D-02750C0980E0` matches the installed arm64e kernel.
-Independent information/debug `syspolicyd` records at `15:21:07 +0200` name the
+Independent info/debug `syspolicyd` at `15:21:07 +0200` names the
 exact fixture in `GK Xprotect results` and `evaluation result: 12666, script, allowed, cache`;
 process-provenance also names PID `22778`. Default and original-failure queries are empty.
-This invocation passes; its policy wait does not establish the older timeout's cause.
+This passing invocation's policy wait cannot explain the older timeout.
 The task owns cleanup, failed-selector/symbolization limits; OS/toolchain reads are dependencies. Root sampler birth identity was not retained; nested cleanup is unproved.
 Helper STOP invalidates authentication; independent observed-process and exact-command
 censuses are empty. Identities/offsets/results are durable here and in Git;

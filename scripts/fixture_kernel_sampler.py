@@ -70,10 +70,20 @@ class NativeProcesses:
         return Path(os.fsdecode(buffer.value)).resolve()
 
     def command(self, pid):
-        result = subprocess.run(
-            ["/bin/ps", "-p", str(pid), "-o", "command="],
-            stdin=subprocess.DEVNULL, capture_output=True, timeout=2, check=True,
-        )
+        try:
+            result = subprocess.run(
+                ["/bin/ps", "-p", str(pid), "-o", "command="],
+                stdin=subprocess.DEVNULL, capture_output=True, timeout=2, check=True,
+            )
+        except subprocess.CalledProcessError as error:
+            if error.returncode != 1:
+                raise
+            # Even ps's observed no-match status needs native confirmation.
+            # Only native absence supplies the gone-process exception callers
+            # may skip. Live/reused PIDs, other exit statuses and query timeouts
+            # remain errors; unavailable native identity also stays failed.
+            self.identity(pid)
+            raise
         return os.fsdecode(result.stdout).strip()
 
 

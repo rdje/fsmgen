@@ -294,13 +294,19 @@ def observe(test, native, session, evidence, root):
                         evidence.record("candidate_rejected", pid=pid, reason=str(error).replace(str(root), "."))
                     continue
             if choices and not session.submitted:
-                request, admitted, progress = choices[0]
-                admitted = sampler.validate_target(request, native, root)
-                evidence.retain_sources(admitted["sources"])
-                progress = main_entry(admitted, root)
-                if progress not in ("entered", "drained"):
-                    session.submit(request)
-                    evidence.record("capture_requested", request=request, evidence=admitted, main_entry=progress)
+                for request, admitted, progress in choices:
+                    try:
+                        admitted = sampler.validate_target(request, native, root)
+                        evidence.retain_sources(admitted["sources"])
+                        progress = main_entry(admitted, root)
+                    except (FileNotFoundError, ProcessLookupError):
+                        # A selected fixture can finish before final validation,
+                        # just as during census. No request has been published.
+                        continue
+                    if progress not in ("entered", "drained"):
+                        session.submit(request)
+                        evidence.record("capture_requested", request=request, evidence=admitted, main_entry=progress)
+                        break
             if session.submitted and capture is None:
                 capture = session.result()
                 if capture is not None:

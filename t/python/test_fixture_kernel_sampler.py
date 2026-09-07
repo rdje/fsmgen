@@ -1,6 +1,7 @@
 """Focused controls for the manual native-sampling boundary; no sudo is run."""
 
 import copy
+import errno
 import hashlib
 import importlib.util
 import json
@@ -60,6 +61,66 @@ class CaptureBoundary(unittest.TestCase):
         self.native = NativeOracle(self.root, self.fixture)
         self.request = {"pid": 100, "start_sec": 200, "start_usec": 300,
                         "parent_pid": 90, "parent_start_sec": 190, "parent_start_usec": 290}
+
+    def test_command_query_distinguishes_native_absence_from_inspection_failure(self):
+        native = object.__new__(SAMPLER.NativeProcesses)
+        query_error = subprocess.CalledProcessError(1, ["/bin/ps", "-p", "100"])
+        for number in (errno.ESRCH, errno.ENOENT, errno.EPERM):
+            identity_error = OSError(number, "controlled native identity outcome")
+            with self.subTest(errno=number):
+                with patch.object(native, "identity", side_effect=identity_error) as identity, \
+                        patch.object(SAMPLER.subprocess, "run", side_effect=query_error), \
+                        self.assertRaises(OSError) as caught:
+                    native.command(100)
+                self.assertIs(caught.exception, identity_error)
+                identity.assert_called_once_with(100)
+        for birth in (200, 201):
+            # A live birth, including one that replaced the caller's old birth,
+            # cannot turn a command-query error into process disappearance.
+            with self.subTest(birth=birth):
+                with patch.object(native, "identity", return_value=dict(pid=100, start_sec=birth)) as identity, \
+                        patch.object(SAMPLER.subprocess, "run", side_effect=query_error), \
+                        self.assertRaises(subprocess.CalledProcessError) as caught:
+                    native.command(100)
+                self.assertIs(caught.exception, query_error)
+                identity.assert_called_once_with(100)
+        timeout = subprocess.TimeoutExpired(["/bin/ps"], 2)
+        with patch.object(native, "identity") as identity, \
+                patch.object(SAMPLER.subprocess, "run", side_effect=timeout), \
+                self.assertRaises(subprocess.TimeoutExpired) as caught:
+            native.command(100)
+        self.assertIs(caught.exception, timeout)
+        identity.assert_not_called()
+        for status in (2, -signal.SIGTERM):
+            failure = subprocess.CalledProcessError(status, ["/bin/ps"])
+            with self.subTest(query_status=status):
+                with patch.object(native, "identity", side_effect=ProcessLookupError(errno.ESRCH, "gone")) as identity, \
+                        patch.object(SAMPLER.subprocess, "run", side_effect=failure), \
+                        self.assertRaises(subprocess.CalledProcessError) as caught:
+                    native.command(100)
+                self.assertIs(caught.exception, failure)
+                identity.assert_not_called()
+
+    @unittest.skipUnless(sys.platform == "darwin", "Darwin native identity contract")
+    def test_real_child_exit_between_identity_and_command_is_native_disappearance(self):
+        child = subprocess.Popen(
+            ["/usr/bin/perl", "-e", '$|=1; alarm 5; print "ready\\n"; scalar <STDIN>;'],
+            stdin=subprocess.PIPE, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+        try:
+            self.assertTrue(select.select([child.stdout], [], [], 3)[0])
+            self.assertEqual(os.read(child.stdout.fileno(), 64), b"ready\n")
+            native = SAMPLER.NativeProcesses()
+            admitted = native.identity(child.pid)
+            self.assertEqual(admitted["ppid"], os.getpid())
+            _, stderr = child.communicate(b"exit\n", timeout=3)
+            self.assertEqual(child.returncode, 0, stderr.decode(errors="replace"))
+            with self.assertRaises(ProcessLookupError) as caught:
+                native.command(admitted["pid"])
+            self.assertEqual(caught.exception.errno, errno.ESRCH)
+        finally:
+            if child.poll() is None:
+                child.kill()
+            child.communicate(timeout=3)
 
     def test_direct_fixture_retains_real_source_identity(self):
         first = SAMPLER.validate_target(self.request, self.native, self.root)

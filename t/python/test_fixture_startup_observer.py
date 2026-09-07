@@ -6,6 +6,7 @@ import json
 import os
 from pathlib import Path
 import signal
+import subprocess
 import sys
 import tempfile
 import time
@@ -132,6 +133,61 @@ class ObserverControls(unittest.TestCase):
                          {b"independent wrapper source\n", b"independent producer source\n"})
         for path in sources:
             self.assertEqual(path.stem, hashlib.sha256(path.read_bytes()).hexdigest())
+
+    def command_query_control(self, disappears):
+        # The real command-query method sees a closed ps error. Independently
+        # change native census state only in the disappearing-process control.
+        self.native.records[50] = dict(self.native.records[20], pid=50)
+        self.native.commands[50] = self.native.commands[20]
+        children = self.native.children
+
+        def query(argv, **_kwargs):
+            pid = int(argv[2])
+            self.assertEqual(argv, ["/bin/ps", "-p", str(pid), "-o", "command="])
+            if pid == 50:
+                if disappears:
+                    del self.native.records[50]
+                raise subprocess.CalledProcessError(1, argv)
+            return subprocess.CompletedProcess(argv, 0,
+                                               (self.native.commands[pid] + "\n").encode(), b"")
+
+        with patch.object(self.native, "children", side_effect=lambda pid: sorted(children(pid), reverse=True)), \
+                patch.object(self.native, "command", side_effect=lambda pid:
+                             observer.sampler.NativeProcesses.command(self.native, pid)), \
+                patch.object(observer.sampler.subprocess, "run", side_effect=query):
+            return self.run_observer()
+
+    def test_disappeared_command_query_does_not_hide_a_later_eligible_fixture(self):
+        self.assertEqual(self.command_query_control(True), self.session.capture)
+        self.assertEqual([request["pid"] for request in self.session.requests], [30])
+        self.assertTrue(self.session.stop_called)
+        self.assertFalse((self.evidence.directory / "failure.json").exists())
+
+    def test_live_process_command_query_failure_still_aborts_observation(self):
+        with self.assertRaises(subprocess.CalledProcessError):
+            self.command_query_control(False)
+        self.assertTrue(self.session.stop_called)
+        self.assertEqual(self.session.requests, [])
+        self.assertIn("non-zero exit status", json.loads(
+            (self.evidence.directory / "failure.json").read_text())["failures"]["observation"])
+
+    def test_native_exit_during_final_revalidation_keeps_observation_running(self):
+        validate = observer.sampler.validate_target
+        validations = {}
+
+        def exit_before_publication(request, processes, root):
+            if request["pid"] == 30 and self.clock.now >= observer.CANDIDATE_SECONDS:
+                validations[self.clock.now] = validations.get(self.clock.now, 0) + 1
+                if validations[self.clock.now] == 2:
+                    del self.native.records[30]
+            return validate(request, processes, root)
+
+        with patch.object(observer.sampler, "validate_target", side_effect=exit_before_publication):
+            self.assertEqual(self.run_observer(), self.session.capture)
+        self.assertNotIn(30, self.native.records, "control did not remove the selected birth")
+        self.assertEqual([request["pid"] for request in self.session.requests], [20])
+        self.assertTrue(self.session.stop_called)
+        self.assertFalse((self.evidence.directory / "failure.json").exists())
 
     def test_native_main_entry_excludes_the_expected_legacy_pipe_wait(self):
         # Distinct workspace for literal legacy commands, independently written marker.

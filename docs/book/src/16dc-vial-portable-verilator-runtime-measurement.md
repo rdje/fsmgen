@@ -709,9 +709,19 @@ The selected helper stopped and invalidated authentication.
 
 A later attempt confirmed admission of real Rust and legacy fixtures, but an
 exiting wrapper made its command query fail and stopped observation before a
-capture. The original test passed; that does not qualify the incomplete
-observation or repair the historical startup failure. Task `.3.8.6` owns the
-command-query exit race before another authenticated attempt.
+capture. Task `.3.8.6` repairs that race. The observed `ps` no-match exit status
+now triggers a fresh native identity check: only confirmed disappearance is
+skipped. A live or reused PID retains the query failure; unavailable native
+identity, timeouts, unexpected query exits and signals also remain failures. The same disappearance handling applies when a selected
+fixture finishes during final target/source validation before request publication.
+Observation can then reach another eligible fixture. Once a request is published,
+its rejection or capture failure stays failed without retry.
+
+The exit-race controls include a real identified Perl child released and reaped
+before its command query, plus separate controls for later-target progression
+and genuine inspection errors. The original test's passing result remains
+separate from the interrupted observation; it does not repair the historical
+startup failure. Fresh authenticated capture remains open.
 
 Capture requests and helper results are published only after their complete
 JSON has been written, so a concurrent reader cannot consume a partial record.
