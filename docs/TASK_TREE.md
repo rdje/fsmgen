@@ -47,7 +47,7 @@ Only `active` rows are PNT-eligible. Live `docs/tasks/` nodes are authoritative;
 | Tree | Status | Roadmap lane | Current frontier | File |
 | --- | --- | --- | --- | --- |
 | `LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION` | `active` | `infra/continuity` | `.29` is done; `.12` remains behind director-deferred `.26` | [task](docs/tasks/LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.md) |
-| `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE` | `active` | `verification architecture` | RAM-guard fixture `.19.2.3.1.2.2.6.2` is done; startup `.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2` remains blocked. Director decision: permit inactive endpoints before parent wire qualification while retaining the incident, runtime, complete-CI and push gates; no dependency changed yet | [task](docs/tasks/HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.md) |
+| `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE` | `active` | `verification architecture` | Director approved inactive endpoints after verified private Wire; `.19.2.3.1.2.2.5.5.2.3.2.1` is done; next `.3.2.2` filesystem, then `.3.2.3` connection I/O. Startup, wire qualification, runtime activation, complete CI and push remain gated | [task](docs/tasks/HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.md) |
 | `ISF-SPEC-TEST-INDEX-SYNC` | `active` | `R14` | `.3.2` is blocked on complete guarded-CI qualification after HIAL startup resolution; exact transformation is committed at `f3e7f94dc`. `.3.1` is done with the stale commit/frontier pointer corrected | [task](docs/tasks/ISF-SPEC-TEST-INDEX-SYNC.md) |
 | `IAL2-FEATURE-COMPLETENESS-FRONTIER` | `active` | `IAL2 completeness` | `.844` terminal | [task](docs/tasks/IAL2-FEATURE-COMPLETENESS-FRONTIER.md) |
 
