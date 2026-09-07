@@ -379,9 +379,14 @@ test callsite
 `FSM::Test::ProcessSupervisor` is private test infrastructure. It accepts a
 scalar argument vector without a shell, validates a repository-contained
 same-volume working directory, captures stdout and stderr separately under one
-aggregate byte ceiling, and uses a close-on-exec control pipe to distinguish a
-successful handoff from `chdir`, descriptor, containment, or `exec` failure.
-Monotonic timestamps identify spawn, handoff, first output, and completion.
+aggregate byte ceiling, and retains `chdir`, descriptor, containment, and
+`exec` errors through a close-on-exec control pipe. Monotonic timestamps record
+spawn, observed control-pipe closure, first output, and completion.
+The legacy `exec_handoff_monotonic_ns` field records that observed closure;
+it does not prove entry into the program's `main`. Abrupt child death can also
+close the pipe before `exec`. If capture ends without observing closure,
+the handoff timestamp and dependent durations remain null, including after
+timeout cleanup. Completion time never substitutes for missing launch evidence.
 Every child owns one process group; timeout, overflow, handoff failure, or a
 surviving descendant triggers TERM, bounded grace, KILL when required, leader
 reaping, and a final group-disappearance check.

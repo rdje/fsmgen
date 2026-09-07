@@ -63,6 +63,9 @@ PROGRAM
     is($result->{stage}, 'probe', 'caller policy owns the stage');
     is($result->{stdout}, "stdout-ready\n", 'stdout remains separate');
     is($result->{stderr}, "stderr-ready\n", 'stderr remains separate');
+    ok(defined($result->{exec_handoff_monotonic_ns})
+            && $result->{exec_handoff_monotonic_ns} <= $result->{first_output_monotonic_ns},
+        'successful command retains observed control closure before output');
     is($result->{timeout_seconds}, 1, 'selected wall is explicit');
     is($result->{capture_limit_bytes}, 65_536, 'selected capture ceiling is explicit');
     is($result->{cleanup}{containment}, 'process_supervisor_probe_group', 'caller policy owns the containment label');
@@ -97,6 +100,50 @@ subtest 'child containment must be established before exec' => sub {
         ok($result->{cleanup}{leader_reaped}, "$mode reaps the rejected child");
         ok($result->{cleanup}{group_gone}, "$mode leaves no child group");
         is(getpgrp(0), $caller_group, "$mode leaves the caller group unchanged");
+    }
+};
+
+subtest 'handoff timing requires an observed control-pipe closure' => sub {
+    my $real_setpgid = \&POSIX::setpgid;
+    for my $mode (qw(timeout early_exit)) {
+        no warnings 'redefine';
+        local *FSM::Support::ProcessSupervisor::setpgid = sub {
+            my $result = $real_setpgid->(@_);
+            if ($_[0] == 0) {
+                # This independently fixes the child's position before cwd,
+                # descriptor handoff and exec. The parent keeps advancing its
+                # real deadline and cleaning up the actual process group.
+                POSIX::_exit(23) if $mode eq 'early_exit';
+                sleep 60;
+            }
+            return $result;
+        };
+        my $result = supervise_process(
+            schema => 'fsmgen.test.process_supervisor_probe.v1', stage => 'probe',
+            bounds => {timeout_seconds => 1, capture_limit_bytes => 65_536},
+            containment => 'process_supervisor_probe_group', cwd => $workspace,
+            argv => [$perl, '-e', 'print "command-executed\n"'],
+        );
+        is($result->{status}, $mode eq 'timeout' ? 'timed_out' : 'nonzero_exit',
+            "$mode preserves the real failure class");
+        is($result->{stdout}, '', "$mode cannot execute the command");
+        ok(!defined($result->{first_output_monotonic_ns}),
+            "$mode has no observed command output");
+        ok($result->{cleanup}{leader_reaped} && $result->{cleanup}{group_gone},
+            "$mode leaves no child or group");
+        if ($mode eq 'timeout') {
+            for my $field (qw(exec_handoff_monotonic_ns spawn_to_exec_ns
+                    execution_ns exec_to_first_output_ns)) {
+                ok(!defined($result->{$field}),
+                    "unobserved $field stays unknown after cleanup")
+                    or diag explain $result;
+            }
+        }
+        else {
+            is($result->{exit_code}, 23, 'direct pre-exec exit remains nonzero');
+            ok(defined($result->{exec_handoff_monotonic_ns}),
+                'observed EOF can also come from child death before exec');
+        }
     }
 };
 

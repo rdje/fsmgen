@@ -1,7 +1,7 @@
 # Knowledge Map: `test-subprocess`
 
 > **AUTO-GENERATED — DO NOT EDIT.** Return to the [Knowledge Map](../../KNOWLEDGE_MAP.md).
-> **1** facts · **11** uniquely owned question entries.
+> **1** facts · **12** uniquely owned question entries.
 
 ## Questions → facts
 
@@ -10,6 +10,7 @@
 - q="how are FSMGen test subprocesses bounded?" · facts=[test-subprocess-policy-adapters](../../docs/knowledge/test-subprocess-policy-adapters.md)
 - q="how does the private coordinator preserve execution bytes?" · facts=[test-subprocess-policy-adapters](../../docs/knowledge/test-subprocess-policy-adapters.md)
 - q="how does the supervisor reject failed setpgid before exec?" · facts=[test-subprocess-policy-adapters](../../docs/knowledge/test-subprocess-policy-adapters.md)
+- q="what does exec_handoff_monotonic_ns prove about child startup?" · facts=[test-subprocess-policy-adapters](../../docs/knowledge/test-subprocess-policy-adapters.md)
 - q="where does T1545 preserve empty-output checker failure diagnostics?" · facts=[test-subprocess-policy-adapters](../../docs/knowledge/test-subprocess-policy-adapters.md)
 - q="which ownership model is selected for nested supervision?" · facts=[test-subprocess-policy-adapters](../../docs/knowledge/test-subprocess-policy-adapters.md)
 - q="who may call the low-level test process supervisor?" · facts=[test-subprocess-policy-adapters](../../docs/knowledge/test-subprocess-policy-adapters.md)

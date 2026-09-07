@@ -2308,10 +2308,25 @@ decomposes the architecture needed to move beyond that bounded foundation.
   Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.1: preserve checker failure diagnostics`
 
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2`
-  Status: `pending`
+  Status: `active`
   Goal: `Capture and qualify the unexplained T1545 launch boundary before closing wire qualification.`
   Acceptance: `Keep .artifacts/logs/coordinator-wire-20260907/final-regression.log failed and distinguish unavailable historical evidence from a reproduced runtime cause. Select a bounded observation path for actual checker process identity and startup/main progress before another diagnostic attempt; preserve sealed commands, fixed limits and original fixture assertions. Use captured recurrence to own a concrete runtime repair, or explicitly establish the remaining qualification limit without claiming retry-based recovery. Endpoint implementation remains behind this leaf.`
-  Verification: `The diagnostic-preservation control is RED on the old helper and GREEN after repair, but the instrumented real T1545 run and broader band do not reproduce the historical empty-output failure. No retained structured status, child identity or process sample exists for that invocation. A pre-main stall, timeout, signal or specific OS cause is not established. Prospective runtime observation is a distinct safe slice; no production supervisor or adapter policy changed.`
+  Verification: `The original T1545 failure lacks retained structured status, child identity or process samples and remains unexplained. Child .1 independently repairs fabricated handoff timing and documents why control-pipe EOF cannot prove main entry. Child .2 owns prospective identity/startup observation and launch qualification; no fresh passing run diagnoses the historical invocation or enables endpoint implementation.`
+  Commit: `pending`
+  Children: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.1, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.2`
+
+- ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.1`
+  Status: `done`
+  Goal: `Qualify and repair inferred exec-handoff timing before using it as launch evidence.`
+  Acceptance: `Use an independently controlled real child held before exec to test whether timeout completion fabricates a handoff timestamp. Preserve an unobserved handoff and its dependent durations as unknown; retain observed control-pipe timing on successful commands. Qualify early child death separately from successful exec and document the exact observation boundary. Preserve fixed bounds, sealed commands, schemas, failure and cleanup truth; run focused RED/GREEN and adapter checks, synchronize book/fact evidence, and commit before prospective T1545 observation.`
+  Verification: `The independent pre-exec child control goes RED on the prior engine: timeout cleanup invents a handoff and dependent durations. git log -S traces the fallback to b253263c8. Removing completion-time inference leaves absent capture evidence unknown; the successful-output control retains observed timing, while a direct pre-exec exit proves EOF alone cannot establish main entry. Syntax and the corrected guarded T1669/T1668/T1545/T313 band pass with All tests successful. The initial sandbox run could not inspect processes; the first GREEN band completed its existing tests but rejected a mistyped T313 path and remains incomplete. The mdBook builds, its rendered timing paragraph is checked, and the exact build root is removed after identity capture. The book and existing fact card describe the observation limit; literal import traversal finds no unresolved import or source path absent from the current architecture note. Evidence is under .artifacts/logs/handoff-evidence-20260907/. This repairs diagnostic truth, not the historical T1545 cause; sibling .2 retains prospective observation and qualification.`
+  Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.1: preserve unobserved handoff timing`
+
+- ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.2`
+  Status: `pending`
+  Goal: `Select bounded checker identity and startup observation, then qualify the T1545 launch boundary.`
+  Acceptance: `After timing-evidence qualification in sibling .1, select a bounded observation path for actual checker identity and startup/main progress before another diagnostic attempt. Preserve sealed commands, limits, fixture assertions and the original failed log. Capture recurrence under a concrete repair owner or retain the explicit qualification limit without retry-based recovery. Endpoint implementation remains behind this leaf.`
+  Verification: `Sibling .1 is verified; prospective observation remains unimplemented and the historical T1545 cause remains unestablished.`
   Commit: `pending`
 
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.2`
@@ -5948,3 +5963,23 @@ sources/tests, and relevant mdBook sections. The same-volume caller-selected
 claim template was read-only and its digest agrees with the already owned
 `CLAIM-VERIFICATION-TEMPLATE-REVIEW` record. README and containment adoption
 remain in force; their canonical policies and adoption guide were reviewed.
+
+## Acceptance Checklist (HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.1; enforced)
+
+- [x] **ROOT CAUSE (WHY + WHERE)** — `git log -S` traces completion-time
+  handoff inference to `b253263c8`. The real pre-exec timeout oracle in T1669
+  fails on the unchanged engine in `red-supervised.log`: the reported handoff
+  equals completion even though the command never ran. The separate pre-exec
+  exit falsifies EOF as proof of main entry.
+- [x] **ADDRESSED (verified)** — `_complete_supervision` no longer supplies
+  missing capture evidence. The same held-child oracle is GREEN; successful
+  commands retain observed timing and both failure controls prove cleanup.
+  Re-derivation uses the tracked T1669 command, falsification fixes the child's
+  position independently, and durability is T1669 plus task/book/fact/Git.
+- [x] **NO REGRESSION** — The corrected RAM-guarded T1669/T1668/T1545/T313
+  band reports `All tests successful`; syntax checks and mdBook build pass.
+  The rendered paragraph is checked and the exact disposable build is removed.
+  Evidence: `.artifacts/logs/handoff-evidence-20260907/`. The initial missing
+  process-inspection run and mistyped-test invocation remain failed/incomplete.
+  The staged driver reports `[doctrine] all doctrine checks passed`, including
+  fresh task acceptance; commit hooks recheck the final evidence snapshot.

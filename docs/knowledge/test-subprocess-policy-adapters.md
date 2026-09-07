@@ -5,6 +5,7 @@ answers:
   - "how are FSMGen test subprocesses bounded?"
   - "why does t1545 not use IPC Cmd?"
   - "where does T1545 preserve empty-output checker failure diagnostics?"
+  - "what does exec_handoff_monotonic_ns prove about child startup?"
   - "why does the task-acceptance fixture invoke Bash directly?"
   - "who may call the low-level test process supervisor?"
   - "why can T1595 stall before measuring host memory?"
@@ -44,6 +45,11 @@ The child checks the POSIX `setpgid` return and its actual group before exec.
 Nonthrowing failure and false success reject with `exec_error` and no command
 execution; T1669 injects both plus an exception. The parent's race-closing
 attempt cannot replace child admission. Nested cleanup remains open below.
+`exec_handoff_monotonic_ns` records observed control-pipe EOF, not entry into
+main: abrupt pre-exec child death can also close the pipe. Capture ending
+without EOF leaves that timestamp and dependent durations unknown even after
+cleanup. T1669 holds a real child before exec through timeout and separately
+exits it before exec; successful output remains a distinct positive control.
 Post-KILL reaping uses nonblocking polling inside the existing cleanup grace;
 an unreapable leader or surviving group remains explicitly incomplete. T1669's
 isolated mock oracle rejects blocking waits without creating an unkillable child.

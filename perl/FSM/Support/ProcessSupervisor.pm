@@ -387,8 +387,6 @@ sub _start_supervision {
     for my $fh ($stdout_reader, $stderr_reader, $control_reader) {
         unless (_set_nonblocking($fh)) {
             $state->{host_error} = "cannot make supervised pipe nonblocking: $!";
-            # This setup failure predates observable exec-handoff evidence.
-            $state->{handoff_unknown} = 1;
             _end_supervision_capture($state);
             last;
         }
@@ -435,6 +433,8 @@ sub _advance_supervision_capture {
             last;
         }
         if ($read == 0) {
+            # Observe control-pipe closure, not entry into the new program.
+            # An abrupt child exit can close this descriptor before exec too.
             $state->{exec_handoff} = clock_gettime(CLOCK_MONOTONIC)
                 if $name eq 'control' && !length($state->{exec_error})
                     && !defined($state->{exec_handoff});
@@ -506,9 +506,8 @@ sub _complete_supervision {
     $cleanup->{leader_reaped} = $state->{leader_reaped} ? 1 : 0;
     $cleanup->{group_gone} = _group_alive($state->{pid}) ? 0 : 1;
     $state->{finished} = clock_gettime(CLOCK_MONOTONIC);
-    $state->{exec_handoff} = $state->{finished}
-        if !$state->{handoff_unknown} && !defined($state->{exec_handoff})
-            && !length($state->{exec_error});
+    # Cleanup/completion cannot supply an unobserved handoff. Keep its
+    # timestamp and dependent durations unknown when capture ended first.
     my $exec_error = _sanitize_control($state->{exec_error});
     my $leader_status = $state->{leader_status};
     my $status = defined($state->{host_error}) ? 'host_error'
