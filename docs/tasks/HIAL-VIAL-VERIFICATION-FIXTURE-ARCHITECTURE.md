@@ -2335,7 +2335,7 @@ decomposes the architecture needed to move beyond that bounded foundation.
   Acceptance: `Retain the failed .2 regression unchanged; inspect available child identity and bounded operating-system startup samples before retrying. Distinguish the direct fixture launch path from fixture body and policy behavior, select a bounded repair with an independent failing control, preserve exact production tool identity and all sealed bounds/assertions, and split any change beyond a safe slice before implementation. A fresh passing run cannot erase the initial failed invocation or establish the missing historical T1545 cause.`
   Verification: `Child .1 completes the bounded historical/source/launch investigation without reproducing the failure or identifying a safe repair. The original failed regression remains failed, and the fresh observed band passes without explaining it. Child .2 owns the unresolved causal startup evidence and approved host-policy experiment. Child .3 selects targeted native kernel/user sampling; child .4 owns administrator-assisted capture before repair selection. Child .5 rejects a thread-state-only substitute after its independent stop control fails. Child .6 prepares the normal-user authenticated sampling session; child .7 captures an AppleSystemPolicy wait, verifies shutdown and returns a permission-experiment decision to child .2. The director-approved iTerm2 permission experiment in child .2 passes its unchanged band but still observes exact-fixture XProtect scanning; no production command, fixture, limit or assertion changes. Parent wire qualification remains open.`
   Commit: `pending causal repair`
-  Children: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.1, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.3, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.4, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.5, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.6, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.7`
+  Children: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.1, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.3, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.4, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.5, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.6, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.7, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.8`
 
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.1`
   Status: `done`
@@ -2386,6 +2386,37 @@ decomposes the architecture needed to move beyond that bounded foundation.
   Acceptance: `Use the still-live authenticated helper after the unchanged band does not reproduce the stall. Predeclare a maximum of twenty unchanged T1668 invocations and a cumulative five-minute wall under the configured RAM guard; stop immediately after any failed invocation or admitted capture, whichever comes first. Bind each candidate to its own live invocation with native birth identity and ancestry. Preserve every iteration and capture result. Never retry a failure or interpret passing iterations as repair, reliability or qualification. Consume native output and exact observed process cleanup; stop and verify the authenticated helper when no authorized capture remains. If no recurrence occurs, preserve that causal gap rather than invent a fix.`
   Verification: `The predeclared campaign stops at its first admitted capture during invocation 6; every retained invocation passes, which is not repair or qualification. Native identity binds PID 22778 (1788787261.244839) to T1668 parent 21913 (1788787240.646851), fixture .artifacts/tmp/tests/eyRjEqbQuI/orphaning-runtime and its retained digest. Target-only spindump exits zero without timeout; its stack passes through AppleSystemPolicy. Information/debug OS logs independently identify the exact fixture XProtect result and script allowed result. Default-level and original-failure-window queries are empty; earlier timeouts remain unexplained. Nearest exported kernel symbols are incomplete, and the installed x86_64 collection is rejected for this arm64e report. Every observed test birth is gone; helper STOP publishes authentication_invalidated true, and independent checks find helper, guards, observers, campaign, target and sampler PID absent. A substring residue selector falsely matches its own inspecting shell; exact command-field census is empty. No root sampler birth identity was retained, so no atomic native-launch authority or universal nested cleanup is claimed. Evidence is in .artifacts/logs/fixture-kernel-recurrence-20260907/ and the named capture session; the fact card retains target identity, report digest, stack offsets and exact-path policy results. Ignored scratch producers and full raw logs remain a durability gap. Native launcher ancestry reaches iTerm2 through Codex CLI, bash and login; read-only System Settings shows iTerm2 absent and Terminal off in Developer Tools. Sibling .2 owns the proposed permission experiment; no setting has changed.`
   Commit: `this commit (authenticated native capture and bounded evidence)`
+
+- ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.8`
+  Status: `active`
+  Goal: `Close the latest T1669 recurrence's missing live identity and causal capture path.`
+  Acceptance: `Select and qualify exact diagnostic admission and a tracked bounded observer before a fresh instrumented invocation. Preserve the failed service band, normal-user execution, fixed regression bounds, first-failure truth and original causal repair owner .2. No host-security change or runtime qualification follows from preparing diagnostics.`
+  Verification: `The service-band recurrence at 5f8be37f1ac107cc486a9e9c435b33871391e796 lacks exact transient paths, birth identities and kernel waits. Source review identifies T1669's direct rust-tool-resolution and legacy-ram-capture wrappers plus their generated Rust proxy and legacy producer children. The existing sampler admits only a direct T1668 orphaning-runtime child. Children separate the closed admission policy, durable observer and actual administrator-assisted capture.`
+  Commit: `pending diagnostic children`
+  Children: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.8.1, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.8.2, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.8.3`
+
+- ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.8.1`
+  Status: `pending`
+  Goal: `Qualify closed T1669 fixture ancestry admission for the existing native sampler.`
+  Acceptance: `Retain T1668 compatibility and fixed native sampling command. Admit only exact T1669 wrapper or producer command shapes derived from the generating source, with at most one intermediate parent, matching normal-user native births/interpreters and one direct repository-volume fixture workspace. Retain every inspected source digest and ancestry identity; reject stale, foreign, reparented, redirected, unrelated or cross-workspace candidates before privileged launch. Prove real controlled process admission and independent hostile controls without sudo, sync the book and commit. Authentication and actual capture remain .8.3.`
+  Verification: `pending source, independent negative controls and native positive qualification`
+  Commit: `pending`
+
+- ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.8.2`
+  Status: `blocked`
+  Goal: `Track a bounded normal-user observer for one unchanged T1669 diagnostic invocation.`
+  Acceptance: `After .8.1, bind the observer to its exact guarded test birth; inspect only the selected fixture ancestry, preserve live process/source identities and original TAP/result, submit only admitted fixed sampler requests, and stop after the first captured candidate or failed invocation. Bound observation storage and lifetime, preserve all failed outcomes, and prove exact observed-process and helper shutdown. Retain the instrument in Git so ignored scratch producers no longer own the next capture's reproducibility. No retry campaign or causal conclusion is authorized by this leaf.`
+  Blocked by: `The closed target admission and its independent controls must be committed in .8.1 before observer integration.`
+  Verification: `pending tracked observer and independent controls`
+  Commit: `pending`
+
+- ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.8.3`
+  Status: `blocked`
+  Goal: `Capture and inspect a contemporaneous T1669 wait chain before selecting a causal repair.`
+  Acceptance: `After .8.1 and .8.2, use an authenticated normal-user helper session for one bounded unchanged guarded invocation. Correlate exact target/test/intermediate births, retained fixture bodies, native wait evidence, main-entry markers and exact-window OS records; distinguish fixture-body, supervisor and host-startup explanations, naming unresolved alternatives. Consume every process/helper result and verify shutdown. Return evidence to causal repair .2; no passing run closes the old failure.`
+  Blocked by: `Committed sampler/observer qualification and a fresh administrator-authenticated diagnostic session for the expanded closed T1669 target set are required.`
+  Verification: `pending instrument qualification and authenticated capture`
+  Commit: `pending`
 
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.2`
   Status: `done`
@@ -6298,3 +6329,30 @@ The old authenticated helper is stopped and only admits the earlier T1668
 target shape; another passing regression or an uninstrumented T1669 retry
 would not close that gap. The endpoint approval is fully implemented; launch,
 complete CI and push remain blocked.
+
+## T1669 diagnostic selection — startup child `.3.8`
+
+The selected discriminator is a contemporaneous user/kernel wait chain tied
+to exact fixture ancestry and native main-entry evidence. A wrapper waiting
+on its child must not be misreported as the child's startup cause. The current
+T1668-only helper cannot capture the new T1669 shapes; the source-derived
+admission change and tracked observer therefore precede another invocation.
+The request may add one exact intermediate ancestor, never an arbitrary process
+tree or caller-supplied command. Original test sources, production supervision,
+limits and host-security settings remain outside this diagnostic slice.
+
+Startup followed the director-selected SESSION-READING-SCOPE, including README,
+roadmap, continuity/doctrine/commit policies, task index and the live startup
+owner, CLI/import architecture and relevant source/test/book dependencies. The
+read-only same-volume PGEN comparison matches the template identities already
+recorded by CLAIM-VERIFICATION-TEMPLATE-REVIEW; no new revision is imported. The
+containment guide includes the current derived-state and integration-count
+amendments. Existing raw recurrence evidence is retained; no cleanup deletes
+material still needed by the active incident.
+
+The guarded staged doctrine driver passes every registered check, including
+task integrity and the documentation-only acceptance exemption. The initial
+sandbox invocation could not inspect the process tree and exited before the
+gate; the approved normal-user invocation completed with exit zero. Diff
+hygiene passes. Product/book behavior is unchanged. The commit hook rechecks
+the final selection snapshot before implementation.
