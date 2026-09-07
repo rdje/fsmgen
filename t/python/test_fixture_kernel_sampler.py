@@ -1,6 +1,7 @@
 """Focused controls for the manual native-sampling boundary; no sudo is run."""
 
 import copy
+import hashlib
 import importlib.util
 import json
 import os
@@ -64,6 +65,116 @@ class CaptureBoundary(unittest.TestCase):
         changed = SAMPLER.validate_target(self.request, self.native, self.root)
         self.assertNotEqual(first["fixture_sha256"], changed["fixture_sha256"])
         self.assertEqual(first["fixture"], ".artifacts/tmp/tests/controlled/orphaning-runtime")
+
+    def supervisor_chain(self, family, nested):
+        workspace = self.fixture.parent
+        if family == "rust":
+            wrapper = workspace / "rust-tool-resolution"
+            producer = workspace / "rust-tools/rustup"
+            producer.parent.mkdir(exist_ok=True)
+            wrapper_command = f"/usr/bin/perl -Iperl -It/lib {wrapper} {producer.parent}"
+            producer_command = f"/usr/bin/perl {producer} which cargo"
+        else:
+            wrapper = workspace / "legacy-ram-capture"
+            producer = workspace / ("legacy-ram-" + family)
+            wrapper_command = f"/usr/bin/perl {wrapper} {workspace} {producer}"
+            producer_command = (f"/usr/bin/perl {producer} --host-max-pct 88"
+                                " --process-max-rss-mb 4096 --poll-seconds 0.02"
+                                " --grace-seconds 0 -- unused")
+        wrapper.write_text("wrapper source\n")
+        producer.write_text("producer source\n")
+        self.native.commands[100] = producer_command if nested else wrapper_command
+        self.native.commands[90] = wrapper_command if nested else (
+            "/usr/bin/perl " + SAMPLER.SUPERVISOR_TEST_PATH)
+        if nested:
+            self.native.processes[80] = {
+                "pid": 80, "start_sec": 180, "start_usec": 280,
+                "ppid": 70, "uid": os.getuid(), "ruid": os.getuid()}
+            self.native.executables[80] = Path("/usr/bin/perl").resolve()
+            self.native.commands[80] = "/usr/bin/perl " + SAMPLER.SUPERVISOR_TEST_PATH
+            self.request.update(ancestor_pid=80, ancestor_start_sec=180, ancestor_start_usec=280)
+        return wrapper, producer
+
+    def test_supervisor_wrappers_and_exact_producers_retain_each_source(self):
+        for family in ("rust", "signal", "streams"):
+            for nested in (False, True):
+                with self.subTest(family=family, nested=nested):
+                    self.native = NativeOracle(self.root, self.fixture)
+                    self.request = {key: value for key, value in self.request.items()
+                                    if key in SAMPLER.REQUEST_FIELDS}
+                    wrapper, producer = self.supervisor_chain(family, nested)
+                    result = SAMPLER.validate_target(self.request, self.native, self.root)
+                    target = producer if nested else wrapper
+                    self.assertEqual(result["fixture"], str(target.relative_to(self.root)))
+                    expected_sources = {str(wrapper.relative_to(self.root))}
+                    if nested or family != "rust":
+                        expected_sources.add(str(producer.relative_to(self.root)))
+                    self.assertEqual({item["path"] for item in result["sources"]}, expected_sources)
+                    self.assertEqual("ancestor" in result, nested)
+                    for record in result["sources"]:
+                        self.assertEqual(record["sha256"], hashlib.sha256(
+                            (self.root / record["path"]).read_bytes()).hexdigest())
+
+    def test_nested_requests_require_the_complete_exact_ancestor_identity(self):
+        self.supervisor_chain("rust", True)
+        path = self.root / "request.json"
+        path.write_text(json.dumps(self.request))
+        self.assertEqual(SAMPLER.read_request(path), self.request)
+        for field in SAMPLER.ANCESTOR_FIELDS:
+            bad = dict(self.request)
+            del bad[field]
+            path.write_text(json.dumps(bad))
+            with self.subTest(missing=field), self.assertRaises(ValueError):
+                SAMPLER.read_request(path)
+            bad = dict(self.request)
+            bad[field] += 1
+            if field == "ancestor_pid":
+                self.native.processes[81] = {**self.native.processes[80], "pid": 81}
+                self.native.executables[81] = Path("/usr/bin/perl").resolve()
+                self.native.commands[81] = self.native.commands[80]
+            with patch.object(SAMPLER.subprocess, "Popen") as launch:
+                self.assertTrue(SAMPLER.capture(bad, self.native, self.root, self.root)["rejected"])
+                launch.assert_not_called()
+
+    def test_nested_wrong_command_workspace_user_executable_and_chain_reject(self):
+        self.supervisor_chain("streams", True)
+        for change in ("producer", "workspace", "wrapper", "test", "uid", "executable", "ancestry"):
+            native = copy.deepcopy(self.native)
+            if change == "producer":
+                native.commands[100] += " --unexpected"
+            elif change == "workspace":
+                native.commands[100] = native.commands[100].replace("/controlled/", "/different/")
+            elif change == "wrapper":
+                native.commands[90] = native.commands[90].replace("legacy-ram-streams", "legacy-ram-signal")
+            elif change == "test":
+                native.commands[80] = "/usr/bin/perl " + SAMPLER.TEST_PATH
+            elif change == "uid":
+                native.processes[80]["uid"] += 1
+            elif change == "executable":
+                native.executables[90] = Path("/bin/sh")
+            else:
+                native.processes[90]["ppid"] = 1
+            with self.subTest(change=change), patch.object(SAMPLER.subprocess, "Popen") as launch:
+                self.assertTrue(SAMPLER.capture(self.request, native, self.root, self.root)["rejected"])
+                launch.assert_not_called()
+
+    def test_same_birth_exec_change_and_changed_intermediate_source_reject(self):
+        wrapper, _ = self.supervisor_chain("rust", True)
+        original = self.native.command
+        calls = {}
+
+        def replaced_command(pid):
+            calls[pid] = calls.get(pid, 0) + 1
+            return "/usr/bin/perl unrelated.pl" if calls[pid] > 1 else original(pid)
+
+        self.native.command = replaced_command
+        with self.assertRaisesRegex(ValueError, "identity changed"):
+            SAMPLER.validate_target(self.request, self.native, self.root)
+        self.native.command = original
+        wrapper.unlink()
+        wrapper.symlink_to(self.fixture)
+        with self.assertRaisesRegex(ValueError, "indirect"):
+            SAMPLER.validate_target(self.request, self.native, self.root)
 
     def test_reused_pid_foreign_parent_or_identity_never_launches_a_sampler(self):
         for field in SAMPLER.REQUEST_FIELDS:
@@ -236,6 +347,79 @@ class CaptureBoundary(unittest.TestCase):
             if child.poll() is None:
                 child.kill()
                 child.wait(timeout=3)
+
+    @unittest.skipUnless(sys.platform == "darwin", "Darwin native identity contract")
+    def test_real_t1669_wrapper_and_nested_rust_proxy_are_admitted(self):
+        import select
+        workspace = self.fixture.parent
+        proxy = workspace / "rust-tools/rustup"
+        proxy.parent.mkdir()
+        proxy.write_text('$|=1; alarm 10; print "producer=$$\\n"; sleep 8;\n')
+        wrapper = workspace / "rust-tool-resolution"
+        wrapper.write_text('''$|=1; alarm 12; print "wrapper=$$\\n";
+my $tool = shift(@ARGV) . '/rustup';
+my $pid = fork(); defined $pid or die $!;
+if (!$pid) { exec '/usr/bin/perl', $tool, 'which', 'cargo'; die $!; }
+waitpid($pid, 0);
+''')
+        parent_path = self.root / SAMPLER.SUPERVISOR_TEST_PATH
+        parent_path.parent.mkdir()
+        parent_path.write_text('''alarm 14;
+my $workspace = pack('H*', '%s');
+my $pid = fork(); defined $pid or die $!;
+if (!$pid) { exec '/usr/bin/perl', '-Iperl', '-It/lib',
+    "$workspace/rust-tool-resolution", "$workspace/rust-tools"; die $!; }
+waitpid($pid, 0);
+''' % os.fsencode(workspace).hex())
+        parent = subprocess.Popen(["/usr/bin/perl", str(parent_path)], stdout=subprocess.PIPE,
+                                  start_new_session=True)
+        native = SAMPLER.NativeProcesses()
+        identities = {}
+        try:
+            output = b""
+            deadline = time.monotonic() + 3
+            while time.monotonic() < deadline and len(identities) < 2:
+                if select.select([parent.stdout], [], [], 0.1)[0]:
+                    data = os.read(parent.stdout.fileno(), 128)
+                    if not data:
+                        break
+                    output += data
+                    self.assertLess(len(output), 512)
+                    for line in output.splitlines():
+                        if line.startswith((b"wrapper=", b"producer=")):
+                            name, pid = line.decode().split("=")
+                            identities[name] = native.identity(int(pid))
+            self.assertEqual(set(identities), {"wrapper", "producer"},
+                             "both controlled programs must independently enter main")
+            test = native.identity(parent.pid)
+            request = {key: identities["wrapper"][key] for key in SAMPLER.IDENTITY_FIELDS}
+            request.update({"parent_" + key: test[key] for key in SAMPLER.IDENTITY_FIELDS})
+            self.assertEqual(SAMPLER.validate_target(request, native, self.root)["target_role"],
+                             "rust-wrapper")
+            request = {key: identities["producer"][key] for key in SAMPLER.IDENTITY_FIELDS}
+            request.update({"parent_" + key: identities["wrapper"][key]
+                            for key in SAMPLER.IDENTITY_FIELDS})
+            request.update({"ancestor_" + key: test[key] for key in SAMPLER.IDENTITY_FIELDS})
+            evidence = SAMPLER.validate_target(request, native, self.root)
+            self.assertEqual(evidence["target_role"], "rust-proxy")
+            self.assertEqual(evidence["ancestor"], test)
+        finally:
+            # Own one real process group for this control, including on missing readiness.
+            try:
+                os.killpg(parent.pid, signal.SIGKILL)
+            except ProcessLookupError:
+                pass
+            self.assertIsNotNone(SAMPLER.bounded_wait(parent, 3)["returncode"])
+            parent.stdout.close()
+            deadline = time.monotonic() + 3
+            while time.monotonic() < deadline:
+                try:
+                    os.killpg(parent.pid, 0)
+                except ProcessLookupError:
+                    break
+                time.sleep(0.01)
+            else:
+                self.fail("native control process group cleanup incomplete")
 
     @unittest.skipUnless(sys.platform == "darwin", "Darwin native identity contract")
     def test_real_perl_fixture_and_parent_are_admitted(self):

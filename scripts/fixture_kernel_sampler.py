@@ -10,6 +10,7 @@ import hashlib
 import json
 import os
 from pathlib import Path
+import re
 import resource
 import signal
 import stat
@@ -25,9 +26,11 @@ MAX_REQUESTS = 16
 REQUEST_BYTES = 2048
 OUTPUT_BYTES = 16 * 1024 * 1024
 TEST_PATH = "t/1668-darwin-inline-verilator-test-runtime.t"
+SUPERVISOR_TEST_PATH = "t/1669-task-acceptance-fixture-runtime.t"
 IDENTITY_FIELDS = ("pid", "start_sec", "start_usec")
 REQUEST_FIELDS = (*IDENTITY_FIELDS, "parent_pid", "parent_start_sec",
                   "parent_start_usec")
+ANCESTOR_FIELDS = tuple("ancestor_" + key for key in IDENTITY_FIELDS)
 
 
 class BSDInfo(ctypes.Structure):
@@ -105,57 +108,127 @@ def read_request(path):
         return value
 
     request = json.loads(raw, object_pairs_hook=unique_object)
-    if not isinstance(request, dict) or set(request) != set(REQUEST_FIELDS):
+    if not isinstance(request, dict) or set(request) not in (
+            set(REQUEST_FIELDS), set((*REQUEST_FIELDS, *ANCESTOR_FIELDS))):
         raise ValueError("request fields do not match the closed schema")
     if any(type(value) is not int or value < 0 for value in request.values()):
         raise ValueError("request identity fields must be nonnegative integers")
-    if request["pid"] <= 1 or request["parent_pid"] <= 1:
-        raise ValueError("request requires actual child and parent identities")
-    if request["pid"] > 2**31 - 1 or request["parent_pid"] > 2**31 - 1:
-        raise ValueError("process ID exceeds the native API range")
+    for field in ("pid", "parent_pid", "ancestor_pid"):
+        if field in request and not 1 < request[field] <= 2**31 - 1:
+            raise ValueError("process ID exceeds the native API range")
     return request
 
 
-def validate_target(request, native, root):
-    """Bind a direct orphaning-runtime fixture to the exact live T1668 parent."""
-    child = native.identity(request["pid"])
-    parent = native.identity(request["parent_pid"])
-    for key in IDENTITY_FIELDS:
-        if child[key] != request[key] or parent[key] != request["parent_" + key]:
-            raise ValueError("stale or reused process identity")
-    if child["ppid"] != parent["pid"]:
-        raise ValueError("fixture no longer belongs to the requested parent")
-    if any(info[key] != os.getuid() for info in (child, parent) for key in ("uid", "ruid")):
-        raise ValueError("fixture and test must run as this normal user")
-    perl = Path("/usr/bin/perl").resolve()
-    if any(native.executable(info["pid"]) != perl for info in (child, parent)):
-        raise ValueError("fixture and test must use the selected system Perl")
-    if native.command(parent["pid"]) not in (
-        "/usr/bin/perl " + TEST_PATH, "/usr/bin/perl " + str(root / TEST_PATH),
-    ):
-        raise ValueError("parent is not the selected T1668 invocation")
-    command = native.command(child["pid"])
-    prefix = "/usr/bin/perl " + str(root / ".artifacts/tmp/tests") + "/"
-    if not command.startswith(prefix):
-        raise ValueError("target is not a repository-local generated fixture")
-    suffix = command[len(prefix):].split("/")
-    if len(suffix) != 2 or not suffix[0] or suffix[1] != "orphaning-runtime":
-        raise ValueError("target is not the selected orphaning-runtime fixture")
-    fixture = root / ".artifacts/tmp/tests" / suffix[0] / suffix[1]
+def source_identity(fixture, root):
+    """Inspect a bounded direct source, retaining its filesystem and byte identity."""
     if fixture.resolve() != fixture or fixture.stat().st_dev != root.stat().st_dev:
         raise ValueError("fixture path is indirect or on a different volume")
     with os.fdopen(os.open(fixture, os.O_RDONLY | os.O_NOFOLLOW | os.O_NONBLOCK), "rb") as stream:
         metadata = os.fstat(stream.fileno())
-        if not stat.S_ISREG(metadata.st_mode) or metadata.st_dev != root.stat().st_dev:
-            raise ValueError("fixture is not a repository-volume regular file")
+        if (not stat.S_ISREG(metadata.st_mode) or metadata.st_dev != root.stat().st_dev
+                or metadata.st_uid != os.getuid()):
+            raise ValueError("fixture is not an owned repository-volume regular file")
         body = stream.read(65537)
+        after = os.fstat(stream.fileno())
     if len(body) > 65536:
         raise ValueError("fixture is not a bounded regular source file")
-    if native.identity(child["pid"]) != child or native.identity(parent["pid"]) != parent:
-        raise ValueError("identity changed during inspection")
-    return {"child": child, "parent": parent,
-            "fixture": str(fixture.relative_to(root)),
-            "fixture_sha256": hashlib.sha256(body).hexdigest()}
+    fields = ("st_dev", "st_ino", "st_mode", "st_uid", "st_size", "st_mtime_ns", "st_ctime_ns")
+    before_identity = tuple(getattr(metadata, field) for field in fields)
+    if any(tuple(getattr(info, field) for field in fields) != before_identity
+           for info in (after, fixture.lstat())) or len(body) != metadata.st_size:
+        raise ValueError("fixture changed during inspection")
+    return {"path": str(fixture.relative_to(root)), "sha256": hashlib.sha256(body).hexdigest(),
+            "device": metadata.st_dev, "inode": metadata.st_ino, "size_bytes": len(body)}
+
+
+def _test_command(command, path, root):
+    return command in ("/usr/bin/perl " + path, "/usr/bin/perl " + str(root / path))
+
+
+def _workspace(command, root, includes=False):
+    prefix = "/usr/bin/perl " + ("-Iperl -It/lib " if includes else "")
+    prefix += str(root / ".artifacts/tmp/tests") + "/"
+    match = re.match(re.escape(prefix) + r"([A-Za-z0-9_-]+)/", command)
+    if not match:
+        raise ValueError("target is not a selected repository-local generated fixture")
+    return root / ".artifacts/tmp/tests" / match[1]
+
+
+def _supervisor_wrapper(command, root):
+    """Literal argv shapes from T1669; no shell tokenization or free-form arguments."""
+    includes = command.startswith("/usr/bin/perl -Iperl -It/lib ")
+    workspace = _workspace(command, root, includes)
+    if command == f"/usr/bin/perl -Iperl -It/lib {workspace}/rust-tool-resolution {workspace}/rust-tools":
+        return "rust-wrapper", workspace, workspace / "rust-tool-resolution", None
+    for mode in ("signal", "streams"):
+        producer = workspace / ("legacy-ram-" + mode)
+        if command == f"/usr/bin/perl {workspace}/legacy-ram-capture {workspace} {producer}":
+            return "legacy-wrapper", workspace, workspace / "legacy-ram-capture", producer
+    raise ValueError("parent is not a selected T1669 wrapper command")
+
+
+def validate_target(request, native, root):
+    """Admit a closed direct fixture or one exact T1669 wrapper/producer chain."""
+    prefixes = ("", "parent_") + (("ancestor_",) if "ancestor_pid" in request else ())
+    observations = []
+    perl = Path("/usr/bin/perl").resolve()
+    for prefix in prefixes:
+        info = native.identity(request[prefix + "pid"])
+        if any(info[key] != request[prefix + key] for key in IDENTITY_FIELDS):
+            raise ValueError("stale or reused process identity")
+        if any(info[key] != os.getuid() for key in ("uid", "ruid")):
+            raise ValueError("fixture and test must run as this normal user")
+        if native.executable(info["pid"]) != perl:
+            raise ValueError("fixture and test must use the selected system Perl")
+        observations.append((info, native.command(info["pid"])))
+    for (child, _), (parent, _) in zip(observations, observations[1:]):
+        if child["ppid"] != parent["pid"]:
+            raise ValueError("fixture no longer belongs to the requested parent")
+
+    target_command = observations[0][1]
+    test_command = observations[-1][1]
+    if len(observations) == 2 and _test_command(test_command, TEST_PATH, root):
+        workspace = _workspace(target_command, root)
+        fixture = workspace / "orphaning-runtime"
+        if target_command != f"/usr/bin/perl {fixture}":
+            raise ValueError("target is not the selected orphaning-runtime fixture")
+        role, sources = "verilator-fixture", [fixture]
+    elif _test_command(test_command, SUPERVISOR_TEST_PATH, root):
+        wrapper_command = observations[-2][1]
+        role, workspace, wrapper, producer = _supervisor_wrapper(wrapper_command, root)
+        fixture, sources = wrapper, [wrapper]
+        if producer is not None:
+            sources.append(producer)
+        if len(observations) == 3:
+            if role == "rust-wrapper":
+                fixture = workspace / "rust-tools/rustup"
+                expected = f"/usr/bin/perl {fixture} which cargo"
+                sources.append(fixture)
+                role = "rust-proxy"
+            else:
+                fixture = producer
+                expected = (f"/usr/bin/perl {fixture} --host-max-pct 88"
+                            " --process-max-rss-mb 4096 --poll-seconds 0.02"
+                            " --grace-seconds 0 -- unused")
+                role = "legacy-producer"
+            if target_command != expected:
+                raise ValueError("target does not match its exact T1669 producer and workspace")
+    else:
+        raise ValueError("ancestor is not the selected T1668 or T1669 invocation")
+
+    source_records = [source_identity(path, root) for path in sources]
+    for info, command in observations:
+        if (native.identity(info["pid"]) != info or native.executable(info["pid"]) != perl
+                or native.command(info["pid"]) != command):
+            raise ValueError("identity changed during inspection")
+    fixture_record = next(record for record in source_records
+                          if record["path"] == str(fixture.relative_to(root)))
+    evidence = {"child": observations[0][0], "parent": observations[1][0],
+                "fixture": fixture_record["path"], "fixture_sha256": fixture_record["sha256"],
+                "target_role": role, "sources": source_records}
+    if len(observations) == 3:
+        evidence["ancestor"] = observations[2][0]
+    return evidence
 
 
 def bounded_wait(process, seconds):

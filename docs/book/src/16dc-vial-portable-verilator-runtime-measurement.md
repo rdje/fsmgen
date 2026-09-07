@@ -606,14 +606,34 @@ bash scripts/await_fixture_kernel_samples.sh
 Enter the administrator password in Terminal and wait for `READY`. The helper
 runs as the normal user and authenticates the fixed native `spindump` operation;
 tests remain unprivileged. The engineer can submit subsequent capture requests
-without another interactive prompt while the session is active. Each request
-must identify the live T1668 parent and its direct `orphaning-runtime` child;
-PID reuse, unrelated commands, indirect paths and changed identities are rejected.
+without another interactive prompt while the session is active.
+
+Each request identifies exact native birth identities. The original T1668 route admits its
+direct `orphaning-runtime` child. The T1669 route admits the exact
+`rust-tool-resolution` or `legacy-ram-capture` wrapper, or its generated
+`rustup`, `legacy-ram-signal` or `legacy-ram-streams` child through that wrapper.
+Nested requests include the test's `ancestor_pid`, `ancestor_start_sec` and
+`ancestor_start_usec` alongside the existing child and parent identity fields.
+
+Every process must use the selected system Perl as the normal user; commands
+and their arguments must match the generating test and a common fixture
+workspace. Each inspected source retains its digest and filesystem identity.
+PID reuse, unrelated commands, cross-workspace arguments, indirect sources,
+reparenting and identity changes during inspection are rejected before sampling.
+
+Admission is a checked observation, not an atomic kernel handle: inspect the
+native report against the retained identities before attributing a wait.
 Output stays under `.artifacts/logs/fixture-kernel-capture/`. Ctrl+C or the
 session's `STOP` file ends it; expiry and request limits also stop the helper.
 It invalidates its authentication timestamp on orderly shutdown. Authentication
 refresh is non-interactive and fails closed if access expires or is revoked.
 This is a diagnostic handoff, not a startup repair or qualification result.
+
+The T1669 admission controls exercise controlled native processes and hostile
+requests without privileged sampling. A tracked observer and authenticated
+capture of the original failure remain separately owned investigation steps.
+The hosted doctrine job runs the portable admission controls; native process
+identity controls run on Darwin and are explicitly skipped on other platforms.
 
 The quantitative statements above have three independent legs:
 
