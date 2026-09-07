@@ -6,7 +6,7 @@
 - Status: `active`
 - Roadmap lane: `R14`
 - Created: `2026-05-16`
-- Last updated: `2026-08-25`
+- Last updated: `2026-09-07`
 - Owner: repo-local workflow
 
 ## Goal
@@ -54,14 +54,30 @@ repo's `t/*-isf-*.t` regression files.
   Status: `active`
   Goal: `Repair focused-test index drift after published timing-claim coverage`
   Acceptance: `Record the exact introducing change; add only t/1639-isf-published-timing-claims.t at the lexicographically correct authoritative mdBook source location; register that intentional post-partition addition as an exact archived-source transformation; prove the index has no missing or extra paths and activation-content equality holds; retain the audits unchanged; pass focused, book, doctrine, and complete guarded-CI gates before the pending 300-commit push.`
-  Verification: `Pre-fix guarded ./bin/ci-regression reaches one t/1250 mismatch: listed index 332 has no element where expected index 332 is t/1639-isf-published-timing-claims.t; the independently executed t/1639 passes. Git identifies 8b2a6697905bf6f6b66dad0306b4e4c9576af470 as adding t/1639 without changing the authoritative focused-test source. The post-fix complete run passes t/1250, then t/1569 independently falsifies an incomplete repair because the bounded part differs from its sealed activation source at docs/isf-spec/04-reports-fixtures-deferrals.md:1267. The same run exposes a t/1558 runtime timeout and later exits 137 only when host occupied memory reaches the authorized 88% cutoff during t/296; the active FSMGEN child remains far below its separate 4,096-MiB descendant ceiling. No t/296 checkpoint was configured, so the completed batches are not durable and the retry must activate the repository-local checkpoint contract. Exact repository-local interrupted-run residue is removed only after proving the process tree and open-file set empty. Post-repair ordered and independent set oracles must prove 333 listed/expected with zero missing/extra; focused reference tests, exact activation-content equality, all mdBook chapters, maintained-reference authority, containment, and zero-ceiling-increase gates must pass. Complete guarded CI remains pending after the repair commit.`
-  Commit: `pending`
+  Verification: `Pre-fix guarded ./bin/ci-regression reaches one t/1250 mismatch: listed index 332 has no element where expected index 332 is t/1639-isf-published-timing-claims.t; the independently executed t/1639 passes. Git identifies 8b2a6697905bf6f6b66dad0306b4e4c9576af470 as adding t/1639 without changing the authoritative focused-test source. The post-fix complete run passes t/1250, then t/1569 independently falsifies an incomplete repair because the bounded part differs from its sealed activation source at docs/isf-spec/04-reports-fixtures-deferrals.md:1267. The same run exposes a t/1558 runtime timeout and later exits 137 only when host occupied memory reaches the authorized 88% cutoff during t/296; the active FSMGEN child remains far below its separate 4,096-MiB descendant ceiling. No t/296 checkpoint was configured, so the completed batches are not durable and the retry must activate the repository-local checkpoint contract. Exact repository-local interrupted-run residue is removed only after proving the process tree and open-file set empty. The committed post-repair ordered and independent set oracles proved 333 listed/expected with zero missing/extra; focused reference tests, exact activation-content equality, all mdBook chapters, maintained-reference authority, containment, and zero-ceiling-increase gates passed as recorded below. Complete guarded CI remains pending after the repair commit.`
+  Commit: `f3e7f94dc333fc624fb0d05a0227bd8fdf489460; exact-transformation repair committed, complete-CI qualification pending`
+  Children: `ISF-SPEC-TEST-INDEX-SYNC.3.1, ISF-SPEC-TEST-INDEX-SYNC.3.2`
+
+- ID: `ISF-SPEC-TEST-INDEX-SYNC.3.1`
+  Status: `done`
+  Goal: `Reconcile the already committed exact-transformation repair with the live frontier.`
+  Acceptance: `Verify the actual introducing and repair commits against the current counted rewrite and focused-test source; replace obsolete uncommitted/implementation-next pointers with the exact committed repair and remaining complete-CI blocker. Do not change source, assertions, qualification requirements, runtime behavior or the pending HIAL endpoint decision. Validate the source identity and documentation gates, then commit this continuity repair.`
+  Verification: `Git ancestry and current-versus-commit byte comparison verify the exact-transformation repair at f3e7f94dc333fc624fb0d05a0227bd8fdf489460. The manifest, authoritative focused-test source, t/1250 and t/1639 equal that commit. The initial whole-file identity assertion failed for t/1569; exact diff and history attribute its sole later delta to the VIAL v2 contract fixture-list member in c43e158e8fba263fbc0e43902bd5198f6f75b51e, with all other bytes and assertions unchanged. The original introducing commit 8b2a6697905bf6f6b66dad0306b4e4c9576af470 added t/1639 without its index link. Fresh guarded exact activation-content verification and t/1250/t/1569 pass (Files=2, Tests=8). Evidence is retained under .artifacts/logs/isf-frontier-reconciliation-20260907/: initial-identity-failure.txt, source-identity.json and focused-checks.log. The current task/index now name the committed repair and remaining qualification blocker. The first staged doctrine run rejected the container status and Commit-field delimiter; the corrected tree retains an active parent and assigns remaining qualification to blocked leaf .3.2. The corrected staged doctrine driver passes every registered check, with the docs-only task-acceptance exemption explicitly reported; logs retain both staged-doctrines.log and corrected-staged-doctrines.log. No source, assertion, book behavior or endpoint prerequisite changes are made.`
+  Commit: `ISF-SPEC-TEST-INDEX-SYNC.3.1: reconcile committed repair frontier`
+
+- ID: `ISF-SPEC-TEST-INDEX-SYNC.3.2`
+  Status: `blocked`
+  Goal: `Complete the existing guarded-CI qualification obligation after the startup blocker is resolved.`
+  Acceptance: `Preserve the parent .3 requirements: resolve the owned startup findings first, enable the repository-local t/296 checkpoint contract, then consume complete guarded CI under the normal host and descendant cutoffs before tree closure or push. Attribute and task-own every failed result without retry-to-green or gate weakening.`
+  Verification: `The parent repair at f3e7f94dc333fc624fb0d05a0227bd8fdf489460 is committed and .3.1 verifies its current source identity and focused checks. The historical complete-CI timeout and host-cutoff results remain unqualified; no complete-CI retry is part of the continuity reconciliation.`
+  Commit: `pending complete-CI qualification`
+  Blocked by: `Unresolved startup causal repair and wire qualification in HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2; the pending director decision on inactive endpoint implementation does not waive these gates.`
 
 ## Current Frontier
 
 | Order | Leaf | Status | Why next |
 | --- | --- | --- | --- |
-| 1 | `ISF-SPEC-TEST-INDEX-SYNC.3` | `active` | Register the post-partition t/1639 link as an exact archived-source transformation and restore t/1569 before addressing the other full-CI findings. |
+| 1 | `ISF-SPEC-TEST-INDEX-SYNC.3.2` | `blocked` | The exact transformation is committed at `f3e7f94dc`; complete guarded-CI qualification remains required after the HIAL startup blocker is resolved. `.3.1` is done and records the corrected implementation/commit pointer. |
 
 ## Decisions
 
@@ -77,7 +93,7 @@ repo's `t/*-isf-*.t` regression files.
 
 ## Blockers
 
-- None. The second complete guarded-CI attempt found the exact-content transformation omission plus a separate t/1558 timeout, then correctly terminated on host-wide occupied memory at the authorized cutoff. The current tree owns the t/1569 repair; no cutoff widening or interference with unrelated host workload is authorized.
+- Complete guarded-CI qualification remains blocked by the unresolved HIAL startup incident and wire qualification recorded in `docs/tasks/HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.md`, leaf `.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2`. The exact-content transformation repair is already committed and freshly verified; neither the independent RAM-guard fixture repair nor these focused checks qualifies complete CI. Preserve the prior timeout and host-cutoff findings, the repository-local t/296 checkpoint requirement, normal resource cutoffs, and the push gate. The director decision on inactive endpoint implementation remains separate and pending.
 
 ## Verification Log
 
@@ -89,6 +105,7 @@ repo's `t/*-isf-*.t` regression files.
 | `2026-08-25` | `ISF-SPEC-TEST-INDEX-SYNC.3` focused repair | `git log -S'published_wait_16'`; ordered t/1250 plus independent set comparison; t/1120/t/1250/t/1303/t/1414/t/1639; ISF partition, mdBook test/build, render census/cleanup, maintained-reference, containment, ceiling, diff, and doctrine gates | `pass`; one link restores 333/333 with zero missing/extra, focused regression reports `All tests successful`, `Files=5, Tests=37`, all 56 book chapters pass, the exact 91-file render is removed, and +1 line/+85 bytes has fresh authority with zero ceiling increase. Complete guarded CI remains pending. |
 | `2026-08-25` | `ISF-SPEC-TEST-INDEX-SYNC.3` complete-gate falsification | guarded `./bin/ci-regression`; t/1569 isolated reproduction; t/296 environment/checkpoint census; PID and artifact census | `active`; t/1250 passes, but t/1569 proves the new maintained line lacks its required archived-source rewrite at part line 1267. The run also exposes a separate t/1558 first-run timeout and reaches t/296 before the host guard terminates at 88.0%. No t/296 checkpoint environment was active; `.artifacts/t296` is empty, the process census is empty, and interrupted completed batches are not durable. |
 | `2026-08-25` | `ISF-SPEC-TEST-INDEX-SYNC.3` exact-transformation repair | exact activation-content checker; t/1120/t/1250/t/1303/t/1414/t/1554/t/1569/t/1639; claim-inventory re-derivation and disposition join; live-document doctrine; guarded mdBook test/build; exact render census and cleanup | `pass`; the counted rewrite re-derives the maintained t/1544+t/1639 list tail from the sealed source, t/1569 supplies the RED/green falsification, and the tracked manifest plus regenerated claim inventory provide durability. Focused regression reports `Files=7, Tests=61`; all 56 book chapters pass; the exact 91-file generated book is removed after an empty open-file census. |
+| `2026-09-07` | `ISF-SPEC-TEST-INDEX-SYNC.3.1` | Git ancestry, exact source identity, subsequent t/1569 delta attribution; guarded exact activation-content checker and t/1250/t/1569 | `pass`; the initial overly broad t/1569 byte-identity assertion is retained and explained by the later fixture-list addition. The transformation and focused audits pass; corrected staged doctrines pass after preserving and repairing the container-status/delimiter failures. Full CI remains unqualified. |
 
 ## Commit Log
 
@@ -96,7 +113,8 @@ repo's `t/*-isf-*.t` regression files.
 | --- | --- | --- |
 | `ISF-SPEC-TEST-INDEX-SYNC.1` | `ISF-SPEC-TEST-INDEX-SYNC.1: audit spec test index` | `committed` |
 | `ISF-SPEC-TEST-INDEX-SYNC.2` | `ISF-SPEC-TEST-INDEX-SYNC.2: sync ATL doc-status audit index` | `committed` |
-| `ISF-SPEC-TEST-INDEX-SYNC.3` | `e9e4c63c3` activation; `6b04c795e` focused repair; exact-transformation repair pending | `complete CI falsified the incomplete projection repair` |
+| `ISF-SPEC-TEST-INDEX-SYNC.3` | `e9e4c63c3` activation; `6b04c795e` focused repair; `f3e7f94dc333fc624fb0d05a0227bd8fdf489460` exact-transformation repair | `repair committed; complete-CI qualification remains blocked` |
+| `ISF-SPEC-TEST-INDEX-SYNC.3.1` | `ISF-SPEC-TEST-INDEX-SYNC.3.1: reconcile committed repair frontier` | `continuity reconciliation verified; complete-CI frontier preserved on .3.2` |
 
 ## Acceptance Checklist — `.3` (enforced before completion)
 
