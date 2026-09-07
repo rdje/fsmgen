@@ -40,6 +40,7 @@ reverify: >-
   t/1545-task-acceptance-doctrine.t
   t/1668-darwin-inline-verilator-test-runtime.t
   t/1669-task-acceptance-fixture-runtime.t t/1812-process-coordinator-endpoint.t
+  t/1813-process-coordinator-connection.t
 ---
 
 Decisions `0087`/`0101` keep one engine in `FSM::Support::ProcessSupervisor`
@@ -75,8 +76,7 @@ apart from the checker-output string. Its real nonzero controls cover empty
 and split-stream output and full result recovery. An earlier empty-output failure discarded that record; cause remains unknown.
 The separate launch observation retains actual child identity and bounded progress
 flags with unchanged commands and results. Bash PID, native output and held-child
-controls qualify it; missing progress remains unknown. The book defines the boundary;
-the active task owns qualification.
+controls qualify it; missing progress remains unknown. The book defines the boundary; the task owns qualification.
 The Verilator watcher uses canonical Perl fixture shebangs after an env-Perl
 fixture reached exec handoff but timed out before output. Only the entrypoint
 invoked through Perl by `prove` may retain an env shebang.
@@ -101,9 +101,9 @@ own group gone. Group cleanup does not compose into nested-subtree cleanup.
 The escaped group was terminated; absence verified. HIAL/VIAL
 `.19.2.3.1.2.2.5.5` owns the required ownership design, repair and hostile
 watcher; neutral-verifier extraction remains provisional and blocked.
-Selected: one launch coordinator, private clients, reserved identities and the exact bounded wire/context/lifecycle protocol.
-T1669 proves reservation feasibility. Extraction, Wire and inactive Endpoint filesystem work are complete;
-connection I/O, coordination/routing and hostile qualification (including T1545 diagnosis) remain pending.
+Selected: one launch coordinator, private clients, reserved identities and bounded wire/context/lifecycle protocol.
+T1669 proves reservation feasibility. Extraction, Wire, inactive Endpoint and server I/O are implemented;
+authority/admission, routing and hostile qualification (including T1545 diagnosis) remain pending.
 
 Native capture `.3.7` on 2026-09-07 binds normal-user Perl fixture PID `22778`
 (`1788787261.244839`) to T1668 parent `21913` (`1788787240.646851`). Source:
@@ -117,8 +117,7 @@ Independent information/debug `syspolicyd` records at `15:21:07 +0200` name the
 exact fixture in `GK Xprotect results` and `evaluation result: 12666, script, allowed, cache`;
 process-provenance also names PID `22778`. Default and original-failure queries are empty.
 This invocation passes; its policy wait does not establish the older timeout's cause.
-The task owns full cleanup, failed-selector and symbolization limits; OS/toolchain reads
-are dependencies. Root sampler birth identity was not retained; nested cleanup is unproved.
+The task owns cleanup, failed-selector/symbolization limits; OS/toolchain reads are dependencies. Root sampler birth identity was not retained; nested cleanup is unproved.
 Helper STOP invalidates authentication; independent observed-process and exact-command
 censuses are empty. Identities/offsets/results are durable here and in Git;
 Raw logs and scratch producers remain ignored: an explicit durability gap.
@@ -126,4 +125,4 @@ See `.artifacts/logs/fixture-kernel-recurrence-20260907/` and the task's capture
 Approved iTerm2 Developer Tools is on; Terminal/Tracing off. The unchanged band passes.
 Exact `ju79K1mKs1/orphaning-runtime` still has XProtect results at `16:05:05.243719 +0200`, path `6bce9d1ba3a14e47`.
 [Apple's process-tree paste inspection](https://support.apple.com/en-euro/guide/security/sece3b202c4b/web) is unproved here.
-Fresh shell/Codex also passes with exact-fixture XProtect scanning; `.3.2` retains identities. Live fixture has provenance, no quarantine. Repair open.
+Fresh shell/Codex passes with exact-fixture XProtect scanning; `.3.2` retains identities. Fixture has provenance, no quarantine; repair open.

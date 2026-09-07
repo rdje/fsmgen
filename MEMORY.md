@@ -6,10 +6,10 @@ Status and evidence: `docs/tasks/`. The system itself: `MEMORY_ARCHITECTURE.md`.
 ## Resume
 
 - repository_revision: derive with `git log -1 --format='%H %s'`; never shadow `HEAD` here.
-- active_work_unit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.2.3`
-  (`pending`; implement bounded inactive endpoint connection I/O)
-- next_action: Implement and independently verify the selected connection-I/O leaf .3.2.3.
-- in_flight_uncommitted: none after this filesystem implementation commit workflow.
-- in_flight_background: none; filesystem tests, rendered book and staged doctrine results are consumed.
+- active_work_unit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.2.3.2`
+  (`pending`; implement inactive connection authority and admission)
+- next_action: Implement and independently verify connection authority/admission leaf .3.2.3.2.
+- in_flight_uncommitted: none after the owned connection-I/O commit workflow.
+- in_flight_background: none after consuming the connection-I/O commit checks.
 - blockers: Startup causal repair and parent wire qualification remain open;
   runtime activation, complete CI and push stay gated. Inactive endpoints are approved.

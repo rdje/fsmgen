@@ -553,14 +553,26 @@ recursively deletes a directory or reclaims an earlier run.
 
 This module is inactive: the production supervisor does not import it, and it
 launches no commands. Filesystem admission alone does not authenticate a live
-parent. Bounded connection I/O and live authority checks remain the next owned
-slice; nested coordination, startup repair and runtime qualification remain
-open. The filesystem controls use real Unix socket peers on the current macOS
+parent. Its private server-side connection mechanism is now implemented in
+`FSM::Support::ProcessSupervisor::Connection`. It admits the frame length and
+message type before reading a body, preserves exact bytes under partial writes,
+and keeps control capacity separate from stream backpressure. A partly sent
+frame finishes before another frame can take priority. EOF remains observable
+while output is saturated. Fixed framing and stalled-write walls remain clipped
+to the original invocation deadline; receiving another byte or queueing more
+output cannot renew them. Socket writes restore the caller's native SIGPIPE
+handler, mask and flags even after EPIPE or an exception.
+
+The mechanism uses the private Wire limits and performs no sleeping or blocking
+I/O in advancement. It neither authenticates a parent nor admits a command.
+Finite service admission and live authority checks remain the next owned slice;
+nested coordination, startup repair and runtime qualification remain open. The filesystem controls use real Unix socket peers on the current macOS
 host; foreign-owner/device cases are model-only and Linux execution is still
 unqualified. To reproduce the endpoint and existing wire/mechanism checks:
 
 ```bash
 bash scripts/run_with_ram_guard.sh -- prove -Iperl -It/lib \
+  t/1813-process-coordinator-connection.t \
   t/1812-process-coordinator-endpoint.t \
   t/1669-task-acceptance-fixture-runtime.t
 ```
