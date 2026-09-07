@@ -647,6 +647,102 @@ PROBE
     }
 };
 
+subtest 'legacy RAM-guard capture controls expose signal loss and blocked streams' => sub {
+    # Exact pre-repair run_guard body: helper SHA-256
+    # cb9a8d6d041b37a50abd7bbcea3740018b1777bd52e5ff26856d96fe014fdebe.
+    # This intentionally broken fixture runs only inside the bounded hostile oracle.
+    my $legacy = <<'LEGACY';
+use strict;
+use warnings;
+use IPC::Open3 qw(open3);
+use Symbol qw(gensym);
+use JSON::PP qw(encode_json);
+my ($fake_bin, $guard) = @ARGV;
+sub run_guard {
+    my (%args) = @_;
+    local %ENV = %ENV;
+    $ENV{PATH} = $fake_bin . ':' . $ENV{PATH};
+    $ENV{FSMGEN_TEST_TOTAL_BYTES} = 4_096_000;
+    $ENV{FSMGEN_TEST_VM_STAT_FILE} = $args{vm_stat_file};
+
+    my @command = (
+        $guard,
+        '--host-max-pct', '88',
+        '--process-max-rss-mb', '4096',
+        '--poll-seconds', '0.02',
+        '--grace-seconds', '0',
+        '--',
+        @{$args{command}},
+    );
+
+    my $stderr_fh = gensym();
+    my $pid = open3(my $stdin_fh, my $stdout_fh, $stderr_fh, @command);
+    close $stdin_fh;
+    local $/;
+    my $stdout = <$stdout_fh> // '';
+    my $stderr = <$stderr_fh> // '';
+    waitpid($pid, 0);
+    return ($? >> 8, $stdout, $stderr);
+}
+
+my @result = run_guard(vm_stat_file => 'unused', command => ['unused']);
+my $raw = $?;
+print encode_json({projected_exit => $result[0], stdout => $result[1],
+    stderr => $result[2], native_wait_status => $raw});
+LEGACY
+    my $probe = File::Spec->catfile($workspace, 'legacy-ram-capture');
+    write_executable($probe, "#!$perl\n$legacy");
+    for my $mode (qw(signal streams)) {
+        my $producer = File::Spec->catfile($workspace, "legacy-ram-$mode");
+        my $progress = File::Spec->catfile($workspace, "legacy-ram-$mode-progress");
+        my $prefix = "#!$perl\nmy \$progress = pack('H*', '" . unpack('H*', $progress) . "');\n";
+        my $body = <<'PRODUCER';
+use strict;
+use warnings;
+open my $marker, '>', $progress or die $!;
+print {$marker} "entered\n" or die $!;
+close $marker or die $!;
+PRODUCER
+        if ($mode eq 'signal') {
+            $body .= '$| = 1; print "signal-body-entered\n"; kill q(TERM), $$; die q(signal did not terminate);';
+        }
+        else {
+            $body .= <<'STREAMS';
+print STDERR 'x' x 262_144 or die $!;
+open my $marker_after, '>>', $progress or die $!;
+print {$marker_after} "drained\n" or die $!;
+close $marker_after or die $!;
+print STDOUT "stdout-after-stderr\n";
+STREAMS
+        }
+        write_executable($producer, $prefix . $body);
+        my $result = supervise_process(
+            schema => 'fsmgen.test.legacy_ram_capture_probe.v1', stage => 'legacy_capture',
+            bounds => {timeout_seconds => 5, capture_limit_bytes => 65_536},
+            containment => 'legacy_ram_capture_probe_group', cwd => $workspace,
+            argv => [$perl, $probe, $workspace, $producer],
+        );
+        ok(-f $progress, "$mode producer independently records main entry");
+        is(slurp($progress), "entered\n", "$mode progress excludes an assumed completed write") if -f $progress;
+        if ($mode eq 'signal') {
+            ok($result->{ok}, 'old capture wrapper returns despite its signalled child') or diag explain $result;
+            my $record = eval { decode_json($result->{stdout}) };
+            ok($record, 'old wrapper retains its independently observed wait status in the probe');
+            if ($record) {
+                is($record->{native_wait_status}, 15, 'native wait reports the actual TERM signal');
+                is($record->{projected_exit}, 0, 'old shifted projection falsely reports exit zero');
+                is($record->{stdout}, "signal-body-entered\n", 'signalled child reached its body');
+            }
+        }
+        else {
+            is($result->{status}, 'timed_out', 'old sequential reader cannot drain stderr while waiting for stdout')
+                or diag explain $result;
+        }
+        ok($result->{cleanup}{leader_reaped} && $result->{cleanup}{group_gone},
+            "$mode negative control leaves no owned group");
+    }
+};
+
 subtest 'policy adapters exclusively own low-level test supervision' => sub {
     my $support = slurp(File::Spec->catfile(
         $repo_root, qw(perl FSM Support ProcessSupervisor.pm),
@@ -709,6 +805,12 @@ subtest 'policy adapters exclusively own low-level test supervision' => sub {
     unlike($t1467, qr/IPC::Cmd|run\s*\(\s*command\s*=>/, 'T1467 has no unbounded IPC launch');
     like($t1467, qr/use FSM::Test::RustParityRuntime qw\(run_rust_parity\)/, 'Rust parity uses its sealed adapter');
 
+    my $t1595 = slurp(File::Spec->catfile($repo_root, 't', '1595-agent-runtime-ram-guard-macos-metric.t'));
+    unlike($t1595, qr/IPC::Open3|\bopen3\s*\(|\bwaitpid\s*\(/,
+        'T1595 has no direct IPC or unbounded wait');
+    like($t1595, qr/use FSM::Test::RamGuardFixtureRuntime qw\(/,
+        'RAM-guard fixtures use their sealed adapter');
+
     my @owner;
     for my $path (glob File::Spec->catfile(
             $repo_root, qw(t lib FSM Test *.pm),
@@ -721,6 +823,7 @@ subtest 'policy adapters exclusively own low-level test supervision' => sub {
     is_deeply(
         [sort @owner],
         [qw(
+            t/lib/FSM/Test/RamGuardFixtureRuntime.pm
             t/lib/FSM/Test/RustParityRuntime.pm
             t/lib/FSM/Test/TaskAcceptanceFixtureRuntime.pm
             t/lib/FSM/Test/VerilatorRuntime.pm

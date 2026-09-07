@@ -486,6 +486,43 @@ emitted after return, so its PID is historical evidence, not authority to
 signal a process or a live stack sample. Bash's own PID, unmodified checker
 output, and an independently held pre-exec child qualify these distinctions.
 
+RAM-guard metric fixtures now use `FSM::Test::RamGuardFixtureRuntime` over the
+same shared process mechanism. T1595 preserves its healthy, pressured and
+malformed-sample metric assertions. The adapter invokes the exact repository
+guard through the selected canonical Bash, prepares its fixed fake inspection
+tools with canonical Bash shebangs, and admits only its fixture workspace,
+sample basename and closed child scenario. Caller command, path, environment
+and limit substitutions cannot redirect those operations. Bash and Perl are
+read-only toolchain dependencies; fixture data remains repository-local.
+
+Each invocation has a ten-second wall and one MiB of aggregate capture; sample
+admission has a 64-KiB input ceiling. These are fixed safety ceilings, with the
+shared engine's existing bounded cleanup grace. The guard's production metrics,
+defaults and thresholds are unchanged. Results use
+`fsmgen.test.ram_guard_fixture_result.v1`, retaining separate stdout/stderr,
+actual exit or signal, timeout, overflow and process-group cleanup. A signal
+cannot become exit zero, and incomplete cleanup cannot become success.
+There is no retry. The boundary is one process group; this adapter neither
+activates the private coordinator nor claims general nested containment.
+
+Run the original metric assertions and the associated hostile controls with:
+
+```bash
+bash scripts/run_with_ram_guard.sh -- prove -Iperl -It/lib \
+  t/1595-agent-runtime-ram-guard-macos-metric.t \
+  t/1811-ram-guard-fixture-runtime.t \
+  t/1669-task-acceptance-fixture-runtime.t
+```
+
+The tracked controls retain an exact legacy capture counterexample, independently
+record producer progress, and qualify concurrent capture, signal truth, input
+admission, caller rejection, overflow and bounded TERM/KILL cleanup. Test-private
+producer injection exercises the real engine through the adapter's fixed policy;
+actual guard fixtures separately qualify metric behavior and startup cleanup.
+Source policy re-derives the limits, independent boundary and hostile controls
+challenge them, and task-owned tests/book/Git preserve the evidence. This fixes
+the fixture harness; it does not identify the historical Darwin startup cause.
+
 The observation qualification exposed fresh timeouts in the unchanged Rust
 proxy controls and Verilator Perl fixtures. A live OS sample placed one
 Verilator fixture at `_dyld_start` before its body ran. The failed broader run

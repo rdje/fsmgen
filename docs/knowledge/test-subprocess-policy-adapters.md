@@ -23,7 +23,7 @@ status: current
 tags: [tests, subprocess, supervision, task-acceptance, darwin, locality]
 evidence: >-
   docs/tasks/HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.md;
-  t/1595-agent-runtime-ram-guard-macos-metric.t;
+  t/1595-agent-runtime-ram-guard-macos-metric.t; t/1811-ram-guard-fixture-runtime.t; t/lib/FSM/Test/RamGuardFixtureRuntime.pm;
   docs/decisions/0087-test-subprocesses-use-shared-mechanism-and-sealed-policy-adapters.md;
   docs/tasks/DARWIN-INLINE-VERILATOR-RUNTIME-QUALIFICATION.md;
   docs/book/src/16dc-vial-portable-verilator-runtime-measurement.md;
@@ -92,10 +92,10 @@ Child `.3.6` supplies `bash scripts/await_fixture_kernel_samples.sh`: a normal-u
 session for repeated fixed native captures after local authentication, with expiry,
 identity checks and STOP/Ctrl+C shutdown. Child `.3.7` completes the native capture
 and verified session shutdown; `.3.2` still owns causal repair selection.
-T1595's env-Bash fake uname stalled at `_dyld_start` before measuring memory.
-Its sequential open3 capture, unbounded wait and exit-only projection remain
-owned by HIAL/VIAL `.19.2.3.1.2.2.6`; `.6.1` selects sealed bounds. This does not diagnose the OS cause or
-change production memory formulas/thresholds.
+T1595's historical pre-main cause stays open. `.19.2.3.1.2.2.6.2` fixes its capture:
+`RamGuardFixtureRuntime` seals tools/argv, paths, bounds and full result truth.
+T1811/T1669 prove signal/stream failures and group cleanup; T1595 retains metrics.
+No retry or production threshold change.
 
 A nested probe found an inner group alive after outer timeout reported its
 own group gone. Group cleanup does not compose into nested-subtree cleanup.
