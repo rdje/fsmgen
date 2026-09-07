@@ -78,7 +78,9 @@ fixture reached exec handoff but timed out before output. Only the entrypoint
 invoked through Perl by `prove` may retain an env shebang.
 Fresh direct-Perl fixture timeouts show that this shebang change is insufficient:
 HIAL/VIAL `.19.2.3.1.2.2.5.5.2.3.1.2.2.3` owns the live `_dyld_start` sample,
-Rust proxy/Verilator fixture diagnosis and repair. The OS cause remains unknown.
+Rust proxy/Verilator fixture diagnosis and repair. The OS cause remains unknown;
+child `.3.3` records targeted kernel sampling and its administrator-authentication
+prerequisite, with capture owned by `.3.4` before causal repair selection.
 T1595's env-Bash fake uname stalled at `_dyld_start` before measuring memory.
 Its sequential open3 capture, unbounded wait and exit-only projection remain
 owned by HIAL/VIAL `.19.2.3.1.2.2.6`. This does not diagnose the OS cause or

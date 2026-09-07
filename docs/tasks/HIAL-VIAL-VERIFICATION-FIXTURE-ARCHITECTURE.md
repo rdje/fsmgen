@@ -2333,9 +2333,9 @@ decomposes the architecture needed to move beyond that bounded foundation.
   Status: `active`
   Goal: `Diagnose and repair newly observed Rust and Verilator fixture startup timeouts before qualification.`
   Acceptance: `Retain the failed .2 regression unchanged; inspect available child identity and bounded operating-system startup samples before retrying. Distinguish the direct fixture launch path from fixture body and policy behavior, select a bounded repair with an independent failing control, preserve exact production tool identity and all sealed bounds/assertions, and split any change beyond a safe slice before implementation. A fresh passing run cannot erase the initial failed invocation or establish the missing historical T1545 cause.`
-  Verification: `Child .1 completes the bounded historical/source/launch investigation without reproducing the failure or identifying a safe repair. The original failed regression remains failed, and the fresh observed band passes without explaining it. Child .2 is blocked on causal startup evidence; no production command, fixture, limit, security setting or assertion changes. Parent wire qualification remains open.`
+  Verification: `Child .1 completes the bounded historical/source/launch investigation without reproducing the failure or identifying a safe repair. The original failed regression remains failed, and the fresh observed band passes without explaining it. Child .2 is blocked on causal startup evidence. Child .3 selects targeted native kernel/user sampling; child .4 owns administrator-assisted capture before repair selection. No production command, fixture, limit, security setting or assertion changes. Parent wire qualification remains open.`
   Commit: `pending causal repair`
-  Children: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.1, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2`
+  Children: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.1, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.3, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.4`
 
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.1`
   Status: `done`
@@ -2351,6 +2351,21 @@ decomposes the architecture needed to move beyond that bounded foundation.
   Blocked by: `The retained _dyld_start-only sample does not identify the wait's cause; the targeted historical OS query and fresh controlled observations supply no causal discriminator. Unblock with a reproducible startup failure or new host evidence that distinguishes a repairable mechanism. Do not repeat passing regression merely to seek qualification, widen bounds, replace production tool identity, or alter host security.`
   Verification: `No evidence-backed repair is available from child .1. Original failed logs remain preserved; complete CI, push and coordinator endpoint work stay behind this prerequisite.`
   Commit: `pending causal evidence and verified repair`
+
+- ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.3`
+  Status: `done`
+  Goal: `Qualify bounded host wait-state diagnostics before another fixture-startup observation.`
+  Acceptance: `Compare the retained user-stack-only failure evidence with native diagnostic capabilities. Probe read-only process/thread state and targeted user/kernel sampling on an exact owned live process, with repository-local output and finite time bounds. Preserve unavailable permissions and unknown causes explicitly. Select only diagnostics that add a discriminator; do not repeat passing regression for qualification, alter host security, change tool identity or widen production limits. Record an executable next investigation or an exact external prerequisite and commit this bounded selection before further implementation.`
+  Verification: `The retained orphaning-runtime sample contains only _dyld_start and no kernel wait chain. Native ps succeeds outside the sandbox but reports no named wait channel for the owned control. The installed spindump help advertises user/kernel stacks, onlyTarget, noFile, noBinary and a finite timelimit. A targeted owned-process probe rejects live sampling with exit 77 because root is required; sudo -n rejects with a password-required diagnostic. Neither probe sampled another process or changed host settings. Logs are in .artifacts/logs/fixture-wait-state-20260907/. Startup review follows SESSION-READING-SCOPE; selected claim-template identities match existing review debt, and the containment guide includes the current portability amendment. The existing book accurately retains the unknown cause and open qualification. The guarded staged driver reports all doctrine checks passed, including task integrity and the documentation-only task-acceptance exemption; git diff --cached --check passes. The hook rechecks final evidence before commit. No runtime repair or qualification is claimed.`
+  Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.3: select targeted kernel wait-state evidence`
+
+- ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.4`
+  Status: `blocked`
+  Goal: `Capture targeted native kernel and user wait evidence during a fixture-startup recurrence.`
+  Acceptance: `With administrator-assisted sampling available, observe one bounded unchanged focused invocation under the configured RAM guard. Bind the live target to that invocation by ancestry, executable, fixture and fresh identity before sampling only that target. Keep all output repository-local, retain every original result, bound diagnostic duration and verify sampled-child and observer cleanup. Use the kernel/user evidence to distinguish a repairable cause or preserve the remaining unknown explicitly; return causal repair selection to sibling .2. Do not execute tests as root, repeat passing runs for qualification, widen limits or alter host security.`
+  Blocked by: `The selected native live kernel sampler requires root; non-interactive sudo cannot authenticate. Obtain director-assisted administrator authentication for the narrowly scoped sample, or a caller-supplied equivalent kernel-wait capture from an identified recurrence. Existing user-only evidence cannot select a repair. No dependent qualification or endpoint work may proceed.`
+  Verification: `Pending administrator-assisted capture; sibling .3 owns the native capability and permission evidence.`
+  Commit: `pending`
 
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.2`
   Status: `pending`
@@ -6088,3 +6103,61 @@ The first staged gate rejects the fresh NO REGRESSION box because its prose
 omits the declared prove-summary signature. The corrected box quotes the actual
 failed-band summary and retains its explicit failures; no registry, assertion,
 or gate behavior changes.
+
+## Targeted wait-state diagnostic selection (.19.2.3.1.2.2.5.5.2.3.1.2.2.3.3)
+
+The retained `_dyld_start` sample records a user program counter without the
+kernel wait chain. It cannot distinguish a suspended task, an executable-load
+wait, or another host-side startup mechanism. The existing passing launch arms
+and historical log query do not supply that missing discriminator.
+
+The installed native `spindump -h` contract advertises user and kernel stacks,
+target-only sampling, direct output and a finite exit limit. Read-only probes
+targeted the diagnostic's own live Python process, with an outer subprocess
+deadline and project-local temporary/output roots. `ps` worked outside the
+sandbox but its wait-channel column was `-`. The native sampler returned
+`spindump must be run as root when sampling the live system`; its
+non-interactive `sudo -n` invocation returned `sudo: a password is required`.
+This is an operating-system authentication prerequisite, not an automatic
+approval-review rejection. Neither invocation performed a kernel sample.
+
+The reviewed sampling command form is:
+
+```bash
+# Set this only after proving the live child belongs to the observed invocation.
+# Never reuse a PID from a historical log.
+mkdir -p .artifacts/logs/fixture-wait-state-20260907
+sudo /usr/sbin/spindump "$FSMGEN_STARTUP_PID" 1 10 \
+  -onlyTarget -noFile -noBinary -noSymbolicate -timelimit 3 \
+  > .artifacts/logs/fixture-wait-state-20260907/identified-child.spindump
+```
+
+Child `.3.4` owns the actual administrator-assisted capture and any bounded
+observer implementation. Authentication must be available before starting its
+single guarded diagnostic invocation; tests themselves remain unprivileged.
+Only a freshly identified owned target may be sampled. Keep its executable,
+fixture, ancestry and invocation identity, preserve failed outcomes, and prove
+observer/child cleanup. The command's availability is not a claim that it will
+identify the cause; missing samples, unresolved stacks and absent recurrence
+remain explicit evidence limits. Causal repair remains sibling `.3.2`.
+
+`native-capability.json` and `privileged-capability.json` under
+`.artifacts/logs/fixture-wait-state-20260907/` retain exact commands and returned
+diagnostics. Native help and a repeat of the owned-process capability probe
+re-derive this selection; the actual live probes falsify availability inferred
+from an executable's presence. This task and its Git commit retain the outcome
+and rerunnable command form. The ignored JSON is supplementary, and supplies
+no performance, reliability or root-cause claim. Native process/sampling tools
+and their SDK declarations are required read-only OS/toolchain dependencies;
+the selected PGEN policy is the director-authorized same-volume read-only input.
+No host security, production policy, test body or asserted result changed.
+
+The task-directed startup reading covers all mandatory entrypoints, the
+roadmap, task-tree contracts and active startup owner, relevant decisions and
+facts, the CLI and its documented runtime spine, shared supervisor/adapters,
+the failing fixture paths, T1545 observation, and the matching mdBook guidance.
+The selected claim-template hashes still match `CLAIM-VERIFICATION-TEMPLATE-REVIEW`;
+the containment guide includes its integration-test portability amendment.
+The book already states the unknown startup cause and open qualification, so
+this diagnostic selection changes no user-facing contract. Keep retained
+failure artifacts while their causal owner is open; no cleanup deletes evidence.
