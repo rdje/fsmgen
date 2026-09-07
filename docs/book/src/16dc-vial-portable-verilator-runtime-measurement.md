@@ -686,6 +686,16 @@ test result and stops the helper without retrying. Only the owned direct test
 child is reaped or signalled by this caller; unobserved descendants remain
 unknown. The attach-only command remains available for an already-live test.
 
+The first fixed-launch attempt reproduced the legacy producer failure after
+ordered readiness, but the observer admitted no fixtures. Investigation found
+an admission defect: T1669 allocates under
+`.artifacts/tmp/process-supervisor-tests/`, while the sampler and its controls
+assumed `.artifacts/tmp/tests/`. The earlier controlled admission result therefore
+does not qualify real T1669 coverage. Task `.3.8.5` owns the repair and a control
+using the actual allocator before another authenticated attempt. The failed
+original test remains failed; no kernel sample or causal repair is claimed.
+The selected helper stopped and invalidated authentication.
+
 Capture requests and helper results are published only after their complete
 JSON has been written, so a concurrent reader cannot consume a partial record.
 The hosted doctrine job discovers the fixture Python controls. Launcher
