@@ -6,11 +6,11 @@ Status and evidence: `docs/tasks/`. The system itself: `MEMORY_ARCHITECTURE.md`.
 ## Resume
 
 - repository_revision: derive with `git log -1 --format='%H %s'`; never shadow `HEAD` here.
-- active_work_unit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2`
-  (`blocked`; original startup attribution and independently verified repair missing)
-- next_action: After the checkpoint is committed and the tree is clean, select
-  independent sibling `.19.2.3.1.2.2.6` RAM-guard fixture policy from a clean tree.
-- in_flight_uncommitted: none after this checkpoint commit workflow.
-- in_flight_background: none after observed test/policy/cleanup results are consumed.
-- blockers: Startup causal repair and wire qualification remain open; nested containment,
-  RAM fixture repair, complete CI and push are pending. Retain configured limits.
+- active_work_unit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.6.1`
+  (`done`; selected policy checkpoint awaiting its commit workflow)
+- next_action: After committing this policy checkpoint and verifying a clean tree, implement
+  sibling `.19.2.3.1.2.2.6.2` with the selected admission, result and independent oracle contract.
+- in_flight_uncommitted: none after this policy checkpoint commit workflow.
+- in_flight_background: none.
+- blockers: The separate startup causal repair and wire qualification remain open;
+  nested containment, complete CI and push remain pending. Retain configured limits.

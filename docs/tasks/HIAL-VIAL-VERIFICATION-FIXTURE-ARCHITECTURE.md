@@ -2430,11 +2430,27 @@ decomposes the architecture needed to move beyond that bounded foundation.
   Commit: `pending`
 
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.6`
-  Status: `pending`
+  Status: `active`
   Goal: `Select deterministic bounded RAM-guard test-fixture launches.`
   Acceptance: `Select fixed fixture interpreter identity and a sealed bounded run policy for T1595 without weakening metric assertions, changing production RAM thresholds, or retrying failures into success; distinguish fixture startup from metric computation, preserve signal truth and cleanup, and split implementation into an owned child before source changes.`
-  Verification: `In the 2026-09-06 recovery full run, T1595's first healthy fixture blocks in fake-bin/uname -s before measurement. A one-second OS sample places /usr/bin/env at _dyld_start before main with no loaded binary-image map; its shebang is env bash. During that diagnostic the outer complete-run RAM guard remained active with unchanged thresholds. Knowledge Map returns the metric and sealed-adapter contracts but no T1595 startup answer. Git traces the fixture to 30885823b54a0677b4396550d9d3cfc2fc7fa3a9. run_guard uses open3, sequential stream reads, unbounded waitpid, and exit-only status projection. The verified T1595 tree received TERM; t1595-process.sample and t1595-terminated-processes.json under .artifacts/logs/session-recovery-20260906/ retain evidence. This is an interrupted test, not a metric assertion failure or successful qualification. Re-derivation is the sample plus fixture/source/history inspection; the independent T1467 and T1554 pre-main samples falsify a RAM-formula-only explanation without establishing the OS cause. Task, subprocess fact card, and Git own durability. Policy selection and repair remain pending.`
+  Verification: `In the 2026-09-06 recovery full run, T1595's first healthy fixture blocks in fake-bin/uname -s before measurement. A one-second OS sample places /usr/bin/env at _dyld_start before main with no loaded binary-image map; its shebang is env bash. During that diagnostic the outer complete-run RAM guard remained active with unchanged thresholds. Knowledge Map returns the metric and sealed-adapter contracts but no T1595 startup answer. Git traces the fixture to 30885823b54a0677b4396550d9d3cfc2fc7fa3a9. run_guard uses open3, sequential stream reads, unbounded waitpid, and exit-only status projection. The verified T1595 tree received TERM; t1595-process.sample and t1595-terminated-processes.json under .artifacts/logs/session-recovery-20260906/ retain evidence. This is an interrupted test, not a metric assertion failure or successful qualification. Re-derivation is the sample plus fixture/source/history inspection; the independent T1467 and T1554 pre-main samples falsify a RAM-formula-only explanation without establishing the OS cause. Task, subprocess fact card, and Git own durability. Child .1 selects a sealed RAM-guard fixture adapter and bounded independent controls; child .2 implements and qualifies it. The completed native-diagnostic suffix is retained through the exact history manifest before new live policy is added; current startup blockers and coordinator design remain live. This leaf has no dependency on completing wire endpoints or attributing the old timeout. Existing process-group limits remain explicit; no nested supervisor is introduced. Repair and qualification remain pending.`
   Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.6: own RAM-guard fixture startup blocker`
+
+  Children: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.6.1, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.6.2`
+
+- ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.6.1`
+  Status: `done`
+  Goal: `Select the closed RAM-guard fixture launch policy and independent repair oracles.`
+  Acceptance: `Inspect T1595, the guard, shared engine and current adapter contracts; retain original failed evidence; select exact command, interpreter, path, environment, wall, capture and result policy without modifying production thresholds. Split implementation before source edits, preserve the blocked startup/wire frontier and keep completed diagnostic history exactly retrievable. Commit the reviewed selection before implementing.`
+  Verification: `git log -S waitpid identifies 30885823b54a0677b4396550d9d3cfc2fc7fa3a9; source confirms sequential open3 reads, unbounded waitpid and shifted-only status. Decisions 0087/0101 require shared mechanics behind a domain-specific adapter. The selected policy below bounds those concrete fixture defects without claiming an OS timeout cure. The history manifest re-derives the full predecessor and exact completed diagnostic suffix at 0ba9d1492fa76a1e6b6bf85f6982dd0ac3610a9c; live coordinator design and current startup evidence are unchanged. The focused task/history checker reports all active task-tree invariants hold, including exact predecessor/suffix retrieval; map regeneration succeeds. The guarded staged doctrine driver reports all doctrine checks passed, including task/history integrity and the documentation-only task-acceptance exemption; the hook rechecks final evidence. Runtime changes belong only to child .2.`
+  Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.6.1: select bounded RAM-guard fixture policy`
+
+- ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.6.2`
+  Status: `pending`
+  Goal: `Implement and qualify the sealed RAM-guard test-fixture adapter.`
+  Acceptance: `Implement child .1 policy using the shared mechanism, migrate every T1595 metric assertion without weakening it, prove lost-signal and concurrent-output failures against the former launcher, reject caller command/bound/path/environment escape, preserve normal/nonzero/signal/timeout/overflow and complete/incomplete cleanup truth, extend exclusive-owner watching and synchronize the book/facts. All original failures remain failed; no repeat pass or env bypass establishes the macOS root cause. Split any expanded failure domain before proceeding.`
+  Verification: `Pending child .1 committed selection.`
+  Commit: `pending implementation`
 
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.2`
   Status: `proposed`
@@ -3923,7 +3939,7 @@ leaf is `.19.2.3.1.2.2.4`, bounded Rust parity policy selection.
 
 - Acceptance history manifest: `docs/tasks/history/HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE/acceptance-history.jsonl`
 
-The manifest binds the complete predecessor task file and its exact suffix from the prior `## Version-Retrievable Historical Views` heading through end of file to revision `7e7dc8158bc790e4b2ddaf1f5ba77ae32552e11a`. That predecessor transitively retains the earlier acceptance-history pointer. The live task tree above remains authoritative; current local-CI acceptance evidence appends after this bounded pointer.
+The manifest binds the complete task snapshot at `0ba9d1492fa76a1e6b6bf85f6982dd0ac3610a9c` and its exact completed diagnostic suffix from `## Targeted wait-state diagnostic selection (.19.2.3.1.2.2.5.5.2.3.1.2.2.3.3)` through end of file. That snapshot preserves the earlier history pointer and its versioned manifest; no prior evidence is discarded. Live coordinator design and current startup blockers remain here; the completed capture/permission procedures remain available in source, book, canonical facts and exact Git history.
 
 ## Acceptance Checklist (enforced) — `.17.5.4.3.2.2` authenticated evidence materialization
 
@@ -6124,276 +6140,65 @@ omits the declared prove-summary signature. The corrected box quotes the actual
 failed-band summary and retains its explicit failures; no registry, assertion,
 or gate behavior changes.
 
-## Targeted wait-state diagnostic selection (.19.2.3.1.2.2.5.5.2.3.1.2.2.3.3)
+## RAM-guard fixture policy (.19.2.3.1.2.2.6.1)
 
-The retained `_dyld_start` sample records a user program counter without the
-kernel wait chain. It cannot distinguish a suspended task, an executable-load
-wait, or another host-side startup mechanism. The existing passing launch arms
-and historical log query do not supply that missing discriminator.
+This selection repairs T1595's fixture harness. It does not change the guard's
+production formulas, defaults, safety thresholds or process-tree algorithm,
+and it does not establish a cure for the separate Darwin startup failures.
+The retained original interrupted T1595 run remains interrupted.
 
-The installed native `spindump -h` contract advertises user and kernel stacks,
-target-only sampling, direct output and a finite exit limit. Read-only probes
-targeted the diagnostic's own live Python process, with an outer subprocess
-deadline and project-local temporary/output roots. `ps` worked outside the
-sandbox but its wait-channel column was `-`. The native sampler returned
-`spindump must be run as root when sampling the live system`; its
-non-interactive `sudo -n` invocation returned `sudo: a password is required`.
-This is an operating-system authentication prerequisite, not an automatic
-approval-review rejection. Neither invocation performed a kernel sample.
+- Add private `FSM::Test::RamGuardFixtureRuntime` behind the existing test
+  supervisor wrapper. Resolve the inherited selected Bash and running Perl
+  once from absolute executable paths before fixture PATH changes. Use direct
+  Bash for the guard and canonical Bash shebangs for its fake inspection tools.
+  Installed interpreters and native inspection tools are read-only dependencies.
+- Admit only a direct `fsmgen-*` workspace under
+  `.artifacts/tmp/ram-guard-tests/`, on the repository volume with no symlink
+  ancestry. Admit readable regular sample files directly in that workspace,
+  with safe basenames and a fixed 65,536-byte input ceiling before reading.
+  Fake tools are the fixed uname/sysctl/vm_stat roles inside its fake-bin;
+  their preparation uses fixed bodies and the selected Bash identity.
+- Expose only fixture preparation and a closed run operation taking workspace,
+  sample and scenario. Scenarios are the existing healthy completion, pressured
+  child and child-marker controls; the adapter owns their exact Perl argv.
+  No caller argv, executable, cwd, wall, capture, threshold or environment
+  override is accepted. Marker paths are derived inside the admitted workspace.
+- Launch the exact repository guard through selected Bash. Retain T1595's
+  explicit 88-percent / 4096-MiB options, 0.02-second poll and zero grace; these
+  are existing inner test controls. The real outer RAM guard remains at its
+  configured defaults and uses the real host readings. No safety policy widens.
+- Seal each fixture invocation to ten seconds and 1,048,576 aggregate output
+  bytes. The adapter locally restores the environment, prepends only its
+  admitted fake-bin to the captured absolute tool PATH, fixes the existing
+  4,096,000-byte synthetic host capacity and admitted sample path, and clears
+  inherited Bash startup injections. All temporary/cache data remains local.
+- Return the shared closed result with schema
+  `fsmgen.test.ram_guard_fixture_result.v1`, stage `ram_guard_fixture` and
+  `ram_guard_fixture_process_group` containment. Retain separate exit/signal,
+  output, timeout, overflow, exec and cleanup fields; never collapse signal or
+  timeout into an exit-only success. Preserve nonzero results as nonzero even
+  when a metric test expects the guard's documented trip or rejection.
+- Extend the existing exclusive-owner oracle to admit only this additional
+  policy adapter and forbid direct IPC in T1595. Independently demonstrate
+  that a signalled child defeats the old shifted-exit projection and that
+  stderr-before-stdout pressure defeats its sequential reader under a finite
+  outer observer. Preserve RED evidence and exact owned-process cleanup.
+  Use engine/adapter controls for timeout, capture, signal and cleanup truth;
+  prove hostile caller/path/PATH attempts reject or retain the selected policy.
+  Keep all original healthy/pressured/malformed-sample metric assertions.
 
-The reviewed sampling command form is:
+The guard does not establish a new process group. Its admitted fixture command
+stays in the adapter's group, unlike the independently grouped nested supervisor
+counterexample. This is a group-cleanup boundary, not a general descendant or
+root-owner-loss guarantee; no private coordinator route is activated.
+Re-derivation is source/history plus unchanged metric fixtures; falsification
+is independently bounded signal/output controls and admission mutations;
+durability is this selected contract, following tracked adapter/oracles,
+book/facts and work-unit Git. Runtime and negative-control execution remain
+missing until child .2. Design-only selection changes no shipped behavior.
 
-```bash
-# Set this only after proving the live child belongs to the observed invocation.
-# Never reuse a PID from a historical log.
-mkdir -p .artifacts/logs/fixture-wait-state-20260907
-sudo /usr/sbin/spindump "$FSMGEN_STARTUP_PID" 1 10 \
-  -onlyTarget -noFile -noBinary -noSymbolicate -timelimit 3 \
-  > .artifacts/logs/fixture-wait-state-20260907/identified-child.spindump
-```
+## Acceptance Checklist (.19.2.3.1.2.2.6.1 policy and history routing; enforced)
 
-Child `.3.4` owns the actual administrator-assisted capture and any bounded
-observer implementation. Authentication must be available before starting its
-single guarded diagnostic invocation; tests themselves remain unprivileged.
-Only a freshly identified owned target may be sampled. Keep its executable,
-fixture, ancestry and invocation identity, preserve failed outcomes, and prove
-observer/child cleanup. The command's availability is not a claim that it will
-identify the cause; missing samples, unresolved stacks and absent recurrence
-remain explicit evidence limits. Causal repair remains sibling `.3.2`.
-
-`native-capability.json` and `privileged-capability.json` under
-`.artifacts/logs/fixture-wait-state-20260907/` retain exact commands and returned
-diagnostics. Native help and a repeat of the owned-process capability probe
-re-derive this selection; the actual live probes falsify availability inferred
-from an executable's presence. This task and its Git commit retain the outcome
-and rerunnable command form. The ignored JSON is supplementary, and supplies
-no performance, reliability or root-cause claim. Native process/sampling tools
-and their SDK declarations are required read-only OS/toolchain dependencies;
-the selected PGEN policy is the director-authorized same-volume read-only input.
-No host security, production policy, test body or asserted result changed.
-
-The task-directed startup reading covers all mandatory entrypoints, the
-roadmap, task-tree contracts and active startup owner, relevant decisions and
-facts, the CLI and its documented runtime spine, shared supervisor/adapters,
-the failing fixture paths, T1545 observation, and the matching mdBook guidance.
-The selected claim-template hashes still match `CLAIM-VERIFICATION-TEMPLATE-REVIEW`;
-the containment guide includes its integration-test portability amendment.
-The book already states the unknown startup cause and open qualification, so
-this diagnostic selection changes no user-facing contract. Keep retained
-failure artifacts while their causal owner is open; no cleanup deletes evidence.
-
-## Rejected thread-state substitute (.19.2.3.1.2.2.5.5.2.3.1.2.2.3.5)
-
-The bounded calibration asks whether an unprivileged `libproc` thread-state
-query distinguishes an ordinary pipe wait from a stopped task before applying
-it to any fixture. Its child signals readiness through a separate pipe and
-then blocks on a parent-owned pipe. The parent observes native identity before
-and after inspection, sends SIGSTOP only to that child, and requires an actual
-`waitpid(WUNTRACED)` stop status. Thread-list capacity, polls and child lifetime
-are bounded. The repository RAM guard keeps its configured limits; all scratch
-source and output remain under `.artifacts/` on the repository volume.
-
-The first probe fails with ESRCH because `PROC_PIDLISTTHREADS` handles were
-mistakenly passed to `PROC_PIDTHREADID64INFO`. Apple's own
-[proc-info test](https://github.com/apple-oss-distributions/xnu/blob/main/tests/proc_info.c)
-pairs the listed handles with `PROC_PIDTHREADINFO`; unique thread IDs come from
-a different producer. The corrected probe uses that pairing and succeeds in
-reading the exact owned child's thread. Its pipe wait and independently
-confirmed SIGSTOP both report `TH_STATE_WAITING`, while BSD process status
-changes to `SSTOP`. The stop-discrimination assertion therefore fails and stays
-failed. This is a rejected diagnostic classifier, not a failed production test
-or a newly diagnosed kernel defect. The existing process-status observation
-already distinguishes BSD suspension; this probe adds no kernel wait chain.
-
-The installed SDK separates BSD process-status and Mach thread-state values.
-Apple's [native adapter](https://github.com/apple-oss-distributions/xnu/blob/main/osfmk/kern/bsd_kern.c)
-and [thread-state producer](https://github.com/apple-oss-distributions/xnu/blob/main/osfmk/kern/thread.c)
-also expose a scheduler-state projection rather than a causal wait chain.
-Those external sources support API interpretation, not source identity with
-the running kernel or the historical fixture's cause. The controlled result
-is the evidence rejecting the proposed stop inference. Do not promote this
-probe into an observer or retry the fixture band on its strength.
-
-Retained evidence is `.artifacts/logs/fixture-thread-state-20260907/`:
-`probe.log` and `native-state.json` preserve the initial API error;
-`probe-corrected.log` and `native-state-corrected.json` preserve the failed stop
-control. Each JSON includes its producer digest, child identity, terminal
-`waitpid` result and subsequent native ESRCH. Both exact children were killed
-and reaped by their parent after the failed assertion; both guards are terminal.
-The initial scratch source is `probe-initial.py` and the corrected source is
-`probe.py` under `.artifacts/tmp/fixture-thread-state-20260907/`.
-
-Re-derivation is the bounded native query against that controlled child;
-falsification is the independent waitpid-confirmed stop, which makes the
-proposed discriminator go RED. **Durability gap:** the exploratory producer
-and raw outputs are ignored, so a fresh clone cannot rerun this experiment.
-The tracked task, Knowledge Map route and external producer references preserve
-its negative disposition; this is not a durable calibration, numerical support
-claim, startup repair or qualification pass. Sibling `.3.4` retains the missing
-kernel observation and any tracked observer work before causal repair `.3.2`.
-The book already describes the unknown startup cause and open qualification;
-no user-facing contract or CLI import changes require a book/map regeneration.
-The first staged driver correctly rejects a stale claim-inventory digest after
-the Knowledge Map's generated question totals change. Regeneration changes only
-that derived census digest; candidate membership and dispositions are unchanged.
-The second driver passes the refreshed census but rejects task acceptance:
-the generated inventory is a declared implementation path. Its fresh checklist
-below covers this artifact update; it does not claim a startup repair or runtime
-test pass. The diagnostic probes retain their failed outcomes.
-
-## Acceptance Checklist (.19.2.3.1.2.2.5.5.2.3.1.2.2.3.5 generated census; enforced)
-
-- [x] **ROOT CAUSE (WHY + WHERE)** — `git log -S 'numeric_census_sha256'`
-  identifies `f1dad5dc6` as the introduction of the numeric census mechanism
-  in `scripts/check_claim_verification_inventory.pl`. The first staged driver
-  reports `claim-inventory: inventory drift` after the generated Knowledge Map
-  gains the diagnostic question. The tracked inventory retains the previous
-  map's digest; this is projection drift, not an altered claim classification.
-- [x] **ADDRESSED (verified)** — Guarded inventory regeneration reports
-  `claim-inventory: current-surface census and independent census agree` in
-  `claim-inventory.log`. Its inspected diff changes only `numeric_census_sha256`;
-  the corrected driver's census and complete disposition join pass. The initial
-  rejection independently proves the stale projection is detected.
-- [x] **NO REGRESSION** — The corrected driver reports `knowledge-map: OK`
-  with query parity verified, `readme-entrypoint: all README entry-point invariants hold`,
-  and passing claim/disposition and containment gates. The new native-thread
-  question resolves to the canonical card with the cache disabled. Fresh boxes
-  address the corrected driver's acceptance rejection; the final staged driver
-  and commit hook must pass before commit. No full-CI or runtime pass is claimed.
-
-The generated census's distinct legs are direct regeneration, the independent
-numeric census plus observed stale-digest rejection, and its tracked producer,
-inventory and registered doctrine watcher. They do not close the exploratory
-native calibration's separately stated durability gap.
-
-## Reusable authenticated capture handoff (.19.2.3.1.2.2.5.5.2.3.1.2.2.3.6)
-
-The director asks for an executable unblocking step and rejects repeated manual
-commands/password prompts for successive diagnostic captures. Computer Use
-refuses access to Terminal for safety reasons; no alternate terminal-control
-mechanism is used to bypass that refusal. The installed sudoers manual defines
-terminal/parent-scoped timestamp records, so authenticating in an unrelated
-Terminal cannot be assumed to authorize the agent's execution session.
-
-The prepared user action, from the repository root, is:
-
-```bash
-bash scripts/await_fixture_kernel_samples.sh
-```
-
-The wrapper configures project-local data and the normal RAM guard. The Python
-helper stays unprivileged and uses its controlling Terminal for initial
-`sudo -v`. Refreshes use non-interactive validation from that same helper; they
-never prompt again. Only the fixed native sampler command is elevated. There
-is no new sudoers rule, installation, root shell, saved password, or change to
-host security settings. The normal test runner remains separately owned by
-`.3.4`; the authentication helper does not launch or repeat tests.
-
-When the helper prints READY, `.3.4` must independently verify its live PID,
-start identity and source digest against `session.json` under the reported
-`.artifacts/logs/fixture-kernel-capture/session-*` directory. File state alone
-is not liveness proof. The controller must own a fresh guarded invocation and
-identify its direct T1668 `orphaning-runtime` child before publishing a request.
-Write each complete request atomically as `request-0001.json`, then the next
-number only after consuming the prior `capture-0001/result.json` and outputs.
-The closed schema consists of native integer `pid`, `start_sec`, `start_usec`,
-`parent_pid`, `parent_start_sec`, and `parent_start_usec` fields. No command,
-policy, environment or output path is accepted from a request. Never copy a
-historical PID into this protocol.
-
-The helper cross-checks child and parent birth identity, UID, executable,
-parent command, direct ancestry and canonical same-volume fixture source before
-sampling. The source digest and native identity observations accompany the
-result. Stale/reused/foreign/racing identities, unexpected commands, oversized
-or duplicate-field requests, symlinks and nonregular files reject before a
-sampler can start. Rejection is retained and requires a new numbered request;
-it does not promote a failed regression. Errors after launch stop the session.
-The fixed target-only, text-only native sampling command retains its native
-exit limit and repository-local output; outer waits and TERM/KILL waits are
-also bounded. Actual privileged subprocess behavior and kernel evidence remain
-unqualified until the user runs the session and `.3.4` consumes a live capture.
-In particular, this helper does not prove atomic PID authority across the OS
-sampler's launch or whole nested-test-subtree cleanup.
-
-The session has source-declared expiry and request limits. Ctrl+C or a STOP
-file in its own session directory requests shutdown. On orderly stop, expiry,
-quota completion or failure, the helper stops refreshing authentication and
-invalidates its timestamp. Capture results, refusal/error records and terminal
-session state remain on the repository volume. `.3.4` must consume sampler
-termination, target identity/sample contents, helper/observer termination and
-sampled-fixture cleanup before treating a diagnostic invocation as complete.
-Unknown or empty samples remain unknown; a subsequent passing test does not
-repair the original failure or qualify the private wire implementation.
-
-## Acceptance Checklist (.19.2.3.1.2.2.5.5.2.3.1.2.2.3.6; enforced)
-
-- [x] **ROOT CAUSE (WHY + WHERE)** — `git log -S 'non-interactive sudo cannot authenticate'`
-  identifies `65bb51a34` as the recorded authentication blocker. The live native
-  capability probe requires root, and the repeated non-interactive check reports
-  a password requirement. Computer Use then refuses Terminal access. The local
-  sudoers timestamp contract explains why a separate `sudo -v` instruction was
-  not a complete agent handoff; repeated manual captures also contradict the
-  director's stated workflow requirement.
-- [x] **ADDRESSED (verified)** — The tracked helper supplies one local launch and
-  initial authentication for a stoppable, expiring session of sequential fixed
-  capture requests. Guarded `python3 -B t/python/test_fixture_kernel_sampler.py`
-  passes in `controls-final.log`. Native Perl parent/fixture and independently
-  forked-child controls verify actual identity admission; controlled foreign,
-  stale, racing and redirected inputs reject. The session control exercises
-  repeated requests without repeating interactive validation. An in-memory
-  mutation changing refresh to interactive validation fails that control in
-  `red-refresh.log`; the original implementation passes. No sudo or live kernel
-  sampler runs during these controls.
-- [x] **NO REGRESSION** — Shell/Python syntax checks pass; focused controls also
-  exercise expiry, STOP, non-interactive refresh and a real TERM-resistant
-  child's bounded cleanup. The mdBook builds, its rendered launch/authentication/
-  shutdown guidance is inspected, and the exact disposable output is removed
-  after an empty open-file census. The regenerated map reports `knowledge-map: OK`
-  with query parity; the new question resolves to the canonical fact without
-  cache. Claim inventory and the exact maintained-book aggregate are rederived
-  without raising ceilings. The staged doctrine driver and commit hook remain
-  mandatory before this prepared handoff is committed; full CI and privileged
-  capture remain pending, and no original failed fixture run is reclassified.
-
-Evidence is under `.artifacts/logs/fixture-capture-handoff-20260907/`. Re-derivation
-uses the tracked helper and focused controls. Falsification uses native process
-and filesystem observations, independently owned children, and the observed
-interactive-refresh mutation failure. Durability is the tracked implementation,
-control source, task, book, fact route and Git; the focused command is rerunnable.
-The Python diagnostic controls are manually invoked, not added to the default
-Perl CI runner. Native authentication, privileged sampler cleanup and causal
-kernel evidence remain explicit missing legs owned by `.3.4`.
-
-## Authenticated observation checkpoint (.19.2.3.1.2.2.5.5.2.3.1.2.2.3.4)
-
-The director's iTerm2 READY session matches native birth identity, tracked source
-digest and unexpired `session-d6ff2617c99a426db231c3715749ed84/session.json`.
-One unchanged guarded T1545/T1669/T1668/T313 band passes without another prompt
-or root tests. Its prospective native observer binds guard/test births; no direct
-T1668 orphaning-runtime persists to admission, so no request or sample exists.
-Original failures and qualification remain open. T1545's logged timeout is its
-passing held-before-exec control. Observed births disappear; independent observer/
-guard census is ESRCH, without proving unobserved/reparented nested cleanup.
-The then-live helper passes to `.3.7`, which records its subsequent shutdown.
-Evidence: `.artifacts/logs/fixture-kernel-observation-20260907/` (`regression.log`,
-`observer.log`, `events.jsonl`, `checkpoint-census.json`). Re-derivation uses the
-unchanged command and native observations; falsification retains original failure
-and independently checks birth identity. Task/Git preserve this negative result;
-ignored scratch instrument/raw logs have an explicit durability gap. No cause,
-repair or privileged sampler execution is claimed. Shipped behavior and book
-accuracy are unchanged. Gates reject a missing child reference and line pressure;
-corrected child linkage and exact checkpoint compaction preserve the evidence.
-Auto-review rejects a broad replacement; a scoped patch resolves it. No
-implementation checklist applies; corrected doctrines and hook are required.
-
-## Acceptance Checklist (.19.2.3.1.2.2.5.5.2.3.1.2.2.3.7 evidence projections; enforced)
-
-- [x] **ROOT CAUSE (WHY + WHERE)** — `git log -S 'noSymbolicate'` locates the sampler at `74c23d182`; its first admitted live report and independent exact-path OS records add kernel evidence beyond the book's prior user-only sample. The diagnostic changes only evidence projections and does not establish the original timeout cause.
-- [x] **ADDRESSED (verified)** — Update the owning statuses, bounded fact, book and exact book aggregate from the retained capture. Native report identity and OS records independently agree on the fixture; original empty queries and failed regression remain preserved. The Knowledge Map and independent claim census are regenerated; the book builds and its rendered observation/limitation paragraph is inspected in book-review.json.
-- [x] **NO REGRESSION** — The unchanged diagnostic band and every retained campaign invocation report `All tests successful`; they are observation results, not repair qualification. Helper/observer shutdown and exact command census are consumed. The book build and refreshed map/census pass; the new AppleSystemPolicy question resolves to the canonical card. The first staged driver rejects fact-card aggregate growth; duplicated task detail is routed back to its owner without raising limits, preserving exact capture identity and OS results in the compact card. The corrected staged driver and hook remain mandatory before commit; full CI and push remain pending.
-
-## Acceptance Checklist (.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2 fresh-launch observation; enforced)
-
-- [x] **ROOT CAUSE (WHY + WHERE)** — `git log -S 'Fresh terminal process-tree control requires'` locates the pending handoff at c3f6475637db. Native identities now prove a new shell/Codex ancestry; read-only Settings verifies the existing permission. Exact-fixture OS records reject scan elimination after this change, while original timeout attribution remains missing. Prior permission-checkpoint acceptance is recoverable at 28836d8e21abe3151c99cec5ce5786328d1758de and c3f6475637db8bfe5d488a19a255101edce81f88.
-- [x] **ADDRESSED (observation verified; repair pending)** — The one preselected unchanged band passes with native fixture identity, live provenance metadata and independent same-window exact-fixture policy evidence. Native cleanup and independent guard/observer checks are consumed; no sampler or authentication runs. Task, bounded fact, book and exact book aggregate record the limited result and preserve the open defect. The next independent sibling retains its original acceptance; wire/runtime qualification is unchanged.
-- [x] **NO REGRESSION** — The unchanged band reports `All tests successful`; no test, supervisor, command or bounds changes. The corrected local book build/render review, exact misplaced-output cleanup, map regeneration and independent claim census pass. The first staged driver rejects an overlong Verification field; its prior permission paragraph is routed to this exact leaf at c3f6475637db8bfe5d488a19a255101edce81f88, with canonical facts preserved and no limit change. The corrected staged driver reports `[doctrine] all doctrine checks passed`, including fresh acceptance; the hook rechecks final evidence. Complete CI and push stay blocked; raw diagnostics retain their durability gap.
+- [x] **ROOT CAUSE (WHY + WHERE)** — `git log -S 'waitpid($pid, 0)'` identifies 30885823b54a0677b4396550d9d3cfc2fc7fa3a9; T1595 reads streams sequentially, waits without a deadline and discards signal bits. Its original pre-main sample remains a separate unknown-cause failure. The current task also needs room for live policy; only its completed diagnostic suffix is routed to exact versioned history.
+- [x] **ADDRESSED (policy selected; runtime pending)** — Select one sealed domain adapter over the existing shared engine, exact tool/path/command admission, fixed bounds and full result truth; own implementation and independent RED/GREEN qualification in child .2. Preserve the full predecessor and exact suffix via the existing history manifest, retaining live coordinator design and startup blockers without raising a ceiling.
+- [x] **NO REGRESSION** — Focused task/history retrieval reports all active invariants hold, including exact predecessor and suffix hashes; map regeneration succeeds. The staged doctrine driver reports `[doctrine] all doctrine checks passed`, including Knowledge Map/census and the docs-only acceptance exemption; the hook rechecks final evidence. Source, tests and mdBook behavior are unchanged; no runtime repair or complete-CI qualification is claimed.

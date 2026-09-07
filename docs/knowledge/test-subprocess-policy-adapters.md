@@ -94,7 +94,7 @@ identity checks and STOP/Ctrl+C shutdown. Child `.3.7` completes the native capt
 and verified session shutdown; `.3.2` still owns causal repair selection.
 T1595's env-Bash fake uname stalled at `_dyld_start` before measuring memory.
 Its sequential open3 capture, unbounded wait and exit-only projection remain
-owned by HIAL/VIAL `.19.2.3.1.2.2.6`. This does not diagnose the OS cause or
+owned by HIAL/VIAL `.19.2.3.1.2.2.6`; `.6.1` selects sealed bounds. This does not diagnose the OS cause or
 change production memory formulas/thresholds.
 
 A nested probe found an inner group alive after outer timeout reported its
