@@ -630,12 +630,41 @@ refresh is non-interactive and fails closed if access expires or is revoked.
 This is a diagnostic handoff, not a startup repair or qualification result.
 
 The T1669 admission controls exercise controlled native processes and hostile
-requests without privileged sampling. A tracked observer and authenticated
-capture of the original failure remain separately owned investigation steps.
-The hosted doctrine job runs the portable admission controls; native process
-identity controls run on Darwin and are explicitly skipped on other platforms.
+requests without privileged sampling. The tracked observer is
+`scripts/observe_fixture_startup.py`; inspect its argument contract with:
 
-The quantitative statements above have three independent legs:
+```bash
+python3 -B scripts/observe_fixture_startup.py --help
+```
+
+The engineer supplies the exact live test PID and native birth fields, plus
+the ready helper's repository-relative session directory. The observer runs
+through the RAM guard and attaches to that test; it neither starts nor signals
+tests. The caller retains the original guarded invocation's TAP and exit result.
+The observer records source digests, copies the exact inspected source bytes,
+and retains candidate ancestry and observed main-entry progress under
+`.artifacts/logs/t1669-startup-observation/`. Event and source storage have
+separate fixed bounds.
+An independently bounded `failure.json` retains terminal errors if the event
+log fills.
+
+The observer prefers the generated child over a waiting wrapper. A legacy
+producer that has written its native main-entry marker is excluded from startup
+sampling, so the deliberate blocked-stream control is not mistaken for a
+pre-main stall. It submits at most one capture, preserves failures without
+retry, and waits for the selected test and observed fixtures to disappear.
+It stops the selected helper and verifies authentication invalidation and
+helper disappearance. Unobserved descendants remain unknown; neither a quiet
+process census nor a passing invocation establishes a causal repair.
+
+Capture requests and helper results are published only after their complete
+JSON has been written, so a concurrent reader cannot consume a partial record.
+The portable observer and admission controls run in the hosted doctrine job;
+native process identity controls run on Darwin and are explicitly skipped on
+other platforms. Actual authenticated capture and causal repair remain open
+investigation steps.
+
+The shared adapter's quantitative statements above have three independent legs:
 
 - Re-derive the direct callsites and selected constants from `t/1545`, both
   policy adapters, and the shared engine, then run the original doctrine test.

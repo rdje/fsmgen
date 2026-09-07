@@ -300,6 +300,35 @@ class CaptureBoundary(unittest.TestCase):
         self.assertEqual(json.loads((directory / "session.json").read_text())["state"],
                          "request_limit_reached")
 
+    def test_capture_result_never_exposes_a_partial_json_record(self):
+        directory = self.root / ".artifacts/logs/fixture-kernel-capture/session-control"
+        stack = self.session_patches(directory, [])
+        stack.enter_context(patch.object(SAMPLER, "MAX_REQUESTS", 1))
+        stack.enter_context(patch.object(SAMPLER, "sudo_validation", side_effect=lambda _: (
+            directory / "request-0001.json").write_text(json.dumps(self.request))))
+        stack.enter_context(patch.object(SAMPLER, "capture", return_value={
+            "sampler": {"returncode": 0, "timeout": False}}))
+        write = Path.write_text
+        observed = []
+
+        def interrupted_write(path, text, *args, **kwargs):
+            if path.name not in ("result.json", "result.next"):
+                return write(path, text, *args, **kwargs)
+            with path.open("w") as stream:
+                middle = len(text) // 2
+                stream.write(text[:middle])
+                stream.flush()
+                public = path.parent / "result.json"
+                observed.append(public.exists())
+                self.assertFalse(public.exists(), "reader can see a partial published capture result")
+                stream.write(text[middle:])
+            return len(text)
+
+        stack.enter_context(patch.object(Path, "write_text", interrupted_write))
+        self.assertEqual(SAMPLER.main(), 0)
+        self.assertEqual(observed, [False])
+        self.assertEqual(json.loads((directory / "capture-0001/result.json").read_text())["sampler"]["returncode"], 0)
+
     def test_refresh_is_noninteractive_and_stop_ends_the_session(self):
         directory = self.root / ".artifacts/logs/fixture-kernel-capture/session-control"
         validations = []

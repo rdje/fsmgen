@@ -351,7 +351,9 @@ def main():
             else:
                 # Errors after launch stop the session; they are not pre-launch rejections.
                 result = capture(request, native, ROOT, target_directory)
-            (target_directory / "result.json").write_text(json.dumps(result, indent=2) + "\n")
+            result_pending = target_directory / "result.next"
+            result_pending.write_text(json.dumps(result, indent=2) + "\n")
+            result_pending.replace(target_directory / "result.json")
             session["last_request"] = number
             publish()
             if result.get("rejected"):

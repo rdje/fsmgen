@@ -39,8 +39,8 @@ jobs:
         done < <(git log --format='%s' "$base"..HEAD)
         [ "$bad" -eq 0 ]
 
-    - name: Fixture sampling admission controls (no privileged sampling)
-      run: bash scripts/run_with_ram_guard.sh -- python3 -B -m unittest discover -s t/python -p test_fixture_kernel_sampler.py -v
+    - name: Fixture observer and sampling admission controls (no privileged sampling)
+      run: bash scripts/run_with_ram_guard.sh -- python3 -B -m unittest discover -s t/python -p 'test_fixture_*.py' -v
 
   book:
     name: mdBook build
