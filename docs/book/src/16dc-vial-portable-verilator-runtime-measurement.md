@@ -707,6 +707,12 @@ remains failed; a fresh authenticated attempt is still needed for native wait
 evidence, and no causal repair is claimed.
 The selected helper stopped and invalidated authentication.
 
+A later attempt confirmed admission of real Rust and legacy fixtures, but an
+exiting wrapper made its command query fail and stopped observation before a
+capture. The original test passed; that does not qualify the incomplete
+observation or repair the historical startup failure. Task `.3.8.6` owns the
+command-query exit race before another authenticated attempt.
+
 Capture requests and helper results are published only after their complete
 JSON has been written, so a concurrent reader cannot consume a partial record.
 The hosted doctrine job discovers the fixture Python controls. Launcher
