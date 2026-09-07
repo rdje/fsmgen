@@ -9,6 +9,7 @@ use File::Copy qw(copy);
 use File::Path qw(make_path);
 use File::Spec;
 use FindBin;
+use JSON::PP ();
 
 use lib File::Spec->catdir($FindBin::Bin, '..', 'perl');
 use lib File::Spec->catdir($FindBin::Bin, 'lib');
@@ -172,6 +173,43 @@ subtest 'unstaged worktree evidence cannot satisfy the staged index' => sub {
     like($output, qr/box-scoped root_cause signature/, 'failure reflects the staged snapshot');
 };
 
+subtest 'failed checker diagnostics retain the complete supervisor result' => sub {
+    my $repo = make_fixture_repo();
+    for my $streams (0, 1) {
+        write_file($repo, 'scripts/check_task_acceptance.sh',
+            ($streams ? "printf 'stdout sentinel'\nprintf 'stderr sentinel' >&2\n" : '')
+                . "exit 23\n");
+        my (@diagnostics, $ok, $output, $result);
+        {
+            no warnings 'redefine';
+            local *main::diag = sub { push @diagnostics, @_; return 1; };
+            ($ok, $output, $result) = run_checker($repo);
+        }
+        ok(!$ok, 'deliberate nonzero checker remains failed');
+        is($output, $streams ? 'stdout sentinelstderr sentinel' : '',
+            'checker-output assertions receive only the original streams');
+        my $encoded = join('', @diagnostics);
+        like($encoded, qr/\Afixture checker result: /,
+            'failure emits structured evidence even with empty streams');
+        $encoded =~ s/\Afixture checker result: //;
+        my $record = eval { JSON::PP->new->decode($encoded) };
+        ok(ref($record) eq 'HASH', 'diagnostic is a recoverable JSON result');
+        next unless ref($record) eq 'HASH';
+        is_deeply($record, $result, 'diagnostic preserves every returned result field');
+        is($record->{status}, 'nonzero_exit', 'actual wait status is classified');
+        is($record->{exit_code}, 23, 'independent shell exit is preserved');
+        is($record->{signal}, 0, 'ordinary exit is distinct from a signal');
+        like($record->{diagnostic}, qr/exited nonzero/, 'supervisor explanation survives');
+        is($record->{stdout}, $streams ? 'stdout sentinel' : '', 'stdout stays separate');
+        is($record->{stderr}, $streams ? 'stderr sentinel' : '', 'stderr stays separate');
+        ok(defined($record->{started_monotonic_ns})
+                && defined($record->{finished_monotonic_ns}),
+            'monotonic start and completion evidence survives');
+        ok($record->{cleanup}{leader_reaped} && $record->{cleanup}{group_gone},
+            'real failed control retains completed cleanup evidence');
+    }
+};
+
 done_testing();
 
 sub complete_checklist {
@@ -265,5 +303,10 @@ sub run_checker {
     my ($repo) = @_;
     my $result = run_fixture_checker($repo);
     my $output = $result->{stdout} . $result->{stderr};
-    return ($result->{ok} ? 1 : 0, $output);
+    # Diagnostics are TAP evidence, never checker output: the existing output
+    # assertions must not accidentally match supervisor metadata. Preserve the
+    # complete closed record even when the failed child produced no bytes.
+    diag('fixture checker result: ' . JSON::PP->new->ascii->canonical->encode($result))
+        unless $result->{ok};
+    return ($result->{ok} ? 1 : 0, $output, $result);
 }

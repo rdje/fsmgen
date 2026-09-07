@@ -2293,10 +2293,25 @@ decomposes the architecture needed to move beyond that bounded foundation.
   Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.1: implement bounded private coordinator wire`
 
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2`
-  Status: `pending`
+  Status: `active`
   Goal: `Expose and diagnose T1545 infrastructure failure before closing wire qualification.`
-  Acceptance: `Preserve final-regression.log as failed evidence. Repair run_checker's loss of supervisor status, diagnostic, timing, exit/signal and cleanup facts without changing checker-output assertions, sealed command policy or resource bounds. Prove the diagnostic path with a deliberately failing bounded control, then use one instrumented bounded diagnostic run to identify any recurring launch failure. Own a distinct runtime repair if needed; no retry may erase the first failure. Close the original focused supervisor/adapter band and parent wire qualification only after the failure is honestly dispositioned.`
-  Verification: `The final guarded four-file command reports T1669, T1668 and T313 ok, but T1545's documentation-only checker acceptance and exemption assertions fail at lines 30/31 with an empty output string. Its run_checker at lines 264-268 returns only ok and concatenated streams, so the invocation's structured status and diagnostic are not retained. The original command has completed; a pre-main stall is not established by this evidence. The unchanged paths and producing projection are independently identified by git diff and git log -S. Evidence: .artifacts/logs/coordinator-wire-20260907/final-regression.log. The new diagnostic repair is beyond this codec-only safe slice.`
+  Acceptance: `Preserve the original failed run, retain complete supervisor diagnostics without altering checker assertions or sealed policy, and qualify the launch boundary only after the unexplained failure has an evidence-backed disposition.`
+  Verification: `Child .1 repairs and independently qualifies diagnostic preservation. Its instrumented T1545 run and focused shared-supervisor band pass without reproducing the earlier empty-output failure. The original invocation discarded its structured result and left no retained child identity or process sample; its runtime cause cannot be recovered from final-regression.log. Child .2 owns prospective launch evidence and qualification. The original failure remains failed and parent wire qualification remains open.`
+  Commit: `pending child .2 qualification`
+  Children: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.1, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2`
+
+- ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.1`
+  Status: `done`
+  Goal: `Preserve complete T1545 checker failure diagnostics separately from checker-output assertions.`
+  Acceptance: `A real deliberately failing bounded checker must expose its complete closed result with empty and nonempty streams; prove the control RED on the discarded-result helper, preserve all original checker assertions and resource bounds, and pass focused supervisor regressions and synchronized documentation gates.`
+  Verification: `git log -S locates the discarded-result projection at d630261e6. New real Bash exit-23 controls fail against the old run_checker, then pass after canonical JSON TAP diagnostics and the original structured record are retained. They independently check actual exit/signal, split streams, timings and cleanup while exact decode equality proves complete record preservation. The instrumented T1545 run and guarded T1669/T1668/T1545/T313 band report All tests successful. These fresh observations do not diagnose the earlier invocation. The book and existing fact card state that limit. CLI source/import review agrees with the dated architecture baseline; selected claim-template digests match the already tracked review debt. Evidence: .artifacts/logs/task-acceptance-diagnostics-20260907/. The mdBook builds and its rendered diagnostic paragraph is inspected. The claim inventory and independent census agree; the historical qualification disposition follows its explicitly dated paragraph. Existing Knowledge Map aggregate allowance is renewed by the prescribed ratchet steps under the active parent owner; no enforcement ceiling changes. The guarded staged doctrine driver reports all doctrine checks passed, including fresh task acceptance; hooks recheck the final staged evidence on commit.`
+  Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.1: preserve checker failure diagnostics`
+
+- ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2`
+  Status: `pending`
+  Goal: `Capture and qualify the unexplained T1545 launch boundary before closing wire qualification.`
+  Acceptance: `Keep .artifacts/logs/coordinator-wire-20260907/final-regression.log failed and distinguish unavailable historical evidence from a reproduced runtime cause. Select a bounded observation path for actual checker process identity and startup/main progress before another diagnostic attempt; preserve sealed commands, fixed limits and original fixture assertions. Use captured recurrence to own a concrete runtime repair, or explicitly establish the remaining qualification limit without claiming retry-based recovery. Endpoint implementation remains behind this leaf.`
+  Verification: `The diagnostic-preservation control is RED on the old helper and GREEN after repair, but the instrumented real T1545 run and broader band do not reproduce the historical empty-output failure. No retained structured status, child identity or process sample exists for that invocation. A pre-main stall, timeout, signal or specific OS cause is not established. Prospective runtime observation is a distinct safe slice; no production supervisor or adapter policy changed.`
   Commit: `pending`
 
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.2`
@@ -5901,3 +5916,35 @@ This slice applies the batch stop condition for newly discovered work beyond
 a safe slice: T1545 diagnostic repair is distinct from the private codec.
 Commit the qualified implementation checkpoint before that repair begins.
 The default batch is not complete; no push is authorized by this checkpoint.
+
+## Acceptance Checklist (HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.1 diagnostics; enforced)
+
+- [x] **ROOT CAUSE (WHY + WHERE)** — `git log -S` identifies
+  `run_checker`'s two-value projection at `d630261e6`. The retained original
+  `final-regression.log` contains empty checker output without supervisor
+  metadata. The new real failed-checker controls go RED against that helper
+  in `red.log`; this proves diagnostic loss, not the historical runtime cause.
+- [x] **ADDRESSED (verified)** — The same controls go GREEN in
+  `instrumented.log`: empty and split streams remain unchanged for checker
+  assertions, while canonical JSON diagnostics reconstruct the complete
+  structured result, actual shell exit, signal, timing and cleanup facts.
+  No resource bound, command admission, retry, or production runtime changes.
+- [x] **NO REGRESSION** — Guarded T1669/T1668/T1545/T313 report
+  `All tests successful` in `regression.log`. The instrumented launch does not
+  reproduce the earlier failure; its original failed status is retained.
+  The mdBook builds and its rendered diagnostic paragraph is inspected; the
+  existing Knowledge Map card routes to the repaired test. The claim census
+  and complete disposition join pass. The guarded staged driver reports
+  `[doctrine] all doctrine checks passed`; hooks recheck final staged evidence.
+
+The distinct claim legs are re-derivation through the instrumented checker,
+falsification through real failed-shell controls against the unchanged helper,
+and durability through the tracked regression, this task, book and fact card.
+The historical invocation lacks enough runtime evidence to identify its cause;
+child `.1.2.2` retains that missing leg and blocks parent qualification.
+Startup used the director-selected task-directed scope in `SESSION-READING-SCOPE`:
+mandatory documents, roadmap, full CLI, import architecture, active process
+sources/tests, and relevant mdBook sections. The same-volume caller-selected
+claim template was read-only and its digest agrees with the already owned
+`CLAIM-VERIFICATION-TEMPLATE-REVIEW` record. README and containment adoption
+remain in force; their canonical policies and adoption guide were reviewed.

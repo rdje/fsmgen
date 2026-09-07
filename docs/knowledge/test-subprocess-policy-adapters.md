@@ -4,6 +4,7 @@ title: Test subprocesses share one mechanism behind sealed policy adapters
 answers:
   - "how are FSMGen test subprocesses bounded?"
   - "why does t1545 not use IPC Cmd?"
+  - "where does T1545 preserve empty-output checker failure diagnostics?"
   - "why does the task-acceptance fixture invoke Bash directly?"
   - "who may call the low-level test process supervisor?"
   - "why can T1595 stall before measuring host memory?"
@@ -57,6 +58,10 @@ Bash preserves capability: the retained `/bin/bash` 3.2 control fails its empty
 array under `set -u`. Bash/Git are read-only host dependencies; project data
 stays local. Timeout, overflow, nonzero, signal, exec, group-descendant and
 cleanup failures stay failed without retry; original fixture assertions pass.
+T1545 preserves each failed checker result in canonical JSON TAP diagnostics,
+apart from the checker-output string. Its real nonzero controls cover empty
+and split-stream output and full result recovery. An earlier empty-output
+failure discarded that record; its underlying cause remains unestablished.
 The Verilator watcher uses canonical Perl fixture shebangs after an env-Perl
 fixture reached exec handoff but timed out before output. Only the entrypoint
 invoked through Perl by `prove` may retain an env shebang.

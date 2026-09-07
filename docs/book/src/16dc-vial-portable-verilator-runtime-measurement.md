@@ -453,11 +453,21 @@ The adapter returns
 `fsmgen.test.task_acceptance_fixture_result.v1`, with separate streams,
 exit/signal/timeout/limit/exec truth, selected bounds, monotonic timings, and
 closed cleanup evidence. There is no retry. A nonzero checker remains nonzero,
-a first timeout remains failed, and no later control can promote it. All nine
-original `t/1545` subtests pass unchanged under the adapter. The combined
-focused regression—original doctrine fixture, unchanged Verilator hostile
-watcher, and the new shared-engine/adapter watcher—passes at three files and
-19 top-level tests under the repository RAM guard.
+a first timeout remains failed, and no later control can promote it. At the
+decision `0087` qualification, all nine original `t/1545` subtests passed under
+the adapter. Its combined focused regression—original doctrine fixture,
+Verilator hostile watcher, and shared-engine/adapter watcher—passed at three
+files and 19 top-level tests under the repository RAM guard.
+
+T1545 emits each failed checker result as a canonical JSON TAP diagnostic,
+prefixed `fixture checker result: `. It preserves separate streams, status,
+explanation, exit/signal, timings, bounds, and cleanup evidence even when the
+child produced no output. The checker-output assertions still receive only
+the original captured streams. A deliberate failed-checker control watches
+the complete diagnostic record with empty and nonempty output. This fixes
+the loss of failure evidence; it does not identify the cause of an earlier
+empty-output failure whose supervisor record was discarded. A later passing
+run cannot retroactively diagnose or erase that failed invocation.
 
 The quantitative statements above have three independent legs:
 
