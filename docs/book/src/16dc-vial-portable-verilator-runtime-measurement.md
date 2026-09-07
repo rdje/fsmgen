@@ -489,9 +489,13 @@ output, and an independently held pre-exec child qualify these distinctions.
 The observation qualification exposed fresh timeouts in the unchanged Rust
 proxy controls and Verilator Perl fixtures. A live OS sample placed one
 Verilator fixture at `_dyld_start` before its body ran. The failed broader run
-remains failed; this sample does not establish the OS cause or explain the
-earlier T1545 invocation. HIAL/VIAL `.19.2.3.1.2.2.5.5.2.3.1.2.2.3` owns repair
-before wire qualification can close.
+remains failed. A subsequent authenticated native capture identifies a delayed
+fixture waiting inside AppleSystemPolicy; independent `syspolicyd` records name
+that exact fixture in an XProtect evaluation and an allowed-script result.
+That invocation eventually passes. This narrows its startup wait, but does not
+establish the reason for the delay or retroactively explain the original Rust,
+Verilator or T1545 failures. HIAL/VIAL `.19.2.3.1.2.2.5.5.2.3.1.2.2.3` owns
+causal verification and repair before wire qualification can close.
 
 For this Darwin startup investigation, an administrator can open a temporary
 sampling session from the repository root:

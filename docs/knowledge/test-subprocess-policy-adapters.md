@@ -8,6 +8,7 @@ answers:
   - "where does T1545 retain actual checker PID and startup observations?"
   - "can native thread state replace kernel sampling of fixture startup?"
   - "how do I start an authenticated fixture sampling session?"
+  - "what does the AppleSystemPolicy fixture startup capture establish?"
   - "what does exec_handoff_monotonic_ns prove about child startup?"
   - "why does the task-acceptance fixture invoke Bash directly?"
   - "who may call the low-level test process supervisor?"
@@ -89,7 +90,8 @@ Child `.3.5` rejects a thread-state-only substitute: its independently stopped
 pipe reader still reports a waiting thread. This does not identify the OS cause.
 Child `.3.6` supplies `bash scripts/await_fixture_kernel_samples.sh`: a normal-user
 session for repeated fixed native captures after local authentication, with expiry,
-identity checks and STOP/Ctrl+C shutdown. Actual capture remains owned by `.3.4`.
+identity checks and STOP/Ctrl+C shutdown. Child `.3.7` completes the native capture
+and verified session shutdown; `.3.2` still owns causal repair selection.
 T1595's env-Bash fake uname stalled at `_dyld_start` before measuring memory.
 Its sequential open3 capture, unbounded wait and exit-only projection remain
 owned by HIAL/VIAL `.19.2.3.1.2.2.6`. This does not diagnose the OS cause or
@@ -103,3 +105,26 @@ watcher; neutral-verifier extraction remains provisional and blocked.
 The task selects one launch coordinator, private clients, reserved identities
 and an exact bounded wire/context/lifecycle protocol. T1669 proves reservation
 feasibility; extraction and private Wire are complete; coordination/routing and hostile qualification, including T1545 diagnosis, remain pending.
+
+Native capture `.3.7` on 2026-09-07 binds normal-user Perl fixture PID `22778`
+(`1788787261.244839`) to T1668 parent `21913` (`1788787240.646851`). Source:
+`.artifacts/tmp/tests/eyRjEqbQuI/orphaning-runtime`, SHA-256
+`51805be68accf0933248e791444815bf1f4a3d51faca75c739c03dc92ee10dd5`.
+Report SHA-256: `e1306078fdb46858ce867f1411d83f52dc3d366e5971ff0384404d89da504d5b`;
+sample interval: `15:21:02.594–15:21:03.596 +0200`. AppleSystemPolicy offsets:
+`33268 → 32024 → 27236 → 13740`, image UUID `8474AAC8-5327-3045-A969-9B20DBF588BD`.
+Kernel UUID `3F7964F9-C5A6-39D4-942D-02750C0980E0` matches the installed arm64e kernel.
+Independent information/debug `syspolicyd` records at `15:21:07 +0200` name the
+exact fixture in `GK Xprotect results` and `evaluation result: 12666, script, allowed, cache`;
+process-provenance also names PID `22778`. Default and original-failure queries are empty.
+This invocation passes; its policy wait does not establish the older timeout's cause.
+The task owns full cleanup, failed-selector and symbolization limits; OS/toolchain reads
+are dependencies. Root sampler birth identity was not retained; nested cleanup is unproved.
+Helper STOP invalidates authentication; independent observed-process and exact-command
+censuses are empty. These identities/offsets/results are durable here and in Git;
+full raw logs and scratch producers remain ignored, an explicit durability gap.
+See `.artifacts/logs/fixture-kernel-recurrence-20260907/` and the task's capture session.
+The observed launcher is iTerm2; read-only Developer Tools lists only Terminal, off.
+[Apple's per-app control](https://support.apple.com/en-au/guide/mac-help/mchlc5fb7f9c/mac)
+permits local software outside normal execution policy. `.3.2` owns the proposed iTerm2
+experiment and action-time approval. No host setting changes or verified fix are claimed.
