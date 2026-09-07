@@ -7,11 +7,10 @@ Status and evidence: `docs/tasks/`. The system itself: `MEMORY_ARCHITECTURE.md`.
 
 - repository_revision: derive with `git log -1 --format='%H %s'`; never shadow `HEAD` here.
 - active_work_unit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2`
-  (`blocked`; fresh terminal process-tree control before verified repair)
-- next_action: Obtain a director-started fresh iTerm2/Codex launch with a typed command;
-  verify new ancestry before selecting its bounded unchanged fixture observation.
-- in_flight_uncommitted: none after the policy/provenance checkpoint commit workflow.
-- in_flight_background: none; authenticated helper is stopped and cleanup consumed.
-- blockers: A fresh launch tree requires the director's local terminal action; original
-  timeout attribution, verified repair, wire qualification, nested containment,
-  RAM fixture repair, complete CI and push remain open. Retain configured limits.
+  (`blocked`; original startup attribution and independently verified repair missing)
+- next_action: After the checkpoint is committed and the tree is clean, select
+  independent sibling `.19.2.3.1.2.2.6` RAM-guard fixture policy from a clean tree.
+- in_flight_uncommitted: none after this checkpoint commit workflow.
+- in_flight_background: none after observed test/policy/cleanup results are consumed.
+- blockers: Startup causal repair and wire qualification remain open; nested containment,
+  RAM fixture repair, complete CI and push are pending. Retain configured limits.

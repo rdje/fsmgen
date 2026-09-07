@@ -127,4 +127,4 @@ See `.artifacts/logs/fixture-kernel-recurrence-20260907/` and the task's capture
 Approved iTerm2 Developer Tools is on; Terminal/Tracing off. The unchanged band passes.
 Exact `ju79K1mKs1/orphaning-runtime` still has XProtect results at `16:05:05.243719 +0200`, path `6bce9d1ba3a14e47`.
 [Apple's process-tree paste inspection](https://support.apple.com/en-euro/guide/security/sece3b202c4b/web) is unproved here.
-`.3.2` owns a fresh typed terminal-tree control. Artifact parents have provenance, no quarantine; fixtures are gone. No verified repair.
+Fresh shell/Codex also passes with exact-fixture XProtect scanning; `.3.2` retains identities. Live fixture has provenance, no quarantine. Repair open.

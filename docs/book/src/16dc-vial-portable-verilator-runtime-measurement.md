@@ -497,10 +497,10 @@ establish the reason for the delay or retroactively explain the original Rust,
 Verilator or T1545 failures. HIAL/VIAL `.19.2.3.1.2.2.5.5.2.3.1.2.2.3` owns
 causal verification and repair before wire qualification can close.
 
-The director-approved iTerm2 Developer Tools experiment enables only that app's
-permission. The unchanged focused band passes, but independent OS records still
-identify an XProtect scan of its exact generated fixture. This setting is not
-yet a verified timeout repair; original failures and qualification remain open.
+The approved iTerm2 Developer Tools permission remains enabled. The unchanged
+focused bands pass both before and after a fresh shell/Codex launch, but exact
+fixture OS records still identify XProtect scanning. Neither control verifies
+a timeout repair; original failures and qualification remain open.
 
 For this Darwin startup investigation, an administrator can open a temporary
 sampling session from the repository root:
