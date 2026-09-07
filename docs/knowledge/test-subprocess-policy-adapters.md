@@ -124,7 +124,7 @@ Helper STOP invalidates authentication; independent observed-process and exact-c
 censuses are empty. These identities/offsets/results are durable here and in Git;
 full raw logs and scratch producers remain ignored, an explicit durability gap.
 See `.artifacts/logs/fixture-kernel-recurrence-20260907/` and the task's capture session.
-The director approved iTerm2 Developer Tools; its switch is on, Terminal/Tracing off.
-The unchanged band passes, but exact fixture `ju79K1mKs1/orphaning-runtime` still has
-XProtect results at `16:05:05.243719 +0200`, path identity `6bce9d1ba3a14e47`.
-Child `.3.2` owns provenance/policy follow-up; no scan bypass or verified fix is claimed.
+Approved iTerm2 Developer Tools is on; Terminal/Tracing off. The unchanged band passes.
+Exact `ju79K1mKs1/orphaning-runtime` still has XProtect results at `16:05:05.243719 +0200`, path `6bce9d1ba3a14e47`.
+[Apple's process-tree paste inspection](https://support.apple.com/en-euro/guide/security/sece3b202c4b/web) is unproved here.
+`.3.2` owns a fresh typed terminal-tree control. Artifact parents have provenance, no quarantine; fixtures are gone. No verified repair.
