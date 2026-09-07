@@ -6,13 +6,13 @@ Status and evidence: `docs/tasks/`. The system itself: `MEMORY_ARCHITECTURE.md`.
 ## Resume
 
 - repository_revision: derive with `git log -1 --format='%H %s'`; never shadow `HEAD` here.
-- active_work_unit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1`
-  (`pending`; bounded coordinator wire and execution snapshot)
-- next_action: Implement the private bounded wire/context codec and qualify
-  byte transport against direct exec under `.19.2.3.1.2.2.5.5.2.3.1`.
+- active_work_unit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2`
+  (`pending`; T1545 diagnostic preservation and wire qualification)
+- next_action: Expose T1545's structured supervisor failure and diagnose the
+  retained failed band under `.19.2.3.1.2.2.5.5.2.3.1.2` before endpoint work.
 - in_flight_uncommitted: none.
 - in_flight_background: none; every diagnostic process group is gone.
-- blockers: Nested group escape blocks neutral-verifier policy acceptance.
-  Startup repair `.19.2.3.1.2.2.6` and fresh complete guarded CI also remain open.
-  Evidence: owning task and `.artifacts/logs/live-document-policy-20260906/`.
+- blockers: T1545's empty-output failure blocks wire qualification; nested group
+  escape blocks neutral-verifier policy acceptance. RAM fixture repair and CI remain open.
+  Evidence: owning task and `.artifacts/logs/coordinator-wire-20260907/`.
   Full qualification and push remain blocked; retain configured RAM limits.

@@ -2278,17 +2278,32 @@ decomposes the architecture needed to move beyond that bounded foundation.
   Children: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.2, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.3, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.4`
 
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1`
-  Status: `pending`
+  Status: `active`
   Goal: `Implement and qualify the private bounded coordinator wire codec and execution snapshot.`
   Acceptance: `Implement the selected closed frame/message grammar, canonical byte scalars, ordered environment, metadata and fixed resource admission without launching a coordinator. Qualify byte-exact argv/environment conversion against an independent direct-exec oracle, not only codec round trips. Reject truncated/oversized/unknown/direction-invalid frames, duplicate or malformed keys, invalid contexts and boundary-plus-one inputs before allocation or command execution. Keep runtime activation and public contracts unchanged.`
-  Verification: `First executable coordinator child after the committed safe-slice decomposition; exact protocol is retained above.`
+  Verification: `The private wire and execution snapshot are implemented under child .1 with independent direct-exec and hostile byte/frame evidence. The final broader run fails the unchanged T1545 docs-only fixture with empty output; run_checker discards the structured supervisor failure, preventing diagnosis from the retained run. Child .2 owns that newly exposed diagnostic defect and qualification prerequisite. Do not promote the failed band or enable coordinator routing.`
+  Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.1: implement bounded private coordinator wire`
+  Children: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.1, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2`
+
+- ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.1`
+  Status: `done`
+  Goal: `Implement the selected private codec and execution snapshot without runtime activation.`
+  Acceptance: `Retain the exact byte grammar and finite admission, prove literal independent frame vectors and direct-exec argv/environment parity, reject malformed and over-bound inputs, preserve caller state and public process paths, and retain any broader qualification failure under an explicit following owner.`
+  Verification: `Wire.pm adds no process or socket creation and no public export or production import. T1669 qualifies every message type with independently constructed frames, every truncated prefix, malformed direction/version/field/vector/key/context, scalar/vector/aggregate/integer boundaries, actual producer RESULT metadata and hostile mutations. The existing direct exec independently confirms byte/Unicode arguments, live ENV magic, empty versus absent values and umask; deliberate double encoding changes child-visible bytes and fails that oracle. Syntax and final guarded T1669 pass. T1668 and T313 pass in the final broader run, but T1545 fails its first subtest with empty output; that band remains failed. Source diff proves its test, adapter, wrapper and shared engine are unchanged; git pickaxe identifies the lost-diagnostic projection at d630261e6. Child .2 owns diagnosis and qualification. Logs retain the initial endpoint-fixture off-by-one, corrected focused result, mistaken T313 filename and corrected band without promoting earlier failures. Book nested-cleanup limits and current CLI import architecture remain accurate; startup policy comparisons match the already tracked template revision. Staged doctrines and commit hooks must pass before this implementation checkpoint commits.`
+  Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.1: implement bounded private coordinator wire`
+
+- ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2`
+  Status: `pending`
+  Goal: `Expose and diagnose T1545 infrastructure failure before closing wire qualification.`
+  Acceptance: `Preserve final-regression.log as failed evidence. Repair run_checker's loss of supervisor status, diagnostic, timing, exit/signal and cleanup facts without changing checker-output assertions, sealed command policy or resource bounds. Prove the diagnostic path with a deliberately failing bounded control, then use one instrumented bounded diagnostic run to identify any recurring launch failure. Own a distinct runtime repair if needed; no retry may erase the first failure. Close the original focused supervisor/adapter band and parent wire qualification only after the failure is honestly dispositioned.`
+  Verification: `The final guarded four-file command reports T1669, T1668 and T313 ok, but T1545's documentation-only checker acceptance and exemption assertions fail at lines 30/31 with an empty output string. Its run_checker at lines 264-268 returns only ok and concatenated streams, so the invocation's structured status and diagnostic are not retained. The original command has completed; a pre-main stall is not established by this evidence. The unchanged paths and producing projection are independently identified by git diff and git log -S. Evidence: .artifacts/logs/coordinator-wire-20260907/final-regression.log. The new diagnostic repair is beyond this codec-only safe slice.`
   Commit: `pending`
 
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.2`
   Status: `pending`
   Goal: `Implement private repository-local endpoints and finite nonblocking connection handling.`
   Acceptance: `After .1, implement exact run-directory/socket identity, random run/job authority, close-on-exec descriptors, bounded connections/partial frames/queues and fixed progress walls. Prove actual long-path bind/connect, handle-based cwd restoration on success and failure, exact environment/signal-mask restoration, symlink/foreign/stale endpoint rejection and identity-safe endpoint cleanup. No supervised command launch or public routing is enabled.`
-  Verification: `Pending the qualified wire and context codec in sibling .1.`
+  Verification: `Pending parent wire qualification in sibling .1, including the newly owned T1545 diagnostic repair.`
   Commit: `pending`
 
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.3`
@@ -5843,3 +5858,46 @@ T1669/T1668/T1545/T313 band remains its behavioral evidence; this decomposition
 changes no process code, book behavior, policy constant, or public result.
 Retain the gate and commit output under
 `.artifacts/logs/coordinator-safe-slices-20260907/`.
+
+## Acceptance Checklist (.19.2.3.1.2.2.5.5.2.3.1.1 wire implementation; enforced)
+
+- [x] **ROOT CAUSE (WHY + WHERE)** — `git log -S 'sub _start_supervision'`
+  identifies asynchronous extraction `51a3a3914`, which has no transport or
+  execution snapshot. The selected protocol requires byte-preserving private
+  messages before coordinator activation. A separate `git log -S` identifies
+  T1545's discarded supervisor diagnostics in `d630261e6`; unchanged source
+  paths and the failed final band are retained for child `.1.2`.
+- [x] **ADDRESSED (verified)** — The private `ProcessSupervisor::Wire` module
+  implements the selected bounded message/context grammar and snapshot without
+  sockets, process creation or production imports. Independent literal frames,
+  raw hostile frames, boundary-plus-one inputs, actual producer RESULT data,
+  and direct exec establish the codec boundary. The direct-exec oracle catches
+  deliberate double encoding and distinguishes Perl argv conversion from live
+  ENV magic. Syntax and final guarded T1669 pass after the endpoint test's
+  independently detected off-by-one was corrected.
+- [x] **NO REGRESSION (focused implementation; broader qualification pending)** —
+  Final guarded T1669 reports `All tests successful`; T1668 and T313 are also
+  `ok` in the final band. T1545 fails its first fixture with empty output, so
+  that band is explicitly **failed**, not a qualification pass. Parent `.1`
+  stays active and child `.1.2` owns diagnostic repair and qualification before
+  endpoints. Book own-group limitations and the CLI import map remain current;
+  production callers and result schemas are unchanged. The synchronized staged
+  driver reports `[doctrine] all doctrine checks passed`, including fresh task
+  acceptance. The hook repeats that gate before the checkpoint commits.
+
+Evidence lives under `.artifacts/logs/coordinator-wire-20260907/`. Re-derivation
+is the final focused command and exact frame inputs; falsification is direct
+exec plus deliberately corrupted data; durability is the tracked codec,
+T1669, task and Knowledge Map route. Nested runtime/Linux qualification and
+the failed broader band remain explicit missing legs. No performance or
+capacity conclusion is drawn from transient TAP timings or configured bounds.
+The initial containment rejection is resolved by proving the added fact-card
+paragraph duplicates this task's richer evidence and keeping only its concise
+retrieval pointer. No recorded fact or containment ceiling changes. A sandbox
+index-write rejection left no lock; authorized sequential staging resolved the
+resulting-tree mismatch before the passing gate.
+
+This slice applies the batch stop condition for newly discovered work beyond
+a safe slice: T1545 diagnostic repair is distinct from the private codec.
+Commit the qualified implementation checkpoint before that repair begins.
+The default batch is not complete; no push is authorized by this checkpoint.

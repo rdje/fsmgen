@@ -18,6 +18,7 @@ use lib File::Spec->catdir($FindBin::Bin, 'lib');
 
 use FSM::ProjectDataLocality qw(create_project_tempdir);
 use FSM::Test::ProjectDataLocality;
+use FSM::Support::ProcessSupervisor::Wire ();
 use FSM::Test::ProcessSupervisor qw(
     repository_root
     supervise_process
@@ -691,6 +692,342 @@ subtest 'policy adapters exclusively own low-level test supervision' => sub {
         ['t/1669-task-acceptance-fixture-runtime.t'],
         'only the hostile-process oracle bypasses a sealed policy adapter',
     );
+};
+
+subtest 'private wire uses exact network bytes and rejects malformed frames' => sub {
+    my $wire = 'FSM::Support::ProcessSupervisor::Wire';
+    my $encode = $wire->can('encode_frame');
+    my $decode = $wire->can('decode_frame');
+    my $run = pack('C*', 0 .. 15);
+    my $token = pack('C*', 128 .. 159);
+    my $spawn = {
+        type => 'SPAWN', started_ns => '18446744073709551615',
+        schema => 's', stage => 't', containment => 'c', cwd => '.',
+        timeout_seconds => 10, capture_limit_bytes => 1_048_576, umask => 0027,
+        argv => ['p', '', "\xff"], environment => [['A', ''], ['B', "x\ny"]],
+    };
+    # Literal expected bodies do not call the codec's packing helpers.
+    my @cases = (
+        ['client', {type => 'HELLO', run => $run, parent => 17, token => $token},
+            "\x01\x01" . $run . pack('H*', '00000011') . $token],
+        ['coordinator', {type => 'READY', run => $run, parent => 17},
+            "\x01\x02" . $run . pack('H*', '00000011')],
+        ['client', $spawn, pack('H*',
+            '0103ffffffffffffffff000000017300000001740000000163000000012e'
+            . '0000000a00100000000000170000000300000001700000000000000001ff'
+            . '00000002000000014100000000000000014200000003780a79')],
+        ['coordinator', {type => 'ACCEPT', job => 2}, pack('H*', '010400000002')],
+        ['coordinator', {type => 'STDOUT', job => 2, offset => '4294967296', chunk => "\0\xff"},
+            pack('H*', '01050000000200000001000000000000000200ff')],
+        ['coordinator', {type => 'STDERR', job => 2, offset => 0, chunk => ''},
+            pack('H*', '010600000002000000000000000000000000')],
+        ['client', {type => 'CANCEL', job => 2}, pack('H*', '010700000002')],
+        ['client', {type => 'ACK', job => 2}, pack('H*', '010900000002')],
+        ['coordinator', {type => 'REJECT', class => 1, diagnostic => 'invalid request'},
+            pack('H*', '010a010000000f') . 'invalid request'],
+        ['coordinator', {type => 'STDOUT_END', job => 2, offset => '18446744073709551615'},
+            pack('H*', '010b00000002ffffffffffffffff')],
+        ['coordinator', {type => 'STDERR_END', job => 2, offset => 0},
+            pack('H*', '010c000000020000000000000000')],
+    );
+    for my $case (@cases) {
+        my ($direction, $message, $body) = @$case;
+        my $frame = pack('N', length($body)) . $body;
+        is($encode->($direction, $message), $frame, "$message->{type} has independent exact wire bytes");
+        is_deeply($decode->($direction, $frame), $message, "$message->{type} decodes the independent vector");
+        is($wire->can('payload_size')->(substr($frame, 0, 4)), length($body),
+            "$message->{type} admits only its declared payload");
+        is($wire->can('frame_size')->($direction, substr($frame, 0, 6)), length($frame),
+            "$message->{type} validates direction and cap before the body");
+        my $other = $direction eq 'client' ? 'coordinator' : 'client';
+        like(capture_error(sub { $decode->($other, $frame) }), qr/wrong direction/,
+            "$message->{type} rejects the opposite direction");
+        # Every byte boundary is deliberately incomplete; no framing retry can
+        # turn a prefix into a complete message or accept concatenated frames.
+        my @accepted_prefix;
+        for my $end (0 .. length($frame) - 1) {
+            push @accepted_prefix, $end unless length capture_error(sub {
+                $decode->($direction, substr($frame, 0, $end));
+            });
+        }
+        is_deeply(\@accepted_prefix, [], "$message->{type} rejects every truncated prefix");
+        like(capture_error(sub { $decode->($direction, $frame . 'x') }), qr/trailing data/,
+            "$message->{type} rejects data after its frame");
+        my $extra = pack('N', length($body) + 1) . $body . 'x';
+        like(capture_error(sub { $decode->($direction, $extra) }), qr/trailing message fields/,
+            "$message->{type} rejects unknown fields inside its frame");
+    }
+    for my $case (
+        ['unknown version', pack('H*', '000000020201'), qr/unknown wire version/],
+        ['unknown type', pack('H*', '00000002010d'), qr/unknown message type/],
+        ['short payload', pack('N', 1) . "\x01\x01", qr/payload length/],
+        ['request cap plus one', pack('N', 1_048_577) . "\x01\x03", qr/payload length/],
+        ['control cap plus one', pack('N', 8_193) . "\x01\x01", qr/payload exceeds/],
+    ) {
+        like(capture_error(sub { $wire->can('frame_size')->('client', $case->[1]) }),
+            $case->[2], "$case->[0] rejects before requesting body storage");
+    }
+    my $bad_vector = pack('H*',
+        '01030000000000000000000000017300000001740000000163000000012e'
+        . '00000001000000010000000000001001');
+    like(capture_error(sub { $decode->('client', pack('N', length($bad_vector)) . $bad_vector) }),
+        qr/declared vector exceeds/, 'vector count rejects before reading or allocating its members');
+    substr($bad_vector, -4) = pack('NN', 1, 65_537);
+    like(capture_error(sub { $decode->('client', pack('N', length($bad_vector)) . $bad_vector) }),
+        qr/declared scalar exceeds/, 'scalar length rejects before reading or allocating its bytes');
+    my $unknown = {%$spawn, unrecognized => 1};
+    like(capture_error(sub { $encode->('client', $unknown) }), qr/record fields/,
+        'encoder rejects unknown request metadata');
+    like(capture_error(sub { $decode->('other', $encode->('client', $spawn)) }), qr/unknown direction/,
+        'unknown direction fails closed');
+    my $flagged_frame = $encode->('client', $spawn);
+    utf8::upgrade($flagged_frame);
+    like(capture_error(sub { $decode->('client', $flagged_frame) }), qr/unflagged octets/,
+        'decoder never silently transcodes wire bytes');
+};
+
+subtest 'wire snapshot, scalar, vector and context limits have boundary controls' => sub {
+    my $wire = 'FSM::Support::ProcessSupervisor::Wire';
+    my $encode = $wire->can('encode_frame');
+    my $decode = $wire->can('decode_frame');
+    my $base = {
+        type => 'SPAWN', started_ns => 0, schema => 's', stage => 't', containment => 'c',
+        cwd => '.', timeout_seconds => 1, capture_limit_bytes => 1, umask => 0,
+        argv => ['p'], environment => [],
+    };
+    my @cases = (
+        ['argv count', argv => [ ('') x 4_096 ], [ ('') x 4_097 ]],
+        ['scalar bytes', argv => ['x' x 65_536], ['x' x 65_537]],
+        ['snapshot total', argv => [('x' x 65_536) x 8], [('x' x 65_536) x 8, 'x']],
+        ['environment count', environment => [map { [sprintf('K%04d', $_), ''] } 1 .. 4_096],
+            [map { [sprintf('K%04d', $_), ''] } 1 .. 4_097]],
+        ['metadata bytes', schema => 's' x 256, 's' x 257],
+        ['cwd bytes', cwd => 'x' x 4_096, 'x' x 4_097],
+        ['timeout u32', timeout_seconds => '4294967295', '4294967296'],
+        ['capture u32', capture_limit_bytes => '4294967295', '4294967296'],
+        ['umask bits', umask => 511, 512],
+        ['monotonic u64', started_ns => '18446744073709551615', '18446744073709551616'],
+    );
+    for my $case (@cases) {
+        my ($name, $field, $at, $over) = @$case;
+        my $admitted = {%$base, $field => $at};
+        is_deeply($decode->('client', $encode->('client', $admitted)), $admitted,
+            "$name inclusive boundary passes");
+        like(capture_error(sub { $encode->('client', {%$base, $field => $over}) }), qr/private process wire:/,
+            "$name boundary plus one rejects");
+    }
+    for my $chunk_size (16_384, 16_385) {
+        my $message = {type => 'STDOUT', job => 1, offset => 0, chunk => "\0" x $chunk_size};
+        my $error = capture_error(sub { $decode->('coordinator', $encode->('coordinator', $message)) });
+        $chunk_size == 16_384 ? is($error, '', 'full binary stream chunk passes')
+            : like($error, qr/byte bound/, 'stream chunk boundary plus one rejects');
+    }
+    my $rejection = {type => 'REJECT', class => 2, diagnostic => 'x' x 2_048};
+    is_deeply($decode->('coordinator', $encode->('coordinator', $rejection)), $rejection,
+        'rejection diagnostic boundary passes');
+    $rejection->{diagnostic} .= 'x';
+    like(capture_error(sub { $encode->('coordinator', $rejection) }), qr/byte bound/,
+        'diagnostic boundary plus one rejects');
+    for my $mutation (
+        [argv => []], [argv => [undef]], [argv => [{}]], [argv => ["a\0b"]],
+        [schema => ''], [stage => "\xff"], [containment => "\0"],
+        [environment => [['', 'v']]], [environment => [['A=B', 'v']]],
+        [environment => [["A\0B", 'v']]], [environment => [['A', "v\0"]]],
+        [environment => [['B', 'v'], ['A', 'v']]], [environment => [['A', 'x'], ['A', 'y']]],
+        [environment => [['A']]], [environment => [['A', 'v', 'extra']]],
+        [cwd => '/outside'], [cwd => '../escape'], [cwd => 'a/./b'], [cwd => 'a//b'],
+        [cwd => 'a/../b'], [cwd => 'a/'], [timeout_seconds => 0], [timeout_seconds => '01'],
+        [started_ns => '-1'], [started_ns => '1e9'], [started_ns => '1.0'],
+    ) {
+        my ($field, $value) = @$mutation;
+        like(capture_error(sub { $encode->('client', {%$base, $field => $value}) }),
+            qr/private process wire:/, "$field malformed value rejects");
+    }
+    my $colliding_key = chr(0xe9);
+    utf8::upgrade($colliding_key);
+    like(capture_error(sub { $encode->('client', {%$base,
+        environment => [[$colliding_key, 'x'], ["\xc3\xa9", 'y']]}) }),
+        qr/unique and byte ordered/, 'environment key collisions after byte conversion reject');
+    my $mixed_overflow = {%$base, argv => [('x' x 65_536) x 8], environment => [['K', '']]};
+    like(capture_error(sub { $encode->('client', $mixed_overflow) }), qr/aggregate byte bound/,
+        'argv and environment share one aggregate budget');
+    my $flagged_chunk = 'text';
+    utf8::upgrade($flagged_chunk);
+    like(capture_error(sub { $encode->('coordinator',
+        {type => 'STDOUT', job => 1, offset => 0, chunk => $flagged_chunk}) }), qr/unflagged octets/,
+        'stream bytes never pass through argv text conversion');
+    # Decoder hostility is constructed independently of the rejecting encoder.
+    my $frame = $encode->('client', {%$base, environment => [['A', 'x'], ['B', 'y']]});
+    substr($frame, -6, 1) = 'A';
+    like(capture_error(sub { $decode->('client', $frame) }), qr/unique and byte ordered/,
+        'raw duplicate environment keys reject at the receiver');
+    my $context = {directory => '.artifacts/tmp/process-coordinator/run_1',
+        run => "\0" x 16, parent => 1, token => "\xff" x 32};
+    my $encoded = $wire->can('encode_context')->($context);
+    my $expected = '1:' . unpack('H*', $context->{directory}) . ':' . ('00' x 16) . ':1:' . ('ff' x 32);
+    is($encoded, $expected, 'context has independently constructed canonical bytes');
+    is_deeply($wire->can('decode_context')->($expected), $context, 'context syntax decodes exactly');
+    my $endpoint_root = '.artifacts/tmp/process-coordinator/';
+    my $max_directory = $endpoint_root . ('x' x (256 - length($endpoint_root)));
+    is(length($max_directory), 256, 'endpoint boundary is independently constructed');
+    my $largest = {%$context, directory => $max_directory, parent => '4294967295'};
+    is_deeply($wire->can('decode_context')->($wire->can('encode_context')->($largest)), $largest,
+        'maximum endpoint and job ID pass');
+    for my $mutation (
+        [directory => $max_directory . 'x'], [directory => '.artifacts/tmp/process-coordinator/..'],
+        [directory => '.artifacts/tmp/process-coordinator/a/b'], [directory => '.artifacts/tmp/foreign/x'],
+        [run => 'x' x 15], [token => 'x' x 33], [parent => 0], [parent => '4294967296'],
+    ) {
+        my ($field, $value) = @$mutation;
+        like(capture_error(sub { $wire->can('encode_context')->({%$context, $field => $value}) }),
+            qr/private process wire:/, "context rejects invalid $field");
+    }
+    for my $invalid (undef, '', '1:', '2:' . substr($expected, 2), uc($expected),
+            $expected . ':extra', 'x' x 8_193, $expected =~ s/:1:/:01:/r) {
+        like(capture_error(sub { $wire->can('decode_context')->($invalid) }), qr/private process wire:/,
+            'invalid inherited context has no fallback admission');
+    }
+    my $limits = $wire->can('limits')->();
+    $limits->{jobs} = 999;
+    is_deeply($wire->can('limits')->(), {
+        jobs => 8, depth => 8, children => 16, connections => 8, backlog => 8,
+        descriptors => 128, context => 8_192, cwd => 4_096, endpoint => 256,
+        request => 1_048_576, control => 8_192, argv => 4_096, environment => 4_096,
+        scalar => 65_536, snapshot => 524_288, metadata => 256, chunk => 16_384,
+        stream_queue => 65_536, control_queue => 16_384, diagnostic => 2_048,
+        handshake_seconds => 2, delivery_seconds => 2, idle_seconds => 0.05,
+    }, 'selected finite limits are defensive and cannot be widened by callers');
+};
+
+subtest 'snapshot bytes match the existing direct exec and preserve caller context' => sub {
+    my $wire = 'FSM::Support::ProcessSupervisor::Wire';
+    local %ENV = %ENV;
+    my $flagged = chr(0xe9);
+    utf8::upgrade($flagged);
+    $ENV{FSMGEN_WIRE_ORACLE_BYTES} = "\xff\xe9\n'\"";
+    $ENV{FSMGEN_WIRE_ORACLE_FLAGGED} = $flagged;
+    $ENV{FSMGEN_WIRE_ORACLE_EMPTY} = '';
+    delete $ENV{FSMGEN_WIRE_ORACLE_ABSENT};
+    my @warnings;
+    {
+        local $SIG{__WARN__} = sub { push @warnings, @_ };
+        $ENV{FSMGEN_WIRE_ORACLE_WIDE} = chr(0x100);
+    }
+    my @arguments = ('', "a b\n'\"", "\xff\xe9", $flagged, chr(0x100), chr(0x1f600));
+    my $observer = <<'OBSERVER';
+use strict; use warnings; use JSON::PP;
+binmode STDOUT, ':raw';
+my %env = map { $_ => [exists($ENV{$_}) ? 1 : 0,
+    exists($ENV{$_}) ? unpack('H*', $ENV{$_}) : undef] }
+    map { 'FSMGEN_WIRE_ORACLE_' . $_ } qw(BYTES FLAGGED WIDE EMPTY ABSENT);
+print JSON::PP->new->ascii->canonical->encode({
+    argv => [map { unpack('H*', $_) } @ARGV], environment => \%env, mask => umask(),
+});
+OBSERVER
+    my $request = {
+        schema => 'fsmgen.test.process_supervisor_probe.v1', stage => 'wire_oracle',
+        bounds => {timeout_seconds => 10, capture_limit_bytes => 65_536},
+        containment => 'process_supervisor_probe_group', cwd => $repo_root,
+        argv => [$perl, '-e', $observer, @arguments],
+    };
+    my %environment_before = %ENV;
+    my $cwd_before = Cwd::getcwd();
+    my $mask_before = umask();
+    my @flags_before = map { utf8::is_utf8($_) ? 1 : 0 } @{$request->{argv}};
+    # This arm goes straight through the pre-existing fork/exec implementation,
+    # with the original scalars and ENV. It never imports a conversion rule.
+    my $direct = supervise_process(%$request);
+    ok($direct->{ok}, 'independent original exec returns successfully') or diag explain $direct;
+    my $snapshot = $wire->can('snapshot_request')->($request, 123_456_789);
+    is_deeply(\%ENV, \%environment_before, 'snapshot does not mutate caller environment');
+    is(Cwd::getcwd(), $cwd_before, 'snapshot leaves caller cwd unchanged');
+    is(umask(), $mask_before, 'snapshot observes umask without changing it');
+    is_deeply([map { utf8::is_utf8($_) ? 1 : 0 } @{$request->{argv}}], \@flags_before,
+        'snapshot does not change caller scalar flags');
+    {
+        local %ENV = map { (sprintf('K%04d', $_), '') } 1 .. 4_097;
+        like(capture_error(sub { $wire->can('snapshot_request')->($request, 0) }),
+            qr/too many environment pairs/, 'live environment count rejects before snapshot construction');
+    }
+    {
+        local %ENV = map { ('K' . $_, 'v' x 65_536) } 1 .. 8;
+        like(capture_error(sub { $wire->can('snapshot_request')->($request, 0) }),
+            qr/aggregate byte bound/, 'live environment byte sum rejects while accumulating the snapshot');
+    }
+    like(capture_error(sub { $wire->can('snapshot_request')->({%$request, cwd => 'no-such-wire-directory'}, 0) }),
+        qr/not an admitted repository directory/, 'snapshot rejects a nonexistent cwd');
+    is_deeply(\%ENV, \%environment_before, 'failed snapshot admission leaves the environment unchanged');
+    ok(!grep(utf8::is_utf8($_), @{$snapshot->{argv}}), 'decoded argv contains only byte strings');
+    my $transported;
+    {
+        local %ENV = map { @$_ } @{$snapshot->{environment}};
+        $transported = supervise_process(%$request, argv => $snapshot->{argv});
+    }
+    ok($transported->{ok}, 'transported bytes execute successfully') or diag explain $transported;
+    is($transported->{stdout}, $direct->{stdout},
+        'kernel exec observes identical argv, environment presence/values and umask');
+    my $observed = decode_json($direct->{stdout});
+    is_deeply($observed->{argv}, ['', '6120620a2722', 'ffe9', 'c3a9', 'c480', 'f09f9880'],
+        'independent literal byte oracle distinguishes bytes from flagged text');
+    is_deeply($observed->{environment}{FSMGEN_WIRE_ORACLE_FLAGGED}, [1, 'e9'],
+        'live ENV magic already converts low flagged text differently from argv');
+    is_deeply($observed->{environment}{FSMGEN_WIRE_ORACLE_WIDE}, [1, 'c480'],
+        'wide environment text reaches exec as encoded bytes');
+    is_deeply($observed->{environment}{FSMGEN_WIRE_ORACLE_EMPTY}, [1, ''], 'empty value is present');
+    is_deeply($observed->{environment}{FSMGEN_WIRE_ORACLE_ABSENT}, [0, undef], 'absent value stays absent');
+    my @broken = @{$snapshot->{argv}};
+    # Deliberately transcode an already-admitted argument twice. The same
+    # transport round trip would accept it, but the independent exec oracle must
+    # detect that it changes what the program receives.
+    utf8::upgrade($broken[-1]);
+    utf8::encode($broken[-1]);
+    my $control = supervise_process(%$request, argv => \@broken);
+    ok($control->{ok}, 'deliberately wrong conversion still executes normally');
+    isnt($control->{stdout}, $direct->{stdout}, 'direct-exec comparison rejects double encoding');
+    for my $result ($direct, $transported, $control) {
+        ok($result->{cleanup}{leader_reaped} && $result->{cleanup}{group_gone},
+            'each independent exec leaves its group and child closed');
+    }
+    my $result_metadata = {%$direct};
+    delete @{$result_metadata}{qw(stdout stderr)};
+    my $metadata = {result => $result_metadata, reservation_reaped => 1,
+        subtree_closed => 1, delivery_complete => 0};
+    my $json = JSON::PP->new->ascii->canonical->encode($metadata);
+    my $body = pack('CCNN', 1, 8, 1, length($json)) . $json;
+    my $expected = pack('N', length($body)) . $body;
+    my $message = {type => 'RESULT', job => 1, metadata => $metadata};
+    is($wire->can('encode_frame')->('coordinator', $message), $expected,
+        'actual producer result has independent RESULT framing');
+    is_deeply($wire->can('decode_frame')->('coordinator', $expected), $message,
+        'actual producer result retains its complete closed metadata');
+    for my $change (
+        sub { $_[0]{delivery_complete} = 1 },
+        sub { $_[0]{reservation_reaped} = 0 },
+        sub { $_[0]{subtree_closed} = 0 },
+        sub { $_[0]{result}{ok} = '1' },
+        sub { $_[0]{result}{cleanup}{group_gone} = 0 },
+        sub { $_[0]{result}{stdout} = 'hidden stream' },
+        sub { $_[0]{result}{signal} = 9 },
+        sub { $_[0]{result}{capture_limit_bytes} = 0 },
+        sub { $_[0]{result}{stdout_bytes} = 65_537 },
+        sub { $_[0]{result}{spawn_to_exec_ns} += 1 },
+        sub { $_[0]{result}{status} = 'nonzero_exit' },
+        sub { $_[0]{result}{schema_version} = 2 },
+    ) {
+        my $mutated = decode_json($json);
+        $change->($mutated);
+        my $encoded = JSON::PP->new->ascii->canonical->encode($mutated);
+        my $raw_body = pack('CCNN', 1, 8, 1, length($encoded)) . $encoded;
+        like(capture_error(sub { $wire->can('decode_frame')->('coordinator',
+            pack('N', length($raw_body)) . $raw_body) }), qr/private process wire:/,
+            'receiver rejects inconsistent or malformed terminal metadata');
+    }
+    for my $bad_json (' ' . $json, $json =~ s/\A\{/\{"delivery_complete":0,/r) {
+        my $raw_body = pack('CCNN', 1, 8, 1, length($bad_json)) . $bad_json;
+        like(capture_error(sub { $wire->can('decode_frame')->('coordinator',
+            pack('N', length($raw_body)) . $raw_body) }), qr/not canonical JSON/,
+            'receiver rejects whitespace and duplicate JSON keys');
+    }
 };
 
 done_testing();

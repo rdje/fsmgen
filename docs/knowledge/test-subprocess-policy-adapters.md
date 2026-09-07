@@ -11,6 +11,7 @@ answers:
   - "how does the supervisor reject failed setpgid before exec?"
   - "can post-KILL leader reaping bypass the cleanup deadline?"
   - "which ownership model is selected for nested supervision?"
+  - "how does the private coordinator preserve execution bytes?"
 date: 2026-09-07
 status: current
 tags: [tests, subprocess, supervision, task-acceptance, darwin, locality]
@@ -71,4 +72,4 @@ The exact escaped group was terminated and absence verified. HIAL/VIAL
 watcher; neutral-verifier extraction remains provisional and blocked.
 The task selects one launch coordinator, private clients, reserved identities
 and an exact bounded wire/context/lifecycle protocol. T1669 proves reservation
-feasibility; extraction is complete, while coordination/routing and hostile qualification remain pending.
+feasibility; extraction and private Wire are complete; coordination/routing and hostile qualification, including T1545 diagnosis, remain pending.
