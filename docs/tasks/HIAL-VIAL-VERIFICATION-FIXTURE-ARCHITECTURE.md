@@ -2335,7 +2335,7 @@ decomposes the architecture needed to move beyond that bounded foundation.
   Acceptance: `Retain the failed .2 regression unchanged; inspect available child identity and bounded operating-system startup samples before retrying. Distinguish the direct fixture launch path from fixture body and policy behavior, select a bounded repair with an independent failing control, preserve exact production tool identity and all sealed bounds/assertions, and split any change beyond a safe slice before implementation. A fresh passing run cannot erase the initial failed invocation or establish the missing historical T1545 cause.`
   Verification: `Child .1 completes the bounded historical/source/launch investigation without reproducing the failure or identifying a safe repair. The original failed regression remains failed, and the fresh observed band passes without explaining it. Child .2 is blocked on causal startup evidence. Child .3 selects targeted native kernel/user sampling; child .4 owns administrator-assisted capture before repair selection. Child .5 rejects a thread-state-only substitute after its independent stop control fails. Child .6 prepares the normal-user authenticated sampling session requested by the director. No production command, fixture, limit, security setting or assertion changes. Parent wire qualification remains open.`
   Commit: `pending causal repair`
-  Children: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.1, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.3, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.4, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.5, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.6`
+  Children: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.1, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.3, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.4, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.5, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.6, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.7`
 
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.1`
   Status: `done`
@@ -2360,11 +2360,10 @@ decomposes the architecture needed to move beyond that bounded foundation.
   Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.3: select targeted kernel wait-state evidence`
 
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.4`
-  Status: `blocked`
+  Status: `in_progress`
   Goal: `Capture targeted native kernel and user wait evidence during a fixture-startup recurrence.`
   Acceptance: `With administrator-assisted sampling available, observe one bounded unchanged focused invocation under the configured RAM guard. Bind the live target to that invocation by ancestry, executable, fixture and fresh identity before sampling only that target. Keep all output repository-local, retain every original result, bound diagnostic duration and verify sampled-child and observer cleanup. Use the kernel/user evidence to distinguish a repairable cause or preserve the remaining unknown explicitly; return causal repair selection to sibling .2. Do not execute tests as root, repeat passing runs for qualification, widen limits or alter host security.`
-  Blocked by: `The selected native live kernel sampler requires root. The director must launch bash scripts/await_fixture_kernel_samples.sh once in a repository-root Terminal and authenticate locally; sibling .6 supplies the expiring session for repeated fixed captures. Computer Use refused Terminal access, and a separate terminal's sudo -v does not authorize agent tool sessions. Existing user-only evidence cannot select a repair. No dependent qualification or endpoint work may proceed.`
-  Verification: `Pending administrator-assisted capture; sibling .3 owns the native capability and permission evidence.`
+  Verification: `The director reports READY after starting the helper in iTerm2. Native inspection verifies the live helper identity and exact producer digest for session-d6ff2617c99a426db231c3715749ed84; the session is ready and unexpired. The bounded unchanged T1545/T1669/T1668/T313 observation passes without a qualifying long-lived target or capture request. The observer and every observed test birth identity are absent afterward; this sampled census is not universal nested-containment proof. Preserve the original failures. The live authenticated helper is retained for sibling .7, a separately bounded first-recurrence capture experiment; causal evidence and helper cleanup remain open.`
   Commit: `pending`
 
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.5`
@@ -2380,6 +2379,13 @@ decomposes the architecture needed to move beyond that bounded foundation.
   Acceptance: `Keep authentication and the fixed native sampler in the same user-launched diagnostic session. The director rejects repeated manual commands/authentication: allow sequential bounded capture requests within an expiring, stoppable session after one authentication, with non-interactive refresh and fail-closed revocation. Never run the helper or tests as root. Reject stale/reused or foreign identities, non-fixture paths and invalid ancestry before sampling. Keep output and temporary data repository-local, bound session/request count and sampler lifetime, preserve failed outcomes, and test rejection paths before handing over the command. Record that Computer Use refused Terminal access and that authentication in an unrelated terminal does not authorize agent tool sessions. Actual live kernel capture and test/observer cleanup remain sibling .4.`
   Verification: `The helper runs as the normal user under the configured RAM guard, authenticates through the controlling terminal and accepts fixed numbered capture requests during an expiring session. Fresh native child/parent identities, Perl executable identity, exact T1668 parent command and direct canonical orphaning-runtime source are required before root sampling. Focused Python controls pass, including a real Perl parent/fixture, stale/reused/foreign/racing identities, filesystem redirects/FIFOs, bounded TERM-resistant cleanup, repeated requests, non-interactive refresh, STOP and expiry. A planted interactive-refresh mutation fails the independent session control. Shell/Python syntax and the mdBook build pass; rendered command and shutdown guidance are checked, and the exact unused book output is removed. Source, tests, task, book and fact route are tracked; authentication and actual native kernel capture remain unqualified until sibling .4. Evidence: .artifacts/logs/fixture-capture-handoff-20260907/. No original fixture regression or privileged capture has run.`
   Commit: `this commit (manual authenticated diagnostic session)`
+
+- ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.7`
+  Status: `pending`
+  Goal: `Obtain the first natural startup recurrence within a bounded prospective capture experiment.`
+  Acceptance: `Use the still-live authenticated helper after the unchanged band does not reproduce the stall. Predeclare a maximum of twenty unchanged T1668 invocations and a cumulative five-minute wall under the configured RAM guard; stop immediately after any failed invocation or admitted capture, whichever comes first. Bind each candidate to its own live invocation with native birth identity and ancestry. Preserve every iteration and capture result. Never retry a failure or interpret passing iterations as repair, reliability or qualification. Consume native output and exact observed process cleanup; stop and verify the authenticated helper when no authorized capture remains. If no recurrence occurs, preserve that causal gap rather than invent a fix.`
+  Verification: `Pending the .4 observation checkpoint commit. This experiment seeks a new kernel discriminator for an intermittent defect; no production or test source, timeout or result is changed.`
+  Commit: `pending`
 
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.2`
   Status: `pending`
@@ -6357,3 +6363,29 @@ control source, task, book, fact route and Git; the focused command is rerunnabl
 The Python diagnostic controls are manually invoked, not added to the default
 Perl CI runner. Native authentication, privileged sampler cleanup and causal
 kernel evidence remain explicit missing legs owned by `.3.4`.
+
+## Authenticated observation checkpoint (.19.2.3.1.2.2.5.5.2.3.1.2.2.3.4)
+
+The director's iTerm2 READY session matches native helper birth identity and
+tracked source digest in `session-d6ff2617c99a426db231c3715749ed84/session.json`;
+it is unexpired. No extra prompt or root test invocation is used. One unchanged
+guarded T1545/T1669/T1668/T313 band passes. The prospective observer binds guard/
+test births and watches their descendants; no admissible direct T1668 orphaning-
+runtime persists to the threshold. No request or kernel sample exists; original
+failures and wire qualification remain open. T1545's logged timeout is its
+deliberate held-before-exec control, whose enclosing subtest passes.
+The observer exits normally; native census finds observed test births gone,
+and independent follow-up finds observer/guard ESRCH. This sampled census
+cannot prove absence of unobserved/reparented nested descendants. Memory retains
+the live helper for the finite `.3.7` experiment and subsequent verified shutdown.
+Evidence: `.artifacts/logs/fixture-kernel-observation-20260907/` (`regression.log`,
+`observer.log`, `events.jsonl`, `checkpoint-census.json`). Re-derivation uses the
+unchanged command and native observations; falsification retains original failure
+and independently checks birth identity. Task/Git preserve this negative result;
+ignored scratch instrument/raw logs have an explicit durability gap. No cause,
+repair or privileged sampler execution is claimed. Shipped behavior and book
+accuracy are unchanged. The first gate rejects a missing child reference; the
+second finds line-warning pressure. Add the child and compact this new checkpoint
+without dropping facts, then rerun doctrines and hook. No implementation checklist
+applies. Auto-review rejects a broad replacement command; this exact edit follows
+a read-only scope check and preserves surrounding evidence.
