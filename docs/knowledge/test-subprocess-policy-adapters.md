@@ -39,7 +39,7 @@ reverify: >-
   scripts/run_with_ram_guard.sh -- prove -Iperl -It/lib
   t/1545-task-acceptance-doctrine.t
   t/1668-darwin-inline-verilator-test-runtime.t
-  t/1669-task-acceptance-fixture-runtime.t
+  t/1669-task-acceptance-fixture-runtime.t t/1812-process-coordinator-endpoint.t
 ---
 
 Decisions `0087`/`0101` keep one engine in `FSM::Support::ProcessSupervisor`
@@ -72,12 +72,11 @@ stays local. Timeout, overflow, nonzero, signal, exec, group-descendant and
 cleanup failures stay failed without retry; original fixture assertions pass.
 T1545 preserves each failed checker result in canonical JSON TAP diagnostics,
 apart from the checker-output string. Its real nonzero controls cover empty
-and split-stream output and full result recovery. An earlier empty-output
-failure discarded that record; its underlying cause remains unestablished.
-Its separate launch observation retains actual child identity and bounded
-progress flags without changing commands or results. Bash PID, native output,
-and held-child controls qualify it; absent progress remains unknown. The book
-defines the observation boundary and the active task owns qualification.
+and split-stream output and full result recovery. An earlier empty-output failure discarded that record; cause remains unknown.
+The separate launch observation retains actual child identity and bounded progress
+flags with unchanged commands and results. Bash PID, native output and held-child
+controls qualify it; missing progress remains unknown. The book defines the boundary;
+the active task owns qualification.
 The Verilator watcher uses canonical Perl fixture shebangs after an env-Perl
 fixture reached exec handoff but timed out before output. Only the entrypoint
 invoked through Perl by `prove` may retain an env shebang.
@@ -99,12 +98,12 @@ No retry or production threshold change.
 
 A nested probe found an inner group alive after outer timeout reported its
 own group gone. Group cleanup does not compose into nested-subtree cleanup.
-The exact escaped group was terminated and absence verified. HIAL/VIAL
+The escaped group was terminated; absence verified. HIAL/VIAL
 `.19.2.3.1.2.2.5.5` owns the required ownership design, repair and hostile
 watcher; neutral-verifier extraction remains provisional and blocked.
-The task selects one launch coordinator, private clients, reserved identities
-and an exact bounded wire/context/lifecycle protocol. T1669 proves reservation
-feasibility; extraction and private Wire are complete; coordination/routing and hostile qualification, including T1545 diagnosis, remain pending.
+Selected: one launch coordinator, private clients, reserved identities and the exact bounded wire/context/lifecycle protocol.
+T1669 proves reservation feasibility. Extraction, Wire and inactive Endpoint filesystem work are complete;
+connection I/O, coordination/routing and hostile qualification (including T1545 diagnosis) remain pending.
 
 Native capture `.3.7` on 2026-09-07 binds normal-user Perl fixture PID `22778`
 (`1788787261.244839`) to T1668 parent `21913` (`1788787240.646851`). Source:
@@ -121,8 +120,8 @@ This invocation passes; its policy wait does not establish the older timeout's c
 The task owns full cleanup, failed-selector and symbolization limits; OS/toolchain reads
 are dependencies. Root sampler birth identity was not retained; nested cleanup is unproved.
 Helper STOP invalidates authentication; independent observed-process and exact-command
-censuses are empty. These identities/offsets/results are durable here and in Git;
-full raw logs and scratch producers remain ignored, an explicit durability gap.
+censuses are empty. Identities/offsets/results are durable here and in Git;
+Raw logs and scratch producers remain ignored: an explicit durability gap.
 See `.artifacts/logs/fixture-kernel-recurrence-20260907/` and the task's capture session.
 Approved iTerm2 Developer Tools is on; Terminal/Tracing off. The unchanged band passes.
 Exact `ju79K1mKs1/orphaning-runtime` still has XProtect results at `16:05:05.243719 +0200`, path `6bce9d1ba3a14e47`.

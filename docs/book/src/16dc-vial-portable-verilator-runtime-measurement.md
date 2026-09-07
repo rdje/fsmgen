@@ -539,6 +539,32 @@ focused bands pass both before and after a fresh shell/Codex launch, but exact
 fixture OS records still identify XProtect scanning. Neither control verifies
 a timeout repair; original failures and qualification remain open.
 
+The approved private endpoint groundwork is implemented separately in
+`FSM::Support::ProcessSupervisor::Endpoint`. It creates an exclusive private
+run directory below `.artifacts/tmp/process-coordinator/`, admits the directory
+and socket by their filesystem identity, and obtains run/job authority from
+the read-only operating-system random source. Tokens stay in memory. Bind and
+connect use the local socket name inside the admitted directory, then restore
+the caller's directory by handle and its exact signal mask. Long checkout
+paths therefore work without placing project data in a system temporary tree.
+The caller's environment and umask are preserved. Replaced identities,
+unexpected entries and incomplete restoration remain failures; cleanup never
+recursively deletes a directory or reclaims an earlier run.
+
+This module is inactive: the production supervisor does not import it, and it
+launches no commands. Filesystem admission alone does not authenticate a live
+parent. Bounded connection I/O and live authority checks remain the next owned
+slice; nested coordination, startup repair and runtime qualification remain
+open. The filesystem controls use real Unix socket peers on the current macOS
+host; foreign-owner/device cases are model-only and Linux execution is still
+unqualified. To reproduce the endpoint and existing wire/mechanism checks:
+
+```bash
+bash scripts/run_with_ram_guard.sh -- prove -Iperl -It/lib \
+  t/1812-process-coordinator-endpoint.t \
+  t/1669-task-acceptance-fixture-runtime.t
+```
+
 For this Darwin startup investigation, an administrator can open a temporary
 sampling session from the repository root:
 

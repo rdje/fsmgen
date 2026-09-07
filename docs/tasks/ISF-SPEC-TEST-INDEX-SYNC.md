@@ -71,7 +71,7 @@ repo's `t/*-isf-*.t` regression files.
   Acceptance: `Preserve the parent .3 requirements: resolve the owned startup findings first, enable the repository-local t/296 checkpoint contract, then consume complete guarded CI under the normal host and descendant cutoffs before tree closure or push. Attribute and task-own every failed result without retry-to-green or gate weakening.`
   Verification: `The parent repair at f3e7f94dc333fc624fb0d05a0227bd8fdf489460 is committed and .3.1 verifies its current source identity and focused checks. The historical complete-CI timeout and host-cutoff results remain unqualified; no complete-CI retry is part of the continuity reconciliation.`
   Commit: `pending complete-CI qualification`
-  Blocked by: `Unresolved startup causal repair and wire qualification in HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2; the pending director decision on inactive endpoint implementation does not waive these gates.`
+  Blocked by: `Unresolved startup causal repair and wire qualification in HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2; director-approved inactive endpoint implementation does not waive these gates.`
 
 ## Current Frontier
 
@@ -93,7 +93,7 @@ repo's `t/*-isf-*.t` regression files.
 
 ## Blockers
 
-- Complete guarded-CI qualification remains blocked by the unresolved HIAL startup incident and wire qualification recorded in `docs/tasks/HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.md`, leaf `.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2`. The exact-content transformation repair is already committed and freshly verified; neither the independent RAM-guard fixture repair nor these focused checks qualifies complete CI. Preserve the prior timeout and host-cutoff findings, the repository-local t/296 checkpoint requirement, normal resource cutoffs, and the push gate. The director decision on inactive endpoint implementation remains separate and pending.
+- Complete guarded-CI qualification remains blocked by the unresolved HIAL startup incident and wire qualification recorded in `docs/tasks/HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.md`, leaf `.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2`. The exact-content transformation repair is already committed and freshly verified; neither the independent RAM-guard fixture repair nor these focused checks qualifies complete CI. Preserve the prior timeout and host-cutoff findings, the repository-local t/296 checkpoint requirement, normal resource cutoffs, and the push gate. The director-approved inactive endpoint implementation remains separate from these qualification gates.
 
 ## Verification Log
 
