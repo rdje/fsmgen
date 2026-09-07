@@ -662,11 +662,36 @@ was started too late. Keep launch and readiness evidence: successful observer
 shutdown alone does not establish coverage of the test invocation. A capture
 attempt with unobserved fixtures remains an open investigation.
 
+For a new diagnostic invocation, the fixed caller
+`scripts/run_fixture_startup_observation.py` prepares the observer in its own
+process and holds its test child behind a pipe until readiness is recorded.
+Set `FSMGEN_CAPTURE_SESSION` to the exact repository-relative directory printed
+by the authenticated helper's `READY` message, then run:
+
+```bash
+bash scripts/run_with_ram_guard.sh -- python3 -B \
+  scripts/run_fixture_startup_observation.py --session "$FSMGEN_CAPTURE_SESSION"
+```
+
+This command releases only the fixed T1669 invocation. A child-side witness
+records consumption of the release token; it proves readiness ordering, while
+successful exec and main entry require their own observations. The caller
+retains `test.tap`, `test.stderr` and the original native wait status in
+`test-result.json` beside the observer evidence. Its whole-test, preparation,
+exec-observation, file-size and reap limits are diagnostic bounds; fixture
+assertions and individual regression walls are unchanged. It restores normal
+exec signal defaults so Python's ignored signals do not leak into the test.
+Failed readiness prevents release. Observer failure preserves the original
+test result and stops the helper without retrying. Only the owned direct test
+child is reaped or signalled by this caller; unobserved descendants remain
+unknown. The attach-only command remains available for an already-live test.
+
 Capture requests and helper results are published only after their complete
 JSON has been written, so a concurrent reader cannot consume a partial record.
-The portable observer and admission controls run in the hosted doctrine job;
-native process identity controls run on Darwin and are explicitly skipped on
-other platforms. Actual authenticated capture and causal repair remain open
+The hosted doctrine job discovers the fixture Python controls. Launcher
+controls exercise real pipes, exec and wait; birth metadata is native on Darwin
+and modeled on other platforms. Separate libproc controls are explicitly
+Darwin-only. Actual authenticated capture and causal repair remain open
 investigation steps.
 
 The shared adapter's quantitative statements above have three independent legs:
