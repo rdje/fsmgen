@@ -6,6 +6,7 @@ answers:
   - "why does t1545 not use IPC Cmd?"
   - "where does T1545 preserve empty-output checker failure diagnostics?"
   - "where does T1545 retain actual checker PID and startup observations?"
+  - "can native thread state replace kernel sampling of fixture startup?"
   - "what does exec_handoff_monotonic_ns prove about child startup?"
   - "why does the task-acceptance fixture invoke Bash directly?"
   - "who may call the low-level test process supervisor?"
@@ -81,6 +82,8 @@ HIAL/VIAL `.19.2.3.1.2.2.5.5.2.3.1.2.2.3` owns the live `_dyld_start` sample,
 Rust proxy/Verilator fixture diagnosis and repair. The OS cause remains unknown;
 child `.3.3` records targeted kernel sampling and its administrator-authentication
 prerequisite, with capture owned by `.3.4` before causal repair selection.
+Child `.3.5` rejects a thread-state-only substitute: its independently stopped
+pipe reader still reports a waiting thread. This does not identify the OS cause.
 T1595's env-Bash fake uname stalled at `_dyld_start` before measuring memory.
 Its sequential open3 capture, unbounded wait and exit-only projection remain
 owned by HIAL/VIAL `.19.2.3.1.2.2.6`. This does not diagnose the OS cause or

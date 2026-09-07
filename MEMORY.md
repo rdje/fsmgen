@@ -11,9 +11,9 @@ Status and evidence: `docs/tasks/`. The system itself: `MEMORY_ARCHITECTURE.md`.
 - next_action: Obtain administrator-assisted native kernel sampling for an identified
   fixture-startup recurrence under the owning node's bounded capture contract.
 - in_flight_uncommitted: none.
-- in_flight_background: none; native capability probes are terminal.
+- in_flight_background: none.
 - blockers: Native live kernel sampling requires administrator authentication;
   non-interactive sudo cannot authenticate. Evidence and exact capture scope:
-  owning task and `.artifacts/logs/fixture-wait-state-20260907/`.
+  owning task and its retained native capability/calibration evidence.
   Startup causes, wire qualification, nested containment, RAM fixture repair,
   complete CI and push remain open; retain configured RAM limits.

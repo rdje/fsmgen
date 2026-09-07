@@ -2333,9 +2333,9 @@ decomposes the architecture needed to move beyond that bounded foundation.
   Status: `active`
   Goal: `Diagnose and repair newly observed Rust and Verilator fixture startup timeouts before qualification.`
   Acceptance: `Retain the failed .2 regression unchanged; inspect available child identity and bounded operating-system startup samples before retrying. Distinguish the direct fixture launch path from fixture body and policy behavior, select a bounded repair with an independent failing control, preserve exact production tool identity and all sealed bounds/assertions, and split any change beyond a safe slice before implementation. A fresh passing run cannot erase the initial failed invocation or establish the missing historical T1545 cause.`
-  Verification: `Child .1 completes the bounded historical/source/launch investigation without reproducing the failure or identifying a safe repair. The original failed regression remains failed, and the fresh observed band passes without explaining it. Child .2 is blocked on causal startup evidence. Child .3 selects targeted native kernel/user sampling; child .4 owns administrator-assisted capture before repair selection. No production command, fixture, limit, security setting or assertion changes. Parent wire qualification remains open.`
+  Verification: `Child .1 completes the bounded historical/source/launch investigation without reproducing the failure or identifying a safe repair. The original failed regression remains failed, and the fresh observed band passes without explaining it. Child .2 is blocked on causal startup evidence. Child .3 selects targeted native kernel/user sampling; child .4 owns administrator-assisted capture before repair selection. Child .5 rejects a thread-state-only substitute after its independent stop control fails. No production command, fixture, limit, security setting or assertion changes. Parent wire qualification remains open.`
   Commit: `pending causal repair`
-  Children: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.1, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.3, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.4`
+  Children: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.1, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.3, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.4, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.5`
 
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.1`
   Status: `done`
@@ -2366,6 +2366,13 @@ decomposes the architecture needed to move beyond that bounded foundation.
   Blocked by: `The selected native live kernel sampler requires root; non-interactive sudo cannot authenticate. Obtain director-assisted administrator authentication for the narrowly scoped sample, or a caller-supplied equivalent kernel-wait capture from an identified recurrence. Existing user-only evidence cannot select a repair. No dependent qualification or endpoint work may proceed.`
   Verification: `Pending administrator-assisted capture; sibling .3 owns the native capability and permission evidence.`
   Commit: `pending`
+
+- ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.5`
+  Status: `done`
+  Goal: `Test whether unprivileged native thread-state inspection adds a startup discriminator while kernel sampling is unavailable.`
+  Acceptance: `Read the installed libproc and Mach declarations, probe native thread-state access on an exact owned controlled child, and distinguish a pipe wait from a waitpid-confirmed stop before interpreting any fixture. Bound process lifetime and every poll, preserve native return/error and child identity, and prove cleanup. If this adds a usable discriminator, select a separately owned bounded diagnostic observation; otherwise preserve the administrator prerequisite. Do not rerun qualification, infer a historical cause or alter production behavior.`
+  Verification: `The initial probe fails because list-thread handles were passed to the unique-thread-ID flavor. Apple's producer test identifies the correct pairing. The corrected native call works, but the independent waitpid-confirmed SIGSTOP control still reports the same thread waiting state as its pipe wait. BSD process status changes separately; thread state alone is not the proposed discriminator. Both failed probes and successful exact-child cleanup are retained in fixture-thread-state-20260907. The rejected scratch instrument has an explicit durability gap; no fixture is rerun and no historical cause or repair is claimed. Sibling .4 remains the next blocked frontier.`
+  Commit: `this commit (negative native calibration; no runtime change)`
 
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.2`
   Status: `pending`
@@ -6161,3 +6168,87 @@ the containment guide includes its integration-test portability amendment.
 The book already states the unknown startup cause and open qualification, so
 this diagnostic selection changes no user-facing contract. Keep retained
 failure artifacts while their causal owner is open; no cleanup deletes evidence.
+
+## Rejected thread-state substitute (.19.2.3.1.2.2.5.5.2.3.1.2.2.3.5)
+
+The bounded calibration asks whether an unprivileged `libproc` thread-state
+query distinguishes an ordinary pipe wait from a stopped task before applying
+it to any fixture. Its child signals readiness through a separate pipe and
+then blocks on a parent-owned pipe. The parent observes native identity before
+and after inspection, sends SIGSTOP only to that child, and requires an actual
+`waitpid(WUNTRACED)` stop status. Thread-list capacity, polls and child lifetime
+are bounded. The repository RAM guard keeps its configured limits; all scratch
+source and output remain under `.artifacts/` on the repository volume.
+
+The first probe fails with ESRCH because `PROC_PIDLISTTHREADS` handles were
+mistakenly passed to `PROC_PIDTHREADID64INFO`. Apple's own
+[proc-info test](https://github.com/apple-oss-distributions/xnu/blob/main/tests/proc_info.c)
+pairs the listed handles with `PROC_PIDTHREADINFO`; unique thread IDs come from
+a different producer. The corrected probe uses that pairing and succeeds in
+reading the exact owned child's thread. Its pipe wait and independently
+confirmed SIGSTOP both report `TH_STATE_WAITING`, while BSD process status
+changes to `SSTOP`. The stop-discrimination assertion therefore fails and stays
+failed. This is a rejected diagnostic classifier, not a failed production test
+or a newly diagnosed kernel defect. The existing process-status observation
+already distinguishes BSD suspension; this probe adds no kernel wait chain.
+
+The installed SDK separates BSD process-status and Mach thread-state values.
+Apple's [native adapter](https://github.com/apple-oss-distributions/xnu/blob/main/osfmk/kern/bsd_kern.c)
+and [thread-state producer](https://github.com/apple-oss-distributions/xnu/blob/main/osfmk/kern/thread.c)
+also expose a scheduler-state projection rather than a causal wait chain.
+Those external sources support API interpretation, not source identity with
+the running kernel or the historical fixture's cause. The controlled result
+is the evidence rejecting the proposed stop inference. Do not promote this
+probe into an observer or retry the fixture band on its strength.
+
+Retained evidence is `.artifacts/logs/fixture-thread-state-20260907/`:
+`probe.log` and `native-state.json` preserve the initial API error;
+`probe-corrected.log` and `native-state-corrected.json` preserve the failed stop
+control. Each JSON includes its producer digest, child identity, terminal
+`waitpid` result and subsequent native ESRCH. Both exact children were killed
+and reaped by their parent after the failed assertion; both guards are terminal.
+The initial scratch source is `probe-initial.py` and the corrected source is
+`probe.py` under `.artifacts/tmp/fixture-thread-state-20260907/`.
+
+Re-derivation is the bounded native query against that controlled child;
+falsification is the independent waitpid-confirmed stop, which makes the
+proposed discriminator go RED. **Durability gap:** the exploratory producer
+and raw outputs are ignored, so a fresh clone cannot rerun this experiment.
+The tracked task, Knowledge Map route and external producer references preserve
+its negative disposition; this is not a durable calibration, numerical support
+claim, startup repair or qualification pass. Sibling `.3.4` retains the missing
+kernel observation and any tracked observer work before causal repair `.3.2`.
+The book already describes the unknown startup cause and open qualification;
+no user-facing contract or CLI import changes require a book/map regeneration.
+The first staged driver correctly rejects a stale claim-inventory digest after
+the Knowledge Map's generated question totals change. Regeneration changes only
+that derived census digest; candidate membership and dispositions are unchanged.
+The second driver passes the refreshed census but rejects task acceptance:
+the generated inventory is a declared implementation path. Its fresh checklist
+below covers this artifact update; it does not claim a startup repair or runtime
+test pass. The diagnostic probes retain their failed outcomes.
+
+## Acceptance Checklist (.19.2.3.1.2.2.5.5.2.3.1.2.2.3.5 generated census; enforced)
+
+- [x] **ROOT CAUSE (WHY + WHERE)** — `git log -S 'numeric_census_sha256'`
+  identifies `f1dad5dc6` as the introduction of the numeric census mechanism
+  in `scripts/check_claim_verification_inventory.pl`. The first staged driver
+  reports `claim-inventory: inventory drift` after the generated Knowledge Map
+  gains the diagnostic question. The tracked inventory retains the previous
+  map's digest; this is projection drift, not an altered claim classification.
+- [x] **ADDRESSED (verified)** — Guarded inventory regeneration reports
+  `claim-inventory: current-surface census and independent census agree` in
+  `claim-inventory.log`. Its inspected diff changes only `numeric_census_sha256`;
+  the corrected driver's census and complete disposition join pass. The initial
+  rejection independently proves the stale projection is detected.
+- [x] **NO REGRESSION** — The corrected driver reports `knowledge-map: OK`
+  with query parity verified, `readme-entrypoint: all README entry-point invariants hold`,
+  and passing claim/disposition and containment gates. The new native-thread
+  question resolves to the canonical card with the cache disabled. Fresh boxes
+  address the corrected driver's acceptance rejection; the final staged driver
+  and commit hook must pass before commit. No full-CI or runtime pass is claimed.
+
+The generated census's distinct legs are direct regeneration, the independent
+numeric census plus observed stale-digest rejection, and its tracked producer,
+inventory and registered doctrine watcher. They do not close the exploratory
+native calibration's separately stated durability gap.
