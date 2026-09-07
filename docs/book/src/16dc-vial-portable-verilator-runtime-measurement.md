@@ -657,6 +657,11 @@ It stops the selected helper and verifies authentication invalidation and
 helper disappearance. Unobserved descendants remain unknown; neither a quiet
 process census nor a passing invocation establishes a causal repair.
 
+An attach-only observer can finish successfully after seeing no fixture if it
+was started too late. Keep launch and readiness evidence: successful observer
+shutdown alone does not establish coverage of the test invocation. A capture
+attempt with unobserved fixtures remains an open investigation.
+
 Capture requests and helper results are published only after their complete
 JSON has been written, so a concurrent reader cannot consume a partial record.
 The portable observer and admission controls run in the hosted doctrine job;
