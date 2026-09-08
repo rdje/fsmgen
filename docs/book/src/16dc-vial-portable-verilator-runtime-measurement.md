@@ -861,7 +861,16 @@ entry. The integrated native smoke uses actual read-only OS streams with
 controlled fixtures and a modeled unprivileged helper; it does not authenticate
 kernel sampling or replay original T1669. All recorded births are independently
 absent afterward, and verified evidence copies survive control cleanup.
-Task `.3.8.11` owns the next authenticated legacy capture.
+The authenticated legacy-selection experiment stops on a Rust status mismatch;
+its legacy assertions pass and no eligible legacy capture occurs. Live streams
+retain exact-path policy events, even though a later retrospective query cannot
+retrieve them. The Rust fixture path is rewritten between nonzero and decoy
+modes: retained identities show the same inode with different source bytes and
+different process births. A later path-only policy event therefore cannot name
+the failed process or source version. Task `.3.8.11` retains these boundaries;
+`.3.8.12` owns the missing complete Rust failure diagnostic before further causal
+selection. Passing legacy checks and retained policy activity establish neither
+a startup repair nor runtime qualification.
 
 Capture requests and helper results are published only after their complete
 JSON has been written, so a concurrent reader cannot consume a partial record.

@@ -49,8 +49,8 @@ repository cwd, bounded split streams, exec handoff, monotonic time, one process
 group, first-failure status and TERM/KILL cleanup. Sealed adapters own commands,
 bounds, schemas and platform guards; T1669 watches exclusive ownership.
 Child checks POSIX `setpgid` return and actual group before exec.
-Nonthrowing failure/false success yield `exec_error`, no execution; T1669 injects
-both and an exception. Parent race closure cannot replace child admission. Nested cleanup remains open.
+False/nonthrowing failures yield `exec_error`, no execution; T1669 injects both
+and an exception. Parent race closure cannot replace admission. Nested cleanup open.
 `exec_handoff_monotonic_ns` means observed control-pipe EOF, not main entry:
 pre-exec death can close it. Without observed EOF, that timestamp and dependent
 durations stay unknown even after cleanup. T1669 holds a real pre-exec child
@@ -63,16 +63,14 @@ isolated mock oracle rejects blocking waits without creating an unkillable child
 Git/checker stages cap wall at ten seconds, capture at 1,048,576/4,194,304 bytes,
 with closed `fsmgen.test.task_acceptance_fixture_result.v1` schema. Load-time
 canonical Git/Bash ignore later PATH changes; callers cannot widen policy.
-The env-Bash checker stalled before main on Darwin. Direct selected
-Bash preserves capability: the retained `/bin/bash` 3.2 control fails its empty
+Darwin env-Bash stalled before main. Direct Bash preserves capability: the retained `/bin/bash` 3.2 control fails its empty
 array under `set -u`. Bash/Git are read-only host dependencies; project data
 stays local. Timeout/overflow/nonzero/signal/exec/descendant/cleanup failures stay failed
 without retry; original fixture assertions pass.
 T1545 keeps failed checker results as canonical JSON TAP diagnostics apart from
 checker output. Nonzero controls verify empty/split streams/full recovery;
 the older discarded empty-output cause is unknown.
-Launch observation preserves commands/results, retaining child identity and bounded
-progress. Bash PID, native output and held-child controls qualify it; absent
+Launch observation retains commands/results, child identity and bounded progress. Bash PID, native output and held-child controls qualify it; absent
 progress stays unknown. Task/book own qualification/boundaries.
 After an env-Perl fixture reached exec handoff yet timed out before output,
 Verilator fixtures use canonical Perl shebangs. Only `prove`'s Perl-invoked
@@ -91,7 +89,7 @@ captures; tests stay normal-user. Identity, expiry and STOP/Ctrl+C checks remain
 T1669's allocator uses `.artifacts/tmp/process-supervisor-tests/` root.
 Empty observation fails coverage; `.3.8.5`/book own it.
 A `ps` no-match skips only native absence; `.3.8.6` retains other errors.
-`.3.8.9`'s `--target-family legacy` reserves capture and requires legacy coverage. T1669 `.3.8.8` captures Rust waiting in policy while legacy startup fails; causes stay distinct. Its successful Info query later returns empty; `.3.8.10` integrates live policy retention.
+`.3.8.9`'s `--target-family legacy` reserves capture with positive coverage. `.3.8.8` captures passing Rust policy wait, failed legacy; causes stay distinct. Info later disappears; `.3.8.10` retains live logs. `.3.8.11`: Rust fails, legacy passes, no capture. Rewritten Rust path/inode prevents event attribution; `.3.8.12` owns lost failure detail.
 T1595's pre-main cause stays open; `.19.2.3.1.2.2.6.2` fixes capture.
 `RamGuardFixtureRuntime` seals tools/argv, paths, bounds and full results.
 T1811/T1669 prove signal/stream failures and group cleanup; T1595 keeps metrics.
@@ -116,7 +114,7 @@ Independent info/debug `syspolicyd` at `15:21:07 +0200` names the
 exact fixture in `GK Xprotect results` and `evaluation result: 12666, script, allowed, cache`;
 process-provenance also names PID `22778`. Default and original-failure queries are empty.
 This passing policy wait cannot explain the older timeout.
-Task owns cleanup/failed-selector/symbol limits; OS/toolchain reads are dependencies. Root sampler birth is unretained; nested cleanup unproved.
+Task owns cleanup/selector/symbol limits; OS/toolchain reads are dependencies. Root sampler birth is unretained; nested cleanup unproved.
 Helper STOP invalidates authentication; independent observed-process and exact-command censuses are empty. Identities/offsets/results survive here and in Git;
 raw logs/scratch producers remain ignored: a durability gap.
 See `.artifacts/logs/fixture-kernel-recurrence-20260907/` and the task's capture session.
