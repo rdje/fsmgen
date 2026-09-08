@@ -75,11 +75,11 @@ captures; tests stay normal-user. Identity, expiry and STOP/Ctrl+C checks remain
 `.3.8.7` keeps one helper per sequence; single-run STOP needs fresh authentication.
 `.3.7` closes native capture/shutdown verification; `.3.2` owns causal repair.
 T1669 allocates under `.artifacts/tmp/process-supervisor-tests/`; empty coverage fails (`.3.8.5`/book). A `ps` no-match skips only native absence; `.3.8.6` retains other errors.
-`.3.8.9`'s `--target-family legacy` reserves capture with positive coverage. `.3.8.8` captures passing Rust policy wait, failed legacy; causes stay distinct. Info later disappears; `.3.8.10` retains live logs. `.3.8.11`: Rust fails, legacy passes, no capture. Rewritten Rust path/inode prevents event attribution; `.3.8.12` retains full Rust failure JSON. `.3.8.13` separates mode paths; `.3.8.14` captures passing nonzero, retains failed decoy JSON/distinct policy path and failed legacy signal. Cleanup verified; failed-target stack missing. `.3.8.15` qualifies `--target-family rust` for later candidates; `.3.8.16` awaits authentication.
+`.3.8.9`'s `--target-family legacy` reserves capture with positive coverage. `.3.8.8` captures passing Rust policy wait, failed legacy; causes stay distinct. Info later disappears; `.3.8.10` retains live logs. `.3.8.11`: Rust fails, legacy passes, no capture. Rewritten Rust path/inode prevents event attribution; `.3.8.12` retains full Rust failure JSON. `.3.8.13` separates mode paths; `.3.8.14` captures passing nonzero, retains failed decoy JSON/distinct policy path and failed legacy signal. Cleanup verified; failed-target stack missing. `.3.8.15` qualifies `--target-family rust` for later candidates; `.3.8.16`: passes, no capture; `.3.8.17` owns budget.
 T1595's pre-main cause stays open; `.19.2.3.1.2.2.6.2` fixes capture.
 `RamGuardFixtureRuntime` seals tools/argv, paths, bounds and full results.
 T1811/T1669 prove signal/stream failures and group cleanup; T1595 keeps metrics.
-No retry/production-threshold change.
+No retry/threshold change.
 Outer timeout proved its group gone but left an inner group alive; terminated and absence verified. Per-group cleanup cannot prove nested cleanup.
 HIAL/VIAL `.19.2.3.1.2.2.5.5` owns ownership design, repair and hostile controls;
 neutral-verifier extraction stays provisional/blocked.
@@ -98,7 +98,7 @@ Kernel UUID `3F7964F9-C5A6-39D4-942D-02750C0980E0` matches the installed arm64e 
 Independent info/debug `syspolicyd` at `15:21:07 +0200` names the
 exact fixture in `GK Xprotect results` and `evaluation result: 12666, script, allowed, cache`;
 process-provenance also names PID `22778`. Default/original-failure queries are empty; this passing wait cannot explain the older timeout.
-Task owns cleanup/selector/symbol limits; OS/toolchain are read dependencies. Root sampler birth is unretained; nested cleanup unproved.
+Task: cleanup/selector/symbol limits. OS/toolchain: read dependencies. Root sampler birth is unretained; nested cleanup unproved.
 Helper STOP invalidates authentication; independent observed-process and exact-command censuses are empty. Git preserves identities/offsets/results; ignored raw logs/scratch producers are a durability gap.
 See `.artifacts/logs/fixture-kernel-recurrence-20260907/` and the capture session.
 Approved iTerm2 Developer Tools is on; Terminal/Tracing off. The unchanged band passes.

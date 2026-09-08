@@ -927,7 +927,12 @@ The sequence stops on this original failure. Its collector, original test and
 helper are settled; recorded process births and observed fixture workspaces are
 independently absent. The early passing candidate consumed the sole capture,
 so `.3.8.15` qualifies the longer-lived Rust selector above. Task `.3.8.16`
-owns its next bounded authenticated observation.
+records passing invocations with positive Rust coverage but no capture. The
+sequence ends at its complete-next-invocation reservation boundary, and native
+recorded-birth/workspace cleanup is independently verified. This does not erase
+the earlier failures. Task `.3.8.17` owns qualification of a larger fixed Rust
+observation budget while preserving invocation limits, original deadlines,
+first-failure stop and complete cleanup reserves.
 Startup repair, complete policy delivery and runtime qualification remain open.
 
 Capture requests and helper results are published only after their complete
