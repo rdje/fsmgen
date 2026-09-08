@@ -1012,10 +1012,15 @@ source identities and evidence hashes. Task `.3.2.5` queries the earlier failed
 interval without another test launch: the query succeeds but returns only
 empty terminal metadata. Independently retained live events from that same
 interval falsify an inference that no scan occurred. Historical availability
-cannot supply the missing queue/start/wakeup context. Task `.3.2.6` owns review
-of normal-user live context together with exact fixture identity/source evidence
-during the same invocation. Existing authenticated commands retain their helper
-requirement.
+cannot supply the missing queue/start/wakeup context. Task `.3.2.6` selects a
+shared passive fixture census: same-invocation native identity and retained
+source bytes will join the original failed result to exact policy path/token
+events. The census will observe fixtures without signalling them or requiring
+an authenticated helper. Its implementation and independent controls remain
+pending under `.3.2.7`, followed by fixed caller integration in `.3.2.8` and
+the separately owned original observation in `.3.2.9`. Current policy-only
+behavior still lacks fixture-native evidence. Existing authenticated commands
+retain their helper requirement.
 Startup repair, complete policy delivery and runtime qualification remain open.
 
 Capture requests and helper results are published only after their complete
