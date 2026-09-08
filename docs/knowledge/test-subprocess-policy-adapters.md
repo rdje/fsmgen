@@ -71,7 +71,7 @@ T1545 keeps failed checker results as canonical JSON TAP diagnostics apart from
 checker output. Nonzero controls verify empty/split streams/full recovery;
 the older discarded empty-output cause is unknown.
 Launch observation retains commands/results, child identity and bounded progress. Bash PID, native output and held-child controls qualify it; absent
-progress stays unknown. Task/book own qualification/boundaries.
+progress stays unknown. Task/book own boundaries.
 After an env-Perl fixture reached exec handoff yet timed out before output,
 Verilator fixtures use canonical Perl shebangs. Only `prove`'s Perl-invoked
 entrypoint may retain an env shebang.
@@ -89,7 +89,7 @@ captures; tests stay normal-user. Identity, expiry and STOP/Ctrl+C checks remain
 T1669's allocator uses `.artifacts/tmp/process-supervisor-tests/` root.
 Empty observation fails coverage; `.3.8.5`/book own it.
 A `ps` no-match skips only native absence; `.3.8.6` retains other errors.
-`.3.8.9`'s `--target-family legacy` reserves capture with positive coverage. `.3.8.8` captures passing Rust policy wait, failed legacy; causes stay distinct. Info later disappears; `.3.8.10` retains live logs. `.3.8.11`: Rust fails, legacy passes, no capture. Rewritten Rust path/inode prevents event attribution; `.3.8.12` owns lost failure detail.
+`.3.8.9`'s `--target-family legacy` reserves capture with positive coverage. `.3.8.8` captures passing Rust policy wait, failed legacy; causes stay distinct. Info later disappears; `.3.8.10` retains live logs. `.3.8.11`: Rust fails, legacy passes, no capture. Rewritten Rust path/inode prevents event attribution; `.3.8.12` retains full Rust failure JSON. `.3.8.13` separates mode identities.
 T1595's pre-main cause stays open; `.19.2.3.1.2.2.6.2` fixes capture.
 `RamGuardFixtureRuntime` seals tools/argv, paths, bounds and full results.
 T1811/T1669 prove signal/stream failures and group cleanup; T1595 keeps metrics.
@@ -102,8 +102,8 @@ Selected: one launch coordinator, private clients, reserved identities, bounded 
 T1669 proves reservation feasibility. Extraction, Wire, inactive endpoint/service transport are implemented;
 coordination, routing and hostile qualification (including startup diagnosis) remain open.
 
-Native capture `.3.7` on 2026-09-07 binds normal-user Perl fixture PID `22778`
-(`1788787261.244839`) to T1668 parent `21913` (`1788787240.646851`). Source:
+Capture `.3.7`, 2026-09-07: normal-user Perl PID `22778`
+(`1788787261.244839`) under T1668 `21913` (`1788787240.646851`). Source:
 `.artifacts/tmp/tests/eyRjEqbQuI/orphaning-runtime`, SHA-256
 `51805be68accf0933248e791444815bf1f4a3d51faca75c739c03dc92ee10dd5`.
 Report SHA-256: `e1306078fdb46858ce867f1411d83f52dc3d366e5971ff0384404d89da504d5b`;
@@ -117,7 +117,7 @@ This passing policy wait cannot explain the older timeout.
 Task owns cleanup/selector/symbol limits; OS/toolchain reads are dependencies. Root sampler birth is unretained; nested cleanup unproved.
 Helper STOP invalidates authentication; independent observed-process and exact-command censuses are empty. Identities/offsets/results survive here and in Git;
 raw logs/scratch producers remain ignored: a durability gap.
-See `.artifacts/logs/fixture-kernel-recurrence-20260907/` and the task's capture session.
+See `.artifacts/logs/fixture-kernel-recurrence-20260907/` and the capture session.
 Approved iTerm2 Developer Tools is on; Terminal/Tracing off. The unchanged band passes.
 Exact `ju79K1mKs1/orphaning-runtime` still has XProtect results at `16:05:05.243719 +0200`, path `6bce9d1ba3a14e47`.
 [Apple's process-tree paste inspection](https://support.apple.com/en-euro/guide/security/sece3b202c4b/web) is unproved here.

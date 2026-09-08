@@ -641,7 +641,10 @@ PROBE
         ok(ref($result) eq 'HASH', "$mode returns a structured adapter result") or return;
         ok(!$result->{ok}, "$mode fails closed");
         is($result->{failure_stage}, $mode eq 'proxy_decoy' ? 'tool_admission' : 'tool_resolution', "$mode has exact stage attribution");
-        is($result->{status}, $mode eq 'proxy_nonzero' ? 'nonzero_exit' : 'invocation_error', "$mode preserves failure class");
+        is($result->{status}, $mode eq 'proxy_nonzero' ? 'nonzero_exit' : 'invocation_error', "$mode preserves failure class")
+            or diag('Rust tool-resolution result: ' . JSON::PP->new->ascii->canonical->encode({
+                mode => $mode, adapter => $result, outer => $outer,
+            }));
         ok(!grep($_->{stage} eq 'cargo_build', @{$result->{stages}}), "$mode cannot start Cargo build");
         ok(!grep(!$_->{cleanup}{group_gone}, @{$result->{stages}}), "$mode leaves no owned process group");
     }

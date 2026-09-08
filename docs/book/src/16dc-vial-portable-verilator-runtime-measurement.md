@@ -868,9 +868,18 @@ retrieve them. The Rust fixture path is rewritten between nonzero and decoy
 modes: retained identities show the same inode with different source bytes and
 different process births. A later path-only policy event therefore cannot name
 the failed process or source version. Task `.3.8.11` retains these boundaries;
-`.3.8.12` owns the missing complete Rust failure diagnostic before further causal
-selection. Passing legacy checks and retained policy activity establish neither
+`.3.8.12` repairs the discarded Rust failure detail; `.3.8.13` owns distinct
+per-mode source identities before further observation. Passing legacy checks
+and retained policy activity establish neither
 a startup repair nor runtime qualification.
+
+When the Rust tool-resolution status assertion mismatches, T1669 now writes a
+`Rust tool-resolution result:` TAP diagnostic followed by canonical ASCII JSON.
+Its `mode`, `adapter` and `outer` fields preserve the selected proxy mode, full
+decoded adapter result and complete outer supervisor result. This retains nested
+stage timing, separate streams and cleanup evidence even when streams are empty.
+The assertion remains failed; a matching assertion adds no such diagnostic.
+The prior invocation's discarded details cannot be recovered by this repair.
 
 Capture requests and helper results are published only after their complete
 JSON has been written, so a concurrent reader cannot consume a partial record.
