@@ -60,10 +60,10 @@ Darwin env-Bash stalled before main. Direct Bash preserves capability: the retai
 array under `set -u`. Bash/Git are read-only host dependencies; project data
 stays local. Timeout/overflow/nonzero/signal/exec/descendant/cleanup failures stay failed
 without retry; original fixture assertions pass.
-T1545 retains failed checker results as canonical JSON TAP diagnostics separate from output. Nonzero controls prove empty/split streams/full recovery; older discarded cause unknown.
-Launch observation retains commands/results, identity and bounded progress, qualified by Bash PID/native-output/held-child controls. Missing progress stays unknown; task/book own limits.
+T1545: canonical JSON TAP diagnostics preserve failed checker results separately from output. Nonzero controls prove empty/split-stream recovery; older discarded cause unknown.
+Launch observation retains commands/results, identity and bounded progress. Bash PID/native-output/held-child controls qualify it; missing progress stays unknown (task/book).
 Env-Perl reached handoff then timed out without output; Verilator fixtures now use canonical Perl shebangs. Only the `prove` Perl-invoked entrypoint may retain env.
-Direct-Perl timeouts disprove a shebang-only cure:
+Direct-Perl timeouts refute a shebang-only cure:
 HIAL/VIAL `.19.2.3.1.2.2.5.5.2.3.1.2.2.3` owns the live `_dyld_start` sample,
 Rust proxy/Verilator fixture diagnosis and repair;
 child `.3.3` owns kernel-sampling selection and required administrator authentication;
@@ -75,7 +75,7 @@ captures; tests stay normal-user. Identity, expiry and STOP/Ctrl+C checks remain
 `.3.8.7` keeps one helper per sequence; single-run STOP needs fresh authentication.
 `.3.7` closes native capture/shutdown verification; `.3.2` owns causal repair.
 T1669 allocates under `.artifacts/tmp/process-supervisor-tests/`; empty coverage fails (`.3.8.5`/book). A `ps` no-match skips only native absence; `.3.8.6` retains other errors.
-`.3.8.9`'s `--target-family legacy` reserves capture with positive coverage. `.3.8.8` captures passing Rust policy wait, failed legacy; causes stay distinct. Info later disappears; `.3.8.10` retains live logs. `.3.8.11`: Rust fails, legacy passes, no capture. Rewritten Rust path/inode prevents event attribution; `.3.8.12` retains full Rust failure JSON. `.3.8.13` separates mode paths; `.3.8.14` captures passing nonzero, retains failed decoy JSON/distinct policy path and failed legacy signal. Cleanup verified; failed-target stack missing. `.3.8.15` qualifies `--target-family rust` for later candidates; `.3.8.16`: passes, no capture; `.3.8.17` owns budget.
+`.3.8.9`'s `--target-family legacy` reserves capture with positive coverage. `.3.8.8` captures passing Rust policy wait, failed legacy; causes stay distinct. Info later disappears; `.3.8.10` retains live logs. `.3.8.11`: Rust fails, legacy passes, no capture. Rewritten Rust path/inode prevents event attribution; `.3.8.12` retains full Rust failure JSON. `.3.8.13` separates mode paths; `.3.8.14` captures passing nonzero, retains failed decoy JSON/distinct policy path and failed legacy signal. Cleanup verified; failed-target stack missing. `.3.8.15` qualifies `--target-family rust` for later candidates; `.3.8.16`: passes, no capture; `.3.8.17` extends budget; `.3.8.18` awaits authentication.
 T1595's pre-main cause stays open; `.19.2.3.1.2.2.6.2` fixes capture.
 `RamGuardFixtureRuntime` seals tools/argv, paths, bounds and full results.
 T1811/T1669 prove signal/stream failures and group cleanup; T1595 keeps metrics.
@@ -101,7 +101,7 @@ process-provenance also names PID `22778`. Default/original-failure queries are 
 Task: cleanup/selector/symbol limits. OS/toolchain: read dependencies. Root sampler birth is unretained; nested cleanup unproved.
 Helper STOP invalidates authentication; independent observed-process and exact-command censuses are empty. Git preserves identities/offsets/results; ignored raw logs/scratch producers are a durability gap.
 See `.artifacts/logs/fixture-kernel-recurrence-20260907/` and the capture session.
-Approved iTerm2 Developer Tools is on; Terminal/Tracing off. The unchanged band passes.
+Approved iTerm2 Developer Tools is on; Terminal/Tracing off. Unchanged band passes.
 Exact `ju79K1mKs1/orphaning-runtime` still has XProtect results at `16:05:05.243719 +0200`, path `6bce9d1ba3a14e47`.
 [Apple's process-tree paste inspection](https://support.apple.com/en-euro/guide/security/sece3b202c4b/web) is unproved here.
-Fresh shell/Codex passes with exact-fixture XProtect scanning; `.3.2` retains identities. Fixture has provenance, no quarantine; repair open.
+Fresh shell/Codex passes with exact-fixture XProtect scans; identities: `.3.2`. Fixture provenance, no quarantine; repair open.

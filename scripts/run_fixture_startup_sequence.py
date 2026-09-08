@@ -20,6 +20,7 @@ import run_fixture_startup_observation as launcher
 ROOT = launcher.ROOT
 MAX_INVOCATIONS = 20
 SEQUENCE_SECONDS = 300
+RUST_SEQUENCE_SECONDS = 900
 
 
 def invocation_reserve():
@@ -66,14 +67,17 @@ def settled_iteration(evidence, result, submitted, target_family):
 def run_sequence(session, native, journal, root, *, target_family="all"):
     try:
         launcher.observer.require_target_family(target_family)
-        deadline = time.monotonic() + SEQUENCE_SECONDS
+        # Keep complete invocation/cleanup reserves while allowing the Rust
+        # selector more opportunities to observe an intermittent longer wait.
+        budget_seconds = RUST_SEQUENCE_SECONDS if target_family == "rust" else SEQUENCE_SECONDS
+        deadline = time.monotonic() + budget_seconds
         completed = 0
         reason = "invocation_limit"
         journal.record("sequence_started", helper=session.helper,
                        target_family=target_family,
                        sequence_sha256=hashlib.sha256(Path(__file__).read_bytes()).hexdigest(),
                        session=str(session.directory.relative_to(root)),
-                       max_invocations=MAX_INVOCATIONS, budget_seconds=SEQUENCE_SECONDS,
+                       max_invocations=MAX_INVOCATIONS, budget_seconds=budget_seconds,
                        invocation_reserve_seconds=invocation_reserve(),
                        helper_cleanup_seconds=launcher.observer.SETTLE_SECONDS,
                        policy_start_seconds=launcher.policy_log.START_SECONDS,

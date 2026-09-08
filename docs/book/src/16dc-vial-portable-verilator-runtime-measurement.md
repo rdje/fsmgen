@@ -745,10 +745,10 @@ bash scripts/run_with_ram_guard.sh -- python3 -B \
   scripts/run_fixture_startup_sequence.py --session "$FSMGEN_CAPTURE_SESSION"
 ```
 
-It permits at most twenty unchanged T1669 invocations within a checked
-five-minute diagnostic budget. Before each invocation it reserves the complete
-existing caller allowance and helper cleanup, so it may stop well before either
-ceiling. It does not shorten fixture deadlines to use the remaining time;
+The sequence permits at most 20 T1669 invocations.
+The fixed budget is 300 seconds for all/legacy and 900 seconds for Rust.
+Before each invocation it reserves the complete existing caller allowance and
+helper cleanup, so it may stop well before either ceiling. It does not shorten fixture deadlines to use the remaining time;
 an observed budget overrun is a diagnostic error. The original test, admission
 policy, source retention and native capture command remain unchanged.
 
@@ -930,9 +930,15 @@ so `.3.8.15` qualifies the longer-lived Rust selector above. Task `.3.8.16`
 records passing invocations with positive Rust coverage but no capture. The
 sequence ends at its complete-next-invocation reservation boundary, and native
 recorded-birth/workspace cleanup is independently verified. This does not erase
-the earlier failures. Task `.3.8.17` owns qualification of a larger fixed Rust
-observation budget while preserving invocation limits, original deadlines,
-first-failure stop and complete cleanup reserves.
+the earlier failures. Task `.3.8.17` qualifies the larger fixed Rust budget
+above, preserving invocation limits, original deadlines, first-failure stop and
+complete cleanup reserves. Independent modeled timing reproduces the prior
+early stop and reaches the count ceiling under ordinary completed-invocation
+timing with the new budget. Restoring the prior budget fails that oracle;
+near-end reservation and overrun controls still stop correctly. Native
+controlled bodies verify the selected and sibling budgets and the original
+failure stop. These controls do not replay full T1669 or authenticate sampling.
+Task `.3.8.18` owns the next bounded authenticated observation.
 Startup repair, complete policy delivery and runtime qualification remain open.
 
 Capture requests and helper results are published only after their complete

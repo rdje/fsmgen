@@ -9,6 +9,7 @@ import select
 import subprocess
 import sys
 import tempfile
+from types import SimpleNamespace
 import unittest
 from unittest.mock import patch
 
@@ -156,6 +157,7 @@ print "ok 1 - controlled sequence body\n1..1\n";
         self.assertEqual(self.session.stop_calls, 1)
         self.assertTrue(self.session.stopped())
         events = self.events()
+        self.assertEqual(events[0]["budget_seconds"], 300)
         self.assertEqual([e["event"] for e in events], ["sequence_started", "iteration_started",
                          "iteration_completed", "iteration_started", "iteration_completed",
                          "sequence_outcome", "sequence_settled"])
@@ -184,6 +186,7 @@ print "ok 1 - controlled sequence body\n1..1\n";
         self.assertEqual(outcome["reason"], "invocation_limit")
         self.assertEqual(len(self.census()), 2)
         self.assertTrue(all(ready == 1 for _, ready in self.census()))
+        self.assertEqual(self.events()[0]["budget_seconds"], 900 if family == "rust" else 300)
         for event in self.events():
             if event["event"] == "iteration_started":
                 rows = [json.loads(row) for row in
@@ -266,17 +269,32 @@ print "ok 1 - controlled sequence body\n1..1\n";
         self.assertEqual(run.call_count, 1)
         self.assertTrue(self.session.stopped())
 
-    def test_one_capture_ends_sequence_even_when_original_test_succeeds(self):
+    def check_capture_stops_sequence(self, family):
         def capture(*args, **kwargs):
             self.session.submitted = True
             return self.modeled_iteration(*args, **kwargs)
 
         with patch.object(launcher, "run", side_effect=capture) as run:
-            outcome = self.run_sequence()
+            outcome = self.run_sequence(target_family=family)
         self.assertTrue(outcome["capture_received"])
         self.assertEqual(outcome["reason"], "capture_received")
         self.assertEqual(run.call_count, 1)
         self.assertEqual(self.session.stop_calls, 1)
+
+    def test_one_capture_ends_sequence_even_when_original_test_succeeds(self):
+        self.check_capture_stops_sequence("all")
+
+    def test_rust_capture_stops_despite_the_larger_budget(self):
+        self.check_capture_stops_sequence("rust")
+
+    @unittest.skipUnless(sys.platform == "darwin", "real native fixture ancestry admission")
+    def test_rust_original_failure_stops_despite_the_larger_budget(self):
+        self.program(first_exit=23, family="rust")
+        with self.assertRaisesRegex(RuntimeError, "original test failed"):
+            self.run_sequence(target_family="rust")
+        self.assertEqual(len(self.census()), 1)
+        self.assertEqual(self.session.stop_calls, 1)
+        self.assertTrue(self.session.stopped())
 
     def test_observer_failure_cannot_start_a_later_iteration(self):
         with patch.object(launcher, "run", side_effect=RuntimeError("capture rejected")) as run, \
@@ -335,6 +353,58 @@ print "ok 1 - controlled sequence body\n1..1\n";
         run.assert_not_called()
         self.assertEqual(outcome["completed_invocations"], 0)
         self.assertEqual(outcome["reason"], "insufficient_time_for_complete_invocation")
+
+    def timed_iterations(self, family, duration):
+        # Model only the controller clock and original result. Real retained
+        # policy files, settlement checks and owned helper cleanup still run.
+        now = [0.0]
+
+        def elapsed(*args, **kwargs):
+            result = self.modeled_iteration(*args, **kwargs)
+            now[0] += duration
+            return result
+
+        with patch.object(sequence, "time", SimpleNamespace(monotonic=lambda: now[0])), \
+                patch.object(launcher, "run", side_effect=elapsed) as run:
+            outcome = sequence.run_sequence(self.session, self.native, self.journal,
+                                            self.root, target_family=family)
+        return outcome, run.call_count
+
+    def test_rust_budget_reaches_fixed_count_with_ordinary_completed_iterations(self):
+        outcome, count = self.timed_iterations("rust", 15)
+        self.assertEqual(outcome["completed_invocations"], 20)
+        self.assertEqual(count, 20)
+        self.assertEqual(outcome["reason"], "invocation_limit")
+        self.assertEqual(outcome["qualification"], "not_claimed")
+        self.assertFalse(outcome["capture_received"])
+        self.assertEqual(self.events()[0]["budget_seconds"], 900)
+        self.assertEqual(self.events()[0]["max_invocations"], 20)
+        self.assertEqual(self.session.stop_calls, 1)
+        self.assertTrue(self.session.stopped())
+
+    def test_count_oracle_rejects_the_previous_rust_budget(self):
+        control = type(self)("test_rust_budget_reaches_fixed_count_with_ordinary_completed_iterations")
+        result = unittest.TestResult()
+        with patch.object(sequence, "RUST_SEQUENCE_SECONDS", 300):
+            control.run(result)
+        self.assertEqual(result.errors, [])
+        self.assertEqual(len(result.failures), 1)
+        self.assertIn("4 != 20", result.failures[0][1])
+
+    def test_rust_still_reserves_the_complete_next_invocation(self):
+        outcome, count = self.timed_iterations("rust", 218)
+        self.assertEqual(count, 3)
+        self.assertEqual(outcome["reason"], "insufficient_time_for_complete_invocation")
+        self.assertEqual(self.events()[0]["invocation_reserve_seconds"], 235)
+        self.assertEqual(self.events()[0]["helper_cleanup_seconds"], 12)
+        self.assertTrue(self.session.stopped())
+
+    def test_rust_budget_overrun_is_not_promoted_by_a_passing_result(self):
+        with self.assertRaisesRegex(TimeoutError, "reserved diagnostic budget"):
+            self.timed_iterations("rust", 889)
+        self.assertEqual(sum(r["event"] == "iteration_started" for r in self.events()), 1)
+        self.assertEqual(self.session.stop_calls, 1)
+        self.assertTrue(self.session.stopped())
 
     def test_policy_allowances_are_reserved_in_addition_to_the_original_invocation(self):
         # The old 221 + 12 reservation fits 240; collection's extra startup
