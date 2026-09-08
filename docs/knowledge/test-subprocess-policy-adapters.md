@@ -8,6 +8,7 @@ answers:
   - "where does T1545 retain actual checker PID and startup observations?"
   - "can native thread state replace kernel sampling of fixture startup?"
   - "how do I start an authenticated fixture sampling session?"
+  - "how are passive fixture identities and sources tracked?"
   - "why does fixture capture need repeated authentication?"
   - "why did T1669 admission miss its workspace?"
   - "how are fixture command-query exit races handled?"
@@ -34,6 +35,7 @@ evidence: >-
   t/1545-task-acceptance-doctrine.t;
   t/1668-darwin-inline-verilator-test-runtime.t;
   scripts/fixture_kernel_sampler.py; t/python/test_fixture_kernel_sampler.py;
+  scripts/observe_fixture_startup.py; t/python/test_fixture_census.py;
   t/1669-task-acceptance-fixture-runtime.t
 reverify: >-
   scripts/run_with_ram_guard.sh -- prove -Iperl -It/lib
@@ -75,7 +77,8 @@ captures; tests stay normal-user. Identity, expiry and STOP/Ctrl+C checks remain
 `.3.8.7` keeps one helper per sequence; single-run STOP needs fresh authentication.
 `.3.7` closes native capture/shutdown verification; `.3.2` owns causal repair.
 T1669 allocates under `.artifacts/tmp/process-supervisor-tests/`; empty coverage fails (`.3.8.5`/book). A `ps` no-match skips only native absence; `.3.8.6` retains other errors.
-Diagnostic detail: task/Git. `.3.8.18` captures the failed decoy in AppleSystemPolicy with native/source ancestry and timeout JSON; passing samples share those frames. Full-deadline wait, daemon cause, Rust main entry and failed legacy stack remain unknown. `.3.2.2–.3` qualify closed execution_context collection and fixed normal-user T1669; fixture-native/kernel evidence absent. `.3.2.4` passes with exact path/token queue/start/wakeup joins, unchanged sources and owned cleanup; no repair is claimed. `.3.2.5` finds historical context unavailable; retained live events falsify no-scan inference. `.3.2.6–.9` own passive census, integration and same-run observation.
+Diagnostic detail: task/Git. `.3.8.18` captures the failed decoy in AppleSystemPolicy with native/source ancestry and timeout JSON; passing samples share those frames. Full-deadline wait, daemon cause, Rust main entry and failed legacy stack remain unknown. `.3.2.2–.3` qualify closed execution_context collection and fixed normal-user T1669; fixture-native/kernel evidence absent. `.3.2.4` passes with exact path/token queue/start/wakeup joins, unchanged sources and owned cleanup; no repair is claimed. `.3.2.5` finds historical context unavailable; retained live events falsify no-scan inference.
+`.3.2.7` qualifies shared passive birth/source/progress tracking and read-only settlement; `.3.2.8–.9` own fixed caller integration and observation. Native held chains, source/inode mutations, false-absence and archive-clock controls protect the boundary.
 T1595's pre-main cause stays open; `.19.2.3.1.2.2.6.2` fixes capture.
 `RamGuardFixtureRuntime` seals tools/argv, paths, bounds and full results.
 T1811/T1669 prove signal/stream failures and group cleanup; T1595 keeps metrics.
@@ -87,20 +90,7 @@ Selected: one coordinator, private clients, reserved identities, bounded wire/co
 T1669 proves reservation feasibility. Extraction, Wire, inactive endpoint/service transport are implemented;
 coordination, routing and hostile qualification (including startup diagnosis) remain open.
 
-Capture `.3.7`, 2026-09-07: normal-user Perl PID `22778`
-(`1788787261.244839`) under T1668 `21913` (`1788787240.646851`). Source:
-`.artifacts/tmp/tests/eyRjEqbQuI/orphaning-runtime`, SHA-256
-`51805be68accf0933248e791444815bf1f4a3d51faca75c739c03dc92ee10dd5`.
-Report SHA-256: `e1306078fdb46858ce867f1411d83f52dc3d366e5971ff0384404d89da504d5b`;
-sample interval: `15:21:02.594–15:21:03.596 +0200`. AppleSystemPolicy offsets:
-`33268 → 32024 → 27236 → 13740`, image UUID `8474AAC8-5327-3045-A969-9B20DBF588BD`.
-Kernel UUID `3F7964F9-C5A6-39D4-942D-02750C0980E0` matches the installed arm64e kernel.
-Independent info/debug `syspolicyd` at `15:21:07 +0200` names the
-exact fixture in `GK Xprotect results` and `evaluation result: 12666, script, allowed, cache`;
-process-provenance also names PID `22778`. Default/original-failure queries are empty; this passing wait cannot explain the older timeout.
-Task: cleanup/selector/symbol limits. OS/toolchain: read dependencies. Root sampler birth is unretained; nested cleanup unproved.
-Helper STOP invalidates authentication; independent observed-process and exact-command censuses are empty. Git preserves identities/offsets/results; ignored raw logs/scratch producers are a durability gap.
-See `.artifacts/logs/fixture-kernel-recurrence-20260907/` and the capture session.
+Earlier passing T1668 capture `.3.7`: exact birth/source identities, AppleSystemPolicy offsets/image UUIDs, XProtect/provenance and cleanup limits remain at `ae992d5178a8bc68756402f51244bff752744bbd:docs/knowledge/test-subprocess-policy-adapters.md`. That passing policy wait cannot explain an older timeout; raw diagnostic artifacts remain an explicit durability gap.
 Approved iTerm2 Developer Tools is on; Terminal/Tracing off. Unchanged band passes.
 Exact `ju79K1mKs1/orphaning-runtime` still has XProtect results at `16:05:05.243719 +0200`, path `6bce9d1ba3a14e47`.
 [Apple's process-tree paste inspection](https://support.apple.com/en-euro/guide/security/sece3b202c4b/web) is unproved here.

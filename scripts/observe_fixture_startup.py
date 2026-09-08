@@ -260,11 +260,131 @@ def main_entry(evidence, root, *, include_wrapper=False):
     return "drained" if body.endswith(b"drained\n") else "entered"
 
 
+class CheckpointProcesses:
+    """Check caller policy between native inspections, including command queries."""
+
+    def __init__(self, native, checkpoint):
+        self.native, self.checkpoint = native, checkpoint
+
+    def inspect(self, method, pid):
+        if self.checkpoint is not None:
+            self.checkpoint()
+        result = method(pid)
+        if self.checkpoint is not None:
+            self.checkpoint()
+        return result
+
+    def identity(self, pid):
+        return self.inspect(self.native.identity, pid)
+
+    def executable(self, pid):
+        return self.inspect(self.native.executable, pid)
+
+    def command(self, pid):
+        return self.inspect(self.native.command, pid)
+
+    def children(self, pid):
+        return self.inspect(self.native.children, pid)
+
+
+class FixtureCensus:
+    """Passive exact-fixture admission; callers own execution and capture policy.
+
+    Scanning and read-only settlement are separate so a scan failure cannot
+    prevent the enclosing caller from finishing its original test first.
+    Authenticated observation retains its existing permissive rejection policy;
+    the normal-user census additionally requires immutable admitted sources.
+    """
+
+    def __init__(self, test, native, evidence, root, *, checkpoint=None,
+                 include_wrapper_progress=True, strict=True):
+        self.test, self.raw_native, self.evidence, self.root = test, native, evidence, root
+        self.native = CheckpointProcesses(native, checkpoint)
+        self.include_wrapper_progress, self.strict = include_wrapper_progress, strict
+        self.seen, self.admitted, self.first_seen, self.progress_seen = {}, {}, {}, {}
+        if (not still_live(self.native, test)
+                or any(self.native.identity(test["pid"])[key] != os.getuid() for key in ("uid", "ruid"))
+                or self.native.executable(test["pid"]) != Path("/usr/bin/perl").resolve()
+                or not sampler._test_command(self.native.command(test["pid"]), sampler.SUPERVISOR_TEST_PATH, root)):
+            raise ValueError("observer requires the exact normal-user T1669 invocation")
+
+    def scan(self):
+        entries = []
+        for pid in self.native.children(self.test["pid"]):
+            try:
+                parent = self.native.identity(pid)
+                if parent["ppid"] != self.test["pid"]:
+                    continue
+                sampler._supervisor_wrapper(self.native.command(pid), self.root)
+                chains = [[parent, self.test]]
+                for child_pid in self.native.children(pid):
+                    child = self.native.identity(child_pid)
+                    chains.insert(0, [child, parent, self.test])
+                for chain in chains:
+                    request = request_for(chain)
+                    admitted = sampler.validate_target(request, self.native, self.root)
+                    key = identity_key(admitted["child"])
+                    if key not in self.seen:
+                        if len(self.seen) >= MAX_IDENTITIES:
+                            raise RuntimeError("observer identity capacity reached")
+                        # Remember admission before any archival/journal failure:
+                        # the caller still needs to settle this observed birth.
+                        self.seen[key] = admitted["child"]
+                        self.admitted[key] = admitted
+                        self.evidence.retain_sources(admitted["sources"])
+                        # Preserve authenticated capture eligibility: archival
+                        # time is not part of its post-retention observation.
+                        self.first_seen[key] = time.monotonic()
+                        self.evidence.record("candidate", evidence=admitted)
+                    elif self.strict and admitted != self.admitted[key]:
+                        raise RuntimeError("fixture identity or source changed for an observed native birth")
+                    progress = main_entry(admitted, self.root, include_wrapper=self.include_wrapper_progress)
+                    if self.progress_seen.get(key) != progress:
+                        self.evidence.record("main_entry", identity=admitted["child"], progress=progress,
+                                             progress_scope="selected_producer" if (
+                                                 self.include_wrapper_progress and admitted["target_role"] == "legacy-wrapper"
+                                             ) else "target")
+                        self.progress_seen[key] = progress
+                    entries.append({"request": request, "evidence": admitted, "progress": progress,
+                                    "leaf": len(chain) == 3 or len(chains) == 1,
+                                    "observed_at": time.monotonic()})
+            except (FileNotFoundError, ProcessLookupError):
+                continue
+            except ValueError as error:
+                # Unrelated T1669 controls are outside this exact target policy.
+                known = any(info["pid"] == pid or info["ppid"] == pid for info in self.seen.values())
+                if known:
+                    self.evidence.record("candidate_rejected", pid=pid,
+                                         reason=str(error).replace(str(self.root), "."))
+                    if self.strict:
+                        raise RuntimeError("observed fixture rejected: " + str(error)) from error
+                continue
+        return entries
+
+    def require_coverage(self):
+        if not self.seen:
+            raise RuntimeError("no fixture was observed; coverage is unestablished")
+
+    def survivors(self):
+        # The original and collector may already be settled; inspection here
+        # must not depend on their earlier scan-time checkpoints.
+        return [info for info in self.seen.values() if still_live(self.raw_native, info)]
+
+    def settle(self):
+        deadline = time.monotonic() + SETTLE_SECONDS
+        while self.survivors():
+            if time.monotonic() >= deadline:
+                raise RuntimeError("observer could not verify observed fixture cleanup")
+            time.sleep(POLL_SECONDS)
+        return {"observed_fixtures_gone": True, "observed_fixture_count": len(self.seen),
+                "unobserved_descendants": "unknown"}
+
+
 def observe(test, native, session, evidence, root, *, stop_session=True, target_family="all",
             check_collection=None):
     """Settle observed fixtures; an enclosing sequence may own helper shutdown."""
     deadline = time.monotonic() + OBSERVATION_SECONDS
-    seen, candidates, progress_seen = {}, {}, {}
+    census, seen = None, {}
     selected_seen = set()
     capture = None
     try:
@@ -273,11 +393,9 @@ def observe(test, native, session, evidence, root, *, stop_session=True, target_
         # candidate. This observed interval establishes neither main entry nor
         # an eventual timeout, and never changes the original test's deadlines.
         candidate_seconds = RUST_CANDIDATE_SECONDS if target_family == "rust" else CANDIDATE_SECONDS
-        if (not still_live(native, test)
-                or any(native.identity(test["pid"])[key] != os.getuid() for key in ("uid", "ruid"))
-                or native.executable(test["pid"]) != Path("/usr/bin/perl").resolve()
-                or not sampler._test_command(native.command(test["pid"]), sampler.SUPERVISOR_TEST_PATH, root)):
-            raise ValueError("observer requires the exact normal-user T1669 invocation")
+        census = FixtureCensus(test, native, evidence, root,
+                               include_wrapper_progress=target_family == "legacy", strict=False)
+        seen = census.seen
         evidence.record("attached", test=test, test_source=sampler.SUPERVISOR_TEST_PATH,
                         target_family=target_family, candidate_seconds=candidate_seconds,
                         sampler_session=str(session.directory.relative_to(root)),
@@ -289,49 +407,16 @@ def observe(test, native, session, evidence, root, *, stop_session=True, target_
             if time.monotonic() >= deadline:
                 raise TimeoutError("observer wall expired; caller still owns the test")
             choices = []
-            for pid in native.children(test["pid"]):
-                try:
-                    parent = native.identity(pid)
-                    if parent["ppid"] != test["pid"]:
-                        continue
-                    sampler._supervisor_wrapper(native.command(pid), root)
-                    chains = [[parent, test]]
-                    for child_pid in native.children(pid):
-                        child = native.identity(child_pid)
-                        chains.insert(0, [child, parent, test])
-                    for chain in chains:
-                        request = request_for(chain)
-                        admitted = sampler.validate_target(request, native, root)
-                        key = identity_key(admitted["child"])
-                        if key not in seen:
-                            if len(seen) >= MAX_IDENTITIES:
-                                raise RuntimeError("observer identity capacity reached")
-                            evidence.retain_sources(admitted["sources"])
-                            seen[key] = admitted["child"]
-                            candidates[key] = time.monotonic()
-                            evidence.record("candidate", evidence=admitted)
-                        selected = selected_target(admitted, target_family)
-                        if selected:
-                            selected_seen.add(key)
-                        progress = main_entry(admitted, root, include_wrapper=target_family == "legacy")
-                        if progress_seen.get(key) != progress:
-                            evidence.record("main_entry", identity=admitted["child"], progress=progress,
-                                            progress_scope="selected_producer" if (
-                                                target_family == "legacy" and admitted["target_role"] == "legacy-wrapper"
-                                            ) else "target")
-                            progress_seen[key] = progress
-                        if (selected and not session.submitted and progress not in ("entered", "drained")
-                                and time.monotonic() - candidates[key] >= candidate_seconds
-                                and (len(chain) == 3 or len(chains) == 1)):
-                            choices.append((request, admitted, progress))
-                except (FileNotFoundError, ProcessLookupError):
-                    continue
-                except ValueError as error:
-                    # Ordinary unrelated T1669 controls are outside this target policy.
-                    # Record target races only after that native birth was admitted.
-                    if any(info["pid"] == pid or info["ppid"] == pid for info in seen.values()):
-                        evidence.record("candidate_rejected", pid=pid, reason=str(error).replace(str(root), "."))
-                    continue
+            for entry in census.scan():
+                admitted, progress = entry["evidence"], entry["progress"]
+                key = identity_key(admitted["child"])
+                if (selected_target(admitted, target_family) and not session.submitted
+                        and progress not in ("entered", "drained")
+                        and entry["observed_at"] - census.first_seen[key] >= candidate_seconds
+                        and entry["leaf"]):
+                    choices.append((entry["request"], admitted, progress))
+            selected_seen.update(key for key, admitted in census.admitted.items()
+                                 if selected_target(admitted, target_family))
             if choices and not session.submitted:
                 for request, admitted, progress in choices:
                     try:
@@ -373,7 +458,7 @@ def observe(test, native, session, evidence, root, *, stop_session=True, target_
                     capture = session.result()
                     if capture is not None:
                         evidence.record("capture_result", result=capture)
-                survivors = [info for info in seen.values() if still_live(native, info)]
+                survivors = census.survivors() if census is not None else []
                 helper_settled = session.stopped() if stop_session else (
                     not session.submitted or capture is not None)
                 if not survivors and helper_settled:

@@ -1015,11 +1015,24 @@ interval falsify an inference that no scan occurred. Historical availability
 cannot supply the missing queue/start/wakeup context. Task `.3.2.6` selects a
 shared passive fixture census: same-invocation native identity and retained
 source bytes will join the original failed result to exact policy path/token
-events. The census will observe fixtures without signalling them or requiring
-an authenticated helper. Its implementation and independent controls remain
-pending under `.3.2.7`, followed by fixed caller integration in `.3.2.8` and
-the separately owned original observation in `.3.2.9`. Current policy-only
-behavior still lacks fixture-native evidence. Existing authenticated commands
+events. Task `.3.2.7` qualifies that shared mechanism. It observes fixtures
+without signalling them or requiring an authenticated helper. The existing
+authenticated observer now reuses its census while retaining capture selection,
+final request validation and helper ownership.
+
+Passive scanning, coverage and observed-birth settlement are separate. An
+admitted identity remains available for cleanup even if source archival fails;
+capture eligibility still starts after successful archival. Strict passive
+tracking rejects changed sources or replacement inodes for an already observed
+birth. Legacy wrapper progress explicitly describes its selected producer.
+Actual held Perl chains independently verify identities, source bytes, progress,
+rejection of live-source changes and settlement only after the fixtures exit.
+A false-absence mutation fails the cleanup oracle, and a slow-archive control
+protects the existing eligibility timing.
+
+Fixed policy-only integration remains pending in `.3.2.8`, followed by the
+separately owned original observation in `.3.2.9`. The current policy-only
+command still lacks fixture-native evidence. Existing authenticated commands
 retain their helper requirement.
 Startup repair, complete policy delivery and runtime qualification remain open.
 
