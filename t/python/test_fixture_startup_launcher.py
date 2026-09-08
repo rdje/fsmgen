@@ -19,7 +19,7 @@ sys.path.insert(0, str(ROOT / "scripts"))
 import run_fixture_startup_observation as launcher
 
 
-def install_policy_control(case, root):
+def install_policy_control(case, root, *, scope="fixture_path"):
     """Replace only the OS stream with a real held, unprivileged producer."""
     source = root / "controlled-policy.pl"
     source.write_text('use strict; use warnings; $|=1; $SIG{INT}=sub { exit 0 }; alarm 30;\n'
@@ -29,7 +29,7 @@ def install_policy_control(case, root):
 
     def spawn(argv, **kwargs):
         if argv[:2] == ["/usr/bin/log", "stream"]:
-            case.assertEqual(argv, launcher.policy_log.command(root))
+            case.assertEqual(argv, launcher.policy_log.command(root, scope=scope))
             process = popen(["/usr/bin/perl", str(source)], **kwargs)
             processes.append(process)
             return process
@@ -270,7 +270,7 @@ print STDERR "separate stderr\\n";
 
     def policy_body(self, action=""):
         journal = str((self.evidence.directory / "observations.jsonl").relative_to(self.root))
-        return "use JSON::PP qw(decode_json);\nopen my $events, '<', '" + journal + "' or die $!;\n" + r'''
+        return "do {\nuse JSON::PP qw(decode_json);\nopen my $events, '<', '" + journal + "' or die $!;\n" + r'''
 my ($collector, $prepared, $ready);
 while (my $line = <$events>) {
     my $row = decode_json($line);
@@ -285,7 +285,7 @@ die 'collector is not alive at test entry' unless kill 0, $collector;
 open my $proof, '>', 'policy-body-proof' or die $!;
 print {$proof} "$collector $prepared $ready\n" or die $!;
 close $proof or die $!;
-''' + action
+''' + action + "\n};\n"
 
     def test_actual_body_verifies_policy_preparation_and_live_collector_before_entry(self):
         self.program(body=self.policy_body())

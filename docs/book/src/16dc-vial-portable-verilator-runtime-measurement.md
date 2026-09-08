@@ -973,10 +973,37 @@ Both scopes exercise the same real-producer output, failure and cleanup
 controls; a normal-user OS collector independently verifies context settlement.
 Neither test establishes complete event delivery or diagnoses the earlier wait.
 
-The policy-only caller remains pending under `.3.2.3`, followed by the separately
-owned original observation. Existing observation commands still require their
-documented helper. The planned policy-only route needs no privileged capture;
-startup repair, complete policy delivery and runtime qualification remain open.
+For policy execution context without kernel sampling, task `.3.2.3` adds a
+separate fixed caller. Run it as the normal user on Darwin:
+
+```bash
+bash scripts/run_with_ram_guard.sh -- python3 -B \
+  scripts/run_fixture_startup_policy_observation.py
+```
+
+It accepts no session, command or numeric override and runs the original T1669
+once. It prints its private evidence directory under
+`.artifacts/logs/t1669-startup-observation/`. The context collector prepares
+before the held test is released. The existing original invocation, output
+and cleanup limits apply. No authenticated helper or sampler is started.
+
+The journal records source hashes, readiness and settlement; `test.tap`,
+`test.stderr`, `test-result.json` and the policy files preserve each result.
+An original nonzero or timeout remains failed even if collection succeeds.
+A collection failure likewise fails the diagnostic while retaining the
+original result separately. Both owners are settled before return. Healthy
+completion explicitly claims no qualification.
+
+This mode collects no native fixture ancestry or kernel stack; unobserved
+descendants remain unknown. Native test/collector ownership and each original
+adapter's own-group cleanup are separate from that missing fixture evidence.
+Controlled bodies verify context readiness before entry and exact split output;
+a deliberate false-success projection fails against a real native nonzero exit.
+The actual native collector is tested with a controlled body, not full T1669.
+
+Task `.3.2.4` owns the separately bounded original observation. Existing
+authenticated observation commands keep their documented helper requirement.
+Startup repair, complete policy delivery and runtime qualification remain open.
 
 Capture requests and helper results are published only after their complete
 JSON has been written, so a concurrent reader cannot consume a partial record.
