@@ -221,7 +221,18 @@ def stop_helper(session):
         time.sleep(observer.POLL_SECONDS)
 
 
-def run(session, native, evidence, root):
+def require_ready(session, native):
+    state = session.state()
+    cursor = state.get("last_request", 0)
+    if (session.submitted or state.get("state") != "ready"
+            or observer.identity_key(state["helper"]) != observer.identity_key(session.helper)
+            or not observer.still_live(native, session.helper)
+            or type(cursor) is not int or cursor != session.number - 1
+            or (session.directory / "STOP").exists()):
+        raise ValueError("authenticated helper changed before test release")
+
+
+def run(session, native, evidence, root, *, stop_session=True):
     test, result = None, None
     observation_error = None
     cancelled = False
@@ -230,14 +241,7 @@ def run(session, native, evidence, root):
         native.test = test
 
         def prepare():
-            state = session.state()
-            cursor = state.get("last_request", 0)
-            if (state.get("state") != "ready"
-                    or observer.identity_key(state["helper"]) != observer.identity_key(session.helper)
-                    or not observer.still_live(native, session.helper)
-                    or type(cursor) is not int or cursor != session.number - 1
-                    or (session.directory / "STOP").exists()):
-                raise ValueError("authenticated helper changed before test release")
+            require_ready(session, native)
             ready_ns = time.monotonic_ns()
             evidence.record("observer_ready", ready_ns=ready_ns, test=test.identity,
                             argv=list(TEST_ARGV), test_sha256=hashlib.sha256(
@@ -248,7 +252,7 @@ def run(session, native, evidence, root):
         witness = test.release(prepare)
         evidence.record("test_release", witness=witness, test=test.identity)
         wait_for_exec(test, native, root)
-        observer.observe(test.identity, native, session, evidence, root)
+        observer.observe(test.identity, native, session, evidence, root, stop_session=stop_session)
     except (Exception, KeyboardInterrupt) as error:
         observation_error = error
         cancelled = isinstance(error, KeyboardInterrupt)
@@ -263,10 +267,11 @@ def run(session, native, evidence, root):
                 pending.replace(evidence.directory / "test-result.json")
         except (Exception, KeyboardInterrupt) as error:
             cleanup_errors.append("test cleanup: " + str(error))
-        try:
-            stop_helper(session)
-        except (Exception, KeyboardInterrupt) as error:
-            cleanup_errors.append("helper cleanup: " + str(error))
+        if stop_session:
+            try:
+                stop_helper(session)
+            except (Exception, KeyboardInterrupt) as error:
+                cleanup_errors.append("helper cleanup: " + str(error))
         if cleanup_errors:
             failure = RuntimeError("; ".join(cleanup_errors))
             evidence.problem("cleanup", failure)

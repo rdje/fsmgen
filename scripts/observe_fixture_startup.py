@@ -238,7 +238,8 @@ def main_entry(evidence, root):
     return "drained" if body.endswith(b"drained\n") else "entered"
 
 
-def observe(test, native, session, evidence, root):
+def observe(test, native, session, evidence, root, *, stop_session=True):
+    """Settle observed fixtures; an enclosing sequence may own helper shutdown."""
     deadline = time.monotonic() + OBSERVATION_SECONDS
     seen, candidates, progress_seen = {}, {}, {}
     capture = None
@@ -320,7 +321,8 @@ def observe(test, native, session, evidence, root):
         raise
     finally:
         try:
-            session.stop()
+            if stop_session:
+                session.stop()
             settle_deadline = time.monotonic() + SETTLE_SECONDS
             while time.monotonic() < settle_deadline:
                 if session.submitted and capture is None:
@@ -328,12 +330,18 @@ def observe(test, native, session, evidence, root):
                     if capture is not None:
                         evidence.record("capture_result", result=capture)
                 survivors = [info for info in seen.values() if still_live(native, info)]
-                if not survivors and session.stopped():
+                helper_settled = session.stopped() if stop_session else (
+                    not session.submitted or capture is not None)
+                if not survivors and helper_settled:
                     break
                 time.sleep(POLL_SECONDS)
             else:
-                raise RuntimeError("observer could not verify selected fixture/helper shutdown")
-            evidence.record("settled", observed_fixtures_gone=True, helper_stopped=True,
+                boundary = "selected fixture/helper shutdown" if stop_session else (
+                    "selected fixture cleanup and capture settlement")
+                raise RuntimeError("observer could not verify " + boundary)
+            evidence.record("settled", observed_fixtures_gone=True,
+                            helper_stopped=stop_session,
+                            helper_shutdown_owner="observer" if stop_session else "caller",
                             observed_fixture_count=len(seen),
                             capture_received=capture is not None,
                             original_test_result="caller_owned", unobserved_descendants="unknown")

@@ -108,10 +108,30 @@ class ObserverControls(unittest.TestCase):
         self.native = Native(self.root, self.clock)
         self.test = self.native.identity(10)
 
-    def run_observer(self):
+    def run_observer(self, **kwargs):
         with patch.object(observer.time, "monotonic", side_effect=lambda: self.clock.now), \
                 patch.object(observer.time, "sleep", side_effect=self.clock.sleep):
-            return observer.observe(self.test, self.native, self.session, self.evidence, self.root)
+            return observer.observe(self.test, self.native, self.session, self.evidence, self.root, **kwargs)
+
+    def test_sequence_owner_keeps_helper_live_until_capture_result_is_consumed(self):
+        def delayed_result():
+            return self.session.capture if self.clock.now >= 1.5 else None
+
+        with patch.object(self.session, "result", side_effect=delayed_result):
+            self.assertEqual(self.run_observer(stop_session=False), self.session.capture)
+        self.assertFalse(self.session.stop_called)
+        self.assertGreaterEqual(self.clock.now, 1.5)
+        self.assertFalse(self.events()[-1]["helper_stopped"])
+        self.assertEqual(self.events()[-1]["helper_shutdown_owner"], "caller")
+
+    def test_sequence_owner_cannot_hide_missing_capture_or_fixture_cleanup(self):
+        self.session.capture = None
+        with patch.object(observer, "SETTLE_SECONDS", 0.2), \
+                self.assertRaisesRegex(RuntimeError, "could not verify"):
+            self.run_observer(stop_session=False)
+        self.assertFalse(self.session.stop_called)
+        self.assertEqual(len(self.session.requests), 1)
+        self.assertIn("cleanup", json.loads((self.evidence.directory / "failure.json").read_text())["failures"])
 
     def events(self):
         return [json.loads(line) for line in (self.evidence.directory / "observations.jsonl").read_text().splitlines()]

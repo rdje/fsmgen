@@ -726,8 +726,9 @@ through Rust, signal and streams fixtures without an eligible kernel capture.
 The native streams marker excludes its expected body wait. Exact-path XProtect
 records accompany the passing invocation; they do not establish the earlier
 failure's cause. Recorded process births are independently absent and the
-helper has stopped with authentication invalidated. Task `.3.8.7` next owns
-qualification of a bounded prospective sequence using one helper lifetime.
+helper has stopped with authentication invalidated. Task `.3.8.7` qualifies
+a bounded prospective sequence using one helper lifetime; `.3.8.8` owns its
+authenticated execution.
 
 Administrator authentication is for the fixed native kernel-stack capture:
 `spindump` rejected the unprivileged probe because root is required. Tests and
@@ -735,6 +736,42 @@ the observer run as the normal user. The helper supports repeated requests
 within its expiring session, but the single-invocation observer shuts it down
 after each attempt. That shutdown requires fresh authentication for a later
 attempt; it is separate from the director's authorization to continue work.
+
+For that finite prospective experiment, use the sequence controller with the
+same ready session directory:
+
+```bash
+bash scripts/run_with_ram_guard.sh -- python3 -B \
+  scripts/run_fixture_startup_sequence.py --session "$FSMGEN_CAPTURE_SESSION"
+```
+
+It permits at most twenty unchanged T1669 invocations within a checked
+five-minute diagnostic budget. Before each invocation it reserves the complete
+existing caller allowance and helper cleanup, so it may stop well before either
+ceiling. It does not shorten fixture deadlines to use the remaining time;
+an observed budget overrun is a diagnostic error. The original test, admission
+policy, source retention and native capture command remain unchanged.
+
+The sequence owns helper shutdown across iterations. Every iteration must
+retain successful original status and positive observed-fixture cleanup before
+another test starts. A failed test, observer error, revoked helper or any capture
+ends the sequence. A request alone cannot count as a received capture. The
+helper stops and invalidates authentication at the end of the complete sequence.
+The standalone observer and single-invocation caller retain their own shutdown.
+No administrator interaction is needed between iterations of this sequence.
+
+The sequence journal links every iteration's separate TAP, wait status and
+observer evidence. Exit zero means a capture was received with successful
+original invocation results; exit two means the finite experiment ended without
+a capture. Failures remain failures, and neither outcome establishes a causal
+repair or runtime qualification. The controlled qualification uses real Perl
+invocations and a held unprivileged helper; native ancestry integration is
+Darwin-only, and those controls do not exercise administrator authentication.
+
+These temporary Perl programs stand in for tool-resolution failures, signals
+and blocked output while regression tests verify process supervision. The
+investigation concerns delayed startup before
+native main-entry evidence, distinct from a deliberately blocked fixture body.
 
 Capture requests and helper results are published only after their complete
 JSON has been written, so a concurrent reader cannot consume a partial record.

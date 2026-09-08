@@ -8,6 +8,7 @@ answers:
   - "where does T1545 retain actual checker PID and startup observations?"
   - "can native thread state replace kernel sampling of fixture startup?"
   - "how do I start an authenticated fixture sampling session?"
+  - "why does fixture capture need repeated authentication?"
   - "why did T1669 admission miss its workspace?"
   - "how are fixture command-query exit races handled?"
   - "what does the AppleSystemPolicy fixture startup capture establish?"
@@ -43,21 +44,20 @@ reverify: >-
 ---
 
 Decisions `0087`/`0101` keep one engine in `FSM::Support::ProcessSupervisor`
-with nonblocking advancement behind synchronous callers: shell-free argv, same-volume
+with nonblocking steps behind synchronous callers: shell-free argv, same-volume
 repository cwd, bounded split streams, exec handoff, monotonic time, one process
 group, first-failure status and TERM/KILL cleanup. Sealed adapters own commands,
 bounds, schemas and platform guards; T1669 watches exclusive ownership.
-The child checks POSIX `setpgid` return and actual group before exec.
+Child checks POSIX `setpgid` return and actual group before exec.
 Nonthrowing failure and false success reject with `exec_error` and no command
-execution; T1669 injects both plus an exception. The parent's race-closing
-attempt cannot replace child admission. Nested cleanup remains open below.
+execution; T1669 injects both plus an exception. The parent's race closure cannot replace child admission. Nested cleanup remains open below.
 `exec_handoff_monotonic_ns` records observed control-pipe EOF, not entry into
 main: abrupt pre-exec child death can also close the pipe. Capture ending
 without EOF leaves that timestamp and dependent durations unknown even after
 cleanup. T1669 holds a real child before exec through timeout and separately
 exits it before exec; successful output remains a distinct positive control.
-Post-KILL reaping uses nonblocking polling inside the existing cleanup grace;
-an unreapable leader or surviving group remains explicitly incomplete. T1669's
+Post-KILL reaping polls nonblocking within the cleanup grace;
+an unreapable leader or surviving group remains incomplete. T1669's
 isolated mock oracle rejects blocking waits without creating an unkillable child.
 `VerilatorRuntime` retains decision `0086`'s Darwin qualification and version/
 compile/runtime contracts. `TaskAcceptanceFixtureRuntime` admits only owned
@@ -65,14 +65,14 @@ fixture roots and fixed local Git argv. Its ten-second Git/checker stages cap
 capture at 1,048,576/4,194,304 bytes and use the closed
 `fsmgen.test.task_acceptance_fixture_result.v1` schema. Load-time canonical
 Git/Bash identities ignore later PATH mutation; callers cannot widen policy.
-The original env-Bash checker stalled before main on Darwin. Direct selected
+The env-Bash checker stalled before main on Darwin. Direct selected
 Bash preserves capability: the retained `/bin/bash` 3.2 control fails its empty
 array under `set -u`. Bash/Git are read-only host dependencies; project data
 stays local. Timeout/overflow/nonzero/signal/exec/descendant/cleanup failures stay failed
 without retry; original fixture assertions pass.
 T1545 retains failed checker results as canonical JSON TAP diagnostics separate
-from checker output. Real nonzero controls verify empty/split streams and full
-recovery; the older discarded empty-output result has unknown cause.
+from checker output. Nonzero controls verify empty/split streams and full
+recovery; the older discarded empty-output cause is unknown.
 Launch observation retains child identity and bounded progress with unchanged
 commands/results. Bash PID, native output and held-child controls qualify it;
 missing progress stays unknown. Task/book own qualification and boundaries.
@@ -82,12 +82,13 @@ entrypoint may retain an env shebang.
 Direct-Perl timeouts show the shebang repair is insufficient:
 HIAL/VIAL `.19.2.3.1.2.2.5.5.2.3.1.2.2.3` owns the live `_dyld_start` sample,
 Rust proxy/Verilator fixture diagnosis and repair. OS cause stays unknown;
-child `.3.3` records targeted kernel sampling and its administrator-authentication
-prerequisite, with capture owned by `.3.4` before causal repair selection.
-Child `.3.5` rejects a thread-state-only substitute: its independently stopped
-pipe reader still reports a waiting thread. This does not identify the OS cause.
-`.3.6`: `bash scripts/await_fixture_kernel_samples.sh` supplies local authentication,
-normal-user repeated fixed captures, identity checks, expiry and STOP/Ctrl+C.
+child `.3.3` owns kernel-sampling selection and required administrator authentication;
+`.3.4` owns capture before causal repair.
+`.3.5` rejects thread-state substitution: an independently stopped pipe reader
+still reports waiting; OS cause remains unknown.
+`.3.6`: `bash scripts/await_fixture_kernel_samples.sh` authenticates fixed kernel
+captures; tests stay normal-user. Identity, expiry and STOP/Ctrl+C checks remain.
+`.3.8.7` keeps one helper per sequence; single-run STOP needs fresh authentication.
 `.3.7` closes native capture/shutdown verification; `.3.2` owns causal repair.
 T1669 admission uses its real allocator's `.artifacts/tmp/process-supervisor-tests/` root.
 An empty observation fails coverage; `.3.8.5`/book own the contract.
@@ -96,7 +97,6 @@ T1595's pre-main cause stays open; `.19.2.3.1.2.2.6.2` fixes capture.
 `RamGuardFixtureRuntime` seals tools/argv, paths, bounds and full results.
 T1811/T1669 prove signal/stream failures and group cleanup; T1595 keeps metrics.
 No retry or production threshold change.
-
 An outer timeout proved its group gone but left an inner group alive. That group
 was terminated; absence verified. Per-group cleanup cannot prove nested cleanup.
 HIAL/VIAL `.19.2.3.1.2.2.5.5` owns ownership design, repair and hostile controls;
@@ -117,7 +117,7 @@ Independent info/debug `syspolicyd` at `15:21:07 +0200` names the
 exact fixture in `GK Xprotect results` and `evaluation result: 12666, script, allowed, cache`;
 process-provenance also names PID `22778`. Default and original-failure queries are empty.
 This passing invocation's policy wait cannot explain the older timeout.
-The task owns cleanup, failed-selector/symbolization limits; OS/toolchain reads are dependencies. Root sampler birth identity was not retained; nested cleanup is unproved.
+Task owns cleanup and failed-selector/symbol limits; OS/toolchain reads are dependencies. Root sampler birth identity was not retained; nested cleanup is unproved.
 Helper STOP invalidates authentication; independent observed-process and exact-command
 censuses are empty. Identities/offsets/results are durable here and in Git;
 Raw logs and scratch producers remain ignored: an explicit durability gap.
