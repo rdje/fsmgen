@@ -27,6 +27,7 @@ ROOT = Path(__file__).resolve().parent.parent
 OBSERVATION_SECONDS = 180
 SETTLE_SECONDS = 12
 CANDIDATE_SECONDS = 0.5
+RUST_CANDIDATE_SECONDS = 3.0
 POLL_SECONDS = 0.1
 MAX_CHILDREN = 64
 MAX_IDENTITIES = 512
@@ -35,17 +36,20 @@ MAX_EVENT_BYTES = 16384
 MAX_LOG_BYTES = 16 * 1024 * 1024
 MAX_SOURCE_FILES = 64
 MAX_SOURCE_BYTES = 4 * 1024 * 1024
-TARGET_FAMILIES = ("all", "legacy")
+TARGET_FAMILIES = ("all", "legacy", "rust")
 
 
 def require_target_family(target_family):
     if target_family not in TARGET_FAMILIES:
-        raise ValueError("target family must be all or legacy")
+        raise ValueError("target family must be all, legacy or rust")
 
 
 def selected_target(admitted, target_family):
-    return target_family == "all" or admitted["target_role"] in (
-        "legacy-wrapper", "legacy-producer")
+    if target_family == "all":
+        return True
+    roles = (("rust-wrapper", "rust-proxy") if target_family == "rust" else
+             ("legacy-wrapper", "legacy-producer"))
+    return admitted["target_role"] in roles
 
 
 class Processes(sampler.NativeProcesses):
@@ -265,13 +269,17 @@ def observe(test, native, session, evidence, root, *, stop_session=True, target_
     capture = None
     try:
         require_target_family(target_family)
+        # Rust-only observation reserves the sole request for a longer-lived
+        # candidate. This observed interval establishes neither main entry nor
+        # an eventual timeout, and never changes the original test's deadlines.
+        candidate_seconds = RUST_CANDIDATE_SECONDS if target_family == "rust" else CANDIDATE_SECONDS
         if (not still_live(native, test)
                 or any(native.identity(test["pid"])[key] != os.getuid() for key in ("uid", "ruid"))
                 or native.executable(test["pid"]) != Path("/usr/bin/perl").resolve()
                 or not sampler._test_command(native.command(test["pid"]), sampler.SUPERVISOR_TEST_PATH, root)):
             raise ValueError("observer requires the exact normal-user T1669 invocation")
         evidence.record("attached", test=test, test_source=sampler.SUPERVISOR_TEST_PATH,
-                        target_family=target_family,
+                        target_family=target_family, candidate_seconds=candidate_seconds,
                         sampler_session=str(session.directory.relative_to(root)),
                         observer_sha256=hashlib.sha256(Path(__file__).read_bytes()).hexdigest(),
                         sampler_sha256=hashlib.sha256((root / "scripts/fixture_kernel_sampler.py").read_bytes()).hexdigest())
@@ -313,7 +321,7 @@ def observe(test, native, session, evidence, root, *, stop_session=True, target_
                                             ) else "target")
                             progress_seen[key] = progress
                         if (selected and not session.submitted and progress not in ("entered", "drained")
-                                and time.monotonic() - candidates[key] >= CANDIDATE_SECONDS
+                                and time.monotonic() - candidates[key] >= candidate_seconds
                                 and (len(chain) == 3 or len(chains) == 1)):
                             choices.append((request, admitted, progress))
                 except (FileNotFoundError, ProcessLookupError):

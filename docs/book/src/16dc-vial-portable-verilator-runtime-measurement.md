@@ -774,6 +774,31 @@ before publication. Invalid selectors fail before test release. These controls
 qualify selection only; the fixed caller also prepares the live policy retention
 described below before each authenticated experiment.
 
+For a longer-lived Rust candidate, use the same fixed sequence with the Rust
+selector:
+
+```bash
+bash scripts/run_with_ram_guard.sh -- python3 -B \
+  scripts/run_fixture_startup_sequence.py --session "$FSMGEN_CAPTURE_SESSION" \
+  --target-family rust
+```
+
+Rust selection requires 3 seconds from the candidate's first retained
+observation before it can consume the single capture. Only admitted Rust
+wrappers/proxies qualify; observed legacy sources remain retained, but legacy
+activity alone cannot establish Rust coverage. The attached event records the
+allowance. All-family and legacy selection keep their existing allowance, and
+the original test's deadlines stay fixed.
+
+This interval is a diagnostic choice. An eligible process may still pass;
+selection proves neither timeout nor main entry. Independent modeled controls
+prove that an earlier departing Rust candidate and a later legacy candidate
+cannot spend the request before the later live Rust child. Restoring early
+eligibility or removing family filtering fails that oracle. Real native
+lifecycle controls verify Rust readiness and matching coverage with capture
+eligibility disabled; they do not authenticate sampling.
+
+
 The sequence owns helper shutdown across iterations. Every iteration must
 retain successful original status and positive observed-fixture cleanup before
 another test starts. A failed test, observer error, revoked helper or any capture
@@ -901,7 +926,8 @@ That delayed path record cannot supply the failed process's kernel wait stack.
 The sequence stops on this original failure. Its collector, original test and
 helper are settled; recorded process births and observed fixture workspaces are
 independently absent. The early passing candidate consumed the sole capture,
-so `.3.8.15` owns a qualified selection of a longer-lived Rust candidate.
+so `.3.8.15` qualifies the longer-lived Rust selector above. Task `.3.8.16`
+owns its next bounded authenticated observation.
 Startup repair, complete policy delivery and runtime qualification remain open.
 
 Capture requests and helper results are published only after their complete

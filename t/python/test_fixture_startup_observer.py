@@ -184,6 +184,69 @@ class ObserverControls(unittest.TestCase):
         self.assertEqual(self.events()[-1]["selected_fixture_count"], 0)
         self.assertTrue(self.session.stop_called)
 
+    def test_rust_selection_waits_for_later_live_candidate_and_excludes_legacy(self):
+        self.add_later_legacy()
+        workspace = self.root / ".artifacts/tmp/process-supervisor-tests/later-rust"
+        (workspace / "rust-tools").mkdir(parents=True)
+        wrapper, producer = workspace / "rust-tool-resolution", workspace / "rust-tools/rustup"
+        wrapper.write_bytes(b"independent later Rust wrapper\n")
+        producer.write_bytes(b"independent later Rust producer\n")
+        self.native.records[70] = dict(self.native.records[20], pid=70, start_sec=170)
+        self.native.records[80] = dict(self.native.records[30], pid=80, ppid=70, start_sec=180)
+        self.native.commands[70] = f"/usr/bin/perl -Iperl -It/lib {wrapper} {producer.parent}"
+        self.native.commands[80] = f"/usr/bin/perl {producer} which cargo"
+        children, identity = self.native.children, self.native.identity
+
+        def current_identity(pid):
+            if pid in (20, 30) and self.clock.now >= 2.4:
+                raise ProcessLookupError(errno.ESRCH, "early Rust candidate exited")
+            return identity(pid)
+
+        self.native.identity = current_identity
+        self.native.children = lambda pid: [candidate for candidate in children(pid)
+            if (candidate not in (20, 30) or self.clock.now < 2.4)
+            and (candidate not in (70, 80) or self.clock.now >= 2.5)]
+        self.native.end = 8.0
+        self.assertEqual(self.run_observer(target_family="rust"), self.session.capture)
+        self.assertEqual([request["pid"] for request in self.session.requests], [80])
+        rows = self.events()
+        attached = next(row for row in rows if row["event"] == "attached")
+        captured = next(row for row in rows if row["event"] == "capture_requested")
+        self.assertEqual(attached["candidate_seconds"], 3)
+        self.assertGreaterEqual(captured["monotonic_ns"], 5_500_000_000)
+        self.assertEqual(captured["target_family"], "rust")
+        self.assertEqual(rows[-1]["observed_fixture_count"], 6)
+        self.assertEqual(rows[-1]["selected_fixture_count"], 4)
+        self.assertTrue(self.session.stop_called)
+
+    def test_later_rust_oracle_rejects_early_capture_allowance(self):
+        control = type(self)("test_rust_selection_waits_for_later_live_candidate_and_excludes_legacy")
+        result = unittest.TestResult()
+        with patch.object(observer, "RUST_CANDIDATE_SECONDS", 0.5):
+            control.run(result)
+        self.assertEqual(result.errors, [])
+        self.assertEqual(len(result.failures), 1)
+        self.assertIn("[30] != [80]", result.failures[0][1])
+
+    def test_later_rust_oracle_rejects_unfiltered_legacy_capture(self):
+        control = type(self)("test_rust_selection_waits_for_later_live_candidate_and_excludes_legacy")
+        result = unittest.TestResult()
+        with patch.object(observer, "selected_target", return_value=True):
+            control.run(result)
+        self.assertEqual(result.errors, [])
+        self.assertEqual(len(result.failures), 1)
+        self.assertIn("[60] != [80]", result.failures[0][1])
+
+    def test_legacy_only_cannot_establish_rust_coverage(self):
+        self.add_later_legacy()
+        del self.native.records[20], self.native.records[30]
+        with self.assertRaisesRegex(RuntimeError, "no selected fixture was observed"):
+            self.run_observer(target_family="rust")
+        self.assertEqual(self.session.requests, [])
+        self.assertEqual(self.events()[-1]["observed_fixture_count"], 2)
+        self.assertEqual(self.events()[-1]["selected_fixture_count"], 0)
+        self.assertTrue(self.session.stop_called)
+
     def test_legacy_wrapper_without_child_remains_eligible(self):
         self.add_later_legacy(child=False)
         self.assertEqual(self.run_observer(target_family="legacy"), self.session.capture)
@@ -199,7 +262,7 @@ class ObserverControls(unittest.TestCase):
 
     def test_invalid_family_stops_helper_without_observing_or_sampling(self):
         with self.assertRaisesRegex(ValueError, "target family must be"):
-            self.run_observer(target_family="rust")
+            self.run_observer(target_family="unrecognized")
         self.assertEqual(self.session.requests, [])
         self.assertTrue(self.session.stop_called)
         self.assertFalse(any(row["event"] == "attached" for row in self.events()))

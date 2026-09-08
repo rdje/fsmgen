@@ -47,25 +47,23 @@ Decisions `0087`/`0101`: `FSM::Support::ProcessSupervisor` has nonblocking steps
 repository cwd, bounded split streams, exec handoff, monotonic time, one process
 group, first-failure status and TERM/KILL cleanup. Sealed adapters own commands,
 bounds, schemas and platform guards; T1669 watches exclusive ownership.
-Child checks POSIX `setpgid` return and actual group before exec. False/nonthrowing failures yield `exec_error`, no execution; T1669 injects both plus exception. Parent race closure cannot replace admission; nested cleanup open.
+Child checks POSIX `setpgid` return and actual group before exec. False/nonthrowing failures yield `exec_error` without execution; T1669 injects both plus exception. Parent race closure cannot replace admission; nested cleanup open.
 `exec_handoff_monotonic_ns` means observed control-pipe EOF, not main entry:
 pre-exec death can close it. Without observed EOF, that timestamp and dependent
 durations stay unknown even after cleanup. T1669 holds a real pre-exec child
 through timeout and separately exits it; successful output is the positive control.
-Post-KILL reaping polls nonblocking within the cleanup grace;
-an unreapable leader or surviving group remains incomplete. T1669's
-isolated mock oracle rejects blocking waits without creating an unkillable child.
+Post-KILL reaping polls nonblocking within cleanup grace. Unreaped leaders/surviving groups stay incomplete; T1669's isolated mock rejects blocking waits without unkillable children.
 `VerilatorRuntime` retains `0086`'s Darwin qualification and version/compile/runtime contracts.
-`TaskAcceptanceFixtureRuntime` seals owned fixture roots and fixed local Git argv.
+`TaskAcceptanceFixtureRuntime` seals owned fixture roots/fixed local Git argv.
 Git/checker: ten-second wall, 1,048,576/4,194,304-byte capture, closed `fsmgen.test.task_acceptance_fixture_result.v1`. Load-time Git/Bash ignore later PATH; callers cannot widen policy.
 Darwin env-Bash stalled before main. Direct Bash preserves capability: the retained `/bin/bash` 3.2 control fails its empty
 array under `set -u`. Bash/Git are read-only host dependencies; project data
 stays local. Timeout/overflow/nonzero/signal/exec/descendant/cleanup failures stay failed
 without retry; original fixture assertions pass.
 T1545 retains failed checker results as canonical JSON TAP diagnostics separate from output. Nonzero controls prove empty/split streams/full recovery; older discarded cause unknown.
-Launch observation retains commands/results, identity and bounded progress, qualified by Bash PID/native-output/held-child controls. Missing progress is unknown; task/book own limits.
+Launch observation retains commands/results, identity and bounded progress, qualified by Bash PID/native-output/held-child controls. Missing progress stays unknown; task/book own limits.
 Env-Perl reached handoff then timed out without output; Verilator fixtures now use canonical Perl shebangs. Only the `prove` Perl-invoked entrypoint may retain env.
-Direct-Perl timeouts show the shebang repair is insufficient:
+Direct-Perl timeouts disprove a shebang-only cure:
 HIAL/VIAL `.19.2.3.1.2.2.5.5.2.3.1.2.2.3` owns the live `_dyld_start` sample,
 Rust proxy/Verilator fixture diagnosis and repair;
 child `.3.3` owns kernel-sampling selection and required administrator authentication;
@@ -76,10 +74,8 @@ still reports waiting.
 captures; tests stay normal-user. Identity, expiry and STOP/Ctrl+C checks remain.
 `.3.8.7` keeps one helper per sequence; single-run STOP needs fresh authentication.
 `.3.7` closes native capture/shutdown verification; `.3.2` owns causal repair.
-T1669's allocator uses `.artifacts/tmp/process-supervisor-tests/` root.
-Empty observation fails coverage; `.3.8.5`/book own it.
-A `ps` no-match skips only native absence; `.3.8.6` retains other errors.
-`.3.8.9`'s `--target-family legacy` reserves capture with positive coverage. `.3.8.8` captures passing Rust policy wait, failed legacy; causes stay distinct. Info later disappears; `.3.8.10` retains live logs. `.3.8.11`: Rust fails, legacy passes, no capture. Rewritten Rust path/inode prevents event attribution; `.3.8.12` retains full Rust failure JSON. `.3.8.13` separates mode paths; `.3.8.14` captures passing nonzero, retains failed decoy JSON/distinct policy path and failed legacy signal. Cleanup verified; failed-target stack missing. `.3.8.15` owns later Rust selection.
+T1669 allocates under `.artifacts/tmp/process-supervisor-tests/`; empty coverage fails (`.3.8.5`/book). A `ps` no-match skips only native absence; `.3.8.6` retains other errors.
+`.3.8.9`'s `--target-family legacy` reserves capture with positive coverage. `.3.8.8` captures passing Rust policy wait, failed legacy; causes stay distinct. Info later disappears; `.3.8.10` retains live logs. `.3.8.11`: Rust fails, legacy passes, no capture. Rewritten Rust path/inode prevents event attribution; `.3.8.12` retains full Rust failure JSON. `.3.8.13` separates mode paths; `.3.8.14` captures passing nonzero, retains failed decoy JSON/distinct policy path and failed legacy signal. Cleanup verified; failed-target stack missing. `.3.8.15` qualifies `--target-family rust` for later candidates; `.3.8.16` awaits authentication.
 T1595's pre-main cause stays open; `.19.2.3.1.2.2.6.2` fixes capture.
 `RamGuardFixtureRuntime` seals tools/argv, paths, bounds and full results.
 T1811/T1669 prove signal/stream failures and group cleanup; T1595 keeps metrics.
