@@ -89,7 +89,7 @@ captures; tests stay normal-user. Identity, expiry and STOP/Ctrl+C checks remain
 T1669's allocator uses `.artifacts/tmp/process-supervisor-tests/` root.
 Empty observation fails coverage; `.3.8.5`/book own it.
 A `ps` no-match skips only native absence; `.3.8.6` retains other errors.
-`.3.8.9`'s `--target-family legacy` reserves capture with positive coverage. `.3.8.8` captures passing Rust policy wait, failed legacy; causes stay distinct. Info later disappears; `.3.8.10` retains live logs. `.3.8.11`: Rust fails, legacy passes, no capture. Rewritten Rust path/inode prevents event attribution; `.3.8.12` retains full Rust failure JSON. `.3.8.13` separates mode identities.
+`.3.8.9`'s `--target-family legacy` reserves capture with positive coverage. `.3.8.8` captures passing Rust policy wait, failed legacy; causes stay distinct. Info later disappears; `.3.8.10` retains live logs. `.3.8.11`: Rust fails, legacy passes, no capture. Rewritten Rust path/inode prevents event attribution; `.3.8.12` retains full Rust failure JSON. `.3.8.13` now separates mode paths.
 T1595's pre-main cause stays open; `.19.2.3.1.2.2.6.2` fixes capture.
 `RamGuardFixtureRuntime` seals tools/argv, paths, bounds and full results.
 T1811/T1669 prove signal/stream failures and group cleanup; T1595 keeps metrics.

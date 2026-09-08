@@ -129,7 +129,7 @@ class CaptureBoundary(unittest.TestCase):
         self.assertNotEqual(first["fixture_sha256"], changed["fixture_sha256"])
         self.assertEqual(first["fixture"], ".artifacts/tmp/tests/controlled/orphaning-runtime")
 
-    def allocated_supervisor_workspace(self):
+    def allocated_supervisor_workspace(self, variable="workspace"):
         """Exercise the unchanged allocator and original T1669 allocation call.
 
         Copy the module into this isolated repository-shaped root; neither the
@@ -144,12 +144,14 @@ class CaptureBoundary(unittest.TestCase):
         (self.root / "bin").mkdir(exist_ok=True)
         (self.root / "bin/fsmgen").touch()
         source = (ROOT / "t/1669-task-acceptance-fixture-runtime.t").read_text()
-        calls = re.findall(r"my \$workspace = create_project_tempdir\([\s\S]*?\);", source)
-        self.assertEqual(len(calls), 1, "original allocation must be unambiguous")
+        self.assertIn(variable, ("workspace", "mode_workspace"))
+        calls = re.findall(r"my \$" + variable + r" = create_project_tempdir\([\s\S]*?\);", source)
+        self.assertEqual(len(calls), 1, "selected allocation must be unambiguous")
         program = "$|=1; alarm 15;\n" + calls[0] + '''
 print "$workspace\\n";
 read(STDIN, my $release, 1) == 1 or die "allocator release missing";
 '''
+        program = program.replace("$workspace", "$" + variable)
         allocator = subprocess.Popen(
             ["/usr/bin/perl", "-Iperl", "-MFSM::ProjectDataLocality=create_project_tempdir",
              "-e", program], cwd=self.root, stdin=subprocess.PIPE,
@@ -216,8 +218,9 @@ read(STDIN, my $release, 1) == 1 or die "allocator release missing";
         return wrapper, producer
 
     def test_t1669_commands_follow_the_actual_allocator(self):
-        workspace = self.allocated_supervisor_workspace()
         for family in ("rust", "signal", "streams"):
+            workspace = self.allocated_supervisor_workspace(
+                "mode_workspace" if family == "rust" else "workspace")
             for nested in (False, True):
                 with self.subTest(family=family, nested=nested):
                     self.native = NativeOracle(self.root, self.fixture)
@@ -522,8 +525,9 @@ read(STDIN, my $release, 1) == 1 or die "allocator release missing";
 
     @unittest.skipUnless(sys.platform == "darwin", "Darwin native identity contract")
     def test_real_t1669_wrappers_and_nested_producers_are_admitted(self):
-        workspace = self.allocated_supervisor_workspace()
         for family in ("rust", "signal", "streams"):
+            workspace = self.allocated_supervisor_workspace(
+                "mode_workspace" if family == "rust" else "workspace")
             with self.subTest(family=family):
                 self.assert_native_supervisor_chain(workspace, family)
 

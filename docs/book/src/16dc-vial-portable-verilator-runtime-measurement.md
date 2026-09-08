@@ -868,9 +868,9 @@ retrieve them. The Rust fixture path is rewritten between nonzero and decoy
 modes: retained identities show the same inode with different source bytes and
 different process births. A later path-only policy event therefore cannot name
 the failed process or source version. Task `.3.8.11` retains these boundaries;
-`.3.8.12` repairs the discarded Rust failure detail; `.3.8.13` owns distinct
-per-mode source identities before further observation. Passing legacy checks
-and retained policy activity establish neither
+`.3.8.12` repairs the discarded Rust failure detail; `.3.8.13` separates
+per-mode source identities. Passing legacy checks and retained policy activity
+establish neither
 a startup repair nor runtime qualification.
 
 When the Rust tool-resolution status assertion mismatches, T1669 now writes a
@@ -880,6 +880,23 @@ decoded adapter result and complete outer supervisor result. This retains nested
 stage timing, separate streams and cleanup evidence even when streams are empty.
 The assertion remains failed; a matching assertion adds no such diagnostic.
 The prior invocation's discarded details cannot be recovered by this repair.
+
+Each Rust mode now allocates a distinct repository-local fixture workspace.
+The modes keep their original wrapper and proxy bodies, Cargo directory or
+symlink behavior, tool basenames, assertions and deadlines. Preparing a later
+mode no longer rewrites an earlier mode's source path. The generation control
+runs the actual Rust subtest with supervisor calls intercepted: real filesystem
+snapshots prove source preservation and allocator cleanup, while the deliberate
+shared-workspace control exposes the old overwrite. Native admission controls
+also use the actual new allocation call; these checks execute controlled programs
+and do not replay the full original regression or authenticate kernel sampling.
+
+Distinct paths remove the observed cross-mode source ambiguity. They do not
+establish which kernel wait caused an earlier timeout or promise complete policy
+log delivery. Task `.3.8.14` owns a fresh bounded sequence with
+`--target-family all`, covering the Rust family that failed in the preceding
+legacy-selected experiment. It retains the existing first-failure/capture stop,
+full result diagnostics, live policy collection and final helper shutdown.
 
 Capture requests and helper results are published only after their complete
 JSON has been written, so a concurrent reader cannot consume a partial record.

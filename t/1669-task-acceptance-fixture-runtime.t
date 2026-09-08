@@ -608,8 +608,14 @@ CHECKER
 };
 
 subtest 'Rust parity rejects unresolved and misleading tool identities before building' => sub {
-    my $probe = File::Spec->catfile($workspace, 'rust-tool-resolution');
-    write_executable($probe, <<'PROBE');
+    for my $mode (qw(directory proxy_nonzero proxy_decoy)) {
+        # Keep each source path unchanged for its entire mode lifetime so a
+        # delayed path-only policy record cannot name a later proxy's bytes.
+        my $mode_workspace = create_project_tempdir(
+            purpose => 'process-supervisor-tests',
+        );
+        my $probe = File::Spec->catfile($mode_workspace, 'rust-tool-resolution');
+        write_executable($probe, <<'PROBE');
 use strict;
 use warnings;
 use JSON::PP qw(encode_json);
@@ -617,11 +623,10 @@ $ENV{PATH} = shift @ARGV;
 require FSM::Test::RustParityRuntime;
 print encode_json(FSM::Test::RustParityRuntime::run_rust_parity());
 PROBE
-    my $bin = File::Spec->catdir($workspace, 'rust-tools');
-    make_path(File::Spec->catdir($bin, 'cargo'));
-    my $cargo = File::Spec->catfile($bin, 'cargo');
-    my $proxy = File::Spec->catfile($bin, 'rustup');
-    for my $mode (qw(directory proxy_nonzero proxy_decoy)) {
+        my $bin = File::Spec->catdir($mode_workspace, 'rust-tools');
+        make_path(File::Spec->catdir($bin, 'cargo'));
+        my $cargo = File::Spec->catfile($bin, 'cargo');
+        my $proxy = File::Spec->catfile($bin, 'rustup');
         if ($mode ne 'directory') {
             rmdir $cargo if -d $cargo;
             unlink $cargo if -l $cargo;
