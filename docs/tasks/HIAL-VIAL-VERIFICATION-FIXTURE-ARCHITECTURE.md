@@ -2393,7 +2393,7 @@ decomposes the architecture needed to move beyond that bounded foundation.
   Acceptance: `Select and qualify exact diagnostic admission and a tracked bounded observer before a fresh instrumented invocation. Preserve the failed service band, normal-user execution, fixed regression bounds, first-failure truth and original causal repair owner .2. No host-security change or runtime qualification follows from preparing diagnostics.`
   Verification: `The service-band recurrence at 5f8be37f1ac107cc486a9e9c435b33871391e796 lacks exact transient paths, birth identities and kernel waits. Source review identifies T1669's direct rust-tool-resolution and legacy-ram-capture wrappers plus their generated Rust proxy and legacy producer children. The existing sampler admits only a direct T1668 orphaning-runtime child. Children separate the closed admission policy, durable observer and actual administrator-assisted capture.`
   Commit: `pending diagnostic children`
-  Children: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.8.1, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.8.2, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.8.3, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.8.4, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.8.5, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.8.6, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.8.7, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.8.8, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.8.9, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.8.10, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.8.11, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.8.12, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.8.13, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.8.14`
+  Children: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.8.1, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.8.2, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.8.3, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.8.4, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.8.5, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.8.6, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.8.7, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.8.8, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.8.9, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.8.10, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.8.11, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.8.12, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.8.13, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.8.14, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.8.15`
 
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.8.1`
   Status: `done`
@@ -2503,12 +2503,18 @@ decomposes the architecture needed to move beyond that bounded foundation.
   Commit: `this distinct Rust fixture source-identity repair`
 
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.8.14`
-  Status: `blocked`
+  Status: `done`
   Goal: `Capture a contemporaneous startup wait with complete results and distinct Rust source identities.`
-  Acceptance: `After .8.13 commits, use a fresh director READY helper for one fixed guarded run_fixture_startup_sequence.py --target-family all sequence. This includes the Rust family that failed in .8.11 and retains legacy coverage under the qualified default all-family policy. Keep the fixed finite invocation/time reservation, normal-user execution, unchanged assertion semantics/deadlines and global single capture. Stop on first failure or capture; consume original TAP/full failure JSON, exact native target/source ancestry, policy records, original and sequence statuses and all cleanup. Bind each event only to its observed source version and retain missing delivery/main-entry/capture-birth facts as unknown. No retry qualification, extra campaign, host-setting change or startup-repair claim follows automatically.`
-  Blocked by: `All authenticated helpers are stopped with authentication invalidated. The fixed native spindump requires a fresh director-run bash scripts/await_fixture_kernel_samples.sh READY helper; root authentication cannot be supplied by the normal-user engineering process. No further engineering authorization is required.`
-  Verification: `The .8.12 full-result and .8.13 source-identity repairs are independently qualified without replaying the original regression. Await a fresh READY after their commit workflows; source version 3867cc4fa9d7e74c2f61ec9849b3b9af295d5d3c8cc61e0fd9b3103a0c9d3045 is the new observation baseline, not the byte-unchanged .8.11 predecessor. Causal repair .2 and parent qualification remain open.`
-  Commit: `pending authenticated causal observation`
+  Acceptance: `After .8.13 commits, use a fresh director READY helper for one fixed guarded run_fixture_startup_sequence.py --target-family all sequence. Preserve fixed invocation/time reservation, normal-user execution, assertion semantics/deadlines and global single capture. Stop on first failure or capture; consume original TAP/full failure JSON, native target/source ancestry, policy records, statuses and cleanup. Missing delivery/main-entry/capture-birth facts remain unknown. No retry qualification, extra campaign, host-setting change or automatic startup-repair claim.`
+  Verification: `The fresh READY helper passes native identity and committed sampler checks. The single invocation captures the passing proxy_nonzero process in AppleSystemPolicy, then fails proxy_decoy and legacy signal assertions; sequence exit 1 preserves original native wait 512/exit 2. The repaired diagnostic retains the complete decoy result, independently decoded equal to the outer stdout object with internally consistent timing. Distinct paths bind delayed policy events to the decoy source without the prior cross-mode rewrite. No sample of the failed decoy or legacy signal exists. The live collector prepares before original release, retains exact-path records and exits zero without forced cleanup or failures; its exact output identities, sizes and hashes independently reload. All eleven recorded births return native ESRCH, and all observed fixture workspaces are absent. Helper STOP invalidates authentication. Exact identities, native frames, complete decoy diagnostic and policy evidence follow below. Re-derivation is native sample/status, original TAP/JSON and independent source/log/cleanup checks; falsification is the captured passing mode versus distinct unsampled failed modes, excluding that sample as their cause. Durability is tracked task/book/fact, committed diagnostic producers and Git; ignored raw logs and scratch post-inspection producers remain explicit gaps. No original retry, host change or production source edit. Causal repair and parent qualification remain open; .8.15 owns qualified selection of a longer-lived Rust candidate before another authenticated experiment.`
+  Commit: `this distinct-source observation evidence checkpoint; causal repair remains open`
+
+- ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.8.15`
+  Status: `pending`
+  Goal: `Preserve the single capture opportunity for a longer-lived Rust fixture.`
+  Acceptance: `The .8.14 half-second selector spends its sole capture on passing proxy_nonzero before proxy_decoy times out. Add a closed Rust-only diagnostic selection with a fixed three-second observed-candidate allowance; keep all/legacy behavior, native admission, single capture, original assertions/deadlines, live retention and cleanup unchanged. Independently prove an earlier departing Rust candidate does not consume the request, a later still-live Rust candidate does, legacy candidates cannot establish selected Rust coverage, and the original early-selection counterexample fails that oracle. The allowance is a diagnostic choice, not a startup guarantee or timeout classification. Qualify modeled timing plus existing native admission and caller/sequence propagation without original-regression replay or authenticated sampling; sync book/fact and commit before a separately owned bounded observation.`
+  Verification: `Pending qualification; the .8.14 recorded passing target and separate failing decoy establish the selection gap. Root authentication is unnecessary for controlled implementation work.`
+  Commit: `pending focused selector qualification`
 
 
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.2`
@@ -6283,62 +6289,7 @@ omits the declared prove-summary signature. The corrected box quotes the actual
 failed-band summary and retains its explicit failures; no registry, assertion,
 or gate behavior changes.
 
-## RAM-guard fixture policy (.19.2.3.1.2.2.6.1)
-
-This selection repairs T1595's fixture harness. It does not change the guard's
-production formulas, defaults, safety thresholds or process-tree algorithm,
-and it does not establish a cure for the separate Darwin startup failures.
-The retained original interrupted T1595 run remains interrupted.
-
-- Add private `FSM::Test::RamGuardFixtureRuntime` behind the existing test
-  supervisor wrapper. Resolve the inherited selected Bash and running Perl
-  once from absolute executable paths before fixture PATH changes. Use direct
-  Bash for the guard and canonical Bash shebangs for its fake inspection tools.
-  Installed interpreters and native inspection tools are read-only dependencies.
-- Admit only a direct `fsmgen-*` workspace under
-  `.artifacts/tmp/ram-guard-tests/`, on the repository volume with no symlink
-  ancestry. Admit readable regular sample files directly in that workspace,
-  with safe basenames and a fixed 65,536-byte input ceiling before reading.
-  Fake tools are the fixed uname/sysctl/vm_stat roles inside its fake-bin;
-  their preparation uses fixed bodies and the selected Bash identity.
-- Expose only fixture preparation and a closed run operation taking workspace,
-  sample and scenario. Scenarios are the existing healthy completion, pressured
-  child and child-marker controls; the adapter owns their exact Perl argv.
-  No caller argv, executable, cwd, wall, capture, threshold or environment
-  override is accepted. Marker paths are derived inside the admitted workspace.
-- Launch the exact repository guard through selected Bash. Retain T1595's
-  explicit 88-percent / 4096-MiB options, 0.02-second poll and zero grace; these
-  are existing inner test controls. The real outer RAM guard remains at its
-  configured defaults and uses the real host readings. No safety policy widens.
-- Seal each fixture invocation to ten seconds and 1,048,576 aggregate output
-  bytes. The adapter locally restores the environment, prepends only its
-  admitted fake-bin to the captured absolute tool PATH, fixes the existing
-  4,096,000-byte synthetic host capacity and admitted sample path, and clears
-  inherited Bash startup injections. All temporary/cache data remains local.
-- Return the shared closed result with schema
-  `fsmgen.test.ram_guard_fixture_result.v1`, stage `ram_guard_fixture` and
-  `ram_guard_fixture_process_group` containment. Retain separate exit/signal,
-  output, timeout, overflow, exec and cleanup fields; never collapse signal or
-  timeout into an exit-only success. Preserve nonzero results as nonzero even
-  when a metric test expects the guard's documented trip or rejection.
-- Extend the existing exclusive-owner oracle to admit only this additional
-  policy adapter and forbid direct IPC in T1595. Independently demonstrate
-  that a signalled child defeats the old shifted-exit projection and that
-  stderr-before-stdout pressure defeats its sequential reader under a finite
-  outer observer. Preserve RED evidence and exact owned-process cleanup.
-  Use engine/adapter controls for timeout, capture, signal and cleanup truth;
-  prove hostile caller/path/PATH attempts reject or retain the selected policy.
-  Keep all original healthy/pressured/malformed-sample metric assertions.
-
-The guard does not establish a new process group. Its admitted fixture command
-stays in the adapter's group, unlike the independently grouped nested supervisor
-counterexample. This is a group-cleanup boundary, not a general descendant or
-root-owner-loss guarantee; no private coordinator route is activated.
-Re-derivation is source/history plus unchanged metric fixtures; falsification
-is independently bounded signal/output controls and admission mutations;
-durability is this selected contract, following tracked adapter/oracles,
-book/facts and work-unit Git. Runtime and negative-control execution remain
-missing until child .2. Design-only selection changes no shipped behavior.
+RAM-guard fixture policy .19.2.3.1.2.2.6.1 selected contract: retrieve the complete design, bounds, controls and original qualification limits from `74727386c431f4543413c036ef7ab002ae4db4cd:docs/tasks/HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.md`; its live nodes, adapter and book retain current behavior.
 
 RAM-guard fixture policy .19.2.3.1.2.2.6.1 acceptance: retrieve every complete checked assertion from `6f7bbebcbe441ac2d36936f14ffd609625392ae7:docs/tasks/HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.md`; live nodes retain qualification and blockers.
 
@@ -6390,8 +6341,34 @@ Legacy-selection .3.8.11 acceptance: retrieve all checked assertions from `82a3c
 
 Rust failure-retention .3.8.12 acceptance: retrieve all complete checked assertions from `554be9fa171829de5c38e4a668370bf17d1faff8:docs/tasks/HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.md`; live verification remains above.
 
-## Acceptance Checklist (Rust source identity .3.8.13)
+Rust source-identity .3.8.13 acceptance: retrieve every complete checked assertion from `74727386c431f4543413c036ef7ab002ae4db4cd:docs/tasks/HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.md`; live verification remains above.
 
-- [x] **ROOT CAUSE (WHY + WHERE)** — `git log -S 'write_executable($proxy,' -- t/1669-task-acceptance-fixture-runtime.t` traces the rewritten proxy to 98097b6311726b0c673d0abc8cc377df09ceb0ea. The .8.11 native filesystem census observes the same path/inode with different bytes across modes; the actual predecessor generator independently fails with `AssertionError: 1 != 3`. Source write_executable truncates that shared file. This diagnoses source-attribution ambiguity; the startup timeout's OS cause remains unproved.
-- [x] **ADDRESSED (verified)** — Real generation now preserves distinct per-mode source paths and unchanged bodies through all later mode preparation. The permanent shared-workspace counterexample reaches and proves the prior-byte overwrite after correcting its initially incompatible repeated directory setup. Historical/current generation snapshots agree on initial bodies, command prefix, bounds and Cargo kinds; real allocator cleanup and unchanged outside-subtest code are independently verified.
-- [x] **NO REGRESSION** — Guarded discovery passes 112 diagnostic controls, including modeled and real native admission using the actual new Rust allocation call and the existing policy/caller/sequence cleanup contracts. The original full regression is not replayed and no privileged sample runs. Book/render review and exact generated-output cleanup pass; the staged driver reports `[doctrine] all doctrine checks passed`. The final hook rechecks this evidence snapshot. The compile check reports t/1669-task-acceptance-fixture-runtime.t syntax OK
+## Distinct-source observation evidence .3.8.14
+
+At committed baseline 74727386c431f4543413c036ef7ab002ae4db4cd, T1669 SHA-256 3867cc4fa9d7e74c2f61ec9849b3b9af295d5d3c8cc61e0fd9b3103a0c9d3045 runs once through the fixed guarded all-family sequence. Logs: .artifacts/logs/t1669-distinct-source-capture-20260908/. Sequence run-a2255378b1684b6ea31ba273e3a4388a and invocation run-56acf35d82fc468695c3b18ebf0e05ef live under .artifacts/logs/t1669-startup-observation/. Session-cb29a137a4194d3c8feaebe89f3ef914 uses the unchanged sampler 3ae0843d817587295322d40344b2ea58de576bd19075b7d6a2c8e9a7bfac9845. Collector 78185 prepares at Python monotonic ns 232796764422625, before ready 232796766052000 and child release 232796766343875. All recorded identities below are UID/RUID 501. The original test returns native wait 512/exit 2, no caller timeout, released/reaped true. The sequence exits 1 on that failure, with no second invocation; helper STOP records authentication_invalidated true.
+
+The sole request selects nonzero Rust proxy 78772 (1788880804.555699), wrapper 78766 (1788880804.529268), test 78187 (1788880795.760639), under fsmgen-O1qED2O_. Its proxy inode 73898820/body dd39d5015afa146af4ecf8ec60573264ca37e38838d4248a395f9e3b2d3dbff7 is distinct from failed decoy 79093 (1788880807.003241), wrapper 79073 (1788880806.979072), fsmgen-XQlfWVSJ, proxy inode 73898835/body c6e0dc1adf2f6087fe9ba8b0a21b581ed6e6c757c0b6aa31bf47e51fda687f5c. Device 16777244; both wrapper bodies remain df525c2166853a62c81b9a5aa70eea9606e3bd96c88c46f1844c1b4c55c7d2b0. All these paths are immediately beneath .artifacts/tmp/process-supervisor-tests/, with rust-tools/rustup and rust-tool-resolution basenames respectively.
+
+Native spindump succeeds without timeout: 46146-byte sample SHA-256 b5835a92124955c8afb0046145612659304b173908f6edad21e8357bbc4082d3, request 624cf9dc30ee6a58988c1ee723e3d95a717f04b09e89136dcd1b50d0125ed8cd, result 1db7735f8c02c9e3a06be113b8878de98be47591575089de365a6eb07365736a. Report target Perl 78772, unique PID 28475930, parent 78766, UID 501. Its 101 samples span 2026-09-08 17:20:05.447 through 17:20:06.452 +0200. Unresolved perl+1706432 at 0x102e8c9c0 traverses kernel offsets 27500/687260/9684836, AppleSystemPolicy 33268/32024/27236/13740, then kernel 481876/590180/595220. Policy UUID 8474AAC8-5327-3045-A969-9B20DBF588BD and kernel UUID 3F7964F9-C5A6-39D4-942D-02750C0980E0 match earlier captures. No named user frame, atomic capture-birth authority or failed-mode wait is inferred. Sudo PID 78869 lacks retained birth; stderr contains only sampling/completion messages. The captured nonzero assertions all pass.
+
+The decoy fails at t/1669-task-acceptance-fixture-runtime.t lines 648/649: tool_resolution instead of tool_admission and timed_out instead of invocation_error. Its complete retained canonical diagnostic follows; independent parsing proves adapter equals JSON decoded from outer.stdout and each duration equals its own endpoint subtraction. These Perl monotonic values are never compared with the Python clock epoch.
+
+```json
+{"adapter":{"failure_stage":"tool_resolution","ok":0,"schema":"fsmgen.test.rust_parity_result.v1","schema_version":1,"stages":[{"capture_limit_bytes":1048576,"cleanup":{"containment":"rust_parity_process_group","group_gone":1,"kill_sent":0,"leader_reaped":1,"leader_started":1,"surviving_descendants":0,"term_sent":1},"diagnostic":"supervised process exceeded its fixed deadline","exec_error":null,"exec_failed":0,"exec_handoff_monotonic_ns":232802503180000,"exec_to_first_output_ns":null,"execution_ns":10027458000,"exit_code":null,"finished_monotonic_ns":232812530638000,"first_output_monotonic_ns":null,"first_output_to_exit_ns":null,"ok":0,"output_limited":0,"schema":"fsmgen.test.rust_parity_stage.v1","schema_version":1,"signal":15,"spawn_to_exec_ns":1507000,"stage":"tool_resolution","started_monotonic_ns":232802501673000,"status":"timed_out","stderr":"","stderr_bytes":0,"stdout":"","stdout_bytes":0,"timed_out":1,"timeout_seconds":10}],"status":"timed_out"},"mode":"proxy_decoy","outer":{"capture_limit_bytes":65536,"cleanup":{"containment":"rust_tool_resolution_probe_group","group_gone":1,"kill_sent":0,"leader_reaped":1,"leader_started":1,"surviving_descendants":0,"term_sent":0},"diagnostic":"supervised process completed successfully","exec_error":null,"exec_failed":0,"exec_handoff_monotonic_ns":232802478909000,"exec_to_first_output_ns":10052662000,"execution_ns":10108361000,"exit_code":0,"finished_monotonic_ns":232812587270000,"first_output_monotonic_ns":232812531571000,"first_output_to_exit_ns":55699000,"ok":1,"output_limited":0,"schema":"fsmgen.test.rust_tool_resolution_probe.v1","schema_version":1,"signal":0,"spawn_to_exec_ns":1423000,"stage":"probe","started_monotonic_ns":232802477486000,"status":"success","stderr":"","stderr_bytes":0,"stdout":"{\"ok\":0,\"failure_stage\":\"tool_resolution\",\"schema\":\"fsmgen.test.rust_parity_result.v1\",\"stages\":[{\"stage\":\"tool_resolution\",\"spawn_to_exec_ns\":1507000,\"signal\":15,\"capture_limit_bytes\":1048576,\"execution_ns\":10027458000,\"exec_failed\":0,\"exec_error\":null,\"schema_version\":1,\"status\":\"timed_out\",\"output_limited\":0,\"timeout_seconds\":10,\"cleanup\":{\"kill_sent\":0,\"group_gone\":1,\"surviving_descendants\":0,\"term_sent\":1,\"leader_started\":1,\"containment\":\"rust_parity_process_group\",\"leader_reaped\":1},\"exit_code\":null,\"diagnostic\":\"supervised process exceeded its fixed deadline\",\"stderr\":\"\",\"stdout\":\"\",\"finished_monotonic_ns\":232812530638000,\"exec_handoff_monotonic_ns\":232802503180000,\"exec_to_first_output_ns\":null,\"stdout_bytes\":0,\"stderr_bytes\":0,\"first_output_to_exit_ns\":null,\"timed_out\":1,\"schema\":\"fsmgen.test.rust_parity_stage.v1\",\"started_monotonic_ns\":232802501673000,\"ok\":0,\"first_output_monotonic_ns\":null}],\"status\":\"timed_out\",\"schema_version\":1}","stdout_bytes":956,"timed_out":0,"timeout_seconds":20}}
+```
+
+Legacy signal wrapper 83141 (1788880817.091361) and producer 83145 (1788880817.102504) use fsmgen-rfClY1aa. Main entry is unobserved and its original assertion fails. The wrapper times out at its unchanged five-second wall: start/handoff/finish Perl ns 232812589778000/232812591184000/232817616982000, execution 5025798000, empty streams/no first output, signal 15, TERM sent, no KILL, leader reaped/group gone. Original result/wait assertions also fail. Streams wrapper 88263 (1788880822.124478), producer 88272 (1788880822.135125) has observed entered marker and all original negative assertions pass. Legacy wrapper body remains bd13191666dff15eefa7b79dbe3835e114efe6ba741ee6b9258547a4b835143c; signal bb07d1a16ee3ab04b4fe850f65a360d891af57a93e51fc2919bfd66ea70dcdad; streams 8cbdfa0f1e486eaf9b75aec4a85bf619c5abda17d5b3e054c322ed70c39632fb. No native sample of either failed mode exists.
+
+Policy stdout retains 24 actual logEvent records, 23284 bytes/hash 45d3acb90895ab34f90746a97dfec4be93f1decb630dc7971ab89e780f31668f; stderr is empty. Collector exits zero, no failures/forced kill, leader reaped, complete output hash/path checks pass. Syspolicyd 677 XProtect records on 2026-09-08 +0200: passing nonzero at 17:20:06.862238 token 57041580f406b4e4; failed decoy at 17:20:22.466099 token 32994547ab9ea4f; legacy signal at 17:20:22.664714 token 7953f016e1cdc8dc; streams at 17:20:22.875626 token 92c969d2733467eb. Each names its exact distinct fixture path. The decoy record occurs after the subsequent legacy wrapper birth; its source identity is no longer ambiguous across modes, but the path record supplies neither the failed process's wait stack nor policy queue causality. Missing token-only/private events and subscription/completeness remain unknown. No retrospective replay/query or host-setting change follows.
+
+Source digest/size declarations equal retained source copies. Independent native libproc returns ESRCH for all recorded births; all observed fsmgen-O1qED2O_, fsmgen-XQlfWVSJ and fsmgen-rfClY1aa workspaces are absent. Caller 78166 and sudo 78869 lack retained birth, so their historical identity absence and unobserved descendants remain unproved.
+
+Recorded gone births (PID/birth/parent): 53686/1788880413.685793/53392; 78185/1788880795.702147/78166; 78187/1788880795.760639/78166; 78766/1788880804.529268/78187; 78772/1788880804.555699/78766; 79073/1788880806.979072/78187; 79093/1788880807.003241/79073; 83145/1788880817.102504/83141; 83141/1788880817.091361/78187; 88272/1788880822.135125/88263; 88263/1788880822.124478/78187.
+
+Evidence hashes: sequence journal a880246373b521f18a8d5a2ba162a7ebe019dbb216c7066790471ced476f9796; observer journal 213ba97f992891be6d252ef3c4823e52b223533509d59171c7b9edbd6ada188c; TAP cb507aa4374183ad1200ee3e86489d1686d38ecf425717a93c0c4ae05977a412; stderr 490fa98d9109f46dae947ba12d12c506e477cb64fe43769fa18cc4d6151d96e7. Full raw evidence and scratch postcheck/correlation producers remain ignored durability gaps; the diagnostic object, identities, exact results and sources survive in this task/book/fact and Git. No passing capture is used to qualify the failed regression or repair.
+
+## Acceptance Checklist (distinct-source observation .3.8.14)
+
+- [x] **ROOT CAUSE (WHY + WHERE)** — Original stderr reports at t/1669-task-acceptance-fixture-runtime.t line 649. The exact failing decoy source differs from the passing captured nonzero source. The half-second candidate selection in scripts/observe_fixture_startup.py consumes the single request first; this diagnoses the capture-selection gap, while the failed process's OS cause remains open.
+- [x] **ADDRESSED (verified)** — The bounded experiment, original failure, full nested diagnostic, native sample, exact-source live policy and independent recorded-birth/workspace cleanup are retained above. No original retry or causal-repair claim occurs; .8.15 owns qualification of a longer-lived Rust selection.
+- [x] **NO REGRESSION** — Source identity remains the committed baseline; focused evidence reload, duration arithmetic and native cleanup checks pass. The generated book renders correctly and its exact inventoried build is removed. The staged driver reports `[doctrine] all doctrine checks passed`; the failed original regression remains failed. The final hook rechecks this evidence snapshot. The focused compile check reports t/1669-task-acceptance-fixture-runtime.t syntax OK

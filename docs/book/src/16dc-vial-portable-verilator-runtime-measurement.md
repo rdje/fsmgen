@@ -891,12 +891,18 @@ shared-workspace control exposes the old overwrite. Native admission controls
 also use the actual new allocation call; these checks execute controlled programs
 and do not replay the full original regression or authenticate kernel sampling.
 
-Distinct paths remove the observed cross-mode source ambiguity. They do not
-establish which kernel wait caused an earlier timeout or promise complete policy
-log delivery. Task `.3.8.14` owns a fresh bounded sequence with
-`--target-family all`, covering the Rust family that failed in the preceding
-legacy-selected experiment. It retains the existing first-failure/capture stop,
-full result diagnostics, live policy collection and final helper shutdown.
+Distinct paths remove the observed cross-mode source ambiguity. The authenticated
+all-family observation in task `.3.8.14` captures the nonzero Rust proxy waiting
+inside AppleSystemPolicy; its original assertions pass. The later decoy times
+out during resolution, and the legacy signal fixture also fails. The full decoy
+diagnostic survives, and the live policy record names its distinct source path.
+That delayed path record cannot supply the failed process's kernel wait stack.
+
+The sequence stops on this original failure. Its collector, original test and
+helper are settled; recorded process births and observed fixture workspaces are
+independently absent. The early passing candidate consumed the sole capture,
+so `.3.8.15` owns a qualified selection of a longer-lived Rust candidate.
+Startup repair, complete policy delivery and runtime qualification remain open.
 
 Capture requests and helper results are published only after their complete
 JSON has been written, so a concurrent reader cannot consume a partial record.
