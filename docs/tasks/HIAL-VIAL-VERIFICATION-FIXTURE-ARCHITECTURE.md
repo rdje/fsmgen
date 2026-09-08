@@ -2348,11 +2348,11 @@ decomposes the architecture needed to move beyond that bounded foundation.
   Status: `active`
   Goal: `Capture a causal fixture-startup failure and select a bounded repair before wire qualification.`
   Acceptance: `Obtain a recurrence with exact live child identity, executable/fixture identity, independent process state and bounded startup sample sufficient to separate fixture-body, supervisor and host-startup causes. Preserve the first failed result. Select and independently falsify a project-correctable repair; split deeper host instrumentation or architecture changes into a reviewed slice before implementation. A later passing run cannot close this leaf.`
-  Open qualification: `.8.18 captures the failed decoy in AppleSystemPolicy with exact native/source identity and full timed-out result. Daemon-internal cause, continuous full-deadline wait and a falsified project repair remain unproved. Children .2.1–.3 qualify unprivileged policy context; .2.4 consumes one passing original. .2.5 finds no retained failed-interval context; .2.8 qualifies passive census integration; .2.9 owns one original with same-run native fixture and live policy context. Historical failures, parent wire/runtime qualification, full CI and push remain gated. No extra host-security change is authorized or implied.`
+  Open qualification: `.8.18 captures the failed decoy in AppleSystemPolicy with exact native/source identity and full timed-out result. Daemon-internal cause, continuous full-deadline wait and a falsified project repair remain unproved. Children .2.1–.3 qualify unprivileged policy context; .2.4 consumes one passing original. .2.5 finds no retained failed-interval context; .2.8 qualifies passive census integration; .2.9 retains a different original containment failure plus an observer identity rejection; .2.10 owns containment diagnosis and .2.11 owns census identity-race diagnosis. Historical failures, parent wire/runtime qualification, full CI and push remain gated. No extra host-security change is authorized or implied.`
   Verification: `Prior permission/provenance observation is preserved in this exact leaf at c3f6475637db8bfe5d488a19a255101edce81f88: approved iTerm-only permission on, Terminal/Tracing off; unchanged band passes while exact-fixture XProtect scanning persists; TCC query empty; native cleanup consumed; rejected stdin-only query, installed-xattr fallback and unavailable historical fixture metadata retained. The canonical subprocess fact retains exact prior scan/capture identities. Apple process-tree paste inspection and DTS repeat-run cautions do not prove applicability, bypass or a restart requirement. Fresh-launch control: native Codex PID 16937 (1788791393.880957) and shell 37861 (1788791321.503862) differ from old Codex 23425 (1788776699.745556)/shell 31921 (1788653434.708176); login 37767 still descends from the existing iTermServer 10517. This is a new shell/Codex control, not a new app, machine or cold cache. Read-only Settings verification finds iTerm on, Terminal/Tracing off. The single unchanged guarded band reports All tests successful, Files=4, Tests=36; its deliberate pre-exec timeout is a passing negative control. T1668 orphaning-runtime PID 72555 (1788792022.901244), parent 72494, is /usr/bin/perl on .artifacts/tmp/tests/wun0CS39LV/orphaning-runtime with sibling .7's exact digest. Live xattr reports provenance 010200fd5101f2392ba1db and no quarantine; older fixture metadata remains unrecoverable. The invocation-window query (16:39:53 through 16:40:38 +0200) binds exact scan token e0b722d88ddbf34e from queue 16:40:22.923572 through XProtect results 16:40:23.137647 and waiter wakeup 16:40:23.137826; provenance names PID 72555 at 16:40:23.138811. This independently rejects scan-elimination inference after the fresh launch; it does not establish original cause, timing improvement or repair. All observed births are gone, with independent guard 70277 (1788791993.051443)/observer 70276 (1788791993.003798) ESRCH checks. Evidence: .artifacts/logs/fixture-fresh-terminal-20260907/; regression SHA-256 e8b2f5176e445f0560cd133cb3d1dc31806f367405dd3fa75801034ea05c9f49, events 23174cea6fab9e4a447c9d2d823aa5e18cb13bc0c42bda73131ba182b55d25a3, exact policy 1234ac21a296f5620ff527593b5023dc8f33ecd5e163efcd52594ed180193b8a. Native identity/test output re-derive the observation; exact OS records falsify bypass; task/book/fact/Git retain its durable meaning and identities, with ignored raw logs/scratch producers an explicit durability gap. The initial mdBook destination was incorrectly relative to the book instead of the invoking root; its exact generated directory landed outside the repo on the same volume. Copy/verify/use/delete compares file sizes and SHA-256, then the corrected root-relative build and rendered paragraph review succeed and the exact old-directory residue is absent; book-relocation.json retains the census. Book, map/census and corrected staged doctrines pass, including fresh task acceptance; the commit hook rechecks the final evidence. No host setting, fixture, interpreter, assertion or limit changes in this observation. The later independently owned RAM-guard harness repair is committed separately at aacd8d5576449ee0996f462cd2c8f800e162f3be; it does not close this incident. A read-only frontier review finds neutral-verifier implementation behind nested containment, endpoints behind wire qualification, continuity .12 behind director-deferred .26, ISF closure behind complete CI, and IAL2 .844 terminal. The later director approval is recorded in endpoint .3.2.1; causal repair and qualification remain open. This documentation-only handoff passes staged doctrines and diff hygiene; the hook rechecks final evidence. Logs: .artifacts/logs/fixture-endpoint-decision-20260907/. Full CI and push remain blocked.`
   Commit: `28836d8e21abe3151c99cec5ce5786328d1758de permission checkpoint; c3f6475637db8bfe5d488a19a255101edce81f88 provenance handoff; this fresh-launch observation; causal repair pending`
 
-  Children: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.1, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.2, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.3, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.4, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.5, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.6, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.7, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.8, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.9`
+  Children: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.1, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.2, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.3, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.4, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.5, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.6, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.7, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.8, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.9, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.10, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.11`
 
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.1`
   Status: `done`
@@ -2411,11 +2411,26 @@ decomposes the architecture needed to move beyond that bounded foundation.
   Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.8: join passive fixtures to normal-user policy observation`
 
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.9`
-  Status: `pending`
+  Status: `done`
   Goal: `Consume one fixed original with same-run native fixture and live policy context.`
   Acceptance: `After .2.8 commits, run one unchanged fixed original T1669 under the normal-user RAM-guarded caller. No helper, kernel capture or follow-up campaign. Preserve original status/full failure JSON, admitted fixture births/ancestry, retained exact source bytes, marker truth, live policy status and every owned cleanup result. Bind failed result PID to the native/source record and exact path/token events; timing joins must use explicit comparable clocks and never cross Perl/Python monotonic epochs. A passing invocation or missing match is not repair; select a separately owned remaining discriminator or independently falsifiable repair from the actual outcome and commit before further work.`
-  Verification: `Pending qualified caller integration; no recurrence is launched during design or implementation.`
-  Commit: `pending consume same-run native fixture policy context`
+  Verification: `Exactly one unchanged fixed guarded normal-user caller runs at f4735487ea03dcaf284f88134aa9219b7f20b3cd. Caller exit one retains original native wait 256/exit one, released/reaped true and no original timeout. The asynchronous control_wait outer rejects before exec with exec_error/exit 126 and the combined diagnostic process-group containment failed: Operation not permitted; full decoded diagnostic is retained below. Rust and legacy subtests pass; those are not a startup repair. The failed outer has no recorded PID/native birth or syscall-specific errno, so it cannot be joined to admitted fixture births or policy events. Passive census admits eight exact wrapper/producer births and archives their source bytes, then rejects identity changed during inspection while scanning legacy-stream wrapper 88075. The combined validator comparison does not identify which process/field changed; cleanup-time disappearance or reparenting is not established as the cause. Released original completion, healthy execution_context collector and observed-fixture settlement all complete independently. Fresh native checks find every recorded original/collector/fixture birth absent; all three observed workspaces are absent. Strict policy-result hash/path/scope reload succeeds. Actual logEvent rows are separated from terminal metadata; exact archived sources identify both Rust modes, then path/token records join all four passing producers to queue/start/wakeup. Independent timezone-aware and integer clock subtraction agree; token-only records falsify the old path filter. No cross-runtime monotonic arithmetic, kernel sample, authentication, host change or repair occurs. Full retained evidence and limits follow below; logs and scratch postcheck/correlation/decode producers remain explicitly ignored durability gaps. Tracked original/caller/census, independent raw native/status/event evidence, task/book/fact and exact Git source identities retain reproducible meaning. New .2.10 owns the containment boundary failure and .2.11 owns the passive identity rejection, including missing diagnostic granularity; do not rerun the original as implicit recurrence work. Book builds, rendered failed-original/observer boundaries are inspected and exact inventoried output is removed. Map regeneration/check and independent claim census pass. Initial staged acceptance rejects the generic git-log signature; the actual pickaxe query identifies the integration and corrects only checklist evidence. Corrected staged doctrines and diff hygiene pass; the hook rechecks final evidence.`
+  Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.9: preserve original containment failure and passive identity rejection`
+
+
+- ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.10`
+  Status: `pending`
+  Goal: `Root-cause and repair the original pre-exec containment failure without weakening admission.`
+  Acceptance: `Preserve .2.9's failed control_wait result and missing PID/syscall evidence. Query the map, inspect source/history and native contract, then use bounded independently observed fork/group controls to separate setpgid return, actual membership and stale diagnostic errno. Select the smallest causal repair; if evidence needs new instrumentation, qualify and commit that separately before further original observation. Every actual owned child/group must settle; preserve rejection of false-success/undefined/negative/throwing admission, fixed limits and original failure. No retry-as-repair, host security change or unrelated recurrence campaign. Update book/fact and commit each verified slice.`
+  Verification: `New .2.9 failure is in the asynchronous control_wait outer before exec; the current combined eval reports ambient $! after either syscall or membership failure. The source review identifies ambiguity, not a proved syscall failure or cause. Single next action after .2.9 commits.`
+  Commit: `pending containment root cause and bounded repair`
+
+- ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.11`
+  Status: `pending`
+  Goal: `Root-cause the passive census identity rejection during observed legacy cleanup.`
+  Acceptance: `Preserve .2.9's recorded identities, exact sources, rejection and independently settled original/collector/fixtures. Determine which validation path can yield the combined identity-changed error using controlled native exit/reparent/reuse and source-change cases. Do not relabel the unobserved original transition as benign. Keep live source/birth/ownership/command changes failed; if a proved disappearance race may be skipped, require fresh native evidence and preserve prior cleanup ownership. Qualify the smallest repair and independent hostile oracle, including unchanged authenticated capture admission, before a separately owned original observation. No helper or fixture signals in the passive census.`
+  Verification: `At Python monotonic 262199068161083 the observer records wrapper PID 88075 and identity changed during inspection after admitted streams main entry. The validator combines final identity/executable/command comparisons, so culprit process and field are unavailable. All observed births subsequently settle; that later absence does not identify the rejected transition.`
+  Commit: `pending passive identity-race diagnosis`
 
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.3`
   Status: `done`
@@ -6220,112 +6235,9 @@ changes no process code, book behavior, policy constant, or public result.
 Retain the gate and commit output under
 `.artifacts/logs/coordinator-safe-slices-20260907/`.
 
-## Acceptance Checklist (.19.2.3.1.2.2.5.5.2.3.1.1 wire implementation; enforced)
+Wire implementation .19.2.3.1.2.2.5.5.2.3.1.1 acceptance and original failed broader qualification: recover all checked assertions and exact evidence from `f4735487ea03dcaf284f88134aa9219b7f20b3cd:docs/tasks/HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.md`; live nodes retain transport implementation and unclosed qualification.
 
-- [x] **ROOT CAUSE (WHY + WHERE)** — `git log -S 'sub _start_supervision'`
-  identifies asynchronous extraction `51a3a3914`, which has no transport or
-  execution snapshot. The selected protocol requires byte-preserving private
-  messages before coordinator activation. A separate `git log -S` identifies
-  T1545's discarded supervisor diagnostics in `d630261e6`; unchanged source
-  paths and the failed final band are retained for child `.1.2`.
-- [x] **ADDRESSED (verified)** — The private `ProcessSupervisor::Wire` module
-  implements the selected bounded message/context grammar and snapshot without
-  sockets, process creation or production imports. Independent literal frames,
-  raw hostile frames, boundary-plus-one inputs, actual producer RESULT data,
-  and direct exec establish the codec boundary. The direct-exec oracle catches
-  deliberate double encoding and distinguishes Perl argv conversion from live
-  ENV magic. Syntax and final guarded T1669 pass after the endpoint test's
-  independently detected off-by-one was corrected.
-- [x] **NO REGRESSION (focused implementation; broader qualification pending)** —
-  Final guarded T1669 reports `All tests successful`; T1668 and T313 are also
-  `ok` in the final band. T1545 fails its first fixture with empty output, so
-  that band is explicitly **failed**, not a qualification pass. Parent `.1`
-  stays active and child `.1.2` owns diagnostic repair and qualification before
-  endpoints. Book own-group limitations and the CLI import map remain current;
-  production callers and result schemas are unchanged. The synchronized staged
-  driver reports `[doctrine] all doctrine checks passed`, including fresh task
-  acceptance. The hook repeats that gate before the checkpoint commits.
-
-Evidence lives under `.artifacts/logs/coordinator-wire-20260907/`. Re-derivation
-is the final focused command and exact frame inputs; falsification is direct
-exec plus deliberately corrupted data; durability is the tracked codec,
-T1669, task and Knowledge Map route. Nested runtime/Linux qualification and
-the failed broader band remain explicit missing legs. No performance or
-capacity conclusion is drawn from transient TAP timings or configured bounds.
-The initial containment rejection is resolved by proving the added fact-card
-paragraph duplicates this task's richer evidence and keeping only its concise
-retrieval pointer. No recorded fact or containment ceiling changes. A sandbox
-index-write rejection left no lock; authorized sequential staging resolved the
-resulting-tree mismatch before the passing gate.
-
-This slice applies the batch stop condition for newly discovered work beyond
-a safe slice: T1545 diagnostic repair is distinct from the private codec.
-Commit the qualified implementation checkpoint before that repair begins.
-The default batch is not complete; no push is authorized by this checkpoint.
-
-Acceptance Checklist (HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.1 diagnostics; enforced) — retrieve the complete checked assertions and historical evidence from `968dbee6952ea4faf80d7470f138ba70b8b32181:docs/tasks/HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.md`; live nodes retain current qualification and blockers.
-
-Acceptance Checklist (HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.1; enforced) — retrieve the complete checked assertions and historical evidence from `968dbee6952ea4faf80d7470f138ba70b8b32181:docs/tasks/HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.md`; live nodes retain current qualification and blockers.
-
-## Selected T1545 observation boundary (HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.2)
-
-Keep observation private to T1545's `run_checker`: scoped read-only wrappers
-around the existing start/advance functions retain the actual forked child PID
-and parent PID, launch cardinality, and fixed progress flags for observed
-control EOF, first output, native checker diagnostic, cleanup, and completion.
-The native diagnostic classifier comes from the checker's emitting `printf`
-calls: a line beginning `[task-acceptance] OK:` or `[task-acceptance] FAIL:`.
-No flag infers pre-main state from absent output or proves exec from EOF.
-
-Publish the bounded observation as a separate canonical JSON TAP diagnostic
-on every checker invocation. Keep the complete supervisor result unchanged and
-keep both metadata records out of checker-output assertions. Observation adds
-no command, callback API, process, file, stream capture, policy override, retry,
-fixture-source edit, environment change, or blocking OS sampler. It cannot
-recover a past PID/stack sample or promise a future native stack capture.
-
-Qualify PID identity independently with Bash's own `$$`, original checker
-progress with its unmodified output producer, and pre-exec timeout with a child
-held after actual group admission. The latter must retain unknown output/main
-progress and prove cleanup. Preserve the historical failed invocation and use
-any captured recurrence for a separately owned repair; a fresh pass alone does
-not unblock wire qualification.
-
-## Newly exposed fixture launch failure during checker observation
-
-The broader observation qualification is failed: T1669's unchanged Rust
-proxy controls return timeout instead of their scripted outcomes; T1668's
-unchanged direct Perl fixture launches also fail. Preserve the active RAM
-guard and fixed deadlines. Capture a bounded OS sample only from an identified
-live descendant of this invocation, then verify cleanup. Child `.1.2.2.3` owns
-root-cause selection and repair after the checker observation checkpoint;
-no retry-based recovery or endpoint activation is authorized by the passing
-T1545 subtest. This is a separate defect, not evidence for the missing historic
-T1545 runtime cause.
-
-Checker launch-observation .19.2.3.1.2.2.5.5.2.3.1.2.2.2 acceptance: retrieve every complete checked assertion from `82a3c00071120b963faaf43555fc9bbc6a1a10ee:docs/tasks/HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.md`; its live node and evidence remain.
-
-Evidence is retained under `.artifacts/logs/checker-launch-observation-20260907/`.
-Re-derivation is the guarded tracked test and source/history comparison;
-falsification uses independent Bash PID, the held-child oracle and native
-output producer; durability is the test, this task, book, fact card and commit.
-The fresh broader failure has a native sample but lacks an OS root cause;
-the historical T1545 failure still lacks its discarded result and identity.
-Both missing legs remain explicit. The sampled PID and recorded observation
-PIDs are absent after the terminal run. The read-only host process inspector
-and OS sampling tool are required diagnostic dependencies; their outputs stay
-on the repository volume. The first reference-authority calculation stopped
-at its metadata header before writing; the corrected keyed traversal records
-the exact book delta without altering a containment ceiling.
-
-Commit this verified observation checkpoint before modifying either failing
-watcher or adapter. Child `.3` is the single next action; the broader band,
-wire qualification, nested containment and push remain blocked.
-
-The first staged gate rejects the fresh NO REGRESSION box because its prose
-omits the declared prove-summary signature. The corrected box quotes the actual
-failed-band summary and retains its explicit failures; no registry, assertion,
-or gate behavior changes.
+T1545 observation selection and its original failed-band evidence: recover the full selected boundary, failure, cleanup and gate history from `f4735487ea03dcaf284f88134aa9219b7f20b3cd:docs/tasks/HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.md`; the live checker/startup nodes retain their separate open causes.
 
 RAM-guard fixture policy .19.2.3.1.2.2.6.1 selected contract: retrieve the complete design, bounds, controls and original qualification limits from `74727386c431f4543413c036ef7ab002ae4db4cd:docs/tasks/HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.md`; its live nodes, adapter and book retain current behavior.
 
@@ -6367,28 +6279,80 @@ Original policy-context .3.2.4 acceptance: recover every checked assertion from 
 
 Historical failed-interval .3.2.5 exact query/native/result/live-counterexample evidence and every checked acceptance assertion: recover the complete record from `23ccc679ed557145b1c64f621b4b1dee42173b0a:docs/tasks/HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.md`; live verification and book retain historical unavailability and next discriminator.
 
-## Selected passive fixture correlation .3.2.6
-
-The discriminator is the failed adapter's reported PID joined to its same-invocation admitted native birth, parent/ancestor and immutable source path/bytes, then to explicit policy token/path events. Earlier .8.18 has failure/native/sample evidence but omitted queue context; .2.4 has passing context without fixture-native evidence; .2.5 cannot recover historical context. Combining evidence across those invocations cannot create the missing causal join. Event queue/start/wakeup could distinguish daemon queue delay from time after work starts; it still cannot identify undocumented daemon internals or prove a complete kernel wait. No cause or repair is claimed now.
-
-Select one passive census mechanism in observe_fixture_startup.py, reused by authenticated observation and the fixed policy-only caller. It does not construct, emulate, submit to, stop or inspect a helper. Share the existing native parent/child enumeration, exact request_for/validate_target admission, source archival and main-entry reading; preserve authenticated candidate selection, final request revalidation and helper settlement as caller policy. The passive lifecycle exposes incremental scanning, admitted identities/source records, progress and separate read-only settlement. No arbitrary CLI scope, test command, PID or timing override is added.
-
-Census before/after admission rechecks native birth, normal UID/RUID, direct parent/ancestor, selected /usr/bin/perl identity and literal wrapper/producer commands; source_identity plus retain_sources authenticate direct repository-volume regular bytes. Same-birth source/path/inode/hash changes cannot silently overwrite an earlier identity; normal-user integration treats them as failed diagnostic integrity. Different births remain distinct even if PIDs or paths repeat. Inadmissible unrelated original controls are skipped, missing native identities stay races, and live command/permission errors remain failed. The source-mode split already in T1669 stays unchanged; Rust mode comes from retained bytes and exact result PID, never policy-event order.
-
-Preserve existing bounds: per-parent native census 64, admitted identities 512, source files 64/aggregate 4 MiB/per source 65536 bytes, marker 64 bytes, events 4096/per event 16384 bytes/journal 16 MiB, poll 0.1 seconds and read-only settlement 12 seconds. Pass deadline/collector checkpoints through the census between native inspections so repeated command queries cannot silently consume an unbounded iteration; a single native command keeps its existing two-second limit. These are selected existing limits, not newly qualified timing guarantees. .2.7/.2.8 own independent bound and timeout oracles, including a slow command sequence. Missing kernel preemption of filesystem/native reads is not promoted to a hard-real-time guarantee.
-
-Normal-user sequencing: prepare context collector before the held original; release once, verify its exact exec identity, attach passive census, then poll original and scan under the original deadline plus collector checks. On any failure, retain original TAP/status first and finalize each owner independently: test completion/cancellation under current policy, collector settlement/hash reload, observed-fixture read-only settlement. A failed scanner must not wait for fixtures before allowing the caller to finish the original. No fixture is signalled by the census. Surviving or inaccessible observed identities remain a failed cleanup result; unobserved descendants remain unknown. Empty admitted coverage is a diagnostic failure even when the original passes.
-
-Legacy progress can be read through the admitted wrapper's selected producer, with progress_scope=selected_producer; producer records retain target scope. Only exact existing entered/drained marker bytes count; absent marker is not_observed, Rust main entry remains unknown. No new fixture marker or shebang is introduced. Archived source integrity and marker timing do not retroactively prove earlier execution.
-
-Independent controls: actual bounded pipe-held native Perl wrapper/producer chains provide their own PID/parent/source and marker observations; modeled identity/permission races cover unavailable states without unsafe processes. Mutate birth/parent/source identity and successful-cleanup projection to make an independently selected oracle fail. Retain existing authenticated selection, request count, helper cleanup, process disappearance, storage and original-failure controls. No native integration proof is claimed until .2.7/.2.8 pass and commit. .2.9 alone owns one unchanged original observation; further recurrence work requires a newly reviewed owned slice, not an implicit loop.
-
-Passive correlation selection .3.2.6 acceptance: recover every checked assertion from `ae992d5178a8bc68756402f51244bff752744bbd:docs/tasks/HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.md`; the selected contract remains above.
+Passive correlation .3.2.6 selected design and acceptance: recover the complete contract, limits and checked assertions from `f4735487ea03dcaf284f88134aa9219b7f20b3cd:docs/tasks/HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.md`; qualified census/caller nodes and the book retain current behavior and limits.
 
 Shared passive census .3.2.7 acceptance: recover every checked assertion from `cf24350cf1c10ed8a2e4570a234b160587c50d94:docs/tasks/HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.md`; live verification retains its native controls and preserved archival timing.
 
-## Acceptance Checklist (fixed caller census integration .3.2.8)
+Fixed caller census integration .3.2.8 acceptance: recover every checked assertion from `f4735487ea03dcaf284f88134aa9219b7f20b3cd:docs/tasks/HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.md`.
 
-- [x] **ROOT CAUSE (WHY + WHERE)** — `git log -S 'fixture_native_identity="not_observed"' -- scripts/run_fixture_startup_policy_observation.py` identifies d7c41d957c1d4a08902148831e21252d4b411465's context-only caller. It cannot supply the failed-result/native-source join selected after the passing .2.4 and unavailable .2.5 observations.
-- [x] **ADDRESSED (verified)** — Real controlled producers independently wait for their own admitted journal identity; ancestry/source bytes and native absence agree. The integrated caller preserves original result and independently settles collector/fixtures even on scan, result-delivery or journal failure. A live-controller-birth false-closure claim fails; disabling the independent post-settlement recheck makes that oracle fail with RuntimeError not raised.
-- [x] **NO REGRESSION** — Guarded final fixture discovery passes 184 tests in 32.828 seconds; changed Python syntax OK and exact controlled-workspace residue is empty. Authenticated caller, collector, census, sampler, original T1669 and production supervisor remain byte-identical. Book build/rendered integration review, exact output cleanup, regenerated knowledge-map: OK and independent claim census pass. All staged doctrine checks and git diff --cached --check pass; the hook rechecks final evidence. No actual recurrence is launched here.
+
+## Single original native/context observation .3.2.9
+
+Baseline `f4735487ea03dcaf284f88134aa9219b7f20b3cd`; one fixed guarded normal-user caller, run `.artifacts/logs/t1669-startup-observation/run-eb32870bc30d496ea5ea589e44a21b19`; postcheck `.artifacts/logs/passive-policy-original-20260909/`. All published paths are repository-relative; installed libproc, ps and log are required read-only OS diagnostics. No helper, root sampler or original rerun.
+
+Original 87554 birth 1788910182.849523 and collector 87553 birth 1788910182.789426 share parent 87534, UID/RUID 501. Controller birth was not retained. Original wait 256/exit 1, released/reaped true, timeout false. TAP fails only top-level subtest 6 of 14: control_wait has no structured inner oracle because its outer returns pre-exec containment failure. The full original stderr diagnostic is decoded without execution into this canonical representation; quoted times preserve the dump's scalar rendering, and no failed outer PID is invented.
+
+`{"capture_limit_bytes":65536,"cleanup":{"containment":"process_supervisor_probe_group","group_gone":1,"kill_sent":0,"leader_reaped":1,"leader_started":1,"surviving_descendants":0,"term_sent":0},"diagnostic":"process-group containment failed: Operation not permitted","exec_error":"process-group containment failed: Operation not permitted","exec_failed":1,"exec_handoff_monotonic_ns":null,"exec_to_first_output_ns":null,"execution_ns":null,"exit_code":126,"finished_monotonic_ns":"262186395985000","first_output_monotonic_ns":null,"first_output_to_exit_ns":null,"ok":0,"output_limited":0,"schema":"fsmgen.test.process_supervisor_probe.v1","schema_version":1,"signal":0,"spawn_to_exec_ns":null,"stage":"probe","started_monotonic_ns":"262186315994000","status":"exec_error","stderr":"","stderr_bytes":0,"stdout":"","stdout_bytes":0,"timed_out":0,"timeout_seconds":15}`
+
+The ambient error string does not separately identify syscall return, exception or actual-group mismatch. The source at perl/FSM/Support/ProcessSupervisor.pm uses one eval and trailing $! for all of them. .2.10 owns diagnosis/repair. Original source SHA-256 3867cc4fa9d7e74c2f61ec9849b3b9af295d5d3c8cc61e0fd9b3103a0c9d3045 and production supervisor 648dc70efcca393ff7f417f588e7d5d24cc91bf8644262348a2ce13ec46924fb are unchanged.
+
+All admitted fixtures below are canonical Perl, normal UID/RUID 501. Wrapper parents are original 87554; producer parents are their listed wrapper. The native birth plus immutable source bytes identify the Rust modes independently of policy-event order.
+
+| Role | PID/birth | Parent | Exact fixture path | Source SHA-256 |
+|---|---|---|---|---|
+| rust-proxy | 87985/1788910191.741483 | 87983 | .artifacts/tmp/process-supervisor-tests/fsmgen-bJFBoUVQ/rust-tools/rustup | dd39d5015afa146af4ecf8ec60573264ca37e38838d4248a395f9e3b2d3dbff7 |
+| rust-wrapper | 87983/1788910191.705051 | 87554 | .artifacts/tmp/process-supervisor-tests/fsmgen-bJFBoUVQ/rust-tool-resolution | df525c2166853a62c81b9a5aa70eea9606e3bd96c88c46f1844c1b4c55c7d2b0 |
+| rust-wrapper | 88013/1788910192.087852 | 87554 | .artifacts/tmp/process-supervisor-tests/fsmgen-Ny7JfJzO/rust-tool-resolution | df525c2166853a62c81b9a5aa70eea9606e3bd96c88c46f1844c1b4c55c7d2b0 |
+| rust-proxy | 88019/1788910192.127177 | 88013 | .artifacts/tmp/process-supervisor-tests/fsmgen-Ny7JfJzO/rust-tools/rustup | c6e0dc1adf2f6087fe9ba8b0a21b581ed6e6c757c0b6aa31bf47e51fda687f5c |
+| legacy-producer | 88050/1788910192.592996 | 88049 | .artifacts/tmp/process-supervisor-tests/fsmgen-3nMoaMF5/legacy-ram-signal | c4f806579042b82df706c33c9b467827eeee812ae767ec541b08b0f0aae481a5 |
+| legacy-wrapper | 88049/1788910192.578031 | 87554 | .artifacts/tmp/process-supervisor-tests/fsmgen-3nMoaMF5/legacy-ram-capture | bd13191666dff15eefa7b79dbe3835e114efe6ba741ee6b9258547a4b835143c |
+| legacy-producer | 88076/1788910192.941013 | 88075 | .artifacts/tmp/process-supervisor-tests/fsmgen-3nMoaMF5/legacy-ram-streams | 5345e79514eda3695f0d508ef5cf2a17279be102a8e8de920bbc8408c869f4d9 |
+| legacy-wrapper | 88075/1788910192.925307 | 87554 | .artifacts/tmp/process-supervisor-tests/fsmgen-3nMoaMF5/legacy-ram-capture | bd13191666dff15eefa7b79dbe3835e114efe6ba741ee6b9258547a4b835143c |
+
+Each archived source is independently rehashed and size-checked against its admitted record. All source devices are 16777244. Exact source filesystem identities:
+
+| Path suffix under process-supervisor-tests/ | Inode | Bytes | SHA-256 |
+|---|---|---|---|
+| fsmgen-bJFBoUVQ/rust-tool-resolution | 74685969 | 188 | df525c2166853a62c81b9a5aa70eea9606e3bd96c88c46f1844c1b4c55c7d2b0 |
+| fsmgen-bJFBoUVQ/rust-tools/rustup | 74685972 | 62 | dd39d5015afa146af4ecf8ec60573264ca37e38838d4248a395f9e3b2d3dbff7 |
+| fsmgen-Ny7JfJzO/rust-tool-resolution | 74685979 | 188 | df525c2166853a62c81b9a5aa70eea9606e3bd96c88c46f1844c1b4c55c7d2b0 |
+| fsmgen-Ny7JfJzO/rust-tools/rustup | 74685982 | 44 | c6e0dc1adf2f6087fe9ba8b0a21b581ed6e6c757c0b6aa31bf47e51fda687f5c |
+| fsmgen-3nMoaMF5/legacy-ram-capture | 74685986 | 1079 | bd13191666dff15eefa7b79dbe3835e114efe6ba741ee6b9258547a4b835143c |
+| fsmgen-3nMoaMF5/legacy-ram-signal | 74685987 | 507 | c4f806579042b82df706c33c9b467827eeee812ae767ec541b08b0f0aae481a5 |
+| fsmgen-3nMoaMF5/legacy-ram-streams | 74685991 | 622 | 5345e79514eda3695f0d508ef5cf2a17279be102a8e8de920bbc8408c869f4d9 |
+
+Rust progress remains unknown. Signal marker is not observed by the census, although original assertions independently prove entered bytes, native TERM 15 and the old false-zero projection. Streams progress changes from not_observed to entered: selected-producer wrapper event 262194329062666, target event 262194459199250. At 262199068161083 the census rejects wrapper 88075 with identity changed during inspection. These are Python monotonic event times only. No changed field, intermediate native value or reparenting observation was retained; .2.11 owns the diagnostic gap.
+
+Collector execution_context is healthy: exit zero, no errors or forced KILL, leader reaped, strict saved scope/command/path/hash reload agrees. Python prepared 262183988427500, observer-ready 262183990423250, child-release witness 262183990684791; collector started 262183928127791, finished 262199841579291. The witness is not exec proof; later native admission is separate. Subscription readiness/full delivery and missing records remain unproved/unknown.
+
+There are 241 actual logEvent rows, 24 exact-fixture-path events and 68 rows selected by those paths or their four tokens. Terminal count=241,finished=1 is metadata. Every queue/start/wakeup below is syspolicyd PID 677, Info, com.apple.syspolicy.exec, on 2026-09-09 +0200; daemon birth is unretained. Exact XProtect file URLs join each token to archived path and source. These passing-producer event intervals do not diagnose the unrelated failed control_wait or earlier startup timeout.
+
+| Exact path suffix | Token | Queue | Work start | Wakeup | Queue→start µs | Queue→wakeup µs |
+|---|---|---|---|---|---|---|
+| fsmgen-bJFBoUVQ/rust-tools/rustup | 6bb526c961b0d529 | 01:29:51.744061 | 01:29:51.744105 | 01:29:51.970665 | 44 | 226604 |
+| fsmgen-Ny7JfJzO/rust-tools/rustup | ec46f8b2542b0f4b | 01:29:52.129379 | 01:29:52.129432 | 01:29:52.460462 | 53 | 331083 |
+| fsmgen-3nMoaMF5/legacy-ram-signal | ecf763c4bf1a088f | 01:29:52.597853 | 01:29:52.597879 | 01:29:52.860788 | 26 | 262935 |
+| fsmgen-3nMoaMF5/legacy-ram-streams | 3dbacaa6696d1a9e | 01:29:52.943946 | 01:29:52.943971 | 01:29:53.166774 | 25 | 222828 |
+
+Timezone-aware datetime subtraction agrees with separate integer clock-field extraction. The prior path-only predicate omits every token-only queue/wakeup row. Cross-Perl/Python monotonic epochs are never joined. Full-deadline kernel wait, daemon internals, causal startup repair and runtime qualification remain unproved.
+
+All ten recorded original/collector/fixture identities independently return native ESRCH after completion. Observed fixture result: gone true, count eight, unobserved descendants unknown. All three listed workspaces are absent. Original and observer both remain failed despite successful cleanup; no caller_complete success is present. The failed outer's missing PID/birth and any unobserved descendants remain unknown.
+
+Complete retained-file SHA-256 identities (all under the run above):
+- `failure.json`: 169 bytes; `9d3568241110cd2ae10b5c231447c56744495be6866a40378196027aa40188fe`.
+- `fixture-result.json`: 107 bytes; `aeb936801918ad1ca1d828ea4c23c2aa905adea89d0dbee6c087dd413d6f85e0`.
+- `observations.jsonl`: 11768 bytes; `845bc7467af763afe16cf86476ba0e8ecf2cfe55aa0a1e0b525dd649fecfc8be`.
+- `policy-result.json`: 1585 bytes; `64e8460c5dc10fb7dc3541d83a3db74629b85944459c8e34d1e8d598e70852ba`.
+- `policy.stderr`: 0 bytes; `e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855`.
+- `policy.stdout`: 207922 bytes; `3a2aafc57f01ee3ea9084fcb347359871951750a0da97ea06110b85150ea676b`.
+- `test-result.json`: 171 bytes; `ffa604095b0f97171af7038fd179ee3a55819525639f5a712b94381c9e4fb714`.
+- `test.stderr`: 1673 bytes; `4a9989a2aa0d1c08237796a506a5c95319f823054298073afbb94bb88954555f`.
+- `test.tap`: 24437 bytes; `74e1511e645da6b31df0233942d07f7ac1384b8d79372b2bdfa42f4ab37f4d5c`.
+
+Selected raw policy JSON SHA-256 `f01a4f7306c6532b574e1e8eafc35e765f16fae23d33b61bb9e5796af1f3320d`. Re-derivation: original native wait/TAP, admitted source bytes, independent libproc absence and raw policy records. Falsification: source-mode rather than order matching, token-only filter counterexample and independent clock arithmetic; the missing failed-outer identity prevents a causal join. Durability: tracked original/diagnostic sources plus this full result/identity record, book/fact and Git; ignored raw logs and scratch readers remain explicit gaps. No production repair or successful original qualification is claimed.
+
+## Acceptance Checklist (single native/context original .3.2.9)
+
+- [x] **ROOT CAUSE (WHY + WHERE)** — `git log -S 'census = launcher.observer.FixtureCensus' -- scripts/run_fixture_startup_policy_observation.py` identifies f4735487ea03dcaf284f88134aa9219b7f20b3cd's qualified integration; only the separately owned original can qualify its actual evidence. The preserved control_wait containment failure and combined census rejection expose distinct missing causal detail, now owned by .2.10/.2.11.
+- [x] **ADDRESSED (verified)** — Exactly one caller invocation is consumed without retry. Original native wait/full failed outer, admitted native/source/progress records, strict policy reload, independent source-mode/path/token joins and native ESRCH census preserve the actual failed outcome; every owned original/collector/observed-fixture cleanup is consumed. No unknown failed PID, changed field or repair is invented.
+- [x] **NO REGRESSION** — Canonical knowledge-map: OK and unchanged original/supervisor/caller hashes protect the observation-only scope. The original has one failing top-level subtest; Rust and legacy assertions pass without closing historical failures. Book build/rendered evidence review, exact generated-output deletion and independent claim census pass. Corrected staged doctrine checks and git diff --cached --check pass; the hook rechecks final evidence.

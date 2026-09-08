@@ -1042,9 +1042,21 @@ protects the existing eligibility timing.
 
 The fixed policy-only command now includes this census through `.3.2.8`.
 Its healthy result names an `observed_subset`; it claims no complete descendant
-coverage. Task `.3.2.9` owns the separately bounded original observation with
-the integrated diagnostic. Existing authenticated commands retain their helper
-requirement.
+coverage. Existing authenticated commands retain their helper requirement.
+
+The single integrated observation in task `.3.2.9` fails at a different
+boundary: the asynchronous `control_wait` outer reports pre-exec process-group
+containment failure, while Rust and legacy startup assertions pass. The current
+combined diagnostic does not identify the failed syscall or group-membership
+check; no failed outer PID was retained. Task `.3.2.10` owns diagnosis and repair.
+The observer separately rejects an identity change during legacy-stream cleanup.
+Its combined final comparison does not retain the changed process or field,
+so a benign exit/reparenting race is unproved. Task `.3.2.11` owns that diagnosis.
+Original, collector and observed-fixture cleanup all settle, with independent
+native absence checks and source archive verification. Same-run exact source
+bytes identify the passing Rust modes; path/token events join the passing
+producers to policy queue/start/wakeup. Neither the clean collector nor those
+passing assertions converts the failed original or observer into success.
 Startup repair, complete policy delivery and runtime qualification remain open.
 
 Capture requests and helper results are published only after their complete
