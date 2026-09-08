@@ -951,8 +951,15 @@ This closes the missing failed-Rust-sample gap. It does not establish a
 continuous wait throughout the deadline, the daemon's internal cause, Rust
 main entry or the separately failed legacy signal process's stack. Earlier
 passing samples have the same policy frames; those frames cannot predict
-failure. Task `.3.2.1` owns project-side repair selection. Startup repair,
-complete policy delivery and runtime qualification remain open.
+failure. Task `.3.2.1` reviews the actual external-launch contracts and selects
+unprivileged policy execution context as the next discriminator. Earlier
+retained queue/wakeup messages contain only a policy token; the current
+fixture-path filter omits them. Task `.3.2.2` will qualify a closed broader
+collector, followed by a fixed policy-only caller and a separately owned
+original observation. These are planned diagnostics: the existing commands
+still require their documented helper, and no new mode is implemented yet.
+This route needs no additional privileged capture. Startup repair, complete
+policy delivery and runtime qualification remain open.
 
 Capture requests and helper results are published only after their complete
 JSON has been written, so a concurrent reader cannot consume a partial record.
