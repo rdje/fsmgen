@@ -954,12 +954,29 @@ passing samples have the same policy frames; those frames cannot predict
 failure. Task `.3.2.1` reviews the actual external-launch contracts and selects
 unprivileged policy execution context as the next discriminator. Earlier
 retained queue/wakeup messages contain only a policy token; the current
-fixture-path filter omits them. Task `.3.2.2` will qualify a closed broader
-collector, followed by a fixed policy-only caller and a separately owned
-original observation. These are planned diagnostics: the existing commands
-still require their documented helper, and no new mode is implemented yet.
-This route needs no additional privileged capture. Startup repair, complete
-policy delivery and runtime qualification remain open.
+fixture-path filter omits them. Task `.3.2.2` qualifies the collector's closed
+`execution_context` scope. The default `fixture_path` scope keeps the exact
+existing predicate. Context includes those fixture-path messages and messages
+from `syspolicyd` in `com.apple.syspolicy.exec`; it can therefore contain other
+launches' paths or tokens and stays in private local diagnostic files.
+
+The preparation witness and `fsmgen.fixture_policy_log.v1` result now carry
+`scope`. Reload requires the expected scope and exact fixed command, alongside
+existing file identity, hash and settled-cleanup checks. A context result cannot
+be read as default fixture-only evidence. Historical records without this field
+remain inspectable using their committed reader version.
+
+The native macOS predicate engine independently evaluates the actual command
+against earlier token-only queue/wakeup records and unrelated controls. The
+predecessor and restored old-filter mutation lose the required context rows.
+Both scopes exercise the same real-producer output, failure and cleanup
+controls; a normal-user OS collector independently verifies context settlement.
+Neither test establishes complete event delivery or diagnoses the earlier wait.
+
+The policy-only caller remains pending under `.3.2.3`, followed by the separately
+owned original observation. Existing observation commands still require their
+documented helper. The planned policy-only route needs no privileged capture;
+startup repair, complete policy delivery and runtime qualification remain open.
 
 Capture requests and helper results are published only after their complete
 JSON has been written, so a concurrent reader cannot consume a partial record.

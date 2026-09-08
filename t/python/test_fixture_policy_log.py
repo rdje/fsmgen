@@ -16,6 +16,7 @@ sys.path.insert(0, str(ROOT / "scripts"))
 import fixture_policy_log as policy
 import fixture_kernel_sampler as sampler
 import observe_fixture_startup as observer
+import run_fixture_startup_observation as launcher
 
 
 class PortableIdentity:
@@ -25,6 +26,8 @@ class PortableIdentity:
 
 
 class PolicyControls(unittest.TestCase):
+    scope = "fixture_path"
+
     def setUp(self):
         workspace = tempfile.TemporaryDirectory(prefix="policy-controls-", dir=ROOT / ".artifacts/tmp")
         self.addCleanup(workspace.cleanup)
@@ -32,7 +35,7 @@ class PolicyControls(unittest.TestCase):
         self.evidence = observer.Evidence(self.root)
         self.addCleanup(self.evidence.stream.close)
         native = sampler.NativeProcesses() if sys.platform == "darwin" else PortableIdentity()
-        self.collector = policy.PolicyLog(self.root, self.evidence.directory, native)
+        self.collector = policy.PolicyLog(self.root, self.evidence.directory, native, scope=self.scope)
         self.addCleanup(self.close_collector)
 
     def close_collector(self):
@@ -55,7 +58,7 @@ class PolicyControls(unittest.TestCase):
         path.write_text(source)
 
         def spawn(argv, **kwargs):
-            self.assertEqual(argv, policy.command(self.root))
+            self.assertEqual(argv, policy.command(self.root, scope=self.scope))
             self.assertEqual(kwargs["cwd"], self.root)
             for key in ("TMPDIR", "TMP", "TEMP"):
                 self.assertEqual(kwargs["env"][key], str(self.root / ".artifacts/tmp"))
@@ -85,6 +88,9 @@ class PolicyControls(unittest.TestCase):
         self.assertEqual(rows, [{"eventMessage": "literal fixture record", "timestamp": "controlled"}])
         self.assertEqual(list(self.root.glob("volatile-source")), [], "later source retrieval is empty")
         self.assertEqual(result["failures"], {})
+        self.assertEqual(result["scope"], self.scope)
+        self.assertEqual(witness["scope"], self.scope)
+        self.assertEqual(launcher.retained_policy_result(self.evidence, scope=self.scope), result)
         self.assertTrue(result["leader_reaped"])
         self.assertEqual(result["returncode"], 0)
         self.assertEqual(witness["subscription_readiness"], "unproved")
@@ -277,6 +283,125 @@ class PolicyControls(unittest.TestCase):
         self.assertEqual(json.loads(argv[9].split(" CONTAINS ", 1)[1]),
                          str(root / ".artifacts/tmp/process-supervisor-tests") + "/")
         self.assertNotIn("config", argv)
+
+    def test_retained_scope_and_command_cannot_be_relabelled(self):
+        with self.controlled():
+            self.collector.prepare()
+            original = self.collector.finish()
+        path = self.evidence.directory / "policy-result.json"
+        for change in ({"scope": "arbitrary"}, {"scope": None}, {"command": ["/usr/bin/log", "config"]}):
+            with self.subTest(change=change):
+                path.write_text(json.dumps(dict(original, **change)) + "\n")
+                with self.assertRaisesRegex(RuntimeError, "scope or command"):
+                    launcher.retained_policy_result(self.evidence, scope=self.scope)
+        path.write_text(json.dumps(original) + "\n")
+        self.assertEqual(launcher.retained_policy_result(self.evidence, scope=self.scope), original)
+        other = "execution_context" if self.scope == "fixture_path" else "fixture_path"
+        with self.assertRaisesRegex(RuntimeError, "scope or command"):
+            launcher.retained_policy_result(self.evidence, scope=other)
+
+    def test_scope_is_closed_before_any_collector_spawn(self):
+        for scope in (None, "", "syspolicyd", 'TRUEPREDICATE', [], {}):
+            with self.subTest(scope=scope), patch.object(policy.subprocess, "Popen") as spawn:
+                with self.assertRaisesRegex(ValueError, "unknown policy collection scope"):
+                    policy.command(self.root, scope=scope)
+                with self.assertRaisesRegex(ValueError, "unknown policy collection scope"):
+                    policy.PolicyLog(self.root, self.evidence.directory, self.collector.native, scope=scope)
+                spawn.assert_not_called()
+
+
+class ExecutionPolicyControls(PolicyControls):
+    """Apply the same real-producer failure/retention oracles to the new scope."""
+
+    scope = "execution_context"
+
+
+@unittest.skipUnless(sys.platform == "darwin", "native Foundation predicate and OS log controls")
+class NativeExecutionContext(unittest.TestCase):
+    def setUp(self):
+        workspace = tempfile.TemporaryDirectory(prefix="policy-context-", dir=ROOT / ".artifacts/tmp")
+        self.addCleanup(workspace.cleanup)
+        self.root = Path(workspace.name)
+
+    def evaluate(self, predicate, records):
+        # The OS's predicate engine, not a Python reconstruction of our filter,
+        # interprets actual emitted argv against independently selected records.
+        # osascript/Foundation are read-only installed OS dependencies; this JXA
+        # calls no application and writes no files. Temporary data stays local.
+        source = '''function run(argv) {
+            ObjC.import("Foundation");
+            var predicate = $.NSPredicate.predicateWithFormat(argv[0]);
+            return JSON.stringify(JSON.parse(argv[1]).map(function(record) {
+                return Boolean(predicate.evaluateWithObject($(record)));
+            }));
+        }'''
+        environment = dict(os.environ, TMPDIR=str(self.root), TMP=str(self.root), TEMP=str(self.root))
+        result = subprocess.run(
+            ["/usr/bin/osascript", "-l", "JavaScript", "-e", source,
+             predicate, json.dumps(records)],
+            cwd=self.root, env=environment, stdin=subprocess.DEVNULL,
+            capture_output=True, timeout=5, check=True)
+        self.assertEqual(result.stderr, b"")
+        return json.loads(result.stdout)
+
+    def test_context_keeps_real_token_only_records_and_excludes_unrelated_sources(self):
+        # Exact message text from the dated .3.2 record, independently emitted by
+        # syspolicyd. These messages have no repository path to match.
+        messages = [
+            "queueing up scan for code: PST: (path: e0b722d88ddbf34e), (team: (null)), (id: (null)), (bundle_id: (null))",
+            "scan finished, waking up any waiters: PST: (path: e0b722d88ddbf34e), (team: (null)), (id: (null)), (bundle_id: NOT_A_BUNDLE)",
+        ]
+        root = self.root / 'space and "quote" \\ literal'
+        prefix = str(root / ".artifacts/tmp/process-supervisor-tests") + "/"
+        records = [dict(process="syspolicyd", subsystem="com.apple.syspolicy.exec", eventMessage=m)
+                   for m in messages]
+        records += [
+            dict(process="syspolicyd", subsystem="com.apple.securityd", eventMessage=prefix + "fixture"),
+            dict(process="another_process", subsystem="com.apple.syspolicy.exec", eventMessage=messages[0]),
+            dict(process="syspolicyd", subsystem="unrelated.subsystem", eventMessage=messages[0]),
+            dict(process="another_process", subsystem="com.apple.securityd", eventMessage=prefix + "fixture"),
+            dict(process="syspolicyd", subsystem="com.apple.securityd", eventMessage=prefix[:-1] + "-other/fixture"),
+        ]
+        original = policy.command(root)
+        self.assertEqual(original[-1], 'process == "syspolicyd" AND eventMessage CONTAINS '
+                         + json.dumps(prefix, ensure_ascii=False))
+        self.assertEqual(self.evaluate(original[-1], records), [False, False, True, False, False, False, False])
+        context = policy.command(root, scope="execution_context")
+        self.assertEqual(context[:-1], original[:-1])
+        self.assertEqual(self.evaluate(context[-1], records), [True, True, True, False, False, False, False])
+
+    def test_native_record_oracle_rejects_restored_path_only_predicate(self):
+        original = policy.command
+        control = type(self)("test_context_keeps_real_token_only_records_and_excludes_unrelated_sources")
+        result = unittest.TestResult()
+        with patch.object(policy, "command", side_effect=lambda root, **_kwargs: original(root)):
+            control.run(result)
+        self.assertEqual(result.errors, [])
+        self.assertEqual(len(result.failures), 1)
+        self.assertIn("[False, False, True", result.failures[0][1])
+
+    def test_real_context_collector_settles_with_exact_scope_and_owned_cleanup(self):
+        evidence = observer.Evidence(self.root)
+        self.addCleanup(evidence.stream.close)
+        native = sampler.NativeProcesses()
+        collector = policy.PolicyLog(self.root, evidence.directory, native, scope="execution_context")
+        try:
+            witness = collector.prepare()
+            collector.check()
+        finally:
+            result = collector.finish()
+        self.assertEqual(witness["scope"], "execution_context")
+        self.assertEqual(result["scope"], "execution_context")
+        self.assertEqual(result["failures"], {})
+        self.assertTrue(result["leader_reaped"])
+        self.assertFalse(result["forced_kill"])
+        self.assertEqual(launcher.retained_policy_result(evidence, scope="execution_context"), result)
+        with self.assertRaisesRegex(RuntimeError, "scope or command"):
+            launcher.retained_policy_result(evidence)
+        with self.assertRaises(ChildProcessError):
+            os.waitpid(collector.process.pid, os.WNOHANG)
+        self.assertFalse(observer.still_live(native, witness["identity"]))
+        self.assertIn(b"com.apple.syspolicy.exec", (evidence.directory / "policy.stdout").read_bytes())
 
 
 if __name__ == "__main__":

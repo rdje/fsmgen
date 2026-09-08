@@ -24,12 +24,23 @@ REAP_SECONDS = 2
 OUTPUT_BYTES = 16 * 1024 * 1024
 HEADER_BYTES = 8192
 POLL_SECONDS = 0.05
+SCOPES = ("fixture_path", "execution_context")
 
 
-def command(root):
+def require_scope(scope):
+    if scope not in SCOPES:
+        raise ValueError("unknown policy collection scope")
+
+
+def command(root, *, scope="fixture_path"):
+    require_scope(scope)
     # JSON string quoting supplies an NSPredicate string literal, not shell text.
     prefix = str(root / ".artifacts/tmp/process-supervisor-tests") + "/"
     predicate = 'process == "syspolicyd" AND eventMessage CONTAINS ' + json.dumps(prefix, ensure_ascii=False)
+    if scope == "execution_context":
+        predicate = ('process == "syspolicyd" AND (eventMessage CONTAINS '
+                     + json.dumps(prefix, ensure_ascii=False)
+                     + ' OR subsystem == "com.apple.syspolicy.exec")')
     return ["/usr/bin/log", "stream", "--style", "ndjson", "--level", "debug",
             "--timeout", str(LIFETIME_SECONDS), "--predicate", predicate]
 
@@ -41,7 +52,9 @@ def limit_child_output():
 class PolicyLog:
     """Own one native collector; finish returns retained status including failures."""
 
-    def __init__(self, root, directory, native):
+    def __init__(self, root, directory, native, *, scope="fixture_path"):
+        require_scope(scope)
+        self.scope = scope
         self.root, self.directory, self.native = root, directory, native
         if root.resolve() != root or directory.resolve() != directory or root not in directory.parents:
             raise ValueError("policy evidence must be directly repository-local")
@@ -56,7 +69,7 @@ class PolicyLog:
         self.failures = {}
         self.finished = False
         self.result = None
-        self.argv = command(root)
+        self.argv = command(root, scope=scope)
 
     def _directory_unchanged(self):
         metadata = self.directory.lstat()
@@ -104,7 +117,7 @@ class PolicyLog:
                     if not prefix.split(b"\n", 1)[0].startswith(b"Filtering the log data using "):
                         raise ValueError("policy collector did not emit its native filter header")
                     self.prepared_ns = time.monotonic_ns()
-                    return {"prepared_ns": self.prepared_ns, "identity": self.identity,
+                    return {"prepared_ns": self.prepared_ns, "identity": self.identity, "scope": self.scope,
                             "subscription_readiness": "unproved", "complete_coverage": "unproved"}
                 if len(prefix) == HEADER_BYTES:
                     raise ValueError("policy startup header exceeds its fixed bound")
@@ -189,6 +202,7 @@ class PolicyLog:
                     stream.close()
             self.finished = True
             self.result = {"schema": "fsmgen.fixture_policy_log.v1", "identity": self.identity,
+                           "scope": self.scope,
                            "command": [arg.replace(str(self.root), "<repo>") for arg in self.argv],
                            "producer_sha256": hashlib.sha256(Path(__file__).read_bytes()).hexdigest(),
                            "started_ns": self.started_ns, "prepared_ns": self.prepared_ns,

@@ -234,10 +234,16 @@ def require_ready(session, native):
         raise ValueError("authenticated helper changed before test release")
 
 
-def retained_policy_result(evidence):
+def retained_policy_result(evidence, *, scope="fixture_path"):
     """Reload retained status and independently verify its exact output files."""
+    policy_log.require_scope(scope)
     result = json.loads(observer.read_local_file(
         evidence.directory / "policy-result.json", evidence.root, POLICY_STATUS_BYTES))
+    expected_command = [arg.replace(str(evidence.root), "<repo>")
+                        for arg in policy_log.command(evidence.root, scope=scope)]
+    if (not isinstance(result, dict) or result.get("scope") != scope
+            or result.get("command") != expected_command):
+        raise RuntimeError("policy retention has unexpected collection scope or command")
     if (not isinstance(result, dict) or result.get("schema") != "fsmgen.fixture_policy_log.v1"
             or result.get("failures") != {} or result.get("leader_reaped") is not True
             or result.get("forced_kill") is not False
