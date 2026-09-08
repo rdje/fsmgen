@@ -1001,8 +1001,16 @@ Controlled bodies verify context readiness before entry and exact split output;
 a deliberate false-success projection fails against a real native nonzero exit.
 The actual native collector is tested with a controlled body, not full T1669.
 
-Task `.3.2.4` owns the separately bounded original observation. Existing
-authenticated observation commands keep their documented helper requirement.
+Task `.3.2.4` consumes the original observation: T1669 passes, collection
+settles successfully, and the owned test/collector are independently absent.
+Exact path/token records connect the logged Rust proxies and legacy producers
+to queue, work-start and waiter-wakeup events omitted by the default filter.
+This passing run supplies no failed-run diagnosis or repair. Fixture-native
+identities and transient source bytes were not collected; Rust mode attribution
+is not inferred solely from event order. The task retains exact event timestamps,
+source identities and evidence hashes. Task `.3.2.5` checks whether equivalent
+events remain available for the earlier failed interval without another test
+launch. Existing authenticated commands retain their helper requirement.
 Startup repair, complete policy delivery and runtime qualification remain open.
 
 Capture requests and helper results are published only after their complete
