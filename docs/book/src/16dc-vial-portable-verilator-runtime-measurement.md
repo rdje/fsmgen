@@ -938,8 +938,21 @@ timing with the new budget. Restoring the prior budget fails that oracle;
 near-end reservation and overrun controls still stop correctly. Native
 controlled bodies verify the selected and sibling budgets and the original
 failure stop. These controls do not replay full T1669 or authenticate sampling.
-Task `.3.8.18` owns the next bounded authenticated observation.
-Startup repair, complete policy delivery and runtime qualification remain open.
+Task `.3.8.18` then captures the decoy Rust proxy during an original failing
+invocation. Native ancestry, distinct source bytes, the request and the report's
+PID/parent agree. The decoy should print `relative-cargo` and exit so admission
+can reject the relative tool identity. Instead, resolution times out with empty
+streams. The sample shows that same process inside AppleSystemPolicy. Its full
+diagnostic survives, and the policy log later names its exact source. The first
+failure stops the sequence. Independent native birth/workspace checks verify
+observed cleanup; the helper stops with authentication invalidated.
+
+This closes the missing failed-Rust-sample gap. It does not establish a
+continuous wait throughout the deadline, the daemon's internal cause, Rust
+main entry or the separately failed legacy signal process's stack. Earlier
+passing samples have the same policy frames; those frames cannot predict
+failure. Task `.3.2.1` owns project-side repair selection. Startup repair,
+complete policy delivery and runtime qualification remain open.
 
 Capture requests and helper results are published only after their complete
 JSON has been written, so a concurrent reader cannot consume a partial record.
