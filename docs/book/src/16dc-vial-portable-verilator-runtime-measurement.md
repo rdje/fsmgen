@@ -814,6 +814,36 @@ policy activity occurred. Task `.3.8.10` owns prospective retention before a
 new experiment. It will preserve the existing host settings and keep missing
 records and collection failures explicit.
 
+The bounded policy collector is now qualified as a separate component;
+`.3.8.10.2` must integrate it with the fixed diagnostic lifecycle before another
+experiment. It invokes the read-only native `log stream` with debug-level
+NDJSON, restricted to `syspolicyd` messages containing this checkout's exact
+fixture allocator prefix. The native command and log service are required OS
+dependencies; output and temporary data remain on the repository volume.
+Records without that prefix, including token-only or privacy-filtered messages,
+are outside assured coverage.
+
+Preparation requires the native filter header within ten seconds. That header
+does not acknowledge subscription readiness or complete delivery. The command
+has a 240-second timeout, plus observed lifetime checks; each output file has an
+inherited 16-MiB limit. Reaching a limit, premature exit even with zero status,
+or a failed collection check remains a diagnostic failure. Cleanup allows one
+two-second interrupt wait and one two-second kill wait; forced termination stays
+failed. These finite allowances do not promise hard real-time OS scheduling.
+
+The collector retains original stream bytes, including the native header and
+completion metadata, separately from its status. Status records the exact
+child birth, relative output paths, hashes and path-identity checks, monotonic
+witnesses, native exit and reaping. It publishes complete status exclusively,
+preserving any existing result or foreign pending file. Callers must inspect
+retained failures and consume cleanup; a returned status alone is not success.
+The native smoke check returns only a header and zero-record completion, with
+normal shutdown and independently verified absence. A separate controlled
+producer emits a literal record and deletes its source: the retained copy
+survives an empty later lookup, and a discarded-record mutation fails that
+oracle. This qualifies retention without claiming the missing legacy cause or
+complete OS-log delivery.
+
 Capture requests and helper results are published only after their complete
 JSON has been written, so a concurrent reader cannot consume a partial record.
 The hosted doctrine job discovers the fixture Python controls. Launcher

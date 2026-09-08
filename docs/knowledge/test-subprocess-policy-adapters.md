@@ -89,9 +89,9 @@ captures; tests stay normal-user. Identity, expiry and STOP/Ctrl+C checks remain
 `.3.8.7` keeps one helper per sequence; single-run STOP needs fresh authentication.
 `.3.7` closes native capture/shutdown verification; `.3.2` owns causal repair.
 T1669's allocator uses `.artifacts/tmp/process-supervisor-tests/` root.
-An empty observation fails coverage; `.3.8.5`/book own the contract.
+Empty observation fails coverage; `.3.8.5`/book own it.
 A `ps` no-match skips only native absence; `.3.8.6` retains other errors.
-`.3.8.9`'s `--target-family legacy` reserves capture and requires legacy coverage. T1669 `.3.8.8` captures Rust waiting in policy while legacy startup fails; causes stay distinct. Its successful Info query later returns empty; `.3.8.10` owns prospective retention.
+`.3.8.9`'s `--target-family legacy` reserves capture and requires legacy coverage. T1669 `.3.8.8` captures Rust waiting in policy while legacy startup fails; causes stay distinct. Its successful Info query later returns empty; `.3.8.10.1` qualifies retention; integration pending.
 T1595's pre-main cause stays open; `.19.2.3.1.2.2.6.2` fixes capture.
 `RamGuardFixtureRuntime` seals tools/argv, paths, bounds and full results.
 T1811/T1669 prove signal/stream failures and group cleanup; T1595 keeps metrics.
