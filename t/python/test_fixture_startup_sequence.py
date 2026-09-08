@@ -76,6 +76,7 @@ class SequenceControls(unittest.TestCase):
         self.addCleanup(self.session.close)
         self.journal = launcher.observer.Evidence(self.root)
         self.addCleanup(self.journal.stream.close)
+        launcher_controls.install_policy_control(self, self.root)
         workspace = self.root / ".artifacts/tmp/process-supervisor-tests/sequence-control"
         (workspace / "rust-tools").mkdir(parents=True)
         (workspace / "rust-tool-resolution").write_text(
@@ -213,6 +214,14 @@ print "ok 1 - controlled sequence body\n1..1\n";
                         selected_fixture_count=1, target_family=target_family,
                         helper_stopped=False, helper_shutdown_owner="caller",
                         capture_received=session.submitted)
+        collector = launcher.policy_log.PolicyLog(_root, evidence.directory, _native)
+        try:
+            collector.prepare()
+        finally:
+            retained = collector.finish()
+        self.assertEqual(retained["failures"], {})
+        evidence.record("policy_settled", leader_reaped=True, failures={},
+                        result_path=str((evidence.directory / "policy-result.json").relative_to(_root)))
         return result
 
     def test_legacy_selection_reaches_every_iteration_and_sequence_journal(self):
@@ -311,6 +320,42 @@ print "ok 1 - controlled sequence body\n1..1\n";
         run.assert_not_called()
         self.assertEqual(outcome["completed_invocations"], 0)
         self.assertEqual(outcome["reason"], "insufficient_time_for_complete_invocation")
+
+    def test_policy_allowances_are_reserved_in_addition_to_the_original_invocation(self):
+        # The old 221 + 12 reservation fits 240; collection's extra startup
+        # and cleanup do not. No original deadline is shortened to make it fit.
+        with patch.object(sequence, "SEQUENCE_SECONDS", 240), patch.object(launcher, "run") as run:
+            outcome = self.run_sequence()
+        run.assert_not_called()
+        self.assertEqual(outcome["reason"], "insufficient_time_for_complete_invocation")
+
+    def test_policy_output_drift_stops_before_another_iteration(self):
+        def changed(session, native, evidence, root, **kwargs):
+            result = self.modeled_iteration(session, native, evidence, root, **kwargs)
+            with (evidence.directory / "policy.stdout").open("ab") as stream:
+                stream.write(b"changed after original status\n")
+            return result
+
+        with patch.object(launcher, "run", side_effect=changed) as run, \
+                self.assertRaisesRegex(RuntimeError, "retained output changed"):
+            self.run_sequence()
+        self.assertEqual(run.call_count, 1)
+        self.assertTrue(self.session.stopped())
+
+    def test_missing_policy_settlement_stops_before_another_iteration(self):
+        def missing(session, native, evidence, root, **kwargs):
+            result = self.modeled_iteration(session, native, evidence, root, **kwargs)
+            path = evidence.directory / "observations.jsonl"
+            rows = [row for row in path.read_text().splitlines()
+                    if json.loads(row)["event"] != "policy_settled"]
+            path.write_text("\n".join(rows) + "\n")
+            return result
+
+        with patch.object(launcher, "run", side_effect=missing) as run, \
+                self.assertRaisesRegex(RuntimeError, "lacks settled policy retention"):
+            self.run_sequence()
+        self.assertEqual(run.call_count, 1)
+        self.assertTrue(self.session.stopped())
 
     def test_elapsed_time_is_checked_after_invocation_and_before_another(self):
         now = [0]

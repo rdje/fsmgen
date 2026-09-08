@@ -256,7 +256,8 @@ def main_entry(evidence, root, *, include_wrapper=False):
     return "drained" if body.endswith(b"drained\n") else "entered"
 
 
-def observe(test, native, session, evidence, root, *, stop_session=True, target_family="all"):
+def observe(test, native, session, evidence, root, *, stop_session=True, target_family="all",
+            check_collection=None):
     """Settle observed fixtures; an enclosing sequence may own helper shutdown."""
     deadline = time.monotonic() + OBSERVATION_SECONDS
     seen, candidates, progress_seen = {}, {}, {}
@@ -275,6 +276,8 @@ def observe(test, native, session, evidence, root, *, stop_session=True, target_
                         observer_sha256=hashlib.sha256(Path(__file__).read_bytes()).hexdigest(),
                         sampler_sha256=hashlib.sha256((root / "scripts/fixture_kernel_sampler.py").read_bytes()).hexdigest())
         while still_live(native, test):
+            if check_collection is not None:
+                check_collection()
             if time.monotonic() >= deadline:
                 raise TimeoutError("observer wall expired; caller still owns the test")
             choices = []
@@ -344,6 +347,8 @@ def observe(test, native, session, evidence, root, *, stop_session=True, target_
                 if capture is not None:
                     evidence.record("capture_result", result=capture)
             time.sleep(POLL_SECONDS)
+        if check_collection is not None:
+            check_collection()
         evidence.record("test_gone", test=test)
         if not selected_seen:
             raise RuntimeError("no selected fixture was observed; coverage is unestablished")

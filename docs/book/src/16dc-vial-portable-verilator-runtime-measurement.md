@@ -771,8 +771,8 @@ An entered/drained producer excludes its remaining wrapper too: that progress
 is explicitly scoped to the selected producer, not wrapper main entry. Nested
 children remain preferred, and source, ancestry and progress are rechecked
 before publication. Invalid selectors fail before test release. These controls
-qualify selection only; prospective OS-record retention remains required before
-the next authenticated experiment.
+qualify selection only; the fixed caller also prepares the live policy retention
+described below before each authenticated experiment.
 
 The sequence owns helper shutdown across iterations. Every iteration must
 retain successful original status and positive observed-fixture cleanup before
@@ -810,13 +810,12 @@ the identical query and broader controls cannot retrieve the same record.
 The observed loss of queryability is consistent with those defaults; the
 actual subsystem configuration and precise disappearance mechanism remain
 unverified. This means an empty retrospective query cannot establish that no
-policy activity occurred. Task `.3.8.10` owns prospective retention before a
-new experiment. It will preserve the existing host settings and keep missing
-records and collection failures explicit.
+policy activity occurred. Task `.3.8.10` implements prospective retention while
+preserving host settings and keeping missing records and collection failures explicit.
 
-The bounded policy collector is now qualified as a separate component;
-`.3.8.10.2` must integrate it with the fixed diagnostic lifecycle before another
-experiment. It invokes the read-only native `log stream` with debug-level
+The fixed caller and sequence now prepare the bounded policy collector before
+test release. The standalone observer remains an attach-only tool. Collection
+invokes the read-only native `log stream` with debug-level
 NDJSON, restricted to `syspolicyd` messages containing this checkout's exact
 fixture allocator prefix. The native command and log service are required OS
 dependencies; output and temporary data remain on the repository volume.
@@ -843,6 +842,26 @@ producer emits a literal record and deletes its source: the retained copy
 survives an empty later lookup, and a discarded-record mutation fails that
 oracle. This qualifies retention without claiming the missing legacy cause or
 complete OS-log delivery.
+
+The caller records policy preparation, checks collector and helper readiness,
+then releases the original test. Observation continues checking collection
+while following the selected fixtures. After retaining the original TAP and
+wait status, the caller closes collection and reloads its published status and
+exact output paths, sizes and hashes. The sequence requires that settlement and
+rechecks retained bytes before another invocation; successful test output alone
+cannot establish diagnostic success.
+
+Collector preparation and cleanup are included in the existing sequence budget
+reservation. Original fixture deadlines remain unchanged. Failed preparation
+prevents test release; premature collector exit, forced cleanup, output drift
+or missing settlement stops the sequence. A full journal preserves its earlier
+observation failure without relabeling physically verified process cleanup.
+Independent controlled bodies verify collector preparation and aliveness at
+entry. The integrated native smoke uses actual read-only OS streams with
+controlled fixtures and a modeled unprivileged helper; it does not authenticate
+kernel sampling or replay original T1669. All recorded births are independently
+absent afterward, and verified evidence copies survive control cleanup.
+Task `.3.8.11` owns the next authenticated legacy capture.
 
 Capture requests and helper results are published only after their complete
 JSON has been written, so a concurrent reader cannot consume a partial record.

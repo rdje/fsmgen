@@ -7,6 +7,7 @@ import json
 import os
 from pathlib import Path
 import signal
+import subprocess
 import sys
 import tempfile
 import time
@@ -16,6 +17,34 @@ from unittest.mock import patch
 ROOT = Path(__file__).resolve().parents[2]
 sys.path.insert(0, str(ROOT / "scripts"))
 import run_fixture_startup_observation as launcher
+
+
+def install_policy_control(case, root):
+    """Replace only the OS stream with a real held, unprivileged producer."""
+    source = root / "controlled-policy.pl"
+    source.write_text('use strict; use warnings; $|=1; $SIG{INT}=sub { exit 0 }; alarm 30;\n'
+                      'print "Filtering the log data using controlled fixture predicate\\n";\n'
+                      'while (1) { select undef, undef, undef, 0.05; }\n')
+    popen, processes = subprocess.Popen, []
+
+    def spawn(argv, **kwargs):
+        if argv[:2] == ["/usr/bin/log", "stream"]:
+            case.assertEqual(argv, launcher.policy_log.command(root))
+            process = popen(["/usr/bin/perl", str(source)], **kwargs)
+            processes.append(process)
+            return process
+        return popen(argv, **kwargs)
+
+    def close():
+        for process in processes:
+            if process.poll() is None:
+                process.kill()
+            process.wait(timeout=2)
+
+    replaced = patch.object(launcher.policy_log.subprocess, "Popen", side_effect=spawn)
+    replaced.start()
+    case.addCleanup(replaced.stop)
+    case.addCleanup(close)
 
 
 class PortableProcesses:
@@ -74,6 +103,7 @@ class LauncherControls(unittest.TestCase):
         self.session = Session(self.native, self.root)
         self.evidence = launcher.observer.Evidence(self.root)
         self.addCleanup(self.evidence.stream.close)
+        install_policy_control(self, self.root)
         self.program()
 
     def program(self, exit_code=0, body="", pause="0.3"):
@@ -229,7 +259,95 @@ print STDERR "separate stderr\\n";
         result = json.loads((self.evidence.directory / "test-result.json").read_text())
         self.assertEqual(result["returncode"], 23)
         self.assertTrue(result["leader_reaped"])
+        self.assertEqual(launcher.retained_policy_result(self.evidence)["failures"], {})
         self.assertFalse(any(row["event"] == "caller_complete" for row in self.events()))
+
+    def policy_body(self, action=""):
+        journal = str((self.evidence.directory / "observations.jsonl").relative_to(self.root))
+        return "use JSON::PP qw(decode_json);\nopen my $events, '<', '" + journal + "' or die $!;\n" + r'''
+my ($collector, $prepared, $ready);
+while (my $line = <$events>) {
+    my $row = decode_json($line);
+    next unless $row->{event} eq 'observer_ready' && $row->{test}{pid} == $$;
+    $collector = $row->{policy_readiness}{identity}{pid};
+    $prepared = $row->{policy_readiness}{prepared_ns};
+    $ready = $row->{ready_ns};
+}
+close $events or die $!;
+die 'policy was not prepared before release' unless $collector && $prepared <= $ready;
+die 'collector is not alive at test entry' unless kill 0, $collector;
+open my $proof, '>', 'policy-body-proof' or die $!;
+print {$proof} "$collector $prepared $ready\n" or die $!;
+close $proof or die $!;
+''' + action
+
+    def test_actual_body_verifies_policy_preparation_and_live_collector_before_entry(self):
+        self.program(body=self.policy_body())
+        with patch.object(launcher.observer, "observe", return_value=None):
+            result = self.run_launcher()
+        collector_pid, prepared, ready = map(int, (self.root / "policy-body-proof").read_text().split())
+        retained = launcher.retained_policy_result(self.evidence)
+        self.assertEqual(retained["identity"]["pid"], collector_pid)
+        self.assertLessEqual(prepared, ready)
+        self.assertEqual(result["returncode"], 0)
+        with self.assertRaises(ChildProcessError):
+            os.waitpid(collector_pid, os.WNOHANG)
+        self.assertGreater(self.session.stop_calls, 0)
+
+    def test_failed_policy_preparation_prevents_test_fork_and_closes_both_owners(self):
+        (self.root / "controlled-policy.pl").write_text(
+            '$|=1; $SIG{INT}=sub { exit 0 }; alarm 10; print "wrong header\\n"; sleep 5;\n')
+        with patch.object(launcher, "GatedTest") as child, self.assertRaisesRegex(RuntimeError, "policy collection"):
+            self.run_launcher()
+        child.assert_not_called()
+        self.assertFalse((self.root / "body-entered").exists())
+        retained = json.loads((self.evidence.directory / "policy-result.json").read_text())
+        self.assertTrue(retained["leader_reaped"])
+        self.assertIn("native filter header", retained["failures"]["prepare"])
+        self.assertGreater(self.session.stop_calls, 0)
+
+    def test_early_collector_zero_exit_preserves_successful_original_tap_as_separate_evidence(self):
+        self.program(body=self.policy_body("kill 'INT', $collector or die $!;"), pause="1")
+        with self.assertRaisesRegex(RuntimeError, "policy collection"):
+            self.run_launcher()
+        original = json.loads((self.evidence.directory / "test-result.json").read_text())
+        retained = json.loads((self.evidence.directory / "policy-result.json").read_text())
+        self.assertEqual(original["returncode"], 0)
+        self.assertTrue(original["leader_reaped"])
+        self.assertEqual(retained["returncode"], 0)
+        self.assertTrue(retained["leader_reaped"])
+        self.assertIn("exited before requested shutdown", retained["failures"]["collection"])
+        self.assertFalse(any(row["event"] == "caller_complete" for row in self.events()))
+        self.assertGreater(self.session.stop_calls, 0)
+
+    def test_forced_collector_cleanup_cannot_promote_original_success(self):
+        path = self.root / "controlled-policy.pl"
+        path.write_text(path.read_text().replace('$SIG{INT}=sub { exit 0 }', '$SIG{INT}="IGNORE"'))
+        with patch.object(launcher.observer, "observe", return_value=None), \
+                patch.object(launcher.policy_log, "REAP_SECONDS", 0.1), \
+                self.assertRaisesRegex(RuntimeError, "policy collection"):
+            self.run_launcher()
+        retained = json.loads((self.evidence.directory / "policy-result.json").read_text())
+        self.assertTrue(retained["leader_reaped"])
+        self.assertTrue(retained["forced_kill"])
+        self.assertEqual(json.loads((self.evidence.directory / "test-result.json").read_text())["returncode"], 0)
+        self.assertGreater(self.session.stop_calls, 0)
+
+    def test_changed_retained_output_is_rejected_before_caller_success(self):
+        finish = launcher.policy_log.PolicyLog.finish
+
+        def changed(collector):
+            result = finish(collector)
+            with (collector.directory / "policy.stdout").open("ab") as stream:
+                stream.write(b"unreported bytes\n")
+            return result
+
+        with patch.object(launcher.observer, "observe", return_value=None), \
+                patch.object(launcher.policy_log.PolicyLog, "finish", changed), \
+                self.assertRaisesRegex(RuntimeError, "retained output changed"):
+            self.run_launcher()
+        self.assertEqual(json.loads((self.evidence.directory / "test-result.json").read_text())["returncode"], 0)
+        self.assertGreater(self.session.stop_calls, 0)
 
     def test_passing_test_cannot_promote_missing_fixture_coverage(self):
         with self.assertRaisesRegex(RuntimeError, "no selected fixture was observed"):
@@ -345,6 +463,7 @@ print STDERR "separate stderr\\n";
 
     def test_partial_pipe_creation_closes_exact_fds_and_stops_helper(self):
         pipe = os.pipe
+        gated_test = launcher.GatedTest
         descriptors = []
 
         def fail_second_pipe():
@@ -354,8 +473,12 @@ print STDERR "separate stderr\\n";
             descriptors.extend(pair)
             return pair
 
+        def reserve(*args, **kwargs):
+            with patch.object(launcher.os, "pipe", side_effect=fail_second_pipe):
+                return gated_test(*args, **kwargs)
+
         try:
-            with patch.object(launcher.os, "pipe", side_effect=fail_second_pipe), \
+            with patch.object(launcher, "GatedTest", side_effect=reserve), \
                     self.assertRaisesRegex(OSError, "descriptor exhaustion"):
                 self.run_launcher()
             self.assertEqual(self.session.stop_calls, 1)

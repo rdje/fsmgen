@@ -20,6 +20,7 @@ import sys
 import time
 
 import observe_fixture_startup as observer
+import fixture_policy_log as policy_log
 
 
 ROOT = Path(__file__).resolve().parent.parent
@@ -29,6 +30,7 @@ TEST_SECONDS = 200
 REAP_SECONDS = 2
 ACK_BYTES = 16
 OUTPUT_BYTES = 16 * 1024 * 1024
+POLICY_STATUS_BYTES = 65536
 TEST_ARGV = ("/usr/bin/perl", observer.sampler.SUPERVISOR_TEST_PATH)
 
 
@@ -232,20 +234,53 @@ def require_ready(session, native):
         raise ValueError("authenticated helper changed before test release")
 
 
+def retained_policy_result(evidence):
+    """Reload retained status and independently verify its exact output files."""
+    result = json.loads(observer.read_local_file(
+        evidence.directory / "policy-result.json", evidence.root, POLICY_STATUS_BYTES))
+    if (not isinstance(result, dict) or result.get("schema") != "fsmgen.fixture_policy_log.v1"
+            or result.get("failures") != {} or result.get("leader_reaped") is not True
+            or result.get("forced_kill") is not False
+            or type(result.get("returncode")) is not int
+            or result["returncode"] not in (0, -signal.SIGINT)
+            or any(type(result.get(key)) is not int for key in ("started_ns", "prepared_ns", "finished_ns"))
+            or not 0 < result["started_ns"] <= result["prepared_ns"] <= result["finished_ns"]
+            or not isinstance(result.get("outputs"), dict)
+            or set(result["outputs"]) != {"stdout", "stderr"}):
+        raise RuntimeError("policy retention lacks prepared, successful owned cleanup")
+    for name, metadata in result["outputs"].items():
+        path = evidence.directory / ("policy." + name)
+        if (not isinstance(metadata, dict) or metadata.get("path") != str(path.relative_to(evidence.root))
+                or metadata.get("hash_complete") is not True or metadata.get("path_identity_matches") is not True
+                or type(metadata.get("bytes")) is not int
+                or not 0 <= metadata["bytes"] < policy_log.OUTPUT_BYTES):
+            raise RuntimeError("policy retention has invalid output identity or bounds")
+        raw = observer.read_local_file(path, evidence.root, policy_log.OUTPUT_BYTES)
+        if len(raw) != metadata["bytes"] or hashlib.sha256(raw).hexdigest() != metadata.get("sha256"):
+            raise RuntimeError("policy retained output changed after collector shutdown")
+    return result
+
+
 def run(session, native, evidence, root, *, stop_session=True, target_family="all"):
     test, result = None, None
+    collection = None
     observation_error = None
     cancelled = False
     try:
         observer.require_target_family(target_family)
+        collection = policy_log.PolicyLog(root, evidence.directory, native)
+        policy_ready = collection.prepare()
+        evidence.record("policy_prepared", **policy_ready)
         test = GatedTest(native, root, evidence.directory)
         native.test = test
 
         def prepare():
             require_ready(session, native)
+            collection.check()
             ready_ns = time.monotonic_ns()
             evidence.record("observer_ready", ready_ns=ready_ns, test=test.identity,
                             target_family=target_family,
+                            policy_readiness=policy_ready,
                             argv=list(TEST_ARGV), test_sha256=hashlib.sha256(
                                 (root / TEST_ARGV[1]).read_bytes()).hexdigest(),
                             launcher_sha256=hashlib.sha256(Path(__file__).read_bytes()).hexdigest())
@@ -255,7 +290,8 @@ def run(session, native, evidence, root, *, stop_session=True, target_family="al
         evidence.record("test_release", witness=witness, test=test.identity)
         wait_for_exec(test, native, root)
         observer.observe(test.identity, native, session, evidence, root,
-                         stop_session=stop_session, target_family=target_family)
+                         stop_session=stop_session, target_family=target_family,
+                         check_collection=collection.check)
     except (Exception, KeyboardInterrupt) as error:
         observation_error = error
         cancelled = isinstance(error, KeyboardInterrupt)
@@ -270,6 +306,22 @@ def run(session, native, evidence, root, *, stop_session=True, target_family="al
                 pending.replace(evidence.directory / "test-result.json")
         except (Exception, KeyboardInterrupt) as error:
             cleanup_errors.append("test cleanup: " + str(error))
+        if collection is not None:
+            try:
+                collected = collection.finish()
+                if retained_policy_result(evidence) != collected:
+                    raise RuntimeError("policy status changed after collector publication")
+            except (Exception, KeyboardInterrupt) as error:
+                cleanup_errors.append("policy collection: " + str(error))
+            else:
+                try:
+                    evidence.record("policy_settled", leader_reaped=True, failures={},
+                                    result_path=str((evidence.directory / "policy-result.json").relative_to(root)))
+                except (Exception, KeyboardInterrupt) as error:
+                    # A full journal must not relabel physically verified
+                    # collection cleanup, or replace an earlier observation error.
+                    if observation_error is None:
+                        observation_error = error
         if stop_session:
             try:
                 stop_helper(session)
@@ -280,6 +332,7 @@ def run(session, native, evidence, root, *, stop_session=True, target_family="al
             evidence.problem("cleanup", failure)
             raise failure
     if observation_error is not None:
+        evidence.problem("observation", observation_error)
         raise observation_error
     if result is None or result["timeout"] or result["returncode"] != 0:
         raise RuntimeError("original test failed; retained TAP/wait status remains authoritative")

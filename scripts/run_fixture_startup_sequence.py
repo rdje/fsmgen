@@ -29,7 +29,8 @@ def invocation_reserve():
     observation = (2 * launcher.READY_SECONDS + launcher.EXEC_SECONDS
                    + launcher.observer.OBSERVATION_SECONDS
                    + launcher.observer.SETTLE_SECONDS)
-    return max(launcher.TEST_SECONDS, observation) + 2 * launcher.REAP_SECONDS
+    return (max(launcher.TEST_SECONDS, observation) + 2 * launcher.REAP_SECONDS
+            + launcher.policy_log.START_SECONDS + 2 * launcher.policy_log.REAP_SECONDS)
 
 
 def settled_iteration(evidence, result, submitted, target_family):
@@ -53,6 +54,13 @@ def settled_iteration(evidence, result, submitted, target_family):
             or result.get("native_wait_status") != 0 or result.get("returncode") != 0
             or (evidence.directory / "failure.json").exists()):
         raise RuntimeError("iteration lacks successful original status or observed cleanup")
+    policy = [row for row in rows if row.get("event") == "policy_settled"]
+    if (len(policy) != 1 or policy[0].get("leader_reaped") is not True
+            or policy[0].get("failures") != {}
+            or policy[0].get("result_path") != str(
+                (evidence.directory / "policy-result.json").relative_to(evidence.root))):
+        raise RuntimeError("iteration lacks settled policy retention")
+    launcher.retained_policy_result(evidence)
 
 
 def run_sequence(session, native, journal, root, *, target_family="all"):
@@ -68,6 +76,8 @@ def run_sequence(session, native, journal, root, *, target_family="all"):
                        max_invocations=MAX_INVOCATIONS, budget_seconds=SEQUENCE_SECONDS,
                        invocation_reserve_seconds=invocation_reserve(),
                        helper_cleanup_seconds=launcher.observer.SETTLE_SECONDS,
+                       policy_start_seconds=launcher.policy_log.START_SECONDS,
+                       policy_cleanup_seconds=2 * launcher.policy_log.REAP_SECONDS,
                        qualification="not_claimed")
         for number in range(1, MAX_INVOCATIONS + 1):
             launcher.require_ready(session, native)
