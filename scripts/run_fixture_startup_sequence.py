@@ -32,7 +32,7 @@ def invocation_reserve():
     return max(launcher.TEST_SECONDS, observation) + 2 * launcher.REAP_SECONDS
 
 
-def settled_iteration(evidence, result, submitted):
+def settled_iteration(evidence, result, submitted, target_family):
     """Require the retained cleanup evidence before another test can start."""
     raw = launcher.observer.read_local_file(
         evidence.directory / "observations.jsonl", evidence.root,
@@ -42,6 +42,9 @@ def settled_iteration(evidence, result, submitted):
     if (len(settled) != 1 or settled[0].get("observed_fixtures_gone") is not True
             or type(settled[0].get("observed_fixture_count")) is not int
             or settled[0]["observed_fixture_count"] <= 0
+            or type(settled[0].get("selected_fixture_count")) is not int
+            or not 0 < settled[0]["selected_fixture_count"] <= settled[0]["observed_fixture_count"]
+            or settled[0].get("target_family") != target_family
             or settled[0].get("helper_stopped") is not False
             or settled[0].get("helper_shutdown_owner") != "caller"
             or settled[0].get("capture_received") is not submitted
@@ -52,12 +55,14 @@ def settled_iteration(evidence, result, submitted):
         raise RuntimeError("iteration lacks successful original status or observed cleanup")
 
 
-def run_sequence(session, native, journal, root):
+def run_sequence(session, native, journal, root, *, target_family="all"):
     try:
+        launcher.observer.require_target_family(target_family)
         deadline = time.monotonic() + SEQUENCE_SECONDS
         completed = 0
         reason = "invocation_limit"
         journal.record("sequence_started", helper=session.helper,
+                       target_family=target_family,
                        sequence_sha256=hashlib.sha256(Path(__file__).read_bytes()).hexdigest(),
                        session=str(session.directory.relative_to(root)),
                        max_invocations=MAX_INVOCATIONS, budget_seconds=SEQUENCE_SECONDS,
@@ -74,8 +79,9 @@ def run_sequence(session, native, journal, root):
             try:
                 journal.record("iteration_started", number=number,
                                evidence=str(evidence.directory.relative_to(root)))
-                result = launcher.run(session, native, evidence, root, stop_session=False)
-                settled_iteration(evidence, result, session.submitted)
+                result = launcher.run(session, native, evidence, root,
+                                      stop_session=False, target_family=target_family)
+                settled_iteration(evidence, result, session.submitted, target_family)
                 completed += 1
                 journal.record("iteration_completed", number=number, result=result,
                                capture_requested=session.submitted)
@@ -112,6 +118,7 @@ def run_sequence(session, native, journal, root):
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--session", required=True)
+    parser.add_argument("--target-family", choices=launcher.observer.TARGET_FAMILIES, default="all")
     args = parser.parse_args()
     if sys.platform != "darwin" or os.getuid() == 0 or os.geteuid() == 0:
         raise ValueError("run the diagnostic sequence as the normal user on Darwin")
@@ -131,7 +138,7 @@ def main():
         journal = launcher.observer.Evidence(ROOT)
         print(str(journal.directory.relative_to(ROOT)), flush=True)
         sequence_owns_session = True
-        outcome = run_sequence(session, native, journal, ROOT)
+        outcome = run_sequence(session, native, journal, ROOT, target_family=args.target_family)
         return 0 if outcome["capture_received"] else 2
     except (Exception, KeyboardInterrupt) as error:
         if journal is not None:

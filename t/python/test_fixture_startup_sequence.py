@@ -82,10 +82,10 @@ class SequenceControls(unittest.TestCase):
             "use Time::HiRes qw(sleep); sleep 0.4; exit 0;\n")
         self.program()
 
-    def program(self, first_exit=0):
+    def program(self, first_exit=0, family="all"):
         # The test body independently finds its own readiness event, reports
         # actual PIDs and writes an invocation census outside controller output.
-        (self.root / launcher.TEST_ARGV[1]).write_text(r'''
+        body = r'''
 use strict;
 use warnings;
 use JSON::PP qw(decode_json);
@@ -95,7 +95,8 @@ for my $path (glob '.artifacts/logs/t1669-startup-observation/run-*/observations
     open my $events, '<', $path or die $!;
     while (my $line = <$events>) {
         my $event = decode_json($line);
-        $ready = 1 if $event->{event} eq 'observer_ready' && $event->{test}{pid} == $$;
+        $ready = 1 if $event->{event} eq 'observer_ready' && $event->{test}{pid} == $$
+            && $event->{target_family} eq 'all';
     }
     close $events or die $!;
 }
@@ -112,14 +113,22 @@ if (!$pid) {
 waitpid($pid, 0) == $pid or die $!;
 die 'controlled wrapper failed' if $?;
 print "ok 1 - controlled sequence body\n1..1\n";
-''' + "exit " + str(first_exit) + ";\n")
+'''
+        if family == "legacy":
+            workspace = self.root / ".artifacts/tmp/process-supervisor-tests/sequence-control"
+            (workspace / "legacy-ram-capture").write_text("use Time::HiRes qw(sleep); sleep 0.4; exit 0;\n")
+            (workspace / "legacy-ram-streams").write_text("exit 0;\n")
+            body = body.replace("eq 'all'", "eq 'legacy'").replace(
+                "exec '/usr/bin/perl', '-Iperl', '-It/lib', \"$base/rust-tool-resolution\", \"$base/rust-tools\";",
+                "exec '/usr/bin/perl', \"$base/legacy-ram-capture\", $base, \"$base/legacy-ram-streams\";")
+        (self.root / launcher.TEST_ARGV[1]).write_text(body + "exit " + str(first_exit) + ";\n")
 
-    def run_sequence(self):
+    def run_sequence(self, **kwargs):
         # This test calibrates real serial lifetime/cleanup, not startup capture
         # eligibility. Native admission and real observation remain enabled.
         with patch.object(sequence, "MAX_INVOCATIONS", 2), \
                 patch.object(launcher.observer, "CANDIDATE_SECONDS", 60):
-            return sequence.run_sequence(self.session, self.native, self.journal, self.root)
+            return sequence.run_sequence(self.session, self.native, self.journal, self.root, **kwargs)
 
     def events(self):
         return [json.loads(row) for row in (self.journal.directory / "observations.jsonl").read_text().splitlines()]
@@ -167,6 +176,23 @@ print "ok 1 - controlled sequence body\n1..1\n";
         self.assertTrue(self.session.stopped())
 
     @unittest.skipUnless(sys.platform == "darwin", "real native fixture ancestry admission")
+    def test_real_legacy_bodies_independently_verify_selected_family_before_entry(self):
+        self.program(family="legacy")
+        outcome = self.run_sequence(target_family="legacy")
+        self.assertEqual(outcome["reason"], "invocation_limit")
+        self.assertEqual(len(self.census()), 2)
+        self.assertTrue(all(ready == 1 for _, ready in self.census()))
+        for event in self.events():
+            if event["event"] == "iteration_started":
+                rows = [json.loads(row) for row in
+                        (self.root / event["evidence"] / "observations.jsonl").read_text().splitlines()]
+                settled = next(row for row in rows if row["event"] == "settled")
+                self.assertEqual(settled["selected_fixture_count"], 1)
+                self.assertEqual(settled["target_family"], "legacy")
+        self.assertEqual(self.session.stop_calls, 1)
+        self.assertTrue(self.session.stopped())
+
+    @unittest.skipUnless(sys.platform == "darwin", "real native fixture ancestry admission")
     def test_independent_lifetime_control_rejects_premature_helper_shutdown(self):
         run = launcher.run
 
@@ -179,14 +205,42 @@ print "ok 1 - controlled sequence body\n1..1\n";
         self.assertEqual(len(self.census()), 1)
         self.assertTrue(self.session.stopped())
 
-    def modeled_iteration(self, session, _native, evidence, _root, *, stop_session):
+    def modeled_iteration(self, session, _native, evidence, _root, *, stop_session, target_family):
         self.assertFalse(stop_session)
         result = {"pid": 99, "returncode": 0, "native_wait_status": 0, "leader_reaped": True,
                   "released": True, "timeout": False, "unobserved_descendants": "unknown"}
         evidence.record("settled", observed_fixture_count=1, observed_fixtures_gone=True,
+                        selected_fixture_count=1, target_family=target_family,
                         helper_stopped=False, helper_shutdown_owner="caller",
                         capture_received=session.submitted)
         return result
+
+    def test_legacy_selection_reaches_every_iteration_and_sequence_journal(self):
+        with patch.object(launcher, "run", side_effect=self.modeled_iteration) as run:
+            self.run_sequence(target_family="legacy")
+        self.assertEqual(run.call_count, 2)
+        self.assertTrue(all(call.kwargs["target_family"] == "legacy" for call in run.call_args_list))
+        self.assertEqual(self.events()[0]["target_family"], "legacy")
+        self.assertEqual(self.session.stop_calls, 1)
+
+    def test_invalid_family_stops_helper_without_starting_an_iteration(self):
+        with patch.object(launcher, "run") as run, \
+                self.assertRaisesRegex(ValueError, "target family must be"):
+            self.run_sequence(target_family="rust")
+        run.assert_not_called()
+        self.assertEqual(self.census(), [])
+        self.assertTrue(self.session.stopped())
+
+    def test_unrelated_coverage_cannot_start_another_legacy_iteration(self):
+        def unrelated(session, native, evidence, root, **kwargs):
+            kwargs["target_family"] = "all"
+            return self.modeled_iteration(session, native, evidence, root, **kwargs)
+
+        with patch.object(launcher, "run", side_effect=unrelated) as run, \
+                self.assertRaisesRegex(RuntimeError, "lacks successful original status or observed cleanup"):
+            self.run_sequence(target_family="legacy")
+        self.assertEqual(run.call_count, 1)
+        self.assertTrue(self.session.stopped())
 
     def test_one_capture_ends_sequence_even_when_original_test_succeeds(self):
         def capture(*args, **kwargs):

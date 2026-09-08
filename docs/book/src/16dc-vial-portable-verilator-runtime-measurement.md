@@ -752,6 +752,28 @@ ceiling. It does not shorten fixture deadlines to use the remaining time;
 an observed budget overrun is a diagnostic error. The original test, admission
 policy, source retention and native capture command remain unchanged.
 
+To reserve the capture for the failing legacy signal/streams family, select it
+explicitly (the standalone observer and single-invocation caller accept the
+same option):
+
+```bash
+bash scripts/run_with_ram_guard.sh -- python3 -B \
+  scripts/run_fixture_startup_sequence.py --session "$FSMGEN_CAPTURE_SESSION" \
+  --target-family legacy
+```
+
+The default `--target-family all` preserves all-family selection. Legacy mode
+still retains observed Rust identities and sources, but only an admitted legacy
+wrapper or producer can consume the single capture. Seeing Rust alone fails
+selected-family coverage. Readiness and settlement retain the selected family;
+the sequence checks matching positive coverage before another invocation.
+An entered/drained producer excludes its remaining wrapper too: that progress
+is explicitly scoped to the selected producer, not wrapper main entry. Nested
+children remain preferred, and source, ancestry and progress are rechecked
+before publication. Invalid selectors fail before test release. These controls
+qualify selection only; prospective OS-record retention remains required before
+the next authenticated experiment.
+
 The sequence owns helper shutdown across iterations. Every iteration must
 retain successful original status and positive observed-fixture cleanup before
 another test starts. A failed test, observer error, revoked helper or any capture
@@ -780,7 +802,7 @@ inside `AppleSystemPolicy`. That observation belongs to the Rust fixture; it
 does not establish the cause of either legacy failure. Original nonzero status,
 source bytes and native ancestry remain retained. The helper stops with
 authentication invalidated, and independent checks find every recorded birth
-gone. Task `.3.8.9` narrows the next capture to the failed legacy family.
+gone. Task `.3.8.9` qualifies selection of the failed legacy family.
 
 A first exact-path query returns that Rust fixture's XProtect result. Later,
 the identical query and broader controls cannot retrieve the same record.

@@ -58,29 +58,28 @@ through timeout and separately exits it; successful output is the positive contr
 Post-KILL reaping polls nonblocking within the cleanup grace;
 an unreapable leader or surviving group remains incomplete. T1669's
 isolated mock oracle rejects blocking waits without creating an unkillable child.
-`VerilatorRuntime` retains decision `0086`'s Darwin qualification and version/
-compile/runtime contracts. `TaskAcceptanceFixtureRuntime` admits only owned
-fixture roots and fixed local Git argv. Its ten-second Git/checker stages cap
-capture at 1,048,576/4,194,304 bytes and use the closed
-`fsmgen.test.task_acceptance_fixture_result.v1` schema. Load-time canonical
-Git/Bash identities ignore later PATH mutation; callers cannot widen policy.
+`VerilatorRuntime` retains `0086`'s Darwin qualification and version/compile/runtime contracts.
+`TaskAcceptanceFixtureRuntime` seals owned fixture roots and fixed local Git argv.
+Git/checker stages cap wall at ten seconds, capture at 1,048,576/4,194,304 bytes,
+with closed `fsmgen.test.task_acceptance_fixture_result.v1` schema. Load-time
+canonical Git/Bash ignore later PATH changes; callers cannot widen policy.
 The env-Bash checker stalled before main on Darwin. Direct selected
 Bash preserves capability: the retained `/bin/bash` 3.2 control fails its empty
 array under `set -u`. Bash/Git are read-only host dependencies; project data
 stays local. Timeout/overflow/nonzero/signal/exec/descendant/cleanup failures stay failed
 without retry; original fixture assertions pass.
-T1545 retains failed checker results as canonical JSON TAP diagnostics separate
-from checker output. Nonzero controls verify empty/split streams and full
-recovery; the older discarded empty-output cause is unknown.
-Launch observation retains child identity and bounded progress with unchanged
-commands/results. Bash PID, native output and held-child controls qualify it;
-missing progress stays unknown. Task/book own qualification and boundaries.
+T1545 keeps failed checker results as canonical JSON TAP diagnostics apart from
+checker output. Nonzero controls verify empty/split streams/full recovery;
+the older discarded empty-output cause is unknown.
+Launch observation preserves commands/results, retaining child identity and bounded
+progress. Bash PID, native output and held-child controls qualify it; absent
+progress stays unknown. Task/book own qualification/boundaries.
 After an env-Perl fixture reached exec handoff yet timed out before output,
 Verilator fixtures use canonical Perl shebangs. Only `prove`'s Perl-invoked
 entrypoint may retain an env shebang.
 Direct-Perl timeouts show the shebang repair is insufficient:
 HIAL/VIAL `.19.2.3.1.2.2.5.5.2.3.1.2.2.3` owns the live `_dyld_start` sample,
-Rust proxy/Verilator fixture diagnosis and repair. OS cause stays unknown;
+Rust proxy/Verilator fixture diagnosis and repair;
 child `.3.3` owns kernel-sampling selection and required administrator authentication;
 `.3.4` owns capture before causal repair.
 `.3.5` rejects thread-state substitution: an independently stopped pipe reader
@@ -89,10 +88,10 @@ still reports waiting.
 captures; tests stay normal-user. Identity, expiry and STOP/Ctrl+C checks remain.
 `.3.8.7` keeps one helper per sequence; single-run STOP needs fresh authentication.
 `.3.7` closes native capture/shutdown verification; `.3.2` owns causal repair.
-T1669 admission uses its real allocator's `.artifacts/tmp/process-supervisor-tests/` root.
+T1669's allocator uses `.artifacts/tmp/process-supervisor-tests/` root.
 An empty observation fails coverage; `.3.8.5`/book own the contract.
 A `ps` no-match skips only native absence; `.3.8.6` retains other errors.
-T1669 `.3.8.8` captures Rust waiting in policy while legacy startup fails; causes stay distinct. Its successful Info query later returns empty; `.3.8.10` owns prospective retention.
+`.3.8.9`'s `--target-family legacy` reserves capture and requires legacy coverage. T1669 `.3.8.8` captures Rust waiting in policy while legacy startup fails; causes stay distinct. Its successful Info query later returns empty; `.3.8.10` owns prospective retention.
 T1595's pre-main cause stays open; `.19.2.3.1.2.2.6.2` fixes capture.
 `RamGuardFixtureRuntime` seals tools/argv, paths, bounds and full results.
 T1811/T1669 prove signal/stream failures and group cleanup; T1595 keeps metrics.
@@ -101,8 +100,8 @@ An outer timeout proved its group gone but left an inner group alive. That group
 was terminated; absence verified. Per-group cleanup cannot prove nested cleanup.
 HIAL/VIAL `.19.2.3.1.2.2.5.5` owns ownership design, repair and hostile controls;
 neutral-verifier extraction stays provisional/blocked.
-Selected: one launch coordinator, private clients, reserved identities and bounded wire/context/lifecycle protocol.
-T1669 proves reservation feasibility. Extraction, Wire and inactive endpoint/service transport are implemented;
+Selected: one launch coordinator, private clients, reserved identities, bounded wire/context/lifecycle protocol.
+T1669 proves reservation feasibility. Extraction, Wire, inactive endpoint/service transport are implemented;
 coordination, routing and hostile qualification (including startup diagnosis) remain open.
 
 Native capture `.3.7` on 2026-09-07 binds normal-user Perl fixture PID `22778`

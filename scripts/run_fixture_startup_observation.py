@@ -232,11 +232,12 @@ def require_ready(session, native):
         raise ValueError("authenticated helper changed before test release")
 
 
-def run(session, native, evidence, root, *, stop_session=True):
+def run(session, native, evidence, root, *, stop_session=True, target_family="all"):
     test, result = None, None
     observation_error = None
     cancelled = False
     try:
+        observer.require_target_family(target_family)
         test = GatedTest(native, root, evidence.directory)
         native.test = test
 
@@ -244,6 +245,7 @@ def run(session, native, evidence, root, *, stop_session=True):
             require_ready(session, native)
             ready_ns = time.monotonic_ns()
             evidence.record("observer_ready", ready_ns=ready_ns, test=test.identity,
+                            target_family=target_family,
                             argv=list(TEST_ARGV), test_sha256=hashlib.sha256(
                                 (root / TEST_ARGV[1]).read_bytes()).hexdigest(),
                             launcher_sha256=hashlib.sha256(Path(__file__).read_bytes()).hexdigest())
@@ -252,7 +254,8 @@ def run(session, native, evidence, root, *, stop_session=True):
         witness = test.release(prepare)
         evidence.record("test_release", witness=witness, test=test.identity)
         wait_for_exec(test, native, root)
-        observer.observe(test.identity, native, session, evidence, root, stop_session=stop_session)
+        observer.observe(test.identity, native, session, evidence, root,
+                         stop_session=stop_session, target_family=target_family)
     except (Exception, KeyboardInterrupt) as error:
         observation_error = error
         cancelled = isinstance(error, KeyboardInterrupt)
@@ -287,6 +290,7 @@ def run(session, native, evidence, root, *, stop_session=True):
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--session", required=True)
+    parser.add_argument("--target-family", choices=observer.TARGET_FAMILIES, default="all")
     args = parser.parse_args()
     if sys.platform != "darwin" or os.getuid() == 0 or os.geteuid() == 0:
         raise ValueError("run the diagnostic caller as the normal user on Darwin")
@@ -304,7 +308,7 @@ def main():
         os.umask(0o077)
         evidence = observer.Evidence(ROOT)
         print(str(evidence.directory.relative_to(ROOT)), flush=True)
-        run(session, native, evidence, ROOT)
+        run(session, native, evidence, ROOT, target_family=args.target_family)
         return 0
     except (Exception, KeyboardInterrupt) as error:
         if evidence is not None:

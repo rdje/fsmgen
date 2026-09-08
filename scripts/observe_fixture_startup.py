@@ -35,6 +35,17 @@ MAX_EVENT_BYTES = 16384
 MAX_LOG_BYTES = 16 * 1024 * 1024
 MAX_SOURCE_FILES = 64
 MAX_SOURCE_BYTES = 4 * 1024 * 1024
+TARGET_FAMILIES = ("all", "legacy")
+
+
+def require_target_family(target_family):
+    if target_family not in TARGET_FAMILIES:
+        raise ValueError("target family must be all or legacy")
+
+
+def selected_target(admitted, target_family):
+    return target_family == "all" or admitted["target_role"] in (
+        "legacy-wrapper", "legacy-producer")
 
 
 class Processes(sampler.NativeProcesses):
@@ -225,10 +236,17 @@ def request_for(chain):
             for key in sampler.IDENTITY_FIELDS}
 
 
-def main_entry(evidence, root):
-    if evidence["target_role"] != "legacy-producer":
+def main_entry(evidence, root, *, include_wrapper=False):
+    role = evidence["target_role"]
+    if role == "legacy-wrapper" and include_wrapper:
+        # Admission retains the exact wrapper and its selected producer in
+        # this order. This marker describes that producer, not wrapper entry.
+        fixture = evidence["sources"][1]["path"]
+    elif role == "legacy-producer":
+        fixture = evidence["fixture"]
+    else:
         return "unknown"
-    marker = root / (evidence["fixture"] + "-progress")
+    marker = root / (fixture + "-progress")
     try:
         body = read_local_file(marker, root, 64)
     except FileNotFoundError:
@@ -238,18 +256,21 @@ def main_entry(evidence, root):
     return "drained" if body.endswith(b"drained\n") else "entered"
 
 
-def observe(test, native, session, evidence, root, *, stop_session=True):
+def observe(test, native, session, evidence, root, *, stop_session=True, target_family="all"):
     """Settle observed fixtures; an enclosing sequence may own helper shutdown."""
     deadline = time.monotonic() + OBSERVATION_SECONDS
     seen, candidates, progress_seen = {}, {}, {}
+    selected_seen = set()
     capture = None
     try:
+        require_target_family(target_family)
         if (not still_live(native, test)
                 or any(native.identity(test["pid"])[key] != os.getuid() for key in ("uid", "ruid"))
                 or native.executable(test["pid"]) != Path("/usr/bin/perl").resolve()
                 or not sampler._test_command(native.command(test["pid"]), sampler.SUPERVISOR_TEST_PATH, root)):
             raise ValueError("observer requires the exact normal-user T1669 invocation")
         evidence.record("attached", test=test, test_source=sampler.SUPERVISOR_TEST_PATH,
+                        target_family=target_family,
                         sampler_session=str(session.directory.relative_to(root)),
                         observer_sha256=hashlib.sha256(Path(__file__).read_bytes()).hexdigest(),
                         sampler_sha256=hashlib.sha256((root / "scripts/fixture_kernel_sampler.py").read_bytes()).hexdigest())
@@ -278,11 +299,17 @@ def observe(test, native, session, evidence, root, *, stop_session=True):
                             seen[key] = admitted["child"]
                             candidates[key] = time.monotonic()
                             evidence.record("candidate", evidence=admitted)
-                        progress = main_entry(admitted, root)
+                        selected = selected_target(admitted, target_family)
+                        if selected:
+                            selected_seen.add(key)
+                        progress = main_entry(admitted, root, include_wrapper=target_family == "legacy")
                         if progress_seen.get(key) != progress:
-                            evidence.record("main_entry", identity=admitted["child"], progress=progress)
+                            evidence.record("main_entry", identity=admitted["child"], progress=progress,
+                                            progress_scope="selected_producer" if (
+                                                target_family == "legacy" and admitted["target_role"] == "legacy-wrapper"
+                                            ) else "target")
                             progress_seen[key] = progress
-                        if (not session.submitted and progress not in ("entered", "drained")
+                        if (selected and not session.submitted and progress not in ("entered", "drained")
                                 and time.monotonic() - candidates[key] >= CANDIDATE_SECONDS
                                 and (len(chain) == 3 or len(chains) == 1)):
                             choices.append((request, admitted, progress))
@@ -299,14 +326,18 @@ def observe(test, native, session, evidence, root, *, stop_session=True):
                     try:
                         admitted = sampler.validate_target(request, native, root)
                         evidence.retain_sources(admitted["sources"])
-                        progress = main_entry(admitted, root)
+                        progress = main_entry(admitted, root, include_wrapper=target_family == "legacy")
                     except (FileNotFoundError, ProcessLookupError):
                         # A selected fixture can finish before final validation,
                         # just as during census. No request has been published.
                         continue
-                    if progress not in ("entered", "drained"):
+                    if selected_target(admitted, target_family) and progress not in ("entered", "drained"):
                         session.submit(request)
-                        evidence.record("capture_requested", request=request, evidence=admitted, main_entry=progress)
+                        evidence.record("capture_requested", request=request, evidence=admitted,
+                                        main_entry=progress, target_family=target_family,
+                                        progress_scope="selected_producer" if (
+                                            target_family == "legacy" and admitted["target_role"] == "legacy-wrapper"
+                                        ) else "target")
                         break
             if session.submitted and capture is None:
                 capture = session.result()
@@ -314,7 +345,7 @@ def observe(test, native, session, evidence, root, *, stop_session=True):
                     evidence.record("capture_result", result=capture)
             time.sleep(POLL_SECONDS)
         evidence.record("test_gone", test=test)
-        if not seen:
+        if not selected_seen:
             raise RuntimeError("no selected fixture was observed; coverage is unestablished")
     except BaseException as error:
         evidence.problem("observation", error)
@@ -343,6 +374,7 @@ def observe(test, native, session, evidence, root, *, stop_session=True):
                             helper_stopped=stop_session,
                             helper_shutdown_owner="observer" if stop_session else "caller",
                             observed_fixture_count=len(seen),
+                            selected_fixture_count=len(selected_seen), target_family=target_family,
                             capture_received=capture is not None,
                             original_test_result="caller_owned", unobserved_descendants="unknown")
         except BaseException as error:
@@ -360,6 +392,7 @@ def main():
     for key in sampler.IDENTITY_FIELDS:
         parser.add_argument("--test-" + key.replace("_", "-"), type=int, required=True)
     parser.add_argument("--session", required=True)
+    parser.add_argument("--target-family", choices=TARGET_FAMILIES, default="all")
     args = parser.parse_args()
     if sys.platform != "darwin" or os.getuid() == 0 or os.geteuid() == 0:
         raise ValueError("the observer runs only as the normal user on Darwin")
@@ -377,7 +410,7 @@ def main():
         raise KeyboardInterrupt
     previous_term = signal.signal(signal.SIGTERM, interrupted)
     try:
-        capture = observe(test, native, session, evidence, ROOT)
+        capture = observe(test, native, session, evidence, ROOT, target_family=args.target_family)
         evidence.record("complete", captured=capture is not None, qualification="not_claimed")
         return 0
     except (Exception, KeyboardInterrupt) as error:

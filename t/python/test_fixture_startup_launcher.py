@@ -203,6 +203,24 @@ print STDERR "separate stderr\\n";
         self.assertEqual(len((self.root / "body-entered").read_text().splitlines()), 1)
         self.assertEqual((self.root / "body-entered").read_text(), "ready\n")
 
+    def test_selected_family_is_retained_before_release_and_reaches_observer(self):
+        with patch.object(launcher.observer, "observe", return_value=None) as observed:
+            result = launcher.run(self.session, self.native, self.evidence, self.root,
+                                  target_family="legacy")
+        self.assertEqual(result["returncode"], 0)
+        self.assertEqual(observed.call_args.kwargs["target_family"], "legacy")
+        ready = next(row for row in self.events() if row["event"] == "observer_ready")
+        self.assertEqual(ready["target_family"], "legacy")
+        self.assertEqual((self.root / "body-entered").read_text(), "ready\n")
+
+    def test_invalid_family_prevents_fork_and_release_but_stops_helper(self):
+        with patch.object(launcher, "GatedTest") as child, \
+                self.assertRaisesRegex(ValueError, "target family must be"):
+            launcher.run(self.session, self.native, self.evidence, self.root, target_family="rust")
+        child.assert_not_called()
+        self.assertFalse((self.root / "body-entered").exists())
+        self.assertGreater(self.session.stop_calls, 0)
+
     def test_original_failure_is_not_promoted_by_successful_observation(self):
         self.program(exit_code=23)
         with patch.object(launcher.observer, "observe", return_value=None), \

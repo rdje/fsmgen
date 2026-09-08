@@ -136,6 +136,74 @@ class ObserverControls(unittest.TestCase):
     def events(self):
         return [json.loads(line) for line in (self.evidence.directory / "observations.jsonl").read_text().splitlines()]
 
+    def add_later_legacy(self, *, entered=False, child=True):
+        workspace = self.native.producer.parent.parent
+        wrapper, producer = workspace / "legacy-ram-capture", workspace / "legacy-ram-streams"
+        wrapper.write_bytes(b"independent later legacy wrapper\n")
+        producer.write_bytes(b"independent later legacy producer\n")
+        if entered:
+            Path(str(producer) + "-progress").write_bytes(b"entered\n")
+        self.native.records[50] = dict(self.native.records[20], pid=50, start_sec=150)
+        self.native.commands[50] = f"/usr/bin/perl {wrapper} {workspace} {producer}"
+        if child:
+            self.native.records[60] = dict(self.native.records[30], pid=60, ppid=50, start_sec=160)
+            self.native.commands[60] = (f"/usr/bin/perl {producer} --host-max-pct 88"
+                                       " --process-max-rss-mb 4096 --poll-seconds 0.02"
+                                       " --grace-seconds 0 -- unused")
+        children = self.native.children
+        self.native.children = lambda pid: [candidate for candidate in children(pid)
+                                           if candidate not in (50, 60) or self.clock.now >= 0.8]
+        self.native.end = 2.0
+
+    def test_legacy_selection_reaches_later_producer_without_spending_capture_on_rust(self):
+        self.add_later_legacy()
+        self.assertEqual(self.run_observer(target_family="legacy"), self.session.capture)
+        self.assertEqual([request["pid"] for request in self.session.requests], [60])
+        rows = self.events()
+        self.assertEqual({row["evidence"]["child"]["pid"] for row in rows
+                          if row["event"] == "candidate"}, {20, 30, 50, 60})
+        self.assertEqual(rows[-1]["observed_fixture_count"], 4)
+        self.assertEqual(rows[-1]["selected_fixture_count"], 2)
+        self.assertEqual(rows[-1]["target_family"], "legacy")
+        self.assertTrue(self.session.stop_called)
+
+    def test_independent_mixed_family_oracle_rejects_unfiltered_capture(self):
+        control = type(self)("test_legacy_selection_reaches_later_producer_without_spending_capture_on_rust")
+        result = unittest.TestResult()
+        with patch.object(observer, "selected_target", return_value=True):
+            control.run(result)
+        self.assertEqual(result.errors, [])
+        self.assertEqual(len(result.failures), 1)
+        self.assertIn("[30] != [60]", result.failures[0][1])
+
+    def test_rust_only_cannot_establish_legacy_coverage(self):
+        with self.assertRaisesRegex(RuntimeError, "no selected fixture was observed"):
+            self.run_observer(target_family="legacy")
+        self.assertEqual(self.session.requests, [])
+        self.assertEqual(self.events()[-1]["observed_fixture_count"], 2)
+        self.assertEqual(self.events()[-1]["selected_fixture_count"], 0)
+        self.assertTrue(self.session.stop_called)
+
+    def test_legacy_wrapper_without_child_remains_eligible(self):
+        self.add_later_legacy(child=False)
+        self.assertEqual(self.run_observer(target_family="legacy"), self.session.capture)
+        self.assertEqual([request["pid"] for request in self.session.requests], [50])
+
+    def test_entered_legacy_producer_excludes_its_remaining_wrapper(self):
+        self.add_later_legacy(entered=True, child=False)
+        self.assertIsNone(self.run_observer(target_family="legacy"))
+        self.assertEqual(self.session.requests, [])
+        self.assertTrue(any(row.get("progress") == "entered" and
+                            row.get("progress_scope") == "selected_producer" for row in self.events()))
+        self.assertEqual(self.events()[-1]["selected_fixture_count"], 1)
+
+    def test_invalid_family_stops_helper_without_observing_or_sampling(self):
+        with self.assertRaisesRegex(ValueError, "target family must be"):
+            self.run_observer(target_family="rust")
+        self.assertEqual(self.session.requests, [])
+        self.assertTrue(self.session.stop_called)
+        self.assertFalse(any(row["event"] == "attached" for row in self.events()))
+
     def test_one_capture_prefers_the_nested_target_and_retains_exact_sources(self):
         result = self.run_observer()
         self.assertEqual(result, self.session.capture)
