@@ -773,12 +773,31 @@ and blocked output while regression tests verify process supervision. The
 investigation concerns delayed startup before
 native main-entry evidence, distinct from a deliberately blocked fixture body.
 
+The first authenticated sequence stops after its first invocation: the legacy
+signal and streams producers fail their main-entry assertions, while the Rust
+subtest passes. The retained native report captures the Rust proxy waiting
+inside `AppleSystemPolicy`. That observation belongs to the Rust fixture; it
+does not establish the cause of either legacy failure. Original nonzero status,
+source bytes and native ancestry remain retained. The helper stops with
+authentication invalidated, and independent checks find every recorded birth
+gone. Task `.3.8.9` narrows the next capture to the failed legacy family.
+
+A first exact-path query returns that Rust fixture's XProtect result. Later,
+the identical query and broader controls cannot retrieve the same record.
+[Apple documents normally memory-only Info and Debug logs](https://developer.apple.com/documentation/os/generating-log-messages-from-your-code).
+The observed loss of queryability is consistent with those defaults; the
+actual subsystem configuration and precise disappearance mechanism remain
+unverified. This means an empty retrospective query cannot establish that no
+policy activity occurred. Task `.3.8.10` owns prospective retention before a
+new experiment. It will preserve the existing host settings and keep missing
+records and collection failures explicit.
+
 Capture requests and helper results are published only after their complete
 JSON has been written, so a concurrent reader cannot consume a partial record.
 The hosted doctrine job discovers the fixture Python controls. Launcher
 controls exercise real pipes, exec and wait; birth metadata is native on Darwin
 and modeled on other platforms. Separate libproc controls are explicitly
-Darwin-only. Actual T1669 authenticated capture and causal repair remain open
+Darwin-only. Legacy-specific authenticated capture and causal repair remain open
 investigation steps. Run the focused unprivileged controls with:
 
 ```bash

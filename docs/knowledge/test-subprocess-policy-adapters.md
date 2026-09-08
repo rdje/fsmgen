@@ -49,13 +49,12 @@ repository cwd, bounded split streams, exec handoff, monotonic time, one process
 group, first-failure status and TERM/KILL cleanup. Sealed adapters own commands,
 bounds, schemas and platform guards; T1669 watches exclusive ownership.
 Child checks POSIX `setpgid` return and actual group before exec.
-Nonthrowing failure and false success reject with `exec_error` and no command
-execution; T1669 injects both plus an exception. The parent's race closure cannot replace child admission. Nested cleanup remains open below.
-`exec_handoff_monotonic_ns` records observed control-pipe EOF, not entry into
-main: abrupt pre-exec child death can also close the pipe. Capture ending
-without EOF leaves that timestamp and dependent durations unknown even after
-cleanup. T1669 holds a real child before exec through timeout and separately
-exits it before exec; successful output remains a distinct positive control.
+Nonthrowing failure/false success yield `exec_error`, no execution; T1669 injects
+both and an exception. Parent race closure cannot replace child admission. Nested cleanup remains open.
+`exec_handoff_monotonic_ns` means observed control-pipe EOF, not main entry:
+pre-exec death can close it. Without observed EOF, that timestamp and dependent
+durations stay unknown even after cleanup. T1669 holds a real pre-exec child
+through timeout and separately exits it; successful output is the positive control.
 Post-KILL reaping polls nonblocking within the cleanup grace;
 an unreapable leader or surviving group remains incomplete. T1669's
 isolated mock oracle rejects blocking waits without creating an unkillable child.
@@ -85,7 +84,7 @@ Rust proxy/Verilator fixture diagnosis and repair. OS cause stays unknown;
 child `.3.3` owns kernel-sampling selection and required administrator authentication;
 `.3.4` owns capture before causal repair.
 `.3.5` rejects thread-state substitution: an independently stopped pipe reader
-still reports waiting; OS cause remains unknown.
+still reports waiting.
 `.3.6`: `bash scripts/await_fixture_kernel_samples.sh` authenticates fixed kernel
 captures; tests stay normal-user. Identity, expiry and STOP/Ctrl+C checks remain.
 `.3.8.7` keeps one helper per sequence; single-run STOP needs fresh authentication.
@@ -93,6 +92,7 @@ captures; tests stay normal-user. Identity, expiry and STOP/Ctrl+C checks remain
 T1669 admission uses its real allocator's `.artifacts/tmp/process-supervisor-tests/` root.
 An empty observation fails coverage; `.3.8.5`/book own the contract.
 A `ps` no-match skips only native absence; `.3.8.6` retains other errors.
+T1669 `.3.8.8` captures Rust waiting in policy while legacy startup fails; causes stay distinct. Its successful Info query later returns empty; `.3.8.10` owns prospective retention.
 T1595's pre-main cause stays open; `.19.2.3.1.2.2.6.2` fixes capture.
 `RamGuardFixtureRuntime` seals tools/argv, paths, bounds and full results.
 T1811/T1669 prove signal/stream failures and group cleanup; T1595 keeps metrics.
@@ -116,11 +116,10 @@ Kernel UUID `3F7964F9-C5A6-39D4-942D-02750C0980E0` matches the installed arm64e 
 Independent info/debug `syspolicyd` at `15:21:07 +0200` names the
 exact fixture in `GK Xprotect results` and `evaluation result: 12666, script, allowed, cache`;
 process-provenance also names PID `22778`. Default and original-failure queries are empty.
-This passing invocation's policy wait cannot explain the older timeout.
-Task owns cleanup and failed-selector/symbol limits; OS/toolchain reads are dependencies. Root sampler birth identity was not retained; nested cleanup is unproved.
-Helper STOP invalidates authentication; independent observed-process and exact-command
-censuses are empty. Identities/offsets/results are durable here and in Git;
-Raw logs and scratch producers remain ignored: an explicit durability gap.
+This passing policy wait cannot explain the older timeout.
+Task owns cleanup/failed-selector/symbol limits; OS/toolchain reads are dependencies. Root sampler birth is unretained; nested cleanup unproved.
+Helper STOP invalidates authentication; independent observed-process and exact-command censuses are empty. Identities/offsets/results survive here and in Git;
+raw logs/scratch producers remain ignored: a durability gap.
 See `.artifacts/logs/fixture-kernel-recurrence-20260907/` and the task's capture session.
 Approved iTerm2 Developer Tools is on; Terminal/Tracing off. The unchanged band passes.
 Exact `ju79K1mKs1/orphaning-runtime` still has XProtect results at `16:05:05.243719 +0200`, path `6bce9d1ba3a14e47`.
