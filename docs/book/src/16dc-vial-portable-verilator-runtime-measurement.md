@@ -1008,9 +1008,14 @@ to queue, work-start and waiter-wakeup events omitted by the default filter.
 This passing run supplies no failed-run diagnosis or repair. Fixture-native
 identities and transient source bytes were not collected; Rust mode attribution
 is not inferred solely from event order. The task retains exact event timestamps,
-source identities and evidence hashes. Task `.3.2.5` checks whether equivalent
-events remain available for the earlier failed interval without another test
-launch. Existing authenticated commands retain their helper requirement.
+source identities and evidence hashes. Task `.3.2.5` queries the earlier failed
+interval without another test launch: the query succeeds but returns only
+empty terminal metadata. Independently retained live events from that same
+interval falsify an inference that no scan occurred. Historical availability
+cannot supply the missing queue/start/wakeup context. Task `.3.2.6` owns review
+of normal-user live context together with exact fixture identity/source evidence
+during the same invocation. Existing authenticated commands retain their helper
+requirement.
 Startup repair, complete policy delivery and runtime qualification remain open.
 
 Capture requests and helper results are published only after their complete

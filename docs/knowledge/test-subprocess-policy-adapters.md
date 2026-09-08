@@ -21,7 +21,7 @@ answers:
   - "can post-KILL leader reaping bypass the cleanup deadline?"
   - "which ownership model is selected for nested supervision?"
   - "how does the private coordinator preserve execution bytes?"
-date: 2026-09-08
+date: 2026-09-09
 status: current
 tags: [tests, subprocess, supervision, task-acceptance, darwin, locality]
 evidence: >-
@@ -75,7 +75,7 @@ captures; tests stay normal-user. Identity, expiry and STOP/Ctrl+C checks remain
 `.3.8.7` keeps one helper per sequence; single-run STOP needs fresh authentication.
 `.3.7` closes native capture/shutdown verification; `.3.2` owns causal repair.
 T1669 allocates under `.artifacts/tmp/process-supervisor-tests/`; empty coverage fails (`.3.8.5`/book). A `ps` no-match skips only native absence; `.3.8.6` retains other errors.
-Historical diagnostic detail is in task/Git. `.3.8.18` captures the failed decoy in AppleSystemPolicy with native/source ancestry and full timeout JSON; passing samples share those frames. Full-deadline wait, daemon cause, Rust main entry and failed legacy stack remain unknown. `.3.2.2–.3` qualify closed execution_context collection and fixed normal-user T1669 without fixture-native/kernel evidence. `.3.2.4` passes with exact path/token queue/start/wakeup joins, unchanged sources and owned cleanup; no repair is claimed. `.3.2.5` seeks historical failed-interval context without replay/authentication.
+Diagnostic detail: task/Git. `.3.8.18` captures the failed decoy in AppleSystemPolicy with native/source ancestry and timeout JSON; passing samples share those frames. Full-deadline wait, daemon cause, Rust main entry and failed legacy stack remain unknown. `.3.2.2–.3` qualify closed execution_context collection and fixed normal-user T1669; fixture-native/kernel evidence absent. `.3.2.4` passes with exact path/token queue/start/wakeup joins, unchanged sources and owned cleanup; no repair is claimed. `.3.2.5` finds historical context unavailable; retained live events falsify no-scan inference. `.3.2.6` reviews same-run native fixture/source correlation without authentication.
 T1595's pre-main cause stays open; `.19.2.3.1.2.2.6.2` fixes capture.
 `RamGuardFixtureRuntime` seals tools/argv, paths, bounds and full results.
 T1811/T1669 prove signal/stream failures and group cleanup; T1595 keeps metrics.
