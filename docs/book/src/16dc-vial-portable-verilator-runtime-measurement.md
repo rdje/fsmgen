@@ -987,21 +987,31 @@ once. It prints its private evidence directory under
 before the held test is released. The existing original invocation, output
 and cleanup limits apply. No authenticated helper or sampler is started.
 
-The journal records source hashes, readiness and settlement; `test.tap`,
-`test.stderr`, `test-result.json` and the policy files preserve each result.
+The journal records source hashes, readiness, admitted fixtures and settlement;
+`test.tap`, `test.stderr`, `test-result.json`, `fixture-result.json` and the policy
+files preserve the separate results.
 An original nonzero or timeout remains failed even if collection succeeds.
 A collection failure likewise fails the diagnostic while retaining the
-original result separately. Both owners are settled before return. Healthy
-completion explicitly claims no qualification.
+original result separately. Original, collector and observed-fixture owners are
+settled independently before return. Healthy completion claims no qualification.
 
-This mode collects no native fixture ancestry or kernel stack; unobserved
-descendants remain unknown. Native test/collector ownership and each original
-adapter's own-group cleanup are separate from that missing fixture evidence.
-Controlled bodies verify context readiness before entry and exact split output;
-a deliberate false-success projection fails against a real native nonzero exit.
-The actual native collector is tested with a controlled body, not full T1669.
+Task `.3.2.8` adds native ancestry and retained source bytes for the fixtures
+actually admitted by the passive census. It attaches after original exec
+admission, while the context collector is already prepared. Original-deadline
+and collector checks continue between native inspections. No kernel stack is
+collected, and unobserved descendants remain unknown. Empty fixture coverage
+remains a diagnostic failure even when the original passes.
 
-Task `.3.2.4` consumes the original observation: T1669 passes, collection
+`fixture-result.json` records settlement of the observed births. The caller
+checks its fields against the census and independently queries those births
+again before recording `fixtures_settled`. A callee's false cleanup claim
+therefore cannot promote success. Original status, collector state and fixture
+settlement remain distinct; a result-delivery or journal failure stays failed,
+and other owners still receive their cleanup attempt. Controlled Perl producers
+read their own admission event before exiting; separate checks verify ancestry,
+retained bytes, exact split output and native absence.
+
+The earlier context-only `.3.2.4` observation passes T1669; collection
 settles successfully, and the owned test/collector are independently absent.
 Exact path/token records connect the logged Rust proxies and legacy producers
 to queue, work-start and waiter-wakeup events omitted by the default filter.
@@ -1014,7 +1024,7 @@ empty terminal metadata. Independently retained live events from that same
 interval falsify an inference that no scan occurred. Historical availability
 cannot supply the missing queue/start/wakeup context. Task `.3.2.6` selects a
 shared passive fixture census: same-invocation native identity and retained
-source bytes will join the original failed result to exact policy path/token
+source bytes join the original result to exact policy path/token
 events. Task `.3.2.7` qualifies that shared mechanism. It observes fixtures
 without signalling them or requiring an authenticated helper. The existing
 authenticated observer now reuses its census while retaining capture selection,
@@ -1030,17 +1040,20 @@ rejection of live-source changes and settlement only after the fixtures exit.
 A false-absence mutation fails the cleanup oracle, and a slow-archive control
 protects the existing eligibility timing.
 
-Fixed policy-only integration remains pending in `.3.2.8`, followed by the
-separately owned original observation in `.3.2.9`. The current policy-only
-command still lacks fixture-native evidence. Existing authenticated commands
-retain their helper requirement.
+The fixed policy-only command now includes this census through `.3.2.8`.
+Its healthy result names an `observed_subset`; it claims no complete descendant
+coverage. Task `.3.2.9` owns the separately bounded original observation with
+the integrated diagnostic. Existing authenticated commands retain their helper
+requirement.
 Startup repair, complete policy delivery and runtime qualification remain open.
 
 Capture requests and helper results are published only after their complete
 JSON has been written, so a concurrent reader cannot consume a partial record.
 The hosted doctrine job discovers the fixture Python controls. Launcher
 controls exercise real pipes, exec and wait; birth metadata is native on Darwin
-and modeled on other platforms. Separate libproc controls are explicitly
+and modeled on other platforms. Off-Darwin caller controls use real reported
+child PIDs/parents with modeled birth, executable and command inspection.
+Separate libproc controls are explicitly
 Darwin-only. Legacy-specific authenticated capture and causal repair remain open
 investigation steps. Run the focused unprivileged controls with:
 

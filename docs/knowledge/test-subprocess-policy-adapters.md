@@ -36,6 +36,7 @@ evidence: >-
   t/1668-darwin-inline-verilator-test-runtime.t;
   scripts/fixture_kernel_sampler.py; t/python/test_fixture_kernel_sampler.py;
   scripts/observe_fixture_startup.py; t/python/test_fixture_census.py;
+  scripts/run_fixture_startup_policy_observation.py; t/python/test_fixture_startup_policy_observation.py;
   t/1669-task-acceptance-fixture-runtime.t
 reverify: >-
   scripts/run_with_ram_guard.sh -- prove -Iperl -It/lib
@@ -78,7 +79,7 @@ captures; tests stay normal-user. Identity, expiry and STOP/Ctrl+C checks remain
 `.3.7` closes native capture/shutdown verification; `.3.2` owns causal repair.
 T1669 allocates under `.artifacts/tmp/process-supervisor-tests/`; empty coverage fails (`.3.8.5`/book). A `ps` no-match skips only native absence; `.3.8.6` retains other errors.
 Diagnostic detail: task/Git. `.3.8.18` captures the failed decoy in AppleSystemPolicy with native/source ancestry and timeout JSON; passing samples share those frames. Full-deadline wait, daemon cause, Rust main entry and failed legacy stack remain unknown. `.3.2.2–.3` qualify closed execution_context collection and fixed normal-user T1669; fixture-native/kernel evidence absent. `.3.2.4` passes with exact path/token queue/start/wakeup joins, unchanged sources and owned cleanup; no repair is claimed. `.3.2.5` finds historical context unavailable; retained live events falsify no-scan inference.
-`.3.2.7` qualifies shared passive birth/source/progress tracking and read-only settlement; `.3.2.8–.9` own fixed caller integration and observation. Native held chains, source/inode mutations, false-absence and archive-clock controls protect the boundary.
+`.3.2.7` qualifies shared passive birth/source/progress tracking and read-only settlement; `.3.2.8` integrates the fixed caller with independent original/collector/fixture settlement and fresh birth rechecks; `.3.2.9` owns one original observation. Native held chains, source/inode mutations, false-absence and archive-clock controls protect the boundary.
 T1595's pre-main cause stays open; `.19.2.3.1.2.2.6.2` fixes capture.
 `RamGuardFixtureRuntime` seals tools/argv, paths, bounds and full results.
 T1811/T1669 prove signal/stream failures and group cleanup; T1595 keeps metrics.

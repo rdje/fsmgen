@@ -1,6 +1,8 @@
 """Fixed policy-only caller controls with real children and no authentication."""
 
 import contextlib
+import errno
+import hashlib
 import io
 import json
 import os
@@ -20,8 +22,52 @@ import test_fixture_startup_launcher as fixtures
 launcher = policy_caller.launcher
 
 
+class PortableFixtureProcesses(fixtures.PortableProcesses):
+    """Model native inspections off Darwin using a real reported process tree."""
+
+    def __init__(self, root):
+        super().__init__()
+        self.root = root
+        self.workspace = root / ".artifacts/tmp/process-supervisor-tests/caller-control"
+
+    def records(self):
+        result = {}
+        for role in ("wrapper", "producer"):
+            path = self.workspace / (role + ".json")
+            if path.exists():
+                result[role] = json.loads(path.read_text())
+        return result
+
+    @staticmethod
+    def live(pid):
+        try:
+            os.kill(pid, 0)
+            return True
+        except ProcessLookupError:
+            return False
+
+    def identity(self, pid):
+        for record in self.records().values():
+            if record["pid"] == pid:
+                if not self.live(pid):
+                    raise ProcessLookupError(errno.ESRCH, "reported control child is gone")
+                return dict(super().identity(pid), ppid=record["ppid"])
+        return super().identity(pid)
+
+    def children(self, pid):
+        return [record["pid"] for record in self.records().values()
+                if record["ppid"] == pid and self.live(record["pid"])]
+
+    def command(self, pid):
+        for role, record in self.records().items():
+            if record["pid"] == pid:
+                if role == "wrapper":
+                    return f"/usr/bin/perl -Iperl -It/lib {self.workspace}/rust-tool-resolution {self.workspace}/rust-tools"
+                return f"/usr/bin/perl {self.workspace}/rust-tools/rustup which cargo"
+        return super().command(pid)
+
+
 class PolicyOnlyControls(unittest.TestCase):
-    program = fixtures.LauncherControls.program
     policy_body = fixtures.LauncherControls.policy_body
     events = fixtures.LauncherControls.events
 
@@ -30,7 +76,7 @@ class PolicyOnlyControls(unittest.TestCase):
         self.addCleanup(workspace.cleanup)
         self.root = Path(workspace.name)
         (self.root / "t").mkdir()
-        self.native = launcher.OwnedProcesses() if sys.platform == "darwin" else fixtures.PortableProcesses()
+        self.native = launcher.OwnedProcesses() if sys.platform == "darwin" else PortableFixtureProcesses(self.root)
         self.evidence = launcher.observer.Evidence(self.root)
         self.addCleanup(self.evidence.stream.close)
         self.real_popen = subprocess.Popen
@@ -63,6 +109,70 @@ class PolicyOnlyControls(unittest.TestCase):
         self.addCleanup(self.close_children)
         self.program()
 
+    def program(self, exit_code=0, body="", pause="0.3", *, with_fixture=True):
+        if with_fixture:
+            workspace = self.root / ".artifacts/tmp/process-supervisor-tests/caller-control"
+            (workspace / "rust-tools").mkdir(parents=True, exist_ok=True)
+            prefix = r'''
+use strict;
+use warnings;
+use Cwd qw(getcwd);
+use JSON::PP qw(encode_json decode_json);
+$SIG{TERM} = 'DEFAULT';
+alarm 12;
+my $workspace = getcwd() . '/.artifacts/tmp/process-supervisor-tests/caller-control';
+sub report_identity {
+    my ($name) = @_;
+    open my $out, '>', "$workspace/$name.next" or die $!;
+    print {$out} encode_json({pid => $$, ppid => getppid()}) or die $!;
+    close $out or die $!;
+    rename "$workspace/$name.next", "$workspace/$name.json" or die $!;
+}
+'''
+            wrapper = prefix + r'''
+report_identity('wrapper');
+system '/usr/bin/perl', "$workspace/rust-tools/rustup", 'which', 'cargo';
+die 'controlled producer failed' if $? != 0;
+'''
+            journal = (self.evidence.directory / "observations.jsonl").relative_to(self.root)
+            failure = (self.evidence.directory / "failure.json").relative_to(self.root)
+            producer = prefix + "my $journal_path = '" + str(journal) + "';\n"
+            producer += "my $failure_path = '" + str(failure) + "';\n" + r'''
+report_identity('producer');
+while (1) {
+    last if -f $failure_path;
+    open my $journal, '<', $journal_path or die $!;
+    my $admitted = 0;
+    while (my $line = <$journal>) {
+        my $row = eval { decode_json($line) };
+        next unless $row && $row->{event} eq 'candidate';
+        $admitted++ if $row->{evidence}{child}{pid} == $$
+            && $row->{evidence}{parent}{pid} == getppid()
+            && $row->{evidence}{target_role} eq 'rust-proxy';
+    }
+    close $journal or die $!;
+    if ($admitted) {
+        open my $marker, '>', "$workspace/admission-read" or die $!;
+        print {$marker} "admitted\n" or die $!;
+        close $marker or die $!;
+        last;
+    }
+    select undef, undef, undef, 0.01;
+}
+'''
+            (workspace / "rust-tool-resolution").write_text(wrapper)
+            (workspace / "rust-tools/rustup").write_text(producer)
+            self.fixture_sources = {wrapper.encode(), producer.encode()}
+            body += r'''
+do {
+    require Cwd;
+    my $workspace = Cwd::getcwd() . '/.artifacts/tmp/process-supervisor-tests/caller-control';
+    system '/usr/bin/perl', '-Iperl', '-It/lib', "$workspace/rust-tool-resolution", "$workspace/rust-tools";
+    die 'controlled wrapper failed' if $? != 0;
+};
+'''
+        fixtures.LauncherControls.program(self, exit_code=exit_code, body=body, pause=pause)
+
     def allowed_spawn(self, popen, argv, **kwargs):
         self.assertTrue(argv[:2] == ["/usr/bin/log", "stream"] or argv[:1] == ["/bin/ps"], argv)
         return popen(argv, **kwargs)
@@ -88,6 +198,12 @@ class PolicyOnlyControls(unittest.TestCase):
         with self.assertRaises(ChildProcessError):
             os.waitpid(retained["identity"]["pid"], os.WNOHANG)
         self.assertFalse(launcher.observer.still_live(self.native, child.identity))
+        workspace = self.root / ".artifacts/tmp/process-supervisor-tests/caller-control"
+        for role in ("wrapper", "producer"):
+            path = workspace / (role + ".json")
+            if path.exists():
+                with self.assertRaises(ProcessLookupError):
+                    self.native.identity(json.loads(path.read_text())["pid"])
 
     def context_body(self):
         journal = (self.evidence.directory / "observations.jsonl").relative_to(self.root)
@@ -118,7 +234,18 @@ die 'missing or repeated readiness' unless $matched == 1;
         completed = next(row for row in rows if row["event"] == "caller_complete")
         self.assertEqual(completed["qualification"], "not_claimed")
         self.assertEqual(completed["kernel_sample"], "not_collected")
-        self.assertEqual(completed["fixture_native_identity"], "not_observed")
+        self.assertEqual(completed["fixture_native_identity"], "observed_subset")
+        self.assertGreater(completed["fixtures"]["observed_fixture_count"], 0)
+        workspace = self.root / ".artifacts/tmp/process-supervisor-tests/caller-control"
+        reported = json.loads((workspace / "producer.json").read_text())
+        admitted = next(row["evidence"] for row in rows if row["event"] == "candidate"
+                        and row["evidence"]["child"]["pid"] == reported["pid"])
+        self.assertEqual(admitted["parent"]["pid"], reported["ppid"])
+        self.assertEqual(admitted["ancestor"]["pid"], self.children[0].pid)
+        self.assertEqual((workspace / "admission-read").read_text(), "admitted\n")
+        self.assertEqual({path.read_bytes() for path in self.evidence.directory.glob("*.source")}, self.fixture_sources)
+        for path in self.evidence.directory.glob("*.source"):
+            self.assertEqual(path.stem, hashlib.sha256(path.read_bytes()).hexdigest())
         self.check_closed()
 
     def test_original_nonzero_stays_failed_without_another_invocation(self):
@@ -169,16 +296,106 @@ die 'missing or repeated readiness' unless $matched == 1;
             self.run_caller()
         self.assertEqual(self.original()["returncode"], 0)
         self.assertTrue(json.loads((self.evidence.directory / "policy-result.json").read_text())["forced_kill"])
+        self.assertTrue(json.loads((self.evidence.directory / "fixture-result.json").read_text())["observed_fixtures_gone"])
+        self.assertTrue(any(row["event"] == "fixtures_settled" for row in self.events()))
         self.check_closed()
 
     def test_original_deadline_preserves_timeout_and_reaps_term_resistant_child(self):
         self.program(body=self.context_body(), pause="5")
         with patch.object(launcher, "TEST_SECONDS", 0.15), patch.object(launcher, "REAP_SECONDS", 0.1), \
-                self.assertRaisesRegex(RuntimeError, "original test failed"):
+                self.assertRaisesRegex((RuntimeError, TimeoutError),
+                                       "original test failed|fixture census reached the original test deadline"):
             self.run_caller()
         self.assertTrue(self.original()["timeout"])
         self.assertEqual(self.original()["returncode"], -signal.SIGKILL)
         self.check_closed()
+
+    def test_census_failure_preserves_original_before_each_owner_settles(self):
+        order = []
+        original_finish = self.gated_class.finish
+        policy_finish = launcher.policy_log.PolicyLog.finish
+        census_settle = launcher.observer.FixtureCensus.settle
+
+        def finish_original(test, *args, **kwargs):
+            result = original_finish(test, *args, **kwargs)
+            order.append("original")
+            return result
+
+        def finish_policy(collector):
+            self.assertEqual(self.original()["returncode"], 0)
+            result = policy_finish(collector)
+            order.append("policy")
+            return result
+
+        def finish_census(census):
+            self.assertTrue((self.evidence.directory / "policy-result.json").exists())
+            result = census_settle(census)
+            order.append("fixtures")
+            return result
+
+        with patch.object(launcher.observer.FixtureCensus, "scan", side_effect=PermissionError("census denied")), \
+                patch.object(self.gated_class, "finish", finish_original), \
+                patch.object(launcher.policy_log.PolicyLog, "finish", finish_policy), \
+                patch.object(launcher.observer.FixtureCensus, "settle", finish_census), \
+                self.assertRaisesRegex(PermissionError, "census denied"):
+            self.run_caller()
+        self.assertEqual(order, ["original", "policy", "fixtures"])
+        self.assertFalse(any(row["event"] == "caller_complete" for row in self.events()))
+        self.check_closed()
+
+    def test_empty_fixture_coverage_remains_failed_after_all_physical_cleanup(self):
+        self.program(body=self.context_body(), with_fixture=False)
+        with self.assertRaisesRegex(RuntimeError, "no fixture was observed"):
+            self.run_caller()
+        self.assertEqual(self.original()["returncode"], 0)
+        self.assertEqual(json.loads((self.evidence.directory / "fixture-result.json").read_text()),
+                         {"observed_fixtures_gone": True, "observed_fixture_count": 0,
+                          "unobserved_descendants": "unknown"})
+        self.assertFalse(any(row["event"] == "caller_complete" for row in self.events()))
+        self.check_closed()
+
+    def false_settlement_control(self, *, disable_recheck=False):
+        settle = launcher.observer.FixtureCensus.settle
+
+        def wrong_claim(census):
+            result = settle(census)
+            # Corrupt the callee's claimed set with the still-live controller
+            # birth. The caller must independently reject this false closure.
+            controller = self.native.identity(os.getpid())
+            census.seen[launcher.observer.identity_key(controller)] = controller
+            if disable_recheck:
+                bypass = patch.object(launcher.observer, "still_live", return_value=False)
+                bypass.start()
+                self.addCleanup(bypass.stop)
+            return dict(result, observed_fixture_count=len(census.seen))
+
+        with patch.object(launcher.observer.FixtureCensus, "settle", wrong_claim), \
+                self.assertRaisesRegex(RuntimeError, "settlement disagrees with observed identities"):
+            self.run_caller()
+        self.assertEqual(self.original()["returncode"], 0)
+        self.check_closed()
+
+    def test_caller_independently_rechecks_claimed_settled_births(self):
+        self.false_settlement_control()
+
+    def test_false_settlement_oracle_rejects_disabled_native_recheck(self):
+        with self.assertRaisesRegex(AssertionError, "RuntimeError not raised"):
+            self.false_settlement_control(disable_recheck=True)
+        self.assertEqual(self.original()["returncode"], 0)
+        self.check_closed()
+
+    def test_failed_census_settlement_cannot_skip_collector_or_original_cleanup(self):
+        with patch.object(launcher.observer.FixtureCensus, "settle", side_effect=PermissionError("settlement denied")), \
+                self.assertRaisesRegex(RuntimeError, "observed fixtures: settlement denied"):
+            self.run_caller()
+        self.assertEqual(self.original()["returncode"], 0)
+        self.assertEqual(launcher.retained_policy_result(self.evidence, scope="execution_context")["failures"], {})
+        self.assertFalse(any(row["event"] == "caller_complete" for row in self.events()))
+        self.check_closed()
+
+    def test_reported_tree_model_exercises_off_darwin_inspection_contract(self):
+        self.native = PortableFixtureProcesses(self.root)
+        self.test_actual_body_verifies_context_preparation_before_its_single_release()
 
     def test_interrupt_after_release_closes_both_owners_without_success(self):
         with patch.object(launcher, "wait_for_exec", side_effect=KeyboardInterrupt), self.assertRaises(KeyboardInterrupt):
@@ -214,6 +431,42 @@ die 'missing or repeated readiness' unless $matched == 1;
             self.run_caller()
         self.assertEqual(launcher.retained_policy_result(self.evidence, scope="execution_context")["failures"], {})
         self.check_closed()
+
+    def test_fixture_journal_failure_keeps_independently_verified_saved_settlement(self):
+        record = self.evidence.record
+
+        def full(event, **fields):
+            if event == "fixtures_settled":
+                raise RuntimeError("fixture journal full")
+            return record(event, **fields)
+
+        with patch.object(self.evidence, "record", side_effect=full), \
+                self.assertRaisesRegex(RuntimeError, "fixture journal full"):
+            self.run_caller()
+        retained = json.loads((self.evidence.directory / "fixture-result.json").read_text())
+        self.assertTrue(retained["observed_fixtures_gone"])
+        self.assertGreater(retained["observed_fixture_count"], 0)
+        self.assertEqual(self.original()["returncode"], 0)
+        self.check_closed()
+
+    def test_original_result_delivery_failure_still_settles_other_owners(self):
+        finish = self.gated_class.finish
+
+        def failed_delivery(test, *args, **kwargs):
+            finish(test, *args, **kwargs)
+            raise RuntimeError("original result delivery failed")
+
+        with patch.object(self.gated_class, "finish", failed_delivery), \
+                self.assertRaisesRegex(RuntimeError, "test cleanup: original result delivery failed"):
+            self.run_caller()
+        self.assertEqual(self.children[0].status, 0)
+        with self.assertRaises(ChildProcessError):
+            os.waitpid(self.children[0].pid, os.WNOHANG)
+        self.assertTrue((self.evidence.directory / "test.tap").exists())
+        self.assertFalse((self.evidence.directory / "test-result.json").exists())
+        self.assertTrue(json.loads((self.evidence.directory / "policy-result.json").read_text())["leader_reaped"])
+        self.assertTrue(json.loads((self.evidence.directory / "fixture-result.json").read_text())["observed_fixtures_gone"])
+        self.assertFalse(any(row["event"] == "caller_complete" for row in self.events()))
 
     @unittest.skipUnless(sys.platform == "darwin", "actual normal-user OS log lifecycle")
     def test_native_collector_and_actual_body_agree_on_prepared_context(self):

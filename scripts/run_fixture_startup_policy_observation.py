@@ -1,7 +1,8 @@
-"""Run one fixed, normal-user T1669 invocation with policy execution context.
+"""Run one fixed, normal-user T1669 invocation with fixture and policy context.
 
-This diagnostic collects no fixture ancestry or kernel sample. The original
-test result, collector result and their observed cleanup remain distinct facts.
+Exact observed fixture ancestry and source bytes accompany live policy logs.
+No kernel sample is collected. Original, collector and observed-fixture cleanup
+remain distinct facts; unobserved descendants are unknown.
 """
 
 import argparse
@@ -21,7 +22,7 @@ POLICY_SCOPE = "execution_context"
 
 
 def run(native, evidence, root):
-    test = collection = result = None
+    test = collection = census = result = fixture_result = None
     observation_error = None
     cancelled = False
     try:
@@ -32,7 +33,8 @@ def run(native, evidence, root):
             caller_sha256=hashlib.sha256(Path(__file__).read_bytes()).hexdigest(),
             launcher_sha256=hashlib.sha256(Path(launcher.__file__).read_bytes()).hexdigest(),
             policy_sha256=hashlib.sha256(Path(launcher.policy_log.__file__).read_bytes()).hexdigest(),
-            fixture_native_identity="not_observed", kernel_sample="not_collected",
+            observer_sha256=hashlib.sha256(Path(launcher.observer.__file__).read_bytes()).hexdigest(),
+            fixture_native_identity="pending", kernel_sample="not_collected",
             qualification="not_claimed")
         collection = launcher.policy_log.PolicyLog(root, evidence.directory, native, scope=POLICY_SCOPE)
         policy_ready = collection.prepare()
@@ -50,8 +52,19 @@ def run(native, evidence, root):
         witness = test.release(prepare)
         evidence.record("test_release", witness=witness, test=test.identity)
         launcher.wait_for_exec(test, native, root)
-        while test.poll() is None and time.monotonic() < test.deadline:
+
+        def check_observation():
             collection.check()
+            if time.monotonic() >= test.deadline:
+                raise TimeoutError("fixture census reached the original test deadline")
+
+        census = launcher.observer.FixtureCensus(test.identity, native, evidence, root,
+                                                 checkpoint=check_observation)
+        evidence.record("fixtures_attached", test=test.identity, mode="passive",
+                        unobserved_descendants="unknown")
+        while test.poll() is None and time.monotonic() < test.deadline:
+            check_observation()
+            census.scan()
             time.sleep(launcher.observer.POLL_SECONDS)
     except (Exception, KeyboardInterrupt) as error:
         observation_error = error
@@ -83,6 +96,27 @@ def run(native, evidence, root):
                 except (Exception, KeyboardInterrupt) as error:
                     if observation_error is None:
                         observation_error = error
+        if census is not None:
+            try:
+                fixture_result = census.settle()
+                pending = evidence.directory / "fixture-result.next"
+                pending.write_text(json.dumps(fixture_result, indent=2) + "\n")
+                pending.replace(evidence.directory / "fixture-result.json")
+                if (set(fixture_result) != {"observed_fixtures_gone", "observed_fixture_count", "unobserved_descendants"}
+                        or fixture_result["observed_fixtures_gone"] is not True
+                        or type(fixture_result["observed_fixture_count"]) is not int
+                        or fixture_result["observed_fixture_count"] != len(census.seen)
+                        or fixture_result["unobserved_descendants"] != "unknown"
+                        or any(launcher.observer.still_live(native, info) for info in census.seen.values())):
+                    raise RuntimeError("passive fixture settlement disagrees with observed identities")
+            except (Exception, KeyboardInterrupt) as error:
+                cleanup_errors.append("observed fixtures: " + str(error))
+            else:
+                try:
+                    evidence.record("fixtures_settled", mode="passive", **fixture_result)
+                except (Exception, KeyboardInterrupt) as error:
+                    if observation_error is None:
+                        observation_error = error
         if cleanup_errors:
             failure = RuntimeError("; ".join(cleanup_errors))
             evidence.problem("cleanup", failure)
@@ -92,8 +126,12 @@ def run(native, evidence, root):
         raise observation_error
     if result is None or result["timeout"] or result["returncode"] != 0:
         raise RuntimeError("original test failed; retained TAP/wait status remains authoritative")
+    if census is None or fixture_result is None:
+        raise RuntimeError("original lacks observed fixture settlement")
+    census.require_coverage()
     evidence.record("caller_complete", result=result, scope=POLICY_SCOPE,
-                    fixture_native_identity="not_observed", kernel_sample="not_collected",
+                    fixture_native_identity="observed_subset", fixtures=fixture_result,
+                    kernel_sample="not_collected",
                     qualification="not_claimed")
     return result
 
