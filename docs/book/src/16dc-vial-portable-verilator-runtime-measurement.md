@@ -721,7 +721,20 @@ The exit-race controls include a real identified Perl child released and reaped
 before its command query, plus separate controls for later-target progression
 and genuine inspection errors. The original test's passing result remains
 separate from the interrupted observation; it does not repair the historical
-startup failure. Fresh authenticated capture remains open.
+startup failure. After the race repair, a complete observed invocation passes
+through Rust, signal and streams fixtures without an eligible kernel capture.
+The native streams marker excludes its expected body wait. Exact-path XProtect
+records accompany the passing invocation; they do not establish the earlier
+failure's cause. Recorded process births are independently absent and the
+helper has stopped with authentication invalidated. Task `.3.8.7` next owns
+qualification of a bounded prospective sequence using one helper lifetime.
+
+Administrator authentication is for the fixed native kernel-stack capture:
+`spindump` rejected the unprivileged probe because root is required. Tests and
+the observer run as the normal user. The helper supports repeated requests
+within its expiring session, but the single-invocation observer shuts it down
+after each attempt. That shutdown requires fresh authentication for a later
+attempt; it is separate from the director's authorization to continue work.
 
 Capture requests and helper results are published only after their complete
 JSON has been written, so a concurrent reader cannot consume a partial record.
