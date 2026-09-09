@@ -1174,6 +1174,35 @@ oracle now uses a separate worker and fixed communication deadline; ordinary
 offline tests do not implicitly repeat it. Those startup delays and the original
 queued-work cause remain owned by `.3.2.15.2`.
 
+Task `.3.2.15.2` identifies the sampled native-library delay more precisely.
+The installed dyld image matches the sample's UUID. Its callsite instructions
+and independent disassembly show `F_CHECK_LV`, the library-validation check
+that precedes loading the library. Public
+[dyld source](https://raw.githubusercontent.com/apple-oss-distributions/dyld/dyld-1378/dyld/Loader.cpp)
+provides context, but the finding uses the matching installed binary because
+the published source version differs. The exact kernel wait and its relationship
+to the original script delays remain unknown. The next discriminator is owned
+by `.3.2.15.3`.
+
+A bounded historical query cannot recover even the failed run's already retained
+queue events. Empty history therefore cannot establish that a scan never ran.
+Preserve live records and the missing-delivery limitation.
+
+Timestamp units do not establish a shared clock origin. Here Python's
+`time.monotonic_ns()` uses Mach absolute time, while the Perl supervisor uses
+POSIX `CLOCK_MONOTONIC`. Native brackets confirm the clocks differ. Inspect
+the current APIs without launching a fixture:
+
+```sh
+python3 -B -c 'import time; print(time.get_clock_info("monotonic")); print(time.monotonic_ns(), time.clock_gettime_ns(time.CLOCK_MONOTONIC))'
+```
+
+Those sequential readings are diagnostic, not a historical conversion factor.
+Native process birth is a calendar creation time preserved across exec; it is
+not proof of fixture main entry. Use within-domain durations and explicit
+entry witnesses; do not subtract arbitrary Python, Perl and policy timestamps.
+
+
 
 Capture requests and helper results are published only after their complete
 JSON has been written, so a concurrent reader cannot consume a partial record.

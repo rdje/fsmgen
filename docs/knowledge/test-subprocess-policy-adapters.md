@@ -13,6 +13,8 @@ answers:
   - "why did T1669 admission miss its workspace?"
   - "how are fixture command-query exit races handled?"
   - "how are queued-only fixture policy tokens attributed?"
+  - "which call delayed the native library load?"
+  - "why must fixture clock domains stay separate?"
   - "where does T1669 retain failed legacy main entry diagnostics?"
   - "what does the AppleSystemPolicy fixture startup capture establish?"
   - "what does exec_handoff_monotonic_ns prove about child startup?"
@@ -80,9 +82,9 @@ still reports waiting.
 captures; tests stay normal-user. Identity, expiry and STOP/Ctrl+C checks remain.
 `.3.8.7` keeps one helper per sequence; single-run STOP needs fresh authentication.
 `.3.7` closes native capture/shutdown verification; `.3.2` owns causal repair.
-T1669 uses `.artifacts/tmp/process-supervisor-tests/`; empty coverage fails (`.3.8.5`/book). Every `ps` query, including successful `<defunct>` output, requires fresh native presence (`.3.2.11`). Only native disappearance is skipped; permission/query/live identity changes remain failed. The native exit oracle and unchecked-ps mutation qualify that race, not the historical changed field.
-Capture details: book/task. `.3.8.18` samples failed decoy AppleSystemPolicy; passing frames match, so full wait/cause remain unknown. Historical context is unavailable; no-scan inference is invalid.
-`.3.2.9` fails containment/census; `.3.2.10.1` fixes provenance but fails original Rust/legacy startup. `.3.2.11` repairs an exit race; historical field unknown. `.3.2.12` retains legacy entry-failure JSON (source/marker identity plus original result); `.3.2.13` passes; `.3.2.14.1` fails with unjoined queues and stops the campaign. `.3.2.15.1` adds `scripts/analyze_fixture_policy.py`: native CFString hashes calibrated against separate literal pairs retain queued-only/unjoined events, checked archives/manifests and historical roots as data. Scoped collisions fail; missing records stay unknown. `.3.2.15.2` owns queued-work and auxiliary native-load delays.
+T1669 uses `.artifacts/tmp/process-supervisor-tests/`. Every ps result needs native presence; only disappearance is skipped. Permission/query/live identity changes fail. Native exit and unchecked-ps controls qualify that race, not the historical changed field (`.3.2.11`; book/task).
+Capture history: book/task and `8f9bab40065c85f15162e952753e81107c88d87d:docs/knowledge/test-subprocess-policy-adapters.md`. Failed/pass samples share AppleSystemPolicy frames; no full wait or daemon cause is proved. Legacy entry failures retain complete JSON. The failed original campaign remains stopped.
+`.3.2.15.1` adds calibrated offline token attribution: `scripts/analyze_fixture_policy.py` checks archives/manifests, preserves unjoined events and treats capture roots as data. Scoped collisions fail; missing records stay unknown. `.3.2.15.2` identifies the sampled UUID-matched dyld call as F_CHECK_LV through raw instructions and independent disassembly. Python Mach absolute time and Perl CLOCK_MONOTONIC differ; no historical offset conversion is qualified. Birth is calendar creation, not entry. `.3.2.15.3` owns the next causal discriminator.
 T1595's pre-main cause stays open; `.19.2.3.1.2.2.6.2` fixes capture.
 `RamGuardFixtureRuntime` seals tools/argv, paths, bounds and full results.
 T1811/T1669 prove signal/stream failures and group cleanup; T1595 keeps metrics.
