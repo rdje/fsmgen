@@ -239,8 +239,8 @@ def retained_policy_result(evidence, *, scope="fixture_path"):
     policy_log.require_scope(scope)
     result = json.loads(observer.read_local_file(
         evidence.directory / "policy-result.json", evidence.root, POLICY_STATUS_BYTES))
-    expected_command = [arg.replace(str(evidence.root), "<repo>")
-                        for arg in policy_log.command(evidence.root, scope=scope)]
+    # Build the canonical contract without repeating producer normalization.
+    expected_command = policy_log.command(Path("<repo>"), scope=scope)
     if (not isinstance(result, dict) or result.get("scope") != scope
             or result.get("command") != expected_command):
         raise RuntimeError("policy retention has unexpected collection scope or command")

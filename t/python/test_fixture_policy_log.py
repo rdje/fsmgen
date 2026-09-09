@@ -17,6 +17,7 @@ import fixture_policy_log as policy
 import fixture_kernel_sampler as sampler
 import observe_fixture_startup as observer
 import run_fixture_startup_observation as launcher
+import analyze_fixture_policy as analysis
 
 
 class PortableIdentity:
@@ -341,6 +342,79 @@ class DaemonPolicyControls(PolicyControls):
                 launcher.retained_policy_result(self.evidence, scope=self.scope)
         path.write_text(json.dumps(original) + "\n")
         self.assertEqual(launcher.retained_policy_result(self.evidence, scope=self.scope), original)
+
+
+class QuotedRootRetention(unittest.TestCase):
+    """Independent captured-command oracle through actual held child cleanup."""
+
+    def test_quoted_roots_keep_canonical_commands_and_reject_actual_drift(self):
+        predicates = {
+            "fixture_path": 'process == "syspolicyd" AND eventMessage CONTAINS "<repo>/.artifacts/tmp/process-supervisor-tests/"',
+            "execution_context": 'process == "syspolicyd" AND (eventMessage CONTAINS "<repo>/.artifacts/tmp/process-supervisor-tests/" OR subsystem == "com.apple.syspolicy.exec")',
+            "daemon_context": 'process == "syspolicyd"',
+        }
+        base = ["/usr/bin/log", "stream", "--style", "ndjson", "--level", "debug", "--timeout", "240", "--predicate"]
+        with tempfile.TemporaryDirectory(prefix="policy-relocation-", dir=ROOT / ".artifacts/tmp") as temporary:
+            for spelling in ('space name', 'double"quote', 'back\\slash', 'trailing\\', 'été 漢字'):
+                root = Path(temporary) / spelling
+                root.mkdir()
+                source = root / "held.pl"
+                source.write_text('use strict; use warnings; $|=1; $SIG{INT}=sub {exit 0}; alarm 10; '
+                                  'print "Filtering the log data using \\"$ARGV[0]\\"\\n"; '
+                                  'while (1) { select undef, undef, undef, 0.05; }\n')
+                native = sampler.NativeProcesses() if sys.platform == "darwin" else PortableIdentity()
+                for scope, predicate in predicates.items():
+                    for drift in ("none", "predicate", "timeout", "unescaped"):
+                        if drift == "unescaped" and (scope == "daemon_context" or not any(c in spelling for c in ('"', '\\'))):
+                            continue
+                        with self.subTest(root=spelling, scope=scope, drift=drift):
+                            evidence = observer.Evidence(root)
+                            collector = policy.PolicyLog(root, evidence.directory, native, scope=scope)
+                            if drift == "predicate":
+                                collector.argv[-1] += " OR TRUEPREDICATE"
+                            elif drift == "timeout":
+                                collector.argv[7] = "17"
+                            elif drift == "unescaped":
+                                quoted = json.dumps(str(root / ".artifacts/tmp/process-supervisor-tests") + "/", ensure_ascii=False)
+                                collector.argv[-1] = collector.argv[-1].replace(quoted, '"' + str(root / ".artifacts/tmp/process-supervisor-tests") + '/"')
+                            executed = list(collector.argv)
+                            popen = subprocess.Popen
+
+                            def held(argv, **kwargs):
+                                self.assertEqual(argv, executed)
+                                self.assertEqual(kwargs["cwd"], root)
+                                return popen(["/usr/bin/perl", str(source), argv[-1]], **kwargs)
+
+                            try:
+                                with patch.object(policy.subprocess, "Popen", side_effect=held):
+                                    collector.prepare()
+                                    result = collector.finish()
+                                self.assertEqual(result["failures"], {})
+                                self.assertEqual(collector.argv, executed)
+                                if drift == "none":
+                                    self.assertEqual(result["command"], base + [predicate])
+                                    self.assertEqual(launcher.retained_policy_result(evidence, scope=scope), result)
+                                    if scope == "execution_context":
+                                        analysis.verify_collector_command(result)
+                                        header = (evidence.directory / "policy.stdout").read_text().splitlines()[0]
+                                        self.assertEqual(analysis.capture_root_from_header(header), str(root))
+                                else:
+                                    self.assertNotEqual(result["command"], base + [predicate])
+                                    with self.assertRaisesRegex(RuntimeError, "scope or command"):
+                                        launcher.retained_policy_result(evidence, scope=scope)
+                            finally:
+                                process = collector.process
+                                if process is not None and process.poll() is None:
+                                    process.kill()
+                                    process.wait(timeout=2)
+                                for stream in collector.streams.values():
+                                    stream.close()
+                                evidence.stream.close()
+                                if process is not None:
+                                    with self.assertRaises(ChildProcessError):
+                                        os.waitpid(process.pid, os.WNOHANG)
+                                    if sys.platform == "darwin":
+                                        self.assertFalse(observer.still_live(native, collector.identity))
 
 
 @unittest.skipUnless(sys.platform == "darwin", "native Foundation predicate and OS log controls")

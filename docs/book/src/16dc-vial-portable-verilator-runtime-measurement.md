@@ -1352,9 +1352,18 @@ report is shareable.
 
 The modeled daemon-snapshot reader is qualified separately from its producer.
 Current standalone sealing still accepts execution-context captures; daemon
-capture-time associations and the fixed caller remain pending. Quoted-root
-normalization in the older path-bearing collector scopes is tracked for repair
-under `.3.2.15.5.1.3.3`; mismatching retained commands fail closed.
+capture-time associations and the fixed caller remain pending. Retained commands
+support checkout paths containing spaces, quotes, backslashes and Unicode under
+`.3.2.15.5.1.3.3`. The collector replaces only the exact JSON-quoted fixture-prefix
+literal in its captured argv with the canonical `<repo>` literal; all other
+command bytes remain unchanged. The reader constructs its canonical expectation
+without repeating that normalization. Predicate widening, changed timeout
+arguments and malformed unescaped paths remain visible and are rejected.
+The older literal-root replacement both rejected valid escaped roots and could
+make malformed unescaped predicates appear canonical; these are retained-metadata
+defects, not evidence that the OS executed a different command. Held collectors
+and the frozen offline command/header reader exercise the repaired boundary;
+no live log collection is needed for those controls.
 Offline disclosure controls pass under `.3.2.15.5.1.3.2.1`. Its broader band
 exposed a timeout-control scope defect, repaired under `.3.2.15.5.1.3.2.2`:
 the leader-only timeout test also started descendants that the passive census

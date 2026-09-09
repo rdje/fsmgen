@@ -49,6 +49,19 @@ def command(root, *, scope="fixture_path"):
             "--timeout", str(LIFETIME_SECONDS), "--predicate", predicate]
 
 
+def retained_command(argv, root):
+    """Relocate only the exact quoted fixture prefix in the captured argv.
+
+    Literal-root substitution cannot handle JSON escaping and can turn malformed
+    unescaped predicates into apparently valid metadata. Keep every other byte,
+    including command drift, for the independent retained-command check.
+    """
+    prefix = ".artifacts/tmp/process-supervisor-tests/"
+    captured = json.dumps(str(root / prefix) + "/", ensure_ascii=False)
+    canonical = json.dumps("<repo>/" + prefix, ensure_ascii=False)
+    return [arg.replace(captured, canonical) for arg in argv]
+
+
 def limit_child_output():
     resource.setrlimit(resource.RLIMIT_FSIZE, (OUTPUT_BYTES, OUTPUT_BYTES))
 
@@ -207,7 +220,7 @@ class PolicyLog:
             self.finished = True
             self.result = {"schema": "fsmgen.fixture_policy_log.v1", "identity": self.identity,
                            "scope": self.scope,
-                           "command": [arg.replace(str(self.root), "<repo>") for arg in self.argv],
+                           "command": retained_command(self.argv, self.root),
                            "producer_sha256": hashlib.sha256(Path(__file__).read_bytes()).hexdigest(),
                            "started_ns": self.started_ns, "prepared_ns": self.prepared_ns,
                            "finished_ns": time.monotonic_ns(), "outputs": outputs,
