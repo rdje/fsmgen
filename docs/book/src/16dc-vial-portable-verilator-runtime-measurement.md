@@ -1456,8 +1456,8 @@ invocations pass; the first publishes a checked receipt. The second retains
 its complete raw evidence but publication fails on a valid PST token printed
 without its leading zero: `499990c7f2beab5`, native value `0499990c7f2beab5`.
 The then-current parser required sixteen digits. Task `.3.2.15.5.4.1` repairs
-normalization; `.3.2.15.5.4.2` still owns the retained-evidence audit and offline
-publication recovery before further observation.
+normalization; `.3.2.15.5.4.2` completes the retained-evidence audit and offline
+publication recovery.
 
 Sequence status is failure; no third invocation or kernel capture occurs.
 Both collectors settle successfully. All recorded native births and observed
@@ -1465,6 +1465,21 @@ fixture workspaces are independently absent, and helper authentication is
 invalidated. The passing originals do not repair the earlier startup failures.
 The first run's receipt remains in its private sequence journal even though
 this later failure prevents normal completion output.
+
+The retained audit finds short spellings in four captures. Earlier calibrated
+failed/passing analyses and the first daemon receipt are unchanged. The second
+daemon run now has a separately produced recovery manifest, report and receipt;
+all original inputs and its failure record remain unchanged. Its twelve formerly
+unrecognized records join the decoy source, including one queue, start and
+wakeup. The corrected receipt digest is
+`aff1e18a4b10591784d7c25dbd8b40eeca0f5ae06b3ece00f7d6d6e972fc5c6f`.
+Recovery verifies artifact consistency and does not change the failed sequence
+outcome or establish startup repair. Older short-token records retain their
+original source/stack limitations.
+
+Task `.3.2.15.6` separately selects one corrected finite campaign because the
+first stopped on the repaired diagnostic defect. Its admission leaf requires
+current calibration and a ready authenticated helper before any execution.
 
 Standard output begins with the relative sequence journal directory. On normal
 completion it emits each validated receipt/digest as a separate JSON line, then

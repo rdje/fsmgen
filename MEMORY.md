@@ -6,8 +6,8 @@ Status and evidence: `docs/tasks/`. The system itself: `MEMORY_ARCHITECTURE.md`.
 ## Resume
 
 - repository_revision: derive with `git log -1 --format='%H %s'`; never shadow `HEAD` here.
-- active_work_unit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.5.4.2` (`pending`)
-- next_action: Audit retained token widths and recover the failed daemon publication offline.
+- active_work_unit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.6.1` (`pending`)
+- next_action: Revalidate pinned calibration and census ready helpers for the corrected campaign.
 - in_flight_uncommitted: none.
 - in_flight_background: none.
 - blockers: Startup/containment and parent qualification remain open; full CI/push gated.
