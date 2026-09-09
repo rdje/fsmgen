@@ -20,6 +20,7 @@ answers:
   - "why can shortened PST tokens stop daemon publication?"
   - "why does a saturated daemon capture need bounded archive pages?"
   - "how are calibrated archive pages built without losing metadata?"
+  - "how does policy publication handle replaced directories?"
   - "how will policy diagnostics avoid private paths?"
   - "which fixture bands wrongly ran live collectors?"
   - "which call delayed the native library load?"
@@ -76,12 +77,13 @@ stays local. Timeout/overflow/nonzero/signal/exec/descendant/cleanup failures st
 without retry; original fixture assertions pass.
 T1545: canonical JSON TAP diagnostics preserve failed checker results separately from output. Nonzero controls prove empty/split-stream recovery; older discarded cause unknown.
 Launch observation retains commands/results, identity and bounded progress. Bash PID/native-output/held-child controls qualify it; missing progress stays unknown (task/book).
-Env-Perl timed out after handoff; Verilator uses canonical Perl, except the `prove` entrypoint. Direct-Perl timeouts refute a shebang-only cure. HIAL/VIAL `.19.2.3.1.2.2.5.5.2.3.1.2.2.3` owns `_dyld_start`/fixture diagnosis. `.3.3–7` qualify fixed authenticated kernel capture and reject thread-state substitution; `.3.2` owns causal repair. `bash scripts/await_fixture_kernel_samples.sh` checks identity/expiry/STOP; tests stay normal-user. `.3.8.7` keeps one helper per sequence; standalone STOP needs fresh authentication.
+Env-Perl and direct Perl both timed out after handoff, refuting a shebang-only cure. HIAL/VIAL `.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2` owns startup cause; `.3.3–7` own authenticated kernel capture. Sampling/authentication/STOP limits remain in task/book and the exact historical card below.
 T1669 uses `.artifacts/tmp/process-supervisor-tests/`. Every ps result needs native presence; only disappearance is skipped. Permission/query/live identity changes fail. Native exit and unchecked-ps controls qualify that race, not the historical changed field (`.3.2.11`; book/task).
 History: `93e7072566e2dce7b70c10fa04ffc8765b35b1e9:docs/knowledge/test-subprocess-policy-adapters.md`; .3.2.15.3.3 passes without capture; cause open.
 PST parsing normalizes 1–16 lowercase hex digits; malformed fields and contradictions reject.
 .15.6 captures a failed Rust proxy. The stream exceeds v1 record/report bounds; truncation loses its start/wakeup. .15.7 selects bounded ordered pages with metadata hashes. Archive schemas/consumer/builder are qualified (.15.7.2.1–2); publication, callers and startup repair remain open.
 V1 association replay needs pinned manifest/archives, no old root/CFHash; native rederivation unavailable, unauthenticated. Reports omit raw text/bodies; receipts bind calibration/artifacts without private reads. Fixed daemon CLI .15.5.2.2 preflights, settles and publishes; controller pins calibration, rechecks full reserve, verifies actual receipts and stops on first failure/capture. Outcomes stay distinct; failures/ownership persist. F_CHECK_LV cause unproved (.15.2); queue/provenance coexist (.15.4); worker/delivery unknown. Live opt-in violations: .15.5.1.2.2–3.
+Shared publish_bytes anchors writes/cleanup to directory descriptors and checks observed inode/byte replacement; existing files and primary failures persist. Arbitrary later same-user mutation remains outside its guarantee (.15.7.2.3.1; test_fixture_policy_writer.py).
 Archive reverify: `scripts/run_with_ram_guard.sh -- python3 -B -m unittest discover -s t/python -p 'test_fixture_policy_archive*.py'`.
 T1595's pre-main cause stays open; `.19.2.3.1.2.2.6.2` fixes capture.
 `RamGuardFixtureRuntime` seals tools/argv, paths, bounds and full results.

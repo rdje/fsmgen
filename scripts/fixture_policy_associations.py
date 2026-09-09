@@ -12,6 +12,7 @@ import json
 import os
 from pathlib import Path
 import re
+import stat
 import sys
 import uuid
 
@@ -303,30 +304,100 @@ def publish(manifest, relative, root=ROOT):
     return publish_bytes(canonical(manifest), relative, root)
 
 
+def _file_identity(info):
+    return info.st_dev, info.st_ino
+
+
+def _publication_parent(root, relative):
+    """Open each directory without following links; keep traversal on this volume."""
+    flags = os.O_RDONLY | os.O_DIRECTORY | os.O_NOFOLLOW
+    descriptor = os.open(root, flags)
+    try:
+        device = ROOT.stat().st_dev
+        for component in (None, *Path(relative).parts[:-1]):
+            if component is not None:
+                child = os.open(component, flags, dir_fd=descriptor)
+                os.close(descriptor)
+                descriptor = child
+            info = os.fstat(descriptor)
+            if info.st_dev != device or info.st_uid != os.getuid():
+                raise ValueError("association destination requires an owned direct local directory")
+        return descriptor
+    except BaseException:
+        os.close(descriptor)
+        raise
+
+
+def _check_publication_parent(root, relative, descriptor):
+    current = _publication_parent(root, relative)
+    try:
+        if _file_identity(os.fstat(current)) != _file_identity(os.fstat(descriptor)):
+            raise ValueError("association destination directory changed during publication")
+    finally:
+        os.close(current)
+
+
 def publish_bytes(raw, relative, root=ROOT):
-    """Atomically retain bounded private bytes; the caller owns schema validation."""
+    """Exclusively retain bounded bytes and verify the observed public identity.
+
+    Directory descriptors anchor writes and cleanup across path replacement.
+    Checks detect observed identity/byte changes; they cannot exclude arbitrary
+    same-user mutation after a check or make several files one transaction.
+    """
     if type(raw) is not bytes or len(raw) > MAX_MANIFEST_BYTES:
         raise ValueError("published evidence exceeds its fixed byte bound")
     root = root.resolve()
     path_value(relative, ".artifacts/logs/")
-    destination = root / relative
-    parent = destination.parent
-    if (parent.resolve() != parent or root not in parent.parents
-            or parent.stat().st_dev != root.stat().st_dev or parent.stat().st_uid != os.getuid()):
-        raise ValueError("association destination requires an owned direct local directory")
-    pending = parent / ("associations-" + uuid.uuid4().hex + ".pending")
-    owned = False
+    parent = _publication_parent(root, relative)
+    destination = Path(relative).name
+    pending = "associations-" + uuid.uuid4().hex + ".pending"
+    descriptor = None
+    failed = False
     try:
-        with pending.open("xb") as stream:
-            owned = True
-            os.chmod(pending, 0o600)
+        descriptor = os.open(pending, os.O_RDWR | os.O_CREAT | os.O_EXCL | os.O_NOFOLLOW,
+                             0o600, dir_fd=parent)
+        identity = _file_identity(os.fstat(descriptor))
+        os.fchmod(descriptor, 0o600)
+        with os.fdopen(os.dup(descriptor), "wb") as stream:
             stream.write(raw)
             stream.flush()
             os.fsync(stream.fileno())
-        os.link(pending, destination)
+        _check_publication_parent(root, relative, parent)
+        if _file_identity(os.stat(pending, dir_fd=parent, follow_symlinks=False)) != identity:
+            raise ValueError("association temporary identity changed during publication")
+        os.link(pending, destination, src_dir_fd=parent, dst_dir_fd=parent,
+                follow_symlinks=False)
+        published = os.open(destination, os.O_RDONLY | os.O_NOFOLLOW | os.O_NONBLOCK, dir_fd=parent)
+        with os.fdopen(published, "rb") as stream:
+            before = os.fstat(stream.fileno())
+            if (not stat.S_ISREG(before.st_mode) or _file_identity(before) != identity
+                    or stat.S_IMODE(before.st_mode) != 0o600 or before.st_size != len(raw)):
+                raise ValueError("association published identity changed during publication")
+            actual = stream.read(MAX_MANIFEST_BYTES + 1)
+            after = os.fstat(stream.fileno())
+            if (actual != raw or (before.st_size, before.st_mtime_ns, before.st_ctime_ns)
+                    != (after.st_size, after.st_mtime_ns, after.st_ctime_ns)
+                    or _file_identity(os.stat(destination, dir_fd=parent,
+                                              follow_symlinks=False)) != identity):
+                raise ValueError("association published bytes or identity changed during publication")
+        _check_publication_parent(root, relative, parent)
+    except BaseException:
+        failed = True
+        raise
     finally:
-        if owned:
-            pending.unlink()
+        try:
+            if descriptor is not None:
+                current = os.stat(pending, dir_fd=parent, follow_symlinks=False)
+                if _file_identity(current) != identity:
+                    raise ValueError("association temporary identity changed before cleanup")
+                os.unlink(pending, dir_fd=parent)
+        except BaseException:
+            if not failed:
+                raise
+        finally:
+            if descriptor is not None:
+                os.close(descriptor)
+            os.close(parent)
     return digest(raw)
 
 

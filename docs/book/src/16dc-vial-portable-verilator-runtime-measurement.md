@@ -1515,6 +1515,17 @@ and fixed-caller integration remain pending; there is no new archive-producing
 command yet. Kernel frames and the delayed retained scan do not yet establish
 worker cause or startup repair.
 
+Shared evidence publication now anchors file creation, linking and temporary
+cleanup to open directory descriptors. A controlled directory-replacement test
+exposed an earlier writer returning the expected digest for replacement bytes;
+it also removed a foreign temporary name. The repaired writer detects observed
+directory, temporary-inode and published-byte changes, preserves existing final
+files, and retains the primary failure if cleanup also fails. Complete earlier
+artifacts remain on failure. These checks do not prevent arbitrary same-user
+mutation after observation or make several files one atomic transaction;
+consumers must still verify their separately retained digest. This repair is
+shared by existing formats; archive publication remains a separate pending leaf.
+
 Standard output begins with the relative sequence journal directory. On normal
 completion it emits each validated receipt/digest as a separate JSON line, then
 a closed JSON outcome. That outcome contains only reason, completed invocation
