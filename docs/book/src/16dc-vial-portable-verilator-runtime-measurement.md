@@ -1425,7 +1425,30 @@ invocation settles its original, collector and observed fixtures. Held bodies
 check preparation order and native cleanup; calibration in those controls is
 modeled, and live system-log launches are trapped. These controls are not a new
 original observation, authenticated capture or proof of complete daemon delivery.
-The fixed finite sequence still requires separate qualification before a campaign.
+The shared finite controller supports calibrated daemon iterations under
+`.3.2.15.5.2.1`; the fixed sequence CLI remains the next slice. The existing
+fixture-path sequence command keeps its original defaults. No prospective
+campaign is admitted by this controller qualification.
+
+Daemon sequencing pins one initial calibration identity and rechecks it before
+each invocation. Because preflight consumes time, it checks helper readiness and
+the complete existing launch/cleanup reserve again after preflight. If that
+reserve no longer fits, it records a deferred iteration without launching a
+collector or original. The existing Rust budget, invocation limit and original
+deadline remain unchanged; publication time also counts toward the sequence
+budget. A passing original cannot hide a budget overrun or publication failure.
+
+Before another invocation, the controller independently reloads settled original,
+selected-fixture and collector evidence with the exact daemon scope. It reads
+the actual receipt file using the returned digest, verifies the public pair and
+requires the current iteration path, initial calibration and original outcome
+to agree. A previous valid receipt cannot stand in for the current invocation.
+Each receipt has its own bounded journal event; the controller does not combine
+all receipts into a potentially oversized event. First failure or received
+capture still stops the sequence, and only the controller stops its helper.
+Tests use actual held bodies and an unprivileged held helper, with calibration,
+controller-clock changes and capture delivery explicitly modeled. They establish
+controller behavior, not an authenticated sample or startup repair.
 
 The standalone sealing CLI keeps its execution-context contract. The internal
 `seal_daemon_capture` path supports the fixed caller. Its native calibration check uses a

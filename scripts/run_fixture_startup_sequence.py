@@ -15,12 +15,17 @@ import sys
 import time
 
 import run_fixture_startup_observation as launcher
+import run_fixture_startup_daemon_capture as daemon
 
 
 ROOT = launcher.ROOT
 MAX_INVOCATIONS = 20
 SEQUENCE_SECONDS = 300
 RUST_SEQUENCE_SECONDS = 900
+
+
+class InvocationReserveExpired(TimeoutError):
+    """Preflight used the remaining launch allowance; no child was admitted."""
 
 
 def invocation_reserve():
@@ -34,7 +39,7 @@ def invocation_reserve():
             + launcher.policy_log.START_SECONDS + 2 * launcher.policy_log.REAP_SECONDS)
 
 
-def settled_iteration(evidence, result, submitted, target_family):
+def settled_iteration(evidence, result, submitted, target_family, *, policy_scope="fixture_path"):
     """Require the retained cleanup evidence before another test can start."""
     raw = launcher.observer.read_local_file(
         evidence.directory / "observations.jsonl", evidence.root,
@@ -61,16 +66,45 @@ def settled_iteration(evidence, result, submitted, target_family):
             or policy[0].get("result_path") != str(
                 (evidence.directory / "policy-result.json").relative_to(evidence.root))):
         raise RuntimeError("iteration lacks settled policy retention")
-    launcher.retained_policy_result(evidence)
+    launcher.retained_policy_result(evidence, scope=policy_scope)
 
 
-def run_sequence(session, native, journal, root, *, target_family="all"):
+def retained_daemon_publication(evidence, published, admitted, result):
+    """Read the actual pinned receipt and bind it to this settled iteration."""
+    publication = daemon.publication
+    associations = publication.associations
+    associations.fields(published, ("receipt", "sha256"))
+    raw = publication.analysis.read_local(evidence.directory / publication.RECEIPT,
+                                          evidence.root, associations.MAX_MANIFEST_BYTES)
+    checked = publication.consume(raw, published["sha256"], evidence.root)
+    receipt = checked["receipt"]
+    if (receipt != published["receipt"]
+            or receipt["run"] != str(evidence.directory.relative_to(evidence.root))
+            or receipt["admission_sha256"] != associations.digest(associations.canonical(admitted))
+            or checked["diagnostic"]["original"]["returncode"] != result["returncode"]):
+        raise ValueError("publication disagrees with its admitted sequence iteration")
+    return {"receipt": receipt, "sha256": published["sha256"]}
+
+
+def run_sequence(session, native, journal, root, *, target_family="all", calibrations=None):
     try:
         launcher.observer.require_target_family(target_family)
         # Keep complete invocation/cleanup reserves while allowing the Rust
         # selector more opportunities to observe an intermittent longer wait.
         budget_seconds = RUST_SEQUENCE_SECONDS if target_family == "rust" else SEQUENCE_SECONDS
         deadline = time.monotonic() + budget_seconds
+        admitted = None
+        publications = []
+        policy_scope = "fixture_path"
+        if calibrations is not None:
+            admitted = daemon.publication.associations.calibration_snapshot(calibrations, root)
+            policy_scope = daemon.SCOPE
+
+        def before_daemon_launch():
+            launcher.require_ready(session, native)
+            if deadline - time.monotonic() < invocation_reserve() + launcher.observer.SETTLE_SECONDS:
+                raise InvocationReserveExpired("insufficient time after calibration preflight")
+
         completed = 0
         reason = "invocation_limit"
         journal.record("sequence_started", helper=session.helper,
@@ -83,6 +117,10 @@ def run_sequence(session, native, journal, root, *, target_family="all"):
                        policy_start_seconds=launcher.policy_log.START_SECONDS,
                        policy_cleanup_seconds=2 * launcher.policy_log.REAP_SECONDS,
                        qualification="not_claimed")
+        if admitted is not None:
+            journal.record("sequence_calibration_admitted", scope=policy_scope,
+                           sha256=daemon.publication.associations.digest(
+                               daemon.publication.associations.canonical(admitted)))
         for number in range(1, MAX_INVOCATIONS + 1):
             launcher.require_ready(session, native)
             remaining = deadline - time.monotonic()
@@ -93,9 +131,28 @@ def run_sequence(session, native, journal, root, *, target_family="all"):
             try:
                 journal.record("iteration_started", number=number,
                                evidence=str(evidence.directory.relative_to(root)))
-                result = launcher.run(session, native, evidence, root,
-                                      stop_session=False, target_family=target_family)
-                settled_iteration(evidence, result, session.submitted, target_family)
+                if admitted is None:
+                    result = launcher.run(session, native, evidence, root,
+                                          stop_session=False, target_family=target_family)
+                else:
+                    try:
+                        capture = daemon.run(session, native, evidence, root, calibrations,
+                                             stop_session=False, target_family=target_family,
+                                             _calibration_admission=admitted,
+                                             _before_launch=before_daemon_launch)
+                    except daemon.CaptureFailure as error:
+                        if isinstance(error.__cause__, InvocationReserveExpired):
+                            reason = "insufficient_time_for_complete_invocation"
+                            journal.record("iteration_deferred", number=number, reason=reason)
+                            break
+                        raise
+                    result = capture["original"]
+                settled_iteration(evidence, result, session.submitted, target_family,
+                                  policy_scope=policy_scope)
+                if admitted is not None:
+                    pinned = retained_daemon_publication(evidence, capture["publication"], admitted, result)
+                    publications.append(pinned)
+                    journal.record("iteration_publication", number=number, **pinned)
                 completed += 1
                 journal.record("iteration_completed", number=number, result=result,
                                capture_requested=session.submitted)
@@ -111,6 +168,10 @@ def run_sequence(session, native, journal, root, *, target_family="all"):
                    "capture_received": session.submitted, "qualification": "not_claimed",
                    "unobserved_descendants": "unknown"}
         journal.record("sequence_outcome", **outcome)
+        if admitted is not None:
+            # Receipts already have separate bounded journal records. Combining
+            # every receipt into one event would exceed the event byte ceiling.
+            outcome["publications"] = publications
     except (Exception, KeyboardInterrupt) as error:
         journal.problem("observation", error)
         raise

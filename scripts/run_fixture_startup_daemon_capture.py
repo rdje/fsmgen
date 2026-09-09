@@ -38,14 +38,22 @@ def _problem(evidence, stage, error):
             pass
 
 
-def run(session, native, evidence, root, calibrations, *, stop_session=True, target_family="all"):
+def run(session, native, evidence, root, calibrations, *, stop_session=True, target_family="all",
+        _calibration_admission=None, _before_launch=None):
     """Keep launch ownership in the qualified caller; wrap admission/publication."""
     handed_off = False
     try:
         launcher.observer.require_target_family(target_family)
         admitted = publication.associations.calibration_snapshot(calibrations, root)
+        if (_calibration_admission is not None and publication.associations.canonical(admitted)
+                != publication.associations.canonical(_calibration_admission)):
+            raise ValueError("calibration changed after sequence admission")
         evidence.record("daemon_calibration_preflight", scope=SCOPE,
                         sha256=publication.associations.digest(publication.associations.canonical(admitted)))
+        # The finite controller checks readiness and the full existing reserve
+        # after calibration work, immediately before handing off launch ownership.
+        if _before_launch is not None:
+            _before_launch()
         result = published = failure = None
         interrupted = False
         handed_off = True

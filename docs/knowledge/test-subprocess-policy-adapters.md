@@ -15,6 +15,7 @@ answers:
   - "how are queued-only fixture policy tokens attributed?"
   - "how is fixture calibration preflight checked?"
   - "how does the fixed daemon capture caller work?"
+  - "how does the finite daemon sequence preserve its budget and helper?"
   - "how are fixture policy publication receipts verified?"
   - "how will policy diagnostics avoid private paths?"
   - "which fixture bands wrongly ran live collectors?"
@@ -72,21 +73,10 @@ stays local. Timeout/overflow/nonzero/signal/exec/descendant/cleanup failures st
 without retry; original fixture assertions pass.
 T1545: canonical JSON TAP diagnostics preserve failed checker results separately from output. Nonzero controls prove empty/split-stream recovery; older discarded cause unknown.
 Launch observation retains commands/results, identity and bounded progress. Bash PID/native-output/held-child controls qualify it; missing progress stays unknown (task/book).
-Env-Perl timed out silently after handoff; Verilator fixtures use canonical Perl shebangs. Only the `prove` Perl entrypoint may retain env.
-Direct-Perl timeouts refute a shebang-only cure:
-HIAL/VIAL `.19.2.3.1.2.2.5.5.2.3.1.2.2.3` owns the live `_dyld_start` sample,
-Rust proxy/Verilator fixture diagnosis and repair;
-child `.3.3` owns kernel-sampling selection and required administrator authentication;
-`.3.4` owns capture before causal repair.
-`.3.5` rejects thread-state substitution: an independently stopped pipe reader
-still reports waiting.
-`.3.6`: `bash scripts/await_fixture_kernel_samples.sh` authenticates fixed kernel
-captures; tests stay normal-user. Identity, expiry and STOP/Ctrl+C checks remain.
-`.3.8.7` keeps one helper per sequence; single-run STOP needs fresh authentication.
-`.3.7` closes native capture/shutdown verification; `.3.2` owns causal repair.
+Env-Perl timed out after handoff; Verilator uses canonical Perl, except the `prove` entrypoint. Direct-Perl timeouts refute a shebang-only cure. HIAL/VIAL `.19.2.3.1.2.2.5.5.2.3.1.2.2.3` owns `_dyld_start`/fixture diagnosis. `.3.3–7` qualify fixed authenticated kernel capture and reject thread-state substitution; `.3.2` owns causal repair. `bash scripts/await_fixture_kernel_samples.sh` checks identity/expiry/STOP; tests stay normal-user. `.3.8.7` keeps one helper per sequence; standalone STOP needs fresh authentication.
 T1669 uses `.artifacts/tmp/process-supervisor-tests/`. Every ps result needs native presence; only disappearance is skipped. Permission/query/live identity changes fail. Native exit and unchecked-ps controls qualify that race, not the historical changed field (`.3.2.11`; book/task).
 History: `93e7072566e2dce7b70c10fa04ffc8765b35b1e9:docs/knowledge/test-subprocess-policy-adapters.md`. Combined original passes without capture; startup cause stays open (.3.2.15.3.3).
-Command/header/joins verified. Pinned archive replay omits old root/CFHash; rederivation unavailable; unauthenticated. Diagnostics omit raw text/bodies. Receipts bind calibration/artifacts; consumption needs no private inputs. Daemon caller preflights, settles, publishes; preserves failures/ownership. F_CHECK_LV shared cause unproved (.15.2); queues/provenance coexist (.15.4). Worker/delivery unknown. Live opt-in violations: .15.5.1.2.2–3.
+Command/header/joins verified. Pinned archive replay omits old root/CFHash; rederivation unavailable; unauthenticated. Diagnostics omit raw text/bodies. Receipts bind calibration/artifacts; consumption needs no private inputs. Daemon caller preflights, settles, publishes; preserves failures/ownership. The shared finite controller pins calibration, rechecks the full reserve after preflight, verifies each actual receipt/current iteration and stops at first failure/capture. Fixed CLI pending (.15.5.2.2). F_CHECK_LV shared cause unproved (.15.2); queues/provenance coexist (.15.4). Worker/delivery unknown. Live opt-in violations: .15.5.1.2.2–3.
 T1595's pre-main cause stays open; `.19.2.3.1.2.2.6.2` fixes capture.
 `RamGuardFixtureRuntime` seals tools/argv, paths, bounds and full results.
 T1811/T1669 prove signal/stream failures and group cleanup; T1595 keeps metrics.
