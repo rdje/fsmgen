@@ -1477,13 +1477,20 @@ Recovery verifies artifact consistency and does not change the failed sequence
 outcome or establish startup repair. Older short-token records retain their
 original source/stack limitations.
 
-Task `.3.2.15.6` separately selects one corrected finite campaign because the
-first stopped on the repaired diagnostic defect. Its admission leaf requires
-current calibration and a ready authenticated helper before any execution.
-Admission `.3.2.15.6.1` now verifies the fresh authenticated helper and unchanged
-calibration. A forged native birth rejects; admission launches no original or
-collector. Commit this admission, then recheck the exact helper immediately
-before the single `.3.2.15.6.2` execution. Startup qualification remains open.
+The corrected campaign `.3.2.15.6` is also exhausted. Its first original fails:
+`proxy_nonzero` times out under the unchanged ten-second tool-resolution wall
+instead of returning the expected nonzero failure. The helper captures that
+exact Rust proxy; receiving its sample does not turn the original into success.
+All recorded native births and observed workspaces are independently absent,
+and helper authentication is invalidated.
+
+Portable publication rejects this capture's combined daemon-event count:
+8,492 log events plus 55 metadata records exceed the analyzer's unchanged
+4,096-record bound. The collector retains the complete 7,467,562-byte stream
+and settles without reported failure; this does not prove complete log delivery.
+Raw evidence and both failures remain authoritative. Task `.3.2.15.7` owns a
+bounded diagnostic repair and offline analysis of this failed-target capture;
+no further campaign is selected. Startup qualification remains open.
 
 Standard output begins with the relative sequence journal directory. On normal
 completion it emits each validated receipt/digest as a separate JSON line, then

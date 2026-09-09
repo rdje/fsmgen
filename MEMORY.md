@@ -6,9 +6,9 @@ Status and evidence: `docs/tasks/`. The system itself: `MEMORY_ARCHITECTURE.md`.
 ## Resume
 
 - repository_revision: derive with `git log -1 --format='%H %s'`; never shadow `HEAD` here.
-- active_work_unit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.6.2`
-  (`pending`; single corrected campaign)
-- next_action: After admission commits, recheck the selected helper and run the fixed Rust sequence once.
+- active_work_unit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.1`
+  (`pending`; retained diagnosis)
+- next_action: Diagnose retained event saturation and select a bounded repair contract.
 - in_flight_uncommitted: none.
 - in_flight_background: none.
 - blockers: Startup/parent qualification and full CI/push remain gated.
