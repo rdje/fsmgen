@@ -60,6 +60,7 @@ signature instead of pasting unrelated evidence or weakening the checklist.
 | Need sanitized semantic/IR structure | `--strict --emit-semantic-json`. |
 | Need generated SystemVerilog checked by external tools | `--verify-hdl --output .artifacts/sv/out.sv`. |
 | Need support-accounting coverage truth | `prove -Iperl t/248-regression-corpus-accounting.t`. |
+| Retained fixture policy queues lack literal path/start/wakeup links | Use `scripts/analyze_fixture_policy.py RUN --calibration OTHER_RUN` under the RAM guard; the mdBook runtime-measurement chapter documents bounded, calibrated offline attribution and missing-record limits. This starts no original or collector. |
 | Need a specific parser/generator regression | Focused `prove -Iperl t/<test>.t`. |
 | Need user-facing docs proof | `mdbook build docs/book`. |
 | Need docs path hygiene | `scripts/check_docs_relative_paths.sh`. |

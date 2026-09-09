@@ -12,6 +12,7 @@ answers:
   - "why does fixture capture need repeated authentication?"
   - "why did T1669 admission miss its workspace?"
   - "how are fixture command-query exit races handled?"
+  - "how are queued-only fixture policy tokens attributed?"
   - "where does T1669 retain failed legacy main entry diagnostics?"
   - "what does the AppleSystemPolicy fixture startup capture establish?"
   - "what does exec_handoff_monotonic_ns prove about child startup?"
@@ -37,6 +38,7 @@ evidence: >-
   t/1668-darwin-inline-verilator-test-runtime.t;
   scripts/fixture_kernel_sampler.py; t/python/test_fixture_kernel_sampler.py;
   scripts/observe_fixture_startup.py; t/python/test_fixture_census.py;
+  scripts/analyze_fixture_policy.py; t/python/test_fixture_policy_analysis.py;
   scripts/run_fixture_startup_policy_observation.py; t/python/test_fixture_startup_policy_observation.py;
   t/1669-task-acceptance-fixture-runtime.t
 reverify: >-
@@ -79,8 +81,8 @@ captures; tests stay normal-user. Identity, expiry and STOP/Ctrl+C checks remain
 `.3.8.7` keeps one helper per sequence; single-run STOP needs fresh authentication.
 `.3.7` closes native capture/shutdown verification; `.3.2` owns causal repair.
 T1669 uses `.artifacts/tmp/process-supervisor-tests/`; empty coverage fails (`.3.8.5`/book). Every `ps` query, including successful `<defunct>` output, requires fresh native presence (`.3.2.11`). Only native disappearance is skipped; permission/query/live identity changes remain failed. The native exit oracle and unchecked-ps mutation qualify that race, not the historical changed field.
-Diagnostic detail: task/Git. `.3.8.18` captures the failed decoy in AppleSystemPolicy with native/source ancestry and timeout JSON; passing samples share those frames. Full-deadline wait, daemon cause, Rust main entry and failed legacy stack remain unknown. `.3.2.2–.3` qualify closed execution_context collection and fixed normal-user T1669; fixture-native/kernel evidence absent. `.3.2.4` passes with exact path/token queue/start/wakeup joins, unchanged sources and owned cleanup; no repair is claimed. `.3.2.5` finds historical context unavailable; retained live events falsify no-scan inference.
-`.3.2.7–.8` owns passive census/settlement. `.3.2.9` fails containment/census; `.3.2.10.1` fixes provenance but fails original Rust/legacy startup. `.3.2.11` repairs an exit race; historical field unknown. `.3.2.12` retains legacy entry-failure JSON (source/marker identity plus original result); `.3.2.13` passes; `.3.2.14.1` fails with unjoined queues and stops the campaign. `.3.2.15` owns attribution; book/task retain limits.
+Capture details: book/task. `.3.8.18` samples failed decoy AppleSystemPolicy; passing frames match, so full wait/cause remain unknown. Historical context is unavailable; no-scan inference is invalid.
+`.3.2.9` fails containment/census; `.3.2.10.1` fixes provenance but fails original Rust/legacy startup. `.3.2.11` repairs an exit race; historical field unknown. `.3.2.12` retains legacy entry-failure JSON (source/marker identity plus original result); `.3.2.13` passes; `.3.2.14.1` fails with unjoined queues and stops the campaign. `.3.2.15.1` adds `scripts/analyze_fixture_policy.py`: native CFString hashes calibrated against separate literal pairs retain queued-only/unjoined events, checked archives/manifests and historical roots as data. Scoped collisions fail; missing records stay unknown. `.3.2.15.2` owns queued-work and auxiliary native-load delays.
 T1595's pre-main cause stays open; `.19.2.3.1.2.2.6.2` fixes capture.
 `RamGuardFixtureRuntime` seals tools/argv, paths, bounds and full results.
 T1811/T1669 prove signal/stream failures and group cleanup; T1595 keeps metrics.

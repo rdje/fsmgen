@@ -1130,10 +1130,49 @@ then stops further slots. Complete legacy failure diagnostics now survive the
 actual missing-entry case; the census and all observed cleanup settle.
 The full policy stream contains four queued scan tokens, with no retained
 work-start/wakeup or exact fixture-path link. Path-seeded selection alone would
-lose these events. Their timing follows the observed producer births, but an
-exact identity join is still missing. Task `.3.2.15` owns attribution and the
-queued-work diagnosis; missing log records do not prove work never began.
+lose these events. At capture, the producer births supplied only temporal
+pairing. The calibrated attribution below resolves that analysis gap; missing
+log records still do not prove work never began.
 
+Task `.3.2.15.1` supplies an offline analyzer for these retained records.
+Native CoreFoundation string hashing reproduces the path tokens of two
+independently linked observations. Calibration against those literal records
+then attributes the failed run's four queues to its observed producer paths.
+This is scoped hash attribution; collisions or conflicting literal evidence
+fail, and a hash never becomes a universal identity guarantee.
+
+For the retained example runs, execute:
+
+```sh
+bash scripts/run_with_ram_guard.sh -- python3 -B scripts/analyze_fixture_policy.py \
+  .artifacts/logs/t1669-startup-observation/run-6a2c638c7d214c1d8065190d8d7b2ac2 \
+  --calibration .artifacts/logs/t1669-startup-observation/run-ae0697059c164ccd9bcbdadf67f6780c \
+  --calibration .artifacts/logs/t1669-startup-observation/run-eb32870bc30d496ea5ea589e44a21b19 \
+  > .artifacts/logs/policy-attribution.json
+```
+
+Use existing retained runs; this command starts no original test or collector.
+It verifies the collector manifest and source archives, reads historical capture
+roots from the recorded headers as data, and retains all actual events,
+unattributed tokens and original/collector results. No old filesystem root is
+accessed. Each input is bounded to 16 MiB, each journal/policy set to 4096 records,
+and sources to 64 archives of at most 65536 bytes each. Supply one through four
+distinct calibration runs, each with at least two unique literal path/token
+pairs. Missing, altered or ambiguous evidence fails without an attribution result.
+
+Output `tokens` contains source identity, record indices and observed
+`queued`/`started`/`wakeups` counts. The failed example has one queue and no
+retained start/wakeup per producer; the passing comparison has all three.
+`missing_records` remains unknown. These counts describe retained records,
+not proof of whether unlogged work executed.
+
+An auxiliary native C executable timed out, and a C shared-library check later
+completed only after a long delay. A user-level sample caught Python loading
+that library through dyld `mapSegments`/`fcntl`; no kernel wait chain was captured.
+The native interface values did agree. The explicitly selected native build/load
+oracle now uses a separate worker and fixed communication deadline; ordinary
+offline tests do not implicitly repeat it. Those startup delays and the original
+queued-work cause remain owned by `.3.2.15.2`.
 
 
 Capture requests and helper results are published only after their complete
