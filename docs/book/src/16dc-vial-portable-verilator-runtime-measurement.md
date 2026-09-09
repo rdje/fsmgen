@@ -1426,9 +1426,43 @@ check preparation order and native cleanup; calibration in those controls is
 modeled, and live system-log launches are trapped. These controls are not a new
 original observation, authenticated capture or proof of complete daemon delivery.
 The shared finite controller supports calibrated daemon iterations under
-`.3.2.15.5.2.1`; the fixed sequence CLI remains the next slice. The existing
-fixture-path sequence command keeps its original defaults. No prospective
-campaign is admitted by this controller qualification.
+`.3.2.15.5.2.1`. Its fixed CLI is qualified under `.3.2.15.5.2.2`:
+
+```sh
+scripts/run_with_ram_guard.sh -- python3 -B scripts/run_fixture_startup_daemon_sequence.py \
+  --session "$FSMGEN_CAPTURE_SESSION" --target-family rust \
+  --calibration "$FSMGEN_POLICY_CALIBRATION_A" \
+  --calibration "$FSMGEN_POLICY_CALIBRATION_B"
+```
+
+Use repository-relative session/calibration paths and an already ready helper.
+The command accepts only session, repeated calibration and target-family flags;
+abbreviations and predicate/scope/count/deadline overrides reject. The existing
+fixture-path sequence command keeps its original defaults. The owning observation
+task must admit a prospective campaign separately; qualifying this CLI runs none.
+
+Standard output begins with the relative sequence journal directory. On normal
+completion it emits each validated receipt/digest as a separate JSON line, then
+a closed JSON outcome. That outcome contains only reason, completed invocation
+count, capture-received flag, `qualification: "not_claimed"` and
+`unobserved_descendants: "unknown"`. All receipts are checked before any of that
+completion output is printed: duplicate iterations, changed calibration, forged
+counts/reasons/fields and failed original/collector outcomes reject. Preserve
+receipt digests separately from their artifacts.
+
+| Exit | Meaning |
+| --- | --- |
+| `0` | A capture was received and the sequence settled |
+| `2` | No capture; invocation limit or full-reserve exhaustion ended the sequence |
+| `1` | Operational failure; consult retained evidence |
+| `130` | Interrupted, including interruption followed by cleanup failure |
+
+No-capture status emits no failure message. Failure output is fixed text without
+private arguments/errors; a completed receipt may still be emitted for a failed
+original, whose failed status remains unchanged. Helper cleanup errors retain
+interruption and any already completed receipt. Failure before journal setup
+still closes the admitted helper. A valid receipt proves artifact consistency,
+not original/observer qualification or complete descendant/log coverage.
 
 Daemon sequencing pins one initial calibration identity and rechecks it before
 each invocation. Because preflight consumes time, it checks helper readiness and

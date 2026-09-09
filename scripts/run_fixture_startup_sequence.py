@@ -176,12 +176,17 @@ def run_sequence(session, native, journal, root, *, target_family="all", calibra
         journal.problem("observation", error)
         raise
     finally:
+        pending = sys.exc_info()[1]
         try:
             launcher.stop_helper(session)
             journal.record("sequence_settled", helper_stopped=True,
                            authentication_invalidated=True)
         except (Exception, KeyboardInterrupt) as error:
-            journal.problem("cleanup", error)
+            daemon._problem(journal, "cleanup", error)
+            if isinstance(pending, daemon.CaptureFailure):
+                raise daemon.CaptureFailure(
+                    interrupted=pending.interrupted or isinstance(error, KeyboardInterrupt),
+                    published=pending.published) from pending
             raise
     if time.monotonic() > deadline:
         error = TimeoutError("sequence cleanup exceeded its diagnostic budget")

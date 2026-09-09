@@ -17,6 +17,7 @@ import run_fixture_startup_observation as launcher
 ROOT = launcher.ROOT
 SCOPE = "daemon_context"
 PUBLIC_FAILURE = "fixture daemon capture failed; retained evidence remains authoritative"
+PUBLIC_SEQUENCE_FAILURE = "fixture daemon sequence failed; retained evidence remains authoritative"
 
 
 class CaptureFailure(RuntimeError):
@@ -94,20 +95,64 @@ def run(session, native, evidence, root, calibrations, *, stop_session=True, tar
                 raise CaptureFailure(interrupted=interrupted) from pending or error
 
 
-def _emit_publication(published):
+def _checked_publication(published, *, successful_iteration=False):
     publication.associations.fields(published, ("receipt", "sha256"))
     raw = publication.associations.canonical(published["receipt"])
     checked = publication.consume(raw, published["sha256"], ROOT)
-    print(json.dumps({"receipt": checked["receipt"], "sha256": published["sha256"]}, sort_keys=True))
+    if successful_iteration:
+        report = checked["diagnostic"]
+        if (report["original"] != dict(returncode=0, timeout=False, released=True, leader_reaped=True)
+                or report["collector"]["returncode"] not in (0, -signal.SIGINT)
+                or report["collector"]["reported_failure"] is not False
+                or report["collector"]["leader_reaped"] is not True
+                or report["collector"]["forced_kill"] is not False):
+            raise ValueError("sequence receipt retains an unsuccessful original or collector")
+    return {"receipt": checked["receipt"], "sha256": published["sha256"]}
 
 
-def main(argv=None):
+def _emit_publication(published):
+    print(json.dumps(_checked_publication(published), sort_keys=True))
+
+
+def _emit_sequence(outcome, limit):
+    """Admit closed public outcome/receipt fields before emitting any of them."""
+    associations = publication.associations
+    associations.fields(outcome, ("reason", "completed_invocations", "capture_received", "qualification",
+                                   "unobserved_descendants", "publications"))
+    associations.integer(outcome["completed_invocations"], limit)
+    count = outcome["completed_invocations"]
+    if (type(outcome["capture_received"]) is not bool
+            or outcome["qualification"] != "not_claimed" or outcome["unobserved_descendants"] != "unknown"
+            or outcome["reason"] not in ("invocation_limit", "insufficient_time_for_complete_invocation", "capture_received")
+            or (outcome["reason"] == "capture_received") is not outcome["capture_received"]
+            or (outcome["capture_received"] and count == 0)
+            or (outcome["reason"] == "invocation_limit" and count != limit)
+            or (outcome["reason"] == "insufficient_time_for_complete_invocation" and count == limit)):
+        raise ValueError("sequence outcome lacks a closed truthful disposition")
+    associations.bounded_list(outcome["publications"], limit, 0)
+    if len(outcome["publications"]) != count:
+        raise ValueError("sequence publication count disagrees with its completed iterations")
+    checked = [_checked_publication(published, successful_iteration=True) for published in outcome["publications"]]
+    if (len({p["receipt"]["run"] for p in checked}) != count
+            or len({p["receipt"]["admission_sha256"] for p in checked}) > 1):
+        raise ValueError("sequence publications repeat an iteration or change calibration")
+    for published in checked:
+        print(json.dumps(published, sort_keys=True))
+    print(json.dumps({key: value for key, value in outcome.items() if key != "publications"}, sort_keys=True))
+
+
+def main(argv=None, *, _sequence=False):
     session = evidence = previous_signal = previous_umask = None
     handed_off = False
     status = 1
+    failed = True
+    public_failure = PUBLIC_SEQUENCE_FAILURE if _sequence else PUBLIC_FAILURE
     try:
+        if _sequence:
+            import run_fixture_startup_sequence as sequence
         parser = publication.associations.PrivateArgumentParser(
-            prog="fixture-daemon-capture", description=__doc__, allow_abbrev=False)
+            prog="fixture-daemon-sequence" if _sequence else "fixture-daemon-capture",
+            description=sequence.__doc__ if _sequence else __doc__, allow_abbrev=False)
         parser.add_argument("--session", required=True)
         parser.add_argument("--calibration", action="append", required=True)
         parser.add_argument("--target-family", choices=launcher.observer.TARGET_FAMILIES, default="all")
@@ -127,9 +172,16 @@ def main(argv=None):
         evidence = launcher.observer.Evidence(ROOT)
         print(str(evidence.directory.relative_to(ROOT)), flush=True)
         handed_off = True
-        result = run(session, native, evidence, ROOT, args.calibration, target_family=args.target_family)
-        _emit_publication(result["publication"])
-        status = 0
+        if _sequence:
+            result = sequence.run_sequence(session, native, evidence, ROOT,
+                                           target_family=args.target_family, calibrations=args.calibration)
+            _emit_sequence(result, sequence.MAX_INVOCATIONS)
+            status = 0 if result["capture_received"] else 2
+        else:
+            result = run(session, native, evidence, ROOT, args.calibration, target_family=args.target_family)
+            _emit_publication(result["publication"])
+            status = 0
+        failed = False
     except CaptureFailure as error:
         status = 130 if error.interrupted else 1
         if error.published is not None:
@@ -147,19 +199,21 @@ def main(argv=None):
             try:
                 launcher.stop_helper(session)
             except (Exception, KeyboardInterrupt) as error:
+                failed = True
                 status = 130 if status == 130 or isinstance(error, KeyboardInterrupt) else 1
                 _problem(evidence, "cleanup", error)
         if evidence is not None:
             try:
                 evidence.stream.close()
             except (Exception, KeyboardInterrupt) as error:
+                failed = True
                 status = 130 if status == 130 or isinstance(error, KeyboardInterrupt) else 1
         if previous_umask is not None:
             os.umask(previous_umask)
         if previous_signal is not None:
             signal.signal(signal.SIGTERM, previous_signal)
-    if status:
-        print(PUBLIC_FAILURE, file=sys.stderr)
+    if failed:
+        print(public_failure, file=sys.stderr)
     return status
 
 
