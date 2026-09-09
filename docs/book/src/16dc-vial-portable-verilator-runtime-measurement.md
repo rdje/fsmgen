@@ -1366,7 +1366,7 @@ Calibration-only preflight is available through `calibration_snapshot` under
 the same literal-pair/native-hash and closed-identity checks as sealing. It
 rechecks input and source-archive snapshots, requires no target capture and
 starts no observation. Its returned relative identities are the admission
-snapshot that the future caller must compare exactly against its final seal.
+snapshot that the daemon caller compares exactly against its final seal.
 A later byte change invalidates that comparison even if the literal path/token
 pairs still match. Preflight does not qualify any original result or promise
 that a future target will contain enough observed sources.
@@ -1395,12 +1395,40 @@ publication, not during receipt consumption.
 A valid receipt establishes consistency of the pinned artifacts. It does not
 authenticate them, qualify the original/observer, or establish complete coverage.
 An original failure remains failed in the report even when publication succeeds.
-This publisher starts no observation; wiring it into the fixed combined-capture
-launcher remains the next task.
+The publisher itself starts no observation. The fixed combined caller is
+qualified under `.3.2.15.5.1.4.2.2.2`. With an already admitted helper and local
+calibration inputs, its command is:
+
+```sh
+scripts/run_with_ram_guard.sh -- python3 -B scripts/run_fixture_startup_daemon_capture.py \
+  --session "$FSMGEN_CAPTURE_SESSION" --target-family rust \
+  --calibration "$FSMGEN_POLICY_CALIBRATION_A" \
+  --calibration "$FSMGEN_POLICY_CALIBRATION_B"
+```
+
+The session and calibration values are repository-relative paths. This command
+starts one original test and the fixed daemon collector; use it only after
+helper readiness and the owning observation task's admission. It starts no
+authentication and accepts no predicate, scope, count or deadline override.
+Preflight precedes collector preparation and original release. The existing
+combined launcher retains its original argv, fixture census, target-family
+selection, deadlines and cleanup. After settlement, the caller attempts portable
+publication even if the original failed. It retains both failures privately
+when observation and publication fail, and prints only the relative evidence
+directory and any independently revalidated receipt/digest. Pin that digest
+separately. Public error text is fixed; a receipt does not change a failed exit
+status. Cancellation remains interrupted even if evidence closing also fails.
+
+Standalone use owns helper shutdown, including rejected calibration or evidence
+setup. Internal sequence use leaves the helper with its controller while each
+invocation settles its original, collector and observed fixtures. Held bodies
+check preparation order and native cleanup; calibration in those controls is
+modeled, and live system-log launches are trapped. These controls are not a new
+original observation, authenticated capture or proof of complete daemon delivery.
+The fixed finite sequence still requires separate qualification before a campaign.
 
 The standalone sealing CLI keeps its execution-context contract. The internal
-`seal_daemon_capture` path is available for the pending fixed caller integration;
-it introduces no new observation command. Its native calibration check uses a
+`seal_daemon_capture` path supports the fixed caller. Its native calibration check uses a
 clearly modeled daemon snapshot made from retained evidence, preserving every
 original input. That check proves calibrated sealing and portable consumption,
 not a new daemon capture or complete daemon-record delivery. Retained commands
