@@ -1221,17 +1221,21 @@ daemon messages. Task `.3.2.15.5` therefore owns bounded daemon-wide collection
 and a fixed finite sequence, each requiring qualification before another
 observation. The existing original deadlines and helper admission stay fixed.
 
-Daemon-context implementation is currently blocked on a path-policy decision
-under `.3.2.15.5.1`. Path-token attribution needs the absolute checkout root from
-capture time; the existing OS header preserves it, while the daemon-only
-predicate does not. Substituting the repository's later location would change
-the attributed path. The proposed choices are a bounded historical-root identity
-stored strictly as data and never used for filesystem access, or an explicit
-historical-root input required for offline analysis. The latter needs a stated
-recovery limitation when that input is unavailable. No new root metadata or
-daemon collector has been implemented pending that clarification. Separate native-library evidence does not
-establish the original fixture's kernel cause. This passing observation does
-not establish repair or authorize a retry.
+The path-policy clarification removes the policy blocker in `.3.2.15.5.1`:
+project references remain repository-relative, and paths outside the repository
+are private unless they identify an explicit public dependency. Other users
+must not need objects from the capture machine. The selected design computes
+token associations during capture and retains relative source identities;
+relocated analysis must not require the private historical checkout root.
+Calibration, integrity and limits on later independent re-derivation still need
+qualification; this design is not implemented yet. Daemon-wide messages can
+contain unrelated private paths, so their disclosure boundary also needs
+qualification. Raw ignored evidence is not automatically safe to share, and a
+filtered diagnostic representation must state its omissions. Existing analysis
+still reproduces raw retained records and is not a privacy filter. Required
+public OS/toolchain dependencies remain explicit. Separate native-library
+evidence does not establish the original fixture's kernel cause; the passing
+observation does not establish repair or authorize a retry.
 
 
 A bounded historical query cannot recover even the failed run's already retained

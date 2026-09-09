@@ -27,6 +27,15 @@ Persisted paths are written relative to the repository root. Runtime code and
 tools derive the absolute root at execution time; they never persist the
 machine's current absolute checkout path as project configuration.
 
+This also protects privacy and portability. References to project objects stay
+repository-relative; another user must not need objects from the capture
+machine. Paths outside the repository are private unless they identify an
+explicit public dependency, such as a required operating-system tool. Do not
+disclose private external paths in documentation, diagnostic output or shared
+artifacts. Keeping raw host evidence in an ignored repository-local directory
+does not make its contents safe to publish. Qualify any disclosure boundary
+separately, including messages, errors and embedded source content.
+
 | Data family | Repository-relative root |
 | --- | --- |
 | Generated user/review artifacts | `.artifacts/` |

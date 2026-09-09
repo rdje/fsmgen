@@ -7,11 +7,10 @@ Status and evidence: `docs/tasks/`. The system itself: `MEMORY_ARCHITECTURE.md`.
 
 - repository_revision: derive with `git log -1 --format='%H %s'`; never shadow `HEAD` here.
 - active_work_unit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.5.1`
-  (`blocked`; historical-root policy clarification)
-- next_action: Await the director's historical-root policy decision in .3.2.15.5.1;
-  then qualify the selected daemon-context attribution boundary.
+  (`active`; portable, privacy-preserving diagnostic boundary)
+- next_action: Own and qualify the retained analyzer's exact command/predicate checks;
+  then qualify capture-time relative token associations and the disclosure boundary.
 - in_flight_uncommitted: none after this commit.
 - in_flight_background: none.
-- blockers: Historical absolute-root identity versus relative-path policy needs clarification.
-  Startup/containment cause and parent wire/runtime qualification remain open;
+- blockers: Startup/containment cause and parent wire/runtime qualification remain open;
   full CI/push gated; the original observation campaign is stopped.

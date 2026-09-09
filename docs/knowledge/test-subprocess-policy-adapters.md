@@ -13,7 +13,7 @@ answers:
   - "why did T1669 admission miss its workspace?"
   - "how are fixture command-query exit races handled?"
   - "how are queued-only fixture policy tokens attributed?"
-  - "why does policy attribution need a historical root?"
+  - "how will policy diagnostics avoid private paths?"
   - "which call delayed the native library load?"
   - "why must fixture clock domains stay separate?"
   - "where does T1669 retain failed legacy main entry diagnostics?"
@@ -85,7 +85,7 @@ captures; tests stay normal-user. Identity, expiry and STOP/Ctrl+C checks remain
 `.3.7` closes native capture/shutdown verification; `.3.2` owns causal repair.
 T1669 uses `.artifacts/tmp/process-supervisor-tests/`. Every ps result needs native presence; only disappearance is skipped. Permission/query/live identity changes fail. Native exit and unchecked-ps controls qualify that race, not the historical changed field (`.3.2.11`; book/task).
 History: `93e7072566e2dce7b70c10fa04ffc8765b35b1e9:docs/knowledge/test-subprocess-policy-adapters.md`. Combined original passes without capture; startup cause stays open (.3.2.15.3.3).
-Offline `analyze_fixture_policy.py` preserves complete retained records and calibrated source/token joins; collisions fail and missing records stay unknown (.15.1). Sampled dyld F_CHECK_LV and distinct Python/Perl clocks (.15.2) establish no historical conversion or shared cause. Fixed `run_fixture_startup_context_capture.py` uses execution_context; old callers retain fixture_path (.15.3.2). Failed queues coexist with continued provenance logging; the exec/path predicate can omit other daemon context (.15.4). Daemon attribution needs its historical absolute root; storage awaits .15.5.1. Worker state/delivery stay unknown.
+Offline analysis preserves raw context and calibrated source/token joins; collisions fail, missing records stay unknown (.15.1). F_CHECK_LV and distinct clocks prove no shared cause (.15.2). Fixed context capture uses execution_context; defaults retain fixture_path (.15.3.2). Failed queues coexist with provenance logging; other daemon context may be omitted (.15.4). Director clarification selects capture-time relative associations and no disclosed private external paths (.15.5.1); implementation/calibration/privacy qualification remain pending. Raw local evidence is not automatically safe to share. Worker state/delivery stay unknown.
 T1595's pre-main cause stays open; `.19.2.3.1.2.2.6.2` fixes capture.
 `RamGuardFixtureRuntime` seals tools/argv, paths, bounds and full results.
 T1811/T1669 prove signal/stream failures and group cleanup; T1595 keeps metrics.
