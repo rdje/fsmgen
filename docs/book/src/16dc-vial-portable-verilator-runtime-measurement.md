@@ -1203,10 +1203,15 @@ fixture deadlines and Rust candidate selection are unchanged. Full original
 failures remain failures even when observation and cleanup succeed.
 
 Task `.3.2.15.3.2` qualifies this composition with controlled held bodies and
-scope mutations; `.3.2.15.3.3` owns the separately admitted original observation
-after commit and helper readiness. Separate native-library evidence does not
-establish the original fixture's kernel cause. A passing run or absent capture
-does not establish repair or authorize a retry.
+scope mutations. The separately admitted original under `.3.2.15.3.3` passes
+with complete retained queue/start/wakeup joins for its observed producer paths.
+It triggers no kernel capture. The original and observed fixtures are gone,
+their observed workspaces are removed, and the helper has stopped and invalidated
+authentication. Complete log and descendant coverage remain unproved.
+Task `.3.2.15.4` compares the retained passing and failed policy context before
+another measurement is selected. Separate native-library evidence does not
+establish the original fixture's kernel cause. This passing observation does
+not establish repair or authorize a retry.
 
 
 A bounded historical query cannot recover even the failed run's already retained
