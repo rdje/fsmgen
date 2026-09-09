@@ -1492,6 +1492,18 @@ Raw evidence and both failures remain authoritative. Task `.3.2.15.7` owns a
 bounded diagnostic repair and offline analysis of this failed-target capture;
 no further campaign is selected. Startup qualification remains open.
 
+The full retained stream contains the failed proxy's queue, start and wakeup.
+Its start and wakeup lie beyond the old record prefix; truncation would produce
+a misleading queued-only projection. The full diagnostic projection also
+exceeds the old report byte bound, so increasing only the loader count would
+leave publication broken. The selected repair uses an explicitly versioned
+archive index and bounded ordered pages, retaining metadata hashes and positions
+as well as every log projection. Existing formats remain unchanged. Schema,
+producer, publication and fixed-caller integration have separate task leaves;
+this is a selected contract awaiting implementation, not a usable new command.
+Kernel frames and the delayed retained scan do not yet establish worker cause
+or startup repair.
+
 Standard output begins with the relative sequence journal directory. On normal
 completion it emits each validated receipt/digest as a separate JSON line, then
 a closed JSON outcome. That outcome contains only reason, completed invocation

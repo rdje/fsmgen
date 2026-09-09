@@ -2720,7 +2720,7 @@ decomposes the architecture needed to move beyond that bounded foundation.
   Status: `done`
   Goal: `Audit retained token widths and recover the failed publication offline.`
   Acceptance: `After .1 commits, census exact retained original capture inputs and token spellings; independently compare old/new normalized joins and identify every affected historical claim. Preserve original raw evidence and existing pinned publications. Produce separately owned recovery artifacts for the failed daemon iteration, verify with native calibration and portable consumers, and bind exact hashes to the original failed campaign. No new original, helper, collector or retry qualification. Track any additional defect before repair and commit aligned evidence/book/fact.`
-  Verification: `At committed normalization 0194d4e916b596e2368967d990d09865b0a562ec, bounded census covers all twenty-nine run directories under .artifacts/logs/t1669-startup-observation/: eighteen retained policy streams, eleven without policy result, six current attribution contracts. Independent delimiter/alphabet/integer decoding agrees with production tokens; no malformed field is found. Short spellings occur in four runs: twelve records in failed daemon publication run-4be794f0b2b24a37b29610ea4a117a9d and one each in older run-408ca031548b48048080d09967a2e815, run-56acf35d82fc468695c3b18ebf0e05ef and run-c9fd4d55b58144c38f9ce1fd17ebaeb6. The four current execution-context analyses are completely equal before/after repair, including the failed queued-only example; first daemon receipt d6cc46cf00064ad9cc39a4419ae27b7c305e27c276346d02cfab3a1686704cc0 and every projected record remain unchanged. Native values for older short tokens are 0102c5530af93c1f, 032994547ab9ea4f and 0f06d68b63b3c6e7. Original task versions 0a65abfd1ec65ff620a6387960f93adc31a85e37 and 3ca01e0091697119e13929e2a762ab7c9eec6152 explicitly retain the first two short spellings; 82a3c00071120b963faaf43555fc9bbc6a1a10ee retains the third passing invocation's complete event count/raw hash without a per-token group or absence claim. Historical source-version/stack/causality limitations remain; current loader is not retrofitted onto those older scopes. Recovery exclusively creates the previously absent policy-associations.json, policy-diagnostic.json and policy-publication.json in the second daemon run. Fresh native calibration equals the pinned admission 0784264dd0d4daf183e6b161a132a2cb2ecd585cb2e7e74a85012c3794bfa01f. Manifest is 263556 bytes/SHA-256 13a2aad2c4df4124407f583ac4fea6b3438af6ce8a6b398b110f083dcbcf6b9a; report is 676335 bytes/803c0c9b51859d2fd6c1231c82c4be14bfdc1bbb26bd46e67fa3202c923921d8; receipt SHA-256 aff1e18a4b10591784d7c25dbd8b40eeca0f5ae06b3ece00f7d6d6e972fc5c6f. Portable consumption passes with private/native access trapped. All 2425 records retain raw hashes; normalized 0499990c7f2beab5 joins indices 752,753,754,767,768,796,932,934,937,938,940,941 to the 44-byte decoy source c6e0dc1adf2f6087fe9ba8b0a21b581ed6e6c757c0b6aa31bf47e51fda687f5c, with queue/start/wakeup one each. All preexisting audited files and the second-run failure.json remain byte-identical; no original/helper/collector launches. Original campaign exit 1 remains failed and both originals remain passing; recovery establishes artifact consistency only. Re-derivation: independent integer decoder, native calibration/path values, complete old/new comparison and portable anchored consumption. Falsification: old fixed-width extraction omits the newly joined records; correct native values and preserved older explicit evidence reject missing-token and changed-historical-cause interpretations. Durability: task/book/fact/Git bind correction to the failed campaign. Supplemental ignored evidence at .artifacts/logs/policy-token-retained-audit-20260909/: audit.json 28923 bytes/825842c69eafcb6a565c5452e6da19cbbc091130020a83cafbe40cb14102cd8a; recovery.json 2149 bytes/ee4eb13360383774d21e58c8b478ad39efb0c2a289002baf629ba261e1078b26; history-dispositions.json 2864 bytes/2997e21551b5bcdafe271ddf39dd75bf41e98f7d9ab0b7b5e85ae3e3fbdde208. The initial staged gate rejects pending status on the new container; it is corrected to active while both leaves remain pending. Startup cause is still unproved: the repaired publication supplies passing daemon context, not a failed-target daemon observation. .15.6 separately owns one follow-up admission/campaign after this commit.`
+  Verification: `Full retained census, all older short-token identities/dispositions, unchanged analyses/first receipt, exact recovered second publication and every original failure are recoverable at e79b7b26d3b2a99e0afaac4924265441937b596c:docs/tasks/HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.md. Recovery receipt aff1e18a4b10591784d7c25dbd8b40eeca0f5ae06b3ece00f7d6d6e972fc5c6f binds corrected artifacts only; the first campaign remains failed and both originals passing. All prior bytes remain unchanged, native calibration is unchanged, and startup cause is unproved. Supplemental raw audit/recovery evidence remains explicitly gapped in that exact record.`
   Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.5.4.2: audit retained token widths and recover daemon publication offline`
 
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.6`
@@ -2749,17 +2749,43 @@ decomposes the architecture needed to move beyond that bounded foundation.
   Verification: `The committed .6 campaign supplies one exact failed target/kernel capture and a complete byte-retained daemon stream that the current portable path cannot represent. Children own diagnosis, repair and recovery separately.`
   Children: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.1, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.2, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3`
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.1`
-  Status: `pending`
+  Status: `done`
   Goal: `Diagnose retained event saturation and select a finite repair contract.`
   Acceptance: `Query durable facts, inspect the exact input/collector/analyzer/publication bounds, independently census and attribute the failed target's retained records and sample, and distinguish parser limits from missing log delivery. Select the smallest evidence-preserving bounded repair without changing original assertions/deadlines or silently widening public limits. Commit before implementation.`
-  Verification: `Pending .6.2 outcome commit. The exact rejection originates in analyze_fixture_policy.py; git log -S for its error locates 8f9bab40065c85f15162e952753e81107c88d87d. No new original or collector is owned here.`
-  Commit: `pending`
+  Verification: `At e79b7b26d3b2a99e0afaac4924265441937b596c, unchanged native calibration matches 0784264dd0d4daf183e6b161a132a2cb2ecd585cb2e7e74a85012c3794bfa01f. Independent delimiter/alphabet/integer token decoding agrees over all 8492 log events and 55 metadata rows; changed path suffixes reject every observed source token. Failed proxy c70948274239ac01 has twelve retained records; queue/start/wakeup are log indices 2343/5600/6214 at 20:54:26.649954/20:54:41.603439/20:54:41.808651 +0200. Eleven of its records lie beyond the old log-event prefix; truncation would falsely leave a queued-only projection. The literal file URL in record 6209 independently confirms the exact archived source. Within the retained policy timestamp domain, queue-to-start is 14953485 microseconds and start-to-wakeup 205212; no conversion to supervisor or observer clocks is made. The bound failure originates at analyze_fixture_policy.py MAX_EVENTS and is repeated by frozen association/report validators. The entire diagnostic record array alone is 2348609 bytes, also exceeding the existing 2097152-byte report cap; merely lifting the parser count would fail again. Private diagnosis is 18438 bytes/SHA-256 ee226352cb4b16ce55ec5f7f11ec7cdcc1b80db6dbd7a272aa20a5681d527f46. A separate ordered-page probe preserves all 8547 canonical record hashes, including metadata, in three pages with 4096/4096/355 entries and 1199167/1210479/106087 bytes. Probe digest 066353cd038f63c43b58dc7cb628dedc16554f081245c666ba089e2e6dc8ac59; its binding is explicitly a placeholder, not a publication. Select the paged successor contract below; frozen v1 behavior and current callers remain unchanged until their owned integration. Re-derivation: complete raw/collector hash, native/literal/path/source joins and exact context-projection dimensions. Falsification: prefix-only projection loses the observed start/wakeup; record-only cap change still exceeds the report cap; ordered complete reconstruction proves the selected part shape fits this retained example. Durability: task/book/fact/Git retain cause, full bounds and next owners; ignored diagnosis/probe/sample evidence remains a supplemental durability gap. The failed proxy sample contains AppleSystemPolicy frames throughout its reported samples, but daemon queue duration and those frames do not prove worker cause or a startup repair. .2 owns schema, producer, publication and caller integration in separate commits before .3 recovery/causal analysis. No new original/helper/collector or host mutation.`
+  Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.1: select bounded pages for saturated daemon evidence`
+
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.2`
+  Status: `active`
+  Goal: `Implement and qualify the selected bounded diagnostic archive successor.`
+  Acceptance: `Follow the exact .1 archive contract below in separate committed schema, producer, publication and fixed-caller leaves. Preserve every frozen v1 contract, original failure and finite process limit. No live campaign is part of this implementation.`
+  Verification: `Selected from the failed retained stream; .2.1 alone starts after .1 commits.`
+  Children: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.2.1, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.2.2, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.2.3, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.2.4`
+- ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.2.1`
   Status: `pending`
-  Goal: `Implement and qualify the selected bounded diagnostic representation repair.`
-  Acceptance: `After .1 commits an exact contract, implement only that repair with independent full-input/omission/reordering/tamper/boundary controls, focused regression and synchronized book. Preserve all current frozen contracts and failure truth unless an explicitly selected successor owns the change. Commit before recovery.`
-  Verification: `Pending diagnosed and committed contract; no implementation selected yet.`
+  Goal: `Implement closed archive index/page admission and portable consumption.`
+  Acceptance: `Implement the selected schemas, exact domains/order/count/linkage/hash checks and fixed same-volume reads. Independent constructed pages prove acceptance, loss/reorder/duplicate/gap/tamper/foreign binding/byte and count boundaries; private/native reads are trapped during consumption. No producer, publication or caller changes.`
+  Verification: `Pending .1 contract commit.`
   Commit: `pending`
+- ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.2.2`
+  Status: `pending`
+  Goal: `Build the full calibrated archive from a bounded retained daemon stream.`
+  Acceptance: `Validate exact private scope/bytes/original/source/calibration identities, deterministically pack all rows under both page bounds, and reread inputs before return. Independent full reconstruction, late target records, metadata order, projection and boundary/collision/contradiction/mutation controls must pass. Preserve v1 loaders and limits; no file publication.`
+  Verification: `Pending .2.1.`
+  Commit: `pending`
+- ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.2.3`
+  Status: `pending`
+  Goal: `Publish complete archive pages with the final separately anchored index.`
+  Acceptance: `Preflight every fixed destination, publish complete pages exclusively, independently consume them before index publication, and verify the final index. Preserve partial complete pages and original errors on failure; reject reuse/replacement/tampering/foreign paths without overwriting. No collector/original starts.`
+  Verification: `Pending .2.2.`
+  Commit: `pending`
+- ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.2.4`
+  Status: `pending`
+  Goal: `Integrate the explicit archive successor into the fixed daemon callers.`
+  Acceptance: `Deliberately update daemon receipt handling to the named archive schema while preserving CLI flags, original deadlines, calibration pinning, sequence reserves/count and failure/interruption/cleanup semantics. Qualify large retained projections plus ordinary, failed-original, forged-receipt/outcome, publication and cleanup failures without live collectors; legacy v1 APIs remain unchanged. Update the book before recovery.`
+  Verification: `Pending .2.3; current callers still use v1.`
+  Commit: `pending`
+
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3`
   Status: `pending`
   Goal: `Recover the retained failed-run diagnostic and advance causal analysis offline.`
@@ -3737,7 +3763,7 @@ decomposes the architecture needed to move beyond that bounded foundation.
 
 ## Current Frontier
 
-Current frontier: .3.2.15.6 is exhausted: one failed Rust original, one exact kernel capture, settled cleanup and an event-bound publication rejection. Commit .15.6.2 outcome, then .15.7.1 diagnoses retained evidence and selects a bounded diagnostic repair. No repeat campaign. Startup/parent qualification, full CI and push remain gated.
+Current frontier: .3.2.15.7.1 selects a bounded paged archive after proving that truncation loses the failed target's start/wakeup and a count-only change still exceeds the report byte cap. Commit selection, then .15.7.2.1 owns closed schemas/consumption. Current v1 callers are unchanged; no further campaign. Startup/parent, full CI and push remain gated.
 
 Architecture audit `.1` is complete. Decision `0032` selects one public
 `.vial` source language, private immutable `VIALSemanticIR` and
@@ -5887,69 +5913,7 @@ is explicitly missing until that implementation lands. Full CI remains blocked.
   rejected a pending status on a new container; it was corrected to active.
   No completed source repair or full-CI success is claimed by this checkpoint.
 
-## Acceptance Checklist (.19.2.3.1.2.2.5.5.4 child group admission; enforced)
-
-- [x] **ROOT CAUSE (WHY + WHERE)** — `git log -S 'unless (eval { setpgid(0, 0); 1 })'`
-  identifies the original process engine at `b253263c847a2ac641f9cae14603d28d1a755122`.
-  The real POSIX invalid-PID oracle returns `undef`/`ESRCH`, without throwing.
-  The old child branch ends its eval with literal true. T1669's new controls
-  consequently observe command execution for nonthrowing failure and false
-  success, while the exception control rejects. The initial RAM-guard attempt
-  refused unavailable sandbox process inspection; the authorized guarded run
-  supplies the RED evidence in `red.log` under the task log root.
-- [x] **ADDRESSED (verified)** — The child now checks the returned zero and
-  actual PGID before descriptor/exec handoff. The unchanged hostile controls
-  pass with `exec_error`, no command output, reaped leader, absent child group
-  and unchanged caller group. The parent retains its race-closing attempt;
-  caller seals, result schemas, budgets and retry policy do not change.
-  The fact card and rendered book describe this guarantee separately from
-  the still-open nested-group limitation. The task index returns to `.5.5.1`.
-- [x] **NO REGRESSION** — Guarded T1669, T1668 and T1545 report `ok` in
-  `green.log`; its later invalid T313 filename makes that invocation incomplete,
-  not a complete-band pass. Corrected T313 reports `All tests successful` in
-  `hdl-validation.log`. The book build succeeds and its rendered paragraph is
-  inspected. Import re-derivation matches the existing architecture baseline.
-  The staged driver reports `[doctrine] all doctrine checks passed`, including
-  fresh acceptance, Knowledge Map, containment, locality, task integrity and
-  claim joins. The inspected book render is removed with exact file hashes
-  and absent-root evidence retained in `book-cleanup.json` under the log root.
-
-The startup review followed the director's recorded task-directed scope in
-`SESSION-READING-SCOPE`: mandatory entrypoints, complete roadmap, task workflow,
-active repair nodes and evidence, CLI source and import architecture, shared
-engine and relevant tests, book contents and the relevant product/supervision
-sections. This is not an exhaustive source/test/book review. The requested
-read-only sibling claim-template digest still matches the already-owned
-`CLAIM-VERIFICATION-TEMPLATE-REVIEW` discovery; no new template delta is inferred.
-The local containment adoption guide includes the current stable-success
-contract revision. README policy is already adopted. No new policy adoption,
-architecture-note refresh, complete-CI pass or nested cleanup repair is claimed.
-
-## Acceptance Checklist (.19.2.3.1.2.2.5.5.5 finite post-KILL reap; enforced)
-
-- [x] **ROOT CAUSE (WHY + WHERE)** — `git log -S 'my $waited = waitpid($pid, 0);'`
-  traces the blocking wait to the original shared-engine ancestor
-  `b253263c847a2ac641f9cae14603d28d1a755122`. That wait precedes creation of the
-  KILL-grace deadline in `_terminate_owned_process`. The isolated mock oracle
-  goes RED with `blocking wait bypasses cleanup deadline`; its clock advances
-  while its leader/group remain present. Signal and wait syscalls are mocked
-  inside a separate bounded process, so the oracle signals no real PID and
-  creates no unkillable child. The earlier process-admission fix stays green.
-- [x] **ADDRESSED (verified)** — The existing KILL grace now covers both
-  nonblocking leader polling and group disappearance. The unchanged oracle
-  returns normally with incomplete leader/group evidence and observes TERM
-  then KILL. First-failure status and fixed grace values remain unchanged;
-  there is no retry or new process-runner entrypoint. Book and fact-card prose
-  distinguish bounded cleanup attempts from proved disappearance.
-- [x] **NO REGRESSION** — The guarded T1669/T1668/T1545/T313 band reports
-  `All tests successful` in `green.log` under
-  `.artifacts/logs/process-reap-deadline-20260907/`. It includes real
-  TERM-resistant descendant cleanup, success, signal/exit/exec/overflow and
-  sealed-adapter controls, alongside the new deliberately unresolved mock.
-  The book builds and the rendered cleanup paragraph is inspected; exact
-  cleanup hashes and absent-root evidence are in `book-cleanup.json`. The
-  staged driver reports `[doctrine] all doctrine checks passed`, including
-  fresh task acceptance, Knowledge Map, containment, locality and claim joins.
+Child-group admission and finite post-KILL reaping acceptance: recover every exact assertion, observed failure and passing oracle from `e79b7b26d3b2a99e0afaac4924265441937b596c:docs/tasks/HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.md`. Live nodes and the selected ownership contract retain current behavior and limitations.
 
 ## Nested ownership selection (.19.2.3.1.2.2.5.5.1)
 
@@ -6061,31 +6025,7 @@ the complete selected nesting boundary succeeds.
   watchers are a missing leg owned by `.5.5.2` and `.5.5.3`; no implemented
   nested-containment guarantee is published by this decision.
 
-## Acceptance Checklist (.19.2.3.1.2.2.5.5.1 selection and decomposition; enforced)
-
-- [x] **ROOT CAUSE (WHY + WHERE)** — The retained independent nested probe in
-  `.5.1` observes a live inner group after the returned outer `group_gone`.
-  `git log -S 'setpgid(0, 0)'` traces the separate-group mechanism to
-  `b253263c847a2ac641f9cae14603d28d1a755122`. The current Rust adapter consults
-  each stage's group cleanup before removing its workspace; sharing one group
-  cannot silently preserve that meaning. Existing admission and bounded-reap
-  controls pass; neither addresses loss of the intermediate group owner.
-- [x] **ADDRESSED (architecture selected; runtime repair pending)** — The task-local
-  selection compares the alternatives and selects coordinator-owned forks,
-  recorded-before-exec ownership, finite private cooperating clients, logical
-  parents, failure preservation, cancellation and explicit guarantee limits.
-  The implementation container now has independently reviewable child leaves.
-  Memory, the active index and the existing fact card route to the
-  exact protocol frontier. Automated implementation and qualification remain
-  explicitly missing under `.5.5.2` and `.5.5.3`.
-- [x] **NO REGRESSION (selection only)** — The preceding focused process band
-  reports `All tests successful` at clean source commit `6155096cd`; this slice
-  changes no process source, test or public behavior. The final staged driver
-  reports `[doctrine] all doctrine checks passed`, including task integrity,
-  Knowledge Map, claim joins and fresh acceptance. The initial rollover-debt
-  rejection is retained in `initial-doctrines.log`; the final resulting tree
-  keeps the original ceilings and allowances and all substantive selection
-  content. Logs are under `.artifacts/logs/nested-ownership-selection-20260907/`.
+Nested-ownership selection acceptance: recover all exact checked assertions and measured limitations from `e79b7b26d3b2a99e0afaac4924265441937b596c:docs/tasks/HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.md`. The adjacent live selected contract and authoritative nodes remain intact.
 
 ## Group identity refinement (.19.2.3.1.2.2.5.5.2.1.1)
 
@@ -6162,30 +6102,7 @@ Production coordinator integration, hostile partial-start/owner-loss races and
 Linux execution remain missing legs under the following owned leaves. The
 mdBook's current nested-cleanup limitation stays accurate and is unchanged.
 
-## Acceptance Checklist (.19.2.3.1.2.2.5.5.2.1.1 reservation oracle; enforced)
-
-- [x] **ROOT CAUSE (WHY + WHERE)** — `git log -S 'waitpid($pid, WNOHANG)'`
-  identifies `d630261e61ebd240dd4e9817c362e0ea185629d7` and the shared-engine
-  move `d1235212cd7b15d4867edf9f8f08e3937fae6cc6`. The source harvests the
-  command identity before later group cleanup. The selected coordinator must
-  retain a separate group identity through its last signal; the independent
-  kernel oracle supplies that feasibility evidence without claiming a live
-  PID-reuse incident. The failed negative-control exit is separately reduced
-  to Perl END status clobbering by the direct success/failure controls above.
-- [x] **ADDRESSED (design feasibility verified; integration pending)** — T1669
-  verifies reservation departure, retained command membership, independent
-  normal/cancel wait truth, group absence before reservation release and exact
-  cleanup. Its unmoved control fails at group absence; localizing END status
-  preserves that failure. The task-local coordinator selection is refined and
-  the wire/lifecycle frontier is split explicitly before production changes.
-- [x] **NO REGRESSION** — Guarded T1669/T1668/T1545/T313 report
-  `All tests successful` in `green.log`; the preceding fixture failure remains
-  in `regression.log`. No production process engine, adapter contract or book
-  behavior changes. Logs are under
-  `.artifacts/logs/nested-group-reservation-20260907/`; `staged-doctrines.log`
-  reports `[doctrine] all doctrine checks passed`, including fresh acceptance,
-  task integrity, Knowledge Map and unchanged containment limits. Full CI and
-  push remain blocked by the active nested and RAM-fixture frontiers.
+Reservation oracle acceptance: recover all exact checked assertions and measured limitations from `e79b7b26d3b2a99e0afaac4924265441937b596c:docs/tasks/HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.md`. The adjacent live selected contract and authoritative nodes remain intact.
 
 ## Private coordinator protocol (.19.2.3.1.2.2.5.5.2.1.2)
 
@@ -6475,51 +6392,32 @@ fact-card route and Git; automated protocol/queue/lifecycle watchers are still
 missing and owned by the following implementation/qualification leaves. This
 selection alone does not unblock neutral-verifier acceptance or full CI.
 
-Startup review on 2026-09-07 followed the settled `SESSION-READING-SCOPE`
-decision: required doctrines, roadmap, live owner, relevant source/tests and
-book, plus CLI routing and its import architecture. The selected PGEN template
-was read-only on the repository volume; its digest still matches the changed
-input recorded in `CLAIM-VERIFICATION-TEMPLATE-REVIEW`. Local claim authority
-is unchanged. The containment adoption guide includes its latest stable-count
-integration rule; no new portable policy revision was found in that local
-source. The README remains the governed landing page. No project artifact is
-deleted while it owns pending failure or verification evidence.
+The complete dated 2026-09-07 startup review remains at `e79b7b26d3b2a99e0afaac4924265441937b596c:docs/tasks/HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.md`; scoped reading and local doctrine authorities remain unchanged.
 
 Protocol selection .19.2.3.1.2.2.5.5.2.1.2 and asynchronous extraction .19.2.3.1.2.2.5.5.2.2 acceptance: recover every complete checked assertion from `a611bfb11b4b08ff9e71b9889f088f4e7716733a:docs/tasks/HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.md`. Live nodes retain their contracts, results and limits.
 
-## Coordinator safe-slice decomposition (.19.2.3.1.2.2.5.5.2.3)
-
-The post-extraction source exposes a material implementation boundary:
-`_start_supervision` still releases its single command directly to exec. The
-selected coordinator cannot safely be added merely by calling that function
-from a socket loop. It must publish owned records before releasing exec,
-retain a separate reservation child, transport each client's execution context
-without changing bytes, and preserve caller cwd while binding a local endpoint
-under long checkout paths. The preceding synchronous and nonblocking-step
-regressions do not qualify any of those new failure domains.
-
-Apply the director's batch stop condition for a task expanding beyond a safe
-slice. The live coordinator node is now a container with the exact sequence:
-wire/snapshot and independent exec oracle; endpoint/connection lifecycle;
-reserved-group launch gates; root admission/service integration. Every child
-has explicit acceptance and predecessor evidence before source changes. This
-is an early batch stop after the verified protocol and extraction commits,
-not completion of the requested default batch or the coordinator repair.
-A fresh session resumes directly at `.5.5.2.3.1`; no implementation from that
-child is in flight. Existing neutral-verifier, RAM-fixture and full-CI blockers
-remain open, and no push is attempted.
-
-Validation for this documentation-only decomposition is the staged task-tree
-and doctrine gate plus diff hygiene. The preceding source commit's guarded
-T1669/T1668/T1545/T313 band remains its behavioral evidence; this decomposition
-changes no process code, book behavior, policy constant, or public result.
-Retain the gate and commit output under
-`.artifacts/logs/coordinator-safe-slices-20260907/`.
+Historical coordinator safe-slice decomposition and its exact failed/passing limits: recover `e79b7b26d3b2a99e0afaac4924265441937b596c:docs/tasks/HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.md`. The authoritative live nodes above retain current protocol, implementation and qualification state.
 
 Prior wire, endpoint, runtime, startup-observation, policy-analysis and daemon-qualification acceptance histories: recover every exact route, original failed result, checked assertion and correction from `0194d4e916b596e2368967d990d09865b0a562ec:docs/tasks/HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.md`. Live nodes retain all open causes, qualification limits and current behavior.
 
-## Acceptance Checklist (corrected campaign outcome .3.2.15.6.2)
+## Selected saturated daemon archive contract (.3.2.15.7.1)
 
-- [x] **ROOT CAUSE (WHY + WHERE)** — `git log -S 'retained policy exceeds its event bound' -- scripts/analyze_fixture_policy.py` locates 8f9bab40065c85f15162e952753e81107c88d87d. Retained combined records exceed that unchanged loader bound; separately, T1669 preserves the proxy_nonzero startup timeout.
-- [x] **ADDRESSED (verified failure retention and cleanup)** — One campaign stops on its first failed original, receives the exact target sample and preserves publication failure. Independent native/workspace/authentication and raw-byte checks pass; .15.7 owns diagnostic repair and causal analysis. This closes observation, not startup repair. Initial gate rejects two undispositioned book measurements; historical dispositions then require canonical UTF-8 and the fixed group owner; corrected.
-- [x] **NO REGRESSION (outcome evidence and documentation)** — Current parser/caller/tests and limits are unchanged. Book render/cleanup, knowledge-map: OK, refreshed claim inventory and staged doctrines preserve both failures and the next repair owner; full CI/push remain gated.
+Implement a separate `scripts/fixture_policy_archive.py` successor. Existing association, diagnostic and publication v1 schemas, filenames and public APIs retain their exact bounds and meaning. The fixed daemon callers deliberately switch only in `.2.4`; there is no catch-and-retry fallback, predicate narrowing or silent change to v1. The source stream remains bounded by the existing 16-MiB collector/input cap. A new archive admits at most sixteen pages; each page retains at most 4,096 combined log/metadata rows and at most 2,097,152 canonical ASCII JSON bytes. The complete page set is therefore bounded by 65,536 rows and 33,554,432 bytes; the index separately stays at 2,097,152 bytes. These are explicit successor envelope selections, not increased v1 limits or a promise to represent every possible input within the raw byte cap. Excess fails before publication; never truncate or drop context to fit.
+
+The closed index schema is `fsmgen.fixture_policy_archive.v1`, with exactly `schema`, `context`, `context_sha256`, `pages`, `record_count`, `log_event_count`, `metadata_count` and `limits`. `context` contains exactly `run`, `inputs`, `sources`, `calibrations`, `producers`, `scope`, `original` and `collector`. Reuse the existing input/source/calibration domains and ordering; source tokens are unique calibrated canonical path hashes. Scope is exactly daemon_context; original/collector fields and admitted scalar domains are the existing diagnostic projections, preserving failed originals. Producer identities bind the archive module and its actual analysis/association/diagnostic dependencies. The context digest is SHA-256 of its complete canonical bytes. No native birth, raw path, raw message, raw metadata, source body or error string enters this public structure beyond the existing admitted repository-relative source/run coordinates.
+
+`pages` is a nonempty ordered list of exact descriptors: `path`, `bytes`, `sha256`, `first_record`, `record_count`, `log_event_count`, `metadata_count`. Paths are exactly `<run>/policy-archive-0001.json` through the selected consecutive page count; no caller filenames. Indices start at zero and descriptors cover one contiguous combined-row sequence without empty pages, gaps, overlaps or duplicates. Totals must equal exact descriptor sums. The index lives only at `<run>/policy-archive.json`; it is the separately pinned receipt and contains no self-digest cycle. Every page count and byte bound is checked before reads/decodes where possible. Native record hashes bind canonical parsed rows; the complete raw input hash separately binds original header, whitespace and bytes.
+
+Each closed page has exactly `schema`, `context_sha256`, `first_record` and `records`, with schema `fsmgen.fixture_policy_archive_page.v1`. Every entry is either exactly `{kind: metadata, sha256}` or `{kind: log_event, sha256, tokens, phase, context}`. Use existing canonical token/phase/admitted-context domains and digest grammar. Metadata contents stay omitted, but their hashes and positions remain, preventing an unaccounted gap in the retained stream. `first_record`, entry counts, kinds, context digest and file digest must match the index; the consumer reconstructs all entries in order and reports no complete-delivery, authenticity, native-rederivation, source-body-verification or original-qualification claim. Frozen limit/omission labels must be exact, not caller text. Consumer I/O is only the anchored index and its bounded fixed public pages; it never accesses private inputs, source bodies, native APIs or the historical root.
+
+The builder reuses exact privately root-bound daemon command/header/collector validation, archived source identities and separate literal calibration. It independently checks target literal/native joins, including contradictions, collision and malformed-token rejection. Refactor only shared bounded validation primitives where necessary; do not weaken the v1 loader to admit the successor. Consume each nonblank post-header row once in original order. Pack greedily until adding the next whole entry would exceed either page limit; use exact canonical byte accounting, not repeated whole-page serialization. Fail if one entry cannot fit or the page-count envelope is exhausted. Bind full context, original/collector failure flags and all input hashes; re-read the complete input/source/calibration set before returning a build. No fabricated sub-run, edited policy-result, sliced raw input or backdated artifact is permitted.
+
+Publication preflights all fixed archive destinations, publishes complete pages exclusively using the qualified same-volume identity-safe primitive, then independently consumes the prospective anchored index against actual page bytes before publishing that index last. Re-read the final index and preserve the original inputs. Existing or partial publications are never overwritten or silently resumed. A later error retains complete earlier pages and failure truth; no index means no completed publication. Portable consumption returns the admitted index and ordered pages within the finite aggregate envelope. Fixed caller/sequence integration validates the new context's run, calibration digest and original/collector outcomes explicitly; it must not treat receiving an archive as successful original execution. CLI flags, authentication ownership, first-failure/capture stop, reserved budget, invocation ceiling and unknown descendant/delivery limits remain unchanged. No compatibility alias may reinterpret an archive as a legacy v1 manifest/report pair.
+
+Qualification is split across `.2.1`–`.2.4`: an independent constructed-page oracle; exact boundary/excess and malformed closed-field controls; loss/order/duplicate/gap/foreign-context/forged-anchor controls; full raw-to-ordered-projection equality with metadata and late failed-target records; native/calibration/source contradictions and input mutation; publication ordering/partial failure/exclusive destination/identity replacement; and fixed caller failure/interruption/cleanup/sequence outcomes. Run focused bands and the default fixture band with live collectors trapped. The private selection probe uses a placeholder binding and proves only this layout's fit, never implementation qualification or a published archive. `.3` alone owns offline recovery after all implementation commits. Kernel and daemon evidence support a delayed retained scan, but worker scheduling, exact wait causality and a startup repair still need independent evidence.
+
+## Acceptance Checklist (saturation selection .3.2.15.7.1)
+
+- [x] **ROOT CAUSE (WHY + WHERE)** — `git log -S 'retained policy exceeds its event bound' -- scripts/analyze_fixture_policy.py` locates 8f9bab40065c85f15162e952753e81107c88d87d. The unchanged loader and frozen projection bounds reject the larger daemon scope; the complete diagnostic projection also exceeds its byte bound.
+- [x] **ADDRESSED (verified selection)** — Independent full-input/token/path/literal reconstruction proves the late start/wakeup records and rejects prefix-only attribution. A separate finite page probe reconstructs every retained row in order. The exact successor contract and separately committed schema/producer/publication/caller leaves own repair; implementation is not yet qualified.
+- [x] **NO REGRESSION (selection and documentation)** — All implementation and frozen limits remain unchanged. Book render/cleanup, knowledge-map: OK, refreshed claim inventory and staged doctrines retain the selected successor and explicit startup/full CI/push gates. Initial containment gate rejects task aggregate bytes; completed historical acceptance routes now retain their complete exact Git versions without raising allowances.
