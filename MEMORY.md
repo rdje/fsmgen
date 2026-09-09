@@ -6,10 +6,10 @@ Status and evidence: `docs/tasks/`. The system itself: `MEMORY_ARCHITECTURE.md`.
 ## Resume
 
 - repository_revision: derive with `git log -1 --format='%H %s'`; never shadow `HEAD` here.
-- active_work_unit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.5.1.2`
-  (`pending`; portable capture-time token associations)
-- next_action: Activate .3.2.15.5.1.2 and qualify the bounded relative association contract,
-  capture-time calibration, relocated analysis and explicit replay limits.
+- active_work_unit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.5.1.3`
+  (`pending`; daemon-context diagnostic disclosure)
+- next_action: Activate .3.2.15.5.1.3 and qualify the fixed daemon predicate and
+  bounded diagnostic disclosure with explicit omissions and hostile privacy controls.
 - in_flight_uncommitted: none after this commit.
 - in_flight_background: none.
 - blockers: Startup/containment cause and parent wire/runtime qualification remain open;

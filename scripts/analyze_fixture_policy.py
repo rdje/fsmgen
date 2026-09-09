@@ -114,7 +114,8 @@ def decode_json(value):
 
 def load_run(relative, root):
     directory = root / relative_path(relative, ".artifacts/logs/")
-    journal = [decode_json(line) for line in read_local(directory / "observations.jsonl", root).splitlines()]
+    journal_bytes = read_local(directory / "observations.jsonl", root)
+    journal = [decode_json(line) for line in journal_bytes.splitlines()]
     if len(journal) > MAX_EVENTS:
         raise ValueError("retained journal exceeds its event bound")
     sources = {}
@@ -145,7 +146,8 @@ def load_run(relative, root):
             raise ValueError("retained source archive does not match its byte identity")
 
     policy_bytes = read_local(directory / "policy.stdout", root)
-    collector = decode_json(read_local(directory / "policy-result.json", root))
+    collector_bytes = read_local(directory / "policy-result.json", root)
+    collector = decode_json(collector_bytes)
     verify_collector_command(collector)
     retained = collector["outputs"]["stdout"]
     if (retained["path"] != str((directory / "policy.stdout").relative_to(root))
@@ -192,9 +194,13 @@ def load_run(relative, root):
             metadata.append(row)
         if len(records) + len(metadata) > MAX_EVENTS:
             raise ValueError("retained policy exceeds its event bound")
-    return dict(directory=relative, capture_root=capture_root, sources=sources,
+    original_bytes = read_local(directory / "test-result.json", root)
+    inputs = {name: dict(bytes=len(data), sha256=hashlib.sha256(data).hexdigest())
+              for name, data in (("observations.jsonl", journal_bytes), ("policy.stdout", policy_bytes),
+                                 ("policy-result.json", collector_bytes), ("test-result.json", original_bytes))}
+    return dict(directory=relative, capture_root=capture_root, sources=sources, inputs=inputs,
                 records=records, metadata=metadata, collector_result=collector,
-                original_result=decode_json(read_local(directory / "test-result.json", root)))
+                original_result=decode_json(original_bytes))
 
 
 def literal_pairs(run):

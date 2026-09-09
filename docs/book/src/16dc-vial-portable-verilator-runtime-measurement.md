@@ -1227,8 +1227,9 @@ are private unless they identify an explicit public dependency. Other users
 must not need objects from the capture machine. The selected design computes
 token associations during capture and retains relative source identities;
 relocated analysis must not require the private historical checkout root.
-Calibration, integrity and limits on later independent re-derivation still need
-qualification; this design is not implemented yet. Daemon-wide messages can
+The separate association seal/replay boundary below now qualifies calibration,
+integrity and the missing later native re-derivation leg. Automatic caller
+integration remains pending. Daemon-wide messages can
 contain unrelated private paths, so their disclosure boundary also needs
 qualification. Raw ignored evidence is not automatically safe to share, and a
 filtered diagnostic representation must state its omissions. Existing analysis
@@ -1245,8 +1246,52 @@ metadata, changed options or a widened predicate fail analysis, even when the
 recorded output hash matches. These consistency checks apply to the target and
 each calibration run. Valid failure results and all retained records remain
 available; command consistency does not establish complete log delivery or
-privacy safety. The separate portable association and disclosure work remains
-pending under `.3.2.15.5.1`.
+privacy safety. Diagnostic disclosure remains pending under `.3.2.15.5.1`.
+
+`scripts/fixture_policy_associations.py` seals settled execution-context evidence
+while its original checkout root is still available. It checks independent
+literal path/token calibration, source archives and collector command/header
+identity, rejects collisions and conflicting literal evidence, and rechecks
+the input snapshot before returning. Sealing an old capture now does not
+backdate the seal. It starts no original fixture or collector.
+
+For the same retained failed example and a separately linked calibration:
+
+```bash
+FSMGEN_ASSOCIATION_SHA=$(python3 -B scripts/fixture_policy_associations.py seal \
+  .artifacts/logs/t1669-startup-observation/run-6a2c638c7d214c1d8065190d8d7b2ac2 \
+  --calibration .artifacts/logs/t1669-startup-observation/run-ae0697059c164ccd9bcbdadf67f6780c \
+  --output .artifacts/logs/policy-associations.json)
+python3 -B scripts/fixture_policy_associations.py replay \
+  .artifacts/logs/policy-associations.json --sha256 "$FSMGEN_ASSOCIATION_SHA" \
+  --archives .artifacts/logs/t1669-startup-observation/run-6a2c638c7d214c1d8065190d8d7b2ac2
+```
+
+Retain the printed digest separately with the trusted capture record. For
+relocation, copy the manifest and its target sources' content-addressed
+`.source` archives into the receiving repository's `.artifacts/logs/` tree,
+then pass their new local locations and that retained digest to `replay`.
+Neither old headers, calibration files, original source paths nor CoreFoundation
+are needed for replay. Source bytes can contain private data; these local
+archives are not yet a qualified shareable diagnostic bundle.
+
+The closed manifest records relative source identities, calibrated tokens,
+private-input and producer digests, and an ordered token/phase projection with
+each raw event's canonical digest. It omits raw messages and the private root.
+The fixed manifest byte, path and token-cardinality bounds are additional
+admission ceilings; existing source, event and calibration limits still apply.
+Replay verifies the supplied digest, schema and every relocated target archive,
+then reconstructs token joins, record indices and retained queue/start/wakeup
+counts, including unattributed tokens. It does not replay original test outcomes
+or claim complete raw-record equivalence.
+
+Without the private root, later native hash re-derivation is unavailable.
+The seal retains calibration witnesses and pins their provenance; the supplied
+digest detects changed mappings against that anchor but is not authentication.
+Replacing both the manifest and its trusted digest is a different evidence
+claim. Missing records and complete delivery retain their explicit unknown and
+unproved states. Automatic sealing and broader diagnostic disclosure must still
+qualify before the next daemon-context caller runs.
 
 
 A bounded historical query cannot recover even the failed run's already retained

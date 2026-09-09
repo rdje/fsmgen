@@ -42,6 +42,7 @@ evidence: >-
   scripts/fixture_kernel_sampler.py; t/python/test_fixture_kernel_sampler.py;
   scripts/observe_fixture_startup.py; t/python/test_fixture_census.py;
   scripts/analyze_fixture_policy.py; t/python/test_fixture_policy_analysis.py;
+  scripts/fixture_policy_associations.py; t/python/test_fixture_policy_associations.py;
   scripts/run_fixture_startup_policy_observation.py; t/python/test_fixture_startup_policy_observation.py;
   t/1669-task-acceptance-fixture-runtime.t
 reverify: >-
@@ -85,7 +86,7 @@ captures; tests stay normal-user. Identity, expiry and STOP/Ctrl+C checks remain
 `.3.7` closes native capture/shutdown verification; `.3.2` owns causal repair.
 T1669 uses `.artifacts/tmp/process-supervisor-tests/`. Every ps result needs native presence; only disappearance is skipped. Permission/query/live identity changes fail. Native exit and unchecked-ps controls qualify that race, not the historical changed field (`.3.2.11`; book/task).
 History: `93e7072566e2dce7b70c10fa04ffc8765b35b1e9:docs/knowledge/test-subprocess-policy-adapters.md`. Combined original passes without capture; startup cause stays open (.3.2.15.3.3).
-Offline analysis preserves raw context and calibrated joins; missing records stay unknown (.15.1). Exact command/header checks reject scope drift (.15.5.1.1). F_CHECK_LV and distinct clocks prove no shared cause (.15.2). Context capture uses execution_context; defaults retain fixture_path (.15.3.2). Failed queues coexist with provenance logging (.15.4). Director clarification selects relative capture-time associations and no disclosed private external paths (.15.5.1); portable/privacy qualification remains pending. Raw evidence is not automatically safe to share. Worker state/delivery stay unknown.
+Offline analysis preserves raw events and calibrated joins; exact command/header checks reject drift (.15.1/.15.5.1.1). Portable replay (.15.5.1.2) needs a pinned relative-association manifest and local archives, not native hashing or historical roots. It cannot rederive native tokens or authenticate its supplied digest. Caller/disclosure qualification is pending. F_CHECK_LV/clocks do not establish shared cause (.15.2); queues coexist with provenance logs (.15.4). Raw evidence is private; worker state/delivery stay unknown.
 T1595's pre-main cause stays open; `.19.2.3.1.2.2.6.2` fixes capture.
 `RamGuardFixtureRuntime` seals tools/argv, paths, bounds and full results.
 T1811/T1669 prove signal/stream failures and group cleanup; T1595 keeps metrics.
