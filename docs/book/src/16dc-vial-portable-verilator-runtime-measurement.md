@@ -1361,6 +1361,16 @@ It is omitted from the shareable manifest and report, whose separately pinned
 replay needs no original root. A moved raw capture cannot be resealed as if it
 originated in the receiving checkout; relocate its already sealed associations.
 
+Calibration-only preflight is available through `calibration_snapshot` under
+`.3.2.15.5.1.4.2.1`. It accepts bounded, distinct local calibration runs and uses
+the same literal-pair/native-hash and closed-identity checks as sealing. It
+rechecks input and source-archive snapshots, requires no target capture and
+starts no observation. Its returned relative identities are the admission
+snapshot that the future caller must compare exactly against its final seal.
+A later byte change invalidates that comparison even if the literal path/token
+pairs still match. Preflight does not qualify any original result or promise
+that a future target will contain enough observed sources.
+
 The standalone sealing CLI keeps its execution-context contract. The internal
 `seal_daemon_capture` path is available for the pending fixed caller integration;
 it introduces no new observation command. Its native calibration check uses a

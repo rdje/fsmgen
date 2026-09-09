@@ -13,6 +13,7 @@ answers:
   - "why did T1669 admission miss its workspace?"
   - "how are fixture command-query exit races handled?"
   - "how are queued-only fixture policy tokens attributed?"
+  - "how is fixture calibration preflight checked?"
   - "how will policy diagnostics avoid private paths?"
   - "which fixture bands wrongly ran live collectors?"
   - "which call delayed the native library load?"
@@ -83,7 +84,7 @@ captures; tests stay normal-user. Identity, expiry and STOP/Ctrl+C checks remain
 `.3.7` closes native capture/shutdown verification; `.3.2` owns causal repair.
 T1669 uses `.artifacts/tmp/process-supervisor-tests/`. Every ps result needs native presence; only disappearance is skipped. Permission/query/live identity changes fail. Native exit and unchecked-ps controls qualify that race, not the historical changed field (`.3.2.11`; book/task).
 History: `93e7072566e2dce7b70c10fa04ffc8765b35b1e9:docs/knowledge/test-subprocess-policy-adapters.md`. Combined original passes without capture; startup cause stays open (.3.2.15.3.3).
-Analysis checks command/header and calibrated joins. Replay (.15.5.1.2): pinned relative manifests/archives: no old roots/native hashing; native rederivation unavailable, digest unauthenticated. Diagnostics (.15.5.1.3.2): admitted context/outcomes, no raw text/bodies; pinned read needs no private data. Daemon scope/quoted roots pass; daemon sealing (.15.5.1.4.1) passes; caller pending. F_CHECK_LV/clocks: shared cause unproved (.15.2); queues/provenance coexist (.15.4). Raw private; worker/delivery unknown. Deadline scope fixed (.15.5.1.3.2.2). Live tests require opt-in; violations: .15.5.1.2.2–3.
+Analysis verifies command/header/joins. Replay (.15.5.1.2): pinned relative manifests/archives, no old root/CFHash; rederivation unavailable, digest unauthenticated. Diagnostics (.15.5.1.3.2): admitted context/outcomes, no raw text/bodies; reads need no private inputs. Quoted roots, daemon sealing and calibration preflight pass; caller pending. F_CHECK_LV/clocks: shared cause unproved (.15.2); queues/provenance coexist (.15.4). Raw private; worker/delivery unknown. Deadline scope fixed (.15.5.1.3.2.2). Live tests require opt-in; violations: .15.5.1.2.2–3.
 T1595's pre-main cause stays open; `.19.2.3.1.2.2.6.2` fixes capture.
 `RamGuardFixtureRuntime` seals tools/argv, paths, bounds and full results.
 T1811/T1669 prove signal/stream failures and group cleanup; T1595 keeps metrics.

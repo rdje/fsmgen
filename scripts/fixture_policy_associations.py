@@ -107,6 +107,13 @@ def unique_sources(sources, minimum):
         raise ValueError("association sources are not in canonical path order")
 
 
+def calibration_identity(calibration):
+    fields(calibration, ("run", "inputs", "pairs"))
+    path_value(calibration["run"], ".artifacts/logs/")
+    input_identities(calibration["inputs"])
+    unique_sources(calibration["pairs"], 2)
+
+
 def validate(manifest):
     """Validate the frozen replay schema; no live producer or native dependency."""
     fields(manifest, ("schema", "algorithm", "producers", "target", "calibrations", "limits"))
@@ -134,13 +141,10 @@ def validate(manifest):
     bounded_list(manifest["calibrations"], analysis.MAX_CALIBRATIONS, 1)
     runs = {target["run"]}
     for calibration in manifest["calibrations"]:
-        fields(calibration, ("run", "inputs", "pairs"))
-        path_value(calibration["run"], ".artifacts/logs/")
+        calibration_identity(calibration)
         if calibration["run"] in runs:
             raise ValueError("association calibration must use distinct separate runs")
         runs.add(calibration["run"])
-        input_identities(calibration["inputs"])
-        unique_sources(calibration["pairs"], 2)
     if [item["run"] for item in manifest["calibrations"]] != sorted(runs - {target["run"]}):
         raise ValueError("calibration runs are not in canonical order")
     if len(canonical(manifest)) > MAX_MANIFEST_BYTES:
@@ -157,6 +161,44 @@ def phase(message):
         if message.startswith(prefix):
             return name
     return "other"
+
+
+def _checked_calibrations(runs, path_hash):
+    checked = []
+    for calibration in runs:
+        pairs = analysis.literal_pairs(calibration)
+        if len(pairs) < 2 or len(set(pairs.values())) != len(pairs):
+            raise ValueError("calibration requires distinct independently linked paths and tokens")
+        sources = []
+        for absolute, token in pairs.items():
+            if path_hash(absolute) != token:
+                raise ValueError("native path hash disagrees with literal policy calibration")
+            relative = absolute[len(calibration["capture_root"]) + 1:]
+            sources.append(projected_source(calibration["sources"][relative], token))
+        admitted = dict(run=calibration["directory"], inputs=calibration["inputs"],
+                        pairs=sorted(sources, key=lambda source: source["path"]))
+        calibration_identity(admitted)
+        checked.append(admitted)
+    return checked
+
+
+def calibration_snapshot(calibrations, root=ROOT, path_hash=None):
+    """Check calibration before any target exists; return portable identities.
+
+    A prospective caller must compare these exact identities with the final
+    seal. This snapshot cannot authorize changed inputs or promise target data.
+    """
+    root = root.resolve()
+    bounded_list(calibrations, analysis.MAX_CALIBRATIONS, 1)
+    if len(set(calibrations)) != len(calibrations):
+        raise ValueError("calibration requires distinct separate runs")
+    runs = [analysis.load_run(name, root) for name in sorted(calibrations)]
+    path_hash = analysis.NativePathHash() if path_hash is None else path_hash
+    checked = _checked_calibrations(runs, path_hash)
+    for captured in runs:
+        if analysis.load_run(captured["directory"], root) != captured:
+            raise ValueError("calibration evidence changed during preflight")
+    return checked
 
 
 def seal(target, calibrations, root=ROOT, path_hash=None):
@@ -187,19 +229,7 @@ def _seal(target, calibrations, root, path_hash, target_loader):
     if run["capture_root"] != str(root):
         raise ValueError("seal requires the original capture checkout; replay requires no historical root")
     path_hash = analysis.NativePathHash() if path_hash is None else path_hash
-    checked = []
-    for calibration in runs[1:]:
-        pairs = analysis.literal_pairs(calibration)
-        if len(pairs) < 2 or len(set(pairs.values())) != len(pairs):
-            raise ValueError("calibration requires distinct independently linked paths and tokens")
-        sources = []
-        for absolute, token in pairs.items():
-            if path_hash(absolute) != token:
-                raise ValueError("native path hash disagrees with literal policy calibration")
-            relative = absolute[len(calibration["capture_root"]) + 1:]
-            sources.append(projected_source(calibration["sources"][relative], token))
-        checked.append(dict(run=calibration["directory"], inputs=calibration["inputs"],
-                            pairs=sorted(sources, key=lambda source: source["path"])))
+    checked = _checked_calibrations(runs[1:], path_hash)
     sources = [projected_source(source, path_hash(str(root) + "/" + path))
                for path, source in sorted(run["sources"].items())]
     unique_sources(sources, 1)
