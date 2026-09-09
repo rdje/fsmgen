@@ -1219,7 +1219,17 @@ The existing `execution_context` predicate selects the execution-policy subsyste
 and messages containing a literal fixture-root path. It can omit unrelated
 daemon messages. Task `.3.2.15.5` therefore owns bounded daemon-wide collection
 and a fixed finite sequence, each requiring qualification before another
-observation. The existing original deadlines and helper admission stay fixed. Separate native-library evidence does not
+observation. The existing original deadlines and helper admission stay fixed.
+
+Daemon-context implementation is currently blocked on a path-policy decision
+under `.3.2.15.5.1`. Path-token attribution needs the absolute checkout root from
+capture time; the existing OS header preserves it, while the daemon-only
+predicate does not. Substituting the repository's later location would change
+the attributed path. The proposed choices are a bounded historical-root identity
+stored strictly as data and never used for filesystem access, or an explicit
+historical-root input required for offline analysis. The latter needs a stated
+recovery limitation when that input is unavailable. No new root metadata or
+daemon collector has been implemented pending that clarification. Separate native-library evidence does not
 establish the original fixture's kernel cause. This passing observation does
 not establish repair or authorize a retry.
 
