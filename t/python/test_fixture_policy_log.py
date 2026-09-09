@@ -1,6 +1,7 @@
 """Real bounded producer and independent retained-record controls; no OS writes."""
 
 import json
+import hashlib
 import os
 from pathlib import Path
 import signal
@@ -321,6 +322,20 @@ class DaemonPolicyControls(PolicyControls):
     """The wider selection retains the same held-producer lifecycle contract."""
 
     scope = "daemon_context"
+
+    def test_private_capture_root_digest_is_bound_before_daemon_launch(self):
+        expected = hashlib.sha256(str(self.root).encode("utf-8")).hexdigest()
+        self.assertEqual(self.collector.capture_root_sha256, expected)
+        with self.controlled():
+            self.collector.prepare()
+            result = self.collector.finish()
+        self.assertEqual(result["capture_root_sha256"], expected)
+        self.assertNotIn(str(self.root), json.dumps(result))
+        self.assertEqual(launcher.retained_policy_result(self.evidence, scope=self.scope), result)
+        with self.assertRaises(ChildProcessError):
+            os.waitpid(self.collector.process.pid, os.WNOHANG)
+        if sys.platform == "darwin":
+            self.assertFalse(observer.still_live(self.collector.native, self.collector.identity))
 
     def test_fixed_daemon_command_is_independent_of_root_and_has_no_extra_selector(self):
         expected = ["/usr/bin/log", "stream", "--style", "ndjson", "--level", "debug",

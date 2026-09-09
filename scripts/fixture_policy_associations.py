@@ -165,11 +165,24 @@ def seal(target, calibrations, root=ROOT, path_hash=None):
     This boundary never starts collection. Existing captures can be sealed in
     their original checkout, but doing so does not backdate manifest creation.
     """
+    return _seal(target, calibrations, root, path_hash, analysis.load_run)
+
+
+def seal_daemon_capture(target, calibrations, root=ROOT, path_hash=None):
+    """Seal a privately root-bound daemon capture with separate literal calibration.
+
+    The standalone CLI keeps its execution-context contract. A fixed prospective
+    caller can use this boundary once its own admission/publication is qualified.
+    """
+    return _seal(target, calibrations, root, path_hash, analysis.load_daemon_capture)
+
+
+def _seal(target, calibrations, root, path_hash, target_loader):
     root = root.resolve()
     bounded_list(calibrations, analysis.MAX_CALIBRATIONS, 1)
     if target in calibrations or len(set(calibrations)) != len(calibrations):
         raise ValueError("association calibration must use distinct separate runs")
-    runs = [analysis.load_run(name, root) for name in [target, *sorted(calibrations)]]
+    runs = [target_loader(target, root), *[analysis.load_run(name, root) for name in sorted(calibrations)]]
     run = runs[0]
     if run["capture_root"] != str(root):
         raise ValueError("seal requires the original capture checkout; replay requires no historical root")
@@ -208,8 +221,9 @@ def seal(target, calibrations, root=ROOT, path_hash=None):
     validate(manifest)
     # Reject a changing input set, including replacement between separate file
     # reads. Source archive identities are checked again by the same loader.
-    for captured in runs:
-        current = analysis.load_run(captured["directory"], root)
+    for index, captured in enumerate(runs):
+        loader = analysis.load_run if index else target_loader
+        current = loader(captured["directory"], root)
         if current != captured:
             raise ValueError("capture evidence changed during association sealing")
     return manifest

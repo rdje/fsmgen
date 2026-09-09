@@ -1350,9 +1350,23 @@ output. CLI failures disclose a fixed message, without private arguments or
 exception details. Source archives and raw captures remain private even when a
 report is shareable.
 
-The modeled daemon-snapshot reader is qualified separately from its producer.
-Current standalone sealing still accepts execution-context captures; daemon
-capture-time associations and the fixed caller remain pending. Retained commands
+The internal daemon-capture sealer is qualified under `.3.2.15.5.1.4.1`.
+Before launching a daemon collector, the producer binds the canonical checkout
+root to a private digest. Settled capture loading requires that digest to match
+the current checkout, the exact daemon command/header, intact source archives
+and unchanged input snapshots. Separate literal calibration still checks the
+native path hash; absent sources or calibration cannot produce invented joins.
+The root digest detects inconsistent capture location; it is not authentication.
+It is omitted from the shareable manifest and report, whose separately pinned
+replay needs no original root. A moved raw capture cannot be resealed as if it
+originated in the receiving checkout; relocate its already sealed associations.
+
+The standalone sealing CLI keeps its execution-context contract. The internal
+`seal_daemon_capture` path is available for the pending fixed caller integration;
+it introduces no new observation command. Its native calibration check uses a
+clearly modeled daemon snapshot made from retained evidence, preserving every
+original input. That check proves calibrated sealing and portable consumption,
+not a new daemon capture or complete daemon-record delivery. Retained commands
 support checkout paths containing spaces, quotes, backslashes and Unicode under
 `.3.2.15.5.1.3.3`. The collector replaces only the exact JSON-quoted fixture-prefix
 literal in its captured argv with the canonical `<repo>` literal; all other

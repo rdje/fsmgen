@@ -80,6 +80,9 @@ class PolicyLog:
                 or metadata.st_uid != os.getuid() or stat.S_IMODE(metadata.st_mode) != 0o700):
             raise ValueError("policy evidence requires an owned private repository-volume directory")
         self.directory_identity = (metadata.st_dev, metadata.st_ino)
+        # The daemon-only predicate has no path-bearing native header. Retain a
+        # private consistency witness for same-checkout sealing, never a path.
+        self.capture_root_sha256 = hashlib.sha256(str(root).encode("utf-8")).hexdigest()
         self.process, self.identity = None, None
         self.streams = {}
         self.started_ns = self.prepared_ns = None
@@ -229,6 +232,8 @@ class PolicyLog:
                            "forced_kill": forced, "failures": dict(self.failures),
                            "subscription_readiness": "unproved", "complete_coverage": "unproved",
                            "missing_records": "unknown", "unobserved_descendants": "unknown"}
+            if self.scope == "daemon_context":
+                self.result["capture_root_sha256"] = self.capture_root_sha256
             self._directory_unchanged()
             pending = self.directory / "policy-result.next"
             owned_pending = False

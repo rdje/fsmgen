@@ -141,6 +141,20 @@ def capture_root_from_header(header):
 
 
 def load_run(relative, root):
+    """Load the frozen execution-context capture contract."""
+    return _load_run(relative, root, daemon_capture=False)
+
+
+def load_daemon_capture(relative, root):
+    """Load a settled daemon capture only in its privately bound checkout.
+
+    This root digest is consistency evidence, not authentication. Portable replay
+    consumes the separately pinned association manifest, never this loader.
+    """
+    return _load_run(relative, root.resolve(), daemon_capture=True)
+
+
+def _load_run(relative, root, *, daemon_capture):
     directory = root / relative_path(relative, ".artifacts/logs/")
     journal_bytes = read_local(directory / "observations.jsonl", root)
     journal = [decode_json(line) for line in journal_bytes.splitlines()]
@@ -176,7 +190,16 @@ def load_run(relative, root):
     policy_bytes = read_local(directory / "policy.stdout", root)
     collector_bytes = read_local(directory / "policy-result.json", root)
     collector = decode_json(collector_bytes)
-    verify_collector_command(collector)
+    if daemon_capture:
+        expected = ["/usr/bin/log", "stream", "--style", "ndjson", "--level", "debug",
+                    "--timeout", "240", "--predicate", 'process == "syspolicyd"']
+        if (type(collector) is not dict or collector.get("schema") != "fsmgen.fixture_policy_log.v1"
+                or collector.get("scope") != "daemon_context" or collector.get("command") != expected):
+            raise ValueError("daemon capture command is not the reviewed contract")
+        if collector.get("capture_root_sha256") != hashlib.sha256(str(root).encode("utf-8")).hexdigest():
+            raise ValueError("daemon capture does not bind the current checkout")
+    else:
+        verify_collector_command(collector)
     retained = collector["outputs"]["stdout"]
     if (retained["path"] != str((directory / "policy.stdout").relative_to(root))
             or type(retained["bytes"]) is not int or retained["bytes"] != len(policy_bytes)
@@ -186,7 +209,12 @@ def load_run(relative, root):
     lines = policy_bytes.decode("utf-8").splitlines()
     if not lines or not lines[0].startswith("Filtering the log data using "):
         raise ValueError("capture-root header is unavailable")
-    capture_root = capture_root_from_header(lines[0])
+    if daemon_capture:
+        if lines[0] != 'Filtering the log data using "process == "syspolicyd""':
+            raise ValueError("daemon capture header disagrees with the reviewed command")
+        capture_root = str(root)
+    else:
+        capture_root = capture_root_from_header(lines[0])
     records, metadata = [], []
     for line in lines[1:]:
         if not line.strip():
