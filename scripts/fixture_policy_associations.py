@@ -215,8 +215,8 @@ def seal(target, calibrations, root=ROOT, path_hash=None):
     return manifest
 
 
-def replay(raw, expected_sha256, archive_directory, root=ROOT):
-    """Check a separately pinned manifest and relocated target archives."""
+def read_manifest(raw, expected_sha256):
+    """Admit only canonical manifest bytes matching a separately held anchor."""
     if type(raw) is not bytes or len(raw) > MAX_MANIFEST_BYTES:
         raise ValueError("association manifest exceeds its fixed byte bound")
     hex_value(expected_sha256, 64)
@@ -226,6 +226,12 @@ def replay(raw, expected_sha256, archive_directory, root=ROOT):
     validate(manifest)
     if raw != canonical(manifest):
         raise ValueError("association manifest encoding is not canonical")
+    return manifest
+
+
+def replay(raw, expected_sha256, archive_directory, root=ROOT):
+    """Check a separately pinned manifest and relocated target archives."""
+    manifest = read_manifest(raw, expected_sha256)
     root = root.resolve()
     path_value(archive_directory, ".artifacts/logs/")
     directory = root / archive_directory
@@ -250,6 +256,13 @@ def replay(raw, expected_sha256, archive_directory, root=ROOT):
 def publish(manifest, relative, root=ROOT):
     """Publish complete bytes without replacing any existing evidence."""
     validate(manifest)
+    return publish_bytes(canonical(manifest), relative, root)
+
+
+def publish_bytes(raw, relative, root=ROOT):
+    """Atomically retain bounded private bytes; the caller owns schema validation."""
+    if type(raw) is not bytes or len(raw) > MAX_MANIFEST_BYTES:
+        raise ValueError("published evidence exceeds its fixed byte bound")
     root = root.resolve()
     path_value(relative, ".artifacts/logs/")
     destination = root / relative
@@ -257,7 +270,6 @@ def publish(manifest, relative, root=ROOT):
     if (parent.resolve() != parent or root not in parent.parents
             or parent.stat().st_dev != root.stat().st_dev or parent.stat().st_uid != os.getuid()):
         raise ValueError("association destination requires an owned direct local directory")
-    raw = canonical(manifest)
     pending = parent / ("associations-" + uuid.uuid4().hex + ".pending")
     owned = False
     try:

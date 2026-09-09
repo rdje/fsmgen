@@ -112,6 +112,34 @@ def decode_json(value):
     return json.loads(value, object_pairs_hook=unique, parse_constant=invalid_constant)
 
 
+def capture_root_from_header(header):
+    """Check the frozen execution-context header; its root is data, never accessed."""
+    if not isinstance(header, str) or not header.startswith("Filtering the log data using "):
+        raise ValueError("capture-root header is unavailable")
+    fields = re.findall(r'\b(?:composedMessage|eventMessage) CONTAINS ("(?:[^"\\]|\\.)*")', header)
+    if len(fields) != 1:
+        raise ValueError("capture-root header is ambiguous")
+    # Native log output renders eventMessage as composedMessage. Admit that
+    # observed alias only; arbitrary predicates containing a root are invalid.
+    headers = {
+        'Filtering the log data using "process == "syspolicyd" AND (' + field
+        + " CONTAINS " + fields[0] + ' OR subsystem == "com.apple.syspolicy.exec")"'
+        for field in ("eventMessage", "composedMessage")
+    }
+    if header not in headers:
+        raise ValueError("capture-root header predicate disagrees with the collector command")
+    prefix = decode_json(fields[0])
+    suffix = "/" + FIXTURE_PREFIX
+    if not isinstance(prefix, str) or not prefix.endswith(suffix):
+        raise ValueError("capture-root header is outside the selected fixture policy")
+    capture_root = prefix[:-len(suffix)]
+    if (not capture_root.startswith("/") or "\0" in capture_root
+            or PurePosixPath(capture_root).as_posix() != capture_root
+            or ".." in PurePosixPath(capture_root).parts):
+        raise ValueError("historical capture root is not canonical")
+    return capture_root
+
+
 def load_run(relative, root):
     directory = root / relative_path(relative, ".artifacts/logs/")
     journal_bytes = read_local(directory / "observations.jsonl", root)
@@ -158,27 +186,7 @@ def load_run(relative, root):
     lines = policy_bytes.decode("utf-8").splitlines()
     if not lines or not lines[0].startswith("Filtering the log data using "):
         raise ValueError("capture-root header is unavailable")
-    fields = re.findall(r'\b(?:composedMessage|eventMessage) CONTAINS ("(?:[^"\\]|\\.)*")', lines[0])
-    if len(fields) != 1:
-        raise ValueError("capture-root header is ambiguous")
-    # Native log output renders eventMessage as composedMessage. Admit that
-    # observed alias only; arbitrary predicates containing a root are invalid.
-    headers = {
-        'Filtering the log data using "process == "syspolicyd" AND (' + field
-        + " CONTAINS " + fields[0] + ' OR subsystem == "com.apple.syspolicy.exec")"'
-        for field in ("eventMessage", "composedMessage")
-    }
-    if lines[0] not in headers:
-        raise ValueError("capture-root header predicate disagrees with the collector command")
-    prefix = decode_json(fields[0])
-    suffix = "/" + FIXTURE_PREFIX
-    if not isinstance(prefix, str) or not prefix.endswith(suffix):
-        raise ValueError("capture-root header is outside the selected fixture policy")
-    capture_root = prefix[:-len(suffix)]
-    if (not capture_root.startswith("/") or "\0" in capture_root
-            or PurePosixPath(capture_root).as_posix() != capture_root
-            or ".." in PurePosixPath(capture_root).parts):
-        raise ValueError("historical capture root is not canonical")
+    capture_root = capture_root_from_header(lines[0])
     records, metadata = [], []
     for line in lines[1:]:
         if not line.strip():

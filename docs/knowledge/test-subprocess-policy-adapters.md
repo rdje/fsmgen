@@ -54,10 +54,7 @@ reverify: >-
   t/1813-process-coordinator-connection.t t/1814-process-coordinator-service.t
 ---
 
-Decisions `0087`/`0101`: `FSM::Support::ProcessSupervisor` has nonblocking steps behind synchronous callers: shell-free argv, same-volume
-repository cwd, bounded split streams, exec handoff, monotonic time, one process
-group, first-failure status and TERM/KILL cleanup. Sealed adapters own commands,
-bounds, schemas and platform guards; T1669 watches exclusive ownership.
+Decisions `0087`/`0101`: `FSM::Support::ProcessSupervisor` offers nonblocking steps to synchronous callers: shell-free argv, same-volume cwd, bounded split capture, exec handoff, monotonic time, one group, first-failure status, TERM/KILL cleanup. Adapters seal commands/bounds/schemas/platform guards; T1669 checks exclusive ownership.
 Child requires successful `setpgid` and actual owned group before exec. `.3.2.10.1` separates return/errno, exception and membership diagnostics with child PID; native session/false-success controls reject stale-error attribution. PID is not birth identity. Parent race closure cannot replace admission; nested cleanup stays open.
 `exec_handoff_monotonic_ns` means observed control-pipe EOF, not main entry:
 pre-exec death can close it. Without observed EOF, that timestamp and dependent
@@ -72,7 +69,7 @@ stays local. Timeout/overflow/nonzero/signal/exec/descendant/cleanup failures st
 without retry; original fixture assertions pass.
 T1545: canonical JSON TAP diagnostics preserve failed checker results separately from output. Nonzero controls prove empty/split-stream recovery; older discarded cause unknown.
 Launch observation retains commands/results, identity and bounded progress. Bash PID/native-output/held-child controls qualify it; missing progress stays unknown (task/book).
-Env-Perl reached handoff then timed out without output; Verilator fixtures now use canonical Perl shebangs. Only the `prove` Perl-invoked entrypoint may retain env.
+Env-Perl timed out silently after handoff; Verilator fixtures use canonical Perl shebangs. Only the `prove` Perl entrypoint may retain env.
 Direct-Perl timeouts refute a shebang-only cure:
 HIAL/VIAL `.19.2.3.1.2.2.5.5.2.3.1.2.2.3` owns the live `_dyld_start` sample,
 Rust proxy/Verilator fixture diagnosis and repair;
@@ -86,7 +83,7 @@ captures; tests stay normal-user. Identity, expiry and STOP/Ctrl+C checks remain
 `.3.7` closes native capture/shutdown verification; `.3.2` owns causal repair.
 T1669 uses `.artifacts/tmp/process-supervisor-tests/`. Every ps result needs native presence; only disappearance is skipped. Permission/query/live identity changes fail. Native exit and unchecked-ps controls qualify that race, not the historical changed field (`.3.2.11`; book/task).
 History: `93e7072566e2dce7b70c10fa04ffc8765b35b1e9:docs/knowledge/test-subprocess-policy-adapters.md`. Combined original passes without capture; startup cause stays open (.3.2.15.3.3).
-Raw analysis checks command/header and retains events/calibrated joins. Portable replay (.15.5.1.2) needs a pinned relative-association manifest and local archives, not native hashing or historical roots. Native rederivation is unavailable; the digest is not authentication. Daemon scope qualified; caller/disclosure pending. F_CHECK_LV/clocks do not establish shared cause (.15.2); queues coexist with provenance logs (.15.4). Raw evidence is private; worker state/delivery stay unknown. Live tests require opt-in; prior scope violations: .15.5.1.2.2–3.
+Analysis checks command/header and calibrated events/joins. Replay (.15.5.1.2) uses pinned relative manifests/local archives: no old roots/native hashing; native rederivation unavailable, digest unauthenticated. Diagnostics (.15.5.1.3.2): admitted context/outcomes, no raw text/bodies; pinned read needs no private inputs. Daemon scope qualified; quoted-root repair (.15.5.1.3.3) and caller pending. F_CHECK_LV/clocks: shared cause unproved (.15.2); queues/provenance coexist (.15.4). Raw private; worker/delivery unknown. Deadline failure: .15.5.1.3.2.2. Live tests require opt-in; violations: .15.5.1.2.2–3.
 T1595's pre-main cause stays open; `.19.2.3.1.2.2.6.2` fixes capture.
 `RamGuardFixtureRuntime` seals tools/argv, paths, bounds and full results.
 T1811/T1669 prove signal/stream failures and group cleanup; T1595 keeps metrics.

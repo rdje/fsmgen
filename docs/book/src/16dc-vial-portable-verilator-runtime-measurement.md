@@ -1231,9 +1231,9 @@ python3 -B -c 'import sys; sys.path.insert(0, "scripts"); from pathlib import Pa
 Task `.3.2.15.5.1.3.1` qualifies the predicate with native Foundation evaluation
 of synthetic records and the collector lifecycle with held producers. It starts
 no live system-log stream. The retained analyzer and association seal still
-accept only their frozen execution-context capture contract. Daemon-context
-retained analysis, shareable diagnostics, fixed single-caller and finite-sequence
-entrypoints require their own qualification before another observation.
+accept only their frozen execution-context capture contract. The disclosure projection below now accepts pinned private snapshots. Daemon
+capture-time association production, fixed single-caller and finite-sequence
+entrypoints still require qualification before another observation.
 Raw daemon output remains private: it can contain unrelated paths, messages and
 metadata. The existing original deadlines and helper admission stay fixed.
 
@@ -1245,9 +1245,8 @@ token associations during capture and retains relative source identities;
 relocated analysis must not require the private historical checkout root.
 The separate association seal/replay boundary below now qualifies calibration,
 integrity and the missing later native re-derivation leg. Automatic caller
-integration remains pending. Daemon-wide messages can
-contain unrelated private paths, so their disclosure boundary also needs
-qualification. Raw ignored evidence is not automatically safe to share, and a
+integration remains pending. Daemon-wide messages can contain unrelated private
+paths; the separately qualified projection below omits their raw text. Raw ignored evidence is not automatically safe to share, and a
 filtered diagnostic representation must state its omissions. Existing analysis
 still reproduces raw retained records and is not a privacy filter. Required
 public OS/toolchain dependencies remain explicit. Separate native-library
@@ -1262,7 +1261,7 @@ metadata, changed options or a widened predicate fail analysis, even when the
 recorded output hash matches. These consistency checks apply to the target and
 each calibration run. Valid failure results and all retained records remain
 available; command consistency does not establish complete log delivery or
-privacy safety. Diagnostic disclosure remains pending under `.3.2.15.5.1`.
+privacy safety. The separate diagnostic projection below checks pinned inputs and limits disclosure.
 
 `scripts/fixture_policy_associations.py` seals settled execution-context evidence
 while its original checkout root is still available. It checks independent
@@ -1306,8 +1305,59 @@ The seal retains calibration witnesses and pins their provenance; the supplied
 digest detects changed mappings against that anchor but is not authentication.
 Replacing both the manifest and its trusted digest is a different evidence
 claim. Missing records and complete delivery retain their explicit unknown and
-unproved states. Automatic sealing and broader diagnostic disclosure must still
-qualify before the next daemon-context caller runs.
+unproved states. Automatic daemon-context sealing and caller integration still
+require qualification before the next observation.
+
+
+`scripts/fixture_policy_diagnostics.py` exports a closed diagnostic report from
+a separately pinned association manifest and matching private snapshot files.
+It rehashes the snapshot, verifies the reviewed command/header and every ordered
+event projection, then rechecks the input bytes. It does not read source bodies,
+load native hashing or start collection. Using the manifest and digest above:
+
+```bash
+FSMGEN_DIAGNOSTIC_SHA=$(python3 -B scripts/fixture_policy_diagnostics.py export \
+  .artifacts/logs/policy-associations.json --sha256 "$FSMGEN_ASSOCIATION_SHA" \
+  --private-inputs .artifacts/logs/t1669-startup-observation/run-6a2c638c7d214c1d8065190d8d7b2ac2 \
+  --output .artifacts/logs/policy-diagnostic.json)
+python3 -B scripts/fixture_policy_diagnostics.py read \
+  .artifacts/logs/policy-diagnostic.json --sha256 "$FSMGEN_DIAGNOSTIC_SHA"
+```
+
+Keep the printed report digest with the trusted export record. The receiving
+checkout needs only the canonical report file and that separately held digest.
+Neither private snapshots, source archives nor historical roots are needed to
+read it. Publication is exclusive and private; an existing output is not replaced.
+Changing either report or manifest bytes against its retained anchor rejects;
+replacing both bytes and the trusted anchor is not authentication.
+
+The report retains relative source identities, opaque tokens/digests, ordered
+phase projections, admitted numeric process/thread/activity/Mach fields, and
+validated policy timestamps. Native adjacent-offset and spaced-offset timestamp
+spellings are preserved. Subsystems become fixed execution-policy/other/missing
+classes; arbitrary subsystem names and unknown context values are omitted or
+represented as unknown. It retains typed original exit/timeout and selected
+collector failure/cleanup flags. A failed original stays failed, and overall
+qualification is always `not_claimed`. Recorded numeric IDs are not native birth
+identities; no cross-run identity or cross-clock conversion is inferred.
+
+Raw messages, metadata, errors and source bodies are excluded. The report states
+those omissions, counts excluded metadata records, and does not claim raw-record
+equivalence, complete delivery, independent source-body verification or observer
+success. The source/event bounds and the association manifest's byte ceiling also
+bound report admission; oversized or malformed reports fail without successful
+output. CLI failures disclose a fixed message, without private arguments or
+exception details. Source archives and raw captures remain private even when a
+report is shareable.
+
+The modeled daemon-snapshot reader is qualified separately from its producer.
+Current standalone sealing still accepts execution-context captures; daemon
+capture-time associations and the fixed caller remain pending. Quoted-root
+normalization in the older path-bearing collector scopes is tracked for repair
+under `.3.2.15.5.1.3.3`; mismatching retained commands fail closed.
+Offline disclosure controls pass under `.3.2.15.5.1.3.2.1`. Full fixture
+qualification remains open: `.3.2.15.5.1.3.2.2` owns a timeout-control fixture
+cleanup failure. The earlier passing band does not resolve that failure.
 
 
 A bounded historical query cannot recover even the failed run's already retained
