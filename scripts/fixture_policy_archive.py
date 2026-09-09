@@ -237,3 +237,137 @@ def consume(raw, expected_sha256, root=ROOT):
         data = analysis.read_local(root / descriptor["path"], root, MAX_PAGE_BYTES)
         pages.append(read_page(data, descriptor, index["context_sha256"]))
     return {"index": index, "pages": pages}
+
+
+def _project_rows(raw):
+    """Retain one ordered entry per nonblank native row, including metadata."""
+    records, entries = [], []
+    for line in raw.decode("utf-8").splitlines()[1:]:
+        if not line.strip():
+            continue
+        if len(entries) >= MAX_RECORDS:
+            raise ValueError("archive input exceeds its combined record bound")
+        row = analysis.decode_json(line)
+        if type(row) is not dict:
+            raise ValueError("archive native record is not an object")
+        entry = dict(kind="metadata", sha256=associations.digest(associations.canonical(row)))
+        if row.get("eventType") == "logEvent":
+            if type(row.get("eventMessage")) is not str:
+                raise ValueError("archive log event lacks its message")
+            records.append(row)
+            entry.update(kind="log_event", tokens=sorted(analysis.policy_tokens(row["eventMessage"])),
+                         phase=associations.phase(row["eventMessage"]), context=diagnostics.project_context(row))
+        _validate_record(entry)
+        entries.append(entry)
+    if not entries:
+        raise ValueError("archive input contains no retained rows")
+    return records, entries
+
+
+def _pack_pages(entries, context_sha256, run):
+    """Greedy whole-entry packing with exact linear canonical byte accounting."""
+    pages, descriptors = [], []
+    first = 0
+
+    def empty_page():
+        return dict(schema=PAGE_SCHEMA, context_sha256=context_sha256,
+                    first_record=first, records=[])
+
+    page = empty_page()
+    page_size = len(associations.canonical(page))
+
+    def finish_page():
+        if len(pages) >= MAX_PAGES:
+            raise ValueError("archive exceeds its fixed page-count bound")
+        raw = associations.canonical(page)
+        if len(raw) != page_size:
+            raise ValueError("archive canonical byte accounting disagrees")
+        log_count = sum(entry["kind"] == "log_event" for entry in page["records"])
+        descriptor = dict(path=page_path(run, len(pages) + 1), bytes=len(raw),
+            sha256=associations.digest(raw), first_record=first,
+            record_count=len(page["records"]), log_event_count=log_count,
+            metadata_count=len(page["records"]) - log_count)
+        validate_page(page, descriptor, context_sha256)
+        pages.append(raw)
+        descriptors.append(descriptor)
+
+    for entry in entries:
+        # canonical(entry) includes one trailing newline, absent inside a list.
+        entry_size = len(associations.canonical(entry)) - 1
+        additional = entry_size + bool(page["records"])
+        if page["records"] and (len(page["records"]) == MAX_PAGE_RECORDS
+                                or page_size + additional > MAX_PAGE_BYTES):
+            finish_page()
+            first += len(page["records"])
+            page = empty_page()
+            page_size = len(associations.canonical(page))
+            additional = entry_size
+        if page_size + additional > MAX_PAGE_BYTES:
+            raise ValueError("archive entry cannot fit its fixed page byte bound")
+        page["records"].append(entry)
+        page_size += additional
+    if page["records"]:
+        finish_page()
+    return descriptors, pages
+
+
+def build(target, calibrations, root=ROOT, path_hash=None):
+    """Return a validated index and page_bytes; never publish or launch.
+
+    All private inputs, archives, calibration and producer bytes are rechecked
+    before returning. Public consumption still needs only the resulting pages.
+    """
+    root = root.resolve()
+    if root.stat().st_dev != ROOT.stat().st_dev:
+        raise ValueError("archive inputs and producer must share the repository volume")
+    associations.path_value(target, ".artifacts/logs/")
+    associations.bounded_list(calibrations, analysis.MAX_CALIBRATIONS, 1)
+    if target in calibrations or len(set(calibrations)) != len(calibrations):
+        raise ValueError("archive calibration requires distinct separate runs")
+    path_hash = analysis.NativePathHash() if path_hash is None else path_hash
+    admitted = associations.calibration_snapshot(calibrations, root, path_hash)
+    captured, raw_inputs = analysis._load_capture_inputs(target, root, daemon_capture=True)
+    raw_inputs["test-result.json"] = analysis.read_local(root / target / "test-result.json", root)
+    original = analysis.decode_json(raw_inputs["test-result.json"])
+    collector = captured["collector_result"]
+    if type(original) is not dict or type(collector.get("failures")) is not dict:
+        raise ValueError("archive outcome is not a retained result object")
+    records, entries = _project_rows(raw_inputs["policy.stdout"])
+    sources = [associations.projected_source(source, path_hash(str(root / path)))
+               for path, source in sorted(captured["sources"].items())]
+    associations.unique_sources(sources, 1)
+    by_path = {str(root / source["path"]): source["token"] for source in sources}
+    for absolute, token in analysis.literal_pairs(captured | {"records": records}).items():
+        if by_path[absolute] != token:
+            raise ValueError("archive literal policy record contradicts calibrated attribution")
+    producer_bytes = {name: analysis.read_local(ROOT / name, ROOT) for name in PRODUCERS}
+    context = dict(run=target,
+        inputs={name: dict(bytes=len(raw), sha256=associations.digest(raw)) for name, raw in raw_inputs.items()},
+        sources=sources, calibrations=admitted,
+        producers={name: dict(bytes=len(raw), sha256=associations.digest(raw))
+                   for name, raw in producer_bytes.items()},
+        scope="daemon_context",
+        original=dict(returncode=original.get("returncode"), timeout=original.get("timeout"),
+            released=diagnostics.boolean_or_unknown(original.get("released")),
+            leader_reaped=diagnostics.boolean_or_unknown(original.get("leader_reaped"))),
+        collector=dict(returncode=collector.get("returncode"), reported_failure=bool(collector["failures"]),
+            leader_reaped=diagnostics.boolean_or_unknown(collector.get("leader_reaped")),
+            forced_kill=diagnostics.boolean_or_unknown(collector.get("forced_kill"))))
+    validate_context(context)
+    binding = associations.digest(associations.canonical(context))
+    descriptors, page_bytes = _pack_pages(entries, binding, target)
+    log_count = len(records)
+    index = dict(schema=SCHEMA, context=context, context_sha256=binding, pages=descriptors,
+        record_count=len(entries), log_event_count=log_count,
+        metadata_count=len(entries) - log_count, limits=dict(LIMITS))
+    validate_index(index)
+    if associations.calibration_snapshot(calibrations, root, path_hash) != admitted:
+        raise ValueError("calibration changed during archive building")
+    current, current_inputs = analysis._load_capture_inputs(target, root, daemon_capture=True)
+    current_inputs["test-result.json"] = analysis.read_local(root / target / "test-result.json", root)
+    if current != captured or current_inputs != raw_inputs:
+        raise ValueError("private capture changed during archive building")
+    for name, previous in producer_bytes.items():
+        if analysis.read_local(ROOT / name, ROOT) != previous:
+            raise ValueError("producer changed during archive building")
+    return {"index": index, "page_bytes": page_bytes}

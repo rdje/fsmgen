@@ -167,7 +167,12 @@ def load_daemon_capture(relative, root):
     return _load_run(relative, root.resolve(), daemon_capture=True)
 
 
-def _load_run(relative, root, *, daemon_capture):
+def _load_capture_inputs(relative, root, *, daemon_capture):
+    """Validate shared private inputs without selecting a record projection.
+
+    The frozen v1 loader below retains its original record bound. The archive
+    builder separately selects its ordered, bounded successor projection.
+    """
     directory = root / relative_path(relative, ".artifacts/logs/")
     journal_bytes = read_local(directory / "observations.jsonl", root)
     journal = [decode_json(line) for line in journal_bytes.splitlines()]
@@ -228,6 +233,15 @@ def _load_run(relative, root, *, daemon_capture):
         capture_root = str(root)
     else:
         capture_root = capture_root_from_header(lines[0])
+    return (dict(directory=relative, capture_root=capture_root, sources=sources,
+                 collector_result=collector),
+            {"observations.jsonl": journal_bytes, "policy.stdout": policy_bytes,
+             "policy-result.json": collector_bytes})
+
+
+def _load_run(relative, root, *, daemon_capture):
+    captured, raw_inputs = _load_capture_inputs(relative, root, daemon_capture=daemon_capture)
+    lines = raw_inputs["policy.stdout"].decode("utf-8").splitlines()
     records, metadata = [], []
     for line in lines[1:]:
         if not line.strip():
@@ -243,13 +257,12 @@ def _load_run(relative, root, *, daemon_capture):
             metadata.append(row)
         if len(records) + len(metadata) > MAX_EVENTS:
             raise ValueError("retained policy exceeds its event bound")
-    original_bytes = read_local(directory / "test-result.json", root)
-    inputs = {name: dict(bytes=len(data), sha256=hashlib.sha256(data).hexdigest())
-              for name, data in (("observations.jsonl", journal_bytes), ("policy.stdout", policy_bytes),
-                                 ("policy-result.json", collector_bytes), ("test-result.json", original_bytes))}
-    return dict(directory=relative, capture_root=capture_root, sources=sources, inputs=inputs,
-                records=records, metadata=metadata, collector_result=collector,
-                original_result=decode_json(original_bytes))
+    original_bytes = read_local(root / relative / "test-result.json", root)
+    raw_inputs["test-result.json"] = original_bytes
+    return captured | dict(
+        inputs={name: dict(bytes=len(data), sha256=hashlib.sha256(data).hexdigest())
+                for name, data in raw_inputs.items()},
+        records=records, metadata=metadata, original_result=decode_json(original_bytes))
 
 
 def literal_pairs(run):

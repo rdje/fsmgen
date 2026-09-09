@@ -1505,9 +1505,15 @@ The consumer checks a separately pinned index and only its consecutive public
 pages, preserving metadata positions, admitted context and failed outcomes.
 It rejects changed bytes, gaps, wrong counts, foreign bindings, indirect files
 and a page root on another volume. It does not read private capture inputs or
-native state. Builders and fixed-caller integration remain pending; there is
-no new archive-producing command yet. Kernel frames and the delayed retained
-scan do not yet establish worker cause or startup repair.
+native state. The calibrated builder is implemented under `.15.7.2.2`: it
+preserves every nonblank retained row, packs whole entries under both page
+bounds, and rechecks raw inputs, source archives, calibration and producer bytes
+before returning the index and page bytes. It performs no publication. The
+retained failed capture reconstructs completely in memory, including late
+progress and metadata, with its original failure intact. Exclusive publication
+and fixed-caller integration remain pending; there is no new archive-producing
+command yet. Kernel frames and the delayed retained scan do not yet establish
+worker cause or startup repair.
 
 Standard output begins with the relative sequence journal directory. On normal
 completion it emits each validated receipt/digest as a separate JSON line, then

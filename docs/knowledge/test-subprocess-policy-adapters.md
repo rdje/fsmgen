@@ -19,6 +19,7 @@ answers:
   - "how are fixture policy publication receipts verified?"
   - "why can shortened PST tokens stop daemon publication?"
   - "why does a saturated daemon capture need bounded archive pages?"
+  - "how are calibrated archive pages built without losing metadata?"
   - "how will policy diagnostics avoid private paths?"
   - "which fixture bands wrongly ran live collectors?"
   - "which call delayed the native library load?"
@@ -79,8 +80,9 @@ Env-Perl timed out after handoff; Verilator uses canonical Perl, except the `pro
 T1669 uses `.artifacts/tmp/process-supervisor-tests/`. Every ps result needs native presence; only disappearance is skipped. Permission/query/live identity changes fail. Native exit and unchecked-ps controls qualify that race, not the historical changed field (`.3.2.11`; book/task).
 History: `93e7072566e2dce7b70c10fa04ffc8765b35b1e9:docs/knowledge/test-subprocess-policy-adapters.md`; .3.2.15.3.3 passes without capture; cause open.
 PST parsing normalizes 1–16 lowercase hex digits; malformed fields and contradictions reject.
-.15.6 captures a failed Rust proxy. The stream exceeds v1 record/report bounds; truncation loses its start/wakeup. .15.7 selects bounded ordered pages with metadata hashes. Archive schemas/consumer are qualified (.15.7.2.1); builder, callers and startup repair remain open.
-Command/header/joins verified. Pinned archive replay omits old root/CFHash; rederivation unavailable; unauthenticated. Diagnostics omit raw text/bodies. Receipts bind calibration/artifacts; consumption needs no private inputs. Daemon caller preflights, settles, publishes; preserves failures/ownership. The shared finite controller pins calibration, rechecks the full reserve after preflight, verifies each actual receipt/current iteration and stops at first failure/capture. Fixed CLI .15.5.2.2 emits checked receipts/outcomes; capture/no-capture/failure/interruption stay distinct. F_CHECK_LV shared cause unproved (.15.2); queues/provenance coexist (.15.4). Worker/delivery unknown. Live opt-in violations: .15.5.1.2.2–3.
+.15.6 captures a failed Rust proxy. The stream exceeds v1 record/report bounds; truncation loses its start/wakeup. .15.7 selects bounded ordered pages with metadata hashes. Archive schemas/consumer/builder are qualified (.15.7.2.1–2); publication, callers and startup repair remain open.
+V1 association replay needs pinned manifest/archives, no old root/CFHash; native rederivation unavailable, unauthenticated. Reports omit raw text/bodies; receipts bind calibration/artifacts without private reads. Fixed daemon CLI .15.5.2.2 preflights, settles and publishes; controller pins calibration, rechecks full reserve, verifies actual receipts and stops on first failure/capture. Outcomes stay distinct; failures/ownership persist. F_CHECK_LV cause unproved (.15.2); queue/provenance coexist (.15.4); worker/delivery unknown. Live opt-in violations: .15.5.1.2.2–3.
+Archive reverify: `scripts/run_with_ram_guard.sh -- python3 -B -m unittest discover -s t/python -p 'test_fixture_policy_archive*.py'`.
 T1595's pre-main cause stays open; `.19.2.3.1.2.2.6.2` fixes capture.
 `RamGuardFixtureRuntime` seals tools/argv, paths, bounds and full results.
 T1811/T1669 prove signal/stream failures and group cleanup; T1595 keeps metrics.
@@ -92,4 +94,4 @@ Selected: one coordinator, private clients, reserved identities, bounded wire/co
 T1669 proves reservation feasibility. Extraction, Wire, inactive endpoint/service transport are implemented;
 coordination, routing and hostile qualification (including startup diagnosis) remain open.
 
-Prior startup captures, first daemon normalization/audit and host/security context: `e79b7b26d3b2a99e0afaac4924265441937b596c:docs/knowledge/test-subprocess-policy-adapters.md`. Their original failures, qualification limits and exact older evidence routes remain unchanged.
+Prior startup/daemon/security evidence and limits: `e79b7b26d3b2a99e0afaac4924265441937b596c:docs/knowledge/test-subprocess-policy-adapters.md`.

@@ -60,7 +60,7 @@ signature instead of pasting unrelated evidence or weakening the checklist.
 | Need sanitized semantic/IR structure | `--strict --emit-semantic-json`. |
 | Need generated SystemVerilog checked by external tools | `--verify-hdl --output .artifacts/sv/out.sv`. |
 | Need support-accounting coverage truth | `prove -Iperl t/248-regression-corpus-accounting.t`. |
-| Retained fixture policy evidence | `scripts/analyze_fixture_policy.py`: private analysis; `scripts/fixture_policy_associations.py`: preflight/seal/replay; `scripts/fixture_policy_diagnostics.py`: bounded export/read; `scripts/fixture_policy_publication.py`: internal publish/consume receipts. Use the RAM guard and mdBook limits. No original or collector starts. |
+| Retained fixture policy evidence | `scripts/analyze_fixture_policy.py`: private analysis; `scripts/fixture_policy_associations.py`: preflight/seal/replay; `scripts/fixture_policy_diagnostics.py`: bounded export/read; `scripts/fixture_policy_publication.py`: internal publish/consume receipts. `scripts/fixture_policy_archive.py`: build ordered pages in memory or consume an anchored index. Use the RAM guard and mdBook limits. No original or collector starts. |
 | Need original fixture kernel capture and daemon context | Use `scripts/run_fixture_startup_daemon_capture.py` or `scripts/run_fixture_startup_daemon_sequence.py` under the RAM guard after helper/task admission. The mdBook gives required session/calibration arguments, failure retention and cleanup. |
 | Need a specific parser/generator regression | Focused `prove -Iperl t/<test>.t`. |
 | Need user-facing docs proof | `mdbook build docs/book`. |
