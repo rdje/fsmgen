@@ -1046,9 +1046,9 @@ coverage. Existing authenticated commands retain their helper requirement.
 
 The single integrated observation in task `.3.2.9` fails at a different
 boundary: the asynchronous `control_wait` outer reports pre-exec process-group
-containment failure, while Rust and legacy startup assertions pass. The current
+containment failure, while Rust and legacy startup assertions pass. That revision's
 combined diagnostic does not identify the failed syscall or group-membership
-check; no failed outer PID was retained. Task `.3.2.10` owns diagnosis and repair.
+check; no failed outer PID was retained. Task `.3.2.10` owns its unresolved cause.
 The observer separately rejects an identity change during legacy-stream cleanup.
 Its combined final comparison does not retain the changed process or field,
 so a benign exit/reparenting race is unproved. Task `.3.2.11` owns that diagnosis.
@@ -1058,6 +1058,35 @@ bytes identify the passing Rust modes; path/token events join the passing
 producers to policy queue/start/wakeup. Neither the clean collector nor those
 passing assertions converts the failed original or observer into success.
 Startup repair, complete policy delivery and runtime qualification remain open.
+
+Task `.3.2.10.1` makes containment failures precise while retaining the required
+successful `setpgid` and actual owned-group check. Diagnostics identify the
+child PID and distinguish an operation's return/errno, its exception, and a
+group-membership mismatch. The diagnostic shapes include:
+
+```text
+process-group containment failed: pid=<pid> operation=setpgid result=undef errno=<errno> (<system text>)
+process-group containment failed: pid=<pid> operation=getpgrp result=-1 errno=<errno> (<system text>)
+process-group containment failed: pid=<pid> operation=membership expected=<pid> observed=<group>
+```
+
+A successful operation can leave stale error text behind. A membership mismatch
+therefore reports the returned group instead of borrowing that error. Exceptions
+retain their own cause. PID is not native birth identity; the bounded control
+pipe, failed exec status and cleanup contract are unchanged. Native session and
+false-success controls distinguish causes merged by the older message.
+Isolated query faults and a deliberate wrong-label mutation protect the result.
+
+The updated full T1669 qualification still fails both Rust startup modes and
+legacy main-entry checks, while the new diagnostic controls and production HDL
+contract pass. Available failures remain in the task; that run did not collect
+native fixture identities or live policy context. Legacy streams also reveals
+a retention gap: missing main entry fails, but its expected timeout assertion
+passes, so the full result is omitted. Task `.3.2.12` owns that gap.
+Observer diagnosis `.3.2.11` and complete failure retention precede another
+separately selected causal observation. The diagnostic change does not qualify
+original runtime behavior or repair startup.
+
 
 Capture requests and helper results are published only after their complete
 JSON has been written, so a concurrent reader cannot consume a partial record.

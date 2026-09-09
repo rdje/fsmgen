@@ -321,13 +321,9 @@ sub _start_supervision {
         # POSIX failures normally return undef instead of throwing. The child
         # must verify containment itself before exec; the parent's matching
         # setpgid call is only a race-closing attempt, not admission evidence.
-        unless (eval {
-            my $group_result = setpgid(0, 0);
-            defined($group_result) && $group_result == 0 && getpgrp(0) == $$;
-        }) {
-            _write_child_control(
-                $control_writer, "process-group containment failed: $!",
-            );
+        my $group_error = _child_group_admission_error();
+        if (defined $group_error) {
+            _write_child_control($control_writer, $group_error);
             _exit(126);
         }
         unless (chdir($request->{cwd})) {
@@ -392,6 +388,44 @@ sub _start_supervision {
         }
     }
     return $state;
+}
+
+sub _child_group_admission_error {
+    my $prefix = "process-group containment failed: pid=$$";
+    my ($result, $error_number, $error_text);
+    my $returned = eval {
+        local $! = 0;
+        $result = setpgid(0, 0);
+        ($error_number, $error_text) = (0 + $!, "$!");
+        1;
+    };
+    my $exception = $@;
+    return "$prefix operation=setpgid exception=" . _sanitize_control($exception)
+        unless $returned;
+    unless (defined($result) && $result == 0) {
+        my $observed = defined($result) ? $result : 'undef';
+        return "$prefix operation=setpgid result=$observed errno=$error_number ($error_text)";
+    }
+
+    # A successful setpgid may leave errno unchanged. Only the return value
+    # admits the group query; stale errno must not explain a membership failure.
+    my $group;
+    $returned = eval {
+        local $! = 0;
+        $group = getpgrp(0);
+        ($error_number, $error_text) = (0 + $!, "$!");
+        1;
+    };
+    $exception = $@;
+    return "$prefix operation=getpgrp exception=" . _sanitize_control($exception)
+        unless $returned;
+    unless (defined($group) && $group >= 0) {
+        my $observed = defined($group) ? $group : 'undef';
+        return "$prefix operation=getpgrp result=$observed errno=$error_number ($error_text)";
+    }
+    return "$prefix operation=membership expected=$$ observed=$group"
+        if $group != $$;
+    return undef;
 }
 
 sub _advance_supervision_capture {

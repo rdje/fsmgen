@@ -75,14 +75,43 @@ PROGRAM
 
 subtest 'child containment must be established before exec' => sub {
     my $caller_group = getpgrp(0);
-    for my $mode (qw(undefined negative false_success exception)) {
+    my $real_setpgid = \&POSIX::setpgid;
+    for my $mode (qw(undefined negative false_success exception native_session success_stale)) {
+        my $observation = File::Spec->catfile($workspace, "containment-$mode.json");
         no warnings 'redefine';
         local *FSM::Support::ProcessSupervisor::setpgid = sub {
-            $! = EPERM;
+            # Native session admission precedes any parent group move.
+            return 0 if $_[0] != 0 && $mode eq 'native_session';
+            my ($returned, $session);
+            if ($mode eq 'native_session') {
+                $session = POSIX::setsid();
+                die "native session control failed\n"
+                    unless defined($session) && $session == $$;
+                $! = 0;
+                $returned = $real_setpgid->(@_);
+            }
+            elsif ($mode eq 'success_stale') {
+                $returned = $real_setpgid->(@_);
+                $! = EPERM; # A successful syscall need not clear old errno.
+            }
+            else {
+                $! = EPERM;
+                $returned = $mode eq 'undefined' ? undef
+                    : $mode eq 'negative' ? -1 : 0;
+            }
+            my $number = 0 + $!;
+            if ($_[0] == 0) {
+                my $actual_group = CORE::getpgrp(0);
+                open my $record, '>', $observation or die $!;
+                print {$record} JSON::PP->new->canonical->encode({
+                    pid => $$, actual_group => $actual_group,
+                    returned => $returned, errno => $number, session => $session,
+                }) or die $!;
+                close $record or die $!;
+            }
+            $! = $number;
             die "injected containment exception\n" if $mode eq 'exception';
-            return undef if $mode eq 'undefined';
-            return -1 if $mode eq 'negative';
-            return 0;
+            return $returned;
         };
         my $result = supervise_process(
             schema => 'fsmgen.test.process_supervisor_probe.v1',
@@ -90,16 +119,118 @@ subtest 'child containment must be established before exec' => sub {
             bounds => {timeout_seconds => 1, capture_limit_bytes => 65_536},
             containment => 'process_supervisor_probe_group',
             cwd => $workspace,
-            argv => [$perl, '-e', 'print "command-executed\n"'],
+            argv => [$perl, '-e', 'print "command-executed=$$\n"'],
         );
-        is($result->{status}, 'exec_error', "$mode rejects the exec handoff");
-        ok($result->{exec_failed}, "$mode reports failed handoff");
-        like($result->{exec_error} // '', qr/process-group containment failed/,
-            "$mode identifies the containment boundary");
-        is($result->{stdout}, '', "$mode never executes the command");
-        ok($result->{cleanup}{leader_reaped}, "$mode reaps the rejected child");
+        my $observed = eval { decode_json(slurp($observation)) };
+        ok(ref($observed) eq 'HASH', "$mode retains the actual child's group observation")
+            or do { diag explain $result; next };
+        my $pid = $observed->{pid};
+        ok(defined($pid) && $pid > 0, "$mode reports its actual child PID");
+        if ($mode eq 'success_stale') {
+            ok($result->{ok}, 'stale errno cannot reject successful group admission')
+                or diag explain $result;
+            is($result->{stdout}, "command-executed=$pid\n", 'admitted native child executes once');
+            is($observed->{actual_group}, $pid, 'successful child independently observes its owned group');
+            is($observed->{errno}, EPERM, 'success control actually carries stale errno');
+        }
+        else {
+            is($result->{status}, 'exec_error', "$mode rejects the exec handoff");
+            ok($result->{exec_failed}, "$mode reports failed handoff");
+            my $prefix = "process-group containment failed: pid=$pid ";
+            if ($mode eq 'false_success') {
+                is($observed->{actual_group}, $caller_group, 'false return leaves the child in its inherited group');
+                is($result->{exec_error},
+                    $prefix . "operation=membership expected=$pid observed=$caller_group",
+                    'membership mismatch cannot be mislabeled as a syscall failure');
+            }
+            elsif ($mode eq 'exception') {
+                is($result->{exec_error},
+                    $prefix . 'operation=setpgid exception=injected containment exception',
+                    'exception keeps its own cause without ambient errno');
+            }
+            else {
+                my $returned = $mode eq 'negative' ? '-1' : 'undef';
+                like($result->{exec_error} // '',
+                    qr/^\Q${prefix}operation=setpgid result=$returned errno=\E@{[EPERM]} \([^()\r\n]+\)$/,
+                    "$mode reports the failed operation, return and captured errno");
+                if ($mode eq 'native_session') {
+                    is($observed->{session}, $pid, 'native control actually becomes a session leader');
+                    is($observed->{actual_group}, $pid, 'correct group alone cannot excuse a failed syscall');
+                    is($observed->{errno}, EPERM, 'native syscall independently supplies EPERM');
+                }
+            }
+            is($result->{stdout}, '', "$mode never executes the command");
+        }
+        ok($result->{cleanup}{leader_reaped}, "$mode reaps the child");
         ok($result->{cleanup}{group_gone}, "$mode leaves no child group");
+        ok(!kill(0, $pid), "$mode independently leaves no child PID");
         is(getpgrp(0), $caller_group, "$mode leaves the caller group unchanged");
+    }
+};
+
+subtest 'containment group-query diagnostics preserve their own provenance' => sub {
+    my $probe = File::Spec->catfile($workspace, 'containment-query');
+    write_executable($probe, <<'PROBE');
+use strict;
+use warnings;
+use Errno qw(EINVAL EPERM);
+use JSON::PP qw(encode_json);
+our $mode = shift @ARGV;
+BEGIN {
+    *CORE::GLOBAL::getpgrp = sub {
+        my $actual = CORE::getpgrp($_[0]);
+        # Query failures are modeled in this isolated process. Its outer
+        # supervisor establishes and owns the actual native group.
+        $! = EINVAL;
+        return undef if $mode eq 'undefined';
+        return -1 if $mode eq 'negative';
+        die "injected group-query exception\n" if $mode eq 'exception';
+        return $actual + 1 if $mode eq 'mismatch';
+        return $actual;
+    };
+}
+require FSM::Support::ProcessSupervisor;
+no warnings 'redefine';
+local *FSM::Support::ProcessSupervisor::setpgid = sub { $! = EPERM; return 0 };
+my $actual = CORE::getpgrp(0);
+my $error = FSM::Support::ProcessSupervisor::_child_group_admission_error();
+print encode_json({pid => $$, actual_group => $actual, error => $error});
+PROBE
+    for my $mode (qw(undefined negative exception mismatch success_stale)) {
+        my $outer = supervise_process(
+            schema => 'fsmgen.test.process_supervisor_probe.v1', stage => 'probe',
+            bounds => {timeout_seconds => 10, capture_limit_bytes => 65_536},
+            containment => 'process_supervisor_probe_group', cwd => $repo_root,
+            argv => [$perl, '-Iperl', $probe, $mode],
+        );
+        ok($outer->{ok}, "$mode query oracle returns under its independent wall")
+            or diag explain $outer;
+        my $observed = eval { decode_json($outer->{stdout}) };
+        ok(ref($observed) eq 'HASH', "$mode returns structured query evidence") or next;
+        my $pid = $observed->{pid};
+        is($observed->{actual_group}, $pid, "$mode outer established actual native containment");
+        my $prefix = "process-group containment failed: pid=$pid ";
+        if ($mode eq 'success_stale') {
+            ok(!defined($observed->{error}), 'successful query ignores stale errno from both operations');
+        }
+        elsif ($mode eq 'exception') {
+            is($observed->{error}, $prefix . 'operation=getpgrp exception=injected group-query exception',
+                'query exception cannot become a setpgid error');
+        }
+        elsif ($mode eq 'mismatch') {
+            is($observed->{error}, $prefix . "operation=membership expected=$pid observed=" . ($pid + 1),
+                'membership diagnostic retains the returned group, without stale errno');
+        }
+        else {
+            my $returned = $mode eq 'negative' ? '-1' : 'undef';
+            my $number = Errno::EINVAL();
+            like($observed->{error} // '',
+                qr/^\Q${prefix}operation=getpgrp result=$returned errno=$number\E \([^()\r\n]+\)$/,
+                "$mode query failure keeps its own return and errno");
+        }
+        ok($outer->{cleanup}{leader_reaped} && $outer->{cleanup}{group_gone},
+            "$mode query oracle leaves no owned child/group");
+        ok(!kill(0, $pid), "$mode query process is independently absent");
     }
 };
 
