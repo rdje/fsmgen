@@ -316,6 +316,33 @@ class ExecutionPolicyControls(PolicyControls):
     scope = "execution_context"
 
 
+class DaemonPolicyControls(PolicyControls):
+    """The wider selection retains the same held-producer lifecycle contract."""
+
+    scope = "daemon_context"
+
+    def test_fixed_daemon_command_is_independent_of_root_and_has_no_extra_selector(self):
+        expected = ["/usr/bin/log", "stream", "--style", "ndjson", "--level", "debug",
+                    "--timeout", "240", "--predicate", 'process == "syspolicyd"']
+        for root in (self.root, self.root / 'private "name" \\ alternate'):
+            self.assertEqual(policy.command(root, scope=self.scope), expected)
+        self.assertEqual(self.collector.argv, expected)
+
+    def test_widened_or_narrowed_command_cannot_relabel_retained_scope(self):
+        with self.controlled():
+            self.collector.prepare()
+            original = self.collector.finish()
+        path = self.evidence.directory / "policy-result.json"
+        for predicate in ('TRUEPREDICATE', 'process == "other_process"',
+                          'process == "syspolicyd" AND subsystem == "com.apple.syspolicy.exec"'):
+            changed = dict(original, command=original["command"][:-1] + [predicate])
+            path.write_text(json.dumps(changed) + "\n")
+            with self.subTest(predicate=predicate), self.assertRaisesRegex(RuntimeError, "scope or command"):
+                launcher.retained_policy_result(self.evidence, scope=self.scope)
+        path.write_text(json.dumps(original) + "\n")
+        self.assertEqual(launcher.retained_policy_result(self.evidence, scope=self.scope), original)
+
+
 @unittest.skipUnless(sys.platform == "darwin", "native Foundation predicate and OS log controls")
 class NativeExecutionContext(unittest.TestCase):
     def setUp(self):
@@ -379,6 +406,30 @@ class NativeExecutionContext(unittest.TestCase):
         self.assertEqual(result.errors, [])
         self.assertEqual(len(result.failures), 1)
         self.assertIn("[False, False, True", result.failures[0][1])
+
+    def test_daemon_scope_keeps_cross_subsystem_records_and_excludes_other_processes(self):
+        records = [
+            dict(process="syspolicyd", subsystem="com.apple.syspolicy.exec", eventMessage="token-only queue"),
+            dict(process="syspolicyd", subsystem="unrelated.subsystem", eventMessage="/private/unrelated/account"),
+            dict(process="syspolicyd", subsystem="", eventMessage="no fixture path"),
+            dict(process="other_process", subsystem="com.apple.syspolicy.exec", eventMessage="token-only queue"),
+            dict(process="syspolicyd_helper", subsystem="unrelated.subsystem", eventMessage="daemon-like name"),
+        ]
+        self.assertEqual(self.evaluate(policy.command(self.root, scope="daemon_context")[-1], records),
+                         [True, True, True, False, False])
+        self.assertEqual(self.evaluate(policy.command(self.root, scope="execution_context")[-1], records),
+                         [True, False, False, False, False])
+
+    def test_native_daemon_oracle_rejects_old_filter_and_widened_process(self):
+        original = policy.command
+        for predicate in (original(self.root, scope="execution_context")[-1], 'TRUEPREDICATE'):
+            control = type(self)("test_daemon_scope_keeps_cross_subsystem_records_and_excludes_other_processes")
+            result = unittest.TestResult()
+            with patch.object(policy, "command", side_effect=lambda root, **kwargs:
+                              original(root, **kwargs)[:-1] + [predicate]):
+                control.run(result)
+            self.assertEqual(result.errors, [])
+            self.assertEqual(len(result.failures), 1)
 
     @unittest.skipUnless(os.environ.get("FSMGEN_LIVE_POLICY_COLLECTOR_ORACLE") == "1",
                          "separately selected live policy collector qualification")

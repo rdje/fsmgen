@@ -24,7 +24,7 @@ REAP_SECONDS = 2
 OUTPUT_BYTES = 16 * 1024 * 1024
 HEADER_BYTES = 8192
 POLL_SECONDS = 0.05
-SCOPES = ("fixture_path", "execution_context")
+SCOPES = ("fixture_path", "execution_context", "daemon_context")
 
 
 def require_scope(scope):
@@ -41,6 +41,10 @@ def command(root, *, scope="fixture_path"):
         predicate = ('process == "syspolicyd" AND (eventMessage CONTAINS '
                      + json.dumps(prefix, ensure_ascii=False)
                      + ' OR subsystem == "com.apple.syspolicy.exec")')
+    elif scope == "daemon_context":
+        # No message/path/subsystem condition: unrelated daemon context is the
+        # selected diagnostic scope. Its raw output remains private evidence.
+        predicate = 'process == "syspolicyd"'
     return ["/usr/bin/log", "stream", "--style", "ndjson", "--level", "debug",
             "--timeout", str(LIFETIME_SECONDS), "--predicate", predicate]
 

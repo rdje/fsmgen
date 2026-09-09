@@ -1217,9 +1217,25 @@ passing producer runs and does not distinguish the failure.
 
 The existing `execution_context` predicate selects the execution-policy subsystem
 and messages containing a literal fixture-root path. It can omit unrelated
-daemon messages. Task `.3.2.15.5` therefore owns bounded daemon-wide collection
-and a fixed finite sequence, each requiring qualification before another
-observation. The existing original deadlines and helper admission stay fixed.
+daemon messages. The internal collector now also admits `daemon_context`, whose
+fixed predicate is exactly `process == "syspolicyd"`. It selects daemon records
+across subsystems even when their messages contain no fixture path, and excludes
+other processes. Both earlier predicates and caller defaults are unchanged;
+existing time/output limits, normal-user ownership and cleanup still apply.
+Inspect the selected predicate without starting a collector:
+
+```bash
+python3 -B -c 'import sys; sys.path.insert(0, "scripts"); from pathlib import Path; import fixture_policy_log as p; print(p.command(Path.cwd(), scope="daemon_context")[-1])'
+```
+
+Task `.3.2.15.5.1.3.1` qualifies the predicate with native Foundation evaluation
+of synthetic records and the collector lifecycle with held producers. It starts
+no live system-log stream. The retained analyzer and association seal still
+accept only their frozen execution-context capture contract. Daemon-context
+retained analysis, shareable diagnostics, fixed single-caller and finite-sequence
+entrypoints require their own qualification before another observation.
+Raw daemon output remains private: it can contain unrelated paths, messages and
+metadata. The existing original deadlines and helper admission stay fixed.
 
 The path-policy clarification removes the policy blocker in `.3.2.15.5.1`:
 project references remain repository-relative, and paths outside the repository

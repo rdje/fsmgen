@@ -2515,7 +2515,7 @@ decomposes the architecture needed to move beyond that bounded foundation.
   Status: `active`
   Goal: `Qualify bounded daemon-wide policy context and one finite prospective original sequence.`
   Acceptance: `Close the retained exec/path filter gap without admitting a privileged daemon target. Qualify the collector and retained analyzer first, then the fixed sequence and hostile controls, and commit each before a separately admitted finite original campaign. Preserve original assertions, native identities, fixed Rust eligibility, existing helper admission/capture command, sequence bounds and first-failure/capture stop. No host-security change or daemon mutation; no retry-based qualification.`
-  Verification: `Selected by .15.4's independent retained-context comparison. Current code still has no daemon_context collector or sequence. Implementation and observation are separately owned.`
+  Verification: `Selected by .15.4's independent retained-context comparison. The internal daemon_context collector is qualified; disclosure, retained integration, fixed caller and sequence remain pending. Implementation and observation are separately owned.`
   Children: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.5.1, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.5.2, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.5.3`
 
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.5.1`
@@ -2555,10 +2555,25 @@ decomposes the architecture needed to move beyond that bounded foundation.
   Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.5.1.2.2: require explicit live collector test admission`
 
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.5.1.3`
-  Status: `pending`
+  Status: `active`
   Goal: `Qualify the daemon-context diagnostic disclosure boundary.`
   Acceptance: `After portable associations qualify, admit the fixed process-only predicate with existing bounds. Separate private raw evidence from a bounded shareable representation. Exercise unrelated private paths in messages, metadata, errors and source bodies; preserve permitted context, explicit omissions and missing coverage without calling projected records complete raw evidence. Use native predicate and held-child controls without a new live daemon collector.`
-  Verification: `Pending preceding child qualification.`
+  Verification: `Portable associations and explicit live-test admission are committed. Split fixed collector-scope qualification from shareable diagnostic projection so each implementation has independent review and a clean commit; fixed-caller integration remains sibling .4.`
+  Commit: `pending`
+  Children: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.5.1.3.1, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.5.1.3.2`
+
+- ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.5.1.3.1`
+  Status: `done`
+  Goal: `Qualify the fixed internal daemon-context collector scope.`
+  Acceptance: `Admit exactly process == "syspolicyd" with the existing command, time/output and owned cleanup bounds; preserve both older predicates/defaults. Native Foundation must select synthetic unrelated-subsystem daemon records and reject other processes. Reuse held-producer lifecycle/failure controls, trap actual system-log launch, and reject hostile retained scope/command changes. No original, live collector or authenticated helper. Sync book/fact and commit before disclosure implementation.`
+  Verification: `Git history locates the original two-scope admission in a2ac6baf1. The new internal daemon_context scope emits exactly process == "syspolicyd" with the existing executable/options/time/output contract. Existing fixture_path and execution_context predicates and caller defaults remain unchanged. Native Foundation independently accepts synthetic daemon events with unrelated/empty subsystem and no fixture path, and rejects other and similarly named processes. The permanent native watcher rejects both the prior execution filter and TRUEPREDICATE. The full held-producer lifecycle/failure suite now applies to the new scope; an independent literal command oracle and changed narrow/wide/process metadata controls reject scope drift. Guarded discovery reports 245 tests in 35.582 seconds, no failures/errors, three deliberate skips and zero live-log spawn attempts. Re-derivation: literal expected argv, native predicate evaluation and held-child retained output/cleanup. Falsification: independently selected cross-subsystem records and narrowed/widened native predicate mutations plus hostile retained commands. Durability: source/tests/book/canonical fact and Git; no live daemon stream or complete-delivery qualification is claimed. Existing retained analyzer/association contracts still accept execution_context only; disclosure, daemon retained analysis and fixed-entrypoint integration remain pending. Book build/rendered scope/limits, the safe predicate-inspection example and exact generated cleanup pass. Knowledge Map is current; refreshed claim census and staged doctrines must pass before commit. Evidence is .artifacts/logs/policy-daemon-scope-20260909/.`
+  Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.5.1.3.1: qualify fixed internal daemon context scope`
+
+- ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.5.1.3.2`
+  Status: `pending`
+  Goal: `Qualify a bounded shareable diagnostic projection with explicit omissions.`
+  Acceptance: `Use pinned associations and independently bound private retained inputs to project only closed approved fields. Preserve permitted cross-subsystem context and failure truth, omit private raw messages/metadata/errors/source bodies, reject hostile encodings and altered input identity, and name incomplete coverage/re-derivation limits. Prove unrelated private paths cannot cross output or CLI errors; qualify relocated consumption without raw private data or historical-root dependency. No original/live collector/helper. Commit before fixed-caller integration.`
+  Verification: `Pending fixed-scope qualification.`
   Commit: `pending`
 
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.5.1.4`
@@ -3551,7 +3566,7 @@ decomposes the architecture needed to move beyond that bounded foundation.
 
 ## Current Frontier
 
-Current frontier: approved inactive endpoint container `.19.2.3.1.2.2.5.5.2.3.2` is complete. Startup causal repair `.3.1.2.2.3.2` remains open. Portable associations and live-test admission repair are complete; next `.3.2.15.5.1.3` qualifies daemon-context diagnostic disclosure without live collection. Reserved-group launch `.3.3`, parent wire qualification, runtime activation, complete CI and push remain gated; endpoint approval does not waive them.
+Current frontier: approved inactive endpoint container `.19.2.3.1.2.2.5.5.2.3.2` is complete. Startup causal repair `.3.1.2.2.3.2` remains open. Portable associations, live-test admission repair and the fixed daemon scope are complete; next `.3.2.15.5.1.3.2` qualifies diagnostic disclosure without live collection. Reserved-group launch `.3.3`, parent wire qualification, runtime activation, complete CI and push remain gated; endpoint approval does not waive them.
 
 Architecture audit `.1` is complete. Decision `0032` selects one public
 `.vial` source language, private immutable `VIALSemanticIR` and
@@ -6406,3 +6421,10 @@ Director privacy clarification .3.2.15.5.1 complete selection and acceptance: re
 - [x] **ROOT CAUSE (WHY + WHERE)** — `git log -S 'test_real_context_collector_settles_with_exact_scope_and_owned_cleanup' -- t/python/test_fixture_policy_log.py` locates a2ac6baf1; the corresponding policy-only caller test is introduced in d7c41d957. Darwin-only discovery did not express live-collection selection. The consumed earlier band records both as ok, contrary to its owning no-live scope; the guarded audit blocks the second route before launch after the first is gated.
 - [x] **ADDRESSED (verified)** — Both live controls require exact opt-in at discovery and recheck it before system-log admission. The four admission tests verify rejection after revocation and selected reachability at mocked boundaries. Removing either execution gate in memory makes four negative subcases fail at the forbidden boundary, with no collector launched. Historical task/book evidence now names both violating executions, their tested cleanup and the missing retained raw streams/process births.
 - [x] **NO REGRESSION (default fixture band and documentation)** — knowledge-map: OK; guarded discovery reports 222 tests in 35.059 seconds with zero failures/errors, three deliberate skips and zero attempted live-log launches. The hardened admission-only band passes four tests. Native Foundation predicate and held-child controls retain coverage. Book build/rendered selection-and-correction checks and exact generated-build cleanup pass. Refreshed claim census and staged doctrines must pass before commit; full CI/push remain gated by the existing startup/containment repair.
+
+
+## Acceptance Checklist (fixed daemon scope .3.2.15.5.1.3.1)
+
+- [x] **ROOT CAUSE (WHY + WHERE)** — `git log -S 'SCOPES = ' -- scripts/fixture_policy_log.py` locates a2ac6baf1, which admits only fixture-path and execution-context selection. Native Foundation confirms that the execution predicate rejects daemon records from unrelated subsystems without a literal fixture path; the retained comparison already owns that diagnostic gap.
+- [x] **ADDRESSED (verified)** — Fixed internal daemon_context admits exactly the syspolicyd process predicate. Independently authored native records verify cross-subsystem retention and other-process rejection; restored narrow and unrestricted predicate mutations fail the permanent oracle. Literal command/root-independence and hostile retained metadata controls lock the selection while the same held-child suite qualifies cleanup and failures.
+- [x] **NO REGRESSION (guarded fixture band and documentation)** — knowledge-map: OK; the full fixture band reports 245 tests in 35.582 seconds, no failures/errors, three explicit skips and zero attempted live-log launches. Existing predicates/defaults and retained analysis limits remain exact. Book rendering, the read-only inspection example and exact generated-book cleanup pass; refreshed claim census and final staged doctrines must pass before commit. No original, live collector or authenticated helper runs; full CI/push remain gated.
