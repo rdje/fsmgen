@@ -7,10 +7,11 @@ Status and evidence: `docs/tasks/`. The system itself: `MEMORY_ARCHITECTURE.md`.
 
 - repository_revision: derive with `git log -1 --format='%H %s'`; never shadow `HEAD` here.
 - active_work_unit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.3.3`
-  (`pending`; one combined original observation)
-- next_action: Select a verified ready helper for .3.2.15.3.3, then run its single
-  unchanged Rust-selected original and retain/settle every outcome.
+  (`blocked`; authenticated helper readiness)
+- next_action: Await the fixed helper's locally authenticated READY session;
+  revalidate it, then execute .3.2.15.3.3's single original observation.
 - in_flight_uncommitted: none after this commit.
 - in_flight_background: none.
-- blockers: Startup/containment cause and parent wire/runtime qualification remain open;
+- blockers: No ready authenticated helper; user-local terminal authentication required.
+  Startup/containment cause and parent wire/runtime qualification remain open;
   full CI/push gated; the original observation campaign is stopped.
