@@ -267,14 +267,16 @@ def retained_policy_result(evidence, *, scope="fixture_path"):
     return result
 
 
-def run(session, native, evidence, root, *, stop_session=True, target_family="all"):
+def run(session, native, evidence, root, *, stop_session=True, target_family="all",
+        policy_scope="fixture_path"):
     test, result = None, None
     collection = None
     observation_error = None
     cancelled = False
     try:
         observer.require_target_family(target_family)
-        collection = policy_log.PolicyLog(root, evidence.directory, native)
+        policy_log.require_scope(policy_scope)
+        collection = policy_log.PolicyLog(root, evidence.directory, native, scope=policy_scope)
         policy_ready = collection.prepare()
         evidence.record("policy_prepared", **policy_ready)
         test = GatedTest(native, root, evidence.directory)
@@ -315,13 +317,13 @@ def run(session, native, evidence, root, *, stop_session=True, target_family="al
         if collection is not None:
             try:
                 collected = collection.finish()
-                if retained_policy_result(evidence) != collected:
+                if retained_policy_result(evidence, scope=policy_scope) != collected:
                     raise RuntimeError("policy status changed after collector publication")
             except (Exception, KeyboardInterrupt) as error:
                 cleanup_errors.append("policy collection: " + str(error))
             else:
                 try:
-                    evidence.record("policy_settled", leader_reaped=True, failures={},
+                    evidence.record("policy_settled", scope=policy_scope, leader_reaped=True, failures={},
                                     result_path=str((evidence.directory / "policy-result.json").relative_to(root)))
                 except (Exception, KeyboardInterrupt) as error:
                     # A full journal must not relabel physically verified
@@ -342,11 +344,12 @@ def run(session, native, evidence, root, *, stop_session=True, target_family="al
         raise observation_error
     if result is None or result["timeout"] or result["returncode"] != 0:
         raise RuntimeError("original test failed; retained TAP/wait status remains authoritative")
-    evidence.record("caller_complete", result=result, qualification="not_claimed")
+    evidence.record("caller_complete", result=result, scope=policy_scope, qualification="not_claimed")
     return result
 
 
-def main():
+def main(*, policy_scope="fixture_path"):
+    policy_log.require_scope(policy_scope)
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--session", required=True)
     parser.add_argument("--target-family", choices=observer.TARGET_FAMILIES, default="all")
@@ -367,7 +370,8 @@ def main():
         os.umask(0o077)
         evidence = observer.Evidence(ROOT)
         print(str(evidence.directory.relative_to(ROOT)), flush=True)
-        run(session, native, evidence, ROOT, target_family=args.target_family)
+        run(session, native, evidence, ROOT, target_family=args.target_family,
+            policy_scope=policy_scope)
         return 0
     except (Exception, KeyboardInterrupt) as error:
         if evidence is not None:

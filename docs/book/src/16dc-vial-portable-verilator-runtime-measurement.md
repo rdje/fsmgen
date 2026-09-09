@@ -1183,12 +1183,30 @@ provides context, but the finding uses the matching installed binary because
 the published source version differs. The exact kernel wait and its relationship
 to the original script delays remain unknown. The next discriminator is owned
 by `.3.2.15.3`.
-The selected next discriminator combines the original fixture's kernel capture
-with complete execution-policy context in the same run. The helper keeps its
-existing system-Perl fixture admission. A fixed caller composition is pending
-qualification under `.3.2.15.3.2`; the separately owned observation follows that
-commit and helper readiness. Separate native-library evidence does not establish
-the original fixture's kernel cause.
+The fixed `scripts/run_fixture_startup_context_capture.py` caller combines the
+original fixture's kernel capture with complete execution-policy context in the
+same run. Set `FSMGEN_CAPTURE_SESSION` to the exact repository-relative directory
+from the authenticated helper's `READY` message, as described above:
+
+```bash
+bash scripts/run_with_ram_guard.sh -- python3 -B \
+  scripts/run_fixture_startup_context_capture.py --session "$FSMGEN_CAPTURE_SESSION" \
+  --target-family rust
+```
+
+This entrypoint fixes `execution_context` internally. It prepares collection
+before releasing the unchanged original and verifies the selected scope and
+command again from retained results. It exposes no predicate or scope override.
+The existing observation caller and sequence retain their `fixture_path` default.
+The helper retains its system-Perl admission, fixed capture command and shutdown;
+fixture deadlines and Rust candidate selection are unchanged. Full original
+failures remain failures even when observation and cleanup succeed.
+
+Task `.3.2.15.3.2` qualifies this composition with controlled held bodies and
+scope mutations; `.3.2.15.3.3` owns the separately admitted original observation
+after commit and helper readiness. Separate native-library evidence does not
+establish the original fixture's kernel cause. A passing run or absent capture
+does not establish repair or authorize a retry.
 
 
 A bounded historical query cannot recover even the failed run's already retained

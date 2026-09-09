@@ -91,6 +91,8 @@ class Session:
 
 
 class LauncherControls(unittest.TestCase):
+    policy_scope = "fixture_path"
+
     def setUp(self):
         self.workspace = tempfile.TemporaryDirectory(prefix="launcher-controls-", dir=ROOT / ".artifacts/tmp")
         self.addCleanup(self.workspace.cleanup)
@@ -103,7 +105,7 @@ class LauncherControls(unittest.TestCase):
         self.session = Session(self.native, self.root)
         self.evidence = launcher.observer.Evidence(self.root)
         self.addCleanup(self.evidence.stream.close)
-        install_policy_control(self, self.root)
+        install_policy_control(self, self.root, scope=self.policy_scope)
         self.program()
 
     def program(self, exit_code=0, body="", pause="0.3"):
