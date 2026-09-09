@@ -1440,6 +1440,10 @@ The command accepts only session, repeated calibration and target-family flags;
 abbreviations and predicate/scope/count/deadline overrides reject. The existing
 fixture-path sequence command keeps its original defaults. The owning observation
 task must admit a prospective campaign separately; qualifying this CLI runs none.
+Current campaign readiness `.3.2.15.5.3.1` is blocked on fresh administrator
+authentication: calibration revalidates, but no retained helper is ready. Run
+`bash scripts/await_fixture_kernel_samples.sh` from the repository root in
+Terminal and wait for `READY`; no original daemon campaign has run.
 
 Standard output begins with the relative sequence journal directory. On normal
 completion it emits each validated receipt/digest as a separate JSON line, then
