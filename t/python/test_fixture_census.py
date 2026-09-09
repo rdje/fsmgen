@@ -207,7 +207,23 @@ class NativeCensusControls(unittest.TestCase):
                     prefix="native-census-", dir=ROOT / ".artifacts/tmp") as temporary:
                 self.check_native_chain(Path(temporary), family)
 
-    def check_native_chain(self, root, family):
+    def test_exit_during_final_command_query_is_native_disappearance(self):
+        with tempfile.TemporaryDirectory(prefix="native-census-exit-", dir=ROOT / ".artifacts/tmp") as temporary:
+            self.check_native_chain(Path(temporary), "legacy", exit_during_command=True)
+
+    def test_native_exit_oracle_rejects_missing_successful_query_presence_check(self):
+        def unchecked_command(native, pid):
+            result = subprocess.run(["/bin/ps", "-p", str(pid), "-o", "command="],
+                                    stdin=subprocess.DEVNULL, capture_output=True,
+                                    timeout=2, check=True)
+            return os.fsdecode(result.stdout).strip()
+
+        with tempfile.TemporaryDirectory(prefix="native-census-exit-mutant-", dir=ROOT / ".artifacts/tmp") as temporary, \
+                patch.object(observer.sampler.NativeProcesses, "command", unchecked_command), \
+                self.assertRaisesRegex(RuntimeError, "observed fixture rejected: identity changed during inspection"):
+            self.check_native_chain(Path(temporary), "legacy", exit_during_command=True)
+
+    def check_native_chain(self, root, family, *, exit_during_command=False):
         workspace = root / ".artifacts/tmp/process-supervisor-tests/native-held"
         workspace.mkdir(parents=True)
         (root / "t").mkdir()
@@ -239,11 +255,14 @@ sub identity {
                              "'--grace-seconds', '0', '--', 'unused'")
 
         def parent_body(name, argv):
+            hold_reap = (r'''
+while (!-f "$workspace/reap") { select undef, undef, undef, 0.01; }
+''' if name == "wrapper" and exit_during_command else "")
             return prefix + "identity('" + name + "');\n" + r'''
 my $child = fork();
 die 'fork failed' unless defined $child;
 if (!$child) {
-''' + "    exec " + argv + ";\n    die 'exec failed';\n}\n" + r'''
+''' + "    exec " + argv + ";\n    die 'exec failed';\n}\n" + hold_reap + r'''
 waitpid($child, 0) == $child or die 'wait failed';
 exit($? == 0 ? 0 : 1);
 '''
@@ -295,15 +314,49 @@ close $marker or die $!;
                 self.assertEqual(target["progress"], "entered" if family == "legacy" else "unknown")
                 self.assertEqual({path.read_bytes() for path in evidence.directory.glob("*.source")},
                                  {wrapper_source.encode(), producer_source.encode()})
-                producer.write_text(producer_source + "# changed after native admission\n")
-                with self.assertRaisesRegex(RuntimeError, "changed for an observed native birth"):
-                    census.scan()
+                if exit_during_command:
+                    command = native.command
+                    producer_pid = reported["producer"]["pid"]
+                    queries = []
+
+                    def exit_before_final_command(pid):
+                        if pid == producer_pid:
+                            queries.append(pid)
+                            if len(queries) == 2:
+                                # All initial identity/executable/command reads
+                                # and the final executable read saw the held
+                                # producer. Exit only before the final ps query.
+                                (workspace / "release").write_text("exit\n")
+                                deadline = time.monotonic() + 2
+                                while True:
+                                    try:
+                                        native.identity(pid)
+                                    except ProcessLookupError:
+                                        break
+                                    if time.monotonic() >= deadline:
+                                        self.fail("released producer did not exit within the control bound")
+                                    time.sleep(0.01)
+                                snapshot = subprocess.check_output(
+                                    ["/bin/ps", "-p", str(pid), "-o", "stat=,command="], timeout=2)
+                                self.assertRegex(snapshot, rb"^Z\S*\s+<defunct>\s*$")
+                        return command(pid)
+
+                    with patch.object(native, "command", side_effect=exit_before_final_command):
+                        self.assertEqual(census.scan(), [], "native disappearance cannot become identity corruption")
+                    self.assertEqual(queries, [producer_pid, producer_pid])
+                    self.assertEqual(len(census.seen), 2, "prior admitted cleanup ownership remains intact")
+                    (workspace / "reap").write_text("reap\n")
+                else:
+                    producer.write_text(producer_source + "# changed after native admission\n")
+                    with self.assertRaisesRegex(RuntimeError, "changed for an observed native birth"):
+                        census.scan()
                 self.assertEqual({path.read_bytes() for path in evidence.directory.glob("*.source")},
                                  {wrapper_source.encode(), producer_source.encode()})
-                with patch.object(observer, "SETTLE_SECONDS", 0.02):
-                    with self.assertRaisesRegex(RuntimeError, "observed fixture cleanup"):
-                        census.settle()
-                self.assertEqual(len(census.survivors()), 2, "passive settlement must not signal live fixtures")
+                if not exit_during_command:
+                    with patch.object(observer, "SETTLE_SECONDS", 0.02):
+                        with self.assertRaisesRegex(RuntimeError, "observed fixture cleanup"):
+                            census.settle()
+                    self.assertEqual(len(census.survivors()), 2, "passive settlement must not signal live fixtures")
                 (workspace / "release").write_text("release\n")
                 stderr = process.communicate(timeout=5)[1]
                 self.assertEqual((process.returncode, stderr), (0, b""))
@@ -313,6 +366,7 @@ close $marker or die $!;
                     native.identity(reported[name]["pid"])
         finally:
             (workspace / "release").write_text("release\n")
+            (workspace / "reap").write_text("reap\n")
             if process is not None and process.returncode is None:
                 # The control alone creates and owns this session/group. Keep
                 # its leader unreaped until any necessary group signal. This

@@ -101,6 +101,48 @@ class CaptureBoundary(unittest.TestCase):
                 self.assertIs(caught.exception, failure)
                 identity.assert_not_called()
 
+    def test_successful_command_query_requires_fresh_native_presence(self):
+        native = object.__new__(SAMPLER.NativeProcesses)
+        for output in (b"/usr/bin/perl held.pl\n", b"<defunct>\n"):
+            result = subprocess.CompletedProcess(["/bin/ps"], 0, output, b"")
+            for number in (errno.ESRCH, errno.ENOENT, errno.EPERM):
+                failure = OSError(number, "independent native outcome")
+                with self.subTest(output=output, errno=number), \
+                        patch.object(SAMPLER.subprocess, "run", return_value=result), \
+                        patch.object(native, "identity", side_effect=failure) as identity, \
+                        self.assertRaises(OSError) as caught:
+                    native.command(100)
+                self.assertIs(caught.exception, failure)
+                identity.assert_called_once_with(100)
+            for birth in (200, 201):
+                with self.subTest(output=output, birth=birth), \
+                        patch.object(SAMPLER.subprocess, "run", return_value=result), \
+                        patch.object(native, "identity", return_value=dict(pid=100, start_sec=birth)) as identity:
+                    self.assertEqual(native.command(100), os.fsdecode(output).strip())
+                identity.assert_called_once_with(100)
+
+    def test_live_identity_changes_during_inspection_still_reject_capture(self):
+        for field in ("start_sec", "start_usec", "ppid", "uid", "ruid"):
+            native = copy.deepcopy(self.native)
+            identity = native.identity
+            reads = []
+
+            def change_on_revalidation(pid):
+                record = identity(pid)
+                if pid == 100:
+                    reads.append(pid)
+                    if len(reads) > 1:
+                        record[field] += 1
+                return record
+
+            with self.subTest(field=field), \
+                    patch.object(native, "identity", side_effect=change_on_revalidation), \
+                    patch.object(SAMPLER.subprocess, "Popen") as launch:
+                result = SAMPLER.capture(self.request, native, self.root, self.root)
+                self.assertTrue(result["rejected"])
+                self.assertIn("identity changed during inspection", result["error"])
+                launch.assert_not_called()
+
     @unittest.skipUnless(sys.platform == "darwin", "Darwin native identity contract")
     def test_real_child_exit_between_identity_and_command_is_native_disappearance(self):
         child = subprocess.Popen(

@@ -84,6 +84,10 @@ class NativeProcesses:
             # remain errors; unavailable native identity also stays failed.
             self.identity(pid)
             raise
+        # ps can succeed with <defunct> after libproc no longer exposes the
+        # process. Require fresh native presence after successful queries too,
+        # so that exit race retains the same disappearance exception.
+        self.identity(pid)
         return os.fsdecode(result.stdout).strip()
 
 

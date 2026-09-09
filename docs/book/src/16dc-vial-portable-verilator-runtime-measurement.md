@@ -1051,7 +1051,7 @@ combined diagnostic does not identify the failed syscall or group-membership
 check; no failed outer PID was retained. Task `.3.2.10` owns its unresolved cause.
 The observer separately rejects an identity change during legacy-stream cleanup.
 Its combined final comparison does not retain the changed process or field,
-so a benign exit/reparenting race is unproved. Task `.3.2.11` owns that diagnosis.
+so its historical transition remains unclassified.
 Original, collector and observed-fixture cleanup all settle, with independent
 native absence checks and source archive verification. Same-run exact source
 bytes identify the passing Rust modes; path/token events join the passing
@@ -1083,9 +1083,25 @@ contract pass. Available failures remain in the task; that run did not collect
 native fixture identities or live policy context. Legacy streams also reveals
 a retention gap: missing main entry fails, but its expected timeout assertion
 passes, so the full result is omitted. Task `.3.2.12` owns that gap.
-Observer diagnosis `.3.2.11` and complete failure retention precede another
+The census repair below and complete failure retention precede another
 separately selected causal observation. The diagnostic change does not qualify
 original runtime behavior or repair startup.
+
+
+Task `.3.2.11` reproduces and repairs a command-query exit race. An unreaped
+Perl child can already be absent from libproc while `ps` succeeds with
+`<defunct>`. During final validation this looked like a changed live command.
+Every successful command query now requires fresh native presence too.
+Only native disappearance follows the existing skip path; permission failures
+and observed live birth, parent, ownership, command or source changes still fail.
+
+A real held process family verifies the exit, retained sources and caller-owned
+reaping. Removing the presence check restores the original census error.
+This is a proved possible cause of the historical combined rejection; that
+earlier run did not retain the changed field, so its exact cause stays unknown.
+Native absence does not itself prove reaping. Capture admission, cleanup
+ownership and deadlines are unchanged. The repair is qualified by the fixture
+diagnostic controls; the original startup and containment failures remain open.
 
 
 Capture requests and helper results are published only after their complete
