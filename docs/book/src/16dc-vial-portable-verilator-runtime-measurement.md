@@ -1355,9 +1355,19 @@ Current standalone sealing still accepts execution-context captures; daemon
 capture-time associations and the fixed caller remain pending. Quoted-root
 normalization in the older path-bearing collector scopes is tracked for repair
 under `.3.2.15.5.1.3.3`; mismatching retained commands fail closed.
-Offline disclosure controls pass under `.3.2.15.5.1.3.2.1`. Full fixture
-qualification remains open: `.3.2.15.5.1.3.2.2` owns a timeout-control fixture
-cleanup failure. The earlier passing band does not resolve that failure.
+Offline disclosure controls pass under `.3.2.15.5.1.3.2.1`. Its broader band
+exposed a timeout-control scope defect, repaired under `.3.2.15.5.1.3.2.2`:
+the leader-only timeout test also started descendants that the passive census
+might not admit before the deadline. The leader control now isolates its owned
+child, retaining timeout, forced termination and consumed-wait assertions.
+A separate controlled non-admission test observes live fixture births after
+leader reaping, requires the census to report unobserved descendants as unknown,
+then releases the fixtures through their own protocol and checks every recorded
+birth has disappeared. Production signal ownership and deadlines are unchanged.
+Future cleanup assertion failures retain the reported role and native identity.
+The earlier failure remains recorded; its exact native identity was lost when
+the temporary test workspace was removed, so the controlled reproduction cannot
+recover that historical identity or establish complete descendant coverage.
 
 
 A bounded historical query cannot recover even the failed run's already retained

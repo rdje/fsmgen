@@ -11,6 +11,7 @@ import signal
 import subprocess
 import sys
 import tempfile
+import time
 import unittest
 from unittest.mock import patch
 
@@ -202,8 +203,11 @@ do {
         for role in ("wrapper", "producer"):
             path = workspace / (role + ".json")
             if path.exists():
-                with self.assertRaises(ProcessLookupError):
-                    self.native.identity(json.loads(path.read_text())["pid"])
+                try:
+                    live = self.native.identity(json.loads(path.read_text())["pid"])
+                except ProcessLookupError:
+                    continue
+                self.fail(f"reported {role} is still live after cleanup: {live}")
 
     def context_body(self):
         journal = (self.evidence.directory / "observations.jsonl").relative_to(self.root)
@@ -301,14 +305,60 @@ die 'missing or repeated readiness' unless $matched == 1;
         self.check_closed()
 
     def test_original_deadline_preserves_timeout_and_reaps_term_resistant_child(self):
-        self.program(body=self.context_body(), pause="5")
+        # This owner kills/reaps its leader only. Descendant admission is a
+        # separate passive boundary, exercised independently below.
+        self.program(body=self.context_body(), pause="5", with_fixture=False)
         with patch.object(launcher, "TEST_SECONDS", 0.15), patch.object(launcher, "REAP_SECONDS", 0.1), \
                 self.assertRaisesRegex((RuntimeError, TimeoutError),
                                        "original test failed|fixture census reached the original test deadline"):
             self.run_caller()
         self.assertTrue(self.original()["timeout"])
         self.assertEqual(self.original()["returncode"], -signal.SIGKILL)
+        self.assertEqual(self.original()["unobserved_descendants"], "unknown")
+        self.assertFalse(any(row["event"] == "caller_complete" for row in self.events()))
         self.check_closed()
+
+    def test_unobserved_fixture_births_remain_unknown_after_original_deadline(self):
+        self.program(body=self.context_body(), pause="5")
+        workspace = self.root / ".artifacts/tmp/process-supervisor-tests/caller-control"
+        births = {}
+
+        def defer_admission(census):
+            # Hold this controlled scan until the independent reports exist,
+            # then expire the leader's deadline without admitting either birth.
+            deadline = time.monotonic() + 3
+            for role in ("wrapper", "producer"):
+                path = workspace / (role + ".json")
+                while not path.exists() and time.monotonic() < deadline:
+                    time.sleep(0.01)
+                self.assertTrue(path.exists(), f"controlled {role} did not report")
+                births[role] = self.native.identity(json.loads(path.read_text())["pid"])
+            self.children[0].deadline = time.monotonic()
+            return []
+
+        try:
+            with patch.object(launcher, "TEST_SECONDS", 3), patch.object(launcher, "REAP_SECONDS", 0.1), \
+                    patch.object(launcher.observer.FixtureCensus, "scan", defer_admission), \
+                    self.assertRaisesRegex(RuntimeError, "original test failed"):
+                self.run_caller()
+            self.assertEqual(set(births), {"wrapper", "producer"})
+            self.assertTrue(self.original()["timeout"])
+            self.assertEqual(self.original()["returncode"], -signal.SIGKILL)
+            self.assertEqual(json.loads((self.evidence.directory / "fixture-result.json").read_text()),
+                             dict(observed_fixtures_gone=True, observed_fixture_count=0,
+                                  unobserved_descendants="unknown"))
+            for role, birth in births.items():
+                self.assertTrue(launcher.observer.still_live(self.native, birth), (role, birth))
+            self.assertFalse(any(row["event"] == "caller_complete" for row in self.events()))
+        finally:
+            # Only the fixture protocol releases these test-owned descendants.
+            # Production settlement has no authority to signal unobserved PIDs.
+            self.evidence.problem("observation", RuntimeError("controlled fixture release"))
+            deadline = time.monotonic() + 4
+            while any(launcher.observer.still_live(self.native, birth) for birth in births.values()):
+                self.assertLess(time.monotonic(), deadline, births)
+                time.sleep(0.01)
+            self.check_closed()
 
     def test_census_failure_preserves_original_before_each_owner_settles(self):
         order = []
