@@ -2488,7 +2488,7 @@ decomposes the architecture needed to move beyond that bounded foundation.
   Goal: `Independently attribute the failed-run queued policy tokens and investigate missing work-start evidence.`
   Acceptance: `Use .2.14.1's retained full context and exact native/source/result records, not another original. Preserve all four queue events even though path-seeded correlation selects none. Compare queue, script-assessment and native-birth evidence without turning timing/order into an exact identity join. Test bounded read-only token/path derivation hypotheses against independently joined passing paths before applying any match to failed paths; reject mismatches and retain missing attribution explicitly. Investigate only supported discriminators for queued work with no retained start/wakeup, distinguishing actual missing execution from unavailable log delivery. No host-security change, daemon mutation, new authenticated/helper capture, production timeout widening or implicit recurrence belongs here. Own and qualify any necessary observer-analysis repair before further original admission.`
   Verification: `Native CoreFoundation CFHash of an absolute-path CFString reproduces all four independently path-linked .2.13 tokens; relative-path and file-URL forms fail. It also reproduces all four held-out .2.9 path-linked tokens; changed suffixes reject those tokens. Applying the calibrated function to all archived .2.14.1 source paths uniquely matches the four producer paths to all four queued tokens. This is empirically verified scoped attribution, not a cryptographic or universal identity. Queue/start/wakeup delivery and daemon cause still need diagnosis. The initial direct probe uses read-only SDK CFBase/CFString declarations and the native framework; no original or privileged helper is run. Raw cfhash.json and cfhash-heldout-failed.json are under .artifacts/logs/queued-token-attribution-20260909/. .2.15.1 owns durable, calibrated offline analysis and hostile controls before .2.15.2 investigates retained queued-work evidence.`
-  Children: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.1, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.2, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.3, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.4`
+  Children: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.1, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.2, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.3, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.4, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.5`
 
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.1`
   Status: `done`
@@ -2505,10 +2505,38 @@ decomposes the architecture needed to move beyond that bounded foundation.
   Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.2: identify library-validation call and separate clock domains`
 
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.4`
-  Status: `pending`
+  Status: `done`
   Goal: `Compare retained failed and passing execution-policy context before selecting another discriminator.`
   Acceptance: `Use the complete .14.1, .13 and .15.3.3 policy records with their qualified native/source/token/result joins. Compare all event classes and queue/worker/thread progress inside each policy clock, including unrelated retained context; preserve collection gaps and separate observation from daemon execution. Test every proposed discriminator against independent passing records and retained counterexamples. Identify a supported next causal step or a precise missing prerequisite without repeating an original, requesting new authentication, querying live history, mutating the daemon/host or widening deadlines. Own any implementation before editing it; commit the comparison and aligned book/fact.`
-  Verification: `Pending .15.3.3 observation commit; only retained-input analysis is selected.`
+  Verification: `Qualified complete-record comparison loads .14.1 (129 events/original exit 2), .13 (146/0), .15.3.3 (386/0) and held-out .9 (241/1, separate containment failure with passing producer startup). Independent Perl JSON::PP census agrees with Python on every one of the 27 observed format classes, record totals and queued/start/wakeup counts; raw input hashes remain unchanged. All normalized collector argv are identical: debug level, fixed execution_context predicate and lifetime, successful retained cleanup. Failure has four Script evaluation, GK process assessment, rooted-assessment and queued events; no later work-start/scan/wakeup events. After its first queue, 92 provenance messages continue on recorded PID 677, including 36 on thread 64920880 and 56 on 64915751, the same two threads that emit its queues. First/last such records are 2026-09-09 03:06:53.007132/03:07:22.377986 +0200. Queue-to-last-retained-event spans are 30035341, 19899450, 9785811 and 4735451 microseconds inside that policy clock; these are log-window observations, not command or worker durations. Each comparison run has four queue/start/wakeup joins. The identical tracking-violation message (redacted arguments, value 15825978093429936637) appears in failure and combined/held-out passing producer cases. Error Code=-67062 appears four times per passing producer comparison and is absent from failure; neither record alone diagnoses the startup defect. Re-derivation: validated raw input/manifests/calibrated attribution plus independent raw Perl census. Falsification: continued same-run daemon logging refutes blanket no-activity/no-delivery accounts; passing tracking/error records refute those standalone discriminators. Selective worker-message loss, worker state and complete delivery remain unknown; native daemon birth was not admitted, so no cross-run PID-lifetime claim is made. The predicate retains only com.apple.syspolicy.exec or literal fixture-root messages and can omit unrelated daemon context. .15.5 owns a closed bounded daemon_context collector/retained-analysis boundary, then fixed finite sequence qualification, then one separately admitted campaign. No new original/helper, live historical query, daemon/host mutation or runtime source change occurs in this comparison. Durability: task/book/canonical fact, qualified analyzer and Git; supplemental ignored outputs remain a named gap at .artifacts/logs/retained-context-comparison-20260909/. File identities: comparison.json 20747B aba9fb2eb76f1dad4f2646f15187afa4611bcd845e0d38da167bc6be884600f2; discriminators.json 10477B 468ad496d0a123c227edfc73bd7a1b9624f417b2e2cfefc806707fa5f27c00a1; failed-ordered-events.json 135262B 79ea56f0d56a3949b0357cc05b7f18d968261646661fde979382b589fb891167; perl-oracle.jsonl 4481B 2eb4b68c29a8456f05b4406f6b9c4ad01c8c22237c4c91ab0a64f1c9f18b8dd0. Book build/rendered discriminator review, hash manifest and exact cleanup pass; knowledge-map: OK; independent regenerated claim census agrees. All staged doctrine checks and git diff --cached --check pass; the hook verifies final evidence.`
+  Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.4: distinguish continued provenance logging from absent scan progress`
+
+- ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.5`
+  Status: `active`
+  Goal: `Qualify bounded daemon-wide policy context and one finite prospective original sequence.`
+  Acceptance: `Close the retained exec/path filter gap without admitting a privileged daemon target. Qualify the collector and retained analyzer first, then the fixed sequence and hostile controls, and commit each before a separately admitted finite original campaign. Preserve original assertions, native identities, fixed Rust eligibility, existing helper admission/capture command, sequence bounds and first-failure/capture stop. No host-security change or daemon mutation; no retry-based qualification.`
+  Verification: `Selected by .15.4's independent retained-context comparison. Current code still has no daemon_context collector or sequence. Implementation and observation are separately owned.`
+  Children: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.5.1, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.5.2, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.5.3`
+
+- ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.5.1`
+  Status: `pending`
+  Goal: `Qualify a closed daemon_context collector and retained analysis boundary.`
+  Acceptance: `Add an internal named scope with exact predicate process == "syspolicyd" and the existing time/output/locality/cleanup bounds. Preserve fixture_path and execution_context unchanged. Fix a single-caller entrypoint to that scope, and admit it in retained analysis only with exact corresponding command/scope/hash verification. Prove broader cross-subsystem retention, wrong process/predicate/scope rejection, full-record preservation, real held-child preparation and failure cleanup, with focused hostile controls and the fixture band. No original, authenticated helper or live daemon collector during qualification; sync book/fact/Toolbox and commit.`
+  Verification: `Pending comparison commit.`
+  Commit: `pending`
+
+- ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.5.2`
+  Status: `pending`
+  Goal: `Qualify a fixed daemon-context finite sequence with one helper lifetime.`
+  Acceptance: `After .1 commits, pass one validated internal scope through sequence launch and independently retained iteration settlement; preserve old defaults. Provide a fixed daemon_context sequence entrypoint without user predicate/scope/count/deadline overrides. Retain existing twenty-invocation limit, Rust nine-hundred-second budget, complete-next-invocation reserve, helper ownership and immediate stop on any original/observer/collector/cleanup failure or capture. Verify modeled bounds and hostile scope drift plus real held bodies, no original/authentication; sync book and commit.`
+  Verification: `Pending collector qualification.`
+  Commit: `pending`
+
+- ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.5.3`
+  Status: `pending`
+  Goal: `Retain one finite Rust-selected daemon-context observation campaign.`
+  Acceptance: `Only after .1/.2 commit, verify one ready authenticated helper and invoke the fixed sequence once with Rust selection. Preserve every first-attempt original result, full daemon records, native/source identities and any single sample. Stop on first failure or capture; never continue after missing cleanup, coverage or budget. Retain all outcomes even if every invocation passes or none captures; successful diagnostics do not establish repair. Settle every owned collector/original/observed fixture and helper, invalidate authentication, verify exact workspace cleanup and commit before choosing a causal follow-up. No host or daemon mutation, deadline widening or implicit second campaign.`
+  Verification: `Pending qualified fixed sequence and helper readiness; no campaign selected for execution yet.`
   Commit: `pending`
 
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.3`
@@ -5465,47 +5493,7 @@ duplicated card summary against existing rollover-debt allowances. This complete
 policy is retained here in its work-unit layer; the card routes to the richer
 architecture note. No existing fact or enforcement ceiling is removed or raised.
 
-## Acceptance Checklist (.19.2.3.1.2.2.4.2 sealed Rust parity; enforced)
-
-- [x] **ROOT CAUSE (WHY + WHERE)** — `git log -S 'run('` identifies
-  `07d9df7ebefe7618ad4581ee172fe24085a1d1df` as the unbounded T1467 launch
-  introduction; the retained recovery sample places its child at `_dyld_start`.
-  Initial T1810 RED reports `Can't locate FSM/Test/RustParityRuntime.pm`
-  at `t/1810-rust-parity-runtime.t line 11`. This diagnoses the missing
-  containment boundary; it does not claim an OS loader root cause.
-- [x] **ADDRESSED (verified)** — Guarded T1467/T1669/T1810 GREEN reports
-  `All tests successful`, `Files=3, Tests=13`, `Result: PASS` in
-  `adapter-final.log`. Sealed tool/build/artifact/runtime controls preserve
-  first failure, finite split-stream capture, signal identity, and proved
-  TERM/KILL cleanup. Independent comparison with the previous Git version
-  proves the entire normalized parity projection and helpers byte-identical.
-- [x] **NO REGRESSION** — The shared-process/fixture/real-parity band reports
-  `All tests successful`, `Files=3, Tests=13`; all changed Perl sources report
-  `syntax OK`. `mdbook test docs/book` and the corrected root-derived HTML
-  build exit zero. Exact render copy/hash/residue verification is below.
-  Claim inventory independently agrees, and the final staged gate reports
-  `[doctrine] all doctrine checks passed`, including fresh evidence-backed
-  task acceptance, containment, locality, Knowledge Map, and dispositions.
-  Full-CI and push qualification remain blocked by the separately owned work.
-
-### Rust parity implementation artifact-location recovery
-
-The implementation book build passed `--dest-dir ../../.artifacts/build/rust-parity-book-20260906`
-assuming mdBook interpreted it from `docs/book`. Its terminal output instead
-resolved the path from the repository working directory, creating the exact
-build below the caller's `../../.artifacts/build/` on the repository volume.
-This leaf owns immediate copy/verify/use/delete recovery into
-`.artifacts/build/rust-parity-book-20260906`, a corrected root-derived build,
-and an exact-old-path residue census. No parent directory or shared data is
-owned for deletion. The successful render is not evidence of correct locality;
-recovery completed: the initial copy verified all 98 files and 22,636,617
-bytes by per-file SHA-256. The corrected command uses
-`--dest-dir .artifacts/build/rust-parity-book-20260906` from the root and
-exits zero at the repository-local destination. The rendered parity guidance
-was inspected. Both the exact misplaced directory and the reviewed local render
-were removed; an explicit residue census proves both absent. The per-file
-manifest and terminal results are retained in `book-location-recovery.json`
-under the owned log root. Only the exact session-owned leaves were deleted.
+Sealed Rust parity .19.2.3.1.2.2.4.2 complete acceptance and exact artifact-location recovery: retrieve `9e7ced83fe6acdf88e7ff31e1950c72889e10777:docs/tasks/HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.md`. Its live done node retains implementation, native qualification and recovered locality; parent startup/full-CI obligations remain live.
 
 ## Neutral verifier policy selection (.19.2.3.1.2.2.5.1)
 
@@ -6392,8 +6380,10 @@ Combined observation selection .3.2.15.3.1 rationale and acceptance: recover exa
 
 Fixed combined caller .3.2.15.3.2 complete qualification and acceptance: recover exactly from `93f9fee2d15db526035ee9e4daf5da4113bc1639:docs/tasks/HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.md`.
 
-## Acceptance Checklist (combined original .3.2.15.3.3)
+Combined original .3.2.15.3.3 complete result, identities, cleanup and acceptance: recover exactly from `9e7ced83fe6acdf88e7ff31e1950c72889e10777:docs/tasks/HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.md`.
 
-- [x] **ROOT CAUSE (WHY + WHERE)** — `git log -S 'RUST_CANDIDATE_SECONDS' -- scripts/observe_fixture_startup.py` identifies the fixed Rust candidate policy. This original passes and produces no request under that unchanged selection; absent capture supplies no kernel-wait diagnosis. Earlier failed context and startup cause remain open.
-- [x] **ADDRESSED (verified)** — Run one unchanged original with the qualified context caller and verified helper. Full TAP/result, complete raw policy/analyzer equality, independent calibration, native ESRCH, source hashes, exact workspace absence and authentication invalidation support the retained passing/no-capture result; no retry occurs.
-- [x] **NO REGRESSION (observation)** — All original assertions pass; retained native wait is zero and runtime sources remain unchanged. knowledge-map: OK; book render/exact output cleanup, independent claim census and diff checks pass. All staged doctrine checks and git diff --cached --check pass; the hook verifies final evidence.
+## Acceptance Checklist (retained context .3.2.15.4)
+
+- [x] **ROOT CAUSE (WHY + WHERE)** — `git log -S 'com.apple.syspolicy.exec' -- scripts/fixture_policy_log.py` locates a2ac6baf107de0daa18c0f1dcf3046f3c94f4bea. Its closed exec/path predicate can omit unrelated daemon context. Retained failed queues coexist with continuing provenance records but no later scan-stage records; worker state remains unproved.
+- [x] **ADDRESSED (verified)** — Qualified complete-record analysis and an independent Perl raw census agree across failed and comparison inputs. Actual continued logging and passing tracking/error counterexamples reject overbroad causal claims. Own closed daemon-wide collection, fixed finite-sequence qualification and subsequent observation separately before implementation.
+- [x] **NO REGRESSION (retained analysis only)** — knowledge-map: OK; book build/rendered discriminator review, exact output cleanup, independent claim census and diff checks pass. All staged doctrine checks and git diff --cached --check pass; the hook verifies final evidence. No runtime source, original, helper, collector or host state is changed by this slice.

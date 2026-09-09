@@ -1208,8 +1208,18 @@ with complete retained queue/start/wakeup joins for its observed producer paths.
 It triggers no kernel capture. The original and observed fixtures are gone,
 their observed workspaces are removed, and the helper has stopped and invalidated
 authentication. Complete log and descendant coverage remain unproved.
-Task `.3.2.15.4` compares the retained passing and failed policy context before
-another measurement is selected. Separate native-library evidence does not
+The retained comparison in `.3.2.15.4` finds continued provenance logging in
+the failed interval, including on threads that queue the fixture scans, while
+later scan-stage records are absent. Identical collector settings and passing
+counterexamples narrow the recorded difference; they do not reveal the worker's
+state or prove complete delivery. A tracking-violation message also occurs in
+passing producer runs and does not distinguish the failure.
+
+The existing `execution_context` predicate selects the execution-policy subsystem
+and messages containing a literal fixture-root path. It can omit unrelated
+daemon messages. Task `.3.2.15.5` therefore owns bounded daemon-wide collection
+and a fixed finite sequence, each requiring qualification before another
+observation. The existing original deadlines and helper admission stay fixed. Separate native-library evidence does not
 establish the original fixture's kernel cause. This passing observation does
 not establish repair or authorize a retry.
 
