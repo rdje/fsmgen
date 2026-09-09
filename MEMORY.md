@@ -6,10 +6,10 @@ Status and evidence: `docs/tasks/`. The system itself: `MEMORY_ARCHITECTURE.md`.
 ## Resume
 
 - repository_revision: derive with `git log -1 --format='%H %s'`; never shadow `HEAD` here.
-- active_work_unit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.3`
-  (`pending`; library-validation discriminator)
-- next_action: Select the bounded library-validation discriminator under .3.2.15.3;
-  no new original, native build/load experiment or helper is selected.
+- active_work_unit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.3.2`
+  (`pending`; fixed kernel/context caller)
+- next_action: Qualify .3.2.15.3.2's fixed kernel/context caller;
+  the original observation follows its commit and verified helper readiness.
 - in_flight_uncommitted: none after this commit.
 - in_flight_background: none.
 - blockers: Startup/containment cause and parent wire/runtime qualification remain open;

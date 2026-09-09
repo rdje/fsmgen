@@ -1183,6 +1183,13 @@ provides context, but the finding uses the matching installed binary because
 the published source version differs. The exact kernel wait and its relationship
 to the original script delays remain unknown. The next discriminator is owned
 by `.3.2.15.3`.
+The selected next discriminator combines the original fixture's kernel capture
+with complete execution-policy context in the same run. The helper keeps its
+existing system-Perl fixture admission. A fixed caller composition is pending
+qualification under `.3.2.15.3.2`; the separately owned observation follows that
+commit and helper readiness. Separate native-library evidence does not establish
+the original fixture's kernel cause.
+
 
 A bounded historical query cannot recover even the failed run's already retained
 queue events. Empty history therefore cannot establish that a scan never ran.
