@@ -2762,11 +2762,11 @@ decomposes the architecture needed to move beyond that bounded foundation.
   Verification: `Selected from the failed retained stream; .2.1 alone starts after .1 commits.`
   Children: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.2.1, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.2.2, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.2.3, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.2.4`
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.2.1`
-  Status: `pending`
+  Status: `done`
   Goal: `Implement closed archive index/page admission and portable consumption.`
   Acceptance: `Implement the selected schemas, exact domains/order/count/linkage/hash checks and fixed same-volume reads. Independent constructed pages prove acceptance, loss/reorder/duplicate/gap/tamper/foreign binding/byte and count boundaries; private/native reads are trapped during consumption. No producer, publication or caller changes.`
-  Verification: `Pending .1 contract commit.`
-  Commit: `pending`
+  Verification: `At contract 237c004ae4f2ac6239ef60f3ff99d04249e83095, scripts/fixture_policy_archive.py implements closed context/index/page validation, independently pinned canonical reads and portable consumption only. It preserves the selected fixed sixteen-page/4096-row/2097152-byte envelopes and all frozen v1 modules. Closed metadata entries retain hash and position; log entries retain canonical tokens/phase/admitted context. Root/source/calibration/producer domains, unique ordering, contiguous ranges, exact descriptor and actual entry-kind totals, context/file digests, byte sizes, canonical JSON and fixed paths reject inconsistencies before use. Reader permits only owned regular public pages on the current repository volume; it reads no raw inputs/source bodies/native API. T/python independently constructs data and proves relocation, exact ordered hashes/metadata, preserved failed-original flags and absent private/native access. Cardinality boundary reconstructs 65536 metadata rows across sixteen full pages; the adjacent page/record excess rejects. A valid canonical page constructed by semantic token/integer variation occupies exactly 2097152 bytes and consumes successfully; its one-byte excess rejects. Oversized raw bytes reject before decode. Missing/reordered/foreign/changed pages, forged anchors, malformed fields/types/tokens/timestamps/outcomes, calibration collisions, symlinks/directories and off-volume reads reject. Final focused tests pass twelve cases in 0.388 seconds with no live collector attempts. Six in-memory mutants disable volume, pinned digest, context hash, page binding, range or kind-count enforcement; each is caught by assertion failures with no harness errors. Initial pre-locality fixture band passes 331 tests in 71.143 seconds with three deliberate skips; it is not the final changed-source qualification. Final guarded default band passes 332 tests in 71.515 seconds, three deliberate opt-in skips and zero live log attempts. No Linux-host execution is claimed. Re-derivation: independent authored index/page bytes and exact full reconstruction/boundary controls. Falsification: the six disabled guards make the tests RED; retained original failure never becomes a success flag. Durability: tracked module/tests/task/book/fact/Git own schema behavior; supplementary guard/falsification logs at .artifacts/logs/policy-archive-schema-20260909/ are explicitly ignored evidence gaps. Staged gates find task_evidence at 79.5 percent after exact historical routing: normal state is required, then the normal-state schema requires null baseline/transition. Retire that numeric debt state and its transitional fields; exact predecessor values remain at 237c004ae4f2ac6239ef60f3ff99d04249e83095:doctrine/live_document_size/surfaces.jsonl. Health targets, warning thresholds and enforcement ceilings are unchanged. No builder, publication, daemon-caller integration or live campaign is introduced. .2 alone owns raw-source building after this slice commits.`
+  Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.2.1: add bounded archive schema and portable consumer`
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.2.2`
   Status: `pending`
   Goal: `Build the full calibrated archive from a bounded retained daemon stream.`
@@ -3763,7 +3763,7 @@ decomposes the architecture needed to move beyond that bounded foundation.
 
 ## Current Frontier
 
-Current frontier: .3.2.15.7.1 selects a bounded paged archive after proving that truncation loses the failed target's start/wakeup and a count-only change still exceeds the report byte cap. Commit selection, then .15.7.2.1 owns closed schemas/consumption. Current v1 callers are unchanged; no further campaign. Startup/parent, full CI and push remain gated.
+Current frontier: .3.2.15.7.2.1 implements and qualifies closed archive schemas and portable consumption. Commit the consumer, then .15.7.2.2 builds calibrated ordered pages from private retained inputs. Existing v1 callers remain unchanged; no further campaign. Startup/parent, full CI and push stay gated.
 
 Architecture audit `.1` is complete. Decision `0032` selects one public
 `.vial` source language, private immutable `VIALSemanticIR` and
@@ -5484,67 +5484,7 @@ The manifest binds the complete task snapshot at `0ba9d1492fa76a1e6b6bf85f6982dd
   maintained-reference, product, VIAL/HIAL, capability, support, or runtime
   behavior changes.
 
-## Acceptance Checklist (.19.2.3.1.2.2.2.1, enforced)
-
-- [x] **ROOT CAUSE (WHY + WHERE)** — the clean full-CI run stalled because
-  T313 delegated its success fixture to `can_run('true')`; mutable host `PATH`
-  selected a Homebrew executable that remained before `main`. The production
-  validator then waited without a deadline. The required Knowledge Map query
-  returned no answer. Independent `git log -S` searches trace the success
-  lookup to `ba8ea7840` and the success/failure pair to `602906bf1`.
-- [x] **ADDRESSED (verified)** — T313 resolves the canonical already-running
-  Perl interpreter and generates explicit success and failure programs below
-  the repository-local test temp root. It passes their exact paths to the
-  mocked validator inventory while hostile same-named PATH traps exit 97/98.
-  The success route, unsupported-top prefix, tool-failure prefix, and unique
-  failure-fixture diagnostic all pass; the source has no true/false lookup or
-  fixed host-global fallback. The Knowledge Card makes the rule durable.
-- [x] **NO REGRESSION (fixture identity, validation contract, and locality)** —
-  T313 reports `syntax OK` and its standalone run reports
-  `All tests successful.` at `Files=1, Tests=4`. The real-tool success subtest
-  remains conditional on the unchanged validator discovery contract. No
-  production module, contract/schema, VIAL/HIAL behavior, support claim, or
-  artifact path changes; generated programs remain cleanup-owned under the
-  standard repository-local test-temp environment. Knowledge Map validation
-  reports 1,161 facts/6,322 questions/6,493 occurrences/139 shards. Claim
-  inventory independently agrees at 12,270 numeric lines/1,899 candidates,
-  and dispositions close 1,899/1,899 with zero gaps or open owners. Final
-  staged task acceptance and the complete doctrine driver pass.
-
-## Acceptance Checklist (.19.2.3.1.2.2.2.2.2, enforced)
-
-- [x] **ROOT CAUSE (WHY + WHERE)** — `git log -S` traces the unbounded
-  `IPC::Cmd qw(can_run run)` validation launch to `51720be7b` and the reviewed
-  test supervisor to `d630261e6`. The first post-wiring T313 run changed the
-  former indefinite wait into `status=timed_out`; an independent two-second
-  direct-script probe reproduced `/usr/bin/perl` stationary at `_dyld_start`,
-  while T1669's explicit interpreter-plus-script argv completed. The exact
-  off-volume sample was copied to the repository volume, verified byte/hash
-  equal, consumed, and removed at both paths with an absent-residue check.
-- [x] **ADDRESSED (verified)** — the reviewed engine is moved into
-  `FSM::Support::ProcessSupervisor`, the test module is a thin delegating
-  boundary, and only it plus HDL external validation can launch through the
-  low-level engine. HDL steps use fixed 120-second/8,388,608-byte bounds from
-  repository cwd with shell-free argv, split capture, process-group cleanup,
-  stable status/diagnostic failure text, and no retry. Plain Perl tool scripts
-  use explicit canonical-interpreter argv; T313 completes in under one second
-  with five green top-level subtests, including all eight failure classes and
-  installed Verilator/Yosys, while T1669 proves real hostile-tree cleanup.
-- [x] **NO REGRESSION (real tools, adapters, contracts, docs, and residue)** —
-  the widened process/HDL/manifest/JSON/defensive-copy suite reports
-  `All tests successful.` at `Files=8, Tests=30`, including the full external
-  HDL smoke and unchanged legacy supervisor oracle. All seven changed Perl and
-  test files report `syntax OK`. All 63 mdBook chapters test; the inspected
-  repository-local render contains 97 files/22,272 KiB and the new policy,
-  then is removed exactly. `knowledge-map: OK` remains 1,161 facts/6,322
-  questions/6,493 occurrences/139 shards. Claim inventory independently
-  agrees at 12,273 numeric lines/1,900 candidates/2,671 constants; the one new
-  safety-policy claim has distinct re-derive/falsify/durability evidence and
-  zero open owner. Probe, sample, process, render, log, and brief residue is
-  absent. Final staged task acceptance reports
-  `[task-acceptance] OK` with independent Git-history root-cause and prove-summary
-  no-regression evidence; the complete doctrine driver reports
-  `[doctrine] all doctrine checks passed`.
+Completed `.19.2.3.1.2.2.2.1` and `.19.2.3.1.2.2.2.2.2` acceptance: recover every source diagnosis, checked assertion and qualification limit from `237c004ae4f2ac6239ef60f3ff99d04249e83095:docs/tasks/HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.md`. Authoritative live nodes retain current behavior and open dependencies.
 
 ## Acceptance Checklist (.19.2.3.1.2.2.3.2 implementation, verification pending; enforced)
 
@@ -6416,8 +6356,8 @@ Publication preflights all fixed archive destinations, publishes complete pages 
 
 Qualification is split across `.2.1`–`.2.4`: an independent constructed-page oracle; exact boundary/excess and malformed closed-field controls; loss/order/duplicate/gap/foreign-context/forged-anchor controls; full raw-to-ordered-projection equality with metadata and late failed-target records; native/calibration/source contradictions and input mutation; publication ordering/partial failure/exclusive destination/identity replacement; and fixed caller failure/interruption/cleanup/sequence outcomes. Run focused bands and the default fixture band with live collectors trapped. The private selection probe uses a placeholder binding and proves only this layout's fit, never implementation qualification or a published archive. `.3` alone owns offline recovery after all implementation commits. Kernel and daemon evidence support a delayed retained scan, but worker scheduling, exact wait causality and a startup repair still need independent evidence.
 
-## Acceptance Checklist (saturation selection .3.2.15.7.1)
+## Acceptance Checklist (archive schema/consumer .3.2.15.7.2.1)
 
-- [x] **ROOT CAUSE (WHY + WHERE)** — `git log -S 'retained policy exceeds its event bound' -- scripts/analyze_fixture_policy.py` locates 8f9bab40065c85f15162e952753e81107c88d87d. The unchanged loader and frozen projection bounds reject the larger daemon scope; the complete diagnostic projection also exceeds its byte bound.
-- [x] **ADDRESSED (verified selection)** — Independent full-input/token/path/literal reconstruction proves the late start/wakeup records and rejects prefix-only attribution. A separate finite page probe reconstructs every retained row in order. The exact successor contract and separately committed schema/producer/publication/caller leaves own repair; implementation is not yet qualified.
-- [x] **NO REGRESSION (selection and documentation)** — All implementation and frozen limits remain unchanged. Book render/cleanup, knowledge-map: OK, refreshed claim inventory and staged doctrines retain the selected successor and explicit startup/full CI/push gates. Initial containment gate rejects task aggregate bytes; completed historical acceptance routes now retain their complete exact Git versions without raising allowances.
+- [x] **ROOT CAUSE (WHY + WHERE)** — `git log -S 'retained policy exceeds its event bound' -- scripts/analyze_fixture_policy.py` locates 8f9bab40065c85f15162e952753e81107c88d87d. The committed selection requires a separate finite schema because the retained daemon stream exceeds both frozen record and report-byte bounds.
+- [x] **ADDRESSED (verified consumer)** — Independently authored index/pages reconstruct all metadata/log entries using only public files. Exact count/page and canonical byte boundaries, adjacent excesses, pinned digests and hostile schema/path/binding/count controls pass; six disabled guards produce real assertion failures. Builder and caller integration remain separately pending.
+- [x] **NO REGRESSION** — Final default fixture band reports 332 tests/71.515 seconds, OK with three deliberate skips and zero live log attempts. Book render/cleanup, knowledge-map: OK, regenerated claim inventory and staged doctrines preserve v1 behavior and the separately owned builder/caller/startup work.

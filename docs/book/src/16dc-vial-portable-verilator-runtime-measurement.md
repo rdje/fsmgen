@@ -1499,10 +1499,15 @@ exceeds the old report byte bound, so increasing only the loader count would
 leave publication broken. The selected repair uses an explicitly versioned
 archive index and bounded ordered pages, retaining metadata hashes and positions
 as well as every log projection. Existing formats remain unchanged. Schema,
-producer, publication and fixed-caller integration have separate task leaves;
-this is a selected contract awaiting implementation, not a usable new command.
-Kernel frames and the delayed retained scan do not yet establish worker cause
-or startup repair.
+producer, publication and fixed-caller integration have separate task leaves.
+The archive schema and portable consumer are implemented under `.15.7.2.1`.
+The consumer checks a separately pinned index and only its consecutive public
+pages, preserving metadata positions, admitted context and failed outcomes.
+It rejects changed bytes, gaps, wrong counts, foreign bindings, indirect files
+and a page root on another volume. It does not read private capture inputs or
+native state. Builders and fixed-caller integration remain pending; there is
+no new archive-producing command yet. Kernel frames and the delayed retained
+scan do not yet establish worker cause or startup repair.
 
 Standard output begins with the relative sequence journal directory. On normal
 completion it emits each validated receipt/digest as a separate JSON line, then
