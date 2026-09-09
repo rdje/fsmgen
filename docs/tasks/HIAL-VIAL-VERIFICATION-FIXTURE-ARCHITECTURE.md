@@ -2800,12 +2800,23 @@ decomposes the architecture needed to move beyond that bounded foundation.
   Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.2.4: integrate archive indexes into fixed daemon callers`
 
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3`
-  Status: `pending`
+  Status: `active`
   Goal: `Recover the retained failed-run diagnostic and advance causal analysis offline.`
   Acceptance: `After qualified repair commits, recover only absent artifacts from preserved raw inputs. Independently verify exact-source/native/sample joins and all original byte identities, retain campaign failure and missing causal legs, then own the next supported repair action. No original/collector/helper launch or implicit repeat.`
-  Verification: `Pending selected repair qualification.`
+  Verification: `Archive implementation and fixed callers are committed at f3b387de01f49891e140b918b32d332b1fb805f5. Separate recovery from causal analysis; neither starts a new campaign.`
+  Children: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.1, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.2`
+- ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.1`
+  Status: `done`
+  Goal: `Recover the exact failed capture as an exclusive pinned archive offline.`
+  Acceptance: `Reverify admitted calibration and all raw/source/sample identities; publish only absent fixed archive files, independently reconstruct every ordered row and failed-target record from raw evidence, verify public-only relocation and all original files unchanged, and preserve both original and campaign failure. Commit the recovered pins, limits and book before causal analysis.`
+  Verification: `At committed caller/implementation f3b387de01f49891e140b918b32d332b1fb805f5, guarded recovery starts no process and rederives the unchanged native calibration pin 0784264dd0d4daf183e6b161a132a2cb2ecd585cb2e7e74a85012c3794bfa01f. The exact run-2205e120533e4eb9aabcbc9f6c06e971 raw stream is still 7467562 bytes/bcd04952de64ccde9a1e952ed34cefb70c50aed602ce2d793f4328595fbe0034. Kernel sample remains 69065 bytes/5a91ea5c9e3416c0288f2042f9c62cb89913a0796cd0ecdd940a87f6a4491287. Exclusive publication adds only policy-archive-0001.json, policy-archive-0002.json, policy-archive-0003.json and policy-archive.json to the target. The separately retained index is 7466 bytes/SHA-256 686c1ecc7e5ff2e1d1a9cb350c206007fcadf7af2ef5cd1ef3bdc4a919d2ab53, context 45bdf708b45570fa1136d3d7d0bbfba69532772e336f85d2abeb64e7cd68fc4a. Pages retain 4096/4096/355 combined rows and 1199167/1210479/106087 bytes; page SHA-256 pins are b68a6c265ac1faea34c8b70541a62c1c3de79a19504712f8c159f058fd7f14b4, 44cc857d53554c1703ad22def5c8923085cb37fbfb8a86ca448399b488934c14 and 9abe1630543d681dcade986cfb5f857c6a0f0b7eead437cfedeed2bbdbb543af. Independent full reconstruction matches every canonical raw-row hash, kind and separately decoded token across 8547 rows: 8492 log events and 55 metadata records. Failed Rust proxy source remains 62 bytes/dd39d5015afa146af4ecf8ec60573264ca37e38838d4248a395f9e3b2d3dbff7 with calibrated token c70948274239ac01. Its queue/start/wakeup remain at combined rows 2365/5626/6240 with the prior exact hashes. Original returncode stays 1 with no outer timeout and released/reaped flags; collector retains returncode 0, no reported failure, reaped and no forced kill. All 45 prior target/calibration/campaign files, totaling 7942197 bytes, remain byte-for-byte unchanged; the sample is checked separately. The only new run files are the four complete mode-0600, single-link archive files, with no pending residue or legacy publication receipt. A copied public-only receiver has exactly those files, identical counts/bytes/hashes, and reconstructs the complete archive with private/native/process access trapped. Changed/missing copied pages and a forged index reject; exact receiver cleanup leaves the actual archive unchanged. Producer archive is 21652 bytes/f72355164d6af97e9c6de678018fe864bfab537280d95a87f986825970ad50e2, associations 19916 bytes/921fb245ca7882559753bed04fdfa33d3a71bb1c30f54e7eea510da6dd54da3f; unchanged analysis/diagnostics identities are bound in the index. Re-derivation: pinned native calibration/raw/sample identities, exact original-file census, independent row/token reconstruction and actual archive rereads. Falsification: tampered/missing portable pages and forged index fail while original/collector failure truth remains distinct. Durability: this task/book/fact/Git retain all recovery pins, scope and limits; ignored private/public artifacts and supplemental recovery.json remain an explicit evidence-availability gap if those local files are lost. The supplemental report is 4173 bytes/SHA-256 2da1edf428f0d105cf4f9be005daabc6dbfcf626825b1d0c9ecb5366a6a7cbf2. No original, helper or system-log collector starts. No source implementation changes or repeated broad fixture band are needed; staged doctrines and rendered-book review/cleanup cover this evidence/doc slice. Recovery does not reclassify the failed campaign, establish worker cause or qualify startup; .2 owns causal analysis after this commit.`
+  Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.1: recover and pin the retained failed daemon archive`
+- ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.2`
+  Status: `pending`
+  Goal: `Root-cause the retained failed-target wait and own the next supported repair.`
+  Acceptance: `Inspect complete native sample and full retained policy context with exact source/birth joins. Keep clock domains and source correlation distinct from proved client identity or worker cause. Falsify causal hypotheses with available evidence; root-cause surprises and create bounded repair/qualification ownership before any next action. No implicit live repeat or host mutation.`
+  Verification: `Pending committed archive recovery .1.`
   Commit: `pending`
-
 
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.3`
   Status: `done`
@@ -3776,7 +3787,7 @@ decomposes the architecture needed to move beyond that bounded foundation.
 
 ## Current Frontier
 
-Current frontier: .3.2.15.7.2.4 qualifies explicit archive callers and completes .15.7.2 implementation. Commit it, then .15.7.3 owns retained failed-run recovery and causal analysis. No further campaign; startup/parent, full CI and push stay gated.
+Current frontier: .3.2.15.7.3.1 recovers and independently verifies the complete failed archive. Commit its pins, then .15.7.3.2 owns causal analysis and the next supported repair. No further campaign; startup/parent, full CI and push stay gated.
 
 Architecture audit `.1` is complete. Decision `0032` selects one public
 `.vial` source language, private immutable `VIALSemanticIR` and
@@ -6371,20 +6382,16 @@ Qualification is split across `.2.1`–`.2.4`: an independent constructed-page o
 
 Builder acceptance: recover every checked assertion from `02c26d7d986a86e8f1b3c7a0da043e915e33b1c4:docs/tasks/HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.md`. Live nodes retain its contract, evidence and limits.
 
-## Acceptance Checklist (shared publication identity repair .3.2.15.7.2.3.1)
-
-- [x] **ROOT CAUSE (WHY + WHERE)** — `git log -S 'def publish_bytes' -- scripts/fixture_policy_associations.py` locates 16ce07d59f36111512f25cabcfe100c5bd9521d9. A controlled directory replacement proves path-based linking/cleanup can publish foreign bytes and return the expected digest.
-- [x] **ADDRESSED (verified writer)** — Descriptor-relative traversal and I/O retain the original directory identity; actual published inode/bytes are checked, existing finals are preserved, and primary errors survive failed cleanup. Focused replacement/exclusivity/boundary/I/O controls pass; five historical-writer controls fail by independent assertions.
-- [x] **NO REGRESSION** — Guarded default fixture band reports 355 tests/70.895 seconds, OK with three deliberate skips and zero live log attempts. Book review/cleanup, knowledge-map: OK, claim inventory and staged doctrines retain all v1 formats and pending archive/caller/startup boundaries.
-
-## Acceptance Checklist (exclusive archive publication .3.2.15.7.2.3.2)
-
-- [x] **ROOT CAUSE (WHY + WHERE)** — `git log -S '"page_bytes": page_bytes' -- scripts/fixture_policy_archive.py` locates 02c26d7d986a86e8f1b3c7a0da043e915e33b1c4: the calibrated builder returns only memory bytes. Publication requires separate exclusive file retention and actual-file verification before and after the final index.
-- [x] **ADDRESSED (verified publication)** — Complete namespace preflight, held directory identity, pages-first/index-last ordering and actual pinned consumption pass independent partial-write, replacement, tamper and failed-outcome controls. Five disabled-guard controls are RED; portable relocation reads no private/native evidence.
-- [x] **NO REGRESSION** — Guarded default fixture band reports 365 tests/72.102 seconds, OK with three deliberate skips and zero live log attempts; final isolated focused cases pass. Book review/cleanup, knowledge-map: OK, claim inventory and staged doctrines preserve frozen v1 and pending caller/startup boundaries.
+Writer and archive-publication acceptance: recover every checked assertion from `8853975426cd66c9530bfd4a8bac604beb967824:docs/tasks/HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.md`. Live nodes retain all contracts, verification and limits.
 
 ## Acceptance Checklist (explicit archive callers .3.2.15.7.2.4)
 
 - [x] **ROOT CAUSE (WHY + WHERE)** — `git log -S 'import fixture_policy_publication as publication' -- scripts/run_fixture_startup_daemon_capture.py` locates 64acde6fe5608a19df036c73fe9af7f0e82d5cea; journal embedding originates at 93caf0c039aa39b35343b6030c551a84b9be1461. Fixed callers require explicit new index/context handling, and a full archive index can exceed the unchanged journal event bound.
 - [x] **ADDRESSED (verified callers)** — Exact actual-index/run/calibration/original/collector checks, explicit index/digest output and compact journal anchors pass held-process and portable controls. Large ordered streams preserve metadata/late progress; header-only rejection preserves the original result. Five disabled guards fail independent assertions. The exact book example consumes public files and rejects tampering.
 - [x] **NO REGRESSION** — Guarded final fixture band reports 372 tests/75.777 seconds, OK with three deliberate skips and zero live system-log attempts. Book review/example/cleanup, knowledge-map: OK, claim inventory and staged doctrines preserve legacy APIs, fixed process limits and separately open recovery/startup qualification.
+
+## Acceptance Checklist (retained archive recovery .3.2.15.7.3.1)
+
+- [x] **ROOT CAUSE (WHY + WHERE)** — `git log -S 'def publish(target, calibrations, admitted' -- scripts/fixture_policy_archive.py` locates 8853975426cd66c9530bfd4a8bac604beb967824. The retained failed capture still lacked publication because the frozen v1 projection saturated; committed archive implementation now permits faithful offline recovery.
+- [x] **ADDRESSED (verified recovery)** — The exclusive pinned index/pages reconstruct every raw row and metadata position, preserve late target progress and all original/calibration/campaign/sample bytes, and replay from public files alone. Changed/missing copied pages and a forged index reject. Original and campaign failures stay failed.
+- [x] **NO REGRESSION** — No implementation change or new original/helper/collector launch. Exact evidence census, book render/cleanup, knowledge-map: OK, claim inventory and staged doctrines preserve all prior byte identities, frozen v1 behavior and separately open causal/startup qualification.

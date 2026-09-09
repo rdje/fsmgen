@@ -1513,9 +1513,16 @@ before returning the index and page bytes. It performs no publication. The
 retained failed capture reconstructs completely in memory, including late
 progress and metadata, with its original failure intact. Exclusive publication
 is implemented under `.15.7.2.3.2`; `.15.7.2.4` integrates the fixed callers.
-The retained failed capture still awaits separately owned offline recovery.
-Kernel frames and the delayed retained scan do not establish worker cause or
-startup repair.
+The retained failed capture now has a separately recovered archive under
+`.15.7.3.1`. Its index digest is
+`686c1ecc7e5ff2e1d1a9cb350c206007fcadf7af2ef5cd1ef3bdc4a919d2ab53`.
+Independent reconstruction preserves every retained row, metadata position and
+late failed-target queue/start/wakeup record. Replay from public files alone
+passes; changed or missing pages and a forged index reject. Original inputs,
+source archives, the kernel sample and prior failure records are unchanged.
+Recovery establishes artifact consistency while the original and campaign
+remain failed. Kernel frames and the delayed retained scan do not establish
+worker cause or startup repair; `.15.7.3.2` owns that causal analysis.
 
 Shared evidence publication now anchors file creation, linking and temporary
 cleanup to open directory descriptors. A controlled directory-replacement test
