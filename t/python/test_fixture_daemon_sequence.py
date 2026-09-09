@@ -13,7 +13,7 @@ import test_fixture_startup_sequence as lifetime_controls
 sequence = lifetime_controls.sequence
 daemon = sequence.daemon
 launcher = sequence.launcher
-associations = daemon.publication.associations
+associations = daemon.archive.associations
 
 
 class DaemonSequenceControls(unittest.TestCase):
@@ -81,12 +81,12 @@ close $count or die $!;
 
     def checked_publications(self, outcome):
         for evidence, published in zip(self.iterations, outcome["publications"], strict=True):
-            raw = (evidence.directory / daemon.publication.RECEIPT).read_bytes()
-            checked = daemon.publication.consume(raw, published["sha256"], self.root)
-            self.assertEqual(checked["receipt"], published["receipt"])
-            self.assertEqual(checked["receipt"]["run"], str(evidence.directory.relative_to(self.root)))
-            self.assertEqual(checked["diagnostic"]["original"]["returncode"], 0)
-            self.assertEqual(checked["diagnostic"]["scope"], "daemon_context")
+            raw = (evidence.directory / daemon.archive.INDEX_FILE).read_bytes()
+            checked = daemon.archive.consume(raw, published["sha256"], self.root)
+            self.assertEqual(checked["index"], published["index"])
+            self.assertEqual(checked["index"]["context"]["run"], str(evidence.directory.relative_to(self.root)))
+            self.assertEqual(checked["index"]["context"]["original"]["returncode"], 0)
+            self.assertEqual(checked["index"]["context"]["scope"], "daemon_context")
             result = json.loads((evidence.directory / "test-result.json").read_text())
             self.assertEqual(result["native_wait_status"], 0)
             if sys.platform == "darwin":
@@ -103,7 +103,7 @@ close $count or die $!;
         self.checked_publications(outcome)
         admitted = next(row for row in self.journal_events() if row["event"] == "sequence_calibration_admitted")
         self.assertEqual(admitted["scope"], "daemon_context")
-        self.assertTrue(all(p["receipt"]["admission_sha256"] == admitted["sha256"] for p in outcome["publications"]))
+        self.assertTrue(all(associations.digest(associations.canonical(p["index"]["context"]["calibrations"])) == admitted["sha256"] for p in outcome["publications"]))
         self.check_helper()
 
     def test_original_failure_keeps_its_publication_and_stops_before_second_body(self):
@@ -112,9 +112,9 @@ close $count or die $!;
             self.run_sequence()
         self.assertEqual(len(self.bodies()), 1)
         self.assertIsNotNone(failed.exception.published)
-        raw = associations.canonical(failed.exception.published["receipt"])
-        checked = daemon.publication.consume(raw, failed.exception.published["sha256"], self.root)
-        self.assertEqual(checked["diagnostic"]["original"]["returncode"], 23)
+        raw = associations.canonical(failed.exception.published["index"])
+        checked = daemon.archive.consume(raw, failed.exception.published["sha256"], self.root)
+        self.assertEqual(checked["index"]["context"]["original"]["returncode"], 23)
         self.check_closed()
         self.check_helper()
 
@@ -191,7 +191,7 @@ close $count or die $!;
                 patch.object(daemon, "run", side_effect=elapsed):
             return self.run_sequence(count=None)
 
-    def test_fixed_count_and_budget_keep_receipts_in_separate_bounded_events(self):
+    def test_fixed_count_and_budget_keep_indexes_in_separate_bounded_events(self):
         outcome = self.timed_bodies(15)
         self.assertEqual(outcome["completed_invocations"], 20)
         self.assertEqual(len(set(self.bodies())), 20)
@@ -221,19 +221,19 @@ close $count or die $!;
         self.check_closed()
         self.check_helper()
 
-    def test_receipt_corruption_after_publication_stops_before_next_body(self):
+    def test_index_corruption_after_publication_stops_before_next_body(self):
         original = daemon.run
         def corrupt(*args, **kwargs):
             result = original(*args, **kwargs)
-            (self.evidence.directory / daemon.publication.RECEIPT).write_bytes(b"{}\n")
+            (self.evidence.directory / daemon.archive.INDEX_FILE).write_bytes(b"{}\n")
             return result
-        with patch.object(daemon, "run", side_effect=corrupt), self.assertRaisesRegex(ValueError, "receipt disagrees"):
+        with patch.object(daemon, "run", side_effect=corrupt), self.assertRaisesRegex(ValueError, "archive index disagrees"):
             self.run_sequence()
         self.assertEqual(len(self.bodies()), 1)
         self.check_closed()
         self.check_helper()
 
-    def test_prior_valid_receipt_cannot_replace_current_iteration_publication(self):
+    def test_prior_valid_index_cannot_replace_current_iteration_publication(self):
         original = daemon.run
         prior = []
         def substitute(*args, **kwargs):
@@ -242,8 +242,8 @@ close $count or die $!;
                 prior.append(result["publication"])
             else:
                 result["publication"] = prior[0]
-                (self.evidence.directory / daemon.publication.RECEIPT).write_bytes(
-                    associations.canonical(prior[0]["receipt"]))
+                (self.evidence.directory / daemon.archive.INDEX_FILE).write_bytes(
+                    associations.canonical(prior[0]["index"]))
             return result
         with patch.object(daemon, "run", side_effect=substitute), \
                 self.assertRaisesRegex(ValueError, "admitted sequence iteration"):
@@ -268,7 +268,7 @@ close $count or die $!;
         self.check_helper()
 
     def test_publication_failure_stops_before_any_next_body(self):
-        with patch.object(daemon.publication, "publish", side_effect=OSError("private publication")), \
+        with patch.object(daemon.archive, "publish", side_effect=OSError("private publication")), \
                 self.assertRaises(daemon.CaptureFailure):
             self.run_sequence()
         self.assertEqual(len(self.bodies()), 1)

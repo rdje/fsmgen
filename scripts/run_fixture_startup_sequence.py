@@ -70,20 +70,23 @@ def settled_iteration(evidence, result, submitted, target_family, *, policy_scop
 
 
 def retained_daemon_publication(evidence, published, admitted, result):
-    """Read the actual pinned receipt and bind it to this settled iteration."""
-    publication = daemon.publication
-    associations = publication.associations
-    associations.fields(published, ("receipt", "sha256"))
-    raw = publication.analysis.read_local(evidence.directory / publication.RECEIPT,
-                                          evidence.root, associations.MAX_MANIFEST_BYTES)
-    checked = publication.consume(raw, published["sha256"], evidence.root)
-    receipt = checked["receipt"]
-    if (receipt != published["receipt"]
-            or receipt["run"] != str(evidence.directory.relative_to(evidence.root))
-            or receipt["admission_sha256"] != associations.digest(associations.canonical(admitted))
-            or checked["diagnostic"]["original"]["returncode"] != result["returncode"]):
-        raise ValueError("publication disagrees with its admitted sequence iteration")
-    return {"receipt": receipt, "sha256": published["sha256"]}
+    """Read the pinned archive index and bind its context to this iteration."""
+    archive = daemon.archive
+    associations = archive.associations
+    associations.fields(published, ("index", "sha256"))
+    raw = archive.analysis.read_local(evidence.directory / archive.INDEX_FILE,
+                                       evidence.root, archive.MAX_INDEX_BYTES)
+    checked = archive.consume(raw, published["sha256"], evidence.root)
+    index = checked["index"]
+    context = index["context"]
+    if (index != published["index"]
+            or context["run"] != str(evidence.directory.relative_to(evidence.root))
+            or associations.canonical(context["calibrations"]) != associations.canonical(admitted)
+            or context["original"] != {key: result[key] for key in
+                                        ("returncode", "timeout", "released", "leader_reaped")}):
+        raise ValueError("archive disagrees with its admitted sequence iteration")
+    daemon._require_successful_context(context)
+    return {"index": index, "sha256": published["sha256"]}
 
 
 def run_sequence(session, native, journal, root, *, target_family="all", calibrations=None):
@@ -97,7 +100,7 @@ def run_sequence(session, native, journal, root, *, target_family="all", calibra
         publications = []
         policy_scope = "fixture_path"
         if calibrations is not None:
-            admitted = daemon.publication.associations.calibration_snapshot(calibrations, root)
+            admitted = daemon.archive.associations.calibration_snapshot(calibrations, root)
             policy_scope = daemon.SCOPE
 
         def before_daemon_launch():
@@ -119,8 +122,8 @@ def run_sequence(session, native, journal, root, *, target_family="all", calibra
                        qualification="not_claimed")
         if admitted is not None:
             journal.record("sequence_calibration_admitted", scope=policy_scope,
-                           sha256=daemon.publication.associations.digest(
-                               daemon.publication.associations.canonical(admitted)))
+                           sha256=daemon.archive.associations.digest(
+                               daemon.archive.associations.canonical(admitted)))
         for number in range(1, MAX_INVOCATIONS + 1):
             launcher.require_ready(session, native)
             remaining = deadline - time.monotonic()
@@ -152,7 +155,10 @@ def run_sequence(session, native, journal, root, *, target_family="all", calibra
                 if admitted is not None:
                     pinned = retained_daemon_publication(evidence, capture["publication"], admitted, result)
                     publications.append(pinned)
-                    journal.record("iteration_publication", number=number, **pinned)
+                    journal.record("iteration_publication", number=number,
+                                   schema=daemon.archive.SCHEMA,
+                                   index_path=str((evidence.directory / daemon.archive.INDEX_FILE).relative_to(root)),
+                                   sha256=pinned["sha256"])
                 completed += 1
                 journal.record("iteration_completed", number=number, result=result,
                                capture_requested=session.submitted)
@@ -169,8 +175,8 @@ def run_sequence(session, native, journal, root, *, target_family="all", calibra
                    "unobserved_descendants": "unknown"}
         journal.record("sequence_outcome", **outcome)
         if admitted is not None:
-            # Receipts already have separate bounded journal records. Combining
-            # every receipt into one event would exceed the event byte ceiling.
+            # Journal events retain small schema/path/digest anchors only. Each
+            # full index lives in its own bounded file and public output record.
             outcome["publications"] = publications
     except (Exception, KeyboardInterrupt) as error:
         journal.problem("observation", error)

@@ -20,7 +20,15 @@ try:
 finally:
     sys.path.pop(0)
 launcher = daemon.launcher
-associations = daemon.publication.associations
+associations = daemon.archive.associations
+
+
+def controlled_policy(root, rows):
+    header = 'Filtering the log data using "process == "syspolicyd""\n'
+    output = header + "".join(json.dumps(row) + "\n" for row in rows)
+    (root / "controlled-policy.pl").write_text(
+        'use strict; use warnings; $|=1; $SIG{INT}=sub {exit 0}; alarm 30;\nprint '
+        + json.dumps(output) + ';\nwhile (1) { select undef, undef, undef, 0.05; }\n')
 
 
 class DaemonCaptureControls(unittest.TestCase):
@@ -62,10 +70,7 @@ class DaemonCaptureControls(unittest.TestCase):
         native_hash = patch.object(associations.analysis, "NativePathHash", return_value=self.mapping.__getitem__)
         native_hash.start()
         self.addCleanup(native_hash.stop)
-        header = 'Filtering the log data using "process == "syspolicyd""\n'
-        (self.root / "controlled-policy.pl").write_text(
-            'use strict; use warnings; $|=1; $SIG{INT}=sub {exit 0}; alarm 30;\nprint '
-            + json.dumps(header) + ';\nwhile (1) { select undef, undef, undef, 0.05; }\n')
+        controlled_policy(self.root, [calibration.OfflineAttribution.event("controlled daemon row")])
         self.program(body=self.body())
 
     def body(self):
@@ -93,17 +98,17 @@ die 'missing unique prepared scope' unless $prepared_scope == 1;
                           stop_session=stop_session, target_family="rust")
 
     def consume(self, published):
-        raw = associations.canonical(published["receipt"])
-        return daemon.publication.consume(raw, published["sha256"], self.root)
+        raw = associations.canonical(published["index"])
+        return daemon.archive.consume(raw, published["sha256"], self.root)
 
     def test_held_body_observes_preflight_and_scope_before_native_settlement_and_publication(self):
         outcome = self.run_capture()
         loaded = self.consume(outcome["publication"])
         self.assertEqual(outcome["original"], self.original())
         self.assertEqual(outcome["original"]["returncode"], 0)
-        self.assertEqual(loaded["diagnostic"]["scope"], "daemon_context")
-        self.assertEqual(loaded["diagnostic"]["qualification"], "not_claimed")
-        self.assertEqual({row["token"] for row in loaded["manifest"]["target"]["sources"]}, {"3" * 16, "4" * 16})
+        self.assertEqual(loaded["index"]["context"]["scope"], "daemon_context")
+        self.assertEqual(loaded["index"]["limits"]["original_qualification"], "not_claimed")
+        self.assertEqual({row["token"] for row in loaded["index"]["context"]["sources"]}, {"3" * 16, "4" * 16})
         self.assertTrue((self.root / "policy-body-proof").exists())
         settled = next(row for row in self.events() if row["event"] == "settled")
         self.assertTrue(settled["observed_fixtures_gone"])
@@ -120,8 +125,34 @@ die 'missing unique prepared scope' unless $prepared_scope == 1;
         self.assertIsNotNone(failed.exception.published)
         loaded = self.consume(failed.exception.published)
         self.assertEqual(self.original()["returncode"], 23)
-        self.assertEqual(loaded["diagnostic"]["original"]["returncode"], 23)
+        self.assertEqual(loaded["index"]["context"]["original"]["returncode"], 23)
         self.assertIn("original test failed", str(failed.exception.__cause__))
+        self.check_closed()
+
+    def test_large_collected_stream_preserves_metadata_and_late_progress(self):
+        rows = [{"controlled_metadata": number} for number in range(4096)]
+        rows += [calibration.OfflineAttribution.event("starting work for scan: PST: (path: " + "4" * 16 + ")")]
+        controlled_policy(self.root, rows)
+        outcome = self.run_capture()
+        checked = self.consume(outcome["publication"])
+        entries = [entry for page in checked["pages"] for entry in page["records"]]
+        self.assertEqual(len(entries), 4097)
+        self.assertEqual(checked["index"]["metadata_count"], 4096)
+        self.assertEqual([entry["sha256"] for entry in entries],
+                         [associations.digest(associations.canonical(row)) for row in rows])
+        self.assertEqual(entries[-1]["phase"], "started")
+        self.assertEqual(entries[-1]["tokens"], ["4" * 16])
+        self.assertEqual(outcome["original"]["returncode"], 0)
+        self.check_closed()
+
+    def test_header_only_collector_rejects_nonempty_archive_without_promoting_original(self):
+        controlled_policy(self.root, [])
+        with self.assertRaises(daemon.CaptureFailure) as failed:
+            self.run_capture()
+        self.assertIsNone(failed.exception.published)
+        self.assertIn("no retained rows", str(failed.exception.__cause__))
+        self.assertEqual(self.original()["returncode"], 0)
+        self.assertFalse((self.evidence.directory / daemon.archive.INDEX_FILE).exists())
         self.check_closed()
 
     def test_invalid_preflight_stops_standalone_helper_without_any_launch(self):
@@ -151,7 +182,7 @@ die 'missing unique prepared scope' unless $prepared_scope == 1;
         self.assertIn("private cleanup failure", failures["cleanup"])
         self.assertEqual(self.children, [])
 
-    def test_changed_calibration_after_entry_cannot_receive_a_publication_receipt(self):
+    def test_changed_calibration_after_entry_cannot_receive_a_publication_index(self):
         original_run = launcher.run
         def change(*args, **kwargs):
             result = original_run(*args, **kwargs)
@@ -163,12 +194,12 @@ die 'missing unique prepared scope' unless $prepared_scope == 1;
         self.assertIsNone(failed.exception.published)
         self.assertEqual(self.original()["returncode"], 0)
         self.assertIn("changed after prospective admission", str(failed.exception.__cause__))
-        self.assertFalse((self.evidence.directory / daemon.publication.RECEIPT).exists())
+        self.assertFalse((self.evidence.directory / daemon.archive.INDEX_FILE).exists())
         self.check_closed()
 
     def test_publication_failure_cannot_replace_original_failure_or_skip_cleanup(self):
         self.program(exit_code=23, body=self.body())
-        with patch.object(daemon.publication, "publish", side_effect=OSError("private publication failure")), \
+        with patch.object(daemon.archive, "publish", side_effect=OSError("private publication failure")), \
                 self.assertRaises(daemon.CaptureFailure) as failed:
             self.run_capture()
         self.assertIn("original test failed", str(failed.exception.__cause__))
@@ -197,7 +228,7 @@ die 'missing unique prepared scope' unless $prepared_scope == 1;
             status = daemon.main(args)
         return status, stdout.getvalue(), stderr.getvalue()
 
-    def test_cli_emits_only_validated_receipt_even_when_original_fails(self):
+    def test_cli_emits_only_validated_index_even_when_original_fails(self):
         self.program(exit_code=23, body=self.body())
         status, stdout, stderr = self.cli(["--session", "controlled", "--calibration", self.calibration,
                                           "--target-family", "rust"])
@@ -205,7 +236,7 @@ die 'missing unique prepared scope' unless $prepared_scope == 1;
         self.assertEqual(stderr, daemon.PUBLIC_FAILURE + "\n")
         lines = stdout.splitlines()
         self.assertEqual(lines[0], str(self.evidence.directory.relative_to(self.root)))
-        self.assertEqual(self.consume(json.loads(lines[1]))["diagnostic"]["original"]["returncode"], 23)
+        self.assertEqual(self.consume(json.loads(lines[1]))["index"]["context"]["original"]["returncode"], 23)
         self.assertNotIn(str(self.root), stdout + stderr)
         self.check_closed()
 

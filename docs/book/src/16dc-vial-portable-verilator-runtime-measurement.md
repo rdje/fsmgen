@@ -1377,12 +1377,12 @@ Calibration-only preflight is available through `calibration_snapshot` under
 the same literal-pair/native-hash and closed-identity checks as sealing. It
 rechecks input and source-archive snapshots, requires no target capture and
 starts no observation. Its returned relative identities are the admission
-snapshot that the daemon caller compares exactly against its final seal.
+snapshot that the daemon caller compares exactly against its final archive.
 A later byte change invalidates that comparison even if the literal path/token
 pairs still match. Preflight does not qualify any original result or promise
 that a future target will contain enough observed sources.
 
-The offline publication boundary is qualified under `.3.2.15.5.1.4.2.2.1`.
+The legacy offline publication boundary remains qualified under `.3.2.15.5.1.4.2.2.1`.
 It compares the final seal's calibration identities with the exact preflight
 snapshot before writing, then retains these files in the capture directory:
 
@@ -1406,8 +1406,9 @@ publication, not during receipt consumption.
 A valid receipt establishes consistency of the pinned artifacts. It does not
 authenticate them, qualify the original/observer, or establish complete coverage.
 An original failure remains failed in the report even when publication succeeds.
-The publisher itself starts no observation. The fixed combined caller is
-qualified under `.3.2.15.5.1.4.2.2.2`. With an already admitted helper and local
+The legacy publisher itself starts no observation. The fixed combined caller
+now uses the archive successor under `.3.2.15.7.2.4`; it does not produce or
+fall back to the legacy pair. With an already admitted helper and local
 calibration inputs, its command is:
 
 ```sh
@@ -1426,8 +1427,8 @@ combined launcher retains its original argv, fixture census, target-family
 selection, deadlines and cleanup. After settlement, the caller attempts portable
 publication even if the original failed. It retains both failures privately
 when observation and publication fail, and prints only the relative evidence
-directory and any independently revalidated receipt/digest. Pin that digest
-separately. Public error text is fixed; a receipt does not change a failed exit
+directory and any independently revalidated archive index/digest. Pin that digest
+separately. Public error text is fixed; an archive does not change a failed exit
 status. Cancellation remains interrupted even if evidence closing also fails.
 
 Standalone use owns helper shutdown, including rejected calibration or evidence
@@ -1437,7 +1438,7 @@ check preparation order and native cleanup; calibration in those controls is
 modeled, and live system-log launches are trapped. These controls are not a new
 original observation, authenticated capture or proof of complete daemon delivery.
 The shared finite controller supports calibrated daemon iterations under
-`.3.2.15.5.2.1`. Its fixed CLI is qualified under `.3.2.15.5.2.2`:
+`.3.2.15.5.2.1`; `.15.7.2.4` integrates the archive successor. Its fixed CLI is:
 
 ```sh
 scripts/run_with_ram_guard.sh -- python3 -B scripts/run_fixture_startup_daemon_sequence.py \
@@ -1511,9 +1512,10 @@ bounds, and rechecks raw inputs, source archives, calibration and producer bytes
 before returning the index and page bytes. It performs no publication. The
 retained failed capture reconstructs completely in memory, including late
 progress and metadata, with its original failure intact. Exclusive publication
-is implemented under `.15.7.2.3.2`; fixed-caller integration remains pending.
-There is no new archive-producing command yet. Kernel frames and the delayed retained scan do not yet establish
-worker cause or startup repair.
+is implemented under `.15.7.2.3.2`; `.15.7.2.4` integrates the fixed callers.
+The retained failed capture still awaits separately owned offline recovery.
+Kernel frames and the delayed retained scan do not establish worker cause or
+startup repair.
 
 Shared evidence publication now anchors file creation, linking and temporary
 cleanup to open directory descriptors. A controlled directory-replacement test
@@ -1540,14 +1542,46 @@ There is no overwrite, automatic resume or compatibility alias to the older
 manifest/report receipt. Portable `consume(index_bytes, sha256, root)` returns
 the admitted index and ordered pages without private inputs or native APIs.
 
+The archive requires at least one retained row, which can be metadata. A
+header-only stream causes publication failure even when the original exits
+successfully. The caller preserves that successful original result separately,
+settles owned processes, and reports the publication failure; it never invents
+a record or falls back to the older format. The legacy API retains its existing
+empty-stream behavior. A valid archive may preserve a failed original, but a
+completed sequence iteration requires exact successful original and collector
+flags plus the admitted calibration and the current iteration's run.
+
+For portable review, copy the index and all named pages at their relative paths,
+then consume the index with its separately retained digest from the repo root:
+
+```sh
+scripts/run_with_ram_guard.sh -- python3 -B -c '
+import json, sys
+from pathlib import Path
+sys.path.insert(0, "scripts")
+import fixture_policy_archive as archive
+root = Path.cwd()
+raw = archive.analysis.read_local(root / sys.argv[1], root, archive.MAX_INDEX_BYTES)
+checked = archive.consume(raw, sys.argv[2], root)
+print(json.dumps(checked["index"]["context"]["original"], sort_keys=True))
+' "$FSMGEN_POLICY_ARCHIVE_INDEX" "$FSMGEN_POLICY_ARCHIVE_SHA256"
+```
+
+This reads public files only. The output is retained original status, not a new
+execution or a startup qualification. A changed page or index rejects.
+
 Standard output begins with the relative sequence journal directory. On normal
-completion it emits each validated receipt/digest as a separate JSON line, then
+completion it emits each validated `{"index": ..., "sha256": ...}` as a separate
+JSON line, then
 a closed JSON outcome. That outcome contains only reason, completed invocation
 count, capture-received flag, `qualification: "not_claimed"` and
-`unobserved_descendants: "unknown"`. All receipts are checked before any of that
+`unobserved_descendants: "unknown"`. All indexes are checked before any of that
 completion output is printed: duplicate iterations, changed calibration, forged
 counts/reasons/fields and failed original/collector outcomes reject. Preserve
-receipt digests separately from their artifacts.
+index digests separately from their artifacts. The sequence journal stores each
+index's schema, relative path and digest in an `iteration_publication` event; it
+does not embed the full index. This keeps the existing journal event bound even
+when a valid index is larger than one event.
 
 | Exit | Meaning |
 | --- | --- |
@@ -1557,10 +1591,10 @@ receipt digests separately from their artifacts.
 | `130` | Interrupted, including interruption followed by cleanup failure |
 
 No-capture status emits no failure message. Failure output is fixed text without
-private arguments/errors; a completed receipt may still be emitted for a failed
+private arguments/errors; a completed archive may still be emitted for a failed
 original, whose failed status remains unchanged. Helper cleanup errors retain
-interruption and any already completed receipt. Failure before journal setup
-still closes the admitted helper. A valid receipt proves artifact consistency,
+interruption and any already completed archive. Failure before journal setup
+still closes the admitted helper. A valid archive proves artifact consistency,
 not original/observer qualification or complete descendant/log coverage.
 
 Daemon sequencing pins one initial calibration identity and rechecks it before

@@ -71,21 +71,21 @@ class DaemonSequenceCLI(unittest.TestCase):
                                       capture_received=False, qualification="not_claimed", unobserved_descendants="unknown"))
         self.assertEqual(len(set(self.bodies())), 2)
         for row, evidence in zip(rows[:-1], self.iterations, strict=True):
-            raw = (evidence.directory / daemon.publication.RECEIPT).read_bytes()
-            checked = daemon.publication.consume(raw, row["sha256"], self.root)
-            self.assertEqual(checked["receipt"], row["receipt"])
+            raw = (evidence.directory / daemon.archive.INDEX_FILE).read_bytes()
+            checked = daemon.archive.consume(raw, row["sha256"], self.root)
+            self.assertEqual(checked["index"], row["index"])
         self.check_helper()
 
-    def test_original_failure_stays_failed_but_emits_its_valid_portable_receipt(self):
+    def test_original_failure_stays_failed_but_emits_its_valid_portable_index(self):
         self.first_exit = 23
         status, stdout, stderr = self.cli()
         self.assertEqual(status, 1)
         self.assertEqual(stderr, daemon.PUBLIC_SEQUENCE_FAILURE + "\n")
         rows = self.output(stdout)
         self.assertEqual(len(rows), 1)
-        checked = daemon.publication.consume(daemon.publication.associations.canonical(rows[0]["receipt"]),
+        checked = daemon.archive.consume(daemon.archive.associations.canonical(rows[0]["index"]),
                                              rows[0]["sha256"], self.root)
-        self.assertEqual(checked["diagnostic"]["original"]["returncode"], 23)
+        self.assertEqual(checked["index"]["context"]["original"]["returncode"], 23)
         self.assertEqual(len(self.bodies()), 1)
         self.check_helper()
 
@@ -149,7 +149,7 @@ class DaemonSequenceCLI(unittest.TestCase):
             self.assertEqual(stdout.getvalue(), "")
             self.assertEqual(stderr.getvalue(), daemon.PUBLIC_SEQUENCE_FAILURE + "\n")
 
-    def test_public_outcome_rejects_forged_private_fields_counts_and_receipts_before_output(self):
+    def test_public_outcome_rejects_forged_private_fields_counts_and_indexes_before_output(self):
         outcome = self.run_sequence()
         variants = []
         for key, value in (("reason", "/private/reason"), ("capture_received", 1),
@@ -173,7 +173,7 @@ class DaemonSequenceCLI(unittest.TestCase):
             self.assertEqual(output.getvalue(), "")
         self.check_helper()
 
-    def test_failed_original_receipt_cannot_appear_as_a_completed_sequence_iteration(self):
+    def test_failed_original_index_cannot_appear_as_a_completed_sequence_iteration(self):
         self.first_exit = 23
         with self.assertRaises(daemon.CaptureFailure) as failed:
             self.run_sequence()
@@ -187,7 +187,7 @@ class DaemonSequenceCLI(unittest.TestCase):
         self.assertEqual(output.getvalue(), "")
         self.check_helper()
 
-    def test_empty_no_capture_outcome_has_no_receipts_and_is_not_an_execution_failure(self):
+    def test_empty_no_capture_outcome_has_no_indexes_and_is_not_an_execution_failure(self):
         with patch.object(sequence, "RUST_SEQUENCE_SECONDS", 1):
             status, stdout, stderr = self.cli()
         self.assertEqual(status, 2)

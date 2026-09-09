@@ -1,4 +1,4 @@
-"""One fixed T1669 daemon-context capture with calibrated portable publication.
+"""One fixed T1669 daemon-context capture with calibrated portable archive.
 
 Use an existing admitted helper and explicit local calibration runs. The shared
 launcher retains original argv, target-family policy, deadlines and cleanup.
@@ -10,7 +10,7 @@ import os
 import signal
 import sys
 
-import fixture_policy_publication as publication
+import fixture_policy_archive as archive
 import run_fixture_startup_observation as launcher
 
 
@@ -41,16 +41,16 @@ def _problem(evidence, stage, error):
 
 def run(session, native, evidence, root, calibrations, *, stop_session=True, target_family="all",
         _calibration_admission=None, _before_launch=None):
-    """Keep launch ownership in the qualified caller; wrap admission/publication."""
+    """Keep launch ownership in the qualified caller; wrap admission/archive."""
     handed_off = False
     try:
         launcher.observer.require_target_family(target_family)
-        admitted = publication.associations.calibration_snapshot(calibrations, root)
-        if (_calibration_admission is not None and publication.associations.canonical(admitted)
-                != publication.associations.canonical(_calibration_admission)):
+        admitted = archive.associations.calibration_snapshot(calibrations, root)
+        if (_calibration_admission is not None and archive.associations.canonical(admitted)
+                != archive.associations.canonical(_calibration_admission)):
             raise ValueError("calibration changed after sequence admission")
         evidence.record("daemon_calibration_preflight", scope=SCOPE,
-                        sha256=publication.associations.digest(publication.associations.canonical(admitted)))
+                        sha256=archive.associations.digest(archive.associations.canonical(admitted)))
         # The finite controller checks readiness and the full existing reserve
         # after calibration work, immediately before handing off launch ownership.
         if _before_launch is not None:
@@ -67,7 +67,7 @@ def run(session, native, evidence, root, calibrations, *, stop_session=True, tar
             _problem(evidence, "observation", error)
         try:
             target = str(evidence.directory.relative_to(root))
-            published = publication.publish(target, calibrations, admitted, root)
+            published = archive.publish(target, calibrations, admitted, root)
         except (Exception, KeyboardInterrupt) as error:
             _problem(evidence, "final", error)
             interrupted = interrupted or isinstance(error, KeyboardInterrupt)
@@ -95,19 +95,22 @@ def run(session, native, evidence, root, calibrations, *, stop_session=True, tar
                 raise CaptureFailure(interrupted=interrupted) from pending or error
 
 
+def _require_successful_context(context):
+    if (context["original"] != dict(returncode=0, timeout=False, released=True, leader_reaped=True)
+            or context["collector"]["returncode"] not in (0, -signal.SIGINT)
+            or context["collector"]["reported_failure"] is not False
+            or context["collector"]["leader_reaped"] is not True
+            or context["collector"]["forced_kill"] is not False):
+        raise ValueError("sequence archive retains an unsuccessful original or collector")
+
+
 def _checked_publication(published, *, successful_iteration=False):
-    publication.associations.fields(published, ("receipt", "sha256"))
-    raw = publication.associations.canonical(published["receipt"])
-    checked = publication.consume(raw, published["sha256"], ROOT)
+    archive.associations.fields(published, ("index", "sha256"))
+    raw = archive.associations.canonical(published["index"])
+    checked = archive.consume(raw, published["sha256"], ROOT)
     if successful_iteration:
-        report = checked["diagnostic"]
-        if (report["original"] != dict(returncode=0, timeout=False, released=True, leader_reaped=True)
-                or report["collector"]["returncode"] not in (0, -signal.SIGINT)
-                or report["collector"]["reported_failure"] is not False
-                or report["collector"]["leader_reaped"] is not True
-                or report["collector"]["forced_kill"] is not False):
-            raise ValueError("sequence receipt retains an unsuccessful original or collector")
-    return {"receipt": checked["receipt"], "sha256": published["sha256"]}
+        _require_successful_context(checked["index"]["context"])
+    return {"index": checked["index"], "sha256": published["sha256"]}
 
 
 def _emit_publication(published):
@@ -115,8 +118,8 @@ def _emit_publication(published):
 
 
 def _emit_sequence(outcome, limit):
-    """Admit closed public outcome/receipt fields before emitting any of them."""
-    associations = publication.associations
+    """Admit closed public outcome/archive fields before emitting any of them."""
+    associations = archive.associations
     associations.fields(outcome, ("reason", "completed_invocations", "capture_received", "qualification",
                                    "unobserved_descendants", "publications"))
     associations.integer(outcome["completed_invocations"], limit)
@@ -133,8 +136,9 @@ def _emit_sequence(outcome, limit):
     if len(outcome["publications"]) != count:
         raise ValueError("sequence publication count disagrees with its completed iterations")
     checked = [_checked_publication(published, successful_iteration=True) for published in outcome["publications"]]
-    if (len({p["receipt"]["run"] for p in checked}) != count
-            or len({p["receipt"]["admission_sha256"] for p in checked}) > 1):
+    contexts = [p["index"]["context"] for p in checked]
+    admissions = {associations.digest(associations.canonical(context["calibrations"])) for context in contexts}
+    if len({context["run"] for context in contexts}) != count or len(admissions) > 1:
         raise ValueError("sequence publications repeat an iteration or change calibration")
     for published in checked:
         print(json.dumps(published, sort_keys=True))
@@ -150,7 +154,7 @@ def main(argv=None, *, _sequence=False):
     try:
         if _sequence:
             import run_fixture_startup_sequence as sequence
-        parser = publication.associations.PrivateArgumentParser(
+        parser = archive.associations.PrivateArgumentParser(
             prog="fixture-daemon-sequence" if _sequence else "fixture-daemon-capture",
             description=sequence.__doc__ if _sequence else __doc__, allow_abbrev=False)
         parser.add_argument("--session", required=True)
