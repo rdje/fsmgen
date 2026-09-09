@@ -47,7 +47,7 @@ Only `active` rows are PNT-eligible. Live `docs/tasks/` nodes are authoritative;
 | Tree | Status | Roadmap lane | Current frontier | File |
 | --- | --- | --- | --- | --- |
 | `LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION` | `active` | `infra/continuity` | `.29` is done; `.12` remains behind director-deferred `.26` | [task](docs/tasks/LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.md) |
-| `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE` | `active` | `verification architecture` | Startup cause open. Token repair, historical audit and offline publication recovery complete. Prior campaign remains failed; originals passed. Next `.3.2.15.6.1` checks readiness for one separately owned corrected campaign. Parent wire/runtime, full CI and push gated | [task](docs/tasks/HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.md) |
+| `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE` | `active` | `verification architecture` | Startup cause open. Token repair/audit/offline recovery complete. `.3.2.15.6.1` blocked on administrator authentication: calibration passes, no ready helper. After Terminal READY, commit admission before single `.15.6.2` campaign. Parent wire/runtime, full CI and push gated | [task](docs/tasks/HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.md) |
 | `ISF-SPEC-TEST-INDEX-SYNC` | `active` | `R14` | `.3.2` is blocked on complete guarded-CI qualification after HIAL startup resolution; exact transformation is committed at `f3e7f94dc`. `.3.1` is done with the stale commit/frontier pointer corrected | [task](docs/tasks/ISF-SPEC-TEST-INDEX-SYNC.md) |
 | `IAL2-FEATURE-COMPLETENESS-FRONTIER` | `active` | `IAL2 completeness` | `.844` terminal | [task](docs/tasks/IAL2-FEATURE-COMPLETENESS-FRONTIER.md) |
 

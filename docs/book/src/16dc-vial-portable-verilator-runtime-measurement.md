@@ -1480,6 +1480,10 @@ original source/stack limitations.
 Task `.3.2.15.6` separately selects one corrected finite campaign because the
 first stopped on the repaired diagnostic defect. Its admission leaf requires
 current calibration and a ready authenticated helper before any execution.
+Current admission `.3.2.15.6.1` revalidates calibration but finds no ready helper.
+The previous sequence stopped its helper and invalidated authentication.
+From the repository root in Terminal, run `bash scripts/await_fixture_kernel_samples.sh`
+and wait for `READY`; admission must be rechecked and committed before execution.
 
 Standard output begins with the relative sequence journal directory. On normal
 completion it emits each validated receipt/digest as a separate JSON line, then

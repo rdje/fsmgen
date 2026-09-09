@@ -2730,11 +2730,11 @@ decomposes the architecture needed to move beyond that bounded foundation.
   Verification: `No new campaign is admitted or executed. .1 owns fresh technical readiness before .2; repaired retained artifacts cannot supply missing failed-target daemon state.`
   Children: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.6.1, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.6.2`
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.6.1`
-  Status: `pending`
+  Status: `blocked`
   Goal: `Admit calibration and one fresh authenticated helper for the corrected campaign.`
   Acceptance: `Read-only revalidate the same two pinned calibration runs and committed producers; census exact current native helper births and require qualified session readiness. No original/collector/authentication starts during admission. Commit admission before .2. If no helper is ready, retain the exact technical authentication blocker and Terminal command; never infer readiness or run a retry.`
-  Verification: `Pending .15.5.4.2 commit and a fresh readiness census; the preceding helper is stopped with authentication invalidated.`
-  Commit: `pending`
+  Verification: `At 4c5f746b1f9b2a5d7f3aa2d9ff473330f5172237, guarded read-only calibration of .artifacts/logs/t1669-startup-observation/run-ae0697059c164ccd9bcbdadf67f6780c and run-eb32870bc30d496ea5ea589e44a21b19 reproduces the independently pinned 2746-byte snapshot SHA-256 0784264dd0d4daf183e6b161a132a2cb2ecd585cb2e7e74a85012c3794bfa01f. Census checks all twelve exact local helper sessions: no matching native birth is live, all authentication_invalidated fields are true, and none passes qualified admission. Evidence at .artifacts/logs/policy-corrected-campaign-admission-20260909/: readiness.json 5112 bytes/SHA-256 cf7d1985248e7bc6c01d6dfed46caaf36bab2edcd2338afec537e259de2cd0a9. In-memory relabeling of every state as ready with current producer hash still rejects all twelve through native identity checks; original session bytes remain unchanged and subprocess traps record zero attempts. Re-derivation: native calibration equals prior pinned bytes; independently read session metadata and libproc births agree. Falsification: forged-ready metadata cannot substitute for a live helper. Durability: task/book/resume/index and work-unit Git commit retain the exact blocker; ignored raw controls/scratch are supplemental gaps. The preceding campaign intentionally stopped its helper and invalidated authentication; no original, collector, authentication or request starts in this admission. The director must run bash scripts/await_fixture_kernel_samples.sh from the repository root in Terminal, enter the administrator password there, and reply READY once the helper prints its relative session directory. On resume, locate and recheck that exact helper through CaptureSession/require_ready and verify enough remaining lifetime, commit admission, then execute .15.6.2 once with scripts/run_fixture_startup_daemon_sequence.py --target-family rust and both explicit calibrations. This is a technical authentication blocker, not missing permission or implementation. No implicit additional campaign, full CI or push.`
+  Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.6.1: retain corrected campaign calibration and authentication blocker`
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.6.2`
   Status: `pending`
   Goal: `Execute the single separately admitted corrected Rust daemon sequence.`
@@ -3711,7 +3711,7 @@ decomposes the architecture needed to move beyond that bounded foundation.
 
 ## Current Frontier
 
-Current frontier: .3.2.15.5 is exhausted; token normalization and offline historical audit/publication recovery are complete. Startup cause remains open because both observed originals passed. Next .3.2.15.6.1 admits calibration and a fresh helper for one separately owned corrected campaign. Parent wire/runtime qualification, full CI and push remain gated.
+Current frontier: .3.2.15.5 is exhausted; parser repair, historical audit and offline recovery are complete. Startup cause remains open. .3.2.15.6.1 is blocked on fresh administrator authentication: calibration passes, no helper is ready. After Terminal READY, recheck and commit admission before the single .15.6.2 campaign. Parent wire/runtime qualification, full CI and push remain gated.
 
 Architecture audit `.1` is complete. Decision `0032` selects one public
 `.vial` source language, private immutable `VIALSemanticIR` and
@@ -6492,8 +6492,8 @@ Retain the gate and commit output under
 
 Prior wire, endpoint, runtime, startup-observation, policy-analysis and daemon-qualification acceptance histories: recover every exact route, original failed result, checked assertion and correction from `0194d4e916b596e2368967d990d09865b0a562ec:docs/tasks/HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.md`. Live nodes retain all open causes, qualification limits and current behavior.
 
-## Acceptance Checklist (retained audit .3.2.15.5.4.2)
+## Acceptance Checklist (corrected campaign admission .3.2.15.6.1)
 
-- [x] **ROOT CAUSE (WHY + WHERE)** — `git log -S 'literal source record lacks an unambiguous PST token' -- scripts/analyze_fixture_policy.py` identifies 8f9bab40065c85f15162e952753e81107c88d87d. Independent raw-token decoding and native path values locate all retained short spellings; their original task versions distinguish parser omissions from already preserved historical evidence.
-- [x] **ADDRESSED (verified offline recovery)** — Committed normalization restores the failed second publication, with calibrated source joins and independently pinned portable receipt. Exact old/new comparison preserves earlier current analyses and the first receipt. Every preexisting audited input/failure record remains unchanged; original campaign status remains failed.
-- [x] **NO REGRESSION (retained evidence and documentation)** — No runtime source changes or original/helper/collector launches. Guarded audit and recovery checks pass, including trapped private/native receipt reads. Book rendering/cleanup, knowledge-map: OK, refreshed claim inventory and staged doctrines keep historical outcomes and remaining startup gates explicit.
+- [x] **ROOT CAUSE (WHY + WHERE)** — `git log -S 'sudo_validation(True)' -- scripts/fixture_kernel_sampler.py` locates 74c23d182dae033defcaf717f6197d59e86690a0. The prior sequence stopped its helper/authentication; current metadata and native census admit no ready replacement.
+- [x] **ADDRESSED (verified checkpoint)** — Native calibration exactly matches its independent pinned snapshot. All retained helper births are absent, authentication invalidated, and forged-ready states reject without changing session bytes or launching subprocesses. The exact Terminal authentication/resume action is durable; campaign execution remains unstarted.
+- [x] **NO REGRESSION (read-only prerequisite and documentation)** — Qualified parser/caller sources are unchanged; no original/collector/helper/authentication starts. Book render/cleanup, knowledge-map: OK, refreshed claim inventory and staged doctrines retain the blocked prerequisite and open startup/full CI/push gates.
