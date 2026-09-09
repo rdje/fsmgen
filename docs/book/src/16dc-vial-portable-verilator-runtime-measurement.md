@@ -1103,6 +1103,23 @@ Native absence does not itself prove reaping. Capture admission, cleanup
 ownership and deadlines are unchanged. The repair is qualified by the fixture
 diagnostic controls; the original startup and containment failures remain open.
 
+Task `.3.2.12` closes the legacy diagnostic gap. Whenever either main-entry
+assertion fails, TAP emits `Legacy main-entry result: ` followed by canonical
+JSON. It retains `mode`, `fixture` (repository-relative path, byte count and
+SHA-256), `marker` (relative path, regular-file observation and exact contents),
+and the complete original `result`. A missing marker has null contents; an
+empty or unexpected marker retains its actual bytes. For example, a streams
+timeout with no marker keeps the failed entry assertion and publishes the result
+even though the expected-timeout assertion passes.
+
+The result, assertions, fixture bytes, limits and cleanup behavior stay intact.
+Independent TAP controls reject missing or altered retention; actual generated
+producer controls preserve TERM and stream/marker behavior. These are diagnostic
+controls, not a startup repair. The earlier omitted streams result remains
+unavailable. Task `.3.2.13` owns one separately observed original with these
+diagnostics and the repaired passive census.
+
+
 
 Capture requests and helper results are published only after their complete
 JSON has been written, so a concurrent reader cannot consume a partial record.

@@ -12,6 +12,7 @@ answers:
   - "why does fixture capture need repeated authentication?"
   - "why did T1669 admission miss its workspace?"
   - "how are fixture command-query exit races handled?"
+  - "where does T1669 retain failed legacy main entry diagnostics?"
   - "what does the AppleSystemPolicy fixture startup capture establish?"
   - "what does exec_handoff_monotonic_ns prove about child startup?"
   - "why does the task-acceptance fixture invoke Bash directly?"
@@ -79,7 +80,7 @@ captures; tests stay normal-user. Identity, expiry and STOP/Ctrl+C checks remain
 `.3.7` closes native capture/shutdown verification; `.3.2` owns causal repair.
 T1669 allocates under `.artifacts/tmp/process-supervisor-tests/`; empty coverage fails (`.3.8.5`/book). Every `ps` query, including successful `<defunct>` output, requires fresh native presence (`.3.2.11`). Only native disappearance is skipped; permission/query/live identity changes remain failed. The native exit oracle and unchecked-ps mutation qualify that race, not the historical changed field.
 Diagnostic detail: task/Git. `.3.8.18` captures the failed decoy in AppleSystemPolicy with native/source ancestry and timeout JSON; passing samples share those frames. Full-deadline wait, daemon cause, Rust main entry and failed legacy stack remain unknown. `.3.2.2–.3` qualify closed execution_context collection and fixed normal-user T1669; fixture-native/kernel evidence absent. `.3.2.4` passes with exact path/token queue/start/wakeup joins, unchanged sources and owned cleanup; no repair is claimed. `.3.2.5` finds historical context unavailable; retained live events falsify no-scan inference.
-`.3.2.7–.8` supplies shared passive identity/source/progress and independent owner settlement. `.3.2.9` fails original containment and census validation; `.3.2.10.1` repairs provenance but full original fails Rust/legacy startup. `.3.2.11` proves/repairs an exit race; the historical changed field remains unknown. Next `.3.2.12` retains complete legacy failures. Book/task preserve native controls, passing policy joins, missing historical evidence and open causal repair.
+`.3.2.7–.8` owns passive census/settlement. `.3.2.9` fails containment/census; `.3.2.10.1` fixes provenance but fails original Rust/legacy startup. `.3.2.11` proves/repairs an exit race; the historical changed field is unknown. `.3.2.12` retains legacy entry-failure JSON (source/marker identity plus original result); `.3.2.13` owns one corrected observation. Book/task retain the controls and open causal repair.
 T1595's pre-main cause stays open; `.19.2.3.1.2.2.6.2` fixes capture.
 `RamGuardFixtureRuntime` seals tools/argv, paths, bounds and full results.
 T1811/T1669 prove signal/stream failures and group cleanup; T1595 keeps metrics.

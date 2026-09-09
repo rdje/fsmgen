@@ -4,6 +4,7 @@ use strict;
 use warnings;
 
 use Cwd qw(abs_path);
+use Digest::SHA qw(sha256_hex);
 use Errno qw(EPERM);
 use File::Basename qw(dirname);
 use File::Path qw(make_path);
@@ -861,8 +862,22 @@ STREAMS
             containment => 'legacy_ram_capture_probe_group', cwd => $workspace,
             argv => [$perl, $probe, $workspace, $producer],
         );
-        ok(-f $progress, "$mode producer independently records main entry");
-        is(slurp($progress), "entered\n", "$mode progress excludes an assumed completed write") if -f $progress;
+        my $progress_exists = -f $progress;
+        my $progress_content = $progress_exists ? (slurp($progress) // '') : undef;
+        my $entry_ok = ok($progress_exists, "$mode producer independently records main entry");
+        my $progress_ok = !$progress_exists || is($progress_content, "entered\n",
+            "$mode progress excludes an assumed completed write");
+        if (!$entry_ok || !$progress_ok) {
+            my $source = slurp($producer);
+            diag('Legacy main-entry result: ' . JSON::PP->new->ascii->canonical->encode({
+                mode => $mode,
+                fixture => {path => File::Spec->abs2rel($producer, $repo_root),
+                    size_bytes => length($source), sha256 => sha256_hex($source)},
+                marker => {path => File::Spec->abs2rel($progress, $repo_root),
+                    regular_file => $progress_exists ? 1 : 0, content => $progress_content},
+                result => $result,
+            }));
+        }
         if ($mode eq 'signal') {
             ok($result->{ok}, 'old capture wrapper returns despite its signalled child') or diag explain $result;
             my $record = eval { decode_json($result->{stdout}) };

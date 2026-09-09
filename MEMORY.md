@@ -6,10 +6,10 @@ Status and evidence: `docs/tasks/`. The system itself: `MEMORY_ARCHITECTURE.md`.
 ## Resume
 
 - repository_revision: derive with `git log -1 --format='%H %s'`; never shadow `HEAD` here.
-- active_work_unit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.12`
-  (`pending`; complete legacy failure retention)
-- next_action: Retain full legacy results on failed main-entry
-  assertions under .3.2.12 before selecting another original observation.
+- active_work_unit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.13`
+  (`pending`; corrected diagnostic original observation)
+- next_action: Run one fixed policy-only original under .3.2.13,
+  preserving complete diagnostics, native census, policy joins and independent cleanup.
 - in_flight_uncommitted: none after this commit.
 - in_flight_background: none.
 - blockers: Causal repair, legacy startup failure and parent wire/runtime
