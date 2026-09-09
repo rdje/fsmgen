@@ -1521,8 +1521,18 @@ late failed-target queue/start/wakeup record. Replay from public files alone
 passes; changed or missing pages and a forged index reject. Original inputs,
 source archives, the kernel sample and prior failure records are unchanged.
 Recovery establishes artifact consistency while the original and campaign
-remain failed. Kernel frames and the delayed retained scan do not establish
-worker cause or startup repair; `.15.7.3.2` owns that causal analysis.
+remain failed. The `.15.7.3.2` audit matches the daemon image to the retained
+logs and verifies that its scan work uses a serial queue. A preceding scan
+for another project spans the failed fixture's recorded queue wait; the
+fixture scan starts just after that scan finishes. This supports queue
+contention, with exact timings and instruction evidence in the task tree.
+It does not identify the native client request or explain the preceding
+scan's duration. The sampled user address is outside the UUID-matched Perl
+image, so it cannot establish a Perl function or inherit an earlier dyld
+callsite attribution. The installed policy images also fail the sample's
+architecture/UUID match. Startup qualification remains open; `.15.7.3.3`
+owns a repository-local fixture repair selection preserving native failure
+assertions and fixed bounds.
 
 Shared evidence publication now anchors file creation, linking and temporary
 cleanup to open directory descriptors. A controlled directory-replacement test
