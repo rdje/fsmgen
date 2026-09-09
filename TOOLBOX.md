@@ -60,7 +60,7 @@ signature instead of pasting unrelated evidence or weakening the checklist.
 | Need sanitized semantic/IR structure | `--strict --emit-semantic-json`. |
 | Need generated SystemVerilog checked by external tools | `--verify-hdl --output .artifacts/sv/out.sv`. |
 | Need support-accounting coverage truth | `prove -Iperl t/248-regression-corpus-accounting.t`. |
-| Retained fixture policy evidence | Use `scripts/analyze_fixture_policy.py` for private analysis, `scripts/fixture_policy_associations.py` for seal/replay, and `scripts/fixture_policy_diagnostics.py` for bounded export/read. Use the RAM guard; the mdBook gives commands and limits. These tools start no original or collector. |
+| Retained fixture policy evidence | `scripts/analyze_fixture_policy.py`: private analysis; `scripts/fixture_policy_associations.py`: preflight/seal/replay; `scripts/fixture_policy_diagnostics.py`: bounded export/read; `scripts/fixture_policy_publication.py`: internal publish/consume receipts. Use the RAM guard and mdBook limits. No original or collector starts. |
 | Need original fixture kernel capture with complete policy queues | After fixed helper readiness, run `python3 -B scripts/run_fixture_startup_context_capture.py --session "$FSMGEN_CAPTURE_SESSION" --target-family rust` under the RAM guard; see the mdBook runtime-measurement chapter for admission, retained results and cleanup. |
 | Need a specific parser/generator regression | Focused `prove -Iperl t/<test>.t`. |
 | Need user-facing docs proof | `mdbook build docs/book`. |

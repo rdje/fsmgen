@@ -1371,6 +1371,33 @@ A later byte change invalidates that comparison even if the literal path/token
 pairs still match. Preflight does not qualify any original result or promise
 that a future target will contain enough observed sources.
 
+The offline publication boundary is qualified under `.3.2.15.5.1.4.2.2.1`.
+It compares the final seal's calibration identities with the exact preflight
+snapshot before writing, then retains these files in the capture directory:
+
+| File | What it binds |
+| --- | --- |
+| `policy-associations.json` | Calibrated relative sources and ordered event projections |
+| `policy-diagnostic.json` | Admitted context and typed outcomes, linked to that manifest |
+| `policy-publication.json` | Both artifact byte identities and the admitted calibration digest |
+
+Each write is exclusive. A known destination collision prevents any new write;
+a later failure can leave a complete earlier artifact. The publisher verifies
+the pair before attempting the receipt, so partial publication does not receive
+a receipt. Preserve partial evidence rather than overwriting it on a retry.
+Pin the returned receipt digest separately. `fixture_policy_publication.consume`
+checks the canonical receipt, both artifact hashes and their calibration,
+source, input and ordered-record linkage. A receiving checkout needs only the
+receipt and public pair at their relative paths; no original root, private
+capture, source body or native ABI is read. Source bodies are verified during
+publication, not during receipt consumption.
+
+A valid receipt establishes consistency of the pinned artifacts. It does not
+authenticate them, qualify the original/observer, or establish complete coverage.
+An original failure remains failed in the report even when publication succeeds.
+This publisher starts no observation; wiring it into the fixed combined-capture
+launcher remains the next task.
+
 The standalone sealing CLI keeps its execution-context contract. The internal
 `seal_daemon_capture` path is available for the pending fixed caller integration;
 it introduces no new observation command. Its native calibration check uses a
