@@ -1511,8 +1511,8 @@ bounds, and rechecks raw inputs, source archives, calibration and producer bytes
 before returning the index and page bytes. It performs no publication. The
 retained failed capture reconstructs completely in memory, including late
 progress and metadata, with its original failure intact. Exclusive publication
-and fixed-caller integration remain pending; there is no new archive-producing
-command yet. Kernel frames and the delayed retained scan do not yet establish
+is implemented under `.15.7.2.3.2`; fixed-caller integration remains pending.
+There is no new archive-producing command yet. Kernel frames and the delayed retained scan do not yet establish
 worker cause or startup repair.
 
 Shared evidence publication now anchors file creation, linking and temporary
@@ -1524,7 +1524,21 @@ files, and retains the primary failure if cleanup also fails. Complete earlier
 artifacts remain on failure. These checks do not prevent arbitrary same-user
 mutation after observation or make several files one atomic transaction;
 consumers must still verify their separately retained digest. This repair is
-shared by existing formats; archive publication remains a separate pending leaf.
+shared by existing formats.
+
+The archive library's `publish(target, calibrations, admitted)` takes the run,
+separate calibration runs and their prospectively retained calibration snapshot.
+It checks the complete prepared page set and rejects existing files anywhere in
+the fixed archive namespace, including pages outside the new index's range.
+It preserves one directory identity across publication, writes complete pages
+exclusively, and consumes their actual bytes before writing `policy-archive.json`
+last. It then rereads that index and consumes every page again. The return value
+contains `index` and its `sha256`; preserve that digest separately. A later
+error leaves earlier complete files and the failed outcome intact. An index's
+presence alone does not prove success: its pinned consumption must pass.
+There is no overwrite, automatic resume or compatibility alias to the older
+manifest/report receipt. Portable `consume(index_bytes, sha256, root)` returns
+the admitted index and ordered pages without private inputs or native APIs.
 
 Standard output begins with the relative sequence journal directory. On normal
 completion it emits each validated receipt/digest as a separate JSON line, then

@@ -4,6 +4,7 @@ The pinned index and its public pages establish artifact consistency only.
 Legacy association, diagnostic and publication v1 contracts remain separate.
 """
 
+import os
 from pathlib import Path
 
 import fixture_policy_diagnostics as diagnostics
@@ -371,3 +372,56 @@ def build(target, calibrations, root=ROOT, path_hash=None):
         if analysis.read_local(ROOT / name, ROOT) != previous:
             raise ValueError("producer changed during archive building")
     return {"index": index, "page_bytes": page_bytes}
+
+
+def publish(target, calibrations, admitted, root=ROOT, path_hash=None):
+    """Publish complete pages exclusively, verify them, then retain the index.
+
+    Any existing fixed archive destination rejects the operation. A later
+    failure retains earlier complete files; callers must consume the separately
+    pinned index and preserve original/collector failure truth.
+    """
+    root = root.resolve()
+    associations.bounded_list(admitted, analysis.MAX_CALIBRATIONS, 1)
+    for calibration in admitted:
+        associations.calibration_identity(calibration)
+    admission = associations.canonical(admitted)
+    built = build(target, calibrations, root, path_hash)
+    index, page_bytes = built["index"], built["page_bytes"]
+    validate_index(index)
+    if index["context"]["run"] != target:
+        raise ValueError("archive builder returned a foreign run")
+    if associations.canonical(index["context"]["calibrations"]) != admission:
+        raise ValueError("calibration changed after prospective admission")
+    associations.bounded_list(page_bytes, MAX_PAGES, 1)
+    if len(page_bytes) != len(index["pages"]):
+        raise ValueError("archive builder returned an incomplete page set")
+    for raw, descriptor in zip(page_bytes, index["pages"]):
+        read_page(raw, descriptor, index["context_sha256"])
+    raw_index = associations.canonical(index)
+    anchor = associations.digest(raw_index)
+    index_path = target + "/" + INDEX_FILE
+    # An unreferenced page from an earlier attempt is still existing evidence.
+    destinations = [index_path] + [page_path(target, n) for n in range(1, MAX_PAGES + 1)]
+    parent = associations._publication_parent(root, index_path)
+    try:
+        for relative in destinations:
+            try:
+                os.stat(Path(relative).name, dir_fd=parent, follow_symlinks=False)
+            except FileNotFoundError:
+                continue
+            raise FileExistsError("archive publication destination already exists")
+        for raw, descriptor in zip(page_bytes, index["pages"]):
+            associations._check_publication_parent(root, index_path, parent)
+            if associations.publish_bytes(raw, descriptor["path"], root) != descriptor["sha256"]:
+                raise ValueError("published archive page digest disagrees with prepared bytes")
+        consume(raw_index, anchor, root)
+        associations._check_publication_parent(root, index_path, parent)
+        if associations.publish_bytes(raw_index, index_path, root) != anchor:
+            raise ValueError("published archive index digest disagrees with prepared bytes")
+        retained = analysis.read_local(root / index_path, root, MAX_INDEX_BYTES)
+        consumed = consume(retained, anchor, root)
+        associations._check_publication_parent(root, index_path, parent)
+        return {"index": consumed["index"], "sha256": anchor}
+    finally:
+        os.close(parent)
