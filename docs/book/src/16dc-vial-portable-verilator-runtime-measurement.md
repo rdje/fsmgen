@@ -1329,6 +1329,21 @@ bash scripts/run_with_ram_guard.sh -- python3 -B -m unittest discover \
   -s t/python -p 'test_fixture_*.py' -v
 ```
 
+Default discovery excludes live system-log collection. Its native collector
+controls require `FSMGEN_LIVE_POLICY_COLLECTOR_ORACLE=1`, checked again before
+native admission; set this only when the owning task explicitly permits live
+collection. Native Foundation predicate checks still evaluate synthetic records,
+and held-child lifecycle controls still use controlled producers.
+
+The first association qualification band inadvertently ran the previously
+ungated native collector controls: the direct collector and the policy-only
+caller with a synthetic body. Both passed collector-reap checks; the direct
+control also checked native disappearance. Those executions violated the
+selected no-live-collector scope. Task
+`.3.2.15.5.1.2.2` corrects the evidence and selection boundary; it does not
+reinterpret the earlier run as collector-free. Their temporary raw streams
+and exact native births were not retained after test cleanup.
+
 The shared adapter's quantitative statements above have three independent legs:
 
 - Re-derive the direct callsites and selected constants from `t/1545`, both

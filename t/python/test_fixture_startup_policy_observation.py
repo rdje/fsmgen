@@ -469,7 +469,13 @@ die 'missing or repeated readiness' unless $matched == 1;
         self.assertFalse(any(row["event"] == "caller_complete" for row in self.events()))
 
     @unittest.skipUnless(sys.platform == "darwin", "actual normal-user OS log lifecycle")
+    @unittest.skipUnless(os.environ.get("FSMGEN_LIVE_POLICY_COLLECTOR_ORACLE") == "1",
+                         "separately selected live policy collector qualification")
     def test_native_collector_and_actual_body_agree_on_prepared_context(self):
+        # Import-time selection can be revoked before execution. Check again
+        # before replacing the controlled collector or releasing any test body.
+        if os.environ.get("FSMGEN_LIVE_POLICY_COLLECTOR_ORACLE") != "1":
+            self.skipTest("live policy collector qualification is not selected")
         self.program(body=self.context_body())
         with patch.object(subprocess, "Popen", side_effect=lambda argv, **kwargs:
                           self.allowed_spawn(self.real_popen, argv, **kwargs)):
@@ -524,6 +530,42 @@ die 'missing or repeated readiness' unless $matched == 1;
     @unittest.skipUnless(sys.platform == "darwin", "actual normal-user Darwin entrypoint")
     def test_main_reports_failure_after_preserving_original_and_cleanup(self):
         self.check_main(23, 1)
+
+
+class LiveCollectorAdmission(unittest.TestCase):
+    def invoke_body(self, case):
+        method = PolicyOnlyControls.test_native_collector_and_actual_body_agree_on_prepared_context
+        # Bypass only discovery decorators; the execution-time gate must stand
+        # alone even when an earlier opt-in was revoked.
+        while hasattr(method, "__wrapped__"):
+            method = method.__wrapped__
+        return method(case)
+
+    def test_unselected_or_revoked_collection_cannot_replace_control_or_release_body(self):
+        case = PolicyOnlyControls()
+        for value in ("", "0", "true", "yes"):
+            with self.subTest(selection=value), \
+                    patch.dict(os.environ, {"FSMGEN_LIVE_POLICY_COLLECTOR_ORACLE": value}), \
+                    patch.object(case, "program") as program, \
+                    patch.object(case, "context_body", side_effect=AssertionError("unselected body boundary")) as context, \
+                    patch.object(subprocess, "Popen") as spawn:
+                with self.assertRaisesRegex(unittest.SkipTest, "not selected"):
+                    self.invoke_body(case)
+                program.assert_not_called()
+                context.assert_not_called()
+                spawn.assert_not_called()
+
+    def test_exact_selection_reaches_control_boundary_without_collection(self):
+        case = PolicyOnlyControls()
+        with patch.dict(os.environ, {"FSMGEN_LIVE_POLICY_COLLECTOR_ORACLE": "1"}), \
+                patch.object(case, "context_body", return_value="held body") as context, \
+                patch.object(case, "program", side_effect=RuntimeError("selected boundary")) as program, \
+                patch.object(subprocess, "Popen") as spawn:
+            with self.assertRaisesRegex(RuntimeError, "selected boundary"):
+                self.invoke_body(case)
+            context.assert_called_once_with()
+            program.assert_called_once_with(body="held body")
+            spawn.assert_not_called()
 
 
 if __name__ == "__main__":

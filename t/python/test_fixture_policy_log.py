@@ -380,7 +380,13 @@ class NativeExecutionContext(unittest.TestCase):
         self.assertEqual(len(result.failures), 1)
         self.assertIn("[False, False, True", result.failures[0][1])
 
+    @unittest.skipUnless(os.environ.get("FSMGEN_LIVE_POLICY_COLLECTOR_ORACLE") == "1",
+                         "separately selected live policy collector qualification")
     def test_real_context_collector_settles_with_exact_scope_and_owned_cleanup(self):
+        # Recheck at execution: import-time selection must not survive revocation.
+        # This must precede evidence allocation and every native admission.
+        if os.environ.get("FSMGEN_LIVE_POLICY_COLLECTOR_ORACLE") != "1":
+            self.skipTest("live policy collector qualification is not selected")
         evidence = observer.Evidence(self.root)
         self.addCleanup(evidence.stream.close)
         native = sampler.NativeProcesses()
@@ -402,6 +408,40 @@ class NativeExecutionContext(unittest.TestCase):
             os.waitpid(collector.process.pid, os.WNOHANG)
         self.assertFalse(observer.still_live(native, witness["identity"]))
         self.assertIn(b"com.apple.syspolicy.exec", (evidence.directory / "policy.stdout").read_bytes())
+
+
+class LiveCollectorAdmission(unittest.TestCase):
+    def invoke_body(self):
+        method = NativeExecutionContext.test_real_context_collector_settles_with_exact_scope_and_owned_cleanup
+        # Exercise the execution-time gate even when unittest skips the method
+        # at discovery. Neither control is allowed to start a system-log stream.
+        return getattr(method, "__wrapped__", method)(self)
+
+    def test_unselected_or_revoked_live_collection_fails_before_native_admission(self):
+        self.root = ROOT  # The rejected path must never allocate this evidence.
+        for value in ("", "0", "true", "yes"):
+            with self.subTest(selection=value), \
+                    patch.dict(os.environ, {"FSMGEN_LIVE_POLICY_COLLECTOR_ORACLE": value}), \
+                    patch.object(observer, "Evidence", side_effect=AssertionError("unselected evidence boundary")) as evidence, \
+                    patch.object(sampler, "NativeProcesses") as native, \
+                    patch.object(policy, "PolicyLog") as collector:
+                with self.assertRaisesRegex(unittest.SkipTest, "not selected"):
+                    self.invoke_body()
+                evidence.assert_not_called()
+                native.assert_not_called()
+                collector.assert_not_called()
+
+    def test_exact_selection_reaches_evidence_boundary_without_collection(self):
+        self.root = ROOT  # No fixture is allocated: the boundary raises first.
+        with patch.dict(os.environ, {"FSMGEN_LIVE_POLICY_COLLECTOR_ORACLE": "1"}), \
+                patch.object(observer, "Evidence", side_effect=RuntimeError("selected boundary")) as evidence, \
+                patch.object(sampler, "NativeProcesses") as native, \
+                patch.object(policy, "PolicyLog") as collector:
+            with self.assertRaisesRegex(RuntimeError, "selected boundary"):
+                self.invoke_body()
+            evidence.assert_called_once_with(ROOT)
+            native.assert_not_called()
+            collector.assert_not_called()
 
 
 if __name__ == "__main__":
