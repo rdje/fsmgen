@@ -17,6 +17,7 @@ answers:
   - "how does the fixed daemon capture caller work?"
   - "how does the finite daemon sequence preserve its budget and helper?"
   - "how are fixture policy publication receipts verified?"
+  - "why can shortened PST tokens stop daemon publication?"
   - "how will policy diagnostics avoid private paths?"
   - "which fixture bands wrongly ran live collectors?"
   - "which call delayed the native library load?"
@@ -76,6 +77,7 @@ Launch observation retains commands/results, identity and bounded progress. Bash
 Env-Perl timed out after handoff; Verilator uses canonical Perl, except the `prove` entrypoint. Direct-Perl timeouts refute a shebang-only cure. HIAL/VIAL `.19.2.3.1.2.2.5.5.2.3.1.2.2.3` owns `_dyld_start`/fixture diagnosis. `.3.3–7` qualify fixed authenticated kernel capture and reject thread-state substitution; `.3.2` owns causal repair. `bash scripts/await_fixture_kernel_samples.sh` checks identity/expiry/STOP; tests stay normal-user. `.3.8.7` keeps one helper per sequence; standalone STOP needs fresh authentication.
 T1669 uses `.artifacts/tmp/process-supervisor-tests/`. Every ps result needs native presence; only disappearance is skipped. Permission/query/live identity changes fail. Native exit and unchecked-ps controls qualify that race, not the historical changed field (`.3.2.11`; book/task).
 History: `93e7072566e2dce7b70c10fa04ffc8765b35b1e9:docs/knowledge/test-subprocess-policy-adapters.md`. Combined original passes without capture; startup cause stays open (.3.2.15.3.3).
+Daemon campaign .15.5.3 passes both originals but stops publication on a valid fifteen-digit PST token; fixed-width parsing misses its leading zero. Native value agrees. .15.5.4 owns normalization/audit; helper stopped, no capture.
 Command/header/joins verified. Pinned archive replay omits old root/CFHash; rederivation unavailable; unauthenticated. Diagnostics omit raw text/bodies. Receipts bind calibration/artifacts; consumption needs no private inputs. Daemon caller preflights, settles, publishes; preserves failures/ownership. The shared finite controller pins calibration, rechecks the full reserve after preflight, verifies each actual receipt/current iteration and stops at first failure/capture. Fixed CLI .15.5.2.2 emits checked receipts/outcomes; capture/no-capture/failure/interruption stay distinct. F_CHECK_LV shared cause unproved (.15.2); queues/provenance coexist (.15.4). Worker/delivery unknown. Live opt-in violations: .15.5.1.2.2–3.
 T1595's pre-main cause stays open; `.19.2.3.1.2.2.6.2` fixes capture.
 `RamGuardFixtureRuntime` seals tools/argv, paths, bounds and full results.
@@ -88,8 +90,5 @@ Selected: one coordinator, private clients, reserved identities, bounded wire/co
 T1669 proves reservation feasibility. Extraction, Wire, inactive endpoint/service transport are implemented;
 coordination, routing and hostile qualification (including startup diagnosis) remain open.
 
-Earlier passing T1668 capture `.3.7`: exact birth/source identities, AppleSystemPolicy offsets/image UUIDs, XProtect/provenance and cleanup limits remain at `ae992d5178a8bc68756402f51244bff752744bbd:docs/knowledge/test-subprocess-policy-adapters.md`. That passing policy wait cannot explain an older timeout; raw diagnostic artifacts remain an explicit durability gap.
-Approved iTerm2 Developer Tools is on; Terminal/Tracing off. Unchanged band passes.
-Exact `ju79K1mKs1/orphaning-runtime` still has XProtect results at `16:05:05.243719 +0200`, path `6bce9d1ba3a14e47`.
-[Apple's process-tree paste inspection](https://support.apple.com/en-euro/guide/security/sece3b202c4b/web) is unproved here.
-Fresh shell/Codex passes with exact-fixture XProtect scans; identities: `.3.2`. Fixture provenance, no quarantine; repair open.
+Earlier passing T1668 capture identities/frames/provenance/cleanup: `ae992d5178a8bc68756402f51244bff752744bbd:docs/knowledge/test-subprocess-policy-adapters.md`. Passing waits cannot explain older failures; ignored raw evidence remains a gap.
+Dated host-permission and exact XProtect context: `2101ece2ec82e668cdacacada3fd44b2bf2c4885:docs/knowledge/test-subprocess-policy-adapters.md`. Security-setting causality remains unproved; startup repair remains open.

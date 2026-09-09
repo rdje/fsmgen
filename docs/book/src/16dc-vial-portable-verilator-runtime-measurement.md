@@ -1440,11 +1440,19 @@ The command accepts only session, repeated calibration and target-family flags;
 abbreviations and predicate/scope/count/deadline overrides reject. The existing
 fixture-path sequence command keeps its original defaults. The owning observation
 task must admit a prospective campaign separately; qualifying this CLI runs none.
-Current admission `.3.2.15.5.3.1` verifies calibration and one director-started
-ready helper. The single campaign `.3.2.15.5.3.2` remains unstarted; recheck
-that helper immediately before execution. Readiness expires and is not a
-campaign result. Start a helper through `bash scripts/await_fixture_kernel_samples.sh`
-in Terminal when the owning task explicitly requires fresh authentication.
+The first admitted daemon campaign `.3.2.15.5.3` is exhausted. Both original
+invocations pass; the first publishes a checked receipt. The second retains
+its complete raw evidence but publication fails on a valid PST token printed
+without its leading zero: `499990c7f2beab5`, native value `0499990c7f2beab5`.
+The parser currently recognizes only sixteen-digit tokens. Task `.3.2.15.5.4`
+owns normalization and a retained-evidence audit before further observation.
+
+Sequence status is failure; no third invocation or kernel capture occurs.
+Both collectors settle successfully. All recorded native births and observed
+fixture workspaces are independently absent, and helper authentication is
+invalidated. The passing originals do not repair the earlier startup failures.
+The first run's receipt remains in its private sequence journal even though
+this later failure prevents normal completion output.
 
 Standard output begins with the relative sequence journal directory. On normal
 completion it emits each validated receipt/digest as a separate JSON line, then
