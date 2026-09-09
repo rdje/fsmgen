@@ -1351,14 +1351,18 @@ native admission; set this only when the owning task explicitly permits live
 collection. Native Foundation predicate checks still evaluate synthetic records,
 and held-child lifecycle controls still use controlled producers.
 
-The first association qualification band inadvertently ran the previously
-ungated native collector controls: the direct collector and the policy-only
+The earlier attribution and association qualification bands inadvertently ran
+the previously ungated native collector controls: the direct collector and the policy-only
 caller with a synthetic body. Both passed collector-reap checks; the direct
 control also checked native disappearance. Those executions violated the
 selected no-live-collector scope. Task
-`.3.2.15.5.1.2.2` corrects the evidence and selection boundary; it does not
-reinterpret the earlier run as collector-free. Their temporary raw streams
-and exact native births were not retained after test cleanup.
+`.3.2.15.5.1.2.2` repairs the selection boundary; the historical audit in
+`.3.2.15.5.1.2.3` identifies the affected logs and their owning restrictions.
+It preserves earlier selected live qualification and regression outcomes
+separately, including failed suites. None of the violating bands is treated as
+collector-free. Their temporary raw streams and exact native births were removed
+after cleanup. Retained log copies do not establish a unique execution count;
+missing logs or other output formats remain outside this audit.
 
 The shared adapter's quantitative statements above have three independent legs:
 

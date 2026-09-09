@@ -14,6 +14,7 @@ answers:
   - "how are fixture command-query exit races handled?"
   - "how are queued-only fixture policy tokens attributed?"
   - "how will policy diagnostics avoid private paths?"
+  - "which fixture bands wrongly ran live collectors?"
   - "which call delayed the native library load?"
   - "why must fixture clock domains stay separate?"
   - "where does T1669 retain failed legacy main entry diagnostics?"
@@ -60,8 +61,7 @@ bounds, schemas and platform guards; T1669 watches exclusive ownership.
 Child requires successful `setpgid` and actual owned group before exec. `.3.2.10.1` separates return/errno, exception and membership diagnostics with child PID; native session/false-success controls reject stale-error attribution. PID is not birth identity. Parent race closure cannot replace admission; nested cleanup stays open.
 `exec_handoff_monotonic_ns` means observed control-pipe EOF, not main entry:
 pre-exec death can close it. Without observed EOF, that timestamp and dependent
-durations stay unknown even after cleanup. T1669 holds a real pre-exec child
-through timeout and separately exits it; successful output is the positive control.
+durations stay unknown even after cleanup. T1669 checks held-child timeout, separate pre-exec exit and successful output.
 Post-KILL reaping polls nonblocking within cleanup grace. Unreaped leaders/surviving groups stay incomplete; T1669's isolated mock rejects blocking waits without unkillable children.
 `VerilatorRuntime` retains `0086`'s Darwin qualification and version/compile/runtime contracts.
 `TaskAcceptanceFixtureRuntime` seals owned fixture roots/fixed local Git argv.
@@ -86,7 +86,7 @@ captures; tests stay normal-user. Identity, expiry and STOP/Ctrl+C checks remain
 `.3.7` closes native capture/shutdown verification; `.3.2` owns causal repair.
 T1669 uses `.artifacts/tmp/process-supervisor-tests/`. Every ps result needs native presence; only disappearance is skipped. Permission/query/live identity changes fail. Native exit and unchecked-ps controls qualify that race, not the historical changed field (`.3.2.11`; book/task).
 History: `93e7072566e2dce7b70c10fa04ffc8765b35b1e9:docs/knowledge/test-subprocess-policy-adapters.md`. Combined original passes without capture; startup cause stays open (.3.2.15.3.3).
-Raw analysis keeps events and calibrated joins; exact command/header checks reject drift. Portable replay (.15.5.1.2) needs a pinned relative-association manifest and local archives, not native hashing or historical roots. It cannot rederive native tokens or authenticate its supplied digest. Daemon scope qualified; caller/disclosure pending. F_CHECK_LV/clocks do not establish shared cause (.15.2); queues coexist with provenance logs (.15.4). Raw evidence is private; worker state/delivery stay unknown. Live collector tests require opt-in (.15.5.1.2.2).
+Raw analysis checks command/header and retains events/calibrated joins. Portable replay (.15.5.1.2) needs a pinned relative-association manifest and local archives, not native hashing or historical roots. Native rederivation is unavailable; the digest is not authentication. Daemon scope qualified; caller/disclosure pending. F_CHECK_LV/clocks do not establish shared cause (.15.2); queues coexist with provenance logs (.15.4). Raw evidence is private; worker state/delivery stay unknown. Live tests require opt-in; prior scope violations: .15.5.1.2.2–3.
 T1595's pre-main cause stays open; `.19.2.3.1.2.2.6.2` fixes capture.
 `RamGuardFixtureRuntime` seals tools/argv, paths, bounds and full results.
 T1811/T1669 prove signal/stream failures and group cleanup; T1595 keeps metrics.
