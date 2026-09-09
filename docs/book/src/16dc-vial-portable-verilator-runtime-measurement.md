@@ -1141,6 +1141,17 @@ then attributes the failed run's four queues to its observed producer paths.
 This is scoped hash attribution; collisions or conflicting literal evidence
 fail, and a hash never becomes a universal identity guarantee.
 
+Native PST fields accept one through sixteen lowercase hexadecimal digits.
+Leading zeroes are optional in captured messages; canonical output always uses
+sixteen digits. For example, `499990c7f2beab5` and `0499990c7f2beab5` identify
+the same value, and `0` becomes `0000000000000000`. Equivalent spellings in one
+record count once. Calibration, token groups, portable associations and diagnostic
+projections use the same normalization. Empty, oversized, signed or nonhexadecimal
+recognized fields reject; an adjacent valid token cannot hide a malformed field.
+Distinct values beside a literal source URL remain ambiguous, and disagreement
+with another literal witness or the calibrated native value still fails.
+Raw messages and their record hashes are preserved.
+
 For the retained example runs, execute:
 
 ```sh
@@ -1444,8 +1455,9 @@ The first admitted daemon campaign `.3.2.15.5.3` is exhausted. Both original
 invocations pass; the first publishes a checked receipt. The second retains
 its complete raw evidence but publication fails on a valid PST token printed
 without its leading zero: `499990c7f2beab5`, native value `0499990c7f2beab5`.
-The parser currently recognizes only sixteen-digit tokens. Task `.3.2.15.5.4`
-owns normalization and a retained-evidence audit before further observation.
+The then-current parser required sixteen digits. Task `.3.2.15.5.4.1` repairs
+normalization; `.3.2.15.5.4.2` still owns the retained-evidence audit and offline
+publication recovery before further observation.
 
 Sequence status is failure; no third invocation or kernel capture occurs.
 Both collectors settle successfully. All recorded native births and observed

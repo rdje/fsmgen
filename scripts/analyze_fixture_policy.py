@@ -25,7 +25,20 @@ MAX_SOURCES = 64
 MAX_SOURCE_BYTES = 65536
 MAX_CALIBRATIONS = 4
 FIXTURE_PREFIX = ".artifacts/tmp/process-supervisor-tests/"
-TOKEN = re.compile(r"PST: \(path: ([0-9a-f]{16})\)")
+TOKEN = re.compile(r"PST: \(path: ([0-9a-f]{1,16})\)")
+
+
+def policy_tokens(message):
+    """Normalize native unsigned-64-bit spellings without changing raw records.
+
+    Native messages can omit leading zeroes. Portable artifacts and path hashes
+    retain sixteen lowercase digits; equivalent spellings denote one value.
+    A malformed native field must not disappear beside another valid token.
+    """
+    tokens = TOKEN.findall(message)
+    if len(tokens) != message.count("PST: (path: "):
+        raise ValueError("policy token has invalid unsigned-64-bit spelling")
+    return {token.zfill(16) for token in tokens}
 
 
 def verify_collector_command(collector):
@@ -252,7 +265,7 @@ def literal_pairs(run):
             continue
         if url.netloc or url.query or url.fragment:
             raise ValueError("literal source URL is ambiguous")
-        tokens = set(TOKEN.findall(message))
+        tokens = policy_tokens(message)
         if len(tokens) != 1:
             raise ValueError("literal source record lacks an unambiguous PST token")
         token = tokens.pop()
@@ -293,7 +306,7 @@ def analyze(target, calibrations, root=ROOT, path_hash=None):
             raise ValueError("target literal policy record contradicts calibrated attribution")
     groups = {}
     for index, row in enumerate(run["records"]):
-        for token in set(TOKEN.findall(row["eventMessage"])):
+        for token in policy_tokens(row["eventMessage"]):
             groups.setdefault(token, []).append(index)
     tokens = []
     for token, indices in sorted(groups.items()):

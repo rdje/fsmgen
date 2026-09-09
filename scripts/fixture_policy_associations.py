@@ -238,7 +238,7 @@ def _seal(target, calibrations, root, path_hash, target_loader):
         if by_path[absolute] != token:
             raise ValueError("target literal policy record contradicts calibrated attribution")
     records = [dict(sha256=digest(canonical(record)),
-                    tokens=sorted(set(analysis.TOKEN.findall(record["eventMessage"]))),
+                    tokens=sorted(analysis.policy_tokens(record["eventMessage"])),
                     phase=phase(record["eventMessage"])) for record in run["records"]]
     producers = {}
     for name in PRODUCERS:

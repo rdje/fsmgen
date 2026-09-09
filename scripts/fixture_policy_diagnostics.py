@@ -186,7 +186,7 @@ def export(raw, expected_sha256, private_directory, root=ROOT):
             if type(record.get("eventMessage")) is not str:
                 raise ValueError("diagnostic log event lacks a message")
             projection = dict(sha256=associations.digest(associations.canonical(record)),
-                tokens=sorted(set(associations.analysis.TOKEN.findall(record["eventMessage"]))),
+                tokens=sorted(associations.analysis.policy_tokens(record["eventMessage"])),
                 phase=associations.phase(record["eventMessage"]))
             if len(records) >= len(sealed_records) or projection != sealed_records[len(records)]:
                 raise ValueError("diagnostic event projection disagrees with pinned associations")
