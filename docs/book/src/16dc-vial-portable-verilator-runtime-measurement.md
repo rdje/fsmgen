@@ -1237,6 +1237,17 @@ public OS/toolchain dependencies remain explicit. Separate native-library
 evidence does not establish the original fixture's kernel cause; the passing
 observation does not establish repair or authorize a retry.
 
+The retained analyzer now checks the versioned execution-context command as
+well as the output byte manifest. Its native header must contain the matching
+process, fixture prefix and subsystem predicate; the OS-rendered
+`composedMessage` spelling is accepted for `eventMessage`. Missing command
+metadata, changed options or a widened predicate fail analysis, even when the
+recorded output hash matches. These consistency checks apply to the target and
+each calibration run. Valid failure results and all retained records remain
+available; command consistency does not establish complete log delivery or
+privacy safety. The separate portable association and disclosure work remains
+pending under `.3.2.15.5.1`.
+
 
 A bounded historical query cannot recover even the failed run's already retained
 queue events. Empty history therefore cannot establish that a scan never ran.

@@ -28,6 +28,21 @@ FIXTURE_PREFIX = ".artifacts/tmp/process-supervisor-tests/"
 TOKEN = re.compile(r"PST: \(path: ([0-9a-f]{16})\)")
 
 
+def verify_collector_command(collector):
+    # This is the frozen retained v1 contract, independent of current launcher
+    # defaults. A valid byte hash alone does not establish collection scope.
+    expected = ["/usr/bin/log", "stream", "--style", "ndjson", "--level", "debug",
+                "--timeout", "240", "--predicate",
+                'process == "syspolicyd" AND (eventMessage CONTAINS '
+                '"<repo>/.artifacts/tmp/process-supervisor-tests/" '
+                'OR subsystem == "com.apple.syspolicy.exec")']
+    if (not isinstance(collector, dict)
+            or collector.get("schema") != "fsmgen.fixture_policy_log.v1"
+            or collector.get("scope") != "execution_context"
+            or collector.get("command") != expected):
+        raise ValueError("retained collector command is not the reviewed execution-context contract")
+
+
 class NativePathHash:
     def __init__(self):
         if sys.platform != "darwin" or ctypes.sizeof(ctypes.c_ulong) != 8:
@@ -131,9 +146,9 @@ def load_run(relative, root):
 
     policy_bytes = read_local(directory / "policy.stdout", root)
     collector = decode_json(read_local(directory / "policy-result.json", root))
+    verify_collector_command(collector)
     retained = collector["outputs"]["stdout"]
-    if (collector["scope"] != "execution_context"
-            or retained["path"] != str((directory / "policy.stdout").relative_to(root))
+    if (retained["path"] != str((directory / "policy.stdout").relative_to(root))
             or type(retained["bytes"]) is not int or retained["bytes"] != len(policy_bytes)
             or retained["sha256"] != hashlib.sha256(policy_bytes).hexdigest()
             or retained["hash_complete"] is not True or retained["path_identity_matches"] is not True):
@@ -144,6 +159,15 @@ def load_run(relative, root):
     fields = re.findall(r'\b(?:composedMessage|eventMessage) CONTAINS ("(?:[^"\\]|\\.)*")', lines[0])
     if len(fields) != 1:
         raise ValueError("capture-root header is ambiguous")
+    # Native log output renders eventMessage as composedMessage. Admit that
+    # observed alias only; arbitrary predicates containing a root are invalid.
+    headers = {
+        'Filtering the log data using "process == "syspolicyd" AND (' + field
+        + " CONTAINS " + fields[0] + ' OR subsystem == "com.apple.syspolicy.exec")"'
+        for field in ("eventMessage", "composedMessage")
+    }
+    if lines[0] not in headers:
+        raise ValueError("capture-root header predicate disagrees with the collector command")
     prefix = decode_json(fields[0])
     suffix = "/" + FIXTURE_PREFIX
     if not isinstance(prefix, str) or not prefix.endswith(suffix):

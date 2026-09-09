@@ -59,12 +59,19 @@ class OfflineAttribution(unittest.TestCase):
                                 device=self.root.stat().st_dev, inode=index + 1))
         (directory / "observations.jsonl").write_text(json.dumps(
             dict(event="candidate", evidence=dict(sources=sources))) + "\n")
-        header = 'Filtering the log data using process == "syspolicyd" AND (composedMessage CONTAINS '
-        header += json.dumps(self.capture_root + "/" + analysis.FIXTURE_PREFIX) + ")\n"
+        header = 'Filtering the log data using "process == "syspolicyd" AND (composedMessage CONTAINS '
+        header += (json.dumps(self.capture_root + "/" + analysis.FIXTURE_PREFIX)
+                   + ' OR subsystem == "com.apple.syspolicy.exec")"\n')
         (directory / "policy.stdout").write_text(header + "\n".join(map(json.dumps, records)) + "\n"
                                                 + json.dumps(dict(count=len(records), finished=1)) + "\n")
         policy = (directory / "policy.stdout").read_bytes()
-        (directory / "policy-result.json").write_text(json.dumps(dict(scope="execution_context",
+        command = ["/usr/bin/log", "stream", "--style", "ndjson", "--level", "debug",
+                   "--timeout", "240", "--predicate",
+                   'process == "syspolicyd" AND (eventMessage CONTAINS '
+                   '"<repo>/.artifacts/tmp/process-supervisor-tests/" '
+                   'OR subsystem == "com.apple.syspolicy.exec")']
+        (directory / "policy-result.json").write_text(json.dumps(dict(
+            schema="fsmgen.fixture_policy_log.v1", scope="execution_context", command=command,
             returncode=0, failures={}, outputs=dict(stdout=dict(path=relative + "/policy.stdout",
             bytes=len(policy), sha256=hashlib.sha256(policy).hexdigest(),
             hash_complete=True, path_identity_matches=True)))))
@@ -111,6 +118,79 @@ class OfflineAttribution(unittest.TestCase):
         self.make_run(self.calibration, self.paths[:2], self.calibration_records[:1])
         with self.assertRaisesRegex(ValueError, "distinct independently linked"):
             self.run_analysis()
+
+    def test_collector_command_and_scope_are_required_for_target_and_calibration(self):
+        for relative in (self.target, self.calibration):
+            path = self.root / relative / "policy-result.json"
+            original = json.loads(path.read_text())
+            variants = {}
+            for field in ("schema", "scope", "command"):
+                changed = copy.deepcopy(original)
+                del changed[field]
+                variants["missing " + field] = changed
+                changed = copy.deepcopy(original)
+                changed[field] = "unreviewed"
+                variants["changed " + field] = changed
+            for index, value in ((0, "/usr/bin/true"), (1, "show"), (3, "json"),
+                                 (5, "info"), (7, "241"), (8, "--other")):
+                changed = copy.deepcopy(original)
+                changed["command"][index] = value
+                variants["argv " + str(index)] = changed
+            for label, predicate in (
+                    ("wrong process", original["command"][-1].replace("syspolicyd", "other")),
+                    ("widened predicate", original["command"][-1] + " OR TRUEPREDICATE"),
+                    ("narrowed predicate", 'process == "syspolicyd"'),
+                    ("wrong root", original["command"][-1].replace("<repo>", "<other>"))):
+                changed = copy.deepcopy(original)
+                changed["command"][-1] = predicate
+                variants[label] = changed
+            try:
+                for label, changed in variants.items():
+                    with self.subTest(run=relative, variant=label):
+                        path.write_text(json.dumps(changed))
+                        with self.assertRaisesRegex(ValueError, "collector command"):
+                            self.run_analysis()
+            finally:
+                path.write_text(json.dumps(original))
+        self.assert_complete_context(self.run_analysis())
+
+    def test_header_predicate_must_agree_even_when_manifest_hash_is_updated(self):
+        for relative in (self.target, self.calibration):
+            directory = self.root / relative
+            output = directory / "policy.stdout"
+            manifest = directory / "policy-result.json"
+            original_bytes, original_manifest = output.read_bytes(), manifest.read_bytes()
+            header, records = original_bytes.split(b"\n", 1)
+            variants = {
+                "wrong process": header.replace(b"syspolicyd", b"other"),
+                "widened predicate": header[:-1] + b' OR TRUEPREDICATE"',
+                "changed conjunction": header.replace(b" AND ", b" OR "),
+                "changed subsystem": header.replace(b"com.apple.syspolicy.exec", b"other"),
+            }
+            try:
+                for label, changed_header in variants.items():
+                    with self.subTest(run=relative, variant=label):
+                        data = changed_header + b"\n" + records
+                        output.write_bytes(data)
+                        changed = json.loads(original_manifest)
+                        changed["outputs"]["stdout"].update(
+                            bytes=len(data), sha256=hashlib.sha256(data).hexdigest())
+                        manifest.write_text(json.dumps(changed))
+                        with self.assertRaisesRegex(ValueError, "header predicate"):
+                            self.run_analysis()
+            finally:
+                output.write_bytes(original_bytes)
+                manifest.write_bytes(original_manifest)
+        self.assert_complete_context(self.run_analysis())
+
+    def test_verified_command_does_not_discard_collector_failure_evidence(self):
+        path = self.root / self.target / "policy-result.json"
+        manifest = json.loads(path.read_text())
+        manifest.update(returncode=1, failures={"finish": "retained cleanup failure"})
+        path.write_text(json.dumps(manifest))
+        result = self.run_analysis()
+        self.assert_complete_context(result)
+        self.assertEqual(result["collector_result"], manifest)
 
     def test_hash_collisions_and_literal_disagreement_fail_closed(self):
         values = dict(self.mapping)

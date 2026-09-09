@@ -2523,6 +2523,34 @@ decomposes the architecture needed to move beyond that bounded foundation.
   Goal: `Qualify a closed daemon_context collector and retained analysis boundary.`
   Acceptance: `Add an internal named scope with exact predicate process == "syspolicyd" and existing time/output/locality/cleanup bounds. Preserve fixture_path and execution_context. First qualify exact retained command/scope/hash checks. Then qualify capture-time token associations with repository-relative source identities, independent calibration and explicit missing re-derivation limits: relocated analysis must need neither the historical absolute root nor objects on the capture machine. Private external paths must not be disclosed through metadata, messages, errors, source bodies or exported diagnostics; raw evidence being ignored and local does not establish disclosure safety. Qualify a bounded shareable representation separately from raw evidence, preserving admitted context and explicitly reporting omissions without claiming full raw-record equivalence. Then qualify the fixed single-caller entrypoint, cross-subsystem selection, wrong process/predicate/scope and privacy controls, real held-child preparation and failure cleanup. Own bounded children before each implementation and commit each. No original, authenticated helper or new live daemon collector during qualification; sync book/fact/Toolbox.`
   Verification: `Director clarification resolves the policy question: FSMGen must be self-contained for other users; private paths outside the repository must not be disclosed, while project references remain relative. Public required OS/toolchain paths remain explicit dependencies, not permission for arbitrary external paths. Neither a published historical-root identity nor requiring that private root as offline input is selected. Capture-time relative source/token associations are the chosen direction, with calibration/replay limits to be qualified rather than asserted. Daemon-wide raw messages may contain unrelated private paths; this leaf owns a disclosure boundary before their use in shareable diagnostics. Existing raw historical evidence is unchanged and is not newly authorized for publication. The previous question and complete checkpoint remain recoverable at 8e77a5f5df189a095988b99169bd6b394677d9bf:docs/tasks/HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.md. Source review still establishes that load_run checks scope and byte hashes but not the command field; the first implementation slice must reject wrong command/process/predicate without losing existing retained events. No runtime change or new capture has occurred in this policy selection. Book, canonical fact and PROJECT_DATA_LOCALITY.md retain the clarified rule; book rendering, exact build cleanup, Knowledge Map and independent claim census pass. The first staged gate rejects reuse of the previous book-authority identifier; the current clarification now has its own identifier without raising any bound. Final staged doctrines and hook must pass before commit.`
+  Children: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.5.1.1, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.5.1.2, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.5.1.3, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.5.1.4`
+
+- ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.5.1.1`
+  Status: `done`
+  Goal: `Verify exact retained execution-context command and header before offline attribution.`
+  Acceptance: `Retain a closed versioned command contract, normalize only the documented OS message-field alias, reject missing or changed schema/scope/executable/options/predicate/header, and preserve every valid original result and record. Qualify wrong-process, widened-predicate, forged-header and calibration/target controls against the unchanged predecessor and actual retained captures. No original, collector, new native build/load experiment or helper launch; the existing read-only CoreFoundation hashing dependency remains admitted. Book/fact and focused verification before commit.`
+  Verification: `The new predecessor controls report 12 tests, 38 failures and two missing-scope errors, with the optional native build/load experiment unselected. After repair, the same offline band reports 12 tests in 0.150 seconds: eleven pass and that experiment stays skipped. Exact versioned schema/scope/argv and the native execution-context header are required; only the documented eventMessage/composedMessage field alias is admitted. Target and calibration controls reject changed executable, mode, style, level, lifetime, option, process, predicate, root, schema and missing fields. Independently rehashed forged headers still fail. Valid collector failures retain their complete result and records. Removing command validation makes the permanent watcher fail at all 32 hostile cases; bypassing header validation makes all eight header cases fail. Read-only analysis of .14.1/.13/.15.3.3/.9 is exactly equal to the preceding committed analyzer's complete result for each run; independent raw JSON selection agrees with every record/metadata object and all inputs remain byte-identical. The original exits remain 2/0/0/1 and record counts remain 129/146/386/241; the held-out exit remains a separate containment failure. No original, collector, helper or native build/load experiment occurs; the existing OS CoreFoundation dependency re-derives calibrated tokens. Re-derivation: exact retained command/header and input hashes with native calibration; falsification: predecessor and independently bypassed validation fail the permanent hostile controls; durability: source/tests/task/book/fact and Git, with ignored raw-run evidence still an explicit supplemental retention gap. Evidence is under .artifacts/logs/policy-command-contract-20260909/. Book rendering, exact cleanup, Knowledge Map and independent claim census pass. The first staged gate finds the aggregate root-document allowance exceeded by thirteen bytes; the Toolbox wording is shortened without losing its privacy warning or raising bounds. Final staged doctrines and hook must pass before commit.`
+  Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.5.1.1: verify retained collector command and header before attribution`
+
+- ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.5.1.2`
+  Status: `pending`
+  Goal: `Retain portable capture-time source/token associations without a historical-root input.`
+  Acceptance: `After command qualification, define and qualify a bounded manifest of relative source identities and native token associations. Calibrate independently while capture identity is available; bind provenance and archives, reject collisions/changed mappings, prove relocated analysis has no external path dependency, and state any missing later re-derivation leg. Keep private root data out of disclosed metadata. No original or live collector.`
+  Verification: `Pending preceding child qualification.`
+  Commit: `pending`
+
+- ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.5.1.3`
+  Status: `pending`
+  Goal: `Qualify the daemon-context diagnostic disclosure boundary.`
+  Acceptance: `After portable associations qualify, admit the fixed process-only predicate with existing bounds. Separate private raw evidence from a bounded shareable representation. Exercise unrelated private paths in messages, metadata, errors and source bodies; preserve permitted context, explicit omissions and missing coverage without calling projected records complete raw evidence. Use native predicate and held-child controls without a new live daemon collector.`
+  Verification: `Pending preceding child qualification.`
+  Commit: `pending`
+
+- ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.5.1.4`
+  Status: `pending`
+  Goal: `Qualify the fixed daemon-context single caller.`
+  Acceptance: `After association and disclosure boundaries commit, bind the fixed entrypoint to the qualified scope and retained analysis. Prove preparation before a held body, full failure settlement, hostile scope/command changes and physical cleanup; run the focused fixture band. No original or authenticated helper. Commit before parent finite-sequence qualification.`
+  Verification: `Pending preceding child qualification.`
   Commit: `pending`
 
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.5.2`
@@ -6256,49 +6284,7 @@ integration rule; no new portable policy revision was found in that local
 source. The README remains the governed landing page. No project artifact is
 deleted while it owns pending failure or verification evidence.
 
-## Acceptance Checklist (.19.2.3.1.2.2.5.5.2.1.2 protocol selection)
-
-- [x] **ROOT CAUSE (WHY + WHERE)** — `git log -S 'setpgid(0, 0)'`
-  identifies the separately owned group mechanism already isolated by the
-  escaped-inner-group counterexample. The shared engine and Rust adapter show
-  why surviving ownership must retain per-call environment and exact command
-  wait truth. The preceding reservation oracle addresses numeric identity;
-  it does not supply transport, queue or lifecycle policy.
-- [x] **ADDRESSED (contract selected; implementation pending)** — The exact
-  task-local grammar, finite resource table, authority/context boundary,
-  transition obligations and result/identity retirement rules now constrain
-  the existing implementation leaves. The parent protocol node is complete
-  and the shared-engine extraction is next. No production source, test, public
-  result schema or shipped book behavior changes in this slice.
-- [x] **NO REGRESSION (design only)** — The guarded initial doctrine driver
-  reports `[doctrine] all doctrine checks passed`; task integrity also passed
-  independently. The staged driver and hook must pass before this slice can
-  commit. Diff hygiene is clean, the mdBook's nested-cleanup limitation is
-  unchanged, and the existing fact card points to this selected contract.
-  Evidence: `.artifacts/logs/nested-coordinator-protocol-20260907/`.
-
-## Acceptance Checklist (.19.2.3.1.2.2.5.5.2.2 asynchronous extraction; enforced)
-
-- [x] **ROOT CAUSE (WHY + WHERE)** — `git log -S 'sub _supervise'` locates
-  the shared-owner extraction. `_supervise` formerly combined launch, stream
-  waiting, polling, termination graces and result construction in one call;
-  that prevents a coordinator from servicing other jobs during cleanup.
-  Existing admission, reservation and unreapable-child evidence remains
-  authoritative; this slice changes scheduling structure, not group ownership.
-- [x] **ADDRESSED (verified)** — One shared implementation now exposes private
-  start/advance/complete states, with waiting confined to its compatibility
-  drivers. T1669's independent oracle rejects sleep or blocking select within
-  advancement, observes deliberately broken drivers fail at each trap, and
-  proves binary output, separate streams, timeout/escalation and actual child/
-  group absence. No IPC, new public runner or nested-cleanup claim is enabled.
-- [x] **NO REGRESSION** — `perl -Iperl -c` reports `syntax OK` for the shared
-  engine and updated watcher. Both the original and updated guarded
-  T1669/T1668/T1545/T313 bands report `All tests successful`; the updated band
-  adds the nonblocking oracle. Sealed adapters and public result keys are
-  unchanged. The mdBook's current own-group limitation and import architecture
-  remain accurate; no behavior-document edit is needed. The staged doctrine
-  gate and commit hook must pass before commit. Evidence is retained under
-  `.artifacts/logs/process-async-extraction-20260907/`.
+Protocol selection .19.2.3.1.2.2.5.5.2.1.2 and asynchronous extraction .19.2.3.1.2.2.5.5.2.2 acceptance: recover every complete checked assertion from `a611bfb11b4b08ff9e71b9889f088f4e7716733a:docs/tasks/HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.md`. Live nodes retain their contracts, results and limits.
 
 ## Coordinator safe-slice decomposition (.19.2.3.1.2.2.5.5.2.3)
 
@@ -6384,8 +6370,10 @@ Combined original .3.2.15.3.3 complete result, identities, cleanup and acceptanc
 
 Retained context .3.2.15.4 complete comparison, counterexamples and acceptance: recover exactly from `1dc52fd5b53f126fb7c7b7f6abf711ae0fc4c749:docs/tasks/HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.md`.
 
-## Acceptance Checklist (director privacy clarification .3.2.15.5.1)
+Director privacy clarification .3.2.15.5.1 complete selection and acceptance: recover exactly from `a611bfb11b4b08ff9e71b9889f088f4e7716733a:docs/tasks/HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.md`.
 
-- [x] **ROOT CAUSE (historical-root dependency)** — `git log -S 'capture-root header is unavailable' -- scripts/analyze_fixture_policy.py` locates 8f9bab40065c85f15162e952753e81107c88d87d. load_run extracts the historical absolute root from the old path predicate's OS header. The selected daemon-only predicate has no root; current-root substitution would break moved-repository attribution. The director clarifies privacy outside the repository and self-contained use, removing the prior policy question.
-- [x] **ADDRESSED (policy selected; implementation pending)** — Persist project references relatively, require no private historical root for relocated analysis, and exclude private external paths from disclosed artifacts. Task ownership includes capture-time associations, calibration/replay limits and a separate disclosure boundary. PROJECT_DATA_LOCALITY.md, the book and canonical fact agree; existing raw evidence remains unchanged and is not publication-safe by assumption.
-- [x] **NO REGRESSION (documentation selection)** — knowledge-map: OK; book build and rendered privacy-boundary review pass, with a byte/hash manifest and exact generated-build removal. Independent claim census agrees with the refreshed inventory. Evidence is repository-local at .artifacts/logs/diagnostic-privacy-selection-20260909/. Staged doctrines and final hook are required before commit. No runtime sources change and no original, helper or collector is launched.
+## Acceptance Checklist (retained command qualification .3.2.15.5.1.1)
+
+- [x] **ROOT CAUSE (WHY + WHERE)** — `git log -S 'collector["scope"] != "execution_context"' -- scripts/analyze_fixture_policy.py` locates 8f9bab40065c85f15162e952753e81107c88d87d. It verifies scope and output bytes but ignores command metadata and only extracts a path from the header. The predecessor accepts hostile commands and independently rehashed wrong-process/widened headers; missing scope raises an unqualified KeyError.
+- [x] **ADDRESSED (verified)** — Frozen execution-context command/schema/scope and exact native header checks now reject every target/calibration hostile case while preserving valid failures. The offline band reports eleven passes and one explicitly unselected native experiment; bypass mutations independently trigger 32 command and eight header failures. All complete analysis results for the retained failed, passing, combined and held-out runs equal the predecessor and raw-record oracle, with input hashes unchanged.
+- [x] **NO REGRESSION (offline analysis and live documentation)** — knowledge-map: OK; focused offline controls and complete retained-run equality pass. Book build/rendered command-contract review, independent refreshed claim census and exact generated-build cleanup pass. qualification.json is 1711 bytes with SHA-256 81a98e2df6c51e83a1e553ef6b881726c3c8fe469a9a3c3ed6614e9caf32fa03 under .artifacts/logs/policy-command-contract-20260909/. Staged doctrines and final hook must pass before commit; full CI remains gated for the parent repair and push.
