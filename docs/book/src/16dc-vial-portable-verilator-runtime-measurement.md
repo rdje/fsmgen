@@ -1125,6 +1125,14 @@ a passing comparison, not a startup or containment repair. Earlier failed
 results and their missing fields remain unresolved. Task `.3.2.14` admits at
 most three further observations, committed individually, to obtain the missing
 failed-run context; the first failed or incomplete result stops that campaign.
+Its first slot `.3.2.14.1` fails both Rust and both legacy startup controls,
+then stops further slots. Complete legacy failure diagnostics now survive the
+actual missing-entry case; the census and all observed cleanup settle.
+The full policy stream contains four queued scan tokens, with no retained
+work-start/wakeup or exact fixture-path link. Path-seeded selection alone would
+lose these events. Their timing follows the observed producer births, but an
+exact identity join is still missing. Task `.3.2.15` owns attribution and the
+queued-work diagnosis; missing log records do not prove work never began.
 
 
 
