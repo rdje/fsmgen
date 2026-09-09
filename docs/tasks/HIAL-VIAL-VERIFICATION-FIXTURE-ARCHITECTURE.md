@@ -2811,11 +2811,11 @@ decomposes the architecture needed to move beyond that bounded foundation.
   Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.2: establish scan queue mechanism and failed-sample attribution limits`
 
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.3`
-  Status: `proposed`
+  Status: `blocked`
   Goal: `Select a repository-local fixture repair for execution-policy queue exposure.`
   Acceptance: `Use the committed queue mechanism and exact T1669/Rust adapter contracts to assess immutable fixture reuse versus other bounded launch changes. Preserve configured interpreter identity, native tool-resolution failure assertions, first-attempt truth, fixed deadlines, containment and same-volume ownership; no prewarming, retry, security bypass or host mutation. Reject a proposal if it merely hides missing startup qualification. Select the smallest supported implementation and independent negative/native qualification leaves before code changes; retain missing client/request and stackshot image attribution as explicit open evidence limits. No new original/helper/collector during selection.`
-  Verification: `pending selection; startup and parent qualification remain open`
-  Commit: `pending`
+  Verification: `Code/decision review after 72925871ac1747ad1d44f12b7e241e24037953ab finds no causally qualified repository repair. T1669 resolves the current Perl, writes a mode-lifetime immutable rustup script, and exposes it through a cargo symlink. RustParityRuntime canonicalizes that executable, recognizes basename rustup and executes the exact native which-cargo route under its sealed wall. A tracked hardcoded-interpreter script changes configured capability; an env shebang fails against the intentionally isolated proxy PATH. A persistent generated fixture cache could preserve interpreter/body identities, but adds custody/relocation/concurrency ownership and does not establish cold-launch latency or immunity to the verified OS queue. No retained counterfactual proves reuse repairs the failed launch. A resident interpreter or mocked _run would remove the native executable-resolution path that this control must test. Prewarming, retries, changing expected nonzero to accept timeout, widening bounds or altering host policy would hide or change the selected contract. Decision 0087 preserves fixed bounds, first-failure truth and the canonical running Perl; the earlier direct-Perl timeout also prevents a shebang-only cure. Proposed next action, awaiting director judgment: obtain a quiet qualification window with competing builds quiescent, then own and run one unchanged T1669 through the existing guarded test route, retain its complete first-attempt output/outcome and verify owned cleanup. Any failure remains a blocker, not a retry trigger; a pass supplies limited native qualification, never retroactive repair, complete host isolation or closure of the missing kernel/client join. No other project's processes or configuration are inspected or changed. This changes the next frontier from an unproved code repair to host-condition qualification, so the direction needs the director's judgment before admission. Re-derivation: exact T1669 proxy setup and RustParityRuntime resolver/_run/_bounds/aggregate code plus decision 0087 and committed native evidence. Falsification: canonical executable/argv/interpreter requirements reject substitute launch paths; absent cold/reuse controls prevent a cache-performance claim. Durability: this task, book, fact route and Git retain alternatives, proposal and all missing legs; no implementation, original, helper, collector or host change occurs. .3 remains blocked on the explicit qualification-direction/quiet-window answer; startup/parent, full CI/push remain gated.`
+  Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.3: preserve fixture contracts and own qualification decision`
 
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.3`
   Status: `done`
@@ -3786,7 +3786,7 @@ decomposes the architecture needed to move beyond that bounded foundation.
 
 ## Current Frontier
 
-Current frontier: .3.2.15.7.3.2 establishes the serial scan mechanism and attribution limits; .15.7.3.3 selects the smallest supported repository-local fixture repair. No further campaign; startup/parent, full CI and push stay gated.
+Current frontier: .3.2.15.7.3.3 is blocked on the director decision about unchanged T1669 qualification in a quiet build window; no code repair is causally qualified. No further campaign; startup/parent, full CI and push stay gated.
 
 Architecture audit `.1` is complete. Decision `0032` selects one public
 `.vial` source language, private immutable `VIALSemanticIR` and
@@ -6389,8 +6389,10 @@ Causal audit references: [Apple Mach-O format](https://raw.githubusercontent.com
 
 Causal audit tool note: Initial audit omitted canonical trailing newlines and failed before any claim; corrected independent encoding reproduces the committed archive exactly. LLVM --arch selected Mach-O mode despite omitted --macho and ignored address bounds, producing a complete finite disassembly; subsequent analysis only reads the retained file, with exact bounded excerpts and no repeated disassembly. The initial staged doctrine gate rejected the oversized Verification field; routing this note here preserves its full evidence within the unchanged field limit.
 
-## Acceptance Checklist (failed-wait causal audit .3.2.15.7.3.2)
+Causal-audit checked acceptance: recover complete assertions at `72925871ac1747ad1d44f12b7e241e24037953ab` in this task path; the live audit node retains its evidence and limits.
 
-- [x] **ROOT CAUSE (WHY + WHERE)** — Exact UUID-matched daemon instructions establish serial scan dispatch, while complete retained phase records isolate queue delay; invalid Perl image attribution and missing native request joins prevent a stronger startup claim. The original proxy assertion locus is independently located at 98097b6311726b0c673d0abc8cc377df09ceb0ea by git log -S 'proxy_nonzero' -- t/1669-task-acceptance-fixture-runtime.t.
-- [x] **ADDRESSED (verified audit)** — Complete raw/archive equality, independent timestamp arithmetic, exact image/byte/branch checks and contrary queue/image/identity controls support the bounded causal finding. A next fixture repair-selection leaf owns action; no original outcome is promoted.
-- [x] **NO REGRESSION** — Original/raw/sample/archive identities stay pinned and no production launch occurs. Rendered-book review/cleanup, knowledge-map: OK, claim inventory and staged doctrines verify the documentation slice; startup/parent qualification remains open.
+## Acceptance Checklist (fixture repair selection .3.2.15.7.3.3)
+
+- [x] **ROOT CAUSE (WHY + WHERE)** — git log -S 'proxy_nonzero' -- t/1669-task-acceptance-fixture-runtime.t locates 98097b6311726b0c673d0abc8cc377df09ceb0ea. Exact resolver/argv/bounds review and the committed OS queue evidence distinguish a failed native launch from a demonstrated repository defect.
+- [x] **ADDRESSED (verified proposal)** — Concrete alternatives and their failed contract/proof requirements are recorded, with an owned conditional unchanged-test qualification proposal. Selection remains blocked on director judgment; no speculative implementation or original launch is admitted.
+- [x] **NO REGRESSION** — Runtime/test sources remain unchanged. Rendered-book review/cleanup, knowledge-map: OK, refreshed claims and staged doctrines preserve the original failure, fixed bounds and open startup/parent qualification.

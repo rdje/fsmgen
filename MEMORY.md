@@ -7,8 +7,8 @@ Status and evidence: `docs/tasks/`. The system itself: `MEMORY_ARCHITECTURE.md`.
 
 - repository_revision: derive with `git log -1 --format='%H %s'`; never shadow `HEAD` here.
 - active_work_unit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.3`
-  (`proposed`; repository-local fixture repair selection)
-- next_action: Select the smallest fixture repair preserving native assertions and fixed bounds.
+  (`blocked`; fixture qualification direction)
+- next_action: Resolve the director decision on unchanged T1669 qualification in a quiet build window.
 - in_flight_uncommitted: none.
 - in_flight_background: none.
-- blockers: Startup/parent qualification and full CI/push remain gated.
+- blockers: Director qualification-direction/quiet-window answer; startup/parent and full CI/push gated.
