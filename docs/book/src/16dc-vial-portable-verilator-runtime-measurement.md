@@ -1119,6 +1119,13 @@ controls, not a startup repair. The earlier omitted streams result remains
 unavailable. Task `.3.2.13` owns one separately observed original with these
 diagnostics and the repaired passive census.
 
+That single `.3.2.13` observation passes the original and census, with exact
+source/policy joins and independently settled observed identities. It supplies
+a passing comparison, not a startup or containment repair. Earlier failed
+results and their missing fields remain unresolved. Task `.3.2.14` admits at
+most three further observations, committed individually, to obtain the missing
+failed-run context; the first failed or incomplete result stops that campaign.
+
 
 
 Capture requests and helper results are published only after their complete
