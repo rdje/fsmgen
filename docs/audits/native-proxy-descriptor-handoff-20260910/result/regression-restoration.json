@@ -1,0 +1,34 @@
+{
+  "all_byte_exact": true,
+  "note": "The first restoration attempt encountered the intentionally read-only custody JSON and failed before writing. Its original bytes were already preserved. The exact owned result was temporarily made writable, restored, returned to mode 0400 and verified; no regression was rerun.",
+  "restored": [
+    {
+      "canonical": "docs/audits/native-proxy-image-custody-20260910/result/qualification.json",
+      "mode": 256,
+      "path": ".artifacts/logs/native-proxy-image-custody-20260910/qualification.json",
+      "sha256": "00933670c3298a0e02ba1ea3b32de91837ad853c1d67186d7528884bd92a8b0b",
+      "size_bytes": 8112
+    },
+    {
+      "canonical": "docs/audits/native-proxy-image-publication-20260910/result/qualification.json",
+      "mode": 384,
+      "path": ".artifacts/logs/native-proxy-image-publication-20260910/qualification.json",
+      "sha256": "a9ae30b38d35b90db3d53c4bb4128460661490b305436debce6930a87bd2f59f",
+      "size_bytes": 8022
+    },
+    {
+      "canonical": "docs/audits/native-proxy-observation-reuse-20260910/result/qualification.json",
+      "mode": 384,
+      "path": ".artifacts/logs/native-proxy-observation-reuse-20260910/qualification.json",
+      "sha256": "348c434f7a40012fc8a46a7c7b4b6842ad7d30ca56f3a82947b82231974f6296",
+      "size_bytes": 3707937
+    },
+    {
+      "canonical": "docs/audits/native-proxy-observation-reuse-20260910/result/admission.jsonl",
+      "mode": 384,
+      "path": ".artifacts/logs/native-proxy-observation-reuse-20260910/admission.jsonl",
+      "sha256": "c3acc35eb6ba4c64d697dd9c75a2a295241b8eaf160aafd9054b60fbfe909b04",
+      "size_bytes": 20600
+    }
+  ]
+}

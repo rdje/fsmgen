@@ -1,0 +1,17 @@
+{
+  "allocations": 2,
+  "assertions": 5,
+  "expected_baseline_gaps_confirmed": true,
+  "falsifiers": [
+    "phase success relabeled",
+    "lost allocation",
+    "lost disposition",
+    "lost recovery",
+    "source bytes changed",
+    "forbidden process"
+  ],
+  "limits": "Finite inert fault qualification with deliberately retained references, not a live crash or proof against arbitrary memory corruption. Full observation interruption/lifetime and native qualification remain separately gated.",
+  "phase": "baseline",
+  "qualified": false,
+  "schema": "fsmgen.inactive_descriptor_handoff_audit.v1"
+}

@@ -1,0 +1,6 @@
+ok 1 - source_mode: baseline descriptor disposition
+ok 2 - source_mode: caller or observer recovery closes every retained descriptor
+ok 3 - writer_byte_mode: baseline descriptor disposition
+ok 4 - writer_byte_mode: caller or observer recovery closes every retained descriptor
+ok 5 - no process attempt
+1..5

@@ -1876,6 +1876,23 @@ settlement. Replay:
 scripts/run_with_ram_guard.sh -- perl docs/audits/native-proxy-observation-reuse-20260910/qualify.t
 ```
 
+Inactive source admission explicitly closes the descriptor received from the
+lower reader when stricter mode, size or inheritance checks fail. The canonical
+writer also closes its descriptors when byte-mode selection or later writing,
+sealing or close reporting fails. Original failure diagnostics and conservative
+partial payloads remain intact. A successful source read still transfers its
+open descriptor to the caller, which owns the eventual close.
+
+The handoff controls retain references to actual handles so scope cleanup cannot
+hide an omitted close. They cover empty and partial writes, competing close
+errors and deliberate omitted-close controls. This qualifies explicit cleanup
+at these inactive boundaries; it does not establish an ordinary runtime leak
+or replace the remaining observation interruption matrix. Replay:
+
+```bash
+scripts/run_with_ram_guard.sh -- perl docs/audits/native-proxy-descriptor-handoff-20260910/qualify.t --qualification
+```
+
 The helper checks bounded regular source/output files and the native header,
 then sets executable permissions through the admitted open file handle. A
 regression exposed path-based permission changes affecting a substituted file

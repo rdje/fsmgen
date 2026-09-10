@@ -1,0 +1,117 @@
+{
+  "baseline": [
+    {
+      "expected_open_handles": 1,
+      "name": "source_mode"
+    },
+    {
+      "expected_open_handles": 1,
+      "name": "writer_byte_mode"
+    }
+  ],
+  "baseline_meaning": "A separately named prospective baseline reproduces two source-visible cleanup gaps while an independent observer deliberately retains the actual handles. It proves reliance on lexical destruction, not an ordinary runtime leak. The observer explicitly closes these abandoned handles before exact fixture cleanup. Baseline completion never means the implementation passed explicit handoff closure.",
+  "cases": [
+    {
+      "diagnostic": "",
+      "name": "source_success",
+      "operation": "source",
+      "writer_state": null
+    },
+    {
+      "diagnostic": "invalid image source mode, links or size",
+      "name": "source_mode",
+      "operation": "source",
+      "writer_state": null
+    },
+    {
+      "diagnostic": "invalid image source mode, links or size",
+      "name": "source_size",
+      "operation": "source",
+      "writer_state": null
+    },
+    {
+      "diagnostic": "cannot read descriptor flags",
+      "name": "source_get_flags",
+      "operation": "source",
+      "writer_state": null
+    },
+    {
+      "diagnostic": "cannot seal descriptor inheritance",
+      "name": "source_set_flags",
+      "operation": "source",
+      "writer_state": null
+    },
+    {
+      "diagnostic": "invalid image source mode, links or size",
+      "name": "source_mode_close_error",
+      "operation": "source",
+      "writer_state": null
+    },
+    {
+      "diagnostic": "",
+      "name": "writer_success",
+      "operation": "writer",
+      "writer_state": "complete"
+    },
+    {
+      "diagnostic": "cannot select canonical byte mode",
+      "name": "writer_byte_mode",
+      "operation": "writer",
+      "writer_state": "empty"
+    },
+    {
+      "diagnostic": "cannot read canonical writer flags",
+      "name": "writer_get_flags",
+      "operation": "writer",
+      "writer_state": "empty"
+    },
+    {
+      "diagnostic": "cannot seal canonical writer inheritance",
+      "name": "writer_set_flags",
+      "operation": "writer",
+      "writer_state": "empty"
+    },
+    {
+      "diagnostic": "cannot write complete canonical bytes",
+      "name": "writer_zero_write",
+      "operation": "writer",
+      "writer_state": "empty"
+    },
+    {
+      "diagnostic": "cannot write complete canonical bytes",
+      "name": "writer_partial_write",
+      "operation": "writer",
+      "writer_state": "prefix"
+    },
+    {
+      "diagnostic": "injected canonical seal failure",
+      "name": "writer_seal",
+      "operation": "writer",
+      "writer_state": "complete"
+    },
+    {
+      "diagnostic": "cannot write complete canonical bytes",
+      "name": "writer_write_close_error",
+      "operation": "writer",
+      "writer_state": "empty"
+    },
+    {
+      "diagnostic": "cannot close canonical reader",
+      "name": "writer_close_error",
+      "operation": "writer",
+      "writer_state": "complete"
+    }
+  ],
+  "controls": "Capture lower-reader handles only after actual successful return and writer handles at byte-mode selection. Capture native descriptor/named identities before fault injection. Hooks alter only the declared syscall return or sealed helper; source input bytes/mode/inode stay unchanged. Full writer bytes, exact first eight-byte prefix or empty file are selected before execution. A close-error hook closes the real descriptor then reports error, preserving actual disposition while testing first-error precedence. Omitted-close mutants report success without closing; independent fileno/native identity checks must detect them. Test-owned recovery explicitly closes any deliberately retained leftover only after recording the failure.",
+  "limits": "Finite inert fault qualification with deliberately retained references, not a live crash or proof against arbitrary memory corruption. Full observation interruption/lifetime and native qualification remain separately gated.",
+  "mutants": [
+    "omit source failure close",
+    "omit writer failure close"
+  ],
+  "owner": "HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.12.4.1.3.3.2.2.1",
+  "result": "Record every real opened handle, native identity, descriptor number, observed closed/open disposition before observer recovery, recovery result, complete before/after filesystem footprint, exact diagnostic/return outcome and immediate allocation ledger. A successful source returns one open transferred handle which the caller explicitly closes; every failed source and every writer outcome must close all subject-owned handles. Preserve original errors, partial named payloads and no process attempt.",
+  "schema": "fsmgen.inactive_descriptor_handoff_plan.v1",
+  "scope": "Inactive _source descriptor transfer and _write_payload failure closure only. Each case owns one private isolated native-proxy-image-custody/cases/fsmgen-* directory. Source payload is the original inert C vector, never executed; writer payload is fixed inert bytes. No coordination, fixture, compiler, native query, helper or worker process.",
+  "source_revision": "33b1c0b4cb41227034f3a8b369c9cacefdc27c32",
+  "source_revision_boundary": "No product source change is admitted. The lower reader remains unchanged; only explicit cleanup after its successful descriptor handoff and the canonical writer cleanup boundary may change."
+}

@@ -17,6 +17,7 @@ answers:
   - "how does fresh observation acquisition retain source snapshots?"
   - "how does stable observation reuse preserve the original hold?"
   - "why must fixture clones preserve byte flags and JSON numeric types?"
+  - "why do inactive source and writer handoffs close explicitly?"
   - "why did integrated proxy qualification fail?"
   - "why does t1545 not use IPC Cmd?"
   - "where does T1545 preserve empty-output checker failure diagnostics?"
@@ -86,17 +87,18 @@ Child requires successful `setpgid` and owned group before exec; PID is not birt
 Post-KILL: poll within grace; unreaped leaders/live groups stay incomplete. T1669 rejects blocking waits.
 `VerilatorRuntime` follows decision `0086`.
 `TaskAcceptanceFixtureRuntime` seals owned fixture roots/fixed local Git argv.
-Git/checker: ten-second wall, 1,048,576/4,194,304-byte capture, closed `fsmgen.test.task_acceptance_fixture_result.v1`. Load-time Git/Bash ignore later PATH; callers cannot widen policy.
+Git/checker bounds, closed result schema and fixed load-time tools: history.
 Darwin env-Bash stalled before main; direct Bash retains capability. Bash/Git are read-only dependencies; project data stays local. Failures never retry. Version and fixture controls: history.
 T1545 controls: historical card; absent witnesses stay unknown.
 Env/direct Perl timeouts refute a shebang-only cure. Startup cause, authenticated capture and STOP limits: task/book/history.
-T1669 roots: `.artifacts/tmp/process-supervisor-tests/`. ps requires native presence; only disappearance skips. Permission/query/identity errors fail. Exit-race controls do not explain the historical changed field (.3.2.11).
-History: `6081e5815b5aa80b1f3f78b43dc4ab0be1688ed6:docs/knowledge/test-subprocess-policy-adapters.md`.
+T1669 uses process-supervisor-tests roots; ps skips only verified disappearance. Other errors fail; the historical changed field stays open (.3.2.11).
+History: `33b1c0b4cb41227034f3a8b369c9cacefdc27c32:docs/knowledge/test-subprocess-policy-adapters.md`.
 PST parsing normalizes 1–16 lowercase hex digits; malformed fields and contradictions reject.
-.15.7.3 supports serial queue contention; client/frame joins and startup repair stay open. Native integration supplies pre-runtime receipts, ancestry/C custody, owned retirement and passive daemon capture. Counterexamples: history; loaded bytes unproved.
+Serial queue contention is supported; client/frame joins, loaded bytes and startup repair remain unproved. Native integration controls: history.
 Fixed CLI binds archive and journal anchors, preserving first failure/stop/ownership. F_CHECK_LV cause and worker/delivery remain unknown. Controls and opt-in violations: history.
 Combined census retains both record kinds; runtime-only inspection stays distinct. Fresh custody keeps wrapper/private-ref/global-ref/C/executable snapshots separate from its hold. Reuse .1.3.3.2.1 checks exact prior custody without publication, even at capacity. Release/capture stay open; replay: `docs/audits/native-proxy-observation-reuse-20260910/audit.py`.
 Fixture cloning must preserve octet flags and JSON types: JSON cloning flags binary vectors as characters; Storable can stringify dual native IDs. The reuse audit's FixtureClone.pm preserves both; neither prototype guard is relaxed.
+Inactive _source and _write_payload now close explicitly on failed descriptor handoff. Retained-handle controls expose scope-cleanup dependence, not an ordinary leak. Replay: `docs/audits/native-proxy-descriptor-handoff-20260910/audit.py --qualification`.
 Caller-sealed test wrappers use tail goto to preserve caller.
 Replay: `scripts/run_with_ram_guard.sh -- python3 -B -m unittest discover -s t/python -p 'test_fixture_policy_archive*.py'`.
 T1595 pre-main cause open; `.19.2.3.1.2.2.6.2` fixes capture.

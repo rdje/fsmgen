@@ -1,0 +1,36 @@
+ok 1 - source_success: qualification descriptor disposition
+ok 2 - source_success: caller or observer recovery closes every retained descriptor
+ok 3 - source_mode: qualification descriptor disposition
+ok 4 - source_mode: caller or observer recovery closes every retained descriptor
+ok 5 - source_size: qualification descriptor disposition
+ok 6 - source_size: caller or observer recovery closes every retained descriptor
+ok 7 - source_get_flags: qualification descriptor disposition
+ok 8 - source_get_flags: caller or observer recovery closes every retained descriptor
+ok 9 - source_set_flags: qualification descriptor disposition
+ok 10 - source_set_flags: caller or observer recovery closes every retained descriptor
+ok 11 - source_mode_close_error: qualification descriptor disposition
+ok 12 - source_mode_close_error: caller or observer recovery closes every retained descriptor
+ok 13 - writer_success: qualification descriptor disposition
+ok 14 - writer_success: caller or observer recovery closes every retained descriptor
+ok 15 - writer_byte_mode: qualification descriptor disposition
+ok 16 - writer_byte_mode: caller or observer recovery closes every retained descriptor
+ok 17 - writer_get_flags: qualification descriptor disposition
+ok 18 - writer_get_flags: caller or observer recovery closes every retained descriptor
+ok 19 - writer_set_flags: qualification descriptor disposition
+ok 20 - writer_set_flags: caller or observer recovery closes every retained descriptor
+ok 21 - writer_zero_write: qualification descriptor disposition
+ok 22 - writer_zero_write: caller or observer recovery closes every retained descriptor
+ok 23 - writer_partial_write: qualification descriptor disposition
+ok 24 - writer_partial_write: caller or observer recovery closes every retained descriptor
+ok 25 - writer_seal: qualification descriptor disposition
+ok 26 - writer_seal: caller or observer recovery closes every retained descriptor
+ok 27 - writer_write_close_error: qualification descriptor disposition
+ok 28 - writer_write_close_error: caller or observer recovery closes every retained descriptor
+ok 29 - writer_close_error: qualification descriptor disposition
+ok 30 - writer_close_error: caller or observer recovery closes every retained descriptor
+ok 31 - omit source failure close exposes missing explicit closure
+ok 32 - omit source failure close observer recovery closes the actual descriptor
+ok 33 - omit writer failure close exposes missing explicit closure
+ok 34 - omit writer failure close observer recovery closes the actual descriptor
+ok 35 - no process attempt
+1..35

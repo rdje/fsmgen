@@ -1,0 +1,195 @@
+{
+   "allocated" : [
+      {
+         "device" : 16777244,
+         "inode" : 76926724,
+         "path" : ".artifacts/tmp/native-proxy-image-custody/cases/fsmgen-k3NRqUH_"
+      },
+      {
+         "device" : 16777244,
+         "inode" : 76926726,
+         "path" : ".artifacts/tmp/native-proxy-image-custody/cases/fsmgen-551MN2NJ"
+      }
+   ],
+   "cases" : [
+      {
+         "after" : {
+            "" : {
+               "device" : 16777244,
+               "inode" : 76926724,
+               "kind" : "directory",
+               "mode" : 448,
+               "uid" : 501
+            },
+            "source" : {
+               "bytes" : "/* inert qualification bytes; never compiled */\n\u0000\u00ff",
+               "device" : 16777244,
+               "inode" : 76926725,
+               "kind" : "file",
+               "links" : 1,
+               "mode" : 256,
+               "sha256" : "a7d92e28ec1c8308e37c6003df167bc42bd2341cf3a69d677f45330271ffba56",
+               "size_bytes" : 50,
+               "uid" : 501
+            }
+         },
+         "allocation" : {
+            "device" : 16777244,
+            "inode" : 76926724,
+            "path" : ".artifacts/tmp/native-proxy-image-custody/cases/fsmgen-k3NRqUH_"
+         },
+         "allocation_absent" : 1,
+         "before" : {
+            "" : {
+               "device" : 16777244,
+               "inode" : 76926724,
+               "kind" : "directory",
+               "mode" : 448,
+               "uid" : 501
+            },
+            "source" : {
+               "bytes" : "/* inert qualification bytes; never compiled */\n\u0000\u00ff",
+               "device" : 16777244,
+               "inode" : 76926725,
+               "kind" : "file",
+               "links" : 1,
+               "mode" : 256,
+               "sha256" : "a7d92e28ec1c8308e37c6003df167bc42bd2341cf3a69d677f45330271ffba56",
+               "size_bytes" : 50,
+               "uid" : 501
+            }
+         },
+         "error" : "invalid image source mode, links or size\n",
+         "expected_open_handles" : 1,
+         "fault" : "source_mode",
+         "handles" : [
+            {
+               "closed_after_recovery" : 1,
+               "closed_before_recovery" : 0,
+               "current_identity" : {
+                  "device" : 16777244,
+                  "inode" : 76926725,
+                  "links" : 1,
+                  "mode" : 256,
+                  "size_bytes" : 50,
+                  "uid" : 501
+               },
+               "descriptor" : 3,
+               "identity" : {
+                  "device" : 16777244,
+                  "inode" : 76926725,
+                  "links" : 1,
+                  "mode" : 256,
+                  "size_bytes" : 50,
+                  "uid" : 501
+               },
+               "open_cloexec" : 1,
+               "path" : ".artifacts/tmp/native-proxy-image-custody/cases/fsmgen-k3NRqUH_/source",
+               "recovery_close_ok" : 1,
+               "role" : "reader"
+            }
+         ],
+         "name" : "source_mode",
+         "operation" : "source",
+         "returned" : 0
+      },
+      {
+         "after" : {
+            "" : {
+               "device" : 16777244,
+               "inode" : 76926726,
+               "kind" : "directory",
+               "mode" : 448,
+               "uid" : 501
+            },
+            "payload" : {
+               "bytes" : "",
+               "device" : 16777244,
+               "inode" : 76926728,
+               "kind" : "file",
+               "links" : 1,
+               "mode" : 256,
+               "sha256" : "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+               "size_bytes" : 0,
+               "uid" : 501
+            },
+            "source" : {
+               "bytes" : "/* inert qualification bytes; never compiled */\n\u0000\u00ff",
+               "device" : 16777244,
+               "inode" : 76926727,
+               "kind" : "file",
+               "links" : 1,
+               "mode" : 256,
+               "sha256" : "a7d92e28ec1c8308e37c6003df167bc42bd2341cf3a69d677f45330271ffba56",
+               "size_bytes" : 50,
+               "uid" : 501
+            }
+         },
+         "allocation" : {
+            "device" : 16777244,
+            "inode" : 76926726,
+            "path" : ".artifacts/tmp/native-proxy-image-custody/cases/fsmgen-551MN2NJ"
+         },
+         "allocation_absent" : 1,
+         "before" : {
+            "" : {
+               "device" : 16777244,
+               "inode" : 76926726,
+               "kind" : "directory",
+               "mode" : 448,
+               "uid" : 501
+            },
+            "source" : {
+               "bytes" : "/* inert qualification bytes; never compiled */\n\u0000\u00ff",
+               "device" : 16777244,
+               "inode" : 76926727,
+               "kind" : "file",
+               "links" : 1,
+               "mode" : 256,
+               "sha256" : "a7d92e28ec1c8308e37c6003df167bc42bd2341cf3a69d677f45330271ffba56",
+               "size_bytes" : 50,
+               "uid" : 501
+            }
+         },
+         "error" : "cannot select canonical byte mode: Input/output error\n",
+         "expected_open_handles" : 1,
+         "fault" : "writer_byte_mode",
+         "handles" : [
+            {
+               "closed_after_recovery" : 1,
+               "closed_before_recovery" : 0,
+               "current_identity" : {
+                  "device" : 16777244,
+                  "inode" : 76926728,
+                  "links" : 1,
+                  "mode" : 256,
+                  "size_bytes" : 0,
+                  "uid" : 501
+               },
+               "descriptor" : 3,
+               "identity" : {
+                  "device" : 16777244,
+                  "inode" : 76926728,
+                  "links" : 1,
+                  "mode" : 256,
+                  "size_bytes" : 0,
+                  "uid" : 501
+               },
+               "open_cloexec" : 1,
+               "path" : ".artifacts/tmp/native-proxy-image-custody/cases/fsmgen-551MN2NJ/payload",
+               "recovery_close_ok" : 1,
+               "role" : "writer"
+            }
+         ],
+         "name" : "writer_byte_mode",
+         "operation" : "writer",
+         "returned" : 0
+      }
+   ],
+   "completed" : true,
+   "forbidden_process_attempts" : 0,
+   "mutants" : [],
+   "phase" : "baseline",
+   "schema" : "fsmgen.inactive_descriptor_handoff_qualification.v1",
+   "success" : false
+}

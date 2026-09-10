@@ -1,0 +1,40 @@
+{
+  "allocations": 17,
+  "assertions": 35,
+  "closure": {
+    "all_rosters_disjoint_and_absent": true,
+    "baseline_assertions": 5,
+    "baseline_qualified": false,
+    "baseline_source_pins_verified": true,
+    "regressions": {
+      "custody": {
+        "assertions": 81,
+        "retired_paths": 19
+      },
+      "observation": {
+        "assertions": 81,
+        "retired_paths": 160
+      },
+      "publication": {
+        "assertions": 78,
+        "retired_paths": 19
+      }
+    }
+  },
+  "expected_baseline_gaps_confirmed": false,
+  "falsifiers": [
+    "phase success relabeled",
+    "lost allocation",
+    "lost disposition",
+    "lost recovery",
+    "source bytes changed",
+    "forbidden process",
+    "failed source still open",
+    "writer prefix concealed",
+    "lost close mutant"
+  ],
+  "limits": "Finite inert fault qualification with deliberately retained references, not a live crash or proof against arbitrary memory corruption. Full observation interruption/lifetime and native qualification remain separately gated.",
+  "phase": "qualification",
+  "qualified": true,
+  "schema": "fsmgen.inactive_descriptor_handoff_audit.v1"
+}

@@ -1,0 +1,162 @@
+{
+  "all_copies_byte_exact": true,
+  "files": [
+    {
+      "destination": "docs/audits/native-proxy-descriptor-handoff-20260910/result/baseline.json",
+      "sha256": "fa977e0b3835054cd2782e837dcb49b7b3d75cde216be57c54b3883818a74b19",
+      "size_bytes": 6424,
+      "source": ".artifacts/logs/native-proxy-descriptor-handoff-20260910/baseline.json"
+    },
+    {
+      "destination": "docs/audits/native-proxy-descriptor-handoff-20260910/result/baseline.tap",
+      "sha256": "4af7e4fb54e57ca11d42c8b614f7d6b44025aeda67ba080af69e27f764cff4f6",
+      "size_bytes": 307,
+      "source": ".artifacts/logs/native-proxy-descriptor-handoff-20260910/baseline.tap"
+    },
+    {
+      "destination": "docs/audits/native-proxy-descriptor-handoff-20260910/result/baseline.stderr",
+      "sha256": "9f6444e8abfe778e9d5a72b1ba24cdde6a8caf6a4f979017d43a590406128c20",
+      "size_bytes": 91,
+      "source": ".artifacts/logs/native-proxy-descriptor-handoff-20260910/baseline.stderr"
+    },
+    {
+      "destination": "docs/audits/native-proxy-descriptor-handoff-20260910/result/baseline-admission.jsonl",
+      "sha256": "866186ded46ebcd410d559014464db104b0ed3b8b6856db3d93176347b5f0a17",
+      "size_bytes": 220,
+      "source": ".artifacts/logs/native-proxy-descriptor-handoff-20260910/baseline-admission.jsonl"
+    },
+    {
+      "destination": "docs/audits/native-proxy-descriptor-handoff-20260910/result/baseline-audit.json",
+      "sha256": "8efaf7c12cdbf9ef183974e440666db12a9475fac43888dafb160b95b139b3d9",
+      "size_bytes": 603,
+      "source": ".artifacts/logs/native-proxy-descriptor-handoff-20260910/baseline-audit.json"
+    },
+    {
+      "destination": "docs/audits/native-proxy-descriptor-handoff-20260910/result/qualification.json",
+      "sha256": "c6e2be5102dec9d93c57b170d5796115d686c7efda6fbdfd8ef4ad7029057a79",
+      "size_bytes": 51679,
+      "source": ".artifacts/logs/native-proxy-descriptor-handoff-20260910/qualification.json"
+    },
+    {
+      "destination": "docs/audits/native-proxy-descriptor-handoff-20260910/result/qualification.tap",
+      "sha256": "2f7f98eaec335b170321e5ce4a7efe2ee07d205f44a14c2a971fe592171e5c79",
+      "size_bytes": 2576,
+      "source": ".artifacts/logs/native-proxy-descriptor-handoff-20260910/qualification.tap"
+    },
+    {
+      "destination": "docs/audits/native-proxy-descriptor-handoff-20260910/result/qualification.stderr",
+      "sha256": "e111a90d9753ad1095d1739944fb4eb682edc5da4fc340b0f7a1bdd8326bf19d",
+      "size_bytes": 91,
+      "source": ".artifacts/logs/native-proxy-descriptor-handoff-20260910/qualification.stderr"
+    },
+    {
+      "destination": "docs/audits/native-proxy-descriptor-handoff-20260910/result/qualification-admission.jsonl",
+      "sha256": "491daa3003db9c2736bc089fe86d98d7abc668f86af902ac741c15255e9e4214",
+      "size_bytes": 1870,
+      "source": ".artifacts/logs/native-proxy-descriptor-handoff-20260910/qualification-admission.jsonl"
+    },
+    {
+      "destination": "docs/audits/native-proxy-descriptor-handoff-20260910/result/qualification-audit.json",
+      "sha256": "a3c50e54996c69eb3cecccd97d8d9dbdfc7845d74e954c4053e79a8d8e9147c9",
+      "size_bytes": 1150,
+      "source": ".artifacts/logs/native-proxy-descriptor-handoff-20260910/qualification-audit.json"
+    },
+    {
+      "destination": "docs/audits/native-proxy-descriptor-handoff-20260910/result/ImageCustody.pm.baseline-source",
+      "sha256": "7f9db38e47140fedd39a80d7a6fbf1ee111f56f290a463729b516b08aae90d4f",
+      "size_bytes": 8021,
+      "source": ".artifacts/logs/native-proxy-descriptor-handoff-20260910/ImageCustody.pm.baseline-source"
+    },
+    {
+      "destination": "docs/audits/native-proxy-descriptor-handoff-20260910/result/Publication.pm.baseline-source",
+      "sha256": "dc50ca598632572616d7da65fa6f1b417a20e7207dafa5fe03fd5d887382fab6",
+      "size_bytes": 5367,
+      "source": ".artifacts/logs/native-proxy-descriptor-handoff-20260910/Publication.pm.baseline-source"
+    },
+    {
+      "destination": "docs/audits/native-proxy-descriptor-handoff-20260910/result/regression-restoration.json",
+      "sha256": "dc09c158a0788e99ee99fd1de872e46cd9cc62068057e1c80bed8f62f1d5c150",
+      "size_bytes": 1662,
+      "source": ".artifacts/logs/native-proxy-descriptor-handoff-20260910/regression-restoration.json"
+    },
+    {
+      "destination": "docs/audits/native-proxy-descriptor-handoff-20260910/result/book-review.json",
+      "sha256": "1fe714b5000bd5cafc70d38e6925916bedec41e490e9a69f02d6c23aa363a95a",
+      "size_bytes": 158,
+      "source": ".artifacts/logs/native-proxy-descriptor-handoff-20260910/book-review.json"
+    },
+    {
+      "destination": "docs/audits/native-proxy-descriptor-handoff-20260910/result/task-integrity.stdout",
+      "sha256": "c6b36d5002b952776d0c36630040c47bbb5b964b18fbc5ffd95ee1f12f09e3c7",
+      "size_bytes": 171,
+      "source": ".artifacts/logs/native-proxy-descriptor-handoff-20260910/task-integrity.stdout"
+    },
+    {
+      "destination": "docs/audits/native-proxy-descriptor-handoff-20260910/result/task-integrity.stderr",
+      "sha256": "c2b6b8377fd2bcb4a993732c48d0dbdcb67bbd0bef01919e649bef1cb7156fee",
+      "size_bytes": 91,
+      "source": ".artifacts/logs/native-proxy-descriptor-handoff-20260910/task-integrity.stderr"
+    },
+    {
+      "destination": "docs/audits/native-proxy-descriptor-handoff-20260910/result/custody-regression/qualification.json",
+      "sha256": "dfce516cf4a2e7c604601f4260cc19f91bf86e3974f857714dabafc8f9993f9c",
+      "size_bytes": 10865,
+      "source": ".artifacts/logs/native-proxy-descriptor-handoff-20260910/custody-regression/qualification.json"
+    },
+    {
+      "destination": "docs/audits/native-proxy-descriptor-handoff-20260910/result/custody-regression/qualify.stderr",
+      "sha256": "108bdba43a353201e97e9839ad8f8f1751ef4b700ddc80378b51eb41c832cc90",
+      "size_bytes": 91,
+      "source": ".artifacts/logs/native-proxy-descriptor-handoff-20260910/custody-regression/qualify.stderr"
+    },
+    {
+      "destination": "docs/audits/native-proxy-descriptor-handoff-20260910/result/custody-regression/qualify.tap",
+      "sha256": "3c533a10a8dbbf86778d802e5a7db1fb18dd88b6345be14fb6dc947cae533564",
+      "size_bytes": 3365,
+      "source": ".artifacts/logs/native-proxy-descriptor-handoff-20260910/custody-regression/qualify.tap"
+    },
+    {
+      "destination": "docs/audits/native-proxy-descriptor-handoff-20260910/result/publication-regression/qualification.json",
+      "sha256": "851678790db0aaa20dcfda25e39f9b3ecd0270453dc9ad6091923b3ab9934691",
+      "size_bytes": 8022,
+      "source": ".artifacts/logs/native-proxy-descriptor-handoff-20260910/publication-regression/qualification.json"
+    },
+    {
+      "destination": "docs/audits/native-proxy-descriptor-handoff-20260910/result/publication-regression/qualify.stderr",
+      "sha256": "2b492bf3e0b9d7620f081649f5312b81eace66c41ad68db92c71b1dbe2e1c00c",
+      "size_bytes": 91,
+      "source": ".artifacts/logs/native-proxy-descriptor-handoff-20260910/publication-regression/qualify.stderr"
+    },
+    {
+      "destination": "docs/audits/native-proxy-descriptor-handoff-20260910/result/publication-regression/qualify.tap",
+      "sha256": "02d21b2f806e033300a6510b735a7d76cf2a875498a16e52aa62545fdb12dbb2",
+      "size_bytes": 3745,
+      "source": ".artifacts/logs/native-proxy-descriptor-handoff-20260910/publication-regression/qualify.tap"
+    },
+    {
+      "destination": "docs/audits/native-proxy-descriptor-handoff-20260910/result/observation-regression/admission.jsonl",
+      "sha256": "10690bc695ac5dcd9a614f0cbddd8d9569309d04514b17198d16a2f6e5781d2e",
+      "size_bytes": 20600,
+      "source": ".artifacts/logs/native-proxy-descriptor-handoff-20260910/observation-regression/admission.jsonl"
+    },
+    {
+      "destination": "docs/audits/native-proxy-descriptor-handoff-20260910/result/observation-regression/qualification.json",
+      "sha256": "fe650255c110318199273f243fc93676727726eccbf38693ddbc6a9c796d989b",
+      "size_bytes": 3707937,
+      "source": ".artifacts/logs/native-proxy-descriptor-handoff-20260910/observation-regression/qualification.json"
+    },
+    {
+      "destination": "docs/audits/native-proxy-descriptor-handoff-20260910/result/observation-regression/qualify.stderr",
+      "sha256": "e508645021ccf04c5bf2412b150513c1aac865c5e4c2a4effe6ef49049c558ff",
+      "size_bytes": 91,
+      "source": ".artifacts/logs/native-proxy-descriptor-handoff-20260910/observation-regression/qualify.stderr"
+    },
+    {
+      "destination": "docs/audits/native-proxy-descriptor-handoff-20260910/result/observation-regression/qualify.tap",
+      "sha256": "4723c8cc10a20250706acc8cb03e251b119d120d0e6db7aac0cc9d71c7ccf5be",
+      "size_bytes": 5213,
+      "source": ".artifacts/logs/native-proxy-descriptor-handoff-20260910/observation-regression/qualify.tap"
+    }
+  ],
+  "schema": "fsmgen.descriptor_handoff_recovery.v1"
+}

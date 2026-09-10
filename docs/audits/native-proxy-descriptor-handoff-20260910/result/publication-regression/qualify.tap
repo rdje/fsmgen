@@ -1,0 +1,79 @@
+ok 1 - canonical writer is close-on-exec
+ok 2 - payload stays non-executable before sealing
+ok 3 - canonical writer is close-on-exec
+ok 4 - payload stays non-executable before sealing
+ok 5 - canonical writer is close-on-exec
+ok 6 - payload stays non-executable before sealing
+ok 7 - first publication creates canonical image
+ok 8 - content publication grants no runtime authorization
+ok 9 - content result has no runnable executable
+ok 10 - independent Python key selects canonical directory
+ok 11 - final snapshots contain independently expected C, image and manifest
+ok 12 - snapshot joins actual native inode
+ok 13 - canonical files have no hard-link aliases
+ok 14 - actual bytes join snapshot digest
+ok 15 - snapshot joins actual native inode
+ok 16 - canonical files have no hard-link aliases
+ok 17 - actual bytes join snapshot digest
+ok 18 - snapshot joins actual native inode
+ok 19 - canonical files have no hard-link aliases
+ok 20 - actual bytes join snapshot digest
+ok 21 - every canonical writer closes
+ok 22 - equal bytes reuse an existing complete image
+ok 23 - reuse preserves exact canonical inodes and bytes
+ok 24 - reuse performs no new payload write or seal
+ok 25 - creation and reuse share the permanent lock identity
+ok 26 - different actual bytes select a distinct image
+ok 27 - different publication leaves original immutable
+ok 28 - modeled content-key collision
+ok 29 - collision rejection never overwrites image
+ok 30 - equal image remains reusable at image capacity
+ok 31 - new image at capacity
+ok 32 - capacity rejection neither creates nor evicts an image
+ok 33 - existing empty_directory
+ok 34 - invalid existing image is never repaired
+ok 35 - existing missing_manifest
+ok 36 - invalid existing image is never repaired
+ok 37 - existing writable_image
+ok 38 - invalid existing image is never repaired
+ok 39 - existing changed_bytes
+ok 40 - invalid existing image is never repaired
+ok 41 - interruption before rustup.c
+ok 42 - first failure stops all later payload operations
+ok 43 - failed payload is not retried
+ok 44 - partial publication is conservatively retained
+ok 45 - interruption after rustup.c
+ok 46 - first failure stops all later payload operations
+ok 47 - failed payload is not retried
+ok 48 - partial publication is conservatively retained
+ok 49 - interruption before image.json
+ok 50 - first failure stops all later payload operations
+ok 51 - failed payload is not retried
+ok 52 - partial publication is conservatively retained
+ok 53 - interruption after image.json
+ok 54 - first failure stops all later payload operations
+ok 55 - failed payload is not retried
+ok 56 - partial publication is conservatively retained
+ok 57 - interruption before rustup
+ok 58 - first failure stops all later payload operations
+ok 59 - failed payload is not retried
+ok 60 - partial publication is conservatively retained
+ok 61 - interruption after rustup
+ok 62 - first failure stops all later payload operations
+ok 63 - failed payload is not retried
+ok 64 - partial publication is conservatively retained
+ok 65 - interruption before executable seal
+ok 66 - retained permission boundary is explicit; no result authorizes execution
+ok 67 - interruption after executable seal
+ok 68 - retained permission boundary is explicit; no result authorizes execution
+ok 69 - same-byte sealed source replacement
+ok 70 - same-byte sealed directory replacement
+ok 71 - no publication callback
+ok 72 - unknown fixed transaction
+ok 73 - oversized publication bytes
+ok 74 - direct internal publication bypass
+ok 75 - invalid requests perform no store bootstrap
+ok 76 - independent creation-inode oracle defeats removed sealed-source guard
+ok 77 - no compiler or process creation attempted
+ok 78 - all owned inert namespaces are absent
+1..78

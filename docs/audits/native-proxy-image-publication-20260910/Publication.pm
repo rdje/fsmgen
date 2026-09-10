@@ -25,10 +25,10 @@ sub _write_payload {
     my ($path, $bytes, $mode) = @_;
     sysopen(my $writer, $path, O_RDWR | O_CREAT | O_EXCL | O_NOFOLLOW, 0400)
         or die "cannot exclusively create canonical payload: $!\n";
-    binmode($writer) or die "cannot select canonical byte mode: $!\n";
     my $source;
     my $sealed_identity;
     my $ok = eval {
+        binmode($writer) or die "cannot select canonical byte mode: $!\n";
         my $flags = fcntl($writer, F_GETFD, 0);
         die "cannot read canonical writer flags: $!\n" unless defined $flags;
         fcntl($writer, F_SETFD, $flags | FD_CLOEXEC)

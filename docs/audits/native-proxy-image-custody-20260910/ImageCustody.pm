@@ -130,13 +130,23 @@ sub _source {
     # Reuse the qualified bounded no-follow descriptor read. The additional
     # custody checks below enforce this store's stricter modes and link count.
     my ($bytes, $metadata, $handle) = FSM::Test::RustProxyFixture::_read_file($path, 1);
-    die "invalid image source mode, links or size\n"
-        unless ($metadata->[2] & 07777) == $mode && $metadata->[3] == 1
-            && length($bytes) <= $limit;
-    my $flags = fcntl($handle, F_GETFD, 0);
-    die "cannot read descriptor flags: $!\n" unless defined $flags;
-    fcntl($handle, F_SETFD, $flags | FD_CLOEXEC)
-        or die "cannot seal descriptor inheritance: $!\n";
+    my $ok = eval {
+        die "invalid image source mode, links or size\n"
+            unless ($metadata->[2] & 07777) == $mode && $metadata->[3] == 1
+                && length($bytes) <= $limit;
+        my $flags = fcntl($handle, F_GETFD, 0);
+        die "cannot read descriptor flags: $!\n" unless defined $flags;
+        fcntl($handle, F_SETFD, $flags | FD_CLOEXEC)
+            or die "cannot seal descriptor inheritance: $!\n";
+        1;
+    };
+    my $error = $@;
+    unless ($ok) {
+        # The lower reader transferred ownership even when these stricter
+        # checks fail. Close that handle explicitly and preserve the cause.
+        close($handle);
+        die $error;
+    }
     return {bytes => $bytes, metadata => $metadata, handle => $handle, path => $path};
 }
 
