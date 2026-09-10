@@ -1,0 +1,5 @@
+ram-guard: PID 35429; host 63.6%; host cutoff 88%; descendant RSS cutoff 4096 MiB; poll 2s
+#   Failed test 'admission malformed_global'
+#   at docs/audits/native-proxy-runtime-acquisition-20260910/qualify.t line 102.
+# invalid reference JSON
+# Looks like you failed 1 test of 79.

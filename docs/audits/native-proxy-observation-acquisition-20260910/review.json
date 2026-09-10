@@ -1,0 +1,195 @@
+{
+  "book": {
+    "exact_output_absent": true,
+    "new_passage_verified": true,
+    "rendered_bytes": 23145283,
+    "rendered_files": 98,
+    "same_volume_direct_objects": true
+  },
+  "correction": "Only the old runtime-acquisition malformed_global expected diagnostic changes from invalid runtime JSON to invalid reference JSON. The source-version comparison proves no other harness change. The original failed run remains unsuccessful; an explicitly labeled diagnostic-only projection checks its other semantics, and a separate corrected run passes all assertions. The prior combined-dispatch slice is back-annotated with this regression-band omission.",
+  "durability": "Task ownership and fixed plan precede source changes and inert allocations. Sources, plan/harness/auditor, review, original failed regression and exact recovered result/TAP/guard/ledger copies are tracked. Prior ignored regression results and ledgers are restored byte-exactly. Closed retirement history and prior acceptance remain authenticated at the source revision; no cap is raised.",
+  "falsification": "Prior identity, record/capacity/source violations reject without mutation. Exact late directory/source/hold replacements reject and retain published holds. Omitting prior evidence identity or retained source identity admits results rejected by the independent oracle. Eleven declared result falsifiers detect evidence loss, false authority and forbidden process attempts.",
+  "final_evidence": [
+    {
+      "path": "docs/audits/native-proxy-observation-acquisition-20260910/result/audit.json",
+      "sha256": "7d6b5699ecd59325bf75803220d4c073a225f801c0594f155d6e7dd5b8271dbd",
+      "size_bytes": 1399
+    },
+    {
+      "path": "docs/audits/native-proxy-observation-acquisition-20260910/result/qualification.json",
+      "sha256": "5c201ce2c6e91a03a07f80180e7d66215038ed6c75e8c9fada6c8e59b2bce3bf",
+      "size_bytes": 1424879
+    }
+  ],
+  "initial_failure": {
+    "allocations": 84,
+    "cause": "The prior combined dispatcher reports invalid reference JSON; the unchanged runtime-acquisition harness still expected invalid runtime JSON. Rejection and absence of a returned result were correct.",
+    "complete_ledger_and_absence_verified": true,
+    "failed_assertion": "admission malformed_global",
+    "forbidden_process_attempts": 0,
+    "initial_result_success": false,
+    "other_semantics_verified_on_explicit_diagnostic_only_projection": true,
+    "schema": "fsmgen.observation_acquisition_regression_recovery.v1",
+    "source_revision": "f1b0f0dc0657b0d583fa16493680f1445308c7be",
+    "source_sha256": "9aff78c5e58d63c2bdce64587beb73127bc070e9127d5f45826f8e546cb2343a"
+  },
+  "limits": [
+    "Only fresh filesystem storage acquisition with inert images and synthetic process births. Stable reuse/full interruption matrix, archive settlement, exact hold release, Python capture integration, actual native ownership/transport, compiler profiles and real contention remain separately owned gates. Existing archive file/aggregate byte limits remain unchanged.",
+    "Process births remain supplied synthetic data. Source metadata closure is a cooperative dated observation, not arbitrary-writer atomicity or loaded-image attestation. Runtime authority remains zero with no executable returned.",
+    "The full acquisition interruption/reuse matrix is next. No archive file, capture helper, native query, compiler or fixture is run; historical startup/parent qualification and full CI/push remain gated."
+  ],
+  "owner": "HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.12.4.1.3.3.1",
+  "qualification": {
+    "allocations": 116,
+    "assertions": 59,
+    "cases": 21,
+    "falsifiers": [
+      "hidden failure",
+      "lost source",
+      "source identity substituted",
+      "evidence identity substituted",
+      "runtime authority",
+      "lost descriptor closure",
+      "lost rejection",
+      "lost late hold",
+      "lost mutant",
+      "lost allocation",
+      "forbidden process"
+    ],
+    "late_changes": 6,
+    "limits": "Only fresh filesystem storage acquisition with inert images and synthetic process births. Stable reuse/full interruption matrix, archive settlement, exact hold release, Python capture integration, actual native ownership/transport, compiler profiles and real contention remain separately owned gates. Existing archive file/aggregate byte limits remain unchanged.",
+    "mutants": [
+      "discard prior evidence identity",
+      "discard retained source identity"
+    ],
+    "regressions": {
+      "all_rosters_disjoint_and_absent": true,
+      "combined_census": {
+        "allocations": 33,
+        "assertions": 35
+      },
+      "initial_runtime_acquisition": {
+        "allocations": 84,
+        "other_semantics_checked_on_explicit_projection": true,
+        "sole_failure": "stale malformed_global diagnostic expectation",
+        "success": false
+      },
+      "runtime_acquisition": {
+        "allocations": 84,
+        "assertions": 79
+      }
+    },
+    "schema": "fsmgen.inactive_observation_acquisition_audit.v1",
+    "success": true
+  },
+  "rederive": "Independent Python oracle reconstructs both inert runtime acquisitions, the complete store/workspace/evidence footprints, canonical observation records and ordered captured sources. Actual source and directory identities join the independent observations. Immediate ledgers reconcile every allocation with absence; original retained descriptor closure and exact rejection/mutation scope are checked. The two prior regression suites pass independent oracles.",
+  "schema": "fsmgen.inactive_observation_acquisition_review.v1",
+  "source_revision": "f1b0f0dc0657b0d583fa16493680f1445308c7be",
+  "unchanged_inputs": [
+    {
+      "path": "t/1669-task-acceptance-fixture-runtime.t",
+      "sha256": "bdebbf03308cd5e0699324f9ab96a249c11c9ab05634309569d33874391a196f",
+      "size_bytes": 67582
+    },
+    {
+      "path": "t/lib/FSM/Test/RustProxyFixture.pm",
+      "sha256": "d9c4ab52cf8074526c59b7a5dcb9da870ca7ffdacb4eb236dacb23b5db6d8bfb",
+      "size_bytes": 11466
+    },
+    {
+      "path": "perl/FSM/Support/ProcessSupervisor.pm",
+      "sha256": "684882d91f673ea7145f43ed3aad31acf099f13508574be7b2d8911123988637",
+      "size_bytes": 27990
+    },
+    {
+      "path": "scripts/fixture_kernel_sampler.py",
+      "sha256": "50c94165893b74b758c560f561ff744f294683812a26b429071ef43009aac2dc",
+      "size_bytes": 22040
+    },
+    {
+      "path": "scripts/observe_fixture_startup.py",
+      "sha256": "05144eb1ebd86ebf132ad36b86b4c93b23687db928fc369f633615f0b870fe06",
+      "size_bytes": 25563
+    },
+    {
+      "path": "scripts/fixture_policy_archive.py",
+      "sha256": "f72355164d6af97e9c6de678018fe864bfab537280d95a87f986825970ad50e2",
+      "size_bytes": 21652
+    },
+    {
+      "path": "docs/audits/native-proxy-image-custody-20260910/ImageCustody.pm",
+      "sha256": "7f9db38e47140fedd39a80d7a6fbf1ee111f56f290a463729b516b08aae90d4f",
+      "size_bytes": 8021
+    },
+    {
+      "path": "docs/audits/native-proxy-runtime-records-20260910/RuntimeRecord.pm",
+      "sha256": "013c0a02e7df59dc3a5af944b603cd44121252a02ca0228d6fdc3e1dd28e6745",
+      "size_bytes": 4078
+    },
+    {
+      "path": "docs/audits/native-proxy-observation-records-20260910/ObservationRecord.pm",
+      "sha256": "35445ee951c8f5e7dc204f58cffe1b2f6273286cc3e7715953d705b33e7158d5",
+      "size_bytes": 4369
+    },
+    {
+      "path": "docs/audits/native-proxy-runtime-census-20260910/qualify.t",
+      "sha256": "dfecb1fb29d91911939b80d2aa9315866f306707c85ba85688dfb20091845f57",
+      "size_bytes": 13416
+    },
+    {
+      "path": "docs/audits/native-proxy-runtime-census-20260910/audit.py",
+      "sha256": "4602141d655ed33c00e44417e64254937bfdac8863a24e44971c2159f900a13b",
+      "size_bytes": 10090
+    },
+    {
+      "path": "docs/audits/native-proxy-runtime-acquisition-20260910/ReferenceAcquisition.pm",
+      "sha256": "b751c88d709e102f7f9b9dd17e0222c39e0a81acc16d7194f7f7c3f4c8535b57",
+      "size_bytes": 6565
+    },
+    {
+      "path": "docs/audits/native-proxy-runtime-retirement-20260910/RuntimeRetirement.pm",
+      "sha256": "766348d16243d3868ca5f8b653f757f8f2eaf5c1aba8ec27fd2d9c67e9fd0bcc",
+      "size_bytes": 8727
+    },
+    {
+      "path": "docs/audits/native-proxy-runtime-retirement-20260910/qualify.t",
+      "sha256": "68e36c8b7dd43b49cb39e339dee45665202fbb32a3511e45af7a523380722524",
+      "size_bytes": 22411
+    },
+    {
+      "path": "docs/audits/native-proxy-image-maintenance-20260910/ImageMaintenance.pm",
+      "sha256": "1295957d97737e764c0e800885a2c3f9adfa327a0d41b35d122dde3e21698cac",
+      "size_bytes": 5678
+    },
+    {
+      "path": "docs/audits/native-proxy-canonical-contract-20260910/contract.json",
+      "sha256": "f3f981398afae72540ab4ac0194b8380d4743c3d2146c1172a85365add053222",
+      "size_bytes": 21927
+    },
+    {
+      "path": "docs/audits/native-proxy-runtime-census-20260910/ReferenceCensus.pm",
+      "sha256": "9fd74767e8c10831f2732fa8ad426b7e4fff8c17bab06584aa671cdd013b6247",
+      "size_bytes": 8024
+    },
+    {
+      "path": "docs/audits/native-proxy-image-publication-20260910/Publication.pm",
+      "sha256": "dc50ca598632572616d7da65fa6f1b417a20e7207dafa5fe03fd5d887382fab6",
+      "size_bytes": 5367
+    },
+    {
+      "path": "docs/audits/native-proxy-combined-census-20260910/qualify.t",
+      "sha256": "f99eeebdd9c5ab0013f4cf903136468085eb13e38f044e4abd9a51c85cbf3c46",
+      "size_bytes": 16644
+    },
+    {
+      "path": "docs/audits/native-proxy-combined-census-20260910/audit.py",
+      "sha256": "ab7a213628f24b8b09a5438184a6ad344d42f400a31b5f5500e748ea4eb0a14c",
+      "size_bytes": 17759
+    },
+    {
+      "path": "docs/audits/native-proxy-runtime-acquisition-20260910/audit.py",
+      "sha256": "36449fac78d3d073fa404ad5f2df5b29e780cbb5af72f3701d1346defdb90fe5",
+      "size_bytes": 13414
+    }
+  ]
+}

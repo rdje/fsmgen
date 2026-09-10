@@ -1,0 +1,43 @@
+{
+  "allocations": 116,
+  "assertions": 59,
+  "cases": 21,
+  "falsifiers": [
+    "hidden failure",
+    "lost source",
+    "source identity substituted",
+    "evidence identity substituted",
+    "runtime authority",
+    "lost descriptor closure",
+    "lost rejection",
+    "lost late hold",
+    "lost mutant",
+    "lost allocation",
+    "forbidden process"
+  ],
+  "late_changes": 6,
+  "limits": "Only fresh filesystem storage acquisition with inert images and synthetic process births. Stable reuse/full interruption matrix, archive settlement, exact hold release, Python capture integration, actual native ownership/transport, compiler profiles and real contention remain separately owned gates. Existing archive file/aggregate byte limits remain unchanged.",
+  "mutants": [
+    "discard prior evidence identity",
+    "discard retained source identity"
+  ],
+  "regressions": {
+    "all_rosters_disjoint_and_absent": true,
+    "combined_census": {
+      "allocations": 33,
+      "assertions": 35
+    },
+    "initial_runtime_acquisition": {
+      "allocations": 84,
+      "other_semantics_checked_on_explicit_projection": true,
+      "sole_failure": "stale malformed_global diagnostic expectation",
+      "success": false
+    },
+    "runtime_acquisition": {
+      "allocations": 84,
+      "assertions": 79
+    }
+  },
+  "schema": "fsmgen.inactive_observation_acquisition_audit.v1",
+  "success": true
+}

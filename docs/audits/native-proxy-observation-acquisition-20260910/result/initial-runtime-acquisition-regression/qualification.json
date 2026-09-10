@@ -1,0 +1,1538 @@
+{
+   "allocated" : [
+      {
+         "device" : 16777244,
+         "inode" : 76921600,
+         "kind" : "store",
+         "path" : ".artifacts/tmp/native-proxy-image-custody/cases/fsmgen-_4taF1tu"
+      },
+      {
+         "device" : 16777244,
+         "inode" : 76921604,
+         "kind" : "workspace",
+         "path" : ".artifacts/tmp/process-supervisor-tests/fsmgen-fpQWCaXN"
+      },
+      {
+         "device" : 16777244,
+         "inode" : 76921606,
+         "kind" : "workspace",
+         "path" : ".artifacts/tmp/process-supervisor-tests/fsmgen-ALjAH_ko"
+      },
+      {
+         "device" : 16777244,
+         "inode" : 76921616,
+         "kind" : "store",
+         "path" : ".artifacts/tmp/native-proxy-image-custody/cases/fsmgen-X_xBAQxT"
+      },
+      {
+         "device" : 16777244,
+         "inode" : 76921620,
+         "kind" : "workspace",
+         "path" : ".artifacts/tmp/process-supervisor-tests/fsmgen-zSi_3Cqy"
+      },
+      {
+         "device" : 16777244,
+         "inode" : 76921622,
+         "kind" : "workspace",
+         "path" : ".artifacts/tmp/process-supervisor-tests/fsmgen-2QpyifCE"
+      },
+      {
+         "device" : 16777244,
+         "inode" : 76921637,
+         "kind" : "store",
+         "path" : ".artifacts/tmp/native-proxy-image-custody/cases/fsmgen-YSV6aQsH"
+      },
+      {
+         "device" : 16777244,
+         "inode" : 76921641,
+         "kind" : "workspace",
+         "path" : ".artifacts/tmp/process-supervisor-tests/fsmgen-U3tbyirL"
+      },
+      {
+         "device" : 16777244,
+         "inode" : 76921643,
+         "kind" : "workspace",
+         "path" : ".artifacts/tmp/process-supervisor-tests/fsmgen-qL_tcnAR"
+      },
+      {
+         "device" : 16777244,
+         "inode" : 76921645,
+         "kind" : "store",
+         "path" : ".artifacts/tmp/native-proxy-image-custody/cases/fsmgen-6z9dFpgG"
+      },
+      {
+         "device" : 16777244,
+         "inode" : 76921649,
+         "kind" : "workspace",
+         "path" : ".artifacts/tmp/process-supervisor-tests/fsmgen-axx39fIp"
+      },
+      {
+         "device" : 16777244,
+         "inode" : 76921651,
+         "kind" : "workspace",
+         "path" : ".artifacts/tmp/process-supervisor-tests/fsmgen-ZX9vdJch"
+      },
+      {
+         "device" : 16777244,
+         "inode" : 76921653,
+         "kind" : "store",
+         "path" : ".artifacts/tmp/native-proxy-image-custody/cases/fsmgen-tYvtrj3a"
+      },
+      {
+         "device" : 16777244,
+         "inode" : 76921657,
+         "kind" : "workspace",
+         "path" : ".artifacts/tmp/process-supervisor-tests/fsmgen-rKwSTnYR"
+      },
+      {
+         "device" : 16777244,
+         "inode" : 76921659,
+         "kind" : "workspace",
+         "path" : ".artifacts/tmp/process-supervisor-tests/fsmgen-1opSzlgE"
+      },
+      {
+         "device" : 16777244,
+         "inode" : 76921661,
+         "kind" : "store",
+         "path" : ".artifacts/tmp/native-proxy-image-custody/cases/fsmgen-J_ssVDVv"
+      },
+      {
+         "device" : 16777244,
+         "inode" : 76921665,
+         "kind" : "workspace",
+         "path" : ".artifacts/tmp/process-supervisor-tests/fsmgen-mr8_7HPN"
+      },
+      {
+         "device" : 16777244,
+         "inode" : 76921667,
+         "kind" : "workspace",
+         "path" : ".artifacts/tmp/process-supervisor-tests/fsmgen-w5cLUxgV"
+      },
+      {
+         "device" : 16777244,
+         "inode" : 76921669,
+         "kind" : "store",
+         "path" : ".artifacts/tmp/native-proxy-image-custody/cases/fsmgen-6q4VIJLN"
+      },
+      {
+         "device" : 16777244,
+         "inode" : 76921673,
+         "kind" : "workspace",
+         "path" : ".artifacts/tmp/process-supervisor-tests/fsmgen-DaimGzU4"
+      },
+      {
+         "device" : 16777244,
+         "inode" : 76921675,
+         "kind" : "workspace",
+         "path" : ".artifacts/tmp/process-supervisor-tests/fsmgen-hCraIWYL"
+      },
+      {
+         "device" : 16777244,
+         "inode" : 76921677,
+         "kind" : "store",
+         "path" : ".artifacts/tmp/native-proxy-image-custody/cases/fsmgen-5moeoBXZ"
+      },
+      {
+         "device" : 16777244,
+         "inode" : 76921681,
+         "kind" : "workspace",
+         "path" : ".artifacts/tmp/process-supervisor-tests/fsmgen-DIZmpsmM"
+      },
+      {
+         "device" : 16777244,
+         "inode" : 76921683,
+         "kind" : "workspace",
+         "path" : ".artifacts/tmp/process-supervisor-tests/fsmgen-fyTgo_0q"
+      },
+      {
+         "device" : 16777244,
+         "inode" : 76921685,
+         "kind" : "store",
+         "path" : ".artifacts/tmp/native-proxy-image-custody/cases/fsmgen-2gXH7NBA"
+      },
+      {
+         "device" : 16777244,
+         "inode" : 76921689,
+         "kind" : "workspace",
+         "path" : ".artifacts/tmp/process-supervisor-tests/fsmgen-5_zEgx1S"
+      },
+      {
+         "device" : 16777244,
+         "inode" : 76921691,
+         "kind" : "workspace",
+         "path" : ".artifacts/tmp/process-supervisor-tests/fsmgen-PSqHNL0g"
+      },
+      {
+         "device" : 16777244,
+         "inode" : 76921693,
+         "kind" : "store",
+         "path" : ".artifacts/tmp/native-proxy-image-custody/cases/fsmgen-RDZH0x9e"
+      },
+      {
+         "device" : 16777244,
+         "inode" : 76921697,
+         "kind" : "workspace",
+         "path" : ".artifacts/tmp/process-supervisor-tests/fsmgen-I0deiYpg"
+      },
+      {
+         "device" : 16777244,
+         "inode" : 76921699,
+         "kind" : "workspace",
+         "path" : ".artifacts/tmp/process-supervisor-tests/fsmgen-XoAFsclb"
+      },
+      {
+         "device" : 16777244,
+         "inode" : 76921702,
+         "kind" : "store",
+         "path" : ".artifacts/tmp/native-proxy-image-custody/cases/fsmgen-KuFlV9N8"
+      },
+      {
+         "device" : 16777244,
+         "inode" : 76921706,
+         "kind" : "workspace",
+         "path" : ".artifacts/tmp/process-supervisor-tests/fsmgen-PBWtph2O"
+      },
+      {
+         "device" : 16777244,
+         "inode" : 76921708,
+         "kind" : "workspace",
+         "path" : ".artifacts/tmp/process-supervisor-tests/fsmgen-zh9kh3Zb"
+      },
+      {
+         "device" : 16777244,
+         "inode" : 76921711,
+         "kind" : "store",
+         "path" : ".artifacts/tmp/native-proxy-image-custody/cases/fsmgen-8q4OzFyr"
+      },
+      {
+         "device" : 16777244,
+         "inode" : 76921715,
+         "kind" : "workspace",
+         "path" : ".artifacts/tmp/process-supervisor-tests/fsmgen-KzPGDPFh"
+      },
+      {
+         "device" : 16777244,
+         "inode" : 76921717,
+         "kind" : "workspace",
+         "path" : ".artifacts/tmp/process-supervisor-tests/fsmgen-x3C4hiTW"
+      },
+      {
+         "device" : 16777244,
+         "inode" : 76921720,
+         "kind" : "store",
+         "path" : ".artifacts/tmp/native-proxy-image-custody/cases/fsmgen-PqJTSF_n"
+      },
+      {
+         "device" : 16777244,
+         "inode" : 76921724,
+         "kind" : "workspace",
+         "path" : ".artifacts/tmp/process-supervisor-tests/fsmgen-cBrB6dfv"
+      },
+      {
+         "device" : 16777244,
+         "inode" : 76921726,
+         "kind" : "workspace",
+         "path" : ".artifacts/tmp/process-supervisor-tests/fsmgen-8nz0h_r7"
+      },
+      {
+         "device" : 16777244,
+         "inode" : 76921732,
+         "kind" : "store",
+         "path" : ".artifacts/tmp/native-proxy-image-custody/cases/fsmgen-HRASzsel"
+      },
+      {
+         "device" : 16777244,
+         "inode" : 76921736,
+         "kind" : "workspace",
+         "path" : ".artifacts/tmp/process-supervisor-tests/fsmgen-eZHzj4XE"
+      },
+      {
+         "device" : 16777244,
+         "inode" : 76921738,
+         "kind" : "workspace",
+         "path" : ".artifacts/tmp/process-supervisor-tests/fsmgen-PmtS6VTY"
+      },
+      {
+         "device" : 16777244,
+         "inode" : 76921745,
+         "kind" : "store",
+         "path" : ".artifacts/tmp/native-proxy-image-custody/cases/fsmgen-IQcUFHFQ"
+      },
+      {
+         "device" : 16777244,
+         "inode" : 76921749,
+         "kind" : "workspace",
+         "path" : ".artifacts/tmp/process-supervisor-tests/fsmgen-iusLhZN6"
+      },
+      {
+         "device" : 16777244,
+         "inode" : 76921751,
+         "kind" : "workspace",
+         "path" : ".artifacts/tmp/process-supervisor-tests/fsmgen-U0yugFdO"
+      },
+      {
+         "device" : 16777244,
+         "inode" : 76921758,
+         "kind" : "store",
+         "path" : ".artifacts/tmp/native-proxy-image-custody/cases/fsmgen-tCnu7QyQ"
+      },
+      {
+         "device" : 16777244,
+         "inode" : 76921762,
+         "kind" : "workspace",
+         "path" : ".artifacts/tmp/process-supervisor-tests/fsmgen-RgU0GcUJ"
+      },
+      {
+         "device" : 16777244,
+         "inode" : 76921764,
+         "kind" : "workspace",
+         "path" : ".artifacts/tmp/process-supervisor-tests/fsmgen-o0kDSUJX"
+      },
+      {
+         "device" : 16777244,
+         "inode" : 76921772,
+         "kind" : "store",
+         "path" : ".artifacts/tmp/native-proxy-image-custody/cases/fsmgen-J5gu8xcQ"
+      },
+      {
+         "device" : 16777244,
+         "inode" : 76921776,
+         "kind" : "workspace",
+         "path" : ".artifacts/tmp/process-supervisor-tests/fsmgen-EYP0oVDo"
+      },
+      {
+         "device" : 16777244,
+         "inode" : 76921778,
+         "kind" : "workspace",
+         "path" : ".artifacts/tmp/process-supervisor-tests/fsmgen-M5hFBsjI"
+      },
+      {
+         "device" : 16777244,
+         "inode" : 76921797,
+         "kind" : "store",
+         "path" : ".artifacts/tmp/native-proxy-image-custody/cases/fsmgen-OnE6bdbv"
+      },
+      {
+         "device" : 16777244,
+         "inode" : 76921801,
+         "kind" : "workspace",
+         "path" : ".artifacts/tmp/process-supervisor-tests/fsmgen-8fDwFUQj"
+      },
+      {
+         "device" : 16777244,
+         "inode" : 76921803,
+         "kind" : "workspace",
+         "path" : ".artifacts/tmp/process-supervisor-tests/fsmgen-3YPnowIm"
+      },
+      {
+         "device" : 16777244,
+         "inode" : 76921814,
+         "kind" : "store",
+         "path" : ".artifacts/tmp/native-proxy-image-custody/cases/fsmgen-eJQSgTck"
+      },
+      {
+         "device" : 16777244,
+         "inode" : 76921818,
+         "kind" : "workspace",
+         "path" : ".artifacts/tmp/process-supervisor-tests/fsmgen-YuszXGXe"
+      },
+      {
+         "device" : 16777244,
+         "inode" : 76921820,
+         "kind" : "workspace",
+         "path" : ".artifacts/tmp/process-supervisor-tests/fsmgen-QhXqUAmK"
+      },
+      {
+         "device" : 16777244,
+         "inode" : 76921830,
+         "kind" : "store",
+         "path" : ".artifacts/tmp/native-proxy-image-custody/cases/fsmgen-RnS_kQnW"
+      },
+      {
+         "device" : 16777244,
+         "inode" : 76921834,
+         "kind" : "workspace",
+         "path" : ".artifacts/tmp/process-supervisor-tests/fsmgen-Q44YrVio"
+      },
+      {
+         "device" : 16777244,
+         "inode" : 76921836,
+         "kind" : "workspace",
+         "path" : ".artifacts/tmp/process-supervisor-tests/fsmgen-K322H7pX"
+      },
+      {
+         "device" : 16777244,
+         "inode" : 76921847,
+         "kind" : "store",
+         "path" : ".artifacts/tmp/native-proxy-image-custody/cases/fsmgen-NXviyYKi"
+      },
+      {
+         "device" : 16777244,
+         "inode" : 76921851,
+         "kind" : "workspace",
+         "path" : ".artifacts/tmp/process-supervisor-tests/fsmgen-2YEyhDBs"
+      },
+      {
+         "device" : 16777244,
+         "inode" : 76921853,
+         "kind" : "workspace",
+         "path" : ".artifacts/tmp/process-supervisor-tests/fsmgen-UAqoRJz8"
+      },
+      {
+         "device" : 16777244,
+         "inode" : 76921864,
+         "kind" : "store",
+         "path" : ".artifacts/tmp/native-proxy-image-custody/cases/fsmgen-a9wnGJZN"
+      },
+      {
+         "device" : 16777244,
+         "inode" : 76921868,
+         "kind" : "workspace",
+         "path" : ".artifacts/tmp/process-supervisor-tests/fsmgen-gLpYybXJ"
+      },
+      {
+         "device" : 16777244,
+         "inode" : 76921870,
+         "kind" : "workspace",
+         "path" : ".artifacts/tmp/process-supervisor-tests/fsmgen-CRxYDIQ2"
+      },
+      {
+         "device" : 16777244,
+         "inode" : 76921880,
+         "kind" : "store",
+         "path" : ".artifacts/tmp/native-proxy-image-custody/cases/fsmgen-aCYhJPUR"
+      },
+      {
+         "device" : 16777244,
+         "inode" : 76921884,
+         "kind" : "workspace",
+         "path" : ".artifacts/tmp/process-supervisor-tests/fsmgen-VkDAEs5o"
+      },
+      {
+         "device" : 16777244,
+         "inode" : 76921886,
+         "kind" : "workspace",
+         "path" : ".artifacts/tmp/process-supervisor-tests/fsmgen-gn4j2GUY"
+      },
+      {
+         "device" : 16777244,
+         "inode" : 76921898,
+         "kind" : "store",
+         "path" : ".artifacts/tmp/native-proxy-image-custody/cases/fsmgen-TgjHZ1De"
+      },
+      {
+         "device" : 16777244,
+         "inode" : 76921902,
+         "kind" : "workspace",
+         "path" : ".artifacts/tmp/process-supervisor-tests/fsmgen-7SuzpyC1"
+      },
+      {
+         "device" : 16777244,
+         "inode" : 76921904,
+         "kind" : "workspace",
+         "path" : ".artifacts/tmp/process-supervisor-tests/fsmgen-AEmXSiLj"
+      },
+      {
+         "device" : 16777244,
+         "inode" : 76922048,
+         "kind" : "store",
+         "path" : ".artifacts/tmp/native-proxy-image-custody/cases/fsmgen-PXqeB_RX"
+      },
+      {
+         "device" : 16777244,
+         "inode" : 76922052,
+         "kind" : "workspace",
+         "path" : ".artifacts/tmp/process-supervisor-tests/fsmgen-1MQLeoeu"
+      },
+      {
+         "device" : 16777244,
+         "inode" : 76922054,
+         "kind" : "workspace",
+         "path" : ".artifacts/tmp/process-supervisor-tests/fsmgen-tBjGMWov"
+      },
+      {
+         "device" : 16777244,
+         "inode" : 76922093,
+         "kind" : "store",
+         "path" : ".artifacts/tmp/native-proxy-image-custody/cases/fsmgen-wHCU5EJE"
+      },
+      {
+         "device" : 16777244,
+         "inode" : 76922097,
+         "kind" : "workspace",
+         "path" : ".artifacts/tmp/process-supervisor-tests/fsmgen-hGzIfQTK"
+      },
+      {
+         "device" : 16777244,
+         "inode" : 76922099,
+         "kind" : "workspace",
+         "path" : ".artifacts/tmp/process-supervisor-tests/fsmgen-HBOZFbQ6"
+      },
+      {
+         "device" : 16777244,
+         "inode" : 76922115,
+         "kind" : "store",
+         "path" : ".artifacts/tmp/native-proxy-image-custody/cases/fsmgen-ROxVyQm7"
+      },
+      {
+         "device" : 16777244,
+         "inode" : 76922119,
+         "kind" : "workspace",
+         "path" : ".artifacts/tmp/process-supervisor-tests/fsmgen-lzVmlWox"
+      },
+      {
+         "device" : 16777244,
+         "inode" : 76922121,
+         "kind" : "workspace",
+         "path" : ".artifacts/tmp/process-supervisor-tests/fsmgen-CX46kofp"
+      },
+      {
+         "device" : 16777244,
+         "inode" : 76922130,
+         "kind" : "store",
+         "path" : ".artifacts/tmp/native-proxy-image-custody/cases/fsmgen-wEhet8Q7"
+      },
+      {
+         "device" : 16777244,
+         "inode" : 76922134,
+         "kind" : "workspace",
+         "path" : ".artifacts/tmp/process-supervisor-tests/fsmgen-GtUE3PMV"
+      },
+      {
+         "device" : 16777244,
+         "inode" : 76922136,
+         "kind" : "workspace",
+         "path" : ".artifacts/tmp/process-supervisor-tests/fsmgen-JMNsN0Hn"
+      }
+   ],
+   "capacity" : {
+      "case" : ".artifacts/tmp/native-proxy-image-custody/cases/fsmgen-TgjHZ1De",
+      "keys" : [
+         "054bcaec2eb32839db41b94f51b7b3c81a9e2761440e306fc4b367c1b57ae1e1",
+         "05c1647261327a1f1609c580ea4289046c0e10bd74d94790201fe60f090d97e6",
+         "0649afd19f0a3e9f2629ac6ff2eb867b13d5d116bf8104a59500e8944ea620af",
+         "06e594aeafc3388ae8b57addd01c7f47078810bf7e44b5b1ee72572fcfcadccc",
+         "06fab14645e40f31972a1018df234b8fb6ea2483feb5a224bb3eaf3513e44060",
+         "0bfe4a5d777ae4f2ca10df111a537e86d60d44b258699878d7e639b6b4859d9c",
+         "0cf7998cfd756c508dd1576c0b60f8074019900b3326f0126c502a08f3d26907",
+         "0d16a8d00c6fb19ac32a841f89ce8d2a2a211ec44935c23715b5878319570c0a",
+         "1187f9650296ce89f45ac95ed3ae9411517b6a64c9ccc9a04588627cba9d6f78",
+         "1478244adc9aabc20cc6682d5abbae79067421481ccac944d3352ce006dfc317",
+         "15692bc0ac352b56d0daa0377dc8f983cea5b3b631a3892bd77e87b16d2799df",
+         "15b145c1f4a2c90d2e37a76ea3dcd553fa470ac22d4e6853dd8380cd699b0d80",
+         "18656c67dc75298a8a6b052444d575ac8b33d1c51876fe79c28ecb1d3a1a6777",
+         "187c7dfe78b509813a4069a5478fa2205e78a798e43627563c13fb969b09afdf",
+         "19dba700ad835662ec688e8aa702fcb3fd27a983eda4aa596b9204f6c68abe73",
+         "1a16a5f55a27b4a8718dde2753fe00aebc75433811937152772e87b664040ef5",
+         "1e55c9b18854a4f12a3299b4772192fa47278f45cfa2edaeab7f4c126ab0ea24",
+         "212b07f1cc57941e33dbae5bea192f11c6e8126866477ec6daed8deba57dceda",
+         "282e2f61e5085f561adf4765de1454479957faf0a51affca89af26fb5f8c5d6b",
+         "2b1e9e23cf1cee3a8c9f7fb212b287091b7efa3e5b5a27ab552bedf0e3f5e488",
+         "2f1823c48fd554de71784107724a92ea06b94e00d87f962be31fb14f83faf130",
+         "3022f04ecdd5c866ae921c2625f980e12190bd5a2e4ee990b2b8300e6388afe7",
+         "304fb2e161ce1b54acee57064ff7cfc46b129f6bb6acf121587b4d3e8aeabea8",
+         "31923714730f0483804a77143009639cb7a268180846fd31cc7bd7eca7b794ba",
+         "332bfe03028b93e81b5b17505ff81ff8b1e2a9439ec28db4ced25fa73d3d0bdc",
+         "35e5f66d67cd05eeb0e1a99e552fe72af1b5b1e39f2488990e3f12396d82929a",
+         "3970895514fb8dd72dbc1e011fc25c48b5dc58a6f3c39ca00904ee2effe40960",
+         "399a00a7b45115663016d4b27a21ef56a17f5c1be5104daefd73e311c2e713bc",
+         "3ababdb54a7655c5250d987d5ba2eac4c8ce5035dc70d6605d3ec65978bc97a2",
+         "3af18b0abe6221952d86d2e9079a8bca08c9b7915c463112a37a6b0c37ac8f26",
+         "3c7ac489160fd0d2d73bc61d355e51936155a1d04292a4dd7da73653438a0839",
+         "4344e0d7ed5bdbbb4fd27571940c3f9c99d8d10a27dd84fd94a854fcb9c6a42f",
+         "4994e34f6f99e8662b3d5d9f6156646aeecca14cbb82b276526646f495d4dda6",
+         "4a11dfffbe1ae556547f58a8b2956ff58b172da2595f15c35911868804074702",
+         "4a12ac5b80d2fcc226cc8c188c65fcb1538183a079fa133f78860d5ad78c42d7",
+         "4bbe641e4bad460f186500afc7ed8dd54bd7071d9e2858487e7a76783ce72a79",
+         "4c943b00e5537c30c4cd8657797fc783ed542dde8bad7188c15b1db56f43034f",
+         "50eac7d2da2e74b09751da5ecb0f8464d9a13bd6caf1f53dd84bd5212fbc392b",
+         "50f50cc99e246fff9bbf8f1eeaaff1aaf98d52f5e11fa0dc9a146ee735c694e6",
+         "520f00a0b635ef4806c82247d82f1d3721e16ed4ccc21f7385f29c5a83569ce8",
+         "5226e960f0cae1f6028f7d1db134d2922bd391b20c711483f91aa8d7438ef0f6",
+         "53d893546e4bbda705a17433bee7b02c48851ff404908fd9886ded070442d1c0",
+         "53f9c38cdadbe44c21b474714012eafb5b8efa15db46d332a5aa70bbc2feca79",
+         "544ddf2970c0b2f477d95b509c31f7efa83b7f361b1f86be5aec0b0cfdb247e0",
+         "56194eab9d1c8f044c8e92fdfde7cd90e9e259d2905ac7a8090140cd80d979ce",
+         "56511e4c2484b8169fe752a238e69909bcf7b391e2c3e006b9000854ba2d250f",
+         "58e1c2d87ffe04ad38a576e05167dc4a925f072d9d2aa77a685c82e84870395d",
+         "595c1927bdddb1a45c584ad05906799e75c21c71b50c0ae19c17172757846021",
+         "5caa48b922474570a2f14ddfe729686923b0caf8f0a91ae59de76646613d0940",
+         "5f289657fa7784b38efacc640dd04724308ec99242f9c8a70eef691136d253de",
+         "6073f117afde0819ca8bc4d3bf4f7550ee592e49fe775fa25249110c62d0cbc5",
+         "6116cdf0ab48018939604da37b8db1c6e466df8b6ee847bdbb1f9b49f529eb56",
+         "679643d6c6851443bb72822c42a80827824a8cd646f1581a7aa70d466b014f5b",
+         "696ecb21aa515219280cf8905d4be9c332b7c78eec3798b9ca66c4edf8482fc3",
+         "6b6207e6324bbbb4e997c992b631c78533620f87c2fb2e35359a961b1a0d57d2",
+         "6c033e67624053c47164a38d9d35e9f543434f45f79e5a7292d3055c100e6752",
+         "6e048f1c61bb9885e40e4fcfa0e52dd2bae29dbf38d9f8c013a4e4de23d9fade",
+         "6f21aa3d5fb7efb05929947c1101821230aacca13467011ffc7e97a12bfa0f95",
+         "6f3f510c61968201682dccf0518050f53a9fbb20640b8fc9b66cdd68cdf244a0",
+         "7127959802c8def1b4f109103f17c67ab05a629bdf0eaf16ffed0f6b1cd2ea60",
+         "72cf667209aa811efd6acff4034f6650a09bc6c7ec1157c94f06be62013048ca",
+         "756fd54ad2865cbbd04148d4ca3a6fc7b9233d8cba0eec5d18e2d53c047d3c81",
+         "75dc95a60556c8bac948c72ecb8fa30a9e887ef66ac215f885724b545e646165",
+         "771dc419d071bd4a27cdc2eb7117332b4c398b19e601c9d3492e1e3cd8c28f0d",
+         "77adcda16b771ce3fb3a70c17a57c090b5e65f2947125183b32d78239ef8ca46",
+         "78a03272220ca0972e42ca26211b28b0b4bebb791c113ffbbc2af71be8bc5cb9",
+         "7c955cff785037512e9abdb8e686b665be7cda1e3d1117ff05b7b6a69adff76d",
+         "7d25fc19b2b0fd7acc309568643cbc26dfb6f2da47940c983410e8e2e12ffbb7",
+         "7f403cee11e4836c692d8519af7afb87e1ed8455771a0fc7d3006d937ebcfec3",
+         "811fe3364fe289fc564cae61cbe164c3156d8c656a02aaa8d0e2b9889469b6ca",
+         "88ad0b89f8a7c14b6c48772b3db22aa220831e99793a656bab59edb34d0a59d1",
+         "8945a00849d969f08f179d8653d51b9c57c92647cd32675c8cc509d92d35b468",
+         "8b4546dcf9bdd4784721055dccd73c80837ff24397c8f2c1504871e478d28a99",
+         "8e17a4dc92c639acb1072ad067ddbfc0d5dea69ea7421de732892c0568925c73",
+         "8e91fc91946e479ace83186cb8da132c5b20e43bf3583289fe1dfea6dabcb0c5",
+         "90d654d5eeed1709bec3355874742dda440f04dd2017b8a0a69e75ec04e8d989",
+         "913df411bc5f15cb021c0af263d97b0a5165c1cae1aae8abba1886661bae5643",
+         "9348321fab57321fc639bdf533ce6aeda9d0975302473e3da85e02be69258b3d",
+         "9367d64606e93163fb8d34c892bae4af61e8a0a59b844b093ef3bfdf842b4ea5",
+         "94b687df1aed608b9a3f1b2e2c8c1aace43aecdff7d2e4e5f695289f813a1a40",
+         "96aa4ff4cb1003e402ab53d59a111c8d0d45c0085b7ef9bf14f1a89601d4f543",
+         "97e0dbdcc9a99c4d46df8716bd81586c903755aac6bd754c2060107cf102c7a1",
+         "9b7e3491b45fa144ce55c9af1e45ecf32155cfb0d654894c28ad0c4429e0e4f6",
+         "9be4adaa487f4fd352bd52902b379c1cc2ce009065804c664294930f83462353",
+         "9e7002c06c1dfda28e5f99f4e663382b492ae8bb6ed3c70906f83102bd7af2e8",
+         "a067db9e3f6f3d4366a8c5f4204a22b0dfd47783aa8cf11a518478c379c4aa6d",
+         "a0c459b904820a49438557617fdc6129af2c9c0b04e3507c843753963483ca2d",
+         "a6d44b3e00ccddf1d5ddddebf1c2c46a4ca4de754b97c3966ee2b379d546c586",
+         "a87157fa7c43bdc170cd619d0c873105cc78ee774c9cb083258fa8685064bc73",
+         "ac5fa7301e96ec6e35e70d793eaa18220c5a411a8638c80b4f204e1518f067a0",
+         "ac6410acce2a22b26c685936bcb3df5625ea08ce01fdc67ff216f359680f4a4c",
+         "b0e1daaa6a3e845ceb49ba47ed01e318797d416ac26ed1044fd434efafb91487",
+         "b318e92d739e200199e6c6e9c5a192125b95f50416079b1cb94a8b1812ac1ee2",
+         "b34c810859f80203cf62bce878c08cd868bf69dd6243e1fa2f9cfb5e6fddab13",
+         "b450ffe54db65d0e69a736ddb0b3406202038ddda887d202b0f866f28fc91c6f",
+         "b72875de4533698c476cb5557a72865450e7f1cbe3c4ebac5b5461d5503782ee",
+         "bb79eef945f95d853a7fea650c6226427a372a528c5f07d11457894a2b162090",
+         "bfcad56bee7a1358555fdd09a0dd2fbef62b3937df6faad86ae793562f7a0698",
+         "c4f5091c5ffc4a81fc715e0f17e99f70c6855f8b796c3eb554e764d9cf81d4e1",
+         "c5488b8bacd7b0d3ecb0322682d50906de694729357ade8ace324189d0cdcd8d",
+         "c619a175177697f08544a044a76e358c3b53768aacdeceed2990f3323fe05f7d",
+         "c75a1ecee23ab0d926dcad0a3bb614bd5f62b6b624f43a6b1b6bf78a330a5406",
+         "c9418cd2ac134da59b054a0cab4fd77e7037eb9c7f0cd22bb053eae071d2a566",
+         "c98d4094c67bad043b5c78cbbf184fceb661c29bf9e1a76f9bf7cdd9a9a8f356",
+         "c9d4503e4382cbe538d6ec5818089b4b8f1dfdedccad2631e220f0f03b8138d4",
+         "caaf317c8e0a0fee8eff7aa16b6f1e8c9fa1dd263649674a827874749cdcbb93",
+         "cda3b3396d6f656b78f43cf50b51bafa02c8354189ee11cd933d69984dcb52b5",
+         "d38c9052b67487ecb0dd294b87bf1c7252d06a5949a09f23e7ce6ca802110ae6",
+         "d3aab3ff852f3e742dcc621d849cb93893dec7b051fe452644be91ca16b3e7a5",
+         "d46e288efc262e4c1adf74ec592c8e9bf68faca29dfe51528d6481dddd9f2c40",
+         "d4cdbf03555611eaf93c8b6cd0d28c6f1cf1304bb11a5265393b42cd6f0bd3ab",
+         "d676e0ee154c2b1efaf8309615310360d52c17a44a3a3cfb4883170928aca0f0",
+         "d9070eae800f58391c60acc1ab65c3934591e2318387c90970956f2b01734617",
+         "dad9b710967ff0e9542a191c3b623156514f9eb3e96f03b6bd290df5f9960a90",
+         "de502d7892c097a4301f4d229844e30ae43a4aa0eff9ff80589cd7b9e6c12a35",
+         "dfa9bde711c6d33a4d427eee043f8fea6f5188737e773679664700f39e5a0695",
+         "e6f98352c4a6f05c73416fbb4d3974c09f709278973866c5a3d3fc4aebd3e3c8",
+         "e967a81f3ce252c3341050f144f31db02266599be042a5bca94f4999f5b1fd03",
+         "ed58634ce2ca7ef756bc1a2a4a4b6cdc6f8e1e233d77ca11fcab94cedcb47e51",
+         "f00b2c2fd68dc722d6950fd85fe52da5d1382bc04755fe70988cfcc9308219f2",
+         "f5618f8240f63e113e2a7798ad276720542d5d277ea30724b26886736fb80d43",
+         "f5b1178c0532213ad10666f4ea9332e9c69c328c3cf15ca5d25dc61d819bcc45",
+         "f5ecd62f8c6c4261e77b39ab49b93ea8b6acb9ad6e510698a7e094ca68cdd7e4",
+         "f69aeb87cdfe88d928d433674390f75a02b443aebd5f998929c5f5a3d5cecba5",
+         "f802eac03ceede345455086bd1a8630153a1cd0282bcfbbf9e2837344e210c61",
+         "fa32b43816e25a064f97f998720b8e5d2c18bbe03777637cc9f123b41db33d87",
+         "fdc9b002abc560d01e94ffa9471e1965a52412db630f810faa70acb4df00f8a2",
+         "ff5dac5cf3087afb5e0ea16dee040718e06c0944e606fff5032ad048cf2e5d7b"
+      ],
+      "original_workspace" : ".artifacts/tmp/process-supervisor-tests/fsmgen-AEmXSiLj"
+   },
+   "controls" : [
+      {
+         "expected_diagnostic" : 1,
+         "name" : "duplicate global ownership",
+         "rejected" : 1,
+         "returned_result" : 0
+      },
+      {
+         "expected_diagnostic" : 1,
+         "name" : "admission stale_inode",
+         "rejected" : 1,
+         "returned_result" : 0
+      },
+      {
+         "expected_diagnostic" : 1,
+         "name" : "admission wrong_device",
+         "rejected" : 1,
+         "returned_result" : 0
+      },
+      {
+         "expected_diagnostic" : 1,
+         "name" : "admission extra_field",
+         "rejected" : 1,
+         "returned_result" : 0
+      },
+      {
+         "expected_diagnostic" : 1,
+         "name" : "admission numeric_inode",
+         "rejected" : 1,
+         "returned_result" : 0
+      },
+      {
+         "expected_diagnostic" : 1,
+         "name" : "admission boolean_inode",
+         "rejected" : 1,
+         "returned_result" : 0
+      },
+      {
+         "expected_diagnostic" : 1,
+         "name" : "admission wrong_path",
+         "rejected" : 1,
+         "returned_result" : 0
+      },
+      {
+         "expected_diagnostic" : 1,
+         "name" : "admission missing_tools",
+         "rejected" : 1,
+         "returned_result" : 0
+      },
+      {
+         "expected_diagnostic" : 1,
+         "name" : "admission private_exists",
+         "rejected" : 1,
+         "returned_result" : 0
+      },
+      {
+         "expected_diagnostic" : 1,
+         "name" : "admission private_symlink",
+         "rejected" : 1,
+         "returned_result" : 0
+      },
+      {
+         "expected_diagnostic" : 0,
+         "name" : "admission malformed_global",
+         "rejected" : 1,
+         "returned_result" : 0
+      },
+      {
+         "expected_diagnostic" : 1,
+         "name" : "interruption before_global",
+         "rejected" : 1,
+         "returned_result" : 0
+      },
+      {
+         "expected_diagnostic" : 1,
+         "name" : "interruption after_global",
+         "rejected" : 1,
+         "returned_result" : 0
+      },
+      {
+         "expected_diagnostic" : 1,
+         "name" : "interruption before_private",
+         "rejected" : 1,
+         "returned_result" : 0
+      },
+      {
+         "expected_diagnostic" : 1,
+         "name" : "interruption after_private",
+         "rejected" : 1,
+         "returned_result" : 0
+      },
+      {
+         "expected_diagnostic" : 1,
+         "name" : "closure global_inode",
+         "rejected" : 1,
+         "returned_result" : 0
+      },
+      {
+         "expected_diagnostic" : 1,
+         "name" : "closure private_inode",
+         "rejected" : 1,
+         "returned_result" : 0
+      },
+      {
+         "expected_diagnostic" : 1,
+         "name" : "closure private_bytes",
+         "rejected" : 1,
+         "returned_result" : 0
+      },
+      {
+         "expected_diagnostic" : 1,
+         "name" : "closure workspace_root",
+         "rejected" : 1,
+         "returned_result" : 0
+      },
+      {
+         "expected_diagnostic" : 1,
+         "name" : "closure tools_directory",
+         "rejected" : 1,
+         "returned_result" : 0
+      },
+      {
+         "expected_diagnostic" : 1,
+         "name" : "closure prior_record",
+         "rejected" : 1,
+         "returned_result" : 0
+      },
+      {
+         "expected_diagnostic" : 1,
+         "name" : "closure prior_image",
+         "rejected" : 1,
+         "returned_result" : 0
+      },
+      {
+         "expected_diagnostic" : 1,
+         "name" : "reference capacity before new publication",
+         "rejected" : 1,
+         "returned_result" : 0
+      },
+      {
+         "expected_diagnostic" : 1,
+         "name" : "new image capacity",
+         "rejected" : 1,
+         "returned_result" : 0
+      },
+      {
+         "expected_diagnostic" : 1,
+         "name" : "global without private is not reacquired",
+         "rejected" : 1,
+         "returned_result" : 0
+      },
+      {
+         "expected_diagnostic" : 1,
+         "name" : "extra positional option",
+         "rejected" : 1,
+         "returned_result" : 0
+      },
+      {
+         "expected_diagnostic" : 1,
+         "name" : "oversized image input",
+         "rejected" : 1,
+         "returned_result" : 0
+      },
+      {
+         "expected_diagnostic" : 1,
+         "name" : "direct admission bypass",
+         "rejected" : 1,
+         "returned_result" : 0
+      },
+      {
+         "expected_diagnostic" : 1,
+         "name" : "direct acquisition bypass",
+         "rejected" : 1,
+         "returned_result" : 0
+      },
+      {
+         "expected_diagnostic" : 1,
+         "name" : "direct closure bypass",
+         "rejected" : 1,
+         "returned_result" : 0
+      }
+   ],
+   "different" : {
+      "first" : {
+         "created" : 1,
+         "executable" : null,
+         "image" : {
+            "key" : "efd497b0e847884b3c1cfcde14d8b645991c52ebab90c54e58984ccbc303c146",
+            "snapshots" : [
+               {
+                  "bytes" : "/* inert qualification bytes; never compiled */\n\u0000\u00ff",
+                  "identity" : {
+                     "device" : 16777244,
+                     "inode" : 76921625,
+                     "path" : ".artifacts/tmp/native-proxy-image-custody/cases/fsmgen-X_xBAQxT/images/efd497b0e847884b3c1cfcde14d8b645991c52ebab90c54e58984ccbc303c146/rustup.c",
+                     "sha256" : "a7d92e28ec1c8308e37c6003df167bc42bd2341cf3a69d677f45330271ffba56",
+                     "size_bytes" : 50
+                  }
+               },
+               {
+                  "bytes" : "\u00cf\u00fa\u00ed\u00fe\f\u0000\u0000\u0001\u0000\u0000\u0000\u0000\u0002\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000inert-not-a-program\u0000\u00ff",
+                  "identity" : {
+                     "device" : 16777244,
+                     "inode" : 76921627,
+                     "path" : ".artifacts/tmp/native-proxy-image-custody/cases/fsmgen-X_xBAQxT/images/efd497b0e847884b3c1cfcde14d8b645991c52ebab90c54e58984ccbc303c146/rustup",
+                     "sha256" : "e7f06f27e18528c7d10e8c4a4ab42b5e70d1423cdb80e83048597719c9c7eb67",
+                     "size_bytes" : 53
+                  }
+               },
+               {
+                  "bytes" : "{\"executable\":{\"sha256\":\"e7f06f27e18528c7d10e8c4a4ab42b5e70d1423cdb80e83048597719c9c7eb67\",\"size_bytes\":53},\"generated_c\":{\"sha256\":\"a7d92e28ec1c8308e37c6003df167bc42bd2341cf3a69d677f45330271ffba56\",\"size_bytes\":50},\"key\":\"efd497b0e847884b3c1cfcde14d8b645991c52ebab90c54e58984ccbc303c146\",\"schema\":\"fsmgen.test.rust_proxy_image.v1\"}",
+                  "identity" : {
+                     "device" : 16777244,
+                     "inode" : 76921626,
+                     "path" : ".artifacts/tmp/native-proxy-image-custody/cases/fsmgen-X_xBAQxT/images/efd497b0e847884b3c1cfcde14d8b645991c52ebab90c54e58984ccbc303c146/image.json",
+                     "sha256" : "156ec74edbff95660f5275aca3dca8f675f8398ceff43a243573aee41462efb4",
+                     "size_bytes" : 332
+                  }
+               }
+            ]
+         },
+         "lock" : {
+            "device" : 16777244,
+            "inode" : 76921617,
+            "path" : ".artifacts/tmp/native-proxy-image-custody/cases/fsmgen-X_xBAQxT/coordination.lock"
+         },
+         "reference" : {
+            "global" : {
+               "bytes" : "{\"image_key\":\"efd497b0e847884b3c1cfcde14d8b645991c52ebab90c54e58984ccbc303c146\",\"reference_key\":\"d48228020f89cb80ea7ffd69f225a55349d36d61ded49a1e68877504aa4cd01b\",\"schema\":\"fsmgen.test.rust_proxy_image_reference.v1\",\"selected_sources\":[{\"device\":16777244,\"inode\":76921625,\"path\":\".artifacts/tmp/native-proxy-image-custody/cases/fsmgen-X_xBAQxT/images/efd497b0e847884b3c1cfcde14d8b645991c52ebab90c54e58984ccbc303c146/rustup.c\",\"sha256\":\"a7d92e28ec1c8308e37c6003df167bc42bd2341cf3a69d677f45330271ffba56\",\"size_bytes\":50},{\"device\":16777244,\"inode\":76921627,\"path\":\".artifacts/tmp/native-proxy-image-custody/cases/fsmgen-X_xBAQxT/images/efd497b0e847884b3c1cfcde14d8b645991c52ebab90c54e58984ccbc303c146/rustup\",\"sha256\":\"e7f06f27e18528c7d10e8c4a4ab42b5e70d1423cdb80e83048597719c9c7eb67\",\"size_bytes\":53}],\"workspace\":\".artifacts/tmp/process-supervisor-tests/fsmgen-zSi_3Cqy\",\"workspace_identity\":{\"device\":16777244,\"inode\":76921620,\"path\":\".artifacts/tmp/process-supervisor-tests/fsmgen-zSi_3Cqy\"}}",
+               "identity" : {
+                  "device" : 16777244,
+                  "inode" : 76921628,
+                  "path" : ".artifacts/tmp/native-proxy-image-custody/cases/fsmgen-X_xBAQxT/references/d48228020f89cb80ea7ffd69f225a55349d36d61ded49a1e68877504aa4cd01b.json",
+                  "sha256" : "f6e4f7ba2d0b566b3d18ec671d2b69a281a5d1722826ad79f13de391ed8cfa82",
+                  "size_bytes" : 994
+               }
+            },
+            "private" : {
+               "bytes" : "{\"image_key\":\"efd497b0e847884b3c1cfcde14d8b645991c52ebab90c54e58984ccbc303c146\",\"reference_key\":\"d48228020f89cb80ea7ffd69f225a55349d36d61ded49a1e68877504aa4cd01b\",\"schema\":\"fsmgen.test.rust_proxy_image_reference.v1\",\"selected_sources\":[{\"device\":16777244,\"inode\":76921625,\"path\":\".artifacts/tmp/native-proxy-image-custody/cases/fsmgen-X_xBAQxT/images/efd497b0e847884b3c1cfcde14d8b645991c52ebab90c54e58984ccbc303c146/rustup.c\",\"sha256\":\"a7d92e28ec1c8308e37c6003df167bc42bd2341cf3a69d677f45330271ffba56\",\"size_bytes\":50},{\"device\":16777244,\"inode\":76921627,\"path\":\".artifacts/tmp/native-proxy-image-custody/cases/fsmgen-X_xBAQxT/images/efd497b0e847884b3c1cfcde14d8b645991c52ebab90c54e58984ccbc303c146/rustup\",\"sha256\":\"e7f06f27e18528c7d10e8c4a4ab42b5e70d1423cdb80e83048597719c9c7eb67\",\"size_bytes\":53}],\"workspace\":\".artifacts/tmp/process-supervisor-tests/fsmgen-zSi_3Cqy\",\"workspace_identity\":{\"device\":16777244,\"inode\":76921620,\"path\":\".artifacts/tmp/process-supervisor-tests/fsmgen-zSi_3Cqy\"}}",
+               "identity" : {
+                  "device" : 16777244,
+                  "inode" : 76921629,
+                  "path" : ".artifacts/tmp/process-supervisor-tests/fsmgen-zSi_3Cqy/rust-tools/image-reference.json",
+                  "sha256" : "f6e4f7ba2d0b566b3d18ec671d2b69a281a5d1722826ad79f13de391ed8cfa82",
+                  "size_bytes" : 994
+               }
+            },
+            "record" : {
+               "image_key" : "efd497b0e847884b3c1cfcde14d8b645991c52ebab90c54e58984ccbc303c146",
+               "reference_key" : "d48228020f89cb80ea7ffd69f225a55349d36d61ded49a1e68877504aa4cd01b",
+               "schema" : "fsmgen.test.rust_proxy_image_reference.v1",
+               "selected_sources" : [
+                  {
+                     "device" : 16777244,
+                     "inode" : 76921625,
+                     "path" : ".artifacts/tmp/native-proxy-image-custody/cases/fsmgen-X_xBAQxT/images/efd497b0e847884b3c1cfcde14d8b645991c52ebab90c54e58984ccbc303c146/rustup.c",
+                     "sha256" : "a7d92e28ec1c8308e37c6003df167bc42bd2341cf3a69d677f45330271ffba56",
+                     "size_bytes" : 50
+                  },
+                  {
+                     "device" : 16777244,
+                     "inode" : 76921627,
+                     "path" : ".artifacts/tmp/native-proxy-image-custody/cases/fsmgen-X_xBAQxT/images/efd497b0e847884b3c1cfcde14d8b645991c52ebab90c54e58984ccbc303c146/rustup",
+                     "sha256" : "e7f06f27e18528c7d10e8c4a4ab42b5e70d1423cdb80e83048597719c9c7eb67",
+                     "size_bytes" : 53
+                  }
+               ],
+               "workspace" : ".artifacts/tmp/process-supervisor-tests/fsmgen-zSi_3Cqy",
+               "workspace_identity" : {
+                  "device" : 16777244,
+                  "inode" : 76921620,
+                  "path" : ".artifacts/tmp/process-supervisor-tests/fsmgen-zSi_3Cqy"
+               }
+            }
+         },
+         "runtime_authorized" : 0,
+         "schema" : "fsmgen.inactive_runtime_reference_acquisition.v1"
+      },
+      "second" : {
+         "created" : 1,
+         "executable" : null,
+         "image" : {
+            "key" : "4c76374bc3c80b24a742bc20cbca5fc1a4a9facb2b03cfc2ea4581f9a674bb26",
+            "snapshots" : [
+               {
+                  "bytes" : "/* inert qualification bytes; never compiled */\n\u0000\u00ff",
+                  "identity" : {
+                     "device" : 16777244,
+                     "inode" : 76921631,
+                     "path" : ".artifacts/tmp/native-proxy-image-custody/cases/fsmgen-X_xBAQxT/images/4c76374bc3c80b24a742bc20cbca5fc1a4a9facb2b03cfc2ea4581f9a674bb26/rustup.c",
+                     "sha256" : "a7d92e28ec1c8308e37c6003df167bc42bd2341cf3a69d677f45330271ffba56",
+                     "size_bytes" : 50
+                  }
+               },
+               {
+                  "bytes" : "\u00cf\u00fa\u00ed\u00fe\f\u0000\u0000\u0001\u0000\u0000\u0000\u0000\u0002\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000inert-not-a-program\u0000\u00ffdifferent",
+                  "identity" : {
+                     "device" : 16777244,
+                     "inode" : 76921633,
+                     "path" : ".artifacts/tmp/native-proxy-image-custody/cases/fsmgen-X_xBAQxT/images/4c76374bc3c80b24a742bc20cbca5fc1a4a9facb2b03cfc2ea4581f9a674bb26/rustup",
+                     "sha256" : "86378f5a413eeab5e40fe8c732c92d81acc2b9a8f4dbabf42320b9d7084bd850",
+                     "size_bytes" : 62
+                  }
+               },
+               {
+                  "bytes" : "{\"executable\":{\"sha256\":\"86378f5a413eeab5e40fe8c732c92d81acc2b9a8f4dbabf42320b9d7084bd850\",\"size_bytes\":62},\"generated_c\":{\"sha256\":\"a7d92e28ec1c8308e37c6003df167bc42bd2341cf3a69d677f45330271ffba56\",\"size_bytes\":50},\"key\":\"4c76374bc3c80b24a742bc20cbca5fc1a4a9facb2b03cfc2ea4581f9a674bb26\",\"schema\":\"fsmgen.test.rust_proxy_image.v1\"}",
+                  "identity" : {
+                     "device" : 16777244,
+                     "inode" : 76921632,
+                     "path" : ".artifacts/tmp/native-proxy-image-custody/cases/fsmgen-X_xBAQxT/images/4c76374bc3c80b24a742bc20cbca5fc1a4a9facb2b03cfc2ea4581f9a674bb26/image.json",
+                     "sha256" : "114b83bbc6a7d56580235df3bcfb1d98fde58e848afc2ba5689fbe78b71292b4",
+                     "size_bytes" : 332
+                  }
+               }
+            ]
+         },
+         "lock" : {
+            "device" : 16777244,
+            "inode" : 76921617,
+            "path" : ".artifacts/tmp/native-proxy-image-custody/cases/fsmgen-X_xBAQxT/coordination.lock"
+         },
+         "reference" : {
+            "global" : {
+               "bytes" : "{\"image_key\":\"4c76374bc3c80b24a742bc20cbca5fc1a4a9facb2b03cfc2ea4581f9a674bb26\",\"reference_key\":\"15457c26d880142beea16fcad3f76d3593a422f986920250a52b9c61d33ee6fd\",\"schema\":\"fsmgen.test.rust_proxy_image_reference.v1\",\"selected_sources\":[{\"device\":16777244,\"inode\":76921631,\"path\":\".artifacts/tmp/native-proxy-image-custody/cases/fsmgen-X_xBAQxT/images/4c76374bc3c80b24a742bc20cbca5fc1a4a9facb2b03cfc2ea4581f9a674bb26/rustup.c\",\"sha256\":\"a7d92e28ec1c8308e37c6003df167bc42bd2341cf3a69d677f45330271ffba56\",\"size_bytes\":50},{\"device\":16777244,\"inode\":76921633,\"path\":\".artifacts/tmp/native-proxy-image-custody/cases/fsmgen-X_xBAQxT/images/4c76374bc3c80b24a742bc20cbca5fc1a4a9facb2b03cfc2ea4581f9a674bb26/rustup\",\"sha256\":\"86378f5a413eeab5e40fe8c732c92d81acc2b9a8f4dbabf42320b9d7084bd850\",\"size_bytes\":62}],\"workspace\":\".artifacts/tmp/process-supervisor-tests/fsmgen-2QpyifCE\",\"workspace_identity\":{\"device\":16777244,\"inode\":76921622,\"path\":\".artifacts/tmp/process-supervisor-tests/fsmgen-2QpyifCE\"}}",
+               "identity" : {
+                  "device" : 16777244,
+                  "inode" : 76921634,
+                  "path" : ".artifacts/tmp/native-proxy-image-custody/cases/fsmgen-X_xBAQxT/references/15457c26d880142beea16fcad3f76d3593a422f986920250a52b9c61d33ee6fd.json",
+                  "sha256" : "edc0964fa7945206940326efcfb5e1457b519995999110bcde12d13ffea889ba",
+                  "size_bytes" : 994
+               }
+            },
+            "private" : {
+               "bytes" : "{\"image_key\":\"4c76374bc3c80b24a742bc20cbca5fc1a4a9facb2b03cfc2ea4581f9a674bb26\",\"reference_key\":\"15457c26d880142beea16fcad3f76d3593a422f986920250a52b9c61d33ee6fd\",\"schema\":\"fsmgen.test.rust_proxy_image_reference.v1\",\"selected_sources\":[{\"device\":16777244,\"inode\":76921631,\"path\":\".artifacts/tmp/native-proxy-image-custody/cases/fsmgen-X_xBAQxT/images/4c76374bc3c80b24a742bc20cbca5fc1a4a9facb2b03cfc2ea4581f9a674bb26/rustup.c\",\"sha256\":\"a7d92e28ec1c8308e37c6003df167bc42bd2341cf3a69d677f45330271ffba56\",\"size_bytes\":50},{\"device\":16777244,\"inode\":76921633,\"path\":\".artifacts/tmp/native-proxy-image-custody/cases/fsmgen-X_xBAQxT/images/4c76374bc3c80b24a742bc20cbca5fc1a4a9facb2b03cfc2ea4581f9a674bb26/rustup\",\"sha256\":\"86378f5a413eeab5e40fe8c732c92d81acc2b9a8f4dbabf42320b9d7084bd850\",\"size_bytes\":62}],\"workspace\":\".artifacts/tmp/process-supervisor-tests/fsmgen-2QpyifCE\",\"workspace_identity\":{\"device\":16777244,\"inode\":76921622,\"path\":\".artifacts/tmp/process-supervisor-tests/fsmgen-2QpyifCE\"}}",
+               "identity" : {
+                  "device" : 16777244,
+                  "inode" : 76921635,
+                  "path" : ".artifacts/tmp/process-supervisor-tests/fsmgen-2QpyifCE/rust-tools/image-reference.json",
+                  "sha256" : "edc0964fa7945206940326efcfb5e1457b519995999110bcde12d13ffea889ba",
+                  "size_bytes" : 994
+               }
+            },
+            "record" : {
+               "image_key" : "4c76374bc3c80b24a742bc20cbca5fc1a4a9facb2b03cfc2ea4581f9a674bb26",
+               "reference_key" : "15457c26d880142beea16fcad3f76d3593a422f986920250a52b9c61d33ee6fd",
+               "schema" : "fsmgen.test.rust_proxy_image_reference.v1",
+               "selected_sources" : [
+                  {
+                     "device" : 16777244,
+                     "inode" : 76921631,
+                     "path" : ".artifacts/tmp/native-proxy-image-custody/cases/fsmgen-X_xBAQxT/images/4c76374bc3c80b24a742bc20cbca5fc1a4a9facb2b03cfc2ea4581f9a674bb26/rustup.c",
+                     "sha256" : "a7d92e28ec1c8308e37c6003df167bc42bd2341cf3a69d677f45330271ffba56",
+                     "size_bytes" : 50
+                  },
+                  {
+                     "device" : 16777244,
+                     "inode" : 76921633,
+                     "path" : ".artifacts/tmp/native-proxy-image-custody/cases/fsmgen-X_xBAQxT/images/4c76374bc3c80b24a742bc20cbca5fc1a4a9facb2b03cfc2ea4581f9a674bb26/rustup",
+                     "sha256" : "86378f5a413eeab5e40fe8c732c92d81acc2b9a8f4dbabf42320b9d7084bd850",
+                     "size_bytes" : 62
+                  }
+               ],
+               "workspace" : ".artifacts/tmp/process-supervisor-tests/fsmgen-2QpyifCE",
+               "workspace_identity" : {
+                  "device" : 16777244,
+                  "inode" : 76921622,
+                  "path" : ".artifacts/tmp/process-supervisor-tests/fsmgen-2QpyifCE"
+               }
+            }
+         },
+         "runtime_authorized" : 0,
+         "schema" : "fsmgen.inactive_runtime_reference_acquisition.v1"
+      }
+   },
+   "first" : {
+      "created" : 1,
+      "executable" : null,
+      "image" : {
+         "key" : "efd497b0e847884b3c1cfcde14d8b645991c52ebab90c54e58984ccbc303c146",
+         "snapshots" : [
+            {
+               "bytes" : "/* inert qualification bytes; never compiled */\n\u0000\u00ff",
+               "identity" : {
+                  "device" : 16777244,
+                  "inode" : 76921609,
+                  "path" : ".artifacts/tmp/native-proxy-image-custody/cases/fsmgen-_4taF1tu/images/efd497b0e847884b3c1cfcde14d8b645991c52ebab90c54e58984ccbc303c146/rustup.c",
+                  "sha256" : "a7d92e28ec1c8308e37c6003df167bc42bd2341cf3a69d677f45330271ffba56",
+                  "size_bytes" : 50
+               }
+            },
+            {
+               "bytes" : "\u00cf\u00fa\u00ed\u00fe\f\u0000\u0000\u0001\u0000\u0000\u0000\u0000\u0002\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000inert-not-a-program\u0000\u00ff",
+               "identity" : {
+                  "device" : 16777244,
+                  "inode" : 76921611,
+                  "path" : ".artifacts/tmp/native-proxy-image-custody/cases/fsmgen-_4taF1tu/images/efd497b0e847884b3c1cfcde14d8b645991c52ebab90c54e58984ccbc303c146/rustup",
+                  "sha256" : "e7f06f27e18528c7d10e8c4a4ab42b5e70d1423cdb80e83048597719c9c7eb67",
+                  "size_bytes" : 53
+               }
+            },
+            {
+               "bytes" : "{\"executable\":{\"sha256\":\"e7f06f27e18528c7d10e8c4a4ab42b5e70d1423cdb80e83048597719c9c7eb67\",\"size_bytes\":53},\"generated_c\":{\"sha256\":\"a7d92e28ec1c8308e37c6003df167bc42bd2341cf3a69d677f45330271ffba56\",\"size_bytes\":50},\"key\":\"efd497b0e847884b3c1cfcde14d8b645991c52ebab90c54e58984ccbc303c146\",\"schema\":\"fsmgen.test.rust_proxy_image.v1\"}",
+               "identity" : {
+                  "device" : 16777244,
+                  "inode" : 76921610,
+                  "path" : ".artifacts/tmp/native-proxy-image-custody/cases/fsmgen-_4taF1tu/images/efd497b0e847884b3c1cfcde14d8b645991c52ebab90c54e58984ccbc303c146/image.json",
+                  "sha256" : "156ec74edbff95660f5275aca3dca8f675f8398ceff43a243573aee41462efb4",
+                  "size_bytes" : 332
+               }
+            }
+         ]
+      },
+      "lock" : {
+         "device" : 16777244,
+         "inode" : 76921601,
+         "path" : ".artifacts/tmp/native-proxy-image-custody/cases/fsmgen-_4taF1tu/coordination.lock"
+      },
+      "reference" : {
+         "global" : {
+            "bytes" : "{\"image_key\":\"efd497b0e847884b3c1cfcde14d8b645991c52ebab90c54e58984ccbc303c146\",\"reference_key\":\"6da5bf9722cfb50d3288f7cfc032385db42bb177a0d3a4b191792592f81f1f98\",\"schema\":\"fsmgen.test.rust_proxy_image_reference.v1\",\"selected_sources\":[{\"device\":16777244,\"inode\":76921609,\"path\":\".artifacts/tmp/native-proxy-image-custody/cases/fsmgen-_4taF1tu/images/efd497b0e847884b3c1cfcde14d8b645991c52ebab90c54e58984ccbc303c146/rustup.c\",\"sha256\":\"a7d92e28ec1c8308e37c6003df167bc42bd2341cf3a69d677f45330271ffba56\",\"size_bytes\":50},{\"device\":16777244,\"inode\":76921611,\"path\":\".artifacts/tmp/native-proxy-image-custody/cases/fsmgen-_4taF1tu/images/efd497b0e847884b3c1cfcde14d8b645991c52ebab90c54e58984ccbc303c146/rustup\",\"sha256\":\"e7f06f27e18528c7d10e8c4a4ab42b5e70d1423cdb80e83048597719c9c7eb67\",\"size_bytes\":53}],\"workspace\":\".artifacts/tmp/process-supervisor-tests/fsmgen-fpQWCaXN\",\"workspace_identity\":{\"device\":16777244,\"inode\":76921604,\"path\":\".artifacts/tmp/process-supervisor-tests/fsmgen-fpQWCaXN\"}}",
+            "identity" : {
+               "device" : 16777244,
+               "inode" : 76921612,
+               "path" : ".artifacts/tmp/native-proxy-image-custody/cases/fsmgen-_4taF1tu/references/6da5bf9722cfb50d3288f7cfc032385db42bb177a0d3a4b191792592f81f1f98.json",
+               "sha256" : "d1943948f4e2710ed3cf7c5041b6af68ba1dabee41d8eb81d222eeaf96ddc0fd",
+               "size_bytes" : 994
+            }
+         },
+         "private" : {
+            "bytes" : "{\"image_key\":\"efd497b0e847884b3c1cfcde14d8b645991c52ebab90c54e58984ccbc303c146\",\"reference_key\":\"6da5bf9722cfb50d3288f7cfc032385db42bb177a0d3a4b191792592f81f1f98\",\"schema\":\"fsmgen.test.rust_proxy_image_reference.v1\",\"selected_sources\":[{\"device\":16777244,\"inode\":76921609,\"path\":\".artifacts/tmp/native-proxy-image-custody/cases/fsmgen-_4taF1tu/images/efd497b0e847884b3c1cfcde14d8b645991c52ebab90c54e58984ccbc303c146/rustup.c\",\"sha256\":\"a7d92e28ec1c8308e37c6003df167bc42bd2341cf3a69d677f45330271ffba56\",\"size_bytes\":50},{\"device\":16777244,\"inode\":76921611,\"path\":\".artifacts/tmp/native-proxy-image-custody/cases/fsmgen-_4taF1tu/images/efd497b0e847884b3c1cfcde14d8b645991c52ebab90c54e58984ccbc303c146/rustup\",\"sha256\":\"e7f06f27e18528c7d10e8c4a4ab42b5e70d1423cdb80e83048597719c9c7eb67\",\"size_bytes\":53}],\"workspace\":\".artifacts/tmp/process-supervisor-tests/fsmgen-fpQWCaXN\",\"workspace_identity\":{\"device\":16777244,\"inode\":76921604,\"path\":\".artifacts/tmp/process-supervisor-tests/fsmgen-fpQWCaXN\"}}",
+            "identity" : {
+               "device" : 16777244,
+               "inode" : 76921613,
+               "path" : ".artifacts/tmp/process-supervisor-tests/fsmgen-fpQWCaXN/rust-tools/image-reference.json",
+               "sha256" : "d1943948f4e2710ed3cf7c5041b6af68ba1dabee41d8eb81d222eeaf96ddc0fd",
+               "size_bytes" : 994
+            }
+         },
+         "record" : {
+            "image_key" : "efd497b0e847884b3c1cfcde14d8b645991c52ebab90c54e58984ccbc303c146",
+            "reference_key" : "6da5bf9722cfb50d3288f7cfc032385db42bb177a0d3a4b191792592f81f1f98",
+            "schema" : "fsmgen.test.rust_proxy_image_reference.v1",
+            "selected_sources" : [
+               {
+                  "device" : 16777244,
+                  "inode" : 76921609,
+                  "path" : ".artifacts/tmp/native-proxy-image-custody/cases/fsmgen-_4taF1tu/images/efd497b0e847884b3c1cfcde14d8b645991c52ebab90c54e58984ccbc303c146/rustup.c",
+                  "sha256" : "a7d92e28ec1c8308e37c6003df167bc42bd2341cf3a69d677f45330271ffba56",
+                  "size_bytes" : 50
+               },
+               {
+                  "device" : 16777244,
+                  "inode" : 76921611,
+                  "path" : ".artifacts/tmp/native-proxy-image-custody/cases/fsmgen-_4taF1tu/images/efd497b0e847884b3c1cfcde14d8b645991c52ebab90c54e58984ccbc303c146/rustup",
+                  "sha256" : "e7f06f27e18528c7d10e8c4a4ab42b5e70d1423cdb80e83048597719c9c7eb67",
+                  "size_bytes" : 53
+               }
+            ],
+            "workspace" : ".artifacts/tmp/process-supervisor-tests/fsmgen-fpQWCaXN",
+            "workspace_identity" : {
+               "device" : 16777244,
+               "inode" : 76921604,
+               "path" : ".artifacts/tmp/process-supervisor-tests/fsmgen-fpQWCaXN"
+            }
+         }
+      },
+      "runtime_authorized" : 0,
+      "schema" : "fsmgen.inactive_runtime_reference_acquisition.v1"
+   },
+   "forbidden_process_attempts" : 0,
+   "interruptions" : [
+      {
+         "boundary" : "before_global",
+         "case" : ".artifacts/tmp/native-proxy-image-custody/cases/fsmgen-PqJTSF_n",
+         "global_present" : 0,
+         "private_present" : 0,
+         "workspace" : ".artifacts/tmp/process-supervisor-tests/fsmgen-cBrB6dfv"
+      },
+      {
+         "boundary" : "after_global",
+         "case" : ".artifacts/tmp/native-proxy-image-custody/cases/fsmgen-HRASzsel",
+         "global_bytes" : "{\"image_key\":\"efd497b0e847884b3c1cfcde14d8b645991c52ebab90c54e58984ccbc303c146\",\"reference_key\":\"f6a0e6358d8ccd829fef3d4674ed1589f5867797e1379b2d93cdf62efcb0825e\",\"schema\":\"fsmgen.test.rust_proxy_image_reference.v1\",\"selected_sources\":[{\"device\":16777244,\"inode\":76921741,\"path\":\".artifacts/tmp/native-proxy-image-custody/cases/fsmgen-HRASzsel/images/efd497b0e847884b3c1cfcde14d8b645991c52ebab90c54e58984ccbc303c146/rustup.c\",\"sha256\":\"a7d92e28ec1c8308e37c6003df167bc42bd2341cf3a69d677f45330271ffba56\",\"size_bytes\":50},{\"device\":16777244,\"inode\":76921743,\"path\":\".artifacts/tmp/native-proxy-image-custody/cases/fsmgen-HRASzsel/images/efd497b0e847884b3c1cfcde14d8b645991c52ebab90c54e58984ccbc303c146/rustup\",\"sha256\":\"e7f06f27e18528c7d10e8c4a4ab42b5e70d1423cdb80e83048597719c9c7eb67\",\"size_bytes\":53}],\"workspace\":\".artifacts/tmp/process-supervisor-tests/fsmgen-eZHzj4XE\",\"workspace_identity\":{\"device\":16777244,\"inode\":76921736,\"path\":\".artifacts/tmp/process-supervisor-tests/fsmgen-eZHzj4XE\"}}",
+         "global_present" : 1,
+         "private_present" : 0,
+         "workspace" : ".artifacts/tmp/process-supervisor-tests/fsmgen-eZHzj4XE"
+      },
+      {
+         "boundary" : "before_private",
+         "case" : ".artifacts/tmp/native-proxy-image-custody/cases/fsmgen-IQcUFHFQ",
+         "global_bytes" : "{\"image_key\":\"efd497b0e847884b3c1cfcde14d8b645991c52ebab90c54e58984ccbc303c146\",\"reference_key\":\"9702584dd250c0ea36fd8a95719614a7268d8c38d23b0b2cf1a88b46a55a5a70\",\"schema\":\"fsmgen.test.rust_proxy_image_reference.v1\",\"selected_sources\":[{\"device\":16777244,\"inode\":76921754,\"path\":\".artifacts/tmp/native-proxy-image-custody/cases/fsmgen-IQcUFHFQ/images/efd497b0e847884b3c1cfcde14d8b645991c52ebab90c54e58984ccbc303c146/rustup.c\",\"sha256\":\"a7d92e28ec1c8308e37c6003df167bc42bd2341cf3a69d677f45330271ffba56\",\"size_bytes\":50},{\"device\":16777244,\"inode\":76921756,\"path\":\".artifacts/tmp/native-proxy-image-custody/cases/fsmgen-IQcUFHFQ/images/efd497b0e847884b3c1cfcde14d8b645991c52ebab90c54e58984ccbc303c146/rustup\",\"sha256\":\"e7f06f27e18528c7d10e8c4a4ab42b5e70d1423cdb80e83048597719c9c7eb67\",\"size_bytes\":53}],\"workspace\":\".artifacts/tmp/process-supervisor-tests/fsmgen-iusLhZN6\",\"workspace_identity\":{\"device\":16777244,\"inode\":76921749,\"path\":\".artifacts/tmp/process-supervisor-tests/fsmgen-iusLhZN6\"}}",
+         "global_present" : 1,
+         "private_present" : 0,
+         "workspace" : ".artifacts/tmp/process-supervisor-tests/fsmgen-iusLhZN6"
+      },
+      {
+         "boundary" : "after_private",
+         "case" : ".artifacts/tmp/native-proxy-image-custody/cases/fsmgen-tCnu7QyQ",
+         "global_bytes" : "{\"image_key\":\"efd497b0e847884b3c1cfcde14d8b645991c52ebab90c54e58984ccbc303c146\",\"reference_key\":\"2a5e36777a71d81796abbbdf0262b73cd4c2837da06b7649b4739545c3b602e5\",\"schema\":\"fsmgen.test.rust_proxy_image_reference.v1\",\"selected_sources\":[{\"device\":16777244,\"inode\":76921767,\"path\":\".artifacts/tmp/native-proxy-image-custody/cases/fsmgen-tCnu7QyQ/images/efd497b0e847884b3c1cfcde14d8b645991c52ebab90c54e58984ccbc303c146/rustup.c\",\"sha256\":\"a7d92e28ec1c8308e37c6003df167bc42bd2341cf3a69d677f45330271ffba56\",\"size_bytes\":50},{\"device\":16777244,\"inode\":76921769,\"path\":\".artifacts/tmp/native-proxy-image-custody/cases/fsmgen-tCnu7QyQ/images/efd497b0e847884b3c1cfcde14d8b645991c52ebab90c54e58984ccbc303c146/rustup\",\"sha256\":\"e7f06f27e18528c7d10e8c4a4ab42b5e70d1423cdb80e83048597719c9c7eb67\",\"size_bytes\":53}],\"workspace\":\".artifacts/tmp/process-supervisor-tests/fsmgen-RgU0GcUJ\",\"workspace_identity\":{\"device\":16777244,\"inode\":76921762,\"path\":\".artifacts/tmp/process-supervisor-tests/fsmgen-RgU0GcUJ\"}}",
+         "global_present" : 1,
+         "private_bytes" : "{\"image_key\":\"efd497b0e847884b3c1cfcde14d8b645991c52ebab90c54e58984ccbc303c146\",\"reference_key\":\"2a5e36777a71d81796abbbdf0262b73cd4c2837da06b7649b4739545c3b602e5\",\"schema\":\"fsmgen.test.rust_proxy_image_reference.v1\",\"selected_sources\":[{\"device\":16777244,\"inode\":76921767,\"path\":\".artifacts/tmp/native-proxy-image-custody/cases/fsmgen-tCnu7QyQ/images/efd497b0e847884b3c1cfcde14d8b645991c52ebab90c54e58984ccbc303c146/rustup.c\",\"sha256\":\"a7d92e28ec1c8308e37c6003df167bc42bd2341cf3a69d677f45330271ffba56\",\"size_bytes\":50},{\"device\":16777244,\"inode\":76921769,\"path\":\".artifacts/tmp/native-proxy-image-custody/cases/fsmgen-tCnu7QyQ/images/efd497b0e847884b3c1cfcde14d8b645991c52ebab90c54e58984ccbc303c146/rustup\",\"sha256\":\"e7f06f27e18528c7d10e8c4a4ab42b5e70d1423cdb80e83048597719c9c7eb67\",\"size_bytes\":53}],\"workspace\":\".artifacts/tmp/process-supervisor-tests/fsmgen-RgU0GcUJ\",\"workspace_identity\":{\"device\":16777244,\"inode\":76921762,\"path\":\".artifacts/tmp/process-supervisor-tests/fsmgen-RgU0GcUJ\"}}",
+         "private_present" : 1,
+         "workspace" : ".artifacts/tmp/process-supervisor-tests/fsmgen-RgU0GcUJ"
+      }
+   ],
+   "mutants" : [
+      {
+         "accepted" : {
+            "created" : 1,
+            "executable" : null,
+            "image" : {
+               "key" : "efd497b0e847884b3c1cfcde14d8b645991c52ebab90c54e58984ccbc303c146",
+               "snapshots" : [
+                  {
+                     "bytes" : "/* inert qualification bytes; never compiled */\n\u0000\u00ff",
+                     "identity" : {
+                        "device" : 16777244,
+                        "inode" : 76922124,
+                        "path" : ".artifacts/tmp/native-proxy-image-custody/cases/fsmgen-ROxVyQm7/images/efd497b0e847884b3c1cfcde14d8b645991c52ebab90c54e58984ccbc303c146/rustup.c",
+                        "sha256" : "a7d92e28ec1c8308e37c6003df167bc42bd2341cf3a69d677f45330271ffba56",
+                        "size_bytes" : 50
+                     }
+                  },
+                  {
+                     "bytes" : "\u00cf\u00fa\u00ed\u00fe\f\u0000\u0000\u0001\u0000\u0000\u0000\u0000\u0002\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000inert-not-a-program\u0000\u00ff",
+                     "identity" : {
+                        "device" : 16777244,
+                        "inode" : 76922126,
+                        "path" : ".artifacts/tmp/native-proxy-image-custody/cases/fsmgen-ROxVyQm7/images/efd497b0e847884b3c1cfcde14d8b645991c52ebab90c54e58984ccbc303c146/rustup",
+                        "sha256" : "e7f06f27e18528c7d10e8c4a4ab42b5e70d1423cdb80e83048597719c9c7eb67",
+                        "size_bytes" : 53
+                     }
+                  },
+                  {
+                     "bytes" : "{\"executable\":{\"sha256\":\"e7f06f27e18528c7d10e8c4a4ab42b5e70d1423cdb80e83048597719c9c7eb67\",\"size_bytes\":53},\"generated_c\":{\"sha256\":\"a7d92e28ec1c8308e37c6003df167bc42bd2341cf3a69d677f45330271ffba56\",\"size_bytes\":50},\"key\":\"efd497b0e847884b3c1cfcde14d8b645991c52ebab90c54e58984ccbc303c146\",\"schema\":\"fsmgen.test.rust_proxy_image.v1\"}",
+                     "identity" : {
+                        "device" : 16777244,
+                        "inode" : 76922125,
+                        "path" : ".artifacts/tmp/native-proxy-image-custody/cases/fsmgen-ROxVyQm7/images/efd497b0e847884b3c1cfcde14d8b645991c52ebab90c54e58984ccbc303c146/image.json",
+                        "sha256" : "156ec74edbff95660f5275aca3dca8f675f8398ceff43a243573aee41462efb4",
+                        "size_bytes" : 332
+                     }
+                  }
+               ]
+            },
+            "lock" : {
+               "device" : 16777244,
+               "inode" : 76922116,
+               "path" : ".artifacts/tmp/native-proxy-image-custody/cases/fsmgen-ROxVyQm7/coordination.lock"
+            },
+            "reference" : {
+               "global" : {
+                  "bytes" : "{\"image_key\":\"efd497b0e847884b3c1cfcde14d8b645991c52ebab90c54e58984ccbc303c146\",\"reference_key\":\"16d87a4568cbac5a036485f91d9fca74f6795ff7a2feac83b0b647aa4dff9209\",\"schema\":\"fsmgen.test.rust_proxy_image_reference.v1\",\"selected_sources\":[{\"device\":16777244,\"inode\":76922124,\"path\":\".artifacts/tmp/native-proxy-image-custody/cases/fsmgen-ROxVyQm7/images/efd497b0e847884b3c1cfcde14d8b645991c52ebab90c54e58984ccbc303c146/rustup.c\",\"sha256\":\"a7d92e28ec1c8308e37c6003df167bc42bd2341cf3a69d677f45330271ffba56\",\"size_bytes\":50},{\"device\":16777244,\"inode\":76922126,\"path\":\".artifacts/tmp/native-proxy-image-custody/cases/fsmgen-ROxVyQm7/images/efd497b0e847884b3c1cfcde14d8b645991c52ebab90c54e58984ccbc303c146/rustup\",\"sha256\":\"e7f06f27e18528c7d10e8c4a4ab42b5e70d1423cdb80e83048597719c9c7eb67\",\"size_bytes\":53}],\"workspace\":\".artifacts/tmp/process-supervisor-tests/fsmgen-lzVmlWox\",\"workspace_identity\":{\"device\":16777244,\"inode\":76922119,\"path\":\".artifacts/tmp/process-supervisor-tests/fsmgen-lzVmlWox\"}}",
+                  "identity" : {
+                     "device" : 16777244,
+                     "inode" : 76922127,
+                     "path" : ".artifacts/tmp/native-proxy-image-custody/cases/fsmgen-ROxVyQm7/references/16d87a4568cbac5a036485f91d9fca74f6795ff7a2feac83b0b647aa4dff9209.json",
+                     "sha256" : "9d963314d047b5e21c1630fc62fc0ba515ba7c1ed759364ea3c4faf36b7897b9",
+                     "size_bytes" : 994
+                  }
+               },
+               "private" : {
+                  "bytes" : "{\"image_key\":\"efd497b0e847884b3c1cfcde14d8b645991c52ebab90c54e58984ccbc303c146\",\"reference_key\":\"16d87a4568cbac5a036485f91d9fca74f6795ff7a2feac83b0b647aa4dff9209\",\"schema\":\"fsmgen.test.rust_proxy_image_reference.v1\",\"selected_sources\":[{\"device\":16777244,\"inode\":76922124,\"path\":\".artifacts/tmp/native-proxy-image-custody/cases/fsmgen-ROxVyQm7/images/efd497b0e847884b3c1cfcde14d8b645991c52ebab90c54e58984ccbc303c146/rustup.c\",\"sha256\":\"a7d92e28ec1c8308e37c6003df167bc42bd2341cf3a69d677f45330271ffba56\",\"size_bytes\":50},{\"device\":16777244,\"inode\":76922126,\"path\":\".artifacts/tmp/native-proxy-image-custody/cases/fsmgen-ROxVyQm7/images/efd497b0e847884b3c1cfcde14d8b645991c52ebab90c54e58984ccbc303c146/rustup\",\"sha256\":\"e7f06f27e18528c7d10e8c4a4ab42b5e70d1423cdb80e83048597719c9c7eb67\",\"size_bytes\":53}],\"workspace\":\".artifacts/tmp/process-supervisor-tests/fsmgen-lzVmlWox\",\"workspace_identity\":{\"device\":16777244,\"inode\":76922119,\"path\":\".artifacts/tmp/process-supervisor-tests/fsmgen-lzVmlWox\"}}",
+                  "identity" : {
+                     "device" : 16777244,
+                     "inode" : 76922128,
+                     "path" : ".artifacts/tmp/process-supervisor-tests/fsmgen-lzVmlWox/rust-tools/image-reference.json",
+                     "sha256" : "9d963314d047b5e21c1630fc62fc0ba515ba7c1ed759364ea3c4faf36b7897b9",
+                     "size_bytes" : 994
+                  }
+               },
+               "record" : {
+                  "image_key" : "efd497b0e847884b3c1cfcde14d8b645991c52ebab90c54e58984ccbc303c146",
+                  "reference_key" : "16d87a4568cbac5a036485f91d9fca74f6795ff7a2feac83b0b647aa4dff9209",
+                  "schema" : "fsmgen.test.rust_proxy_image_reference.v1",
+                  "selected_sources" : [
+                     {
+                        "device" : 16777244,
+                        "inode" : 76922124,
+                        "path" : ".artifacts/tmp/native-proxy-image-custody/cases/fsmgen-ROxVyQm7/images/efd497b0e847884b3c1cfcde14d8b645991c52ebab90c54e58984ccbc303c146/rustup.c",
+                        "sha256" : "a7d92e28ec1c8308e37c6003df167bc42bd2341cf3a69d677f45330271ffba56",
+                        "size_bytes" : 50
+                     },
+                     {
+                        "device" : 16777244,
+                        "inode" : 76922126,
+                        "path" : ".artifacts/tmp/native-proxy-image-custody/cases/fsmgen-ROxVyQm7/images/efd497b0e847884b3c1cfcde14d8b645991c52ebab90c54e58984ccbc303c146/rustup",
+                        "sha256" : "e7f06f27e18528c7d10e8c4a4ab42b5e70d1423cdb80e83048597719c9c7eb67",
+                        "size_bytes" : 53
+                     }
+                  ],
+                  "workspace" : ".artifacts/tmp/process-supervisor-tests/fsmgen-lzVmlWox",
+                  "workspace_identity" : {
+                     "device" : 16777244,
+                     "inode" : 76922119,
+                     "path" : ".artifacts/tmp/process-supervisor-tests/fsmgen-lzVmlWox"
+                  }
+               }
+            },
+            "runtime_authorized" : 0,
+            "schema" : "fsmgen.inactive_runtime_reference_acquisition.v1"
+         },
+         "current_workspace" : {
+            "device" : 16777244,
+            "inode" : 76922129,
+            "path" : ".artifacts/tmp/process-supervisor-tests/fsmgen-lzVmlWox"
+         },
+         "kind" : "workspace_closure"
+      },
+      {
+         "accepted" : {
+            "created" : 1,
+            "executable" : null,
+            "image" : {
+               "key" : "efd497b0e847884b3c1cfcde14d8b645991c52ebab90c54e58984ccbc303c146",
+               "snapshots" : [
+                  {
+                     "bytes" : "/* inert qualification bytes; never compiled */\n\u0000\u00ff",
+                     "identity" : {
+                        "device" : 16777244,
+                        "inode" : 76922139,
+                        "path" : ".artifacts/tmp/native-proxy-image-custody/cases/fsmgen-wEhet8Q7/images/efd497b0e847884b3c1cfcde14d8b645991c52ebab90c54e58984ccbc303c146/rustup.c",
+                        "sha256" : "a7d92e28ec1c8308e37c6003df167bc42bd2341cf3a69d677f45330271ffba56",
+                        "size_bytes" : 50
+                     }
+                  },
+                  {
+                     "bytes" : "\u00cf\u00fa\u00ed\u00fe\f\u0000\u0000\u0001\u0000\u0000\u0000\u0000\u0002\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000inert-not-a-program\u0000\u00ff",
+                     "identity" : {
+                        "device" : 16777244,
+                        "inode" : 76922141,
+                        "path" : ".artifacts/tmp/native-proxy-image-custody/cases/fsmgen-wEhet8Q7/images/efd497b0e847884b3c1cfcde14d8b645991c52ebab90c54e58984ccbc303c146/rustup",
+                        "sha256" : "e7f06f27e18528c7d10e8c4a4ab42b5e70d1423cdb80e83048597719c9c7eb67",
+                        "size_bytes" : 53
+                     }
+                  },
+                  {
+                     "bytes" : "{\"executable\":{\"sha256\":\"e7f06f27e18528c7d10e8c4a4ab42b5e70d1423cdb80e83048597719c9c7eb67\",\"size_bytes\":53},\"generated_c\":{\"sha256\":\"a7d92e28ec1c8308e37c6003df167bc42bd2341cf3a69d677f45330271ffba56\",\"size_bytes\":50},\"key\":\"efd497b0e847884b3c1cfcde14d8b645991c52ebab90c54e58984ccbc303c146\",\"schema\":\"fsmgen.test.rust_proxy_image.v1\"}",
+                     "identity" : {
+                        "device" : 16777244,
+                        "inode" : 76922140,
+                        "path" : ".artifacts/tmp/native-proxy-image-custody/cases/fsmgen-wEhet8Q7/images/efd497b0e847884b3c1cfcde14d8b645991c52ebab90c54e58984ccbc303c146/image.json",
+                        "sha256" : "156ec74edbff95660f5275aca3dca8f675f8398ceff43a243573aee41462efb4",
+                        "size_bytes" : 332
+                     }
+                  }
+               ]
+            },
+            "lock" : {
+               "device" : 16777244,
+               "inode" : 76922131,
+               "path" : ".artifacts/tmp/native-proxy-image-custody/cases/fsmgen-wEhet8Q7/coordination.lock"
+            },
+            "reference" : {
+               "global" : {
+                  "bytes" : "{\"image_key\":\"efd497b0e847884b3c1cfcde14d8b645991c52ebab90c54e58984ccbc303c146\",\"reference_key\":\"306998341a8587f27e9d85cfaa9195f3374959e9441923a23f5fc5792dd8730e\",\"schema\":\"fsmgen.test.rust_proxy_image_reference.v1\",\"selected_sources\":[{\"device\":16777244,\"inode\":76922139,\"path\":\".artifacts/tmp/native-proxy-image-custody/cases/fsmgen-wEhet8Q7/images/efd497b0e847884b3c1cfcde14d8b645991c52ebab90c54e58984ccbc303c146/rustup.c\",\"sha256\":\"a7d92e28ec1c8308e37c6003df167bc42bd2341cf3a69d677f45330271ffba56\",\"size_bytes\":50},{\"device\":16777244,\"inode\":76922141,\"path\":\".artifacts/tmp/native-proxy-image-custody/cases/fsmgen-wEhet8Q7/images/efd497b0e847884b3c1cfcde14d8b645991c52ebab90c54e58984ccbc303c146/rustup\",\"sha256\":\"e7f06f27e18528c7d10e8c4a4ab42b5e70d1423cdb80e83048597719c9c7eb67\",\"size_bytes\":53}],\"workspace\":\".artifacts/tmp/process-supervisor-tests/fsmgen-GtUE3PMV\",\"workspace_identity\":{\"device\":16777244,\"inode\":76922134,\"path\":\".artifacts/tmp/process-supervisor-tests/fsmgen-GtUE3PMV\"}}",
+                  "identity" : {
+                     "device" : 16777244,
+                     "inode" : 76922142,
+                     "path" : ".artifacts/tmp/native-proxy-image-custody/cases/fsmgen-wEhet8Q7/references/306998341a8587f27e9d85cfaa9195f3374959e9441923a23f5fc5792dd8730e.json",
+                     "sha256" : "edc98a780d36d28f66e42d46449c1daa408ae2daa2c9f5b70e1de1f171ec23cc",
+                     "size_bytes" : 994
+                  }
+               },
+               "private" : {
+                  "bytes" : "{\"image_key\":\"efd497b0e847884b3c1cfcde14d8b645991c52ebab90c54e58984ccbc303c146\",\"reference_key\":\"306998341a8587f27e9d85cfaa9195f3374959e9441923a23f5fc5792dd8730e\",\"schema\":\"fsmgen.test.rust_proxy_image_reference.v1\",\"selected_sources\":[{\"device\":16777244,\"inode\":76922139,\"path\":\".artifacts/tmp/native-proxy-image-custody/cases/fsmgen-wEhet8Q7/images/efd497b0e847884b3c1cfcde14d8b645991c52ebab90c54e58984ccbc303c146/rustup.c\",\"sha256\":\"a7d92e28ec1c8308e37c6003df167bc42bd2341cf3a69d677f45330271ffba56\",\"size_bytes\":50},{\"device\":16777244,\"inode\":76922141,\"path\":\".artifacts/tmp/native-proxy-image-custody/cases/fsmgen-wEhet8Q7/images/efd497b0e847884b3c1cfcde14d8b645991c52ebab90c54e58984ccbc303c146/rustup\",\"sha256\":\"e7f06f27e18528c7d10e8c4a4ab42b5e70d1423cdb80e83048597719c9c7eb67\",\"size_bytes\":53}],\"workspace\":\".artifacts/tmp/process-supervisor-tests/fsmgen-GtUE3PMV\",\"workspace_identity\":{\"device\":16777244,\"inode\":76922134,\"path\":\".artifacts/tmp/process-supervisor-tests/fsmgen-GtUE3PMV\"}}",
+                  "identity" : {
+                     "device" : 16777244,
+                     "inode" : 76922144,
+                     "path" : ".artifacts/tmp/process-supervisor-tests/fsmgen-GtUE3PMV/rust-tools/image-reference.json",
+                     "sha256" : "edc98a780d36d28f66e42d46449c1daa408ae2daa2c9f5b70e1de1f171ec23cc",
+                     "size_bytes" : 994
+                  }
+               },
+               "record" : {
+                  "image_key" : "efd497b0e847884b3c1cfcde14d8b645991c52ebab90c54e58984ccbc303c146",
+                  "reference_key" : "306998341a8587f27e9d85cfaa9195f3374959e9441923a23f5fc5792dd8730e",
+                  "schema" : "fsmgen.test.rust_proxy_image_reference.v1",
+                  "selected_sources" : [
+                     {
+                        "device" : 16777244,
+                        "inode" : 76922139,
+                        "path" : ".artifacts/tmp/native-proxy-image-custody/cases/fsmgen-wEhet8Q7/images/efd497b0e847884b3c1cfcde14d8b645991c52ebab90c54e58984ccbc303c146/rustup.c",
+                        "sha256" : "a7d92e28ec1c8308e37c6003df167bc42bd2341cf3a69d677f45330271ffba56",
+                        "size_bytes" : 50
+                     },
+                     {
+                        "device" : 16777244,
+                        "inode" : 76922141,
+                        "path" : ".artifacts/tmp/native-proxy-image-custody/cases/fsmgen-wEhet8Q7/images/efd497b0e847884b3c1cfcde14d8b645991c52ebab90c54e58984ccbc303c146/rustup",
+                        "sha256" : "e7f06f27e18528c7d10e8c4a4ab42b5e70d1423cdb80e83048597719c9c7eb67",
+                        "size_bytes" : 53
+                     }
+                  ],
+                  "workspace" : ".artifacts/tmp/process-supervisor-tests/fsmgen-GtUE3PMV",
+                  "workspace_identity" : {
+                     "device" : 16777244,
+                     "inode" : 76922134,
+                     "path" : ".artifacts/tmp/process-supervisor-tests/fsmgen-GtUE3PMV"
+                  }
+               }
+            },
+            "runtime_authorized" : 0,
+            "schema" : "fsmgen.inactive_runtime_reference_acquisition.v1"
+         },
+         "kind" : "sealed_identity",
+         "original_private_identity" : {
+            "device" : 16777244,
+            "inode" : 76922143
+         }
+      }
+   ],
+   "retired_cases" : [
+      ".artifacts/tmp/native-proxy-image-custody/cases/fsmgen-_4taF1tu",
+      ".artifacts/tmp/native-proxy-image-custody/cases/fsmgen-X_xBAQxT",
+      ".artifacts/tmp/native-proxy-image-custody/cases/fsmgen-YSV6aQsH",
+      ".artifacts/tmp/native-proxy-image-custody/cases/fsmgen-6z9dFpgG",
+      ".artifacts/tmp/native-proxy-image-custody/cases/fsmgen-tYvtrj3a",
+      ".artifacts/tmp/native-proxy-image-custody/cases/fsmgen-J_ssVDVv",
+      ".artifacts/tmp/native-proxy-image-custody/cases/fsmgen-6q4VIJLN",
+      ".artifacts/tmp/native-proxy-image-custody/cases/fsmgen-5moeoBXZ",
+      ".artifacts/tmp/native-proxy-image-custody/cases/fsmgen-2gXH7NBA",
+      ".artifacts/tmp/native-proxy-image-custody/cases/fsmgen-RDZH0x9e",
+      ".artifacts/tmp/native-proxy-image-custody/cases/fsmgen-KuFlV9N8",
+      ".artifacts/tmp/native-proxy-image-custody/cases/fsmgen-8q4OzFyr",
+      ".artifacts/tmp/native-proxy-image-custody/cases/fsmgen-PqJTSF_n",
+      ".artifacts/tmp/native-proxy-image-custody/cases/fsmgen-HRASzsel",
+      ".artifacts/tmp/native-proxy-image-custody/cases/fsmgen-IQcUFHFQ",
+      ".artifacts/tmp/native-proxy-image-custody/cases/fsmgen-tCnu7QyQ",
+      ".artifacts/tmp/native-proxy-image-custody/cases/fsmgen-J5gu8xcQ",
+      ".artifacts/tmp/native-proxy-image-custody/cases/fsmgen-OnE6bdbv",
+      ".artifacts/tmp/native-proxy-image-custody/cases/fsmgen-eJQSgTck",
+      ".artifacts/tmp/native-proxy-image-custody/cases/fsmgen-RnS_kQnW",
+      ".artifacts/tmp/native-proxy-image-custody/cases/fsmgen-NXviyYKi",
+      ".artifacts/tmp/native-proxy-image-custody/cases/fsmgen-a9wnGJZN",
+      ".artifacts/tmp/native-proxy-image-custody/cases/fsmgen-aCYhJPUR",
+      ".artifacts/tmp/native-proxy-image-custody/cases/fsmgen-TgjHZ1De",
+      ".artifacts/tmp/native-proxy-image-custody/cases/fsmgen-PXqeB_RX",
+      ".artifacts/tmp/native-proxy-image-custody/cases/fsmgen-wHCU5EJE",
+      ".artifacts/tmp/native-proxy-image-custody/cases/fsmgen-ROxVyQm7",
+      ".artifacts/tmp/native-proxy-image-custody/cases/fsmgen-wEhet8Q7"
+   ],
+   "retired_workspaces" : [
+      ".artifacts/tmp/process-supervisor-tests/fsmgen-fpQWCaXN",
+      ".artifacts/tmp/process-supervisor-tests/fsmgen-ALjAH_ko",
+      ".artifacts/tmp/process-supervisor-tests/fsmgen-zSi_3Cqy",
+      ".artifacts/tmp/process-supervisor-tests/fsmgen-2QpyifCE",
+      ".artifacts/tmp/process-supervisor-tests/fsmgen-U3tbyirL",
+      ".artifacts/tmp/process-supervisor-tests/fsmgen-qL_tcnAR",
+      ".artifacts/tmp/process-supervisor-tests/fsmgen-axx39fIp",
+      ".artifacts/tmp/process-supervisor-tests/fsmgen-ZX9vdJch",
+      ".artifacts/tmp/process-supervisor-tests/fsmgen-rKwSTnYR",
+      ".artifacts/tmp/process-supervisor-tests/fsmgen-1opSzlgE",
+      ".artifacts/tmp/process-supervisor-tests/fsmgen-mr8_7HPN",
+      ".artifacts/tmp/process-supervisor-tests/fsmgen-w5cLUxgV",
+      ".artifacts/tmp/process-supervisor-tests/fsmgen-DaimGzU4",
+      ".artifacts/tmp/process-supervisor-tests/fsmgen-hCraIWYL",
+      ".artifacts/tmp/process-supervisor-tests/fsmgen-DIZmpsmM",
+      ".artifacts/tmp/process-supervisor-tests/fsmgen-fyTgo_0q",
+      ".artifacts/tmp/process-supervisor-tests/fsmgen-5_zEgx1S",
+      ".artifacts/tmp/process-supervisor-tests/fsmgen-PSqHNL0g",
+      ".artifacts/tmp/process-supervisor-tests/fsmgen-I0deiYpg",
+      ".artifacts/tmp/process-supervisor-tests/fsmgen-XoAFsclb",
+      ".artifacts/tmp/process-supervisor-tests/fsmgen-PBWtph2O",
+      ".artifacts/tmp/process-supervisor-tests/fsmgen-zh9kh3Zb",
+      ".artifacts/tmp/process-supervisor-tests/fsmgen-KzPGDPFh",
+      ".artifacts/tmp/process-supervisor-tests/fsmgen-x3C4hiTW",
+      ".artifacts/tmp/process-supervisor-tests/fsmgen-cBrB6dfv",
+      ".artifacts/tmp/process-supervisor-tests/fsmgen-8nz0h_r7",
+      ".artifacts/tmp/process-supervisor-tests/fsmgen-eZHzj4XE",
+      ".artifacts/tmp/process-supervisor-tests/fsmgen-PmtS6VTY",
+      ".artifacts/tmp/process-supervisor-tests/fsmgen-iusLhZN6",
+      ".artifacts/tmp/process-supervisor-tests/fsmgen-U0yugFdO",
+      ".artifacts/tmp/process-supervisor-tests/fsmgen-RgU0GcUJ",
+      ".artifacts/tmp/process-supervisor-tests/fsmgen-o0kDSUJX",
+      ".artifacts/tmp/process-supervisor-tests/fsmgen-EYP0oVDo",
+      ".artifacts/tmp/process-supervisor-tests/fsmgen-M5hFBsjI",
+      ".artifacts/tmp/process-supervisor-tests/fsmgen-8fDwFUQj",
+      ".artifacts/tmp/process-supervisor-tests/fsmgen-3YPnowIm",
+      ".artifacts/tmp/process-supervisor-tests/fsmgen-YuszXGXe",
+      ".artifacts/tmp/process-supervisor-tests/fsmgen-QhXqUAmK",
+      ".artifacts/tmp/process-supervisor-tests/fsmgen-Q44YrVio",
+      ".artifacts/tmp/process-supervisor-tests/fsmgen-K322H7pX",
+      ".artifacts/tmp/process-supervisor-tests/fsmgen-2YEyhDBs",
+      ".artifacts/tmp/process-supervisor-tests/fsmgen-UAqoRJz8",
+      ".artifacts/tmp/process-supervisor-tests/fsmgen-gLpYybXJ",
+      ".artifacts/tmp/process-supervisor-tests/fsmgen-CRxYDIQ2",
+      ".artifacts/tmp/process-supervisor-tests/fsmgen-VkDAEs5o",
+      ".artifacts/tmp/process-supervisor-tests/fsmgen-gn4j2GUY",
+      ".artifacts/tmp/process-supervisor-tests/fsmgen-7SuzpyC1",
+      ".artifacts/tmp/process-supervisor-tests/fsmgen-AEmXSiLj",
+      ".artifacts/tmp/process-supervisor-tests/fsmgen-1MQLeoeu",
+      ".artifacts/tmp/process-supervisor-tests/fsmgen-tBjGMWov",
+      ".artifacts/tmp/process-supervisor-tests/fsmgen-hGzIfQTK",
+      ".artifacts/tmp/process-supervisor-tests/fsmgen-HBOZFbQ6",
+      ".artifacts/tmp/process-supervisor-tests/fsmgen-lzVmlWox",
+      ".artifacts/tmp/process-supervisor-tests/fsmgen-CX46kofp",
+      ".artifacts/tmp/process-supervisor-tests/fsmgen-GtUE3PMV",
+      ".artifacts/tmp/process-supervisor-tests/fsmgen-JMNsN0Hn"
+   ],
+   "reuse" : {
+      "created" : 0,
+      "executable" : null,
+      "image" : {
+         "key" : "efd497b0e847884b3c1cfcde14d8b645991c52ebab90c54e58984ccbc303c146",
+         "snapshots" : [
+            {
+               "bytes" : "/* inert qualification bytes; never compiled */\n\u0000\u00ff",
+               "identity" : {
+                  "device" : 16777244,
+                  "inode" : 76921609,
+                  "path" : ".artifacts/tmp/native-proxy-image-custody/cases/fsmgen-_4taF1tu/images/efd497b0e847884b3c1cfcde14d8b645991c52ebab90c54e58984ccbc303c146/rustup.c",
+                  "sha256" : "a7d92e28ec1c8308e37c6003df167bc42bd2341cf3a69d677f45330271ffba56",
+                  "size_bytes" : 50
+               }
+            },
+            {
+               "bytes" : "\u00cf\u00fa\u00ed\u00fe\f\u0000\u0000\u0001\u0000\u0000\u0000\u0000\u0002\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000inert-not-a-program\u0000\u00ff",
+               "identity" : {
+                  "device" : 16777244,
+                  "inode" : 76921611,
+                  "path" : ".artifacts/tmp/native-proxy-image-custody/cases/fsmgen-_4taF1tu/images/efd497b0e847884b3c1cfcde14d8b645991c52ebab90c54e58984ccbc303c146/rustup",
+                  "sha256" : "e7f06f27e18528c7d10e8c4a4ab42b5e70d1423cdb80e83048597719c9c7eb67",
+                  "size_bytes" : 53
+               }
+            },
+            {
+               "bytes" : "{\"executable\":{\"sha256\":\"e7f06f27e18528c7d10e8c4a4ab42b5e70d1423cdb80e83048597719c9c7eb67\",\"size_bytes\":53},\"generated_c\":{\"sha256\":\"a7d92e28ec1c8308e37c6003df167bc42bd2341cf3a69d677f45330271ffba56\",\"size_bytes\":50},\"key\":\"efd497b0e847884b3c1cfcde14d8b645991c52ebab90c54e58984ccbc303c146\",\"schema\":\"fsmgen.test.rust_proxy_image.v1\"}",
+               "identity" : {
+                  "device" : 16777244,
+                  "inode" : 76921610,
+                  "path" : ".artifacts/tmp/native-proxy-image-custody/cases/fsmgen-_4taF1tu/images/efd497b0e847884b3c1cfcde14d8b645991c52ebab90c54e58984ccbc303c146/image.json",
+                  "sha256" : "156ec74edbff95660f5275aca3dca8f675f8398ceff43a243573aee41462efb4",
+                  "size_bytes" : 332
+               }
+            }
+         ]
+      },
+      "lock" : {
+         "device" : 16777244,
+         "inode" : 76921601,
+         "path" : ".artifacts/tmp/native-proxy-image-custody/cases/fsmgen-_4taF1tu/coordination.lock"
+      },
+      "reference" : {
+         "global" : {
+            "bytes" : "{\"image_key\":\"efd497b0e847884b3c1cfcde14d8b645991c52ebab90c54e58984ccbc303c146\",\"reference_key\":\"de2fd1f03a28befd177f3c972393d36fd25f6c572df314e238c06bd1a10b2498\",\"schema\":\"fsmgen.test.rust_proxy_image_reference.v1\",\"selected_sources\":[{\"device\":16777244,\"inode\":76921609,\"path\":\".artifacts/tmp/native-proxy-image-custody/cases/fsmgen-_4taF1tu/images/efd497b0e847884b3c1cfcde14d8b645991c52ebab90c54e58984ccbc303c146/rustup.c\",\"sha256\":\"a7d92e28ec1c8308e37c6003df167bc42bd2341cf3a69d677f45330271ffba56\",\"size_bytes\":50},{\"device\":16777244,\"inode\":76921611,\"path\":\".artifacts/tmp/native-proxy-image-custody/cases/fsmgen-_4taF1tu/images/efd497b0e847884b3c1cfcde14d8b645991c52ebab90c54e58984ccbc303c146/rustup\",\"sha256\":\"e7f06f27e18528c7d10e8c4a4ab42b5e70d1423cdb80e83048597719c9c7eb67\",\"size_bytes\":53}],\"workspace\":\".artifacts/tmp/process-supervisor-tests/fsmgen-ALjAH_ko\",\"workspace_identity\":{\"device\":16777244,\"inode\":76921606,\"path\":\".artifacts/tmp/process-supervisor-tests/fsmgen-ALjAH_ko\"}}",
+            "identity" : {
+               "device" : 16777244,
+               "inode" : 76921614,
+               "path" : ".artifacts/tmp/native-proxy-image-custody/cases/fsmgen-_4taF1tu/references/de2fd1f03a28befd177f3c972393d36fd25f6c572df314e238c06bd1a10b2498.json",
+               "sha256" : "b694c8ca156e4c554c407364fe44803643308abdb574a7fd9fa456010f02007b",
+               "size_bytes" : 994
+            }
+         },
+         "private" : {
+            "bytes" : "{\"image_key\":\"efd497b0e847884b3c1cfcde14d8b645991c52ebab90c54e58984ccbc303c146\",\"reference_key\":\"de2fd1f03a28befd177f3c972393d36fd25f6c572df314e238c06bd1a10b2498\",\"schema\":\"fsmgen.test.rust_proxy_image_reference.v1\",\"selected_sources\":[{\"device\":16777244,\"inode\":76921609,\"path\":\".artifacts/tmp/native-proxy-image-custody/cases/fsmgen-_4taF1tu/images/efd497b0e847884b3c1cfcde14d8b645991c52ebab90c54e58984ccbc303c146/rustup.c\",\"sha256\":\"a7d92e28ec1c8308e37c6003df167bc42bd2341cf3a69d677f45330271ffba56\",\"size_bytes\":50},{\"device\":16777244,\"inode\":76921611,\"path\":\".artifacts/tmp/native-proxy-image-custody/cases/fsmgen-_4taF1tu/images/efd497b0e847884b3c1cfcde14d8b645991c52ebab90c54e58984ccbc303c146/rustup\",\"sha256\":\"e7f06f27e18528c7d10e8c4a4ab42b5e70d1423cdb80e83048597719c9c7eb67\",\"size_bytes\":53}],\"workspace\":\".artifacts/tmp/process-supervisor-tests/fsmgen-ALjAH_ko\",\"workspace_identity\":{\"device\":16777244,\"inode\":76921606,\"path\":\".artifacts/tmp/process-supervisor-tests/fsmgen-ALjAH_ko\"}}",
+            "identity" : {
+               "device" : 16777244,
+               "inode" : 76921615,
+               "path" : ".artifacts/tmp/process-supervisor-tests/fsmgen-ALjAH_ko/rust-tools/image-reference.json",
+               "sha256" : "b694c8ca156e4c554c407364fe44803643308abdb574a7fd9fa456010f02007b",
+               "size_bytes" : 994
+            }
+         },
+         "record" : {
+            "image_key" : "efd497b0e847884b3c1cfcde14d8b645991c52ebab90c54e58984ccbc303c146",
+            "reference_key" : "de2fd1f03a28befd177f3c972393d36fd25f6c572df314e238c06bd1a10b2498",
+            "schema" : "fsmgen.test.rust_proxy_image_reference.v1",
+            "selected_sources" : [
+               {
+                  "device" : 16777244,
+                  "inode" : 76921609,
+                  "path" : ".artifacts/tmp/native-proxy-image-custody/cases/fsmgen-_4taF1tu/images/efd497b0e847884b3c1cfcde14d8b645991c52ebab90c54e58984ccbc303c146/rustup.c",
+                  "sha256" : "a7d92e28ec1c8308e37c6003df167bc42bd2341cf3a69d677f45330271ffba56",
+                  "size_bytes" : 50
+               },
+               {
+                  "device" : 16777244,
+                  "inode" : 76921611,
+                  "path" : ".artifacts/tmp/native-proxy-image-custody/cases/fsmgen-_4taF1tu/images/efd497b0e847884b3c1cfcde14d8b645991c52ebab90c54e58984ccbc303c146/rustup",
+                  "sha256" : "e7f06f27e18528c7d10e8c4a4ab42b5e70d1423cdb80e83048597719c9c7eb67",
+                  "size_bytes" : 53
+               }
+            ],
+            "workspace" : ".artifacts/tmp/process-supervisor-tests/fsmgen-ALjAH_ko",
+            "workspace_identity" : {
+               "device" : 16777244,
+               "inode" : 76921606,
+               "path" : ".artifacts/tmp/process-supervisor-tests/fsmgen-ALjAH_ko"
+            }
+         }
+      },
+      "runtime_authorized" : 0,
+      "schema" : "fsmgen.inactive_runtime_reference_acquisition.v1"
+   },
+   "schema" : "fsmgen.inactive_runtime_reference_acquisition_qualification.v1",
+   "success" : false
+}

@@ -1789,8 +1789,8 @@ missing owners never justify release. Unknown records or partial images stop
 maintenance before deletion. Successful removal preserves the permanent lock,
 all references and other images, and can free space for a later explicit
 publication. Interrupted removal leaves its exact partial state for separately
-owned recovery; it does not repair, retry or evict another image. Observation
-acquisition and combined lifetimes still require qualification before activation.
+owned recovery; it does not repair, retry or evict another image. Full observation
+and combined lifetimes still require qualification before activation.
 Replay the inert maintenance controls:
 
 ```bash
@@ -1801,7 +1801,7 @@ The inactive observation codec defines a separate retention record for capture.
 Its key binds the evidence directory and the complete observer and target births
 in that order. The record also carries the historical directory identity and
 the canonical C/executable source identities, in that order. Wrapper and runtime
-reference snapshots belong to the later observation-custody operation; they do
+reference snapshots belong to observation acquisition; they do
 not expand this image-retention pair.
 
 The codec checks exact fields, JSON types, relative path spelling, source layout
@@ -1832,6 +1832,30 @@ performs no native process query. Replay the inert mixed-reference controls:
 
 ```bash
 scripts/run_with_ram_guard.sh -- perl docs/audits/native-proxy-combined-census-20260910/qualify.t
+```
+
+Fresh inactive observation acquisition now opens existing coordination state
+and checks the prior workspace and evidence-directory identities. It requires
+matching current private/global runtime records and a fully checked image,
+then captures the wrapper, private reference, global reference, C source and
+executable in that order. The result carries those already captured bytes and
+identities separately from the observation hold; consumers need not reopen a
+later pathname to obtain the original snapshot.
+
+The hold binds the evidence directory, ordered observer/target births and
+canonical source pair. Acquisition checks directory and source identities
+again, closes retained descriptors on success and failure, and preserves other
+owners. Missing coordination, changed files, mismatched records and exhausted
+reference capacity reject. A hold published before a later failure remains
+for separately owned recovery. Existing holds currently reject; stable reuse,
+interruption closure, archive settlement and exact release are the next steps.
+
+This is storage qualification with inert files and synthetic birth records.
+It does not authenticate a process, run capture or activate the product path.
+Replay the fresh-acquisition controls:
+
+```bash
+scripts/run_with_ram_guard.sh -- perl docs/audits/native-proxy-observation-acquisition-20260910/qualify.t
 ```
 
 The helper checks bounded regular source/output files and the native header,

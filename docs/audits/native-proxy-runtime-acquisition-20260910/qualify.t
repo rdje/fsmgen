@@ -168,7 +168,7 @@ for my $kind (qw(stale_inode wrong_device extra_field numeric_inode boolean_inod
         my %reason = (stale_inode => qr/prior workspace identity/, wrong_device => qr/prior workspace identity/,
             extra_field => qr/closed record/, numeric_inode => qr/JSON integer/, boolean_inode => qr/JSON integer/,
             wrong_path => qr/private workspace/, missing_tools => qr/(?:does not exist|missing|private same-volume directory)/,
-            private_exists => qr/already exists/, private_symlink => qr/already exists/, malformed_global => qr/invalid runtime JSON/);
+            private_exists => qr/already exists/, private_symlink => qr/already exists/, malformed_global => qr/invalid reference JSON/);
         rejects("admission $kind", sub { $acquire->($case, $expected, $c, $image) }, $reason{$kind});
         is(image_count($case), 0, "$kind fails before image publication");
     });

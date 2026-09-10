@@ -1,0 +1,33 @@
+{
+  "restored": [
+    {
+      "byte_exact": true,
+      "ignored_path": ".artifacts/logs/native-proxy-runtime-acquisition-20260910/qualification.json",
+      "path": "docs/audits/native-proxy-runtime-acquisition-20260910/result/qualification.json",
+      "sha256": "8d3b8eb0d7cbd120964eedebb8fdf71d1f1196b2f6841076a5ea5cba19989b07",
+      "size_bytes": 86400
+    },
+    {
+      "byte_exact": true,
+      "ignored_path": ".artifacts/logs/native-proxy-runtime-acquisition-20260910/admission.jsonl",
+      "path": "docs/audits/native-proxy-runtime-acquisition-20260910/result/admission.jsonl",
+      "sha256": "df3f7413ffe742d27ccd8320f4518122db947b97e7e3e365c3a08878b1600671",
+      "size_bytes": 10276
+    },
+    {
+      "byte_exact": true,
+      "ignored_path": ".artifacts/logs/native-proxy-combined-census-20260910/qualification.json",
+      "path": "docs/audits/native-proxy-combined-census-20260910/result/qualification.json",
+      "sha256": "2f7c1df823e40f7c2885d331cd93145c54b28eafe35aff58aa2375b834297d59",
+      "size_bytes": 962984
+    },
+    {
+      "byte_exact": true,
+      "ignored_path": ".artifacts/logs/native-proxy-combined-census-20260910/admission.jsonl",
+      "path": "docs/audits/native-proxy-combined-census-20260910/result/admission.jsonl",
+      "sha256": "e8e78ace00b3e75dca69248af5193a3c6bbda664625ab6fedf42f7352774f7e8",
+      "size_bytes": 4125
+    }
+  ],
+  "source_revision": "f1b0f0dc0657b0d583fa16493680f1445308c7be"
+}

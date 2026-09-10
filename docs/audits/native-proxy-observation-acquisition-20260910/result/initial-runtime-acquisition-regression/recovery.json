@@ -1,0 +1,12 @@
+{
+  "allocations": 84,
+  "cause": "The prior combined dispatcher reports invalid reference JSON; the unchanged runtime-acquisition harness still expected invalid runtime JSON. Rejection and absence of a returned result were correct.",
+  "complete_ledger_and_absence_verified": true,
+  "failed_assertion": "admission malformed_global",
+  "forbidden_process_attempts": 0,
+  "initial_result_success": false,
+  "other_semantics_verified_on_explicit_diagnostic_only_projection": true,
+  "schema": "fsmgen.observation_acquisition_regression_recovery.v1",
+  "source_revision": "f1b0f0dc0657b0d583fa16493680f1445308c7be",
+  "source_sha256": "9aff78c5e58d63c2bdce64587beb73127bc070e9127d5f45826f8e546cb2343a"
+}

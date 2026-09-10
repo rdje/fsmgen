@@ -1,0 +1,210 @@
+{
+  "cases": [
+    {
+      "kind": "success",
+      "name": "fresh acquisition"
+    },
+    {
+      "kind": "success",
+      "name": "wrapper exact byte ceiling"
+    },
+    {
+      "diagnostic": "runtime reference differs from prior workspace",
+      "kind": "reject",
+      "name": "prior workspace identity mismatch"
+    },
+    {
+      "diagnostic": "prior evidence identity differs",
+      "kind": "reject",
+      "name": "prior evidence identity mismatch"
+    },
+    {
+      "diagnostic": "existing observation lock",
+      "kind": "reject",
+      "name": "missing existing lock"
+    },
+    {
+      "diagnostic": "path does not exist",
+      "kind": "reject",
+      "name": "missing existing namespace"
+    },
+    {
+      "diagnostic": "runtime reference is absent",
+      "kind": "reject",
+      "name": "missing runtime reference"
+    },
+    {
+      "diagnostic": "private/global runtime reference differs",
+      "kind": "reject",
+      "name": "mismatched private/global runtime bytes"
+    },
+    {
+      "diagnostic": "does not bind current canonical source",
+      "kind": "reject",
+      "name": "stale canonical runtime source identity"
+    },
+    {
+      "diagnostic": "identity path differs",
+      "kind": "reject",
+      "name": "foreign runtime workspace"
+    },
+    {
+      "diagnostic": "observation reference capacity exceeded",
+      "kind": "reject",
+      "name": "reference capacity before publication"
+    },
+    {
+      "diagnostic": "observation reference already exists",
+      "kind": "reject",
+      "name": "existing observation hold"
+    },
+    {
+      "diagnostic": "symlink ancestry is forbidden",
+      "kind": "reject",
+      "name": "wrapper symlink"
+    },
+    {
+      "diagnostic": "source mode",
+      "kind": "reject",
+      "name": "wrapper hardlink"
+    },
+    {
+      "diagnostic": "source mode",
+      "kind": "reject",
+      "name": "wrapper wrong mode"
+    },
+    {
+      "diagnostic": "fixture must be an owned bounded regular file",
+      "kind": "reject",
+      "name": "wrapper byte excess"
+    },
+    {
+      "diagnostic": "closed record",
+      "kind": "reject",
+      "name": "extra request field"
+    },
+    {
+      "diagnostic": "birth integer",
+      "kind": "reject",
+      "name": "malformed birth"
+    },
+    {
+      "diagnostic": "prior evidence_directory_identity path",
+      "kind": "reject",
+      "name": "foreign evidence path"
+    },
+    {
+      "diagnostic": "expected isolated store",
+      "kind": "reject",
+      "name": "extra argument"
+    },
+    {
+      "diagnostic": "sealed coordinator",
+      "kind": "reject",
+      "name": "direct internal caller"
+    }
+  ],
+  "controls": [
+    "fresh acquisition",
+    "independent target-source bytes and identities",
+    "original held descriptors close on success and failure",
+    "prior workspace identity mismatch",
+    "prior evidence identity mismatch",
+    "missing existing lock",
+    "missing existing namespace",
+    "missing runtime reference",
+    "mismatched private/global runtime bytes",
+    "stale canonical runtime source identity",
+    "foreign runtime workspace",
+    "reference capacity before publication",
+    "existing observation hold",
+    "wrapper symlink",
+    "wrapper hardlink",
+    "wrapper wrong mode",
+    "wrapper byte excess",
+    "source directory replacement",
+    "source replacement during admission",
+    "source bytes changed before return",
+    "late evidence directory replacement",
+    "late workspace directory replacement",
+    "sealed observation replacement",
+    "extra request field",
+    "malformed birth",
+    "foreign evidence path",
+    "extra argument",
+    "direct internal caller"
+  ],
+  "coordination": "Open only existing checked coordination state. No bootstrap, native command/query, compiler, fixture, helper, capture, release, retry or image publication. Validate the full combined census before and after exclusive observation publication. Retain partial or complete published holds on failure for separately owned recovery.",
+  "late_cases": [
+    {
+      "hold_expected": false,
+      "name": "source directory replacement",
+      "phase": "admission"
+    },
+    {
+      "hold_expected": false,
+      "name": "source replacement during admission",
+      "phase": "admission"
+    },
+    {
+      "hold_expected": true,
+      "name": "source bytes changed before return",
+      "phase": "finish"
+    },
+    {
+      "hold_expected": true,
+      "name": "late evidence directory replacement",
+      "phase": "finish"
+    },
+    {
+      "hold_expected": true,
+      "name": "late workspace directory replacement",
+      "phase": "finish"
+    },
+    {
+      "hold_expected": true,
+      "name": "sealed observation replacement",
+      "phase": "finish"
+    }
+  ],
+  "limits": "Only fresh filesystem storage acquisition with inert images and synthetic process births. Stable reuse/full interruption matrix, archive settlement, exact hold release, Python capture integration, actual native ownership/transport, compiler profiles and real contention remain separately owned gates. Existing archive file/aggregate byte limits remain unchanged.",
+  "mutants": [
+    "discard prior evidence identity",
+    "discard retained source identity"
+  ],
+  "owner": "HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.12.4.1.3.3.1",
+  "publication": "Create only one absent observation reference with the qualified exclusive readback/descriptor-seal writer. Bind evidence path and ordered observer/target births, exact evidence directory identity and current canonical C/executable pair. Existing reference rejects in this leaf; stable reuse belongs to the next child.",
+  "qualification_note": "Each case records allocations immediately, observes the complete store/workspace/evidence footprint independently, traps fixture/compiler process attempts, retains any published hold on failure and checks every intercepted source descriptor closes. Required rejection stages are fixed from the source contract before fixture execution. No native experiment is authorized.",
+  "request": "Prior direct owned workspace and isolated evidence-directory path/device/inode identities; closed typed births are data, never native authentication. Workspace uses the existing process-supervisor-tests purpose; evidence cases use .artifacts/logs/native-proxy-observation-acquisition-20260910/cases/fsmgen-<suffix>. Derive all source/reference destinations; accept no caller filename or callback.",
+  "request_fields": [
+    "workspace_identity",
+    "evidence_directory_identity",
+    "observer_birth",
+    "target_birth"
+  ],
+  "result": "Inactive acquisition envelope carries the checked permanent lock, target_sources in the fixed order and a separate observation_reference record/source snapshot. runtime_authorized is zero and executable is null. Changing observer-hold metadata never enters target_sources.",
+  "schema": "fsmgen.inactive_observation_acquisition_plan.v1",
+  "source_custody": "Hold original checked descriptors through final closure, close them on every path, and return already captured byte/identity snapshots. Matching global/private runtime records must bind the prior workspace and current canonical C/executable identities. Preserve original workspace/tools/evidence/image directory identities and all other holds/images.",
+  "source_limits": {
+    "executable": 65536,
+    "generated_c": 65536,
+    "global_runtime_reference": 4096,
+    "private_runtime_reference": 4096,
+    "wrapper": 65536
+  },
+  "source_modes": {
+    "executable": 320,
+    "generated_c": 256,
+    "global_runtime_reference": 256,
+    "private_runtime_reference": 256,
+    "wrapper": 448
+  },
+  "source_order": [
+    "wrapper",
+    "private_runtime_reference",
+    "global_runtime_reference",
+    "generated_c",
+    "executable"
+  ],
+  "source_revision": "f1b0f0dc0657b0d583fa16493680f1445308c7be"
+}

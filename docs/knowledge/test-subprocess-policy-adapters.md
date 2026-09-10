@@ -14,6 +14,7 @@ answers:
   - "when can inactive maintenance remove a canonical image?"
   - "what does the inactive observation-reference codec validate?"
   - "how are runtime and observation references counted together?"
+  - "how does fresh observation acquisition retain source snapshots?"
   - "why did integrated proxy qualification fail?"
   - "why does t1545 not use IPC Cmd?"
   - "where does T1545 preserve empty-output checker failure diagnostics?"
@@ -78,7 +79,7 @@ reverify: >-
 ---
 
 Decisions `0087`/`0101`: `FSM::Support::ProcessSupervisor` gives nonblocking steps, shell-free argv, same-volume cwd, bounded split capture, monotonic measurements and one group with TERM/KILL cleanup. Adapters seal policy; T1669 checks ownership.
-Child requires `setpgid` success and owned group before exec. `.3.2.10.1` separates return/errno, exception and membership with child PID; native session/false-success controls reject stale-error attribution. PID is not birth identity. Parent race closure cannot replace admission; nested cleanup stays open.
+Child requires successful `setpgid` and owned group before exec; PID is not birth identity. Admission controls and nested-cleanup limits: history.
 `exec_handoff_monotonic_ns` means observed control-pipe EOF, not main entry:
 pre-exec death can close it. Without observed EOF, that timestamp and dependent
 durations stay unknown even after cleanup. T1669 checks held-child timeout, separate pre-exec exit and successful output.
@@ -92,11 +93,11 @@ without retry; original fixture assertions pass.
 T1545 controls: historical card; absent witnesses stay unknown.
 Env/direct Perl handoff timeouts refute a shebang-only cure. HIAL/VIAL `.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2` owns startup cause; `.3.3–7` own authenticated kernel capture. Sampling/authentication/STOP limits: task/book/history.
 T1669 roots: `.artifacts/tmp/process-supervisor-tests/`. ps requires native presence; only disappearance skips. Permission/query/identity errors fail. Exit-race controls do not explain the historical changed field (.3.2.11).
-History: `a3959a599307be3125b869cf5090e633333cb98d:docs/knowledge/test-subprocess-policy-adapters.md`.
+History: `f1b0f0dc0657b0d583fa16493680f1445308c7be:docs/knowledge/test-subprocess-policy-adapters.md`.
 PST parsing normalizes 1–16 lowercase hex digits; malformed fields and contradictions reject.
 .15.7.3 supports serial queue contention; client/frame joins and startup repair stay open. Native integration supplies pre-runtime receipts, ancestry/C custody, owned retirement and passive daemon capture. Counterexamples: history; loaded bytes unproved.
-Fixed CLI .15.7.2.4 binds archive index/digest and journal anchors; calibration/reserve/file checks preserve first failure, stop, distinct outcomes and ownership. F_CHECK_LV cause (.15.2) and worker/delivery remain unknown; queue/provenance coexist (.15.4). Opt-in violations: .15.5.1.2.2–3.
-Combined census .1.3.2 retains both reference kinds. Runtime-only inspection stays distinct. Custody/capture remain open; details: history.
+Fixed CLI binds archive and journal anchors, preserving first failure/stop/ownership. F_CHECK_LV cause and worker/delivery remain unknown. Controls and opt-in violations: history.
+Combined census retains both reference kinds; runtime-only inspection stays distinct. Fresh acquisition .1.3.3.1 retains wrapper/private-ref/global-ref/C/executable snapshots and a separate hold. Published failed holds remain; reuse/release/capture stay open. Replay: `docs/audits/native-proxy-observation-acquisition-20260910/audit.py`.
 Caller-sealed test wrappers use tail goto to preserve caller.
 Replay: `scripts/run_with_ram_guard.sh -- python3 -B -m unittest discover -s t/python -p 'test_fixture_policy_archive*.py'`.
 T1595 pre-main cause open; `.19.2.3.1.2.2.6.2` fixes capture.
