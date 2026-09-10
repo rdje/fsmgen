@@ -2740,10 +2740,10 @@ decomposes the architecture needed to move beyond that bounded foundation.
   Children: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.12.4.1.2.2.2.1, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.12.4.1.2.2.2.2`
 
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.12.4.1.2.2.2.1`
-  Status: `active`
+  Status: `done`
   Goal: `Qualify closed runtime-reference records and key/type validation.`
   Acceptance: `Add an inactive closed runtime-record codec with exact field sets, canonical ASCII JSON, scalar/integer distinctions, root-relative workspace/image paths, key derivation and ordered source identities. Keep record structure distinct from current filesystem ownership or liveness; stale owners never authorize release. Use independently reconstructed vectors and malformed/type/path/key counterexamples without writing runtime references or launching processes. Preserve exact completed acceptance recovery history within existing live bounds.`
-  Verification: `Format review reproduced a defect in the qualified inactive foundation: _birth compares comma-joined field names, so the five-field object with pid, ppid,ruid as one key, start_sec, start_usec and uid is accepted and observation_reference_key returns bce38da7b4f92bb84394428d6b47903d547d27a1ab46184f31afcf1cbdbbd3a0. Explicit field count and membership must be repaired before codec extension. Child .1 owns the fix and missing regression; child .2 then implements the runtime codec. No runtime key use or live execution occurred.`
+  Verification: `Field-set repair child .1 is committed at 531f1ce0383e6557492ec5d44737f31d0560c02d. Child .2 qualifies the inactive closed runtime-record codec with independent vectors, malformed-record and counterimplementation controls. Structural historical records confer no current filesystem, execution or release authority. Global/private acquisition remains the separately owned next child of .12.4.1.2.2.2.`
   Children: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.12.4.1.2.2.2.1.1, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.12.4.1.2.2.2.1.2`
 
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.12.4.1.2.2.2.1.1`
@@ -2754,11 +2754,11 @@ decomposes the architecture needed to move beyond that bounded foundation.
   Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.12.4.1.2.2.2.1.1: reject delimiter-colliding birth field sets`
 
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.12.4.1.2.2.2.1.2`
-  Status: `proposed`
+  Status: `done`
   Goal: `Qualify the inactive closed runtime-record codec.`
   Acceptance: `After the field-set repair commits, implement exact runtime schema, canonical ASCII JSON, scalar/integer checks, root-relative workspace/image paths, key derivation and ordered source identities. Use independent vectors and malformed/type/path/key controls; do not conflate structural validity with current ownership/liveness or write any runtime reference.`
-  Verification: `pending`
-  Commit: `pending`
+  Verification: `Inactive RuntimeRecord.pm implements the pinned closed runtime schema with explicit field count/membership, JSON scalar/integer distinctions, bounded canonical ASCII encoding and parsing, workspace-derived reference key and ordered isolated canonical C/executable paths. It reuses the qualified runtime-key function and performs no current filesystem admission. Supplied native IDs and digest spellings remain historical structural data, not actual byte/ownership/liveness evidence or runtime/cleanup authority. Re-derivation: independently generated Python JSON/set/type/path vectors and Perl bytes agree, including the exact record ceiling and an integer beyond binary64 exact precision. The guarded harness passes 74 TAP assertions with 63 rejecting controls; complete output/result audit agrees. Falsification: unknown/missing/merged/padded fields, booleans/numeric strings/negative/fractional values, wrong schema/keys/paths/order, duplicate keys, noncanonical JSON and byte ceilings reject. Removing field closure or key derivation separately admits records rejected by the independent parser. Six altered result records reject. Independent field-set regression rechecks its retained RED/GREEN/publication evidence without another runtime experiment. Six unchanged foundation/coordinator/publication/product pins match 531f1ce0383e6557492ec5d44737f31d0560c02d. No fixture workspace or runtime reference is created and no compiler/process attempt occurs. The exact-limit vector uses a deliberately long syntactic path; no filesystem support for that name is claimed. Durability: docs/audits/native-proxy-runtime-records-20260910 retains source, harness, vectors, independent audit, review and byte-exact recovery copies. result/audit.json is 1801 bytes SHA-256 d1bdac4efb58dcb27eb241771e4610ac0ad49ab8080220532785d415a4c55da4; result/qualification.json is 16680 bytes SHA-256 e2f3fac8ca9eb353a4ba8ffc1fc4258333236349c350705a3c4089bcc5c016df. The completed repair acceptance suffix is sealed at the exact predecessor, retaining its versioned recovery chain. Book examples, knowledge-map synchronization and staged doctrines gate the slice. Global filename joins, fresh same-volume identities, actual image bytes, matching global/private acquisition, observation/retirement/maintenance/contention and native behavior remain separately unqualified. Historical startup/parent and full CI/push stay gated.`
+  Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.12.4.1.2.2.2.1.2: qualify inactive runtime-reference record codec`
 
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.12.4.1.2.2.2.2`
   Status: `proposed`
@@ -3792,7 +3792,7 @@ decomposes the architecture needed to move beyond that bounded foundation.
 
 ## Current Frontier
 
-Current frontier: .3.2.15.7.3.12.4.1.2.2.2.1.1 is repaired; .12.4.1.2.2.2.1.2 next qualifies the inactive runtime-record codec. Startup/parent, full CI and push stay gated.
+Current frontier: .3.2.15.7.3.12.4.1.2.2.2.1 is qualified; .12.4.1.2.2.2.2 next owns global/private runtime-reference acquisition. Startup/parent, full CI and push stay gated.
 
 Architecture audit `.1` is complete. Decision `0032` selects one public
 `.vial` source language, private immutable `VIALSemanticIR` and
@@ -6385,11 +6385,11 @@ Completed native-proxy feasibility through runtime-source-controls acceptance: r
 
 - Acceptance history manifest: `docs/tasks/history/HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE/acceptance-history.jsonl`
 
-The manifest binds the exact completed inactive-publication acceptance suffix at `3618546c64ff0b2071b07c9822b3fbfae3605b01`. That source preserves the earlier history pointer and versioned manifest chain; current node contracts remain authoritative.
+The manifest binds the exact completed field-set repair acceptance suffix at `531f1ce0383e6557492ec5d44737f31d0560c02d`. That source preserves the earlier history pointer and versioned manifest chain; current node contracts remain authoritative.
 
 
-## Acceptance Checklist (field-set repair .3.2.15.7.3.12.4.1.2.2.2.1.1)
+## Acceptance Checklist (runtime codec .3.2.15.7.3.12.4.1.2.2.2.1.2)
 
-- [x] **ROOT CAUSE (WHY + WHERE)** — git log -S 'sub _birth' -- docs/audits/native-proxy-image-custody-20260910/ImageCustody.pm identifies 161fba1bbc63a46f2f508611b7fd859da6a2a084. Its comma-joined field-name comparison admits a combined ppid,ruid key. The new failing regression and exact old-source capture reproduce the defect before repair.
-- [x] **ADDRESSED (verified repair)** — Explicit count and required membership reject combined native fields before value validation. Member-list cardinality also rejects its helper-level ambiguity. Independent before/after audits distinguish unexpected acceptance from late wrong-stage failure, and valid key vectors remain exact.
-- [x] **NO REGRESSION** — The complete custody suite and unchanged publication controls pass; independent TAP/result and exact case-absence audits agree. Book rendering and knowledge-map: OK synchronization plus staged doctrines gate the fix. The prior qualification gap is annotated; runtime references and native behavior remain unqualified.
+- [x] **ROOT CAUSE (WHY + WHERE)** — git log -S 'sub runtime_reference_key' -- docs/audits/native-proxy-image-custody-20260910/ImageCustody.pm identifies 161fba1bbc63a46f2f508611b7fd859da6a2a084. It supplies keys and snapshots but no closed runtime-reference codec; the pinned reference contract requires that format before filesystem acquisition.
+- [x] **ADDRESSED (verified implementation)** — Inactive RuntimeRecord.pm enforces closed fields, canonical bytes, scalar/integer distinctions, derived keys and ordered source paths. Independent Python vectors/parser and weakened field/key counterimplementations verify the stated structural boundary without granting current custody or runtime authority.
+- [x] **NO REGRESSION** — Complete guarded codec TAP and independent result audit pass, and the retained field-set RED/GREEN/publication audit reverifies. Foundation and product source pins are unchanged. Book rendering and knowledge-map: OK synchronization plus staged doctrines gate the slice; global/private acquisition and native behavior remain open.

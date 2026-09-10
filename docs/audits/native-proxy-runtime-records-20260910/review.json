@@ -1,0 +1,47 @@
+{
+  "durability": "Tracked source, harness, deterministic vectors, independent auditor and exact result copies. Recovery lengths and SHA-256 are rechecked byte-for-byte.",
+  "falsification": "Malformed field/type/path/key inputs and noncanonical/duplicate JSON reject. Omitted field closure and omitted key derivation each admit a record rejected by the independent parser. Altered qualification results fail the independent audit.",
+  "implementation": "Pure inactive RuntimeRecord.pm serializes the pinned closed runtime schema. Explicit field count and membership precede value checks. JSON scalar types, canonical byte spelling, bounded parsing/encoding, independently derived workspace key and ordered isolated image paths are required. Decoder delegates to the same complete object validation before exact byte comparison.",
+  "limits": [
+    "Synthetic historical device/inode and path values are data only. A structurally valid record is not fresh custody, content-key byte proof, current same-volume ownership, a global filename join or runtime authorization.",
+    "The exact record-limit vector deliberately uses a long syntactically valid workspace name; no filesystem compatibility is inferred and no such directory is created.",
+    "No runtime reference or fixture workspace is created, no process is launched by the harness, and product source is unchanged.",
+    "Acquisition must additionally check fresh ownership, image bytes, the global filename and both exact reference copies. Reference lifetimes, contention, maintenance, native behavior and historical startup repair remain open."
+  ],
+  "owner": "HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.12.4.1.2.2.2.1.2",
+  "rederive": "Independent Python JSON/set/type/path parser reconstructs canonical vectors, source framing and runtime keys, including an exactly full record and a native integer beyond binary64 exact precision. Complete TAP and encoded results are audited. Existing field-set RED/GREEN and publication evidence independently reverifies without another filesystem or native experiment.",
+  "schema": "fsmgen.inactive_runtime_record_review.v1",
+  "source_revision": "531f1ce0383e6557492ec5d44737f31d0560c02d",
+  "unchanged_inputs": [
+    {
+      "path": "docs/audits/native-proxy-image-custody-20260910/ImageCustody.pm",
+      "sha256": "7f9db38e47140fedd39a80d7a6fbf1ee111f56f290a463729b516b08aae90d4f",
+      "size_bytes": 8021
+    },
+    {
+      "path": "docs/audits/native-proxy-image-custody-20260910/qualify.t",
+      "sha256": "ddb1ce26dd2824cdbdacaaeae00da36ae26defb13749bea063d1dd9323968b34",
+      "size_bytes": 12544
+    },
+    {
+      "path": "docs/audits/native-proxy-image-coordination-20260910/Coordination.pm",
+      "sha256": "2ffc141ce9daf44cf3b77853e103e7f1fdeb5757d05a87c0a2117475ee0ce050",
+      "size_bytes": 8309
+    },
+    {
+      "path": "docs/audits/native-proxy-image-publication-20260910/Publication.pm",
+      "sha256": "dc50ca598632572616d7da65fa6f1b417a20e7207dafa5fe03fd5d887382fab6",
+      "size_bytes": 5367
+    },
+    {
+      "path": "t/lib/FSM/Test/RustProxyFixture.pm",
+      "sha256": "d9c4ab52cf8074526c59b7a5dcb9da870ca7ffdacb4eb236dacb23b5db6d8bfb",
+      "size_bytes": 11466
+    },
+    {
+      "path": "perl/FSM/Support/ProcessSupervisor.pm",
+      "sha256": "684882d91f673ea7145f43ed3aad31acf099f13508574be7b2d8911123988637",
+      "size_bytes": 27990
+    }
+  ]
+}

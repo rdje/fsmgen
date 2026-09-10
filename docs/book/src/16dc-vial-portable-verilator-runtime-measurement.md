@@ -1654,7 +1654,7 @@ frozen; new native preparation and source locations need versioned support.
 An inactive prototype now qualifies content keys, canonical manifests and
 descriptor snapshots in isolated inert directories. Changed bytes, permissions,
 links and replacement inodes reject. It returns source evidence without
-authorizing execution. Publication, runtime/observation references, contention,
+authorizing execution. Runtime/observation references, contention,
 maintenance and native behavior remain unimplemented or unqualified under
 `.15.7.3.12.4`; product reuse remains inactive. Replay the inert custody checks
 from the repository root:
@@ -1697,6 +1697,21 @@ The inactive observation-key codec now checks native-birth field count and
 membership explicitly. A key named `ppid,ruid` cannot substitute for the
 separate `ppid` and `ruid` fields. This closes a reproduced ambiguity in joined
 field-name comparisons; combined names are covered by regression controls.
+
+The inactive runtime-reference codec checks the closed schema, workspace key,
+directory identity, and ordered canonical C/executable source records. It
+rejects extra or merged fields, numeric strings and booleans in integer fields,
+swapped sources, mismatched paths, duplicate JSON keys and noncanonical bytes.
+These checks establish record structure; current filesystem ownership, actual
+image bytes and matching global/private references still require acquisition.
+Synthetic historical identities grant no execution or cleanup authority.
+Replay the data-only controls and independent reconstruction from the root:
+
+```bash
+mkdir -p .artifacts/logs/native-proxy-runtime-records-20260910
+scripts/run_with_ram_guard.sh -- perl docs/audits/native-proxy-runtime-records-20260910/qualify.t > .artifacts/logs/native-proxy-runtime-records-20260910/qualify.tap 2>&1
+python3 -B docs/audits/native-proxy-runtime-records-20260910/audit.py
+```
 
 The helper checks bounded regular source/output files and the native header,
 then sets executable permissions through the admitted open file handle. A

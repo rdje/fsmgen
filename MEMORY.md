@@ -6,9 +6,9 @@ Status and evidence: `docs/tasks/`. The system itself: `MEMORY_ARCHITECTURE.md`.
 ## Resume
 
 - repository_revision: derive with `git log -1 --format='%H %s'`; never shadow `HEAD` here.
-- active_work_unit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.12.4.1.2.2.2.1.2`
-  (`proposed`; runtime-record codec)
-- next_action: Qualify the inactive runtime-record codec.
+- active_work_unit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.12.4.1.2.2.2.2`
+  (`proposed`; runtime-reference acquisition)
+- next_action: Qualify inactive global/private reference acquisition.
 - in_flight_uncommitted: none.
 - in_flight_background: none.
 - blockers: Historical startup/parent qualification and full CI/push remain gated.

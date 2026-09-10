@@ -5,6 +5,7 @@ answers:
   - "how are FSMGen test subprocesses bounded?"
   - "how are native Rust proxy fixtures built and qualified?"
   - "why must native-birth field sets use explicit membership?"
+  - "what does the inactive runtime-reference codec validate?"
   - "why did integrated proxy qualification fail?"
   - "why does t1545 not use IPC Cmd?"
   - "where does T1545 preserve empty-output checker failure diagnostics?"
@@ -83,11 +84,11 @@ without retry; original fixture assertions pass.
 T1545 controls: historical card; absent witnesses stay unknown.
 Env-Perl and direct Perl both timed out after handoff, refuting a shebang-only cure. HIAL/VIAL `.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2` owns startup cause; `.3.3–7` own authenticated kernel capture. Sampling/authentication/STOP limits remain in task/book and the exact historical card below.
 T1669 uses `.artifacts/tmp/process-supervisor-tests/`. Every ps result needs native presence; only disappearance is skipped. Permission/query/live identity changes fail. Native exit and unchecked-ps controls qualify that race, not the historical changed field (`.3.2.11`; book/task).
-History: `3618546c64ff0b2071b07c9822b3fbfae3605b01:docs/knowledge/test-subprocess-policy-adapters.md`.
+History: `531f1ce0383e6557492ec5d44737f31d0560c02d:docs/knowledge/test-subprocess-policy-adapters.md`.
 PST parsing normalizes 1–16 lowercase hex digits; malformed fields and contradictions reject.
-.15.7.3 supports serial queue contention; client/frame joins and startup repair stay open. Native integration supplies preparation-before-runtime receipts, exact ancestry/C custody and owned retirement, with passive daemon capture. Registration/startup failures and launch-constraint counterexamples remain in history; loaded bytes unproved.
+.15.7.3 supports serial queue contention; client/frame joins and startup repair stay open. Native integration supplies preparation-before-runtime receipts, exact ancestry/C custody and owned retirement, with passive daemon capture. Prior counterexamples: history; loaded bytes unproved.
 Fixed CLI .15.7.2.4 uses archive index/digest and journal anchors; calibration/reserve/actual-file checks and first-failure/capture stop persist. Outcomes stay distinct; failures/ownership persist. F_CHECK_LV cause unproved (.15.2); queue/provenance coexist (.15.4); worker/delivery unknown. Live opt-in violations: .15.5.1.2.2–3.
-Native joins pass (.4.3); scans persist (.4.4); cause remains open. .12.2.2 rejects hard links after held A reports B. .12.3 separates runtime/observer lifetimes. Inactive .12.4.1 qualifies keys, lock/census and publication snapshots; runtime references, contention and native reuse stay open. Birth fields require count and membership: comma-joined names admitted a merged key, fixed by .12.4.1.2.2.2.1.1.
+Inactive .12.4.1 qualifies keys, coordination and publication custody. Birth fields require count/membership after the merged-name defect (.12.4.1.2.2.2.1.1). Runtime codec .1.2 checks closed typed canonical records, workspace keys and ordered paths; historical IDs grant no current custody or release. Acquisition, lifetimes, contention and native reuse remain open.
 Replay: `scripts/run_with_ram_guard.sh -- python3 -B -m unittest discover -s t/python -p 'test_fixture_policy_archive*.py'`.
 T1595 pre-main cause open; `.19.2.3.1.2.2.6.2` fixes capture.
 `RamGuardFixtureRuntime` seals tools/argv, paths, bounds and full results.

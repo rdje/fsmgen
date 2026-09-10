@@ -1,0 +1,50 @@
+{
+  "assertions": 74,
+  "falsifiers": [
+    "hidden failure",
+    "lost type control",
+    "hidden acceptance",
+    "missing counterimplementation",
+    "lookup despite pure codec",
+    "changed encoded bytes"
+  ],
+  "inputs": [
+    {
+      "path": "docs/audits/native-proxy-runtime-records-20260910/RuntimeRecord.pm",
+      "sha256": "013c0a02e7df59dc3a5af944b603cd44121252a02ca0228d6fdc3e1dd28e6745",
+      "size_bytes": 4078
+    },
+    {
+      "path": "docs/audits/native-proxy-runtime-records-20260910/qualify.t",
+      "sha256": "5f33676338f421e819e15c97880531678850d1833d59804fa619c7a4dd5f6f7e",
+      "size_bytes": 9848
+    },
+    {
+      "path": "docs/audits/native-proxy-runtime-records-20260910/vectors.json",
+      "sha256": "8bec68fae5049ff6d951931cb98b895dc711394127f767411bf9550edfb5b166",
+      "size_bytes": 13777
+    },
+    {
+      "path": ".artifacts/logs/native-proxy-runtime-records-20260910/qualification.json",
+      "sha256": "e2f3fac8ca9eb353a4ba8ffc1fc4258333236349c350705a3c4089bcc5c016df",
+      "size_bytes": 16680
+    },
+    {
+      "path": ".artifacts/logs/native-proxy-runtime-records-20260910/qualify.tap",
+      "sha256": "9c132622021fe41f651b40544de7bea1332b2156e5fc880c0a37b9939c9fcc8b",
+      "size_bytes": 2983
+    }
+  ],
+  "limits": [
+    "Record syntax and internal consistency only; synthetic paths and native IDs.",
+    "No runtime reference or fixture workspace is created; no process is launched.",
+    "Current filesystem custody, global filename, full image byte equality, reference acquisition, retirement, observation lifetime and native behavior remain unqualified."
+  ],
+  "mutants": [
+    "omitted field closure",
+    "omitted key derivation"
+  ],
+  "rejection_controls": 63,
+  "schema": "fsmgen.inactive_runtime_record_audit.v1",
+  "success": true
+}

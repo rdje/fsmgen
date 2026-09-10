@@ -1,0 +1,26 @@
+[
+  {
+    "recovery": "docs/audits/native-proxy-runtime-records-20260910/result/qualification.json",
+    "sha256": "e2f3fac8ca9eb353a4ba8ffc1fc4258333236349c350705a3c4089bcc5c016df",
+    "size_bytes": 16680,
+    "source": ".artifacts/logs/native-proxy-runtime-records-20260910/qualification.json"
+  },
+  {
+    "recovery": "docs/audits/native-proxy-runtime-records-20260910/result/qualify.tap",
+    "sha256": "9c132622021fe41f651b40544de7bea1332b2156e5fc880c0a37b9939c9fcc8b",
+    "size_bytes": 2983,
+    "source": ".artifacts/logs/native-proxy-runtime-records-20260910/qualify.tap"
+  },
+  {
+    "recovery": "docs/audits/native-proxy-runtime-records-20260910/result/audit.json",
+    "sha256": "d1bdac4efb58dcb27eb241771e4610ac0ad49ab8080220532785d415a4c55da4",
+    "size_bytes": 1801,
+    "source": ".artifacts/logs/native-proxy-runtime-records-20260910/audit.json"
+  },
+  {
+    "recovery": "docs/audits/native-proxy-runtime-records-20260910/result/fieldsets-regression.json",
+    "sha256": "97688fcff120683b5bb21a35d8e83b3cfbd314b2eebb748274069d7a371bfbdd",
+    "size_bytes": 2791,
+    "source": ".artifacts/logs/native-proxy-image-fieldsets-20260910/audit.json"
+  }
+]
