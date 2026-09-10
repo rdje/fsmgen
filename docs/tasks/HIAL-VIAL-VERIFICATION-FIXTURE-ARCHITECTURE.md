@@ -2640,10 +2640,32 @@ decomposes the architecture needed to move beyond that bounded foundation.
   Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.10: integrate native proxy preparation with owned workspace retirement`
 
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.11`
-  Status: `proposed`
+  Status: `active`
   Goal: `Independently qualify integrated native fixtures and reassess the still-open startup repair boundary.`
   Acceptance: `After integration commits, explicitly pin and own the fixed original invocation and any separately required native capture before launch. Preserve first-attempt failures, exact input/identity/source/result custody, full TAP and independent falsifiers, resource limits and bounded cleanup. No retry, threshold relaxation or conversion of a passing run into historical causal repair. Compare actual coverage with the pre-change contract; route any remaining startup cause or unsupported repair leg to its live parent with a concrete next action. Full CI and push require their own completed qualification.`
-  Verification: `pending integration`
+  Verification: `Integration e27b609d3fdc6ef823584f7726be9715ec28f535 is clean and committed. Child .1 prospectively admits one fixed original invocation with current native-selection inputs and complete tracked input pins; .2 executes it and independently audits TAP, root birth, outputs and observed fixture-directory residue; .3 reconciles coverage and the still-open historical repair. Actual native builder bodies were separately qualified in .8. No authenticated helper or collector is required for this functional original qualification; any unobserved generated producer births/bytes stay explicitly unobserved. A pass cannot close historical startup repair.`
+  Children: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.11.1, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.11.2, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.11.3`
+  Commit: `pending`
+
+- ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.11.1`
+  Status: `done`
+  Goal: `Admit the exact integrated original qualification before release.`
+  Acceptance: `Pin the original and its complete current test-helper, supervisor, locality, observer, sampler and C-template inputs against the integration commit. Fix the existing GatedTest argv, wall and output bounds; preserve source checks before release and after reaping, native identity, complete TAP/streams and bounded directory census. Record read-only installed toolchain/host selection inputs as an inference, not an observed producer image. The run namespace is exclusive and the original-attempt limit is fixed; no original starts in this admission slice. Commit the contract, frozen driver/admission/preflight recovery bundle and executable-plan hash before .2.`
+  Verification: `Prospective contract only; no original, compiler, authenticated helper or collector launched. Source revision e27b609d3fdc6ef823584f7726be9715ec28f535 pins 24 current original/test-helper/supervisor/locality/observer/sampler/C-template inputs. The unchanged tracked GatedTest owns exactly one /usr/bin/perl t/1669-task-acceptance-fixture-runtime.t release, fixed 200-second wall and 16777216-byte per-output-file limit. Driver .artifacts/tmp/native-proxy-original-20260910/run.py is 8207 bytes SHA-256 c27ffce2d0b7c0f86c199c879d51e3cdc3fda6c8f7c4764edbfe1d8d56bf4c03; admission.json beside it is 5087 bytes SHA-256 be70dd17a24b9d90d59df2e6990a3ad00b270e07ecad9d0bc026ccf92d168cc7. Exact driver/admission/preflight recovery bytes are committed under docs/audits/native-proxy-original-20260910/. Restore them to the scratch directory if needed, verify these pins and the unexecuted .2 frontier, then run the driver through scripts/run_with_ram_guard.sh. The .artifacts/logs/native-proxy-original-20260910 run namespace must not already exist; an attempted rerun fails before original construction. Pin equality is checked before release and after reaping; retain complete TAP/stderr, native root birth/release/wait and before/after bounded fixture-directory census. Native selection is inferred from pinned builder code and observed Darwin/arm64 plus fixed installed CLT compiler/SDK availability. Compiler is a required read-only off-repository OS/toolchain dependency, 290664032 bytes SHA-256 f30550eab15fdf5ab8c0dc54c52679711241e5d4b636b027e18c09fef531775d; bounded streaming reads recheck its metadata/hash. Resolved SDK is /Library/Developer/CommandLineTools/SDKs/MacOSX26.5.sdk, device 16777232 inode 224015058; its content is not fully censused. Host/selection identities recheck at release and after the invocation. Generated producer images, bytes and births are not observed by this root owner and remain unknown; .8 independently qualified native builder bodies. Re-derivation: all input bytes match the integration commit and AST inspection identifies one GatedTest constructor and release. Falsification: isolated selection-context execution rejects changed machine, compiler digest and SDK inode without executing the driver or constructing a test. Durability: frozen tracked plan, original owner/source and this task preserve recovery; raw future results remain separately owned by .2. Original run directory is absent. Book render and exact output cleanup plus staged doctrines gate this admission; .2 may release only after this commit. A later pass cannot close historical startup/parent, full CI or push gates.`
+  Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.11.1: admit one fixed integrated original qualification`
+
+- ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.11.2`
+  Status: `proposed`
+  Goal: `Execute and independently verify the admitted integrated original once.`
+  Acceptance: `Require the committed .1 admission and unchanged input/driver pins before release. Run exactly one original under the existing RAM guard and GatedTest, preserving first failure without retry or widened bounds. Retain complete root identity/release/wait/TAP/streams and before/after source and fixture-directory evidence. Independently parse TAP and falsify altered retained result/plan/cleanup copies without rerunning the original. Unknown producer visibility and host isolation remain unknown. Commit the result before interpretation pivots.`
+  Verification: `pending committed admission`
+  Commit: `pending`
+
+- ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.11.3`
+  Status: `proposed`
+  Goal: `Reconcile integrated qualification with actual coverage and historical startup repair.`
+  Acceptance: `Compare the independently audited original with the pre-change negative-control contract and builder/capture qualifications. Close only proved integration obligations; name absent producer/native-capture or causal joins. Select and own a concrete next action for any remaining project-correctable startup or qualification defect without promoting a later pass into historical causal repair. Keep full CI and push separately gated.`
+  Verification: `pending original result`
   Commit: `pending`
 
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.3`
@@ -3615,7 +3637,7 @@ decomposes the architecture needed to move beyond that bounded foundation.
 
 ## Current Frontier
 
-Current frontier: .3.2.15.7.3.10 integrates qualified native/Perl preparation and owned workspace retirement; .15.7.3.11 owns the separate original/native qualification. Startup/parent, full CI and push stay gated.
+Current frontier: .3.2.15.7.3.11.1 freezes one original qualification; .11.2 executes the admitted invocation once and independently audits its result. Startup/parent, full CI and push stay gated.
 
 Architecture audit `.1` is complete. Decision `0032` selects one public
 `.vial` source language, private immutable `VIALSemanticIR` and
@@ -6257,3 +6279,9 @@ Native-proxy review acceptance: recover all checked assertions at `5c269071bd345
 - [x] **ROOT CAUSE (WHY + WHERE)** — The preserved controlled failure reports empty-stage acceptance at t/1816-rust-proxy-integration.t line 130. A separate Perl expression proves that list context removes the empty condition argument; explicit scalar context retains zero. Existing automatic allocator cleanup also could not preserve a mode with unproved compiler/runtime ownership.
 - [x] **ADDRESSED (verified)** — Final isolated integration controls pass after scalar stage counting and explicit mode ownership. Missing or invalid lifecycle evidence preserves files. A copied control with retirement admission disabled fails exactly the independently expected cleanup scenarios. The original negative assertions and fixed watcher policy remain.
 - [x] **NO REGRESSION** — Original syntax checking and focused sampler/allocator controls pass; independent full TAP and native birth checks agree. Book rendering and exact output removal pass; knowledge-map: OK. The original runtime and compiler were not invoked, and their separate qualification remains open. Staged doctrines gate the commit.
+
+## Acceptance Checklist (original admission .3.2.15.7.3.11.1)
+
+- [x] **ROOT CAUSE (WHY + WHERE)** — git log -S 'use FSM::Test::RustProxyFixture' -- t/1669-task-acceptance-fixture-runtime.t locates e27b609d3fdc6ef823584f7726be9715ec28f535. Its builder/C input and observed native-selection context must accompany the integrated original qualification.
+- [x] **ADDRESSED (verified)** — Frozen plan/input pins match the integration commit. Static admission has one constructor and release, and isolated context controls accept current inputs while rejecting changed machine, compiler digest and SDK inode. Exact recovery copies match the admitted driver and metadata; no original is launched.
+- [x] **NO REGRESSION** — Book rendering and exact generated-output cleanup pass; knowledge-map: OK. Existing tracked original and gated-owner sources are unchanged from the integration commit. Staged doctrines gate the prospective checkpoint.

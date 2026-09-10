@@ -1657,6 +1657,14 @@ They verify lifecycle handling without launching the original test or compiler.
 Task `.15.7.3.11` owns the separate original/native qualification; the historical
 startup delay is still open.
 
+Its admitted original uses the existing gated owner and unchanged limits. A
+tracked recovery bundle preserves the driver, source revision, helper and C
+input pins, exclusive run directory and native-selection checks. Changed host,
+compiler or SDK selection identity rejects before release. Native selection is
+inferred from the pinned builder and observed host inputs; SDK contents are
+not fully censused, and unobserved producer images or births remain unknown.
+There is no authenticated capture or collector in this functional qualification.
+
 Shared evidence publication now anchors file creation, linking and temporary
 cleanup to open directory descriptors. A controlled directory-replacement test
 exposed an earlier writer returning the expected digest for replacement bytes;
