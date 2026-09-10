@@ -1,0 +1,7 @@
+{
+  "corrected": true,
+  "failure": "The independent-record loop referred to r instead of row. It stopped before log directory creation. The subsequent shell output redirection failed before starting the RAM guard or harness.",
+  "fixture_allocations": 0,
+  "schema": "fsmgen.combined_census_preflight_recovery.v1",
+  "stage": "one-off preflight command"
+}

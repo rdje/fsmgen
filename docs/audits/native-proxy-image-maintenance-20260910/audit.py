@@ -97,7 +97,7 @@ def validate(result: dict, plan: dict) -> None:
     assert len(controls) == len({row['name'] for row in controls})
     assert {'stale owner still pins selected image', 'absent selected image', 'unknown image name',
             'partial unreferenced other image', 'partial selected image', 'changed selected bytes',
-            'unknown observation reference', 'malformed reference', 'shared selected source',
+            'runtime fields relabeled as observation', 'malformed reference', 'shared selected source',
             'absent lock cannot be recreated', 'unknown store member', 'invalid selected key',
             'extra argument', 'direct removal bypass'} <= {row['name'] for row in controls}
     assert all(row['rejected'] == 1 and row['diagnostic_matched'] == 1 and row['returned'] == 0

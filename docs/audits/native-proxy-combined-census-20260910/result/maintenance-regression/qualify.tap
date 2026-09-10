@@ -1,0 +1,32 @@
+ok 1 - maintenance cut: before rustup.c
+ok 2 - maintenance cut: after rustup.c
+ok 3 - maintenance cut: before image.json
+ok 4 - maintenance cut: after image.json
+ok 5 - maintenance cut: before rustup
+ok 6 - maintenance cut: after rustup
+ok 7 - maintenance cut: before DIRECTORY
+ok 8 - maintenance cut: after DIRECTORY
+ok 9 - maintenance cut: complete
+ok 10 - stale owner still pins selected image
+ok 11 - absent selected image
+ok 12 - unknown image name
+ok 13 - partial unreferenced other image
+ok 14 - partial selected image
+ok 15 - changed selected bytes
+ok 16 - runtime fields relabeled as observation
+ok 17 - malformed reference
+ok 18 - shared selected source
+ok 19 - absent lock cannot be recreated
+ok 20 - unknown store member
+ok 21 - invalid selected key
+ok 22 - extra argument
+ok 23 - direct removal bypass
+ok 24 - late maintenance change: source_replaced
+ok 25 - late maintenance change: directory_replaced
+ok 26 - late maintenance change: late_member
+ok 27 - late maintenance change: directory_reappeared
+ok 28 - explicit unreferenced maintenance recovers capacity without evicting a hold
+ok 29 - last unreferenced image removal preserves permanent empty store
+ok 30 - omitted retention guard destroys pinned bytes before the later census rejects
+ok 31 - no compiler or process attempt
+1..31

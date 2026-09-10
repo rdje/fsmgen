@@ -139,7 +139,7 @@ sub _transaction {
         && (($operation eq 'inspect' && !@payload)
             || ($operation eq 'publish_image' && @payload == 2
                 && defined(&NativeProxyImagePublication::_publish_locked))
-            || ($operation eq 'inspect_runtime_references' && !@payload
+            || (($operation eq 'inspect_runtime_references' || $operation eq 'inspect_references') && !@payload
                 && defined(&NativeProxyReferenceCensus::_inspect_locked))
             || ($operation eq 'acquire_runtime_reference' && @payload == 3
                 && defined(&NativeProxyReferenceAcquisition::_admit_locked)
@@ -184,8 +184,9 @@ sub _transaction {
         my $census = _census($base);
         my $publication = $operation eq 'publish_image'
             ? NativeProxyImagePublication::_publish_locked($case, $census, @payload) : undef;
-        my $references = $operation eq 'inspect_runtime_references'
-            ? NativeProxyReferenceCensus::_inspect_locked($case, $census) : undef;
+        my $references = $operation eq 'inspect_runtime_references' || $operation eq 'inspect_references'
+            ? NativeProxyReferenceCensus::_inspect_locked($case, $census,
+                $operation eq 'inspect_runtime_references' ? 1 : 0) : undef;
         my $acquisition;
         if ($operation eq 'acquire_runtime_reference') {
             my $before = NativeProxyReferenceCensus::_inspect_locked($case, $census);
@@ -240,6 +241,9 @@ sub _transaction {
                executable => undef, lock => $lock, %$publication}
             : $operation eq 'inspect_runtime_references'
             ? {schema => 'fsmgen.inactive_runtime_reference_census.v1', runtime_authorized => 0,
+               executable => undef, lock => $lock, %$references}
+            : $operation eq 'inspect_references'
+            ? {schema => 'fsmgen.inactive_image_reference_census.v1', runtime_authorized => 0,
                executable => undef, lock => $lock, %$references}
             : $operation eq 'acquire_runtime_reference'
             ? {schema => 'fsmgen.inactive_runtime_reference_acquisition.v1', runtime_authorized => 0,

@@ -1,0 +1,46 @@
+{
+  "all_byte_exact": true,
+  "files": [
+    {
+      "new_evidence": ".artifacts/logs/native-proxy-combined-census-20260910/runtime-census-regression/qualification.json",
+      "restored_from": "docs/audits/native-proxy-runtime-census-20260910/result/qualification.json",
+      "restored_sha256": "e0b63d63697355f10e40ad5eb57934e79f98cff4084b76e9d43470bc5df7d2d5",
+      "restored_source": ".artifacts/logs/native-proxy-runtime-census-20260910/qualification.json",
+      "sha256": "b8f603e31dcc66a8d6ff092b2ebbc82382416d3cd26e011de76fb3ef7ae9e547",
+      "size_bytes": 37759
+    },
+    {
+      "new_evidence": ".artifacts/logs/native-proxy-combined-census-20260910/retirement-regression/qualification.json",
+      "restored_from": "docs/audits/native-proxy-runtime-retirement-20260910/result/qualification.json",
+      "restored_sha256": "1cfe4c58f055acf2027580f8cef80586584b66c6a26469f91014ece8dde53757",
+      "restored_source": ".artifacts/logs/native-proxy-runtime-retirement-20260910/qualification.json",
+      "sha256": "011d9441c6974197803f7b21e74d90c0295b25797853c969a614bf3994b61d5a",
+      "size_bytes": 1335062
+    },
+    {
+      "new_evidence": ".artifacts/logs/native-proxy-combined-census-20260910/retirement-regression/admission.jsonl",
+      "restored_from": "docs/audits/native-proxy-runtime-retirement-20260910/result/admission.jsonl",
+      "restored_sha256": "4e516320dcf66ec6ce7909288ee59e0582e8e9ccc57249f536b9ac320d615b7c",
+      "restored_source": ".artifacts/logs/native-proxy-runtime-retirement-20260910/admission.jsonl",
+      "sha256": "4bbc704a4ae6c45955850191ff7a792d82cee76f795abab0807fb1dc40771fc1",
+      "size_bytes": 21286
+    },
+    {
+      "new_evidence": ".artifacts/logs/native-proxy-combined-census-20260910/maintenance-regression/qualification.json",
+      "restored_from": "docs/audits/native-proxy-image-maintenance-20260910/result/qualification.json",
+      "restored_sha256": "930f3a928326171e6d8d56f677dd44e638270d209a4422ac42760bf3469923e4",
+      "restored_source": ".artifacts/logs/native-proxy-image-maintenance-20260910/qualification.json",
+      "sha256": "ee3c81bfd4234aa4880f0a60715ecc4f2871edb154572913fdae72a02b1e6052",
+      "size_bytes": 345186
+    },
+    {
+      "new_evidence": ".artifacts/logs/native-proxy-combined-census-20260910/maintenance-regression/admission.jsonl",
+      "restored_from": "docs/audits/native-proxy-image-maintenance-20260910/result/admission.jsonl",
+      "restored_sha256": "819909454eb3591403fcf1ccd55b65aa7ed2437b929cdc7a040cbb6f2cea9fd1",
+      "restored_source": ".artifacts/logs/native-proxy-image-maintenance-20260910/admission.jsonl",
+      "sha256": "dfb4464098751fb76e72970cb395bac15d18d830182259b9827d64522312735e",
+      "size_bytes": 7259
+    }
+  ],
+  "schema": "fsmgen.combined_census_regression_restoration.v1"
+}

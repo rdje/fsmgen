@@ -1,0 +1,45 @@
+{
+  "controls": [
+    "extra observation field",
+    "merged observation fields",
+    "birth integer boolean",
+    "birth key mismatch",
+    "source content mismatch",
+    "source length mismatch",
+    "source order",
+    "absent image",
+    "unknown schema",
+    "missing schema",
+    "boolean schema",
+    "runtime fields relabeled as observation",
+    "wrong filename",
+    "duplicate member",
+    "partial JSON",
+    "writable reference",
+    "hardlinked reference",
+    "legacy inspection rejects observation",
+    "observation pin blocks maintenance",
+    "direct inspection bypass",
+    "extra argument"
+  ],
+  "late": [
+    "reference_replaced",
+    "reference_bytes_changed",
+    "reference_added",
+    "image_replaced",
+    "image_directory_replaced"
+  ],
+  "limits": "Inert same-volume case stores only. No workspace/native owner is admitted, no observation is acquired or released, and no fixture/compiler/capture/contention process runs. Existing runtime-only inspection remains distinct; combined inspection and internal storage operations retain both variants.",
+  "mutants": [
+    "omitted content join",
+    "omitted filename join",
+    "inferred observation schema"
+  ],
+  "positive": [
+    "empty",
+    "observation_only",
+    "mixed_images",
+    "mixed_capacity"
+  ],
+  "schema": "fsmgen.inactive_combined_reference_census_plan.v1"
+}

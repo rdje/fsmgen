@@ -161,11 +161,11 @@ reject_case('unknown image name', sub { mkdir("$ROOT/$_[0]/images/unknown", 0700
 reject_case('partial unreferenced other image', sub { mkdir("$ROOT/$_[0]/images/".('0' x 64), 0700) or die $! }, qr/(?:missing|exist|open|absent)/);
 reject_case('partial selected image', sub { unlink("$ROOT/$_[0]/images/$_[1]/image.json") == 1 or die $! }, qr/(?:members|membership|complete)/);
 reject_case('changed selected bytes', sub { write_bytes("$ROOT/$_[0]/images/$_[1]/rustup.c", 'changed', 0400) }, qr/(?:key|manifest|differ)/);
-reject_case('unknown observation reference', sub {
+reject_case('runtime fields relabeled as observation', sub {
     my $p = $_[2]{reference}{global}{identity}{path}; my $record = $JSON->decode(read_bytes("$ROOT/$p"));
     $record->{schema} = 'fsmgen.test.rust_proxy_image_observation_reference.v1'; write_bytes("$ROOT/$p", $JSON->encode($record), 0400);
-}, qr/runtime reference schema/);
-reject_case('malformed reference', sub { write_bytes("$ROOT/$_[2]{reference}{global}{identity}{path}", '{', 0400) }, qr/invalid runtime JSON/);
+}, qr/closed record/);
+reject_case('malformed reference', sub { write_bytes("$ROOT/$_[2]{reference}{global}{identity}{path}", '{', 0400) }, qr/invalid reference JSON/);
 reject_case('shared selected source', sub { link("$ROOT/$_[0]/images/$_[1]/rustup.c", "$ROOT/$_[0]/images/$_[1]/alias") or die $! }, qr/(?:link|members)/);
 reject_case('absent lock cannot be recreated', sub { unlink("$ROOT/$_[0]/coordination.lock") == 1 or die $! }, qr/existing maintenance lock/);
 reject_case('unknown store member', sub { rename("$ROOT/$_[0]/references", "$ROOT/$_[0]/unknown") or die $! }, qr/unknown store member/);

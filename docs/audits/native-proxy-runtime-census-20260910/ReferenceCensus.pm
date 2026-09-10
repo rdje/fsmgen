@@ -4,18 +4,50 @@ use strict;
 use warnings;
 use Digest::SHA qw(sha256_hex);
 use File::Spec;
+use JSON::PP ();
 use FSM::Test::ProcessSupervisor qw(repository_root);
 use ImageCustody;
 use RuntimeRecord;
 use Coordination;
+BEGIN {
+    # Load the fixed inactive dependency without changing the caller's @INC.
+    local @INC = (File::Spec->catdir(repository_root(), qw(docs audits
+        native-proxy-observation-records-20260910)), @INC);
+    require ObservationRecord;
+}
 
 my $ROOT = repository_root();
+my $JSON = JSON::PP->new->canonical->ascii->max_depth(8)->allow_nonref(0);
 
 # Inactive read-only reference semantics. Stale native IDs are preserved, never
 # reinterpreted as current custody or used to release an owner's storage hold.
 sub inspect_runtime_references {
     die "expected one inactive reference store\n" unless @_ == 1;
     return NativeProxyImageCoordination::_transaction($_[0], 'inspect_runtime_references');
+}
+
+sub inspect_references {
+    die "expected one inactive reference store\n" unless @_ == 1;
+    return NativeProxyImageCoordination::_transaction($_[0], 'inspect_references');
+}
+
+sub _decode_record {
+    my ($case, $bytes, $runtime_only) = @_;
+    # Keep the prior inspection's format and failure stages unchanged. Internal
+    # storage operations instead inspect both explicitly selected variants.
+    return NativeProxyRuntimeRecord::decode_runtime_record($case, $bytes) if $runtime_only;
+    die "expected bounded ASCII reference bytes\n"
+        unless defined($bytes) && !ref($bytes) && !utf8::is_utf8($bytes)
+            && length($bytes) <= 4096 && $bytes !~ /[^\x00-\x7f]/;
+    my $value = eval { $JSON->decode($bytes) };
+    die "invalid reference JSON\n" if $@;
+    die "expected explicit reference schema\n" unless ref($value) eq 'HASH'
+        && defined($value->{schema}) && !ref($value->{schema});
+    return NativeProxyRuntimeRecord::decode_runtime_record($case, $bytes)
+        if $value->{schema} eq 'fsmgen.test.rust_proxy_image_reference.v1';
+    return NativeProxyObservationRecord::decode_observation_record($case, $bytes)
+        if $value->{schema} eq 'fsmgen.test.rust_proxy_image_observation_reference.v1';
+    die "unknown reference schema\n";
 }
 
 sub _snapshot {
@@ -113,14 +145,14 @@ sub _closure {
 sub _inspect_locked {
     die "reference inspection requires the sealed coordinator\n"
         unless caller eq 'NativeProxyImageCoordination';
-    my ($case, $census) = @_;
+    my ($case, $census, $runtime_only) = @_;
     my (@sources, @references, %images);
     my %available = map { $_ => 1 } @{$census->{images}};
     my $ok = eval {
         for my $name (@{$census->{references}}) {
             my $source = NativeProxyImageCustody::_source("$ROOT/$case/references/$name", 0400, 4096);
             push @sources, $source;
-            my $record = NativeProxyRuntimeRecord::decode_runtime_record($case, $source->{bytes});
+            my $record = _decode_record($case, $source->{bytes}, $runtime_only);
             _filename_key($name, $record);
             my $key = $record->{image_key};
             die "reference names an absent image\n" unless $available{$key};
@@ -135,13 +167,16 @@ sub _inspect_locked {
     my $error = $@;
     my $close_error = '';
     for my $source (@sources) {
-        $close_error ||= "cannot close runtime reference: $!\n" unless close($source->{handle});
+        $close_error ||= 'cannot close ' . ($runtime_only ? 'runtime ' : '') . "reference: $!\n"
+            unless close($source->{handle});
     }
     die $error unless $ok;
     die $close_error if length($close_error);
     return {references => \@references,
         images => [map { $images{$_}{snapshot} } sort keys %images],
-        retention => 'all_valid_runtime_records_retained; stale_owners_not_released'};
+        retention => $runtime_only
+            ? 'all_valid_runtime_records_retained; stale_owners_not_released'
+            : 'all_valid_runtime_and_observation_records_retained; stale_owners_not_released'};
 }
 
 1;

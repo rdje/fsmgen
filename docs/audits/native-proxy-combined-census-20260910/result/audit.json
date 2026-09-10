@@ -1,0 +1,42 @@
+{
+  "all_allocation_rosters_disjoint_and_absent": true,
+  "allocations": 33,
+  "assertions": 35,
+  "falsifiers": [
+    "hidden failure",
+    "lost observation hold",
+    "mixed capacity omission",
+    "lost source inode join",
+    "runtime authorization",
+    "lost rejection",
+    "maintenance deleted observation pin",
+    "lost mutation detection",
+    "lost schema mutant",
+    "lost allocation",
+    "forbidden process"
+  ],
+  "late_changes": 5,
+  "limits": "Inert same-volume case stores only. No workspace/native owner is admitted, no observation is acquired or released, and no fixture/compiler/capture/contention process runs. Existing runtime-only inspection remains distinct; combined inspection and internal storage operations retain both variants.",
+  "mutants": [
+    "omitted content join",
+    "omitted filename join",
+    "inferred observation schema"
+  ],
+  "regressions": {
+    "maintenance": {
+      "assertions": 31,
+      "retired_paths": 59
+    },
+    "retirement": {
+      "assertions": 59,
+      "retired_paths": 174
+    },
+    "runtime-census": {
+      "assertions": 53,
+      "retired_paths": 25
+    }
+  },
+  "rejection_controls": 22,
+  "schema": "fsmgen.inactive_combined_reference_census_audit.v1",
+  "success": true
+}

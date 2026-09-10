@@ -1,0 +1,120 @@
+{
+  "all_copies_byte_exact": true,
+  "files": [
+    {
+      "destination": "docs/audits/native-proxy-combined-census-20260910/result/admission.jsonl",
+      "sha256": "e8e78ace00b3e75dca69248af5193a3c6bbda664625ab6fedf42f7352774f7e8",
+      "size_bytes": 4125,
+      "source": ".artifacts/logs/native-proxy-combined-census-20260910/admission.jsonl"
+    },
+    {
+      "destination": "docs/audits/native-proxy-combined-census-20260910/result/audit.json",
+      "sha256": "21aec7b23440c4e6f12031e3129148158855333ac04328473a6727f979967450",
+      "size_bytes": 1248,
+      "source": ".artifacts/logs/native-proxy-combined-census-20260910/audit.json"
+    },
+    {
+      "destination": "docs/audits/native-proxy-combined-census-20260910/result/book-review.json",
+      "sha256": "d2e1e453efb0d16a7a8bdb76599de0091c963593302d8673caddb1dcb067d47f",
+      "size_bytes": 158,
+      "source": ".artifacts/logs/native-proxy-combined-census-20260910/book-review.json"
+    },
+    {
+      "destination": "docs/audits/native-proxy-combined-census-20260910/result/maintenance-regression/admission.jsonl",
+      "sha256": "dfb4464098751fb76e72970cb395bac15d18d830182259b9827d64522312735e",
+      "size_bytes": 7259,
+      "source": ".artifacts/logs/native-proxy-combined-census-20260910/maintenance-regression/admission.jsonl"
+    },
+    {
+      "destination": "docs/audits/native-proxy-combined-census-20260910/result/maintenance-regression/qualification.json",
+      "sha256": "ee3c81bfd4234aa4880f0a60715ecc4f2871edb154572913fdae72a02b1e6052",
+      "size_bytes": 345186,
+      "source": ".artifacts/logs/native-proxy-combined-census-20260910/maintenance-regression/qualification.json"
+    },
+    {
+      "destination": "docs/audits/native-proxy-combined-census-20260910/result/maintenance-regression/qualify.stderr",
+      "sha256": "77935892dade6857681401f83e7d6149412c1e3d94eed387ff0c50af05206985",
+      "size_bytes": 91,
+      "source": ".artifacts/logs/native-proxy-combined-census-20260910/maintenance-regression/qualify.stderr"
+    },
+    {
+      "destination": "docs/audits/native-proxy-combined-census-20260910/result/maintenance-regression/qualify.tap",
+      "sha256": "37f3e459eea2affb9868d0bad083acf6abac25773b5a2042775ccaf204995ef1",
+      "size_bytes": 1302,
+      "source": ".artifacts/logs/native-proxy-combined-census-20260910/maintenance-regression/qualify.tap"
+    },
+    {
+      "destination": "docs/audits/native-proxy-combined-census-20260910/result/preflight-note.json",
+      "sha256": "83da939b9e2551303d4c37bcbb52d4f985cb26cea0d4c77d7c11e6b2ff401e4e",
+      "size_bytes": 357,
+      "source": ".artifacts/logs/native-proxy-combined-census-20260910/preflight-note.json"
+    },
+    {
+      "destination": "docs/audits/native-proxy-combined-census-20260910/result/qualification.json",
+      "sha256": "2f7c1df823e40f7c2885d331cd93145c54b28eafe35aff58aa2375b834297d59",
+      "size_bytes": 962984,
+      "source": ".artifacts/logs/native-proxy-combined-census-20260910/qualification.json"
+    },
+    {
+      "destination": "docs/audits/native-proxy-combined-census-20260910/result/qualify.stderr",
+      "sha256": "1e543709eee63bb2c7670418b5aeb97b91df0bf80ccb81b75c84aac5ee5a81f3",
+      "size_bytes": 91,
+      "source": ".artifacts/logs/native-proxy-combined-census-20260910/qualify.stderr"
+    },
+    {
+      "destination": "docs/audits/native-proxy-combined-census-20260910/result/qualify.tap",
+      "sha256": "e6d627462dd7183bf9f241d3ab47049f117ed9304bfe6de425c970e6a772f762",
+      "size_bytes": 1454,
+      "source": ".artifacts/logs/native-proxy-combined-census-20260910/qualify.tap"
+    },
+    {
+      "destination": "docs/audits/native-proxy-combined-census-20260910/result/regression-restoration.json",
+      "sha256": "deef26e403c869e0e000588a4133b1b0f916c0be2770e87d353a2827fc584636",
+      "size_bytes": 2813,
+      "source": ".artifacts/logs/native-proxy-combined-census-20260910/regression-restoration.json"
+    },
+    {
+      "destination": "docs/audits/native-proxy-combined-census-20260910/result/retirement-regression/admission.jsonl",
+      "sha256": "4bbc704a4ae6c45955850191ff7a792d82cee76f795abab0807fb1dc40771fc1",
+      "size_bytes": 21286,
+      "source": ".artifacts/logs/native-proxy-combined-census-20260910/retirement-regression/admission.jsonl"
+    },
+    {
+      "destination": "docs/audits/native-proxy-combined-census-20260910/result/retirement-regression/qualification.json",
+      "sha256": "011d9441c6974197803f7b21e74d90c0295b25797853c969a614bf3994b61d5a",
+      "size_bytes": 1335062,
+      "source": ".artifacts/logs/native-proxy-combined-census-20260910/retirement-regression/qualification.json"
+    },
+    {
+      "destination": "docs/audits/native-proxy-combined-census-20260910/result/retirement-regression/qualify.stderr",
+      "sha256": "ba7d860882540664f6c018d8b46e2ee91baf7b3ad370f0660145bcbb8c3b5299",
+      "size_bytes": 91,
+      "source": ".artifacts/logs/native-proxy-combined-census-20260910/retirement-regression/qualify.stderr"
+    },
+    {
+      "destination": "docs/audits/native-proxy-combined-census-20260910/result/retirement-regression/qualify.tap",
+      "sha256": "c1d1b0ecb59d959109730ff39c44fa21250ccdd267220eb920d1b8e5376627e8",
+      "size_bytes": 2623,
+      "source": ".artifacts/logs/native-proxy-combined-census-20260910/retirement-regression/qualify.tap"
+    },
+    {
+      "destination": "docs/audits/native-proxy-combined-census-20260910/result/runtime-census-regression/qualification.json",
+      "sha256": "b8f603e31dcc66a8d6ff092b2ebbc82382416d3cd26e011de76fb3ef7ae9e547",
+      "size_bytes": 37759,
+      "source": ".artifacts/logs/native-proxy-combined-census-20260910/runtime-census-regression/qualification.json"
+    },
+    {
+      "destination": "docs/audits/native-proxy-combined-census-20260910/result/runtime-census-regression/qualify.stderr",
+      "sha256": "924c60970a704fa3c74766cdc523fedb041d6031eefdaf4f0b5d4f9143df0ada",
+      "size_bytes": 91,
+      "source": ".artifacts/logs/native-proxy-combined-census-20260910/runtime-census-regression/qualify.stderr"
+    },
+    {
+      "destination": "docs/audits/native-proxy-combined-census-20260910/result/runtime-census-regression/qualify.tap",
+      "sha256": "39f17a4bbd88193df0133ea00fcec31f8195fbbfd7de12507f9d56f6f8e12592",
+      "size_bytes": 2505,
+      "source": ".artifacts/logs/native-proxy-combined-census-20260910/runtime-census-regression/qualify.tap"
+    }
+  ],
+  "schema": "fsmgen.combined_census_recovery.v1"
+}
