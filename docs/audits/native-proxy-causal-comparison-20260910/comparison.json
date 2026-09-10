@@ -1,0 +1,149 @@
+{
+  "failed_perl": {
+    "clock_domain": "retained_policy_timestamp_only",
+    "literal_line": 6237,
+    "literal_raw_line": {
+      "bytes": 1059,
+      "sha256": "42e00d48d699a6729824144168af52c4dac2bd22c2dccda32e8a9fd2eb6520e8"
+    },
+    "path": ".artifacts/tmp/process-supervisor-tests/fsmgen-Y7FyEc4L/rust-tools/rustup",
+    "phases": {
+      "queued": {
+        "line": 2367,
+        "raw_line": {
+          "bytes": 865,
+          "sha256": "79c5ba57e18fcf944d442e319757fff9d5da9bfc1d6c97ba45f30b1036d0fdd3"
+        },
+        "timestamp": "2026-09-09 20:54:26.649954+0200"
+      },
+      "started": {
+        "line": 5628,
+        "raw_line": {
+          "bytes": 877,
+          "sha256": "85226119d1fb41bb01d0937cd1f59447a4b8f5b28e44a6791e290d72761a1cc7"
+        },
+        "timestamp": "2026-09-09 20:54:41.603439+0200"
+      },
+      "wakeups": {
+        "line": 6242,
+        "raw_line": {
+          "bytes": 893,
+          "sha256": "0d1d227026ad1226f5688f7686ea69f04868373d441bed79e989b68fc1bb1241"
+        },
+        "timestamp": "2026-09-09 20:54:41.808651+0200"
+      }
+    },
+    "queue_to_start_us": 14953485,
+    "start_to_wakeup_us": 205212,
+    "token": "c70948274239ac01"
+  },
+  "failed_policy": {
+    "bytes": 7467562,
+    "sha256": "bcd04952de64ccde9a1e952ed34cefb70c50aed602ce2d793f4328595fbe0034"
+  },
+  "failed_retained_rows": 8547,
+  "interpretation": {
+    "historical_queue_contention": "consistent with previously qualified serial queue evidence",
+    "kernel_sample": "not_collected_in_native_run",
+    "loaded_image_attestation": "not_provided",
+    "native_cures_historical_startup": "not_established; workload and preceding queue state differ",
+    "native_exec_contract": "qualified by committed source/birth/TAP evidence",
+    "native_own_scan_shortening": "refuted for these retained observations",
+    "native_policy_bypass": "refuted by literal joined queue/start/wakeup records",
+    "new_original_or_collector": "not_launched",
+    "original_clock_conversion": "not_performed",
+    "raw_policy_durability": "private ignored streams; exact pins and projections retained"
+  },
+  "passed_policy": {
+    "bytes": 3709789,
+    "sha256": "bc5a96e9db96f87ad573a318a44c8e4316d1806e76935a436acaa727c4116d20"
+  },
+  "passed_retained_rows": 4154,
+  "passing_native": [
+    {
+      "clock_domain": "retained_policy_timestamp_only",
+      "literal_line": 1892,
+      "literal_raw_line": {
+        "bytes": 1059,
+        "sha256": "245a82637cf0799c8756d28f5f74c2892abd7a8653a2dc7bb1ad4b5d289ac28b"
+      },
+      "mode": "proxy_nonzero",
+      "path": ".artifacts/tmp/process-supervisor-tests/fsmgen-BgloFnVu/rust-tools/rustup",
+      "phases": {
+        "queued": {
+          "line": 720,
+          "raw_line": {
+            "bytes": 865,
+            "sha256": "a4dba228ab448609ca423893e432d0ae354d6da3102a49832d062a2a504597c7"
+          },
+          "timestamp": "2026-09-10 13:26:19.953573+0200"
+        },
+        "started": {
+          "line": 721,
+          "raw_line": {
+            "bytes": 877,
+            "sha256": "03e1f4e6b007b6c4288041af2dbc01c39c8cee33f46afb39244dd18ad2e02944"
+          },
+          "timestamp": "2026-09-10 13:26:19.953622+0200"
+        },
+        "wakeups": {
+          "line": 1898,
+          "raw_line": {
+            "bytes": 893,
+            "sha256": "6671d5cf0789a92a24133de6d03016709dab17ff2a0f13dd5745c715059b9e9b"
+          },
+          "timestamp": "2026-09-10 13:26:20.231530+0200"
+        }
+      },
+      "queue_to_start_us": 49,
+      "start_to_wakeup_us": 277908,
+      "token": "4099d6255feed48d"
+    },
+    {
+      "clock_domain": "retained_policy_timestamp_only",
+      "literal_line": 2238,
+      "literal_raw_line": {
+        "bytes": 1059,
+        "sha256": "8480def4d923f5e312abab3380f46564639fe4b6713885919fb0986030eaafe6"
+      },
+      "mode": "proxy_decoy",
+      "path": ".artifacts/tmp/process-supervisor-tests/fsmgen-vIOv1Kqe/rust-tools/rustup",
+      "phases": {
+        "queued": {
+          "line": 1989,
+          "raw_line": {
+            "bytes": 865,
+            "sha256": "c25a417fdec03005a0ef5dbe979c8e6a089694d084ce59ed114a52a5df388428"
+          },
+          "timestamp": "2026-09-10 13:26:20.478397+0200"
+        },
+        "started": {
+          "line": 1990,
+          "raw_line": {
+            "bytes": 877,
+            "sha256": "79073a0d8dfaa366967b05d45b0c43372d1cb5d8eacf8ba348fa8246bda35f8f"
+          },
+          "timestamp": "2026-09-10 13:26:20.478484+0200"
+        },
+        "wakeups": {
+          "line": 2244,
+          "raw_line": {
+            "bytes": 893,
+            "sha256": "c40223ea8b8eee2399b553d068b44ef82a1fa5501d63d3a57c54ad0f1b390e33"
+          },
+          "timestamp": "2026-09-10 13:26:20.715692+0200"
+        }
+      },
+      "queue_to_start_us": 87,
+      "start_to_wakeup_us": 237208,
+      "token": "ebf8c93369254360"
+    }
+  ],
+  "rejected_claims": [
+    "changed_source_path",
+    "changed_policy_token",
+    "native_avoids_policy_queue",
+    "native_shortens_own_scan"
+  ],
+  "schema": "fsmgen.native_proxy_retained_causal_comparison.v1"
+}

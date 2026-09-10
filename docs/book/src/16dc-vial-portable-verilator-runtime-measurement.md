@@ -1084,8 +1084,11 @@ paths in the same retained daemon records connect those producers to their
 queue, work-start and waiter-wakeup records. The original, collector and
 observed fixture births are independently absent afterward. This supplies
 observed native qualification for that run; it does not establish a repair
-for the earlier startup failure. The tracked audit preserves original and
-source evidence. Raw daemon output remains private with a pinned digest and
+for the earlier startup failure. The retained native images still queue for
+policy scanning. Their short queue waits differ from the long wait in the
+failed run; their own scans are not shorter in these observations. Native
+substitution therefore does not establish policy bypass or a contention fix.
+The tracked audit preserves original and source evidence. Raw daemon output remains private with a pinned digest and
 an explicit availability gap; complete delivery and loaded-image attestation
 remain unproved.
 
