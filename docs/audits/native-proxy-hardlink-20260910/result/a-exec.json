@@ -1,0 +1,28 @@
+{
+  "executable": ".artifacts/tmp/process-supervisor-tests/fsmgen-HardlinkA20260910/rust-tools/rustup",
+  "identity": {
+    "pid": 9507,
+    "ppid": 9401,
+    "ruid": 501,
+    "start_sec": 1789044711,
+    "start_usec": 920157,
+    "uid": 501
+  },
+  "monotonic_ns": 396713802074708,
+  "source_identity": {
+    "binary": {
+      "device": 16777244,
+      "inode": 76712085,
+      "path": ".artifacts/tmp/process-supervisor-tests/fsmgen-HardlinkA20260910/rust-tools/rustup",
+      "sha256": "1c5f4010ca29a66de933b98429407055ba714854d77ff6c8276b2926392e3e2b",
+      "size_bytes": 50040
+    },
+    "c": {
+      "device": 16777244,
+      "inode": 76712047,
+      "path": ".artifacts/tmp/process-supervisor-tests/fsmgen-HardlinkA20260910/rust-tools/rustup.c",
+      "sha256": "6349a566c74b9645543699d8158092b6618678f8c153c56c423d454524bef27f",
+      "size_bytes": 710
+    }
+  }
+}

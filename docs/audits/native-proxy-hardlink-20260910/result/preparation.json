@@ -1,0 +1,87 @@
+{
+  "control": "held_path_observation_only",
+  "control_source_sha256": "0cd6f9ffc129d25ea51aab69a5536ac8d48dc3b4a79a6f72b7f09148094beaf3",
+  "original_source_sha256": "be8b66690a93c8432c0f33094ac15c26f7fef0940c18f6935fd5b0994d9f4ede",
+  "prepared": {
+    "compilation": {
+      "capture_limit_bytes": 4096,
+      "cleanup": {
+        "containment": "rust_proxy_compiler_group",
+        "group_gone": 1,
+        "kill_sent": 0,
+        "leader_reaped": 1,
+        "leader_started": 1,
+        "surviving_descendants": 0,
+        "term_sent": 0
+      },
+      "diagnostic": "supervised process completed successfully",
+      "exec_error": null,
+      "exec_failed": 0,
+      "exec_handoff_monotonic_ns": 396706569599000,
+      "exec_to_first_output_ns": null,
+      "execution_ns": 112123000,
+      "exit_code": 0,
+      "finished_monotonic_ns": 396706681722000,
+      "first_output_monotonic_ns": null,
+      "first_output_to_exit_ns": null,
+      "ok": 1,
+      "output_limited": 0,
+      "schema": "fsmgen.test.rust_proxy_compilation.v1",
+      "schema_version": 1,
+      "signal": 0,
+      "spawn_to_exec_ns": 2896000,
+      "stage": "compile_proxy",
+      "started_monotonic_ns": 396706566703000,
+      "status": "success",
+      "stderr": "",
+      "stderr_bytes": 0,
+      "stdout": "",
+      "stdout_bytes": 0,
+      "timed_out": 0,
+      "timeout_seconds": 10
+    },
+    "compilation_argv": [
+      "/Library/Developer/CommandLineTools/usr/bin/clang",
+      "--no-default-config",
+      "-isysroot",
+      "/Library/Developer/CommandLineTools/SDKs/MacOSX26.5.sdk",
+      "-arch",
+      "arm64",
+      "-mmacosx-version-min=11.0",
+      "-O2",
+      "-Wall",
+      "-Wextra",
+      "-Werror",
+      "-fno-builtin",
+      "-fno-modules",
+      ".artifacts/tmp/process-supervisor-tests/fsmgen-HardlinkBase20260910/rust-tools/rustup.c",
+      "-o",
+      ".artifacts/tmp/process-supervisor-tests/fsmgen-HardlinkBase20260910/rust-tools/rustup"
+    ],
+    "diagnostic": "immutable proxy fixture prepared",
+    "executable": ".artifacts/tmp/process-supervisor-tests/fsmgen-HardlinkBase20260910/rust-tools/rustup",
+    "failure_stage": null,
+    "implementation": "native",
+    "ok": 1,
+    "schema": "fsmgen.test.rust_proxy_fixture.v1",
+    "selection_reason": "darwin_arm64_command_line_tools",
+    "sources": [
+      {
+        "device": 16777244,
+        "inode": 76712047,
+        "path": ".artifacts/tmp/process-supervisor-tests/fsmgen-HardlinkBase20260910/rust-tools/rustup.c",
+        "sha256": "6349a566c74b9645543699d8158092b6618678f8c153c56c423d454524bef27f",
+        "size_bytes": 710
+      },
+      {
+        "device": 16777244,
+        "inode": 76712085,
+        "path": ".artifacts/tmp/process-supervisor-tests/fsmgen-HardlinkBase20260910/rust-tools/rustup",
+        "sha256": "1c5f4010ca29a66de933b98429407055ba714854d77ff6c8276b2926392e3e2b",
+        "size_bytes": 50040
+      }
+    ],
+    "status": "success"
+  },
+  "schema": "fsmgen.hardlink_control_preparation.v1"
+}

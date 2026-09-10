@@ -1,0 +1,38 @@
+{
+  "audit_sha256": "183bed83b0bfabb20665f0a4be3a8dd15e4f68cf32b36a3479323ec9148fb3cf",
+  "independently_absent_identities": [
+    {
+      "pid": 9460,
+      "ppid": 9401,
+      "ruid": 501,
+      "start_sec": 1789044711,
+      "start_usec": 28333,
+      "uid": 501
+    },
+    {
+      "pid": 9507,
+      "ppid": 9401,
+      "ruid": 501,
+      "start_sec": 1789044711,
+      "start_usec": 920157,
+      "uid": 501
+    },
+    {
+      "pid": 9505,
+      "ppid": 9401,
+      "ruid": 501,
+      "start_sec": 1789044711,
+      "start_usec": 860658,
+      "uid": 501
+    }
+  ],
+  "new_fixture_invocations": 0,
+  "remaining_workspaces": [],
+  "retired_workspaces": [
+    ".artifacts/tmp/process-supervisor-tests/fsmgen-HardlinkA20260910",
+    ".artifacts/tmp/process-supervisor-tests/fsmgen-HardlinkB20260910",
+    ".artifacts/tmp/process-supervisor-tests/fsmgen-HardlinkBase20260910"
+  ],
+  "schema": "fsmgen.native_hardlink_retirement.v1",
+  "surviving_link_bytes_verified_after_each_retirement": true
+}

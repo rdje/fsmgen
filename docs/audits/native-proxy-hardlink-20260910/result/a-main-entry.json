@@ -1,0 +1,12 @@
+{
+  "identity": {
+    "pid": 9507,
+    "ppid": 9401,
+    "ruid": 501,
+    "start_sec": 1789044711,
+    "start_usec": 920157,
+    "uid": 501
+  },
+  "marker": "CONTROL_READY\n",
+  "observed_monotonic_ns": 396714110500375
+}

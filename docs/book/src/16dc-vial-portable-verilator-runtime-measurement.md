@@ -1634,11 +1634,14 @@ Compiler temporary files and caches stay in the private fixture directory.
 The generated C source includes its selected mode, so retained source bytes
 remain meaningful without the original compiler process.
 
-Image reuse remains experimental. Task `.15.7.3.12.2.1` admits a separate
-held native control to check whether hard links preserve the private executable
-path and surviving image bytes. The admission permits a first invocation and
-a reuse invocation, stopping at the first unexpected result. It does not run
-the original fixture or establish scan avoidance or historical startup repair.
+The held-control experiment in `.15.7.3.12.2.2` rejects private hard-link
+reuse under the current capture contract. The same native process first
+reported private executable path A, then path B after a second hard link was
+created and accessed. Both paths still named the same inode and image bytes.
+The experiment stopped before the reuse invocation and retired its owned
+workspaces after independent checks. This counterexample requires a different
+identity design; it establishes neither scan avoidance nor historical startup
+repair. The original fixture was not run in that experiment.
 
 The helper checks bounded regular source/output files and the native header,
 then sets executable permissions through the admitted open file handle. A

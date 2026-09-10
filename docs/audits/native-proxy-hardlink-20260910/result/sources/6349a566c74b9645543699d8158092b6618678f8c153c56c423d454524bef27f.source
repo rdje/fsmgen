@@ -1,0 +1,28 @@
+#define PROXY_NONZERO 1
+/* Isolated path-observation control, not the original Rust negative fixture. */
+#include <unistd.h>
+
+#if !PROXY_NONZERO
+#error This control requires the admitted preparation mode.
+#endif
+
+static int equal(const char *left, const char *right)
+{
+    while (*left && *left == *right) {
+        ++left;
+        ++right;
+    }
+    return *left == *right;
+}
+
+int main(int argc, char **argv)
+{
+    static const char ready[] = "CONTROL_READY\n";
+    if (argc != 3 || !equal(argv[1], "which") || !equal(argv[2], "cargo"))
+        return 97;
+    if (write(1, ready, sizeof(ready) - 1) != (ssize_t)(sizeof(ready) - 1))
+        return 94;
+    if (sleep(1) != 0)
+        return 95;
+    return 9;
+}

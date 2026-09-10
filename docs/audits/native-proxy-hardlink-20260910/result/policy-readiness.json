@@ -1,0 +1,14 @@
+{
+  "complete_coverage": "unproved",
+  "identity": {
+    "pid": 9505,
+    "ppid": 9401,
+    "ruid": 501,
+    "start_sec": 1789044711,
+    "start_usec": 860658,
+    "uid": 501
+  },
+  "prepared_ns": 396713219263583,
+  "scope": "daemon_context",
+  "subscription_readiness": "unproved"
+}

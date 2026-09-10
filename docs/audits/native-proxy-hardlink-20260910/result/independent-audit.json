@@ -1,0 +1,589 @@
+{
+  "admission_commit": "f323894fc1cbc91498434bbeb600cc922140124c",
+  "changed_native_path": {
+    "expected": ".artifacts/tmp/process-supervisor-tests/fsmgen-HardlinkA20260910/rust-tools/rustup",
+    "identity": {
+      "pid": 9507,
+      "ppid": 9401,
+      "ruid": 501,
+      "start_sec": 1789044711,
+      "start_usec": 920157,
+      "uid": 501
+    },
+    "observed": ".artifacts/tmp/process-supervisor-tests/fsmgen-HardlinkB20260910/rust-tools/rustup"
+  },
+  "cleanup": "requires separate exact retirement after this audit",
+  "compiler_group_cleanup": "successful retained compiler result; compiler birth not independently sampled",
+  "first_failure_stopped_sequence": true,
+  "first_native_path": {
+    "executable": ".artifacts/tmp/process-supervisor-tests/fsmgen-HardlinkA20260910/rust-tools/rustup",
+    "identity": {
+      "pid": 9507,
+      "ppid": 9401,
+      "ruid": 501,
+      "start_sec": 1789044711,
+      "start_usec": 920157,
+      "uid": 501
+    },
+    "monotonic_ns": 396713802074708,
+    "source_identity": {
+      "binary": {
+        "device": 16777244,
+        "inode": 76712085,
+        "path": ".artifacts/tmp/process-supervisor-tests/fsmgen-HardlinkA20260910/rust-tools/rustup",
+        "sha256": "1c5f4010ca29a66de933b98429407055ba714854d77ff6c8276b2926392e3e2b",
+        "size_bytes": 50040
+      },
+      "c": {
+        "device": 16777244,
+        "inode": 76712047,
+        "path": ".artifacts/tmp/process-supervisor-tests/fsmgen-HardlinkA20260910/rust-tools/rustup.c",
+        "sha256": "6349a566c74b9645543699d8158092b6618678f8c153c56c423d454524bef27f",
+        "size_bytes": 710
+      }
+    }
+  },
+  "held_native_invocations": 1,
+  "independently_absent_identities": [
+    {
+      "pid": 9460,
+      "ppid": 9401,
+      "ruid": 501,
+      "start_sec": 1789044711,
+      "start_usec": 28333,
+      "uid": 501
+    },
+    {
+      "pid": 9507,
+      "ppid": 9401,
+      "ruid": 501,
+      "start_sec": 1789044711,
+      "start_usec": 920157,
+      "uid": 501
+    },
+    {
+      "pid": 9505,
+      "ppid": 9401,
+      "ruid": 501,
+      "start_sec": 1789044711,
+      "start_usec": 860658,
+      "uid": 501
+    }
+  ],
+  "interpretation": {
+    "cold_host_state": "unproved",
+    "cross_clock_conversion": "not_performed",
+    "historical_startup_repair": "unproved",
+    "kernel_internal_path_cache_mechanism": "not_established",
+    "loaded_image_attestation": "not_provided",
+    "policy_delivery": "unproved",
+    "raw_policy_durability": "private ignored bytes; exact pin retained",
+    "reuse_execution": "not_attempted after first failure",
+    "scan_avoidance": "not_claimed",
+    "stable_private_native_path": "refuted by this admitted held control"
+  },
+  "literal_policy_path_rows": [
+    {
+      "line": 1291,
+      "path": ".artifacts/tmp/process-supervisor-tests/fsmgen-HardlinkA20260910/rust-tools/rustup",
+      "raw_line": {
+        "bytes": 948,
+        "sha256": "af3e24e2f28d0f90add37f2abf0a3a5a7a7fdcb75c6fc71f7661ed05981dd43c"
+      },
+      "timestamp": "2026-09-10 14:51:52.592055+0200",
+      "tokens": []
+    },
+    {
+      "line": 1294,
+      "path": ".artifacts/tmp/process-supervisor-tests/fsmgen-HardlinkA20260910/rust-tools/rustup",
+      "raw_line": {
+        "bytes": 948,
+        "sha256": "71404c622f192986748ac1444da2cf9b24b2218cca35fe40f433eb1d68731f41"
+      },
+      "timestamp": "2026-09-10 14:51:52.592085+0200",
+      "tokens": []
+    },
+    {
+      "line": 1299,
+      "path": ".artifacts/tmp/process-supervisor-tests/fsmgen-HardlinkA20260910/rust-tools/rustup",
+      "raw_line": {
+        "bytes": 992,
+        "sha256": "bb76a8b106d288d4db0b2f95f6558a68899938e99600ab60bf6c8b2c8fec319e"
+      },
+      "timestamp": "2026-09-10 14:51:52.592113+0200",
+      "tokens": []
+    },
+    {
+      "line": 1351,
+      "path": ".artifacts/tmp/process-supervisor-tests/fsmgen-HardlinkA20260910/rust-tools/rustup",
+      "raw_line": {
+        "bytes": 948,
+        "sha256": "37a22496b749cf91830d22ea21fdbce08bcf6776397b1381fb4446f82cf932a7"
+      },
+      "timestamp": "2026-09-10 14:51:52.593311+0200",
+      "tokens": []
+    },
+    {
+      "line": 1354,
+      "path": ".artifacts/tmp/process-supervisor-tests/fsmgen-HardlinkA20260910/rust-tools/rustup",
+      "raw_line": {
+        "bytes": 992,
+        "sha256": "79b8976361cec7118de93e01c910fd53d0d82a0efc6a8156a9397b0271b1851a"
+      },
+      "timestamp": "2026-09-10 14:51:52.593342+0200",
+      "tokens": []
+    },
+    {
+      "line": 1445,
+      "path": ".artifacts/tmp/process-supervisor-tests/fsmgen-HardlinkA20260910/rust-tools/rustup",
+      "raw_line": {
+        "bytes": 948,
+        "sha256": "84f757641748c3ad0d3507ac43939f04f3e1d49a9b367705b2663e089bdd56e3"
+      },
+      "timestamp": "2026-09-10 14:51:52.730179+0200",
+      "tokens": []
+    },
+    {
+      "line": 1451,
+      "path": ".artifacts/tmp/process-supervisor-tests/fsmgen-HardlinkA20260910/rust-tools/rustup",
+      "raw_line": {
+        "bytes": 1010,
+        "sha256": "855adc6a36cb61d18575206e77f75ed4725e0685ae5c00b286fd91f4aa943965"
+      },
+      "timestamp": "2026-09-10 14:51:52.730360+0200",
+      "tokens": []
+    },
+    {
+      "line": 1506,
+      "path": ".artifacts/tmp/process-supervisor-tests/fsmgen-HardlinkA20260910/rust-tools/rustup",
+      "raw_line": {
+        "bytes": 1068,
+        "sha256": "f04dc6f8a69a892c7dc832bb9ef84db5ec81eac61df787b0af17f290213e799b"
+      },
+      "timestamp": "2026-09-10 14:51:52.806806+0200",
+      "tokens": [
+        "103e65d984466c3e"
+      ]
+    }
+  ],
+  "original_invocations": 0,
+  "outcome": {
+    "cold_host_state": "unproved",
+    "collector_result": {
+      "capture_root_sha256": "3ba6cd8bb2d036c2db282d96dab45dd0be79b4dbdc8810a200cb758b74005480",
+      "command": [
+        "/usr/bin/log",
+        "stream",
+        "--style",
+        "ndjson",
+        "--level",
+        "debug",
+        "--timeout",
+        "240",
+        "--predicate",
+        "process == \"syspolicyd\""
+      ],
+      "complete_coverage": "unproved",
+      "failures": {},
+      "finished_ns": 396715121070250,
+      "forced_kill": false,
+      "identity": {
+        "pid": 9505,
+        "ppid": 9401,
+        "ruid": 501,
+        "start_sec": 1789044711,
+        "start_usec": 860658,
+        "uid": 501
+      },
+      "leader_reaped": true,
+      "missing_records": "unknown",
+      "outputs": {
+        "stderr": {
+          "bytes": 0,
+          "hash_complete": true,
+          "path": ".artifacts/logs/native-proxy-hardlink-20260910/policy/policy.stderr",
+          "path_identity_matches": true,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "stdout": {
+          "bytes": 2758960,
+          "hash_complete": true,
+          "path": ".artifacts/logs/native-proxy-hardlink-20260910/policy/policy.stdout",
+          "path_identity_matches": true,
+          "sha256": "23671c6610a3632561b916c74709f56dba2f28ab46d1a48a0d6623a31541537b"
+        }
+      },
+      "prepared_ns": 396713219263583,
+      "producer_sha256": "ed3db21b5fffbed8073fbbe7d80982062e914c974f2f5512e781ce4f9eb8812c",
+      "returncode": 0,
+      "schema": "fsmgen.fixture_policy_log.v1",
+      "scope": "daemon_context",
+      "started_ns": 396713160251583,
+      "subscription_readiness": "unproved",
+      "unobserved_descendants": "unknown"
+    },
+    "completed_sequence": false,
+    "control": "held_path_observation_only",
+    "errors": [
+      {
+        "operation": {
+          "message": "native executable path differs from the invoked private alias",
+          "message_truncated": false,
+          "type": "ValueError"
+        },
+        "role": "a"
+      },
+      {
+        "experiment": {
+          "message": "native executable path differs from the invoked private alias",
+          "message_truncated": false,
+          "type": "ValueError"
+        }
+      }
+    ],
+    "historical_startup_repair": "unproved",
+    "independently_absent_identities": [
+      {
+        "pid": 9460,
+        "ppid": 9401,
+        "ruid": 501,
+        "start_sec": 1789044711,
+        "start_usec": 28333,
+        "uid": 501
+      },
+      {
+        "pid": 9507,
+        "ppid": 9401,
+        "ruid": 501,
+        "start_sec": 1789044711,
+        "start_usec": 920157,
+        "uid": 501
+      },
+      {
+        "pid": 9505,
+        "ppid": 9401,
+        "ruid": 501,
+        "start_sec": 1789044711,
+        "start_usec": 860658,
+        "uid": 501
+      }
+    ],
+    "original_invocations": 0,
+    "policy_delivery": "unproved",
+    "qualification": "pending_independent_audit",
+    "results": {
+      "a": {
+        "leader_reaped": true,
+        "native_wait_status": 2304,
+        "pid": 9507,
+        "released": true,
+        "returncode": 9,
+        "timeout": false,
+        "unobserved_descendants": "unknown"
+      },
+      "prepare": {
+        "leader_reaped": true,
+        "native_wait_status": 0,
+        "pid": 9460,
+        "released": true,
+        "returncode": 0,
+        "timeout": false,
+        "unobserved_descendants": "unknown"
+      }
+    },
+    "roles_reserved": [
+      "prepare",
+      "a"
+    ],
+    "scan_avoidance": "not_claimed",
+    "unobserved_descendants": "unknown",
+    "workspaces_remaining": {
+      "a": ".artifacts/tmp/process-supervisor-tests/fsmgen-HardlinkA20260910",
+      "b": ".artifacts/tmp/process-supervisor-tests/fsmgen-HardlinkB20260910",
+      "base": ".artifacts/tmp/process-supervisor-tests/fsmgen-HardlinkBase20260910"
+    }
+  },
+  "plan": {
+    "bytes": 6939,
+    "sha256": "8e01756dc4797e28ab889ded1e051f16f3e7ff6eaf621d3d7771d85433b3caaa"
+  },
+  "policy_rows": 3113,
+  "rejected_counterfactuals": [
+    "wrong_status",
+    "missing_reap",
+    "hidden_second_invocation",
+    "unchanged_path",
+    "changed_birth",
+    "different_inode",
+    "changed_archived_image"
+  ],
+  "remaining_owned_workspaces": {
+    "a": {
+      "entries": [
+        {
+          "bytes": null,
+          "device": 16777244,
+          "directory": true,
+          "inode": 76712097,
+          "mode": 448,
+          "path": ".artifacts/tmp/process-supervisor-tests/fsmgen-HardlinkA20260910/rust-tools"
+        },
+        {
+          "bytes": 710,
+          "device": 16777244,
+          "directory": false,
+          "inode": 76712047,
+          "mode": 256,
+          "path": ".artifacts/tmp/process-supervisor-tests/fsmgen-HardlinkA20260910/rust-tools/rustup.c"
+        },
+        {
+          "bytes": 50040,
+          "device": 16777244,
+          "directory": false,
+          "inode": 76712085,
+          "mode": 320,
+          "path": ".artifacts/tmp/process-supervisor-tests/fsmgen-HardlinkA20260910/rust-tools/rustup"
+        }
+      ],
+      "identity": {
+        "device": 16777244,
+        "inode": 76712095,
+        "path": ".artifacts/tmp/process-supervisor-tests/fsmgen-HardlinkA20260910"
+      }
+    },
+    "b": {
+      "entries": [
+        {
+          "bytes": null,
+          "device": 16777244,
+          "directory": true,
+          "inode": 76712252,
+          "mode": 448,
+          "path": ".artifacts/tmp/process-supervisor-tests/fsmgen-HardlinkB20260910/rust-tools"
+        },
+        {
+          "bytes": 710,
+          "device": 16777244,
+          "directory": false,
+          "inode": 76712047,
+          "mode": 256,
+          "path": ".artifacts/tmp/process-supervisor-tests/fsmgen-HardlinkB20260910/rust-tools/rustup.c"
+        },
+        {
+          "bytes": 50040,
+          "device": 16777244,
+          "directory": false,
+          "inode": 76712085,
+          "mode": 320,
+          "path": ".artifacts/tmp/process-supervisor-tests/fsmgen-HardlinkB20260910/rust-tools/rustup"
+        }
+      ],
+      "identity": {
+        "device": 16777244,
+        "inode": 76712250,
+        "path": ".artifacts/tmp/process-supervisor-tests/fsmgen-HardlinkB20260910"
+      }
+    },
+    "base": {
+      "entries": [
+        {
+          "bytes": null,
+          "device": 16777244,
+          "directory": true,
+          "inode": 76712046,
+          "mode": 448,
+          "path": ".artifacts/tmp/process-supervisor-tests/fsmgen-HardlinkBase20260910/rust-tools"
+        },
+        {
+          "bytes": null,
+          "device": 16777244,
+          "directory": true,
+          "inode": 76712048,
+          "mode": 448,
+          "path": ".artifacts/tmp/process-supervisor-tests/fsmgen-HardlinkBase20260910/rust-tools/compiler-temp"
+        },
+        {
+          "bytes": 710,
+          "device": 16777244,
+          "directory": false,
+          "inode": 76712047,
+          "mode": 256,
+          "path": ".artifacts/tmp/process-supervisor-tests/fsmgen-HardlinkBase20260910/rust-tools/rustup.c"
+        },
+        {
+          "bytes": 50040,
+          "device": 16777244,
+          "directory": false,
+          "inode": 76712085,
+          "mode": 320,
+          "path": ".artifacts/tmp/process-supervisor-tests/fsmgen-HardlinkBase20260910/rust-tools/rustup"
+        },
+        {
+          "bytes": null,
+          "device": 16777244,
+          "directory": true,
+          "inode": 76712049,
+          "mode": 448,
+          "path": ".artifacts/tmp/process-supervisor-tests/fsmgen-HardlinkBase20260910/rust-tools/compiler-cache"
+        }
+      ],
+      "identity": {
+        "device": 16777244,
+        "inode": 76711876,
+        "path": ".artifacts/tmp/process-supervisor-tests/fsmgen-HardlinkBase20260910"
+      }
+    }
+  },
+  "retained_manifest": {
+    "a-after-alias-b-access-unexpected.json": {
+      "bytes": 346,
+      "sha256": "5ba1a1d1c9a7a06a85477b3629bd304124ce4c2330121b866ca2f34357dd8ce7"
+    },
+    "a-exec.json": {
+      "bytes": 873,
+      "sha256": "c365ff04dac14dad04a9c69033921ae10d82b3735823d87e41273dcafee25acb"
+    },
+    "a-main-entry.json": {
+      "bytes": 221,
+      "sha256": "e41e0f13464b2960b8f461b6374ef35fc5996527793cbc91342539ea9ba49ac8"
+    },
+    "a/test.stderr": {
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "a/test.tap": {
+      "bytes": 14,
+      "sha256": "ea84fb86d905252e7081faf83b2396714ff93e6df5cbf6f6737fb949b18ade28"
+    },
+    "admission.json": {
+      "bytes": 6053,
+      "sha256": "2c18ec1f3eff91de78dcfa3850abb275f4a6691a85e9fe09ae9c3ce98603c998"
+    },
+    "alias-a.json": {
+      "bytes": 733,
+      "sha256": "a58a0a867d9dae585bcdd71fe76768f0dfbe3cc4d36aa72674cbc10e1986f4ad"
+    },
+    "alias-b.json": {
+      "bytes": 733,
+      "sha256": "83710530d981217a176a090bd1409b5361c7f9f528647629146716fdd70f2917"
+    },
+    "outcome.json": {
+      "bytes": 3633,
+      "sha256": "8b5cca4108cd5e9058ecd17e4043236ccb89cb31f8023389bce51e115bb73599"
+    },
+    "owner-a-attempt.json": {
+      "bytes": 34,
+      "sha256": "4fac9d663b7458213a4c35e0993e78073a35a87d9df2fb5b77a8f137e023fa74"
+    },
+    "owner-a-identity.json": {
+      "bytes": 114,
+      "sha256": "8637703f8ce90f73e0054c0dfdffabcab95060ce88d75107dee00c8bafd8ef91"
+    },
+    "owner-a-release.json": {
+      "bytes": 125,
+      "sha256": "c15f3fb4ff20b6b9da193a595476d9842a7b63c1d2525f9958b705f49a44a302"
+    },
+    "owner-a-result.json": {
+      "bytes": 171,
+      "sha256": "2bfd6227be78dc298c782a70febd351b7264a912b08d4929f1436fdfa922683e"
+    },
+    "owner-prepare-attempt.json": {
+      "bytes": 40,
+      "sha256": "21dcacb77f992b6a0423a2fef0ffd04365784aae22d4ea5c3153051979933d3a"
+    },
+    "owner-prepare-identity.json": {
+      "bytes": 113,
+      "sha256": "2058f83b93a07c11282531db729577a08bd7f4f8d5f1c72c63a0b3d75680f153"
+    },
+    "owner-prepare-release.json": {
+      "bytes": 125,
+      "sha256": "1f666ba0c61351fb8fd487d43462f1ea0b22200b405eb333db6220dc684f011b"
+    },
+    "owner-prepare-result.json": {
+      "bytes": 168,
+      "sha256": "0385a1b0f9b4bf15c6ea93395444db86d3f9e659d8554670511e1a70552eb87d"
+    },
+    "policy-readiness.json": {
+      "bytes": 284,
+      "sha256": "2621935793e7ddaac1b23ff6d42a2fdd991da7ab24e90cea4560130693165741"
+    },
+    "policy/policy-result.json": {
+      "bytes": 1499,
+      "sha256": "db5ffde087f39c079fbcbe6bd27af3c0a86790ce5296400240ad67d68d7e5b04"
+    },
+    "policy/policy.stderr": {
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "policy/policy.stdout": {
+      "bytes": 2758960,
+      "sha256": "23671c6610a3632561b916c74709f56dba2f28ab46d1a48a0d6623a31541537b"
+    },
+    "preparation.json": {
+      "bytes": 2986,
+      "sha256": "b6923ee459e94be8e788e8e6188f12a81a8ce4e8a1a71f720d4c9ddde93895e3"
+    },
+    "prepare/test.stderr": {
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "prepare/test.tap": {
+      "bytes": 2348,
+      "sha256": "90cb9a654bfd7b50f24d817655f03718da21b87a71fae65e6cf51ff9601225d1"
+    },
+    "source-archive.json": {
+      "bytes": 544,
+      "sha256": "e705b0f55f9328be09c77485221d9b98df21d2b066f2d1c51498703487e5c4e6"
+    },
+    "sources/1c5f4010ca29a66de933b98429407055ba714854d77ff6c8276b2926392e3e2b.source": {
+      "bytes": 50040,
+      "sha256": "1c5f4010ca29a66de933b98429407055ba714854d77ff6c8276b2926392e3e2b"
+    },
+    "sources/6349a566c74b9645543699d8158092b6618678f8c153c56c423d454524bef27f.source": {
+      "bytes": 710,
+      "sha256": "6349a566c74b9645543699d8158092b6618678f8c153c56c423d454524bef27f"
+    },
+    "workspace-a-attempt.json": {
+      "bytes": 81,
+      "sha256": "3a09d61f001f04f81020093dbe0949095a7648d77f76937f3a1988dc45934b85"
+    },
+    "workspace-a.json": {
+      "bytes": 124,
+      "sha256": "5b00469fb18aa93b4b07ae2f037c5e5d9bbbbe131c3ab44dd7a0a7c751ec499d"
+    },
+    "workspace-b-attempt.json": {
+      "bytes": 81,
+      "sha256": "4330532210b555dd3773f75f11c7e46e9e415823e8bd3b8a6901cce0afc44547"
+    },
+    "workspace-b.json": {
+      "bytes": 124,
+      "sha256": "42dc97f65c98d6f3f4b4e0ad0cadf93f3657d38b33d1c5e91da6d59286c8abaa"
+    },
+    "workspace-base-attempt.json": {
+      "bytes": 84,
+      "sha256": "f0f736bb18c39acd5f4216072113be9d7d82298a9153731416b485a8d0f14a9b"
+    },
+    "workspace-base.json": {
+      "bytes": 127,
+      "sha256": "72f83112eefd5f4f647b5601ede9cd593d3e935d582c583258a618d118dc5565"
+    }
+  },
+  "reuse_invocations": 0,
+  "same_inode_sources": {
+    "binary": {
+      "device": 16777244,
+      "inode": 76712085,
+      "path": ".artifacts/tmp/process-supervisor-tests/fsmgen-HardlinkBase20260910/rust-tools/rustup",
+      "sha256": "1c5f4010ca29a66de933b98429407055ba714854d77ff6c8276b2926392e3e2b",
+      "size_bytes": 50040
+    },
+    "c": {
+      "device": 16777244,
+      "inode": 76712047,
+      "path": ".artifacts/tmp/process-supervisor-tests/fsmgen-HardlinkBase20260910/rust-tools/rustup.c",
+      "sha256": "6349a566c74b9645543699d8158092b6618678f8c153c56c423d454524bef27f",
+      "size_bytes": 710
+    }
+  },
+  "schema": "fsmgen.native_hardlink_independent_audit.v1"
+}
