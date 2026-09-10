@@ -1,0 +1,53 @@
+{
+  "falsifiers": [
+    "hidden failed result",
+    "hidden process attempt",
+    "omitted countermodel",
+    "omitted rejection controls",
+    "false completeness",
+    "wrong lock path"
+  ],
+  "independently_absent_cases": 22,
+  "inputs": [
+    {
+      "path": "docs/audits/native-proxy-image-coordination-20260910/Coordination.pm",
+      "sha256": "1c745704a1efa8e2eb07ca7628092cc261479508a55c5baa434800ed8ba54338",
+      "size_bytes": 7497
+    },
+    {
+      "path": "docs/audits/native-proxy-image-coordination-20260910/qualify.t",
+      "sha256": "12c3e637d31af9bcf06cb4d058d8bec5e15d8d1d15e1a40de7de4f621581acd3",
+      "size_bytes": 11891
+    },
+    {
+      "path": "docs/audits/native-proxy-canonical-contract-20260910/contract.json",
+      "sha256": "f3f981398afae72540ab4ac0194b8380d4743c3d2146c1172a85365add053222",
+      "size_bytes": 21927
+    },
+    {
+      "path": "docs/audits/native-proxy-image-custody-20260910/ImageCustody.pm",
+      "sha256": "20b05813b17dffcbbac2d0216fca00456e53ceb1ac451ad672263a6788700207",
+      "size_bytes": 7953
+    },
+    {
+      "path": ".artifacts/logs/native-proxy-image-coordination-20260910/qualification.json",
+      "sha256": "707e6f677e3a7a450e1b44fe98eccb1b77cc14aa76c823d163dee4aaa8c80941",
+      "size_bytes": 4867
+    },
+    {
+      "path": ".artifacts/logs/native-proxy-image-coordination-20260910/qualify.log",
+      "sha256": "e29506ab3b940cfb9abc5f0fd76649955cc10d567a4a661ebe74591acc0f7ae2",
+      "size_bytes": 3082
+    }
+  ],
+  "limits": [
+    "Single-process lock identity, flags and descriptor closure were observed.",
+    "Busy, nonbusy error and monotonic-deadline outcomes were modeled; actual cross-process contention and inheritance are separately owned.",
+    "Counts include incomplete objects; this census establishes no image or reference completeness.",
+    "No publication, runtime/observation lifetime, maintenance, native execution or product activation."
+  ],
+  "rejection_controls": 20,
+  "schema": "fsmgen.inactive_image_coordination_audit.v1",
+  "success": true,
+  "tap_assertions": 67
+}

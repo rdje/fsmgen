@@ -1669,6 +1669,20 @@ Replay creates and retires fresh inert cases. Archived inode records describe
 the earlier run; byte snapshots do not attest to a loaded image or guarantee
 ongoing immutability against arbitrary programs changing the files.
 
+The inactive coordination prototype checks a permanent lock's identity and
+descriptor lifetime, private store structure and bounded namespace counts.
+Incomplete images and reference records consume capacity; counting them does
+not admit their contents. Invalid or replaced locks reject, and final inspection
+cannot recreate a removed directory. Busy/error/deadline behavior is modeled;
+actual competing processes and inherited descriptors still require separate
+qualification. Replay these filesystem-only checks with:
+
+```bash
+mkdir -p .artifacts/logs/native-proxy-image-coordination-20260910
+scripts/run_with_ram_guard.sh -- perl docs/audits/native-proxy-image-coordination-20260910/qualify.t > .artifacts/logs/native-proxy-image-coordination-20260910/qualify.log 2>&1
+python3 -B docs/audits/native-proxy-image-coordination-20260910/audit.py
+```
+
 The helper checks bounded regular source/output files and the native header,
 then sets executable permissions through the admitted open file handle. A
 regression exposed path-based permission changes affecting a substituted file

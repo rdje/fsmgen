@@ -2707,9 +2707,30 @@ decomposes the architecture needed to move beyond that bounded foundation.
   Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.12.4.1.1: qualify inactive image keys and descriptor snapshots`
 
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.12.4.1.2`
-  Status: `proposed`
+  Status: `active`
   Goal: `Qualify locked publication, runtime references and exact private retirement.`
   Acceptance: `Extend only the qualified inactive foundation with canonical direct publication, bounded namespace/capacity accounting, runtime acquisition, conservative partial-state handling and exact runtime release. Test each write/seal/reference/retirement interruption and corruption boundary with inert owners. No active product route, compiler/native proxy/original/collector or unadmitted worker execution; observation lifetime stays separately owned.`
+  Verification: `Foundation 161fba1bbc63a46f2f508611b7fd859da6a2a084 committed; tree clean and brief zero before activation. Separate coordination/census, publication/runtime acquisition and exact retirement/maintenance slices preserve reviewable boundaries. All remain inactive and process-free; actual contention workers require .12.4.1.4 admission.`
+  Children: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.12.4.1.2.1, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.12.4.1.2.2, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.12.4.1.2.3`
+
+- ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.12.4.1.2.1`
+  Status: `done`
+  Goal: `Qualify inactive lock identity and bounded namespace census.`
+  Acceptance: `Add a sealed inactive coordination primitive using the pinned contract: checked permanent empty single-link lock, exclusive creation or verified existing race, close-on-exec, nonblocking monotonic admission deadline and no process-capable public callback. Validate same-volume private structure and bounded image/reference name counts, including incomplete objects. Exercise wrong files, inode/directory replacement, capacity and modeled busy/error boundaries with inert local data and no worker, compiler/native/original/collector execution. Preserve the qualified foundation and compact only exact completed checklist recovery references for continuity.`
+  Verification: `Inactive Coordination.pm uses the qualified image-custody directory/source checks and exposes only one fixed structure inspection, with no process-capable public callback. The permanent empty single-link 0600 lock is created exclusively or opened through the expected existing-file race, never truncated, replaced, chmodded or removed by inspection. Descriptor/name identity and close-on-exec are checked; the descriptor closes on success and every acquisition/census failure. Nonblocking flock uses the pinned monotonic acquisition deadline and only lock-busy errno permits bounded polling. The deadline does not claim filesystem-call interruptibility. Under cooperation, bootstrap admits owned private same-volume structure, and final rechecks cannot recreate removed directories. Image/reference name counts include incomplete objects at the selected ceilings; the result explicitly remains structure-only, without image/reference semantic admission. The existing caller-specific ArchitectureScaleMeasurement lock remains unchanged. Re-derivation: guarded inert qualification passes 67 TAP assertions; independent complete TAP/result reconstruction agrees with 20 rejecting controls and independently proves all 22 exact inert cases absent. Native lock file identities/flags and descriptor closure are observed in one process; busy, error and late-success timing are modeled, not claimed as real contention. Falsification: malformed/aliased/nonempty locks, invalid/writable/indirect namespace members, capacity overflow, late/nonbusy outcomes and lock/directory replacement reject. Removing the final lock identity or no-repair safeguard defeats independent inode/absence oracles. Six altered result records reject in the separate Python audit. No worker, compiler/native fixture, original, collector or helper is executed; actual contention, cancellation and inheritance still require .12.4.1.4 admission. Publication/runtime acquisition and exact retirement/maintenance remain separate following leaves, with observer semantics independently owned. Durability: docs/audits/native-proxy-image-coordination-20260910 retains source, harness, audit, review and exact recovery copies; result/audit.json is 2072 bytes SHA-256 82687e6534a8dcc52ab02c939492d39edd2ef8f631da5636d4cc48e87b1d9ffa; result/qualification.json is 4867 bytes SHA-256 707e6f677e3a7a450e1b44fe98eccb1b77cc14aa76c823d163dee4aaa8c80941. Foundation and three selected product source pins remain exact at 161fba1bbc63a46f2f508611b7fd859da6a2a084. Twelve repeated completed-checklist recovery labels are consolidated only after matching every full body at 890ee5495f50806edfd4ee81b1148e872640a706 and every prior label at HEAD; exact history remains recoverable and no task ceiling grows. Book rendering, knowledge-map synchronization and staged doctrines gate the slice. Product activation and historical startup/parent qualification remain open; full CI/push stays gated.`
+  Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.12.4.1.2.1: qualify inactive lock identity and bounded namespace census`
+
+- ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.12.4.1.2.2`
+  Status: `proposed`
+  Goal: `Qualify canonical publication and runtime-reference acquisition.`
+  Acceptance: `Use the qualified coordination/custody primitives for direct canonical creation, exact compiled-byte equality, closed global/private runtime references and conservative partial state. Exercise every write/seal/publication/reference boundary and exact capacity with inert owners; preserve first failure, no fallback, no executable rename/hard links and no product activation.`
+  Verification: `pending`
+  Commit: `pending`
+
+- ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.12.4.1.2.3`
+  Status: `proposed`
+  Goal: `Qualify exact private retirement and conservative image maintenance.`
+  Acceptance: `Require complete owned cleanup evidence before runtime retirement, retain the global reference until exact workspace absence and retain ambiguous/stale references. Qualify bounded reference census and separately invoked maintenance only for complete unreferenced owned images. Model every interruption and unknown/partial object; observer retention remains a prerequisite before complete lifecycle closure. No real workers/native/original/collector or product activation.`
   Verification: `pending`
   Commit: `pending`
 
@@ -3724,7 +3745,7 @@ decomposes the architecture needed to move beyond that bounded foundation.
 
 ## Current Frontier
 
-Current frontier: .3.2.15.7.3.12.4.1.1 is qualified; .12.4.1.2 next adds inactive locked publication and runtime references. Startup/parent, full CI and push stay gated.
+Current frontier: .3.2.15.7.3.12.4.1.2.1 is qualified; .12.4.1.2.2 next adds inactive publication and runtime acquisition. Startup/parent, full CI and push stay gated.
 
 Architecture audit `.1` is complete. Decision `0032` selects one public
 `.vial` source language, private immutable `VIALSemanticIR` and
@@ -6332,29 +6353,7 @@ Reduced-load qualification acceptance: recover every checked assertion at `26e08
 
 Native-proxy review acceptance: recover all checked assertions at `5c269071bd345dc4ece75d65fb58373b56a2edb7` in this task path; its live node retains the review outcome.
 
-Acceptance Checklist (native-proxy feasibility .3.2.15.7.3.6): completed checklist and box-scoped evidence are preserved at `890ee5495f50806edfd4ee81b1148e872640a706:docs/tasks/HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.md`. Live leaf evidence remains above.
-
-Acceptance Checklist (authored-native feasibility .3.2.15.7.3.7): completed checklist and box-scoped evidence are preserved at `890ee5495f50806edfd4ee81b1148e872640a706:docs/tasks/HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.md`. Live leaf evidence remains above.
-
-Acceptance Checklist (portable proxy builder .3.2.15.7.3.8): completed checklist and box-scoped evidence are preserved at `890ee5495f50806edfd4ee81b1148e872640a706:docs/tasks/HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.md`. Live leaf evidence remains above.
-
-Acceptance Checklist (closed native capture .3.2.15.7.3.9): completed checklist and box-scoped evidence are preserved at `890ee5495f50806edfd4ee81b1148e872640a706:docs/tasks/HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.md`. Live leaf evidence remains above.
-
-Acceptance Checklist (original proxy integration .3.2.15.7.3.10): completed checklist and box-scoped evidence are preserved at `890ee5495f50806edfd4ee81b1148e872640a706:docs/tasks/HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.md`. Live leaf evidence remains above.
-
-Acceptance Checklist (original admission .3.2.15.7.3.11.1): completed checklist and box-scoped evidence are preserved at `890ee5495f50806edfd4ee81b1148e872640a706:docs/tasks/HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.md`. Live leaf evidence remains above.
-
-Acceptance Checklist (failed original evidence .3.2.15.7.3.11.2): completed checklist and box-scoped evidence are preserved at `890ee5495f50806edfd4ee81b1148e872640a706:docs/tasks/HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.md`. Live leaf evidence remains above.
-
-Acceptance Checklist (adapter registration .3.2.15.7.3.11.3.1): completed checklist and box-scoped evidence are preserved at `890ee5495f50806edfd4ee81b1148e872640a706:docs/tasks/HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.md`. Live leaf evidence remains above.
-
-Acceptance Checklist (implementation visibility .3.2.15.7.3.11.3.2): completed checklist and box-scoped evidence are preserved at `890ee5495f50806edfd4ee81b1148e872640a706:docs/tasks/HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.md`. Live leaf evidence remains above.
-
-Acceptance Checklist (preparation diagnostics .3.2.15.7.3.11.3.3): completed checklist and box-scoped evidence are preserved at `890ee5495f50806edfd4ee81b1148e872640a706:docs/tasks/HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.md`. Live leaf evidence remains above.
-
-Acceptance Checklist (unprivileged daemon caller .3.2.15.7.3.11.3.4.1.1): completed checklist and box-scoped evidence are preserved at `890ee5495f50806edfd4ee81b1148e872640a706:docs/tasks/HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.md`. Live leaf evidence remains above.
-
-Acceptance Checklist (runtime source controls .3.2.15.7.3.11.3.4.1.2): completed checklist and box-scoped evidence are preserved at `890ee5495f50806edfd4ee81b1148e872640a706:docs/tasks/HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.md`. Live leaf evidence remains above.
+Completed native-proxy feasibility through runtime-source-controls acceptance: recover all predecessor checklist bodies from `890ee5495f50806edfd4ee81b1148e872640a706:docs/tasks/HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.md`. The exact individual recovery labels remain in `161fba1bbc63a46f2f508611b7fd859da6a2a084` at the same task path; current live and version-object nodes retain their outcomes.
 
 ## Version-Retrievable Historical Views
 
@@ -6367,3 +6366,9 @@ The manifest binds the exact completed admission-through-canonical-contract acce
 - [x] **ROOT CAUSE (WHY + WHERE)** — git log -S 'rust-tools' -- t/lib/FSM/Test/RustProxyFixture.pm identifies e0d74bb051465ba641227acc11975e25e5d879a7. Current preparation creates private source/image bytes; the prospective canonical protocol needs strict content keys, closed manifests and independent source custody before publication or reuse can qualify.
 - [x] **ADDRESSED (verified inactive foundation)** — The guarded inert harness and independent Python audit agree on exact byte framing, canonical records and actual snapshots. Corrupt files and same-byte inode replacements reject; removing full byte equality fails the independent corruption oracle. Isolated cases retire without compiler/native/original/collector execution; product reuse remains inactive.
 - [x] **NO REGRESSION** — The focused unchanged-reader regression reports All tests successful. Exact production pins and recovery copies agree; independent case absence is verified. Book rendering and knowledge-map: OK synchronization plus staged doctrines gate the commit. File-lock concurrency, publication, reference lifetime and native refinement remain separately owned.
+
+## Acceptance Checklist (inactive coordination .3.2.15.7.3.12.4.1.2.1)
+
+- [x] **ROOT CAUSE (WHY + WHERE)** — git log -S 'LOCK_NB' -- perl/FSM/VIAL/ArchitectureScaleMeasurement.pm identifies c7493e3ded5899d98da22cf12fe6d6d592f3c41f. That existing measurement lock is caller-specific and immediately rejects contention; the pinned image contract requires a distinct fixed namespace and bounded acquisition policy before publication can qualify.
+- [x] **ADDRESSED (verified inactive coordination)** — Actual inert permanent-lock identities, descriptor closure and bounded namespace counts agree with independent TAP/result and residue audits. Corrupt/replaced objects and modeled deadline/errors reject. Removing identity or no-repair guards fails independent countermodels; no public callback or live worker is introduced.
+- [x] **NO REGRESSION** — The qualified foundation and selected product sources stay byte-identical to the predecessor; exact recovery copies agree. Book rendering and knowledge-map: OK synchronization plus staged doctrines gate this slice. Real contention/inheritance, complete publication/reference semantics and native behavior remain separately owned and unqualified.

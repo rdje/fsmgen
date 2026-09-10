@@ -1,0 +1,23 @@
+{
+  "copies": [
+    {
+      "recovery": "docs/audits/native-proxy-image-coordination-20260910/result/qualification.json",
+      "sha256": "707e6f677e3a7a450e1b44fe98eccb1b77cc14aa76c823d163dee4aaa8c80941",
+      "size_bytes": 4867,
+      "source": ".artifacts/logs/native-proxy-image-coordination-20260910/qualification.json"
+    },
+    {
+      "recovery": "docs/audits/native-proxy-image-coordination-20260910/result/audit.json",
+      "sha256": "82687e6534a8dcc52ab02c939492d39edd2ef8f631da5636d4cc48e87b1d9ffa",
+      "size_bytes": 2072,
+      "source": ".artifacts/logs/native-proxy-image-coordination-20260910/audit.json"
+    },
+    {
+      "recovery": "docs/audits/native-proxy-image-coordination-20260910/result/qualification.tap",
+      "sha256": "e29506ab3b940cfb9abc5f0fd76649955cc10d567a4a661ebe74591acc0f7ae2",
+      "size_bytes": 3082,
+      "source": ".artifacts/logs/native-proxy-image-coordination-20260910/qualify.log"
+    }
+  ],
+  "schema": "fsmgen.inactive_image_coordination_recovery.v1"
+}

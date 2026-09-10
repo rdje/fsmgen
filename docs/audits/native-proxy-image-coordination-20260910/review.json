@@ -1,0 +1,37 @@
+{
+  "durability": "Tracked inactive source, harness, independent audit and exact result copies. Every inert case retires after checks. The foundation and selected existing product mechanisms remain exact.",
+  "falsification": "Invalid permanent lock objects and namespace entries, over-capacity sets, modeled busy/error/late success, replaced lock/directory and removed directory reject. Removed final identity and no-repair guards fail independent named-inode/absence oracles; six altered result records reject.",
+  "limits": [
+    "Acquisition uses nonblocking flock and a monotonic deadline. The deadline does not promise interruptibility of filesystem calls.",
+    "Only single-process local lock/open/close is observed here. Real competing workers, cancellation and inheritance still require the separate prospective admission.",
+    "Namespace counts include incomplete images/reference records, whose bytes and ownership semantics remain unqualified in this structure-only result.",
+    "Publication, runtime/observation lifetime, maintenance, product activation and historical startup repair remain open."
+  ],
+  "owner": "HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.12.4.1.2.1",
+  "rederive": "Actual inert lock creation/reopen, native file identities, close-on-exec flags, descriptor closure and namespace boundary counts; independent complete TAP/result audit and exact residue census.",
+  "schema": "fsmgen.inactive_image_coordination_review.v1",
+  "selection": "Existing ArchitectureScaleMeasurement lock policy is caller-specific and immediately rejects contention. It remains unchanged. The isolated prototype adds the pinned image-store policy through fixed filesystem operations and exposes no caller callback under the lock.",
+  "source_revision": "161fba1bbc63a46f2f508611b7fd859da6a2a084",
+  "unchanged_inputs": [
+    {
+      "path": "docs/audits/native-proxy-image-custody-20260910/ImageCustody.pm",
+      "sha256": "20b05813b17dffcbbac2d0216fca00456e53ceb1ac451ad672263a6788700207",
+      "size_bytes": 7953
+    },
+    {
+      "path": "t/lib/FSM/Test/RustProxyFixture.pm",
+      "sha256": "d9c4ab52cf8074526c59b7a5dcb9da870ca7ffdacb4eb236dacb23b5db6d8bfb",
+      "size_bytes": 11466
+    },
+    {
+      "path": "perl/FSM/Support/ProcessSupervisor.pm",
+      "sha256": "684882d91f673ea7145f43ed3aad31acf099f13508574be7b2d8911123988637",
+      "size_bytes": 27990
+    },
+    {
+      "path": "perl/FSM/VIAL/ArchitectureScaleMeasurement.pm",
+      "sha256": "63fa7061bbad45aaad0d5b65b302622d0eb706d54edf8ae3f3ca93813c20bb40",
+      "size_bytes": 127881
+    }
+  ]
+}
