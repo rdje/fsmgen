@@ -1559,6 +1559,48 @@ hosts without a C compiler, and closed native capture admission alongside the
 existing Perl route. Tasks `.15.7.3.8`–`.11` own those prerequisites, integration
 and independent qualification. The original fixtures remain unchanged.
 
+Task `.15.7.3.8` adds `FSM::Test::RustProxyFixture::prepare_rust_proxy` as a
+separate test helper. It accepts a private, directly owned workspace beneath
+`.artifacts/tmp/process-supervisor-tests/` and either `proxy_nonzero` or
+`proxy_decoy`. Its `rust-tools` directory must not already exist. The result
+reports the implementation and selection reason, root-relative executable and
+source identities, and the complete compilation result and command when used.
+
+On arm64 macOS with the installed Command Line Tools compiler and SDK, it
+builds the native fixture. Other platforms and unavailable native tooling keep
+the original selected-Perl bodies; no control is skipped. Once native compilation
+is selected, failure cannot trigger a Perl fallback or retry. Compilation uses
+a fixed ten-second wall and 4096-byte aggregate capture. Caller compiler flags
+and configuration are excluded; [Clang's default configuration loading is
+disabled](https://clang.llvm.org/docs/UsersManual.html#configuration-files).
+Compiler temporary files and caches stay in the private fixture directory.
+The generated C source includes its selected mode, so retained source bytes
+remain meaningful without the original compiler process.
+
+The helper checks bounded regular source/output files and the native header,
+then sets executable permissions through the admitted open file handle. A
+regression exposed path-based permission changes affecting a substituted file
+and stale success after Perl-path replacement; both now reject. It rechecks
+the returned source identities before success. These are observed custody
+checks, not an attestation of compiler behavior or protection against later
+arbitrary same-user mutation.
+
+The caller owns workspace cleanup: disable automatic temporary-directory
+removal, retain the workspace whenever process cleanup is unproved, and remove
+it only after its compilation and runtime owners have finished. The helper
+does not remove files that a wrapper or delayed diagnostic may still need.
+Controlled tests cover the portable bodies, configuration isolation, invalid
+paths and outputs, failure retention, and replacement races:
+
+```bash
+scripts/run_with_ram_guard.sh -- prove -Iperl -It/lib t/1815-rust-proxy-fixture.t
+```
+
+Separate current-host qualification builds and runs both modes, retains their
+exact source/executable bytes and native results, and verifies cleanup. Native
+capture admission and original-test integration remain separately owned; the
+historical startup delay is still open.
+
 Shared evidence publication now anchors file creation, linking and temporary
 cleanup to open directory descriptors. A controlled directory-replacement test
 exposed an earlier writer returning the expected digest for replacement bytes;

@@ -3,7 +3,7 @@ id: test-subprocess-policy-adapters
 title: Test subprocesses share one mechanism behind sealed policy adapters
 answers:
   - "how are FSMGen test subprocesses bounded?"
-  - "what do native Rust proxy fixture experiments establish?"
+  - "how are native Rust proxy fixtures built and qualified?"
   - "why does t1545 not use IPC Cmd?"
   - "where does T1545 preserve empty-output checker failure diagnostics?"
   - "where does T1545 retain actual checker PID and startup observations?"
@@ -54,13 +54,15 @@ evidence: >-
   scripts/analyze_fixture_policy.py; t/python/test_fixture_policy_analysis.py;
   scripts/fixture_policy_associations.py; t/python/test_fixture_policy_associations.py;
   scripts/run_fixture_startup_policy_observation.py; t/python/test_fixture_startup_policy_observation.py;
-  t/1669-task-acceptance-fixture-runtime.t
+  t/1669-task-acceptance-fixture-runtime.t;
+  t/lib/FSM/Test/RustProxyFixture.pm; t/1815-rust-proxy-fixture.t
 reverify: >-
   scripts/run_with_ram_guard.sh -- prove -Iperl -It/lib
   t/1545-task-acceptance-doctrine.t
   t/1668-darwin-inline-verilator-test-runtime.t
   t/1669-task-acceptance-fixture-runtime.t t/1812-process-coordinator-endpoint.t
   t/1813-process-coordinator-connection.t t/1814-process-coordinator-service.t
+  t/1815-rust-proxy-fixture.t
 ---
 
 Decisions `0087`/`0101`: `FSM::Support::ProcessSupervisor` offers nonblocking steps to synchronous callers: shell-free argv, same-volume cwd, bounded split capture, exec handoff, monotonic time, one group, first-failure status, TERM/KILL cleanup. Adapters seal commands/bounds/schemas/platform guards; T1669 checks exclusive ownership.
@@ -76,17 +78,17 @@ Darwin env-Bash stalled before main. Direct Bash preserves capability: the retai
 array under `set -u`. Bash/Git are read-only host dependencies; project data
 stays local. Timeout/overflow/nonzero/signal/exec/descendant/cleanup failures stay failed
 without retry; original fixture assertions pass.
-T1545: canonical JSON TAP diagnostics preserve failed checker results separately from output. Nonzero controls prove empty/split-stream recovery; older discarded cause unknown.
+T1545 keeps failed-checker JSON separate from output; nonzero empty/split-stream controls pass. Older lost cause stays unknown.
 Launch observation retains commands/results, identity and bounded progress. Bash PID/native-output/held-child controls qualify it; missing progress stays unknown (task/book).
 Env-Perl and direct Perl both timed out after handoff, refuting a shebang-only cure. HIAL/VIAL `.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2` owns startup cause; `.3.3–7` own authenticated kernel capture. Sampling/authentication/STOP limits remain in task/book and the exact historical card below.
 T1669 uses `.artifacts/tmp/process-supervisor-tests/`. Every ps result needs native presence; only disappearance is skipped. Permission/query/live identity changes fail. Native exit and unchecked-ps controls qualify that race, not the historical changed field (`.3.2.11`; book/task).
-History: `93e7072566e2dce7b70c10fa04ffc8765b35b1e9:docs/knowledge/test-subprocess-policy-adapters.md`; .3.2.15.3.3 passes without capture; cause open.
+Prior evidence and earlier routes: `bb799b271876fe1ca60059b90579c66eea3fbd50:docs/knowledge/test-subprocess-policy-adapters.md`; .3.2.15.3.3 passes without capture; cause open.
 PST parsing normalizes 1–16 lowercase hex digits; malformed fields and contradictions reject.
-.15.7.3.2 verifies serial scan dispatch; preceding work spans the failed proxy queue wait. Client/frame joins remain open. .4 passes unchanged; .6 rejects OS copies (launch constraint); .7 authored bodies pass on this Mac, no repair proof. .8–11 own build/capture/integration. Archive pins/order/empty-stream rejection: task/book (.15.7.2–3).
+.15.7.3.2 verifies serial scan dispatch; preceding work spans the failed proxy queue wait. Client/frame joins remain open. .4 passes unchanged; .6 rejects OS copies (launch constraint); .7 authored bodies pass on this Mac, no repair proof. .8 adds the bounded builder, portable Perl choice and descriptor sealing; .9–11 own capture/integration. Archive pins/order/empty-stream rejection: task/book (.15.7.2–3).
 V1 association replay needs pinned manifest/archives, no old root/CFHash; native rederivation unavailable, unauthenticated. Reports omit raw text/bodies; receipts bind calibration/artifacts without private reads. Fixed CLI .15.7.2.4 uses archive index/digest output and compact journal anchors; calibration/reserve/actual-file checks and first-failure/capture stop persist. Outcomes stay distinct; failures/ownership persist. F_CHECK_LV cause unproved (.15.2); queue/provenance coexist (.15.4); worker/delivery unknown. Live opt-in violations: .15.5.1.2.2–3.
-Shared publish_bytes checks descriptor-anchored inode/bytes; existing files/primary failures persist. Later same-user mutation is outside its guarantee (.15.7.2.3.1). Archive publication rejects fixed existing destinations and consumes pages before/after writing index last (.3.2).
+Shared publish_bytes checks descriptor-anchored inode/bytes; existing files/primary failures persist. Later same-user mutation is unprotected (.15.7.2.3.1). Archive publication rejects fixed existing destinations and consumes pages before/after writing index last (.3.2).
 Archive reverify: `scripts/run_with_ram_guard.sh -- python3 -B -m unittest discover -s t/python -p 'test_fixture_policy_archive*.py'`.
-T1595's pre-main cause stays open; `.19.2.3.1.2.2.6.2` fixes capture.
+T1595 pre-main cause open; `.19.2.3.1.2.2.6.2` fixes capture.
 `RamGuardFixtureRuntime` seals tools/argv, paths, bounds and full results.
 T1811/T1669 prove signal/stream failures and group cleanup; T1595 keeps metrics.
 Outer timeout proved its group gone but left an inner group alive; terminated and absence verified. Per-group cleanup cannot prove nested cleanup.
@@ -95,5 +97,3 @@ neutral-verifier extraction stays provisional/blocked.
 Selected: one coordinator, private clients, reserved identities, bounded wire/context/lifecycle protocol.
 T1669 proves reservation feasibility. Extraction, Wire, inactive endpoint/service transport are implemented;
 coordination, routing and hostile qualification (including startup diagnosis) remain open.
-
-Prior startup evidence: `e79b7b26d3b2a99e0afaac4924265441937b596c:docs/knowledge/test-subprocess-policy-adapters.md`.
