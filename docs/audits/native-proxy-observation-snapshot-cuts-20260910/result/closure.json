@@ -1,0 +1,31 @@
+{
+  "all_rosters_disjoint_and_absent": true,
+  "complete_route_handles": {
+    "fresh": {
+      "lock": 1,
+      "source": 83,
+      "writer": 1
+    },
+    "reuse": {
+      "lock": 1,
+      "source": 89,
+      "writer": 0
+    }
+  },
+  "limits": "Independent inert snapshot and focused regression closure only; no publication/coordinator matrix, archive settlement, native ownership or product activation.",
+  "regressions": {
+    "fresh": {
+      "allocations": 116,
+      "assertions": 59
+    },
+    "reuse": {
+      "allocations": 160,
+      "assertions": 81
+    }
+  },
+  "restored_prior_outputs": 4,
+  "schema": "fsmgen.inactive_observation_snapshot_cut_closure.v1",
+  "success": true,
+  "total_allocations": 964,
+  "unchanged_prospective_inputs": 14
+}

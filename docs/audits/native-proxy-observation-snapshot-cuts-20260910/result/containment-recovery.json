@@ -1,0 +1,19 @@
+{
+  "action": "Shorten the old fixture-clone explanation through its exact authenticated history pointer. Preserve the current byte/type invariant, original answer routes, all qualification sources/results and unchanged size allowance. Rerun only documentation producers and the required staged/commit gates.",
+  "excess_bytes": 67,
+  "expected_final_aggregate_bytes": 3492385,
+  "failed_gates": [
+    "LIVE-DOCUMENT-SIZE",
+    "README-ENTRYPOINT"
+  ],
+  "history": "730b8b3a2bb1e918d24a03d23a19b0066d159508:docs/knowledge/test-subprocess-policy-adapters.md",
+  "initial_aggregate_bytes": 3492491,
+  "initial_card": {
+    "bytes": 8944,
+    "sha256": "0ec779352c50e3db2ed49843a7c2506e4fc126e2b9a83410bc9c41254e0129fc"
+  },
+  "initial_gate_exit": 1,
+  "schema": "fsmgen.snapshot_cut_containment_recovery.v1",
+  "shortened_bytes": 106,
+  "unchanged_allowance_bytes": 3492424
+}

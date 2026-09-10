@@ -1,0 +1,60 @@
+ok 1 - fresh acquisition: retained descriptors close
+ok 2 - fresh acquisition returns separate hold and retained target sources
+ok 3 - wrapper exact byte ceiling: retained descriptors close
+ok 4 - wrapper exact byte ceiling returns separate hold and retained target sources
+ok 5 - prior workspace identity mismatch: retained descriptors close
+ok 6 - prior workspace identity mismatch rejects without mutation
+ok 7 - prior evidence identity mismatch: retained descriptors close
+ok 8 - prior evidence identity mismatch rejects without mutation
+ok 9 - missing existing lock: retained descriptors close
+ok 10 - missing existing lock rejects without mutation
+ok 11 - missing existing namespace: retained descriptors close
+ok 12 - missing existing namespace rejects without mutation
+ok 13 - missing runtime reference: retained descriptors close
+ok 14 - missing runtime reference rejects without mutation
+ok 15 - mismatched private/global runtime bytes: retained descriptors close
+ok 16 - mismatched private/global runtime bytes rejects without mutation
+ok 17 - stale canonical runtime source identity: retained descriptors close
+ok 18 - stale canonical runtime source identity rejects without mutation
+ok 19 - foreign runtime workspace: retained descriptors close
+ok 20 - foreign runtime workspace rejects without mutation
+ok 21 - reference capacity before publication: retained descriptors close
+ok 22 - reference capacity before publication rejects without mutation
+ok 23 - existing observation hold: retained descriptors close
+ok 24 - existing observation hold rejects without mutation
+ok 25 - wrapper symlink: retained descriptors close
+ok 26 - wrapper symlink rejects without mutation
+ok 27 - wrapper hardlink: retained descriptors close
+ok 28 - wrapper hardlink rejects without mutation
+ok 29 - wrapper wrong mode: retained descriptors close
+ok 30 - wrapper wrong mode rejects without mutation
+ok 31 - wrapper byte excess: retained descriptors close
+ok 32 - wrapper byte excess rejects without mutation
+ok 33 - extra request field: retained descriptors close
+ok 34 - extra request field rejects without mutation
+ok 35 - malformed birth: retained descriptors close
+ok 36 - malformed birth rejects without mutation
+ok 37 - foreign evidence path: retained descriptors close
+ok 38 - foreign evidence path rejects without mutation
+ok 39 - extra argument: retained descriptors close
+ok 40 - extra argument rejects without mutation
+ok 41 - direct internal caller: retained descriptors close
+ok 42 - direct internal caller rejects without mutation
+ok 43 - source directory replacement: retained descriptors close
+ok 44 - source directory replacement fails while preserving observed partial state
+ok 45 - source replacement during admission: retained descriptors close
+ok 46 - source replacement during admission fails while preserving observed partial state
+ok 47 - source bytes changed before return: retained descriptors close
+ok 48 - source bytes changed before return fails while preserving observed partial state
+ok 49 - late evidence directory replacement: retained descriptors close
+ok 50 - late evidence directory replacement fails while preserving observed partial state
+ok 51 - late workspace directory replacement: retained descriptors close
+ok 52 - late workspace directory replacement fails while preserving observed partial state
+ok 53 - sealed observation replacement: retained descriptors close
+ok 54 - sealed observation replacement fails while preserving observed partial state
+ok 55 - discard prior evidence identity: retained descriptors close
+ok 56 - discard prior evidence identity admits independently invalid custody
+ok 57 - discard retained source identity: retained descriptors close
+ok 58 - discard retained source identity admits independently invalid custody
+ok 59 - no compiler or fixture process attempt
+1..59

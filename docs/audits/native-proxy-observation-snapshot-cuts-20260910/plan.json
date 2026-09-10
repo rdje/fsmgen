@@ -1,0 +1,1399 @@
+{
+  "cases": [
+    {
+      "cut": null,
+      "hold": "complete",
+      "id": "fresh:complete",
+      "returns": true,
+      "route": "fresh"
+    },
+    {
+      "cut": "admit:enter",
+      "hold": "absent",
+      "id": "fresh:admit:enter",
+      "returns": false,
+      "route": "fresh"
+    },
+    {
+      "cut": "admit:prior:workspace",
+      "hold": "absent",
+      "id": "fresh:admit:prior:workspace",
+      "returns": false,
+      "route": "fresh"
+    },
+    {
+      "cut": "admit:prior:evidence",
+      "hold": "absent",
+      "id": "fresh:admit:prior:evidence",
+      "returns": false,
+      "route": "fresh"
+    },
+    {
+      "cut": "admit:directory:tools",
+      "hold": "absent",
+      "id": "fresh:admit:directory:tools",
+      "returns": false,
+      "route": "fresh"
+    },
+    {
+      "cut": "admit:directory:image",
+      "hold": "absent",
+      "id": "fresh:admit:directory:image",
+      "returns": false,
+      "route": "fresh"
+    },
+    {
+      "cut": "admit:read:wrapper",
+      "hold": "absent",
+      "id": "fresh:admit:read:wrapper",
+      "returns": false,
+      "route": "fresh"
+    },
+    {
+      "cut": "admit:read:private",
+      "hold": "absent",
+      "id": "fresh:admit:read:private",
+      "returns": false,
+      "route": "fresh"
+    },
+    {
+      "cut": "admit:read:global",
+      "hold": "absent",
+      "id": "fresh:admit:read:global",
+      "returns": false,
+      "route": "fresh"
+    },
+    {
+      "cut": "admit:read:c",
+      "hold": "absent",
+      "id": "fresh:admit:read:c",
+      "returns": false,
+      "route": "fresh"
+    },
+    {
+      "cut": "admit:read:image",
+      "hold": "absent",
+      "id": "fresh:admit:read:image",
+      "returns": false,
+      "route": "fresh"
+    },
+    {
+      "cut": "admit:sources:enter",
+      "hold": "absent",
+      "id": "fresh:admit:sources:enter",
+      "returns": false,
+      "route": "fresh"
+    },
+    {
+      "cut": "admit:sources:original:wrapper",
+      "hold": "absent",
+      "id": "fresh:admit:sources:original:wrapper",
+      "returns": false,
+      "route": "fresh"
+    },
+    {
+      "cut": "admit:sources:read:wrapper",
+      "hold": "absent",
+      "id": "fresh:admit:sources:read:wrapper",
+      "returns": false,
+      "route": "fresh"
+    },
+    {
+      "cut": "admit:sources:fresh:wrapper",
+      "hold": "absent",
+      "id": "fresh:admit:sources:fresh:wrapper",
+      "returns": false,
+      "route": "fresh"
+    },
+    {
+      "cut": "admit:sources:original:private",
+      "hold": "absent",
+      "id": "fresh:admit:sources:original:private",
+      "returns": false,
+      "route": "fresh"
+    },
+    {
+      "cut": "admit:sources:read:private",
+      "hold": "absent",
+      "id": "fresh:admit:sources:read:private",
+      "returns": false,
+      "route": "fresh"
+    },
+    {
+      "cut": "admit:sources:fresh:private",
+      "hold": "absent",
+      "id": "fresh:admit:sources:fresh:private",
+      "returns": false,
+      "route": "fresh"
+    },
+    {
+      "cut": "admit:sources:original:global",
+      "hold": "absent",
+      "id": "fresh:admit:sources:original:global",
+      "returns": false,
+      "route": "fresh"
+    },
+    {
+      "cut": "admit:sources:read:global",
+      "hold": "absent",
+      "id": "fresh:admit:sources:read:global",
+      "returns": false,
+      "route": "fresh"
+    },
+    {
+      "cut": "admit:sources:fresh:global",
+      "hold": "absent",
+      "id": "fresh:admit:sources:fresh:global",
+      "returns": false,
+      "route": "fresh"
+    },
+    {
+      "cut": "admit:sources:original:c",
+      "hold": "absent",
+      "id": "fresh:admit:sources:original:c",
+      "returns": false,
+      "route": "fresh"
+    },
+    {
+      "cut": "admit:sources:read:c",
+      "hold": "absent",
+      "id": "fresh:admit:sources:read:c",
+      "returns": false,
+      "route": "fresh"
+    },
+    {
+      "cut": "admit:sources:fresh:c",
+      "hold": "absent",
+      "id": "fresh:admit:sources:fresh:c",
+      "returns": false,
+      "route": "fresh"
+    },
+    {
+      "cut": "admit:sources:original:image",
+      "hold": "absent",
+      "id": "fresh:admit:sources:original:image",
+      "returns": false,
+      "route": "fresh"
+    },
+    {
+      "cut": "admit:sources:read:image",
+      "hold": "absent",
+      "id": "fresh:admit:sources:read:image",
+      "returns": false,
+      "route": "fresh"
+    },
+    {
+      "cut": "admit:sources:fresh:image",
+      "hold": "absent",
+      "id": "fresh:admit:sources:fresh:image",
+      "returns": false,
+      "route": "fresh"
+    },
+    {
+      "cut": "admit:directories:enter",
+      "hold": "absent",
+      "id": "fresh:admit:directories:enter",
+      "returns": false,
+      "route": "fresh"
+    },
+    {
+      "cut": "admit:directory:workspace",
+      "hold": "absent",
+      "id": "fresh:admit:directory:workspace",
+      "returns": false,
+      "route": "fresh"
+    },
+    {
+      "cut": "admit:directory:evidence",
+      "hold": "absent",
+      "id": "fresh:admit:directory:evidence",
+      "returns": false,
+      "route": "fresh"
+    },
+    {
+      "cut": "admit:directory:tools",
+      "hold": "absent",
+      "id": "fresh:admit:directory:tools",
+      "returns": false,
+      "route": "fresh"
+    },
+    {
+      "cut": "admit:directory:image",
+      "hold": "absent",
+      "id": "fresh:admit:directory:image",
+      "returns": false,
+      "route": "fresh"
+    },
+    {
+      "cut": "acquire:enter",
+      "hold": "absent",
+      "id": "fresh:acquire:enter",
+      "returns": false,
+      "route": "fresh"
+    },
+    {
+      "cut": "acquire:sources:enter",
+      "hold": "absent",
+      "id": "fresh:acquire:sources:enter",
+      "returns": false,
+      "route": "fresh"
+    },
+    {
+      "cut": "acquire:sources:original:wrapper",
+      "hold": "absent",
+      "id": "fresh:acquire:sources:original:wrapper",
+      "returns": false,
+      "route": "fresh"
+    },
+    {
+      "cut": "acquire:sources:read:wrapper",
+      "hold": "absent",
+      "id": "fresh:acquire:sources:read:wrapper",
+      "returns": false,
+      "route": "fresh"
+    },
+    {
+      "cut": "acquire:sources:fresh:wrapper",
+      "hold": "absent",
+      "id": "fresh:acquire:sources:fresh:wrapper",
+      "returns": false,
+      "route": "fresh"
+    },
+    {
+      "cut": "acquire:sources:original:private",
+      "hold": "absent",
+      "id": "fresh:acquire:sources:original:private",
+      "returns": false,
+      "route": "fresh"
+    },
+    {
+      "cut": "acquire:sources:read:private",
+      "hold": "absent",
+      "id": "fresh:acquire:sources:read:private",
+      "returns": false,
+      "route": "fresh"
+    },
+    {
+      "cut": "acquire:sources:fresh:private",
+      "hold": "absent",
+      "id": "fresh:acquire:sources:fresh:private",
+      "returns": false,
+      "route": "fresh"
+    },
+    {
+      "cut": "acquire:sources:original:global",
+      "hold": "absent",
+      "id": "fresh:acquire:sources:original:global",
+      "returns": false,
+      "route": "fresh"
+    },
+    {
+      "cut": "acquire:sources:read:global",
+      "hold": "absent",
+      "id": "fresh:acquire:sources:read:global",
+      "returns": false,
+      "route": "fresh"
+    },
+    {
+      "cut": "acquire:sources:fresh:global",
+      "hold": "absent",
+      "id": "fresh:acquire:sources:fresh:global",
+      "returns": false,
+      "route": "fresh"
+    },
+    {
+      "cut": "acquire:sources:original:c",
+      "hold": "absent",
+      "id": "fresh:acquire:sources:original:c",
+      "returns": false,
+      "route": "fresh"
+    },
+    {
+      "cut": "acquire:sources:read:c",
+      "hold": "absent",
+      "id": "fresh:acquire:sources:read:c",
+      "returns": false,
+      "route": "fresh"
+    },
+    {
+      "cut": "acquire:sources:fresh:c",
+      "hold": "absent",
+      "id": "fresh:acquire:sources:fresh:c",
+      "returns": false,
+      "route": "fresh"
+    },
+    {
+      "cut": "acquire:sources:original:image",
+      "hold": "absent",
+      "id": "fresh:acquire:sources:original:image",
+      "returns": false,
+      "route": "fresh"
+    },
+    {
+      "cut": "acquire:sources:read:image",
+      "hold": "absent",
+      "id": "fresh:acquire:sources:read:image",
+      "returns": false,
+      "route": "fresh"
+    },
+    {
+      "cut": "acquire:sources:fresh:image",
+      "hold": "absent",
+      "id": "fresh:acquire:sources:fresh:image",
+      "returns": false,
+      "route": "fresh"
+    },
+    {
+      "cut": "acquire:directories:enter",
+      "hold": "absent",
+      "id": "fresh:acquire:directories:enter",
+      "returns": false,
+      "route": "fresh"
+    },
+    {
+      "cut": "acquire:directory:workspace",
+      "hold": "absent",
+      "id": "fresh:acquire:directory:workspace",
+      "returns": false,
+      "route": "fresh"
+    },
+    {
+      "cut": "acquire:directory:evidence",
+      "hold": "absent",
+      "id": "fresh:acquire:directory:evidence",
+      "returns": false,
+      "route": "fresh"
+    },
+    {
+      "cut": "acquire:directory:tools",
+      "hold": "absent",
+      "id": "fresh:acquire:directory:tools",
+      "returns": false,
+      "route": "fresh"
+    },
+    {
+      "cut": "acquire:directory:image",
+      "hold": "absent",
+      "id": "fresh:acquire:directory:image",
+      "returns": false,
+      "route": "fresh"
+    },
+    {
+      "cut": "finish:enter",
+      "hold": "complete",
+      "id": "fresh:finish:enter",
+      "returns": false,
+      "route": "fresh"
+    },
+    {
+      "cut": "finish:hold:enter",
+      "hold": "complete",
+      "id": "fresh:finish:hold:enter",
+      "returns": false,
+      "route": "fresh"
+    },
+    {
+      "cut": "finish:hold:read",
+      "hold": "complete",
+      "id": "fresh:finish:hold:read",
+      "returns": false,
+      "route": "fresh"
+    },
+    {
+      "cut": "finish:hold:check",
+      "hold": "complete",
+      "id": "fresh:finish:hold:check",
+      "returns": false,
+      "route": "fresh"
+    },
+    {
+      "cut": "finish:hold:return",
+      "hold": "complete",
+      "id": "fresh:finish:hold:return",
+      "returns": false,
+      "route": "fresh"
+    },
+    {
+      "cut": "finish:sources:enter",
+      "hold": "complete",
+      "id": "fresh:finish:sources:enter",
+      "returns": false,
+      "route": "fresh"
+    },
+    {
+      "cut": "finish:sources:original:wrapper",
+      "hold": "complete",
+      "id": "fresh:finish:sources:original:wrapper",
+      "returns": false,
+      "route": "fresh"
+    },
+    {
+      "cut": "finish:sources:read:wrapper",
+      "hold": "complete",
+      "id": "fresh:finish:sources:read:wrapper",
+      "returns": false,
+      "route": "fresh"
+    },
+    {
+      "cut": "finish:sources:fresh:wrapper",
+      "hold": "complete",
+      "id": "fresh:finish:sources:fresh:wrapper",
+      "returns": false,
+      "route": "fresh"
+    },
+    {
+      "cut": "finish:sources:original:private",
+      "hold": "complete",
+      "id": "fresh:finish:sources:original:private",
+      "returns": false,
+      "route": "fresh"
+    },
+    {
+      "cut": "finish:sources:read:private",
+      "hold": "complete",
+      "id": "fresh:finish:sources:read:private",
+      "returns": false,
+      "route": "fresh"
+    },
+    {
+      "cut": "finish:sources:fresh:private",
+      "hold": "complete",
+      "id": "fresh:finish:sources:fresh:private",
+      "returns": false,
+      "route": "fresh"
+    },
+    {
+      "cut": "finish:sources:original:global",
+      "hold": "complete",
+      "id": "fresh:finish:sources:original:global",
+      "returns": false,
+      "route": "fresh"
+    },
+    {
+      "cut": "finish:sources:read:global",
+      "hold": "complete",
+      "id": "fresh:finish:sources:read:global",
+      "returns": false,
+      "route": "fresh"
+    },
+    {
+      "cut": "finish:sources:fresh:global",
+      "hold": "complete",
+      "id": "fresh:finish:sources:fresh:global",
+      "returns": false,
+      "route": "fresh"
+    },
+    {
+      "cut": "finish:sources:original:c",
+      "hold": "complete",
+      "id": "fresh:finish:sources:original:c",
+      "returns": false,
+      "route": "fresh"
+    },
+    {
+      "cut": "finish:sources:read:c",
+      "hold": "complete",
+      "id": "fresh:finish:sources:read:c",
+      "returns": false,
+      "route": "fresh"
+    },
+    {
+      "cut": "finish:sources:fresh:c",
+      "hold": "complete",
+      "id": "fresh:finish:sources:fresh:c",
+      "returns": false,
+      "route": "fresh"
+    },
+    {
+      "cut": "finish:sources:original:image",
+      "hold": "complete",
+      "id": "fresh:finish:sources:original:image",
+      "returns": false,
+      "route": "fresh"
+    },
+    {
+      "cut": "finish:sources:read:image",
+      "hold": "complete",
+      "id": "fresh:finish:sources:read:image",
+      "returns": false,
+      "route": "fresh"
+    },
+    {
+      "cut": "finish:sources:fresh:image",
+      "hold": "complete",
+      "id": "fresh:finish:sources:fresh:image",
+      "returns": false,
+      "route": "fresh"
+    },
+    {
+      "cut": "finish:directories:enter",
+      "hold": "complete",
+      "id": "fresh:finish:directories:enter",
+      "returns": false,
+      "route": "fresh"
+    },
+    {
+      "cut": "finish:directory:workspace",
+      "hold": "complete",
+      "id": "fresh:finish:directory:workspace",
+      "returns": false,
+      "route": "fresh"
+    },
+    {
+      "cut": "finish:directory:evidence",
+      "hold": "complete",
+      "id": "fresh:finish:directory:evidence",
+      "returns": false,
+      "route": "fresh"
+    },
+    {
+      "cut": "finish:directory:tools",
+      "hold": "complete",
+      "id": "fresh:finish:directory:tools",
+      "returns": false,
+      "route": "fresh"
+    },
+    {
+      "cut": "finish:directory:image",
+      "hold": "complete",
+      "id": "fresh:finish:directory:image",
+      "returns": false,
+      "route": "fresh"
+    },
+    {
+      "cut": null,
+      "hold": "complete",
+      "id": "reuse:complete",
+      "returns": true,
+      "route": "reuse"
+    },
+    {
+      "cut": "admit:enter",
+      "hold": "complete",
+      "id": "reuse:admit:enter",
+      "returns": false,
+      "route": "reuse"
+    },
+    {
+      "cut": "admit:prior:workspace",
+      "hold": "complete",
+      "id": "reuse:admit:prior:workspace",
+      "returns": false,
+      "route": "reuse"
+    },
+    {
+      "cut": "admit:prior:evidence",
+      "hold": "complete",
+      "id": "reuse:admit:prior:evidence",
+      "returns": false,
+      "route": "reuse"
+    },
+    {
+      "cut": "admit:directory:tools",
+      "hold": "complete",
+      "id": "reuse:admit:directory:tools",
+      "returns": false,
+      "route": "reuse"
+    },
+    {
+      "cut": "admit:directory:image",
+      "hold": "complete",
+      "id": "reuse:admit:directory:image",
+      "returns": false,
+      "route": "reuse"
+    },
+    {
+      "cut": "admit:read:wrapper",
+      "hold": "complete",
+      "id": "reuse:admit:read:wrapper",
+      "returns": false,
+      "route": "reuse"
+    },
+    {
+      "cut": "admit:read:private",
+      "hold": "complete",
+      "id": "reuse:admit:read:private",
+      "returns": false,
+      "route": "reuse"
+    },
+    {
+      "cut": "admit:read:global",
+      "hold": "complete",
+      "id": "reuse:admit:read:global",
+      "returns": false,
+      "route": "reuse"
+    },
+    {
+      "cut": "admit:read:c",
+      "hold": "complete",
+      "id": "reuse:admit:read:c",
+      "returns": false,
+      "route": "reuse"
+    },
+    {
+      "cut": "admit:read:image",
+      "hold": "complete",
+      "id": "reuse:admit:read:image",
+      "returns": false,
+      "route": "reuse"
+    },
+    {
+      "cut": "admit:read:hold",
+      "hold": "complete",
+      "id": "reuse:admit:read:hold",
+      "returns": false,
+      "route": "reuse"
+    },
+    {
+      "cut": "admit:sources:enter",
+      "hold": "complete",
+      "id": "reuse:admit:sources:enter",
+      "returns": false,
+      "route": "reuse"
+    },
+    {
+      "cut": "admit:sources:original:wrapper",
+      "hold": "complete",
+      "id": "reuse:admit:sources:original:wrapper",
+      "returns": false,
+      "route": "reuse"
+    },
+    {
+      "cut": "admit:sources:read:wrapper",
+      "hold": "complete",
+      "id": "reuse:admit:sources:read:wrapper",
+      "returns": false,
+      "route": "reuse"
+    },
+    {
+      "cut": "admit:sources:fresh:wrapper",
+      "hold": "complete",
+      "id": "reuse:admit:sources:fresh:wrapper",
+      "returns": false,
+      "route": "reuse"
+    },
+    {
+      "cut": "admit:sources:original:private",
+      "hold": "complete",
+      "id": "reuse:admit:sources:original:private",
+      "returns": false,
+      "route": "reuse"
+    },
+    {
+      "cut": "admit:sources:read:private",
+      "hold": "complete",
+      "id": "reuse:admit:sources:read:private",
+      "returns": false,
+      "route": "reuse"
+    },
+    {
+      "cut": "admit:sources:fresh:private",
+      "hold": "complete",
+      "id": "reuse:admit:sources:fresh:private",
+      "returns": false,
+      "route": "reuse"
+    },
+    {
+      "cut": "admit:sources:original:global",
+      "hold": "complete",
+      "id": "reuse:admit:sources:original:global",
+      "returns": false,
+      "route": "reuse"
+    },
+    {
+      "cut": "admit:sources:read:global",
+      "hold": "complete",
+      "id": "reuse:admit:sources:read:global",
+      "returns": false,
+      "route": "reuse"
+    },
+    {
+      "cut": "admit:sources:fresh:global",
+      "hold": "complete",
+      "id": "reuse:admit:sources:fresh:global",
+      "returns": false,
+      "route": "reuse"
+    },
+    {
+      "cut": "admit:sources:original:c",
+      "hold": "complete",
+      "id": "reuse:admit:sources:original:c",
+      "returns": false,
+      "route": "reuse"
+    },
+    {
+      "cut": "admit:sources:read:c",
+      "hold": "complete",
+      "id": "reuse:admit:sources:read:c",
+      "returns": false,
+      "route": "reuse"
+    },
+    {
+      "cut": "admit:sources:fresh:c",
+      "hold": "complete",
+      "id": "reuse:admit:sources:fresh:c",
+      "returns": false,
+      "route": "reuse"
+    },
+    {
+      "cut": "admit:sources:original:image",
+      "hold": "complete",
+      "id": "reuse:admit:sources:original:image",
+      "returns": false,
+      "route": "reuse"
+    },
+    {
+      "cut": "admit:sources:read:image",
+      "hold": "complete",
+      "id": "reuse:admit:sources:read:image",
+      "returns": false,
+      "route": "reuse"
+    },
+    {
+      "cut": "admit:sources:fresh:image",
+      "hold": "complete",
+      "id": "reuse:admit:sources:fresh:image",
+      "returns": false,
+      "route": "reuse"
+    },
+    {
+      "cut": "admit:sources:original:hold",
+      "hold": "complete",
+      "id": "reuse:admit:sources:original:hold",
+      "returns": false,
+      "route": "reuse"
+    },
+    {
+      "cut": "admit:sources:read:hold",
+      "hold": "complete",
+      "id": "reuse:admit:sources:read:hold",
+      "returns": false,
+      "route": "reuse"
+    },
+    {
+      "cut": "admit:sources:fresh:hold",
+      "hold": "complete",
+      "id": "reuse:admit:sources:fresh:hold",
+      "returns": false,
+      "route": "reuse"
+    },
+    {
+      "cut": "admit:directories:enter",
+      "hold": "complete",
+      "id": "reuse:admit:directories:enter",
+      "returns": false,
+      "route": "reuse"
+    },
+    {
+      "cut": "admit:directory:workspace",
+      "hold": "complete",
+      "id": "reuse:admit:directory:workspace",
+      "returns": false,
+      "route": "reuse"
+    },
+    {
+      "cut": "admit:directory:evidence",
+      "hold": "complete",
+      "id": "reuse:admit:directory:evidence",
+      "returns": false,
+      "route": "reuse"
+    },
+    {
+      "cut": "admit:directory:tools",
+      "hold": "complete",
+      "id": "reuse:admit:directory:tools",
+      "returns": false,
+      "route": "reuse"
+    },
+    {
+      "cut": "admit:directory:image",
+      "hold": "complete",
+      "id": "reuse:admit:directory:image",
+      "returns": false,
+      "route": "reuse"
+    },
+    {
+      "cut": "acquire:enter",
+      "hold": "complete",
+      "id": "reuse:acquire:enter",
+      "returns": false,
+      "route": "reuse"
+    },
+    {
+      "cut": "acquire:sources:enter",
+      "hold": "complete",
+      "id": "reuse:acquire:sources:enter",
+      "returns": false,
+      "route": "reuse"
+    },
+    {
+      "cut": "acquire:sources:original:wrapper",
+      "hold": "complete",
+      "id": "reuse:acquire:sources:original:wrapper",
+      "returns": false,
+      "route": "reuse"
+    },
+    {
+      "cut": "acquire:sources:read:wrapper",
+      "hold": "complete",
+      "id": "reuse:acquire:sources:read:wrapper",
+      "returns": false,
+      "route": "reuse"
+    },
+    {
+      "cut": "acquire:sources:fresh:wrapper",
+      "hold": "complete",
+      "id": "reuse:acquire:sources:fresh:wrapper",
+      "returns": false,
+      "route": "reuse"
+    },
+    {
+      "cut": "acquire:sources:original:private",
+      "hold": "complete",
+      "id": "reuse:acquire:sources:original:private",
+      "returns": false,
+      "route": "reuse"
+    },
+    {
+      "cut": "acquire:sources:read:private",
+      "hold": "complete",
+      "id": "reuse:acquire:sources:read:private",
+      "returns": false,
+      "route": "reuse"
+    },
+    {
+      "cut": "acquire:sources:fresh:private",
+      "hold": "complete",
+      "id": "reuse:acquire:sources:fresh:private",
+      "returns": false,
+      "route": "reuse"
+    },
+    {
+      "cut": "acquire:sources:original:global",
+      "hold": "complete",
+      "id": "reuse:acquire:sources:original:global",
+      "returns": false,
+      "route": "reuse"
+    },
+    {
+      "cut": "acquire:sources:read:global",
+      "hold": "complete",
+      "id": "reuse:acquire:sources:read:global",
+      "returns": false,
+      "route": "reuse"
+    },
+    {
+      "cut": "acquire:sources:fresh:global",
+      "hold": "complete",
+      "id": "reuse:acquire:sources:fresh:global",
+      "returns": false,
+      "route": "reuse"
+    },
+    {
+      "cut": "acquire:sources:original:c",
+      "hold": "complete",
+      "id": "reuse:acquire:sources:original:c",
+      "returns": false,
+      "route": "reuse"
+    },
+    {
+      "cut": "acquire:sources:read:c",
+      "hold": "complete",
+      "id": "reuse:acquire:sources:read:c",
+      "returns": false,
+      "route": "reuse"
+    },
+    {
+      "cut": "acquire:sources:fresh:c",
+      "hold": "complete",
+      "id": "reuse:acquire:sources:fresh:c",
+      "returns": false,
+      "route": "reuse"
+    },
+    {
+      "cut": "acquire:sources:original:image",
+      "hold": "complete",
+      "id": "reuse:acquire:sources:original:image",
+      "returns": false,
+      "route": "reuse"
+    },
+    {
+      "cut": "acquire:sources:read:image",
+      "hold": "complete",
+      "id": "reuse:acquire:sources:read:image",
+      "returns": false,
+      "route": "reuse"
+    },
+    {
+      "cut": "acquire:sources:fresh:image",
+      "hold": "complete",
+      "id": "reuse:acquire:sources:fresh:image",
+      "returns": false,
+      "route": "reuse"
+    },
+    {
+      "cut": "acquire:sources:original:hold",
+      "hold": "complete",
+      "id": "reuse:acquire:sources:original:hold",
+      "returns": false,
+      "route": "reuse"
+    },
+    {
+      "cut": "acquire:sources:read:hold",
+      "hold": "complete",
+      "id": "reuse:acquire:sources:read:hold",
+      "returns": false,
+      "route": "reuse"
+    },
+    {
+      "cut": "acquire:sources:fresh:hold",
+      "hold": "complete",
+      "id": "reuse:acquire:sources:fresh:hold",
+      "returns": false,
+      "route": "reuse"
+    },
+    {
+      "cut": "acquire:directories:enter",
+      "hold": "complete",
+      "id": "reuse:acquire:directories:enter",
+      "returns": false,
+      "route": "reuse"
+    },
+    {
+      "cut": "acquire:directory:workspace",
+      "hold": "complete",
+      "id": "reuse:acquire:directory:workspace",
+      "returns": false,
+      "route": "reuse"
+    },
+    {
+      "cut": "acquire:directory:evidence",
+      "hold": "complete",
+      "id": "reuse:acquire:directory:evidence",
+      "returns": false,
+      "route": "reuse"
+    },
+    {
+      "cut": "acquire:directory:tools",
+      "hold": "complete",
+      "id": "reuse:acquire:directory:tools",
+      "returns": false,
+      "route": "reuse"
+    },
+    {
+      "cut": "acquire:directory:image",
+      "hold": "complete",
+      "id": "reuse:acquire:directory:image",
+      "returns": false,
+      "route": "reuse"
+    },
+    {
+      "cut": "finish:enter",
+      "hold": "complete",
+      "id": "reuse:finish:enter",
+      "returns": false,
+      "route": "reuse"
+    },
+    {
+      "cut": "finish:hold:enter",
+      "hold": "complete",
+      "id": "reuse:finish:hold:enter",
+      "returns": false,
+      "route": "reuse"
+    },
+    {
+      "cut": "finish:hold:read",
+      "hold": "complete",
+      "id": "reuse:finish:hold:read",
+      "returns": false,
+      "route": "reuse"
+    },
+    {
+      "cut": "finish:hold:check",
+      "hold": "complete",
+      "id": "reuse:finish:hold:check",
+      "returns": false,
+      "route": "reuse"
+    },
+    {
+      "cut": "finish:hold:return",
+      "hold": "complete",
+      "id": "reuse:finish:hold:return",
+      "returns": false,
+      "route": "reuse"
+    },
+    {
+      "cut": "finish:sources:enter",
+      "hold": "complete",
+      "id": "reuse:finish:sources:enter",
+      "returns": false,
+      "route": "reuse"
+    },
+    {
+      "cut": "finish:sources:original:wrapper",
+      "hold": "complete",
+      "id": "reuse:finish:sources:original:wrapper",
+      "returns": false,
+      "route": "reuse"
+    },
+    {
+      "cut": "finish:sources:read:wrapper",
+      "hold": "complete",
+      "id": "reuse:finish:sources:read:wrapper",
+      "returns": false,
+      "route": "reuse"
+    },
+    {
+      "cut": "finish:sources:fresh:wrapper",
+      "hold": "complete",
+      "id": "reuse:finish:sources:fresh:wrapper",
+      "returns": false,
+      "route": "reuse"
+    },
+    {
+      "cut": "finish:sources:original:private",
+      "hold": "complete",
+      "id": "reuse:finish:sources:original:private",
+      "returns": false,
+      "route": "reuse"
+    },
+    {
+      "cut": "finish:sources:read:private",
+      "hold": "complete",
+      "id": "reuse:finish:sources:read:private",
+      "returns": false,
+      "route": "reuse"
+    },
+    {
+      "cut": "finish:sources:fresh:private",
+      "hold": "complete",
+      "id": "reuse:finish:sources:fresh:private",
+      "returns": false,
+      "route": "reuse"
+    },
+    {
+      "cut": "finish:sources:original:global",
+      "hold": "complete",
+      "id": "reuse:finish:sources:original:global",
+      "returns": false,
+      "route": "reuse"
+    },
+    {
+      "cut": "finish:sources:read:global",
+      "hold": "complete",
+      "id": "reuse:finish:sources:read:global",
+      "returns": false,
+      "route": "reuse"
+    },
+    {
+      "cut": "finish:sources:fresh:global",
+      "hold": "complete",
+      "id": "reuse:finish:sources:fresh:global",
+      "returns": false,
+      "route": "reuse"
+    },
+    {
+      "cut": "finish:sources:original:c",
+      "hold": "complete",
+      "id": "reuse:finish:sources:original:c",
+      "returns": false,
+      "route": "reuse"
+    },
+    {
+      "cut": "finish:sources:read:c",
+      "hold": "complete",
+      "id": "reuse:finish:sources:read:c",
+      "returns": false,
+      "route": "reuse"
+    },
+    {
+      "cut": "finish:sources:fresh:c",
+      "hold": "complete",
+      "id": "reuse:finish:sources:fresh:c",
+      "returns": false,
+      "route": "reuse"
+    },
+    {
+      "cut": "finish:sources:original:image",
+      "hold": "complete",
+      "id": "reuse:finish:sources:original:image",
+      "returns": false,
+      "route": "reuse"
+    },
+    {
+      "cut": "finish:sources:read:image",
+      "hold": "complete",
+      "id": "reuse:finish:sources:read:image",
+      "returns": false,
+      "route": "reuse"
+    },
+    {
+      "cut": "finish:sources:fresh:image",
+      "hold": "complete",
+      "id": "reuse:finish:sources:fresh:image",
+      "returns": false,
+      "route": "reuse"
+    },
+    {
+      "cut": "finish:sources:original:hold",
+      "hold": "complete",
+      "id": "reuse:finish:sources:original:hold",
+      "returns": false,
+      "route": "reuse"
+    },
+    {
+      "cut": "finish:sources:read:hold",
+      "hold": "complete",
+      "id": "reuse:finish:sources:read:hold",
+      "returns": false,
+      "route": "reuse"
+    },
+    {
+      "cut": "finish:sources:fresh:hold",
+      "hold": "complete",
+      "id": "reuse:finish:sources:fresh:hold",
+      "returns": false,
+      "route": "reuse"
+    },
+    {
+      "cut": "finish:directories:enter",
+      "hold": "complete",
+      "id": "reuse:finish:directories:enter",
+      "returns": false,
+      "route": "reuse"
+    },
+    {
+      "cut": "finish:directory:workspace",
+      "hold": "complete",
+      "id": "reuse:finish:directory:workspace",
+      "returns": false,
+      "route": "reuse"
+    },
+    {
+      "cut": "finish:directory:evidence",
+      "hold": "complete",
+      "id": "reuse:finish:directory:evidence",
+      "returns": false,
+      "route": "reuse"
+    },
+    {
+      "cut": "finish:directory:tools",
+      "hold": "complete",
+      "id": "reuse:finish:directory:tools",
+      "returns": false,
+      "route": "reuse"
+    },
+    {
+      "cut": "finish:directory:image",
+      "hold": "complete",
+      "id": "reuse:finish:directory:image",
+      "returns": false,
+      "route": "reuse"
+    }
+  ],
+  "checkpoints": "Inject a synchronous exception at each declared function-entry event; finish:hold:return is after the temporary hold reader has explicitly closed and transfers only a byte snapshot. Source-read events fire before invoking the reader, never after it returns but before its caller can own the handle. Caller-sealed admission/acquire/finish wrappers tail-goto their originals. Complete event order must equal the independently enumerated source flow. These are finite called-function boundaries, not every instruction or an asynchronous crash model.",
+  "descriptors": "Retain independent aliases to every returned ImageCustody source handle, the canonical writer when selected, and the permanent lock. Check all explicit closes before observer cleanup. Reconstruct the exact per-path source count: each structural-plus-semantic census phase reads every reference three times and each of two images as C four times, executable four times, manifest twice. Add only completed target/read-hold events and the fresh writer readback; post-publication census is complete before finish:enter. The writer and lock have separate exact counts. Deliberately omitted target closes must leave precisely five fresh or six reuse handles open, which the observer explicitly recovers.",
+  "directory_roles": [
+    "workspace",
+    "evidence",
+    "tools",
+    "image"
+  ],
+  "fixture": "Four immediately recorded same-volume private roots per case. Acquire two original inert runtime images and independently seed another observation hold for the other image; reuse also begins with its exact successful primary acquisition. Keep all unrelated runtime/observation holds and bytes unchanged. Evidence directories use the already admitted observation-acquisition cases prefix. No process, compiler, native query, helper, archive or release is admitted.",
+  "limits": "Inert snapshot interruptions only. Lower-reader failures before handoff, publication/coordinator cuts, real asynchronous crashes, archive/capture settlement, exact release, actual process ownership and native activation are not established by this slice.",
+  "mutants": [
+    {
+      "id": "fresh:omit_target_close",
+      "route": "fresh"
+    },
+    {
+      "id": "reuse:omit_target_close",
+      "route": "reuse"
+    }
+  ],
+  "owner": "HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.12.4.1.3.3.2.2.2.1",
+  "publication_boundary": "Fresh source failures before publication leave no primary hold. Every finish checkpoint follows complete exclusive publication and both post-publication censuses, so the complete hold remains despite no returned result. Reuse always preserves its original exact hold without publication. Empty/partial publication, census and final coordinator/close-report cuts belong to the sibling matrix slice.",
+  "schema": "fsmgen.inactive_observation_snapshot_cut_plan.v1",
+  "source_revision": "730b8b3a2bb1e918d24a03d23a19b0066d159508",
+  "target_roles": [
+    "wrapper",
+    "private",
+    "global",
+    "c",
+    "image"
+  ],
+  "traces": {
+    "fresh": [
+      "admit:enter",
+      "admit:prior:workspace",
+      "admit:prior:evidence",
+      "admit:directory:tools",
+      "admit:directory:image",
+      "admit:read:wrapper",
+      "admit:read:private",
+      "admit:read:global",
+      "admit:read:c",
+      "admit:read:image",
+      "admit:sources:enter",
+      "admit:sources:original:wrapper",
+      "admit:sources:read:wrapper",
+      "admit:sources:fresh:wrapper",
+      "admit:sources:original:private",
+      "admit:sources:read:private",
+      "admit:sources:fresh:private",
+      "admit:sources:original:global",
+      "admit:sources:read:global",
+      "admit:sources:fresh:global",
+      "admit:sources:original:c",
+      "admit:sources:read:c",
+      "admit:sources:fresh:c",
+      "admit:sources:original:image",
+      "admit:sources:read:image",
+      "admit:sources:fresh:image",
+      "admit:directories:enter",
+      "admit:directory:workspace",
+      "admit:directory:evidence",
+      "admit:directory:tools",
+      "admit:directory:image",
+      "acquire:enter",
+      "acquire:sources:enter",
+      "acquire:sources:original:wrapper",
+      "acquire:sources:read:wrapper",
+      "acquire:sources:fresh:wrapper",
+      "acquire:sources:original:private",
+      "acquire:sources:read:private",
+      "acquire:sources:fresh:private",
+      "acquire:sources:original:global",
+      "acquire:sources:read:global",
+      "acquire:sources:fresh:global",
+      "acquire:sources:original:c",
+      "acquire:sources:read:c",
+      "acquire:sources:fresh:c",
+      "acquire:sources:original:image",
+      "acquire:sources:read:image",
+      "acquire:sources:fresh:image",
+      "acquire:directories:enter",
+      "acquire:directory:workspace",
+      "acquire:directory:evidence",
+      "acquire:directory:tools",
+      "acquire:directory:image",
+      "finish:enter",
+      "finish:hold:enter",
+      "finish:hold:read",
+      "finish:hold:check",
+      "finish:hold:return",
+      "finish:sources:enter",
+      "finish:sources:original:wrapper",
+      "finish:sources:read:wrapper",
+      "finish:sources:fresh:wrapper",
+      "finish:sources:original:private",
+      "finish:sources:read:private",
+      "finish:sources:fresh:private",
+      "finish:sources:original:global",
+      "finish:sources:read:global",
+      "finish:sources:fresh:global",
+      "finish:sources:original:c",
+      "finish:sources:read:c",
+      "finish:sources:fresh:c",
+      "finish:sources:original:image",
+      "finish:sources:read:image",
+      "finish:sources:fresh:image",
+      "finish:directories:enter",
+      "finish:directory:workspace",
+      "finish:directory:evidence",
+      "finish:directory:tools",
+      "finish:directory:image"
+    ],
+    "reuse": [
+      "admit:enter",
+      "admit:prior:workspace",
+      "admit:prior:evidence",
+      "admit:directory:tools",
+      "admit:directory:image",
+      "admit:read:wrapper",
+      "admit:read:private",
+      "admit:read:global",
+      "admit:read:c",
+      "admit:read:image",
+      "admit:read:hold",
+      "admit:sources:enter",
+      "admit:sources:original:wrapper",
+      "admit:sources:read:wrapper",
+      "admit:sources:fresh:wrapper",
+      "admit:sources:original:private",
+      "admit:sources:read:private",
+      "admit:sources:fresh:private",
+      "admit:sources:original:global",
+      "admit:sources:read:global",
+      "admit:sources:fresh:global",
+      "admit:sources:original:c",
+      "admit:sources:read:c",
+      "admit:sources:fresh:c",
+      "admit:sources:original:image",
+      "admit:sources:read:image",
+      "admit:sources:fresh:image",
+      "admit:sources:original:hold",
+      "admit:sources:read:hold",
+      "admit:sources:fresh:hold",
+      "admit:directories:enter",
+      "admit:directory:workspace",
+      "admit:directory:evidence",
+      "admit:directory:tools",
+      "admit:directory:image",
+      "acquire:enter",
+      "acquire:sources:enter",
+      "acquire:sources:original:wrapper",
+      "acquire:sources:read:wrapper",
+      "acquire:sources:fresh:wrapper",
+      "acquire:sources:original:private",
+      "acquire:sources:read:private",
+      "acquire:sources:fresh:private",
+      "acquire:sources:original:global",
+      "acquire:sources:read:global",
+      "acquire:sources:fresh:global",
+      "acquire:sources:original:c",
+      "acquire:sources:read:c",
+      "acquire:sources:fresh:c",
+      "acquire:sources:original:image",
+      "acquire:sources:read:image",
+      "acquire:sources:fresh:image",
+      "acquire:sources:original:hold",
+      "acquire:sources:read:hold",
+      "acquire:sources:fresh:hold",
+      "acquire:directories:enter",
+      "acquire:directory:workspace",
+      "acquire:directory:evidence",
+      "acquire:directory:tools",
+      "acquire:directory:image",
+      "finish:enter",
+      "finish:hold:enter",
+      "finish:hold:read",
+      "finish:hold:check",
+      "finish:hold:return",
+      "finish:sources:enter",
+      "finish:sources:original:wrapper",
+      "finish:sources:read:wrapper",
+      "finish:sources:fresh:wrapper",
+      "finish:sources:original:private",
+      "finish:sources:read:private",
+      "finish:sources:fresh:private",
+      "finish:sources:original:global",
+      "finish:sources:read:global",
+      "finish:sources:fresh:global",
+      "finish:sources:original:c",
+      "finish:sources:read:c",
+      "finish:sources:fresh:c",
+      "finish:sources:original:image",
+      "finish:sources:read:image",
+      "finish:sources:fresh:image",
+      "finish:sources:original:hold",
+      "finish:sources:read:hold",
+      "finish:sources:fresh:hold",
+      "finish:directories:enter",
+      "finish:directory:workspace",
+      "finish:directory:evidence",
+      "finish:directory:tools",
+      "finish:directory:image"
+    ]
+  }
+}

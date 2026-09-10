@@ -1,0 +1,32 @@
+{
+  "allocations": 688,
+  "assertions": 345,
+  "cases": 170,
+  "cut_counts": {
+    "fresh": 79,
+    "reuse": 89
+  },
+  "falsifiers": [
+    "hidden failure",
+    "lost cut",
+    "lost executed event",
+    "lost source handle",
+    "wrong handle path",
+    "masked missing close",
+    "invented source identity",
+    "lost unrelated owner",
+    "extra stored member",
+    "authority type changed",
+    "lost failed hold",
+    "lost mutant evidence",
+    "lost allocation",
+    "forbidden process"
+  ],
+  "limits": "Inert snapshot interruptions only. Lower-reader failures before handoff, publication/coordinator cuts, real asynchronous crashes, archive/capture settlement, exact release, actual process ownership and native activation are not established by this slice.",
+  "mutants": [
+    "fresh:omit_target_close",
+    "reuse:omit_target_close"
+  ],
+  "schema": "fsmgen.inactive_observation_snapshot_cuts_audit.v1",
+  "success": true
+}

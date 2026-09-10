@@ -1,0 +1,29 @@
+{
+  "all_byte_exact": true,
+  "restored": [
+    {
+      "bytes": 1424879,
+      "mode": 384,
+      "path": ".artifacts/logs/native-proxy-observation-acquisition-20260910/qualification.json",
+      "sha256": "5c201ce2c6e91a03a07f80180e7d66215038ed6c75e8c9fada6c8e59b2bce3bf"
+    },
+    {
+      "bytes": 14935,
+      "mode": 384,
+      "path": ".artifacts/logs/native-proxy-observation-acquisition-20260910/admission.jsonl",
+      "sha256": "0465eb5d6933f6a1f9cd29cb7a6ee6e4e208b8a31a7c598fe54a98ff0bef75b9"
+    },
+    {
+      "bytes": 3707937,
+      "mode": 384,
+      "path": ".artifacts/logs/native-proxy-observation-reuse-20260910/qualification.json",
+      "sha256": "348c434f7a40012fc8a46a7c7b4b6842ad7d30ca56f3a82947b82231974f6296"
+    },
+    {
+      "bytes": 20600,
+      "mode": 384,
+      "path": ".artifacts/logs/native-proxy-observation-reuse-20260910/admission.jsonl",
+      "sha256": "c3acc35eb6ba4c64d697dd9c75a2a295241b8eaf160aafd9054b60fbfe909b04"
+    }
+  ]
+}

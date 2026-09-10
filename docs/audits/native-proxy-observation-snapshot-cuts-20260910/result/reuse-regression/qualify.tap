@@ -1,0 +1,82 @@
+ok 1 - stable repeated reuse: retained descriptors close
+ok 2 - stable repeated reuse preserves storage and ownership
+ok 3 - reuse at combined capacity: retained descriptors close
+ok 4 - reuse at combined capacity preserves storage and ownership
+ok 5 - extra receipt field: retained descriptors close
+ok 6 - extra receipt field preserves storage and ownership
+ok 7 - runtime authority: retained descriptors close
+ok 8 - runtime authority preserves storage and ownership
+ok 9 - executable supplied: retained descriptors close
+ok 10 - executable supplied preserves storage and ownership
+ok 11 - boolean lock inode: retained descriptors close
+ok 12 - boolean lock inode preserves storage and ownership
+ok 13 - foreign lock path: retained descriptors close
+ok 14 - foreign lock path preserves storage and ownership
+ok 15 - missing target source: retained descriptors close
+ok 16 - missing target source preserves storage and ownership
+ok 17 - extra source field: retained descriptors close
+ok 18 - extra source field preserves storage and ownership
+ok 19 - oversized wrapper: retained descriptors close
+ok 20 - oversized wrapper preserves storage and ownership
+ok 21 - source hash mismatch: retained descriptors close
+ok 22 - source hash mismatch preserves storage and ownership
+ok 23 - source size mismatch: retained descriptors close
+ok 24 - source size mismatch preserves storage and ownership
+ok 25 - string source inode: retained descriptors close
+ok 26 - string source inode preserves storage and ownership
+ok 27 - foreign source path: retained descriptors close
+ok 28 - foreign source path preserves storage and ownership
+ok 29 - hold bytes mismatch: retained descriptors close
+ok 30 - hold bytes mismatch preserves storage and ownership
+ok 31 - request target birth differs: retained descriptors close
+ok 32 - request target birth differs preserves storage and ownership
+ok 33 - request evidence identity differs: retained descriptors close
+ok 34 - request evidence identity differs preserves storage and ownership
+ok 35 - request workspace identity differs: retained descriptors close
+ok 36 - request workspace identity differs preserves storage and ownership
+ok 37 - private global bytes differ: retained descriptors close
+ok 38 - private global bytes differ preserves storage and ownership
+ok 39 - source order differs: retained descriptors close
+ok 40 - source order differs preserves storage and ownership
+ok 41 - current hold absent: retained descriptors close
+ok 42 - current hold absent preserves storage and ownership
+ok 43 - current hold replaced: retained descriptors close
+ok 44 - current hold replaced preserves storage and ownership
+ok 45 - current hold ownership changed: retained descriptors close
+ok 46 - current hold ownership changed preserves storage and ownership
+ok 47 - current lock replaced: retained descriptors close
+ok 48 - current lock replaced preserves storage and ownership
+ok 49 - current wrapper bytes changed: retained descriptors close
+ok 50 - current wrapper bytes changed preserves storage and ownership
+ok 51 - current wrapper replaced: retained descriptors close
+ok 52 - current wrapper replaced preserves storage and ownership
+ok 53 - current private reference replaced: retained descriptors close
+ok 54 - current private reference replaced preserves storage and ownership
+ok 55 - current global reference replaced: retained descriptors close
+ok 56 - current global reference replaced preserves storage and ownership
+ok 57 - current canonical source replaced: retained descriptors close
+ok 58 - current canonical source replaced preserves storage and ownership
+ok 59 - current evidence directory replaced: retained descriptors close
+ok 60 - current evidence directory replaced preserves storage and ownership
+ok 61 - current workspace directory replaced: retained descriptors close
+ok 62 - current workspace directory replaced preserves storage and ownership
+ok 63 - current runtime reference absent: retained descriptors close
+ok 64 - current runtime reference absent preserves storage and ownership
+ok 65 - extra argument: retained descriptors close
+ok 66 - extra argument preserves storage and ownership
+ok 67 - direct internal caller: retained descriptors close
+ok 68 - direct internal caller preserves storage and ownership
+ok 69 - wrapper replaced before closure: retained descriptors close
+ok 70 - wrapper replaced before closure rejects and retains exact state
+ok 71 - hold replaced before closure: retained descriptors close
+ok 72 - hold replaced before closure rejects and retains exact state
+ok 73 - evidence directory replaced before closure: retained descriptors close
+ok 74 - evidence directory replaced before closure rejects and retains exact state
+ok 75 - workspace directory replaced before closure: retained descriptors close
+ok 76 - workspace directory replaced before closure rejects and retains exact state
+ok 77 - discard prior hold identity: retained descriptors close
+ok 78 - discard prior hold identity admits independently invalid prior custody
+ok 79 - discard prior target snapshots: retained descriptors close
+ok 80 - discard prior target snapshots admits independently invalid prior custody
+ok 81 - no process or publication attempt
+1..81

@@ -1893,6 +1893,26 @@ or replace the remaining observation interruption matrix. Replay:
 scripts/run_with_ram_guard.sh -- perl docs/audits/native-proxy-descriptor-handoff-20260910/qualify.t --qualification
 ```
 
+The inactive snapshot interruption controls stop fresh acquisition and reuse
+at each declared admission, source/directory recheck and held-reference read
+boundary. For example, a fresh failure before publication leaves no hold;
+a failure at final snapshot verification preserves the fully published hold.
+A reuse failure preserves the exact existing hold. Other runtime and
+observation owners retain their records, images and file identities throughout.
+
+The independent oracle checks the executed call prefix, complete store and
+workspace contents, and per-path counts for every returned source descriptor,
+writer and lock. Retained handle aliases expose deliberately omitted closes;
+the test observer recovers those handles before removing its exact fixtures.
+These are synchronous function-boundary cuts with inert files, not proof of
+real crash recovery. Publication/coordinator failures, archive settlement,
+release and native ownership remain separately owned. Replay:
+
+```bash
+scripts/run_with_ram_guard.sh -- perl docs/audits/native-proxy-observation-snapshot-cuts-20260910/qualify.t
+python3 -B docs/audits/native-proxy-observation-snapshot-cuts-20260910/audit.py
+```
+
 The helper checks bounded regular source/output files and the native header,
 then sets executable permissions through the admitted open file handle. A
 regression exposed path-based permission changes affecting a substituted file

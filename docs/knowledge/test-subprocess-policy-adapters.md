@@ -18,6 +18,7 @@ answers:
   - "how does stable observation reuse preserve the original hold?"
   - "why must fixture clones preserve byte flags and JSON numeric types?"
   - "why do inactive source and writer handoffs close explicitly?"
+  - "what do inactive observation snapshot interruption cuts prove?"
   - "why did integrated proxy qualification fail?"
   - "why does t1545 not use IPC Cmd?"
   - "where does T1545 preserve empty-output checker failure diagnostics?"
@@ -92,13 +93,14 @@ Darwin env-Bash stalled before main; direct Bash retains capability. Bash/Git ar
 T1545 controls: historical card; absent witnesses stay unknown.
 Env/direct Perl timeouts refute a shebang-only cure. Startup cause, authenticated capture and STOP limits: task/book/history.
 T1669 uses process-supervisor-tests roots; ps skips only verified disappearance. Other errors fail; the historical changed field stays open (.3.2.11).
-History: `33b1c0b4cb41227034f3a8b369c9cacefdc27c32:docs/knowledge/test-subprocess-policy-adapters.md`.
+History: `730b8b3a2bb1e918d24a03d23a19b0066d159508:docs/knowledge/test-subprocess-policy-adapters.md`.
 PST parsing normalizes 1–16 lowercase hex digits; malformed fields and contradictions reject.
 Serial queue contention is supported; client/frame joins, loaded bytes and startup repair remain unproved. Native integration controls: history.
 Fixed CLI binds archive and journal anchors, preserving first failure/stop/ownership. F_CHECK_LV cause and worker/delivery remain unknown. Controls and opt-in violations: history.
-Combined census retains both record kinds; runtime-only inspection stays distinct. Fresh custody keeps wrapper/private-ref/global-ref/C/executable snapshots separate from its hold. Reuse .1.3.3.2.1 checks exact prior custody without publication, even at capacity. Release/capture stay open; replay: `docs/audits/native-proxy-observation-reuse-20260910/audit.py`.
-Fixture cloning must preserve octet flags and JSON types: JSON cloning flags binary vectors as characters; Storable can stringify dual native IDs. The reuse audit's FixtureClone.pm preserves both; neither prototype guard is relaxed.
-Inactive _source and _write_payload now close explicitly on failed descriptor handoff. Retained-handle controls expose scope-cleanup dependence, not an ordinary leak. Replay: `docs/audits/native-proxy-descriptor-handoff-20260910/audit.py --qualification`.
+Combined census retains runtime/observation holds. Fresh snapshots order wrapper/private-ref/global-ref/C/executable; reuse checks prior custody without publication. Hold stays separate; release/capture open. Controls: history.
+FixtureClone preserves octet flags and JSON types. JSON/Storable pitfalls and controls: history. Prototype guards stay strict.
+Inactive source/writer failed handoffs close explicitly; no ordinary leak inferred. Retained-handle controls: history.
+Snapshot cuts preserve other owners and exact source-handle counts; fresh prepublication has no hold, finish failures retain it, reuse preserves it. Synchronous inert boundaries only; publication/coordinator/native closure stays open. Replay: `docs/audits/native-proxy-observation-snapshot-cuts-20260910/audit.py`.
 Caller-sealed test wrappers use tail goto to preserve caller.
 Replay: `scripts/run_with_ram_guard.sh -- python3 -B -m unittest discover -s t/python -p 'test_fixture_policy_archive*.py'`.
 T1595 pre-main cause open; `.19.2.3.1.2.2.6.2` fixes capture.

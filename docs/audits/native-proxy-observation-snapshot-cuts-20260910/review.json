@@ -1,0 +1,273 @@
+{
+  "book": {
+    "exact_output_absent": true,
+    "new_passage_verified": true,
+    "rendered_bytes": 23156420,
+    "rendered_files": 98,
+    "same_volume_direct_objects": true
+  },
+  "closure": {
+    "all_rosters_disjoint_and_absent": true,
+    "complete_route_handles": {
+      "fresh": {
+        "lock": 1,
+        "source": 83,
+        "writer": 1
+      },
+      "reuse": {
+        "lock": 1,
+        "source": 89,
+        "writer": 0
+      }
+    },
+    "limits": "Independent inert snapshot and focused regression closure only; no publication/coordinator matrix, archive settlement, native ownership or product activation.",
+    "regressions": {
+      "fresh": {
+        "allocations": 116,
+        "assertions": 59
+      },
+      "reuse": {
+        "allocations": 160,
+        "assertions": 81
+      }
+    },
+    "restored_prior_outputs": 4,
+    "schema": "fsmgen.inactive_observation_snapshot_cut_closure.v1",
+    "success": true,
+    "total_allocations": 964,
+    "unchanged_prospective_inputs": 14
+  },
+  "containment_recovery": {
+    "action": "Shorten the old fixture-clone explanation through its exact authenticated history pointer. Preserve the current byte/type invariant, original answer routes, all qualification sources/results and unchanged size allowance. Rerun only documentation producers and the required staged/commit gates.",
+    "excess_bytes": 67,
+    "expected_final_aggregate_bytes": 3492385,
+    "failed_gates": [
+      "LIVE-DOCUMENT-SIZE",
+      "README-ENTRYPOINT"
+    ],
+    "history": "730b8b3a2bb1e918d24a03d23a19b0066d159508:docs/knowledge/test-subprocess-policy-adapters.md",
+    "initial_aggregate_bytes": 3492491,
+    "initial_card": {
+      "bytes": 8944,
+      "sha256": "0ec779352c50e3db2ed49843a7c2506e4fc126e2b9a83410bc9c41254e0129fc"
+    },
+    "initial_gate_exit": 1,
+    "schema": "fsmgen.snapshot_cut_containment_recovery.v1",
+    "shortened_bytes": 106,
+    "unchanged_allowance_bytes": 3492424
+  },
+  "durability": "Owning leaf and fixed plan precede every allocation. Immediate allocation and completed-row journals preserve progress; the final full receipt, exact journals/TAP, audit/closure, unchanged inputs and recovery copies are tracked. All roots are absent and prior regression outputs are restored byte-exactly with modes. Acceptance history binds the predecessor; book and Knowledge Map carry the current qualified scope.",
+  "exact_recovery_copies": 27,
+  "falsification": "Every declared source/directory boundary is interrupted before the call; the final hold-return checkpoint follows explicit temporary-reader close. Omitted target-close mutants retain five/six actual open descriptors and fail the strict custody oracle; observer recovery explicitly closes them. Fourteen result falsifiers reject missing events, handles, preserved holds, identity/authority changes and process attempts.",
+  "final_evidence": [
+    {
+      "destination": "docs/audits/native-proxy-observation-snapshot-cuts-20260910/result/qualification.json",
+      "sha256": "a523b08bad6f2fc7b120ab8157da30ad0046f4d63e5a3c0f6fa047b3564ba222",
+      "size_bytes": 30412207
+    },
+    {
+      "destination": "docs/audits/native-proxy-observation-snapshot-cuts-20260910/result/audit.json",
+      "sha256": "62710ebed74f64c22b2e16e653bf139ef2b23c50c01cfe639971413aaefbabdd",
+      "size_bytes": 937
+    },
+    {
+      "destination": "docs/audits/native-proxy-observation-snapshot-cuts-20260910/result/closure.json",
+      "sha256": "17ab61f37983997d865459dc7ab972e30e96c9984db4266f5db00a0c8363ed46",
+      "size_bytes": 756
+    },
+    {
+      "destination": "docs/audits/native-proxy-observation-snapshot-cuts-20260910/result/fresh-regression/qualification.json",
+      "sha256": "3fdf928d55e871b3a23581cc7bc2772d24ea8713f993e290a5b19f9842540413",
+      "size_bytes": 1424879
+    },
+    {
+      "destination": "docs/audits/native-proxy-observation-snapshot-cuts-20260910/result/reuse-regression/qualification.json",
+      "sha256": "d07d1f3e1db7a4acf67e16c34cb6991b714ea4e2d8f9f62d3af19138dcfc8e66",
+      "size_bytes": 3706320
+    }
+  ],
+  "limits": [
+    "Inert snapshot interruptions only. Lower-reader failures before handoff, publication/coordinator cuts, real asynchronous crashes, archive/capture settlement, exact release, actual process ownership and native activation are not established by this slice.",
+    "No product/prototype change was required. These finite synchronous cuts do not cover every instruction or asynchronous process death. Only successfully returned source handles enter this roster; failures inside the lower reader before handoff remain outside this slice. Publication/coordinator and close-report faults belong to the next leaf.",
+    "No compiler, fixture process, helper, archive, release, contention worker or native query ran. Historical startup/parent qualification and full CI/push remain gated."
+  ],
+  "owner": "HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.12.4.1.3.3.2.2.2.1",
+  "qualification": {
+    "allocations": 688,
+    "assertions": 345,
+    "cases": 170,
+    "cut_counts": {
+      "fresh": 79,
+      "reuse": 89
+    },
+    "falsifiers": [
+      "hidden failure",
+      "lost cut",
+      "lost executed event",
+      "lost source handle",
+      "wrong handle path",
+      "masked missing close",
+      "invented source identity",
+      "lost unrelated owner",
+      "extra stored member",
+      "authority type changed",
+      "lost failed hold",
+      "lost mutant evidence",
+      "lost allocation",
+      "forbidden process"
+    ],
+    "limits": "Inert snapshot interruptions only. Lower-reader failures before handoff, publication/coordinator cuts, real asynchronous crashes, archive/capture settlement, exact release, actual process ownership and native activation are not established by this slice.",
+    "mutants": [
+      "fresh:omit_target_close",
+      "reuse:omit_target_close"
+    ],
+    "schema": "fsmgen.inactive_observation_snapshot_cuts_audit.v1",
+    "success": true
+  },
+  "rederive": "The prospective Python plan enumerates source flow independently of the Perl recorder. The oracle checks exact executed prefixes, original inert byte vectors and canonical records, all before/after namespace members, native source/path identities, and the per-path returned-source multiset from each census and completed source read. Successful routes have 83/89 source handles respectively, plus one lock and only the fresh writer. Independent acquisition oracles validate setup and focused regressions.",
+  "root_cause": "Fresh acquisition and stable reuse had custody and late-substitution controls, but no complete declared function-boundary interruption matrix. Source/directory closure and final hold reads retain handles across fallible checks; qualification must observe explicit closes despite retained aliases and account for every other owner.",
+  "schema": "fsmgen.inactive_observation_snapshot_cut_review.v1",
+  "source_revision": "730b8b3a2bb1e918d24a03d23a19b0066d159508",
+  "unchanged_inputs": [
+    {
+      "path": "t/1669-task-acceptance-fixture-runtime.t",
+      "sha256": "bdebbf03308cd5e0699324f9ab96a249c11c9ab05634309569d33874391a196f",
+      "size_bytes": 67582
+    },
+    {
+      "path": "t/lib/FSM/Test/RustProxyFixture.pm",
+      "sha256": "d9c4ab52cf8074526c59b7a5dcb9da870ca7ffdacb4eb236dacb23b5db6d8bfb",
+      "size_bytes": 11466
+    },
+    {
+      "path": "perl/FSM/Support/ProcessSupervisor.pm",
+      "sha256": "684882d91f673ea7145f43ed3aad31acf099f13508574be7b2d8911123988637",
+      "size_bytes": 27990
+    },
+    {
+      "path": "scripts/fixture_kernel_sampler.py",
+      "sha256": "50c94165893b74b758c560f561ff744f294683812a26b429071ef43009aac2dc",
+      "size_bytes": 22040
+    },
+    {
+      "path": "scripts/observe_fixture_startup.py",
+      "sha256": "05144eb1ebd86ebf132ad36b86b4c93b23687db928fc369f633615f0b870fe06",
+      "size_bytes": 25563
+    },
+    {
+      "path": "scripts/fixture_policy_archive.py",
+      "sha256": "f72355164d6af97e9c6de678018fe864bfab537280d95a87f986825970ad50e2",
+      "size_bytes": 21652
+    },
+    {
+      "path": "docs/audits/native-proxy-runtime-records-20260910/RuntimeRecord.pm",
+      "sha256": "013c0a02e7df59dc3a5af944b603cd44121252a02ca0228d6fdc3e1dd28e6745",
+      "size_bytes": 4078
+    },
+    {
+      "path": "docs/audits/native-proxy-observation-records-20260910/ObservationRecord.pm",
+      "sha256": "35445ee951c8f5e7dc204f58cffe1b2f6273286cc3e7715953d705b33e7158d5",
+      "size_bytes": 4369
+    },
+    {
+      "path": "docs/audits/native-proxy-runtime-census-20260910/qualify.t",
+      "sha256": "dfecb1fb29d91911939b80d2aa9315866f306707c85ba85688dfb20091845f57",
+      "size_bytes": 13416
+    },
+    {
+      "path": "docs/audits/native-proxy-runtime-census-20260910/audit.py",
+      "sha256": "4602141d655ed33c00e44417e64254937bfdac8863a24e44971c2159f900a13b",
+      "size_bytes": 10090
+    },
+    {
+      "path": "docs/audits/native-proxy-runtime-acquisition-20260910/ReferenceAcquisition.pm",
+      "sha256": "b751c88d709e102f7f9b9dd17e0222c39e0a81acc16d7194f7f7c3f4c8535b57",
+      "size_bytes": 6565
+    },
+    {
+      "path": "docs/audits/native-proxy-runtime-retirement-20260910/RuntimeRetirement.pm",
+      "sha256": "766348d16243d3868ca5f8b653f757f8f2eaf5c1aba8ec27fd2d9c67e9fd0bcc",
+      "size_bytes": 8727
+    },
+    {
+      "path": "docs/audits/native-proxy-runtime-retirement-20260910/qualify.t",
+      "sha256": "68e36c8b7dd43b49cb39e339dee45665202fbb32a3511e45af7a523380722524",
+      "size_bytes": 22411
+    },
+    {
+      "path": "docs/audits/native-proxy-image-maintenance-20260910/ImageMaintenance.pm",
+      "sha256": "1295957d97737e764c0e800885a2c3f9adfa327a0d41b35d122dde3e21698cac",
+      "size_bytes": 5678
+    },
+    {
+      "path": "docs/audits/native-proxy-canonical-contract-20260910/contract.json",
+      "sha256": "f3f981398afae72540ab4ac0194b8380d4743c3d2146c1172a85365add053222",
+      "size_bytes": 21927
+    },
+    {
+      "path": "docs/audits/native-proxy-runtime-census-20260910/ReferenceCensus.pm",
+      "sha256": "9fd74767e8c10831f2732fa8ad426b7e4fff8c17bab06584aa671cdd013b6247",
+      "size_bytes": 8024
+    },
+    {
+      "path": "docs/audits/native-proxy-combined-census-20260910/qualify.t",
+      "sha256": "f99eeebdd9c5ab0013f4cf903136468085eb13e38f044e4abd9a51c85cbf3c46",
+      "size_bytes": 16644
+    },
+    {
+      "path": "docs/audits/native-proxy-combined-census-20260910/audit.py",
+      "sha256": "ab7a213628f24b8b09a5438184a6ad344d42f400a31b5f5500e748ea4eb0a14c",
+      "size_bytes": 17759
+    },
+    {
+      "path": "docs/audits/native-proxy-runtime-acquisition-20260910/audit.py",
+      "sha256": "36449fac78d3d073fa404ad5f2df5b29e780cbb5af72f3701d1346defdb90fe5",
+      "size_bytes": 13414
+    },
+    {
+      "path": "docs/audits/native-proxy-observation-acquisition-20260910/qualify.t",
+      "sha256": "7170172160b9309e46ed8aad75d383c1b9329b21273030c3bd8ca7a1fcb3db1e",
+      "size_bytes": 18549
+    },
+    {
+      "path": "docs/audits/native-proxy-observation-acquisition-20260910/audit.py",
+      "sha256": "0c9a39917335920095e822a9ed8faa5a218d6e1ec8ada23509beefe7b54acb87",
+      "size_bytes": 20281
+    },
+    {
+      "path": "docs/audits/native-proxy-image-coordination-20260910/Coordination.pm",
+      "sha256": "9d587b9a369ec2e6ed924186a227a5bc4809e25d59b1e019be53e67196043279",
+      "size_bytes": 16715
+    },
+    {
+      "path": "docs/audits/native-proxy-observation-acquisition-20260910/ObservationAcquisition.pm",
+      "sha256": "809c013255ab6973a2d0dabcfd5b0ae5c55c97696d7acc77b10cf68149006470",
+      "size_bytes": 16517
+    },
+    {
+      "path": "docs/audits/native-proxy-observation-reuse-20260910/qualify.t",
+      "sha256": "6a3aa5374ddf2c5c58b3d31214340e8d2d85952875272ceccd4356693920098f",
+      "size_bytes": 19837
+    },
+    {
+      "path": "docs/audits/native-proxy-observation-reuse-20260910/audit.py",
+      "sha256": "0ba9d55002b911a98ce4e92d23824df414bccbe4e7e663c6fcabc3d74a81219e",
+      "size_bytes": 18403
+    },
+    {
+      "path": "docs/audits/native-proxy-observation-reuse-20260910/FixtureClone.pm",
+      "sha256": "d68a2d93f785b1c96689e352f7271e97b0bd239f2cf228f2c8e119dbb6aaf234",
+      "size_bytes": 1053
+    },
+    {
+      "path": "docs/audits/native-proxy-image-custody-20260910/ImageCustody.pm",
+      "sha256": "8f5961d40a8f9235ab07e8adde91337ece585ae850e91858a1074597461a88c3",
+      "size_bytes": 8326
+    },
+    {
+      "path": "docs/audits/native-proxy-image-publication-20260910/Publication.pm",
+      "sha256": "34ca8717856492a09ebf16af8810f04b1dea4c6c8c84ff7b3f5c11c07e7dc2bf",
+      "size_bytes": 5371
+    }
+  ]
+}
