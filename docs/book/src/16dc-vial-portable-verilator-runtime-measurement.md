@@ -1535,9 +1535,13 @@ records why fixture reuse is not yet a proved repair. A hardcoded interpreter
 or mocked resolver changes the control; a persistent fixture cache lacks cold
 launch evidence. The director has authorized an unchanged test after stopping two other
 agents, while one remains running. Task `.15.7.3.4` owns that single reduced-load
-qualification; this is not an isolated-host claim. Any failure remains failed,
-and a passing run would provide limited qualification without repairing the
-historical failure or closing the missing native request join.
+qualification and records a pass, including the native Rust proxy controls.
+Complete TAP is independently checked; altered-result and missing-plan copies
+reject. The original birth is absent after reaping, and the checked fixture
+roots are empty. Source bytes and assertions are unchanged. This qualifies the
+admitted invocation, without proving host isolation, repairing the historical
+failure or closing the missing native request join. Task `.15.7.3.5` reviews
+native proxy-fixture candidates; no such replacement is implemented or qualified.
 
 Shared evidence publication now anchors file creation, linking and temporary
 cleanup to open directory descriptors. A controlled directory-replacement test
