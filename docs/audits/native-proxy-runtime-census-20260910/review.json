@@ -1,0 +1,56 @@
+{
+  "durability": "Exact initial/final results, regression TAP/JSON, source, independent audit and review are tracked. Prior ignored coordination/publication JSON files are restored byte-exactly after new results are retained. The completed runtime-codec subtree is recoverable at the exact source revision; no live ceiling increases.",
+  "falsification": "Malformed, dangling, partial, unknown-format, misnamed, writable, linked, replaced and content-mismatched references reject without returning a result. Capacity fails without dropping records. Omitted content and filename guards each admit records rejected by the independent oracle; altered result records fail separately.",
+  "implementation": "The inactive coordinator gains one fixed reference-inspection operation and accepts no callback. ReferenceCensus.pm decodes the entire bounded runtime census, joins each filename/key and record content to complete current image bytes, holds reference descriptors through closure, and rereads reference and image bytes/identities before returning dated snapshots. Every valid historical owner remains retained without workspace/PID liveness inference.",
+  "initial_harness_failure": "The merged-root-field control also removed reference_key before the helper derived its filename, producing .json. The namespace correctly rejected that name, so the intended record-schema diagnostic was not reached. The harness now retains the original valid filename before mutating the record. The first TAP/result are preserved; all cases retired. No prototype repair was needed for this setup error.",
+  "initial_staged_gate": "The live task file reached its 80-percent warning threshold at exactly 6400 lines, which also propagated through README-ENTRYPOINT. One redundant outside-fence blank line is removed; evidence and all ceilings remain unchanged.",
+  "limits": [
+    "Inert image and reference fixtures only; no real runtime reference acquisition or workspace lifecycle is admitted.",
+    "Only referenced image contents are qualified by this census. Unreferenced incomplete image directories are counted structurally and preserved for separately owned recovery.",
+    "Historical device/inode records are retained, not silently rewritten on relocation. They grant neither current ownership nor permission to execute or release.",
+    "Unknown observation variants reject until separately qualified explicit schema dispatch; this runtime-only census cannot be activated as the combined production protocol.",
+    "Descriptor/byte snapshots are dated cooperative observations, not arbitrary concurrent-writer protection or loaded-image attestation.",
+    "Global/private acquisition, observation lifetimes, retirement, maintenance, actual contention, native behavior and historical startup repair remain unqualified."
+  ],
+  "owner": "HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.12.4.1.2.2.2.2.1",
+  "rederive": "Independent Python record/type/path/key reconstruction and raw source byte/length/SHA joins agree with the guarded census results. The complete capacity key set is independently reconstructed. Existing coordination and publication harnesses pass against the refined coordinator. Every fresh and initial failing-run case is independently absent and disjoint.",
+  "schema": "fsmgen.inactive_runtime_reference_census_review.v1",
+  "source_revision": "4f461e152e2f18a5900a36d9d3752afdb615df37",
+  "unchanged_inputs": [
+    {
+      "path": "docs/audits/native-proxy-image-custody-20260910/ImageCustody.pm",
+      "sha256": "7f9db38e47140fedd39a80d7a6fbf1ee111f56f290a463729b516b08aae90d4f",
+      "size_bytes": 8021
+    },
+    {
+      "path": "docs/audits/native-proxy-runtime-records-20260910/RuntimeRecord.pm",
+      "sha256": "013c0a02e7df59dc3a5af944b603cd44121252a02ca0228d6fdc3e1dd28e6745",
+      "size_bytes": 4078
+    },
+    {
+      "path": "docs/audits/native-proxy-image-publication-20260910/Publication.pm",
+      "sha256": "dc50ca598632572616d7da65fa6f1b417a20e7207dafa5fe03fd5d887382fab6",
+      "size_bytes": 5367
+    },
+    {
+      "path": "docs/audits/native-proxy-image-publication-20260910/qualify.t",
+      "sha256": "52babd30938949ba8fe41520c4bcafc31f308beff3050010430f6102fa5e762d",
+      "size_bytes": 12840
+    },
+    {
+      "path": "docs/audits/native-proxy-image-coordination-20260910/qualify.t",
+      "sha256": "12c3e637d31af9bcf06cb4d058d8bec5e15d8d1d15e1a40de7de4f621581acd3",
+      "size_bytes": 11891
+    },
+    {
+      "path": "t/lib/FSM/Test/RustProxyFixture.pm",
+      "sha256": "d9c4ab52cf8074526c59b7a5dcb9da870ca7ffdacb4eb236dacb23b5db6d8bfb",
+      "size_bytes": 11466
+    },
+    {
+      "path": "perl/FSM/Support/ProcessSupervisor.pm",
+      "sha256": "684882d91f673ea7145f43ed3aad31acf099f13508574be7b2d8911123988637",
+      "size_bytes": 27990
+    }
+  ]
+}

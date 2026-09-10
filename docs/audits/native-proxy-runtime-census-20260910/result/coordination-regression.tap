@@ -1,0 +1,69 @@
+ram-guard: PID 19903; host 58.4%; host cutoff 88%; descendant RSS cutoff 4096 MiB; poll 2s
+ok 1 - lock descriptor is close-on-exec while held
+ok 2 - empty image namespace
+ok 3 - empty reference namespace
+ok 4 - actual named lock identity retained
+ok 5 - lock stays on repository volume
+ok 6 - permanent lock has exact mode
+ok 7 - permanent lock stays empty
+ok 8 - success closes lock descriptor
+ok 9 - lock descriptor is close-on-exec while held
+ok 10 - existing store reuses exact permanent lock
+ok 11 - repeated success closes descriptor
+ok 12 - no caller callback accepted
+ok 13 - wrong lock mode
+ok 14 - invalid existing lock preserved
+ok 15 - invalid lock creates no structural directories
+ok 16 - nonempty lock
+ok 17 - invalid existing lock preserved
+ok 18 - invalid lock creates no structural directories
+ok 19 - hard-linked lock
+ok 20 - invalid existing lock preserved
+ok 21 - invalid lock creates no structural directories
+ok 22 - symlink lock
+ok 23 - invalid existing lock preserved
+ok 24 - invalid lock creates no structural directories
+ok 25 - directory lock
+ok 26 - invalid existing lock preserved
+ok 27 - invalid lock creates no structural directories
+ok 28 - FIFO lock
+ok 29 - invalid existing lock preserved
+ok 30 - invalid lock creates no structural directories
+ok 31 - image boundary counts incomplete image directories
+ok 32 - reference boundary counts incomplete records
+ok 33 - namespace census does not claim content admission
+ok 34 - image over capacity
+ok 35 - reference over capacity
+ok 36 - capacity rejection does not evict
+ok 37 - invalid namespace unknown
+ok 38 - invalid namespace image_name
+ok 39 - invalid namespace reference_name
+ok 40 - invalid namespace writable_reference
+ok 41 - invalid namespace symlink_directory
+ok 42 - modeled lock polling interval stays bounded
+ok 43 - modeled busy result permits bounded subsequent acquisition
+ok 44 - exact modeled busy/success attempts
+ok 45 - success or acquisition failure closes descriptor
+ok 46 - modeled lock polling interval stays bounded
+ok 47 - modeled lock polling interval stays bounded
+ok 48 - modeled busy_deadline
+ok 49 - no extra acquisition after deadline or nonbusy error
+ok 50 - failed acquisition performs no directory bootstrap
+ok 51 - success or acquisition failure closes descriptor
+ok 52 - modeled other_error
+ok 53 - no extra acquisition after deadline or nonbusy error
+ok 54 - failed acquisition performs no directory bootstrap
+ok 55 - success or acquisition failure closes descriptor
+ok 56 - modeled late_success
+ok 57 - no extra acquisition after deadline or nonbusy error
+ok 58 - failed acquisition performs no directory bootstrap
+ok 59 - success or acquisition failure closes descriptor
+ok 60 - census lock_replace
+ok 61 - census directory_replace
+ok 62 - census directory_remove
+ok 63 - final recheck cannot repair removed structure
+ok 64 - independent named-inode oracle defeats removed final lock guard
+ok 65 - independent absence oracle defeats removed no-repair guard
+ok 66 - no compiler or process creation attempted
+ok 67 - all owned inert namespaces are absent
+1..67

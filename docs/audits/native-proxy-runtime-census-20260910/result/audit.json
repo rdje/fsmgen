@@ -1,0 +1,88 @@
+{
+  "assertions": 53,
+  "coordination_assertions": 67,
+  "falsifiers": [
+    "hidden failure",
+    "dropped stale owner",
+    "runtime authority",
+    "runnable result",
+    "incomplete capacity census",
+    "discarded partial state",
+    "omitted counterimplementation"
+  ],
+  "inputs": [
+    {
+      "path": "docs/audits/native-proxy-runtime-census-20260910/ReferenceCensus.pm",
+      "sha256": "a1d2ebbe12e5219cf4b10aba701708a266a5aa9c342de0f06a053f2bd977e91b",
+      "size_bytes": 6246
+    },
+    {
+      "path": "docs/audits/native-proxy-runtime-census-20260910/qualify.t",
+      "sha256": "dfecb1fb29d91911939b80d2aa9315866f306707c85ba85688dfb20091845f57",
+      "size_bytes": 13416
+    },
+    {
+      "path": "docs/audits/native-proxy-image-coordination-20260910/Coordination.pm",
+      "sha256": "a32029cab5786721f63281e2e6cce2dd72e5af148930e0aec68dadfb20828036",
+      "size_bytes": 8836
+    },
+    {
+      "path": ".artifacts/logs/native-proxy-runtime-census-20260910/qualification.json",
+      "sha256": "e0b63d63697355f10e40ad5eb57934e79f98cff4084b76e9d43470bc5df7d2d5",
+      "size_bytes": 37759
+    },
+    {
+      "path": ".artifacts/logs/native-proxy-runtime-census-20260910/qualify.tap",
+      "sha256": "4c087d060f49f8372d57e044432fd7e9ebbb01294ea4ea3200e894b3dc9299a3",
+      "size_bytes": 2596
+    },
+    {
+      "path": ".artifacts/logs/native-proxy-runtime-census-20260910/initial-harness.json",
+      "sha256": "286bb86d0915dcefc385bc8780c73805352d3f0135d320d6d8c4b214d8dd5b4a",
+      "size_bytes": 37760
+    },
+    {
+      "path": ".artifacts/logs/native-proxy-runtime-census-20260910/initial-harness.tap",
+      "sha256": "ced0d229769beb835eb15fd70e4cac2749a58285d32631d9997bba1b06fd4c43",
+      "size_bytes": 2924
+    },
+    {
+      "path": ".artifacts/logs/native-proxy-runtime-census-20260910/coordination-regression.json",
+      "sha256": "b3b9f0b410f92c0fb01b7c4e035fe95180c0f5899b314d7754b0a287e8837bc3",
+      "size_bytes": 4867
+    },
+    {
+      "path": ".artifacts/logs/native-proxy-runtime-census-20260910/coordination-regression.tap",
+      "sha256": "bf0e38557e7229d434b255518f979265637e5a3b4ac3276723080d79645cff1b",
+      "size_bytes": 3082
+    },
+    {
+      "path": ".artifacts/logs/native-proxy-runtime-census-20260910/publication-regression.json",
+      "sha256": "65e315e8c74bbdba5e011c1a688fe66d78a603d62b2d8b101efe550a29570a8d",
+      "size_bytes": 8022
+    },
+    {
+      "path": ".artifacts/logs/native-proxy-runtime-census-20260910/publication-regression.tap",
+      "sha256": "52f5e7c36167347e3a112ee1f7312a550e41eb7a077275f635e2b4ebea9d8cb7",
+      "size_bytes": 3836
+    }
+  ],
+  "limits": [
+    "All images and references are inert qualification fixtures, never compiled or executed.",
+    "Absent synthetic workspaces and historical IDs do not authorize reference release.",
+    "Only referenced image content is admitted; unreferenced partial data remains for owned recovery.",
+    "Snapshots are dated, not ongoing immutability or loaded-image attestation.",
+    "Global/private acquisition, observation formats/lifetimes, retirement, maintenance, actual contention and native behavior remain unqualified."
+  ],
+  "publication_assertions": 78,
+  "rejection_controls": 23,
+  "retained_capacity_keys": 128,
+  "retired_cases": {
+    "census": 25,
+    "coordination": 22,
+    "initial": 25,
+    "publication": 19
+  },
+  "schema": "fsmgen.inactive_runtime_reference_census_audit.v1",
+  "success": true
+}

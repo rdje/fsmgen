@@ -1,0 +1,60 @@
+ram-guard: PID 90945; host 57.7%; host cutoff 88%; descendant RSS cutoff 4096 MiB; poll 2s
+ok 1 - empty reference census grants no holds
+ok 2 - unreferenced images are outside reference content admission
+ok 3 - held reference descriptor excludes inheritance
+ok 4 - held reference descriptor excludes inheritance
+ok 5 - both absent-workspace owners remain retained
+ok 6 - equal image is independently read once per closure pass
+ok 7 - inspection grants no runtime authority
+ok 8 - inspection returns no runnable executable
+ok 9 - historical identity preserved rather than reinterpreted
+ok 10 - checked reference bytes remain present
+ok 11 - unknown runtime field
+ok 12 - unknown runtime field preserves the unresolved record
+Use of uninitialized value in concatenation (.) or string at docs/audits/native-proxy-runtime-census-20260910/qualify.t line 78.
+not ok 13 - merged runtime fields
+#   Failed test 'merged runtime fields'
+#   at docs/audits/native-proxy-runtime-census-20260910/qualify.t line 88.
+# invalid reference name
+ok 14 - merged runtime fields preserves the unresolved record
+ok 15 - boolean historical inode
+ok 16 - boolean historical inode preserves the unresolved record
+ok 17 - wrong runtime key
+ok 18 - wrong runtime key preserves the unresolved record
+ok 19 - unknown observation format
+ok 20 - unknown observation format preserves the unresolved record
+ok 21 - wrong reference content digest
+ok 22 - wrong reference content digest preserves the unresolved record
+ok 23 - wrong reference content length
+ok 24 - wrong reference content length preserves the unresolved record
+ok 25 - dangling referenced image
+ok 26 - dangling referenced image preserves the unresolved record
+ok 27 - reference wrong_filename
+ok 28 - wrong_filename reference is not repaired or removed
+ok 29 - reference partial
+ok 30 - partial reference is not repaired or removed
+ok 31 - reference duplicate
+ok 32 - duplicate reference is not repaired or removed
+ok 33 - reference writable
+ok 34 - writable reference is not repaired or removed
+ok 35 - reference hardlink
+ok 36 - hardlink reference is not repaired or removed
+ok 37 - referenced image missing_manifest
+ok 38 - referenced image changed_image
+ok 39 - closure reference_replaced
+ok 40 - closure reference_bytes_changed
+ok 41 - closure reference_added
+ok 42 - closure image_replaced
+ok 43 - closure image_directory_replaced
+ok 44 - exact combined reference ceiling retains every runtime owner
+ok 45 - reference capacity exceeded
+ok 46 - capacity failure removes no reference
+ok 47 - unreferenced incomplete image is not falsely admitted
+ok 48 - unreferenced partial state is left for owned recovery
+ok 49 - direct inspection bypass
+ok 50 - caller callback rejected
+ok 51 - omitted content join admits independently invalid record
+ok 52 - omitted filename join admits independently invalid alias
+ok 53 - no compiler or process attempt
+1..53
+# Looks like you failed 1 test of 53.

@@ -12,7 +12,7 @@ use FSM::Test::ProcessSupervisor qw(repository_root);
 use ImageCustody;
 
 # Inactive checked coordination. Public inspection and the fixed internal
-# publication operation share custody; no caller callback is accepted.
+# publication/reference operations share custody; no caller callback is accepted.
 my $ROOT = repository_root();
 my $DEVICE = (stat($ROOT))[0];
 my $CASE_PREFIX = '.artifacts/tmp/native-proxy-image-custody/cases/';
@@ -131,7 +131,9 @@ sub _transaction {
     die "unknown inactive transaction\n" unless defined($operation) && !ref($operation)
         && (($operation eq 'inspect' && !@payload)
             || ($operation eq 'publish_image' && @payload == 2
-                && defined(&NativeProxyImagePublication::_publish_locked)));
+                && defined(&NativeProxyImagePublication::_publish_locked))
+            || ($operation eq 'inspect_runtime_references' && !@payload
+                && defined(&NativeProxyReferenceCensus::_inspect_locked)));
     NativeProxyImageCustody::image_key(@payload) if $operation eq 'publish_image';
     NativeProxyImageCustody::_relative_path($case);
     die "only the inactive qualification namespace is admitted\n"
@@ -156,6 +158,8 @@ sub _transaction {
         my $census = _census($base);
         my $publication = $operation eq 'publish_image'
             ? NativeProxyImagePublication::_publish_locked($case, $census, @payload) : undef;
+        my $references = $operation eq 'inspect_runtime_references'
+            ? NativeProxyReferenceCensus::_inspect_locked($case, $census) : undef;
         _structure($base, 0);
         for my $i (0, 1) {
             my $name = $i ? 'references' : 'images';
@@ -173,6 +177,9 @@ sub _transaction {
         $result = $operation eq 'publish_image'
             ? {schema => 'fsmgen.inactive_image_publication.v1', runtime_authorized => 0,
                executable => undef, lock => $lock, %$publication}
+            : $operation eq 'inspect_runtime_references'
+            ? {schema => 'fsmgen.inactive_runtime_reference_census.v1', runtime_authorized => 0,
+               executable => undef, lock => $lock, %$references}
             : {schema => 'fsmgen.inactive_image_namespace.v1',
             completeness => 'structure_only; contents_and_reference_semantics_unqualified',
             lock => $lock,

@@ -1713,6 +1713,20 @@ scripts/run_with_ram_guard.sh -- perl docs/audits/native-proxy-runtime-records-2
 python3 -B docs/audits/native-proxy-runtime-records-20260910/audit.py
 ```
 
+The inactive runtime-reference census now checks every record's filename/key
+and content against its complete referenced image. It preserves historical
+identities and retains owners whose private workspace is absent. Malformed,
+dangling, partial or unknown observation records fail without repair or removal.
+Before returning dated snapshots, it rechecks reference and image bytes and
+identities. Unreferenced partial images stay outside content admission and remain
+for separately owned recovery. Inspection grants no execution or cleanup
+authority; global/private acquisition is still the next step. Run its focused
+inert checks from the root:
+
+```bash
+scripts/run_with_ram_guard.sh -- perl docs/audits/native-proxy-runtime-census-20260910/qualify.t
+```
+
 The helper checks bounded regular source/output files and the native header,
 then sets executable permissions through the admitted open file handle. A
 regression exposed path-based permission changes affecting a substituted file
