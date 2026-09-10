@@ -1,0 +1,28 @@
+{
+  "all_rosters_disjoint_and_absent": true,
+  "authenticated_prerequisite_copies": 13,
+  "current_allocations": 496,
+  "current_assertions": 249,
+  "limits": "Prerequisites are authenticated and rederived from their committed receipts without rerunning fixtures or rewriting ignored results. Current coordinator cuts execute both full routes but do not qualify semantic-census internal cuts, target/lock close reports, asynchronous crashes or native ownership.",
+  "prior": {
+    "members": {
+      "allocations": 14,
+      "archived_assertions": 29,
+      "executed": false
+    },
+    "namespace": {
+      "allocations": 14,
+      "archived_assertions": 29,
+      "executed": false
+    },
+    "snapshot": {
+      "allocations": 688,
+      "archived_assertions": 345,
+      "executed": false
+    }
+  },
+  "prospective_inputs_unchanged": 43,
+  "schema": "fsmgen.inactive_observation_coordinator_cut_closure.v1",
+  "success": true,
+  "total_roots": 1212
+}

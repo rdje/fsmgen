@@ -1,0 +1,250 @@
+ok 1 - fresh:complete: exact executed prefix and outcome
+ok 2 - fresh:complete: explicit descriptor disposition and observer recovery
+ok 3 - fresh:coordinator:root:initial: exact executed prefix and outcome
+ok 4 - fresh:coordinator:root:initial: explicit descriptor disposition and observer recovery
+ok 5 - fresh:coordinator:lock:open: exact executed prefix and outcome
+ok 6 - fresh:coordinator:lock:open: explicit descriptor disposition and observer recovery
+ok 7 - fresh:coordinator:lock:identity:initial: exact executed prefix and outcome
+ok 8 - fresh:coordinator:lock:identity:initial: explicit descriptor disposition and observer recovery
+ok 9 - fresh:coordinator:lock:flags:get: exact executed prefix and outcome
+ok 10 - fresh:coordinator:lock:flags:get: explicit descriptor disposition and observer recovery
+ok 11 - fresh:coordinator:lock:flags:set: exact executed prefix and outcome
+ok 12 - fresh:coordinator:lock:flags:set: explicit descriptor disposition and observer recovery
+ok 13 - fresh:coordinator:lock:acquire: exact executed prefix and outcome
+ok 14 - fresh:coordinator:lock:acquire: explicit descriptor disposition and observer recovery
+ok 15 - fresh:coordinator:lock:identity:acquired: exact executed prefix and outcome
+ok 16 - fresh:coordinator:lock:identity:acquired: explicit descriptor disposition and observer recovery
+ok 17 - fresh:coordinator:root:acquired: exact executed prefix and outcome
+ok 18 - fresh:coordinator:root:acquired: explicit descriptor disposition and observer recovery
+ok 19 - fresh:structure:pre:enter: exact executed prefix and outcome
+ok 20 - fresh:structure:pre:enter: explicit descriptor disposition and observer recovery
+ok 21 - fresh:structure:pre:names:entry: exact executed prefix and outcome
+ok 22 - fresh:structure:pre:names:entry: explicit descriptor disposition and observer recovery
+ok 23 - fresh:structure:pre:directory:images: exact executed prefix and outcome
+ok 24 - fresh:structure:pre:directory:images: explicit descriptor disposition and observer recovery
+ok 25 - fresh:structure:pre:directory:references: exact executed prefix and outcome
+ok 26 - fresh:structure:pre:directory:references: explicit descriptor disposition and observer recovery
+ok 27 - fresh:structure:pre:names:complete: exact executed prefix and outcome
+ok 28 - fresh:structure:pre:names:complete: explicit descriptor disposition and observer recovery
+ok 29 - fresh:structure:pre:return: exact executed prefix and outcome
+ok 30 - fresh:structure:pre:return: explicit descriptor disposition and observer recovery
+ok 31 - fresh:coordinator:namespace:initial:images: exact executed prefix and outcome
+ok 32 - fresh:coordinator:namespace:initial:images: explicit descriptor disposition and observer recovery
+ok 33 - fresh:coordinator:namespace:initial:references: exact executed prefix and outcome
+ok 34 - fresh:coordinator:namespace:initial:references: explicit descriptor disposition and observer recovery
+ok 35 - fresh:census:pre:enter: exact executed prefix and outcome
+ok 36 - fresh:census:pre:enter: explicit descriptor disposition and observer recovery
+ok 37 - fresh:census:pre:names:images: exact executed prefix and outcome
+ok 38 - fresh:census:pre:names:images: explicit descriptor disposition and observer recovery
+ok 39 - fresh:census:pre:names:references: exact executed prefix and outcome
+ok 40 - fresh:census:pre:names:references: explicit descriptor disposition and observer recovery
+ok 41 - fresh:census:pre:directory:0: exact executed prefix and outcome
+ok 42 - fresh:census:pre:directory:0: explicit descriptor disposition and observer recovery
+ok 43 - fresh:census:pre:directory:1: exact executed prefix and outcome
+ok 44 - fresh:census:pre:directory:1: explicit descriptor disposition and observer recovery
+ok 45 - fresh:census:pre:source:0: exact executed prefix and outcome
+ok 46 - fresh:census:pre:source:0: explicit descriptor disposition and observer recovery
+ok 47 - fresh:census:pre:check:0: exact executed prefix and outcome
+ok 48 - fresh:census:pre:check:0: explicit descriptor disposition and observer recovery
+ok 49 - fresh:census:pre:source:1: exact executed prefix and outcome
+ok 50 - fresh:census:pre:source:1: explicit descriptor disposition and observer recovery
+ok 51 - fresh:census:pre:check:1: exact executed prefix and outcome
+ok 52 - fresh:census:pre:check:1: explicit descriptor disposition and observer recovery
+ok 53 - fresh:census:pre:source:2: exact executed prefix and outcome
+ok 54 - fresh:census:pre:source:2: explicit descriptor disposition and observer recovery
+ok 55 - fresh:census:pre:check:2: exact executed prefix and outcome
+ok 56 - fresh:census:pre:check:2: explicit descriptor disposition and observer recovery
+ok 57 - fresh:census:pre:return: exact executed prefix and outcome
+ok 58 - fresh:census:pre:return: explicit descriptor disposition and observer recovery
+ok 59 - fresh:semantic:pre:enter: exact executed prefix and outcome
+ok 60 - fresh:semantic:pre:enter: explicit descriptor disposition and observer recovery
+ok 61 - fresh:operation:admit:enter: exact executed prefix and outcome
+ok 62 - fresh:operation:admit:enter: explicit descriptor disposition and observer recovery
+ok 63 - fresh:operation:acquire:enter: exact executed prefix and outcome
+ok 64 - fresh:operation:acquire:enter: explicit descriptor disposition and observer recovery
+ok 65 - fresh:census:post:enter: exact executed prefix and outcome
+ok 66 - fresh:census:post:enter: explicit descriptor disposition and observer recovery
+ok 67 - fresh:census:post:names:images: exact executed prefix and outcome
+ok 68 - fresh:census:post:names:images: explicit descriptor disposition and observer recovery
+ok 69 - fresh:census:post:names:references: exact executed prefix and outcome
+ok 70 - fresh:census:post:names:references: explicit descriptor disposition and observer recovery
+ok 71 - fresh:census:post:directory:0: exact executed prefix and outcome
+ok 72 - fresh:census:post:directory:0: explicit descriptor disposition and observer recovery
+ok 73 - fresh:census:post:directory:1: exact executed prefix and outcome
+ok 74 - fresh:census:post:directory:1: explicit descriptor disposition and observer recovery
+ok 75 - fresh:census:post:source:0: exact executed prefix and outcome
+ok 76 - fresh:census:post:source:0: explicit descriptor disposition and observer recovery
+ok 77 - fresh:census:post:check:0: exact executed prefix and outcome
+ok 78 - fresh:census:post:check:0: explicit descriptor disposition and observer recovery
+ok 79 - fresh:census:post:source:1: exact executed prefix and outcome
+ok 80 - fresh:census:post:source:1: explicit descriptor disposition and observer recovery
+ok 81 - fresh:census:post:check:1: exact executed prefix and outcome
+ok 82 - fresh:census:post:check:1: explicit descriptor disposition and observer recovery
+ok 83 - fresh:census:post:source:2: exact executed prefix and outcome
+ok 84 - fresh:census:post:source:2: explicit descriptor disposition and observer recovery
+ok 85 - fresh:census:post:check:2: exact executed prefix and outcome
+ok 86 - fresh:census:post:check:2: explicit descriptor disposition and observer recovery
+ok 87 - fresh:census:post:source:3: exact executed prefix and outcome
+ok 88 - fresh:census:post:source:3: explicit descriptor disposition and observer recovery
+ok 89 - fresh:census:post:check:3: exact executed prefix and outcome
+ok 90 - fresh:census:post:check:3: explicit descriptor disposition and observer recovery
+ok 91 - fresh:census:post:return: exact executed prefix and outcome
+ok 92 - fresh:census:post:return: explicit descriptor disposition and observer recovery
+ok 93 - fresh:semantic:post:enter: exact executed prefix and outcome
+ok 94 - fresh:semantic:post:enter: explicit descriptor disposition and observer recovery
+ok 95 - fresh:operation:finish:enter: exact executed prefix and outcome
+ok 96 - fresh:operation:finish:enter: explicit descriptor disposition and observer recovery
+ok 97 - fresh:structure:final:enter: exact executed prefix and outcome
+ok 98 - fresh:structure:final:enter: explicit descriptor disposition and observer recovery
+ok 99 - fresh:structure:final:names:entry: exact executed prefix and outcome
+ok 100 - fresh:structure:final:names:entry: explicit descriptor disposition and observer recovery
+ok 101 - fresh:structure:final:directory:images: exact executed prefix and outcome
+ok 102 - fresh:structure:final:directory:images: explicit descriptor disposition and observer recovery
+ok 103 - fresh:structure:final:directory:references: exact executed prefix and outcome
+ok 104 - fresh:structure:final:directory:references: explicit descriptor disposition and observer recovery
+ok 105 - fresh:structure:final:names:complete: exact executed prefix and outcome
+ok 106 - fresh:structure:final:names:complete: explicit descriptor disposition and observer recovery
+ok 107 - fresh:structure:final:return: exact executed prefix and outcome
+ok 108 - fresh:structure:final:return: explicit descriptor disposition and observer recovery
+ok 109 - fresh:coordinator:namespace:final:images: exact executed prefix and outcome
+ok 110 - fresh:coordinator:namespace:final:images: explicit descriptor disposition and observer recovery
+ok 111 - fresh:coordinator:namespace:final:references: exact executed prefix and outcome
+ok 112 - fresh:coordinator:namespace:final:references: explicit descriptor disposition and observer recovery
+ok 113 - fresh:coordinator:root:final: exact executed prefix and outcome
+ok 114 - fresh:coordinator:root:final: explicit descriptor disposition and observer recovery
+ok 115 - fresh:coordinator:lock:identity:final: exact executed prefix and outcome
+ok 116 - fresh:coordinator:lock:identity:final: explicit descriptor disposition and observer recovery
+ok 117 - reuse:complete: exact executed prefix and outcome
+ok 118 - reuse:complete: explicit descriptor disposition and observer recovery
+ok 119 - reuse:coordinator:root:initial: exact executed prefix and outcome
+ok 120 - reuse:coordinator:root:initial: explicit descriptor disposition and observer recovery
+ok 121 - reuse:coordinator:lock:open: exact executed prefix and outcome
+ok 122 - reuse:coordinator:lock:open: explicit descriptor disposition and observer recovery
+ok 123 - reuse:coordinator:lock:identity:initial: exact executed prefix and outcome
+ok 124 - reuse:coordinator:lock:identity:initial: explicit descriptor disposition and observer recovery
+ok 125 - reuse:coordinator:lock:flags:get: exact executed prefix and outcome
+ok 126 - reuse:coordinator:lock:flags:get: explicit descriptor disposition and observer recovery
+ok 127 - reuse:coordinator:lock:flags:set: exact executed prefix and outcome
+ok 128 - reuse:coordinator:lock:flags:set: explicit descriptor disposition and observer recovery
+ok 129 - reuse:coordinator:lock:acquire: exact executed prefix and outcome
+ok 130 - reuse:coordinator:lock:acquire: explicit descriptor disposition and observer recovery
+ok 131 - reuse:coordinator:lock:identity:acquired: exact executed prefix and outcome
+ok 132 - reuse:coordinator:lock:identity:acquired: explicit descriptor disposition and observer recovery
+ok 133 - reuse:coordinator:root:acquired: exact executed prefix and outcome
+ok 134 - reuse:coordinator:root:acquired: explicit descriptor disposition and observer recovery
+ok 135 - reuse:structure:pre:enter: exact executed prefix and outcome
+ok 136 - reuse:structure:pre:enter: explicit descriptor disposition and observer recovery
+ok 137 - reuse:structure:pre:names:entry: exact executed prefix and outcome
+ok 138 - reuse:structure:pre:names:entry: explicit descriptor disposition and observer recovery
+ok 139 - reuse:structure:pre:directory:images: exact executed prefix and outcome
+ok 140 - reuse:structure:pre:directory:images: explicit descriptor disposition and observer recovery
+ok 141 - reuse:structure:pre:directory:references: exact executed prefix and outcome
+ok 142 - reuse:structure:pre:directory:references: explicit descriptor disposition and observer recovery
+ok 143 - reuse:structure:pre:names:complete: exact executed prefix and outcome
+ok 144 - reuse:structure:pre:names:complete: explicit descriptor disposition and observer recovery
+ok 145 - reuse:structure:pre:return: exact executed prefix and outcome
+ok 146 - reuse:structure:pre:return: explicit descriptor disposition and observer recovery
+ok 147 - reuse:coordinator:namespace:initial:images: exact executed prefix and outcome
+ok 148 - reuse:coordinator:namespace:initial:images: explicit descriptor disposition and observer recovery
+ok 149 - reuse:coordinator:namespace:initial:references: exact executed prefix and outcome
+ok 150 - reuse:coordinator:namespace:initial:references: explicit descriptor disposition and observer recovery
+ok 151 - reuse:census:pre:enter: exact executed prefix and outcome
+ok 152 - reuse:census:pre:enter: explicit descriptor disposition and observer recovery
+ok 153 - reuse:census:pre:names:images: exact executed prefix and outcome
+ok 154 - reuse:census:pre:names:images: explicit descriptor disposition and observer recovery
+ok 155 - reuse:census:pre:names:references: exact executed prefix and outcome
+ok 156 - reuse:census:pre:names:references: explicit descriptor disposition and observer recovery
+ok 157 - reuse:census:pre:directory:0: exact executed prefix and outcome
+ok 158 - reuse:census:pre:directory:0: explicit descriptor disposition and observer recovery
+ok 159 - reuse:census:pre:directory:1: exact executed prefix and outcome
+ok 160 - reuse:census:pre:directory:1: explicit descriptor disposition and observer recovery
+ok 161 - reuse:census:pre:source:0: exact executed prefix and outcome
+ok 162 - reuse:census:pre:source:0: explicit descriptor disposition and observer recovery
+ok 163 - reuse:census:pre:check:0: exact executed prefix and outcome
+ok 164 - reuse:census:pre:check:0: explicit descriptor disposition and observer recovery
+ok 165 - reuse:census:pre:source:1: exact executed prefix and outcome
+ok 166 - reuse:census:pre:source:1: explicit descriptor disposition and observer recovery
+ok 167 - reuse:census:pre:check:1: exact executed prefix and outcome
+ok 168 - reuse:census:pre:check:1: explicit descriptor disposition and observer recovery
+ok 169 - reuse:census:pre:source:2: exact executed prefix and outcome
+ok 170 - reuse:census:pre:source:2: explicit descriptor disposition and observer recovery
+ok 171 - reuse:census:pre:check:2: exact executed prefix and outcome
+ok 172 - reuse:census:pre:check:2: explicit descriptor disposition and observer recovery
+ok 173 - reuse:census:pre:source:3: exact executed prefix and outcome
+ok 174 - reuse:census:pre:source:3: explicit descriptor disposition and observer recovery
+ok 175 - reuse:census:pre:check:3: exact executed prefix and outcome
+ok 176 - reuse:census:pre:check:3: explicit descriptor disposition and observer recovery
+ok 177 - reuse:census:pre:return: exact executed prefix and outcome
+ok 178 - reuse:census:pre:return: explicit descriptor disposition and observer recovery
+ok 179 - reuse:semantic:pre:enter: exact executed prefix and outcome
+ok 180 - reuse:semantic:pre:enter: explicit descriptor disposition and observer recovery
+ok 181 - reuse:operation:admit:enter: exact executed prefix and outcome
+ok 182 - reuse:operation:admit:enter: explicit descriptor disposition and observer recovery
+ok 183 - reuse:operation:acquire:enter: exact executed prefix and outcome
+ok 184 - reuse:operation:acquire:enter: explicit descriptor disposition and observer recovery
+ok 185 - reuse:census:post:enter: exact executed prefix and outcome
+ok 186 - reuse:census:post:enter: explicit descriptor disposition and observer recovery
+ok 187 - reuse:census:post:names:images: exact executed prefix and outcome
+ok 188 - reuse:census:post:names:images: explicit descriptor disposition and observer recovery
+ok 189 - reuse:census:post:names:references: exact executed prefix and outcome
+ok 190 - reuse:census:post:names:references: explicit descriptor disposition and observer recovery
+ok 191 - reuse:census:post:directory:0: exact executed prefix and outcome
+ok 192 - reuse:census:post:directory:0: explicit descriptor disposition and observer recovery
+ok 193 - reuse:census:post:directory:1: exact executed prefix and outcome
+ok 194 - reuse:census:post:directory:1: explicit descriptor disposition and observer recovery
+ok 195 - reuse:census:post:source:0: exact executed prefix and outcome
+ok 196 - reuse:census:post:source:0: explicit descriptor disposition and observer recovery
+ok 197 - reuse:census:post:check:0: exact executed prefix and outcome
+ok 198 - reuse:census:post:check:0: explicit descriptor disposition and observer recovery
+ok 199 - reuse:census:post:source:1: exact executed prefix and outcome
+ok 200 - reuse:census:post:source:1: explicit descriptor disposition and observer recovery
+ok 201 - reuse:census:post:check:1: exact executed prefix and outcome
+ok 202 - reuse:census:post:check:1: explicit descriptor disposition and observer recovery
+ok 203 - reuse:census:post:source:2: exact executed prefix and outcome
+ok 204 - reuse:census:post:source:2: explicit descriptor disposition and observer recovery
+ok 205 - reuse:census:post:check:2: exact executed prefix and outcome
+ok 206 - reuse:census:post:check:2: explicit descriptor disposition and observer recovery
+ok 207 - reuse:census:post:source:3: exact executed prefix and outcome
+ok 208 - reuse:census:post:source:3: explicit descriptor disposition and observer recovery
+ok 209 - reuse:census:post:check:3: exact executed prefix and outcome
+ok 210 - reuse:census:post:check:3: explicit descriptor disposition and observer recovery
+ok 211 - reuse:census:post:return: exact executed prefix and outcome
+ok 212 - reuse:census:post:return: explicit descriptor disposition and observer recovery
+ok 213 - reuse:semantic:post:enter: exact executed prefix and outcome
+ok 214 - reuse:semantic:post:enter: explicit descriptor disposition and observer recovery
+ok 215 - reuse:operation:finish:enter: exact executed prefix and outcome
+ok 216 - reuse:operation:finish:enter: explicit descriptor disposition and observer recovery
+ok 217 - reuse:structure:final:enter: exact executed prefix and outcome
+ok 218 - reuse:structure:final:enter: explicit descriptor disposition and observer recovery
+ok 219 - reuse:structure:final:names:entry: exact executed prefix and outcome
+ok 220 - reuse:structure:final:names:entry: explicit descriptor disposition and observer recovery
+ok 221 - reuse:structure:final:directory:images: exact executed prefix and outcome
+ok 222 - reuse:structure:final:directory:images: explicit descriptor disposition and observer recovery
+ok 223 - reuse:structure:final:directory:references: exact executed prefix and outcome
+ok 224 - reuse:structure:final:directory:references: explicit descriptor disposition and observer recovery
+ok 225 - reuse:structure:final:names:complete: exact executed prefix and outcome
+ok 226 - reuse:structure:final:names:complete: explicit descriptor disposition and observer recovery
+ok 227 - reuse:structure:final:return: exact executed prefix and outcome
+ok 228 - reuse:structure:final:return: explicit descriptor disposition and observer recovery
+ok 229 - reuse:coordinator:namespace:final:images: exact executed prefix and outcome
+ok 230 - reuse:coordinator:namespace:final:images: explicit descriptor disposition and observer recovery
+ok 231 - reuse:coordinator:namespace:final:references: exact executed prefix and outcome
+ok 232 - reuse:coordinator:namespace:final:references: explicit descriptor disposition and observer recovery
+ok 233 - reuse:coordinator:root:final: exact executed prefix and outcome
+ok 234 - reuse:coordinator:root:final: explicit descriptor disposition and observer recovery
+ok 235 - reuse:coordinator:lock:identity:final: exact executed prefix and outcome
+ok 236 - reuse:coordinator:lock:identity:final: explicit descriptor disposition and observer recovery
+ok 237 - fresh:omit_lock_close: exact executed prefix and outcome
+ok 238 - fresh:omit_lock_close: explicit descriptor disposition and observer recovery
+ok 239 - fresh:omit_reference_close: exact executed prefix and outcome
+ok 240 - fresh:omit_reference_close: explicit descriptor disposition and observer recovery
+ok 241 - fresh:omit_directory_close: exact executed prefix and outcome
+ok 242 - fresh:omit_directory_close: explicit descriptor disposition and observer recovery
+ok 243 - reuse:omit_lock_close: exact executed prefix and outcome
+ok 244 - reuse:omit_lock_close: explicit descriptor disposition and observer recovery
+ok 245 - reuse:omit_reference_close: exact executed prefix and outcome
+ok 246 - reuse:omit_reference_close: explicit descriptor disposition and observer recovery
+ok 247 - reuse:omit_directory_close: exact executed prefix and outcome
+ok 248 - reuse:omit_directory_close: explicit descriptor disposition and observer recovery
+ok 249 - no process attempt
+1..249

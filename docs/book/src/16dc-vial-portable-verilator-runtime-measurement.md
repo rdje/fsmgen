@@ -1965,6 +1965,24 @@ scripts/run_with_ram_guard.sh -- perl docs/audits/native-proxy-image-members-202
 python3 -B docs/audits/native-proxy-image-members-20260911/audit.py --qualification
 ```
 
+The inactive coordinator interruption controls cover store identity, existing
+lock opening and descriptor flags, lock acquisition, structural namespace and
+reference checks, operation entry, and final directory/root/lock checks. A
+fresh failure before publication leaves no primary hold; later failures retain
+the complete hold. Reuse preserves its original hold, and other owners remain
+unchanged throughout.
+
+The oracle checks each executed call prefix and every returned source, writer,
+lock and directory descriptor. Deliberately omitted closes expose actual open
+handles before observer recovery. These are synchronous call-boundary controls;
+semantic-census internal faults, target/lock close reports, crash durability and
+native ownership remain separately owned. Replay:
+
+```bash
+scripts/run_with_ram_guard.sh -- perl docs/audits/native-proxy-observation-coordinator-cuts-20260911/qualify.t
+python3 -B docs/audits/native-proxy-observation-coordinator-cuts-20260911/audit.py
+```
+
 The helper checks bounded regular source/output files and the native header,
 then sets executable permissions through the admitted open file handle. A
 regression exposed path-based permission changes affecting a substituted file

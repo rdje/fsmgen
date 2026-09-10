@@ -22,6 +22,7 @@ answers:
   - "what survives inactive observation publication failures?"
   - "how does inactive namespace enumeration reject read errors?"
   - "how does inactive image membership reject enumeration errors?"
+  - "what do inactive coordinator interruption cuts prove?"
   - "why did integrated proxy qualification fail?"
   - "why does t1545 not use IPC Cmd?"
   - "where does T1545 preserve empty-output checker failure diagnostics?"
@@ -96,13 +97,13 @@ Darwin env/direct-Bash startup and locality controls: history.
 T1545 controls: historical card; absent witnesses stay unknown.
 Env/direct Perl timeouts refute a shebang-only cure. Startup cause, authenticated capture and STOP limits: task/book/history.
 T1669 uses process-supervisor-tests roots; ps skips only verified disappearance. Other errors fail; the historical changed field stays open (.3.2.11).
-History: `fa9f92d53a65ce8f6b259b0ef48e657be046f2cd:docs/knowledge/test-subprocess-policy-adapters.md`.
+History: `f7fb1d0272266e5d6117023c1e9e8496622bedd0:docs/knowledge/test-subprocess-policy-adapters.md`.
 PST parsing normalizes 1–16 lowercase hex digits; malformed fields and contradictions reject.
 Serial queue contention is supported; causal/native limits and controls: history.
 Fixed CLI contracts/limits: history.
 Combined census, fresh/reuse custody, FixtureClone types/octet flags, handoff/snapshot/publication controls and conservative holds: history. Release/capture/coordinator/native closure stays open.
-Inactive namespace reads reject errors instead of returning partial names; capacity/read failures close explicitly and preserve the first error. Actual retained-directory controls: `docs/audits/native-proxy-namespace-reader-20260911/audit.py`. Synchronous injected faults do not establish an ordinary leak or full-acquisition bypass.
-Image membership also rejects read errors after all three expected names and closes explicitly on failure: `docs/audits/native-proxy-image-members-20260911/audit.py`. Direct controls do not establish incomplete-image acceptance through the full reader.
+Inactive namespace/image-member errno and explicit-cleanup repairs, retained-directory controls and limits: history.
+Coordinator cuts check lock flags, exact source/directory custody and conservative holds; other owners stay unchanged. Replay: `docs/audits/native-proxy-observation-coordinator-cuts-20260911/audit.py`. Semantic internals, close reports and native closure stay open.
 Caller-sealed test wrappers use tail goto to preserve caller.
 Replay: `scripts/run_with_ram_guard.sh -- python3 -B -m unittest discover -s t/python -p 'test_fixture_policy_archive*.py'`.
 T1595 pre-main cause open; `.19.2.3.1.2.2.6.2` fixes capture.

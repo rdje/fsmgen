@@ -1,0 +1,308 @@
+{
+  "book": {
+    "exact_output_absent": true,
+    "new_passage_verified": true,
+    "rendered_bytes": 23171173,
+    "rendered_files": 98,
+    "same_volume_direct_objects": true
+  },
+  "closure": {
+    "all_rosters_disjoint_and_absent": true,
+    "authenticated_prerequisite_copies": 13,
+    "current_allocations": 496,
+    "current_assertions": 249,
+    "limits": "Prerequisites are authenticated and rederived from their committed receipts without rerunning fixtures or rewriting ignored results. Current coordinator cuts execute both full routes but do not qualify semantic-census internal cuts, target/lock close reports, asynchronous crashes or native ownership.",
+    "prior": {
+      "members": {
+        "allocations": 14,
+        "archived_assertions": 29,
+        "executed": false
+      },
+      "namespace": {
+        "allocations": 14,
+        "archived_assertions": 29,
+        "executed": false
+      },
+      "snapshot": {
+        "allocations": 688,
+        "archived_assertions": 345,
+        "executed": false
+      }
+    },
+    "prospective_inputs_unchanged": 43,
+    "schema": "fsmgen.inactive_observation_coordinator_cut_closure.v1",
+    "success": true,
+    "total_roots": 1212
+  },
+  "durability": "The fixed plan and owning child precede every fixture. Source, plan, harness and auditor are pinned before execution. Eleven exact new result/TAP/journal/audit/closure/preflight copies are tracked. Thirteen committed prerequisite receipts are authenticated and independently rederived without rerunning old fixtures or changing their ignored outputs. No prototype or product source changes. Task/history, Knowledge Map and inspected-and-removed book output preserve the remaining semantic and close-report boundaries.",
+  "exact_recovery_copies": 11,
+  "falsification": "All declared coordinator entry cuts and non-handle-returning structure/census returns preserve the exact prefix, close actual owned descriptors, and retain the declared hold and all other owners. Six omitted lock/first-reference/first-directory close controls each leave exactly one actual handle open, which strict custody detects and the observer recovers. Fourteen altered evidence records reject missing boundaries, sources/directories, identity/closure/hold data and authority/process changes.",
+  "final_evidence": [
+    {
+      "destination": "docs/audits/native-proxy-observation-coordinator-cuts-20260911/result/qualification.json",
+      "sha256": "c8d568f22bc79727a6283d72867e2cbc791361e3420a1822913042f0cf48b95b",
+      "size_bytes": 18384572,
+      "source": ".artifacts/logs/native-proxy-observation-coordinator-cuts-20260911/qualification.json"
+    },
+    {
+      "destination": "docs/audits/native-proxy-observation-coordinator-cuts-20260911/result/audit.json",
+      "sha256": "66516252fdcd49f3197a7b9abaa8ae0862826109818fc0559b8f0a4d2e0ab8d9",
+      "size_bytes": 1329,
+      "source": ".artifacts/logs/native-proxy-observation-coordinator-cuts-20260911/audit.json"
+    },
+    {
+      "destination": "docs/audits/native-proxy-observation-coordinator-cuts-20260911/result/closure.json",
+      "sha256": "09e11acd52602bc9ca2c3fa657c2b18396dcb277f437c944fec7dd19f6d6e2b0",
+      "size_bytes": 955,
+      "source": ".artifacts/logs/native-proxy-observation-coordinator-cuts-20260911/closure.json"
+    }
+  ],
+  "limits": "Finite inert coordinator call-boundary cuts only. No complete semantic-census internal matrix, every syscall failure, asynchronous crash, ordinary lexical-cleanup leak, native process ownership, archive/capture settlement, exact release, product activation or historical startup repair is established.",
+  "owner": "HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.12.4.1.3.3.2.2.2.2.2.2.2.1",
+  "qualification": {
+    "allocations": 496,
+    "assertions": 249,
+    "cases": 118,
+    "complete_handles": {
+      "fresh": {
+        "directory": 26,
+        "lock": 1,
+        "source": 83,
+        "writer": 1
+      },
+      "reuse": {
+        "directory": 26,
+        "lock": 1,
+        "source": 89,
+        "writer": 0
+      }
+    },
+    "cut_counts": {
+      "fresh": 57,
+      "reuse": 59
+    },
+    "falsifiers": [
+      "hidden failure",
+      "lost boundary",
+      "lost call",
+      "lost directory",
+      "lost source",
+      "lost observer close",
+      "invented lock identity",
+      "lost lock inheritance seal",
+      "lost other owner",
+      "lost failed hold",
+      "lost omitted close",
+      "authority type changed",
+      "lost allocation",
+      "forbidden process"
+    ],
+    "limits": "Finite inert coordinator call-boundary cuts only. No complete semantic-census internal matrix, every syscall failure, asynchronous crash, ordinary lexical-cleanup leak, native process ownership, archive/capture settlement, exact release, product activation or historical startup repair is established.",
+    "mutants": [
+      "fresh:omit_lock_close",
+      "fresh:omit_reference_close",
+      "fresh:omit_directory_close",
+      "reuse:omit_lock_close",
+      "reuse:omit_reference_close",
+      "reuse:omit_directory_close"
+    ],
+    "schema": "fsmgen.inactive_observation_coordinator_cut_audit.v1",
+    "success": true
+  },
+  "rederive": "A separate Python flow fixes fresh/reuse call order and completed-call resource effects. The oracle maps ordinal references to actual sorted filenames and independently reconstructs per-path source/directory/writer/lock counts, native identities, exact full store/workspace state and conservative primary-hold disposition. Complete routes retain the prior 83/89 source counts and each observes 26 explicitly closed directory handles. Every allocated root is immediately journaled; full row/progress journals reconcile with the complete result.",
+  "root_cause": "The prior snapshot/publication matrices leave coordinator operation, permanent-lock and structural-census boundaries unqualified. Both direct directory-reader prerequisites now close read/capacity errors explicitly, allowing actual directory aliases to join the coordinator custody oracle.",
+  "schema": "fsmgen.inactive_observation_coordinator_cut_review.v1",
+  "source_revision": "f7fb1d0272266e5d6117023c1e9e8496622bedd0",
+  "unchanged_inputs": [
+    {
+      "path": "docs/audits/native-proxy-canonical-contract-20260910/contract.json",
+      "sha256": "f3f981398afae72540ab4ac0194b8380d4743c3d2146c1172a85365add053222",
+      "size_bytes": 21927
+    },
+    {
+      "path": "docs/audits/native-proxy-combined-census-20260910/audit.py",
+      "sha256": "ab7a213628f24b8b09a5438184a6ad344d42f400a31b5f5500e748ea4eb0a14c",
+      "size_bytes": 17759
+    },
+    {
+      "path": "docs/audits/native-proxy-combined-census-20260910/plan.json",
+      "sha256": "9acb2e13135f501617d972f9376b8e37a01e33485d70e5cd762fb7fe791c716b",
+      "size_bytes": 1354
+    },
+    {
+      "path": "docs/audits/native-proxy-combined-census-20260910/qualify.t",
+      "sha256": "f99eeebdd9c5ab0013f4cf903136468085eb13e38f044e4abd9a51c85cbf3c46",
+      "size_bytes": 16644
+    },
+    {
+      "path": "docs/audits/native-proxy-image-coordination-20260910/Coordination.pm",
+      "sha256": "51c36432bdcaf35180dd84b7fde709312682e57a4a3fbdc679c1f4d2f01fd00d",
+      "size_bytes": 17012
+    },
+    {
+      "path": "docs/audits/native-proxy-image-custody-20260910/ImageCustody.pm",
+      "sha256": "927f1ab39f7f26742e36878985d1ff545ddf2dee119d4bf6b7b41bf2c9360ccc",
+      "size_bytes": 8619
+    },
+    {
+      "path": "docs/audits/native-proxy-image-custody-20260910/audit.py",
+      "sha256": "e964855e7e9bd7abf08af58821cd93fc45425b1b7e0e57fbaa8cdd49e7ecae6a",
+      "size_bytes": 6530
+    },
+    {
+      "path": "docs/audits/native-proxy-image-custody-20260910/qualify.t",
+      "sha256": "ddb1ce26dd2824cdbdacaaeae00da36ae26defb13749bea063d1dd9323968b34",
+      "size_bytes": 12544
+    },
+    {
+      "path": "docs/audits/native-proxy-image-custody-20260910/vectors.json",
+      "sha256": "60992f01705436d9c7efbc280d6de73f4c132d91ffea9359852c10c9afb7890d",
+      "size_bytes": 1373
+    },
+    {
+      "path": "docs/audits/native-proxy-image-maintenance-20260910/ImageMaintenance.pm",
+      "sha256": "1295957d97737e764c0e800885a2c3f9adfa327a0d41b35d122dde3e21698cac",
+      "size_bytes": 5678
+    },
+    {
+      "path": "docs/audits/native-proxy-image-publication-20260910/Publication.pm",
+      "sha256": "34ca8717856492a09ebf16af8810f04b1dea4c6c8c84ff7b3f5c11c07e7dc2bf",
+      "size_bytes": 5371
+    },
+    {
+      "path": "docs/audits/native-proxy-image-publication-20260910/audit.py",
+      "sha256": "4fdcb1f466368df5e2cec7b31356bf4f4f4d068e1bbd70a51b88e7f0f9f5f186",
+      "size_bytes": 7057
+    },
+    {
+      "path": "docs/audits/native-proxy-image-publication-20260910/qualify.t",
+      "sha256": "52babd30938949ba8fe41520c4bcafc31f308beff3050010430f6102fa5e762d",
+      "size_bytes": 12840
+    },
+    {
+      "path": "docs/audits/native-proxy-observation-acquisition-20260910/ObservationAcquisition.pm",
+      "sha256": "809c013255ab6973a2d0dabcfd5b0ae5c55c97696d7acc77b10cf68149006470",
+      "size_bytes": 16517
+    },
+    {
+      "path": "docs/audits/native-proxy-observation-acquisition-20260910/audit.py",
+      "sha256": "0c9a39917335920095e822a9ed8faa5a218d6e1ec8ada23509beefe7b54acb87",
+      "size_bytes": 20281
+    },
+    {
+      "path": "docs/audits/native-proxy-observation-acquisition-20260910/qualify.t",
+      "sha256": "7170172160b9309e46ed8aad75d383c1b9329b21273030c3bd8ca7a1fcb3db1e",
+      "size_bytes": 18549
+    },
+    {
+      "path": "docs/audits/native-proxy-observation-records-20260910/ObservationRecord.pm",
+      "sha256": "35445ee951c8f5e7dc204f58cffe1b2f6273286cc3e7715953d705b33e7158d5",
+      "size_bytes": 4369
+    },
+    {
+      "path": "docs/audits/native-proxy-observation-reuse-20260910/FixtureClone.pm",
+      "sha256": "d68a2d93f785b1c96689e352f7271e97b0bd239f2cf228f2c8e119dbb6aaf234",
+      "size_bytes": 1053
+    },
+    {
+      "path": "docs/audits/native-proxy-observation-reuse-20260910/audit.py",
+      "sha256": "0ba9d55002b911a98ce4e92d23824df414bccbe4e7e663c6fcabc3d74a81219e",
+      "size_bytes": 18403
+    },
+    {
+      "path": "docs/audits/native-proxy-observation-reuse-20260910/qualify.t",
+      "sha256": "6a3aa5374ddf2c5c58b3d31214340e8d2d85952875272ceccd4356693920098f",
+      "size_bytes": 19837
+    },
+    {
+      "path": "docs/audits/native-proxy-observation-snapshot-cuts-20260910/audit.py",
+      "sha256": "7cda9532c29332bd2c73ebcf12936e130853fde81e2861160dc68755097cf032",
+      "size_bytes": 15274
+    },
+    {
+      "path": "docs/audits/native-proxy-observation-snapshot-cuts-20260910/plan.json",
+      "sha256": "e1bc62c41afefe8a694d03eb4152dbf07d5818d436e7607af7f82a21d6a4397d",
+      "size_bytes": 38075
+    },
+    {
+      "path": "docs/audits/native-proxy-observation-snapshot-cuts-20260910/plan.py",
+      "sha256": "b89004c6882c2534a1a0117f89cb1adeaf93bdff70890fd6294887080c784776",
+      "size_bytes": 4686
+    },
+    {
+      "path": "docs/audits/native-proxy-observation-snapshot-cuts-20260910/qualify.t",
+      "sha256": "89ad16ec831491f8fb19d290d5eac155c0ad006f0b2a55a82e7a75c560923b9d",
+      "size_bytes": 19552
+    },
+    {
+      "path": "docs/audits/native-proxy-runtime-acquisition-20260910/ReferenceAcquisition.pm",
+      "sha256": "b751c88d709e102f7f9b9dd17e0222c39e0a81acc16d7194f7f7c3f4c8535b57",
+      "size_bytes": 6565
+    },
+    {
+      "path": "docs/audits/native-proxy-runtime-acquisition-20260910/audit.py",
+      "sha256": "36449fac78d3d073fa404ad5f2df5b29e780cbb5af72f3701d1346defdb90fe5",
+      "size_bytes": 13414
+    },
+    {
+      "path": "docs/audits/native-proxy-runtime-census-20260910/ReferenceCensus.pm",
+      "sha256": "9fd74767e8c10831f2732fa8ad426b7e4fff8c17bab06584aa671cdd013b6247",
+      "size_bytes": 8024
+    },
+    {
+      "path": "docs/audits/native-proxy-runtime-census-20260910/audit.py",
+      "sha256": "4602141d655ed33c00e44417e64254937bfdac8863a24e44971c2159f900a13b",
+      "size_bytes": 10090
+    },
+    {
+      "path": "docs/audits/native-proxy-runtime-census-20260910/qualify.t",
+      "sha256": "dfecb1fb29d91911939b80d2aa9315866f306707c85ba85688dfb20091845f57",
+      "size_bytes": 13416
+    },
+    {
+      "path": "docs/audits/native-proxy-runtime-records-20260910/RuntimeRecord.pm",
+      "sha256": "013c0a02e7df59dc3a5af944b603cd44121252a02ca0228d6fdc3e1dd28e6745",
+      "size_bytes": 4078
+    },
+    {
+      "path": "docs/audits/native-proxy-runtime-retirement-20260910/RuntimeRetirement.pm",
+      "sha256": "766348d16243d3868ca5f8b653f757f8f2eaf5c1aba8ec27fd2d9c67e9fd0bcc",
+      "size_bytes": 8727
+    },
+    {
+      "path": "docs/audits/native-proxy-runtime-retirement-20260910/qualify.t",
+      "sha256": "68e36c8b7dd43b49cb39e339dee45665202fbb32a3511e45af7a523380722524",
+      "size_bytes": 22411
+    },
+    {
+      "path": "perl/FSM/Support/ProcessSupervisor.pm",
+      "sha256": "684882d91f673ea7145f43ed3aad31acf099f13508574be7b2d8911123988637",
+      "size_bytes": 27990
+    },
+    {
+      "path": "scripts/fixture_kernel_sampler.py",
+      "sha256": "50c94165893b74b758c560f561ff744f294683812a26b429071ef43009aac2dc",
+      "size_bytes": 22040
+    },
+    {
+      "path": "scripts/fixture_policy_archive.py",
+      "sha256": "f72355164d6af97e9c6de678018fe864bfab537280d95a87f986825970ad50e2",
+      "size_bytes": 21652
+    },
+    {
+      "path": "scripts/observe_fixture_startup.py",
+      "sha256": "05144eb1ebd86ebf132ad36b86b4c93b23687db928fc369f633615f0b870fe06",
+      "size_bytes": 25563
+    },
+    {
+      "path": "t/1669-task-acceptance-fixture-runtime.t",
+      "sha256": "bdebbf03308cd5e0699324f9ab96a249c11c9ab05634309569d33874391a196f",
+      "size_bytes": 67582
+    },
+    {
+      "path": "t/lib/FSM/Test/RustProxyFixture.pm",
+      "sha256": "d9c4ab52cf8074526c59b7a5dcb9da870ca7ffdacb4eb236dacb23b5db6d8bfb",
+      "size_bytes": 11466
+    }
+  ]
+}

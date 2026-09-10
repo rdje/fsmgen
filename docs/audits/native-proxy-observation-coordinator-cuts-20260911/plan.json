@@ -1,0 +1,1334 @@
+{
+  "cases": [
+    {
+      "cut": null,
+      "hold": "complete",
+      "id": "fresh:complete",
+      "route": "fresh"
+    },
+    {
+      "cut": "coordinator:root:initial",
+      "hold": "absent",
+      "id": "fresh:coordinator:root:initial",
+      "route": "fresh"
+    },
+    {
+      "cut": "coordinator:lock:open",
+      "hold": "absent",
+      "id": "fresh:coordinator:lock:open",
+      "route": "fresh"
+    },
+    {
+      "cut": "coordinator:lock:identity:initial",
+      "hold": "absent",
+      "id": "fresh:coordinator:lock:identity:initial",
+      "route": "fresh"
+    },
+    {
+      "cut": "coordinator:lock:flags:get",
+      "hold": "absent",
+      "id": "fresh:coordinator:lock:flags:get",
+      "route": "fresh"
+    },
+    {
+      "cut": "coordinator:lock:flags:set",
+      "hold": "absent",
+      "id": "fresh:coordinator:lock:flags:set",
+      "route": "fresh"
+    },
+    {
+      "cut": "coordinator:lock:acquire",
+      "hold": "absent",
+      "id": "fresh:coordinator:lock:acquire",
+      "route": "fresh"
+    },
+    {
+      "cut": "coordinator:lock:identity:acquired",
+      "hold": "absent",
+      "id": "fresh:coordinator:lock:identity:acquired",
+      "route": "fresh"
+    },
+    {
+      "cut": "coordinator:root:acquired",
+      "hold": "absent",
+      "id": "fresh:coordinator:root:acquired",
+      "route": "fresh"
+    },
+    {
+      "cut": "structure:pre:enter",
+      "hold": "absent",
+      "id": "fresh:structure:pre:enter",
+      "route": "fresh"
+    },
+    {
+      "cut": "structure:pre:names:entry",
+      "hold": "absent",
+      "id": "fresh:structure:pre:names:entry",
+      "route": "fresh"
+    },
+    {
+      "cut": "structure:pre:directory:images",
+      "hold": "absent",
+      "id": "fresh:structure:pre:directory:images",
+      "route": "fresh"
+    },
+    {
+      "cut": "structure:pre:directory:references",
+      "hold": "absent",
+      "id": "fresh:structure:pre:directory:references",
+      "route": "fresh"
+    },
+    {
+      "cut": "structure:pre:names:complete",
+      "hold": "absent",
+      "id": "fresh:structure:pre:names:complete",
+      "route": "fresh"
+    },
+    {
+      "cut": "structure:pre:return",
+      "hold": "absent",
+      "id": "fresh:structure:pre:return",
+      "route": "fresh"
+    },
+    {
+      "cut": "coordinator:namespace:initial:images",
+      "hold": "absent",
+      "id": "fresh:coordinator:namespace:initial:images",
+      "route": "fresh"
+    },
+    {
+      "cut": "coordinator:namespace:initial:references",
+      "hold": "absent",
+      "id": "fresh:coordinator:namespace:initial:references",
+      "route": "fresh"
+    },
+    {
+      "cut": "census:pre:enter",
+      "hold": "absent",
+      "id": "fresh:census:pre:enter",
+      "route": "fresh"
+    },
+    {
+      "cut": "census:pre:names:images",
+      "hold": "absent",
+      "id": "fresh:census:pre:names:images",
+      "route": "fresh"
+    },
+    {
+      "cut": "census:pre:names:references",
+      "hold": "absent",
+      "id": "fresh:census:pre:names:references",
+      "route": "fresh"
+    },
+    {
+      "cut": "census:pre:directory:0",
+      "hold": "absent",
+      "id": "fresh:census:pre:directory:0",
+      "route": "fresh"
+    },
+    {
+      "cut": "census:pre:directory:1",
+      "hold": "absent",
+      "id": "fresh:census:pre:directory:1",
+      "route": "fresh"
+    },
+    {
+      "cut": "census:pre:source:0",
+      "hold": "absent",
+      "id": "fresh:census:pre:source:0",
+      "route": "fresh"
+    },
+    {
+      "cut": "census:pre:check:0",
+      "hold": "absent",
+      "id": "fresh:census:pre:check:0",
+      "route": "fresh"
+    },
+    {
+      "cut": "census:pre:source:1",
+      "hold": "absent",
+      "id": "fresh:census:pre:source:1",
+      "route": "fresh"
+    },
+    {
+      "cut": "census:pre:check:1",
+      "hold": "absent",
+      "id": "fresh:census:pre:check:1",
+      "route": "fresh"
+    },
+    {
+      "cut": "census:pre:source:2",
+      "hold": "absent",
+      "id": "fresh:census:pre:source:2",
+      "route": "fresh"
+    },
+    {
+      "cut": "census:pre:check:2",
+      "hold": "absent",
+      "id": "fresh:census:pre:check:2",
+      "route": "fresh"
+    },
+    {
+      "cut": "census:pre:return",
+      "hold": "absent",
+      "id": "fresh:census:pre:return",
+      "route": "fresh"
+    },
+    {
+      "cut": "semantic:pre:enter",
+      "hold": "absent",
+      "id": "fresh:semantic:pre:enter",
+      "route": "fresh"
+    },
+    {
+      "cut": "operation:admit:enter",
+      "hold": "absent",
+      "id": "fresh:operation:admit:enter",
+      "route": "fresh"
+    },
+    {
+      "cut": "operation:acquire:enter",
+      "hold": "absent",
+      "id": "fresh:operation:acquire:enter",
+      "route": "fresh"
+    },
+    {
+      "cut": "census:post:enter",
+      "hold": "complete",
+      "id": "fresh:census:post:enter",
+      "route": "fresh"
+    },
+    {
+      "cut": "census:post:names:images",
+      "hold": "complete",
+      "id": "fresh:census:post:names:images",
+      "route": "fresh"
+    },
+    {
+      "cut": "census:post:names:references",
+      "hold": "complete",
+      "id": "fresh:census:post:names:references",
+      "route": "fresh"
+    },
+    {
+      "cut": "census:post:directory:0",
+      "hold": "complete",
+      "id": "fresh:census:post:directory:0",
+      "route": "fresh"
+    },
+    {
+      "cut": "census:post:directory:1",
+      "hold": "complete",
+      "id": "fresh:census:post:directory:1",
+      "route": "fresh"
+    },
+    {
+      "cut": "census:post:source:0",
+      "hold": "complete",
+      "id": "fresh:census:post:source:0",
+      "route": "fresh"
+    },
+    {
+      "cut": "census:post:check:0",
+      "hold": "complete",
+      "id": "fresh:census:post:check:0",
+      "route": "fresh"
+    },
+    {
+      "cut": "census:post:source:1",
+      "hold": "complete",
+      "id": "fresh:census:post:source:1",
+      "route": "fresh"
+    },
+    {
+      "cut": "census:post:check:1",
+      "hold": "complete",
+      "id": "fresh:census:post:check:1",
+      "route": "fresh"
+    },
+    {
+      "cut": "census:post:source:2",
+      "hold": "complete",
+      "id": "fresh:census:post:source:2",
+      "route": "fresh"
+    },
+    {
+      "cut": "census:post:check:2",
+      "hold": "complete",
+      "id": "fresh:census:post:check:2",
+      "route": "fresh"
+    },
+    {
+      "cut": "census:post:source:3",
+      "hold": "complete",
+      "id": "fresh:census:post:source:3",
+      "route": "fresh"
+    },
+    {
+      "cut": "census:post:check:3",
+      "hold": "complete",
+      "id": "fresh:census:post:check:3",
+      "route": "fresh"
+    },
+    {
+      "cut": "census:post:return",
+      "hold": "complete",
+      "id": "fresh:census:post:return",
+      "route": "fresh"
+    },
+    {
+      "cut": "semantic:post:enter",
+      "hold": "complete",
+      "id": "fresh:semantic:post:enter",
+      "route": "fresh"
+    },
+    {
+      "cut": "operation:finish:enter",
+      "hold": "complete",
+      "id": "fresh:operation:finish:enter",
+      "route": "fresh"
+    },
+    {
+      "cut": "structure:final:enter",
+      "hold": "complete",
+      "id": "fresh:structure:final:enter",
+      "route": "fresh"
+    },
+    {
+      "cut": "structure:final:names:entry",
+      "hold": "complete",
+      "id": "fresh:structure:final:names:entry",
+      "route": "fresh"
+    },
+    {
+      "cut": "structure:final:directory:images",
+      "hold": "complete",
+      "id": "fresh:structure:final:directory:images",
+      "route": "fresh"
+    },
+    {
+      "cut": "structure:final:directory:references",
+      "hold": "complete",
+      "id": "fresh:structure:final:directory:references",
+      "route": "fresh"
+    },
+    {
+      "cut": "structure:final:names:complete",
+      "hold": "complete",
+      "id": "fresh:structure:final:names:complete",
+      "route": "fresh"
+    },
+    {
+      "cut": "structure:final:return",
+      "hold": "complete",
+      "id": "fresh:structure:final:return",
+      "route": "fresh"
+    },
+    {
+      "cut": "coordinator:namespace:final:images",
+      "hold": "complete",
+      "id": "fresh:coordinator:namespace:final:images",
+      "route": "fresh"
+    },
+    {
+      "cut": "coordinator:namespace:final:references",
+      "hold": "complete",
+      "id": "fresh:coordinator:namespace:final:references",
+      "route": "fresh"
+    },
+    {
+      "cut": "coordinator:root:final",
+      "hold": "complete",
+      "id": "fresh:coordinator:root:final",
+      "route": "fresh"
+    },
+    {
+      "cut": "coordinator:lock:identity:final",
+      "hold": "complete",
+      "id": "fresh:coordinator:lock:identity:final",
+      "route": "fresh"
+    },
+    {
+      "cut": null,
+      "hold": "complete",
+      "id": "reuse:complete",
+      "route": "reuse"
+    },
+    {
+      "cut": "coordinator:root:initial",
+      "hold": "complete",
+      "id": "reuse:coordinator:root:initial",
+      "route": "reuse"
+    },
+    {
+      "cut": "coordinator:lock:open",
+      "hold": "complete",
+      "id": "reuse:coordinator:lock:open",
+      "route": "reuse"
+    },
+    {
+      "cut": "coordinator:lock:identity:initial",
+      "hold": "complete",
+      "id": "reuse:coordinator:lock:identity:initial",
+      "route": "reuse"
+    },
+    {
+      "cut": "coordinator:lock:flags:get",
+      "hold": "complete",
+      "id": "reuse:coordinator:lock:flags:get",
+      "route": "reuse"
+    },
+    {
+      "cut": "coordinator:lock:flags:set",
+      "hold": "complete",
+      "id": "reuse:coordinator:lock:flags:set",
+      "route": "reuse"
+    },
+    {
+      "cut": "coordinator:lock:acquire",
+      "hold": "complete",
+      "id": "reuse:coordinator:lock:acquire",
+      "route": "reuse"
+    },
+    {
+      "cut": "coordinator:lock:identity:acquired",
+      "hold": "complete",
+      "id": "reuse:coordinator:lock:identity:acquired",
+      "route": "reuse"
+    },
+    {
+      "cut": "coordinator:root:acquired",
+      "hold": "complete",
+      "id": "reuse:coordinator:root:acquired",
+      "route": "reuse"
+    },
+    {
+      "cut": "structure:pre:enter",
+      "hold": "complete",
+      "id": "reuse:structure:pre:enter",
+      "route": "reuse"
+    },
+    {
+      "cut": "structure:pre:names:entry",
+      "hold": "complete",
+      "id": "reuse:structure:pre:names:entry",
+      "route": "reuse"
+    },
+    {
+      "cut": "structure:pre:directory:images",
+      "hold": "complete",
+      "id": "reuse:structure:pre:directory:images",
+      "route": "reuse"
+    },
+    {
+      "cut": "structure:pre:directory:references",
+      "hold": "complete",
+      "id": "reuse:structure:pre:directory:references",
+      "route": "reuse"
+    },
+    {
+      "cut": "structure:pre:names:complete",
+      "hold": "complete",
+      "id": "reuse:structure:pre:names:complete",
+      "route": "reuse"
+    },
+    {
+      "cut": "structure:pre:return",
+      "hold": "complete",
+      "id": "reuse:structure:pre:return",
+      "route": "reuse"
+    },
+    {
+      "cut": "coordinator:namespace:initial:images",
+      "hold": "complete",
+      "id": "reuse:coordinator:namespace:initial:images",
+      "route": "reuse"
+    },
+    {
+      "cut": "coordinator:namespace:initial:references",
+      "hold": "complete",
+      "id": "reuse:coordinator:namespace:initial:references",
+      "route": "reuse"
+    },
+    {
+      "cut": "census:pre:enter",
+      "hold": "complete",
+      "id": "reuse:census:pre:enter",
+      "route": "reuse"
+    },
+    {
+      "cut": "census:pre:names:images",
+      "hold": "complete",
+      "id": "reuse:census:pre:names:images",
+      "route": "reuse"
+    },
+    {
+      "cut": "census:pre:names:references",
+      "hold": "complete",
+      "id": "reuse:census:pre:names:references",
+      "route": "reuse"
+    },
+    {
+      "cut": "census:pre:directory:0",
+      "hold": "complete",
+      "id": "reuse:census:pre:directory:0",
+      "route": "reuse"
+    },
+    {
+      "cut": "census:pre:directory:1",
+      "hold": "complete",
+      "id": "reuse:census:pre:directory:1",
+      "route": "reuse"
+    },
+    {
+      "cut": "census:pre:source:0",
+      "hold": "complete",
+      "id": "reuse:census:pre:source:0",
+      "route": "reuse"
+    },
+    {
+      "cut": "census:pre:check:0",
+      "hold": "complete",
+      "id": "reuse:census:pre:check:0",
+      "route": "reuse"
+    },
+    {
+      "cut": "census:pre:source:1",
+      "hold": "complete",
+      "id": "reuse:census:pre:source:1",
+      "route": "reuse"
+    },
+    {
+      "cut": "census:pre:check:1",
+      "hold": "complete",
+      "id": "reuse:census:pre:check:1",
+      "route": "reuse"
+    },
+    {
+      "cut": "census:pre:source:2",
+      "hold": "complete",
+      "id": "reuse:census:pre:source:2",
+      "route": "reuse"
+    },
+    {
+      "cut": "census:pre:check:2",
+      "hold": "complete",
+      "id": "reuse:census:pre:check:2",
+      "route": "reuse"
+    },
+    {
+      "cut": "census:pre:source:3",
+      "hold": "complete",
+      "id": "reuse:census:pre:source:3",
+      "route": "reuse"
+    },
+    {
+      "cut": "census:pre:check:3",
+      "hold": "complete",
+      "id": "reuse:census:pre:check:3",
+      "route": "reuse"
+    },
+    {
+      "cut": "census:pre:return",
+      "hold": "complete",
+      "id": "reuse:census:pre:return",
+      "route": "reuse"
+    },
+    {
+      "cut": "semantic:pre:enter",
+      "hold": "complete",
+      "id": "reuse:semantic:pre:enter",
+      "route": "reuse"
+    },
+    {
+      "cut": "operation:admit:enter",
+      "hold": "complete",
+      "id": "reuse:operation:admit:enter",
+      "route": "reuse"
+    },
+    {
+      "cut": "operation:acquire:enter",
+      "hold": "complete",
+      "id": "reuse:operation:acquire:enter",
+      "route": "reuse"
+    },
+    {
+      "cut": "census:post:enter",
+      "hold": "complete",
+      "id": "reuse:census:post:enter",
+      "route": "reuse"
+    },
+    {
+      "cut": "census:post:names:images",
+      "hold": "complete",
+      "id": "reuse:census:post:names:images",
+      "route": "reuse"
+    },
+    {
+      "cut": "census:post:names:references",
+      "hold": "complete",
+      "id": "reuse:census:post:names:references",
+      "route": "reuse"
+    },
+    {
+      "cut": "census:post:directory:0",
+      "hold": "complete",
+      "id": "reuse:census:post:directory:0",
+      "route": "reuse"
+    },
+    {
+      "cut": "census:post:directory:1",
+      "hold": "complete",
+      "id": "reuse:census:post:directory:1",
+      "route": "reuse"
+    },
+    {
+      "cut": "census:post:source:0",
+      "hold": "complete",
+      "id": "reuse:census:post:source:0",
+      "route": "reuse"
+    },
+    {
+      "cut": "census:post:check:0",
+      "hold": "complete",
+      "id": "reuse:census:post:check:0",
+      "route": "reuse"
+    },
+    {
+      "cut": "census:post:source:1",
+      "hold": "complete",
+      "id": "reuse:census:post:source:1",
+      "route": "reuse"
+    },
+    {
+      "cut": "census:post:check:1",
+      "hold": "complete",
+      "id": "reuse:census:post:check:1",
+      "route": "reuse"
+    },
+    {
+      "cut": "census:post:source:2",
+      "hold": "complete",
+      "id": "reuse:census:post:source:2",
+      "route": "reuse"
+    },
+    {
+      "cut": "census:post:check:2",
+      "hold": "complete",
+      "id": "reuse:census:post:check:2",
+      "route": "reuse"
+    },
+    {
+      "cut": "census:post:source:3",
+      "hold": "complete",
+      "id": "reuse:census:post:source:3",
+      "route": "reuse"
+    },
+    {
+      "cut": "census:post:check:3",
+      "hold": "complete",
+      "id": "reuse:census:post:check:3",
+      "route": "reuse"
+    },
+    {
+      "cut": "census:post:return",
+      "hold": "complete",
+      "id": "reuse:census:post:return",
+      "route": "reuse"
+    },
+    {
+      "cut": "semantic:post:enter",
+      "hold": "complete",
+      "id": "reuse:semantic:post:enter",
+      "route": "reuse"
+    },
+    {
+      "cut": "operation:finish:enter",
+      "hold": "complete",
+      "id": "reuse:operation:finish:enter",
+      "route": "reuse"
+    },
+    {
+      "cut": "structure:final:enter",
+      "hold": "complete",
+      "id": "reuse:structure:final:enter",
+      "route": "reuse"
+    },
+    {
+      "cut": "structure:final:names:entry",
+      "hold": "complete",
+      "id": "reuse:structure:final:names:entry",
+      "route": "reuse"
+    },
+    {
+      "cut": "structure:final:directory:images",
+      "hold": "complete",
+      "id": "reuse:structure:final:directory:images",
+      "route": "reuse"
+    },
+    {
+      "cut": "structure:final:directory:references",
+      "hold": "complete",
+      "id": "reuse:structure:final:directory:references",
+      "route": "reuse"
+    },
+    {
+      "cut": "structure:final:names:complete",
+      "hold": "complete",
+      "id": "reuse:structure:final:names:complete",
+      "route": "reuse"
+    },
+    {
+      "cut": "structure:final:return",
+      "hold": "complete",
+      "id": "reuse:structure:final:return",
+      "route": "reuse"
+    },
+    {
+      "cut": "coordinator:namespace:final:images",
+      "hold": "complete",
+      "id": "reuse:coordinator:namespace:final:images",
+      "route": "reuse"
+    },
+    {
+      "cut": "coordinator:namespace:final:references",
+      "hold": "complete",
+      "id": "reuse:coordinator:namespace:final:references",
+      "route": "reuse"
+    },
+    {
+      "cut": "coordinator:root:final",
+      "hold": "complete",
+      "id": "reuse:coordinator:root:final",
+      "route": "reuse"
+    },
+    {
+      "cut": "coordinator:lock:identity:final",
+      "hold": "complete",
+      "id": "reuse:coordinator:lock:identity:final",
+      "route": "reuse"
+    }
+  ],
+  "checkpoints": "Synchronous called-function entry cuts, plus structure/census returns that transfer no open handle. Never interrupt after a source or lock opens but before its caller owns it. Sealed census/observation wrappers tail-goto originals. Lock flags are cut before their fixed builtin calls; actual busy/error timing remains in the earlier modeled coordinator qualification. Semantic internals and target/lock close reports remain separately owned.",
+  "custody": "Retain every returned source/writer/lock and actual directory handle. Observe directory identity through an immediately closed descriptor duplicate. Independently reconstruct per-path source and directory counts: one source per completed structural reference read; each complete semantic pass adds two reads per reference, four C/four executable/two manifest reads per image, one reference-directory enumeration and four enumerations per image directory. Complete admission reads each target twice, acquisition once, finish once plus a temporary hold read. Fresh publication adds its readback and writer. Verify explicit closes before observer recovery and preserve every other owner.",
+  "fixture": "Reuse the qualified four-root inert context: two runtime images, independent other observation hold, and exact primary prior hold for reuse. Declare the plan before allocations; journal each root and completed case immediately. No process, compiler, native query/helper, archive/release or retry.",
+  "flows": {
+    "fresh": [
+      {
+        "effect": null,
+        "event": "coordinator:root:initial"
+      },
+      {
+        "effect": {
+          "lock": true
+        },
+        "event": "coordinator:lock:open"
+      },
+      {
+        "effect": null,
+        "event": "coordinator:lock:identity:initial"
+      },
+      {
+        "effect": null,
+        "event": "coordinator:lock:flags:get"
+      },
+      {
+        "effect": null,
+        "event": "coordinator:lock:flags:set"
+      },
+      {
+        "effect": null,
+        "event": "coordinator:lock:acquire"
+      },
+      {
+        "effect": null,
+        "event": "coordinator:lock:identity:acquired"
+      },
+      {
+        "effect": null,
+        "event": "coordinator:root:acquired"
+      },
+      {
+        "effect": null,
+        "event": "structure:pre:enter"
+      },
+      {
+        "effect": {
+          "directory": "store"
+        },
+        "event": "structure:pre:names:entry"
+      },
+      {
+        "effect": null,
+        "event": "structure:pre:directory:images"
+      },
+      {
+        "effect": null,
+        "event": "structure:pre:directory:references"
+      },
+      {
+        "effect": {
+          "directory": "store"
+        },
+        "event": "structure:pre:names:complete"
+      },
+      {
+        "effect": null,
+        "event": "structure:pre:return"
+      },
+      {
+        "effect": null,
+        "event": "coordinator:namespace:initial:images"
+      },
+      {
+        "effect": null,
+        "event": "coordinator:namespace:initial:references"
+      },
+      {
+        "effect": null,
+        "event": "census:pre:enter"
+      },
+      {
+        "effect": {
+          "directory": "images"
+        },
+        "event": "census:pre:names:images"
+      },
+      {
+        "effect": {
+          "directory": "references"
+        },
+        "event": "census:pre:names:references"
+      },
+      {
+        "effect": null,
+        "event": "census:pre:directory:0"
+      },
+      {
+        "effect": null,
+        "event": "census:pre:directory:1"
+      },
+      {
+        "effect": {
+          "index": 0,
+          "reference": "pre"
+        },
+        "event": "census:pre:source:0"
+      },
+      {
+        "effect": null,
+        "event": "census:pre:check:0"
+      },
+      {
+        "effect": {
+          "index": 1,
+          "reference": "pre"
+        },
+        "event": "census:pre:source:1"
+      },
+      {
+        "effect": null,
+        "event": "census:pre:check:1"
+      },
+      {
+        "effect": {
+          "index": 2,
+          "reference": "pre"
+        },
+        "event": "census:pre:source:2"
+      },
+      {
+        "effect": null,
+        "event": "census:pre:check:2"
+      },
+      {
+        "effect": null,
+        "event": "census:pre:return"
+      },
+      {
+        "effect": {
+          "semantic": "pre"
+        },
+        "event": "semantic:pre:enter"
+      },
+      {
+        "effect": {
+          "target_reads": 2
+        },
+        "event": "operation:admit:enter"
+      },
+      {
+        "effect": {
+          "publication": true,
+          "target_reads": 1
+        },
+        "event": "operation:acquire:enter"
+      },
+      {
+        "effect": null,
+        "event": "census:post:enter"
+      },
+      {
+        "effect": {
+          "directory": "images"
+        },
+        "event": "census:post:names:images"
+      },
+      {
+        "effect": {
+          "directory": "references"
+        },
+        "event": "census:post:names:references"
+      },
+      {
+        "effect": null,
+        "event": "census:post:directory:0"
+      },
+      {
+        "effect": null,
+        "event": "census:post:directory:1"
+      },
+      {
+        "effect": {
+          "index": 0,
+          "reference": "post"
+        },
+        "event": "census:post:source:0"
+      },
+      {
+        "effect": null,
+        "event": "census:post:check:0"
+      },
+      {
+        "effect": {
+          "index": 1,
+          "reference": "post"
+        },
+        "event": "census:post:source:1"
+      },
+      {
+        "effect": null,
+        "event": "census:post:check:1"
+      },
+      {
+        "effect": {
+          "index": 2,
+          "reference": "post"
+        },
+        "event": "census:post:source:2"
+      },
+      {
+        "effect": null,
+        "event": "census:post:check:2"
+      },
+      {
+        "effect": {
+          "index": 3,
+          "reference": "post"
+        },
+        "event": "census:post:source:3"
+      },
+      {
+        "effect": null,
+        "event": "census:post:check:3"
+      },
+      {
+        "effect": null,
+        "event": "census:post:return"
+      },
+      {
+        "effect": {
+          "semantic": "post"
+        },
+        "event": "semantic:post:enter"
+      },
+      {
+        "effect": {
+          "hold_read": true,
+          "target_reads": 1
+        },
+        "event": "operation:finish:enter"
+      },
+      {
+        "effect": null,
+        "event": "structure:final:enter"
+      },
+      {
+        "effect": {
+          "directory": "store"
+        },
+        "event": "structure:final:names:entry"
+      },
+      {
+        "effect": null,
+        "event": "structure:final:directory:images"
+      },
+      {
+        "effect": null,
+        "event": "structure:final:directory:references"
+      },
+      {
+        "effect": {
+          "directory": "store"
+        },
+        "event": "structure:final:names:complete"
+      },
+      {
+        "effect": null,
+        "event": "structure:final:return"
+      },
+      {
+        "effect": null,
+        "event": "coordinator:namespace:final:images"
+      },
+      {
+        "effect": null,
+        "event": "coordinator:namespace:final:references"
+      },
+      {
+        "effect": null,
+        "event": "coordinator:root:final"
+      },
+      {
+        "effect": null,
+        "event": "coordinator:lock:identity:final"
+      }
+    ],
+    "reuse": [
+      {
+        "effect": null,
+        "event": "coordinator:root:initial"
+      },
+      {
+        "effect": {
+          "lock": true
+        },
+        "event": "coordinator:lock:open"
+      },
+      {
+        "effect": null,
+        "event": "coordinator:lock:identity:initial"
+      },
+      {
+        "effect": null,
+        "event": "coordinator:lock:flags:get"
+      },
+      {
+        "effect": null,
+        "event": "coordinator:lock:flags:set"
+      },
+      {
+        "effect": null,
+        "event": "coordinator:lock:acquire"
+      },
+      {
+        "effect": null,
+        "event": "coordinator:lock:identity:acquired"
+      },
+      {
+        "effect": null,
+        "event": "coordinator:root:acquired"
+      },
+      {
+        "effect": null,
+        "event": "structure:pre:enter"
+      },
+      {
+        "effect": {
+          "directory": "store"
+        },
+        "event": "structure:pre:names:entry"
+      },
+      {
+        "effect": null,
+        "event": "structure:pre:directory:images"
+      },
+      {
+        "effect": null,
+        "event": "structure:pre:directory:references"
+      },
+      {
+        "effect": {
+          "directory": "store"
+        },
+        "event": "structure:pre:names:complete"
+      },
+      {
+        "effect": null,
+        "event": "structure:pre:return"
+      },
+      {
+        "effect": null,
+        "event": "coordinator:namespace:initial:images"
+      },
+      {
+        "effect": null,
+        "event": "coordinator:namespace:initial:references"
+      },
+      {
+        "effect": null,
+        "event": "census:pre:enter"
+      },
+      {
+        "effect": {
+          "directory": "images"
+        },
+        "event": "census:pre:names:images"
+      },
+      {
+        "effect": {
+          "directory": "references"
+        },
+        "event": "census:pre:names:references"
+      },
+      {
+        "effect": null,
+        "event": "census:pre:directory:0"
+      },
+      {
+        "effect": null,
+        "event": "census:pre:directory:1"
+      },
+      {
+        "effect": {
+          "index": 0,
+          "reference": "pre"
+        },
+        "event": "census:pre:source:0"
+      },
+      {
+        "effect": null,
+        "event": "census:pre:check:0"
+      },
+      {
+        "effect": {
+          "index": 1,
+          "reference": "pre"
+        },
+        "event": "census:pre:source:1"
+      },
+      {
+        "effect": null,
+        "event": "census:pre:check:1"
+      },
+      {
+        "effect": {
+          "index": 2,
+          "reference": "pre"
+        },
+        "event": "census:pre:source:2"
+      },
+      {
+        "effect": null,
+        "event": "census:pre:check:2"
+      },
+      {
+        "effect": {
+          "index": 3,
+          "reference": "pre"
+        },
+        "event": "census:pre:source:3"
+      },
+      {
+        "effect": null,
+        "event": "census:pre:check:3"
+      },
+      {
+        "effect": null,
+        "event": "census:pre:return"
+      },
+      {
+        "effect": {
+          "semantic": "pre"
+        },
+        "event": "semantic:pre:enter"
+      },
+      {
+        "effect": {
+          "target_reads": 2
+        },
+        "event": "operation:admit:enter"
+      },
+      {
+        "effect": {
+          "publication": false,
+          "target_reads": 1
+        },
+        "event": "operation:acquire:enter"
+      },
+      {
+        "effect": null,
+        "event": "census:post:enter"
+      },
+      {
+        "effect": {
+          "directory": "images"
+        },
+        "event": "census:post:names:images"
+      },
+      {
+        "effect": {
+          "directory": "references"
+        },
+        "event": "census:post:names:references"
+      },
+      {
+        "effect": null,
+        "event": "census:post:directory:0"
+      },
+      {
+        "effect": null,
+        "event": "census:post:directory:1"
+      },
+      {
+        "effect": {
+          "index": 0,
+          "reference": "post"
+        },
+        "event": "census:post:source:0"
+      },
+      {
+        "effect": null,
+        "event": "census:post:check:0"
+      },
+      {
+        "effect": {
+          "index": 1,
+          "reference": "post"
+        },
+        "event": "census:post:source:1"
+      },
+      {
+        "effect": null,
+        "event": "census:post:check:1"
+      },
+      {
+        "effect": {
+          "index": 2,
+          "reference": "post"
+        },
+        "event": "census:post:source:2"
+      },
+      {
+        "effect": null,
+        "event": "census:post:check:2"
+      },
+      {
+        "effect": {
+          "index": 3,
+          "reference": "post"
+        },
+        "event": "census:post:source:3"
+      },
+      {
+        "effect": null,
+        "event": "census:post:check:3"
+      },
+      {
+        "effect": null,
+        "event": "census:post:return"
+      },
+      {
+        "effect": {
+          "semantic": "post"
+        },
+        "event": "semantic:post:enter"
+      },
+      {
+        "effect": {
+          "hold_read": true,
+          "target_reads": 1
+        },
+        "event": "operation:finish:enter"
+      },
+      {
+        "effect": null,
+        "event": "structure:final:enter"
+      },
+      {
+        "effect": {
+          "directory": "store"
+        },
+        "event": "structure:final:names:entry"
+      },
+      {
+        "effect": null,
+        "event": "structure:final:directory:images"
+      },
+      {
+        "effect": null,
+        "event": "structure:final:directory:references"
+      },
+      {
+        "effect": {
+          "directory": "store"
+        },
+        "event": "structure:final:names:complete"
+      },
+      {
+        "effect": null,
+        "event": "structure:final:return"
+      },
+      {
+        "effect": null,
+        "event": "coordinator:namespace:final:images"
+      },
+      {
+        "effect": null,
+        "event": "coordinator:namespace:final:references"
+      },
+      {
+        "effect": null,
+        "event": "coordinator:root:final"
+      },
+      {
+        "effect": null,
+        "event": "coordinator:lock:identity:final"
+      }
+    ]
+  },
+  "limits": "Finite inert coordinator call-boundary cuts only. No complete semantic-census internal matrix, every syscall failure, asynchronous crash, ordinary lexical-cleanup leak, native process ownership, archive/capture settlement, exact release, product activation or historical startup repair is established.",
+  "mutants": [
+    {
+      "guard": "omit_lock_close",
+      "hold": "complete",
+      "id": "fresh:omit_lock_close",
+      "route": "fresh"
+    },
+    {
+      "guard": "omit_reference_close",
+      "hold": "complete",
+      "id": "fresh:omit_reference_close",
+      "route": "fresh"
+    },
+    {
+      "guard": "omit_directory_close",
+      "hold": "complete",
+      "id": "fresh:omit_directory_close",
+      "route": "fresh"
+    },
+    {
+      "guard": "omit_lock_close",
+      "hold": "complete",
+      "id": "reuse:omit_lock_close",
+      "route": "reuse"
+    },
+    {
+      "guard": "omit_reference_close",
+      "hold": "complete",
+      "id": "reuse:omit_reference_close",
+      "route": "reuse"
+    },
+    {
+      "guard": "omit_directory_close",
+      "hold": "complete",
+      "id": "reuse:omit_directory_close",
+      "route": "reuse"
+    }
+  ],
+  "mutants_contract": "Skip one actual lock, first structural reference, or first structure-directory close while reporting success. Exact per-path counts and independent retained-handle custody must expose precisely that open handle, then observer recovery closes it before fixture removal. Do not omit another guard or rewrite a prototype.",
+  "ordering": "Structural references use their actual sorted filenames; source/check indexes are ordinal, independently mapped from exact before/after fixtures. Image directories use sorted content keys. Every reached call prefix must equal the independently generated route flow. Count only effects of calls completed before the cut.",
+  "owner": "HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.12.4.1.3.3.2.2.2.2.2.2.2.1",
+  "schema": "fsmgen.inactive_observation_coordinator_cut_plan.v1",
+  "source_revision": "f7fb1d0272266e5d6117023c1e9e8496622bedd0"
+}
