@@ -2656,7 +2656,7 @@ decomposes the architecture needed to move beyond that bounded foundation.
   Goal: `Assess immutable native fixture reuse as a project-side response to repeated executable scanning.`
   Acceptance: `Begin with a bounded design review of the already qualified native images and their generation, tool identity, capture, ownership and retirement contracts. Reuse must preserve exact source/compiler selection, original negative behavior, per-run ancestry and byte custody, unchanged deadlines and first-attempt failure. Any cache benefit or security-policy behavior needs independent evidence; neither prewarming nor automatic retries count as repair. Own implementation and hostile/concurrent/cold-cache qualification separately if the design is supported. Historical queue contention from other projects and complete host-latency guarantees remain outside this claim.`
   Verification: `Selection is motivated by retained identical native image hashes at fresh paths that still receive policy scans. No cache, new original or live collector is implemented or admitted. Child .1 selects recompilation plus exact output reuse as a conditional design; .2 must qualify private hard-link behavior before implementation.`
-  Children: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.12.1, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.12.2`
+  Children: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.12.1, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.12.2, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.12.3`
 
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.12.1`
   Status: `done`
@@ -2666,10 +2666,10 @@ decomposes the architecture needed to move beyond that bounded foundation.
   Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.12.1: select byte-identical image reuse for bounded path qualification`
 
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.12.2`
-  Status: `active`
+  Status: `done`
   Goal: `Qualify native hard-link path, byte lifetime and observed policy behavior before image reuse implementation.`
   Acceptance: `Admit one finite isolated experiment that can reject the private-path hard-link design. Preserve fixed original sources and all original policies; no original invocation or image-store implementation belongs here. Use an owned held native path control when needed for observable exec identity, and identify that distinct fixture explicitly. Exact first-use/reuse invocation count, sources, outputs, native births, wall/capture bounds, collector ownership and cleanup must commit before execution. Stop on first unexpected outcome; no successful later attempt may replace a failure. Qualify custody and path observations independently, and keep missing policy delivery, cold-start generality and historical repair explicit.`
-  Verification: `Prospective qualification only. The compiler-and-byte-comparison design does not yet authorize product cache behavior or establish scan avoidance.`
+  Verification: `Children .1-.3 complete the prospectively admitted finite assessment and preserve its first native-path counterexample, exact retirement and disposition. The private hard-link design is rejected; B was not executed after A changed its reported path. This closes the assessment only, with no image reuse implementation or historical repair. Separately owned .12.3 must specify a canonical-path lifecycle/capture contract before further admission.`
   Children: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.12.2.1, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.12.2.2, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.12.2.3`
 
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.12.2.1`
@@ -2687,10 +2687,18 @@ decomposes the architecture needed to move beyond that bounded foundation.
   Commit: `pending`
 
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.12.2.3`
-  Status: `proposed`
+  Status: `done`
   Goal: `Decide image reuse feasibility from the qualified native path and policy evidence.`
   Acceptance: `Compare actual first-use/reuse path, byte and policy observations against the unchanged resolver/capture/retirement contracts. Reject unsupported aliases or causal claims; name remaining ambiguity and own a concrete next action. Only select product implementation with explicit identity, publication, capacity, concurrency, cold-failure and maintenance contracts plus independent counterexamples. No new native execution or implementation belongs to this disposition slice.`
-  Verification: `pending`
+  Verification: `Read-only source review checks nine exact builder/resolver/C/original/sampler/census/collector/analysis/association inputs against 28e9052d3c6cf67014fc709caee9d4f5668052fa and rechecks the committed counterexample/retirement bytes. Private executable hard links are rejected for the current capture contract: normalizing B to A would conceal actual native path behavior. Fresh per-mode copies do not demonstrate repair either. The next selected activity is a single canonical immutable image path with separately bound process births and ancestry; this is contract assessment only, not implementation or live admission. Keep compilation on every preparation and compare actual generated C/completed image bytes before reuse. The canonical basename must remain rustup. Existing private Cargo selection can point there, but capture currently derives the executable from the private wrapper workspace and needs a checked receipt/source relationship instead. Shared image lifetime must be separate from private workspace retirement; define publication, descriptor custody, collision/partial-write handling, fixed capacity, concurrent use, acquisition/release and maintenance before implementation. An absent parent cannot stand in for descendant settlement. Collector prefixes and frozen v1 source/command validators currently name process-supervisor-tests; any new location requires explicit current collection support and versioned retained-format handling without changing historical v1 meaning. Shared path/PST identity cannot uniquely attribute concurrent client requests. Re-derivation: exact current/Git bytes and retained same-birth/inode/path/cleanup evidence. Falsification: the live hard-link counterexample and prior fresh-image scans refute private-alias stability and unsupported repair claims; canonical publication/runtime, concurrency, capacity and maintenance qualification are still missing and owned by .12.3 before prospective execution. No new compiler, native control, original, collector or helper runs here; no image store is implemented. Durability: docs/audits/native-proxy-hardlink-disposition-20260910/review.json is 6269 bytes SHA-256 6cc5735b03fc284db19bf02cea913cef6f731de867dfc214277cee0fed2bfa8e and preserves exact inputs, rejected alternatives, obligations and missing legs. Book, Knowledge Map and staged doctrines gate the disposition. Historical repair, cold-host generality and complete policy delivery remain unproved.`
+  Commit: `pending`
+
+
+- ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.12.3`
+  Status: `proposed`
+  Goal: `Specify the canonical immutable-image lifecycle and capture/policy compatibility contract.`
+  Acceptance: `Produce a concrete bounded contract before implementation or live admission: repository-relative layout and canonical rustup naming; unchanged current compiler invocation followed by actual C/image equality; immutable publication and source receipts; crash/partial-publication and collision behavior; explicit capacity and concurrent-owner semantics; acquisition/release, private retirement and separately safe maintenance. Bind each native birth and exact wrapper/test ancestry to admitted shared bytes without treating a shared path or policy token as a unique request. Preserve frozen historical policy formats; select versioned support where current prefixes change. Name independent adversarial controls and the exact next prospective admission/execution owners. Do not implement a cache, weaken path checks, warm fixtures, run originals or widen existing policies in this contract slice.`
+  Verification: `Selected by .12.2.3 after the committed same-birth hard-link counterexample; all product behavior remains unchanged and canonical-path feasibility is unproved.`
   Commit: `pending`
 
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.3`
@@ -3662,7 +3670,7 @@ decomposes the architecture needed to move beyond that bounded foundation.
 
 ## Current Frontier
 
-Current frontier: .3.2.15.7.3.12.2.3 disposes of the native hard-link counterexample and selects a separately owned next design. Startup/parent, full CI and push stay gated.
+Current frontier: .3.2.15.7.3.12.3 specifies canonical-image lifetime, capture and policy compatibility before further live admission or implementation. Startup/parent, full CI and push stay gated.
 
 Architecture audit `.1` is complete. Decision `0032` selects one public
 `.vial` source language, private immutable `VIALSemanticIR` and
@@ -6334,3 +6342,9 @@ Acceptance Checklist (runtime source controls .3.2.15.7.3.11.3.4.1.2): completed
 - [x] **ROOT CAUSE (WHY + WHERE)** — git log -S 'def executable' -- scripts/fixture_kernel_sampler.py identifies 74c23d182dae033defcaf717f6197d59e86690a0. Capture reads the native executable path through proc_pidpath; the same held birth changes from A to B after alternate hard-link access despite unchanged bytes and inode. Kernel-internal path-cache cause is not established.
 - [x] **ADDRESSED (verified counterexample)** — The admitted sequence stops on that first unexpected path and never executes B. Independent status/source/identity joins and seven counterfactual controls verify the failure. Exact owned cleanup preserves surviving link bytes, rechecks birth absence and leaves no experiment workspace.
 - [x] **NO REGRESSION** — Unchanged production pins and exact recovery copies agree; the original does not run. Book rendering and knowledge-map: OK synchronization plus staged doctrines gate this result. Private policy delivery and historical startup repair remain unproved; the next design decision stays separately owned.
+
+## Acceptance Checklist (hard-link disposition .3.2.15.7.3.12.2.3)
+
+- [x] **ROOT CAUSE (WHY + WHERE)** — git log -S 'def executable' -- scripts/fixture_kernel_sampler.py identifies 74c23d182dae033defcaf717f6197d59e86690a0. The exact private native path contract conflicts with the retained A-to-B alias change; current collectors and frozen retained validators also constrain source locations.
+- [x] **ADDRESSED (verified disposition)** — Exact source and counterexample review rejects private hard links and silent path normalization. Canonical-image lifecycle, process attribution and policy-format compatibility now have a bounded contract owner; no product implementation or new execution is selected before those obligations qualify.
+- [x] **NO REGRESSION** — All reviewed source bytes match the committed revision, and the counterexample and cleanup pins remain exact. Book rendering and knowledge-map: OK synchronization plus staged doctrines gate this design disposition; runtime feasibility and historical repair remain explicit missing legs.

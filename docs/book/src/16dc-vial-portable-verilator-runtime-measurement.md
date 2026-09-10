@@ -1642,6 +1642,8 @@ The experiment stopped before the reuse invocation and retired its owned
 workspaces after independent checks. This counterexample requires a different
 identity design; it establishes neither scan avoidance nor historical startup
 repair. The original fixture was not run in that experiment.
+Task `.15.7.3.12.3` specifies the shared-path ownership and capture contract
+before any image reuse implementation.
 
 The helper checks bounded regular source/output files and the native header,
 then sets executable permissions through the admitted open file handle. A
