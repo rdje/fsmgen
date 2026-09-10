@@ -12,6 +12,7 @@ answers:
   - "which cleanup receipts must settle before proxy retirement?"
   - "how does inactive private workspace retirement retain image pins?"
   - "when can inactive maintenance remove a canonical image?"
+  - "what does the inactive observation-reference codec validate?"
   - "why did integrated proxy qualification fail?"
   - "why does t1545 not use IPC Cmd?"
   - "where does T1545 preserve empty-output checker failure diagnostics?"
@@ -90,11 +91,11 @@ without retry; original fixture assertions pass.
 T1545 controls: historical card; absent witnesses stay unknown.
 Env/direct Perl handoff timeouts refute a shebang-only cure. HIAL/VIAL `.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2` owns startup cause; `.3.3–7` own authenticated kernel capture. Sampling/authentication/STOP limits: task/book/history.
 T1669 roots: `.artifacts/tmp/process-supervisor-tests/`. ps requires native presence; only disappearance skips. Permission/query/identity errors fail. Exit-race controls do not explain the historical changed field (.3.2.11).
-History: `4bc8f5ebc48173a26fbec6a30a248b86df7eda71:docs/knowledge/test-subprocess-policy-adapters.md`.
+History: `0982590d6ef9b6f937ffa8752912e33eb52152b8:docs/knowledge/test-subprocess-policy-adapters.md`.
 PST parsing normalizes 1–16 lowercase hex digits; malformed fields and contradictions reject.
 .15.7.3 supports serial queue contention; client/frame joins and startup repair stay open. Native integration supplies pre-runtime receipts, ancestry/C custody, owned retirement and passive daemon capture. Counterexamples: history; loaded bytes unproved.
 Fixed CLI .15.7.2.4 binds archive index/digest and journal anchors; calibration/reserve/file checks preserve first failure, stop, distinct outcomes and ownership. F_CHECK_LV cause (.15.2) and worker/delivery remain unknown; queue/provenance coexist (.15.4). Opt-in violations: .15.5.1.2.2–3.
-Inactive .12.4.1 background: history. Maintenance .1.2.3.3 checks every reference/image and removes one complete unreferenced image. Stale owners pin; partial/unknown state rejects. Lock/other holds survive. Observer/native lifetimes and real ownership/transport remain open.
+Inactive .12.4.1 details: history. Observation codec .1.3.1 binds evidence path, births and the ordered canonical source pair. Only syntax is qualified; combined census, custody, release and capture compatibility remain open.
 Caller-sealed test wrappers use tail goto to preserve caller.
 Replay: `scripts/run_with_ram_guard.sh -- python3 -B -m unittest discover -s t/python -p 'test_fixture_policy_archive*.py'`.
 T1595 pre-main cause open; `.19.2.3.1.2.2.6.2` fixes capture.

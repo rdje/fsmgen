@@ -1,0 +1,731 @@
+{
+   "controls" : [
+      {
+         "expected_diagnostic" : 1,
+         "name" : "null root",
+         "rejected" : 1
+      },
+      {
+         "expected_diagnostic" : 1,
+         "name" : "array root",
+         "rejected" : 1
+      },
+      {
+         "expected_diagnostic" : 1,
+         "name" : "missing root evidence_directory",
+         "rejected" : 1
+      },
+      {
+         "expected_diagnostic" : 1,
+         "name" : "missing root evidence_directory_identity",
+         "rejected" : 1
+      },
+      {
+         "expected_diagnostic" : 1,
+         "name" : "missing root image_key",
+         "rejected" : 1
+      },
+      {
+         "expected_diagnostic" : 1,
+         "name" : "missing root observer_birth",
+         "rejected" : 1
+      },
+      {
+         "expected_diagnostic" : 1,
+         "name" : "missing root reference_key",
+         "rejected" : 1
+      },
+      {
+         "expected_diagnostic" : 1,
+         "name" : "missing root schema",
+         "rejected" : 1
+      },
+      {
+         "expected_diagnostic" : 1,
+         "name" : "missing root selected_sources",
+         "rejected" : 1
+      },
+      {
+         "expected_diagnostic" : 1,
+         "name" : "missing root target_birth",
+         "rejected" : 1
+      },
+      {
+         "expected_diagnostic" : 1,
+         "name" : "extra root field",
+         "rejected" : 1
+      },
+      {
+         "expected_diagnostic" : 1,
+         "name" : "merged root fields",
+         "rejected" : 1
+      },
+      {
+         "expected_diagnostic" : 1,
+         "name" : "wrong schema fsmgen.test.rust_proxy_image_reference.v1",
+         "rejected" : 1
+      },
+      {
+         "expected_diagnostic" : 1,
+         "name" : "wrong schema fsmgen.test.rust_proxy_image_observation_reference.v2",
+         "rejected" : 1
+      },
+      {
+         "expected_diagnostic" : 1,
+         "name" : "boolean schema",
+         "rejected" : 1
+      },
+      {
+         "expected_diagnostic" : 1,
+         "name" : "image_key uppercase",
+         "rejected" : 1
+      },
+      {
+         "expected_diagnostic" : 1,
+         "name" : "image_key short",
+         "rejected" : 1
+      },
+      {
+         "expected_diagnostic" : 1,
+         "name" : "image_key numeric",
+         "rejected" : 1
+      },
+      {
+         "expected_diagnostic" : 1,
+         "name" : "reference_key uppercase",
+         "rejected" : 1
+      },
+      {
+         "expected_diagnostic" : 1,
+         "name" : "reference_key short",
+         "rejected" : 1
+      },
+      {
+         "expected_diagnostic" : 1,
+         "name" : "reference_key numeric",
+         "rejected" : 1
+      },
+      {
+         "expected_diagnostic" : 1,
+         "name" : "wrong reference key",
+         "rejected" : 1
+      },
+      {
+         "expected_diagnostic" : 1,
+         "name" : "observer_birth null",
+         "rejected" : 1
+      },
+      {
+         "expected_diagnostic" : 1,
+         "name" : "observer_birth array",
+         "rejected" : 1
+      },
+      {
+         "expected_diagnostic" : 1,
+         "name" : "observer_birth extra",
+         "rejected" : 1
+      },
+      {
+         "expected_diagnostic" : 1,
+         "name" : "observer_birth missing pid",
+         "rejected" : 1
+      },
+      {
+         "expected_diagnostic" : 1,
+         "name" : "observer_birth stale key pid",
+         "rejected" : 1
+      },
+      {
+         "expected_diagnostic" : 1,
+         "name" : "observer_birth missing ppid",
+         "rejected" : 1
+      },
+      {
+         "expected_diagnostic" : 1,
+         "name" : "observer_birth stale key ppid",
+         "rejected" : 1
+      },
+      {
+         "expected_diagnostic" : 1,
+         "name" : "observer_birth missing ruid",
+         "rejected" : 1
+      },
+      {
+         "expected_diagnostic" : 1,
+         "name" : "observer_birth stale key ruid",
+         "rejected" : 1
+      },
+      {
+         "expected_diagnostic" : 1,
+         "name" : "observer_birth missing start_sec",
+         "rejected" : 1
+      },
+      {
+         "expected_diagnostic" : 1,
+         "name" : "observer_birth stale key start_sec",
+         "rejected" : 1
+      },
+      {
+         "expected_diagnostic" : 1,
+         "name" : "observer_birth missing start_usec",
+         "rejected" : 1
+      },
+      {
+         "expected_diagnostic" : 1,
+         "name" : "observer_birth stale key start_usec",
+         "rejected" : 1
+      },
+      {
+         "expected_diagnostic" : 1,
+         "name" : "observer_birth missing uid",
+         "rejected" : 1
+      },
+      {
+         "expected_diagnostic" : 1,
+         "name" : "observer_birth stale key uid",
+         "rejected" : 1
+      },
+      {
+         "expected_diagnostic" : 1,
+         "name" : "observer_birth integer string",
+         "rejected" : 1
+      },
+      {
+         "expected_diagnostic" : 1,
+         "name" : "observer_birth integer boolean",
+         "rejected" : 1
+      },
+      {
+         "expected_diagnostic" : 1,
+         "name" : "observer_birth integer negative",
+         "rejected" : 1
+      },
+      {
+         "expected_diagnostic" : 1,
+         "name" : "observer_birth integer fraction",
+         "rejected" : 1
+      },
+      {
+         "expected_diagnostic" : 1,
+         "name" : "observer_birth integer null",
+         "rejected" : 1
+      },
+      {
+         "expected_diagnostic" : 1,
+         "name" : "observer_birth integer array",
+         "rejected" : 1
+      },
+      {
+         "expected_diagnostic" : 1,
+         "name" : "observer_birth integer object",
+         "rejected" : 1
+      },
+      {
+         "expected_diagnostic" : 1,
+         "name" : "observer_birth invalid pid",
+         "rejected" : 1
+      },
+      {
+         "expected_diagnostic" : 1,
+         "name" : "observer_birth invalid start_usec",
+         "rejected" : 1
+      },
+      {
+         "expected_diagnostic" : 1,
+         "name" : "observer_birth merged padded fields",
+         "rejected" : 1
+      },
+      {
+         "expected_diagnostic" : 1,
+         "name" : "target_birth null",
+         "rejected" : 1
+      },
+      {
+         "expected_diagnostic" : 1,
+         "name" : "target_birth array",
+         "rejected" : 1
+      },
+      {
+         "expected_diagnostic" : 1,
+         "name" : "target_birth extra",
+         "rejected" : 1
+      },
+      {
+         "expected_diagnostic" : 1,
+         "name" : "target_birth missing pid",
+         "rejected" : 1
+      },
+      {
+         "expected_diagnostic" : 1,
+         "name" : "target_birth stale key pid",
+         "rejected" : 1
+      },
+      {
+         "expected_diagnostic" : 1,
+         "name" : "target_birth missing ppid",
+         "rejected" : 1
+      },
+      {
+         "expected_diagnostic" : 1,
+         "name" : "target_birth stale key ppid",
+         "rejected" : 1
+      },
+      {
+         "expected_diagnostic" : 1,
+         "name" : "target_birth missing ruid",
+         "rejected" : 1
+      },
+      {
+         "expected_diagnostic" : 1,
+         "name" : "target_birth stale key ruid",
+         "rejected" : 1
+      },
+      {
+         "expected_diagnostic" : 1,
+         "name" : "target_birth missing start_sec",
+         "rejected" : 1
+      },
+      {
+         "expected_diagnostic" : 1,
+         "name" : "target_birth stale key start_sec",
+         "rejected" : 1
+      },
+      {
+         "expected_diagnostic" : 1,
+         "name" : "target_birth missing start_usec",
+         "rejected" : 1
+      },
+      {
+         "expected_diagnostic" : 1,
+         "name" : "target_birth stale key start_usec",
+         "rejected" : 1
+      },
+      {
+         "expected_diagnostic" : 1,
+         "name" : "target_birth missing uid",
+         "rejected" : 1
+      },
+      {
+         "expected_diagnostic" : 1,
+         "name" : "target_birth stale key uid",
+         "rejected" : 1
+      },
+      {
+         "expected_diagnostic" : 1,
+         "name" : "target_birth integer string",
+         "rejected" : 1
+      },
+      {
+         "expected_diagnostic" : 1,
+         "name" : "target_birth integer boolean",
+         "rejected" : 1
+      },
+      {
+         "expected_diagnostic" : 1,
+         "name" : "target_birth integer negative",
+         "rejected" : 1
+      },
+      {
+         "expected_diagnostic" : 1,
+         "name" : "target_birth integer fraction",
+         "rejected" : 1
+      },
+      {
+         "expected_diagnostic" : 1,
+         "name" : "target_birth integer null",
+         "rejected" : 1
+      },
+      {
+         "expected_diagnostic" : 1,
+         "name" : "target_birth integer array",
+         "rejected" : 1
+      },
+      {
+         "expected_diagnostic" : 1,
+         "name" : "target_birth integer object",
+         "rejected" : 1
+      },
+      {
+         "expected_diagnostic" : 1,
+         "name" : "target_birth invalid pid",
+         "rejected" : 1
+      },
+      {
+         "expected_diagnostic" : 1,
+         "name" : "target_birth invalid start_usec",
+         "rejected" : 1
+      },
+      {
+         "expected_diagnostic" : 1,
+         "name" : "target_birth merged padded fields",
+         "rejected" : 1
+      },
+      {
+         "expected_diagnostic" : 1,
+         "name" : "directory path mismatch",
+         "rejected" : 1
+      },
+      {
+         "expected_diagnostic" : 1,
+         "name" : "directory extra field",
+         "rejected" : 1
+      },
+      {
+         "expected_diagnostic" : 1,
+         "name" : "directory merged padded fields",
+         "rejected" : 1
+      },
+      {
+         "expected_diagnostic" : 1,
+         "name" : "directory integer string",
+         "rejected" : 1
+      },
+      {
+         "expected_diagnostic" : 1,
+         "name" : "source integer string",
+         "rejected" : 1
+      },
+      {
+         "expected_diagnostic" : 1,
+         "name" : "directory integer boolean",
+         "rejected" : 1
+      },
+      {
+         "expected_diagnostic" : 1,
+         "name" : "source integer boolean",
+         "rejected" : 1
+      },
+      {
+         "expected_diagnostic" : 1,
+         "name" : "directory integer negative",
+         "rejected" : 1
+      },
+      {
+         "expected_diagnostic" : 1,
+         "name" : "source integer negative",
+         "rejected" : 1
+      },
+      {
+         "expected_diagnostic" : 1,
+         "name" : "directory integer fraction",
+         "rejected" : 1
+      },
+      {
+         "expected_diagnostic" : 1,
+         "name" : "source integer fraction",
+         "rejected" : 1
+      },
+      {
+         "expected_diagnostic" : 1,
+         "name" : "directory integer null",
+         "rejected" : 1
+      },
+      {
+         "expected_diagnostic" : 1,
+         "name" : "source integer null",
+         "rejected" : 1
+      },
+      {
+         "expected_diagnostic" : 1,
+         "name" : "directory integer array",
+         "rejected" : 1
+      },
+      {
+         "expected_diagnostic" : 1,
+         "name" : "source integer array",
+         "rejected" : 1
+      },
+      {
+         "expected_diagnostic" : 1,
+         "name" : "source order",
+         "rejected" : 1
+      },
+      {
+         "expected_diagnostic" : 1,
+         "name" : "source missing",
+         "rejected" : 1
+      },
+      {
+         "expected_diagnostic" : 1,
+         "name" : "source extra",
+         "rejected" : 1
+      },
+      {
+         "expected_diagnostic" : 1,
+         "name" : "source map",
+         "rejected" : 1
+      },
+      {
+         "expected_diagnostic" : 1,
+         "name" : "source null",
+         "rejected" : 1
+      },
+      {
+         "expected_diagnostic" : 1,
+         "name" : "source extra field",
+         "rejected" : 1
+      },
+      {
+         "expected_diagnostic" : 1,
+         "name" : "source ceiling excess",
+         "rejected" : 1
+      },
+      {
+         "expected_diagnostic" : 1,
+         "name" : "source digest",
+         "rejected" : 1
+      },
+      {
+         "expected_diagnostic" : 1,
+         "name" : "source private substitution",
+         "rejected" : 1
+      },
+      {
+         "expected_diagnostic" : 1,
+         "name" : "source foreign image",
+         "rejected" : 1
+      },
+      {
+         "expected_diagnostic" : 1,
+         "name" : "evidence path \"\"",
+         "rejected" : 1
+      },
+      {
+         "expected_diagnostic" : 1,
+         "name" : "evidence path \"/absolute\"",
+         "rejected" : 1
+      },
+      {
+         "expected_diagnostic" : 1,
+         "name" : "evidence path \"../escape\"",
+         "rejected" : 1
+      },
+      {
+         "expected_diagnostic" : 1,
+         "name" : "evidence path \"a/../b\"",
+         "rejected" : 1
+      },
+      {
+         "expected_diagnostic" : 1,
+         "name" : "evidence path \"a/./b\"",
+         "rejected" : 1
+      },
+      {
+         "expected_diagnostic" : 1,
+         "name" : "evidence path \"a//b\"",
+         "rejected" : 1
+      },
+      {
+         "expected_diagnostic" : 1,
+         "name" : "evidence path \"a/\"",
+         "rejected" : 1
+      },
+      {
+         "expected_diagnostic" : 1,
+         "name" : "evidence path \"a\\\\b\"",
+         "rejected" : 1
+      },
+      {
+         "expected_diagnostic" : 1,
+         "name" : "evidence path \"a\\n\"",
+         "rejected" : 1
+      },
+      {
+         "expected_diagnostic" : 1,
+         "name" : "evidence path \"a\\u0000\"",
+         "rejected" : 1
+      },
+      {
+         "expected_diagnostic" : 1,
+         "name" : "evidence path \"a\\u007f\"",
+         "rejected" : 1
+      },
+      {
+         "expected_diagnostic" : 1,
+         "name" : "evidence path 123",
+         "rejected" : 1
+      },
+      {
+         "expected_diagnostic" : 1,
+         "name" : "evidence path true",
+         "rejected" : 1
+      },
+      {
+         "expected_diagnostic" : 1,
+         "name" : "evidence path null",
+         "rejected" : 1
+      },
+      {
+         "expected_diagnostic" : 1,
+         "name" : "evidence path []",
+         "rejected" : 1
+      },
+      {
+         "expected_diagnostic" : 1,
+         "name" : "case path \"/absolute\"",
+         "rejected" : 1
+      },
+      {
+         "expected_diagnostic" : 1,
+         "name" : "case path \".artifacts/tmp/native-proxy-image-custody/cases/fsmgen-ObservationCodec/../B\"",
+         "rejected" : 1
+      },
+      {
+         "expected_diagnostic" : 1,
+         "name" : "case path \".artifacts/tmp/native-proxy-image-custody/cases/fsmgen-ObservationCodec/\"",
+         "rejected" : 1
+      },
+      {
+         "expected_diagnostic" : 1,
+         "name" : "case path \".artifacts/tmp/native-proxy-image-custody/cases/fsmgen-ObservationCodec\\n\"",
+         "rejected" : 1
+      },
+      {
+         "expected_diagnostic" : 1,
+         "name" : "case path \".artifacts/cache/rust-proxy-images/v1\"",
+         "rejected" : 1
+      },
+      {
+         "expected_diagnostic" : 1,
+         "name" : "record encode ceiling",
+         "rejected" : 1
+      },
+      {
+         "expected_diagnostic" : 1,
+         "name" : "trailing newline",
+         "rejected" : 1
+      },
+      {
+         "expected_diagnostic" : 1,
+         "name" : "leading whitespace",
+         "rejected" : 1
+      },
+      {
+         "expected_diagnostic" : 1,
+         "name" : "duplicate root",
+         "rejected" : 1
+      },
+      {
+         "expected_diagnostic" : 1,
+         "name" : "duplicate directory member",
+         "rejected" : 1
+      },
+      {
+         "expected_diagnostic" : 1,
+         "name" : "duplicate birth member",
+         "rejected" : 1
+      },
+      {
+         "expected_diagnostic" : 1,
+         "name" : "noncanonical fraction",
+         "rejected" : 1
+      },
+      {
+         "expected_diagnostic" : 1,
+         "name" : "noncanonical exponent",
+         "rejected" : 1
+      },
+      {
+         "expected_diagnostic" : 1,
+         "name" : "noncanonical ASCII escape",
+         "rejected" : 1
+      },
+      {
+         "expected_diagnostic" : 1,
+         "name" : "invalid JSON",
+         "rejected" : 1
+      },
+      {
+         "expected_diagnostic" : 1,
+         "name" : "deep JSON",
+         "rejected" : 1
+      },
+      {
+         "expected_diagnostic" : 1,
+         "name" : "decode ceiling",
+         "rejected" : 1
+      },
+      {
+         "expected_diagnostic" : 1,
+         "name" : "raw non-ASCII",
+         "rejected" : 1
+      },
+      {
+         "expected_diagnostic" : 1,
+         "name" : "character instead of bytes",
+         "rejected" : 1
+      },
+      {
+         "expected_diagnostic" : 1,
+         "name" : "reference instead of bytes",
+         "rejected" : 1
+      },
+      {
+         "expected_diagnostic" : 1,
+         "name" : "extra encode argument",
+         "rejected" : 1
+      },
+      {
+         "expected_diagnostic" : 1,
+         "name" : "missing decode argument",
+         "rejected" : 1
+      },
+      {
+         "expected_diagnostic" : 1,
+         "name" : "extra decode argument",
+         "rejected" : 1
+      },
+      {
+         "expected_diagnostic" : 1,
+         "name" : "runtime record in observation decoder",
+         "rejected" : 1
+      },
+      {
+         "expected_diagnostic" : 1,
+         "name" : "observation record in runtime decoder",
+         "rejected" : 1
+      }
+   ],
+   "encoded" : [
+      "{\"evidence_directory\":\".artifacts/logs/inert-observation-codec\",\"evidence_directory_identity\":{\"device\":17,\"inode\":101,\"path\":\".artifacts/logs/inert-observation-codec\"},\"image_key\":\"efd497b0e847884b3c1cfcde14d8b645991c52ebab90c54e58984ccbc303c146\",\"observer_birth\":{\"pid\":101,\"ppid\":100,\"ruid\":501,\"start_sec\":123,\"start_usec\":456,\"uid\":501},\"reference_key\":\"dcc4fbc90e236d1303de64b22c461900db55143be04a0ae51ee17c15b2e54b0b\",\"schema\":\"fsmgen.test.rust_proxy_image_observation_reference.v1\",\"selected_sources\":[{\"device\":17,\"inode\":102,\"path\":\".artifacts/tmp/native-proxy-image-custody/cases/fsmgen-ObservationCodec/images/efd497b0e847884b3c1cfcde14d8b645991c52ebab90c54e58984ccbc303c146/rustup.c\",\"sha256\":\"a7d92e28ec1c8308e37c6003df167bc42bd2341cf3a69d677f45330271ffba56\",\"size_bytes\":50},{\"device\":17,\"inode\":103,\"path\":\".artifacts/tmp/native-proxy-image-custody/cases/fsmgen-ObservationCodec/images/efd497b0e847884b3c1cfcde14d8b645991c52ebab90c54e58984ccbc303c146/rustup\",\"sha256\":\"e7f06f27e18528c7d10e8c4a4ab42b5e70d1423cdb80e83048597719c9c7eb67\",\"size_bytes\":53}],\"target_birth\":{\"pid\":102,\"ppid\":99,\"ruid\":501,\"start_sec\":124,\"start_usec\":789,\"uid\":501}}",
+      "{\"evidence_directory\":\".artifacts/logs/inert-observation-codec-\\u00e9-\\ud83d\\ude00\",\"evidence_directory_identity\":{\"device\":17,\"inode\":101,\"path\":\".artifacts/logs/inert-observation-codec-\\u00e9-\\ud83d\\ude00\"},\"image_key\":\"efd497b0e847884b3c1cfcde14d8b645991c52ebab90c54e58984ccbc303c146\",\"observer_birth\":{\"pid\":101,\"ppid\":100,\"ruid\":501,\"start_sec\":123,\"start_usec\":456,\"uid\":501},\"reference_key\":\"1ef69cd830e62ffa7455311e9daa4386622ae17d475cd81f76b09e8d58ffffa3\",\"schema\":\"fsmgen.test.rust_proxy_image_observation_reference.v1\",\"selected_sources\":[{\"device\":17,\"inode\":102,\"path\":\".artifacts/tmp/native-proxy-image-custody/cases/fsmgen-ObservationCodec/images/efd497b0e847884b3c1cfcde14d8b645991c52ebab90c54e58984ccbc303c146/rustup.c\",\"sha256\":\"a7d92e28ec1c8308e37c6003df167bc42bd2341cf3a69d677f45330271ffba56\",\"size_bytes\":50},{\"device\":17,\"inode\":103,\"path\":\".artifacts/tmp/native-proxy-image-custody/cases/fsmgen-ObservationCodec/images/efd497b0e847884b3c1cfcde14d8b645991c52ebab90c54e58984ccbc303c146/rustup\",\"sha256\":\"e7f06f27e18528c7d10e8c4a4ab42b5e70d1423cdb80e83048597719c9c7eb67\",\"size_bytes\":53}],\"target_birth\":{\"pid\":102,\"ppid\":99,\"ruid\":501,\"start_sec\":124,\"start_usec\":789,\"uid\":501}}",
+      "{\"evidence_directory\":\".artifacts/logs/inert-observation-codec\",\"evidence_directory_identity\":{\"device\":17,\"inode\":101,\"path\":\".artifacts/logs/inert-observation-codec\"},\"image_key\":\"efd497b0e847884b3c1cfcde14d8b645991c52ebab90c54e58984ccbc303c146\",\"observer_birth\":{\"pid\":101,\"ppid\":100,\"ruid\":501,\"start_sec\":123,\"start_usec\":456,\"uid\":501},\"reference_key\":\"dcc4fbc90e236d1303de64b22c461900db55143be04a0ae51ee17c15b2e54b0b\",\"schema\":\"fsmgen.test.rust_proxy_image_observation_reference.v1\",\"selected_sources\":[{\"device\":17,\"inode\":102,\"path\":\".artifacts/tmp/native-proxy-image-custody/cases/fsmgen-ObservationCodec/images/efd497b0e847884b3c1cfcde14d8b645991c52ebab90c54e58984ccbc303c146/rustup.c\",\"sha256\":\"a7d92e28ec1c8308e37c6003df167bc42bd2341cf3a69d677f45330271ffba56\",\"size_bytes\":50},{\"device\":17,\"inode\":9007199254740993,\"path\":\".artifacts/tmp/native-proxy-image-custody/cases/fsmgen-ObservationCodec/images/efd497b0e847884b3c1cfcde14d8b645991c52ebab90c54e58984ccbc303c146/rustup\",\"sha256\":\"e7f06f27e18528c7d10e8c4a4ab42b5e70d1423cdb80e83048597719c9c7eb67\",\"size_bytes\":53}],\"target_birth\":{\"pid\":102,\"ppid\":99,\"ruid\":501,\"start_sec\":124,\"start_usec\":789,\"uid\":501}}",
+      "{\"evidence_directory\":\".artifacts/logs/inert-observation-codec\",\"evidence_directory_identity\":{\"device\":17,\"inode\":101,\"path\":\".artifacts/logs/inert-observation-codec\"},\"image_key\":\"efd497b0e847884b3c1cfcde14d8b645991c52ebab90c54e58984ccbc303c146\",\"observer_birth\":{\"pid\":101,\"ppid\":100,\"ruid\":501,\"start_sec\":123,\"start_usec\":456,\"uid\":501},\"reference_key\":\"dcc4fbc90e236d1303de64b22c461900db55143be04a0ae51ee17c15b2e54b0b\",\"schema\":\"fsmgen.test.rust_proxy_image_observation_reference.v1\",\"selected_sources\":[{\"device\":17,\"inode\":102,\"path\":\".artifacts/tmp/native-proxy-image-custody/cases/fsmgen-ObservationCodec/images/efd497b0e847884b3c1cfcde14d8b645991c52ebab90c54e58984ccbc303c146/rustup.c\",\"sha256\":\"a7d92e28ec1c8308e37c6003df167bc42bd2341cf3a69d677f45330271ffba56\",\"size_bytes\":65536},{\"device\":17,\"inode\":103,\"path\":\".artifacts/tmp/native-proxy-image-custody/cases/fsmgen-ObservationCodec/images/efd497b0e847884b3c1cfcde14d8b645991c52ebab90c54e58984ccbc303c146/rustup\",\"sha256\":\"e7f06f27e18528c7d10e8c4a4ab42b5e70d1423cdb80e83048597719c9c7eb67\",\"size_bytes\":65536}],\"target_birth\":{\"pid\":102,\"ppid\":99,\"ruid\":501,\"start_sec\":124,\"start_usec\":789,\"uid\":501}}",
+      "{\"evidence_directory\":\".artifacts/logs/inert-observation-codecBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB\",\"evidence_directory_identity\":{\"device\":17,\"inode\":101,\"path\":\".artifacts/logs/inert-observation-codecBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB\"},\"image_key\":\"efd497b0e847884b3c1cfcde14d8b645991c52ebab90c54e58984ccbc303c146\",\"observer_birth\":{\"pid\":101,\"ppid\":100,\"ruid\":501,\"start_sec\":123,\"start_usec\":456,\"uid\":501},\"reference_key\":\"72627fc666c562c165efcf0a6cbe598baed214a499f7b03de02ca257a789d2f5\",\"schema\":\"fsmgen.test.rust_proxy_image_observation_reference.v1\",\"selected_sources\":[{\"device\":17,\"inode\":102,\"path\":\".artifacts/tmp/native-proxy-image-custody/cases/fsmgen-ObservationCodec/images/efd497b0e847884b3c1cfcde14d8b645991c52ebab90c54e58984ccbc303c146/rustup.c\",\"sha256\":\"a7d92e28ec1c8308e37c6003df167bc42bd2341cf3a69d677f45330271ffba56\",\"size_bytes\":50},{\"device\":17,\"inode\":103,\"path\":\".artifacts/tmp/native-proxy-image-custody/cases/fsmgen-ObservationCodec/images/efd497b0e847884b3c1cfcde14d8b645991c52ebab90c54e58984ccbc303c146/rustup\",\"sha256\":\"e7f06f27e18528c7d10e8c4a4ab42b5e70d1423cdb80e83048597719c9c7eb67\",\"size_bytes\":53}],\"target_birth\":{\"pid\":102,\"ppid\":99,\"ruid\":501,\"start_sec\":124,\"start_usec\":789,\"uid\":501}}",
+      "{\"evidence_directory\":\".artifacts/logs/inert-observation-codec\",\"evidence_directory_identity\":{\"device\":17,\"inode\":101,\"path\":\".artifacts/logs/inert-observation-codec\"},\"image_key\":\"efd497b0e847884b3c1cfcde14d8b645991c52ebab90c54e58984ccbc303c146\",\"observer_birth\":{\"pid\":102,\"ppid\":100,\"ruid\":501,\"start_sec\":123,\"start_usec\":456,\"uid\":501},\"reference_key\":\"9780b1106e170a27b40ac641bd5f1a3e477e068e8651231cacdf45f9d18bf80e\",\"schema\":\"fsmgen.test.rust_proxy_image_observation_reference.v1\",\"selected_sources\":[{\"device\":17,\"inode\":102,\"path\":\".artifacts/tmp/native-proxy-image-custody/cases/fsmgen-ObservationCodec/images/efd497b0e847884b3c1cfcde14d8b645991c52ebab90c54e58984ccbc303c146/rustup.c\",\"sha256\":\"a7d92e28ec1c8308e37c6003df167bc42bd2341cf3a69d677f45330271ffba56\",\"size_bytes\":50},{\"device\":17,\"inode\":103,\"path\":\".artifacts/tmp/native-proxy-image-custody/cases/fsmgen-ObservationCodec/images/efd497b0e847884b3c1cfcde14d8b645991c52ebab90c54e58984ccbc303c146/rustup\",\"sha256\":\"e7f06f27e18528c7d10e8c4a4ab42b5e70d1423cdb80e83048597719c9c7eb67\",\"size_bytes\":53}],\"target_birth\":{\"pid\":102,\"ppid\":99,\"ruid\":501,\"start_sec\":124,\"start_usec\":789,\"uid\":501}}",
+      "{\"evidence_directory\":\".artifacts/logs/inert-observation-codec\",\"evidence_directory_identity\":{\"device\":17,\"inode\":101,\"path\":\".artifacts/logs/inert-observation-codec\"},\"image_key\":\"efd497b0e847884b3c1cfcde14d8b645991c52ebab90c54e58984ccbc303c146\",\"observer_birth\":{\"pid\":101,\"ppid\":101,\"ruid\":501,\"start_sec\":123,\"start_usec\":456,\"uid\":501},\"reference_key\":\"1e29bf1661859a63829efcdb8c267314160d3aeb1064bd1fd134f934d13b444d\",\"schema\":\"fsmgen.test.rust_proxy_image_observation_reference.v1\",\"selected_sources\":[{\"device\":17,\"inode\":102,\"path\":\".artifacts/tmp/native-proxy-image-custody/cases/fsmgen-ObservationCodec/images/efd497b0e847884b3c1cfcde14d8b645991c52ebab90c54e58984ccbc303c146/rustup.c\",\"sha256\":\"a7d92e28ec1c8308e37c6003df167bc42bd2341cf3a69d677f45330271ffba56\",\"size_bytes\":50},{\"device\":17,\"inode\":103,\"path\":\".artifacts/tmp/native-proxy-image-custody/cases/fsmgen-ObservationCodec/images/efd497b0e847884b3c1cfcde14d8b645991c52ebab90c54e58984ccbc303c146/rustup\",\"sha256\":\"e7f06f27e18528c7d10e8c4a4ab42b5e70d1423cdb80e83048597719c9c7eb67\",\"size_bytes\":53}],\"target_birth\":{\"pid\":102,\"ppid\":99,\"ruid\":501,\"start_sec\":124,\"start_usec\":789,\"uid\":501}}",
+      "{\"evidence_directory\":\".artifacts/logs/inert-observation-codec\",\"evidence_directory_identity\":{\"device\":17,\"inode\":101,\"path\":\".artifacts/logs/inert-observation-codec\"},\"image_key\":\"efd497b0e847884b3c1cfcde14d8b645991c52ebab90c54e58984ccbc303c146\",\"observer_birth\":{\"pid\":101,\"ppid\":100,\"ruid\":502,\"start_sec\":123,\"start_usec\":456,\"uid\":501},\"reference_key\":\"b9ae088cd6c8420a7c21e5441c6a3e1ecedb469a5e901f5c7159826e84cc1423\",\"schema\":\"fsmgen.test.rust_proxy_image_observation_reference.v1\",\"selected_sources\":[{\"device\":17,\"inode\":102,\"path\":\".artifacts/tmp/native-proxy-image-custody/cases/fsmgen-ObservationCodec/images/efd497b0e847884b3c1cfcde14d8b645991c52ebab90c54e58984ccbc303c146/rustup.c\",\"sha256\":\"a7d92e28ec1c8308e37c6003df167bc42bd2341cf3a69d677f45330271ffba56\",\"size_bytes\":50},{\"device\":17,\"inode\":103,\"path\":\".artifacts/tmp/native-proxy-image-custody/cases/fsmgen-ObservationCodec/images/efd497b0e847884b3c1cfcde14d8b645991c52ebab90c54e58984ccbc303c146/rustup\",\"sha256\":\"e7f06f27e18528c7d10e8c4a4ab42b5e70d1423cdb80e83048597719c9c7eb67\",\"size_bytes\":53}],\"target_birth\":{\"pid\":102,\"ppid\":99,\"ruid\":501,\"start_sec\":124,\"start_usec\":789,\"uid\":501}}",
+      "{\"evidence_directory\":\".artifacts/logs/inert-observation-codec\",\"evidence_directory_identity\":{\"device\":17,\"inode\":101,\"path\":\".artifacts/logs/inert-observation-codec\"},\"image_key\":\"efd497b0e847884b3c1cfcde14d8b645991c52ebab90c54e58984ccbc303c146\",\"observer_birth\":{\"pid\":101,\"ppid\":100,\"ruid\":501,\"start_sec\":124,\"start_usec\":456,\"uid\":501},\"reference_key\":\"8193d2f321aae1419538fe1c2471f13ede3b067896ef3175495a6ceb32fa7592\",\"schema\":\"fsmgen.test.rust_proxy_image_observation_reference.v1\",\"selected_sources\":[{\"device\":17,\"inode\":102,\"path\":\".artifacts/tmp/native-proxy-image-custody/cases/fsmgen-ObservationCodec/images/efd497b0e847884b3c1cfcde14d8b645991c52ebab90c54e58984ccbc303c146/rustup.c\",\"sha256\":\"a7d92e28ec1c8308e37c6003df167bc42bd2341cf3a69d677f45330271ffba56\",\"size_bytes\":50},{\"device\":17,\"inode\":103,\"path\":\".artifacts/tmp/native-proxy-image-custody/cases/fsmgen-ObservationCodec/images/efd497b0e847884b3c1cfcde14d8b645991c52ebab90c54e58984ccbc303c146/rustup\",\"sha256\":\"e7f06f27e18528c7d10e8c4a4ab42b5e70d1423cdb80e83048597719c9c7eb67\",\"size_bytes\":53}],\"target_birth\":{\"pid\":102,\"ppid\":99,\"ruid\":501,\"start_sec\":124,\"start_usec\":789,\"uid\":501}}",
+      "{\"evidence_directory\":\".artifacts/logs/inert-observation-codec\",\"evidence_directory_identity\":{\"device\":17,\"inode\":101,\"path\":\".artifacts/logs/inert-observation-codec\"},\"image_key\":\"efd497b0e847884b3c1cfcde14d8b645991c52ebab90c54e58984ccbc303c146\",\"observer_birth\":{\"pid\":101,\"ppid\":100,\"ruid\":501,\"start_sec\":123,\"start_usec\":457,\"uid\":501},\"reference_key\":\"43e7c4233c8a6a1bfe2326ce66bd4b7d94138a5859635042dda9a43b0d88fcbe\",\"schema\":\"fsmgen.test.rust_proxy_image_observation_reference.v1\",\"selected_sources\":[{\"device\":17,\"inode\":102,\"path\":\".artifacts/tmp/native-proxy-image-custody/cases/fsmgen-ObservationCodec/images/efd497b0e847884b3c1cfcde14d8b645991c52ebab90c54e58984ccbc303c146/rustup.c\",\"sha256\":\"a7d92e28ec1c8308e37c6003df167bc42bd2341cf3a69d677f45330271ffba56\",\"size_bytes\":50},{\"device\":17,\"inode\":103,\"path\":\".artifacts/tmp/native-proxy-image-custody/cases/fsmgen-ObservationCodec/images/efd497b0e847884b3c1cfcde14d8b645991c52ebab90c54e58984ccbc303c146/rustup\",\"sha256\":\"e7f06f27e18528c7d10e8c4a4ab42b5e70d1423cdb80e83048597719c9c7eb67\",\"size_bytes\":53}],\"target_birth\":{\"pid\":102,\"ppid\":99,\"ruid\":501,\"start_sec\":124,\"start_usec\":789,\"uid\":501}}",
+      "{\"evidence_directory\":\".artifacts/logs/inert-observation-codec\",\"evidence_directory_identity\":{\"device\":17,\"inode\":101,\"path\":\".artifacts/logs/inert-observation-codec\"},\"image_key\":\"efd497b0e847884b3c1cfcde14d8b645991c52ebab90c54e58984ccbc303c146\",\"observer_birth\":{\"pid\":101,\"ppid\":100,\"ruid\":501,\"start_sec\":123,\"start_usec\":456,\"uid\":502},\"reference_key\":\"b8f4ec928d244e436afe9d50908e5aab3fc6d67823d16bf9fa3ca5af27212292\",\"schema\":\"fsmgen.test.rust_proxy_image_observation_reference.v1\",\"selected_sources\":[{\"device\":17,\"inode\":102,\"path\":\".artifacts/tmp/native-proxy-image-custody/cases/fsmgen-ObservationCodec/images/efd497b0e847884b3c1cfcde14d8b645991c52ebab90c54e58984ccbc303c146/rustup.c\",\"sha256\":\"a7d92e28ec1c8308e37c6003df167bc42bd2341cf3a69d677f45330271ffba56\",\"size_bytes\":50},{\"device\":17,\"inode\":103,\"path\":\".artifacts/tmp/native-proxy-image-custody/cases/fsmgen-ObservationCodec/images/efd497b0e847884b3c1cfcde14d8b645991c52ebab90c54e58984ccbc303c146/rustup\",\"sha256\":\"e7f06f27e18528c7d10e8c4a4ab42b5e70d1423cdb80e83048597719c9c7eb67\",\"size_bytes\":53}],\"target_birth\":{\"pid\":102,\"ppid\":99,\"ruid\":501,\"start_sec\":124,\"start_usec\":789,\"uid\":501}}",
+      "{\"evidence_directory\":\".artifacts/logs/inert-observation-codec\",\"evidence_directory_identity\":{\"device\":17,\"inode\":101,\"path\":\".artifacts/logs/inert-observation-codec\"},\"image_key\":\"efd497b0e847884b3c1cfcde14d8b645991c52ebab90c54e58984ccbc303c146\",\"observer_birth\":{\"pid\":101,\"ppid\":100,\"ruid\":501,\"start_sec\":123,\"start_usec\":456,\"uid\":501},\"reference_key\":\"c7d155fe786dc72bd42119862ee23d8d2d8a639d77295d287b64a71b04038705\",\"schema\":\"fsmgen.test.rust_proxy_image_observation_reference.v1\",\"selected_sources\":[{\"device\":17,\"inode\":102,\"path\":\".artifacts/tmp/native-proxy-image-custody/cases/fsmgen-ObservationCodec/images/efd497b0e847884b3c1cfcde14d8b645991c52ebab90c54e58984ccbc303c146/rustup.c\",\"sha256\":\"a7d92e28ec1c8308e37c6003df167bc42bd2341cf3a69d677f45330271ffba56\",\"size_bytes\":50},{\"device\":17,\"inode\":103,\"path\":\".artifacts/tmp/native-proxy-image-custody/cases/fsmgen-ObservationCodec/images/efd497b0e847884b3c1cfcde14d8b645991c52ebab90c54e58984ccbc303c146/rustup\",\"sha256\":\"e7f06f27e18528c7d10e8c4a4ab42b5e70d1423cdb80e83048597719c9c7eb67\",\"size_bytes\":53}],\"target_birth\":{\"pid\":103,\"ppid\":99,\"ruid\":501,\"start_sec\":124,\"start_usec\":789,\"uid\":501}}",
+      "{\"evidence_directory\":\".artifacts/logs/inert-observation-codec\",\"evidence_directory_identity\":{\"device\":17,\"inode\":101,\"path\":\".artifacts/logs/inert-observation-codec\"},\"image_key\":\"efd497b0e847884b3c1cfcde14d8b645991c52ebab90c54e58984ccbc303c146\",\"observer_birth\":{\"pid\":101,\"ppid\":100,\"ruid\":501,\"start_sec\":123,\"start_usec\":456,\"uid\":501},\"reference_key\":\"a9a46f550c9d88453a8177f3ffdcfff781f702069764e88f7929cd3f753c6e40\",\"schema\":\"fsmgen.test.rust_proxy_image_observation_reference.v1\",\"selected_sources\":[{\"device\":17,\"inode\":102,\"path\":\".artifacts/tmp/native-proxy-image-custody/cases/fsmgen-ObservationCodec/images/efd497b0e847884b3c1cfcde14d8b645991c52ebab90c54e58984ccbc303c146/rustup.c\",\"sha256\":\"a7d92e28ec1c8308e37c6003df167bc42bd2341cf3a69d677f45330271ffba56\",\"size_bytes\":50},{\"device\":17,\"inode\":103,\"path\":\".artifacts/tmp/native-proxy-image-custody/cases/fsmgen-ObservationCodec/images/efd497b0e847884b3c1cfcde14d8b645991c52ebab90c54e58984ccbc303c146/rustup\",\"sha256\":\"e7f06f27e18528c7d10e8c4a4ab42b5e70d1423cdb80e83048597719c9c7eb67\",\"size_bytes\":53}],\"target_birth\":{\"pid\":102,\"ppid\":100,\"ruid\":501,\"start_sec\":124,\"start_usec\":789,\"uid\":501}}",
+      "{\"evidence_directory\":\".artifacts/logs/inert-observation-codec\",\"evidence_directory_identity\":{\"device\":17,\"inode\":101,\"path\":\".artifacts/logs/inert-observation-codec\"},\"image_key\":\"efd497b0e847884b3c1cfcde14d8b645991c52ebab90c54e58984ccbc303c146\",\"observer_birth\":{\"pid\":101,\"ppid\":100,\"ruid\":501,\"start_sec\":123,\"start_usec\":456,\"uid\":501},\"reference_key\":\"44f72b4480e4f7d7643d711b847a5e24430c60c2eb174c17730879a35813c9bc\",\"schema\":\"fsmgen.test.rust_proxy_image_observation_reference.v1\",\"selected_sources\":[{\"device\":17,\"inode\":102,\"path\":\".artifacts/tmp/native-proxy-image-custody/cases/fsmgen-ObservationCodec/images/efd497b0e847884b3c1cfcde14d8b645991c52ebab90c54e58984ccbc303c146/rustup.c\",\"sha256\":\"a7d92e28ec1c8308e37c6003df167bc42bd2341cf3a69d677f45330271ffba56\",\"size_bytes\":50},{\"device\":17,\"inode\":103,\"path\":\".artifacts/tmp/native-proxy-image-custody/cases/fsmgen-ObservationCodec/images/efd497b0e847884b3c1cfcde14d8b645991c52ebab90c54e58984ccbc303c146/rustup\",\"sha256\":\"e7f06f27e18528c7d10e8c4a4ab42b5e70d1423cdb80e83048597719c9c7eb67\",\"size_bytes\":53}],\"target_birth\":{\"pid\":102,\"ppid\":99,\"ruid\":502,\"start_sec\":124,\"start_usec\":789,\"uid\":501}}",
+      "{\"evidence_directory\":\".artifacts/logs/inert-observation-codec\",\"evidence_directory_identity\":{\"device\":17,\"inode\":101,\"path\":\".artifacts/logs/inert-observation-codec\"},\"image_key\":\"efd497b0e847884b3c1cfcde14d8b645991c52ebab90c54e58984ccbc303c146\",\"observer_birth\":{\"pid\":101,\"ppid\":100,\"ruid\":501,\"start_sec\":123,\"start_usec\":456,\"uid\":501},\"reference_key\":\"78e4aeaf9815dd2e0090ccc4c8bd88e3ef9f1a47cc3ab61830d5c0f875baad19\",\"schema\":\"fsmgen.test.rust_proxy_image_observation_reference.v1\",\"selected_sources\":[{\"device\":17,\"inode\":102,\"path\":\".artifacts/tmp/native-proxy-image-custody/cases/fsmgen-ObservationCodec/images/efd497b0e847884b3c1cfcde14d8b645991c52ebab90c54e58984ccbc303c146/rustup.c\",\"sha256\":\"a7d92e28ec1c8308e37c6003df167bc42bd2341cf3a69d677f45330271ffba56\",\"size_bytes\":50},{\"device\":17,\"inode\":103,\"path\":\".artifacts/tmp/native-proxy-image-custody/cases/fsmgen-ObservationCodec/images/efd497b0e847884b3c1cfcde14d8b645991c52ebab90c54e58984ccbc303c146/rustup\",\"sha256\":\"e7f06f27e18528c7d10e8c4a4ab42b5e70d1423cdb80e83048597719c9c7eb67\",\"size_bytes\":53}],\"target_birth\":{\"pid\":102,\"ppid\":99,\"ruid\":501,\"start_sec\":125,\"start_usec\":789,\"uid\":501}}",
+      "{\"evidence_directory\":\".artifacts/logs/inert-observation-codec\",\"evidence_directory_identity\":{\"device\":17,\"inode\":101,\"path\":\".artifacts/logs/inert-observation-codec\"},\"image_key\":\"efd497b0e847884b3c1cfcde14d8b645991c52ebab90c54e58984ccbc303c146\",\"observer_birth\":{\"pid\":101,\"ppid\":100,\"ruid\":501,\"start_sec\":123,\"start_usec\":456,\"uid\":501},\"reference_key\":\"98402603ee050c50af99f7c9ef63aeadcb45431d2e496088fb792029454a3025\",\"schema\":\"fsmgen.test.rust_proxy_image_observation_reference.v1\",\"selected_sources\":[{\"device\":17,\"inode\":102,\"path\":\".artifacts/tmp/native-proxy-image-custody/cases/fsmgen-ObservationCodec/images/efd497b0e847884b3c1cfcde14d8b645991c52ebab90c54e58984ccbc303c146/rustup.c\",\"sha256\":\"a7d92e28ec1c8308e37c6003df167bc42bd2341cf3a69d677f45330271ffba56\",\"size_bytes\":50},{\"device\":17,\"inode\":103,\"path\":\".artifacts/tmp/native-proxy-image-custody/cases/fsmgen-ObservationCodec/images/efd497b0e847884b3c1cfcde14d8b645991c52ebab90c54e58984ccbc303c146/rustup\",\"sha256\":\"e7f06f27e18528c7d10e8c4a4ab42b5e70d1423cdb80e83048597719c9c7eb67\",\"size_bytes\":53}],\"target_birth\":{\"pid\":102,\"ppid\":99,\"ruid\":501,\"start_sec\":124,\"start_usec\":790,\"uid\":501}}",
+      "{\"evidence_directory\":\".artifacts/logs/inert-observation-codec\",\"evidence_directory_identity\":{\"device\":17,\"inode\":101,\"path\":\".artifacts/logs/inert-observation-codec\"},\"image_key\":\"efd497b0e847884b3c1cfcde14d8b645991c52ebab90c54e58984ccbc303c146\",\"observer_birth\":{\"pid\":101,\"ppid\":100,\"ruid\":501,\"start_sec\":123,\"start_usec\":456,\"uid\":501},\"reference_key\":\"8af6392890bd1a82eef37ce37cc144938fff228744ac3a18fd9061745ca90b7b\",\"schema\":\"fsmgen.test.rust_proxy_image_observation_reference.v1\",\"selected_sources\":[{\"device\":17,\"inode\":102,\"path\":\".artifacts/tmp/native-proxy-image-custody/cases/fsmgen-ObservationCodec/images/efd497b0e847884b3c1cfcde14d8b645991c52ebab90c54e58984ccbc303c146/rustup.c\",\"sha256\":\"a7d92e28ec1c8308e37c6003df167bc42bd2341cf3a69d677f45330271ffba56\",\"size_bytes\":50},{\"device\":17,\"inode\":103,\"path\":\".artifacts/tmp/native-proxy-image-custody/cases/fsmgen-ObservationCodec/images/efd497b0e847884b3c1cfcde14d8b645991c52ebab90c54e58984ccbc303c146/rustup\",\"sha256\":\"e7f06f27e18528c7d10e8c4a4ab42b5e70d1423cdb80e83048597719c9c7eb67\",\"size_bytes\":53}],\"target_birth\":{\"pid\":102,\"ppid\":99,\"ruid\":501,\"start_sec\":124,\"start_usec\":789,\"uid\":502}}",
+      "{\"evidence_directory\":\".artifacts/logs/inert-observation-codec\",\"evidence_directory_identity\":{\"device\":17,\"inode\":101,\"path\":\".artifacts/logs/inert-observation-codec\"},\"image_key\":\"efd497b0e847884b3c1cfcde14d8b645991c52ebab90c54e58984ccbc303c146\",\"observer_birth\":{\"pid\":102,\"ppid\":99,\"ruid\":501,\"start_sec\":124,\"start_usec\":789,\"uid\":501},\"reference_key\":\"b7536dcb76044c8fe000abad9823fe74e0aaafecde74d8d75b26410ffe6fe67f\",\"schema\":\"fsmgen.test.rust_proxy_image_observation_reference.v1\",\"selected_sources\":[{\"device\":17,\"inode\":102,\"path\":\".artifacts/tmp/native-proxy-image-custody/cases/fsmgen-ObservationCodec/images/efd497b0e847884b3c1cfcde14d8b645991c52ebab90c54e58984ccbc303c146/rustup.c\",\"sha256\":\"a7d92e28ec1c8308e37c6003df167bc42bd2341cf3a69d677f45330271ffba56\",\"size_bytes\":50},{\"device\":17,\"inode\":103,\"path\":\".artifacts/tmp/native-proxy-image-custody/cases/fsmgen-ObservationCodec/images/efd497b0e847884b3c1cfcde14d8b645991c52ebab90c54e58984ccbc303c146/rustup\",\"sha256\":\"e7f06f27e18528c7d10e8c4a4ab42b5e70d1423cdb80e83048597719c9c7eb67\",\"size_bytes\":53}],\"target_birth\":{\"pid\":101,\"ppid\":100,\"ruid\":501,\"start_sec\":123,\"start_usec\":456,\"uid\":501}}",
+      "{\"evidence_directory\":\".artifacts/logs/inert-observation-codec\",\"evidence_directory_identity\":{\"device\":17,\"inode\":101,\"path\":\".artifacts/logs/inert-observation-codec\"},\"image_key\":\"efd497b0e847884b3c1cfcde14d8b645991c52ebab90c54e58984ccbc303c146\",\"observer_birth\":{\"pid\":1,\"ppid\":0,\"ruid\":0,\"start_sec\":0,\"start_usec\":0,\"uid\":0},\"reference_key\":\"74fd0af7e878625e04d4e61cce637bd68bb4f4d01616890cc9e4f468b69dc817\",\"schema\":\"fsmgen.test.rust_proxy_image_observation_reference.v1\",\"selected_sources\":[{\"device\":17,\"inode\":102,\"path\":\".artifacts/tmp/native-proxy-image-custody/cases/fsmgen-ObservationCodec/images/efd497b0e847884b3c1cfcde14d8b645991c52ebab90c54e58984ccbc303c146/rustup.c\",\"sha256\":\"a7d92e28ec1c8308e37c6003df167bc42bd2341cf3a69d677f45330271ffba56\",\"size_bytes\":50},{\"device\":17,\"inode\":103,\"path\":\".artifacts/tmp/native-proxy-image-custody/cases/fsmgen-ObservationCodec/images/efd497b0e847884b3c1cfcde14d8b645991c52ebab90c54e58984ccbc303c146/rustup\",\"sha256\":\"e7f06f27e18528c7d10e8c4a4ab42b5e70d1423cdb80e83048597719c9c7eb67\",\"size_bytes\":53}],\"target_birth\":{\"pid\":102,\"ppid\":99,\"ruid\":501,\"start_sec\":124,\"start_usec\":999999,\"uid\":501}}"
+   ],
+   "filesystem_lookup_attempts" : 0,
+   "forbidden_process_attempts" : 0,
+   "mutants" : [
+      {
+         "accepted_by_mutant" : 1,
+         "name" : "omitted field closure",
+         "raw" : "{\"evidence_directory\":\".artifacts/logs/inert-observation-codec\",\"evidence_directory_identity\":{\"device\":17,\"inode\":101,\"path\":\".artifacts/logs/inert-observation-codec\"},\"extra\":0,\"image_key\":\"efd497b0e847884b3c1cfcde14d8b645991c52ebab90c54e58984ccbc303c146\",\"observer_birth\":{\"pid\":101,\"ppid\":100,\"ruid\":501,\"start_sec\":123,\"start_usec\":456,\"uid\":501},\"reference_key\":\"dcc4fbc90e236d1303de64b22c461900db55143be04a0ae51ee17c15b2e54b0b\",\"schema\":\"fsmgen.test.rust_proxy_image_observation_reference.v1\",\"selected_sources\":[{\"device\":17,\"inode\":102,\"path\":\".artifacts/tmp/native-proxy-image-custody/cases/fsmgen-ObservationCodec/images/efd497b0e847884b3c1cfcde14d8b645991c52ebab90c54e58984ccbc303c146/rustup.c\",\"sha256\":\"a7d92e28ec1c8308e37c6003df167bc42bd2341cf3a69d677f45330271ffba56\",\"size_bytes\":50},{\"device\":17,\"inode\":103,\"path\":\".artifacts/tmp/native-proxy-image-custody/cases/fsmgen-ObservationCodec/images/efd497b0e847884b3c1cfcde14d8b645991c52ebab90c54e58984ccbc303c146/rustup\",\"sha256\":\"e7f06f27e18528c7d10e8c4a4ab42b5e70d1423cdb80e83048597719c9c7eb67\",\"size_bytes\":53}],\"target_birth\":{\"pid\":102,\"ppid\":99,\"ruid\":501,\"start_sec\":124,\"start_usec\":789,\"uid\":501}}"
+      },
+      {
+         "accepted_by_mutant" : 1,
+         "name" : "omitted key derivation",
+         "raw" : "{\"evidence_directory\":\".artifacts/logs/inert-observation-codec\",\"evidence_directory_identity\":{\"device\":17,\"inode\":101,\"path\":\".artifacts/logs/inert-observation-codec\"},\"image_key\":\"efd497b0e847884b3c1cfcde14d8b645991c52ebab90c54e58984ccbc303c146\",\"observer_birth\":{\"pid\":101,\"ppid\":100,\"ruid\":501,\"start_sec\":123,\"start_usec\":456,\"uid\":501},\"reference_key\":\"0000000000000000000000000000000000000000000000000000000000000000\",\"schema\":\"fsmgen.test.rust_proxy_image_observation_reference.v1\",\"selected_sources\":[{\"device\":17,\"inode\":102,\"path\":\".artifacts/tmp/native-proxy-image-custody/cases/fsmgen-ObservationCodec/images/efd497b0e847884b3c1cfcde14d8b645991c52ebab90c54e58984ccbc303c146/rustup.c\",\"sha256\":\"a7d92e28ec1c8308e37c6003df167bc42bd2341cf3a69d677f45330271ffba56\",\"size_bytes\":50},{\"device\":17,\"inode\":103,\"path\":\".artifacts/tmp/native-proxy-image-custody/cases/fsmgen-ObservationCodec/images/efd497b0e847884b3c1cfcde14d8b645991c52ebab90c54e58984ccbc303c146/rustup\",\"sha256\":\"e7f06f27e18528c7d10e8c4a4ab42b5e70d1423cdb80e83048597719c9c7eb67\",\"size_bytes\":53}],\"target_birth\":{\"pid\":102,\"ppid\":99,\"ruid\":501,\"start_sec\":124,\"start_usec\":789,\"uid\":501}}"
+      },
+      {
+         "accepted_by_mutant" : 1,
+         "name" : "omitted birth validation",
+         "raw" : "{\"evidence_directory\":\".artifacts/logs/inert-observation-codec\",\"evidence_directory_identity\":{\"device\":17,\"inode\":101,\"path\":\".artifacts/logs/inert-observation-codec\"},\"image_key\":\"efd497b0e847884b3c1cfcde14d8b645991c52ebab90c54e58984ccbc303c146\",\"observer_birth\":{\"pid\":101,\"ppid\":100,\"ruid\":501,\"start_sec\":123,\"start_usec\":456,\"uid\":true},\"reference_key\":\"117c45bc9d2a174a8aafdb7da0a420b2edb5980783bb5fe74cf3596cf8a6576c\",\"schema\":\"fsmgen.test.rust_proxy_image_observation_reference.v1\",\"selected_sources\":[{\"device\":17,\"inode\":102,\"path\":\".artifacts/tmp/native-proxy-image-custody/cases/fsmgen-ObservationCodec/images/efd497b0e847884b3c1cfcde14d8b645991c52ebab90c54e58984ccbc303c146/rustup.c\",\"sha256\":\"a7d92e28ec1c8308e37c6003df167bc42bd2341cf3a69d677f45330271ffba56\",\"size_bytes\":50},{\"device\":17,\"inode\":103,\"path\":\".artifacts/tmp/native-proxy-image-custody/cases/fsmgen-ObservationCodec/images/efd497b0e847884b3c1cfcde14d8b645991c52ebab90c54e58984ccbc303c146/rustup\",\"sha256\":\"e7f06f27e18528c7d10e8c4a4ab42b5e70d1423cdb80e83048597719c9c7eb67\",\"size_bytes\":53}],\"target_birth\":{\"pid\":102,\"ppid\":99,\"ruid\":501,\"start_sec\":124,\"start_usec\":789,\"uid\":501}}"
+      }
+   ],
+   "schema" : "fsmgen.inactive_observation_record_qualification.v1",
+   "success" : true
+}

@@ -1,0 +1,75 @@
+ok 1 - independent Python bytes: inert historical identities
+ok 2 - decoded record: inert historical identities
+ok 3 - independent Python bytes: integer above binary64 precision
+ok 4 - decoded record: integer above binary64 precision
+ok 5 - independent Python bytes: exact record byte ceiling; syntax only
+ok 6 - decoded record: exact record byte ceiling; syntax only
+ok 7 - extra root field
+ok 8 - missing root field
+ok 9 - merged root fields
+ok 10 - null root
+ok 11 - array root
+ok 12 - wrong schema
+ok 13 - boolean schema
+ok 14 - uppercase image key
+ok 15 - short image key
+ok 16 - numeric digest
+ok 17 - wrong reference key
+ok 18 - wrong workspace identity
+ok 19 - unknown directory field
+ok 20 - merged directory fields
+ok 21 - numeric string inode
+ok 22 - boolean inode
+ok 23 - negative device
+ok 24 - fractional device
+ok 25 - null inode
+ok 26 - array inode
+ok 27 - source order
+ok 28 - missing source
+ok 29 - extra source
+ok 30 - source map
+ok 31 - source null
+ok 32 - extra source field
+ok 33 - merged source fields padded
+ok 34 - source byte ceiling
+ok 35 - source size string
+ok 36 - source size boolean
+ok 37 - source negative inode
+ok 38 - source digest spelling
+ok 39 - private source substitution
+ok 40 - foreign image source
+ok 41 - workspace path /absolute
+ok 42 - workspace path ../escape
+ok 43 - workspace path .artifacts/tmp/process-supervisor-tests/fsmgen-A/../B
+ok 44 - workspace path .artifacts/tmp/process-supervisor-tests//fsmgen-A
+ok 45 - workspace path .artifacts/tmp/process-supervisor-tests/fsmgen-Inert20260910/
+ok 46 - workspace path .artifacts/tmp/process-supervisor-tests/fsmgen-Inert20260910\n
+ok 47 - workspace path .artifacts/cache/rust-proxy-images/v1
+ok 48 - workspace path .artifacts/tmp/process-supervisor-tests/fsmgen-A\B
+ok 49 - case path /absolute
+ok 50 - case path .artifacts/tmp/native-proxy-image-custody/cases/fsmgen-Codec20260910/../other
+ok 51 - case path .artifacts/tmp/native-proxy-image-custody/cases/fsmgen-Codec20260910/
+ok 52 - case path .artifacts/tmp/native-proxy-image-custody/cases/fsmgen-Codec20260910\n
+ok 53 - case path .artifacts/cache/rust-proxy-images/v1
+ok 54 - trailing newline
+ok 55 - whitespace
+ok 56 - duplicate root member
+ok 57 - duplicate nested member
+ok 58 - noncanonical fraction
+ok 59 - noncanonical exponent
+ok 60 - noncanonical escaped ASCII
+ok 61 - invalid JSON
+ok 62 - deep JSON
+ok 63 - raw non-ASCII
+ok 64 - record decode ceiling
+ok 65 - character rather than byte input
+ok 66 - reference rather than byte input
+ok 67 - extra positional argument
+ok 68 - missing decode argument
+ok 69 - record encode ceiling
+ok 70 - source ceiling is structural policy, not measured bytes
+ok 71 - removed field closure admits independently invalid member
+ok 72 - removed key derivation admits independently invalid reference
+ok 73 - codec does not invoke current filesystem custody
+ok 74 - no compiler or process attempt
+1..74

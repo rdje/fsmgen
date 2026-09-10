@@ -1,0 +1,29 @@
+{
+  "assertions": 180,
+  "falsifiers": [
+    "hidden failure",
+    "lost rejection",
+    "duplicate rejection",
+    "hidden acceptance",
+    "wrong diagnostic",
+    "lost birth mutant",
+    "lookup despite pure codec",
+    "unexpected process",
+    "changed encoded bytes"
+  ],
+  "limits": [
+    "Only closed record syntax, historical identity consistency and key derivation.",
+    "No store/workspace/reference created; no native query or fixture/compiler subprocess launched.",
+    "Dual census, observation acquisition/release, archive custody and capture compatibility remain open."
+  ],
+  "mutants": [
+    "omitted field closure",
+    "omitted key derivation",
+    "omitted birth validation"
+  ],
+  "rejection_controls": 137,
+  "runtime_regression_assertions": 74,
+  "schema": "fsmgen.inactive_observation_record_audit.v1",
+  "success": true,
+  "vectors": 19
+}

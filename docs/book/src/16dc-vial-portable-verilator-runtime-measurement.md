@@ -1790,11 +1790,31 @@ maintenance before deletion. Successful removal preserves the permanent lock,
 all references and other images, and can free space for a later explicit
 publication. Interrupted removal leaves its exact partial state for separately
 owned recovery; it does not repair, retry or evict another image. Observation
-formats and combined lifetimes still require qualification before activation.
+dispatch and combined lifetimes still require qualification before activation.
 Replay the inert maintenance controls:
 
 ```bash
 scripts/run_with_ram_guard.sh -- perl docs/audits/native-proxy-image-maintenance-20260910/qualify.t
+```
+
+The inactive observation codec defines a separate retention record for capture.
+Its key binds the evidence directory and the complete observer and target births
+in that order. The record also carries the historical directory identity and
+the canonical C/executable source identities, in that order. Wrapper and runtime
+reference snapshots belong to the later observation-custody operation; they do
+not expand this image-retention pair.
+
+The codec checks exact fields, JSON types, relative path spelling, source layout
+and canonical bytes. Its fixed record and source limits are structural bounds,
+not evidence of actual file sizes or valid processes. Independent vectors cover
+Unicode paths, birth changes and ordering, and the exact record boundary.
+Malformed records and runtime/observation cross-substitutions reject. The
+existing runtime format remains unchanged. No hold is acquired or released by
+encoding a record; combined census, snapshot custody, settlement and capture
+version compatibility remain separate qualification steps. Replay:
+
+```bash
+scripts/run_with_ram_guard.sh -- perl docs/audits/native-proxy-observation-records-20260910/qualify.t
 ```
 
 The helper checks bounded regular source/output files and the native header,

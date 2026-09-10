@@ -1,0 +1,54 @@
+{
+  "all_copies_byte_exact": true,
+  "files": [
+    {
+      "destination": "docs/audits/native-proxy-observation-records-20260910/result/qualification.json",
+      "sha256": "b260a9026316c433cbd2bf2fddda52303dbf450ca7068ab8e99503900a9fa1fc",
+      "size_bytes": 48218,
+      "source": ".artifacts/logs/native-proxy-observation-records-20260910/qualification.json"
+    },
+    {
+      "destination": "docs/audits/native-proxy-observation-records-20260910/result/qualify.tap",
+      "sha256": "9ee409dac654a6d02bcc20e29b9c5cc5d8cfa2b2ec82df83c0973466bd9a0658",
+      "size_bytes": 7440,
+      "source": ".artifacts/logs/native-proxy-observation-records-20260910/qualify.tap"
+    },
+    {
+      "destination": "docs/audits/native-proxy-observation-records-20260910/result/qualify.stderr",
+      "sha256": "6944dfde9623e0a03dc2e1c6537e2bebba07ceaa86b87495f9dc6727f8da69e0",
+      "size_bytes": 90,
+      "source": ".artifacts/logs/native-proxy-observation-records-20260910/qualify.stderr"
+    },
+    {
+      "destination": "docs/audits/native-proxy-observation-records-20260910/result/audit.json",
+      "sha256": "b9a647da2bf94ca34e747d42dcb32d143f0d8d20d394ae310eaac56a9b648adf",
+      "size_bytes": 866,
+      "source": ".artifacts/logs/native-proxy-observation-records-20260910/audit.json"
+    },
+    {
+      "destination": "docs/audits/native-proxy-observation-records-20260910/result/runtime-regression.json",
+      "sha256": "e2f3fac8ca9eb353a4ba8ffc1fc4258333236349c350705a3c4089bcc5c016df",
+      "size_bytes": 16680,
+      "source": ".artifacts/logs/native-proxy-observation-records-20260910/runtime-regression.json"
+    },
+    {
+      "destination": "docs/audits/native-proxy-observation-records-20260910/result/runtime-regression.tap",
+      "sha256": "57974575a25e8ea6c4c304741399b2f8c8472b10ca544672c4cba9afa42cc62e",
+      "size_bytes": 2892,
+      "source": ".artifacts/logs/native-proxy-observation-records-20260910/runtime-regression.tap"
+    },
+    {
+      "destination": "docs/audits/native-proxy-observation-records-20260910/result/runtime-regression.stderr",
+      "sha256": "3edc839447db98db0ada1fb32e6e6f648956c50c207b051f055e3261b9acda18",
+      "size_bytes": 90,
+      "source": ".artifacts/logs/native-proxy-observation-records-20260910/runtime-regression.stderr"
+    },
+    {
+      "destination": "docs/audits/native-proxy-observation-records-20260910/result/book-review.json",
+      "sha256": "47c4809edb30a9596d6008b9a799b946061e62a1dfafbceaaecb86288c9e1997",
+      "size_bytes": 158,
+      "source": ".artifacts/logs/native-proxy-observation-records-20260910/book-review.json"
+    }
+  ],
+  "schema": "fsmgen.observation_record_recovery.v1"
+}

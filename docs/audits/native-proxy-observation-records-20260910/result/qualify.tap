@@ -1,0 +1,181 @@
+ok 1 - independent Python bytes: inert historical identities
+ok 2 - decoded record: inert historical identities
+ok 3 - independent Python bytes: Unicode path canonical ASCII
+ok 4 - decoded record: Unicode path canonical ASCII
+ok 5 - independent Python bytes: integer above binary64 precision
+ok 6 - decoded record: integer above binary64 precision
+ok 7 - independent Python bytes: source byte ceiling is structural only
+ok 8 - decoded record: source byte ceiling is structural only
+ok 9 - independent Python bytes: record byte ceiling is syntax only
+ok 10 - decoded record: record byte ceiling is syntax only
+ok 11 - independent Python bytes: key binds observer_birth.pid
+ok 12 - decoded record: key binds observer_birth.pid
+ok 13 - independent Python bytes: key binds observer_birth.ppid
+ok 14 - decoded record: key binds observer_birth.ppid
+ok 15 - independent Python bytes: key binds observer_birth.ruid
+ok 16 - decoded record: key binds observer_birth.ruid
+ok 17 - independent Python bytes: key binds observer_birth.start_sec
+ok 18 - decoded record: key binds observer_birth.start_sec
+ok 19 - independent Python bytes: key binds observer_birth.start_usec
+ok 20 - decoded record: key binds observer_birth.start_usec
+ok 21 - independent Python bytes: key binds observer_birth.uid
+ok 22 - decoded record: key binds observer_birth.uid
+ok 23 - independent Python bytes: key binds target_birth.pid
+ok 24 - decoded record: key binds target_birth.pid
+ok 25 - independent Python bytes: key binds target_birth.ppid
+ok 26 - decoded record: key binds target_birth.ppid
+ok 27 - independent Python bytes: key binds target_birth.ruid
+ok 28 - decoded record: key binds target_birth.ruid
+ok 29 - independent Python bytes: key binds target_birth.start_sec
+ok 30 - decoded record: key binds target_birth.start_sec
+ok 31 - independent Python bytes: key binds target_birth.start_usec
+ok 32 - decoded record: key binds target_birth.start_usec
+ok 33 - independent Python bytes: key binds target_birth.uid
+ok 34 - decoded record: key binds target_birth.uid
+ok 35 - independent Python bytes: birth order remains significant
+ok 36 - decoded record: birth order remains significant
+ok 37 - independent Python bytes: native birth structural endpoints
+ok 38 - decoded record: native birth structural endpoints
+ok 39 - null root
+ok 40 - array root
+ok 41 - missing root evidence_directory
+ok 42 - missing root evidence_directory_identity
+ok 43 - missing root image_key
+ok 44 - missing root observer_birth
+ok 45 - missing root reference_key
+ok 46 - missing root schema
+ok 47 - missing root selected_sources
+ok 48 - missing root target_birth
+ok 49 - extra root field
+ok 50 - merged root fields
+ok 51 - wrong schema fsmgen.test.rust_proxy_image_reference.v1
+ok 52 - wrong schema fsmgen.test.rust_proxy_image_observation_reference.v2
+ok 53 - boolean schema
+ok 54 - image_key uppercase
+ok 55 - image_key short
+ok 56 - image_key numeric
+ok 57 - reference_key uppercase
+ok 58 - reference_key short
+ok 59 - reference_key numeric
+ok 60 - wrong reference key
+ok 61 - observer_birth null
+ok 62 - observer_birth array
+ok 63 - observer_birth extra
+ok 64 - observer_birth missing pid
+ok 65 - observer_birth stale key pid
+ok 66 - observer_birth missing ppid
+ok 67 - observer_birth stale key ppid
+ok 68 - observer_birth missing ruid
+ok 69 - observer_birth stale key ruid
+ok 70 - observer_birth missing start_sec
+ok 71 - observer_birth stale key start_sec
+ok 72 - observer_birth missing start_usec
+ok 73 - observer_birth stale key start_usec
+ok 74 - observer_birth missing uid
+ok 75 - observer_birth stale key uid
+ok 76 - observer_birth integer string
+ok 77 - observer_birth integer boolean
+ok 78 - observer_birth integer negative
+ok 79 - observer_birth integer fraction
+ok 80 - observer_birth integer null
+ok 81 - observer_birth integer array
+ok 82 - observer_birth integer object
+ok 83 - observer_birth invalid pid
+ok 84 - observer_birth invalid start_usec
+ok 85 - observer_birth merged padded fields
+ok 86 - target_birth null
+ok 87 - target_birth array
+ok 88 - target_birth extra
+ok 89 - target_birth missing pid
+ok 90 - target_birth stale key pid
+ok 91 - target_birth missing ppid
+ok 92 - target_birth stale key ppid
+ok 93 - target_birth missing ruid
+ok 94 - target_birth stale key ruid
+ok 95 - target_birth missing start_sec
+ok 96 - target_birth stale key start_sec
+ok 97 - target_birth missing start_usec
+ok 98 - target_birth stale key start_usec
+ok 99 - target_birth missing uid
+ok 100 - target_birth stale key uid
+ok 101 - target_birth integer string
+ok 102 - target_birth integer boolean
+ok 103 - target_birth integer negative
+ok 104 - target_birth integer fraction
+ok 105 - target_birth integer null
+ok 106 - target_birth integer array
+ok 107 - target_birth integer object
+ok 108 - target_birth invalid pid
+ok 109 - target_birth invalid start_usec
+ok 110 - target_birth merged padded fields
+ok 111 - directory path mismatch
+ok 112 - directory extra field
+ok 113 - directory merged padded fields
+ok 114 - directory integer string
+ok 115 - source integer string
+ok 116 - directory integer boolean
+ok 117 - source integer boolean
+ok 118 - directory integer negative
+ok 119 - source integer negative
+ok 120 - directory integer fraction
+ok 121 - source integer fraction
+ok 122 - directory integer null
+ok 123 - source integer null
+ok 124 - directory integer array
+ok 125 - source integer array
+ok 126 - source order
+ok 127 - source missing
+ok 128 - source extra
+ok 129 - source map
+ok 130 - source null
+ok 131 - source extra field
+ok 132 - source ceiling excess
+ok 133 - source digest
+ok 134 - source private substitution
+ok 135 - source foreign image
+ok 136 - evidence path ""
+ok 137 - evidence path "/absolute"
+ok 138 - evidence path "../escape"
+ok 139 - evidence path "a/../b"
+ok 140 - evidence path "a/./b"
+ok 141 - evidence path "a//b"
+ok 142 - evidence path "a/"
+ok 143 - evidence path "a\\b"
+ok 144 - evidence path "a\n"
+ok 145 - evidence path "a\u0000"
+ok 146 - evidence path "a\u007f"
+ok 147 - evidence path 123
+ok 148 - evidence path true
+ok 149 - evidence path null
+ok 150 - evidence path []
+ok 151 - case path "/absolute"
+ok 152 - case path ".artifacts/tmp/native-proxy-image-custody/cases/fsmgen-ObservationCodec/../B"
+ok 153 - case path ".artifacts/tmp/native-proxy-image-custody/cases/fsmgen-ObservationCodec/"
+ok 154 - case path ".artifacts/tmp/native-proxy-image-custody/cases/fsmgen-ObservationCodec\n"
+ok 155 - case path ".artifacts/cache/rust-proxy-images/v1"
+ok 156 - record encode ceiling
+ok 157 - trailing newline
+ok 158 - leading whitespace
+ok 159 - duplicate root
+ok 160 - duplicate directory member
+ok 161 - duplicate birth member
+ok 162 - noncanonical fraction
+ok 163 - noncanonical exponent
+ok 164 - noncanonical ASCII escape
+ok 165 - invalid JSON
+ok 166 - deep JSON
+ok 167 - decode ceiling
+ok 168 - raw non-ASCII
+ok 169 - character instead of bytes
+ok 170 - reference instead of bytes
+ok 171 - extra encode argument
+ok 172 - missing decode argument
+ok 173 - extra decode argument
+ok 174 - runtime record in observation decoder
+ok 175 - observation record in runtime decoder
+ok 176 - counterimplementation admits independently invalid bytes: omitted field closure
+ok 177 - counterimplementation admits independently invalid bytes: omitted key derivation
+ok 178 - counterimplementation admits independently invalid bytes: omitted birth validation
+ok 179 - codec does not invoke current filesystem custody
+ok 180 - no compiler or process attempt
+1..180
