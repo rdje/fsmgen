@@ -1,0 +1,134 @@
+{
+  "argv": [
+    "/usr/bin/perl",
+    "t/1669-task-acceptance-fixture-runtime.t"
+  ],
+  "collector": false,
+  "fixture_census": {
+    ".artifacts/build/rust-parity": {},
+    ".artifacts/tmp/process-supervisor-tests": {},
+    ".artifacts/tmp/task-acceptance-tests": {}
+  },
+  "helper": false,
+  "host_isolation": "not_proved",
+  "host_selection_inputs": {
+    "compiler": {
+      "bytes": 290664032,
+      "path": "/Library/Developer/CommandLineTools/usr/bin/clang",
+      "sha256": "f30550eab15fdf5ab8c0dc54c52679711241e5d4b636b027e18c09fef531775d"
+    },
+    "machine": "arm64",
+    "sdk": {
+      "content_census": "not_performed",
+      "device": 16777232,
+      "inode": 224015058,
+      "path": "/Library/Developer/CommandLineTools/SDKs/MacOSX26.5.sdk"
+    },
+    "sysname": "Darwin"
+  },
+  "implementation_inference": "native from qualified host/toolchain selection inputs; producer image not observed",
+  "native_producer_identity_and_generated_bytes": "not_observed_by_this_owner",
+  "new_original_limit": 1,
+  "output_bytes": 16777216,
+  "prospective_admission_sha256": "be70dd17a24b9d90d59df2e6990a3ad00b270e07ecad9d0bc026ccf92d168cc7",
+  "revision": "e27b609d3fdc6ef823584f7726be9715ec28f535",
+  "source_pins": {
+    "perl/FSM/ProjectDataLocality.pm": {
+      "bytes": 6017,
+      "sha256": "14aece4a50b35956bc2585099aa8d26753942288663c641922da9d36ad4bc893"
+    },
+    "perl/FSM/Support/ProcessSupervisor.pm": {
+      "bytes": 27990,
+      "sha256": "684882d91f673ea7145f43ed3aad31acf099f13508574be7b2d8911123988637"
+    },
+    "perl/FSM/Support/ProcessSupervisor/Connection.pm": {
+      "bytes": 10710,
+      "sha256": "6dd92a76f94ad04ebab067c404ba5616bb554e269c16e56884c6935621e70746"
+    },
+    "perl/FSM/Support/ProcessSupervisor/Endpoint.pm": {
+      "bytes": 17264,
+      "sha256": "c5b565909e529c2374ecb88b535331577d13fedb303e01f0537e3d280dcd0974"
+    },
+    "perl/FSM/Support/ProcessSupervisor/Service.pm": {
+      "bytes": 14225,
+      "sha256": "cec90c24ed115e87332db029b9331a2adc5ec5bf3f627122b4b319e796b92e38"
+    },
+    "perl/FSM/Support/ProcessSupervisor/Wire.pm": {
+      "bytes": 20037,
+      "sha256": "12905a5209c025fc361f15caf75f91a8eb5893fc4b4db75188d03284ba41fe03"
+    },
+    "scripts/fixture_kernel_sampler.py": {
+      "bytes": 22040,
+      "sha256": "50c94165893b74b758c560f561ff744f294683812a26b429071ef43009aac2dc"
+    },
+    "scripts/observe_fixture_startup.py": {
+      "bytes": 25563,
+      "sha256": "05144eb1ebd86ebf132ad36b86b4c93b23687db928fc369f633615f0b870fe06"
+    },
+    "scripts/run_fixture_startup_observation.py": {
+      "bytes": 17614,
+      "sha256": "a793b6b81b6954aa49cd9e9b0a67045844c334862927b3946b492fcf4dccdafb"
+    },
+    "t/1669-task-acceptance-fixture-runtime.t": {
+      "bytes": 67220,
+      "sha256": "f84cc2afe2fc193ad0a8a8b4f268f88e635e9a00c1b89dbbea131d3db187319b"
+    },
+    "t/fixtures/rust-tool-proxy.c": {
+      "bytes": 721,
+      "sha256": "be8b66690a93c8432c0f33094ac15c26f7fef0940c18f6935fd5b0994d9f4ede"
+    },
+    "t/lib/FSM/Test/CompositionNets.pm": {
+      "bytes": 1856,
+      "sha256": "9f75d9e3d2f56587fd8d547ff404d75335aab2759bd9fff1e731f6ec887594b4"
+    },
+    "t/lib/FSM/Test/DefensiveCopyAudit.pm": {
+      "bytes": 4134,
+      "sha256": "7ef2fcb5810cf07e4308ed5ae3ba99e941d575c4ae765b7733eb553fea91beae"
+    },
+    "t/lib/FSM/Test/HostedCorpusShard.pm": {
+      "bytes": 2963,
+      "sha256": "8e52011ef7b5ff696445bad16f20c733cee2cd6a727b957813cbaf4f60b1f485"
+    },
+    "t/lib/FSM/Test/OSVVMRuntimePersistedRequest.pm": {
+      "bytes": 8915,
+      "sha256": "2d0eaec50b2844dc330208fce953f25c44a09ffaa9af1feb1b05265bd663e504"
+    },
+    "t/lib/FSM/Test/ProcessSupervisor.pm": {
+      "bytes": 773,
+      "sha256": "52e467023ea8a776167e227a767abdd3dddf185f1f7c539aac8ca1c4a0a06680"
+    },
+    "t/lib/FSM/Test/ProjectDataLocality.pm": {
+      "bytes": 198,
+      "sha256": "8fe6472c61717d8619554ede193c05a16ea4d15706379712585a6cc3f49273c6"
+    },
+    "t/lib/FSM/Test/RamGuardFixtureRuntime.pm": {
+      "bytes": 7162,
+      "sha256": "304fb6f17cce6d31a42ce378c75bb3ee01916d4e213da4c304d56e2dbd439c9c"
+    },
+    "t/lib/FSM/Test/RegressionCorpus.pm": {
+      "bytes": 384,
+      "sha256": "fae6af3568c0978970e8085f86a660a9b1790ca4b738b8ff08964be16e718521"
+    },
+    "t/lib/FSM/Test/RustParityRuntime.pm": {
+      "bytes": 10526,
+      "sha256": "10441706cb8b189f14b791b92f75f6e37f8d72aeb8b722457bac79ebda149eaa"
+    },
+    "t/lib/FSM/Test/RustProxyFixture.pm": {
+      "bytes": 11466,
+      "sha256": "d9c4ab52cf8074526c59b7a5dcb9da870ca7ffdacb4eb236dacb23b5db6d8bfb"
+    },
+    "t/lib/FSM/Test/T296Checkpoint.pm": {
+      "bytes": 9190,
+      "sha256": "18a22d0d65011fa3bfa3fe20a0378cf644d2861474a8375bcff2ceb7a4b37e6b"
+    },
+    "t/lib/FSM/Test/TaskAcceptanceFixtureRuntime.pm": {
+      "bytes": 6284,
+      "sha256": "d97a669eb15346874b6ef8525a1860c315279c5f7c7763d366d69d3cf7e1dde7"
+    },
+    "t/lib/FSM/Test/VerilatorRuntime.pm": {
+      "bytes": 4438,
+      "sha256": "36dcf875785bd0aea3422e647c02dbe765a47e249ef6476e3cdbdc454f96538a"
+    }
+  },
+  "whole_test_seconds": 200
+}

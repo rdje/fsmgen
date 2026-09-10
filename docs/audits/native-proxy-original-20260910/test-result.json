@@ -1,0 +1,9 @@
+{
+  "leader_reaped": true,
+  "native_wait_status": 768,
+  "pid": 7409,
+  "released": true,
+  "returncode": 3,
+  "timeout": false,
+  "unobserved_descendants": "unknown"
+}

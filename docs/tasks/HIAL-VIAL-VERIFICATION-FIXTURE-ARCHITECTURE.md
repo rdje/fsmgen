@@ -2655,17 +2655,32 @@ decomposes the architecture needed to move beyond that bounded foundation.
   Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.11.1: admit one fixed integrated original qualification`
 
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.11.2`
-  Status: `proposed`
+  Status: `done`
   Goal: `Execute and independently verify the admitted integrated original once.`
   Acceptance: `Require the committed .1 admission and unchanged input/driver pins before release. Run exactly one original under the existing RAM guard and GatedTest, preserving first failure without retry or widened bounds. Retain complete root identity/release/wait/TAP/streams and before/after source and fixture-directory evidence. Independently parse TAP and falsify altered retained result/plan/cleanup copies without rerunning the original. Unknown producer visibility and host isolation remain unknown. Commit the result before interpretation pivots.`
-  Verification: `pending committed admission`
-  Commit: `pending`
+  Verification: `FAILED ORIGINAL; execution and independent evidence audit are complete, not integration signoff. Exactly one original was released under admission 119e7e5abd17894a09e8c213d60f23300736d183 from source e27b609d3fdc6ef823584f7726be9715ec28f535. PID7409 parent7312 birth1789030107.713937, uid/ruid501, exits rc3/native wait768; whole-owner timeout is false. Complete TAP plans/runs 15 roots with failed roots 10 (Rust controls), 11 (legacy entry/return) and 12 (architecture adapter census). Re-derivation: independent TAP::Parser plus raw contiguous root rows agree, with no parse errors; complete TAP is 28983 bytes SHA-256 37d00d79bcf3efa09884d479e0ed13e433d52e0be3adc9d2fa45ab0fccbc2d03. Stderr is 11617 bytes SHA-256 994a1465ef33436479da3c80febf2fc5a411a1b0db2b0a49b1e37414cb954989. Both proxy modes return tool_resolution/timed_out after their unchanged ten-second deadline, empty streams and no first-output witness; both outer watchers finish normally and retain matching decoded adapter results. Legacy signal/streams also time out at their unchanged five-second wall with absent main-entry markers. The architecture failure specifically reports RustProxyFixture absent from the explicit sealed-adapter list at t/1669-task-acceptance-fixture-runtime.t line993. That is a concrete integration omission; .3.1 owns immediate correction and a focused reusable guard. Actual producer images/births are unobserved, so native selection remains an admission inference and no startup cause is established by this failure. All 24 input pins match source revision before/after and at independent audit; observed selection inputs match, while SDK contents remain uncensused. Original is reaped and independently absent; recorded process-supervisor/task-acceptance/Rust-build roots are empty, and the named legacy workspace is independently absent. Unobserved descendants stay unknown. Falsification: altered rc, native wait, leader-reaped flag and missing TAP-plan copies all reject without rerunning the original. Independent audit is 12607 bytes SHA-256 722d4fb2e1d485e2ff72e9e37119e27d234b2837c102a212ac45883ecd3d6eaf. Durability: exact admission, root identity/release/result, qualification, complete TAP/stderr and audit plus audit source are frozen under docs/audits/native-proxy-original-20260910/; copied bytes match the original .artifacts/logs/native-proxy-original-20260910 receipts. This closes the raw-result availability gap for this run. Book records the failure and concrete repair; rendered checks pass and the exact 98-file/23071477-byte output is removed. Knowledge Map synchronizes; staged doctrines gate the evidence commit. No retry, original deadline change, compiler re-execution, helper or collector is performed. Parent startup/qualification, full CI and push stay open.`
+  Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.11.2: preserve failed integrated original and own concrete repairs`
 
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.11.3`
-  Status: `proposed`
+  Status: `active`
   Goal: `Reconcile integrated qualification with actual coverage and historical startup repair.`
   Acceptance: `Compare the independently audited original with the pre-change negative-control contract and builder/capture qualifications. Close only proved integration obligations; name absent producer/native-capture or causal joins. Select and own a concrete next action for any remaining project-correctable startup or qualification defect without promoting a later pass into historical causal repair. Keep full CI and push separately gated.`
-  Verification: `pending original result`
+  Verification: `The original failed roots 10/11/12. Child .1 fixes the missing sealed-adapter registration with an isolated architecture guard, without running startup-sensitive originals. Child .2 then resolves actual implementation visibility and the remaining startup diagnosis/qualification boundary. A registration fix cannot account for or waive the independent startup timeouts; no original retry or authenticated capture is inherited.`
+  Children: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.11.3.1, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.11.3.2`
+  Commit: `pending`
+
+- ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.11.3.1`
+  Status: `proposed`
+  Goal: `Register the sealed Rust proxy compiler adapter and expose focused architecture regression.`
+  Acceptance: `Add only RustProxyFixture to the explicit approved test-adapter census, retaining the closed production/caller/direct-test boundaries. Extract or reuse the original architecture guard as a fast isolated check so future sealed-adapter changes need not launch unrelated startup-sensitive tests. Reproduce the current missing registration, prove the corrected census, and independently reject injected unauthorized ownership without modifying real source files or launching processes. Commit before further startup investigation; no original retry or deadline change.`
+  Verification: `pending committed failed-original evidence`
+  Commit: `pending`
+
+- ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.11.3.2`
+  Status: `proposed`
+  Goal: `Resolve producer implementation visibility and select the next evidence-backed startup action.`
+  Acceptance: `After the registration repair commits, distinguish direct observations from native-selection inference. Use bounded read-only probes in the selected interpreter and retained failed diagnostics first. A current selection observation cannot retroactively supply lost producer identity or bytes. Identify any diagnostic omission that prevents the next causal decision and own its repair/qualification before another original or authenticated capture. Keep the existing historical queue evidence and its absent joins explicit; do not classify the startup failures away or widen/retry the original.`
+  Verification: `pending focused architecture repair`
   Commit: `pending`
 
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.3`
@@ -3637,7 +3652,7 @@ decomposes the architecture needed to move beyond that bounded foundation.
 
 ## Current Frontier
 
-Current frontier: .3.2.15.7.3.11.1 freezes one original qualification; .11.2 executes the admitted invocation once and independently audits its result. Startup/parent, full CI and push stay gated.
+Current frontier: .3.2.15.7.3.11.2 preserves a failed original and exact audit; .11.3.1 fixes the missing sealed-adapter registration, then .11.3.2 resolves startup visibility. Startup/parent, full CI and push stay gated.
 
 Architecture audit `.1` is complete. Decision `0032` selects one public
 `.vial` source language, private immutable `VIALSemanticIR` and
@@ -6285,3 +6300,9 @@ Native-proxy review acceptance: recover all checked assertions at `5c269071bd345
 - [x] **ROOT CAUSE (WHY + WHERE)** — git log -S 'use FSM::Test::RustProxyFixture' -- t/1669-task-acceptance-fixture-runtime.t locates e27b609d3fdc6ef823584f7726be9715ec28f535. Its builder/C input and observed native-selection context must accompany the integrated original qualification.
 - [x] **ADDRESSED (verified)** — Frozen plan/input pins match the integration commit. Static admission has one constructor and release, and isolated context controls accept current inputs while rejecting changed machine, compiler digest and SDK inode. Exact recovery copies match the admitted driver and metadata; no original is launched.
 - [x] **NO REGRESSION** — Book rendering and exact generated-output cleanup pass; knowledge-map: OK. Existing tracked original and gated-owner sources are unchanged from the integration commit. Staged doctrines gate the prospective checkpoint.
+
+## Acceptance Checklist (failed original evidence .3.2.15.7.3.11.2)
+
+- [x] **ROOT CAUSE (WHY + WHERE)** — Preserved architecture diagnostics identify the missing RustProxyFixture registration at t/1669-task-acceptance-fixture-runtime.t line 993. Startup causes remain unproved: both Rust controls time out without output and legacy main-entry witnesses are absent.
+- [x] **ADDRESSED (verified)** — Freeze the complete first failed original, identify exact failed roots independently and own the concrete registration repair plus startup visibility follow-up. Altered retained result/cleanup/plan controls reject without another original. This closes evidence custody, not the test failures.
+- [x] **NO REGRESSION** — Independent TAP, input, root-birth and directory checks agree; complete original receipts are copied exactly into Git-owned evidence. Book rendering/cleanup pass; knowledge-map: OK. No source repair, retry or widened limit is hidden in this evidence slice.

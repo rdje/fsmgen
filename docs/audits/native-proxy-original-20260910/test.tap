@@ -1,0 +1,527 @@
+# Subtest: shared engine keeps one closed success contract
+    ok 1 - caller environment remains exact
+    ok 2 - supervised argv succeeds once
+    ok 3 - caller policy owns the result schema
+    ok 4 - caller policy owns the stage
+    ok 5 - stdout remains separate
+    ok 6 - stderr remains separate
+    ok 7 - successful command retains observed control closure before output
+    ok 8 - selected wall is explicit
+    ok 9 - selected capture ceiling is explicit
+    ok 10 - caller policy owns the containment label
+    ok 11 - leader is reaped
+    ok 12 - process group is gone
+    1..12
+ok 1 - shared engine keeps one closed success contract
+# Subtest: child containment must be established before exec
+    ok 1 - undefined retains the actual child's group observation
+    ok 2 - undefined reports its actual child PID
+    ok 3 - undefined rejects the exec handoff
+    ok 4 - undefined reports failed handoff
+    ok 5 - undefined reports the failed operation, return and captured errno
+    ok 6 - undefined never executes the command
+    ok 7 - undefined reaps the child
+    ok 8 - undefined leaves no child group
+    ok 9 - undefined independently leaves no child PID
+    ok 10 - undefined leaves the caller group unchanged
+    ok 11 - negative retains the actual child's group observation
+    ok 12 - negative reports its actual child PID
+    ok 13 - negative rejects the exec handoff
+    ok 14 - negative reports failed handoff
+    ok 15 - negative reports the failed operation, return and captured errno
+    ok 16 - negative never executes the command
+    ok 17 - negative reaps the child
+    ok 18 - negative leaves no child group
+    ok 19 - negative independently leaves no child PID
+    ok 20 - negative leaves the caller group unchanged
+    ok 21 - false_success retains the actual child's group observation
+    ok 22 - false_success reports its actual child PID
+    ok 23 - false_success rejects the exec handoff
+    ok 24 - false_success reports failed handoff
+    ok 25 - false return leaves the child in its inherited group
+    ok 26 - membership mismatch cannot be mislabeled as a syscall failure
+    ok 27 - false_success never executes the command
+    ok 28 - false_success reaps the child
+    ok 29 - false_success leaves no child group
+    ok 30 - false_success independently leaves no child PID
+    ok 31 - false_success leaves the caller group unchanged
+    ok 32 - exception retains the actual child's group observation
+    ok 33 - exception reports its actual child PID
+    ok 34 - exception rejects the exec handoff
+    ok 35 - exception reports failed handoff
+    ok 36 - exception keeps its own cause without ambient errno
+    ok 37 - exception never executes the command
+    ok 38 - exception reaps the child
+    ok 39 - exception leaves no child group
+    ok 40 - exception independently leaves no child PID
+    ok 41 - exception leaves the caller group unchanged
+    ok 42 - native_session retains the actual child's group observation
+    ok 43 - native_session reports its actual child PID
+    ok 44 - native_session rejects the exec handoff
+    ok 45 - native_session reports failed handoff
+    ok 46 - native_session reports the failed operation, return and captured errno
+    ok 47 - native control actually becomes a session leader
+    ok 48 - correct group alone cannot excuse a failed syscall
+    ok 49 - native syscall independently supplies EPERM
+    ok 50 - native_session never executes the command
+    ok 51 - native_session reaps the child
+    ok 52 - native_session leaves no child group
+    ok 53 - native_session independently leaves no child PID
+    ok 54 - native_session leaves the caller group unchanged
+    ok 55 - success_stale retains the actual child's group observation
+    ok 56 - success_stale reports its actual child PID
+    ok 57 - stale errno cannot reject successful group admission
+    ok 58 - admitted native child executes once
+    ok 59 - successful child independently observes its owned group
+    ok 60 - success control actually carries stale errno
+    ok 61 - success_stale reaps the child
+    ok 62 - success_stale leaves no child group
+    ok 63 - success_stale independently leaves no child PID
+    ok 64 - success_stale leaves the caller group unchanged
+    1..64
+ok 2 - child containment must be established before exec
+# Subtest: containment group-query diagnostics preserve their own provenance
+    ok 1 - undefined query oracle returns under its independent wall
+    ok 2 - undefined returns structured query evidence
+    ok 3 - undefined outer established actual native containment
+    ok 4 - undefined query failure keeps its own return and errno
+    ok 5 - undefined query oracle leaves no owned child/group
+    ok 6 - undefined query process is independently absent
+    ok 7 - negative query oracle returns under its independent wall
+    ok 8 - negative returns structured query evidence
+    ok 9 - negative outer established actual native containment
+    ok 10 - negative query failure keeps its own return and errno
+    ok 11 - negative query oracle leaves no owned child/group
+    ok 12 - negative query process is independently absent
+    ok 13 - exception query oracle returns under its independent wall
+    ok 14 - exception returns structured query evidence
+    ok 15 - exception outer established actual native containment
+    ok 16 - query exception cannot become a setpgid error
+    ok 17 - exception query oracle leaves no owned child/group
+    ok 18 - exception query process is independently absent
+    ok 19 - mismatch query oracle returns under its independent wall
+    ok 20 - mismatch returns structured query evidence
+    ok 21 - mismatch outer established actual native containment
+    ok 22 - membership diagnostic retains the returned group, without stale errno
+    ok 23 - mismatch query oracle leaves no owned child/group
+    ok 24 - mismatch query process is independently absent
+    ok 25 - success_stale query oracle returns under its independent wall
+    ok 26 - success_stale returns structured query evidence
+    ok 27 - success_stale outer established actual native containment
+    ok 28 - successful query ignores stale errno from both operations
+    ok 29 - success_stale query oracle leaves no owned child/group
+    ok 30 - success_stale query process is independently absent
+    1..30
+ok 3 - containment group-query diagnostics preserve their own provenance
+# Subtest: handoff timing requires an observed control-pipe closure
+    ok 1 - timeout preserves the real failure class
+    ok 2 - timeout cannot execute the command
+    ok 3 - timeout has no observed command output
+    ok 4 - timeout leaves no child or group
+    ok 5 - unobserved exec_handoff_monotonic_ns stays unknown after cleanup
+    ok 6 - unobserved spawn_to_exec_ns stays unknown after cleanup
+    ok 7 - unobserved execution_ns stays unknown after cleanup
+    ok 8 - unobserved exec_to_first_output_ns stays unknown after cleanup
+    ok 9 - early_exit preserves the real failure class
+    ok 10 - early_exit cannot execute the command
+    ok 11 - early_exit has no observed command output
+    ok 12 - early_exit leaves no child or group
+    ok 13 - direct pre-exec exit remains nonzero
+    ok 14 - observed EOF can also come from child death before exec
+    1..14
+ok 4 - handoff timing requires an observed control-pipe closure
+# Subtest: shared engine kills a TERM-resistant process tree at its wall
+    ok 1 - first deadline remains failed
+    ok 2 - timeout evidence is explicit
+    ok 3 - TERM reaches the complete process group
+    ok 4 - TERM resistance escalates to KILL
+    ok 5 - timed-out leader is reaped
+    ok 6 - timed-out group is proved gone
+    ok 7 - hostile fixture reports its descendant
+    ok 8 - hostile descendant leaves no process residue
+    1..8
+ok 5 - shared engine kills a TERM-resistant process tree at its wall
+# Subtest: cleanup cannot block while waiting for an unreapable leader
+    ok 1 - isolated mock oracle returns under a real deadline
+    ok 2 - oracle returns structured evidence
+    ok 3 - cleanup returns when its grace expires
+    ok 4 - cleanup never asks for a blocking wait
+    ok 5 - unreapable leader remains unreaped
+    ok 6 - surviving group remains explicitly present
+    ok 7 - cleanup first attempts TERM
+    ok 8 - cleanup escalates to KILL
+    1..8
+ok 6 - cleanup cannot block while waiting for an unreapable leader
+# Subtest: asynchronous capture and cleanup steps never wait inside the engine
+    ok 1 - success returns independent oracle evidence
+    ok 2 - success advances without hidden waiting
+    ok 3 - success preserves the closed command outcome
+    ok 4 - success finishes both cleanup obligations
+    ok 5 - asynchronous capture preserves raw bytes
+    ok 6 - asynchronous capture keeps streams separate
+    ok 7 - success identifies its actual command
+    ok 8 - success independently leaves no command process
+    ok 9 - success independently leaves no command group
+    ok 10 - timeout returns independent oracle evidence
+    ok 11 - timeout advances without hidden waiting
+    ok 12 - timeout preserves the closed command outcome
+    ok 13 - timeout finishes both cleanup obligations
+    ok 14 - cleanup advances through both graces without sleeping in a step
+    ok 15 - timeout identifies its actual command
+    ok 16 - timeout independently leaves no command process
+    ok 17 - timeout independently leaves no command group
+    ok 18 - control_sleep returns independent oracle evidence
+    ok 19 - control_sleep rejects a blocking driver
+    ok 20 - control_sleep cannot claim advancement completed
+    ok 21 - control_sleep exercises the intended trap
+    ok 22 - control_sleep identifies its actual command
+    ok 23 - control_sleep independently leaves no command process
+    ok 24 - control_sleep independently leaves no command group
+    ok 25 - control_wait returns independent oracle evidence
+    ok 26 - control_wait rejects a blocking driver
+    ok 27 - control_wait cannot claim advancement completed
+    ok 28 - control_wait exercises the intended trap
+    ok 29 - control_wait identifies its actual command
+    ok 30 - control_wait independently leaves no command process
+    ok 31 - control_wait independently leaves no command group
+    1..31
+ok 7 - asynchronous capture and cleanup steps never wait inside the engine
+# Subtest: prospective coordinator can reserve group identity through command cleanup
+    ok 1 - normal kernel oracle completes under its independent wall
+    ok 2 - normal returns structured evidence
+    ok 3 - normal completes every handoff
+    ok 4 - normal command retains the reserved group
+    ok 5 - normal preserves the direct child's actual wait status
+    ok 6 - normal proves group absence before identity release
+    ok 7 - normal retains its reservation through group cleanup
+    ok 8 - normal releases the reservation normally
+    ok 9 - normal reaps both exact direct children
+    ok 10 - normal leaves caller membership unchanged
+    ok 11 - normal never signals the caller group
+    ok 12 - normal oracle leaves no outer group
+    ok 13 - cancel kernel oracle completes under its independent wall
+    ok 14 - cancel returns structured evidence
+    ok 15 - cancel completes every handoff
+    ok 16 - cancel command retains the reserved group
+    ok 17 - cancel preserves the direct child's actual wait status
+    ok 18 - cancel proves group absence before identity release
+    ok 19 - cancel retains its reservation through group cleanup
+    ok 20 - cancel releases the reservation normally
+    ok 21 - cancel reaps both exact direct children
+    ok 22 - cancel leaves caller membership unchanged
+    ok 23 - cancel never signals the caller group
+    ok 24 - cancellation reaches only the command group
+    ok 25 - cancel oracle leaves no outer group
+    ok 26 - unmoved reservation is a failed control
+    ok 27 - negative control returns evidence
+    ok 28 - negative control detects the reservation inside the command group
+    ok 29 - negative control fails at the actual group-absence check
+    ok 30 - negative control identifies command_pid
+    ok 31 - negative control cleaned its exact command_pid before returning
+    ok 32 - negative control identifies reservation_pid
+    ok 33 - negative control cleaned its exact reservation_pid before returning
+    1..33
+ok 8 - prospective coordinator can reserve group identity through command cleanup
+# Subtest: task-acceptance adapter seals path, command, interpreter, and bounds
+    ok 1 - fixture Git leaves the environment exact
+    ok 2 - load-time canonical Git ignores later PATH replacement
+    ok 3 - fixture result schema is exact
+    ok 4 - fixture Git stage is exact
+    ok 5 - fixture Git wall cannot be widened
+    ok 6 - fixture Git capture cannot be widened
+    ok 7 - fixture containment is exact
+    ok 8 - unregistered Git subcommand fails closed
+    ok 9 - rejected Git command starts no process
+    ok 10 - global Git configuration fails closed
+    ok 11 - rejected global configuration starts no process
+    ok 12 - non-fixture repository fails closed
+    ok 13 - rejected repository starts no process
+    ok 14 - load-time canonical Bash ignores later PATH replacement and env handoff
+    ok 15 - checker output is exact
+    ok 16 - checker stage is exact
+    ok 17 - checker wall cannot be widened
+    ok 18 - checker capture cannot be widened
+    ok 19 - checker nonzero remains failed
+    ok 20 - checker exit code is exact
+    ok 21 - failed checker group is gone
+    1..21
+ok 9 - task-acceptance adapter seals path, command, interpreter, and bounds
+# Subtest: Rust parity rejects unresolved and misleading tool identities before building
+    ok 1 - directory probe terminates under the independent watcher
+    ok 2 - directory returns a structured adapter result
+    ok 3 - directory fails closed
+    ok 4 - directory has exact stage attribution
+    ok 5 - directory preserves failure class
+    ok 6 - directory cannot start Cargo build
+    ok 7 - directory leaves no owned process group
+    ok 8 - settled proxy workspace is removed
+    ok 9 - proxy_nonzero proxy preparation succeeds
+    ok 10 - proxy_nonzero probe terminates under the independent watcher
+    ok 11 - proxy_nonzero returns a structured adapter result
+    ok 12 - proxy_nonzero fails closed
+    ok 13 - proxy_nonzero has exact stage attribution
+    not ok 14 - proxy_nonzero preserves failure class
+    ok 15 - proxy_nonzero cannot start Cargo build
+    ok 16 - proxy_nonzero leaves no owned process group
+    ok 17 - settled proxy workspace is removed
+    ok 18 - proxy_decoy proxy preparation succeeds
+    ok 19 - proxy_decoy probe terminates under the independent watcher
+    ok 20 - proxy_decoy returns a structured adapter result
+    ok 21 - proxy_decoy fails closed
+    not ok 22 - proxy_decoy has exact stage attribution
+    not ok 23 - proxy_decoy preserves failure class
+    ok 24 - proxy_decoy cannot start Cargo build
+    ok 25 - proxy_decoy leaves no owned process group
+    ok 26 - settled proxy workspace is removed
+    1..26
+not ok 10 - Rust parity rejects unresolved and misleading tool identities before building
+# Subtest: legacy RAM-guard capture controls expose signal loss and blocked streams
+    not ok 1 - signal producer independently records main entry
+    not ok 2 - old capture wrapper returns despite its signalled child
+    not ok 3 - old wrapper retains its independently observed wait status in the probe
+    ok 4 - signal negative control leaves no owned group
+    not ok 5 - streams producer independently records main entry
+    ok 6 - old sequential reader cannot drain stderr while waiting for stdout
+    ok 7 - streams negative control leaves no owned group
+    1..7
+not ok 11 - legacy RAM-guard capture controls expose signal loss and blocked streams
+# Subtest: policy adapters exclusively own low-level test supervision
+    ok 1 - the reviewed mechanics have one production support owner
+    ok 2 - the test compatibility module contains no copied process mechanics
+    ok 3 - the test compatibility boundary delegates process creation
+    ok 4 - the shared engine does not borrow VIAL lifecycle authority
+    ok 5 - a caller outside the two sealed policy boundaries cannot launch
+    ok 6 - only HDL external validation holds production supervision authority
+    ok 7 - t1545 has no direct IPC launch
+    ok 8 - t1545 imports its sealed adapter
+    ok 9 - fixture Git is adapter-owned
+    ok 10 - fixture checker is adapter-owned
+    ok 11 - T1467 has no unbounded IPC launch
+    ok 12 - Rust parity uses its sealed adapter
+    ok 13 - T1595 has no direct IPC or unbounded wait
+    ok 14 - RAM-guard fixtures use their sealed adapter
+    not ok 15 - only sealed policy adapters call the low-level supervisor
+    ok 16 - only the hostile-process oracle bypasses a sealed policy adapter
+    1..16
+not ok 12 - policy adapters exclusively own low-level test supervision
+# Subtest: private wire uses exact network bytes and rejects malformed frames
+    ok 1 - HELLO has independent exact wire bytes
+    ok 2 - HELLO decodes the independent vector
+    ok 3 - HELLO admits only its declared payload
+    ok 4 - HELLO validates direction and cap before the body
+    ok 5 - HELLO rejects the opposite direction
+    ok 6 - HELLO rejects every truncated prefix
+    ok 7 - HELLO rejects data after its frame
+    ok 8 - HELLO rejects unknown fields inside its frame
+    ok 9 - READY has independent exact wire bytes
+    ok 10 - READY decodes the independent vector
+    ok 11 - READY admits only its declared payload
+    ok 12 - READY validates direction and cap before the body
+    ok 13 - READY rejects the opposite direction
+    ok 14 - READY rejects every truncated prefix
+    ok 15 - READY rejects data after its frame
+    ok 16 - READY rejects unknown fields inside its frame
+    ok 17 - SPAWN has independent exact wire bytes
+    ok 18 - SPAWN decodes the independent vector
+    ok 19 - SPAWN admits only its declared payload
+    ok 20 - SPAWN validates direction and cap before the body
+    ok 21 - SPAWN rejects the opposite direction
+    ok 22 - SPAWN rejects every truncated prefix
+    ok 23 - SPAWN rejects data after its frame
+    ok 24 - SPAWN rejects unknown fields inside its frame
+    ok 25 - ACCEPT has independent exact wire bytes
+    ok 26 - ACCEPT decodes the independent vector
+    ok 27 - ACCEPT admits only its declared payload
+    ok 28 - ACCEPT validates direction and cap before the body
+    ok 29 - ACCEPT rejects the opposite direction
+    ok 30 - ACCEPT rejects every truncated prefix
+    ok 31 - ACCEPT rejects data after its frame
+    ok 32 - ACCEPT rejects unknown fields inside its frame
+    ok 33 - STDOUT has independent exact wire bytes
+    ok 34 - STDOUT decodes the independent vector
+    ok 35 - STDOUT admits only its declared payload
+    ok 36 - STDOUT validates direction and cap before the body
+    ok 37 - STDOUT rejects the opposite direction
+    ok 38 - STDOUT rejects every truncated prefix
+    ok 39 - STDOUT rejects data after its frame
+    ok 40 - STDOUT rejects unknown fields inside its frame
+    ok 41 - STDERR has independent exact wire bytes
+    ok 42 - STDERR decodes the independent vector
+    ok 43 - STDERR admits only its declared payload
+    ok 44 - STDERR validates direction and cap before the body
+    ok 45 - STDERR rejects the opposite direction
+    ok 46 - STDERR rejects every truncated prefix
+    ok 47 - STDERR rejects data after its frame
+    ok 48 - STDERR rejects unknown fields inside its frame
+    ok 49 - CANCEL has independent exact wire bytes
+    ok 50 - CANCEL decodes the independent vector
+    ok 51 - CANCEL admits only its declared payload
+    ok 52 - CANCEL validates direction and cap before the body
+    ok 53 - CANCEL rejects the opposite direction
+    ok 54 - CANCEL rejects every truncated prefix
+    ok 55 - CANCEL rejects data after its frame
+    ok 56 - CANCEL rejects unknown fields inside its frame
+    ok 57 - ACK has independent exact wire bytes
+    ok 58 - ACK decodes the independent vector
+    ok 59 - ACK admits only its declared payload
+    ok 60 - ACK validates direction and cap before the body
+    ok 61 - ACK rejects the opposite direction
+    ok 62 - ACK rejects every truncated prefix
+    ok 63 - ACK rejects data after its frame
+    ok 64 - ACK rejects unknown fields inside its frame
+    ok 65 - REJECT has independent exact wire bytes
+    ok 66 - REJECT decodes the independent vector
+    ok 67 - REJECT admits only its declared payload
+    ok 68 - REJECT validates direction and cap before the body
+    ok 69 - REJECT rejects the opposite direction
+    ok 70 - REJECT rejects every truncated prefix
+    ok 71 - REJECT rejects data after its frame
+    ok 72 - REJECT rejects unknown fields inside its frame
+    ok 73 - STDOUT_END has independent exact wire bytes
+    ok 74 - STDOUT_END decodes the independent vector
+    ok 75 - STDOUT_END admits only its declared payload
+    ok 76 - STDOUT_END validates direction and cap before the body
+    ok 77 - STDOUT_END rejects the opposite direction
+    ok 78 - STDOUT_END rejects every truncated prefix
+    ok 79 - STDOUT_END rejects data after its frame
+    ok 80 - STDOUT_END rejects unknown fields inside its frame
+    ok 81 - STDERR_END has independent exact wire bytes
+    ok 82 - STDERR_END decodes the independent vector
+    ok 83 - STDERR_END admits only its declared payload
+    ok 84 - STDERR_END validates direction and cap before the body
+    ok 85 - STDERR_END rejects the opposite direction
+    ok 86 - STDERR_END rejects every truncated prefix
+    ok 87 - STDERR_END rejects data after its frame
+    ok 88 - STDERR_END rejects unknown fields inside its frame
+    ok 89 - unknown version rejects before requesting body storage
+    ok 90 - unknown type rejects before requesting body storage
+    ok 91 - short payload rejects before requesting body storage
+    ok 92 - request cap plus one rejects before requesting body storage
+    ok 93 - control cap plus one rejects before requesting body storage
+    ok 94 - vector count rejects before reading or allocating its members
+    ok 95 - scalar length rejects before reading or allocating its bytes
+    ok 96 - encoder rejects unknown request metadata
+    ok 97 - unknown direction fails closed
+    ok 98 - decoder never silently transcodes wire bytes
+    1..98
+ok 13 - private wire uses exact network bytes and rejects malformed frames
+# Subtest: wire snapshot, scalar, vector and context limits have boundary controls
+    ok 1 - argv count inclusive boundary passes
+    ok 2 - argv count boundary plus one rejects
+    ok 3 - scalar bytes inclusive boundary passes
+    ok 4 - scalar bytes boundary plus one rejects
+    ok 5 - snapshot total inclusive boundary passes
+    ok 6 - snapshot total boundary plus one rejects
+    ok 7 - environment count inclusive boundary passes
+    ok 8 - environment count boundary plus one rejects
+    ok 9 - metadata bytes inclusive boundary passes
+    ok 10 - metadata bytes boundary plus one rejects
+    ok 11 - cwd bytes inclusive boundary passes
+    ok 12 - cwd bytes boundary plus one rejects
+    ok 13 - timeout u32 inclusive boundary passes
+    ok 14 - timeout u32 boundary plus one rejects
+    ok 15 - capture u32 inclusive boundary passes
+    ok 16 - capture u32 boundary plus one rejects
+    ok 17 - umask bits inclusive boundary passes
+    ok 18 - umask bits boundary plus one rejects
+    ok 19 - monotonic u64 inclusive boundary passes
+    ok 20 - monotonic u64 boundary plus one rejects
+    ok 21 - full binary stream chunk passes
+    ok 22 - stream chunk boundary plus one rejects
+    ok 23 - rejection diagnostic boundary passes
+    ok 24 - diagnostic boundary plus one rejects
+    ok 25 - argv malformed value rejects
+    ok 26 - argv malformed value rejects
+    ok 27 - argv malformed value rejects
+    ok 28 - argv malformed value rejects
+    ok 29 - schema malformed value rejects
+    ok 30 - stage malformed value rejects
+    ok 31 - containment malformed value rejects
+    ok 32 - environment malformed value rejects
+    ok 33 - environment malformed value rejects
+    ok 34 - environment malformed value rejects
+    ok 35 - environment malformed value rejects
+    ok 36 - environment malformed value rejects
+    ok 37 - environment malformed value rejects
+    ok 38 - environment malformed value rejects
+    ok 39 - environment malformed value rejects
+    ok 40 - cwd malformed value rejects
+    ok 41 - cwd malformed value rejects
+    ok 42 - cwd malformed value rejects
+    ok 43 - cwd malformed value rejects
+    ok 44 - cwd malformed value rejects
+    ok 45 - cwd malformed value rejects
+    ok 46 - timeout_seconds malformed value rejects
+    ok 47 - timeout_seconds malformed value rejects
+    ok 48 - started_ns malformed value rejects
+    ok 49 - started_ns malformed value rejects
+    ok 50 - started_ns malformed value rejects
+    ok 51 - environment key collisions after byte conversion reject
+    ok 52 - argv and environment share one aggregate budget
+    ok 53 - stream bytes never pass through argv text conversion
+    ok 54 - raw duplicate environment keys reject at the receiver
+    ok 55 - context has independently constructed canonical bytes
+    ok 56 - context syntax decodes exactly
+    ok 57 - endpoint boundary is independently constructed
+    ok 58 - maximum endpoint and job ID pass
+    ok 59 - context rejects invalid directory
+    ok 60 - context rejects invalid directory
+    ok 61 - context rejects invalid directory
+    ok 62 - context rejects invalid directory
+    ok 63 - context rejects invalid run
+    ok 64 - context rejects invalid token
+    ok 65 - context rejects invalid parent
+    ok 66 - context rejects invalid parent
+    ok 67 - invalid inherited context has no fallback admission
+    ok 68 - invalid inherited context has no fallback admission
+    ok 69 - invalid inherited context has no fallback admission
+    ok 70 - invalid inherited context has no fallback admission
+    ok 71 - invalid inherited context has no fallback admission
+    ok 72 - invalid inherited context has no fallback admission
+    ok 73 - invalid inherited context has no fallback admission
+    ok 74 - invalid inherited context has no fallback admission
+    ok 75 - selected finite limits are defensive and cannot be widened by callers
+    1..75
+ok 14 - wire snapshot, scalar, vector and context limits have boundary controls
+# Subtest: snapshot bytes match the existing direct exec and preserve caller context
+    ok 1 - independent original exec returns successfully
+    ok 2 - snapshot does not mutate caller environment
+    ok 3 - snapshot leaves caller cwd unchanged
+    ok 4 - snapshot observes umask without changing it
+    ok 5 - snapshot does not change caller scalar flags
+    ok 6 - live environment count rejects before snapshot construction
+    ok 7 - live environment byte sum rejects while accumulating the snapshot
+    ok 8 - snapshot rejects a nonexistent cwd
+    ok 9 - failed snapshot admission leaves the environment unchanged
+    ok 10 - decoded argv contains only byte strings
+    ok 11 - transported bytes execute successfully
+    ok 12 - kernel exec observes identical argv, environment presence/values and umask
+    ok 13 - independent literal byte oracle distinguishes bytes from flagged text
+    ok 14 - live ENV magic already converts low flagged text differently from argv
+    ok 15 - wide environment text reaches exec as encoded bytes
+    ok 16 - empty value is present
+    ok 17 - absent value stays absent
+    ok 18 - deliberately wrong conversion still executes normally
+    ok 19 - direct-exec comparison rejects double encoding
+    ok 20 - each independent exec leaves its group and child closed
+    ok 21 - each independent exec leaves its group and child closed
+    ok 22 - each independent exec leaves its group and child closed
+    ok 23 - actual producer result has independent RESULT framing
+    ok 24 - actual producer result retains its complete closed metadata
+    ok 25 - receiver rejects inconsistent or malformed terminal metadata
+    ok 26 - receiver rejects inconsistent or malformed terminal metadata
+    ok 27 - receiver rejects inconsistent or malformed terminal metadata
+    ok 28 - receiver rejects inconsistent or malformed terminal metadata
+    ok 29 - receiver rejects inconsistent or malformed terminal metadata
+    ok 30 - receiver rejects inconsistent or malformed terminal metadata
+    ok 31 - receiver rejects inconsistent or malformed terminal metadata
+    ok 32 - receiver rejects inconsistent or malformed terminal metadata
+    ok 33 - receiver rejects inconsistent or malformed terminal metadata
+    ok 34 - receiver rejects inconsistent or malformed terminal metadata
+    ok 35 - receiver rejects inconsistent or malformed terminal metadata
+    ok 36 - receiver rejects inconsistent or malformed terminal metadata
+    ok 37 - receiver rejects whitespace and duplicate JSON keys
+    ok 38 - receiver rejects whitespace and duplicate JSON keys
+    1..38
+ok 15 - snapshot bytes match the existing direct exec and preserve caller context
+1..15

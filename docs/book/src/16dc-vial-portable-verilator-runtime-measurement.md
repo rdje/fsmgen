@@ -1665,6 +1665,18 @@ inferred from the pinned builder and observed host inputs; SDK contents are
 not fully censused, and unobserved producer images or births remain unknown.
 There is no authenticated capture or collector in this functional qualification.
 
+The admitted original failed. Rust proxy resolution timed out with empty
+streams; legacy controls also missed their main-entry witnesses. The architecture
+guard exposed a concrete integration omission: its explicit adapter list did
+not yet include `RustProxyFixture`. That registration needs correction before
+the integrated test can qualify. The original was reaped, input and observed
+selection pins stayed unchanged, and checked fixture directories were empty.
+Complete failed TAP, diagnostics and independent audit are retained with the
+frozen admission. No retry was performed. Producer implementation was inferred
+by admission, so these results do not prove a native-image startup cause or
+repair the historical delay. The next owned work fixes the adapter registration
+and resolves the remaining observation gaps.
+
 Shared evidence publication now anchors file creation, linking and temporary
 cleanup to open directory descriptors. A controlled directory-replacement test
 exposed an earlier writer returning the expected digest for replacement bytes;

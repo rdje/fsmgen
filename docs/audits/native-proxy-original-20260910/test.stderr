@@ -1,0 +1,76 @@
+    #   Failed test 'proxy_nonzero preserves failure class'
+    #   at t/1669-task-acceptance-fixture-runtime.t line 793.
+    #          got: 'timed_out'
+    #     expected: 'nonzero_exit'
+    # Rust tool-resolution result: {"adapter":{"failure_stage":"tool_resolution","ok":0,"schema":"fsmgen.test.rust_parity_result.v1","schema_version":1,"stages":[{"capture_limit_bytes":1048576,"cleanup":{"containment":"rust_parity_process_group","group_gone":1,"kill_sent":0,"leader_reaped":1,"leader_started":1,"surviving_descendants":0,"term_sent":1},"diagnostic":"supervised process exceeded its fixed deadline","exec_error":null,"exec_failed":0,"exec_handoff_monotonic_ns":382112758932000,"exec_to_first_output_ns":null,"execution_ns":10029850000,"exit_code":null,"finished_monotonic_ns":382122788782000,"first_output_monotonic_ns":null,"first_output_to_exit_ns":null,"ok":0,"output_limited":0,"schema":"fsmgen.test.rust_parity_stage.v1","schema_version":1,"signal":15,"spawn_to_exec_ns":1336000,"stage":"tool_resolution","started_monotonic_ns":382112757596000,"status":"timed_out","stderr":"","stderr_bytes":0,"stdout":"","stdout_bytes":0,"timed_out":1,"timeout_seconds":10}],"status":"timed_out"},"mode":"proxy_nonzero","outer":{"capture_limit_bytes":65536,"cleanup":{"containment":"rust_tool_resolution_probe_group","group_gone":1,"kill_sent":0,"leader_reaped":1,"leader_started":1,"surviving_descendants":0,"term_sent":0},"diagnostic":"supervised process completed successfully","exec_error":null,"exec_failed":0,"exec_handoff_monotonic_ns":382112730719000,"exec_to_first_output_ns":10062578000,"execution_ns":10125117000,"exit_code":0,"finished_monotonic_ns":382122855836000,"first_output_monotonic_ns":382122793297000,"first_output_to_exit_ns":62539000,"ok":1,"output_limited":0,"schema":"fsmgen.test.rust_tool_resolution_probe.v1","schema_version":1,"signal":0,"spawn_to_exec_ns":1599000,"stage":"probe","started_monotonic_ns":382112729120000,"status":"success","stderr":"","stderr_bytes":0,"stdout":"{\"ok\":0,\"stages\":[{\"schema\":\"fsmgen.test.rust_parity_stage.v1\",\"exit_code\":null,\"exec_error\":null,\"first_output_monotonic_ns\":null,\"spawn_to_exec_ns\":1336000,\"stdout_bytes\":0,\"stage\":\"tool_resolution\",\"exec_handoff_monotonic_ns\":382112758932000,\"stderr_bytes\":0,\"finished_monotonic_ns\":382122788782000,\"exec_to_first_output_ns\":null,\"ok\":0,\"schema_version\":1,\"status\":\"timed_out\",\"capture_limit_bytes\":1048576,\"stderr\":\"\",\"output_limited\":0,\"first_output_to_exit_ns\":null,\"timed_out\":1,\"diagnostic\":\"supervised process exceeded its fixed deadline\",\"stdout\":\"\",\"timeout_seconds\":10,\"cleanup\":{\"containment\":\"rust_parity_process_group\",\"surviving_descendants\":0,\"group_gone\":1,\"leader_started\":1,\"kill_sent\":0,\"leader_reaped\":1,\"term_sent\":1},\"execution_ns\":10029850000,\"signal\":15,\"started_monotonic_ns\":382112757596000,\"exec_failed\":0}],\"schema\":\"fsmgen.test.rust_parity_result.v1\",\"failure_stage\":\"tool_resolution\",\"status\":\"timed_out\",\"schema_version\":1}","stdout_bytes":956,"timed_out":0,"timeout_seconds":20}}
+    #   Failed test 'proxy_decoy has exact stage attribution'
+    #   at t/1669-task-acceptance-fixture-runtime.t line 792.
+    #          got: 'tool_resolution'
+    #     expected: 'tool_admission'
+    #   Failed test 'proxy_decoy preserves failure class'
+    #   at t/1669-task-acceptance-fixture-runtime.t line 793.
+    #          got: 'timed_out'
+    #     expected: 'invocation_error'
+    # Rust tool-resolution result: {"adapter":{"failure_stage":"tool_resolution","ok":0,"schema":"fsmgen.test.rust_parity_result.v1","schema_version":1,"stages":[{"capture_limit_bytes":1048576,"cleanup":{"containment":"rust_parity_process_group","group_gone":1,"kill_sent":0,"leader_reaped":1,"leader_started":1,"surviving_descendants":0,"term_sent":1},"diagnostic":"supervised process exceeded its fixed deadline","exec_error":null,"exec_failed":0,"exec_handoff_monotonic_ns":382123003808000,"exec_to_first_output_ns":null,"execution_ns":10030823000,"exit_code":null,"finished_monotonic_ns":382133034631000,"first_output_monotonic_ns":null,"first_output_to_exit_ns":null,"ok":0,"output_limited":0,"schema":"fsmgen.test.rust_parity_stage.v1","schema_version":1,"signal":15,"spawn_to_exec_ns":1184000,"stage":"tool_resolution","started_monotonic_ns":382123002624000,"status":"timed_out","stderr":"","stderr_bytes":0,"stdout":"","stdout_bytes":0,"timed_out":1,"timeout_seconds":10}],"status":"timed_out"},"mode":"proxy_decoy","outer":{"capture_limit_bytes":65536,"cleanup":{"containment":"rust_tool_resolution_probe_group","group_gone":1,"kill_sent":0,"leader_reaped":1,"leader_started":1,"surviving_descendants":0,"term_sent":0},"diagnostic":"supervised process completed successfully","exec_error":null,"exec_failed":0,"exec_handoff_monotonic_ns":382122979209000,"exec_to_first_output_ns":10061057000,"execution_ns":10115715000,"exit_code":0,"finished_monotonic_ns":382133094924000,"first_output_monotonic_ns":382133040266000,"first_output_to_exit_ns":54658000,"ok":1,"output_limited":0,"schema":"fsmgen.test.rust_tool_resolution_probe.v1","schema_version":1,"signal":0,"spawn_to_exec_ns":1513000,"stage":"probe","started_monotonic_ns":382122977696000,"status":"success","stderr":"","stderr_bytes":0,"stdout":"{\"schema_version\":1,\"failure_stage\":\"tool_resolution\",\"stages\":[{\"capture_limit_bytes\":1048576,\"stdout_bytes\":0,\"finished_monotonic_ns\":382133034631000,\"execution_ns\":10030823000,\"first_output_monotonic_ns\":null,\"spawn_to_exec_ns\":1184000,\"timeout_seconds\":10,\"exec_to_first_output_ns\":null,\"started_monotonic_ns\":382123002624000,\"exec_failed\":0,\"stderr_bytes\":0,\"diagnostic\":\"supervised process exceeded its fixed deadline\",\"schema\":\"fsmgen.test.rust_parity_stage.v1\",\"output_limited\":0,\"stderr\":\"\",\"status\":\"timed_out\",\"first_output_to_exit_ns\":null,\"cleanup\":{\"kill_sent\":0,\"term_sent\":1,\"containment\":\"rust_parity_process_group\",\"group_gone\":1,\"leader_reaped\":1,\"leader_started\":1,\"surviving_descendants\":0},\"timed_out\":1,\"schema_version\":1,\"ok\":0,\"exec_error\":null,\"exit_code\":null,\"stdout\":\"\",\"stage\":\"tool_resolution\",\"exec_handoff_monotonic_ns\":382123003808000,\"signal\":15}],\"status\":\"timed_out\",\"ok\":0,\"schema\":\"fsmgen.test.rust_parity_result.v1\"}","stdout_bytes":956,"timed_out":0,"timeout_seconds":20}}
+    # Looks like you failed 3 tests of 26.
+#   Failed test 'Rust parity rejects unresolved and misleading tool identities before building'
+#   at t/1669-task-acceptance-fixture-runtime.t line 803.
+    #   Failed test 'signal producer independently records main entry'
+    #   at t/1669-task-acceptance-fixture-runtime.t line 882.
+    # Legacy main-entry result: {"fixture":{"path":".artifacts/tmp/process-supervisor-tests/fsmgen-ktAgYwX3/legacy-ram-signal","sha256":"8caf63fc056a85bbc38becbebbff16c85578fe817d8ffb06b8742ebbce2d1a7a","size_bytes":507},"marker":{"content":null,"path":".artifacts/tmp/process-supervisor-tests/fsmgen-ktAgYwX3/legacy-ram-signal-progress","regular_file":0},"mode":"signal","result":{"capture_limit_bytes":65536,"cleanup":{"containment":"legacy_ram_capture_probe_group","group_gone":1,"kill_sent":0,"leader_reaped":1,"leader_started":1,"surviving_descendants":0,"term_sent":1},"diagnostic":"supervised process exceeded its fixed deadline","exec_error":null,"exec_failed":0,"exec_handoff_monotonic_ns":382133106247000,"exec_to_first_output_ns":null,"execution_ns":5031312000,"exit_code":null,"finished_monotonic_ns":382138137559000,"first_output_monotonic_ns":null,"first_output_to_exit_ns":null,"ok":0,"output_limited":0,"schema":"fsmgen.test.legacy_ram_capture_probe.v1","schema_version":1,"signal":15,"spawn_to_exec_ns":3250000,"stage":"legacy_capture","started_monotonic_ns":382133102997000,"status":"timed_out","stderr":"","stderr_bytes":0,"stdout":"","stdout_bytes":0,"timed_out":1,"timeout_seconds":5}}
+    #   Failed test 'old capture wrapper returns despite its signalled child'
+    #   at t/1669-task-acceptance-fixture-runtime.t line 897.
+    # {
+    #   'capture_limit_bytes' => 65536,
+    #   'cleanup' => {
+    #     'containment' => 'legacy_ram_capture_probe_group',
+    #     'group_gone' => 1,
+    #     'kill_sent' => 0,
+    #     'leader_reaped' => 1,
+    #     'leader_started' => 1,
+    #     'surviving_descendants' => 0,
+    #     'term_sent' => 1
+    #   },
+    #   'diagnostic' => 'supervised process exceeded its fixed deadline',
+    #   'exec_error' => undef,
+    #   'exec_failed' => 0,
+    #   'exec_handoff_monotonic_ns' => '382133106247000',
+    #   'exec_to_first_output_ns' => undef,
+    #   'execution_ns' => 5031312000,
+    #   'exit_code' => undef,
+    #   'finished_monotonic_ns' => '382138137559000',
+    #   'first_output_monotonic_ns' => undef,
+    #   'first_output_to_exit_ns' => undef,
+    #   'ok' => 0,
+    #   'output_limited' => 0,
+    #   'schema' => 'fsmgen.test.legacy_ram_capture_probe.v1',
+    #   'schema_version' => 1,
+    #   'signal' => 15,
+    #   'spawn_to_exec_ns' => 3250000,
+    #   'stage' => 'legacy_capture',
+    #   'started_monotonic_ns' => '382133102997000',
+    #   'status' => 'timed_out',
+    #   'stderr' => '',
+    #   'stderr_bytes' => 0,
+    #   'stdout' => '',
+    #   'stdout_bytes' => 0,
+    #   'timed_out' => 1,
+    #   'timeout_seconds' => 5
+    # }
+    #   Failed test 'old wrapper retains its independently observed wait status in the probe'
+    #   at t/1669-task-acceptance-fixture-runtime.t line 899.
+    #   Failed test 'streams producer independently records main entry'
+    #   at t/1669-task-acceptance-fixture-runtime.t line 882.
+    # Legacy main-entry result: {"fixture":{"path":".artifacts/tmp/process-supervisor-tests/fsmgen-ktAgYwX3/legacy-ram-streams","sha256":"eb5a6c2d42408454e26ee87602b15aab099954b68829fae470d67b4e8f45b004","size_bytes":622},"marker":{"content":null,"path":".artifacts/tmp/process-supervisor-tests/fsmgen-ktAgYwX3/legacy-ram-streams-progress","regular_file":0},"mode":"streams","result":{"capture_limit_bytes":65536,"cleanup":{"containment":"legacy_ram_capture_probe_group","group_gone":1,"kill_sent":0,"leader_reaped":1,"leader_started":1,"surviving_descendants":0,"term_sent":1},"diagnostic":"supervised process exceeded its fixed deadline","exec_error":null,"exec_failed":0,"exec_handoff_monotonic_ns":382138156632000,"exec_to_first_output_ns":null,"execution_ns":5024607000,"exit_code":null,"finished_monotonic_ns":382143181239000,"first_output_monotonic_ns":null,"first_output_to_exit_ns":null,"ok":0,"output_limited":0,"schema":"fsmgen.test.legacy_ram_capture_probe.v1","schema_version":1,"signal":15,"spawn_to_exec_ns":3443000,"stage":"legacy_capture","started_monotonic_ns":382138153189000,"status":"timed_out","stderr":"","stderr_bytes":0,"stdout":"","stdout_bytes":0,"timed_out":1,"timeout_seconds":5}}
+    # Looks like you failed 4 tests of 7.
+#   Failed test 'legacy RAM-guard capture controls expose signal loss and blocked streams'
+#   at t/1669-task-acceptance-fixture-runtime.t line 913.
+    #   Failed test 'only sealed policy adapters call the low-level supervisor'
+    #   at t/1669-task-acceptance-fixture-runtime.t line 993.
+    #     Structures begin differing at:
+    #          $got->[2] = 't/lib/FSM/Test/RustProxyFixture.pm'
+    #     $expected->[2] = 't/lib/FSM/Test/TaskAcceptanceFixtureRuntime.pm'
+    # Looks like you failed 1 test of 16.
+#   Failed test 'policy adapters exclusively own low-level test supervision'
+#   at t/1669-task-acceptance-fixture-runtime.t line 1014.
+# Looks like you failed 3 tests of 15.

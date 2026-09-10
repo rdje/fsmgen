@@ -1,0 +1,39 @@
+{
+  "errors": [],
+  "finished_monotonic_ns": 382150046279000,
+  "fixture_census_after": {
+    ".artifacts/build/rust-parity": {},
+    ".artifacts/tmp/process-supervisor-tests": {},
+    ".artifacts/tmp/task-acceptance-tests": {}
+  },
+  "host_isolation": "not_proved",
+  "input_bytes_unchanged": true,
+  "new_fixture_entries": {
+    ".artifacts/build/rust-parity": [],
+    ".artifacts/tmp/process-supervisor-tests": [],
+    ".artifacts/tmp/task-acceptance-tests": []
+  },
+  "original_native_birth_absent": true,
+  "outputs": {
+    "test.stderr": {
+      "bytes": 11617,
+      "sha256": "994a1465ef33436479da3c80febf2fc5a411a1b0db2b0a49b1e37414cb954989"
+    },
+    "test.tap": {
+      "bytes": 28983,
+      "sha256": "37d00d79bcf3efa09884d479e0ed13e433d52e0be3adc9d2fa45ab0fccbc2d03"
+    }
+  },
+  "result": {
+    "leader_reaped": true,
+    "native_wait_status": 768,
+    "pid": 7409,
+    "released": true,
+    "returncode": 3,
+    "timeout": false,
+    "unobserved_descendants": "unknown"
+  },
+  "selection_context_unchanged": true,
+  "started_monotonic_ns": 382109009612666,
+  "unobserved_descendants": "unknown"
+}
