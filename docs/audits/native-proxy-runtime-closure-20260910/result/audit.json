@@ -1,0 +1,85 @@
+{
+  "assertions": 149,
+  "cases": 37,
+  "cuts": 35,
+  "falsifiers": [
+    "incomplete run",
+    "omitted cut",
+    "changed prior owner",
+    "returned after interruption",
+    "missing partial bytes",
+    "premature executable permission",
+    "lost global retention",
+    "rewritten reuse source",
+    "altered transition prefix",
+    "missing allocation"
+  ],
+  "inputs": [
+    {
+      "path": "docs/audits/native-proxy-runtime-closure-20260910/plan.json",
+      "sha256": "57b2ee88816d6736a5cecd6ddebc63e0a2ba768554720676f5beef16483b6204",
+      "size_bytes": 22406
+    },
+    {
+      "path": "docs/audits/native-proxy-runtime-closure-20260910/qualify.t",
+      "sha256": "f5d8df54999cadff56e7dc97f5d1c5fba2b67532c01e92ec96134fd2096a4ca9",
+      "size_bytes": 10365
+    },
+    {
+      "path": ".artifacts/logs/native-proxy-runtime-closure-20260910/qualification.json",
+      "sha256": "4735a73c6e8ff183da294809c37befda392eefa4219a1934cc489c776ccac732",
+      "size_bytes": 468737
+    },
+    {
+      "path": ".artifacts/logs/native-proxy-runtime-closure-20260910/qualify.tap",
+      "sha256": "ca1ba7cfe41fa662946a799ae300ad90744e7f05b94fda43b32ba1e76be3bece",
+      "size_bytes": 8131
+    },
+    {
+      "path": ".artifacts/logs/native-proxy-runtime-closure-20260910/admission.jsonl",
+      "sha256": "facf5be0e3443414c8b706d6ea35f5fe0f874bdc26e25a3ff23d70818a4ac7c2",
+      "size_bytes": 13579
+    },
+    {
+      "path": ".artifacts/logs/native-proxy-runtime-closure-20260910/initial-compile.tap",
+      "sha256": "4bb761f3bb84ad310d17af486bb8135e1a58f10bc603e5afe3a2c0f54e302ddd",
+      "size_bytes": 297
+    },
+    {
+      "path": ".artifacts/logs/native-proxy-runtime-closure-20260910/initial-compile.t.source",
+      "sha256": "b1ad90fa18fd4b2d847a77eff0bed2470e43a9ddb1ad0b2826f0a80dcfbd1fb4",
+      "size_bytes": 10357
+    },
+    {
+      "path": ".artifacts/logs/native-proxy-runtime-closure-20260910/acquisition-regression.json",
+      "sha256": "4aef7d8ae8073497b5ddc4d6eafea263a7aa594fe29b606a1ddcadc7ccf7d7d4",
+      "size_bytes": 86400
+    },
+    {
+      "path": ".artifacts/logs/native-proxy-runtime-closure-20260910/acquisition-regression.tap",
+      "sha256": "a54392a6a183c8c7dac269fb00d9e576ab502e4c20582fcff23788cf9043a65d",
+      "size_bytes": 3637
+    },
+    {
+      "path": ".artifacts/logs/native-proxy-runtime-closure-20260910/acquisition-regression-admission.jsonl",
+      "sha256": "d34ea777fd95a595c012eb8e7488531dfa43be0428338aaa67197e00ea659967",
+      "size_bytes": 10276
+    }
+  ],
+  "limits": [
+    "Fixed deterministic cuts over inert filesystem publication/acquisition, not actual process crashes or power-loss durability.",
+    "Every cut preserves an earlier complete owner and withholds a returned acquisition result.",
+    "Partial executable writes remain nonexecutable; complete post-seal files can remain without runtime authority.",
+    "No compiler/native/original/collector or actual contention worker is launched.",
+    "Observer lifetime, retirement, maintenance, actual coordination workers and native behavior remain unqualified."
+  ],
+  "partial_write_cuts": 7,
+  "regression_assertions": 79,
+  "regression_stores": 28,
+  "regression_workspaces": 56,
+  "retired_stores": 37,
+  "retired_workspaces": 74,
+  "schema": "fsmgen.inactive_publication_reference_cut_audit.v1",
+  "success": true,
+  "successful_routes": 2
+}

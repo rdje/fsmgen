@@ -87,11 +87,11 @@ without retry; original fixture assertions pass.
 T1545 controls: historical card; absent witnesses stay unknown.
 Env/direct Perl handoff timeouts refute a shebang-only cure. HIAL/VIAL `.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2` owns startup cause; `.3.3–7` own authenticated kernel capture. Sampling/authentication/STOP limits: task/book/history.
 T1669 roots: `.artifacts/tmp/process-supervisor-tests/`. ps requires native presence; only disappearance skips. Permission/query/identity errors fail. Exit-race controls do not explain the historical changed field (.3.2.11).
-History: `6d87fd64c4ab4abcecee0d1ad8f8259350719e53:docs/knowledge/test-subprocess-policy-adapters.md`.
+History: `87c11cddfbb5ab6567b6f8777fac3dc426c10256:docs/knowledge/test-subprocess-policy-adapters.md`.
 PST parsing normalizes 1–16 lowercase hex digits; malformed fields and contradictions reject.
 .15.7.3 supports serial queue contention; client/frame joins and startup repair stay open. Native integration supplies pre-runtime receipts, ancestry/C custody, owned retirement and passive daemon capture. Counterexamples: history; loaded bytes unproved.
 Fixed CLI .15.7.2.4 binds archive index/digest and journal anchors; calibration/reserve/file checks preserve first failure, stop, distinct outcomes and ownership. F_CHECK_LV cause (.15.2) and worker/delivery remain unknown; queue/provenance coexist (.15.4). Opt-in violations: .15.5.1.2.2–3.
-Inactive .12.4.1 qualifies keys, coordination and publication custody. Birth fields require count/membership after the merged-name defect (.12.4.1.2.2.2.1.1). Runtime codec .1.2 checks closed typed canonical records, workspace keys and ordered paths; historical IDs grant no current custody or release. Census .2.1 retains stale owners after filename/content joins. Acquisition .2.2 writes global before private, checks original inodes and prior holds; execution/lifetimes remain unqualified.
+Inactive .12.4.1: keys/coordination/publication custody. Birth-field membership/count fixes merged keys (.12.4.1.2.2.2.1.1). Codec .1.2 checks closed typed records, canonical bytes, workspace keys and source order; historical IDs grant no custody/release. Census .2.1 checks filename/content joins and retains stale owners. Acquisition .2.2 checks global-before-private copies, original inodes and prior holds. Matrix .3 checks cuts and prior retention. Execution/lifetimes remain open.
 Caller-sealed test wrappers use tail goto to preserve caller.
 Replay: `scripts/run_with_ram_guard.sh -- python3 -B -m unittest discover -s t/python -p 'test_fixture_policy_archive*.py'`.
 T1595 pre-main cause open; `.19.2.3.1.2.2.6.2` fixes capture.

@@ -1,0 +1,63 @@
+{
+  "durability": "Source, fixed plan, independent oracle/review and exact initial/final/regression results are tracked. Each allocated root is logged before further fixture work, and case results are saved before and after retirement; the harness stops at the first unexpected result. Both prior acquisition JSON and its allocation ledger are restored exactly after the new regression copies are retained.",
+  "falsification": "Each injected cut must return exactly its first expected exception with no acquisition result, while preserving an earlier complete owner. Partial syswrite controls physically write the selected prefix before interruption. Independent altered-result controls reject missing cuts, changed old owners, returned failure results, wrong partial bytes, premature execute permission, lost global pins, changed reuse inodes, bad traces and missing allocations.",
+  "initial_compile_failure": "The first harness failed compilation because a quoted-string/fat-comma map body was parsed ambiguously. Parenthesizing the returned pair disambiguates it. Exact failed source/TAP are retained; no matrix fixture setup executed in that aborted compilation. No prototype change was needed.",
+  "limits": [
+    "All payloads and ownership records are inert fixtures, never real compiler attestations or product runtime leases.",
+    "Deterministic exceptions and partial writes qualify observable filesystem failure states; they do not claim actual process-crash or power-loss durability.",
+    "An executable cut before sealing retains nonexecutable partial bytes. Complete sealed files can remain after later failure without granting runtime authority.",
+    "No prototype or product source changes in this slice. The existing omitted-guard controls remain in the passing acquisition regression.",
+    "Observation lifetime, runtime retirement, maintenance, actual cross-language contention, native behavior and historical startup repair remain separately unqualified."
+  ],
+  "owner": "HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.12.4.1.2.2.3",
+  "rederive": "A deterministic Python plan fixes fresh/reuse write and seal cuts before the harness runs. Independent bounded no-follow descriptor probes capture physical bytes, modes, links, UID, native identity and digests. The Python oracle reconstructs actual image framing, manifests, complete references, partial prefixes, transition traces, prior-owner invariance and returned snapshots from those probes and the allocation ledger.",
+  "schema": "fsmgen.inactive_publication_reference_cut_review.v1",
+  "source_revision": "87c11cddfbb5ab6567b6f8777fac3dc426c10256",
+  "unchanged_inputs": [
+    {
+      "path": "docs/audits/native-proxy-image-custody-20260910/ImageCustody.pm",
+      "sha256": "7f9db38e47140fedd39a80d7a6fbf1ee111f56f290a463729b516b08aae90d4f",
+      "size_bytes": 8021
+    },
+    {
+      "path": "docs/audits/native-proxy-image-coordination-20260910/Coordination.pm",
+      "sha256": "8a8c0b0e76655b1991d1a91b893c5a4ce6abca418c89836245188bf4a0ab0cd9",
+      "size_bytes": 10186
+    },
+    {
+      "path": "docs/audits/native-proxy-image-publication-20260910/Publication.pm",
+      "sha256": "dc50ca598632572616d7da65fa6f1b417a20e7207dafa5fe03fd5d887382fab6",
+      "size_bytes": 5367
+    },
+    {
+      "path": "docs/audits/native-proxy-runtime-records-20260910/RuntimeRecord.pm",
+      "sha256": "013c0a02e7df59dc3a5af944b603cd44121252a02ca0228d6fdc3e1dd28e6745",
+      "size_bytes": 4078
+    },
+    {
+      "path": "docs/audits/native-proxy-runtime-census-20260910/ReferenceCensus.pm",
+      "sha256": "a1d2ebbe12e5219cf4b10aba701708a266a5aa9c342de0f06a053f2bd977e91b",
+      "size_bytes": 6246
+    },
+    {
+      "path": "docs/audits/native-proxy-runtime-acquisition-20260910/ReferenceAcquisition.pm",
+      "sha256": "b751c88d709e102f7f9b9dd17e0222c39e0a81acc16d7194f7f7c3f4c8535b57",
+      "size_bytes": 6565
+    },
+    {
+      "path": "docs/audits/native-proxy-runtime-acquisition-20260910/qualify.t",
+      "sha256": "9aff78c5e58d63c2bdce64587beb73127bc070e9127d5f45826f8e546cb2343a",
+      "size_bytes": 18708
+    },
+    {
+      "path": "t/lib/FSM/Test/RustProxyFixture.pm",
+      "sha256": "d9c4ab52cf8074526c59b7a5dcb9da870ca7ffdacb4eb236dacb23b5db6d8bfb",
+      "size_bytes": 11466
+    },
+    {
+      "path": "perl/FSM/Support/ProcessSupervisor.pm",
+      "sha256": "684882d91f673ea7145f43ed3aad31acf099f13508574be7b2d8911123988637",
+      "size_bytes": 27990
+    }
+  ]
+}

@@ -2719,10 +2719,10 @@ decomposes the architecture needed to move beyond that bounded foundation.
   Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.12.4.1.2.1: qualify inactive lock identity and bounded namespace census`
 
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.12.4.1.2.2`
-  Status: `active`
+  Status: `done`
   Goal: `Qualify canonical publication and runtime-reference acquisition.`
   Acceptance: `Use the qualified coordination/custody primitives for direct canonical creation, exact compiled-byte equality, closed global/private runtime references and conservative partial state. Exercise every write/seal/publication/reference boundary and exact capacity with inert owners; preserve first failure, no fallback, no executable rename/hard links and no product activation.`
-  Verification: `Coordination 502006787cb326c8931b914b100a42d35c8f153b committed; tree clean and brief zero. Split image publication, runtime-reference acquisition and combined boundary closure into independently committed inactive leaves. No compiler, native fixture, original, collector or contention worker is authorized.`
+  Verification: `Publication and runtime-reference acquisition are committed through 87c11cddfbb5ab6567b6f8777fac3dc426c10256. Child .3 independently closes the deterministic fresh/reuse write/seal and partial-write matrix with exact preserved prior owners and cleanup. This closes inactive publication/reference failure states only; retirement/maintenance, observation lifetime, real contention and native behavior remain separately open.`
   Children: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.12.4.1.2.2.1, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.12.4.1.2.2.2, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.12.4.1.2.2.3`
 
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.12.4.1.2.2.1`
@@ -2773,11 +2773,11 @@ decomposes the architecture needed to move beyond that bounded foundation.
   Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.12.4.1.2.2.2.2.2: qualify global-before-private reference acquisition`
 
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.12.4.1.2.2.3`
-  Status: `proposed`
+  Status: `done`
   Goal: `Independently close publication/reference interruption and capacity boundaries.`
   Acceptance: `Re-derive the combined inactive transaction and test each source/manifest/seal/global/private transition, first-failure retention and complete byte equality. Reject omitted custody/identity/closure checks and preserve unqualified observer, maintenance and actual-contention legs. Commit before retirement/maintenance; no compiler/native/original/collector or unadmitted worker.`
-  Verification: `pending`
-  Commit: `pending`
+  Verification: `Independent plan.json fixes fresh-image and exact-reuse cuts before/after each payload write and seal, plus physically partial writes. Every case first seeds a complete earlier owner; bounded no-follow descriptor probes capture target and prior physical bytes, modes, link count, UID, native identities and digests after the cut. The harness retains each result before/after exact cleanup and stops on its first unexpected outcome. Re-derivation: 37 cases comprise 35 interrupted paths and two complete routes, including seven actual eight-byte partial-write cuts. All 149 TAP assertions pass. The independent Python oracle reconstructs exact image framing, manifests, full references and partial prefixes, validates transition prefixes and returned source identities, and proves all prior owner snapshots unchanged. Partial executable writes remain 0400; post-seal complete files can remain 0500 after a later failure but no interrupted call returns an acquisition result. Falsification: ten altered results reject incomplete coverage, lost prior owners or globals, returned failures, wrong partial bytes, premature execute permission, changed reuse inodes, wrong traces and missing allocations. The unchanged acquisition regression passes 79 assertions including its existing omitted workspace/sealed-inode guards. The matrix ledger accounts for all 111 allocated roots: 37 stores and 74 workspaces; all are independently absent, as are the disjoint regression 28 stores and 56 workspaces. Compiler/process attempts are zero in completed runs. The first harness failed compilation at an ambiguous quoted-string/fat-comma map body; parenthesizing the pair fixes parsing before any matrix fixture setup. Exact failed source/TAP remain retained. Durability: docs/audits/native-proxy-runtime-closure-20260910 retains the fixed plan, harness, independent audit/review, allocation ledger and exact initial/final/regression copies. result/audit.json is 3367 bytes SHA-256 2ae923f5d8d37261eec45c1498389f01b62fd1b7739ed49e06bd062bf993c77a; result/qualification.json is 468737 bytes SHA-256 4735a73c6e8ff183da294809c37befda392eefa4219a1934cc489c776ccac732. Nine prototype/harness/product pins match 87c11cddfbb5ab6567b6f8777fac3dc426c10256. Both prior acquisition JSON and its ledger are restored exactly after new regression copies are retained. Completed acquisition acceptance history remains exact-version recoverable within existing bounds. No prototype or product implementation changes. These deterministic filesystem cuts do not claim actual process-crash or power-loss durability, loaded-image attestation or runtime authorization. Retirement/maintenance, observation lifetimes, actual contention, native behavior and historical startup repair remain separately open. Book rendering, knowledge-map synchronization and staged doctrines gate closure; full CI/push stay gated.`
+  Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.12.4.1.2.2.3: close deterministic publication-reference cut matrix`
 
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.12.4.1.2.3`
   Status: `proposed`
@@ -3797,7 +3797,7 @@ decomposes the architecture needed to move beyond that bounded foundation.
 
 ## Current Frontier
 
-Current frontier: .3.2.15.7.3.12.4.1.2.2.2 is qualified; .12.4.1.2.2.3 next independently closes combined publication/reference interruption boundaries. Startup/parent, full CI and push stay gated.
+Current frontier: .3.2.15.7.3.12.4.1.2.2 is qualified; .12.4.1.2.3 next owns inactive retirement and conservative maintenance. Startup/parent, full CI and push stay gated.
 
 Architecture audit `.1` is complete. Decision `0032` selects one public
 `.vial` source language, private immutable `VIALSemanticIR` and
@@ -6390,10 +6390,10 @@ Completed native-proxy feasibility through runtime-source-controls acceptance: r
 
 - Acceptance history manifest: `docs/tasks/history/HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE/acceptance-history.jsonl`
 
-The manifest binds the exact completed reference-census acceptance suffix at `6d87fd64c4ab4abcecee0d1ad8f8259350719e53`. That source preserves the earlier history pointer and versioned manifest chain; current node contracts remain authoritative.
+The manifest binds the exact completed acquisition acceptance suffix at `87c11cddfbb5ab6567b6f8777fac3dc426c10256`. That source preserves the earlier history pointer and versioned manifest chain; current node contracts remain authoritative.
 
-## Acceptance Checklist (reference acquisition .3.2.15.7.3.12.4.1.2.2.2.2.2)
+## Acceptance Checklist (combined cuts .3.2.15.7.3.12.4.1.2.2.3)
 
-- [x] **ROOT CAUSE (WHY + WHERE)** — git log -S 'sub _inspect_locked' -- docs/audits/native-proxy-runtime-census-20260910/ReferenceCensus.pm identifies 6d87fd64c4ab4abcecee0d1ad8f8259350719e53. It preserves existing runtime holds but does not acquire new global/private copies; the pinned protocol requires checked ordered publication before any preparation authority.
-- [x] **ADDRESSED (verified implementation)** — Fixed inactive acquisition admits prior workspace identity and capacity before publication, writes global before private, and closes original sealed inodes, current directories, matching records and prior holds. Independent byte/key/allocation reconstruction and omitted workspace/inode guards establish the stated boundary.
-- [x] **NO REGRESSION** — Guarded acquisition, coordination, publication and census suites plus independent TAP/byte/absence audits pass. The initial wrapper caller error and whole-namespace cleanup evidence remain retained. Book rendering, knowledge-map: OK synchronization and staged doctrines gate the slice; product source, native behavior and wider lifetime gates remain unchanged.
+- [x] **ROOT CAUSE (WHY + WHERE)** — git log -S 'sub _write_payload' -- docs/audits/native-proxy-image-publication-20260910/Publication.pm identifies 3618546c64ff0b2071b07c9822b3fbfae3605b01. Its writer is composed into the acquired reference path; isolated component checks need a combined fresh/reuse interruption matrix with direct retained-byte/mode evidence.
+- [x] **ADDRESSED (verified qualification)** — A fixed independent plan covers complete and interrupted fresh/reuse paths, including actual partial syswrite prefixes. Direct descriptor probes and independent byte/manifest/reference reconstruction verify exact failure footprints and preservation of the prior complete owner without changing prototypes.
+- [x] **NO REGRESSION** — Complete matrix and unchanged acquisition suites, independent counterfactual audits and exact ledger/absence checks pass. Book rendering, knowledge-map: OK synchronization and staged doctrines gate closure. Initial compilation failure and exact acceptance recovery remain retained; actual crashes, lifetimes and native behavior stay unqualified.

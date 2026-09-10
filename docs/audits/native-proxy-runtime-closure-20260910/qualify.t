@@ -1,0 +1,217 @@
+#!/usr/bin/env perl
+use strict;
+use warnings;
+our ($forbidden, $active_payload, $selected_cut, $selected_payload, $partial_size) = (0, undef, undef, undef, 8);
+our @trace;
+BEGIN {
+    *CORE::GLOBAL::fork = sub { ++$forbidden; die 'forbidden fork'; };
+    *CORE::GLOBAL::system = sub { ++$forbidden; die 'forbidden system'; };
+    *CORE::GLOBAL::syswrite = sub {
+        if (defined($active_payload) && defined($selected_cut) && $selected_cut eq 'partial_write'
+                && $active_payload eq $selected_payload) {
+            die 'partial-write fixture is too short' unless $_[2] > $partial_size;
+            my $written = CORE::syswrite($_[0], $_[1], $partial_size, $_[3] // 0);
+            die 'unexpected partial-write system result' unless defined($written) && $written == $partial_size;
+            event($active_payload, 'partial_write');
+            die 'selected partial-write event did not interrupt';
+        }
+        return CORE::syswrite($_[0], $_[1], $_[2], $_[3] // 0);
+    };
+}
+use FindBin;
+use lib "$FindBin::Bin/../../../perl", "$FindBin::Bin/../../../t/lib",
+    "$FindBin::Bin/../native-proxy-image-custody-20260910",
+    "$FindBin::Bin/../native-proxy-image-coordination-20260910",
+    "$FindBin::Bin/../native-proxy-image-publication-20260910",
+    "$FindBin::Bin/../native-proxy-runtime-records-20260910",
+    "$FindBin::Bin/../native-proxy-runtime-census-20260910",
+    "$FindBin::Bin/../native-proxy-runtime-acquisition-20260910";
+use Digest::SHA qw(sha256_hex);
+use Errno qw(ENOENT);
+use Fcntl qw(O_RDONLY O_NOFOLLOW O_NONBLOCK F_GETFD F_SETFD FD_CLOEXEC S_ISREG);
+use File::Spec;
+use File::Temp ();
+use JSON::PP ();
+use Test::More;
+use FSM::ProjectDataLocality qw(ensure_project_artifact_dir repository_root);
+use FSM::Test::RustProxyFixture ();
+BEGIN { *CORE::GLOBAL::exec = sub { ++$forbidden; die 'forbidden exec'; }; }
+use ReferenceAcquisition;
+
+my $root = repository_root();
+my $json = JSON::PP->new->canonical->ascii;
+my $case_parent = ensure_project_artifact_dir(qw(tmp native-proxy-image-custody cases));
+my $work_parent = ensure_project_artifact_dir(qw(tmp process-supervisor-tests));
+my $log = ensure_project_artifact_dir(qw(logs native-proxy-runtime-closure-20260910));
+my $plan = $json->decode(read_bytes("$FindBin::Bin/plan.json"));
+$partial_size = $plan->{partial_write_bytes};
+my $vectors = $json->decode(read_bytes("$FindBin::Bin/../native-proxy-image-custody-20260910/vectors.json"));
+my ($c, $image) = map { pack('H*', $_) } @$vectors{qw(generated_c_hex image_hex)};
+my $acquire = \&NativeProxyReferenceAcquisition::acquire_runtime_reference;
+my $writer = \&NativeProxyImagePublication::_write_payload;
+my $seal = \&NativeProxyImagePublication::_seal_payload;
+my (@rows, @allocated, @retired_cases, @retired_workspaces);
+no warnings 'redefine';
+local *FSM::Test::RustProxyFixture::supervise_process = sub { ++$forbidden; die 'forbidden compiler'; };
+write_bytes("$log/admission.jsonl", '');
+
+sub read_bytes {
+    open my $fh, '<:raw', $_[0] or die "read input: $!";
+    my $bytes = do { local $/; <$fh> };
+    close $fh or die "close input: $!";
+    return $bytes;
+}
+sub write_bytes {
+    open my $fh, '>:raw', $_[0] or die "write evidence: $!";
+    print {$fh} $_[1] or die "write evidence bytes: $!";
+    close $fh or die "close evidence: $!";
+}
+sub event {
+    my ($payload, $event) = @_;
+    push @trace, "$payload:$event";
+    die "injected matrix $payload:$event\n" if defined($selected_cut)
+        && $payload eq $selected_payload && $event eq $selected_cut;
+}
+sub allocation {
+    my ($kind, $path) = @_;
+    my @metadata = lstat("$root/$path");
+    my $record = {kind => $kind, path => $path, device => $metadata[0], inode => $metadata[1]};
+    open my $fh, '>>:raw', "$log/admission.jsonl" or die "admission: $!";
+    print {$fh} $json->encode($record), "\n" or die "admission bytes: $!";
+    close $fh or die "close admission: $!";
+    push @allocated, $record;
+}
+sub same_stat {
+    my ($left, $right) = @_;
+    return @$left && @$right && !grep { $left->[$_] ne $right->[$_] } (0,1,2,3,4,7,9,10);
+}
+sub probe {
+    my ($relative) = @_;
+    my $path = "$root/$relative";
+    my @named = lstat($path);
+    if (!@named) {
+        die "cannot inspect matrix path: $!" unless $! == ENOENT;
+        return undef;
+    }
+    die 'matrix payload is not a bounded regular file' unless S_ISREG($named[2]) && $named[7] <= 65_536;
+    sysopen(my $fh, $path, O_RDONLY | O_NOFOLLOW | O_NONBLOCK) or die "probe open: $!";
+    binmode($fh) or die "probe bytes: $!";
+    my $flags = fcntl($fh, F_GETFD, 0);
+    die 'probe descriptor flags unavailable' unless defined($flags);
+    fcntl($fh, F_SETFD, $flags | FD_CLOEXEC) or die "probe descriptor seal: $!";
+    my @before = stat($fh);
+    die 'matrix probe identity mismatch' unless same_stat(\@named, \@before);
+    my $bytes = '';
+    while (1) {
+        my $read = sysread($fh, my $chunk, 4096);
+        die "matrix probe read: $!" unless defined($read);
+        last unless $read;
+        $bytes .= $chunk;
+        die 'matrix probe exceeded bound' if length($bytes) > 65_536;
+    }
+    my @after = stat($fh);
+    my @current = lstat($path);
+    die 'matrix probe changed while reading' unless same_stat(\@before, \@after)
+        && same_stat(\@before, \@current) && length($bytes) == $before[7];
+    close $fh or die "probe close: $!";
+    return {path => $relative, bytes => $bytes, size_bytes => length($bytes), sha256 => sha256_hex($bytes),
+        device => $before[0], inode => $before[1], uid => $before[4], links => $before[3],
+        mode => sprintf('%04o', $before[2] & 07777)};
+}
+sub footprint {
+    my ($paths) = @_;
+    my %observed;
+    for my $kind (sort keys %$paths) {
+        my $value = probe($paths->{$kind});
+        $observed{$kind} = $value if defined($value);
+    }
+    return \%observed;
+}
+sub paths {
+    my ($case, $workspace, $key) = @_;
+    my $reference = NativeProxyImageCustody::runtime_reference_key($workspace->{path});
+    return {c => "$case/images/$key/rustup.c", manifest => "$case/images/$key/image.json",
+        executable => "$case/images/$key/rustup", global => "$case/references/$reference.json",
+        private => "$workspace->{path}/rust-tools/image-reference.json"};
+}
+sub persist {
+    my ($complete) = @_;
+    write_bytes("$log/qualification.json", $json->encode({
+        schema => 'fsmgen.inactive_publication_reference_cut_qualification.v1',
+        complete => $complete ? JSON::PP::true : JSON::PP::false,
+        success => Test::More->builder->is_passing ? JSON::PP::true : JSON::PP::false,
+        forbidden_process_attempts => $forbidden, rows => \@rows, allocated => \@allocated,
+        retired_cases => \@retired_cases, retired_workspaces => \@retired_workspaces}));
+}
+
+for my $cut (@{$plan->{rows}}) {
+    my $store = File::Temp->newdir('fsmgen-XXXXXXXX', DIR => $case_parent, CLEANUP => 1);
+    my $case = File::Spec->abs2rel("$store", $root);
+    allocation('store', $case);
+    my (@work, @identities);
+    for (1, 2) {
+        my $workspace = File::Temp->newdir('fsmgen-XXXXXXXX', DIR => $work_parent, CLEANUP => 1);
+        my $relative = File::Spec->abs2rel("$workspace", $root);
+        allocation('workspace', $relative);
+        mkdir("$workspace/rust-tools", 0700) or die $!;
+        my @metadata = stat("$workspace");
+        push @identities, {path => $relative, device => $metadata[0], inode => $metadata[1]};
+        push @work, $workspace;
+    }
+    my $seed = $acquire->($case, $identities[0], $c, $image);
+    my $prior_paths = paths($case, $identities[0], $seed->{image}{key});
+    my $prior = footprint($prior_paths);
+    my $target_image = $cut->{route} eq 'fresh' ? $image . 'matrix-new' : $image;
+    my $target_key = NativeProxyImageCustody::image_key($c, $target_image);
+    my $target_paths = paths($case, $identities[1], $target_key);
+    my %kind_for_path = map { ($root . '/' . $target_paths->{$_} => $_) } keys %$target_paths;
+    my ($result, $error);
+    {
+        local $selected_payload = $cut->{payload};
+        local $selected_cut = $cut->{cut};
+        local $active_payload;
+        local *NativeProxyImagePublication::_write_payload = sub {
+            die 'unexpected matrix payload path' unless exists($kind_for_path{$_[0]});
+            local $active_payload = $kind_for_path{$_[0]};
+            event($active_payload, 'before_write');
+            my $result = $writer->(@_);
+            event($active_payload, 'after_write');
+            return $result;
+        };
+        local *NativeProxyImagePublication::_seal_payload = sub {
+            die 'matrix seal outside payload' unless defined($active_payload);
+            event($active_payload, 'before_seal');
+            my $result = $seal->(@_);
+            event($active_payload, 'after_seal');
+            return $result;
+        };
+        @trace = ();
+        eval { $result = $acquire->($case, $identities[1], $c, $target_image); 1 };
+        $error = $@;
+    }
+    my $observed = footprint($target_paths);
+    my $preserved = footprint($prior_paths);
+    my $row = {id => $cut->{id}, case => $case, prior_workspace => $identities[0],
+        target_workspace => $identities[1], image_key => $target_key, trace => [@trace],
+        error => $error, result => $result, target => $observed, prior_before => $prior, prior_after => $preserved};
+    push @rows, $row;
+    my $expected_error = $cut->{returns} ? '' : "injected matrix $cut->{payload}:$cut->{cut}\n";
+    my $accepted = is($error, $expected_error, "$cut->{id} exact first outcome");
+    $accepted = is(defined($result) ? 1 : 0, $cut->{returns} ? 1 : 0, "$cut->{id} return boundary") && $accepted;
+    $accepted = is_deeply(\@trace, $cut->{expected_trace}, "$cut->{id} exact transition prefix") && $accepted;
+    $accepted = is_deeply($preserved, $prior, "$cut->{id} preserves prior owner") && $accepted;
+    persist(0);
+    @work = ();
+    for my $identity (@identities) {
+        die 'matrix workspace remains' if -e "$root/$identity->{path}" || -l "$root/$identity->{path}";
+        push @retired_workspaces, $identity->{path};
+    }
+    undef $store;
+    die 'matrix store remains' if -e "$root/$case" || -l "$root/$case";
+    push @retired_cases, $case;
+    persist(0);
+    die "first unexpected matrix result retained at $cut->{id}\n" unless $accepted;
+}
+is($forbidden, 0, 'no compiler or process attempt');
+persist(1);
+done_testing;

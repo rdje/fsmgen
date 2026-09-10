@@ -1,0 +1,56 @@
+[
+  {
+    "recovery": "docs/audits/native-proxy-runtime-closure-20260910/result/qualification.json",
+    "sha256": "4735a73c6e8ff183da294809c37befda392eefa4219a1934cc489c776ccac732",
+    "size_bytes": 468737,
+    "source": ".artifacts/logs/native-proxy-runtime-closure-20260910/qualification.json"
+  },
+  {
+    "recovery": "docs/audits/native-proxy-runtime-closure-20260910/result/qualify.tap",
+    "sha256": "ca1ba7cfe41fa662946a799ae300ad90744e7f05b94fda43b32ba1e76be3bece",
+    "size_bytes": 8131,
+    "source": ".artifacts/logs/native-proxy-runtime-closure-20260910/qualify.tap"
+  },
+  {
+    "recovery": "docs/audits/native-proxy-runtime-closure-20260910/result/audit.json",
+    "sha256": "2ae923f5d8d37261eec45c1498389f01b62fd1b7739ed49e06bd062bf993c77a",
+    "size_bytes": 3367,
+    "source": ".artifacts/logs/native-proxy-runtime-closure-20260910/audit.json"
+  },
+  {
+    "recovery": "docs/audits/native-proxy-runtime-closure-20260910/result/admission.jsonl",
+    "sha256": "facf5be0e3443414c8b706d6ea35f5fe0f874bdc26e25a3ff23d70818a4ac7c2",
+    "size_bytes": 13579,
+    "source": ".artifacts/logs/native-proxy-runtime-closure-20260910/admission.jsonl"
+  },
+  {
+    "recovery": "docs/audits/native-proxy-runtime-closure-20260910/result/initial-compile.tap",
+    "sha256": "4bb761f3bb84ad310d17af486bb8135e1a58f10bc603e5afe3a2c0f54e302ddd",
+    "size_bytes": 297,
+    "source": ".artifacts/logs/native-proxy-runtime-closure-20260910/initial-compile.tap"
+  },
+  {
+    "recovery": "docs/audits/native-proxy-runtime-closure-20260910/result/initial-compile.t.source",
+    "sha256": "b1ad90fa18fd4b2d847a77eff0bed2470e43a9ddb1ad0b2826f0a80dcfbd1fb4",
+    "size_bytes": 10357,
+    "source": ".artifacts/logs/native-proxy-runtime-closure-20260910/initial-compile.t.source"
+  },
+  {
+    "recovery": "docs/audits/native-proxy-runtime-closure-20260910/result/acquisition-regression.json",
+    "sha256": "4aef7d8ae8073497b5ddc4d6eafea263a7aa594fe29b606a1ddcadc7ccf7d7d4",
+    "size_bytes": 86400,
+    "source": ".artifacts/logs/native-proxy-runtime-closure-20260910/acquisition-regression.json"
+  },
+  {
+    "recovery": "docs/audits/native-proxy-runtime-closure-20260910/result/acquisition-regression.tap",
+    "sha256": "a54392a6a183c8c7dac269fb00d9e576ab502e4c20582fcff23788cf9043a65d",
+    "size_bytes": 3637,
+    "source": ".artifacts/logs/native-proxy-runtime-closure-20260910/acquisition-regression.tap"
+  },
+  {
+    "recovery": "docs/audits/native-proxy-runtime-closure-20260910/result/acquisition-regression-admission.jsonl",
+    "sha256": "d34ea777fd95a595c012eb8e7488531dfa43be0428338aaa67197e00ea659967",
+    "size_bytes": 10276,
+    "source": ".artifacts/logs/native-proxy-runtime-closure-20260910/acquisition-regression-admission.jsonl"
+  }
+]

@@ -1,0 +1,875 @@
+{
+  "missing_legs": [
+    "runtime retirement and maintenance",
+    "observation snapshots and lifetime",
+    "real cross-language contention",
+    "native behavior and historical startup repair"
+  ],
+  "owner": "HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.12.4.1.2.2.3",
+  "partial_write_bytes": 8,
+  "rows": [
+    {
+      "cut": "before_write",
+      "expected_files": {},
+      "expected_trace": [
+        "c:before_write"
+      ],
+      "id": "fresh:c:before_write",
+      "payload": "c",
+      "returns": false,
+      "route": "fresh"
+    },
+    {
+      "cut": "partial_write",
+      "expected_files": {
+        "c": "partial"
+      },
+      "expected_trace": [
+        "c:before_write",
+        "c:partial_write"
+      ],
+      "id": "fresh:c:partial_write",
+      "payload": "c",
+      "returns": false,
+      "route": "fresh"
+    },
+    {
+      "cut": "before_seal",
+      "expected_files": {
+        "c": "complete"
+      },
+      "expected_trace": [
+        "c:before_write",
+        "c:before_seal"
+      ],
+      "id": "fresh:c:before_seal",
+      "payload": "c",
+      "returns": false,
+      "route": "fresh"
+    },
+    {
+      "cut": "after_seal",
+      "expected_files": {
+        "c": "complete"
+      },
+      "expected_trace": [
+        "c:before_write",
+        "c:before_seal",
+        "c:after_seal"
+      ],
+      "id": "fresh:c:after_seal",
+      "payload": "c",
+      "returns": false,
+      "route": "fresh"
+    },
+    {
+      "cut": "after_write",
+      "expected_files": {
+        "c": "complete"
+      },
+      "expected_trace": [
+        "c:before_write",
+        "c:before_seal",
+        "c:after_seal",
+        "c:after_write"
+      ],
+      "id": "fresh:c:after_write",
+      "payload": "c",
+      "returns": false,
+      "route": "fresh"
+    },
+    {
+      "cut": "before_write",
+      "expected_files": {
+        "c": "complete"
+      },
+      "expected_trace": [
+        "c:before_write",
+        "c:before_seal",
+        "c:after_seal",
+        "c:after_write",
+        "manifest:before_write"
+      ],
+      "id": "fresh:manifest:before_write",
+      "payload": "manifest",
+      "returns": false,
+      "route": "fresh"
+    },
+    {
+      "cut": "partial_write",
+      "expected_files": {
+        "c": "complete",
+        "manifest": "partial"
+      },
+      "expected_trace": [
+        "c:before_write",
+        "c:before_seal",
+        "c:after_seal",
+        "c:after_write",
+        "manifest:before_write",
+        "manifest:partial_write"
+      ],
+      "id": "fresh:manifest:partial_write",
+      "payload": "manifest",
+      "returns": false,
+      "route": "fresh"
+    },
+    {
+      "cut": "before_seal",
+      "expected_files": {
+        "c": "complete",
+        "manifest": "complete"
+      },
+      "expected_trace": [
+        "c:before_write",
+        "c:before_seal",
+        "c:after_seal",
+        "c:after_write",
+        "manifest:before_write",
+        "manifest:before_seal"
+      ],
+      "id": "fresh:manifest:before_seal",
+      "payload": "manifest",
+      "returns": false,
+      "route": "fresh"
+    },
+    {
+      "cut": "after_seal",
+      "expected_files": {
+        "c": "complete",
+        "manifest": "complete"
+      },
+      "expected_trace": [
+        "c:before_write",
+        "c:before_seal",
+        "c:after_seal",
+        "c:after_write",
+        "manifest:before_write",
+        "manifest:before_seal",
+        "manifest:after_seal"
+      ],
+      "id": "fresh:manifest:after_seal",
+      "payload": "manifest",
+      "returns": false,
+      "route": "fresh"
+    },
+    {
+      "cut": "after_write",
+      "expected_files": {
+        "c": "complete",
+        "manifest": "complete"
+      },
+      "expected_trace": [
+        "c:before_write",
+        "c:before_seal",
+        "c:after_seal",
+        "c:after_write",
+        "manifest:before_write",
+        "manifest:before_seal",
+        "manifest:after_seal",
+        "manifest:after_write"
+      ],
+      "id": "fresh:manifest:after_write",
+      "payload": "manifest",
+      "returns": false,
+      "route": "fresh"
+    },
+    {
+      "cut": "before_write",
+      "expected_files": {
+        "c": "complete",
+        "manifest": "complete"
+      },
+      "expected_trace": [
+        "c:before_write",
+        "c:before_seal",
+        "c:after_seal",
+        "c:after_write",
+        "manifest:before_write",
+        "manifest:before_seal",
+        "manifest:after_seal",
+        "manifest:after_write",
+        "executable:before_write"
+      ],
+      "id": "fresh:executable:before_write",
+      "payload": "executable",
+      "returns": false,
+      "route": "fresh"
+    },
+    {
+      "cut": "partial_write",
+      "expected_files": {
+        "c": "complete",
+        "executable": "partial",
+        "manifest": "complete"
+      },
+      "expected_trace": [
+        "c:before_write",
+        "c:before_seal",
+        "c:after_seal",
+        "c:after_write",
+        "manifest:before_write",
+        "manifest:before_seal",
+        "manifest:after_seal",
+        "manifest:after_write",
+        "executable:before_write",
+        "executable:partial_write"
+      ],
+      "id": "fresh:executable:partial_write",
+      "payload": "executable",
+      "returns": false,
+      "route": "fresh"
+    },
+    {
+      "cut": "before_seal",
+      "expected_files": {
+        "c": "complete",
+        "executable": "complete",
+        "manifest": "complete"
+      },
+      "expected_trace": [
+        "c:before_write",
+        "c:before_seal",
+        "c:after_seal",
+        "c:after_write",
+        "manifest:before_write",
+        "manifest:before_seal",
+        "manifest:after_seal",
+        "manifest:after_write",
+        "executable:before_write",
+        "executable:before_seal"
+      ],
+      "id": "fresh:executable:before_seal",
+      "payload": "executable",
+      "returns": false,
+      "route": "fresh"
+    },
+    {
+      "cut": "after_seal",
+      "expected_files": {
+        "c": "complete",
+        "executable": "sealed",
+        "manifest": "complete"
+      },
+      "expected_trace": [
+        "c:before_write",
+        "c:before_seal",
+        "c:after_seal",
+        "c:after_write",
+        "manifest:before_write",
+        "manifest:before_seal",
+        "manifest:after_seal",
+        "manifest:after_write",
+        "executable:before_write",
+        "executable:before_seal",
+        "executable:after_seal"
+      ],
+      "id": "fresh:executable:after_seal",
+      "payload": "executable",
+      "returns": false,
+      "route": "fresh"
+    },
+    {
+      "cut": "after_write",
+      "expected_files": {
+        "c": "complete",
+        "executable": "sealed",
+        "manifest": "complete"
+      },
+      "expected_trace": [
+        "c:before_write",
+        "c:before_seal",
+        "c:after_seal",
+        "c:after_write",
+        "manifest:before_write",
+        "manifest:before_seal",
+        "manifest:after_seal",
+        "manifest:after_write",
+        "executable:before_write",
+        "executable:before_seal",
+        "executable:after_seal",
+        "executable:after_write"
+      ],
+      "id": "fresh:executable:after_write",
+      "payload": "executable",
+      "returns": false,
+      "route": "fresh"
+    },
+    {
+      "cut": "before_write",
+      "expected_files": {
+        "c": "complete",
+        "executable": "sealed",
+        "manifest": "complete"
+      },
+      "expected_trace": [
+        "c:before_write",
+        "c:before_seal",
+        "c:after_seal",
+        "c:after_write",
+        "manifest:before_write",
+        "manifest:before_seal",
+        "manifest:after_seal",
+        "manifest:after_write",
+        "executable:before_write",
+        "executable:before_seal",
+        "executable:after_seal",
+        "executable:after_write",
+        "global:before_write"
+      ],
+      "id": "fresh:global:before_write",
+      "payload": "global",
+      "returns": false,
+      "route": "fresh"
+    },
+    {
+      "cut": "partial_write",
+      "expected_files": {
+        "c": "complete",
+        "executable": "sealed",
+        "global": "partial",
+        "manifest": "complete"
+      },
+      "expected_trace": [
+        "c:before_write",
+        "c:before_seal",
+        "c:after_seal",
+        "c:after_write",
+        "manifest:before_write",
+        "manifest:before_seal",
+        "manifest:after_seal",
+        "manifest:after_write",
+        "executable:before_write",
+        "executable:before_seal",
+        "executable:after_seal",
+        "executable:after_write",
+        "global:before_write",
+        "global:partial_write"
+      ],
+      "id": "fresh:global:partial_write",
+      "payload": "global",
+      "returns": false,
+      "route": "fresh"
+    },
+    {
+      "cut": "before_seal",
+      "expected_files": {
+        "c": "complete",
+        "executable": "sealed",
+        "global": "complete",
+        "manifest": "complete"
+      },
+      "expected_trace": [
+        "c:before_write",
+        "c:before_seal",
+        "c:after_seal",
+        "c:after_write",
+        "manifest:before_write",
+        "manifest:before_seal",
+        "manifest:after_seal",
+        "manifest:after_write",
+        "executable:before_write",
+        "executable:before_seal",
+        "executable:after_seal",
+        "executable:after_write",
+        "global:before_write",
+        "global:before_seal"
+      ],
+      "id": "fresh:global:before_seal",
+      "payload": "global",
+      "returns": false,
+      "route": "fresh"
+    },
+    {
+      "cut": "after_seal",
+      "expected_files": {
+        "c": "complete",
+        "executable": "sealed",
+        "global": "complete",
+        "manifest": "complete"
+      },
+      "expected_trace": [
+        "c:before_write",
+        "c:before_seal",
+        "c:after_seal",
+        "c:after_write",
+        "manifest:before_write",
+        "manifest:before_seal",
+        "manifest:after_seal",
+        "manifest:after_write",
+        "executable:before_write",
+        "executable:before_seal",
+        "executable:after_seal",
+        "executable:after_write",
+        "global:before_write",
+        "global:before_seal",
+        "global:after_seal"
+      ],
+      "id": "fresh:global:after_seal",
+      "payload": "global",
+      "returns": false,
+      "route": "fresh"
+    },
+    {
+      "cut": "after_write",
+      "expected_files": {
+        "c": "complete",
+        "executable": "sealed",
+        "global": "complete",
+        "manifest": "complete"
+      },
+      "expected_trace": [
+        "c:before_write",
+        "c:before_seal",
+        "c:after_seal",
+        "c:after_write",
+        "manifest:before_write",
+        "manifest:before_seal",
+        "manifest:after_seal",
+        "manifest:after_write",
+        "executable:before_write",
+        "executable:before_seal",
+        "executable:after_seal",
+        "executable:after_write",
+        "global:before_write",
+        "global:before_seal",
+        "global:after_seal",
+        "global:after_write"
+      ],
+      "id": "fresh:global:after_write",
+      "payload": "global",
+      "returns": false,
+      "route": "fresh"
+    },
+    {
+      "cut": "before_write",
+      "expected_files": {
+        "c": "complete",
+        "executable": "sealed",
+        "global": "complete",
+        "manifest": "complete"
+      },
+      "expected_trace": [
+        "c:before_write",
+        "c:before_seal",
+        "c:after_seal",
+        "c:after_write",
+        "manifest:before_write",
+        "manifest:before_seal",
+        "manifest:after_seal",
+        "manifest:after_write",
+        "executable:before_write",
+        "executable:before_seal",
+        "executable:after_seal",
+        "executable:after_write",
+        "global:before_write",
+        "global:before_seal",
+        "global:after_seal",
+        "global:after_write",
+        "private:before_write"
+      ],
+      "id": "fresh:private:before_write",
+      "payload": "private",
+      "returns": false,
+      "route": "fresh"
+    },
+    {
+      "cut": "partial_write",
+      "expected_files": {
+        "c": "complete",
+        "executable": "sealed",
+        "global": "complete",
+        "manifest": "complete",
+        "private": "partial"
+      },
+      "expected_trace": [
+        "c:before_write",
+        "c:before_seal",
+        "c:after_seal",
+        "c:after_write",
+        "manifest:before_write",
+        "manifest:before_seal",
+        "manifest:after_seal",
+        "manifest:after_write",
+        "executable:before_write",
+        "executable:before_seal",
+        "executable:after_seal",
+        "executable:after_write",
+        "global:before_write",
+        "global:before_seal",
+        "global:after_seal",
+        "global:after_write",
+        "private:before_write",
+        "private:partial_write"
+      ],
+      "id": "fresh:private:partial_write",
+      "payload": "private",
+      "returns": false,
+      "route": "fresh"
+    },
+    {
+      "cut": "before_seal",
+      "expected_files": {
+        "c": "complete",
+        "executable": "sealed",
+        "global": "complete",
+        "manifest": "complete",
+        "private": "complete"
+      },
+      "expected_trace": [
+        "c:before_write",
+        "c:before_seal",
+        "c:after_seal",
+        "c:after_write",
+        "manifest:before_write",
+        "manifest:before_seal",
+        "manifest:after_seal",
+        "manifest:after_write",
+        "executable:before_write",
+        "executable:before_seal",
+        "executable:after_seal",
+        "executable:after_write",
+        "global:before_write",
+        "global:before_seal",
+        "global:after_seal",
+        "global:after_write",
+        "private:before_write",
+        "private:before_seal"
+      ],
+      "id": "fresh:private:before_seal",
+      "payload": "private",
+      "returns": false,
+      "route": "fresh"
+    },
+    {
+      "cut": "after_seal",
+      "expected_files": {
+        "c": "complete",
+        "executable": "sealed",
+        "global": "complete",
+        "manifest": "complete",
+        "private": "complete"
+      },
+      "expected_trace": [
+        "c:before_write",
+        "c:before_seal",
+        "c:after_seal",
+        "c:after_write",
+        "manifest:before_write",
+        "manifest:before_seal",
+        "manifest:after_seal",
+        "manifest:after_write",
+        "executable:before_write",
+        "executable:before_seal",
+        "executable:after_seal",
+        "executable:after_write",
+        "global:before_write",
+        "global:before_seal",
+        "global:after_seal",
+        "global:after_write",
+        "private:before_write",
+        "private:before_seal",
+        "private:after_seal"
+      ],
+      "id": "fresh:private:after_seal",
+      "payload": "private",
+      "returns": false,
+      "route": "fresh"
+    },
+    {
+      "cut": "after_write",
+      "expected_files": {
+        "c": "complete",
+        "executable": "sealed",
+        "global": "complete",
+        "manifest": "complete",
+        "private": "complete"
+      },
+      "expected_trace": [
+        "c:before_write",
+        "c:before_seal",
+        "c:after_seal",
+        "c:after_write",
+        "manifest:before_write",
+        "manifest:before_seal",
+        "manifest:after_seal",
+        "manifest:after_write",
+        "executable:before_write",
+        "executable:before_seal",
+        "executable:after_seal",
+        "executable:after_write",
+        "global:before_write",
+        "global:before_seal",
+        "global:after_seal",
+        "global:after_write",
+        "private:before_write",
+        "private:before_seal",
+        "private:after_seal",
+        "private:after_write"
+      ],
+      "id": "fresh:private:after_write",
+      "payload": "private",
+      "returns": false,
+      "route": "fresh"
+    },
+    {
+      "cut": null,
+      "expected_files": {
+        "c": "complete",
+        "executable": "sealed",
+        "global": "complete",
+        "manifest": "complete",
+        "private": "complete"
+      },
+      "expected_trace": [
+        "c:before_write",
+        "c:before_seal",
+        "c:after_seal",
+        "c:after_write",
+        "manifest:before_write",
+        "manifest:before_seal",
+        "manifest:after_seal",
+        "manifest:after_write",
+        "executable:before_write",
+        "executable:before_seal",
+        "executable:after_seal",
+        "executable:after_write",
+        "global:before_write",
+        "global:before_seal",
+        "global:after_seal",
+        "global:after_write",
+        "private:before_write",
+        "private:before_seal",
+        "private:after_seal",
+        "private:after_write"
+      ],
+      "id": "fresh:complete",
+      "payload": null,
+      "returns": true,
+      "route": "fresh"
+    },
+    {
+      "cut": "before_write",
+      "expected_files": {
+        "c": "complete",
+        "executable": "sealed",
+        "manifest": "complete"
+      },
+      "expected_trace": [
+        "global:before_write"
+      ],
+      "id": "reuse:global:before_write",
+      "payload": "global",
+      "returns": false,
+      "route": "reuse"
+    },
+    {
+      "cut": "partial_write",
+      "expected_files": {
+        "c": "complete",
+        "executable": "sealed",
+        "global": "partial",
+        "manifest": "complete"
+      },
+      "expected_trace": [
+        "global:before_write",
+        "global:partial_write"
+      ],
+      "id": "reuse:global:partial_write",
+      "payload": "global",
+      "returns": false,
+      "route": "reuse"
+    },
+    {
+      "cut": "before_seal",
+      "expected_files": {
+        "c": "complete",
+        "executable": "sealed",
+        "global": "complete",
+        "manifest": "complete"
+      },
+      "expected_trace": [
+        "global:before_write",
+        "global:before_seal"
+      ],
+      "id": "reuse:global:before_seal",
+      "payload": "global",
+      "returns": false,
+      "route": "reuse"
+    },
+    {
+      "cut": "after_seal",
+      "expected_files": {
+        "c": "complete",
+        "executable": "sealed",
+        "global": "complete",
+        "manifest": "complete"
+      },
+      "expected_trace": [
+        "global:before_write",
+        "global:before_seal",
+        "global:after_seal"
+      ],
+      "id": "reuse:global:after_seal",
+      "payload": "global",
+      "returns": false,
+      "route": "reuse"
+    },
+    {
+      "cut": "after_write",
+      "expected_files": {
+        "c": "complete",
+        "executable": "sealed",
+        "global": "complete",
+        "manifest": "complete"
+      },
+      "expected_trace": [
+        "global:before_write",
+        "global:before_seal",
+        "global:after_seal",
+        "global:after_write"
+      ],
+      "id": "reuse:global:after_write",
+      "payload": "global",
+      "returns": false,
+      "route": "reuse"
+    },
+    {
+      "cut": "before_write",
+      "expected_files": {
+        "c": "complete",
+        "executable": "sealed",
+        "global": "complete",
+        "manifest": "complete"
+      },
+      "expected_trace": [
+        "global:before_write",
+        "global:before_seal",
+        "global:after_seal",
+        "global:after_write",
+        "private:before_write"
+      ],
+      "id": "reuse:private:before_write",
+      "payload": "private",
+      "returns": false,
+      "route": "reuse"
+    },
+    {
+      "cut": "partial_write",
+      "expected_files": {
+        "c": "complete",
+        "executable": "sealed",
+        "global": "complete",
+        "manifest": "complete",
+        "private": "partial"
+      },
+      "expected_trace": [
+        "global:before_write",
+        "global:before_seal",
+        "global:after_seal",
+        "global:after_write",
+        "private:before_write",
+        "private:partial_write"
+      ],
+      "id": "reuse:private:partial_write",
+      "payload": "private",
+      "returns": false,
+      "route": "reuse"
+    },
+    {
+      "cut": "before_seal",
+      "expected_files": {
+        "c": "complete",
+        "executable": "sealed",
+        "global": "complete",
+        "manifest": "complete",
+        "private": "complete"
+      },
+      "expected_trace": [
+        "global:before_write",
+        "global:before_seal",
+        "global:after_seal",
+        "global:after_write",
+        "private:before_write",
+        "private:before_seal"
+      ],
+      "id": "reuse:private:before_seal",
+      "payload": "private",
+      "returns": false,
+      "route": "reuse"
+    },
+    {
+      "cut": "after_seal",
+      "expected_files": {
+        "c": "complete",
+        "executable": "sealed",
+        "global": "complete",
+        "manifest": "complete",
+        "private": "complete"
+      },
+      "expected_trace": [
+        "global:before_write",
+        "global:before_seal",
+        "global:after_seal",
+        "global:after_write",
+        "private:before_write",
+        "private:before_seal",
+        "private:after_seal"
+      ],
+      "id": "reuse:private:after_seal",
+      "payload": "private",
+      "returns": false,
+      "route": "reuse"
+    },
+    {
+      "cut": "after_write",
+      "expected_files": {
+        "c": "complete",
+        "executable": "sealed",
+        "global": "complete",
+        "manifest": "complete",
+        "private": "complete"
+      },
+      "expected_trace": [
+        "global:before_write",
+        "global:before_seal",
+        "global:after_seal",
+        "global:after_write",
+        "private:before_write",
+        "private:before_seal",
+        "private:after_seal",
+        "private:after_write"
+      ],
+      "id": "reuse:private:after_write",
+      "payload": "private",
+      "returns": false,
+      "route": "reuse"
+    },
+    {
+      "cut": null,
+      "expected_files": {
+        "c": "complete",
+        "executable": "sealed",
+        "global": "complete",
+        "manifest": "complete",
+        "private": "complete"
+      },
+      "expected_trace": [
+        "global:before_write",
+        "global:before_seal",
+        "global:after_seal",
+        "global:after_write",
+        "private:before_write",
+        "private:before_seal",
+        "private:after_seal",
+        "private:after_write"
+      ],
+      "id": "reuse:complete",
+      "payload": null,
+      "returns": true,
+      "route": "reuse"
+    }
+  ],
+  "schema": "fsmgen.inactive_publication_reference_cut_plan.v1",
+  "scope": "Inert fresh/reuse acquisition only; preserve an earlier complete owner at every cut. No compiler, native fixture, original, collector or actual contention worker."
+}

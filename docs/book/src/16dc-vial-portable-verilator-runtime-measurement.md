@@ -1741,6 +1741,18 @@ contention and native behavior remain separate qualification steps. Replay:
 scripts/run_with_ram_guard.sh -- perl docs/audits/native-proxy-runtime-acquisition-20260910/qualify.t
 ```
 
+The combined inactive matrix now checks fresh-image and exact-reuse failures
+before/after writing and sealing, including physically partial writes. Each
+case preserves an earlier complete owner's bytes, inodes and references. Partial
+executable writes remain nonexecutable; later failures can retain complete sealed
+files but return no acquisition result. Independent descriptor probes and byte,
+mode and reference reconstruction verify the retained state. These deterministic
+cuts do not establish actual process-crash or power-loss durability. Replay:
+
+```bash
+scripts/run_with_ram_guard.sh -- perl docs/audits/native-proxy-runtime-closure-20260910/qualify.t
+```
+
 The helper checks bounded regular source/output files and the native header,
 then sets executable permissions through the admitted open file handle. A
 regression exposed path-based permission changes affecting a substituted file

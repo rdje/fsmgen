@@ -1,0 +1,151 @@
+ram-guard: PID 4669; host 60.9%; host cutoff 88%; descendant RSS cutoff 4096 MiB; poll 2s
+ok 1 - fresh:c:before_write exact first outcome
+ok 2 - fresh:c:before_write return boundary
+ok 3 - fresh:c:before_write exact transition prefix
+ok 4 - fresh:c:before_write preserves prior owner
+ok 5 - fresh:c:partial_write exact first outcome
+ok 6 - fresh:c:partial_write return boundary
+ok 7 - fresh:c:partial_write exact transition prefix
+ok 8 - fresh:c:partial_write preserves prior owner
+ok 9 - fresh:c:before_seal exact first outcome
+ok 10 - fresh:c:before_seal return boundary
+ok 11 - fresh:c:before_seal exact transition prefix
+ok 12 - fresh:c:before_seal preserves prior owner
+ok 13 - fresh:c:after_seal exact first outcome
+ok 14 - fresh:c:after_seal return boundary
+ok 15 - fresh:c:after_seal exact transition prefix
+ok 16 - fresh:c:after_seal preserves prior owner
+ok 17 - fresh:c:after_write exact first outcome
+ok 18 - fresh:c:after_write return boundary
+ok 19 - fresh:c:after_write exact transition prefix
+ok 20 - fresh:c:after_write preserves prior owner
+ok 21 - fresh:manifest:before_write exact first outcome
+ok 22 - fresh:manifest:before_write return boundary
+ok 23 - fresh:manifest:before_write exact transition prefix
+ok 24 - fresh:manifest:before_write preserves prior owner
+ok 25 - fresh:manifest:partial_write exact first outcome
+ok 26 - fresh:manifest:partial_write return boundary
+ok 27 - fresh:manifest:partial_write exact transition prefix
+ok 28 - fresh:manifest:partial_write preserves prior owner
+ok 29 - fresh:manifest:before_seal exact first outcome
+ok 30 - fresh:manifest:before_seal return boundary
+ok 31 - fresh:manifest:before_seal exact transition prefix
+ok 32 - fresh:manifest:before_seal preserves prior owner
+ok 33 - fresh:manifest:after_seal exact first outcome
+ok 34 - fresh:manifest:after_seal return boundary
+ok 35 - fresh:manifest:after_seal exact transition prefix
+ok 36 - fresh:manifest:after_seal preserves prior owner
+ok 37 - fresh:manifest:after_write exact first outcome
+ok 38 - fresh:manifest:after_write return boundary
+ok 39 - fresh:manifest:after_write exact transition prefix
+ok 40 - fresh:manifest:after_write preserves prior owner
+ok 41 - fresh:executable:before_write exact first outcome
+ok 42 - fresh:executable:before_write return boundary
+ok 43 - fresh:executable:before_write exact transition prefix
+ok 44 - fresh:executable:before_write preserves prior owner
+ok 45 - fresh:executable:partial_write exact first outcome
+ok 46 - fresh:executable:partial_write return boundary
+ok 47 - fresh:executable:partial_write exact transition prefix
+ok 48 - fresh:executable:partial_write preserves prior owner
+ok 49 - fresh:executable:before_seal exact first outcome
+ok 50 - fresh:executable:before_seal return boundary
+ok 51 - fresh:executable:before_seal exact transition prefix
+ok 52 - fresh:executable:before_seal preserves prior owner
+ok 53 - fresh:executable:after_seal exact first outcome
+ok 54 - fresh:executable:after_seal return boundary
+ok 55 - fresh:executable:after_seal exact transition prefix
+ok 56 - fresh:executable:after_seal preserves prior owner
+ok 57 - fresh:executable:after_write exact first outcome
+ok 58 - fresh:executable:after_write return boundary
+ok 59 - fresh:executable:after_write exact transition prefix
+ok 60 - fresh:executable:after_write preserves prior owner
+ok 61 - fresh:global:before_write exact first outcome
+ok 62 - fresh:global:before_write return boundary
+ok 63 - fresh:global:before_write exact transition prefix
+ok 64 - fresh:global:before_write preserves prior owner
+ok 65 - fresh:global:partial_write exact first outcome
+ok 66 - fresh:global:partial_write return boundary
+ok 67 - fresh:global:partial_write exact transition prefix
+ok 68 - fresh:global:partial_write preserves prior owner
+ok 69 - fresh:global:before_seal exact first outcome
+ok 70 - fresh:global:before_seal return boundary
+ok 71 - fresh:global:before_seal exact transition prefix
+ok 72 - fresh:global:before_seal preserves prior owner
+ok 73 - fresh:global:after_seal exact first outcome
+ok 74 - fresh:global:after_seal return boundary
+ok 75 - fresh:global:after_seal exact transition prefix
+ok 76 - fresh:global:after_seal preserves prior owner
+ok 77 - fresh:global:after_write exact first outcome
+ok 78 - fresh:global:after_write return boundary
+ok 79 - fresh:global:after_write exact transition prefix
+ok 80 - fresh:global:after_write preserves prior owner
+ok 81 - fresh:private:before_write exact first outcome
+ok 82 - fresh:private:before_write return boundary
+ok 83 - fresh:private:before_write exact transition prefix
+ok 84 - fresh:private:before_write preserves prior owner
+ok 85 - fresh:private:partial_write exact first outcome
+ok 86 - fresh:private:partial_write return boundary
+ok 87 - fresh:private:partial_write exact transition prefix
+ok 88 - fresh:private:partial_write preserves prior owner
+ok 89 - fresh:private:before_seal exact first outcome
+ok 90 - fresh:private:before_seal return boundary
+ok 91 - fresh:private:before_seal exact transition prefix
+ok 92 - fresh:private:before_seal preserves prior owner
+ok 93 - fresh:private:after_seal exact first outcome
+ok 94 - fresh:private:after_seal return boundary
+ok 95 - fresh:private:after_seal exact transition prefix
+ok 96 - fresh:private:after_seal preserves prior owner
+ok 97 - fresh:private:after_write exact first outcome
+ok 98 - fresh:private:after_write return boundary
+ok 99 - fresh:private:after_write exact transition prefix
+ok 100 - fresh:private:after_write preserves prior owner
+ok 101 - fresh:complete exact first outcome
+ok 102 - fresh:complete return boundary
+ok 103 - fresh:complete exact transition prefix
+ok 104 - fresh:complete preserves prior owner
+ok 105 - reuse:global:before_write exact first outcome
+ok 106 - reuse:global:before_write return boundary
+ok 107 - reuse:global:before_write exact transition prefix
+ok 108 - reuse:global:before_write preserves prior owner
+ok 109 - reuse:global:partial_write exact first outcome
+ok 110 - reuse:global:partial_write return boundary
+ok 111 - reuse:global:partial_write exact transition prefix
+ok 112 - reuse:global:partial_write preserves prior owner
+ok 113 - reuse:global:before_seal exact first outcome
+ok 114 - reuse:global:before_seal return boundary
+ok 115 - reuse:global:before_seal exact transition prefix
+ok 116 - reuse:global:before_seal preserves prior owner
+ok 117 - reuse:global:after_seal exact first outcome
+ok 118 - reuse:global:after_seal return boundary
+ok 119 - reuse:global:after_seal exact transition prefix
+ok 120 - reuse:global:after_seal preserves prior owner
+ok 121 - reuse:global:after_write exact first outcome
+ok 122 - reuse:global:after_write return boundary
+ok 123 - reuse:global:after_write exact transition prefix
+ok 124 - reuse:global:after_write preserves prior owner
+ok 125 - reuse:private:before_write exact first outcome
+ok 126 - reuse:private:before_write return boundary
+ok 127 - reuse:private:before_write exact transition prefix
+ok 128 - reuse:private:before_write preserves prior owner
+ok 129 - reuse:private:partial_write exact first outcome
+ok 130 - reuse:private:partial_write return boundary
+ok 131 - reuse:private:partial_write exact transition prefix
+ok 132 - reuse:private:partial_write preserves prior owner
+ok 133 - reuse:private:before_seal exact first outcome
+ok 134 - reuse:private:before_seal return boundary
+ok 135 - reuse:private:before_seal exact transition prefix
+ok 136 - reuse:private:before_seal preserves prior owner
+ok 137 - reuse:private:after_seal exact first outcome
+ok 138 - reuse:private:after_seal return boundary
+ok 139 - reuse:private:after_seal exact transition prefix
+ok 140 - reuse:private:after_seal preserves prior owner
+ok 141 - reuse:private:after_write exact first outcome
+ok 142 - reuse:private:after_write return boundary
+ok 143 - reuse:private:after_write exact transition prefix
+ok 144 - reuse:private:after_write preserves prior owner
+ok 145 - reuse:complete exact first outcome
+ok 146 - reuse:complete return boundary
+ok 147 - reuse:complete exact transition prefix
+ok 148 - reuse:complete preserves prior owner
+ok 149 - no compiler or process attempt
+1..149
