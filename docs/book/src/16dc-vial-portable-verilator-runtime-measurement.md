@@ -1693,6 +1693,19 @@ scripts/run_with_ram_guard.sh -- prove -Iperl -It/lib t/1816-rust-proxy-integrat
 ```
 
 They verify lifecycle handling without launching the original test or compiler.
+
+A separate source-lifetime control uses the real allocator and portable builder,
+with compiler and runtime calls trapped. It compares each mode's source bytes
+at the modeled launch and immediately before actual retirement, checks distinct
+paths, and verifies removal. Deliberately changed proxy bytes must fail the
+independent lifetime comparison. An empty-stage control preserves its failed
+assertion while control-owned cleanup removes only the recorded allocator
+identity. It does not change production failure-retention policy.
+
+```bash
+scripts/run_with_ram_guard.sh -- python3 -B -m unittest discover -s t/python -p 'test_fixture_runtime_sources.py'
+```
+
 Task `.15.7.3.11` owns the separate original/native qualification; the historical
 startup delay is still open.
 
