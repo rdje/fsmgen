@@ -1045,6 +1045,36 @@ The fixed policy-only command now includes this census through `.3.2.8`.
 Its healthy result names an `observed_subset`; it claims no complete descendant
 coverage. Existing authenticated commands retain their helper requirement.
 
+For daemon-wide policy context with passive fixture observation, a separate
+fixed entrypoint runs as the normal user without an authenticated kernel helper.
+After the owning task admits an original invocation, use:
+
+```bash
+scripts/run_with_ram_guard.sh -- python3 -B scripts/run_fixture_startup_daemon_observation.py
+```
+
+It fixes the predicate to `process == "syspolicyd"`, so unrelated daemon queue
+records can accompany fixture records. Raw output stays private and may include
+unrelated paths and messages. The existing policy-only command retains its
+execution-context filter; neither command accepts a scope, predicate, command,
+session or deadline override. Both use the same original, collector and passive
+census lifecycle and retain the existing resource and output bounds.
+
+Collector readiness must match the selected scope before the original can
+start. Retained scope and command are independently checked after collection.
+Failed originals remain failed even when collection and observed-fixture cleanup
+succeed. The output directory retains original TAP, preparation diagnostics,
+policy bytes, observed source archives and separate owner results. It supplies
+no kernel sample, portable archive publication, complete-delivery claim or
+loaded-image attestation. Those are separate evidence requirements.
+
+Both scopes are checked with held bodies while live collection and authentication
+are trapped in the focused controls:
+
+```bash
+scripts/run_with_ram_guard.sh -- python3 -B -m unittest discover -s t/python -p 'test_fixture_startup_policy_observation.py'
+```
+
 The single integrated observation in task `.3.2.9` fails at a different
 boundary: the asynchronous `control_wait` outer reports pre-exec process-group
 containment failure, while Rust and legacy startup assertions pass. That revision's

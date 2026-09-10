@@ -2691,10 +2691,52 @@ decomposes the architecture needed to move beyond that bounded foundation.
   Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.11.3.3: retain complete preparation receipts before wrapper execution`
 
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.11.3.4`
-  Status: `proposed`
-  Goal: `Select a bounded original observation that joins prepared proxies to actual producer and policy evidence.`
+  Status: `active`
+  Goal: `Join prepared proxies to actual producer and daemon policy evidence through a bounded observation.`
   Acceptance: `After the diagnostic repair commits, inspect the existing passive source census and unprivileged execution-policy observer before selecting another original. Identify which existing qualified entrypoint can retain actual native producer birth and binary/C bytes alongside new preparation receipts and complete policy queue context. Own any missing caller qualification or prospective admission before execution. Preserve first failures, fixed original bounds, source snapshots and cleanup; never reuse historical authenticated readiness or retry a failed original. If privileged kernel capture is necessary, identify that exact missing leg and its authentication requirement. A new passing run cannot close the historical causal parent; full CI and push remain separately gated.`
-  Verification: `pending diagnostic repair commit`
+  Verification: `Diagnostic repair is committed at 0846768a5094a166eaa5e633728f509d4c3d95de. Existing policy-only caller has passive native census and no authentication, but fixes execution_context, which can omit unrelated daemon queue records. The existing daemon caller fixes daemon_context but requires a kernel helper. Select a fixed unprivileged daemon entrypoint reusing policy-only lifecycle; .1 owns scope plumbing and controlled qualification, .2 prospective admission, .3 the single observation, and .4 interpretation. No original, compiler, live collector or helper is admitted during implementation. No kernel evidence or complete delivery is claimed.`
+  Children: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.11.3.4.1, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.11.3.4.2, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.11.3.4.3, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.11.3.4.4`
+
+- ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.11.3.4.1`
+  Status: `active`
+  Goal: `Add and qualify fixed unprivileged daemon observation using the existing lifecycle.`
+  Acceptance: `Keep the current execution-context CLI/default unchanged. Add a fixed daemon-context CLI with no session, command, predicate, scope or deadline override. Reuse the policy-only original/collector/passive-census lifecycle with a closed internal scope selection. Bind selected scope consistently in readiness, retained-result validation and completion. Preserve original failure, cleanup, output/time/resource bounds and native ancestry/source custody. Qualify both scopes with held bodies, trapped live collectors/authentication, scope/command/retained-result mutations and CLI/default checks; run the default fixture band with live opt-ins unset. Document private raw daemon context and missing kernel/delivery/loaded-image legs. Commit before any new observation.`
+  Verification: `The fixed daemon caller passes its focused controls, but the first broader band finds stale runtime-source controls from integration e27b609d3fdc6ef823584f7726be9715ec28f535. Child .1 commits the verified caller implementation; .2 owns immediate source-control repair and complete band requalification before any original admission. Full band: 412 tests, two failures, four existing/derived opt-in skips; live-log and forbidden-command attempt counters are zero. No failure is waived. The failed directory-mode source control retains .artifacts/tmp/process-supervisor-tests/fsmgen-m1Z3PNjy after its empty-stage mock is rejected; this unit owns exact read/verify cleanup after its observed test interpreter is reaped. No runtime/compile call reached that directory control.`
+  Children: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.11.3.4.1.1, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.11.3.4.1.2`
+
+- ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.11.3.4.1.1`
+  Status: `done`
+  Goal: `Implement the fixed daemon-only CLI and qualify shared scope boundaries.`
+  Acceptance: `Own the caller, entrypoint, focused scope/lifecycle controls and synchronized documentation originally selected by the parent before implementation. Require unchanged default execution-context behavior, a fixed daemon entrypoint with no CLI overrides, readiness and retained scope/command checks, full failed-original/cleanup truth and trapped authentication/live collection. Commit independently verified caller work with the exact broader-band failures and their next repair owner; parent qualification remains open until .2 closes them.`
+  Verification: `Shared policy-only lifecycle accepts only execution_context or daemon_context internally; its existing CLI/default remains execution_context. New fixed daemon CLI delegates to that lifecycle without exposing scope, command, predicate, deadline or session options. Readiness scope must match before original construction; selected scope continues through readiness events, retained scope/command validation and completion. Original/collector/census bounds, failed-original truth, source custody and cleanup are unchanged. Re-derivation: the pre-repair trapped boundary rejects the unsupported daemon keyword without any owner launch. Final focused band passes 58 tests with two live opt-in skips, covering both scopes, actual held bodies, entrypoint/default/invalid selectors, malformed readiness, altered retained scope/command, original failure and physical cleanup. Falsification: removing readiness admission in memory causes both independent pre-release scope controls to fail; changed retained results reject at their real boundary. Full band runs 412 tests with four opt-in skips and exactly two stale runtime-source-control failures, both now owned by .2. Live-log and forbidden-command counters remain zero. The earlier .10 integration changed allocation and retirement while these source controls retained empty stage mocks and the old allocator pattern. No original or compiler is run. The failed directory mock left one exact mode workspace: same-volume owned entries and complete 188-byte wrapper SHA-256 df525c2166853a62c81b9a5aa70eea9606e3bd96c88c46f1844c1b4c55c7d2b0 matched the real template, then the reaped control workspace was removed and absence verified. Durability: tracked caller/scope/lifecycle tests retain qualification and falsifiers; .artifacts/logs/daemon-passive-observer-20260910/audit.json is 2676 bytes SHA-256 413949dcf6bd99b2f4be9592dadf474ce5a307dea0007ba5a6b5be00a13bc7d0. Complete log-row census agrees with runner summaries; controlled READY output is parsed with its separate terminal row. Final working input hashes are recorded; ignored raw logs have an availability gap. Focused log is 11781 bytes SHA-256 0c62db5fa24e93a776abe76bb626a0a63d1732133ba41c76228951931a462947; failed full log is 79705 bytes SHA-256 66054abd0408a3c428df75091e13ad887a8404ef1bd0916694868ed39b048d74. Book explains private raw evidence and missing kernel/delivery/loaded-image legs; legacy V1 card detail routes to exact 0846768a5094a166eaa5e633728f509d4c3d95de history without raising ceilings. Book rendering and exact 98-file/23083657-byte output cleanup pass; knowledge-map: OK. Parent qualification and original admission remain blocked on .2; no result is waived.`
+  Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.11.3.4.1.1: add fixed unprivileged daemon observation and preserve qualification gaps`
+
+- ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.11.3.4.1.2`
+  Status: `proposed`
+  Goal: `Repair stale runtime-source controls and complete the observer fixture-band qualification.`
+  Acceptance: `After the caller implementation commits, update t/python/test_fixture_runtime_sources.py for actual File::Temp allocation, nonempty stage/explicit cleanup results, native-or-Perl builder preparation and per-mode retirement. Trap compiler and runtime execution before any corrected control can reach proxy modes. Preserve independent source/path/lifetime assertions and an actual shared-workspace or byte-substitution falsifier without weakening exclusive builder ownership or replaying already retired paths. Reproduce the exact stale controls from retained full-band failure, verify exact owned residue cleanup, then run focused source controls and the complete default fixture band with live/authenticated/original launches trapped. Keep any genuine new failure failed and owned; no original admission until the parent is qualified.`
+  Verification: `The full-band first failure rejects modeled empty stages; the second finds no retired create_project_tempdir call. Source inspection confirms missing preparation interception and assumptions that files survive every mode. These are integration-era control drift, not daemon-scope runtime failures.`
+  Commit: `pending`
+
+- ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.11.3.4.2`
+  Status: `proposed`
+  Goal: `Admit one fixed observed original at the qualified daemon-only entrypoint.`
+  Acceptance: `After .1 commits, pin the exact input closure, entrypoint, original command/bounds, selection context, exclusive output ownership and stop/cleanup plan. Qualify admission without releasing an original; historical READY sessions are invalid. Name raw custody, native source/birth coverage, preparation linkage, policy calibration and independent falsification requirements and their absent legs.`
+  Verification: `pending`
+  Commit: `pending`
+
+- ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.11.3.4.3`
+  Status: `proposed`
+  Goal: `Execute and audit the single admitted daemon-only original observation.`
+  Acceptance: `Require committed unchanged .2 admission. Release exactly one original with its prestarted fixed daemon collector and passive source census. Preserve first failure, preparation receipts, full TAP/native results and raw policy/source evidence. Independently check source/birth joins, cleanup and mutated-record falsifiers. No retry, widening or helper/capture substitution.`
+  Verification: `pending`
+  Commit: `pending`
+
+- ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.11.3.4.4`
+  Status: `proposed`
+  Goal: `Resolve the observed startup result and own the remaining causal repair.`
+  Acceptance: `Compare prepared identities, actual observed producer bytes/births and complete retained daemon queue context without confusing missing delivery or kernel evidence with absence. Root-cause surprising results, retain failed outcomes, fix project-correctable defects under new leaves and identify any strictly necessary authenticated kernel observation. A passing original does not erase historical failure; full CI and push stay gated until required qualification.`
+  Verification: `pending`
   Commit: `pending`
 
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.3`
@@ -3666,7 +3708,7 @@ decomposes the architecture needed to move beyond that bounded foundation.
 
 ## Current Frontier
 
-Current frontier: .3.2.15.7.3.11.3.4 selects an observation joining preserved preparation receipts to actual producer and policy evidence; startup cause remains unproved. Startup/parent, full CI and push stay gated.
+Current frontier: .3.2.15.7.3.11.3.4.1.2 repairs stale source-identity controls before daemon-observer qualification and any original admission. Startup/parent, full CI and push stay gated.
 
 Architecture audit `.1` is complete. Decision `0032` selects one public
 `.vial` source language, private immutable `VIALSemanticIR` and
@@ -6338,3 +6380,9 @@ Native-proxy review acceptance: recover all checked assertions at `5c269071bd345
 - [x] **ROOT CAUSE (WHY + WHERE)** — The pre-repair controls fail at t/1816-rust-proxy-integration.t line 177 and line 184: successful preparation records are absent, and wrapper execution precedes any receipt. Frozen original diagnostics independently preserve that omission.
 - [x] **ADDRESSED (verified)** — Complete canonical preparation is emitted before success/failure handling or wrapper execution. Native, Perl and failed-preparation controls pass. In-memory incomplete and late receipt mutations fail the exact independent completeness/order boundaries without modifying original disk bytes.
 - [x] **NO REGRESSION** — Full focused TAP, input and native absence audits agree; lifecycle and architecture controls pass with empty stderr. The original syntax OK result is retained. Book and knowledge-map: OK synchronization plus staged doctrines gate the commit; no original or compiler execution is hidden in the checks.
+
+## Acceptance Checklist (unprivileged daemon caller .3.2.15.7.3.11.3.4.1.1)
+
+- [x] **ROOT CAUSE (WHY + WHERE)** — git log -S 'POLICY_SCOPE = "execution_context"' -- scripts/run_fixture_startup_policy_observation.py identifies the fixed narrower caller. The new trapped daemon boundary initially raises TypeError for the unsupported scope keyword without constructing a collector or original.
+- [x] **ADDRESSED (verified)** — The fixed daemon CLI reuses the existing unprivileged lifecycle. Both selected scopes pass held-body and cleanup controls; missing/changed readiness rejects before launch and changed retained scope/command rejects after settlement. Removing readiness admission fails the independent controls.
+- [x] **NO REGRESSION** — Focused scope/lifecycle controls pass; independent full-band census retains the two stale source-control failures and their immediate repair owner. No new observer failure is hidden or original admitted. Book and knowledge-map: OK synchronization plus staged doctrines gate this caller commit; parent fixture qualification stays open.

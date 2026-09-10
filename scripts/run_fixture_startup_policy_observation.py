@@ -21,13 +21,19 @@ ROOT = Path(__file__).resolve().parent.parent
 POLICY_SCOPE = "execution_context"
 
 
-def run(native, evidence, root):
+def require_policy_scope(scope):
+    if scope not in ("execution_context", "daemon_context"):
+        raise ValueError("unknown policy-only collection scope")
+
+
+def run(native, evidence, root, *, policy_scope=POLICY_SCOPE):
+    require_policy_scope(policy_scope)
     test = collection = census = result = fixture_result = None
     observation_error = None
     cancelled = False
     try:
         evidence.record(
-            "policy_observation_started", scope=POLICY_SCOPE,
+            "policy_observation_started", scope=policy_scope,
             argv=list(launcher.TEST_ARGV),
             test_sha256=hashlib.sha256((root / launcher.TEST_ARGV[1]).read_bytes()).hexdigest(),
             caller_sha256=hashlib.sha256(Path(__file__).read_bytes()).hexdigest(),
@@ -36,8 +42,10 @@ def run(native, evidence, root):
             observer_sha256=hashlib.sha256(Path(launcher.observer.__file__).read_bytes()).hexdigest(),
             fixture_native_identity="pending", kernel_sample="not_collected",
             qualification="not_claimed")
-        collection = launcher.policy_log.PolicyLog(root, evidence.directory, native, scope=POLICY_SCOPE)
+        collection = launcher.policy_log.PolicyLog(root, evidence.directory, native, scope=policy_scope)
         policy_ready = collection.prepare()
+        if not isinstance(policy_ready, dict) or policy_ready.get("scope") != policy_scope:
+            raise RuntimeError("policy readiness has unexpected collection scope")
         evidence.record("policy_prepared", **policy_ready)
         test = launcher.GatedTest(native, root, evidence.directory)
         native.test = test
@@ -46,7 +54,7 @@ def run(native, evidence, root):
             collection.check()
             ready_ns = time.monotonic_ns()
             evidence.record("observer_ready", ready_ns=ready_ns, test=test.identity,
-                            mode="policy_only", scope=POLICY_SCOPE, policy_readiness=policy_ready)
+                            mode="policy_only", scope=policy_scope, policy_readiness=policy_ready)
             return ready_ns
 
         witness = test.release(prepare)
@@ -85,13 +93,13 @@ def run(native, evidence, root):
         if collection is not None:
             try:
                 collected = collection.finish()
-                if launcher.retained_policy_result(evidence, scope=POLICY_SCOPE) != collected:
+                if launcher.retained_policy_result(evidence, scope=policy_scope) != collected:
                     raise RuntimeError("policy status changed after collector publication")
             except (Exception, KeyboardInterrupt) as error:
                 cleanup_errors.append("policy collection: " + str(error))
             else:
                 try:
-                    evidence.record("policy_settled", scope=POLICY_SCOPE, leader_reaped=True, failures={},
+                    evidence.record("policy_settled", scope=policy_scope, leader_reaped=True, failures={},
                                     result_path=str((evidence.directory / "policy-result.json").relative_to(root)))
                 except (Exception, KeyboardInterrupt) as error:
                     if observation_error is None:
@@ -129,14 +137,15 @@ def run(native, evidence, root):
     if census is None or fixture_result is None:
         raise RuntimeError("original lacks observed fixture settlement")
     census.require_coverage()
-    evidence.record("caller_complete", result=result, scope=POLICY_SCOPE,
+    evidence.record("caller_complete", result=result, scope=policy_scope,
                     fixture_native_identity="observed_subset", fixtures=fixture_result,
                     kernel_sample="not_collected",
                     qualification="not_claimed")
     return result
 
 
-def main():
+def main(*, policy_scope=POLICY_SCOPE):
+    require_policy_scope(policy_scope)
     argparse.ArgumentParser(description=__doc__).parse_args()
     if sys.platform != "darwin" or os.getuid() == 0 or os.geteuid() == 0:
         raise ValueError("run the diagnostic caller as the normal user on Darwin")
@@ -153,7 +162,7 @@ def main():
     try:
         evidence = launcher.observer.Evidence(ROOT)
         print(str(evidence.directory.relative_to(ROOT)), flush=True)
-        run(native, evidence, ROOT)
+        run(native, evidence, ROOT, policy_scope=policy_scope)
         return 0
     except (Exception, KeyboardInterrupt) as error:
         if evidence is not None:

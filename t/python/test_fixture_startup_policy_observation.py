@@ -6,6 +6,7 @@ import hashlib
 import io
 import json
 import os
+import runpy
 from pathlib import Path
 import signal
 import subprocess
@@ -13,7 +14,7 @@ import sys
 import tempfile
 import time
 import unittest
-from unittest.mock import patch
+from unittest.mock import Mock, patch
 
 ROOT = Path(__file__).resolve().parents[2]
 sys.path.insert(0, str(ROOT / "scripts"))
@@ -69,6 +70,7 @@ class PortableFixtureProcesses(fixtures.PortableProcesses):
 
 
 class PolicyOnlyControls(unittest.TestCase):
+    policy_scope = "execution_context"
     policy_body = fixtures.LauncherControls.policy_body
     events = fixtures.LauncherControls.events
 
@@ -81,7 +83,7 @@ class PolicyOnlyControls(unittest.TestCase):
         self.evidence = launcher.observer.Evidence(self.root)
         self.addCleanup(self.evidence.stream.close)
         self.real_popen = subprocess.Popen
-        fixtures.install_policy_control(self, self.root, scope="execution_context")
+        fixtures.install_policy_control(self, self.root, scope=self.policy_scope)
         controlled_popen = subprocess.Popen
         blocked = patch.object(subprocess, "Popen", side_effect=lambda argv, **kwargs:
                                self.allowed_spawn(controlled_popen, argv, **kwargs))
@@ -183,7 +185,10 @@ do {
             child.finish(cancel=True)
 
     def run_caller(self):
-        return policy_caller.run(self.native, self.evidence, self.root)
+        return policy_caller.run(self.native, self.evidence, self.root, policy_scope=self.policy_scope)
+
+    def main(self):
+        return policy_caller.main(policy_scope=self.policy_scope)
 
     def original(self):
         return json.loads((self.evidence.directory / "test-result.json").read_text())
@@ -211,7 +216,7 @@ do {
 
     def context_body(self):
         journal = (self.evidence.directory / "observations.jsonl").relative_to(self.root)
-        return self.policy_body() + "\nopen my $context, '<', '" + str(journal) + "' or die $!;\n" + r'''
+        body = self.policy_body() + "\nopen my $context, '<', '" + str(journal) + "' or die $!;\n" + r'''
 my $matched = 0;
 while (my $line = <$context>) {
     my $row = decode_json($line);
@@ -224,6 +229,7 @@ while (my $line = <$context>) {
 close $context or die $!;
 die 'missing or repeated readiness' unless $matched == 1;
 '''
+        return body.replace("execution_context", self.policy_scope)
 
     def test_actual_body_verifies_context_preparation_before_its_single_release(self):
         self.program(body=self.context_body())
@@ -252,13 +258,49 @@ die 'missing or repeated readiness' unless $matched == 1;
             self.assertEqual(path.stem, hashlib.sha256(path.read_bytes()).hexdigest())
         self.check_closed()
 
+    def test_changed_readiness_scope_cannot_release_original(self):
+        prepare = launcher.policy_log.PolicyLog.prepare
+        def changed(collector):
+            return dict(prepare(collector), scope="fixture_path")
+        with patch.object(launcher.policy_log.PolicyLog, "prepare", changed), \
+                self.assertRaisesRegex(RuntimeError, "readiness.*scope"):
+            self.run_caller()
+        self.assertEqual(self.children, [])
+        retained = json.loads((self.evidence.directory / "policy-result.json").read_text())
+        self.assertTrue(retained["leader_reaped"])
+        with self.assertRaises(ChildProcessError):
+            os.waitpid(retained["identity"]["pid"], os.WNOHANG)
+
+    def changed_retention(self, field):
+        finish = launcher.policy_log.PolicyLog.finish
+        def changed(collector):
+            result = finish(collector)
+            if field == "scope":
+                result["scope"] = "fixture_path"
+            else:
+                result["command"][-1] += " AND false"
+            (collector.directory / "policy-result.json").write_text(json.dumps(result) + "\n")
+            return result
+        with patch.object(launcher.policy_log.PolicyLog, "finish", changed), \
+                self.assertRaisesRegex(RuntimeError, "unexpected collection scope or command"):
+            self.run_caller()
+        self.assertEqual(self.original()["returncode"], 0)
+        self.assertFalse(any(row["event"] == "caller_complete" for row in self.events()))
+        self.check_closed()
+
+    def test_changed_retained_scope_stays_failed(self):
+        self.changed_retention("scope")
+
+    def test_changed_retained_command_stays_failed(self):
+        self.changed_retention("command")
+
     def test_original_nonzero_stays_failed_without_another_invocation(self):
         self.program(exit_code=23, body=self.context_body())
         with self.assertRaisesRegex(RuntimeError, "original test failed"):
             self.run_caller()
         self.assertEqual(self.original()["returncode"], 23)
         self.assertFalse(any(row["event"] == "caller_complete" for row in self.events()))
-        self.assertEqual(launcher.retained_policy_result(self.evidence, scope="execution_context")["failures"], {})
+        self.assertEqual(launcher.retained_policy_result(self.evidence, scope=self.policy_scope)["failures"], {})
         self.check_closed()
 
     def test_original_failure_oracle_rejects_laundered_success(self):
@@ -439,7 +481,7 @@ die 'missing or repeated readiness' unless $matched == 1;
                 self.assertRaisesRegex(RuntimeError, "observed fixtures: settlement denied"):
             self.run_caller()
         self.assertEqual(self.original()["returncode"], 0)
-        self.assertEqual(launcher.retained_policy_result(self.evidence, scope="execution_context")["failures"], {})
+        self.assertEqual(launcher.retained_policy_result(self.evidence, scope=self.policy_scope)["failures"], {})
         self.assertFalse(any(row["event"] == "caller_complete" for row in self.events()))
         self.check_closed()
 
@@ -479,7 +521,7 @@ die 'missing or repeated readiness' unless $matched == 1;
         with patch.object(self.evidence, "record", side_effect=full), \
                 self.assertRaisesRegex(RuntimeError, "controlled full journal"):
             self.run_caller()
-        self.assertEqual(launcher.retained_policy_result(self.evidence, scope="execution_context")["failures"], {})
+        self.assertEqual(launcher.retained_policy_result(self.evidence, scope=self.policy_scope)["failures"], {})
         self.check_closed()
 
     def test_fixture_journal_failure_keeps_independently_verified_saved_settlement(self):
@@ -533,18 +575,19 @@ die 'missing or repeated readiness' unless $matched == 1;
         self.check_closed()
 
     def test_cli_has_no_session_or_command_override_and_requires_guarded_normal_user(self):
-        for arguments in (["--session", "unused"], ["--command", "unused"]):
+        for arguments in (["--session", "unused"], ["--command", "unused"],
+                          ["--scope", "daemon_context"], ["--predicate", "true"], ["--timeout", "1"]):
             with self.subTest(arguments=arguments), patch.object(sys, "argv", ["policy-observation", *arguments]), \
                     contextlib.redirect_stderr(io.StringIO()), self.assertRaises(SystemExit) as error:
-                policy_caller.main()
+                self.main()
             self.assertEqual(error.exception.code, 2)
         with patch.object(sys, "argv", ["policy-observation"]), patch.object(sys, "platform", "darwin"):
             with patch.object(os, "getuid", return_value=0), self.assertRaisesRegex(ValueError, "normal user"):
-                policy_caller.main()
+                self.main()
             with patch.object(os, "getuid", return_value=501), patch.object(os, "geteuid", return_value=501), \
                     patch.dict(os.environ, {"FSMGEN_RAM_GUARD_ACTIVE": "0"}), \
                     self.assertRaisesRegex(ValueError, "run this caller through"):
-                policy_caller.main()
+                self.main()
         self.assertEqual(self.children, [])
 
     def check_main(self, original_exit, expected_exit):
@@ -559,7 +602,7 @@ die 'missing or repeated readiness' unless $matched == 1;
                 patch.object(sys, "argv", ["policy-observation"]), \
                 patch.dict(os.environ, {"FSMGEN_RAM_GUARD_ACTIVE": "1"}), \
                 contextlib.redirect_stdout(output), contextlib.redirect_stderr(errors):
-            self.assertEqual(policy_caller.main(), expected_exit)
+            self.assertEqual(self.main(), expected_exit)
         self.assertEqual(signal.getsignal(signal.SIGTERM), previous_handler)
         actual_umask = os.umask(previous_umask)
         self.assertEqual(actual_umask, previous_umask)
@@ -580,6 +623,50 @@ die 'missing or repeated readiness' unless $matched == 1;
     @unittest.skipUnless(sys.platform == "darwin", "actual normal-user Darwin entrypoint")
     def test_main_reports_failure_after_preserving_original_and_cleanup(self):
         self.check_main(23, 1)
+
+
+class DaemonPolicyOnlyControls(PolicyOnlyControls):
+    policy_scope = "daemon_context"
+
+
+class ScopeSelectionControls(unittest.TestCase):
+    def boundary(self, scope=None):
+        evidence = Mock(directory=ROOT / ".artifacts/logs/unused-control-boundary")
+        options = {} if scope is None else {"policy_scope": scope}
+        with patch.object(launcher.policy_log, "PolicyLog", side_effect=RuntimeError("collector boundary")) as collector, \
+                patch.object(launcher, "GatedTest", side_effect=AssertionError("test launch forbidden")) as original, \
+                self.assertRaisesRegex(RuntimeError, "collector boundary"):
+            policy_caller.run(None, evidence, ROOT, **options)
+        collector.assert_called_once_with(ROOT, evidence.directory, None,
+                                          scope="execution_context" if scope is None else scope)
+        original.assert_not_called()
+
+    def test_existing_default_reaches_execution_context(self):
+        self.boundary()
+
+    def test_explicit_daemon_reaches_daemon_context(self):
+        self.boundary("daemon_context")
+
+    def test_invalid_internal_scope_rejects_before_any_owner(self):
+        with patch.object(launcher.policy_log, "PolicyLog") as collector, \
+                patch.object(launcher, "GatedTest") as original, \
+                patch.object(launcher.observer, "Evidence") as evidence:
+            for scope in ("fixture_path", "unknown", None, []):
+                with self.subTest(scope=scope):
+                    with self.assertRaisesRegex(ValueError, "policy-only.*scope"):
+                        policy_caller.run(None, None, ROOT, policy_scope=scope)
+                    with self.assertRaisesRegex(ValueError, "policy-only.*scope"):
+                        policy_caller.main(policy_scope=scope)
+            collector.assert_not_called()
+            original.assert_not_called()
+            evidence.assert_not_called()
+
+    def test_daemon_entrypoint_fixes_scope_without_other_options(self):
+        with patch.object(policy_caller, "main", return_value=0) as main, \
+                self.assertRaises(SystemExit) as result:
+            runpy.run_path(str(ROOT / "scripts/run_fixture_startup_daemon_observation.py"), run_name="__main__")
+        self.assertEqual(result.exception.code, 0)
+        main.assert_called_once_with(policy_scope="daemon_context")
 
 
 class LiveCollectorAdmission(unittest.TestCase):
