@@ -1,0 +1,11 @@
+{
+  "agrees_with_result_allocations": true,
+  "all_exact_allocations_absent": true,
+  "cause": "save_result called pretty on the shared JSON::PP object, mutating it; subsequent ledger append operations wrote complete pretty JSON objects rather than one object per line. The independent JSONL reader rejected that mismatch.",
+  "complete_stream_objects": 141,
+  "process_attempts": 0,
+  "qualified_runtime_retirement_claim": false,
+  "schema": "fsmgen.retirement_initial_ledger_recovery.v1",
+  "source_bytes": 20915,
+  "source_sha256": "b48e2d329e207b223574ca25755f02dc43342df4e91dcf5714bb8e634ca2922f"
+}

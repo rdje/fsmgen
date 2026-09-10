@@ -1,0 +1,135 @@
+"""Prospective deletion cuts and independent filesystem retirement oracle."""
+from __future__ import annotations
+
+import copy
+import hashlib
+import json
+from pathlib import Path
+import re
+import sys
+
+BASE = Path(__file__).resolve().parent
+ROOT = BASE.parents[2]
+LOG = ROOT / '.artifacts/logs/native-proxy-runtime-retirement-20260910'
+NODES = ['', 'rust-tool-resolution', 'rust-tools', 'rust-tools/cargo',
+         'rust-tools/compiler-cache', 'rust-tools/compiler-cache/cache.dat',
+         'rust-tools/compiler-temp', 'rust-tools/compiler-temp/scratch.dat',
+         'rust-tools/image-reference.json', 'rust-tools/rustup', 'rust-tools/rustup.c']
+
+
+def build_plan() -> dict:
+    removals = list(reversed(NODES)) + ['GLOBAL']
+    trace = [dict(path=path, phase=phase) for path in removals for phase in ('before', 'after')]
+    cases = []
+    for index, step in enumerate(trace):
+        completed = (index + 1) // 2
+        cases.append(dict(name=f"{step['phase']} {step['path'] or 'ROOT'}", cut=step,
+                          trace=trace[:index + 1], remaining=sorted(set(NODES) - set(removals[:completed])),
+                          global_retained=int(completed < len(removals)), returned=0))
+    cases.append(dict(name='complete', cut=None, trace=trace, remaining=[], global_retained=0, returned=1))
+    return dict(schema='fsmgen.inactive_runtime_retirement_plan.v1', nodes=NODES, cases=cases,
+                ceilings=dict(nodes=256, depth=8, regular_file_bytes=65536, total_regular_file_bytes=4194304),
+                limits='Fixed inert filesystem profiles and deterministic exceptions; no actual process crash, '
+                       'compiler output capacity, authenticated cleanup or product runtime authority.')
+
+
+def tap_count(raw: str) -> int:
+    assert not re.search(r'^(?:not ok|Bail out!)', raw, re.M)
+    plans = re.findall(r'^1\.\.([0-9]+)$', raw, re.M)
+    assert len(plans) == 1
+    total = int(plans[0])
+    assert [int(n) for n in re.findall(r'^ok ([0-9]+) - ', raw, re.M)] == list(range(1, total + 1))
+    return total
+
+
+def validate_result(result: dict, plan: dict) -> None:
+    assert result['success'] is True
+    assert type(result['forbidden_process_attempts']) is int and result['forbidden_process_attempts'] == 0
+    assert len(result['cuts']) == len(plan['cases'])
+    for actual, expected in zip(result['cuts'], plan['cases']):
+        assert actual['name'] == expected['name'] and actual['trace'] == expected['trace']
+        assert actual['remaining'] == expected['remaining']
+        assert actual['global_retained'] == expected['global_retained']
+        assert actual['returned'] == expected['returned']
+        assert actual['prior_before'] == actual['prior_after']
+        assert actual['image_before'] == actual['image_after']
+        assert actual['error'] == ('' if expected['returned'] else 'selected retirement cut\n')
+        assert set(actual['before']) == set(NODES)
+        assert actual['after'] == {key: actual['before'][key] for key in expected['remaining']}
+        if expected['returned']:
+            assert actual['result']['removed_nodes'] == len(NODES)
+            assert actual['result']['runtime_authorized'] == 0 and actual['result']['executable'] is None
+    controls = result['controls']
+    assert len(controls) == len({row['name'] for row in controls})
+    assert all(row['rejected'] == 1 and row['expected_diagnostic'] == 1 and row['returned'] == 0
+               and row['before'] == row['after'] for row in controls)
+    assert {'unsettled compiler', 'missing outer', 'missing inner stages', 'same-byte global replacement',
+            'same-byte private replacement', 'replaced acquired workspace', 'unknown node spelling',
+            'special FIFO', 'shared file links', 'file byte ceiling', 'node ceiling', 'depth ceiling',
+            'aggregate byte ceiling', 'absent lock cannot be recreated', 'absent namespace cannot be recreated',
+            'wrong lock identity', 'changed acquired image', 'unknown acquisition field', 'direct retirement bypass'} \
+        <= {row['name'] for row in controls}
+    last = result['last_owner']
+    assert last['references_remaining'] == 0 and last['image_before'] == last['image_after']
+    assert last['workspace_absent'] == 1
+    mutants = result['mutants']
+    assert set(mutants) == {'omitted cleanup review', 'discarded prior workspace identity'}
+    for row in mutants.values():
+        assert row['returned'] == 1 and row['global_retained'] == 0 and row['workspace_absent'] == 1
+    assert mutants['omitted cleanup review']['compiler_group_gone'] == 0
+    assert mutants['discarded prior workspace identity']['prior_inode'] != mutants['discarded prior workspace identity']['current_inode']
+    allocated = result['allocated']
+    assert allocated and len({row['path'] for row in allocated}) == len(allocated)
+    for row in allocated:
+        assert row['kind'] in ('store', 'workspace')
+        assert type(row['device']) is int and row['device'] == ROOT.stat().st_dev
+        assert type(row['inode']) is int and row['inode'] > 0
+        assert re.fullmatch(r'\.artifacts/tmp/(?:native-proxy-image-custody/cases|process-supervisor-tests)/fsmgen-[A-Za-z0-9_]+', row['path'])
+        path = ROOT / row['path']
+        assert not path.exists() and not path.is_symlink()
+    ledger = [json.loads(line) for line in (LOG / 'admission.jsonl').read_text().splitlines()]
+    assert ledger == allocated
+
+
+def main() -> None:
+    plan = build_plan()
+    if sys.argv[1:] == ['--plan']:
+        (BASE / 'plan.json').write_text(json.dumps(plan, sort_keys=True, indent=2) + '\n')
+        print(f"fixed retirement plan: {len(plan['cases'])} routes")
+        return
+    assert not sys.argv[1:]
+    assert json.loads((BASE / 'plan.json').read_bytes()) == plan
+    result = json.loads((LOG / 'qualification.json').read_bytes())
+    validate_result(result, plan)
+    falsifiers = []
+    for name, mutate in [
+        ('missing cut', lambda x: x['cuts'].pop()),
+        ('early release', lambda x: x['cuts'][0].update(global_retained=0)),
+        ('unremoved node', lambda x: x['cuts'][-1]['remaining'].append('rust-tools')),
+        ('lost prior owner', lambda x: x['cuts'][0].update(prior_after={})),
+        ('changed shared image', lambda x: x['cuts'][0].update(image_after={})),
+        ('returned interruption', lambda x: x['cuts'][0].update(returned=1)),
+        ('lost rejection', lambda x: x['controls'][0].update(rejected=0)),
+        ('missing mutant', lambda x: x['mutants'].pop('discarded prior workspace identity')),
+        ('lost allocation', lambda x: x['allocated'].pop()),
+        ('process attempted', lambda x: x.update(forbidden_process_attempts=1)),
+    ]:
+        altered = copy.deepcopy(result)
+        mutate(altered)
+        try:
+            validate_result(altered, plan)
+        except AssertionError:
+            falsifiers.append(name)
+        else:
+            raise AssertionError(f'counterfactual accepted: {name}')
+    report = dict(schema='fsmgen.inactive_runtime_retirement_audit.v1', success=True,
+                  assertions=tap_count((LOG / 'qualify.tap').read_text()),
+                  cuts=len(plan['cases']) - 1, complete_cut_routes=1,
+                  rejecting_controls=len(result['controls']), allocations=len(result['allocated']),
+                  mutants=sorted(result['mutants']), falsifiers=falsifiers, limits=plan['limits'])
+    (LOG / 'audit.json').write_text(json.dumps(report, sort_keys=True, indent=2) + '\n')
+    print(json.dumps(report, sort_keys=True))
+
+
+if __name__ == '__main__':
+    main()

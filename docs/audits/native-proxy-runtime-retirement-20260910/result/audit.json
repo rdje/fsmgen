@@ -1,0 +1,32 @@
+{
+  "allocations": 174,
+  "assertions": 59,
+  "complete_cut_routes": 1,
+  "cuts": 24,
+  "falsifiers": [
+    "missing cut",
+    "early release",
+    "unremoved node",
+    "lost prior owner",
+    "changed shared image",
+    "returned interruption",
+    "lost rejection",
+    "missing mutant",
+    "lost allocation",
+    "process attempted",
+    "lost late replacement",
+    "unproved exact capacity"
+  ],
+  "initial_stream_recovered_allocations": 141,
+  "late_changes": 7,
+  "limits": "Fixed inert filesystem profiles and deterministic exceptions; no actual process crash, compiler output capacity, authenticated cleanup or product runtime authority.",
+  "mutants": [
+    "discarded prior workspace identity",
+    "omitted cleanup review"
+  ],
+  "positive_boundaries": 4,
+  "regression_assertions": 79,
+  "rejecting_controls": 19,
+  "schema": "fsmgen.inactive_runtime_retirement_audit.v1",
+  "success": true
+}

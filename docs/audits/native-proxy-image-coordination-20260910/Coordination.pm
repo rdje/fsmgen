@@ -50,6 +50,13 @@ sub _open_lock {
     return $handle;
 }
 
+sub _open_existing_lock {
+    my ($path) = @_;
+    sysopen(my $handle, $path, O_RDWR | O_NOFOLLOW | O_NONBLOCK)
+        or die "cannot open existing retirement lock: $!\n";
+    return $handle;
+}
+
 sub _acquire {
     my ($handle, $path, $before) = @_;
     my $deadline = _now() + $WAIT_SECONDS;
@@ -137,16 +144,20 @@ sub _transaction {
             || ($operation eq 'acquire_runtime_reference' && @payload == 3
                 && defined(&NativeProxyReferenceAcquisition::_admit_locked)
                 && defined(&NativeProxyReferenceCensus::_inspect_locked)
-                && defined(&NativeProxyImagePublication::_publish_locked)));
+                && defined(&NativeProxyImagePublication::_publish_locked))
+            || ($operation eq 'retire_runtime_reference' && @payload == 2
+                && defined(&NativeProxyRuntimeRetirement::_admit_locked)
+                && defined(&NativeProxyReferenceCensus::_inspect_locked)));
     NativeProxyImageCustody::image_key(@payload) if $operation eq 'publish_image';
     NativeProxyReferenceAcquisition::_request(@payload) if $operation eq 'acquire_runtime_reference';
+    NativeProxyRuntimeRetirement::_request($case, @payload) if $operation eq 'retire_runtime_reference';
     NativeProxyImageCustody::_relative_path($case);
     die "only the inactive qualification namespace is admitted\n"
         unless $case =~ /\A\Q$CASE_PREFIX\Efsmgen-[A-Za-z0-9_]+\z/;
     my $base = File::Spec->catdir($ROOT, $case);
     my $root_before = NativeProxyImageCustody::_directory($base);
     my $path = "$base/coordination.lock";
-    my $handle = _open_lock($path);
+    my $handle = $operation eq 'retire_runtime_reference' ? _open_existing_lock($path) : _open_lock($path);
     my $result;
     my $ok = eval {
         my $before = _lock_identity($handle, $path);
@@ -155,10 +166,13 @@ sub _transaction {
         fcntl($handle, F_SETFD, $flags | FD_CLOEXEC)
             or die "cannot seal permanent lock descriptor inheritance: $!\n";
         _acquire($handle, $path, $before);
+        die "retirement lock differs from acquired identity\n"
+            if $operation eq 'retire_runtime_reference'
+                && ($before->[0] != $payload[0]{lock}{device} || $before->[1] != $payload[0]{lock}{inode});
         die "store root replaced during acquisition\n"
             unless NativeProxyImageCustody::_same_metadata(
                 $root_before, NativeProxyImageCustody::_directory($base), 0,1,2,4);
-        _structure($base, 1);
+        _structure($base, $operation eq 'retire_runtime_reference' ? 0 : 1);
         my @directories = map { NativeProxyImageCustody::_directory("$base/$_") } qw(images references);
         my $census = _census($base);
         my $publication = $operation eq 'publish_image'
@@ -174,6 +188,19 @@ sub _transaction {
             my $after = NativeProxyReferenceCensus::_inspect_locked($case, _census($base));
             $acquisition = NativeProxyReferenceAcquisition::_finish_locked(
                 $case, $plan, $published, $acquired, $before, $after);
+        }
+        my $retirement;
+        if ($operation eq 'retire_runtime_reference') {
+            my $before = NativeProxyReferenceCensus::_inspect_locked($case, $census);
+            my $plan = NativeProxyRuntimeRetirement::_admit_locked($case, $before, $payload[0]);
+            NativeProxyRuntimeRetirement::_retire_locked($plan);
+            my $current = NativeProxyReferenceCensus::_inspect_locked($case, _census($base));
+            NativeProxyRuntimeRetirement::_release_locked($plan, $current);
+            my $final_census = _census($base);
+            die "retirement changed image namespace membership\n"
+                unless join(',', @{$census->{images}}) eq join(',', @{$final_census->{images}});
+            my $after = NativeProxyReferenceCensus::_inspect_locked($case, $final_census);
+            $retirement = NativeProxyRuntimeRetirement::_finish_locked($case, $plan, $after);
         }
         _structure($base, 0);
         for my $i (0, 1) {
@@ -198,6 +225,9 @@ sub _transaction {
             : $operation eq 'acquire_runtime_reference'
             ? {schema => 'fsmgen.inactive_runtime_reference_acquisition.v1', runtime_authorized => 0,
                executable => undef, lock => $lock, %$acquisition}
+            : $operation eq 'retire_runtime_reference'
+            ? {schema => 'fsmgen.inactive_runtime_retirement.v1', runtime_authorized => 0,
+               executable => undef, lock => $lock, %$retirement}
             : {schema => 'fsmgen.inactive_image_namespace.v1',
             completeness => 'structure_only; contents_and_reference_semantics_unqualified',
             lock => $lock,

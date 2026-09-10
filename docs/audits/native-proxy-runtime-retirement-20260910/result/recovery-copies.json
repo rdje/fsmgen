@@ -1,0 +1,75 @@
+{
+  "files": [
+    {
+      "path": "docs/audits/native-proxy-runtime-retirement-20260910/result/acquisition-regression-admission.jsonl",
+      "sha256": "07720c66b1429f4e6f31960cd826be436a7a9e5758eb743fba1e203bfdd2e232",
+      "size_bytes": 10276
+    },
+    {
+      "path": "docs/audits/native-proxy-runtime-retirement-20260910/result/acquisition-regression.json",
+      "sha256": "088cbfc6a24a9095ddef3c5ce52261f6ec728d9bbf33c42cb7a170510b429df4",
+      "size_bytes": 86400
+    },
+    {
+      "path": "docs/audits/native-proxy-runtime-retirement-20260910/result/acquisition-regression.tap",
+      "sha256": "2ea4b2614d7b5d41cb0a66910bc964ace070ee809c7dd749f743c25a8058f740",
+      "size_bytes": 3637
+    },
+    {
+      "path": "docs/audits/native-proxy-runtime-retirement-20260910/result/admission.jsonl",
+      "sha256": "4e516320dcf66ec6ce7909288ee59e0582e8e9ccc57249f536b9ac320d615b7c",
+      "size_bytes": 21286
+    },
+    {
+      "path": "docs/audits/native-proxy-runtime-retirement-20260910/result/audit.json",
+      "sha256": "193e4bf2db0b693d69284d9d313e69822ad275ff3dcffee9a379e48bdad90a33",
+      "size_bytes": 908
+    },
+    {
+      "path": "docs/audits/native-proxy-runtime-retirement-20260910/result/initial-admission.json.stream.base64",
+      "sha256": "9061b1cf35c10f6b53cb97095719aba3bdc89d5b40c13dacc9f8f6df52e6af10",
+      "size_bytes": 28255
+    },
+    {
+      "path": "docs/audits/native-proxy-runtime-retirement-20260910/result/initial-audit.log",
+      "sha256": "897247db1decb74cd01c1d44cd5ad87779a140da3a07bd753b34590063fd28eb",
+      "size_bytes": 1445
+    },
+    {
+      "path": "docs/audits/native-proxy-runtime-retirement-20260910/result/initial-audit.py.source",
+      "sha256": "1dfd739556ceb7e39acd8dd92df99486591cb3003ef2e0b711dae6a698446cf7",
+      "size_bytes": 7560
+    },
+    {
+      "path": "docs/audits/native-proxy-runtime-retirement-20260910/result/initial-ledger-recovery.json",
+      "sha256": "f260b3ce1edecd40e483947827cf3d4f3e37eafb5984af575358073e8913ccb7",
+      "size_bytes": 604
+    },
+    {
+      "path": "docs/audits/native-proxy-runtime-retirement-20260910/result/initial-qualification.json",
+      "sha256": "1449388b5217e1ece6614649ad9ef6f2e7034f8678065dc96139d8c3c16066f3",
+      "size_bytes": 1025840
+    },
+    {
+      "path": "docs/audits/native-proxy-runtime-retirement-20260910/result/initial-qualify.t.source",
+      "sha256": "b9330cf4c5acfd36e42a605d20a4c01f5bc01a23d4bd2a696c788d4b06d001f5",
+      "size_bytes": 16998
+    },
+    {
+      "path": "docs/audits/native-proxy-runtime-retirement-20260910/result/initial-qualify.tap",
+      "sha256": "c3e8b3c75a19e73107c78a1c940d41544446aebe67234a3b4c81b061c9c15df8",
+      "size_bytes": 2301
+    },
+    {
+      "path": "docs/audits/native-proxy-runtime-retirement-20260910/result/qualification.json",
+      "sha256": "1cfe4c58f055acf2027580f8cef80586584b66c6a26469f91014ece8dde53757",
+      "size_bytes": 1335062
+    },
+    {
+      "path": "docs/audits/native-proxy-runtime-retirement-20260910/result/qualify.tap",
+      "sha256": "f3bfb07160ddac83e4d9891c5547a419c83938aa8d19bf3e756f55ee7c580806",
+      "size_bytes": 2714
+    }
+  ],
+  "schema": "fsmgen.inactive_retirement_recovery_copies.v1"
+}

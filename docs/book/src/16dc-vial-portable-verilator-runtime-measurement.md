@@ -1765,6 +1765,23 @@ custody; passing synthetic receipts does not authorize deletion. Replay:
 scripts/run_with_ram_guard.sh -- perl docs/audits/native-proxy-cleanup-receipts-20260910/qualify.t
 ```
 
+Inactive retirement now joins those receipts to the original acquisition
+identities and a complete bounded private-tree snapshot. It removes only
+captured owned nodes and never follows symlink targets. Unknown members,
+special files, shared links, changed identities or exceeded limits fail closed.
+The global reference remains until the private workspace is confirmed absent;
+ordinary retirement preserves shared images and other owners. Partial removal
+retains the pin for recovery. An interruption after the final reference unlink
+can leave release completed without a success return, while preserving the image.
+There is no automatic retry or recreation of missing coordination state.
+These are inert filesystem qualifications; actual compiler-workspace capacity,
+complete receipt transport, observer lifetimes and native behavior remain open.
+The fixed qualification limits are recorded beside the replay harness:
+
+```bash
+scripts/run_with_ram_guard.sh -- perl docs/audits/native-proxy-runtime-retirement-20260910/qualify.t
+```
+
 The helper checks bounded regular source/output files and the native header,
 then sets executable permissions through the admitted open file handle. A
 regression exposed path-based permission changes affecting a substituted file

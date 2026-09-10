@@ -1,0 +1,110 @@
+{
+  "book": {
+    "exact_output_absent": true,
+    "new_passage_verified": true,
+    "rendered_bytes": 23128475,
+    "rendered_files": 98,
+    "same_volume_direct_objects": true
+  },
+  "durability": "All sources, the fixed plan, harness, independent audit/review, immediate allocation ledger and exact initial/final/regression evidence are tracked. The prior ignored acquisition JSON and ledger are restored exactly after their regression copies are retained. Every first-run allocated root is accounted for by full JSON-stream recovery and independently absent; no first failure is discarded.",
+  "exact_stream_encoding": "The original malformed ledger ends with a blank line, which git diff --check rejects as newly staged text. Its exact bytes are retained as initial-admission.json.stream.base64; decoding is byte-identical to the independently recovered stream and its original length/SHA-256. No original byte or failed record is normalized or discarded.",
+  "falsification": "Initial malformed/unsettled/foreign-identity/unknown-node and over-capacity cases cause no retirement mutation. Late content/inode/root/member/global replacements and partial-removal/reappearance controls retain the global pin. Exact node/depth/byte boundaries succeed and a symlink to another owned workspace is removed without affecting its target. Omitted cleanup and discarded prior-root identity counterimplementations each perform a deletion independently contradicted by the supplied evidence. Altered results reject missing cuts, pins, members, owners, images, controls, allocations and capacity proof.",
+  "final_evidence": [
+    {
+      "path": "docs/audits/native-proxy-runtime-retirement-20260910/result/audit.json",
+      "sha256": "193e4bf2db0b693d69284d9d313e69822ad275ff3dcffee9a379e48bdad90a33",
+      "size_bytes": 908
+    },
+    {
+      "path": "docs/audits/native-proxy-runtime-retirement-20260910/result/qualification.json",
+      "sha256": "1cfe4c58f055acf2027580f8cef80586584b66c6a26469f91014ece8dde53757",
+      "size_bytes": 1335062
+    }
+  ],
+  "initial_final_regression_allocations_disjoint": true,
+  "initial_ledger_failure": {
+    "agrees_with_result_allocations": true,
+    "all_exact_allocations_absent": true,
+    "cause": "save_result called pretty on the shared JSON::PP object, mutating it; subsequent ledger append operations wrote complete pretty JSON objects rather than one object per line. The independent JSONL reader rejected that mismatch.",
+    "complete_stream_objects": 141,
+    "process_attempts": 0,
+    "qualified_runtime_retirement_claim": false,
+    "schema": "fsmgen.retirement_initial_ledger_recovery.v1",
+    "source_bytes": 20915,
+    "source_sha256": "b48e2d329e207b223574ca25755f02dc43342df4e91dcf5714bb8e634ca2922f"
+  },
+  "limits": [
+    "Inactive runtime-reference store only; no product import or activation, compiler, native fixture, original, observer, unadmitted worker or process launch.",
+    "The required cleanup predicate reviews caller-supplied records; it does not authenticate actual process ownership or prove transport completeness. Those prerequisites and actual compiler-workspace profile/capacity qualification remain owned by .12.4.1.5 before native admission.",
+    "Selected workspace ceilings are conservative inert qualification inputs: 256 nodes, depth eight, each regular file at most 65536 bytes and aggregate regular-file bytes at most 4194304. They do not change current production cleanup policy or claim measured compiler-cache headroom.",
+    "Custody is checked under cooperative coordination. Dated path/descriptor observations cannot prevent arbitrary noncooperating mutation between the final check and a filesystem syscall; no adversarial atomic-unlink, kernel crash or power-loss guarantee is claimed.",
+    "An interruption before private absence retains the global reference. A cut after completed global unlink can leave an absent workspace/reference without a success return; shared image bytes remain retained and no automatic retry or reconstruction occurs.",
+    "Unresolved or stale ownership is not recovered by this operation. Observation-reference formats remain unqualified; maintenance and combined lifetimes must qualify before activation. Historical startup/parent and full CI/push remain gated."
+  ],
+  "owner": "HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.12.4.1.2.3.2",
+  "rederive": "A fixed prospective plan enumerates every before/after unlink/rmdir/global-release cut for the inert private profile. A separate filesystem observer uses lstat, readlink and bounded file reads; Python reconstructs image framing, full manifests and runtime-reference bytes from raw vectors, workspace/native file identities and canonical encoding. It checks exact remaining private footprints, shared images, prior owners, final ledger and independently absent roots. The unchanged acquisition suite and its independent oracle qualify the refined coordinator.",
+  "schema": "fsmgen.inactive_runtime_retirement_review.v1",
+  "source_revision": "a2d0fa26b976ecdc2faf5dbe1cdbf5ca69bf5424",
+  "unchanged_inputs": [
+    {
+      "path": "t/1669-task-acceptance-fixture-runtime.t",
+      "sha256": "bdebbf03308cd5e0699324f9ab96a249c11c9ab05634309569d33874391a196f",
+      "size_bytes": 67582
+    },
+    {
+      "path": "t/lib/FSM/Test/RustParityRuntime.pm",
+      "sha256": "10441706cb8b189f14b791b92f75f6e37f8d72aeb8b722457bac79ebda149eaa",
+      "size_bytes": 10526
+    },
+    {
+      "path": "t/lib/FSM/Test/RustProxyFixture.pm",
+      "sha256": "d9c4ab52cf8074526c59b7a5dcb9da870ca7ffdacb4eb236dacb23b5db6d8bfb",
+      "size_bytes": 11466
+    },
+    {
+      "path": "perl/FSM/Support/ProcessSupervisor.pm",
+      "sha256": "684882d91f673ea7145f43ed3aad31acf099f13508574be7b2d8911123988637",
+      "size_bytes": 27990
+    },
+    {
+      "path": "docs/audits/native-proxy-image-custody-20260910/ImageCustody.pm",
+      "sha256": "7f9db38e47140fedd39a80d7a6fbf1ee111f56f290a463729b516b08aae90d4f",
+      "size_bytes": 8021
+    },
+    {
+      "path": "docs/audits/native-proxy-image-publication-20260910/Publication.pm",
+      "sha256": "dc50ca598632572616d7da65fa6f1b417a20e7207dafa5fe03fd5d887382fab6",
+      "size_bytes": 5367
+    },
+    {
+      "path": "docs/audits/native-proxy-runtime-records-20260910/RuntimeRecord.pm",
+      "sha256": "013c0a02e7df59dc3a5af944b603cd44121252a02ca0228d6fdc3e1dd28e6745",
+      "size_bytes": 4078
+    },
+    {
+      "path": "docs/audits/native-proxy-runtime-census-20260910/ReferenceCensus.pm",
+      "sha256": "a1d2ebbe12e5219cf4b10aba701708a266a5aa9c342de0f06a053f2bd977e91b",
+      "size_bytes": 6246
+    },
+    {
+      "path": "docs/audits/native-proxy-runtime-acquisition-20260910/ReferenceAcquisition.pm",
+      "sha256": "b751c88d709e102f7f9b9dd17e0222c39e0a81acc16d7194f7f7c3f4c8535b57",
+      "size_bytes": 6565
+    },
+    {
+      "path": "docs/audits/native-proxy-runtime-acquisition-20260910/qualify.t",
+      "sha256": "9aff78c5e58d63c2bdce64587beb73127bc070e9127d5f45826f8e546cb2343a",
+      "size_bytes": 18708
+    },
+    {
+      "path": "docs/audits/native-proxy-cleanup-receipts-20260910/CleanupReceipts.pm",
+      "sha256": "5b22cecf6ff131f62fdeb237a3e77b67b5b29a172ff82320a67772b03cd24de0",
+      "size_bytes": 1300
+    },
+    {
+      "path": "docs/audits/native-proxy-canonical-contract-20260910/contract.json",
+      "sha256": "f3f981398afae72540ab4ac0194b8380d4743c3d2146c1172a85365add053222",
+      "size_bytes": 21927
+    }
+  ]
+}

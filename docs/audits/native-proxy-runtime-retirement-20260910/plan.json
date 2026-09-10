@@ -1,0 +1,1760 @@
+{
+  "cases": [
+    {
+      "cut": {
+        "path": "rust-tools/rustup.c",
+        "phase": "before"
+      },
+      "global_retained": 1,
+      "name": "before rust-tools/rustup.c",
+      "remaining": [
+        "",
+        "rust-tool-resolution",
+        "rust-tools",
+        "rust-tools/cargo",
+        "rust-tools/compiler-cache",
+        "rust-tools/compiler-cache/cache.dat",
+        "rust-tools/compiler-temp",
+        "rust-tools/compiler-temp/scratch.dat",
+        "rust-tools/image-reference.json",
+        "rust-tools/rustup",
+        "rust-tools/rustup.c"
+      ],
+      "returned": 0,
+      "trace": [
+        {
+          "path": "rust-tools/rustup.c",
+          "phase": "before"
+        }
+      ]
+    },
+    {
+      "cut": {
+        "path": "rust-tools/rustup.c",
+        "phase": "after"
+      },
+      "global_retained": 1,
+      "name": "after rust-tools/rustup.c",
+      "remaining": [
+        "",
+        "rust-tool-resolution",
+        "rust-tools",
+        "rust-tools/cargo",
+        "rust-tools/compiler-cache",
+        "rust-tools/compiler-cache/cache.dat",
+        "rust-tools/compiler-temp",
+        "rust-tools/compiler-temp/scratch.dat",
+        "rust-tools/image-reference.json",
+        "rust-tools/rustup"
+      ],
+      "returned": 0,
+      "trace": [
+        {
+          "path": "rust-tools/rustup.c",
+          "phase": "before"
+        },
+        {
+          "path": "rust-tools/rustup.c",
+          "phase": "after"
+        }
+      ]
+    },
+    {
+      "cut": {
+        "path": "rust-tools/rustup",
+        "phase": "before"
+      },
+      "global_retained": 1,
+      "name": "before rust-tools/rustup",
+      "remaining": [
+        "",
+        "rust-tool-resolution",
+        "rust-tools",
+        "rust-tools/cargo",
+        "rust-tools/compiler-cache",
+        "rust-tools/compiler-cache/cache.dat",
+        "rust-tools/compiler-temp",
+        "rust-tools/compiler-temp/scratch.dat",
+        "rust-tools/image-reference.json",
+        "rust-tools/rustup"
+      ],
+      "returned": 0,
+      "trace": [
+        {
+          "path": "rust-tools/rustup.c",
+          "phase": "before"
+        },
+        {
+          "path": "rust-tools/rustup.c",
+          "phase": "after"
+        },
+        {
+          "path": "rust-tools/rustup",
+          "phase": "before"
+        }
+      ]
+    },
+    {
+      "cut": {
+        "path": "rust-tools/rustup",
+        "phase": "after"
+      },
+      "global_retained": 1,
+      "name": "after rust-tools/rustup",
+      "remaining": [
+        "",
+        "rust-tool-resolution",
+        "rust-tools",
+        "rust-tools/cargo",
+        "rust-tools/compiler-cache",
+        "rust-tools/compiler-cache/cache.dat",
+        "rust-tools/compiler-temp",
+        "rust-tools/compiler-temp/scratch.dat",
+        "rust-tools/image-reference.json"
+      ],
+      "returned": 0,
+      "trace": [
+        {
+          "path": "rust-tools/rustup.c",
+          "phase": "before"
+        },
+        {
+          "path": "rust-tools/rustup.c",
+          "phase": "after"
+        },
+        {
+          "path": "rust-tools/rustup",
+          "phase": "before"
+        },
+        {
+          "path": "rust-tools/rustup",
+          "phase": "after"
+        }
+      ]
+    },
+    {
+      "cut": {
+        "path": "rust-tools/image-reference.json",
+        "phase": "before"
+      },
+      "global_retained": 1,
+      "name": "before rust-tools/image-reference.json",
+      "remaining": [
+        "",
+        "rust-tool-resolution",
+        "rust-tools",
+        "rust-tools/cargo",
+        "rust-tools/compiler-cache",
+        "rust-tools/compiler-cache/cache.dat",
+        "rust-tools/compiler-temp",
+        "rust-tools/compiler-temp/scratch.dat",
+        "rust-tools/image-reference.json"
+      ],
+      "returned": 0,
+      "trace": [
+        {
+          "path": "rust-tools/rustup.c",
+          "phase": "before"
+        },
+        {
+          "path": "rust-tools/rustup.c",
+          "phase": "after"
+        },
+        {
+          "path": "rust-tools/rustup",
+          "phase": "before"
+        },
+        {
+          "path": "rust-tools/rustup",
+          "phase": "after"
+        },
+        {
+          "path": "rust-tools/image-reference.json",
+          "phase": "before"
+        }
+      ]
+    },
+    {
+      "cut": {
+        "path": "rust-tools/image-reference.json",
+        "phase": "after"
+      },
+      "global_retained": 1,
+      "name": "after rust-tools/image-reference.json",
+      "remaining": [
+        "",
+        "rust-tool-resolution",
+        "rust-tools",
+        "rust-tools/cargo",
+        "rust-tools/compiler-cache",
+        "rust-tools/compiler-cache/cache.dat",
+        "rust-tools/compiler-temp",
+        "rust-tools/compiler-temp/scratch.dat"
+      ],
+      "returned": 0,
+      "trace": [
+        {
+          "path": "rust-tools/rustup.c",
+          "phase": "before"
+        },
+        {
+          "path": "rust-tools/rustup.c",
+          "phase": "after"
+        },
+        {
+          "path": "rust-tools/rustup",
+          "phase": "before"
+        },
+        {
+          "path": "rust-tools/rustup",
+          "phase": "after"
+        },
+        {
+          "path": "rust-tools/image-reference.json",
+          "phase": "before"
+        },
+        {
+          "path": "rust-tools/image-reference.json",
+          "phase": "after"
+        }
+      ]
+    },
+    {
+      "cut": {
+        "path": "rust-tools/compiler-temp/scratch.dat",
+        "phase": "before"
+      },
+      "global_retained": 1,
+      "name": "before rust-tools/compiler-temp/scratch.dat",
+      "remaining": [
+        "",
+        "rust-tool-resolution",
+        "rust-tools",
+        "rust-tools/cargo",
+        "rust-tools/compiler-cache",
+        "rust-tools/compiler-cache/cache.dat",
+        "rust-tools/compiler-temp",
+        "rust-tools/compiler-temp/scratch.dat"
+      ],
+      "returned": 0,
+      "trace": [
+        {
+          "path": "rust-tools/rustup.c",
+          "phase": "before"
+        },
+        {
+          "path": "rust-tools/rustup.c",
+          "phase": "after"
+        },
+        {
+          "path": "rust-tools/rustup",
+          "phase": "before"
+        },
+        {
+          "path": "rust-tools/rustup",
+          "phase": "after"
+        },
+        {
+          "path": "rust-tools/image-reference.json",
+          "phase": "before"
+        },
+        {
+          "path": "rust-tools/image-reference.json",
+          "phase": "after"
+        },
+        {
+          "path": "rust-tools/compiler-temp/scratch.dat",
+          "phase": "before"
+        }
+      ]
+    },
+    {
+      "cut": {
+        "path": "rust-tools/compiler-temp/scratch.dat",
+        "phase": "after"
+      },
+      "global_retained": 1,
+      "name": "after rust-tools/compiler-temp/scratch.dat",
+      "remaining": [
+        "",
+        "rust-tool-resolution",
+        "rust-tools",
+        "rust-tools/cargo",
+        "rust-tools/compiler-cache",
+        "rust-tools/compiler-cache/cache.dat",
+        "rust-tools/compiler-temp"
+      ],
+      "returned": 0,
+      "trace": [
+        {
+          "path": "rust-tools/rustup.c",
+          "phase": "before"
+        },
+        {
+          "path": "rust-tools/rustup.c",
+          "phase": "after"
+        },
+        {
+          "path": "rust-tools/rustup",
+          "phase": "before"
+        },
+        {
+          "path": "rust-tools/rustup",
+          "phase": "after"
+        },
+        {
+          "path": "rust-tools/image-reference.json",
+          "phase": "before"
+        },
+        {
+          "path": "rust-tools/image-reference.json",
+          "phase": "after"
+        },
+        {
+          "path": "rust-tools/compiler-temp/scratch.dat",
+          "phase": "before"
+        },
+        {
+          "path": "rust-tools/compiler-temp/scratch.dat",
+          "phase": "after"
+        }
+      ]
+    },
+    {
+      "cut": {
+        "path": "rust-tools/compiler-temp",
+        "phase": "before"
+      },
+      "global_retained": 1,
+      "name": "before rust-tools/compiler-temp",
+      "remaining": [
+        "",
+        "rust-tool-resolution",
+        "rust-tools",
+        "rust-tools/cargo",
+        "rust-tools/compiler-cache",
+        "rust-tools/compiler-cache/cache.dat",
+        "rust-tools/compiler-temp"
+      ],
+      "returned": 0,
+      "trace": [
+        {
+          "path": "rust-tools/rustup.c",
+          "phase": "before"
+        },
+        {
+          "path": "rust-tools/rustup.c",
+          "phase": "after"
+        },
+        {
+          "path": "rust-tools/rustup",
+          "phase": "before"
+        },
+        {
+          "path": "rust-tools/rustup",
+          "phase": "after"
+        },
+        {
+          "path": "rust-tools/image-reference.json",
+          "phase": "before"
+        },
+        {
+          "path": "rust-tools/image-reference.json",
+          "phase": "after"
+        },
+        {
+          "path": "rust-tools/compiler-temp/scratch.dat",
+          "phase": "before"
+        },
+        {
+          "path": "rust-tools/compiler-temp/scratch.dat",
+          "phase": "after"
+        },
+        {
+          "path": "rust-tools/compiler-temp",
+          "phase": "before"
+        }
+      ]
+    },
+    {
+      "cut": {
+        "path": "rust-tools/compiler-temp",
+        "phase": "after"
+      },
+      "global_retained": 1,
+      "name": "after rust-tools/compiler-temp",
+      "remaining": [
+        "",
+        "rust-tool-resolution",
+        "rust-tools",
+        "rust-tools/cargo",
+        "rust-tools/compiler-cache",
+        "rust-tools/compiler-cache/cache.dat"
+      ],
+      "returned": 0,
+      "trace": [
+        {
+          "path": "rust-tools/rustup.c",
+          "phase": "before"
+        },
+        {
+          "path": "rust-tools/rustup.c",
+          "phase": "after"
+        },
+        {
+          "path": "rust-tools/rustup",
+          "phase": "before"
+        },
+        {
+          "path": "rust-tools/rustup",
+          "phase": "after"
+        },
+        {
+          "path": "rust-tools/image-reference.json",
+          "phase": "before"
+        },
+        {
+          "path": "rust-tools/image-reference.json",
+          "phase": "after"
+        },
+        {
+          "path": "rust-tools/compiler-temp/scratch.dat",
+          "phase": "before"
+        },
+        {
+          "path": "rust-tools/compiler-temp/scratch.dat",
+          "phase": "after"
+        },
+        {
+          "path": "rust-tools/compiler-temp",
+          "phase": "before"
+        },
+        {
+          "path": "rust-tools/compiler-temp",
+          "phase": "after"
+        }
+      ]
+    },
+    {
+      "cut": {
+        "path": "rust-tools/compiler-cache/cache.dat",
+        "phase": "before"
+      },
+      "global_retained": 1,
+      "name": "before rust-tools/compiler-cache/cache.dat",
+      "remaining": [
+        "",
+        "rust-tool-resolution",
+        "rust-tools",
+        "rust-tools/cargo",
+        "rust-tools/compiler-cache",
+        "rust-tools/compiler-cache/cache.dat"
+      ],
+      "returned": 0,
+      "trace": [
+        {
+          "path": "rust-tools/rustup.c",
+          "phase": "before"
+        },
+        {
+          "path": "rust-tools/rustup.c",
+          "phase": "after"
+        },
+        {
+          "path": "rust-tools/rustup",
+          "phase": "before"
+        },
+        {
+          "path": "rust-tools/rustup",
+          "phase": "after"
+        },
+        {
+          "path": "rust-tools/image-reference.json",
+          "phase": "before"
+        },
+        {
+          "path": "rust-tools/image-reference.json",
+          "phase": "after"
+        },
+        {
+          "path": "rust-tools/compiler-temp/scratch.dat",
+          "phase": "before"
+        },
+        {
+          "path": "rust-tools/compiler-temp/scratch.dat",
+          "phase": "after"
+        },
+        {
+          "path": "rust-tools/compiler-temp",
+          "phase": "before"
+        },
+        {
+          "path": "rust-tools/compiler-temp",
+          "phase": "after"
+        },
+        {
+          "path": "rust-tools/compiler-cache/cache.dat",
+          "phase": "before"
+        }
+      ]
+    },
+    {
+      "cut": {
+        "path": "rust-tools/compiler-cache/cache.dat",
+        "phase": "after"
+      },
+      "global_retained": 1,
+      "name": "after rust-tools/compiler-cache/cache.dat",
+      "remaining": [
+        "",
+        "rust-tool-resolution",
+        "rust-tools",
+        "rust-tools/cargo",
+        "rust-tools/compiler-cache"
+      ],
+      "returned": 0,
+      "trace": [
+        {
+          "path": "rust-tools/rustup.c",
+          "phase": "before"
+        },
+        {
+          "path": "rust-tools/rustup.c",
+          "phase": "after"
+        },
+        {
+          "path": "rust-tools/rustup",
+          "phase": "before"
+        },
+        {
+          "path": "rust-tools/rustup",
+          "phase": "after"
+        },
+        {
+          "path": "rust-tools/image-reference.json",
+          "phase": "before"
+        },
+        {
+          "path": "rust-tools/image-reference.json",
+          "phase": "after"
+        },
+        {
+          "path": "rust-tools/compiler-temp/scratch.dat",
+          "phase": "before"
+        },
+        {
+          "path": "rust-tools/compiler-temp/scratch.dat",
+          "phase": "after"
+        },
+        {
+          "path": "rust-tools/compiler-temp",
+          "phase": "before"
+        },
+        {
+          "path": "rust-tools/compiler-temp",
+          "phase": "after"
+        },
+        {
+          "path": "rust-tools/compiler-cache/cache.dat",
+          "phase": "before"
+        },
+        {
+          "path": "rust-tools/compiler-cache/cache.dat",
+          "phase": "after"
+        }
+      ]
+    },
+    {
+      "cut": {
+        "path": "rust-tools/compiler-cache",
+        "phase": "before"
+      },
+      "global_retained": 1,
+      "name": "before rust-tools/compiler-cache",
+      "remaining": [
+        "",
+        "rust-tool-resolution",
+        "rust-tools",
+        "rust-tools/cargo",
+        "rust-tools/compiler-cache"
+      ],
+      "returned": 0,
+      "trace": [
+        {
+          "path": "rust-tools/rustup.c",
+          "phase": "before"
+        },
+        {
+          "path": "rust-tools/rustup.c",
+          "phase": "after"
+        },
+        {
+          "path": "rust-tools/rustup",
+          "phase": "before"
+        },
+        {
+          "path": "rust-tools/rustup",
+          "phase": "after"
+        },
+        {
+          "path": "rust-tools/image-reference.json",
+          "phase": "before"
+        },
+        {
+          "path": "rust-tools/image-reference.json",
+          "phase": "after"
+        },
+        {
+          "path": "rust-tools/compiler-temp/scratch.dat",
+          "phase": "before"
+        },
+        {
+          "path": "rust-tools/compiler-temp/scratch.dat",
+          "phase": "after"
+        },
+        {
+          "path": "rust-tools/compiler-temp",
+          "phase": "before"
+        },
+        {
+          "path": "rust-tools/compiler-temp",
+          "phase": "after"
+        },
+        {
+          "path": "rust-tools/compiler-cache/cache.dat",
+          "phase": "before"
+        },
+        {
+          "path": "rust-tools/compiler-cache/cache.dat",
+          "phase": "after"
+        },
+        {
+          "path": "rust-tools/compiler-cache",
+          "phase": "before"
+        }
+      ]
+    },
+    {
+      "cut": {
+        "path": "rust-tools/compiler-cache",
+        "phase": "after"
+      },
+      "global_retained": 1,
+      "name": "after rust-tools/compiler-cache",
+      "remaining": [
+        "",
+        "rust-tool-resolution",
+        "rust-tools",
+        "rust-tools/cargo"
+      ],
+      "returned": 0,
+      "trace": [
+        {
+          "path": "rust-tools/rustup.c",
+          "phase": "before"
+        },
+        {
+          "path": "rust-tools/rustup.c",
+          "phase": "after"
+        },
+        {
+          "path": "rust-tools/rustup",
+          "phase": "before"
+        },
+        {
+          "path": "rust-tools/rustup",
+          "phase": "after"
+        },
+        {
+          "path": "rust-tools/image-reference.json",
+          "phase": "before"
+        },
+        {
+          "path": "rust-tools/image-reference.json",
+          "phase": "after"
+        },
+        {
+          "path": "rust-tools/compiler-temp/scratch.dat",
+          "phase": "before"
+        },
+        {
+          "path": "rust-tools/compiler-temp/scratch.dat",
+          "phase": "after"
+        },
+        {
+          "path": "rust-tools/compiler-temp",
+          "phase": "before"
+        },
+        {
+          "path": "rust-tools/compiler-temp",
+          "phase": "after"
+        },
+        {
+          "path": "rust-tools/compiler-cache/cache.dat",
+          "phase": "before"
+        },
+        {
+          "path": "rust-tools/compiler-cache/cache.dat",
+          "phase": "after"
+        },
+        {
+          "path": "rust-tools/compiler-cache",
+          "phase": "before"
+        },
+        {
+          "path": "rust-tools/compiler-cache",
+          "phase": "after"
+        }
+      ]
+    },
+    {
+      "cut": {
+        "path": "rust-tools/cargo",
+        "phase": "before"
+      },
+      "global_retained": 1,
+      "name": "before rust-tools/cargo",
+      "remaining": [
+        "",
+        "rust-tool-resolution",
+        "rust-tools",
+        "rust-tools/cargo"
+      ],
+      "returned": 0,
+      "trace": [
+        {
+          "path": "rust-tools/rustup.c",
+          "phase": "before"
+        },
+        {
+          "path": "rust-tools/rustup.c",
+          "phase": "after"
+        },
+        {
+          "path": "rust-tools/rustup",
+          "phase": "before"
+        },
+        {
+          "path": "rust-tools/rustup",
+          "phase": "after"
+        },
+        {
+          "path": "rust-tools/image-reference.json",
+          "phase": "before"
+        },
+        {
+          "path": "rust-tools/image-reference.json",
+          "phase": "after"
+        },
+        {
+          "path": "rust-tools/compiler-temp/scratch.dat",
+          "phase": "before"
+        },
+        {
+          "path": "rust-tools/compiler-temp/scratch.dat",
+          "phase": "after"
+        },
+        {
+          "path": "rust-tools/compiler-temp",
+          "phase": "before"
+        },
+        {
+          "path": "rust-tools/compiler-temp",
+          "phase": "after"
+        },
+        {
+          "path": "rust-tools/compiler-cache/cache.dat",
+          "phase": "before"
+        },
+        {
+          "path": "rust-tools/compiler-cache/cache.dat",
+          "phase": "after"
+        },
+        {
+          "path": "rust-tools/compiler-cache",
+          "phase": "before"
+        },
+        {
+          "path": "rust-tools/compiler-cache",
+          "phase": "after"
+        },
+        {
+          "path": "rust-tools/cargo",
+          "phase": "before"
+        }
+      ]
+    },
+    {
+      "cut": {
+        "path": "rust-tools/cargo",
+        "phase": "after"
+      },
+      "global_retained": 1,
+      "name": "after rust-tools/cargo",
+      "remaining": [
+        "",
+        "rust-tool-resolution",
+        "rust-tools"
+      ],
+      "returned": 0,
+      "trace": [
+        {
+          "path": "rust-tools/rustup.c",
+          "phase": "before"
+        },
+        {
+          "path": "rust-tools/rustup.c",
+          "phase": "after"
+        },
+        {
+          "path": "rust-tools/rustup",
+          "phase": "before"
+        },
+        {
+          "path": "rust-tools/rustup",
+          "phase": "after"
+        },
+        {
+          "path": "rust-tools/image-reference.json",
+          "phase": "before"
+        },
+        {
+          "path": "rust-tools/image-reference.json",
+          "phase": "after"
+        },
+        {
+          "path": "rust-tools/compiler-temp/scratch.dat",
+          "phase": "before"
+        },
+        {
+          "path": "rust-tools/compiler-temp/scratch.dat",
+          "phase": "after"
+        },
+        {
+          "path": "rust-tools/compiler-temp",
+          "phase": "before"
+        },
+        {
+          "path": "rust-tools/compiler-temp",
+          "phase": "after"
+        },
+        {
+          "path": "rust-tools/compiler-cache/cache.dat",
+          "phase": "before"
+        },
+        {
+          "path": "rust-tools/compiler-cache/cache.dat",
+          "phase": "after"
+        },
+        {
+          "path": "rust-tools/compiler-cache",
+          "phase": "before"
+        },
+        {
+          "path": "rust-tools/compiler-cache",
+          "phase": "after"
+        },
+        {
+          "path": "rust-tools/cargo",
+          "phase": "before"
+        },
+        {
+          "path": "rust-tools/cargo",
+          "phase": "after"
+        }
+      ]
+    },
+    {
+      "cut": {
+        "path": "rust-tools",
+        "phase": "before"
+      },
+      "global_retained": 1,
+      "name": "before rust-tools",
+      "remaining": [
+        "",
+        "rust-tool-resolution",
+        "rust-tools"
+      ],
+      "returned": 0,
+      "trace": [
+        {
+          "path": "rust-tools/rustup.c",
+          "phase": "before"
+        },
+        {
+          "path": "rust-tools/rustup.c",
+          "phase": "after"
+        },
+        {
+          "path": "rust-tools/rustup",
+          "phase": "before"
+        },
+        {
+          "path": "rust-tools/rustup",
+          "phase": "after"
+        },
+        {
+          "path": "rust-tools/image-reference.json",
+          "phase": "before"
+        },
+        {
+          "path": "rust-tools/image-reference.json",
+          "phase": "after"
+        },
+        {
+          "path": "rust-tools/compiler-temp/scratch.dat",
+          "phase": "before"
+        },
+        {
+          "path": "rust-tools/compiler-temp/scratch.dat",
+          "phase": "after"
+        },
+        {
+          "path": "rust-tools/compiler-temp",
+          "phase": "before"
+        },
+        {
+          "path": "rust-tools/compiler-temp",
+          "phase": "after"
+        },
+        {
+          "path": "rust-tools/compiler-cache/cache.dat",
+          "phase": "before"
+        },
+        {
+          "path": "rust-tools/compiler-cache/cache.dat",
+          "phase": "after"
+        },
+        {
+          "path": "rust-tools/compiler-cache",
+          "phase": "before"
+        },
+        {
+          "path": "rust-tools/compiler-cache",
+          "phase": "after"
+        },
+        {
+          "path": "rust-tools/cargo",
+          "phase": "before"
+        },
+        {
+          "path": "rust-tools/cargo",
+          "phase": "after"
+        },
+        {
+          "path": "rust-tools",
+          "phase": "before"
+        }
+      ]
+    },
+    {
+      "cut": {
+        "path": "rust-tools",
+        "phase": "after"
+      },
+      "global_retained": 1,
+      "name": "after rust-tools",
+      "remaining": [
+        "",
+        "rust-tool-resolution"
+      ],
+      "returned": 0,
+      "trace": [
+        {
+          "path": "rust-tools/rustup.c",
+          "phase": "before"
+        },
+        {
+          "path": "rust-tools/rustup.c",
+          "phase": "after"
+        },
+        {
+          "path": "rust-tools/rustup",
+          "phase": "before"
+        },
+        {
+          "path": "rust-tools/rustup",
+          "phase": "after"
+        },
+        {
+          "path": "rust-tools/image-reference.json",
+          "phase": "before"
+        },
+        {
+          "path": "rust-tools/image-reference.json",
+          "phase": "after"
+        },
+        {
+          "path": "rust-tools/compiler-temp/scratch.dat",
+          "phase": "before"
+        },
+        {
+          "path": "rust-tools/compiler-temp/scratch.dat",
+          "phase": "after"
+        },
+        {
+          "path": "rust-tools/compiler-temp",
+          "phase": "before"
+        },
+        {
+          "path": "rust-tools/compiler-temp",
+          "phase": "after"
+        },
+        {
+          "path": "rust-tools/compiler-cache/cache.dat",
+          "phase": "before"
+        },
+        {
+          "path": "rust-tools/compiler-cache/cache.dat",
+          "phase": "after"
+        },
+        {
+          "path": "rust-tools/compiler-cache",
+          "phase": "before"
+        },
+        {
+          "path": "rust-tools/compiler-cache",
+          "phase": "after"
+        },
+        {
+          "path": "rust-tools/cargo",
+          "phase": "before"
+        },
+        {
+          "path": "rust-tools/cargo",
+          "phase": "after"
+        },
+        {
+          "path": "rust-tools",
+          "phase": "before"
+        },
+        {
+          "path": "rust-tools",
+          "phase": "after"
+        }
+      ]
+    },
+    {
+      "cut": {
+        "path": "rust-tool-resolution",
+        "phase": "before"
+      },
+      "global_retained": 1,
+      "name": "before rust-tool-resolution",
+      "remaining": [
+        "",
+        "rust-tool-resolution"
+      ],
+      "returned": 0,
+      "trace": [
+        {
+          "path": "rust-tools/rustup.c",
+          "phase": "before"
+        },
+        {
+          "path": "rust-tools/rustup.c",
+          "phase": "after"
+        },
+        {
+          "path": "rust-tools/rustup",
+          "phase": "before"
+        },
+        {
+          "path": "rust-tools/rustup",
+          "phase": "after"
+        },
+        {
+          "path": "rust-tools/image-reference.json",
+          "phase": "before"
+        },
+        {
+          "path": "rust-tools/image-reference.json",
+          "phase": "after"
+        },
+        {
+          "path": "rust-tools/compiler-temp/scratch.dat",
+          "phase": "before"
+        },
+        {
+          "path": "rust-tools/compiler-temp/scratch.dat",
+          "phase": "after"
+        },
+        {
+          "path": "rust-tools/compiler-temp",
+          "phase": "before"
+        },
+        {
+          "path": "rust-tools/compiler-temp",
+          "phase": "after"
+        },
+        {
+          "path": "rust-tools/compiler-cache/cache.dat",
+          "phase": "before"
+        },
+        {
+          "path": "rust-tools/compiler-cache/cache.dat",
+          "phase": "after"
+        },
+        {
+          "path": "rust-tools/compiler-cache",
+          "phase": "before"
+        },
+        {
+          "path": "rust-tools/compiler-cache",
+          "phase": "after"
+        },
+        {
+          "path": "rust-tools/cargo",
+          "phase": "before"
+        },
+        {
+          "path": "rust-tools/cargo",
+          "phase": "after"
+        },
+        {
+          "path": "rust-tools",
+          "phase": "before"
+        },
+        {
+          "path": "rust-tools",
+          "phase": "after"
+        },
+        {
+          "path": "rust-tool-resolution",
+          "phase": "before"
+        }
+      ]
+    },
+    {
+      "cut": {
+        "path": "rust-tool-resolution",
+        "phase": "after"
+      },
+      "global_retained": 1,
+      "name": "after rust-tool-resolution",
+      "remaining": [
+        ""
+      ],
+      "returned": 0,
+      "trace": [
+        {
+          "path": "rust-tools/rustup.c",
+          "phase": "before"
+        },
+        {
+          "path": "rust-tools/rustup.c",
+          "phase": "after"
+        },
+        {
+          "path": "rust-tools/rustup",
+          "phase": "before"
+        },
+        {
+          "path": "rust-tools/rustup",
+          "phase": "after"
+        },
+        {
+          "path": "rust-tools/image-reference.json",
+          "phase": "before"
+        },
+        {
+          "path": "rust-tools/image-reference.json",
+          "phase": "after"
+        },
+        {
+          "path": "rust-tools/compiler-temp/scratch.dat",
+          "phase": "before"
+        },
+        {
+          "path": "rust-tools/compiler-temp/scratch.dat",
+          "phase": "after"
+        },
+        {
+          "path": "rust-tools/compiler-temp",
+          "phase": "before"
+        },
+        {
+          "path": "rust-tools/compiler-temp",
+          "phase": "after"
+        },
+        {
+          "path": "rust-tools/compiler-cache/cache.dat",
+          "phase": "before"
+        },
+        {
+          "path": "rust-tools/compiler-cache/cache.dat",
+          "phase": "after"
+        },
+        {
+          "path": "rust-tools/compiler-cache",
+          "phase": "before"
+        },
+        {
+          "path": "rust-tools/compiler-cache",
+          "phase": "after"
+        },
+        {
+          "path": "rust-tools/cargo",
+          "phase": "before"
+        },
+        {
+          "path": "rust-tools/cargo",
+          "phase": "after"
+        },
+        {
+          "path": "rust-tools",
+          "phase": "before"
+        },
+        {
+          "path": "rust-tools",
+          "phase": "after"
+        },
+        {
+          "path": "rust-tool-resolution",
+          "phase": "before"
+        },
+        {
+          "path": "rust-tool-resolution",
+          "phase": "after"
+        }
+      ]
+    },
+    {
+      "cut": {
+        "path": "",
+        "phase": "before"
+      },
+      "global_retained": 1,
+      "name": "before ROOT",
+      "remaining": [
+        ""
+      ],
+      "returned": 0,
+      "trace": [
+        {
+          "path": "rust-tools/rustup.c",
+          "phase": "before"
+        },
+        {
+          "path": "rust-tools/rustup.c",
+          "phase": "after"
+        },
+        {
+          "path": "rust-tools/rustup",
+          "phase": "before"
+        },
+        {
+          "path": "rust-tools/rustup",
+          "phase": "after"
+        },
+        {
+          "path": "rust-tools/image-reference.json",
+          "phase": "before"
+        },
+        {
+          "path": "rust-tools/image-reference.json",
+          "phase": "after"
+        },
+        {
+          "path": "rust-tools/compiler-temp/scratch.dat",
+          "phase": "before"
+        },
+        {
+          "path": "rust-tools/compiler-temp/scratch.dat",
+          "phase": "after"
+        },
+        {
+          "path": "rust-tools/compiler-temp",
+          "phase": "before"
+        },
+        {
+          "path": "rust-tools/compiler-temp",
+          "phase": "after"
+        },
+        {
+          "path": "rust-tools/compiler-cache/cache.dat",
+          "phase": "before"
+        },
+        {
+          "path": "rust-tools/compiler-cache/cache.dat",
+          "phase": "after"
+        },
+        {
+          "path": "rust-tools/compiler-cache",
+          "phase": "before"
+        },
+        {
+          "path": "rust-tools/compiler-cache",
+          "phase": "after"
+        },
+        {
+          "path": "rust-tools/cargo",
+          "phase": "before"
+        },
+        {
+          "path": "rust-tools/cargo",
+          "phase": "after"
+        },
+        {
+          "path": "rust-tools",
+          "phase": "before"
+        },
+        {
+          "path": "rust-tools",
+          "phase": "after"
+        },
+        {
+          "path": "rust-tool-resolution",
+          "phase": "before"
+        },
+        {
+          "path": "rust-tool-resolution",
+          "phase": "after"
+        },
+        {
+          "path": "",
+          "phase": "before"
+        }
+      ]
+    },
+    {
+      "cut": {
+        "path": "",
+        "phase": "after"
+      },
+      "global_retained": 1,
+      "name": "after ROOT",
+      "remaining": [],
+      "returned": 0,
+      "trace": [
+        {
+          "path": "rust-tools/rustup.c",
+          "phase": "before"
+        },
+        {
+          "path": "rust-tools/rustup.c",
+          "phase": "after"
+        },
+        {
+          "path": "rust-tools/rustup",
+          "phase": "before"
+        },
+        {
+          "path": "rust-tools/rustup",
+          "phase": "after"
+        },
+        {
+          "path": "rust-tools/image-reference.json",
+          "phase": "before"
+        },
+        {
+          "path": "rust-tools/image-reference.json",
+          "phase": "after"
+        },
+        {
+          "path": "rust-tools/compiler-temp/scratch.dat",
+          "phase": "before"
+        },
+        {
+          "path": "rust-tools/compiler-temp/scratch.dat",
+          "phase": "after"
+        },
+        {
+          "path": "rust-tools/compiler-temp",
+          "phase": "before"
+        },
+        {
+          "path": "rust-tools/compiler-temp",
+          "phase": "after"
+        },
+        {
+          "path": "rust-tools/compiler-cache/cache.dat",
+          "phase": "before"
+        },
+        {
+          "path": "rust-tools/compiler-cache/cache.dat",
+          "phase": "after"
+        },
+        {
+          "path": "rust-tools/compiler-cache",
+          "phase": "before"
+        },
+        {
+          "path": "rust-tools/compiler-cache",
+          "phase": "after"
+        },
+        {
+          "path": "rust-tools/cargo",
+          "phase": "before"
+        },
+        {
+          "path": "rust-tools/cargo",
+          "phase": "after"
+        },
+        {
+          "path": "rust-tools",
+          "phase": "before"
+        },
+        {
+          "path": "rust-tools",
+          "phase": "after"
+        },
+        {
+          "path": "rust-tool-resolution",
+          "phase": "before"
+        },
+        {
+          "path": "rust-tool-resolution",
+          "phase": "after"
+        },
+        {
+          "path": "",
+          "phase": "before"
+        },
+        {
+          "path": "",
+          "phase": "after"
+        }
+      ]
+    },
+    {
+      "cut": {
+        "path": "GLOBAL",
+        "phase": "before"
+      },
+      "global_retained": 1,
+      "name": "before GLOBAL",
+      "remaining": [],
+      "returned": 0,
+      "trace": [
+        {
+          "path": "rust-tools/rustup.c",
+          "phase": "before"
+        },
+        {
+          "path": "rust-tools/rustup.c",
+          "phase": "after"
+        },
+        {
+          "path": "rust-tools/rustup",
+          "phase": "before"
+        },
+        {
+          "path": "rust-tools/rustup",
+          "phase": "after"
+        },
+        {
+          "path": "rust-tools/image-reference.json",
+          "phase": "before"
+        },
+        {
+          "path": "rust-tools/image-reference.json",
+          "phase": "after"
+        },
+        {
+          "path": "rust-tools/compiler-temp/scratch.dat",
+          "phase": "before"
+        },
+        {
+          "path": "rust-tools/compiler-temp/scratch.dat",
+          "phase": "after"
+        },
+        {
+          "path": "rust-tools/compiler-temp",
+          "phase": "before"
+        },
+        {
+          "path": "rust-tools/compiler-temp",
+          "phase": "after"
+        },
+        {
+          "path": "rust-tools/compiler-cache/cache.dat",
+          "phase": "before"
+        },
+        {
+          "path": "rust-tools/compiler-cache/cache.dat",
+          "phase": "after"
+        },
+        {
+          "path": "rust-tools/compiler-cache",
+          "phase": "before"
+        },
+        {
+          "path": "rust-tools/compiler-cache",
+          "phase": "after"
+        },
+        {
+          "path": "rust-tools/cargo",
+          "phase": "before"
+        },
+        {
+          "path": "rust-tools/cargo",
+          "phase": "after"
+        },
+        {
+          "path": "rust-tools",
+          "phase": "before"
+        },
+        {
+          "path": "rust-tools",
+          "phase": "after"
+        },
+        {
+          "path": "rust-tool-resolution",
+          "phase": "before"
+        },
+        {
+          "path": "rust-tool-resolution",
+          "phase": "after"
+        },
+        {
+          "path": "",
+          "phase": "before"
+        },
+        {
+          "path": "",
+          "phase": "after"
+        },
+        {
+          "path": "GLOBAL",
+          "phase": "before"
+        }
+      ]
+    },
+    {
+      "cut": {
+        "path": "GLOBAL",
+        "phase": "after"
+      },
+      "global_retained": 0,
+      "name": "after GLOBAL",
+      "remaining": [],
+      "returned": 0,
+      "trace": [
+        {
+          "path": "rust-tools/rustup.c",
+          "phase": "before"
+        },
+        {
+          "path": "rust-tools/rustup.c",
+          "phase": "after"
+        },
+        {
+          "path": "rust-tools/rustup",
+          "phase": "before"
+        },
+        {
+          "path": "rust-tools/rustup",
+          "phase": "after"
+        },
+        {
+          "path": "rust-tools/image-reference.json",
+          "phase": "before"
+        },
+        {
+          "path": "rust-tools/image-reference.json",
+          "phase": "after"
+        },
+        {
+          "path": "rust-tools/compiler-temp/scratch.dat",
+          "phase": "before"
+        },
+        {
+          "path": "rust-tools/compiler-temp/scratch.dat",
+          "phase": "after"
+        },
+        {
+          "path": "rust-tools/compiler-temp",
+          "phase": "before"
+        },
+        {
+          "path": "rust-tools/compiler-temp",
+          "phase": "after"
+        },
+        {
+          "path": "rust-tools/compiler-cache/cache.dat",
+          "phase": "before"
+        },
+        {
+          "path": "rust-tools/compiler-cache/cache.dat",
+          "phase": "after"
+        },
+        {
+          "path": "rust-tools/compiler-cache",
+          "phase": "before"
+        },
+        {
+          "path": "rust-tools/compiler-cache",
+          "phase": "after"
+        },
+        {
+          "path": "rust-tools/cargo",
+          "phase": "before"
+        },
+        {
+          "path": "rust-tools/cargo",
+          "phase": "after"
+        },
+        {
+          "path": "rust-tools",
+          "phase": "before"
+        },
+        {
+          "path": "rust-tools",
+          "phase": "after"
+        },
+        {
+          "path": "rust-tool-resolution",
+          "phase": "before"
+        },
+        {
+          "path": "rust-tool-resolution",
+          "phase": "after"
+        },
+        {
+          "path": "",
+          "phase": "before"
+        },
+        {
+          "path": "",
+          "phase": "after"
+        },
+        {
+          "path": "GLOBAL",
+          "phase": "before"
+        },
+        {
+          "path": "GLOBAL",
+          "phase": "after"
+        }
+      ]
+    },
+    {
+      "cut": null,
+      "global_retained": 0,
+      "name": "complete",
+      "remaining": [],
+      "returned": 1,
+      "trace": [
+        {
+          "path": "rust-tools/rustup.c",
+          "phase": "before"
+        },
+        {
+          "path": "rust-tools/rustup.c",
+          "phase": "after"
+        },
+        {
+          "path": "rust-tools/rustup",
+          "phase": "before"
+        },
+        {
+          "path": "rust-tools/rustup",
+          "phase": "after"
+        },
+        {
+          "path": "rust-tools/image-reference.json",
+          "phase": "before"
+        },
+        {
+          "path": "rust-tools/image-reference.json",
+          "phase": "after"
+        },
+        {
+          "path": "rust-tools/compiler-temp/scratch.dat",
+          "phase": "before"
+        },
+        {
+          "path": "rust-tools/compiler-temp/scratch.dat",
+          "phase": "after"
+        },
+        {
+          "path": "rust-tools/compiler-temp",
+          "phase": "before"
+        },
+        {
+          "path": "rust-tools/compiler-temp",
+          "phase": "after"
+        },
+        {
+          "path": "rust-tools/compiler-cache/cache.dat",
+          "phase": "before"
+        },
+        {
+          "path": "rust-tools/compiler-cache/cache.dat",
+          "phase": "after"
+        },
+        {
+          "path": "rust-tools/compiler-cache",
+          "phase": "before"
+        },
+        {
+          "path": "rust-tools/compiler-cache",
+          "phase": "after"
+        },
+        {
+          "path": "rust-tools/cargo",
+          "phase": "before"
+        },
+        {
+          "path": "rust-tools/cargo",
+          "phase": "after"
+        },
+        {
+          "path": "rust-tools",
+          "phase": "before"
+        },
+        {
+          "path": "rust-tools",
+          "phase": "after"
+        },
+        {
+          "path": "rust-tool-resolution",
+          "phase": "before"
+        },
+        {
+          "path": "rust-tool-resolution",
+          "phase": "after"
+        },
+        {
+          "path": "",
+          "phase": "before"
+        },
+        {
+          "path": "",
+          "phase": "after"
+        },
+        {
+          "path": "GLOBAL",
+          "phase": "before"
+        },
+        {
+          "path": "GLOBAL",
+          "phase": "after"
+        }
+      ]
+    }
+  ],
+  "ceilings": {
+    "depth": 8,
+    "nodes": 256,
+    "regular_file_bytes": 65536,
+    "total_regular_file_bytes": 4194304
+  },
+  "limits": "Fixed inert filesystem profiles and deterministic exceptions; no actual process crash, compiler output capacity, authenticated cleanup or product runtime authority.",
+  "nodes": [
+    "",
+    "rust-tool-resolution",
+    "rust-tools",
+    "rust-tools/cargo",
+    "rust-tools/compiler-cache",
+    "rust-tools/compiler-cache/cache.dat",
+    "rust-tools/compiler-temp",
+    "rust-tools/compiler-temp/scratch.dat",
+    "rust-tools/image-reference.json",
+    "rust-tools/rustup",
+    "rust-tools/rustup.c"
+  ],
+  "schema": "fsmgen.inactive_runtime_retirement_plan.v1"
+}

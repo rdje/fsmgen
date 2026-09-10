@@ -10,6 +10,7 @@ answers:
   - "how does inactive acquisition order global and private references?"
   - "how must tests wrap a caller-sealed function?"
   - "which cleanup receipts must settle before proxy retirement?"
+  - "how does inactive private workspace retirement retain image pins?"
   - "why did integrated proxy qualification fail?"
   - "why does t1545 not use IPC Cmd?"
   - "where does T1545 preserve empty-output checker failure diagnostics?"
@@ -88,11 +89,11 @@ without retry; original fixture assertions pass.
 T1545 controls: historical card; absent witnesses stay unknown.
 Env/direct Perl handoff timeouts refute a shebang-only cure. HIAL/VIAL `.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2` owns startup cause; `.3.3–7` own authenticated kernel capture. Sampling/authentication/STOP limits: task/book/history.
 T1669 roots: `.artifacts/tmp/process-supervisor-tests/`. ps requires native presence; only disappearance skips. Permission/query/identity errors fail. Exit-race controls do not explain the historical changed field (.3.2.11).
-History: `592ae7cbf2cbefa944581f3f17e592af513467ca:docs/knowledge/test-subprocess-policy-adapters.md`.
+History: `a2d0fa26b976ecdc2faf5dbe1cdbf5ca69bf5424:docs/knowledge/test-subprocess-policy-adapters.md`.
 PST parsing normalizes 1–16 lowercase hex digits; malformed fields and contradictions reject.
 .15.7.3 supports serial queue contention; client/frame joins and startup repair stay open. Native integration supplies pre-runtime receipts, ancestry/C custody, owned retirement and passive daemon capture. Counterexamples: history; loaded bytes unproved.
 Fixed CLI .15.7.2.4 binds archive index/digest and journal anchors; calibration/reserve/file checks preserve first failure, stop, distinct outcomes and ownership. F_CHECK_LV cause (.15.2) and worker/delivery remain unknown; queue/provenance coexist (.15.4). Opt-in violations: .15.5.1.2.2–3.
-Inactive .12.4.1: keys/coordination/publication, typed records, stale pins, global-before-private copies and prior-owner cut retention. Birth fields/wrappers: history. Cleanup .1.2.3.1 requires compiler, outer and all supplied inner receipts; live groups or unreaped started leaders block. Receipts prove no ownership, transport completeness or deletion authority. Lifetimes/native execution remain open.
+Inactive .12.4.1 groundwork: history. Retirement .1.2.3.2 checks bounded private trees and acquired IDs, removes private nodes before the global reference, and retains images/other owners. Partial cleanup pins; final unlink may precede a failed return. Ownership, transport, compiler profiles, observers and native execution remain open.
 Caller-sealed test wrappers use tail goto to preserve caller.
 Replay: `scripts/run_with_ram_guard.sh -- python3 -B -m unittest discover -s t/python -p 'test_fixture_policy_archive*.py'`.
 T1595 pre-main cause open; `.19.2.3.1.2.2.6.2` fixes capture.
