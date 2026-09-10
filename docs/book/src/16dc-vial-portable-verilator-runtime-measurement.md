@@ -1646,8 +1646,17 @@ context; the repaired condition explicitly counts stages in scalar context.
 Incorrect status or an unexpected Cargo build remains a test failure even
 when its settled workspace can be removed.
 
-The isolated integration controls execute the extracted construction,
-assertions and retirement logic with inert builder/process observations:
+After each preparation returns, T1669 emits `Rust proxy preparation: ` followed
+by canonical JSON containing `mode` and the complete `prepared` result. This
+happens before any wrapper launch, for successful and failed preparation.
+Inspect `prepared.implementation`, `selection_reason`, `sources`, and the
+compilation result and argv to identify what was prepared. Source identities
+retain their relative paths and hashes even after settled workspace cleanup.
+The receipt does not establish loaded bytes, process birth or main entry.
+
+The isolated integration controls verify complete receipts and their ordering,
+as well as the extracted construction, assertions and retirement logic, using
+inert builder/process observations:
 
 ```bash
 scripts/run_with_ram_guard.sh -- prove -Iperl -It/lib t/1816-rust-proxy-integration.t
@@ -1673,8 +1682,8 @@ qualification remains open. The failed original omitted successful preparation
 receipts, so its generated proxy implementation and byte identities remain
 unobserved. A later interpreter probe selects native, and the earlier standalone
 builder retained native receipts; neither can fill that historical gap. The
-next diagnostic repair will retain preparation before runtime execution. Such a
-receipt describes prepared files, not loaded bytes, process birth or main entry. The original was reaped, input and observed
+preparation diagnostic repair now closes that omission for future attempts.
+The original was reaped, input and observed
 selection pins stayed unchanged, and checked fixture directories were empty.
 Complete failed TAP, diagnostics and independent audit are retained with the
 frozen admission. No retry was performed. Producer implementation was inferred

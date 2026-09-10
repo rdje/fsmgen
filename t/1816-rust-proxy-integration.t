@@ -25,11 +25,20 @@ die 'original integration boundaries are missing' unless $body && $retire && $wr
 
 {
     package RustProxyIntegrationModel;
-    our ($root, $scenario, @assertions, @diagnostics, @preparations, @watchers, @workspaces);
+    our ($root, $scenario, @assertions, @diagnostics, @preparations, @watchers, @workspaces,
+         @prepared_results, @events);
     sub ok { push @assertions, [$_[0] ? 1 : 0, $_[1]]; return $_[0]; }
     sub is { return ok(defined($_[0]) && defined($_[1]) && $_[0] eq $_[1], $_[2]); }
     sub fail { return ok(0, $_[0]); }
-    sub diag { push @diagnostics, @_; }
+    sub diag {
+        push @diagnostics, @_;
+        for my $message (@_) {
+            next if ref($message) || $message !~ /^Rust proxy preparation: (.*)\z/s;
+            my $receipt = eval { JSON::PP::decode_json($1) };
+            my $mode = ref($receipt) eq 'HASH' ? $receipt->{mode} : 'invalid';
+            push @events, ['receipt', $mode];
+        }
+    }
     sub explain { return @_; }
     sub subtest { $_[1]->(); }
     sub cleanup { return {leader_started => 1, leader_reaped => 1, group_gone => 1}; }
@@ -39,19 +48,40 @@ die 'original integration boundaries are missing' unless $body && $retire && $wr
             || ($mode ne 'proxy_nonzero' && $mode ne 'proxy_decoy');
         push @preparations, [$workspace, $mode];
         push @workspaces, $workspace;
-        return {ok => 0, status => 'timeout', diagnostic => 'controlled preparation failure'}
-            if $scenario eq 'prepare_failure';
+        push @events, ['prepare', $mode];
+        my $result = {
+            schema => 'fsmgen.test.rust_proxy_fixture.v1', ok => 0,
+            status => 'timed_out', failure_stage => 'compile',
+            diagnostic => "controlled preparation failure\n",
+            implementation => $scenario eq 'perl' ? 'perl' : 'native',
+            selection_reason => 'controlled_selection',
+            executable => undef, sources => [], compilation => undef,
+            compilation_argv => undef,
+        };
+        if ($scenario eq 'prepare_failure') {
+            push @prepared_results, {mode => $mode, prepared => {%$result}};
+            return $result;
+        }
         my $bin = "$workspace/rust-tools";
         mkdir($bin, 0700) or die $!;
         open my $fh, '>', "$bin/rustup" or die $!;
         print {$fh} "inert $mode fixture\n" or die $!;
         close $fh or die $!;
         chmod 0500, "$bin/rustup" or die $!;
-        my $result = {ok => 1, executable => File::Spec->abs2rel("$bin/rustup", $root)};
+        $result->{ok} = 1;
+        $result->{status} = 'success';
+        $result->{failure_stage} = undef;
+        $result->{diagnostic} = 'controlled fixture prepared';
+        $result->{executable} = File::Spec->abs2rel("$bin/rustup", $root);
+        # Opaque test identities exercise lossless transfer, not native custody.
+        $result->{sources} = [{path => $result->{executable}, device => 7, inode => 11,
+                              size_bytes => 23, sha256 => 'a' x 64}];
         if ($scenario ne 'perl') {
-            $result->{compilation} = {cleanup => cleanup()};
+            $result->{compilation} = {ok => 1, status => 'success', cleanup => cleanup()};
+            $result->{compilation_argv} = ['controlled-clang', '-o', $result->{executable}];
             $result->{compilation}{cleanup}{group_gone} = 0 if $scenario eq 'compiler_group';
         }
+        push @prepared_results, JSON::PP::decode_json(JSON::PP::encode_json({mode => $mode, prepared => $result}));
         return $result;
     }
     sub supervise_process {
@@ -68,6 +98,7 @@ die 'original integration boundaries are missing' unless $body && $retire && $wr
         die 'proxy canonical identity changed' if $mode ne 'directory'
             && (!-l "$bin/cargo" || Cwd::abs_path("$bin/cargo") ne "$bin/rustup");
         push @watchers, [$mode, \%args];
+        push @events, ['watcher', $mode];
         push @workspaces, File::Basename::dirname($bin);
         my $cleanup = cleanup();
         $cleanup->{leader_started} = 0 if $mode eq 'directory';
@@ -107,6 +138,8 @@ for my $scenario (qw(native perl prepare_failure compiler_group inner_group inne
         @RustProxyIntegrationModel::preparations = ();
         @RustProxyIntegrationModel::watchers = ();
         @RustProxyIntegrationModel::workspaces = ();
+        @RustProxyIntegrationModel::prepared_results = ();
+        @RustProxyIntegrationModel::events = ();
         my $package = 'RustProxyIntegrationCase' . ++$case;
         my $aliases = join "\n", map { "*$_ = \\&RustProxyIntegrationModel::$_;" }
             qw(ok is fail diag explain subtest prepare_rust_proxy supervise_process);
@@ -137,6 +170,19 @@ PRELUDE
             'each attempted proxy mode is prepared once without fallback or retry');
         is(scalar(@RustProxyIntegrationModel::watchers), $scenario eq 'prepare_failure' ? 1 : $retains ? 2 : 3,
             'preparation failure cannot launch its wrapper or advance to another mode');
+        my @receipts = map { /^Rust proxy preparation: (.*)\z/s ? $1 : () }
+            grep { !ref($_) } @RustProxyIntegrationModel::diagnostics;
+        my @expected_receipts = map { JSON::PP->new->ascii->canonical->encode($_) }
+            @RustProxyIntegrationModel::prepared_results;
+        is_deeply(\@receipts, \@expected_receipts,
+            'every preparation retains its complete canonical mode-linked receipt');
+        my @expected_events = (['watcher', 'directory']);
+        for my $mode ($retains ? ('proxy_nonzero') : qw(proxy_nonzero proxy_decoy)) {
+            push @expected_events, ['prepare', $mode], ['receipt', $mode];
+            push @expected_events, ['watcher', $mode] unless $scenario eq 'prepare_failure';
+        }
+        is_deeply(\@RustProxyIntegrationModel::events, \@expected_events,
+            'receipt follows preparation and precedes any wrapper launch');
         ok(!grep(-e $_, keys %workspaces), 'controlled fixture cleanup leaves no workspace');
     };
 }

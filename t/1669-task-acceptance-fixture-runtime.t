@@ -767,6 +767,11 @@ PROBE
         }
         else {
             $prepared = prepare_rust_proxy("$mode_workspace", $mode);
+            # Preserve preparation identity before runtime can fail or cleanup
+            # can remove these files. This is not a loaded-image observation.
+            diag 'Rust proxy preparation: ' . JSON::PP->new->ascii->canonical->encode({
+                mode => $mode, prepared => $prepared,
+            });
             ok($prepared->{ok}, "$mode proxy preparation succeeds") or do {
                 diag explain $prepared;
                 diag 'Retained proxy workspace: ' . File::Spec->abs2rel("$mode_workspace", $repo_root);
