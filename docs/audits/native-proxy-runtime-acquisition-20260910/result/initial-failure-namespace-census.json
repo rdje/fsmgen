@@ -1,0 +1,12 @@
+{
+  ".artifacts/tmp/native-proxy-image-custody/cases": {
+    "device": 16777244,
+    "inode": 76887551,
+    "members": []
+  },
+  ".artifacts/tmp/process-supervisor-tests": {
+    "device": 16777244,
+    "inode": 66006961,
+    "members": []
+  }
+}

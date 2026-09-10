@@ -1,0 +1,147 @@
+{
+   "controls" : [
+      {
+         "expected_diagnostic" : 1,
+         "name" : "no caller callback accepted",
+         "rejected" : 1
+      },
+      {
+         "expected_diagnostic" : 1,
+         "name" : "wrong lock mode",
+         "rejected" : 1
+      },
+      {
+         "expected_diagnostic" : 1,
+         "name" : "nonempty lock",
+         "rejected" : 1
+      },
+      {
+         "expected_diagnostic" : 1,
+         "name" : "hard-linked lock",
+         "rejected" : 1
+      },
+      {
+         "expected_diagnostic" : 1,
+         "name" : "symlink lock",
+         "rejected" : 1
+      },
+      {
+         "expected_diagnostic" : 1,
+         "name" : "directory lock",
+         "rejected" : 1
+      },
+      {
+         "expected_diagnostic" : 1,
+         "name" : "FIFO lock",
+         "rejected" : 1
+      },
+      {
+         "expected_diagnostic" : 1,
+         "name" : "image over capacity",
+         "rejected" : 1
+      },
+      {
+         "expected_diagnostic" : 1,
+         "name" : "reference over capacity",
+         "rejected" : 1
+      },
+      {
+         "expected_diagnostic" : 1,
+         "name" : "invalid namespace unknown",
+         "rejected" : 1
+      },
+      {
+         "expected_diagnostic" : 1,
+         "name" : "invalid namespace image_name",
+         "rejected" : 1
+      },
+      {
+         "expected_diagnostic" : 1,
+         "name" : "invalid namespace reference_name",
+         "rejected" : 1
+      },
+      {
+         "expected_diagnostic" : 1,
+         "name" : "invalid namespace writable_reference",
+         "rejected" : 1
+      },
+      {
+         "expected_diagnostic" : 1,
+         "name" : "invalid namespace symlink_directory",
+         "rejected" : 1
+      },
+      {
+         "expected_diagnostic" : 1,
+         "name" : "modeled busy_deadline",
+         "rejected" : 1
+      },
+      {
+         "expected_diagnostic" : 1,
+         "name" : "modeled other_error",
+         "rejected" : 1
+      },
+      {
+         "expected_diagnostic" : 1,
+         "name" : "modeled late_success",
+         "rejected" : 1
+      },
+      {
+         "expected_diagnostic" : 1,
+         "name" : "census lock_replace",
+         "rejected" : 1
+      },
+      {
+         "expected_diagnostic" : 1,
+         "name" : "census directory_replace",
+         "rejected" : 1
+      },
+      {
+         "expected_diagnostic" : 1,
+         "name" : "census directory_remove",
+         "rejected" : 1
+      }
+   ],
+   "forbidden_process_attempts" : 0,
+   "limits" : "Single-process local lock/open/close observed; busy/error/deadline behavior modeled. No real contender, native executable, publication, reference semantics or product activation.",
+   "mutants_defeated" : [
+      "lock_guard",
+      "no_repair_guard"
+   ],
+   "positive" : {
+      "completeness" : "structure_only; contents_and_reference_semantics_unqualified",
+      "images" : [],
+      "lock" : {
+         "device" : 16777244,
+         "inode" : 76899260,
+         "path" : ".artifacts/tmp/native-proxy-image-custody/cases/fsmgen-OGaaynga/coordination.lock"
+      },
+      "references" : [],
+      "schema" : "fsmgen.inactive_image_namespace.v1"
+   },
+   "retired_cases" : [
+      ".artifacts/tmp/native-proxy-image-custody/cases/fsmgen-OGaaynga",
+      ".artifacts/tmp/native-proxy-image-custody/cases/fsmgen-tfjzUiHs",
+      ".artifacts/tmp/native-proxy-image-custody/cases/fsmgen-sxqMfqpN",
+      ".artifacts/tmp/native-proxy-image-custody/cases/fsmgen-dL8cQpb6",
+      ".artifacts/tmp/native-proxy-image-custody/cases/fsmgen-kj5VWhvK",
+      ".artifacts/tmp/native-proxy-image-custody/cases/fsmgen-mya2BnGJ",
+      ".artifacts/tmp/native-proxy-image-custody/cases/fsmgen-etGSVtBy",
+      ".artifacts/tmp/native-proxy-image-custody/cases/fsmgen-fvsxcIAy",
+      ".artifacts/tmp/native-proxy-image-custody/cases/fsmgen-Jx0WDB3y",
+      ".artifacts/tmp/native-proxy-image-custody/cases/fsmgen-R300Zjwu",
+      ".artifacts/tmp/native-proxy-image-custody/cases/fsmgen-2Qu1L_Xh",
+      ".artifacts/tmp/native-proxy-image-custody/cases/fsmgen-RrFjJEVa",
+      ".artifacts/tmp/native-proxy-image-custody/cases/fsmgen-0C5Akh08",
+      ".artifacts/tmp/native-proxy-image-custody/cases/fsmgen-dZxQmkmp",
+      ".artifacts/tmp/native-proxy-image-custody/cases/fsmgen-x_jm2e54",
+      ".artifacts/tmp/native-proxy-image-custody/cases/fsmgen-fX1_NiSw",
+      ".artifacts/tmp/native-proxy-image-custody/cases/fsmgen-_3vbBAxn",
+      ".artifacts/tmp/native-proxy-image-custody/cases/fsmgen-eAgYRxxq",
+      ".artifacts/tmp/native-proxy-image-custody/cases/fsmgen-qjPvRC3L",
+      ".artifacts/tmp/native-proxy-image-custody/cases/fsmgen-0nrhxc4N",
+      ".artifacts/tmp/native-proxy-image-custody/cases/fsmgen-aGXY_UpG",
+      ".artifacts/tmp/native-proxy-image-custody/cases/fsmgen-qb4kR_jh"
+   ],
+   "schema" : "fsmgen.inactive_image_coordination_qualification.v1",
+   "success" : true
+}

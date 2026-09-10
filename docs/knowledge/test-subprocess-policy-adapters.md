@@ -7,6 +7,8 @@ answers:
   - "why must native-birth field sets use explicit membership?"
   - "what does the inactive runtime-reference codec validate?"
   - "how does the inactive reference census retain stale owners?"
+  - "how does inactive acquisition order global and private references?"
+  - "how must tests wrap a caller-sealed function?"
   - "why did integrated proxy qualification fail?"
   - "why does t1545 not use IPC Cmd?"
   - "where does T1545 preserve empty-output checker failure diagnostics?"
@@ -71,11 +73,11 @@ reverify: >-
 ---
 
 Decisions `0087`/`0101`: `FSM::Support::ProcessSupervisor` gives nonblocking steps, shell-free argv, same-volume cwd, bounded split capture, monotonic measurements and one group with TERM/KILL cleanup. Adapters seal policy; T1669 checks ownership.
-Child requires successful `setpgid` and owned group before exec. `.3.2.10.1` separates return/errno, exception and membership with child PID; native session/false-success controls reject stale-error attribution. PID is not birth identity. Parent race closure cannot replace admission; nested cleanup stays open.
+Child requires `setpgid` success and owned group before exec. `.3.2.10.1` separates return/errno, exception and membership with child PID; native session/false-success controls reject stale-error attribution. PID is not birth identity. Parent race closure cannot replace admission; nested cleanup stays open.
 `exec_handoff_monotonic_ns` means observed control-pipe EOF, not main entry:
 pre-exec death can close it. Without observed EOF, that timestamp and dependent
 durations stay unknown even after cleanup. T1669 checks held-child timeout, separate pre-exec exit and successful output.
-Post-KILL reaping polls within cleanup grace. Unreaped leaders/surviving groups stay incomplete; T1669 rejects blocking waits with an inert mock.
+Post-KILL: poll within grace; unreaped leaders/live groups stay incomplete. T1669 rejects blocking waits.
 `VerilatorRuntime` follows decision `0086`.
 `TaskAcceptanceFixtureRuntime` seals owned fixture roots/fixed local Git argv.
 Git/checker: ten-second wall, 1,048,576/4,194,304-byte capture, closed `fsmgen.test.task_acceptance_fixture_result.v1`. Load-time Git/Bash ignore later PATH; callers cannot widen policy.
@@ -83,13 +85,14 @@ Darwin env-Bash stalled before main. Direct Bash retains capability; `/bin/bash`
 stays local. Timeout/overflow/nonzero/signal/exec/descendant/cleanup failures stay failed
 without retry; original fixture assertions pass.
 T1545 controls: historical card; absent witnesses stay unknown.
-Env/direct Perl timed out after handoff; a shebang-only cure is refuted. HIAL/VIAL `.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2` owns startup cause; `.3.3–7` own authenticated kernel capture. Sampling/authentication/STOP limits: task/book/history.
+Env/direct Perl handoff timeouts refute a shebang-only cure. HIAL/VIAL `.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2` owns startup cause; `.3.3–7` own authenticated kernel capture. Sampling/authentication/STOP limits: task/book/history.
 T1669 roots: `.artifacts/tmp/process-supervisor-tests/`. ps requires native presence; only disappearance skips. Permission/query/identity errors fail. Exit-race controls do not explain the historical changed field (.3.2.11).
-History: `4f461e152e2f18a5900a36d9d3752afdb615df37:docs/knowledge/test-subprocess-policy-adapters.md`.
+History: `6d87fd64c4ab4abcecee0d1ad8f8259350719e53:docs/knowledge/test-subprocess-policy-adapters.md`.
 PST parsing normalizes 1–16 lowercase hex digits; malformed fields and contradictions reject.
-.15.7.3 supports serial queue contention; client/frame joins and startup repair stay open. Native integration supplies preparation-before-runtime receipts, exact ancestry/C custody and owned retirement, with passive daemon capture. Prior counterexamples: history; loaded bytes unproved.
-Fixed CLI .15.7.2.4 uses archive index/digest and journal anchors; calibration/reserve/actual-file checks and first-failure/capture stop persist. Outcomes stay distinct; failures/ownership persist. F_CHECK_LV cause unproved (.15.2); queue/provenance coexist (.15.4); worker/delivery unknown. Live opt-in violations: .15.5.1.2.2–3.
-Inactive .12.4.1 qualifies keys, coordination and publication custody. Birth fields require count/membership after the merged-name defect (.12.4.1.2.2.2.1.1). Runtime codec .1.2 checks closed typed canonical records, workspace keys and ordered paths; historical IDs grant no current custody or release. Census .2.1 checks filename/content joins and retains stale owners; acquisition/lifetimes remain open.
+.15.7.3 supports serial queue contention; client/frame joins and startup repair stay open. Native integration supplies pre-runtime receipts, ancestry/C custody, owned retirement and passive daemon capture. Counterexamples: history; loaded bytes unproved.
+Fixed CLI .15.7.2.4 binds archive index/digest and journal anchors; calibration/reserve/file checks preserve first failure, stop, distinct outcomes and ownership. F_CHECK_LV cause (.15.2) and worker/delivery remain unknown; queue/provenance coexist (.15.4). Opt-in violations: .15.5.1.2.2–3.
+Inactive .12.4.1 qualifies keys, coordination and publication custody. Birth fields require count/membership after the merged-name defect (.12.4.1.2.2.2.1.1). Runtime codec .1.2 checks closed typed canonical records, workspace keys and ordered paths; historical IDs grant no current custody or release. Census .2.1 retains stale owners after filename/content joins. Acquisition .2.2 writes global before private, checks original inodes and prior holds; execution/lifetimes remain unqualified.
+Caller-sealed test wrappers use tail goto to preserve caller.
 Replay: `scripts/run_with_ram_guard.sh -- python3 -B -m unittest discover -s t/python -p 'test_fixture_policy_archive*.py'`.
 T1595 pre-main cause open; `.19.2.3.1.2.2.6.2` fixes capture.
 `RamGuardFixtureRuntime` seals tools/argv, paths, bounds and full results.

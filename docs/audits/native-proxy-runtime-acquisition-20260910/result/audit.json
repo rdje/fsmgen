@@ -1,0 +1,113 @@
+{
+  "allocations": 84,
+  "assertions": 79,
+  "falsifiers": [
+    "hidden failure",
+    "runtime authority",
+    "runnable result",
+    "lost global pin",
+    "different private bytes",
+    "missing allocation",
+    "incomplete capacity census",
+    "missed stale workspace mutant"
+  ],
+  "inputs": [
+    {
+      "path": "docs/audits/native-proxy-runtime-acquisition-20260910/ReferenceAcquisition.pm",
+      "sha256": "b751c88d709e102f7f9b9dd17e0222c39e0a81acc16d7194f7f7c3f4c8535b57",
+      "size_bytes": 6565
+    },
+    {
+      "path": "docs/audits/native-proxy-runtime-acquisition-20260910/qualify.t",
+      "sha256": "9aff78c5e58d63c2bdce64587beb73127bc070e9127d5f45826f8e546cb2343a",
+      "size_bytes": 18708
+    },
+    {
+      "path": "docs/audits/native-proxy-image-coordination-20260910/Coordination.pm",
+      "sha256": "8a8c0b0e76655b1991d1a91b893c5a4ce6abca418c89836245188bf4a0ab0cd9",
+      "size_bytes": 10186
+    },
+    {
+      "path": ".artifacts/logs/native-proxy-runtime-acquisition-20260910/qualification.json",
+      "sha256": "8d3b8eb0d7cbd120964eedebb8fdf71d1f1196b2f6841076a5ea5cba19989b07",
+      "size_bytes": 86400
+    },
+    {
+      "path": ".artifacts/logs/native-proxy-runtime-acquisition-20260910/qualify.tap",
+      "sha256": "5238c4a446819c5c40f6027c157962e3a09577f8084c15070fa048486f84ea28",
+      "size_bytes": 3637
+    },
+    {
+      "path": ".artifacts/logs/native-proxy-runtime-acquisition-20260910/admission.jsonl",
+      "sha256": "df3f7413ffe742d27ccd8320f4518122db947b97e7e3e365c3a08878b1600671",
+      "size_bytes": 10276
+    },
+    {
+      "path": ".artifacts/logs/native-proxy-runtime-acquisition-20260910/initial-harness.tap",
+      "sha256": "e28b8df325c3840ee50debf7cad43eee1c91a90ad8d140bbb9e329be88df757c",
+      "size_bytes": 4842
+    },
+    {
+      "path": ".artifacts/logs/native-proxy-runtime-acquisition-20260910/initial-harness.t.source",
+      "sha256": "a348bf7b6502891d1340c95fb29cb80b09f021485a0cd3d8bca83f3c9a2e0d9b",
+      "size_bytes": 18120
+    },
+    {
+      "path": ".artifacts/logs/native-proxy-runtime-acquisition-20260910/initial-failure-namespace-census.json",
+      "sha256": "ff28a2fb11f5e313026786cbb0fb8fb4d06e5382cf08104af77b95df2c83b57f",
+      "size_bytes": 245
+    },
+    {
+      "path": ".artifacts/logs/native-proxy-runtime-acquisition-20260910/coordination-regression.json",
+      "sha256": "9135d6bb1e2314b90287a2a917c3d56e442431742f7a5fec40dac8968fe8a03a",
+      "size_bytes": 4867
+    },
+    {
+      "path": ".artifacts/logs/native-proxy-runtime-acquisition-20260910/coordination-regression.tap",
+      "sha256": "16f7409bab4e74ad9bf39f9492cc2a6ccc26426b088334a104d3c469843de6a3",
+      "size_bytes": 3082
+    },
+    {
+      "path": ".artifacts/logs/native-proxy-runtime-acquisition-20260910/publication-regression.json",
+      "sha256": "edab9e2071bd3da72120e2d2c008dbc00e4309ebcf4d4610c07dcf7074a2f0f8",
+      "size_bytes": 8022
+    },
+    {
+      "path": ".artifacts/logs/native-proxy-runtime-acquisition-20260910/publication-regression.tap",
+      "sha256": "ddb9e8645d979cc0073562e9e65de19e2353d8a9ba95c2bfb394f5bc13604499",
+      "size_bytes": 3836
+    },
+    {
+      "path": ".artifacts/logs/native-proxy-runtime-acquisition-20260910/census-regression.json",
+      "sha256": "30aa149a215a0226e546db2643b0c6e0196e7849f80974296ba052c8ea9888b9",
+      "size_bytes": 37759
+    },
+    {
+      "path": ".artifacts/logs/native-proxy-runtime-acquisition-20260910/census-regression.tap",
+      "sha256": "326561d4adf120413807f6eb1d31c7a083fade38477a8ec0e9f134fadbc58699",
+      "size_bytes": 2596
+    }
+  ],
+  "limits": [
+    "Inert record acquisition only, with no compiler, native fixture, original, collector or contention worker.",
+    "Initial harness abort has no final JSON/allocation roster; the immediate census independently proves both whole fixture namespaces empty.",
+    "Final allocation ledger and result agree; each exact owned store/workspace and replacement transient is absent.",
+    "Source snapshots and IDs are dated observations, not loaded-image attestation or arbitrary concurrent-writer protection.",
+    "Combined interruption closure, observation lifetimes, retirement, maintenance, actual contention and native behavior remain separately unqualified."
+  ],
+  "regression_assertions": {
+    "census": 53,
+    "coordination": 67,
+    "publication": 78
+  },
+  "rejection_controls": 30,
+  "retired_cases": {
+    "acquisition": 28,
+    "census": 25,
+    "coordination": 22,
+    "publication": 19
+  },
+  "retired_workspaces": 56,
+  "schema": "fsmgen.inactive_runtime_reference_acquisition_audit.v1",
+  "success": true
+}

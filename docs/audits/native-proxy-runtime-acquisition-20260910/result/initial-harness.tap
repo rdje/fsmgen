@@ -1,0 +1,101 @@
+ram-guard: PID 26456; host 58.5%; host cutoff 88%; descendant RSS cutoff 4096 MiB; poll 2s
+ok 1 - global reference is written before private receipt
+ok 2 - first acquisition publishes image
+ok 3 - second owner reuses exact image
+ok 4 - equal image retains exact bytes and inodes
+ok 5 - separate workspaces retain distinct complete references
+ok 6 - inactive acquisition grants no runtime authority
+ok 7 - inactive acquisition returns no runnable executable
+ok 8 - both reference copies agree
+ok 9 - inactive acquisition grants no runtime authority
+ok 10 - inactive acquisition returns no runnable executable
+ok 11 - both reference copies agree
+ok 12 - duplicate global ownership
+ok 13 - duplicate rejection preserves both owners
+ok 14 - different output creates a distinct image
+ok 15 - different output preserves both images
+ok 16 - admission stale_inode
+ok 17 - stale_inode fails before image publication
+ok 18 - admission wrong_device
+ok 19 - wrong_device fails before image publication
+ok 20 - admission extra_field
+ok 21 - extra_field fails before image publication
+ok 22 - admission numeric_inode
+ok 23 - numeric_inode fails before image publication
+ok 24 - admission boolean_inode
+ok 25 - boolean_inode fails before image publication
+ok 26 - admission wrong_path
+ok 27 - wrong_path fails before image publication
+ok 28 - admission missing_tools
+ok 29 - missing_tools fails before image publication
+ok 30 - admission private_exists
+ok 31 - private_exists fails before image publication
+ok 32 - admission private_symlink
+ok 33 - private_symlink fails before image publication
+ok 34 - admission malformed_global
+ok 35 - malformed_global fails before image publication
+ok 36 - interruption before_global
+ok 37 - before_global preserves global state
+ok 38 - before_global preserves private state
+ok 39 - interruption after_global
+ok 40 - after_global preserves global state
+ok 41 - after_global preserves private state
+ok 42 - interruption before_private
+ok 43 - before_private preserves global state
+ok 44 - before_private preserves private state
+ok 45 - interruption after_private
+ok 46 - after_private preserves global state
+ok 47 - after_private preserves private state
+not ok 48 - closure global_inode
+#   Failed test 'closure global_inode'
+#   at docs/audits/native-proxy-runtime-acquisition-20260910/qualify.t line 89.
+# reference closure requires the sealed coordinator
+ok 49 - global_inode retains its global reference
+not ok 50 - closure private_inode
+#   Failed test 'closure private_inode'
+#   at docs/audits/native-proxy-runtime-acquisition-20260910/qualify.t line 89.
+# reference closure requires the sealed coordinator
+ok 51 - private_inode retains its global reference
+not ok 52 - closure private_bytes
+#   Failed test 'closure private_bytes'
+#   at docs/audits/native-proxy-runtime-acquisition-20260910/qualify.t line 89.
+# reference closure requires the sealed coordinator
+ok 53 - private_bytes retains its global reference
+not ok 54 - closure workspace_root
+#   Failed test 'closure workspace_root'
+#   at docs/audits/native-proxy-runtime-acquisition-20260910/qualify.t line 89.
+# reference closure requires the sealed coordinator
+ok 55 - workspace_root retains its global reference
+not ok 56 - closure tools_directory
+#   Failed test 'closure tools_directory'
+#   at docs/audits/native-proxy-runtime-acquisition-20260910/qualify.t line 89.
+# reference closure requires the sealed coordinator
+ok 57 - tools_directory retains its global reference
+not ok 58 - closure prior_record
+#   Failed test 'closure prior_record'
+#   at docs/audits/native-proxy-runtime-acquisition-20260910/qualify.t line 89.
+# reference closure requires the sealed coordinator
+ok 59 - prior_record retains its global reference
+not ok 60 - closure prior_image
+#   Failed test 'closure prior_image'
+#   at docs/audits/native-proxy-runtime-acquisition-20260910/qualify.t line 89.
+# reference closure requires the sealed coordinator
+ok 61 - prior_image retains its global reference
+ok 62 - reference capacity before new publication
+ok 63 - reference capacity rejects before another image is published
+ok 64 - capacity leaves the complete original reference set
+ok 65 - existing image acquires a reference at the image ceiling
+ok 66 - new image capacity
+ok 67 - image capacity creates no new reference copy
+ok 68 - image capacity retains every complete or partial entry
+ok 69 - global without private is not reacquired
+ok 70 - incomplete owner remains pinned
+ok 71 - incomplete private copy is not silently repaired
+ok 72 - extra positional option
+ok 73 - oversized image input
+ok 74 - direct admission bypass
+ok 75 - direct acquisition bypass
+ok 76 - direct closure bypass
+reference closure requires the sealed coordinator
+# Tests were run but no plan was declared and done_testing() was not seen.
+# Looks like your test exited with 255 just after 76.

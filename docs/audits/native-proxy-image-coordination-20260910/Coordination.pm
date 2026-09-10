@@ -133,8 +133,13 @@ sub _transaction {
             || ($operation eq 'publish_image' && @payload == 2
                 && defined(&NativeProxyImagePublication::_publish_locked))
             || ($operation eq 'inspect_runtime_references' && !@payload
-                && defined(&NativeProxyReferenceCensus::_inspect_locked)));
+                && defined(&NativeProxyReferenceCensus::_inspect_locked))
+            || ($operation eq 'acquire_runtime_reference' && @payload == 3
+                && defined(&NativeProxyReferenceAcquisition::_admit_locked)
+                && defined(&NativeProxyReferenceCensus::_inspect_locked)
+                && defined(&NativeProxyImagePublication::_publish_locked)));
     NativeProxyImageCustody::image_key(@payload) if $operation eq 'publish_image';
+    NativeProxyReferenceAcquisition::_request(@payload) if $operation eq 'acquire_runtime_reference';
     NativeProxyImageCustody::_relative_path($case);
     die "only the inactive qualification namespace is admitted\n"
         unless $case =~ /\A\Q$CASE_PREFIX\Efsmgen-[A-Za-z0-9_]+\z/;
@@ -160,6 +165,16 @@ sub _transaction {
             ? NativeProxyImagePublication::_publish_locked($case, $census, @payload) : undef;
         my $references = $operation eq 'inspect_runtime_references'
             ? NativeProxyReferenceCensus::_inspect_locked($case, $census) : undef;
+        my $acquisition;
+        if ($operation eq 'acquire_runtime_reference') {
+            my $before = NativeProxyReferenceCensus::_inspect_locked($case, $census);
+            my $plan = NativeProxyReferenceAcquisition::_admit_locked($case, $census, $payload[0]);
+            my $published = NativeProxyImagePublication::_publish_locked($case, $census, @payload[1,2]);
+            my $acquired = NativeProxyReferenceAcquisition::_acquire_locked($case, $plan, $published);
+            my $after = NativeProxyReferenceCensus::_inspect_locked($case, _census($base));
+            $acquisition = NativeProxyReferenceAcquisition::_finish_locked(
+                $case, $plan, $published, $acquired, $before, $after);
+        }
         _structure($base, 0);
         for my $i (0, 1) {
             my $name = $i ? 'references' : 'images';
@@ -180,6 +195,9 @@ sub _transaction {
             : $operation eq 'inspect_runtime_references'
             ? {schema => 'fsmgen.inactive_runtime_reference_census.v1', runtime_authorized => 0,
                executable => undef, lock => $lock, %$references}
+            : $operation eq 'acquire_runtime_reference'
+            ? {schema => 'fsmgen.inactive_runtime_reference_acquisition.v1', runtime_authorized => 0,
+               executable => undef, lock => $lock, %$acquisition}
             : {schema => 'fsmgen.inactive_image_namespace.v1',
             completeness => 'structure_only; contents_and_reference_semantics_unqualified',
             lock => $lock,

@@ -2733,10 +2733,10 @@ decomposes the architecture needed to move beyond that bounded foundation.
   Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.12.4.1.2.2.1: qualify inactive canonical image publication`
 
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.12.4.1.2.2.2`
-  Status: `active`
+  Status: `done`
   Goal: `Qualify closed runtime-reference acquisition and private receipts.`
   Acceptance: `Add exact closed runtime records, independently derived keys and checked workspace/canonical-source identities. Publish global reference before the private receipt under the same coordination transaction; require exact sealed agreement before any success. Reject incorrect fields/types/paths, stale identities, incomplete copies and reference capacity; retain partial global pins and return no runnable preparation. Inert data only; no live fixture or product activation.`
-  Verification: `Publication 3618546c64ff0b2071b07c9822b3fbfae3605b01 committed; tree clean and brief zero. Qualify closed runtime records before integrating global/private acquisition into the fixed transaction. No runtime launch, compiler, original, collector or contention worker is authorized.`
+  Verification: `The closed codec is retained through its exact-version terminal, the bounded runtime-reference census is committed at 6d87fd64c4ab4abcecee0d1ad8f8259350719e53, and acquisition child .2.2 verifies exact global/private copies, original sealed identities and prior holds. This closes inactive runtime acquisition only; combined interruption closure, observer lifetimes, retirement/maintenance, actual contention and native behavior remain open.`
   Children: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.12.4.1.2.2.2.1, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.12.4.1.2.2.2.2`
 
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.12.4.1.2.2.2.1`
@@ -2752,10 +2752,10 @@ decomposes the architecture needed to move beyond that bounded foundation.
   Commit: `4f461e152e2f18a5900a36d9d3752afdb615df37`
 
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.12.4.1.2.2.2.2`
-  Status: `active`
+  Status: `done`
   Goal: `Qualify global/private runtime-reference acquisition under coordination.`
   Acceptance: `Integrate validated runtime records with the fixed checked transaction: admit the current owned workspace, canonical image and reference namespace; reject malformed/dangling/ambiguous records without dropping pins; preserve valid stale owners as retention obligations. Create global reference before private receipt, seal and recheck exact copies and native identities, and reject existing/mismatched/partial records or capacity without repair or retry. Return no runnable preparation in the inactive prototype; actual compiler/runtime, observation and contention remain unqualified.`
-  Verification: `Runtime codec 4f461e152e2f18a5900a36d9d3752afdb615df37 committed; tree clean and message brief zero. Child .1 first qualifies the bounded runtime-reference census under the existing fixed coordination transaction. Child .2 then admits the owned workspace and publishes both records. No compiler/runtime/original/collector or contention worker is launched. This decomposition keeps the read-only retention boundary independently reviewable before new reference writes.`
+  Verification: `Census child .1 is committed at 6d87fd64c4ab4abcecee0d1ad8f8259350719e53; child .2 qualifies inactive checked global-before-private acquisition and preservation of existing holds. Interrupted or duplicate acquisition stays failed without implicit repair or runtime authority. Combined interruption closure and the wider lifetime/native gates remain separately owned.`
   Children: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.12.4.1.2.2.2.2.1, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.12.4.1.2.2.2.2.2`
 
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.12.4.1.2.2.2.2.1`
@@ -2766,11 +2766,11 @@ decomposes the architecture needed to move beyond that bounded foundation.
   Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.12.4.1.2.2.2.2.1: qualify conservative runtime-reference census`
 
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.12.4.1.2.2.2.2.2`
-  Status: `proposed`
+  Status: `done`
   Goal: `Qualify checked global-before-private runtime-reference publication.`
   Acceptance: `After reference census commits, admit the current direct owned workspace and reference capacity before image publication; reject duplicate/partial private or global ownership without repair. Under the same fixed transaction publish/admit the image, exclusively write and seal the global reference before the private receipt, and require exact bytes and current source/directory identity closure before returning an inactive result with no runnable executable. Interrupted acquisition retains every uncertain global pin. Inert data only; runtime, observer and actual contention remain unqualified.`
-  Verification: `pending`
-  Commit: `pending`
+  Verification: `Inactive ReferenceAcquisition.pm adds a fixed checked coordinator operation. Closed prior workspace identity must match the current direct private root; rust-tools must exist with exact private ownership. Existing global/private ownership, malformed retained references and full reference capacity fail before image publication. The qualified writer receives codec-bounded exact reference bytes, creates the global record before the private receipt and seals the original descriptors. Final rereads/census require matching copies, original sealed inodes, workspace/bin identity, the selected image and every prior reference/image snapshot. Results always retain runtime_authorized zero and executable null. Re-derivation: guarded acquisition passes 79 TAP assertions; independent Python image framing/manifest/record/byte/key and allocation-ledger joins agree. Equal images retain exact bytes/inodes across distinct workspace references; different outputs preserve both images. The entire capacity key set is independently reconstructed. Falsification: 30 rejecting controls cover stale/typed/directory/duplicate/partial admission, reference/image capacity, before/after both writes, current/prior record/image/root/bin replacement, oversized input and direct/callback bypass. Partial globals remain pinned and missing private copies cannot be implicitly repaired/reacquired. Omitted workspace closure and discarded original sealed-inode identity each admit a result contradicted by an independent native identity observation. Eight altered result records reject. Existing coordination/publication/census suites pass 67/78/53 assertions. All 28 acquisition, 22 coordination, 19 publication and 25 census cases plus 56 acquisition workspaces are independently absent and disjoint; the corrected harness records all 84 allocated roots in an immediately closed ledger and attempts no compiler/process. Initial harness wrappers changed the sealed closure caller, producing seven wrong-stage checks and aborting before final JSON/plan. Tail goto preserves the coordinator caller. Exact first source/TAP are retained; an immediate census independently found both entire fixture namespaces empty. No first-run allocation roster or final process-attempt counter is claimed. Durability: docs/audits/native-proxy-runtime-acquisition-20260910 retains source, harness, independent audit/review, ledger, first-failure and exact final/regression copies. result/audit.json is 4624 bytes SHA-256 ae7080e2bad01cf15a2529b1970c7d95c3c951796a987147b7d23bbbf97350fc; result/qualification.json is 86400 bytes SHA-256 8d3b8eb0d7cbd120964eedebb8fdf71d1f1196b2f6841076a5ea5cba19989b07. Nine foundation/codec/census/publication/harness/product pins match 6d87fd64c4ab4abcecee0d1ad8f8259350719e53. New regression results precede exact restoration of prior ignored JSON. The completed census acceptance suffix remains exact-version recoverable within existing bounds. No real runtime lease, native execution or loaded-code attestation is claimed; snapshots are dated cooperative observations. Combined interruption closure, observer lifetimes, retirement, maintenance, actual contention, native behavior and historical startup repair remain open. Book rendering, knowledge-map synchronization and staged doctrines gate this slice; full CI/push stay gated.`
+  Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.12.4.1.2.2.2.2.2: qualify global-before-private reference acquisition`
 
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.12.4.1.2.2.3`
   Status: `proposed`
@@ -3797,7 +3797,7 @@ decomposes the architecture needed to move beyond that bounded foundation.
 
 ## Current Frontier
 
-Current frontier: .3.2.15.7.3.12.4.1.2.2.2.2.1 qualifies runtime-reference census; .12.4.1.2.2.2.2.2 next owns global/private acquisition. Startup/parent, full CI and push stay gated.
+Current frontier: .3.2.15.7.3.12.4.1.2.2.2 is qualified; .12.4.1.2.2.3 next independently closes combined publication/reference interruption boundaries. Startup/parent, full CI and push stay gated.
 
 Architecture audit `.1` is complete. Decision `0032` selects one public
 `.vial` source language, private immutable `VIALSemanticIR` and
@@ -6390,10 +6390,10 @@ Completed native-proxy feasibility through runtime-source-controls acceptance: r
 
 - Acceptance history manifest: `docs/tasks/history/HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE/acceptance-history.jsonl`
 
-The manifest binds the exact completed runtime-codec acceptance suffix at `4f461e152e2f18a5900a36d9d3752afdb615df37`. That source preserves the earlier history pointer and versioned manifest chain; current node contracts remain authoritative.
+The manifest binds the exact completed reference-census acceptance suffix at `6d87fd64c4ab4abcecee0d1ad8f8259350719e53`. That source preserves the earlier history pointer and versioned manifest chain; current node contracts remain authoritative.
 
-## Acceptance Checklist (reference census .3.2.15.7.3.12.4.1.2.2.2.2.1)
+## Acceptance Checklist (reference acquisition .3.2.15.7.3.12.4.1.2.2.2.2.2)
 
-- [x] **ROOT CAUSE (WHY + WHERE)** — git log -S 'sub _census' -- docs/audits/native-proxy-image-coordination-20260910/Coordination.pm identifies the structure-only census at 502006787cb326c8931b914b100a42d35c8f153b. File shape/count cannot establish reference schema, filename/content agreement or retained ownership; closed record semantics must precede acquisition.
-- [x] **ADDRESSED (verified implementation)** — Fixed inactive reference inspection joins complete bounded records and image bytes, preserves historical ownership, and checks descriptor/byte/membership closure. Independent Python reconstruction rejects omitted filename and content guards; capacity and malformed/partial/replacement controls preserve unresolved records without runtime authority.
-- [x] **NO REGRESSION** — Complete guarded census, coordination and publication suites and independent byte/TAP/absence audits pass. Book rendering, knowledge-map: OK synchronization and staged doctrines gate the slice. Exact completed codec/history recovery remains within live bounds; product source and native behavior are unchanged.
+- [x] **ROOT CAUSE (WHY + WHERE)** — git log -S 'sub _inspect_locked' -- docs/audits/native-proxy-runtime-census-20260910/ReferenceCensus.pm identifies 6d87fd64c4ab4abcecee0d1ad8f8259350719e53. It preserves existing runtime holds but does not acquire new global/private copies; the pinned protocol requires checked ordered publication before any preparation authority.
+- [x] **ADDRESSED (verified implementation)** — Fixed inactive acquisition admits prior workspace identity and capacity before publication, writes global before private, and closes original sealed inodes, current directories, matching records and prior holds. Independent byte/key/allocation reconstruction and omitted workspace/inode guards establish the stated boundary.
+- [x] **NO REGRESSION** — Guarded acquisition, coordination, publication and census suites plus independent TAP/byte/absence audits pass. The initial wrapper caller error and whole-namespace cleanup evidence remain retained. Book rendering, knowledge-map: OK synchronization and staged doctrines gate the slice; product source, native behavior and wider lifetime gates remain unchanged.

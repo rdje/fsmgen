@@ -1720,11 +1720,25 @@ dangling, partial or unknown observation records fail without repair or removal.
 Before returning dated snapshots, it rechecks reference and image bytes and
 identities. Unreferenced partial images stay outside content admission and remain
 for separately owned recovery. Inspection grants no execution or cleanup
-authority; global/private acquisition is still the next step. Run its focused
+authority. Run its focused
 inert checks from the root:
 
 ```bash
 scripts/run_with_ram_guard.sh -- perl docs/audits/native-proxy-runtime-census-20260910/qualify.t
+```
+
+Inactive acquisition now checks a prior workspace identity, rejects existing
+ownership and full reference capacity before publication, and writes the global
+reference before the private receipt. Both copies must match the sealed original
+inodes and exact record bytes. Workspace/bin replacement or changes to earlier
+references and images fail. An interrupted or incomplete acquisition retains
+uncertain global references; it cannot silently repair or reacquire them.
+Even complete inactive results keep `runtime_authorized: 0` and
+`executable: null`. Observer lifetimes, retirement, maintenance, actual
+contention and native behavior remain separate qualification steps. Replay:
+
+```bash
+scripts/run_with_ram_guard.sh -- perl docs/audits/native-proxy-runtime-acquisition-20260910/qualify.t
 ```
 
 The helper checks bounded regular source/output files and the native header,

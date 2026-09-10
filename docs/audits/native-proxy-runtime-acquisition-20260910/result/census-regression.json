@@ -1,0 +1,623 @@
+{
+   "capacity" : {
+      "case" : ".artifacts/tmp/native-proxy-image-custody/cases/fsmgen-YNJF48tn",
+      "keys" : [
+         "008822ec976c82a93f4589b3ebc38d905b28e709134cc0f45f726d1bd31036d2",
+         "01a90c0caf25696e13ced486ae3a3de6b5c346ef61f24d1018bc67152209a104",
+         "01c3ad59bd1b46daf4e344d04e1c2c5dd658fcce0a2efff8ab593c1d05f6c21b",
+         "0202757307a165d44a6302729f32ebbd0d67d876b5735e1d86b434346ba5d252",
+         "043cb372499550b526c861c3239405f87e539ab8e4a65cb2e450b660746b2a02",
+         "04f273a2b26367b5f386673e7b5e87a820b5b1086ac81c87f41c05a671a4ef02",
+         "0802dd87f19a51ea55bf8aa7bad66d8fb48a2c88a4d0bc9180f60da894bbe8fd",
+         "0922db538f7fade987f5ce14a180c3562ca029990e69380f370f37e5e080e745",
+         "099328e20138fdc91b43c6914175c529adf779d3fc595118c5f8f3960859b567",
+         "11e87f38069fd6499fe65c99549955e9c4c7a2fbd38efd9fda0568af2fac87ed",
+         "137110de0e2904d16a358e70588a24d23ce320be9075f9b3ebbf7330ebd0229e",
+         "13f62c2141b150bb9c8b7e2d3486f2dfb5dc02b7657798419ce9de580518c07e",
+         "14a04a71a8195c7537dd9a738b98bd1819acdedcb526fc82716528c3d042f10f",
+         "1b0bd265631036a0be600c067beef4a2c866ad696c8ad822efaf42ac2da594d4",
+         "1c872d9ff61fca814448f266e2e266969933d2826ba5bb183dc9d6fa2c29ce0d",
+         "1e9bcf957066e8d3b182010a62ee4dd465f8ae47d8b84997c2941801fd20934f",
+         "210fa169a90dfc45d2edaea77b9e4b3086507b75e6766fd3a2674c89b8bc44df",
+         "21eeebcd86b4937ec8ad0f3212d46e320155360dfbc90b44c9b956cca54dcdda",
+         "286db9b0c06dfa3ca1c0316e0a083c374303ce1add0571c88ecdc7832ec3f584",
+         "29cadceeb1ac65118f6d532ffc8686763fc6feb4aaf90fb71e12abc2ceffe648",
+         "2cc2b3708c875ee87530f146c05bc223c334029420e5b64fe69a7c31206feb03",
+         "2cf03912aa36948802f9bcfcc4d1f897c33084c72c17359b9fd9044c9773f5ee",
+         "2d3069ce04f029252f3f15fdb48d568111c3f0bd934775686f44d663f0e74385",
+         "2dc4cd1349f01720019b7b375c4a77cab0d262fb84679a847fbeef9804dcb851",
+         "2e95f1ad5fdf16c3ca289e44c16b8289fc353e83788b2f368808569affa27c5c",
+         "30b1754f57712e33232cbd7c5c40854537126617f56f254d872424047bd5791d",
+         "332460631a9458e3d83010b6351e88f5edb17cec3a5faa43364c483a95f06267",
+         "3627f614823c779dba9f6fe2726c09770ee0a923a06ef947ce4bc44403cd9a22",
+         "37cc1fc47b25614af8d8d5de989da99b5e80abdfdcce803da62fc0a4f85fada9",
+         "385adc5722087babf2f09aefea3031b20b40228d8c872561f162d05ade59a48d",
+         "3ade461383ca9dc36fe35266845796de1c575b21cb379173efb31a3017da0382",
+         "3b272576d167bff14f15ad98ce93c1e3e5409d5e31283840f1cc6e2665c84f5d",
+         "3f68a72ab66690f41179a1e533918326813560c9ba127e60cf83e7a8cb761517",
+         "3f9ac5c3edb76a46167607318b12770d3607c5df96b97f9658d985b157e4b40e",
+         "3fe72b5628af123b93f5b54cc7077d0adfc2204818a1db8843d288e33e70cb1b",
+         "40fcb665a8787e2419cc5ce818b7ec6588aaed820f321a9ded38b679145f66b4",
+         "410d6a43be3948ac22779d7d6a4a878a5505ac8d9c982f39248fccbf26bcc1f9",
+         "4262f5ed5b31fb6be5fbc6cbdacd9b22a0df4967191b8b2752a808163b130d8b",
+         "4559f4f78256e8eab6a3494337b0ab6f9647b029143e70cd8c4bc4ec8094e431",
+         "4ab2a472598bf7dfc1caf1d69d34750facb3d6bed6cebf5a82268b77742e15ee",
+         "4f25f3fdf629518b24620cd5abf026b644fb2e682b29e76a1a22bc5324d0903f",
+         "52c99ca45ef40eba83aa51b788b6c932dda91a8c8c495f8d816850ce838caeba",
+         "54bdbfc19ae2f4a9e605631fca19c6dcd56069a04c87067eaa1dc1b6f981d6be",
+         "587969bc3123838b33f8ac09ee25a57177dfe69ef98ab4a215cf10eda829c0fd",
+         "5a480cc309af9f2c05599289c8174910a1b2f1fc1d0bd363f6d5de66b89e1b76",
+         "5a93e1041f3879e2f9585608d2812bcc55559f3a9d0d069250448de920f6f570",
+         "5d53f8a26263c93629ce1681af6ef970d5d156adbee1e923d05974a4edb6a656",
+         "5d54bb6813afdd194d5b311662da2ce2e9cf8eb8f3045cbf3b9a5821d3b2b586",
+         "5fc45f20a34f405bbf8b0c1d0f12fec1ac2357a527e02095d9e64b3efcd51205",
+         "601a3e169572d308d999322e98b9353a15eda4eb08c2a5a2fc3e1fe9b7d8e05e",
+         "611e6330d9359cb1bda44bd81b27b7693ff7e20fd257684793673ea886ebf5a5",
+         "63eabd6b407bee4ed3d46c402da5cb81a6f0d51234be4d52b6085b0a08da0bba",
+         "643af63640e1dca9a4b96cc2a254067e479f19f6c22de9ae9567300e9d525c72",
+         "648804378999371fdfdc1724fa6a936e71f92760c764a068470847e984c5e0d0",
+         "64b93722ceaf57f6383e5f492203b1c0d4860fd0ff0568610757235b27a7f8cc",
+         "67b342c14a8d13b0c38bb77170d14f7208f683d6e7d9ad80a57da8a7f74ca2c7",
+         "68bbc5fab0be846428bfcb327c5ab4338c9b8ab07bbbd788de082f609e9b13b1",
+         "6a68050095e3dad0800643fe6d4cb36952f52e7ec79107e927dda30b620d6dbf",
+         "6bc8e9b6c94e08ca47b575d38d6c17d0e004f77c61aca2e5ef25e6d461ef52de",
+         "6c1e5ac110cfecd647bfc82844a18b78b94e3232bf5791077745b06f17ffd640",
+         "6eff21d44fc6fe187caee6061d2f87294ccaa60937914d9f0800392a4bbf92a6",
+         "6f539696f1e8f6d8d5cf9f4b53e6600a610d00e80e82a9449fc5fe86d97d7516",
+         "70f28590ca0065433eaf260ca1bba2c1caeb636fbbcd612277a72e971f2d9cc7",
+         "742dfc90f2cd128fb72fb55d3555dc18dbc7eb607d7cab32e78257f422158386",
+         "76a63b818323997ee73a29f7731233038f1d5de0adf212d046bb1babc762052e",
+         "7972da4f1d2689aa0b0844501c13c29b4b41c5584bd6e6c61f5cce0cc124375b",
+         "7f2f87afbb0cd1c20d0c9612d07560a23003cc95fea6a984f0e5e2eb7a11a5a8",
+         "80b9527bc99b93296120d60ccbebeddabc3d06c0ebe839a7ac0123449556e73d",
+         "80e72d2c32ddc5b6f424264f234d33abb9b5e3ec801926c8e12d54f2fbd7cc5d",
+         "826ddbb93a3c82758331f29f9310a4f0ace08368a093d06e6eaf1aef178e3dd7",
+         "850a871ecf013a5e21ee1938c3feb565f85d2ede490373c62e26f18c0a2f976a",
+         "85b9cea1a48b84ba2e94f5ad8e94aac95b0cb4e3b71e9d5fc42d1b6513f73a16",
+         "860f0cbb3e43a3ab432ce9d51b97600b452f3864843ed6a16fb5115d358b9ef8",
+         "877f201fb5ff982ae6e64f291487b1fdae5737c4c6410fd54c485e2a6730dbc5",
+         "8793422fd3eda460e17a2def2409a5f8cdeac39ff73bbf269ba97f15a1b77edf",
+         "8ada1dc551a56132ac880cdfa451fe0af0d344921b44a4c32fbb7d2befa3f040",
+         "8f56fe0eb48faf0e32940d75a22ed4400d340ef214d50b37b4569a1fa70d146e",
+         "92288fd4da1b220a683b9374bd37c91775b5515e58eb7fb933e2c62c1294f519",
+         "93383a56461892578911bbc0a45667aa829e36f40688b8d5e9e94ccd6cf6cdef",
+         "951832bff74c95592106e68c9401c28e94da4a9d6230155cd883f22a5ca7d8d4",
+         "956e3f67357aed15563076a7017601a2a88ee621b658a5e413213d0ab5c5e4d0",
+         "9a1d518fa901c4fdf1a8637f4fd24a52973bed2058895043e3084af0d73315fb",
+         "9b906babe5c4c0fa7b3ea7ac4227d6a01f1c2c20888ab3aa60d7c382b45f2318",
+         "9c972e6a34d77ddd058c2014d38e555c2ea7559982d57115b27277be8b6db75d",
+         "9f3b94c8e9bb632be4ef3070f49083121bf956d1353c42ac47f197be087ea4bc",
+         "a2bc179134e49b933e0644bf31d487a5626701d093947d82889efd703453462d",
+         "a30215117508523ece846df6cc5e7d4fd8c327f4e3c4017504b09cfb3f0ced47",
+         "a4086bb78e70596a0666a6c614054fb2b9d09430c8b49186309d5b23ff0af9be",
+         "a686ca9def5d1b61325d01ec99521af486d72ad3e7dc27a433929fd4415ec9af",
+         "ab57e826db138ec31792266c544a1f98cd3aee3dfcd5522bde37c68f7d597f70",
+         "ae669932c489426bd1f96a0a7f0b1709bafff4ed4ea7df3a5b889eecbeac103a",
+         "b3229b6e340ee33e1c9c0ea25957b03cf1d51cfcc650505fa83e01b7087df514",
+         "b337e313e832974b14f580166fb456b5814276b833451016799d9374a21d969b",
+         "b519752cc77b4f7efe84587b8a2ee5a9723e4bdaef41c34564bdcd1d4806e7db",
+         "b8d63554164419411f3ce36f46c4dad3dc0c694d89761158d56f4c6d1ee145f8",
+         "b9af67edf8455770068704e318fb14fd48ac9a950af913e5a00abe23fe2c64c2",
+         "bba2179cc252e9196fda740017b19f771a42d4a00ec2bd624a6a69e14e08c6a0",
+         "bc4dce565253c5580b0487f9d4f63e5f8b23331ca0885edea0e27bb73c65dade",
+         "bcf9bfea29fc467247e89c65ca932fbcb34972a7249c44ba8452560bc6d904e3",
+         "bd8fdc22dc725ba3db4782cb1bcad1a15054b532f6b73a51f526a592d21a2fd5",
+         "c171df33ed62f43f1502813eef7d67bc0099113e118d58f9c9fbf06d119ef594",
+         "c1b6a5278a29d12ad78488379cb955f2dd56bd405a05ca8bfc294d3142a43e18",
+         "c3ad9fbc07574c974d578ac0fbcf667e8ecea68f8e3387dc964a5b788650ad91",
+         "c42fb796f3a08cfff11074a5e53397507d30dd63f206b9de0da0f58ba1ef3654",
+         "c5886d20e159109478e60df09645bb76e006bb5a8da727ad7f34f82edcc4e476",
+         "c66b4ef7ad4499101501c3e7f7456c104d7259e4ca14d8bc823d246d7666069f",
+         "c7d1fd5afbfb6a750e92b5f9015e809a7ce4cd95585c6717322952cb06b42bde",
+         "ca9ba289cfcb6c589bc653a715cfc45e4a879923bf490a6ff440f575a85e1f49",
+         "cbcd2152bffbf64dd5580c870aeee6573e21505ffb1ef22d984ef49f1b01bf94",
+         "ccd052bc802118e348e1d7de3bfb5b209e8d68c8c7a6cc59a64b0cf0cb1eb2b1",
+         "cf81696c605ab5de4df4524a896196fb24fa68f9b943a823f16b4d5da62f10db",
+         "d0af15a488557a06818a7f8a61b76295b3c44a2f3f2a2057553ffcb7bb7f021c",
+         "d0fac006ab5b15c87f59b5ccf5c488a19fd58321a4b6b016901c4f759016d2ee",
+         "d3abc6aebf23a89bcd021f21c55b13592143cc5a676f60031b6a8552e490c2a1",
+         "da03297b43984d7dcb22bd22a82657520adae7119548f2f2a899d581d8b62bca",
+         "dbab694a9fe493e404689422ea58d7d581f6fa1ce96650aaa115e8b54d8603d5",
+         "dd0fd051db290bfa5bfce8094ff1b73963f2b63ba35d55cff31800e71febea6b",
+         "de4807889f05ffcc9300a68b816692db90eaa313c0057b25d4fed2001999ffef",
+         "e358d5d5dba6d83059c2d807d1b07ea49e82a1d45a98aaad6c49cce96d8c4490",
+         "e400f680e280c12d0ff5326cf9c8fe9340a7a27d6a587db054d3f5d7bbe80972",
+         "e45fc460e8c1966b22dfa8f880291884828bf0bb3f64992ea0a753082b3622f8",
+         "e98448609f8404cd7c276fb21fef3363a970a4cb83f93cf55cdb6871a9563a63",
+         "edc437c6da0043c33eefe4fc62d2a34d4b35a3fb336337620c2335279bac4db9",
+         "ef82af3200fb428def12adffc404ce4d1e5404c871e78d168e1c4485f23fd62c",
+         "f3162272bcce0bbe1a71a3385a675f4ac4d005ed9c01b141eae0c35948a16150",
+         "f9acc9e21aee641e490ad05ecfc82cc30ecf42f3eeac5527c4dbe2d39c32fd4d",
+         "f9c1193435ad6e73791678cddf63d53b74a6bee03079f02f1b66fcedc210e653",
+         "fad3a09e693380dcc15ec43c05d33aded004c8aa5750ada486cfce309d896ccc"
+      ]
+   },
+   "controls" : [
+      {
+         "expected_diagnostic" : 1,
+         "name" : "unknown runtime field",
+         "rejected" : 1,
+         "returned_result" : 0
+      },
+      {
+         "expected_diagnostic" : 1,
+         "name" : "merged runtime fields",
+         "rejected" : 1,
+         "returned_result" : 0
+      },
+      {
+         "expected_diagnostic" : 1,
+         "name" : "boolean historical inode",
+         "rejected" : 1,
+         "returned_result" : 0
+      },
+      {
+         "expected_diagnostic" : 1,
+         "name" : "wrong runtime key",
+         "rejected" : 1,
+         "returned_result" : 0
+      },
+      {
+         "expected_diagnostic" : 1,
+         "name" : "unknown observation format",
+         "rejected" : 1,
+         "returned_result" : 0
+      },
+      {
+         "expected_diagnostic" : 1,
+         "name" : "wrong reference content digest",
+         "rejected" : 1,
+         "returned_result" : 0
+      },
+      {
+         "expected_diagnostic" : 1,
+         "name" : "wrong reference content length",
+         "rejected" : 1,
+         "returned_result" : 0
+      },
+      {
+         "expected_diagnostic" : 1,
+         "name" : "dangling referenced image",
+         "rejected" : 1,
+         "returned_result" : 0
+      },
+      {
+         "expected_diagnostic" : 1,
+         "name" : "reference wrong_filename",
+         "rejected" : 1,
+         "returned_result" : 0
+      },
+      {
+         "expected_diagnostic" : 1,
+         "name" : "reference partial",
+         "rejected" : 1,
+         "returned_result" : 0
+      },
+      {
+         "expected_diagnostic" : 1,
+         "name" : "reference duplicate",
+         "rejected" : 1,
+         "returned_result" : 0
+      },
+      {
+         "expected_diagnostic" : 1,
+         "name" : "reference writable",
+         "rejected" : 1,
+         "returned_result" : 0
+      },
+      {
+         "expected_diagnostic" : 1,
+         "name" : "reference hardlink",
+         "rejected" : 1,
+         "returned_result" : 0
+      },
+      {
+         "expected_diagnostic" : 1,
+         "name" : "referenced image missing_manifest",
+         "rejected" : 1,
+         "returned_result" : 0
+      },
+      {
+         "expected_diagnostic" : 1,
+         "name" : "referenced image changed_image",
+         "rejected" : 1,
+         "returned_result" : 0
+      },
+      {
+         "expected_diagnostic" : 1,
+         "name" : "closure reference_replaced",
+         "rejected" : 1,
+         "returned_result" : 0
+      },
+      {
+         "expected_diagnostic" : 1,
+         "name" : "closure reference_bytes_changed",
+         "rejected" : 1,
+         "returned_result" : 0
+      },
+      {
+         "expected_diagnostic" : 1,
+         "name" : "closure reference_added",
+         "rejected" : 1,
+         "returned_result" : 0
+      },
+      {
+         "expected_diagnostic" : 1,
+         "name" : "closure image_replaced",
+         "rejected" : 1,
+         "returned_result" : 0
+      },
+      {
+         "expected_diagnostic" : 1,
+         "name" : "closure image_directory_replaced",
+         "rejected" : 1,
+         "returned_result" : 0
+      },
+      {
+         "expected_diagnostic" : 1,
+         "name" : "reference capacity exceeded",
+         "rejected" : 1,
+         "returned_result" : 0
+      },
+      {
+         "expected_diagnostic" : 1,
+         "name" : "direct inspection bypass",
+         "rejected" : 1,
+         "returned_result" : 0
+      },
+      {
+         "expected_diagnostic" : 1,
+         "name" : "caller callback rejected",
+         "rejected" : 1,
+         "returned_result" : 0
+      }
+   ],
+   "forbidden_process_attempts" : 0,
+   "incomplete" : {
+      "case" : ".artifacts/tmp/native-proxy-image-custody/cases/fsmgen-5mbKq3oa",
+      "retained_unreferenced_partial" : 1
+   },
+   "mutants" : [
+      {
+         "accepted" : {
+            "executable" : null,
+            "images" : [
+               {
+                  "key" : "efd497b0e847884b3c1cfcde14d8b645991c52ebab90c54e58984ccbc303c146",
+                  "snapshots" : [
+                     {
+                        "bytes" : "/* inert qualification bytes; never compiled */\n\u0000\u00ff",
+                        "identity" : {
+                           "device" : 16777244,
+                           "inode" : 76899245,
+                           "path" : ".artifacts/tmp/native-proxy-image-custody/cases/fsmgen-scTXAHQF/images/efd497b0e847884b3c1cfcde14d8b645991c52ebab90c54e58984ccbc303c146/rustup.c",
+                           "sha256" : "a7d92e28ec1c8308e37c6003df167bc42bd2341cf3a69d677f45330271ffba56",
+                           "size_bytes" : 50
+                        }
+                     },
+                     {
+                        "bytes" : "\u00cf\u00fa\u00ed\u00fe\f\u0000\u0000\u0001\u0000\u0000\u0000\u0000\u0002\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000inert-not-a-program\u0000\u00ff",
+                        "identity" : {
+                           "device" : 16777244,
+                           "inode" : 76899247,
+                           "path" : ".artifacts/tmp/native-proxy-image-custody/cases/fsmgen-scTXAHQF/images/efd497b0e847884b3c1cfcde14d8b645991c52ebab90c54e58984ccbc303c146/rustup",
+                           "sha256" : "e7f06f27e18528c7d10e8c4a4ab42b5e70d1423cdb80e83048597719c9c7eb67",
+                           "size_bytes" : 53
+                        }
+                     },
+                     {
+                        "bytes" : "{\"executable\":{\"sha256\":\"e7f06f27e18528c7d10e8c4a4ab42b5e70d1423cdb80e83048597719c9c7eb67\",\"size_bytes\":53},\"generated_c\":{\"sha256\":\"a7d92e28ec1c8308e37c6003df167bc42bd2341cf3a69d677f45330271ffba56\",\"size_bytes\":50},\"key\":\"efd497b0e847884b3c1cfcde14d8b645991c52ebab90c54e58984ccbc303c146\",\"schema\":\"fsmgen.test.rust_proxy_image.v1\"}",
+                        "identity" : {
+                           "device" : 16777244,
+                           "inode" : 76899246,
+                           "path" : ".artifacts/tmp/native-proxy-image-custody/cases/fsmgen-scTXAHQF/images/efd497b0e847884b3c1cfcde14d8b645991c52ebab90c54e58984ccbc303c146/image.json",
+                           "sha256" : "156ec74edbff95660f5275aca3dca8f675f8398ceff43a243573aee41462efb4",
+                           "size_bytes" : 332
+                        }
+                     }
+                  ]
+               }
+            ],
+            "lock" : {
+               "device" : 16777244,
+               "inode" : 76899241,
+               "path" : ".artifacts/tmp/native-proxy-image-custody/cases/fsmgen-scTXAHQF/coordination.lock"
+            },
+            "references" : [
+               {
+                  "record" : {
+                     "image_key" : "efd497b0e847884b3c1cfcde14d8b645991c52ebab90c54e58984ccbc303c146",
+                     "reference_key" : "99e34c9ad219c8c0fbc8d6b601e045a0d1648271273a2d40c7076edf2b33c7e8",
+                     "schema" : "fsmgen.test.rust_proxy_image_reference.v1",
+                     "selected_sources" : [
+                        {
+                           "device" : 17,
+                           "inode" : 100,
+                           "path" : ".artifacts/tmp/native-proxy-image-custody/cases/fsmgen-scTXAHQF/images/efd497b0e847884b3c1cfcde14d8b645991c52ebab90c54e58984ccbc303c146/rustup.c",
+                           "sha256" : "0000000000000000000000000000000000000000000000000000000000000000",
+                           "size_bytes" : 50
+                        },
+                        {
+                           "device" : 17,
+                           "inode" : 101,
+                           "path" : ".artifacts/tmp/native-proxy-image-custody/cases/fsmgen-scTXAHQF/images/efd497b0e847884b3c1cfcde14d8b645991c52ebab90c54e58984ccbc303c146/rustup",
+                           "sha256" : "e7f06f27e18528c7d10e8c4a4ab42b5e70d1423cdb80e83048597719c9c7eb67",
+                           "size_bytes" : 53
+                        }
+                     ],
+                     "workspace" : ".artifacts/tmp/process-supervisor-tests/fsmgen-Census20260910Mutant",
+                     "workspace_identity" : {
+                        "device" : 17,
+                        "inode" : 99,
+                        "path" : ".artifacts/tmp/process-supervisor-tests/fsmgen-Census20260910Mutant"
+                     }
+                  },
+                  "source" : {
+                     "bytes" : "{\"image_key\":\"efd497b0e847884b3c1cfcde14d8b645991c52ebab90c54e58984ccbc303c146\",\"reference_key\":\"99e34c9ad219c8c0fbc8d6b601e045a0d1648271273a2d40c7076edf2b33c7e8\",\"schema\":\"fsmgen.test.rust_proxy_image_reference.v1\",\"selected_sources\":[{\"device\":17,\"inode\":100,\"path\":\".artifacts/tmp/native-proxy-image-custody/cases/fsmgen-scTXAHQF/images/efd497b0e847884b3c1cfcde14d8b645991c52ebab90c54e58984ccbc303c146/rustup.c\",\"sha256\":\"0000000000000000000000000000000000000000000000000000000000000000\",\"size_bytes\":50},{\"device\":17,\"inode\":101,\"path\":\".artifacts/tmp/native-proxy-image-custody/cases/fsmgen-scTXAHQF/images/efd497b0e847884b3c1cfcde14d8b645991c52ebab90c54e58984ccbc303c146/rustup\",\"sha256\":\"e7f06f27e18528c7d10e8c4a4ab42b5e70d1423cdb80e83048597719c9c7eb67\",\"size_bytes\":53}],\"workspace\":\".artifacts/tmp/process-supervisor-tests/fsmgen-Census20260910Mutant\",\"workspace_identity\":{\"device\":17,\"inode\":99,\"path\":\".artifacts/tmp/process-supervisor-tests/fsmgen-Census20260910Mutant\"}}",
+                     "identity" : {
+                        "device" : 16777244,
+                        "inode" : 76899248,
+                        "path" : ".artifacts/tmp/native-proxy-image-custody/cases/fsmgen-scTXAHQF/references/99e34c9ad219c8c0fbc8d6b601e045a0d1648271273a2d40c7076edf2b33c7e8.json",
+                        "sha256" : "383ced9a369d2fa4213fed3ea36ab3ae59bf0e76fb11f05878421285020e2b96",
+                        "size_bytes" : 984
+                     }
+                  }
+               }
+            ],
+            "retention" : "all_valid_runtime_records_retained; stale_owners_not_released",
+            "runtime_authorized" : 0,
+            "schema" : "fsmgen.inactive_runtime_reference_census.v1"
+         },
+         "kind" : "content"
+      },
+      {
+         "accepted" : {
+            "executable" : null,
+            "images" : [
+               {
+                  "key" : "efd497b0e847884b3c1cfcde14d8b645991c52ebab90c54e58984ccbc303c146",
+                  "snapshots" : [
+                     {
+                        "bytes" : "/* inert qualification bytes; never compiled */\n\u0000\u00ff",
+                        "identity" : {
+                           "device" : 16777244,
+                           "inode" : 76899254,
+                           "path" : ".artifacts/tmp/native-proxy-image-custody/cases/fsmgen-gw_e5c4O/images/efd497b0e847884b3c1cfcde14d8b645991c52ebab90c54e58984ccbc303c146/rustup.c",
+                           "sha256" : "a7d92e28ec1c8308e37c6003df167bc42bd2341cf3a69d677f45330271ffba56",
+                           "size_bytes" : 50
+                        }
+                     },
+                     {
+                        "bytes" : "\u00cf\u00fa\u00ed\u00fe\f\u0000\u0000\u0001\u0000\u0000\u0000\u0000\u0002\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000inert-not-a-program\u0000\u00ff",
+                        "identity" : {
+                           "device" : 16777244,
+                           "inode" : 76899256,
+                           "path" : ".artifacts/tmp/native-proxy-image-custody/cases/fsmgen-gw_e5c4O/images/efd497b0e847884b3c1cfcde14d8b645991c52ebab90c54e58984ccbc303c146/rustup",
+                           "sha256" : "e7f06f27e18528c7d10e8c4a4ab42b5e70d1423cdb80e83048597719c9c7eb67",
+                           "size_bytes" : 53
+                        }
+                     },
+                     {
+                        "bytes" : "{\"executable\":{\"sha256\":\"e7f06f27e18528c7d10e8c4a4ab42b5e70d1423cdb80e83048597719c9c7eb67\",\"size_bytes\":53},\"generated_c\":{\"sha256\":\"a7d92e28ec1c8308e37c6003df167bc42bd2341cf3a69d677f45330271ffba56\",\"size_bytes\":50},\"key\":\"efd497b0e847884b3c1cfcde14d8b645991c52ebab90c54e58984ccbc303c146\",\"schema\":\"fsmgen.test.rust_proxy_image.v1\"}",
+                        "identity" : {
+                           "device" : 16777244,
+                           "inode" : 76899255,
+                           "path" : ".artifacts/tmp/native-proxy-image-custody/cases/fsmgen-gw_e5c4O/images/efd497b0e847884b3c1cfcde14d8b645991c52ebab90c54e58984ccbc303c146/image.json",
+                           "sha256" : "156ec74edbff95660f5275aca3dca8f675f8398ceff43a243573aee41462efb4",
+                           "size_bytes" : 332
+                        }
+                     }
+                  ]
+               }
+            ],
+            "lock" : {
+               "device" : 16777244,
+               "inode" : 76899250,
+               "path" : ".artifacts/tmp/native-proxy-image-custody/cases/fsmgen-gw_e5c4O/coordination.lock"
+            },
+            "references" : [
+               {
+                  "record" : {
+                     "image_key" : "efd497b0e847884b3c1cfcde14d8b645991c52ebab90c54e58984ccbc303c146",
+                     "reference_key" : "99e34c9ad219c8c0fbc8d6b601e045a0d1648271273a2d40c7076edf2b33c7e8",
+                     "schema" : "fsmgen.test.rust_proxy_image_reference.v1",
+                     "selected_sources" : [
+                        {
+                           "device" : 17,
+                           "inode" : 100,
+                           "path" : ".artifacts/tmp/native-proxy-image-custody/cases/fsmgen-gw_e5c4O/images/efd497b0e847884b3c1cfcde14d8b645991c52ebab90c54e58984ccbc303c146/rustup.c",
+                           "sha256" : "a7d92e28ec1c8308e37c6003df167bc42bd2341cf3a69d677f45330271ffba56",
+                           "size_bytes" : 50
+                        },
+                        {
+                           "device" : 17,
+                           "inode" : 101,
+                           "path" : ".artifacts/tmp/native-proxy-image-custody/cases/fsmgen-gw_e5c4O/images/efd497b0e847884b3c1cfcde14d8b645991c52ebab90c54e58984ccbc303c146/rustup",
+                           "sha256" : "e7f06f27e18528c7d10e8c4a4ab42b5e70d1423cdb80e83048597719c9c7eb67",
+                           "size_bytes" : 53
+                        }
+                     ],
+                     "workspace" : ".artifacts/tmp/process-supervisor-tests/fsmgen-Census20260910Mutant",
+                     "workspace_identity" : {
+                        "device" : 17,
+                        "inode" : 99,
+                        "path" : ".artifacts/tmp/process-supervisor-tests/fsmgen-Census20260910Mutant"
+                     }
+                  },
+                  "source" : {
+                     "bytes" : "{\"image_key\":\"efd497b0e847884b3c1cfcde14d8b645991c52ebab90c54e58984ccbc303c146\",\"reference_key\":\"99e34c9ad219c8c0fbc8d6b601e045a0d1648271273a2d40c7076edf2b33c7e8\",\"schema\":\"fsmgen.test.rust_proxy_image_reference.v1\",\"selected_sources\":[{\"device\":17,\"inode\":100,\"path\":\".artifacts/tmp/native-proxy-image-custody/cases/fsmgen-gw_e5c4O/images/efd497b0e847884b3c1cfcde14d8b645991c52ebab90c54e58984ccbc303c146/rustup.c\",\"sha256\":\"a7d92e28ec1c8308e37c6003df167bc42bd2341cf3a69d677f45330271ffba56\",\"size_bytes\":50},{\"device\":17,\"inode\":101,\"path\":\".artifacts/tmp/native-proxy-image-custody/cases/fsmgen-gw_e5c4O/images/efd497b0e847884b3c1cfcde14d8b645991c52ebab90c54e58984ccbc303c146/rustup\",\"sha256\":\"e7f06f27e18528c7d10e8c4a4ab42b5e70d1423cdb80e83048597719c9c7eb67\",\"size_bytes\":53}],\"workspace\":\".artifacts/tmp/process-supervisor-tests/fsmgen-Census20260910Mutant\",\"workspace_identity\":{\"device\":17,\"inode\":99,\"path\":\".artifacts/tmp/process-supervisor-tests/fsmgen-Census20260910Mutant\"}}",
+                     "identity" : {
+                        "device" : 16777244,
+                        "inode" : 76899257,
+                        "path" : ".artifacts/tmp/native-proxy-image-custody/cases/fsmgen-gw_e5c4O/references/0000000000000000000000000000000000000000000000000000000000000000.json",
+                        "sha256" : "ffa9d307f466b8c2e25c60641337cbe96ef27de512ea3fdd91533b67614deee3",
+                        "size_bytes" : 984
+                     }
+                  }
+               }
+            ],
+            "retention" : "all_valid_runtime_records_retained; stale_owners_not_released",
+            "runtime_authorized" : 0,
+            "schema" : "fsmgen.inactive_runtime_reference_census.v1"
+         },
+         "kind" : "filename"
+      }
+   ],
+   "positive" : {
+      "executable" : null,
+      "images" : [
+         {
+            "key" : "efd497b0e847884b3c1cfcde14d8b645991c52ebab90c54e58984ccbc303c146",
+            "snapshots" : [
+               {
+                  "bytes" : "/* inert qualification bytes; never compiled */\n\u0000\u00ff",
+                  "identity" : {
+                     "device" : 16777244,
+                     "inode" : 76898900,
+                     "path" : ".artifacts/tmp/native-proxy-image-custody/cases/fsmgen-DCeNLeO3/images/efd497b0e847884b3c1cfcde14d8b645991c52ebab90c54e58984ccbc303c146/rustup.c",
+                     "sha256" : "a7d92e28ec1c8308e37c6003df167bc42bd2341cf3a69d677f45330271ffba56",
+                     "size_bytes" : 50
+                  }
+               },
+               {
+                  "bytes" : "\u00cf\u00fa\u00ed\u00fe\f\u0000\u0000\u0001\u0000\u0000\u0000\u0000\u0002\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000inert-not-a-program\u0000\u00ff",
+                  "identity" : {
+                     "device" : 16777244,
+                     "inode" : 76898902,
+                     "path" : ".artifacts/tmp/native-proxy-image-custody/cases/fsmgen-DCeNLeO3/images/efd497b0e847884b3c1cfcde14d8b645991c52ebab90c54e58984ccbc303c146/rustup",
+                     "sha256" : "e7f06f27e18528c7d10e8c4a4ab42b5e70d1423cdb80e83048597719c9c7eb67",
+                     "size_bytes" : 53
+                  }
+               },
+               {
+                  "bytes" : "{\"executable\":{\"sha256\":\"e7f06f27e18528c7d10e8c4a4ab42b5e70d1423cdb80e83048597719c9c7eb67\",\"size_bytes\":53},\"generated_c\":{\"sha256\":\"a7d92e28ec1c8308e37c6003df167bc42bd2341cf3a69d677f45330271ffba56\",\"size_bytes\":50},\"key\":\"efd497b0e847884b3c1cfcde14d8b645991c52ebab90c54e58984ccbc303c146\",\"schema\":\"fsmgen.test.rust_proxy_image.v1\"}",
+                  "identity" : {
+                     "device" : 16777244,
+                     "inode" : 76898901,
+                     "path" : ".artifacts/tmp/native-proxy-image-custody/cases/fsmgen-DCeNLeO3/images/efd497b0e847884b3c1cfcde14d8b645991c52ebab90c54e58984ccbc303c146/image.json",
+                     "sha256" : "156ec74edbff95660f5275aca3dca8f675f8398ceff43a243573aee41462efb4",
+                     "size_bytes" : 332
+                  }
+               }
+            ]
+         }
+      ],
+      "lock" : {
+         "device" : 16777244,
+         "inode" : 76898896,
+         "path" : ".artifacts/tmp/native-proxy-image-custody/cases/fsmgen-DCeNLeO3/coordination.lock"
+      },
+      "references" : [
+         {
+            "record" : {
+               "image_key" : "efd497b0e847884b3c1cfcde14d8b645991c52ebab90c54e58984ccbc303c146",
+               "reference_key" : "1d563eb7d0ffcc93b478a3b562e942bbb20409217fb5293a9f89efc0bcbf1c18",
+               "schema" : "fsmgen.test.rust_proxy_image_reference.v1",
+               "selected_sources" : [
+                  {
+                     "device" : 17,
+                     "inode" : 100,
+                     "path" : ".artifacts/tmp/native-proxy-image-custody/cases/fsmgen-DCeNLeO3/images/efd497b0e847884b3c1cfcde14d8b645991c52ebab90c54e58984ccbc303c146/rustup.c",
+                     "sha256" : "a7d92e28ec1c8308e37c6003df167bc42bd2341cf3a69d677f45330271ffba56",
+                     "size_bytes" : 50
+                  },
+                  {
+                     "device" : 17,
+                     "inode" : 101,
+                     "path" : ".artifacts/tmp/native-proxy-image-custody/cases/fsmgen-DCeNLeO3/images/efd497b0e847884b3c1cfcde14d8b645991c52ebab90c54e58984ccbc303c146/rustup",
+                     "sha256" : "e7f06f27e18528c7d10e8c4a4ab42b5e70d1423cdb80e83048597719c9c7eb67",
+                     "size_bytes" : 53
+                  }
+               ],
+               "workspace" : ".artifacts/tmp/process-supervisor-tests/fsmgen-Census20260910A",
+               "workspace_identity" : {
+                  "device" : 17,
+                  "inode" : 99,
+                  "path" : ".artifacts/tmp/process-supervisor-tests/fsmgen-Census20260910A"
+               }
+            },
+            "source" : {
+               "bytes" : "{\"image_key\":\"efd497b0e847884b3c1cfcde14d8b645991c52ebab90c54e58984ccbc303c146\",\"reference_key\":\"1d563eb7d0ffcc93b478a3b562e942bbb20409217fb5293a9f89efc0bcbf1c18\",\"schema\":\"fsmgen.test.rust_proxy_image_reference.v1\",\"selected_sources\":[{\"device\":17,\"inode\":100,\"path\":\".artifacts/tmp/native-proxy-image-custody/cases/fsmgen-DCeNLeO3/images/efd497b0e847884b3c1cfcde14d8b645991c52ebab90c54e58984ccbc303c146/rustup.c\",\"sha256\":\"a7d92e28ec1c8308e37c6003df167bc42bd2341cf3a69d677f45330271ffba56\",\"size_bytes\":50},{\"device\":17,\"inode\":101,\"path\":\".artifacts/tmp/native-proxy-image-custody/cases/fsmgen-DCeNLeO3/images/efd497b0e847884b3c1cfcde14d8b645991c52ebab90c54e58984ccbc303c146/rustup\",\"sha256\":\"e7f06f27e18528c7d10e8c4a4ab42b5e70d1423cdb80e83048597719c9c7eb67\",\"size_bytes\":53}],\"workspace\":\".artifacts/tmp/process-supervisor-tests/fsmgen-Census20260910A\",\"workspace_identity\":{\"device\":17,\"inode\":99,\"path\":\".artifacts/tmp/process-supervisor-tests/fsmgen-Census20260910A\"}}",
+               "identity" : {
+                  "device" : 16777244,
+                  "inode" : 76898903,
+                  "path" : ".artifacts/tmp/native-proxy-image-custody/cases/fsmgen-DCeNLeO3/references/1d563eb7d0ffcc93b478a3b562e942bbb20409217fb5293a9f89efc0bcbf1c18.json",
+                  "sha256" : "8f3d36e69b0fb7f52221167e07cd289f730466708dcaf98de415d98c2cdf602e",
+                  "size_bytes" : 974
+               }
+            }
+         },
+         {
+            "record" : {
+               "image_key" : "efd497b0e847884b3c1cfcde14d8b645991c52ebab90c54e58984ccbc303c146",
+               "reference_key" : "ea05f57d52a98320b6fc9274654d1b0392be1ba3094fddb176e582cee3c77bc8",
+               "schema" : "fsmgen.test.rust_proxy_image_reference.v1",
+               "selected_sources" : [
+                  {
+                     "device" : 17,
+                     "inode" : 100,
+                     "path" : ".artifacts/tmp/native-proxy-image-custody/cases/fsmgen-DCeNLeO3/images/efd497b0e847884b3c1cfcde14d8b645991c52ebab90c54e58984ccbc303c146/rustup.c",
+                     "sha256" : "a7d92e28ec1c8308e37c6003df167bc42bd2341cf3a69d677f45330271ffba56",
+                     "size_bytes" : 50
+                  },
+                  {
+                     "device" : 17,
+                     "inode" : 101,
+                     "path" : ".artifacts/tmp/native-proxy-image-custody/cases/fsmgen-DCeNLeO3/images/efd497b0e847884b3c1cfcde14d8b645991c52ebab90c54e58984ccbc303c146/rustup",
+                     "sha256" : "e7f06f27e18528c7d10e8c4a4ab42b5e70d1423cdb80e83048597719c9c7eb67",
+                     "size_bytes" : 53
+                  }
+               ],
+               "workspace" : ".artifacts/tmp/process-supervisor-tests/fsmgen-Census20260910B",
+               "workspace_identity" : {
+                  "device" : 17,
+                  "inode" : 99,
+                  "path" : ".artifacts/tmp/process-supervisor-tests/fsmgen-Census20260910B"
+               }
+            },
+            "source" : {
+               "bytes" : "{\"image_key\":\"efd497b0e847884b3c1cfcde14d8b645991c52ebab90c54e58984ccbc303c146\",\"reference_key\":\"ea05f57d52a98320b6fc9274654d1b0392be1ba3094fddb176e582cee3c77bc8\",\"schema\":\"fsmgen.test.rust_proxy_image_reference.v1\",\"selected_sources\":[{\"device\":17,\"inode\":100,\"path\":\".artifacts/tmp/native-proxy-image-custody/cases/fsmgen-DCeNLeO3/images/efd497b0e847884b3c1cfcde14d8b645991c52ebab90c54e58984ccbc303c146/rustup.c\",\"sha256\":\"a7d92e28ec1c8308e37c6003df167bc42bd2341cf3a69d677f45330271ffba56\",\"size_bytes\":50},{\"device\":17,\"inode\":101,\"path\":\".artifacts/tmp/native-proxy-image-custody/cases/fsmgen-DCeNLeO3/images/efd497b0e847884b3c1cfcde14d8b645991c52ebab90c54e58984ccbc303c146/rustup\",\"sha256\":\"e7f06f27e18528c7d10e8c4a4ab42b5e70d1423cdb80e83048597719c9c7eb67\",\"size_bytes\":53}],\"workspace\":\".artifacts/tmp/process-supervisor-tests/fsmgen-Census20260910B\",\"workspace_identity\":{\"device\":17,\"inode\":99,\"path\":\".artifacts/tmp/process-supervisor-tests/fsmgen-Census20260910B\"}}",
+               "identity" : {
+                  "device" : 16777244,
+                  "inode" : 76898904,
+                  "path" : ".artifacts/tmp/native-proxy-image-custody/cases/fsmgen-DCeNLeO3/references/ea05f57d52a98320b6fc9274654d1b0392be1ba3094fddb176e582cee3c77bc8.json",
+                  "sha256" : "1cf32c85a5beebfa3e06fc655ae8e7b714708f991acee54ed762dadcb209bf46",
+                  "size_bytes" : 974
+               }
+            }
+         }
+      ],
+      "retention" : "all_valid_runtime_records_retained; stale_owners_not_released",
+      "runtime_authorized" : 0,
+      "schema" : "fsmgen.inactive_runtime_reference_census.v1"
+   },
+   "retired_cases" : [
+      ".artifacts/tmp/native-proxy-image-custody/cases/fsmgen-DCeNLeO3",
+      ".artifacts/tmp/native-proxy-image-custody/cases/fsmgen-29GjcoIg",
+      ".artifacts/tmp/native-proxy-image-custody/cases/fsmgen-0_EiPdyG",
+      ".artifacts/tmp/native-proxy-image-custody/cases/fsmgen-glaudSFI",
+      ".artifacts/tmp/native-proxy-image-custody/cases/fsmgen-epi_BpQy",
+      ".artifacts/tmp/native-proxy-image-custody/cases/fsmgen-7zo4f5pH",
+      ".artifacts/tmp/native-proxy-image-custody/cases/fsmgen-XyfK2SK0",
+      ".artifacts/tmp/native-proxy-image-custody/cases/fsmgen-2iq2TN9o",
+      ".artifacts/tmp/native-proxy-image-custody/cases/fsmgen-vvPHh4F6",
+      ".artifacts/tmp/native-proxy-image-custody/cases/fsmgen-n1_XuRru",
+      ".artifacts/tmp/native-proxy-image-custody/cases/fsmgen-ZHpi77Gh",
+      ".artifacts/tmp/native-proxy-image-custody/cases/fsmgen-6n0dIx6q",
+      ".artifacts/tmp/native-proxy-image-custody/cases/fsmgen-TnpCfx29",
+      ".artifacts/tmp/native-proxy-image-custody/cases/fsmgen-drTf7TE9",
+      ".artifacts/tmp/native-proxy-image-custody/cases/fsmgen-b4L77cx7",
+      ".artifacts/tmp/native-proxy-image-custody/cases/fsmgen-PlIY4U6z",
+      ".artifacts/tmp/native-proxy-image-custody/cases/fsmgen-HlODMPgW",
+      ".artifacts/tmp/native-proxy-image-custody/cases/fsmgen-nsnvcQ0W",
+      ".artifacts/tmp/native-proxy-image-custody/cases/fsmgen-i92Weh94",
+      ".artifacts/tmp/native-proxy-image-custody/cases/fsmgen-XZT9AxpT",
+      ".artifacts/tmp/native-proxy-image-custody/cases/fsmgen-nGaYe6SE",
+      ".artifacts/tmp/native-proxy-image-custody/cases/fsmgen-YNJF48tn",
+      ".artifacts/tmp/native-proxy-image-custody/cases/fsmgen-5mbKq3oa",
+      ".artifacts/tmp/native-proxy-image-custody/cases/fsmgen-scTXAHQF",
+      ".artifacts/tmp/native-proxy-image-custody/cases/fsmgen-gw_e5c4O"
+   ],
+   "schema" : "fsmgen.inactive_runtime_reference_census_qualification.v1",
+   "success" : true
+}
