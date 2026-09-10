@@ -20,6 +20,7 @@ answers:
   - "why do inactive source and writer handoffs close explicitly?"
   - "what do inactive observation snapshot interruption cuts prove?"
   - "what survives inactive observation publication failures?"
+  - "how does inactive namespace enumeration reject read errors?"
   - "why did integrated proxy qualification fail?"
   - "why does t1545 not use IPC Cmd?"
   - "where does T1545 preserve empty-output checker failure diagnostics?"
@@ -94,15 +95,12 @@ Darwin env-Bash pre-main stalls, direct Bash capability, locality and no-retry c
 T1545 controls: historical card; absent witnesses stay unknown.
 Env/direct Perl timeouts refute a shebang-only cure. Startup cause, authenticated capture and STOP limits: task/book/history.
 T1669 uses process-supervisor-tests roots; ps skips only verified disappearance. Other errors fail; the historical changed field stays open (.3.2.11).
-History: `5bb1b2366cc652416283d8959d12a9d44616498c:docs/knowledge/test-subprocess-policy-adapters.md`.
+History: `295d186656a5d517894c1bdbd550b0633d2b2fc4:docs/knowledge/test-subprocess-policy-adapters.md`.
 PST parsing normalizes 1–16 lowercase hex digits; malformed fields and contradictions reject.
 Serial queue contention is supported; causal/native limits and controls: history.
 Fixed CLI contracts/limits: history.
-Combined census and fresh/reuse snapshot custody retain other owners. Ordered bytes and separate hold: history; release/capture stay open.
-FixtureClone preserves octet flags and JSON types. JSON/Storable pitfalls and controls: history. Prototype guards stay strict.
-Inactive source/writer failed handoffs close explicitly; no ordinary leak inferred. Retained-handle controls: history.
-Snapshot cuts qualify source-handle counts and conservative holds; exact matrix: history.
-Publication failures retain absent/empty/prefix/full holds by reached stage; explicit closes and first errors are checked. Reuse never publishes. Replay: `docs/audits/native-proxy-observation-publication-cuts-20260910/audit.py`. Inert synchronous controls only; coordinator/native closure stays open.
+Combined census, fresh/reuse custody, FixtureClone types/octet flags, handoff/snapshot/publication controls and conservative holds: history. Release/capture/coordinator/native closure stays open.
+Inactive namespace reads reject errors instead of returning partial names; capacity/read failures close explicitly and preserve the first error. Actual retained-directory controls: `docs/audits/native-proxy-namespace-reader-20260911/audit.py`. Synchronous injected faults do not establish an ordinary leak or full-acquisition bypass.
 Caller-sealed test wrappers use tail goto to preserve caller.
 Replay: `scripts/run_with_ram_guard.sh -- python3 -B -m unittest discover -s t/python -p 'test_fixture_policy_archive*.py'`.
 T1595 pre-main cause open; `.19.2.3.1.2.2.6.2` fixes capture.

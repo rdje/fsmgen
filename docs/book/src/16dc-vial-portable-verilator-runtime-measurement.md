@@ -1932,6 +1932,25 @@ scripts/run_with_ram_guard.sh -- perl docs/audits/native-proxy-observation-publi
 python3 -B docs/audits/native-proxy-observation-publication-cuts-20260910/audit.py
 ```
 
+The inactive bounded namespace reader distinguishes an enumeration error from
+the end of a directory. For example, a read error after one image name rejects
+the listing instead of returning that incomplete set. Successful listings stay
+sorted, and capacity limits still count every non-dot member. Capacity or read
+failure explicitly closes the directory handle; a later close error preserves
+the original failure. A close error after otherwise complete enumeration also
+rejects the listing.
+
+The controls inject read and close reports while observing actual directory
+handles and unchanged file contents. Retained aliases expose omitted cleanup;
+they do not establish a leak during ordinary lexical cleanup or a complete
+acquisition bypass. The coordinator/census interruption matrix remains open.
+Replay the repaired qualification with:
+
+```bash
+scripts/run_with_ram_guard.sh -- perl docs/audits/native-proxy-namespace-reader-20260911/qualify.t --qualification
+python3 -B docs/audits/native-proxy-namespace-reader-20260911/audit.py --qualification
+```
+
 The helper checks bounded regular source/output files and the native header,
 then sets executable permissions through the admitted open file handle. A
 regression exposed path-based permission changes affecting a substituted file

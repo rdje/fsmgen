@@ -1,0 +1,122 @@
+{
+  "baseline": [
+    "capacity",
+    "read_entry",
+    "read_after_one"
+  ],
+  "baseline_contract": "Preserve exact unmodified prototype/harness, full baseline result and immediate ledger/TAP. Capacity is expected to reject with its real aliased directory still open until observer recovery; entry/one-member read errors are expected to return incomplete names. Baseline success/qualified remains false even when diagnostic controls match. Repair only after independent validation of these actual observations.",
+  "cases": [
+    {
+      "diagnostic": "",
+      "limit": 2,
+      "members": 2,
+      "name": "normal",
+      "returns": true
+    },
+    {
+      "diagnostic": "",
+      "limit": 3,
+      "members": 2,
+      "name": "below_capacity",
+      "returns": true
+    },
+    {
+      "diagnostic": "",
+      "limit": 0,
+      "members": 0,
+      "name": "empty",
+      "returns": true
+    },
+    {
+      "diagnostic": "",
+      "limit": 2,
+      "members": 2,
+      "name": "stale_errno",
+      "returns": true
+    },
+    {
+      "diagnostic": "cannot open bounded namespace",
+      "limit": 2,
+      "members": 2,
+      "name": "missing_directory",
+      "returns": false
+    },
+    {
+      "diagnostic": "namespace capacity exceeded",
+      "limit": 1,
+      "members": 2,
+      "name": "capacity",
+      "returns": false
+    },
+    {
+      "diagnostic": "namespace capacity exceeded",
+      "limit": 1,
+      "members": 2,
+      "name": "capacity_and_close",
+      "returns": false
+    },
+    {
+      "diagnostic": "cannot read bounded namespace",
+      "limit": 2,
+      "members": 2,
+      "name": "read_entry",
+      "returns": false
+    },
+    {
+      "diagnostic": "cannot read bounded namespace",
+      "limit": 2,
+      "members": 2,
+      "name": "read_after_one",
+      "returns": false
+    },
+    {
+      "diagnostic": "cannot read bounded namespace",
+      "limit": 2,
+      "members": 2,
+      "name": "read_after_all",
+      "returns": false
+    },
+    {
+      "diagnostic": "cannot read bounded namespace",
+      "limit": 2,
+      "members": 2,
+      "name": "read_and_close",
+      "returns": false
+    },
+    {
+      "diagnostic": "cannot close bounded namespace",
+      "limit": 2,
+      "members": 2,
+      "name": "close_error",
+      "returns": false
+    }
+  ],
+  "close_faults": "Capacity rejection must explicitly close despite retained aliases. Reported close errors perform the actual closedir first and then return EIO; earlier capacity/read errors must remain primary. A deliberately omitted close returns success without closing and is independently exposed/recovered. A second in-memory prototype mutant removes only the read-error branch and must wrongly return the actual partial names, with its handle otherwise closed.",
+  "fixtures": "One immediately ledger-recorded private same-volume directory per case under the existing inert image-custody cases prefix. Empty or exactly two files a/b containing fixed alpha/beta newline bytes, mode 0400, root 0700. Missing-directory admission uses only its absent child. No process/compiler/query/helper/archive/release/retry or native image is admitted.",
+  "limits": "Finite synchronous inactive namespace-reader qualification with modeled read/close errors and actual retained directory descriptors. It does not establish a real filesystem fault, ordinary lexical-cleanup leak, full observation bypass, every close ambiguity, asynchronous crash, coordinator-matrix completion, native ownership or product activation.",
+  "mutants": [
+    {
+      "case": "capacity",
+      "name": "omit_directory_close"
+    },
+    {
+      "case": "read_after_one",
+      "name": "omit_read_error_check"
+    }
+  ],
+  "observation": "Retain actual directory-handle aliases after opendir succeeds. Installed Perl reports 5.34.1 and d_dirfd=define. Observe fileno, independently duplicate that exact descriptor for fstat identity, immediately close the observer duplicate, and retain the original handle until explicit close disposition is checked. Recover any deliberately or unexpectedly open directory only with CORE::closedir before removing its exact recorded root.",
+  "owner": "HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.12.4.1.3.3.2.2.2.2.2.1",
+  "read_faults": "Record every real directory entry in order, including dot entries. Inject undef with EIO before the first real read, after one actual non-dot member, or after both non-dot members. Do not replace complete source names with invented data. Record call/result/errno before prototype handling, and prove the returned listing is absent on failure. Initial baseline may expose accepted incomplete listing; it is explicitly unqualified and never proves a complete-operation bypass.",
+  "references": [
+    {
+      "purpose": "Directory descriptor availability depends on host dirfd support; actual installed configuration and retained-handle observations remain required.",
+      "url": "https://perldoc.perl.org/functions/fileno"
+    },
+    {
+      "purpose": "The readdir contract distinguishes end of directory from error through errno and requires clearing errno before the call.",
+      "url": "https://pubs.opengroup.org/onlinepubs/007904875/functions/readdir_r.html"
+    }
+  ],
+  "schema": "fsmgen.inactive_namespace_reader_plan.v1",
+  "source_revision": "295d186656a5d517894c1bdbd550b0633d2b2fc4"
+}

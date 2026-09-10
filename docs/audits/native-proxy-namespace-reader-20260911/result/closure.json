@@ -1,0 +1,40 @@
+{
+  "all_rosters_disjoint_and_absent": true,
+  "baseline_plan_harness_auditor_unchanged": true,
+  "limits": "Direct synchronous directory faults and focused inactive regressions. No ordinary lexical-cleanup leak, full-acquisition bypass, complete coordinator matrix, native execution or product activation is established.",
+  "only_names_function_changed": true,
+  "phases": {
+    "baseline": {
+      "allocations": 3,
+      "assertions": 7,
+      "qualified": false
+    },
+    "qualification": {
+      "allocations": 14,
+      "assertions": 29,
+      "qualified": true
+    }
+  },
+  "regressions": {
+    "coordination": {
+      "allocations": 22,
+      "assertions": 67,
+      "executed": true
+    },
+    "publication": {
+      "allocations": 80,
+      "assertions": 41,
+      "executed": true
+    },
+    "snapshot": {
+      "allocations": 688,
+      "assertions": 345,
+      "executed": true
+    }
+  },
+  "restored_outputs": 9,
+  "schema": "fsmgen.inactive_namespace_reader_closure.v1",
+  "success": true,
+  "total_roots": 807,
+  "unchanged_predecessor_inputs": 27
+}

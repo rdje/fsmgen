@@ -1,0 +1,47 @@
+{
+  "all_copies_byte_exact": true,
+  "files": [
+    {
+      "destination": "docs/audits/native-proxy-namespace-reader-20260911/result/baseline.json",
+      "sha256": "b8527f81586c125864f28603fc4d699f66f9d5891fc40f211bcac9609528330b",
+      "size_bytes": 12568,
+      "source": ".artifacts/logs/native-proxy-namespace-reader-20260911/baseline.json"
+    },
+    {
+      "destination": "docs/audits/native-proxy-namespace-reader-20260911/result/baseline-admission.jsonl",
+      "sha256": "5115cb7152e630b4ce44ba0aab801573cecc46381950bcf9b27ca53e9a5c3cf5",
+      "size_bytes": 330,
+      "source": ".artifacts/logs/native-proxy-namespace-reader-20260911/baseline-admission.jsonl"
+    },
+    {
+      "destination": "docs/audits/native-proxy-namespace-reader-20260911/result/baseline.tap",
+      "sha256": "de8746eaeea11d4cd444eabd1b50facbf94c82c945e0feef61cc25e1062c33c1",
+      "size_bytes": 407,
+      "source": ".artifacts/logs/native-proxy-namespace-reader-20260911/baseline.tap"
+    },
+    {
+      "destination": "docs/audits/native-proxy-namespace-reader-20260911/result/baseline.stderr",
+      "sha256": "2bb4b6053d647fc1790fc584733461a8f1200049046ac0d5323af56eba5b945f",
+      "size_bytes": 91,
+      "source": ".artifacts/logs/native-proxy-namespace-reader-20260911/baseline.stderr"
+    },
+    {
+      "destination": "docs/audits/native-proxy-namespace-reader-20260911/result/baseline-audit.json",
+      "sha256": "da9ecea68e62621263564807aae958846e848b8e87fee8cd3bfe2c32d7458365",
+      "size_bytes": 776,
+      "source": ".artifacts/logs/native-proxy-namespace-reader-20260911/baseline-audit.json"
+    },
+    {
+      "destination": "docs/audits/native-proxy-namespace-reader-20260911/result/baseline-pins.json",
+      "sha256": "ad6f1ab702ccbacc97b779fd7808814217399ee14c72ce70c2ba14ff7216cd0c",
+      "size_bytes": 753,
+      "source": ".artifacts/logs/native-proxy-namespace-reader-20260911/baseline-pins.json"
+    },
+    {
+      "destination": "docs/audits/native-proxy-namespace-reader-20260911/result/Coordination.pm.baseline-source",
+      "sha256": "9d587b9a369ec2e6ed924186a227a5bc4809e25d59b1e019be53e67196043279",
+      "size_bytes": 16715,
+      "source": ".artifacts/logs/native-proxy-namespace-reader-20260911/Coordination.pm.baseline-source"
+    }
+  ]
+}

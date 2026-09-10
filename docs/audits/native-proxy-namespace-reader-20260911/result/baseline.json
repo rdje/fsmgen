@@ -1,0 +1,417 @@
+{
+   "allocated" : [
+      {
+         "device" : 16777244,
+         "inode" : 76951186,
+         "path" : ".artifacts/tmp/native-proxy-image-custody/cases/fsmgen-5veou7_G"
+      },
+      {
+         "device" : 16777244,
+         "inode" : 76951189,
+         "path" : ".artifacts/tmp/native-proxy-image-custody/cases/fsmgen-f3XH6UTt"
+      },
+      {
+         "device" : 16777244,
+         "inode" : 76951192,
+         "path" : ".artifacts/tmp/native-proxy-image-custody/cases/fsmgen-vGKCXsgw"
+      }
+   ],
+   "cases" : [
+      {
+         "actual_members" : [
+            "a",
+            "b"
+         ],
+         "after" : {
+            "" : {
+               "device" : 16777244,
+               "inode" : 76951186,
+               "kind" : "directory",
+               "mode" : 448,
+               "uid" : 501
+            },
+            "a" : {
+               "bytes" : "alpha\n",
+               "device" : 16777244,
+               "inode" : 76951187,
+               "kind" : "file",
+               "links" : 1,
+               "mode" : 256,
+               "sha256" : "b6a98d9ce9a2d9149288fa3df42d377c3e42737afdcdaf714e33c0a100b51060",
+               "size_bytes" : 6,
+               "uid" : 501
+            },
+            "b" : {
+               "bytes" : "beta\n",
+               "device" : 16777244,
+               "inode" : 76951188,
+               "kind" : "file",
+               "links" : 1,
+               "mode" : 256,
+               "sha256" : "f2c82decdd7181cf98945929a62598db7e6b477e11f6e0eb0ae97020eff151ad",
+               "size_bytes" : 5,
+               "uid" : 501
+            }
+         },
+         "allocation" : {
+            "device" : 16777244,
+            "inode" : 76951186,
+            "path" : ".artifacts/tmp/native-proxy-image-custody/cases/fsmgen-5veou7_G"
+         },
+         "allocation_absent" : 1,
+         "before" : {
+            "" : {
+               "device" : 16777244,
+               "inode" : 76951186,
+               "kind" : "directory",
+               "mode" : 448,
+               "uid" : 501
+            },
+            "a" : {
+               "bytes" : "alpha\n",
+               "device" : 16777244,
+               "inode" : 76951187,
+               "kind" : "file",
+               "links" : 1,
+               "mode" : 256,
+               "sha256" : "b6a98d9ce9a2d9149288fa3df42d377c3e42737afdcdaf714e33c0a100b51060",
+               "size_bytes" : 6,
+               "uid" : 501
+            },
+            "b" : {
+               "bytes" : "beta\n",
+               "device" : 16777244,
+               "inode" : 76951188,
+               "kind" : "file",
+               "links" : 1,
+               "mode" : 256,
+               "sha256" : "f2c82decdd7181cf98945929a62598db7e6b477e11f6e0eb0ae97020eff151ad",
+               "size_bytes" : 5,
+               "uid" : 501
+            }
+         },
+         "calls" : [
+            {
+               "errno" : 0,
+               "kind" : "open",
+               "returned" : 1
+            },
+            {
+               "entry" : ".",
+               "errno" : 0,
+               "incoming_errno" : 0,
+               "injected" : 0,
+               "kind" : "read"
+            },
+            {
+               "entry" : "..",
+               "errno" : 0,
+               "incoming_errno" : 0,
+               "injected" : 0,
+               "kind" : "read"
+            },
+            {
+               "entry" : "a",
+               "errno" : 0,
+               "incoming_errno" : 0,
+               "injected" : 0,
+               "kind" : "read"
+            },
+            {
+               "entry" : "b",
+               "errno" : 0,
+               "incoming_errno" : 0,
+               "injected" : 0,
+               "kind" : "read"
+            }
+         ],
+         "error" : "namespace capacity exceeded\n",
+         "fault" : "capacity",
+         "handles" : [
+            {
+               "closed_after_recovery" : 1,
+               "closed_before_recovery" : 0,
+               "descriptor" : 3,
+               "identity" : {
+                  "device" : 16777244,
+                  "inode" : 76951186,
+                  "mode" : 448,
+                  "uid" : 501
+               },
+               "observer_close_ok" : 1,
+               "observer_closed" : 1,
+               "observer_descriptor" : 4,
+               "path" : ".artifacts/tmp/native-proxy-image-custody/cases/fsmgen-5veou7_G",
+               "recovery_close_ok" : 1
+            }
+         ],
+         "name" : "capacity",
+         "read_error_injected" : 0,
+         "returned" : 0
+      },
+      {
+         "actual_members" : [],
+         "after" : {
+            "" : {
+               "device" : 16777244,
+               "inode" : 76951189,
+               "kind" : "directory",
+               "mode" : 448,
+               "uid" : 501
+            },
+            "a" : {
+               "bytes" : "alpha\n",
+               "device" : 16777244,
+               "inode" : 76951190,
+               "kind" : "file",
+               "links" : 1,
+               "mode" : 256,
+               "sha256" : "b6a98d9ce9a2d9149288fa3df42d377c3e42737afdcdaf714e33c0a100b51060",
+               "size_bytes" : 6,
+               "uid" : 501
+            },
+            "b" : {
+               "bytes" : "beta\n",
+               "device" : 16777244,
+               "inode" : 76951191,
+               "kind" : "file",
+               "links" : 1,
+               "mode" : 256,
+               "sha256" : "f2c82decdd7181cf98945929a62598db7e6b477e11f6e0eb0ae97020eff151ad",
+               "size_bytes" : 5,
+               "uid" : 501
+            }
+         },
+         "allocation" : {
+            "device" : 16777244,
+            "inode" : 76951189,
+            "path" : ".artifacts/tmp/native-proxy-image-custody/cases/fsmgen-f3XH6UTt"
+         },
+         "allocation_absent" : 1,
+         "before" : {
+            "" : {
+               "device" : 16777244,
+               "inode" : 76951189,
+               "kind" : "directory",
+               "mode" : 448,
+               "uid" : 501
+            },
+            "a" : {
+               "bytes" : "alpha\n",
+               "device" : 16777244,
+               "inode" : 76951190,
+               "kind" : "file",
+               "links" : 1,
+               "mode" : 256,
+               "sha256" : "b6a98d9ce9a2d9149288fa3df42d377c3e42737afdcdaf714e33c0a100b51060",
+               "size_bytes" : 6,
+               "uid" : 501
+            },
+            "b" : {
+               "bytes" : "beta\n",
+               "device" : 16777244,
+               "inode" : 76951191,
+               "kind" : "file",
+               "links" : 1,
+               "mode" : 256,
+               "sha256" : "f2c82decdd7181cf98945929a62598db7e6b477e11f6e0eb0ae97020eff151ad",
+               "size_bytes" : 5,
+               "uid" : 501
+            }
+         },
+         "calls" : [
+            {
+               "errno" : 0,
+               "kind" : "open",
+               "returned" : 1
+            },
+            {
+               "entry" : null,
+               "errno" : 5,
+               "incoming_errno" : 0,
+               "injected" : 1,
+               "kind" : "read"
+            },
+            {
+               "actual_close" : 1,
+               "errno" : 5,
+               "kind" : "close",
+               "returned" : 1
+            }
+         ],
+         "error" : "",
+         "fault" : "read_entry",
+         "handles" : [
+            {
+               "closed_after_recovery" : 1,
+               "closed_before_recovery" : 1,
+               "descriptor" : 3,
+               "identity" : {
+                  "device" : 16777244,
+                  "inode" : 76951189,
+                  "mode" : 448,
+                  "uid" : 501
+               },
+               "observer_close_ok" : 1,
+               "observer_closed" : 1,
+               "observer_descriptor" : 4,
+               "path" : ".artifacts/tmp/native-proxy-image-custody/cases/fsmgen-f3XH6UTt",
+               "recovery_close_ok" : null
+            }
+         ],
+         "name" : "read_entry",
+         "names" : [],
+         "read_error_injected" : 1,
+         "returned" : 1
+      },
+      {
+         "actual_members" : [
+            "a"
+         ],
+         "after" : {
+            "" : {
+               "device" : 16777244,
+               "inode" : 76951192,
+               "kind" : "directory",
+               "mode" : 448,
+               "uid" : 501
+            },
+            "a" : {
+               "bytes" : "alpha\n",
+               "device" : 16777244,
+               "inode" : 76951193,
+               "kind" : "file",
+               "links" : 1,
+               "mode" : 256,
+               "sha256" : "b6a98d9ce9a2d9149288fa3df42d377c3e42737afdcdaf714e33c0a100b51060",
+               "size_bytes" : 6,
+               "uid" : 501
+            },
+            "b" : {
+               "bytes" : "beta\n",
+               "device" : 16777244,
+               "inode" : 76951194,
+               "kind" : "file",
+               "links" : 1,
+               "mode" : 256,
+               "sha256" : "f2c82decdd7181cf98945929a62598db7e6b477e11f6e0eb0ae97020eff151ad",
+               "size_bytes" : 5,
+               "uid" : 501
+            }
+         },
+         "allocation" : {
+            "device" : 16777244,
+            "inode" : 76951192,
+            "path" : ".artifacts/tmp/native-proxy-image-custody/cases/fsmgen-vGKCXsgw"
+         },
+         "allocation_absent" : 1,
+         "before" : {
+            "" : {
+               "device" : 16777244,
+               "inode" : 76951192,
+               "kind" : "directory",
+               "mode" : 448,
+               "uid" : 501
+            },
+            "a" : {
+               "bytes" : "alpha\n",
+               "device" : 16777244,
+               "inode" : 76951193,
+               "kind" : "file",
+               "links" : 1,
+               "mode" : 256,
+               "sha256" : "b6a98d9ce9a2d9149288fa3df42d377c3e42737afdcdaf714e33c0a100b51060",
+               "size_bytes" : 6,
+               "uid" : 501
+            },
+            "b" : {
+               "bytes" : "beta\n",
+               "device" : 16777244,
+               "inode" : 76951194,
+               "kind" : "file",
+               "links" : 1,
+               "mode" : 256,
+               "sha256" : "f2c82decdd7181cf98945929a62598db7e6b477e11f6e0eb0ae97020eff151ad",
+               "size_bytes" : 5,
+               "uid" : 501
+            }
+         },
+         "calls" : [
+            {
+               "errno" : 0,
+               "kind" : "open",
+               "returned" : 1
+            },
+            {
+               "entry" : ".",
+               "errno" : 0,
+               "incoming_errno" : 0,
+               "injected" : 0,
+               "kind" : "read"
+            },
+            {
+               "entry" : "..",
+               "errno" : 0,
+               "incoming_errno" : 0,
+               "injected" : 0,
+               "kind" : "read"
+            },
+            {
+               "entry" : "a",
+               "errno" : 0,
+               "incoming_errno" : 0,
+               "injected" : 0,
+               "kind" : "read"
+            },
+            {
+               "entry" : null,
+               "errno" : 5,
+               "incoming_errno" : 0,
+               "injected" : 1,
+               "kind" : "read"
+            },
+            {
+               "actual_close" : 1,
+               "errno" : 5,
+               "kind" : "close",
+               "returned" : 1
+            }
+         ],
+         "error" : "",
+         "fault" : "read_after_one",
+         "handles" : [
+            {
+               "closed_after_recovery" : 1,
+               "closed_before_recovery" : 1,
+               "descriptor" : 3,
+               "identity" : {
+                  "device" : 16777244,
+                  "inode" : 76951192,
+                  "mode" : 448,
+                  "uid" : 501
+               },
+               "observer_close_ok" : 1,
+               "observer_closed" : 1,
+               "observer_descriptor" : 4,
+               "path" : ".artifacts/tmp/native-proxy-image-custody/cases/fsmgen-vGKCXsgw",
+               "recovery_close_ok" : null
+            }
+         ],
+         "name" : "read_after_one",
+         "names" : [
+            "a"
+         ],
+         "read_error_injected" : 1,
+         "returned" : 1
+      }
+   ],
+   "completed" : true,
+   "directory_descriptor_support" : "define",
+   "forbidden_process_attempts" : 0,
+   "mutants" : [],
+   "perl_version" : "v5.34.1",
+   "phase" : "baseline",
+   "qualified" : false,
+   "schema" : "fsmgen.inactive_namespace_reader_qualification.v1",
+   "success" : false
+}

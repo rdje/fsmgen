@@ -1,0 +1,22 @@
+[
+  {
+    "bytes": 16715,
+    "path": "docs/audits/native-proxy-image-coordination-20260910/Coordination.pm",
+    "sha256": "9d587b9a369ec2e6ed924186a227a5bc4809e25d59b1e019be53e67196043279"
+  },
+  {
+    "bytes": 5373,
+    "path": "docs/audits/native-proxy-namespace-reader-20260911/plan.json",
+    "sha256": "883d5f4744bc1a8ba5b41d8a7c0ee46748a5b2c1a93334b74143d1f5549fc842"
+  },
+  {
+    "bytes": 12450,
+    "path": "docs/audits/native-proxy-namespace-reader-20260911/qualify.t",
+    "sha256": "7f0c22d4e8d65c22a566921c71264200e066e63b55beca2d826b3f8a170943a9"
+  },
+  {
+    "bytes": 10432,
+    "path": "docs/audits/native-proxy-namespace-reader-20260911/audit.py",
+    "sha256": "7a54cf7ae643b2b262ea135fafc85f38b6a4c0743d1db86b71c8c1acaab686ec"
+  }
+]

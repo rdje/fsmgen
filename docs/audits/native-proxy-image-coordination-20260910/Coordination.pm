@@ -82,12 +82,24 @@ sub _names {
     my ($path, $limit) = @_;
     opendir(my $directory, $path) or die "cannot open bounded namespace: $!\n";
     my @names;
-    while (defined(my $name = readdir($directory))) {
-        next if $name eq '.' || $name eq '..';
-        push @names, $name;
-        die "namespace capacity exceeded\n" if @names > $limit;
-    }
-    closedir($directory) or die "cannot close bounded namespace: $!\n";
+    my $ok = eval {
+        while (1) {
+            $! = 0;
+            my $name = readdir($directory);
+            if (!defined($name)) {
+                die "cannot read bounded namespace: $!\n" if $!;
+                last;
+            }
+            next if $name eq '.' || $name eq '..';
+            push @names, $name;
+            die "namespace capacity exceeded\n" if @names > $limit;
+        }
+        1;
+    };
+    my $error = $@;
+    my $closed = closedir($directory);
+    die $error unless $ok;
+    die "cannot close bounded namespace: $!\n" unless $closed;
     return [sort @names];
 }
 

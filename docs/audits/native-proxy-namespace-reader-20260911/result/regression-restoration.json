@@ -1,0 +1,59 @@
+{
+  "all_byte_exact": true,
+  "restored": [
+    {
+      "bytes": 4867,
+      "mode": 384,
+      "path": ".artifacts/logs/native-proxy-image-coordination-20260910/qualification.json",
+      "sha256": "707e6f677e3a7a450e1b44fe98eccb1b77cc14aa76c823d163dee4aaa8c80941"
+    },
+    {
+      "bytes": 30412207,
+      "mode": 384,
+      "path": ".artifacts/logs/native-proxy-observation-snapshot-cuts-20260910/qualification.json",
+      "sha256": "a523b08bad6f2fc7b120ab8157da30ad0046f4d63e5a3c0f6fa047b3564ba222"
+    },
+    {
+      "bytes": 88580,
+      "mode": 384,
+      "path": ".artifacts/logs/native-proxy-observation-snapshot-cuts-20260910/admission.jsonl",
+      "sha256": "5930b2e9b43ffd38a07ff001abd45f72e4dd701fb0069393162464c617f3460e"
+    },
+    {
+      "bytes": 19351593,
+      "mode": 384,
+      "path": ".artifacts/logs/native-proxy-observation-snapshot-cuts-20260910/rows.jsonl",
+      "sha256": "a78443c2125908d8a9c26a39efeec72a0a75ee0ed1999da1380bdb6f9696c699"
+    },
+    {
+      "bytes": 141,
+      "mode": 384,
+      "path": ".artifacts/logs/native-proxy-observation-snapshot-cuts-20260910/progress.json",
+      "sha256": "0edfb9d4be8f79d2533e1b64c534d1229d06d79e8f9e659cd6985d122a558406"
+    },
+    {
+      "bytes": 3284631,
+      "mode": 384,
+      "path": ".artifacts/logs/native-proxy-observation-publication-cuts-20260910/qualification.json",
+      "sha256": "7f3cf95447d602a0d04fd62046576bf45cbe4e51102016e94b3790f594104bd2"
+    },
+    {
+      "bytes": 10300,
+      "mode": 384,
+      "path": ".artifacts/logs/native-proxy-observation-publication-cuts-20260910/admission.jsonl",
+      "sha256": "51ae2c65da124470f240b9ede5184b2e9bbe9c7044f10d8d4b35a3c44f3c1699"
+    },
+    {
+      "bytes": 2055705,
+      "mode": 384,
+      "path": ".artifacts/logs/native-proxy-observation-publication-cuts-20260910/rows.jsonl",
+      "sha256": "f1b643cd2308ef35ef349a4139ab8d3d2600b238ad1e75b8caab2fc9bf384f7b"
+    },
+    {
+      "bytes": 142,
+      "mode": 384,
+      "path": ".artifacts/logs/native-proxy-observation-publication-cuts-20260910/progress.json",
+      "sha256": "6d658c6ab7b37a7319d5978303dca86af41dd951607228cbfbf5c0307b38cd25"
+    }
+  ]
+}

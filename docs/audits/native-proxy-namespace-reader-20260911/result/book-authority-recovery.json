@@ -1,0 +1,25 @@
+{
+  "cause": "The one-off metadata update selected rows by mandatory indexing, overlooking the registry header row without surface_id.",
+  "corrected_aggregate": {
+    "baseline": {
+      "bytes_total": 3290681,
+      "files": 63,
+      "lines_total": 60109
+    },
+    "current": {
+      "bytes_total": 3291736,
+      "files": 63,
+      "lines_total": 60128
+    },
+    "delta": {
+      "bytes_total": 1055,
+      "files": 0,
+      "lines_total": 19
+    }
+  },
+  "diagnostic": "KeyError: 'surface_id'",
+  "effect": "Knowledge Map generation/check passed. The registry write and metric report were not reached; no registry content changed.",
+  "initial_exit_code": 1,
+  "repair": "Select the data row with row.get before updating its exact aggregate authority. No ceiling changes or qualification reruns.",
+  "schema": "fsmgen.namespace_reader_book_authority_recovery.v1"
+}

@@ -1,0 +1,8 @@
+ok 1 - capacity: baseline outcome and explicit directory disposition
+ok 2 - capacity: exact state and observer recovery
+ok 3 - read_entry: baseline outcome and explicit directory disposition
+ok 4 - read_entry: exact state and observer recovery
+ok 5 - read_after_one: baseline outcome and explicit directory disposition
+ok 6 - read_after_one: exact state and observer recovery
+ok 7 - no process attempt
+1..7

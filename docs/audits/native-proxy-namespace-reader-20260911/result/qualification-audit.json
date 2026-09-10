@@ -1,0 +1,23 @@
+{
+  "allocations": 14,
+  "assertions": 29,
+  "cases": 12,
+  "completed": true,
+  "falsifiers": [
+    "phase relabeled as passing",
+    "lost allocation",
+    "lost read calls",
+    "invented directory identity",
+    "lost observer close",
+    "changed file bytes",
+    "forbidden process"
+  ],
+  "limits": "Finite synchronous inactive namespace-reader qualification with modeled read/close errors and actual retained directory descriptors. It does not establish a real filesystem fault, ordinary lexical-cleanup leak, full observation bypass, every close ambiguity, asynchronous crash, coordinator-matrix completion, native ownership or product activation.",
+  "mutants": [
+    "omit_directory_close",
+    "omit_read_error_check"
+  ],
+  "phase": "qualification",
+  "qualified": true,
+  "schema": "fsmgen.inactive_namespace_reader_audit.v1"
+}
