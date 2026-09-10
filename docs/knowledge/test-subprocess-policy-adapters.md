@@ -3,7 +3,7 @@ id: test-subprocess-policy-adapters
 title: Test subprocesses share one mechanism behind sealed policy adapters
 answers:
   - "how are FSMGen test subprocesses bounded?"
-  - "why did a copied native Rust fixture fail its launch?"
+  - "what do native Rust proxy fixture experiments establish?"
   - "why does t1545 not use IPC Cmd?"
   - "where does T1545 preserve empty-output checker failure diagnostics?"
   - "where does T1545 retain actual checker PID and startup observations?"
@@ -64,7 +64,7 @@ reverify: >-
 ---
 
 Decisions `0087`/`0101`: `FSM::Support::ProcessSupervisor` offers nonblocking steps to synchronous callers: shell-free argv, same-volume cwd, bounded split capture, exec handoff, monotonic time, one group, first-failure status, TERM/KILL cleanup. Adapters seal commands/bounds/schemas/platform guards; T1669 checks exclusive ownership.
-Child requires successful `setpgid` and actual owned group before exec. `.3.2.10.1` separates return/errno, exception and membership diagnostics with child PID; native session/false-success controls reject stale-error attribution. PID is not birth identity. Parent race closure cannot replace admission; nested cleanup stays open.
+Child requires successful `setpgid` and owned group before exec. `.3.2.10.1` separates return/errno, exception and membership with child PID; native session/false-success controls reject stale-error attribution. PID is not birth identity. Parent race closure cannot replace admission; nested cleanup stays open.
 `exec_handoff_monotonic_ns` means observed control-pipe EOF, not main entry:
 pre-exec death can close it. Without observed EOF, that timestamp and dependent
 durations stay unknown even after cleanup. T1669 checks held-child timeout, separate pre-exec exit and successful output.
@@ -82,14 +82,13 @@ Env-Perl and direct Perl both timed out after handoff, refuting a shebang-only c
 T1669 uses `.artifacts/tmp/process-supervisor-tests/`. Every ps result needs native presence; only disappearance is skipped. Permission/query/live identity changes fail. Native exit and unchecked-ps controls qualify that race, not the historical changed field (`.3.2.11`; book/task).
 History: `93e7072566e2dce7b70c10fa04ffc8765b35b1e9:docs/knowledge/test-subprocess-policy-adapters.md`; .3.2.15.3.3 passes without capture; cause open.
 PST parsing normalizes 1–16 lowercase hex digits; malformed fields and contradictions reject.
-.15.7.3.2 verifies daemon serial scan dispatch; preceding work spans the failed proxy queue wait. Client/frame joins remain open. .4 passes unchanged; .6 rejects OS copies (launch constraint); .7 owns authored candidates. Archive pins/order/empty-stream rejection: task/book (.15.7.2–3).
+.15.7.3.2 verifies serial scan dispatch; preceding work spans the failed proxy queue wait. Client/frame joins remain open. .4 passes unchanged; .6 rejects OS copies (launch constraint); .7 authored bodies pass on this Mac, no repair proof. .8–11 own build/capture/integration. Archive pins/order/empty-stream rejection: task/book (.15.7.2–3).
 V1 association replay needs pinned manifest/archives, no old root/CFHash; native rederivation unavailable, unauthenticated. Reports omit raw text/bodies; receipts bind calibration/artifacts without private reads. Fixed CLI .15.7.2.4 uses archive index/digest output and compact journal anchors; calibration/reserve/actual-file checks and first-failure/capture stop persist. Outcomes stay distinct; failures/ownership persist. F_CHECK_LV cause unproved (.15.2); queue/provenance coexist (.15.4); worker/delivery unknown. Live opt-in violations: .15.5.1.2.2–3.
-Shared publish_bytes checks descriptor-anchored inode/bytes; existing files and primary failures persist. Later same-user mutation is outside its guarantee (.15.7.2.3.1). Archive publication rejects any fixed existing destination and consumes pages before and after writing the index last (.3.2).
+Shared publish_bytes checks descriptor-anchored inode/bytes; existing files/primary failures persist. Later same-user mutation is outside its guarantee (.15.7.2.3.1). Archive publication rejects fixed existing destinations and consumes pages before/after writing index last (.3.2).
 Archive reverify: `scripts/run_with_ram_guard.sh -- python3 -B -m unittest discover -s t/python -p 'test_fixture_policy_archive*.py'`.
 T1595's pre-main cause stays open; `.19.2.3.1.2.2.6.2` fixes capture.
 `RamGuardFixtureRuntime` seals tools/argv, paths, bounds and full results.
 T1811/T1669 prove signal/stream failures and group cleanup; T1595 keeps metrics.
-No retry/threshold change.
 Outer timeout proved its group gone but left an inner group alive; terminated and absence verified. Per-group cleanup cannot prove nested cleanup.
 HIAL/VIAL `.19.2.3.1.2.2.5.5` owns ownership design, repair and hostile controls;
 neutral-verifier extraction stays provisional/blocked.

@@ -1548,9 +1548,16 @@ producer coverage. Task `.15.7.3.6` tests one copied native candidate: macOS
 rejects its launch with a launch-constraint violation, despite a valid offline
 signature check. The first failure and exact process/report join are preserved;
 the second candidate is not started. Copied OS utilities are therefore rejected
-as the selected approach. Task `.15.7.3.7` evaluates a project-authored native
-fixture with explicit compiler and diagnostic costs. No original fixture changes
-and no startup repair are qualified by these experiments.
+as the selected approach. Task `.15.7.3.7` compiles project-authored native
+fixtures on the current arm64 Mac. Their first invocations preserve the exact
+nonzero and relative-path behaviors, within the existing source bound, and
+their recorded processes clean up. Independent retained-result checks reject
+altered exits, streams and cleanup flags. This establishes body feasibility;
+it does not establish portability or repair the historical startup delay.
+A replacement also needs a bounded compiler policy that preserves tests on
+hosts without a C compiler, and closed native capture admission alongside the
+existing Perl route. Tasks `.15.7.3.8`–`.11` own those prerequisites, integration
+and independent qualification. The original fixtures remain unchanged.
 
 Shared evidence publication now anchors file creation, linking and temporary
 cleanup to open directory descriptors. A controlled directory-replacement test
