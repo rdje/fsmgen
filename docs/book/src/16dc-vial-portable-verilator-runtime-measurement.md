@@ -1544,9 +1544,13 @@ failure or closing the missing native request join. Task `.15.7.3.5` reviews
 native proxy-fixture candidates. Whole platform binaries exceed source custody
 bounds; their architecture payloads fit, but capture admission still requires
 the exact Perl executable chain. A fixture-only substitution could remove Rust
-producer coverage. Task `.15.7.3.6` owns the scope decision for explicit native
-admission and architecture custody before implementation or qualification.
-No candidate has been copied or executed, and cold-start benefit is unproved.
+producer coverage. Task `.15.7.3.6` tests one copied native candidate: macOS
+rejects its launch with a launch-constraint violation, despite a valid offline
+signature check. The first failure and exact process/report join are preserved;
+the second candidate is not started. Copied OS utilities are therefore rejected
+as the selected approach. Task `.15.7.3.7` evaluates a project-authored native
+fixture with explicit compiler and diagnostic costs. No original fixture changes
+and no startup repair are qualified by these experiments.
 
 Shared evidence publication now anchors file creation, linking and temporary
 cleanup to open directory descriptors. A controlled directory-replacement test

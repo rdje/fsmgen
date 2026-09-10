@@ -13,9 +13,6 @@ new implementation work starts.
 Also force the session to adopt the repository's crash-recovery discipline
 before momentum builds.
 
-This is not a generic onboarding note.
-It is the explicit session-start ritual for ongoing FSMGen architecture work.
-
 The director selected this task-directed reading scope;
 [SESSION-READING-SCOPE](docs/tasks/SESSION-READING-SCOPE.md) owns the decision.
 Read the mandatory entrypoints and roadmap, then the active task's source,
@@ -26,6 +23,10 @@ Report the scope actually reviewed and do not reopen this settled choice
 because a generic startup prompt says to read the codebase and mdBook; only
 a later explicit director instruction changes it. Task ownership, code/book
 alignment, evidence, locality, and commit requirements still apply.
+
+PNT authorizes roadmap-aligned engineering decisions and bounded task
+decomposition. Do not seek renewed approval just to split fixture or diagnostic
+work into owned slices.
 
 ## Default start-of-session task
 Before doing anything else, perform this task first:

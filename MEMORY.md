@@ -6,9 +6,9 @@ Status and evidence: `docs/tasks/`. The system itself: `MEMORY_ARCHITECTURE.md`.
 ## Resume
 
 - repository_revision: derive with `git log -1 --format='%H %s'`; never shadow `HEAD` here.
-- active_work_unit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.6`
-  (`blocked`; native-fixture/capture scope decision)
-- next_action: Resolve whether to expand the native-fixture and capture contract.
+- active_work_unit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.7`
+  (`proposed`; project-authored native-proxy feasibility)
+- next_action: Evaluate and qualify a project-authored native fixture.
 - in_flight_uncommitted: none.
 - in_flight_background: none.
-- blockers: Director scope decision; startup/parent qualification and full CI/push gated.
+- blockers: Historical startup/parent qualification and full CI/push remain gated.
