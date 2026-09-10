@@ -96,12 +96,10 @@ decomposes the architecture needed to move beyond that bounded foundation.
   aligned, and every implementation slice is committed through `COMMIT.md`.
 
 ## Task Tree
-
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE`
   Status: `active`
   Goal: `Define peer HIAL and VIAL intent systems and their typed bridge so synthesizable hardware and powerful generated verification share one traceable architecture.`
   Children: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.1, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.2, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.3, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.4, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.5, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.6, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.7, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.8, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.9, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.10, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.11, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.12, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.13, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.14, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.15, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.16, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.18, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19`
-
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.13`
   Status: `active`
   Goal: `Implement native SystemVerilog/UVM through independently honest emission, experimental-probe, and PGEN+NEXSIM qualification slices.`
@@ -109,7 +107,6 @@ decomposes the architecture needed to move beyond that bounded foundation.
   Verification: `pending children .13.1-.13.3`
   Commit: `pending activation`
   Children: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.13.1, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.13.2, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.13.3`
-
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.15`
   Status: `done`
   Goal: `Implement and capability-qualify the selected VHDL verification backend.`
@@ -118,14 +115,12 @@ decomposes the architecture needed to move beyond that bounded foundation.
   Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.15: activate VHDL backend implementation`
   Children: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.15.1, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.15.2, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.15.3, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.15.4, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.15.5, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.15.6, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.15.7`
   Closure: `All seven children are complete. The provider-free VHDL-2008 backend emits its exact readable/source-mapped graph, exact GHDL 6.0.0 analysis/elaboration/runtime produces the bounded trace-v2 normalized result with nineteen applicable portable-SystemVerilog parity paths, and the OSVVM 2026.05 tier materializes and qualifies its exact additive provider/tool route. The inert legacy VHDL package remains separate; HIAL synthesis output remains distinct; PSL, complete VHDL/OSVVM breadth, other simulators, mixed language, general parity, public VHDL API, and general support remain unclaimed. Documentation audit .18.1 closes the stale parent status after reproducing every child as done and finding no remaining .15 acceptance item.`
-
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.16`
   Status: `proposed`
   Goal: `Select and validate the first mixed-language HIAL/VIAL binding profile.`
   Acceptance: `An exact HIAL HDL plus VIAL verification-language combination, tool/version, bridge binding adapter, compile/elaboration/run sequence, capability/non-claim matrix, result parity oracle, project-local artifacts, licensing/CI policy, and unsupported combinations are selected and executed; no mixed-language claim is inferred from single-language gates.`
   Verification: `The 2026-08-10 eligibility census finds Verilator 5.046 and Icarus 13.0 on PATH plus exact repository-local GHDL 6.0.0 LLVM-JIT, but no vsim/Questa, qrun, xrun/irun, VCS, Riviera, NVC, or other compatible mixed-language execution tool. The Icarus version probe referenced one transient off-volume response path; an exact post-command absence check proves it left no residue. Decisions 0032 and 0051 forbid inferring mixed-language qualification from the separately qualified Verilator and GHDL lanes. This leaf remains proposed and unavailable until the external tool state changes; no adapter, execution, capability, or support claim is selected.`
   Commit: `pending activation`
-
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17`
   Status: `done`
   Goal: `Define and prove architecture-specific large-fixture scalability and bounded failure.`
@@ -134,7 +129,6 @@ decomposes the architecture needed to move beyond that bounded foundation.
   Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17: activate scale-proof contract`
   Children: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.1, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.2, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.3, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.4, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.5, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.6, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.7, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.8, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.9`
   Closure: `All nine children are complete. The scale contract, deterministic workload and oracle families, current measurements, cap consistency, representative promotion corpus, qualified budgets, exact public gate, support-limit alignment, containment repair, decision reconciliation, and failed-stage cleanup now form one fail-closed architecture-scale proof. The final clean exact observation at revision 840c895f3 independently closes 11 selected profiles, 11 validations, 33 raw records, 44 controller invocations, zero exclusions, exact public/documentation joins, immutable evidence, atomic latest publication, and zero staging/process/receipt residue. This is bounded HIAL/VIAL regression evidence, not whole-product capacity, mixed-language, arbitrary-tool, native-UVM-runtime, full-language, synthesis, support-promotion, or general-parity qualification.`
-
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.1`
   Status: `done`
   Goal: `Select the exact architecture-specific scale workloads, correctness oracles, measurements, budgets, and non-claims.`
@@ -2776,7 +2770,7 @@ decomposes the architecture needed to move beyond that bounded foundation.
   Goal: `Recover the retained failed-run diagnostic and advance causal analysis offline.`
   Acceptance: `After qualified repair commits, recover only absent artifacts from preserved raw inputs. Independently verify exact-source/native/sample joins and all original byte identities, retain campaign failure and missing causal legs, then own the next supported repair action. No original/collector/helper launch or implicit repeat.`
   Verification: `Archive implementation and fixed callers are committed at f3b387de01f49891e140b918b32d332b1fb805f5. Separate recovery from causal analysis; neither starts a new campaign.`
-  Children: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.1, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.2, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.3, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.4, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.5`
+  Children: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.1, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.2, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.3, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.4, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.5, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.6`
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.1`
   Status: `done`
   Goal: `Recover the exact failed capture as an exclusive pinned archive offline.`
@@ -2805,11 +2799,18 @@ decomposes the architecture needed to move beyond that bounded foundation.
   Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.4: retain the unchanged reduced-load T1669 pass`
 
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.5`
-  Status: `proposed`
+  Status: `done`
   Goal: `Assess native proxy fixtures as a bounded project-correctable startup alternative.`
   Acceptance: `Review whether repository-local copies of existing platform false/printf executables can provide the nonzero and relative-output proxy behaviors while preserving the exact native rustup which-cargo route, configured wrapper Perl, failure-stage/assertion coverage, fixed bounds and source/observer custody. These are candidates, not an asserted fix or permission to weaken admission. Read only explicitly needed installed OS tool metadata/contracts; any copy or execution needs a separately specified bounded qualification owner first, and all derived artifacts stay on the repository volume. Reject changes that merely mask cold-start failure, alter tested semantics or silently remove capture coverage. Own implementation and independent adversarial/native qualification only if the contract survives review. No T1669 original, helper, policy collector or host mutation in selection.`
-  Verification: `pending candidate/contract review; a passing reduced-load invocation does not close historical causal repair`
-  Commit: `pending`
+  Verification: `Review rejects whole-platform-binary copies as a drop-in repair. T1669 asserts native nonzero_exit/tool_resolution and invocation_error/tool_admission before Cargo build; it does not require the current proxy stderr, exit 9 or relative-cargo spelling. The wrapper still needs its canonical running Perl, and RustParityRuntime must canonicalize a repository-local rustup then execute exactly which cargo; a direct symlink to false/printf canonicalizes to another basename and changes that route. Installed manuals make false/nonzero and printf/relative-output candidates plausible, not qualified behavior under the fixed proxy argv. Read-only OS metadata gives false 84032 bytes/SHA-256 3f23eaf182a6d49e9f41b627944b05678faa20377f223cbf5927b90fcb9f2047 and printf 101808 bytes/d7992bc59e048ee061716365839990227ab463d954d87e6c2e7f987c0054fd59. Both exceed the unchanged 65536-byte source limit. However their arm64e payloads are respectively 34880 and 52656 bytes, so architecture selection refutes a blanket size-only rejection; no payload is copied or executed, and relocation/signature/platform behavior is unqualified. The decisive remaining contract is fixture_kernel_sampler.validate_target: every process in the admitted chain must have the selected system-Perl executable before and after inspection, and the proxy command is literal Perl plus the owned source and which cargo. A native proxy therefore rejects independently of size. FixtureCensus delegates to that admission, and source retention has the same per-file bound; a fixture-only change could lose Rust producer coverage. No limit or admission is relaxed. Three existing controlled admission oracles pass for exact sources, wrong command/workspace/user/executable/ancestry, and same-birth/source changes, without a native original/helper/collector. The first test-driver command used the wrong cwd and exited 127 before locating the guard or running any test; the root-relative corrected invocation succeeds. Re-derivation: exact adapter/test/sampler/census source plus stable OS stat/read-length/hash comparisons and bounded architecture-table ranges. Falsification: existing controlled rejections and the fitting architecture payloads reject both silent capture compatibility and universal size impossibility. Durability: task/book/fact/Git retain the decision and limits; review.json in .artifacts/logs/native-proxy-contract-review-20260910/ is 2970 bytes/SHA-256 4f390b4fb8f62b6e0a2161dd00b0b791920c9fa57940b5184190ed768a839b6a. Ignored review/command logs and installed-version availability lack an automatic watcher; native behavior, cold-start benefit and causal repair are missing qualification legs. No test/runtime source or host policy changes. The safe selection slice is exhausted: a native alternative needs explicit closed executable/source admission, architecture custody and independent native/adversarial qualification, beyond a fixture substitution. Child .6 owns this scope decision; parent causal repair and CI/push remain gated.`
+  Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.5: retain native-proxy compatibility review and scope boundary`
+
+- ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.6`
+  Status: `blocked`
+  Goal: `Resolve the native-proxy and capture-contract expansion before implementation.`
+  Acceptance: `Director direction selects whether to expand beyond fixture substitution into closed native-target admission and architecture-specific executable custody. The concrete candidate keeps the existing per-source and runtime bounds, configured wrapper Perl, exact rustup argv, failure-stage assertions, immutable per-mode files and first-attempt truth. Before replacing T1669 fixtures, separately own architecture selection/rejection, binary identity and source retention, exact native parent/ancestor/argv checks, ordinary and authenticated capture parity, and independent hostile/native qualification. No copied system binary is presumed relocatable, trusted or immune to policy delay. A candidate pass cannot close historical causal repair. Do not start a new original, helper, collector or host-policy change while this scope choice is unresolved.`
+  Verification: `Blocked on direction: whole copies fail unchanged custody bounds; smaller native payloads still require a different executable-admission contract, and no retained counterfactual proves startup benefit. The proposed expansion is concrete in .5/.6; no implementation is admitted.`
+  Commit: `pending director scope decision`
 
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.3`
   Status: `done`
@@ -3780,7 +3781,7 @@ decomposes the architecture needed to move beyond that bounded foundation.
 
 ## Current Frontier
 
-Current frontier: .3.2.15.7.3.4 retains the unchanged reduced-load T1669 pass; .15.7.3.5 reviews a native-proxy fixture alternative. Historical causal repair and parent qualification remain open. No further campaign; startup/parent, full CI and push stay gated.
+Current frontier: .3.2.15.7.3.5 completes native-proxy compatibility review; .15.7.3.6 is blocked on the native-fixture/capture scope decision. The unchanged .4 pass remains valid but does not close historical causal repair. No campaign; startup/parent, full CI and push stay gated.
 
 Architecture audit `.1` is complete. Decision `0032` selects one public
 `.vial` source language, private immutable `VIALSemanticIR` and
@@ -6389,8 +6390,10 @@ Fixture-selection blocked-review acceptance: recover complete assertions at `a8e
 
 Reduced-load admission acceptance: recover every checked assertion at `53aebfa2e14b553d5ed455ad08e00a867bf6a850` in this task path; the live nodes retain the authorization and result.
 
-## Acceptance Checklist (reduced-load qualification .3.2.15.7.3.4)
+Reduced-load qualification acceptance: recover every checked assertion at `26e08bf156b281e66d0dc553e929c81333b7333b` in this task path; the live node retains its outcome and limits.
 
-- [x] **ROOT CAUSE (WHY + WHERE)** — git log -S 'proxy_nonzero' -- t/1669-task-acceptance-fixture-runtime.t locates 98097b6311726b0c673d0abc8cc377df09ceb0ea. The director-authorized condition change permits one unchanged qualification; neither the prior serial-queue evidence nor a new pass alone establishes a project repair.
-- [x] **ADDRESSED (verified result)** — The single native original passes with independently parsed complete TAP, unchanged source/output pins, reaped/absent original birth and empty checked fixture roots. Changed-result and missing-plan TAP copies fail independently without a second original.
-- [x] **NO REGRESSION** — Runtime/test sources remain unchanged. Book render/cleanup, knowledge-map: OK, refreshed claims and staged doctrines preserve original failure history, native coverage and separately open causal/parent qualification.
+## Acceptance Checklist (native-proxy contract review .3.2.15.7.3.5)
+
+- [x] **ROOT CAUSE (WHY + WHERE)** — git log -S native.executable -- scripts/fixture_kernel_sampler.py locates 7eefc961b6ec2542ecbb6a4bc76f93b799eed497 and 74c23d182dae033defcaf717f6197d59e86690a0. Exact native executable/argv admission rejects native proxies even when architecture payloads fit the unchanged source limit.
+- [x] **ADDRESSED (verified review)** — Static contracts, installed metadata/manuals and controlled admission oracles reject a silent fixture substitution. The concrete architecture/capture expansion and its missing native/cold-start evidence are task-owned in .6 before any implementation.
+- [x] **NO REGRESSION** — Three existing controlled admission tests pass. Unchanged runtime/test sources, book build/render cleanup, knowledge-map: OK, refreshed claims and staged doctrines preserve failure history, fixed bounds and open causal qualification.
