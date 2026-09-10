@@ -1753,6 +1753,18 @@ cuts do not establish actual process-crash or power-loss durability. Replay:
 scripts/run_with_ram_guard.sh -- perl docs/audits/native-proxy-runtime-closure-20260910/qualify.t
 ```
 
+Inactive cleanup review requires the compiler, outer watcher and every supplied
+inner-stage receipt. Missing cleanup fields, surviving groups and unreaped
+started leaders prevent retirement. A failed command can still be settled;
+a successful command with unresolved cleanup cannot justify removal. This pure
+check preserves the existing scalar flag contract. The caller must still prove
+complete returned-stage transport, actual ownership and current workspace/image
+custody; passing synthetic receipts does not authorize deletion. Replay:
+
+```bash
+scripts/run_with_ram_guard.sh -- perl docs/audits/native-proxy-cleanup-receipts-20260910/qualify.t
+```
+
 The helper checks bounded regular source/output files and the native header,
 then sets executable permissions through the admitted open file handle. A
 regression exposed path-based permission changes affecting a substituted file

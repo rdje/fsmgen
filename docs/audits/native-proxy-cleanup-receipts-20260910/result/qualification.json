@@ -1,0 +1,1013 @@
+{
+   "cases" : [
+      {
+         "actual" : 0,
+         "input_unchanged" : 1,
+         "name" : "compiler: flags 000"
+      },
+      {
+         "actual" : 1,
+         "input_unchanged" : 1,
+         "name" : "compiler: flags 001"
+      },
+      {
+         "actual" : 0,
+         "input_unchanged" : 1,
+         "name" : "compiler: flags 010"
+      },
+      {
+         "actual" : 1,
+         "input_unchanged" : 1,
+         "name" : "compiler: flags 011"
+      },
+      {
+         "actual" : 0,
+         "input_unchanged" : 1,
+         "name" : "compiler: flags 100"
+      },
+      {
+         "actual" : 0,
+         "input_unchanged" : 1,
+         "name" : "compiler: flags 101"
+      },
+      {
+         "actual" : 0,
+         "input_unchanged" : 1,
+         "name" : "compiler: flags 110"
+      },
+      {
+         "actual" : 1,
+         "input_unchanged" : 1,
+         "name" : "compiler: flags 111"
+      },
+      {
+         "actual" : 0,
+         "input_unchanged" : 1,
+         "name" : "compiler: leader_started null"
+      },
+      {
+         "actual" : 0,
+         "input_unchanged" : 1,
+         "name" : "compiler: leader_started boolean"
+      },
+      {
+         "actual" : 0,
+         "input_unchanged" : 1,
+         "name" : "compiler: leader_started array"
+      },
+      {
+         "actual" : 0,
+         "input_unchanged" : 1,
+         "name" : "compiler: leader_started map"
+      },
+      {
+         "actual" : 0,
+         "input_unchanged" : 1,
+         "name" : "compiler: leader_started negative"
+      },
+      {
+         "actual" : 0,
+         "input_unchanged" : 1,
+         "name" : "compiler: leader_started fraction"
+      },
+      {
+         "actual" : 0,
+         "input_unchanged" : 1,
+         "name" : "compiler: leader_started out-of-range"
+      },
+      {
+         "actual" : 0,
+         "input_unchanged" : 1,
+         "name" : "compiler: leader_started padded"
+      },
+      {
+         "actual" : 0,
+         "input_unchanged" : 1,
+         "name" : "compiler: leader_started newline"
+      },
+      {
+         "actual" : 0,
+         "input_unchanged" : 1,
+         "name" : "compiler: leader_started empty"
+      },
+      {
+         "actual" : 0,
+         "input_unchanged" : 1,
+         "name" : "compiler: missing leader_started"
+      },
+      {
+         "actual" : 0,
+         "input_unchanged" : 1,
+         "name" : "compiler: leader_reaped null"
+      },
+      {
+         "actual" : 0,
+         "input_unchanged" : 1,
+         "name" : "compiler: leader_reaped boolean"
+      },
+      {
+         "actual" : 0,
+         "input_unchanged" : 1,
+         "name" : "compiler: leader_reaped array"
+      },
+      {
+         "actual" : 0,
+         "input_unchanged" : 1,
+         "name" : "compiler: leader_reaped map"
+      },
+      {
+         "actual" : 0,
+         "input_unchanged" : 1,
+         "name" : "compiler: leader_reaped negative"
+      },
+      {
+         "actual" : 0,
+         "input_unchanged" : 1,
+         "name" : "compiler: leader_reaped fraction"
+      },
+      {
+         "actual" : 0,
+         "input_unchanged" : 1,
+         "name" : "compiler: leader_reaped out-of-range"
+      },
+      {
+         "actual" : 0,
+         "input_unchanged" : 1,
+         "name" : "compiler: leader_reaped padded"
+      },
+      {
+         "actual" : 0,
+         "input_unchanged" : 1,
+         "name" : "compiler: leader_reaped newline"
+      },
+      {
+         "actual" : 0,
+         "input_unchanged" : 1,
+         "name" : "compiler: leader_reaped empty"
+      },
+      {
+         "actual" : 0,
+         "input_unchanged" : 1,
+         "name" : "compiler: missing leader_reaped"
+      },
+      {
+         "actual" : 0,
+         "input_unchanged" : 1,
+         "name" : "compiler: group_gone null"
+      },
+      {
+         "actual" : 0,
+         "input_unchanged" : 1,
+         "name" : "compiler: group_gone boolean"
+      },
+      {
+         "actual" : 0,
+         "input_unchanged" : 1,
+         "name" : "compiler: group_gone array"
+      },
+      {
+         "actual" : 0,
+         "input_unchanged" : 1,
+         "name" : "compiler: group_gone map"
+      },
+      {
+         "actual" : 0,
+         "input_unchanged" : 1,
+         "name" : "compiler: group_gone negative"
+      },
+      {
+         "actual" : 0,
+         "input_unchanged" : 1,
+         "name" : "compiler: group_gone fraction"
+      },
+      {
+         "actual" : 0,
+         "input_unchanged" : 1,
+         "name" : "compiler: group_gone out-of-range"
+      },
+      {
+         "actual" : 0,
+         "input_unchanged" : 1,
+         "name" : "compiler: group_gone padded"
+      },
+      {
+         "actual" : 0,
+         "input_unchanged" : 1,
+         "name" : "compiler: group_gone newline"
+      },
+      {
+         "actual" : 0,
+         "input_unchanged" : 1,
+         "name" : "compiler: group_gone empty"
+      },
+      {
+         "actual" : 0,
+         "input_unchanged" : 1,
+         "name" : "compiler: missing group_gone"
+      },
+      {
+         "actual" : 0,
+         "input_unchanged" : 1,
+         "name" : "compiler: cleanup null"
+      },
+      {
+         "actual" : 0,
+         "input_unchanged" : 1,
+         "name" : "compiler: cleanup array"
+      },
+      {
+         "actual" : 0,
+         "input_unchanged" : 1,
+         "name" : "compiler: cleanup scalar"
+      },
+      {
+         "actual" : 0,
+         "input_unchanged" : 1,
+         "name" : "compiler: missing cleanup"
+      },
+      {
+         "actual" : 0,
+         "input_unchanged" : 1,
+         "name" : "compiler: absent owner"
+      },
+      {
+         "actual" : 0,
+         "input_unchanged" : 1,
+         "name" : "outer: flags 000"
+      },
+      {
+         "actual" : 1,
+         "input_unchanged" : 1,
+         "name" : "outer: flags 001"
+      },
+      {
+         "actual" : 0,
+         "input_unchanged" : 1,
+         "name" : "outer: flags 010"
+      },
+      {
+         "actual" : 1,
+         "input_unchanged" : 1,
+         "name" : "outer: flags 011"
+      },
+      {
+         "actual" : 0,
+         "input_unchanged" : 1,
+         "name" : "outer: flags 100"
+      },
+      {
+         "actual" : 0,
+         "input_unchanged" : 1,
+         "name" : "outer: flags 101"
+      },
+      {
+         "actual" : 0,
+         "input_unchanged" : 1,
+         "name" : "outer: flags 110"
+      },
+      {
+         "actual" : 1,
+         "input_unchanged" : 1,
+         "name" : "outer: flags 111"
+      },
+      {
+         "actual" : 0,
+         "input_unchanged" : 1,
+         "name" : "outer: leader_started null"
+      },
+      {
+         "actual" : 0,
+         "input_unchanged" : 1,
+         "name" : "outer: leader_started boolean"
+      },
+      {
+         "actual" : 0,
+         "input_unchanged" : 1,
+         "name" : "outer: leader_started array"
+      },
+      {
+         "actual" : 0,
+         "input_unchanged" : 1,
+         "name" : "outer: leader_started map"
+      },
+      {
+         "actual" : 0,
+         "input_unchanged" : 1,
+         "name" : "outer: leader_started negative"
+      },
+      {
+         "actual" : 0,
+         "input_unchanged" : 1,
+         "name" : "outer: leader_started fraction"
+      },
+      {
+         "actual" : 0,
+         "input_unchanged" : 1,
+         "name" : "outer: leader_started out-of-range"
+      },
+      {
+         "actual" : 0,
+         "input_unchanged" : 1,
+         "name" : "outer: leader_started padded"
+      },
+      {
+         "actual" : 0,
+         "input_unchanged" : 1,
+         "name" : "outer: leader_started newline"
+      },
+      {
+         "actual" : 0,
+         "input_unchanged" : 1,
+         "name" : "outer: leader_started empty"
+      },
+      {
+         "actual" : 0,
+         "input_unchanged" : 1,
+         "name" : "outer: missing leader_started"
+      },
+      {
+         "actual" : 0,
+         "input_unchanged" : 1,
+         "name" : "outer: leader_reaped null"
+      },
+      {
+         "actual" : 0,
+         "input_unchanged" : 1,
+         "name" : "outer: leader_reaped boolean"
+      },
+      {
+         "actual" : 0,
+         "input_unchanged" : 1,
+         "name" : "outer: leader_reaped array"
+      },
+      {
+         "actual" : 0,
+         "input_unchanged" : 1,
+         "name" : "outer: leader_reaped map"
+      },
+      {
+         "actual" : 0,
+         "input_unchanged" : 1,
+         "name" : "outer: leader_reaped negative"
+      },
+      {
+         "actual" : 0,
+         "input_unchanged" : 1,
+         "name" : "outer: leader_reaped fraction"
+      },
+      {
+         "actual" : 0,
+         "input_unchanged" : 1,
+         "name" : "outer: leader_reaped out-of-range"
+      },
+      {
+         "actual" : 0,
+         "input_unchanged" : 1,
+         "name" : "outer: leader_reaped padded"
+      },
+      {
+         "actual" : 0,
+         "input_unchanged" : 1,
+         "name" : "outer: leader_reaped newline"
+      },
+      {
+         "actual" : 0,
+         "input_unchanged" : 1,
+         "name" : "outer: leader_reaped empty"
+      },
+      {
+         "actual" : 0,
+         "input_unchanged" : 1,
+         "name" : "outer: missing leader_reaped"
+      },
+      {
+         "actual" : 0,
+         "input_unchanged" : 1,
+         "name" : "outer: group_gone null"
+      },
+      {
+         "actual" : 0,
+         "input_unchanged" : 1,
+         "name" : "outer: group_gone boolean"
+      },
+      {
+         "actual" : 0,
+         "input_unchanged" : 1,
+         "name" : "outer: group_gone array"
+      },
+      {
+         "actual" : 0,
+         "input_unchanged" : 1,
+         "name" : "outer: group_gone map"
+      },
+      {
+         "actual" : 0,
+         "input_unchanged" : 1,
+         "name" : "outer: group_gone negative"
+      },
+      {
+         "actual" : 0,
+         "input_unchanged" : 1,
+         "name" : "outer: group_gone fraction"
+      },
+      {
+         "actual" : 0,
+         "input_unchanged" : 1,
+         "name" : "outer: group_gone out-of-range"
+      },
+      {
+         "actual" : 0,
+         "input_unchanged" : 1,
+         "name" : "outer: group_gone padded"
+      },
+      {
+         "actual" : 0,
+         "input_unchanged" : 1,
+         "name" : "outer: group_gone newline"
+      },
+      {
+         "actual" : 0,
+         "input_unchanged" : 1,
+         "name" : "outer: group_gone empty"
+      },
+      {
+         "actual" : 0,
+         "input_unchanged" : 1,
+         "name" : "outer: missing group_gone"
+      },
+      {
+         "actual" : 0,
+         "input_unchanged" : 1,
+         "name" : "outer: cleanup null"
+      },
+      {
+         "actual" : 0,
+         "input_unchanged" : 1,
+         "name" : "outer: cleanup array"
+      },
+      {
+         "actual" : 0,
+         "input_unchanged" : 1,
+         "name" : "outer: cleanup scalar"
+      },
+      {
+         "actual" : 0,
+         "input_unchanged" : 1,
+         "name" : "outer: missing cleanup"
+      },
+      {
+         "actual" : 0,
+         "input_unchanged" : 1,
+         "name" : "outer: absent owner"
+      },
+      {
+         "actual" : 0,
+         "input_unchanged" : 1,
+         "name" : "inner-first: flags 000"
+      },
+      {
+         "actual" : 1,
+         "input_unchanged" : 1,
+         "name" : "inner-first: flags 001"
+      },
+      {
+         "actual" : 0,
+         "input_unchanged" : 1,
+         "name" : "inner-first: flags 010"
+      },
+      {
+         "actual" : 1,
+         "input_unchanged" : 1,
+         "name" : "inner-first: flags 011"
+      },
+      {
+         "actual" : 0,
+         "input_unchanged" : 1,
+         "name" : "inner-first: flags 100"
+      },
+      {
+         "actual" : 0,
+         "input_unchanged" : 1,
+         "name" : "inner-first: flags 101"
+      },
+      {
+         "actual" : 0,
+         "input_unchanged" : 1,
+         "name" : "inner-first: flags 110"
+      },
+      {
+         "actual" : 1,
+         "input_unchanged" : 1,
+         "name" : "inner-first: flags 111"
+      },
+      {
+         "actual" : 0,
+         "input_unchanged" : 1,
+         "name" : "inner-first: leader_started null"
+      },
+      {
+         "actual" : 0,
+         "input_unchanged" : 1,
+         "name" : "inner-first: leader_started boolean"
+      },
+      {
+         "actual" : 0,
+         "input_unchanged" : 1,
+         "name" : "inner-first: leader_started array"
+      },
+      {
+         "actual" : 0,
+         "input_unchanged" : 1,
+         "name" : "inner-first: leader_started map"
+      },
+      {
+         "actual" : 0,
+         "input_unchanged" : 1,
+         "name" : "inner-first: leader_started negative"
+      },
+      {
+         "actual" : 0,
+         "input_unchanged" : 1,
+         "name" : "inner-first: leader_started fraction"
+      },
+      {
+         "actual" : 0,
+         "input_unchanged" : 1,
+         "name" : "inner-first: leader_started out-of-range"
+      },
+      {
+         "actual" : 0,
+         "input_unchanged" : 1,
+         "name" : "inner-first: leader_started padded"
+      },
+      {
+         "actual" : 0,
+         "input_unchanged" : 1,
+         "name" : "inner-first: leader_started newline"
+      },
+      {
+         "actual" : 0,
+         "input_unchanged" : 1,
+         "name" : "inner-first: leader_started empty"
+      },
+      {
+         "actual" : 0,
+         "input_unchanged" : 1,
+         "name" : "inner-first: missing leader_started"
+      },
+      {
+         "actual" : 0,
+         "input_unchanged" : 1,
+         "name" : "inner-first: leader_reaped null"
+      },
+      {
+         "actual" : 0,
+         "input_unchanged" : 1,
+         "name" : "inner-first: leader_reaped boolean"
+      },
+      {
+         "actual" : 0,
+         "input_unchanged" : 1,
+         "name" : "inner-first: leader_reaped array"
+      },
+      {
+         "actual" : 0,
+         "input_unchanged" : 1,
+         "name" : "inner-first: leader_reaped map"
+      },
+      {
+         "actual" : 0,
+         "input_unchanged" : 1,
+         "name" : "inner-first: leader_reaped negative"
+      },
+      {
+         "actual" : 0,
+         "input_unchanged" : 1,
+         "name" : "inner-first: leader_reaped fraction"
+      },
+      {
+         "actual" : 0,
+         "input_unchanged" : 1,
+         "name" : "inner-first: leader_reaped out-of-range"
+      },
+      {
+         "actual" : 0,
+         "input_unchanged" : 1,
+         "name" : "inner-first: leader_reaped padded"
+      },
+      {
+         "actual" : 0,
+         "input_unchanged" : 1,
+         "name" : "inner-first: leader_reaped newline"
+      },
+      {
+         "actual" : 0,
+         "input_unchanged" : 1,
+         "name" : "inner-first: leader_reaped empty"
+      },
+      {
+         "actual" : 0,
+         "input_unchanged" : 1,
+         "name" : "inner-first: missing leader_reaped"
+      },
+      {
+         "actual" : 0,
+         "input_unchanged" : 1,
+         "name" : "inner-first: group_gone null"
+      },
+      {
+         "actual" : 0,
+         "input_unchanged" : 1,
+         "name" : "inner-first: group_gone boolean"
+      },
+      {
+         "actual" : 0,
+         "input_unchanged" : 1,
+         "name" : "inner-first: group_gone array"
+      },
+      {
+         "actual" : 0,
+         "input_unchanged" : 1,
+         "name" : "inner-first: group_gone map"
+      },
+      {
+         "actual" : 0,
+         "input_unchanged" : 1,
+         "name" : "inner-first: group_gone negative"
+      },
+      {
+         "actual" : 0,
+         "input_unchanged" : 1,
+         "name" : "inner-first: group_gone fraction"
+      },
+      {
+         "actual" : 0,
+         "input_unchanged" : 1,
+         "name" : "inner-first: group_gone out-of-range"
+      },
+      {
+         "actual" : 0,
+         "input_unchanged" : 1,
+         "name" : "inner-first: group_gone padded"
+      },
+      {
+         "actual" : 0,
+         "input_unchanged" : 1,
+         "name" : "inner-first: group_gone newline"
+      },
+      {
+         "actual" : 0,
+         "input_unchanged" : 1,
+         "name" : "inner-first: group_gone empty"
+      },
+      {
+         "actual" : 0,
+         "input_unchanged" : 1,
+         "name" : "inner-first: missing group_gone"
+      },
+      {
+         "actual" : 0,
+         "input_unchanged" : 1,
+         "name" : "inner-first: cleanup null"
+      },
+      {
+         "actual" : 0,
+         "input_unchanged" : 1,
+         "name" : "inner-first: cleanup array"
+      },
+      {
+         "actual" : 0,
+         "input_unchanged" : 1,
+         "name" : "inner-first: cleanup scalar"
+      },
+      {
+         "actual" : 0,
+         "input_unchanged" : 1,
+         "name" : "inner-first: missing cleanup"
+      },
+      {
+         "actual" : 0,
+         "input_unchanged" : 1,
+         "name" : "inner-first: absent owner"
+      },
+      {
+         "actual" : 0,
+         "input_unchanged" : 1,
+         "name" : "inner-last: flags 000"
+      },
+      {
+         "actual" : 1,
+         "input_unchanged" : 1,
+         "name" : "inner-last: flags 001"
+      },
+      {
+         "actual" : 0,
+         "input_unchanged" : 1,
+         "name" : "inner-last: flags 010"
+      },
+      {
+         "actual" : 1,
+         "input_unchanged" : 1,
+         "name" : "inner-last: flags 011"
+      },
+      {
+         "actual" : 0,
+         "input_unchanged" : 1,
+         "name" : "inner-last: flags 100"
+      },
+      {
+         "actual" : 0,
+         "input_unchanged" : 1,
+         "name" : "inner-last: flags 101"
+      },
+      {
+         "actual" : 0,
+         "input_unchanged" : 1,
+         "name" : "inner-last: flags 110"
+      },
+      {
+         "actual" : 1,
+         "input_unchanged" : 1,
+         "name" : "inner-last: flags 111"
+      },
+      {
+         "actual" : 0,
+         "input_unchanged" : 1,
+         "name" : "inner-last: leader_started null"
+      },
+      {
+         "actual" : 0,
+         "input_unchanged" : 1,
+         "name" : "inner-last: leader_started boolean"
+      },
+      {
+         "actual" : 0,
+         "input_unchanged" : 1,
+         "name" : "inner-last: leader_started array"
+      },
+      {
+         "actual" : 0,
+         "input_unchanged" : 1,
+         "name" : "inner-last: leader_started map"
+      },
+      {
+         "actual" : 0,
+         "input_unchanged" : 1,
+         "name" : "inner-last: leader_started negative"
+      },
+      {
+         "actual" : 0,
+         "input_unchanged" : 1,
+         "name" : "inner-last: leader_started fraction"
+      },
+      {
+         "actual" : 0,
+         "input_unchanged" : 1,
+         "name" : "inner-last: leader_started out-of-range"
+      },
+      {
+         "actual" : 0,
+         "input_unchanged" : 1,
+         "name" : "inner-last: leader_started padded"
+      },
+      {
+         "actual" : 0,
+         "input_unchanged" : 1,
+         "name" : "inner-last: leader_started newline"
+      },
+      {
+         "actual" : 0,
+         "input_unchanged" : 1,
+         "name" : "inner-last: leader_started empty"
+      },
+      {
+         "actual" : 0,
+         "input_unchanged" : 1,
+         "name" : "inner-last: missing leader_started"
+      },
+      {
+         "actual" : 0,
+         "input_unchanged" : 1,
+         "name" : "inner-last: leader_reaped null"
+      },
+      {
+         "actual" : 0,
+         "input_unchanged" : 1,
+         "name" : "inner-last: leader_reaped boolean"
+      },
+      {
+         "actual" : 0,
+         "input_unchanged" : 1,
+         "name" : "inner-last: leader_reaped array"
+      },
+      {
+         "actual" : 0,
+         "input_unchanged" : 1,
+         "name" : "inner-last: leader_reaped map"
+      },
+      {
+         "actual" : 0,
+         "input_unchanged" : 1,
+         "name" : "inner-last: leader_reaped negative"
+      },
+      {
+         "actual" : 0,
+         "input_unchanged" : 1,
+         "name" : "inner-last: leader_reaped fraction"
+      },
+      {
+         "actual" : 0,
+         "input_unchanged" : 1,
+         "name" : "inner-last: leader_reaped out-of-range"
+      },
+      {
+         "actual" : 0,
+         "input_unchanged" : 1,
+         "name" : "inner-last: leader_reaped padded"
+      },
+      {
+         "actual" : 0,
+         "input_unchanged" : 1,
+         "name" : "inner-last: leader_reaped newline"
+      },
+      {
+         "actual" : 0,
+         "input_unchanged" : 1,
+         "name" : "inner-last: leader_reaped empty"
+      },
+      {
+         "actual" : 0,
+         "input_unchanged" : 1,
+         "name" : "inner-last: missing leader_reaped"
+      },
+      {
+         "actual" : 0,
+         "input_unchanged" : 1,
+         "name" : "inner-last: group_gone null"
+      },
+      {
+         "actual" : 0,
+         "input_unchanged" : 1,
+         "name" : "inner-last: group_gone boolean"
+      },
+      {
+         "actual" : 0,
+         "input_unchanged" : 1,
+         "name" : "inner-last: group_gone array"
+      },
+      {
+         "actual" : 0,
+         "input_unchanged" : 1,
+         "name" : "inner-last: group_gone map"
+      },
+      {
+         "actual" : 0,
+         "input_unchanged" : 1,
+         "name" : "inner-last: group_gone negative"
+      },
+      {
+         "actual" : 0,
+         "input_unchanged" : 1,
+         "name" : "inner-last: group_gone fraction"
+      },
+      {
+         "actual" : 0,
+         "input_unchanged" : 1,
+         "name" : "inner-last: group_gone out-of-range"
+      },
+      {
+         "actual" : 0,
+         "input_unchanged" : 1,
+         "name" : "inner-last: group_gone padded"
+      },
+      {
+         "actual" : 0,
+         "input_unchanged" : 1,
+         "name" : "inner-last: group_gone newline"
+      },
+      {
+         "actual" : 0,
+         "input_unchanged" : 1,
+         "name" : "inner-last: group_gone empty"
+      },
+      {
+         "actual" : 0,
+         "input_unchanged" : 1,
+         "name" : "inner-last: missing group_gone"
+      },
+      {
+         "actual" : 0,
+         "input_unchanged" : 1,
+         "name" : "inner-last: cleanup null"
+      },
+      {
+         "actual" : 0,
+         "input_unchanged" : 1,
+         "name" : "inner-last: cleanup array"
+      },
+      {
+         "actual" : 0,
+         "input_unchanged" : 1,
+         "name" : "inner-last: cleanup scalar"
+      },
+      {
+         "actual" : 0,
+         "input_unchanged" : 1,
+         "name" : "inner-last: missing cleanup"
+      },
+      {
+         "actual" : 0,
+         "input_unchanged" : 1,
+         "name" : "inner-last: absent owner"
+      },
+      {
+         "actual" : 0,
+         "input_unchanged" : 1,
+         "name" : "stage array empty"
+      },
+      {
+         "actual" : 0,
+         "input_unchanged" : 1,
+         "name" : "stage array null"
+      },
+      {
+         "actual" : 0,
+         "input_unchanged" : 1,
+         "name" : "stage array map"
+      },
+      {
+         "actual" : 0,
+         "input_unchanged" : 1,
+         "name" : "stage array scalar"
+      },
+      {
+         "actual" : 0,
+         "input_unchanged" : 1,
+         "name" : "arity 0"
+      },
+      {
+         "actual" : 0,
+         "input_unchanged" : 1,
+         "name" : "arity 1"
+      },
+      {
+         "actual" : 0,
+         "input_unchanged" : 1,
+         "name" : "arity 2"
+      },
+      {
+         "actual" : 0,
+         "input_unchanged" : 1,
+         "name" : "extra argument"
+      },
+      {
+         "actual" : 1,
+         "input_unchanged" : 1,
+         "name" : "scalar flag strings retain current compatibility"
+      },
+      {
+         "actual" : 0,
+         "input_unchanged" : 1,
+         "name" : "success cannot substitute for cleanup"
+      },
+      {
+         "actual" : 1,
+         "input_unchanged" : 1,
+         "name" : "failed but settled owners"
+      },
+      {
+         "actual" : 1,
+         "input_unchanged" : 1,
+         "name" : "prelaunch failures with no started leaders"
+      }
+   ],
+   "forbidden_process_attempts" : 0,
+   "mutants" : {
+      "omitted compiler" : {
+         "actual" : 1,
+         "case_name" : "compiler: flags 110",
+         "expected" : 0,
+         "input_unchanged" : 1
+      },
+      "omitted later inner" : {
+         "actual" : 1,
+         "case_name" : "inner-last: flags 110",
+         "expected" : 0,
+         "input_unchanged" : 1
+      },
+      "omitted leader reap" : {
+         "actual" : 1,
+         "case_name" : "inner-first: flags 101",
+         "expected" : 0,
+         "input_unchanged" : 1
+      },
+      "omitted outer" : {
+         "actual" : 1,
+         "case_name" : "outer: flags 110",
+         "expected" : 0,
+         "input_unchanged" : 1
+      }
+   },
+   "schema" : "fsmgen.inactive_cleanup_receipt_qualification.v1",
+   "success" : true
+}

@@ -1,0 +1,30 @@
+{
+  "files": [
+    {
+      "path": "docs/audits/native-proxy-cleanup-receipts-20260910/result/qualification.json",
+      "sha256": "f7b7a610569176eaedb6ea001ead693ddf8d5086a7c154091138ff5bdbe45edb",
+      "size_bytes": 24415
+    },
+    {
+      "path": "docs/audits/native-proxy-cleanup-receipts-20260910/result/qualify.tap",
+      "sha256": "ecdc6c89c983653c1bbf78ee374542102f8b1da6e76e15beb74d1de79dd36f26",
+      "size_bytes": 7562
+    },
+    {
+      "path": "docs/audits/native-proxy-cleanup-receipts-20260910/result/audit.json",
+      "sha256": "2ddd4a417a1253ecafa6744106d9149ca43ed18351527a734b6ab16b6fe35157",
+      "size_bytes": 2419
+    },
+    {
+      "path": "docs/audits/native-proxy-cleanup-receipts-20260910/result/codec-regression.json",
+      "sha256": "e2f3fac8ca9eb353a4ba8ffc1fc4258333236349c350705a3c4089bcc5c016df",
+      "size_bytes": 16680
+    },
+    {
+      "path": "docs/audits/native-proxy-cleanup-receipts-20260910/result/codec-regression.tap",
+      "sha256": "af46f8c349cd9e652a69961907c39730193018b5d284d15cbc0c8960639f0faa",
+      "size_bytes": 2983
+    }
+  ],
+  "schema": "fsmgen.cleanup_receipt_recovery_copies.v1"
+}

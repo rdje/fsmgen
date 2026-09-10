@@ -1,0 +1,68 @@
+{
+  "assertions": 201,
+  "cases": 196,
+  "falsifiers": [
+    "hidden failure",
+    "missing owner position",
+    "unknown cleanup accepted",
+    "input mutated",
+    "missing omitted-owner control",
+    "unproved counterimplementation",
+    "process attempted",
+    "boolean counter"
+  ],
+  "inputs": [
+    {
+      "path": "docs/audits/native-proxy-cleanup-receipts-20260910/CleanupReceipts.pm",
+      "sha256": "5b22cecf6ff131f62fdeb237a3e77b67b5b29a172ff82320a67772b03cd24de0",
+      "size_bytes": 1300
+    },
+    {
+      "path": "docs/audits/native-proxy-cleanup-receipts-20260910/qualify.t",
+      "sha256": "0cad02f5d5adfdbf32aacd0bd03a9fb65307135bd4e7c155ed7b717a6851c574",
+      "size_bytes": 3289
+    },
+    {
+      "path": "docs/audits/native-proxy-cleanup-receipts-20260910/plan.json",
+      "sha256": "fd25d8dc80d06f435afd228e9afc9282e06fc446bf7eff47b70a5829d6931ba7",
+      "size_bytes": 219398
+    },
+    {
+      "path": ".artifacts/logs/native-proxy-cleanup-receipts-20260910/qualification.json",
+      "sha256": "f7b7a610569176eaedb6ea001ead693ddf8d5086a7c154091138ff5bdbe45edb",
+      "size_bytes": 24415
+    },
+    {
+      "path": ".artifacts/logs/native-proxy-cleanup-receipts-20260910/qualify.tap",
+      "sha256": "ecdc6c89c983653c1bbf78ee374542102f8b1da6e76e15beb74d1de79dd36f26",
+      "size_bytes": 7562
+    },
+    {
+      "path": ".artifacts/logs/native-proxy-cleanup-receipts-20260910/codec-regression.json",
+      "sha256": "e2f3fac8ca9eb353a4ba8ffc1fc4258333236349c350705a3c4089bcc5c016df",
+      "size_bytes": 16680
+    },
+    {
+      "path": ".artifacts/logs/native-proxy-cleanup-receipts-20260910/codec-regression.tap",
+      "sha256": "af46f8c349cd9e652a69961907c39730193018b5d284d15cbc0c8960639f0faa",
+      "size_bytes": 2983
+    },
+    {
+      "path": "docs/audits/native-proxy-runtime-records-20260910/audit.py",
+      "sha256": "ece89eeb01cdd6e5b6c48a8e124bd4a4bde4e30f1bc53745d9ac2109748f0c83",
+      "size_bytes": 9573
+    }
+  ],
+  "limits": "Synthetic receipt structure only. The caller must establish complete transport, actual process ownership and current filesystem custody before any retirement.",
+  "mutants": [
+    "omitted compiler",
+    "omitted later inner",
+    "omitted leader reap",
+    "omitted outer"
+  ],
+  "regression_assertions": 74,
+  "rejected_cases": 181,
+  "schema": "fsmgen.inactive_cleanup_receipt_audit.v1",
+  "success": true,
+  "truth_table_cases": 32
+}
