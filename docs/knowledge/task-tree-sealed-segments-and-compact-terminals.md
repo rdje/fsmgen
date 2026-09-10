@@ -12,11 +12,12 @@ answers:
   - "where did the completed task-tree index rows go?"
   - "what retention contract does a task-tree version object require?"
   - "how is task-tree migration completeness proved?"
-date: 2026-07-31
+  - "can completed live claim owners become compact task terminals?"
+date: 2026-09-11
 status: current
 tags: [task-tree, continuity, containment, jsonl, segment, archive, provenance]
-evidence: docs/decisions/0042-task-trees-seal-completed-subtrees-with-exact-provenance.md; docs/TASK_TREE.md; docs/TASK_TREE_README.md; docs/tasks/TEMPLATE.md; scripts/check_task_tree_integrity.pl; t/1549-task-tree-integrity-doctrine.t; docs/tasks/LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.md
-reverify: prove -Iperl t/1549-task-tree-integrity-doctrine.t && scripts/check_task_tree_integrity.pl
+evidence: docs/decisions/0042-task-trees-seal-completed-subtrees-with-exact-provenance.md; docs/TASK_TREE.md; docs/TASK_TREE_README.md; docs/tasks/TEMPLATE.md; scripts/check_task_tree_integrity.pl; scripts/check_claim_verification.pl; t/1549-task-tree-integrity-doctrine.t; docs/tasks/LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.md
+reverify: scripts/check_task_tree_integrity.pl && scripts/check_claim_verification.pl
 ---
 
 Decision `0042` keeps the live task Markdown file as the readable front door:
@@ -40,6 +41,11 @@ retention contract, goal, verification, and commit reference let the checker rel
 the whole terminal subtree through git. Missing revisions, digest or count
 drift, nonterminal archived nodes, broken child closure, and pending leaf
 evidence all fail closed.
+
+Before compaction, check live claim owners too. `CLAIM-VERIFICATION` requires
+each `owner_task` ID in the live task file; a compact terminal does not satisfy it. Keep those owners live and select a different subtree.
+
+Initial migration figures follow.
 
 Both forms are optional. Existing one-file trees remain valid. `.7` performs
 the first migration: one exact-source segment now holds all 844 terminal IAL2

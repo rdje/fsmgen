@@ -19,6 +19,7 @@ answers:
   - "why must fixture clones preserve byte flags and JSON numeric types?"
   - "why do inactive source and writer handoffs close explicitly?"
   - "what do inactive observation snapshot interruption cuts prove?"
+  - "what survives inactive observation publication failures?"
   - "why did integrated proxy qualification fail?"
   - "why does t1545 not use IPC Cmd?"
   - "where does T1545 preserve empty-output checker failure diagnostics?"
@@ -54,7 +55,7 @@ answers:
   - "can post-KILL leader reaping bypass the cleanup deadline?"
   - "which ownership model is selected for nested supervision?"
   - "how does the private coordinator preserve execution bytes?"
-date: 2026-09-10
+date: 2026-09-11
 status: current
 tags: [tests, subprocess, supervision, task-acceptance, darwin, locality]
 evidence: >-
@@ -83,24 +84,25 @@ reverify: >-
 ---
 
 Decisions `0087`/`0101` select `FSM::Support::ProcessSupervisor`; adapters seal bounded local argv/capture/group cleanup. T1669 checks ownership.
-Child requires successful `setpgid` and owned group before exec; PID is not birth identity. Admission controls and nested-cleanup limits: history.
+Child requires its owned group before exec; birth/cleanup controls: history.
 `exec_handoff_monotonic_ns` observes pipe EOF, not main entry; pre-exec death can close it. Missing EOF leaves dependent timing unknown. Controls: history.
 Post-KILL: poll within grace; unreaped leaders/live groups stay incomplete. T1669 rejects blocking waits.
 `VerilatorRuntime` follows decision `0086`.
 `TaskAcceptanceFixtureRuntime` seals owned fixture roots/fixed local Git argv.
 Git/checker bounds, closed result schema and fixed load-time tools: history.
-Darwin env-Bash stalled before main; direct Bash retains capability. Bash/Git are read-only dependencies; project data stays local. Failures never retry. Version and fixture controls: history.
+Darwin env-Bash pre-main stalls, direct Bash capability, locality and no-retry controls: history.
 T1545 controls: historical card; absent witnesses stay unknown.
 Env/direct Perl timeouts refute a shebang-only cure. Startup cause, authenticated capture and STOP limits: task/book/history.
 T1669 uses process-supervisor-tests roots; ps skips only verified disappearance. Other errors fail; the historical changed field stays open (.3.2.11).
-History: `730b8b3a2bb1e918d24a03d23a19b0066d159508:docs/knowledge/test-subprocess-policy-adapters.md`.
+History: `5bb1b2366cc652416283d8959d12a9d44616498c:docs/knowledge/test-subprocess-policy-adapters.md`.
 PST parsing normalizes 1–16 lowercase hex digits; malformed fields and contradictions reject.
-Serial queue contention is supported; client/frame joins, loaded bytes and startup repair remain unproved. Native integration controls: history.
-Fixed CLI binds archive and journal anchors, preserving first failure/stop/ownership. F_CHECK_LV cause and worker/delivery remain unknown. Controls and opt-in violations: history.
-Combined census retains runtime/observation holds. Fresh snapshots order wrapper/private-ref/global-ref/C/executable; reuse checks prior custody without publication. Hold stays separate; release/capture open. Controls: history.
+Serial queue contention is supported; causal/native limits and controls: history.
+Fixed CLI contracts/limits: history.
+Combined census and fresh/reuse snapshot custody retain other owners. Ordered bytes and separate hold: history; release/capture stay open.
 FixtureClone preserves octet flags and JSON types. JSON/Storable pitfalls and controls: history. Prototype guards stay strict.
 Inactive source/writer failed handoffs close explicitly; no ordinary leak inferred. Retained-handle controls: history.
-Snapshot cuts preserve other owners and exact source-handle counts; fresh prepublication has no hold, finish failures retain it, reuse preserves it. Synchronous inert boundaries only; publication/coordinator/native closure stays open. Replay: `docs/audits/native-proxy-observation-snapshot-cuts-20260910/audit.py`.
+Snapshot cuts qualify source-handle counts and conservative holds; exact matrix: history.
+Publication failures retain absent/empty/prefix/full holds by reached stage; explicit closes and first errors are checked. Reuse never publishes. Replay: `docs/audits/native-proxy-observation-publication-cuts-20260910/audit.py`. Inert synchronous controls only; coordinator/native closure stays open.
 Caller-sealed test wrappers use tail goto to preserve caller.
 Replay: `scripts/run_with_ram_guard.sh -- python3 -B -m unittest discover -s t/python -p 'test_fixture_policy_archive*.py'`.
 T1595 pre-main cause open; `.19.2.3.1.2.2.6.2` fixes capture.

@@ -1,0 +1,29 @@
+{
+  "all_rosters_disjoint_and_absent": true,
+  "authenticated_predecessor_copies": 27,
+  "current_allocations": 80,
+  "current_assertions": 41,
+  "limits": "Predecessor matrices are authenticated and independently rederived from their committed receipts, not rerun. Current healthy fresh/reuse paths and publication faults ran in this leaf; no product/prototype changed. Coordinator and final closure remain unqualified.",
+  "predecessor_inputs_unchanged": 28,
+  "prospective_inputs_unchanged": 18,
+  "regressions": {
+    "fresh": {
+      "allocations": 116,
+      "archived_assertions": 59,
+      "executed": false
+    },
+    "reuse": {
+      "allocations": 160,
+      "archived_assertions": 81,
+      "executed": false
+    }
+  },
+  "schema": "fsmgen.inactive_observation_publication_cuts_closure.v1",
+  "snapshot": {
+    "allocations": 688,
+    "archived_assertions": 345,
+    "executed": false
+  },
+  "success": true,
+  "total_roots": 1044
+}

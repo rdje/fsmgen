@@ -1905,12 +1905,31 @@ workspace contents, and per-path counts for every returned source descriptor,
 writer and lock. Retained handle aliases expose deliberately omitted closes;
 the test observer recovers those handles before removing its exact fixtures.
 These are synchronous function-boundary cuts with inert files, not proof of
-real crash recovery. Publication/coordinator failures, archive settlement,
+real crash recovery. Coordinator failures, archive settlement,
 release and native ownership remain separately owned. Replay:
 
 ```bash
 scripts/run_with_ram_guard.sh -- perl docs/audits/native-proxy-observation-snapshot-cuts-20260910/qualify.t
 python3 -B docs/audits/native-proxy-observation-snapshot-cuts-20260910/audit.py
+```
+
+Inactive observation publication also preserves conservative failure state.
+Failure before exclusive creation leaves no primary hold; byte-mode or writer
+setup failure can leave an empty hold. A short write followed by failure leaves
+the exact written prefix, while later readback, seal or return failures retain
+the complete record. These observation files keep their read-only mode; no
+other runtime or observation owner is removed or rewritten. Reuse makes no
+publication call.
+
+Reader and writer close-report controls perform the actual close before
+reporting failure. Competing cleanup errors preserve the first operation error.
+Separate omitted-close controls leave the actual handle open so an independent
+observer can detect and recover it. This qualifies the declared inert cases,
+not every operating-system close ambiguity or crash durability. Replay:
+
+```bash
+scripts/run_with_ram_guard.sh -- perl docs/audits/native-proxy-observation-publication-cuts-20260910/qualify.t
+python3 -B docs/audits/native-proxy-observation-publication-cuts-20260910/audit.py
 ```
 
 The helper checks bounded regular source/output files and the native header,

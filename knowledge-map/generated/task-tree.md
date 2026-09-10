@@ -1,13 +1,14 @@
 # Knowledge Map: `task-tree`
 
 > **AUTO-GENERATED — DO NOT EDIT.** Return to the [Knowledge Map](../../KNOWLEDGE_MAP.md).
-> **4** facts · **26** uniquely owned question entries.
+> **4** facts · **27** uniquely owned question entries.
 
 ## Questions → facts
 
 - q="are existing task trees required to migrate to segments?" · facts=[task-tree-sealed-segments-and-compact-terminals](../../docs/knowledge/task-tree-sealed-segments-and-compact-terminals.md)
 - q="are the ## Current Frontier / ## Commit Log / ## Verification Log / ## Changelog sections in a task-tree file authoritative?" · facts=[task-tree-in-file-secondary-views-are-historical](../../docs/knowledge/task-tree-in-file-secondary-views-are-historical.md)
 - q="are there stale active task markers in completed task trees?" · facts=[task-tree-stale-status-drift-repair](../../docs/knowledge/task-tree-stale-status-drift-repair.md)
+- q="can completed live claim owners become compact task terminals?" · facts=[task-tree-sealed-segments-and-compact-terminals](../../docs/knowledge/task-tree-sealed-segments-and-compact-terminals.md)
 - q="does PNT need to read archived task-tree history?" · facts=[task-tree-sealed-segments-and-compact-terminals](../../docs/knowledge/task-tree-sealed-segments-and-compact-terminals.md)
 - q="does TASK-TREE-INTEGRITY validate completed index archives?" · facts=[task-tree-live-node-integrity](../../docs/knowledge/task-tree-live-node-integrity.md)
 - q="does TASK-TREE-INTEGRITY validate sealed task-tree segments?" · facts=[task-tree-live-node-integrity](../../docs/knowledge/task-tree-live-node-integrity.md)
@@ -52,7 +53,7 @@ _Active task-tree live-node structure is mechanically enforced_
 
 _Long-running task trees use exact-provenance sealed segments or compact terminals_
 
-- **date:** 2026-07-31 · **status:** current
+- **date:** 2026-09-11 · **status:** current
 - **source and verification:** [`docs/knowledge/task-tree-sealed-segments-and-compact-terminals.md`](../../docs/knowledge/task-tree-sealed-segments-and-compact-terminals.md)
 
 ### task-tree-stale-status-drift-repair

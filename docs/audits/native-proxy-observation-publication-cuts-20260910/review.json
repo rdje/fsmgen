@@ -1,0 +1,278 @@
+{
+  "book": {
+    "exact_output_absent": true,
+    "new_passage_verified": true,
+    "rendered_bytes": 23159666,
+    "rendered_files": 98,
+    "same_volume_direct_objects": true
+  },
+  "claim_owner_recovery": {
+    "action": "Restore the complete claim-owning subtree, select a fully read completed subtree with no live doctrine-registry references, and rerun both gates. Qualification sources, results and all registry limits remain unchanged.",
+    "doctrine_registry_references": 0,
+    "failed_gates": [
+      "CLAIM-VERIFICATION"
+    ],
+    "failed_task_bytes": 1127274,
+    "failed_task_sha256": "d04d04cb23b68a488edd51372855ecc3e3c82e87b63dea417b014c97651281e0",
+    "initial_gate_exit": 1,
+    "new_task_lines": 6303,
+    "restored_live_claim_owners": [
+      "HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.5.3.1.1",
+      "HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.5.3.2.2",
+      "HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.5.3.2.3",
+      "HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.5.3.2.1",
+      "HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.5.3.1.2"
+    ],
+    "restored_subtree": "HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.5.3",
+    "root_cause": "Task-tree integrity authenticates version-object terminal structure, while the claim consumer requires the exact owner_task ID in its live Markdown source. A done subtree can therefore remain ineligible for compaction. The first choice overlooked that separate live consumer.",
+    "rule_durability": "docs/knowledge/task-tree-sealed-segments-and-compact-terminals.md",
+    "schema": "fsmgen.publication_cut_claim_owner_recovery.v1",
+    "selected_nodes": 19,
+    "selected_subtree": "HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.5.1",
+    "source_bytes": 1145296,
+    "source_revision": "5bb1b2366cc652416283d8959d12a9d44616498c",
+    "source_sha256": "a491153ce36242722ca708c30d7ca13973e7b84a8b4b066b8b9f9be3b05aa481"
+  },
+  "closure": {
+    "all_rosters_disjoint_and_absent": true,
+    "authenticated_predecessor_copies": 27,
+    "current_allocations": 80,
+    "current_assertions": 41,
+    "limits": "Predecessor matrices are authenticated and independently rederived from their committed receipts, not rerun. Current healthy fresh/reuse paths and publication faults ran in this leaf; no product/prototype changed. Coordinator and final closure remain unqualified.",
+    "predecessor_inputs_unchanged": 28,
+    "prospective_inputs_unchanged": 18,
+    "regressions": {
+      "fresh": {
+        "allocations": 116,
+        "archived_assertions": 59,
+        "executed": false
+      },
+      "reuse": {
+        "allocations": 160,
+        "archived_assertions": 81,
+        "executed": false
+      }
+    },
+    "schema": "fsmgen.inactive_observation_publication_cuts_closure.v1",
+    "snapshot": {
+      "allocations": 688,
+      "archived_assertions": 345,
+      "executed": false
+    },
+    "success": true,
+    "total_roots": 1044
+  },
+  "containment": {
+    "ceilings_unchanged": true,
+    "doctrine_registry_references": 0,
+    "sealed_nodes": 19,
+    "sealed_subtree": "HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.5.1",
+    "source_bytes": 1145296,
+    "source_fully_read_and_authenticated": true,
+    "source_lines": 6393,
+    "source_path": "docs/tasks/HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.md",
+    "source_revision": "5bb1b2366cc652416283d8959d12a9d44616498c",
+    "source_sha256": "a491153ce36242722ca708c30d7ca13973e7b84a8b4b066b8b9f9be3b05aa481"
+  },
+  "durability": "The fixed plan and owning leaf precede every fixture. Immediate allocation/row journals, complete result, TAP, independent audit/closure and exact recovery copies are tracked. Predecessor evidence is authenticated from committed copies and independently rederived without rerunning old fixtures or rewriting their ignored receipts. Current implementation inputs remain unchanged. Live task/history, Knowledge Map and inspected-and-removed book output preserve scope.",
+  "exact_recovery_copies": 19,
+  "falsification": "Byte-mode/flag/write/readback/seal/return and actual-close-report failures preserve their declared conservative state. Competing close failures retain the original write/readcheck cause, and reader failure takes precedence over a later writer close failure. Two deliberate omitted-close controls expose precisely the real publication reader/writer still open; strict custody rejects and observer recovery closes it. Sixteen result falsifiers reject missing calls, handles, owner/payload evidence and authority/process changes.",
+  "final_evidence": [
+    {
+      "destination": "docs/audits/native-proxy-observation-publication-cuts-20260910/result/qualification.json",
+      "sha256": "7f3cf95447d602a0d04fd62046576bf45cbe4e51102016e94b3790f594104bd2",
+      "size_bytes": 3284631
+    },
+    {
+      "destination": "docs/audits/native-proxy-observation-publication-cuts-20260910/result/audit.json",
+      "sha256": "e9c8086146e48e19154721a86de9adc5060c34e48941fd81b28294b428bdc77a",
+      "size_bytes": 1085
+    },
+    {
+      "destination": "docs/audits/native-proxy-observation-publication-cuts-20260910/result/closure.json",
+      "sha256": "c587ff172a969d0210f3bd4bd3aefd52b3bb093c74086ff87132281e5f7b746d",
+      "size_bytes": 945
+    }
+  ],
+  "limits": [
+    "Finite synchronous publication and close-report controls only. Coordinator/census and retained-target/lock close-report cuts and final matrix join remain separately owned. Lower-reader prehandoff failure, asynchronous crash durability, actual process ownership, archive/capture settlement, exact release, contention and native activation are not established.",
+    "Close-report controls perform real close before returning EIO; omitted-close mutants alone leave actual handles open. This qualifies explicit cleanup and error precedence, not every operating-system close ambiguity. No prototype/product source changed or native operation ran. Historical startup/parent and full CI/push remain gated."
+  ],
+  "owner": "HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.12.4.1.3.3.2.2.2.2.1",
+  "qualification": {
+    "allocations": 80,
+    "assertions": 41,
+    "cases": 18,
+    "falsifiers": [
+      "hidden failure",
+      "lost publication case",
+      "lost cleanup call",
+      "lost reader handle",
+      "masked open writer",
+      "forged handle identity",
+      "lost partial payload",
+      "lost empty payload",
+      "lost complete failed payload",
+      "cleanup masks primary failure",
+      "lost unrelated observation owner",
+      "reuse publishes",
+      "authority type changed",
+      "lost omitted-close evidence",
+      "lost allocation",
+      "forbidden process"
+    ],
+    "limits": "Finite synchronous publication and close-report controls only. Coordinator/census and retained-target/lock close-report cuts and final matrix join remain separately owned. Lower-reader prehandoff failure, asynchronous crash durability, actual process ownership, archive/capture settlement, exact release, contention and native activation are not established.",
+    "mutants": [
+      "fresh:omit_reader_close",
+      "fresh:omit_writer_close"
+    ],
+    "schema": "fsmgen.inactive_observation_publication_cuts_audit.v1",
+    "success": true
+  },
+  "rederive": "An independent Python plan enumerates source/directory prefixes and actual publication/cleanup transitions. The oracle rederives fixed inert image/runtime/observation bytes, full namespace identities, exact absent/empty/eight-byte-prefix/full primary payloads, and the per-path returned-source/writer/lock multiset. Forty-four source reads precede publication; a successful readback adds one. The healthy full routes use the qualified predecessor counts.",
+  "root_cause": "The snapshot matrix stops outside canonical publication. Its writer can fail after exclusive creation, short writing, readback or sealing; cleanup can also report failure. Observation acquisition must retain the exact reached hold state, preserve other owners, explicitly close all returned descriptors and preserve its original error.",
+  "schema": "fsmgen.inactive_observation_publication_cuts_review.v1",
+  "source_revision": "5bb1b2366cc652416283d8959d12a9d44616498c",
+  "unchanged_inputs": [
+    {
+      "path": "t/1669-task-acceptance-fixture-runtime.t",
+      "sha256": "bdebbf03308cd5e0699324f9ab96a249c11c9ab05634309569d33874391a196f",
+      "size_bytes": 67582
+    },
+    {
+      "path": "t/lib/FSM/Test/RustProxyFixture.pm",
+      "sha256": "d9c4ab52cf8074526c59b7a5dcb9da870ca7ffdacb4eb236dacb23b5db6d8bfb",
+      "size_bytes": 11466
+    },
+    {
+      "path": "perl/FSM/Support/ProcessSupervisor.pm",
+      "sha256": "684882d91f673ea7145f43ed3aad31acf099f13508574be7b2d8911123988637",
+      "size_bytes": 27990
+    },
+    {
+      "path": "scripts/fixture_kernel_sampler.py",
+      "sha256": "50c94165893b74b758c560f561ff744f294683812a26b429071ef43009aac2dc",
+      "size_bytes": 22040
+    },
+    {
+      "path": "scripts/observe_fixture_startup.py",
+      "sha256": "05144eb1ebd86ebf132ad36b86b4c93b23687db928fc369f633615f0b870fe06",
+      "size_bytes": 25563
+    },
+    {
+      "path": "scripts/fixture_policy_archive.py",
+      "sha256": "f72355164d6af97e9c6de678018fe864bfab537280d95a87f986825970ad50e2",
+      "size_bytes": 21652
+    },
+    {
+      "path": "docs/audits/native-proxy-runtime-records-20260910/RuntimeRecord.pm",
+      "sha256": "013c0a02e7df59dc3a5af944b603cd44121252a02ca0228d6fdc3e1dd28e6745",
+      "size_bytes": 4078
+    },
+    {
+      "path": "docs/audits/native-proxy-observation-records-20260910/ObservationRecord.pm",
+      "sha256": "35445ee951c8f5e7dc204f58cffe1b2f6273286cc3e7715953d705b33e7158d5",
+      "size_bytes": 4369
+    },
+    {
+      "path": "docs/audits/native-proxy-runtime-census-20260910/qualify.t",
+      "sha256": "dfecb1fb29d91911939b80d2aa9315866f306707c85ba85688dfb20091845f57",
+      "size_bytes": 13416
+    },
+    {
+      "path": "docs/audits/native-proxy-runtime-census-20260910/audit.py",
+      "sha256": "4602141d655ed33c00e44417e64254937bfdac8863a24e44971c2159f900a13b",
+      "size_bytes": 10090
+    },
+    {
+      "path": "docs/audits/native-proxy-runtime-acquisition-20260910/ReferenceAcquisition.pm",
+      "sha256": "b751c88d709e102f7f9b9dd17e0222c39e0a81acc16d7194f7f7c3f4c8535b57",
+      "size_bytes": 6565
+    },
+    {
+      "path": "docs/audits/native-proxy-runtime-retirement-20260910/RuntimeRetirement.pm",
+      "sha256": "766348d16243d3868ca5f8b653f757f8f2eaf5c1aba8ec27fd2d9c67e9fd0bcc",
+      "size_bytes": 8727
+    },
+    {
+      "path": "docs/audits/native-proxy-runtime-retirement-20260910/qualify.t",
+      "sha256": "68e36c8b7dd43b49cb39e339dee45665202fbb32a3511e45af7a523380722524",
+      "size_bytes": 22411
+    },
+    {
+      "path": "docs/audits/native-proxy-image-maintenance-20260910/ImageMaintenance.pm",
+      "sha256": "1295957d97737e764c0e800885a2c3f9adfa327a0d41b35d122dde3e21698cac",
+      "size_bytes": 5678
+    },
+    {
+      "path": "docs/audits/native-proxy-canonical-contract-20260910/contract.json",
+      "sha256": "f3f981398afae72540ab4ac0194b8380d4743c3d2146c1172a85365add053222",
+      "size_bytes": 21927
+    },
+    {
+      "path": "docs/audits/native-proxy-runtime-census-20260910/ReferenceCensus.pm",
+      "sha256": "9fd74767e8c10831f2732fa8ad426b7e4fff8c17bab06584aa671cdd013b6247",
+      "size_bytes": 8024
+    },
+    {
+      "path": "docs/audits/native-proxy-combined-census-20260910/qualify.t",
+      "sha256": "f99eeebdd9c5ab0013f4cf903136468085eb13e38f044e4abd9a51c85cbf3c46",
+      "size_bytes": 16644
+    },
+    {
+      "path": "docs/audits/native-proxy-combined-census-20260910/audit.py",
+      "sha256": "ab7a213628f24b8b09a5438184a6ad344d42f400a31b5f5500e748ea4eb0a14c",
+      "size_bytes": 17759
+    },
+    {
+      "path": "docs/audits/native-proxy-runtime-acquisition-20260910/audit.py",
+      "sha256": "36449fac78d3d073fa404ad5f2df5b29e780cbb5af72f3701d1346defdb90fe5",
+      "size_bytes": 13414
+    },
+    {
+      "path": "docs/audits/native-proxy-observation-acquisition-20260910/qualify.t",
+      "sha256": "7170172160b9309e46ed8aad75d383c1b9329b21273030c3bd8ca7a1fcb3db1e",
+      "size_bytes": 18549
+    },
+    {
+      "path": "docs/audits/native-proxy-observation-acquisition-20260910/audit.py",
+      "sha256": "0c9a39917335920095e822a9ed8faa5a218d6e1ec8ada23509beefe7b54acb87",
+      "size_bytes": 20281
+    },
+    {
+      "path": "docs/audits/native-proxy-image-coordination-20260910/Coordination.pm",
+      "sha256": "9d587b9a369ec2e6ed924186a227a5bc4809e25d59b1e019be53e67196043279",
+      "size_bytes": 16715
+    },
+    {
+      "path": "docs/audits/native-proxy-observation-acquisition-20260910/ObservationAcquisition.pm",
+      "sha256": "809c013255ab6973a2d0dabcfd5b0ae5c55c97696d7acc77b10cf68149006470",
+      "size_bytes": 16517
+    },
+    {
+      "path": "docs/audits/native-proxy-observation-reuse-20260910/qualify.t",
+      "sha256": "6a3aa5374ddf2c5c58b3d31214340e8d2d85952875272ceccd4356693920098f",
+      "size_bytes": 19837
+    },
+    {
+      "path": "docs/audits/native-proxy-observation-reuse-20260910/audit.py",
+      "sha256": "0ba9d55002b911a98ce4e92d23824df414bccbe4e7e663c6fcabc3d74a81219e",
+      "size_bytes": 18403
+    },
+    {
+      "path": "docs/audits/native-proxy-observation-reuse-20260910/FixtureClone.pm",
+      "sha256": "d68a2d93f785b1c96689e352f7271e97b0bd239f2cf228f2c8e119dbb6aaf234",
+      "size_bytes": 1053
+    },
+    {
+      "path": "docs/audits/native-proxy-image-custody-20260910/ImageCustody.pm",
+      "sha256": "8f5961d40a8f9235ab07e8adde91337ece585ae850e91858a1074597461a88c3",
+      "size_bytes": 8326
+    },
+    {
+      "path": "docs/audits/native-proxy-image-publication-20260910/Publication.pm",
+      "sha256": "34ca8717856492a09ebf16af8810f04b1dea4c6c8c84ff7b3f5c11c07e7dc2bf",
+      "size_bytes": 5371
+    }
+  ]
+}

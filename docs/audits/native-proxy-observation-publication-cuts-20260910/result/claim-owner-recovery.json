@@ -1,0 +1,26 @@
+{
+  "action": "Restore the complete claim-owning subtree, select a fully read completed subtree with no live doctrine-registry references, and rerun both gates. Qualification sources, results and all registry limits remain unchanged.",
+  "doctrine_registry_references": 0,
+  "failed_gates": [
+    "CLAIM-VERIFICATION"
+  ],
+  "failed_task_bytes": 1127274,
+  "failed_task_sha256": "d04d04cb23b68a488edd51372855ecc3e3c82e87b63dea417b014c97651281e0",
+  "initial_gate_exit": 1,
+  "new_task_lines": 6303,
+  "restored_live_claim_owners": [
+    "HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.5.3.1.1",
+    "HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.5.3.2.2",
+    "HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.5.3.2.3",
+    "HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.5.3.2.1",
+    "HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.5.3.1.2"
+  ],
+  "restored_subtree": "HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.5.3",
+  "root_cause": "Task-tree integrity authenticates version-object terminal structure, while the claim consumer requires the exact owner_task ID in its live Markdown source. A done subtree can therefore remain ineligible for compaction. The first choice overlooked that separate live consumer.",
+  "schema": "fsmgen.publication_cut_claim_owner_recovery.v1",
+  "selected_nodes": 19,
+  "selected_subtree": "HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.5.1",
+  "source_bytes": 1145296,
+  "source_revision": "5bb1b2366cc652416283d8959d12a9d44616498c",
+  "source_sha256": "a491153ce36242722ca708c30d7ca13973e7b84a8b4b066b8b9f9be3b05aa481"
+}

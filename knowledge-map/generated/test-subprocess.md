@@ -1,7 +1,7 @@
 # Knowledge Map: `test-subprocess`
 
 > **AUTO-GENERATED — DO NOT EDIT.** Return to the [Knowledge Map](../../KNOWLEDGE_MAP.md).
-> **1** facts · **52** uniquely owned question entries.
+> **1** facts · **53** uniquely owned question entries.
 
 ## Questions → facts
 
@@ -36,6 +36,7 @@
 - q="what does the AppleSystemPolicy fixture startup capture establish?" · facts=[test-subprocess-policy-adapters](../../docs/knowledge/test-subprocess-policy-adapters.md)
 - q="what does the inactive observation-reference codec validate?" · facts=[test-subprocess-policy-adapters](../../docs/knowledge/test-subprocess-policy-adapters.md)
 - q="what does the inactive runtime-reference codec validate?" · facts=[test-subprocess-policy-adapters](../../docs/knowledge/test-subprocess-policy-adapters.md)
+- q="what survives inactive observation publication failures?" · facts=[test-subprocess-policy-adapters](../../docs/knowledge/test-subprocess-policy-adapters.md)
 - q="when can inactive maintenance remove a canonical image?" · facts=[test-subprocess-policy-adapters](../../docs/knowledge/test-subprocess-policy-adapters.md)
 - q="where does T1545 preserve empty-output checker failure diagnostics?" · facts=[test-subprocess-policy-adapters](../../docs/knowledge/test-subprocess-policy-adapters.md)
 - q="where does T1545 retain actual checker PID and startup observations?" · facts=[test-subprocess-policy-adapters](../../docs/knowledge/test-subprocess-policy-adapters.md)
@@ -64,5 +65,5 @@
 
 _Test subprocesses share one mechanism behind sealed policy adapters_
 
-- **date:** 2026-09-10 · **status:** current
+- **date:** 2026-09-11 · **status:** current
 - **source and verification:** [`docs/knowledge/test-subprocess-policy-adapters.md`](../../docs/knowledge/test-subprocess-policy-adapters.md)

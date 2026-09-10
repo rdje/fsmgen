@@ -1,0 +1,30 @@
+{
+  "allocations": 80,
+  "assertions": 41,
+  "cases": 18,
+  "falsifiers": [
+    "hidden failure",
+    "lost publication case",
+    "lost cleanup call",
+    "lost reader handle",
+    "masked open writer",
+    "forged handle identity",
+    "lost partial payload",
+    "lost empty payload",
+    "lost complete failed payload",
+    "cleanup masks primary failure",
+    "lost unrelated observation owner",
+    "reuse publishes",
+    "authority type changed",
+    "lost omitted-close evidence",
+    "lost allocation",
+    "forbidden process"
+  ],
+  "limits": "Finite synchronous publication and close-report controls only. Coordinator/census and retained-target/lock close-report cuts and final matrix join remain separately owned. Lower-reader prehandoff failure, asynchronous crash durability, actual process ownership, archive/capture settlement, exact release, contention and native activation are not established.",
+  "mutants": [
+    "fresh:omit_reader_close",
+    "fresh:omit_writer_close"
+  ],
+  "schema": "fsmgen.inactive_observation_publication_cuts_audit.v1",
+  "success": true
+}
