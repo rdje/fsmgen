@@ -1,0 +1,27 @@
+{
+  "evidence_directory": ".artifacts/logs/inert-custody-\u00e9",
+  "generated_c_hex": "2f2a20696e657274207175616c696669636174696f6e2062797465733b206e6576657220636f6d70696c6564202a2f0a00ff",
+  "image_hex": "cffaedfe0c000001000000000200000000000000000000000000000000000000696e6572742d6e6f742d612d70726f6772616d00ff",
+  "key": "efd497b0e847884b3c1cfcde14d8b645991c52ebab90c54e58984ccbc303c146",
+  "manifest": "{\"executable\":{\"sha256\":\"e7f06f27e18528c7d10e8c4a4ab42b5e70d1423cdb80e83048597719c9c7eb67\",\"size_bytes\":53},\"generated_c\":{\"sha256\":\"a7d92e28ec1c8308e37c6003df167bc42bd2341cf3a69d677f45330271ffba56\",\"size_bytes\":50},\"key\":\"efd497b0e847884b3c1cfcde14d8b645991c52ebab90c54e58984ccbc303c146\",\"schema\":\"fsmgen.test.rust_proxy_image.v1\"}",
+  "observation_reference_key": "bf4bef3b2ac0e2401af59d9d0c5a85d105e3b57371031325a4abe23584bf1ccc",
+  "observer_birth": {
+    "pid": 101,
+    "ppid": 100,
+    "ruid": 501,
+    "start_sec": 1234,
+    "start_usec": 5678,
+    "uid": 501
+  },
+  "runtime_reference_key": "19601963a8c90b7591d0e06a3f398fa3ed3f285f4778694b5d0b70d9bc761faf",
+  "schema": "fsmgen.inactive_image_custody_vectors.v1",
+  "target_birth": {
+    "pid": 102,
+    "ppid": 101,
+    "ruid": 501,
+    "start_sec": 1234,
+    "start_usec": 9012,
+    "uid": 501
+  },
+  "workspace": ".artifacts/tmp/process-supervisor-tests/fsmgen-Inert20260910"
+}

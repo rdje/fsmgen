@@ -1,0 +1,65 @@
+ram-guard: PID 41540; host 59.7%; host cutoff 88%; descendant RSS cutoff 4096 MiB; poll 2s
+ok 1 - Python unsigned-64 byte framing agrees
+ok 2 - Python canonical manifest agrees
+ok 3 - Python runtime reference key agrees
+ok 4 - Python Unicode observation reference key agrees
+ok 5 - exact manifest accepted
+ok 6 - manifest unknown field
+ok 7 - manifest numeric string
+ok 8 - manifest boolean size
+ok 9 - manifest negative size
+ok 10 - manifest null payload
+ok 11 - manifest wrong schema
+ok 12 - manifest changed digest
+ok 13 - manifest missing key
+ok 14 - manifest array payload
+ok 15 - noncanonical or duplicate JSON spelling
+ok 16 - noncanonical or duplicate JSON spelling
+ok 17 - noncanonical or duplicate JSON spelling
+ok 18 - manifest byte limit
+ok 19 - source byte limit
+ok 20 - byte scalar reference
+ok 21 - noncanonical relative path
+ok 22 - noncanonical relative path
+ok 23 - noncanonical relative path
+ok 24 - noncanonical relative path
+ok 25 - noncanonical relative path
+ok 26 - noncanonical relative path
+ok 27 - noncanonical relative path
+ok 28 - wrong native birth integer type
+ok 29 - wrong native birth integer type
+ok 30 - wrong native birth integer type
+ok 31 - wrong native birth integer type
+ok 32 - wrong native birth integer type
+ok 33 - actual descriptor snapshots preserve exact C, image and manifest bytes
+ok 34 - snapshot digest matches retained bytes
+ok 35 - snapshot stays on repository volume
+ok 36 - snapshot inode matches current name
+ok 37 - snapshot digest matches retained bytes
+ok 38 - snapshot stays on repository volume
+ok 39 - snapshot inode matches current name
+ok 40 - snapshot digest matches retained bytes
+ok 41 - snapshot stays on repository volume
+ok 42 - snapshot inode matches current name
+ok 43 - writable source
+ok 44 - hard-linked image
+ok 45 - symlink image
+ok 46 - FIFO image
+ok 47 - directory image
+ok 48 - oversized image
+ok 49 - oversized manifest
+ok 50 - changed image bytes
+ok 51 - changed C bytes
+ok 52 - unknown member
+ok 53 - missing manifest
+ok 54 - public directory
+ok 55 - symlink ancestry
+ok 56 - same-byte source inode replacement
+ok 57 - same-byte directory inode replacement
+ok 58 - source descriptor is close-on-exec
+ok 59 - wrong key
+ok 60 - production root excluded
+ok 61 - independent corruption oracle defeats removed byte guard
+ok 62 - no compiler or process creation attempted
+ok 63 - all exact inert cases are absent
+1..63

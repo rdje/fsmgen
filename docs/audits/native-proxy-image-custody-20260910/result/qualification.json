@@ -1,0 +1,272 @@
+{
+   "byte_guard_mutant_defeated" : 1,
+   "controls" : [
+      {
+         "expected_diagnostic" : 1,
+         "name" : "manifest unknown field",
+         "rejected" : 1
+      },
+      {
+         "expected_diagnostic" : 1,
+         "name" : "manifest numeric string",
+         "rejected" : 1
+      },
+      {
+         "expected_diagnostic" : 1,
+         "name" : "manifest boolean size",
+         "rejected" : 1
+      },
+      {
+         "expected_diagnostic" : 1,
+         "name" : "manifest negative size",
+         "rejected" : 1
+      },
+      {
+         "expected_diagnostic" : 1,
+         "name" : "manifest null payload",
+         "rejected" : 1
+      },
+      {
+         "expected_diagnostic" : 1,
+         "name" : "manifest wrong schema",
+         "rejected" : 1
+      },
+      {
+         "expected_diagnostic" : 1,
+         "name" : "manifest changed digest",
+         "rejected" : 1
+      },
+      {
+         "expected_diagnostic" : 1,
+         "name" : "manifest missing key",
+         "rejected" : 1
+      },
+      {
+         "expected_diagnostic" : 1,
+         "name" : "manifest array payload",
+         "rejected" : 1
+      },
+      {
+         "expected_diagnostic" : 1,
+         "name" : "noncanonical or duplicate JSON spelling",
+         "rejected" : 1
+      },
+      {
+         "expected_diagnostic" : 1,
+         "name" : "noncanonical or duplicate JSON spelling",
+         "rejected" : 1
+      },
+      {
+         "expected_diagnostic" : 1,
+         "name" : "noncanonical or duplicate JSON spelling",
+         "rejected" : 1
+      },
+      {
+         "expected_diagnostic" : 1,
+         "name" : "manifest byte limit",
+         "rejected" : 1
+      },
+      {
+         "expected_diagnostic" : 1,
+         "name" : "source byte limit",
+         "rejected" : 1
+      },
+      {
+         "expected_diagnostic" : 1,
+         "name" : "byte scalar reference",
+         "rejected" : 1
+      },
+      {
+         "expected_diagnostic" : 1,
+         "name" : "noncanonical relative path",
+         "rejected" : 1
+      },
+      {
+         "expected_diagnostic" : 1,
+         "name" : "noncanonical relative path",
+         "rejected" : 1
+      },
+      {
+         "expected_diagnostic" : 1,
+         "name" : "noncanonical relative path",
+         "rejected" : 1
+      },
+      {
+         "expected_diagnostic" : 1,
+         "name" : "noncanonical relative path",
+         "rejected" : 1
+      },
+      {
+         "expected_diagnostic" : 1,
+         "name" : "noncanonical relative path",
+         "rejected" : 1
+      },
+      {
+         "expected_diagnostic" : 1,
+         "name" : "noncanonical relative path",
+         "rejected" : 1
+      },
+      {
+         "expected_diagnostic" : 1,
+         "name" : "noncanonical relative path",
+         "rejected" : 1
+      },
+      {
+         "expected_diagnostic" : 1,
+         "name" : "wrong native birth integer type",
+         "rejected" : 1
+      },
+      {
+         "expected_diagnostic" : 1,
+         "name" : "wrong native birth integer type",
+         "rejected" : 1
+      },
+      {
+         "expected_diagnostic" : 1,
+         "name" : "wrong native birth integer type",
+         "rejected" : 1
+      },
+      {
+         "expected_diagnostic" : 1,
+         "name" : "wrong native birth integer type",
+         "rejected" : 1
+      },
+      {
+         "expected_diagnostic" : 1,
+         "name" : "wrong native birth integer type",
+         "rejected" : 1
+      },
+      {
+         "expected_diagnostic" : 1,
+         "name" : "writable source",
+         "rejected" : 1
+      },
+      {
+         "expected_diagnostic" : 1,
+         "name" : "hard-linked image",
+         "rejected" : 1
+      },
+      {
+         "expected_diagnostic" : 1,
+         "name" : "symlink image",
+         "rejected" : 1
+      },
+      {
+         "expected_diagnostic" : 1,
+         "name" : "FIFO image",
+         "rejected" : 1
+      },
+      {
+         "expected_diagnostic" : 1,
+         "name" : "directory image",
+         "rejected" : 1
+      },
+      {
+         "expected_diagnostic" : 1,
+         "name" : "oversized image",
+         "rejected" : 1
+      },
+      {
+         "expected_diagnostic" : 1,
+         "name" : "oversized manifest",
+         "rejected" : 1
+      },
+      {
+         "expected_diagnostic" : 1,
+         "name" : "changed image bytes",
+         "rejected" : 1
+      },
+      {
+         "expected_diagnostic" : 1,
+         "name" : "changed C bytes",
+         "rejected" : 1
+      },
+      {
+         "expected_diagnostic" : 1,
+         "name" : "unknown member",
+         "rejected" : 1
+      },
+      {
+         "expected_diagnostic" : 1,
+         "name" : "missing manifest",
+         "rejected" : 1
+      },
+      {
+         "expected_diagnostic" : 1,
+         "name" : "public directory",
+         "rejected" : 1
+      },
+      {
+         "expected_diagnostic" : 1,
+         "name" : "symlink ancestry",
+         "rejected" : 1
+      },
+      {
+         "expected_diagnostic" : 1,
+         "name" : "same-byte source inode replacement",
+         "rejected" : 1
+      },
+      {
+         "expected_diagnostic" : 1,
+         "name" : "same-byte directory inode replacement",
+         "rejected" : 1
+      },
+      {
+         "expected_diagnostic" : 1,
+         "name" : "wrong key",
+         "rejected" : 1
+      },
+      {
+         "expected_diagnostic" : 1,
+         "name" : "production root excluded",
+         "rejected" : 1
+      }
+   ],
+   "forbidden_process_attempts" : 0,
+   "positive_snapshot" : [
+      {
+         "device" : 16777244,
+         "inode" : 76887555,
+         "path" : ".artifacts/tmp/native-proxy-image-custody/cases/fsmgen-5HzqRvUZ/images/efd497b0e847884b3c1cfcde14d8b645991c52ebab90c54e58984ccbc303c146/rustup.c",
+         "sha256" : "a7d92e28ec1c8308e37c6003df167bc42bd2341cf3a69d677f45330271ffba56",
+         "size_bytes" : 50
+      },
+      {
+         "device" : 16777244,
+         "inode" : 76887556,
+         "path" : ".artifacts/tmp/native-proxy-image-custody/cases/fsmgen-5HzqRvUZ/images/efd497b0e847884b3c1cfcde14d8b645991c52ebab90c54e58984ccbc303c146/rustup",
+         "sha256" : "e7f06f27e18528c7d10e8c4a4ab42b5e70d1423cdb80e83048597719c9c7eb67",
+         "size_bytes" : 53
+      },
+      {
+         "device" : 16777244,
+         "inode" : 76887557,
+         "path" : ".artifacts/tmp/native-proxy-image-custody/cases/fsmgen-5HzqRvUZ/images/efd497b0e847884b3c1cfcde14d8b645991c52ebab90c54e58984ccbc303c146/image.json",
+         "sha256" : "156ec74edbff95660f5275aca3dca8f675f8398ceff43a243573aee41462efb4",
+         "size_bytes" : 332
+      }
+   ],
+   "retired_cases" : [
+      ".artifacts/tmp/native-proxy-image-custody/cases/fsmgen-5HzqRvUZ",
+      ".artifacts/tmp/native-proxy-image-custody/cases/fsmgen-D2ue4xz3",
+      ".artifacts/tmp/native-proxy-image-custody/cases/fsmgen-DTzuvr28",
+      ".artifacts/tmp/native-proxy-image-custody/cases/fsmgen-factE79z",
+      ".artifacts/tmp/native-proxy-image-custody/cases/fsmgen-6bR5Xl7V",
+      ".artifacts/tmp/native-proxy-image-custody/cases/fsmgen-LY5e0Ulz",
+      ".artifacts/tmp/native-proxy-image-custody/cases/fsmgen-YN4bHtZ0",
+      ".artifacts/tmp/native-proxy-image-custody/cases/fsmgen-kbuYak3g",
+      ".artifacts/tmp/native-proxy-image-custody/cases/fsmgen-JNPhbLp2",
+      ".artifacts/tmp/native-proxy-image-custody/cases/fsmgen-rLG6_rDF",
+      ".artifacts/tmp/native-proxy-image-custody/cases/fsmgen-ViTcoVBm",
+      ".artifacts/tmp/native-proxy-image-custody/cases/fsmgen-mjxr08BX",
+      ".artifacts/tmp/native-proxy-image-custody/cases/fsmgen-wQybCjZ9",
+      ".artifacts/tmp/native-proxy-image-custody/cases/fsmgen-2r29tA6k",
+      ".artifacts/tmp/native-proxy-image-custody/cases/fsmgen-m54UipYu",
+      ".artifacts/tmp/native-proxy-image-custody/cases/fsmgen-Zaa6yiAh",
+      ".artifacts/tmp/native-proxy-image-custody/cases/fsmgen-ak5DNUUL",
+      ".artifacts/tmp/native-proxy-image-custody/cases/fsmgen-gQEXzOjt"
+   ],
+   "schema" : "fsmgen.inactive_image_custody_qualification.v1",
+   "scope" : "inert byte/filesystem custody only; no publication, lifetime, native behavior or product activation",
+   "success" : true
+}

@@ -72,7 +72,7 @@ Child requires successful `setpgid` and owned group before exec. `.3.2.10.1` sep
 `exec_handoff_monotonic_ns` means observed control-pipe EOF, not main entry:
 pre-exec death can close it. Without observed EOF, that timestamp and dependent
 durations stay unknown even after cleanup. T1669 checks held-child timeout, separate pre-exec exit and successful output.
-Post-KILL reaping polls nonblocking within cleanup grace. Unreaped leaders/surviving groups stay incomplete; T1669's isolated mock rejects blocking waits without unkillable children.
+Post-KILL reaping polls within cleanup grace. Unreaped leaders/surviving groups stay incomplete; T1669 rejects blocking waits with an inert mock.
 `VerilatorRuntime` follows decision `0086`.
 `TaskAcceptanceFixtureRuntime` seals owned fixture roots/fixed local Git argv.
 Git/checker: ten-second wall, 1,048,576/4,194,304-byte capture, closed `fsmgen.test.task_acceptance_fixture_result.v1`. Load-time Git/Bash ignore later PATH; callers cannot widen policy.
@@ -82,11 +82,11 @@ without retry; original fixture assertions pass.
 T1545 controls: historical card; absent witnesses stay unknown.
 Env-Perl and direct Perl both timed out after handoff, refuting a shebang-only cure. HIAL/VIAL `.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2` owns startup cause; `.3.3–7` own authenticated kernel capture. Sampling/authentication/STOP limits remain in task/book and the exact historical card below.
 T1669 uses `.artifacts/tmp/process-supervisor-tests/`. Every ps result needs native presence; only disappearance is skipped. Permission/query/live identity changes fail. Native exit and unchecked-ps controls qualify that race, not the historical changed field (`.3.2.11`; book/task).
-History: `0f71d2c44e26bc5000302bd347d9203f13fb39ff:docs/knowledge/test-subprocess-policy-adapters.md`.
+Earlier facts: `0f71d2c44e26bc5000302bd347d9203f13fb39ff:docs/knowledge/test-subprocess-policy-adapters.md`.
 PST parsing normalizes 1–16 lowercase hex digits; malformed fields and contradictions reject.
 .15.7.3: serial queue contention is supported; client/frame joins and startup repair stay open. Reduced-load and authored-native passes do not close them; OS copies hit launch constraints. .8 seals portable proxy preparation. .9 admits exact native ancestry and pinned C inputs with byte custody; .10 integrates owned mode retirement; .11 retains startup/registry failures; .11.3.1 fixes registration; .11.3.3 records preparation before runtime; .11.3.4.1 adds fixed passive daemon observation without kernel authentication. Loaded bytes unproved.
 Fixed CLI .15.7.2.4 uses archive index/digest output and compact journal anchors; calibration/reserve/actual-file checks and first-failure/capture stop persist. Outcomes stay distinct; failures/ownership persist. F_CHECK_LV cause unproved (.15.2); queue/provenance coexist (.15.4); worker/delivery unknown. Live opt-in violations: .15.5.1.2.2–3.
-Native joins pass (.4.3); scans persist (.4.4). Cause stays open; .12.2.2 refutes hard-link path stability: held A reports B after B access. No reuse run. .12.3 separates runtime/observer references; .12.4 qualifies the unimplemented design.
+Native joins pass (.4.3); scans persist (.4.4). Cause stays open. .12.2.2 rejects hard links: held A reports B after B access. .12.3 separates runtime/observer lifetimes. .12.4.1.1 qualifies inactive keys/manifests/snapshots; publication and native reuse stay open.
 Replay: `scripts/run_with_ram_guard.sh -- python3 -B -m unittest discover -s t/python -p 'test_fixture_policy_archive*.py'`.
 T1595 pre-main cause open; `.19.2.3.1.2.2.6.2` fixes capture.
 `RamGuardFixtureRuntime` seals tools/argv, paths, bounds and full results.

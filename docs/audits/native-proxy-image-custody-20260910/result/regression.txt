@@ -1,0 +1,5 @@
+ram-guard: PID 42358; host 58.7%; host cutoff 88%; descendant RSS cutoff 4096 MiB; poll 2s
+t/1815-rust-proxy-fixture.t .. ok
+All tests successful.
+Files=1, Tests=7,  0 wallclock secs ( 0.00 usr  0.00 sys +  0.04 cusr  0.02 csys =  0.06 CPU)
+Result: PASS

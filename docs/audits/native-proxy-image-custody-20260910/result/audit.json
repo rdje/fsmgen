@@ -1,0 +1,65 @@
+{
+  "falsifiers": [
+    "key",
+    "runtime_reference_key",
+    "observation_reference_key",
+    "success",
+    "forbidden_process_attempts",
+    "controls",
+    "positive_snapshot"
+  ],
+  "independently_absent_cases": 18,
+  "inputs": [
+    {
+      "path": "docs/audits/native-proxy-image-custody-20260910/ImageCustody.pm",
+      "sha256": "20b05813b17dffcbbac2d0216fca00456e53ceb1ac451ad672263a6788700207",
+      "size_bytes": 7953
+    },
+    {
+      "path": "docs/audits/native-proxy-image-custody-20260910/qualify.t",
+      "sha256": "0a96602b2839c9e6535c9e548f71b16612494f269c74ce3bcbb1c9aeb729d0ab",
+      "size_bytes": 11150
+    },
+    {
+      "path": "docs/audits/native-proxy-image-custody-20260910/vectors.json",
+      "sha256": "60992f01705436d9c7efbc280d6de73f4c132d91ffea9359852c10c9afb7890d",
+      "size_bytes": 1373
+    },
+    {
+      "path": ".artifacts/logs/native-proxy-image-custody-20260910/qualification.json",
+      "sha256": "00933670c3298a0e02ba1ea3b32de91837ad853c1d67186d7528884bd92a8b0b",
+      "size_bytes": 8112
+    },
+    {
+      "path": ".artifacts/logs/native-proxy-image-custody-20260910/qualify.log",
+      "sha256": "ffd9a79791bdd4f4a399fbe4cd8c95a0bd0fa489ae036b29f09d62a5deef1214",
+      "size_bytes": 2396
+    },
+    {
+      "path": "t/lib/FSM/Test/RustProxyFixture.pm",
+      "sha256": "d9c4ab52cf8074526c59b7a5dcb9da870ca7ffdacb4eb236dacb23b5db6d8bfb",
+      "size_bytes": 11466
+    },
+    {
+      "path": "perl/FSM/Support/ProcessSupervisor.pm",
+      "sha256": "684882d91f673ea7145f43ed3aad31acf099f13508574be7b2d8911123988637",
+      "size_bytes": 27990
+    },
+    {
+      "path": "docs/audits/native-proxy-canonical-contract-20260910/contract.json",
+      "sha256": "f3f981398afae72540ab4ac0194b8380d4743c3d2146c1172a85365add053222",
+      "size_bytes": 21927
+    }
+  ],
+  "limits": [
+    "No publication, file-lock contention, references or maintenance implemented.",
+    "No compiler, native fixture, original, collector or helper executed by the controls.",
+    "Inode records describe retired inert cases; replay obtains new identities.",
+    "The reused reader has second-resolution Perl stat checks; snapshots do not prove ongoing disk immutability against arbitrary noncooperating mutation.",
+    "Product activation and historical startup repair remain unqualified."
+  ],
+  "rejected_controls": 44,
+  "schema": "fsmgen.inactive_image_custody_audit.v1",
+  "success": true,
+  "tap_assertions": 63
+}

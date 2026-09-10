@@ -1,0 +1,29 @@
+{
+  "copies": [
+    {
+      "recovery": "docs/audits/native-proxy-image-custody-20260910/result/qualification.json",
+      "sha256": "00933670c3298a0e02ba1ea3b32de91837ad853c1d67186d7528884bd92a8b0b",
+      "size_bytes": 8112,
+      "source": ".artifacts/logs/native-proxy-image-custody-20260910/qualification.json"
+    },
+    {
+      "recovery": "docs/audits/native-proxy-image-custody-20260910/result/audit.json",
+      "sha256": "eaa0b30b05359b41cd1f1c46586413b7a6dc54c96258554384e5ae73b07773a7",
+      "size_bytes": 2449,
+      "source": ".artifacts/logs/native-proxy-image-custody-20260910/audit.json"
+    },
+    {
+      "recovery": "docs/audits/native-proxy-image-custody-20260910/result/qualification.tap",
+      "sha256": "ffd9a79791bdd4f4a399fbe4cd8c95a0bd0fa489ae036b29f09d62a5deef1214",
+      "size_bytes": 2396,
+      "source": ".artifacts/logs/native-proxy-image-custody-20260910/qualify.log"
+    },
+    {
+      "recovery": "docs/audits/native-proxy-image-custody-20260910/result/regression.txt",
+      "sha256": "0c6456b9f5b8e7d54871efb08d6063ff8d85d146627ee59d7a3ebf741d86ded4",
+      "size_bytes": 254,
+      "source": ".artifacts/logs/native-proxy-image-custody-20260910/regression.log"
+    }
+  ],
+  "schema": "fsmgen.inactive_image_custody_recovery.v1"
+}

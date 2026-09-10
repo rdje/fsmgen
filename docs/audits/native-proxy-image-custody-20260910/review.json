@@ -1,0 +1,47 @@
+{
+  "durability": "Tracked prototype, vectors, harness, independent audit and exact result copies; focused unchanged-reader regression passes. Inert cases are retired and no recorded fixture lifetime remains.",
+  "falsification": "Wrong types, permissions, links, members, byte counts, changed bytes and same-byte replacement reject. Removing the full byte-equality guard admits corruption and fails the independent oracle. The independent result audit rejects seven altered inputs/results.",
+  "initial_harness_failure": {
+    "cause": "An ordinary CORE::GLOBAL::exec override changes parsing of the pre-existing exec {program} argv syntax. Load the qualified dependency first, with fork already trapped; install exec interception before loading the prototype. No product source change or live execution was required.",
+    "path": ".artifacts/logs/native-proxy-image-custody-20260910/qualify-first-load-failure.log",
+    "sha256": "c1a93ff54096b8a683ce15687e0533b3bfe6a11b5de01f346f25f44fa05b37dc"
+  },
+  "limits": [
+    "This prototype only reads an isolated inert namespace. It does not publish, authorize execution, implement runtime/observation leases or activate product reuse.",
+    "Close-on-exec flags are observed; actual child inheritance and file-lock contention remain separately admitted qualification.",
+    "The reused reader uses second-resolution stat metadata. Returned byte snapshots are observations, not continuous immutability or loaded-image attestation.",
+    "Historical startup repair, capacity workload and attributable scan benefit remain open."
+  ],
+  "owner": "HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.12.4.1.1",
+  "production_inputs": [
+    {
+      "path": "t/lib/FSM/Test/RustProxyFixture.pm",
+      "sha256": "d9c4ab52cf8074526c59b7a5dcb9da870ca7ffdacb4eb236dacb23b5db6d8bfb",
+      "size_bytes": 11466
+    },
+    {
+      "path": "t/lib/FSM/Test/ProcessSupervisor.pm",
+      "sha256": "52e467023ea8a776167e227a767abdd3dddf185f1f7c539aac8ca1c4a0a06680",
+      "size_bytes": 773
+    },
+    {
+      "path": "perl/FSM/Support/ProcessSupervisor.pm",
+      "sha256": "684882d91f673ea7145f43ed3aad31acf099f13508574be7b2d8911123988637",
+      "size_bytes": 27990
+    },
+    {
+      "path": "perl/FSM/ProjectDataLocality.pm",
+      "sha256": "14aece4a50b35956bc2585099aa8d26753942288663c641922da9d36ad4bc893",
+      "size_bytes": 6017
+    },
+    {
+      "path": "t/1815-rust-proxy-fixture.t",
+      "sha256": "7f52f927a2a588064919e9255134e0782ec584faf51b4d233ac958b8264c2890",
+      "size_bytes": 12320
+    }
+  ],
+  "rederive": "Independent Python unsigned-64 framing, SHA-256 and canonical ASCII JSON agree with the Perl keys and manifest; actual descriptor snapshots match bytes, native identities and same-volume placement.",
+  "result": "inactive_identity_and_descriptor_custody_qualified",
+  "schema": "fsmgen.inactive_image_custody_review.v1",
+  "source_revision": "56618a320f7847338eef567c061e0cd1720d630a"
+}

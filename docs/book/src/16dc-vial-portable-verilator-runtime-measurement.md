@@ -1651,8 +1651,23 @@ with a retry. Explicit maintenance must prove an image has no references before
 removing its checked files. The proposed limits are 32 images and 128 combined
 references, not measured workload capacity. Existing policy formats stay
 frozen; new native preparation and source locations need versioned support.
-These rules remain unimplemented. Task `.15.7.3.12.4` qualifies filesystem,
-reader-lifetime and native behavior before activation.
+An inactive prototype now qualifies content keys, canonical manifests and
+descriptor snapshots in isolated inert directories. Changed bytes, permissions,
+links and replacement inodes reject. It returns source evidence without
+authorizing execution. Publication, runtime/observation references, contention,
+maintenance and native behavior remain unimplemented or unqualified under
+`.15.7.3.12.4`; product reuse remains inactive. Replay the inert custody checks
+from the repository root:
+
+```bash
+mkdir -p .artifacts/logs/native-proxy-image-custody-20260910
+scripts/run_with_ram_guard.sh -- perl docs/audits/native-proxy-image-custody-20260910/qualify.t > .artifacts/logs/native-proxy-image-custody-20260910/qualify.log 2>&1
+python3 -B docs/audits/native-proxy-image-custody-20260910/audit.py
+```
+
+Replay creates and retires fresh inert cases. Archived inode records describe
+the earlier run; byte snapshots do not attest to a loaded image or guarantee
+ongoing immutability against arbitrary programs changing the files.
 
 The helper checks bounded regular source/output files and the native header,
 then sets executable permissions through the admitted open file handle. A
