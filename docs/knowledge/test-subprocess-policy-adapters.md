@@ -75,16 +75,15 @@ Post-KILL reaping polls nonblocking within cleanup grace. Unreaped leaders/survi
 `VerilatorRuntime` follows decision `0086`.
 `TaskAcceptanceFixtureRuntime` seals owned fixture roots/fixed local Git argv.
 Git/checker: ten-second wall, 1,048,576/4,194,304-byte capture, closed `fsmgen.test.task_acceptance_fixture_result.v1`. Load-time Git/Bash ignore later PATH; callers cannot widen policy.
-Darwin env-Bash stalled before main. Direct Bash preserves capability: the retained `/bin/bash` 3.2 control fails its empty
-array under `set -u`. Bash/Git are read-only host dependencies; project data
+Darwin env-Bash stalled before main. Direct Bash retains capability; `/bin/bash` 3.2 fails the empty array (`set -u`). Bash/Git are read-only host dependencies; project data
 stays local. Timeout/overflow/nonzero/signal/exec/descendant/cleanup failures stay failed
 without retry; original fixture assertions pass.
-T1545 diagnostics/progress controls: historical card; absent witnesses stay unknown.
+T1545 controls: historical card; absent witnesses stay unknown.
 Env-Perl and direct Perl both timed out after handoff, refuting a shebang-only cure. HIAL/VIAL `.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2` owns startup cause; `.3.3–7` own authenticated kernel capture. Sampling/authentication/STOP limits remain in task/book and the exact historical card below.
 T1669 uses `.artifacts/tmp/process-supervisor-tests/`. Every ps result needs native presence; only disappearance is skipped. Permission/query/live identity changes fail. Native exit and unchecked-ps controls qualify that race, not the historical changed field (`.3.2.11`; book/task).
 History: `e0d74bb051465ba641227acc11975e25e5d879a7:docs/knowledge/test-subprocess-policy-adapters.md`.
 PST parsing normalizes 1–16 lowercase hex digits; malformed fields and contradictions reject.
-.15.7.3: serial queue contention is supported; client/frame joins and startup repair stay open. Reduced-load and authored-native passes do not close them; OS copies hit launch constraints. .8 seals portable proxy preparation. .9 admits exact native ancestry and pinned C inputs with byte custody; .10 integrates owned mode retirement; .11 retains startup/registry failures; .11.3.1 fixes registration; .11.3.2 owns startup visibility.
+.15.7.3: serial queue contention is supported; client/frame joins and startup repair stay open. Reduced-load and authored-native passes do not close them; OS copies hit launch constraints. .8 seals portable proxy preparation. .9 admits exact native ancestry and pinned C inputs with byte custody; .10 integrates owned mode retirement; .11 retains startup/registry failures; .11.3.1 fixes registration; .11.3.2–3 own missing preparation receipts. Native selection cannot prove loaded bytes.
 V1 association replay needs pinned manifest/archives, no old root/CFHash; native rederivation unavailable, unauthenticated. Reports omit raw text/bodies; receipts bind calibration/artifacts without private reads. Fixed CLI .15.7.2.4 uses archive index/digest output and compact journal anchors; calibration/reserve/actual-file checks and first-failure/capture stop persist. Outcomes stay distinct; failures/ownership persist. F_CHECK_LV cause unproved (.15.2); queue/provenance coexist (.15.4); worker/delivery unknown. Live opt-in violations: .15.5.1.2.2–3.
 Shared publish_bytes checks descriptor-anchored inode/bytes; existing files/primary failures persist. Later same-user mutation is unprotected (.15.7.2.3.1). Archive publication rejects fixed existing destinations and consumes pages before/after writing index last (.3.2).
 Archive reverify: `scripts/run_with_ram_guard.sh -- python3 -B -m unittest discover -s t/python -p 'test_fixture_policy_archive*.py'`.

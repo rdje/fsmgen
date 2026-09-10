@@ -2666,7 +2666,7 @@ decomposes the architecture needed to move beyond that bounded foundation.
   Goal: `Reconcile integrated qualification with actual coverage and historical startup repair.`
   Acceptance: `Compare the independently audited original with the pre-change negative-control contract and builder/capture qualifications. Close only proved integration obligations; name absent producer/native-capture or causal joins. Select and own a concrete next action for any remaining project-correctable startup or qualification defect without promoting a later pass into historical causal repair. Keep full CI and push separately gated.`
   Verification: `The original failed roots 10/11/12. Child .1 fixes the missing sealed-adapter registration with an isolated architecture guard, without running startup-sensitive originals. Child .2 then resolves actual implementation visibility and the remaining startup diagnosis/qualification boundary. A registration fix cannot account for or waive the independent startup timeouts; no original retry or authenticated capture is inherited.`
-  Children: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.11.3.1, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.11.3.2`
+  Children: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.11.3.1, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.11.3.2, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.11.3.3`
   Commit: `pending`
 
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.11.3.1`
@@ -2677,10 +2677,17 @@ decomposes the architecture needed to move beyond that bounded foundation.
   Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.11.3.1: register sealed proxy adapter and isolate architecture guard`
 
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.11.3.2`
-  Status: `proposed`
+  Status: `done`
   Goal: `Resolve producer implementation visibility and select the next evidence-backed startup action.`
   Acceptance: `After the registration repair commits, distinguish direct observations from native-selection inference. Use bounded read-only probes in the selected interpreter and retained failed diagnostics first. A current selection observation cannot retroactively supply lost producer identity or bytes. Identify any diagnostic omission that prevents the next causal decision and own its repair/qualification before another original or authenticated capture. Keep the existing historical queue evidence and its absent joins explicit; do not classify the startup failures away or widen/retry the original.`
-  Verification: `pending focused architecture repair`
+  Verification: `Read-only /usr/bin/perl probe observes darwin/arm64 and native/darwin_arm64_command_line_tools without compiling or preparing a fixture. The prior .8 native-final.pl calls the ordinary builder with no selection override; its retained preparation.json directly reports native. Neither observation supplies missing implementation identity in the failed .11.2 original. Re-derivation: complete frozen stderr has exactly the proxy_nonzero/proxy_decoy result records, each with only mode/adapter/outer and timed_out; TAP preparation-success assertions omit the receipt. T1669 prints prepared only on preparation failure, then removes settled mode workspaces. This is the diagnostic omission, not proof of a native startup cause. The current probe uses one gated interpreter, ten-second wall and 4096-byte per-file output bound; PID4591 parent4572 birth1789033214.380286, uid/ruid501, rc0/wait0, empty stderr, reaped and independently absent. Final input pins agree. Falsification: the frozen original lacks preparation fields even while the current interpreter reports native; rejecting this cross-run substitution leaves historical image/birth/bytes unknown. Durability: .artifacts/logs/native-proxy-visibility-20260910/audit.json is 1660 bytes SHA-256 9ec359a4ada0b8df4fd93f4aae542fd6bd10145b20392c614d2f55fa4350ebde; task/source history retain the dated result, while ignored probe receipts have an explicit availability gap. Select child .3 to emit complete canonical preparation receipts before wrapper execution and qualify ordering/content through inert integration controls. No fixture, compiler, original, helper or collector is launched here. Book and fact distinguish observed preparation from loaded-image/main-entry proof. Book rendering and exact 98-file/23074369-byte cleanup pass; knowledge-map: OK. Historical queue joins, startup repair, parent qualification, full CI and push remain open.`
+  Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.11.3.2: identify missing original preparation receipts`
+
+- ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.11.3.3`
+  Status: `proposed`
+  Goal: `Preserve complete proxy preparation receipts before runtime execution.`
+  Acceptance: `Emit a canonical mode-linked preparation diagnostic immediately after each actual prepare_rust_proxy return and before any wrapper launch, including failed preparation. Preserve the complete existing result: selected implementation/reason, relative executable and source identities, compilation argv/result and failure truth. Keep runtime selection, negative assertions, deadlines, retirement and no-retry semantics unchanged. Extend isolated T1816 controls to compare exact native/Perl/failure receipts and ordering, reproduce the omission before repair, and reject altered/missing/late diagnostics without compiler or original execution. A preparation receipt does not attest loaded bytes, native birth, main entry or causal repair. Commit before selecting any new original observation.`
+  Verification: `pending visibility audit commit`
   Commit: `pending`
 
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.3`
@@ -3652,7 +3659,7 @@ decomposes the architecture needed to move beyond that bounded foundation.
 
 ## Current Frontier
 
-Current frontier: .3.2.15.7.3.11.3.1 fixes the sealed-adapter registration with isolated hostile checks; .11.3.2 resolves startup implementation visibility and the next evidence-backed action. Startup/parent, full CI and push stay gated.
+Current frontier: .3.2.15.7.3.11.3.3 preserves pre-runtime preparation receipts after the visibility audit; loaded-image and startup cause remain unproved. Startup/parent, full CI and push stay gated.
 
 Architecture audit `.1` is complete. Decision `0032` selects one public
 `.vial` source language, private immutable `VIALSemanticIR` and
@@ -6312,3 +6319,9 @@ Native-proxy review acceptance: recover all checked assertions at `5c269071bd345
 - [x] **ROOT CAUSE (WHY + WHERE)** — The focused predecessor fails at t/1817-test-supervision-architecture.t line 61, reproducing the original missing-holder census. RustProxyFixture already implements a sealed compiler policy but was absent from the explicit approved adapter list.
 - [x] **ADDRESSED (verified)** — Adding exactly that holder makes the original architecture fragment pass independently. Inert source-reader changes still reject unauthorized adapter and direct-test ownership at the exact expected boundaries; inspected disk files stay unchanged.
 - [x] **NO REGRESSION** — Independent full TAP, final input pins and native owner absence agree; the focused final stderr is empty. Book rendering/cleanup pass; knowledge-map: OK. The failed original is preserved without retry, and no runtime policy or deadline changes.
+
+## Acceptance Checklist (implementation visibility .3.2.15.7.3.11.3.2)
+
+- [x] **ROOT CAUSE (WHY + WHERE)** — git log -S 'diag explain $prepared' -- t/1669-task-acceptance-fixture-runtime.t locates e27b609d3fdc6ef823584f7726be9715ec28f535. Preparation details are printed only on preparation failure; the frozen successful-preparation TAP and later failed-runtime diagnostics contain no preparation receipt.
+- [x] **ADDRESSED (verified audit)** — The selected interpreter directly reports native without launching a fixture or compiler. Independent frozen-record inspection rejects substituting that current result for missing historical producer evidence. The next owned repair preserves complete preparation receipts before runtime and qualifies ordering through inert controls.
+- [x] **NO REGRESSION** — Probe input hashes remain exact and the native root birth is reaped/absent. Book rendering and exact generated-output removal pass; knowledge-map: OK. Existing original, builder and runtime sources stay unchanged. The initial staged gate required this fresh checklist for book authority configuration; it is now explicit.

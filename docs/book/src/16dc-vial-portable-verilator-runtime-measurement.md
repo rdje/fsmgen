@@ -1669,7 +1669,12 @@ The admitted original failed. Rust proxy resolution timed out with empty
 streams; legacy controls also missed their main-entry witnesses. The architecture
 guard exposed a concrete integration omission: its explicit adapter list did
 not yet include `RustProxyFixture`. That registration is now corrected; startup
-qualification remains open. The original was reaped, input and observed
+qualification remains open. The failed original omitted successful preparation
+receipts, so its generated proxy implementation and byte identities remain
+unobserved. A later interpreter probe selects native, and the earlier standalone
+builder retained native receipts; neither can fill that historical gap. The
+next diagnostic repair will retain preparation before runtime execution. Such a
+receipt describes prepared files, not loaded bytes, process birth or main entry. The original was reaped, input and observed
 selection pins stayed unchanged, and checked fixture directories were empty.
 Complete failed TAP, diagnostics and independent audit are retained with the
 frozen admission. No retry was performed. Producer implementation was inferred
