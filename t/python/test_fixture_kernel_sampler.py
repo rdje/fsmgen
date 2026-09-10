@@ -10,6 +10,7 @@ from pathlib import Path
 import re
 import select
 import signal
+import struct
 import subprocess
 import sys
 import tempfile
@@ -323,6 +324,174 @@ read(STDIN, my $release, 1) == 1 or die "allocator release missing";
             with patch.object(SAMPLER.subprocess, "Popen") as launch:
                 self.assertTrue(SAMPLER.capture(bad, self.native, self.root, self.root)["rejected"])
                 launch.assert_not_called()
+
+    def native_rust_chain(self, mode=1):
+        workspace = self.root / ".artifacts/tmp/process-supervisor-tests/fsmgen-control"
+        workspace.mkdir(mode=0o700, parents=True, exist_ok=True)
+        wrapper, producer = self.supervisor_chain("rust", True, workspace)
+        producer.parent.chmod(0o700)
+        # Synthetic header and non-text payload: this control never executes it
+        # and does not claim that header admission validates a complete Mach-O.
+        producer.write_bytes(struct.pack("<8I", 0xfeedfacf, 0x0100000c, 0, 2, 0, 0, 0, 0)
+                             + b"\x00\xffindependent binary custody\x80")
+        producer.chmod(0o500)
+        source = producer.with_name("rustup.c")
+        if source.exists():
+            source.chmod(0o600)
+        source.write_bytes(f"#define PROXY_NONZERO {mode}\n".encode()
+                           + (ROOT / "t/fixtures/rust-tool-proxy.c").read_bytes())
+        source.chmod(0o400)
+        self.native.executables[100] = producer
+        self.native.commands[100] = f"{producer} which cargo"
+        return wrapper, producer, source
+
+    def test_native_rust_modes_retain_exact_binary_source_and_ancestry(self):
+        source_hashes = set()
+        for mode in (0, 1):
+            with self.subTest(mode=mode):
+                if mode:
+                    self.native.executables[100].chmod(0o600)
+                paths = self.native_rust_chain(mode)
+                evidence = SAMPLER.validate_target(self.request, self.native, self.root)
+                self.assertEqual(evidence["target_role"], "rust-proxy")
+                self.assertEqual(evidence["ancestor"], self.native.processes[80])
+                self.assertEqual(evidence["fixture"], str(paths[1].relative_to(self.root)))
+                self.assertEqual([item["path"] for item in evidence["sources"]],
+                                 [str(path.relative_to(self.root)) for path in paths])
+                for path, item in zip(paths, evidence["sources"]):
+                    self.assertEqual(set(item), {"path", "sha256", "device", "inode", "size_bytes"})
+                    self.assertEqual(item["sha256"], hashlib.sha256(path.read_bytes()).hexdigest())
+                    self.assertEqual(item["size_bytes"], path.stat().st_size)
+                    self.assertEqual(item["inode"], path.stat().st_ino)
+                source_hashes.add(evidence["sources"][-1]["sha256"])
+        self.assertEqual(source_hashes, SAMPLER.NATIVE_RUST_SOURCES,
+                         "admission pins must match both complete tracked C inputs")
+
+    def test_native_rust_wrong_command_executable_workspace_and_ancestry_reject(self):
+        _, producer, _ = self.native_rust_chain()
+        changes = (
+            ("commands", 100, f"/usr/bin/perl {producer} which cargo"),
+            ("commands", 100, f"{producer} which cargo --extra"),
+            ("commands", 100, f"{producer} which rustc"),
+            ("commands", 100, f"{producer.parent}/other which cargo"),
+            ("commands", 90, self.native.commands[90].replace("fsmgen-control", "fsmgen-other")),
+            ("commands", 80, "/usr/bin/perl " + SAMPLER.TEST_PATH),
+            ("executables", 100, Path("/bin/sh")),
+            ("executables", 100, Path("/usr/bin/perl").resolve()),
+            ("executables", 90, producer), ("executables", 80, producer),
+        )
+        for attribute, pid, value in changes:
+            native = copy.deepcopy(self.native)
+            getattr(native, attribute)[pid] = value
+            with self.subTest(attribute=attribute, pid=pid, value=value), self.assertRaises(ValueError):
+                SAMPLER.validate_target(self.request, native, self.root)
+        for pid in (100, 90, 80):
+            for field in ("uid", "ruid", "start_usec", "ppid"):
+                if pid == 80 and field == "ppid":
+                    continue  # No admission claim about ancestors beyond the test.
+                native = copy.deepcopy(self.native)
+                native.processes[pid][field] += 1
+                with self.subTest(pid=pid, field=field), self.assertRaises(ValueError):
+                    SAMPLER.validate_target(self.request, native, self.root)
+
+    def test_native_rust_header_modes_inputs_and_private_directories_reject(self):
+        _, producer, source = self.native_rust_chain()
+        binary = producer.read_bytes()
+        bodies = [b"", binary[:31], binary + b"x" * 65536]
+        for word, value in ((0, 0xcafebabe), (1, 0x01000007), (2, 2), (3, 6)):
+            changed = bytearray(binary)
+            struct.pack_into("<I", changed, word * 4, value)
+            bodies.append(changed)
+        for body in bodies:
+            producer.chmod(0o600)
+            producer.write_bytes(body)
+            producer.chmod(0o500)
+            with self.subTest(header=bytes(body[:16])), self.assertRaises(ValueError):
+                SAMPLER.validate_target(self.request, self.native, self.root)
+        producer.chmod(0o600)
+        producer.write_bytes(binary)
+        producer.chmod(0o500)
+        for path, bad_mode in ((producer, 0o700), (source, 0o600),
+                               (producer.parent, 0o755), (producer.parent.parent, 0o755)):
+            original_mode = path.stat().st_mode & 0o777
+            path.chmod(bad_mode)
+            with self.subTest(path=path.name), self.assertRaises(ValueError):
+                SAMPLER.validate_target(self.request, self.native, self.root)
+            path.chmod(original_mode)
+        source.chmod(0o600)
+        source.write_bytes(source.read_bytes() + b"\n")
+        source.chmod(0o400)
+        with self.assertRaisesRegex(ValueError, "qualified mode inputs"):
+            SAMPLER.validate_target(self.request, self.native, self.root)
+        source.unlink()
+        source.symlink_to(self.fixture)
+        with self.assertRaisesRegex(ValueError, "indirect"):
+            SAMPLER.validate_target(self.request, self.native, self.root)
+        source.unlink()
+        os.mkfifo(source, 0o400)
+        with self.assertRaisesRegex(ValueError, "regular file"):
+            SAMPLER.validate_target(self.request, self.native, self.root)
+
+    def test_native_rust_same_birth_changes_during_inspection_reject(self):
+        paths = self.native_rust_chain()
+        original = self.native.command
+        for path in paths:
+            body = path.read_bytes()
+            mode = path.stat().st_mode & 0o777
+            calls = []
+
+            def change_source(pid):
+                calls.append(pid)
+                if calls.count(100) == 2 and pid == 100:
+                    path.chmod(0o600)
+                    path.write_bytes(body + b"changed")
+                    path.chmod(mode)
+                return original(pid)
+
+            with self.subTest(path=path.name), patch.object(self.native, "command", change_source), \
+                    self.assertRaises(ValueError):
+                SAMPLER.validate_target(self.request, self.native, self.root)
+            path.chmod(0o600)
+            path.write_bytes(body)
+            path.chmod(mode)
+        executable = self.native.executable
+        calls = []
+
+        def change_executable(pid):
+            calls.append(pid)
+            return Path("/bin/sh") if pid == 100 and calls.count(pid) > 1 else executable(pid)
+
+        with patch.object(self.native, "executable", change_executable), \
+                self.assertRaisesRegex(ValueError, "identity changed"):
+            SAMPLER.validate_target(self.request, self.native, self.root)
+
+    def test_native_rust_file_ownership_volume_and_workspace_prefix_reject(self):
+        paths = self.native_rust_chain()
+        fstat = SAMPLER.os.fstat
+        for path in paths:
+            inode = path.stat().st_ino
+            for field in ("st_uid", "st_dev"):
+                def changed_metadata(fd):
+                    metadata = fstat(fd)
+                    if metadata.st_ino != inode:
+                        return metadata
+                    values = {name: getattr(metadata, name) for name in dir(metadata)
+                              if name.startswith("st_")}
+                    values[field] += 1
+                    return SimpleNamespace(**values)
+
+                with self.subTest(path=path.name, field=field), \
+                        patch.object(SAMPLER.os, "fstat", changed_metadata), \
+                        self.assertRaisesRegex(ValueError, "owned repository-volume"):
+                    SAMPLER.validate_target(self.request, self.native, self.root)
+        workspace = paths[1].parent.parent
+        renamed = workspace.with_name("unqualified-workspace")
+        workspace.rename(renamed)
+        self.native.commands = {pid: command.replace(str(workspace), str(renamed))
+                                for pid, command in self.native.commands.items()}
+        self.native.executables[100] = renamed / "rust-tools/rustup"
+        with self.assertRaisesRegex(ValueError, "workspace is not builder-owned"):
+            SAMPLER.validate_target(self.request, self.native, self.root)
 
     def test_nested_wrong_command_workspace_user_executable_and_chain_reject(self):
         self.supervisor_chain("streams", True)

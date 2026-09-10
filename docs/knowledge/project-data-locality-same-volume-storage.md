@@ -8,24 +8,25 @@ answers:
   - "may FSMGen use a user-home dependency cache?"
   - "how should off-volume FSMGen data be migrated?"
   - "what is the project data locality policy?"
-date: 2026-07-29
+  - "how is the mdbook destination output directory resolved?"
+date: 2026-09-10
 status: current
 tags: [artifacts, storage, temporary-files, caches, portability, doctrine]
-evidence: PROJECT_DATA_LOCALITY.md; docs/decisions/0022-project-data-locality-and-same-volume-storage.md; docs/tasks/PROJECT-DATA-LOCALITY-SAME-VOLUME-ADOPTION.md; scripts/check_project_data_locality.sh; README.md; TOOLBOX.md; docs/book/src/09-generated-hdl-debugging-and-inspection.md
+evidence: docs/tasks/HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.md; PROJECT_DATA_LOCALITY.md; docs/decisions/0022-project-data-locality-and-same-volume-storage.md; docs/tasks/PROJECT-DATA-LOCALITY-SAME-VOLUME-ADOPTION.md; scripts/check_project_data_locality.sh; README.md; TOOLBOX.md; docs/book/src/09-generated-hdl-debugging-and-inspection.md
 reverify: scripts/check_project_data_locality.sh
 ---
 
-FSMGen stores all project-owned generated output, build state, caches, logs,
-test fixtures, and temporary workspaces on the repository filesystem volume.
-Runtime tools derive absolute locations from the current repository root while
-persisted project paths remain repository-relative.
+All project-owned output, builds, caches, logs, fixtures and temporary workspaces
+stay on the repository volume, normally in `.artifacts/`. Runtime tools derive
+absolute locations from the current root; persisted paths remain root-relative.
+`PROJECT_DATA_LOCALITY.md` defines subdirectories and external-input exceptions.
+Off-volume data follows copy/verify/use/delete; ambiguous shared caches stay.
 
-The general generated-state root is `.artifacts/`; exact subdirectories and
-the external-input exception boundary are defined in
-`PROJECT_DATA_LOCALITY.md`. Existing exact off-volume project data follows
-copy/verify/use/delete. Ambiguous shared caches are not deleted.
+Adoption is complete. `scripts/check_project_data_locality.sh` rejects OS temporary
+paths in runtime, tests, configuration, README, toolbox, mdBook, fact cards and
+Knowledge Map, and verifies shared local runtime/launcher controls.
 
-The adoption is complete. `scripts/check_project_data_locality.sh` now requires
-zero operating-system temporary paths in live runtime, test, configuration,
-README, toolbox, mdBook, fact-card, and generated Knowledge Map surfaces; the
-check also verifies the shared repository-local runtime and launcher controls.
+From repository cwd, use `mdbook build docs/book --dest-dir .artifacts/book`:
+mdBook resolves the destination from cwd. Task `.3.2.15.7.3.9` retains a misplaced
+build's same-volume copy, complete hash comparison, rendered inspection and
+exact-directory deletion/residue evidence.

@@ -14,6 +14,7 @@ import re
 import resource
 import signal
 import stat
+import struct
 import subprocess
 import sys
 import time
@@ -31,6 +32,12 @@ IDENTITY_FIELDS = ("pid", "start_sec", "start_usec")
 REQUEST_FIELDS = (*IDENTITY_FIELDS, "parent_pid", "parent_start_sec",
                   "parent_start_usec")
 ANCESTOR_FIELDS = tuple("ancestor_" + key for key in IDENTITY_FIELDS)
+# Exact generated C inputs qualified by the sealed builder. Native-proxy tests
+# reconstruct both from the tracked template so source changes cannot drift.
+NATIVE_RUST_SOURCES = frozenset((
+    "b689e2f7ee42bf7cac62f272a36d5313a272dddef15a75f8c66b126568fbf276",
+    "a2ff3cf129d8c01d2b05c33b2df2ca18b68048972dcc86c00222786a6751defc",
+))
 
 
 class BSDInfo(ctypes.Structure):
@@ -135,6 +142,11 @@ def read_request(path):
 
 def source_identity(fixture, root):
     """Inspect a bounded direct source, retaining its filesystem and byte identity."""
+    return _read_source(fixture, root)[0]
+
+
+def _read_source(fixture, root):
+    """Return identity, bytes and metadata from one checked bounded descriptor."""
     if fixture.resolve() != fixture or fixture.stat().st_dev != root.stat().st_dev:
         raise ValueError("fixture path is indirect or on a different volume")
     with os.fdopen(os.open(fixture, os.O_RDONLY | os.O_NOFOLLOW | os.O_NONBLOCK), "rb") as stream:
@@ -151,8 +163,29 @@ def source_identity(fixture, root):
     if any(tuple(getattr(info, field) for field in fields) != before_identity
            for info in (after, fixture.lstat())) or len(body) != metadata.st_size:
         raise ValueError("fixture changed during inspection")
-    return {"path": str(fixture.relative_to(root)), "sha256": hashlib.sha256(body).hexdigest(),
-            "device": metadata.st_dev, "inode": metadata.st_ino, "size_bytes": len(body)}
+    record = {"path": str(fixture.relative_to(root)), "sha256": hashlib.sha256(body).hexdigest(),
+              "device": metadata.st_dev, "inode": metadata.st_ino, "size_bytes": len(body)}
+    return record, body, metadata
+
+
+def _native_rust_sources(fixture, root):
+    workspace = fixture.parent.parent
+    if not re.fullmatch(r"fsmgen-[A-Za-z0-9_]+", workspace.name):
+        raise ValueError("native Rust proxy workspace is not builder-owned")
+    for directory in (workspace, fixture.parent):
+        metadata = directory.lstat()
+        if (not stat.S_ISDIR(metadata.st_mode) or directory.resolve() != directory
+                or metadata.st_uid != os.getuid() or metadata.st_mode & 0o077
+                or metadata.st_dev != root.stat().st_dev):
+            raise ValueError("native Rust proxy directory is not owned and private")
+    executable, body, metadata = _read_source(fixture, root)
+    if (stat.S_IMODE(metadata.st_mode) != 0o500 or len(body) < 32
+            or struct.unpack_from("<4I", body) != (0xfeedfacf, 0x0100000c, 0, 2)):
+        raise ValueError("Rust proxy is not the admitted read-only arm64 executable")
+    source, _, metadata = _read_source(fixture.with_name("rustup.c"), root)
+    if stat.S_IMODE(metadata.st_mode) != 0o400 or source["sha256"] not in NATIVE_RUST_SOURCES:
+        raise ValueError("Rust proxy C source is not one of the qualified mode inputs")
+    return [executable, source]
 
 
 def _test_command(command, path, root):
@@ -188,6 +221,7 @@ def validate_target(request, native, root):
     """Admit a closed direct fixture or one exact T1669 wrapper/producer chain."""
     prefixes = ("", "parent_") + (("ancestor_",) if "ancestor_pid" in request else ())
     observations = []
+    executables = []
     perl = Path("/usr/bin/perl").resolve()
     for prefix in prefixes:
         info = native.identity(request[prefix + "pid"])
@@ -195,8 +229,10 @@ def validate_target(request, native, root):
             raise ValueError("stale or reused process identity")
         if any(info[key] != os.getuid() for key in ("uid", "ruid")):
             raise ValueError("fixture and test must run as this normal user")
-        if native.executable(info["pid"]) != perl:
+        executable = native.executable(info["pid"])
+        if prefix and executable != perl:
             raise ValueError("fixture and test must use the selected system Perl")
+        executables.append(executable)
         observations.append((info, native.command(info["pid"])))
     for (child, _), (parent, _) in zip(observations, observations[1:]):
         if child["ppid"] != parent["pid"]:
@@ -204,6 +240,7 @@ def validate_target(request, native, root):
 
     target_command = observations[0][1]
     test_command = observations[-1][1]
+    native_proxy = False
     if len(observations) == 2 and _test_command(test_command, TEST_PATH, root):
         workspace = _workspace(target_command, root)
         fixture = workspace / "orphaning-runtime"
@@ -219,7 +256,8 @@ def validate_target(request, native, root):
         if len(observations) == 3:
             if role == "rust-wrapper":
                 fixture = workspace / "rust-tools/rustup"
-                expected = f"/usr/bin/perl {fixture} which cargo"
+                native_proxy = executables[0] == fixture
+                expected = f"{fixture} which cargo" if native_proxy else f"/usr/bin/perl {fixture} which cargo"
                 sources.append(fixture)
                 role = "rust-proxy"
             else:
@@ -233,11 +271,21 @@ def validate_target(request, native, root):
     else:
         raise ValueError("ancestor is not the selected T1668 or T1669 invocation")
 
-    source_records = [source_identity(path, root) for path in sources]
-    for info, command in observations:
-        if (native.identity(info["pid"]) != info or native.executable(info["pid"]) != perl
+    expected_executable = fixture if native_proxy else perl
+    if executables[0] != expected_executable:
+        raise ValueError("fixture must use its exact admitted executable")
+    if native_proxy:
+        source_records = [source_identity(sources[0], root), *_native_rust_sources(fixture, root)]
+    else:
+        source_records = [source_identity(path, root) for path in sources]
+    for (info, command), executable in zip(observations, executables):
+        if (native.identity(info["pid"]) != info or native.executable(info["pid"]) != executable
                 or native.command(info["pid"]) != command):
             raise ValueError("identity changed during inspection")
+    if native_proxy:
+        after = [source_identity(sources[0], root), *_native_rust_sources(fixture, root)]
+        if after != source_records:
+            raise ValueError("native proxy sources changed during inspection")
     fixture_record = next(record for record in source_records
                           if record["path"] == str(fixture.relative_to(root)))
     evidence = {"child": observations[0][0], "parent": observations[1][0],

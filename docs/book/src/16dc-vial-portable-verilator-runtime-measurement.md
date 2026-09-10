@@ -615,9 +615,10 @@ direct `orphaning-runtime` child. The T1669 route admits the exact
 Nested requests include the test's `ancestor_pid`, `ancestor_start_sec` and
 `ancestor_start_usec` alongside the existing child and parent identity fields.
 
-Every process must use the selected system Perl as the normal user; commands
-and their arguments must match the generating test and a common fixture
-workspace. T1668 fixtures stay under `.artifacts/tmp/tests/`; T1669 uses
+Processes run as the normal user. Wrappers and test ancestors use the selected
+system Perl; a Rust proxy may also use the qualified native fixture described
+below. Commands and arguments must match the generating test and a common
+fixture workspace. T1668 fixtures stay under `.artifacts/tmp/tests/`; T1669 uses
 its explicit `.artifacts/tmp/process-supervisor-tests/` allocator root. Other
 allocator purposes and the former wrong T1669 root are rejected. Each inspected
 source retains its digest and filesystem identity.
@@ -1597,9 +1598,36 @@ scripts/run_with_ram_guard.sh -- prove -Iperl -It/lib t/1815-rust-proxy-fixture.
 ```
 
 Separate current-host qualification builds and runs both modes, retains their
-exact source/executable bytes and native results, and verifies cleanup. Native
-capture admission and original-test integration remain separately owned; the
-historical startup delay is still open.
+exact source/executable bytes and native results, and verifies cleanup.
+
+Task `.15.7.3.9` extends capture admission to the helper's direct native
+`rust-tools/rustup which cargo` producer. The wrapper and original test must
+still be the exact system-Perl ancestors. The workspace must have the builder's
+`fsmgen-` name prefix, with directly owned private workspace and `rust-tools`
+directories. Admission checks the read-only executable's arm64 header and the
+read-only `rustup.c` against the complete qualified source for either mode.
+Changed commands, ownership, workspace, architecture, permissions or source
+are rejected. Existing Perl routes and capture limits remain in force.
+
+Evidence retains the wrapper, executable and C input as bounded raw bytes with
+their filesystem identities and hashes. The native route rechecks its complete
+source set during admission; the passive census rejects changed bytes or a
+replacement inode for an already observed process birth. Binary archives use
+the existing `rust-proxy` role and policy-analysis format. A matching source
+and binary header do not attest to the compiler or the process's loaded image;
+native identity observations are not an atomic kernel handle. Rust main entry
+remains unknown without its own witness.
+
+Controlled admission, source-race and passive archival checks run with:
+
+```bash
+scripts/run_with_ram_guard.sh -- python3 -B -m unittest discover -s t/python -p 'test_fixture_kernel_sampler.py'
+scripts/run_with_ram_guard.sh -- python3 -B -m unittest discover -s t/python -p 'test_fixture_census.py'
+```
+
+These checks do not launch the original test or authenticated capture.
+Original-test integration and native capture qualification remain separately
+owned; the historical startup delay is still open.
 
 Shared evidence publication now anchors file creation, linking and temporary
 cleanup to open directory descriptors. A controlled directory-replacement test

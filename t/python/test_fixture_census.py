@@ -6,6 +6,7 @@ import json
 import os
 from pathlib import Path
 import signal
+import struct
 import subprocess
 import sys
 import tempfile
@@ -71,6 +72,72 @@ class CensusControls(unittest.TestCase):
             census.scan()
         self.assertNotIn(b"different producer source\n",
                          [path.read_bytes() for path in self.evidence.directory.glob("*.source")])
+        self.assertEqual(census.settle()["observed_fixture_count"], 2)
+
+    def prepare_native_proxy(self):
+        old_workspace = self.native.producer.parent.parent
+        workspace = old_workspace.with_name("fsmgen-census")
+        old_workspace.rename(workspace)
+        self.native.commands = {pid: command.replace(str(old_workspace), str(workspace))
+                                for pid, command in self.native.commands.items()}
+        workspace.chmod(0o700)
+        producer = workspace / "rust-tools/rustup"
+        self.native.producer = producer
+        producer.parent.chmod(0o700)
+        producer.write_bytes(struct.pack("<8I", 0xfeedfacf, 0x0100000c, 0, 2, 0, 0, 0, 0)
+                             + b"\xff\x80\x00opaque retained executable")
+        producer.chmod(0o500)
+        source = producer.with_name("rustup.c")
+        source.write_bytes(b"#define PROXY_NONZERO 1\n"
+                           + (ROOT / "t/fixtures/rust-tool-proxy.c").read_bytes())
+        source.chmod(0o400)
+        self.native.commands[30] = f"{producer} which cargo"
+        self.native.executable = lambda pid: producer if pid == 30 else Path("/usr/bin/perl").resolve()
+        return workspace / "rust-tool-resolution", producer, source
+
+    def test_native_proxy_census_retains_binary_c_source_and_perl_wrapper(self):
+        paths = self.prepare_native_proxy()
+        census = self.census()
+        entries = census.scan()
+        self.assertEqual([entry["evidence"]["child"]["pid"] for entry in entries], [30, 20])
+        self.assertEqual([entry["evidence"]["target_role"] for entry in entries],
+                         ["rust-proxy", "rust-wrapper"])
+        self.assertEqual([entry["progress"] for entry in entries], ["unknown", "unknown"])
+        self.assertEqual([record["path"] for record in entries[0]["evidence"]["sources"]],
+                         [str(path.relative_to(self.root)) for path in paths])
+        archived = list(self.evidence.directory.glob("*.source"))
+        self.assertEqual({path.read_bytes() for path in archived}, {path.read_bytes() for path in paths})
+        for path in archived:
+            self.assertEqual(path.stem, hashlib.sha256(path.read_bytes()).hexdigest())
+        census.require_coverage()
+        self.assertEqual(census.settle()["observed_fixture_count"], 2)
+
+    def test_native_proxy_census_rejects_changed_inputs_and_replaced_inode(self):
+        paths = self.prepare_native_proxy()
+        census = self.census()
+        census.scan()
+        archived = {path.name: path.read_bytes() for path in self.evidence.directory.glob("*.source")}
+        for path in paths:
+            body, mode = path.read_bytes(), path.stat().st_mode & 0o777
+            changed = (body.replace(b"#define PROXY_NONZERO 1", b"#define PROXY_NONZERO 0")
+                       if path.suffix == ".c" else body + b"changed")
+            path.chmod(0o600)
+            path.write_bytes(changed)
+            path.chmod(mode)
+            with self.subTest(path=path.name), self.assertRaisesRegex(
+                    RuntimeError, "changed for an observed native birth"):
+                census.scan()
+            self.assertEqual({item.name: item.read_bytes()
+                              for item in self.evidence.directory.glob("*.source")}, archived)
+            path.chmod(0o600)
+            path.write_bytes(body)
+            path.chmod(mode)
+        replacement = self.root / "replacement-native"
+        replacement.write_bytes(paths[1].read_bytes())
+        replacement.chmod(0o500)
+        replacement.replace(paths[1])
+        with self.assertRaisesRegex(RuntimeError, "changed for an observed native birth"):
+            census.scan()
         self.assertEqual(census.settle()["observed_fixture_count"], 2)
 
     def test_same_source_bytes_under_a_replacement_inode_are_rejected(self):
