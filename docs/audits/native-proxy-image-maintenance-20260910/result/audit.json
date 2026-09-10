@@ -1,0 +1,23 @@
+{
+  "allocations": 59,
+  "assertions": 31,
+  "deletion_cuts": 8,
+  "falsifiers": [
+    "missing cut",
+    "lost hold",
+    "returned interruption",
+    "lost rejection",
+    "lost late-change control",
+    "unproved capacity recovery",
+    "hidden stale-pin deletion",
+    "lost allocation",
+    "process attempted"
+  ],
+  "late_changes": 4,
+  "limits": "Only inert images under the isolated qualification store; deterministic deletion cuts do not establish actual crash/power-loss or observer/native lifecycle behavior.",
+  "regression_allocations": 174,
+  "rejection_controls": 14,
+  "retirement_regression_assertions": 59,
+  "schema": "fsmgen.inactive_image_maintenance_audit.v1",
+  "success": true
+}

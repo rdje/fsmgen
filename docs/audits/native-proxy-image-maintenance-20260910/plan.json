@@ -1,0 +1,306 @@
+{
+  "cases": [
+    {
+      "cut": {
+        "path": "rustup.c",
+        "phase": "before"
+      },
+      "name": "before rustup.c",
+      "removed": [],
+      "returned": 0,
+      "trace": [
+        {
+          "path": "rustup.c",
+          "phase": "before"
+        }
+      ]
+    },
+    {
+      "cut": {
+        "path": "rustup.c",
+        "phase": "after"
+      },
+      "name": "after rustup.c",
+      "removed": [
+        "rustup.c"
+      ],
+      "returned": 0,
+      "trace": [
+        {
+          "path": "rustup.c",
+          "phase": "before"
+        },
+        {
+          "path": "rustup.c",
+          "phase": "after"
+        }
+      ]
+    },
+    {
+      "cut": {
+        "path": "image.json",
+        "phase": "before"
+      },
+      "name": "before image.json",
+      "removed": [
+        "rustup.c"
+      ],
+      "returned": 0,
+      "trace": [
+        {
+          "path": "rustup.c",
+          "phase": "before"
+        },
+        {
+          "path": "rustup.c",
+          "phase": "after"
+        },
+        {
+          "path": "image.json",
+          "phase": "before"
+        }
+      ]
+    },
+    {
+      "cut": {
+        "path": "image.json",
+        "phase": "after"
+      },
+      "name": "after image.json",
+      "removed": [
+        "rustup.c",
+        "image.json"
+      ],
+      "returned": 0,
+      "trace": [
+        {
+          "path": "rustup.c",
+          "phase": "before"
+        },
+        {
+          "path": "rustup.c",
+          "phase": "after"
+        },
+        {
+          "path": "image.json",
+          "phase": "before"
+        },
+        {
+          "path": "image.json",
+          "phase": "after"
+        }
+      ]
+    },
+    {
+      "cut": {
+        "path": "rustup",
+        "phase": "before"
+      },
+      "name": "before rustup",
+      "removed": [
+        "rustup.c",
+        "image.json"
+      ],
+      "returned": 0,
+      "trace": [
+        {
+          "path": "rustup.c",
+          "phase": "before"
+        },
+        {
+          "path": "rustup.c",
+          "phase": "after"
+        },
+        {
+          "path": "image.json",
+          "phase": "before"
+        },
+        {
+          "path": "image.json",
+          "phase": "after"
+        },
+        {
+          "path": "rustup",
+          "phase": "before"
+        }
+      ]
+    },
+    {
+      "cut": {
+        "path": "rustup",
+        "phase": "after"
+      },
+      "name": "after rustup",
+      "removed": [
+        "rustup.c",
+        "image.json",
+        "rustup"
+      ],
+      "returned": 0,
+      "trace": [
+        {
+          "path": "rustup.c",
+          "phase": "before"
+        },
+        {
+          "path": "rustup.c",
+          "phase": "after"
+        },
+        {
+          "path": "image.json",
+          "phase": "before"
+        },
+        {
+          "path": "image.json",
+          "phase": "after"
+        },
+        {
+          "path": "rustup",
+          "phase": "before"
+        },
+        {
+          "path": "rustup",
+          "phase": "after"
+        }
+      ]
+    },
+    {
+      "cut": {
+        "path": "",
+        "phase": "before"
+      },
+      "name": "before DIRECTORY",
+      "removed": [
+        "rustup.c",
+        "image.json",
+        "rustup"
+      ],
+      "returned": 0,
+      "trace": [
+        {
+          "path": "rustup.c",
+          "phase": "before"
+        },
+        {
+          "path": "rustup.c",
+          "phase": "after"
+        },
+        {
+          "path": "image.json",
+          "phase": "before"
+        },
+        {
+          "path": "image.json",
+          "phase": "after"
+        },
+        {
+          "path": "rustup",
+          "phase": "before"
+        },
+        {
+          "path": "rustup",
+          "phase": "after"
+        },
+        {
+          "path": "",
+          "phase": "before"
+        }
+      ]
+    },
+    {
+      "cut": {
+        "path": "",
+        "phase": "after"
+      },
+      "name": "after DIRECTORY",
+      "removed": [
+        "rustup.c",
+        "image.json",
+        "rustup",
+        ""
+      ],
+      "returned": 0,
+      "trace": [
+        {
+          "path": "rustup.c",
+          "phase": "before"
+        },
+        {
+          "path": "rustup.c",
+          "phase": "after"
+        },
+        {
+          "path": "image.json",
+          "phase": "before"
+        },
+        {
+          "path": "image.json",
+          "phase": "after"
+        },
+        {
+          "path": "rustup",
+          "phase": "before"
+        },
+        {
+          "path": "rustup",
+          "phase": "after"
+        },
+        {
+          "path": "",
+          "phase": "before"
+        },
+        {
+          "path": "",
+          "phase": "after"
+        }
+      ]
+    },
+    {
+      "cut": null,
+      "name": "complete",
+      "removed": [
+        "rustup.c",
+        "image.json",
+        "rustup",
+        ""
+      ],
+      "returned": 1,
+      "trace": [
+        {
+          "path": "rustup.c",
+          "phase": "before"
+        },
+        {
+          "path": "rustup.c",
+          "phase": "after"
+        },
+        {
+          "path": "image.json",
+          "phase": "before"
+        },
+        {
+          "path": "image.json",
+          "phase": "after"
+        },
+        {
+          "path": "rustup",
+          "phase": "before"
+        },
+        {
+          "path": "rustup",
+          "phase": "after"
+        },
+        {
+          "path": "",
+          "phase": "before"
+        },
+        {
+          "path": "",
+          "phase": "after"
+        }
+      ]
+    }
+  ],
+  "limits": "Only inert images under the isolated qualification store; deterministic deletion cuts do not establish actual crash/power-loss or observer/native lifecycle behavior.",
+  "schema": "fsmgen.inactive_image_maintenance_plan.v1"
+}

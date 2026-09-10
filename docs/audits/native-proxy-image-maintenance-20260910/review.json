@@ -1,0 +1,109 @@
+{
+  "allocation_rosters_disjoint_and_absent": {
+    "final": 59,
+    "initial": 40,
+    "retirement_regression": 174
+  },
+  "book": {
+    "exact_output_absent": true,
+    "new_passage_verified": true,
+    "rendered_bytes": 23131412,
+    "rendered_files": 98,
+    "same_volume_direct_objects": true
+  },
+  "durability": "Prototype, fixed plan, harness, independent audit/review, immediate ledger and exact initial/final/regression recovery copies are tracked. The first control expected the wrong rejection stage: adding a fourth root member reaches the three-member ceiling before unknown-name admission. Renaming an existing member isolates the intended guard. Exact first source/result/TAP/ledger and complete allocation/absence recovery remain retained; no prototype repair or live run was needed. Both prior ignored retirement qualification JSON and ledger are restored exactly after their new regression copies are retained.",
+  "falsification": "Stale owner references, absent/malformed/partial/unknown/shared-link state and caller/argument bypasses reject without mutation. Late source/directory replacement rejects before deletion; injected extra members or directory reappearance retain an explicit partial failure. Removing the retention guard permits destruction of a still-pinned inert image, which the later census detects only after bytes are gone. The independent oracle rejects altered cuts, holds, returns, rejection/late-change controls, capacity, mutation and allocation evidence.",
+  "final_evidence": [
+    {
+      "path": "docs/audits/native-proxy-image-maintenance-20260910/result/audit.json",
+      "sha256": "f822fdf1031f9eeb1690077df67738bf5ab5dfe6dd24c8a6e336771b028454e1",
+      "size_bytes": 704
+    },
+    {
+      "path": "docs/audits/native-proxy-image-maintenance-20260910/result/qualification.json",
+      "sha256": "930f3a928326171e6d8d56f677dd44e638270d209a4422ac42760bf3469923e4",
+      "size_bytes": 345176
+    }
+  ],
+  "first_failure": {
+    "all_exact_allocations_absent": true,
+    "allocations": 40,
+    "cause": "The unknown-store-member test appended a fourth member. The existing three-member namespace ceiling correctly rejects before the later unknown-name guard, so the harness expected the wrong diagnostic. Replace the known reference-directory name with an unknown name to isolate the intended guard without exceeding the earlier ceiling.",
+    "complete_ledger_agrees": true,
+    "process_attempts": 0,
+    "schema": "fsmgen.maintenance_initial_case_recovery.v1"
+  },
+  "limits": [
+    "Only explicit inactive stores are reachable. Preparation and runtime retirement do not invoke maintenance; no production cache, compiler, native fixture, original, collector, helper or contention worker runs.",
+    "All runtime references remain retention obligations even when their private workspace is absent. Unknown observation variants reject until explicit combined-format/lifetime qualification; absence of a process or an old timestamp never authorizes deletion.",
+    "Partial deletion retains exact failed state for a separately owned recovery audit. A cut after the final directory removal may leave completed deletion without a success return; no implicit retry, repair, alternative candidate or reconstruction occurs.",
+    "Snapshots and removal checks use cooperative coordination. Actual contention/inheritance, arbitrary noncooperating mutation, crash/power-loss durability, compiler-workspace profiles, authenticated cleanup/transport and observer/native lifetimes remain unqualified.",
+    "This closes only inactive publication/runtime retirement/maintenance. Observation/version compatibility remains the next frontier; historical startup/parent qualification and full CI/push stay gated."
+  ],
+  "owner": "HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.12.4.1.2.3.3",
+  "rederive": "The fixed prospective plan enumerates before/after deletion of C, manifest, executable and empty candidate directory. A separate lstat/readlink/file-hash observer captures the whole store. Python reconstructs exact content keys/manifests, validates the complete historical acquisition record, joins the immediate allocation ledger and verifies that only the expected candidate nodes disappear. It independently reconstructs the full capacity-key set and checks the unchanged retirement suite against the refined coordinator.",
+  "schema": "fsmgen.inactive_image_maintenance_review.v1",
+  "source_revision": "4bc8f5ebc48173a26fbec6a30a248b86df7eda71",
+  "unchanged_inputs": [
+    {
+      "path": "t/1669-task-acceptance-fixture-runtime.t",
+      "sha256": "bdebbf03308cd5e0699324f9ab96a249c11c9ab05634309569d33874391a196f",
+      "size_bytes": 67582
+    },
+    {
+      "path": "t/lib/FSM/Test/RustProxyFixture.pm",
+      "sha256": "d9c4ab52cf8074526c59b7a5dcb9da870ca7ffdacb4eb236dacb23b5db6d8bfb",
+      "size_bytes": 11466
+    },
+    {
+      "path": "perl/FSM/Support/ProcessSupervisor.pm",
+      "sha256": "684882d91f673ea7145f43ed3aad31acf099f13508574be7b2d8911123988637",
+      "size_bytes": 27990
+    },
+    {
+      "path": "docs/audits/native-proxy-image-custody-20260910/ImageCustody.pm",
+      "sha256": "7f9db38e47140fedd39a80d7a6fbf1ee111f56f290a463729b516b08aae90d4f",
+      "size_bytes": 8021
+    },
+    {
+      "path": "docs/audits/native-proxy-image-publication-20260910/Publication.pm",
+      "sha256": "dc50ca598632572616d7da65fa6f1b417a20e7207dafa5fe03fd5d887382fab6",
+      "size_bytes": 5367
+    },
+    {
+      "path": "docs/audits/native-proxy-runtime-records-20260910/RuntimeRecord.pm",
+      "sha256": "013c0a02e7df59dc3a5af944b603cd44121252a02ca0228d6fdc3e1dd28e6745",
+      "size_bytes": 4078
+    },
+    {
+      "path": "docs/audits/native-proxy-runtime-census-20260910/ReferenceCensus.pm",
+      "sha256": "a1d2ebbe12e5219cf4b10aba701708a266a5aa9c342de0f06a053f2bd977e91b",
+      "size_bytes": 6246
+    },
+    {
+      "path": "docs/audits/native-proxy-runtime-acquisition-20260910/ReferenceAcquisition.pm",
+      "sha256": "b751c88d709e102f7f9b9dd17e0222c39e0a81acc16d7194f7f7c3f4c8535b57",
+      "size_bytes": 6565
+    },
+    {
+      "path": "docs/audits/native-proxy-runtime-retirement-20260910/PrivateWorkspace.pm",
+      "sha256": "fb87393846eb10147f868aa40ba444f5e5d56cef7f0aaf6a1ff295216a90e9c1",
+      "size_bytes": 6080
+    },
+    {
+      "path": "docs/audits/native-proxy-runtime-retirement-20260910/RuntimeRetirement.pm",
+      "sha256": "766348d16243d3868ca5f8b653f757f8f2eaf5c1aba8ec27fd2d9c67e9fd0bcc",
+      "size_bytes": 8727
+    },
+    {
+      "path": "docs/audits/native-proxy-runtime-retirement-20260910/qualify.t",
+      "sha256": "68e36c8b7dd43b49cb39e339dee45665202fbb32a3511e45af7a523380722524",
+      "size_bytes": 22411
+    },
+    {
+      "path": "docs/audits/native-proxy-canonical-contract-20260910/contract.json",
+      "sha256": "f3f981398afae72540ab4ac0194b8380d4743c3d2146c1172a85365add053222",
+      "size_bytes": 21927
+    }
+  ]
+}

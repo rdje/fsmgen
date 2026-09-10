@@ -1,0 +1,61 @@
+ram-guard: PID 93251; host 63.4%; host cutoff 88%; descendant RSS cutoff 4096 MiB; poll 2s
+ok 1 - retirement boundary: before rust-tools/rustup.c
+ok 2 - retirement boundary: after rust-tools/rustup.c
+ok 3 - retirement boundary: before rust-tools/rustup
+ok 4 - retirement boundary: after rust-tools/rustup
+ok 5 - retirement boundary: before rust-tools/image-reference.json
+ok 6 - retirement boundary: after rust-tools/image-reference.json
+ok 7 - retirement boundary: before rust-tools/compiler-temp/scratch.dat
+ok 8 - retirement boundary: after rust-tools/compiler-temp/scratch.dat
+ok 9 - retirement boundary: before rust-tools/compiler-temp
+ok 10 - retirement boundary: after rust-tools/compiler-temp
+ok 11 - retirement boundary: before rust-tools/compiler-cache/cache.dat
+ok 12 - retirement boundary: after rust-tools/compiler-cache/cache.dat
+ok 13 - retirement boundary: before rust-tools/compiler-cache
+ok 14 - retirement boundary: after rust-tools/compiler-cache
+ok 15 - retirement boundary: before rust-tools/cargo
+ok 16 - retirement boundary: after rust-tools/cargo
+ok 17 - retirement boundary: before rust-tools
+ok 18 - retirement boundary: after rust-tools
+ok 19 - retirement boundary: before rust-tool-resolution
+ok 20 - retirement boundary: after rust-tool-resolution
+ok 21 - retirement boundary: before ROOT
+ok 22 - retirement boundary: after ROOT
+ok 23 - retirement boundary: before GLOBAL
+ok 24 - retirement boundary: after GLOBAL
+ok 25 - retirement boundary: complete
+ok 26 - unsettled compiler
+ok 27 - missing outer
+ok 28 - missing inner stages
+ok 29 - same-byte global replacement
+ok 30 - same-byte private replacement
+ok 31 - replaced acquired workspace
+ok 32 - unknown node spelling
+ok 33 - special FIFO
+ok 34 - shared file links
+ok 35 - file byte ceiling
+ok 36 - node ceiling
+ok 37 - depth ceiling
+ok 38 - aggregate byte ceiling
+ok 39 - absent lock cannot be recreated
+ok 40 - absent namespace cannot be recreated
+ok 41 - wrong lock identity
+ok 42 - changed acquired image
+ok 43 - unknown acquisition field
+ok 44 - direct retirement bypass
+ok 45 - late change: changed_file
+ok 46 - late change: replaced_file
+ok 47 - late change: new_member
+ok 48 - late change: replaced_root
+ok 49 - late change: partial_new_member
+ok 50 - late change: reappeared_root
+ok 51 - late change: replaced_global
+ok 52 - positive boundary: node_ceiling
+ok 53 - positive boundary: depth_ceiling
+ok 54 - positive boundary: byte_ceiling
+ok 55 - positive boundary: symlink_target
+ok 56 - last owner release preserves complete shared image
+ok 57 - omitted cleanup admits independently unsettled compiler
+ok 58 - discarded prior identity deletes independently replaced workspace
+ok 59 - no compiler or process attempt
+1..59

@@ -1,0 +1,8 @@
+{
+  "all_exact_allocations_absent": true,
+  "allocations": 40,
+  "cause": "The unknown-store-member test appended a fourth member. The existing three-member namespace ceiling correctly rejects before the later unknown-name guard, so the harness expected the wrong diagnostic. Replace the known reference-directory name with an unknown name to isolate the intended guard without exceeding the earlier ceiling.",
+  "complete_ledger_agrees": true,
+  "process_attempts": 0,
+  "schema": "fsmgen.maintenance_initial_case_recovery.v1"
+}

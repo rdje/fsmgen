@@ -1,0 +1,25 @@
+ram-guard: PID 93429; host 62.9%; host cutoff 88%; descendant RSS cutoff 4096 MiB; poll 2s
+ok 1 - maintenance cut: before rustup.c
+ok 2 - maintenance cut: after rustup.c
+ok 3 - maintenance cut: before image.json
+ok 4 - maintenance cut: after image.json
+ok 5 - maintenance cut: before rustup
+ok 6 - maintenance cut: after rustup
+ok 7 - maintenance cut: before DIRECTORY
+ok 8 - maintenance cut: after DIRECTORY
+ok 9 - maintenance cut: complete
+ok 10 - stale owner still pins selected image
+ok 11 - absent selected image
+ok 12 - unknown image name
+ok 13 - partial unreferenced other image
+ok 14 - partial selected image
+ok 15 - changed selected bytes
+ok 16 - unknown observation reference
+ok 17 - malformed reference
+ok 18 - shared selected source
+ok 19 - absent lock cannot be recreated
+not ok 20 - unknown store member
+#   Failed test 'unknown store member'
+#   at docs/audits/native-proxy-image-maintenance-20260910/qualify.t line 155.
+# namespace capacity exceeded
+Bail out!  first unexpected maintenance rejection retained

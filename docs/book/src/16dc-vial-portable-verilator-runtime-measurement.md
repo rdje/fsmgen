@@ -1782,6 +1782,21 @@ The fixed qualification limits are recorded beside the replay harness:
 scripts/run_with_ram_guard.sh -- perl docs/audits/native-proxy-runtime-retirement-20260910/qualify.t
 ```
 
+Inactive maintenance is a separate operation for an explicitly selected image.
+It checks the complete bounded reference census and every image before deleting
+the selected known files and empty directory. A stale owner still pins its image;
+missing owners never justify release. Unknown records or partial images stop
+maintenance before deletion. Successful removal preserves the permanent lock,
+all references and other images, and can free space for a later explicit
+publication. Interrupted removal leaves its exact partial state for separately
+owned recovery; it does not repair, retry or evict another image. Observation
+formats and combined lifetimes still require qualification before activation.
+Replay the inert maintenance controls:
+
+```bash
+scripts/run_with_ram_guard.sh -- perl docs/audits/native-proxy-image-maintenance-20260910/qualify.t
+```
+
 The helper checks bounded regular source/output files and the native header,
 then sets executable permissions through the admitted open file handle. A
 regression exposed path-based permission changes affecting a substituted file

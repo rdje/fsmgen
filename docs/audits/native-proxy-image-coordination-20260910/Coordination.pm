@@ -51,9 +51,9 @@ sub _open_lock {
 }
 
 sub _open_existing_lock {
-    my ($path) = @_;
+    my ($path, $purpose) = @_;
     sysopen(my $handle, $path, O_RDWR | O_NOFOLLOW | O_NONBLOCK)
-        or die "cannot open existing retirement lock: $!\n";
+        or die "cannot open existing $purpose lock: $!\n";
     return $handle;
 }
 
@@ -147,17 +147,24 @@ sub _transaction {
                 && defined(&NativeProxyImagePublication::_publish_locked))
             || ($operation eq 'retire_runtime_reference' && @payload == 2
                 && defined(&NativeProxyRuntimeRetirement::_admit_locked)
+                && defined(&NativeProxyReferenceCensus::_inspect_locked))
+            || ($operation eq 'remove_unreferenced_image' && @payload == 1
+                && defined(&NativeProxyImageMaintenance::_admit_locked)
                 && defined(&NativeProxyReferenceCensus::_inspect_locked)));
     NativeProxyImageCustody::image_key(@payload) if $operation eq 'publish_image';
     NativeProxyReferenceAcquisition::_request(@payload) if $operation eq 'acquire_runtime_reference';
     NativeProxyRuntimeRetirement::_request($case, @payload) if $operation eq 'retire_runtime_reference';
+    NativeProxyImageMaintenance::_request(@payload) if $operation eq 'remove_unreferenced_image';
     NativeProxyImageCustody::_relative_path($case);
     die "only the inactive qualification namespace is admitted\n"
         unless $case =~ /\A\Q$CASE_PREFIX\Efsmgen-[A-Za-z0-9_]+\z/;
     my $base = File::Spec->catdir($ROOT, $case);
     my $root_before = NativeProxyImageCustody::_directory($base);
     my $path = "$base/coordination.lock";
-    my $handle = $operation eq 'retire_runtime_reference' ? _open_existing_lock($path) : _open_lock($path);
+    my $existing_only = $operation eq 'retire_runtime_reference' || $operation eq 'remove_unreferenced_image';
+    my $handle = $existing_only
+        ? _open_existing_lock($path, $operation eq 'retire_runtime_reference' ? 'retirement' : 'maintenance')
+        : _open_lock($path);
     my $result;
     my $ok = eval {
         my $before = _lock_identity($handle, $path);
@@ -172,7 +179,7 @@ sub _transaction {
         die "store root replaced during acquisition\n"
             unless NativeProxyImageCustody::_same_metadata(
                 $root_before, NativeProxyImageCustody::_directory($base), 0,1,2,4);
-        _structure($base, $operation eq 'retire_runtime_reference' ? 0 : 1);
+        _structure($base, $existing_only ? 0 : 1);
         my @directories = map { NativeProxyImageCustody::_directory("$base/$_") } qw(images references);
         my $census = _census($base);
         my $publication = $operation eq 'publish_image'
@@ -202,6 +209,18 @@ sub _transaction {
             my $after = NativeProxyReferenceCensus::_inspect_locked($case, $final_census);
             $retirement = NativeProxyRuntimeRetirement::_finish_locked($case, $plan, $after);
         }
+        my $maintenance;
+        if ($operation eq 'remove_unreferenced_image') {
+            my $references = NativeProxyReferenceCensus::_inspect_locked($case, $census);
+            my $plan = NativeProxyImageMaintenance::_admit_locked($case, $census, $references, $payload[0]);
+            my $current = _census($base);
+            my $current_references = NativeProxyReferenceCensus::_inspect_locked($case, $current);
+            NativeProxyImageMaintenance::_closure_locked($case, $plan, $current, $current_references);
+            NativeProxyImageMaintenance::_remove_locked($case, $plan);
+            my $after = _census($base);
+            my $after_references = NativeProxyReferenceCensus::_inspect_locked($case, $after);
+            $maintenance = NativeProxyImageMaintenance::_finish_locked($case, $plan, $after, $after_references);
+        }
         _structure($base, 0);
         for my $i (0, 1) {
             my $name = $i ? 'references' : 'images';
@@ -228,6 +247,9 @@ sub _transaction {
             : $operation eq 'retire_runtime_reference'
             ? {schema => 'fsmgen.inactive_runtime_retirement.v1', runtime_authorized => 0,
                executable => undef, lock => $lock, %$retirement}
+            : $operation eq 'remove_unreferenced_image'
+            ? {schema => 'fsmgen.inactive_image_maintenance.v1', runtime_authorized => 0,
+               executable => undef, lock => $lock, %$maintenance}
             : {schema => 'fsmgen.inactive_image_namespace.v1',
             completeness => 'structure_only; contents_and_reference_semantics_unqualified',
             lock => $lock,
