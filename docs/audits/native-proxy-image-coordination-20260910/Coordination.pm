@@ -11,8 +11,8 @@ use Time::HiRes qw(clock_gettime CLOCK_MONOTONIC sleep);
 use FSM::Test::ProcessSupervisor qw(repository_root);
 use ImageCustody;
 
-# Inactive structure inspection only. No compiler, image publication, reference
-# release, maintenance or process-capable callback is exposed by this module.
+# Inactive checked coordination. Public inspection and the fixed internal
+# publication operation share custody; no caller callback is accepted.
 my $ROOT = repository_root();
 my $DEVICE = (stat($ROOT))[0];
 my $CASE_PREFIX = '.artifacts/tmp/native-proxy-image-custody/cases/';
@@ -123,7 +123,16 @@ sub _census {
 
 sub inspect_store {
     die "expected one inactive store root\n" unless @_ == 1;
-    my ($case) = @_;
+    return _transaction($_[0], 'inspect');
+}
+
+sub _transaction {
+    my ($case, $operation, @payload) = @_;
+    die "unknown inactive transaction\n" unless defined($operation) && !ref($operation)
+        && (($operation eq 'inspect' && !@payload)
+            || ($operation eq 'publish_image' && @payload == 2
+                && defined(&NativeProxyImagePublication::_publish_locked)));
+    NativeProxyImageCustody::image_key(@payload) if $operation eq 'publish_image';
     NativeProxyImageCustody::_relative_path($case);
     die "only the inactive qualification namespace is admitted\n"
         unless $case =~ /\A\Q$CASE_PREFIX\Efsmgen-[A-Za-z0-9_]+\z/;
@@ -145,6 +154,8 @@ sub inspect_store {
         _structure($base, 1);
         my @directories = map { NativeProxyImageCustody::_directory("$base/$_") } qw(images references);
         my $census = _census($base);
+        my $publication = $operation eq 'publish_image'
+            ? NativeProxyImagePublication::_publish_locked($case, $census, @payload) : undef;
         _structure($base, 0);
         for my $i (0, 1) {
             my $name = $i ? 'references' : 'images';
@@ -158,9 +169,13 @@ sub inspect_store {
         die "permanent lock replaced during census\n"
             unless NativeProxyImageCustody::_same_metadata(
                 $before, _lock_identity($handle, $path), 0,1,2,3,4,7);
-        $result = {schema => 'fsmgen.inactive_image_namespace.v1',
+        my $lock = {path => "$case/coordination.lock", device => $before->[0], inode => $before->[1]};
+        $result = $operation eq 'publish_image'
+            ? {schema => 'fsmgen.inactive_image_publication.v1', runtime_authorized => 0,
+               executable => undef, lock => $lock, %$publication}
+            : {schema => 'fsmgen.inactive_image_namespace.v1',
             completeness => 'structure_only; contents_and_reference_semantics_unqualified',
-            lock => {path => "$case/coordination.lock", device => $before->[0], inode => $before->[1]},
+            lock => $lock,
             %$census};
         1;
     };

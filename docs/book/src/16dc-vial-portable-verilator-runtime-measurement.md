@@ -1683,6 +1683,16 @@ scripts/run_with_ram_guard.sh -- perl docs/audits/native-proxy-image-coordinatio
 python3 -B docs/audits/native-proxy-image-coordination-20260910/audit.py
 ```
 
+Inactive publication now creates canonical files directly under that lock and
+reuses an existing image only after comparing its complete C and executable
+bytes. A first publication reports `created: 1`; exact reuse reports `created: 0`
+with the same source inodes. Both keep `runtime_authorized: 0` and
+`executable: null`. Interrupted, incomplete, colliding or replaced objects fail
+without repair or retry. Failure after sealing can leave a sealed file on disk;
+its presence grants no runtime authority. Runtime-reference acquisition remains
+the next qualification step, and the product builder still prepares private
+fixtures as described above.
+
 The helper checks bounded regular source/output files and the native header,
 then sets executable permissions through the admitted open file handle. A
 regression exposed path-based permission changes affecting a substituted file

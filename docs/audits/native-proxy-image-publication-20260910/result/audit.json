@@ -1,0 +1,67 @@
+{
+  "coordination_assertions": 67,
+  "coordination_cases": 22,
+  "falsifiers": [
+    "hidden failure",
+    "runtime authorization",
+    "runnable result",
+    "different reuse inode",
+    "changed source digest",
+    "missing interruption controls",
+    "omitted source mutant"
+  ],
+  "inputs": [
+    {
+      "path": "docs/audits/native-proxy-image-publication-20260910/Publication.pm",
+      "sha256": "dc50ca598632572616d7da65fa6f1b417a20e7207dafa5fe03fd5d887382fab6",
+      "size_bytes": 5367
+    },
+    {
+      "path": "docs/audits/native-proxy-image-publication-20260910/qualify.t",
+      "sha256": "52babd30938949ba8fe41520c4bcafc31f308beff3050010430f6102fa5e762d",
+      "size_bytes": 12840
+    },
+    {
+      "path": "docs/audits/native-proxy-image-coordination-20260910/Coordination.pm",
+      "sha256": "2ffc141ce9daf44cf3b77853e103e7f1fdeb5757d05a87c0a2117475ee0ce050",
+      "size_bytes": 8309
+    },
+    {
+      "path": "docs/audits/native-proxy-image-custody-20260910/ImageCustody.pm",
+      "sha256": "20b05813b17dffcbbac2d0216fca00456e53ceb1ac451ad672263a6788700207",
+      "size_bytes": 7953
+    },
+    {
+      "path": ".artifacts/logs/native-proxy-image-publication-20260910/qualification.json",
+      "sha256": "a9ae30b38d35b90db3d53c4bb4128460661490b305436debce6930a87bd2f59f",
+      "size_bytes": 8022
+    },
+    {
+      "path": ".artifacts/logs/native-proxy-image-publication-20260910/qualify.log",
+      "sha256": "802cd9bf8d8e6e4b424c9120ce1e4fd9563632b3fa30b713ceff41b3e94db9e2",
+      "size_bytes": 3836
+    },
+    {
+      "path": ".artifacts/logs/native-proxy-image-publication-20260910/coordination-regression.json",
+      "sha256": "01e1740e04bf63ba382991205fb5571e8457d8b0f7863c1ca62e47f793859f51",
+      "size_bytes": 4867
+    },
+    {
+      "path": ".artifacts/logs/native-proxy-image-publication-20260910/coordination-regression.tap",
+      "sha256": "ef329e264a668c1a20372bad9a9e79e3e70f198f42e61c475268d6e1edd64e3e",
+      "size_bytes": 3082
+    }
+  ],
+  "limits": [
+    "All published bytes are inert vectors, never compiled or executed.",
+    "Creation/reuse preserve observed canonical byte/inode custody without runtime authorization.",
+    "No runtime/observation references, real contention, native behavior or maintenance qualified.",
+    "Historical inode records describe retired cases; replay creates new ones.",
+    "Cooperative locking and descriptor observations do not attest loaded code or ongoing immutability against arbitrary noncooperating programs."
+  ],
+  "publication_assertions": 78,
+  "publication_cases": 19,
+  "rejection_controls": 20,
+  "schema": "fsmgen.inactive_image_publication_audit.v1",
+  "success": true
+}

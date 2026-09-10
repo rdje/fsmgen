@@ -1,0 +1,47 @@
+{
+  "durability": "Tracked sources, harness, independent audit and exact recovery files. The coordination regression result is copied into this slice before restoring its predecessor ignored JSON from the tracked exact copy; earlier evidence remains recoverable.",
+  "falsification": "Corrupt or incomplete images, key-collision model, capacity overflow, interrupted payload/seal operations, source/directory replacement and internal caller bypass reject without repair or retry. Removing the sealed-source identity guard defeats an independent creation-inode oracle. Seven altered results reject independently.",
+  "limits": [
+    "Published C/image values are inert vectors, not compiler outputs or native runtime qualification.",
+    "An interrupted post-seal image may remain executable on disk, but no failed call returns a result or runtime authority; partial data is conservatively retained until separately owned recovery.",
+    "No runtime/observation reference acquisition, actual worker contention, maintenance or product activation is qualified here.",
+    "Immutable custody is an observed cooperative protocol, not loaded-image attestation or protection against arbitrary noncooperating mutation."
+  ],
+  "owner": "HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.12.4.1.2.2.1",
+  "rederive": "Independent Python byte-key/manifest reconstruction, creation/reuse native identity joins, complete TAP audits and disjoint exact case-absence censuses. The prior coordination harness passes after transaction refinement.",
+  "schema": "fsmgen.inactive_image_publication_review.v1",
+  "selection": "Refine the qualified coordinator through fixed inspect/publish operations, never a caller callback. The publication helper is caller-sealed to that coordinator. Canonical files are created directly and verified against their writing/sealing descriptors; existing bytes are fully compared. Results explicitly grant no runtime authorization.",
+  "source_revision": "502006787cb326c8931b914b100a42d35c8f153b",
+  "unchanged_inputs": [
+    {
+      "path": "docs/audits/native-proxy-image-custody-20260910/ImageCustody.pm",
+      "sha256": "20b05813b17dffcbbac2d0216fca00456e53ceb1ac451ad672263a6788700207",
+      "size_bytes": 7953
+    },
+    {
+      "path": "docs/audits/native-proxy-image-coordination-20260910/qualify.t",
+      "sha256": "12c3e637d31af9bcf06cb4d058d8bec5e15d8d1d15e1a40de7de4f621581acd3",
+      "size_bytes": 11891
+    },
+    {
+      "path": "docs/audits/native-proxy-image-custody-20260910/audit.py",
+      "sha256": "e964855e7e9bd7abf08af58821cd93fc45425b1b7e0e57fbaa8cdd49e7ecae6a",
+      "size_bytes": 6530
+    },
+    {
+      "path": "docs/audits/native-proxy-image-coordination-20260910/audit.py",
+      "sha256": "ed7323dd97c40682ddb142d6012e06c482e815b2a40a8bf3ab99e1672e72b048",
+      "size_bytes": 5013
+    },
+    {
+      "path": "t/lib/FSM/Test/RustProxyFixture.pm",
+      "sha256": "d9c4ab52cf8074526c59b7a5dcb9da870ca7ffdacb4eb236dacb23b5db6d8bfb",
+      "size_bytes": 11466
+    },
+    {
+      "path": "perl/FSM/Support/ProcessSupervisor.pm",
+      "sha256": "684882d91f673ea7145f43ed3aad31acf099f13508574be7b2d8911123988637",
+      "size_bytes": 27990
+    }
+  ]
+}

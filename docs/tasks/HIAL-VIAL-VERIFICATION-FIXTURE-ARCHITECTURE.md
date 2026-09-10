@@ -2721,9 +2721,30 @@ decomposes the architecture needed to move beyond that bounded foundation.
   Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.12.4.1.2.1: qualify inactive lock identity and bounded namespace census`
 
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.12.4.1.2.2`
-  Status: `proposed`
+  Status: `active`
   Goal: `Qualify canonical publication and runtime-reference acquisition.`
   Acceptance: `Use the qualified coordination/custody primitives for direct canonical creation, exact compiled-byte equality, closed global/private runtime references and conservative partial state. Exercise every write/seal/publication/reference boundary and exact capacity with inert owners; preserve first failure, no fallback, no executable rename/hard links and no product activation.`
+  Verification: `Coordination 502006787cb326c8931b914b100a42d35c8f153b committed; tree clean and brief zero. Split image publication, runtime-reference acquisition and combined boundary closure into independently committed inactive leaves. No compiler, native fixture, original, collector or contention worker is authorized.`
+  Children: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.12.4.1.2.2.1, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.12.4.1.2.2.2, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.12.4.1.2.2.3`
+
+- ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.12.4.1.2.2.1`
+  Status: `done`
+  Goal: `Qualify direct canonical image publication without runtime authorization.`
+  Acceptance: `Refine only the qualified inactive coordination transaction into fixed named operations, with no caller callback and all ownership checks retained. Create canonical C, manifest and executable directly through exclusive descriptors; verify and seal bytes, reject incomplete/colliding/changed entries and capacity overflow without overwrite, hard links, executable rename, retry or fallback. Reopen and compare complete bytes under the same lock; return an image snapshot only, with no runnable preparation or runtime lease. Exercise interrupted write/seal boundaries and regress the prior lock/custody controls. Keep exact completed acceptance history bounded through its verified version manifest.`
+  Verification: `The inactive coordinator now dispatches only fixed inspection/publication operations; it keeps its qualified lock, namespace and closure checks and accepts no caller callback. Publication.pm is caller-sealed to that coordinator. It creates C, manifest and executable directly under the final canonical name through exclusive non-inheritable descriptors, reads back bounded exact bytes through the qualified source mechanism, seals through the original writer and joins final snapshots to every original sealed inode and the created directory. Existing entries require complete manifest and full actual C/image equality; hash equality alone cannot admit them. No hard links, executable rename, overwrite, repair, retry or fallback is introduced. Results explicitly set runtime_authorized to zero and executable to null; publication creates no runtime or observation reference. Re-derivation: the guarded publication harness passes 78 TAP assertions and the unchanged prior coordination harness passes 67 against the refined transaction. Independent Python key/manifest reconstruction, same-inode first/reuse joins, complete TAP/result audits and exact absence checks agree: all 19 publication and 22 coordination cases are absent and disjoint, with zero compiler/process attempts. Falsification: 20 rejection controls cover modeled key collision, capacity, incomplete/corrupt images, payload/seal interruptions, source/directory replacement and caller bypass. A removed sealed-source identity guard admits a replacement and fails the independent creation-inode oracle. Seven altered result records reject independently. Interrupted post-seal data can retain an executable file, but no failed call returns a result or runtime authority; this is conservative partial-state retention, not runnable preparation. Capacity counts incomplete objects and an equal complete image remains reusable at the image ceiling. Durability: docs/audits/native-proxy-image-publication-20260910 retains source, harness, independent audit, review and exact recovery copies; result/audit.json is 2675 bytes SHA-256 72c5e1b5158b5d73d0ce04480bd961db92bae85095f27eb7329595e63f7bde33; result/qualification.json is 8022 bytes SHA-256 a9ae30b38d35b90db3d53c4bb4128460661490b305436debce6930a87bd2f59f. The prior coordination regression writes its fixed ignored JSON; the new result is copied into this slice before that prior JSON is restored exactly from its tracked historical copy. Six unchanged foundation/auditor/product pins match 502006787cb326c8931b914b100a42d35c8f153b. The optional acceptance-history manifest now seals the exact completed custody/coordination suffix at that revision, retaining its predecessor chain with independent byte/text boundaries. All payloads are inert vectors, never real compiler output or native runtime evidence. Runtime references, observation lifetime, actual contention, maintenance and product activation remain separately open. Book rendering, knowledge-map synchronization and staged doctrines gate this slice; historical startup/parent and full CI/push remain gated.`
+  Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.12.4.1.2.2.1: qualify inactive canonical image publication`
+
+- ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.12.4.1.2.2.2`
+  Status: `proposed`
+  Goal: `Qualify closed runtime-reference acquisition and private receipts.`
+  Acceptance: `Add exact closed runtime records, independently derived keys and checked workspace/canonical-source identities. Publish global reference before the private receipt under the same coordination transaction; require exact sealed agreement before any success. Reject incorrect fields/types/paths, stale identities, incomplete copies and reference capacity; retain partial global pins and return no runnable preparation. Inert data only; no live fixture or product activation.`
+  Verification: `pending`
+  Commit: `pending`
+
+- ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.12.4.1.2.2.3`
+  Status: `proposed`
+  Goal: `Independently close publication/reference interruption and capacity boundaries.`
+  Acceptance: `Re-derive the combined inactive transaction and test each source/manifest/seal/global/private transition, first-failure retention and complete byte equality. Reject omitted custody/identity/closure checks and preserve unqualified observer, maintenance and actual-contention legs. Commit before retirement/maintenance; no compiler/native/original/collector or unadmitted worker.`
   Verification: `pending`
   Commit: `pending`
 
@@ -3745,7 +3766,7 @@ decomposes the architecture needed to move beyond that bounded foundation.
 
 ## Current Frontier
 
-Current frontier: .3.2.15.7.3.12.4.1.2.1 is qualified; .12.4.1.2.2 next adds inactive publication and runtime acquisition. Startup/parent, full CI and push stay gated.
+Current frontier: .3.2.15.7.3.12.4.1.2.2.1 is qualified; .12.4.1.2.2.2 next adds inactive runtime-reference acquisition. Startup/parent, full CI and push stay gated.
 
 Architecture audit `.1` is complete. Decision `0032` selects one public
 `.vial` source language, private immutable `VIALSemanticIR` and
@@ -6359,16 +6380,11 @@ Completed native-proxy feasibility through runtime-source-controls acceptance: r
 
 - Acceptance history manifest: `docs/tasks/history/HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE/acceptance-history.jsonl`
 
-The manifest binds the exact completed admission-through-canonical-contract acceptance suffix at `56618a320f7847338eef567c061e0cd1720d630a`. That source preserves the previous history pointer and versioned manifest; current node contracts remain authoritative.
+The manifest binds the exact completed inactive custody/coordination acceptance suffix at `502006787cb326c8931b914b100a42d35c8f153b`. That source preserves the earlier history pointer and versioned manifest chain; current node contracts remain authoritative.
 
-## Acceptance Checklist (inactive image custody .3.2.15.7.3.12.4.1.1)
 
-- [x] **ROOT CAUSE (WHY + WHERE)** — git log -S 'rust-tools' -- t/lib/FSM/Test/RustProxyFixture.pm identifies e0d74bb051465ba641227acc11975e25e5d879a7. Current preparation creates private source/image bytes; the prospective canonical protocol needs strict content keys, closed manifests and independent source custody before publication or reuse can qualify.
-- [x] **ADDRESSED (verified inactive foundation)** — The guarded inert harness and independent Python audit agree on exact byte framing, canonical records and actual snapshots. Corrupt files and same-byte inode replacements reject; removing full byte equality fails the independent corruption oracle. Isolated cases retire without compiler/native/original/collector execution; product reuse remains inactive.
-- [x] **NO REGRESSION** — The focused unchanged-reader regression reports All tests successful. Exact production pins and recovery copies agree; independent case absence is verified. Book rendering and knowledge-map: OK synchronization plus staged doctrines gate the commit. File-lock concurrency, publication, reference lifetime and native refinement remain separately owned.
+## Acceptance Checklist (inactive publication .3.2.15.7.3.12.4.1.2.2.1)
 
-## Acceptance Checklist (inactive coordination .3.2.15.7.3.12.4.1.2.1)
-
-- [x] **ROOT CAUSE (WHY + WHERE)** — git log -S 'LOCK_NB' -- perl/FSM/VIAL/ArchitectureScaleMeasurement.pm identifies c7493e3ded5899d98da22cf12fe6d6d592f3c41f. That existing measurement lock is caller-specific and immediately rejects contention; the pinned image contract requires a distinct fixed namespace and bounded acquisition policy before publication can qualify.
-- [x] **ADDRESSED (verified inactive coordination)** — Actual inert permanent-lock identities, descriptor closure and bounded namespace counts agree with independent TAP/result and residue audits. Corrupt/replaced objects and modeled deadline/errors reject. Removing identity or no-repair guards fails independent countermodels; no public callback or live worker is introduced.
-- [x] **NO REGRESSION** — The qualified foundation and selected product sources stay byte-identical to the predecessor; exact recovery copies agree. Book rendering and knowledge-map: OK synchronization plus staged doctrines gate this slice. Real contention/inheritance, complete publication/reference semantics and native behavior remain separately owned and unqualified.
+- [x] **ROOT CAUSE (WHY + WHERE)** — git log -S 'sub inspect_store' -- docs/audits/native-proxy-image-coordination-20260910/Coordination.pm identifies 502006787cb326c8931b914b100a42d35c8f153b. Qualified inspection alone cannot publish immutable content; the selected protocol needs a fixed checked transaction that preserves the created/sealed inode identities through final verification.
+- [x] **ADDRESSED (verified inactive publication)** — Actual inert first/reuse snapshots agree with independent byte/key/manifest reconstruction and preserve canonical identities. Corruption, capacity, interruptions, replacement and caller bypass reject without repair or retry. Removing sealed-source custody fails an independent creation-inode oracle; no result authorizes execution.
+- [x] **NO REGRESSION** — The prior coordination harness passes against the refined dispatcher; independent complete TAP/results and exact disjoint case-absence audits agree. Book rendering and knowledge-map: OK synchronization plus staged doctrines gate this slice. Runtime references, native behavior and actual contention remain separately owned; no product activation is implied.
