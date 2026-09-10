@@ -1,0 +1,39 @@
+{
+  "actual_capsule_absent": true,
+  "bounds_equal_fixed_literals": true,
+  "collector_launched": false,
+  "committed_checkpoint_test": "modeled read before commit; real read required after commit and by driver",
+  "compiler_launched": false,
+  "driver": {
+    "bytes": 13729,
+    "sha256": "c6a38a089cb55259c1e26c9215c8cb5512d91cbbccc62dc9da59ef9952534541"
+  },
+  "helper_launched": false,
+  "modeled_constructor_and_release": true,
+  "original_launched": false,
+  "plan": {
+    "bytes": 6505,
+    "sha256": "808ecadb137c18b0fc4501cf6eb97e6cbc4f10c58dfa4ddfc43abe128edc59ca"
+  },
+  "rejected_controls": [
+    "driver_digest",
+    "scope",
+    "count",
+    "boolean_count",
+    "bounds",
+    "entrypoint",
+    "source_pin",
+    "machine",
+    "compiler_digest",
+    "sdk_inode",
+    "changed_committed_plan",
+    "second_constructor",
+    "second_release",
+    "changed_inputs_before_release",
+    "removed_release_check",
+    "oversized_local_input",
+    "symlink_local_input"
+  ],
+  "schema": "fsmgen.native_proxy_daemon_admission_preflight.v1",
+  "source_count": 27
+}

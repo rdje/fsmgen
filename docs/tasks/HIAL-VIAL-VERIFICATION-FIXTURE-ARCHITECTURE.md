@@ -2719,11 +2719,11 @@ decomposes the architecture needed to move beyond that bounded foundation.
   Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.11.3.4.1.2: repair source lifetime controls and qualify the observer fixture band`
 
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.11.3.4.2`
-  Status: `proposed`
+  Status: `done`
   Goal: `Admit one fixed observed original at the qualified daemon-only entrypoint.`
   Acceptance: `After .1 commits, pin the exact input closure, entrypoint, original command/bounds, selection context, exclusive output ownership and stop/cleanup plan. Qualify admission without releasing an original; historical READY sessions are invalid. Name raw custody, native source/birth coverage, preparation linkage, policy calibration and independent falsification requirements and their absent legs.`
-  Verification: `pending`
-  Commit: `pending`
+  Verification: `Prospective checkpoint only: no original, compiler, live collector or helper launched. Source revision 890ee5495f50806edfd4ee81b1148e872640a706 qualifies the caller and complete fixture band. The fixed daemon_context entrypoint owns the unchanged /usr/bin/perl t/1669-task-acceptance-fixture-runtime.t command, 200-second original, 16-MiB per-file capture and existing readiness/exec/reap/census/collector limits; admission.json enumerates every literal. Exactly one constructor attempt and release are admitted, with source/selection checks before construction and inside release. Exclusive output .artifacts/logs/native-proxy-daemon-original-20260910 prevents silent retry after partial execution. Production caller retains lifecycle ownership; raw daemon context stays private. Re-derivation: controlled preflight verifies all 27 source pins against the source revision and read-only Darwin/arm64 compiler/SDK context. SDK contents are not fully censused. Falsification: 17 controls reject changed driver/plan/scope/count/bounds/entrypoint/source/host/compiler/SDK, changed committed-plan bytes, second reservation/release, changed release inputs, oversized or symlink inputs; removing the release check fails the independent modeled release oracle. Real original/collector/Evidence constructors are trapped. The committed-plan boundary is modeled before commit; actual Git byte comparison is mandatory after this checkpoint and again inside the driver before execution. Durability: docs/audits/native-proxy-daemon-original-20260910 retains exact run.py (13729 bytes, SHA-256 c6a38a089cb55259c1e26c9215c8cb5512d91cbbccc62dc9da59ef9952534541), admission.json (6505 bytes, SHA-256 808ecadb137c18b0fc4501cf6eb97e6cbc4f10c58dfa4ddfc43abe128edc59ca), controlled preflight source and its 1071-byte report SHA-256 299ddae9a2dba6c08096f9ea17c254363f4de861318747344ff83bec6fe89d3c. Recovery copies match the qualified scratch files. The preflight source uses its original scratch layout; restore those exact copies to replay controlled checks in a fresh owned namespace. Read-only installed OS/toolchain dependencies are explicit exceptions; all project output remains local. Actual preparation/native birth/source joins, original result and observed cleanup require .3; policy calibration/publication, kernel sampling, complete delivery, loaded-image attestation, host isolation and unobserved descendants remain absent or unproved. Book documents the committed-plan boundary; rendered output is verified and removed. The initial doctrine gate reaches the task-evidence warning threshold. Completed acceptance prose routes to exact predecessor Git history; live nodes and current acceptance remain, with no raised ceiling or added debt. Knowledge Map and final staged doctrines gate the commit.`
+  Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.11.3.4.2: admit one fixed daemon-only original observation`
 
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.11.3.4.3`
   Status: `proposed`
@@ -3708,7 +3708,7 @@ decomposes the architecture needed to move beyond that bounded foundation.
 
 ## Current Frontier
 
-Current frontier: .3.2.15.7.3.11.3.4.2 prospectively admits one daemon-only original after complete caller and fixture-band qualification. Startup/parent, full CI and push stay gated.
+Current frontier: .3.2.15.7.3.11.3.4.3 verifies the committed admission before one daemon-only original and independent audit. Startup/parent, full CI and push stay gated.
 
 Architecture audit `.1` is complete. Decision `0032` selects one public
 `.vial` source language, private immutable `VIALSemanticIR` and
@@ -6321,74 +6321,32 @@ Reduced-load qualification acceptance: recover every checked assertion at `26e08
 
 Native-proxy review acceptance: recover all checked assertions at `5c269071bd345dc4ece75d65fb58373b56a2edb7` in this task path; its live node retains the review outcome.
 
-## Acceptance Checklist (native-proxy feasibility .3.2.15.7.3.6)
+Acceptance Checklist (native-proxy feasibility .3.2.15.7.3.6): completed checklist and box-scoped evidence are preserved at `890ee5495f50806edfd4ee81b1148e872640a706:docs/tasks/HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.md`. Live leaf evidence remains above.
 
-- [x] **ROOT CAUSE (WHY + WHERE)** — git log -S native.executable -- scripts/fixture_kernel_sampler.py locates 7eefc961b6ec2542ecbb6a4bc76f93b799eed497. The joined OS crash report identifies the candidate failure as CODESIGNING code 4 / Launch Constraint Violation; offline signature validity does not establish runtime launch eligibility.
-- [x] **ADDRESSED (verified experiment)** — The single failed native attempt, independent wait/absence and report/UUID evidence reject copied OS binaries. The exact OS report completes copy/verify/use/delete with zero old-path residue. The next authored-fixture experiment and director-authorized autonomy are durably owned; production/test sources stay unchanged.
-- [x] **NO REGRESSION** — Book build/render cleanup, knowledge-map: OK, refreshed claim inventory and staged doctrines preserve the original failure, fixed bounds and separately open startup cause. Task integrity reconstructs every sealed terminal subtree at the exact predecessor; no live frontier is archived.
+Acceptance Checklist (authored-native feasibility .3.2.15.7.3.7): completed checklist and box-scoped evidence are preserved at `890ee5495f50806edfd4ee81b1148e872640a706:docs/tasks/HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.md`. Live leaf evidence remains above.
 
-## Acceptance Checklist (authored-native feasibility .3.2.15.7.3.7)
+Acceptance Checklist (portable proxy builder .3.2.15.7.3.8): completed checklist and box-scoped evidence are preserved at `890ee5495f50806edfd4ee81b1148e872640a706:docs/tasks/HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.md`. Live leaf evidence remains above.
 
-- [x] **ROOT CAUSE (WHY + WHERE)** — git log -S resolution-failed -- t/1669-task-acceptance-fixture-runtime.t locates 98097b6311726b0c673d0abc8cc377df09ceb0ea. Exact proxy bodies and native wait/stream evidence establish the candidate behavior; capture still requires the Perl executable chain. Historical OS startup repair is not proved.
-- [x] **ADDRESSED (verified experiment)** — Both first native invocations preserve their exact bodies and reaping/absence; compiler stages report group cleanup. Independent raw-result, input/output and altered-record checks qualify this host only. Build policy, capture, integration and original qualification have separate owners.
-- [x] **NO REGRESSION** — Book build and rendered-text assertions pass; the exact generated book is removed. knowledge-map: OK and the refreshed independent claim census agrees. Original test/runtime/capture bytes equal HEAD; no original, helper or collector was invoked.
+Acceptance Checklist (closed native capture .3.2.15.7.3.9): completed checklist and box-scoped evidence are preserved at `890ee5495f50806edfd4ee81b1148e872640a706:docs/tasks/HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.md`. Live leaf evidence remains above.
 
-## Acceptance Checklist (portable proxy builder .3.2.15.7.3.8)
+Acceptance Checklist (original proxy integration .3.2.15.7.3.10): completed checklist and box-scoped evidence are preserved at `890ee5495f50806edfd4ee81b1148e872640a706:docs/tasks/HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.md`. Live leaf evidence remains above.
 
-- [x] **ROOT CAUSE (WHY + WHERE)** — The controlled replacement reports a failed assertion at t/1815-rust-proxy-fixture.t line 232: path-based chmod changes the substituted owned file. A separate assertion proves stale Perl success. The active leaf owns both draft defects and their permanent regression.
-- [x] **ADDRESSED (verified implementation)** — Permission sealing uses the admitted open descriptor, followed by complete source-set identity checks. Final controlled and native rounds pass; exact compiler receipts, body outcomes, first failures and independent absence/cleanup evidence are retained without invoking the original test.
-- [x] **NO REGRESSION** — The final controlled and native rounds pass with independent TAP, identity, byte and cleanup audits. An in-memory changed-bound pair fails both independent per-mode assertions. Book build/rendered text and exact output cleanup pass; knowledge-map: OK. Original T1669/runtime/capture sources remain unchanged; staged doctrines gate the commit.
+Acceptance Checklist (original admission .3.2.15.7.3.11.1): completed checklist and box-scoped evidence are preserved at `890ee5495f50806edfd4ee81b1148e872640a706:docs/tasks/HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.md`. Live leaf evidence remains above.
 
-## Acceptance Checklist (closed native capture .3.2.15.7.3.9)
+Acceptance Checklist (failed original evidence .3.2.15.7.3.11.2): completed checklist and box-scoped evidence are preserved at `890ee5495f50806edfd4ee81b1148e872640a706:docs/tasks/HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.md`. Live leaf evidence remains above.
 
-- [x] **ROOT CAUSE (WHY + WHERE)** — git log -S native.executable -- scripts/fixture_kernel_sampler.py locates 7eefc961b6ec2542ecbb6a4bc76f93b799eed497. The predecessor rejects the exact native producer because every target executable had to be system Perl. Existing archival code already retains opaque bytes.
-- [x] **ADDRESSED (verified)** — The controlled native modes now retain exact ancestry, binary/C/wrapper hashes and unchanged evidence roles. Wrong commands, inputs, ownership, volume, workspace and same-birth changes reject. Removing the final source check causes the independent race controls to fail.
-- [x] **NO REGRESSION** — The default fixture Python band passes with only its existing opt-in skips and no live collector or original/authenticated launch. Book rendering, complete copied-output hash comparison and exact cleanup pass. knowledge-map: OK; the independent claim census agrees. Staged doctrines gate the commit.
+Acceptance Checklist (adapter registration .3.2.15.7.3.11.3.1): completed checklist and box-scoped evidence are preserved at `890ee5495f50806edfd4ee81b1148e872640a706:docs/tasks/HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.md`. Live leaf evidence remains above.
 
-## Acceptance Checklist (original proxy integration .3.2.15.7.3.10)
+Acceptance Checklist (implementation visibility .3.2.15.7.3.11.3.2): completed checklist and box-scoped evidence are preserved at `890ee5495f50806edfd4ee81b1148e872640a706:docs/tasks/HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.md`. Live leaf evidence remains above.
 
-- [x] **ROOT CAUSE (WHY + WHERE)** — The preserved controlled failure reports empty-stage acceptance at t/1816-rust-proxy-integration.t line 130. A separate Perl expression proves that list context removes the empty condition argument; explicit scalar context retains zero. Existing automatic allocator cleanup also could not preserve a mode with unproved compiler/runtime ownership.
-- [x] **ADDRESSED (verified)** — Final isolated integration controls pass after scalar stage counting and explicit mode ownership. Missing or invalid lifecycle evidence preserves files. A copied control with retirement admission disabled fails exactly the independently expected cleanup scenarios. The original negative assertions and fixed watcher policy remain.
-- [x] **NO REGRESSION** — Original syntax checking and focused sampler/allocator controls pass; independent full TAP and native birth checks agree. Book rendering and exact output removal pass; knowledge-map: OK. The original runtime and compiler were not invoked, and their separate qualification remains open. Staged doctrines gate the commit.
+Acceptance Checklist (preparation diagnostics .3.2.15.7.3.11.3.3): completed checklist and box-scoped evidence are preserved at `890ee5495f50806edfd4ee81b1148e872640a706:docs/tasks/HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.md`. Live leaf evidence remains above.
 
-## Acceptance Checklist (original admission .3.2.15.7.3.11.1)
+Acceptance Checklist (unprivileged daemon caller .3.2.15.7.3.11.3.4.1.1): completed checklist and box-scoped evidence are preserved at `890ee5495f50806edfd4ee81b1148e872640a706:docs/tasks/HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.md`. Live leaf evidence remains above.
 
-- [x] **ROOT CAUSE (WHY + WHERE)** — git log -S 'use FSM::Test::RustProxyFixture' -- t/1669-task-acceptance-fixture-runtime.t locates e27b609d3fdc6ef823584f7726be9715ec28f535. Its builder/C input and observed native-selection context must accompany the integrated original qualification.
-- [x] **ADDRESSED (verified)** — Frozen plan/input pins match the integration commit. Static admission has one constructor and release, and isolated context controls accept current inputs while rejecting changed machine, compiler digest and SDK inode. Exact recovery copies match the admitted driver and metadata; no original is launched.
-- [x] **NO REGRESSION** — Book rendering and exact generated-output cleanup pass; knowledge-map: OK. Existing tracked original and gated-owner sources are unchanged from the integration commit. Staged doctrines gate the prospective checkpoint.
+Acceptance Checklist (runtime source controls .3.2.15.7.3.11.3.4.1.2): completed checklist and box-scoped evidence are preserved at `890ee5495f50806edfd4ee81b1148e872640a706:docs/tasks/HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.md`. Live leaf evidence remains above.
 
-## Acceptance Checklist (failed original evidence .3.2.15.7.3.11.2)
+## Acceptance Checklist (daemon-original admission .3.2.15.7.3.11.3.4.2)
 
-- [x] **ROOT CAUSE (WHY + WHERE)** — Preserved architecture diagnostics identify the missing RustProxyFixture registration at t/1669-task-acceptance-fixture-runtime.t line 993. Startup causes remain unproved: both Rust controls time out without output and legacy main-entry witnesses are absent.
-- [x] **ADDRESSED (verified)** — Freeze the complete first failed original, identify exact failed roots independently and own the concrete registration repair plus startup visibility follow-up. Altered retained result/cleanup/plan controls reject without another original. This closes evidence custody, not the test failures.
-- [x] **NO REGRESSION** — Independent TAP, input, root-birth and directory checks agree; complete original receipts are copied exactly into Git-owned evidence. Book rendering/cleanup pass; knowledge-map: OK. No source repair, retry or widened limit is hidden in this evidence slice.
-
-## Acceptance Checklist (adapter registration .3.2.15.7.3.11.3.1)
-
-- [x] **ROOT CAUSE (WHY + WHERE)** — The focused predecessor fails at t/1817-test-supervision-architecture.t line 61, reproducing the original missing-holder census. RustProxyFixture already implements a sealed compiler policy but was absent from the explicit approved adapter list.
-- [x] **ADDRESSED (verified)** — Adding exactly that holder makes the original architecture fragment pass independently. Inert source-reader changes still reject unauthorized adapter and direct-test ownership at the exact expected boundaries; inspected disk files stay unchanged.
-- [x] **NO REGRESSION** — Independent full TAP, final input pins and native owner absence agree; the focused final stderr is empty. Book rendering/cleanup pass; knowledge-map: OK. The failed original is preserved without retry, and no runtime policy or deadline changes.
-
-## Acceptance Checklist (implementation visibility .3.2.15.7.3.11.3.2)
-
-- [x] **ROOT CAUSE (WHY + WHERE)** — git log -S 'diag explain $prepared' -- t/1669-task-acceptance-fixture-runtime.t locates e27b609d3fdc6ef823584f7726be9715ec28f535. Preparation details are printed only on preparation failure; the frozen successful-preparation TAP and later failed-runtime diagnostics contain no preparation receipt.
-- [x] **ADDRESSED (verified audit)** — The selected interpreter directly reports native without launching a fixture or compiler. Independent frozen-record inspection rejects substituting that current result for missing historical producer evidence. The next owned repair preserves complete preparation receipts before runtime and qualifies ordering through inert controls.
-- [x] **NO REGRESSION** — Probe input hashes remain exact and the native root birth is reaped/absent. Book rendering and exact generated-output removal pass; knowledge-map: OK. Existing original, builder and runtime sources stay unchanged. The initial staged gate required this fresh checklist for book authority configuration; it is now explicit.
-
-## Acceptance Checklist (preparation diagnostics .3.2.15.7.3.11.3.3)
-
-- [x] **ROOT CAUSE (WHY + WHERE)** — The pre-repair controls fail at t/1816-rust-proxy-integration.t line 177 and line 184: successful preparation records are absent, and wrapper execution precedes any receipt. Frozen original diagnostics independently preserve that omission.
-- [x] **ADDRESSED (verified)** — Complete canonical preparation is emitted before success/failure handling or wrapper execution. Native, Perl and failed-preparation controls pass. In-memory incomplete and late receipt mutations fail the exact independent completeness/order boundaries without modifying original disk bytes.
-- [x] **NO REGRESSION** — Full focused TAP, input and native absence audits agree; lifecycle and architecture controls pass with empty stderr. The original syntax OK result is retained. Book and knowledge-map: OK synchronization plus staged doctrines gate the commit; no original or compiler execution is hidden in the checks.
-
-## Acceptance Checklist (unprivileged daemon caller .3.2.15.7.3.11.3.4.1.1)
-
-- [x] **ROOT CAUSE (WHY + WHERE)** — git log -S 'POLICY_SCOPE = "execution_context"' -- scripts/run_fixture_startup_policy_observation.py identifies the fixed narrower caller. The new trapped daemon boundary initially raises TypeError for the unsupported scope keyword without constructing a collector or original.
-- [x] **ADDRESSED (verified)** — The fixed daemon CLI reuses the existing unprivileged lifecycle. Both selected scopes pass held-body and cleanup controls; missing/changed readiness rejects before launch and changed retained scope/command rejects after settlement. Removing readiness admission fails the independent controls.
-- [x] **NO REGRESSION** — Focused scope/lifecycle controls pass; independent full-band census retains the two stale source-control failures and their immediate repair owner. No new observer failure is hidden or original admitted. Book and knowledge-map: OK synchronization plus staged doctrines gate this caller commit; parent fixture qualification stays open.
-
-## Acceptance Checklist (runtime source controls .3.2.15.7.3.11.3.4.1.2)
-
-- [x] **ROOT CAUSE (WHY + WHERE)** — git log -S 'my $mode_workspace = File::Temp->newdir' -- t/1669-task-acceptance-fixture-runtime.t locates e27b609d3fdc6ef823584f7726be9715ec28f535. The retained full-band failures show an empty-stage model rejected by the original and a mutation still targeting the retired allocator; source snapshots also assumed files survive explicit retirement.
-- [x] **ADDRESSED (verified)** — Real allocation, portable preparation and retirement now accompany inert no-process results, with compilation trapped. Actual proxy-byte substitution fails the independent lifetime oracle. The former empty-stage failure stays failed while exact control-owned fallback cleanup removes its workspace.
-- [x] **NO REGRESSION** — The complete fixture band passes with only live opt-in skips and zero trapped live/forbidden attempts; independent test-row and final source/empty-root audits agree. Book and knowledge-map: OK synchronization plus staged doctrines gate the commit. Production original, builder and observer sources are unchanged.
+- [x] **ROOT CAUSE (WHY + WHERE)** — git log -S 'POLICY_SCOPE = "execution_context"' -- scripts/run_fixture_startup_policy_observation.py identifies d7c41d957c1d4a08902148831e21252d4b411465. The narrower historical caller omits daemon context; the qualified fixed daemon caller needs a prospective source-bound execution checkpoint.
+- [x] **ADDRESSED (verified)** — Exact driver, plan and controlled preflight are preserved for the single observed original. Changed admission/input data and repeated reservation/release reject; removal of the release recheck fails the independent oracle. Real owner construction is trapped during this checkpoint.
+- [x] **NO REGRESSION** — Fixed production bounds and source pins agree; the actual run namespace remains absent. Book rendering and knowledge-map: OK synchronization plus staged doctrines gate the checkpoint. Actual Git plan equality is required after commit before the separately owned execution.

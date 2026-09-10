@@ -1068,6 +1068,15 @@ policy bytes, observed source archives and separate owner results. It supplies
 no kernel sample, portable archive publication, complete-delivery claim or
 loaded-image attestation. Those are separate evidence requirements.
 
+For a task-scoped observation, commit the admission driver and plan before
+execution. The driver compares its own bytes and the adjacent plan with Git,
+checks the selected source and toolchain inputs again before release, and
+reserves an exclusive output directory. A partial attempt consumes that
+reservation. Controlled admission checks use inert owners; they do not count
+as an observed original. Audit the retained original result, preparation
+receipts, observed producer births and source bytes independently afterward.
+A healthy collector alone does not establish those joins.
+
 Both scopes are checked with held bodies while live collection and authentication
 are trapped in the focused controls:
 
