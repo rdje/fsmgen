@@ -1,0 +1,187 @@
+{
+  "bounds": {
+    "collector_limit": 1,
+    "collector_output_bytes_per_file": 16777216,
+    "collector_reap_seconds": 2,
+    "collector_seconds": 240,
+    "collector_start_seconds": 10,
+    "compiler_capture_bytes": 4096,
+    "compiler_seconds": 10,
+    "held_body_seconds": 1,
+    "native_control_limit": 2,
+    "native_owner_seconds": 10,
+    "native_path_observation_seconds": 5,
+    "original_limit": 0,
+    "owner_output_bytes_per_file": 65536,
+    "preparation_owner_limit": 1,
+    "preparation_owner_seconds": 40,
+    "ready_seconds": 10,
+    "reap_seconds": 2
+  },
+  "capsule": ".artifacts/logs/native-proxy-hardlink-20260910",
+  "control": "held_path_observation_only",
+  "limitations": {
+    "cold_host_state": "unproved",
+    "complete_policy_delivery": "unproved",
+    "fixture": "distinct held control; original and shipped fixture are not executed",
+    "historical_startup_repair": "unproved",
+    "host_isolation": "unproved",
+    "image_store": "not_implemented",
+    "loaded_image_attestation": "not_provided",
+    "scan_avoidance": "not_claimed",
+    "unobserved_descendants": "unknown"
+  },
+  "producers": {
+    "build.pl": {
+      "bytes": 1870,
+      "sha256": "09121784d7cede1139677ee488134144fb83792cd6cec95eb89f4e98281c2015"
+    },
+    "held.c": {
+      "bytes": 686,
+      "sha256": "0cd6f9ffc129d25ea51aab69a5536ac8d48dc3b4a79a6f72b7f09148094beaf3"
+    },
+    "run.py": {
+      "bytes": 30905,
+      "sha256": "0515de97158633aab0e789d37d00fb9e73ca573f7e79d3a158431ad61a8508de"
+    }
+  },
+  "read_only_external_dependencies": "Installed Perl/Python/Git, CLT compiler/SDK, libproc and OS log service are required read-only external dependencies; all project data stays on the repository volume.",
+  "roles": [
+    "prepare",
+    "a",
+    "b"
+  ],
+  "schema": "fsmgen.native_hardlink_admission.v1",
+  "scope": "daemon_context",
+  "selection_context": {
+    "compiler": {
+      "bytes": 290664032,
+      "path": "/Library/Developer/CommandLineTools/usr/bin/clang",
+      "sha256": "f30550eab15fdf5ab8c0dc54c52679711241e5d4b636b027e18c09fef531775d"
+    },
+    "machine": "arm64",
+    "sdk": {
+      "contents": "not_fully_censused",
+      "device": 16777232,
+      "inode": 224015058,
+      "path": "/Library/Developer/CommandLineTools/SDKs/MacOSX26.5.sdk"
+    },
+    "sysname": "Darwin"
+  },
+  "source_pins": {
+    "perl/FSM/ProjectDataLocality.pm": {
+      "bytes": 6017,
+      "sha256": "14aece4a50b35956bc2585099aa8d26753942288663c641922da9d36ad4bc893"
+    },
+    "perl/FSM/Support/ProcessSupervisor.pm": {
+      "bytes": 27990,
+      "sha256": "684882d91f673ea7145f43ed3aad31acf099f13508574be7b2d8911123988637"
+    },
+    "perl/FSM/Support/ProcessSupervisor/Connection.pm": {
+      "bytes": 10710,
+      "sha256": "6dd92a76f94ad04ebab067c404ba5616bb554e269c16e56884c6935621e70746"
+    },
+    "perl/FSM/Support/ProcessSupervisor/Endpoint.pm": {
+      "bytes": 17264,
+      "sha256": "c5b565909e529c2374ecb88b535331577d13fedb303e01f0537e3d280dcd0974"
+    },
+    "perl/FSM/Support/ProcessSupervisor/Service.pm": {
+      "bytes": 14225,
+      "sha256": "cec90c24ed115e87332db029b9331a2adc5ec5bf3f627122b4b319e796b92e38"
+    },
+    "perl/FSM/Support/ProcessSupervisor/Wire.pm": {
+      "bytes": 20037,
+      "sha256": "12905a5209c025fc361f15caf75f91a8eb5893fc4b4db75188d03284ba41fe03"
+    },
+    "scripts/fixture_kernel_sampler.py": {
+      "bytes": 22040,
+      "sha256": "50c94165893b74b758c560f561ff744f294683812a26b429071ef43009aac2dc"
+    },
+    "scripts/fixture_policy_log.py": {
+      "bytes": 12764,
+      "sha256": "ed3db21b5fffbed8073fbbe7d80982062e914c974f2f5512e781ce4f9eb8812c"
+    },
+    "scripts/observe_fixture_startup.py": {
+      "bytes": 25563,
+      "sha256": "05144eb1ebd86ebf132ad36b86b4c93b23687db928fc369f633615f0b870fe06"
+    },
+    "scripts/project_data_locality_env.sh": {
+      "bytes": 3052,
+      "sha256": "188e19b30d312f97289b2e6634555fc294075910eb56f981b00bd191d648584b"
+    },
+    "scripts/run_fixture_startup_observation.py": {
+      "bytes": 17614,
+      "sha256": "a793b6b81b6954aa49cd9e9b0a67045844c334862927b3946b492fcf4dccdafb"
+    },
+    "scripts/run_with_ram_guard.sh": {
+      "bytes": 10500,
+      "sha256": "ade1e6930d696a3abba0899244b1dd0ef4fc289f3b5c33ac2ff8ead96c1312af"
+    },
+    "t/1669-task-acceptance-fixture-runtime.t": {
+      "bytes": 67582,
+      "sha256": "bdebbf03308cd5e0699324f9ab96a249c11c9ab05634309569d33874391a196f"
+    },
+    "t/fixtures/rust-tool-proxy.c": {
+      "bytes": 721,
+      "sha256": "be8b66690a93c8432c0f33094ac15c26f7fef0940c18f6935fd5b0994d9f4ede"
+    },
+    "t/lib/FSM/Test/CompositionNets.pm": {
+      "bytes": 1856,
+      "sha256": "9f75d9e3d2f56587fd8d547ff404d75335aab2759bd9fff1e731f6ec887594b4"
+    },
+    "t/lib/FSM/Test/DefensiveCopyAudit.pm": {
+      "bytes": 4134,
+      "sha256": "7ef2fcb5810cf07e4308ed5ae3ba99e941d575c4ae765b7733eb553fea91beae"
+    },
+    "t/lib/FSM/Test/HostedCorpusShard.pm": {
+      "bytes": 2963,
+      "sha256": "8e52011ef7b5ff696445bad16f20c733cee2cd6a727b957813cbaf4f60b1f485"
+    },
+    "t/lib/FSM/Test/OSVVMRuntimePersistedRequest.pm": {
+      "bytes": 8915,
+      "sha256": "2d0eaec50b2844dc330208fce953f25c44a09ffaa9af1feb1b05265bd663e504"
+    },
+    "t/lib/FSM/Test/ProcessSupervisor.pm": {
+      "bytes": 773,
+      "sha256": "52e467023ea8a776167e227a767abdd3dddf185f1f7c539aac8ca1c4a0a06680"
+    },
+    "t/lib/FSM/Test/ProjectDataLocality.pm": {
+      "bytes": 198,
+      "sha256": "8fe6472c61717d8619554ede193c05a16ea4d15706379712585a6cc3f49273c6"
+    },
+    "t/lib/FSM/Test/RamGuardFixtureRuntime.pm": {
+      "bytes": 7162,
+      "sha256": "304fb6f17cce6d31a42ce378c75bb3ee01916d4e213da4c304d56e2dbd439c9c"
+    },
+    "t/lib/FSM/Test/RegressionCorpus.pm": {
+      "bytes": 384,
+      "sha256": "fae6af3568c0978970e8085f86a660a9b1790ca4b738b8ff08964be16e718521"
+    },
+    "t/lib/FSM/Test/RustParityRuntime.pm": {
+      "bytes": 10526,
+      "sha256": "10441706cb8b189f14b791b92f75f6e37f8d72aeb8b722457bac79ebda149eaa"
+    },
+    "t/lib/FSM/Test/RustProxyFixture.pm": {
+      "bytes": 11466,
+      "sha256": "d9c4ab52cf8074526c59b7a5dcb9da870ca7ffdacb4eb236dacb23b5db6d8bfb"
+    },
+    "t/lib/FSM/Test/T296Checkpoint.pm": {
+      "bytes": 9190,
+      "sha256": "18a22d0d65011fa3bfa3fe20a0378cf644d2861474a8375bcff2ceb7a4b37e6b"
+    },
+    "t/lib/FSM/Test/TaskAcceptanceFixtureRuntime.pm": {
+      "bytes": 6284,
+      "sha256": "d97a669eb15346874b6ef8525a1860c315279c5f7c7763d366d69d3cf7e1dde7"
+    },
+    "t/lib/FSM/Test/VerilatorRuntime.pm": {
+      "bytes": 4438,
+      "sha256": "36dcf875785bd0aea3422e647c02dbe765a47e249ef6476e3cdbdc454f96538a"
+    }
+  },
+  "source_revision": "dd7d2b5370326380b7b84846a09dfa969c7e6605",
+  "workspaces": {
+    "a": ".artifacts/tmp/process-supervisor-tests/fsmgen-HardlinkA20260910",
+    "b": ".artifacts/tmp/process-supervisor-tests/fsmgen-HardlinkB20260910",
+    "base": ".artifacts/tmp/process-supervisor-tests/fsmgen-HardlinkBase20260910"
+  }
+}

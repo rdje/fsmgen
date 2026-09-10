@@ -1,0 +1,87 @@
+{
+  "bounds_match_independent_literals": true,
+  "collector_invocations": 0,
+  "committed_byte_verification": "modeled here; actual Git read required after commit",
+  "compiler_invocations": 0,
+  "live_capsule_and_workspaces_absent": true,
+  "native_control_invocations": 0,
+  "native_hardlink_behavior": "unqualified; model files and native observations were inert",
+  "original_invocations": 0,
+  "plan": {
+    "bytes": 6939,
+    "sha256": "8e01756dc4797e28ab889ded1e051f16f3e7ff6eaf621d3d7771d85433b3caaa"
+  },
+  "producers": {
+    "build.pl": {
+      "bytes": 1870,
+      "sha256": "09121784d7cede1139677ee488134144fb83792cd6cec95eb89f4e98281c2015"
+    },
+    "held.c": {
+      "bytes": 686,
+      "sha256": "0cd6f9ffc129d25ea51aab69a5536ac8d48dc3b4a79a6f72b7f09148094beaf3"
+    },
+    "run.py": {
+      "bytes": 30905,
+      "sha256": "0515de97158633aab0e789d37d00fb9e73ca573f7e79d3a158431ad61a8508de"
+    }
+  },
+  "qualified_controls": [
+    "closed_plan_and_committed_byte_witness",
+    "inert_preparation_custody_alias_lifetime_and_native_path_oracle",
+    "actual_owner_wrapper_sequence_failure_latch_and_partial_constructor_cleanup",
+    "removed_release_and_native_path_checks_fail_independent_oracles",
+    "first_failure_stops_all_later_sequence_steps"
+  ],
+  "real_fork_attempts": 0,
+  "real_subprocess_attempts_in_controls": 0,
+  "rejected_controls": [
+    "extra_key",
+    "scope",
+    "role_order",
+    "original_limit",
+    "boolean_limit",
+    "compiler_wall",
+    "producer",
+    "workspace",
+    "control_kind",
+    "scope_claim",
+    "changed_source",
+    "changed_compiler",
+    "changed_sdk",
+    "scratch_execution",
+    "changed_committed_control",
+    "incomplete_cleanup",
+    "boolean_cleanup",
+    "compiler_arguments",
+    "source_inode",
+    "compile_timeout",
+    "compiler_descendant",
+    "changed_permissions",
+    "changed_held_body",
+    "same_inode_wrong_native_path",
+    "removed_native_path_guard",
+    "changed_native_birth",
+    "fourth_owner",
+    "changed_release",
+    "changed_release_closes_admission",
+    "wrong_exit",
+    "wrong_exit_closes_admission",
+    "constructor_failure",
+    "constructor_failure_closes_admission",
+    "observation_failure",
+    "observation_failure_closes_admission",
+    "actual_release_rechecks_input",
+    "removed_release_input_guard",
+    "sequence_prepare",
+    "sequence_collector_constructor",
+    "sequence_collector_prepare",
+    "sequence_readiness_record",
+    "sequence_run_a",
+    "sequence_retire_a",
+    "sequence_verify_b",
+    "sequence_run_b",
+    "sequence_retire_b"
+  ],
+  "schema": "fsmgen.native_hardlink_preflight.v1",
+  "source_count": 27
+}
