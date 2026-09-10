@@ -1623,7 +1623,8 @@ reports the implementation and selection reason, root-relative executable and
 source identities, and the complete compilation result and command when used.
 
 On arm64 macOS with the installed Command Line Tools compiler and SDK, it
-builds the native fixture. Other platforms and unavailable native tooling keep
+compiles a fresh native image for each mode preparation. The receipt binds
+that invocation’s output. Other platforms and unavailable native tooling keep
 the original selected-Perl bodies; no control is skipped. Once native compilation
 is selected, failure cannot trigger a Perl fallback or retry. Compilation uses
 a fixed ten-second wall and 4096-byte aggregate capture. Caller compiler flags

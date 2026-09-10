@@ -1,0 +1,90 @@
+{
+  "alternatives": [
+    {
+      "choice": "skip_compilation_using_current_snapshot",
+      "disposition": "not_selected",
+      "reason": "SDK inode and compiler bytes do not represent every build dependency; no complete input manifest exists."
+    },
+    {
+      "choice": "copy_reused_image_to_fresh_inode",
+      "disposition": "not_selected",
+      "reason": "The retained qualified identical image bytes at fresh paths/inodes do not establish a causal improvement."
+    },
+    {
+      "choice": "execute_directly_from_shared_canonical_path",
+      "disposition": "defer",
+      "reason": "Changes current source/path admission, path-filtered collectors and delayed/concurrent policy attribution; first test whether private-path hard links preserve the existing contract."
+    }
+  ],
+  "candidate": {
+    "cleanup": "Private mode retirement removes its own link after existing cleanup; retained immutable store lifetime needs separately owned maintenance.",
+    "compile": "Keep current selected compiler, source, arguments, environment and bounds on every preparation.",
+    "failure": "Compile, collision, identity, capacity, hard-link or admission failures remain failures. No first-run prewarming, automatic retry, deadline extension or copying fallback.",
+    "identity": "Use generated C bytes and actual completed executable bytes; compare bytes through checked descriptors before reuse. A changed output selects a distinct image.",
+    "materialization": "Prefer a same-volume hard link at the existing per-mode rust-tools/rustup path if native path and source-custody behavior qualify.",
+    "name": "compile_then_reuse_identical_image",
+    "not_claimed": "No cache hit, policy-scan avoidance, performance gain, complete build-input attestation or historical startup repair is established.",
+    "publication": "A fixed repository-local private store may retain immutable image inodes, with exclusive publication and bounded capacity; do not overwrite or evict live identities."
+  },
+  "established_constraints": [
+    "The builder compiles each generated mode in one private workspace and seals its descriptor before returning.",
+    "The resolver canonicalizes Cargo and chooses its rustup branch by the resulting basename; installed-utility symlinks were already rejected.",
+    "The sampler requires the exact private workspace rustup executable path and archives binary/C/wrapper identities before and after inspection.",
+    "Mode retirement removes only its private workspace after every admitted compiler/runtime owner reports cleanup.",
+    "The current compiler/SDK snapshot is not a complete compiler/linker dependency manifest.",
+    "The recorded native output hashes repeat across qualified preparations, but fresh paths still receive policy scans."
+  ],
+  "implementation": "none; prospective design only",
+  "inputs": {
+    "scripts/fixture_kernel_sampler.py": {
+      "bytes": 22040,
+      "sha256": "50c94165893b74b758c560f561ff744f294683812a26b429071ef43009aac2dc"
+    },
+    "scripts/fixture_policy_log.py": {
+      "bytes": 12764,
+      "sha256": "ed3db21b5fffbed8073fbbe7d80982062e914c974f2f5512e781ce4f9eb8812c"
+    },
+    "scripts/observe_fixture_startup.py": {
+      "bytes": 25563,
+      "sha256": "05144eb1ebd86ebf132ad36b86b4c93b23687db928fc369f633615f0b870fe06"
+    },
+    "t/1669-task-acceptance-fixture-runtime.t": {
+      "bytes": 67582,
+      "sha256": "bdebbf03308cd5e0699324f9ab96a249c11c9ab05634309569d33874391a196f"
+    },
+    "t/fixtures/rust-tool-proxy.c": {
+      "bytes": 721,
+      "sha256": "be8b66690a93c8432c0f33094ac15c26f7fef0940c18f6935fd5b0994d9f4ede"
+    },
+    "t/lib/FSM/Test/RustParityRuntime.pm": {
+      "bytes": 10526,
+      "sha256": "10441706cb8b189f14b791b92f75f6e37f8d72aeb8b722457bac79ebda149eaa"
+    },
+    "t/lib/FSM/Test/RustProxyFixture.pm": {
+      "bytes": 11466,
+      "sha256": "d9c4ab52cf8074526c59b7a5dcb9da870ca7ffdacb4eb236dacb23b5db6d8bfb"
+    }
+  },
+  "next_experiment": {
+    "admission": "Qualify source/binary/argv/deadline/native-birth/collector bounds and exact invocation count before any execution. A held purpose-built path-control may be needed to observe fast exec; it is not an original fixture qualification.",
+    "counterexamples": [
+      "changed inode or bytes",
+      "wrong observed executable path",
+      "changed C-mode binding",
+      "existing-name or poisoned image",
+      "link retirement changing surviving image bytes",
+      "first unexpected native outcome",
+      "missing collector delivery"
+    ],
+    "first_use": "Retain cold and reuse outcomes separately. Stop at first unexpected failure; a later pass must never replace it. No original test is selected.",
+    "owner": "HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.12.2",
+    "questions": [
+      "Does native process path observation retain the invoked private hard-link path?",
+      "Does unchanged shared-inode reuse preserve source/mode permissions and independent link retirement?",
+      "What policy events are actually retained for each fixed use, without promoting absent logs to scan absence?"
+    ]
+  },
+  "original_compiler_collector_or_fixture_launched": false,
+  "schema": "fsmgen.native_proxy_reuse_design.v1",
+  "source_revision": "9228120fa5fd415a6295e4d403230622eea699cb"
+}
