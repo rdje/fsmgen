@@ -2670,11 +2670,11 @@ decomposes the architecture needed to move beyond that bounded foundation.
   Commit: `pending`
 
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.11.3.1`
-  Status: `proposed`
+  Status: `done`
   Goal: `Register the sealed Rust proxy compiler adapter and expose focused architecture regression.`
-  Acceptance: `Add only RustProxyFixture to the explicit approved test-adapter census, retaining the closed production/caller/direct-test boundaries. Extract or reuse the original architecture guard as a fast isolated check so future sealed-adapter changes need not launch unrelated startup-sensitive tests. Reproduce the current missing registration, prove the corrected census, and independently reject injected unauthorized ownership without modifying real source files or launching processes. Commit before further startup investigation; no original retry or deadline change.`
-  Verification: `pending committed failed-original evidence`
-  Commit: `pending`
+  Acceptance: `Add only RustProxyFixture to the explicit approved test-adapter census, retaining the closed production/caller/direct-test boundaries. Extract or reuse the original architecture guard as a fast isolated check so future sealed-adapter changes need not launch unrelated startup-sensitive tests. Reproduce the current missing registration, prove the corrected census, and independently reject injected unauthorized ownership without modifying real source files or launching fixture/compiler/original processes. Commit before further startup investigation; no original retry or deadline change.`
+  Verification: `Repairs the concrete architecture omission preserved at 60a96724bdaeb7a1f1d15e48020fdc52e7aed1a1 by adding only t/lib/FSM/Test/RustProxyFixture.pm to T1669's explicit approved adapter list. Production, caller and direct-test boundaries remain unchanged. T1817 executes the original architecture fragment and capture-error helper with isolated assertion recording; localized source-reader injections add unauthorized adapter/direct-test ownership as inert text without altering real files. Re-derivation: the pre-fix focused run reproduces missing registration (failed roots 1 and 3, rc2/wait512); its harmless dynamic-glob once warning is retained. The final run scopes intentional alias warnings and passes all 3 roots with empty stderr. Final PID50228 parent50107 birth1789031700.132708, uid/ruid501, rc0/wait0, no timeout, reaped and independently absent. Final TAP is 935 bytes SHA-256 eeeb875d7624616f1cc58a25c887d102f07482b3e8a74fff02facf778b49ca5c; pre-fix TAP is 951 bytes SHA-256 4cf059e6dd3e345f40c53d8240c67b880072f8fd40305f8cc632809b25c4a8df. Independent TAP::Parser and raw root rows agree with exact before/after outcomes and no parse errors. Falsification: added source-only ownership in ProjectDataLocality.pm and T1595 rejects at the exact respective architecture assertions while on-disk bytes remain unchanged. Durability: tracked T1817 retains both falsifiers and the original canonical guard; task/book/fact retain the fixed boundary. .artifacts/logs/native-proxy-architecture-20260910/audit.json is 2125 bytes SHA-256 6cb3f456babc23edcf4adcafd7115ed742e66b0a1267536fea782814ad15583b. Final admitted input pins agree; ignored raw focused receipts have an explicit availability gap. The original failure remains frozen in Git and was never reexecuted; no compiler/runtime fixture is launched. Book rendering passes and the exact 98-file/23073033-byte output is removed. Knowledge Map and claim census synchronize without raising ceilings. This fixes registration only; .3.2 owns startup implementation visibility and its next evidence-backed action. Startup/parent, full CI and push stay open.`
+  Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.11.3.1: register sealed proxy adapter and isolate architecture guard`
 
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.11.3.2`
   Status: `proposed`
@@ -3652,7 +3652,7 @@ decomposes the architecture needed to move beyond that bounded foundation.
 
 ## Current Frontier
 
-Current frontier: .3.2.15.7.3.11.2 preserves a failed original and exact audit; .11.3.1 fixes the missing sealed-adapter registration, then .11.3.2 resolves startup visibility. Startup/parent, full CI and push stay gated.
+Current frontier: .3.2.15.7.3.11.3.1 fixes the sealed-adapter registration with isolated hostile checks; .11.3.2 resolves startup implementation visibility and the next evidence-backed action. Startup/parent, full CI and push stay gated.
 
 Architecture audit `.1` is complete. Decision `0032` selects one public
 `.vial` source language, private immutable `VIALSemanticIR` and
@@ -6306,3 +6306,9 @@ Native-proxy review acceptance: recover all checked assertions at `5c269071bd345
 - [x] **ROOT CAUSE (WHY + WHERE)** — Preserved architecture diagnostics identify the missing RustProxyFixture registration at t/1669-task-acceptance-fixture-runtime.t line 993. Startup causes remain unproved: both Rust controls time out without output and legacy main-entry witnesses are absent.
 - [x] **ADDRESSED (verified)** — Freeze the complete first failed original, identify exact failed roots independently and own the concrete registration repair plus startup visibility follow-up. Altered retained result/cleanup/plan controls reject without another original. This closes evidence custody, not the test failures.
 - [x] **NO REGRESSION** — Independent TAP, input, root-birth and directory checks agree; complete original receipts are copied exactly into Git-owned evidence. Book rendering/cleanup pass; knowledge-map: OK. No source repair, retry or widened limit is hidden in this evidence slice.
+
+## Acceptance Checklist (adapter registration .3.2.15.7.3.11.3.1)
+
+- [x] **ROOT CAUSE (WHY + WHERE)** — The focused predecessor fails at t/1817-test-supervision-architecture.t line 61, reproducing the original missing-holder census. RustProxyFixture already implements a sealed compiler policy but was absent from the explicit approved adapter list.
+- [x] **ADDRESSED (verified)** — Adding exactly that holder makes the original architecture fragment pass independently. Inert source-reader changes still reject unauthorized adapter and direct-test ownership at the exact expected boundaries; inspected disk files stay unchanged.
+- [x] **NO REGRESSION** — Independent full TAP, final input pins and native owner absence agree; the focused final stderr is empty. Book rendering/cleanup pass; knowledge-map: OK. The failed original is preserved without retry, and no runtime policy or deadline changes.

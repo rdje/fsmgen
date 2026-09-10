@@ -994,6 +994,7 @@ subtest 'policy adapters exclusively own low-level test supervision' => sub {
         [qw(
             t/lib/FSM/Test/RamGuardFixtureRuntime.pm
             t/lib/FSM/Test/RustParityRuntime.pm
+            t/lib/FSM/Test/RustProxyFixture.pm
             t/lib/FSM/Test/TaskAcceptanceFixtureRuntime.pm
             t/lib/FSM/Test/VerilatorRuntime.pm
         )],

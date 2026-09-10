@@ -1668,14 +1668,24 @@ There is no authenticated capture or collector in this functional qualification.
 The admitted original failed. Rust proxy resolution timed out with empty
 streams; legacy controls also missed their main-entry witnesses. The architecture
 guard exposed a concrete integration omission: its explicit adapter list did
-not yet include `RustProxyFixture`. That registration needs correction before
-the integrated test can qualify. The original was reaped, input and observed
+not yet include `RustProxyFixture`. That registration is now corrected; startup
+qualification remains open. The original was reaped, input and observed
 selection pins stayed unchanged, and checked fixture directories were empty.
 Complete failed TAP, diagnostics and independent audit are retained with the
 frozen admission. No retry was performed. Producer implementation was inferred
 by admission, so these results do not prove a native-image startup cause or
-repair the historical delay. The next owned work fixes the adapter registration
-and resolves the remaining observation gaps.
+repair the historical delay. The next owned work resolves the remaining
+observation gaps.
+
+The focused architecture check executes the existing original guard without
+starting its runtime fixtures. It checks the current approved adapters and
+rejects source-only injections of an unauthorized adapter or direct test caller;
+the real inspected files remain unchanged. Use it when changing a sealed test
+adapter, before any separately admitted original qualification:
+
+```bash
+scripts/run_with_ram_guard.sh -- prove -Iperl -It/lib t/1817-test-supervision-architecture.t
+```
 
 Shared evidence publication now anchors file creation, linking and temporary
 cleanup to open directory descriptors. A controlled directory-replacement test
