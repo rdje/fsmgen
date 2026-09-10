@@ -1951,6 +1951,20 @@ scripts/run_with_ram_guard.sh -- perl docs/audits/native-proxy-namespace-reader-
 python3 -B docs/audits/native-proxy-namespace-reader-20260911/audit.py --qualification
 ```
 
+The inactive image-member reader applies the same error and cleanup discipline
+while requiring exactly `image.json`, `rustup`, and `rustup.c`. Even an error
+reported after all three expected names rejects the inspection. Empty,
+incomplete, unknown, and over-capacity membership still reject. Read or capacity
+failure explicitly closes the directory while preserving the original cause.
+Direct-helper controls preserve the earlier ignored-error and retained-handle
+baseline; they do not establish incomplete-image acceptance through the full
+reader. Replay:
+
+```bash
+scripts/run_with_ram_guard.sh -- perl docs/audits/native-proxy-image-members-20260911/qualify.t --qualification
+python3 -B docs/audits/native-proxy-image-members-20260911/audit.py --qualification
+```
+
 The helper checks bounded regular source/output files and the native header,
 then sets executable permissions through the admitted open file handle. A
 regression exposed path-based permission changes affecting a substituted file

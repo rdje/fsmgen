@@ -1,0 +1,30 @@
+ok 1 - normal: qualification outcome and explicit directory disposition
+ok 2 - normal: exact state and observer recovery
+ok 3 - empty: qualification outcome and explicit directory disposition
+ok 4 - empty: exact state and observer recovery
+ok 5 - incomplete: qualification outcome and explicit directory disposition
+ok 6 - incomplete: exact state and observer recovery
+ok 7 - unknown: qualification outcome and explicit directory disposition
+ok 8 - unknown: exact state and observer recovery
+ok 9 - stale_errno: qualification outcome and explicit directory disposition
+ok 10 - stale_errno: exact state and observer recovery
+ok 11 - capacity: qualification outcome and explicit directory disposition
+ok 12 - capacity: exact state and observer recovery
+ok 13 - capacity_and_close: qualification outcome and explicit directory disposition
+ok 14 - capacity_and_close: exact state and observer recovery
+ok 15 - read_entry: qualification outcome and explicit directory disposition
+ok 16 - read_entry: exact state and observer recovery
+ok 17 - read_after_one: qualification outcome and explicit directory disposition
+ok 18 - read_after_one: exact state and observer recovery
+ok 19 - read_after_all: qualification outcome and explicit directory disposition
+ok 20 - read_after_all: exact state and observer recovery
+ok 21 - read_and_close: qualification outcome and explicit directory disposition
+ok 22 - read_and_close: exact state and observer recovery
+ok 23 - close_error: qualification outcome and explicit directory disposition
+ok 24 - close_error: exact state and observer recovery
+ok 25 - omit_directory_close: the omitted guard is observable
+ok 26 - omit_directory_close: observer recovers unchanged fixture
+ok 27 - omit_read_error_check: the omitted guard is observable
+ok 28 - omit_read_error_check: observer recovers unchanged fixture
+ok 29 - no process attempt
+1..29

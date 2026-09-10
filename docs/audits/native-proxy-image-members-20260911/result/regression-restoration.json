@@ -1,0 +1,53 @@
+{
+  "all_byte_exact": true,
+  "restored": [
+    {
+      "bytes": 8112,
+      "mode": 256,
+      "path": ".artifacts/logs/native-proxy-image-custody-20260910/qualification.json",
+      "sha256": "00933670c3298a0e02ba1ea3b32de91837ad853c1d67186d7528884bd92a8b0b"
+    },
+    {
+      "bytes": 8022,
+      "mode": 384,
+      "path": ".artifacts/logs/native-proxy-image-publication-20260910/qualification.json",
+      "sha256": "a9ae30b38d35b90db3d53c4bb4128460661490b305436debce6930a87bd2f59f"
+    },
+    {
+      "bytes": 962984,
+      "mode": 384,
+      "path": ".artifacts/logs/native-proxy-combined-census-20260910/qualification.json",
+      "sha256": "2f7c1df823e40f7c2885d331cd93145c54b28eafe35aff58aa2375b834297d59"
+    },
+    {
+      "bytes": 4125,
+      "mode": 384,
+      "path": ".artifacts/logs/native-proxy-combined-census-20260910/admission.jsonl",
+      "sha256": "e8e78ace00b3e75dca69248af5193a3c6bbda664625ab6fedf42f7352774f7e8"
+    },
+    {
+      "bytes": 30412207,
+      "mode": 384,
+      "path": ".artifacts/logs/native-proxy-observation-snapshot-cuts-20260910/qualification.json",
+      "sha256": "a523b08bad6f2fc7b120ab8157da30ad0046f4d63e5a3c0f6fa047b3564ba222"
+    },
+    {
+      "bytes": 88580,
+      "mode": 384,
+      "path": ".artifacts/logs/native-proxy-observation-snapshot-cuts-20260910/admission.jsonl",
+      "sha256": "5930b2e9b43ffd38a07ff001abd45f72e4dd701fb0069393162464c617f3460e"
+    },
+    {
+      "bytes": 19351593,
+      "mode": 384,
+      "path": ".artifacts/logs/native-proxy-observation-snapshot-cuts-20260910/rows.jsonl",
+      "sha256": "a78443c2125908d8a9c26a39efeec72a0a75ee0ed1999da1380bdb6f9696c699"
+    },
+    {
+      "bytes": 141,
+      "mode": 384,
+      "path": ".artifacts/logs/native-proxy-observation-snapshot-cuts-20260910/progress.json",
+      "sha256": "0edfb9d4be8f79d2533e1b64c534d1229d06d79e8f9e659cd6985d122a558406"
+    }
+  ]
+}

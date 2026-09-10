@@ -1,0 +1,36 @@
+ok 1 - empty retains every owner without filesystem mutation
+ok 2 - observation_only retains every owner without filesystem mutation
+ok 3 - mixed_images retains every owner without filesystem mutation
+ok 4 - mixed_capacity retains every owner without filesystem mutation
+ok 5 - combined capacity excess
+ok 6 - extra observation field
+ok 7 - merged observation fields
+ok 8 - birth integer boolean
+ok 9 - birth key mismatch
+ok 10 - source content mismatch
+ok 11 - source length mismatch
+ok 12 - source order
+ok 13 - absent image
+ok 14 - unknown schema
+ok 15 - missing schema
+ok 16 - boolean schema
+ok 17 - runtime fields relabeled as observation
+ok 18 - wrong filename
+ok 19 - duplicate member
+ok 20 - partial JSON
+ok 21 - writable reference
+ok 22 - hardlinked reference
+ok 23 - legacy inspection rejects observation
+ok 24 - observation pin blocks maintenance
+ok 25 - direct inspection bypass
+ok 26 - extra argument
+ok 27 - late reference_replaced fails without repair
+ok 28 - late reference_bytes_changed fails without repair
+ok 29 - late reference_added fails without repair
+ok 30 - late image_replaced fails without repair
+ok 31 - late image_directory_replaced fails without repair
+ok 32 - omitted content join admits independently invalid observation
+ok 33 - omitted filename join admits independently invalid observation
+ok 34 - inferred observation schema admits independently invalid observation
+ok 35 - no compiler or fixture process attempt
+1..35

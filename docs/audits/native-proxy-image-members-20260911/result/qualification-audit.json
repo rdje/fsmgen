@@ -1,0 +1,23 @@
+{
+  "allocations": 14,
+  "assertions": 29,
+  "cases": 12,
+  "completed": true,
+  "falsifiers": [
+    "false qualification",
+    "lost allocation",
+    "lost read calls",
+    "invented directory identity",
+    "lost observer close",
+    "changed member bytes",
+    "forbidden process"
+  ],
+  "limits": "Finite synchronous direct image-membership controls with actual directory descriptors and modeled read/close errors. No ordinary lexical-cleanup leak, incomplete-image acceptance through the complete reader, asynchronous crash, complete coordinator matrix, native ownership or product activation is established.",
+  "mutants": [
+    "omit_directory_close",
+    "omit_read_error_check"
+  ],
+  "phase": "qualification",
+  "qualified": true,
+  "schema": "fsmgen.inactive_image_member_audit.v1"
+}

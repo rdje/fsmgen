@@ -1,0 +1,47 @@
+{
+  "all_copies_byte_exact": true,
+  "files": [
+    {
+      "destination": "docs/audits/native-proxy-image-members-20260911/result/baseline.json",
+      "sha256": "fd7950334e2cb3f6980fe66d2100b6d7287362cf24d17ed86d283357cb9e2fb7",
+      "size_bytes": 21796,
+      "source": ".artifacts/logs/native-proxy-image-members-20260911/baseline.json"
+    },
+    {
+      "destination": "docs/audits/native-proxy-image-members-20260911/result/baseline-admission.jsonl",
+      "sha256": "2c7e0b7d03cafb681d1b9e8706e9a1472d8183171863ce4d669e5d1a002a8c15",
+      "size_bytes": 440,
+      "source": ".artifacts/logs/native-proxy-image-members-20260911/baseline-admission.jsonl"
+    },
+    {
+      "destination": "docs/audits/native-proxy-image-members-20260911/result/baseline.tap",
+      "sha256": "d5b156df7d7a81c87f5e781b4cef5bb9b1afdd7b848909779f55d57be86b863e",
+      "size_bytes": 539,
+      "source": ".artifacts/logs/native-proxy-image-members-20260911/baseline.tap"
+    },
+    {
+      "destination": "docs/audits/native-proxy-image-members-20260911/result/baseline.stderr",
+      "sha256": "9f573733a2c103ca4ea1451c9dab2de93da8da8003debc6c8bbb265d8fab69c5",
+      "size_bytes": 91,
+      "source": ".artifacts/logs/native-proxy-image-members-20260911/baseline.stderr"
+    },
+    {
+      "destination": "docs/audits/native-proxy-image-members-20260911/result/baseline-audit.json",
+      "sha256": "f17c75dd8eb58473ed0382ecfcd7228da3200806f1aaab6bdc0e91f5c07331c2",
+      "size_bytes": 729,
+      "source": ".artifacts/logs/native-proxy-image-members-20260911/baseline-audit.json"
+    },
+    {
+      "destination": "docs/audits/native-proxy-image-members-20260911/result/baseline-pins.json",
+      "sha256": "4d70bb4499bccde2540e28c2f5976c9a3a4b8977c03a17f503d40595a805a270",
+      "size_bytes": 737,
+      "source": ".artifacts/logs/native-proxy-image-members-20260911/baseline-pins.json"
+    },
+    {
+      "destination": "docs/audits/native-proxy-image-members-20260911/result/ImageCustody.pm.baseline-source",
+      "sha256": "8f5961d40a8f9235ab07e8adde91337ece585ae850e91858a1074597461a88c3",
+      "size_bytes": 8326,
+      "source": ".artifacts/logs/native-proxy-image-members-20260911/ImageCustody.pm.baseline-source"
+    }
+  ]
+}

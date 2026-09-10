@@ -1,0 +1,2413 @@
+{
+   "allocated" : [
+      {
+         "device" : 16777244,
+         "inode" : 77033068,
+         "path" : ".artifacts/tmp/native-proxy-image-custody/cases/fsmgen-5CK6gkLz"
+      },
+      {
+         "device" : 16777244,
+         "inode" : 77033072,
+         "path" : ".artifacts/tmp/native-proxy-image-custody/cases/fsmgen-ThCHvwjV"
+      },
+      {
+         "device" : 16777244,
+         "inode" : 77033073,
+         "path" : ".artifacts/tmp/native-proxy-image-custody/cases/fsmgen-uVLJtiCX"
+      },
+      {
+         "device" : 16777244,
+         "inode" : 77033076,
+         "path" : ".artifacts/tmp/native-proxy-image-custody/cases/fsmgen-e4vTWovq"
+      },
+      {
+         "device" : 16777244,
+         "inode" : 77033080,
+         "path" : ".artifacts/tmp/native-proxy-image-custody/cases/fsmgen-kRIxF3dQ"
+      },
+      {
+         "device" : 16777244,
+         "inode" : 77033084,
+         "path" : ".artifacts/tmp/native-proxy-image-custody/cases/fsmgen-kVyYt0PT"
+      },
+      {
+         "device" : 16777244,
+         "inode" : 77033089,
+         "path" : ".artifacts/tmp/native-proxy-image-custody/cases/fsmgen-BnKyww8O"
+      },
+      {
+         "device" : 16777244,
+         "inode" : 77033094,
+         "path" : ".artifacts/tmp/native-proxy-image-custody/cases/fsmgen-gqclyssD"
+      },
+      {
+         "device" : 16777244,
+         "inode" : 77033098,
+         "path" : ".artifacts/tmp/native-proxy-image-custody/cases/fsmgen-jrGa4TvA"
+      },
+      {
+         "device" : 16777244,
+         "inode" : 77033102,
+         "path" : ".artifacts/tmp/native-proxy-image-custody/cases/fsmgen-zNMZ1DDC"
+      },
+      {
+         "device" : 16777244,
+         "inode" : 77033106,
+         "path" : ".artifacts/tmp/native-proxy-image-custody/cases/fsmgen-_y1T7_M8"
+      },
+      {
+         "device" : 16777244,
+         "inode" : 77033110,
+         "path" : ".artifacts/tmp/native-proxy-image-custody/cases/fsmgen-ANzqyDI8"
+      },
+      {
+         "device" : 16777244,
+         "inode" : 77033114,
+         "path" : ".artifacts/tmp/native-proxy-image-custody/cases/fsmgen-z2yZxUg9"
+      },
+      {
+         "device" : 16777244,
+         "inode" : 77033119,
+         "path" : ".artifacts/tmp/native-proxy-image-custody/cases/fsmgen-_rOWgVLr"
+      }
+   ],
+   "cases" : [
+      {
+         "actual_members" : [
+            "rustup.c",
+            "rustup",
+            "image.json"
+         ],
+         "after" : {
+            "" : {
+               "device" : 16777244,
+               "inode" : 77033068,
+               "kind" : "directory",
+               "mode" : 448,
+               "uid" : 501
+            },
+            "image.json" : {
+               "bytes" : "manifest\n",
+               "device" : 16777244,
+               "inode" : 77033069,
+               "kind" : "file",
+               "links" : 1,
+               "mode" : 256,
+               "sha256" : "7021e610a5f62eefd01830fea68e5fa180e8cf017c08ea0890c326b2854ebc96",
+               "size_bytes" : 9,
+               "uid" : 501
+            },
+            "rustup" : {
+               "bytes" : "image\n",
+               "device" : 16777244,
+               "inode" : 77033070,
+               "kind" : "file",
+               "links" : 1,
+               "mode" : 256,
+               "sha256" : "254eddf15d9534e3b20c55469077aa2f24f167aa4b897a36381d3e251e4829c2",
+               "size_bytes" : 6,
+               "uid" : 501
+            },
+            "rustup.c" : {
+               "bytes" : "c\n",
+               "device" : 16777244,
+               "inode" : 77033071,
+               "kind" : "file",
+               "links" : 1,
+               "mode" : 256,
+               "sha256" : "a3a5e715f0cc574a73c3f9bebb6bc24f32ffd5b67b387244c2c909da779a1478",
+               "size_bytes" : 2,
+               "uid" : 501
+            }
+         },
+         "allocation" : {
+            "device" : 16777244,
+            "inode" : 77033068,
+            "path" : ".artifacts/tmp/native-proxy-image-custody/cases/fsmgen-5CK6gkLz"
+         },
+         "allocation_absent" : 1,
+         "before" : {
+            "" : {
+               "device" : 16777244,
+               "inode" : 77033068,
+               "kind" : "directory",
+               "mode" : 448,
+               "uid" : 501
+            },
+            "image.json" : {
+               "bytes" : "manifest\n",
+               "device" : 16777244,
+               "inode" : 77033069,
+               "kind" : "file",
+               "links" : 1,
+               "mode" : 256,
+               "sha256" : "7021e610a5f62eefd01830fea68e5fa180e8cf017c08ea0890c326b2854ebc96",
+               "size_bytes" : 9,
+               "uid" : 501
+            },
+            "rustup" : {
+               "bytes" : "image\n",
+               "device" : 16777244,
+               "inode" : 77033070,
+               "kind" : "file",
+               "links" : 1,
+               "mode" : 256,
+               "sha256" : "254eddf15d9534e3b20c55469077aa2f24f167aa4b897a36381d3e251e4829c2",
+               "size_bytes" : 6,
+               "uid" : 501
+            },
+            "rustup.c" : {
+               "bytes" : "c\n",
+               "device" : 16777244,
+               "inode" : 77033071,
+               "kind" : "file",
+               "links" : 1,
+               "mode" : 256,
+               "sha256" : "a3a5e715f0cc574a73c3f9bebb6bc24f32ffd5b67b387244c2c909da779a1478",
+               "size_bytes" : 2,
+               "uid" : 501
+            }
+         },
+         "calls" : [
+            {
+               "errno" : 0,
+               "kind" : "open",
+               "returned" : 1
+            },
+            {
+               "entry" : ".",
+               "errno" : 0,
+               "incoming_errno" : 0,
+               "injected" : 0,
+               "kind" : "read"
+            },
+            {
+               "entry" : "..",
+               "errno" : 0,
+               "incoming_errno" : 0,
+               "injected" : 0,
+               "kind" : "read"
+            },
+            {
+               "entry" : "rustup.c",
+               "errno" : 0,
+               "incoming_errno" : 0,
+               "injected" : 0,
+               "kind" : "read"
+            },
+            {
+               "entry" : "rustup",
+               "errno" : 0,
+               "incoming_errno" : 0,
+               "injected" : 0,
+               "kind" : "read"
+            },
+            {
+               "entry" : "image.json",
+               "errno" : 0,
+               "incoming_errno" : 0,
+               "injected" : 0,
+               "kind" : "read"
+            },
+            {
+               "entry" : null,
+               "errno" : 0,
+               "incoming_errno" : 0,
+               "injected" : 0,
+               "kind" : "read"
+            },
+            {
+               "actual_close" : 1,
+               "errno" : 0,
+               "kind" : "close",
+               "returned" : 1
+            }
+         ],
+         "error" : "",
+         "fault" : "normal",
+         "handles" : [
+            {
+               "closed_after_recovery" : 1,
+               "closed_before_recovery" : 1,
+               "descriptor" : 3,
+               "identity" : {
+                  "device" : 16777244,
+                  "inode" : 77033068,
+                  "mode" : 448,
+                  "uid" : 501
+               },
+               "observer_close_ok" : 1,
+               "observer_closed" : 1,
+               "observer_descriptor" : 4,
+               "path" : ".artifacts/tmp/native-proxy-image-custody/cases/fsmgen-5CK6gkLz",
+               "recovery_close_ok" : null
+            }
+         ],
+         "name" : "normal",
+         "read_error_injected" : 0,
+         "returned" : 1
+      },
+      {
+         "actual_members" : [],
+         "after" : {
+            "" : {
+               "device" : 16777244,
+               "inode" : 77033072,
+               "kind" : "directory",
+               "mode" : 448,
+               "uid" : 501
+            }
+         },
+         "allocation" : {
+            "device" : 16777244,
+            "inode" : 77033072,
+            "path" : ".artifacts/tmp/native-proxy-image-custody/cases/fsmgen-ThCHvwjV"
+         },
+         "allocation_absent" : 1,
+         "before" : {
+            "" : {
+               "device" : 16777244,
+               "inode" : 77033072,
+               "kind" : "directory",
+               "mode" : 448,
+               "uid" : 501
+            }
+         },
+         "calls" : [
+            {
+               "errno" : 25,
+               "kind" : "open",
+               "returned" : 1
+            },
+            {
+               "entry" : ".",
+               "errno" : 0,
+               "incoming_errno" : 0,
+               "injected" : 0,
+               "kind" : "read"
+            },
+            {
+               "entry" : "..",
+               "errno" : 0,
+               "incoming_errno" : 0,
+               "injected" : 0,
+               "kind" : "read"
+            },
+            {
+               "entry" : null,
+               "errno" : 0,
+               "incoming_errno" : 0,
+               "injected" : 0,
+               "kind" : "read"
+            },
+            {
+               "actual_close" : 1,
+               "errno" : 0,
+               "kind" : "close",
+               "returned" : 1
+            }
+         ],
+         "error" : "incomplete or unknown image members\n",
+         "fault" : "empty",
+         "handles" : [
+            {
+               "closed_after_recovery" : 1,
+               "closed_before_recovery" : 1,
+               "descriptor" : 3,
+               "identity" : {
+                  "device" : 16777244,
+                  "inode" : 77033072,
+                  "mode" : 448,
+                  "uid" : 501
+               },
+               "observer_close_ok" : 1,
+               "observer_closed" : 1,
+               "observer_descriptor" : 4,
+               "path" : ".artifacts/tmp/native-proxy-image-custody/cases/fsmgen-ThCHvwjV",
+               "recovery_close_ok" : null
+            }
+         ],
+         "name" : "empty",
+         "read_error_injected" : 0,
+         "returned" : 0
+      },
+      {
+         "actual_members" : [
+            "rustup",
+            "image.json"
+         ],
+         "after" : {
+            "" : {
+               "device" : 16777244,
+               "inode" : 77033073,
+               "kind" : "directory",
+               "mode" : 448,
+               "uid" : 501
+            },
+            "image.json" : {
+               "bytes" : "manifest\n",
+               "device" : 16777244,
+               "inode" : 77033074,
+               "kind" : "file",
+               "links" : 1,
+               "mode" : 256,
+               "sha256" : "7021e610a5f62eefd01830fea68e5fa180e8cf017c08ea0890c326b2854ebc96",
+               "size_bytes" : 9,
+               "uid" : 501
+            },
+            "rustup" : {
+               "bytes" : "image\n",
+               "device" : 16777244,
+               "inode" : 77033075,
+               "kind" : "file",
+               "links" : 1,
+               "mode" : 256,
+               "sha256" : "254eddf15d9534e3b20c55469077aa2f24f167aa4b897a36381d3e251e4829c2",
+               "size_bytes" : 6,
+               "uid" : 501
+            }
+         },
+         "allocation" : {
+            "device" : 16777244,
+            "inode" : 77033073,
+            "path" : ".artifacts/tmp/native-proxy-image-custody/cases/fsmgen-uVLJtiCX"
+         },
+         "allocation_absent" : 1,
+         "before" : {
+            "" : {
+               "device" : 16777244,
+               "inode" : 77033073,
+               "kind" : "directory",
+               "mode" : 448,
+               "uid" : 501
+            },
+            "image.json" : {
+               "bytes" : "manifest\n",
+               "device" : 16777244,
+               "inode" : 77033074,
+               "kind" : "file",
+               "links" : 1,
+               "mode" : 256,
+               "sha256" : "7021e610a5f62eefd01830fea68e5fa180e8cf017c08ea0890c326b2854ebc96",
+               "size_bytes" : 9,
+               "uid" : 501
+            },
+            "rustup" : {
+               "bytes" : "image\n",
+               "device" : 16777244,
+               "inode" : 77033075,
+               "kind" : "file",
+               "links" : 1,
+               "mode" : 256,
+               "sha256" : "254eddf15d9534e3b20c55469077aa2f24f167aa4b897a36381d3e251e4829c2",
+               "size_bytes" : 6,
+               "uid" : 501
+            }
+         },
+         "calls" : [
+            {
+               "errno" : 0,
+               "kind" : "open",
+               "returned" : 1
+            },
+            {
+               "entry" : ".",
+               "errno" : 0,
+               "incoming_errno" : 0,
+               "injected" : 0,
+               "kind" : "read"
+            },
+            {
+               "entry" : "..",
+               "errno" : 0,
+               "incoming_errno" : 0,
+               "injected" : 0,
+               "kind" : "read"
+            },
+            {
+               "entry" : "rustup",
+               "errno" : 0,
+               "incoming_errno" : 0,
+               "injected" : 0,
+               "kind" : "read"
+            },
+            {
+               "entry" : "image.json",
+               "errno" : 0,
+               "incoming_errno" : 0,
+               "injected" : 0,
+               "kind" : "read"
+            },
+            {
+               "entry" : null,
+               "errno" : 0,
+               "incoming_errno" : 0,
+               "injected" : 0,
+               "kind" : "read"
+            },
+            {
+               "actual_close" : 1,
+               "errno" : 0,
+               "kind" : "close",
+               "returned" : 1
+            }
+         ],
+         "error" : "incomplete or unknown image members\n",
+         "fault" : "incomplete",
+         "handles" : [
+            {
+               "closed_after_recovery" : 1,
+               "closed_before_recovery" : 1,
+               "descriptor" : 3,
+               "identity" : {
+                  "device" : 16777244,
+                  "inode" : 77033073,
+                  "mode" : 448,
+                  "uid" : 501
+               },
+               "observer_close_ok" : 1,
+               "observer_closed" : 1,
+               "observer_descriptor" : 4,
+               "path" : ".artifacts/tmp/native-proxy-image-custody/cases/fsmgen-uVLJtiCX",
+               "recovery_close_ok" : null
+            }
+         ],
+         "name" : "incomplete",
+         "read_error_injected" : 0,
+         "returned" : 0
+      },
+      {
+         "actual_members" : [
+            "rustup",
+            "extra",
+            "image.json"
+         ],
+         "after" : {
+            "" : {
+               "device" : 16777244,
+               "inode" : 77033076,
+               "kind" : "directory",
+               "mode" : 448,
+               "uid" : 501
+            },
+            "extra" : {
+               "bytes" : "extra\n",
+               "device" : 16777244,
+               "inode" : 77033077,
+               "kind" : "file",
+               "links" : 1,
+               "mode" : 256,
+               "sha256" : "65110ea3b8b62b0c09742c368bf1527f0978b06dff7a1371ef7b4c98e244d91a",
+               "size_bytes" : 6,
+               "uid" : 501
+            },
+            "image.json" : {
+               "bytes" : "manifest\n",
+               "device" : 16777244,
+               "inode" : 77033078,
+               "kind" : "file",
+               "links" : 1,
+               "mode" : 256,
+               "sha256" : "7021e610a5f62eefd01830fea68e5fa180e8cf017c08ea0890c326b2854ebc96",
+               "size_bytes" : 9,
+               "uid" : 501
+            },
+            "rustup" : {
+               "bytes" : "image\n",
+               "device" : 16777244,
+               "inode" : 77033079,
+               "kind" : "file",
+               "links" : 1,
+               "mode" : 256,
+               "sha256" : "254eddf15d9534e3b20c55469077aa2f24f167aa4b897a36381d3e251e4829c2",
+               "size_bytes" : 6,
+               "uid" : 501
+            }
+         },
+         "allocation" : {
+            "device" : 16777244,
+            "inode" : 77033076,
+            "path" : ".artifacts/tmp/native-proxy-image-custody/cases/fsmgen-e4vTWovq"
+         },
+         "allocation_absent" : 1,
+         "before" : {
+            "" : {
+               "device" : 16777244,
+               "inode" : 77033076,
+               "kind" : "directory",
+               "mode" : 448,
+               "uid" : 501
+            },
+            "extra" : {
+               "bytes" : "extra\n",
+               "device" : 16777244,
+               "inode" : 77033077,
+               "kind" : "file",
+               "links" : 1,
+               "mode" : 256,
+               "sha256" : "65110ea3b8b62b0c09742c368bf1527f0978b06dff7a1371ef7b4c98e244d91a",
+               "size_bytes" : 6,
+               "uid" : 501
+            },
+            "image.json" : {
+               "bytes" : "manifest\n",
+               "device" : 16777244,
+               "inode" : 77033078,
+               "kind" : "file",
+               "links" : 1,
+               "mode" : 256,
+               "sha256" : "7021e610a5f62eefd01830fea68e5fa180e8cf017c08ea0890c326b2854ebc96",
+               "size_bytes" : 9,
+               "uid" : 501
+            },
+            "rustup" : {
+               "bytes" : "image\n",
+               "device" : 16777244,
+               "inode" : 77033079,
+               "kind" : "file",
+               "links" : 1,
+               "mode" : 256,
+               "sha256" : "254eddf15d9534e3b20c55469077aa2f24f167aa4b897a36381d3e251e4829c2",
+               "size_bytes" : 6,
+               "uid" : 501
+            }
+         },
+         "calls" : [
+            {
+               "errno" : 0,
+               "kind" : "open",
+               "returned" : 1
+            },
+            {
+               "entry" : ".",
+               "errno" : 0,
+               "incoming_errno" : 0,
+               "injected" : 0,
+               "kind" : "read"
+            },
+            {
+               "entry" : "..",
+               "errno" : 0,
+               "incoming_errno" : 0,
+               "injected" : 0,
+               "kind" : "read"
+            },
+            {
+               "entry" : "rustup",
+               "errno" : 0,
+               "incoming_errno" : 0,
+               "injected" : 0,
+               "kind" : "read"
+            },
+            {
+               "entry" : "extra",
+               "errno" : 0,
+               "incoming_errno" : 0,
+               "injected" : 0,
+               "kind" : "read"
+            },
+            {
+               "entry" : "image.json",
+               "errno" : 0,
+               "incoming_errno" : 0,
+               "injected" : 0,
+               "kind" : "read"
+            },
+            {
+               "entry" : null,
+               "errno" : 0,
+               "incoming_errno" : 0,
+               "injected" : 0,
+               "kind" : "read"
+            },
+            {
+               "actual_close" : 1,
+               "errno" : 0,
+               "kind" : "close",
+               "returned" : 1
+            }
+         ],
+         "error" : "incomplete or unknown image members\n",
+         "fault" : "unknown",
+         "handles" : [
+            {
+               "closed_after_recovery" : 1,
+               "closed_before_recovery" : 1,
+               "descriptor" : 3,
+               "identity" : {
+                  "device" : 16777244,
+                  "inode" : 77033076,
+                  "mode" : 448,
+                  "uid" : 501
+               },
+               "observer_close_ok" : 1,
+               "observer_closed" : 1,
+               "observer_descriptor" : 4,
+               "path" : ".artifacts/tmp/native-proxy-image-custody/cases/fsmgen-e4vTWovq",
+               "recovery_close_ok" : null
+            }
+         ],
+         "name" : "unknown",
+         "read_error_injected" : 0,
+         "returned" : 0
+      },
+      {
+         "actual_members" : [
+            "rustup.c",
+            "rustup",
+            "image.json"
+         ],
+         "after" : {
+            "" : {
+               "device" : 16777244,
+               "inode" : 77033080,
+               "kind" : "directory",
+               "mode" : 448,
+               "uid" : 501
+            },
+            "image.json" : {
+               "bytes" : "manifest\n",
+               "device" : 16777244,
+               "inode" : 77033081,
+               "kind" : "file",
+               "links" : 1,
+               "mode" : 256,
+               "sha256" : "7021e610a5f62eefd01830fea68e5fa180e8cf017c08ea0890c326b2854ebc96",
+               "size_bytes" : 9,
+               "uid" : 501
+            },
+            "rustup" : {
+               "bytes" : "image\n",
+               "device" : 16777244,
+               "inode" : 77033082,
+               "kind" : "file",
+               "links" : 1,
+               "mode" : 256,
+               "sha256" : "254eddf15d9534e3b20c55469077aa2f24f167aa4b897a36381d3e251e4829c2",
+               "size_bytes" : 6,
+               "uid" : 501
+            },
+            "rustup.c" : {
+               "bytes" : "c\n",
+               "device" : 16777244,
+               "inode" : 77033083,
+               "kind" : "file",
+               "links" : 1,
+               "mode" : 256,
+               "sha256" : "a3a5e715f0cc574a73c3f9bebb6bc24f32ffd5b67b387244c2c909da779a1478",
+               "size_bytes" : 2,
+               "uid" : 501
+            }
+         },
+         "allocation" : {
+            "device" : 16777244,
+            "inode" : 77033080,
+            "path" : ".artifacts/tmp/native-proxy-image-custody/cases/fsmgen-kRIxF3dQ"
+         },
+         "allocation_absent" : 1,
+         "before" : {
+            "" : {
+               "device" : 16777244,
+               "inode" : 77033080,
+               "kind" : "directory",
+               "mode" : 448,
+               "uid" : 501
+            },
+            "image.json" : {
+               "bytes" : "manifest\n",
+               "device" : 16777244,
+               "inode" : 77033081,
+               "kind" : "file",
+               "links" : 1,
+               "mode" : 256,
+               "sha256" : "7021e610a5f62eefd01830fea68e5fa180e8cf017c08ea0890c326b2854ebc96",
+               "size_bytes" : 9,
+               "uid" : 501
+            },
+            "rustup" : {
+               "bytes" : "image\n",
+               "device" : 16777244,
+               "inode" : 77033082,
+               "kind" : "file",
+               "links" : 1,
+               "mode" : 256,
+               "sha256" : "254eddf15d9534e3b20c55469077aa2f24f167aa4b897a36381d3e251e4829c2",
+               "size_bytes" : 6,
+               "uid" : 501
+            },
+            "rustup.c" : {
+               "bytes" : "c\n",
+               "device" : 16777244,
+               "inode" : 77033083,
+               "kind" : "file",
+               "links" : 1,
+               "mode" : 256,
+               "sha256" : "a3a5e715f0cc574a73c3f9bebb6bc24f32ffd5b67b387244c2c909da779a1478",
+               "size_bytes" : 2,
+               "uid" : 501
+            }
+         },
+         "calls" : [
+            {
+               "errno" : 5,
+               "kind" : "open",
+               "returned" : 1
+            },
+            {
+               "entry" : ".",
+               "errno" : 0,
+               "incoming_errno" : 0,
+               "injected" : 0,
+               "kind" : "read"
+            },
+            {
+               "entry" : "..",
+               "errno" : 0,
+               "incoming_errno" : 0,
+               "injected" : 0,
+               "kind" : "read"
+            },
+            {
+               "entry" : "rustup.c",
+               "errno" : 0,
+               "incoming_errno" : 0,
+               "injected" : 0,
+               "kind" : "read"
+            },
+            {
+               "entry" : "rustup",
+               "errno" : 0,
+               "incoming_errno" : 0,
+               "injected" : 0,
+               "kind" : "read"
+            },
+            {
+               "entry" : "image.json",
+               "errno" : 0,
+               "incoming_errno" : 0,
+               "injected" : 0,
+               "kind" : "read"
+            },
+            {
+               "entry" : null,
+               "errno" : 0,
+               "incoming_errno" : 0,
+               "injected" : 0,
+               "kind" : "read"
+            },
+            {
+               "actual_close" : 1,
+               "errno" : 0,
+               "kind" : "close",
+               "returned" : 1
+            }
+         ],
+         "error" : "",
+         "fault" : "stale_errno",
+         "handles" : [
+            {
+               "closed_after_recovery" : 1,
+               "closed_before_recovery" : 1,
+               "descriptor" : 3,
+               "identity" : {
+                  "device" : 16777244,
+                  "inode" : 77033080,
+                  "mode" : 448,
+                  "uid" : 501
+               },
+               "observer_close_ok" : 1,
+               "observer_closed" : 1,
+               "observer_descriptor" : 4,
+               "path" : ".artifacts/tmp/native-proxy-image-custody/cases/fsmgen-kRIxF3dQ",
+               "recovery_close_ok" : null
+            }
+         ],
+         "name" : "stale_errno",
+         "read_error_injected" : 0,
+         "returned" : 1
+      },
+      {
+         "actual_members" : [
+            "rustup.c",
+            "rustup",
+            "extra",
+            "image.json"
+         ],
+         "after" : {
+            "" : {
+               "device" : 16777244,
+               "inode" : 77033084,
+               "kind" : "directory",
+               "mode" : 448,
+               "uid" : 501
+            },
+            "extra" : {
+               "bytes" : "extra\n",
+               "device" : 16777244,
+               "inode" : 77033085,
+               "kind" : "file",
+               "links" : 1,
+               "mode" : 256,
+               "sha256" : "65110ea3b8b62b0c09742c368bf1527f0978b06dff7a1371ef7b4c98e244d91a",
+               "size_bytes" : 6,
+               "uid" : 501
+            },
+            "image.json" : {
+               "bytes" : "manifest\n",
+               "device" : 16777244,
+               "inode" : 77033086,
+               "kind" : "file",
+               "links" : 1,
+               "mode" : 256,
+               "sha256" : "7021e610a5f62eefd01830fea68e5fa180e8cf017c08ea0890c326b2854ebc96",
+               "size_bytes" : 9,
+               "uid" : 501
+            },
+            "rustup" : {
+               "bytes" : "image\n",
+               "device" : 16777244,
+               "inode" : 77033087,
+               "kind" : "file",
+               "links" : 1,
+               "mode" : 256,
+               "sha256" : "254eddf15d9534e3b20c55469077aa2f24f167aa4b897a36381d3e251e4829c2",
+               "size_bytes" : 6,
+               "uid" : 501
+            },
+            "rustup.c" : {
+               "bytes" : "c\n",
+               "device" : 16777244,
+               "inode" : 77033088,
+               "kind" : "file",
+               "links" : 1,
+               "mode" : 256,
+               "sha256" : "a3a5e715f0cc574a73c3f9bebb6bc24f32ffd5b67b387244c2c909da779a1478",
+               "size_bytes" : 2,
+               "uid" : 501
+            }
+         },
+         "allocation" : {
+            "device" : 16777244,
+            "inode" : 77033084,
+            "path" : ".artifacts/tmp/native-proxy-image-custody/cases/fsmgen-kVyYt0PT"
+         },
+         "allocation_absent" : 1,
+         "before" : {
+            "" : {
+               "device" : 16777244,
+               "inode" : 77033084,
+               "kind" : "directory",
+               "mode" : 448,
+               "uid" : 501
+            },
+            "extra" : {
+               "bytes" : "extra\n",
+               "device" : 16777244,
+               "inode" : 77033085,
+               "kind" : "file",
+               "links" : 1,
+               "mode" : 256,
+               "sha256" : "65110ea3b8b62b0c09742c368bf1527f0978b06dff7a1371ef7b4c98e244d91a",
+               "size_bytes" : 6,
+               "uid" : 501
+            },
+            "image.json" : {
+               "bytes" : "manifest\n",
+               "device" : 16777244,
+               "inode" : 77033086,
+               "kind" : "file",
+               "links" : 1,
+               "mode" : 256,
+               "sha256" : "7021e610a5f62eefd01830fea68e5fa180e8cf017c08ea0890c326b2854ebc96",
+               "size_bytes" : 9,
+               "uid" : 501
+            },
+            "rustup" : {
+               "bytes" : "image\n",
+               "device" : 16777244,
+               "inode" : 77033087,
+               "kind" : "file",
+               "links" : 1,
+               "mode" : 256,
+               "sha256" : "254eddf15d9534e3b20c55469077aa2f24f167aa4b897a36381d3e251e4829c2",
+               "size_bytes" : 6,
+               "uid" : 501
+            },
+            "rustup.c" : {
+               "bytes" : "c\n",
+               "device" : 16777244,
+               "inode" : 77033088,
+               "kind" : "file",
+               "links" : 1,
+               "mode" : 256,
+               "sha256" : "a3a5e715f0cc574a73c3f9bebb6bc24f32ffd5b67b387244c2c909da779a1478",
+               "size_bytes" : 2,
+               "uid" : 501
+            }
+         },
+         "calls" : [
+            {
+               "errno" : 0,
+               "kind" : "open",
+               "returned" : 1
+            },
+            {
+               "entry" : ".",
+               "errno" : 0,
+               "incoming_errno" : 0,
+               "injected" : 0,
+               "kind" : "read"
+            },
+            {
+               "entry" : "..",
+               "errno" : 0,
+               "incoming_errno" : 0,
+               "injected" : 0,
+               "kind" : "read"
+            },
+            {
+               "entry" : "rustup.c",
+               "errno" : 0,
+               "incoming_errno" : 0,
+               "injected" : 0,
+               "kind" : "read"
+            },
+            {
+               "entry" : "rustup",
+               "errno" : 0,
+               "incoming_errno" : 0,
+               "injected" : 0,
+               "kind" : "read"
+            },
+            {
+               "entry" : "extra",
+               "errno" : 0,
+               "incoming_errno" : 0,
+               "injected" : 0,
+               "kind" : "read"
+            },
+            {
+               "entry" : "image.json",
+               "errno" : 0,
+               "incoming_errno" : 0,
+               "injected" : 0,
+               "kind" : "read"
+            },
+            {
+               "actual_close" : 1,
+               "errno" : 0,
+               "kind" : "close",
+               "returned" : 1
+            }
+         ],
+         "error" : "too many image members\n",
+         "fault" : "capacity",
+         "handles" : [
+            {
+               "closed_after_recovery" : 1,
+               "closed_before_recovery" : 1,
+               "descriptor" : 3,
+               "identity" : {
+                  "device" : 16777244,
+                  "inode" : 77033084,
+                  "mode" : 448,
+                  "uid" : 501
+               },
+               "observer_close_ok" : 1,
+               "observer_closed" : 1,
+               "observer_descriptor" : 4,
+               "path" : ".artifacts/tmp/native-proxy-image-custody/cases/fsmgen-kVyYt0PT",
+               "recovery_close_ok" : null
+            }
+         ],
+         "name" : "capacity",
+         "read_error_injected" : 0,
+         "returned" : 0
+      },
+      {
+         "actual_members" : [
+            "rustup.c",
+            "rustup",
+            "extra",
+            "image.json"
+         ],
+         "after" : {
+            "" : {
+               "device" : 16777244,
+               "inode" : 77033089,
+               "kind" : "directory",
+               "mode" : 448,
+               "uid" : 501
+            },
+            "extra" : {
+               "bytes" : "extra\n",
+               "device" : 16777244,
+               "inode" : 77033090,
+               "kind" : "file",
+               "links" : 1,
+               "mode" : 256,
+               "sha256" : "65110ea3b8b62b0c09742c368bf1527f0978b06dff7a1371ef7b4c98e244d91a",
+               "size_bytes" : 6,
+               "uid" : 501
+            },
+            "image.json" : {
+               "bytes" : "manifest\n",
+               "device" : 16777244,
+               "inode" : 77033091,
+               "kind" : "file",
+               "links" : 1,
+               "mode" : 256,
+               "sha256" : "7021e610a5f62eefd01830fea68e5fa180e8cf017c08ea0890c326b2854ebc96",
+               "size_bytes" : 9,
+               "uid" : 501
+            },
+            "rustup" : {
+               "bytes" : "image\n",
+               "device" : 16777244,
+               "inode" : 77033092,
+               "kind" : "file",
+               "links" : 1,
+               "mode" : 256,
+               "sha256" : "254eddf15d9534e3b20c55469077aa2f24f167aa4b897a36381d3e251e4829c2",
+               "size_bytes" : 6,
+               "uid" : 501
+            },
+            "rustup.c" : {
+               "bytes" : "c\n",
+               "device" : 16777244,
+               "inode" : 77033093,
+               "kind" : "file",
+               "links" : 1,
+               "mode" : 256,
+               "sha256" : "a3a5e715f0cc574a73c3f9bebb6bc24f32ffd5b67b387244c2c909da779a1478",
+               "size_bytes" : 2,
+               "uid" : 501
+            }
+         },
+         "allocation" : {
+            "device" : 16777244,
+            "inode" : 77033089,
+            "path" : ".artifacts/tmp/native-proxy-image-custody/cases/fsmgen-BnKyww8O"
+         },
+         "allocation_absent" : 1,
+         "before" : {
+            "" : {
+               "device" : 16777244,
+               "inode" : 77033089,
+               "kind" : "directory",
+               "mode" : 448,
+               "uid" : 501
+            },
+            "extra" : {
+               "bytes" : "extra\n",
+               "device" : 16777244,
+               "inode" : 77033090,
+               "kind" : "file",
+               "links" : 1,
+               "mode" : 256,
+               "sha256" : "65110ea3b8b62b0c09742c368bf1527f0978b06dff7a1371ef7b4c98e244d91a",
+               "size_bytes" : 6,
+               "uid" : 501
+            },
+            "image.json" : {
+               "bytes" : "manifest\n",
+               "device" : 16777244,
+               "inode" : 77033091,
+               "kind" : "file",
+               "links" : 1,
+               "mode" : 256,
+               "sha256" : "7021e610a5f62eefd01830fea68e5fa180e8cf017c08ea0890c326b2854ebc96",
+               "size_bytes" : 9,
+               "uid" : 501
+            },
+            "rustup" : {
+               "bytes" : "image\n",
+               "device" : 16777244,
+               "inode" : 77033092,
+               "kind" : "file",
+               "links" : 1,
+               "mode" : 256,
+               "sha256" : "254eddf15d9534e3b20c55469077aa2f24f167aa4b897a36381d3e251e4829c2",
+               "size_bytes" : 6,
+               "uid" : 501
+            },
+            "rustup.c" : {
+               "bytes" : "c\n",
+               "device" : 16777244,
+               "inode" : 77033093,
+               "kind" : "file",
+               "links" : 1,
+               "mode" : 256,
+               "sha256" : "a3a5e715f0cc574a73c3f9bebb6bc24f32ffd5b67b387244c2c909da779a1478",
+               "size_bytes" : 2,
+               "uid" : 501
+            }
+         },
+         "calls" : [
+            {
+               "errno" : 0,
+               "kind" : "open",
+               "returned" : 1
+            },
+            {
+               "entry" : ".",
+               "errno" : 0,
+               "incoming_errno" : 0,
+               "injected" : 0,
+               "kind" : "read"
+            },
+            {
+               "entry" : "..",
+               "errno" : 0,
+               "incoming_errno" : 0,
+               "injected" : 0,
+               "kind" : "read"
+            },
+            {
+               "entry" : "rustup.c",
+               "errno" : 0,
+               "incoming_errno" : 0,
+               "injected" : 0,
+               "kind" : "read"
+            },
+            {
+               "entry" : "rustup",
+               "errno" : 0,
+               "incoming_errno" : 0,
+               "injected" : 0,
+               "kind" : "read"
+            },
+            {
+               "entry" : "extra",
+               "errno" : 0,
+               "incoming_errno" : 0,
+               "injected" : 0,
+               "kind" : "read"
+            },
+            {
+               "entry" : "image.json",
+               "errno" : 0,
+               "incoming_errno" : 0,
+               "injected" : 0,
+               "kind" : "read"
+            },
+            {
+               "actual_close" : 1,
+               "errno" : 5,
+               "kind" : "close",
+               "returned" : 0
+            }
+         ],
+         "error" : "too many image members\n",
+         "fault" : "capacity_and_close",
+         "handles" : [
+            {
+               "closed_after_recovery" : 1,
+               "closed_before_recovery" : 1,
+               "descriptor" : 3,
+               "identity" : {
+                  "device" : 16777244,
+                  "inode" : 77033089,
+                  "mode" : 448,
+                  "uid" : 501
+               },
+               "observer_close_ok" : 1,
+               "observer_closed" : 1,
+               "observer_descriptor" : 4,
+               "path" : ".artifacts/tmp/native-proxy-image-custody/cases/fsmgen-BnKyww8O",
+               "recovery_close_ok" : null
+            }
+         ],
+         "name" : "capacity_and_close",
+         "read_error_injected" : 0,
+         "returned" : 0
+      },
+      {
+         "actual_members" : [],
+         "after" : {
+            "" : {
+               "device" : 16777244,
+               "inode" : 77033094,
+               "kind" : "directory",
+               "mode" : 448,
+               "uid" : 501
+            },
+            "image.json" : {
+               "bytes" : "manifest\n",
+               "device" : 16777244,
+               "inode" : 77033095,
+               "kind" : "file",
+               "links" : 1,
+               "mode" : 256,
+               "sha256" : "7021e610a5f62eefd01830fea68e5fa180e8cf017c08ea0890c326b2854ebc96",
+               "size_bytes" : 9,
+               "uid" : 501
+            },
+            "rustup" : {
+               "bytes" : "image\n",
+               "device" : 16777244,
+               "inode" : 77033096,
+               "kind" : "file",
+               "links" : 1,
+               "mode" : 256,
+               "sha256" : "254eddf15d9534e3b20c55469077aa2f24f167aa4b897a36381d3e251e4829c2",
+               "size_bytes" : 6,
+               "uid" : 501
+            },
+            "rustup.c" : {
+               "bytes" : "c\n",
+               "device" : 16777244,
+               "inode" : 77033097,
+               "kind" : "file",
+               "links" : 1,
+               "mode" : 256,
+               "sha256" : "a3a5e715f0cc574a73c3f9bebb6bc24f32ffd5b67b387244c2c909da779a1478",
+               "size_bytes" : 2,
+               "uid" : 501
+            }
+         },
+         "allocation" : {
+            "device" : 16777244,
+            "inode" : 77033094,
+            "path" : ".artifacts/tmp/native-proxy-image-custody/cases/fsmgen-gqclyssD"
+         },
+         "allocation_absent" : 1,
+         "before" : {
+            "" : {
+               "device" : 16777244,
+               "inode" : 77033094,
+               "kind" : "directory",
+               "mode" : 448,
+               "uid" : 501
+            },
+            "image.json" : {
+               "bytes" : "manifest\n",
+               "device" : 16777244,
+               "inode" : 77033095,
+               "kind" : "file",
+               "links" : 1,
+               "mode" : 256,
+               "sha256" : "7021e610a5f62eefd01830fea68e5fa180e8cf017c08ea0890c326b2854ebc96",
+               "size_bytes" : 9,
+               "uid" : 501
+            },
+            "rustup" : {
+               "bytes" : "image\n",
+               "device" : 16777244,
+               "inode" : 77033096,
+               "kind" : "file",
+               "links" : 1,
+               "mode" : 256,
+               "sha256" : "254eddf15d9534e3b20c55469077aa2f24f167aa4b897a36381d3e251e4829c2",
+               "size_bytes" : 6,
+               "uid" : 501
+            },
+            "rustup.c" : {
+               "bytes" : "c\n",
+               "device" : 16777244,
+               "inode" : 77033097,
+               "kind" : "file",
+               "links" : 1,
+               "mode" : 256,
+               "sha256" : "a3a5e715f0cc574a73c3f9bebb6bc24f32ffd5b67b387244c2c909da779a1478",
+               "size_bytes" : 2,
+               "uid" : 501
+            }
+         },
+         "calls" : [
+            {
+               "errno" : 0,
+               "kind" : "open",
+               "returned" : 1
+            },
+            {
+               "entry" : null,
+               "errno" : 5,
+               "incoming_errno" : 0,
+               "injected" : 1,
+               "kind" : "read"
+            },
+            {
+               "actual_close" : 1,
+               "errno" : 5,
+               "kind" : "close",
+               "returned" : 1
+            }
+         ],
+         "error" : "cannot read image members: Input/output error\n",
+         "fault" : "read_entry",
+         "handles" : [
+            {
+               "closed_after_recovery" : 1,
+               "closed_before_recovery" : 1,
+               "descriptor" : 3,
+               "identity" : {
+                  "device" : 16777244,
+                  "inode" : 77033094,
+                  "mode" : 448,
+                  "uid" : 501
+               },
+               "observer_close_ok" : 1,
+               "observer_closed" : 1,
+               "observer_descriptor" : 4,
+               "path" : ".artifacts/tmp/native-proxy-image-custody/cases/fsmgen-gqclyssD",
+               "recovery_close_ok" : null
+            }
+         ],
+         "name" : "read_entry",
+         "read_error_injected" : 1,
+         "returned" : 0
+      },
+      {
+         "actual_members" : [
+            "rustup.c"
+         ],
+         "after" : {
+            "" : {
+               "device" : 16777244,
+               "inode" : 77033098,
+               "kind" : "directory",
+               "mode" : 448,
+               "uid" : 501
+            },
+            "image.json" : {
+               "bytes" : "manifest\n",
+               "device" : 16777244,
+               "inode" : 77033099,
+               "kind" : "file",
+               "links" : 1,
+               "mode" : 256,
+               "sha256" : "7021e610a5f62eefd01830fea68e5fa180e8cf017c08ea0890c326b2854ebc96",
+               "size_bytes" : 9,
+               "uid" : 501
+            },
+            "rustup" : {
+               "bytes" : "image\n",
+               "device" : 16777244,
+               "inode" : 77033100,
+               "kind" : "file",
+               "links" : 1,
+               "mode" : 256,
+               "sha256" : "254eddf15d9534e3b20c55469077aa2f24f167aa4b897a36381d3e251e4829c2",
+               "size_bytes" : 6,
+               "uid" : 501
+            },
+            "rustup.c" : {
+               "bytes" : "c\n",
+               "device" : 16777244,
+               "inode" : 77033101,
+               "kind" : "file",
+               "links" : 1,
+               "mode" : 256,
+               "sha256" : "a3a5e715f0cc574a73c3f9bebb6bc24f32ffd5b67b387244c2c909da779a1478",
+               "size_bytes" : 2,
+               "uid" : 501
+            }
+         },
+         "allocation" : {
+            "device" : 16777244,
+            "inode" : 77033098,
+            "path" : ".artifacts/tmp/native-proxy-image-custody/cases/fsmgen-jrGa4TvA"
+         },
+         "allocation_absent" : 1,
+         "before" : {
+            "" : {
+               "device" : 16777244,
+               "inode" : 77033098,
+               "kind" : "directory",
+               "mode" : 448,
+               "uid" : 501
+            },
+            "image.json" : {
+               "bytes" : "manifest\n",
+               "device" : 16777244,
+               "inode" : 77033099,
+               "kind" : "file",
+               "links" : 1,
+               "mode" : 256,
+               "sha256" : "7021e610a5f62eefd01830fea68e5fa180e8cf017c08ea0890c326b2854ebc96",
+               "size_bytes" : 9,
+               "uid" : 501
+            },
+            "rustup" : {
+               "bytes" : "image\n",
+               "device" : 16777244,
+               "inode" : 77033100,
+               "kind" : "file",
+               "links" : 1,
+               "mode" : 256,
+               "sha256" : "254eddf15d9534e3b20c55469077aa2f24f167aa4b897a36381d3e251e4829c2",
+               "size_bytes" : 6,
+               "uid" : 501
+            },
+            "rustup.c" : {
+               "bytes" : "c\n",
+               "device" : 16777244,
+               "inode" : 77033101,
+               "kind" : "file",
+               "links" : 1,
+               "mode" : 256,
+               "sha256" : "a3a5e715f0cc574a73c3f9bebb6bc24f32ffd5b67b387244c2c909da779a1478",
+               "size_bytes" : 2,
+               "uid" : 501
+            }
+         },
+         "calls" : [
+            {
+               "errno" : 0,
+               "kind" : "open",
+               "returned" : 1
+            },
+            {
+               "entry" : ".",
+               "errno" : 0,
+               "incoming_errno" : 0,
+               "injected" : 0,
+               "kind" : "read"
+            },
+            {
+               "entry" : "..",
+               "errno" : 0,
+               "incoming_errno" : 0,
+               "injected" : 0,
+               "kind" : "read"
+            },
+            {
+               "entry" : "rustup.c",
+               "errno" : 0,
+               "incoming_errno" : 0,
+               "injected" : 0,
+               "kind" : "read"
+            },
+            {
+               "entry" : null,
+               "errno" : 5,
+               "incoming_errno" : 0,
+               "injected" : 1,
+               "kind" : "read"
+            },
+            {
+               "actual_close" : 1,
+               "errno" : 5,
+               "kind" : "close",
+               "returned" : 1
+            }
+         ],
+         "error" : "cannot read image members: Input/output error\n",
+         "fault" : "read_after_one",
+         "handles" : [
+            {
+               "closed_after_recovery" : 1,
+               "closed_before_recovery" : 1,
+               "descriptor" : 3,
+               "identity" : {
+                  "device" : 16777244,
+                  "inode" : 77033098,
+                  "mode" : 448,
+                  "uid" : 501
+               },
+               "observer_close_ok" : 1,
+               "observer_closed" : 1,
+               "observer_descriptor" : 4,
+               "path" : ".artifacts/tmp/native-proxy-image-custody/cases/fsmgen-jrGa4TvA",
+               "recovery_close_ok" : null
+            }
+         ],
+         "name" : "read_after_one",
+         "read_error_injected" : 1,
+         "returned" : 0
+      },
+      {
+         "actual_members" : [
+            "rustup.c",
+            "rustup",
+            "image.json"
+         ],
+         "after" : {
+            "" : {
+               "device" : 16777244,
+               "inode" : 77033102,
+               "kind" : "directory",
+               "mode" : 448,
+               "uid" : 501
+            },
+            "image.json" : {
+               "bytes" : "manifest\n",
+               "device" : 16777244,
+               "inode" : 77033103,
+               "kind" : "file",
+               "links" : 1,
+               "mode" : 256,
+               "sha256" : "7021e610a5f62eefd01830fea68e5fa180e8cf017c08ea0890c326b2854ebc96",
+               "size_bytes" : 9,
+               "uid" : 501
+            },
+            "rustup" : {
+               "bytes" : "image\n",
+               "device" : 16777244,
+               "inode" : 77033104,
+               "kind" : "file",
+               "links" : 1,
+               "mode" : 256,
+               "sha256" : "254eddf15d9534e3b20c55469077aa2f24f167aa4b897a36381d3e251e4829c2",
+               "size_bytes" : 6,
+               "uid" : 501
+            },
+            "rustup.c" : {
+               "bytes" : "c\n",
+               "device" : 16777244,
+               "inode" : 77033105,
+               "kind" : "file",
+               "links" : 1,
+               "mode" : 256,
+               "sha256" : "a3a5e715f0cc574a73c3f9bebb6bc24f32ffd5b67b387244c2c909da779a1478",
+               "size_bytes" : 2,
+               "uid" : 501
+            }
+         },
+         "allocation" : {
+            "device" : 16777244,
+            "inode" : 77033102,
+            "path" : ".artifacts/tmp/native-proxy-image-custody/cases/fsmgen-zNMZ1DDC"
+         },
+         "allocation_absent" : 1,
+         "before" : {
+            "" : {
+               "device" : 16777244,
+               "inode" : 77033102,
+               "kind" : "directory",
+               "mode" : 448,
+               "uid" : 501
+            },
+            "image.json" : {
+               "bytes" : "manifest\n",
+               "device" : 16777244,
+               "inode" : 77033103,
+               "kind" : "file",
+               "links" : 1,
+               "mode" : 256,
+               "sha256" : "7021e610a5f62eefd01830fea68e5fa180e8cf017c08ea0890c326b2854ebc96",
+               "size_bytes" : 9,
+               "uid" : 501
+            },
+            "rustup" : {
+               "bytes" : "image\n",
+               "device" : 16777244,
+               "inode" : 77033104,
+               "kind" : "file",
+               "links" : 1,
+               "mode" : 256,
+               "sha256" : "254eddf15d9534e3b20c55469077aa2f24f167aa4b897a36381d3e251e4829c2",
+               "size_bytes" : 6,
+               "uid" : 501
+            },
+            "rustup.c" : {
+               "bytes" : "c\n",
+               "device" : 16777244,
+               "inode" : 77033105,
+               "kind" : "file",
+               "links" : 1,
+               "mode" : 256,
+               "sha256" : "a3a5e715f0cc574a73c3f9bebb6bc24f32ffd5b67b387244c2c909da779a1478",
+               "size_bytes" : 2,
+               "uid" : 501
+            }
+         },
+         "calls" : [
+            {
+               "errno" : 0,
+               "kind" : "open",
+               "returned" : 1
+            },
+            {
+               "entry" : ".",
+               "errno" : 0,
+               "incoming_errno" : 0,
+               "injected" : 0,
+               "kind" : "read"
+            },
+            {
+               "entry" : "..",
+               "errno" : 0,
+               "incoming_errno" : 0,
+               "injected" : 0,
+               "kind" : "read"
+            },
+            {
+               "entry" : "rustup.c",
+               "errno" : 0,
+               "incoming_errno" : 0,
+               "injected" : 0,
+               "kind" : "read"
+            },
+            {
+               "entry" : "rustup",
+               "errno" : 0,
+               "incoming_errno" : 0,
+               "injected" : 0,
+               "kind" : "read"
+            },
+            {
+               "entry" : "image.json",
+               "errno" : 0,
+               "incoming_errno" : 0,
+               "injected" : 0,
+               "kind" : "read"
+            },
+            {
+               "entry" : null,
+               "errno" : 5,
+               "incoming_errno" : 0,
+               "injected" : 1,
+               "kind" : "read"
+            },
+            {
+               "actual_close" : 1,
+               "errno" : 5,
+               "kind" : "close",
+               "returned" : 1
+            }
+         ],
+         "error" : "cannot read image members: Input/output error\n",
+         "fault" : "read_after_all",
+         "handles" : [
+            {
+               "closed_after_recovery" : 1,
+               "closed_before_recovery" : 1,
+               "descriptor" : 3,
+               "identity" : {
+                  "device" : 16777244,
+                  "inode" : 77033102,
+                  "mode" : 448,
+                  "uid" : 501
+               },
+               "observer_close_ok" : 1,
+               "observer_closed" : 1,
+               "observer_descriptor" : 4,
+               "path" : ".artifacts/tmp/native-proxy-image-custody/cases/fsmgen-zNMZ1DDC",
+               "recovery_close_ok" : null
+            }
+         ],
+         "name" : "read_after_all",
+         "read_error_injected" : 1,
+         "returned" : 0
+      },
+      {
+         "actual_members" : [
+            "rustup.c"
+         ],
+         "after" : {
+            "" : {
+               "device" : 16777244,
+               "inode" : 77033106,
+               "kind" : "directory",
+               "mode" : 448,
+               "uid" : 501
+            },
+            "image.json" : {
+               "bytes" : "manifest\n",
+               "device" : 16777244,
+               "inode" : 77033107,
+               "kind" : "file",
+               "links" : 1,
+               "mode" : 256,
+               "sha256" : "7021e610a5f62eefd01830fea68e5fa180e8cf017c08ea0890c326b2854ebc96",
+               "size_bytes" : 9,
+               "uid" : 501
+            },
+            "rustup" : {
+               "bytes" : "image\n",
+               "device" : 16777244,
+               "inode" : 77033108,
+               "kind" : "file",
+               "links" : 1,
+               "mode" : 256,
+               "sha256" : "254eddf15d9534e3b20c55469077aa2f24f167aa4b897a36381d3e251e4829c2",
+               "size_bytes" : 6,
+               "uid" : 501
+            },
+            "rustup.c" : {
+               "bytes" : "c\n",
+               "device" : 16777244,
+               "inode" : 77033109,
+               "kind" : "file",
+               "links" : 1,
+               "mode" : 256,
+               "sha256" : "a3a5e715f0cc574a73c3f9bebb6bc24f32ffd5b67b387244c2c909da779a1478",
+               "size_bytes" : 2,
+               "uid" : 501
+            }
+         },
+         "allocation" : {
+            "device" : 16777244,
+            "inode" : 77033106,
+            "path" : ".artifacts/tmp/native-proxy-image-custody/cases/fsmgen-_y1T7_M8"
+         },
+         "allocation_absent" : 1,
+         "before" : {
+            "" : {
+               "device" : 16777244,
+               "inode" : 77033106,
+               "kind" : "directory",
+               "mode" : 448,
+               "uid" : 501
+            },
+            "image.json" : {
+               "bytes" : "manifest\n",
+               "device" : 16777244,
+               "inode" : 77033107,
+               "kind" : "file",
+               "links" : 1,
+               "mode" : 256,
+               "sha256" : "7021e610a5f62eefd01830fea68e5fa180e8cf017c08ea0890c326b2854ebc96",
+               "size_bytes" : 9,
+               "uid" : 501
+            },
+            "rustup" : {
+               "bytes" : "image\n",
+               "device" : 16777244,
+               "inode" : 77033108,
+               "kind" : "file",
+               "links" : 1,
+               "mode" : 256,
+               "sha256" : "254eddf15d9534e3b20c55469077aa2f24f167aa4b897a36381d3e251e4829c2",
+               "size_bytes" : 6,
+               "uid" : 501
+            },
+            "rustup.c" : {
+               "bytes" : "c\n",
+               "device" : 16777244,
+               "inode" : 77033109,
+               "kind" : "file",
+               "links" : 1,
+               "mode" : 256,
+               "sha256" : "a3a5e715f0cc574a73c3f9bebb6bc24f32ffd5b67b387244c2c909da779a1478",
+               "size_bytes" : 2,
+               "uid" : 501
+            }
+         },
+         "calls" : [
+            {
+               "errno" : 0,
+               "kind" : "open",
+               "returned" : 1
+            },
+            {
+               "entry" : ".",
+               "errno" : 0,
+               "incoming_errno" : 0,
+               "injected" : 0,
+               "kind" : "read"
+            },
+            {
+               "entry" : "..",
+               "errno" : 0,
+               "incoming_errno" : 0,
+               "injected" : 0,
+               "kind" : "read"
+            },
+            {
+               "entry" : "rustup.c",
+               "errno" : 0,
+               "incoming_errno" : 0,
+               "injected" : 0,
+               "kind" : "read"
+            },
+            {
+               "entry" : null,
+               "errno" : 5,
+               "incoming_errno" : 0,
+               "injected" : 1,
+               "kind" : "read"
+            },
+            {
+               "actual_close" : 1,
+               "errno" : 5,
+               "kind" : "close",
+               "returned" : 0
+            }
+         ],
+         "error" : "cannot read image members: Input/output error\n",
+         "fault" : "read_and_close",
+         "handles" : [
+            {
+               "closed_after_recovery" : 1,
+               "closed_before_recovery" : 1,
+               "descriptor" : 3,
+               "identity" : {
+                  "device" : 16777244,
+                  "inode" : 77033106,
+                  "mode" : 448,
+                  "uid" : 501
+               },
+               "observer_close_ok" : 1,
+               "observer_closed" : 1,
+               "observer_descriptor" : 4,
+               "path" : ".artifacts/tmp/native-proxy-image-custody/cases/fsmgen-_y1T7_M8",
+               "recovery_close_ok" : null
+            }
+         ],
+         "name" : "read_and_close",
+         "read_error_injected" : 1,
+         "returned" : 0
+      },
+      {
+         "actual_members" : [
+            "rustup.c",
+            "rustup",
+            "image.json"
+         ],
+         "after" : {
+            "" : {
+               "device" : 16777244,
+               "inode" : 77033110,
+               "kind" : "directory",
+               "mode" : 448,
+               "uid" : 501
+            },
+            "image.json" : {
+               "bytes" : "manifest\n",
+               "device" : 16777244,
+               "inode" : 77033111,
+               "kind" : "file",
+               "links" : 1,
+               "mode" : 256,
+               "sha256" : "7021e610a5f62eefd01830fea68e5fa180e8cf017c08ea0890c326b2854ebc96",
+               "size_bytes" : 9,
+               "uid" : 501
+            },
+            "rustup" : {
+               "bytes" : "image\n",
+               "device" : 16777244,
+               "inode" : 77033112,
+               "kind" : "file",
+               "links" : 1,
+               "mode" : 256,
+               "sha256" : "254eddf15d9534e3b20c55469077aa2f24f167aa4b897a36381d3e251e4829c2",
+               "size_bytes" : 6,
+               "uid" : 501
+            },
+            "rustup.c" : {
+               "bytes" : "c\n",
+               "device" : 16777244,
+               "inode" : 77033113,
+               "kind" : "file",
+               "links" : 1,
+               "mode" : 256,
+               "sha256" : "a3a5e715f0cc574a73c3f9bebb6bc24f32ffd5b67b387244c2c909da779a1478",
+               "size_bytes" : 2,
+               "uid" : 501
+            }
+         },
+         "allocation" : {
+            "device" : 16777244,
+            "inode" : 77033110,
+            "path" : ".artifacts/tmp/native-proxy-image-custody/cases/fsmgen-ANzqyDI8"
+         },
+         "allocation_absent" : 1,
+         "before" : {
+            "" : {
+               "device" : 16777244,
+               "inode" : 77033110,
+               "kind" : "directory",
+               "mode" : 448,
+               "uid" : 501
+            },
+            "image.json" : {
+               "bytes" : "manifest\n",
+               "device" : 16777244,
+               "inode" : 77033111,
+               "kind" : "file",
+               "links" : 1,
+               "mode" : 256,
+               "sha256" : "7021e610a5f62eefd01830fea68e5fa180e8cf017c08ea0890c326b2854ebc96",
+               "size_bytes" : 9,
+               "uid" : 501
+            },
+            "rustup" : {
+               "bytes" : "image\n",
+               "device" : 16777244,
+               "inode" : 77033112,
+               "kind" : "file",
+               "links" : 1,
+               "mode" : 256,
+               "sha256" : "254eddf15d9534e3b20c55469077aa2f24f167aa4b897a36381d3e251e4829c2",
+               "size_bytes" : 6,
+               "uid" : 501
+            },
+            "rustup.c" : {
+               "bytes" : "c\n",
+               "device" : 16777244,
+               "inode" : 77033113,
+               "kind" : "file",
+               "links" : 1,
+               "mode" : 256,
+               "sha256" : "a3a5e715f0cc574a73c3f9bebb6bc24f32ffd5b67b387244c2c909da779a1478",
+               "size_bytes" : 2,
+               "uid" : 501
+            }
+         },
+         "calls" : [
+            {
+               "errno" : 0,
+               "kind" : "open",
+               "returned" : 1
+            },
+            {
+               "entry" : ".",
+               "errno" : 0,
+               "incoming_errno" : 0,
+               "injected" : 0,
+               "kind" : "read"
+            },
+            {
+               "entry" : "..",
+               "errno" : 0,
+               "incoming_errno" : 0,
+               "injected" : 0,
+               "kind" : "read"
+            },
+            {
+               "entry" : "rustup.c",
+               "errno" : 0,
+               "incoming_errno" : 0,
+               "injected" : 0,
+               "kind" : "read"
+            },
+            {
+               "entry" : "rustup",
+               "errno" : 0,
+               "incoming_errno" : 0,
+               "injected" : 0,
+               "kind" : "read"
+            },
+            {
+               "entry" : "image.json",
+               "errno" : 0,
+               "incoming_errno" : 0,
+               "injected" : 0,
+               "kind" : "read"
+            },
+            {
+               "entry" : null,
+               "errno" : 0,
+               "incoming_errno" : 0,
+               "injected" : 0,
+               "kind" : "read"
+            },
+            {
+               "actual_close" : 1,
+               "errno" : 5,
+               "kind" : "close",
+               "returned" : 0
+            }
+         ],
+         "error" : "cannot close image directory: Input/output error\n",
+         "fault" : "close_error",
+         "handles" : [
+            {
+               "closed_after_recovery" : 1,
+               "closed_before_recovery" : 1,
+               "descriptor" : 3,
+               "identity" : {
+                  "device" : 16777244,
+                  "inode" : 77033110,
+                  "mode" : 448,
+                  "uid" : 501
+               },
+               "observer_close_ok" : 1,
+               "observer_closed" : 1,
+               "observer_descriptor" : 4,
+               "path" : ".artifacts/tmp/native-proxy-image-custody/cases/fsmgen-ANzqyDI8",
+               "recovery_close_ok" : null
+            }
+         ],
+         "name" : "close_error",
+         "read_error_injected" : 0,
+         "returned" : 0
+      }
+   ],
+   "completed" : true,
+   "directory_descriptor_support" : "define",
+   "forbidden_process_attempts" : 0,
+   "mutants" : [
+      {
+         "actual_members" : [
+            "rustup.c",
+            "rustup",
+            "extra",
+            "image.json"
+         ],
+         "after" : {
+            "" : {
+               "device" : 16777244,
+               "inode" : 77033114,
+               "kind" : "directory",
+               "mode" : 448,
+               "uid" : 501
+            },
+            "extra" : {
+               "bytes" : "extra\n",
+               "device" : 16777244,
+               "inode" : 77033115,
+               "kind" : "file",
+               "links" : 1,
+               "mode" : 256,
+               "sha256" : "65110ea3b8b62b0c09742c368bf1527f0978b06dff7a1371ef7b4c98e244d91a",
+               "size_bytes" : 6,
+               "uid" : 501
+            },
+            "image.json" : {
+               "bytes" : "manifest\n",
+               "device" : 16777244,
+               "inode" : 77033116,
+               "kind" : "file",
+               "links" : 1,
+               "mode" : 256,
+               "sha256" : "7021e610a5f62eefd01830fea68e5fa180e8cf017c08ea0890c326b2854ebc96",
+               "size_bytes" : 9,
+               "uid" : 501
+            },
+            "rustup" : {
+               "bytes" : "image\n",
+               "device" : 16777244,
+               "inode" : 77033117,
+               "kind" : "file",
+               "links" : 1,
+               "mode" : 256,
+               "sha256" : "254eddf15d9534e3b20c55469077aa2f24f167aa4b897a36381d3e251e4829c2",
+               "size_bytes" : 6,
+               "uid" : 501
+            },
+            "rustup.c" : {
+               "bytes" : "c\n",
+               "device" : 16777244,
+               "inode" : 77033118,
+               "kind" : "file",
+               "links" : 1,
+               "mode" : 256,
+               "sha256" : "a3a5e715f0cc574a73c3f9bebb6bc24f32ffd5b67b387244c2c909da779a1478",
+               "size_bytes" : 2,
+               "uid" : 501
+            }
+         },
+         "allocation" : {
+            "device" : 16777244,
+            "inode" : 77033114,
+            "path" : ".artifacts/tmp/native-proxy-image-custody/cases/fsmgen-z2yZxUg9"
+         },
+         "allocation_absent" : 1,
+         "before" : {
+            "" : {
+               "device" : 16777244,
+               "inode" : 77033114,
+               "kind" : "directory",
+               "mode" : 448,
+               "uid" : 501
+            },
+            "extra" : {
+               "bytes" : "extra\n",
+               "device" : 16777244,
+               "inode" : 77033115,
+               "kind" : "file",
+               "links" : 1,
+               "mode" : 256,
+               "sha256" : "65110ea3b8b62b0c09742c368bf1527f0978b06dff7a1371ef7b4c98e244d91a",
+               "size_bytes" : 6,
+               "uid" : 501
+            },
+            "image.json" : {
+               "bytes" : "manifest\n",
+               "device" : 16777244,
+               "inode" : 77033116,
+               "kind" : "file",
+               "links" : 1,
+               "mode" : 256,
+               "sha256" : "7021e610a5f62eefd01830fea68e5fa180e8cf017c08ea0890c326b2854ebc96",
+               "size_bytes" : 9,
+               "uid" : 501
+            },
+            "rustup" : {
+               "bytes" : "image\n",
+               "device" : 16777244,
+               "inode" : 77033117,
+               "kind" : "file",
+               "links" : 1,
+               "mode" : 256,
+               "sha256" : "254eddf15d9534e3b20c55469077aa2f24f167aa4b897a36381d3e251e4829c2",
+               "size_bytes" : 6,
+               "uid" : 501
+            },
+            "rustup.c" : {
+               "bytes" : "c\n",
+               "device" : 16777244,
+               "inode" : 77033118,
+               "kind" : "file",
+               "links" : 1,
+               "mode" : 256,
+               "sha256" : "a3a5e715f0cc574a73c3f9bebb6bc24f32ffd5b67b387244c2c909da779a1478",
+               "size_bytes" : 2,
+               "uid" : 501
+            }
+         },
+         "calls" : [
+            {
+               "errno" : 0,
+               "kind" : "open",
+               "returned" : 1
+            },
+            {
+               "entry" : ".",
+               "errno" : 0,
+               "incoming_errno" : 0,
+               "injected" : 0,
+               "kind" : "read"
+            },
+            {
+               "entry" : "..",
+               "errno" : 0,
+               "incoming_errno" : 0,
+               "injected" : 0,
+               "kind" : "read"
+            },
+            {
+               "entry" : "rustup.c",
+               "errno" : 0,
+               "incoming_errno" : 0,
+               "injected" : 0,
+               "kind" : "read"
+            },
+            {
+               "entry" : "rustup",
+               "errno" : 0,
+               "incoming_errno" : 0,
+               "injected" : 0,
+               "kind" : "read"
+            },
+            {
+               "entry" : "extra",
+               "errno" : 0,
+               "incoming_errno" : 0,
+               "injected" : 0,
+               "kind" : "read"
+            },
+            {
+               "entry" : "image.json",
+               "errno" : 0,
+               "incoming_errno" : 0,
+               "injected" : 0,
+               "kind" : "read"
+            },
+            {
+               "actual_close" : 0,
+               "errno" : 0,
+               "kind" : "close",
+               "returned" : 1
+            }
+         ],
+         "error" : "too many image members\n",
+         "fault" : "capacity",
+         "handles" : [
+            {
+               "closed_after_recovery" : 1,
+               "closed_before_recovery" : 0,
+               "descriptor" : 3,
+               "identity" : {
+                  "device" : 16777244,
+                  "inode" : 77033114,
+                  "mode" : 448,
+                  "uid" : 501
+               },
+               "observer_close_ok" : 1,
+               "observer_closed" : 1,
+               "observer_descriptor" : 4,
+               "path" : ".artifacts/tmp/native-proxy-image-custody/cases/fsmgen-z2yZxUg9",
+               "recovery_close_ok" : 1
+            }
+         ],
+         "name" : "omit_directory_close",
+         "read_error_injected" : 0,
+         "returned" : 0
+      },
+      {
+         "actual_members" : [
+            "rustup.c",
+            "rustup",
+            "image.json"
+         ],
+         "after" : {
+            "" : {
+               "device" : 16777244,
+               "inode" : 77033119,
+               "kind" : "directory",
+               "mode" : 448,
+               "uid" : 501
+            },
+            "image.json" : {
+               "bytes" : "manifest\n",
+               "device" : 16777244,
+               "inode" : 77033120,
+               "kind" : "file",
+               "links" : 1,
+               "mode" : 256,
+               "sha256" : "7021e610a5f62eefd01830fea68e5fa180e8cf017c08ea0890c326b2854ebc96",
+               "size_bytes" : 9,
+               "uid" : 501
+            },
+            "rustup" : {
+               "bytes" : "image\n",
+               "device" : 16777244,
+               "inode" : 77033121,
+               "kind" : "file",
+               "links" : 1,
+               "mode" : 256,
+               "sha256" : "254eddf15d9534e3b20c55469077aa2f24f167aa4b897a36381d3e251e4829c2",
+               "size_bytes" : 6,
+               "uid" : 501
+            },
+            "rustup.c" : {
+               "bytes" : "c\n",
+               "device" : 16777244,
+               "inode" : 77033122,
+               "kind" : "file",
+               "links" : 1,
+               "mode" : 256,
+               "sha256" : "a3a5e715f0cc574a73c3f9bebb6bc24f32ffd5b67b387244c2c909da779a1478",
+               "size_bytes" : 2,
+               "uid" : 501
+            }
+         },
+         "allocation" : {
+            "device" : 16777244,
+            "inode" : 77033119,
+            "path" : ".artifacts/tmp/native-proxy-image-custody/cases/fsmgen-_rOWgVLr"
+         },
+         "allocation_absent" : 1,
+         "before" : {
+            "" : {
+               "device" : 16777244,
+               "inode" : 77033119,
+               "kind" : "directory",
+               "mode" : 448,
+               "uid" : 501
+            },
+            "image.json" : {
+               "bytes" : "manifest\n",
+               "device" : 16777244,
+               "inode" : 77033120,
+               "kind" : "file",
+               "links" : 1,
+               "mode" : 256,
+               "sha256" : "7021e610a5f62eefd01830fea68e5fa180e8cf017c08ea0890c326b2854ebc96",
+               "size_bytes" : 9,
+               "uid" : 501
+            },
+            "rustup" : {
+               "bytes" : "image\n",
+               "device" : 16777244,
+               "inode" : 77033121,
+               "kind" : "file",
+               "links" : 1,
+               "mode" : 256,
+               "sha256" : "254eddf15d9534e3b20c55469077aa2f24f167aa4b897a36381d3e251e4829c2",
+               "size_bytes" : 6,
+               "uid" : 501
+            },
+            "rustup.c" : {
+               "bytes" : "c\n",
+               "device" : 16777244,
+               "inode" : 77033122,
+               "kind" : "file",
+               "links" : 1,
+               "mode" : 256,
+               "sha256" : "a3a5e715f0cc574a73c3f9bebb6bc24f32ffd5b67b387244c2c909da779a1478",
+               "size_bytes" : 2,
+               "uid" : 501
+            }
+         },
+         "calls" : [
+            {
+               "errno" : 0,
+               "kind" : "open",
+               "returned" : 1
+            },
+            {
+               "entry" : ".",
+               "errno" : 0,
+               "incoming_errno" : 0,
+               "injected" : 0,
+               "kind" : "read"
+            },
+            {
+               "entry" : "..",
+               "errno" : 0,
+               "incoming_errno" : 0,
+               "injected" : 0,
+               "kind" : "read"
+            },
+            {
+               "entry" : "rustup.c",
+               "errno" : 0,
+               "incoming_errno" : 0,
+               "injected" : 0,
+               "kind" : "read"
+            },
+            {
+               "entry" : "rustup",
+               "errno" : 0,
+               "incoming_errno" : 0,
+               "injected" : 0,
+               "kind" : "read"
+            },
+            {
+               "entry" : "image.json",
+               "errno" : 0,
+               "incoming_errno" : 0,
+               "injected" : 0,
+               "kind" : "read"
+            },
+            {
+               "entry" : null,
+               "errno" : 5,
+               "incoming_errno" : 0,
+               "injected" : 1,
+               "kind" : "read"
+            },
+            {
+               "actual_close" : 1,
+               "errno" : 5,
+               "kind" : "close",
+               "returned" : 1
+            }
+         ],
+         "error" : "",
+         "fault" : "read_after_all",
+         "handles" : [
+            {
+               "closed_after_recovery" : 1,
+               "closed_before_recovery" : 1,
+               "descriptor" : 3,
+               "identity" : {
+                  "device" : 16777244,
+                  "inode" : 77033119,
+                  "mode" : 448,
+                  "uid" : 501
+               },
+               "observer_close_ok" : 1,
+               "observer_closed" : 1,
+               "observer_descriptor" : 4,
+               "path" : ".artifacts/tmp/native-proxy-image-custody/cases/fsmgen-_rOWgVLr",
+               "recovery_close_ok" : null
+            }
+         ],
+         "name" : "omit_read_error_check",
+         "read_error_injected" : 1,
+         "returned" : 1
+      }
+   ],
+   "perl_version" : "v5.34.1",
+   "phase" : "qualification",
+   "qualified" : true,
+   "schema" : "fsmgen.inactive_image_member_qualification.v1",
+   "success" : true
+}

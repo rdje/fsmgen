@@ -115,12 +115,24 @@ sub _members {
     my ($path) = @_;
     opendir(my $directory, $path) or die "cannot inspect image members: $!\n";
     my @members;
-    while (defined(my $name = readdir($directory))) {
-        next if $name eq '.' || $name eq '..';
-        push @members, $name;
-        die "too many image members\n" if @members > 3;
-    }
-    closedir($directory) or die "cannot close image directory: $!\n";
+    my $ok = eval {
+        while (1) {
+            $! = 0;
+            my $name = readdir($directory);
+            if (!defined($name)) {
+                die "cannot read image members: $!\n" if $!;
+                last;
+            }
+            next if $name eq '.' || $name eq '..';
+            push @members, $name;
+            die "too many image members\n" if @members > 3;
+        }
+        1;
+    };
+    my $error = $@;
+    my $closed = closedir($directory);
+    die $error unless $ok;
+    die "cannot close image directory: $!\n" unless $closed;
     die "incomplete or unknown image members\n"
         unless @members == 3 && join(',', sort @members) eq 'image.json,rustup,rustup.c';
 }

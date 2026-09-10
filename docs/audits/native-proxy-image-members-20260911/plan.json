@@ -1,0 +1,162 @@
+{
+  "baseline": [
+    "capacity",
+    "read_entry",
+    "read_after_one",
+    "read_after_all"
+  ],
+  "baseline_contract": "Preserve exact current ImageCustody.pm, plan, harness, auditor, baseline results, immediate allocation ledger and TAP before repair. Capacity is expected to reject while its actual aliased directory remains open; injected EIO before/within names is expected to be misreported as incomplete membership; EIO after all three actual expected names is expected to be ignored with successful helper completion. Baseline qualified/success remains false even when diagnostic controls match.",
+  "cases": [
+    {
+      "diagnostic": "",
+      "members": [
+        "image.json",
+        "rustup",
+        "rustup.c"
+      ],
+      "name": "normal",
+      "returns": true
+    },
+    {
+      "diagnostic": "incomplete or unknown image members",
+      "members": [],
+      "name": "empty",
+      "returns": false
+    },
+    {
+      "diagnostic": "incomplete or unknown image members",
+      "members": [
+        "image.json",
+        "rustup"
+      ],
+      "name": "incomplete",
+      "returns": false
+    },
+    {
+      "diagnostic": "incomplete or unknown image members",
+      "members": [
+        "extra",
+        "image.json",
+        "rustup"
+      ],
+      "name": "unknown",
+      "returns": false
+    },
+    {
+      "diagnostic": "",
+      "members": [
+        "image.json",
+        "rustup",
+        "rustup.c"
+      ],
+      "name": "stale_errno",
+      "returns": true
+    },
+    {
+      "diagnostic": "too many image members",
+      "members": [
+        "extra",
+        "image.json",
+        "rustup",
+        "rustup.c"
+      ],
+      "name": "capacity",
+      "returns": false
+    },
+    {
+      "diagnostic": "too many image members",
+      "members": [
+        "extra",
+        "image.json",
+        "rustup",
+        "rustup.c"
+      ],
+      "name": "capacity_and_close",
+      "returns": false
+    },
+    {
+      "diagnostic": "cannot read image members",
+      "members": [
+        "image.json",
+        "rustup",
+        "rustup.c"
+      ],
+      "name": "read_entry",
+      "returns": false
+    },
+    {
+      "diagnostic": "cannot read image members",
+      "members": [
+        "image.json",
+        "rustup",
+        "rustup.c"
+      ],
+      "name": "read_after_one",
+      "returns": false
+    },
+    {
+      "diagnostic": "cannot read image members",
+      "members": [
+        "image.json",
+        "rustup",
+        "rustup.c"
+      ],
+      "name": "read_after_all",
+      "returns": false
+    },
+    {
+      "diagnostic": "cannot read image members",
+      "members": [
+        "image.json",
+        "rustup",
+        "rustup.c"
+      ],
+      "name": "read_and_close",
+      "returns": false
+    },
+    {
+      "diagnostic": "cannot close image directory",
+      "members": [
+        "image.json",
+        "rustup",
+        "rustup.c"
+      ],
+      "name": "close_error",
+      "returns": false
+    }
+  ],
+  "close_faults": "Reported errors perform real CORE::closedir then return EIO. Capacity/read errors must remain primary. Removing explicit closedir leaves one actual retained directory open; removing only the read-error branch ignores a reported EIO after all expected names. Strict independent oracles reject both; observer recovery closes any remaining directory.",
+  "fixture": "One immediately recorded private same-volume root per case under the existing inert image-custody cases prefix. Exactly declared regular single-link 0400 files with fixed bytes, root 0700. This direct membership helper does not interpret payloads as compiled images. No process, compiler, native query/helper, archive, release or retry.",
+  "limits": "Finite synchronous direct image-membership controls with actual directory descriptors and modeled read/close errors. No ordinary lexical-cleanup leak, incomplete-image acceptance through the complete reader, asynchronous crash, complete coordinator matrix, native ownership or product activation is established.",
+  "mutants": [
+    {
+      "case": "capacity",
+      "name": "omit_directory_close"
+    },
+    {
+      "case": "read_after_all",
+      "name": "omit_read_error_check"
+    }
+  ],
+  "observation": "Retain actual opendir aliases. Installed Perl 5.34.1 d_dirfd=define supports fileno; duplicate the exact descriptor for fstat identity, close that observer immediately, then inspect original explicit close before recovery. Count actual real non-dot names, never fabricate entries. Read faults return undef/EIO at entry, after one actual member, or after all three.",
+  "owner": "HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.12.4.1.3.3.2.2.2.2.2.2.1",
+  "payloads": {
+    "extra": "extra\n",
+    "image.json": "manifest\n",
+    "rustup": "image\n",
+    "rustup.c": "c\n"
+  },
+  "references": [
+    {
+      "purpose": "Directory descriptor availability depends on host dirfd support; actual installed configuration and retained-handle observations remain required.",
+      "url": "https://perldoc.perl.org/functions/fileno"
+    },
+    {
+      "purpose": "The readdir contract distinguishes end of directory from error through errno and requires clearing errno before the call.",
+      "url": "https://pubs.opengroup.org/onlinepubs/007904875/functions/readdir_r.html"
+    }
+  ],
+  "regression": "Run focused image-custody, image-publication, combined-reference census and observation snapshot regressions against the repaired helper. Preserve new results/TAP/ledgers/journals and restore each exact old ignored output including modes. Reconcile disjoint fixture rosters and absence.",
+  "schema": "fsmgen.inactive_image_member_plan.v1",
+  "source_revision": "fa9f92d53a65ce8f6b259b0ef48e657be046f2cd"
+}

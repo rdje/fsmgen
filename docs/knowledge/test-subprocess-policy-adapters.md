@@ -21,6 +21,7 @@ answers:
   - "what do inactive observation snapshot interruption cuts prove?"
   - "what survives inactive observation publication failures?"
   - "how does inactive namespace enumeration reject read errors?"
+  - "how does inactive image membership reject enumeration errors?"
   - "why did integrated proxy qualification fail?"
   - "why does t1545 not use IPC Cmd?"
   - "where does T1545 preserve empty-output checker failure diagnostics?"
@@ -85,22 +86,23 @@ reverify: >-
 ---
 
 Decisions `0087`/`0101` select `FSM::Support::ProcessSupervisor`; adapters seal bounded local argv/capture/group cleanup. T1669 checks ownership.
-Child requires its owned group before exec; birth/cleanup controls: history.
+Owned child-group and cleanup controls: history.
 `exec_handoff_monotonic_ns` observes pipe EOF, not main entry; pre-exec death can close it. Missing EOF leaves dependent timing unknown. Controls: history.
-Post-KILL: poll within grace; unreaped leaders/live groups stay incomplete. T1669 rejects blocking waits.
+Post-KILL cleanup and blocking-wait controls: history.
 `VerilatorRuntime` follows decision `0086`.
 `TaskAcceptanceFixtureRuntime` seals owned fixture roots/fixed local Git argv.
-Git/checker bounds, closed result schema and fixed load-time tools: history.
-Darwin env-Bash pre-main stalls, direct Bash capability, locality and no-retry controls: history.
+Git/checker bounds and schema: history.
+Darwin env/direct-Bash startup and locality controls: history.
 T1545 controls: historical card; absent witnesses stay unknown.
 Env/direct Perl timeouts refute a shebang-only cure. Startup cause, authenticated capture and STOP limits: task/book/history.
 T1669 uses process-supervisor-tests roots; ps skips only verified disappearance. Other errors fail; the historical changed field stays open (.3.2.11).
-History: `295d186656a5d517894c1bdbd550b0633d2b2fc4:docs/knowledge/test-subprocess-policy-adapters.md`.
+History: `fa9f92d53a65ce8f6b259b0ef48e657be046f2cd:docs/knowledge/test-subprocess-policy-adapters.md`.
 PST parsing normalizes 1–16 lowercase hex digits; malformed fields and contradictions reject.
 Serial queue contention is supported; causal/native limits and controls: history.
 Fixed CLI contracts/limits: history.
 Combined census, fresh/reuse custody, FixtureClone types/octet flags, handoff/snapshot/publication controls and conservative holds: history. Release/capture/coordinator/native closure stays open.
 Inactive namespace reads reject errors instead of returning partial names; capacity/read failures close explicitly and preserve the first error. Actual retained-directory controls: `docs/audits/native-proxy-namespace-reader-20260911/audit.py`. Synchronous injected faults do not establish an ordinary leak or full-acquisition bypass.
+Image membership also rejects read errors after all three expected names and closes explicitly on failure: `docs/audits/native-proxy-image-members-20260911/audit.py`. Direct controls do not establish incomplete-image acceptance through the full reader.
 Caller-sealed test wrappers use tail goto to preserve caller.
 Replay: `scripts/run_with_ram_guard.sh -- python3 -B -m unittest discover -s t/python -p 'test_fixture_policy_archive*.py'`.
 T1595 pre-main cause open; `.19.2.3.1.2.2.6.2` fixes capture.

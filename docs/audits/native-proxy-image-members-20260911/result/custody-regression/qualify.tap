@@ -1,0 +1,82 @@
+ok 1 - Python unsigned-64 byte framing agrees
+ok 2 - Python canonical manifest agrees
+ok 3 - Python runtime reference key agrees
+ok 4 - Python Unicode observation reference key agrees
+ok 5 - exact manifest accepted
+ok 6 - manifest unknown field
+ok 7 - manifest numeric string
+ok 8 - manifest boolean size
+ok 9 - manifest negative size
+ok 10 - manifest null payload
+ok 11 - manifest wrong schema
+ok 12 - manifest changed digest
+ok 13 - manifest missing key
+ok 14 - manifest array payload
+ok 15 - noncanonical or duplicate JSON spelling
+ok 16 - noncanonical or duplicate JSON spelling
+ok 17 - noncanonical or duplicate JSON spelling
+ok 18 - manifest byte limit
+ok 19 - source byte limit
+ok 20 - byte scalar reference
+ok 21 - noncanonical relative path
+ok 22 - noncanonical relative path
+ok 23 - noncanonical relative path
+ok 24 - noncanonical relative path
+ok 25 - noncanonical relative path
+ok 26 - noncanonical relative path
+ok 27 - noncanonical relative path
+ok 28 - wrong native birth integer type
+ok 29 - wrong native birth integer type
+ok 30 - wrong native birth integer type
+ok 31 - wrong native birth integer type
+ok 32 - wrong native birth integer type
+ok 33 - combined native birth fields: pid+ppid
+ok 34 - combined native birth fields: ppid+ruid
+ok 35 - combined native birth fields: ruid+start_sec
+ok 36 - combined native birth fields: start_sec+start_usec
+ok 37 - combined native birth fields: start_usec+uid
+ok 38 - combined native birth fields: pid+ppid+ruid
+ok 39 - combined native birth fields: ppid+ruid+start_sec
+ok 40 - combined native birth fields: ruid+start_sec+start_usec
+ok 41 - combined native birth fields: start_sec+start_usec+uid
+ok 42 - combined native birth fields: pid+ppid+ruid+start_sec
+ok 43 - combined native birth fields: ppid+ruid+start_sec+start_usec
+ok 44 - combined native birth fields: ruid+start_sec+start_usec+uid
+ok 45 - combined native birth fields: pid+ppid+ruid+start_sec+start_usec
+ok 46 - combined native birth fields: ppid+ruid+start_sec+start_usec+uid
+ok 47 - combined native birth fields: pid+ppid+ruid+start_sec+start_usec+uid
+ok 48 - combined native fields padded to expected count
+ok 49 - actual descriptor snapshots preserve exact C, image and manifest bytes
+ok 50 - snapshot digest matches retained bytes
+ok 51 - snapshot stays on repository volume
+ok 52 - snapshot inode matches current name
+ok 53 - snapshot digest matches retained bytes
+ok 54 - snapshot stays on repository volume
+ok 55 - snapshot inode matches current name
+ok 56 - snapshot digest matches retained bytes
+ok 57 - snapshot stays on repository volume
+ok 58 - snapshot inode matches current name
+ok 59 - writable source
+ok 60 - hard-linked image
+ok 61 - symlink image
+ok 62 - FIFO image
+ok 63 - directory image
+ok 64 - oversized image
+ok 65 - oversized manifest
+ok 66 - changed image bytes
+ok 67 - changed C bytes
+ok 68 - unknown member
+ok 69 - missing manifest
+ok 70 - public directory
+ok 71 - symlink ancestry
+ok 72 - same-byte source inode replacement
+ok 73 - same-byte directory inode replacement
+ok 74 - source descriptor is close-on-exec
+ok 75 - wrong key
+ok 76 - production root excluded
+ok 77 - combined image member names
+ok 78 - combined-member image cannot be admitted
+ok 79 - independent corruption oracle defeats removed byte guard
+ok 80 - no compiler or process creation attempted
+ok 81 - all exact inert cases are absent
+1..81

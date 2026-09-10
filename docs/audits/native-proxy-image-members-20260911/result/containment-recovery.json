@@ -1,0 +1,37 @@
+{
+  "action": "Preserve exact failed gate/card, shorten only older routed prose through the exact fa9f92d53 card history, regenerate and recheck. No limit or qualification source changes.",
+  "actual_bytes": 3492549,
+  "allowance_bytes": 3492424,
+  "cause": "The additional image-member question and fact exceeded the shared Knowledge Map card byte allowance by 125 bytes.",
+  "ceilings_unchanged": true,
+  "failed_gates": [
+    "LIVE-DOCUMENT-SIZE",
+    "README-ENTRYPOINT"
+  ],
+  "files": [
+    {
+      "destination": "docs/audits/native-proxy-image-members-20260911/result/initial-containment-failure/staged-doctrines.log",
+      "sha256": "32adba679ebcad9af002d3daad8e75ed2807dcc7e41326b88f789c0e04ed697d",
+      "size_bytes": 51922,
+      "source": ".artifacts/logs/native-proxy-image-members-20260911/staged-doctrines.log"
+    },
+    {
+      "destination": "docs/audits/native-proxy-image-members-20260911/result/initial-containment-failure/test-subprocess-policy-adapters.md.initial-source",
+      "sha256": "3d8caf21fc20b75fa152f58b662c572d4accd09f8b380a72658d620882c529ea",
+      "size_bytes": 8658,
+      "source": "docs/knowledge/test-subprocess-policy-adapters.md"
+    },
+    {
+      "destination": "docs/audits/native-proxy-image-members-20260911/result/initial-containment-failure/snapshot-routing-doctrines.log",
+      "sha256": "880869eb611c081f1dc0294a933332511b79ab0edad34c3f3de42f99f7a8fa04",
+      "size_bytes": 51995,
+      "source": ".artifacts/logs/native-proxy-image-members-20260911/staged-doctrines.log"
+    }
+  ],
+  "final_bytes": 3492398,
+  "initial_gate_exit": 1,
+  "reduced_bytes": 151,
+  "second_gate_exit": 1,
+  "snapshot_routing_cause": "The exact failed-card copy retained its .md suffix, so live-document discovery treated audit evidence as an uncovered new live Markdown reference. The repeated gate verified byte containment but rejected that routing.",
+  "snapshot_routing_repair": "Preserve the identical bytes as .md.initial-source, an explicit evidence snapshot, with its original source path and hash in the recovery manifest. Preserve the second failed gate; do not add a second live fact card or change any coverage rule."
+}
