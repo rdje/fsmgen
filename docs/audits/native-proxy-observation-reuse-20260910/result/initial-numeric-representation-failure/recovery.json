@@ -1,0 +1,14 @@
+{
+  "all_initial_allocations_absent": true,
+  "cause": "Storable::dclone converts native-style dual-valued device/inode scalars from JSON integers into JSON strings. The strict integer validator rejects the cloned receipt before storage custody. Earlier pure controls used already decoded JSON numbers and therefore did not exercise dual-valued native metadata.",
+  "correction": "A harness-only FixtureClone module preserves canonical JSON types and values, then restores each original scalar character flag recursively. Controls independently reproduce both failed clones and distinguish integer, numeric string, boolean, null, dual-valued integer, large integer, binary octets, wide characters and character-flagged ASCII/Latin-1. The actual prototype guards remain unchanged.",
+  "initial_allocations": 4,
+  "initial_success": false,
+  "process_attempts": 0,
+  "prototype_unchanged": true,
+  "publication_attempts": 0,
+  "pure_controls": 15,
+  "schema": "fsmgen.observation_reuse_numeric_recovery.v1",
+  "source_descriptors_opened": 0,
+  "source_sha256": "68624866286e6caeba34e8ff9279b73fd491ba44d517b16d34c90bdd96d5f431"
+}

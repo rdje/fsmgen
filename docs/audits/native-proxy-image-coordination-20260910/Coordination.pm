@@ -153,12 +153,19 @@ sub _transaction {
                 && defined(&NativeProxyReferenceCensus::_inspect_locked))
             || ($operation eq 'acquire_observation_reference' && @payload == 1
                 && defined(&NativeProxyObservationAcquisition::_admit_locked)
+                && defined(&NativeProxyReferenceCensus::_inspect_locked))
+            || ($operation eq 'reuse_observation_reference' && @payload == 2
+                && defined(&NativeProxyObservationAcquisition::_admit_locked)
                 && defined(&NativeProxyReferenceCensus::_inspect_locked)));
     NativeProxyImageCustody::image_key(@payload) if $operation eq 'publish_image';
     NativeProxyReferenceAcquisition::_request(@payload) if $operation eq 'acquire_runtime_reference';
     NativeProxyRuntimeRetirement::_request($case, @payload) if $operation eq 'retire_runtime_reference';
     NativeProxyImageMaintenance::_request(@payload) if $operation eq 'remove_unreferenced_image';
     NativeProxyObservationAcquisition::_request(@payload) if $operation eq 'acquire_observation_reference';
+    if ($operation eq 'reuse_observation_reference') {
+        my $request = NativeProxyObservationAcquisition::_request($payload[0]);
+        NativeProxyObservationAcquisition::_previous($case, $request, $payload[1]);
+    }
     NativeProxyImageCustody::_relative_path($case);
     die "only the inactive qualification namespace is admitted\n"
         unless $case =~ /\A\Q$CASE_PREFIX\Efsmgen-[A-Za-z0-9_]+\z/;
@@ -166,7 +173,7 @@ sub _transaction {
     my $root_before = NativeProxyImageCustody::_directory($base);
     my $path = "$base/coordination.lock";
     my $existing_only = $operation eq 'retire_runtime_reference' || $operation eq 'remove_unreferenced_image'
-        || $operation eq 'acquire_observation_reference';
+        || $operation eq 'acquire_observation_reference' || $operation eq 'reuse_observation_reference';
     my $purpose = $operation eq 'retire_runtime_reference' ? 'retirement'
         : $operation eq 'remove_unreferenced_image' ? 'maintenance' : 'observation';
     my $handle = $existing_only
@@ -183,6 +190,9 @@ sub _transaction {
         die "retirement lock differs from acquired identity\n"
             if $operation eq 'retire_runtime_reference'
                 && ($before->[0] != $payload[0]{lock}{device} || $before->[1] != $payload[0]{lock}{inode});
+        die "observation lock differs from acquired identity\n"
+            if $operation eq 'reuse_observation_reference'
+                && ($before->[0] != $payload[1]{lock}{device} || $before->[1] != $payload[1]{lock}{inode});
         die "store root replaced during acquisition\n"
             unless NativeProxyImageCustody::_same_metadata(
                 $root_before, NativeProxyImageCustody::_directory($base), 0,1,2,4);
@@ -230,9 +240,9 @@ sub _transaction {
             $maintenance = NativeProxyImageMaintenance::_finish_locked($case, $plan, $after, $after_references);
         }
         my $observation;
-        if ($operation eq 'acquire_observation_reference') {
+        if ($operation eq 'acquire_observation_reference' || $operation eq 'reuse_observation_reference') {
             my $before = NativeProxyReferenceCensus::_inspect_locked($case, $census);
-            my $plan = NativeProxyObservationAcquisition::_admit_locked($case, $before, $payload[0]);
+            my $plan = NativeProxyObservationAcquisition::_admit_locked($case, $before, @payload);
             my $complete = eval {
                 my $sealed = NativeProxyObservationAcquisition::_acquire_locked($plan);
                 my $final_census = _census($base);
@@ -279,7 +289,7 @@ sub _transaction {
             : $operation eq 'remove_unreferenced_image'
             ? {schema => 'fsmgen.inactive_image_maintenance.v1', runtime_authorized => 0,
                executable => undef, lock => $lock, %$maintenance}
-            : $operation eq 'acquire_observation_reference'
+            : $operation eq 'acquire_observation_reference' || $operation eq 'reuse_observation_reference'
             ? {schema => 'fsmgen.inactive_observation_acquisition.v1', runtime_authorized => 0,
                executable => undef, lock => $lock, %$observation}
             : {schema => 'fsmgen.inactive_image_namespace.v1',

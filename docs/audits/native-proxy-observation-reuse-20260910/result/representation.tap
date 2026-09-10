@@ -1,0 +1,16 @@
+ok 1 - retained JSON exposes character flags on the original binary C/image vectors
+ok 2 - JSON cloning reproduces the failure before custody
+ok 3 - fixture cloning preserves octets
+ok 4 - fixture clone preserves all closed data values and types
+ok 5 - validated defensive clone also retains octets
+ok 6 - validated receipt is a separate nested copy
+ok 7 - character input remains rejected; the native-byte contract is not relaxed
+ok 8 - representation controls perform no filesystem custody operation
+ok 9 - native-style dual scalar has JSON integer meaning
+ok 10 - Storable reproduces the native integer-to-string failure
+ok 11 - fixture clone preserves the complete JSON type/value vector
+ok 12 - fixture clone preserves both octet and character flags, including ASCII characters
+ok 13 - fixture clone owns separate nested data
+ok 14 - full prior receipt with native-style dual identities validates after fixture cloning
+ok 15 - all representation controls remain independent of filesystem custody
+1..15

@@ -1,0 +1,190 @@
+{
+  "cases": [
+    {
+      "kind": "success",
+      "name": "stable repeated reuse"
+    },
+    {
+      "kind": "success",
+      "name": "reuse at combined capacity"
+    },
+    {
+      "diagnostic": "closed record fields",
+      "kind": "reject",
+      "name": "extra receipt field"
+    },
+    {
+      "diagnostic": "invalid inactive observation authority",
+      "kind": "reject",
+      "name": "runtime authority"
+    },
+    {
+      "diagnostic": "expected inactive observation acquisition",
+      "kind": "reject",
+      "name": "executable supplied"
+    },
+    {
+      "diagnostic": "nonnegative JSON integer",
+      "kind": "reject",
+      "name": "boolean lock inode"
+    },
+    {
+      "diagnostic": "acquired observation lock path",
+      "kind": "reject",
+      "name": "foreign lock path"
+    },
+    {
+      "diagnostic": "ordered observation target snapshots",
+      "kind": "reject",
+      "name": "missing target source"
+    },
+    {
+      "diagnostic": "closed record fields",
+      "kind": "reject",
+      "name": "extra source field"
+    },
+    {
+      "diagnostic": "bounded bytes",
+      "kind": "reject",
+      "name": "oversized wrapper"
+    },
+    {
+      "diagnostic": "acquired snapshot bytes or path differ",
+      "kind": "reject",
+      "name": "source hash mismatch"
+    },
+    {
+      "diagnostic": "acquired snapshot bytes or path differ",
+      "kind": "reject",
+      "name": "source size mismatch"
+    },
+    {
+      "diagnostic": "nonnegative JSON integer",
+      "kind": "reject",
+      "name": "string source inode"
+    },
+    {
+      "diagnostic": "acquired snapshot bytes or path differ",
+      "kind": "reject",
+      "name": "foreign source path"
+    },
+    {
+      "diagnostic": "acquired snapshot bytes or path differ",
+      "kind": "reject",
+      "name": "hold bytes mismatch"
+    },
+    {
+      "diagnostic": "observation record differs from requested ownership",
+      "kind": "reject",
+      "name": "request target birth differs"
+    },
+    {
+      "diagnostic": "observation record differs from requested ownership",
+      "kind": "reject",
+      "name": "request evidence identity differs"
+    },
+    {
+      "diagnostic": "acquired runtime record differs from requested workspace",
+      "kind": "reject",
+      "name": "request workspace identity differs"
+    },
+    {
+      "diagnostic": "acquired runtime reference pair differs",
+      "kind": "reject",
+      "name": "private global bytes differ"
+    },
+    {
+      "diagnostic": "acquired snapshot bytes or path differ",
+      "kind": "reject",
+      "name": "source order differs"
+    },
+    {
+      "diagnostic": "previous observation hold is absent or changed",
+      "kind": "reject",
+      "name": "current hold absent"
+    },
+    {
+      "diagnostic": "previous observation hold is absent or changed",
+      "kind": "reject",
+      "name": "current hold replaced"
+    },
+    {
+      "diagnostic": "previous observation hold is absent or changed",
+      "kind": "reject",
+      "name": "current hold ownership changed"
+    },
+    {
+      "diagnostic": "observation lock differs from acquired identity",
+      "kind": "reject",
+      "name": "current lock replaced"
+    },
+    {
+      "diagnostic": "observation target sources differ from acquired snapshots",
+      "kind": "reject",
+      "name": "current wrapper bytes changed"
+    },
+    {
+      "diagnostic": "observation target sources differ from acquired snapshots",
+      "kind": "reject",
+      "name": "current wrapper replaced"
+    },
+    {
+      "diagnostic": "observation target sources differ from acquired snapshots",
+      "kind": "reject",
+      "name": "current private reference replaced"
+    },
+    {
+      "diagnostic": "observation target sources differ from acquired snapshots",
+      "kind": "reject",
+      "name": "current global reference replaced"
+    },
+    {
+      "diagnostic": "runtime reference does not bind current canonical source",
+      "kind": "reject",
+      "name": "current canonical source replaced"
+    },
+    {
+      "diagnostic": "prior evidence identity differs",
+      "kind": "reject",
+      "name": "current evidence directory replaced"
+    },
+    {
+      "diagnostic": "prior workspace identity differs",
+      "kind": "reject",
+      "name": "current workspace directory replaced"
+    },
+    {
+      "diagnostic": "observation runtime reference is absent",
+      "kind": "reject",
+      "name": "current runtime reference absent"
+    },
+    {
+      "diagnostic": "expected isolated store, observation request and previous acquisition",
+      "kind": "reject",
+      "name": "extra argument"
+    },
+    {
+      "diagnostic": "sealed coordinator",
+      "kind": "reject",
+      "name": "direct internal caller"
+    }
+  ],
+  "custody": "Bind the current permanent lock to the prior acquisition. Complete combined census and fresh source admission must match the original hold bytes/inode and every target snapshot. Retain the observation hold descriptor as well as target descriptors through closure. Reuse invokes no writer and changes no member, mode, bytes, identity or ownership; full combined capacity is permitted because no reference is added. Return the same inactive envelope, keeping the hold separate from strict target_sources.",
+  "fixtures": "Every context immediately records four same-volume isolated roots and acquires two original inert runtime images plus one fresh observation. Evidence roots retain the already admitted native-proxy-observation-acquisition-20260910/cases namespace; the reuse result/ledger live under this audit log namespace. No fixture/compiler/native query/helper/capture/worker process is permitted. Trap publication only around reuse after fixture setup.",
+  "late_cases": [
+    "wrapper replaced before closure",
+    "hold replaced before closure",
+    "evidence directory replaced before closure",
+    "workspace directory replaced before closure"
+  ],
+  "limits": "Stable inert filesystem reuse only; supplied receipts and births are data, not authenticated native ownership. Complete interruption matrix, archive/capture settlement, release, compatibility, real contention and native qualification remain separately owned. Dated metadata/source closure does not promise arbitrary-writer atomicity or loaded-image attestation.",
+  "mutants": [
+    "discard prior hold identity",
+    "discard prior target snapshots"
+  ],
+  "operation": "reuse_observation_reference(case, request, previous_acquisition); fixed existing-only coordinator operation. Fresh two-argument acquisition remains unchanged and rejects existing holds.",
+  "owner": "HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.12.4.1.3.3.2.1",
+  "request": "Validate and defensively clone the closed prior successful inactive acquisition. Check zero authority/null executable, canonical lock path, canonical observation record/hold snapshot, matching runtime pair and prior workspace, canonical image key/source pair and five bounded byte/hash/identity snapshots in their original order. Request evidence identity and ordered births must match the original hold.",
+  "schema": "fsmgen.inactive_observation_reuse_plan.v1",
+  "source_revision": "6081e5815b5aa80b1f3f78b43dc4ab0be1688ed6"
+}

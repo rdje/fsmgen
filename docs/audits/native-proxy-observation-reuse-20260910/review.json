@@ -1,0 +1,237 @@
+{
+  "book": {
+    "exact_output_absent": true,
+    "new_passage_verified": true,
+    "rendered_bytes": 23148663,
+    "rendered_files": 98,
+    "same_volume_direct_objects": true
+  },
+  "correction": "Only the fixture clone changes after the first failure: JSON-only cloning corrupts octet representation; Storable-only cloning can stringify native-style dual integers. FixtureClone first preserves canonical JSON types/values, then restores original character flags recursively. Both production-independent prototype sources remain byte-exact with their first failed-run copies. The initial eight pure controls used already decoded numeric scalars and missed native dual values; the expanded fifteen controls cover that distinction.",
+  "durability": "Task ownership and the fixed inert plan precede implementation/allocation. Both failed run source/result/TAP/ledger sets, pure diagnosis, helper and current expanded representation controls, successful result and independent review are tracked. Previous ignored result/ledger pairs are restored exactly. Closed documentation history and previous acceptance are authenticated at the source revision without cap increases.",
+  "falsification": "Altered prior types, bytes, paths, ownership and current identities reject without publication or release. Repeated valid reuse remains byte/identity stable at full reference capacity. Omitting either prior hold or prior target comparison accepts independently invalid custody; thirteen result falsifiers detect false authority, omitted evidence and process/publication attempts. Pure controls reproduce both failed clone representations, preserve each JSON type and octet/character flag, and retain rejection of character input.",
+  "final_evidence": [
+    {
+      "path": "docs/audits/native-proxy-observation-reuse-20260910/result/audit.json",
+      "sha256": "e0acfc1f233a0cfa88cc3575c5e1e6958521555f76cc8d6757fa01482c1ff3d1",
+      "size_bytes": 1810
+    },
+    {
+      "path": "docs/audits/native-proxy-observation-reuse-20260910/result/qualification.json",
+      "sha256": "348c434f7a40012fc8a46a7c7b4b6842ad7d30ca56f3a82947b82231974f6296",
+      "size_bytes": 3707937
+    }
+  ],
+  "initial_failures": [
+    {
+      "all_initial_allocations_absent": true,
+      "cause": "The harness JSON encoder/decoder clone turns the original binary C/executable vectors into character-flagged scalars. The byte-only receipt contract correctly rejects them before filesystem custody. Structural Storable::dclone preserves the original octets and JSON data types; only the harness clone changes.",
+      "correction": "One Storable import and the clone helper replacement only. No prototype guard is relaxed, and a wide-character byte-field control still rejects.",
+      "initial_allocations": 4,
+      "initial_success": false,
+      "process_attempts": 0,
+      "prototype_unchanged": true,
+      "publication_attempts": 0,
+      "pure_controls": 8,
+      "schema": "fsmgen.observation_reuse_representation_recovery.v1",
+      "source_descriptors_opened": 0,
+      "source_sha256": "9ec8c57db5a386dcb580d3d96e2cdd7498f0e4695f763c7a885c9361f194d7eb"
+    },
+    {
+      "all_initial_allocations_absent": true,
+      "cause": "Storable::dclone converts native-style dual-valued device/inode scalars from JSON integers into JSON strings. The strict integer validator rejects the cloned receipt before storage custody. Earlier pure controls used already decoded JSON numbers and therefore did not exercise dual-valued native metadata.",
+      "correction": "A harness-only FixtureClone module preserves canonical JSON types and values, then restores each original scalar character flag recursively. Controls independently reproduce both failed clones and distinguish integer, numeric string, boolean, null, dual-valued integer, large integer, binary octets, wide characters and character-flagged ASCII/Latin-1. The actual prototype guards remain unchanged.",
+      "initial_allocations": 4,
+      "initial_success": false,
+      "process_attempts": 0,
+      "prototype_unchanged": true,
+      "publication_attempts": 0,
+      "pure_controls": 15,
+      "schema": "fsmgen.observation_reuse_numeric_recovery.v1",
+      "source_descriptors_opened": 0,
+      "source_sha256": "68624866286e6caeba34e8ff9279b73fd491ba44d517b16d34c90bdd96d5f431"
+    }
+  ],
+  "limits": [
+    "Stable inert filesystem reuse only; supplied receipts and births are data, not authenticated native ownership. Complete interruption matrix, archive/capture settlement, release, compatibility, real contention and native qualification remain separately owned. Dated metadata/source closure does not promise arbitrary-writer atomicity or loaded-image attestation.",
+    "The first eight-control representation TAP was overwritten when the suite expanded. Its exact source and recovery result remain retained; the current fifteen-control TAP is preserved. No byte-exact recovery of that earlier pure-control log is claimed. Both failed filesystem TAPs are preserved exactly.",
+    "The original fresh acquisition still rejects existing holds. Only the explicitly named reuse operation admits an exact previously successful acquisition; failed/partial holds are not reacquired. Full interruption and lifetime settlement gates remain active. Historical startup/parent qualification and full CI/push remain gated."
+  ],
+  "owner": "HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.12.4.1.3.3.2.1",
+  "qualification": {
+    "allocations": 160,
+    "assertions": 81,
+    "cases": 34,
+    "falsifiers": [
+      "hidden failure",
+      "prior hold identity replaced",
+      "prior source identity replaced",
+      "authority flag type changed",
+      "lost capacity hold",
+      "lost descriptor closure",
+      "lost held descriptor roster",
+      "lost rejection",
+      "lost late change",
+      "lost mutant",
+      "lost allocation",
+      "forbidden process",
+      "forbidden publication"
+    ],
+    "late_changes": 4,
+    "limits": "Stable inert filesystem reuse only; supplied receipts and births are data, not authenticated native ownership. Complete interruption matrix, archive/capture settlement, release, compatibility, real contention and native qualification remain separately owned. Dated metadata/source closure does not promise arbitrary-writer atomicity or loaded-image attestation.",
+    "mutants": [
+      "discard prior hold identity",
+      "discard prior target snapshots"
+    ],
+    "regressions": {
+      "all_rosters_disjoint_and_absent": true,
+      "combined": {
+        "allocations": 33,
+        "assertions": 35
+      },
+      "fresh": {
+        "allocations": 116,
+        "assertions": 59
+      },
+      "initial_runs": [
+        {
+          "allocations": 4,
+          "diagnostic": "expected bounded bytes",
+          "directory": "initial-byte-representation-failure",
+          "no_source_admission_or_mutation": true,
+          "success": false
+        },
+        {
+          "allocations": 4,
+          "diagnostic": "expected nonnegative JSON integer",
+          "directory": "initial-numeric-representation-failure",
+          "no_source_admission_or_mutation": true,
+          "success": false
+        }
+      ],
+      "prototype_unchanged_after_initial_failure": true,
+      "representation_assertions": 15
+    },
+    "schema": "fsmgen.inactive_observation_reuse_audit.v1",
+    "success": true
+  },
+  "rederive": "Independent Python oracle reconstructs both original runtime acquisitions and the original fresh observation, complete before/after footprints, exact ordered source snapshots and canonical reference bytes. It checks every hostile receipt transformation, the sole declared current or late filesystem change, unchanged storage and exact prior-result reuse. Complete immediate allocation rosters join absence; descriptor rosters include the separately retained hold. Prior fresh and mixed-reference suites pass their independent oracles.",
+  "schema": "fsmgen.inactive_observation_reuse_review.v1",
+  "source_revision": "6081e5815b5aa80b1f3f78b43dc4ab0be1688ed6",
+  "unchanged_inputs": [
+    {
+      "path": "t/1669-task-acceptance-fixture-runtime.t",
+      "sha256": "bdebbf03308cd5e0699324f9ab96a249c11c9ab05634309569d33874391a196f",
+      "size_bytes": 67582
+    },
+    {
+      "path": "t/lib/FSM/Test/RustProxyFixture.pm",
+      "sha256": "d9c4ab52cf8074526c59b7a5dcb9da870ca7ffdacb4eb236dacb23b5db6d8bfb",
+      "size_bytes": 11466
+    },
+    {
+      "path": "perl/FSM/Support/ProcessSupervisor.pm",
+      "sha256": "684882d91f673ea7145f43ed3aad31acf099f13508574be7b2d8911123988637",
+      "size_bytes": 27990
+    },
+    {
+      "path": "scripts/fixture_kernel_sampler.py",
+      "sha256": "50c94165893b74b758c560f561ff744f294683812a26b429071ef43009aac2dc",
+      "size_bytes": 22040
+    },
+    {
+      "path": "scripts/observe_fixture_startup.py",
+      "sha256": "05144eb1ebd86ebf132ad36b86b4c93b23687db928fc369f633615f0b870fe06",
+      "size_bytes": 25563
+    },
+    {
+      "path": "scripts/fixture_policy_archive.py",
+      "sha256": "f72355164d6af97e9c6de678018fe864bfab537280d95a87f986825970ad50e2",
+      "size_bytes": 21652
+    },
+    {
+      "path": "docs/audits/native-proxy-image-custody-20260910/ImageCustody.pm",
+      "sha256": "7f9db38e47140fedd39a80d7a6fbf1ee111f56f290a463729b516b08aae90d4f",
+      "size_bytes": 8021
+    },
+    {
+      "path": "docs/audits/native-proxy-runtime-records-20260910/RuntimeRecord.pm",
+      "sha256": "013c0a02e7df59dc3a5af944b603cd44121252a02ca0228d6fdc3e1dd28e6745",
+      "size_bytes": 4078
+    },
+    {
+      "path": "docs/audits/native-proxy-observation-records-20260910/ObservationRecord.pm",
+      "sha256": "35445ee951c8f5e7dc204f58cffe1b2f6273286cc3e7715953d705b33e7158d5",
+      "size_bytes": 4369
+    },
+    {
+      "path": "docs/audits/native-proxy-runtime-census-20260910/qualify.t",
+      "sha256": "dfecb1fb29d91911939b80d2aa9315866f306707c85ba85688dfb20091845f57",
+      "size_bytes": 13416
+    },
+    {
+      "path": "docs/audits/native-proxy-runtime-census-20260910/audit.py",
+      "sha256": "4602141d655ed33c00e44417e64254937bfdac8863a24e44971c2159f900a13b",
+      "size_bytes": 10090
+    },
+    {
+      "path": "docs/audits/native-proxy-runtime-acquisition-20260910/ReferenceAcquisition.pm",
+      "sha256": "b751c88d709e102f7f9b9dd17e0222c39e0a81acc16d7194f7f7c3f4c8535b57",
+      "size_bytes": 6565
+    },
+    {
+      "path": "docs/audits/native-proxy-runtime-retirement-20260910/RuntimeRetirement.pm",
+      "sha256": "766348d16243d3868ca5f8b653f757f8f2eaf5c1aba8ec27fd2d9c67e9fd0bcc",
+      "size_bytes": 8727
+    },
+    {
+      "path": "docs/audits/native-proxy-runtime-retirement-20260910/qualify.t",
+      "sha256": "68e36c8b7dd43b49cb39e339dee45665202fbb32a3511e45af7a523380722524",
+      "size_bytes": 22411
+    },
+    {
+      "path": "docs/audits/native-proxy-image-maintenance-20260910/ImageMaintenance.pm",
+      "sha256": "1295957d97737e764c0e800885a2c3f9adfa327a0d41b35d122dde3e21698cac",
+      "size_bytes": 5678
+    },
+    {
+      "path": "docs/audits/native-proxy-canonical-contract-20260910/contract.json",
+      "sha256": "f3f981398afae72540ab4ac0194b8380d4743c3d2146c1172a85365add053222",
+      "size_bytes": 21927
+    },
+    {
+      "path": "docs/audits/native-proxy-runtime-census-20260910/ReferenceCensus.pm",
+      "sha256": "9fd74767e8c10831f2732fa8ad426b7e4fff8c17bab06584aa671cdd013b6247",
+      "size_bytes": 8024
+    },
+    {
+      "path": "docs/audits/native-proxy-image-publication-20260910/Publication.pm",
+      "sha256": "dc50ca598632572616d7da65fa6f1b417a20e7207dafa5fe03fd5d887382fab6",
+      "size_bytes": 5367
+    },
+    {
+      "path": "docs/audits/native-proxy-combined-census-20260910/qualify.t",
+      "sha256": "f99eeebdd9c5ab0013f4cf903136468085eb13e38f044e4abd9a51c85cbf3c46",
+      "size_bytes": 16644
+    },
+    {
+      "path": "docs/audits/native-proxy-combined-census-20260910/audit.py",
+      "sha256": "ab7a213628f24b8b09a5438184a6ad344d42f400a31b5f5500e748ea4eb0a14c",
+      "size_bytes": 17759
+    },
+    {
+      "path": "docs/audits/native-proxy-runtime-acquisition-20260910/audit.py",
+      "sha256": "36449fac78d3d073fa404ad5f2df5b29e780cbb5af72f3701d1346defdb90fe5",
+      "size_bytes": 13414
+    },
+    {
+      "path": "docs/audits/native-proxy-observation-acquisition-20260910/qualify.t",
+      "sha256": "7170172160b9309e46ed8aad75d383c1b9329b21273030c3bd8ca7a1fcb3db1e",
+      "size_bytes": 18549
+    },
+    {
+      "path": "docs/audits/native-proxy-observation-acquisition-20260910/audit.py",
+      "sha256": "0c9a39917335920095e822a9ed8faa5a218d6e1ec8ada23509beefe7b54acb87",
+      "size_bytes": 20281
+    }
+  ]
+}

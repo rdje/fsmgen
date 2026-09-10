@@ -1,0 +1,3 @@
+ok 1 - stable repeated reuse: retained descriptors close
+not ok 2 - stable repeated reuse preserves storage and ownership
+Bail out!  first stable reuse mismatch

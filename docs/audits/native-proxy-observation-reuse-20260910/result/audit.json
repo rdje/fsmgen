@@ -1,0 +1,57 @@
+{
+  "allocations": 160,
+  "assertions": 81,
+  "cases": 34,
+  "falsifiers": [
+    "hidden failure",
+    "prior hold identity replaced",
+    "prior source identity replaced",
+    "authority flag type changed",
+    "lost capacity hold",
+    "lost descriptor closure",
+    "lost held descriptor roster",
+    "lost rejection",
+    "lost late change",
+    "lost mutant",
+    "lost allocation",
+    "forbidden process",
+    "forbidden publication"
+  ],
+  "late_changes": 4,
+  "limits": "Stable inert filesystem reuse only; supplied receipts and births are data, not authenticated native ownership. Complete interruption matrix, archive/capture settlement, release, compatibility, real contention and native qualification remain separately owned. Dated metadata/source closure does not promise arbitrary-writer atomicity or loaded-image attestation.",
+  "mutants": [
+    "discard prior hold identity",
+    "discard prior target snapshots"
+  ],
+  "regressions": {
+    "all_rosters_disjoint_and_absent": true,
+    "combined": {
+      "allocations": 33,
+      "assertions": 35
+    },
+    "fresh": {
+      "allocations": 116,
+      "assertions": 59
+    },
+    "initial_runs": [
+      {
+        "allocations": 4,
+        "diagnostic": "expected bounded bytes",
+        "directory": "initial-byte-representation-failure",
+        "no_source_admission_or_mutation": true,
+        "success": false
+      },
+      {
+        "allocations": 4,
+        "diagnostic": "expected nonnegative JSON integer",
+        "directory": "initial-numeric-representation-failure",
+        "no_source_admission_or_mutation": true,
+        "success": false
+      }
+    ],
+    "prototype_unchanged_after_initial_failure": true,
+    "representation_assertions": 15
+  },
+  "schema": "fsmgen.inactive_observation_reuse_audit.v1",
+  "success": true
+}

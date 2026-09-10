@@ -1,0 +1,14 @@
+{
+  "all_initial_allocations_absent": true,
+  "cause": "The harness JSON encoder/decoder clone turns the original binary C/executable vectors into character-flagged scalars. The byte-only receipt contract correctly rejects them before filesystem custody. Structural Storable::dclone preserves the original octets and JSON data types; only the harness clone changes.",
+  "correction": "One Storable import and the clone helper replacement only. No prototype guard is relaxed, and a wide-character byte-field control still rejects.",
+  "initial_allocations": 4,
+  "initial_success": false,
+  "process_attempts": 0,
+  "prototype_unchanged": true,
+  "publication_attempts": 0,
+  "pure_controls": 8,
+  "schema": "fsmgen.observation_reuse_representation_recovery.v1",
+  "source_descriptors_opened": 0,
+  "source_sha256": "9ec8c57db5a386dcb580d3d96e2cdd7498f0e4695f763c7a885c9361f194d7eb"
+}

@@ -15,6 +15,8 @@ answers:
   - "what does the inactive observation-reference codec validate?"
   - "how are runtime and observation references counted together?"
   - "how does fresh observation acquisition retain source snapshots?"
+  - "how does stable observation reuse preserve the original hold?"
+  - "why must fixture clones preserve byte flags and JSON numeric types?"
   - "why did integrated proxy qualification fail?"
   - "why does t1545 not use IPC Cmd?"
   - "where does T1545 preserve empty-output checker failure diagnostics?"
@@ -78,26 +80,23 @@ reverify: >-
   t/1815-rust-proxy-fixture.t t/1816-rust-proxy-integration.t t/1817-test-supervision-architecture.t
 ---
 
-Decisions `0087`/`0101`: `FSM::Support::ProcessSupervisor` gives nonblocking steps, shell-free argv, same-volume cwd, bounded split capture, monotonic measurements and one group with TERM/KILL cleanup. Adapters seal policy; T1669 checks ownership.
+Decisions `0087`/`0101` select `FSM::Support::ProcessSupervisor`; adapters seal bounded local argv/capture/group cleanup. T1669 checks ownership.
 Child requires successful `setpgid` and owned group before exec; PID is not birth identity. Admission controls and nested-cleanup limits: history.
-`exec_handoff_monotonic_ns` means observed control-pipe EOF, not main entry:
-pre-exec death can close it. Without observed EOF, that timestamp and dependent
-durations stay unknown even after cleanup. T1669 checks held-child timeout, separate pre-exec exit and successful output.
+`exec_handoff_monotonic_ns` observes pipe EOF, not main entry; pre-exec death can close it. Missing EOF leaves dependent timing unknown. Controls: history.
 Post-KILL: poll within grace; unreaped leaders/live groups stay incomplete. T1669 rejects blocking waits.
 `VerilatorRuntime` follows decision `0086`.
 `TaskAcceptanceFixtureRuntime` seals owned fixture roots/fixed local Git argv.
 Git/checker: ten-second wall, 1,048,576/4,194,304-byte capture, closed `fsmgen.test.task_acceptance_fixture_result.v1`. Load-time Git/Bash ignore later PATH; callers cannot widen policy.
-Darwin env-Bash stalled before main. Direct Bash retains capability; `/bin/bash` 3.2 fails the empty array (`set -u`). Bash/Git are read-only host dependencies; project data
-stays local. Timeout/overflow/nonzero/signal/exec/descendant/cleanup failures stay failed
-without retry; original fixture assertions pass.
+Darwin env-Bash stalled before main; direct Bash retains capability. Bash/Git are read-only dependencies; project data stays local. Failures never retry. Version and fixture controls: history.
 T1545 controls: historical card; absent witnesses stay unknown.
-Env/direct Perl handoff timeouts refute a shebang-only cure. HIAL/VIAL `.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2` owns startup cause; `.3.3–7` own authenticated kernel capture. Sampling/authentication/STOP limits: task/book/history.
+Env/direct Perl timeouts refute a shebang-only cure. Startup cause, authenticated capture and STOP limits: task/book/history.
 T1669 roots: `.artifacts/tmp/process-supervisor-tests/`. ps requires native presence; only disappearance skips. Permission/query/identity errors fail. Exit-race controls do not explain the historical changed field (.3.2.11).
-History: `f1b0f0dc0657b0d583fa16493680f1445308c7be:docs/knowledge/test-subprocess-policy-adapters.md`.
+History: `6081e5815b5aa80b1f3f78b43dc4ab0be1688ed6:docs/knowledge/test-subprocess-policy-adapters.md`.
 PST parsing normalizes 1–16 lowercase hex digits; malformed fields and contradictions reject.
 .15.7.3 supports serial queue contention; client/frame joins and startup repair stay open. Native integration supplies pre-runtime receipts, ancestry/C custody, owned retirement and passive daemon capture. Counterexamples: history; loaded bytes unproved.
 Fixed CLI binds archive and journal anchors, preserving first failure/stop/ownership. F_CHECK_LV cause and worker/delivery remain unknown. Controls and opt-in violations: history.
-Combined census retains both reference kinds; runtime-only inspection stays distinct. Fresh acquisition .1.3.3.1 retains wrapper/private-ref/global-ref/C/executable snapshots and a separate hold. Published failed holds remain; reuse/release/capture stay open. Replay: `docs/audits/native-proxy-observation-acquisition-20260910/audit.py`.
+Combined census retains both record kinds; runtime-only inspection stays distinct. Fresh custody keeps wrapper/private-ref/global-ref/C/executable snapshots separate from its hold. Reuse .1.3.3.2.1 checks exact prior custody without publication, even at capacity. Release/capture stay open; replay: `docs/audits/native-proxy-observation-reuse-20260910/audit.py`.
+Fixture cloning must preserve octet flags and JSON types: JSON cloning flags binary vectors as characters; Storable can stringify dual native IDs. The reuse audit's FixtureClone.pm preserves both; neither prototype guard is relaxed.
 Caller-sealed test wrappers use tail goto to preserve caller.
 Replay: `scripts/run_with_ram_guard.sh -- python3 -B -m unittest discover -s t/python -p 'test_fixture_policy_archive*.py'`.
 T1595 pre-main cause open; `.19.2.3.1.2.2.6.2` fixes capture.

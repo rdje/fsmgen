@@ -1,0 +1,4 @@
+ram-guard: PID 46162; host 64.2%; host cutoff 88%; descendant RSS cutoff 4096 MiB; poll 2s
+#   Failed test 'stable repeated reuse preserves storage and ownership'
+#   at docs/audits/native-proxy-observation-reuse-20260910/qualify.t line 280.
+# expected nonnegative JSON integer

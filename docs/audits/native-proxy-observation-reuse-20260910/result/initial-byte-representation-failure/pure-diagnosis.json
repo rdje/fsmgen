@@ -1,0 +1,48 @@
+{
+   "error" : "",
+   "pure_validation_after_octet_restoration" : 1,
+   "snapshots" : [
+      {
+         "character_flag" : 0,
+         "codepoints" : 1266,
+         "octets_after_downgrade" : 1266,
+         "octets_recoverable" : 1,
+         "path" : ".artifacts/tmp/native-proxy-image-custody/cases/fsmgen-FLhrWvxC/references/7a175f24980e9567942b36e0687a35196492e82b50ff35c3a218f89cdff6feee.json"
+      },
+      {
+         "character_flag" : 0,
+         "codepoints" : 60,
+         "octets_after_downgrade" : 60,
+         "octets_recoverable" : 1,
+         "path" : ".artifacts/tmp/process-supervisor-tests/fsmgen-VgB4PRrm/rust-tool-resolution"
+      },
+      {
+         "character_flag" : 0,
+         "codepoints" : 994,
+         "octets_after_downgrade" : 994,
+         "octets_recoverable" : 1,
+         "path" : ".artifacts/tmp/process-supervisor-tests/fsmgen-VgB4PRrm/rust-tools/image-reference.json"
+      },
+      {
+         "character_flag" : 0,
+         "codepoints" : 994,
+         "octets_after_downgrade" : 994,
+         "octets_recoverable" : 1,
+         "path" : ".artifacts/tmp/native-proxy-image-custody/cases/fsmgen-FLhrWvxC/references/4d15ee5441cc6ee5dea5fdfe1440e598faa8a2cfefb84ae9f017e82159d6231d.json"
+      },
+      {
+         "character_flag" : 1,
+         "codepoints" : 50,
+         "octets_after_downgrade" : 50,
+         "octets_recoverable" : 1,
+         "path" : ".artifacts/tmp/native-proxy-image-custody/cases/fsmgen-FLhrWvxC/images/efd497b0e847884b3c1cfcde14d8b645991c52ebab90c54e58984ccbc303c146/rustup.c"
+      },
+      {
+         "character_flag" : 1,
+         "codepoints" : 53,
+         "octets_after_downgrade" : 53,
+         "octets_recoverable" : 1,
+         "path" : ".artifacts/tmp/native-proxy-image-custody/cases/fsmgen-FLhrWvxC/images/efd497b0e847884b3c1cfcde14d8b645991c52ebab90c54e58984ccbc303c146/rustup"
+      }
+   ]
+}

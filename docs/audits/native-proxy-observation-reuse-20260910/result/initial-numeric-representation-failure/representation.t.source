@@ -1,0 +1,44 @@
+#!/usr/bin/env perl
+use strict;
+use warnings;
+use FindBin;
+use lib "$FindBin::Bin/../../../perl", "$FindBin::Bin/../../../t/lib",
+    map { "$FindBin::Bin/../$_" } qw(native-proxy-image-custody-20260910
+        native-proxy-image-coordination-20260910 native-proxy-image-publication-20260910
+        native-proxy-runtime-records-20260910 native-proxy-runtime-census-20260910
+        native-proxy-observation-records-20260910 native-proxy-observation-acquisition-20260910);
+use JSON::PP ();
+use Storable qw(dclone);
+use Test::More;
+use ObservationAcquisition;
+
+my $JSON = JSON::PP->new->canonical->ascii;
+# Replay only the retained failed receipt. Its directories are absent; no
+# filesystem custody or process operation is needed to diagnose representation.
+open my $fh, '<:raw', "$FindBin::Bin/../../../.artifacts/logs/native-proxy-observation-reuse-20260910/initial-byte-representation-failure/qualification.json" or die $!;
+my $result = $JSON->decode(do { local $/; <$fh> }); close $fh or die $!;
+my $context = $result->{cases}[0]{context};
+my $previous = $context->{previous};
+my $attempts = 0;
+no warnings 'redefine';
+local *NativeProxyImageCustody::_source = sub { ++$attempts; die 'forbidden source read'; };
+local *NativeProxyImageCustody::_directory = sub { ++$attempts; die 'forbidden directory lookup'; };
+sub snapshots { return ($_[0]{observation_reference}{source}, @{$_[0]{target_sources}}); }
+my @flagged = map { utf8::is_utf8($_->{bytes}) ? 1 : 0 } snapshots($previous);
+is_deeply(\@flagged, [0,0,0,0,1,1], 'retained JSON exposes character flags on the original binary C/image vectors');
+utf8::downgrade($_->{bytes}, 1) or die 'retained value is not recoverable as original octets' for snapshots($previous);
+my $json_copy = $JSON->decode($JSON->encode($previous));
+my $ok = eval { NativeProxyObservationAcquisition::_previous($context->{store}{path}, $context->{request}, $json_copy); 1 };
+ok(!$ok && $@ =~ /expected bounded bytes/, 'JSON cloning reproduces the failure before custody');
+my $copy = dclone($previous);
+ok(!grep({ utf8::is_utf8($_->{bytes}) } snapshots($copy)), 'structural cloning preserves octets');
+is($JSON->encode($copy), $JSON->encode($previous), 'structural clone preserves all closed data values and types');
+my $validated = NativeProxyObservationAcquisition::_previous($context->{store}{path}, $context->{request}, $copy);
+ok(!grep({ utf8::is_utf8($_->{bytes}) } snapshots($validated)), 'validated defensive clone also retains octets');
+$validated->{target_sources}[0]{bytes} .= 'changed';
+is($JSON->encode($copy), $JSON->encode($previous), 'validated receipt is a separate nested copy');
+my $wide = dclone($previous); $wide->{target_sources}[0]{bytes} = "\x{100}";
+$ok = eval { NativeProxyObservationAcquisition::_previous($context->{store}{path}, $context->{request}, $wide); 1 };
+ok(!$ok && $@ =~ /expected bounded bytes/, 'character input remains rejected; the native-byte contract is not relaxed');
+is($attempts, 0, 'representation controls perform no filesystem custody operation');
+done_testing();

@@ -1,0 +1,331 @@
+#!/usr/bin/env perl
+use strict;
+use warnings;
+our $forbidden = 0;
+our $publications = 0;
+BEGIN {
+    *CORE::GLOBAL::fork = sub { ++$forbidden; die 'forbidden fork'; };
+    *CORE::GLOBAL::system = sub { ++$forbidden; die 'forbidden system'; };
+}
+use FindBin;
+use lib "$FindBin::Bin/../../../perl", "$FindBin::Bin/../../../t/lib", $FindBin::Bin,
+    map { "$FindBin::Bin/../$_" } qw(native-proxy-image-custody-20260910
+        native-proxy-image-coordination-20260910 native-proxy-image-publication-20260910
+        native-proxy-runtime-records-20260910 native-proxy-runtime-census-20260910
+        native-proxy-runtime-acquisition-20260910 native-proxy-observation-acquisition-20260910);
+use Digest::SHA qw(sha256_hex);
+use Fcntl qw(S_ISDIR S_ISLNK S_ISREG F_GETFD FD_CLOEXEC);
+use File::Spec;
+use File::Temp ();
+use JSON::PP ();
+use Storable qw(dclone);
+use Test::More;
+use FSM::ProjectDataLocality qw(ensure_project_artifact_dir repository_root);
+use FSM::Test::RustProxyFixture ();
+BEGIN { *CORE::GLOBAL::exec = sub { ++$forbidden; die 'forbidden exec'; }; }
+use ReferenceAcquisition;
+use ObservationAcquisition;
+
+my $ROOT = repository_root();
+my $JSON = JSON::PP->new->canonical->ascii;
+my $parent = ensure_project_artifact_dir(qw(tmp native-proxy-image-custody cases));
+my $work_parent = ensure_project_artifact_dir(qw(tmp process-supervisor-tests));
+my $evidence_parent = ensure_project_artifact_dir(qw(logs native-proxy-observation-acquisition-20260910 cases));
+my $log = ensure_project_artifact_dir(qw(logs native-proxy-observation-reuse-20260910));
+my $plan = $JSON->decode(read_bytes("$FindBin::Bin/plan.json"));
+my $vector = $JSON->decode(read_bytes("$FindBin::Bin/../native-proxy-image-custody-20260910/vectors.json"));
+my ($C, $IMAGE) = map { pack('H*', $_) } @$vector{qw(generated_c_hex image_hex)};
+my $WRAPPER = "#!/usr/bin/perl\n# inert observation wrapper; never executed\n";
+my $acquire = \&NativeProxyObservationAcquisition::acquire_observation_reference;
+my $reuse = \&NativeProxyObservationAcquisition::reuse_observation_reference;
+my $source_reader = \&NativeProxyImageCustody::_source;
+my $finish = \&NativeProxyObservationAcquisition::_finish_locked;
+my $prior_directory = \&NativeProxyObservationAcquisition::_prior_directory;
+my $result = {schema => 'fsmgen.inactive_observation_reuse_qualification.v1',
+    success => JSON::PP::false, allocated => [], cases => [], late_changes => [], mutants => []};
+write_bytes("$log/admission.jsonl", '', 0600);
+no warnings 'redefine';
+local *FSM::Test::RustProxyFixture::supervise_process = sub { ++$forbidden; die 'forbidden compiler'; };
+
+sub read_bytes {
+    open my $fh, '<:raw', $_[0] or die "fixture read: $!";
+    my $raw = do { local $/; <$fh> }; close $fh or die $!; return $raw;
+}
+sub write_bytes {
+    my ($path, $raw, $mode) = @_;
+    chmod(0600, $path) == 1 or die $! if -e $path;
+    open my $fh, '>:raw', $path or die "fixture write: $!";
+    print {$fh} $raw or die $!; close $fh or die $!; chmod($mode, $path) == 1 or die $!;
+}
+sub clone { return dclone($_[0]); }
+sub save_result {
+    $result->{forbidden_process_attempts} = $forbidden;
+    $result->{forbidden_publication_attempts} = $publications;
+    write_bytes("$log/qualification.json", JSON::PP->new->canonical->ascii->pretty->encode($result), 0600);
+}
+sub tree_footprint {
+    my ($base) = @_; my %nodes; my $walk;
+    $walk = sub {
+        my ($path, $relative) = @_; my @s = lstat("$ROOT/$path"); die 'oracle stat' unless @s;
+        die 'oracle volume/census bound' unless $s[0] == (stat($ROOT))[0] && keys(%nodes) < 512;
+        my $node = {device => $s[0], inode => $s[1], mode => $s[2] & 07777, uid => $s[4]};
+        $nodes{$relative} = $node;
+        if (S_ISDIR($s[2])) {
+            $node->{kind} = 'directory'; opendir my $dir, "$ROOT/$path" or die $!;
+            my @names = sort grep { $_ ne '.' && $_ ne '..' } readdir $dir; closedir $dir or die $!;
+            $walk->("$path/$_", length($relative) ? "$relative/$_" : $_) for @names;
+        } elsif (S_ISLNK($s[2])) {
+            $node->{kind} = 'symlink'; $node->{target} = readlink("$ROOT/$path");
+        } elsif (S_ISREG($s[2])) {
+            die 'oracle byte ceiling' if $s[7] > 65537; my $raw = read_bytes("$ROOT/$path");
+            $node->{kind} = 'file'; $node->{links} = $s[3];
+            $node->{bytes} = length($raw); $node->{sha256} = sha256_hex($raw);
+        } else { $node->{kind} = 'special'; }
+    };
+    $walk->($base, ''); return \%nodes;
+}
+
+sub allocate {
+    my ($kind, $path) = @_; my @s = lstat("$path");
+    my $row = {kind => $kind, path => File::Spec->abs2rel("$path", $ROOT), device => $s[0], inode => $s[1]};
+    open my $fh, '>>:raw', "$log/admission.jsonl" or die $!;
+    print {$fh} $JSON->encode($row), "\n" or die $!; close $fh or die $!;
+    push @{$result->{allocated}}, $row; save_result(); return $row;
+}
+sub identity { return {map { $_ => $_[0]{$_} } qw(path device inode)}; }
+sub footprint {
+    my ($context) = @_;
+    return {map { $_ => tree_footprint($context->{$_}{path}) } qw(store workspace other_workspace evidence)};
+}
+sub context {
+    my ($callback) = @_;
+    my @temporary;
+    my $context = {};
+    for my $spec ([store => $parent], [workspace => $work_parent],
+                  [other_workspace => $work_parent], [evidence => $evidence_parent]) {
+        my $directory = File::Temp->newdir('fsmgen-XXXXXXXX', DIR => $spec->[1], CLEANUP => 1);
+        push @temporary, $directory;
+        my $kind = $spec->[0] eq 'other_workspace' ? 'workspace' : $spec->[0];
+        $context->{$spec->[0]} = allocate($kind, $directory);
+    }
+    my $case = $context->{store}{path};
+    for my $kind (qw(workspace other_workspace)) {
+        my $path = $context->{$kind}{path}; mkdir("$ROOT/$path/rust-tools", 0700) or die $!;
+        write_bytes("$ROOT/$path/rust-tool-resolution", $WRAPPER, 0700);
+        my $suffix = $kind eq 'workspace' ? '' : 'other';
+        $context->{$kind eq 'workspace' ? 'runtime' : 'other_runtime'} =
+            NativeProxyReferenceAcquisition::acquire_runtime_reference($case, identity($context->{$kind}), $C, $IMAGE.$suffix);
+    }
+    $context->{request} = {workspace_identity => identity($context->{workspace}),
+        evidence_directory_identity => identity($context->{evidence}),
+        observer_birth => {pid => 101, ppid => 100, uid => 501, ruid => 501, start_sec => 123, start_usec => 456},
+        target_birth => {pid => 201, ppid => 200, uid => 501, ruid => 501, start_sec => 124, start_usec => 789}};
+    $context->{before_acquisition} = footprint($context);
+    $context->{previous} = $acquire->($case, $context->{request});
+    $context->{after_acquisition} = footprint($context);
+    $callback->($context);
+    @temporary = ();
+    for my $kind (qw(store workspace other_workspace evidence)) {
+        my $path = "$ROOT/$context->{$kind}{path}";
+        die 'inert observation allocation remains' if -e $path || -l $path;
+    }
+    save_result();
+}
+sub observation_record {
+    my ($context, $offset) = @_;
+    my $request = clone($context->{request}); $request->{target_birth}{pid} += $offset // 0;
+    my $record = {schema => 'fsmgen.test.rust_proxy_image_observation_reference.v1',
+        image_key => $context->{runtime}{image}{key},
+        evidence_directory => $request->{evidence_directory_identity}{path},
+        evidence_directory_identity => $request->{evidence_directory_identity},
+        observer_birth => $request->{observer_birth}, target_birth => $request->{target_birth},
+        selected_sources => clone($context->{runtime}{reference}{record}{selected_sources})};
+    $record->{reference_key} = NativeProxyImageCustody::observation_reference_key(
+        @$record{qw(evidence_directory observer_birth target_birth)});
+    return $record;
+}
+sub add_observation {
+    my ($context, $offset) = @_; my $record = observation_record($context, $offset);
+    my $case = $context->{store}{path};
+    write_bytes("$ROOT/$case/references/$record->{reference_key}.json",
+        NativeProxyObservationRecord::encode_observation_record($case, $record), 0400);
+}
+sub replace_file {
+    my ($path, $mode) = @_; my $raw = read_bytes($path);
+    rename($path, "$path.old") or die $!;
+    write_bytes($path, $raw, $mode); unlink("$path.old") or die $!;
+}
+sub replace_directory {
+    my ($path) = @_;
+    rename($path, "$path.old") or die $!; mkdir($path, 0700) or die $!;
+    opendir my $directory, "$path.old" or die $!;
+    my @names = grep { $_ ne '.' && $_ ne '..' } readdir $directory;
+    closedir $directory or die $!;
+    rename("$path.old/$_", "$path/$_") or die $! for @names;
+    rmdir("$path.old") or die $!;
+}
+sub evaluate {
+    my ($context, $row, $callback, $source_hook) = @_;
+    my @held;
+    my $ok = eval {
+        local *NativeProxyImagePublication::_write_payload = sub { ++$publications; die 'forbidden publication'; };
+        local *NativeProxyImageCustody::_source = sub {
+            my $owned = caller eq 'NativeProxyObservationAcquisition';
+            my $source = $source_reader->(@_);
+            if ($owned) {
+                my $flags = fcntl($source->{handle}, F_GETFD, 0);
+                push @held, {handle => $source->{handle}, descriptor => fileno($source->{handle}),
+                    path => File::Spec->abs2rel($source->{path}, $ROOT),
+                    cloexec => defined($flags) && ($flags & FD_CLOEXEC) ? 1 : 0};
+                $source_hook->($source) if $source_hook;
+            }
+            return $source;
+        };
+        $row->{result} = $callback->(); 1;
+    };
+    my $error = $@; $error =~ s/\Q$ROOT\E/./g;
+    $row->{error} = $error;
+    $row->{returned} = $ok && defined($row->{result}) ? 1 : 0;
+    $row->{descriptors} = [map { +{path => $_->{path}, descriptor => $_->{descriptor}, cloexec => $_->{cloexec},
+        closed => defined(fileno($_->{handle})) ? 0 : 1} } @held];
+    $row->{after} = footprint($context);
+    # Keep intercepted handle references alive until after this assertion, so
+    # garbage collection cannot substitute for the operation's explicit close.
+    ok(!grep({ !$_->{closed} || !$_->{cloexec} } @{$row->{descriptors}}), "$row->{name}: retained descriptors close")
+        or do { $result->{first_failure} = $row; save_result(); BAIL_OUT('observation descriptor custody failed'); };
+    return $ok;
+}
+sub initial_row {
+    my ($context, $name) = @_;
+    return {name => $name, context => clone($context), before => footprint($context)};
+}
+
+sub snapshot_bytes {
+    my ($snapshot, $bytes) = @_;
+    $snapshot->{bytes} = $bytes;
+    $snapshot->{identity}{size_bytes} = length($bytes);
+    $snapshot->{identity}{sha256} = sha256_hex($bytes);
+}
+save_result();
+for my $case (@{$plan->{cases}}) {
+    context(sub {
+        my ($context) = @_; my $name = $case->{name};
+        my $request = clone($context->{request}); my $previous = clone($context->{previous});
+        my $workspace = "$ROOT/$context->{workspace}{path}";
+        my $store = "$ROOT/$context->{store}{path}";
+        my $hold = "$ROOT/$previous->{observation_reference}{source}{identity}{path}";
+        my @args = ($context->{store}{path}, $request, $previous);
+        my $callback = sub { $reuse->(@args) };
+        if ($name eq 'stable repeated reuse' || $name eq 'reuse at combined capacity') {
+            add_observation($context, 1000+$_) for $name eq 'reuse at combined capacity' ? (0..124) : ();
+            $callback = sub {
+                my $first = $reuse->(@args); my $second = $reuse->($args[0], $request, $first);
+                die 'repeated reuse changed acquisition' unless $JSON->encode($first) eq $JSON->encode($second);
+                return $second;
+            };
+        } elsif ($name eq 'extra receipt field') { $previous->{extra} = 0; }
+        elsif ($name eq 'runtime authority') { $previous->{runtime_authorized} = 1; }
+        elsif ($name eq 'executable supplied') { $previous->{executable} = 'rustup'; }
+        elsif ($name eq 'boolean lock inode') { $previous->{lock}{inode} = JSON::PP::true; }
+        elsif ($name eq 'foreign lock path') { $previous->{lock}{path} .= 'Other'; }
+        elsif ($name eq 'missing target source') { pop @{$previous->{target_sources}}; }
+        elsif ($name eq 'extra source field') { $previous->{target_sources}[0]{extra} = 0; }
+        elsif ($name eq 'oversized wrapper') { $previous->{target_sources}[0]{bytes} = 'W' x 65537; }
+        elsif ($name eq 'source hash mismatch') { $previous->{target_sources}[0]{identity}{sha256} = '0' x 64; }
+        elsif ($name eq 'source size mismatch') { $previous->{target_sources}[0]{identity}{size_bytes}++; }
+        elsif ($name eq 'string source inode') { $previous->{target_sources}[0]{identity}{inode} = '7'; }
+        elsif ($name eq 'foreign source path') { $previous->{target_sources}[0]{identity}{path} .= 'Other'; }
+        elsif ($name eq 'hold bytes mismatch') { $previous->{observation_reference}{source}{bytes} .= ' '; }
+        elsif ($name eq 'request target birth differs') { $request->{target_birth}{pid}++; }
+        elsif ($name eq 'request evidence identity differs') { $request->{evidence_directory_identity}{inode}++; }
+        elsif ($name eq 'request workspace identity differs') { $request->{workspace_identity}{inode}++; }
+        elsif ($name eq 'private global bytes differ') {
+            snapshot_bytes($previous->{target_sources}[1], $previous->{target_sources}[1]{bytes}.' ');
+        } elsif ($name eq 'source order differs') {
+            @{$previous->{target_sources}}[3,4] = @{$previous->{target_sources}}[4,3];
+        } elsif ($name eq 'current hold absent') { unlink($hold) or die $!; }
+        elsif ($name eq 'current hold replaced') { replace_file($hold, 0400); }
+        elsif ($name eq 'current hold ownership changed') {
+            my $record = clone($previous->{observation_reference}{record}); $record->{evidence_directory_identity}{inode}++;
+            write_bytes($hold, NativeProxyObservationRecord::encode_observation_record($args[0], $record), 0400);
+        } elsif ($name eq 'current lock replaced') { replace_file("$store/coordination.lock", 0600); }
+        elsif ($name eq 'current wrapper bytes changed') { write_bytes("$workspace/rust-tool-resolution", $WRAPPER.'changed', 0700); }
+        elsif ($name eq 'current wrapper replaced') { replace_file("$workspace/rust-tool-resolution", 0700); }
+        elsif ($name eq 'current private reference replaced') {
+            replace_file("$ROOT/$context->{runtime}{reference}{private}{identity}{path}", 0400);
+        } elsif ($name eq 'current global reference replaced') {
+            replace_file("$ROOT/$context->{runtime}{reference}{global}{identity}{path}", 0400);
+        } elsif ($name eq 'current canonical source replaced') {
+            replace_file("$ROOT/$context->{runtime}{image}{snapshots}[0]{identity}{path}", 0400);
+        } elsif ($name eq 'current evidence directory replaced') { replace_directory("$ROOT/$context->{evidence}{path}"); }
+        elsif ($name eq 'current workspace directory replaced') { replace_directory($workspace); }
+        elsif ($name eq 'current runtime reference absent') {
+            unlink("$ROOT/$context->{runtime}{reference}{global}{identity}{path}") or die $!;
+        } elsif ($name eq 'extra argument') { push @args, 'extra'; }
+        elsif ($name eq 'direct internal caller') {
+            $callback = sub { NativeProxyObservationAcquisition::_admit_locked($args[0], {}, $request, $previous) };
+        } else { die "unknown planned reuse case $name"; }
+        my $row = initial_row($context, $name);
+        $row->{request} = clone($request); $row->{previous} = clone($previous);
+        my $ok = evaluate($context, $row, $callback);
+        $row->{request_after} = clone($request); $row->{previous_after} = clone($previous);
+        $row->{diagnostic_matched} = $case->{kind} eq 'success' ? $row->{error} eq '' ? 1 : 0
+            : index($row->{error}, $case->{diagnostic}) >= 0 ? 1 : 0;
+        my $unchanged = $JSON->encode($row->{before}) eq $JSON->encode($row->{after});
+        my $expected = $case->{kind} eq 'success'
+            ? $ok && $row->{returned} && $JSON->encode($row->{result}) eq $JSON->encode($context->{previous})
+            : !$ok && !$row->{returned};
+        push @{$result->{cases}}, $row; save_result();
+        ok($expected && $row->{diagnostic_matched} && $unchanged, "$name preserves storage and ownership")
+            or do { diag($row->{error} || 'unexpected acquisition or storage mutation'); BAIL_OUT('first stable reuse mismatch'); };
+    });
+}
+for my $name (@{$plan->{late_cases}}) {
+    context(sub {
+        my ($context) = @_; my $row = initial_row($context, $name); my $fired = 0;
+        local *NativeProxyObservationAcquisition::_finish_locked = sub {
+            $row->{before_injection} = footprint($context); $fired++;
+            if ($name eq 'wrapper replaced before closure') {
+                replace_file("$ROOT/$context->{workspace}{path}/rust-tool-resolution", 0700);
+            } elsif ($name eq 'hold replaced before closure') {
+                replace_file("$ROOT/$context->{previous}{observation_reference}{source}{identity}{path}", 0400);
+            } elsif ($name eq 'evidence directory replaced before closure') { replace_directory("$ROOT/$context->{evidence}{path}"); }
+            elsif ($name eq 'workspace directory replaced before closure') { replace_directory("$ROOT/$context->{workspace}{path}"); }
+            else { die 'unknown planned late reuse case'; }
+            $row->{injected} = footprint($context); goto &$finish;
+        };
+        my $ok = evaluate($context, $row, sub { $reuse->($context->{store}{path}, $context->{request}, $context->{previous}) });
+        $row->{diagnostic_matched} = $row->{error} =~ /(?:changed|identity differs)/ ? 1 : 0;
+        push @{$result->{late_changes}}, $row; save_result();
+        ok(!$ok && !$row->{returned} && $fired == 1 && $row->{diagnostic_matched}
+            && $JSON->encode($row->{before}) eq $JSON->encode($row->{before_injection})
+            && $JSON->encode($row->{injected}) eq $JSON->encode($row->{after}), "$name rejects and retains exact state")
+            or do { diag($row->{error} || 'unexpected late success'); BAIL_OUT('first late reuse mismatch'); };
+    });
+}
+for my $name (@{$plan->{mutants}}) {
+    context(sub {
+        my ($context) = @_;
+        if ($name eq 'discard prior hold identity') {
+            replace_file("$ROOT/$context->{previous}{observation_reference}{source}{identity}{path}", 0400);
+        } elsif ($name eq 'discard prior target snapshots') {
+            replace_file("$ROOT/$context->{workspace}{path}/rust-tool-resolution", 0700);
+        } else { die 'unknown planned reuse mutant'; }
+        my $row = initial_row($context, $name); my $callback = sub {
+            $reuse->($context->{store}{path}, $context->{request}, $context->{previous}) };
+        my $ok;
+        if ($name eq 'discard prior hold identity') {
+            local *NativeProxyObservationAcquisition::_prior_hold_matches = sub { return };
+            $ok = evaluate($context, $row, $callback);
+        } else {
+            local *NativeProxyObservationAcquisition::_prior_targets_match = sub { return };
+            $ok = evaluate($context, $row, $callback);
+        }
+        push @{$result->{mutants}}, $row; save_result();
+        ok($ok && $row->{returned} && $JSON->encode($row->{result}) ne $JSON->encode($context->{previous})
+            && $JSON->encode($row->{before}) eq $JSON->encode($row->{after}), "$name admits independently invalid prior custody")
+            or do { diag($row->{error} || 'mutant did not separate prior custody'); BAIL_OUT('reuse mutant failed'); };
+    });
+}
+is($forbidden + $publications, 0, 'no process or publication attempt');
+$result->{success} = JSON::PP::true; save_result(); done_testing();

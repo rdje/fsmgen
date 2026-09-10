@@ -1847,8 +1847,8 @@ canonical source pair. Acquisition checks directory and source identities
 again, closes retained descriptors on success and failure, and preserves other
 owners. Missing coordination, changed files, mismatched records and exhausted
 reference capacity reject. A hold published before a later failure remains
-for separately owned recovery. Existing holds currently reject; stable reuse,
-interruption closure, archive settlement and exact release are the next steps.
+for separately owned recovery. Fresh acquisition rejects existing holds;
+interruption closure, archive settlement and exact release remain separate gates.
 
 This is storage qualification with inert files and synthetic birth records.
 It does not authenticate a process, run capture or activate the product path.
@@ -1856,6 +1856,24 @@ Replay the fresh-acquisition controls:
 
 ```bash
 scripts/run_with_ram_guard.sh -- perl docs/audits/native-proxy-observation-acquisition-20260910/qualify.t
+```
+
+The separate inactive reuse operation requires the previous successful
+acquisition and the same workspace, evidence directory and ordered births.
+It checks the original permanent lock, observation hold and every target source
+against current bytes and identities. Repeated reuse returns the same hold and
+snapshots without publication, including when reference capacity is full.
+Missing or replaced holds, changed source bytes and altered receipt fields
+reject without recreation or release. The hold stays outside strict target
+snapshots, so owning it does not itself change a repeated source comparison.
+
+The reuse controls also preserve binary snapshot bytes and JSON numeric types
+when cloning fixture data. This avoids testing an accidentally retyped receipt.
+These controls remain inert and do not prove native ownership or full lifetime
+settlement. Replay:
+
+```bash
+scripts/run_with_ram_guard.sh -- perl docs/audits/native-proxy-observation-reuse-20260910/qualify.t
 ```
 
 The helper checks bounded regular source/output files and the native header,
