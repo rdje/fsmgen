@@ -1533,10 +1533,11 @@ callsite attribution. The installed policy images also fail the sample's
 architecture/UUID match. Startup qualification remains open; `.15.7.3.3`
 records why fixture reuse is not yet a proved repair. A hardcoded interpreter
 or mocked resolver changes the control; a persistent fixture cache lacks cold
-launch evidence. The proposed next step is an unchanged test in a quiet build
-window, pending the director's decision. Any failure remains failed, and a
-passing run would provide limited qualification without repairing the historical
-failure or closing the missing native request join.
+launch evidence. The director has authorized an unchanged test after stopping two other
+agents, while one remains running. Task `.15.7.3.4` owns that single reduced-load
+qualification; this is not an isolated-host claim. Any failure remains failed,
+and a passing run would provide limited qualification without repairing the
+historical failure or closing the missing native request join.
 
 Shared evidence publication now anchors file creation, linking and temporary
 cleanup to open directory descriptors. A controlled directory-replacement test
