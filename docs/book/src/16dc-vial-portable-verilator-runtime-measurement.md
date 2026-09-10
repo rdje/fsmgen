@@ -1558,7 +1558,8 @@ it does not establish portability or repair the historical startup delay.
 A replacement also needs a bounded compiler policy that preserves tests on
 hosts without a C compiler, and closed native capture admission alongside the
 existing Perl route. Tasks `.15.7.3.8`–`.11` own those prerequisites, integration
-and independent qualification. The original fixtures remain unchanged.
+and independent qualification. Those feasibility probes left the original
+fixtures unchanged.
 
 Task `.15.7.3.8` adds `FSM::Test::RustProxyFixture::prepare_rust_proxy` as a
 separate test helper. It accepts a private, directly owned workspace beneath
@@ -1626,8 +1627,35 @@ scripts/run_with_ram_guard.sh -- python3 -B -m unittest discover -s t/python -p 
 ```
 
 These checks do not launch the original test or authenticated capture.
-Original-test integration and native capture qualification remain separately
-owned; the historical startup delay is still open.
+
+Task `.15.7.3.10` connects the qualified builder to the original Rust negative
+controls. The directory control still presents a Cargo directory; the proxy
+modes prepare separate immutable paths and expose Cargo as a symlink to their
+canonical `rustup`. The selected-Perl wrapper, exact tool-resolution route,
+deadlines, failure-stage and failure-class assertions, and prohibition on a
+Cargo build remain in place. Native preparation failure fails the test without
+switching implementations or retrying, and retains that mode's workspace.
+
+Mode directories disable automatic removal. Retirement requires explicit
+cleanup evidence from the compiler when used, the outer watcher, and every
+inner stage: started leaders must be reaped and owned groups gone. Missing,
+undefined or invalid cleanup flags retain the workspace. Invalid JSON or an
+empty stage history also fails and retains it. An isolated hostile control
+exposed an empty-array assertion losing its condition through Perl list
+context; the repaired condition explicitly counts stages in scalar context.
+Incorrect status or an unexpected Cargo build remains a test failure even
+when its settled workspace can be removed.
+
+The isolated integration controls execute the extracted construction,
+assertions and retirement logic with inert builder/process observations:
+
+```bash
+scripts/run_with_ram_guard.sh -- prove -Iperl -It/lib t/1816-rust-proxy-integration.t
+```
+
+They verify lifecycle handling without launching the original test or compiler.
+Task `.15.7.3.11` owns the separate original/native qualification; the historical
+startup delay is still open.
 
 Shared evidence publication now anchors file creation, linking and temporary
 cleanup to open directory descriptors. A controlled directory-replacement test

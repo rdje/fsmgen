@@ -55,14 +55,14 @@ evidence: >-
   scripts/fixture_policy_associations.py; t/python/test_fixture_policy_associations.py;
   scripts/run_fixture_startup_policy_observation.py; t/python/test_fixture_startup_policy_observation.py;
   t/1669-task-acceptance-fixture-runtime.t;
-  t/lib/FSM/Test/RustProxyFixture.pm; t/1815-rust-proxy-fixture.t
+  t/lib/FSM/Test/RustProxyFixture.pm; t/1815-rust-proxy-fixture.t; t/1816-rust-proxy-integration.t
 reverify: >-
   scripts/run_with_ram_guard.sh -- prove -Iperl -It/lib
   t/1545-task-acceptance-doctrine.t
   t/1668-darwin-inline-verilator-test-runtime.t
   t/1669-task-acceptance-fixture-runtime.t t/1812-process-coordinator-endpoint.t
   t/1813-process-coordinator-connection.t t/1814-process-coordinator-service.t
-  t/1815-rust-proxy-fixture.t
+  t/1815-rust-proxy-fixture.t t/1816-rust-proxy-integration.t
 ---
 
 Decisions `0087`/`0101`: `FSM::Support::ProcessSupervisor` offers nonblocking steps to synchronous callers: shell-free argv, same-volume cwd, bounded split capture, exec handoff, monotonic time, one group, first-failure status, TERM/KILL cleanup. Adapters seal commands/bounds/schemas/platform guards; T1669 checks exclusive ownership.
@@ -78,12 +78,12 @@ Darwin env-Bash stalled before main. Direct Bash preserves capability: the retai
 array under `set -u`. Bash/Git are read-only host dependencies; project data
 stays local. Timeout/overflow/nonzero/signal/exec/descendant/cleanup failures stay failed
 without retry; original fixture assertions pass.
-T1545 diagnostics, native launch observations and bounded-progress controls are retained in the historical card below; missing witnesses remain unknown.
+T1545 diagnostics and bounded launch/progress controls: historical card below; missing witnesses stay unknown.
 Env-Perl and direct Perl both timed out after handoff, refuting a shebang-only cure. HIAL/VIAL `.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2` owns startup cause; `.3.3–7` own authenticated kernel capture. Sampling/authentication/STOP limits remain in task/book and the exact historical card below.
 T1669 uses `.artifacts/tmp/process-supervisor-tests/`. Every ps result needs native presence; only disappearance is skipped. Permission/query/live identity changes fail. Native exit and unchecked-ps controls qualify that race, not the historical changed field (`.3.2.11`; book/task).
 Prior evidence and earlier routes: `e0d74bb051465ba641227acc11975e25e5d879a7:docs/knowledge/test-subprocess-policy-adapters.md`.
 PST parsing normalizes 1–16 lowercase hex digits; malformed fields and contradictions reject.
-.15.7.3: serial queue contention is supported; client/frame joins and startup repair stay open. Reduced-load and authored-native passes do not close them; OS copies hit launch constraints. .8 seals portable proxy preparation. .9 admits exact native which-cargo ancestry and pinned C inputs, retaining/rechecking binary/source custody; .10–11 own integration/qualification. Archive pins/order/empty-stream rejection: task/book (.15.7.2–3).
+.15.7.3: serial queue contention is supported; client/frame joins and startup repair stay open. Reduced-load and authored-native passes do not close them; OS copies hit launch constraints. .8 seals portable proxy preparation. .9 admits exact native ancestry and pinned C inputs with byte custody; .10 integrates owned mode retirement; .11 owns original qualification. Archive contract: task/book (.15.7.2–3).
 V1 association replay needs pinned manifest/archives, no old root/CFHash; native rederivation unavailable, unauthenticated. Reports omit raw text/bodies; receipts bind calibration/artifacts without private reads. Fixed CLI .15.7.2.4 uses archive index/digest output and compact journal anchors; calibration/reserve/actual-file checks and first-failure/capture stop persist. Outcomes stay distinct; failures/ownership persist. F_CHECK_LV cause unproved (.15.2); queue/provenance coexist (.15.4); worker/delivery unknown. Live opt-in violations: .15.5.1.2.2–3.
 Shared publish_bytes checks descriptor-anchored inode/bytes; existing files/primary failures persist. Later same-user mutation is unprotected (.15.7.2.3.1). Archive publication rejects fixed existing destinations and consumes pages before/after writing index last (.3.2).
 Archive reverify: `scripts/run_with_ram_guard.sh -- python3 -B -m unittest discover -s t/python -p 'test_fixture_policy_archive*.py'`.

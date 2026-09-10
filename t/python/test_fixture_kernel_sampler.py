@@ -188,15 +188,21 @@ class CaptureBoundary(unittest.TestCase):
         (self.root / "bin/fsmgen").touch()
         source = (ROOT / "t/1669-task-acceptance-fixture-runtime.t").read_text()
         self.assertIn(variable, ("workspace", "mode_workspace"))
-        calls = re.findall(r"my \$" + variable + r" = create_project_tempdir\([\s\S]*?\);", source)
+        calls = re.findall(r"my \$" + variable
+                           + r" = (?:create_project_tempdir|File::Temp->newdir)\([\s\S]*?\);", source)
         self.assertEqual(len(calls), 1, "selected allocation must be unambiguous")
         program = "$|=1; alarm 15;\n" + calls[0] + '''
 print "$workspace\\n";
 read(STDIN, my $release, 1) == 1 or die "allocator release missing";
 '''
         program = program.replace("$workspace", "$" + variable)
+        if variable == "mode_workspace":
+            # This control has no compiler or runtime owner. Only its held
+            # allocator owns the synthetic files, so release may remove them.
+            program += "$mode_workspace->unlink_on_destroy(1);\n"
         allocator = subprocess.Popen(
-            ["/usr/bin/perl", "-Iperl", "-MFSM::ProjectDataLocality=create_project_tempdir",
+            ["/usr/bin/perl", "-Iperl", "-MFile::Temp",
+             "-MFSM::ProjectDataLocality=create_project_tempdir,ensure_project_artifact_dir",
              "-e", program], cwd=self.root, stdin=subprocess.PIPE,
             stdout=subprocess.PIPE, stderr=subprocess.PIPE)
         workspace = None

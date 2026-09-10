@@ -7,8 +7,9 @@ use Cwd qw(abs_path);
 use Digest::SHA qw(sha256_hex);
 use Errno qw(EPERM);
 use File::Basename qw(dirname);
-use File::Path qw(make_path);
+use File::Path qw(make_path remove_tree);
 use File::Spec;
+use File::Temp ();
 use FindBin;
 use JSON::PP qw(decode_json);
 use Test::More;
@@ -17,7 +18,7 @@ use Time::HiRes qw(sleep);
 use lib File::Spec->catdir($FindBin::Bin, '..', 'perl');
 use lib File::Spec->catdir($FindBin::Bin, 'lib');
 
-use FSM::ProjectDataLocality qw(create_project_tempdir);
+use FSM::ProjectDataLocality qw(create_project_tempdir ensure_project_artifact_dir);
 use FSM::Test::ProjectDataLocality;
 use FSM::Support::ProcessSupervisor::Wire ();
 use FSM::Test::ProcessSupervisor qw(
@@ -28,6 +29,7 @@ use FSM::Test::TaskAcceptanceFixtureRuntime qw(
     run_fixture_checker
     run_fixture_git
 );
+use FSM::Test::RustProxyFixture qw(prepare_rust_proxy);
 
 my $repo_root = repository_root();
 my $perl = abs_path($^X)
@@ -743,8 +745,10 @@ subtest 'Rust parity rejects unresolved and misleading tool identities before bu
     for my $mode (qw(directory proxy_nonzero proxy_decoy)) {
         # Keep each source path unchanged for its entire mode lifetime so a
         # delayed path-only policy record cannot name a later proxy's bytes.
-        my $mode_workspace = create_project_tempdir(
-            purpose => 'process-supervisor-tests',
+        my $mode_workspace = File::Temp->newdir(
+            'fsmgen-XXXXXXXX',
+            DIR => ensure_project_artifact_dir(qw(tmp process-supervisor-tests)),
+            CLEANUP => 0,
         );
         my $probe = File::Spec->catfile($mode_workspace, 'rust-tool-resolution');
         write_executable($probe, <<'PROBE');
@@ -756,15 +760,19 @@ require FSM::Test::RustParityRuntime;
 print encode_json(FSM::Test::RustParityRuntime::run_rust_parity());
 PROBE
         my $bin = File::Spec->catdir($mode_workspace, 'rust-tools');
-        make_path(File::Spec->catdir($bin, 'cargo'));
         my $cargo = File::Spec->catfile($bin, 'cargo');
-        my $proxy = File::Spec->catfile($bin, 'rustup');
-        if ($mode ne 'directory') {
-            rmdir $cargo if -d $cargo;
-            unlink $cargo if -l $cargo;
-            write_executable($proxy, "#!$perl\n" . ($mode eq 'proxy_nonzero'
-                ? "print STDERR qq(resolution-failed\\n); exit 9;\n"
-                : "print qq(relative-cargo\\n);\n"));
+        my $prepared;
+        if ($mode eq 'directory') {
+            make_path($cargo);
+        }
+        else {
+            $prepared = prepare_rust_proxy("$mode_workspace", $mode);
+            ok($prepared->{ok}, "$mode proxy preparation succeeds") or do {
+                diag explain $prepared;
+                diag 'Retained proxy workspace: ' . File::Spec->abs2rel("$mode_workspace", $repo_root);
+                return;
+            };
+            my $proxy = File::Spec->catfile($repo_root, $prepared->{executable});
             symlink $proxy, $cargo or die "cannot make Cargo proxy: $!";
         }
         my $outer = supervise_process(
@@ -775,7 +783,11 @@ PROBE
         );
         ok($outer->{ok}, "$mode probe terminates under the independent watcher") or diag explain $outer;
         my $result = eval { decode_json($outer->{stdout}) };
-        ok(ref($result) eq 'HASH', "$mode returns a structured adapter result") or return;
+        ok(ref($result) eq 'HASH' && ref($result->{stages}) eq 'ARRAY' && scalar(@{$result->{stages}}),
+            "$mode returns a structured adapter result") or do {
+                diag 'Retained proxy workspace: ' . File::Spec->abs2rel("$mode_workspace", $repo_root);
+                return;
+            };
         ok(!$result->{ok}, "$mode fails closed");
         is($result->{failure_stage}, $mode eq 'proxy_decoy' ? 'tool_admission' : 'tool_resolution', "$mode has exact stage attribution");
         is($result->{status}, $mode eq 'proxy_nonzero' ? 'nonzero_exit' : 'invocation_error', "$mode preserves failure class")
@@ -784,6 +796,9 @@ PROBE
             }));
         ok(!grep($_->{stage} eq 'cargo_build', @{$result->{stages}}), "$mode cannot start Cargo build");
         ok(!grep(!$_->{cleanup}{group_gone}, @{$result->{stages}}), "$mode leaves no owned process group");
+        my @owners = ($outer, @{$result->{stages}});
+        push @owners, $prepared->{compilation} if $prepared && defined($prepared->{compilation});
+        retire_rust_proxy_workspace("$mode_workspace", @owners) or return;
     }
 };
 
@@ -1335,6 +1350,29 @@ OBSERVER
 };
 
 done_testing();
+
+sub retire_rust_proxy_workspace {
+    my ($directory, @owners) = @_;
+    # A group disappearing is not enough if its leader remains unreaped.
+    # Failed pre-launch stages have no leader; missing evidence stays unknown.
+    my $settled = @owners && !grep {
+        my $cleanup = ref($_) eq 'HASH' ? $_->{cleanup} : undef;
+        ref($cleanup) ne 'HASH' || (grep {
+            !defined($cleanup->{$_}) || ref($cleanup->{$_}) || $cleanup->{$_} !~ /\A[01]\z/
+        } qw(leader_started leader_reaped group_gone)) || !$cleanup->{group_gone}
+            || ($cleanup->{leader_started} && !$cleanup->{leader_reaped})
+    } @owners;
+    unless ($settled) {
+        fail('proxy workspace requires complete process cleanup');
+        diag 'Retained proxy workspace: ' . File::Spec->abs2rel($directory, $repo_root);
+        return 0;
+    }
+    my $errors;
+    my $removed = eval { remove_tree($directory, {error => \$errors}); 1 };
+    my $gone = $removed && !@$errors && !-e $directory && !-l $directory;
+    ok($gone, 'settled proxy workspace is removed') or diag explain $errors;
+    return $gone;
+}
 
 sub capture_error {
     my ($code) = @_;
