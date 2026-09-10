@@ -121,6 +121,25 @@ for my $value ('101', JSON::PP::true, undef, -1, 1.5) {
         NativeProxyImageCustody::observation_reference_key($v->{evidence_directory}, $birth, $v->{target_birth});
     }, qr/birth integer/);
 }
+my @birth_fields = qw(pid ppid ruid start_sec start_usec uid);
+for my $length (2 .. @birth_fields) {
+    for my $start (0 .. @birth_fields - $length) {
+        my @merged = @birth_fields[$start .. $start + $length - 1];
+        my $birth = {%{$v->{observer_birth}}};
+        delete @$birth{@merged};
+        $birth->{join(',', @merged)} = 501;
+        rejects('combined native birth fields: '.join('+', @merged), sub {
+            NativeProxyImageCustody::observation_reference_key($v->{evidence_directory}, $birth, $v->{target_birth});
+        }, qr/closed native birth/);
+    }
+}
+my $padded_birth = {%{$v->{observer_birth}}};
+delete @$padded_birth{qw(ppid ruid)};
+$padded_birth->{'ppid,ruid'} = 501;
+$padded_birth->{padding} = 0;
+rejects('combined native fields padded to expected count', sub {
+    NativeProxyImageCustody::observation_reference_key($v->{evidence_directory}, $padded_birth, $v->{target_birth});
+}, qr/closed native birth/);
 
 with_entry(sub {
     my ($case) = @_;
@@ -189,6 +208,15 @@ with_entry(sub {
     close($source->{handle}) or die $!;
     rejects('wrong key', sub { $read->($case, '0' x 64, $c, $image) }, qr/compiled bytes/);
     rejects('production root excluded', sub { $read->('.artifacts/cache/rust-proxy-images/v1', $key, $c, $image) }, qr/inactive qualification namespace/);
+});
+
+with_entry(sub {
+    my ($case, $entry) = @_;
+    unlink("$entry/image.json") or die $!;
+    unlink("$entry/rustup") or die $!;
+    write_bytes("$entry/image.json,rustup", '', 0400);
+    rejects('combined image member names', sub { NativeProxyImageCustody::_members($entry) }, qr/incomplete or unknown/);
+    rejects('combined-member image cannot be admitted', sub { $read->($case, $key, $c, $image) }, qr/incomplete or unknown|does not exist/);
 });
 
 # A removed byte-equality guard must make the real corruption oracle fail.

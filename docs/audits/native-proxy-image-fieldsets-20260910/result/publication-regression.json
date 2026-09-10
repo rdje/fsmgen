@@ -1,0 +1,218 @@
+{
+   "controls" : [
+      {
+         "expected_diagnostic" : 1,
+         "name" : "modeled content-key collision",
+         "rejected" : 1,
+         "returned_result" : 0
+      },
+      {
+         "expected_diagnostic" : 1,
+         "name" : "new image at capacity",
+         "rejected" : 1,
+         "returned_result" : 0
+      },
+      {
+         "expected_diagnostic" : 1,
+         "name" : "existing empty_directory",
+         "rejected" : 1,
+         "returned_result" : 0
+      },
+      {
+         "expected_diagnostic" : 1,
+         "name" : "existing missing_manifest",
+         "rejected" : 1,
+         "returned_result" : 0
+      },
+      {
+         "expected_diagnostic" : 1,
+         "name" : "existing writable_image",
+         "rejected" : 1,
+         "returned_result" : 0
+      },
+      {
+         "expected_diagnostic" : 1,
+         "name" : "existing changed_bytes",
+         "rejected" : 1,
+         "returned_result" : 0
+      },
+      {
+         "expected_diagnostic" : 1,
+         "name" : "interruption before rustup.c",
+         "rejected" : 1,
+         "returned_result" : 0
+      },
+      {
+         "expected_diagnostic" : 1,
+         "name" : "interruption after rustup.c",
+         "rejected" : 1,
+         "returned_result" : 0
+      },
+      {
+         "expected_diagnostic" : 1,
+         "name" : "interruption before image.json",
+         "rejected" : 1,
+         "returned_result" : 0
+      },
+      {
+         "expected_diagnostic" : 1,
+         "name" : "interruption after image.json",
+         "rejected" : 1,
+         "returned_result" : 0
+      },
+      {
+         "expected_diagnostic" : 1,
+         "name" : "interruption before rustup",
+         "rejected" : 1,
+         "returned_result" : 0
+      },
+      {
+         "expected_diagnostic" : 1,
+         "name" : "interruption after rustup",
+         "rejected" : 1,
+         "returned_result" : 0
+      },
+      {
+         "expected_diagnostic" : 1,
+         "name" : "interruption before executable seal",
+         "rejected" : 1,
+         "returned_result" : 0
+      },
+      {
+         "expected_diagnostic" : 1,
+         "name" : "interruption after executable seal",
+         "rejected" : 1,
+         "returned_result" : 0
+      },
+      {
+         "expected_diagnostic" : 1,
+         "name" : "same-byte sealed source replacement",
+         "rejected" : 1,
+         "returned_result" : 0
+      },
+      {
+         "expected_diagnostic" : 1,
+         "name" : "same-byte sealed directory replacement",
+         "rejected" : 1,
+         "returned_result" : 0
+      },
+      {
+         "expected_diagnostic" : 1,
+         "name" : "no publication callback",
+         "rejected" : 1,
+         "returned_result" : 0
+      },
+      {
+         "expected_diagnostic" : 1,
+         "name" : "unknown fixed transaction",
+         "rejected" : 1,
+         "returned_result" : 0
+      },
+      {
+         "expected_diagnostic" : 1,
+         "name" : "oversized publication bytes",
+         "rejected" : 1,
+         "returned_result" : 0
+      },
+      {
+         "expected_diagnostic" : 1,
+         "name" : "direct internal publication bypass",
+         "rejected" : 1,
+         "returned_result" : 0
+      }
+   ],
+   "first" : {
+      "created" : 1,
+      "executable" : null,
+      "image_key" : "efd497b0e847884b3c1cfcde14d8b645991c52ebab90c54e58984ccbc303c146",
+      "lock" : {
+         "device" : 16777244,
+         "inode" : 76892151,
+         "path" : ".artifacts/tmp/native-proxy-image-custody/cases/fsmgen-oWJ7HRtY/coordination.lock"
+      },
+      "runtime_authorized" : 0,
+      "sources" : [
+         {
+            "device" : 16777244,
+            "inode" : 76892155,
+            "path" : ".artifacts/tmp/native-proxy-image-custody/cases/fsmgen-oWJ7HRtY/images/efd497b0e847884b3c1cfcde14d8b645991c52ebab90c54e58984ccbc303c146/rustup.c",
+            "sha256" : "a7d92e28ec1c8308e37c6003df167bc42bd2341cf3a69d677f45330271ffba56",
+            "size_bytes" : 50
+         },
+         {
+            "device" : 16777244,
+            "inode" : 76892157,
+            "path" : ".artifacts/tmp/native-proxy-image-custody/cases/fsmgen-oWJ7HRtY/images/efd497b0e847884b3c1cfcde14d8b645991c52ebab90c54e58984ccbc303c146/rustup",
+            "sha256" : "e7f06f27e18528c7d10e8c4a4ab42b5e70d1423cdb80e83048597719c9c7eb67",
+            "size_bytes" : 53
+         },
+         {
+            "device" : 16777244,
+            "inode" : 76892156,
+            "path" : ".artifacts/tmp/native-proxy-image-custody/cases/fsmgen-oWJ7HRtY/images/efd497b0e847884b3c1cfcde14d8b645991c52ebab90c54e58984ccbc303c146/image.json",
+            "sha256" : "156ec74edbff95660f5275aca3dca8f675f8398ceff43a243573aee41462efb4",
+            "size_bytes" : 332
+         }
+      ]
+   },
+   "forbidden_process_attempts" : 0,
+   "limits" : "Inert publication/custody only. No actual compiler, runtime reference, worker contention, native behavior, maintenance or product activation.",
+   "retired_cases" : [
+      ".artifacts/tmp/native-proxy-image-custody/cases/fsmgen-oWJ7HRtY",
+      ".artifacts/tmp/native-proxy-image-custody/cases/fsmgen-ro9CYW6b",
+      ".artifacts/tmp/native-proxy-image-custody/cases/fsmgen-lyFsM1PS",
+      ".artifacts/tmp/native-proxy-image-custody/cases/fsmgen-iT8KrIvM",
+      ".artifacts/tmp/native-proxy-image-custody/cases/fsmgen-T0EqmO0Z",
+      ".artifacts/tmp/native-proxy-image-custody/cases/fsmgen-fKN6kkwa",
+      ".artifacts/tmp/native-proxy-image-custody/cases/fsmgen-pphIYbXh",
+      ".artifacts/tmp/native-proxy-image-custody/cases/fsmgen-TvnHUiz2",
+      ".artifacts/tmp/native-proxy-image-custody/cases/fsmgen-84c3DDGB",
+      ".artifacts/tmp/native-proxy-image-custody/cases/fsmgen-2sdjPslv",
+      ".artifacts/tmp/native-proxy-image-custody/cases/fsmgen-jcFiUIAn",
+      ".artifacts/tmp/native-proxy-image-custody/cases/fsmgen-AVglPviP",
+      ".artifacts/tmp/native-proxy-image-custody/cases/fsmgen-jLj0X76n",
+      ".artifacts/tmp/native-proxy-image-custody/cases/fsmgen-C0N6YmpW",
+      ".artifacts/tmp/native-proxy-image-custody/cases/fsmgen-kuyUy2xS",
+      ".artifacts/tmp/native-proxy-image-custody/cases/fsmgen-H_ZH7llb",
+      ".artifacts/tmp/native-proxy-image-custody/cases/fsmgen-HyjNa9Az",
+      ".artifacts/tmp/native-proxy-image-custody/cases/fsmgen-TWTeCU3f",
+      ".artifacts/tmp/native-proxy-image-custody/cases/fsmgen-FcbDUxhw"
+   ],
+   "reuse" : {
+      "created" : 0,
+      "executable" : null,
+      "image_key" : "efd497b0e847884b3c1cfcde14d8b645991c52ebab90c54e58984ccbc303c146",
+      "lock" : {
+         "device" : 16777244,
+         "inode" : 76892151,
+         "path" : ".artifacts/tmp/native-proxy-image-custody/cases/fsmgen-oWJ7HRtY/coordination.lock"
+      },
+      "runtime_authorized" : 0,
+      "sources" : [
+         {
+            "device" : 16777244,
+            "inode" : 76892155,
+            "path" : ".artifacts/tmp/native-proxy-image-custody/cases/fsmgen-oWJ7HRtY/images/efd497b0e847884b3c1cfcde14d8b645991c52ebab90c54e58984ccbc303c146/rustup.c",
+            "sha256" : "a7d92e28ec1c8308e37c6003df167bc42bd2341cf3a69d677f45330271ffba56",
+            "size_bytes" : 50
+         },
+         {
+            "device" : 16777244,
+            "inode" : 76892157,
+            "path" : ".artifacts/tmp/native-proxy-image-custody/cases/fsmgen-oWJ7HRtY/images/efd497b0e847884b3c1cfcde14d8b645991c52ebab90c54e58984ccbc303c146/rustup",
+            "sha256" : "e7f06f27e18528c7d10e8c4a4ab42b5e70d1423cdb80e83048597719c9c7eb67",
+            "size_bytes" : 53
+         },
+         {
+            "device" : 16777244,
+            "inode" : 76892156,
+            "path" : ".artifacts/tmp/native-proxy-image-custody/cases/fsmgen-oWJ7HRtY/images/efd497b0e847884b3c1cfcde14d8b645991c52ebab90c54e58984ccbc303c146/image.json",
+            "sha256" : "156ec74edbff95660f5275aca3dca8f675f8398ceff43a243573aee41462efb4",
+            "size_bytes" : 332
+         }
+      ]
+   },
+   "schema" : "fsmgen.inactive_image_publication_qualification.v1",
+   "sealed_source_mutant_defeated" : 1,
+   "success" : true
+}

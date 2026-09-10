@@ -75,9 +75,10 @@ sub runtime_reference_key {
 
 sub _birth {
     my ($birth) = @_;
+    my @fields = qw(pid ppid ruid start_sec start_usec uid);
     die "expected closed native birth\n" unless ref($birth) eq 'HASH'
-        && join(',', sort keys %$birth) eq 'pid,ppid,ruid,start_sec,start_usec,uid';
-    for my $field (keys %$birth) {
+        && keys(%$birth) == @fields && !grep { !exists($birth->{$_}) } @fields;
+    for my $field (@fields) {
         my $value = $birth->{$field};
         die "expected native birth integer\n"
             unless defined($value) && !ref($value)
@@ -121,7 +122,7 @@ sub _members {
     }
     closedir($directory) or die "cannot close image directory: $!\n";
     die "incomplete or unknown image members\n"
-        unless join(',', sort @members) eq 'image.json,rustup,rustup.c';
+        unless @members == 3 && join(',', sort @members) eq 'image.json,rustup,rustup.c';
 }
 
 sub _source {

@@ -1693,6 +1693,11 @@ its presence grants no runtime authority. Runtime-reference acquisition remains
 the next qualification step, and the product builder still prepares private
 fixtures as described above.
 
+The inactive observation-key codec now checks native-birth field count and
+membership explicitly. A key named `ppid,ruid` cannot substitute for the
+separate `ppid` and `ruid` fields. This closes a reproduced ambiguity in joined
+field-name comparisons; combined names are covered by regression controls.
+
 The helper checks bounded regular source/output files and the native header,
 then sets executable permissions through the admitted open file handle. A
 regression exposed path-based permission changes affecting a substituted file

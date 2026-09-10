@@ -1,0 +1,53 @@
+{
+  "copies": [
+    {
+      "recovery": "docs/audits/native-proxy-image-fieldsets-20260910/result/before-source.pm.source",
+      "sha256": "20b05813b17dffcbbac2d0216fca00456e53ceb1ac451ad672263a6788700207",
+      "size_bytes": 7953,
+      "source": ".artifacts/logs/native-proxy-image-fieldsets-20260910/before-source.pm"
+    },
+    {
+      "recovery": "docs/audits/native-proxy-image-fieldsets-20260910/result/red.json",
+      "sha256": "498fa8124a926be9d49cedbaeff7a2803e5894a8b27f427dea6a6ae0488b7cc7",
+      "size_bytes": 10866,
+      "source": ".artifacts/logs/native-proxy-image-fieldsets-20260910/red.json"
+    },
+    {
+      "recovery": "docs/audits/native-proxy-image-fieldsets-20260910/result/red.tap",
+      "sha256": "4b80a14803cc70978465e44332ef0b1ead2ce016b34bfe504a4002155c0e17c8",
+      "size_bytes": 8134,
+      "source": ".artifacts/logs/native-proxy-image-fieldsets-20260910/red.tap"
+    },
+    {
+      "recovery": "docs/audits/native-proxy-image-fieldsets-20260910/result/green.json",
+      "sha256": "d243c648237f57062f8e1757d3dfb31535e2d0cdd96e849bc433a2f06929ea99",
+      "size_bytes": 10865,
+      "source": ".artifacts/logs/native-proxy-image-fieldsets-20260910/green.json"
+    },
+    {
+      "recovery": "docs/audits/native-proxy-image-fieldsets-20260910/result/green.tap",
+      "sha256": "9d0cf921cbd428a2ad7cfb8195d0d828f7067ca58fcad4643b1805c63ae3135c",
+      "size_bytes": 3456,
+      "source": ".artifacts/logs/native-proxy-image-fieldsets-20260910/green.tap"
+    },
+    {
+      "recovery": "docs/audits/native-proxy-image-fieldsets-20260910/result/publication-regression.json",
+      "sha256": "78fd73740426859f3e7bea354cca5340a7aaa2e9b6a98c99aac15ccc800b7681",
+      "size_bytes": 8022,
+      "source": ".artifacts/logs/native-proxy-image-fieldsets-20260910/publication-regression.json"
+    },
+    {
+      "recovery": "docs/audits/native-proxy-image-fieldsets-20260910/result/publication-regression.tap",
+      "sha256": "eb1be1f3cd59dc2c7938564bef5d864cc2179821c54f86c6635110dc3ef755a2",
+      "size_bytes": 3836,
+      "source": ".artifacts/logs/native-proxy-image-fieldsets-20260910/publication-regression.tap"
+    },
+    {
+      "recovery": "docs/audits/native-proxy-image-fieldsets-20260910/result/audit.json",
+      "sha256": "97688fcff120683b5bb21a35d8e83b3cfbd314b2eebb748274069d7a371bfbdd",
+      "size_bytes": 2791,
+      "source": ".artifacts/logs/native-proxy-image-fieldsets-20260910/audit.json"
+    }
+  ],
+  "schema": "fsmgen.inactive_fieldset_repair_recovery.v1"
+}

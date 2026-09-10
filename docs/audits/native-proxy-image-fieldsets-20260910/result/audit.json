@@ -1,0 +1,74 @@
+{
+  "falsifiers": [
+    "hidden original failure",
+    "hidden repaired failure",
+    "claimed old rejection",
+    "missing merged-field controls"
+  ],
+  "green_assertions": 81,
+  "green_rejection_controls": 62,
+  "inputs": [
+    {
+      "path": ".artifacts/logs/native-proxy-image-fieldsets-20260910/before-source.pm",
+      "sha256": "20b05813b17dffcbbac2d0216fca00456e53ceb1ac451ad672263a6788700207",
+      "size_bytes": 7953
+    },
+    {
+      "path": ".artifacts/logs/native-proxy-image-fieldsets-20260910/red.json",
+      "sha256": "498fa8124a926be9d49cedbaeff7a2803e5894a8b27f427dea6a6ae0488b7cc7",
+      "size_bytes": 10866
+    },
+    {
+      "path": ".artifacts/logs/native-proxy-image-fieldsets-20260910/red.tap",
+      "sha256": "4b80a14803cc70978465e44332ef0b1ead2ce016b34bfe504a4002155c0e17c8",
+      "size_bytes": 8134
+    },
+    {
+      "path": ".artifacts/logs/native-proxy-image-fieldsets-20260910/green.json",
+      "sha256": "d243c648237f57062f8e1757d3dfb31535e2d0cdd96e849bc433a2f06929ea99",
+      "size_bytes": 10865
+    },
+    {
+      "path": ".artifacts/logs/native-proxy-image-fieldsets-20260910/green.tap",
+      "sha256": "9d0cf921cbd428a2ad7cfb8195d0d828f7067ca58fcad4643b1805c63ae3135c",
+      "size_bytes": 3456
+    },
+    {
+      "path": ".artifacts/logs/native-proxy-image-fieldsets-20260910/publication-regression.json",
+      "sha256": "78fd73740426859f3e7bea354cca5340a7aaa2e9b6a98c99aac15ccc800b7681",
+      "size_bytes": 8022
+    },
+    {
+      "path": ".artifacts/logs/native-proxy-image-fieldsets-20260910/publication-regression.tap",
+      "sha256": "eb1be1f3cd59dc2c7938564bef5d864cc2179821c54f86c6635110dc3ef755a2",
+      "size_bytes": 3836
+    },
+    {
+      "path": "docs/audits/native-proxy-image-custody-20260910/ImageCustody.pm",
+      "sha256": "7f9db38e47140fedd39a80d7a6fbf1ee111f56f290a463729b516b08aae90d4f",
+      "size_bytes": 8021
+    },
+    {
+      "path": "docs/audits/native-proxy-image-custody-20260910/qualify.t",
+      "sha256": "ddb1ce26dd2824cdbdacaaeae00da36ae26defb13749bea063d1dd9323968b34",
+      "size_bytes": 12544
+    }
+  ],
+  "limits": [
+    "The malformed birth was accepted by an inactive key codec; no runtime reference was written.",
+    "Old member-list validation was ambiguous, but complete image admission rejected missing files.",
+    "The repair qualifies record shape and custody controls, not runtime ownership or native execution."
+  ],
+  "publication_assertions": 78,
+  "red_assertions": 81,
+  "red_failed_assertions": 16,
+  "reproduced_bad_key": "bce38da7b4f92bb84394428d6b47903d547d27a1ab46184f31afcf1cbdbbd3a0",
+  "retired_cases": {
+    "green": 19,
+    "publication": 19,
+    "red": 19
+  },
+  "schema": "fsmgen.inactive_fieldset_repair_audit.v1",
+  "success": true,
+  "unexpected_old_acceptances": 11
+}
