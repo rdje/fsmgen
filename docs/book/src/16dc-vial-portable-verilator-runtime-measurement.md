@@ -1642,8 +1642,17 @@ The experiment stopped before the reuse invocation and retired its owned
 workspaces after independent checks. This counterexample requires a different
 identity design; it establishes neither scan avoidance nor historical startup
 repair. The original fixture was not run in that experiment.
-Task `.15.7.3.12.3` specifies the shared-path ownership and capture contract
-before any image reuse implementation.
+The prospective contract in `.15.7.3.12.3` keeps compilation on every
+preparation and selects shared images only by exact completed output bytes.
+Runtime and observation references have separate lifetimes: a capture can
+still need source evidence after runtime cleanup. Crashed or uncertain owners
+retain their image references; preparation cannot evict them or hide failure
+with a retry. Explicit maintenance must prove an image has no references before
+removing its checked files. The proposed limits are 32 images and 128 combined
+references, not measured workload capacity. Existing policy formats stay
+frozen; new native preparation and source locations need versioned support.
+These rules remain unimplemented. Task `.15.7.3.12.4` qualifies filesystem,
+reader-lifetime and native behavior before activation.
 
 The helper checks bounded regular source/output files and the native header,
 then sets executable permissions through the admitted open file handle. A

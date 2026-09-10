@@ -1,0 +1,81 @@
+{
+  "durability": "Exact proposed contract/model/source pins; the model is independently reproducible with no fixture execution. Task-tree owns the next qualification before activation.",
+  "inert_model": {
+    "failure": null,
+    "states_seen": 20,
+    "transitions_examined": 25
+  },
+  "inputs": {
+    "scripts/analyze_fixture_policy.py": {
+      "bytes": 17432,
+      "sha256": "25a98f7b8bcdac695455a64121e88637a46599552f992eb530726eec8f07b40a"
+    },
+    "scripts/fixture_kernel_sampler.py": {
+      "bytes": 22040,
+      "sha256": "50c94165893b74b758c560f561ff744f294683812a26b429071ef43009aac2dc"
+    },
+    "scripts/fixture_policy_associations.py": {
+      "bytes": 19916,
+      "sha256": "921fb245ca7882559753bed04fdfa33d3a71bb1c30f54e7eea510da6dd54da3f"
+    },
+    "scripts/fixture_policy_log.py": {
+      "bytes": 12764,
+      "sha256": "ed3db21b5fffbed8073fbbe7d80982062e914c974f2f5512e781ce4f9eb8812c"
+    },
+    "scripts/observe_fixture_startup.py": {
+      "bytes": 25563,
+      "sha256": "05144eb1ebd86ebf132ad36b86b4c93b23687db928fc369f633615f0b870fe06"
+    },
+    "t/1669-task-acceptance-fixture-runtime.t": {
+      "bytes": 67582,
+      "sha256": "bdebbf03308cd5e0699324f9ab96a249c11c9ab05634309569d33874391a196f"
+    },
+    "t/fixtures/rust-tool-proxy.c": {
+      "bytes": 721,
+      "sha256": "be8b66690a93c8432c0f33094ac15c26f7fef0940c18f6935fd5b0994d9f4ede"
+    },
+    "t/lib/FSM/Test/RustParityRuntime.pm": {
+      "bytes": 10526,
+      "sha256": "10441706cb8b189f14b791b92f75f6e37f8d72aeb8b722457bac79ebda149eaa"
+    },
+    "t/lib/FSM/Test/RustProxyFixture.pm": {
+      "bytes": 11466,
+      "sha256": "d9c4ab52cf8074526c59b7a5dcb9da870ca7ffdacb4eb236dacb23b5db6d8bfb"
+    }
+  },
+  "lifetime_gap": "Current source archival follows target validation. Runtime-only references do not protect a later observer read; the prospective contract requires storage snapshots and separate observation references.",
+  "missing_legs": [
+    "Implementation refinement, crash and filesystem coordination qualification.",
+    "Canonical native path and reuse behavior.",
+    "Capture/policy v2 backward compatibility.",
+    "Maintenance and capacity workload qualification.",
+    "Positive attributable startup/scan benefit and historical repair."
+  ],
+  "new_native_compiler_original_collector_or_helper": false,
+  "primary_reference": "https://perldoc.perl.org/functions/flock",
+  "product_implementation": false,
+  "recovery_files": {
+    "check_lifetime.py": {
+      "bytes": 5024,
+      "sha256": "e9273b6d6074709f117240126b7076eeb966560d06b4709b0d780bb6a909e37d"
+    },
+    "contract.json": {
+      "bytes": 21927,
+      "sha256": "f3f981398afae72540ab4ac0194b8380d4743c3d2146c1172a85365add053222"
+    },
+    "lifetime-model.json": {
+      "bytes": 3065,
+      "sha256": "a4f0ec8a857a562398b59a2de0f46577df61c26301bc5490f08e517068db96d9"
+    }
+  },
+  "reference_support": "Advisory whole-file locking; LOCK_NB avoids indefinite acquisition wait; native flock may survive fork. Actual installed cross-language/filesystem behavior is still unqualified.",
+  "rejected_mutants": [
+    "early_observation_release",
+    "maintenance_ignores_observation",
+    "missing_observation_reference",
+    "missing_source_snapshot"
+  ],
+  "revision": "a069ab1450c2f4ca9b3b8c0e1d9c836ac0bdd734",
+  "schema": "fsmgen.canonical_image_contract_review.v1",
+  "selected_limits_meaning": "Policy design ceilings only; neither implementation performance nor workload qualification."
+}

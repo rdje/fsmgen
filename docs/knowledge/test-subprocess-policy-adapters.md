@@ -84,16 +84,16 @@ Env-Perl and direct Perl both timed out after handoff, refuting a shebang-only c
 T1669 uses `.artifacts/tmp/process-supervisor-tests/`. Every ps result needs native presence; only disappearance is skipped. Permission/query/live identity changes fail. Native exit and unchecked-ps controls qualify that race, not the historical changed field (`.3.2.11`; book/task).
 History: `0f71d2c44e26bc5000302bd347d9203f13fb39ff:docs/knowledge/test-subprocess-policy-adapters.md`.
 PST parsing normalizes 1–16 lowercase hex digits; malformed fields and contradictions reject.
-.15.7.3: serial queue contention is supported; client/frame joins and startup repair stay open. Reduced-load and authored-native passes do not close them; OS copies hit launch constraints. .8 seals portable proxy preparation. .9 admits exact native ancestry and pinned C inputs with byte custody; .10 integrates owned mode retirement; .11 retains startup/registry failures; .11.3.1 fixes registration; .11.3.3 records preparation before runtime; .11.3.4.1 adds fixed passive daemon observation without kernel authentication. Loaded bytes remain unproved.
+.15.7.3: serial queue contention is supported; client/frame joins and startup repair stay open. Reduced-load and authored-native passes do not close them; OS copies hit launch constraints. .8 seals portable proxy preparation. .9 admits exact native ancestry and pinned C inputs with byte custody; .10 integrates owned mode retirement; .11 retains startup/registry failures; .11.3.1 fixes registration; .11.3.3 records preparation before runtime; .11.3.4.1 adds fixed passive daemon observation without kernel authentication. Loaded bytes unproved.
 Fixed CLI .15.7.2.4 uses archive index/digest output and compact journal anchors; calibration/reserve/actual-file checks and first-failure/capture stop persist. Outcomes stay distinct; failures/ownership persist. F_CHECK_LV cause unproved (.15.2); queue/provenance coexist (.15.4); worker/delivery unknown. Live opt-in violations: .15.5.1.2.2–3.
-Source controls .11.3.4.1.2. Native joins pass (.4.3), but native scans persist (.4.4). Cause stays open; .12.2.2 refutes hard-link path stability: held A reports B after B access. No reuse run; .12.3 owns shared-path design.
-Archive reverify: `scripts/run_with_ram_guard.sh -- python3 -B -m unittest discover -s t/python -p 'test_fixture_policy_archive*.py'`.
+Native joins pass (.4.3); scans persist (.4.4). Cause stays open; .12.2.2 refutes hard-link path stability: held A reports B after B access. No reuse run. .12.3 separates runtime/observer references; .12.4 qualifies the unimplemented design.
+Replay: `scripts/run_with_ram_guard.sh -- python3 -B -m unittest discover -s t/python -p 'test_fixture_policy_archive*.py'`.
 T1595 pre-main cause open; `.19.2.3.1.2.2.6.2` fixes capture.
 `RamGuardFixtureRuntime` seals tools/argv, paths, bounds and full results.
 T1811/T1669 prove signal/stream failures and group cleanup; T1595 keeps metrics.
 Outer timeout proved its group gone but left an inner group alive; terminated and absence verified. Per-group cleanup cannot prove nested cleanup.
 HIAL/VIAL `.19.2.3.1.2.2.5.5` owns ownership design, repair and hostile controls;
 neutral-verifier extraction stays provisional/blocked.
-Selected: one coordinator, private clients, reserved identities, bounded wire/context/lifecycle protocol.
+Selected: one coordinator, private clients, reserved identities, bounded wire/context/lifecycle.
 T1669 proves reservation feasibility. Extraction, Wire, inactive endpoint/service transport are implemented;
 coordination, routing and hostile qualification (including startup diagnosis) remain open.

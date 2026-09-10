@@ -1,0 +1,193 @@
+{
+  "basis": {
+    "counterexample_commit": "28e9052d3c6cf67014fc709caee9d4f5668052fa",
+    "disposition_commit": "a069ab1450c2f4ca9b3b8c0e1d9c836ac0bdd734",
+    "not_claimed": [
+      "historical startup repair",
+      "scan avoidance",
+      "cold-host generality",
+      "complete policy delivery",
+      "loaded-image attestation"
+    ],
+    "scope": "Selected Darwin arm64 test proxy preparation only; the existing selected-Perl path and all runtime failure semantics remain unchanged."
+  },
+  "bounds": {
+    "compiler_capture_bytes": 4096,
+    "compiler_seconds": 10,
+    "coordination_poll_seconds": 0.005,
+    "coordination_wait_seconds": 2,
+    "image_entries": 32,
+    "image_manifest_bytes": 4096,
+    "meaning": "New entry/reference and coordination bounds are selected policy ceilings, not measured throughput or latency claims. The coordination deadline bounds nonblocking lock acquisition; it does not assert that a blocking filesystem syscall is interruptible. Existing outer ownership remains required. Count incomplete entries/references against capacity and reject unknown namespace members. The global reference ceiling counts runtime and observation references together.",
+    "reference_bytes_each": 4096,
+    "reference_entries": 128,
+    "runtime_bounds": "Every existing original, wrapper, resolution, capture and cleanup bound remains unchanged.",
+    "source_bytes_each": 65536
+  },
+  "capture_and_policy": {
+    "attribution": "A canonical image path or PST token may be shared by concurrent executions. Source/path context does not establish a unique native client or daemon request. Keep per-execution births/ancestry distinct and name any absent request-level association.",
+    "collection": "Add only a closed repository-derived canonical-image prefix where current path-filtered collection requires it; retain the existing legacy prefix. Daemon-only scope remains its existing predicate. No caller-supplied predicate, path, deadline or capture limit is introduced.",
+    "historical_evidence": "Do not replay, rewrite or promote the failed hard-link experiment, prior original outcomes or frozen policy archives. Missing rows never establish scan avoidance.",
+    "native_admission": "Preserve exact native birth, UID/RUID, parent and original-test ancestry and literal wrapper argv. Validate the private reference and global retention record, derive the sole canonical rustup path from its key, check current image/C bytes and qualified mode source, then compare the actual native executable and command to that canonical path. Repeat native/source/reference checks after observation. Reject arbitrary same-inode aliases and changed records.",
+    "preparation_format": {
+      "compatibility": "Use v2 for native shared-image preparation only. Preserve the exact existing v1 selected-Perl result. Existing fields retain their meanings, scalar/result truth and diagnostic-before-runtime ordering; old retained records remain interpretable.",
+      "failure": "No failed v2 preparation returns a runnable executable: executable is null whenever ok is zero. Preserve available compilation/source/failure evidence. Use failure_stage image_admission for layout/locking/content/capacity failure and image_reference for incomplete reference acquisition, retaining invocation_error status and a bounded specific diagnostic. Do not turn a retained global reference into implicit runtime authorization.",
+      "fields": [
+        "schema",
+        "ok",
+        "status",
+        "failure_stage",
+        "diagnostic",
+        "implementation",
+        "selection_reason",
+        "executable",
+        "sources",
+        "compilation",
+        "compilation_argv",
+        "compilation_sources",
+        "image_reference"
+      ],
+      "new_fields": "compilation_sources retains actual private generated-C/executable identities in that order; sources names the selected canonical C/executable in that order. image_reference names the checked global/private reference paths and their actual source identity records, or is null before complete acquisition.",
+      "schema": "fsmgen.test.rust_proxy_fixture.v2"
+    },
+    "retained_formats": "Preserve frozen v1 command/source-prefix and archive/publication interpretation. Add explicit version dispatch and v2 source-family/command contracts where required; never make a changed current default redefine an old receipt. Prove old fixtures remain accepted and cross-version/prefix substitutions reject before activation.",
+    "source_custody": "Retain wrapper, canonical executable/C and matching runtime reference records as identified sources, using bounded snapshots taken while coordinated storage ownership is acquired. Keep a separate per-birth observation hold until archiving/capture settles. Do not insert changing observer-hold state into the strict target snapshot. Legacy source ordering and main-entry interpretation remain unchanged; native main entry stays unknown unless independently witnessed."
+  },
+  "content_manifest": {
+    "executable": "closed byte length and SHA-256 for rustup",
+    "fields": [
+      "schema",
+      "key",
+      "generated_c",
+      "executable"
+    ],
+    "generated_c": "closed byte length and SHA-256 for rustup.c",
+    "rules": "Canonical ASCII JSON, exact field sets/types, no caller options, no paths outside the fixed layout. The key is independently recomputed from admitted bytes. Compilation metadata is per preparation, never a mutable property of a shared image.",
+    "schema": "fsmgen.test.rust_proxy_image.v1"
+  },
+  "coordination": {
+    "bootstrap": "Create/admit only the repository-derived private store root. Create coordination.lock exclusively or, on the expected existing-file race, open and verify that same normal-user regular 0600 single-link file without truncation. Under its lock create/admit only images and references as owned private direct directories. Missing initial structural directories may be created; unexpected data or invalid existing objects fail. The lock is never migrated, replaced or deleted by a contender.",
+    "contention": "Only documented lock-busy errno permits another nonblocking acquisition attempt before the fixed monotonic deadline. Other errors fail immediately. Admission waiting never reruns a compiler, fixture or original. Unsupported locking fails; no alternate locking scheme or fixture fallback is selected.",
+    "identity": "Verify descriptor and named lock identity before and after acquisition, and retain the descriptor until the operation finishes. Never unlink or replace the coordination file during normal operation or maintenance. Advisory locking is cooperative coordination, not a security barrier against another program ignoring it.",
+    "lifetime": "Compilation and compiler group settlement finish before acquiring this lock. No subprocess, fork, exec, fixture launch or callback that can spawn may occur while it is held. All paths close the descriptor; child inheritance must be independently falsified during qualification. Observation snapshot/reference acquisition also uses short filesystem-only coordination; native command queries and capture remain outside it.",
+    "primitive": "Checked repository-local coordination.lock descriptor, opened without following symlinks and with close-on-exec, using Fcntl LOCK_EX|LOCK_NB. All publication, reference acquisition/release and maintenance use that same verified inode.",
+    "source_limits": "Perl documents advisory whole-file locking, indefinite blocking without LOCK_NB and fork inheritance for native flock. Actual installed filesystem/runtime behavior remains an independent qualification obligation.",
+    "sources": [
+      "https://perldoc.perl.org/functions/flock"
+    ]
+  },
+  "durability_limits": "This activity-specific prospective contract belongs to task-tree evidence. It does not amend current public behavior or the repository-wide doctrines. It is pinned before the next qualification, and later failures may only change it through a newly owned disposition.",
+  "layout": {
+    "images": "images/<key>/rustup, images/<key>/rustup.c, images/<key>/image.json",
+    "key": "lowercase SHA-256 of ASCII fsmgen.rust_proxy_image.v1 followed by NUL, unsigned 64-bit big-endian C byte length, exact generated C bytes, unsigned 64-bit big-endian executable byte length, and exact completed executable bytes",
+    "lock": "coordination.lock",
+    "paths": "All persisted project paths are root-relative. Derive absolute paths from the current root at runtime. Content manifests contain no persisted filesystem device/inode or absolute root; per-preparation custody receipts record current native filesystem identities.",
+    "permissions": "Direct owned same-volume private directories 0700; permanent coordination file 0600; C/manifests/references 0400; sealed executable 0500. Exclude symlink ancestry and non-regular files. The executable has no additional hard links and never moves after its canonical creation.",
+    "private_receipt": "<owned-mode-workspace>/rust-tools/image-reference.json",
+    "reference_key": "Runtime: SHA-256 of ASCII fsmgen.rust_proxy_reference.runtime.v1, NUL, then canonical root-relative workspace UTF-8. Observation: SHA-256 of ASCII fsmgen.rust_proxy_reference.observation.v1, NUL, then canonical ASCII JSON of the ordered array [evidence_directory, observer_birth, target_birth]. Use lowercase hex. Existing different identity or collision fails without overwrite.",
+    "references": "references/<reference_key>.json",
+    "root": ".artifacts/cache/rust-proxy-images/v1",
+    "separation": "Shared data stays outside ephemeral fixture roots. A private Cargo symlink resolves to the canonical basename rustup; it does not create a second executable inode alias. Private compilation outputs retain their existing paths and custody."
+  },
+  "maintenance": {
+    "capacity_failure": "Return a distinct storage-admission failure with the fixed capacity and retained state; no eviction, alternate key, private copy execution, fallback or original retry. Maintenance qualification and user-facing recovery guidance must exist before activation.",
+    "entrypoint": "Separately owned explicit maintenance, not an automatic side effect of preparation and not yet an admitted command.",
+    "partial_recovery": "Interrupted publication or malformed records require a separately owned exact-state recovery audit. Never assume that age, absent parent or an incomplete marker proves safe deletion. No automatic repair is selected in this contract.",
+    "protocol": "Hold the same checked coordination lock. Validate the bounded complete reference census before any candidate deletion. Keep every referenced image, including references with missing/dead/inconclusive owners. Reject unknown entries or ambiguous partial state. For an unreferenced complete image, prove exact owned bytes/identities and only then remove its known file set and empty directory. Never replace/remove the coordination file or drop references to create capacity."
+  },
+  "next_work": {
+    "activation_gate": "Product implementation/activation requires qualified publication, references, maintenance, capture/version compatibility and native behavior. A passing isolated control alone cannot close historical startup repair. Cross-language coordination and runtime/observation reference semantics must qualify together; reader lifetime may not be deferred past activation.",
+    "owner": "HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.12.4",
+    "stages": [
+      "inert protocol and custody qualification",
+      "prospective fixed native admission",
+      "single admitted canonical-path experiment and independent cleanup",
+      "evidence-based disposition before product activation"
+    ]
+  },
+  "observation_lifetime": [
+    "Prefetch native ancestry and command queries outside coordination. During a short coordinated filesystem operation, validate the current runtime reference and image, snapshot bounded wrapper/reference/C/image bytes and their descriptor identities, and reserve a separate observation reference before returning storage ownership. No ps, helper, process launch or long native query may run under coordination.",
+    "Recheck exact native births/path/commands after acquiring the storage hold, outside the lock. Failed admission cancels only its own observation work and releases the observation reference only after that work is settled. Record ownership before any archival or sampling action can fail.",
+    "Archive the already bounded source snapshot with independent length/digest checks; do not reopen a path after runtime retirement to reconstruct missing bytes. Snapshot custody is a dated descriptor/byte observation, not loaded-image attestation. Preserve existing source byte/file limits.",
+    "The passive census retains one stable observation reference per admitted target birth through source archival and its selected capture work. Repeated target-source comparisons exclude the observer's own hold metadata. Capture and native command checks run outside coordination; acquiring storage must never pin a global lock across a subprocess or its timeout.",
+    "Release only the exact observation reference after verified archive custody and all selected capture/helper work settle, including cancellation. Retain it on uncertain cleanup or ownership. Maintenance keeps the image while either runtime or observation references exist."
+  ],
+  "owner": "HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.12.3",
+  "preparation": [
+    "Run the unchanged selected compiler once in the existing private workspace with its existing source, argv, environment, ten-second wall, capture and group cleanup. Retain exact compilation source/output identities and result. Any failure remains failed.",
+    "Compute the content key from the actual successfully completed and sealed generated C/executable bytes. Hashes route lookup; they never replace checked descriptor byte equality.",
+    "Acquire the checked coordination lock. Enumerate only the fixed bounded namespace, counting incomplete objects. Reject malformed, foreign, indirect, oversized or unexpectedly writable members; do not repair or evict as part of preparation.",
+    "If the key exists, independently validate its exact complete manifest, canonical file set, permissions, link count and bytes against the newly compiled C/executable. A mismatch, partial object or collision is a failed preparation; never overwrite it or select another executable.",
+    "If the key is absent and capacity permits, create its final canonical directory exclusively while holding the lock. Copy checked C/executable bytes directly into that directory through exclusive descriptors; do not hard-link or rename the executable. Write the closed content manifest, seal C/manifest, then seal the executable only after every byte is verified. Reopen and independently verify the complete entry. Cooperating readers cannot select partially published contents because acquisition uses the same lock.",
+    "Create an exclusive global reference before the private receipt, binding the content key, owned workspace path, current directory identity and actual canonical source identities. Fully write, seal and verify both records before return. A global reference left without a private receipt conservatively retains the image. No caller may execute merely because an image or partial receipt exists.",
+    "Return the canonical executable only after the complete entry and both matching references verify. Retain existing compilation metadata and distinguish compilation_sources from selected runtime sources in a versioned preparation record. Existing selected-Perl results remain compatible. Close coordination before any wrapper/fixture can start."
+  ],
+  "reference_contract": {
+    "failure": "Incomplete publication/acquisition returns no runnable result. A present global reference remains a retention obligation even if its owner process has disappeared, its private workspace is gone, or another record is incomplete. No stale-age or parent-PID heuristic releases it. A crashed observer also conservatively pins its image; absent observer/target PIDs alone do not discharge archival/capture ownership.",
+    "fields": {
+      "observation": [
+        "schema",
+        "reference_key",
+        "image_key",
+        "evidence_directory",
+        "evidence_directory_identity",
+        "observer_birth",
+        "target_birth",
+        "selected_sources"
+      ],
+      "runtime": [
+        "schema",
+        "reference_key",
+        "image_key",
+        "workspace",
+        "workspace_identity",
+        "selected_sources"
+      ]
+    },
+    "meaning": "A durable storage reference, not proof that its PID still lives or that a policy token names one request. Runtime global/private copies must agree. Observation references are separate ownership records retained until archival and all selected capture work settle; they are not inserted as changing fields into the target same-birth admission snapshot.",
+    "relocation": "A moved/copied repository derives new paths and current source identities from its root. Content equality is portable; stale custody references remain conservatively retained until separately audited recovery. Do not silently reinterpret historical device/inode or process-birth records.",
+    "schema": "Closed runtime fsmgen.test.rust_proxy_image_reference.v1 and observation fsmgen.test.rust_proxy_image_observation_reference.v1 variants; never infer one from missing fields.",
+    "types": {
+      "directory_identity": [
+        "path",
+        "device",
+        "inode"
+      ],
+      "encoding": "Canonical ASCII JSON with sorted keys and exact field sets. Integers are integers, not booleans; hashes are lowercase 64-character hex. Runtime selected_sources are the two canonical generated-C/executable records in that order. Workspace/evidence paths and every identity path must agree with the checked layout. Global filename and reference_key must independently re-derive.",
+      "native_birth": [
+        "pid",
+        "ppid",
+        "uid",
+        "ruid",
+        "start_sec",
+        "start_usec"
+      ],
+      "source_identity": [
+        "path",
+        "device",
+        "inode",
+        "size_bytes",
+        "sha256"
+      ]
+    }
+  },
+  "required_falsifiers": [
+    "Wrong mode bytes, same-key changed output, source/image collision, invalid manifest field/type, wrong permissions, hard-link alias, symlink ancestry, oversized file and changed descriptor/named inode must fail before returning an executable.",
+    "Concurrent equal-image publishers must produce one canonical immutable identity and separate complete references; different-image publishers must not overwrite each other. A waiting or failed publisher cannot launch an original or inherit coordination into a child.",
+    "Interrupt publication after each file/write/seal boundary, reference creation between global/private records, and retirement before/after workspace removal. Partial state remains failed and conservatively retained; no reference is silently lost.",
+    "Fill the exact image/reference limits and exceed them. No partial capacity accounting, unbounded census, eviction or fallback may convert the boundary failure into success.",
+    "Interleave acquisition, active observation, retirement and maintenance. Referenced bytes and identities must survive; failed/dead owners remain pinned until separate proven recovery. Lock replacement, stale workspace reuse and absent-parent-only release reject.",
+    "Force runtime retirement between native admission, source snapshot, archival and capture completion. An observation hold must retain the image and the admitted snapshot bytes; killing the observer retains its unresolved reference. Repeated same-birth scans must not fail merely because the observer owns storage. No command-query timeout may retain the global coordination lock.",
+    "Exercise old and new capture/retained-format families independently, including mixed prefixes, incorrect versions, two simultaneous births using one image, tampered private/global references and stale native identity.",
+    "After an exact prospective checkpoint, a finite distinct held control must prove first-use and reuse native canonical paths, source custody and lifetime. Preserve the first unexpected outcome and stop; do not run the original to compensate.",
+    "Any eventual scan or startup improvement claim needs positive attributable evidence and its own independent counterexample, with unchanged original bounds and explicit host/delivery/cold-state limits."
+  ],
+  "retirement": [
+    "Require the existing complete compiler, outer watcher and every returned runtime-stage cleanup record before retiring the exact owned mode. Missing ownership, unreaped leaders or surviving groups retain its workspace and reference.",
+    "Acquire coordination and verify the global/private reference plus exact workspace and image identities. Retire only the caller-owned private workspace using its existing no-follow ownership policy; keep the global reference until workspace absence is proved.",
+    "Remove only that exact checked global reference after successful private retirement. A partial cleanup or interruption keeps the global reference and records failure for recovery. Shared executable/source files are never removed by ordinary mode retirement.",
+    "Reference release does not repair a failed runtime result, cause a retry, or claim unobserved descendants absent. Stale-reference recovery is separately task-owned and requires evidence sufficient to discharge the original ownership obligation."
+  ],
+  "schema": "fsmgen.native_proxy_canonical_image_design.v1",
+  "status": "prospective_contract_only; implementation_and_runtime_qualification_pending"
+}

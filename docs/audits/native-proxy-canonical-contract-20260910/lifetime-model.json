@@ -1,0 +1,109 @@
+{
+  "contract": {
+    "bytes": 21927,
+    "sha256": "f3f981398afae72540ab4ac0194b8380d4743c3d2146c1172a85365add053222"
+  },
+  "limitations": [
+    "No implementation refinement proof.",
+    "No file-lock, crash-durability, capacity workload or native path qualification.",
+    "No policy scan or startup improvement claim."
+  ],
+  "native_compiler_original_collector_invocations": 0,
+  "positive": {
+    "failure": null,
+    "states_seen": 20,
+    "transitions_examined": 25
+  },
+  "rejected_mutants": {
+    "early_observation_release": {
+      "failure": "unsettled observation lost its selected image",
+      "state": {
+        "image": false,
+        "observation": "capturing",
+        "observation_reference": false,
+        "runtime": "retired",
+        "runtime_reference": false,
+        "snapshot": true,
+        "workspace": false
+      },
+      "states_seen": 27,
+      "trace": [
+        "prepare",
+        "launch",
+        "observation_admitted",
+        "runtime_finished",
+        "runtime_retired",
+        "observation_reference_released",
+        "image_retired"
+      ],
+      "transitions_examined": 41
+    },
+    "maintenance_ignores_observation": {
+      "failure": "unsettled observation lost its selected image",
+      "state": {
+        "image": false,
+        "observation": "capturing",
+        "observation_reference": true,
+        "runtime": "retired",
+        "runtime_reference": false,
+        "snapshot": true,
+        "workspace": false
+      },
+      "states_seen": 19,
+      "trace": [
+        "prepare",
+        "launch",
+        "observation_admitted",
+        "runtime_finished",
+        "runtime_retired",
+        "image_retired"
+      ],
+      "transitions_examined": 21
+    },
+    "missing_observation_reference": {
+      "failure": "unsettled observation lost its selected image",
+      "state": {
+        "image": false,
+        "observation": "capturing",
+        "observation_reference": false,
+        "runtime": "retired",
+        "runtime_reference": false,
+        "snapshot": true,
+        "workspace": false
+      },
+      "states_seen": 18,
+      "trace": [
+        "prepare",
+        "launch",
+        "observation_admitted",
+        "runtime_finished",
+        "runtime_retired",
+        "image_retired"
+      ],
+      "transitions_examined": 20
+    },
+    "missing_source_snapshot": {
+      "failure": "private source retirement stranded observation custody",
+      "state": {
+        "image": true,
+        "observation": "capturing",
+        "observation_reference": true,
+        "runtime": "retired",
+        "runtime_reference": false,
+        "snapshot": false,
+        "workspace": false
+      },
+      "states_seen": 13,
+      "trace": [
+        "prepare",
+        "launch",
+        "observation_admitted",
+        "runtime_finished",
+        "runtime_retired"
+      ],
+      "transitions_examined": 13
+    }
+  },
+  "schema": "fsmgen.canonical_image_lifetime_model.v1",
+  "semantics": "Finite single-runtime/single-observer ownership interleavings; event names model actions, never execute them."
+}
