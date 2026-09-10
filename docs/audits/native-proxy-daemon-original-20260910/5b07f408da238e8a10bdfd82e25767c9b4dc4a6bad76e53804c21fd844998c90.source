@@ -1,0 +1,12 @@
+#!/usr/bin/perl
+my $progress = pack('H*', '2f566f6c756d65732f5353442f446f63756d656e74732f6769746875622f66736d67656e2f2e6172746966616374732f746d702f70726f636573732d73757065727669736f722d74657374732f66736d67656e2d3738464d476d625a2f6c65676163792d72616d2d73747265616d732d70726f6772657373');
+use strict;
+use warnings;
+open my $marker, '>', $progress or die $!;
+print {$marker} "entered\n" or die $!;
+close $marker or die $!;
+print STDERR 'x' x 262_144 or die $!;
+open my $marker_after, '>>', $progress or die $!;
+print {$marker_after} "drained\n" or die $!;
+close $marker_after or die $!;
+print STDOUT "stdout-after-stderr\n";

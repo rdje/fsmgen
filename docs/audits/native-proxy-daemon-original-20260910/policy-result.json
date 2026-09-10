@@ -1,0 +1,53 @@
+{
+  "capture_root_sha256": "3ba6cd8bb2d036c2db282d96dab45dd0be79b4dbdc8810a200cb758b74005480",
+  "command": [
+    "/usr/bin/log",
+    "stream",
+    "--style",
+    "ndjson",
+    "--level",
+    "debug",
+    "--timeout",
+    "240",
+    "--predicate",
+    "process == \"syspolicyd\""
+  ],
+  "complete_coverage": "unproved",
+  "failures": {},
+  "finished_ns": 391587838617458,
+  "forced_kill": false,
+  "identity": {
+    "pid": 76271,
+    "ppid": 76155,
+    "ruid": 501,
+    "start_sec": 1789039569,
+    "start_usec": 376569,
+    "uid": 501
+  },
+  "leader_reaped": true,
+  "missing_records": "unknown",
+  "outputs": {
+    "stderr": {
+      "bytes": 0,
+      "hash_complete": true,
+      "path": ".artifacts/logs/t1669-startup-observation/run-56bb6ad5d9cc493daee047a8a9b92005/policy.stderr",
+      "path_identity_matches": true,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "stdout": {
+      "bytes": 3709789,
+      "hash_complete": true,
+      "path": ".artifacts/logs/t1669-startup-observation/run-56bb6ad5d9cc493daee047a8a9b92005/policy.stdout",
+      "path_identity_matches": true,
+      "sha256": "bc5a96e9db96f87ad573a318a44c8e4316d1806e76935a436acaa727c4116d20"
+    }
+  },
+  "prepared_ns": 391570704236750,
+  "producer_sha256": "ed3db21b5fffbed8073fbbe7d80982062e914c974f2f5512e781ce4f9eb8812c",
+  "returncode": 0,
+  "schema": "fsmgen.fixture_policy_log.v1",
+  "scope": "daemon_context",
+  "started_ns": 391570645385708,
+  "subscription_readiness": "unproved",
+  "unobserved_descendants": "unknown"
+}

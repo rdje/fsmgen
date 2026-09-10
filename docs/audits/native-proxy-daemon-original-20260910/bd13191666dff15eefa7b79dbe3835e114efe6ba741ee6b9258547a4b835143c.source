@@ -1,0 +1,38 @@
+#!/usr/bin/perl
+use strict;
+use warnings;
+use IPC::Open3 qw(open3);
+use Symbol qw(gensym);
+use JSON::PP qw(encode_json);
+my ($fake_bin, $guard) = @ARGV;
+sub run_guard {
+    my (%args) = @_;
+    local %ENV = %ENV;
+    $ENV{PATH} = $fake_bin . ':' . $ENV{PATH};
+    $ENV{FSMGEN_TEST_TOTAL_BYTES} = 4_096_000;
+    $ENV{FSMGEN_TEST_VM_STAT_FILE} = $args{vm_stat_file};
+
+    my @command = (
+        $guard,
+        '--host-max-pct', '88',
+        '--process-max-rss-mb', '4096',
+        '--poll-seconds', '0.02',
+        '--grace-seconds', '0',
+        '--',
+        @{$args{command}},
+    );
+
+    my $stderr_fh = gensym();
+    my $pid = open3(my $stdin_fh, my $stdout_fh, $stderr_fh, @command);
+    close $stdin_fh;
+    local $/;
+    my $stdout = <$stdout_fh> // '';
+    my $stderr = <$stderr_fh> // '';
+    waitpid($pid, 0);
+    return ($? >> 8, $stdout, $stderr);
+}
+
+my @result = run_guard(vm_stat_file => 'unused', command => ['unused']);
+my $raw = $?;
+print encode_json({projected_exit => $result[0], stdout => $result[1],
+    stderr => $result[2], native_wait_status => $raw});

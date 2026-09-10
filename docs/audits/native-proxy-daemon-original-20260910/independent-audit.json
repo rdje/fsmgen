@@ -1,0 +1,372 @@
+{
+  "admission_commit": "5a6a6cc8fc55be97a5f846f88e7beeddf5fbea35",
+  "archived_source_digests": 8,
+  "archived_source_paths": 9,
+  "collector_reexecuted": false,
+  "collector_result": {
+    "capture_root_sha256": "3ba6cd8bb2d036c2db282d96dab45dd0be79b4dbdc8810a200cb758b74005480",
+    "command": [
+      "/usr/bin/log",
+      "stream",
+      "--style",
+      "ndjson",
+      "--level",
+      "debug",
+      "--timeout",
+      "240",
+      "--predicate",
+      "process == \"syspolicyd\""
+    ],
+    "complete_coverage": "unproved",
+    "failures": {},
+    "finished_ns": 391587838617458,
+    "forced_kill": false,
+    "identity": {
+      "pid": 76271,
+      "ppid": 76155,
+      "ruid": 501,
+      "start_sec": 1789039569,
+      "start_usec": 376569,
+      "uid": 501
+    },
+    "leader_reaped": true,
+    "missing_records": "unknown",
+    "outputs": {
+      "stderr": {
+        "bytes": 0,
+        "hash_complete": true,
+        "path": ".artifacts/logs/t1669-startup-observation/run-56bb6ad5d9cc493daee047a8a9b92005/policy.stderr",
+        "path_identity_matches": true,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "stdout": {
+        "bytes": 3709789,
+        "hash_complete": true,
+        "path": ".artifacts/logs/t1669-startup-observation/run-56bb6ad5d9cc493daee047a8a9b92005/policy.stdout",
+        "path_identity_matches": true,
+        "sha256": "bc5a96e9db96f87ad573a318a44c8e4316d1806e76935a436acaa727c4116d20"
+      }
+    },
+    "prepared_ns": 391570704236750,
+    "producer_sha256": "ed3db21b5fffbed8073fbbe7d80982062e914c974f2f5512e781ce4f9eb8812c",
+    "returncode": 0,
+    "schema": "fsmgen.fixture_policy_log.v1",
+    "scope": "daemon_context",
+    "started_ns": 391570645385708,
+    "subscription_readiness": "unproved",
+    "unobserved_descendants": "unknown"
+  },
+  "evidence_directory": ".artifacts/logs/t1669-startup-observation/run-56bb6ad5d9cc493daee047a8a9b92005",
+  "fixture_roots_empty": true,
+  "independently_absent_identities": [
+    {
+      "pid": 76300,
+      "ppid": 76155,
+      "ruid": 501,
+      "start_sec": 1789039569,
+      "start_usec": 981866,
+      "uid": 501
+    },
+    {
+      "pid": 76271,
+      "ppid": 76155,
+      "ruid": 501,
+      "start_sec": 1789039569,
+      "start_usec": 376569,
+      "uid": 501
+    },
+    {
+      "pid": 76682,
+      "ppid": 76681,
+      "ruid": 501,
+      "start_sec": 1789039579,
+      "start_usec": 949819,
+      "uid": 501
+    },
+    {
+      "pid": 76681,
+      "ppid": 76300,
+      "ruid": 501,
+      "start_sec": 1789039579,
+      "start_usec": 924703,
+      "uid": 501
+    },
+    {
+      "pid": 76715,
+      "ppid": 76714,
+      "ruid": 501,
+      "start_sec": 1789039580,
+      "start_usec": 475193,
+      "uid": 501
+    },
+    {
+      "pid": 76714,
+      "ppid": 76300,
+      "ruid": 501,
+      "start_sec": 1789039580,
+      "start_usec": 448626,
+      "uid": 501
+    },
+    {
+      "pid": 76742,
+      "ppid": 76741,
+      "ruid": 501,
+      "start_sec": 1789039580,
+      "start_usec": 840009,
+      "uid": 501
+    },
+    {
+      "pid": 76741,
+      "ppid": 76300,
+      "ruid": 501,
+      "start_sec": 1789039580,
+      "start_usec": 828076,
+      "uid": 501
+    },
+    {
+      "pid": 76777,
+      "ppid": 76772,
+      "ruid": 501,
+      "start_sec": 1789039581,
+      "start_usec": 134086,
+      "uid": 501
+    },
+    {
+      "pid": 76772,
+      "ppid": 76300,
+      "ruid": 501,
+      "start_sec": 1789039581,
+      "start_usec": 123071,
+      "uid": 501
+    }
+  ],
+  "limits": {
+    "complete_policy_delivery": "unproved",
+    "host_isolation": "unproved",
+    "kernel_sample": "not_collected",
+    "loaded_image_attestation": "not_provided",
+    "policy_raw_durability": "private ignored raw stream; pinned availability gap",
+    "startup_causal_repair": "unproved",
+    "unobserved_descendants": "unknown"
+  },
+  "observed_fixture_count": 8,
+  "original_identity": {
+    "pid": 76300,
+    "ppid": 76155,
+    "ruid": 501,
+    "start_sec": 1789039569,
+    "start_usec": 981866,
+    "uid": 501
+  },
+  "original_reexecuted": false,
+  "original_result": {
+    "leader_reaped": true,
+    "native_wait_status": 0,
+    "pid": 76300,
+    "released": true,
+    "returncode": 0,
+    "timeout": false,
+    "unobserved_descendants": "unknown"
+  },
+  "policy_native_joins": [
+    {
+      "calibration_publication": "not_selected",
+      "join_kind": "same_run_literal_path_token",
+      "literal_join_line": 1892,
+      "literal_join_raw_line": {
+        "bytes": 1059,
+        "sha256": "245a82637cf0799c8756d28f5f74c2892abd7a8653a2dc7bb1ad4b5d289ac28b"
+      },
+      "mode": "proxy_nonzero",
+      "path": ".artifacts/tmp/process-supervisor-tests/fsmgen-BgloFnVu/rust-tools/rustup",
+      "phases": {
+        "queued": {
+          "line": 720,
+          "raw_line": {
+            "bytes": 865,
+            "sha256": "a4dba228ab448609ca423893e432d0ae354d6da3102a49832d062a2a504597c7"
+          },
+          "timestamp": "2026-09-10 13:26:19.953573+0200"
+        },
+        "started": {
+          "line": 721,
+          "raw_line": {
+            "bytes": 877,
+            "sha256": "03e1f4e6b007b6c4288041af2dbc01c39c8cee33f46afb39244dd18ad2e02944"
+          },
+          "timestamp": "2026-09-10 13:26:19.953622+0200"
+        },
+        "wakeups": {
+          "line": 1898,
+          "raw_line": {
+            "bytes": 893,
+            "sha256": "6671d5cf0789a92a24133de6d03016709dab17ff2a0f13dd5745c715059b9e9b"
+          },
+          "timestamp": "2026-09-10 13:26:20.231530+0200"
+        }
+      },
+      "token": "4099d6255feed48d"
+    },
+    {
+      "calibration_publication": "not_selected",
+      "join_kind": "same_run_literal_path_token",
+      "literal_join_line": 2238,
+      "literal_join_raw_line": {
+        "bytes": 1059,
+        "sha256": "8480def4d923f5e312abab3380f46564639fe4b6713885919fb0986030eaafe6"
+      },
+      "mode": "proxy_decoy",
+      "path": ".artifacts/tmp/process-supervisor-tests/fsmgen-vIOv1Kqe/rust-tools/rustup",
+      "phases": {
+        "queued": {
+          "line": 1989,
+          "raw_line": {
+            "bytes": 865,
+            "sha256": "c25a417fdec03005a0ef5dbe979c8e6a089694d084ce59ed114a52a5df388428"
+          },
+          "timestamp": "2026-09-10 13:26:20.478397+0200"
+        },
+        "started": {
+          "line": 1990,
+          "raw_line": {
+            "bytes": 877,
+            "sha256": "79073a0d8dfaa366967b05d45b0c43372d1cb5d8eacf8ba348fa8246bda35f8f"
+          },
+          "timestamp": "2026-09-10 13:26:20.478484+0200"
+        },
+        "wakeups": {
+          "line": 2244,
+          "raw_line": {
+            "bytes": 893,
+            "sha256": "c40223ea8b8eee2399b553d068b44ef82a1fa5501d63d3a57c54ad0f1b390e33"
+          },
+          "timestamp": "2026-09-10 13:26:20.715692+0200"
+        }
+      },
+      "token": "ebf8c93369254360"
+    }
+  ],
+  "prepared_native_joins": [
+    {
+      "child": {
+        "pid": 76682,
+        "ppid": 76681,
+        "ruid": 501,
+        "start_sec": 1789039579,
+        "start_usec": 949819,
+        "uid": 501
+      },
+      "loaded_image_attestation": "not_provided",
+      "mode": "proxy_nonzero",
+      "parent": {
+        "pid": 76681,
+        "ppid": 76300,
+        "ruid": 501,
+        "start_sec": 1789039579,
+        "start_usec": 924703,
+        "uid": 501
+      },
+      "prepared_to_observed_identity": "exact_path_device_inode_size_sha256",
+      "sources": [
+        {
+          "device": 16777244,
+          "inode": 76521910,
+          "path": ".artifacts/tmp/process-supervisor-tests/fsmgen-BgloFnVu/rust-tools/rustup.c",
+          "sha256": "b689e2f7ee42bf7cac62f272a36d5313a272dddef15a75f8c66b126568fbf276",
+          "size_bytes": 745
+        },
+        {
+          "device": 16777244,
+          "inode": 76521915,
+          "path": ".artifacts/tmp/process-supervisor-tests/fsmgen-BgloFnVu/rust-tools/rustup",
+          "sha256": "1b4e9ed9995ec79b04d1e48cab53da6f96979a77364ad45eb880a226c86275a8",
+          "size_bytes": 49992
+        }
+      ]
+    },
+    {
+      "child": {
+        "pid": 76715,
+        "ppid": 76714,
+        "ruid": 501,
+        "start_sec": 1789039580,
+        "start_usec": 475193,
+        "uid": 501
+      },
+      "loaded_image_attestation": "not_provided",
+      "mode": "proxy_decoy",
+      "parent": {
+        "pid": 76714,
+        "ppid": 76300,
+        "ruid": 501,
+        "start_sec": 1789039580,
+        "start_usec": 448626,
+        "uid": 501
+      },
+      "prepared_to_observed_identity": "exact_path_device_inode_size_sha256",
+      "sources": [
+        {
+          "device": 16777244,
+          "inode": 76521924,
+          "path": ".artifacts/tmp/process-supervisor-tests/fsmgen-vIOv1Kqe/rust-tools/rustup.c",
+          "sha256": "a2ff3cf129d8c01d2b05c33b2df2ca18b68048972dcc86c00222786a6751defc",
+          "size_bytes": 745
+        },
+        {
+          "device": 16777244,
+          "inode": 76521929,
+          "path": ".artifacts/tmp/process-supervisor-tests/fsmgen-vIOv1Kqe/rust-tools/rustup",
+          "sha256": "eb69147ec7c8d9e54b6b15742a5d34129003d040fb6be71f8c1f148bc9209954",
+          "size_bytes": 49992
+        }
+      ]
+    }
+  ],
+  "rejected_retained_mutations": [
+    "returncode",
+    "native_wait_status",
+    "leader_reaped",
+    "missing_tap_plan",
+    "preparation_inode",
+    "original_birth_join",
+    "archived_bytes",
+    "collector_command",
+    "policy_bytes"
+  ],
+  "retained_log_events": 4123,
+  "retained_nonlog_rows": 31,
+  "retained_policy_rows": 4154,
+  "schema": "fsmgen.native_proxy_daemon_original_audit.v1",
+  "source_pin_count": 27,
+  "stderr": {
+    "bytes": 4135,
+    "sha256": "bcb8c299ae8225063244fad69b55c60cf8db2d1a98a4619815302e1584ce0711"
+  },
+  "tap": {
+    "bytes": 29228,
+    "sha256": "abd15b5d40d5ec872004423c1894ff4e4b7d044a1f8a2fc6184e5d49a1982dd8"
+  },
+  "tap_parser": {
+    "errors": [],
+    "failed": [],
+    "passed": [
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9,
+      10,
+      11,
+      12,
+      13,
+      14,
+      15
+    ],
+    "planned": 15,
+    "run": 15
+  }
+}

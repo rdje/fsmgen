@@ -1077,6 +1077,18 @@ as an observed original. Audit the retained original result, preparation
 receipts, observed producer births and source bytes independently afterward.
 A healthy collector alone does not establish those joins.
 
+The prospectively admitted native-proxy observation passes the original test.
+Its preparation receipts and passive census agree on the actual native
+producers, parent chains, and archived binary/C file identities. Literal
+paths in the same retained daemon records connect those producers to their
+queue, work-start and waiter-wakeup records. The original, collector and
+observed fixture births are independently absent afterward. This supplies
+observed native qualification for that run; it does not establish a repair
+for the earlier startup failure. The tracked audit preserves original and
+source evidence. Raw daemon output remains private with a pinned digest and
+an explicit availability gap; complete delivery and loaded-image attestation
+remain unproved.
+
 Both scopes are checked with held bodies while live collection and authentication
 are trapped in the focused controls:
 

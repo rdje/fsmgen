@@ -1,0 +1,6 @@
+use strict;
+use warnings;
+use JSON::PP qw(encode_json);
+$ENV{PATH} = shift @ARGV;
+require FSM::Test::RustParityRuntime;
+print encode_json(FSM::Test::RustParityRuntime::run_rust_parity());

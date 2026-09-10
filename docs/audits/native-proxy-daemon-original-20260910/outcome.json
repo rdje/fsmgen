@@ -1,0 +1,28 @@
+{
+  "cli_status": 0,
+  "constructor_attempts": 1,
+  "errors": [],
+  "evidence_directory": ".artifacts/logs/t1669-startup-observation/run-56bb6ad5d9cc493daee047a8a9b92005",
+  "finished_monotonic_ns": 391588385473125,
+  "fixture_census_after": {
+    ".artifacts/build/rust-parity": {},
+    ".artifacts/tmp/process-supervisor-tests": {},
+    ".artifacts/tmp/task-acceptance-tests": {}
+  },
+  "inputs_unchanged": true,
+  "kernel_sample": "not_collected",
+  "original": {
+    "leader_reaped": true,
+    "native_wait_status": 0,
+    "pid": 76300,
+    "released": true,
+    "returncode": 0,
+    "timeout": false,
+    "unobserved_descendants": "unknown"
+  },
+  "original_birth_absent": true,
+  "qualification": "pending_independent_audit",
+  "release_attempts": 1,
+  "started_monotonic_ns": 391570639148041,
+  "unobserved_descendants": "unknown"
+}

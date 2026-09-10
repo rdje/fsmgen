@@ -1,0 +1,25 @@
+#define PROXY_NONZERO 0
+/* Fixed negative resolver controls; no files, child processes or heap. */
+#include <unistd.h>
+
+static int equal(const char *left, const char *right)
+{
+    while (*left && *left == *right) {
+        ++left;
+        ++right;
+    }
+    return *left == *right;
+}
+
+int main(int argc, char **argv)
+{
+    if (argc != 3 || !equal(argv[1], "which") || !equal(argv[2], "cargo"))
+        return 97;
+#if PROXY_NONZERO
+    static const char message[] = "resolution-failed\n";
+    return write(2, message, sizeof(message) - 1) == (ssize_t)(sizeof(message) - 1) ? 9 : 94;
+#else
+    static const char message[] = "relative-cargo\n";
+    return write(1, message, sizeof(message) - 1) == (ssize_t)(sizeof(message) - 1) ? 0 : 94;
+#endif
+}
