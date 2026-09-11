@@ -1,0 +1,470 @@
+{
+  "audit": {
+    "path": ".artifacts/logs/native-proxy-observation-acquisition-join-20260911/audit.json",
+    "sha256": "d06b71368ada23d334f0bbdcfcba097a7319babeaf384c964c6e973098980557",
+    "size_bytes": 251439
+  },
+  "ignored_outputs_equal_committed_bytes_with_declared_private_modes": [
+    {
+      "canonical_copy": "docs/audits/native-proxy-descriptor-handoff-20260910/result/qualification.json",
+      "mode": 384,
+      "mode_authority": {
+        "line": 95,
+        "path": "docs/audits/native-proxy-descriptor-handoff-20260910/qualify.t",
+        "text": "write_bytes(\"$log/$phase.json\", JSON::PP->new->canonical->ascii->pretty->encode($result), 0600);"
+      },
+      "path": ".artifacts/logs/native-proxy-descriptor-handoff-20260910/qualification.json",
+      "sha256": "c6e2be5102dec9d93c57b170d5796115d686c7efda6fbdfd8ef4ad7029057a79",
+      "size_bytes": 51679
+    },
+    {
+      "canonical_copy": "docs/audits/native-proxy-descriptor-handoff-20260910/result/qualification-admission.jsonl",
+      "mode": 384,
+      "mode_authority": {
+        "line": 83,
+        "path": "docs/audits/native-proxy-descriptor-handoff-20260910/qualify.t",
+        "text": "write_bytes(\"$log/$phase-admission.jsonl\", '', 0600);"
+      },
+      "path": ".artifacts/logs/native-proxy-descriptor-handoff-20260910/qualification-admission.jsonl",
+      "sha256": "491daa3003db9c2736bc089fe86d98d7abc668f86af902ac741c15255e9e4214",
+      "size_bytes": 1870
+    },
+    {
+      "canonical_copy": "docs/audits/native-proxy-image-members-20260911/result/qualification.json",
+      "mode": 384,
+      "mode_authority": {
+        "line": 96,
+        "path": "docs/audits/native-proxy-image-members-20260911/qualify.t",
+        "text": "write_bytes(\"$log/$phase.json\", JSON::PP->new->canonical->ascii->pretty->encode($result), 0600);"
+      },
+      "path": ".artifacts/logs/native-proxy-image-members-20260911/qualification.json",
+      "sha256": "aa9d29456224639c3c439fc39b71b8501a6855a7cab78d564b6095672ff85b19",
+      "size_bytes": 74901
+    },
+    {
+      "canonical_copy": "docs/audits/native-proxy-image-members-20260911/result/qualification-admission.jsonl",
+      "mode": 384,
+      "mode_authority": {
+        "line": 83,
+        "path": "docs/audits/native-proxy-image-members-20260911/qualify.t",
+        "text": "write_bytes(\"$log/$phase-admission.jsonl\", '', 0600);"
+      },
+      "path": ".artifacts/logs/native-proxy-image-members-20260911/qualification-admission.jsonl",
+      "sha256": "11d24090d84c9e63786c0c487f2deb1d598d03709eb0d15b6e5822cd1ff67aa2",
+      "size_bytes": 1540
+    },
+    {
+      "canonical_copy": "docs/audits/native-proxy-namespace-reader-20260911/result/qualification.json",
+      "mode": 384,
+      "mode_authority": {
+        "line": 96,
+        "path": "docs/audits/native-proxy-namespace-reader-20260911/qualify.t",
+        "text": "write_bytes(\"$log/$phase.json\", JSON::PP->new->canonical->ascii->pretty->encode($result), 0600);"
+      },
+      "path": ".artifacts/logs/native-proxy-namespace-reader-20260911/qualification.json",
+      "sha256": "7167afea81f9ea10c3478b9504328bd22065da3384ade76b2a7d3046324ab5f1",
+      "size_bytes": 58246
+    },
+    {
+      "canonical_copy": "docs/audits/native-proxy-namespace-reader-20260911/result/qualification-admission.jsonl",
+      "mode": 384,
+      "mode_authority": {
+        "line": 83,
+        "path": "docs/audits/native-proxy-namespace-reader-20260911/qualify.t",
+        "text": "write_bytes(\"$log/$phase-admission.jsonl\", '', 0600);"
+      },
+      "path": ".artifacts/logs/native-proxy-namespace-reader-20260911/qualification-admission.jsonl",
+      "sha256": "3fa44d61b323a8c08f20d4f688f707e51f0e2cf17b0f5ffd813b03c3b54fadf3",
+      "size_bytes": 1540
+    },
+    {
+      "canonical_copy": "docs/audits/native-proxy-observation-acquisition-20260910/result/qualification.json",
+      "mode": 384,
+      "mode_authority": {
+        "line": 60,
+        "path": "docs/audits/native-proxy-observation-acquisition-20260910/qualify.t",
+        "text": "write_bytes(\"$log/qualification.json\", JSON::PP->new->canonical->ascii->pretty->encode($result), 0600);"
+      },
+      "path": ".artifacts/logs/native-proxy-observation-acquisition-20260910/qualification.json",
+      "sha256": "5c201ce2c6e91a03a07f80180e7d66215038ed6c75e8c9fada6c8e59b2bce3bf",
+      "size_bytes": 1424879
+    },
+    {
+      "canonical_copy": "docs/audits/native-proxy-observation-acquisition-20260910/result/admission.jsonl",
+      "mode": 384,
+      "mode_authority": {
+        "line": 43,
+        "path": "docs/audits/native-proxy-observation-acquisition-20260910/qualify.t",
+        "text": "write_bytes(\"$log/admission.jsonl\", '', 0600);"
+      },
+      "path": ".artifacts/logs/native-proxy-observation-acquisition-20260910/admission.jsonl",
+      "sha256": "0465eb5d6933f6a1f9cd29cb7a6ee6e4e208b8a31a7c598fe54a98ff0bef75b9",
+      "size_bytes": 14935
+    },
+    {
+      "canonical_copy": "docs/audits/native-proxy-observation-coordinator-cuts-20260911/result/qualification.json",
+      "mode": 384,
+      "mode_authority": {
+        "line": 161,
+        "path": "docs/audits/native-proxy-observation-coordinator-cuts-20260911/qualify.t",
+        "text": "write_bytes(\"$log/qualification.json\", JSON::PP->new->canonical->ascii->pretty->encode($result), 0600);"
+      },
+      "path": ".artifacts/logs/native-proxy-observation-coordinator-cuts-20260911/qualification.json",
+      "sha256": "c8d568f22bc79727a6283d72867e2cbc791361e3420a1822913042f0cf48b95b",
+      "size_bytes": 18384572
+    },
+    {
+      "canonical_copy": "docs/audits/native-proxy-observation-coordinator-cuts-20260911/result/admission.jsonl",
+      "mode": 384,
+      "mode_authority": {
+        "line": 106,
+        "path": "docs/audits/native-proxy-observation-coordinator-cuts-20260911/qualify.t",
+        "text": "write_bytes(\"$log/admission.jsonl\", '', 0600);"
+      },
+      "path": ".artifacts/logs/native-proxy-observation-coordinator-cuts-20260911/admission.jsonl",
+      "sha256": "e3f23d119a091e347c5686f24a99e23a26cb377f74a0ef40ac854ef5c0569720",
+      "size_bytes": 63860
+    },
+    {
+      "canonical_copy": "docs/audits/native-proxy-observation-coordinator-cuts-20260911/result/rows.jsonl",
+      "mode": 384,
+      "mode_authority": {
+        "line": 409,
+        "path": "docs/audits/native-proxy-observation-coordinator-cuts-20260911/qualify.t",
+        "text": "write_bytes(\"$log/rows.jsonl\", '', 0600);"
+      },
+      "path": ".artifacts/logs/native-proxy-observation-coordinator-cuts-20260911/rows.jsonl",
+      "sha256": "a769b897b7643555aef042ab130784c5195ee81603e021bc26c2944093ed8383",
+      "size_bytes": 11352791
+    },
+    {
+      "canonical_copy": "docs/audits/native-proxy-observation-coordinator-cuts-20260911/result/progress.json",
+      "mode": 384,
+      "mode_authority": {
+        "line": 123,
+        "path": "docs/audits/native-proxy-observation-coordinator-cuts-20260911/qualify.t",
+        "text": "write_bytes(\"$log/progress.json\", $JSON->encode($progress), 0600);"
+      },
+      "path": ".artifacts/logs/native-proxy-observation-coordinator-cuts-20260911/progress.json",
+      "sha256": "1072e981daa1b72277398572ee62c6f6a297e58f8bf98eb5f5ca23cae6e3e9a4",
+      "size_bytes": 144
+    },
+    {
+      "canonical_copy": "docs/audits/native-proxy-observation-publication-cuts-20260910/result/qualification.json",
+      "mode": 384,
+      "mode_authority": {
+        "line": 170,
+        "path": "docs/audits/native-proxy-observation-publication-cuts-20260910/qualify.t",
+        "text": "write_bytes(\"$log/qualification.json\", JSON::PP->new->canonical->ascii->pretty->encode($result), 0600);"
+      },
+      "path": ".artifacts/logs/native-proxy-observation-publication-cuts-20260910/qualification.json",
+      "sha256": "7f3cf95447d602a0d04fd62046576bf45cbe4e51102016e94b3790f594104bd2",
+      "size_bytes": 3284631
+    },
+    {
+      "canonical_copy": "docs/audits/native-proxy-observation-publication-cuts-20260910/result/admission.jsonl",
+      "mode": 384,
+      "mode_authority": {
+        "line": 115,
+        "path": "docs/audits/native-proxy-observation-publication-cuts-20260910/qualify.t",
+        "text": "write_bytes(\"$log/admission.jsonl\", '', 0600);"
+      },
+      "path": ".artifacts/logs/native-proxy-observation-publication-cuts-20260910/admission.jsonl",
+      "sha256": "51ae2c65da124470f240b9ede5184b2e9bbe9c7044f10d8d4b35a3c44f3c1699",
+      "size_bytes": 10300
+    },
+    {
+      "canonical_copy": "docs/audits/native-proxy-observation-publication-cuts-20260910/result/rows.jsonl",
+      "mode": 384,
+      "mode_authority": {
+        "line": 409,
+        "path": "docs/audits/native-proxy-observation-publication-cuts-20260910/qualify.t",
+        "text": "write_bytes(\"$log/rows.jsonl\", '', 0600);"
+      },
+      "path": ".artifacts/logs/native-proxy-observation-publication-cuts-20260910/rows.jsonl",
+      "sha256": "f1b643cd2308ef35ef349a4139ab8d3d2600b238ad1e75b8caab2fc9bf384f7b",
+      "size_bytes": 2055705
+    },
+    {
+      "canonical_copy": "docs/audits/native-proxy-observation-publication-cuts-20260910/result/progress.json",
+      "mode": 384,
+      "mode_authority": {
+        "line": 132,
+        "path": "docs/audits/native-proxy-observation-publication-cuts-20260910/qualify.t",
+        "text": "write_bytes(\"$log/progress.json\", $JSON->encode($progress), 0600);"
+      },
+      "path": ".artifacts/logs/native-proxy-observation-publication-cuts-20260910/progress.json",
+      "sha256": "6d658c6ab7b37a7319d5978303dca86af41dd951607228cbfbf5c0307b38cd25",
+      "size_bytes": 142
+    },
+    {
+      "canonical_copy": "docs/audits/native-proxy-observation-remaining-close-20260911/result/qualification.json",
+      "mode": 384,
+      "mode_authority": {
+        "line": 184,
+        "path": "docs/audits/native-proxy-observation-remaining-close-20260911/qualify.t",
+        "text": "write_bytes(\"$log/qualification.json\", JSON::PP->new->canonical->ascii->pretty->encode($result), 0600);"
+      },
+      "path": ".artifacts/logs/native-proxy-observation-remaining-close-20260911/qualification.json",
+      "sha256": "e7f985ec88ab32ef831185d5818888de2829973de60db2b4f1209ffc73ed881d",
+      "size_bytes": 32915066
+    },
+    {
+      "canonical_copy": "docs/audits/native-proxy-observation-remaining-close-20260911/result/admission.jsonl",
+      "mode": 384,
+      "mode_authority": {
+        "line": 129,
+        "path": "docs/audits/native-proxy-observation-remaining-close-20260911/qualify.t",
+        "text": "write_bytes(\"$log/admission.jsonl\", '', 0600);"
+      },
+      "path": ".artifacts/logs/native-proxy-observation-remaining-close-20260911/admission.jsonl",
+      "sha256": "0ffc8b12c6ac1f7d2ed2cf27c3bcdf5bb4c2073c9bea4b554bd802e7be149d6c",
+      "size_bytes": 81885
+    },
+    {
+      "canonical_copy": "docs/audits/native-proxy-observation-remaining-close-20260911/result/rows.jsonl",
+      "mode": 384,
+      "mode_authority": {
+        "line": 485,
+        "path": "docs/audits/native-proxy-observation-remaining-close-20260911/qualify.t",
+        "text": "write_bytes(\"$log/rows.jsonl\", '', 0600);"
+      },
+      "path": ".artifacts/logs/native-proxy-observation-remaining-close-20260911/rows.jsonl",
+      "sha256": "dd5000a554fc4bc9defdbeae3ceb95b198f4654d1506ba96b6f12773ffe4705b",
+      "size_bytes": 20811929
+    },
+    {
+      "canonical_copy": "docs/audits/native-proxy-observation-remaining-close-20260911/result/progress.json",
+      "mode": 384,
+      "mode_authority": {
+        "line": 146,
+        "path": "docs/audits/native-proxy-observation-remaining-close-20260911/qualify.t",
+        "text": "write_bytes(\"$log/progress.json\", $JSON->encode($progress), 0600);"
+      },
+      "path": ".artifacts/logs/native-proxy-observation-remaining-close-20260911/progress.json",
+      "sha256": "0bc798f64348346aa93b2c9184eb3013f807d621d46eebeb733579fe1e49c369",
+      "size_bytes": 145
+    },
+    {
+      "canonical_copy": "docs/audits/native-proxy-observation-reuse-20260910/result/qualification.json",
+      "mode": 384,
+      "mode_authority": {
+        "line": 64,
+        "path": "docs/audits/native-proxy-observation-reuse-20260910/qualify.t",
+        "text": "write_bytes(\"$log/qualification.json\", JSON::PP->new->canonical->ascii->pretty->encode($result), 0600);"
+      },
+      "path": ".artifacts/logs/native-proxy-observation-reuse-20260910/qualification.json",
+      "sha256": "348c434f7a40012fc8a46a7c7b4b6842ad7d30ca56f3a82947b82231974f6296",
+      "size_bytes": 3707937
+    },
+    {
+      "canonical_copy": "docs/audits/native-proxy-observation-reuse-20260910/result/admission.jsonl",
+      "mode": 384,
+      "mode_authority": {
+        "line": 46,
+        "path": "docs/audits/native-proxy-observation-reuse-20260910/qualify.t",
+        "text": "write_bytes(\"$log/admission.jsonl\", '', 0600);"
+      },
+      "path": ".artifacts/logs/native-proxy-observation-reuse-20260910/admission.jsonl",
+      "sha256": "c3acc35eb6ba4c64d697dd9c75a2a295241b8eaf160aafd9054b60fbfe909b04",
+      "size_bytes": 20600
+    },
+    {
+      "canonical_copy": "docs/audits/native-proxy-observation-semantic-close-20260911/result/qualification.json",
+      "mode": 384,
+      "mode_authority": {
+        "line": 172,
+        "path": "docs/audits/native-proxy-observation-semantic-close-20260911/qualify.t",
+        "text": "write_bytes(\"$log/qualification.json\", JSON::PP->new->canonical->ascii->pretty->encode($result), 0600);"
+      },
+      "path": ".artifacts/logs/native-proxy-observation-semantic-close-20260911/qualification.json",
+      "sha256": "a340d63edcf9e7df5be942e5c02b8b10474aa7c3e7be30323c44f882b587e5d4",
+      "size_bytes": 30228622
+    },
+    {
+      "canonical_copy": "docs/audits/native-proxy-observation-semantic-close-20260911/result/admission.jsonl",
+      "mode": 384,
+      "mode_authority": {
+        "line": 117,
+        "path": "docs/audits/native-proxy-observation-semantic-close-20260911/qualify.t",
+        "text": "write_bytes(\"$log/admission.jsonl\", '', 0600);"
+      },
+      "path": ".artifacts/logs/native-proxy-observation-semantic-close-20260911/admission.jsonl",
+      "sha256": "270ec6e5cc805e314f9528bf76bff25f299afb2d7a64aa5cc7a09d40099a698c",
+      "size_bytes": 82915
+    },
+    {
+      "canonical_copy": "docs/audits/native-proxy-observation-semantic-close-20260911/result/rows.jsonl",
+      "mode": 384,
+      "mode_authority": {
+        "line": 464,
+        "path": "docs/audits/native-proxy-observation-semantic-close-20260911/qualify.t",
+        "text": "write_bytes(\"$log/rows.jsonl\", '', 0600);"
+      },
+      "path": ".artifacts/logs/native-proxy-observation-semantic-close-20260911/rows.jsonl",
+      "sha256": "f35cbc4be33d72745e6d4d968942a53fd97d824ead45f525ceed347026794850",
+      "size_bytes": 19064181
+    },
+    {
+      "canonical_copy": "docs/audits/native-proxy-observation-semantic-close-20260911/result/progress.json",
+      "mode": 384,
+      "mode_authority": {
+        "line": 134,
+        "path": "docs/audits/native-proxy-observation-semantic-close-20260911/qualify.t",
+        "text": "write_bytes(\"$log/progress.json\", $JSON->encode($progress), 0600);"
+      },
+      "path": ".artifacts/logs/native-proxy-observation-semantic-close-20260911/progress.json",
+      "sha256": "37ea1915faae7132f2f344ab56fc55ab93136be4a1a4d7e9848499cb64c37416",
+      "size_bytes": 144
+    },
+    {
+      "canonical_copy": "docs/audits/native-proxy-observation-semantic-cuts-20260911/result/qualification.json",
+      "mode": 384,
+      "mode_authority": {
+        "line": 155,
+        "path": "docs/audits/native-proxy-observation-semantic-cuts-20260911/qualify.t",
+        "text": "write_bytes(\"$log/qualification.json\", JSON::PP->new->canonical->ascii->pretty->encode($result), 0600);"
+      },
+      "path": ".artifacts/logs/native-proxy-observation-semantic-cuts-20260911/qualification.json",
+      "sha256": "172f74b18371793b66b530c6984db691c916f9dedf9042d2a24f1e6d74f84bac",
+      "size_bytes": 55152244
+    },
+    {
+      "canonical_copy": "docs/audits/native-proxy-observation-semantic-cuts-20260911/result/admission.jsonl",
+      "mode": 384,
+      "mode_authority": {
+        "line": 100,
+        "path": "docs/audits/native-proxy-observation-semantic-cuts-20260911/qualify.t",
+        "text": "write_bytes(\"$log/admission.jsonl\", '', 0600);"
+      },
+      "path": ".artifacts/logs/native-proxy-observation-semantic-cuts-20260911/admission.jsonl",
+      "sha256": "36a96d2d430d7c6014f58a7abf16185f5c4305ba3ae62f2495a31e444596274a",
+      "size_bytes": 168405
+    },
+    {
+      "canonical_copy": "docs/audits/native-proxy-observation-semantic-cuts-20260911/result/rows.jsonl",
+      "mode": 384,
+      "mode_authority": {
+        "line": 442,
+        "path": "docs/audits/native-proxy-observation-semantic-cuts-20260911/qualify.t",
+        "text": "write_bytes(\"$log/rows.jsonl\", '', 0600);"
+      },
+      "path": ".artifacts/logs/native-proxy-observation-semantic-cuts-20260911/rows.jsonl",
+      "sha256": "fa9d58c6720121067d3477cfec6306d7d07737069177c59e0ab5ab67a66c51c4",
+      "size_bytes": 34606837
+    },
+    {
+      "canonical_copy": "docs/audits/native-proxy-observation-semantic-cuts-20260911/result/progress.json",
+      "mode": 384,
+      "mode_authority": {
+        "line": 117,
+        "path": "docs/audits/native-proxy-observation-semantic-cuts-20260911/qualify.t",
+        "text": "write_bytes(\"$log/progress.json\", $JSON->encode($progress), 0600);"
+      },
+      "path": ".artifacts/logs/native-proxy-observation-semantic-cuts-20260911/progress.json",
+      "sha256": "0506e6e4acc163be17149fb1c6218786fc8b1ccb00f2209f6aeadd36d645c144",
+      "size_bytes": 143
+    },
+    {
+      "canonical_copy": "docs/audits/native-proxy-observation-snapshot-cuts-20260910/result/qualification.json",
+      "mode": 384,
+      "mode_authority": {
+        "line": 121,
+        "path": "docs/audits/native-proxy-observation-snapshot-cuts-20260910/qualify.t",
+        "text": "write_bytes(\"$log/qualification.json\", JSON::PP->new->canonical->ascii->pretty->encode($result), 0600);"
+      },
+      "path": ".artifacts/logs/native-proxy-observation-snapshot-cuts-20260910/qualification.json",
+      "sha256": "a523b08bad6f2fc7b120ab8157da30ad0046f4d63e5a3c0f6fa047b3564ba222",
+      "size_bytes": 30412207
+    },
+    {
+      "canonical_copy": "docs/audits/native-proxy-observation-snapshot-cuts-20260910/result/admission.jsonl",
+      "mode": 384,
+      "mode_authority": {
+        "line": 66,
+        "path": "docs/audits/native-proxy-observation-snapshot-cuts-20260910/qualify.t",
+        "text": "write_bytes(\"$log/admission.jsonl\", '', 0600);"
+      },
+      "path": ".artifacts/logs/native-proxy-observation-snapshot-cuts-20260910/admission.jsonl",
+      "sha256": "5930b2e9b43ffd38a07ff001abd45f72e4dd701fb0069393162464c617f3460e",
+      "size_bytes": 88580
+    },
+    {
+      "canonical_copy": "docs/audits/native-proxy-observation-snapshot-cuts-20260910/result/rows.jsonl",
+      "mode": 384,
+      "mode_authority": {
+        "line": 335,
+        "path": "docs/audits/native-proxy-observation-snapshot-cuts-20260910/qualify.t",
+        "text": "write_bytes(\"$log/rows.jsonl\", '', 0600);"
+      },
+      "path": ".artifacts/logs/native-proxy-observation-snapshot-cuts-20260910/rows.jsonl",
+      "sha256": "a78443c2125908d8a9c26a39efeec72a0a75ee0ed1999da1380bdb6f9696c699",
+      "size_bytes": 19351593
+    },
+    {
+      "canonical_copy": "docs/audits/native-proxy-observation-snapshot-cuts-20260910/result/progress.json",
+      "mode": 384,
+      "mode_authority": {
+        "line": 83,
+        "path": "docs/audits/native-proxy-observation-snapshot-cuts-20260910/qualify.t",
+        "text": "write_bytes(\"$log/progress.json\", $JSON->encode($progress), 0600);"
+      },
+      "path": ".artifacts/logs/native-proxy-observation-snapshot-cuts-20260910/progress.json",
+      "sha256": "0edfb9d4be8f79d2533e1b64c534d1229d06d79e8f9e659cd6985d122a558406",
+      "size_bytes": 141
+    },
+    {
+      "canonical_copy": "docs/audits/native-proxy-snapshot-occurrence-20260911/result/qualification.json",
+      "mode": 384,
+      "mode_authority": {
+        "line": 128,
+        "path": "docs/audits/native-proxy-snapshot-occurrence-20260911/qualify.t",
+        "text": "write_bytes(\"$log/qualification.json\", JSON::PP->new->canonical->ascii->pretty->encode($result), 0600);"
+      },
+      "path": ".artifacts/logs/native-proxy-snapshot-occurrence-20260911/qualification.json",
+      "sha256": "60dfc6e1e7551434e25606060f8aee7e4c4caa7926d9348943211b7ed23f54af",
+      "size_bytes": 30495831
+    },
+    {
+      "canonical_copy": "docs/audits/native-proxy-snapshot-occurrence-20260911/result/admission.jsonl",
+      "mode": 384,
+      "mode_authority": {
+        "line": 73,
+        "path": "docs/audits/native-proxy-snapshot-occurrence-20260911/qualify.t",
+        "text": "write_bytes(\"$log/admission.jsonl\", '', 0600);"
+      },
+      "path": ".artifacts/logs/native-proxy-snapshot-occurrence-20260911/admission.jsonl",
+      "sha256": "0d2bf0437ad069556bda6e96743e8516d923b98c754e7f80ccad2d4e5217f401",
+      "size_bytes": 88580
+    },
+    {
+      "canonical_copy": "docs/audits/native-proxy-snapshot-occurrence-20260911/result/rows.jsonl",
+      "mode": 384,
+      "mode_authority": {
+        "line": 342,
+        "path": "docs/audits/native-proxy-snapshot-occurrence-20260911/qualify.t",
+        "text": "write_bytes(\"$log/rows.jsonl\", '', 0600);"
+      },
+      "path": ".artifacts/logs/native-proxy-snapshot-occurrence-20260911/rows.jsonl",
+      "sha256": "ddf581abd6c6ee9abc8492d101093c692366634d9ffc54f5a08352204c674193",
+      "size_bytes": 19410567
+    },
+    {
+      "canonical_copy": "docs/audits/native-proxy-snapshot-occurrence-20260911/result/progress.json",
+      "mode": 384,
+      "mode_authority": {
+        "line": 90,
+        "path": "docs/audits/native-proxy-snapshot-occurrence-20260911/qualify.t",
+        "text": "write_bytes(\"$log/progress.json\", $JSON->encode($progress), 0600);"
+      },
+      "path": ".artifacts/logs/native-proxy-snapshot-occurrence-20260911/progress.json",
+      "sha256": "f809e74c4677bf380c3e1c0c2188f8075c4ec65d63911d6c3e003c4da4648db7",
+      "size_bytes": 148
+    }
+  ],
+  "limits": "This read-only closure compares current ignored result/ledger/journal bytes with their committed original copies and checks private modes against the explicit producer writes. Archive-copy permissions are not runtime-mode authority. The historical snapshot output is included for preservation only. The join invoked validators with tracked receipt directories and wrote only its own reports; it did not rerun a producer or restore any ignored output. Original inventory tool exit status remains unavailable; its complete report was independently rederived by the successful join. No native or lifetime qualification is added.",
+  "predecessor_inputs_unchanged": 63,
+  "prospective_join_inputs_unchanged": 5,
+  "schema": "fsmgen.inactive_observation_acquisition_join_closure.v1",
+  "success": true
+}

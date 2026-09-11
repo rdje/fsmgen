@@ -1,0 +1,12 @@
+{"component": "snapshot", "contexts": 172, "assertions": 345, "allocations": 688, "verified": true}
+{"component": "publication", "contexts": 20, "assertions": 41, "allocations": 80, "verified": true}
+{"component": "coordinator", "contexts": 124, "assertions": 249, "allocations": 496, "verified": true}
+{"component": "semantic_calls", "contexts": 327, "assertions": 655, "allocations": 1308, "verified": true}
+{"component": "semantic_close", "contexts": 161, "assertions": 323, "allocations": 644, "verified": true}
+{"component": "remaining_close", "contexts": 159, "assertions": 319, "allocations": 636, "verified": true}
+{"component": "namespace", "contexts": 14, "assertions": 29, "allocations": 14, "verified": true}
+{"component": "members", "contexts": 14, "assertions": 29, "allocations": 14, "verified": true}
+{"component": "handoff", "contexts": 17, "assertions": 35, "allocations": 17, "verified": true}
+{"component": "fresh", "contexts": 29, "assertions": 59, "allocations": 116, "verified": true}
+{"component": "reuse", "contexts": 40, "assertions": 81, "allocations": 160, "verified": true}
+{"assertions": 2165, "authenticated_receipts": 58, "components": 11, "contexts": 1077, "disjoint_absent_roots": 4173, "falsifiers": 46, "qualified_function_replacements": 9, "source_comparisons": 350, "success": true}

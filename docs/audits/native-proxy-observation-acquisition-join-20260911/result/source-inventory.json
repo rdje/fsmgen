@@ -1,0 +1,720 @@
+{
+  "components": [
+    {
+      "external_python_modules": [
+        "copy",
+        "hashlib",
+        "importlib",
+        "json",
+        "os",
+        "re",
+        "struct"
+      ],
+      "local_oracle_producer_inputs": [
+        "docs/audits/native-proxy-image-coordination-20260910/audit.py",
+        "docs/audits/native-proxy-image-custody-20260910/audit.py",
+        "docs/audits/native-proxy-image-custody-20260910/vectors.json",
+        "docs/audits/native-proxy-image-publication-20260910/audit.py",
+        "docs/audits/native-proxy-observation-acquisition-20260910/audit.py",
+        "docs/audits/native-proxy-observation-acquisition-20260910/plan.json",
+        "docs/audits/native-proxy-observation-records-20260910/audit.py",
+        "docs/audits/native-proxy-observation-records-20260910/plan.json",
+        "docs/audits/native-proxy-runtime-acquisition-20260910/audit.py",
+        "docs/audits/native-proxy-runtime-census-20260910/audit.py",
+        "docs/audits/native-proxy-runtime-records-20260910/audit.py",
+        "docs/audits/native-proxy-runtime-records-20260910/vectors.json",
+        "docs/audits/native-proxy-snapshot-occurrence-20260911/audit.py",
+        "docs/audits/native-proxy-snapshot-occurrence-20260911/plan.json",
+        "docs/audits/native-proxy-snapshot-occurrence-20260911/plan.py",
+        "docs/audits/native-proxy-snapshot-occurrence-20260911/qualify.t"
+      ],
+      "name": "snapshot",
+      "source_epoch": "b2e382b393784ea6b0bf48c3345fa05a919dff97"
+    },
+    {
+      "external_python_modules": [
+        "copy",
+        "hashlib",
+        "importlib",
+        "json",
+        "os",
+        "re",
+        "struct"
+      ],
+      "local_oracle_producer_inputs": [
+        "docs/audits/native-proxy-image-coordination-20260910/audit.py",
+        "docs/audits/native-proxy-image-custody-20260910/audit.py",
+        "docs/audits/native-proxy-image-custody-20260910/vectors.json",
+        "docs/audits/native-proxy-image-publication-20260910/audit.py",
+        "docs/audits/native-proxy-observation-acquisition-20260910/audit.py",
+        "docs/audits/native-proxy-observation-acquisition-20260910/plan.json",
+        "docs/audits/native-proxy-observation-publication-cuts-20260910/audit.py",
+        "docs/audits/native-proxy-observation-publication-cuts-20260910/plan.json",
+        "docs/audits/native-proxy-observation-publication-cuts-20260910/plan.py",
+        "docs/audits/native-proxy-observation-publication-cuts-20260910/qualify.t",
+        "docs/audits/native-proxy-observation-records-20260910/audit.py",
+        "docs/audits/native-proxy-observation-records-20260910/plan.json",
+        "docs/audits/native-proxy-observation-snapshot-cuts-20260910/audit.py",
+        "docs/audits/native-proxy-observation-snapshot-cuts-20260910/plan.json",
+        "docs/audits/native-proxy-observation-snapshot-cuts-20260910/plan.py",
+        "docs/audits/native-proxy-runtime-acquisition-20260910/audit.py",
+        "docs/audits/native-proxy-runtime-census-20260910/audit.py",
+        "docs/audits/native-proxy-runtime-records-20260910/audit.py",
+        "docs/audits/native-proxy-runtime-records-20260910/vectors.json"
+      ],
+      "name": "publication",
+      "source_epoch": "295d186656a5d517894c1bdbd550b0633d2b2fc4"
+    },
+    {
+      "external_python_modules": [
+        "copy",
+        "hashlib",
+        "importlib",
+        "json",
+        "os",
+        "re",
+        "struct"
+      ],
+      "local_oracle_producer_inputs": [
+        "docs/audits/native-proxy-image-coordination-20260910/audit.py",
+        "docs/audits/native-proxy-image-custody-20260910/audit.py",
+        "docs/audits/native-proxy-image-custody-20260910/vectors.json",
+        "docs/audits/native-proxy-image-publication-20260910/audit.py",
+        "docs/audits/native-proxy-observation-acquisition-20260910/audit.py",
+        "docs/audits/native-proxy-observation-acquisition-20260910/plan.json",
+        "docs/audits/native-proxy-observation-coordinator-cuts-20260911/audit.py",
+        "docs/audits/native-proxy-observation-coordinator-cuts-20260911/plan.json",
+        "docs/audits/native-proxy-observation-coordinator-cuts-20260911/plan.py",
+        "docs/audits/native-proxy-observation-coordinator-cuts-20260911/qualify.t",
+        "docs/audits/native-proxy-observation-records-20260910/audit.py",
+        "docs/audits/native-proxy-observation-records-20260910/plan.json",
+        "docs/audits/native-proxy-observation-snapshot-cuts-20260910/audit.py",
+        "docs/audits/native-proxy-observation-snapshot-cuts-20260910/plan.json",
+        "docs/audits/native-proxy-observation-snapshot-cuts-20260910/plan.py",
+        "docs/audits/native-proxy-runtime-acquisition-20260910/audit.py",
+        "docs/audits/native-proxy-runtime-census-20260910/audit.py",
+        "docs/audits/native-proxy-runtime-records-20260910/audit.py",
+        "docs/audits/native-proxy-runtime-records-20260910/vectors.json"
+      ],
+      "name": "coordinator",
+      "source_epoch": "c2bd1d2aa7e78a85571d34fc36cdcc02fe0485dd"
+    },
+    {
+      "external_python_modules": [
+        "copy",
+        "hashlib",
+        "importlib",
+        "json",
+        "os",
+        "re",
+        "struct"
+      ],
+      "local_oracle_producer_inputs": [
+        "docs/audits/native-proxy-image-coordination-20260910/audit.py",
+        "docs/audits/native-proxy-image-custody-20260910/audit.py",
+        "docs/audits/native-proxy-image-custody-20260910/vectors.json",
+        "docs/audits/native-proxy-image-publication-20260910/audit.py",
+        "docs/audits/native-proxy-observation-acquisition-20260910/audit.py",
+        "docs/audits/native-proxy-observation-acquisition-20260910/plan.json",
+        "docs/audits/native-proxy-observation-coordinator-cuts-20260911/audit.py",
+        "docs/audits/native-proxy-observation-coordinator-cuts-20260911/plan.json",
+        "docs/audits/native-proxy-observation-coordinator-cuts-20260911/plan.py",
+        "docs/audits/native-proxy-observation-records-20260910/audit.py",
+        "docs/audits/native-proxy-observation-records-20260910/plan.json",
+        "docs/audits/native-proxy-observation-semantic-cuts-20260911/audit.py",
+        "docs/audits/native-proxy-observation-semantic-cuts-20260911/plan.json",
+        "docs/audits/native-proxy-observation-semantic-cuts-20260911/plan.py",
+        "docs/audits/native-proxy-observation-semantic-cuts-20260911/qualify.t",
+        "docs/audits/native-proxy-observation-snapshot-cuts-20260910/audit.py",
+        "docs/audits/native-proxy-observation-snapshot-cuts-20260910/plan.json",
+        "docs/audits/native-proxy-observation-snapshot-cuts-20260910/plan.py",
+        "docs/audits/native-proxy-runtime-acquisition-20260910/audit.py",
+        "docs/audits/native-proxy-runtime-census-20260910/audit.py",
+        "docs/audits/native-proxy-runtime-records-20260910/audit.py",
+        "docs/audits/native-proxy-runtime-records-20260910/vectors.json"
+      ],
+      "name": "semantic_calls",
+      "source_epoch": "829df81b7df7cc2a8f61e740b67655db8093ea40"
+    },
+    {
+      "external_python_modules": [
+        "copy",
+        "hashlib",
+        "importlib",
+        "json",
+        "os",
+        "re",
+        "struct"
+      ],
+      "local_oracle_producer_inputs": [
+        "docs/audits/native-proxy-image-coordination-20260910/audit.py",
+        "docs/audits/native-proxy-image-custody-20260910/audit.py",
+        "docs/audits/native-proxy-image-custody-20260910/vectors.json",
+        "docs/audits/native-proxy-image-publication-20260910/audit.py",
+        "docs/audits/native-proxy-observation-acquisition-20260910/audit.py",
+        "docs/audits/native-proxy-observation-acquisition-20260910/plan.json",
+        "docs/audits/native-proxy-observation-coordinator-cuts-20260911/audit.py",
+        "docs/audits/native-proxy-observation-coordinator-cuts-20260911/plan.json",
+        "docs/audits/native-proxy-observation-coordinator-cuts-20260911/plan.py",
+        "docs/audits/native-proxy-observation-records-20260910/audit.py",
+        "docs/audits/native-proxy-observation-records-20260910/plan.json",
+        "docs/audits/native-proxy-observation-semantic-close-20260911/audit.py",
+        "docs/audits/native-proxy-observation-semantic-close-20260911/plan.json",
+        "docs/audits/native-proxy-observation-semantic-close-20260911/plan.py",
+        "docs/audits/native-proxy-observation-semantic-close-20260911/qualify.t",
+        "docs/audits/native-proxy-observation-semantic-cuts-20260911/audit.py",
+        "docs/audits/native-proxy-observation-semantic-cuts-20260911/plan.json",
+        "docs/audits/native-proxy-observation-semantic-cuts-20260911/plan.py",
+        "docs/audits/native-proxy-observation-snapshot-cuts-20260910/audit.py",
+        "docs/audits/native-proxy-observation-snapshot-cuts-20260910/plan.json",
+        "docs/audits/native-proxy-observation-snapshot-cuts-20260910/plan.py",
+        "docs/audits/native-proxy-runtime-acquisition-20260910/audit.py",
+        "docs/audits/native-proxy-runtime-census-20260910/audit.py",
+        "docs/audits/native-proxy-runtime-records-20260910/audit.py",
+        "docs/audits/native-proxy-runtime-records-20260910/vectors.json"
+      ],
+      "name": "semantic_close",
+      "source_epoch": "407851bf7b30d4977dd49518fc2d350c4269d02e"
+    },
+    {
+      "external_python_modules": [
+        "copy",
+        "hashlib",
+        "importlib",
+        "json",
+        "os",
+        "re",
+        "struct"
+      ],
+      "local_oracle_producer_inputs": [
+        "docs/audits/native-proxy-image-coordination-20260910/audit.py",
+        "docs/audits/native-proxy-image-custody-20260910/audit.py",
+        "docs/audits/native-proxy-image-custody-20260910/vectors.json",
+        "docs/audits/native-proxy-image-publication-20260910/audit.py",
+        "docs/audits/native-proxy-observation-acquisition-20260910/audit.py",
+        "docs/audits/native-proxy-observation-acquisition-20260910/plan.json",
+        "docs/audits/native-proxy-observation-coordinator-cuts-20260911/audit.py",
+        "docs/audits/native-proxy-observation-coordinator-cuts-20260911/plan.json",
+        "docs/audits/native-proxy-observation-coordinator-cuts-20260911/plan.py",
+        "docs/audits/native-proxy-observation-records-20260910/audit.py",
+        "docs/audits/native-proxy-observation-records-20260910/plan.json",
+        "docs/audits/native-proxy-observation-remaining-close-20260911/audit.py",
+        "docs/audits/native-proxy-observation-remaining-close-20260911/plan.json",
+        "docs/audits/native-proxy-observation-remaining-close-20260911/plan.py",
+        "docs/audits/native-proxy-observation-remaining-close-20260911/qualify.t",
+        "docs/audits/native-proxy-observation-snapshot-cuts-20260910/audit.py",
+        "docs/audits/native-proxy-observation-snapshot-cuts-20260910/plan.json",
+        "docs/audits/native-proxy-observation-snapshot-cuts-20260910/plan.py",
+        "docs/audits/native-proxy-runtime-acquisition-20260910/audit.py",
+        "docs/audits/native-proxy-runtime-census-20260910/audit.py",
+        "docs/audits/native-proxy-runtime-records-20260910/audit.py",
+        "docs/audits/native-proxy-runtime-records-20260910/vectors.json",
+        "docs/audits/native-proxy-snapshot-occurrence-20260911/audit.py",
+        "docs/audits/native-proxy-snapshot-occurrence-20260911/plan.json",
+        "docs/audits/native-proxy-snapshot-occurrence-20260911/plan.py"
+      ],
+      "name": "remaining_close",
+      "source_epoch": "25e463466e052bb7417f860723c38e2c8c43c6f0"
+    },
+    {
+      "external_python_modules": [
+        "copy",
+        "hashlib",
+        "json",
+        "os",
+        "re"
+      ],
+      "local_oracle_producer_inputs": [
+        "docs/audits/native-proxy-namespace-reader-20260911/audit.py",
+        "docs/audits/native-proxy-namespace-reader-20260911/plan.json",
+        "docs/audits/native-proxy-namespace-reader-20260911/qualify.t"
+      ],
+      "name": "namespace",
+      "source_epoch": "fa9f92d53a65ce8f6b259b0ef48e657be046f2cd"
+    },
+    {
+      "external_python_modules": [
+        "copy",
+        "hashlib",
+        "json",
+        "os",
+        "re"
+      ],
+      "local_oracle_producer_inputs": [
+        "docs/audits/native-proxy-image-members-20260911/audit.py",
+        "docs/audits/native-proxy-image-members-20260911/plan.json",
+        "docs/audits/native-proxy-image-members-20260911/qualify.t"
+      ],
+      "name": "members",
+      "source_epoch": "f7fb1d0272266e5d6117023c1e9e8496622bedd0"
+    },
+    {
+      "external_python_modules": [
+        "copy",
+        "hashlib",
+        "importlib",
+        "json",
+        "os",
+        "re"
+      ],
+      "local_oracle_producer_inputs": [
+        "docs/audits/native-proxy-descriptor-handoff-20260910/audit.py",
+        "docs/audits/native-proxy-descriptor-handoff-20260910/plan.json",
+        "docs/audits/native-proxy-descriptor-handoff-20260910/qualify.t"
+      ],
+      "name": "handoff",
+      "source_epoch": "730b8b3a2bb1e918d24a03d23a19b0066d159508"
+    },
+    {
+      "external_python_modules": [
+        "copy",
+        "hashlib",
+        "importlib",
+        "json",
+        "os",
+        "re",
+        "struct"
+      ],
+      "local_oracle_producer_inputs": [
+        "docs/audits/native-proxy-image-coordination-20260910/audit.py",
+        "docs/audits/native-proxy-image-custody-20260910/audit.py",
+        "docs/audits/native-proxy-image-custody-20260910/vectors.json",
+        "docs/audits/native-proxy-image-publication-20260910/audit.py",
+        "docs/audits/native-proxy-observation-acquisition-20260910/audit.py",
+        "docs/audits/native-proxy-observation-acquisition-20260910/plan.json",
+        "docs/audits/native-proxy-observation-acquisition-20260910/qualify.t",
+        "docs/audits/native-proxy-observation-records-20260910/audit.py",
+        "docs/audits/native-proxy-observation-records-20260910/plan.json",
+        "docs/audits/native-proxy-runtime-acquisition-20260910/audit.py",
+        "docs/audits/native-proxy-runtime-census-20260910/audit.py",
+        "docs/audits/native-proxy-runtime-records-20260910/audit.py",
+        "docs/audits/native-proxy-runtime-records-20260910/vectors.json"
+      ],
+      "name": "fresh",
+      "source_epoch": "5bb1b2366cc652416283d8959d12a9d44616498c"
+    },
+    {
+      "external_python_modules": [
+        "copy",
+        "hashlib",
+        "importlib",
+        "json",
+        "os",
+        "re",
+        "struct"
+      ],
+      "local_oracle_producer_inputs": [
+        "docs/audits/native-proxy-image-coordination-20260910/audit.py",
+        "docs/audits/native-proxy-image-custody-20260910/audit.py",
+        "docs/audits/native-proxy-image-custody-20260910/vectors.json",
+        "docs/audits/native-proxy-image-publication-20260910/audit.py",
+        "docs/audits/native-proxy-observation-acquisition-20260910/audit.py",
+        "docs/audits/native-proxy-observation-acquisition-20260910/plan.json",
+        "docs/audits/native-proxy-observation-records-20260910/audit.py",
+        "docs/audits/native-proxy-observation-records-20260910/plan.json",
+        "docs/audits/native-proxy-observation-reuse-20260910/audit.py",
+        "docs/audits/native-proxy-observation-reuse-20260910/plan.json",
+        "docs/audits/native-proxy-observation-reuse-20260910/qualify.t",
+        "docs/audits/native-proxy-runtime-acquisition-20260910/audit.py",
+        "docs/audits/native-proxy-runtime-census-20260910/audit.py",
+        "docs/audits/native-proxy-runtime-records-20260910/audit.py",
+        "docs/audits/native-proxy-runtime-records-20260910/vectors.json"
+      ],
+      "name": "reuse",
+      "source_epoch": "5bb1b2366cc652416283d8959d12a9d44616498c"
+    }
+  ],
+  "declared_perl_sources": [
+    "docs/audits/native-proxy-cleanup-receipts-20260910/CleanupReceipts.pm",
+    "docs/audits/native-proxy-image-coordination-20260910/Coordination.pm",
+    "docs/audits/native-proxy-image-custody-20260910/ImageCustody.pm",
+    "docs/audits/native-proxy-image-maintenance-20260910/ImageMaintenance.pm",
+    "docs/audits/native-proxy-image-publication-20260910/Publication.pm",
+    "docs/audits/native-proxy-observation-acquisition-20260910/ObservationAcquisition.pm",
+    "docs/audits/native-proxy-observation-records-20260910/ObservationRecord.pm",
+    "docs/audits/native-proxy-observation-reuse-20260910/FixtureClone.pm",
+    "docs/audits/native-proxy-runtime-acquisition-20260910/ReferenceAcquisition.pm",
+    "docs/audits/native-proxy-runtime-census-20260910/ReferenceCensus.pm",
+    "docs/audits/native-proxy-runtime-records-20260910/RuntimeRecord.pm",
+    "docs/audits/native-proxy-runtime-retirement-20260910/PrivateWorkspace.pm",
+    "docs/audits/native-proxy-runtime-retirement-20260910/RuntimeRetirement.pm",
+    "perl/FSM/ProjectDataLocality.pm",
+    "perl/FSM/Support/ProcessSupervisor.pm",
+    "t/lib/FSM/Test/ProcessSupervisor.pm",
+    "t/lib/FSM/Test/RustProxyFixture.pm"
+  ],
+  "limits": "Reachable local Python module objects, their canonical static plan/vector/contract inputs and declared Perl producer/runtime sources. Named Perl project dependencies must resolve uniquely inside the declared set. Installed interpreter/standard-library/toolchain dependencies are required read-only external inputs; no project data is written there. This is static source applicability, not native loaded-image or arbitrary dynamic-import attestation.",
+  "named_external_perl_dependencies": [
+    "Config",
+    "Cwd",
+    "Digest::SHA",
+    "Encode",
+    "Errno",
+    "Exporter",
+    "Fcntl",
+    "File::Basename",
+    "File::Path",
+    "File::Spec",
+    "File::Temp",
+    "FindBin",
+    "IO::Select",
+    "JSON::PP",
+    "POSIX",
+    "Scalar::Util",
+    "Test::More",
+    "Time::HiRes",
+    "bytes",
+    "lib",
+    "strict",
+    "v5",
+    "warnings"
+  ],
+  "schema": "fsmgen.inactive_acquisition_source_inventory.v1",
+  "source_pins": [
+    {
+      "path": "docs/audits/native-proxy-cleanup-receipts-20260910/CleanupReceipts.pm",
+      "sha256": "5b22cecf6ff131f62fdeb237a3e77b67b5b29a172ff82320a67772b03cd24de0",
+      "size_bytes": 1300
+    },
+    {
+      "path": "docs/audits/native-proxy-descriptor-handoff-20260910/audit.py",
+      "sha256": "5b8b54b2179535677dd0d0493631a2e7b1abfe28b0fd14f98ee934af5db4b0d1",
+      "size_bytes": 10614
+    },
+    {
+      "path": "docs/audits/native-proxy-descriptor-handoff-20260910/plan.json",
+      "sha256": "27026f60feac3848d0d163b740be833af20529809cf1defd13a81b868ff2a022",
+      "size_bytes": 5428
+    },
+    {
+      "path": "docs/audits/native-proxy-descriptor-handoff-20260910/qualify.t",
+      "sha256": "2a98fbe3a1f337759cce252e67a319a3c910966062339b2be908ff8e294ede3c",
+      "size_bytes": 11113
+    },
+    {
+      "path": "docs/audits/native-proxy-image-coordination-20260910/Coordination.pm",
+      "sha256": "51c36432bdcaf35180dd84b7fde709312682e57a4a3fbdc679c1f4d2f01fd00d",
+      "size_bytes": 17012
+    },
+    {
+      "path": "docs/audits/native-proxy-image-coordination-20260910/audit.py",
+      "sha256": "ed7323dd97c40682ddb142d6012e06c482e815b2a40a8bf3ab99e1672e72b048",
+      "size_bytes": 5013
+    },
+    {
+      "path": "docs/audits/native-proxy-image-custody-20260910/ImageCustody.pm",
+      "sha256": "927f1ab39f7f26742e36878985d1ff545ddf2dee119d4bf6b7b41bf2c9360ccc",
+      "size_bytes": 8619
+    },
+    {
+      "path": "docs/audits/native-proxy-image-custody-20260910/audit.py",
+      "sha256": "e964855e7e9bd7abf08af58821cd93fc45425b1b7e0e57fbaa8cdd49e7ecae6a",
+      "size_bytes": 6530
+    },
+    {
+      "path": "docs/audits/native-proxy-image-custody-20260910/vectors.json",
+      "sha256": "60992f01705436d9c7efbc280d6de73f4c132d91ffea9359852c10c9afb7890d",
+      "size_bytes": 1373
+    },
+    {
+      "path": "docs/audits/native-proxy-image-maintenance-20260910/ImageMaintenance.pm",
+      "sha256": "1295957d97737e764c0e800885a2c3f9adfa327a0d41b35d122dde3e21698cac",
+      "size_bytes": 5678
+    },
+    {
+      "path": "docs/audits/native-proxy-image-members-20260911/audit.py",
+      "sha256": "12c9184d93fda81874472303423ec5a0c3e3a156c0bb9f440a259cb05ebb3a66",
+      "size_bytes": 9989
+    },
+    {
+      "path": "docs/audits/native-proxy-image-members-20260911/plan.json",
+      "sha256": "7468bc5a701a977c7e2c60423f21c5f733ba981862822fb1abc7c7eb6ae5207a",
+      "size_bytes": 5736
+    },
+    {
+      "path": "docs/audits/native-proxy-image-members-20260911/qualify.t",
+      "sha256": "3b738f8d2d731d4cf02c61190e3395efd4edc00c2d269c63b2f165ce316fba8a",
+      "size_bytes": 12359
+    },
+    {
+      "path": "docs/audits/native-proxy-image-publication-20260910/Publication.pm",
+      "sha256": "34ca8717856492a09ebf16af8810f04b1dea4c6c8c84ff7b3f5c11c07e7dc2bf",
+      "size_bytes": 5371
+    },
+    {
+      "path": "docs/audits/native-proxy-image-publication-20260910/audit.py",
+      "sha256": "4fdcb1f466368df5e2cec7b31356bf4f4f4d068e1bbd70a51b88e7f0f9f5f186",
+      "size_bytes": 7057
+    },
+    {
+      "path": "docs/audits/native-proxy-namespace-reader-20260911/audit.py",
+      "sha256": "7a54cf7ae643b2b262ea135fafc85f38b6a4c0743d1db86b71c8c1acaab686ec",
+      "size_bytes": 10432
+    },
+    {
+      "path": "docs/audits/native-proxy-namespace-reader-20260911/plan.json",
+      "sha256": "883d5f4744bc1a8ba5b41d8a7c0ee46748a5b2c1a93334b74143d1f5549fc842",
+      "size_bytes": 5373
+    },
+    {
+      "path": "docs/audits/native-proxy-namespace-reader-20260911/qualify.t",
+      "sha256": "7f0c22d4e8d65c22a566921c71264200e066e63b55beca2d826b3f8a170943a9",
+      "size_bytes": 12450
+    },
+    {
+      "path": "docs/audits/native-proxy-observation-acquisition-20260910/ObservationAcquisition.pm",
+      "sha256": "809c013255ab6973a2d0dabcfd5b0ae5c55c97696d7acc77b10cf68149006470",
+      "size_bytes": 16517
+    },
+    {
+      "path": "docs/audits/native-proxy-observation-acquisition-20260910/audit.py",
+      "sha256": "0c9a39917335920095e822a9ed8faa5a218d6e1ec8ada23509beefe7b54acb87",
+      "size_bytes": 20281
+    },
+    {
+      "path": "docs/audits/native-proxy-observation-acquisition-20260910/plan.json",
+      "sha256": "b2a2b1ec2d83f8a3260bd9d1e288af240b0965f71b8c0497d9dc55032870d2a2",
+      "size_bytes": 7875
+    },
+    {
+      "path": "docs/audits/native-proxy-observation-acquisition-20260910/qualify.t",
+      "sha256": "7170172160b9309e46ed8aad75d383c1b9329b21273030c3bd8ca7a1fcb3db1e",
+      "size_bytes": 18549
+    },
+    {
+      "path": "docs/audits/native-proxy-observation-coordinator-cuts-20260911/audit.py",
+      "sha256": "b7ce3876507da59563aeb97343cf42c623efdc61b733d71b8a6687ace72e7449",
+      "size_bytes": 13228
+    },
+    {
+      "path": "docs/audits/native-proxy-observation-coordinator-cuts-20260911/plan.json",
+      "sha256": "4b3bfcb6f1f1d9c938cc95561620928e8b50572cb9e132426c7c72c7967a1e10",
+      "size_bytes": 32979
+    },
+    {
+      "path": "docs/audits/native-proxy-observation-coordinator-cuts-20260911/plan.py",
+      "sha256": "5171847651b5dd18e5349b8496ca372081fb1c4ab4f6aad6ec0c534c28c608c8",
+      "size_bytes": 5935
+    },
+    {
+      "path": "docs/audits/native-proxy-observation-coordinator-cuts-20260911/qualify.t",
+      "sha256": "8e59a4a4f70841b60a62428c7475b7ffea64de4dd7f617cb6c8bf0b4ce9b882f",
+      "size_bytes": 23609
+    },
+    {
+      "path": "docs/audits/native-proxy-observation-publication-cuts-20260910/audit.py",
+      "sha256": "56c7ba7a4955cb8cbd182c4178bb02c6140fd69c4eb716492f557d690158a780",
+      "size_bytes": 10795
+    },
+    {
+      "path": "docs/audits/native-proxy-observation-publication-cuts-20260910/plan.json",
+      "sha256": "53a9a87fcbbabcb4cc420c4a4605db817fa6761e4127c49f9b61515076b56c44",
+      "size_bytes": 55099
+    },
+    {
+      "path": "docs/audits/native-proxy-observation-publication-cuts-20260910/plan.py",
+      "sha256": "89fc2d3fdae32b489a7d7183209d2b0b91088e5f8cb34c395493e43e084afca4",
+      "size_bytes": 6876
+    },
+    {
+      "path": "docs/audits/native-proxy-observation-publication-cuts-20260910/qualify.t",
+      "sha256": "caeeab506d170c3c3e949d220510d940daee3ad85a37fcf648d923aa9c54bae7",
+      "size_bytes": 23139
+    },
+    {
+      "path": "docs/audits/native-proxy-observation-records-20260910/ObservationRecord.pm",
+      "sha256": "35445ee951c8f5e7dc204f58cffe1b2f6273286cc3e7715953d705b33e7158d5",
+      "size_bytes": 4369
+    },
+    {
+      "path": "docs/audits/native-proxy-observation-records-20260910/audit.py",
+      "sha256": "a8ab1e4c5a99273f31f36870db6c21daae2a9e285ab726a5ae4512837da602d8",
+      "size_bytes": 19918
+    },
+    {
+      "path": "docs/audits/native-proxy-observation-records-20260910/plan.json",
+      "sha256": "382988a68e3a810a973a08a95f644c614440760d2a1a2b1eefed95debc5ee2ab",
+      "size_bytes": 305416
+    },
+    {
+      "path": "docs/audits/native-proxy-observation-remaining-close-20260911/audit.py",
+      "sha256": "9de30383e39d709c49979da9c7323b19f2b2eae58a8c58a5387e4ba86fb2ceb0",
+      "size_bytes": 15865
+    },
+    {
+      "path": "docs/audits/native-proxy-observation-remaining-close-20260911/plan.json",
+      "sha256": "f1e73b163a51eb3628f6bf95bc40cb486e4c7c62c96d9a00dea911ebde56c4ee",
+      "size_bytes": 1291676
+    },
+    {
+      "path": "docs/audits/native-proxy-observation-remaining-close-20260911/plan.py",
+      "sha256": "7ba5769dbd158b741a0149ab6f39bf85a0dbc7ece849d334db378fdc5a1e10cd",
+      "size_bytes": 8672
+    },
+    {
+      "path": "docs/audits/native-proxy-observation-remaining-close-20260911/qualify.t",
+      "sha256": "54bd357fe272f2f98a0153cc074f8e4d19394d199baa62d5b96e69d04da78aa6",
+      "size_bytes": 28885
+    },
+    {
+      "path": "docs/audits/native-proxy-observation-reuse-20260910/FixtureClone.pm",
+      "sha256": "d68a2d93f785b1c96689e352f7271e97b0bd239f2cf228f2c8e119dbb6aaf234",
+      "size_bytes": 1053
+    },
+    {
+      "path": "docs/audits/native-proxy-observation-reuse-20260910/audit.py",
+      "sha256": "0ba9d55002b911a98ce4e92d23824df414bccbe4e7e663c6fcabc3d74a81219e",
+      "size_bytes": 18403
+    },
+    {
+      "path": "docs/audits/native-proxy-observation-reuse-20260910/plan.json",
+      "sha256": "441e543fd94e59029d95b5fd8d44b7f2a9903aa04d697af5ae86df40ecf07c72",
+      "size_bytes": 7234
+    },
+    {
+      "path": "docs/audits/native-proxy-observation-reuse-20260910/qualify.t",
+      "sha256": "6a3aa5374ddf2c5c58b3d31214340e8d2d85952875272ceccd4356693920098f",
+      "size_bytes": 19837
+    },
+    {
+      "path": "docs/audits/native-proxy-observation-semantic-close-20260911/audit.py",
+      "sha256": "334fd2fad0a011f27eb274ca7922948f6902f2e31f1dd6f1d16ba6636dcb6df2",
+      "size_bytes": 11513
+    },
+    {
+      "path": "docs/audits/native-proxy-observation-semantic-close-20260911/plan.json",
+      "sha256": "d2f3c20d2389c43b38bec715e825c34928237b01ce70a42b376a14702c89b934",
+      "size_bytes": 4885507
+    },
+    {
+      "path": "docs/audits/native-proxy-observation-semantic-close-20260911/plan.py",
+      "sha256": "0d9795c8c9023c514348891c98c3eb15b03bce393e92fbe67100a4f8f0d9ea28",
+      "size_bytes": 7380
+    },
+    {
+      "path": "docs/audits/native-proxy-observation-semantic-close-20260911/qualify.t",
+      "sha256": "4a4114bb65e5a2f4603beb8e4220431f7001122b9f17c25e6b9bcfbbdd11d801",
+      "size_bytes": 27809
+    },
+    {
+      "path": "docs/audits/native-proxy-observation-semantic-cuts-20260911/audit.py",
+      "sha256": "3e362eb2d957fb88c5334d98f401a75e764592ca426697d6fafa105ae6c358e5",
+      "size_bytes": 14821
+    },
+    {
+      "path": "docs/audits/native-proxy-observation-semantic-cuts-20260911/plan.json",
+      "sha256": "05f781422d4e029bac906ed5a8b30f49c9682f756953cc2213e2255ebcfd7c55",
+      "size_bytes": 263743
+    },
+    {
+      "path": "docs/audits/native-proxy-observation-semantic-cuts-20260911/plan.py",
+      "sha256": "ad1535efdf40369f04e49b377c20c9c0e8a7c0ab3bc46311bddcfa9c083d2a1e",
+      "size_bytes": 6933
+    },
+    {
+      "path": "docs/audits/native-proxy-observation-semantic-cuts-20260911/qualify.t",
+      "sha256": "08cc576542926f6078c84d1026460d158db9e031d84bd2206583b4b6f6a078a6",
+      "size_bytes": 25925
+    },
+    {
+      "path": "docs/audits/native-proxy-observation-snapshot-cuts-20260910/audit.py",
+      "sha256": "7cda9532c29332bd2c73ebcf12936e130853fde81e2861160dc68755097cf032",
+      "size_bytes": 15274
+    },
+    {
+      "path": "docs/audits/native-proxy-observation-snapshot-cuts-20260910/plan.json",
+      "sha256": "e1bc62c41afefe8a694d03eb4152dbf07d5818d436e7607af7f82a21d6a4397d",
+      "size_bytes": 38075
+    },
+    {
+      "path": "docs/audits/native-proxy-observation-snapshot-cuts-20260910/plan.py",
+      "sha256": "b89004c6882c2534a1a0117f89cb1adeaf93bdff70890fd6294887080c784776",
+      "size_bytes": 4686
+    },
+    {
+      "path": "docs/audits/native-proxy-runtime-acquisition-20260910/ReferenceAcquisition.pm",
+      "sha256": "b751c88d709e102f7f9b9dd17e0222c39e0a81acc16d7194f7f7c3f4c8535b57",
+      "size_bytes": 6565
+    },
+    {
+      "path": "docs/audits/native-proxy-runtime-acquisition-20260910/audit.py",
+      "sha256": "36449fac78d3d073fa404ad5f2df5b29e780cbb5af72f3701d1346defdb90fe5",
+      "size_bytes": 13414
+    },
+    {
+      "path": "docs/audits/native-proxy-runtime-census-20260910/ReferenceCensus.pm",
+      "sha256": "9fd74767e8c10831f2732fa8ad426b7e4fff8c17bab06584aa671cdd013b6247",
+      "size_bytes": 8024
+    },
+    {
+      "path": "docs/audits/native-proxy-runtime-census-20260910/audit.py",
+      "sha256": "4602141d655ed33c00e44417e64254937bfdac8863a24e44971c2159f900a13b",
+      "size_bytes": 10090
+    },
+    {
+      "path": "docs/audits/native-proxy-runtime-records-20260910/RuntimeRecord.pm",
+      "sha256": "013c0a02e7df59dc3a5af944b603cd44121252a02ca0228d6fdc3e1dd28e6745",
+      "size_bytes": 4078
+    },
+    {
+      "path": "docs/audits/native-proxy-runtime-records-20260910/audit.py",
+      "sha256": "ece89eeb01cdd6e5b6c48a8e124bd4a4bde4e30f1bc53745d9ac2109748f0c83",
+      "size_bytes": 9573
+    },
+    {
+      "path": "docs/audits/native-proxy-runtime-records-20260910/vectors.json",
+      "sha256": "8bec68fae5049ff6d951931cb98b895dc711394127f767411bf9550edfb5b166",
+      "size_bytes": 13777
+    },
+    {
+      "path": "docs/audits/native-proxy-runtime-retirement-20260910/PrivateWorkspace.pm",
+      "sha256": "fb87393846eb10147f868aa40ba444f5e5d56cef7f0aaf6a1ff295216a90e9c1",
+      "size_bytes": 6080
+    },
+    {
+      "path": "docs/audits/native-proxy-runtime-retirement-20260910/RuntimeRetirement.pm",
+      "sha256": "766348d16243d3868ca5f8b653f757f8f2eaf5c1aba8ec27fd2d9c67e9fd0bcc",
+      "size_bytes": 8727
+    },
+    {
+      "path": "docs/audits/native-proxy-snapshot-occurrence-20260911/audit.py",
+      "sha256": "480d6c999df0a658fecbacac0acdae5bf2cb8e7c8b528cb7a6fdd769b2677fa7",
+      "size_bytes": 18121
+    },
+    {
+      "path": "docs/audits/native-proxy-snapshot-occurrence-20260911/plan.json",
+      "sha256": "624ae1f77fdfd63cc1d6193c9adac3b7a27dedcd016173a4d18a15b7f76d451e",
+      "size_bytes": 38350
+    },
+    {
+      "path": "docs/audits/native-proxy-snapshot-occurrence-20260911/plan.py",
+      "sha256": "14796e94416c91e6c80e91df5ed66595b0d62d13e93db42281c57559b7eee2f1",
+      "size_bytes": 5036
+    },
+    {
+      "path": "docs/audits/native-proxy-snapshot-occurrence-20260911/qualify.t",
+      "sha256": "d414179274c080562a6a680f73c604c7661f562c8459f453c8e1dd0d45d9fcbc",
+      "size_bytes": 19834
+    },
+    {
+      "path": "perl/FSM/ProjectDataLocality.pm",
+      "sha256": "14aece4a50b35956bc2585099aa8d26753942288663c641922da9d36ad4bc893",
+      "size_bytes": 6017
+    },
+    {
+      "path": "perl/FSM/Support/ProcessSupervisor.pm",
+      "sha256": "684882d91f673ea7145f43ed3aad31acf099f13508574be7b2d8911123988637",
+      "size_bytes": 27990
+    },
+    {
+      "path": "t/lib/FSM/Test/ProcessSupervisor.pm",
+      "sha256": "52e467023ea8a776167e227a767abdd3dddf185f1f7c539aac8ca1c4a0a06680",
+      "size_bytes": 773
+    },
+    {
+      "path": "t/lib/FSM/Test/RustProxyFixture.pm",
+      "sha256": "d9c4ab52cf8074526c59b7a5dcb9da870ca7ffdacb4eb236dacb23b5db6d8bfb",
+      "size_bytes": 11466
+    }
+  ]
+}

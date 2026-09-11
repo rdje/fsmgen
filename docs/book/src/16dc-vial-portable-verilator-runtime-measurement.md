@@ -1654,9 +1654,9 @@ frozen; new native preparation and source locations need versioned support.
 An inactive prototype now qualifies content keys, canonical manifests and
 descriptor snapshots in isolated inert directories. Changed bytes, permissions,
 links and replacement inodes reject. It returns source evidence without
-authorizing execution. Runtime/observation references, contention,
-maintenance and native behavior remain unimplemented or unqualified under
-`.15.7.3.12.4`; product reuse remains inactive. Replay the inert custody checks
+authorizing execution. Inactive runtime/observation references and maintenance
+are qualified in the stages below. Actual contention and native behavior remain
+unqualified under `.15.7.3.12.4`; product reuse remains inactive. Replay the inert custody checks
 from the repository root:
 
 ```bash
@@ -1689,9 +1689,9 @@ bytes. A first publication reports `created: 1`; exact reuse reports `created: 0
 with the same source inodes. Both keep `runtime_authorized: 0` and
 `executable: null`. Interrupted, incomplete, colliding or replaced objects fail
 without repair or retry. Failure after sealing can leave a sealed file on disk;
-its presence grants no runtime authority. Runtime-reference acquisition remains
-the next qualification step, and the product builder still prepares private
-fixtures as described above.
+its presence grants no runtime authority. Runtime-reference acquisition is
+qualified below; the product builder still prepares private fixtures as
+described above.
 
 The inactive observation-key codec now checks native-birth field count and
 membership explicitly. A key named `ppid,ruid` cannot substitute for the
@@ -1734,8 +1734,8 @@ inodes and exact record bytes. Workspace/bin replacement or changes to earlier
 references and images fail. An interrupted or incomplete acquisition retains
 uncertain global references; it cannot silently repair or reacquire them.
 Even complete inactive results keep `runtime_authorized: 0` and
-`executable: null`. Observer lifetimes, retirement, maintenance, actual
-contention and native behavior remain separate qualification steps. Replay:
+`executable: null`. Inactive retirement and maintenance qualify below; complete
+observer lifetimes, actual contention and native behavior remain open. Replay:
 
 ```bash
 scripts/run_with_ram_guard.sh -- perl docs/audits/native-proxy-runtime-acquisition-20260910/qualify.t
@@ -1810,8 +1810,8 @@ not evidence of actual file sizes or valid processes. Independent vectors cover
 Unicode paths, birth changes and ordering, and the exact record boundary.
 Malformed records and runtime/observation cross-substitutions reject. The
 existing runtime format remains unchanged. No hold is acquired or released by
-encoding a record; snapshot custody, settlement and capture version compatibility
-remain separate qualification steps. Replay:
+encoding a record. Snapshot custody qualifies below; settlement and capture
+version compatibility remain separate qualification steps. Replay:
 
 ```bash
 scripts/run_with_ram_guard.sh -- perl docs/audits/native-proxy-observation-records-20260910/qualify.t
@@ -1847,8 +1847,9 @@ canonical source pair. Acquisition checks directory and source identities
 again, closes retained descriptors on success and failure, and preserves other
 owners. Missing coordination, changed files, mismatched records and exhausted
 reference capacity reject. A hold published before a later failure remains
-for separately owned recovery. Fresh acquisition rejects existing holds;
-interruption closure, archive settlement and exact release remain separate gates.
+for separately owned recovery. Fresh acquisition rejects existing holds. Stable
+reuse and finite interruption closure qualify below; archive settlement and
+exact release remain separate gates.
 
 This is storage qualification with inert files and synthetic birth records.
 It does not authenticate a process, run capture or activate the product path.
@@ -1887,7 +1888,7 @@ The handoff controls retain references to actual handles so scope cleanup cannot
 hide an omitted close. They cover empty and partial writes, competing close
 errors and deliberate omitted-close controls. This qualifies explicit cleanup
 at these inactive boundaries; it does not establish an ordinary runtime leak
-or replace the remaining observation interruption matrix. Replay:
+or replace the broader observation interruption matrix qualified below. Replay:
 
 ```bash
 scripts/run_with_ram_guard.sh -- perl docs/audits/native-proxy-descriptor-handoff-20260910/qualify.t --qualification
@@ -1913,7 +1914,7 @@ workspace contents, and per-path counts for every returned source descriptor,
 writer and lock. Retained handle aliases expose deliberately omitted closes;
 the test observer recovers those handles before removing its exact fixtures.
 These are synchronous function-boundary cuts with inert files, not proof of
-real crash recovery. Coordinator failures, archive settlement,
+real crash recovery. Coordinator failures qualify below; archive settlement,
 release and native ownership remain separately owned. Replay:
 
 ```bash
@@ -1951,7 +1952,7 @@ rejects the listing.
 The controls inject read and close reports while observing actual directory
 handles and unchanged file contents. Retained aliases expose omitted cleanup;
 they do not establish a leak during ordinary lexical cleanup or a complete
-acquisition bypass. The coordinator/census interruption matrix remains open.
+acquisition bypass. The coordinator/census interruption matrix qualifies below.
 Replay the repaired qualification with:
 
 ```bash
@@ -1983,8 +1984,8 @@ unchanged throughout.
 The oracle checks each executed call prefix and every returned source, writer,
 lock and directory descriptor. Deliberately omitted closes expose actual open
 handles before observer recovery. These are synchronous call-boundary controls;
-semantic-census internal faults, target/lock close reports, crash durability and
-native ownership remain separately owned. Replay:
+selected semantic-census faults and target/lock close reports qualify below.
+Crash durability and native ownership remain separately owned. Replay:
 
 ```bash
 scripts/run_with_ram_guard.sh -- perl docs/audits/native-proxy-observation-coordinator-cuts-20260911/qualify.t
@@ -2024,9 +2025,9 @@ The audit binds each close to its actual read occurrence, checks closure before
 the modeled error return, and verifies conservative holds and other owners.
 Separate omitted-close controls leave an actual handle open for detection and
 observer recovery. These synchronous reports do not establish operating-system
-close ambiguity or crash behavior. Target-source and permanent-lock close
-reports, native ownership, archive settlement and release remain separately
-owned. Replay:
+close ambiguity or crash behavior. Target-source and permanent-lock reports
+qualify below. Native ownership, archive settlement and release remain
+separately owned. Replay:
 
 ```bash
 scripts/run_with_ram_guard.sh -- perl docs/audits/native-proxy-observation-semantic-close-20260911/qualify.t
@@ -2044,12 +2045,36 @@ while closing retained targets and the lock. A failed prepublication source
 reread leaves no new hold; its error remains primary even if later target or
 lock closes also report errors. Every modeled report follows an actual close;
 separate omitted-close controls prove that an open handle is detected and
-recovered. The final join of all acquisition matrices remains separately owned.
+recovered. The combined acquisition audit below joins these controls.
 Replay:
 
 ```bash
 scripts/run_with_ram_guard.sh -- perl docs/audits/native-proxy-observation-remaining-close-20260911/qualify.t
 python3 -B docs/audits/native-proxy-observation-remaining-close-20260911/audit.py
+```
+
+The complete declared inert acquisition matrix is now joined across fresh
+acquisition, stable reuse, failed handoffs, corrected snapshot occurrences,
+publication, directory readers, coordinator/census calls and close reports.
+Saved receipts are authenticated against their committed manifests, then
+checked by the original independent oracles. Current source applicability is
+verified separately: older results admit only the precisely qualified
+directory-reader replacements, with every other source byte unchanged.
+
+Case names belong to their matrix. For example, `fresh:complete` in the
+snapshot and publication matrices represents separate fixtures. Within a
+matrix, case IDs and called occurrences must be unique, and every declared
+selector must have its record. The older aliased snapshot matrix remains
+historical evidence; the corrected matrix supplies occurrence coverage.
+
+This closes the finite acquisition contract. It does not qualify every syscall
+or aggregate-reader internal failure, asynchronous crashes, native ownership,
+archive/capture settlement, exact release or product activation. The audit
+reads saved evidence without rerunning fixtures; replay from the repo root:
+
+```bash
+scripts/run_with_ram_guard.sh -- python3 -B docs/audits/native-proxy-observation-acquisition-join-20260911/audit.py
+scripts/run_with_ram_guard.sh -- python3 -B docs/audits/native-proxy-observation-acquisition-join-20260911/closure.py
 ```
 
 The helper checks bounded regular source/output files and the native header,

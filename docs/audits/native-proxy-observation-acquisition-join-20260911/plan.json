@@ -1,0 +1,192 @@
+{
+  "admitted_function_changes": [
+    {
+      "function": "_names",
+      "path": "docs/audits/native-proxy-image-coordination-20260910/Coordination.pm",
+      "witness": "namespace"
+    },
+    {
+      "function": "_members",
+      "path": "docs/audits/native-proxy-image-custody-20260910/ImageCustody.pm",
+      "witness": "members"
+    }
+  ],
+  "applicability": "Compare each producer/oracle/plan and its reachable local Python dependencies at the receipt epoch with current files. Compare the complete declared Perl source set at each epoch. Only the explicitly qualified _names and _members replacements may differ, with unchanged outside-function bytes and exact current replacement witnesses. Reject unexplained changes or missing local dependencies; do not infer operating-system or native loaded-image attestation.",
+  "components": [
+    {
+      "files": [
+        "qualification.json",
+        "admission.jsonl",
+        "qualify.tap",
+        "qualify.stderr",
+        "rows.jsonl",
+        "progress.json"
+      ],
+      "kind": "snapshot",
+      "manifest": "docs/audits/native-proxy-snapshot-occurrence-20260911/result/recovery-copies.json",
+      "name": "snapshot",
+      "receipt": "docs/audits/native-proxy-snapshot-occurrence-20260911/result",
+      "source": "docs/audits/native-proxy-snapshot-occurrence-20260911",
+      "source_epoch": "b2e382b393784ea6b0bf48c3345fa05a919dff97"
+    },
+    {
+      "files": [
+        "qualification.json",
+        "admission.jsonl",
+        "qualify.tap",
+        "qualify.stderr",
+        "rows.jsonl",
+        "progress.json"
+      ],
+      "kind": "publication",
+      "manifest": "docs/audits/native-proxy-observation-publication-cuts-20260910/result/recovery-copies.json",
+      "name": "publication",
+      "receipt": "docs/audits/native-proxy-observation-publication-cuts-20260910/result",
+      "source": "docs/audits/native-proxy-observation-publication-cuts-20260910",
+      "source_epoch": "295d186656a5d517894c1bdbd550b0633d2b2fc4"
+    },
+    {
+      "files": [
+        "qualification.json",
+        "admission.jsonl",
+        "qualify.tap",
+        "qualify.stderr",
+        "rows.jsonl",
+        "progress.json"
+      ],
+      "kind": "coordinator",
+      "manifest": "docs/audits/native-proxy-observation-coordinator-cuts-20260911/result/recovery-copies.json",
+      "name": "coordinator",
+      "receipt": "docs/audits/native-proxy-observation-coordinator-cuts-20260911/result",
+      "source": "docs/audits/native-proxy-observation-coordinator-cuts-20260911",
+      "source_epoch": "c2bd1d2aa7e78a85571d34fc36cdcc02fe0485dd"
+    },
+    {
+      "files": [
+        "qualification.json",
+        "admission.jsonl",
+        "qualify.tap",
+        "qualify.stderr",
+        "rows.jsonl",
+        "progress.json"
+      ],
+      "kind": "semantic_calls",
+      "manifest": "docs/audits/native-proxy-observation-semantic-cuts-20260911/result/recovery-copies.json",
+      "name": "semantic_calls",
+      "receipt": "docs/audits/native-proxy-observation-semantic-cuts-20260911/result",
+      "source": "docs/audits/native-proxy-observation-semantic-cuts-20260911",
+      "source_epoch": "829df81b7df7cc2a8f61e740b67655db8093ea40"
+    },
+    {
+      "files": [
+        "qualification.json",
+        "admission.jsonl",
+        "qualify.tap",
+        "qualify.stderr",
+        "rows.jsonl",
+        "progress.json"
+      ],
+      "kind": "semantic_close",
+      "manifest": "docs/audits/native-proxy-observation-semantic-close-20260911/result/recovery-copies.json",
+      "name": "semantic_close",
+      "receipt": "docs/audits/native-proxy-observation-semantic-close-20260911/result",
+      "source": "docs/audits/native-proxy-observation-semantic-close-20260911",
+      "source_epoch": "407851bf7b30d4977dd49518fc2d350c4269d02e"
+    },
+    {
+      "files": [
+        "qualification.json",
+        "admission.jsonl",
+        "qualify.tap",
+        "qualify.stderr",
+        "rows.jsonl",
+        "progress.json"
+      ],
+      "kind": "remaining_close",
+      "manifest": "docs/audits/native-proxy-observation-remaining-close-20260911/result/recovery-copies.json",
+      "name": "remaining_close",
+      "receipt": "docs/audits/native-proxy-observation-remaining-close-20260911/result",
+      "source": "docs/audits/native-proxy-observation-remaining-close-20260911",
+      "source_epoch": "25e463466e052bb7417f860723c38e2c8c43c6f0"
+    },
+    {
+      "files": [
+        "qualification.json",
+        "qualification-admission.jsonl",
+        "qualification.tap",
+        "qualification.stderr"
+      ],
+      "kind": "directory",
+      "manifest": "docs/audits/native-proxy-namespace-reader-20260911/result/recovery-copies.json",
+      "name": "namespace",
+      "receipt": "docs/audits/native-proxy-namespace-reader-20260911/result",
+      "source": "docs/audits/native-proxy-namespace-reader-20260911",
+      "source_epoch": "fa9f92d53a65ce8f6b259b0ef48e657be046f2cd"
+    },
+    {
+      "files": [
+        "qualification.json",
+        "qualification-admission.jsonl",
+        "qualification.tap",
+        "qualification.stderr"
+      ],
+      "kind": "directory",
+      "manifest": "docs/audits/native-proxy-image-members-20260911/result/recovery-copies.json",
+      "name": "members",
+      "receipt": "docs/audits/native-proxy-image-members-20260911/result",
+      "source": "docs/audits/native-proxy-image-members-20260911",
+      "source_epoch": "f7fb1d0272266e5d6117023c1e9e8496622bedd0"
+    },
+    {
+      "files": [
+        "qualification.json",
+        "qualification-admission.jsonl",
+        "qualification.tap",
+        "qualification.stderr"
+      ],
+      "kind": "handoff",
+      "manifest": "docs/audits/native-proxy-descriptor-handoff-20260910/result/recovery-copies.json",
+      "name": "handoff",
+      "receipt": "docs/audits/native-proxy-descriptor-handoff-20260910/result",
+      "source": "docs/audits/native-proxy-descriptor-handoff-20260910",
+      "source_epoch": "730b8b3a2bb1e918d24a03d23a19b0066d159508"
+    },
+    {
+      "files": [
+        "qualification.json",
+        "admission.jsonl",
+        "qualify.tap",
+        "qualify.stderr",
+        "execution.json"
+      ],
+      "kind": "fresh",
+      "manifest": "docs/audits/native-proxy-observation-snapshot-cuts-20260910/result/recovery-copies.json",
+      "name": "fresh",
+      "receipt": "docs/audits/native-proxy-observation-snapshot-cuts-20260910/result/fresh-regression",
+      "source": "docs/audits/native-proxy-observation-acquisition-20260910",
+      "source_epoch": "5bb1b2366cc652416283d8959d12a9d44616498c"
+    },
+    {
+      "files": [
+        "qualification.json",
+        "admission.jsonl",
+        "qualify.tap",
+        "qualify.stderr",
+        "execution.json"
+      ],
+      "kind": "reuse",
+      "manifest": "docs/audits/native-proxy-observation-snapshot-cuts-20260910/result/recovery-copies.json",
+      "name": "reuse",
+      "receipt": "docs/audits/native-proxy-observation-snapshot-cuts-20260910/result/reuse-regression",
+      "source": "docs/audits/native-proxy-observation-reuse-20260910",
+      "source_epoch": "5bb1b2366cc652416283d8959d12a9d44616498c"
+    }
+  ],
+  "coverage": "Each component is a separate selector namespace. Require globally unique case IDs within each component, exact planned-to-recorded case coverage, unique route events for the called-boundary matrices and complete single-close coverage for every selected semantic/remaining close site. Semantic role ordering remains independently bound per recorded fixture; do not claim the order Cartesian product.",
+  "execution": "Read-only authentication and independent oracle replay over tracked receipts. Write only repository-local join reports. No fixture allocation, native query/process, compiler, original capture/helper rerun, retry, archive/release or activation.",
+  "historical": "The aliased historical snapshot matrix is not an active coverage component. Its authenticated occurrence diagnosis and versioned correction remain authoritative. Baseline/earlier failed evidence stays preserved; no old fixture is rerun.",
+  "limits": "Finite declared inert acquisition contract. Every syscall and aggregate-reader internal failure, asynchronous crashes, arbitrary-writer atomicity, actual ownership/transport/compiler profiles, archive/capture settlement, exact observation release, native contention, compatibility and product activation remain outside this join.",
+  "owner": "HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.12.4.1.3.3.2.2.2.2.3.2",
+  "schema": "fsmgen.inactive_observation_acquisition_join_plan.v1",
+  "source_revision": "25e463466e052bb7417f860723c38e2c8c43c6f0"
+}

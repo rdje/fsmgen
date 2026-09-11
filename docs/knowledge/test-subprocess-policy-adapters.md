@@ -27,6 +27,7 @@ answers:
   - "how do census close errors preserve the primary failure?"
   - "why must snapshot cut selectors identify unique occurrences?"
   - "which remaining acquisition close reports are qualified?"
+  - "how is the complete inactive acquisition matrix joined?"
   - "why did integrated proxy qualification fail?"
   - "why does t1545 not use IPC Cmd?"
   - "where does T1545 preserve empty-output checker failure diagnostics?"
@@ -96,19 +97,18 @@ Owned child-group and cleanup controls: history.
 Post-KILL cleanup and blocking-wait controls: history.
 `VerilatorRuntime` follows decision `0086`.
 `TaskAcceptanceFixtureRuntime` seals owned fixture roots/fixed local Git argv.
-Git/checker bounds and schema: history.
-Darwin env/direct-Bash startup and locality controls: history.
-T1545 controls: historical card; absent witnesses stay unknown.
+Git/checker, Darwin locality and T1545 controls: history; absent witnesses stay unknown.
 Historical startup/capture and STOP limits: task/book/history.
 T1669 locality/census error policy and changed field (.3.2.11): history.
-History: `b2e382b393784ea6b0bf48c3345fa05a919dff97:docs/knowledge/test-subprocess-policy-adapters.md`.
+History: `25e463466e052bb7417f860723c38e2c8c43c6f0:docs/knowledge/test-subprocess-policy-adapters.md`.
 PST parsing normalizes 1–16 lowercase hex digits; malformed fields and contradictions reject.
 Serial queue contention is supported; causal/native limits and controls: history.
 Fixed CLI contracts/limits: history.
 Records, holds, byte flags, publication, enumeration and coordinator/semantic custody: history.
 Census reports follow actual close; all-owned cleanup and primary/first-error controls: history.
 Snapshot cuts need unique event/case IDs; legacy aliases missed four later checks. Correction/substitution controls: history.
-Remaining target, temporary source/hold, structural reference and lock close reports preserve primary errors and conservative holds. Exact occurrence/cleanup controls: `docs/audits/native-proxy-observation-remaining-close-20260911/audit.py`. Final acquisition/native joins stay open.
+Remaining source/hold/census/lock close reports: history.
+Finite acquisition joins authenticated matrix-local domains and exact source epochs in `docs/audits/native-proxy-observation-acquisition-join-20260911/audit.py`; qualified directory repairs are explicit exceptions. Native/lifetime work remains open.
 Caller-sealed test wrappers use tail goto to preserve caller.
 Replay: `scripts/run_with_ram_guard.sh -- python3 -B -m unittest discover -s t/python -p 'test_fixture_policy_archive*.py'`.
 T1595 pre-main cause open; `.19.2.3.1.2.2.6.2` fixes capture.

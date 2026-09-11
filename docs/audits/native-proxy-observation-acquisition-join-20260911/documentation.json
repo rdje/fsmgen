@@ -1,0 +1,24 @@
+{
+  "book_after": {
+    "bytes_total": 3299016,
+    "files": 63,
+    "lines_total": 60254
+  },
+  "book_before": {
+    "bytes_total": 3297450,
+    "files": 63,
+    "lines_total": 60229
+  },
+  "first_book_render": {
+    "bytes": 23190760,
+    "exit_code": 0,
+    "files": 98,
+    "new_passage_verified": true,
+    "reason_for_rebuild": "Synchronize earlier prerequisite paragraphs that still described now-qualified inactive stages as future work."
+  },
+  "knowledge_after": 3492402,
+  "knowledge_allowance": 3492424,
+  "knowledge_before": 3492394,
+  "preparation_recovery": "Initial one-off doc preparation stopped with KeyError: surface_id on the registry metadata header after task/index/Memory/book writes and before registry/card writes. Select the unique shipped_behavior row with row.get, derive HEAD book totals again, and preflight the Knowledge Map aggregate before committing either registry/card update. The failed tool exit was 1; this is a descriptive recovery record, not a fabricated raw transcript.",
+  "task_lines": 6399
+}

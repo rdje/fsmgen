@@ -1,0 +1,9 @@
+ram-guard: PID 67600; host 58.9%; host cutoff 88%; descendant RSS cutoff 4096 MiB; poll 2s
+Traceback (most recent call last):
+  File "/Volumes/SSD/Documents/github/fsmgen/docs/audits/native-proxy-observation-acquisition-join-20260911/closure.py", line 69, in <module>
+    main()
+    ~~~~^^
+  File "/Volumes/SSD/Documents/github/fsmgen/docs/audits/native-proxy-observation-acquisition-join-20260911/closure.py", line 53, in main
+    assert mode == stat.S_IMODE((ROOT/row['destination']).stat().st_mode)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError

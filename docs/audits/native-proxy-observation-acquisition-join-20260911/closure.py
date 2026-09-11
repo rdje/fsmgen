@@ -1,0 +1,82 @@
+"""Check retained ignored outputs and unchanged predecessor/source custody."""
+from __future__ import annotations
+
+import json
+import re
+import stat
+
+from applicability import historical
+from audit import check_pin
+from inventory import BASE, ROOT, LOG, direct_bytes, pin
+
+
+def main():
+    plan = json.loads((BASE/'plan.json').read_bytes())
+    report = json.loads((LOG/'audit.json').read_bytes())
+    assert report['success'] is True and (LOG/'audit.exit').read_text() == '0\n'
+    prospective = json.loads((LOG/'preflight-pins.json').read_bytes())
+    for row in prospective:
+        check_pin(direct_bytes(row['path']), row)
+    previous_path = 'docs/audits/native-proxy-observation-remaining-close-20260911/result/preflight-pins.json'
+    previous_raw = direct_bytes(previous_path)
+    assert previous_raw == historical(plan['source_revision'], previous_path)
+    previous = json.loads(previous_raw)
+    for row in previous:
+        raw = direct_bytes(row['path'])
+        check_pin(raw, row)
+        assert raw == historical(plan['source_revision'], row['path'])
+
+    sources = {row['source'] for row in plan['components']}
+    sources.add('docs/audits/native-proxy-observation-snapshot-cuts-20260910')
+    ignored = []
+    names = {'qualification.json', 'admission.jsonl', 'qualification-admission.jsonl',
+             'rows.jsonl', 'progress.json'}
+    for source in sorted(sources):
+        manifest_path = source+'/result/recovery-copies.json'
+        raw = direct_bytes(manifest_path)
+        assert raw == historical(plan['source_revision'], manifest_path)
+        manifest = json.loads(raw)
+        producer_path = source+'/qualify.t'
+        producer = direct_bytes(producer_path)
+        assert producer == historical(plan['source_revision'], producer_path)
+        prefix = source.replace('docs/audits/', '.artifacts/logs/')+'/'
+        selected = [row for row in manifest['files'] if row['source'].startswith(prefix)
+                    and row['source'][len(prefix):] in names]
+        expected = names-{'qualification-admission.jsonl'} if any(
+            row['source'] == prefix+'rows.jsonl' for row in selected) else (
+            {'qualification.json', 'qualification-admission.jsonl'} if any(
+                row['source'] == prefix+'qualification-admission.jsonl' for row in selected)
+            else {'qualification.json', 'admission.jsonl'})
+        assert {row['source'][len(prefix):] for row in selected} == expected
+        for row in selected:
+            archived = direct_bytes(row['destination'])
+            check_pin(archived, row)
+            current = direct_bytes(row['source'])
+            assert current == archived
+            mode = stat.S_IMODE((ROOT/row['source']).stat().st_mode)
+            # Recovery manifests promise bytes, not archive-copy permissions.
+            # The producer explicitly creates these private outputs as 0600.
+            assert mode == 0o600
+            output = row['source'][len(prefix):]
+            spelling = output.replace('qualification', '$phase') if 'qualification-admission.jsonl' in expected else output
+            writers = [dict(line=i, text=line.strip())
+                       for i,line in enumerate(producer.decode().splitlines(), 1)
+                       if re.search(r'write_bytes\("\$log/'+re.escape(spelling)+r'",.* 0600\);', line)]
+            assert len(writers) == 1
+            ignored.append(dict(**pin(row['source']), mode=mode,
+                                canonical_copy=row['destination'],
+                                mode_authority=dict(path=producer_path, **writers[0])))
+    assert len(ignored) == len({row['path'] for row in ignored})
+    output = dict(schema='fsmgen.inactive_observation_acquisition_join_closure.v1',
+        success=True, prospective_join_inputs_unchanged=len(prospective),
+        predecessor_inputs_unchanged=len(previous),
+        ignored_outputs_equal_committed_bytes_with_declared_private_modes=ignored,
+        audit=pin(str((LOG/'audit.json').relative_to(ROOT))),
+        limits='This read-only closure compares current ignored result/ledger/journal bytes with their committed original copies and checks private modes against the explicit producer writes. Archive-copy permissions are not runtime-mode authority. The historical snapshot output is included for preservation only. The join invoked validators with tracked receipt directories and wrote only its own reports; it did not rerun a producer or restore any ignored output. Original inventory tool exit status remains unavailable; its complete report was independently rederived by the successful join. No native or lifetime qualification is added.')
+    (LOG/'closure.json').write_text(json.dumps(output, indent=2, sort_keys=True)+'\n')
+    print(json.dumps(dict(success=True, prospective_inputs=len(prospective),
+                         predecessor_inputs=len(previous), ignored_outputs=len(ignored)), sort_keys=True))
+
+
+if __name__ == '__main__':
+    main()

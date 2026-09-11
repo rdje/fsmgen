@@ -1,0 +1,12 @@
+{
+  "durability": "Four exact initial source/output/status copies plus the corrected checker and complete closure receipt.",
+  "falsification": "The preserved initial check demonstrates that archival 0644 cannot substitute for declared runtime 0600. Original join falsifiers separately reject changed receipt bytes and hashes.",
+  "first_failure": "result/initial-preservation-check/closure.stderr",
+  "limits": "The initial source-inventory tool exit status was lost; its output/report survived, its recorded supervisor PID was absent, and the successful main join independently regenerated and compared the full inventory. No invented successful original status.",
+  "owner": "HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.12.4.1.3.3.2.2.2.2.3.2",
+  "rederivation": "closure.json contains all thirty-eight root-relative paths, exact byte hashes, observed modes and producer lines; corrected closure exits zero.",
+  "repair": "Keep exact byte/hash comparisons to authenticated recovery copies; derive private output mode from each committed producer write. Record the exact source line and observed mode. No permissions are rewritten.",
+  "root_cause": "The new closure check compared private runtime output modes with recovery-copy modes. Recovery manifests promise bytes and hashes, not matching filesystem permissions. All thirty-eight runtime outputs are 0600 as explicitly created by their committed producers; copied evidence files are 0644. No runtime-output mode or byte was changed.",
+  "schema": "fsmgen.acquisition_join_preservation_check_recovery.v1",
+  "status": "corrected_and_verified"
+}

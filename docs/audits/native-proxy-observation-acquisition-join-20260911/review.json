@@ -1,0 +1,32 @@
+{
+  "book": {
+    "exact_output_absent": true,
+    "exit_code": 0,
+    "new_passage_and_prerequisite_status_verified": true,
+    "rendered_bytes": 23191072,
+    "rendered_files": 98,
+    "same_volume_direct_objects": true
+  },
+  "counts": {
+    "assertions": 2165,
+    "components": 11,
+    "contexts": 1077,
+    "disjoint_absent_roots": 4173
+  },
+  "doctrines": {
+    "acceptance": "fresh evidence-backed acceptance (root=git_history, no-regression=knowledge_map)",
+    "commit_hook": "Required on the final staged content; commit success is contingent on its completion.",
+    "staged_exit_code": 0,
+    "staged_result": "[doctrine] all doctrine checks passed"
+  },
+  "documentation": "documentation.json preserves exact HEAD/current book aggregates and bounded Knowledge Map projection, plus the recovered metadata-header selection error.",
+  "durability": "Five main-join inputs were pinned prospectively. All 63 predecessor inputs remain byte-exact; 38 ignored runtime outputs match committed original bytes and producer-declared private modes without a fixture rerun, output rewrite or restoration. Sixteen exact new recovery copies include the failed preservation-check source/output/status. Task, Knowledge Map and mdBook carry the finite scope; the exact old snapshot remains historical, not active occurrence coverage.",
+  "falsification": "Forty-six join controls reject lost/duplicate cases and selectors, old snapshot aliases, unqualified sources, wrong epochs, missing/changed receipts and false assertion/resource totals or cleanup absence. Existing per-component strict actual-handle mutants are revalidated by their own original oracles.",
+  "limits": "Finite declared inert acquisition contract. Every syscall and aggregate-reader internal failure, asynchronous crashes, arbitrary-writer atomicity, actual ownership/transport/compiler profiles, archive/capture settlement, exact observation release, native contention, compatibility and product activation remain outside this join.",
+  "owner": "HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.12.4.1.3.3.2.2.2.2.3.2",
+  "preservation_check_recovery": "recovery.json",
+  "rederivation": "Authenticate 58 receipts against exact committed manifests; run each original independent oracle over tracked receipts; prove exact matrix-local case domains, unique call occurrences and complete selected single-close sites. Compare 69 distinct local source inputs across 350 component/epoch combinations. Only nine component-specific occurrences of two explicitly qualified function replacements differ; all outside-function bytes remain exact.",
+  "schema": "fsmgen.inactive_observation_acquisition_join_review.v1",
+  "source_inventory_recovery": "Initial inventory completion output and complete report survived; original tool exit status unavailable. Recorded supervisor PID was absent. This completed join independently regenerated and compared the entire inventory.",
+  "source_revision": "25e463466e052bb7417f860723c38e2c8c43c6f0"
+}

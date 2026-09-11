@@ -2603,11 +2603,11 @@ decomposes the architecture needed to move beyond that bounded foundation.
   Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.12.4.1.3.2: qualify combined runtime and observation census`
 
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.12.4.1.3.3`
-  Status: `active`
+  Status: `done`
   Goal: `Qualify coordinated observation acquisition and retained source snapshots.`
   Acceptance: `Acquire one stable hold per evidence directory, observer birth and target birth. Under bounded coordination validate runtime references/image, capture wrapper/reference/C/image bytes and identities, and publish the separate hold before returning custody. Reuse requires exact existing ownership; reject capacity, mutation and partial publication. No command query or subprocess under the lock.`
-  Verification: `Fresh acquisition and stable reuse/interruption closure are separate bounded children. Storage custody does not authenticate caller-supplied process births; native rechecks and capture remain outside coordination and under later owners.`
-  Commit: `pending`
+  Verification: `All owned acquisition children qualify. Final .12.4.1.3.3.2.2.2.2.3.2 join authenticates the complete declared finite matrix, exact source applicability, corrected occurrence domains, actual descriptor/hold evidence and disjoint absent rosters. See docs/audits/native-proxy-observation-acquisition-join-20260911/result/audit.json and closure.json. This closes the admitted inert acquisition contract; native/asynchronous behavior, archive/capture settlement and exact release remain separately owned.`
+  Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.12.4.1.3.3.2.2.2.2.3.2: join finite acquisition qualification`
   Children: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.12.4.1.3.3.1, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.12.4.1.3.3.2`
 
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.12.4.1.3.3.1`
@@ -2618,11 +2618,11 @@ decomposes the architecture needed to move beyond that bounded foundation.
   Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.12.4.1.3.3.1: qualify fresh observation acquisition`
 
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.12.4.1.3.3.2`
-  Status: `active`
+  Status: `done`
   Goal: `Qualify stable observation reuse and every acquisition interruption boundary.`
   Acceptance: `Repeated requests for the same evidence directory and observer/target births reuse only the exact previously acquired record and retained custody; changing ownership/content rejects without overwrite. Keep hold metadata outside strict target snapshots, exercise partial publication and every snapshot/closure interruption/replacement boundary, preserve other owners and record conservative failed state. No automatic retry, release, native query or product activation.`
-  Verification: `Stable reuse and full acquisition interruption closure are separate commit-sized children; both remain inactive filesystem qualification.`
-  Commit: `pending`
+  Verification: `All owned acquisition children qualify. Final .12.4.1.3.3.2.2.2.2.3.2 join authenticates the complete declared finite matrix, exact source applicability, corrected occurrence domains, actual descriptor/hold evidence and disjoint absent rosters. See docs/audits/native-proxy-observation-acquisition-join-20260911/result/audit.json and closure.json. This closes the admitted inert acquisition contract; native/asynchronous behavior, archive/capture settlement and exact release remain separately owned.`
+  Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.12.4.1.3.3.2.2.2.2.3.2: join finite acquisition qualification`
   Children: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.12.4.1.3.3.2.1, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.12.4.1.3.3.2.2`
 
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.12.4.1.3.3.2.1`
@@ -2633,11 +2633,11 @@ decomposes the architecture needed to move beyond that bounded foundation.
   Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.12.4.1.3.3.2.1: qualify stable observation reuse`
 
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.12.4.1.3.3.2.2`
-  Status: `active`
+  Status: `done`
   Goal: `Close fresh and reused observation acquisition interruption boundaries.`
   Acceptance: `Declare the complete finite acquisition source/publication/closure cut matrix before fixture allocation. Exercise partial observation publication and every admitted interruption/replacement boundary for fresh and reused holds, checking exact conservative state, other owners, descriptor cleanup and independent allocation absence. Preserve original fresh/reuse controls, no retry or release, and close the parent only when every required boundary has evidence or a separately owned explicit blocker. No live crash, native query or capture experiment is included.`
-  Verification: `Child .1 qualifies explicit source/writer handoff-failure closure at 730b8b3a2bb1e918d24a03d23a19b0066d159508. Child .2.1 qualifies the declared snapshot cuts with unchanged prototypes; .2.2 remains the frontier for publication/coordinator and close-report boundaries. The complete matrix is still open. The historical reliance on lexical cleanup under retained aliases was not an ordinary runtime-leak claim.`
-  Commit: `pending`
+  Verification: `All owned acquisition children qualify. Final .12.4.1.3.3.2.2.2.2.3.2 join authenticates the complete declared finite matrix, exact source applicability, corrected occurrence domains, actual descriptor/hold evidence and disjoint absent rosters. See docs/audits/native-proxy-observation-acquisition-join-20260911/result/audit.json and closure.json. This closes the admitted inert acquisition contract; native/asynchronous behavior, archive/capture settlement and exact release remain separately owned.`
+  Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.12.4.1.3.3.2.2.2.2.3.2: join finite acquisition qualification`
   Children: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.12.4.1.3.3.2.2.1, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.12.4.1.3.3.2.2.2`
 
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.12.4.1.3.3.2.2.1`
@@ -2648,11 +2648,11 @@ decomposes the architecture needed to move beyond that bounded foundation.
   Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.12.4.1.3.3.2.2.1: close failed descriptor handoffs explicitly`
 
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.12.4.1.3.3.2.2.2`
-  Status: `active`
+  Status: `done`
   Goal: `Qualify the full finite fresh and reused observation acquisition interruption matrix.`
   Acceptance: `After explicit descriptor handoffs qualify, declare and execute all selected source, publication, census, closure and close-report boundaries for fresh and reused holds. Preserve every original owner, exact conservative partial state, complete retained-descriptor disposition and independent allocation absence. No automatic reacquisition, retry, release or native experiment. Close parent acquisition only with the complete declared matrix and unchanged focused regressions.`
-  Verification: `Source/directory snapshot cuts and publication/coordinator closure cuts are separate bounded children. Their prospective union owns the complete admitted finite matrix; neither child alone proves every acquisition interruption. Existing lower handoff controls remain a separate prerequisite, and native/asynchronous crash behavior is excluded.`
-  Commit: `pending`
+  Verification: `All owned acquisition children qualify. Final .12.4.1.3.3.2.2.2.2.3.2 join authenticates the complete declared finite matrix, exact source applicability, corrected occurrence domains, actual descriptor/hold evidence and disjoint absent rosters. See docs/audits/native-proxy-observation-acquisition-join-20260911/result/audit.json and closure.json. This closes the admitted inert acquisition contract; native/asynchronous behavior, archive/capture settlement and exact release remain separately owned.`
+  Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.12.4.1.3.3.2.2.2.2.3.2: join finite acquisition qualification`
   Children: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.12.4.1.3.3.2.2.2.1, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.12.4.1.3.3.2.2.2.2`
 
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.12.4.1.3.3.2.2.2.1`
@@ -2663,11 +2663,11 @@ decomposes the architecture needed to move beyond that bounded foundation.
   Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.12.4.1.3.3.2.2.2.1: qualify observation snapshot interruption cuts`
 
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.12.4.1.3.3.2.2.2.2`
-  Status: `active`
+  Status: `done`
   Goal: `Qualify publication/coordinator cuts and close the combined acquisition matrix.`
   Acceptance: `After snapshot cuts qualify, prospectively enumerate empty/partial/full observation publication failures and structural/semantic census, final store/namespace/lock and close-report boundaries. Verify conservative exact state, every descriptor disposition and preservation of runtime/observation owners on fresh and reused routes. Independently join both matrix children and the handoff/reuse/fresh prerequisites before closing acquisition. No automatic retry/release, real crash or native activation; any discovered defect gets a bounded owned repair before closure.`
-  Verification: `Separate bounded children own canonical publication faults, coordinator/census boundaries, and close-report/final matrix join. The snapshot child already qualifies; no parent acquisition or native closure is claimed before all remaining children complete.`
-  Commit: `pending`
+  Verification: `All owned acquisition children qualify. Final .12.4.1.3.3.2.2.2.2.3.2 join authenticates the complete declared finite matrix, exact source applicability, corrected occurrence domains, actual descriptor/hold evidence and disjoint absent rosters. See docs/audits/native-proxy-observation-acquisition-join-20260911/result/audit.json and closure.json. This closes the admitted inert acquisition contract; native/asynchronous behavior, archive/capture settlement and exact release remain separately owned.`
+  Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.12.4.1.3.3.2.2.2.2.3.2: join finite acquisition qualification`
   Children: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.12.4.1.3.3.2.2.2.2.1, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.12.4.1.3.3.2.2.2.2.2, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.12.4.1.3.3.2.2.2.2.3`
 
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.12.4.1.3.3.2.2.2.2.1`
@@ -2748,11 +2748,11 @@ decomposes the architecture needed to move beyond that bounded foundation.
   Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.12.4.1.3.3.2.2.2.2.2.2.2.2.2: qualify census close reports and error precedence`
 
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.12.4.1.3.3.2.2.2.2.3`
-  Status: `active`
+  Status: `done`
   Goal: `Qualify close-report faults and join the full observation acquisition matrix.`
   Acceptance: `After source, publication and coordinator boundaries close, inject reported retained-target-source and permanent-lock close failures and competing primary errors without relying on lexical destruction; join the already qualified publication reader/writer close-report controls. Independently join all declared matrices and unchanged fresh/reuse/handoff prerequisites, retaining precise limits and exact recovery evidence. Close acquisition only when every admitted boundary, descriptor and conservative hold state is accounted for. Native lifetime/archive/release and activation stay gated.`
-  Verification: `The remaining close-site inventory includes retained observation sources, temporary source-closure rereads, the temporary hold reader, structural census reference reads and the permanent lock. Child .1 qualifies these modeled reports and competing primary/cleanup errors; child .2 independently joins the complete declared acquisition matrix and unchanged prerequisites. Census semantic and publication close reports are already qualified. No native or asynchronous crash expansion.`
-  Commit: `pending`
+  Verification: `All owned acquisition children qualify. Final .12.4.1.3.3.2.2.2.2.3.2 join authenticates the complete declared finite matrix, exact source applicability, corrected occurrence domains, actual descriptor/hold evidence and disjoint absent rosters. See docs/audits/native-proxy-observation-acquisition-join-20260911/result/audit.json and closure.json. This closes the admitted inert acquisition contract; native/asynchronous behavior, archive/capture settlement and exact release remain separately owned.`
+  Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.12.4.1.3.3.2.2.2.2.3.2: join finite acquisition qualification`
 
   Children: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.12.4.1.3.3.2.2.2.2.3.1, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.12.4.1.3.3.2.2.2.2.3.2`
 
@@ -2780,11 +2780,11 @@ decomposes the architecture needed to move beyond that bounded foundation.
   Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.12.4.1.3.3.2.2.2.2.3.1.2: qualify remaining acquisition close reports`
 
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.12.4.1.3.3.2.2.2.2.3.2`
-  Status: `active`
+  Status: `done`
   Goal: `Join the complete declared finite observation acquisition qualification.`
   Acceptance: `After all call and close-report children qualify, authenticate and independently rederive the exact snapshot, publication, coordinator, semantic-call/close and remaining-close matrices plus unchanged fresh/reuse/handoff prerequisites. Prove route-event and case-ID uniqueness and a one-to-one declared/observed selector domain; account for every source and conservative hold, exact ignored-output preservation and disjoint absent rosters. Audit current source and receipt applicability, identify owned gaps instead of overstating every syscall/crash coverage, and close acquisition only when its finite contract is fully evidenced. Native lifetime/archive/release, actual ownership/transport/compiler profiles and activation stay separate.`
-  Verification: `pending`
-  Commit: `pending`
+  Verification: `The complete declared inert acquisition matrix joins eleven independently qualified components: corrected snapshot occurrences, publication, coordinator, semantic calls/closes, remaining closes, namespace/image-member readers, failed handoffs and fresh/reused acquisition. Re-derivation: docs/audits/native-proxy-observation-acquisition-join-20260911/audit.py authenticates 58 tracked receipts against exact committed manifests and reruns each original independent oracle over saved records only. All 1077 matrix-local contexts reconcile with 2165 archived TAP assertions and 4173 disjoint absent allocation roots. Exact planned/recorded case domains, unique route events and every selected pure single-close site are checked; actual per-case semantic ordering is independently bound without claiming the selector-by-order Cartesian product. Sixty-nine distinct local inputs produce 350 component/epoch source comparisons; only nine occurrences of the already qualified _names/_members replacements differ, with exact witness bodies and unchanged outside-function bytes. Falsification: forty-six controls reject missing/duplicate cases/selectors, historical snapshot aliases, unexplained source changes, wrong epochs, missing/altered receipts and false assertion/resource/absence totals. Original strict actual-handle mutants are revalidated by their component oracles. Durability: the plan, source inventory, applicability/domain auditors, closure/review and sixteen exact new recovery copies retain complete evidence. Five prospective join inputs and all 63 predecessor inputs remain unchanged. The closure proves 38 ignored runtime outputs equal committed original bytes and their producer-declared private modes; no producer was rerun and no ignored output was rewritten or restored. Its first check incorrectly used archive-copy permissions as runtime authority; exact failed source/output/status survive, and the corrected check derives explicit 0600 producer writes without changing any permissions. The initial inventory tool exit status was lost; complete output/report and absent supervisor PID survived, and the successful main join independently regenerated the whole inventory. The authentic historical snapshot remains explicitly limited; corrected occurrences supply active coverage. Book and Knowledge Map synchronization, task/history integrity and staged/commit doctrine gates complete continuity. This closes finite acquisition only: aggregate-reader internal failures, every syscall, asynchronous crashes, operating-system close ambiguity, actual ownership/transport/compiler profiles, archive/capture settlement, exact release, native contention/compatibility/activation and historical startup repair remain separately owned. Next is exact settled observation release .12.4.1.3.4; full CI/push remain gated.`
+  Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.12.4.1.3.3.2.2.2.2.3.2: join finite acquisition qualification`
 
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.12.4.1.3.4`
   Status: `proposed`
@@ -3796,7 +3796,7 @@ decomposes the architecture needed to move beyond that bounded foundation.
 
 ## Current Frontier
 
-Current frontier: .3.2.15.7.3.12.4.1.3.3.2.2.2.2.3.2 owns the final acquisition matrix applicability/domain join; corrected snapshot occurrences and all declared remaining close-report families qualify; the finite coordinator/census union now qualifies with both directory readers and semantic call/close controls. Publication interruption states are qualified. Snapshot interruptions, failed handoff closure, fresh acquisition and stable reuse are qualified. Children .3.3-.3.6 own custody, settlement, compatibility and combined closure. Actual ownership/compiler profiles remain prerequisites of .1.5; startup/parent, full CI and push stay gated.
+Current frontier: .3.2.15.7.3.12.4.1.3.4 owns exact observation release after archive/capture settlement. The finite acquisition contract and all its children are done, including the authenticated applicability/domain join and corrected snapshot occurrences. Compatibility and combined lifetime closure remain .3.5-.3.6; actual ownership/compiler profiles remain prerequisites of .1.5. Startup/parent, full CI and push stay gated.
 
 Architecture audit `.1` is complete. Decision `0032` selects one public
 `.vial` source language, private immutable `VIALSemanticIR` and
@@ -6392,8 +6392,8 @@ Completed native-proxy feasibility through runtime-source-controls acceptance: r
 The manifest binds the completed publication-interruption acceptance suffix at `295d186656a5d517894c1bdbd550b0633d2b2fc4`. That source preserves the earlier history pointer and versioned manifest chain; current node contracts remain authoritative.
 
 
-## Acceptance Checklist (remaining closes .3.2.15.7.3.12.4.1.3.3.2.2.2.2.3.1.2)
+## Acceptance Checklist (acquisition matrix join .3.2.15.7.3.12.4.1.3.3.2.2.2.2.3.2)
 
-- [x] **ROOT CAUSE (WHY + WHERE)** — `git log -S 'cannot close fresh observation source' -1 -- docs/audits/native-proxy-observation-acquisition-20260910/ObservationAcquisition.pm` identifies `6081e5815b5aa80b1f3f78b43dc4ab0be1688ed6`; `git log -S 'cannot close census reference' -1 -- docs/audits/native-proxy-image-coordination-20260910/Coordination.pm` identifies `502006787cb326c8931b914b100a42d35c8f153b`. Prior semantic/publication reports leave these temporary/retained observation, structural-reference and lock close outcomes unqualified.
-- [x] **ADDRESSED (verified qualification)** — The first guarded 319-assertion harness and independent audit pass across 143 cases, sixteen actual omitted closes and twenty altered-record falsifiers. Unique composed call/case domains, exact source occurrences and full-operation counts bind actual closure before modeled errno. All-owned-close behavior, primary/first-error precedence and conservative holds qualify without prototype or harness repair; eleven exact recovery copies persist.
-- [x] **NO REGRESSION** — `knowledge-map: OK` reports 1161 facts, 6382 unique questions, 6553 answer occurrences and 139 shards. Read-only closure authenticates forty-one prerequisite copies and rederives 345/323/655/249/29/29/345 archived assertions with the old snapshot limitation explicit. All 4488 roots are absent and disjoint; sixty-three prospective and fifty-eight predecessor inputs are unchanged. Book render exits zero and is inspected/removed; staged doctrines and commit-hook gates close the slice.
+- [x] **ROOT CAUSE (WHY + WHERE)** — `git log -S 'Join the complete declared finite observation acquisition qualification.' -1 --format='%H %s' -- docs/tasks/HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.md` identifies b2e382b393784ea6b0bf48c3345fa05a919dff97, which owns the final join after exposing historical snapshot aliases. The component receipts had distinct epochs and domains; the final audit authenticates them and admits only explicitly qualified function replacements. `recovery.json` root-causes the new preservation-check permission assumption and retains its exact failed source/output/status.
+- [x] **ADDRESSED (verified qualification)** — Guarded `python3 -B docs/audits/native-proxy-observation-acquisition-join-20260911/audit.py` exits zero: eleven matrices, 1077 contexts, 2165 archived assertions, 4173 disjoint absent roots, 58 authenticated receipts, 350 source comparisons and 46 rejecting controls. Exact coverage and source witnesses are in `result/audit.json`; this is finite inert acquisition only. Corrected `closure.py` exits zero, verifies all 38 private ignored outputs and 63 predecessor inputs, and changes no runtime source/output permissions.
+- [x] **NO REGRESSION** — `knowledge-map/scripts/check_knowledge_map.sh` reports `knowledge-map: OK (1161 facts, 6383 unique questions, 6554 answer occurrences, 139 bounded topic shards; query parity verified)`. Guarded task integrity passes with all 1358 nodes and twelve compact terminals. The read-only closure rederives 63 exact predecessor inputs and 38 preserved private outputs. Main audit and corrected closure exit zero; original acquisition/native fixtures were not rerun. Final book rendering and staged/commit doctrine results are retained in the owning audit review; full CI/push remain explicitly gated.
