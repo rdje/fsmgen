@@ -1,0 +1,48 @@
+{
+  "all_rosters_disjoint_and_absent": true,
+  "authenticated_prerequisite_copies": 41,
+  "current_allocations": 636,
+  "current_assertions": 319,
+  "limits": "Prerequisites are authenticated and rederived from their committed receipts without rerunning fixtures or rewriting ignored results. Current remaining-close reports use uniquely composed corrected snapshot occurrences and independent full-operation resource counts. Corrected snapshots qualify all declared occurrences; the older snapshot receipt is rederived only under its weaker historical selection, whose aliases remain explicitly documented in snapshot-occurrence-20260911/history.json. The final all-matrix applicability join, aggregate-reader internals, asynchronous crashes and native ownership remain unqualified.",
+  "prior": {
+    "coordinator": {
+      "allocations": 496,
+      "archived_assertions": 249,
+      "executed": false
+    },
+    "corrected_snapshot": {
+      "allocations": 688,
+      "archived_assertions": 345,
+      "executed": false
+    },
+    "members": {
+      "allocations": 14,
+      "archived_assertions": 29,
+      "executed": false
+    },
+    "namespace": {
+      "allocations": 14,
+      "archived_assertions": 29,
+      "executed": false
+    },
+    "semantic_calls": {
+      "allocations": 1308,
+      "archived_assertions": 655,
+      "executed": false
+    },
+    "semantic_close": {
+      "allocations": 644,
+      "archived_assertions": 323,
+      "executed": false
+    },
+    "snapshot": {
+      "allocations": 688,
+      "archived_assertions": 345,
+      "executed": false
+    }
+  },
+  "prospective_inputs_unchanged": 63,
+  "schema": "fsmgen.inactive_observation_remaining_close_closure.v1",
+  "success": true,
+  "total_roots": 4488
+}

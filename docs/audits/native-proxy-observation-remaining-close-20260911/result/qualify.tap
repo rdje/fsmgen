@@ -1,0 +1,320 @@
+ok 1 - fresh:complete: exact executed prefix and outcome
+ok 2 - fresh:complete: explicit descriptor disposition and observer recovery
+ok 3 - fresh:lock: exact executed prefix and outcome
+ok 4 - fresh:lock: explicit descriptor disposition and observer recovery
+ok 5 - fresh:target:wrapper: exact executed prefix and outcome
+ok 6 - fresh:target:wrapper: explicit descriptor disposition and observer recovery
+ok 7 - fresh:target:private: exact executed prefix and outcome
+ok 8 - fresh:target:private: explicit descriptor disposition and observer recovery
+ok 9 - fresh:target:global: exact executed prefix and outcome
+ok 10 - fresh:target:global: explicit descriptor disposition and observer recovery
+ok 11 - fresh:target:c: exact executed prefix and outcome
+ok 12 - fresh:target:c: explicit descriptor disposition and observer recovery
+ok 13 - fresh:target:image: exact executed prefix and outcome
+ok 14 - fresh:target:image: explicit descriptor disposition and observer recovery
+ok 15 - fresh:all_targets: exact executed prefix and outcome
+ok 16 - fresh:all_targets: explicit descriptor disposition and observer recovery
+ok 17 - fresh:targets_and_lock: exact executed prefix and outcome
+ok 18 - fresh:targets_and_lock: explicit descriptor disposition and observer recovery
+ok 19 - fresh:fresh:admit:wrapper: exact executed prefix and outcome
+ok 20 - fresh:fresh:admit:wrapper: explicit descriptor disposition and observer recovery
+ok 21 - fresh:fresh:admit:wrapper:primary: exact executed prefix and outcome
+ok 22 - fresh:fresh:admit:wrapper:primary: explicit descriptor disposition and observer recovery
+ok 23 - fresh:fresh:admit:private: exact executed prefix and outcome
+ok 24 - fresh:fresh:admit:private: explicit descriptor disposition and observer recovery
+ok 25 - fresh:fresh:admit:private:primary: exact executed prefix and outcome
+ok 26 - fresh:fresh:admit:private:primary: explicit descriptor disposition and observer recovery
+ok 27 - fresh:fresh:admit:global: exact executed prefix and outcome
+ok 28 - fresh:fresh:admit:global: explicit descriptor disposition and observer recovery
+ok 29 - fresh:fresh:admit:global:primary: exact executed prefix and outcome
+ok 30 - fresh:fresh:admit:global:primary: explicit descriptor disposition and observer recovery
+ok 31 - fresh:fresh:admit:c: exact executed prefix and outcome
+ok 32 - fresh:fresh:admit:c: explicit descriptor disposition and observer recovery
+ok 33 - fresh:fresh:admit:c:primary: exact executed prefix and outcome
+ok 34 - fresh:fresh:admit:c:primary: explicit descriptor disposition and observer recovery
+ok 35 - fresh:fresh:admit:image: exact executed prefix and outcome
+ok 36 - fresh:fresh:admit:image: explicit descriptor disposition and observer recovery
+ok 37 - fresh:fresh:admit:image:primary: exact executed prefix and outcome
+ok 38 - fresh:fresh:admit:image:primary: explicit descriptor disposition and observer recovery
+ok 39 - fresh:fresh:admit:wrapper:outer: exact executed prefix and outcome
+ok 40 - fresh:fresh:admit:wrapper:outer: explicit descriptor disposition and observer recovery
+ok 41 - fresh:fresh:admit:image:outer: exact executed prefix and outcome
+ok 42 - fresh:fresh:admit:image:outer: explicit descriptor disposition and observer recovery
+ok 43 - fresh:fresh:acquire:wrapper: exact executed prefix and outcome
+ok 44 - fresh:fresh:acquire:wrapper: explicit descriptor disposition and observer recovery
+ok 45 - fresh:fresh:acquire:wrapper:primary: exact executed prefix and outcome
+ok 46 - fresh:fresh:acquire:wrapper:primary: explicit descriptor disposition and observer recovery
+ok 47 - fresh:fresh:acquire:private: exact executed prefix and outcome
+ok 48 - fresh:fresh:acquire:private: explicit descriptor disposition and observer recovery
+ok 49 - fresh:fresh:acquire:private:primary: exact executed prefix and outcome
+ok 50 - fresh:fresh:acquire:private:primary: explicit descriptor disposition and observer recovery
+ok 51 - fresh:fresh:acquire:global: exact executed prefix and outcome
+ok 52 - fresh:fresh:acquire:global: explicit descriptor disposition and observer recovery
+ok 53 - fresh:fresh:acquire:global:primary: exact executed prefix and outcome
+ok 54 - fresh:fresh:acquire:global:primary: explicit descriptor disposition and observer recovery
+ok 55 - fresh:fresh:acquire:c: exact executed prefix and outcome
+ok 56 - fresh:fresh:acquire:c: explicit descriptor disposition and observer recovery
+ok 57 - fresh:fresh:acquire:c:primary: exact executed prefix and outcome
+ok 58 - fresh:fresh:acquire:c:primary: explicit descriptor disposition and observer recovery
+ok 59 - fresh:fresh:acquire:image: exact executed prefix and outcome
+ok 60 - fresh:fresh:acquire:image: explicit descriptor disposition and observer recovery
+ok 61 - fresh:fresh:acquire:image:primary: exact executed prefix and outcome
+ok 62 - fresh:fresh:acquire:image:primary: explicit descriptor disposition and observer recovery
+ok 63 - fresh:fresh:acquire:wrapper:outer: exact executed prefix and outcome
+ok 64 - fresh:fresh:acquire:wrapper:outer: explicit descriptor disposition and observer recovery
+ok 65 - fresh:fresh:acquire:image:outer: exact executed prefix and outcome
+ok 66 - fresh:fresh:acquire:image:outer: explicit descriptor disposition and observer recovery
+ok 67 - fresh:fresh:finish:wrapper: exact executed prefix and outcome
+ok 68 - fresh:fresh:finish:wrapper: explicit descriptor disposition and observer recovery
+ok 69 - fresh:fresh:finish:wrapper:primary: exact executed prefix and outcome
+ok 70 - fresh:fresh:finish:wrapper:primary: explicit descriptor disposition and observer recovery
+ok 71 - fresh:fresh:finish:private: exact executed prefix and outcome
+ok 72 - fresh:fresh:finish:private: explicit descriptor disposition and observer recovery
+ok 73 - fresh:fresh:finish:private:primary: exact executed prefix and outcome
+ok 74 - fresh:fresh:finish:private:primary: explicit descriptor disposition and observer recovery
+ok 75 - fresh:fresh:finish:global: exact executed prefix and outcome
+ok 76 - fresh:fresh:finish:global: explicit descriptor disposition and observer recovery
+ok 77 - fresh:fresh:finish:global:primary: exact executed prefix and outcome
+ok 78 - fresh:fresh:finish:global:primary: explicit descriptor disposition and observer recovery
+ok 79 - fresh:fresh:finish:c: exact executed prefix and outcome
+ok 80 - fresh:fresh:finish:c: explicit descriptor disposition and observer recovery
+ok 81 - fresh:fresh:finish:c:primary: exact executed prefix and outcome
+ok 82 - fresh:fresh:finish:c:primary: explicit descriptor disposition and observer recovery
+ok 83 - fresh:fresh:finish:image: exact executed prefix and outcome
+ok 84 - fresh:fresh:finish:image: explicit descriptor disposition and observer recovery
+ok 85 - fresh:fresh:finish:image:primary: exact executed prefix and outcome
+ok 86 - fresh:fresh:finish:image:primary: explicit descriptor disposition and observer recovery
+ok 87 - fresh:fresh:finish:wrapper:outer: exact executed prefix and outcome
+ok 88 - fresh:fresh:finish:wrapper:outer: explicit descriptor disposition and observer recovery
+ok 89 - fresh:fresh:finish:image:outer: exact executed prefix and outcome
+ok 90 - fresh:fresh:finish:image:outer: explicit descriptor disposition and observer recovery
+ok 91 - fresh:hold: exact executed prefix and outcome
+ok 92 - fresh:hold: explicit descriptor disposition and observer recovery
+ok 93 - fresh:hold_and_outer: exact executed prefix and outcome
+ok 94 - fresh:hold_and_outer: explicit descriptor disposition and observer recovery
+ok 95 - fresh:hold_primary: exact executed prefix and outcome
+ok 96 - fresh:hold_primary: explicit descriptor disposition and observer recovery
+ok 97 - fresh:census:pre:0: exact executed prefix and outcome
+ok 98 - fresh:census:pre:0: explicit descriptor disposition and observer recovery
+ok 99 - fresh:census:pre:0:primary: exact executed prefix and outcome
+ok 100 - fresh:census:pre:0:primary: explicit descriptor disposition and observer recovery
+ok 101 - fresh:census:pre:1: exact executed prefix and outcome
+ok 102 - fresh:census:pre:1: explicit descriptor disposition and observer recovery
+ok 103 - fresh:census:pre:1:primary: exact executed prefix and outcome
+ok 104 - fresh:census:pre:1:primary: explicit descriptor disposition and observer recovery
+ok 105 - fresh:census:pre:2: exact executed prefix and outcome
+ok 106 - fresh:census:pre:2: explicit descriptor disposition and observer recovery
+ok 107 - fresh:census:pre:2:primary: exact executed prefix and outcome
+ok 108 - fresh:census:pre:2:primary: explicit descriptor disposition and observer recovery
+ok 109 - fresh:census:pre:0:outer: exact executed prefix and outcome
+ok 110 - fresh:census:pre:0:outer: explicit descriptor disposition and observer recovery
+ok 111 - fresh:census:post:0: exact executed prefix and outcome
+ok 112 - fresh:census:post:0: explicit descriptor disposition and observer recovery
+ok 113 - fresh:census:post:0:primary: exact executed prefix and outcome
+ok 114 - fresh:census:post:0:primary: explicit descriptor disposition and observer recovery
+ok 115 - fresh:census:post:1: exact executed prefix and outcome
+ok 116 - fresh:census:post:1: explicit descriptor disposition and observer recovery
+ok 117 - fresh:census:post:1:primary: exact executed prefix and outcome
+ok 118 - fresh:census:post:1:primary: explicit descriptor disposition and observer recovery
+ok 119 - fresh:census:post:2: exact executed prefix and outcome
+ok 120 - fresh:census:post:2: explicit descriptor disposition and observer recovery
+ok 121 - fresh:census:post:2:primary: exact executed prefix and outcome
+ok 122 - fresh:census:post:2:primary: explicit descriptor disposition and observer recovery
+ok 123 - fresh:census:post:3: exact executed prefix and outcome
+ok 124 - fresh:census:post:3: explicit descriptor disposition and observer recovery
+ok 125 - fresh:census:post:3:primary: exact executed prefix and outcome
+ok 126 - fresh:census:post:3:primary: explicit descriptor disposition and observer recovery
+ok 127 - fresh:census:post:0:outer: exact executed prefix and outcome
+ok 128 - fresh:census:post:0:outer: explicit descriptor disposition and observer recovery
+ok 129 - fresh:admit_primary: exact executed prefix and outcome
+ok 130 - fresh:admit_primary: explicit descriptor disposition and observer recovery
+ok 131 - fresh:early_lock_primary: exact executed prefix and outcome
+ok 132 - fresh:early_lock_primary: explicit descriptor disposition and observer recovery
+ok 133 - fresh:late_lock_primary: exact executed prefix and outcome
+ok 134 - fresh:late_lock_primary: explicit descriptor disposition and observer recovery
+ok 135 - reuse:complete: exact executed prefix and outcome
+ok 136 - reuse:complete: explicit descriptor disposition and observer recovery
+ok 137 - reuse:lock: exact executed prefix and outcome
+ok 138 - reuse:lock: explicit descriptor disposition and observer recovery
+ok 139 - reuse:target:wrapper: exact executed prefix and outcome
+ok 140 - reuse:target:wrapper: explicit descriptor disposition and observer recovery
+ok 141 - reuse:target:private: exact executed prefix and outcome
+ok 142 - reuse:target:private: explicit descriptor disposition and observer recovery
+ok 143 - reuse:target:global: exact executed prefix and outcome
+ok 144 - reuse:target:global: explicit descriptor disposition and observer recovery
+ok 145 - reuse:target:c: exact executed prefix and outcome
+ok 146 - reuse:target:c: explicit descriptor disposition and observer recovery
+ok 147 - reuse:target:image: exact executed prefix and outcome
+ok 148 - reuse:target:image: explicit descriptor disposition and observer recovery
+ok 149 - reuse:target:hold: exact executed prefix and outcome
+ok 150 - reuse:target:hold: explicit descriptor disposition and observer recovery
+ok 151 - reuse:all_targets: exact executed prefix and outcome
+ok 152 - reuse:all_targets: explicit descriptor disposition and observer recovery
+ok 153 - reuse:targets_and_lock: exact executed prefix and outcome
+ok 154 - reuse:targets_and_lock: explicit descriptor disposition and observer recovery
+ok 155 - reuse:fresh:admit:wrapper: exact executed prefix and outcome
+ok 156 - reuse:fresh:admit:wrapper: explicit descriptor disposition and observer recovery
+ok 157 - reuse:fresh:admit:wrapper:primary: exact executed prefix and outcome
+ok 158 - reuse:fresh:admit:wrapper:primary: explicit descriptor disposition and observer recovery
+ok 159 - reuse:fresh:admit:private: exact executed prefix and outcome
+ok 160 - reuse:fresh:admit:private: explicit descriptor disposition and observer recovery
+ok 161 - reuse:fresh:admit:private:primary: exact executed prefix and outcome
+ok 162 - reuse:fresh:admit:private:primary: explicit descriptor disposition and observer recovery
+ok 163 - reuse:fresh:admit:global: exact executed prefix and outcome
+ok 164 - reuse:fresh:admit:global: explicit descriptor disposition and observer recovery
+ok 165 - reuse:fresh:admit:global:primary: exact executed prefix and outcome
+ok 166 - reuse:fresh:admit:global:primary: explicit descriptor disposition and observer recovery
+ok 167 - reuse:fresh:admit:c: exact executed prefix and outcome
+ok 168 - reuse:fresh:admit:c: explicit descriptor disposition and observer recovery
+ok 169 - reuse:fresh:admit:c:primary: exact executed prefix and outcome
+ok 170 - reuse:fresh:admit:c:primary: explicit descriptor disposition and observer recovery
+ok 171 - reuse:fresh:admit:image: exact executed prefix and outcome
+ok 172 - reuse:fresh:admit:image: explicit descriptor disposition and observer recovery
+ok 173 - reuse:fresh:admit:image:primary: exact executed prefix and outcome
+ok 174 - reuse:fresh:admit:image:primary: explicit descriptor disposition and observer recovery
+ok 175 - reuse:fresh:admit:hold: exact executed prefix and outcome
+ok 176 - reuse:fresh:admit:hold: explicit descriptor disposition and observer recovery
+ok 177 - reuse:fresh:admit:hold:primary: exact executed prefix and outcome
+ok 178 - reuse:fresh:admit:hold:primary: explicit descriptor disposition and observer recovery
+ok 179 - reuse:fresh:admit:wrapper:outer: exact executed prefix and outcome
+ok 180 - reuse:fresh:admit:wrapper:outer: explicit descriptor disposition and observer recovery
+ok 181 - reuse:fresh:admit:hold:outer: exact executed prefix and outcome
+ok 182 - reuse:fresh:admit:hold:outer: explicit descriptor disposition and observer recovery
+ok 183 - reuse:fresh:acquire:wrapper: exact executed prefix and outcome
+ok 184 - reuse:fresh:acquire:wrapper: explicit descriptor disposition and observer recovery
+ok 185 - reuse:fresh:acquire:wrapper:primary: exact executed prefix and outcome
+ok 186 - reuse:fresh:acquire:wrapper:primary: explicit descriptor disposition and observer recovery
+ok 187 - reuse:fresh:acquire:private: exact executed prefix and outcome
+ok 188 - reuse:fresh:acquire:private: explicit descriptor disposition and observer recovery
+ok 189 - reuse:fresh:acquire:private:primary: exact executed prefix and outcome
+ok 190 - reuse:fresh:acquire:private:primary: explicit descriptor disposition and observer recovery
+ok 191 - reuse:fresh:acquire:global: exact executed prefix and outcome
+ok 192 - reuse:fresh:acquire:global: explicit descriptor disposition and observer recovery
+ok 193 - reuse:fresh:acquire:global:primary: exact executed prefix and outcome
+ok 194 - reuse:fresh:acquire:global:primary: explicit descriptor disposition and observer recovery
+ok 195 - reuse:fresh:acquire:c: exact executed prefix and outcome
+ok 196 - reuse:fresh:acquire:c: explicit descriptor disposition and observer recovery
+ok 197 - reuse:fresh:acquire:c:primary: exact executed prefix and outcome
+ok 198 - reuse:fresh:acquire:c:primary: explicit descriptor disposition and observer recovery
+ok 199 - reuse:fresh:acquire:image: exact executed prefix and outcome
+ok 200 - reuse:fresh:acquire:image: explicit descriptor disposition and observer recovery
+ok 201 - reuse:fresh:acquire:image:primary: exact executed prefix and outcome
+ok 202 - reuse:fresh:acquire:image:primary: explicit descriptor disposition and observer recovery
+ok 203 - reuse:fresh:acquire:hold: exact executed prefix and outcome
+ok 204 - reuse:fresh:acquire:hold: explicit descriptor disposition and observer recovery
+ok 205 - reuse:fresh:acquire:hold:primary: exact executed prefix and outcome
+ok 206 - reuse:fresh:acquire:hold:primary: explicit descriptor disposition and observer recovery
+ok 207 - reuse:fresh:acquire:wrapper:outer: exact executed prefix and outcome
+ok 208 - reuse:fresh:acquire:wrapper:outer: explicit descriptor disposition and observer recovery
+ok 209 - reuse:fresh:acquire:hold:outer: exact executed prefix and outcome
+ok 210 - reuse:fresh:acquire:hold:outer: explicit descriptor disposition and observer recovery
+ok 211 - reuse:fresh:finish:wrapper: exact executed prefix and outcome
+ok 212 - reuse:fresh:finish:wrapper: explicit descriptor disposition and observer recovery
+ok 213 - reuse:fresh:finish:wrapper:primary: exact executed prefix and outcome
+ok 214 - reuse:fresh:finish:wrapper:primary: explicit descriptor disposition and observer recovery
+ok 215 - reuse:fresh:finish:private: exact executed prefix and outcome
+ok 216 - reuse:fresh:finish:private: explicit descriptor disposition and observer recovery
+ok 217 - reuse:fresh:finish:private:primary: exact executed prefix and outcome
+ok 218 - reuse:fresh:finish:private:primary: explicit descriptor disposition and observer recovery
+ok 219 - reuse:fresh:finish:global: exact executed prefix and outcome
+ok 220 - reuse:fresh:finish:global: explicit descriptor disposition and observer recovery
+ok 221 - reuse:fresh:finish:global:primary: exact executed prefix and outcome
+ok 222 - reuse:fresh:finish:global:primary: explicit descriptor disposition and observer recovery
+ok 223 - reuse:fresh:finish:c: exact executed prefix and outcome
+ok 224 - reuse:fresh:finish:c: explicit descriptor disposition and observer recovery
+ok 225 - reuse:fresh:finish:c:primary: exact executed prefix and outcome
+ok 226 - reuse:fresh:finish:c:primary: explicit descriptor disposition and observer recovery
+ok 227 - reuse:fresh:finish:image: exact executed prefix and outcome
+ok 228 - reuse:fresh:finish:image: explicit descriptor disposition and observer recovery
+ok 229 - reuse:fresh:finish:image:primary: exact executed prefix and outcome
+ok 230 - reuse:fresh:finish:image:primary: explicit descriptor disposition and observer recovery
+ok 231 - reuse:fresh:finish:hold: exact executed prefix and outcome
+ok 232 - reuse:fresh:finish:hold: explicit descriptor disposition and observer recovery
+ok 233 - reuse:fresh:finish:hold:primary: exact executed prefix and outcome
+ok 234 - reuse:fresh:finish:hold:primary: explicit descriptor disposition and observer recovery
+ok 235 - reuse:fresh:finish:wrapper:outer: exact executed prefix and outcome
+ok 236 - reuse:fresh:finish:wrapper:outer: explicit descriptor disposition and observer recovery
+ok 237 - reuse:fresh:finish:hold:outer: exact executed prefix and outcome
+ok 238 - reuse:fresh:finish:hold:outer: explicit descriptor disposition and observer recovery
+ok 239 - reuse:hold: exact executed prefix and outcome
+ok 240 - reuse:hold: explicit descriptor disposition and observer recovery
+ok 241 - reuse:hold_and_outer: exact executed prefix and outcome
+ok 242 - reuse:hold_and_outer: explicit descriptor disposition and observer recovery
+ok 243 - reuse:hold_primary: exact executed prefix and outcome
+ok 244 - reuse:hold_primary: explicit descriptor disposition and observer recovery
+ok 245 - reuse:census:pre:0: exact executed prefix and outcome
+ok 246 - reuse:census:pre:0: explicit descriptor disposition and observer recovery
+ok 247 - reuse:census:pre:0:primary: exact executed prefix and outcome
+ok 248 - reuse:census:pre:0:primary: explicit descriptor disposition and observer recovery
+ok 249 - reuse:census:pre:1: exact executed prefix and outcome
+ok 250 - reuse:census:pre:1: explicit descriptor disposition and observer recovery
+ok 251 - reuse:census:pre:1:primary: exact executed prefix and outcome
+ok 252 - reuse:census:pre:1:primary: explicit descriptor disposition and observer recovery
+ok 253 - reuse:census:pre:2: exact executed prefix and outcome
+ok 254 - reuse:census:pre:2: explicit descriptor disposition and observer recovery
+ok 255 - reuse:census:pre:2:primary: exact executed prefix and outcome
+ok 256 - reuse:census:pre:2:primary: explicit descriptor disposition and observer recovery
+ok 257 - reuse:census:pre:3: exact executed prefix and outcome
+ok 258 - reuse:census:pre:3: explicit descriptor disposition and observer recovery
+ok 259 - reuse:census:pre:3:primary: exact executed prefix and outcome
+ok 260 - reuse:census:pre:3:primary: explicit descriptor disposition and observer recovery
+ok 261 - reuse:census:pre:0:outer: exact executed prefix and outcome
+ok 262 - reuse:census:pre:0:outer: explicit descriptor disposition and observer recovery
+ok 263 - reuse:census:post:0: exact executed prefix and outcome
+ok 264 - reuse:census:post:0: explicit descriptor disposition and observer recovery
+ok 265 - reuse:census:post:0:primary: exact executed prefix and outcome
+ok 266 - reuse:census:post:0:primary: explicit descriptor disposition and observer recovery
+ok 267 - reuse:census:post:1: exact executed prefix and outcome
+ok 268 - reuse:census:post:1: explicit descriptor disposition and observer recovery
+ok 269 - reuse:census:post:1:primary: exact executed prefix and outcome
+ok 270 - reuse:census:post:1:primary: explicit descriptor disposition and observer recovery
+ok 271 - reuse:census:post:2: exact executed prefix and outcome
+ok 272 - reuse:census:post:2: explicit descriptor disposition and observer recovery
+ok 273 - reuse:census:post:2:primary: exact executed prefix and outcome
+ok 274 - reuse:census:post:2:primary: explicit descriptor disposition and observer recovery
+ok 275 - reuse:census:post:3: exact executed prefix and outcome
+ok 276 - reuse:census:post:3: explicit descriptor disposition and observer recovery
+ok 277 - reuse:census:post:3:primary: exact executed prefix and outcome
+ok 278 - reuse:census:post:3:primary: explicit descriptor disposition and observer recovery
+ok 279 - reuse:census:post:0:outer: exact executed prefix and outcome
+ok 280 - reuse:census:post:0:outer: explicit descriptor disposition and observer recovery
+ok 281 - reuse:admit_primary: exact executed prefix and outcome
+ok 282 - reuse:admit_primary: explicit descriptor disposition and observer recovery
+ok 283 - reuse:early_lock_primary: exact executed prefix and outcome
+ok 284 - reuse:early_lock_primary: explicit descriptor disposition and observer recovery
+ok 285 - reuse:late_lock_primary: exact executed prefix and outcome
+ok 286 - reuse:late_lock_primary: explicit descriptor disposition and observer recovery
+ok 287 - fresh:omit:lock: exact executed prefix and outcome
+ok 288 - fresh:omit:lock: explicit descriptor disposition and observer recovery
+ok 289 - fresh:omit:target:wrapper: exact executed prefix and outcome
+ok 290 - fresh:omit:target:wrapper: explicit descriptor disposition and observer recovery
+ok 291 - fresh:omit:hold: exact executed prefix and outcome
+ok 292 - fresh:omit:hold: explicit descriptor disposition and observer recovery
+ok 293 - fresh:omit:census:pre:0: exact executed prefix and outcome
+ok 294 - fresh:omit:census:pre:0: explicit descriptor disposition and observer recovery
+ok 295 - fresh:omit:census:post:0: exact executed prefix and outcome
+ok 296 - fresh:omit:census:post:0: explicit descriptor disposition and observer recovery
+ok 297 - fresh:omit:fresh:admit: exact executed prefix and outcome
+ok 298 - fresh:omit:fresh:admit: explicit descriptor disposition and observer recovery
+ok 299 - fresh:omit:fresh:acquire: exact executed prefix and outcome
+ok 300 - fresh:omit:fresh:acquire: explicit descriptor disposition and observer recovery
+ok 301 - fresh:omit:fresh:finish: exact executed prefix and outcome
+ok 302 - fresh:omit:fresh:finish: explicit descriptor disposition and observer recovery
+ok 303 - reuse:omit:lock: exact executed prefix and outcome
+ok 304 - reuse:omit:lock: explicit descriptor disposition and observer recovery
+ok 305 - reuse:omit:target:wrapper: exact executed prefix and outcome
+ok 306 - reuse:omit:target:wrapper: explicit descriptor disposition and observer recovery
+ok 307 - reuse:omit:hold: exact executed prefix and outcome
+ok 308 - reuse:omit:hold: explicit descriptor disposition and observer recovery
+ok 309 - reuse:omit:census:pre:0: exact executed prefix and outcome
+ok 310 - reuse:omit:census:pre:0: explicit descriptor disposition and observer recovery
+ok 311 - reuse:omit:census:post:0: exact executed prefix and outcome
+ok 312 - reuse:omit:census:post:0: explicit descriptor disposition and observer recovery
+ok 313 - reuse:omit:fresh:admit: exact executed prefix and outcome
+ok 314 - reuse:omit:fresh:admit: explicit descriptor disposition and observer recovery
+ok 315 - reuse:omit:fresh:acquire: exact executed prefix and outcome
+ok 316 - reuse:omit:fresh:acquire: explicit descriptor disposition and observer recovery
+ok 317 - reuse:omit:fresh:finish: exact executed prefix and outcome
+ok 318 - reuse:omit:fresh:finish: explicit descriptor disposition and observer recovery
+ok 319 - no process attempt
+1..319

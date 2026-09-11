@@ -2033,6 +2033,25 @@ scripts/run_with_ram_guard.sh -- perl docs/audits/native-proxy-observation-seman
 python3 -B docs/audits/native-proxy-observation-semantic-close-20260911/audit.py
 ```
 
+The remaining acquisition close-report controls cover retained observation
+sources, temporary source rereads, the temporary hold reader, structural census
+reference reads and the permanent lock. The composed plan uses the corrected
+snapshot occurrence names and counts the complete operation's source, writer,
+lock and directory handles. Each close is bound to its actual read occurrence.
+
+For example, a post-publication census close error preserves the complete hold
+while closing retained targets and the lock. A failed prepublication source
+reread leaves no new hold; its error remains primary even if later target or
+lock closes also report errors. Every modeled report follows an actual close;
+separate omitted-close controls prove that an open handle is detected and
+recovered. The final join of all acquisition matrices remains separately owned.
+Replay:
+
+```bash
+scripts/run_with_ram_guard.sh -- perl docs/audits/native-proxy-observation-remaining-close-20260911/qualify.t
+python3 -B docs/audits/native-proxy-observation-remaining-close-20260911/audit.py
+```
+
 The helper checks bounded regular source/output files and the native header,
 then sets executable permissions through the admitted open file handle. A
 regression exposed path-based permission changes affecting a substituted file

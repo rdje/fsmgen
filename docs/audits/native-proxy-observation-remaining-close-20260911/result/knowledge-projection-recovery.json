@@ -1,0 +1,15 @@
+{
+  "aggregate_after": 3492394,
+  "aggregate_before": 3492348,
+  "aggregate_projected": 3492457,
+  "allowance": 3492424,
+  "candidate": "docs/audits/native-proxy-observation-remaining-close-20260911/result/knowledge-card.md.initial-projection",
+  "candidate_sha256": "0642597d0e9cb44a58bcd2dc6c533ecd41a7c0b1088c94693c61d03e84f0a5d3",
+  "candidate_size_bytes": 8566,
+  "candidate_was_written_to_live_card": false,
+  "diagnosis": "The pre-write aggregate assertion correctly rejected the proposed card before changing the live file. The shell then regenerated the unchanged card because this preparation command lacked set -e; no inconsistent card was installed. Subsequent dependent commands fail fast.",
+  "excess_bytes": 33,
+  "repair": "Route older startup/STOP prose through the exact b2e382b39 card history; preserve the projected candidate and leave the allowance unchanged.",
+  "schema": "fsmgen.knowledge_projection_recovery.v1",
+  "source": "docs/knowledge/test-subprocess-policy-adapters.md"
+}

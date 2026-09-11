@@ -1,0 +1,448 @@
+{
+  "book": {
+    "exact_output_absent": true,
+    "exit_code": 0,
+    "new_passage_verified": true,
+    "rendered_bytes": 23184800,
+    "rendered_files": 98,
+    "same_volume_direct_objects": true
+  },
+  "closure": {
+    "all_rosters_disjoint_and_absent": true,
+    "authenticated_prerequisite_copies": 41,
+    "current_allocations": 636,
+    "current_assertions": 319,
+    "limits": "Prerequisites are authenticated and rederived from their committed receipts without rerunning fixtures or rewriting ignored results. Current remaining-close reports use uniquely composed corrected snapshot occurrences and independent full-operation resource counts. Corrected snapshots qualify all declared occurrences; the older snapshot receipt is rederived only under its weaker historical selection, whose aliases remain explicitly documented in snapshot-occurrence-20260911/history.json. The final all-matrix applicability join, aggregate-reader internals, asynchronous crashes and native ownership remain unqualified.",
+    "prior": {
+      "coordinator": {
+        "allocations": 496,
+        "archived_assertions": 249,
+        "executed": false
+      },
+      "corrected_snapshot": {
+        "allocations": 688,
+        "archived_assertions": 345,
+        "executed": false
+      },
+      "members": {
+        "allocations": 14,
+        "archived_assertions": 29,
+        "executed": false
+      },
+      "namespace": {
+        "allocations": 14,
+        "archived_assertions": 29,
+        "executed": false
+      },
+      "semantic_calls": {
+        "allocations": 1308,
+        "archived_assertions": 655,
+        "executed": false
+      },
+      "semantic_close": {
+        "allocations": 644,
+        "archived_assertions": 323,
+        "executed": false
+      },
+      "snapshot": {
+        "allocations": 688,
+        "archived_assertions": 345,
+        "executed": false
+      }
+    },
+    "prospective_inputs_unchanged": 63,
+    "schema": "fsmgen.inactive_observation_remaining_close_closure.v1",
+    "success": true,
+    "total_roots": 4488
+  },
+  "documentation_projection": {
+    "aggregate_after": 3492394,
+    "aggregate_before": 3492348,
+    "aggregate_projected": 3492457,
+    "allowance": 3492424,
+    "candidate": "docs/audits/native-proxy-observation-remaining-close-20260911/result/knowledge-card.md.initial-projection",
+    "candidate_sha256": "0642597d0e9cb44a58bcd2dc6c533ecd41a7c0b1088c94693c61d03e84f0a5d3",
+    "candidate_size_bytes": 8566,
+    "candidate_was_written_to_live_card": false,
+    "diagnosis": "The pre-write aggregate assertion correctly rejected the proposed card before changing the live file. The shell then regenerated the unchanged card because this preparation command lacked set -e; no inconsistent card was installed. Subsequent dependent commands fail fast.",
+    "excess_bytes": 33,
+    "repair": "Route older startup/STOP prose through the exact b2e382b39 card history; preserve the projected candidate and leave the allowance unchanged.",
+    "schema": "fsmgen.knowledge_projection_recovery.v1",
+    "source": "docs/knowledge/test-subprocess-policy-adapters.md"
+  },
+  "durability": "Sixty-three inputs are pinned before fixtures; immediate allocation/row journals reconcile with result/progress/TAP. Eleven exact recovery copies are tracked. Forty-one committed prerequisite copies rederive corrected snapshot, semantic/coordinator/close and directory controls without old fixture reruns or output rewrites, explicitly limiting the old aliased snapshot selection. All 4488 current/prerequisite roots are disjoint and absent. Fifty-eight predecessor inputs remain exact at b2e382b39. Task/history, bounded Knowledge Map and inspected/removed mdBook preserve scope; the final all-matrix applicability join remains separate.",
+  "exact_recovery_copies": 11,
+  "falsification": "Cases include 141 modeled-report scenarios and 56 competing primary errors. All owned close batches execute after actual CORE::close; primary and first inner failures outrank later cleanup reports. Sixteen omitted lock/target/hold/structural/fresh-source closes each leave one actual handle, rejected independently by strict custody and close-call oracles and recovered. Twenty altered records reject aliases, missing attempts, false closure, an earlier same-path occurrence, changed or suppressed reports/precedence, lost resources/owners/holds and authority/process changes.",
+  "final_evidence": [
+    {
+      "destination": "docs/audits/native-proxy-observation-remaining-close-20260911/result/qualification.json",
+      "sha256": "e7f985ec88ab32ef831185d5818888de2829973de60db2b4f1209ffc73ed881d",
+      "size_bytes": 32915066,
+      "source": ".artifacts/logs/native-proxy-observation-remaining-close-20260911/qualification.json"
+    },
+    {
+      "destination": "docs/audits/native-proxy-observation-remaining-close-20260911/result/audit.json",
+      "sha256": "4a6a70eec0327466600c2fdf74a67ea22d7cb36753a0f41398f1523298170a46",
+      "size_bytes": 1728,
+      "source": ".artifacts/logs/native-proxy-observation-remaining-close-20260911/audit.json"
+    },
+    {
+      "destination": "docs/audits/native-proxy-observation-remaining-close-20260911/result/closure.json",
+      "sha256": "6805d06d24f304fa8e7e8f3039018b185905f7f4d30c38dc4ad17a2278043a7a",
+      "size_bytes": 1739,
+      "source": ".artifacts/logs/native-proxy-observation-remaining-close-20260911/closure.json"
+    }
+  ],
+  "limits": "Finite synchronous selected close reports, not operating-system close ambiguity, every syscall or aggregate-reader internal failure, asynchronous crashes, archive/capture settlement, exact release, native ownership, activation or historical startup repair. One actual independently bound reference order per selector, not a full order Cartesian product. Final all-matrix applicability and closure join remains a separate leaf.",
+  "owner": "HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.12.4.1.3.3.2.2.2.2.3.1.2",
+  "qualification": {
+    "allocations": 636,
+    "assertions": 319,
+    "cases": 143,
+    "competing_primary_cases": 56,
+    "falsifiers": [
+      "hidden failure",
+      "lost close site",
+      "aliased case",
+      "lost close attempt",
+      "invented actual close",
+      "close still open",
+      "earlier same-path occurrence",
+      "suppressed lock report",
+      "changed first report",
+      "lost primary precedence",
+      "lost call",
+      "lost source",
+      "lost directory",
+      "lost lock seal",
+      "lost other owner",
+      "lost failed hold",
+      "authority type changed",
+      "lost omitted marker",
+      "lost allocation",
+      "forbidden process"
+    ],
+    "flow_lengths": {
+      "fresh": 134,
+      "reuse": 145
+    },
+    "limits": "Finite synchronous selected close reports, not operating-system close ambiguity, every syscall or aggregate-reader internal failure, asynchronous crashes, archive/capture settlement, exact release, native ownership, activation or historical startup repair. One actual independently bound reference order per selector, not a full order Cartesian product. Final all-matrix applicability and closure join remains a separate leaf.",
+    "modeled_report_cases": 141,
+    "mutants": [
+      "fresh:omit:lock",
+      "fresh:omit:target:wrapper",
+      "fresh:omit:hold",
+      "fresh:omit:census:pre:0",
+      "fresh:omit:census:post:0",
+      "fresh:omit:fresh:admit",
+      "fresh:omit:fresh:acquire",
+      "fresh:omit:fresh:finish",
+      "reuse:omit:lock",
+      "reuse:omit:target:wrapper",
+      "reuse:omit:hold",
+      "reuse:omit:census:pre:0",
+      "reuse:omit:census:post:0",
+      "reuse:omit:fresh:admit",
+      "reuse:omit:fresh:acquire",
+      "reuse:omit:fresh:finish"
+    ],
+    "schema": "fsmgen.inactive_observation_remaining_close_audit.v1",
+    "success": true
+  },
+  "rederive": "The prospective composed coordinator and corrected snapshot flow has 134/145 unique calls. A separate Python oracle counts effects only after completed calls, binds every close to the actual per-path read occurrence, and reconstructs complete native identity, owner/hold footprints, modeled errno and actual closure. Healthy full-operation counts independently equal the qualified coordinator counts. The first harness passes 319 assertions across 143 cases and sixteen omitted-close mutants without a prototype or harness repair.",
+  "root_cause": "Semantic census and publication reports do not cover retained observation targets, temporary source-closure rereads, the temporary hold reader, structural census reference reads and the permanent lock. The initial composition was preserved by the separately committed snapshot occurrence correction; this slice restores it with only owner/revision and corrected snapshot import changes.",
+  "schema": "fsmgen.inactive_observation_remaining_close_review.v1",
+  "source_revision": "b2e382b393784ea6b0bf48c3345fa05a919dff97",
+  "unchanged_inputs": [
+    {
+      "path": "docs/audits/native-proxy-canonical-contract-20260910/contract.json",
+      "sha256": "f3f981398afae72540ab4ac0194b8380d4743c3d2146c1172a85365add053222",
+      "size_bytes": 21927
+    },
+    {
+      "path": "docs/audits/native-proxy-combined-census-20260910/audit.py",
+      "sha256": "ab7a213628f24b8b09a5438184a6ad344d42f400a31b5f5500e748ea4eb0a14c",
+      "size_bytes": 17759
+    },
+    {
+      "path": "docs/audits/native-proxy-combined-census-20260910/plan.json",
+      "sha256": "9acb2e13135f501617d972f9376b8e37a01e33485d70e5cd762fb7fe791c716b",
+      "size_bytes": 1354
+    },
+    {
+      "path": "docs/audits/native-proxy-combined-census-20260910/qualify.t",
+      "sha256": "f99eeebdd9c5ab0013f4cf903136468085eb13e38f044e4abd9a51c85cbf3c46",
+      "size_bytes": 16644
+    },
+    {
+      "path": "docs/audits/native-proxy-image-coordination-20260910/Coordination.pm",
+      "sha256": "51c36432bdcaf35180dd84b7fde709312682e57a4a3fbdc679c1f4d2f01fd00d",
+      "size_bytes": 17012
+    },
+    {
+      "path": "docs/audits/native-proxy-image-custody-20260910/ImageCustody.pm",
+      "sha256": "927f1ab39f7f26742e36878985d1ff545ddf2dee119d4bf6b7b41bf2c9360ccc",
+      "size_bytes": 8619
+    },
+    {
+      "path": "docs/audits/native-proxy-image-custody-20260910/audit.py",
+      "sha256": "e964855e7e9bd7abf08af58821cd93fc45425b1b7e0e57fbaa8cdd49e7ecae6a",
+      "size_bytes": 6530
+    },
+    {
+      "path": "docs/audits/native-proxy-image-custody-20260910/qualify.t",
+      "sha256": "ddb1ce26dd2824cdbdacaaeae00da36ae26defb13749bea063d1dd9323968b34",
+      "size_bytes": 12544
+    },
+    {
+      "path": "docs/audits/native-proxy-image-custody-20260910/vectors.json",
+      "sha256": "60992f01705436d9c7efbc280d6de73f4c132d91ffea9359852c10c9afb7890d",
+      "size_bytes": 1373
+    },
+    {
+      "path": "docs/audits/native-proxy-image-maintenance-20260910/ImageMaintenance.pm",
+      "sha256": "1295957d97737e764c0e800885a2c3f9adfa327a0d41b35d122dde3e21698cac",
+      "size_bytes": 5678
+    },
+    {
+      "path": "docs/audits/native-proxy-image-publication-20260910/Publication.pm",
+      "sha256": "34ca8717856492a09ebf16af8810f04b1dea4c6c8c84ff7b3f5c11c07e7dc2bf",
+      "size_bytes": 5371
+    },
+    {
+      "path": "docs/audits/native-proxy-image-publication-20260910/audit.py",
+      "sha256": "4fdcb1f466368df5e2cec7b31356bf4f4f4d068e1bbd70a51b88e7f0f9f5f186",
+      "size_bytes": 7057
+    },
+    {
+      "path": "docs/audits/native-proxy-image-publication-20260910/qualify.t",
+      "sha256": "52babd30938949ba8fe41520c4bcafc31f308beff3050010430f6102fa5e762d",
+      "size_bytes": 12840
+    },
+    {
+      "path": "docs/audits/native-proxy-observation-acquisition-20260910/ObservationAcquisition.pm",
+      "sha256": "809c013255ab6973a2d0dabcfd5b0ae5c55c97696d7acc77b10cf68149006470",
+      "size_bytes": 16517
+    },
+    {
+      "path": "docs/audits/native-proxy-observation-acquisition-20260910/audit.py",
+      "sha256": "0c9a39917335920095e822a9ed8faa5a218d6e1ec8ada23509beefe7b54acb87",
+      "size_bytes": 20281
+    },
+    {
+      "path": "docs/audits/native-proxy-observation-acquisition-20260910/qualify.t",
+      "sha256": "7170172160b9309e46ed8aad75d383c1b9329b21273030c3bd8ca7a1fcb3db1e",
+      "size_bytes": 18549
+    },
+    {
+      "path": "docs/audits/native-proxy-observation-coordinator-cuts-20260911/audit.py",
+      "sha256": "b7ce3876507da59563aeb97343cf42c623efdc61b733d71b8a6687ace72e7449",
+      "size_bytes": 13228
+    },
+    {
+      "path": "docs/audits/native-proxy-observation-coordinator-cuts-20260911/plan.json",
+      "sha256": "4b3bfcb6f1f1d9c938cc95561620928e8b50572cb9e132426c7c72c7967a1e10",
+      "size_bytes": 32979
+    },
+    {
+      "path": "docs/audits/native-proxy-observation-coordinator-cuts-20260911/plan.py",
+      "sha256": "5171847651b5dd18e5349b8496ca372081fb1c4ab4f6aad6ec0c534c28c608c8",
+      "size_bytes": 5935
+    },
+    {
+      "path": "docs/audits/native-proxy-observation-coordinator-cuts-20260911/qualify.t",
+      "sha256": "8e59a4a4f70841b60a62428c7475b7ffea64de4dd7f617cb6c8bf0b4ce9b882f",
+      "size_bytes": 23609
+    },
+    {
+      "path": "docs/audits/native-proxy-observation-publication-cuts-20260910/audit.py",
+      "sha256": "56c7ba7a4955cb8cbd182c4178bb02c6140fd69c4eb716492f557d690158a780",
+      "size_bytes": 10795
+    },
+    {
+      "path": "docs/audits/native-proxy-observation-records-20260910/ObservationRecord.pm",
+      "sha256": "35445ee951c8f5e7dc204f58cffe1b2f6273286cc3e7715953d705b33e7158d5",
+      "size_bytes": 4369
+    },
+    {
+      "path": "docs/audits/native-proxy-observation-reuse-20260910/FixtureClone.pm",
+      "sha256": "d68a2d93f785b1c96689e352f7271e97b0bd239f2cf228f2c8e119dbb6aaf234",
+      "size_bytes": 1053
+    },
+    {
+      "path": "docs/audits/native-proxy-observation-reuse-20260910/audit.py",
+      "sha256": "0ba9d55002b911a98ce4e92d23824df414bccbe4e7e663c6fcabc3d74a81219e",
+      "size_bytes": 18403
+    },
+    {
+      "path": "docs/audits/native-proxy-observation-reuse-20260910/qualify.t",
+      "sha256": "6a3aa5374ddf2c5c58b3d31214340e8d2d85952875272ceccd4356693920098f",
+      "size_bytes": 19837
+    },
+    {
+      "path": "docs/audits/native-proxy-observation-semantic-close-20260911/audit.py",
+      "sha256": "334fd2fad0a011f27eb274ca7922948f6902f2e31f1dd6f1d16ba6636dcb6df2",
+      "size_bytes": 11513
+    },
+    {
+      "path": "docs/audits/native-proxy-observation-semantic-close-20260911/closure.py",
+      "sha256": "a93c2fce34f6f27c08c12896f71e63552d4c36fc303ccbfd215716bce3a7cbc0",
+      "size_bytes": 6768
+    },
+    {
+      "path": "docs/audits/native-proxy-observation-semantic-close-20260911/plan.json",
+      "sha256": "d2f3c20d2389c43b38bec715e825c34928237b01ce70a42b376a14702c89b934",
+      "size_bytes": 4885507
+    },
+    {
+      "path": "docs/audits/native-proxy-observation-semantic-close-20260911/plan.py",
+      "sha256": "0d9795c8c9023c514348891c98c3eb15b03bce393e92fbe67100a4f8f0d9ea28",
+      "size_bytes": 7380
+    },
+    {
+      "path": "docs/audits/native-proxy-observation-semantic-close-20260911/qualify.t",
+      "sha256": "4a4114bb65e5a2f4603beb8e4220431f7001122b9f17c25e6b9bcfbbdd11d801",
+      "size_bytes": 27809
+    },
+    {
+      "path": "docs/audits/native-proxy-observation-semantic-cuts-20260911/audit.py",
+      "sha256": "3e362eb2d957fb88c5334d98f401a75e764592ca426697d6fafa105ae6c358e5",
+      "size_bytes": 14821
+    },
+    {
+      "path": "docs/audits/native-proxy-observation-semantic-cuts-20260911/plan.json",
+      "sha256": "05f781422d4e029bac906ed5a8b30f49c9682f756953cc2213e2255ebcfd7c55",
+      "size_bytes": 263743
+    },
+    {
+      "path": "docs/audits/native-proxy-observation-semantic-cuts-20260911/plan.py",
+      "sha256": "ad1535efdf40369f04e49b377c20c9c0e8a7c0ab3bc46311bddcfa9c083d2a1e",
+      "size_bytes": 6933
+    },
+    {
+      "path": "docs/audits/native-proxy-observation-semantic-cuts-20260911/qualify.t",
+      "sha256": "08cc576542926f6078c84d1026460d158db9e031d84bd2206583b4b6f6a078a6",
+      "size_bytes": 25925
+    },
+    {
+      "path": "docs/audits/native-proxy-observation-snapshot-cuts-20260910/audit.py",
+      "sha256": "7cda9532c29332bd2c73ebcf12936e130853fde81e2861160dc68755097cf032",
+      "size_bytes": 15274
+    },
+    {
+      "path": "docs/audits/native-proxy-observation-snapshot-cuts-20260910/plan.json",
+      "sha256": "e1bc62c41afefe8a694d03eb4152dbf07d5818d436e7607af7f82a21d6a4397d",
+      "size_bytes": 38075
+    },
+    {
+      "path": "docs/audits/native-proxy-observation-snapshot-cuts-20260910/plan.py",
+      "sha256": "b89004c6882c2534a1a0117f89cb1adeaf93bdff70890fd6294887080c784776",
+      "size_bytes": 4686
+    },
+    {
+      "path": "docs/audits/native-proxy-observation-snapshot-cuts-20260910/qualify.t",
+      "sha256": "89ad16ec831491f8fb19d290d5eac155c0ad006f0b2a55a82e7a75c560923b9d",
+      "size_bytes": 19552
+    },
+    {
+      "path": "docs/audits/native-proxy-runtime-acquisition-20260910/ReferenceAcquisition.pm",
+      "sha256": "b751c88d709e102f7f9b9dd17e0222c39e0a81acc16d7194f7f7c3f4c8535b57",
+      "size_bytes": 6565
+    },
+    {
+      "path": "docs/audits/native-proxy-runtime-acquisition-20260910/audit.py",
+      "sha256": "36449fac78d3d073fa404ad5f2df5b29e780cbb5af72f3701d1346defdb90fe5",
+      "size_bytes": 13414
+    },
+    {
+      "path": "docs/audits/native-proxy-runtime-census-20260910/ReferenceCensus.pm",
+      "sha256": "9fd74767e8c10831f2732fa8ad426b7e4fff8c17bab06584aa671cdd013b6247",
+      "size_bytes": 8024
+    },
+    {
+      "path": "docs/audits/native-proxy-runtime-census-20260910/audit.py",
+      "sha256": "4602141d655ed33c00e44417e64254937bfdac8863a24e44971c2159f900a13b",
+      "size_bytes": 10090
+    },
+    {
+      "path": "docs/audits/native-proxy-runtime-census-20260910/qualify.t",
+      "sha256": "dfecb1fb29d91911939b80d2aa9315866f306707c85ba85688dfb20091845f57",
+      "size_bytes": 13416
+    },
+    {
+      "path": "docs/audits/native-proxy-runtime-records-20260910/RuntimeRecord.pm",
+      "sha256": "013c0a02e7df59dc3a5af944b603cd44121252a02ca0228d6fdc3e1dd28e6745",
+      "size_bytes": 4078
+    },
+    {
+      "path": "docs/audits/native-proxy-runtime-retirement-20260910/RuntimeRetirement.pm",
+      "sha256": "766348d16243d3868ca5f8b653f757f8f2eaf5c1aba8ec27fd2d9c67e9fd0bcc",
+      "size_bytes": 8727
+    },
+    {
+      "path": "docs/audits/native-proxy-runtime-retirement-20260910/qualify.t",
+      "sha256": "68e36c8b7dd43b49cb39e339dee45665202fbb32a3511e45af7a523380722524",
+      "size_bytes": 22411
+    },
+    {
+      "path": "docs/audits/native-proxy-snapshot-occurrence-20260911/audit.py",
+      "sha256": "480d6c999df0a658fecbacac0acdae5bf2cb8e7c8b528cb7a6fdd769b2677fa7",
+      "size_bytes": 18121
+    },
+    {
+      "path": "docs/audits/native-proxy-snapshot-occurrence-20260911/closure.py",
+      "sha256": "94928242dd460fd00e56f44f5d9f086a2f5ffab6a8fc33504ec3bf49472a545e",
+      "size_bytes": 7984
+    },
+    {
+      "path": "docs/audits/native-proxy-snapshot-occurrence-20260911/history.py",
+      "sha256": "44ffb7b2349742e9e00053524bbe20eacc96e4c469c098eb3274bf285671f097",
+      "size_bytes": 4239
+    },
+    {
+      "path": "docs/audits/native-proxy-snapshot-occurrence-20260911/plan.json",
+      "sha256": "624ae1f77fdfd63cc1d6193c9adac3b7a27dedcd016173a4d18a15b7f76d451e",
+      "size_bytes": 38350
+    },
+    {
+      "path": "docs/audits/native-proxy-snapshot-occurrence-20260911/plan.py",
+      "sha256": "14796e94416c91e6c80e91df5ed66595b0d62d13e93db42281c57559b7eee2f1",
+      "size_bytes": 5036
+    },
+    {
+      "path": "docs/audits/native-proxy-snapshot-occurrence-20260911/qualify.t",
+      "sha256": "d414179274c080562a6a680f73c604c7661f562c8459f453c8e1dd0d45d9fcbc",
+      "size_bytes": 19834
+    },
+    {
+      "path": "perl/FSM/Support/ProcessSupervisor.pm",
+      "sha256": "684882d91f673ea7145f43ed3aad31acf099f13508574be7b2d8911123988637",
+      "size_bytes": 27990
+    },
+    {
+      "path": "scripts/fixture_kernel_sampler.py",
+      "sha256": "50c94165893b74b758c560f561ff744f294683812a26b429071ef43009aac2dc",
+      "size_bytes": 22040
+    },
+    {
+      "path": "scripts/fixture_policy_archive.py",
+      "sha256": "f72355164d6af97e9c6de678018fe864bfab537280d95a87f986825970ad50e2",
+      "size_bytes": 21652
+    },
+    {
+      "path": "scripts/observe_fixture_startup.py",
+      "sha256": "05144eb1ebd86ebf132ad36b86b4c93b23687db928fc369f633615f0b870fe06",
+      "size_bytes": 25563
+    },
+    {
+      "path": "t/1669-task-acceptance-fixture-runtime.t",
+      "sha256": "bdebbf03308cd5e0699324f9ab96a249c11c9ab05634309569d33874391a196f",
+      "size_bytes": 67582
+    },
+    {
+      "path": "t/lib/FSM/Test/RustProxyFixture.pm",
+      "sha256": "d9c4ab52cf8074526c59b7a5dcb9da870ca7ffdacb4eb236dacb23b5db6d8bfb",
+      "size_bytes": 11466
+    }
+  ]
+}
