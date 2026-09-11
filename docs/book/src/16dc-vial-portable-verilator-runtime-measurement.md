@@ -2342,8 +2342,34 @@ exact recovery copies are under
 `docs/audits/native-proxy-observation-archive-partial-writes-20260911/`.
 The replay command above covers the earlier record, filesystem and helper-call
 matrices at its pinned source revision. Partial-write evidence has its own saved
-oracle. Modeled close reports, genuine omitted-close controls, final hostile
-layout/source applicability and native release remain separate gates.
+oracle. Close-return reports have separate qualification below.
+
+Archive close-error controls cover ordinary and equal-content archives, both
+fresh creation and verification of an existing archive. Each modeled failure
+follows a successful actual close of the exact observed source, writer or
+directory handle. The result records the real close and the substituted error
+separately; it does not assert that an operating-system close failed.
+
+Single and grouped failures check cleanup order and error precedence. For
+example, when a payload reader reports EIO and its writer reports ENOSPC,
+the reader's earlier error survives while the writer and earlier retained
+sources still close. When a source recheck already failed, that original
+exception survives all subsequent close reports. Declaring reports in reverse
+order makes their declaration order independent of actual cleanup order.
+
+The independent oracle reconstructs the exact interrupted call sequence,
+all remaining owned closes and the complete returned error. Existing-archive
+cases first observe a successful preparation and then require verification
+to preserve every archive byte and native identity. Fresh failures retain
+exactly the complete files already created; both observation holds, retained
+snapshots and other owners remain unchanged. Actual descriptor closure is
+checked before return, including the directory observer's duplicate handle.
+
+The saved qualification, independent oracle and exact recovery copies live at
+`docs/audits/native-proxy-observation-archive-close-reports-20260911/`.
+These modeled return errors do not qualify operating-system close ambiguity.
+Genuine omitted-close detection and recovery, the close-domain join, final
+hostile layout/source applicability and native release remain separate gates.
 
 The helper checks bounded regular source/output files and the native header,
 then sets executable permissions through the admitted open file handle. A

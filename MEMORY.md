@@ -6,8 +6,8 @@ Status and evidence: `docs/tasks/`. The system itself: `MEMORY_ARCHITECTURE.md`.
 ## Resume
 
 - repository_revision: derive with `git log -1 --format='%H %s'`; never shadow `HEAD` here.
-- active_work_unit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.12.4.1.3.4.2.3.3`
-- next_action: Qualify archive close reports and omitted-close controls at the active leaf.
-- in_flight_uncommitted: none after commit.
+- active_work_unit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.12.4.1.3.4.2.3.3.2`
+- next_action: Qualify omitted archive closes and observer recovery.
+- in_flight_uncommitted: none.
 - in_flight_background: none.
 - blockers: Historical startup/parent qualification and full CI/push remain gated.

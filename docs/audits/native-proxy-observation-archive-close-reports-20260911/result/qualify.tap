@@ -1,0 +1,573 @@
+ok 1 - ordinary:fresh:healthy: actual inactive retirement precedes close controls
+ok 2 - ordinary:fresh:healthy: selected reports and primary outcome are observed
+ok 3 - ordinary:fresh:healthy: every actual owned handle explicitly closes
+ok 4 - ordinary:fresh:healthy: retained inputs unchanged
+ok 5 - ordinary:fresh:healthy: expected complete archive and other owners preserved
+ok 6 - ordinary:fresh:single:directory_handle:0: actual inactive retirement precedes close controls
+ok 7 - ordinary:fresh:single:directory_handle:0: selected reports and primary outcome are observed
+ok 8 - ordinary:fresh:single:directory_handle:0: every actual owned handle explicitly closes
+ok 9 - ordinary:fresh:single:directory_handle:0: retained inputs unchanged
+ok 10 - ordinary:fresh:single:directory_handle:0: expected complete archive and other owners preserved
+ok 11 - ordinary:fresh:single:directory_handle:1: actual inactive retirement precedes close controls
+ok 12 - ordinary:fresh:single:directory_handle:1: selected reports and primary outcome are observed
+ok 13 - ordinary:fresh:single:directory_handle:1: every actual owned handle explicitly closes
+ok 14 - ordinary:fresh:single:directory_handle:1: retained inputs unchanged
+ok 15 - ordinary:fresh:single:directory_handle:1: expected complete archive and other owners preserved
+ok 16 - ordinary:fresh:single:source:0:0: actual inactive retirement precedes close controls
+ok 17 - ordinary:fresh:single:source:0:0: selected reports and primary outcome are observed
+ok 18 - ordinary:fresh:single:source:0:0: every actual owned handle explicitly closes
+ok 19 - ordinary:fresh:single:source:0:0: retained inputs unchanged
+ok 20 - ordinary:fresh:single:source:0:0: expected complete archive and other owners preserved
+ok 21 - ordinary:fresh:single:writer:0: actual inactive retirement precedes close controls
+ok 22 - ordinary:fresh:single:writer:0: selected reports and primary outcome are observed
+ok 23 - ordinary:fresh:single:writer:0: every actual owned handle explicitly closes
+ok 24 - ordinary:fresh:single:writer:0: retained inputs unchanged
+ok 25 - ordinary:fresh:single:writer:0: expected complete archive and other owners preserved
+ok 26 - ordinary:fresh:single:directory_handle:2: actual inactive retirement precedes close controls
+ok 27 - ordinary:fresh:single:directory_handle:2: selected reports and primary outcome are observed
+ok 28 - ordinary:fresh:single:directory_handle:2: every actual owned handle explicitly closes
+ok 29 - ordinary:fresh:single:directory_handle:2: retained inputs unchanged
+ok 30 - ordinary:fresh:single:directory_handle:2: expected complete archive and other owners preserved
+ok 31 - ordinary:fresh:single:source:1:0: actual inactive retirement precedes close controls
+ok 32 - ordinary:fresh:single:source:1:0: selected reports and primary outcome are observed
+ok 33 - ordinary:fresh:single:source:1:0: every actual owned handle explicitly closes
+ok 34 - ordinary:fresh:single:source:1:0: retained inputs unchanged
+ok 35 - ordinary:fresh:single:source:1:0: expected complete archive and other owners preserved
+ok 36 - ordinary:fresh:single:writer:1: actual inactive retirement precedes close controls
+ok 37 - ordinary:fresh:single:writer:1: selected reports and primary outcome are observed
+ok 38 - ordinary:fresh:single:writer:1: every actual owned handle explicitly closes
+ok 39 - ordinary:fresh:single:writer:1: retained inputs unchanged
+ok 40 - ordinary:fresh:single:writer:1: expected complete archive and other owners preserved
+ok 41 - ordinary:fresh:single:directory_handle:3: actual inactive retirement precedes close controls
+ok 42 - ordinary:fresh:single:directory_handle:3: selected reports and primary outcome are observed
+ok 43 - ordinary:fresh:single:directory_handle:3: every actual owned handle explicitly closes
+ok 44 - ordinary:fresh:single:directory_handle:3: retained inputs unchanged
+ok 45 - ordinary:fresh:single:directory_handle:3: expected complete archive and other owners preserved
+ok 46 - ordinary:fresh:single:source:2:0: actual inactive retirement precedes close controls
+ok 47 - ordinary:fresh:single:source:2:0: selected reports and primary outcome are observed
+ok 48 - ordinary:fresh:single:source:2:0: every actual owned handle explicitly closes
+ok 49 - ordinary:fresh:single:source:2:0: retained inputs unchanged
+ok 50 - ordinary:fresh:single:source:2:0: expected complete archive and other owners preserved
+ok 51 - ordinary:fresh:single:writer:2: actual inactive retirement precedes close controls
+ok 52 - ordinary:fresh:single:writer:2: selected reports and primary outcome are observed
+ok 53 - ordinary:fresh:single:writer:2: every actual owned handle explicitly closes
+ok 54 - ordinary:fresh:single:writer:2: retained inputs unchanged
+ok 55 - ordinary:fresh:single:writer:2: expected complete archive and other owners preserved
+ok 56 - ordinary:fresh:single:directory_handle:4: actual inactive retirement precedes close controls
+ok 57 - ordinary:fresh:single:directory_handle:4: selected reports and primary outcome are observed
+ok 58 - ordinary:fresh:single:directory_handle:4: every actual owned handle explicitly closes
+ok 59 - ordinary:fresh:single:directory_handle:4: retained inputs unchanged
+ok 60 - ordinary:fresh:single:directory_handle:4: expected complete archive and other owners preserved
+ok 61 - ordinary:fresh:single:source:3:0: actual inactive retirement precedes close controls
+ok 62 - ordinary:fresh:single:source:3:0: selected reports and primary outcome are observed
+ok 63 - ordinary:fresh:single:source:3:0: every actual owned handle explicitly closes
+ok 64 - ordinary:fresh:single:source:3:0: retained inputs unchanged
+ok 65 - ordinary:fresh:single:source:3:0: expected complete archive and other owners preserved
+ok 66 - ordinary:fresh:single:writer:3: actual inactive retirement precedes close controls
+ok 67 - ordinary:fresh:single:writer:3: selected reports and primary outcome are observed
+ok 68 - ordinary:fresh:single:writer:3: every actual owned handle explicitly closes
+ok 69 - ordinary:fresh:single:writer:3: retained inputs unchanged
+ok 70 - ordinary:fresh:single:writer:3: expected complete archive and other owners preserved
+ok 71 - ordinary:fresh:single:directory_handle:5: actual inactive retirement precedes close controls
+ok 72 - ordinary:fresh:single:directory_handle:5: selected reports and primary outcome are observed
+ok 73 - ordinary:fresh:single:directory_handle:5: every actual owned handle explicitly closes
+ok 74 - ordinary:fresh:single:directory_handle:5: retained inputs unchanged
+ok 75 - ordinary:fresh:single:directory_handle:5: expected complete archive and other owners preserved
+ok 76 - ordinary:fresh:single:source:0:2: actual inactive retirement precedes close controls
+ok 77 - ordinary:fresh:single:source:0:2: selected reports and primary outcome are observed
+ok 78 - ordinary:fresh:single:source:0:2: every actual owned handle explicitly closes
+ok 79 - ordinary:fresh:single:source:0:2: retained inputs unchanged
+ok 80 - ordinary:fresh:single:source:0:2: expected complete archive and other owners preserved
+ok 81 - ordinary:fresh:single:source:1:2: actual inactive retirement precedes close controls
+ok 82 - ordinary:fresh:single:source:1:2: selected reports and primary outcome are observed
+ok 83 - ordinary:fresh:single:source:1:2: every actual owned handle explicitly closes
+ok 84 - ordinary:fresh:single:source:1:2: retained inputs unchanged
+ok 85 - ordinary:fresh:single:source:1:2: expected complete archive and other owners preserved
+ok 86 - ordinary:fresh:single:source:2:2: actual inactive retirement precedes close controls
+ok 87 - ordinary:fresh:single:source:2:2: selected reports and primary outcome are observed
+ok 88 - ordinary:fresh:single:source:2:2: every actual owned handle explicitly closes
+ok 89 - ordinary:fresh:single:source:2:2: retained inputs unchanged
+ok 90 - ordinary:fresh:single:source:2:2: expected complete archive and other owners preserved
+ok 91 - ordinary:fresh:single:source:3:2: actual inactive retirement precedes close controls
+ok 92 - ordinary:fresh:single:source:3:2: selected reports and primary outcome are observed
+ok 93 - ordinary:fresh:single:source:3:2: every actual owned handle explicitly closes
+ok 94 - ordinary:fresh:single:source:3:2: retained inputs unchanged
+ok 95 - ordinary:fresh:single:source:3:2: expected complete archive and other owners preserved
+ok 96 - ordinary:fresh:single:directory_handle:6: actual inactive retirement precedes close controls
+ok 97 - ordinary:fresh:single:directory_handle:6: selected reports and primary outcome are observed
+ok 98 - ordinary:fresh:single:directory_handle:6: every actual owned handle explicitly closes
+ok 99 - ordinary:fresh:single:directory_handle:6: retained inputs unchanged
+ok 100 - ordinary:fresh:single:directory_handle:6: expected complete archive and other owners preserved
+ok 101 - ordinary:fresh:single:source:0:1: actual inactive retirement precedes close controls
+ok 102 - ordinary:fresh:single:source:0:1: selected reports and primary outcome are observed
+ok 103 - ordinary:fresh:single:source:0:1: every actual owned handle explicitly closes
+ok 104 - ordinary:fresh:single:source:0:1: retained inputs unchanged
+ok 105 - ordinary:fresh:single:source:0:1: expected complete archive and other owners preserved
+ok 106 - ordinary:fresh:single:source:1:1: actual inactive retirement precedes close controls
+ok 107 - ordinary:fresh:single:source:1:1: selected reports and primary outcome are observed
+ok 108 - ordinary:fresh:single:source:1:1: every actual owned handle explicitly closes
+ok 109 - ordinary:fresh:single:source:1:1: retained inputs unchanged
+ok 110 - ordinary:fresh:single:source:1:1: expected complete archive and other owners preserved
+ok 111 - ordinary:fresh:single:source:2:1: actual inactive retirement precedes close controls
+ok 112 - ordinary:fresh:single:source:2:1: selected reports and primary outcome are observed
+ok 113 - ordinary:fresh:single:source:2:1: every actual owned handle explicitly closes
+ok 114 - ordinary:fresh:single:source:2:1: retained inputs unchanged
+ok 115 - ordinary:fresh:single:source:2:1: expected complete archive and other owners preserved
+ok 116 - ordinary:fresh:single:source:3:1: actual inactive retirement precedes close controls
+ok 117 - ordinary:fresh:single:source:3:1: selected reports and primary outcome are observed
+ok 118 - ordinary:fresh:single:source:3:1: every actual owned handle explicitly closes
+ok 119 - ordinary:fresh:single:source:3:1: retained inputs unchanged
+ok 120 - ordinary:fresh:single:source:3:1: expected complete archive and other owners preserved
+ok 121 - ordinary:fresh:payload-pair:0: actual inactive retirement precedes close controls
+ok 122 - ordinary:fresh:payload-pair:0: selected reports and primary outcome are observed
+ok 123 - ordinary:fresh:payload-pair:0: every actual owned handle explicitly closes
+ok 124 - ordinary:fresh:payload-pair:0: retained inputs unchanged
+ok 125 - ordinary:fresh:payload-pair:0: expected complete archive and other owners preserved
+ok 126 - ordinary:fresh:primary-payload:0: actual inactive retirement precedes close controls
+ok 127 - ordinary:fresh:primary-payload:0: selected reports and primary outcome are observed
+ok 128 - ordinary:fresh:primary-payload:0: every actual owned handle explicitly closes
+ok 129 - ordinary:fresh:primary-payload:0: retained inputs unchanged
+ok 130 - ordinary:fresh:primary-payload:0: expected complete archive and other owners preserved
+ok 131 - ordinary:fresh:payload-pair:1: actual inactive retirement precedes close controls
+ok 132 - ordinary:fresh:payload-pair:1: selected reports and primary outcome are observed
+ok 133 - ordinary:fresh:payload-pair:1: every actual owned handle explicitly closes
+ok 134 - ordinary:fresh:payload-pair:1: retained inputs unchanged
+ok 135 - ordinary:fresh:payload-pair:1: expected complete archive and other owners preserved
+ok 136 - ordinary:fresh:primary-payload:1: actual inactive retirement precedes close controls
+ok 137 - ordinary:fresh:primary-payload:1: selected reports and primary outcome are observed
+ok 138 - ordinary:fresh:primary-payload:1: every actual owned handle explicitly closes
+ok 139 - ordinary:fresh:primary-payload:1: retained inputs unchanged
+ok 140 - ordinary:fresh:primary-payload:1: expected complete archive and other owners preserved
+ok 141 - ordinary:fresh:payload-pair:2: actual inactive retirement precedes close controls
+ok 142 - ordinary:fresh:payload-pair:2: selected reports and primary outcome are observed
+ok 143 - ordinary:fresh:payload-pair:2: every actual owned handle explicitly closes
+ok 144 - ordinary:fresh:payload-pair:2: retained inputs unchanged
+ok 145 - ordinary:fresh:payload-pair:2: expected complete archive and other owners preserved
+ok 146 - ordinary:fresh:primary-payload:2: actual inactive retirement precedes close controls
+ok 147 - ordinary:fresh:primary-payload:2: selected reports and primary outcome are observed
+ok 148 - ordinary:fresh:primary-payload:2: every actual owned handle explicitly closes
+ok 149 - ordinary:fresh:primary-payload:2: retained inputs unchanged
+ok 150 - ordinary:fresh:primary-payload:2: expected complete archive and other owners preserved
+ok 151 - ordinary:fresh:payload-pair:3: actual inactive retirement precedes close controls
+ok 152 - ordinary:fresh:payload-pair:3: selected reports and primary outcome are observed
+ok 153 - ordinary:fresh:payload-pair:3: every actual owned handle explicitly closes
+ok 154 - ordinary:fresh:payload-pair:3: retained inputs unchanged
+ok 155 - ordinary:fresh:payload-pair:3: expected complete archive and other owners preserved
+ok 156 - ordinary:fresh:primary-payload:3: actual inactive retirement precedes close controls
+ok 157 - ordinary:fresh:primary-payload:3: selected reports and primary outcome are observed
+ok 158 - ordinary:fresh:primary-payload:3: every actual owned handle explicitly closes
+ok 159 - ordinary:fresh:primary-payload:3: retained inputs unchanged
+ok 160 - ordinary:fresh:primary-payload:3: expected complete archive and other owners preserved
+ok 161 - ordinary:fresh:retained-group: actual inactive retirement precedes close controls
+ok 162 - ordinary:fresh:retained-group: selected reports and primary outcome are observed
+ok 163 - ordinary:fresh:retained-group: every actual owned handle explicitly closes
+ok 164 - ordinary:fresh:retained-group: retained inputs unchanged
+ok 165 - ordinary:fresh:retained-group: expected complete archive and other owners preserved
+ok 166 - ordinary:fresh:primary-retained: actual inactive retirement precedes close controls
+ok 167 - ordinary:fresh:primary-retained: selected reports and primary outcome are observed
+ok 168 - ordinary:fresh:primary-retained: every actual owned handle explicitly closes
+ok 169 - ordinary:fresh:primary-retained: retained inputs unchanged
+ok 170 - ordinary:fresh:primary-retained: expected complete archive and other owners preserved
+ok 171 - ordinary:fresh:primary-reread:0: actual inactive retirement precedes close controls
+ok 172 - ordinary:fresh:primary-reread:0: selected reports and primary outcome are observed
+ok 173 - ordinary:fresh:primary-reread:0: every actual owned handle explicitly closes
+ok 174 - ordinary:fresh:primary-reread:0: retained inputs unchanged
+ok 175 - ordinary:fresh:primary-reread:0: expected complete archive and other owners preserved
+ok 176 - ordinary:fresh:primary-reread:1: actual inactive retirement precedes close controls
+ok 177 - ordinary:fresh:primary-reread:1: selected reports and primary outcome are observed
+ok 178 - ordinary:fresh:primary-reread:1: every actual owned handle explicitly closes
+ok 179 - ordinary:fresh:primary-reread:1: retained inputs unchanged
+ok 180 - ordinary:fresh:primary-reread:1: expected complete archive and other owners preserved
+ok 181 - ordinary:fresh:primary-reread:2: actual inactive retirement precedes close controls
+ok 182 - ordinary:fresh:primary-reread:2: selected reports and primary outcome are observed
+ok 183 - ordinary:fresh:primary-reread:2: every actual owned handle explicitly closes
+ok 184 - ordinary:fresh:primary-reread:2: retained inputs unchanged
+ok 185 - ordinary:fresh:primary-reread:2: expected complete archive and other owners preserved
+ok 186 - ordinary:fresh:primary-reread:3: actual inactive retirement precedes close controls
+ok 187 - ordinary:fresh:primary-reread:3: selected reports and primary outcome are observed
+ok 188 - ordinary:fresh:primary-reread:3: every actual owned handle explicitly closes
+ok 189 - ordinary:fresh:primary-reread:3: retained inputs unchanged
+ok 190 - ordinary:fresh:primary-reread:3: expected complete archive and other owners preserved
+ok 191 - ordinary:existing:healthy: healthy preparation is observed
+ok 192 - ordinary:existing:healthy: all actual preparation handles explicitly close
+ok 193 - ordinary:existing:healthy: actual inactive retirement precedes close controls
+ok 194 - ordinary:existing:healthy: selected reports and primary outcome are observed
+ok 195 - ordinary:existing:healthy: every actual owned handle explicitly closes
+ok 196 - ordinary:existing:healthy: retained inputs unchanged
+ok 197 - ordinary:existing:healthy: expected complete archive and other owners preserved
+ok 198 - ordinary:existing:single:directory_handle:0: healthy preparation is observed
+ok 199 - ordinary:existing:single:directory_handle:0: all actual preparation handles explicitly close
+ok 200 - ordinary:existing:single:directory_handle:0: actual inactive retirement precedes close controls
+ok 201 - ordinary:existing:single:directory_handle:0: selected reports and primary outcome are observed
+ok 202 - ordinary:existing:single:directory_handle:0: every actual owned handle explicitly closes
+ok 203 - ordinary:existing:single:directory_handle:0: retained inputs unchanged
+ok 204 - ordinary:existing:single:directory_handle:0: expected complete archive and other owners preserved
+ok 205 - ordinary:existing:single:directory_handle:1: healthy preparation is observed
+ok 206 - ordinary:existing:single:directory_handle:1: all actual preparation handles explicitly close
+ok 207 - ordinary:existing:single:directory_handle:1: actual inactive retirement precedes close controls
+ok 208 - ordinary:existing:single:directory_handle:1: selected reports and primary outcome are observed
+ok 209 - ordinary:existing:single:directory_handle:1: every actual owned handle explicitly closes
+ok 210 - ordinary:existing:single:directory_handle:1: retained inputs unchanged
+ok 211 - ordinary:existing:single:directory_handle:1: expected complete archive and other owners preserved
+ok 212 - ordinary:existing:single:source:0:1: healthy preparation is observed
+ok 213 - ordinary:existing:single:source:0:1: all actual preparation handles explicitly close
+ok 214 - ordinary:existing:single:source:0:1: actual inactive retirement precedes close controls
+ok 215 - ordinary:existing:single:source:0:1: selected reports and primary outcome are observed
+ok 216 - ordinary:existing:single:source:0:1: every actual owned handle explicitly closes
+ok 217 - ordinary:existing:single:source:0:1: retained inputs unchanged
+ok 218 - ordinary:existing:single:source:0:1: expected complete archive and other owners preserved
+ok 219 - ordinary:existing:single:source:1:1: healthy preparation is observed
+ok 220 - ordinary:existing:single:source:1:1: all actual preparation handles explicitly close
+ok 221 - ordinary:existing:single:source:1:1: actual inactive retirement precedes close controls
+ok 222 - ordinary:existing:single:source:1:1: selected reports and primary outcome are observed
+ok 223 - ordinary:existing:single:source:1:1: every actual owned handle explicitly closes
+ok 224 - ordinary:existing:single:source:1:1: retained inputs unchanged
+ok 225 - ordinary:existing:single:source:1:1: expected complete archive and other owners preserved
+ok 226 - ordinary:existing:single:source:2:1: healthy preparation is observed
+ok 227 - ordinary:existing:single:source:2:1: all actual preparation handles explicitly close
+ok 228 - ordinary:existing:single:source:2:1: actual inactive retirement precedes close controls
+ok 229 - ordinary:existing:single:source:2:1: selected reports and primary outcome are observed
+ok 230 - ordinary:existing:single:source:2:1: every actual owned handle explicitly closes
+ok 231 - ordinary:existing:single:source:2:1: retained inputs unchanged
+ok 232 - ordinary:existing:single:source:2:1: expected complete archive and other owners preserved
+ok 233 - ordinary:existing:single:source:3:1: healthy preparation is observed
+ok 234 - ordinary:existing:single:source:3:1: all actual preparation handles explicitly close
+ok 235 - ordinary:existing:single:source:3:1: actual inactive retirement precedes close controls
+ok 236 - ordinary:existing:single:source:3:1: selected reports and primary outcome are observed
+ok 237 - ordinary:existing:single:source:3:1: every actual owned handle explicitly closes
+ok 238 - ordinary:existing:single:source:3:1: retained inputs unchanged
+ok 239 - ordinary:existing:single:source:3:1: expected complete archive and other owners preserved
+ok 240 - ordinary:existing:single:directory_handle:2: healthy preparation is observed
+ok 241 - ordinary:existing:single:directory_handle:2: all actual preparation handles explicitly close
+ok 242 - ordinary:existing:single:directory_handle:2: actual inactive retirement precedes close controls
+ok 243 - ordinary:existing:single:directory_handle:2: selected reports and primary outcome are observed
+ok 244 - ordinary:existing:single:directory_handle:2: every actual owned handle explicitly closes
+ok 245 - ordinary:existing:single:directory_handle:2: retained inputs unchanged
+ok 246 - ordinary:existing:single:directory_handle:2: expected complete archive and other owners preserved
+ok 247 - ordinary:existing:single:source:0:0: healthy preparation is observed
+ok 248 - ordinary:existing:single:source:0:0: all actual preparation handles explicitly close
+ok 249 - ordinary:existing:single:source:0:0: actual inactive retirement precedes close controls
+ok 250 - ordinary:existing:single:source:0:0: selected reports and primary outcome are observed
+ok 251 - ordinary:existing:single:source:0:0: every actual owned handle explicitly closes
+ok 252 - ordinary:existing:single:source:0:0: retained inputs unchanged
+ok 253 - ordinary:existing:single:source:0:0: expected complete archive and other owners preserved
+ok 254 - ordinary:existing:single:source:1:0: healthy preparation is observed
+ok 255 - ordinary:existing:single:source:1:0: all actual preparation handles explicitly close
+ok 256 - ordinary:existing:single:source:1:0: actual inactive retirement precedes close controls
+ok 257 - ordinary:existing:single:source:1:0: selected reports and primary outcome are observed
+ok 258 - ordinary:existing:single:source:1:0: every actual owned handle explicitly closes
+ok 259 - ordinary:existing:single:source:1:0: retained inputs unchanged
+ok 260 - ordinary:existing:single:source:1:0: expected complete archive and other owners preserved
+ok 261 - ordinary:existing:single:source:2:0: healthy preparation is observed
+ok 262 - ordinary:existing:single:source:2:0: all actual preparation handles explicitly close
+ok 263 - ordinary:existing:single:source:2:0: actual inactive retirement precedes close controls
+ok 264 - ordinary:existing:single:source:2:0: selected reports and primary outcome are observed
+ok 265 - ordinary:existing:single:source:2:0: every actual owned handle explicitly closes
+ok 266 - ordinary:existing:single:source:2:0: retained inputs unchanged
+ok 267 - ordinary:existing:single:source:2:0: expected complete archive and other owners preserved
+ok 268 - ordinary:existing:single:source:3:0: healthy preparation is observed
+ok 269 - ordinary:existing:single:source:3:0: all actual preparation handles explicitly close
+ok 270 - ordinary:existing:single:source:3:0: actual inactive retirement precedes close controls
+ok 271 - ordinary:existing:single:source:3:0: selected reports and primary outcome are observed
+ok 272 - ordinary:existing:single:source:3:0: every actual owned handle explicitly closes
+ok 273 - ordinary:existing:single:source:3:0: retained inputs unchanged
+ok 274 - ordinary:existing:single:source:3:0: expected complete archive and other owners preserved
+ok 275 - ordinary:existing:retained-group: healthy preparation is observed
+ok 276 - ordinary:existing:retained-group: all actual preparation handles explicitly close
+ok 277 - ordinary:existing:retained-group: actual inactive retirement precedes close controls
+ok 278 - ordinary:existing:retained-group: selected reports and primary outcome are observed
+ok 279 - ordinary:existing:retained-group: every actual owned handle explicitly closes
+ok 280 - ordinary:existing:retained-group: retained inputs unchanged
+ok 281 - ordinary:existing:retained-group: expected complete archive and other owners preserved
+ok 282 - ordinary:existing:primary-retained: healthy preparation is observed
+ok 283 - ordinary:existing:primary-retained: all actual preparation handles explicitly close
+ok 284 - ordinary:existing:primary-retained: actual inactive retirement precedes close controls
+ok 285 - ordinary:existing:primary-retained: selected reports and primary outcome are observed
+ok 286 - ordinary:existing:primary-retained: every actual owned handle explicitly closes
+ok 287 - ordinary:existing:primary-retained: retained inputs unchanged
+ok 288 - ordinary:existing:primary-retained: expected complete archive and other owners preserved
+ok 289 - ordinary:existing:primary-reread:0: healthy preparation is observed
+ok 290 - ordinary:existing:primary-reread:0: all actual preparation handles explicitly close
+ok 291 - ordinary:existing:primary-reread:0: actual inactive retirement precedes close controls
+ok 292 - ordinary:existing:primary-reread:0: selected reports and primary outcome are observed
+ok 293 - ordinary:existing:primary-reread:0: every actual owned handle explicitly closes
+ok 294 - ordinary:existing:primary-reread:0: retained inputs unchanged
+ok 295 - ordinary:existing:primary-reread:0: expected complete archive and other owners preserved
+ok 296 - ordinary:existing:primary-reread:1: healthy preparation is observed
+ok 297 - ordinary:existing:primary-reread:1: all actual preparation handles explicitly close
+ok 298 - ordinary:existing:primary-reread:1: actual inactive retirement precedes close controls
+ok 299 - ordinary:existing:primary-reread:1: selected reports and primary outcome are observed
+ok 300 - ordinary:existing:primary-reread:1: every actual owned handle explicitly closes
+ok 301 - ordinary:existing:primary-reread:1: retained inputs unchanged
+ok 302 - ordinary:existing:primary-reread:1: expected complete archive and other owners preserved
+ok 303 - ordinary:existing:primary-reread:2: healthy preparation is observed
+ok 304 - ordinary:existing:primary-reread:2: all actual preparation handles explicitly close
+ok 305 - ordinary:existing:primary-reread:2: actual inactive retirement precedes close controls
+ok 306 - ordinary:existing:primary-reread:2: selected reports and primary outcome are observed
+ok 307 - ordinary:existing:primary-reread:2: every actual owned handle explicitly closes
+ok 308 - ordinary:existing:primary-reread:2: retained inputs unchanged
+ok 309 - ordinary:existing:primary-reread:2: expected complete archive and other owners preserved
+ok 310 - ordinary:existing:primary-reread:3: healthy preparation is observed
+ok 311 - ordinary:existing:primary-reread:3: all actual preparation handles explicitly close
+ok 312 - ordinary:existing:primary-reread:3: actual inactive retirement precedes close controls
+ok 313 - ordinary:existing:primary-reread:3: selected reports and primary outcome are observed
+ok 314 - ordinary:existing:primary-reread:3: every actual owned handle explicitly closes
+ok 315 - ordinary:existing:primary-reread:3: retained inputs unchanged
+ok 316 - ordinary:existing:primary-reread:3: expected complete archive and other owners preserved
+ok 317 - equal_reference:fresh:healthy: actual inactive retirement precedes close controls
+ok 318 - equal_reference:fresh:healthy: selected reports and primary outcome are observed
+ok 319 - equal_reference:fresh:healthy: every actual owned handle explicitly closes
+ok 320 - equal_reference:fresh:healthy: retained inputs unchanged
+ok 321 - equal_reference:fresh:healthy: expected complete archive and other owners preserved
+ok 322 - equal_reference:fresh:single:directory_handle:0: actual inactive retirement precedes close controls
+ok 323 - equal_reference:fresh:single:directory_handle:0: selected reports and primary outcome are observed
+ok 324 - equal_reference:fresh:single:directory_handle:0: every actual owned handle explicitly closes
+ok 325 - equal_reference:fresh:single:directory_handle:0: retained inputs unchanged
+ok 326 - equal_reference:fresh:single:directory_handle:0: expected complete archive and other owners preserved
+ok 327 - equal_reference:fresh:single:directory_handle:1: actual inactive retirement precedes close controls
+ok 328 - equal_reference:fresh:single:directory_handle:1: selected reports and primary outcome are observed
+ok 329 - equal_reference:fresh:single:directory_handle:1: every actual owned handle explicitly closes
+ok 330 - equal_reference:fresh:single:directory_handle:1: retained inputs unchanged
+ok 331 - equal_reference:fresh:single:directory_handle:1: expected complete archive and other owners preserved
+ok 332 - equal_reference:fresh:single:source:0:0: actual inactive retirement precedes close controls
+ok 333 - equal_reference:fresh:single:source:0:0: selected reports and primary outcome are observed
+ok 334 - equal_reference:fresh:single:source:0:0: every actual owned handle explicitly closes
+ok 335 - equal_reference:fresh:single:source:0:0: retained inputs unchanged
+ok 336 - equal_reference:fresh:single:source:0:0: expected complete archive and other owners preserved
+ok 337 - equal_reference:fresh:single:writer:0: actual inactive retirement precedes close controls
+ok 338 - equal_reference:fresh:single:writer:0: selected reports and primary outcome are observed
+ok 339 - equal_reference:fresh:single:writer:0: every actual owned handle explicitly closes
+ok 340 - equal_reference:fresh:single:writer:0: retained inputs unchanged
+ok 341 - equal_reference:fresh:single:writer:0: expected complete archive and other owners preserved
+ok 342 - equal_reference:fresh:single:directory_handle:2: actual inactive retirement precedes close controls
+ok 343 - equal_reference:fresh:single:directory_handle:2: selected reports and primary outcome are observed
+ok 344 - equal_reference:fresh:single:directory_handle:2: every actual owned handle explicitly closes
+ok 345 - equal_reference:fresh:single:directory_handle:2: retained inputs unchanged
+ok 346 - equal_reference:fresh:single:directory_handle:2: expected complete archive and other owners preserved
+ok 347 - equal_reference:fresh:single:source:1:0: actual inactive retirement precedes close controls
+ok 348 - equal_reference:fresh:single:source:1:0: selected reports and primary outcome are observed
+ok 349 - equal_reference:fresh:single:source:1:0: every actual owned handle explicitly closes
+ok 350 - equal_reference:fresh:single:source:1:0: retained inputs unchanged
+ok 351 - equal_reference:fresh:single:source:1:0: expected complete archive and other owners preserved
+ok 352 - equal_reference:fresh:single:writer:1: actual inactive retirement precedes close controls
+ok 353 - equal_reference:fresh:single:writer:1: selected reports and primary outcome are observed
+ok 354 - equal_reference:fresh:single:writer:1: every actual owned handle explicitly closes
+ok 355 - equal_reference:fresh:single:writer:1: retained inputs unchanged
+ok 356 - equal_reference:fresh:single:writer:1: expected complete archive and other owners preserved
+ok 357 - equal_reference:fresh:single:directory_handle:3: actual inactive retirement precedes close controls
+ok 358 - equal_reference:fresh:single:directory_handle:3: selected reports and primary outcome are observed
+ok 359 - equal_reference:fresh:single:directory_handle:3: every actual owned handle explicitly closes
+ok 360 - equal_reference:fresh:single:directory_handle:3: retained inputs unchanged
+ok 361 - equal_reference:fresh:single:directory_handle:3: expected complete archive and other owners preserved
+ok 362 - equal_reference:fresh:single:source:2:0: actual inactive retirement precedes close controls
+ok 363 - equal_reference:fresh:single:source:2:0: selected reports and primary outcome are observed
+ok 364 - equal_reference:fresh:single:source:2:0: every actual owned handle explicitly closes
+ok 365 - equal_reference:fresh:single:source:2:0: retained inputs unchanged
+ok 366 - equal_reference:fresh:single:source:2:0: expected complete archive and other owners preserved
+ok 367 - equal_reference:fresh:single:writer:2: actual inactive retirement precedes close controls
+ok 368 - equal_reference:fresh:single:writer:2: selected reports and primary outcome are observed
+ok 369 - equal_reference:fresh:single:writer:2: every actual owned handle explicitly closes
+ok 370 - equal_reference:fresh:single:writer:2: retained inputs unchanged
+ok 371 - equal_reference:fresh:single:writer:2: expected complete archive and other owners preserved
+ok 372 - equal_reference:fresh:single:directory_handle:4: actual inactive retirement precedes close controls
+ok 373 - equal_reference:fresh:single:directory_handle:4: selected reports and primary outcome are observed
+ok 374 - equal_reference:fresh:single:directory_handle:4: every actual owned handle explicitly closes
+ok 375 - equal_reference:fresh:single:directory_handle:4: retained inputs unchanged
+ok 376 - equal_reference:fresh:single:directory_handle:4: expected complete archive and other owners preserved
+ok 377 - equal_reference:fresh:single:source:0:2: actual inactive retirement precedes close controls
+ok 378 - equal_reference:fresh:single:source:0:2: selected reports and primary outcome are observed
+ok 379 - equal_reference:fresh:single:source:0:2: every actual owned handle explicitly closes
+ok 380 - equal_reference:fresh:single:source:0:2: retained inputs unchanged
+ok 381 - equal_reference:fresh:single:source:0:2: expected complete archive and other owners preserved
+ok 382 - equal_reference:fresh:single:source:1:2: actual inactive retirement precedes close controls
+ok 383 - equal_reference:fresh:single:source:1:2: selected reports and primary outcome are observed
+ok 384 - equal_reference:fresh:single:source:1:2: every actual owned handle explicitly closes
+ok 385 - equal_reference:fresh:single:source:1:2: retained inputs unchanged
+ok 386 - equal_reference:fresh:single:source:1:2: expected complete archive and other owners preserved
+ok 387 - equal_reference:fresh:single:source:2:2: actual inactive retirement precedes close controls
+ok 388 - equal_reference:fresh:single:source:2:2: selected reports and primary outcome are observed
+ok 389 - equal_reference:fresh:single:source:2:2: every actual owned handle explicitly closes
+ok 390 - equal_reference:fresh:single:source:2:2: retained inputs unchanged
+ok 391 - equal_reference:fresh:single:source:2:2: expected complete archive and other owners preserved
+ok 392 - equal_reference:fresh:single:directory_handle:5: actual inactive retirement precedes close controls
+ok 393 - equal_reference:fresh:single:directory_handle:5: selected reports and primary outcome are observed
+ok 394 - equal_reference:fresh:single:directory_handle:5: every actual owned handle explicitly closes
+ok 395 - equal_reference:fresh:single:directory_handle:5: retained inputs unchanged
+ok 396 - equal_reference:fresh:single:directory_handle:5: expected complete archive and other owners preserved
+ok 397 - equal_reference:fresh:single:source:0:1: actual inactive retirement precedes close controls
+ok 398 - equal_reference:fresh:single:source:0:1: selected reports and primary outcome are observed
+ok 399 - equal_reference:fresh:single:source:0:1: every actual owned handle explicitly closes
+ok 400 - equal_reference:fresh:single:source:0:1: retained inputs unchanged
+ok 401 - equal_reference:fresh:single:source:0:1: expected complete archive and other owners preserved
+ok 402 - equal_reference:fresh:single:source:1:1: actual inactive retirement precedes close controls
+ok 403 - equal_reference:fresh:single:source:1:1: selected reports and primary outcome are observed
+ok 404 - equal_reference:fresh:single:source:1:1: every actual owned handle explicitly closes
+ok 405 - equal_reference:fresh:single:source:1:1: retained inputs unchanged
+ok 406 - equal_reference:fresh:single:source:1:1: expected complete archive and other owners preserved
+ok 407 - equal_reference:fresh:single:source:2:1: actual inactive retirement precedes close controls
+ok 408 - equal_reference:fresh:single:source:2:1: selected reports and primary outcome are observed
+ok 409 - equal_reference:fresh:single:source:2:1: every actual owned handle explicitly closes
+ok 410 - equal_reference:fresh:single:source:2:1: retained inputs unchanged
+ok 411 - equal_reference:fresh:single:source:2:1: expected complete archive and other owners preserved
+ok 412 - equal_reference:fresh:payload-pair:0: actual inactive retirement precedes close controls
+ok 413 - equal_reference:fresh:payload-pair:0: selected reports and primary outcome are observed
+ok 414 - equal_reference:fresh:payload-pair:0: every actual owned handle explicitly closes
+ok 415 - equal_reference:fresh:payload-pair:0: retained inputs unchanged
+ok 416 - equal_reference:fresh:payload-pair:0: expected complete archive and other owners preserved
+ok 417 - equal_reference:fresh:primary-payload:0: actual inactive retirement precedes close controls
+ok 418 - equal_reference:fresh:primary-payload:0: selected reports and primary outcome are observed
+ok 419 - equal_reference:fresh:primary-payload:0: every actual owned handle explicitly closes
+ok 420 - equal_reference:fresh:primary-payload:0: retained inputs unchanged
+ok 421 - equal_reference:fresh:primary-payload:0: expected complete archive and other owners preserved
+ok 422 - equal_reference:fresh:payload-pair:1: actual inactive retirement precedes close controls
+ok 423 - equal_reference:fresh:payload-pair:1: selected reports and primary outcome are observed
+ok 424 - equal_reference:fresh:payload-pair:1: every actual owned handle explicitly closes
+ok 425 - equal_reference:fresh:payload-pair:1: retained inputs unchanged
+ok 426 - equal_reference:fresh:payload-pair:1: expected complete archive and other owners preserved
+ok 427 - equal_reference:fresh:primary-payload:1: actual inactive retirement precedes close controls
+ok 428 - equal_reference:fresh:primary-payload:1: selected reports and primary outcome are observed
+ok 429 - equal_reference:fresh:primary-payload:1: every actual owned handle explicitly closes
+ok 430 - equal_reference:fresh:primary-payload:1: retained inputs unchanged
+ok 431 - equal_reference:fresh:primary-payload:1: expected complete archive and other owners preserved
+ok 432 - equal_reference:fresh:payload-pair:2: actual inactive retirement precedes close controls
+ok 433 - equal_reference:fresh:payload-pair:2: selected reports and primary outcome are observed
+ok 434 - equal_reference:fresh:payload-pair:2: every actual owned handle explicitly closes
+ok 435 - equal_reference:fresh:payload-pair:2: retained inputs unchanged
+ok 436 - equal_reference:fresh:payload-pair:2: expected complete archive and other owners preserved
+ok 437 - equal_reference:fresh:primary-payload:2: actual inactive retirement precedes close controls
+ok 438 - equal_reference:fresh:primary-payload:2: selected reports and primary outcome are observed
+ok 439 - equal_reference:fresh:primary-payload:2: every actual owned handle explicitly closes
+ok 440 - equal_reference:fresh:primary-payload:2: retained inputs unchanged
+ok 441 - equal_reference:fresh:primary-payload:2: expected complete archive and other owners preserved
+ok 442 - equal_reference:fresh:retained-group: actual inactive retirement precedes close controls
+ok 443 - equal_reference:fresh:retained-group: selected reports and primary outcome are observed
+ok 444 - equal_reference:fresh:retained-group: every actual owned handle explicitly closes
+ok 445 - equal_reference:fresh:retained-group: retained inputs unchanged
+ok 446 - equal_reference:fresh:retained-group: expected complete archive and other owners preserved
+ok 447 - equal_reference:fresh:primary-retained: actual inactive retirement precedes close controls
+ok 448 - equal_reference:fresh:primary-retained: selected reports and primary outcome are observed
+ok 449 - equal_reference:fresh:primary-retained: every actual owned handle explicitly closes
+ok 450 - equal_reference:fresh:primary-retained: retained inputs unchanged
+ok 451 - equal_reference:fresh:primary-retained: expected complete archive and other owners preserved
+ok 452 - equal_reference:fresh:primary-reread:0: actual inactive retirement precedes close controls
+ok 453 - equal_reference:fresh:primary-reread:0: selected reports and primary outcome are observed
+ok 454 - equal_reference:fresh:primary-reread:0: every actual owned handle explicitly closes
+ok 455 - equal_reference:fresh:primary-reread:0: retained inputs unchanged
+ok 456 - equal_reference:fresh:primary-reread:0: expected complete archive and other owners preserved
+ok 457 - equal_reference:fresh:primary-reread:1: actual inactive retirement precedes close controls
+ok 458 - equal_reference:fresh:primary-reread:1: selected reports and primary outcome are observed
+ok 459 - equal_reference:fresh:primary-reread:1: every actual owned handle explicitly closes
+ok 460 - equal_reference:fresh:primary-reread:1: retained inputs unchanged
+ok 461 - equal_reference:fresh:primary-reread:1: expected complete archive and other owners preserved
+ok 462 - equal_reference:fresh:primary-reread:2: actual inactive retirement precedes close controls
+ok 463 - equal_reference:fresh:primary-reread:2: selected reports and primary outcome are observed
+ok 464 - equal_reference:fresh:primary-reread:2: every actual owned handle explicitly closes
+ok 465 - equal_reference:fresh:primary-reread:2: retained inputs unchanged
+ok 466 - equal_reference:fresh:primary-reread:2: expected complete archive and other owners preserved
+ok 467 - equal_reference:existing:healthy: healthy preparation is observed
+ok 468 - equal_reference:existing:healthy: all actual preparation handles explicitly close
+ok 469 - equal_reference:existing:healthy: actual inactive retirement precedes close controls
+ok 470 - equal_reference:existing:healthy: selected reports and primary outcome are observed
+ok 471 - equal_reference:existing:healthy: every actual owned handle explicitly closes
+ok 472 - equal_reference:existing:healthy: retained inputs unchanged
+ok 473 - equal_reference:existing:healthy: expected complete archive and other owners preserved
+ok 474 - equal_reference:existing:single:directory_handle:0: healthy preparation is observed
+ok 475 - equal_reference:existing:single:directory_handle:0: all actual preparation handles explicitly close
+ok 476 - equal_reference:existing:single:directory_handle:0: actual inactive retirement precedes close controls
+ok 477 - equal_reference:existing:single:directory_handle:0: selected reports and primary outcome are observed
+ok 478 - equal_reference:existing:single:directory_handle:0: every actual owned handle explicitly closes
+ok 479 - equal_reference:existing:single:directory_handle:0: retained inputs unchanged
+ok 480 - equal_reference:existing:single:directory_handle:0: expected complete archive and other owners preserved
+ok 481 - equal_reference:existing:single:directory_handle:1: healthy preparation is observed
+ok 482 - equal_reference:existing:single:directory_handle:1: all actual preparation handles explicitly close
+ok 483 - equal_reference:existing:single:directory_handle:1: actual inactive retirement precedes close controls
+ok 484 - equal_reference:existing:single:directory_handle:1: selected reports and primary outcome are observed
+ok 485 - equal_reference:existing:single:directory_handle:1: every actual owned handle explicitly closes
+ok 486 - equal_reference:existing:single:directory_handle:1: retained inputs unchanged
+ok 487 - equal_reference:existing:single:directory_handle:1: expected complete archive and other owners preserved
+ok 488 - equal_reference:existing:single:source:0:1: healthy preparation is observed
+ok 489 - equal_reference:existing:single:source:0:1: all actual preparation handles explicitly close
+ok 490 - equal_reference:existing:single:source:0:1: actual inactive retirement precedes close controls
+ok 491 - equal_reference:existing:single:source:0:1: selected reports and primary outcome are observed
+ok 492 - equal_reference:existing:single:source:0:1: every actual owned handle explicitly closes
+ok 493 - equal_reference:existing:single:source:0:1: retained inputs unchanged
+ok 494 - equal_reference:existing:single:source:0:1: expected complete archive and other owners preserved
+ok 495 - equal_reference:existing:single:source:1:1: healthy preparation is observed
+ok 496 - equal_reference:existing:single:source:1:1: all actual preparation handles explicitly close
+ok 497 - equal_reference:existing:single:source:1:1: actual inactive retirement precedes close controls
+ok 498 - equal_reference:existing:single:source:1:1: selected reports and primary outcome are observed
+ok 499 - equal_reference:existing:single:source:1:1: every actual owned handle explicitly closes
+ok 500 - equal_reference:existing:single:source:1:1: retained inputs unchanged
+ok 501 - equal_reference:existing:single:source:1:1: expected complete archive and other owners preserved
+ok 502 - equal_reference:existing:single:source:2:1: healthy preparation is observed
+ok 503 - equal_reference:existing:single:source:2:1: all actual preparation handles explicitly close
+ok 504 - equal_reference:existing:single:source:2:1: actual inactive retirement precedes close controls
+ok 505 - equal_reference:existing:single:source:2:1: selected reports and primary outcome are observed
+ok 506 - equal_reference:existing:single:source:2:1: every actual owned handle explicitly closes
+ok 507 - equal_reference:existing:single:source:2:1: retained inputs unchanged
+ok 508 - equal_reference:existing:single:source:2:1: expected complete archive and other owners preserved
+ok 509 - equal_reference:existing:single:directory_handle:2: healthy preparation is observed
+ok 510 - equal_reference:existing:single:directory_handle:2: all actual preparation handles explicitly close
+ok 511 - equal_reference:existing:single:directory_handle:2: actual inactive retirement precedes close controls
+ok 512 - equal_reference:existing:single:directory_handle:2: selected reports and primary outcome are observed
+ok 513 - equal_reference:existing:single:directory_handle:2: every actual owned handle explicitly closes
+ok 514 - equal_reference:existing:single:directory_handle:2: retained inputs unchanged
+ok 515 - equal_reference:existing:single:directory_handle:2: expected complete archive and other owners preserved
+ok 516 - equal_reference:existing:single:source:0:0: healthy preparation is observed
+ok 517 - equal_reference:existing:single:source:0:0: all actual preparation handles explicitly close
+ok 518 - equal_reference:existing:single:source:0:0: actual inactive retirement precedes close controls
+ok 519 - equal_reference:existing:single:source:0:0: selected reports and primary outcome are observed
+ok 520 - equal_reference:existing:single:source:0:0: every actual owned handle explicitly closes
+ok 521 - equal_reference:existing:single:source:0:0: retained inputs unchanged
+ok 522 - equal_reference:existing:single:source:0:0: expected complete archive and other owners preserved
+ok 523 - equal_reference:existing:single:source:1:0: healthy preparation is observed
+ok 524 - equal_reference:existing:single:source:1:0: all actual preparation handles explicitly close
+ok 525 - equal_reference:existing:single:source:1:0: actual inactive retirement precedes close controls
+ok 526 - equal_reference:existing:single:source:1:0: selected reports and primary outcome are observed
+ok 527 - equal_reference:existing:single:source:1:0: every actual owned handle explicitly closes
+ok 528 - equal_reference:existing:single:source:1:0: retained inputs unchanged
+ok 529 - equal_reference:existing:single:source:1:0: expected complete archive and other owners preserved
+ok 530 - equal_reference:existing:single:source:2:0: healthy preparation is observed
+ok 531 - equal_reference:existing:single:source:2:0: all actual preparation handles explicitly close
+ok 532 - equal_reference:existing:single:source:2:0: actual inactive retirement precedes close controls
+ok 533 - equal_reference:existing:single:source:2:0: selected reports and primary outcome are observed
+ok 534 - equal_reference:existing:single:source:2:0: every actual owned handle explicitly closes
+ok 535 - equal_reference:existing:single:source:2:0: retained inputs unchanged
+ok 536 - equal_reference:existing:single:source:2:0: expected complete archive and other owners preserved
+ok 537 - equal_reference:existing:retained-group: healthy preparation is observed
+ok 538 - equal_reference:existing:retained-group: all actual preparation handles explicitly close
+ok 539 - equal_reference:existing:retained-group: actual inactive retirement precedes close controls
+ok 540 - equal_reference:existing:retained-group: selected reports and primary outcome are observed
+ok 541 - equal_reference:existing:retained-group: every actual owned handle explicitly closes
+ok 542 - equal_reference:existing:retained-group: retained inputs unchanged
+ok 543 - equal_reference:existing:retained-group: expected complete archive and other owners preserved
+ok 544 - equal_reference:existing:primary-retained: healthy preparation is observed
+ok 545 - equal_reference:existing:primary-retained: all actual preparation handles explicitly close
+ok 546 - equal_reference:existing:primary-retained: actual inactive retirement precedes close controls
+ok 547 - equal_reference:existing:primary-retained: selected reports and primary outcome are observed
+ok 548 - equal_reference:existing:primary-retained: every actual owned handle explicitly closes
+ok 549 - equal_reference:existing:primary-retained: retained inputs unchanged
+ok 550 - equal_reference:existing:primary-retained: expected complete archive and other owners preserved
+ok 551 - equal_reference:existing:primary-reread:0: healthy preparation is observed
+ok 552 - equal_reference:existing:primary-reread:0: all actual preparation handles explicitly close
+ok 553 - equal_reference:existing:primary-reread:0: actual inactive retirement precedes close controls
+ok 554 - equal_reference:existing:primary-reread:0: selected reports and primary outcome are observed
+ok 555 - equal_reference:existing:primary-reread:0: every actual owned handle explicitly closes
+ok 556 - equal_reference:existing:primary-reread:0: retained inputs unchanged
+ok 557 - equal_reference:existing:primary-reread:0: expected complete archive and other owners preserved
+ok 558 - equal_reference:existing:primary-reread:1: healthy preparation is observed
+ok 559 - equal_reference:existing:primary-reread:1: all actual preparation handles explicitly close
+ok 560 - equal_reference:existing:primary-reread:1: actual inactive retirement precedes close controls
+ok 561 - equal_reference:existing:primary-reread:1: selected reports and primary outcome are observed
+ok 562 - equal_reference:existing:primary-reread:1: every actual owned handle explicitly closes
+ok 563 - equal_reference:existing:primary-reread:1: retained inputs unchanged
+ok 564 - equal_reference:existing:primary-reread:1: expected complete archive and other owners preserved
+ok 565 - equal_reference:existing:primary-reread:2: healthy preparation is observed
+ok 566 - equal_reference:existing:primary-reread:2: all actual preparation handles explicitly close
+ok 567 - equal_reference:existing:primary-reread:2: actual inactive retirement precedes close controls
+ok 568 - equal_reference:existing:primary-reread:2: selected reports and primary outcome are observed
+ok 569 - equal_reference:existing:primary-reread:2: every actual owned handle explicitly closes
+ok 570 - equal_reference:existing:primary-reread:2: retained inputs unchanged
+ok 571 - equal_reference:existing:primary-reread:2: expected complete archive and other owners preserved
+ok 572 - no compiler or native process attempt
+1..572
