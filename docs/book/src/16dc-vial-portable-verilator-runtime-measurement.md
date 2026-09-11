@@ -2409,6 +2409,28 @@ lost ownership records. Revalidate the complete retained bodies with:
 python3 -B docs/audits/native-proxy-observation-archive-release-active-after-20260911/audit.py --verify-saved
 ```
 
+The last-observation before-call profile first retires the target runtime and
+its private workspace. Controlled setup then removes the other observation
+hold, after checking that hold against its original inode and complete bytes.
+The selected observation remains present until the release attempt begins.
+The retained result records both retirement and the exact setup removal path.
+
+This leaves the selected hold as the final reference to its image. A completed
+release unlink removes that hold; it leaves the image files intact. Release
+does not perform image maintenance. The archive, the other runtime owner and
+its workspace must also remain unchanged. A failure after unlink still reports
+the completed effect and the exact historical and latest absence observations.
+
+The profile-specific healthy event projection checks the unchanged before-call
+oracle before new fixtures. Each new fault resolves from current physical
+inputs. Altered-record controls reject missing retirement, a retained retired
+workspace, missing or wrong setup-removal evidence, and deletion of the now
+unreferenced image. Inspect the raw bodies and reproduce their audit with:
+
+```sh
+python3 -B docs/audits/native-proxy-observation-archive-release-last-before-20260911/audit.py --verify-saved
+```
+
 Later lanes qualify the remaining profile/phase partitions, actual closes followed by modeled
 errors, deliberate close omissions with separate recovery, and the final
 source/evidence join. Primary errors outrank cleanup reports. These finite

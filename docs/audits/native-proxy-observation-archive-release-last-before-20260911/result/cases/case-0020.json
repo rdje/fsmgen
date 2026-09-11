@@ -1,0 +1,2819 @@
+{
+   "archive_receipt" : {
+      "archive_directory_identity" : {
+         "device" : 16777244,
+         "inode" : 79337907,
+         "path" : ".artifacts/logs/native-proxy-observation-acquisition-20260910/cases/fsmgen-xbUKrKK2/retained-sources"
+      },
+      "evidence_directory_identity" : {
+         "device" : 16777244,
+         "inode" : 79337885,
+         "path" : ".artifacts/logs/native-proxy-observation-acquisition-20260910/cases/fsmgen-xbUKrKK2"
+      },
+      "executable" : null,
+      "observation_reference_key" : "4e0191af522249acf522d1063a05d80c6d9e7cde98f45ce9d4e0f5f03f49deba",
+      "runtime_authorized" : 0,
+      "schema" : "fsmgen.inactive_observation_archive.v1",
+      "source_bindings" : [
+         {
+            "archive" : {
+               "device" : 16777244,
+               "inode" : 79337908,
+               "path" : ".artifacts/logs/native-proxy-observation-acquisition-20260910/cases/fsmgen-xbUKrKK2/retained-sources/d42ab2b4e413bd694a831c4a8307a0c4cd760b3bfdcf5fc93dc0b6772fdd632b.source",
+               "sha256" : "d42ab2b4e413bd694a831c4a8307a0c4cd760b3bfdcf5fc93dc0b6772fdd632b",
+               "size_bytes" : 60
+            },
+            "role" : "wrapper",
+            "source" : {
+               "device" : 16777244,
+               "inode" : 79337887,
+               "path" : ".artifacts/tmp/process-supervisor-tests/fsmgen-3HqR_43u/rust-tool-resolution",
+               "sha256" : "d42ab2b4e413bd694a831c4a8307a0c4cd760b3bfdcf5fc93dc0b6772fdd632b",
+               "size_bytes" : 60
+            }
+         },
+         {
+            "archive" : {
+               "device" : 16777244,
+               "inode" : 79337909,
+               "path" : ".artifacts/logs/native-proxy-observation-acquisition-20260910/cases/fsmgen-xbUKrKK2/retained-sources/4dbffa9c361ab09457ff9270e89c125ae0a5766b6a0edf5e3bd4aa8439cdbc19.source",
+               "sha256" : "4dbffa9c361ab09457ff9270e89c125ae0a5766b6a0edf5e3bd4aa8439cdbc19",
+               "size_bytes" : 994
+            },
+            "role" : "private_reference",
+            "source" : {
+               "device" : 16777244,
+               "inode" : 79337896,
+               "path" : ".artifacts/tmp/process-supervisor-tests/fsmgen-3HqR_43u/rust-tools/image-reference.json",
+               "sha256" : "4dbffa9c361ab09457ff9270e89c125ae0a5766b6a0edf5e3bd4aa8439cdbc19",
+               "size_bytes" : 994
+            }
+         },
+         {
+            "archive" : {
+               "device" : 16777244,
+               "inode" : 79337909,
+               "path" : ".artifacts/logs/native-proxy-observation-acquisition-20260910/cases/fsmgen-xbUKrKK2/retained-sources/4dbffa9c361ab09457ff9270e89c125ae0a5766b6a0edf5e3bd4aa8439cdbc19.source",
+               "sha256" : "4dbffa9c361ab09457ff9270e89c125ae0a5766b6a0edf5e3bd4aa8439cdbc19",
+               "size_bytes" : 994
+            },
+            "role" : "global_reference",
+            "source" : {
+               "device" : 16777244,
+               "inode" : 79337895,
+               "path" : ".artifacts/tmp/native-proxy-image-custody/cases/fsmgen-O7ce9Skw/references/101a04686a0e7a66db60418997d2b5825c6eb0a903239330c8a601b35e05b8da.json",
+               "sha256" : "4dbffa9c361ab09457ff9270e89c125ae0a5766b6a0edf5e3bd4aa8439cdbc19",
+               "size_bytes" : 994
+            }
+         },
+         {
+            "archive" : {
+               "device" : 16777244,
+               "inode" : 79337910,
+               "path" : ".artifacts/logs/native-proxy-observation-acquisition-20260910/cases/fsmgen-xbUKrKK2/retained-sources/a7d92e28ec1c8308e37c6003df167bc42bd2341cf3a69d677f45330271ffba56.source",
+               "sha256" : "a7d92e28ec1c8308e37c6003df167bc42bd2341cf3a69d677f45330271ffba56",
+               "size_bytes" : 50
+            },
+            "role" : "c",
+            "source" : {
+               "device" : 16777244,
+               "inode" : 79337892,
+               "path" : ".artifacts/tmp/native-proxy-image-custody/cases/fsmgen-O7ce9Skw/images/efd497b0e847884b3c1cfcde14d8b645991c52ebab90c54e58984ccbc303c146/rustup.c",
+               "sha256" : "a7d92e28ec1c8308e37c6003df167bc42bd2341cf3a69d677f45330271ffba56",
+               "size_bytes" : 50
+            }
+         },
+         {
+            "archive" : {
+               "device" : 16777244,
+               "inode" : 79337911,
+               "path" : ".artifacts/logs/native-proxy-observation-acquisition-20260910/cases/fsmgen-xbUKrKK2/retained-sources/e7f06f27e18528c7d10e8c4a4ab42b5e70d1423cdb80e83048597719c9c7eb67.source",
+               "sha256" : "e7f06f27e18528c7d10e8c4a4ab42b5e70d1423cdb80e83048597719c9c7eb67",
+               "size_bytes" : 53
+            },
+            "role" : "image",
+            "source" : {
+               "device" : 16777244,
+               "inode" : 79337894,
+               "path" : ".artifacts/tmp/native-proxy-image-custody/cases/fsmgen-O7ce9Skw/images/efd497b0e847884b3c1cfcde14d8b645991c52ebab90c54e58984ccbc303c146/rustup",
+               "sha256" : "e7f06f27e18528c7d10e8c4a4ab42b5e70d1423cdb80e83048597719c9c7eb67",
+               "size_bytes" : 53
+            }
+         }
+      ]
+   },
+   "arguments" : [
+      ".artifacts/tmp/native-proxy-image-custody/cases/fsmgen-O7ce9Skw",
+      {
+         "evidence_directory_identity" : {
+            "device" : 16777244,
+            "inode" : 79337885,
+            "path" : ".artifacts/logs/native-proxy-observation-acquisition-20260910/cases/fsmgen-xbUKrKK2"
+         },
+         "observer_birth" : {
+            "pid" : 101,
+            "ppid" : 100,
+            "ruid" : 501,
+            "start_sec" : 123,
+            "start_usec" : 456,
+            "uid" : 501
+         },
+         "target_birth" : {
+            "pid" : 201,
+            "ppid" : 200,
+            "ruid" : 501,
+            "start_sec" : 124,
+            "start_usec" : 789,
+            "uid" : 501
+         },
+         "workspace_identity" : {
+            "device" : 16777244,
+            "inode" : 79337883,
+            "path" : ".artifacts/tmp/process-supervisor-tests/fsmgen-3HqR_43u"
+         }
+      },
+      {
+         "executable" : null,
+         "lock" : {
+            "device" : 16777244,
+            "inode" : 79337888,
+            "path" : ".artifacts/tmp/native-proxy-image-custody/cases/fsmgen-O7ce9Skw/coordination.lock"
+         },
+         "observation_reference" : {
+            "record" : {
+               "evidence_directory" : ".artifacts/logs/native-proxy-observation-acquisition-20260910/cases/fsmgen-xbUKrKK2",
+               "evidence_directory_identity" : {
+                  "device" : 16777244,
+                  "inode" : 79337885,
+                  "path" : ".artifacts/logs/native-proxy-observation-acquisition-20260910/cases/fsmgen-xbUKrKK2"
+               },
+               "image_key" : "efd497b0e847884b3c1cfcde14d8b645991c52ebab90c54e58984ccbc303c146",
+               "observer_birth" : {
+                  "pid" : 101,
+                  "ppid" : 100,
+                  "ruid" : 501,
+                  "start_sec" : 123,
+                  "start_usec" : 456,
+                  "uid" : 501
+               },
+               "reference_key" : "4e0191af522249acf522d1063a05d80c6d9e7cde98f45ce9d4e0f5f03f49deba",
+               "schema" : "fsmgen.test.rust_proxy_image_observation_reference.v1",
+               "selected_sources" : [
+                  {
+                     "device" : 16777244,
+                     "inode" : 79337892,
+                     "path" : ".artifacts/tmp/native-proxy-image-custody/cases/fsmgen-O7ce9Skw/images/efd497b0e847884b3c1cfcde14d8b645991c52ebab90c54e58984ccbc303c146/rustup.c",
+                     "sha256" : "a7d92e28ec1c8308e37c6003df167bc42bd2341cf3a69d677f45330271ffba56",
+                     "size_bytes" : 50
+                  },
+                  {
+                     "device" : 16777244,
+                     "inode" : 79337894,
+                     "path" : ".artifacts/tmp/native-proxy-image-custody/cases/fsmgen-O7ce9Skw/images/efd497b0e847884b3c1cfcde14d8b645991c52ebab90c54e58984ccbc303c146/rustup",
+                     "sha256" : "e7f06f27e18528c7d10e8c4a4ab42b5e70d1423cdb80e83048597719c9c7eb67",
+                     "size_bytes" : 53
+                  }
+               ],
+               "target_birth" : {
+                  "pid" : 201,
+                  "ppid" : 200,
+                  "ruid" : 501,
+                  "start_sec" : 124,
+                  "start_usec" : 789,
+                  "uid" : 501
+               }
+            },
+            "source" : {
+               "bytes" : "{\"evidence_directory\":\".artifacts/logs/native-proxy-observation-acquisition-20260910/cases/fsmgen-xbUKrKK2\",\"evidence_directory_identity\":{\"device\":16777244,\"inode\":79337885,\"path\":\".artifacts/logs/native-proxy-observation-acquisition-20260910/cases/fsmgen-xbUKrKK2\"},\"image_key\":\"efd497b0e847884b3c1cfcde14d8b645991c52ebab90c54e58984ccbc303c146\",\"observer_birth\":{\"pid\":101,\"ppid\":100,\"ruid\":501,\"start_sec\":123,\"start_usec\":456,\"uid\":501},\"reference_key\":\"4e0191af522249acf522d1063a05d80c6d9e7cde98f45ce9d4e0f5f03f49deba\",\"schema\":\"fsmgen.test.rust_proxy_image_observation_reference.v1\",\"selected_sources\":[{\"device\":16777244,\"inode\":79337892,\"path\":\".artifacts/tmp/native-proxy-image-custody/cases/fsmgen-O7ce9Skw/images/efd497b0e847884b3c1cfcde14d8b645991c52ebab90c54e58984ccbc303c146/rustup.c\",\"sha256\":\"a7d92e28ec1c8308e37c6003df167bc42bd2341cf3a69d677f45330271ffba56\",\"size_bytes\":50},{\"device\":16777244,\"inode\":79337894,\"path\":\".artifacts/tmp/native-proxy-image-custody/cases/fsmgen-O7ce9Skw/images/efd497b0e847884b3c1cfcde14d8b645991c52ebab90c54e58984ccbc303c146/rustup\",\"sha256\":\"e7f06f27e18528c7d10e8c4a4ab42b5e70d1423cdb80e83048597719c9c7eb67\",\"size_bytes\":53}],\"target_birth\":{\"pid\":201,\"ppid\":200,\"ruid\":501,\"start_sec\":124,\"start_usec\":789,\"uid\":501}}",
+               "identity" : {
+                  "device" : 16777244,
+                  "inode" : 79337905,
+                  "path" : ".artifacts/tmp/native-proxy-image-custody/cases/fsmgen-O7ce9Skw/references/4e0191af522249acf522d1063a05d80c6d9e7cde98f45ce9d4e0f5f03f49deba.json",
+                  "sha256" : "a1257055e434b269a6fb64806c5a673e443980436083e1db161c00131e9dcb33",
+                  "size_bytes" : 1266
+               }
+            }
+         },
+         "runtime_authorized" : 0,
+         "schema" : "fsmgen.inactive_observation_acquisition.v1",
+         "target_sources" : [
+            {
+               "bytes" : "#!/usr/bin/perl\n# inert observation wrapper; never executed\n",
+               "identity" : {
+                  "device" : 16777244,
+                  "inode" : 79337887,
+                  "path" : ".artifacts/tmp/process-supervisor-tests/fsmgen-3HqR_43u/rust-tool-resolution",
+                  "sha256" : "d42ab2b4e413bd694a831c4a8307a0c4cd760b3bfdcf5fc93dc0b6772fdd632b",
+                  "size_bytes" : 60
+               }
+            },
+            {
+               "bytes" : "{\"image_key\":\"efd497b0e847884b3c1cfcde14d8b645991c52ebab90c54e58984ccbc303c146\",\"reference_key\":\"101a04686a0e7a66db60418997d2b5825c6eb0a903239330c8a601b35e05b8da\",\"schema\":\"fsmgen.test.rust_proxy_image_reference.v1\",\"selected_sources\":[{\"device\":16777244,\"inode\":79337892,\"path\":\".artifacts/tmp/native-proxy-image-custody/cases/fsmgen-O7ce9Skw/images/efd497b0e847884b3c1cfcde14d8b645991c52ebab90c54e58984ccbc303c146/rustup.c\",\"sha256\":\"a7d92e28ec1c8308e37c6003df167bc42bd2341cf3a69d677f45330271ffba56\",\"size_bytes\":50},{\"device\":16777244,\"inode\":79337894,\"path\":\".artifacts/tmp/native-proxy-image-custody/cases/fsmgen-O7ce9Skw/images/efd497b0e847884b3c1cfcde14d8b645991c52ebab90c54e58984ccbc303c146/rustup\",\"sha256\":\"e7f06f27e18528c7d10e8c4a4ab42b5e70d1423cdb80e83048597719c9c7eb67\",\"size_bytes\":53}],\"workspace\":\".artifacts/tmp/process-supervisor-tests/fsmgen-3HqR_43u\",\"workspace_identity\":{\"device\":16777244,\"inode\":79337883,\"path\":\".artifacts/tmp/process-supervisor-tests/fsmgen-3HqR_43u\"}}",
+               "identity" : {
+                  "device" : 16777244,
+                  "inode" : 79337896,
+                  "path" : ".artifacts/tmp/process-supervisor-tests/fsmgen-3HqR_43u/rust-tools/image-reference.json",
+                  "sha256" : "4dbffa9c361ab09457ff9270e89c125ae0a5766b6a0edf5e3bd4aa8439cdbc19",
+                  "size_bytes" : 994
+               }
+            },
+            {
+               "bytes" : "{\"image_key\":\"efd497b0e847884b3c1cfcde14d8b645991c52ebab90c54e58984ccbc303c146\",\"reference_key\":\"101a04686a0e7a66db60418997d2b5825c6eb0a903239330c8a601b35e05b8da\",\"schema\":\"fsmgen.test.rust_proxy_image_reference.v1\",\"selected_sources\":[{\"device\":16777244,\"inode\":79337892,\"path\":\".artifacts/tmp/native-proxy-image-custody/cases/fsmgen-O7ce9Skw/images/efd497b0e847884b3c1cfcde14d8b645991c52ebab90c54e58984ccbc303c146/rustup.c\",\"sha256\":\"a7d92e28ec1c8308e37c6003df167bc42bd2341cf3a69d677f45330271ffba56\",\"size_bytes\":50},{\"device\":16777244,\"inode\":79337894,\"path\":\".artifacts/tmp/native-proxy-image-custody/cases/fsmgen-O7ce9Skw/images/efd497b0e847884b3c1cfcde14d8b645991c52ebab90c54e58984ccbc303c146/rustup\",\"sha256\":\"e7f06f27e18528c7d10e8c4a4ab42b5e70d1423cdb80e83048597719c9c7eb67\",\"size_bytes\":53}],\"workspace\":\".artifacts/tmp/process-supervisor-tests/fsmgen-3HqR_43u\",\"workspace_identity\":{\"device\":16777244,\"inode\":79337883,\"path\":\".artifacts/tmp/process-supervisor-tests/fsmgen-3HqR_43u\"}}",
+               "identity" : {
+                  "device" : 16777244,
+                  "inode" : 79337895,
+                  "path" : ".artifacts/tmp/native-proxy-image-custody/cases/fsmgen-O7ce9Skw/references/101a04686a0e7a66db60418997d2b5825c6eb0a903239330c8a601b35e05b8da.json",
+                  "sha256" : "4dbffa9c361ab09457ff9270e89c125ae0a5766b6a0edf5e3bd4aa8439cdbc19",
+                  "size_bytes" : 994
+               }
+            },
+            {
+               "bytes" : "/* inert qualification bytes; never compiled */\n\u0000\u00ff",
+               "identity" : {
+                  "device" : 16777244,
+                  "inode" : 79337892,
+                  "path" : ".artifacts/tmp/native-proxy-image-custody/cases/fsmgen-O7ce9Skw/images/efd497b0e847884b3c1cfcde14d8b645991c52ebab90c54e58984ccbc303c146/rustup.c",
+                  "sha256" : "a7d92e28ec1c8308e37c6003df167bc42bd2341cf3a69d677f45330271ffba56",
+                  "size_bytes" : 50
+               }
+            },
+            {
+               "bytes" : "\u00cf\u00fa\u00ed\u00fe\f\u0000\u0000\u0001\u0000\u0000\u0000\u0000\u0002\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000inert-not-a-program\u0000\u00ff",
+               "identity" : {
+                  "device" : 16777244,
+                  "inode" : 79337894,
+                  "path" : ".artifacts/tmp/native-proxy-image-custody/cases/fsmgen-O7ce9Skw/images/efd497b0e847884b3c1cfcde14d8b645991c52ebab90c54e58984ccbc303c146/rustup",
+                  "sha256" : "e7f06f27e18528c7d10e8c4a4ab42b5e70d1423cdb80e83048597719c9c7eb67",
+                  "size_bytes" : 53
+               }
+            }
+         ]
+      },
+      {
+         "archive_directory_identity" : {
+            "device" : 16777244,
+            "inode" : 79337907,
+            "path" : ".artifacts/logs/native-proxy-observation-acquisition-20260910/cases/fsmgen-xbUKrKK2/retained-sources"
+         },
+         "evidence_directory_identity" : {
+            "device" : 16777244,
+            "inode" : 79337885,
+            "path" : ".artifacts/logs/native-proxy-observation-acquisition-20260910/cases/fsmgen-xbUKrKK2"
+         },
+         "executable" : null,
+         "observation_reference_key" : "4e0191af522249acf522d1063a05d80c6d9e7cde98f45ce9d4e0f5f03f49deba",
+         "runtime_authorized" : 0,
+         "schema" : "fsmgen.inactive_observation_archive.v1",
+         "source_bindings" : [
+            {
+               "archive" : {
+                  "device" : 16777244,
+                  "inode" : 79337908,
+                  "path" : ".artifacts/logs/native-proxy-observation-acquisition-20260910/cases/fsmgen-xbUKrKK2/retained-sources/d42ab2b4e413bd694a831c4a8307a0c4cd760b3bfdcf5fc93dc0b6772fdd632b.source",
+                  "sha256" : "d42ab2b4e413bd694a831c4a8307a0c4cd760b3bfdcf5fc93dc0b6772fdd632b",
+                  "size_bytes" : 60
+               },
+               "role" : "wrapper",
+               "source" : {
+                  "device" : 16777244,
+                  "inode" : 79337887,
+                  "path" : ".artifacts/tmp/process-supervisor-tests/fsmgen-3HqR_43u/rust-tool-resolution",
+                  "sha256" : "d42ab2b4e413bd694a831c4a8307a0c4cd760b3bfdcf5fc93dc0b6772fdd632b",
+                  "size_bytes" : 60
+               }
+            },
+            {
+               "archive" : {
+                  "device" : 16777244,
+                  "inode" : 79337909,
+                  "path" : ".artifacts/logs/native-proxy-observation-acquisition-20260910/cases/fsmgen-xbUKrKK2/retained-sources/4dbffa9c361ab09457ff9270e89c125ae0a5766b6a0edf5e3bd4aa8439cdbc19.source",
+                  "sha256" : "4dbffa9c361ab09457ff9270e89c125ae0a5766b6a0edf5e3bd4aa8439cdbc19",
+                  "size_bytes" : 994
+               },
+               "role" : "private_reference",
+               "source" : {
+                  "device" : 16777244,
+                  "inode" : 79337896,
+                  "path" : ".artifacts/tmp/process-supervisor-tests/fsmgen-3HqR_43u/rust-tools/image-reference.json",
+                  "sha256" : "4dbffa9c361ab09457ff9270e89c125ae0a5766b6a0edf5e3bd4aa8439cdbc19",
+                  "size_bytes" : 994
+               }
+            },
+            {
+               "archive" : {
+                  "device" : 16777244,
+                  "inode" : 79337909,
+                  "path" : ".artifacts/logs/native-proxy-observation-acquisition-20260910/cases/fsmgen-xbUKrKK2/retained-sources/4dbffa9c361ab09457ff9270e89c125ae0a5766b6a0edf5e3bd4aa8439cdbc19.source",
+                  "sha256" : "4dbffa9c361ab09457ff9270e89c125ae0a5766b6a0edf5e3bd4aa8439cdbc19",
+                  "size_bytes" : 994
+               },
+               "role" : "global_reference",
+               "source" : {
+                  "device" : 16777244,
+                  "inode" : 79337895,
+                  "path" : ".artifacts/tmp/native-proxy-image-custody/cases/fsmgen-O7ce9Skw/references/101a04686a0e7a66db60418997d2b5825c6eb0a903239330c8a601b35e05b8da.json",
+                  "sha256" : "4dbffa9c361ab09457ff9270e89c125ae0a5766b6a0edf5e3bd4aa8439cdbc19",
+                  "size_bytes" : 994
+               }
+            },
+            {
+               "archive" : {
+                  "device" : 16777244,
+                  "inode" : 79337910,
+                  "path" : ".artifacts/logs/native-proxy-observation-acquisition-20260910/cases/fsmgen-xbUKrKK2/retained-sources/a7d92e28ec1c8308e37c6003df167bc42bd2341cf3a69d677f45330271ffba56.source",
+                  "sha256" : "a7d92e28ec1c8308e37c6003df167bc42bd2341cf3a69d677f45330271ffba56",
+                  "size_bytes" : 50
+               },
+               "role" : "c",
+               "source" : {
+                  "device" : 16777244,
+                  "inode" : 79337892,
+                  "path" : ".artifacts/tmp/native-proxy-image-custody/cases/fsmgen-O7ce9Skw/images/efd497b0e847884b3c1cfcde14d8b645991c52ebab90c54e58984ccbc303c146/rustup.c",
+                  "sha256" : "a7d92e28ec1c8308e37c6003df167bc42bd2341cf3a69d677f45330271ffba56",
+                  "size_bytes" : 50
+               }
+            },
+            {
+               "archive" : {
+                  "device" : 16777244,
+                  "inode" : 79337911,
+                  "path" : ".artifacts/logs/native-proxy-observation-acquisition-20260910/cases/fsmgen-xbUKrKK2/retained-sources/e7f06f27e18528c7d10e8c4a4ab42b5e70d1423cdb80e83048597719c9c7eb67.source",
+                  "sha256" : "e7f06f27e18528c7d10e8c4a4ab42b5e70d1423cdb80e83048597719c9c7eb67",
+                  "size_bytes" : 53
+               },
+               "role" : "image",
+               "source" : {
+                  "device" : 16777244,
+                  "inode" : 79337894,
+                  "path" : ".artifacts/tmp/native-proxy-image-custody/cases/fsmgen-O7ce9Skw/images/efd497b0e847884b3c1cfcde14d8b645991c52ebab90c54e58984ccbc303c146/rustup",
+                  "sha256" : "e7f06f27e18528c7d10e8c4a4ab42b5e70d1423cdb80e83048597719c9c7eb67",
+                  "size_bytes" : 53
+               }
+            }
+         ]
+      },
+      {
+         "entries" : [
+            {
+               "ownership_token" : "db99dcafd1d5eb773d52e2e4c8abfb2e018b104826ab4348b69d3c0d8d0e5acb",
+               "role" : "capture",
+               "work_id" : "work:0"
+            },
+            {
+               "ownership_token" : "ca3d4f8de856ccfd995bc114aba30c369dee7c6f5ccd5c339c3570a957dc4871",
+               "role" : "helper",
+               "work_id" : "work:1"
+            },
+            {
+               "ownership_token" : "741fa88e1231a0fa7cd4be434b9f10cbe12f966490e8587faa2068bdaa673f90",
+               "role" : "query",
+               "work_id" : "work:2"
+            }
+         ],
+         "evidence_directory_identity" : {
+            "device" : 16777244,
+            "inode" : 79337885,
+            "path" : ".artifacts/logs/native-proxy-observation-acquisition-20260910/cases/fsmgen-xbUKrKK2"
+         },
+         "executable" : null,
+         "observation_reference_key" : "4e0191af522249acf522d1063a05d80c6d9e7cde98f45ce9d4e0f5f03f49deba",
+         "runtime_authorized" : 0,
+         "schema" : "fsmgen.inactive_observation_work_selection.v1"
+      },
+      {
+         "executable" : null,
+         "receipts" : [
+            {
+               "cleanup" : {
+                  "group_gone" : 1,
+                  "leader_reaped" : 1,
+                  "leader_started" : 1
+               },
+               "outcome" : "completed",
+               "ownership_token" : "db99dcafd1d5eb773d52e2e4c8abfb2e018b104826ab4348b69d3c0d8d0e5acb",
+               "role" : "capture",
+               "work_id" : "work:0"
+            },
+            {
+               "cleanup" : {
+                  "group_gone" : 1,
+                  "leader_reaped" : 1,
+                  "leader_started" : 1
+               },
+               "outcome" : "failed",
+               "ownership_token" : "ca3d4f8de856ccfd995bc114aba30c369dee7c6f5ccd5c339c3570a957dc4871",
+               "role" : "helper",
+               "work_id" : "work:1"
+            },
+            {
+               "cleanup" : {
+                  "group_gone" : 1,
+                  "leader_reaped" : 1,
+                  "leader_started" : 1
+               },
+               "outcome" : "cancelled",
+               "ownership_token" : "741fa88e1231a0fa7cd4be434b9f10cbe12f966490e8587faa2068bdaa673f90",
+               "role" : "query",
+               "work_id" : "work:2"
+            }
+         ],
+         "runtime_authorized" : 0,
+         "schema" : "fsmgen.inactive_observation_work_settlement.v1",
+         "selection" : {
+            "entries" : [
+               {
+                  "ownership_token" : "db99dcafd1d5eb773d52e2e4c8abfb2e018b104826ab4348b69d3c0d8d0e5acb",
+                  "role" : "capture",
+                  "work_id" : "work:0"
+               },
+               {
+                  "ownership_token" : "ca3d4f8de856ccfd995bc114aba30c369dee7c6f5ccd5c339c3570a957dc4871",
+                  "role" : "helper",
+                  "work_id" : "work:1"
+               },
+               {
+                  "ownership_token" : "741fa88e1231a0fa7cd4be434b9f10cbe12f966490e8587faa2068bdaa673f90",
+                  "role" : "query",
+                  "work_id" : "work:2"
+               }
+            ],
+            "evidence_directory_identity" : {
+               "device" : 16777244,
+               "inode" : 79337885,
+               "path" : ".artifacts/logs/native-proxy-observation-acquisition-20260910/cases/fsmgen-xbUKrKK2"
+            },
+            "executable" : null,
+            "observation_reference_key" : "4e0191af522249acf522d1063a05d80c6d9e7cde98f45ce9d4e0f5f03f49deba",
+            "runtime_authorized" : 0,
+            "schema" : "fsmgen.inactive_observation_work_selection.v1"
+         },
+         "selection_sealed" : 1
+      }
+   ],
+   "before_archive" : {
+      "evidence" : {
+         "" : {
+            "device" : 16777244,
+            "inode" : 79337885,
+            "kind" : "directory",
+            "mode" : 448,
+            "uid" : 501
+         }
+      },
+      "other_workspace" : {
+         "" : {
+            "device" : 16777244,
+            "inode" : 79337884,
+            "kind" : "directory",
+            "mode" : 448,
+            "uid" : 501
+         },
+         "rust-tool-resolution" : {
+            "bytes_hex" : "23212f7573722f62696e2f7065726c0a2320696e657274206f62736572766174696f6e20777261707065723b206e657665722065786563757465640a",
+            "device" : 16777244,
+            "inode" : 79337898,
+            "kind" : "file",
+            "links" : 1,
+            "mode" : 448,
+            "sha256" : "d42ab2b4e413bd694a831c4a8307a0c4cd760b3bfdcf5fc93dc0b6772fdd632b",
+            "size_bytes" : 60,
+            "uid" : 501
+         },
+         "rust-tools" : {
+            "device" : 16777244,
+            "inode" : 79337897,
+            "kind" : "directory",
+            "mode" : 448,
+            "uid" : 501
+         },
+         "rust-tools/image-reference.json" : {
+            "bytes_hex" : "7b22696d6167655f6b6579223a2231383366306434643138353732613235306163393737353631393637333264383834663161323231376132336463626637646636333930643033333032313837222c227265666572656e63655f6b6579223a2234363165393038393838306163303831623535653639396363393233643237626362623366666266326663376263343561363439366434646533353937616164222c22736368656d61223a2266736d67656e2e746573742e727573745f70726f78795f696d6167655f7265666572656e63652e7631222c2273656c65637465645f736f7572636573223a5b7b22646576696365223a31363737373234342c22696e6f6465223a37393333373930302c2270617468223a222e6172746966616374732f746d702f6e61746976652d70726f78792d696d6167652d637573746f64792f63617365732f66736d67656e2d4f37636539536b772f696d616765732f313833663064346431383537326132353061633937373536313936373332643838346631613232313761323364636266376466363339306430333330323138372f7275737475702e63222c22736861323536223a2261376439326532386563316338333038653337633630303364663136376263343262643233343163663361363964363737663435333330323731666662613536222c2273697a655f6279746573223a35307d2c7b22646576696365223a31363737373234342c22696e6f6465223a37393333373930322c2270617468223a222e6172746966616374732f746d702f6e61746976652d70726f78792d696d6167652d637573746f64792f63617365732f66736d67656e2d4f37636539536b772f696d616765732f313833663064346431383537326132353061633937373536313936373332643838346631613232313761323364636266376466363339306430333330323138372f727573747570222c22736861323536223a2232633234326236373966323563643661666265626561656434306431643464613966396137633831363730306364623631653163353662373339663830383235222c2273697a655f6279746573223a35387d5d2c22776f726b7370616365223a222e6172746966616374732f746d702f70726f636573732d73757065727669736f722d74657374732f66736d67656e2d3669677546677873222c22776f726b73706163655f6964656e74697479223a7b22646576696365223a31363737373234342c22696e6f6465223a37393333373838342c2270617468223a222e6172746966616374732f746d702f70726f636573732d73757065727669736f722d74657374732f66736d67656e2d3669677546677873227d7d",
+            "device" : 16777244,
+            "inode" : 79337904,
+            "kind" : "file",
+            "links" : 1,
+            "mode" : 256,
+            "sha256" : "5260d4fa59c15acbc78c44556039f27929a5f00ef2b769e45838f6d542a26daa",
+            "size_bytes" : 994,
+            "uid" : 501
+         }
+      },
+      "store" : {
+         "" : {
+            "device" : 16777244,
+            "inode" : 79337882,
+            "kind" : "directory",
+            "mode" : 448,
+            "uid" : 501
+         },
+         "coordination.lock" : {
+            "bytes_hex" : "",
+            "device" : 16777244,
+            "inode" : 79337888,
+            "kind" : "file",
+            "links" : 1,
+            "mode" : 384,
+            "sha256" : "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+            "size_bytes" : 0,
+            "uid" : 501
+         },
+         "images" : {
+            "device" : 16777244,
+            "inode" : 79337889,
+            "kind" : "directory",
+            "mode" : 448,
+            "uid" : 501
+         },
+         "images/183f0d4d18572a250ac97756196732d884f1a2217a23dcbf7df6390d03302187" : {
+            "device" : 16777244,
+            "inode" : 79337899,
+            "kind" : "directory",
+            "mode" : 448,
+            "uid" : 501
+         },
+         "images/183f0d4d18572a250ac97756196732d884f1a2217a23dcbf7df6390d03302187/image.json" : {
+            "bytes_hex" : "7b2265786563757461626c65223a7b22736861323536223a2232633234326236373966323563643661666265626561656434306431643464613966396137633831363730306364623631653163353662373339663830383235222c2273697a655f6279746573223a35387d2c2267656e6572617465645f63223a7b22736861323536223a2261376439326532386563316338333038653337633630303364663136376263343262643233343163663361363964363737663435333330323731666662613536222c2273697a655f6279746573223a35307d2c226b6579223a2231383366306434643138353732613235306163393737353631393637333264383834663161323231376132336463626637646636333930643033333032313837222c22736368656d61223a2266736d67656e2e746573742e727573745f70726f78795f696d6167652e7631227d",
+            "device" : 16777244,
+            "inode" : 79337901,
+            "kind" : "file",
+            "links" : 1,
+            "mode" : 256,
+            "sha256" : "25833b2a44e94d7e9ba26b7d8cb760737cc6b2d570c505a908ecc271103a514d",
+            "size_bytes" : 332,
+            "uid" : 501
+         },
+         "images/183f0d4d18572a250ac97756196732d884f1a2217a23dcbf7df6390d03302187/rustup" : {
+            "bytes_hex" : "cffaedfe0c000001000000000200000000000000000000000000000000000000696e6572742d6e6f742d612d70726f6772616d00ff6f74686572",
+            "device" : 16777244,
+            "inode" : 79337902,
+            "kind" : "file",
+            "links" : 1,
+            "mode" : 320,
+            "sha256" : "2c242b679f25cd6afbebeaed40d1d4da9f9a7c816700cdb61e1c56b739f80825",
+            "size_bytes" : 58,
+            "uid" : 501
+         },
+         "images/183f0d4d18572a250ac97756196732d884f1a2217a23dcbf7df6390d03302187/rustup.c" : {
+            "bytes_hex" : "2f2a20696e657274207175616c696669636174696f6e2062797465733b206e6576657220636f6d70696c6564202a2f0a00ff",
+            "device" : 16777244,
+            "inode" : 79337900,
+            "kind" : "file",
+            "links" : 1,
+            "mode" : 256,
+            "sha256" : "a7d92e28ec1c8308e37c6003df167bc42bd2341cf3a69d677f45330271ffba56",
+            "size_bytes" : 50,
+            "uid" : 501
+         },
+         "images/efd497b0e847884b3c1cfcde14d8b645991c52ebab90c54e58984ccbc303c146" : {
+            "device" : 16777244,
+            "inode" : 79337891,
+            "kind" : "directory",
+            "mode" : 448,
+            "uid" : 501
+         },
+         "images/efd497b0e847884b3c1cfcde14d8b645991c52ebab90c54e58984ccbc303c146/image.json" : {
+            "bytes_hex" : "7b2265786563757461626c65223a7b22736861323536223a2265376630366632376531383532386337643130653863346134616234326235653730643134323363646238306538333034383539373731396339633765623637222c2273697a655f6279746573223a35337d2c2267656e6572617465645f63223a7b22736861323536223a2261376439326532386563316338333038653337633630303364663136376263343262643233343163663361363964363737663435333330323731666662613536222c2273697a655f6279746573223a35307d2c226b6579223a2265666434393762306538343738383462336331636663646531346438623634353939316335326562616239306335346535383938346363626333303363313436222c22736368656d61223a2266736d67656e2e746573742e727573745f70726f78795f696d6167652e7631227d",
+            "device" : 16777244,
+            "inode" : 79337893,
+            "kind" : "file",
+            "links" : 1,
+            "mode" : 256,
+            "sha256" : "156ec74edbff95660f5275aca3dca8f675f8398ceff43a243573aee41462efb4",
+            "size_bytes" : 332,
+            "uid" : 501
+         },
+         "images/efd497b0e847884b3c1cfcde14d8b645991c52ebab90c54e58984ccbc303c146/rustup" : {
+            "bytes_hex" : "cffaedfe0c000001000000000200000000000000000000000000000000000000696e6572742d6e6f742d612d70726f6772616d00ff",
+            "device" : 16777244,
+            "inode" : 79337894,
+            "kind" : "file",
+            "links" : 1,
+            "mode" : 320,
+            "sha256" : "e7f06f27e18528c7d10e8c4a4ab42b5e70d1423cdb80e83048597719c9c7eb67",
+            "size_bytes" : 53,
+            "uid" : 501
+         },
+         "images/efd497b0e847884b3c1cfcde14d8b645991c52ebab90c54e58984ccbc303c146/rustup.c" : {
+            "bytes_hex" : "2f2a20696e657274207175616c696669636174696f6e2062797465733b206e6576657220636f6d70696c6564202a2f0a00ff",
+            "device" : 16777244,
+            "inode" : 79337892,
+            "kind" : "file",
+            "links" : 1,
+            "mode" : 256,
+            "sha256" : "a7d92e28ec1c8308e37c6003df167bc42bd2341cf3a69d677f45330271ffba56",
+            "size_bytes" : 50,
+            "uid" : 501
+         },
+         "references" : {
+            "device" : 16777244,
+            "inode" : 79337890,
+            "kind" : "directory",
+            "mode" : 448,
+            "uid" : 501
+         },
+         "references/461e9089880ac081b55e699cc923d27bcbb3ffbf2fc7bc45a6496d4de3597aad.json" : {
+            "bytes_hex" : "7b22696d6167655f6b6579223a2231383366306434643138353732613235306163393737353631393637333264383834663161323231376132336463626637646636333930643033333032313837222c227265666572656e63655f6b6579223a2234363165393038393838306163303831623535653639396363393233643237626362623366666266326663376263343561363439366434646533353937616164222c22736368656d61223a2266736d67656e2e746573742e727573745f70726f78795f696d6167655f7265666572656e63652e7631222c2273656c65637465645f736f7572636573223a5b7b22646576696365223a31363737373234342c22696e6f6465223a37393333373930302c2270617468223a222e6172746966616374732f746d702f6e61746976652d70726f78792d696d6167652d637573746f64792f63617365732f66736d67656e2d4f37636539536b772f696d616765732f313833663064346431383537326132353061633937373536313936373332643838346631613232313761323364636266376466363339306430333330323138372f7275737475702e63222c22736861323536223a2261376439326532386563316338333038653337633630303364663136376263343262643233343163663361363964363737663435333330323731666662613536222c2273697a655f6279746573223a35307d2c7b22646576696365223a31363737373234342c22696e6f6465223a37393333373930322c2270617468223a222e6172746966616374732f746d702f6e61746976652d70726f78792d696d6167652d637573746f64792f63617365732f66736d67656e2d4f37636539536b772f696d616765732f313833663064346431383537326132353061633937373536313936373332643838346631613232313761323364636266376466363339306430333330323138372f727573747570222c22736861323536223a2232633234326236373966323563643661666265626561656434306431643464613966396137633831363730306364623631653163353662373339663830383235222c2273697a655f6279746573223a35387d5d2c22776f726b7370616365223a222e6172746966616374732f746d702f70726f636573732d73757065727669736f722d74657374732f66736d67656e2d3669677546677873222c22776f726b73706163655f6964656e74697479223a7b22646576696365223a31363737373234342c22696e6f6465223a37393333373838342c2270617468223a222e6172746966616374732f746d702f70726f636573732d73757065727669736f722d74657374732f66736d67656e2d3669677546677873227d7d",
+            "device" : 16777244,
+            "inode" : 79337903,
+            "kind" : "file",
+            "links" : 1,
+            "mode" : 256,
+            "sha256" : "5260d4fa59c15acbc78c44556039f27929a5f00ef2b769e45838f6d542a26daa",
+            "size_bytes" : 994,
+            "uid" : 501
+         },
+         "references/4e0191af522249acf522d1063a05d80c6d9e7cde98f45ce9d4e0f5f03f49deba.json" : {
+            "bytes_hex" : "7b2265766964656e63655f6469726563746f7279223a222e6172746966616374732f6c6f67732f6e61746976652d70726f78792d6f62736572766174696f6e2d6163717569736974696f6e2d32303236303931302f63617365732f66736d67656e2d7862554b724b4b32222c2265766964656e63655f6469726563746f72795f6964656e74697479223a7b22646576696365223a31363737373234342c22696e6f6465223a37393333373838352c2270617468223a222e6172746966616374732f6c6f67732f6e61746976652d70726f78792d6f62736572766174696f6e2d6163717569736974696f6e2d32303236303931302f63617365732f66736d67656e2d7862554b724b4b32227d2c22696d6167655f6b6579223a2265666434393762306538343738383462336331636663646531346438623634353939316335326562616239306335346535383938346363626333303363313436222c226f627365727665725f6269727468223a7b22706964223a3130312c2270706964223a3130302c2272756964223a3530312c2273746172745f736563223a3132332c2273746172745f75736563223a3435362c22756964223a3530317d2c227265666572656e63655f6b6579223a2234653031393161663532323234396163663532326431303633613035643830633664396537636465393866343563653964346530663566303366343964656261222c22736368656d61223a2266736d67656e2e746573742e727573745f70726f78795f696d6167655f6f62736572766174696f6e5f7265666572656e63652e7631222c2273656c65637465645f736f7572636573223a5b7b22646576696365223a31363737373234342c22696e6f6465223a37393333373839322c2270617468223a222e6172746966616374732f746d702f6e61746976652d70726f78792d696d6167652d637573746f64792f63617365732f66736d67656e2d4f37636539536b772f696d616765732f656664343937623065383437383834623363316366636465313464386236343539393163353265626162393063353465353839383463636263333033633134362f7275737475702e63222c22736861323536223a2261376439326532386563316338333038653337633630303364663136376263343262643233343163663361363964363737663435333330323731666662613536222c2273697a655f6279746573223a35307d2c7b22646576696365223a31363737373234342c22696e6f6465223a37393333373839342c2270617468223a222e6172746966616374732f746d702f6e61746976652d70726f78792d696d6167652d637573746f64792f63617365732f66736d67656e2d4f37636539536b772f696d616765732f656664343937623065383437383834623363316366636465313464386236343539393163353265626162393063353465353839383463636263333033633134362f727573747570222c22736861323536223a2265376630366632376531383532386337643130653863346134616234326235653730643134323363646238306538333034383539373731396339633765623637222c2273697a655f6279746573223a35337d5d2c227461726765745f6269727468223a7b22706964223a3230312c2270706964223a3230302c2272756964223a3530312c2273746172745f736563223a3132342c2273746172745f75736563223a3738392c22756964223a3530317d7d",
+            "device" : 16777244,
+            "inode" : 79337905,
+            "kind" : "file",
+            "links" : 1,
+            "mode" : 256,
+            "sha256" : "a1257055e434b269a6fb64806c5a673e443980436083e1db161c00131e9dcb33",
+            "size_bytes" : 1266,
+            "uid" : 501
+         }
+      },
+      "workspace" : {}
+   },
+   "before_mutation" : {
+      "evidence" : {
+         "" : {
+            "device" : 16777244,
+            "inode" : 79337885,
+            "kind" : "directory",
+            "mode" : 448,
+            "uid" : 501
+         },
+         "retained-sources" : {
+            "device" : 16777244,
+            "inode" : 79337907,
+            "kind" : "directory",
+            "mode" : 448,
+            "uid" : 501
+         },
+         "retained-sources/4dbffa9c361ab09457ff9270e89c125ae0a5766b6a0edf5e3bd4aa8439cdbc19.source" : {
+            "bytes_hex" : "7b22696d6167655f6b6579223a2265666434393762306538343738383462336331636663646531346438623634353939316335326562616239306335346535383938346363626333303363313436222c227265666572656e63655f6b6579223a2231303161303436383661306537613636646236303431383939376432623538323563366562306139303332333933333063386136303162333565303562386461222c22736368656d61223a2266736d67656e2e746573742e727573745f70726f78795f696d6167655f7265666572656e63652e7631222c2273656c65637465645f736f7572636573223a5b7b22646576696365223a31363737373234342c22696e6f6465223a37393333373839322c2270617468223a222e6172746966616374732f746d702f6e61746976652d70726f78792d696d6167652d637573746f64792f63617365732f66736d67656e2d4f37636539536b772f696d616765732f656664343937623065383437383834623363316366636465313464386236343539393163353265626162393063353465353839383463636263333033633134362f7275737475702e63222c22736861323536223a2261376439326532386563316338333038653337633630303364663136376263343262643233343163663361363964363737663435333330323731666662613536222c2273697a655f6279746573223a35307d2c7b22646576696365223a31363737373234342c22696e6f6465223a37393333373839342c2270617468223a222e6172746966616374732f746d702f6e61746976652d70726f78792d696d6167652d637573746f64792f63617365732f66736d67656e2d4f37636539536b772f696d616765732f656664343937623065383437383834623363316366636465313464386236343539393163353265626162393063353465353839383463636263333033633134362f727573747570222c22736861323536223a2265376630366632376531383532386337643130653863346134616234326235653730643134323363646238306538333034383539373731396339633765623637222c2273697a655f6279746573223a35337d5d2c22776f726b7370616365223a222e6172746966616374732f746d702f70726f636573732d73757065727669736f722d74657374732f66736d67656e2d334871525f343375222c22776f726b73706163655f6964656e74697479223a7b22646576696365223a31363737373234342c22696e6f6465223a37393333373838332c2270617468223a222e6172746966616374732f746d702f70726f636573732d73757065727669736f722d74657374732f66736d67656e2d334871525f343375227d7d",
+            "device" : 16777244,
+            "inode" : 79337909,
+            "kind" : "file",
+            "links" : 1,
+            "mode" : 256,
+            "sha256" : "4dbffa9c361ab09457ff9270e89c125ae0a5766b6a0edf5e3bd4aa8439cdbc19",
+            "size_bytes" : 994,
+            "uid" : 501
+         },
+         "retained-sources/a7d92e28ec1c8308e37c6003df167bc42bd2341cf3a69d677f45330271ffba56.source" : {
+            "bytes_hex" : "2f2a20696e657274207175616c696669636174696f6e2062797465733b206e6576657220636f6d70696c6564202a2f0a00ff",
+            "device" : 16777244,
+            "inode" : 79337910,
+            "kind" : "file",
+            "links" : 1,
+            "mode" : 256,
+            "sha256" : "a7d92e28ec1c8308e37c6003df167bc42bd2341cf3a69d677f45330271ffba56",
+            "size_bytes" : 50,
+            "uid" : 501
+         },
+         "retained-sources/d42ab2b4e413bd694a831c4a8307a0c4cd760b3bfdcf5fc93dc0b6772fdd632b.source" : {
+            "bytes_hex" : "23212f7573722f62696e2f7065726c0a2320696e657274206f62736572766174696f6e20777261707065723b206e657665722065786563757465640a",
+            "device" : 16777244,
+            "inode" : 79337908,
+            "kind" : "file",
+            "links" : 1,
+            "mode" : 256,
+            "sha256" : "d42ab2b4e413bd694a831c4a8307a0c4cd760b3bfdcf5fc93dc0b6772fdd632b",
+            "size_bytes" : 60,
+            "uid" : 501
+         },
+         "retained-sources/e7f06f27e18528c7d10e8c4a4ab42b5e70d1423cdb80e83048597719c9c7eb67.source" : {
+            "bytes_hex" : "cffaedfe0c000001000000000200000000000000000000000000000000000000696e6572742d6e6f742d612d70726f6772616d00ff",
+            "device" : 16777244,
+            "inode" : 79337911,
+            "kind" : "file",
+            "links" : 1,
+            "mode" : 256,
+            "sha256" : "e7f06f27e18528c7d10e8c4a4ab42b5e70d1423cdb80e83048597719c9c7eb67",
+            "size_bytes" : 53,
+            "uid" : 501
+         }
+      },
+      "other_workspace" : {
+         "" : {
+            "device" : 16777244,
+            "inode" : 79337884,
+            "kind" : "directory",
+            "mode" : 448,
+            "uid" : 501
+         },
+         "rust-tool-resolution" : {
+            "bytes_hex" : "23212f7573722f62696e2f7065726c0a2320696e657274206f62736572766174696f6e20777261707065723b206e657665722065786563757465640a",
+            "device" : 16777244,
+            "inode" : 79337898,
+            "kind" : "file",
+            "links" : 1,
+            "mode" : 448,
+            "sha256" : "d42ab2b4e413bd694a831c4a8307a0c4cd760b3bfdcf5fc93dc0b6772fdd632b",
+            "size_bytes" : 60,
+            "uid" : 501
+         },
+         "rust-tools" : {
+            "device" : 16777244,
+            "inode" : 79337897,
+            "kind" : "directory",
+            "mode" : 448,
+            "uid" : 501
+         },
+         "rust-tools/image-reference.json" : {
+            "bytes_hex" : "7b22696d6167655f6b6579223a2231383366306434643138353732613235306163393737353631393637333264383834663161323231376132336463626637646636333930643033333032313837222c227265666572656e63655f6b6579223a2234363165393038393838306163303831623535653639396363393233643237626362623366666266326663376263343561363439366434646533353937616164222c22736368656d61223a2266736d67656e2e746573742e727573745f70726f78795f696d6167655f7265666572656e63652e7631222c2273656c65637465645f736f7572636573223a5b7b22646576696365223a31363737373234342c22696e6f6465223a37393333373930302c2270617468223a222e6172746966616374732f746d702f6e61746976652d70726f78792d696d6167652d637573746f64792f63617365732f66736d67656e2d4f37636539536b772f696d616765732f313833663064346431383537326132353061633937373536313936373332643838346631613232313761323364636266376466363339306430333330323138372f7275737475702e63222c22736861323536223a2261376439326532386563316338333038653337633630303364663136376263343262643233343163663361363964363737663435333330323731666662613536222c2273697a655f6279746573223a35307d2c7b22646576696365223a31363737373234342c22696e6f6465223a37393333373930322c2270617468223a222e6172746966616374732f746d702f6e61746976652d70726f78792d696d6167652d637573746f64792f63617365732f66736d67656e2d4f37636539536b772f696d616765732f313833663064346431383537326132353061633937373536313936373332643838346631613232313761323364636266376466363339306430333330323138372f727573747570222c22736861323536223a2232633234326236373966323563643661666265626561656434306431643464613966396137633831363730306364623631653163353662373339663830383235222c2273697a655f6279746573223a35387d5d2c22776f726b7370616365223a222e6172746966616374732f746d702f70726f636573732d73757065727669736f722d74657374732f66736d67656e2d3669677546677873222c22776f726b73706163655f6964656e74697479223a7b22646576696365223a31363737373234342c22696e6f6465223a37393333373838342c2270617468223a222e6172746966616374732f746d702f70726f636573732d73757065727669736f722d74657374732f66736d67656e2d3669677546677873227d7d",
+            "device" : 16777244,
+            "inode" : 79337904,
+            "kind" : "file",
+            "links" : 1,
+            "mode" : 256,
+            "sha256" : "5260d4fa59c15acbc78c44556039f27929a5f00ef2b769e45838f6d542a26daa",
+            "size_bytes" : 994,
+            "uid" : 501
+         }
+      },
+      "store" : {
+         "" : {
+            "device" : 16777244,
+            "inode" : 79337882,
+            "kind" : "directory",
+            "mode" : 448,
+            "uid" : 501
+         },
+         "coordination.lock" : {
+            "bytes_hex" : "",
+            "device" : 16777244,
+            "inode" : 79337888,
+            "kind" : "file",
+            "links" : 1,
+            "mode" : 384,
+            "sha256" : "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+            "size_bytes" : 0,
+            "uid" : 501
+         },
+         "images" : {
+            "device" : 16777244,
+            "inode" : 79337889,
+            "kind" : "directory",
+            "mode" : 448,
+            "uid" : 501
+         },
+         "images/183f0d4d18572a250ac97756196732d884f1a2217a23dcbf7df6390d03302187" : {
+            "device" : 16777244,
+            "inode" : 79337899,
+            "kind" : "directory",
+            "mode" : 448,
+            "uid" : 501
+         },
+         "images/183f0d4d18572a250ac97756196732d884f1a2217a23dcbf7df6390d03302187/image.json" : {
+            "bytes_hex" : "7b2265786563757461626c65223a7b22736861323536223a2232633234326236373966323563643661666265626561656434306431643464613966396137633831363730306364623631653163353662373339663830383235222c2273697a655f6279746573223a35387d2c2267656e6572617465645f63223a7b22736861323536223a2261376439326532386563316338333038653337633630303364663136376263343262643233343163663361363964363737663435333330323731666662613536222c2273697a655f6279746573223a35307d2c226b6579223a2231383366306434643138353732613235306163393737353631393637333264383834663161323231376132336463626637646636333930643033333032313837222c22736368656d61223a2266736d67656e2e746573742e727573745f70726f78795f696d6167652e7631227d",
+            "device" : 16777244,
+            "inode" : 79337901,
+            "kind" : "file",
+            "links" : 1,
+            "mode" : 256,
+            "sha256" : "25833b2a44e94d7e9ba26b7d8cb760737cc6b2d570c505a908ecc271103a514d",
+            "size_bytes" : 332,
+            "uid" : 501
+         },
+         "images/183f0d4d18572a250ac97756196732d884f1a2217a23dcbf7df6390d03302187/rustup" : {
+            "bytes_hex" : "cffaedfe0c000001000000000200000000000000000000000000000000000000696e6572742d6e6f742d612d70726f6772616d00ff6f74686572",
+            "device" : 16777244,
+            "inode" : 79337902,
+            "kind" : "file",
+            "links" : 1,
+            "mode" : 320,
+            "sha256" : "2c242b679f25cd6afbebeaed40d1d4da9f9a7c816700cdb61e1c56b739f80825",
+            "size_bytes" : 58,
+            "uid" : 501
+         },
+         "images/183f0d4d18572a250ac97756196732d884f1a2217a23dcbf7df6390d03302187/rustup.c" : {
+            "bytes_hex" : "2f2a20696e657274207175616c696669636174696f6e2062797465733b206e6576657220636f6d70696c6564202a2f0a00ff",
+            "device" : 16777244,
+            "inode" : 79337900,
+            "kind" : "file",
+            "links" : 1,
+            "mode" : 256,
+            "sha256" : "a7d92e28ec1c8308e37c6003df167bc42bd2341cf3a69d677f45330271ffba56",
+            "size_bytes" : 50,
+            "uid" : 501
+         },
+         "images/efd497b0e847884b3c1cfcde14d8b645991c52ebab90c54e58984ccbc303c146" : {
+            "device" : 16777244,
+            "inode" : 79337891,
+            "kind" : "directory",
+            "mode" : 448,
+            "uid" : 501
+         },
+         "images/efd497b0e847884b3c1cfcde14d8b645991c52ebab90c54e58984ccbc303c146/image.json" : {
+            "bytes_hex" : "7b2265786563757461626c65223a7b22736861323536223a2265376630366632376531383532386337643130653863346134616234326235653730643134323363646238306538333034383539373731396339633765623637222c2273697a655f6279746573223a35337d2c2267656e6572617465645f63223a7b22736861323536223a2261376439326532386563316338333038653337633630303364663136376263343262643233343163663361363964363737663435333330323731666662613536222c2273697a655f6279746573223a35307d2c226b6579223a2265666434393762306538343738383462336331636663646531346438623634353939316335326562616239306335346535383938346363626333303363313436222c22736368656d61223a2266736d67656e2e746573742e727573745f70726f78795f696d6167652e7631227d",
+            "device" : 16777244,
+            "inode" : 79337893,
+            "kind" : "file",
+            "links" : 1,
+            "mode" : 256,
+            "sha256" : "156ec74edbff95660f5275aca3dca8f675f8398ceff43a243573aee41462efb4",
+            "size_bytes" : 332,
+            "uid" : 501
+         },
+         "images/efd497b0e847884b3c1cfcde14d8b645991c52ebab90c54e58984ccbc303c146/rustup" : {
+            "bytes_hex" : "cffaedfe0c000001000000000200000000000000000000000000000000000000696e6572742d6e6f742d612d70726f6772616d00ff",
+            "device" : 16777244,
+            "inode" : 79337894,
+            "kind" : "file",
+            "links" : 1,
+            "mode" : 320,
+            "sha256" : "e7f06f27e18528c7d10e8c4a4ab42b5e70d1423cdb80e83048597719c9c7eb67",
+            "size_bytes" : 53,
+            "uid" : 501
+         },
+         "images/efd497b0e847884b3c1cfcde14d8b645991c52ebab90c54e58984ccbc303c146/rustup.c" : {
+            "bytes_hex" : "2f2a20696e657274207175616c696669636174696f6e2062797465733b206e6576657220636f6d70696c6564202a2f0a00ff",
+            "device" : 16777244,
+            "inode" : 79337892,
+            "kind" : "file",
+            "links" : 1,
+            "mode" : 256,
+            "sha256" : "a7d92e28ec1c8308e37c6003df167bc42bd2341cf3a69d677f45330271ffba56",
+            "size_bytes" : 50,
+            "uid" : 501
+         },
+         "references" : {
+            "device" : 16777244,
+            "inode" : 79337890,
+            "kind" : "directory",
+            "mode" : 448,
+            "uid" : 501
+         },
+         "references/461e9089880ac081b55e699cc923d27bcbb3ffbf2fc7bc45a6496d4de3597aad.json" : {
+            "bytes_hex" : "7b22696d6167655f6b6579223a2231383366306434643138353732613235306163393737353631393637333264383834663161323231376132336463626637646636333930643033333032313837222c227265666572656e63655f6b6579223a2234363165393038393838306163303831623535653639396363393233643237626362623366666266326663376263343561363439366434646533353937616164222c22736368656d61223a2266736d67656e2e746573742e727573745f70726f78795f696d6167655f7265666572656e63652e7631222c2273656c65637465645f736f7572636573223a5b7b22646576696365223a31363737373234342c22696e6f6465223a37393333373930302c2270617468223a222e6172746966616374732f746d702f6e61746976652d70726f78792d696d6167652d637573746f64792f63617365732f66736d67656e2d4f37636539536b772f696d616765732f313833663064346431383537326132353061633937373536313936373332643838346631613232313761323364636266376466363339306430333330323138372f7275737475702e63222c22736861323536223a2261376439326532386563316338333038653337633630303364663136376263343262643233343163663361363964363737663435333330323731666662613536222c2273697a655f6279746573223a35307d2c7b22646576696365223a31363737373234342c22696e6f6465223a37393333373930322c2270617468223a222e6172746966616374732f746d702f6e61746976652d70726f78792d696d6167652d637573746f64792f63617365732f66736d67656e2d4f37636539536b772f696d616765732f313833663064346431383537326132353061633937373536313936373332643838346631613232313761323364636266376466363339306430333330323138372f727573747570222c22736861323536223a2232633234326236373966323563643661666265626561656434306431643464613966396137633831363730306364623631653163353662373339663830383235222c2273697a655f6279746573223a35387d5d2c22776f726b7370616365223a222e6172746966616374732f746d702f70726f636573732d73757065727669736f722d74657374732f66736d67656e2d3669677546677873222c22776f726b73706163655f6964656e74697479223a7b22646576696365223a31363737373234342c22696e6f6465223a37393333373838342c2270617468223a222e6172746966616374732f746d702f70726f636573732d73757065727669736f722d74657374732f66736d67656e2d3669677546677873227d7d",
+            "device" : 16777244,
+            "inode" : 79337903,
+            "kind" : "file",
+            "links" : 1,
+            "mode" : 256,
+            "sha256" : "5260d4fa59c15acbc78c44556039f27929a5f00ef2b769e45838f6d542a26daa",
+            "size_bytes" : 994,
+            "uid" : 501
+         },
+         "references/4e0191af522249acf522d1063a05d80c6d9e7cde98f45ce9d4e0f5f03f49deba.json" : {
+            "bytes_hex" : "7b2265766964656e63655f6469726563746f7279223a222e6172746966616374732f6c6f67732f6e61746976652d70726f78792d6f62736572766174696f6e2d6163717569736974696f6e2d32303236303931302f63617365732f66736d67656e2d7862554b724b4b32222c2265766964656e63655f6469726563746f72795f6964656e74697479223a7b22646576696365223a31363737373234342c22696e6f6465223a37393333373838352c2270617468223a222e6172746966616374732f6c6f67732f6e61746976652d70726f78792d6f62736572766174696f6e2d6163717569736974696f6e2d32303236303931302f63617365732f66736d67656e2d7862554b724b4b32227d2c22696d6167655f6b6579223a2265666434393762306538343738383462336331636663646531346438623634353939316335326562616239306335346535383938346363626333303363313436222c226f627365727665725f6269727468223a7b22706964223a3130312c2270706964223a3130302c2272756964223a3530312c2273746172745f736563223a3132332c2273746172745f75736563223a3435362c22756964223a3530317d2c227265666572656e63655f6b6579223a2234653031393161663532323234396163663532326431303633613035643830633664396537636465393866343563653964346530663566303366343964656261222c22736368656d61223a2266736d67656e2e746573742e727573745f70726f78795f696d6167655f6f62736572766174696f6e5f7265666572656e63652e7631222c2273656c65637465645f736f7572636573223a5b7b22646576696365223a31363737373234342c22696e6f6465223a37393333373839322c2270617468223a222e6172746966616374732f746d702f6e61746976652d70726f78792d696d6167652d637573746f64792f63617365732f66736d67656e2d4f37636539536b772f696d616765732f656664343937623065383437383834623363316366636465313464386236343539393163353265626162393063353465353839383463636263333033633134362f7275737475702e63222c22736861323536223a2261376439326532386563316338333038653337633630303364663136376263343262643233343163663361363964363737663435333330323731666662613536222c2273697a655f6279746573223a35307d2c7b22646576696365223a31363737373234342c22696e6f6465223a37393333373839342c2270617468223a222e6172746966616374732f746d702f6e61746976652d70726f78792d696d6167652d637573746f64792f63617365732f66736d67656e2d4f37636539536b772f696d616765732f656664343937623065383437383834623363316366636465313464386236343539393163353265626162393063353465353839383463636263333033633134362f727573747570222c22736861323536223a2265376630366632376531383532386337643130653863346134616234326235653730643134323363646238306538333034383539373731396339633765623637222c2273697a655f6279746573223a35337d5d2c227461726765745f6269727468223a7b22706964223a3230312c2270706964223a3230302c2272756964223a3530312c2273746172745f736563223a3132342c2273746172745f75736563223a3738392c22756964223a3530317d7d",
+            "device" : 16777244,
+            "inode" : 79337905,
+            "kind" : "file",
+            "links" : 1,
+            "mode" : 256,
+            "sha256" : "a1257055e434b269a6fb64806c5a673e443980436083e1db161c00131e9dcb33",
+            "size_bytes" : 1266,
+            "uid" : 501
+         }
+      },
+      "workspace" : {}
+   },
+   "context" : {
+      "acquired" : {
+         "executable" : null,
+         "lock" : {
+            "device" : 16777244,
+            "inode" : 79337888,
+            "path" : ".artifacts/tmp/native-proxy-image-custody/cases/fsmgen-O7ce9Skw/coordination.lock"
+         },
+         "observation_reference" : {
+            "record" : {
+               "evidence_directory" : ".artifacts/logs/native-proxy-observation-acquisition-20260910/cases/fsmgen-xbUKrKK2",
+               "evidence_directory_identity" : {
+                  "device" : 16777244,
+                  "inode" : 79337885,
+                  "path" : ".artifacts/logs/native-proxy-observation-acquisition-20260910/cases/fsmgen-xbUKrKK2"
+               },
+               "image_key" : "efd497b0e847884b3c1cfcde14d8b645991c52ebab90c54e58984ccbc303c146",
+               "observer_birth" : {
+                  "pid" : 101,
+                  "ppid" : 100,
+                  "ruid" : 501,
+                  "start_sec" : 123,
+                  "start_usec" : 456,
+                  "uid" : 501
+               },
+               "reference_key" : "4e0191af522249acf522d1063a05d80c6d9e7cde98f45ce9d4e0f5f03f49deba",
+               "schema" : "fsmgen.test.rust_proxy_image_observation_reference.v1",
+               "selected_sources" : [
+                  {
+                     "device" : 16777244,
+                     "inode" : 79337892,
+                     "path" : ".artifacts/tmp/native-proxy-image-custody/cases/fsmgen-O7ce9Skw/images/efd497b0e847884b3c1cfcde14d8b645991c52ebab90c54e58984ccbc303c146/rustup.c",
+                     "sha256" : "a7d92e28ec1c8308e37c6003df167bc42bd2341cf3a69d677f45330271ffba56",
+                     "size_bytes" : 50
+                  },
+                  {
+                     "device" : 16777244,
+                     "inode" : 79337894,
+                     "path" : ".artifacts/tmp/native-proxy-image-custody/cases/fsmgen-O7ce9Skw/images/efd497b0e847884b3c1cfcde14d8b645991c52ebab90c54e58984ccbc303c146/rustup",
+                     "sha256" : "e7f06f27e18528c7d10e8c4a4ab42b5e70d1423cdb80e83048597719c9c7eb67",
+                     "size_bytes" : 53
+                  }
+               ],
+               "target_birth" : {
+                  "pid" : 201,
+                  "ppid" : 200,
+                  "ruid" : 501,
+                  "start_sec" : 124,
+                  "start_usec" : 789,
+                  "uid" : 501
+               }
+            },
+            "source" : {
+               "bytes" : "{\"evidence_directory\":\".artifacts/logs/native-proxy-observation-acquisition-20260910/cases/fsmgen-xbUKrKK2\",\"evidence_directory_identity\":{\"device\":16777244,\"inode\":79337885,\"path\":\".artifacts/logs/native-proxy-observation-acquisition-20260910/cases/fsmgen-xbUKrKK2\"},\"image_key\":\"efd497b0e847884b3c1cfcde14d8b645991c52ebab90c54e58984ccbc303c146\",\"observer_birth\":{\"pid\":101,\"ppid\":100,\"ruid\":501,\"start_sec\":123,\"start_usec\":456,\"uid\":501},\"reference_key\":\"4e0191af522249acf522d1063a05d80c6d9e7cde98f45ce9d4e0f5f03f49deba\",\"schema\":\"fsmgen.test.rust_proxy_image_observation_reference.v1\",\"selected_sources\":[{\"device\":16777244,\"inode\":79337892,\"path\":\".artifacts/tmp/native-proxy-image-custody/cases/fsmgen-O7ce9Skw/images/efd497b0e847884b3c1cfcde14d8b645991c52ebab90c54e58984ccbc303c146/rustup.c\",\"sha256\":\"a7d92e28ec1c8308e37c6003df167bc42bd2341cf3a69d677f45330271ffba56\",\"size_bytes\":50},{\"device\":16777244,\"inode\":79337894,\"path\":\".artifacts/tmp/native-proxy-image-custody/cases/fsmgen-O7ce9Skw/images/efd497b0e847884b3c1cfcde14d8b645991c52ebab90c54e58984ccbc303c146/rustup\",\"sha256\":\"e7f06f27e18528c7d10e8c4a4ab42b5e70d1423cdb80e83048597719c9c7eb67\",\"size_bytes\":53}],\"target_birth\":{\"pid\":201,\"ppid\":200,\"ruid\":501,\"start_sec\":124,\"start_usec\":789,\"uid\":501}}",
+               "identity" : {
+                  "device" : 16777244,
+                  "inode" : 79337905,
+                  "path" : ".artifacts/tmp/native-proxy-image-custody/cases/fsmgen-O7ce9Skw/references/4e0191af522249acf522d1063a05d80c6d9e7cde98f45ce9d4e0f5f03f49deba.json",
+                  "sha256" : "a1257055e434b269a6fb64806c5a673e443980436083e1db161c00131e9dcb33",
+                  "size_bytes" : 1266
+               }
+            }
+         },
+         "runtime_authorized" : 0,
+         "schema" : "fsmgen.inactive_observation_acquisition.v1",
+         "target_sources" : [
+            {
+               "bytes" : "#!/usr/bin/perl\n# inert observation wrapper; never executed\n",
+               "identity" : {
+                  "device" : 16777244,
+                  "inode" : 79337887,
+                  "path" : ".artifacts/tmp/process-supervisor-tests/fsmgen-3HqR_43u/rust-tool-resolution",
+                  "sha256" : "d42ab2b4e413bd694a831c4a8307a0c4cd760b3bfdcf5fc93dc0b6772fdd632b",
+                  "size_bytes" : 60
+               }
+            },
+            {
+               "bytes" : "{\"image_key\":\"efd497b0e847884b3c1cfcde14d8b645991c52ebab90c54e58984ccbc303c146\",\"reference_key\":\"101a04686a0e7a66db60418997d2b5825c6eb0a903239330c8a601b35e05b8da\",\"schema\":\"fsmgen.test.rust_proxy_image_reference.v1\",\"selected_sources\":[{\"device\":16777244,\"inode\":79337892,\"path\":\".artifacts/tmp/native-proxy-image-custody/cases/fsmgen-O7ce9Skw/images/efd497b0e847884b3c1cfcde14d8b645991c52ebab90c54e58984ccbc303c146/rustup.c\",\"sha256\":\"a7d92e28ec1c8308e37c6003df167bc42bd2341cf3a69d677f45330271ffba56\",\"size_bytes\":50},{\"device\":16777244,\"inode\":79337894,\"path\":\".artifacts/tmp/native-proxy-image-custody/cases/fsmgen-O7ce9Skw/images/efd497b0e847884b3c1cfcde14d8b645991c52ebab90c54e58984ccbc303c146/rustup\",\"sha256\":\"e7f06f27e18528c7d10e8c4a4ab42b5e70d1423cdb80e83048597719c9c7eb67\",\"size_bytes\":53}],\"workspace\":\".artifacts/tmp/process-supervisor-tests/fsmgen-3HqR_43u\",\"workspace_identity\":{\"device\":16777244,\"inode\":79337883,\"path\":\".artifacts/tmp/process-supervisor-tests/fsmgen-3HqR_43u\"}}",
+               "identity" : {
+                  "device" : 16777244,
+                  "inode" : 79337896,
+                  "path" : ".artifacts/tmp/process-supervisor-tests/fsmgen-3HqR_43u/rust-tools/image-reference.json",
+                  "sha256" : "4dbffa9c361ab09457ff9270e89c125ae0a5766b6a0edf5e3bd4aa8439cdbc19",
+                  "size_bytes" : 994
+               }
+            },
+            {
+               "bytes" : "{\"image_key\":\"efd497b0e847884b3c1cfcde14d8b645991c52ebab90c54e58984ccbc303c146\",\"reference_key\":\"101a04686a0e7a66db60418997d2b5825c6eb0a903239330c8a601b35e05b8da\",\"schema\":\"fsmgen.test.rust_proxy_image_reference.v1\",\"selected_sources\":[{\"device\":16777244,\"inode\":79337892,\"path\":\".artifacts/tmp/native-proxy-image-custody/cases/fsmgen-O7ce9Skw/images/efd497b0e847884b3c1cfcde14d8b645991c52ebab90c54e58984ccbc303c146/rustup.c\",\"sha256\":\"a7d92e28ec1c8308e37c6003df167bc42bd2341cf3a69d677f45330271ffba56\",\"size_bytes\":50},{\"device\":16777244,\"inode\":79337894,\"path\":\".artifacts/tmp/native-proxy-image-custody/cases/fsmgen-O7ce9Skw/images/efd497b0e847884b3c1cfcde14d8b645991c52ebab90c54e58984ccbc303c146/rustup\",\"sha256\":\"e7f06f27e18528c7d10e8c4a4ab42b5e70d1423cdb80e83048597719c9c7eb67\",\"size_bytes\":53}],\"workspace\":\".artifacts/tmp/process-supervisor-tests/fsmgen-3HqR_43u\",\"workspace_identity\":{\"device\":16777244,\"inode\":79337883,\"path\":\".artifacts/tmp/process-supervisor-tests/fsmgen-3HqR_43u\"}}",
+               "identity" : {
+                  "device" : 16777244,
+                  "inode" : 79337895,
+                  "path" : ".artifacts/tmp/native-proxy-image-custody/cases/fsmgen-O7ce9Skw/references/101a04686a0e7a66db60418997d2b5825c6eb0a903239330c8a601b35e05b8da.json",
+                  "sha256" : "4dbffa9c361ab09457ff9270e89c125ae0a5766b6a0edf5e3bd4aa8439cdbc19",
+                  "size_bytes" : 994
+               }
+            },
+            {
+               "bytes" : "/* inert qualification bytes; never compiled */\n\u0000\u00ff",
+               "identity" : {
+                  "device" : 16777244,
+                  "inode" : 79337892,
+                  "path" : ".artifacts/tmp/native-proxy-image-custody/cases/fsmgen-O7ce9Skw/images/efd497b0e847884b3c1cfcde14d8b645991c52ebab90c54e58984ccbc303c146/rustup.c",
+                  "sha256" : "a7d92e28ec1c8308e37c6003df167bc42bd2341cf3a69d677f45330271ffba56",
+                  "size_bytes" : 50
+               }
+            },
+            {
+               "bytes" : "\u00cf\u00fa\u00ed\u00fe\f\u0000\u0000\u0001\u0000\u0000\u0000\u0000\u0002\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000inert-not-a-program\u0000\u00ff",
+               "identity" : {
+                  "device" : 16777244,
+                  "inode" : 79337894,
+                  "path" : ".artifacts/tmp/native-proxy-image-custody/cases/fsmgen-O7ce9Skw/images/efd497b0e847884b3c1cfcde14d8b645991c52ebab90c54e58984ccbc303c146/rustup",
+                  "sha256" : "e7f06f27e18528c7d10e8c4a4ab42b5e70d1423cdb80e83048597719c9c7eb67",
+                  "size_bytes" : 53
+               }
+            }
+         ]
+      },
+      "evidence" : {
+         "device" : 16777244,
+         "inode" : 79337885,
+         "path" : ".artifacts/logs/native-proxy-observation-acquisition-20260910/cases/fsmgen-xbUKrKK2"
+      },
+      "other_observation" : {
+         "executable" : null,
+         "lock" : {
+            "device" : 16777244,
+            "inode" : 79337888,
+            "path" : ".artifacts/tmp/native-proxy-image-custody/cases/fsmgen-O7ce9Skw/coordination.lock"
+         },
+         "observation_reference" : {
+            "record" : {
+               "evidence_directory" : ".artifacts/logs/native-proxy-observation-acquisition-20260910/cases/fsmgen-xbUKrKK2",
+               "evidence_directory_identity" : {
+                  "device" : 16777244,
+                  "inode" : 79337885,
+                  "path" : ".artifacts/logs/native-proxy-observation-acquisition-20260910/cases/fsmgen-xbUKrKK2"
+               },
+               "image_key" : "efd497b0e847884b3c1cfcde14d8b645991c52ebab90c54e58984ccbc303c146",
+               "observer_birth" : {
+                  "pid" : 101,
+                  "ppid" : 100,
+                  "ruid" : 501,
+                  "start_sec" : 123,
+                  "start_usec" : 456,
+                  "uid" : 501
+               },
+               "reference_key" : "a5eece5d2d2bf45c061f089034180dfa0f83a5853c0848ff843e81f2cfc21604",
+               "schema" : "fsmgen.test.rust_proxy_image_observation_reference.v1",
+               "selected_sources" : [
+                  {
+                     "device" : 16777244,
+                     "inode" : 79337892,
+                     "path" : ".artifacts/tmp/native-proxy-image-custody/cases/fsmgen-O7ce9Skw/images/efd497b0e847884b3c1cfcde14d8b645991c52ebab90c54e58984ccbc303c146/rustup.c",
+                     "sha256" : "a7d92e28ec1c8308e37c6003df167bc42bd2341cf3a69d677f45330271ffba56",
+                     "size_bytes" : 50
+                  },
+                  {
+                     "device" : 16777244,
+                     "inode" : 79337894,
+                     "path" : ".artifacts/tmp/native-proxy-image-custody/cases/fsmgen-O7ce9Skw/images/efd497b0e847884b3c1cfcde14d8b645991c52ebab90c54e58984ccbc303c146/rustup",
+                     "sha256" : "e7f06f27e18528c7d10e8c4a4ab42b5e70d1423cdb80e83048597719c9c7eb67",
+                     "size_bytes" : 53
+                  }
+               ],
+               "target_birth" : {
+                  "pid" : 202,
+                  "ppid" : 200,
+                  "ruid" : 501,
+                  "start_sec" : 124,
+                  "start_usec" : 789,
+                  "uid" : 501
+               }
+            },
+            "source" : {
+               "bytes" : "{\"evidence_directory\":\".artifacts/logs/native-proxy-observation-acquisition-20260910/cases/fsmgen-xbUKrKK2\",\"evidence_directory_identity\":{\"device\":16777244,\"inode\":79337885,\"path\":\".artifacts/logs/native-proxy-observation-acquisition-20260910/cases/fsmgen-xbUKrKK2\"},\"image_key\":\"efd497b0e847884b3c1cfcde14d8b645991c52ebab90c54e58984ccbc303c146\",\"observer_birth\":{\"pid\":101,\"ppid\":100,\"ruid\":501,\"start_sec\":123,\"start_usec\":456,\"uid\":501},\"reference_key\":\"a5eece5d2d2bf45c061f089034180dfa0f83a5853c0848ff843e81f2cfc21604\",\"schema\":\"fsmgen.test.rust_proxy_image_observation_reference.v1\",\"selected_sources\":[{\"device\":16777244,\"inode\":79337892,\"path\":\".artifacts/tmp/native-proxy-image-custody/cases/fsmgen-O7ce9Skw/images/efd497b0e847884b3c1cfcde14d8b645991c52ebab90c54e58984ccbc303c146/rustup.c\",\"sha256\":\"a7d92e28ec1c8308e37c6003df167bc42bd2341cf3a69d677f45330271ffba56\",\"size_bytes\":50},{\"device\":16777244,\"inode\":79337894,\"path\":\".artifacts/tmp/native-proxy-image-custody/cases/fsmgen-O7ce9Skw/images/efd497b0e847884b3c1cfcde14d8b645991c52ebab90c54e58984ccbc303c146/rustup\",\"sha256\":\"e7f06f27e18528c7d10e8c4a4ab42b5e70d1423cdb80e83048597719c9c7eb67\",\"size_bytes\":53}],\"target_birth\":{\"pid\":202,\"ppid\":200,\"ruid\":501,\"start_sec\":124,\"start_usec\":789,\"uid\":501}}",
+               "identity" : {
+                  "device" : 16777244,
+                  "inode" : 79337906,
+                  "path" : ".artifacts/tmp/native-proxy-image-custody/cases/fsmgen-O7ce9Skw/references/a5eece5d2d2bf45c061f089034180dfa0f83a5853c0848ff843e81f2cfc21604.json",
+                  "sha256" : "ae1ca3c240f385a13e31796c93914b383bbbbb304ca916c9ef8d934ca66a6108",
+                  "size_bytes" : 1266
+               }
+            }
+         },
+         "runtime_authorized" : 0,
+         "schema" : "fsmgen.inactive_observation_acquisition.v1",
+         "target_sources" : [
+            {
+               "bytes" : "#!/usr/bin/perl\n# inert observation wrapper; never executed\n",
+               "identity" : {
+                  "device" : 16777244,
+                  "inode" : 79337887,
+                  "path" : ".artifacts/tmp/process-supervisor-tests/fsmgen-3HqR_43u/rust-tool-resolution",
+                  "sha256" : "d42ab2b4e413bd694a831c4a8307a0c4cd760b3bfdcf5fc93dc0b6772fdd632b",
+                  "size_bytes" : 60
+               }
+            },
+            {
+               "bytes" : "{\"image_key\":\"efd497b0e847884b3c1cfcde14d8b645991c52ebab90c54e58984ccbc303c146\",\"reference_key\":\"101a04686a0e7a66db60418997d2b5825c6eb0a903239330c8a601b35e05b8da\",\"schema\":\"fsmgen.test.rust_proxy_image_reference.v1\",\"selected_sources\":[{\"device\":16777244,\"inode\":79337892,\"path\":\".artifacts/tmp/native-proxy-image-custody/cases/fsmgen-O7ce9Skw/images/efd497b0e847884b3c1cfcde14d8b645991c52ebab90c54e58984ccbc303c146/rustup.c\",\"sha256\":\"a7d92e28ec1c8308e37c6003df167bc42bd2341cf3a69d677f45330271ffba56\",\"size_bytes\":50},{\"device\":16777244,\"inode\":79337894,\"path\":\".artifacts/tmp/native-proxy-image-custody/cases/fsmgen-O7ce9Skw/images/efd497b0e847884b3c1cfcde14d8b645991c52ebab90c54e58984ccbc303c146/rustup\",\"sha256\":\"e7f06f27e18528c7d10e8c4a4ab42b5e70d1423cdb80e83048597719c9c7eb67\",\"size_bytes\":53}],\"workspace\":\".artifacts/tmp/process-supervisor-tests/fsmgen-3HqR_43u\",\"workspace_identity\":{\"device\":16777244,\"inode\":79337883,\"path\":\".artifacts/tmp/process-supervisor-tests/fsmgen-3HqR_43u\"}}",
+               "identity" : {
+                  "device" : 16777244,
+                  "inode" : 79337896,
+                  "path" : ".artifacts/tmp/process-supervisor-tests/fsmgen-3HqR_43u/rust-tools/image-reference.json",
+                  "sha256" : "4dbffa9c361ab09457ff9270e89c125ae0a5766b6a0edf5e3bd4aa8439cdbc19",
+                  "size_bytes" : 994
+               }
+            },
+            {
+               "bytes" : "{\"image_key\":\"efd497b0e847884b3c1cfcde14d8b645991c52ebab90c54e58984ccbc303c146\",\"reference_key\":\"101a04686a0e7a66db60418997d2b5825c6eb0a903239330c8a601b35e05b8da\",\"schema\":\"fsmgen.test.rust_proxy_image_reference.v1\",\"selected_sources\":[{\"device\":16777244,\"inode\":79337892,\"path\":\".artifacts/tmp/native-proxy-image-custody/cases/fsmgen-O7ce9Skw/images/efd497b0e847884b3c1cfcde14d8b645991c52ebab90c54e58984ccbc303c146/rustup.c\",\"sha256\":\"a7d92e28ec1c8308e37c6003df167bc42bd2341cf3a69d677f45330271ffba56\",\"size_bytes\":50},{\"device\":16777244,\"inode\":79337894,\"path\":\".artifacts/tmp/native-proxy-image-custody/cases/fsmgen-O7ce9Skw/images/efd497b0e847884b3c1cfcde14d8b645991c52ebab90c54e58984ccbc303c146/rustup\",\"sha256\":\"e7f06f27e18528c7d10e8c4a4ab42b5e70d1423cdb80e83048597719c9c7eb67\",\"size_bytes\":53}],\"workspace\":\".artifacts/tmp/process-supervisor-tests/fsmgen-3HqR_43u\",\"workspace_identity\":{\"device\":16777244,\"inode\":79337883,\"path\":\".artifacts/tmp/process-supervisor-tests/fsmgen-3HqR_43u\"}}",
+               "identity" : {
+                  "device" : 16777244,
+                  "inode" : 79337895,
+                  "path" : ".artifacts/tmp/native-proxy-image-custody/cases/fsmgen-O7ce9Skw/references/101a04686a0e7a66db60418997d2b5825c6eb0a903239330c8a601b35e05b8da.json",
+                  "sha256" : "4dbffa9c361ab09457ff9270e89c125ae0a5766b6a0edf5e3bd4aa8439cdbc19",
+                  "size_bytes" : 994
+               }
+            },
+            {
+               "bytes" : "/* inert qualification bytes; never compiled */\n\u0000\u00ff",
+               "identity" : {
+                  "device" : 16777244,
+                  "inode" : 79337892,
+                  "path" : ".artifacts/tmp/native-proxy-image-custody/cases/fsmgen-O7ce9Skw/images/efd497b0e847884b3c1cfcde14d8b645991c52ebab90c54e58984ccbc303c146/rustup.c",
+                  "sha256" : "a7d92e28ec1c8308e37c6003df167bc42bd2341cf3a69d677f45330271ffba56",
+                  "size_bytes" : 50
+               }
+            },
+            {
+               "bytes" : "\u00cf\u00fa\u00ed\u00fe\f\u0000\u0000\u0001\u0000\u0000\u0000\u0000\u0002\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000inert-not-a-program\u0000\u00ff",
+               "identity" : {
+                  "device" : 16777244,
+                  "inode" : 79337894,
+                  "path" : ".artifacts/tmp/native-proxy-image-custody/cases/fsmgen-O7ce9Skw/images/efd497b0e847884b3c1cfcde14d8b645991c52ebab90c54e58984ccbc303c146/rustup",
+                  "sha256" : "e7f06f27e18528c7d10e8c4a4ab42b5e70d1423cdb80e83048597719c9c7eb67",
+                  "size_bytes" : 53
+               }
+            }
+         ]
+      },
+      "other_runtime" : {
+         "created" : 1,
+         "executable" : null,
+         "image" : {
+            "key" : "183f0d4d18572a250ac97756196732d884f1a2217a23dcbf7df6390d03302187",
+            "snapshots" : [
+               {
+                  "bytes" : "/* inert qualification bytes; never compiled */\n\u0000\u00ff",
+                  "identity" : {
+                     "device" : 16777244,
+                     "inode" : 79337900,
+                     "path" : ".artifacts/tmp/native-proxy-image-custody/cases/fsmgen-O7ce9Skw/images/183f0d4d18572a250ac97756196732d884f1a2217a23dcbf7df6390d03302187/rustup.c",
+                     "sha256" : "a7d92e28ec1c8308e37c6003df167bc42bd2341cf3a69d677f45330271ffba56",
+                     "size_bytes" : 50
+                  }
+               },
+               {
+                  "bytes" : "\u00cf\u00fa\u00ed\u00fe\f\u0000\u0000\u0001\u0000\u0000\u0000\u0000\u0002\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000inert-not-a-program\u0000\u00ffother",
+                  "identity" : {
+                     "device" : 16777244,
+                     "inode" : 79337902,
+                     "path" : ".artifacts/tmp/native-proxy-image-custody/cases/fsmgen-O7ce9Skw/images/183f0d4d18572a250ac97756196732d884f1a2217a23dcbf7df6390d03302187/rustup",
+                     "sha256" : "2c242b679f25cd6afbebeaed40d1d4da9f9a7c816700cdb61e1c56b739f80825",
+                     "size_bytes" : 58
+                  }
+               },
+               {
+                  "bytes" : "{\"executable\":{\"sha256\":\"2c242b679f25cd6afbebeaed40d1d4da9f9a7c816700cdb61e1c56b739f80825\",\"size_bytes\":58},\"generated_c\":{\"sha256\":\"a7d92e28ec1c8308e37c6003df167bc42bd2341cf3a69d677f45330271ffba56\",\"size_bytes\":50},\"key\":\"183f0d4d18572a250ac97756196732d884f1a2217a23dcbf7df6390d03302187\",\"schema\":\"fsmgen.test.rust_proxy_image.v1\"}",
+                  "identity" : {
+                     "device" : 16777244,
+                     "inode" : 79337901,
+                     "path" : ".artifacts/tmp/native-proxy-image-custody/cases/fsmgen-O7ce9Skw/images/183f0d4d18572a250ac97756196732d884f1a2217a23dcbf7df6390d03302187/image.json",
+                     "sha256" : "25833b2a44e94d7e9ba26b7d8cb760737cc6b2d570c505a908ecc271103a514d",
+                     "size_bytes" : 332
+                  }
+               }
+            ]
+         },
+         "lock" : {
+            "device" : 16777244,
+            "inode" : 79337888,
+            "path" : ".artifacts/tmp/native-proxy-image-custody/cases/fsmgen-O7ce9Skw/coordination.lock"
+         },
+         "reference" : {
+            "global" : {
+               "bytes" : "{\"image_key\":\"183f0d4d18572a250ac97756196732d884f1a2217a23dcbf7df6390d03302187\",\"reference_key\":\"461e9089880ac081b55e699cc923d27bcbb3ffbf2fc7bc45a6496d4de3597aad\",\"schema\":\"fsmgen.test.rust_proxy_image_reference.v1\",\"selected_sources\":[{\"device\":16777244,\"inode\":79337900,\"path\":\".artifacts/tmp/native-proxy-image-custody/cases/fsmgen-O7ce9Skw/images/183f0d4d18572a250ac97756196732d884f1a2217a23dcbf7df6390d03302187/rustup.c\",\"sha256\":\"a7d92e28ec1c8308e37c6003df167bc42bd2341cf3a69d677f45330271ffba56\",\"size_bytes\":50},{\"device\":16777244,\"inode\":79337902,\"path\":\".artifacts/tmp/native-proxy-image-custody/cases/fsmgen-O7ce9Skw/images/183f0d4d18572a250ac97756196732d884f1a2217a23dcbf7df6390d03302187/rustup\",\"sha256\":\"2c242b679f25cd6afbebeaed40d1d4da9f9a7c816700cdb61e1c56b739f80825\",\"size_bytes\":58}],\"workspace\":\".artifacts/tmp/process-supervisor-tests/fsmgen-6iguFgxs\",\"workspace_identity\":{\"device\":16777244,\"inode\":79337884,\"path\":\".artifacts/tmp/process-supervisor-tests/fsmgen-6iguFgxs\"}}",
+               "identity" : {
+                  "device" : 16777244,
+                  "inode" : 79337903,
+                  "path" : ".artifacts/tmp/native-proxy-image-custody/cases/fsmgen-O7ce9Skw/references/461e9089880ac081b55e699cc923d27bcbb3ffbf2fc7bc45a6496d4de3597aad.json",
+                  "sha256" : "5260d4fa59c15acbc78c44556039f27929a5f00ef2b769e45838f6d542a26daa",
+                  "size_bytes" : 994
+               }
+            },
+            "private" : {
+               "bytes" : "{\"image_key\":\"183f0d4d18572a250ac97756196732d884f1a2217a23dcbf7df6390d03302187\",\"reference_key\":\"461e9089880ac081b55e699cc923d27bcbb3ffbf2fc7bc45a6496d4de3597aad\",\"schema\":\"fsmgen.test.rust_proxy_image_reference.v1\",\"selected_sources\":[{\"device\":16777244,\"inode\":79337900,\"path\":\".artifacts/tmp/native-proxy-image-custody/cases/fsmgen-O7ce9Skw/images/183f0d4d18572a250ac97756196732d884f1a2217a23dcbf7df6390d03302187/rustup.c\",\"sha256\":\"a7d92e28ec1c8308e37c6003df167bc42bd2341cf3a69d677f45330271ffba56\",\"size_bytes\":50},{\"device\":16777244,\"inode\":79337902,\"path\":\".artifacts/tmp/native-proxy-image-custody/cases/fsmgen-O7ce9Skw/images/183f0d4d18572a250ac97756196732d884f1a2217a23dcbf7df6390d03302187/rustup\",\"sha256\":\"2c242b679f25cd6afbebeaed40d1d4da9f9a7c816700cdb61e1c56b739f80825\",\"size_bytes\":58}],\"workspace\":\".artifacts/tmp/process-supervisor-tests/fsmgen-6iguFgxs\",\"workspace_identity\":{\"device\":16777244,\"inode\":79337884,\"path\":\".artifacts/tmp/process-supervisor-tests/fsmgen-6iguFgxs\"}}",
+               "identity" : {
+                  "device" : 16777244,
+                  "inode" : 79337904,
+                  "path" : ".artifacts/tmp/process-supervisor-tests/fsmgen-6iguFgxs/rust-tools/image-reference.json",
+                  "sha256" : "5260d4fa59c15acbc78c44556039f27929a5f00ef2b769e45838f6d542a26daa",
+                  "size_bytes" : 994
+               }
+            },
+            "record" : {
+               "image_key" : "183f0d4d18572a250ac97756196732d884f1a2217a23dcbf7df6390d03302187",
+               "reference_key" : "461e9089880ac081b55e699cc923d27bcbb3ffbf2fc7bc45a6496d4de3597aad",
+               "schema" : "fsmgen.test.rust_proxy_image_reference.v1",
+               "selected_sources" : [
+                  {
+                     "device" : 16777244,
+                     "inode" : 79337900,
+                     "path" : ".artifacts/tmp/native-proxy-image-custody/cases/fsmgen-O7ce9Skw/images/183f0d4d18572a250ac97756196732d884f1a2217a23dcbf7df6390d03302187/rustup.c",
+                     "sha256" : "a7d92e28ec1c8308e37c6003df167bc42bd2341cf3a69d677f45330271ffba56",
+                     "size_bytes" : 50
+                  },
+                  {
+                     "device" : 16777244,
+                     "inode" : 79337902,
+                     "path" : ".artifacts/tmp/native-proxy-image-custody/cases/fsmgen-O7ce9Skw/images/183f0d4d18572a250ac97756196732d884f1a2217a23dcbf7df6390d03302187/rustup",
+                     "sha256" : "2c242b679f25cd6afbebeaed40d1d4da9f9a7c816700cdb61e1c56b739f80825",
+                     "size_bytes" : 58
+                  }
+               ],
+               "workspace" : ".artifacts/tmp/process-supervisor-tests/fsmgen-6iguFgxs",
+               "workspace_identity" : {
+                  "device" : 16777244,
+                  "inode" : 79337884,
+                  "path" : ".artifacts/tmp/process-supervisor-tests/fsmgen-6iguFgxs"
+               }
+            }
+         },
+         "runtime_authorized" : 0,
+         "schema" : "fsmgen.inactive_runtime_reference_acquisition.v1"
+      },
+      "other_workspace" : {
+         "device" : 16777244,
+         "inode" : 79337884,
+         "path" : ".artifacts/tmp/process-supervisor-tests/fsmgen-6iguFgxs"
+      },
+      "request" : {
+         "evidence_directory_identity" : {
+            "device" : 16777244,
+            "inode" : 79337885,
+            "path" : ".artifacts/logs/native-proxy-observation-acquisition-20260910/cases/fsmgen-xbUKrKK2"
+         },
+         "observer_birth" : {
+            "pid" : 101,
+            "ppid" : 100,
+            "ruid" : 501,
+            "start_sec" : 123,
+            "start_usec" : 456,
+            "uid" : 501
+         },
+         "target_birth" : {
+            "pid" : 201,
+            "ppid" : 200,
+            "ruid" : 501,
+            "start_sec" : 124,
+            "start_usec" : 789,
+            "uid" : 501
+         },
+         "workspace_identity" : {
+            "device" : 16777244,
+            "inode" : 79337883,
+            "path" : ".artifacts/tmp/process-supervisor-tests/fsmgen-3HqR_43u"
+         }
+      },
+      "runtime" : {
+         "created" : 1,
+         "executable" : null,
+         "image" : {
+            "key" : "efd497b0e847884b3c1cfcde14d8b645991c52ebab90c54e58984ccbc303c146",
+            "snapshots" : [
+               {
+                  "bytes" : "/* inert qualification bytes; never compiled */\n\u0000\u00ff",
+                  "identity" : {
+                     "device" : 16777244,
+                     "inode" : 79337892,
+                     "path" : ".artifacts/tmp/native-proxy-image-custody/cases/fsmgen-O7ce9Skw/images/efd497b0e847884b3c1cfcde14d8b645991c52ebab90c54e58984ccbc303c146/rustup.c",
+                     "sha256" : "a7d92e28ec1c8308e37c6003df167bc42bd2341cf3a69d677f45330271ffba56",
+                     "size_bytes" : 50
+                  }
+               },
+               {
+                  "bytes" : "\u00cf\u00fa\u00ed\u00fe\f\u0000\u0000\u0001\u0000\u0000\u0000\u0000\u0002\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000inert-not-a-program\u0000\u00ff",
+                  "identity" : {
+                     "device" : 16777244,
+                     "inode" : 79337894,
+                     "path" : ".artifacts/tmp/native-proxy-image-custody/cases/fsmgen-O7ce9Skw/images/efd497b0e847884b3c1cfcde14d8b645991c52ebab90c54e58984ccbc303c146/rustup",
+                     "sha256" : "e7f06f27e18528c7d10e8c4a4ab42b5e70d1423cdb80e83048597719c9c7eb67",
+                     "size_bytes" : 53
+                  }
+               },
+               {
+                  "bytes" : "{\"executable\":{\"sha256\":\"e7f06f27e18528c7d10e8c4a4ab42b5e70d1423cdb80e83048597719c9c7eb67\",\"size_bytes\":53},\"generated_c\":{\"sha256\":\"a7d92e28ec1c8308e37c6003df167bc42bd2341cf3a69d677f45330271ffba56\",\"size_bytes\":50},\"key\":\"efd497b0e847884b3c1cfcde14d8b645991c52ebab90c54e58984ccbc303c146\",\"schema\":\"fsmgen.test.rust_proxy_image.v1\"}",
+                  "identity" : {
+                     "device" : 16777244,
+                     "inode" : 79337893,
+                     "path" : ".artifacts/tmp/native-proxy-image-custody/cases/fsmgen-O7ce9Skw/images/efd497b0e847884b3c1cfcde14d8b645991c52ebab90c54e58984ccbc303c146/image.json",
+                     "sha256" : "156ec74edbff95660f5275aca3dca8f675f8398ceff43a243573aee41462efb4",
+                     "size_bytes" : 332
+                  }
+               }
+            ]
+         },
+         "lock" : {
+            "device" : 16777244,
+            "inode" : 79337888,
+            "path" : ".artifacts/tmp/native-proxy-image-custody/cases/fsmgen-O7ce9Skw/coordination.lock"
+         },
+         "reference" : {
+            "global" : {
+               "bytes" : "{\"image_key\":\"efd497b0e847884b3c1cfcde14d8b645991c52ebab90c54e58984ccbc303c146\",\"reference_key\":\"101a04686a0e7a66db60418997d2b5825c6eb0a903239330c8a601b35e05b8da\",\"schema\":\"fsmgen.test.rust_proxy_image_reference.v1\",\"selected_sources\":[{\"device\":16777244,\"inode\":79337892,\"path\":\".artifacts/tmp/native-proxy-image-custody/cases/fsmgen-O7ce9Skw/images/efd497b0e847884b3c1cfcde14d8b645991c52ebab90c54e58984ccbc303c146/rustup.c\",\"sha256\":\"a7d92e28ec1c8308e37c6003df167bc42bd2341cf3a69d677f45330271ffba56\",\"size_bytes\":50},{\"device\":16777244,\"inode\":79337894,\"path\":\".artifacts/tmp/native-proxy-image-custody/cases/fsmgen-O7ce9Skw/images/efd497b0e847884b3c1cfcde14d8b645991c52ebab90c54e58984ccbc303c146/rustup\",\"sha256\":\"e7f06f27e18528c7d10e8c4a4ab42b5e70d1423cdb80e83048597719c9c7eb67\",\"size_bytes\":53}],\"workspace\":\".artifacts/tmp/process-supervisor-tests/fsmgen-3HqR_43u\",\"workspace_identity\":{\"device\":16777244,\"inode\":79337883,\"path\":\".artifacts/tmp/process-supervisor-tests/fsmgen-3HqR_43u\"}}",
+               "identity" : {
+                  "device" : 16777244,
+                  "inode" : 79337895,
+                  "path" : ".artifacts/tmp/native-proxy-image-custody/cases/fsmgen-O7ce9Skw/references/101a04686a0e7a66db60418997d2b5825c6eb0a903239330c8a601b35e05b8da.json",
+                  "sha256" : "4dbffa9c361ab09457ff9270e89c125ae0a5766b6a0edf5e3bd4aa8439cdbc19",
+                  "size_bytes" : 994
+               }
+            },
+            "private" : {
+               "bytes" : "{\"image_key\":\"efd497b0e847884b3c1cfcde14d8b645991c52ebab90c54e58984ccbc303c146\",\"reference_key\":\"101a04686a0e7a66db60418997d2b5825c6eb0a903239330c8a601b35e05b8da\",\"schema\":\"fsmgen.test.rust_proxy_image_reference.v1\",\"selected_sources\":[{\"device\":16777244,\"inode\":79337892,\"path\":\".artifacts/tmp/native-proxy-image-custody/cases/fsmgen-O7ce9Skw/images/efd497b0e847884b3c1cfcde14d8b645991c52ebab90c54e58984ccbc303c146/rustup.c\",\"sha256\":\"a7d92e28ec1c8308e37c6003df167bc42bd2341cf3a69d677f45330271ffba56\",\"size_bytes\":50},{\"device\":16777244,\"inode\":79337894,\"path\":\".artifacts/tmp/native-proxy-image-custody/cases/fsmgen-O7ce9Skw/images/efd497b0e847884b3c1cfcde14d8b645991c52ebab90c54e58984ccbc303c146/rustup\",\"sha256\":\"e7f06f27e18528c7d10e8c4a4ab42b5e70d1423cdb80e83048597719c9c7eb67\",\"size_bytes\":53}],\"workspace\":\".artifacts/tmp/process-supervisor-tests/fsmgen-3HqR_43u\",\"workspace_identity\":{\"device\":16777244,\"inode\":79337883,\"path\":\".artifacts/tmp/process-supervisor-tests/fsmgen-3HqR_43u\"}}",
+               "identity" : {
+                  "device" : 16777244,
+                  "inode" : 79337896,
+                  "path" : ".artifacts/tmp/process-supervisor-tests/fsmgen-3HqR_43u/rust-tools/image-reference.json",
+                  "sha256" : "4dbffa9c361ab09457ff9270e89c125ae0a5766b6a0edf5e3bd4aa8439cdbc19",
+                  "size_bytes" : 994
+               }
+            },
+            "record" : {
+               "image_key" : "efd497b0e847884b3c1cfcde14d8b645991c52ebab90c54e58984ccbc303c146",
+               "reference_key" : "101a04686a0e7a66db60418997d2b5825c6eb0a903239330c8a601b35e05b8da",
+               "schema" : "fsmgen.test.rust_proxy_image_reference.v1",
+               "selected_sources" : [
+                  {
+                     "device" : 16777244,
+                     "inode" : 79337892,
+                     "path" : ".artifacts/tmp/native-proxy-image-custody/cases/fsmgen-O7ce9Skw/images/efd497b0e847884b3c1cfcde14d8b645991c52ebab90c54e58984ccbc303c146/rustup.c",
+                     "sha256" : "a7d92e28ec1c8308e37c6003df167bc42bd2341cf3a69d677f45330271ffba56",
+                     "size_bytes" : 50
+                  },
+                  {
+                     "device" : 16777244,
+                     "inode" : 79337894,
+                     "path" : ".artifacts/tmp/native-proxy-image-custody/cases/fsmgen-O7ce9Skw/images/efd497b0e847884b3c1cfcde14d8b645991c52ebab90c54e58984ccbc303c146/rustup",
+                     "sha256" : "e7f06f27e18528c7d10e8c4a4ab42b5e70d1423cdb80e83048597719c9c7eb67",
+                     "size_bytes" : 53
+                  }
+               ],
+               "workspace" : ".artifacts/tmp/process-supervisor-tests/fsmgen-3HqR_43u",
+               "workspace_identity" : {
+                  "device" : 16777244,
+                  "inode" : 79337883,
+                  "path" : ".artifacts/tmp/process-supervisor-tests/fsmgen-3HqR_43u"
+               }
+            }
+         },
+         "runtime_authorized" : 0,
+         "schema" : "fsmgen.inactive_runtime_reference_acquisition.v1"
+      },
+      "store" : {
+         "device" : 16777244,
+         "inode" : 79337882,
+         "path" : ".artifacts/tmp/native-proxy-image-custody/cases/fsmgen-O7ce9Skw"
+      },
+      "workspace" : {
+         "device" : 16777244,
+         "inode" : 79337883,
+         "path" : ".artifacts/tmp/process-supervisor-tests/fsmgen-3HqR_43u"
+      }
+   },
+   "controlled_setup_removed_hold" : ".artifacts/tmp/native-proxy-image-custody/cases/fsmgen-O7ce9Skw/references/a5eece5d2d2bf45c061f089034180dfa0f83a5853c0848ff843e81f2cfc21604.json",
+   "input_fingerprint_after" : "9e3da86ff3ce80165b14e317c2280af3386c7df04d7957908629e7ee10044ed1",
+   "input_fingerprint_before" : "9e3da86ff3ce80165b14e317c2280af3386c7df04d7957908629e7ee10044ed1",
+   "inputs_unchanged" : 1,
+   "matrix_case" : {
+      "index" : 20,
+      "name" : "NativeProxyImageCustody::_directory#3:before",
+      "selector" : {
+         "address" : "NativeProxyImageCustody::_directory#3:before",
+         "baseline_effects" : {
+            "last_reference_check" : null,
+            "reference_absence_verified" : 0,
+            "unlink_attempted" : 0,
+            "unlink_completed" : 0
+         },
+         "occurrence" : 3,
+         "phase" : "before",
+         "source_call_id" : 19,
+         "source_event" : "call:19:before",
+         "symbol" : "NativeProxyImageCustody::_directory"
+      }
+   },
+   "mutation" : {
+      "kind" : "none",
+      "retained_original_paths" : []
+   },
+   "name" : "healthy:last-observation",
+   "operation" : {
+      "after" : {
+         "evidence" : {
+            "" : {
+               "device" : 16777244,
+               "inode" : 79337885,
+               "kind" : "directory",
+               "mode" : 448,
+               "uid" : 501
+            },
+            "retained-sources" : {
+               "device" : 16777244,
+               "inode" : 79337907,
+               "kind" : "directory",
+               "mode" : 448,
+               "uid" : 501
+            },
+            "retained-sources/4dbffa9c361ab09457ff9270e89c125ae0a5766b6a0edf5e3bd4aa8439cdbc19.source" : {
+               "bytes_hex" : "7b22696d6167655f6b6579223a2265666434393762306538343738383462336331636663646531346438623634353939316335326562616239306335346535383938346363626333303363313436222c227265666572656e63655f6b6579223a2231303161303436383661306537613636646236303431383939376432623538323563366562306139303332333933333063386136303162333565303562386461222c22736368656d61223a2266736d67656e2e746573742e727573745f70726f78795f696d6167655f7265666572656e63652e7631222c2273656c65637465645f736f7572636573223a5b7b22646576696365223a31363737373234342c22696e6f6465223a37393333373839322c2270617468223a222e6172746966616374732f746d702f6e61746976652d70726f78792d696d6167652d637573746f64792f63617365732f66736d67656e2d4f37636539536b772f696d616765732f656664343937623065383437383834623363316366636465313464386236343539393163353265626162393063353465353839383463636263333033633134362f7275737475702e63222c22736861323536223a2261376439326532386563316338333038653337633630303364663136376263343262643233343163663361363964363737663435333330323731666662613536222c2273697a655f6279746573223a35307d2c7b22646576696365223a31363737373234342c22696e6f6465223a37393333373839342c2270617468223a222e6172746966616374732f746d702f6e61746976652d70726f78792d696d6167652d637573746f64792f63617365732f66736d67656e2d4f37636539536b772f696d616765732f656664343937623065383437383834623363316366636465313464386236343539393163353265626162393063353465353839383463636263333033633134362f727573747570222c22736861323536223a2265376630366632376531383532386337643130653863346134616234326235653730643134323363646238306538333034383539373731396339633765623637222c2273697a655f6279746573223a35337d5d2c22776f726b7370616365223a222e6172746966616374732f746d702f70726f636573732d73757065727669736f722d74657374732f66736d67656e2d334871525f343375222c22776f726b73706163655f6964656e74697479223a7b22646576696365223a31363737373234342c22696e6f6465223a37393333373838332c2270617468223a222e6172746966616374732f746d702f70726f636573732d73757065727669736f722d74657374732f66736d67656e2d334871525f343375227d7d",
+               "device" : 16777244,
+               "inode" : 79337909,
+               "kind" : "file",
+               "links" : 1,
+               "mode" : 256,
+               "sha256" : "4dbffa9c361ab09457ff9270e89c125ae0a5766b6a0edf5e3bd4aa8439cdbc19",
+               "size_bytes" : 994,
+               "uid" : 501
+            },
+            "retained-sources/a7d92e28ec1c8308e37c6003df167bc42bd2341cf3a69d677f45330271ffba56.source" : {
+               "bytes_hex" : "2f2a20696e657274207175616c696669636174696f6e2062797465733b206e6576657220636f6d70696c6564202a2f0a00ff",
+               "device" : 16777244,
+               "inode" : 79337910,
+               "kind" : "file",
+               "links" : 1,
+               "mode" : 256,
+               "sha256" : "a7d92e28ec1c8308e37c6003df167bc42bd2341cf3a69d677f45330271ffba56",
+               "size_bytes" : 50,
+               "uid" : 501
+            },
+            "retained-sources/d42ab2b4e413bd694a831c4a8307a0c4cd760b3bfdcf5fc93dc0b6772fdd632b.source" : {
+               "bytes_hex" : "23212f7573722f62696e2f7065726c0a2320696e657274206f62736572766174696f6e20777261707065723b206e657665722065786563757465640a",
+               "device" : 16777244,
+               "inode" : 79337908,
+               "kind" : "file",
+               "links" : 1,
+               "mode" : 256,
+               "sha256" : "d42ab2b4e413bd694a831c4a8307a0c4cd760b3bfdcf5fc93dc0b6772fdd632b",
+               "size_bytes" : 60,
+               "uid" : 501
+            },
+            "retained-sources/e7f06f27e18528c7d10e8c4a4ab42b5e70d1423cdb80e83048597719c9c7eb67.source" : {
+               "bytes_hex" : "cffaedfe0c000001000000000200000000000000000000000000000000000000696e6572742d6e6f742d612d70726f6772616d00ff",
+               "device" : 16777244,
+               "inode" : 79337911,
+               "kind" : "file",
+               "links" : 1,
+               "mode" : 256,
+               "sha256" : "e7f06f27e18528c7d10e8c4a4ab42b5e70d1423cdb80e83048597719c9c7eb67",
+               "size_bytes" : 53,
+               "uid" : 501
+            }
+         },
+         "other_workspace" : {
+            "" : {
+               "device" : 16777244,
+               "inode" : 79337884,
+               "kind" : "directory",
+               "mode" : 448,
+               "uid" : 501
+            },
+            "rust-tool-resolution" : {
+               "bytes_hex" : "23212f7573722f62696e2f7065726c0a2320696e657274206f62736572766174696f6e20777261707065723b206e657665722065786563757465640a",
+               "device" : 16777244,
+               "inode" : 79337898,
+               "kind" : "file",
+               "links" : 1,
+               "mode" : 448,
+               "sha256" : "d42ab2b4e413bd694a831c4a8307a0c4cd760b3bfdcf5fc93dc0b6772fdd632b",
+               "size_bytes" : 60,
+               "uid" : 501
+            },
+            "rust-tools" : {
+               "device" : 16777244,
+               "inode" : 79337897,
+               "kind" : "directory",
+               "mode" : 448,
+               "uid" : 501
+            },
+            "rust-tools/image-reference.json" : {
+               "bytes_hex" : "7b22696d6167655f6b6579223a2231383366306434643138353732613235306163393737353631393637333264383834663161323231376132336463626637646636333930643033333032313837222c227265666572656e63655f6b6579223a2234363165393038393838306163303831623535653639396363393233643237626362623366666266326663376263343561363439366434646533353937616164222c22736368656d61223a2266736d67656e2e746573742e727573745f70726f78795f696d6167655f7265666572656e63652e7631222c2273656c65637465645f736f7572636573223a5b7b22646576696365223a31363737373234342c22696e6f6465223a37393333373930302c2270617468223a222e6172746966616374732f746d702f6e61746976652d70726f78792d696d6167652d637573746f64792f63617365732f66736d67656e2d4f37636539536b772f696d616765732f313833663064346431383537326132353061633937373536313936373332643838346631613232313761323364636266376466363339306430333330323138372f7275737475702e63222c22736861323536223a2261376439326532386563316338333038653337633630303364663136376263343262643233343163663361363964363737663435333330323731666662613536222c2273697a655f6279746573223a35307d2c7b22646576696365223a31363737373234342c22696e6f6465223a37393333373930322c2270617468223a222e6172746966616374732f746d702f6e61746976652d70726f78792d696d6167652d637573746f64792f63617365732f66736d67656e2d4f37636539536b772f696d616765732f313833663064346431383537326132353061633937373536313936373332643838346631613232313761323364636266376466363339306430333330323138372f727573747570222c22736861323536223a2232633234326236373966323563643661666265626561656434306431643464613966396137633831363730306364623631653163353662373339663830383235222c2273697a655f6279746573223a35387d5d2c22776f726b7370616365223a222e6172746966616374732f746d702f70726f636573732d73757065727669736f722d74657374732f66736d67656e2d3669677546677873222c22776f726b73706163655f6964656e74697479223a7b22646576696365223a31363737373234342c22696e6f6465223a37393333373838342c2270617468223a222e6172746966616374732f746d702f70726f636573732d73757065727669736f722d74657374732f66736d67656e2d3669677546677873227d7d",
+               "device" : 16777244,
+               "inode" : 79337904,
+               "kind" : "file",
+               "links" : 1,
+               "mode" : 256,
+               "sha256" : "5260d4fa59c15acbc78c44556039f27929a5f00ef2b769e45838f6d542a26daa",
+               "size_bytes" : 994,
+               "uid" : 501
+            }
+         },
+         "store" : {
+            "" : {
+               "device" : 16777244,
+               "inode" : 79337882,
+               "kind" : "directory",
+               "mode" : 448,
+               "uid" : 501
+            },
+            "coordination.lock" : {
+               "bytes_hex" : "",
+               "device" : 16777244,
+               "inode" : 79337888,
+               "kind" : "file",
+               "links" : 1,
+               "mode" : 384,
+               "sha256" : "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+               "size_bytes" : 0,
+               "uid" : 501
+            },
+            "images" : {
+               "device" : 16777244,
+               "inode" : 79337889,
+               "kind" : "directory",
+               "mode" : 448,
+               "uid" : 501
+            },
+            "images/183f0d4d18572a250ac97756196732d884f1a2217a23dcbf7df6390d03302187" : {
+               "device" : 16777244,
+               "inode" : 79337899,
+               "kind" : "directory",
+               "mode" : 448,
+               "uid" : 501
+            },
+            "images/183f0d4d18572a250ac97756196732d884f1a2217a23dcbf7df6390d03302187/image.json" : {
+               "bytes_hex" : "7b2265786563757461626c65223a7b22736861323536223a2232633234326236373966323563643661666265626561656434306431643464613966396137633831363730306364623631653163353662373339663830383235222c2273697a655f6279746573223a35387d2c2267656e6572617465645f63223a7b22736861323536223a2261376439326532386563316338333038653337633630303364663136376263343262643233343163663361363964363737663435333330323731666662613536222c2273697a655f6279746573223a35307d2c226b6579223a2231383366306434643138353732613235306163393737353631393637333264383834663161323231376132336463626637646636333930643033333032313837222c22736368656d61223a2266736d67656e2e746573742e727573745f70726f78795f696d6167652e7631227d",
+               "device" : 16777244,
+               "inode" : 79337901,
+               "kind" : "file",
+               "links" : 1,
+               "mode" : 256,
+               "sha256" : "25833b2a44e94d7e9ba26b7d8cb760737cc6b2d570c505a908ecc271103a514d",
+               "size_bytes" : 332,
+               "uid" : 501
+            },
+            "images/183f0d4d18572a250ac97756196732d884f1a2217a23dcbf7df6390d03302187/rustup" : {
+               "bytes_hex" : "cffaedfe0c000001000000000200000000000000000000000000000000000000696e6572742d6e6f742d612d70726f6772616d00ff6f74686572",
+               "device" : 16777244,
+               "inode" : 79337902,
+               "kind" : "file",
+               "links" : 1,
+               "mode" : 320,
+               "sha256" : "2c242b679f25cd6afbebeaed40d1d4da9f9a7c816700cdb61e1c56b739f80825",
+               "size_bytes" : 58,
+               "uid" : 501
+            },
+            "images/183f0d4d18572a250ac97756196732d884f1a2217a23dcbf7df6390d03302187/rustup.c" : {
+               "bytes_hex" : "2f2a20696e657274207175616c696669636174696f6e2062797465733b206e6576657220636f6d70696c6564202a2f0a00ff",
+               "device" : 16777244,
+               "inode" : 79337900,
+               "kind" : "file",
+               "links" : 1,
+               "mode" : 256,
+               "sha256" : "a7d92e28ec1c8308e37c6003df167bc42bd2341cf3a69d677f45330271ffba56",
+               "size_bytes" : 50,
+               "uid" : 501
+            },
+            "images/efd497b0e847884b3c1cfcde14d8b645991c52ebab90c54e58984ccbc303c146" : {
+               "device" : 16777244,
+               "inode" : 79337891,
+               "kind" : "directory",
+               "mode" : 448,
+               "uid" : 501
+            },
+            "images/efd497b0e847884b3c1cfcde14d8b645991c52ebab90c54e58984ccbc303c146/image.json" : {
+               "bytes_hex" : "7b2265786563757461626c65223a7b22736861323536223a2265376630366632376531383532386337643130653863346134616234326235653730643134323363646238306538333034383539373731396339633765623637222c2273697a655f6279746573223a35337d2c2267656e6572617465645f63223a7b22736861323536223a2261376439326532386563316338333038653337633630303364663136376263343262643233343163663361363964363737663435333330323731666662613536222c2273697a655f6279746573223a35307d2c226b6579223a2265666434393762306538343738383462336331636663646531346438623634353939316335326562616239306335346535383938346363626333303363313436222c22736368656d61223a2266736d67656e2e746573742e727573745f70726f78795f696d6167652e7631227d",
+               "device" : 16777244,
+               "inode" : 79337893,
+               "kind" : "file",
+               "links" : 1,
+               "mode" : 256,
+               "sha256" : "156ec74edbff95660f5275aca3dca8f675f8398ceff43a243573aee41462efb4",
+               "size_bytes" : 332,
+               "uid" : 501
+            },
+            "images/efd497b0e847884b3c1cfcde14d8b645991c52ebab90c54e58984ccbc303c146/rustup" : {
+               "bytes_hex" : "cffaedfe0c000001000000000200000000000000000000000000000000000000696e6572742d6e6f742d612d70726f6772616d00ff",
+               "device" : 16777244,
+               "inode" : 79337894,
+               "kind" : "file",
+               "links" : 1,
+               "mode" : 320,
+               "sha256" : "e7f06f27e18528c7d10e8c4a4ab42b5e70d1423cdb80e83048597719c9c7eb67",
+               "size_bytes" : 53,
+               "uid" : 501
+            },
+            "images/efd497b0e847884b3c1cfcde14d8b645991c52ebab90c54e58984ccbc303c146/rustup.c" : {
+               "bytes_hex" : "2f2a20696e657274207175616c696669636174696f6e2062797465733b206e6576657220636f6d70696c6564202a2f0a00ff",
+               "device" : 16777244,
+               "inode" : 79337892,
+               "kind" : "file",
+               "links" : 1,
+               "mode" : 256,
+               "sha256" : "a7d92e28ec1c8308e37c6003df167bc42bd2341cf3a69d677f45330271ffba56",
+               "size_bytes" : 50,
+               "uid" : 501
+            },
+            "references" : {
+               "device" : 16777244,
+               "inode" : 79337890,
+               "kind" : "directory",
+               "mode" : 448,
+               "uid" : 501
+            },
+            "references/461e9089880ac081b55e699cc923d27bcbb3ffbf2fc7bc45a6496d4de3597aad.json" : {
+               "bytes_hex" : "7b22696d6167655f6b6579223a2231383366306434643138353732613235306163393737353631393637333264383834663161323231376132336463626637646636333930643033333032313837222c227265666572656e63655f6b6579223a2234363165393038393838306163303831623535653639396363393233643237626362623366666266326663376263343561363439366434646533353937616164222c22736368656d61223a2266736d67656e2e746573742e727573745f70726f78795f696d6167655f7265666572656e63652e7631222c2273656c65637465645f736f7572636573223a5b7b22646576696365223a31363737373234342c22696e6f6465223a37393333373930302c2270617468223a222e6172746966616374732f746d702f6e61746976652d70726f78792d696d6167652d637573746f64792f63617365732f66736d67656e2d4f37636539536b772f696d616765732f313833663064346431383537326132353061633937373536313936373332643838346631613232313761323364636266376466363339306430333330323138372f7275737475702e63222c22736861323536223a2261376439326532386563316338333038653337633630303364663136376263343262643233343163663361363964363737663435333330323731666662613536222c2273697a655f6279746573223a35307d2c7b22646576696365223a31363737373234342c22696e6f6465223a37393333373930322c2270617468223a222e6172746966616374732f746d702f6e61746976652d70726f78792d696d6167652d637573746f64792f63617365732f66736d67656e2d4f37636539536b772f696d616765732f313833663064346431383537326132353061633937373536313936373332643838346631613232313761323364636266376466363339306430333330323138372f727573747570222c22736861323536223a2232633234326236373966323563643661666265626561656434306431643464613966396137633831363730306364623631653163353662373339663830383235222c2273697a655f6279746573223a35387d5d2c22776f726b7370616365223a222e6172746966616374732f746d702f70726f636573732d73757065727669736f722d74657374732f66736d67656e2d3669677546677873222c22776f726b73706163655f6964656e74697479223a7b22646576696365223a31363737373234342c22696e6f6465223a37393333373838342c2270617468223a222e6172746966616374732f746d702f70726f636573732d73757065727669736f722d74657374732f66736d67656e2d3669677546677873227d7d",
+               "device" : 16777244,
+               "inode" : 79337903,
+               "kind" : "file",
+               "links" : 1,
+               "mode" : 256,
+               "sha256" : "5260d4fa59c15acbc78c44556039f27929a5f00ef2b769e45838f6d542a26daa",
+               "size_bytes" : 994,
+               "uid" : 501
+            },
+            "references/4e0191af522249acf522d1063a05d80c6d9e7cde98f45ce9d4e0f5f03f49deba.json" : {
+               "bytes_hex" : "7b2265766964656e63655f6469726563746f7279223a222e6172746966616374732f6c6f67732f6e61746976652d70726f78792d6f62736572766174696f6e2d6163717569736974696f6e2d32303236303931302f63617365732f66736d67656e2d7862554b724b4b32222c2265766964656e63655f6469726563746f72795f6964656e74697479223a7b22646576696365223a31363737373234342c22696e6f6465223a37393333373838352c2270617468223a222e6172746966616374732f6c6f67732f6e61746976652d70726f78792d6f62736572766174696f6e2d6163717569736974696f6e2d32303236303931302f63617365732f66736d67656e2d7862554b724b4b32227d2c22696d6167655f6b6579223a2265666434393762306538343738383462336331636663646531346438623634353939316335326562616239306335346535383938346363626333303363313436222c226f627365727665725f6269727468223a7b22706964223a3130312c2270706964223a3130302c2272756964223a3530312c2273746172745f736563223a3132332c2273746172745f75736563223a3435362c22756964223a3530317d2c227265666572656e63655f6b6579223a2234653031393161663532323234396163663532326431303633613035643830633664396537636465393866343563653964346530663566303366343964656261222c22736368656d61223a2266736d67656e2e746573742e727573745f70726f78795f696d6167655f6f62736572766174696f6e5f7265666572656e63652e7631222c2273656c65637465645f736f7572636573223a5b7b22646576696365223a31363737373234342c22696e6f6465223a37393333373839322c2270617468223a222e6172746966616374732f746d702f6e61746976652d70726f78792d696d6167652d637573746f64792f63617365732f66736d67656e2d4f37636539536b772f696d616765732f656664343937623065383437383834623363316366636465313464386236343539393163353265626162393063353465353839383463636263333033633134362f7275737475702e63222c22736861323536223a2261376439326532386563316338333038653337633630303364663136376263343262643233343163663361363964363737663435333330323731666662613536222c2273697a655f6279746573223a35307d2c7b22646576696365223a31363737373234342c22696e6f6465223a37393333373839342c2270617468223a222e6172746966616374732f746d702f6e61746976652d70726f78792d696d6167652d637573746f64792f63617365732f66736d67656e2d4f37636539536b772f696d616765732f656664343937623065383437383834623363316366636465313464386236343539393163353265626162393063353465353839383463636263333033633134362f727573747570222c22736861323536223a2265376630366632376531383532386337643130653863346134616234326235653730643134323363646238306538333034383539373731396339633765623637222c2273697a655f6279746573223a35337d5d2c227461726765745f6269727468223a7b22706964223a3230312c2270706964223a3230302c2272756964223a3530312c2273746172745f736563223a3132342c2273746172745f75736563223a3738392c22756964223a3530317d7d",
+               "device" : 16777244,
+               "inode" : 79337905,
+               "kind" : "file",
+               "links" : 1,
+               "mode" : 256,
+               "sha256" : "a1257055e434b269a6fb64806c5a673e443980436083e1db161c00131e9dcb33",
+               "size_bytes" : 1266,
+               "uid" : 501
+            }
+         },
+         "workspace" : {}
+      },
+      "all_observed_handles_closed" : 1,
+      "before" : {
+         "evidence" : {
+            "" : {
+               "device" : 16777244,
+               "inode" : 79337885,
+               "kind" : "directory",
+               "mode" : 448,
+               "uid" : 501
+            },
+            "retained-sources" : {
+               "device" : 16777244,
+               "inode" : 79337907,
+               "kind" : "directory",
+               "mode" : 448,
+               "uid" : 501
+            },
+            "retained-sources/4dbffa9c361ab09457ff9270e89c125ae0a5766b6a0edf5e3bd4aa8439cdbc19.source" : {
+               "bytes_hex" : "7b22696d6167655f6b6579223a2265666434393762306538343738383462336331636663646531346438623634353939316335326562616239306335346535383938346363626333303363313436222c227265666572656e63655f6b6579223a2231303161303436383661306537613636646236303431383939376432623538323563366562306139303332333933333063386136303162333565303562386461222c22736368656d61223a2266736d67656e2e746573742e727573745f70726f78795f696d6167655f7265666572656e63652e7631222c2273656c65637465645f736f7572636573223a5b7b22646576696365223a31363737373234342c22696e6f6465223a37393333373839322c2270617468223a222e6172746966616374732f746d702f6e61746976652d70726f78792d696d6167652d637573746f64792f63617365732f66736d67656e2d4f37636539536b772f696d616765732f656664343937623065383437383834623363316366636465313464386236343539393163353265626162393063353465353839383463636263333033633134362f7275737475702e63222c22736861323536223a2261376439326532386563316338333038653337633630303364663136376263343262643233343163663361363964363737663435333330323731666662613536222c2273697a655f6279746573223a35307d2c7b22646576696365223a31363737373234342c22696e6f6465223a37393333373839342c2270617468223a222e6172746966616374732f746d702f6e61746976652d70726f78792d696d6167652d637573746f64792f63617365732f66736d67656e2d4f37636539536b772f696d616765732f656664343937623065383437383834623363316366636465313464386236343539393163353265626162393063353465353839383463636263333033633134362f727573747570222c22736861323536223a2265376630366632376531383532386337643130653863346134616234326235653730643134323363646238306538333034383539373731396339633765623637222c2273697a655f6279746573223a35337d5d2c22776f726b7370616365223a222e6172746966616374732f746d702f70726f636573732d73757065727669736f722d74657374732f66736d67656e2d334871525f343375222c22776f726b73706163655f6964656e74697479223a7b22646576696365223a31363737373234342c22696e6f6465223a37393333373838332c2270617468223a222e6172746966616374732f746d702f70726f636573732d73757065727669736f722d74657374732f66736d67656e2d334871525f343375227d7d",
+               "device" : 16777244,
+               "inode" : 79337909,
+               "kind" : "file",
+               "links" : 1,
+               "mode" : 256,
+               "sha256" : "4dbffa9c361ab09457ff9270e89c125ae0a5766b6a0edf5e3bd4aa8439cdbc19",
+               "size_bytes" : 994,
+               "uid" : 501
+            },
+            "retained-sources/a7d92e28ec1c8308e37c6003df167bc42bd2341cf3a69d677f45330271ffba56.source" : {
+               "bytes_hex" : "2f2a20696e657274207175616c696669636174696f6e2062797465733b206e6576657220636f6d70696c6564202a2f0a00ff",
+               "device" : 16777244,
+               "inode" : 79337910,
+               "kind" : "file",
+               "links" : 1,
+               "mode" : 256,
+               "sha256" : "a7d92e28ec1c8308e37c6003df167bc42bd2341cf3a69d677f45330271ffba56",
+               "size_bytes" : 50,
+               "uid" : 501
+            },
+            "retained-sources/d42ab2b4e413bd694a831c4a8307a0c4cd760b3bfdcf5fc93dc0b6772fdd632b.source" : {
+               "bytes_hex" : "23212f7573722f62696e2f7065726c0a2320696e657274206f62736572766174696f6e20777261707065723b206e657665722065786563757465640a",
+               "device" : 16777244,
+               "inode" : 79337908,
+               "kind" : "file",
+               "links" : 1,
+               "mode" : 256,
+               "sha256" : "d42ab2b4e413bd694a831c4a8307a0c4cd760b3bfdcf5fc93dc0b6772fdd632b",
+               "size_bytes" : 60,
+               "uid" : 501
+            },
+            "retained-sources/e7f06f27e18528c7d10e8c4a4ab42b5e70d1423cdb80e83048597719c9c7eb67.source" : {
+               "bytes_hex" : "cffaedfe0c000001000000000200000000000000000000000000000000000000696e6572742d6e6f742d612d70726f6772616d00ff",
+               "device" : 16777244,
+               "inode" : 79337911,
+               "kind" : "file",
+               "links" : 1,
+               "mode" : 256,
+               "sha256" : "e7f06f27e18528c7d10e8c4a4ab42b5e70d1423cdb80e83048597719c9c7eb67",
+               "size_bytes" : 53,
+               "uid" : 501
+            }
+         },
+         "other_workspace" : {
+            "" : {
+               "device" : 16777244,
+               "inode" : 79337884,
+               "kind" : "directory",
+               "mode" : 448,
+               "uid" : 501
+            },
+            "rust-tool-resolution" : {
+               "bytes_hex" : "23212f7573722f62696e2f7065726c0a2320696e657274206f62736572766174696f6e20777261707065723b206e657665722065786563757465640a",
+               "device" : 16777244,
+               "inode" : 79337898,
+               "kind" : "file",
+               "links" : 1,
+               "mode" : 448,
+               "sha256" : "d42ab2b4e413bd694a831c4a8307a0c4cd760b3bfdcf5fc93dc0b6772fdd632b",
+               "size_bytes" : 60,
+               "uid" : 501
+            },
+            "rust-tools" : {
+               "device" : 16777244,
+               "inode" : 79337897,
+               "kind" : "directory",
+               "mode" : 448,
+               "uid" : 501
+            },
+            "rust-tools/image-reference.json" : {
+               "bytes_hex" : "7b22696d6167655f6b6579223a2231383366306434643138353732613235306163393737353631393637333264383834663161323231376132336463626637646636333930643033333032313837222c227265666572656e63655f6b6579223a2234363165393038393838306163303831623535653639396363393233643237626362623366666266326663376263343561363439366434646533353937616164222c22736368656d61223a2266736d67656e2e746573742e727573745f70726f78795f696d6167655f7265666572656e63652e7631222c2273656c65637465645f736f7572636573223a5b7b22646576696365223a31363737373234342c22696e6f6465223a37393333373930302c2270617468223a222e6172746966616374732f746d702f6e61746976652d70726f78792d696d6167652d637573746f64792f63617365732f66736d67656e2d4f37636539536b772f696d616765732f313833663064346431383537326132353061633937373536313936373332643838346631613232313761323364636266376466363339306430333330323138372f7275737475702e63222c22736861323536223a2261376439326532386563316338333038653337633630303364663136376263343262643233343163663361363964363737663435333330323731666662613536222c2273697a655f6279746573223a35307d2c7b22646576696365223a31363737373234342c22696e6f6465223a37393333373930322c2270617468223a222e6172746966616374732f746d702f6e61746976652d70726f78792d696d6167652d637573746f64792f63617365732f66736d67656e2d4f37636539536b772f696d616765732f313833663064346431383537326132353061633937373536313936373332643838346631613232313761323364636266376466363339306430333330323138372f727573747570222c22736861323536223a2232633234326236373966323563643661666265626561656434306431643464613966396137633831363730306364623631653163353662373339663830383235222c2273697a655f6279746573223a35387d5d2c22776f726b7370616365223a222e6172746966616374732f746d702f70726f636573732d73757065727669736f722d74657374732f66736d67656e2d3669677546677873222c22776f726b73706163655f6964656e74697479223a7b22646576696365223a31363737373234342c22696e6f6465223a37393333373838342c2270617468223a222e6172746966616374732f746d702f70726f636573732d73757065727669736f722d74657374732f66736d67656e2d3669677546677873227d7d",
+               "device" : 16777244,
+               "inode" : 79337904,
+               "kind" : "file",
+               "links" : 1,
+               "mode" : 256,
+               "sha256" : "5260d4fa59c15acbc78c44556039f27929a5f00ef2b769e45838f6d542a26daa",
+               "size_bytes" : 994,
+               "uid" : 501
+            }
+         },
+         "store" : {
+            "" : {
+               "device" : 16777244,
+               "inode" : 79337882,
+               "kind" : "directory",
+               "mode" : 448,
+               "uid" : 501
+            },
+            "coordination.lock" : {
+               "bytes_hex" : "",
+               "device" : 16777244,
+               "inode" : 79337888,
+               "kind" : "file",
+               "links" : 1,
+               "mode" : 384,
+               "sha256" : "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+               "size_bytes" : 0,
+               "uid" : 501
+            },
+            "images" : {
+               "device" : 16777244,
+               "inode" : 79337889,
+               "kind" : "directory",
+               "mode" : 448,
+               "uid" : 501
+            },
+            "images/183f0d4d18572a250ac97756196732d884f1a2217a23dcbf7df6390d03302187" : {
+               "device" : 16777244,
+               "inode" : 79337899,
+               "kind" : "directory",
+               "mode" : 448,
+               "uid" : 501
+            },
+            "images/183f0d4d18572a250ac97756196732d884f1a2217a23dcbf7df6390d03302187/image.json" : {
+               "bytes_hex" : "7b2265786563757461626c65223a7b22736861323536223a2232633234326236373966323563643661666265626561656434306431643464613966396137633831363730306364623631653163353662373339663830383235222c2273697a655f6279746573223a35387d2c2267656e6572617465645f63223a7b22736861323536223a2261376439326532386563316338333038653337633630303364663136376263343262643233343163663361363964363737663435333330323731666662613536222c2273697a655f6279746573223a35307d2c226b6579223a2231383366306434643138353732613235306163393737353631393637333264383834663161323231376132336463626637646636333930643033333032313837222c22736368656d61223a2266736d67656e2e746573742e727573745f70726f78795f696d6167652e7631227d",
+               "device" : 16777244,
+               "inode" : 79337901,
+               "kind" : "file",
+               "links" : 1,
+               "mode" : 256,
+               "sha256" : "25833b2a44e94d7e9ba26b7d8cb760737cc6b2d570c505a908ecc271103a514d",
+               "size_bytes" : 332,
+               "uid" : 501
+            },
+            "images/183f0d4d18572a250ac97756196732d884f1a2217a23dcbf7df6390d03302187/rustup" : {
+               "bytes_hex" : "cffaedfe0c000001000000000200000000000000000000000000000000000000696e6572742d6e6f742d612d70726f6772616d00ff6f74686572",
+               "device" : 16777244,
+               "inode" : 79337902,
+               "kind" : "file",
+               "links" : 1,
+               "mode" : 320,
+               "sha256" : "2c242b679f25cd6afbebeaed40d1d4da9f9a7c816700cdb61e1c56b739f80825",
+               "size_bytes" : 58,
+               "uid" : 501
+            },
+            "images/183f0d4d18572a250ac97756196732d884f1a2217a23dcbf7df6390d03302187/rustup.c" : {
+               "bytes_hex" : "2f2a20696e657274207175616c696669636174696f6e2062797465733b206e6576657220636f6d70696c6564202a2f0a00ff",
+               "device" : 16777244,
+               "inode" : 79337900,
+               "kind" : "file",
+               "links" : 1,
+               "mode" : 256,
+               "sha256" : "a7d92e28ec1c8308e37c6003df167bc42bd2341cf3a69d677f45330271ffba56",
+               "size_bytes" : 50,
+               "uid" : 501
+            },
+            "images/efd497b0e847884b3c1cfcde14d8b645991c52ebab90c54e58984ccbc303c146" : {
+               "device" : 16777244,
+               "inode" : 79337891,
+               "kind" : "directory",
+               "mode" : 448,
+               "uid" : 501
+            },
+            "images/efd497b0e847884b3c1cfcde14d8b645991c52ebab90c54e58984ccbc303c146/image.json" : {
+               "bytes_hex" : "7b2265786563757461626c65223a7b22736861323536223a2265376630366632376531383532386337643130653863346134616234326235653730643134323363646238306538333034383539373731396339633765623637222c2273697a655f6279746573223a35337d2c2267656e6572617465645f63223a7b22736861323536223a2261376439326532386563316338333038653337633630303364663136376263343262643233343163663361363964363737663435333330323731666662613536222c2273697a655f6279746573223a35307d2c226b6579223a2265666434393762306538343738383462336331636663646531346438623634353939316335326562616239306335346535383938346363626333303363313436222c22736368656d61223a2266736d67656e2e746573742e727573745f70726f78795f696d6167652e7631227d",
+               "device" : 16777244,
+               "inode" : 79337893,
+               "kind" : "file",
+               "links" : 1,
+               "mode" : 256,
+               "sha256" : "156ec74edbff95660f5275aca3dca8f675f8398ceff43a243573aee41462efb4",
+               "size_bytes" : 332,
+               "uid" : 501
+            },
+            "images/efd497b0e847884b3c1cfcde14d8b645991c52ebab90c54e58984ccbc303c146/rustup" : {
+               "bytes_hex" : "cffaedfe0c000001000000000200000000000000000000000000000000000000696e6572742d6e6f742d612d70726f6772616d00ff",
+               "device" : 16777244,
+               "inode" : 79337894,
+               "kind" : "file",
+               "links" : 1,
+               "mode" : 320,
+               "sha256" : "e7f06f27e18528c7d10e8c4a4ab42b5e70d1423cdb80e83048597719c9c7eb67",
+               "size_bytes" : 53,
+               "uid" : 501
+            },
+            "images/efd497b0e847884b3c1cfcde14d8b645991c52ebab90c54e58984ccbc303c146/rustup.c" : {
+               "bytes_hex" : "2f2a20696e657274207175616c696669636174696f6e2062797465733b206e6576657220636f6d70696c6564202a2f0a00ff",
+               "device" : 16777244,
+               "inode" : 79337892,
+               "kind" : "file",
+               "links" : 1,
+               "mode" : 256,
+               "sha256" : "a7d92e28ec1c8308e37c6003df167bc42bd2341cf3a69d677f45330271ffba56",
+               "size_bytes" : 50,
+               "uid" : 501
+            },
+            "references" : {
+               "device" : 16777244,
+               "inode" : 79337890,
+               "kind" : "directory",
+               "mode" : 448,
+               "uid" : 501
+            },
+            "references/461e9089880ac081b55e699cc923d27bcbb3ffbf2fc7bc45a6496d4de3597aad.json" : {
+               "bytes_hex" : "7b22696d6167655f6b6579223a2231383366306434643138353732613235306163393737353631393637333264383834663161323231376132336463626637646636333930643033333032313837222c227265666572656e63655f6b6579223a2234363165393038393838306163303831623535653639396363393233643237626362623366666266326663376263343561363439366434646533353937616164222c22736368656d61223a2266736d67656e2e746573742e727573745f70726f78795f696d6167655f7265666572656e63652e7631222c2273656c65637465645f736f7572636573223a5b7b22646576696365223a31363737373234342c22696e6f6465223a37393333373930302c2270617468223a222e6172746966616374732f746d702f6e61746976652d70726f78792d696d6167652d637573746f64792f63617365732f66736d67656e2d4f37636539536b772f696d616765732f313833663064346431383537326132353061633937373536313936373332643838346631613232313761323364636266376466363339306430333330323138372f7275737475702e63222c22736861323536223a2261376439326532386563316338333038653337633630303364663136376263343262643233343163663361363964363737663435333330323731666662613536222c2273697a655f6279746573223a35307d2c7b22646576696365223a31363737373234342c22696e6f6465223a37393333373930322c2270617468223a222e6172746966616374732f746d702f6e61746976652d70726f78792d696d6167652d637573746f64792f63617365732f66736d67656e2d4f37636539536b772f696d616765732f313833663064346431383537326132353061633937373536313936373332643838346631613232313761323364636266376466363339306430333330323138372f727573747570222c22736861323536223a2232633234326236373966323563643661666265626561656434306431643464613966396137633831363730306364623631653163353662373339663830383235222c2273697a655f6279746573223a35387d5d2c22776f726b7370616365223a222e6172746966616374732f746d702f70726f636573732d73757065727669736f722d74657374732f66736d67656e2d3669677546677873222c22776f726b73706163655f6964656e74697479223a7b22646576696365223a31363737373234342c22696e6f6465223a37393333373838342c2270617468223a222e6172746966616374732f746d702f70726f636573732d73757065727669736f722d74657374732f66736d67656e2d3669677546677873227d7d",
+               "device" : 16777244,
+               "inode" : 79337903,
+               "kind" : "file",
+               "links" : 1,
+               "mode" : 256,
+               "sha256" : "5260d4fa59c15acbc78c44556039f27929a5f00ef2b769e45838f6d542a26daa",
+               "size_bytes" : 994,
+               "uid" : 501
+            },
+            "references/4e0191af522249acf522d1063a05d80c6d9e7cde98f45ce9d4e0f5f03f49deba.json" : {
+               "bytes_hex" : "7b2265766964656e63655f6469726563746f7279223a222e6172746966616374732f6c6f67732f6e61746976652d70726f78792d6f62736572766174696f6e2d6163717569736974696f6e2d32303236303931302f63617365732f66736d67656e2d7862554b724b4b32222c2265766964656e63655f6469726563746f72795f6964656e74697479223a7b22646576696365223a31363737373234342c22696e6f6465223a37393333373838352c2270617468223a222e6172746966616374732f6c6f67732f6e61746976652d70726f78792d6f62736572766174696f6e2d6163717569736974696f6e2d32303236303931302f63617365732f66736d67656e2d7862554b724b4b32227d2c22696d6167655f6b6579223a2265666434393762306538343738383462336331636663646531346438623634353939316335326562616239306335346535383938346363626333303363313436222c226f627365727665725f6269727468223a7b22706964223a3130312c2270706964223a3130302c2272756964223a3530312c2273746172745f736563223a3132332c2273746172745f75736563223a3435362c22756964223a3530317d2c227265666572656e63655f6b6579223a2234653031393161663532323234396163663532326431303633613035643830633664396537636465393866343563653964346530663566303366343964656261222c22736368656d61223a2266736d67656e2e746573742e727573745f70726f78795f696d6167655f6f62736572766174696f6e5f7265666572656e63652e7631222c2273656c65637465645f736f7572636573223a5b7b22646576696365223a31363737373234342c22696e6f6465223a37393333373839322c2270617468223a222e6172746966616374732f746d702f6e61746976652d70726f78792d696d6167652d637573746f64792f63617365732f66736d67656e2d4f37636539536b772f696d616765732f656664343937623065383437383834623363316366636465313464386236343539393163353265626162393063353465353839383463636263333033633134362f7275737475702e63222c22736861323536223a2261376439326532386563316338333038653337633630303364663136376263343262643233343163663361363964363737663435333330323731666662613536222c2273697a655f6279746573223a35307d2c7b22646576696365223a31363737373234342c22696e6f6465223a37393333373839342c2270617468223a222e6172746966616374732f746d702f6e61746976652d70726f78792d696d6167652d637573746f64792f63617365732f66736d67656e2d4f37636539536b772f696d616765732f656664343937623065383437383834623363316366636465313464386236343539393163353265626162393063353465353839383463636263333033633134362f727573747570222c22736861323536223a2265376630366632376531383532386337643130653863346134616234326235653730643134323363646238306538333034383539373731396339633765623637222c2273697a655f6279746573223a35337d5d2c227461726765745f6269727468223a7b22706964223a3230312c2270706964223a3230302c2272756964223a3530312c2273746172745f736563223a3132342c2273746172745f75736563223a3738392c22756964223a3530317d7d",
+               "device" : 16777244,
+               "inode" : 79337905,
+               "kind" : "file",
+               "links" : 1,
+               "mode" : 256,
+               "sha256" : "a1257055e434b269a6fb64806c5a673e443980436083e1db161c00131e9dcb33",
+               "size_bytes" : 1266,
+               "uid" : 501
+            }
+         },
+         "workspace" : {}
+      },
+      "boundary_calls" : [
+         {
+            "caller" : "NativeProxyObservationRelease",
+            "depth" : 44,
+            "id" : 0,
+            "name" : "NativeProxyObservationRelease::_prepare",
+            "occurrence" : 0,
+            "parent" : null,
+            "tail" : 0
+         },
+         {
+            "caller" : "NativeProxyObservationRelease",
+            "completion" : "direct_return",
+            "depth" : 46,
+            "id" : 1,
+            "name" : "NativeProxyObservationArchive::_limits",
+            "occurrence" : 0,
+            "parent" : 0,
+            "tail" : 0
+         },
+         {
+            "caller" : "NativeProxyObservationAcquisition",
+            "completion" : "direct_return",
+            "depth" : 47,
+            "id" : 2,
+            "name" : "NativeProxyImageCustody::_directory",
+            "occurrence" : 0,
+            "parent" : 0,
+            "path" : ".artifacts/logs/native-proxy-observation-acquisition-20260910/cases/fsmgen-xbUKrKK2",
+            "tail" : 0
+         },
+         {
+            "caller" : "NativeProxyObservationRelease",
+            "completion" : "direct_return",
+            "depth" : 46,
+            "id" : 3,
+            "name" : "NativeProxyImageCustody::_directory",
+            "occurrence" : 1,
+            "parent" : 0,
+            "path" : ".artifacts/logs/native-proxy-observation-acquisition-20260910/cases/fsmgen-xbUKrKK2/retained-sources",
+            "tail" : 0
+         },
+         {
+            "caller" : "NativeProxyObservationRelease",
+            "completion" : "direct_return",
+            "depth" : 46,
+            "id" : 4,
+            "name" : "NativeProxyObservationArchive::_members",
+            "occurrence" : 0,
+            "parent" : 0,
+            "tail" : 0
+         },
+         {
+            "caller" : "NativeProxyObservationArchive",
+            "completion" : "direct_return",
+            "depth" : 48,
+            "id" : 5,
+            "name" : "NativeProxyImageCoordination::_names",
+            "occurrence" : 0,
+            "parent" : 4,
+            "path" : ".artifacts/logs/native-proxy-observation-acquisition-20260910/cases/fsmgen-xbUKrKK2/retained-sources",
+            "tail" : 0
+         },
+         {
+            "caller" : "NativeProxyObservationRelease",
+            "completion" : "direct_return",
+            "depth" : 46,
+            "id" : 6,
+            "limit" : 65536,
+            "mode" : 256,
+            "name" : "NativeProxyImageCustody::_source",
+            "occurrence" : 0,
+            "parent" : 0,
+            "path" : ".artifacts/logs/native-proxy-observation-acquisition-20260910/cases/fsmgen-xbUKrKK2/retained-sources/d42ab2b4e413bd694a831c4a8307a0c4cd760b3bfdcf5fc93dc0b6772fdd632b.source",
+            "tail" : 0
+         },
+         {
+            "caller" : "NativeProxyObservationRelease",
+            "completion" : "direct_return",
+            "depth" : 46,
+            "id" : 7,
+            "name" : "NativeProxyImageCustody::_recheck_source",
+            "occurrence" : 0,
+            "parent" : 0,
+            "path" : ".artifacts/logs/native-proxy-observation-acquisition-20260910/cases/fsmgen-xbUKrKK2/retained-sources/d42ab2b4e413bd694a831c4a8307a0c4cd760b3bfdcf5fc93dc0b6772fdd632b.source",
+            "source_handle" : "source:0",
+            "tail" : 0
+         },
+         {
+            "caller" : "NativeProxyObservationRelease",
+            "completion" : "direct_return",
+            "depth" : 46,
+            "id" : 8,
+            "limit" : 65536,
+            "mode" : 256,
+            "name" : "NativeProxyImageCustody::_source",
+            "occurrence" : 1,
+            "parent" : 0,
+            "path" : ".artifacts/logs/native-proxy-observation-acquisition-20260910/cases/fsmgen-xbUKrKK2/retained-sources/4dbffa9c361ab09457ff9270e89c125ae0a5766b6a0edf5e3bd4aa8439cdbc19.source",
+            "tail" : 0
+         },
+         {
+            "caller" : "NativeProxyObservationRelease",
+            "completion" : "direct_return",
+            "depth" : 46,
+            "id" : 9,
+            "name" : "NativeProxyImageCustody::_recheck_source",
+            "occurrence" : 1,
+            "parent" : 0,
+            "path" : ".artifacts/logs/native-proxy-observation-acquisition-20260910/cases/fsmgen-xbUKrKK2/retained-sources/4dbffa9c361ab09457ff9270e89c125ae0a5766b6a0edf5e3bd4aa8439cdbc19.source",
+            "source_handle" : "source:1",
+            "tail" : 0
+         },
+         {
+            "caller" : "NativeProxyObservationRelease",
+            "completion" : "direct_return",
+            "depth" : 46,
+            "id" : 10,
+            "limit" : 65536,
+            "mode" : 256,
+            "name" : "NativeProxyImageCustody::_source",
+            "occurrence" : 2,
+            "parent" : 0,
+            "path" : ".artifacts/logs/native-proxy-observation-acquisition-20260910/cases/fsmgen-xbUKrKK2/retained-sources/a7d92e28ec1c8308e37c6003df167bc42bd2341cf3a69d677f45330271ffba56.source",
+            "tail" : 0
+         },
+         {
+            "caller" : "NativeProxyObservationRelease",
+            "completion" : "direct_return",
+            "depth" : 46,
+            "id" : 11,
+            "name" : "NativeProxyImageCustody::_recheck_source",
+            "occurrence" : 2,
+            "parent" : 0,
+            "path" : ".artifacts/logs/native-proxy-observation-acquisition-20260910/cases/fsmgen-xbUKrKK2/retained-sources/a7d92e28ec1c8308e37c6003df167bc42bd2341cf3a69d677f45330271ffba56.source",
+            "source_handle" : "source:2",
+            "tail" : 0
+         },
+         {
+            "caller" : "NativeProxyObservationRelease",
+            "completion" : "direct_return",
+            "depth" : 46,
+            "id" : 12,
+            "limit" : 65536,
+            "mode" : 256,
+            "name" : "NativeProxyImageCustody::_source",
+            "occurrence" : 3,
+            "parent" : 0,
+            "path" : ".artifacts/logs/native-proxy-observation-acquisition-20260910/cases/fsmgen-xbUKrKK2/retained-sources/e7f06f27e18528c7d10e8c4a4ab42b5e70d1423cdb80e83048597719c9c7eb67.source",
+            "tail" : 0
+         },
+         {
+            "caller" : "NativeProxyObservationRelease",
+            "completion" : "direct_return",
+            "depth" : 46,
+            "id" : 13,
+            "name" : "NativeProxyImageCustody::_recheck_source",
+            "occurrence" : 3,
+            "parent" : 0,
+            "path" : ".artifacts/logs/native-proxy-observation-acquisition-20260910/cases/fsmgen-xbUKrKK2/retained-sources/e7f06f27e18528c7d10e8c4a4ab42b5e70d1423cdb80e83048597719c9c7eb67.source",
+            "source_handle" : "source:3",
+            "tail" : 0
+         },
+         {
+            "caller" : "NativeProxyObservationRelease",
+            "depth" : 46,
+            "id" : 14,
+            "name" : "NativeProxyObservationRelease::_archive_closure",
+            "occurrence" : 0,
+            "parent" : 0,
+            "tail" : 0
+         },
+         {
+            "caller" : "NativeProxyObservationRelease",
+            "completion" : "direct_return",
+            "depth" : 48,
+            "id" : 15,
+            "name" : "NativeProxyObservationArchive::_members",
+            "occurrence" : 1,
+            "parent" : 14,
+            "tail" : 0
+         },
+         {
+            "caller" : "NativeProxyObservationArchive",
+            "completion" : "direct_return",
+            "depth" : 50,
+            "id" : 16,
+            "name" : "NativeProxyImageCoordination::_names",
+            "occurrence" : 1,
+            "parent" : 15,
+            "path" : ".artifacts/logs/native-proxy-observation-acquisition-20260910/cases/fsmgen-xbUKrKK2/retained-sources",
+            "tail" : 0
+         },
+         {
+            "caller" : "NativeProxyObservationRelease",
+            "depth" : 48,
+            "id" : 17,
+            "name" : "NativeProxyObservationArchive::_directory_closure",
+            "occurrence" : 0,
+            "parent" : 14,
+            "tail" : 0
+         },
+         {
+            "caller" : "NativeProxyObservationArchive",
+            "completion" : "direct_return",
+            "depth" : 50,
+            "id" : 18,
+            "name" : "NativeProxyImageCustody::_directory",
+            "occurrence" : 2,
+            "parent" : 17,
+            "path" : ".artifacts/logs/native-proxy-observation-acquisition-20260910/cases/fsmgen-xbUKrKK2",
+            "tail" : 0
+         },
+         {
+            "caller" : "NativeProxyObservationArchive",
+            "depth" : 50,
+            "id" : 19,
+            "name" : "NativeProxyImageCustody::_directory",
+            "occurrence" : 3,
+            "parent" : 17,
+            "path" : ".artifacts/logs/native-proxy-observation-acquisition-20260910/cases/fsmgen-xbUKrKK2/retained-sources",
+            "tail" : 0
+         }
+      ],
+      "error" : "",
+      "events" : [
+         "operation:begin",
+         "call:0:before",
+         "call:1:before",
+         "call:1:after",
+         "call:2:before",
+         "call:2:after",
+         "call:3:before",
+         "call:3:after",
+         "call:4:before",
+         "call:5:before",
+         "opened:directory:0",
+         "close:directory:0:before",
+         "close:directory:0:after",
+         "call:5:after",
+         "call:4:after",
+         "call:6:before",
+         "source_request:0",
+         "read:0",
+         "opened:source:0",
+         "call:6:after",
+         "call:7:before",
+         "call:7:after",
+         "call:8:before",
+         "source_request:1",
+         "read:1",
+         "opened:source:1",
+         "call:8:after",
+         "call:9:before",
+         "call:9:after",
+         "call:10:before",
+         "source_request:2",
+         "read:2",
+         "opened:source:2",
+         "call:10:after",
+         "call:11:before",
+         "call:11:after",
+         "call:12:before",
+         "source_request:3",
+         "read:3",
+         "opened:source:3",
+         "call:12:after",
+         "call:13:before",
+         "call:13:after",
+         "call:14:before",
+         "call:15:before",
+         "call:16:before",
+         "opened:directory:1",
+         "close:directory:1:before",
+         "close:directory:1:after",
+         "call:16:after",
+         "call:15:after",
+         "call:17:before",
+         "call:18:before",
+         "call:18:after",
+         "call:19:before",
+         "close:source:0:before",
+         "close:source:0:after",
+         "close:source:1:before",
+         "close:source:1:after",
+         "close:source:2:before",
+         "close:source:2:after",
+         "close:source:3:before",
+         "close:source:3:after",
+         "operation:end"
+      ],
+      "expected_hold" : ".artifacts/tmp/native-proxy-image-custody/cases/fsmgen-O7ce9Skw/references/4e0191af522249acf522d1063a05d80c6d9e7cde98f45ce9d4e0f5f03f49deba.json",
+      "forbidden_mutation_attempts" : 0,
+      "forbidden_source_attempts" : 0,
+      "handles" : [
+         {
+            "actual_close_ok" : 1,
+            "actual_errno" : 0,
+            "close_caller" : "NativeProxyImageCoordination",
+            "closed_after_call" : 1,
+            "closed_at_return" : 1,
+            "descriptor" : 3,
+            "device" : 16777244,
+            "inode" : 79337907,
+            "kind" : "directory",
+            "label" : "directory:0",
+            "native_at_admission" : [
+               16777244,
+               79337907,
+               16832,
+               6,
+               501,
+               20,
+               0,
+               192,
+               1789153658,
+               1789153658,
+               1789153658,
+               4096,
+               0
+            ],
+            "observer_closed" : 1,
+            "observer_descriptor" : 4,
+            "path" : ".artifacts/logs/native-proxy-observation-acquisition-20260910/cases/fsmgen-xbUKrKK2/retained-sources",
+            "reported_errno" : 0,
+            "reported_return" : 1
+         },
+         {
+            "actual_close_ok" : 1,
+            "actual_errno" : 0,
+            "cloexec_at_handoff" : 1,
+            "cloexec_before_close" : 1,
+            "close_caller" : "NativeProxyObservationRelease",
+            "closed_after_call" : 1,
+            "closed_at_return" : 1,
+            "descriptor" : 3,
+            "device" : 16777244,
+            "inode" : 79337908,
+            "kind" : "source",
+            "label" : "source:0",
+            "native_at_admission" : [
+               16777244,
+               79337908,
+               33024,
+               1,
+               501,
+               20,
+               0,
+               60,
+               1789153658,
+               1789153658,
+               1789153658,
+               4096,
+               8
+            ],
+            "path" : ".artifacts/logs/native-proxy-observation-acquisition-20260910/cases/fsmgen-xbUKrKK2/retained-sources/d42ab2b4e413bd694a831c4a8307a0c4cd760b3bfdcf5fc93dc0b6772fdd632b.source",
+            "reported_errno" : 0,
+            "reported_return" : 1,
+            "sha256" : "d42ab2b4e413bd694a831c4a8307a0c4cd760b3bfdcf5fc93dc0b6772fdd632b",
+            "size_bytes" : 60
+         },
+         {
+            "actual_close_ok" : 1,
+            "actual_errno" : 0,
+            "cloexec_at_handoff" : 1,
+            "cloexec_before_close" : 1,
+            "close_caller" : "NativeProxyObservationRelease",
+            "closed_after_call" : 1,
+            "closed_at_return" : 1,
+            "descriptor" : 4,
+            "device" : 16777244,
+            "inode" : 79337909,
+            "kind" : "source",
+            "label" : "source:1",
+            "native_at_admission" : [
+               16777244,
+               79337909,
+               33024,
+               1,
+               501,
+               20,
+               0,
+               994,
+               1789153658,
+               1789153658,
+               1789153658,
+               4096,
+               8
+            ],
+            "path" : ".artifacts/logs/native-proxy-observation-acquisition-20260910/cases/fsmgen-xbUKrKK2/retained-sources/4dbffa9c361ab09457ff9270e89c125ae0a5766b6a0edf5e3bd4aa8439cdbc19.source",
+            "reported_errno" : 0,
+            "reported_return" : 1,
+            "sha256" : "4dbffa9c361ab09457ff9270e89c125ae0a5766b6a0edf5e3bd4aa8439cdbc19",
+            "size_bytes" : 994
+         },
+         {
+            "actual_close_ok" : 1,
+            "actual_errno" : 0,
+            "cloexec_at_handoff" : 1,
+            "cloexec_before_close" : 1,
+            "close_caller" : "NativeProxyObservationRelease",
+            "closed_after_call" : 1,
+            "closed_at_return" : 1,
+            "descriptor" : 9,
+            "device" : 16777244,
+            "inode" : 79337910,
+            "kind" : "source",
+            "label" : "source:2",
+            "native_at_admission" : [
+               16777244,
+               79337910,
+               33024,
+               1,
+               501,
+               20,
+               0,
+               50,
+               1789153658,
+               1789153658,
+               1789153658,
+               4096,
+               8
+            ],
+            "path" : ".artifacts/logs/native-proxy-observation-acquisition-20260910/cases/fsmgen-xbUKrKK2/retained-sources/a7d92e28ec1c8308e37c6003df167bc42bd2341cf3a69d677f45330271ffba56.source",
+            "reported_errno" : 0,
+            "reported_return" : 1,
+            "sha256" : "a7d92e28ec1c8308e37c6003df167bc42bd2341cf3a69d677f45330271ffba56",
+            "size_bytes" : 50
+         },
+         {
+            "actual_close_ok" : 1,
+            "actual_errno" : 0,
+            "cloexec_at_handoff" : 1,
+            "cloexec_before_close" : 1,
+            "close_caller" : "NativeProxyObservationRelease",
+            "closed_after_call" : 1,
+            "closed_at_return" : 1,
+            "descriptor" : 10,
+            "device" : 16777244,
+            "inode" : 79337911,
+            "kind" : "source",
+            "label" : "source:3",
+            "native_at_admission" : [
+               16777244,
+               79337911,
+               33024,
+               1,
+               501,
+               20,
+               0,
+               53,
+               1789153658,
+               1789153658,
+               1789153658,
+               4096,
+               8
+            ],
+            "path" : ".artifacts/logs/native-proxy-observation-acquisition-20260910/cases/fsmgen-xbUKrKK2/retained-sources/e7f06f27e18528c7d10e8c4a4ab42b5e70d1423cdb80e83048597719c9c7eb67.source",
+            "reported_errno" : 0,
+            "reported_return" : 1,
+            "sha256" : "e7f06f27e18528c7d10e8c4a4ab42b5e70d1423cdb80e83048597719c9c7eb67",
+            "size_bytes" : 53
+         },
+         {
+            "actual_close_ok" : 1,
+            "actual_errno" : 0,
+            "close_caller" : "NativeProxyImageCoordination",
+            "closed_after_call" : 1,
+            "closed_at_return" : 1,
+            "descriptor" : 11,
+            "device" : 16777244,
+            "inode" : 79337907,
+            "kind" : "directory",
+            "label" : "directory:1",
+            "native_at_admission" : [
+               16777244,
+               79337907,
+               16832,
+               6,
+               501,
+               20,
+               0,
+               192,
+               1789153658,
+               1789153658,
+               1789153658,
+               4096,
+               0
+            ],
+            "observer_closed" : 1,
+            "observer_descriptor" : 12,
+            "path" : ".artifacts/logs/native-proxy-observation-acquisition-20260910/cases/fsmgen-xbUKrKK2/retained-sources",
+            "reported_errno" : 0,
+            "reported_return" : 1
+         }
+      ],
+      "injected_hits" : 1,
+      "interrupted_boundary_ids" : [
+         0,
+         14,
+         17,
+         19
+      ],
+      "lock_opens" : [],
+      "modeled_close_hits" : 0,
+      "reads" : [
+         ".artifacts/logs/native-proxy-observation-acquisition-20260910/cases/fsmgen-xbUKrKK2/retained-sources/d42ab2b4e413bd694a831c4a8307a0c4cd760b3bfdcf5fc93dc0b6772fdd632b.source",
+         ".artifacts/logs/native-proxy-observation-acquisition-20260910/cases/fsmgen-xbUKrKK2/retained-sources/4dbffa9c361ab09457ff9270e89c125ae0a5766b6a0edf5e3bd4aa8439cdbc19.source",
+         ".artifacts/logs/native-proxy-observation-acquisition-20260910/cases/fsmgen-xbUKrKK2/retained-sources/a7d92e28ec1c8308e37c6003df167bc42bd2341cf3a69d677f45330271ffba56.source",
+         ".artifacts/logs/native-proxy-observation-acquisition-20260910/cases/fsmgen-xbUKrKK2/retained-sources/e7f06f27e18528c7d10e8c4a4ab42b5e70d1423cdb80e83048597719c9c7eb67.source"
+      ],
+      "result" : {
+         "error" : "injected release call: NativeProxyImageCustody::_directory#3:before\n",
+         "executable" : null,
+         "last_reference_check" : null,
+         "reference_absence_verified" : 0,
+         "release" : null,
+         "runtime_authorized" : 0,
+         "schema" : "fsmgen.inactive_observation_release_attempt.v1",
+         "success" : 0,
+         "unlink_attempted" : 0,
+         "unlink_completed" : 0
+      },
+      "returned" : 1,
+      "source_requests" : [
+         {
+            "limit" : 65536,
+            "mode" : 256,
+            "path" : ".artifacts/logs/native-proxy-observation-acquisition-20260910/cases/fsmgen-xbUKrKK2/retained-sources/d42ab2b4e413bd694a831c4a8307a0c4cd760b3bfdcf5fc93dc0b6772fdd632b.source"
+         },
+         {
+            "limit" : 65536,
+            "mode" : 256,
+            "path" : ".artifacts/logs/native-proxy-observation-acquisition-20260910/cases/fsmgen-xbUKrKK2/retained-sources/4dbffa9c361ab09457ff9270e89c125ae0a5766b6a0edf5e3bd4aa8439cdbc19.source"
+         },
+         {
+            "limit" : 65536,
+            "mode" : 256,
+            "path" : ".artifacts/logs/native-proxy-observation-acquisition-20260910/cases/fsmgen-xbUKrKK2/retained-sources/a7d92e28ec1c8308e37c6003df167bc42bd2341cf3a69d677f45330271ffba56.source"
+         },
+         {
+            "limit" : 65536,
+            "mode" : 256,
+            "path" : ".artifacts/logs/native-proxy-observation-acquisition-20260910/cases/fsmgen-xbUKrKK2/retained-sources/e7f06f27e18528c7d10e8c4a4ab42b5e70d1423cdb80e83048597719c9c7eb67.source"
+         }
+      ],
+      "unlinks" : []
+   },
+   "profile_id" : "ordinary_retired_last_observation",
+   "prospective" : {
+      "error" : "",
+      "flow_calls" : 538,
+      "flow_sha256" : "b987b4e396022835a81fdeef20318533e9ff9fa0bc92f89fe9a097b4bcb4dbf7",
+      "resolved" : {
+         "address" : "NativeProxyImageCustody::_directory#3:before",
+         "call_id" : 19,
+         "occurrence" : 3,
+         "phase" : "before",
+         "symbol" : "NativeProxyImageCustody::_directory"
+      }
+   },
+   "retirement" : {
+      "executable" : null,
+      "image" : {
+         "key" : "efd497b0e847884b3c1cfcde14d8b645991c52ebab90c54e58984ccbc303c146",
+         "snapshots" : [
+            {
+               "bytes" : "/* inert qualification bytes; never compiled */\n\u0000\u00ff",
+               "identity" : {
+                  "device" : 16777244,
+                  "inode" : 79337892,
+                  "path" : ".artifacts/tmp/native-proxy-image-custody/cases/fsmgen-O7ce9Skw/images/efd497b0e847884b3c1cfcde14d8b645991c52ebab90c54e58984ccbc303c146/rustup.c",
+                  "sha256" : "a7d92e28ec1c8308e37c6003df167bc42bd2341cf3a69d677f45330271ffba56",
+                  "size_bytes" : 50
+               }
+            },
+            {
+               "bytes" : "\u00cf\u00fa\u00ed\u00fe\f\u0000\u0000\u0001\u0000\u0000\u0000\u0000\u0002\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000inert-not-a-program\u0000\u00ff",
+               "identity" : {
+                  "device" : 16777244,
+                  "inode" : 79337894,
+                  "path" : ".artifacts/tmp/native-proxy-image-custody/cases/fsmgen-O7ce9Skw/images/efd497b0e847884b3c1cfcde14d8b645991c52ebab90c54e58984ccbc303c146/rustup",
+                  "sha256" : "e7f06f27e18528c7d10e8c4a4ab42b5e70d1423cdb80e83048597719c9c7eb67",
+                  "size_bytes" : 53
+               }
+            },
+            {
+               "bytes" : "{\"executable\":{\"sha256\":\"e7f06f27e18528c7d10e8c4a4ab42b5e70d1423cdb80e83048597719c9c7eb67\",\"size_bytes\":53},\"generated_c\":{\"sha256\":\"a7d92e28ec1c8308e37c6003df167bc42bd2341cf3a69d677f45330271ffba56\",\"size_bytes\":50},\"key\":\"efd497b0e847884b3c1cfcde14d8b645991c52ebab90c54e58984ccbc303c146\",\"schema\":\"fsmgen.test.rust_proxy_image.v1\"}",
+               "identity" : {
+                  "device" : 16777244,
+                  "inode" : 79337893,
+                  "path" : ".artifacts/tmp/native-proxy-image-custody/cases/fsmgen-O7ce9Skw/images/efd497b0e847884b3c1cfcde14d8b645991c52ebab90c54e58984ccbc303c146/image.json",
+                  "sha256" : "156ec74edbff95660f5275aca3dca8f675f8398ceff43a243573aee41462efb4",
+                  "size_bytes" : 332
+               }
+            }
+         ]
+      },
+      "lock" : {
+         "device" : 16777244,
+         "inode" : 79337888,
+         "path" : ".artifacts/tmp/native-proxy-image-custody/cases/fsmgen-O7ce9Skw/coordination.lock"
+      },
+      "released_reference" : ".artifacts/tmp/native-proxy-image-custody/cases/fsmgen-O7ce9Skw/references/101a04686a0e7a66db60418997d2b5825c6eb0a903239330c8a601b35e05b8da.json",
+      "removed_nodes" : 4,
+      "retired_workspace" : ".artifacts/tmp/process-supervisor-tests/fsmgen-3HqR_43u",
+      "runtime_authorized" : 0,
+      "schema" : "fsmgen.inactive_runtime_retirement.v1"
+   },
+   "roots_absent" : true,
+   "selection" : {
+      "argument_change" : null,
+      "cleanup" : "mixed",
+      "control" : "none",
+      "expected_error" : "",
+      "expected_public_return" : true,
+      "expected_success" : true,
+      "expected_unlinked" : true,
+      "last_observation" : true,
+      "mutation" : "none",
+      "name" : "healthy:last-observation",
+      "runtime" : "retired",
+      "wrapper" : "ordinary"
+   },
+   "setup_before" : {
+      "evidence" : {
+         "" : {
+            "device" : 16777244,
+            "inode" : 79337885,
+            "kind" : "directory",
+            "mode" : 448,
+            "uid" : 501
+         }
+      },
+      "other_workspace" : {
+         "" : {
+            "device" : 16777244,
+            "inode" : 79337884,
+            "kind" : "directory",
+            "mode" : 448,
+            "uid" : 501
+         },
+         "rust-tool-resolution" : {
+            "bytes_hex" : "23212f7573722f62696e2f7065726c0a2320696e657274206f62736572766174696f6e20777261707065723b206e657665722065786563757465640a",
+            "device" : 16777244,
+            "inode" : 79337898,
+            "kind" : "file",
+            "links" : 1,
+            "mode" : 448,
+            "sha256" : "d42ab2b4e413bd694a831c4a8307a0c4cd760b3bfdcf5fc93dc0b6772fdd632b",
+            "size_bytes" : 60,
+            "uid" : 501
+         },
+         "rust-tools" : {
+            "device" : 16777244,
+            "inode" : 79337897,
+            "kind" : "directory",
+            "mode" : 448,
+            "uid" : 501
+         },
+         "rust-tools/image-reference.json" : {
+            "bytes_hex" : "7b22696d6167655f6b6579223a2231383366306434643138353732613235306163393737353631393637333264383834663161323231376132336463626637646636333930643033333032313837222c227265666572656e63655f6b6579223a2234363165393038393838306163303831623535653639396363393233643237626362623366666266326663376263343561363439366434646533353937616164222c22736368656d61223a2266736d67656e2e746573742e727573745f70726f78795f696d6167655f7265666572656e63652e7631222c2273656c65637465645f736f7572636573223a5b7b22646576696365223a31363737373234342c22696e6f6465223a37393333373930302c2270617468223a222e6172746966616374732f746d702f6e61746976652d70726f78792d696d6167652d637573746f64792f63617365732f66736d67656e2d4f37636539536b772f696d616765732f313833663064346431383537326132353061633937373536313936373332643838346631613232313761323364636266376466363339306430333330323138372f7275737475702e63222c22736861323536223a2261376439326532386563316338333038653337633630303364663136376263343262643233343163663361363964363737663435333330323731666662613536222c2273697a655f6279746573223a35307d2c7b22646576696365223a31363737373234342c22696e6f6465223a37393333373930322c2270617468223a222e6172746966616374732f746d702f6e61746976652d70726f78792d696d6167652d637573746f64792f63617365732f66736d67656e2d4f37636539536b772f696d616765732f313833663064346431383537326132353061633937373536313936373332643838346631613232313761323364636266376466363339306430333330323138372f727573747570222c22736861323536223a2232633234326236373966323563643661666265626561656434306431643464613966396137633831363730306364623631653163353662373339663830383235222c2273697a655f6279746573223a35387d5d2c22776f726b7370616365223a222e6172746966616374732f746d702f70726f636573732d73757065727669736f722d74657374732f66736d67656e2d3669677546677873222c22776f726b73706163655f6964656e74697479223a7b22646576696365223a31363737373234342c22696e6f6465223a37393333373838342c2270617468223a222e6172746966616374732f746d702f70726f636573732d73757065727669736f722d74657374732f66736d67656e2d3669677546677873227d7d",
+            "device" : 16777244,
+            "inode" : 79337904,
+            "kind" : "file",
+            "links" : 1,
+            "mode" : 256,
+            "sha256" : "5260d4fa59c15acbc78c44556039f27929a5f00ef2b769e45838f6d542a26daa",
+            "size_bytes" : 994,
+            "uid" : 501
+         }
+      },
+      "store" : {
+         "" : {
+            "device" : 16777244,
+            "inode" : 79337882,
+            "kind" : "directory",
+            "mode" : 448,
+            "uid" : 501
+         },
+         "coordination.lock" : {
+            "bytes_hex" : "",
+            "device" : 16777244,
+            "inode" : 79337888,
+            "kind" : "file",
+            "links" : 1,
+            "mode" : 384,
+            "sha256" : "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+            "size_bytes" : 0,
+            "uid" : 501
+         },
+         "images" : {
+            "device" : 16777244,
+            "inode" : 79337889,
+            "kind" : "directory",
+            "mode" : 448,
+            "uid" : 501
+         },
+         "images/183f0d4d18572a250ac97756196732d884f1a2217a23dcbf7df6390d03302187" : {
+            "device" : 16777244,
+            "inode" : 79337899,
+            "kind" : "directory",
+            "mode" : 448,
+            "uid" : 501
+         },
+         "images/183f0d4d18572a250ac97756196732d884f1a2217a23dcbf7df6390d03302187/image.json" : {
+            "bytes_hex" : "7b2265786563757461626c65223a7b22736861323536223a2232633234326236373966323563643661666265626561656434306431643464613966396137633831363730306364623631653163353662373339663830383235222c2273697a655f6279746573223a35387d2c2267656e6572617465645f63223a7b22736861323536223a2261376439326532386563316338333038653337633630303364663136376263343262643233343163663361363964363737663435333330323731666662613536222c2273697a655f6279746573223a35307d2c226b6579223a2231383366306434643138353732613235306163393737353631393637333264383834663161323231376132336463626637646636333930643033333032313837222c22736368656d61223a2266736d67656e2e746573742e727573745f70726f78795f696d6167652e7631227d",
+            "device" : 16777244,
+            "inode" : 79337901,
+            "kind" : "file",
+            "links" : 1,
+            "mode" : 256,
+            "sha256" : "25833b2a44e94d7e9ba26b7d8cb760737cc6b2d570c505a908ecc271103a514d",
+            "size_bytes" : 332,
+            "uid" : 501
+         },
+         "images/183f0d4d18572a250ac97756196732d884f1a2217a23dcbf7df6390d03302187/rustup" : {
+            "bytes_hex" : "cffaedfe0c000001000000000200000000000000000000000000000000000000696e6572742d6e6f742d612d70726f6772616d00ff6f74686572",
+            "device" : 16777244,
+            "inode" : 79337902,
+            "kind" : "file",
+            "links" : 1,
+            "mode" : 320,
+            "sha256" : "2c242b679f25cd6afbebeaed40d1d4da9f9a7c816700cdb61e1c56b739f80825",
+            "size_bytes" : 58,
+            "uid" : 501
+         },
+         "images/183f0d4d18572a250ac97756196732d884f1a2217a23dcbf7df6390d03302187/rustup.c" : {
+            "bytes_hex" : "2f2a20696e657274207175616c696669636174696f6e2062797465733b206e6576657220636f6d70696c6564202a2f0a00ff",
+            "device" : 16777244,
+            "inode" : 79337900,
+            "kind" : "file",
+            "links" : 1,
+            "mode" : 256,
+            "sha256" : "a7d92e28ec1c8308e37c6003df167bc42bd2341cf3a69d677f45330271ffba56",
+            "size_bytes" : 50,
+            "uid" : 501
+         },
+         "images/efd497b0e847884b3c1cfcde14d8b645991c52ebab90c54e58984ccbc303c146" : {
+            "device" : 16777244,
+            "inode" : 79337891,
+            "kind" : "directory",
+            "mode" : 448,
+            "uid" : 501
+         },
+         "images/efd497b0e847884b3c1cfcde14d8b645991c52ebab90c54e58984ccbc303c146/image.json" : {
+            "bytes_hex" : "7b2265786563757461626c65223a7b22736861323536223a2265376630366632376531383532386337643130653863346134616234326235653730643134323363646238306538333034383539373731396339633765623637222c2273697a655f6279746573223a35337d2c2267656e6572617465645f63223a7b22736861323536223a2261376439326532386563316338333038653337633630303364663136376263343262643233343163663361363964363737663435333330323731666662613536222c2273697a655f6279746573223a35307d2c226b6579223a2265666434393762306538343738383462336331636663646531346438623634353939316335326562616239306335346535383938346363626333303363313436222c22736368656d61223a2266736d67656e2e746573742e727573745f70726f78795f696d6167652e7631227d",
+            "device" : 16777244,
+            "inode" : 79337893,
+            "kind" : "file",
+            "links" : 1,
+            "mode" : 256,
+            "sha256" : "156ec74edbff95660f5275aca3dca8f675f8398ceff43a243573aee41462efb4",
+            "size_bytes" : 332,
+            "uid" : 501
+         },
+         "images/efd497b0e847884b3c1cfcde14d8b645991c52ebab90c54e58984ccbc303c146/rustup" : {
+            "bytes_hex" : "cffaedfe0c000001000000000200000000000000000000000000000000000000696e6572742d6e6f742d612d70726f6772616d00ff",
+            "device" : 16777244,
+            "inode" : 79337894,
+            "kind" : "file",
+            "links" : 1,
+            "mode" : 320,
+            "sha256" : "e7f06f27e18528c7d10e8c4a4ab42b5e70d1423cdb80e83048597719c9c7eb67",
+            "size_bytes" : 53,
+            "uid" : 501
+         },
+         "images/efd497b0e847884b3c1cfcde14d8b645991c52ebab90c54e58984ccbc303c146/rustup.c" : {
+            "bytes_hex" : "2f2a20696e657274207175616c696669636174696f6e2062797465733b206e6576657220636f6d70696c6564202a2f0a00ff",
+            "device" : 16777244,
+            "inode" : 79337892,
+            "kind" : "file",
+            "links" : 1,
+            "mode" : 256,
+            "sha256" : "a7d92e28ec1c8308e37c6003df167bc42bd2341cf3a69d677f45330271ffba56",
+            "size_bytes" : 50,
+            "uid" : 501
+         },
+         "references" : {
+            "device" : 16777244,
+            "inode" : 79337890,
+            "kind" : "directory",
+            "mode" : 448,
+            "uid" : 501
+         },
+         "references/101a04686a0e7a66db60418997d2b5825c6eb0a903239330c8a601b35e05b8da.json" : {
+            "bytes_hex" : "7b22696d6167655f6b6579223a2265666434393762306538343738383462336331636663646531346438623634353939316335326562616239306335346535383938346363626333303363313436222c227265666572656e63655f6b6579223a2231303161303436383661306537613636646236303431383939376432623538323563366562306139303332333933333063386136303162333565303562386461222c22736368656d61223a2266736d67656e2e746573742e727573745f70726f78795f696d6167655f7265666572656e63652e7631222c2273656c65637465645f736f7572636573223a5b7b22646576696365223a31363737373234342c22696e6f6465223a37393333373839322c2270617468223a222e6172746966616374732f746d702f6e61746976652d70726f78792d696d6167652d637573746f64792f63617365732f66736d67656e2d4f37636539536b772f696d616765732f656664343937623065383437383834623363316366636465313464386236343539393163353265626162393063353465353839383463636263333033633134362f7275737475702e63222c22736861323536223a2261376439326532386563316338333038653337633630303364663136376263343262643233343163663361363964363737663435333330323731666662613536222c2273697a655f6279746573223a35307d2c7b22646576696365223a31363737373234342c22696e6f6465223a37393333373839342c2270617468223a222e6172746966616374732f746d702f6e61746976652d70726f78792d696d6167652d637573746f64792f63617365732f66736d67656e2d4f37636539536b772f696d616765732f656664343937623065383437383834623363316366636465313464386236343539393163353265626162393063353465353839383463636263333033633134362f727573747570222c22736861323536223a2265376630366632376531383532386337643130653863346134616234326235653730643134323363646238306538333034383539373731396339633765623637222c2273697a655f6279746573223a35337d5d2c22776f726b7370616365223a222e6172746966616374732f746d702f70726f636573732d73757065727669736f722d74657374732f66736d67656e2d334871525f343375222c22776f726b73706163655f6964656e74697479223a7b22646576696365223a31363737373234342c22696e6f6465223a37393333373838332c2270617468223a222e6172746966616374732f746d702f70726f636573732d73757065727669736f722d74657374732f66736d67656e2d334871525f343375227d7d",
+            "device" : 16777244,
+            "inode" : 79337895,
+            "kind" : "file",
+            "links" : 1,
+            "mode" : 256,
+            "sha256" : "4dbffa9c361ab09457ff9270e89c125ae0a5766b6a0edf5e3bd4aa8439cdbc19",
+            "size_bytes" : 994,
+            "uid" : 501
+         },
+         "references/461e9089880ac081b55e699cc923d27bcbb3ffbf2fc7bc45a6496d4de3597aad.json" : {
+            "bytes_hex" : "7b22696d6167655f6b6579223a2231383366306434643138353732613235306163393737353631393637333264383834663161323231376132336463626637646636333930643033333032313837222c227265666572656e63655f6b6579223a2234363165393038393838306163303831623535653639396363393233643237626362623366666266326663376263343561363439366434646533353937616164222c22736368656d61223a2266736d67656e2e746573742e727573745f70726f78795f696d6167655f7265666572656e63652e7631222c2273656c65637465645f736f7572636573223a5b7b22646576696365223a31363737373234342c22696e6f6465223a37393333373930302c2270617468223a222e6172746966616374732f746d702f6e61746976652d70726f78792d696d6167652d637573746f64792f63617365732f66736d67656e2d4f37636539536b772f696d616765732f313833663064346431383537326132353061633937373536313936373332643838346631613232313761323364636266376466363339306430333330323138372f7275737475702e63222c22736861323536223a2261376439326532386563316338333038653337633630303364663136376263343262643233343163663361363964363737663435333330323731666662613536222c2273697a655f6279746573223a35307d2c7b22646576696365223a31363737373234342c22696e6f6465223a37393333373930322c2270617468223a222e6172746966616374732f746d702f6e61746976652d70726f78792d696d6167652d637573746f64792f63617365732f66736d67656e2d4f37636539536b772f696d616765732f313833663064346431383537326132353061633937373536313936373332643838346631613232313761323364636266376466363339306430333330323138372f727573747570222c22736861323536223a2232633234326236373966323563643661666265626561656434306431643464613966396137633831363730306364623631653163353662373339663830383235222c2273697a655f6279746573223a35387d5d2c22776f726b7370616365223a222e6172746966616374732f746d702f70726f636573732d73757065727669736f722d74657374732f66736d67656e2d3669677546677873222c22776f726b73706163655f6964656e74697479223a7b22646576696365223a31363737373234342c22696e6f6465223a37393333373838342c2270617468223a222e6172746966616374732f746d702f70726f636573732d73757065727669736f722d74657374732f66736d67656e2d3669677546677873227d7d",
+            "device" : 16777244,
+            "inode" : 79337903,
+            "kind" : "file",
+            "links" : 1,
+            "mode" : 256,
+            "sha256" : "5260d4fa59c15acbc78c44556039f27929a5f00ef2b769e45838f6d542a26daa",
+            "size_bytes" : 994,
+            "uid" : 501
+         },
+         "references/4e0191af522249acf522d1063a05d80c6d9e7cde98f45ce9d4e0f5f03f49deba.json" : {
+            "bytes_hex" : "7b2265766964656e63655f6469726563746f7279223a222e6172746966616374732f6c6f67732f6e61746976652d70726f78792d6f62736572766174696f6e2d6163717569736974696f6e2d32303236303931302f63617365732f66736d67656e2d7862554b724b4b32222c2265766964656e63655f6469726563746f72795f6964656e74697479223a7b22646576696365223a31363737373234342c22696e6f6465223a37393333373838352c2270617468223a222e6172746966616374732f6c6f67732f6e61746976652d70726f78792d6f62736572766174696f6e2d6163717569736974696f6e2d32303236303931302f63617365732f66736d67656e2d7862554b724b4b32227d2c22696d6167655f6b6579223a2265666434393762306538343738383462336331636663646531346438623634353939316335326562616239306335346535383938346363626333303363313436222c226f627365727665725f6269727468223a7b22706964223a3130312c2270706964223a3130302c2272756964223a3530312c2273746172745f736563223a3132332c2273746172745f75736563223a3435362c22756964223a3530317d2c227265666572656e63655f6b6579223a2234653031393161663532323234396163663532326431303633613035643830633664396537636465393866343563653964346530663566303366343964656261222c22736368656d61223a2266736d67656e2e746573742e727573745f70726f78795f696d6167655f6f62736572766174696f6e5f7265666572656e63652e7631222c2273656c65637465645f736f7572636573223a5b7b22646576696365223a31363737373234342c22696e6f6465223a37393333373839322c2270617468223a222e6172746966616374732f746d702f6e61746976652d70726f78792d696d6167652d637573746f64792f63617365732f66736d67656e2d4f37636539536b772f696d616765732f656664343937623065383437383834623363316366636465313464386236343539393163353265626162393063353465353839383463636263333033633134362f7275737475702e63222c22736861323536223a2261376439326532386563316338333038653337633630303364663136376263343262643233343163663361363964363737663435333330323731666662613536222c2273697a655f6279746573223a35307d2c7b22646576696365223a31363737373234342c22696e6f6465223a37393333373839342c2270617468223a222e6172746966616374732f746d702f6e61746976652d70726f78792d696d6167652d637573746f64792f63617365732f66736d67656e2d4f37636539536b772f696d616765732f656664343937623065383437383834623363316366636465313464386236343539393163353265626162393063353465353839383463636263333033633134362f727573747570222c22736861323536223a2265376630366632376531383532386337643130653863346134616234326235653730643134323363646238306538333034383539373731396339633765623637222c2273697a655f6279746573223a35337d5d2c227461726765745f6269727468223a7b22706964223a3230312c2270706964223a3230302c2272756964223a3530312c2273746172745f736563223a3132342c2273746172745f75736563223a3738392c22756964223a3530317d7d",
+            "device" : 16777244,
+            "inode" : 79337905,
+            "kind" : "file",
+            "links" : 1,
+            "mode" : 256,
+            "sha256" : "a1257055e434b269a6fb64806c5a673e443980436083e1db161c00131e9dcb33",
+            "size_bytes" : 1266,
+            "uid" : 501
+         },
+         "references/a5eece5d2d2bf45c061f089034180dfa0f83a5853c0848ff843e81f2cfc21604.json" : {
+            "bytes_hex" : "7b2265766964656e63655f6469726563746f7279223a222e6172746966616374732f6c6f67732f6e61746976652d70726f78792d6f62736572766174696f6e2d6163717569736974696f6e2d32303236303931302f63617365732f66736d67656e2d7862554b724b4b32222c2265766964656e63655f6469726563746f72795f6964656e74697479223a7b22646576696365223a31363737373234342c22696e6f6465223a37393333373838352c2270617468223a222e6172746966616374732f6c6f67732f6e61746976652d70726f78792d6f62736572766174696f6e2d6163717569736974696f6e2d32303236303931302f63617365732f66736d67656e2d7862554b724b4b32227d2c22696d6167655f6b6579223a2265666434393762306538343738383462336331636663646531346438623634353939316335326562616239306335346535383938346363626333303363313436222c226f627365727665725f6269727468223a7b22706964223a3130312c2270706964223a3130302c2272756964223a3530312c2273746172745f736563223a3132332c2273746172745f75736563223a3435362c22756964223a3530317d2c227265666572656e63655f6b6579223a2261356565636535643264326266343563303631663038393033343138306466613066383361353835336330383438666638343365383166326366633231363034222c22736368656d61223a2266736d67656e2e746573742e727573745f70726f78795f696d6167655f6f62736572766174696f6e5f7265666572656e63652e7631222c2273656c65637465645f736f7572636573223a5b7b22646576696365223a31363737373234342c22696e6f6465223a37393333373839322c2270617468223a222e6172746966616374732f746d702f6e61746976652d70726f78792d696d6167652d637573746f64792f63617365732f66736d67656e2d4f37636539536b772f696d616765732f656664343937623065383437383834623363316366636465313464386236343539393163353265626162393063353465353839383463636263333033633134362f7275737475702e63222c22736861323536223a2261376439326532386563316338333038653337633630303364663136376263343262643233343163663361363964363737663435333330323731666662613536222c2273697a655f6279746573223a35307d2c7b22646576696365223a31363737373234342c22696e6f6465223a37393333373839342c2270617468223a222e6172746966616374732f746d702f6e61746976652d70726f78792d696d6167652d637573746f64792f63617365732f66736d67656e2d4f37636539536b772f696d616765732f656664343937623065383437383834623363316366636465313464386236343539393163353265626162393063353465353839383463636263333033633134362f727573747570222c22736861323536223a2265376630366632376531383532386337643130653863346134616234326235653730643134323363646238306538333034383539373731396339633765623637222c2273697a655f6279746573223a35337d5d2c227461726765745f6269727468223a7b22706964223a3230322c2270706964223a3230302c2272756964223a3530312c2273746172745f736563223a3132342c2273746172745f75736563223a3738392c22756964223a3530317d7d",
+            "device" : 16777244,
+            "inode" : 79337906,
+            "kind" : "file",
+            "links" : 1,
+            "mode" : 256,
+            "sha256" : "ae1ca3c240f385a13e31796c93914b383bbbbb304ca916c9ef8d934ca66a6108",
+            "size_bytes" : 1266,
+            "uid" : 501
+         }
+      },
+      "workspace" : {
+         "" : {
+            "device" : 16777244,
+            "inode" : 79337883,
+            "kind" : "directory",
+            "mode" : 448,
+            "uid" : 501
+         },
+         "rust-tool-resolution" : {
+            "bytes_hex" : "23212f7573722f62696e2f7065726c0a2320696e657274206f62736572766174696f6e20777261707065723b206e657665722065786563757465640a",
+            "device" : 16777244,
+            "inode" : 79337887,
+            "kind" : "file",
+            "links" : 1,
+            "mode" : 448,
+            "sha256" : "d42ab2b4e413bd694a831c4a8307a0c4cd760b3bfdcf5fc93dc0b6772fdd632b",
+            "size_bytes" : 60,
+            "uid" : 501
+         },
+         "rust-tools" : {
+            "device" : 16777244,
+            "inode" : 79337886,
+            "kind" : "directory",
+            "mode" : 448,
+            "uid" : 501
+         },
+         "rust-tools/image-reference.json" : {
+            "bytes_hex" : "7b22696d6167655f6b6579223a2265666434393762306538343738383462336331636663646531346438623634353939316335326562616239306335346535383938346363626333303363313436222c227265666572656e63655f6b6579223a2231303161303436383661306537613636646236303431383939376432623538323563366562306139303332333933333063386136303162333565303562386461222c22736368656d61223a2266736d67656e2e746573742e727573745f70726f78795f696d6167655f7265666572656e63652e7631222c2273656c65637465645f736f7572636573223a5b7b22646576696365223a31363737373234342c22696e6f6465223a37393333373839322c2270617468223a222e6172746966616374732f746d702f6e61746976652d70726f78792d696d6167652d637573746f64792f63617365732f66736d67656e2d4f37636539536b772f696d616765732f656664343937623065383437383834623363316366636465313464386236343539393163353265626162393063353465353839383463636263333033633134362f7275737475702e63222c22736861323536223a2261376439326532386563316338333038653337633630303364663136376263343262643233343163663361363964363737663435333330323731666662613536222c2273697a655f6279746573223a35307d2c7b22646576696365223a31363737373234342c22696e6f6465223a37393333373839342c2270617468223a222e6172746966616374732f746d702f6e61746976652d70726f78792d696d6167652d637573746f64792f63617365732f66736d67656e2d4f37636539536b772f696d616765732f656664343937623065383437383834623363316366636465313464386236343539393163353265626162393063353465353839383463636263333033633134362f727573747570222c22736861323536223a2265376630366632376531383532386337643130653863346134616234326235653730643134323363646238306538333034383539373731396339633765623637222c2273697a655f6279746573223a35337d5d2c22776f726b7370616365223a222e6172746966616374732f746d702f70726f636573732d73757065727669736f722d74657374732f66736d67656e2d334871525f343375222c22776f726b73706163655f6964656e74697479223a7b22646576696365223a31363737373234342c22696e6f6465223a37393333373838332c2270617468223a222e6172746966616374732f746d702f70726f636573732d73757065727669736f722d74657374732f66736d67656e2d334871525f343375227d7d",
+            "device" : 16777244,
+            "inode" : 79337896,
+            "kind" : "file",
+            "links" : 1,
+            "mode" : 256,
+            "sha256" : "4dbffa9c361ab09457ff9270e89c125ae0a5766b6a0edf5e3bd4aa8439cdbc19",
+            "size_bytes" : 994,
+            "uid" : 501
+         }
+      }
+   },
+   "work_selection" : {
+      "entries" : [
+         {
+            "ownership_token" : "db99dcafd1d5eb773d52e2e4c8abfb2e018b104826ab4348b69d3c0d8d0e5acb",
+            "role" : "capture",
+            "work_id" : "work:0"
+         },
+         {
+            "ownership_token" : "ca3d4f8de856ccfd995bc114aba30c369dee7c6f5ccd5c339c3570a957dc4871",
+            "role" : "helper",
+            "work_id" : "work:1"
+         },
+         {
+            "ownership_token" : "741fa88e1231a0fa7cd4be434b9f10cbe12f966490e8587faa2068bdaa673f90",
+            "role" : "query",
+            "work_id" : "work:2"
+         }
+      ],
+      "evidence_directory_identity" : {
+         "device" : 16777244,
+         "inode" : 79337885,
+         "path" : ".artifacts/logs/native-proxy-observation-acquisition-20260910/cases/fsmgen-xbUKrKK2"
+      },
+      "executable" : null,
+      "observation_reference_key" : "4e0191af522249acf522d1063a05d80c6d9e7cde98f45ce9d4e0f5f03f49deba",
+      "runtime_authorized" : 0,
+      "schema" : "fsmgen.inactive_observation_work_selection.v1"
+   },
+   "work_settlement" : {
+      "executable" : null,
+      "receipts" : [
+         {
+            "cleanup" : {
+               "group_gone" : 1,
+               "leader_reaped" : 1,
+               "leader_started" : 1
+            },
+            "outcome" : "completed",
+            "ownership_token" : "db99dcafd1d5eb773d52e2e4c8abfb2e018b104826ab4348b69d3c0d8d0e5acb",
+            "role" : "capture",
+            "work_id" : "work:0"
+         },
+         {
+            "cleanup" : {
+               "group_gone" : 1,
+               "leader_reaped" : 1,
+               "leader_started" : 1
+            },
+            "outcome" : "failed",
+            "ownership_token" : "ca3d4f8de856ccfd995bc114aba30c369dee7c6f5ccd5c339c3570a957dc4871",
+            "role" : "helper",
+            "work_id" : "work:1"
+         },
+         {
+            "cleanup" : {
+               "group_gone" : 1,
+               "leader_reaped" : 1,
+               "leader_started" : 1
+            },
+            "outcome" : "cancelled",
+            "ownership_token" : "741fa88e1231a0fa7cd4be434b9f10cbe12f966490e8587faa2068bdaa673f90",
+            "role" : "query",
+            "work_id" : "work:2"
+         }
+      ],
+      "runtime_authorized" : 0,
+      "schema" : "fsmgen.inactive_observation_work_settlement.v1",
+      "selection" : {
+         "entries" : [
+            {
+               "ownership_token" : "db99dcafd1d5eb773d52e2e4c8abfb2e018b104826ab4348b69d3c0d8d0e5acb",
+               "role" : "capture",
+               "work_id" : "work:0"
+            },
+            {
+               "ownership_token" : "ca3d4f8de856ccfd995bc114aba30c369dee7c6f5ccd5c339c3570a957dc4871",
+               "role" : "helper",
+               "work_id" : "work:1"
+            },
+            {
+               "ownership_token" : "741fa88e1231a0fa7cd4be434b9f10cbe12f966490e8587faa2068bdaa673f90",
+               "role" : "query",
+               "work_id" : "work:2"
+            }
+         ],
+         "evidence_directory_identity" : {
+            "device" : 16777244,
+            "inode" : 79337885,
+            "path" : ".artifacts/logs/native-proxy-observation-acquisition-20260910/cases/fsmgen-xbUKrKK2"
+         },
+         "executable" : null,
+         "observation_reference_key" : "4e0191af522249acf522d1063a05d80c6d9e7cde98f45ce9d4e0f5f03f49deba",
+         "runtime_authorized" : 0,
+         "schema" : "fsmgen.inactive_observation_work_selection.v1"
+      },
+      "selection_sealed" : 1
+   }
+}

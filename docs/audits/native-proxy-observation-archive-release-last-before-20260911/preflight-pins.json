@@ -1,0 +1,47 @@
+[
+  {
+    "path": "docs/audits/native-proxy-observation-archive-release-last-before-20260911/plan.json",
+    "sha256": "0c762d7621784c1c7b36d25b320cae7b8de366ee690c69b0629066267ad0289e",
+    "size_bytes": 1221880
+  },
+  {
+    "path": "docs/audits/native-proxy-observation-archive-release-last-before-20260911/prepare.py",
+    "sha256": "4b28a0e54a10a235569b72f9831fbcf4f0d80730a98b693ef171458fdc36c30c",
+    "size_bytes": 2943
+  },
+  {
+    "path": "docs/audits/native-proxy-observation-archive-release-last-before-20260911/qualify.t",
+    "sha256": "5297818ab6b168f07e18a1b7f7912fb0a94c0446107532458884ac0fe27a9610",
+    "size_bytes": 12762
+  },
+  {
+    "path": "docs/audits/native-proxy-observation-archive-release-last-before-20260911/audit.py",
+    "sha256": "37667340d9db8b1627ab9d08f4c6c20e9127184e3a5ae46bc6b5cb90b4ec993a",
+    "size_bytes": 21339
+  },
+  {
+    "path": "docs/audits/native-proxy-observation-archive-release-last-before-20260911/trace-preflight.py",
+    "sha256": "2379e141a70507415e943511e90aac60ec3f96a380645d93ecf81797d5615d43",
+    "size_bytes": 5274
+  },
+  {
+    "path": "docs/audits/native-proxy-observation-archive-release-last-before-20260911/trace-preflight-pins.json",
+    "sha256": "f30cd0466fae3769007c57fb8464f8df3126f3e93517a8f954db7a39ff655728",
+    "size_bytes": 655
+  },
+  {
+    "path": "docs/audits/native-proxy-observation-archive-release-last-before-20260911/result/trace-preflight.json",
+    "sha256": "2e7eac94c7365962dde2888b67bd3a4b6b88f52c0259f69fe55fc8a5a7b58d7f",
+    "size_bytes": 264752
+  },
+  {
+    "path": "docs/audits/native-proxy-observation-archive-release-last-before-20260911/result/trace-preflight.stdout",
+    "sha256": "d5549d8ce312afac9538a12d1bad151fa56935f059769f29fd70cc417dda9653",
+    "size_bytes": 48
+  },
+  {
+    "path": "docs/audits/native-proxy-observation-archive-release-last-before-20260911/result/trace-preflight.exit",
+    "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa",
+    "size_bytes": 2
+  }
+]

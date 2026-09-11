@@ -1,0 +1,17 @@
+{
+  "checked_passages": [
+    "The last-observation before-call profile first retires the target runtime and its private workspace.",
+    "The selected observation remains present until the release attempt begins.",
+    "The retained result records both retirement and the exact setup removal path.",
+    "A completed release unlink removes that hold; it leaves the image files intact.",
+    "Release does not perform image maintenance.",
+    "last-before-20260911/audit.py --verify-saved"
+  ],
+  "exact_output_absent": true,
+  "exit_code": 0,
+  "output": ".artifacts/tmp/native-proxy-observation-archive-release-last-before-book-20260911/book",
+  "rendered_bytes": 23388737,
+  "rendered_directories": 3,
+  "rendered_files": 98,
+  "same_volume_direct_objects": true
+}

@@ -1,0 +1,17 @@
+[
+  {
+    "path": "docs/audits/native-proxy-observation-archive-release-last-before-20260911/plan.json",
+    "sha256": "0c762d7621784c1c7b36d25b320cae7b8de366ee690c69b0629066267ad0289e",
+    "size_bytes": 1221880
+  },
+  {
+    "path": "docs/audits/native-proxy-observation-archive-release-last-before-20260911/prepare.py",
+    "sha256": "4b28a0e54a10a235569b72f9831fbcf4f0d80730a98b693ef171458fdc36c30c",
+    "size_bytes": 2943
+  },
+  {
+    "path": "docs/audits/native-proxy-observation-archive-release-last-before-20260911/trace-preflight.py",
+    "sha256": "2379e141a70507415e943511e90aac60ec3f96a380645d93ecf81797d5615d43",
+    "size_bytes": 5274
+  }
+]
