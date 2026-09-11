@@ -2,6 +2,7 @@
 id: test-subprocess-policy-adapters
 title: Test subprocesses share one mechanism behind sealed policy adapters
 answers:
+  - "what is the selected release readback failure domain?"
   - "what survives last-observation release after-call faults?"
   - "what survives last-observation release before-call faults?"
   - "what survives active-runtime release after-call faults?"
@@ -128,8 +129,8 @@ reverify: >-
 ---
 Decisions `0087`/`0101`: `FSM::Support::ProcessSupervisor`; adapters seal local argv/capture/group cleanup. T1669 checks ownership. `exec_handoff_monotonic_ns` is EOF, not main entry; absent EOF leaves timing unknown.
 `VerilatorRuntime`: decision `0086`. `TaskAcceptanceFixtureRuntime`: owned roots/fixed Git argv.
-History: `612aa2052eabec11b446742918f8c87ac71ae05b:docs/knowledge/test-subprocess-policy-adapters.md`. Archive/work, replay, reader/caller and startup evidence: history.
-Release: `docs/audits/native-proxy-observation-archive-release-last-after-20260911/review.json`. Last-observation after-call faults preserve completed helper cleanup while callers close remaining handles. Original retirement and authenticated other-hold removal remain exact; final-reference unlink retains the image. Saved healthy prefix/open-handle projections check the unchanged after-call oracle before allocation. Current-input calls, real closes, exact effects and other owners are independently checked; immutable root-cleaned bodies support saved-data audit. Earlier partitions: history. Readback, unlink/absence, close and final joins remain open.
+History: `1db83632112c1b452c3c3e2f98a13cfeed5647f9:docs/knowledge/test-subprocess-policy-adapters.md`. Archive/work, replay, reader/caller and startup evidence: history.
+Release plan: `docs/audits/native-proxy-release-readback-selection-20260911/contract.md`. Each current-input source occurrence selects first-read EIO, one-byte then EIO, early EOF or reported-body XOR. Weak lower-reader custody differs from returned-source ownership. Syscall controls distinguish suppressed reports from actual unlink and historical/latest absence. The plan is audited; execution and its join remain open. Qualified before/after partitions: exact history. Close and native/lifetime work remain open.
 Proxy: `t/fixtures/rust-tool-proxy.c` is C; Perl `t/lib/FSM/Test/RustProxyFixture.pm` builds it and the Perl harness launches a separate process to impersonate rustup resolution. Rust names the substituted tool, not the native implementation language.
 Replay: `scripts/run_with_ram_guard.sh -- python3 -B -m unittest discover -s t/python -p 'test_fixture_policy_archive*.py'`. Other controls: history.
 HIAL/VIAL `.19.2.3.1.2.2.5.5` owns repair/hostile controls; neutral-verifier extraction stays blocked.

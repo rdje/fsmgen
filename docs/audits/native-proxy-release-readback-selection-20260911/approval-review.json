@@ -1,0 +1,8 @@
+{
+  "action": "RAM-guarded mdBook build",
+  "destination": ".artifacts/tmp/native-proxy-release-readback-selection-book-20260911/book",
+  "rejected_process_started": false,
+  "resolution": "Use the current repository root derived at runtime for the same owned .artifacts destination. No off-volume destination or alternative execution route is used.",
+  "review": "rejected before process creation",
+  "stated_reason": "The relative ../../.artifacts destination was interpreted as resolving outside the repository."
+}

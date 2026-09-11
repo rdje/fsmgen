@@ -1,0 +1,35 @@
+{
+  "bounds": {
+    "bytes_each": 10240,
+    "bytes_total": 10240,
+    "files": 1,
+    "line_bytes_each": 512,
+    "lines_each": 160,
+    "lines_total": 160
+  },
+  "cause": "contract.md lacked an explicit live-document surface; the ancillary glob covers only top-level audit markdown.",
+  "exit_code": 1,
+  "failed_surface_sha256": "b90b60549e40ce15a556a5bb8c7a1cd410b3f91d19a50dc6d7ac9a34303b6f76",
+  "raw_recovery": [
+    {
+      "destination": "docs/audits/native-proxy-release-readback-selection-20260911/first-doctrine-failure/doctrines.stdout",
+      "sha256": "b1e8a1cebc1950398d68a9ec14c7bd9ce8a7251bf7d73f821e8eae581f620584",
+      "size_bytes": 47471,
+      "source": ".artifacts/logs/native-proxy-release-readback-selection-20260911/doctrines.stdout"
+    },
+    {
+      "destination": "docs/audits/native-proxy-release-readback-selection-20260911/first-doctrine-failure/doctrines.stderr",
+      "sha256": "b2eee0973868a8a46cb63b6250a420884217fdb4c8300ba92d46714b3d70b779",
+      "size_bytes": 4424,
+      "source": ".artifacts/logs/native-proxy-release-readback-selection-20260911/doctrines.stderr"
+    },
+    {
+      "destination": "docs/audits/native-proxy-release-readback-selection-20260911/first-doctrine-failure/doctrines.exit",
+      "sha256": "4355a46b19d348dc2f57c046f8ef63d4538ebb936000f3c9ee954a27460dd865",
+      "size_bytes": 2,
+      "source": ".artifacts/logs/native-proxy-release-readback-selection-20260911/doctrines.exit"
+    }
+  ],
+  "resolution": "Register the single current prospective contract as an exact-path bounded snapshot with aligned line/byte limits, no chronology and no broader path allowance.",
+  "scope": "LIVE-DOCUMENT-SIZE and its README-ENTRYPOINT delegation; other staged doctrines passed."
+}

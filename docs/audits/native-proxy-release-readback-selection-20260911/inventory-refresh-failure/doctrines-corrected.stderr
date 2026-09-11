@@ -1,0 +1,37 @@
+ram-guard: PID 15011; host 61.2%; host cutoff 88%; descendant RSS cutoff 4096 MiB; poll 2s
+knowledge-map: OK (1161 facts, 6421 unique questions, 6592 answer occurrences, 139 bounded topic shards; query parity verified)
+retired-changes-history: exact 329d7cf1b09319899fb59cc9863cdfffddfa40dc:CHANGES.md recovery and zero live consumers verified
+retired-achievement-history: exact b4d07fee5ffd6621503007958dcac3af8d44b345:LIVE_ACHIEVEMENT_STATUS.md recovery and zero live consumers verified
+retired-roadmap-history: exact b4d07fee5ffd6621503007958dcac3af8d44b345:ROADMAP_STATUS.md recovery and zero live consumers verified
+roadmap-history: exact activation source recovery and bounded live direction verified
+engineering-rationale-ledger: exact immutable source prefix plus 64 post-cutover current entries reconstructed across 2 ranges
+engineering-rationale-ledger: exact immutable source prefix plus 64 post-cutover current entries reconstructed across 2 ranges
+knowledge-card-history: exact sources, stable partitions, answer-set equality, boundedness, and current routing verified
+knowledge-card-history: exact sources, stable partitions, answer-set equality, boundedness, and current routing verified
+knowledge-card-history: exact sources, stable partitions, answer-set equality, boundedness, and current routing verified
+knowledge-card-history: exact sources, stable partitions, answer-set equality, boundedness, and current routing verified
+isf-reference-partitions: 3 exact sources map contiguously to 11 bounded semantic parts
+isf-reference-partitions: 3 exact sources map contiguously to 11 bounded semantic parts
+isf-reference-partitions: 3 exact sources map contiguously to 11 bounded semantic parts
+engineering-rationale-ledger: exact immutable source prefix plus 64 post-cutover current entries reconstructed across 2 ranges
+knowledge-map: OK (1161 facts, 6421 unique questions, 6592 answer occurrences, 139 bounded topic shards; query parity verified)
+knowledge-map: OK (1161 facts, 6421 unique questions, 6592 answer occurrences, 139 bounded topic shards; query parity verified)
+retired-changes-history: exact 329d7cf1b09319899fb59cc9863cdfffddfa40dc:CHANGES.md recovery and zero live consumers verified
+retired-achievement-history: exact b4d07fee5ffd6621503007958dcac3af8d44b345:LIVE_ACHIEVEMENT_STATUS.md recovery and zero live consumers verified
+retired-roadmap-history: exact b4d07fee5ffd6621503007958dcac3af8d44b345:ROADMAP_STATUS.md recovery and zero live consumers verified
+roadmap-history: exact activation source recovery and bounded live direction verified
+engineering-rationale-ledger: exact immutable source prefix plus 64 post-cutover current entries reconstructed across 2 ranges
+engineering-rationale-ledger: exact immutable source prefix plus 64 post-cutover current entries reconstructed across 2 ranges
+knowledge-card-history: exact sources, stable partitions, answer-set equality, boundedness, and current routing verified
+knowledge-card-history: exact sources, stable partitions, answer-set equality, boundedness, and current routing verified
+knowledge-card-history: exact sources, stable partitions, answer-set equality, boundedness, and current routing verified
+knowledge-card-history: exact sources, stable partitions, answer-set equality, boundedness, and current routing verified
+isf-reference-partitions: 3 exact sources map contiguously to 11 bounded semantic parts
+isf-reference-partitions: 3 exact sources map contiguously to 11 bounded semantic parts
+isf-reference-partitions: 3 exact sources map contiguously to 11 bounded semantic parts
+engineering-rationale-ledger: exact immutable source prefix plus 64 post-cutover current entries reconstructed across 2 ranges
+knowledge-map: OK (1161 facts, 6421 unique questions, 6592 answer occurrences, 139 bounded topic shards; query parity verified)
+knowledge-map: OK (1161 facts, 6421 unique questions, 6592 answer occurrences, 139 bounded topic shards; query parity verified)
+claim-inventory: inventory drift; run scripts/check_claim_verification_inventory.pl --write
+[doctrine] FAIL: CLAIM-INVENTORY
+[doctrine] one or more doctrine checks failed

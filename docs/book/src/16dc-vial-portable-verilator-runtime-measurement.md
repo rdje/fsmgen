@@ -2447,7 +2447,31 @@ reference-effect and custody evidence. Revalidate with:
 python3 -B docs/audits/native-proxy-observation-archive-release-last-after-20260911/audit.py --verify-saved
 ```
 
-Later lanes qualify readback, unlink and absence failures, actual closes followed by modeled
+The selected readback plan now covers each source occurrence in the same
+healthy profile basis. Its future controls report a read error before any
+bytes, an error after one real byte, premature EOF, or one altered byte after
+a real read. Healthy and short-read controls accompany each profile. The
+selection uses current-input source occurrences; saved numeric call IDs remain
+provenance. Inspect the plan without executing fixtures with:
+
+```sh
+python3 -B docs/audits/native-proxy-release-readback-selection-20260911/audit.py
+```
+
+A reader failure can happen before a source handle returns. Its observer must
+use a weak alias and inspect closure immediately, so observation itself does
+not keep the handle alive. A successfully returned source instead belongs to
+its real consumer and follows that consumer's cleanup path. These execution
+obligations remain open; validating the plan does not qualify their behavior.
+
+The syscall-report plan separates suppressed calls from actual operations.
+It models rejected unlink while the original hold stays present, and errors
+or reported presence in either absence check after a real unlink. Modeled
+presence does not recreate the file. A later failed check preserves the earlier
+absence observation while reporting the latest result separately. These are
+planned reported-failure controls, not naturally occurring OS-error evidence.
+
+Later lanes qualify these planned controls, actual closes followed by modeled
 errors, deliberate close omissions with separate recovery, and the final
 source/evidence join. Primary errors outrank cleanup reports. These finite
 checks grant no native ownership authority or guarantee against arbitrary

@@ -1,0 +1,43 @@
+{
+  "acceptance_history_revision": "1db83632112c1b452c3c3e2f98a13cfeed5647f9",
+  "approval_review": "approval-review.json",
+  "book": {
+    "checked_passages": [
+      "The selected readback plan now covers each source occurrence",
+      "Its future controls report a read error",
+      "use a weak alias and inspect closure immediately",
+      "validating the plan does not qualify their behavior.",
+      "Modeled presence does not recreate the file.",
+      "native-proxy-release-readback-selection-20260911/audit.py"
+    ],
+    "exact_output_absent": true,
+    "exit_code": 0,
+    "output": ".artifacts/tmp/native-proxy-release-readback-selection-book-20260911/book",
+    "rendered_bytes": 23395414,
+    "rendered_directories": 3,
+    "rendered_files": 98,
+    "same_volume_direct_objects": true
+  },
+  "compaction": "compaction-census.json",
+  "contract": "contract.md",
+  "counts": "result/audit.stdout",
+  "doctrines": "Focused domain audit, rendered book, Knowledge Map/query and task integrity pass. Mandatory staged-index and commit-hook doctrine gates remain required before durable completion.",
+  "documentation_surface": "Exact-path release_readback_plan bounded snapshot: 160 lines, 10240 bytes, 512-byte maximum line; current 109-line/6964-byte contract, no history or wider path growth.",
+  "durability": "Four prospective pins authenticate contract, generator, audit and selected plan; 151 unchanged source/evidence inputs equal the exact predecessor. Sixteen byte-exact raw recovery copies retain successful preparation, independent audit, Knowledge Map, task integrity and book exit. The first failed preparation retains exact source and complete raw streams as hexadecimal bytes. The read-only audit can reconstruct the selected domain from committed retained inputs without executing a fixture or producer.",
+  "executed_fixtures": 0,
+  "execution_qualified": false,
+  "falsification": "Twenty-one mutated plan controls reject lost, duplicated or reordered profiles/sources/modes, wrong source metadata or provenance, false effects and absence history, wrong scalar type and invented execution/native authority.",
+  "first_doctrine_failure": "first-doctrine-failure/review.json",
+  "first_failure": "first-preparation-failure/failure.json",
+  "inventory_refresh_after_registration": "inventory-refresh-failure/review.json",
+  "knowledge_map": "knowledge-map: OK (1161 facts, 6421 unique questions, 6592 answer occurrences, 139 bounded topic shards; query parity verified)",
+  "knowledge_projection": "knowledge-projection.json",
+  "next_action": "Execute the ordinary-retired source-read partition under child .3.10.2, with prospective current-input selectors, weak unreturned-reader custody and actual/report separation. Other profiles, syscall reports, joins, close and native/lifetime work plus historical startup/parent/full CI/push remain gated or open as owned.",
+  "owner": "HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.12.4.1.3.4.4.3.10.1",
+  "plan": "plan.json",
+  "prior_acceptance_sections_unchanged": 37,
+  "rederivation": "Chronological events and returned-source records derive the source selectors and baseline effects. Independent audit uses ordered call forests and completed absence-subtree intervals. All selected original paths, digests, bounds, source callers and profile setup agree against pinned retained evidence.",
+  "schema": "fsmgen.release_readback_selection_review.v1",
+  "scope": "Prospective finite source-read and syscall-report selection only. The earlier healthy basis is historical support, not a rerun. Actual lower-reader/consumer composition and reported syscall failure response remain missing execution legs.",
+  "task_integrity": "[task-tree-integrity] all active task-tree invariants hold (trees=4, nodes=1350, segments=3, compact_terminals=22, index_archives=1, migrations=1, acceptance_histories=1)"
+}

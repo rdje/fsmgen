@@ -1,0 +1,31 @@
+{
+  "cause": "The new exact-path documentation surface changes the derived claim inventory; the prior inventory snapshot is stale.",
+  "exit_code": 1,
+  "raw_recovery": [
+    {
+      "destination": "docs/audits/native-proxy-release-readback-selection-20260911/inventory-refresh-failure/doctrines-corrected.stdout",
+      "sha256": "e8c6b778cd53e0a58cba9b6e310ec931c581d4df65081088f523ef6ccf144a35",
+      "size_bytes": 48493,
+      "source": ".artifacts/logs/native-proxy-release-readback-selection-20260911/doctrines-corrected.stdout"
+    },
+    {
+      "destination": "docs/audits/native-proxy-release-readback-selection-20260911/inventory-refresh-failure/doctrines-corrected.stderr",
+      "sha256": "401fcfb92a8d2024fddf4db53b92594b3be7f0f2b4ace53c478a5fae32a5cb4f",
+      "size_bytes": 4136,
+      "source": ".artifacts/logs/native-proxy-release-readback-selection-20260911/doctrines-corrected.stderr"
+    },
+    {
+      "destination": "docs/audits/native-proxy-release-readback-selection-20260911/inventory-refresh-failure/doctrines-corrected.exit",
+      "sha256": "4355a46b19d348dc2f57c046f8ef63d4538ebb936000f3c9ee954a27460dd865",
+      "size_bytes": 2,
+      "source": ".artifacts/logs/native-proxy-release-readback-selection-20260911/doctrines-corrected.exit"
+    },
+    {
+      "destination": "docs/audits/native-proxy-release-readback-selection-20260911/inventory-refresh-failure/inventory.jsonl",
+      "sha256": "110b6ea87f60fd5b86e760369e6a084038154f4abfb370d8e286295b9f053efc",
+      "size_bytes": 2966032,
+      "source": "doctrine/claim_verification/inventory.jsonl"
+    }
+  ],
+  "resolution": "Refresh the inventory after final registry changes, then rerun the staged gate. No plan, qualified source, oracle or original producer changes."
+}

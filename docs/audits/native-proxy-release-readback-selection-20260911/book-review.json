@@ -1,0 +1,17 @@
+{
+  "checked_passages": [
+    "The selected readback plan now covers each source occurrence",
+    "Its future controls report a read error",
+    "use a weak alias and inspect closure immediately",
+    "validating the plan does not qualify their behavior.",
+    "Modeled presence does not recreate the file.",
+    "native-proxy-release-readback-selection-20260911/audit.py"
+  ],
+  "exact_output_absent": true,
+  "exit_code": 0,
+  "output": ".artifacts/tmp/native-proxy-release-readback-selection-book-20260911/book",
+  "rendered_bytes": 23395414,
+  "rendered_directories": 3,
+  "rendered_files": 98,
+  "same_volume_direct_objects": true
+}
