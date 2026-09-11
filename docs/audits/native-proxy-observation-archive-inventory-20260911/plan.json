@@ -1,0 +1,178 @@
+{
+  "catalogue": "Exact union of every committed file under the declared domain roots, every direct plan input and every input of the two saved source-inventory joins, plus declared infrastructure/extra inputs. Compare current whole-file bytes and identities with this plan source revision. Authenticate each domain file against its completion revision and direct plan inputs against their original source epochs.",
+  "contract": "Authenticate the full finite archive evidence source inventory before the final domain join. Preserve every first-failure/counterexample receipt without relabeling success. An authentic receipt proves provenance, not its claimed semantics; final coverage/ownership rederivation belongs to the following leaf.",
+  "corrections": [
+    {
+      "canonical": "docs/audits/native-proxy-observation-archive-namespace-layouts-20260911/audit.py",
+      "domain": "namespace",
+      "original": "docs/audits/native-proxy-observation-archive-namespace-layouts-20260911/result/first-audit/audit.py.initial-source",
+      "postrun_pin": "docs/audits/native-proxy-observation-archive-namespace-layouts-20260911/postrun-audit-pin.json",
+      "reason": "The first audit assumed symlink mode 0777; preserve that failed source/output, and bind the corrected native-metadata oracle separately. The qualification was not rerun."
+    }
+  ],
+  "domains": [
+    {
+      "completed_revision": "dd29e3bffdcdbcf737236e20086acb89bcc31771",
+      "kind": "pure",
+      "name": "records",
+      "source": "docs/audits/native-proxy-observation-archive-records-20260911",
+      "source_epoch": "74ec076e29cadb651abfaf2e0051da45450e55c4"
+    },
+    {
+      "completed_revision": "ff71d28f1e47c6bf34db96029862f6be5fe96051",
+      "kind": "filesystem",
+      "name": "files",
+      "source": "docs/audits/native-proxy-observation-archive-20260911",
+      "source_epoch": "dd29e3bffdcdbcf737236e20086acb89bcc31771"
+    },
+    {
+      "completed_revision": "cbb62267a741dd059132d745d429c12d86fc5967",
+      "kind": "boundaries",
+      "name": "boundaries",
+      "source": "docs/audits/native-proxy-observation-archive-boundaries-20260911",
+      "source_epoch": "ff71d28f1e47c6bf34db96029862f6be5fe96051"
+    },
+    {
+      "completed_revision": "ca3cd1940f035ece55144ab86f7f08cd9832bd52",
+      "kind": "calls",
+      "name": "ordinary-fresh",
+      "source": "docs/audits/native-proxy-observation-archive-fresh-calls-20260911",
+      "source_epoch": "cbb62267a741dd059132d745d429c12d86fc5967"
+    },
+    {
+      "completed_revision": "83501699d4c9f45d0c5c43837453141f60d02e8b",
+      "kind": "calls",
+      "name": "ordinary-existing",
+      "source": "docs/audits/native-proxy-observation-archive-existing-calls-20260911",
+      "source_epoch": "ca3cd1940f035ece55144ab86f7f08cd9832bd52"
+    },
+    {
+      "completed_revision": "af76fe3c794dc020e4de71789d24a13eafcbca76",
+      "kind": "calls",
+      "name": "equal-fresh",
+      "source": "docs/audits/native-proxy-observation-archive-equal-fresh-calls-20260911",
+      "source_epoch": "83501699d4c9f45d0c5c43837453141f60d02e8b"
+    },
+    {
+      "completed_revision": "698f99da3ca3dfe47b89fc17db142b3784f37907",
+      "kind": "calls",
+      "name": "equal-existing",
+      "source": "docs/audits/native-proxy-observation-archive-equal-existing-calls-20260911",
+      "source_epoch": "af76fe3c794dc020e4de71789d24a13eafcbca76"
+    },
+    {
+      "completed_revision": "7e1f2daa01c9ef5760954089c36ec6c778c25f17",
+      "kind": "writes",
+      "name": "partial-writes",
+      "source": "docs/audits/native-proxy-observation-archive-partial-writes-20260911",
+      "source_epoch": "2a3af00cd390b0801396c52af7e1fa8d6ef57c12"
+    },
+    {
+      "completed_revision": "2ad652d308348e8ce82bb8e4e11a968c731a8ebe",
+      "kind": "closes",
+      "name": "close-reports",
+      "source": "docs/audits/native-proxy-observation-archive-close-reports-20260911",
+      "source_epoch": "7e1f2daa01c9ef5760954089c36ec6c778c25f17"
+    },
+    {
+      "completed_revision": "254e3e1af3f061e7720112ded0d9337c3b13c31b",
+      "kind": "closes",
+      "name": "omitted-closes",
+      "source": "docs/audits/native-proxy-observation-archive-omitted-closes-20260911",
+      "source_epoch": "2ad652d308348e8ce82bb8e4e11a968c731a8ebe"
+    },
+    {
+      "completed_revision": "94e66c8c68017e49ea7bf59017fe67d4a53e5c2c",
+      "kind": "join",
+      "name": "close-join",
+      "source": "docs/audits/native-proxy-observation-archive-close-join-20260911",
+      "source_epoch": "254e3e1af3f061e7720112ded0d9337c3b13c31b"
+    },
+    {
+      "completed_revision": "68ac6ef03c1bce45cb422d4e1739dd4866b8a6b7",
+      "kind": "pure",
+      "name": "guards",
+      "source": "docs/audits/native-proxy-observation-archive-guards-20260911",
+      "source_epoch": "94e66c8c68017e49ea7bf59017fe67d4a53e5c2c"
+    },
+    {
+      "completed_revision": "cb070ba4b28151f6089aae2555846f6a154296e5",
+      "kind": "hostile",
+      "name": "namespace",
+      "source": "docs/audits/native-proxy-observation-archive-namespace-layouts-20260911",
+      "source_epoch": "68ac6ef03c1bce45cb422d4e1739dd4866b8a6b7"
+    },
+    {
+      "completed_revision": "94ba98609063049d44a46f1dddd19fd065e130cd",
+      "kind": "hostile",
+      "name": "replacements",
+      "source": "docs/audits/native-proxy-observation-archive-replacements-20260911",
+      "source_epoch": "cb070ba4b28151f6089aae2555846f6a154296e5"
+    },
+    {
+      "completed_revision": "05957842d584b6b3f434e2b2d20c65316e16e39c",
+      "kind": "reader",
+      "name": "observer",
+      "source": "docs/audits/native-proxy-observation-archive-lower-reader-seam-20260911",
+      "source_epoch": "94ba98609063049d44a46f1dddd19fd065e130cd"
+    },
+    {
+      "completed_revision": "deb2b6a7cfbd55a664e0127b5135a31fdb0b994b",
+      "kind": "reader",
+      "name": "reader-failures",
+      "source": "docs/audits/native-proxy-observation-archive-lower-reader-failures-20260911",
+      "source_epoch": "05957842d584b6b3f434e2b2d20c65316e16e39c"
+    },
+    {
+      "completed_revision": "5d58a61c26859c2c0e155c512b0781bcd25d430b",
+      "kind": "join",
+      "name": "reader-join",
+      "source": "docs/audits/native-proxy-observation-archive-lower-reader-join-20260911",
+      "source_epoch": "deb2b6a7cfbd55a664e0127b5135a31fdb0b994b"
+    },
+    {
+      "completed_revision": "2a3af00cd390b0801396c52af7e1fa8d6ef57c12",
+      "kind": "replay",
+      "name": "replay",
+      "source": "docs/audits/native-proxy-observation-archive-replay-20260911",
+      "source_epoch": "698f99da3ca3dfe47b89fc17db142b3784f37907"
+    },
+    {
+      "completed_revision": "730b8b3a2bb1e918d24a03d23a19b0066d159508",
+      "kind": "handoff-support",
+      "name": "strict-handoff",
+      "source": "docs/audits/native-proxy-descriptor-handoff-20260910",
+      "source_epoch": "33b1c0b4cb41227034f3a8b369c9cacefdc27c32"
+    }
+  ],
+  "extra_inputs": [
+    "docs/audits/native-proxy-image-custody-20260910/vectors.json"
+  ],
+  "handoff_applicability": "Compare only these exact helper bodies with the strict-handoff completion epoch. Historical baseline source and unrelated changed modules remain historical evidence, not claims of full-module current applicability.",
+  "handoff_functions": [
+    {
+      "function": "_read_file",
+      "path": "t/lib/FSM/Test/RustProxyFixture.pm"
+    },
+    {
+      "function": "_source",
+      "path": "docs/audits/native-proxy-image-custody-20260910/ImageCustody.pm"
+    },
+    {
+      "function": "_write_payload",
+      "path": "docs/audits/native-proxy-image-publication-20260910/Publication.pm"
+    }
+  ],
+  "infrastructure": [
+    "docs/audits/native-proxy-observation-archive-close-join-20260911/inventory.py"
+  ],
+  "input_limits": {
+    "file_bytes": 33554432,
+    "files": 1024,
+    "total_bytes": 536870912
+  },
+  "limits": "Read-only saved-evidence inventory. No old fixture, qualification producer, audit main, compiler or native run. No new archive operation, absence census, complete coverage or release authority is claimed by file authentication alone. All project reads/writes are repository-derived and same-volume.",
+  "owner": "HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.12.4.1.3.4.2.3.4.3.1",
+  "schema": "fsmgen.inactive_archive_complete_inventory_plan.v1",
+  "source_revision": "5d58a61c26859c2c0e155c512b0781bcd25d430b"
+}

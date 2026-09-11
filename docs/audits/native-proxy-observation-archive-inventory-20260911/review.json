@@ -1,0 +1,27 @@
+{
+  "book": {
+    "exact_output_absent": true,
+    "exit_code": 0,
+    "new_passage_verified": true,
+    "original_failures_and_correction_preserved": true,
+    "output": ".artifacts/tmp/native-proxy-observation-archive-inventory-book-20260911/book",
+    "provenance_and_semantics_distinguished": true,
+    "release_native_gates_verified": true,
+    "rendered_bytes": 23303090,
+    "rendered_files": 98,
+    "same_volume_direct_objects": true
+  },
+  "containment": "The first pre-write live-owner census correctly refused compaction because the completed layout subtree still owned current book authority; that attempt changed no files. The new book passage moves authority to this live leaf, a repeated owner census is empty, and the seven-node subtree becomes an exact-version terminal at 5d58a61c26859c2c0e155c512b0781bcd25d430b. Focused task integrity passes with four active trees, 1352 live nodes and sixteen compact terminals. Earlier acceptance sections are retained through the exact predecessor footer manifest.",
+  "correction": "The namespace first auditor and its original failed exit are retained under their original prospective pin. A separate postrun pin binds the corrected auditor; the qualification is unchanged. The strict-handoff completion epoch applies through exactly three selected unchanged helper bodies, not an assertion that every unrelated historical module remains identical.",
+  "doctrines": "Successful staged-index and commit-hook gates are required for the durable slice. The following leaf owns complete saved behavior, coverage, absence and ownership rederivation; exact release, native ownership and historical startup/parent/full CI/push remain open.",
+  "documentation": "documentation.json",
+  "durability": "Three prospective pins and ten exact new recovery copies preserve the first successful inventory/audit and compaction preflight. The exact unused terminal draft and initial recovery manifest are separately encoded in result/first-staged-check.json. All 343 original raw recovery receipts are authenticated from tracked copies without reading historical ignored output. Task, book, Knowledge Map and Git retain current scope and the pending semantic join. No old producer/audit main, fixture, compiler or native run occurs.",
+  "falsification": "Twenty-eight altered inventory/domain controls reject missing/aliased domains/files, changed byte lengths/digests/native identities/volume/mode, lost or changed epochs, original versus corrected auditor confusion, lost raw receipts, foreign recovery origins, changed handoff bodies/scope and widened envelopes. Fresh post-falsification byte/identity reads prove inputs remain unchanged. All 62 retained exit-code files remain exact, including four nonzero historical outcomes; authenticity never relabels them successful.",
+  "knowledge_map": "knowledge-map: OK (1161 facts, 6404 unique questions, 6575 answer occurrences, 139 bounded topic shards; query parity verified)",
+  "knowledge_projection": "knowledge-projection.json",
+  "limits": "Read-only saved-evidence inventory. No old fixture, qualification producer, audit main, compiler or native run. No new archive operation, absence census, complete coverage or release authority is claimed by file authentication alone. All project reads/writes are repository-derived and same-volume.",
+  "owner": "HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.12.4.1.3.4.2.3.4.3.1",
+  "rederivation": "The first guarded producer and independent Git/source oracle authenticate nineteen declared evidence domains, 598 files totaling 162373729 bytes, 646 source-epoch comparisons, 84 prospective bindings, 343 raw recovery receipts and three exact strict-handoff helper bodies. The full committed domain trees, direct dependencies, saved source-join inputs and declared infrastructure form one bounded union. The independent checker reconstructs provenance from exact historical Git objects before reusing decoded data; it never invokes the inventory producer.",
+  "schema": "fsmgen.inactive_archive_complete_inventory_review.v1",
+  "staged_check_recovery": "The first cached whitespace check rejects a blank separator at the end of the unused proposed-terminal text copy. result/first-staged-check.json preserves the exact draft, initial recovery manifest and diagnostic. Remove the redundant text copy, retain ten exact ordinary raw copies and the encoded original, then repeat the staged check. Neither the inventory/auditor pins nor verified evidence changed; no producer reran."
+}

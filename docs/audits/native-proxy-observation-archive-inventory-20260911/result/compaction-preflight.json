@@ -1,0 +1,16 @@
+{
+  "first_attempt_changed_no_files": true,
+  "first_prewrite_census_refused": true,
+  "held_owners": [
+    {
+      "owner": "HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.12.4.1.3.4.2.3.4.2.3.3",
+      "path": "doctrine/live_document_size/surfaces.jsonl"
+    }
+  ],
+  "nodes": 7,
+  "proposed_terminal": "HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.12.4.1.3.4.2.3.4.2",
+  "resolution": "Keep the full subtree live until the new slice book authority has moved, then repeat the live-owner census before installing the exact-version terminal.",
+  "source_path": "docs/tasks/HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.md",
+  "source_revision": "5d58a61c26859c2c0e155c512b0781bcd25d430b",
+  "source_sha256": "d3c81ae21c0c66595ebf790d694bbfee80f9a0cd641523f5e2e38b798ea995db"
+}

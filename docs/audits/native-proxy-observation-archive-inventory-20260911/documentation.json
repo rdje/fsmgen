@@ -1,0 +1,20 @@
+{
+  "book_after": {
+    "bytes_total": 3329640,
+    "files": 63,
+    "lines_total": 60750
+  },
+  "book_authority_moved_before_compaction": true,
+  "book_before": {
+    "bytes_total": 3328657,
+    "files": 63,
+    "lines_total": 60735
+  },
+  "compact_source_revision": "5d58a61c26859c2c0e155c512b0781bcd25d430b",
+  "compact_source_sha256": "d3c81ae21c0c66595ebf790d694bbfee80f9a0cd641523f5e2e38b798ea995db",
+  "compact_terminal_nodes": 7,
+  "knowledge_projection": "knowledge-projection.json",
+  "postmove_live_owner_census_empty": true,
+  "root_document_bytes": 261661,
+  "task_lines": 6374
+}

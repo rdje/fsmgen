@@ -1,0 +1,12 @@
+{
+  "exact_output_absent": true,
+  "exit_code": 0,
+  "new_passage_verified": true,
+  "original_failures_and_correction_preserved": true,
+  "output": ".artifacts/tmp/native-proxy-observation-archive-inventory-book-20260911/book",
+  "provenance_and_semantics_distinguished": true,
+  "release_native_gates_verified": true,
+  "rendered_bytes": 23303090,
+  "rendered_files": 98,
+  "same_volume_direct_objects": true
+}

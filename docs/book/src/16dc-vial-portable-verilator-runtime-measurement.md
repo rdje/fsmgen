@@ -2558,6 +2558,21 @@ executed at every archive site, and their reachability at every site is not
 asserted. The complete archive review, exact observation release and native
 ownership remain separate gates.
 
+The complete archive evidence inventory is separately authenticated at
+`docs/audits/native-proxy-observation-archive-inventory-20260911/`. It includes
+record, filesystem, interruption, partial-write, close, guard, hostile-layout
+and reader evidence, with the saved replay and join prerequisites. Current files
+match exact committed sources, original source epochs and raw recovery receipts.
+The corrected namespace auditor is bound separately from its preserved first
+failure; that correction did not rerun the fixture. Earlier handoff evidence
+applies through exact unchanged helper bodies, without asserting that every
+unrelated historical module is unchanged.
+
+File authentication establishes provenance. It does not turn an original failed
+result into a pass, re-execute a historical test, or establish complete semantic
+coverage. The final coverage and ownership join remains the next gate before
+archival signoff; observation release and native qualification remain separate.
+
 The helper checks bounded regular source/output files and the native header,
 then sets executable permissions through the admitted open file handle. A
 regression exposed path-based permission changes affecting a substituted file

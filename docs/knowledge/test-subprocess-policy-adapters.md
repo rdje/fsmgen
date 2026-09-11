@@ -48,6 +48,7 @@ answers:
   - "why must a lower-reader observer retain only weak handle aliases?"
   - "how do lower-reader admission failures close before source handoff?"
   - "how is lower-reader custody joined to archive cleanup?"
+  - "how is complete archive evidence authenticated before final signoff?"
   - "why did integrated proxy qualification fail?"
   - "why does t1545 not use IPC Cmd?"
   - "where does T1545 preserve empty-output checker failure diagnostics?"
@@ -116,8 +117,7 @@ Decisions `0087`/`0101` select `FSM::Support::ProcessSupervisor`; adapters seal 
 `VerilatorRuntime` follows decision `0086`.
 `TaskAcceptanceFixtureRuntime` seals owned fixture roots/fixed local Git argv.
 Supervisor, checker, locality, startup/capture/STOP controls: history; absent witnesses stay unknown.
-History: `deb2b6a7cfbd55a664e0127b5135a31fdb0b994b:docs/knowledge/test-subprocess-policy-adapters.md`. PST/queue evidence and fixed CLI limits/controls: history.
-Reader/archive custody: `docs/audits/native-proxy-observation-archive-lower-reader-join-20260911/audit.py`; lexical, strict and caller cleanup remain distinct. Older domains: history. Caller-sealed wrappers use tail goto. Replay: `scripts/run_with_ram_guard.sh -- python3 -B -m unittest discover -s t/python -p 'test_fixture_policy_archive*.py'`. Nested-cleanup counterexample: history.
+History: `5d58a61c26859c2c0e155c512b0781bcd25d430b:docs/knowledge/test-subprocess-policy-adapters.md`. PST/queue evidence and fixed CLI limits/controls: history.
+Archive inventory: `docs/audits/native-proxy-observation-archive-inventory-20260911/audit.py`; final semantic join remains open. Reader/caller distinctions: history. Caller-sealed wrappers use tail goto. Replay: `scripts/run_with_ram_guard.sh -- python3 -B -m unittest discover -s t/python -p 'test_fixture_policy_archive*.py'`. Nested-cleanup counterexample: history.
 HIAL/VIAL `.19.2.3.1.2.2.5.5` owns ownership design, repair and hostile controls;
 neutral-verifier extraction stays provisional/blocked.
-Coordinator selection, archive replay and open gates: history.
