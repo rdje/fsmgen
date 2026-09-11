@@ -1,0 +1,16 @@
+{
+  "checked_passages": [
+    "Each observed source, directory and lock handle closes before the release attempt returns.",
+    "Caller-sealed helpers retain their original admission checks.",
+    "They are not separate physical interruption points.",
+    "A source-return event is marked as ownership observation only.",
+    "These healthy observations do not yet prove cleanup after throwing at a selected boundary."
+  ],
+  "exact_output_absent": true,
+  "exit_code": 0,
+  "output": ".artifacts/tmp/native-proxy-observation-archive-release-boundaries-book-20260911/book",
+  "rendered_bytes": 23352367,
+  "rendered_directories": 3,
+  "rendered_files": 98,
+  "same_volume_direct_objects": true
+}

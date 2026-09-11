@@ -1,0 +1,37 @@
+{
+  "acceptance_history_revision": "49c15609fb5b4645c51d63babe1370b4aceeb44c",
+  "book": {
+    "checked_passages": [
+      "Each observed source, directory and lock handle closes before the release attempt returns.",
+      "Caller-sealed helpers retain their original admission checks.",
+      "They are not separate physical interruption points.",
+      "A source-return event is marked as ownership observation only.",
+      "These healthy observations do not yet prove cleanup after throwing at a selected boundary."
+    ],
+    "exact_output_absent": true,
+    "exit_code": 0,
+    "output": ".artifacts/tmp/native-proxy-observation-archive-release-boundaries-book-20260911/book",
+    "rendered_bytes": 23352367,
+    "rendered_directories": 3,
+    "rendered_files": 98,
+    "same_volume_direct_objects": true
+  },
+  "counts": "result/audit.json",
+  "doctrines": "Focused syntax, new healthy qualification, independent audit, task integrity, Knowledge Map and rendered-book inspection pass. The mandatory staged-index and commit-hook doctrines gate durable completion.",
+  "durability": "Six prospective pins authenticate before the first inert allocation. Seventy inputs equal the preceding full Git revision. Fourteen byte-exact recovery copies retain the first green qualifier and independent audit, complete call/physical/handle rows, admission census and immutable future fault domain. Exact prior acceptance suffix and all older acceptance sections remain retrievable. Task, book, bounded Knowledge Map and Git preserve the next action.",
+  "falsification": "Twenty-seven changed-report and four domain controls reject missing or reordered calls, wrong parents/callers/retained descriptors/manifest limits, lost events/closure/unlink/archive/input/allocation evidence, invented authority, changed caller rejection and unsafe source-return selection. Six actual external caller-rejection controls preserve the original exact diagnostics through the tail wrappers.",
+  "fault_domain": "result/fault-domain.json",
+  "first_run": "Both the original healthy qualifier and its independent audit passed on the first run; no repaired producer, repeated fixture or corrected auditor is involved.",
+  "knowledge_map": "knowledge-map: OK (1161 facts, 6411 unique questions, 6582 answer occurrences, 139 bounded topic shards; query parity verified)",
+  "knowledge_projection": "knowledge-projection.json",
+  "next_action": "Qualify finite safe release-call, readback and absence interruptions from the preserved occurrence domain. Close-report, omission and final source/applicability joins follow; native/lifetime and historical startup/parent/full CI/push remain gated.",
+  "original_preservation": "Original exact-release code and all saved original cases remain byte-identical to the pinned Git source. The selected healthy profiles construct disjoint inert roots; no original producer or audit main runs. Current and original root absence is independently checked. Native ownership, arbitrary asynchronous writers and launch prevention remain unqualified.",
+  "owner": "HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.12.4.1.3.4.4.2",
+  "prior_acceptance_sections_unchanged": 37,
+  "prospective_plan": "plan.json",
+  "rederivation": "Independent aggregate equations and a separate preorder call-forest model agree. The latter uses original archive specification and actual before-release physical reference records, then verifies incoming callers, parent/order/occurrence, source modes/limits, retained versus fresh descriptors and exact continuation bridges. Unchanged per-case physical, work-record, source/handle and release-attempt oracles recheck the original implementation against newly saved observations.",
+  "schema": "fsmgen.release_boundary_review.v1",
+  "scope": "Healthy observed call boundaries only. Tail completions alias the next before-call; source returns are ownership observations only. No interruption, close-error, omission or native execution qualification.",
+  "source_review": "source-review.json",
+  "task_integrity": "[task-tree-integrity] all active task-tree invariants hold (trees=4, nodes=1354, segments=3, compact_terminals=17, index_archives=1, migrations=1, acceptance_histories=1)"
+}

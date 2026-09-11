@@ -1,0 +1,66 @@
+ok 1 - NativeProxyObservationRelease::_coordinator_request: original rejects external caller
+ok 2 - NativeProxyObservationRelease::_coordinator_request: tail wrapper preserves rejection
+ok 3 - NativeProxyObservationRelease::_coordinator_request: exact caller diagnostic preserved
+ok 4 - NativeProxyObservationRelease::_coordinator_request: rejected tail frame observed
+ok 5 - NativeProxyObservationRelease::_admit_locked: original rejects external caller
+ok 6 - NativeProxyObservationRelease::_admit_locked: tail wrapper preserves rejection
+ok 7 - NativeProxyObservationRelease::_admit_locked: exact caller diagnostic preserved
+ok 8 - NativeProxyObservationRelease::_admit_locked: rejected tail frame observed
+ok 9 - NativeProxyObservationRelease::_unlink_exact: original rejects external caller
+ok 10 - NativeProxyObservationRelease::_unlink_exact: tail wrapper preserves rejection
+ok 11 - NativeProxyObservationRelease::_unlink_exact: exact caller diagnostic preserved
+ok 12 - NativeProxyObservationRelease::_unlink_exact: rejected tail frame observed
+ok 13 - NativeProxyObservationRelease::_release_locked: original rejects external caller
+ok 14 - NativeProxyObservationRelease::_release_locked: tail wrapper preserves rejection
+ok 15 - NativeProxyObservationRelease::_release_locked: exact caller diagnostic preserved
+ok 16 - NativeProxyObservationRelease::_release_locked: rejected tail frame observed
+ok 17 - NativeProxyObservationRelease::_finish_locked: original rejects external caller
+ok 18 - NativeProxyObservationRelease::_finish_locked: tail wrapper preserves rejection
+ok 19 - NativeProxyObservationRelease::_finish_locked: exact caller diagnostic preserved
+ok 20 - NativeProxyObservationRelease::_finish_locked: rejected tail frame observed
+ok 21 - NativeProxyReferenceCensus::_inspect_locked: original rejects external caller
+ok 22 - NativeProxyReferenceCensus::_inspect_locked: tail wrapper preserves rejection
+ok 23 - NativeProxyReferenceCensus::_inspect_locked: exact caller diagnostic preserved
+ok 24 - NativeProxyReferenceCensus::_inspect_locked: rejected tail frame observed
+ok 25 - ordinary_retired_other_observation: attempt returns
+ok 26 - ordinary_retired_other_observation: original release succeeds with caller admission intact
+ok 27 - ordinary_retired_other_observation: no original release error
+ok 28 - ordinary_retired_other_observation: one actual exact unlink
+ok 29 - ordinary_retired_other_observation: every actual observed handle closes
+ok 30 - ordinary_retired_other_observation: input types and byte flags remain unchanged
+ok 31 - ordinary_retired_other_observation: no unrelated mutation or private-source read
+ok 32 - ordinary_retired_other_observation: exact effect and preserved archive/other owners
+ok 33 - ordinary_retired_other_observation: prospective source-loop occurrence counts match
+ok 34 - ordinary_retired_other_observation: every call and continuation completes
+ok 35 - equal_reference_retired_other_observation: attempt returns
+ok 36 - equal_reference_retired_other_observation: original release succeeds with caller admission intact
+ok 37 - equal_reference_retired_other_observation: no original release error
+ok 38 - equal_reference_retired_other_observation: one actual exact unlink
+ok 39 - equal_reference_retired_other_observation: every actual observed handle closes
+ok 40 - equal_reference_retired_other_observation: input types and byte flags remain unchanged
+ok 41 - equal_reference_retired_other_observation: no unrelated mutation or private-source read
+ok 42 - equal_reference_retired_other_observation: exact effect and preserved archive/other owners
+ok 43 - equal_reference_retired_other_observation: prospective source-loop occurrence counts match
+ok 44 - equal_reference_retired_other_observation: every call and continuation completes
+ok 45 - ordinary_active_runtime: attempt returns
+ok 46 - ordinary_active_runtime: original release succeeds with caller admission intact
+ok 47 - ordinary_active_runtime: no original release error
+ok 48 - ordinary_active_runtime: one actual exact unlink
+ok 49 - ordinary_active_runtime: every actual observed handle closes
+ok 50 - ordinary_active_runtime: input types and byte flags remain unchanged
+ok 51 - ordinary_active_runtime: no unrelated mutation or private-source read
+ok 52 - ordinary_active_runtime: exact effect and preserved archive/other owners
+ok 53 - ordinary_active_runtime: prospective source-loop occurrence counts match
+ok 54 - ordinary_active_runtime: every call and continuation completes
+ok 55 - ordinary_retired_last_observation: attempt returns
+ok 56 - ordinary_retired_last_observation: original release succeeds with caller admission intact
+ok 57 - ordinary_retired_last_observation: no original release error
+ok 58 - ordinary_retired_last_observation: one actual exact unlink
+ok 59 - ordinary_retired_last_observation: every actual observed handle closes
+ok 60 - ordinary_retired_last_observation: input types and byte flags remain unchanged
+ok 61 - ordinary_retired_last_observation: no unrelated mutation or private-source read
+ok 62 - ordinary_retired_last_observation: exact effect and preserved archive/other owners
+ok 63 - ordinary_retired_last_observation: prospective source-loop occurrence counts match
+ok 64 - ordinary_retired_last_observation: every call and continuation completes
+ok 65 - no original producer, compiler or native process attempt
+1..65

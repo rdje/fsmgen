@@ -2,6 +2,8 @@
 id: test-subprocess-policy-adapters
 title: Test subprocesses share one mechanism behind sealed policy adapters
 answers:
+  - "how are healthy release call and handle boundaries verified?"
+  - "is the native Rust proxy written in Rust or C?"
   - "how are release interruption boundaries selected?"
   - "what does an inactive observation release attempt report?"
   - "what do closed observation work records validate?"
@@ -117,7 +119,8 @@ reverify: >-
 ---
 Decisions `0087`/`0101`: `FSM::Support::ProcessSupervisor`; adapters seal local argv/capture/group cleanup. T1669 checks ownership. `exec_handoff_monotonic_ns` is EOF, not main entry; absent EOF leaves timing unknown.
 `VerilatorRuntime`: decision `0086`. `TaskAcceptanceFixtureRuntime`: owned roots/fixed Git argv.
-History: `da27b5cbaf01af7cbe294c8f851c8273dd750856:docs/knowledge/test-subprocess-policy-adapters.md`. Archive/work, replay, reader/caller and startup evidence: history.
-Release: `docs/audits/native-proxy-release-interruption-contract-20260911/review.json`; finite effect/custody plan and saved-state projections. Concrete interruption/close coverage and native authority remain open. Exact release: history.
+History: `49c15609fb5b4645c51d63babe1370b4aceeb44c:docs/knowledge/test-subprocess-policy-adapters.md`. Archive/work, replay, reader/caller and startup evidence: history.
+Release: `docs/audits/native-proxy-observation-archive-release-boundaries-20260911/review.json`; independent healthy call/handle forest, tail-goto caller guards and continuation aliases. Source returns are observation-only. Fault/close and native gates remain open; earlier contract/release: history.
+Proxy: `t/fixtures/rust-tool-proxy.c` is C; Perl `t/lib/FSM/Test/RustProxyFixture.pm` builds it and the Perl harness launches a separate process to impersonate rustup resolution. Rust names the substituted tool, not the native implementation language.
 Replay: `scripts/run_with_ram_guard.sh -- python3 -B -m unittest discover -s t/python -p 'test_fixture_policy_archive*.py'`. Other controls: history.
 HIAL/VIAL `.19.2.3.1.2.2.5.5` owns repair/hostile controls; neutral-verifier extraction stays blocked.

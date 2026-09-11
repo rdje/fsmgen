@@ -1,0 +1,27 @@
+{
+  "success": true,
+  "python_syntax": 3,
+  "independent_saved_input_flow_counts": [
+    {
+      "profile": "ordinary_retired_other_observation",
+      "calls": 612,
+      "roots": 23
+    },
+    {
+      "profile": "equal_reference_retired_other_observation",
+      "calls": 589,
+      "roots": 23
+    },
+    {
+      "profile": "ordinary_active_runtime",
+      "calls": 642,
+      "roots": 23
+    },
+    {
+      "profile": "ordinary_retired_last_observation",
+      "calls": 538,
+      "roots": 23
+    }
+  ],
+  "scope": "Draft source/domain validation before prospective pins and inert allocation; no original producer runs."
+}

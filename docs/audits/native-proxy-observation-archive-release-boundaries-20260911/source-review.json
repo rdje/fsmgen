@@ -1,0 +1,18 @@
+{
+  "caller_preservation": "Six sealed symbols use goto to the original coderef. Their original direct external rejection is byte-identical with the observer installed. Ordinary helpers preserve void/list/scalar invocation context. No original module body, caller builtin or permitted package is replaced.",
+  "continuation_bridges": {
+    "admit_locked": "Before the next inspect_locked argument, the coordinator invokes census.",
+    "coordinator_request": "Pure relative-path admission precedes coordinator root directory inspection.",
+    "finish_locked": "The other operation branch is false for this fixed release; final structure inspection follows.",
+    "inspect_locked": "Each completed combined census is assigned before the coordinator invokes admit_locked, release_locked or finish_locked.",
+    "release_locked": "The coordinator invokes the final census after release returns.",
+    "unlink_exact": "The release owner invokes assert_absent immediately after exact unlink returns."
+  },
+  "fault_selection": "A completed sealed frame is observed only at its next selected caller continuation. Its after event aliases that next before event, not an independent fault location. Returned source after events observe ownership transfer and are never eligible cuts. Healthy observation does not itself qualify fault unwinding.",
+  "healthy_basis": "Distinct archive deduplication, active runtime and last observation branches; ordinary baseline retains another observation. Binary, empty and maximum payloads remain original exact-release cases, not newly repeated call profiles.",
+  "owner": "HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.12.4.1.3.4.4.2",
+  "schema": "fsmgen.release_boundary_source_review.v1",
+  "scope": "No original qualification main, compiler, native executable, helper or collector runs. Original sources and saved rows remain pinned; new inert allocations are disjoint and absent. Four complete healthy releases and six caller-rejection controls are separate domains.",
+  "source_loops": "flow_model.py derives the complete preorder forest from original archive specification and before-release physical references. prepare.py uses separately derived aggregate equations. Prior to pins the final ReferenceCensus::_image directory recheck was included in both source models. Fresh manifests retain the original 4096-byte limit.",
+  "source_revision": "49c15609fb5b4645c51d63babe1370b4aceeb44c"
+}

@@ -2234,11 +2234,36 @@ The source boundary inventory distinguishes safe call cuts from ownership
 transfers. A reader returning an open descriptor is observed before its caller
 assumes ownership; throwing at that transfer point is excluded from ordinary
 call cuts. Aggregate cleanup and public/coordinator envelopes have dedicated
-closure domains. Later lanes first record healthy call and handle lifetimes,
-then qualify safe interruptions, actual closes followed by modeled errors,
-deliberate close omissions with separate recovery, and the final source/evidence
-join. Primary errors outrank cleanup reports. These finite checks grant no
-native ownership authority or guarantee against arbitrary asynchronous writers.
+closure domains. Healthy call and handle lifetimes are now recorded in
+`docs/audits/native-proxy-observation-archive-release-boundaries-20260911/result/qualification.json`.
+The independent oracle derives the complete call order from the original archive
+specification and physical reference records. It checks which descriptor each
+recheck uses, including fresh reads of a file already held open. Each observed
+source, directory and lock handle closes before the release attempt returns.
+The healthy basis varies equal-content archives, active runtime ownership and
+release of the last observation; original payload and rejection cases remain
+preserved separately.
+
+Caller-sealed helpers retain their original admission checks. For example,
+`_unlink_exact` still accepts only the release owner. Its observer tail-calls the
+original function; completion is recorded when that owner continues into
+`_assert_absent`. The completed-unlink call event and the following before-call
+event describe the same checked continuation for future fault selection. They
+are not separate physical interruption points. Direct external calls retain
+the original rejection diagnostics with the observer installed.
+
+The immutable `result/fault-domain.json` beside that qualification names each
+selected event, its ordered occurrence, actual open handles and completed-unlink
+state. A source-return event is marked as ownership observation only. A sealed
+completion names its following before-call alias. Neither receives an independent
+fault cut. These healthy observations do not yet prove cleanup after throwing
+at a selected boundary.
+
+Later lanes qualify safe interruptions, actual closes followed by modeled
+errors, deliberate close omissions with separate recovery, and the final
+source/evidence join. Primary errors outrank cleanup reports. These finite
+checks grant no native ownership authority or guarantee against arbitrary
+asynchronous writers.
 
 The inactive archive record implementation now derives a closed specification
 from the complete original acquisition and request. It keeps the ordered wrapper,
