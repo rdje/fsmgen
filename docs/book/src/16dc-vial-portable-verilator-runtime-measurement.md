@@ -2214,8 +2214,8 @@ cleanup; injecting an adapter exception there would manufacture a handoff leak.
 That observation is excluded from throwing call-fault selectors. Close events
 are reserved for separately qualified return-error and omitted-close controls.
 Healthy traces prove this selection and ownership order; the following matrices
-add ordinary and equal-content fresh/existing call cuts. Partial-write and
-close domains, the final applicability join and native release remain open.
+add ordinary and equal-content fresh/existing call cuts. The partial-write,
+close and final archive joins are documented below; native release remains open.
 Revalidate the saved healthy traces:
 
 ```bash
@@ -2262,7 +2262,8 @@ remain unchanged. Verification makes no writes and grants no release authority.
 The independent audit checks the entire preparation, the interrupted healthy
 prefix and cleanup order; it does not assume preparation succeeded.
 
-Partial writes, close-return errors and native release remain separate gates.
+Partial writes and close-return errors have separate qualification below;
+native release remains open.
 Saved evidence and the independent oracle live under
 `docs/audits/native-proxy-observation-archive-existing-calls-20260911/`. Revalidate
 these saved results with:
@@ -2286,7 +2287,7 @@ source/writer/directory cleanup must match. Both observation holds, the other
 runtime/workspace and retained inputs remain unchanged after target retirement.
 An interrupted call does not return an archive receipt or grant release.
 
-Partial writes and close-return errors remain separate qualification gates.
+Partial writes and close-return errors have separate qualification below.
 Inspect the saved evidence and independent audit
 under `docs/audits/native-proxy-observation-archive-equal-fresh-calls-20260911/`:
 
@@ -2412,9 +2413,9 @@ errors, missing recovery and overlapping allocation rosters.
 The source inventory, independent join and exact recovery copies are at
 `docs/audits/native-proxy-observation-archive-close-join-20260911/`.
 This audit reads tracked saved evidence without rerunning the original producers
-or archive operations. It closes the finite close-control gate. Final hostile
-layout and complete archive source applicability, exact observation release,
-actual native ownership and asynchronous crash behavior remain separate gates.
+or archive operations. It closes the finite close-control gate. Hostile layout
+and complete archive source applicability are joined below. Exact observation
+release, native ownership and asynchronous crash behavior remain separate.
 
 Archive count and byte guards also have separate pure qualification. The
 private helper accepts finite raw byte lists only after checking the file count
@@ -2488,8 +2489,8 @@ concurrent writers or operating-system race atomicity.
 The archive tracer observes source handles after admission returns. It cannot
 certify cleanup for a lower-reader failure before that handoff. That observation
 gap is now closed by the separate custody composition below; it was not evidence
-of a runtime leak. The final archive join and exact observation release remain
-open. These inert controls do not qualify native execution or asynchronous races.
+of a runtime leak. The final archive join is documented below; exact observation
+release remains open. These controls do not qualify native execution or races.
 
 A separate lower-reader observer now has its own qualification. Ordinary
 instrumentation retains weak handle aliases, allowing the reader's lexical
@@ -2555,8 +2556,8 @@ at `docs/audits/native-proxy-observation-archive-lower-reader-join-20260911/`.
 The join revalidates saved evidence without rerunning its producers. It establishes
 a finite conditional composition: the selected lower-reader failures were not
 executed at every archive site, and their reachability at every site is not
-asserted. The complete archive review, exact observation release and native
-ownership remain separate gates.
+asserted. The complete archive review follows below. Exact observation release
+and native ownership remain separate gates.
 
 The complete archive evidence inventory is separately authenticated at
 `docs/audits/native-proxy-observation-archive-inventory-20260911/`. It includes
@@ -2570,8 +2571,37 @@ unrelated historical module is unchanged.
 
 File authentication establishes provenance. It does not turn an original failed
 result into a pass, re-execute a historical test, or establish complete semantic
-coverage. The final coverage and ownership join remains the next gate before
-archival signoff; observation release and native qualification remain separate.
+coverage. The final coverage and ownership join now completes finite archival
+signoff; observation release and native qualification remain separate.
+
+The final join is retained at
+`docs/audits/native-proxy-observation-archive-final-join-20260911/`. It revalidates
+each saved record, filesystem, interruption, write, close, guard, hostile-layout
+and reader domain against the complete authenticated source inventory. A separate
+auditor walks the original operations to reconstruct event, handle and cleanup
+totals. Original case allocation journals are disjoint and their roots are absent.
+Derived close/reader joins and recorded replay runs stay separate from original
+archive operations. Descriptor numbers and inode values can recur across cases;
+the totals describe per-operation instances.
+
+For example, a modeled close error follows an actual close. A deliberately
+omitted close leaves its original verdict open, even when observer recovery
+later closes the handle. Both distinctions survive the final accounting and
+altered-evidence controls. The lower-reader result remains a conditional
+composition with archive caller cleanup; failure reachability at every archive
+site is not asserted.
+
+Replay provenance is reconstructed through tracked report, admission and seed
+bindings without opening the original ignored log directories. Declared replay
+seeds and qualification bodies are available in tracked sources. Some auxiliary
+book, claim, commit and document-gate log bodies are represented only by their
+recorded before/after fingerprints. The retained preservation-scope record lists
+those files explicitly; it supports recorded equality without claiming a fresh
+read of unavailable bodies.
+
+This signoff covers the declared finite inactive archive contract. It grants no
+observation-hold release or product activation and leaves native ownership,
+original-startup qualification and asynchronous crash/atomicity gates open.
 
 The helper checks bounded regular source/output files and the native header,
 then sets executable permissions through the admitted open file handle. A

@@ -1,0 +1,31 @@
+{
+  "book": {
+    "exact_output_absent": true,
+    "exit_code": 0,
+    "finite_archival_signoff_verified": true,
+    "new_passage_verified": true,
+    "original_control_recovery_verdicts_separate": true,
+    "output": ".artifacts/tmp/native-proxy-observation-archive-final-join-book-20260911/book",
+    "release_native_startup_gates_verified": true,
+    "rendered_bytes": 23309187,
+    "rendered_directories": 3,
+    "rendered_files": 98,
+    "replay_auxiliary_durability_boundary_verified": true,
+    "same_volume_direct_objects": true
+  },
+  "counts": "result/audit.json",
+  "doctrines": "Focused documentation/task checks, staged-index doctrines and commit hooks are required before durable completion.",
+  "documentation": "documentation.json",
+  "durability": "Six prospective code/plan/scope pins and nine byte-exact raw output copies preserve first-run results. Source, plan, saved replay bindings, original qualification bodies, distinct evidence legs, task parents, book, bounded Knowledge Map and exact previous acceptance suffix survive through this work-unit commit.",
+  "falsification": "Thirty-two aggregate, missing provenance/domain/roster, original-verdict/recovery, real-versus-modeled-write and replay seed/scope controls reject. The independent counter walks original rows instead of calling the join summary. Source contents and native identities remain unchanged after controls.",
+  "knowledge_map": "knowledge-map: OK (1161 facts, 6405 unique questions, 6576 answer occurrences, 139 bounded topic shards; query parity verified)",
+  "next_action": "Qualify exact observation release; native/startup/parent/full CI/push remain gated.",
+  "owner": "HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.12.4.1.3.4.2.3.4.3.2",
+  "recovery": "result/recovery-copies.json",
+  "rederivation": "First guarded join revalidates all fifteen primary and four supporting saved domains; the independent auditor walks original rows and matches all aggregate operation, event, actual-handle, cleanup, partial-write and root counts. Current applicability authenticates 618 files and 163046091 bytes, including the complete prior inventory; 646 original source-epoch comparisons and the corrected namespace/selected handoff boundaries remain explicit.",
+  "replay_boundary": "Recorded before/after equality covers 305 objects: 232 file bodies rehash through tracked sources, 66 auxiliary gate-log bodies have census fingerprints only, and seven directory identities remain recorded observations. Six historical replay run/admission relationships and 84 seed bindings are reconstructed without old ignored content or new replay invocations. No fresh observation of the old replay output directories or reread of unavailable auxiliary bodies is claimed.",
+  "schema": "fsmgen.inactive_archive_final_join_review.v1",
+  "scope": "Finite inactive archival only. Derived joins and replay are not extra original operations; subject descriptor/event counts are per-operation instances. Lexical-reader, stricter-admission and already-owned caller cleanup compose conditionally, not every failure at every site. Original failures and recovery verdicts remain distinct. No old producer/audit main, compiler/native, collector/helper, original integration run, hold release or product activation.",
+  "source_closure": "result/join.json",
+  "task_integrity": "[task-tree-integrity] all active task-tree invariants hold (trees=4, nodes=1352, segments=3, compact_terminals=16, index_archives=1, migrations=1, acceptance_histories=1)"
+}

@@ -1,0 +1,39 @@
+{
+  "contract": "Authenticate the complete committed inventory and current byte applicability before importing saved-data oracles. Revalidate every original finite domain and join source relationships, then independently derive coverage, per-operation actual handle/cleanup/error distinctions and disjoint absent primary allocations. Reconcile close/lower-reader join projections without adding them to original operation counts. Reconstruct saved replay controls, ordered runs, raw output and seed bindings from tracked copies only.",
+  "counts": "Primary archive operations, pure record/guard cases, direct reader controls, strict-handoff baselines/mutants and derived/replay support remain separate. Handles and events are per-operation instances; identical descriptor numbers or reused inode values across operations are not globally unique objects. Only original allocated case rosters contribute to the corresponding absence join.",
+  "domain_order": [
+    "records",
+    "files",
+    "boundaries",
+    "ordinary-fresh",
+    "ordinary-existing",
+    "equal-fresh",
+    "equal-existing",
+    "partial-writes",
+    "close-reports",
+    "omitted-closes",
+    "guards",
+    "namespace",
+    "replacements",
+    "observer",
+    "reader-failures"
+  ],
+  "input_limits": {
+    "file_bytes": 33554432,
+    "files": 1024,
+    "total_bytes": 536870912
+  },
+  "inventory": "docs/audits/native-proxy-observation-archive-inventory-20260911",
+  "limits": "Finite inactive retained-source archival only. No old producer or audit main, compiler/native fixture, collector/helper or original integration test executes. No arbitrary syscall/failure-at-every-site or concurrent-writer atomicity, asynchronous crash safety, original-startup repair, native ownership/transport, product activation or exact observation release is inferred. Those task-tree gates remain separate.",
+  "owner": "HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.12.4.1.3.4.2.3.4.3.2",
+  "replay_scope": "Original replay output directories and legacy logs are not opened. Saved run/admission/diagnostic bytes and declared seed bindings are authenticated through tracked recovery records. This rederives their recorded relationships, not a fresh observation of those old output directories or a new replay invocation. Auxiliary gate-log bodies absent from tracked recovery remain explicitly census-only evidence; all declared qualification/replay seed bodies are present. No fresh raw reread of every old preservation-census object is claimed.",
+  "schema": "fsmgen.inactive_archive_final_join_plan.v1",
+  "source_revision": "6e6eab4442f4c08714edbea003e5ba7406640a09",
+  "source_scope": "The complete inventory source revision authenticates all original source epochs and the explicitly corrected namespace auditor. The final join adds the inventory package and its exact current committed receipts; unrelated historical handoff modules are not declared identical. Only the recorded selected helper bodies supply handoff applicability.",
+  "support_order": [
+    "strict-handoff",
+    "close-join",
+    "reader-join",
+    "replay"
+  ]
+}

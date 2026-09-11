@@ -1,0 +1,11 @@
+{
+  "draft_corrections": [
+    "Child close-report count uses modeled_errors; the aggregate keeps its distinct modeled_close_errors field.",
+    "The saved modeled close adapter returns integer zero, not undef; the independent auditor checks the actual recorded contract.",
+    "Boundary child handle-kind counts are independently derived before their projection is compared.",
+    "Replay seed bindings are compared by their unique output paths, without inventing a lexicographic order."
+  ],
+  "pins_created_before_first_join_or_audit": true,
+  "schema": "fsmgen.inactive_archive_final_join_preflight_review.v1",
+  "syntax": "four Python sources compiled without bytecode"
+}

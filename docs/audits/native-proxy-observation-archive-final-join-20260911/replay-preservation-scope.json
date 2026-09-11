@@ -1,0 +1,687 @@
+{
+  "all_declared_replay_seed_sources_tracked": true,
+  "allowed_auxiliary_names": [
+    "book.exit",
+    "claim-inventory.stderr",
+    "claim-inventory.stdout",
+    "commit.stderr",
+    "commit.stdout",
+    "document-checks.stderr",
+    "document-checks.stdout",
+    "staged-doctrines.exit",
+    "staged-doctrines.stderr",
+    "staged-doctrines.stdout",
+    "task-integrity.stderr",
+    "task-integrity.stdout"
+  ],
+  "before_after_equal": true,
+  "census_only_files": [
+    {
+      "device": 16777244,
+      "inode": 77169930,
+      "kind": "file",
+      "mode": 420,
+      "mtime_ns": 1789096418660665452,
+      "path": ".artifacts/logs/native-proxy-observation-archive-20260911/book.exit",
+      "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa",
+      "size_bytes": 2
+    },
+    {
+      "device": 16777244,
+      "inode": 77169936,
+      "kind": "file",
+      "mode": 420,
+      "mtime_ns": 1789096523534645208,
+      "path": ".artifacts/logs/native-proxy-observation-archive-20260911/claim-inventory.stderr",
+      "sha256": "1368dab24103e30cd106c86e3a1db5ead6468503b4882d94dac253310877eaeb",
+      "size_bytes": 91
+    },
+    {
+      "device": 16777244,
+      "inode": 77169935,
+      "kind": "file",
+      "mode": 420,
+      "mtime_ns": 1789096525222816475,
+      "path": ".artifacts/logs/native-proxy-observation-archive-20260911/claim-inventory.stdout",
+      "sha256": "62cd857b37dd11234fbc8d52c06b2e9c1859f6026e0e81f158ef075efebbe908",
+      "size_bytes": 567
+    },
+    {
+      "device": 16777244,
+      "inode": 77170064,
+      "kind": "file",
+      "mode": 420,
+      "mtime_ns": 1789096706061183905,
+      "path": ".artifacts/logs/native-proxy-observation-archive-20260911/commit.stderr",
+      "sha256": "414d393d62445171b61d91a3ea931197f4d2ee9269840707e37e67227953c6b4",
+      "size_bytes": 51941
+    },
+    {
+      "device": 16777244,
+      "inode": 77170063,
+      "kind": "file",
+      "mode": 420,
+      "mtime_ns": 1789096706094404776,
+      "path": ".artifacts/logs/native-proxy-observation-archive-20260911/commit.stdout",
+      "sha256": "f442d25cd64ec7d45f4d9af8d10aa7fb1832ee3f2545ad52981ac7a767fbc3db",
+      "size_bytes": 2480
+    },
+    {
+      "device": 16777244,
+      "inode": 77170062,
+      "kind": "file",
+      "mode": 420,
+      "mtime_ns": 1789096625852703304,
+      "path": ".artifacts/logs/native-proxy-observation-archive-20260911/staged-doctrines.exit",
+      "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa",
+      "size_bytes": 2
+    },
+    {
+      "device": 16777244,
+      "inode": 77170050,
+      "kind": "file",
+      "mode": 420,
+      "mtime_ns": 1789096614638411271,
+      "path": ".artifacts/logs/native-proxy-observation-archive-20260911/staged-doctrines.stderr",
+      "sha256": "3362d4c7565f0682deebbd92087bac0e66f9362f091c7c5e1b5a4a01640ef752",
+      "size_bytes": 3965
+    },
+    {
+      "device": 16777244,
+      "inode": 77170049,
+      "kind": "file",
+      "mode": 420,
+      "mtime_ns": 1789096624367218742,
+      "path": ".artifacts/logs/native-proxy-observation-archive-20260911/staged-doctrines.stdout",
+      "sha256": "eba8fba53a5469830e526f562c86f3b5a97765e8575d32eb86ac26b855c26a75",
+      "size_bytes": 47855
+    },
+    {
+      "device": 16777244,
+      "inode": 77169932,
+      "kind": "file",
+      "mode": 420,
+      "mtime_ns": 1789096427022987810,
+      "path": ".artifacts/logs/native-proxy-observation-archive-20260911/task-integrity.stderr",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "size_bytes": 0
+    },
+    {
+      "device": 16777244,
+      "inode": 77169931,
+      "kind": "file",
+      "mode": 420,
+      "mtime_ns": 1789096429660514139,
+      "path": ".artifacts/logs/native-proxy-observation-archive-20260911/task-integrity.stdout",
+      "sha256": "1742a74f01bf23655f2a6b19add93e7729295e74e3ba73d95a4022b38c8a9e07",
+      "size_bytes": 171
+    },
+    {
+      "device": 16777244,
+      "inode": 77170657,
+      "kind": "file",
+      "mode": 420,
+      "mtime_ns": 1789098546148421249,
+      "path": ".artifacts/logs/native-proxy-observation-archive-boundaries-20260911/book.exit",
+      "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa",
+      "size_bytes": 2
+    },
+    {
+      "device": 16777244,
+      "inode": 77170661,
+      "kind": "file",
+      "mode": 420,
+      "mtime_ns": 1789098703735023430,
+      "path": ".artifacts/logs/native-proxy-observation-archive-boundaries-20260911/claim-inventory.stderr",
+      "sha256": "5583bb7121a55aca79f1559531040892ffad4081e55cc0436a97f2dfbd685627",
+      "size_bytes": 91
+    },
+    {
+      "device": 16777244,
+      "inode": 77170660,
+      "kind": "file",
+      "mode": 420,
+      "mtime_ns": 1789098705439395387,
+      "path": ".artifacts/logs/native-proxy-observation-archive-boundaries-20260911/claim-inventory.stdout",
+      "sha256": "711a1204ed8ae60a9d032ff043c554e22f4b54eda3000f48328b3a38dcb353bc",
+      "size_bytes": 567
+    },
+    {
+      "device": 16777244,
+      "inode": 77170787,
+      "kind": "file",
+      "mode": 420,
+      "mtime_ns": 1789098950923780649,
+      "path": ".artifacts/logs/native-proxy-observation-archive-boundaries-20260911/commit.stderr",
+      "sha256": "a713ea8bd0d5478bbde5830033e02add14e0877452d56dd8d85d8e409712f534",
+      "size_bytes": 51945
+    },
+    {
+      "device": 16777244,
+      "inode": 77170786,
+      "kind": "file",
+      "mode": 420,
+      "mtime_ns": 1789098950954466214,
+      "path": ".artifacts/logs/native-proxy-observation-archive-boundaries-20260911/commit.stdout",
+      "sha256": "3f1dd7e9e4f477bae8d9349b5d4b95641d8934e4671a224d02b1c9a7febf98f5",
+      "size_bytes": 2698
+    },
+    {
+      "device": 16777244,
+      "inode": 77170785,
+      "kind": "file",
+      "mode": 420,
+      "mtime_ns": 1789098844665035829,
+      "path": ".artifacts/logs/native-proxy-observation-archive-boundaries-20260911/staged-doctrines.exit",
+      "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa",
+      "size_bytes": 2
+    },
+    {
+      "device": 16777244,
+      "inode": 77170773,
+      "kind": "file",
+      "mode": 420,
+      "mtime_ns": 1789098833539004801,
+      "path": ".artifacts/logs/native-proxy-observation-archive-boundaries-20260911/staged-doctrines.stderr",
+      "sha256": "f22455ea014a0cb9a8230473d1f33488ff7988f123f45d00e8639d589f125e3e",
+      "size_bytes": 3965
+    },
+    {
+      "device": 16777244,
+      "inode": 77170772,
+      "kind": "file",
+      "mode": 420,
+      "mtime_ns": 1789098843243883653,
+      "path": ".artifacts/logs/native-proxy-observation-archive-boundaries-20260911/staged-doctrines.stdout",
+      "sha256": "6689d1b673ece6ebdca56b71b296e51f1ad8a18f1c2b58e10904038302b5af8c",
+      "size_bytes": 47859
+    },
+    {
+      "device": 16777244,
+      "inode": 77170552,
+      "kind": "file",
+      "mode": 420,
+      "mtime_ns": 1789098539696621767,
+      "path": ".artifacts/logs/native-proxy-observation-archive-boundaries-20260911/task-integrity.stderr",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "size_bytes": 0
+    },
+    {
+      "device": 16777244,
+      "inode": 77170551,
+      "kind": "file",
+      "mode": 420,
+      "mtime_ns": 1789098542364243403,
+      "path": ".artifacts/logs/native-proxy-observation-archive-boundaries-20260911/task-integrity.stdout",
+      "sha256": "b40e80d2f9a0ed1bce0125ef412dc656878c9cf6da929d4871cd9dc90af3acc8",
+      "size_bytes": 171
+    },
+    {
+      "device": 16777244,
+      "inode": 77187993,
+      "kind": "file",
+      "mode": 420,
+      "mtime_ns": 1789104161203051902,
+      "path": ".artifacts/logs/native-proxy-observation-archive-equal-existing-calls-20260911/book.exit",
+      "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa",
+      "size_bytes": 2
+    },
+    {
+      "device": 16777244,
+      "inode": 77187997,
+      "kind": "file",
+      "mode": 420,
+      "mtime_ns": 1789104257494240679,
+      "path": ".artifacts/logs/native-proxy-observation-archive-equal-existing-calls-20260911/claim-inventory.stderr",
+      "sha256": "3e32ed43b73b8985a1d9888c7a961d66a65731406b7f7f95b0b9dd45916c8210",
+      "size_bytes": 91
+    },
+    {
+      "device": 16777244,
+      "inode": 77187996,
+      "kind": "file",
+      "mode": 420,
+      "mtime_ns": 1789104259193931283,
+      "path": ".artifacts/logs/native-proxy-observation-archive-equal-existing-calls-20260911/claim-inventory.stdout",
+      "sha256": "dfdb1953f727275adcac2f5c94b8e1b3e0ae03bba9a8be5c07c240f9e25281d7",
+      "size_bytes": 567
+    },
+    {
+      "device": 16777244,
+      "inode": 77188106,
+      "kind": "file",
+      "mode": 420,
+      "mtime_ns": 1789104432301138527,
+      "path": ".artifacts/logs/native-proxy-observation-archive-equal-existing-calls-20260911/commit.stderr",
+      "sha256": "79ed6abc3bc644add4c56ad2cbc7680202920668618a576a7089969969938751",
+      "size_bytes": 51949
+    },
+    {
+      "device": 16777244,
+      "inode": 77188105,
+      "kind": "file",
+      "mode": 420,
+      "mtime_ns": 1789104432348515990,
+      "path": ".artifacts/logs/native-proxy-observation-archive-equal-existing-calls-20260911/commit.stdout",
+      "sha256": "d6a1509b5b0fd6e01e9ecf855ed7abdacbd8eaa1a079bd2282c844abac4cd420",
+      "size_bytes": 2718
+    },
+    {
+      "device": 16777244,
+      "inode": 77187750,
+      "kind": "file",
+      "mode": 420,
+      "mtime_ns": 1789104161417090698,
+      "path": ".artifacts/logs/native-proxy-observation-archive-equal-existing-calls-20260911/document-checks.stderr",
+      "sha256": "02e4715e0c672716a9b19dfb74deec589c77fccea293826a0ad955199eaabd71",
+      "size_bytes": 340
+    },
+    {
+      "device": 16777244,
+      "inode": 77187749,
+      "kind": "file",
+      "mode": 420,
+      "mtime_ns": 1789104164092301366,
+      "path": ".artifacts/logs/native-proxy-observation-archive-equal-existing-calls-20260911/document-checks.stdout",
+      "sha256": "1fcf4dd91f65693ddac430848d6caa3cf0cdb7eeba7eaa2e0691b275d94ce4b8",
+      "size_bytes": 171
+    },
+    {
+      "device": 16777244,
+      "inode": 77188093,
+      "kind": "file",
+      "mode": 420,
+      "mtime_ns": 1789104356531173422,
+      "path": ".artifacts/logs/native-proxy-observation-archive-equal-existing-calls-20260911/staged-doctrines.stderr",
+      "sha256": "0944541905b25e9f9ccef78e099c1d68630055d506213208faef605b37b8e5ef",
+      "size_bytes": 3965
+    },
+    {
+      "device": 16777244,
+      "inode": 77188092,
+      "kind": "file",
+      "mode": 420,
+      "mtime_ns": 1789104366272598357,
+      "path": ".artifacts/logs/native-proxy-observation-archive-equal-existing-calls-20260911/staged-doctrines.stdout",
+      "sha256": "a43a5456732141a43b9d14278e553b9b1af336dcff9a7d51697b3b95aefa762f",
+      "size_bytes": 47863
+    },
+    {
+      "device": 16777244,
+      "inode": 77184585,
+      "kind": "file",
+      "mode": 420,
+      "mtime_ns": 1789103142154039795,
+      "path": ".artifacts/logs/native-proxy-observation-archive-equal-fresh-calls-20260911/book.exit",
+      "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa",
+      "size_bytes": 2
+    },
+    {
+      "device": 16777244,
+      "inode": 77184590,
+      "kind": "file",
+      "mode": 420,
+      "mtime_ns": 1789103237591149150,
+      "path": ".artifacts/logs/native-proxy-observation-archive-equal-fresh-calls-20260911/claim-inventory.stderr",
+      "sha256": "32b48fa5b9d096812cd2dba2a834105ac5e42ce1830ce614179106715aaeea92",
+      "size_bytes": 91
+    },
+    {
+      "device": 16777244,
+      "inode": 77184589,
+      "kind": "file",
+      "mode": 420,
+      "mtime_ns": 1789103239287262781,
+      "path": ".artifacts/logs/native-proxy-observation-archive-equal-fresh-calls-20260911/claim-inventory.stdout",
+      "sha256": "673212ee3818c07528aa44066cd86d1eaea4844780cfbcfccaab4655aafe8519",
+      "size_bytes": 567
+    },
+    {
+      "device": 16777244,
+      "inode": 77184697,
+      "kind": "file",
+      "mode": 420,
+      "mtime_ns": 1789103386662566321,
+      "path": ".artifacts/logs/native-proxy-observation-archive-equal-fresh-calls-20260911/commit.stderr",
+      "sha256": "7058e8eee5f37a29c4a99f3c1fac38185268f64a731ee0783f44c33ea064dac3",
+      "size_bytes": 51949
+    },
+    {
+      "device": 16777244,
+      "inode": 77184696,
+      "kind": "file",
+      "mode": 420,
+      "mtime_ns": 1789103386710441382,
+      "path": ".artifacts/logs/native-proxy-observation-archive-equal-fresh-calls-20260911/commit.stdout",
+      "sha256": "e5f854e0c5714a32c7339493872cbc4bcf0069aa59b28230e28e76d68ca825a4",
+      "size_bytes": 2560
+    },
+    {
+      "device": 16777244,
+      "inode": 77184342,
+      "kind": "file",
+      "mode": 420,
+      "mtime_ns": 1789103142419328295,
+      "path": ".artifacts/logs/native-proxy-observation-archive-equal-fresh-calls-20260911/document-checks.stderr",
+      "sha256": "4c95405b7925197623da0d22d9a4d501b1d1ed6678ad960a022abcd1de0cba58",
+      "size_bytes": 340
+    },
+    {
+      "device": 16777244,
+      "inode": 77184341,
+      "kind": "file",
+      "mode": 420,
+      "mtime_ns": 1789103145118258924,
+      "path": ".artifacts/logs/native-proxy-observation-archive-equal-fresh-calls-20260911/document-checks.stdout",
+      "sha256": "74d9c4ff36797aa78f5b86ed27dfe83adbc5640ceec0843da54d20e4f46874bc",
+      "size_bytes": 171
+    },
+    {
+      "device": 16777244,
+      "inode": 77184684,
+      "kind": "file",
+      "mode": 420,
+      "mtime_ns": 1789103320231507945,
+      "path": ".artifacts/logs/native-proxy-observation-archive-equal-fresh-calls-20260911/staged-doctrines.stderr",
+      "sha256": "b5e3b7c47cd7be544e1655411dd53f3a31bdea72653d65587bccfad61d841e73",
+      "size_bytes": 3965
+    },
+    {
+      "device": 16777244,
+      "inode": 77184683,
+      "kind": "file",
+      "mode": 420,
+      "mtime_ns": 1789103329941188524,
+      "path": ".artifacts/logs/native-proxy-observation-archive-equal-fresh-calls-20260911/staged-doctrines.stdout",
+      "sha256": "3785a9f16e73f016be1ae82003b7f106a14ab2de212509862f8f69ee8dae9910",
+      "size_bytes": 47863
+    },
+    {
+      "device": 16777244,
+      "inode": 77180116,
+      "kind": "file",
+      "mode": 420,
+      "mtime_ns": 1789102085387078935,
+      "path": ".artifacts/logs/native-proxy-observation-archive-existing-calls-20260911/book.exit",
+      "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa",
+      "size_bytes": 2
+    },
+    {
+      "device": 16777244,
+      "inode": 77180136,
+      "kind": "file",
+      "mode": 420,
+      "mtime_ns": 1789102194038869254,
+      "path": ".artifacts/logs/native-proxy-observation-archive-existing-calls-20260911/claim-inventory.stderr",
+      "sha256": "f573dc48b1b92e14fec0622927127c67285e5722cb09d85fdeb5249bf0f243af",
+      "size_bytes": 91
+    },
+    {
+      "device": 16777244,
+      "inode": 77180135,
+      "kind": "file",
+      "mode": 420,
+      "mtime_ns": 1789102195732907406,
+      "path": ".artifacts/logs/native-proxy-observation-archive-existing-calls-20260911/claim-inventory.stdout",
+      "sha256": "37a7b9def3fbd6426de96f0a88639157428264772c85d15f4b70c399f4e46e5f",
+      "size_bytes": 567
+    },
+    {
+      "device": 16777244,
+      "inode": 77180250,
+      "kind": "file",
+      "mode": 420,
+      "mtime_ns": 1789102330866895592,
+      "path": ".artifacts/logs/native-proxy-observation-archive-existing-calls-20260911/commit.stderr",
+      "sha256": "b1c65938ae091d516bbf8909b900605ed224cc0fe980e40395160c0ce1923d7d",
+      "size_bytes": 51949
+    },
+    {
+      "device": 16777244,
+      "inode": 77180249,
+      "kind": "file",
+      "mode": 420,
+      "mtime_ns": 1789102330920675872,
+      "path": ".artifacts/logs/native-proxy-observation-archive-existing-calls-20260911/commit.stdout",
+      "sha256": "55134645661e3f8c6bf17f6fb4bfe1691f53bb5d5f5611f2ab42053f7e98fbed",
+      "size_bytes": 2495
+    },
+    {
+      "device": 16777244,
+      "inode": 77179871,
+      "kind": "file",
+      "mode": 420,
+      "mtime_ns": 1789102085180704986,
+      "path": ".artifacts/logs/native-proxy-observation-archive-existing-calls-20260911/document-checks.stderr",
+      "sha256": "fd30f60c3c1dc005d4b49c0daeb79ead4779d2b0f39e2c4219bf393bf487e887",
+      "size_bytes": 340
+    },
+    {
+      "device": 16777244,
+      "inode": 77179870,
+      "kind": "file",
+      "mode": 420,
+      "mtime_ns": 1789102087890109607,
+      "path": ".artifacts/logs/native-proxy-observation-archive-existing-calls-20260911/document-checks.stdout",
+      "sha256": "74d9c4ff36797aa78f5b86ed27dfe83adbc5640ceec0843da54d20e4f46874bc",
+      "size_bytes": 171
+    },
+    {
+      "device": 16777244,
+      "inode": 77180237,
+      "kind": "file",
+      "mode": 420,
+      "mtime_ns": 1789102276913752834,
+      "path": ".artifacts/logs/native-proxy-observation-archive-existing-calls-20260911/staged-doctrines.stderr",
+      "sha256": "04201769d5d55d59dc256f7db9688aaecabcf4312cc3a5f6b6130e32046e6755",
+      "size_bytes": 3965
+    },
+    {
+      "device": 16777244,
+      "inode": 77180236,
+      "kind": "file",
+      "mode": 420,
+      "mtime_ns": 1789102286648907708,
+      "path": ".artifacts/logs/native-proxy-observation-archive-existing-calls-20260911/staged-doctrines.stdout",
+      "sha256": "adeb402e8532945393824b1964716011075c0d6c1b47ae672ebee7f2cab08c42",
+      "size_bytes": 47863
+    },
+    {
+      "device": 16777244,
+      "inode": 77176069,
+      "kind": "file",
+      "mode": 420,
+      "mtime_ns": 1789100639387263685,
+      "path": ".artifacts/logs/native-proxy-observation-archive-fresh-calls-20260911/book.exit",
+      "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa",
+      "size_bytes": 2
+    },
+    {
+      "device": 16777244,
+      "inode": 77176074,
+      "kind": "file",
+      "mode": 420,
+      "mtime_ns": 1789100731475802206,
+      "path": ".artifacts/logs/native-proxy-observation-archive-fresh-calls-20260911/claim-inventory.stderr",
+      "sha256": "9d97dd93c8d39d356bae522dd3913a7ae3265b2f9601befbe89ee806351db5df",
+      "size_bytes": 91
+    },
+    {
+      "device": 16777244,
+      "inode": 77176073,
+      "kind": "file",
+      "mode": 420,
+      "mtime_ns": 1789100733171629161,
+      "path": ".artifacts/logs/native-proxy-observation-archive-fresh-calls-20260911/claim-inventory.stdout",
+      "sha256": "7eb3419df442c55262b7388398c0a0803dba626c95e028d57c27b8882c0bd44c",
+      "size_bytes": 567
+    },
+    {
+      "device": 16777244,
+      "inode": 77176182,
+      "kind": "file",
+      "mode": 420,
+      "mtime_ns": 1789100898902306430,
+      "path": ".artifacts/logs/native-proxy-observation-archive-fresh-calls-20260911/commit.stderr",
+      "sha256": "5f9e36fb3f1a51161736d15d0dde9a9c269e7abc59feda4c3ba1c03ded993590",
+      "size_bytes": 51949
+    },
+    {
+      "device": 16777244,
+      "inode": 77176181,
+      "kind": "file",
+      "mode": 420,
+      "mtime_ns": 1789100898951020267,
+      "path": ".artifacts/logs/native-proxy-observation-archive-fresh-calls-20260911/commit.stdout",
+      "sha256": "fb96ef778828a87bf80ae20548f04b75dbd4aa3bea327cb464260e661abe64f8",
+      "size_bytes": 2429
+    },
+    {
+      "device": 16777244,
+      "inode": 77175927,
+      "kind": "file",
+      "mode": 420,
+      "mtime_ns": 1789100639858656117,
+      "path": ".artifacts/logs/native-proxy-observation-archive-fresh-calls-20260911/document-checks.stderr",
+      "sha256": "7ce4c646f126656f04a9a20f24d48bf8312b37370b826877d59459818ae1831a",
+      "size_bytes": 340
+    },
+    {
+      "device": 16777244,
+      "inode": 77175926,
+      "kind": "file",
+      "mode": 420,
+      "mtime_ns": 1789100642454550614,
+      "path": ".artifacts/logs/native-proxy-observation-archive-fresh-calls-20260911/document-checks.stdout",
+      "sha256": "74d9c4ff36797aa78f5b86ed27dfe83adbc5640ceec0843da54d20e4f46874bc",
+      "size_bytes": 171
+    },
+    {
+      "device": 16777244,
+      "inode": 77176169,
+      "kind": "file",
+      "mode": 420,
+      "mtime_ns": 1789100823936988364,
+      "path": ".artifacts/logs/native-proxy-observation-archive-fresh-calls-20260911/staged-doctrines.stderr",
+      "sha256": "7353ec67571fa675ee624c56b6f8cb793d3609c8fa2af2ae49bc812c12106934",
+      "size_bytes": 3965
+    },
+    {
+      "device": 16777244,
+      "inode": 77176168,
+      "kind": "file",
+      "mode": 420,
+      "mtime_ns": 1789100833630274937,
+      "path": ".artifacts/logs/native-proxy-observation-archive-fresh-calls-20260911/staged-doctrines.stdout",
+      "sha256": "bfef21896bdda164c2ac59f427707c91e9ad7ee8c07a095d9fef25bf0812cafe",
+      "size_bytes": 47863
+    },
+    {
+      "device": 16777244,
+      "inode": 77168663,
+      "kind": "file",
+      "mode": 420,
+      "mtime_ns": 1789094973317035585,
+      "path": ".artifacts/logs/native-proxy-observation-archive-records-20260911/book.exit",
+      "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa",
+      "size_bytes": 2
+    },
+    {
+      "device": 16777244,
+      "inode": 77168667,
+      "kind": "file",
+      "mode": 420,
+      "mtime_ns": 1789095086973154394,
+      "path": ".artifacts/logs/native-proxy-observation-archive-records-20260911/claim-inventory.stderr",
+      "sha256": "40b5004fe5e5683fdcca9fe1be668449c2dd5d8d030506029b283cc13947d384",
+      "size_bytes": 91
+    },
+    {
+      "device": 16777244,
+      "inode": 77168666,
+      "kind": "file",
+      "mode": 420,
+      "mtime_ns": 1789095088666055136,
+      "path": ".artifacts/logs/native-proxy-observation-archive-records-20260911/claim-inventory.stdout",
+      "sha256": "8f27e412f38c610c731dda3fb53abec8c4f67f89be7491b579f4c33f33ddfcbb",
+      "size_bytes": 567
+    },
+    {
+      "device": 16777244,
+      "inode": 77168790,
+      "kind": "file",
+      "mode": 420,
+      "mtime_ns": 1789095174707162151,
+      "path": ".artifacts/logs/native-proxy-observation-archive-records-20260911/commit.stderr",
+      "sha256": "c25f23691c9c83aade63c14361ce5c827a3a39a3463304e771784b0b9232f3ce",
+      "size_bytes": 51940
+    },
+    {
+      "device": 16777244,
+      "inode": 77168789,
+      "kind": "file",
+      "mode": 420,
+      "mtime_ns": 1789095174738805017,
+      "path": ".artifacts/logs/native-proxy-observation-archive-records-20260911/commit.stdout",
+      "sha256": "bf8fbef485efce6a8f6a4e3e29c837618951871b1b3962218b71895f8d4db50c",
+      "size_bytes": 2447
+    },
+    {
+      "device": 16777244,
+      "inode": 77168788,
+      "kind": "file",
+      "mode": 420,
+      "mtime_ns": 1789095122950730206,
+      "path": ".artifacts/logs/native-proxy-observation-archive-records-20260911/staged-doctrines.exit",
+      "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa",
+      "size_bytes": 2
+    },
+    {
+      "device": 16777244,
+      "inode": 77168776,
+      "kind": "file",
+      "mode": 420,
+      "mtime_ns": 1789095111740945681,
+      "path": ".artifacts/logs/native-proxy-observation-archive-records-20260911/staged-doctrines.stderr",
+      "sha256": "b6ec823158d364c3235ffb5020729bcddf066cd24e07a53e224fb37762d2df19",
+      "size_bytes": 3965
+    },
+    {
+      "device": 16777244,
+      "inode": 77168775,
+      "kind": "file",
+      "mode": 420,
+      "mtime_ns": 1789095121466451180,
+      "path": ".artifacts/logs/native-proxy-observation-archive-records-20260911/staged-doctrines.stdout",
+      "sha256": "bfff837146c10dc8f75c2cc146ea3384f2e0bb4dc0f839dfa5c78261e1a49fe8",
+      "size_bytes": 47855
+    },
+    {
+      "device": 16777244,
+      "inode": 77168665,
+      "kind": "file",
+      "mode": 420,
+      "mtime_ns": 1789094984897710368,
+      "path": ".artifacts/logs/native-proxy-observation-archive-records-20260911/task-integrity.stderr",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "size_bytes": 0
+    },
+    {
+      "device": 16777244,
+      "inode": 77168664,
+      "kind": "file",
+      "mode": 420,
+      "mtime_ns": 1789094987549768843,
+      "path": ".artifacts/logs/native-proxy-observation-archive-records-20260911/task-integrity.stdout",
+      "sha256": "1742a74f01bf23655f2a6b19add93e7729295e74e3ba73d95a4022b38c8a9e07",
+      "size_bytes": 171
+    }
+  ],
+  "files": 298,
+  "objects": 305,
+  "prewrite_review": "An initial unexecuted scope draft listed task-integrity logs but omitted the document-checks stdout/stderr names used by four call matrices. The read-only classification assertion caught those eight records before writing any scope claim. Inspecting every missing basename confirms only auxiliary gate logs; include both documented gate naming forms.",
+  "schema": "fsmgen.archive_replay_preservation_scope.v1",
+  "scope": "The original preservation census also includes auxiliary book/claim/commit/task/document-gate logs. Their exact before/after fingerprint records are retained, but their bodies are not tracked recovery inputs. Revalidate those recorded relationships only, without claiming fresh raw-byte rereads of every old object. Every declared qualification/replay seed body remains tracked. This is an evidence boundary, not a demonstrated archive or replay defect.",
+  "source_revision": "2a3af00cd390b0801396c52af7e1fa8d6ef57c12",
+  "tracked_raw_files": 232
+}

@@ -1,0 +1,174 @@
+{
+  "all_original_case_roots_absent": true,
+  "current_prospective_pins": 6,
+  "falsifiers": [
+    {
+      "name": "altered aggregate traced_operations",
+      "rejected": true
+    },
+    {
+      "name": "altered aggregate traced_events",
+      "rejected": true
+    },
+    {
+      "name": "altered aggregate source_handles",
+      "rejected": true
+    },
+    {
+      "name": "altered aggregate writer_handles",
+      "rejected": true
+    },
+    {
+      "name": "altered aggregate directory_handles",
+      "rejected": true
+    },
+    {
+      "name": "altered aggregate traced_handles",
+      "rejected": true
+    },
+    {
+      "name": "altered aggregate archive_operations",
+      "rejected": true
+    },
+    {
+      "name": "altered aggregate legacy_source_observations",
+      "rejected": true
+    },
+    {
+      "name": "altered aggregate omitted_closes",
+      "rejected": true
+    },
+    {
+      "name": "altered aggregate implementation_closes",
+      "rejected": true
+    },
+    {
+      "name": "altered aggregate counterimplementation_returns",
+      "rejected": true
+    },
+    {
+      "name": "altered aggregate closure_rejections",
+      "rejected": true
+    },
+    {
+      "name": "altered aggregate modeled_close_errors",
+      "rejected": true
+    },
+    {
+      "name": "altered aggregate actual_partial_write_calls",
+      "rejected": true
+    },
+    {
+      "name": "altered aggregate actual_partial_written_bytes",
+      "rejected": true
+    },
+    {
+      "name": "missing source_inputs",
+      "rejected": true
+    },
+    {
+      "name": "missing primary_allocations",
+      "rejected": true
+    },
+    {
+      "name": "missing strict_support_allocations",
+      "rejected": true
+    },
+    {
+      "name": "missing prior_joins",
+      "rejected": true
+    },
+    {
+      "name": "missing replay",
+      "rejected": true
+    },
+    {
+      "name": "missing domains",
+      "rejected": true
+    },
+    {
+      "name": "missing primary_tap_assertions",
+      "rejected": true
+    },
+    {
+      "name": "false completion",
+      "rejected": true
+    },
+    {
+      "name": "recovery heals original verdict",
+      "rejected": true
+    },
+    {
+      "name": "omitted close becomes actual close",
+      "rejected": true
+    },
+    {
+      "name": "missing observer recovery",
+      "rejected": true
+    },
+    {
+      "name": "observer recovery failed",
+      "rejected": true
+    },
+    {
+      "name": "missing subject handle",
+      "rejected": true
+    },
+    {
+      "name": "writer mislabeled as source",
+      "rejected": true
+    },
+    {
+      "name": "modeled write counted as syscall",
+      "rejected": true
+    },
+    {
+      "name": "auxiliary preservation boundary erased",
+      "rejected": true
+    },
+    {
+      "name": "altered saved replay seed",
+      "rejected": true
+    }
+  ],
+  "independently_walked_summary": {
+    "actual_partial_write_calls": 1627,
+    "actual_partial_written_bytes": 315186,
+    "archive_operations": 1156,
+    "closure_rejections": 94,
+    "counterimplementation_returns": 65,
+    "directory_handles": 4539,
+    "implementation_closes": 13799,
+    "legacy_source_observations": 162,
+    "modeled_close_errors": 190,
+    "omitted_closes": 248,
+    "source_handles": 7208,
+    "traced_events": 155636,
+    "traced_handles": 14047,
+    "traced_operations": 1127,
+    "writer_handles": 2300
+  },
+  "limits": "Finite inactive retained-source archival only. No old producer or audit main, compiler/native fixture, collector/helper or original integration test executes. No arbitrary syscall/failure-at-every-site or concurrent-writer atomicity, asynchronous crash safety, original-startup repair, native ownership/transport, product activation or exact observation release is inferred. Those task-tree gates remain separate.",
+  "primary_roots": 3397,
+  "primary_tap_assertions": 5324,
+  "replay": {
+    "census_only_auxiliary_files": 66,
+    "controls": 14,
+    "failed_recorded_runs": 2,
+    "new_replay_invocations": 0,
+    "old_log_content_reads": 0,
+    "preservation_objects": 305,
+    "recorded_preservation_directories": 7,
+    "recorded_runs": 6,
+    "rehashed_preservation_files": 232,
+    "seed_bindings": 84,
+    "source_inputs": 148,
+    "successful_recorded_runs": 4
+  },
+  "schema": "fsmgen.inactive_archive_final_join_audit.v1",
+  "semantic_archive_join_complete": true,
+  "source_bytes": 163046091,
+  "source_files": 618,
+  "strict_support_roots": 19,
+  "success": true
+}

@@ -2,6 +2,7 @@
 id: test-subprocess-policy-adapters
 title: Test subprocesses share one mechanism behind sealed policy adapters
 answers:
+  - "what does final inactive archive signoff prove?"
   - "how are FSMGen test subprocesses bounded?"
   - "how are native Rust proxy fixtures built and qualified?"
   - "why must native-birth field sets use explicit membership?"
@@ -112,12 +113,10 @@ reverify: >-
   t/1815-rust-proxy-fixture.t t/1816-rust-proxy-integration.t t/1817-test-supervision-architecture.t
 ---
 
-Decisions `0087`/`0101` select `FSM::Support::ProcessSupervisor`; adapters seal bounded local argv/capture/group cleanup. T1669 checks ownership.
-`exec_handoff_monotonic_ns` is EOF, not main-entry proof; absent EOF leaves timing unknown. Limits/controls: history.
-`VerilatorRuntime` follows decision `0086`.
-`TaskAcceptanceFixtureRuntime` seals owned fixture roots/fixed local Git argv.
-Supervisor, checker, locality, startup/capture/STOP controls: history; absent witnesses stay unknown.
-History: `5d58a61c26859c2c0e155c512b0781bcd25d430b:docs/knowledge/test-subprocess-policy-adapters.md`. PST/queue evidence and fixed CLI limits/controls: history.
-Archive inventory: `docs/audits/native-proxy-observation-archive-inventory-20260911/audit.py`; final semantic join remains open. Reader/caller distinctions: history. Caller-sealed wrappers use tail goto. Replay: `scripts/run_with_ram_guard.sh -- python3 -B -m unittest discover -s t/python -p 'test_fixture_policy_archive*.py'`. Nested-cleanup counterexample: history.
-HIAL/VIAL `.19.2.3.1.2.2.5.5` owns ownership design, repair and hostile controls;
-neutral-verifier extraction stays provisional/blocked.
+Decisions `0087`/`0101` select `FSM::Support::ProcessSupervisor`; adapters seal local argv/capture/group cleanup. T1669 checks ownership.
+`exec_handoff_monotonic_ns` is EOF, not main entry; absent EOF leaves timing unknown. Controls: history.
+`VerilatorRuntime`: decision `0086`. `TaskAcceptanceFixtureRuntime`: owned roots/fixed Git argv.
+History: `6e6eab4442f4c08714edbea003e5ba7406640a09:docs/knowledge/test-subprocess-policy-adapters.md`. Supervisor, startup, capture, STOP, queue/PST and reader/caller evidence: history.
+Final archive: `docs/audits/native-proxy-observation-archive-final-join-20260911/audit.py`; finite saved coverage passes. Auxiliary replay logs remain census-only; declared seeds are tracked. Release/native/startup gates remain. Caller-sealed wrappers use tail goto.
+Replay: `scripts/run_with_ram_guard.sh -- python3 -B -m unittest discover -s t/python -p 'test_fixture_policy_archive*.py'`. Nested-cleanup counterexample: history.
+HIAL/VIAL `.19.2.3.1.2.2.5.5` owns repair/hostile controls; neutral-verifier extraction stays blocked.

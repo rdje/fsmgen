@@ -1,0 +1,14 @@
+{
+  "exact_output_absent": true,
+  "exit_code": 0,
+  "finite_archival_signoff_verified": true,
+  "new_passage_verified": true,
+  "original_control_recovery_verdicts_separate": true,
+  "output": ".artifacts/tmp/native-proxy-observation-archive-final-join-book-20260911/book",
+  "release_native_startup_gates_verified": true,
+  "rendered_bytes": 23309187,
+  "rendered_directories": 3,
+  "rendered_files": 98,
+  "replay_auxiliary_durability_boundary_verified": true,
+  "same_volume_direct_objects": true
+}
