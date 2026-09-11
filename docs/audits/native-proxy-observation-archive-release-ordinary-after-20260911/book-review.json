@@ -1,0 +1,18 @@
+{
+  "checked_passages": [
+    "faults thrown only after an admitted helper returns normally.",
+    "That helper\u2019s frame is complete; its still-running callers are interrupted.",
+    "the caller still owns the checked source and must close it during failure cleanup.",
+    "It then projects only the future closes of handles already open at that point.",
+    "ordinary-after-20260911/audit.py --verify-saved"
+  ],
+  "exact_output_absent": true,
+  "exit_code": 0,
+  "first_review_failure": "book-first-review-failure.json",
+  "output": ".artifacts/tmp/native-proxy-observation-archive-release-ordinary-after-book-20260911/book",
+  "rendered_bytes": 23370357,
+  "rendered_directories": 3,
+  "rendered_files": 98,
+  "review_correction": "Accept the actual U+2019 rendered apostrophe; exact original rendered bytes remain unchanged before successful review. No second build.",
+  "same_volume_direct_objects": true
+}

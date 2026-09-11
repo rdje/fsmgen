@@ -1,0 +1,11 @@
+{
+  "actual_excerpt": "That helper\u2019s frame is complete; its still-running callers are interrupted. For example, after _recheck_source",
+  "book_build_exit": 0,
+  "cause": "The inspection expected an ASCII apostrophe, while mdBook rendered a typographic apostrophe. The original source and rendered sentence agree in meaning; no build, fixture or source repair is required.",
+  "exit_code": 1,
+  "expected": "That helper's frame is complete; its still-running callers are interrupted.",
+  "rendered_path": ".artifacts/tmp/native-proxy-observation-archive-release-ordinary-after-book-20260911/book/16dc-vial-portable-verilator-runtime-measurement.html",
+  "rendered_sha256": "899328fc983f731514412c5303c9ef1e5e8666eccd0d3a46a13134405b58662e",
+  "schema": "fsmgen.after_release_book_first_review_failure.v1",
+  "stderr": "Traceback (most recent call last):\n  File \"<stdin>\", line 11, in <module>\nAssertionError: That helper's frame is complete; its still-running callers are interrupted.\n"
+}

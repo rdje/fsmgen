@@ -2,6 +2,7 @@
 id: test-subprocess-policy-adapters
 title: Test subprocesses share one mechanism behind sealed policy adapters
 answers:
+  - "what survives ordinary release after-call faults?"
   - "what survives ordinary release before-call faults?"
   - "why cannot release faults reuse a saved numeric call ID?"
   - "how are healthy release call and handle boundaries verified?"
@@ -121,8 +122,8 @@ reverify: >-
 ---
 Decisions `0087`/`0101`: `FSM::Support::ProcessSupervisor`; adapters seal local argv/capture/group cleanup. T1669 checks ownership. `exec_handoff_monotonic_ns` is EOF, not main entry; absent EOF leaves timing unknown.
 `VerilatorRuntime`: decision `0086`. `TaskAcceptanceFixtureRuntime`: owned roots/fixed Git argv.
-History: `51bf29de9880c0db37ccfbbcc33ae9b1d7fdd937:docs/knowledge/test-subprocess-policy-adapters.md`. Archive/work, replay, reader/caller and startup evidence: history.
-Release: `docs/audits/native-proxy-observation-archive-release-ordinary-before-20260911/review.json`. Ordinary retired before-call faults preserve actual unlink and historical/latest absence, inputs and other owners; real source/DIR/lock closes and exact roots are independently checked. Resolve helper/occurrence/phase from each current fixture before calling; numeric IDs are provenance. Stream immutable case bodies only after root cleanup. Source returns and sealed-after aliases stay excluded. Other profiles/phases and close domains remain open; selector and healthy contracts: history.
+History: `e1f94e5d750a2ea77cf54245d61a8187dc40e5c5:docs/knowledge/test-subprocess-policy-adapters.md`. Archive/work, replay, reader/caller and startup evidence: history.
+Release: `docs/audits/native-proxy-observation-archive-release-ordinary-after-20260911/review.json`. Ordinary after-call faults leave the returned helper complete and only its callers interrupted; real cleanup and exact unlink/absence/input/other-owner state remain verified. A saved healthy event-prefix/open-handle projection independently checks the source-scope model before new fixtures. Reuse the unchanged current-input resolver and observer; exclude source returns and sealed-after aliases. Immutable bodies publish after root cleanup and support saved-data audit. Before-call and selector contracts: history; other profiles and close domains remain open.
 Proxy: `t/fixtures/rust-tool-proxy.c` is C; Perl `t/lib/FSM/Test/RustProxyFixture.pm` builds it and the Perl harness launches a separate process to impersonate rustup resolution. Rust names the substituted tool, not the native implementation language.
 Replay: `scripts/run_with_ram_guard.sh -- python3 -B -m unittest discover -s t/python -p 'test_fixture_policy_archive*.py'`. Other controls: history.
 HIAL/VIAL `.19.2.3.1.2.2.5.5` owns repair/hostile controls; neutral-verifier extraction stays blocked.

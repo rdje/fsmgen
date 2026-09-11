@@ -2311,7 +2311,29 @@ Its saved-data mode rechecks the retained bodies without allocating fixtures:
 python3 -B docs/audits/native-proxy-observation-archive-release-ordinary-before-20260911/audit.py --verify-saved
 ```
 
-Later lanes qualify the remaining profile/phase interruptions, actual closes followed by modeled
+The ordinary after-call partition uses the same resolver and observer, with
+faults thrown only after an admitted helper returns normally. That helper's
+frame is complete; its still-running callers are interrupted. For example,
+after `_recheck_source` returns, the caller still owns the checked source and
+must close it during failure cleanup. After `_members` returns, its directory
+handle has already closed. Neither case permits inventing a caller return or
+closing a descriptor a second time. Source-return handoffs and sealed completion
+aliases remain excluded from this partition.
+
+Before new fault fixtures run, an event-based preflight takes the exact saved
+healthy prefix through each selected return. It then projects only the future
+closes of handles already open at that point. This independently checks the
+new source-scope oracle's cleanup order and its distinction between completed
+helpers and interrupted callers. Actual fault cases retain their own current
+inputs and complete raw records under
+`docs/audits/native-proxy-observation-archive-release-ordinary-after-20260911/`.
+The same saved-data verification mode applies:
+
+```sh
+python3 -B docs/audits/native-proxy-observation-archive-release-ordinary-after-20260911/audit.py --verify-saved
+```
+
+Later lanes qualify the remaining profiles, actual closes followed by modeled
 errors, deliberate close omissions with separate recovery, and the final
 source/evidence join. Primary errors outrank cleanup reports. These finite
 checks grant no native ownership authority or guarantee against arbitrary

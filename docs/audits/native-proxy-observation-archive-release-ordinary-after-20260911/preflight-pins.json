@@ -1,0 +1,52 @@
+[
+  {
+    "path": "docs/audits/native-proxy-observation-archive-release-ordinary-after-20260911/plan.json",
+    "sha256": "5fbed1f245438fd2b796902254524777857d71884c79aed36308124b9479bc65",
+    "size_bytes": 489395
+  },
+  {
+    "path": "docs/audits/native-proxy-observation-archive-release-ordinary-after-20260911/prepare.py",
+    "sha256": "72382760ceb89f7a88b824a1bc17d1f9d3f40f599eae17bf157c4a1045c467e8",
+    "size_bytes": 2740
+  },
+  {
+    "path": "docs/audits/native-proxy-observation-archive-release-ordinary-after-20260911/expected_trace.py",
+    "sha256": "212d32beba2c8c790f6aebab916db0777947cad82b9390caca75b989838c0c92",
+    "size_bytes": 6335
+  },
+  {
+    "path": "docs/audits/native-proxy-observation-archive-release-ordinary-after-20260911/qualify.t",
+    "sha256": "485032adc8dda2a4f7441b5b06e5f20e308e7276dde2fdf1b4b9d4e2d2fc6835",
+    "size_bytes": 11925
+  },
+  {
+    "path": "docs/audits/native-proxy-observation-archive-release-ordinary-after-20260911/audit.py",
+    "sha256": "18b5ed4af03353f54b642fcb6b6c7f56718022542001bd3fc4769fb309689f0b",
+    "size_bytes": 19967
+  },
+  {
+    "path": "docs/audits/native-proxy-observation-archive-release-ordinary-after-20260911/trace-preflight.py",
+    "sha256": "e5a0045326398d9a4570a0de9c6f24648e1d962593cbc307c12557424e2f94ca",
+    "size_bytes": 4989
+  },
+  {
+    "path": "docs/audits/native-proxy-observation-archive-release-ordinary-after-20260911/trace-preflight-pins.json",
+    "sha256": "062db275cb2e6b36dec402e5c60df5ec8d967d11e6370f0ac84b9cf67bcfebb3",
+    "size_bytes": 887
+  },
+  {
+    "path": "docs/audits/native-proxy-observation-archive-release-ordinary-after-20260911/result/trace-preflight.json",
+    "sha256": "5e4771233d3c04cb432481a36c417737c1c6113a373b10abf084c3a8d62c6a77",
+    "size_bytes": 238727
+  },
+  {
+    "path": "docs/audits/native-proxy-observation-archive-release-ordinary-after-20260911/result/trace-preflight.stdout",
+    "sha256": "bfd1e43c27bc9527fb57deab88208363c19c76d264f896194bd37793b84e209a",
+    "size_bytes": 48
+  },
+  {
+    "path": "docs/audits/native-proxy-observation-archive-release-ordinary-after-20260911/result/trace-preflight.exit",
+    "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa",
+    "size_bytes": 2
+  }
+]
