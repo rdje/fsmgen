@@ -2368,8 +2368,32 @@ checked before return, including the directory observer's duplicate handle.
 The saved qualification, independent oracle and exact recovery copies live at
 `docs/audits/native-proxy-observation-archive-close-reports-20260911/`.
 These modeled return errors do not qualify operating-system close ambiguity.
-Genuine omitted-close detection and recovery, the close-domain join, final
-hostile layout/source applicability and native release remain separate gates.
+
+Genuine omitted-close controls separately check that the observer can detect
+real leaks. Selected counterimplementations skip actual source, writer and
+directory closes while reporting success to the inactive archive helper.
+Actual handle aliases remain alive beyond the helper and tracer return, so
+destructors cannot hide those omissions before observation.
+
+For example, a skipped writer close can leave complete archive bytes and a
+returned receipt while its descriptor is still open. The unchanged closure
+oracle rejects that original verdict. A separate observer checks the open
+handle's descriptor and native identity, then explicitly closes that same
+handle. It checks every selected open identity before starting any recovery,
+and records recovery separately without rewriting the original failure.
+Directory witnesses close their own temporary duplicate handles as well.
+
+The selected cases cover single and grouped omissions during fresh creation
+and existing-archive verification, including competing primary errors and
+equal-content sources. Unselected handles must still close normally. Existing
+archives, original snapshots and other owners stay unchanged; fresh primary
+failures retain the complete files already created. The saved evidence and
+independent oracle are at
+`docs/audits/native-proxy-observation-archive-omitted-closes-20260911/`.
+These controls qualify detection and recovery of their deliberate omissions;
+they do not certify correct cleanup by the defective counterimplementations
+or recovery from a process crash. The close-domain join, final hostile
+layout/source applicability and native release remain separate gates.
 
 The helper checks bounded regular source/output files and the native header,
 then sets executable permissions through the admitted open file handle. A

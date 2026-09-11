@@ -1,0 +1,38 @@
+{
+  "cause": "The first candidate precomputed aggregate bytes but omitted aggregate lines. The Knowledge Map total was 47289 lines against the unchanged 47288-line allowance, so LIVE-DOCUMENT-SIZE and its README wrapper correctly failed.",
+  "files": [
+    {
+      "destination": "docs/audits/native-proxy-observation-archive-omitted-closes-20260911/result/first-staged-gate/stdout",
+      "sha256": "b8ea3b1387a36b683ce8a6e01ce69b59879e972ded68d92f26f81e59feff0bef",
+      "size_bytes": 47469,
+      "source": ".artifacts/logs/native-proxy-observation-archive-omitted-closes-20260911/staged-doctrines.stdout"
+    },
+    {
+      "destination": "docs/audits/native-proxy-observation-archive-omitted-closes-20260911/result/first-staged-gate/stderr",
+      "sha256": "e5f5be832f91bcec985f7958ac93dc2f95322a9705081926e1998db3d271f934",
+      "size_bytes": 4430,
+      "source": ".artifacts/logs/native-proxy-observation-archive-omitted-closes-20260911/staged-doctrines.stderr"
+    },
+    {
+      "destination": "docs/audits/native-proxy-observation-archive-omitted-closes-20260911/result/first-staged-gate/exit",
+      "sha256": "4355a46b19d348dc2f57c046f8ef63d4538ebb936000f3c9ee954a27460dd865",
+      "size_bytes": 2,
+      "source": ".artifacts/logs/native-proxy-observation-archive-omitted-closes-20260911/staged-doctrines.exit"
+    },
+    {
+      "destination": "docs/audits/native-proxy-observation-archive-omitted-closes-20260911/result/first-staged-gate/knowledge-card.initial-source",
+      "sha256": "bc109ea0d7cc01c6800b6c09e3242c501c5be9e80d1bc3b603589a8e7cba5fea",
+      "size_bytes": 8418,
+      "source": "docs/knowledge/test-subprocess-policy-adapters.md"
+    },
+    {
+      "destination": "docs/audits/native-proxy-observation-archive-omitted-closes-20260911/result/first-staged-gate/knowledge-projection.initial-source",
+      "sha256": "280d62d37b5c1afc06693defda2ef89792a9346cd9afb12e35dcbb313f1d3db6",
+      "size_bytes": 208,
+      "source": "docs/audits/native-proxy-observation-archive-omitted-closes-20260911/knowledge-projection.json"
+    }
+  ],
+  "owner": "HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.12.4.1.3.4.2.3.3.2",
+  "repair": "Combine two adjacent related prose lines in the current canonical card, preserving every word, question and history route. Precompute both aggregate byte and line counts before this repair. Qualification sources, pins, results and mdBook are unchanged. Regenerate the Knowledge Map and claim inventory before repeating the staged gate.",
+  "schema": "fsmgen.inactive_archive_omitted_closes_gate_repair.v1"
+}

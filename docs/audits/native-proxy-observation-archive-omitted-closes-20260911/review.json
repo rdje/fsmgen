@@ -1,0 +1,24 @@
+{
+  "book": {
+    "exact_output_absent": true,
+    "exit_code": 0,
+    "new_passage_verified": true,
+    "original_verdict_preserved": true,
+    "output": ".artifacts/tmp/native-proxy-observation-archive-omitted-closes-book-20260911/book",
+    "rendered_bytes": 23263834,
+    "rendered_files": 98,
+    "replay_scope_verified": true,
+    "same_volume_direct_objects": true
+  },
+  "doctrines": "Final staged-index and commit-hook passes are required conditions of the durable work-unit commit; full CI/push and startup/native/parent gates remain open.",
+  "documentation": "documentation.json",
+  "durability": "Thirty-six unchanged predecessor inputs including twenty-one Perl modules bind the source epoch. Five prospective pins and sixteen byte-exact raw recovery copies retain the first qualification and full audit. Task/book/Knowledge Map and exact predecessor acceptance history preserve continuity. No qualification source repair or original matrix rerun occurred.",
+  "falsification": "Forty-eight altered reports and five changed domains reject. Controls cover missing/aliased/order-changed selections, masked original closure failure, unclosed unselected handles, wrong actual/reported close fields and inheritance flags, source/writer/directory and observer states, missing/foreign/native-mismatched open witnesses, aliased or unclosed observer duplicates, missing/foreign/unperformed/failed recovery, changed primary errors, lost preparations, changed archive bytes/modes, other holds, inputs, allocations and process attempts.",
+  "gate_repair": "The first staged gate correctly rejected a one-line Knowledge Map aggregate overflow. Exact failing output and initial card/projection are preserved under result/first-staged-gate. Combining two related prose lines preserves all words, questions and history routes within unchanged byte and line allowances; no qualification source/result or mdBook change.",
+  "knowledge_map": "knowledge-map: OK (1161 facts, 6396 unique questions, 6567 answer occurrences, 139 bounded topic shards; query parity verified)",
+  "knowledge_projection": "knowledge-projection.json",
+  "limits": "Finite inert counterimplementations only. Counts refer to per-operation handle instances, not globally unique descriptors. The original leak verdict remains unchanged after observer recovery; counterimplementation returns do not certify correct cleanup. Operating-system close ambiguity, crash recovery, final source/close joins, exact release and native ownership remain unqualified here. No compiler/native execution, original matrix rerun or observation-hold release.",
+  "owner": "HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.12.4.1.3.4.2.3.3.2",
+  "rederivation": "First guarded qualification and independent audit pass 98 cases, 659 assertions and 133 operations including 35 observed preparations. All 94 genuine omission cases reject at the unchanged closure oracle, including 65 counterimplementation returns and 29 primary failures; four healthy controls pass. Actual open/native witnesses bind all 248 omitted handle instances to explicit recovery of those same handles. The other 1964 of 2212 observed handles close normally; all 392 roots are absent.",
+  "schema": "fsmgen.inactive_archive_omitted_closes_review.v1"
+}

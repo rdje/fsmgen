@@ -1,0 +1,660 @@
+ok 1 - ordinary:fresh:healthy: actual inactive retirement precedes omission controls
+ok 2 - ordinary:fresh:healthy: exact selected omissions and original return-time verdict observed
+ok 3 - ordinary:fresh:healthy: real omissions observed then explicitly recovered
+ok 4 - ordinary:fresh:healthy: every unselected owned handle explicitly closes
+ok 5 - ordinary:fresh:healthy: retained inputs unchanged
+ok 6 - ordinary:fresh:healthy: expected archive and other owners preserved after recovery
+ok 7 - ordinary:fresh:single:directory_handle:0: actual inactive retirement precedes omission controls
+ok 8 - ordinary:fresh:single:directory_handle:0: exact selected omissions and original return-time verdict observed
+ok 9 - ordinary:fresh:single:directory_handle:0: real omissions observed then explicitly recovered
+ok 10 - ordinary:fresh:single:directory_handle:0: every unselected owned handle explicitly closes
+ok 11 - ordinary:fresh:single:directory_handle:0: retained inputs unchanged
+ok 12 - ordinary:fresh:single:directory_handle:0: expected archive and other owners preserved after recovery
+ok 13 - ordinary:fresh:single:directory_handle:1: actual inactive retirement precedes omission controls
+ok 14 - ordinary:fresh:single:directory_handle:1: exact selected omissions and original return-time verdict observed
+ok 15 - ordinary:fresh:single:directory_handle:1: real omissions observed then explicitly recovered
+ok 16 - ordinary:fresh:single:directory_handle:1: every unselected owned handle explicitly closes
+ok 17 - ordinary:fresh:single:directory_handle:1: retained inputs unchanged
+ok 18 - ordinary:fresh:single:directory_handle:1: expected archive and other owners preserved after recovery
+ok 19 - ordinary:fresh:single:source:0:0: actual inactive retirement precedes omission controls
+ok 20 - ordinary:fresh:single:source:0:0: exact selected omissions and original return-time verdict observed
+ok 21 - ordinary:fresh:single:source:0:0: real omissions observed then explicitly recovered
+ok 22 - ordinary:fresh:single:source:0:0: every unselected owned handle explicitly closes
+ok 23 - ordinary:fresh:single:source:0:0: retained inputs unchanged
+ok 24 - ordinary:fresh:single:source:0:0: expected archive and other owners preserved after recovery
+ok 25 - ordinary:fresh:single:writer:0: actual inactive retirement precedes omission controls
+ok 26 - ordinary:fresh:single:writer:0: exact selected omissions and original return-time verdict observed
+ok 27 - ordinary:fresh:single:writer:0: real omissions observed then explicitly recovered
+ok 28 - ordinary:fresh:single:writer:0: every unselected owned handle explicitly closes
+ok 29 - ordinary:fresh:single:writer:0: retained inputs unchanged
+ok 30 - ordinary:fresh:single:writer:0: expected archive and other owners preserved after recovery
+ok 31 - ordinary:fresh:single:directory_handle:2: actual inactive retirement precedes omission controls
+ok 32 - ordinary:fresh:single:directory_handle:2: exact selected omissions and original return-time verdict observed
+ok 33 - ordinary:fresh:single:directory_handle:2: real omissions observed then explicitly recovered
+ok 34 - ordinary:fresh:single:directory_handle:2: every unselected owned handle explicitly closes
+ok 35 - ordinary:fresh:single:directory_handle:2: retained inputs unchanged
+ok 36 - ordinary:fresh:single:directory_handle:2: expected archive and other owners preserved after recovery
+ok 37 - ordinary:fresh:single:source:1:0: actual inactive retirement precedes omission controls
+ok 38 - ordinary:fresh:single:source:1:0: exact selected omissions and original return-time verdict observed
+ok 39 - ordinary:fresh:single:source:1:0: real omissions observed then explicitly recovered
+ok 40 - ordinary:fresh:single:source:1:0: every unselected owned handle explicitly closes
+ok 41 - ordinary:fresh:single:source:1:0: retained inputs unchanged
+ok 42 - ordinary:fresh:single:source:1:0: expected archive and other owners preserved after recovery
+ok 43 - ordinary:fresh:single:writer:1: actual inactive retirement precedes omission controls
+ok 44 - ordinary:fresh:single:writer:1: exact selected omissions and original return-time verdict observed
+ok 45 - ordinary:fresh:single:writer:1: real omissions observed then explicitly recovered
+ok 46 - ordinary:fresh:single:writer:1: every unselected owned handle explicitly closes
+ok 47 - ordinary:fresh:single:writer:1: retained inputs unchanged
+ok 48 - ordinary:fresh:single:writer:1: expected archive and other owners preserved after recovery
+ok 49 - ordinary:fresh:single:directory_handle:3: actual inactive retirement precedes omission controls
+ok 50 - ordinary:fresh:single:directory_handle:3: exact selected omissions and original return-time verdict observed
+ok 51 - ordinary:fresh:single:directory_handle:3: real omissions observed then explicitly recovered
+ok 52 - ordinary:fresh:single:directory_handle:3: every unselected owned handle explicitly closes
+ok 53 - ordinary:fresh:single:directory_handle:3: retained inputs unchanged
+ok 54 - ordinary:fresh:single:directory_handle:3: expected archive and other owners preserved after recovery
+ok 55 - ordinary:fresh:single:source:2:0: actual inactive retirement precedes omission controls
+ok 56 - ordinary:fresh:single:source:2:0: exact selected omissions and original return-time verdict observed
+ok 57 - ordinary:fresh:single:source:2:0: real omissions observed then explicitly recovered
+ok 58 - ordinary:fresh:single:source:2:0: every unselected owned handle explicitly closes
+ok 59 - ordinary:fresh:single:source:2:0: retained inputs unchanged
+ok 60 - ordinary:fresh:single:source:2:0: expected archive and other owners preserved after recovery
+ok 61 - ordinary:fresh:single:writer:2: actual inactive retirement precedes omission controls
+ok 62 - ordinary:fresh:single:writer:2: exact selected omissions and original return-time verdict observed
+ok 63 - ordinary:fresh:single:writer:2: real omissions observed then explicitly recovered
+ok 64 - ordinary:fresh:single:writer:2: every unselected owned handle explicitly closes
+ok 65 - ordinary:fresh:single:writer:2: retained inputs unchanged
+ok 66 - ordinary:fresh:single:writer:2: expected archive and other owners preserved after recovery
+ok 67 - ordinary:fresh:single:directory_handle:4: actual inactive retirement precedes omission controls
+ok 68 - ordinary:fresh:single:directory_handle:4: exact selected omissions and original return-time verdict observed
+ok 69 - ordinary:fresh:single:directory_handle:4: real omissions observed then explicitly recovered
+ok 70 - ordinary:fresh:single:directory_handle:4: every unselected owned handle explicitly closes
+ok 71 - ordinary:fresh:single:directory_handle:4: retained inputs unchanged
+ok 72 - ordinary:fresh:single:directory_handle:4: expected archive and other owners preserved after recovery
+ok 73 - ordinary:fresh:single:source:3:0: actual inactive retirement precedes omission controls
+ok 74 - ordinary:fresh:single:source:3:0: exact selected omissions and original return-time verdict observed
+ok 75 - ordinary:fresh:single:source:3:0: real omissions observed then explicitly recovered
+ok 76 - ordinary:fresh:single:source:3:0: every unselected owned handle explicitly closes
+ok 77 - ordinary:fresh:single:source:3:0: retained inputs unchanged
+ok 78 - ordinary:fresh:single:source:3:0: expected archive and other owners preserved after recovery
+ok 79 - ordinary:fresh:single:writer:3: actual inactive retirement precedes omission controls
+ok 80 - ordinary:fresh:single:writer:3: exact selected omissions and original return-time verdict observed
+ok 81 - ordinary:fresh:single:writer:3: real omissions observed then explicitly recovered
+ok 82 - ordinary:fresh:single:writer:3: every unselected owned handle explicitly closes
+ok 83 - ordinary:fresh:single:writer:3: retained inputs unchanged
+ok 84 - ordinary:fresh:single:writer:3: expected archive and other owners preserved after recovery
+ok 85 - ordinary:fresh:single:directory_handle:5: actual inactive retirement precedes omission controls
+ok 86 - ordinary:fresh:single:directory_handle:5: exact selected omissions and original return-time verdict observed
+ok 87 - ordinary:fresh:single:directory_handle:5: real omissions observed then explicitly recovered
+ok 88 - ordinary:fresh:single:directory_handle:5: every unselected owned handle explicitly closes
+ok 89 - ordinary:fresh:single:directory_handle:5: retained inputs unchanged
+ok 90 - ordinary:fresh:single:directory_handle:5: expected archive and other owners preserved after recovery
+ok 91 - ordinary:fresh:single:source:0:2: actual inactive retirement precedes omission controls
+ok 92 - ordinary:fresh:single:source:0:2: exact selected omissions and original return-time verdict observed
+ok 93 - ordinary:fresh:single:source:0:2: real omissions observed then explicitly recovered
+ok 94 - ordinary:fresh:single:source:0:2: every unselected owned handle explicitly closes
+ok 95 - ordinary:fresh:single:source:0:2: retained inputs unchanged
+ok 96 - ordinary:fresh:single:source:0:2: expected archive and other owners preserved after recovery
+ok 97 - ordinary:fresh:single:source:1:2: actual inactive retirement precedes omission controls
+ok 98 - ordinary:fresh:single:source:1:2: exact selected omissions and original return-time verdict observed
+ok 99 - ordinary:fresh:single:source:1:2: real omissions observed then explicitly recovered
+ok 100 - ordinary:fresh:single:source:1:2: every unselected owned handle explicitly closes
+ok 101 - ordinary:fresh:single:source:1:2: retained inputs unchanged
+ok 102 - ordinary:fresh:single:source:1:2: expected archive and other owners preserved after recovery
+ok 103 - ordinary:fresh:single:source:2:2: actual inactive retirement precedes omission controls
+ok 104 - ordinary:fresh:single:source:2:2: exact selected omissions and original return-time verdict observed
+ok 105 - ordinary:fresh:single:source:2:2: real omissions observed then explicitly recovered
+ok 106 - ordinary:fresh:single:source:2:2: every unselected owned handle explicitly closes
+ok 107 - ordinary:fresh:single:source:2:2: retained inputs unchanged
+ok 108 - ordinary:fresh:single:source:2:2: expected archive and other owners preserved after recovery
+ok 109 - ordinary:fresh:single:source:3:2: actual inactive retirement precedes omission controls
+ok 110 - ordinary:fresh:single:source:3:2: exact selected omissions and original return-time verdict observed
+ok 111 - ordinary:fresh:single:source:3:2: real omissions observed then explicitly recovered
+ok 112 - ordinary:fresh:single:source:3:2: every unselected owned handle explicitly closes
+ok 113 - ordinary:fresh:single:source:3:2: retained inputs unchanged
+ok 114 - ordinary:fresh:single:source:3:2: expected archive and other owners preserved after recovery
+ok 115 - ordinary:fresh:single:directory_handle:6: actual inactive retirement precedes omission controls
+ok 116 - ordinary:fresh:single:directory_handle:6: exact selected omissions and original return-time verdict observed
+ok 117 - ordinary:fresh:single:directory_handle:6: real omissions observed then explicitly recovered
+ok 118 - ordinary:fresh:single:directory_handle:6: every unselected owned handle explicitly closes
+ok 119 - ordinary:fresh:single:directory_handle:6: retained inputs unchanged
+ok 120 - ordinary:fresh:single:directory_handle:6: expected archive and other owners preserved after recovery
+ok 121 - ordinary:fresh:single:source:0:1: actual inactive retirement precedes omission controls
+ok 122 - ordinary:fresh:single:source:0:1: exact selected omissions and original return-time verdict observed
+ok 123 - ordinary:fresh:single:source:0:1: real omissions observed then explicitly recovered
+ok 124 - ordinary:fresh:single:source:0:1: every unselected owned handle explicitly closes
+ok 125 - ordinary:fresh:single:source:0:1: retained inputs unchanged
+ok 126 - ordinary:fresh:single:source:0:1: expected archive and other owners preserved after recovery
+ok 127 - ordinary:fresh:single:source:1:1: actual inactive retirement precedes omission controls
+ok 128 - ordinary:fresh:single:source:1:1: exact selected omissions and original return-time verdict observed
+ok 129 - ordinary:fresh:single:source:1:1: real omissions observed then explicitly recovered
+ok 130 - ordinary:fresh:single:source:1:1: every unselected owned handle explicitly closes
+ok 131 - ordinary:fresh:single:source:1:1: retained inputs unchanged
+ok 132 - ordinary:fresh:single:source:1:1: expected archive and other owners preserved after recovery
+ok 133 - ordinary:fresh:single:source:2:1: actual inactive retirement precedes omission controls
+ok 134 - ordinary:fresh:single:source:2:1: exact selected omissions and original return-time verdict observed
+ok 135 - ordinary:fresh:single:source:2:1: real omissions observed then explicitly recovered
+ok 136 - ordinary:fresh:single:source:2:1: every unselected owned handle explicitly closes
+ok 137 - ordinary:fresh:single:source:2:1: retained inputs unchanged
+ok 138 - ordinary:fresh:single:source:2:1: expected archive and other owners preserved after recovery
+ok 139 - ordinary:fresh:single:source:3:1: actual inactive retirement precedes omission controls
+ok 140 - ordinary:fresh:single:source:3:1: exact selected omissions and original return-time verdict observed
+ok 141 - ordinary:fresh:single:source:3:1: real omissions observed then explicitly recovered
+ok 142 - ordinary:fresh:single:source:3:1: every unselected owned handle explicitly closes
+ok 143 - ordinary:fresh:single:source:3:1: retained inputs unchanged
+ok 144 - ordinary:fresh:single:source:3:1: expected archive and other owners preserved after recovery
+ok 145 - ordinary:fresh:all-group: actual inactive retirement precedes omission controls
+ok 146 - ordinary:fresh:all-group: exact selected omissions and original return-time verdict observed
+ok 147 - ordinary:fresh:all-group: real omissions observed then explicitly recovered
+ok 148 - ordinary:fresh:all-group: every unselected owned handle explicitly closes
+ok 149 - ordinary:fresh:all-group: retained inputs unchanged
+ok 150 - ordinary:fresh:all-group: expected archive and other owners preserved after recovery
+ok 151 - ordinary:fresh:primary-retained: actual inactive retirement precedes omission controls
+ok 152 - ordinary:fresh:primary-retained: exact selected omissions and original return-time verdict observed
+ok 153 - ordinary:fresh:primary-retained: real omissions observed then explicitly recovered
+ok 154 - ordinary:fresh:primary-retained: every unselected owned handle explicitly closes
+ok 155 - ordinary:fresh:primary-retained: retained inputs unchanged
+ok 156 - ordinary:fresh:primary-retained: expected archive and other owners preserved after recovery
+ok 157 - ordinary:fresh:primary-payload:0: actual inactive retirement precedes omission controls
+ok 158 - ordinary:fresh:primary-payload:0: exact selected omissions and original return-time verdict observed
+ok 159 - ordinary:fresh:primary-payload:0: real omissions observed then explicitly recovered
+ok 160 - ordinary:fresh:primary-payload:0: every unselected owned handle explicitly closes
+ok 161 - ordinary:fresh:primary-payload:0: retained inputs unchanged
+ok 162 - ordinary:fresh:primary-payload:0: expected archive and other owners preserved after recovery
+ok 163 - ordinary:fresh:primary-payload:1: actual inactive retirement precedes omission controls
+ok 164 - ordinary:fresh:primary-payload:1: exact selected omissions and original return-time verdict observed
+ok 165 - ordinary:fresh:primary-payload:1: real omissions observed then explicitly recovered
+ok 166 - ordinary:fresh:primary-payload:1: every unselected owned handle explicitly closes
+ok 167 - ordinary:fresh:primary-payload:1: retained inputs unchanged
+ok 168 - ordinary:fresh:primary-payload:1: expected archive and other owners preserved after recovery
+ok 169 - ordinary:fresh:primary-payload:2: actual inactive retirement precedes omission controls
+ok 170 - ordinary:fresh:primary-payload:2: exact selected omissions and original return-time verdict observed
+ok 171 - ordinary:fresh:primary-payload:2: real omissions observed then explicitly recovered
+ok 172 - ordinary:fresh:primary-payload:2: every unselected owned handle explicitly closes
+ok 173 - ordinary:fresh:primary-payload:2: retained inputs unchanged
+ok 174 - ordinary:fresh:primary-payload:2: expected archive and other owners preserved after recovery
+ok 175 - ordinary:fresh:primary-payload:3: actual inactive retirement precedes omission controls
+ok 176 - ordinary:fresh:primary-payload:3: exact selected omissions and original return-time verdict observed
+ok 177 - ordinary:fresh:primary-payload:3: real omissions observed then explicitly recovered
+ok 178 - ordinary:fresh:primary-payload:3: every unselected owned handle explicitly closes
+ok 179 - ordinary:fresh:primary-payload:3: retained inputs unchanged
+ok 180 - ordinary:fresh:primary-payload:3: expected archive and other owners preserved after recovery
+ok 181 - ordinary:fresh:primary-reread:0: actual inactive retirement precedes omission controls
+ok 182 - ordinary:fresh:primary-reread:0: exact selected omissions and original return-time verdict observed
+ok 183 - ordinary:fresh:primary-reread:0: real omissions observed then explicitly recovered
+ok 184 - ordinary:fresh:primary-reread:0: every unselected owned handle explicitly closes
+ok 185 - ordinary:fresh:primary-reread:0: retained inputs unchanged
+ok 186 - ordinary:fresh:primary-reread:0: expected archive and other owners preserved after recovery
+ok 187 - ordinary:fresh:primary-reread:1: actual inactive retirement precedes omission controls
+ok 188 - ordinary:fresh:primary-reread:1: exact selected omissions and original return-time verdict observed
+ok 189 - ordinary:fresh:primary-reread:1: real omissions observed then explicitly recovered
+ok 190 - ordinary:fresh:primary-reread:1: every unselected owned handle explicitly closes
+ok 191 - ordinary:fresh:primary-reread:1: retained inputs unchanged
+ok 192 - ordinary:fresh:primary-reread:1: expected archive and other owners preserved after recovery
+ok 193 - ordinary:fresh:primary-reread:2: actual inactive retirement precedes omission controls
+ok 194 - ordinary:fresh:primary-reread:2: exact selected omissions and original return-time verdict observed
+ok 195 - ordinary:fresh:primary-reread:2: real omissions observed then explicitly recovered
+ok 196 - ordinary:fresh:primary-reread:2: every unselected owned handle explicitly closes
+ok 197 - ordinary:fresh:primary-reread:2: retained inputs unchanged
+ok 198 - ordinary:fresh:primary-reread:2: expected archive and other owners preserved after recovery
+ok 199 - ordinary:fresh:primary-reread:3: actual inactive retirement precedes omission controls
+ok 200 - ordinary:fresh:primary-reread:3: exact selected omissions and original return-time verdict observed
+ok 201 - ordinary:fresh:primary-reread:3: real omissions observed then explicitly recovered
+ok 202 - ordinary:fresh:primary-reread:3: every unselected owned handle explicitly closes
+ok 203 - ordinary:fresh:primary-reread:3: retained inputs unchanged
+ok 204 - ordinary:fresh:primary-reread:3: expected archive and other owners preserved after recovery
+ok 205 - ordinary:fresh:primary-directory: actual inactive retirement precedes omission controls
+ok 206 - ordinary:fresh:primary-directory: exact selected omissions and original return-time verdict observed
+ok 207 - ordinary:fresh:primary-directory: real omissions observed then explicitly recovered
+ok 208 - ordinary:fresh:primary-directory: every unselected owned handle explicitly closes
+ok 209 - ordinary:fresh:primary-directory: retained inputs unchanged
+ok 210 - ordinary:fresh:primary-directory: expected archive and other owners preserved after recovery
+ok 211 - ordinary:existing:healthy: healthy preparation is observed
+ok 212 - ordinary:existing:healthy: all actual preparation handles explicitly close
+ok 213 - ordinary:existing:healthy: actual inactive retirement precedes omission controls
+ok 214 - ordinary:existing:healthy: exact selected omissions and original return-time verdict observed
+ok 215 - ordinary:existing:healthy: real omissions observed then explicitly recovered
+ok 216 - ordinary:existing:healthy: every unselected owned handle explicitly closes
+ok 217 - ordinary:existing:healthy: retained inputs unchanged
+ok 218 - ordinary:existing:healthy: expected archive and other owners preserved after recovery
+ok 219 - ordinary:existing:single:directory_handle:0: healthy preparation is observed
+ok 220 - ordinary:existing:single:directory_handle:0: all actual preparation handles explicitly close
+ok 221 - ordinary:existing:single:directory_handle:0: actual inactive retirement precedes omission controls
+ok 222 - ordinary:existing:single:directory_handle:0: exact selected omissions and original return-time verdict observed
+ok 223 - ordinary:existing:single:directory_handle:0: real omissions observed then explicitly recovered
+ok 224 - ordinary:existing:single:directory_handle:0: every unselected owned handle explicitly closes
+ok 225 - ordinary:existing:single:directory_handle:0: retained inputs unchanged
+ok 226 - ordinary:existing:single:directory_handle:0: expected archive and other owners preserved after recovery
+ok 227 - ordinary:existing:single:directory_handle:1: healthy preparation is observed
+ok 228 - ordinary:existing:single:directory_handle:1: all actual preparation handles explicitly close
+ok 229 - ordinary:existing:single:directory_handle:1: actual inactive retirement precedes omission controls
+ok 230 - ordinary:existing:single:directory_handle:1: exact selected omissions and original return-time verdict observed
+ok 231 - ordinary:existing:single:directory_handle:1: real omissions observed then explicitly recovered
+ok 232 - ordinary:existing:single:directory_handle:1: every unselected owned handle explicitly closes
+ok 233 - ordinary:existing:single:directory_handle:1: retained inputs unchanged
+ok 234 - ordinary:existing:single:directory_handle:1: expected archive and other owners preserved after recovery
+ok 235 - ordinary:existing:single:source:0:1: healthy preparation is observed
+ok 236 - ordinary:existing:single:source:0:1: all actual preparation handles explicitly close
+ok 237 - ordinary:existing:single:source:0:1: actual inactive retirement precedes omission controls
+ok 238 - ordinary:existing:single:source:0:1: exact selected omissions and original return-time verdict observed
+ok 239 - ordinary:existing:single:source:0:1: real omissions observed then explicitly recovered
+ok 240 - ordinary:existing:single:source:0:1: every unselected owned handle explicitly closes
+ok 241 - ordinary:existing:single:source:0:1: retained inputs unchanged
+ok 242 - ordinary:existing:single:source:0:1: expected archive and other owners preserved after recovery
+ok 243 - ordinary:existing:single:source:1:1: healthy preparation is observed
+ok 244 - ordinary:existing:single:source:1:1: all actual preparation handles explicitly close
+ok 245 - ordinary:existing:single:source:1:1: actual inactive retirement precedes omission controls
+ok 246 - ordinary:existing:single:source:1:1: exact selected omissions and original return-time verdict observed
+ok 247 - ordinary:existing:single:source:1:1: real omissions observed then explicitly recovered
+ok 248 - ordinary:existing:single:source:1:1: every unselected owned handle explicitly closes
+ok 249 - ordinary:existing:single:source:1:1: retained inputs unchanged
+ok 250 - ordinary:existing:single:source:1:1: expected archive and other owners preserved after recovery
+ok 251 - ordinary:existing:single:source:2:1: healthy preparation is observed
+ok 252 - ordinary:existing:single:source:2:1: all actual preparation handles explicitly close
+ok 253 - ordinary:existing:single:source:2:1: actual inactive retirement precedes omission controls
+ok 254 - ordinary:existing:single:source:2:1: exact selected omissions and original return-time verdict observed
+ok 255 - ordinary:existing:single:source:2:1: real omissions observed then explicitly recovered
+ok 256 - ordinary:existing:single:source:2:1: every unselected owned handle explicitly closes
+ok 257 - ordinary:existing:single:source:2:1: retained inputs unchanged
+ok 258 - ordinary:existing:single:source:2:1: expected archive and other owners preserved after recovery
+ok 259 - ordinary:existing:single:source:3:1: healthy preparation is observed
+ok 260 - ordinary:existing:single:source:3:1: all actual preparation handles explicitly close
+ok 261 - ordinary:existing:single:source:3:1: actual inactive retirement precedes omission controls
+ok 262 - ordinary:existing:single:source:3:1: exact selected omissions and original return-time verdict observed
+ok 263 - ordinary:existing:single:source:3:1: real omissions observed then explicitly recovered
+ok 264 - ordinary:existing:single:source:3:1: every unselected owned handle explicitly closes
+ok 265 - ordinary:existing:single:source:3:1: retained inputs unchanged
+ok 266 - ordinary:existing:single:source:3:1: expected archive and other owners preserved after recovery
+ok 267 - ordinary:existing:single:directory_handle:2: healthy preparation is observed
+ok 268 - ordinary:existing:single:directory_handle:2: all actual preparation handles explicitly close
+ok 269 - ordinary:existing:single:directory_handle:2: actual inactive retirement precedes omission controls
+ok 270 - ordinary:existing:single:directory_handle:2: exact selected omissions and original return-time verdict observed
+ok 271 - ordinary:existing:single:directory_handle:2: real omissions observed then explicitly recovered
+ok 272 - ordinary:existing:single:directory_handle:2: every unselected owned handle explicitly closes
+ok 273 - ordinary:existing:single:directory_handle:2: retained inputs unchanged
+ok 274 - ordinary:existing:single:directory_handle:2: expected archive and other owners preserved after recovery
+ok 275 - ordinary:existing:single:source:0:0: healthy preparation is observed
+ok 276 - ordinary:existing:single:source:0:0: all actual preparation handles explicitly close
+ok 277 - ordinary:existing:single:source:0:0: actual inactive retirement precedes omission controls
+ok 278 - ordinary:existing:single:source:0:0: exact selected omissions and original return-time verdict observed
+ok 279 - ordinary:existing:single:source:0:0: real omissions observed then explicitly recovered
+ok 280 - ordinary:existing:single:source:0:0: every unselected owned handle explicitly closes
+ok 281 - ordinary:existing:single:source:0:0: retained inputs unchanged
+ok 282 - ordinary:existing:single:source:0:0: expected archive and other owners preserved after recovery
+ok 283 - ordinary:existing:single:source:1:0: healthy preparation is observed
+ok 284 - ordinary:existing:single:source:1:0: all actual preparation handles explicitly close
+ok 285 - ordinary:existing:single:source:1:0: actual inactive retirement precedes omission controls
+ok 286 - ordinary:existing:single:source:1:0: exact selected omissions and original return-time verdict observed
+ok 287 - ordinary:existing:single:source:1:0: real omissions observed then explicitly recovered
+ok 288 - ordinary:existing:single:source:1:0: every unselected owned handle explicitly closes
+ok 289 - ordinary:existing:single:source:1:0: retained inputs unchanged
+ok 290 - ordinary:existing:single:source:1:0: expected archive and other owners preserved after recovery
+ok 291 - ordinary:existing:single:source:2:0: healthy preparation is observed
+ok 292 - ordinary:existing:single:source:2:0: all actual preparation handles explicitly close
+ok 293 - ordinary:existing:single:source:2:0: actual inactive retirement precedes omission controls
+ok 294 - ordinary:existing:single:source:2:0: exact selected omissions and original return-time verdict observed
+ok 295 - ordinary:existing:single:source:2:0: real omissions observed then explicitly recovered
+ok 296 - ordinary:existing:single:source:2:0: every unselected owned handle explicitly closes
+ok 297 - ordinary:existing:single:source:2:0: retained inputs unchanged
+ok 298 - ordinary:existing:single:source:2:0: expected archive and other owners preserved after recovery
+ok 299 - ordinary:existing:single:source:3:0: healthy preparation is observed
+ok 300 - ordinary:existing:single:source:3:0: all actual preparation handles explicitly close
+ok 301 - ordinary:existing:single:source:3:0: actual inactive retirement precedes omission controls
+ok 302 - ordinary:existing:single:source:3:0: exact selected omissions and original return-time verdict observed
+ok 303 - ordinary:existing:single:source:3:0: real omissions observed then explicitly recovered
+ok 304 - ordinary:existing:single:source:3:0: every unselected owned handle explicitly closes
+ok 305 - ordinary:existing:single:source:3:0: retained inputs unchanged
+ok 306 - ordinary:existing:single:source:3:0: expected archive and other owners preserved after recovery
+ok 307 - ordinary:existing:all-group: healthy preparation is observed
+ok 308 - ordinary:existing:all-group: all actual preparation handles explicitly close
+ok 309 - ordinary:existing:all-group: actual inactive retirement precedes omission controls
+ok 310 - ordinary:existing:all-group: exact selected omissions and original return-time verdict observed
+ok 311 - ordinary:existing:all-group: real omissions observed then explicitly recovered
+ok 312 - ordinary:existing:all-group: every unselected owned handle explicitly closes
+ok 313 - ordinary:existing:all-group: retained inputs unchanged
+ok 314 - ordinary:existing:all-group: expected archive and other owners preserved after recovery
+ok 315 - ordinary:existing:primary-retained: healthy preparation is observed
+ok 316 - ordinary:existing:primary-retained: all actual preparation handles explicitly close
+ok 317 - ordinary:existing:primary-retained: actual inactive retirement precedes omission controls
+ok 318 - ordinary:existing:primary-retained: exact selected omissions and original return-time verdict observed
+ok 319 - ordinary:existing:primary-retained: real omissions observed then explicitly recovered
+ok 320 - ordinary:existing:primary-retained: every unselected owned handle explicitly closes
+ok 321 - ordinary:existing:primary-retained: retained inputs unchanged
+ok 322 - ordinary:existing:primary-retained: expected archive and other owners preserved after recovery
+ok 323 - ordinary:existing:primary-reread:0: healthy preparation is observed
+ok 324 - ordinary:existing:primary-reread:0: all actual preparation handles explicitly close
+ok 325 - ordinary:existing:primary-reread:0: actual inactive retirement precedes omission controls
+ok 326 - ordinary:existing:primary-reread:0: exact selected omissions and original return-time verdict observed
+ok 327 - ordinary:existing:primary-reread:0: real omissions observed then explicitly recovered
+ok 328 - ordinary:existing:primary-reread:0: every unselected owned handle explicitly closes
+ok 329 - ordinary:existing:primary-reread:0: retained inputs unchanged
+ok 330 - ordinary:existing:primary-reread:0: expected archive and other owners preserved after recovery
+ok 331 - ordinary:existing:primary-reread:1: healthy preparation is observed
+ok 332 - ordinary:existing:primary-reread:1: all actual preparation handles explicitly close
+ok 333 - ordinary:existing:primary-reread:1: actual inactive retirement precedes omission controls
+ok 334 - ordinary:existing:primary-reread:1: exact selected omissions and original return-time verdict observed
+ok 335 - ordinary:existing:primary-reread:1: real omissions observed then explicitly recovered
+ok 336 - ordinary:existing:primary-reread:1: every unselected owned handle explicitly closes
+ok 337 - ordinary:existing:primary-reread:1: retained inputs unchanged
+ok 338 - ordinary:existing:primary-reread:1: expected archive and other owners preserved after recovery
+ok 339 - ordinary:existing:primary-reread:2: healthy preparation is observed
+ok 340 - ordinary:existing:primary-reread:2: all actual preparation handles explicitly close
+ok 341 - ordinary:existing:primary-reread:2: actual inactive retirement precedes omission controls
+ok 342 - ordinary:existing:primary-reread:2: exact selected omissions and original return-time verdict observed
+ok 343 - ordinary:existing:primary-reread:2: real omissions observed then explicitly recovered
+ok 344 - ordinary:existing:primary-reread:2: every unselected owned handle explicitly closes
+ok 345 - ordinary:existing:primary-reread:2: retained inputs unchanged
+ok 346 - ordinary:existing:primary-reread:2: expected archive and other owners preserved after recovery
+ok 347 - ordinary:existing:primary-reread:3: healthy preparation is observed
+ok 348 - ordinary:existing:primary-reread:3: all actual preparation handles explicitly close
+ok 349 - ordinary:existing:primary-reread:3: actual inactive retirement precedes omission controls
+ok 350 - ordinary:existing:primary-reread:3: exact selected omissions and original return-time verdict observed
+ok 351 - ordinary:existing:primary-reread:3: real omissions observed then explicitly recovered
+ok 352 - ordinary:existing:primary-reread:3: every unselected owned handle explicitly closes
+ok 353 - ordinary:existing:primary-reread:3: retained inputs unchanged
+ok 354 - ordinary:existing:primary-reread:3: expected archive and other owners preserved after recovery
+ok 355 - ordinary:existing:primary-directory: healthy preparation is observed
+ok 356 - ordinary:existing:primary-directory: all actual preparation handles explicitly close
+ok 357 - ordinary:existing:primary-directory: actual inactive retirement precedes omission controls
+ok 358 - ordinary:existing:primary-directory: exact selected omissions and original return-time verdict observed
+ok 359 - ordinary:existing:primary-directory: real omissions observed then explicitly recovered
+ok 360 - ordinary:existing:primary-directory: every unselected owned handle explicitly closes
+ok 361 - ordinary:existing:primary-directory: retained inputs unchanged
+ok 362 - ordinary:existing:primary-directory: expected archive and other owners preserved after recovery
+ok 363 - equal_reference:fresh:healthy: actual inactive retirement precedes omission controls
+ok 364 - equal_reference:fresh:healthy: exact selected omissions and original return-time verdict observed
+ok 365 - equal_reference:fresh:healthy: real omissions observed then explicitly recovered
+ok 366 - equal_reference:fresh:healthy: every unselected owned handle explicitly closes
+ok 367 - equal_reference:fresh:healthy: retained inputs unchanged
+ok 368 - equal_reference:fresh:healthy: expected archive and other owners preserved after recovery
+ok 369 - equal_reference:fresh:single:directory_handle:0: actual inactive retirement precedes omission controls
+ok 370 - equal_reference:fresh:single:directory_handle:0: exact selected omissions and original return-time verdict observed
+ok 371 - equal_reference:fresh:single:directory_handle:0: real omissions observed then explicitly recovered
+ok 372 - equal_reference:fresh:single:directory_handle:0: every unselected owned handle explicitly closes
+ok 373 - equal_reference:fresh:single:directory_handle:0: retained inputs unchanged
+ok 374 - equal_reference:fresh:single:directory_handle:0: expected archive and other owners preserved after recovery
+ok 375 - equal_reference:fresh:single:directory_handle:1: actual inactive retirement precedes omission controls
+ok 376 - equal_reference:fresh:single:directory_handle:1: exact selected omissions and original return-time verdict observed
+ok 377 - equal_reference:fresh:single:directory_handle:1: real omissions observed then explicitly recovered
+ok 378 - equal_reference:fresh:single:directory_handle:1: every unselected owned handle explicitly closes
+ok 379 - equal_reference:fresh:single:directory_handle:1: retained inputs unchanged
+ok 380 - equal_reference:fresh:single:directory_handle:1: expected archive and other owners preserved after recovery
+ok 381 - equal_reference:fresh:single:source:0:0: actual inactive retirement precedes omission controls
+ok 382 - equal_reference:fresh:single:source:0:0: exact selected omissions and original return-time verdict observed
+ok 383 - equal_reference:fresh:single:source:0:0: real omissions observed then explicitly recovered
+ok 384 - equal_reference:fresh:single:source:0:0: every unselected owned handle explicitly closes
+ok 385 - equal_reference:fresh:single:source:0:0: retained inputs unchanged
+ok 386 - equal_reference:fresh:single:source:0:0: expected archive and other owners preserved after recovery
+ok 387 - equal_reference:fresh:single:writer:0: actual inactive retirement precedes omission controls
+ok 388 - equal_reference:fresh:single:writer:0: exact selected omissions and original return-time verdict observed
+ok 389 - equal_reference:fresh:single:writer:0: real omissions observed then explicitly recovered
+ok 390 - equal_reference:fresh:single:writer:0: every unselected owned handle explicitly closes
+ok 391 - equal_reference:fresh:single:writer:0: retained inputs unchanged
+ok 392 - equal_reference:fresh:single:writer:0: expected archive and other owners preserved after recovery
+ok 393 - equal_reference:fresh:single:directory_handle:2: actual inactive retirement precedes omission controls
+ok 394 - equal_reference:fresh:single:directory_handle:2: exact selected omissions and original return-time verdict observed
+ok 395 - equal_reference:fresh:single:directory_handle:2: real omissions observed then explicitly recovered
+ok 396 - equal_reference:fresh:single:directory_handle:2: every unselected owned handle explicitly closes
+ok 397 - equal_reference:fresh:single:directory_handle:2: retained inputs unchanged
+ok 398 - equal_reference:fresh:single:directory_handle:2: expected archive and other owners preserved after recovery
+ok 399 - equal_reference:fresh:single:source:1:0: actual inactive retirement precedes omission controls
+ok 400 - equal_reference:fresh:single:source:1:0: exact selected omissions and original return-time verdict observed
+ok 401 - equal_reference:fresh:single:source:1:0: real omissions observed then explicitly recovered
+ok 402 - equal_reference:fresh:single:source:1:0: every unselected owned handle explicitly closes
+ok 403 - equal_reference:fresh:single:source:1:0: retained inputs unchanged
+ok 404 - equal_reference:fresh:single:source:1:0: expected archive and other owners preserved after recovery
+ok 405 - equal_reference:fresh:single:writer:1: actual inactive retirement precedes omission controls
+ok 406 - equal_reference:fresh:single:writer:1: exact selected omissions and original return-time verdict observed
+ok 407 - equal_reference:fresh:single:writer:1: real omissions observed then explicitly recovered
+ok 408 - equal_reference:fresh:single:writer:1: every unselected owned handle explicitly closes
+ok 409 - equal_reference:fresh:single:writer:1: retained inputs unchanged
+ok 410 - equal_reference:fresh:single:writer:1: expected archive and other owners preserved after recovery
+ok 411 - equal_reference:fresh:single:directory_handle:3: actual inactive retirement precedes omission controls
+ok 412 - equal_reference:fresh:single:directory_handle:3: exact selected omissions and original return-time verdict observed
+ok 413 - equal_reference:fresh:single:directory_handle:3: real omissions observed then explicitly recovered
+ok 414 - equal_reference:fresh:single:directory_handle:3: every unselected owned handle explicitly closes
+ok 415 - equal_reference:fresh:single:directory_handle:3: retained inputs unchanged
+ok 416 - equal_reference:fresh:single:directory_handle:3: expected archive and other owners preserved after recovery
+ok 417 - equal_reference:fresh:single:source:2:0: actual inactive retirement precedes omission controls
+ok 418 - equal_reference:fresh:single:source:2:0: exact selected omissions and original return-time verdict observed
+ok 419 - equal_reference:fresh:single:source:2:0: real omissions observed then explicitly recovered
+ok 420 - equal_reference:fresh:single:source:2:0: every unselected owned handle explicitly closes
+ok 421 - equal_reference:fresh:single:source:2:0: retained inputs unchanged
+ok 422 - equal_reference:fresh:single:source:2:0: expected archive and other owners preserved after recovery
+ok 423 - equal_reference:fresh:single:writer:2: actual inactive retirement precedes omission controls
+ok 424 - equal_reference:fresh:single:writer:2: exact selected omissions and original return-time verdict observed
+ok 425 - equal_reference:fresh:single:writer:2: real omissions observed then explicitly recovered
+ok 426 - equal_reference:fresh:single:writer:2: every unselected owned handle explicitly closes
+ok 427 - equal_reference:fresh:single:writer:2: retained inputs unchanged
+ok 428 - equal_reference:fresh:single:writer:2: expected archive and other owners preserved after recovery
+ok 429 - equal_reference:fresh:single:directory_handle:4: actual inactive retirement precedes omission controls
+ok 430 - equal_reference:fresh:single:directory_handle:4: exact selected omissions and original return-time verdict observed
+ok 431 - equal_reference:fresh:single:directory_handle:4: real omissions observed then explicitly recovered
+ok 432 - equal_reference:fresh:single:directory_handle:4: every unselected owned handle explicitly closes
+ok 433 - equal_reference:fresh:single:directory_handle:4: retained inputs unchanged
+ok 434 - equal_reference:fresh:single:directory_handle:4: expected archive and other owners preserved after recovery
+ok 435 - equal_reference:fresh:single:source:0:2: actual inactive retirement precedes omission controls
+ok 436 - equal_reference:fresh:single:source:0:2: exact selected omissions and original return-time verdict observed
+ok 437 - equal_reference:fresh:single:source:0:2: real omissions observed then explicitly recovered
+ok 438 - equal_reference:fresh:single:source:0:2: every unselected owned handle explicitly closes
+ok 439 - equal_reference:fresh:single:source:0:2: retained inputs unchanged
+ok 440 - equal_reference:fresh:single:source:0:2: expected archive and other owners preserved after recovery
+ok 441 - equal_reference:fresh:single:source:1:2: actual inactive retirement precedes omission controls
+ok 442 - equal_reference:fresh:single:source:1:2: exact selected omissions and original return-time verdict observed
+ok 443 - equal_reference:fresh:single:source:1:2: real omissions observed then explicitly recovered
+ok 444 - equal_reference:fresh:single:source:1:2: every unselected owned handle explicitly closes
+ok 445 - equal_reference:fresh:single:source:1:2: retained inputs unchanged
+ok 446 - equal_reference:fresh:single:source:1:2: expected archive and other owners preserved after recovery
+ok 447 - equal_reference:fresh:single:source:2:2: actual inactive retirement precedes omission controls
+ok 448 - equal_reference:fresh:single:source:2:2: exact selected omissions and original return-time verdict observed
+ok 449 - equal_reference:fresh:single:source:2:2: real omissions observed then explicitly recovered
+ok 450 - equal_reference:fresh:single:source:2:2: every unselected owned handle explicitly closes
+ok 451 - equal_reference:fresh:single:source:2:2: retained inputs unchanged
+ok 452 - equal_reference:fresh:single:source:2:2: expected archive and other owners preserved after recovery
+ok 453 - equal_reference:fresh:single:directory_handle:5: actual inactive retirement precedes omission controls
+ok 454 - equal_reference:fresh:single:directory_handle:5: exact selected omissions and original return-time verdict observed
+ok 455 - equal_reference:fresh:single:directory_handle:5: real omissions observed then explicitly recovered
+ok 456 - equal_reference:fresh:single:directory_handle:5: every unselected owned handle explicitly closes
+ok 457 - equal_reference:fresh:single:directory_handle:5: retained inputs unchanged
+ok 458 - equal_reference:fresh:single:directory_handle:5: expected archive and other owners preserved after recovery
+ok 459 - equal_reference:fresh:single:source:0:1: actual inactive retirement precedes omission controls
+ok 460 - equal_reference:fresh:single:source:0:1: exact selected omissions and original return-time verdict observed
+ok 461 - equal_reference:fresh:single:source:0:1: real omissions observed then explicitly recovered
+ok 462 - equal_reference:fresh:single:source:0:1: every unselected owned handle explicitly closes
+ok 463 - equal_reference:fresh:single:source:0:1: retained inputs unchanged
+ok 464 - equal_reference:fresh:single:source:0:1: expected archive and other owners preserved after recovery
+ok 465 - equal_reference:fresh:single:source:1:1: actual inactive retirement precedes omission controls
+ok 466 - equal_reference:fresh:single:source:1:1: exact selected omissions and original return-time verdict observed
+ok 467 - equal_reference:fresh:single:source:1:1: real omissions observed then explicitly recovered
+ok 468 - equal_reference:fresh:single:source:1:1: every unselected owned handle explicitly closes
+ok 469 - equal_reference:fresh:single:source:1:1: retained inputs unchanged
+ok 470 - equal_reference:fresh:single:source:1:1: expected archive and other owners preserved after recovery
+ok 471 - equal_reference:fresh:single:source:2:1: actual inactive retirement precedes omission controls
+ok 472 - equal_reference:fresh:single:source:2:1: exact selected omissions and original return-time verdict observed
+ok 473 - equal_reference:fresh:single:source:2:1: real omissions observed then explicitly recovered
+ok 474 - equal_reference:fresh:single:source:2:1: every unselected owned handle explicitly closes
+ok 475 - equal_reference:fresh:single:source:2:1: retained inputs unchanged
+ok 476 - equal_reference:fresh:single:source:2:1: expected archive and other owners preserved after recovery
+ok 477 - equal_reference:fresh:all-group: actual inactive retirement precedes omission controls
+ok 478 - equal_reference:fresh:all-group: exact selected omissions and original return-time verdict observed
+ok 479 - equal_reference:fresh:all-group: real omissions observed then explicitly recovered
+ok 480 - equal_reference:fresh:all-group: every unselected owned handle explicitly closes
+ok 481 - equal_reference:fresh:all-group: retained inputs unchanged
+ok 482 - equal_reference:fresh:all-group: expected archive and other owners preserved after recovery
+ok 483 - equal_reference:fresh:primary-retained: actual inactive retirement precedes omission controls
+ok 484 - equal_reference:fresh:primary-retained: exact selected omissions and original return-time verdict observed
+ok 485 - equal_reference:fresh:primary-retained: real omissions observed then explicitly recovered
+ok 486 - equal_reference:fresh:primary-retained: every unselected owned handle explicitly closes
+ok 487 - equal_reference:fresh:primary-retained: retained inputs unchanged
+ok 488 - equal_reference:fresh:primary-retained: expected archive and other owners preserved after recovery
+ok 489 - equal_reference:fresh:primary-payload:0: actual inactive retirement precedes omission controls
+ok 490 - equal_reference:fresh:primary-payload:0: exact selected omissions and original return-time verdict observed
+ok 491 - equal_reference:fresh:primary-payload:0: real omissions observed then explicitly recovered
+ok 492 - equal_reference:fresh:primary-payload:0: every unselected owned handle explicitly closes
+ok 493 - equal_reference:fresh:primary-payload:0: retained inputs unchanged
+ok 494 - equal_reference:fresh:primary-payload:0: expected archive and other owners preserved after recovery
+ok 495 - equal_reference:fresh:primary-payload:1: actual inactive retirement precedes omission controls
+ok 496 - equal_reference:fresh:primary-payload:1: exact selected omissions and original return-time verdict observed
+ok 497 - equal_reference:fresh:primary-payload:1: real omissions observed then explicitly recovered
+ok 498 - equal_reference:fresh:primary-payload:1: every unselected owned handle explicitly closes
+ok 499 - equal_reference:fresh:primary-payload:1: retained inputs unchanged
+ok 500 - equal_reference:fresh:primary-payload:1: expected archive and other owners preserved after recovery
+ok 501 - equal_reference:fresh:primary-payload:2: actual inactive retirement precedes omission controls
+ok 502 - equal_reference:fresh:primary-payload:2: exact selected omissions and original return-time verdict observed
+ok 503 - equal_reference:fresh:primary-payload:2: real omissions observed then explicitly recovered
+ok 504 - equal_reference:fresh:primary-payload:2: every unselected owned handle explicitly closes
+ok 505 - equal_reference:fresh:primary-payload:2: retained inputs unchanged
+ok 506 - equal_reference:fresh:primary-payload:2: expected archive and other owners preserved after recovery
+ok 507 - equal_reference:fresh:primary-reread:0: actual inactive retirement precedes omission controls
+ok 508 - equal_reference:fresh:primary-reread:0: exact selected omissions and original return-time verdict observed
+ok 509 - equal_reference:fresh:primary-reread:0: real omissions observed then explicitly recovered
+ok 510 - equal_reference:fresh:primary-reread:0: every unselected owned handle explicitly closes
+ok 511 - equal_reference:fresh:primary-reread:0: retained inputs unchanged
+ok 512 - equal_reference:fresh:primary-reread:0: expected archive and other owners preserved after recovery
+ok 513 - equal_reference:fresh:primary-reread:1: actual inactive retirement precedes omission controls
+ok 514 - equal_reference:fresh:primary-reread:1: exact selected omissions and original return-time verdict observed
+ok 515 - equal_reference:fresh:primary-reread:1: real omissions observed then explicitly recovered
+ok 516 - equal_reference:fresh:primary-reread:1: every unselected owned handle explicitly closes
+ok 517 - equal_reference:fresh:primary-reread:1: retained inputs unchanged
+ok 518 - equal_reference:fresh:primary-reread:1: expected archive and other owners preserved after recovery
+ok 519 - equal_reference:fresh:primary-reread:2: actual inactive retirement precedes omission controls
+ok 520 - equal_reference:fresh:primary-reread:2: exact selected omissions and original return-time verdict observed
+ok 521 - equal_reference:fresh:primary-reread:2: real omissions observed then explicitly recovered
+ok 522 - equal_reference:fresh:primary-reread:2: every unselected owned handle explicitly closes
+ok 523 - equal_reference:fresh:primary-reread:2: retained inputs unchanged
+ok 524 - equal_reference:fresh:primary-reread:2: expected archive and other owners preserved after recovery
+ok 525 - equal_reference:fresh:primary-directory: actual inactive retirement precedes omission controls
+ok 526 - equal_reference:fresh:primary-directory: exact selected omissions and original return-time verdict observed
+ok 527 - equal_reference:fresh:primary-directory: real omissions observed then explicitly recovered
+ok 528 - equal_reference:fresh:primary-directory: every unselected owned handle explicitly closes
+ok 529 - equal_reference:fresh:primary-directory: retained inputs unchanged
+ok 530 - equal_reference:fresh:primary-directory: expected archive and other owners preserved after recovery
+ok 531 - equal_reference:existing:healthy: healthy preparation is observed
+ok 532 - equal_reference:existing:healthy: all actual preparation handles explicitly close
+ok 533 - equal_reference:existing:healthy: actual inactive retirement precedes omission controls
+ok 534 - equal_reference:existing:healthy: exact selected omissions and original return-time verdict observed
+ok 535 - equal_reference:existing:healthy: real omissions observed then explicitly recovered
+ok 536 - equal_reference:existing:healthy: every unselected owned handle explicitly closes
+ok 537 - equal_reference:existing:healthy: retained inputs unchanged
+ok 538 - equal_reference:existing:healthy: expected archive and other owners preserved after recovery
+ok 539 - equal_reference:existing:single:directory_handle:0: healthy preparation is observed
+ok 540 - equal_reference:existing:single:directory_handle:0: all actual preparation handles explicitly close
+ok 541 - equal_reference:existing:single:directory_handle:0: actual inactive retirement precedes omission controls
+ok 542 - equal_reference:existing:single:directory_handle:0: exact selected omissions and original return-time verdict observed
+ok 543 - equal_reference:existing:single:directory_handle:0: real omissions observed then explicitly recovered
+ok 544 - equal_reference:existing:single:directory_handle:0: every unselected owned handle explicitly closes
+ok 545 - equal_reference:existing:single:directory_handle:0: retained inputs unchanged
+ok 546 - equal_reference:existing:single:directory_handle:0: expected archive and other owners preserved after recovery
+ok 547 - equal_reference:existing:single:directory_handle:1: healthy preparation is observed
+ok 548 - equal_reference:existing:single:directory_handle:1: all actual preparation handles explicitly close
+ok 549 - equal_reference:existing:single:directory_handle:1: actual inactive retirement precedes omission controls
+ok 550 - equal_reference:existing:single:directory_handle:1: exact selected omissions and original return-time verdict observed
+ok 551 - equal_reference:existing:single:directory_handle:1: real omissions observed then explicitly recovered
+ok 552 - equal_reference:existing:single:directory_handle:1: every unselected owned handle explicitly closes
+ok 553 - equal_reference:existing:single:directory_handle:1: retained inputs unchanged
+ok 554 - equal_reference:existing:single:directory_handle:1: expected archive and other owners preserved after recovery
+ok 555 - equal_reference:existing:single:source:0:1: healthy preparation is observed
+ok 556 - equal_reference:existing:single:source:0:1: all actual preparation handles explicitly close
+ok 557 - equal_reference:existing:single:source:0:1: actual inactive retirement precedes omission controls
+ok 558 - equal_reference:existing:single:source:0:1: exact selected omissions and original return-time verdict observed
+ok 559 - equal_reference:existing:single:source:0:1: real omissions observed then explicitly recovered
+ok 560 - equal_reference:existing:single:source:0:1: every unselected owned handle explicitly closes
+ok 561 - equal_reference:existing:single:source:0:1: retained inputs unchanged
+ok 562 - equal_reference:existing:single:source:0:1: expected archive and other owners preserved after recovery
+ok 563 - equal_reference:existing:single:source:1:1: healthy preparation is observed
+ok 564 - equal_reference:existing:single:source:1:1: all actual preparation handles explicitly close
+ok 565 - equal_reference:existing:single:source:1:1: actual inactive retirement precedes omission controls
+ok 566 - equal_reference:existing:single:source:1:1: exact selected omissions and original return-time verdict observed
+ok 567 - equal_reference:existing:single:source:1:1: real omissions observed then explicitly recovered
+ok 568 - equal_reference:existing:single:source:1:1: every unselected owned handle explicitly closes
+ok 569 - equal_reference:existing:single:source:1:1: retained inputs unchanged
+ok 570 - equal_reference:existing:single:source:1:1: expected archive and other owners preserved after recovery
+ok 571 - equal_reference:existing:single:source:2:1: healthy preparation is observed
+ok 572 - equal_reference:existing:single:source:2:1: all actual preparation handles explicitly close
+ok 573 - equal_reference:existing:single:source:2:1: actual inactive retirement precedes omission controls
+ok 574 - equal_reference:existing:single:source:2:1: exact selected omissions and original return-time verdict observed
+ok 575 - equal_reference:existing:single:source:2:1: real omissions observed then explicitly recovered
+ok 576 - equal_reference:existing:single:source:2:1: every unselected owned handle explicitly closes
+ok 577 - equal_reference:existing:single:source:2:1: retained inputs unchanged
+ok 578 - equal_reference:existing:single:source:2:1: expected archive and other owners preserved after recovery
+ok 579 - equal_reference:existing:single:directory_handle:2: healthy preparation is observed
+ok 580 - equal_reference:existing:single:directory_handle:2: all actual preparation handles explicitly close
+ok 581 - equal_reference:existing:single:directory_handle:2: actual inactive retirement precedes omission controls
+ok 582 - equal_reference:existing:single:directory_handle:2: exact selected omissions and original return-time verdict observed
+ok 583 - equal_reference:existing:single:directory_handle:2: real omissions observed then explicitly recovered
+ok 584 - equal_reference:existing:single:directory_handle:2: every unselected owned handle explicitly closes
+ok 585 - equal_reference:existing:single:directory_handle:2: retained inputs unchanged
+ok 586 - equal_reference:existing:single:directory_handle:2: expected archive and other owners preserved after recovery
+ok 587 - equal_reference:existing:single:source:0:0: healthy preparation is observed
+ok 588 - equal_reference:existing:single:source:0:0: all actual preparation handles explicitly close
+ok 589 - equal_reference:existing:single:source:0:0: actual inactive retirement precedes omission controls
+ok 590 - equal_reference:existing:single:source:0:0: exact selected omissions and original return-time verdict observed
+ok 591 - equal_reference:existing:single:source:0:0: real omissions observed then explicitly recovered
+ok 592 - equal_reference:existing:single:source:0:0: every unselected owned handle explicitly closes
+ok 593 - equal_reference:existing:single:source:0:0: retained inputs unchanged
+ok 594 - equal_reference:existing:single:source:0:0: expected archive and other owners preserved after recovery
+ok 595 - equal_reference:existing:single:source:1:0: healthy preparation is observed
+ok 596 - equal_reference:existing:single:source:1:0: all actual preparation handles explicitly close
+ok 597 - equal_reference:existing:single:source:1:0: actual inactive retirement precedes omission controls
+ok 598 - equal_reference:existing:single:source:1:0: exact selected omissions and original return-time verdict observed
+ok 599 - equal_reference:existing:single:source:1:0: real omissions observed then explicitly recovered
+ok 600 - equal_reference:existing:single:source:1:0: every unselected owned handle explicitly closes
+ok 601 - equal_reference:existing:single:source:1:0: retained inputs unchanged
+ok 602 - equal_reference:existing:single:source:1:0: expected archive and other owners preserved after recovery
+ok 603 - equal_reference:existing:single:source:2:0: healthy preparation is observed
+ok 604 - equal_reference:existing:single:source:2:0: all actual preparation handles explicitly close
+ok 605 - equal_reference:existing:single:source:2:0: actual inactive retirement precedes omission controls
+ok 606 - equal_reference:existing:single:source:2:0: exact selected omissions and original return-time verdict observed
+ok 607 - equal_reference:existing:single:source:2:0: real omissions observed then explicitly recovered
+ok 608 - equal_reference:existing:single:source:2:0: every unselected owned handle explicitly closes
+ok 609 - equal_reference:existing:single:source:2:0: retained inputs unchanged
+ok 610 - equal_reference:existing:single:source:2:0: expected archive and other owners preserved after recovery
+ok 611 - equal_reference:existing:all-group: healthy preparation is observed
+ok 612 - equal_reference:existing:all-group: all actual preparation handles explicitly close
+ok 613 - equal_reference:existing:all-group: actual inactive retirement precedes omission controls
+ok 614 - equal_reference:existing:all-group: exact selected omissions and original return-time verdict observed
+ok 615 - equal_reference:existing:all-group: real omissions observed then explicitly recovered
+ok 616 - equal_reference:existing:all-group: every unselected owned handle explicitly closes
+ok 617 - equal_reference:existing:all-group: retained inputs unchanged
+ok 618 - equal_reference:existing:all-group: expected archive and other owners preserved after recovery
+ok 619 - equal_reference:existing:primary-retained: healthy preparation is observed
+ok 620 - equal_reference:existing:primary-retained: all actual preparation handles explicitly close
+ok 621 - equal_reference:existing:primary-retained: actual inactive retirement precedes omission controls
+ok 622 - equal_reference:existing:primary-retained: exact selected omissions and original return-time verdict observed
+ok 623 - equal_reference:existing:primary-retained: real omissions observed then explicitly recovered
+ok 624 - equal_reference:existing:primary-retained: every unselected owned handle explicitly closes
+ok 625 - equal_reference:existing:primary-retained: retained inputs unchanged
+ok 626 - equal_reference:existing:primary-retained: expected archive and other owners preserved after recovery
+ok 627 - equal_reference:existing:primary-reread:0: healthy preparation is observed
+ok 628 - equal_reference:existing:primary-reread:0: all actual preparation handles explicitly close
+ok 629 - equal_reference:existing:primary-reread:0: actual inactive retirement precedes omission controls
+ok 630 - equal_reference:existing:primary-reread:0: exact selected omissions and original return-time verdict observed
+ok 631 - equal_reference:existing:primary-reread:0: real omissions observed then explicitly recovered
+ok 632 - equal_reference:existing:primary-reread:0: every unselected owned handle explicitly closes
+ok 633 - equal_reference:existing:primary-reread:0: retained inputs unchanged
+ok 634 - equal_reference:existing:primary-reread:0: expected archive and other owners preserved after recovery
+ok 635 - equal_reference:existing:primary-reread:1: healthy preparation is observed
+ok 636 - equal_reference:existing:primary-reread:1: all actual preparation handles explicitly close
+ok 637 - equal_reference:existing:primary-reread:1: actual inactive retirement precedes omission controls
+ok 638 - equal_reference:existing:primary-reread:1: exact selected omissions and original return-time verdict observed
+ok 639 - equal_reference:existing:primary-reread:1: real omissions observed then explicitly recovered
+ok 640 - equal_reference:existing:primary-reread:1: every unselected owned handle explicitly closes
+ok 641 - equal_reference:existing:primary-reread:1: retained inputs unchanged
+ok 642 - equal_reference:existing:primary-reread:1: expected archive and other owners preserved after recovery
+ok 643 - equal_reference:existing:primary-reread:2: healthy preparation is observed
+ok 644 - equal_reference:existing:primary-reread:2: all actual preparation handles explicitly close
+ok 645 - equal_reference:existing:primary-reread:2: actual inactive retirement precedes omission controls
+ok 646 - equal_reference:existing:primary-reread:2: exact selected omissions and original return-time verdict observed
+ok 647 - equal_reference:existing:primary-reread:2: real omissions observed then explicitly recovered
+ok 648 - equal_reference:existing:primary-reread:2: every unselected owned handle explicitly closes
+ok 649 - equal_reference:existing:primary-reread:2: retained inputs unchanged
+ok 650 - equal_reference:existing:primary-reread:2: expected archive and other owners preserved after recovery
+ok 651 - equal_reference:existing:primary-directory: healthy preparation is observed
+ok 652 - equal_reference:existing:primary-directory: all actual preparation handles explicitly close
+ok 653 - equal_reference:existing:primary-directory: actual inactive retirement precedes omission controls
+ok 654 - equal_reference:existing:primary-directory: exact selected omissions and original return-time verdict observed
+ok 655 - equal_reference:existing:primary-directory: real omissions observed then explicitly recovered
+ok 656 - equal_reference:existing:primary-directory: every unselected owned handle explicitly closes
+ok 657 - equal_reference:existing:primary-directory: retained inputs unchanged
+ok 658 - equal_reference:existing:primary-directory: expected archive and other owners preserved after recovery
+ok 659 - no compiler or native process attempt
+1..659

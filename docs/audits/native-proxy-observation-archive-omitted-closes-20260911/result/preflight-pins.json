@@ -1,0 +1,27 @@
+[
+  {
+    "path": "docs/audits/native-proxy-observation-archive-omitted-closes-20260911/plan.py",
+    "sha256": "718ba927e1ebf92d604da3e23e6129e2064bc42e7aae34a50d88ec8032d877f2",
+    "size_bytes": 4651
+  },
+  {
+    "path": "docs/audits/native-proxy-observation-archive-omitted-closes-20260911/plan.json",
+    "sha256": "a3edabbe6286e2ca1dd1a5bde26316a2cae8f9d5f1c4d78792617318ac465b95",
+    "size_bytes": 35219
+  },
+  {
+    "path": "docs/audits/native-proxy-observation-archive-omitted-closes-20260911/OmittedCloses.pm",
+    "sha256": "49e19b1d7c332c69be625d0d5555444081996fcd80a6f8fb38ba0d0f9a14dbcd",
+    "size_bytes": 5171
+  },
+  {
+    "path": "docs/audits/native-proxy-observation-archive-omitted-closes-20260911/qualify.t",
+    "sha256": "c429d7378a61b58296d5dee7402a5df479ac50927d74a2f20c7986305d4cf7fe",
+    "size_bytes": 8430
+  },
+  {
+    "path": "docs/audits/native-proxy-observation-archive-omitted-closes-20260911/audit.py",
+    "sha256": "f5be90beff0881e8fac89f5247fd869ffd0abaea5ed93e0a83e0595f2ed1bfac",
+    "size_bytes": 21814
+  }
+]
