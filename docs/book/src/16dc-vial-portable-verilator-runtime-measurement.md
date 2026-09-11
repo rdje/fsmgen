@@ -2129,12 +2129,47 @@ are independent copies of the caller's retained inputs.
 
 These checks use saved acquisitions and explicitly synthetic archive identities.
 They open no original target or archive file and establish no actual storage,
-permissions, descriptor custody, settlement or release authority. Filesystem
-archival and interruption checks are the next owned steps. Pure replay:
+permissions, descriptor custody, settlement or release authority. Actual
+archival qualifies below; interruption checks remain separate. Pure replay:
 
 ```bash
 scripts/run_with_ram_guard.sh -- perl docs/audits/native-proxy-observation-archive-records-20260911/qualify.t
 scripts/run_with_ram_guard.sh -- python3 -B docs/audits/native-proxy-observation-archive-records-20260911/audit.py
+```
+
+The inactive filesystem archiver now writes the original retained snapshots to
+the fixed private archive directory. It can do this after actual inert workspace
+retirement has removed the wrapper, private reference and runtime reference.
+Original target paths are never reopened, including canonical C/image files
+that still exist because observation holds retain them.
+
+A fresh archive uses exclusive creation, complete byte readback, read-only
+files and checked directory/file identities. An existing archive must already
+contain exactly the required content files with matching bytes and custody.
+An empty, partial, unknown, indirect or altered archive rejects; it is never
+filled in, overwritten or repaired. For example, removing one content file
+from an otherwise complete archive causes rejection with the remaining files
+preserved. Stable reuse returns the same receipt without writing files.
+
+The archiver retains source descriptors through final membership, directory,
+byte-reread and named/descriptor identity checks. It attempts every owned source
+close and reports close errors before success; an earlier validation error remains primary.
+Its receipt preserves the separate source identities when equal bytes share a
+content file. The archive operation leaves the observation holds, permanent
+lock, images, other references and unrelated workspace intact.
+
+Isolated filesystem qualification covers archival before/after retirement,
+stable reuse, binary/empty/maximum-size wrappers and equal-content grouping,
+plus malformed existing archives and requests. It independently observes file
+bytes, metadata and returned descriptor closure, then verifies that all fixture
+roots are absent. Birth and cleanup records are synthetic; no fixture, compiler
+or native capture is executed. Interruption/close-error qualification, complete
+native cleanup ownership and exact observation release remain separate gates.
+Replay the inert filesystem cases and independent audit from the repo root:
+
+```bash
+scripts/run_with_ram_guard.sh -- perl docs/audits/native-proxy-observation-archive-20260911/qualify.t
+scripts/run_with_ram_guard.sh -- python3 -B docs/audits/native-proxy-observation-archive-20260911/audit.py
 ```
 
 The helper checks bounded regular source/output files and the native header,

@@ -1,0 +1,134 @@
+ok 1 - all returned archive source handles close
+ok 2 - fresh archive before retirement
+ok 3 - fresh archive before retirement: preserve store
+ok 4 - fresh archive before retirement: preserve workspace
+ok 5 - fresh archive before retirement: preserve other_workspace
+ok 6 - all returned archive source handles close
+ok 7 - fresh archive after retirement
+ok 8 - fresh archive after retirement: preserve store
+ok 9 - fresh archive after retirement: preserve workspace
+ok 10 - fresh archive after retirement: preserve other_workspace
+ok 11 - all returned archive source handles close
+ok 12 - all returned archive source handles close
+ok 13 - stable archive reuse after retirement
+ok 14 - stable archive reuse after retirement: preserve store
+ok 15 - stable archive reuse after retirement: preserve workspace
+ok 16 - stable archive reuse after retirement: preserve other_workspace
+ok 17 - all returned archive source handles close
+ok 18 - binary wrapper after retirement
+ok 19 - binary wrapper after retirement: preserve store
+ok 20 - binary wrapper after retirement: preserve workspace
+ok 21 - binary wrapper after retirement: preserve other_workspace
+ok 22 - all returned archive source handles close
+ok 23 - empty wrapper after retirement
+ok 24 - empty wrapper after retirement: preserve store
+ok 25 - empty wrapper after retirement: preserve workspace
+ok 26 - empty wrapper after retirement: preserve other_workspace
+ok 27 - all returned archive source handles close
+ok 28 - exact wrapper ceiling after retirement
+ok 29 - exact wrapper ceiling after retirement: preserve store
+ok 30 - exact wrapper ceiling after retirement: preserve workspace
+ok 31 - exact wrapper ceiling after retirement: preserve other_workspace
+ok 32 - all returned archive source handles close
+ok 33 - equal wrapper and reference bytes after retirement
+ok 34 - equal wrapper and reference bytes after retirement: preserve store
+ok 35 - equal wrapper and reference bytes after retirement: preserve workspace
+ok 36 - equal wrapper and reference bytes after retirement: preserve other_workspace
+ok 37 - all returned archive source handles close
+ok 38 - existing archive empty
+ok 39 - existing archive empty: preserve store
+ok 40 - existing archive empty: preserve workspace
+ok 41 - existing archive empty: preserve other_workspace
+ok 42 - existing archive empty: preserve rejected archive
+ok 43 - all returned archive source handles close
+ok 44 - existing archive partial
+ok 45 - existing archive partial: preserve store
+ok 46 - existing archive partial: preserve workspace
+ok 47 - existing archive partial: preserve other_workspace
+ok 48 - existing archive partial: preserve rejected archive
+ok 49 - all returned archive source handles close
+ok 50 - existing archive unknown
+ok 51 - existing archive unknown: preserve store
+ok 52 - existing archive unknown: preserve workspace
+ok 53 - existing archive unknown: preserve other_workspace
+ok 54 - existing archive unknown: preserve rejected archive
+ok 55 - all returned archive source handles close
+ok 56 - existing archive symlink
+ok 57 - existing archive symlink: preserve store
+ok 58 - existing archive symlink: preserve workspace
+ok 59 - existing archive symlink: preserve other_workspace
+ok 60 - existing archive symlink: preserve rejected archive
+ok 61 - all returned archive source handles close
+ok 62 - existing archive file
+ok 63 - existing archive file: preserve store
+ok 64 - existing archive file: preserve workspace
+ok 65 - existing archive file: preserve other_workspace
+ok 66 - existing archive file: preserve rejected archive
+ok 67 - all returned archive source handles close
+ok 68 - all returned archive source handles close
+ok 69 - complete archive changed_bytes
+ok 70 - complete archive changed_bytes: preserve store
+ok 71 - complete archive changed_bytes: preserve workspace
+ok 72 - complete archive changed_bytes: preserve other_workspace
+ok 73 - complete archive changed_bytes: preserve rejected archive
+ok 74 - all returned archive source handles close
+ok 75 - all returned archive source handles close
+ok 76 - complete archive changed_mode
+ok 77 - complete archive changed_mode: preserve store
+ok 78 - complete archive changed_mode: preserve workspace
+ok 79 - complete archive changed_mode: preserve other_workspace
+ok 80 - complete archive changed_mode: preserve rejected archive
+ok 81 - all returned archive source handles close
+ok 82 - all returned archive source handles close
+ok 83 - complete archive hardlink
+ok 84 - complete archive hardlink: preserve store
+ok 85 - complete archive hardlink: preserve workspace
+ok 86 - complete archive hardlink: preserve other_workspace
+ok 87 - complete archive hardlink: preserve rejected archive
+ok 88 - all returned archive source handles close
+ok 89 - all returned archive source handles close
+ok 90 - complete archive missing_file
+ok 91 - complete archive missing_file: preserve store
+ok 92 - complete archive missing_file: preserve workspace
+ok 93 - complete archive missing_file: preserve other_workspace
+ok 94 - complete archive missing_file: preserve rejected archive
+ok 95 - all returned archive source handles close
+ok 96 - all returned archive source handles close
+ok 97 - complete archive extra_file
+ok 98 - complete archive extra_file: preserve store
+ok 99 - complete archive extra_file: preserve workspace
+ok 100 - complete archive extra_file: preserve other_workspace
+ok 101 - complete archive extra_file: preserve rejected archive
+ok 102 - all returned archive source handles close
+ok 103 - all returned archive source handles close
+ok 104 - complete archive wrong_directory_mode
+ok 105 - complete archive wrong_directory_mode: preserve store
+ok 106 - complete archive wrong_directory_mode: preserve workspace
+ok 107 - complete archive wrong_directory_mode: preserve other_workspace
+ok 108 - complete archive wrong_directory_mode: preserve rejected archive
+ok 109 - all returned archive source handles close
+ok 110 - foreign evidence identity
+ok 111 - foreign evidence identity: preserve store
+ok 112 - foreign evidence identity: preserve workspace
+ok 113 - foreign evidence identity: preserve other_workspace
+ok 114 - foreign evidence identity: preserve rejected archive
+ok 115 - all returned archive source handles close
+ok 116 - wrong evidence permissions
+ok 117 - wrong evidence permissions: preserve store
+ok 118 - wrong evidence permissions: preserve workspace
+ok 119 - wrong evidence permissions: preserve other_workspace
+ok 120 - wrong evidence permissions: preserve rejected archive
+ok 121 - all returned archive source handles close
+ok 122 - missing argument
+ok 123 - missing argument: preserve store
+ok 124 - missing argument: preserve workspace
+ok 125 - missing argument: preserve other_workspace
+ok 126 - missing argument: preserve rejected archive
+ok 127 - all returned archive source handles close
+ok 128 - extra argument
+ok 129 - extra argument: preserve store
+ok 130 - extra argument: preserve workspace
+ok 131 - extra argument: preserve other_workspace
+ok 132 - extra argument: preserve rejected archive
+ok 133 - no compiler or native process attempt
+1..133

@@ -1,0 +1,15 @@
+{
+  "after": 3492354,
+  "allowance": 3492424,
+  "before": 3492254,
+  "candidate_bytes": 8545,
+  "candidate_is_reconstructed": true,
+  "candidate_path": "docs/audits/native-proxy-observation-archive-20260911/result/knowledge-card.md.initial-projection",
+  "candidate_sha256": "3bd4626151072a97507eb185b494d202b6d2f8fb373ac11b9badb9397eb7eda0",
+  "candidate_was_written_to_live_card": false,
+  "diagnosis": "The initial projection used one preselected older-prose shortening but remained over the aggregate allowance. The assertion stopped before every live-document write. This exact candidate is reconstructed; no raw process transcript is fabricated.",
+  "initial_projection": 3492474,
+  "rejected_projection": 3492436,
+  "repair": "Route the older contract/model path through exact dd29e3bf history while retaining its helper-ownership and release limits. No allowance increase.",
+  "schema": "fsmgen.actual_archive_knowledge_projection_recovery.v1"
+}

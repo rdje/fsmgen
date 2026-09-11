@@ -31,6 +31,7 @@ answers:
   - "why can an observer settled event leave a helper running?"
   - "what must settle before an observation hold is released?"
   - "how do archive records preserve all retained source identities?"
+  - "can retained snapshots be archived after the workspace is retired?"
   - "why did integrated proxy qualification fail?"
   - "why does t1545 not use IPC Cmd?"
   - "where does T1545 preserve empty-output checker failure diagnostics?"
@@ -95,17 +96,18 @@ reverify: >-
 ---
 
 Decisions `0087`/`0101` select `FSM::Support::ProcessSupervisor`; adapters seal bounded local argv/capture/group cleanup. T1669 checks ownership.
-`exec_handoff_monotonic_ns` observes pipe EOF, not main entry; pre-exec death can close it. Missing EOF leaves dependent timing unknown. Controls: history.
+`exec_handoff_monotonic_ns` is EOF, not main-entry proof; absent EOF leaves timing unknown. Limits/controls: history.
 `VerilatorRuntime` follows decision `0086`.
 `TaskAcceptanceFixtureRuntime` seals owned fixture roots/fixed local Git argv.
 Supervisor, checker, locality, startup/capture/STOP controls: history; absent witnesses stay unknown.
-History: `74ec076e29cadb651abfaf2e0051da45450e55c4:docs/knowledge/test-subprocess-policy-adapters.md`.
+History: `dd29e3bffdcdbcf737236e20086acb89bcc31771:docs/knowledge/test-subprocess-policy-adapters.md`.
 PST parsing normalizes 1–16 lowercase hex digits; malformed fields and contradictions reject.
 Serial queue contention is supported; causal/native limits and controls: history.
 Fixed CLI limits: history.
 Records, custody, acquisition and unique-occurrence correction: history.
-Proposed release requires retained-byte archival and every selected owner settled, including cancellation. Legacy settled can leave a caller-owned helper running; it is not release authority. Contract/source-model check: `docs/audits/native-proxy-observation-release-contract-20260911/audit.py`; implementation/native custody remain open.
-Inactive archive records retain all five source identities, deduplicate equal octets and bind canonical content paths to consistent archive identities. Pure checks use historical acquisitions and synthetic archive IDs: `docs/audits/native-proxy-observation-archive-records-20260911/audit.py`. Actual archival/release remain open.
+Proposed release requires retained-byte archival and every selected owner settled, including cancellation. Legacy settled can leave a caller-owned helper running; it is not release authority. Contract/model: history; native custody and release remain open.
+Closed archive records preserve all original identities and binary octets: history.
+Inactive archival creates exclusive read-only content files from retained snapshots after workspace retirement; complete existing archives are verified without repair. Original targets are never reopened. Actual-byte/identity/returned-descriptor and preservation checks: `docs/audits/native-proxy-observation-archive-20260911/audit.py`. Interruption, native ownership and release remain open.
 Caller-sealed test wrappers use tail goto to preserve caller.
 Replay: `scripts/run_with_ram_guard.sh -- python3 -B -m unittest discover -s t/python -p 'test_fixture_policy_archive*.py'`.
 RAM guard/T1595/T1811/T1669 controls and open causes: history.

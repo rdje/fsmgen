@@ -1,0 +1,13 @@
+{
+  "generator_metadata_authenticated": true,
+  "generator_metadata_input": {
+    "path": "docs/audits/native-proxy-observation-archive-records-20260911/plan.json",
+    "sha256": "186bb995f5b769c67a6ab6595856a0b46122a1b101b4b5fb4228c9f810b240b7",
+    "size_bytes": 1018306
+  },
+  "plan_reconstructed_byte_exactly": true,
+  "prospective_inputs_unchanged": 5,
+  "schema": "fsmgen.inactive_archive_plan_provenance.v1",
+  "scope": "Supplement the main audit\u2019s twenty-one declared implementation/oracle inputs with the prior plan used to enumerate Perl dependencies. Reconstruct the complete prospective plan without allocating fixtures or changing source/data pins.",
+  "source_revision": "dd29e3bffdcdbcf737236e20086acb89bcc31771"
+}
