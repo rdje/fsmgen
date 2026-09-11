@@ -1,0 +1,25 @@
+{
+  "disposition": "Qualified as defensive guard reachability and exact earlier-error ordering. No product guard is weakened or removed, no malformed public acquisition is used to manufacture a later branch hit, and no aggregate-excess execution is claimed. The owning leaf fixes the missing qualification; actual namespace/layout and replacement controls stay with its next sibling.",
+  "evidence": [
+    "result/qualification.json",
+    "result/audit.json",
+    "result/recovery-copies.json"
+  ],
+  "finding": "The aggregate-excess guard is unreachable for ordinary finite raw-byte helper inputs that pass the earlier count and per-file guards. The public specification has tighter source-roster and reference-byte constraints.",
+  "owner": "HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.12.4.1.3.4.2.3.4.1",
+  "proof": {
+    "aggregate_excess_reachable_after_earlier_guards": false,
+    "domain": "Ordinary finite raw values; public bounds apply only after the unchanged acquisition and archive specification validators. These are conservative upper bounds, not claims of an achievable maximum payload.",
+    "helper_count_limit": 64,
+    "helper_file_byte_limit": 65536,
+    "helper_implied_aggregate_max": 4194304,
+    "helper_total_byte_limit": 4194304,
+    "public_aggregate_excess_reachable": false,
+    "public_before_dedup_byte_upper_bound": 204800,
+    "public_count_excess_reachable": false,
+    "public_ordered_sources": 5,
+    "public_unique_byte_upper_bound": 200704,
+    "public_unique_file_upper_bound": 4
+  },
+  "root_cause": "git log -S 'my $FILE_LIMIT = 64;' identifies ff71d28f1e47c6bf34db96029862f6be5fe96051. The unchanged helper checks count before per-file validation and accumulates only validated byte lengths. ArchiveRecord and ObservationAcquisition preserve the fixed source roster and equal reference pair."
+}

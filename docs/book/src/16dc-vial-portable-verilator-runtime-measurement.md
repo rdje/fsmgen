@@ -2416,6 +2416,34 @@ or archive operations. It closes the finite close-control gate. Final hostile
 layout and complete archive source applicability, exact observation release,
 actual native ownership and asynchronous crash behavior remain separate gates.
 
+Archive count and byte guards also have separate pure qualification. The
+private helper accepts finite raw byte lists only after checking the file count
+and each payload's byte form and length. Tests preserve the original value types,
+raw bytes and UTF8 flags while observing every byte-validator call and the exact
+first error. Undefined values, references, strings carrying the UTF8 flag and
+oversized payloads reject at the selected first, middle or final positions.
+
+The aggregate-byte guard is defensive: the file-count limit multiplied by the
+per-file byte limit already equals the aggregate cap. A list at both earlier
+limits reaches the exact aggregate boundary and passes. Adding another full
+payload fails the earlier file-count guard; enlarging the final payload fails
+its byte guard. Neither case is recorded as reaching the aggregate-excess
+exception. Altered-bound counterexamples check this implication independently.
+
+The public archive format is smaller still. Its fixed ordered source roster
+requires identical private and global reference bytes, which share an archive
+file. Reference payloads also have a smaller byte ceiling. The proof derived
+from the source records conservative file and byte upper bounds; it does not promise
+that every upper bound is achievable. Likewise, an empty list accepted by the
+private structural helper does not make an empty public archive valid.
+
+The prospective cases, actual helper call records, independent outcome and
+reachability oracle, altered-report/bound/roster controls and exact recovery
+copies are at `docs/audits/native-proxy-observation-archive-guards-20260911/`.
+This qualification leaves archive files untouched. The tested helper invokes
+no target/archive filesystem helper or process. Invalid namespace/layout and replacement
+controls, the final archive join and exact observation release remain open.
+
 The helper checks bounded regular source/output files and the native header,
 then sets executable permissions through the admitted open file handle. A
 regression exposed path-based permission changes affecting a substituted file

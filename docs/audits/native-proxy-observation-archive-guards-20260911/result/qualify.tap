@@ -1,0 +1,72 @@
+ok 1 - empty structural list: expected structural admission
+ok 2 - empty structural list: exact first guard error
+ok 3 - empty structural list: all original value types and bytes preserved
+ok 4 - one empty payload: expected structural admission
+ok 5 - one empty payload: exact first guard error
+ok 6 - one empty payload: all original value types and bytes preserved
+ok 7 - one binary payload: expected structural admission
+ok 8 - one binary payload: exact first guard error
+ok 9 - one binary payload: all original value types and bytes preserved
+ok 10 - count 63 empty payloads: expected structural admission
+ok 11 - count 63 empty payloads: exact first guard error
+ok 12 - count 63 empty payloads: all original value types and bytes preserved
+ok 13 - count 64 empty payloads: expected structural admission
+ok 14 - count 64 empty payloads: exact first guard error
+ok 15 - count 64 empty payloads: all original value types and bytes preserved
+ok 16 - count 65 empty payloads: expected structural admission
+ok 17 - count 65 empty payloads: exact first guard error
+ok 18 - count 65 empty payloads: all original value types and bytes preserved
+ok 19 - aggregate one below ceiling: expected structural admission
+ok 20 - aggregate one below ceiling: exact first guard error
+ok 21 - aggregate one below ceiling: all original value types and bytes preserved
+ok 22 - aggregate exact ceiling: expected structural admission
+ok 23 - aggregate exact ceiling: exact first guard error
+ok 24 - aggregate exact ceiling: all original value types and bytes preserved
+ok 25 - aggregate excess via count: expected structural admission
+ok 26 - aggregate excess via count: exact first guard error
+ok 27 - aggregate excess via count: all original value types and bytes preserved
+ok 28 - aggregate excess via payload: expected structural admission
+ok 29 - aggregate excess via payload: exact first guard error
+ok 30 - aggregate excess via payload: all original value types and bytes preserved
+ok 31 - count precedes invalid byte form: expected structural admission
+ok 32 - count precedes invalid byte form: exact first guard error
+ok 33 - count precedes invalid byte form: all original value types and bytes preserved
+ok 34 - undefined payload at 0: expected structural admission
+ok 35 - undefined payload at 0: exact first guard error
+ok 36 - undefined payload at 0: all original value types and bytes preserved
+ok 37 - undefined payload at 31: expected structural admission
+ok 38 - undefined payload at 31: exact first guard error
+ok 39 - undefined payload at 31: all original value types and bytes preserved
+ok 40 - undefined payload at 63: expected structural admission
+ok 41 - undefined payload at 63: exact first guard error
+ok 42 - undefined payload at 63: all original value types and bytes preserved
+ok 43 - reference payload at 0: expected structural admission
+ok 44 - reference payload at 0: exact first guard error
+ok 45 - reference payload at 0: all original value types and bytes preserved
+ok 46 - reference payload at 31: expected structural admission
+ok 47 - reference payload at 31: exact first guard error
+ok 48 - reference payload at 31: all original value types and bytes preserved
+ok 49 - reference payload at 63: expected structural admission
+ok 50 - reference payload at 63: exact first guard error
+ok 51 - reference payload at 63: all original value types and bytes preserved
+ok 52 - utf8 payload at 0: expected structural admission
+ok 53 - utf8 payload at 0: exact first guard error
+ok 54 - utf8 payload at 0: all original value types and bytes preserved
+ok 55 - utf8 payload at 31: expected structural admission
+ok 56 - utf8 payload at 31: exact first guard error
+ok 57 - utf8 payload at 31: all original value types and bytes preserved
+ok 58 - utf8 payload at 63: expected structural admission
+ok 59 - utf8 payload at 63: exact first guard error
+ok 60 - utf8 payload at 63: all original value types and bytes preserved
+ok 61 - oversized payload at 0: expected structural admission
+ok 62 - oversized payload at 0: exact first guard error
+ok 63 - oversized payload at 0: all original value types and bytes preserved
+ok 64 - oversized payload at 31: expected structural admission
+ok 65 - oversized payload at 31: exact first guard error
+ok 66 - oversized payload at 31: all original value types and bytes preserved
+ok 67 - oversized payload at 63: expected structural admission
+ok 68 - oversized payload at 63: exact first guard error
+ok 69 - oversized payload at 63: all original value types and bytes preserved
+ok 70 - no target or archive filesystem helper call
+ok 71 - no compiler or native process attempt
+1..71

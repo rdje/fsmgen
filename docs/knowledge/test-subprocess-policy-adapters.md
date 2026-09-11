@@ -42,6 +42,7 @@ answers:
   - "how do archive close errors preserve primary errors and cleanup?"
   - "how are genuine omitted archive closes detected and recovered?"
   - "how are archive close domains joined against unchanged sources?"
+  - "why can archive aggregate excess be unreachable after earlier guards?"
   - "why did integrated proxy qualification fail?"
   - "why does t1545 not use IPC Cmd?"
   - "where does T1545 preserve empty-output checker failure diagnostics?"
@@ -110,11 +111,10 @@ Decisions `0087`/`0101` select `FSM::Support::ProcessSupervisor`; adapters seal 
 `VerilatorRuntime` follows decision `0086`.
 `TaskAcceptanceFixtureRuntime` seals owned fixture roots/fixed local Git argv.
 Supervisor, checker, locality, startup/capture/STOP controls: history; absent witnesses stay unknown.
-History: `254e3e1af3f061e7720112ded0d9337c3b13c31b:docs/knowledge/test-subprocess-policy-adapters.md`.
+History: `94e66c8c68017e49ea7bf59017fe67d4a53e5c2c:docs/knowledge/test-subprocess-policy-adapters.md`.
 PST parsing, serial-queue evidence, fixed CLI limits and controls: history.
-Records, custody, acquisition and unique-occurrence correction: history.
-A scoped settled event can leave a caller-owned helper running; release still needs every selected owner settled, including cancellation. Contract/model: history.
-Archive records, call cuts and ownership events: history. Partial writes, close reports and genuine omission/recovery: history. The close-domain join authenticates unchanged sources, complete selected close sites and distinct absent roots: `docs/audits/native-proxy-observation-archive-close-join-20260911/audit.py`.
+Records, custody, acquisition and unique-occurrence correction: history. A scoped settled event can leave a caller-owned helper running; release still needs every selected owner settled, including cancellation. Contract/model: history.
+Archive records and call/write/close joins: history. Archive guard ordering and unreachable aggregate excess: `docs/audits/native-proxy-observation-archive-guards-20260911/audit.py`; bounds are structural or public as declared.
 Caller-sealed test wrappers use tail goto to preserve caller.
 Replay: `scripts/run_with_ram_guard.sh -- python3 -B -m unittest discover -s t/python -p 'test_fixture_policy_archive*.py'`.
 Per-group cleanup cannot prove nested cleanup; actual counterexample: history.
