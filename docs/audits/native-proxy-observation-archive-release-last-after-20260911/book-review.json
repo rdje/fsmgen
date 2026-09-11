@@ -1,0 +1,17 @@
+{
+  "checked_passages": [
+    "The last-observation after-call partition keeps the same retirement and authenticated other-hold removal.",
+    "It leaves the selected image intact after a completed release of the final reference.",
+    "its cleanup stays complete while the remaining callers close any handles they own.",
+    "just-qualified last-observation healthy trace.",
+    "last-after-20260911/audit.py --verify-saved",
+    "Later lanes qualify readback, unlink and absence failures"
+  ],
+  "exact_output_absent": true,
+  "exit_code": 0,
+  "output": ".artifacts/tmp/native-proxy-observation-archive-release-last-after-book-20260911/book",
+  "rendered_bytes": 23391116,
+  "rendered_directories": 3,
+  "rendered_files": 98,
+  "same_volume_direct_objects": true
+}

@@ -2431,7 +2431,23 @@ unreferenced image. Inspect the raw bodies and reproduce their audit with:
 python3 -B docs/audits/native-proxy-observation-archive-release-last-before-20260911/audit.py --verify-saved
 ```
 
-Later lanes qualify the remaining profile/phase partitions, actual closes followed by modeled
+The last-observation after-call partition keeps the same retirement and
+authenticated other-hold removal. It leaves the selected image intact after a
+completed release of the final reference. At the injected boundary, the chosen
+helper has returned normally; its cleanup stays complete while the remaining
+callers close any handles they own.
+
+Before allocation, the preflight projects each admitted return from the
+just-qualified last-observation healthy trace. The unchanged after-call oracle
+must agree with its exact prefix and remaining close order. New cases resolve
+against their own physical inputs and retain full retirement, setup-removal,
+reference-effect and custody evidence. Revalidate with:
+
+```sh
+python3 -B docs/audits/native-proxy-observation-archive-release-last-after-20260911/audit.py --verify-saved
+```
+
+Later lanes qualify readback, unlink and absence failures, actual closes followed by modeled
 errors, deliberate close omissions with separate recovery, and the final
 source/evidence join. Primary errors outrank cleanup reports. These finite
 checks grant no native ownership authority or guarantee against arbitrary

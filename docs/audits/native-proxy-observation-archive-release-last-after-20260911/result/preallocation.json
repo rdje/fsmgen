@@ -1,0 +1,11 @@
+{
+  "cases": 430,
+  "inputs": 4241,
+  "prospective_pins": 9,
+  "success": true,
+  "trace_preflight": {
+    "basis": "saved last-observation healthy event projection",
+    "cases": 429,
+    "new_fixture_allocations": 0
+  }
+}

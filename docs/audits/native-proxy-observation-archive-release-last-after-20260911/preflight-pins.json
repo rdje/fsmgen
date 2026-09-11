@@ -1,0 +1,47 @@
+[
+  {
+    "path": "docs/audits/native-proxy-observation-archive-release-last-after-20260911/plan.json",
+    "sha256": "74f2ba64b65fd2486dd2c4a46352787dbd44e773e502b04b9e454eb930ab893c",
+    "size_bytes": 1297803
+  },
+  {
+    "path": "docs/audits/native-proxy-observation-archive-release-last-after-20260911/prepare.py",
+    "sha256": "61ee59e5a42f7eaeba4d11ebd26ebec2e0e9334b83f88833c88d6216b4e02f6b",
+    "size_bytes": 2954
+  },
+  {
+    "path": "docs/audits/native-proxy-observation-archive-release-last-after-20260911/qualify.t",
+    "sha256": "5e1830b173c90d372024d4460ec8722549d4191d62c91214c243ed0c58719116",
+    "size_bytes": 12759
+  },
+  {
+    "path": "docs/audits/native-proxy-observation-archive-release-last-after-20260911/audit.py",
+    "sha256": "3fa6eb0438ab4554f72592a83b0f5a974b325fdab5e6659f1cf7991a3f75f2fc",
+    "size_bytes": 21547
+  },
+  {
+    "path": "docs/audits/native-proxy-observation-archive-release-last-after-20260911/trace-preflight.py",
+    "sha256": "15cf2237d2be505224d56d7611b58832f502c42ca485ca1bd3e57f992895c7a6",
+    "size_bytes": 5159
+  },
+  {
+    "path": "docs/audits/native-proxy-observation-archive-release-last-after-20260911/trace-preflight-pins.json",
+    "sha256": "28a3a65618caa0fe1b4bc73ea8d342e3b8534012299215a3a9d7e40a6854d2fa",
+    "size_bytes": 652
+  },
+  {
+    "path": "docs/audits/native-proxy-observation-archive-release-last-after-20260911/result/trace-preflight.json",
+    "sha256": "0f6127c86b34ea5767627c14d3dc223e124e5d5760a9bfddbf43e25c7aee364c",
+    "size_bytes": 211336
+  },
+  {
+    "path": "docs/audits/native-proxy-observation-archive-release-last-after-20260911/result/trace-preflight.stdout",
+    "sha256": "8dce8932204c939669b0419e988d60b42d4512a35ddd34983e1564b958029bfe",
+    "size_bytes": 48
+  },
+  {
+    "path": "docs/audits/native-proxy-observation-archive-release-last-after-20260911/result/trace-preflight.exit",
+    "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa",
+    "size_bytes": 2
+  }
+]

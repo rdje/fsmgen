@@ -1,0 +1,35 @@
+{
+  "acceptance_history_revision": "612aa2052eabec11b446742918f8c87ac71ae05b",
+  "book": {
+    "checked_passages": [
+      "The last-observation after-call partition keeps the same retirement and authenticated other-hold removal.",
+      "It leaves the selected image intact after a completed release of the final reference.",
+      "its cleanup stays complete while the remaining callers close any handles they own.",
+      "just-qualified last-observation healthy trace.",
+      "last-after-20260911/audit.py --verify-saved",
+      "Later lanes qualify readback, unlink and absence failures"
+    ],
+    "exact_output_absent": true,
+    "exit_code": 0,
+    "output": ".artifacts/tmp/native-proxy-observation-archive-release-last-after-book-20260911/book",
+    "rendered_bytes": 23391116,
+    "rendered_directories": 3,
+    "rendered_files": 98,
+    "same_volume_direct_objects": true
+  },
+  "counts": "result/audit.json",
+  "doctrines": "Focused preparation/syntax/preflight/authentication/matrix/audits, task integrity, Knowledge Map and rendered book pass. Mandatory staged-index and commit-hook doctrines gate durable completion.",
+  "durability": "Nine prospective matrix pins and 4241 exact predecessors precede allocation; three earlier event-preflight pins bind the profile-specific projection. Each complete immutable case publishes only after its roots are absent. All 430 case bodies and 457 byte-exact recovery copies retain raw outcomes, including guarded preallocation streams and exit. audit.py --verify-saved reproduces the result without fixtures or retained-evidence writes. Task, book, bounded fact, exact acceptance suffix and Git own continuation.",
+  "falsification": "Thirty altered rows, six manifests, two byte receipts and three selector domains reject corrupted frames, aliases, callers, cleanup, effects, original identities, input/root evidence, authority and recovery. Last-observation controls reject missing retirement, retained retired workspace, missing or wrong controlled removal, and deletion of the unreferenced image. Six direct caller controls retain exact original rejection. Earlier pure-flow controls remain dated evidence; their producer is not rerun.",
+  "first_run": "Preparation, syntax, event preflight, guarded preallocation authentication, actual matrix, independent audit, saved-data audit and book inspection all passed on their first runs. No preceding producer or native process ran.",
+  "knowledge_map": "knowledge-map: OK (1161 facts, 6420 unique questions, 6591 answer occurrences, 139 bounded topic shards; query parity verified)",
+  "knowledge_projection": "knowledge-projection.json",
+  "next_action": "Pin and partition selected release readback, failed-unlink and first/later absence controls before new implementation. Preserve original state and actual versus reported effects; separate unreturned lower-reader custody from returned-source observations and modeled failures from OS guarantees. The call/readback join, close reports/omissions, complete release applicability, native/lifetime and historical startup/parent/full CI/push remain open.",
+  "owner": "HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.12.4.1.3.4.4.3.9",
+  "plan": "plan.json",
+  "prior_acceptance_sections_unchanged": 37,
+  "rederivation": "The independent preflight projects each admitted return from the just-qualified last-observation healthy event stream, appending future actual closes only for handles still open. It agrees with the unchanged after-call source-scope oracle, separating completed helper cleanup from interrupted caller ownership. The unchanged Perl resolver derives each new fixture prospectively; the Python flow model independently reconstructs it. The audit checks every call/event, original archive binding, actual source/directory/lock close, original runtime retirement, exact controlled other-hold removal and complete physical effect. The selected image survives final-reference removal. A separate subtree-interval oracle derives truthful unlink and historical/latest absence.",
+  "schema": "fsmgen.release_last_after_review.v1",
+  "scope": "One new healthy last-observation control and the complete ordinary last-observation after-call partition. Retire the target runtime and remove only the other observation hold during controlled setup. Preserve the selected image after its final reference is released. The selected helper is complete and only its callers remain interrupted. Source returns and sealed-after aliases are excluded. No original qualifier, native process, other profile, readback mutation, modeled close report or omitted close.",
+  "task_integrity": "[task-tree-integrity] all active task-tree invariants hold (trees=4, nodes=1350, segments=3, compact_terminals=20, index_archives=1, migrations=1, acceptance_histories=1)"
+}
