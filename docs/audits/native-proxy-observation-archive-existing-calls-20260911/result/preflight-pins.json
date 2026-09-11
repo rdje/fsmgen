@@ -1,0 +1,22 @@
+[
+  {
+    "path": "docs/audits/native-proxy-observation-archive-existing-calls-20260911/plan.py",
+    "sha256": "a078c745c5524a71340b34dc09177a1a317e722f0f48c72430777e79cbe053c0",
+    "size_bytes": 2627
+  },
+  {
+    "path": "docs/audits/native-proxy-observation-archive-existing-calls-20260911/plan.json",
+    "sha256": "1942f90f0b1c1ae7bf461d0eef1c6ccf9769dbbffd2cd5d25334e1770fa0355b",
+    "size_bytes": 28622
+  },
+  {
+    "path": "docs/audits/native-proxy-observation-archive-existing-calls-20260911/qualify.t",
+    "sha256": "2f9b1778acee6b1b82e270c40e039c040f3e8862f504552747daa638d92ef705",
+    "size_bytes": 6799
+  },
+  {
+    "path": "docs/audits/native-proxy-observation-archive-existing-calls-20260911/audit.py",
+    "sha256": "985166b744d5a2943592dc6b344ce87abddf8eca55213c490d872835de137a30",
+    "size_bytes": 13028
+  }
+]
