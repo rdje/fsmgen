@@ -1,0 +1,259 @@
+{
+  "contract": "Authenticate tracked inputs, raw recovery receipts and source epochs before loading saved auditors. Reconstruct full saved domains without old producer or audit main calls, then independently select source-before archive failures and derive each already-owned cleanup suffix. Join callee-before-handoff lexical closure, stricter explicit failure closure and caller cleanup by exact unchanged code. Preserve actual pre-recovery truth and original failures.",
+  "handoff": {
+    "completed_revision": "730b8b3a2bb1e918d24a03d23a19b0066d159508",
+    "receipts": [
+      "docs/audits/native-proxy-descriptor-handoff-20260910/result/baseline.json",
+      "docs/audits/native-proxy-descriptor-handoff-20260910/result/baseline.tap",
+      "docs/audits/native-proxy-descriptor-handoff-20260910/result/baseline.stderr",
+      "docs/audits/native-proxy-descriptor-handoff-20260910/result/baseline-admission.jsonl",
+      "docs/audits/native-proxy-descriptor-handoff-20260910/result/baseline-audit.json",
+      "docs/audits/native-proxy-descriptor-handoff-20260910/result/qualification.json",
+      "docs/audits/native-proxy-descriptor-handoff-20260910/result/qualification.tap",
+      "docs/audits/native-proxy-descriptor-handoff-20260910/result/qualification.stderr",
+      "docs/audits/native-proxy-descriptor-handoff-20260910/result/qualification-admission.jsonl",
+      "docs/audits/native-proxy-descriptor-handoff-20260910/result/qualification-audit.json",
+      "docs/audits/native-proxy-descriptor-handoff-20260910/result/ImageCustody.pm.baseline-source",
+      "docs/audits/native-proxy-descriptor-handoff-20260910/result/Publication.pm.baseline-source",
+      "docs/audits/native-proxy-descriptor-handoff-20260910/result/regression-restoration.json",
+      "docs/audits/native-proxy-descriptor-handoff-20260910/result/book-review.json",
+      "docs/audits/native-proxy-descriptor-handoff-20260910/result/task-integrity.stdout",
+      "docs/audits/native-proxy-descriptor-handoff-20260910/result/task-integrity.stderr",
+      "docs/audits/native-proxy-descriptor-handoff-20260910/result/custody-regression/qualification.json",
+      "docs/audits/native-proxy-descriptor-handoff-20260910/result/custody-regression/qualify.stderr",
+      "docs/audits/native-proxy-descriptor-handoff-20260910/result/custody-regression/qualify.tap",
+      "docs/audits/native-proxy-descriptor-handoff-20260910/result/publication-regression/qualification.json",
+      "docs/audits/native-proxy-descriptor-handoff-20260910/result/publication-regression/qualify.stderr",
+      "docs/audits/native-proxy-descriptor-handoff-20260910/result/publication-regression/qualify.tap",
+      "docs/audits/native-proxy-descriptor-handoff-20260910/result/observation-regression/admission.jsonl",
+      "docs/audits/native-proxy-descriptor-handoff-20260910/result/observation-regression/qualification.json",
+      "docs/audits/native-proxy-descriptor-handoff-20260910/result/observation-regression/qualify.stderr",
+      "docs/audits/native-proxy-descriptor-handoff-20260910/result/observation-regression/qualify.tap"
+    ],
+    "source": "docs/audits/native-proxy-descriptor-handoff-20260910",
+    "sources": [
+      "docs/audits/native-proxy-descriptor-handoff-20260910/plan.json",
+      "docs/audits/native-proxy-descriptor-handoff-20260910/qualify.t",
+      "docs/audits/native-proxy-descriptor-handoff-20260910/audit.py"
+    ]
+  },
+  "infrastructure": [
+    "docs/audits/native-proxy-observation-archive-close-join-20260911/inventory.py"
+  ],
+  "input_limits": {
+    "file_bytes": 33554432,
+    "files": 256,
+    "total_bytes": 268435456
+  },
+  "limits": "Finite conditional source/custody composition. Direct-reader cases are not archive operations. The selected lower failures were not executed at every archive cut, and their reachability at every site is not claimed. No arbitrary reader error, asynchronous race/crash, exact observation release, native execution or startup/parent/full-CI/push qualification follows.",
+  "matrices": [
+    {
+      "completed_revision": "ff71d28f1e47c6bf34db96029862f6be5fe96051",
+      "name": "filesystem",
+      "pins": "docs/audits/native-proxy-observation-archive-20260911/result/preflight-pins.json",
+      "receipts": [
+        "docs/audits/native-proxy-observation-archive-20260911/result/plan.stdout",
+        "docs/audits/native-proxy-observation-archive-20260911/result/plan.stderr",
+        "docs/audits/native-proxy-observation-archive-20260911/result/preflight-pins.json",
+        "docs/audits/native-proxy-observation-archive-20260911/result/plan-provenance.json",
+        "docs/audits/native-proxy-observation-archive-20260911/result/qualification.json",
+        "docs/audits/native-proxy-observation-archive-20260911/result/admission.jsonl",
+        "docs/audits/native-proxy-observation-archive-20260911/result/qualify.tap",
+        "docs/audits/native-proxy-observation-archive-20260911/result/qualify.stderr",
+        "docs/audits/native-proxy-observation-archive-20260911/result/qualify.exit",
+        "docs/audits/native-proxy-observation-archive-20260911/result/audit.json",
+        "docs/audits/native-proxy-observation-archive-20260911/result/audit.stdout",
+        "docs/audits/native-proxy-observation-archive-20260911/result/audit.stderr",
+        "docs/audits/native-proxy-observation-archive-20260911/result/audit.exit"
+      ],
+      "source": "docs/audits/native-proxy-observation-archive-20260911",
+      "source_epoch": "dd29e3bffdcdbcf737236e20086acb89bcc31771",
+      "sources": [
+        "docs/audits/native-proxy-observation-archive-20260911/ObservationArchive.pm",
+        "docs/audits/native-proxy-observation-archive-20260911/plan.py",
+        "docs/audits/native-proxy-observation-archive-20260911/plan.json",
+        "docs/audits/native-proxy-observation-archive-20260911/qualify.t",
+        "docs/audits/native-proxy-observation-archive-20260911/audit.py"
+      ]
+    },
+    {
+      "completed_revision": "ca3cd1940f035ece55144ab86f7f08cd9832bd52",
+      "name": "ordinary-fresh",
+      "pins": "docs/audits/native-proxy-observation-archive-fresh-calls-20260911/result/preflight-pins.json",
+      "receipts": [
+        "docs/audits/native-proxy-observation-archive-fresh-calls-20260911/result/plan.stdout",
+        "docs/audits/native-proxy-observation-archive-fresh-calls-20260911/result/plan.stderr",
+        "docs/audits/native-proxy-observation-archive-fresh-calls-20260911/result/preflight-pins.json",
+        "docs/audits/native-proxy-observation-archive-fresh-calls-20260911/result/qualification.json",
+        "docs/audits/native-proxy-observation-archive-fresh-calls-20260911/result/admission.jsonl",
+        "docs/audits/native-proxy-observation-archive-fresh-calls-20260911/result/qualify.tap",
+        "docs/audits/native-proxy-observation-archive-fresh-calls-20260911/result/qualify.stderr",
+        "docs/audits/native-proxy-observation-archive-fresh-calls-20260911/result/qualify.exit",
+        "docs/audits/native-proxy-observation-archive-fresh-calls-20260911/result/audit.json",
+        "docs/audits/native-proxy-observation-archive-fresh-calls-20260911/result/audit.stdout",
+        "docs/audits/native-proxy-observation-archive-fresh-calls-20260911/result/audit.stderr",
+        "docs/audits/native-proxy-observation-archive-fresh-calls-20260911/result/audit.exit"
+      ],
+      "source": "docs/audits/native-proxy-observation-archive-fresh-calls-20260911",
+      "source_epoch": "cbb62267a741dd059132d745d429c12d86fc5967",
+      "sources": [
+        "docs/audits/native-proxy-observation-archive-fresh-calls-20260911/plan.py",
+        "docs/audits/native-proxy-observation-archive-fresh-calls-20260911/plan.json",
+        "docs/audits/native-proxy-observation-archive-fresh-calls-20260911/qualify.t",
+        "docs/audits/native-proxy-observation-archive-fresh-calls-20260911/audit.py"
+      ]
+    },
+    {
+      "completed_revision": "83501699d4c9f45d0c5c43837453141f60d02e8b",
+      "name": "ordinary-existing",
+      "pins": "docs/audits/native-proxy-observation-archive-existing-calls-20260911/result/preflight-pins.json",
+      "receipts": [
+        "docs/audits/native-proxy-observation-archive-existing-calls-20260911/result/plan.stdout",
+        "docs/audits/native-proxy-observation-archive-existing-calls-20260911/result/plan.stderr",
+        "docs/audits/native-proxy-observation-archive-existing-calls-20260911/result/preflight-pins.json",
+        "docs/audits/native-proxy-observation-archive-existing-calls-20260911/result/qualification.json",
+        "docs/audits/native-proxy-observation-archive-existing-calls-20260911/result/admission.jsonl",
+        "docs/audits/native-proxy-observation-archive-existing-calls-20260911/result/qualify.tap",
+        "docs/audits/native-proxy-observation-archive-existing-calls-20260911/result/qualify.stderr",
+        "docs/audits/native-proxy-observation-archive-existing-calls-20260911/result/qualify.exit",
+        "docs/audits/native-proxy-observation-archive-existing-calls-20260911/result/audit.json",
+        "docs/audits/native-proxy-observation-archive-existing-calls-20260911/result/audit.stdout",
+        "docs/audits/native-proxy-observation-archive-existing-calls-20260911/result/audit.stderr",
+        "docs/audits/native-proxy-observation-archive-existing-calls-20260911/result/audit.exit"
+      ],
+      "source": "docs/audits/native-proxy-observation-archive-existing-calls-20260911",
+      "source_epoch": "ca3cd1940f035ece55144ab86f7f08cd9832bd52",
+      "sources": [
+        "docs/audits/native-proxy-observation-archive-existing-calls-20260911/plan.py",
+        "docs/audits/native-proxy-observation-archive-existing-calls-20260911/plan.json",
+        "docs/audits/native-proxy-observation-archive-existing-calls-20260911/qualify.t",
+        "docs/audits/native-proxy-observation-archive-existing-calls-20260911/audit.py"
+      ]
+    },
+    {
+      "completed_revision": "af76fe3c794dc020e4de71789d24a13eafcbca76",
+      "name": "equal-fresh",
+      "pins": "docs/audits/native-proxy-observation-archive-equal-fresh-calls-20260911/result/preflight-pins.json",
+      "receipts": [
+        "docs/audits/native-proxy-observation-archive-equal-fresh-calls-20260911/result/plan.stdout",
+        "docs/audits/native-proxy-observation-archive-equal-fresh-calls-20260911/result/plan.stderr",
+        "docs/audits/native-proxy-observation-archive-equal-fresh-calls-20260911/result/preflight-pins.json",
+        "docs/audits/native-proxy-observation-archive-equal-fresh-calls-20260911/result/qualification.json",
+        "docs/audits/native-proxy-observation-archive-equal-fresh-calls-20260911/result/admission.jsonl",
+        "docs/audits/native-proxy-observation-archive-equal-fresh-calls-20260911/result/qualify.tap",
+        "docs/audits/native-proxy-observation-archive-equal-fresh-calls-20260911/result/qualify.stderr",
+        "docs/audits/native-proxy-observation-archive-equal-fresh-calls-20260911/result/qualify.exit",
+        "docs/audits/native-proxy-observation-archive-equal-fresh-calls-20260911/result/audit.json",
+        "docs/audits/native-proxy-observation-archive-equal-fresh-calls-20260911/result/audit.stdout",
+        "docs/audits/native-proxy-observation-archive-equal-fresh-calls-20260911/result/audit.stderr",
+        "docs/audits/native-proxy-observation-archive-equal-fresh-calls-20260911/result/audit.exit"
+      ],
+      "source": "docs/audits/native-proxy-observation-archive-equal-fresh-calls-20260911",
+      "source_epoch": "83501699d4c9f45d0c5c43837453141f60d02e8b",
+      "sources": [
+        "docs/audits/native-proxy-observation-archive-equal-fresh-calls-20260911/plan.py",
+        "docs/audits/native-proxy-observation-archive-equal-fresh-calls-20260911/plan.json",
+        "docs/audits/native-proxy-observation-archive-equal-fresh-calls-20260911/qualify.t",
+        "docs/audits/native-proxy-observation-archive-equal-fresh-calls-20260911/audit.py"
+      ]
+    },
+    {
+      "completed_revision": "698f99da3ca3dfe47b89fc17db142b3784f37907",
+      "name": "equal-existing",
+      "pins": "docs/audits/native-proxy-observation-archive-equal-existing-calls-20260911/result/preflight-pins.json",
+      "receipts": [
+        "docs/audits/native-proxy-observation-archive-equal-existing-calls-20260911/result/plan.stdout",
+        "docs/audits/native-proxy-observation-archive-equal-existing-calls-20260911/result/plan.stderr",
+        "docs/audits/native-proxy-observation-archive-equal-existing-calls-20260911/result/preflight-pins.json",
+        "docs/audits/native-proxy-observation-archive-equal-existing-calls-20260911/result/qualification.json",
+        "docs/audits/native-proxy-observation-archive-equal-existing-calls-20260911/result/admission.jsonl",
+        "docs/audits/native-proxy-observation-archive-equal-existing-calls-20260911/result/qualify.tap",
+        "docs/audits/native-proxy-observation-archive-equal-existing-calls-20260911/result/qualify.stderr",
+        "docs/audits/native-proxy-observation-archive-equal-existing-calls-20260911/result/qualify.exit",
+        "docs/audits/native-proxy-observation-archive-equal-existing-calls-20260911/result/audit.json",
+        "docs/audits/native-proxy-observation-archive-equal-existing-calls-20260911/result/audit.stdout",
+        "docs/audits/native-proxy-observation-archive-equal-existing-calls-20260911/result/audit.stderr",
+        "docs/audits/native-proxy-observation-archive-equal-existing-calls-20260911/result/audit.exit"
+      ],
+      "source": "docs/audits/native-proxy-observation-archive-equal-existing-calls-20260911",
+      "source_epoch": "af76fe3c794dc020e4de71789d24a13eafcbca76",
+      "sources": [
+        "docs/audits/native-proxy-observation-archive-equal-existing-calls-20260911/plan.py",
+        "docs/audits/native-proxy-observation-archive-equal-existing-calls-20260911/plan.json",
+        "docs/audits/native-proxy-observation-archive-equal-existing-calls-20260911/qualify.t",
+        "docs/audits/native-proxy-observation-archive-equal-existing-calls-20260911/audit.py"
+      ]
+    },
+    {
+      "completed_revision": "05957842d584b6b3f434e2b2d20c65316e16e39c",
+      "name": "observer",
+      "pins": "docs/audits/native-proxy-observation-archive-lower-reader-seam-20260911/preflight-pins.json",
+      "receipts": [
+        "docs/audits/native-proxy-observation-archive-lower-reader-seam-20260911/result/plan.stdout",
+        "docs/audits/native-proxy-observation-archive-lower-reader-seam-20260911/result/plan.stderr",
+        "docs/audits/native-proxy-observation-archive-lower-reader-seam-20260911/result/plan.exit",
+        "docs/audits/native-proxy-observation-archive-lower-reader-seam-20260911/result/syntax.stdout",
+        "docs/audits/native-proxy-observation-archive-lower-reader-seam-20260911/result/syntax.stderr",
+        "docs/audits/native-proxy-observation-archive-lower-reader-seam-20260911/result/syntax.exit",
+        "docs/audits/native-proxy-observation-archive-lower-reader-seam-20260911/result/admission.jsonl",
+        "docs/audits/native-proxy-observation-archive-lower-reader-seam-20260911/result/qualification.json",
+        "docs/audits/native-proxy-observation-archive-lower-reader-seam-20260911/result/qualify.tap",
+        "docs/audits/native-proxy-observation-archive-lower-reader-seam-20260911/result/qualify.stderr",
+        "docs/audits/native-proxy-observation-archive-lower-reader-seam-20260911/result/qualify.exit",
+        "docs/audits/native-proxy-observation-archive-lower-reader-seam-20260911/result/audit.json",
+        "docs/audits/native-proxy-observation-archive-lower-reader-seam-20260911/result/audit.stdout",
+        "docs/audits/native-proxy-observation-archive-lower-reader-seam-20260911/result/audit.stderr",
+        "docs/audits/native-proxy-observation-archive-lower-reader-seam-20260911/result/audit.exit"
+      ],
+      "source": "docs/audits/native-proxy-observation-archive-lower-reader-seam-20260911",
+      "source_epoch": "94ba98609063049d44a46f1dddd19fd065e130cd",
+      "sources": [
+        "docs/audits/native-proxy-observation-archive-lower-reader-seam-20260911/plan.py",
+        "docs/audits/native-proxy-observation-archive-lower-reader-seam-20260911/plan.json",
+        "docs/audits/native-proxy-observation-archive-lower-reader-seam-20260911/LowerReaderTrace.pm",
+        "docs/audits/native-proxy-observation-archive-lower-reader-seam-20260911/qualify.t",
+        "docs/audits/native-proxy-observation-archive-lower-reader-seam-20260911/audit.py",
+        "docs/audits/native-proxy-observation-archive-lower-reader-seam-20260911/toolchain-reference.json"
+      ]
+    },
+    {
+      "completed_revision": "deb2b6a7cfbd55a664e0127b5135a31fdb0b994b",
+      "name": "failures",
+      "pins": "docs/audits/native-proxy-observation-archive-lower-reader-failures-20260911/preflight-pins.json",
+      "receipts": [
+        "docs/audits/native-proxy-observation-archive-lower-reader-failures-20260911/result/plan.stdout",
+        "docs/audits/native-proxy-observation-archive-lower-reader-failures-20260911/result/plan.stderr",
+        "docs/audits/native-proxy-observation-archive-lower-reader-failures-20260911/result/plan.exit",
+        "docs/audits/native-proxy-observation-archive-lower-reader-failures-20260911/result/syntax.stdout",
+        "docs/audits/native-proxy-observation-archive-lower-reader-failures-20260911/result/syntax.stderr",
+        "docs/audits/native-proxy-observation-archive-lower-reader-failures-20260911/result/syntax.exit",
+        "docs/audits/native-proxy-observation-archive-lower-reader-failures-20260911/result/admission.jsonl",
+        "docs/audits/native-proxy-observation-archive-lower-reader-failures-20260911/result/qualification.json",
+        "docs/audits/native-proxy-observation-archive-lower-reader-failures-20260911/result/qualify.tap",
+        "docs/audits/native-proxy-observation-archive-lower-reader-failures-20260911/result/qualify.stderr",
+        "docs/audits/native-proxy-observation-archive-lower-reader-failures-20260911/result/qualify.exit",
+        "docs/audits/native-proxy-observation-archive-lower-reader-failures-20260911/result/audit.json",
+        "docs/audits/native-proxy-observation-archive-lower-reader-failures-20260911/result/audit.stdout",
+        "docs/audits/native-proxy-observation-archive-lower-reader-failures-20260911/result/audit.stderr",
+        "docs/audits/native-proxy-observation-archive-lower-reader-failures-20260911/result/audit.exit"
+      ],
+      "source": "docs/audits/native-proxy-observation-archive-lower-reader-failures-20260911",
+      "source_epoch": "05957842d584b6b3f434e2b2d20c65316e16e39c",
+      "sources": [
+        "docs/audits/native-proxy-observation-archive-lower-reader-failures-20260911/plan.py",
+        "docs/audits/native-proxy-observation-archive-lower-reader-failures-20260911/plan.json",
+        "docs/audits/native-proxy-observation-archive-lower-reader-failures-20260911/LowerReadControls.pm",
+        "docs/audits/native-proxy-observation-archive-lower-reader-failures-20260911/qualify.t",
+        "docs/audits/native-proxy-observation-archive-lower-reader-failures-20260911/audit.py"
+      ]
+    }
+  ],
+  "owner": "HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.12.4.1.3.4.2.3.4.2.3.3",
+  "schema": "fsmgen.inactive_archive_lower_reader_join_plan.v1",
+  "selection": {
+    "archive": "Every source:index:ordinal:before in each original healthy ordinary/equal fresh/existing flow; include each selected existing preparation.",
+    "direct_reader": "Complete observer and failure domains, with the deliberate strong counterexample separate.",
+    "strict_admission": "Recheck complete dedicated baseline/current handoff evidence; use source cases for the stricter post-reader boundary. Original archive wrong-mode/hardlink cases prove rejection only."
+  },
+  "source_revision": "deb2b6a7cfbd55a664e0127b5135a31fdb0b994b"
+}

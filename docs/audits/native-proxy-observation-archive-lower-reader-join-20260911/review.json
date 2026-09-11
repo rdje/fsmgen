@@ -1,0 +1,25 @@
+{
+  "book": {
+    "conditional_composition_verified": true,
+    "distinct_observers_verified": true,
+    "exact_output_absent": true,
+    "exit_code": 0,
+    "new_passage_verified": true,
+    "output": ".artifacts/tmp/native-proxy-observation-archive-lower-reader-join-book-20260911/book",
+    "rendered_bytes": 23299997,
+    "rendered_files": 98,
+    "same_volume_direct_objects": true,
+    "separate_archive_release_native_gates_verified": true
+  },
+  "doctrines": "The staged-index and commit-hook gates are required conditions of the durable work-unit commit. The finite lower-reader/layout parents complete; final archive applicability, exact release and historical startup/parent/full CI/push stay open.",
+  "documentation": "documentation.json",
+  "durability": "Three prospective pins remain exact; nine new raw recovery copies retain the first successful inventory/audit and their full source census. Original sources and 117 recovered historical receipts stay unchanged. Exact helper bodies match the original handoff repair, and full current source applicability is independently authenticated at each archive/reader epoch. Task/book/Knowledge Map, bounded history and the required staged/commit-hook gates retain continuity. No first-run repair, old producer, old audit main, compiler or native fixture rerun occurs.",
+  "falsification": "Forty-four altered evidence/domain/source/receipt/inventory controls reject. They challenge lost archive cleanup, invented failed handoff, replaced primary errors, missing old domains, lost handoff recovery, omitted source/writer/archive closes, wrong source ordering/epochs and corrupt raw receipts. Existing independent reader oracles retain weak-alias, actual descriptor probe, modeled versus actual read and strong-counterexample distinctions. No observed failure is healed by later recovery.",
+  "knowledge_map": "knowledge-map: OK (1161 facts, 6403 unique questions, 6574 answer occurrences, 139 bounded topic shards; query parity verified)",
+  "knowledge_projection": "knowledge-projection.json",
+  "limits": "Finite conditional source/custody composition. Direct-reader cases are not archive operations. The selected lower failures were not executed at every archive cut, and their reachability at every site is not claimed. No arbitrary reader error, asynchronous race/crash, exact observation release, native execution or startup/parent/full-CI/push qualification follows.",
+  "observation_boundaries": "The original archive wrong-mode/hardlink controls reject without observing a failed source handle. Dedicated strict-handoff evidence supplies explicit closure after successful lower-reader return. Weak direct-reader observation supplies lexical closure before that return. Source-before archive interruptions supply already-owned caller cleanup; exact unchanged source composes the boundaries conditionally. Deliberate strong aliases and baseline gaps remain scoped observer/explicit-close controls, not ordinary runtime leaks.",
+  "owner": "HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.12.4.1.3.4.2.3.4.2.3.3",
+  "rederivation": "The first guarded inventory and saved-evidence audit authenticate 195 inputs (94318521 bytes), 246 original source-epoch comparisons and 117 historical raw receipts. Complete saved archive/filesystem/call, observer/failure and dedicated handoff domains revalidate 3281 historical TAP assertions and 2188 disjoint absent roots; these are preserved observations, not fresh test executions. Independent source-entry selection derives 35 interruptions: seven payload, fourteen retained and fourteen reread cuts. Their fourteen observed preparations yield 49 saved archive operations, 6657 events and 600 actual handles, with 84 already-owned handles closed by reconstructed caller cleanup suffixes. The 140 selected archive roots and seventeen direct-reader roots are disjoint and absent. Five stricter source failures close explicitly before recovery.",
+  "schema": "fsmgen.inactive_archive_lower_reader_join_review.v1"
+}

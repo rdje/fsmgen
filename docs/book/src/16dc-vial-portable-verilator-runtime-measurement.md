@@ -2487,9 +2487,9 @@ concurrent writers or operating-system race atomicity.
 
 The archive tracer observes source handles after admission returns. It cannot
 certify cleanup for a lower-reader failure before that handoff. That observation
-gap has a separate task owner; it is not evidence of a runtime leak. Lower-reader custody, the final archive join and exact observation release
-remain open. These inert controls do not qualify native
-execution or asynchronous filesystem races.
+gap is now closed by the separate custody composition below; it was not evidence
+of a runtime leak. The final archive join and exact observation release remain
+open. These inert controls do not qualify native execution or asynchronous races.
 
 A separate lower-reader observer now has its own qualification. Ordinary
 instrumentation retains weak handle aliases, allowing the reader's lexical
@@ -2527,8 +2527,36 @@ Sources, saved observer applicability, actual records and falsifiers are at
 `docs/audits/native-proxy-observation-archive-lower-reader-failures-20260911/`.
 The product source limit is unchanged; the fixture census is separately bounded
 to represent its selected oversized witness. No runtime leak was demonstrated.
-Composition with archive cleanup remains open; these direct calls are not full
-archive runs or qualification of asynchronous filesystem races.
+These direct calls are not full archive runs or qualification of asynchronous
+filesystem races.
+
+The saved-evidence custody join connects these reader observations to the
+unchanged archive call sites. A read failure before returning a handle remains
+inside the reader's lexical ownership. After a successful read, stricter source
+validation owns the handle and closes it explicitly if admission fails. The
+archive caller then closes resources it already owned before either exception.
+
+For example, a publication readback failure leaves its writer for the publication
+cleanup block to close. A retained-source admission failure leaves the previously
+admitted sources in the archive cleanup list. A final reread failure leaves the
+complete retained-source list there. The join independently reconstructs these
+cleanup suffixes for every selected source-entry interruption in the original
+ordinary/equal-content fresh/existing archive flows, including the observed
+preparations for existing archives.
+
+Original archive wrong-mode and hard-link tests establish rejection, but their
+tracer receives no failed source handle. The separate descriptor-handoff matrix
+supplies stricter-admission cleanup evidence. Deliberately retained aliases in
+that matrix test explicit closure; weak aliases in the lower-reader matrix allow
+lexical closure to be observed. Their pre-recovery verdicts remain unchanged.
+
+Sources, exact historical receipts, source-body applicability and falsifiers are
+at `docs/audits/native-proxy-observation-archive-lower-reader-join-20260911/`.
+The join revalidates saved evidence without rerunning its producers. It establishes
+a finite conditional composition: the selected lower-reader failures were not
+executed at every archive site, and their reachability at every site is not
+asserted. The complete archive review, exact observation release and native
+ownership remain separate gates.
 
 The helper checks bounded regular source/output files and the native header,
 then sets executable permissions through the admitted open file handle. A

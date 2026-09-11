@@ -1,0 +1,12 @@
+{
+  "conditional_composition_verified": true,
+  "distinct_observers_verified": true,
+  "exact_output_absent": true,
+  "exit_code": 0,
+  "new_passage_verified": true,
+  "output": ".artifacts/tmp/native-proxy-observation-archive-lower-reader-join-book-20260911/book",
+  "rendered_bytes": 23299997,
+  "rendered_files": 98,
+  "same_volume_direct_objects": true,
+  "separate_archive_release_native_gates_verified": true
+}

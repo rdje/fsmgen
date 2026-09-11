@@ -1,0 +1,887 @@
+{
+  "all_allocations_absent": true,
+  "all_saved_roots": 2188,
+  "all_saved_tap_assertions": 3281,
+  "child_counts": {
+    "equal-existing": {
+      "cases": 96,
+      "interruption_directory_handles": 143,
+      "interruption_events": 6203,
+      "interruption_source_handles": 282,
+      "interruption_writer_handles": 0,
+      "operations": 192,
+      "preparation_directory_handles": 576,
+      "preparation_events": 18816,
+      "preparation_source_handles": 864,
+      "preparation_writer_handles": 288,
+      "roots": 384
+    },
+    "equal-fresh": {
+      "cases": 138,
+      "directory_handles": 434,
+      "events": 13691,
+      "roots": 552,
+      "source_handles": 558,
+      "writer_handles": 246
+    },
+    "failures": {
+      "actual_read_bytes": 66049,
+      "actual_read_syscalls": 8,
+      "caller_closes": 3,
+      "cases": 9,
+      "controlled_read_returns": 3,
+      "direct_reader_calls": 9,
+      "eio_rejections": 2,
+      "failed_handoffs": 6,
+      "lexical_failure_closures": 6,
+      "observed_read_calls": 11,
+      "observer_duplicates_closed": 3,
+      "read_agreement_rejections": 2,
+      "retained_originals": 1,
+      "roots": 9,
+      "successful_handoffs": 3,
+      "type_size_rejections": 2
+    },
+    "filesystem": {
+      "cases": 22,
+      "observed_source_descriptors": 162,
+      "operations": 29,
+      "returned_operations": 14,
+      "roots": 88
+    },
+    "observer": {
+      "actual_read_bytes": 131584,
+      "actual_read_syscalls": 10,
+      "caller_closes": 3,
+      "cases": 8,
+      "direct_reader_calls": 8,
+      "explicit_reader_closes": 3,
+      "failed_reads": 2,
+      "injected_read_errors": 2,
+      "observed_read_calls": 12,
+      "observer_duplicates_closed": 4,
+      "reader_return_closed": 4,
+      "reader_return_open": 4,
+      "returned_reads": 6,
+      "roots": 8,
+      "strong_bias_detected": 1,
+      "strong_control_recoveries": 1
+    },
+    "ordinary-existing": {
+      "cases": 114,
+      "interruption_directory_handles": 172,
+      "interruption_events": 8765,
+      "interruption_source_handles": 456,
+      "interruption_writer_handles": 0,
+      "operations": 228,
+      "preparation_directory_handles": 798,
+      "preparation_events": 27474,
+      "preparation_source_handles": 1368,
+      "preparation_writer_handles": 456,
+      "roots": 456
+    },
+    "ordinary-fresh": {
+      "cases": 168,
+      "directory_handles": 638,
+      "events": 20582,
+      "roots": 672,
+      "source_handles": 926,
+      "writer_handles": 406
+    }
+  },
+  "direct_reader_cases": 17,
+  "epoch_comparisons": 246,
+  "exact_handoff_function_bodies": [
+    {
+      "function": "_read_file",
+      "path": "t/lib/FSM/Test/RustProxyFixture.pm",
+      "sha256": "4273cb07c9712e219e78bad7531ab430898fe227e732c3f4841d4d15963bb43e",
+      "size_bytes": 1276,
+      "source_epoch": "730b8b3a2bb1e918d24a03d23a19b0066d159508"
+    },
+    {
+      "function": "_source",
+      "path": "docs/audits/native-proxy-image-custody-20260910/ImageCustody.pm",
+      "sha256": "83b68e387b8be166cc2112d5b54b3f030c1ad5c3bf69c1fe5a0fe98c0a40d57b",
+      "size_bytes": 1074,
+      "source_epoch": "730b8b3a2bb1e918d24a03d23a19b0066d159508"
+    },
+    {
+      "function": "_write_payload",
+      "path": "docs/audits/native-proxy-image-publication-20260910/Publication.pm",
+      "sha256": "3d47dc5d2f6bcc109e34b2b6b2e71266017da9264e429618239592ac2012817e",
+      "size_bytes": 2360,
+      "source_epoch": "730b8b3a2bb1e918d24a03d23a19b0066d159508"
+    }
+  ],
+  "falsifiers": [
+    "legacy ignored content",
+    "filesystem: missing case",
+    "ordinary-fresh: missing case",
+    "ordinary-existing: missing case",
+    "equal-fresh: missing case",
+    "equal-existing: missing case",
+    "observer: missing case",
+    "failures: missing case",
+    "handoff baseline: lost recovery",
+    "handoff qualification: lost recovery",
+    "strict source closure hidden",
+    "ordinary-fresh: lost caller close",
+    "ordinary-fresh: invented failed source handoff",
+    "ordinary-fresh: primary replaced",
+    "ordinary-fresh: lost case",
+    "ordinary-existing: lost caller close",
+    "ordinary-existing: invented failed source handoff",
+    "ordinary-existing: primary replaced",
+    "ordinary-existing: lost case",
+    "equal-fresh: lost caller close",
+    "equal-fresh: invented failed source handoff",
+    "equal-fresh: primary replaced",
+    "equal-fresh: lost case",
+    "equal-existing: lost caller close",
+    "equal-existing: invented failed source handoff",
+    "equal-existing: primary replaced",
+    "equal-existing: lost case",
+    "source contract: return ($body, \\@before, $keep_open ? $fh : undef);",
+    "source contract: close($handle);",
+    "source contract: die $error;",
+    "source contract: if (!close($writer))",
+    "source contract: push @{$state->{sources}}, NativeProxyImageCustody::_source(",
+    "source contract: my $close_error = _close_sources($state->{sources});",
+    "source contract: my $fresh = NativeProxyImageCustody::_source(",
+    "source contract: _event(\"$label:before\");",
+    "source contract: my $source = $reader->(@_);",
+    "missing domain",
+    "wrong epoch",
+    "wrong handoff epoch",
+    "docs/audits/native-proxy-observation-archive-lower-reader-seam-20260911: corrupted recovery",
+    "docs/audits/native-proxy-descriptor-handoff-20260910: corrupted recovery",
+    "lost source",
+    "changed identity",
+    "lost epoch comparison"
+  ],
+  "handoff_counts": {
+    "baseline": {
+      "assertions": 5,
+      "cases": 2,
+      "mutants": 0
+    },
+    "qualification": {
+      "assertions": 35,
+      "cases": 15,
+      "mutants": 2
+    }
+  },
+  "limits": "Finite conditional source/custody composition. Direct-reader cases are not archive operations. The selected lower failures were not executed at every archive cut, and their reachability at every site is not claimed. No arbitrary reader error, asynchronous race/crash, exact observation release, native execution or startup/parent/full-CI/push qualification follows.",
+  "original_strict_rejections": [
+    {
+      "name": "complete archive changed_mode",
+      "observed_failed_source_descriptors": 0
+    },
+    {
+      "name": "complete archive hardlink",
+      "observed_failed_source_descriptors": 0
+    }
+  ],
+  "prospective_pins": 3,
+  "raw_receipts": 117,
+  "schema": "fsmgen.inactive_archive_lower_reader_join_audit.v1",
+  "selected_archive_and_direct_roots": 157,
+  "selected_archive_counts": {
+    "archive_operations": 49,
+    "caller_cleanup_handles": 84,
+    "directory_handles": 198,
+    "events": 6657,
+    "payload_cuts": 7,
+    "preparations": 14,
+    "reread_cuts": 14,
+    "retained_cuts": 14,
+    "source_before_cases": 35,
+    "source_handles": 295,
+    "writer_handles": 107
+  },
+  "selected_archive_roots": 140,
+  "selections": {
+    "equal-existing": [
+      {
+        "already_owned": [],
+        "cleanup_events": [
+          "close_sources:before",
+          "close_sources:after"
+        ],
+        "name": "equal_reference:existing:source:0:0:before",
+        "preparation": true,
+        "role": "retained",
+        "selector": "source:0:0:before"
+      },
+      {
+        "already_owned": [
+          "source:0:0"
+        ],
+        "cleanup_events": [
+          "close_sources:before",
+          "close:source:0:0:before",
+          "close:source:0:0:after",
+          "close_sources:after"
+        ],
+        "name": "equal_reference:existing:source:1:0:before",
+        "preparation": true,
+        "role": "retained",
+        "selector": "source:1:0:before"
+      },
+      {
+        "already_owned": [
+          "source:0:0",
+          "source:1:0"
+        ],
+        "cleanup_events": [
+          "close_sources:before",
+          "close:source:0:0:before",
+          "close:source:0:0:after",
+          "close:source:1:0:before",
+          "close:source:1:0:after",
+          "close_sources:after"
+        ],
+        "name": "equal_reference:existing:source:2:0:before",
+        "preparation": true,
+        "role": "retained",
+        "selector": "source:2:0:before"
+      },
+      {
+        "already_owned": [
+          "source:0:0",
+          "source:1:0",
+          "source:2:0"
+        ],
+        "cleanup_events": [
+          "close_sources:before",
+          "close:source:0:0:before",
+          "close:source:0:0:after",
+          "close:source:1:0:before",
+          "close:source:1:0:after",
+          "close:source:2:0:before",
+          "close:source:2:0:after",
+          "close_sources:after"
+        ],
+        "name": "equal_reference:existing:source:0:1:before",
+        "preparation": true,
+        "role": "reread",
+        "selector": "source:0:1:before"
+      },
+      {
+        "already_owned": [
+          "source:0:0",
+          "source:1:0",
+          "source:2:0"
+        ],
+        "cleanup_events": [
+          "close_sources:before",
+          "close:source:0:0:before",
+          "close:source:0:0:after",
+          "close:source:1:0:before",
+          "close:source:1:0:after",
+          "close:source:2:0:before",
+          "close:source:2:0:after",
+          "close_sources:after"
+        ],
+        "name": "equal_reference:existing:source:1:1:before",
+        "preparation": true,
+        "role": "reread",
+        "selector": "source:1:1:before"
+      },
+      {
+        "already_owned": [
+          "source:0:0",
+          "source:1:0",
+          "source:2:0"
+        ],
+        "cleanup_events": [
+          "close_sources:before",
+          "close:source:0:0:before",
+          "close:source:0:0:after",
+          "close:source:1:0:before",
+          "close:source:1:0:after",
+          "close:source:2:0:before",
+          "close:source:2:0:after",
+          "close_sources:after"
+        ],
+        "name": "equal_reference:existing:source:2:1:before",
+        "preparation": true,
+        "role": "reread",
+        "selector": "source:2:1:before"
+      }
+    ],
+    "equal-fresh": [
+      {
+        "already_owned": [
+          "writer:0"
+        ],
+        "cleanup_events": [
+          "close:writer:0:before",
+          "close:writer:0:after",
+          "close_sources:before",
+          "close_sources:after"
+        ],
+        "name": "equal_reference:fresh:source:0:0:before",
+        "preparation": false,
+        "role": "payload",
+        "selector": "source:0:0:before"
+      },
+      {
+        "already_owned": [],
+        "cleanup_events": [
+          "close_sources:before",
+          "close_sources:after"
+        ],
+        "name": "equal_reference:fresh:source:0:1:before",
+        "preparation": false,
+        "role": "retained",
+        "selector": "source:0:1:before"
+      },
+      {
+        "already_owned": [
+          "source:0:1",
+          "writer:1"
+        ],
+        "cleanup_events": [
+          "close:writer:1:before",
+          "close:writer:1:after",
+          "close_sources:before",
+          "close:source:0:1:before",
+          "close:source:0:1:after",
+          "close_sources:after"
+        ],
+        "name": "equal_reference:fresh:source:1:0:before",
+        "preparation": false,
+        "role": "payload",
+        "selector": "source:1:0:before"
+      },
+      {
+        "already_owned": [
+          "source:0:1"
+        ],
+        "cleanup_events": [
+          "close_sources:before",
+          "close:source:0:1:before",
+          "close:source:0:1:after",
+          "close_sources:after"
+        ],
+        "name": "equal_reference:fresh:source:1:1:before",
+        "preparation": false,
+        "role": "retained",
+        "selector": "source:1:1:before"
+      },
+      {
+        "already_owned": [
+          "source:0:1",
+          "source:1:1",
+          "writer:2"
+        ],
+        "cleanup_events": [
+          "close:writer:2:before",
+          "close:writer:2:after",
+          "close_sources:before",
+          "close:source:0:1:before",
+          "close:source:0:1:after",
+          "close:source:1:1:before",
+          "close:source:1:1:after",
+          "close_sources:after"
+        ],
+        "name": "equal_reference:fresh:source:2:0:before",
+        "preparation": false,
+        "role": "payload",
+        "selector": "source:2:0:before"
+      },
+      {
+        "already_owned": [
+          "source:0:1",
+          "source:1:1"
+        ],
+        "cleanup_events": [
+          "close_sources:before",
+          "close:source:0:1:before",
+          "close:source:0:1:after",
+          "close:source:1:1:before",
+          "close:source:1:1:after",
+          "close_sources:after"
+        ],
+        "name": "equal_reference:fresh:source:2:1:before",
+        "preparation": false,
+        "role": "retained",
+        "selector": "source:2:1:before"
+      },
+      {
+        "already_owned": [
+          "source:0:1",
+          "source:1:1",
+          "source:2:1"
+        ],
+        "cleanup_events": [
+          "close_sources:before",
+          "close:source:0:1:before",
+          "close:source:0:1:after",
+          "close:source:1:1:before",
+          "close:source:1:1:after",
+          "close:source:2:1:before",
+          "close:source:2:1:after",
+          "close_sources:after"
+        ],
+        "name": "equal_reference:fresh:source:0:2:before",
+        "preparation": false,
+        "role": "reread",
+        "selector": "source:0:2:before"
+      },
+      {
+        "already_owned": [
+          "source:0:1",
+          "source:1:1",
+          "source:2:1"
+        ],
+        "cleanup_events": [
+          "close_sources:before",
+          "close:source:0:1:before",
+          "close:source:0:1:after",
+          "close:source:1:1:before",
+          "close:source:1:1:after",
+          "close:source:2:1:before",
+          "close:source:2:1:after",
+          "close_sources:after"
+        ],
+        "name": "equal_reference:fresh:source:1:2:before",
+        "preparation": false,
+        "role": "reread",
+        "selector": "source:1:2:before"
+      },
+      {
+        "already_owned": [
+          "source:0:1",
+          "source:1:1",
+          "source:2:1"
+        ],
+        "cleanup_events": [
+          "close_sources:before",
+          "close:source:0:1:before",
+          "close:source:0:1:after",
+          "close:source:1:1:before",
+          "close:source:1:1:after",
+          "close:source:2:1:before",
+          "close:source:2:1:after",
+          "close_sources:after"
+        ],
+        "name": "equal_reference:fresh:source:2:2:before",
+        "preparation": false,
+        "role": "reread",
+        "selector": "source:2:2:before"
+      }
+    ],
+    "ordinary-existing": [
+      {
+        "already_owned": [],
+        "cleanup_events": [
+          "close_sources:before",
+          "close_sources:after"
+        ],
+        "name": "ordinary:existing:source:0:0:before",
+        "preparation": true,
+        "role": "retained",
+        "selector": "source:0:0:before"
+      },
+      {
+        "already_owned": [
+          "source:0:0"
+        ],
+        "cleanup_events": [
+          "close_sources:before",
+          "close:source:0:0:before",
+          "close:source:0:0:after",
+          "close_sources:after"
+        ],
+        "name": "ordinary:existing:source:1:0:before",
+        "preparation": true,
+        "role": "retained",
+        "selector": "source:1:0:before"
+      },
+      {
+        "already_owned": [
+          "source:0:0",
+          "source:1:0"
+        ],
+        "cleanup_events": [
+          "close_sources:before",
+          "close:source:0:0:before",
+          "close:source:0:0:after",
+          "close:source:1:0:before",
+          "close:source:1:0:after",
+          "close_sources:after"
+        ],
+        "name": "ordinary:existing:source:2:0:before",
+        "preparation": true,
+        "role": "retained",
+        "selector": "source:2:0:before"
+      },
+      {
+        "already_owned": [
+          "source:0:0",
+          "source:1:0",
+          "source:2:0"
+        ],
+        "cleanup_events": [
+          "close_sources:before",
+          "close:source:0:0:before",
+          "close:source:0:0:after",
+          "close:source:1:0:before",
+          "close:source:1:0:after",
+          "close:source:2:0:before",
+          "close:source:2:0:after",
+          "close_sources:after"
+        ],
+        "name": "ordinary:existing:source:3:0:before",
+        "preparation": true,
+        "role": "retained",
+        "selector": "source:3:0:before"
+      },
+      {
+        "already_owned": [
+          "source:0:0",
+          "source:1:0",
+          "source:2:0",
+          "source:3:0"
+        ],
+        "cleanup_events": [
+          "close_sources:before",
+          "close:source:0:0:before",
+          "close:source:0:0:after",
+          "close:source:1:0:before",
+          "close:source:1:0:after",
+          "close:source:2:0:before",
+          "close:source:2:0:after",
+          "close:source:3:0:before",
+          "close:source:3:0:after",
+          "close_sources:after"
+        ],
+        "name": "ordinary:existing:source:0:1:before",
+        "preparation": true,
+        "role": "reread",
+        "selector": "source:0:1:before"
+      },
+      {
+        "already_owned": [
+          "source:0:0",
+          "source:1:0",
+          "source:2:0",
+          "source:3:0"
+        ],
+        "cleanup_events": [
+          "close_sources:before",
+          "close:source:0:0:before",
+          "close:source:0:0:after",
+          "close:source:1:0:before",
+          "close:source:1:0:after",
+          "close:source:2:0:before",
+          "close:source:2:0:after",
+          "close:source:3:0:before",
+          "close:source:3:0:after",
+          "close_sources:after"
+        ],
+        "name": "ordinary:existing:source:1:1:before",
+        "preparation": true,
+        "role": "reread",
+        "selector": "source:1:1:before"
+      },
+      {
+        "already_owned": [
+          "source:0:0",
+          "source:1:0",
+          "source:2:0",
+          "source:3:0"
+        ],
+        "cleanup_events": [
+          "close_sources:before",
+          "close:source:0:0:before",
+          "close:source:0:0:after",
+          "close:source:1:0:before",
+          "close:source:1:0:after",
+          "close:source:2:0:before",
+          "close:source:2:0:after",
+          "close:source:3:0:before",
+          "close:source:3:0:after",
+          "close_sources:after"
+        ],
+        "name": "ordinary:existing:source:2:1:before",
+        "preparation": true,
+        "role": "reread",
+        "selector": "source:2:1:before"
+      },
+      {
+        "already_owned": [
+          "source:0:0",
+          "source:1:0",
+          "source:2:0",
+          "source:3:0"
+        ],
+        "cleanup_events": [
+          "close_sources:before",
+          "close:source:0:0:before",
+          "close:source:0:0:after",
+          "close:source:1:0:before",
+          "close:source:1:0:after",
+          "close:source:2:0:before",
+          "close:source:2:0:after",
+          "close:source:3:0:before",
+          "close:source:3:0:after",
+          "close_sources:after"
+        ],
+        "name": "ordinary:existing:source:3:1:before",
+        "preparation": true,
+        "role": "reread",
+        "selector": "source:3:1:before"
+      }
+    ],
+    "ordinary-fresh": [
+      {
+        "already_owned": [
+          "writer:0"
+        ],
+        "cleanup_events": [
+          "close:writer:0:before",
+          "close:writer:0:after",
+          "close_sources:before",
+          "close_sources:after"
+        ],
+        "name": "ordinary:fresh:source:0:0:before",
+        "preparation": false,
+        "role": "payload",
+        "selector": "source:0:0:before"
+      },
+      {
+        "already_owned": [],
+        "cleanup_events": [
+          "close_sources:before",
+          "close_sources:after"
+        ],
+        "name": "ordinary:fresh:source:0:1:before",
+        "preparation": false,
+        "role": "retained",
+        "selector": "source:0:1:before"
+      },
+      {
+        "already_owned": [
+          "source:0:1",
+          "writer:1"
+        ],
+        "cleanup_events": [
+          "close:writer:1:before",
+          "close:writer:1:after",
+          "close_sources:before",
+          "close:source:0:1:before",
+          "close:source:0:1:after",
+          "close_sources:after"
+        ],
+        "name": "ordinary:fresh:source:1:0:before",
+        "preparation": false,
+        "role": "payload",
+        "selector": "source:1:0:before"
+      },
+      {
+        "already_owned": [
+          "source:0:1"
+        ],
+        "cleanup_events": [
+          "close_sources:before",
+          "close:source:0:1:before",
+          "close:source:0:1:after",
+          "close_sources:after"
+        ],
+        "name": "ordinary:fresh:source:1:1:before",
+        "preparation": false,
+        "role": "retained",
+        "selector": "source:1:1:before"
+      },
+      {
+        "already_owned": [
+          "source:0:1",
+          "source:1:1",
+          "writer:2"
+        ],
+        "cleanup_events": [
+          "close:writer:2:before",
+          "close:writer:2:after",
+          "close_sources:before",
+          "close:source:0:1:before",
+          "close:source:0:1:after",
+          "close:source:1:1:before",
+          "close:source:1:1:after",
+          "close_sources:after"
+        ],
+        "name": "ordinary:fresh:source:2:0:before",
+        "preparation": false,
+        "role": "payload",
+        "selector": "source:2:0:before"
+      },
+      {
+        "already_owned": [
+          "source:0:1",
+          "source:1:1"
+        ],
+        "cleanup_events": [
+          "close_sources:before",
+          "close:source:0:1:before",
+          "close:source:0:1:after",
+          "close:source:1:1:before",
+          "close:source:1:1:after",
+          "close_sources:after"
+        ],
+        "name": "ordinary:fresh:source:2:1:before",
+        "preparation": false,
+        "role": "retained",
+        "selector": "source:2:1:before"
+      },
+      {
+        "already_owned": [
+          "source:0:1",
+          "source:1:1",
+          "source:2:1",
+          "writer:3"
+        ],
+        "cleanup_events": [
+          "close:writer:3:before",
+          "close:writer:3:after",
+          "close_sources:before",
+          "close:source:0:1:before",
+          "close:source:0:1:after",
+          "close:source:1:1:before",
+          "close:source:1:1:after",
+          "close:source:2:1:before",
+          "close:source:2:1:after",
+          "close_sources:after"
+        ],
+        "name": "ordinary:fresh:source:3:0:before",
+        "preparation": false,
+        "role": "payload",
+        "selector": "source:3:0:before"
+      },
+      {
+        "already_owned": [
+          "source:0:1",
+          "source:1:1",
+          "source:2:1"
+        ],
+        "cleanup_events": [
+          "close_sources:before",
+          "close:source:0:1:before",
+          "close:source:0:1:after",
+          "close:source:1:1:before",
+          "close:source:1:1:after",
+          "close:source:2:1:before",
+          "close:source:2:1:after",
+          "close_sources:after"
+        ],
+        "name": "ordinary:fresh:source:3:1:before",
+        "preparation": false,
+        "role": "retained",
+        "selector": "source:3:1:before"
+      },
+      {
+        "already_owned": [
+          "source:0:1",
+          "source:1:1",
+          "source:2:1",
+          "source:3:1"
+        ],
+        "cleanup_events": [
+          "close_sources:before",
+          "close:source:0:1:before",
+          "close:source:0:1:after",
+          "close:source:1:1:before",
+          "close:source:1:1:after",
+          "close:source:2:1:before",
+          "close:source:2:1:after",
+          "close:source:3:1:before",
+          "close:source:3:1:after",
+          "close_sources:after"
+        ],
+        "name": "ordinary:fresh:source:0:2:before",
+        "preparation": false,
+        "role": "reread",
+        "selector": "source:0:2:before"
+      },
+      {
+        "already_owned": [
+          "source:0:1",
+          "source:1:1",
+          "source:2:1",
+          "source:3:1"
+        ],
+        "cleanup_events": [
+          "close_sources:before",
+          "close:source:0:1:before",
+          "close:source:0:1:after",
+          "close:source:1:1:before",
+          "close:source:1:1:after",
+          "close:source:2:1:before",
+          "close:source:2:1:after",
+          "close:source:3:1:before",
+          "close:source:3:1:after",
+          "close_sources:after"
+        ],
+        "name": "ordinary:fresh:source:1:2:before",
+        "preparation": false,
+        "role": "reread",
+        "selector": "source:1:2:before"
+      },
+      {
+        "already_owned": [
+          "source:0:1",
+          "source:1:1",
+          "source:2:1",
+          "source:3:1"
+        ],
+        "cleanup_events": [
+          "close_sources:before",
+          "close:source:0:1:before",
+          "close:source:0:1:after",
+          "close:source:1:1:before",
+          "close:source:1:1:after",
+          "close:source:2:1:before",
+          "close:source:2:1:after",
+          "close:source:3:1:before",
+          "close:source:3:1:after",
+          "close_sources:after"
+        ],
+        "name": "ordinary:fresh:source:2:2:before",
+        "preparation": false,
+        "role": "reread",
+        "selector": "source:2:2:before"
+      },
+      {
+        "already_owned": [
+          "source:0:1",
+          "source:1:1",
+          "source:2:1",
+          "source:3:1"
+        ],
+        "cleanup_events": [
+          "close_sources:before",
+          "close:source:0:1:before",
+          "close:source:0:1:after",
+          "close:source:1:1:before",
+          "close:source:1:1:after",
+          "close:source:2:1:before",
+          "close:source:2:1:after",
+          "close:source:3:1:before",
+          "close:source:3:1:after",
+          "close_sources:after"
+        ],
+        "name": "ordinary:fresh:source:3:2:before",
+        "preparation": false,
+        "role": "reread",
+        "selector": "source:3:2:before"
+      }
+    ]
+  },
+  "source_bytes": 94318521,
+  "source_files": 195,
+  "source_observation_gap_closed": true,
+  "strict_failed_source_closures": 5,
+  "success": true
+}
