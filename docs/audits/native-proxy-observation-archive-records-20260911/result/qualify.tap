@@ -1,0 +1,178 @@
+ok 1 - historical acquisition: independent specification
+ok 2 - historical acquisition: independent receipt
+ok 3 - historical acquisition: canonical bytes
+ok 4 - historical acquisition: decoded receipt
+ok 5 - historical acquisition: independent returned copies preserve input
+ok 6 - historical reuse: independent specification
+ok 7 - historical reuse: independent receipt
+ok 8 - historical reuse: canonical bytes
+ok 9 - historical reuse: decoded receipt
+ok 10 - historical reuse: independent returned copies preserve input
+ok 11 - constructed binary wrapper: independent specification
+ok 12 - constructed binary wrapper: independent receipt
+ok 13 - constructed binary wrapper: canonical bytes
+ok 14 - constructed binary wrapper: decoded receipt
+ok 15 - constructed binary wrapper: independent returned copies preserve input
+ok 16 - constructed wrapper exact ceiling: independent specification
+ok 17 - constructed wrapper exact ceiling: independent receipt
+ok 18 - constructed wrapper exact ceiling: canonical bytes
+ok 19 - constructed wrapper exact ceiling: decoded receipt
+ok 20 - constructed wrapper exact ceiling: independent returned copies preserve input
+ok 21 - constructed empty wrapper: independent specification
+ok 22 - constructed empty wrapper: independent receipt
+ok 23 - constructed empty wrapper: canonical bytes
+ok 24 - constructed empty wrapper: decoded receipt
+ok 25 - constructed empty wrapper: independent returned copies preserve input
+ok 26 - constructed three equal sources: independent specification
+ok 27 - constructed three equal sources: independent receipt
+ok 28 - constructed three equal sources: canonical bytes
+ok 29 - constructed three equal sources: decoded receipt
+ok 30 - constructed three equal sources: independent returned copies preserve input
+ok 31 - receipt missing runtime_authorized
+ok 32 - receipt missing executable
+ok 33 - receipt missing evidence_directory_identity
+ok 34 - receipt missing observation_reference_key
+ok 35 - receipt missing schema
+ok 36 - receipt missing archive_directory_identity
+ok 37 - receipt missing source_bindings
+ok 38 - receipt extra field
+ok 39 - receipt.evidence_directory_identity missing device
+ok 40 - receipt.evidence_directory_identity missing inode
+ok 41 - receipt.evidence_directory_identity missing path
+ok 42 - receipt.evidence_directory_identity extra field
+ok 43 - receipt.archive_directory_identity missing device
+ok 44 - receipt.archive_directory_identity missing inode
+ok 45 - receipt.archive_directory_identity missing path
+ok 46 - receipt.archive_directory_identity extra field
+ok 47 - receipt.source_bindings.0 missing role
+ok 48 - receipt.source_bindings.0 missing source
+ok 49 - receipt.source_bindings.0 missing archive
+ok 50 - receipt.source_bindings.0 extra field
+ok 51 - receipt.source_bindings.0.source missing device
+ok 52 - receipt.source_bindings.0.source missing inode
+ok 53 - receipt.source_bindings.0.source missing path
+ok 54 - receipt.source_bindings.0.source missing sha256
+ok 55 - receipt.source_bindings.0.source missing size_bytes
+ok 56 - receipt.source_bindings.0.source extra field
+ok 57 - receipt.source_bindings.0.archive missing path
+ok 58 - receipt.source_bindings.0.archive missing device
+ok 59 - receipt.source_bindings.0.archive missing inode
+ok 60 - receipt.source_bindings.0.archive missing size_bytes
+ok 61 - receipt.source_bindings.0.archive missing sha256
+ok 62 - receipt.source_bindings.0.archive extra field
+ok 63 - authority 1
+ok 64 - authority true
+ok 65 - authority "0"
+ok 66 - authority null
+ok 67 - authority []
+ok 68 - authority {}
+ok 69 - executable "native"
+ok 70 - executable 0
+ok 71 - executable false
+ok 72 - wrong schema
+ok 73 - foreign hold key
+ok 74 - foreign evidence
+ok 75 - foreign archive path
+ok 76 - foreign archive device
+ok 77 - archive directory aliases evidence
+ok 78 - archive device type -1
+ok 79 - archive device type 1.5
+ok 80 - archive device type true
+ok 81 - archive device type "1"
+ok 82 - archive device type null
+ok 83 - archive device type []
+ok 84 - archive inode type -1
+ok 85 - archive inode type 1.5
+ok 86 - archive inode type true
+ok 87 - archive inode type "1"
+ok 88 - archive inode type null
+ok 89 - archive inode type []
+ok 90 - archive size_bytes type -1
+ok 91 - archive size_bytes type 1.5
+ok 92 - archive size_bytes type true
+ok 93 - archive size_bytes type "1"
+ok 94 - archive size_bytes type null
+ok 95 - archive size_bytes type []
+ok 96 - archive digest "FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF"
+ok 97 - archive digest "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+ok 98 - archive digest null
+ok 99 - changed original identity 0
+ok 100 - changed role 0
+ok 101 - changed content path 0
+ok 102 - changed content length 0
+ok 103 - changed content hash 0
+ok 104 - changed original identity 1
+ok 105 - changed role 1
+ok 106 - changed content path 1
+ok 107 - changed content length 1
+ok 108 - changed content hash 1
+ok 109 - changed original identity 2
+ok 110 - changed role 2
+ok 111 - changed content path 2
+ok 112 - changed content length 2
+ok 113 - changed content hash 2
+ok 114 - changed original identity 3
+ok 115 - changed role 3
+ok 116 - changed content path 3
+ok 117 - changed content length 3
+ok 118 - changed content hash 3
+ok 119 - changed original identity 4
+ok 120 - changed role 4
+ok 121 - changed content path 4
+ok 122 - changed content length 4
+ok 123 - changed content hash 4
+ok 124 - shared path inconsistent native identity
+ok 125 - native identity aliases parent
+ok 126 - native identity aliases directory
+ok 127 - native identity aliases other file
+ok 128 - binding list pop
+ok 129 - snapshot list pop
+ok 130 - binding list reverse
+ok 131 - snapshot list reverse
+ok 132 - binding list duplicate
+ok 133 - snapshot list duplicate
+ok 134 - snapshot snapshots.0.bytes_hex
+ok 135 - snapshot snapshots.0.identity.size_bytes
+ok 136 - snapshot snapshots.0.identity.sha256
+ok 137 - snapshot snapshots.0.identity.device
+ok 138 - snapshot snapshots.0.identity.path
+ok 139 - snapshot snapshots.0.extra
+ok 140 - snapshot directory.extra
+ok 141 - snapshot directory.path
+ok 142 - self consistent changed archive content
+ok 143 - original acquired.runtime_authorized
+ok 144 - original acquired.lock.device
+ok 145 - original request.evidence_directory_identity.inode
+ok 146 - original acquired.target_sources.0.identity.device
+ok 147 - original acquired.target_sources.0.bytes_hex
+ok 148 - original acquired.target_sources
+ok 149 - original acquired.extra
+ok 150 - original wrapper exceeds ceiling
+ok 151 - decode whitespace
+ok 152 - decode duplicate field
+ok 153 - decode noncanonical number
+ok 154 - decode deep nesting
+ok 155 - decode oversized
+ok 156 - decode malformed
+ok 157 - decode array
+ok 158 - decode null
+ok 159 - decode non ASCII
+ok 160 - specification missing argument
+ok 161 - specification extra argument
+ok 162 - receipt missing argument
+ok 163 - receipt extra argument
+ok 164 - validate missing argument
+ok 165 - validate extra argument
+ok 166 - encode missing argument
+ok 167 - encode extra argument
+ok 168 - decode missing argument
+ok 169 - decode extra argument
+ok 170 - decode character scalar
+ok 171 - original character octets
+ok 172 - archive character octets
+ok 173 - omitted original identity: weakened helper accepts known invalid data
+ok 174 - omitted shared identity: weakened helper accepts known invalid data
+ok 175 - omitted source content binding: weakened helper accepts known invalid data
+ok 176 - no current target or archive lookup
+ok 177 - no process attempt
+1..177

@@ -30,6 +30,7 @@ answers:
   - "how is the complete inactive acquisition matrix joined?"
   - "why can an observer settled event leave a helper running?"
   - "what must settle before an observation hold is released?"
+  - "how do archive records preserve all retained source identities?"
   - "why did integrated proxy qualification fail?"
   - "why does t1545 not use IPC Cmd?"
   - "where does T1545 preserve empty-output checker failure diagnostics?"
@@ -94,24 +95,17 @@ reverify: >-
 ---
 
 Decisions `0087`/`0101` select `FSM::Support::ProcessSupervisor`; adapters seal bounded local argv/capture/group cleanup. T1669 checks ownership.
-Owned child-group and cleanup controls: history.
 `exec_handoff_monotonic_ns` observes pipe EOF, not main entry; pre-exec death can close it. Missing EOF leaves dependent timing unknown. Controls: history.
-Post-KILL cleanup and blocking-wait controls: history.
 `VerilatorRuntime` follows decision `0086`.
 `TaskAcceptanceFixtureRuntime` seals owned fixture roots/fixed local Git argv.
-Git/checker, Darwin locality and T1545 controls: history; absent witnesses stay unknown.
-Startup/capture/STOP limits: history.
-T1669 locality/census error policy and changed field (.3.2.11): history.
-History: `5e84e56e04238a9e076f0b37dee9ae2dc6a14f35:docs/knowledge/test-subprocess-policy-adapters.md`.
+Supervisor, checker, locality, startup/capture/STOP controls: history; absent witnesses stay unknown.
+History: `74ec076e29cadb651abfaf2e0051da45450e55c4:docs/knowledge/test-subprocess-policy-adapters.md`.
 PST parsing normalizes 1–16 lowercase hex digits; malformed fields and contradictions reject.
 Serial queue contention is supported; causal/native limits and controls: history.
 Fixed CLI limits: history.
-Records, holds, byte flags, publication, enumeration and coordinator/semantic custody: history.
-Census reports follow actual close; all-owned cleanup and primary/first-error controls: history.
-Snapshot cuts need unique event/case IDs; legacy aliases missed four later checks. Correction/substitution controls: history.
-Remaining source/hold/census/lock close reports: history.
-Finite acquisition applicability/domain join: history.
+Records, custody, acquisition and unique-occurrence correction: history.
 Proposed release requires retained-byte archival and every selected owner settled, including cancellation. Legacy settled can leave a caller-owned helper running; it is not release authority. Contract/source-model check: `docs/audits/native-proxy-observation-release-contract-20260911/audit.py`; implementation/native custody remain open.
+Inactive archive records retain all five source identities, deduplicate equal octets and bind canonical content paths to consistent archive identities. Pure checks use historical acquisitions and synthetic archive IDs: `docs/audits/native-proxy-observation-archive-records-20260911/audit.py`. Actual archival/release remain open.
 Caller-sealed test wrappers use tail goto to preserve caller.
 Replay: `scripts/run_with_ram_guard.sh -- python3 -B -m unittest discover -s t/python -p 'test_fixture_policy_archive*.py'`.
 RAM guard/T1595/T1811/T1669 controls and open causes: history.

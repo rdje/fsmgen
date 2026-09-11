@@ -1,0 +1,71 @@
+{
+  "all_copies_byte_exact": true,
+  "files": [
+    {
+      "destination": "docs/audits/native-proxy-observation-archive-records-20260911/result/plan.stdout",
+      "sha256": "a95501ecc48bed5a61ab75ad05c6b6176358c49d502f222f5405744f1771df84",
+      "size_bytes": 60,
+      "source": ".artifacts/logs/native-proxy-observation-archive-records-20260911/plan.stdout"
+    },
+    {
+      "destination": "docs/audits/native-proxy-observation-archive-records-20260911/result/plan.stderr",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "size_bytes": 0,
+      "source": ".artifacts/logs/native-proxy-observation-archive-records-20260911/plan.stderr"
+    },
+    {
+      "destination": "docs/audits/native-proxy-observation-archive-records-20260911/result/preflight-pins.json",
+      "sha256": "dee885c1c03d2f93016360154f6ab5295abea596a76504e19e973b137caec408",
+      "size_bytes": 1017,
+      "source": ".artifacts/logs/native-proxy-observation-archive-records-20260911/preflight-pins.json"
+    },
+    {
+      "destination": "docs/audits/native-proxy-observation-archive-records-20260911/result/qualification.json",
+      "sha256": "e7bde530ef127252641c0333f291a911538235a9a2895bc38d488f6423affe4a",
+      "size_bytes": 487429,
+      "source": ".artifacts/logs/native-proxy-observation-archive-records-20260911/qualification.json"
+    },
+    {
+      "destination": "docs/audits/native-proxy-observation-archive-records-20260911/result/qualify.tap",
+      "sha256": "402938c6f5578ceb4cf47c518aa8f67cbb0a17bdacf9d67ee3d4557c80f3f163",
+      "size_bytes": 7524,
+      "source": ".artifacts/logs/native-proxy-observation-archive-records-20260911/qualify.tap"
+    },
+    {
+      "destination": "docs/audits/native-proxy-observation-archive-records-20260911/result/qualify.stderr",
+      "sha256": "907426ab650ee04cb17dbc305033dc3ff65cda76c441f1253785d09b27e6bb74",
+      "size_bytes": 91,
+      "source": ".artifacts/logs/native-proxy-observation-archive-records-20260911/qualify.stderr"
+    },
+    {
+      "destination": "docs/audits/native-proxy-observation-archive-records-20260911/result/qualify.exit",
+      "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa",
+      "size_bytes": 2,
+      "source": ".artifacts/logs/native-proxy-observation-archive-records-20260911/qualify.exit"
+    },
+    {
+      "destination": "docs/audits/native-proxy-observation-archive-records-20260911/result/audit.json",
+      "sha256": "db2a54fddd137012aff0e30d7255e31b9ca72440fea78aaa5e4d741683d14d29",
+      "size_bytes": 1302,
+      "source": ".artifacts/logs/native-proxy-observation-archive-records-20260911/audit.json"
+    },
+    {
+      "destination": "docs/audits/native-proxy-observation-archive-records-20260911/result/audit.stdout",
+      "sha256": "b0c32dabce79bae21bd50919664fdc1e9927c9933b6b280935439314bb3af1fa",
+      "size_bytes": 1184,
+      "source": ".artifacts/logs/native-proxy-observation-archive-records-20260911/audit.stdout"
+    },
+    {
+      "destination": "docs/audits/native-proxy-observation-archive-records-20260911/result/audit.stderr",
+      "sha256": "6b69e0a1f0d390cad0424da051767d47fb82469ce3fc4e579fa4749d1de17445",
+      "size_bytes": 91,
+      "source": ".artifacts/logs/native-proxy-observation-archive-records-20260911/audit.stderr"
+    },
+    {
+      "destination": "docs/audits/native-proxy-observation-archive-records-20260911/result/audit.exit",
+      "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa",
+      "size_bytes": 2,
+      "source": ".artifacts/logs/native-proxy-observation-archive-records-20260911/audit.exit"
+    }
+  ]
+}

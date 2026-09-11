@@ -1,0 +1,14 @@
+{
+  "after": 3492254,
+  "allowance": 3492424,
+  "before": 3492415,
+  "candidate_bytes": 8565,
+  "candidate_is_reconstructed": true,
+  "candidate_path": "docs/audits/native-proxy-observation-archive-records-20260911/result/knowledge-card.md.initial-projection",
+  "candidate_sha256": "a9f732cf4ca6d21ebd8881f5a92b25957890e19f8cc9a8a600e5782a8e736ddf",
+  "candidate_was_written_to_live_card": false,
+  "diagnosis": "Initial aggregate assertion stopped before every live-document write. The candidate is reconstructed from the unchanged source and exact deterministic replacements; no raw process transcript is fabricated.",
+  "initial_projection": 3492456,
+  "repair": "Combine older supervisor/checker/locality/startup/capture/STOP history pointers at exact 74ec076e, preserving absent-witness limits and current release/archive facts. No allowance increase.",
+  "schema": "fsmgen.archive_record_knowledge_projection_recovery.v1"
+}

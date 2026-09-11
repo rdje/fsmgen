@@ -1,0 +1,14 @@
+{
+  "book_after": {
+    "bytes_total": 3302578,
+    "files": 63,
+    "lines_total": 60314
+  },
+  "book_before": {
+    "bytes_total": 3300690,
+    "files": 63,
+    "lines_total": 60283
+  },
+  "knowledge_recovery": "knowledge-recovery.json",
+  "task_lines": 6280
+}

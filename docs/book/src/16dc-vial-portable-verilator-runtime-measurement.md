@@ -2106,6 +2106,37 @@ The source/model check performs no fixture or native execution:
 scripts/run_with_ram_guard.sh -- python3 -B docs/audits/native-proxy-observation-release-contract-20260911/audit.py
 ```
 
+The inactive archive record implementation now derives a closed specification
+from the complete original acquisition and request. It keeps the ordered wrapper,
+private reference, global reference, C source and image snapshots, including
+binary octets. Content filenames are fixed as `retained-sources/<sha256>.source`
+below the original evidence directory; unique files follow first-source order.
+
+For example, equal private/global reference bytes share one content file while
+the receipt preserves both original source paths and native identities. A
+constructed case also makes the wrapper equal to those references: three source
+identities then share one file. A receipt rejects inconsistent identities for
+that shared file, a file identity reused at another archive path, or altered
+source bytes, lengths or hashes. Empty and maximum-size wrapper snapshots are
+included in the pure qualification.
+
+The closed receipt uses `fsmgen.inactive_observation_archive.v1`, with
+`runtime_authorized: 0` and `executable: null`. It binds the original evidence
+identity and observation key to all ordered source/archive identity pairs.
+Its bounded canonical ASCII encoding rejects extra fields, missing bindings,
+noncanonical JSON and character scalars presented as raw bytes. Returned records
+are independent copies of the caller's retained inputs.
+
+These checks use saved acquisitions and explicitly synthetic archive identities.
+They open no original target or archive file and establish no actual storage,
+permissions, descriptor custody, settlement or release authority. Filesystem
+archival and interruption checks are the next owned steps. Pure replay:
+
+```bash
+scripts/run_with_ram_guard.sh -- perl docs/audits/native-proxy-observation-archive-records-20260911/qualify.t
+scripts/run_with_ram_guard.sh -- python3 -B docs/audits/native-proxy-observation-archive-records-20260911/audit.py
+```
+
 The helper checks bounded regular source/output files and the native header,
 then sets executable permissions through the admitted open file handle. A
 regression exposed path-based permission changes affecting a substituted file

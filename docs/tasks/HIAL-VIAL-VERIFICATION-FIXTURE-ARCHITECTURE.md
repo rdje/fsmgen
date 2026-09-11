@@ -2631,9 +2631,32 @@ decomposes the architecture needed to move beyond that bounded foundation.
   Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.12.4.1.3.4.1: pin settled observation release contract`
 
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.12.4.1.3.4.2`
-  Status: `proposed`
+  Status: `active`
   Goal: `Qualify retained-source archival and independent archived-byte custody.`
   Acceptance: `Archive the original ordered target snapshots after private retirement without reopening target paths. Keep separate identities when equal bytes share a content file, enforce existing file/aggregate bounds and direct owned same-volume custody, verify complete readback and conservative partial failure. Independently reject stale/replaced/truncated/foreign archive evidence and exact boundary errors; no hold release or product capture execution.`
+  Verification: `Closed custody records, actual archival and interruption/applicability qualification are separate bounded children. Every result remains inactive; native and product capture formats stay gated.`
+  Commit: `pending`
+
+  Children: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.12.4.1.3.4.2.1, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.12.4.1.3.4.2.2, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.12.4.1.3.4.2.3`
+
+- ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.12.4.1.3.4.2.1`
+  Status: `done`
+  Goal: `Qualify closed retained-source archive custody records.`
+  Acceptance: `Before filesystem archival, define exact bounded input/specification/result records from the qualified original acquisition and request. Preserve all five ordered source identities and binary octets, deterministic content filenames and separate equal-byte identity bindings. Reject malformed types/fields, foreign evidence/hold/source mappings, false byte/hash/size relations and inconsistent shared-file identities with independent constructed vectors and actual archived acquisition inputs. This pure slice opens no original target or archive file and grants no release/native authority. Own corresponding live/history synchronization.`
+  Verification: `First pure qualification passes 177 TAP assertions: six vectors (two authenticated historical acquisitions, four constructed wrapper cases), 142 malformed controls and three weakened-helper counterexamples. Independent audit reconstructs all bytes/grouping/ordered identities, rejects fifteen altered result records, authenticates twenty-three unchanged predecessor inputs and five prospective pins. Exact raw process results and pins have eleven byte-identical recovery copies under docs/audits/native-proxy-observation-archive-records-20260911/result; review.json names separate re-derivation/falsification/durability legs. Binary/empty/exact source ceiling and separate equal-byte identities pass; original and returned data remain independent. Zero trapped filesystem lookups/process attempts. Archive native IDs are synthetic; actual archival/descriptor/permission/native or release authority is not established. Archival, interruptions and settled release remain owned siblings. Pre-write Knowledge Map projection rejected excess; its reconstructed candidate and honest recovery preserve history with no allowance increase. Book/Knowledge Map and final staged-index/hook gates are part of this work-unit commit.`
+  Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.12.4.1.3.4.2.1: qualify retained-source archive records`
+
+- ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.12.4.1.3.4.2.2`
+  Status: `proposed`
+  Goal: `Implement and qualify archival from retained source snapshots.`
+  Acceptance: `Use the closed custody contract to write or verify only the fixed private same-volume archive directory and content filenames. Archive after actual inert private/runtime-reference retirement without reopening any original target; independently check actual archive bytes/native identity, ordered bindings, deduplication and stable reuse. Preserve original source/aggregate limits and exact conservative partial state. No hold release, native process or product activation.`
+  Verification: `pending`
+  Commit: `pending`
+
+- ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.12.4.1.3.4.2.3`
+  Status: `proposed`
+  Goal: `Qualify archival interruption, cleanup, limits and applicability.`
+  Acceptance: `Prospectively enumerate selected archive directory/member/read/write/seal/close and final custody boundaries, exact entry/byte limits and excess, replacements/aliases and existing partial state. Observe actual returned descriptors and all-owned cleanup, preserve first failures and every preexisting artifact, and falsify incomplete archive success. Authenticate/rederive prerequisites, source applicability and disjoint absent fixtures before closing archival. Do not claim every syscall, arbitrary-writer atomicity, crash or native ownership.`
   Verification: `pending`
   Commit: `pending`
 
@@ -3654,7 +3677,7 @@ decomposes the architecture needed to move beyond that bounded foundation.
 
 ## Current Frontier
 
-Current frontier: .3.2.15.7.3.12.4.1.3.4.2 implements retained-byte archival under the pinned release contract. Finite acquisition is closed and exactly version-retrievable. Exact settled release and interruption closure remain .4.3-.4.4; compatibility .3.5, combined lifetimes .3.6 and actual ownership/compiler profiles .1.5 remain open. Startup/parent, full CI and push stay gated.
+Current frontier: .3.2.15.7.3.12.4.1.3.4.2.2 implements actual retained-source archival after the closed pure records. Archival interruptions, exact settled release, compatibility, combined lifetimes and actual native ownership/transport remain open. Startup/parent, full CI and push stay gated.
 
 Architecture audit `.1` is complete. Decision `0032` selects one public
 `.vial` source language, private immutable `VIALSemanticIR` and
@@ -6247,11 +6270,11 @@ Completed native-proxy feasibility through runtime-source-controls acceptance: r
 
 - Acceptance history manifest: `docs/tasks/history/HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE/acceptance-history.jsonl`
 
-The manifest binds the completed publication-interruption acceptance suffix at `295d186656a5d517894c1bdbd550b0633d2b2fc4`. That source preserves the earlier history pointer and versioned manifest chain; current node contracts remain authoritative.
+The manifest binds the completed release-contract acceptance suffix at `74ec076e29cadb651abfaf2e0051da45450e55c4`. That source preserves the earlier history pointer and versioned manifest chain; current node contracts remain authoritative.
 
 
-## Acceptance Checklist (observation release contract .3.2.15.7.3.12.4.1.3.4.1)
+## Acceptance Checklist (archive custody records .3.2.15.7.3.12.4.1.3.4.2.1)
 
-- [x] **ROOT CAUSE (WHY + WHERE)** — `git log -S 'helper_shutdown_owner' -1 --format='%H %s' -- scripts/observe_fixture_startup.py` identifies 5d5fa132737989dd3041bb190a19a350e70c0e1d. The current scoped settled event can leave a shared helper caller-owned; `Evidence.retain_sources` also reopens original paths. The contract prevents either behavior from becoming implicit release authority while keeping current product formats unchanged. The source-expression check and finite model live in `docs/audits/native-proxy-observation-release-contract-20260911/audit.py`.
-- [x] **ADDRESSED (verified selection)** — Guarded `audit.py` exits zero without fixtures or native execution: twelve source pins, 4096 abstract combinations, nine weakening counterexamples and sixteen rejecting record/envelope controls. Canonical/archive bounds remain unchanged; selected work-envelope limits are explicitly non-production assumptions. `result/audit.json` retains complete counters, witnesses and the actual borrowed-helper source expression result. Implementation and native ownership remain in their owned children.
-- [x] **NO REGRESSION** — `knowledge-map/scripts/check_knowledge_map.sh` reports `knowledge-map: OK (1161 facts, 6385 unique questions, 6556 answer occurrences, 139 bounded topic shards; query parity verified)`. Task integrity passes with 1339 live/compact nodes and thirteen compact terminals, preserving the complete archived acquisition subtree through exact Git retrieval. Claim censuses agree and the final book build exits zero; the rendered contract is inspected and its exact same-volume output removed. All twelve predecessor sources and three prospective inputs remain unchanged. Staged/commit gates close continuity; no fixture/native rerun or full CI/push is admitted.
+- [x] **ROOT CAUSE (WHY + WHERE)** — `git log -S 'prospective_before_implementation' -1 --format='%H %s' -- docs/audits/native-proxy-observation-release-contract-20260911/contract.json` identifies `74ec076e29cadb651abfaf2e0051da45450e55c4`. That prospective contract requires original retained octets and separate source identities before archive/release implementation; prior acquisition supplies complete data but no archive receipt. The owning leaf and prospective plan precede the new module. This adds an inactive data contract; it does not repair or activate a product route.
+- [x] **ADDRESSED (verified qualification)** — Guarded `perl docs/audits/native-proxy-observation-archive-records-20260911/qualify.t` exits 0 with 177 TAP assertions. Guarded `python3 -B docs/audits/native-proxy-observation-archive-records-20260911/audit.py` exits 0: six vectors, 142 rejecting controls, three accepting weakened helpers caught by the independent oracle, and fifteen rejected result falsifiers. Re-derivation authenticates two historical cases, reconstructs full octets and grouping, and matches canonical bytes; durability authenticates twenty-three unchanged inputs, five prospective pins and eleven exact recovery copies. See result/audit.json and result/recovery-copies.json in that audit directory. No first-run qualification repair was needed; knowledge-recovery.json records the later rejected documentation projection.
+- [x] **NO REGRESSION** — All seventeen declared predecessor Perl sources remain byte-identical to the authenticated `74ec076e29cadb651abfaf2e0051da45450e55c4` input epoch; only the new inactive module and its pure qualification were added. No target/archive lookup or process attempt occurred, and no old fixture was rerun. `knowledge-map: OK` (1161 facts, 6386 unique questions, 6557 answer occurrences, 139 bounded shards); task-tree integrity reports all invariants hold (1342 live/compact nodes). mdBook build exits 0; its new passage and direct same-volume output were inspected, then the exact render and empty parent were removed. result/book-review.json and review.json retain scope; final staged-index and commit-hook doctrine passes are mandatory conditions of this commit. Full CI/push and native/startup/parent gates remain open.
