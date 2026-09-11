@@ -1,0 +1,40 @@
+{
+  "acceptance_history_revision": "5cb6a683c65b2bdb992b8447e14f23205f492722",
+  "applicability": "applicability.json",
+  "book": {
+    "checked_passages": [
+      "blanket expectation that every altered read body causes rejection.",
+      "The structural census checks the descriptor and named identity",
+      "It discards the returned bytes.",
+      "corrected consumer applicability is the execution authority",
+      "original plan and audit remain exact historical selection evidence.",
+      "native-proxy-release-readback-applicability-20260911/audit.py"
+    ],
+    "exact_output_absent": true,
+    "exit_code": 0,
+    "output": ".artifacts/tmp/native-proxy-release-readback-applicability-book-20260911/book",
+    "rendered_bytes": 23398557,
+    "rendered_directories": 3,
+    "rendered_files": 98,
+    "same_volume_direct_objects": true
+  },
+  "compaction": "compaction-census.json",
+  "counts": "result/audit.stdout",
+  "durability": "Four prospective pins and 190 unchanged predecessor inputs bind the correction to the original exact plan, contract, audit and source evidence. Sixteen byte-exact raw recovery copies preserve first-success preparation/audit, Knowledge Map, task checks and book exit. Read-only audit reconstructs the corrected partition without fixtures or old producer execution; task retrospective annotation, book precedence, bounded fact, exact acceptance suffix and Git preserve continuation.",
+  "executed_fixtures": 0,
+  "execution_qualified": false,
+  "falsification": "Sixteen changed-domain controls reject wrong ownership, occurrence, scalar type, outcomes, effects, total, supersession and authority. Restoring the old blanket rejection fails independently for each profile.",
+  "finding": "The preceding plan incorrectly expected every reported-body XOR to reject. Structural census reads discard those bytes after metadata checks and close; they are expected-success controls. This is a corrected test expectation with unchanged implementation.",
+  "first_run": "Preparation, independent audit, book build/inspection, Knowledge Map and task integrity all pass first-run. Staged-index and commit-hook doctrines remain mandatory before the corrective commit.",
+  "knowledge_map": "knowledge-map: OK (1161 facts, 6422 unique questions, 6593 answer occurrences, 139 bounded topic shards; query parity verified)",
+  "knowledge_projection": "knowledge-projection.json",
+  "next_action": "Implement and execute the corrected ordinary-retired source partition under sibling .3.10.2.2. Preserve weak unreturned-reader versus returned-source custody, actual/report separation, first failures and current-input resolution. Other profiles/reports/joins, close, native/lifetime and historical startup/parent/full CI/push remain open or gated as owned.",
+  "owner": "HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.12.4.1.3.4.4.3.10.2.1",
+  "prior_acceptance_sections_unchanged": 37,
+  "rederivation": "Exact source bodies identify the unused returned buffer and unchanged physical metadata checks. Producer joins source-parent records; the independent audit reconstructs structural descendants in the original healthy call forest. Both select the same eight/eight/eleven/five body-success cases, preserving every original occurrence and the complete prospective domain.",
+  "runtime_authorized": false,
+  "schema": "fsmgen.release_readback_applicability_review.v1",
+  "scope": "Corrected prospective source-consumer applicability. Reported buffer alteration never changes original files. Actual injected-read behavior and cleanup composition remain unqualified; source and syscall occurrence counts are unchanged.",
+  "source_review": "source-review.json",
+  "task_integrity": "[task-tree-integrity] all active task-tree invariants hold (trees=4, nodes=1350, segments=3, compact_terminals=23, index_archives=1, migrations=1, acceptance_histories=1)"
+}

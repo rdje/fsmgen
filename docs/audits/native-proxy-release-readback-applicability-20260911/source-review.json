@@ -1,0 +1,42 @@
+{
+  "correction": "These body-XOR cases are expected-success controls. Keep all prior selectors and physical-preservation requirements; distinguish a reported source-body change from a real file mutation. Other selected source consumers retain their own content-rejection expectations, which still require actual execution evidence.",
+  "finding": "The prior blanket body-XOR rejection expectation is incorrect for structure-only census reads.",
+  "incorrect_clause": "Reader and source return; the original consumer must reject altered content",
+  "incorrect_contract": "docs/audits/native-proxy-release-readback-selection-20260911/contract.md",
+  "mechanism": "The structural census obtains a source, checks descriptor/named metadata and closes it. Its result contains only image/reference names. It does not inspect, retain or return source bytes. The lower reader checks length and physical metadata; source admission checks size, mode, link count and descriptor inheritance. A same-length modeled buffer change with unchanged physical bytes therefore passes this structural path. Later semantic reads receive the unchanged physical bytes because the control affects only one source occurrence.",
+  "owner": "HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.12.4.1.3.4.4.3.10.2.1",
+  "predecessor": "5cb6a683c65b2bdb992b8447e14f23205f492722",
+  "qualification_limit": "Static source applicability and historical healthy-flow projection only. No new release fixture, injected read, native process or original producer has run.",
+  "schema": "fsmgen.release_readback_consumer_source_review.v1",
+  "source_introduction": "502006787cb326c8931b914b100a42d35c8f153b",
+  "sources": [
+    {
+      "body": "sub _census {\n    my ($base) = @_;\n    my $images = _names(\"$base/images\", $IMAGE_LIMIT);\n    my $references = _names(\"$base/references\", $REFERENCE_LIMIT);\n    for my $name (@$images) {\n        die \"invalid image name\\n\" unless $name =~ /\\A[0-9a-f]{64}\\z/;\n        NativeProxyImageCustody::_directory(\"$base/images/$name\");\n    }\n    for my $name (@$references) {\n        die \"invalid reference name\\n\" unless $name =~ /\\A[0-9a-f]{64}\\.json\\z/;\n        my $source = NativeProxyImageCustody::_source(\"$base/references/$name\", 0400, 4096);\n        my $ok = eval { NativeProxyImageCustody::_recheck_source($source); 1 };\n        my $error = $@;\n        my $closed = close($source->{handle});\n        die $error unless $ok;\n        die \"cannot close census reference: $!\\n\" unless $closed;\n    }\n    # Count incomplete image/record objects. This structure-only result cannot\n    # establish complete image contents or reference schema/lifetime validity.\n    return {images => $images, references => $references};\n}\n\n",
+      "body_sha256": "edf33e14c61d77a9736bf0abf083a8dd41b2adb69377a6097fc19c206e086b51",
+      "file_sha256": "a0d99769147f28ca7c35e9ac80ba88f7cf14760e3bef7b51841d8badebc060e5",
+      "path": "docs/audits/native-proxy-image-coordination-20260910/Coordination.pm",
+      "symbol": "_census"
+    },
+    {
+      "body": "sub _source {\n    my ($path, $mode, $limit) = @_;\n    # Reuse the qualified bounded no-follow descriptor read. The additional\n    # custody checks below enforce this store's stricter modes and link count.\n    my ($bytes, $metadata, $handle) = FSM::Test::RustProxyFixture::_read_file($path, 1);\n    my $ok = eval {\n        die \"invalid image source mode, links or size\\n\"\n            unless ($metadata->[2] & 07777) == $mode && $metadata->[3] == 1\n                && length($bytes) <= $limit;\n        my $flags = fcntl($handle, F_GETFD, 0);\n        die \"cannot read descriptor flags: $!\\n\" unless defined $flags;\n        fcntl($handle, F_SETFD, $flags | FD_CLOEXEC)\n            or die \"cannot seal descriptor inheritance: $!\\n\";\n        1;\n    };\n    my $error = $@;\n    unless ($ok) {\n        # The lower reader transferred ownership even when these stricter\n        # checks fail. Close that handle explicitly and preserve the cause.\n        close($handle);\n        die $error;\n    }\n    return {bytes => $bytes, metadata => $metadata, handle => $handle, path => $path};\n}\n\n",
+      "body_sha256": "1aca3e03fc1d656685e0bf60bb305d0d288407ece093091074ef890676d92b73",
+      "file_sha256": "927f1ab39f7f26742e36878985d1ff545ddf2dee119d4bf6b7b41bf2c9360ccc",
+      "path": "docs/audits/native-proxy-image-custody-20260910/ImageCustody.pm",
+      "symbol": "_source"
+    },
+    {
+      "body": "sub _recheck_source {\n    my ($source) = @_;\n    my @descriptor = stat($source->{handle});\n    my @named = lstat($source->{path});\n    die \"source descriptor or named identity changed\\n\"\n        unless _same_metadata($source->{metadata}, \\@descriptor, 0,1,2,3,4,7,9,10)\n            && _same_metadata($source->{metadata}, \\@named, 0,1,2,3,4,7,9,10)\n            && S_ISREG($named[2]);\n}\n\n",
+      "body_sha256": "12d6645624cddd6f197e49f932954057ccfb3bf34e783835fec67033eb75df78",
+      "file_sha256": "927f1ab39f7f26742e36878985d1ff545ddf2dee119d4bf6b7b41bf2c9360ccc",
+      "path": "docs/audits/native-proxy-image-custody-20260910/ImageCustody.pm",
+      "symbol": "_recheck_source"
+    },
+    {
+      "body": "sub _read_file {\n    my ($path, $keep_open) = @_;\n    my ($absolute, $error) = repository_contained_path($path, must_exist => 1);\n    die \"$error\\n\" if defined $error;\n    sysopen(my $fh, $absolute, O_RDONLY | O_NOFOLLOW | O_NONBLOCK) or die \"cannot read fixture: $!\\n\";\n    binmode($fh);\n    my @before = stat($fh);\n    die \"fixture must be an owned bounded regular file\\n\"\n        unless @before && S_ISREG($before[2]) && $before[4] == $<\n            && $before[0] == (stat($ROOT))[0] && $before[7] <= $LIMIT;\n    my $body = '';\n    while (length($body) <= $LIMIT) {\n        my $count = sysread($fh, my $chunk, $LIMIT + 1 - length($body));\n        die \"cannot read fixture bytes: $!\\n\" unless defined $count;\n        last unless $count;\n        $body .= $chunk;\n    }\n    my @after = stat($fh);\n    my @named = lstat($absolute);\n    die \"fixture changed during its bounded read\\n\"\n        unless @after && @named && length($body) == $before[7] && length($body) <= $LIMIT\n            && join(':', @before[0,1,2,4,7,9,10]) eq join(':', @after[0,1,2,4,7,9,10])\n            && join(':', @before[0,1,2,4,7,9,10]) eq join(':', @named[0,1,2,4,7,9,10]);\n    close($fh) or die \"cannot close fixture: $!\\n\" unless $keep_open;\n    return ($body, \\@before, $keep_open ? $fh : undef);\n}\n\n",
+      "body_sha256": "75545ef4403e9b32e339d74f973e18b8bd3a8c8e496039c723ce4c3cf0334a0d",
+      "file_sha256": "d9c4ab52cf8074526c59b7a5dcb9da870ca7ffdacb4eb236dacb23b5db6d8bfb",
+      "path": "t/lib/FSM/Test/RustProxyFixture.pm",
+      "symbol": "_read_file"
+    }
+  ]
+}

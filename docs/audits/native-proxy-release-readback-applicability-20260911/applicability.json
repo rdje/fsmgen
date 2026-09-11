@@ -1,0 +1,4271 @@
+{
+  "execution_qualified": false,
+  "expected_rejections": 1848,
+  "expected_successes": 44,
+  "inputs": [
+    {
+      "path": "docs/audits/native-proxy-cleanup-receipts-20260910/CleanupReceipts.pm",
+      "sha256": "5b22cecf6ff131f62fdeb237a3e77b67b5b29a172ff82320a67772b03cd24de0",
+      "size_bytes": 1300
+    },
+    {
+      "path": "docs/audits/native-proxy-image-coordination-20260910/Coordination.pm",
+      "sha256": "a0d99769147f28ca7c35e9ac80ba88f7cf14760e3bef7b51841d8badebc060e5",
+      "size_bytes": 19061
+    },
+    {
+      "path": "docs/audits/native-proxy-image-custody-20260910/ImageCustody.pm",
+      "sha256": "927f1ab39f7f26742e36878985d1ff545ddf2dee119d4bf6b7b41bf2c9360ccc",
+      "size_bytes": 8619
+    },
+    {
+      "path": "docs/audits/native-proxy-image-custody-20260910/vectors.json",
+      "sha256": "60992f01705436d9c7efbc280d6de73f4c132d91ffea9359852c10c9afb7890d",
+      "size_bytes": 1373
+    },
+    {
+      "path": "docs/audits/native-proxy-image-maintenance-20260910/ImageMaintenance.pm",
+      "sha256": "1295957d97737e764c0e800885a2c3f9adfa327a0d41b35d122dde3e21698cac",
+      "size_bytes": 5678
+    },
+    {
+      "path": "docs/audits/native-proxy-image-publication-20260910/Publication.pm",
+      "sha256": "34ca8717856492a09ebf16af8810f04b1dea4c6c8c84ff7b3f5c11c07e7dc2bf",
+      "size_bytes": 5371
+    },
+    {
+      "path": "docs/audits/native-proxy-observation-acquisition-20260910/ObservationAcquisition.pm",
+      "sha256": "809c013255ab6973a2d0dabcfd5b0ae5c55c97696d7acc77b10cf68149006470",
+      "size_bytes": 16517
+    },
+    {
+      "path": "docs/audits/native-proxy-observation-acquisition-20260910/result/qualification.json",
+      "sha256": "5c201ce2c6e91a03a07f80180e7d66215038ed6c75e8c9fada6c8e59b2bce3bf",
+      "size_bytes": 1424879
+    },
+    {
+      "path": "docs/audits/native-proxy-observation-acquisition-20260910/result/recovery-copies.json",
+      "sha256": "276358759a2d7429fba28b8fc27cba4157ec8ec63587dbb7536de054eae637a7",
+      "size_bytes": 8515
+    },
+    {
+      "path": "docs/audits/native-proxy-observation-acquisition-join-20260911/result/source-inventory.json",
+      "sha256": "751949360499e53b07aedd784daa8b38b9785c984421d63569522818e60dda6b",
+      "size_bytes": 32004
+    },
+    {
+      "path": "docs/audits/native-proxy-observation-archive-20260911/ObservationArchive.pm",
+      "sha256": "79454039421822af31f9891d0a3d3ebe1b4c1ebcc6f6c8decd1f78e081736e87",
+      "size_bytes": 6196
+    },
+    {
+      "path": "docs/audits/native-proxy-observation-archive-20260911/audit.py",
+      "sha256": "87d276239f8190ae6ebc5988befb935be76e38520e27c2445164a338db0b4622",
+      "size_bytes": 13218
+    },
+    {
+      "path": "docs/audits/native-proxy-observation-archive-20260911/plan.json",
+      "sha256": "052ba7f727ec3b1a18611861a35a6d88b2dfd421290ba1dc0f9f0ab3e3031339",
+      "size_bytes": 10409
+    },
+    {
+      "path": "docs/audits/native-proxy-observation-archive-20260911/qualify.t",
+      "sha256": "ec9522a8358730d9c8bbfb6cc52ce880311b22efb5e28c82ce78e5aaafc869ff",
+      "size_bytes": 15004
+    },
+    {
+      "path": "docs/audits/native-proxy-observation-archive-boundaries-20260911/ArchiveFixture.pm",
+      "sha256": "bcde885a6cf72865e3a4d996e3889a40f64f10910ac5a1ec0abe821b1d6661e5",
+      "size_bytes": 7707
+    },
+    {
+      "path": "docs/audits/native-proxy-observation-archive-boundaries-20260911/ArchiveTrace.pm",
+      "sha256": "033a42ff3b526f69f202cbb0ac6b27b8ffb9918fad38e1cc785015d040f6a363",
+      "size_bytes": 10649
+    },
+    {
+      "path": "docs/audits/native-proxy-observation-archive-boundaries-20260911/audit.py",
+      "sha256": "30c2ccb08d2aa588eadb6035e81db3d882c53817b09eec9ec851d95a3f25cb16",
+      "size_bytes": 14060
+    },
+    {
+      "path": "docs/audits/native-proxy-observation-archive-boundaries-20260911/plan.json",
+      "sha256": "fcae15dbf0d83c29b4a2b6c53873bd3df583f49cf2011e112790639e3aa2f6ec",
+      "size_bytes": 87982
+    },
+    {
+      "path": "docs/audits/native-proxy-observation-archive-boundaries-20260911/result/qualification.json",
+      "sha256": "99a469ca1df6b2f2ab81be6d3d2634518eab6b0392977c09eb0632e81cb93335",
+      "size_bytes": 651443
+    },
+    {
+      "path": "docs/audits/native-proxy-observation-archive-final-join-20260911/result/audit.json",
+      "sha256": "337b0145185846affecbbb7af8d6116f7608ee6936c1e5ca11864f67c03a5a71",
+      "size_bytes": 4449
+    },
+    {
+      "path": "docs/audits/native-proxy-observation-archive-lower-reader-failures-20260911/LowerReadControls.pm",
+      "sha256": "55ec78eb48ecf0559f5d7c7edeb2e994c6b4b7f97308b6ed8da512a51819b32b",
+      "size_bytes": 4574
+    },
+    {
+      "path": "docs/audits/native-proxy-observation-archive-lower-reader-failures-20260911/audit.py",
+      "sha256": "5cc0bb556beb81134c1edd0a5fa37edd7d9be910d67fb7b7d1aff85909088813",
+      "size_bytes": 20175
+    },
+    {
+      "path": "docs/audits/native-proxy-observation-archive-lower-reader-failures-20260911/documentation.json",
+      "sha256": "91ad6dc97e873a7b98b3939b3b4af588271f525a10c4a2f27c9b70a81090cee3",
+      "size_bytes": 300
+    },
+    {
+      "path": "docs/audits/native-proxy-observation-archive-lower-reader-failures-20260911/knowledge-projection.json",
+      "sha256": "5e8ef270445eb97cfd3fe8b0787eb906344ceb6362af098ab36ed4f365f1ee0f",
+      "size_bytes": 285
+    },
+    {
+      "path": "docs/audits/native-proxy-observation-archive-lower-reader-failures-20260911/plan.json",
+      "sha256": "3ed0ae772975b0a124a6efb263c318776b0a66813f6b3c34513b9e7d8a6d6603",
+      "size_bytes": 12820
+    },
+    {
+      "path": "docs/audits/native-proxy-observation-archive-lower-reader-failures-20260911/plan.py",
+      "sha256": "38095c03991494315cc71f1af052a5361f1cffd67366271ea64e0f615509c43b",
+      "size_bytes": 3265
+    },
+    {
+      "path": "docs/audits/native-proxy-observation-archive-lower-reader-failures-20260911/preflight-pins.json",
+      "sha256": "5e621a2b333238ce0783ecc3114acc2661d7e373791286c16d27027df1c9e9d7",
+      "size_bytes": 1088
+    },
+    {
+      "path": "docs/audits/native-proxy-observation-archive-lower-reader-failures-20260911/qualify.t",
+      "sha256": "0b27dd7f74e039eb917557f5b00b71792138afeebc3f50c46bef2fedb0ac5284",
+      "size_bytes": 9018
+    },
+    {
+      "path": "docs/audits/native-proxy-observation-archive-lower-reader-failures-20260911/result/admission.jsonl",
+      "sha256": "aca4c5d05bf89aea0f235599706b95fee524d8b049d15efae2aa86546c285d12",
+      "size_bytes": 1323
+    },
+    {
+      "path": "docs/audits/native-proxy-observation-archive-lower-reader-failures-20260911/result/audit.exit",
+      "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa",
+      "size_bytes": 2
+    },
+    {
+      "path": "docs/audits/native-proxy-observation-archive-lower-reader-failures-20260911/result/audit.json",
+      "sha256": "406c4deb77ae993ce94cd9b102f36c545e3b5d034575cb86a8fbbce7f810232f",
+      "size_bytes": 2701
+    },
+    {
+      "path": "docs/audits/native-proxy-observation-archive-lower-reader-failures-20260911/result/audit.stderr",
+      "sha256": "35f43530752ea0416c9802e98d3ce6cdb11929ee29e372de45b36eb53ea4a0eb",
+      "size_bytes": 91
+    },
+    {
+      "path": "docs/audits/native-proxy-observation-archive-lower-reader-failures-20260911/result/audit.stdout",
+      "sha256": "a0974d68866cdcaf2849979cdca70ff2639be530255aaf5a779478697b06012c",
+      "size_bytes": 2411
+    },
+    {
+      "path": "docs/audits/native-proxy-observation-archive-lower-reader-failures-20260911/result/book-review.json",
+      "sha256": "c698b0660b53749ebf5f1e822bb9d796df07ff77061f8b321ce6781879e3fc8e",
+      "size_bytes": 417
+    },
+    {
+      "path": "docs/audits/native-proxy-observation-archive-lower-reader-failures-20260911/result/plan.exit",
+      "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa",
+      "size_bytes": 2
+    },
+    {
+      "path": "docs/audits/native-proxy-observation-archive-lower-reader-failures-20260911/result/plan.stderr",
+      "sha256": "1d29036493eb7946047d8c451462d2b89566efd34784abed11e6967e486fb061",
+      "size_bytes": 90
+    },
+    {
+      "path": "docs/audits/native-proxy-observation-archive-lower-reader-failures-20260911/result/plan.stdout",
+      "sha256": "83484d1777a9f205da03b5c3e29bd69c32ac06de949e7dcaac9d7b379dd049cd",
+      "size_bytes": 37
+    },
+    {
+      "path": "docs/audits/native-proxy-observation-archive-lower-reader-failures-20260911/result/qualification.json",
+      "sha256": "ac2eec7da6be0f8d5ab9fc7427995c3ad87f591494e71557c3d79536654d5f5b",
+      "size_bytes": 848276
+    },
+    {
+      "path": "docs/audits/native-proxy-observation-archive-lower-reader-failures-20260911/result/qualify.exit",
+      "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa",
+      "size_bytes": 2
+    },
+    {
+      "path": "docs/audits/native-proxy-observation-archive-lower-reader-failures-20260911/result/qualify.stderr",
+      "sha256": "9ace87b4c4abc71f8386dbe3a8bbbf5dcefd45f6fe7a3e5ecc32fa5f0a707d2c",
+      "size_bytes": 91
+    },
+    {
+      "path": "docs/audits/native-proxy-observation-archive-lower-reader-failures-20260911/result/qualify.tap",
+      "sha256": "acb77b614a31342c1fc9acf7b14157b284ec3c8c6523cb3cc42847280a5e8732",
+      "size_bytes": 3262
+    },
+    {
+      "path": "docs/audits/native-proxy-observation-archive-lower-reader-failures-20260911/result/recovery-copies.json",
+      "sha256": "fb54c73d3b4894cad948e90e08b80835a9e1812a4c82a5cbe66185dac742e14d",
+      "size_bytes": 5345
+    },
+    {
+      "path": "docs/audits/native-proxy-observation-archive-lower-reader-failures-20260911/result/syntax.exit",
+      "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa",
+      "size_bytes": 2
+    },
+    {
+      "path": "docs/audits/native-proxy-observation-archive-lower-reader-failures-20260911/result/syntax.stderr",
+      "sha256": "d4ea5de9c04f023d8b1fc2fb0e6e5868b64ef386c314ecdc265c346a1ef4b969",
+      "size_bytes": 186
+    },
+    {
+      "path": "docs/audits/native-proxy-observation-archive-lower-reader-failures-20260911/result/syntax.stdout",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "size_bytes": 0
+    },
+    {
+      "path": "docs/audits/native-proxy-observation-archive-lower-reader-failures-20260911/review.json",
+      "sha256": "6dd8dc87f4ad71762fa63c211a3226a77ec05426e578c6c3494fc39b69a75e0f",
+      "size_bytes": 3456
+    },
+    {
+      "path": "docs/audits/native-proxy-observation-archive-lower-reader-seam-20260911/LowerReaderTrace.pm",
+      "sha256": "a402657a73524c74d31f3586dc585fdd1ba6a36dad93b3d507f39289f1a47207",
+      "size_bytes": 8101
+    },
+    {
+      "path": "docs/audits/native-proxy-observation-archive-lower-reader-seam-20260911/audit.py",
+      "sha256": "8170f734f81daf7e9624ef35a30f771c5a4eb989c83f0260a266bd19359a04bd",
+      "size_bytes": 17565
+    },
+    {
+      "path": "docs/audits/native-proxy-observation-archive-lower-reader-seam-20260911/documentation.json",
+      "sha256": "5b664f725c061eaf9db2408bab352e7953972cb47596c9efe7b7772b818d697c",
+      "size_bytes": 300
+    },
+    {
+      "path": "docs/audits/native-proxy-observation-archive-lower-reader-seam-20260911/knowledge-projection.json",
+      "sha256": "e83dd473f9c050eac29de2944cc32daa1a4c490bbba520093198e856141702a8",
+      "size_bytes": 285
+    },
+    {
+      "path": "docs/audits/native-proxy-observation-archive-lower-reader-seam-20260911/plan.json",
+      "sha256": "b886c9108cfb4b445464f9a4ba7553ef500f5475168dd8d91d7597fc8c3e2c41",
+      "size_bytes": 10184
+    },
+    {
+      "path": "docs/audits/native-proxy-observation-archive-lower-reader-seam-20260911/plan.py",
+      "sha256": "ac0641e9252edf36b272e4368bad6f7b214223c510691bb321217515072f1cd5",
+      "size_bytes": 2791
+    },
+    {
+      "path": "docs/audits/native-proxy-observation-archive-lower-reader-seam-20260911/preflight-pins.json",
+      "sha256": "771124684203898256459921ce2a38d877db448f049ac956c9cfda8cd4bb5cd1",
+      "size_bytes": 1293
+    },
+    {
+      "path": "docs/audits/native-proxy-observation-archive-lower-reader-seam-20260911/qualify.t",
+      "sha256": "1ae936c189802a5c47612e211260c4742cf3136e75defa6d45bb883839dcb978",
+      "size_bytes": 7029
+    },
+    {
+      "path": "docs/audits/native-proxy-observation-archive-lower-reader-seam-20260911/result/admission.jsonl",
+      "sha256": "39f66fda80be14b2285925cdce9d2533334f57a575686440954a3abc808e0475",
+      "size_bytes": 1144
+    },
+    {
+      "path": "docs/audits/native-proxy-observation-archive-lower-reader-seam-20260911/result/audit.exit",
+      "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa",
+      "size_bytes": 2
+    },
+    {
+      "path": "docs/audits/native-proxy-observation-archive-lower-reader-seam-20260911/result/audit.json",
+      "sha256": "e23d90fe2222844df9b88aa4d3e1d9f847858a4b447ca95da743270458ba995e",
+      "size_bytes": 2247
+    },
+    {
+      "path": "docs/audits/native-proxy-observation-archive-lower-reader-seam-20260911/result/audit.stderr",
+      "sha256": "d9ebf2d8a6894ea8064b3cde10fa6fc9e3bbc476a79dacab491fcc4c54a4289c",
+      "size_bytes": 91
+    },
+    {
+      "path": "docs/audits/native-proxy-observation-archive-lower-reader-seam-20260911/result/audit.stdout",
+      "sha256": "7b93028779babefacf1e16fb7f9778de2f7dcb0c7c4a3bc73db506542cd849e3",
+      "size_bytes": 2029
+    },
+    {
+      "path": "docs/audits/native-proxy-observation-archive-lower-reader-seam-20260911/result/book-review.json",
+      "sha256": "501aa23ad69904bad196273565122b06089a3df02d6d22c6b9c3d9be2876ea0c",
+      "size_bytes": 427
+    },
+    {
+      "path": "docs/audits/native-proxy-observation-archive-lower-reader-seam-20260911/result/plan.exit",
+      "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa",
+      "size_bytes": 2
+    },
+    {
+      "path": "docs/audits/native-proxy-observation-archive-lower-reader-seam-20260911/result/plan.stderr",
+      "sha256": "4b2878e3b28ab64a3527f692037a2b2ce049930487371ab198b141342d3ad1eb",
+      "size_bytes": 91
+    },
+    {
+      "path": "docs/audits/native-proxy-observation-archive-lower-reader-seam-20260911/result/plan.stdout",
+      "sha256": "0f9e98e001c4919885ec641a6afb99fb2bb8d5c4ebb8ca33b3a6d8fc7e1324f5",
+      "size_bytes": 37
+    },
+    {
+      "path": "docs/audits/native-proxy-observation-archive-lower-reader-seam-20260911/result/qualification.json",
+      "sha256": "3e825078311c8c0e24fe3d45a38e66beb9627d59ce5961c2a9aa6c20b82b64ff",
+      "size_bytes": 1101441
+    },
+    {
+      "path": "docs/audits/native-proxy-observation-archive-lower-reader-seam-20260911/result/qualify.exit",
+      "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa",
+      "size_bytes": 2
+    },
+    {
+      "path": "docs/audits/native-proxy-observation-archive-lower-reader-seam-20260911/result/qualify.stderr",
+      "sha256": "920d466fc20b595b973e9d0eefb40e2c06a3e9e9e985ecf40d42a95e0bd91730",
+      "size_bytes": 91
+    },
+    {
+      "path": "docs/audits/native-proxy-observation-archive-lower-reader-seam-20260911/result/qualify.tap",
+      "sha256": "e74f92c65c44f8a6425e09692b7af8de53c7b76382c00235db67303ce2a601e1",
+      "size_bytes": 2941
+    },
+    {
+      "path": "docs/audits/native-proxy-observation-archive-lower-reader-seam-20260911/result/recovery-copies.json",
+      "sha256": "8b74510604a55f8d8a0ce4958cbef6cd28d7a0d5d268b577e8664733412e95ba",
+      "size_bytes": 5226
+    },
+    {
+      "path": "docs/audits/native-proxy-observation-archive-lower-reader-seam-20260911/result/syntax.exit",
+      "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa",
+      "size_bytes": 2
+    },
+    {
+      "path": "docs/audits/native-proxy-observation-archive-lower-reader-seam-20260911/result/syntax.stderr",
+      "sha256": "0aee4b6233ecd178ce29743c9e01b170197cbae4144cab2e79c4373f647d5ccc",
+      "size_bytes": 183
+    },
+    {
+      "path": "docs/audits/native-proxy-observation-archive-lower-reader-seam-20260911/result/syntax.stdout",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "size_bytes": 0
+    },
+    {
+      "path": "docs/audits/native-proxy-observation-archive-lower-reader-seam-20260911/review.json",
+      "sha256": "e3ffafadbef780cd0cefc9015c54b5496303ea15ba8cd16bf03712db8a25d22a",
+      "size_bytes": 3560
+    },
+    {
+      "path": "docs/audits/native-proxy-observation-archive-lower-reader-seam-20260911/toolchain-reference.json",
+      "sha256": "50d6f797fc28e47484f566fafeac2f90b5fa218cd34580623000a5cb267a20e9",
+      "size_bytes": 1074
+    },
+    {
+      "path": "docs/audits/native-proxy-observation-archive-records-20260911/ArchiveRecord.pm",
+      "sha256": "38fb47a97157d1b052b3e0f4e148fa6cacd27f4d8defb63ca469133ac6ec1af1",
+      "size_bytes": 9873
+    },
+    {
+      "path": "docs/audits/native-proxy-observation-archive-records-20260911/audit.py",
+      "sha256": "0c75f945c005b5b5fb2fff80e5acb75e2d3a9b942e9c98db7be010c24b7397a3",
+      "size_bytes": 15049
+    },
+    {
+      "path": "docs/audits/native-proxy-observation-archive-records-20260911/plan.json",
+      "sha256": "186bb995f5b769c67a6ab6595856a0b46122a1b101b4b5fb4228c9f810b240b7",
+      "size_bytes": 1018306
+    },
+    {
+      "path": "docs/audits/native-proxy-observation-archive-release-20260911/ObservationRelease.pm",
+      "sha256": "08236265e6e6973ab23e9e31ee26071272f39e8879c2d420ab2382fc800345ab",
+      "size_bytes": 10294
+    },
+    {
+      "path": "docs/audits/native-proxy-observation-archive-release-20260911/ReleaseFixture.pm",
+      "sha256": "adc44f93c9d55e3bc2302a841440e87b92e459c10d50c2acde1f2926399f1b0e",
+      "size_bytes": 6097
+    },
+    {
+      "path": "docs/audits/native-proxy-observation-archive-release-20260911/ReleaseTrace.pm",
+      "sha256": "43f16583db2901de809834a0959f97a54f217bc5c8d408d92d4c514ffed4827b",
+      "size_bytes": 10026
+    },
+    {
+      "path": "docs/audits/native-proxy-observation-archive-release-20260911/audit.py",
+      "sha256": "eefc989d4d346c5f119445ebe0259c7ad46bba37ee9590ddd3caa865fb828994",
+      "size_bytes": 29589
+    },
+    {
+      "path": "docs/audits/native-proxy-observation-archive-release-20260911/contract.json",
+      "sha256": "5283975e59d2309e4e6018a2b67b1c5b91736d94e00232e8c1ffcdfe1ccd7de0",
+      "size_bytes": 5470
+    },
+    {
+      "path": "docs/audits/native-proxy-observation-archive-release-20260911/coordination-extension.json",
+      "sha256": "5ec48abff08cdedf083a738788c4d88bfb09d08af852e1d622d698f3a86e9408",
+      "size_bytes": 4671
+    },
+    {
+      "path": "docs/audits/native-proxy-observation-archive-release-20260911/corrected-auditor-pin.json",
+      "sha256": "eb028b6adc5abc4e36e02f1ad369a6d5854248a0fe6665c2f1e34c43ded7ed60",
+      "size_bytes": 292
+    },
+    {
+      "path": "docs/audits/native-proxy-observation-archive-release-20260911/plan.json",
+      "sha256": "909fea33151d474a687be8104a817ff8d8b53179dff0f9811e94c35578519f44",
+      "size_bytes": 28609
+    },
+    {
+      "path": "docs/audits/native-proxy-observation-archive-release-20260911/preflight-pins.json",
+      "sha256": "bc99396e396421640f1c574279e5a5cc7f867fec10e9722fb8e0f53da04b4580",
+      "size_bytes": 2063
+    },
+    {
+      "path": "docs/audits/native-proxy-observation-archive-release-20260911/qualify.t",
+      "sha256": "1fa2470b46ab7323c3699e1351628fb3a235f90a1b257a07a961ae8f33cd5159",
+      "size_bytes": 7744
+    },
+    {
+      "path": "docs/audits/native-proxy-observation-archive-release-20260911/result/admission.jsonl",
+      "sha256": "c96ca7e6aed97b77aade648c955c3e86f1e3a2c90494eda1df5a619fc0ea6e06",
+      "size_bytes": 19798
+    },
+    {
+      "path": "docs/audits/native-proxy-observation-archive-release-20260911/result/audit.json",
+      "sha256": "15e1343fa9fa77a9bcf7d2ef6b86e7fe422c8d4f086685433cd0c7e8b4097305",
+      "size_bytes": 1960
+    },
+    {
+      "path": "docs/audits/native-proxy-observation-archive-release-20260911/result/qualification.json",
+      "sha256": "6a653b267b1f6d19d0a2f91c549cc34705039fc55278fe23cd513bdfd48432d6",
+      "size_bytes": 12105806
+    },
+    {
+      "path": "docs/audits/native-proxy-observation-archive-release-20260911/result/qualify.exit",
+      "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa",
+      "size_bytes": 2
+    },
+    {
+      "path": "docs/audits/native-proxy-observation-archive-release-20260911/result/qualify.tap",
+      "sha256": "cf19682d6774379f508f8a2cc9b352c1e9bfc819ce92b59d517e48deb88e4065",
+      "size_bytes": 21985
+    },
+    {
+      "path": "docs/audits/native-proxy-observation-archive-release-boundaries-20260911/BoundaryTrace.pm",
+      "sha256": "f0d9b6dcdc65d67e31e90ea8168333ae041be6f9143ebffa36fd8a5b76d9865e",
+      "size_bytes": 8394
+    },
+    {
+      "path": "docs/audits/native-proxy-observation-archive-release-boundaries-20260911/acceptance-preservation.json",
+      "sha256": "11bc5205eb4a24b19c093e24d6220acf80c8754493009151bd40df99a2217d3a",
+      "size_bytes": 173
+    },
+    {
+      "path": "docs/audits/native-proxy-observation-archive-release-boundaries-20260911/audit.py",
+      "sha256": "685f1ea76c3e966374558c3c65ba83281baa512a254d0002f59e9c4948dd04df",
+      "size_bytes": 18707
+    },
+    {
+      "path": "docs/audits/native-proxy-observation-archive-release-boundaries-20260911/book-review.json",
+      "sha256": "06ebddeedc4f0415b1f78816b8c1cc3c13a43750b627ac92ae0019814927d6e9",
+      "size_bytes": 696
+    },
+    {
+      "path": "docs/audits/native-proxy-observation-archive-release-boundaries-20260911/flow_model.py",
+      "sha256": "b84e53d4eefe9409a96cdd4a4e68bce032cf6aa3315357dc93f503d76515ab46",
+      "size_bytes": 7189
+    },
+    {
+      "path": "docs/audits/native-proxy-observation-archive-release-boundaries-20260911/knowledge-projection.json",
+      "sha256": "7d3917683b2243e2cc9ffd13f8093a72cba342371f4d515b84091651100f9b89",
+      "size_bytes": 285
+    },
+    {
+      "path": "docs/audits/native-proxy-observation-archive-release-boundaries-20260911/plan.json",
+      "sha256": "f67ad8f59a6885df8ad3b9f6b51626879475031e7f9cfa227a387517c23fe7f6",
+      "size_bytes": 38998
+    },
+    {
+      "path": "docs/audits/native-proxy-observation-archive-release-boundaries-20260911/preflight-pins.json",
+      "sha256": "01a31c974db22f6ce6cfc2b318151adcf8e4c48c46975b303b6d88c42e621c68",
+      "size_bytes": 1288
+    },
+    {
+      "path": "docs/audits/native-proxy-observation-archive-release-boundaries-20260911/prepare.py",
+      "sha256": "3cf90ff83962f004d6201b558f91bdb7bd9132bdc437ca02eeaed7d944c4e13e",
+      "size_bytes": 6127
+    },
+    {
+      "path": "docs/audits/native-proxy-observation-archive-release-boundaries-20260911/qualify.t",
+      "sha256": "667b5a7c24f4dee45fb4cb43101872967af375f150bec6d10e52e29a5ebc31b6",
+      "size_bytes": 8432
+    },
+    {
+      "path": "docs/audits/native-proxy-observation-archive-release-boundaries-20260911/result/admission.jsonl",
+      "sha256": "37d48093c0ba77219b5dae71547c496a4f220f3eae17c519d07a42f65eb3e81b",
+      "size_bytes": 2084
+    },
+    {
+      "path": "docs/audits/native-proxy-observation-archive-release-boundaries-20260911/result/audit.exit",
+      "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa",
+      "size_bytes": 2
+    },
+    {
+      "path": "docs/audits/native-proxy-observation-archive-release-boundaries-20260911/result/audit.json",
+      "sha256": "e2172a58c3bc45a97128498dac9e06ab2e2de4560442016ba966f0ea1c3d36c5",
+      "size_bytes": 1677
+    },
+    {
+      "path": "docs/audits/native-proxy-observation-archive-release-boundaries-20260911/result/audit.stderr",
+      "sha256": "26f845d486064596b3e639d4dea145c857a511c2e214d056295ac2064395660f",
+      "size_bytes": 91
+    },
+    {
+      "path": "docs/audits/native-proxy-observation-archive-release-boundaries-20260911/result/audit.stdout",
+      "sha256": "5e2c4ba45423813e42a68527f8bbb6a74552144d8da95d8388c795e9b2a6c7d7",
+      "size_bytes": 1485
+    },
+    {
+      "path": "docs/audits/native-proxy-observation-archive-release-boundaries-20260911/result/fault-domain.json",
+      "sha256": "fd50e324ea9a5db4e6fb52be80b7209d7fe6cb2d034dc7cfd91b9fd1aba97e64",
+      "size_bytes": 2661151
+    },
+    {
+      "path": "docs/audits/native-proxy-observation-archive-release-boundaries-20260911/result/preflight.json",
+      "sha256": "bbd2681711e4241536bcc46e7e41ff6674e505ad15960be788a00ba62985dc07",
+      "size_bytes": 628
+    },
+    {
+      "path": "docs/audits/native-proxy-observation-archive-release-boundaries-20260911/result/qualification.json",
+      "sha256": "9475b28e460dd3705ade3cb0eaf1dbb2a289ab6a8cdd6df784c07ff733147230",
+      "size_bytes": 3866202
+    },
+    {
+      "path": "docs/audits/native-proxy-observation-archive-release-boundaries-20260911/result/qualify.exit",
+      "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa",
+      "size_bytes": 2
+    },
+    {
+      "path": "docs/audits/native-proxy-observation-archive-release-boundaries-20260911/result/qualify.stderr",
+      "sha256": "854a39d29e76aff275937abe5a95ce57e96ac867ec333947f2c4e384eaec579f",
+      "size_bytes": 91
+    },
+    {
+      "path": "docs/audits/native-proxy-observation-archive-release-boundaries-20260911/result/qualify.tap",
+      "sha256": "3e29a0aeeeafdd10194994a8e9f5d27a8f9a5a84a88a92310cd091229e48a052",
+      "size_bytes": 5398
+    },
+    {
+      "path": "docs/audits/native-proxy-observation-archive-release-boundaries-20260911/result/recovery-copies.json",
+      "sha256": "bee7575fb56e5c7bb4ca95e86b54e345f577de422f85e673bd6dc0dbddfabec4",
+      "size_bytes": 5033
+    },
+    {
+      "path": "docs/audits/native-proxy-observation-archive-release-boundaries-20260911/result/syntax.exit",
+      "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa",
+      "size_bytes": 2
+    },
+    {
+      "path": "docs/audits/native-proxy-observation-archive-release-boundaries-20260911/result/syntax.stderr",
+      "sha256": "09697e4d5a45cbc22299b6c9ff788e2294e5deb2d2dc563f0e9d175c4e21b422",
+      "size_bytes": 93
+    },
+    {
+      "path": "docs/audits/native-proxy-observation-archive-release-boundaries-20260911/result/syntax.stdout",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "size_bytes": 0
+    },
+    {
+      "path": "docs/audits/native-proxy-observation-archive-release-boundaries-20260911/review.json",
+      "sha256": "8f03e3e6c0f54d471ad407257058317c3e90b6204d0becad9e027d192e45cd33",
+      "size_bytes": 4255
+    },
+    {
+      "path": "docs/audits/native-proxy-observation-archive-release-boundaries-20260911/source-review.json",
+      "sha256": "c82b0ed95175481964dc1d0eef69dd902f4f1704854e5e6a81db78483a326cfe",
+      "size_bytes": 2465
+    },
+    {
+      "path": "docs/audits/native-proxy-observation-records-20260910/ObservationRecord.pm",
+      "sha256": "35445ee951c8f5e7dc204f58cffe1b2f6273286cc3e7715953d705b33e7158d5",
+      "size_bytes": 4369
+    },
+    {
+      "path": "docs/audits/native-proxy-observation-release-contract-20260911/audit.py",
+      "sha256": "0427d24fef5c6cfbd43d9a93e8f8854ec5ce40c732b3ee8592dd405b94d6f902",
+      "size_bytes": 12728
+    },
+    {
+      "path": "docs/audits/native-proxy-observation-release-contract-20260911/contract.json",
+      "sha256": "06f5a8f998baabe772c0683798c3cf95e28a4d7d39d7fac19c9ea72e7cd075c5",
+      "size_bytes": 12823
+    },
+    {
+      "path": "docs/audits/native-proxy-observation-release-contract-20260911/model.py",
+      "sha256": "8ab7961fb5c4d7f56fbe484a1e59267afe5ac723f51e871d2312db4cbe2db3b7",
+      "size_bytes": 3536
+    },
+    {
+      "path": "docs/audits/native-proxy-observation-release-contract-20260911/result/audit.json",
+      "sha256": "75932effd82f5563fdf3b1ac9d7b641931789a72c8ab98bc67b09af2e9cc025b",
+      "size_bytes": 6278
+    },
+    {
+      "path": "docs/audits/native-proxy-observation-reuse-20260910/FixtureClone.pm",
+      "sha256": "d68a2d93f785b1c96689e352f7271e97b0bd239f2cf228f2c8e119dbb6aaf234",
+      "size_bytes": 1053
+    },
+    {
+      "path": "docs/audits/native-proxy-observation-reuse-20260910/result/qualification.json",
+      "sha256": "348c434f7a40012fc8a46a7c7b4b6842ad7d30ca56f3a82947b82231974f6296",
+      "size_bytes": 3707937
+    },
+    {
+      "path": "docs/audits/native-proxy-observation-reuse-20260910/result/recovery-copies.json",
+      "sha256": "af8532e629c095b678b2ac0e610876b422f3e9eed711dfc9af4d488f23d1b092",
+      "size_bytes": 13430
+    },
+    {
+      "path": "docs/audits/native-proxy-observation-work-records-20260911/WorkRecord.pm",
+      "sha256": "3f0f1351bc44a2a8b42502b7b814544f9d756ae8c39e17db470b312635a6e56d",
+      "size_bytes": 8126
+    },
+    {
+      "path": "docs/audits/native-proxy-observation-work-records-20260911/audit.py",
+      "sha256": "8f6239ddddb14548a96a6d0f362b105700e3e733cdb0d0110666652e1f9bd1fe",
+      "size_bytes": 17442
+    },
+    {
+      "path": "docs/audits/native-proxy-observation-work-records-20260911/plan.json",
+      "sha256": "0f406ab391998327bfe39422ef6f842c7d230c39f54ae5b7030799b9a040e5b5",
+      "size_bytes": 368087
+    },
+    {
+      "path": "docs/audits/native-proxy-observation-work-records-20260911/preflight-pins.json",
+      "sha256": "1b6a8dae67ba14d5487fe5aaf6c9bb48fbfa11dc10f12ac66446cbd2d19868a2",
+      "size_bytes": 1002
+    },
+    {
+      "path": "docs/audits/native-proxy-observation-work-records-20260911/result/audit.json",
+      "sha256": "efceb6c1524143f1efcc8602c927f607854f4750091260f0772e940c3cf31ccd",
+      "size_bytes": 1583
+    },
+    {
+      "path": "docs/audits/native-proxy-observation-work-records-20260911/result/qualification.json",
+      "sha256": "d1438155f5ea32c2386d491ee815b06b8f9337610e0ae9af08c55b1fbaa9f207",
+      "size_bytes": 336355
+    },
+    {
+      "path": "docs/audits/native-proxy-release-call-selection-20260911/plan.json",
+      "sha256": "d55ac3653bc40f0bdd0cf3ce2b855352c17ea55dde7ae8c115e75f5741d65194",
+      "size_bytes": 2210663
+    },
+    {
+      "path": "docs/audits/native-proxy-release-interruption-contract-20260911/audit.py",
+      "sha256": "bdb9e0099fa70e7459ce7f192213201c35d51f66a6fe1ddbabcc384274559d59",
+      "size_bytes": 17313
+    },
+    {
+      "path": "docs/audits/native-proxy-release-interruption-contract-20260911/contract.json",
+      "sha256": "8b46fcd193c8bd4805c10b4bbc538bf4add764668d209d80ebe85ec25f3f3411",
+      "size_bytes": 86083
+    },
+    {
+      "path": "docs/audits/native-proxy-release-interruption-contract-20260911/corrected-auditor-pin.json",
+      "sha256": "ee824fcb1d63d2db92c978e5f4204b036bcdc11fd1749bdd8d7d9180a0e97089",
+      "size_bytes": 300
+    },
+    {
+      "path": "docs/audits/native-proxy-release-interruption-contract-20260911/model.py",
+      "sha256": "3b82c3a5f2c0d77cb2cb24fe32f2bf662eba052226d5eb4ac80480f0b31b1c0d",
+      "size_bytes": 2400
+    },
+    {
+      "path": "docs/audits/native-proxy-release-interruption-contract-20260911/preflight-pins.json",
+      "sha256": "e662c60cf9ee6e86e1a259fbfa80a0e1311409ef1a87d6109df2c9fbc4baea70",
+      "size_bytes": 1024
+    },
+    {
+      "path": "docs/audits/native-proxy-release-interruption-contract-20260911/prepare.py",
+      "sha256": "dbfb3abc22b59fe178aa5987653ca3498dcd11f2a37b10a0e1f366a28a7b971f",
+      "size_bytes": 9382
+    },
+    {
+      "path": "docs/audits/native-proxy-release-interruption-contract-20260911/qualify.py",
+      "sha256": "c01260bb85be0df1a6a27dfd29918153938e5cc596bf13fde16ee88bd05eb901",
+      "size_bytes": 3762
+    },
+    {
+      "path": "docs/audits/native-proxy-release-interruption-contract-20260911/result/audit.json",
+      "sha256": "b1a6002ad5eb56c9d1c43432c32d8bb0ef8f79a2bccc0903540da5eb50326253",
+      "size_bytes": 5190
+    },
+    {
+      "path": "docs/audits/native-proxy-release-interruption-contract-20260911/result/qualification.json",
+      "sha256": "3d035deccd70a14f585c30597e8caf5c3c734fcc51e238ab9af9eb3b6a0c8bdb",
+      "size_bytes": 259670
+    },
+    {
+      "path": "docs/audits/native-proxy-release-readback-selection-20260911/approval-review.json",
+      "sha256": "707225bfb95cd8b07f6f3b66c0110c184769e463023301fc6a81b7c2f55b86d5",
+      "size_bytes": 518
+    },
+    {
+      "path": "docs/audits/native-proxy-release-readback-selection-20260911/audit.py",
+      "sha256": "dada0f7c9d1faa8fba6bf615f1d00e5120d441411575a3816190c263d9bb96d1",
+      "size_bytes": 10758
+    },
+    {
+      "path": "docs/audits/native-proxy-release-readback-selection-20260911/book-review.json",
+      "sha256": "10906c57aa713d9abb9825c7409bf869d755c432338786bae861d40cd3affa3a",
+      "size_bytes": 638
+    },
+    {
+      "path": "docs/audits/native-proxy-release-readback-selection-20260911/compaction-census.json",
+      "sha256": "12c0bcf20eaf155e7873ae80ae209eea5a80bfa4eeb798032c978d1302a02338",
+      "size_bytes": 4690
+    },
+    {
+      "path": "docs/audits/native-proxy-release-readback-selection-20260911/contract.md",
+      "sha256": "0eedce04b63492078ecb03f431fd8a1159bc2784826723bf6eb31f40ebe72706",
+      "size_bytes": 6964
+    },
+    {
+      "path": "docs/audits/native-proxy-release-readback-selection-20260911/first-doctrine-failure/doctrines.exit",
+      "sha256": "4355a46b19d348dc2f57c046f8ef63d4538ebb936000f3c9ee954a27460dd865",
+      "size_bytes": 2
+    },
+    {
+      "path": "docs/audits/native-proxy-release-readback-selection-20260911/first-doctrine-failure/doctrines.stderr",
+      "sha256": "b2eee0973868a8a46cb63b6250a420884217fdb4c8300ba92d46714b3d70b779",
+      "size_bytes": 4424
+    },
+    {
+      "path": "docs/audits/native-proxy-release-readback-selection-20260911/first-doctrine-failure/doctrines.stdout",
+      "sha256": "b1e8a1cebc1950398d68a9ec14c7bd9ce8a7251bf7d73f821e8eae581f620584",
+      "size_bytes": 47471
+    },
+    {
+      "path": "docs/audits/native-proxy-release-readback-selection-20260911/first-doctrine-failure/review.json",
+      "sha256": "0900af3fb3f0cc17b56e32fb0230b49534f536916833bd60161cf775b964b572",
+      "size_bytes": 1743
+    },
+    {
+      "path": "docs/audits/native-proxy-release-readback-selection-20260911/first-doctrine-failure/surfaces.jsonl",
+      "sha256": "b90b60549e40ce15a556a5bb8c7a1cd410b3f91d19a50dc6d7ac9a34303b6f76",
+      "size_bytes": 23588
+    },
+    {
+      "path": "docs/audits/native-proxy-release-readback-selection-20260911/first-preparation-failure/failure.json",
+      "sha256": "0cada0527d9522a42da643aa6e963e351ffb0da2a6e7c7dfb99ffaabf1f1bbbb",
+      "size_bytes": 3699
+    },
+    {
+      "path": "docs/audits/native-proxy-release-readback-selection-20260911/first-preparation-failure/source.py",
+      "sha256": "1bae54cd9dbeea331f3b0c7af9b57f116fc1640cd817cc2af8441e67301b79cc",
+      "size_bytes": 5763
+    },
+    {
+      "path": "docs/audits/native-proxy-release-readback-selection-20260911/inventory-refresh-failure/doctrines-corrected.exit",
+      "sha256": "4355a46b19d348dc2f57c046f8ef63d4538ebb936000f3c9ee954a27460dd865",
+      "size_bytes": 2
+    },
+    {
+      "path": "docs/audits/native-proxy-release-readback-selection-20260911/inventory-refresh-failure/doctrines-corrected.stderr",
+      "sha256": "401fcfb92a8d2024fddf4db53b92594b3be7f0f2b4ace53c478a5fae32a5cb4f",
+      "size_bytes": 4136
+    },
+    {
+      "path": "docs/audits/native-proxy-release-readback-selection-20260911/inventory-refresh-failure/doctrines-corrected.stdout",
+      "sha256": "e8c6b778cd53e0a58cba9b6e310ec931c581d4df65081088f523ef6ccf144a35",
+      "size_bytes": 48493
+    },
+    {
+      "path": "docs/audits/native-proxy-release-readback-selection-20260911/inventory-refresh-failure/inventory.jsonl",
+      "sha256": "110b6ea87f60fd5b86e760369e6a084038154f4abfb370d8e286295b9f053efc",
+      "size_bytes": 2966032
+    },
+    {
+      "path": "docs/audits/native-proxy-release-readback-selection-20260911/inventory-refresh-failure/review.json",
+      "sha256": "78aad5db71c15ad6e740d3e2343eb121b07c70f4c017e0172de47690120fd0d3",
+      "size_bytes": 1761
+    },
+    {
+      "path": "docs/audits/native-proxy-release-readback-selection-20260911/knowledge-projection.json",
+      "sha256": "09d97718952e5801aac936da51eab1e4b7259dc227ded879581262939445e0fa",
+      "size_bytes": 285
+    },
+    {
+      "path": "docs/audits/native-proxy-release-readback-selection-20260911/plan.json",
+      "sha256": "37efdb9d86019275c4eadfb13819c0747d238a630919a03eb28d0072d2d5225b",
+      "size_bytes": 418982
+    },
+    {
+      "path": "docs/audits/native-proxy-release-readback-selection-20260911/preflight-pins.json",
+      "sha256": "da422fc81fac517e0008ce47e8a3a28def9bd8fb0b6aa3cbaceddcaa1f96867c",
+      "size_bytes": 808
+    },
+    {
+      "path": "docs/audits/native-proxy-release-readback-selection-20260911/prepare.py",
+      "sha256": "f1584552f07b657dd525ceafa2936d9ba225a0f286d338c9b47917a5c9d6dea7",
+      "size_bytes": 5761
+    },
+    {
+      "path": "docs/audits/native-proxy-release-readback-selection-20260911/result/audit.exit",
+      "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa",
+      "size_bytes": 2
+    },
+    {
+      "path": "docs/audits/native-proxy-release-readback-selection-20260911/result/audit.stderr",
+      "sha256": "bf3626b48dda7a5efd9dedf1ba3b5cfbce673d7311ef2cd1b8484867764c93fd",
+      "size_bytes": 91
+    },
+    {
+      "path": "docs/audits/native-proxy-release-readback-selection-20260911/result/audit.stdout",
+      "sha256": "614c3c847de3fd421a6af27a41eec6f1144f5d29300d82cf965e4acda9728986",
+      "size_bytes": 838
+    },
+    {
+      "path": "docs/audits/native-proxy-release-readback-selection-20260911/result/book.exit",
+      "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa",
+      "size_bytes": 2
+    },
+    {
+      "path": "docs/audits/native-proxy-release-readback-selection-20260911/result/knowledge-check.exit",
+      "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa",
+      "size_bytes": 2
+    },
+    {
+      "path": "docs/audits/native-proxy-release-readback-selection-20260911/result/knowledge-check.stderr",
+      "sha256": "78cf32b2c8db013ca809aaa2e2826b2ca0821c3bb09b4c0fbf408fe8b4b44c2b",
+      "size_bytes": 219
+    },
+    {
+      "path": "docs/audits/native-proxy-release-readback-selection-20260911/result/knowledge-check.stdout",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "size_bytes": 0
+    },
+    {
+      "path": "docs/audits/native-proxy-release-readback-selection-20260911/result/knowledge-gen.exit",
+      "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa",
+      "size_bytes": 2
+    },
+    {
+      "path": "docs/audits/native-proxy-release-readback-selection-20260911/result/knowledge-gen.stderr",
+      "sha256": "0a4255a3d2eca6d89a19aeffe34f6e0141f210aa3734562720c9eef0070c93d1",
+      "size_bytes": 212
+    },
+    {
+      "path": "docs/audits/native-proxy-release-readback-selection-20260911/result/knowledge-gen.stdout",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "size_bytes": 0
+    },
+    {
+      "path": "docs/audits/native-proxy-release-readback-selection-20260911/result/prepare.exit",
+      "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa",
+      "size_bytes": 2
+    },
+    {
+      "path": "docs/audits/native-proxy-release-readback-selection-20260911/result/prepare.stderr",
+      "sha256": "113a75a74ee7dcb511e314e24fcbdf9a72612ffbde287473c892f3da03bc33c1",
+      "size_bytes": 90
+    },
+    {
+      "path": "docs/audits/native-proxy-release-readback-selection-20260911/result/prepare.stdout",
+      "sha256": "3a64c176f6a34e2c5d9091097f6936421dc628467f404899b5b389c6f65dc943",
+      "size_bytes": 108
+    },
+    {
+      "path": "docs/audits/native-proxy-release-readback-selection-20260911/result/recovery-copies.json",
+      "sha256": "eca6e10bd9b26b541a6422e1a8ad75c6da37a9f9ff75450836b675dd571398dc",
+      "size_bytes": 5290
+    },
+    {
+      "path": "docs/audits/native-proxy-release-readback-selection-20260911/result/task.exit",
+      "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa",
+      "size_bytes": 2
+    },
+    {
+      "path": "docs/audits/native-proxy-release-readback-selection-20260911/result/task.stderr",
+      "sha256": "f1432011d31f9f1b2a4a401bd34219a64be48eebca524670fec0cd437972fcc5",
+      "size_bytes": 90
+    },
+    {
+      "path": "docs/audits/native-proxy-release-readback-selection-20260911/result/task.stdout",
+      "sha256": "6e766e1bee037cd1978ccbc3e8c245f44ea4d1e0759edac8f01928f1fdabe0d5",
+      "size_bytes": 171
+    },
+    {
+      "path": "docs/audits/native-proxy-release-readback-selection-20260911/review.json",
+      "sha256": "d344ae39bb273f69d7c3df1b7ffdd13286ad109cdcf897074bcd2dbb2f31942d",
+      "size_bytes": 3906
+    },
+    {
+      "path": "docs/audits/native-proxy-runtime-acquisition-20260910/ReferenceAcquisition.pm",
+      "sha256": "b751c88d709e102f7f9b9dd17e0222c39e0a81acc16d7194f7f7c3f4c8535b57",
+      "size_bytes": 6565
+    },
+    {
+      "path": "docs/audits/native-proxy-runtime-census-20260910/ReferenceCensus.pm",
+      "sha256": "9fd74767e8c10831f2732fa8ad426b7e4fff8c17bab06584aa671cdd013b6247",
+      "size_bytes": 8024
+    },
+    {
+      "path": "docs/audits/native-proxy-runtime-records-20260910/RuntimeRecord.pm",
+      "sha256": "013c0a02e7df59dc3a5af944b603cd44121252a02ca0228d6fdc3e1dd28e6745",
+      "size_bytes": 4078
+    },
+    {
+      "path": "docs/audits/native-proxy-runtime-retirement-20260910/PrivateWorkspace.pm",
+      "sha256": "fb87393846eb10147f868aa40ba444f5e5d56cef7f0aaf6a1ff295216a90e9c1",
+      "size_bytes": 6080
+    },
+    {
+      "path": "docs/audits/native-proxy-runtime-retirement-20260910/RuntimeRetirement.pm",
+      "sha256": "766348d16243d3868ca5f8b653f757f8f2eaf5c1aba8ec27fd2d9c67e9fd0bcc",
+      "size_bytes": 8727
+    },
+    {
+      "path": "perl/FSM/ProjectDataLocality.pm",
+      "sha256": "14aece4a50b35956bc2585099aa8d26753942288663c641922da9d36ad4bc893",
+      "size_bytes": 6017
+    },
+    {
+      "path": "perl/FSM/Support/ProcessSupervisor.pm",
+      "sha256": "684882d91f673ea7145f43ed3aad31acf099f13508574be7b2d8911123988637",
+      "size_bytes": 27990
+    },
+    {
+      "path": "t/lib/FSM/Test/ProcessSupervisor.pm",
+      "sha256": "52e467023ea8a776167e227a767abdd3dddf185f1f7c539aac8ca1c4a0a06680",
+      "size_bytes": 773
+    },
+    {
+      "path": "t/lib/FSM/Test/RustProxyFixture.pm",
+      "sha256": "d9c4ab52cf8074526c59b7a5dcb9da870ca7ffdacb4eb236dacb23b5db6d8bfb",
+      "size_bytes": 11466
+    }
+  ],
+  "original_plan": "docs/audits/native-proxy-release-readback-selection-20260911/plan.json",
+  "owner": "HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.12.4.1.3.4.4.3.10.2.1",
+  "physical_boundary": "Only one reported read buffer changes. Original named bytes and metadata remain unchanged; accepted structural reads permit the complete healthy release effect.",
+  "profiles": [
+    {
+      "body_xor": [
+        {
+          "consumer": "content_sensitive",
+          "effect_basis": "before_selected_source",
+          "expected_success": false,
+          "occurrence": 0,
+          "symbol": "NativeProxyImageCustody::_source"
+        },
+        {
+          "consumer": "content_sensitive",
+          "effect_basis": "before_selected_source",
+          "expected_success": false,
+          "occurrence": 1,
+          "symbol": "NativeProxyImageCustody::_source"
+        },
+        {
+          "consumer": "content_sensitive",
+          "effect_basis": "before_selected_source",
+          "expected_success": false,
+          "occurrence": 2,
+          "symbol": "NativeProxyImageCustody::_source"
+        },
+        {
+          "consumer": "content_sensitive",
+          "effect_basis": "before_selected_source",
+          "expected_success": false,
+          "occurrence": 3,
+          "symbol": "NativeProxyImageCustody::_source"
+        },
+        {
+          "consumer": "content_sensitive",
+          "effect_basis": "before_selected_source",
+          "expected_success": false,
+          "occurrence": 4,
+          "symbol": "NativeProxyImageCustody::_source"
+        },
+        {
+          "consumer": "content_sensitive",
+          "effect_basis": "before_selected_source",
+          "expected_success": false,
+          "occurrence": 5,
+          "symbol": "NativeProxyImageCustody::_source"
+        },
+        {
+          "consumer": "content_sensitive",
+          "effect_basis": "before_selected_source",
+          "expected_success": false,
+          "occurrence": 6,
+          "symbol": "NativeProxyImageCustody::_source"
+        },
+        {
+          "consumer": "content_sensitive",
+          "effect_basis": "before_selected_source",
+          "expected_success": false,
+          "occurrence": 7,
+          "symbol": "NativeProxyImageCustody::_source"
+        },
+        {
+          "consumer": "structure_only",
+          "effect_basis": "healthy_completion",
+          "expected_success": true,
+          "occurrence": 8,
+          "symbol": "NativeProxyImageCustody::_source"
+        },
+        {
+          "consumer": "structure_only",
+          "effect_basis": "healthy_completion",
+          "expected_success": true,
+          "occurrence": 9,
+          "symbol": "NativeProxyImageCustody::_source"
+        },
+        {
+          "consumer": "structure_only",
+          "effect_basis": "healthy_completion",
+          "expected_success": true,
+          "occurrence": 10,
+          "symbol": "NativeProxyImageCustody::_source"
+        },
+        {
+          "consumer": "content_sensitive",
+          "effect_basis": "before_selected_source",
+          "expected_success": false,
+          "occurrence": 11,
+          "symbol": "NativeProxyImageCustody::_source"
+        },
+        {
+          "consumer": "content_sensitive",
+          "effect_basis": "before_selected_source",
+          "expected_success": false,
+          "occurrence": 12,
+          "symbol": "NativeProxyImageCustody::_source"
+        },
+        {
+          "consumer": "content_sensitive",
+          "effect_basis": "before_selected_source",
+          "expected_success": false,
+          "occurrence": 13,
+          "symbol": "NativeProxyImageCustody::_source"
+        },
+        {
+          "consumer": "content_sensitive",
+          "effect_basis": "before_selected_source",
+          "expected_success": false,
+          "occurrence": 14,
+          "symbol": "NativeProxyImageCustody::_source"
+        },
+        {
+          "consumer": "content_sensitive",
+          "effect_basis": "before_selected_source",
+          "expected_success": false,
+          "occurrence": 15,
+          "symbol": "NativeProxyImageCustody::_source"
+        },
+        {
+          "consumer": "content_sensitive",
+          "effect_basis": "before_selected_source",
+          "expected_success": false,
+          "occurrence": 16,
+          "symbol": "NativeProxyImageCustody::_source"
+        },
+        {
+          "consumer": "content_sensitive",
+          "effect_basis": "before_selected_source",
+          "expected_success": false,
+          "occurrence": 17,
+          "symbol": "NativeProxyImageCustody::_source"
+        },
+        {
+          "consumer": "content_sensitive",
+          "effect_basis": "before_selected_source",
+          "expected_success": false,
+          "occurrence": 18,
+          "symbol": "NativeProxyImageCustody::_source"
+        },
+        {
+          "consumer": "content_sensitive",
+          "effect_basis": "before_selected_source",
+          "expected_success": false,
+          "occurrence": 19,
+          "symbol": "NativeProxyImageCustody::_source"
+        },
+        {
+          "consumer": "content_sensitive",
+          "effect_basis": "before_selected_source",
+          "expected_success": false,
+          "occurrence": 20,
+          "symbol": "NativeProxyImageCustody::_source"
+        },
+        {
+          "consumer": "content_sensitive",
+          "effect_basis": "before_selected_source",
+          "expected_success": false,
+          "occurrence": 21,
+          "symbol": "NativeProxyImageCustody::_source"
+        },
+        {
+          "consumer": "content_sensitive",
+          "effect_basis": "before_selected_source",
+          "expected_success": false,
+          "occurrence": 22,
+          "symbol": "NativeProxyImageCustody::_source"
+        },
+        {
+          "consumer": "content_sensitive",
+          "effect_basis": "before_selected_source",
+          "expected_success": false,
+          "occurrence": 23,
+          "symbol": "NativeProxyImageCustody::_source"
+        },
+        {
+          "consumer": "content_sensitive",
+          "effect_basis": "before_selected_source",
+          "expected_success": false,
+          "occurrence": 24,
+          "symbol": "NativeProxyImageCustody::_source"
+        },
+        {
+          "consumer": "content_sensitive",
+          "effect_basis": "before_selected_source",
+          "expected_success": false,
+          "occurrence": 25,
+          "symbol": "NativeProxyImageCustody::_source"
+        },
+        {
+          "consumer": "content_sensitive",
+          "effect_basis": "before_selected_source",
+          "expected_success": false,
+          "occurrence": 26,
+          "symbol": "NativeProxyImageCustody::_source"
+        },
+        {
+          "consumer": "content_sensitive",
+          "effect_basis": "before_selected_source",
+          "expected_success": false,
+          "occurrence": 27,
+          "symbol": "NativeProxyImageCustody::_source"
+        },
+        {
+          "consumer": "content_sensitive",
+          "effect_basis": "before_selected_source",
+          "expected_success": false,
+          "occurrence": 28,
+          "symbol": "NativeProxyImageCustody::_source"
+        },
+        {
+          "consumer": "content_sensitive",
+          "effect_basis": "before_selected_source",
+          "expected_success": false,
+          "occurrence": 29,
+          "symbol": "NativeProxyImageCustody::_source"
+        },
+        {
+          "consumer": "content_sensitive",
+          "effect_basis": "before_selected_source",
+          "expected_success": false,
+          "occurrence": 30,
+          "symbol": "NativeProxyImageCustody::_source"
+        },
+        {
+          "consumer": "content_sensitive",
+          "effect_basis": "before_selected_source",
+          "expected_success": false,
+          "occurrence": 31,
+          "symbol": "NativeProxyImageCustody::_source"
+        },
+        {
+          "consumer": "content_sensitive",
+          "effect_basis": "before_selected_source",
+          "expected_success": false,
+          "occurrence": 32,
+          "symbol": "NativeProxyImageCustody::_source"
+        },
+        {
+          "consumer": "content_sensitive",
+          "effect_basis": "before_selected_source",
+          "expected_success": false,
+          "occurrence": 33,
+          "symbol": "NativeProxyImageCustody::_source"
+        },
+        {
+          "consumer": "content_sensitive",
+          "effect_basis": "before_selected_source",
+          "expected_success": false,
+          "occurrence": 34,
+          "symbol": "NativeProxyImageCustody::_source"
+        },
+        {
+          "consumer": "content_sensitive",
+          "effect_basis": "before_selected_source",
+          "expected_success": false,
+          "occurrence": 35,
+          "symbol": "NativeProxyImageCustody::_source"
+        },
+        {
+          "consumer": "content_sensitive",
+          "effect_basis": "before_selected_source",
+          "expected_success": false,
+          "occurrence": 36,
+          "symbol": "NativeProxyImageCustody::_source"
+        },
+        {
+          "consumer": "content_sensitive",
+          "effect_basis": "before_selected_source",
+          "expected_success": false,
+          "occurrence": 37,
+          "symbol": "NativeProxyImageCustody::_source"
+        },
+        {
+          "consumer": "content_sensitive",
+          "effect_basis": "before_selected_source",
+          "expected_success": false,
+          "occurrence": 38,
+          "symbol": "NativeProxyImageCustody::_source"
+        },
+        {
+          "consumer": "content_sensitive",
+          "effect_basis": "before_selected_source",
+          "expected_success": false,
+          "occurrence": 39,
+          "symbol": "NativeProxyImageCustody::_source"
+        },
+        {
+          "consumer": "content_sensitive",
+          "effect_basis": "before_selected_source",
+          "expected_success": false,
+          "occurrence": 40,
+          "symbol": "NativeProxyImageCustody::_source"
+        },
+        {
+          "consumer": "content_sensitive",
+          "effect_basis": "before_selected_source",
+          "expected_success": false,
+          "occurrence": 41,
+          "symbol": "NativeProxyImageCustody::_source"
+        },
+        {
+          "consumer": "content_sensitive",
+          "effect_basis": "before_selected_source",
+          "expected_success": false,
+          "occurrence": 42,
+          "symbol": "NativeProxyImageCustody::_source"
+        },
+        {
+          "consumer": "content_sensitive",
+          "effect_basis": "before_selected_source",
+          "expected_success": false,
+          "occurrence": 43,
+          "symbol": "NativeProxyImageCustody::_source"
+        },
+        {
+          "consumer": "structure_only",
+          "effect_basis": "healthy_completion",
+          "expected_success": true,
+          "occurrence": 44,
+          "symbol": "NativeProxyImageCustody::_source"
+        },
+        {
+          "consumer": "structure_only",
+          "effect_basis": "healthy_completion",
+          "expected_success": true,
+          "occurrence": 45,
+          "symbol": "NativeProxyImageCustody::_source"
+        },
+        {
+          "consumer": "structure_only",
+          "effect_basis": "healthy_completion",
+          "expected_success": true,
+          "occurrence": 46,
+          "symbol": "NativeProxyImageCustody::_source"
+        },
+        {
+          "consumer": "content_sensitive",
+          "effect_basis": "before_selected_source",
+          "expected_success": false,
+          "occurrence": 47,
+          "symbol": "NativeProxyImageCustody::_source"
+        },
+        {
+          "consumer": "content_sensitive",
+          "effect_basis": "before_selected_source",
+          "expected_success": false,
+          "occurrence": 48,
+          "symbol": "NativeProxyImageCustody::_source"
+        },
+        {
+          "consumer": "content_sensitive",
+          "effect_basis": "before_selected_source",
+          "expected_success": false,
+          "occurrence": 49,
+          "symbol": "NativeProxyImageCustody::_source"
+        },
+        {
+          "consumer": "content_sensitive",
+          "effect_basis": "before_selected_source",
+          "expected_success": false,
+          "occurrence": 50,
+          "symbol": "NativeProxyImageCustody::_source"
+        },
+        {
+          "consumer": "content_sensitive",
+          "effect_basis": "before_selected_source",
+          "expected_success": false,
+          "occurrence": 51,
+          "symbol": "NativeProxyImageCustody::_source"
+        },
+        {
+          "consumer": "content_sensitive",
+          "effect_basis": "before_selected_source",
+          "expected_success": false,
+          "occurrence": 52,
+          "symbol": "NativeProxyImageCustody::_source"
+        },
+        {
+          "consumer": "content_sensitive",
+          "effect_basis": "before_selected_source",
+          "expected_success": false,
+          "occurrence": 53,
+          "symbol": "NativeProxyImageCustody::_source"
+        },
+        {
+          "consumer": "content_sensitive",
+          "effect_basis": "before_selected_source",
+          "expected_success": false,
+          "occurrence": 54,
+          "symbol": "NativeProxyImageCustody::_source"
+        },
+        {
+          "consumer": "content_sensitive",
+          "effect_basis": "before_selected_source",
+          "expected_success": false,
+          "occurrence": 55,
+          "symbol": "NativeProxyImageCustody::_source"
+        },
+        {
+          "consumer": "content_sensitive",
+          "effect_basis": "before_selected_source",
+          "expected_success": false,
+          "occurrence": 56,
+          "symbol": "NativeProxyImageCustody::_source"
+        },
+        {
+          "consumer": "content_sensitive",
+          "effect_basis": "before_selected_source",
+          "expected_success": false,
+          "occurrence": 57,
+          "symbol": "NativeProxyImageCustody::_source"
+        },
+        {
+          "consumer": "content_sensitive",
+          "effect_basis": "before_selected_source",
+          "expected_success": false,
+          "occurrence": 58,
+          "symbol": "NativeProxyImageCustody::_source"
+        },
+        {
+          "consumer": "content_sensitive",
+          "effect_basis": "before_selected_source",
+          "expected_success": false,
+          "occurrence": 59,
+          "symbol": "NativeProxyImageCustody::_source"
+        },
+        {
+          "consumer": "content_sensitive",
+          "effect_basis": "before_selected_source",
+          "expected_success": false,
+          "occurrence": 60,
+          "symbol": "NativeProxyImageCustody::_source"
+        },
+        {
+          "consumer": "content_sensitive",
+          "effect_basis": "before_selected_source",
+          "expected_success": false,
+          "occurrence": 61,
+          "symbol": "NativeProxyImageCustody::_source"
+        },
+        {
+          "consumer": "content_sensitive",
+          "effect_basis": "before_selected_source",
+          "expected_success": false,
+          "occurrence": 62,
+          "symbol": "NativeProxyImageCustody::_source"
+        },
+        {
+          "consumer": "content_sensitive",
+          "effect_basis": "before_selected_source",
+          "expected_success": false,
+          "occurrence": 63,
+          "symbol": "NativeProxyImageCustody::_source"
+        },
+        {
+          "consumer": "content_sensitive",
+          "effect_basis": "before_selected_source",
+          "expected_success": false,
+          "occurrence": 64,
+          "symbol": "NativeProxyImageCustody::_source"
+        },
+        {
+          "consumer": "content_sensitive",
+          "effect_basis": "before_selected_source",
+          "expected_success": false,
+          "occurrence": 65,
+          "symbol": "NativeProxyImageCustody::_source"
+        },
+        {
+          "consumer": "content_sensitive",
+          "effect_basis": "before_selected_source",
+          "expected_success": false,
+          "occurrence": 66,
+          "symbol": "NativeProxyImageCustody::_source"
+        },
+        {
+          "consumer": "content_sensitive",
+          "effect_basis": "before_selected_source",
+          "expected_success": false,
+          "occurrence": 67,
+          "symbol": "NativeProxyImageCustody::_source"
+        },
+        {
+          "consumer": "content_sensitive",
+          "effect_basis": "before_selected_source",
+          "expected_success": false,
+          "occurrence": 68,
+          "symbol": "NativeProxyImageCustody::_source"
+        },
+        {
+          "consumer": "content_sensitive",
+          "effect_basis": "before_selected_source",
+          "expected_success": false,
+          "occurrence": 69,
+          "symbol": "NativeProxyImageCustody::_source"
+        },
+        {
+          "consumer": "content_sensitive",
+          "effect_basis": "before_selected_source",
+          "expected_success": false,
+          "occurrence": 70,
+          "symbol": "NativeProxyImageCustody::_source"
+        },
+        {
+          "consumer": "content_sensitive",
+          "effect_basis": "before_selected_source",
+          "expected_success": false,
+          "occurrence": 71,
+          "symbol": "NativeProxyImageCustody::_source"
+        },
+        {
+          "consumer": "content_sensitive",
+          "effect_basis": "before_selected_source",
+          "expected_success": false,
+          "occurrence": 72,
+          "symbol": "NativeProxyImageCustody::_source"
+        },
+        {
+          "consumer": "content_sensitive",
+          "effect_basis": "before_selected_source",
+          "expected_success": false,
+          "occurrence": 73,
+          "symbol": "NativeProxyImageCustody::_source"
+        },
+        {
+          "consumer": "content_sensitive",
+          "effect_basis": "before_selected_source",
+          "expected_success": false,
+          "occurrence": 74,
+          "symbol": "NativeProxyImageCustody::_source"
+        },
+        {
+          "consumer": "content_sensitive",
+          "effect_basis": "before_selected_source",
+          "expected_success": false,
+          "occurrence": 75,
+          "symbol": "NativeProxyImageCustody::_source"
+        },
+        {
+          "consumer": "content_sensitive",
+          "effect_basis": "before_selected_source",
+          "expected_success": false,
+          "occurrence": 76,
+          "symbol": "NativeProxyImageCustody::_source"
+        },
+        {
+          "consumer": "content_sensitive",
+          "effect_basis": "before_selected_source",
+          "expected_success": false,
+          "occurrence": 77,
+          "symbol": "NativeProxyImageCustody::_source"
+        },
+        {
+          "consumer": "content_sensitive",
+          "effect_basis": "before_selected_source",
+          "expected_success": false,
+          "occurrence": 78,
+          "symbol": "NativeProxyImageCustody::_source"
+        },
+        {
+          "consumer": "content_sensitive",
+          "effect_basis": "before_selected_source",
+          "expected_success": false,
+          "occurrence": 79,
+          "symbol": "NativeProxyImageCustody::_source"
+        },
+        {
+          "consumer": "content_sensitive",
+          "effect_basis": "before_selected_source",
+          "expected_success": false,
+          "occurrence": 80,
+          "symbol": "NativeProxyImageCustody::_source"
+        },
+        {
+          "consumer": "content_sensitive",
+          "effect_basis": "before_selected_source",
+          "expected_success": false,
+          "occurrence": 81,
+          "symbol": "NativeProxyImageCustody::_source"
+        },
+        {
+          "consumer": "content_sensitive",
+          "effect_basis": "before_selected_source",
+          "expected_success": false,
+          "occurrence": 82,
+          "symbol": "NativeProxyImageCustody::_source"
+        },
+        {
+          "consumer": "content_sensitive",
+          "effect_basis": "before_selected_source",
+          "expected_success": false,
+          "occurrence": 83,
+          "symbol": "NativeProxyImageCustody::_source"
+        },
+        {
+          "consumer": "content_sensitive",
+          "effect_basis": "before_selected_source",
+          "expected_success": false,
+          "occurrence": 84,
+          "symbol": "NativeProxyImageCustody::_source"
+        },
+        {
+          "consumer": "structure_only",
+          "effect_basis": "healthy_completion",
+          "expected_success": true,
+          "occurrence": 85,
+          "symbol": "NativeProxyImageCustody::_source"
+        },
+        {
+          "consumer": "structure_only",
+          "effect_basis": "healthy_completion",
+          "expected_success": true,
+          "occurrence": 86,
+          "symbol": "NativeProxyImageCustody::_source"
+        },
+        {
+          "consumer": "content_sensitive",
+          "effect_basis": "before_selected_source",
+          "expected_success": false,
+          "occurrence": 87,
+          "symbol": "NativeProxyImageCustody::_source"
+        },
+        {
+          "consumer": "content_sensitive",
+          "effect_basis": "before_selected_source",
+          "expected_success": false,
+          "occurrence": 88,
+          "symbol": "NativeProxyImageCustody::_source"
+        },
+        {
+          "consumer": "content_sensitive",
+          "effect_basis": "before_selected_source",
+          "expected_success": false,
+          "occurrence": 89,
+          "symbol": "NativeProxyImageCustody::_source"
+        },
+        {
+          "consumer": "content_sensitive",
+          "effect_basis": "before_selected_source",
+          "expected_success": false,
+          "occurrence": 90,
+          "symbol": "NativeProxyImageCustody::_source"
+        },
+        {
+          "consumer": "content_sensitive",
+          "effect_basis": "before_selected_source",
+          "expected_success": false,
+          "occurrence": 91,
+          "symbol": "NativeProxyImageCustody::_source"
+        },
+        {
+          "consumer": "content_sensitive",
+          "effect_basis": "before_selected_source",
+          "expected_success": false,
+          "occurrence": 92,
+          "symbol": "NativeProxyImageCustody::_source"
+        },
+        {
+          "consumer": "content_sensitive",
+          "effect_basis": "before_selected_source",
+          "expected_success": false,
+          "occurrence": 93,
+          "symbol": "NativeProxyImageCustody::_source"
+        },
+        {
+          "consumer": "content_sensitive",
+          "effect_basis": "before_selected_source",
+          "expected_success": false,
+          "occurrence": 94,
+          "symbol": "NativeProxyImageCustody::_source"
+        },
+        {
+          "consumer": "content_sensitive",
+          "effect_basis": "before_selected_source",
+          "expected_success": false,
+          "occurrence": 95,
+          "symbol": "NativeProxyImageCustody::_source"
+        },
+        {
+          "consumer": "content_sensitive",
+          "effect_basis": "before_selected_source",
+          "expected_success": false,
+          "occurrence": 96,
+          "symbol": "NativeProxyImageCustody::_source"
+        },
+        {
+          "consumer": "content_sensitive",
+          "effect_basis": "before_selected_source",
+          "expected_success": false,
+          "occurrence": 97,
+          "symbol": "NativeProxyImageCustody::_source"
+        },
+        {
+          "consumer": "content_sensitive",
+          "effect_basis": "before_selected_source",
+          "expected_success": false,
+          "occurrence": 98,
+          "symbol": "NativeProxyImageCustody::_source"
+        },
+        {
+          "consumer": "content_sensitive",
+          "effect_basis": "before_selected_source",
+          "expected_success": false,
+          "occurrence": 99,
+          "symbol": "NativeProxyImageCustody::_source"
+        },
+        {
+          "consumer": "content_sensitive",
+          "effect_basis": "before_selected_source",
+          "expected_success": false,
+          "occurrence": 100,
+          "symbol": "NativeProxyImageCustody::_source"
+        },
+        {
+          "consumer": "content_sensitive",
+          "effect_basis": "before_selected_source",
+          "expected_success": false,
+          "occurrence": 101,
+          "symbol": "NativeProxyImageCustody::_source"
+        },
+        {
+          "consumer": "content_sensitive",
+          "effect_basis": "before_selected_source",
+          "expected_success": false,
+          "occurrence": 102,
+          "symbol": "NativeProxyImageCustody::_source"
+        },
+        {
+          "consumer": "content_sensitive",
+          "effect_basis": "before_selected_source",
+          "expected_success": false,
+          "occurrence": 103,
+          "symbol": "NativeProxyImageCustody::_source"
+        },
+        {
+          "consumer": "content_sensitive",
+          "effect_basis": "before_selected_source",
+          "expected_success": false,
+          "occurrence": 104,
+          "symbol": "NativeProxyImageCustody::_source"
+        },
+        {
+          "consumer": "content_sensitive",
+          "effect_basis": "before_selected_source",
+          "expected_success": false,
+          "occurrence": 105,
+          "symbol": "NativeProxyImageCustody::_source"
+        },
+        {
+          "consumer": "content_sensitive",
+          "effect_basis": "before_selected_source",
+          "expected_success": false,
+          "occurrence": 106,
+          "symbol": "NativeProxyImageCustody::_source"
+        },
+        {
+          "consumer": "content_sensitive",
+          "effect_basis": "before_selected_source",
+          "expected_success": false,
+          "occurrence": 107,
+          "symbol": "NativeProxyImageCustody::_source"
+        },
+        {
+          "consumer": "content_sensitive",
+          "effect_basis": "before_selected_source",
+          "expected_success": false,
+          "occurrence": 108,
+          "symbol": "NativeProxyImageCustody::_source"
+        },
+        {
+          "consumer": "content_sensitive",
+          "effect_basis": "before_selected_source",
+          "expected_success": false,
+          "occurrence": 109,
+          "symbol": "NativeProxyImageCustody::_source"
+        },
+        {
+          "consumer": "content_sensitive",
+          "effect_basis": "before_selected_source",
+          "expected_success": false,
+          "occurrence": 110,
+          "symbol": "NativeProxyImageCustody::_source"
+        },
+        {
+          "consumer": "content_sensitive",
+          "effect_basis": "before_selected_source",
+          "expected_success": false,
+          "occurrence": 111,
+          "symbol": "NativeProxyImageCustody::_source"
+        },
+        {
+          "consumer": "content_sensitive",
+          "effect_basis": "before_selected_source",
+          "expected_success": false,
+          "occurrence": 112,
+          "symbol": "NativeProxyImageCustody::_source"
+        },
+        {
+          "consumer": "content_sensitive",
+          "effect_basis": "before_selected_source",
+          "expected_success": false,
+          "occurrence": 113,
+          "symbol": "NativeProxyImageCustody::_source"
+        },
+        {
+          "consumer": "content_sensitive",
+          "effect_basis": "before_selected_source",
+          "expected_success": false,
+          "occurrence": 114,
+          "symbol": "NativeProxyImageCustody::_source"
+        },
+        {
+          "consumer": "content_sensitive",
+          "effect_basis": "before_selected_source",
+          "expected_success": false,
+          "occurrence": 115,
+          "symbol": "NativeProxyImageCustody::_source"
+        },
+        {
+          "consumer": "content_sensitive",
+          "effect_basis": "before_selected_source",
+          "expected_success": false,
+          "occurrence": 116,
+          "symbol": "NativeProxyImageCustody::_source"
+        },
+        {
+          "consumer": "content_sensitive",
+          "effect_basis": "before_selected_source",
+          "expected_success": false,
+          "occurrence": 117,
+          "symbol": "NativeProxyImageCustody::_source"
+        },
+        {
+          "consumer": "content_sensitive",
+          "effect_basis": "before_selected_source",
+          "expected_success": false,
+          "occurrence": 118,
+          "symbol": "NativeProxyImageCustody::_source"
+        },
+        {
+          "consumer": "content_sensitive",
+          "effect_basis": "before_selected_source",
+          "expected_success": false,
+          "occurrence": 119,
+          "symbol": "NativeProxyImageCustody::_source"
+        }
+      ],
+      "execution_owner": "HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.12.4.1.3.4.4.3.10.2.2",
+      "expected_body_rejections": 112,
+      "expected_body_successes": 8,
+      "expected_source_case_rejections": 472,
+      "expected_source_case_successes": 10,
+      "id": "ordinary_retired_other_observation",
+      "source_case_count": 482
+    },
+    {
+      "body_xor": [
+        {
+          "consumer": "content_sensitive",
+          "effect_basis": "before_selected_source",
+          "expected_success": false,
+          "occurrence": 0,
+          "symbol": "NativeProxyImageCustody::_source"
+        },
+        {
+          "consumer": "content_sensitive",
+          "effect_basis": "before_selected_source",
+          "expected_success": false,
+          "occurrence": 1,
+          "symbol": "NativeProxyImageCustody::_source"
+        },
+        {
+          "consumer": "content_sensitive",
+          "effect_basis": "before_selected_source",
+          "expected_success": false,
+          "occurrence": 2,
+          "symbol": "NativeProxyImageCustody::_source"
+        },
+        {
+          "consumer": "content_sensitive",
+          "effect_basis": "before_selected_source",
+          "expected_success": false,
+          "occurrence": 3,
+          "symbol": "NativeProxyImageCustody::_source"
+        },
+        {
+          "consumer": "content_sensitive",
+          "effect_basis": "before_selected_source",
+          "expected_success": false,
+          "occurrence": 4,
+          "symbol": "NativeProxyImageCustody::_source"
+        },
+        {
+          "consumer": "content_sensitive",
+          "effect_basis": "before_selected_source",
+          "expected_success": false,
+          "occurrence": 5,
+          "symbol": "NativeProxyImageCustody::_source"
+        },
+        {
+          "consumer": "structure_only",
+          "effect_basis": "healthy_completion",
+          "expected_success": true,
+          "occurrence": 6,
+          "symbol": "NativeProxyImageCustody::_source"
+        },
+        {
+          "consumer": "structure_only",
+          "effect_basis": "healthy_completion",
+          "expected_success": true,
+          "occurrence": 7,
+          "symbol": "NativeProxyImageCustody::_source"
+        },
+        {
+          "consumer": "structure_only",
+          "effect_basis": "healthy_completion",
+          "expected_success": true,
+          "occurrence": 8,
+          "symbol": "NativeProxyImageCustody::_source"
+        },
+        {
+          "consumer": "content_sensitive",
+          "effect_basis": "before_selected_source",
+          "expected_success": false,
+          "occurrence": 9,
+          "symbol": "NativeProxyImageCustody::_source"
+        },
+        {
+          "consumer": "content_sensitive",
+          "effect_basis": "before_selected_source",
+          "expected_success": false,
+          "occurrence": 10,
+          "symbol": "NativeProxyImageCustody::_source"
+        },
+        {
+          "consumer": "content_sensitive",
+          "effect_basis": "before_selected_source",
+          "expected_success": false,
+          "occurrence": 11,
+          "symbol": "NativeProxyImageCustody::_source"
+        },
+        {
+          "consumer": "content_sensitive",
+          "effect_basis": "before_selected_source",
+          "expected_success": false,
+          "occurrence": 12,
+          "symbol": "NativeProxyImageCustody::_source"
+        },
+        {
+          "consumer": "content_sensitive",
+          "effect_basis": "before_selected_source",
+          "expected_success": false,
+          "occurrence": 13,
+          "symbol": "NativeProxyImageCustody::_source"
+        },
+        {
+          "consumer": "content_sensitive",
+          "effect_basis": "before_selected_source",
+          "expected_success": false,
+          "occurrence": 14,
+          "symbol": "NativeProxyImageCustody::_source"
+        },
+        {
+          "consumer": "content_sensitive",
+          "effect_basis": "before_selected_source",
+          "expected_success": false,
+          "occurrence": 15,
+          "symbol": "NativeProxyImageCustody::_source"
+        },
+        {
+          "consumer": "content_sensitive",
+          "effect_basis": "before_selected_source",
+          "expected_success": false,
+          "occurrence": 16,
+          "symbol": "NativeProxyImageCustody::_source"
+        },
+        {
+          "consumer": "content_sensitive",
+          "effect_basis": "before_selected_source",
+          "expected_success": false,
+          "occurrence": 17,
+          "symbol": "NativeProxyImageCustody::_source"
+        },
+        {
+          "consumer": "content_sensitive",
+          "effect_basis": "before_selected_source",
+          "expected_success": false,
+          "occurrence": 18,
+          "symbol": "NativeProxyImageCustody::_source"
+        },
+        {
+          "consumer": "content_sensitive",
+          "effect_basis": "before_selected_source",
+          "expected_success": false,
+          "occurrence": 19,
+          "symbol": "NativeProxyImageCustody::_source"
+        },
+        {
+          "consumer": "content_sensitive",
+          "effect_basis": "before_selected_source",
+          "expected_success": false,
+          "occurrence": 20,
+          "symbol": "NativeProxyImageCustody::_source"
+        },
+        {
+          "consumer": "content_sensitive",
+          "effect_basis": "before_selected_source",
+          "expected_success": false,
+          "occurrence": 21,
+          "symbol": "NativeProxyImageCustody::_source"
+        },
+        {
+          "consumer": "content_sensitive",
+          "effect_basis": "before_selected_source",
+          "expected_success": false,
+          "occurrence": 22,
+          "symbol": "NativeProxyImageCustody::_source"
+        },
+        {
+          "consumer": "content_sensitive",
+          "effect_basis": "before_selected_source",
+          "expected_success": false,
+          "occurrence": 23,
+          "symbol": "NativeProxyImageCustody::_source"
+        },
+        {
+          "consumer": "content_sensitive",
+          "effect_basis": "before_selected_source",
+          "expected_success": false,
+          "occurrence": 24,
+          "symbol": "NativeProxyImageCustody::_source"
+        },
+        {
+          "consumer": "content_sensitive",
+          "effect_basis": "before_selected_source",
+          "expected_success": false,
+          "occurrence": 25,
+          "symbol": "NativeProxyImageCustody::_source"
+        },
+        {
+          "consumer": "content_sensitive",
+          "effect_basis": "before_selected_source",
+          "expected_success": false,
+          "occurrence": 26,
+          "symbol": "NativeProxyImageCustody::_source"
+        },
+        {
+          "consumer": "content_sensitive",
+          "effect_basis": "before_selected_source",
+          "expected_success": false,
+          "occurrence": 27,
+          "symbol": "NativeProxyImageCustody::_source"
+        },
+        {
+          "consumer": "content_sensitive",
+          "effect_basis": "before_selected_source",
+          "expected_success": false,
+          "occurrence": 28,
+          "symbol": "NativeProxyImageCustody::_source"
+        },
+        {
+          "consumer": "content_sensitive",
+          "effect_basis": "before_selected_source",
+          "expected_success": false,
+          "occurrence": 29,
+          "symbol": "NativeProxyImageCustody::_source"
+        },
+        {
+          "consumer": "content_sensitive",
+          "effect_basis": "before_selected_source",
+          "expected_success": false,
+          "occurrence": 30,
+          "symbol": "NativeProxyImageCustody::_source"
+        },
+        {
+          "consumer": "content_sensitive",
+          "effect_basis": "before_selected_source",
+          "expected_success": false,
+          "occurrence": 31,
+          "symbol": "NativeProxyImageCustody::_source"
+        },
+        {
+          "consumer": "content_sensitive",
+          "effect_basis": "before_selected_source",
+          "expected_success": false,
+          "occurrence": 32,
+          "symbol": "NativeProxyImageCustody::_source"
+        },
+        {
+          "consumer": "content_sensitive",
+          "effect_basis": "before_selected_source",
+          "expected_success": false,
+          "occurrence": 33,
+          "symbol": "NativeProxyImageCustody::_source"
+        },
+        {
+          "consumer": "content_sensitive",
+          "effect_basis": "before_selected_source",
+          "expected_success": false,
+          "occurrence": 34,
+          "symbol": "NativeProxyImageCustody::_source"
+        },
+        {
+          "consumer": "content_sensitive",
+          "effect_basis": "before_selected_source",
+          "expected_success": false,
+          "occurrence": 35,
+          "symbol": "NativeProxyImageCustody::_source"
+        },
+        {
+          "consumer": "content_sensitive",
+          "effect_basis": "before_selected_source",
+          "expected_success": false,
+          "occurrence": 36,
+          "symbol": "NativeProxyImageCustody::_source"
+        },
+        {
+          "consumer": "content_sensitive",
+          "effect_basis": "before_selected_source",
+          "expected_success": false,
+          "occurrence": 37,
+          "symbol": "NativeProxyImageCustody::_source"
+        },
+        {
+          "consumer": "content_sensitive",
+          "effect_basis": "before_selected_source",
+          "expected_success": false,
+          "occurrence": 38,
+          "symbol": "NativeProxyImageCustody::_source"
+        },
+        {
+          "consumer": "content_sensitive",
+          "effect_basis": "before_selected_source",
+          "expected_success": false,
+          "occurrence": 39,
+          "symbol": "NativeProxyImageCustody::_source"
+        },
+        {
+          "consumer": "content_sensitive",
+          "effect_basis": "before_selected_source",
+          "expected_success": false,
+          "occurrence": 40,
+          "symbol": "NativeProxyImageCustody::_source"
+        },
+        {
+          "consumer": "structure_only",
+          "effect_basis": "healthy_completion",
+          "expected_success": true,
+          "occurrence": 41,
+          "symbol": "NativeProxyImageCustody::_source"
+        },
+        {
+          "consumer": "structure_only",
+          "effect_basis": "healthy_completion",
+          "expected_success": true,
+          "occurrence": 42,
+          "symbol": "NativeProxyImageCustody::_source"
+        },
+        {
+          "consumer": "structure_only",
+          "effect_basis": "healthy_completion",
+          "expected_success": true,
+          "occurrence": 43,
+          "symbol": "NativeProxyImageCustody::_source"
+        },
+        {
+          "consumer": "content_sensitive",
+          "effect_basis": "before_selected_source",
+          "expected_success": false,
+          "occurrence": 44,
+          "symbol": "NativeProxyImageCustody::_source"
+        },
+        {
+          "consumer": "content_sensitive",
+          "effect_basis": "before_selected_source",
+          "expected_success": false,
+          "occurrence": 45,
+          "symbol": "NativeProxyImageCustody::_source"
+        },
+        {
+          "consumer": "content_sensitive",
+          "effect_basis": "before_selected_source",
+          "expected_success": false,
+          "occurrence": 46,
+          "symbol": "NativeProxyImageCustody::_source"
+        },
+        {
+          "consumer": "content_sensitive",
+          "effect_basis": "before_selected_source",
+          "expected_success": false,
+          "occurrence": 47,
+          "symbol": "NativeProxyImageCustody::_source"
+        },
+        {
+          "consumer": "content_sensitive",
+          "effect_basis": "before_selected_source",
+          "expected_success": false,
+          "occurrence": 48,
+          "symbol": "NativeProxyImageCustody::_source"
+        },
+        {
+          "consumer": "content_sensitive",
+          "effect_basis": "before_selected_source",
+          "expected_success": false,
+          "occurrence": 49,
+          "symbol": "NativeProxyImageCustody::_source"
+        },
+        {
+          "consumer": "content_sensitive",
+          "effect_basis": "before_selected_source",
+          "expected_success": false,
+          "occurrence": 50,
+          "symbol": "NativeProxyImageCustody::_source"
+        },
+        {
+          "consumer": "content_sensitive",
+          "effect_basis": "before_selected_source",
+          "expected_success": false,
+          "occurrence": 51,
+          "symbol": "NativeProxyImageCustody::_source"
+        },
+        {
+          "consumer": "content_sensitive",
+          "effect_basis": "before_selected_source",
+          "expected_success": false,
+          "occurrence": 52,
+          "symbol": "NativeProxyImageCustody::_source"
+        },
+        {
+          "consumer": "content_sensitive",
+          "effect_basis": "before_selected_source",
+          "expected_success": false,
+          "occurrence": 53,
+          "symbol": "NativeProxyImageCustody::_source"
+        },
+        {
+          "consumer": "content_sensitive",
+          "effect_basis": "before_selected_source",
+          "expected_success": false,
+          "occurrence": 54,
+          "symbol": "NativeProxyImageCustody::_source"
+        },
+        {
+          "consumer": "content_sensitive",
+          "effect_basis": "before_selected_source",
+          "expected_success": false,
+          "occurrence": 55,
+          "symbol": "NativeProxyImageCustody::_source"
+        },
+        {
+          "consumer": "content_sensitive",
+          "effect_basis": "before_selected_source",
+          "expected_success": false,
+          "occurrence": 56,
+          "symbol": "NativeProxyImageCustody::_source"
+        },
+        {
+          "consumer": "content_sensitive",
+          "effect_basis": "before_selected_source",
+          "expected_success": false,
+          "occurrence": 57,
+          "symbol": "NativeProxyImageCustody::_source"
+        },
+        {
+          "consumer": "content_sensitive",
+          "effect_basis": "before_selected_source",
+          "expected_success": false,
+          "occurrence": 58,
+          "symbol": "NativeProxyImageCustody::_source"
+        },
+        {
+          "consumer": "content_sensitive",
+          "effect_basis": "before_selected_source",
+          "expected_success": false,
+          "occurrence": 59,
+          "symbol": "NativeProxyImageCustody::_source"
+        },
+        {
+          "consumer": "content_sensitive",
+          "effect_basis": "before_selected_source",
+          "expected_success": false,
+          "occurrence": 60,
+          "symbol": "NativeProxyImageCustody::_source"
+        },
+        {
+          "consumer": "content_sensitive",
+          "effect_basis": "before_selected_source",
+          "expected_success": false,
+          "occurrence": 61,
+          "symbol": "NativeProxyImageCustody::_source"
+        },
+        {
+          "consumer": "content_sensitive",
+          "effect_basis": "before_selected_source",
+          "expected_success": false,
+          "occurrence": 62,
+          "symbol": "NativeProxyImageCustody::_source"
+        },
+        {
+          "consumer": "content_sensitive",
+          "effect_basis": "before_selected_source",
+          "expected_success": false,
+          "occurrence": 63,
+          "symbol": "NativeProxyImageCustody::_source"
+        },
+        {
+          "consumer": "content_sensitive",
+          "effect_basis": "before_selected_source",
+          "expected_success": false,
+          "occurrence": 64,
+          "symbol": "NativeProxyImageCustody::_source"
+        },
+        {
+          "consumer": "content_sensitive",
+          "effect_basis": "before_selected_source",
+          "expected_success": false,
+          "occurrence": 65,
+          "symbol": "NativeProxyImageCustody::_source"
+        },
+        {
+          "consumer": "content_sensitive",
+          "effect_basis": "before_selected_source",
+          "expected_success": false,
+          "occurrence": 66,
+          "symbol": "NativeProxyImageCustody::_source"
+        },
+        {
+          "consumer": "content_sensitive",
+          "effect_basis": "before_selected_source",
+          "expected_success": false,
+          "occurrence": 67,
+          "symbol": "NativeProxyImageCustody::_source"
+        },
+        {
+          "consumer": "content_sensitive",
+          "effect_basis": "before_selected_source",
+          "expected_success": false,
+          "occurrence": 68,
+          "symbol": "NativeProxyImageCustody::_source"
+        },
+        {
+          "consumer": "content_sensitive",
+          "effect_basis": "before_selected_source",
+          "expected_success": false,
+          "occurrence": 69,
+          "symbol": "NativeProxyImageCustody::_source"
+        },
+        {
+          "consumer": "content_sensitive",
+          "effect_basis": "before_selected_source",
+          "expected_success": false,
+          "occurrence": 70,
+          "symbol": "NativeProxyImageCustody::_source"
+        },
+        {
+          "consumer": "content_sensitive",
+          "effect_basis": "before_selected_source",
+          "expected_success": false,
+          "occurrence": 71,
+          "symbol": "NativeProxyImageCustody::_source"
+        },
+        {
+          "consumer": "content_sensitive",
+          "effect_basis": "before_selected_source",
+          "expected_success": false,
+          "occurrence": 72,
+          "symbol": "NativeProxyImageCustody::_source"
+        },
+        {
+          "consumer": "content_sensitive",
+          "effect_basis": "before_selected_source",
+          "expected_success": false,
+          "occurrence": 73,
+          "symbol": "NativeProxyImageCustody::_source"
+        },
+        {
+          "consumer": "content_sensitive",
+          "effect_basis": "before_selected_source",
+          "expected_success": false,
+          "occurrence": 74,
+          "symbol": "NativeProxyImageCustody::_source"
+        },
+        {
+          "consumer": "content_sensitive",
+          "effect_basis": "before_selected_source",
+          "expected_success": false,
+          "occurrence": 75,
+          "symbol": "NativeProxyImageCustody::_source"
+        },
+        {
+          "consumer": "content_sensitive",
+          "effect_basis": "before_selected_source",
+          "expected_success": false,
+          "occurrence": 76,
+          "symbol": "NativeProxyImageCustody::_source"
+        },
+        {
+          "consumer": "content_sensitive",
+          "effect_basis": "before_selected_source",
+          "expected_success": false,
+          "occurrence": 77,
+          "symbol": "NativeProxyImageCustody::_source"
+        },
+        {
+          "consumer": "content_sensitive",
+          "effect_basis": "before_selected_source",
+          "expected_success": false,
+          "occurrence": 78,
+          "symbol": "NativeProxyImageCustody::_source"
+        },
+        {
+          "consumer": "content_sensitive",
+          "effect_basis": "before_selected_source",
+          "expected_success": false,
+          "occurrence": 79,
+          "symbol": "NativeProxyImageCustody::_source"
+        },
+        {
+          "consumer": "content_sensitive",
+          "effect_basis": "before_selected_source",
+          "expected_success": false,
+          "occurrence": 80,
+          "symbol": "NativeProxyImageCustody::_source"
+        },
+        {
+          "consumer": "structure_only",
+          "effect_basis": "healthy_completion",
+          "expected_success": true,
+          "occurrence": 81,
+          "symbol": "NativeProxyImageCustody::_source"
+        },
+        {
+          "consumer": "structure_only",
+          "effect_basis": "healthy_completion",
+          "expected_success": true,
+          "occurrence": 82,
+          "symbol": "NativeProxyImageCustody::_source"
+        },
+        {
+          "consumer": "content_sensitive",
+          "effect_basis": "before_selected_source",
+          "expected_success": false,
+          "occurrence": 83,
+          "symbol": "NativeProxyImageCustody::_source"
+        },
+        {
+          "consumer": "content_sensitive",
+          "effect_basis": "before_selected_source",
+          "expected_success": false,
+          "occurrence": 84,
+          "symbol": "NativeProxyImageCustody::_source"
+        },
+        {
+          "consumer": "content_sensitive",
+          "effect_basis": "before_selected_source",
+          "expected_success": false,
+          "occurrence": 85,
+          "symbol": "NativeProxyImageCustody::_source"
+        },
+        {
+          "consumer": "content_sensitive",
+          "effect_basis": "before_selected_source",
+          "expected_success": false,
+          "occurrence": 86,
+          "symbol": "NativeProxyImageCustody::_source"
+        },
+        {
+          "consumer": "content_sensitive",
+          "effect_basis": "before_selected_source",
+          "expected_success": false,
+          "occurrence": 87,
+          "symbol": "NativeProxyImageCustody::_source"
+        },
+        {
+          "consumer": "content_sensitive",
+          "effect_basis": "before_selected_source",
+          "expected_success": false,
+          "occurrence": 88,
+          "symbol": "NativeProxyImageCustody::_source"
+        },
+        {
+          "consumer": "content_sensitive",
+          "effect_basis": "before_selected_source",
+          "expected_success": false,
+          "occurrence": 89,
+          "symbol": "NativeProxyImageCustody::_source"
+        },
+        {
+          "consumer": "content_sensitive",
+          "effect_basis": "before_selected_source",
+          "expected_success": false,
+          "occurrence": 90,
+          "symbol": "NativeProxyImageCustody::_source"
+        },
+        {
+          "consumer": "content_sensitive",
+          "effect_basis": "before_selected_source",
+          "expected_success": false,
+          "occurrence": 91,
+          "symbol": "NativeProxyImageCustody::_source"
+        },
+        {
+          "consumer": "content_sensitive",
+          "effect_basis": "before_selected_source",
+          "expected_success": false,
+          "occurrence": 92,
+          "symbol": "NativeProxyImageCustody::_source"
+        },
+        {
+          "consumer": "content_sensitive",
+          "effect_basis": "before_selected_source",
+          "expected_success": false,
+          "occurrence": 93,
+          "symbol": "NativeProxyImageCustody::_source"
+        },
+        {
+          "consumer": "content_sensitive",
+          "effect_basis": "before_selected_source",
+          "expected_success": false,
+          "occurrence": 94,
+          "symbol": "NativeProxyImageCustody::_source"
+        },
+        {
+          "consumer": "content_sensitive",
+          "effect_basis": "before_selected_source",
+          "expected_success": false,
+          "occurrence": 95,
+          "symbol": "NativeProxyImageCustody::_source"
+        },
+        {
+          "consumer": "content_sensitive",
+          "effect_basis": "before_selected_source",
+          "expected_success": false,
+          "occurrence": 96,
+          "symbol": "NativeProxyImageCustody::_source"
+        },
+        {
+          "consumer": "content_sensitive",
+          "effect_basis": "before_selected_source",
+          "expected_success": false,
+          "occurrence": 97,
+          "symbol": "NativeProxyImageCustody::_source"
+        },
+        {
+          "consumer": "content_sensitive",
+          "effect_basis": "before_selected_source",
+          "expected_success": false,
+          "occurrence": 98,
+          "symbol": "NativeProxyImageCustody::_source"
+        },
+        {
+          "consumer": "content_sensitive",
+          "effect_basis": "before_selected_source",
+          "expected_success": false,
+          "occurrence": 99,
+          "symbol": "NativeProxyImageCustody::_source"
+        },
+        {
+          "consumer": "content_sensitive",
+          "effect_basis": "before_selected_source",
+          "expected_success": false,
+          "occurrence": 100,
+          "symbol": "NativeProxyImageCustody::_source"
+        },
+        {
+          "consumer": "content_sensitive",
+          "effect_basis": "before_selected_source",
+          "expected_success": false,
+          "occurrence": 101,
+          "symbol": "NativeProxyImageCustody::_source"
+        },
+        {
+          "consumer": "content_sensitive",
+          "effect_basis": "before_selected_source",
+          "expected_success": false,
+          "occurrence": 102,
+          "symbol": "NativeProxyImageCustody::_source"
+        },
+        {
+          "consumer": "content_sensitive",
+          "effect_basis": "before_selected_source",
+          "expected_success": false,
+          "occurrence": 103,
+          "symbol": "NativeProxyImageCustody::_source"
+        },
+        {
+          "consumer": "content_sensitive",
+          "effect_basis": "before_selected_source",
+          "expected_success": false,
+          "occurrence": 104,
+          "symbol": "NativeProxyImageCustody::_source"
+        },
+        {
+          "consumer": "content_sensitive",
+          "effect_basis": "before_selected_source",
+          "expected_success": false,
+          "occurrence": 105,
+          "symbol": "NativeProxyImageCustody::_source"
+        },
+        {
+          "consumer": "content_sensitive",
+          "effect_basis": "before_selected_source",
+          "expected_success": false,
+          "occurrence": 106,
+          "symbol": "NativeProxyImageCustody::_source"
+        },
+        {
+          "consumer": "content_sensitive",
+          "effect_basis": "before_selected_source",
+          "expected_success": false,
+          "occurrence": 107,
+          "symbol": "NativeProxyImageCustody::_source"
+        },
+        {
+          "consumer": "content_sensitive",
+          "effect_basis": "before_selected_source",
+          "expected_success": false,
+          "occurrence": 108,
+          "symbol": "NativeProxyImageCustody::_source"
+        },
+        {
+          "consumer": "content_sensitive",
+          "effect_basis": "before_selected_source",
+          "expected_success": false,
+          "occurrence": 109,
+          "symbol": "NativeProxyImageCustody::_source"
+        },
+        {
+          "consumer": "content_sensitive",
+          "effect_basis": "before_selected_source",
+          "expected_success": false,
+          "occurrence": 110,
+          "symbol": "NativeProxyImageCustody::_source"
+        },
+        {
+          "consumer": "content_sensitive",
+          "effect_basis": "before_selected_source",
+          "expected_success": false,
+          "occurrence": 111,
+          "symbol": "NativeProxyImageCustody::_source"
+        },
+        {
+          "consumer": "content_sensitive",
+          "effect_basis": "before_selected_source",
+          "expected_success": false,
+          "occurrence": 112,
+          "symbol": "NativeProxyImageCustody::_source"
+        },
+        {
+          "consumer": "content_sensitive",
+          "effect_basis": "before_selected_source",
+          "expected_success": false,
+          "occurrence": 113,
+          "symbol": "NativeProxyImageCustody::_source"
+        },
+        {
+          "consumer": "content_sensitive",
+          "effect_basis": "before_selected_source",
+          "expected_success": false,
+          "occurrence": 114,
+          "symbol": "NativeProxyImageCustody::_source"
+        }
+      ],
+      "execution_owner": "HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.12.4.1.3.4.4.3.10.3",
+      "expected_body_rejections": 107,
+      "expected_body_successes": 8,
+      "expected_source_case_rejections": 452,
+      "expected_source_case_successes": 10,
+      "id": "equal_reference_retired_other_observation",
+      "source_case_count": 462
+    },
+    {
+      "body_xor": [
+        {
+          "consumer": "content_sensitive",
+          "effect_basis": "before_selected_source",
+          "expected_success": false,
+          "occurrence": 0,
+          "symbol": "NativeProxyImageCustody::_source"
+        },
+        {
+          "consumer": "content_sensitive",
+          "effect_basis": "before_selected_source",
+          "expected_success": false,
+          "occurrence": 1,
+          "symbol": "NativeProxyImageCustody::_source"
+        },
+        {
+          "consumer": "content_sensitive",
+          "effect_basis": "before_selected_source",
+          "expected_success": false,
+          "occurrence": 2,
+          "symbol": "NativeProxyImageCustody::_source"
+        },
+        {
+          "consumer": "content_sensitive",
+          "effect_basis": "before_selected_source",
+          "expected_success": false,
+          "occurrence": 3,
+          "symbol": "NativeProxyImageCustody::_source"
+        },
+        {
+          "consumer": "content_sensitive",
+          "effect_basis": "before_selected_source",
+          "expected_success": false,
+          "occurrence": 4,
+          "symbol": "NativeProxyImageCustody::_source"
+        },
+        {
+          "consumer": "content_sensitive",
+          "effect_basis": "before_selected_source",
+          "expected_success": false,
+          "occurrence": 5,
+          "symbol": "NativeProxyImageCustody::_source"
+        },
+        {
+          "consumer": "content_sensitive",
+          "effect_basis": "before_selected_source",
+          "expected_success": false,
+          "occurrence": 6,
+          "symbol": "NativeProxyImageCustody::_source"
+        },
+        {
+          "consumer": "content_sensitive",
+          "effect_basis": "before_selected_source",
+          "expected_success": false,
+          "occurrence": 7,
+          "symbol": "NativeProxyImageCustody::_source"
+        },
+        {
+          "consumer": "structure_only",
+          "effect_basis": "healthy_completion",
+          "expected_success": true,
+          "occurrence": 8,
+          "symbol": "NativeProxyImageCustody::_source"
+        },
+        {
+          "consumer": "structure_only",
+          "effect_basis": "healthy_completion",
+          "expected_success": true,
+          "occurrence": 9,
+          "symbol": "NativeProxyImageCustody::_source"
+        },
+        {
+          "consumer": "structure_only",
+          "effect_basis": "healthy_completion",
+          "expected_success": true,
+          "occurrence": 10,
+          "symbol": "NativeProxyImageCustody::_source"
+        },
+        {
+          "consumer": "structure_only",
+          "effect_basis": "healthy_completion",
+          "expected_success": true,
+          "occurrence": 11,
+          "symbol": "NativeProxyImageCustody::_source"
+        },
+        {
+          "consumer": "content_sensitive",
+          "effect_basis": "before_selected_source",
+          "expected_success": false,
+          "occurrence": 12,
+          "symbol": "NativeProxyImageCustody::_source"
+        },
+        {
+          "consumer": "content_sensitive",
+          "effect_basis": "before_selected_source",
+          "expected_success": false,
+          "occurrence": 13,
+          "symbol": "NativeProxyImageCustody::_source"
+        },
+        {
+          "consumer": "content_sensitive",
+          "effect_basis": "before_selected_source",
+          "expected_success": false,
+          "occurrence": 14,
+          "symbol": "NativeProxyImageCustody::_source"
+        },
+        {
+          "consumer": "content_sensitive",
+          "effect_basis": "before_selected_source",
+          "expected_success": false,
+          "occurrence": 15,
+          "symbol": "NativeProxyImageCustody::_source"
+        },
+        {
+          "consumer": "content_sensitive",
+          "effect_basis": "before_selected_source",
+          "expected_success": false,
+          "occurrence": 16,
+          "symbol": "NativeProxyImageCustody::_source"
+        },
+        {
+          "consumer": "content_sensitive",
+          "effect_basis": "before_selected_source",
+          "expected_success": false,
+          "occurrence": 17,
+          "symbol": "NativeProxyImageCustody::_source"
+        },
+        {
+          "consumer": "content_sensitive",
+          "effect_basis": "before_selected_source",
+          "expected_success": false,
+          "occurrence": 18,
+          "symbol": "NativeProxyImageCustody::_source"
+        },
+        {
+          "consumer": "content_sensitive",
+          "effect_basis": "before_selected_source",
+          "expected_success": false,
+          "occurrence": 19,
+          "symbol": "NativeProxyImageCustody::_source"
+        },
+        {
+          "consumer": "content_sensitive",
+          "effect_basis": "before_selected_source",
+          "expected_success": false,
+          "occurrence": 20,
+          "symbol": "NativeProxyImageCustody::_source"
+        },
+        {
+          "consumer": "content_sensitive",
+          "effect_basis": "before_selected_source",
+          "expected_success": false,
+          "occurrence": 21,
+          "symbol": "NativeProxyImageCustody::_source"
+        },
+        {
+          "consumer": "content_sensitive",
+          "effect_basis": "before_selected_source",
+          "expected_success": false,
+          "occurrence": 22,
+          "symbol": "NativeProxyImageCustody::_source"
+        },
+        {
+          "consumer": "content_sensitive",
+          "effect_basis": "before_selected_source",
+          "expected_success": false,
+          "occurrence": 23,
+          "symbol": "NativeProxyImageCustody::_source"
+        },
+        {
+          "consumer": "content_sensitive",
+          "effect_basis": "before_selected_source",
+          "expected_success": false,
+          "occurrence": 24,
+          "symbol": "NativeProxyImageCustody::_source"
+        },
+        {
+          "consumer": "content_sensitive",
+          "effect_basis": "before_selected_source",
+          "expected_success": false,
+          "occurrence": 25,
+          "symbol": "NativeProxyImageCustody::_source"
+        },
+        {
+          "consumer": "content_sensitive",
+          "effect_basis": "before_selected_source",
+          "expected_success": false,
+          "occurrence": 26,
+          "symbol": "NativeProxyImageCustody::_source"
+        },
+        {
+          "consumer": "content_sensitive",
+          "effect_basis": "before_selected_source",
+          "expected_success": false,
+          "occurrence": 27,
+          "symbol": "NativeProxyImageCustody::_source"
+        },
+        {
+          "consumer": "content_sensitive",
+          "effect_basis": "before_selected_source",
+          "expected_success": false,
+          "occurrence": 28,
+          "symbol": "NativeProxyImageCustody::_source"
+        },
+        {
+          "consumer": "content_sensitive",
+          "effect_basis": "before_selected_source",
+          "expected_success": false,
+          "occurrence": 29,
+          "symbol": "NativeProxyImageCustody::_source"
+        },
+        {
+          "consumer": "content_sensitive",
+          "effect_basis": "before_selected_source",
+          "expected_success": false,
+          "occurrence": 30,
+          "symbol": "NativeProxyImageCustody::_source"
+        },
+        {
+          "consumer": "content_sensitive",
+          "effect_basis": "before_selected_source",
+          "expected_success": false,
+          "occurrence": 31,
+          "symbol": "NativeProxyImageCustody::_source"
+        },
+        {
+          "consumer": "content_sensitive",
+          "effect_basis": "before_selected_source",
+          "expected_success": false,
+          "occurrence": 32,
+          "symbol": "NativeProxyImageCustody::_source"
+        },
+        {
+          "consumer": "content_sensitive",
+          "effect_basis": "before_selected_source",
+          "expected_success": false,
+          "occurrence": 33,
+          "symbol": "NativeProxyImageCustody::_source"
+        },
+        {
+          "consumer": "content_sensitive",
+          "effect_basis": "before_selected_source",
+          "expected_success": false,
+          "occurrence": 34,
+          "symbol": "NativeProxyImageCustody::_source"
+        },
+        {
+          "consumer": "content_sensitive",
+          "effect_basis": "before_selected_source",
+          "expected_success": false,
+          "occurrence": 35,
+          "symbol": "NativeProxyImageCustody::_source"
+        },
+        {
+          "consumer": "content_sensitive",
+          "effect_basis": "before_selected_source",
+          "expected_success": false,
+          "occurrence": 36,
+          "symbol": "NativeProxyImageCustody::_source"
+        },
+        {
+          "consumer": "content_sensitive",
+          "effect_basis": "before_selected_source",
+          "expected_success": false,
+          "occurrence": 37,
+          "symbol": "NativeProxyImageCustody::_source"
+        },
+        {
+          "consumer": "content_sensitive",
+          "effect_basis": "before_selected_source",
+          "expected_success": false,
+          "occurrence": 38,
+          "symbol": "NativeProxyImageCustody::_source"
+        },
+        {
+          "consumer": "content_sensitive",
+          "effect_basis": "before_selected_source",
+          "expected_success": false,
+          "occurrence": 39,
+          "symbol": "NativeProxyImageCustody::_source"
+        },
+        {
+          "consumer": "content_sensitive",
+          "effect_basis": "before_selected_source",
+          "expected_success": false,
+          "occurrence": 40,
+          "symbol": "NativeProxyImageCustody::_source"
+        },
+        {
+          "consumer": "content_sensitive",
+          "effect_basis": "before_selected_source",
+          "expected_success": false,
+          "occurrence": 41,
+          "symbol": "NativeProxyImageCustody::_source"
+        },
+        {
+          "consumer": "content_sensitive",
+          "effect_basis": "before_selected_source",
+          "expected_success": false,
+          "occurrence": 42,
+          "symbol": "NativeProxyImageCustody::_source"
+        },
+        {
+          "consumer": "content_sensitive",
+          "effect_basis": "before_selected_source",
+          "expected_success": false,
+          "occurrence": 43,
+          "symbol": "NativeProxyImageCustody::_source"
+        },
+        {
+          "consumer": "content_sensitive",
+          "effect_basis": "before_selected_source",
+          "expected_success": false,
+          "occurrence": 44,
+          "symbol": "NativeProxyImageCustody::_source"
+        },
+        {
+          "consumer": "content_sensitive",
+          "effect_basis": "before_selected_source",
+          "expected_success": false,
+          "occurrence": 45,
+          "symbol": "NativeProxyImageCustody::_source"
+        },
+        {
+          "consumer": "content_sensitive",
+          "effect_basis": "before_selected_source",
+          "expected_success": false,
+          "occurrence": 46,
+          "symbol": "NativeProxyImageCustody::_source"
+        },
+        {
+          "consumer": "structure_only",
+          "effect_basis": "healthy_completion",
+          "expected_success": true,
+          "occurrence": 47,
+          "symbol": "NativeProxyImageCustody::_source"
+        },
+        {
+          "consumer": "structure_only",
+          "effect_basis": "healthy_completion",
+          "expected_success": true,
+          "occurrence": 48,
+          "symbol": "NativeProxyImageCustody::_source"
+        },
+        {
+          "consumer": "structure_only",
+          "effect_basis": "healthy_completion",
+          "expected_success": true,
+          "occurrence": 49,
+          "symbol": "NativeProxyImageCustody::_source"
+        },
+        {
+          "consumer": "structure_only",
+          "effect_basis": "healthy_completion",
+          "expected_success": true,
+          "occurrence": 50,
+          "symbol": "NativeProxyImageCustody::_source"
+        },
+        {
+          "consumer": "content_sensitive",
+          "effect_basis": "before_selected_source",
+          "expected_success": false,
+          "occurrence": 51,
+          "symbol": "NativeProxyImageCustody::_source"
+        },
+        {
+          "consumer": "content_sensitive",
+          "effect_basis": "before_selected_source",
+          "expected_success": false,
+          "occurrence": 52,
+          "symbol": "NativeProxyImageCustody::_source"
+        },
+        {
+          "consumer": "content_sensitive",
+          "effect_basis": "before_selected_source",
+          "expected_success": false,
+          "occurrence": 53,
+          "symbol": "NativeProxyImageCustody::_source"
+        },
+        {
+          "consumer": "content_sensitive",
+          "effect_basis": "before_selected_source",
+          "expected_success": false,
+          "occurrence": 54,
+          "symbol": "NativeProxyImageCustody::_source"
+        },
+        {
+          "consumer": "content_sensitive",
+          "effect_basis": "before_selected_source",
+          "expected_success": false,
+          "occurrence": 55,
+          "symbol": "NativeProxyImageCustody::_source"
+        },
+        {
+          "consumer": "content_sensitive",
+          "effect_basis": "before_selected_source",
+          "expected_success": false,
+          "occurrence": 56,
+          "symbol": "NativeProxyImageCustody::_source"
+        },
+        {
+          "consumer": "content_sensitive",
+          "effect_basis": "before_selected_source",
+          "expected_success": false,
+          "occurrence": 57,
+          "symbol": "NativeProxyImageCustody::_source"
+        },
+        {
+          "consumer": "content_sensitive",
+          "effect_basis": "before_selected_source",
+          "expected_success": false,
+          "occurrence": 58,
+          "symbol": "NativeProxyImageCustody::_source"
+        },
+        {
+          "consumer": "content_sensitive",
+          "effect_basis": "before_selected_source",
+          "expected_success": false,
+          "occurrence": 59,
+          "symbol": "NativeProxyImageCustody::_source"
+        },
+        {
+          "consumer": "content_sensitive",
+          "effect_basis": "before_selected_source",
+          "expected_success": false,
+          "occurrence": 60,
+          "symbol": "NativeProxyImageCustody::_source"
+        },
+        {
+          "consumer": "content_sensitive",
+          "effect_basis": "before_selected_source",
+          "expected_success": false,
+          "occurrence": 61,
+          "symbol": "NativeProxyImageCustody::_source"
+        },
+        {
+          "consumer": "content_sensitive",
+          "effect_basis": "before_selected_source",
+          "expected_success": false,
+          "occurrence": 62,
+          "symbol": "NativeProxyImageCustody::_source"
+        },
+        {
+          "consumer": "content_sensitive",
+          "effect_basis": "before_selected_source",
+          "expected_success": false,
+          "occurrence": 63,
+          "symbol": "NativeProxyImageCustody::_source"
+        },
+        {
+          "consumer": "content_sensitive",
+          "effect_basis": "before_selected_source",
+          "expected_success": false,
+          "occurrence": 64,
+          "symbol": "NativeProxyImageCustody::_source"
+        },
+        {
+          "consumer": "content_sensitive",
+          "effect_basis": "before_selected_source",
+          "expected_success": false,
+          "occurrence": 65,
+          "symbol": "NativeProxyImageCustody::_source"
+        },
+        {
+          "consumer": "content_sensitive",
+          "effect_basis": "before_selected_source",
+          "expected_success": false,
+          "occurrence": 66,
+          "symbol": "NativeProxyImageCustody::_source"
+        },
+        {
+          "consumer": "content_sensitive",
+          "effect_basis": "before_selected_source",
+          "expected_success": false,
+          "occurrence": 67,
+          "symbol": "NativeProxyImageCustody::_source"
+        },
+        {
+          "consumer": "content_sensitive",
+          "effect_basis": "before_selected_source",
+          "expected_success": false,
+          "occurrence": 68,
+          "symbol": "NativeProxyImageCustody::_source"
+        },
+        {
+          "consumer": "content_sensitive",
+          "effect_basis": "before_selected_source",
+          "expected_success": false,
+          "occurrence": 69,
+          "symbol": "NativeProxyImageCustody::_source"
+        },
+        {
+          "consumer": "content_sensitive",
+          "effect_basis": "before_selected_source",
+          "expected_success": false,
+          "occurrence": 70,
+          "symbol": "NativeProxyImageCustody::_source"
+        },
+        {
+          "consumer": "content_sensitive",
+          "effect_basis": "before_selected_source",
+          "expected_success": false,
+          "occurrence": 71,
+          "symbol": "NativeProxyImageCustody::_source"
+        },
+        {
+          "consumer": "content_sensitive",
+          "effect_basis": "before_selected_source",
+          "expected_success": false,
+          "occurrence": 72,
+          "symbol": "NativeProxyImageCustody::_source"
+        },
+        {
+          "consumer": "content_sensitive",
+          "effect_basis": "before_selected_source",
+          "expected_success": false,
+          "occurrence": 73,
+          "symbol": "NativeProxyImageCustody::_source"
+        },
+        {
+          "consumer": "content_sensitive",
+          "effect_basis": "before_selected_source",
+          "expected_success": false,
+          "occurrence": 74,
+          "symbol": "NativeProxyImageCustody::_source"
+        },
+        {
+          "consumer": "content_sensitive",
+          "effect_basis": "before_selected_source",
+          "expected_success": false,
+          "occurrence": 75,
+          "symbol": "NativeProxyImageCustody::_source"
+        },
+        {
+          "consumer": "content_sensitive",
+          "effect_basis": "before_selected_source",
+          "expected_success": false,
+          "occurrence": 76,
+          "symbol": "NativeProxyImageCustody::_source"
+        },
+        {
+          "consumer": "content_sensitive",
+          "effect_basis": "before_selected_source",
+          "expected_success": false,
+          "occurrence": 77,
+          "symbol": "NativeProxyImageCustody::_source"
+        },
+        {
+          "consumer": "content_sensitive",
+          "effect_basis": "before_selected_source",
+          "expected_success": false,
+          "occurrence": 78,
+          "symbol": "NativeProxyImageCustody::_source"
+        },
+        {
+          "consumer": "content_sensitive",
+          "effect_basis": "before_selected_source",
+          "expected_success": false,
+          "occurrence": 79,
+          "symbol": "NativeProxyImageCustody::_source"
+        },
+        {
+          "consumer": "content_sensitive",
+          "effect_basis": "before_selected_source",
+          "expected_success": false,
+          "occurrence": 80,
+          "symbol": "NativeProxyImageCustody::_source"
+        },
+        {
+          "consumer": "content_sensitive",
+          "effect_basis": "before_selected_source",
+          "expected_success": false,
+          "occurrence": 81,
+          "symbol": "NativeProxyImageCustody::_source"
+        },
+        {
+          "consumer": "content_sensitive",
+          "effect_basis": "before_selected_source",
+          "expected_success": false,
+          "occurrence": 82,
+          "symbol": "NativeProxyImageCustody::_source"
+        },
+        {
+          "consumer": "content_sensitive",
+          "effect_basis": "before_selected_source",
+          "expected_success": false,
+          "occurrence": 83,
+          "symbol": "NativeProxyImageCustody::_source"
+        },
+        {
+          "consumer": "content_sensitive",
+          "effect_basis": "before_selected_source",
+          "expected_success": false,
+          "occurrence": 84,
+          "symbol": "NativeProxyImageCustody::_source"
+        },
+        {
+          "consumer": "content_sensitive",
+          "effect_basis": "before_selected_source",
+          "expected_success": false,
+          "occurrence": 85,
+          "symbol": "NativeProxyImageCustody::_source"
+        },
+        {
+          "consumer": "content_sensitive",
+          "effect_basis": "before_selected_source",
+          "expected_success": false,
+          "occurrence": 86,
+          "symbol": "NativeProxyImageCustody::_source"
+        },
+        {
+          "consumer": "content_sensitive",
+          "effect_basis": "before_selected_source",
+          "expected_success": false,
+          "occurrence": 87,
+          "symbol": "NativeProxyImageCustody::_source"
+        },
+        {
+          "consumer": "content_sensitive",
+          "effect_basis": "before_selected_source",
+          "expected_success": false,
+          "occurrence": 88,
+          "symbol": "NativeProxyImageCustody::_source"
+        },
+        {
+          "consumer": "content_sensitive",
+          "effect_basis": "before_selected_source",
+          "expected_success": false,
+          "occurrence": 89,
+          "symbol": "NativeProxyImageCustody::_source"
+        },
+        {
+          "consumer": "content_sensitive",
+          "effect_basis": "before_selected_source",
+          "expected_success": false,
+          "occurrence": 90,
+          "symbol": "NativeProxyImageCustody::_source"
+        },
+        {
+          "consumer": "structure_only",
+          "effect_basis": "healthy_completion",
+          "expected_success": true,
+          "occurrence": 91,
+          "symbol": "NativeProxyImageCustody::_source"
+        },
+        {
+          "consumer": "structure_only",
+          "effect_basis": "healthy_completion",
+          "expected_success": true,
+          "occurrence": 92,
+          "symbol": "NativeProxyImageCustody::_source"
+        },
+        {
+          "consumer": "structure_only",
+          "effect_basis": "healthy_completion",
+          "expected_success": true,
+          "occurrence": 93,
+          "symbol": "NativeProxyImageCustody::_source"
+        },
+        {
+          "consumer": "content_sensitive",
+          "effect_basis": "before_selected_source",
+          "expected_success": false,
+          "occurrence": 94,
+          "symbol": "NativeProxyImageCustody::_source"
+        },
+        {
+          "consumer": "content_sensitive",
+          "effect_basis": "before_selected_source",
+          "expected_success": false,
+          "occurrence": 95,
+          "symbol": "NativeProxyImageCustody::_source"
+        },
+        {
+          "consumer": "content_sensitive",
+          "effect_basis": "before_selected_source",
+          "expected_success": false,
+          "occurrence": 96,
+          "symbol": "NativeProxyImageCustody::_source"
+        },
+        {
+          "consumer": "content_sensitive",
+          "effect_basis": "before_selected_source",
+          "expected_success": false,
+          "occurrence": 97,
+          "symbol": "NativeProxyImageCustody::_source"
+        },
+        {
+          "consumer": "content_sensitive",
+          "effect_basis": "before_selected_source",
+          "expected_success": false,
+          "occurrence": 98,
+          "symbol": "NativeProxyImageCustody::_source"
+        },
+        {
+          "consumer": "content_sensitive",
+          "effect_basis": "before_selected_source",
+          "expected_success": false,
+          "occurrence": 99,
+          "symbol": "NativeProxyImageCustody::_source"
+        },
+        {
+          "consumer": "content_sensitive",
+          "effect_basis": "before_selected_source",
+          "expected_success": false,
+          "occurrence": 100,
+          "symbol": "NativeProxyImageCustody::_source"
+        },
+        {
+          "consumer": "content_sensitive",
+          "effect_basis": "before_selected_source",
+          "expected_success": false,
+          "occurrence": 101,
+          "symbol": "NativeProxyImageCustody::_source"
+        },
+        {
+          "consumer": "content_sensitive",
+          "effect_basis": "before_selected_source",
+          "expected_success": false,
+          "occurrence": 102,
+          "symbol": "NativeProxyImageCustody::_source"
+        },
+        {
+          "consumer": "content_sensitive",
+          "effect_basis": "before_selected_source",
+          "expected_success": false,
+          "occurrence": 103,
+          "symbol": "NativeProxyImageCustody::_source"
+        },
+        {
+          "consumer": "content_sensitive",
+          "effect_basis": "before_selected_source",
+          "expected_success": false,
+          "occurrence": 104,
+          "symbol": "NativeProxyImageCustody::_source"
+        },
+        {
+          "consumer": "content_sensitive",
+          "effect_basis": "before_selected_source",
+          "expected_success": false,
+          "occurrence": 105,
+          "symbol": "NativeProxyImageCustody::_source"
+        },
+        {
+          "consumer": "content_sensitive",
+          "effect_basis": "before_selected_source",
+          "expected_success": false,
+          "occurrence": 106,
+          "symbol": "NativeProxyImageCustody::_source"
+        },
+        {
+          "consumer": "content_sensitive",
+          "effect_basis": "before_selected_source",
+          "expected_success": false,
+          "occurrence": 107,
+          "symbol": "NativeProxyImageCustody::_source"
+        },
+        {
+          "consumer": "content_sensitive",
+          "effect_basis": "before_selected_source",
+          "expected_success": false,
+          "occurrence": 108,
+          "symbol": "NativeProxyImageCustody::_source"
+        },
+        {
+          "consumer": "content_sensitive",
+          "effect_basis": "before_selected_source",
+          "expected_success": false,
+          "occurrence": 109,
+          "symbol": "NativeProxyImageCustody::_source"
+        },
+        {
+          "consumer": "content_sensitive",
+          "effect_basis": "before_selected_source",
+          "expected_success": false,
+          "occurrence": 110,
+          "symbol": "NativeProxyImageCustody::_source"
+        },
+        {
+          "consumer": "content_sensitive",
+          "effect_basis": "before_selected_source",
+          "expected_success": false,
+          "occurrence": 111,
+          "symbol": "NativeProxyImageCustody::_source"
+        },
+        {
+          "consumer": "content_sensitive",
+          "effect_basis": "before_selected_source",
+          "expected_success": false,
+          "occurrence": 112,
+          "symbol": "NativeProxyImageCustody::_source"
+        },
+        {
+          "consumer": "content_sensitive",
+          "effect_basis": "before_selected_source",
+          "expected_success": false,
+          "occurrence": 113,
+          "symbol": "NativeProxyImageCustody::_source"
+        },
+        {
+          "consumer": "content_sensitive",
+          "effect_basis": "before_selected_source",
+          "expected_success": false,
+          "occurrence": 114,
+          "symbol": "NativeProxyImageCustody::_source"
+        },
+        {
+          "consumer": "content_sensitive",
+          "effect_basis": "before_selected_source",
+          "expected_success": false,
+          "occurrence": 115,
+          "symbol": "NativeProxyImageCustody::_source"
+        },
+        {
+          "consumer": "content_sensitive",
+          "effect_basis": "before_selected_source",
+          "expected_success": false,
+          "occurrence": 116,
+          "symbol": "NativeProxyImageCustody::_source"
+        },
+        {
+          "consumer": "content_sensitive",
+          "effect_basis": "before_selected_source",
+          "expected_success": false,
+          "occurrence": 117,
+          "symbol": "NativeProxyImageCustody::_source"
+        },
+        {
+          "consumer": "content_sensitive",
+          "effect_basis": "before_selected_source",
+          "expected_success": false,
+          "occurrence": 118,
+          "symbol": "NativeProxyImageCustody::_source"
+        },
+        {
+          "consumer": "content_sensitive",
+          "effect_basis": "before_selected_source",
+          "expected_success": false,
+          "occurrence": 119,
+          "symbol": "NativeProxyImageCustody::_source"
+        },
+        {
+          "consumer": "content_sensitive",
+          "effect_basis": "before_selected_source",
+          "expected_success": false,
+          "occurrence": 120,
+          "symbol": "NativeProxyImageCustody::_source"
+        },
+        {
+          "consumer": "content_sensitive",
+          "effect_basis": "before_selected_source",
+          "expected_success": false,
+          "occurrence": 121,
+          "symbol": "NativeProxyImageCustody::_source"
+        },
+        {
+          "consumer": "content_sensitive",
+          "effect_basis": "before_selected_source",
+          "expected_success": false,
+          "occurrence": 122,
+          "symbol": "NativeProxyImageCustody::_source"
+        },
+        {
+          "consumer": "content_sensitive",
+          "effect_basis": "before_selected_source",
+          "expected_success": false,
+          "occurrence": 123,
+          "symbol": "NativeProxyImageCustody::_source"
+        },
+        {
+          "consumer": "content_sensitive",
+          "effect_basis": "before_selected_source",
+          "expected_success": false,
+          "occurrence": 124,
+          "symbol": "NativeProxyImageCustody::_source"
+        },
+        {
+          "consumer": "content_sensitive",
+          "effect_basis": "before_selected_source",
+          "expected_success": false,
+          "occurrence": 125,
+          "symbol": "NativeProxyImageCustody::_source"
+        },
+        {
+          "consumer": "content_sensitive",
+          "effect_basis": "before_selected_source",
+          "expected_success": false,
+          "occurrence": 126,
+          "symbol": "NativeProxyImageCustody::_source"
+        },
+        {
+          "consumer": "content_sensitive",
+          "effect_basis": "before_selected_source",
+          "expected_success": false,
+          "occurrence": 127,
+          "symbol": "NativeProxyImageCustody::_source"
+        },
+        {
+          "consumer": "content_sensitive",
+          "effect_basis": "before_selected_source",
+          "expected_success": false,
+          "occurrence": 128,
+          "symbol": "NativeProxyImageCustody::_source"
+        }
+      ],
+      "execution_owner": "HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.12.4.1.3.4.4.3.10.4",
+      "expected_body_rejections": 118,
+      "expected_body_successes": 11,
+      "expected_source_case_rejections": 505,
+      "expected_source_case_successes": 13,
+      "id": "ordinary_active_runtime",
+      "source_case_count": 518
+    },
+    {
+      "body_xor": [
+        {
+          "consumer": "content_sensitive",
+          "effect_basis": "before_selected_source",
+          "expected_success": false,
+          "occurrence": 0,
+          "symbol": "NativeProxyImageCustody::_source"
+        },
+        {
+          "consumer": "content_sensitive",
+          "effect_basis": "before_selected_source",
+          "expected_success": false,
+          "occurrence": 1,
+          "symbol": "NativeProxyImageCustody::_source"
+        },
+        {
+          "consumer": "content_sensitive",
+          "effect_basis": "before_selected_source",
+          "expected_success": false,
+          "occurrence": 2,
+          "symbol": "NativeProxyImageCustody::_source"
+        },
+        {
+          "consumer": "content_sensitive",
+          "effect_basis": "before_selected_source",
+          "expected_success": false,
+          "occurrence": 3,
+          "symbol": "NativeProxyImageCustody::_source"
+        },
+        {
+          "consumer": "content_sensitive",
+          "effect_basis": "before_selected_source",
+          "expected_success": false,
+          "occurrence": 4,
+          "symbol": "NativeProxyImageCustody::_source"
+        },
+        {
+          "consumer": "content_sensitive",
+          "effect_basis": "before_selected_source",
+          "expected_success": false,
+          "occurrence": 5,
+          "symbol": "NativeProxyImageCustody::_source"
+        },
+        {
+          "consumer": "content_sensitive",
+          "effect_basis": "before_selected_source",
+          "expected_success": false,
+          "occurrence": 6,
+          "symbol": "NativeProxyImageCustody::_source"
+        },
+        {
+          "consumer": "content_sensitive",
+          "effect_basis": "before_selected_source",
+          "expected_success": false,
+          "occurrence": 7,
+          "symbol": "NativeProxyImageCustody::_source"
+        },
+        {
+          "consumer": "structure_only",
+          "effect_basis": "healthy_completion",
+          "expected_success": true,
+          "occurrence": 8,
+          "symbol": "NativeProxyImageCustody::_source"
+        },
+        {
+          "consumer": "structure_only",
+          "effect_basis": "healthy_completion",
+          "expected_success": true,
+          "occurrence": 9,
+          "symbol": "NativeProxyImageCustody::_source"
+        },
+        {
+          "consumer": "content_sensitive",
+          "effect_basis": "before_selected_source",
+          "expected_success": false,
+          "occurrence": 10,
+          "symbol": "NativeProxyImageCustody::_source"
+        },
+        {
+          "consumer": "content_sensitive",
+          "effect_basis": "before_selected_source",
+          "expected_success": false,
+          "occurrence": 11,
+          "symbol": "NativeProxyImageCustody::_source"
+        },
+        {
+          "consumer": "content_sensitive",
+          "effect_basis": "before_selected_source",
+          "expected_success": false,
+          "occurrence": 12,
+          "symbol": "NativeProxyImageCustody::_source"
+        },
+        {
+          "consumer": "content_sensitive",
+          "effect_basis": "before_selected_source",
+          "expected_success": false,
+          "occurrence": 13,
+          "symbol": "NativeProxyImageCustody::_source"
+        },
+        {
+          "consumer": "content_sensitive",
+          "effect_basis": "before_selected_source",
+          "expected_success": false,
+          "occurrence": 14,
+          "symbol": "NativeProxyImageCustody::_source"
+        },
+        {
+          "consumer": "content_sensitive",
+          "effect_basis": "before_selected_source",
+          "expected_success": false,
+          "occurrence": 15,
+          "symbol": "NativeProxyImageCustody::_source"
+        },
+        {
+          "consumer": "content_sensitive",
+          "effect_basis": "before_selected_source",
+          "expected_success": false,
+          "occurrence": 16,
+          "symbol": "NativeProxyImageCustody::_source"
+        },
+        {
+          "consumer": "content_sensitive",
+          "effect_basis": "before_selected_source",
+          "expected_success": false,
+          "occurrence": 17,
+          "symbol": "NativeProxyImageCustody::_source"
+        },
+        {
+          "consumer": "content_sensitive",
+          "effect_basis": "before_selected_source",
+          "expected_success": false,
+          "occurrence": 18,
+          "symbol": "NativeProxyImageCustody::_source"
+        },
+        {
+          "consumer": "content_sensitive",
+          "effect_basis": "before_selected_source",
+          "expected_success": false,
+          "occurrence": 19,
+          "symbol": "NativeProxyImageCustody::_source"
+        },
+        {
+          "consumer": "content_sensitive",
+          "effect_basis": "before_selected_source",
+          "expected_success": false,
+          "occurrence": 20,
+          "symbol": "NativeProxyImageCustody::_source"
+        },
+        {
+          "consumer": "content_sensitive",
+          "effect_basis": "before_selected_source",
+          "expected_success": false,
+          "occurrence": 21,
+          "symbol": "NativeProxyImageCustody::_source"
+        },
+        {
+          "consumer": "content_sensitive",
+          "effect_basis": "before_selected_source",
+          "expected_success": false,
+          "occurrence": 22,
+          "symbol": "NativeProxyImageCustody::_source"
+        },
+        {
+          "consumer": "content_sensitive",
+          "effect_basis": "before_selected_source",
+          "expected_success": false,
+          "occurrence": 23,
+          "symbol": "NativeProxyImageCustody::_source"
+        },
+        {
+          "consumer": "content_sensitive",
+          "effect_basis": "before_selected_source",
+          "expected_success": false,
+          "occurrence": 24,
+          "symbol": "NativeProxyImageCustody::_source"
+        },
+        {
+          "consumer": "content_sensitive",
+          "effect_basis": "before_selected_source",
+          "expected_success": false,
+          "occurrence": 25,
+          "symbol": "NativeProxyImageCustody::_source"
+        },
+        {
+          "consumer": "content_sensitive",
+          "effect_basis": "before_selected_source",
+          "expected_success": false,
+          "occurrence": 26,
+          "symbol": "NativeProxyImageCustody::_source"
+        },
+        {
+          "consumer": "content_sensitive",
+          "effect_basis": "before_selected_source",
+          "expected_success": false,
+          "occurrence": 27,
+          "symbol": "NativeProxyImageCustody::_source"
+        },
+        {
+          "consumer": "content_sensitive",
+          "effect_basis": "before_selected_source",
+          "expected_success": false,
+          "occurrence": 28,
+          "symbol": "NativeProxyImageCustody::_source"
+        },
+        {
+          "consumer": "content_sensitive",
+          "effect_basis": "before_selected_source",
+          "expected_success": false,
+          "occurrence": 29,
+          "symbol": "NativeProxyImageCustody::_source"
+        },
+        {
+          "consumer": "content_sensitive",
+          "effect_basis": "before_selected_source",
+          "expected_success": false,
+          "occurrence": 30,
+          "symbol": "NativeProxyImageCustody::_source"
+        },
+        {
+          "consumer": "content_sensitive",
+          "effect_basis": "before_selected_source",
+          "expected_success": false,
+          "occurrence": 31,
+          "symbol": "NativeProxyImageCustody::_source"
+        },
+        {
+          "consumer": "content_sensitive",
+          "effect_basis": "before_selected_source",
+          "expected_success": false,
+          "occurrence": 32,
+          "symbol": "NativeProxyImageCustody::_source"
+        },
+        {
+          "consumer": "content_sensitive",
+          "effect_basis": "before_selected_source",
+          "expected_success": false,
+          "occurrence": 33,
+          "symbol": "NativeProxyImageCustody::_source"
+        },
+        {
+          "consumer": "content_sensitive",
+          "effect_basis": "before_selected_source",
+          "expected_success": false,
+          "occurrence": 34,
+          "symbol": "NativeProxyImageCustody::_source"
+        },
+        {
+          "consumer": "content_sensitive",
+          "effect_basis": "before_selected_source",
+          "expected_success": false,
+          "occurrence": 35,
+          "symbol": "NativeProxyImageCustody::_source"
+        },
+        {
+          "consumer": "content_sensitive",
+          "effect_basis": "before_selected_source",
+          "expected_success": false,
+          "occurrence": 36,
+          "symbol": "NativeProxyImageCustody::_source"
+        },
+        {
+          "consumer": "content_sensitive",
+          "effect_basis": "before_selected_source",
+          "expected_success": false,
+          "occurrence": 37,
+          "symbol": "NativeProxyImageCustody::_source"
+        },
+        {
+          "consumer": "content_sensitive",
+          "effect_basis": "before_selected_source",
+          "expected_success": false,
+          "occurrence": 38,
+          "symbol": "NativeProxyImageCustody::_source"
+        },
+        {
+          "consumer": "content_sensitive",
+          "effect_basis": "before_selected_source",
+          "expected_success": false,
+          "occurrence": 39,
+          "symbol": "NativeProxyImageCustody::_source"
+        },
+        {
+          "consumer": "content_sensitive",
+          "effect_basis": "before_selected_source",
+          "expected_success": false,
+          "occurrence": 40,
+          "symbol": "NativeProxyImageCustody::_source"
+        },
+        {
+          "consumer": "structure_only",
+          "effect_basis": "healthy_completion",
+          "expected_success": true,
+          "occurrence": 41,
+          "symbol": "NativeProxyImageCustody::_source"
+        },
+        {
+          "consumer": "structure_only",
+          "effect_basis": "healthy_completion",
+          "expected_success": true,
+          "occurrence": 42,
+          "symbol": "NativeProxyImageCustody::_source"
+        },
+        {
+          "consumer": "content_sensitive",
+          "effect_basis": "before_selected_source",
+          "expected_success": false,
+          "occurrence": 43,
+          "symbol": "NativeProxyImageCustody::_source"
+        },
+        {
+          "consumer": "content_sensitive",
+          "effect_basis": "before_selected_source",
+          "expected_success": false,
+          "occurrence": 44,
+          "symbol": "NativeProxyImageCustody::_source"
+        },
+        {
+          "consumer": "content_sensitive",
+          "effect_basis": "before_selected_source",
+          "expected_success": false,
+          "occurrence": 45,
+          "symbol": "NativeProxyImageCustody::_source"
+        },
+        {
+          "consumer": "content_sensitive",
+          "effect_basis": "before_selected_source",
+          "expected_success": false,
+          "occurrence": 46,
+          "symbol": "NativeProxyImageCustody::_source"
+        },
+        {
+          "consumer": "content_sensitive",
+          "effect_basis": "before_selected_source",
+          "expected_success": false,
+          "occurrence": 47,
+          "symbol": "NativeProxyImageCustody::_source"
+        },
+        {
+          "consumer": "content_sensitive",
+          "effect_basis": "before_selected_source",
+          "expected_success": false,
+          "occurrence": 48,
+          "symbol": "NativeProxyImageCustody::_source"
+        },
+        {
+          "consumer": "content_sensitive",
+          "effect_basis": "before_selected_source",
+          "expected_success": false,
+          "occurrence": 49,
+          "symbol": "NativeProxyImageCustody::_source"
+        },
+        {
+          "consumer": "content_sensitive",
+          "effect_basis": "before_selected_source",
+          "expected_success": false,
+          "occurrence": 50,
+          "symbol": "NativeProxyImageCustody::_source"
+        },
+        {
+          "consumer": "content_sensitive",
+          "effect_basis": "before_selected_source",
+          "expected_success": false,
+          "occurrence": 51,
+          "symbol": "NativeProxyImageCustody::_source"
+        },
+        {
+          "consumer": "content_sensitive",
+          "effect_basis": "before_selected_source",
+          "expected_success": false,
+          "occurrence": 52,
+          "symbol": "NativeProxyImageCustody::_source"
+        },
+        {
+          "consumer": "content_sensitive",
+          "effect_basis": "before_selected_source",
+          "expected_success": false,
+          "occurrence": 53,
+          "symbol": "NativeProxyImageCustody::_source"
+        },
+        {
+          "consumer": "content_sensitive",
+          "effect_basis": "before_selected_source",
+          "expected_success": false,
+          "occurrence": 54,
+          "symbol": "NativeProxyImageCustody::_source"
+        },
+        {
+          "consumer": "content_sensitive",
+          "effect_basis": "before_selected_source",
+          "expected_success": false,
+          "occurrence": 55,
+          "symbol": "NativeProxyImageCustody::_source"
+        },
+        {
+          "consumer": "content_sensitive",
+          "effect_basis": "before_selected_source",
+          "expected_success": false,
+          "occurrence": 56,
+          "symbol": "NativeProxyImageCustody::_source"
+        },
+        {
+          "consumer": "content_sensitive",
+          "effect_basis": "before_selected_source",
+          "expected_success": false,
+          "occurrence": 57,
+          "symbol": "NativeProxyImageCustody::_source"
+        },
+        {
+          "consumer": "content_sensitive",
+          "effect_basis": "before_selected_source",
+          "expected_success": false,
+          "occurrence": 58,
+          "symbol": "NativeProxyImageCustody::_source"
+        },
+        {
+          "consumer": "content_sensitive",
+          "effect_basis": "before_selected_source",
+          "expected_success": false,
+          "occurrence": 59,
+          "symbol": "NativeProxyImageCustody::_source"
+        },
+        {
+          "consumer": "content_sensitive",
+          "effect_basis": "before_selected_source",
+          "expected_success": false,
+          "occurrence": 60,
+          "symbol": "NativeProxyImageCustody::_source"
+        },
+        {
+          "consumer": "content_sensitive",
+          "effect_basis": "before_selected_source",
+          "expected_success": false,
+          "occurrence": 61,
+          "symbol": "NativeProxyImageCustody::_source"
+        },
+        {
+          "consumer": "content_sensitive",
+          "effect_basis": "before_selected_source",
+          "expected_success": false,
+          "occurrence": 62,
+          "symbol": "NativeProxyImageCustody::_source"
+        },
+        {
+          "consumer": "content_sensitive",
+          "effect_basis": "before_selected_source",
+          "expected_success": false,
+          "occurrence": 63,
+          "symbol": "NativeProxyImageCustody::_source"
+        },
+        {
+          "consumer": "content_sensitive",
+          "effect_basis": "before_selected_source",
+          "expected_success": false,
+          "occurrence": 64,
+          "symbol": "NativeProxyImageCustody::_source"
+        },
+        {
+          "consumer": "content_sensitive",
+          "effect_basis": "before_selected_source",
+          "expected_success": false,
+          "occurrence": 65,
+          "symbol": "NativeProxyImageCustody::_source"
+        },
+        {
+          "consumer": "content_sensitive",
+          "effect_basis": "before_selected_source",
+          "expected_success": false,
+          "occurrence": 66,
+          "symbol": "NativeProxyImageCustody::_source"
+        },
+        {
+          "consumer": "content_sensitive",
+          "effect_basis": "before_selected_source",
+          "expected_success": false,
+          "occurrence": 67,
+          "symbol": "NativeProxyImageCustody::_source"
+        },
+        {
+          "consumer": "content_sensitive",
+          "effect_basis": "before_selected_source",
+          "expected_success": false,
+          "occurrence": 68,
+          "symbol": "NativeProxyImageCustody::_source"
+        },
+        {
+          "consumer": "content_sensitive",
+          "effect_basis": "before_selected_source",
+          "expected_success": false,
+          "occurrence": 69,
+          "symbol": "NativeProxyImageCustody::_source"
+        },
+        {
+          "consumer": "content_sensitive",
+          "effect_basis": "before_selected_source",
+          "expected_success": false,
+          "occurrence": 70,
+          "symbol": "NativeProxyImageCustody::_source"
+        },
+        {
+          "consumer": "content_sensitive",
+          "effect_basis": "before_selected_source",
+          "expected_success": false,
+          "occurrence": 71,
+          "symbol": "NativeProxyImageCustody::_source"
+        },
+        {
+          "consumer": "content_sensitive",
+          "effect_basis": "before_selected_source",
+          "expected_success": false,
+          "occurrence": 72,
+          "symbol": "NativeProxyImageCustody::_source"
+        },
+        {
+          "consumer": "content_sensitive",
+          "effect_basis": "before_selected_source",
+          "expected_success": false,
+          "occurrence": 73,
+          "symbol": "NativeProxyImageCustody::_source"
+        },
+        {
+          "consumer": "content_sensitive",
+          "effect_basis": "before_selected_source",
+          "expected_success": false,
+          "occurrence": 74,
+          "symbol": "NativeProxyImageCustody::_source"
+        },
+        {
+          "consumer": "content_sensitive",
+          "effect_basis": "before_selected_source",
+          "expected_success": false,
+          "occurrence": 75,
+          "symbol": "NativeProxyImageCustody::_source"
+        },
+        {
+          "consumer": "content_sensitive",
+          "effect_basis": "before_selected_source",
+          "expected_success": false,
+          "occurrence": 76,
+          "symbol": "NativeProxyImageCustody::_source"
+        },
+        {
+          "consumer": "content_sensitive",
+          "effect_basis": "before_selected_source",
+          "expected_success": false,
+          "occurrence": 77,
+          "symbol": "NativeProxyImageCustody::_source"
+        },
+        {
+          "consumer": "content_sensitive",
+          "effect_basis": "before_selected_source",
+          "expected_success": false,
+          "occurrence": 78,
+          "symbol": "NativeProxyImageCustody::_source"
+        },
+        {
+          "consumer": "structure_only",
+          "effect_basis": "healthy_completion",
+          "expected_success": true,
+          "occurrence": 79,
+          "symbol": "NativeProxyImageCustody::_source"
+        },
+        {
+          "consumer": "content_sensitive",
+          "effect_basis": "before_selected_source",
+          "expected_success": false,
+          "occurrence": 80,
+          "symbol": "NativeProxyImageCustody::_source"
+        },
+        {
+          "consumer": "content_sensitive",
+          "effect_basis": "before_selected_source",
+          "expected_success": false,
+          "occurrence": 81,
+          "symbol": "NativeProxyImageCustody::_source"
+        },
+        {
+          "consumer": "content_sensitive",
+          "effect_basis": "before_selected_source",
+          "expected_success": false,
+          "occurrence": 82,
+          "symbol": "NativeProxyImageCustody::_source"
+        },
+        {
+          "consumer": "content_sensitive",
+          "effect_basis": "before_selected_source",
+          "expected_success": false,
+          "occurrence": 83,
+          "symbol": "NativeProxyImageCustody::_source"
+        },
+        {
+          "consumer": "content_sensitive",
+          "effect_basis": "before_selected_source",
+          "expected_success": false,
+          "occurrence": 84,
+          "symbol": "NativeProxyImageCustody::_source"
+        },
+        {
+          "consumer": "content_sensitive",
+          "effect_basis": "before_selected_source",
+          "expected_success": false,
+          "occurrence": 85,
+          "symbol": "NativeProxyImageCustody::_source"
+        },
+        {
+          "consumer": "content_sensitive",
+          "effect_basis": "before_selected_source",
+          "expected_success": false,
+          "occurrence": 86,
+          "symbol": "NativeProxyImageCustody::_source"
+        },
+        {
+          "consumer": "content_sensitive",
+          "effect_basis": "before_selected_source",
+          "expected_success": false,
+          "occurrence": 87,
+          "symbol": "NativeProxyImageCustody::_source"
+        },
+        {
+          "consumer": "content_sensitive",
+          "effect_basis": "before_selected_source",
+          "expected_success": false,
+          "occurrence": 88,
+          "symbol": "NativeProxyImageCustody::_source"
+        },
+        {
+          "consumer": "content_sensitive",
+          "effect_basis": "before_selected_source",
+          "expected_success": false,
+          "occurrence": 89,
+          "symbol": "NativeProxyImageCustody::_source"
+        },
+        {
+          "consumer": "content_sensitive",
+          "effect_basis": "before_selected_source",
+          "expected_success": false,
+          "occurrence": 90,
+          "symbol": "NativeProxyImageCustody::_source"
+        },
+        {
+          "consumer": "content_sensitive",
+          "effect_basis": "before_selected_source",
+          "expected_success": false,
+          "occurrence": 91,
+          "symbol": "NativeProxyImageCustody::_source"
+        },
+        {
+          "consumer": "content_sensitive",
+          "effect_basis": "before_selected_source",
+          "expected_success": false,
+          "occurrence": 92,
+          "symbol": "NativeProxyImageCustody::_source"
+        },
+        {
+          "consumer": "content_sensitive",
+          "effect_basis": "before_selected_source",
+          "expected_success": false,
+          "occurrence": 93,
+          "symbol": "NativeProxyImageCustody::_source"
+        },
+        {
+          "consumer": "content_sensitive",
+          "effect_basis": "before_selected_source",
+          "expected_success": false,
+          "occurrence": 94,
+          "symbol": "NativeProxyImageCustody::_source"
+        },
+        {
+          "consumer": "content_sensitive",
+          "effect_basis": "before_selected_source",
+          "expected_success": false,
+          "occurrence": 95,
+          "symbol": "NativeProxyImageCustody::_source"
+        },
+        {
+          "consumer": "content_sensitive",
+          "effect_basis": "before_selected_source",
+          "expected_success": false,
+          "occurrence": 96,
+          "symbol": "NativeProxyImageCustody::_source"
+        },
+        {
+          "consumer": "content_sensitive",
+          "effect_basis": "before_selected_source",
+          "expected_success": false,
+          "occurrence": 97,
+          "symbol": "NativeProxyImageCustody::_source"
+        },
+        {
+          "consumer": "content_sensitive",
+          "effect_basis": "before_selected_source",
+          "expected_success": false,
+          "occurrence": 98,
+          "symbol": "NativeProxyImageCustody::_source"
+        },
+        {
+          "consumer": "content_sensitive",
+          "effect_basis": "before_selected_source",
+          "expected_success": false,
+          "occurrence": 99,
+          "symbol": "NativeProxyImageCustody::_source"
+        },
+        {
+          "consumer": "content_sensitive",
+          "effect_basis": "before_selected_source",
+          "expected_success": false,
+          "occurrence": 100,
+          "symbol": "NativeProxyImageCustody::_source"
+        }
+      ],
+      "execution_owner": "HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.12.4.1.3.4.4.3.10.5",
+      "expected_body_rejections": 96,
+      "expected_body_successes": 5,
+      "expected_source_case_rejections": 399,
+      "expected_source_case_successes": 7,
+      "id": "ordinary_retired_last_observation",
+      "source_case_count": 406
+    }
+  ],
+  "runtime_authorized": false,
+  "schema": "fsmgen.release_readback_consumer_applicability.v1",
+  "source_revision": "5cb6a683c65b2bdb992b8447e14f23205f492722",
+  "supersedes": {
+    "clause": "Reader and source return; the original consumer must reject altered content",
+    "path": "docs/audits/native-proxy-release-readback-selection-20260911/contract.md",
+    "replacement": "A body-XOR control at the structure-only census returns successfully; content-sensitive consumers retain their expected rejection. Actual execution is still required."
+  },
+  "total_proposed_cases": 1892,
+  "unchanged": "All source occurrences, four read controls, short-read/healthy controls and syscall-report selections remain exactly as originally pinned."
+}

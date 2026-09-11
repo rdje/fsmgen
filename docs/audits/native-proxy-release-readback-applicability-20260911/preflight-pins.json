@@ -1,0 +1,22 @@
+[
+  {
+    "path": "docs/audits/native-proxy-release-readback-applicability-20260911/source-review.json",
+    "sha256": "8d4cbe810d78f867b4a33221f182542045c315fb78c042d9120694d5339d6d23",
+    "size_bytes": 6860
+  },
+  {
+    "path": "docs/audits/native-proxy-release-readback-applicability-20260911/prepare.py",
+    "sha256": "a5c697d7d396d3d604d89f1c08f6345b3174604ba401216adeec29ca0085d7a6",
+    "size_bytes": 4199
+  },
+  {
+    "path": "docs/audits/native-proxy-release-readback-applicability-20260911/audit.py",
+    "sha256": "0fbdeaa3fe9c87da7cfefc007a6104995ffdfa8f4a3be4707857e573abc6fa81",
+    "size_bytes": 9516
+  },
+  {
+    "path": "docs/audits/native-proxy-release-readback-applicability-20260911/applicability.json",
+    "sha256": "f161f9c3ac959c2f94a327b1b0e7ac3376bf6be71e3c3695f7a3a904e7dbdec0",
+    "size_bytes": 154924
+  }
+]

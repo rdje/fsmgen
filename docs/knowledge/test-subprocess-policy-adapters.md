@@ -2,6 +2,7 @@
 id: test-subprocess-policy-adapters
 title: Test subprocesses share one mechanism behind sealed policy adapters
 answers:
+  - "why can altered census read bytes leave release successful?"
   - "what is the selected release readback failure domain?"
   - "what survives last-observation release after-call faults?"
   - "what survives last-observation release before-call faults?"
@@ -129,8 +130,8 @@ reverify: >-
 ---
 Decisions `0087`/`0101`: `FSM::Support::ProcessSupervisor`; adapters seal local argv/capture/group cleanup. T1669 checks ownership. `exec_handoff_monotonic_ns` is EOF, not main entry; absent EOF leaves timing unknown.
 `VerilatorRuntime`: decision `0086`. `TaskAcceptanceFixtureRuntime`: owned roots/fixed Git argv.
-History: `1db83632112c1b452c3c3e2f98a13cfeed5647f9:docs/knowledge/test-subprocess-policy-adapters.md`. Archive/work, replay, reader/caller and startup evidence: history.
-Release plan: `docs/audits/native-proxy-release-readback-selection-20260911/contract.md`. Each current-input source occurrence selects first-read EIO, one-byte then EIO, early EOF or reported-body XOR. Weak lower-reader custody differs from returned-source ownership. Syscall controls distinguish suppressed reports from actual unlink and historical/latest absence. The plan is audited; execution and its join remain open. Qualified before/after partitions: exact history. Close and native/lifetime work remain open.
+History: `5cb6a683c65b2bdb992b8447e14f23205f492722:docs/knowledge/test-subprocess-policy-adapters.md`. Archive/work, replay, reader/caller and startup evidence: history.
+Release applicability: `docs/audits/native-proxy-release-readback-applicability-20260911/applicability.json` supersedes blanket body-XOR rejection. Structural census discards returned bytes after metadata checks and close; a reported-only body change leaves its release outcome successful. Other consumers retain content-rejection expectations. The original plan and all selectors stay exact; actual readback execution remains open. Qualified call partitions and other boundaries: history.
 Proxy: `t/fixtures/rust-tool-proxy.c` is C; Perl `t/lib/FSM/Test/RustProxyFixture.pm` builds it and the Perl harness launches a separate process to impersonate rustup resolution. Rust names the substituted tool, not the native implementation language.
 Replay: `scripts/run_with_ram_guard.sh -- python3 -B -m unittest discover -s t/python -p 'test_fixture_policy_archive*.py'`. Other controls: history.
 HIAL/VIAL `.19.2.3.1.2.2.5.5` owns repair/hostile controls; neutral-verifier extraction stays blocked.

@@ -2458,6 +2458,25 @@ provenance. Inspect the plan without executing fixtures with:
 python3 -B docs/audits/native-proxy-release-readback-selection-20260911/audit.py
 ```
 
+Source-consumer review corrects the initial plan's blanket expectation that
+every altered read body causes rejection. The structural census checks the
+descriptor and named identity, closes the source, and returns namespace names.
+It discards the returned bytes. Altering only that reported buffer therefore
+has an expected successful release outcome; the actual file stays unchanged,
+and later semantic reads receive its original bytes. Content-sensitive
+consumers retain their expected rejection.
+
+The corrected consumer applicability is the execution authority for those
+outcomes. The original plan and audit remain exact historical selection
+evidence. Reconstruct the corrected partition without executing fixtures with:
+
+```sh
+python3 -B docs/audits/native-proxy-release-readback-applicability-20260911/audit.py
+```
+
+This correction changes an expected test outcome. Actual readback execution
+and consumer cleanup qualification remain open.
+
 A reader failure can happen before a source handle returns. Its observer must
 use a weak alias and inspect closure immediately, so observation itself does
 not keep the handle alive. A successfully returned source instead belongs to
