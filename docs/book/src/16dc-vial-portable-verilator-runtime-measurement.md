@@ -1900,6 +1900,14 @@ a failure at final snapshot verification preserves the fully published hold.
 A reuse failure preserves the exact existing hold. Other runtime and
 observation owners retain their records, images and file identities throughout.
 
+Initial tools/image directory checks and the later admission-closure checks
+have distinct event names. The plan, recorder and oracle reject duplicate
+selectors and case IDs. Historical snapshot controls reused those names, so
+both repeated cases stopped at the first check; their passing assertion count
+did not prove the four later occurrences. The versioned correction tests each
+later occurrence and rejects substitution of the earlier prefix. Historical
+sources and results remain preserved with their reduced coverage recorded.
+
 The independent oracle checks the executed call prefix, complete store and
 workspace contents, and per-path counts for every returned source descriptor,
 writer and lock. Retained handle aliases expose deliberately omitted closes;
@@ -1909,8 +1917,8 @@ real crash recovery. Coordinator failures, archive settlement,
 release and native ownership remain separately owned. Replay:
 
 ```bash
-scripts/run_with_ram_guard.sh -- perl docs/audits/native-proxy-observation-snapshot-cuts-20260910/qualify.t
-python3 -B docs/audits/native-proxy-observation-snapshot-cuts-20260910/audit.py
+scripts/run_with_ram_guard.sh -- perl docs/audits/native-proxy-snapshot-occurrence-20260911/qualify.t
+python3 -B docs/audits/native-proxy-snapshot-occurrence-20260911/audit.py
 ```
 
 Inactive observation publication also preserves conservative failure state.

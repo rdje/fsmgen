@@ -1,7 +1,7 @@
 # Knowledge Map: `test-subprocess`
 
 > **AUTO-GENERATED — DO NOT EDIT.** Return to the [Knowledge Map](../../KNOWLEDGE_MAP.md).
-> **1** facts · **58** uniquely owned question entries.
+> **1** facts · **59** uniquely owned question entries.
 
 ## Questions → facts
 
@@ -63,6 +63,7 @@
 - q="why must fixture clock domains stay separate?" · facts=[test-subprocess-policy-adapters](../../docs/knowledge/test-subprocess-policy-adapters.md)
 - q="why must fixture clones preserve byte flags and JSON numeric types?" · facts=[test-subprocess-policy-adapters](../../docs/knowledge/test-subprocess-policy-adapters.md)
 - q="why must native-birth field sets use explicit membership?" · facts=[test-subprocess-policy-adapters](../../docs/knowledge/test-subprocess-policy-adapters.md)
+- q="why must snapshot cut selectors identify unique occurrences?" · facts=[test-subprocess-policy-adapters](../../docs/knowledge/test-subprocess-policy-adapters.md)
 
 ## Facts
 

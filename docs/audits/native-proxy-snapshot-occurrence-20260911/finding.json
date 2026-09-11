@@ -1,0 +1,60 @@
+{
+  "archived_result": "docs/audits/native-proxy-image-members-20260911/result/snapshot-regression/qualification.json",
+  "impact": "Four later directory-check occurrences are not independently interrupted in the historical snapshot matrix. Passing 345 TAP assertions remains a true historical result but does not establish all 168 declared occurrence positions. Product behavior and already distinct semantic/coordinator close matrices are not thereby disproved. Final acquisition closure is blocked on the owned correction.",
+  "mechanism": "Legacy snapshot trace uses admit:directory:tools and admit:directory:image for both initial checks and admission directory closure. The recorder fires on the first matching name and the oracle uses list.index, also selecting the first. The plan duplicates those case IDs and does not require event/case uniqueness.",
+  "next_action": "Authenticate historical evidence, create a versioned distinct-occurrence snapshot plan/recorder and independent controls, preserve originals, qualify all occurrence positions and correct historical prose before resuming remaining closes.",
+  "observed": {
+    "fresh": {
+      "declared_positions": 79,
+      "image_positions_zero_based": [
+        4,
+        30
+      ],
+      "recorded_image_prefix_lengths": [
+        5,
+        5
+      ],
+      "recorded_tools_prefix_lengths": [
+        4,
+        4
+      ],
+      "tools_positions_zero_based": [
+        3,
+        29
+      ],
+      "unique_selectors": 77
+    },
+    "reuse": {
+      "declared_positions": 89,
+      "image_positions_zero_based": [
+        4,
+        34
+      ],
+      "recorded_image_prefix_lengths": [
+        5,
+        5
+      ],
+      "recorded_tools_prefix_lengths": [
+        4,
+        4
+      ],
+      "tools_positions_zero_based": [
+        3,
+        33
+      ],
+      "unique_selectors": 87
+    }
+  },
+  "owner": "HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.12.4.1.3.3.2.2.2.2.3.1.1",
+  "preserved_source": {
+    "destination": "docs/audits/native-proxy-snapshot-occurrence-20260911/result/remaining-plan.py.initial-source",
+    "sha256": "55130981f5f6e971815aff292d9ac380a60d94378074b0776b7a492080991d36",
+    "size_bytes": 8676,
+    "source": "docs/audits/native-proxy-observation-remaining-close-20260911/plan.py"
+  },
+  "resolution": "Versioned plan/recorder/auditor qualifies all distinct occurrences and rejects aliases and earlier-prefix substitution; review.json and the owning task retain exact historical correction. Remaining close reports resume separately.",
+  "schema": "fsmgen.snapshot_occurrence_coverage_finding.v1",
+  "source_revision": "407851bf7b30d4977dd49518fc2d350c4269d02e",
+  "status": "corrected_matrix_verified",
+  "trigger": "Pure prospective remaining-close flow composition failed its unique-event assertion before any plan JSON or fixture allocation. The initial tool traceback was not saved as a byte-exact process log; this record preserves its mechanism and exact source, not a fabricated raw-log claim."
+}

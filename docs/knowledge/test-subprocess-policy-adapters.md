@@ -25,6 +25,7 @@ answers:
   - "what do inactive coordinator interruption cuts prove?"
   - "what do inactive semantic-census interruption cuts prove?"
   - "how do census close errors preserve the primary failure?"
+  - "why must snapshot cut selectors identify unique occurrences?"
   - "why did integrated proxy qualification fail?"
   - "why does t1545 not use IPC Cmd?"
   - "where does T1545 preserve empty-output checker failure diagnostics?"
@@ -99,15 +100,13 @@ Darwin env/direct-Bash startup and locality controls: history.
 T1545 controls: historical card; absent witnesses stay unknown.
 Env/direct Perl timeouts refute a shebang-only cure. Startup cause, authenticated capture and STOP limits: task/book/history.
 T1669 uses process-supervisor-tests roots; ps skips only verified disappearance. Other errors fail; the historical changed field stays open (.3.2.11).
-History: `829df81b7df7cc2a8f61e740b67655db8093ea40:docs/knowledge/test-subprocess-policy-adapters.md`.
+History: `407851bf7b30d4977dd49518fc2d350c4269d02e:docs/knowledge/test-subprocess-policy-adapters.md`.
 PST parsing normalizes 1–16 lowercase hex digits; malformed fields and contradictions reject.
 Serial queue contention is supported; causal/native limits and controls: history.
 Fixed CLI contracts/limits: history.
-Combined records, fresh/reuse custody, byte flags, publication and conservative holds: history.
-Namespace/image membership read-error and cleanup repairs: history.
-Coordinator lock/namespace prefixes and actual source/directory counts: history.
-Semantic call order, handle occurrences and conservative holds: history.
-Census reports follow actual close; all owned closes run and primary/first errors prevail. Exact occurrences and omitted closes: `docs/audits/native-proxy-observation-semantic-close-20260911/audit.py`. One order per selector; target/lock/native closure stays open.
+Records, holds, byte flags, publication, enumeration and coordinator/semantic custody: history.
+Census reports follow actual close; all-owned cleanup and primary/first-error controls: history.
+Snapshot selectors must uniquely name initial/closure occurrences. Legacy aliases repeated first cuts and missed four later checks. Versioned correction and substitution controls: `docs/audits/native-proxy-snapshot-occurrence-20260911/audit.py`. Remaining close/native gates stay open.
 Caller-sealed test wrappers use tail goto to preserve caller.
 Replay: `scripts/run_with_ram_guard.sh -- python3 -B -m unittest discover -s t/python -p 'test_fixture_policy_archive*.py'`.
 T1595 pre-main cause open; `.19.2.3.1.2.2.6.2` fixes capture.
