@@ -2,6 +2,7 @@
 id: test-subprocess-policy-adapters
 title: Test subprocesses share one mechanism behind sealed policy adapters
 answers:
+  - "what survives ordinary release before-call faults?"
   - "why cannot release faults reuse a saved numeric call ID?"
   - "how are healthy release call and handle boundaries verified?"
   - "is the native Rust proxy written in Rust or C?"
@@ -120,8 +121,8 @@ reverify: >-
 ---
 Decisions `0087`/`0101`: `FSM::Support::ProcessSupervisor`; adapters seal local argv/capture/group cleanup. T1669 checks ownership. `exec_handoff_monotonic_ns` is EOF, not main entry; absent EOF leaves timing unknown.
 `VerilatorRuntime`: decision `0086`. `TaskAcceptanceFixtureRuntime`: owned roots/fixed Git argv.
-History: `e0cfaecedbfb44f757e44660fa940bf15df47e6b:docs/knowledge/test-subprocess-policy-adapters.md`. Archive/work, replay, reader/caller and startup evidence: history.
-Release: `docs/audits/native-proxy-release-call-selection-20260911/review.json`. Identity-derived reference sorting changes numeric call IDs. Bind helper/occurrence/phase to current-input flow before faults; tail aliases and source returns stay excluded. Pure order/effect consistency is not filesystem fault qualification. Healthy custody and earlier contracts: history.
+History: `51bf29de9880c0db37ccfbbcc33ae9b1d7fdd937:docs/knowledge/test-subprocess-policy-adapters.md`. Archive/work, replay, reader/caller and startup evidence: history.
+Release: `docs/audits/native-proxy-observation-archive-release-ordinary-before-20260911/review.json`. Ordinary retired before-call faults preserve actual unlink and historical/latest absence, inputs and other owners; real source/DIR/lock closes and exact roots are independently checked. Resolve helper/occurrence/phase from each current fixture before calling; numeric IDs are provenance. Stream immutable case bodies only after root cleanup. Source returns and sealed-after aliases stay excluded. Other profiles/phases and close domains remain open; selector and healthy contracts: history.
 Proxy: `t/fixtures/rust-tool-proxy.c` is C; Perl `t/lib/FSM/Test/RustProxyFixture.pm` builds it and the Perl harness launches a separate process to impersonate rustup resolution. Rust names the substituted tool, not the native implementation language.
 Replay: `scripts/run_with_ram_guard.sh -- python3 -B -m unittest discover -s t/python -p 'test_fixture_policy_archive*.py'`. Other controls: history.
 HIAL/VIAL `.19.2.3.1.2.2.5.5` owns repair/hostile controls; neutral-verifier extraction stays blocked.

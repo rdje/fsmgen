@@ -1,0 +1,16 @@
+{
+  "checked_passages": [
+    "The ordinary before-call harness resolves each interruption against the new fixture before invoking release.",
+    "it does not invent normal returns for unwound calls.",
+    "It returns no release receipt and grants no runtime authority.",
+    "Each case body is published only after its temporary roots are absent.",
+    "audit.py --verify-saved"
+  ],
+  "exact_output_absent": true,
+  "exit_code": 0,
+  "output": ".artifacts/tmp/native-proxy-observation-archive-release-ordinary-before-book-20260911/book",
+  "rendered_bytes": 23365906,
+  "rendered_directories": 3,
+  "rendered_files": 98,
+  "same_volume_direct_objects": true
+}

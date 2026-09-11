@@ -1,0 +1,73 @@
+{
+  "assertions": 6155,
+  "byte_falsifiers": [
+    "wrong case size",
+    "wrong case digest"
+  ],
+  "caller_controls": 6,
+  "calls": 188153,
+  "case_bytes": 289221317,
+  "cases": 613,
+  "directories": 15273,
+  "domain_falsifiers": [
+    "missing selector",
+    "unsafe source after",
+    "stale numeric target"
+  ],
+  "events": 609922,
+  "faults": 612,
+  "handles": 53572,
+  "healthy": 1,
+  "locks": 564,
+  "manifest_falsifiers": [
+    "missing case receipt",
+    "reordered cases",
+    "unfinished current case",
+    "hidden process",
+    "caller guard bypass",
+    "foreign case path"
+  ],
+  "prospective_pins": 13,
+  "pure_flow": {
+    "assertions": 59,
+    "baselines": 4,
+    "order_skeletons": 38,
+    "rejected_selectors": 12,
+    "resolved_selectors": 4265
+  },
+  "reads": 37735,
+  "roots": 2452,
+  "row_falsifiers": [
+    "lost actual unlink",
+    "invented early unlink",
+    "lost primary error",
+    "false success",
+    "false native authority",
+    "lost prior absence",
+    "wrong current resolution",
+    "missing call",
+    "wrong caller",
+    "lost continuation",
+    "wrong source alias",
+    "lost prefix event",
+    "extra post-fault call",
+    "lost interrupted frame",
+    "missing fault hit",
+    "unclosed source",
+    "unclosed directory",
+    "unclosed lock",
+    "wrong cleanup owner",
+    "wrong read limit",
+    "changed archive receipt",
+    "lost other-owner state",
+    "changed input flags",
+    "changed fingerprint",
+    "unproved root cleanup"
+  ],
+  "schema": "fsmgen.release_ordinary_before_audit.v1",
+  "scope": "One new healthy ordinary control and the complete ordinary retired before-call partition. Pure cross-profile flow/resolver controls support the shared helper only. No original qualifier, native process, after-call matrix, readback mutation, modeled close report or omitted close.",
+  "sources": 37735,
+  "success": true,
+  "unchanged_inputs": 121,
+  "unlinks": 186
+}

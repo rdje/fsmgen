@@ -2283,7 +2283,35 @@ Those order-only permutations demonstrate selector and effect consistency;
 they do not construct valid reference records, admit new filesystem fixtures
 or prove actual interruption cleanup.
 
-Later lanes qualify safe interruptions, actual closes followed by modeled
+The ordinary before-call harness resolves each interruption against the new
+fixture before invoking release. Its first case is a healthy control; each
+remaining case throws immediately before one selected helper occurrence.
+The original release implementation catches the injected exception and closes
+the descriptors it owns. The observer records actual closes and retains the
+interrupted call stack; it does not invent normal returns for unwound calls.
+Caller-sealed helpers still tail-call their original implementations.
+
+For example, a fault before `_finish_locked` occurs after the selected hold has
+been unlinked and the first absence check has passed. The failed attempt keeps
+`unlink_completed: 1` and `reference_absence_verified: 1`, with its latest check
+still `{ "phase": "after_unlink", "state": "absent" }`. It returns no release
+receipt and grants no runtime authority. Earlier faults preserve the hold when
+unlink has not occurred. The archive and every other owner's files remain part
+of the exact before/after comparison.
+
+Evidence for this partition lives under
+`docs/audits/native-proxy-observation-archive-release-ordinary-before-20260911/`.
+Each case body is published only after its temporary roots are absent. The
+manifest records its exact byte count and digest. The independent auditor reads
+one case at a time, reconstructs the call prefix and cleanup order from source
+and physical inputs, and checks actual source, directory and lock descriptors.
+Its saved-data mode rechecks the retained bodies without allocating fixtures:
+
+```sh
+python3 -B docs/audits/native-proxy-observation-archive-release-ordinary-before-20260911/audit.py --verify-saved
+```
+
+Later lanes qualify the remaining profile/phase interruptions, actual closes followed by modeled
 errors, deliberate close omissions with separate recovery, and the final
 source/evidence join. Primary errors outrank cleanup reports. These finite
 checks grant no native ownership authority or guarantee against arbitrary

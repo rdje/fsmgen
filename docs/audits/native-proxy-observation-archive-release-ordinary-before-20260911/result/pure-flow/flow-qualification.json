@@ -1,0 +1,417 @@
+{
+   "allocated" : [],
+   "baselines" : [
+      {
+         "calls" : 612,
+         "error" : "",
+         "flow_sha256" : "f5d5739511dcdd0cf4ce631ca672c3dd00bbe8fa3d80388c91f3c92015f15bb5",
+         "inputs_unchanged" : 1,
+         "name" : "ordinary_retired_other_observation",
+         "resolution_sha256" : "790373b8afb5fad81cf37cbf860c745cfe0882893abc5554e028ed712b793996",
+         "resolved_selectors" : 1096,
+         "selectors_unchanged" : 1
+      },
+      {
+         "calls" : 589,
+         "error" : "",
+         "flow_sha256" : "ba549e82b9262e760695b0985bb54f159e7cf91b95285133a4b35c5c08480ed2",
+         "inputs_unchanged" : 1,
+         "name" : "equal_reference_retired_other_observation",
+         "resolution_sha256" : "540eac7cb0d5f08a2ad6a952a0e1f3c6b797f57bfa31fb1077da86ec7023bb53",
+         "resolved_selectors" : 1055,
+         "selectors_unchanged" : 1
+      },
+      {
+         "calls" : 642,
+         "error" : "",
+         "flow_sha256" : "d9273197c35aebe3f65e261c1fe493623336ec897da628b2d3f652f2dc02945b",
+         "inputs_unchanged" : 1,
+         "name" : "ordinary_active_runtime",
+         "resolution_sha256" : "4394b277e44cbfcc68f22d7ea52f091329791a4c987f4e76d4bd3e78e5b89c97",
+         "resolved_selectors" : 1147,
+         "selectors_unchanged" : 1
+      },
+      {
+         "calls" : 538,
+         "error" : "",
+         "flow_sha256" : "a19f73eedcb28b8736e61e6d4e39dbd557a6d9a5efd8441ceb81e152f4504bdb",
+         "inputs_unchanged" : 1,
+         "name" : "ordinary_retired_last_observation",
+         "resolution_sha256" : "dc555043ea8cd0b8d38d749f97435bc9ad594db28ffcd89f4f0f23a1b7d9f048",
+         "resolved_selectors" : 967,
+         "selectors_unchanged" : 1
+      }
+   ],
+   "forbidden_process_attempts" : 0,
+   "order_skeletons" : [
+      {
+         "calls" : 612,
+         "error" : "",
+         "flow_sha256" : "229bced43aa69f1db9ec1424179cf02615ec5bf5768d87327b4b660ac63f2118",
+         "inputs_unchanged" : 1,
+         "name" : "ordinary_retired_other_observation:order:0,1,2"
+      },
+      {
+         "calls" : 612,
+         "error" : "",
+         "flow_sha256" : "74a4616a2dc181fe6f7a4ce0fc67b5e32ef30becfb7f9881e68ebf337dbb0fff",
+         "inputs_unchanged" : 1,
+         "name" : "ordinary_retired_other_observation:order:0,2,1"
+      },
+      {
+         "calls" : 612,
+         "error" : "",
+         "flow_sha256" : "4eaf5cb1c58ec4b8871d646788345af2753661eaa41a4cedba82d1959c77d057",
+         "inputs_unchanged" : 1,
+         "name" : "ordinary_retired_other_observation:order:1,0,2"
+      },
+      {
+         "calls" : 612,
+         "error" : "",
+         "flow_sha256" : "52b0f1f45dfcb98aa599cf6df04f387bb98dd5c44fe7a18eaacffa4aed5a47f5",
+         "inputs_unchanged" : 1,
+         "name" : "ordinary_retired_other_observation:order:1,2,0"
+      },
+      {
+         "calls" : 612,
+         "error" : "",
+         "flow_sha256" : "2e74fdbe9cedb412b2445592fd7e23e82f968da95cc10bba1679b7bb5180f70e",
+         "inputs_unchanged" : 1,
+         "name" : "ordinary_retired_other_observation:order:2,0,1"
+      },
+      {
+         "calls" : 612,
+         "error" : "",
+         "flow_sha256" : "ad7cec2d28e1d5cc2db8df73daab205b4b52260effab000ee6b1c74fab74aff4",
+         "inputs_unchanged" : 1,
+         "name" : "ordinary_retired_other_observation:order:2,1,0"
+      },
+      {
+         "calls" : 589,
+         "error" : "",
+         "flow_sha256" : "9989147bf5c6001f6613e01ab5c698706791ae2f156993df5ce65cd22e811ec4",
+         "inputs_unchanged" : 1,
+         "name" : "equal_reference_retired_other_observation:order:0,1,2"
+      },
+      {
+         "calls" : 589,
+         "error" : "",
+         "flow_sha256" : "c3f1021f50dc476d6a88106dc6772ef4d7109d1d209402177bda5d78a0c2423d",
+         "inputs_unchanged" : 1,
+         "name" : "equal_reference_retired_other_observation:order:0,2,1"
+      },
+      {
+         "calls" : 589,
+         "error" : "",
+         "flow_sha256" : "d5947b9747509807473c3020db4752919b085689339edb0348fb7478c7f99656",
+         "inputs_unchanged" : 1,
+         "name" : "equal_reference_retired_other_observation:order:1,0,2"
+      },
+      {
+         "calls" : 589,
+         "error" : "",
+         "flow_sha256" : "0b51a89a1f0d32da99f461103a5fb20111256b6f67ca06d9e37d21c2a9c947e7",
+         "inputs_unchanged" : 1,
+         "name" : "equal_reference_retired_other_observation:order:1,2,0"
+      },
+      {
+         "calls" : 589,
+         "error" : "",
+         "flow_sha256" : "c310019e1a6c0022eae4329cf45619fa37cdab5574e28115563a31a343c32f20",
+         "inputs_unchanged" : 1,
+         "name" : "equal_reference_retired_other_observation:order:2,0,1"
+      },
+      {
+         "calls" : 589,
+         "error" : "",
+         "flow_sha256" : "876667547bf3bff8ca11a9181f33c4e2664a50459fd77d70235cbb0ac17bb747",
+         "inputs_unchanged" : 1,
+         "name" : "equal_reference_retired_other_observation:order:2,1,0"
+      },
+      {
+         "calls" : 642,
+         "error" : "",
+         "flow_sha256" : "a5b5fb7716b962db34b8420d6673e8963a5f93e69712f66a97d56529a96c827c",
+         "inputs_unchanged" : 1,
+         "name" : "ordinary_active_runtime:order:0,1,2,3"
+      },
+      {
+         "calls" : 642,
+         "error" : "",
+         "flow_sha256" : "27b6801677ed11d0947bf4eeebd8eb05e2f8a92833ccb2a0811df660e80c41f8",
+         "inputs_unchanged" : 1,
+         "name" : "ordinary_active_runtime:order:0,1,3,2"
+      },
+      {
+         "calls" : 642,
+         "error" : "",
+         "flow_sha256" : "ae2429a68f68fd69df2761ba8a5fbeb79980144da3ef01b66c4777f9146a8ed5",
+         "inputs_unchanged" : 1,
+         "name" : "ordinary_active_runtime:order:0,2,1,3"
+      },
+      {
+         "calls" : 642,
+         "error" : "",
+         "flow_sha256" : "ebb0606a031c356bc88dc3ca11d1338c1f1bb6685f7ef6bb0d8a0b569f8e63af",
+         "inputs_unchanged" : 1,
+         "name" : "ordinary_active_runtime:order:0,2,3,1"
+      },
+      {
+         "calls" : 642,
+         "error" : "",
+         "flow_sha256" : "9d7cf4058a49b709255d40015a40e3ca13679fc600a292fc736bf15309574dc7",
+         "inputs_unchanged" : 1,
+         "name" : "ordinary_active_runtime:order:0,3,1,2"
+      },
+      {
+         "calls" : 642,
+         "error" : "",
+         "flow_sha256" : "97d847f12630c60a7a80d06566ab352e71be55ca2b311eb8b78cf886054fb76c",
+         "inputs_unchanged" : 1,
+         "name" : "ordinary_active_runtime:order:0,3,2,1"
+      },
+      {
+         "calls" : 642,
+         "error" : "",
+         "flow_sha256" : "4240272a1c095ca5ad5500e83b22d21fe05c9f297d32cf8c75ce2dbde7f2ce66",
+         "inputs_unchanged" : 1,
+         "name" : "ordinary_active_runtime:order:1,0,2,3"
+      },
+      {
+         "calls" : 642,
+         "error" : "",
+         "flow_sha256" : "c85c44eebdeb5326b252dd83151648cebc6637880c32c246e7b7c292ff3b789f",
+         "inputs_unchanged" : 1,
+         "name" : "ordinary_active_runtime:order:1,0,3,2"
+      },
+      {
+         "calls" : 642,
+         "error" : "",
+         "flow_sha256" : "4240272a1c095ca5ad5500e83b22d21fe05c9f297d32cf8c75ce2dbde7f2ce66",
+         "inputs_unchanged" : 1,
+         "name" : "ordinary_active_runtime:order:1,2,0,3"
+      },
+      {
+         "calls" : 642,
+         "error" : "",
+         "flow_sha256" : "c85c44eebdeb5326b252dd83151648cebc6637880c32c246e7b7c292ff3b789f",
+         "inputs_unchanged" : 1,
+         "name" : "ordinary_active_runtime:order:1,2,3,0"
+      },
+      {
+         "calls" : 642,
+         "error" : "",
+         "flow_sha256" : "ca94a16b23fbf4f6284319a8c9c1ed43aec52ec430db0003c143b7501d5521f0",
+         "inputs_unchanged" : 1,
+         "name" : "ordinary_active_runtime:order:1,3,0,2"
+      },
+      {
+         "calls" : 642,
+         "error" : "",
+         "flow_sha256" : "ca94a16b23fbf4f6284319a8c9c1ed43aec52ec430db0003c143b7501d5521f0",
+         "inputs_unchanged" : 1,
+         "name" : "ordinary_active_runtime:order:1,3,2,0"
+      },
+      {
+         "calls" : 642,
+         "error" : "",
+         "flow_sha256" : "ae2429a68f68fd69df2761ba8a5fbeb79980144da3ef01b66c4777f9146a8ed5",
+         "inputs_unchanged" : 1,
+         "name" : "ordinary_active_runtime:order:2,0,1,3"
+      },
+      {
+         "calls" : 642,
+         "error" : "",
+         "flow_sha256" : "ebb0606a031c356bc88dc3ca11d1338c1f1bb6685f7ef6bb0d8a0b569f8e63af",
+         "inputs_unchanged" : 1,
+         "name" : "ordinary_active_runtime:order:2,0,3,1"
+      },
+      {
+         "calls" : 642,
+         "error" : "",
+         "flow_sha256" : "a5b5fb7716b962db34b8420d6673e8963a5f93e69712f66a97d56529a96c827c",
+         "inputs_unchanged" : 1,
+         "name" : "ordinary_active_runtime:order:2,1,0,3"
+      },
+      {
+         "calls" : 642,
+         "error" : "",
+         "flow_sha256" : "27b6801677ed11d0947bf4eeebd8eb05e2f8a92833ccb2a0811df660e80c41f8",
+         "inputs_unchanged" : 1,
+         "name" : "ordinary_active_runtime:order:2,1,3,0"
+      },
+      {
+         "calls" : 642,
+         "error" : "",
+         "flow_sha256" : "97d847f12630c60a7a80d06566ab352e71be55ca2b311eb8b78cf886054fb76c",
+         "inputs_unchanged" : 1,
+         "name" : "ordinary_active_runtime:order:2,3,0,1"
+      },
+      {
+         "calls" : 642,
+         "error" : "",
+         "flow_sha256" : "9d7cf4058a49b709255d40015a40e3ca13679fc600a292fc736bf15309574dc7",
+         "inputs_unchanged" : 1,
+         "name" : "ordinary_active_runtime:order:2,3,1,0"
+      },
+      {
+         "calls" : 642,
+         "error" : "",
+         "flow_sha256" : "5b60072e71bd343830e5fbb67054335219e3614f5ccb62420266e0718196af6b",
+         "inputs_unchanged" : 1,
+         "name" : "ordinary_active_runtime:order:3,0,1,2"
+      },
+      {
+         "calls" : 642,
+         "error" : "",
+         "flow_sha256" : "1a001ec16fad5e6652d8c3843d9b1ad70165520b47f2d77dd955a16ed3224e5a",
+         "inputs_unchanged" : 1,
+         "name" : "ordinary_active_runtime:order:3,0,2,1"
+      },
+      {
+         "calls" : 642,
+         "error" : "",
+         "flow_sha256" : "840c73bcc7496c4de584c8f5f7951353ecc858d78b166d84c1102ac648180cb0",
+         "inputs_unchanged" : 1,
+         "name" : "ordinary_active_runtime:order:3,1,0,2"
+      },
+      {
+         "calls" : 642,
+         "error" : "",
+         "flow_sha256" : "840c73bcc7496c4de584c8f5f7951353ecc858d78b166d84c1102ac648180cb0",
+         "inputs_unchanged" : 1,
+         "name" : "ordinary_active_runtime:order:3,1,2,0"
+      },
+      {
+         "calls" : 642,
+         "error" : "",
+         "flow_sha256" : "1a001ec16fad5e6652d8c3843d9b1ad70165520b47f2d77dd955a16ed3224e5a",
+         "inputs_unchanged" : 1,
+         "name" : "ordinary_active_runtime:order:3,2,0,1"
+      },
+      {
+         "calls" : 642,
+         "error" : "",
+         "flow_sha256" : "5b60072e71bd343830e5fbb67054335219e3614f5ccb62420266e0718196af6b",
+         "inputs_unchanged" : 1,
+         "name" : "ordinary_active_runtime:order:3,2,1,0"
+      },
+      {
+         "calls" : 538,
+         "error" : "",
+         "flow_sha256" : "0d9e78f0b8e08e5b01bae509388a96e3720b2900f404b49ec91d8d82d9f07caf",
+         "inputs_unchanged" : 1,
+         "name" : "ordinary_retired_last_observation:order:0,1"
+      },
+      {
+         "calls" : 538,
+         "error" : "",
+         "flow_sha256" : "ca006f3edd282757f4229d04e559dda3817f44df1fb96c2cf6e7a76bcb6fa0e6",
+         "inputs_unchanged" : 1,
+         "name" : "ordinary_retired_last_observation:order:1,0"
+      }
+   ],
+   "prospective_pins" : [
+      {
+         "path" : "docs/audits/native-proxy-observation-archive-release-ordinary-before-20260911/CallPlan.pm",
+         "sha256" : "8d792d3bf590fa83330298af703aa0ab25e7eaa31aba34d097a70d3d4bb15c6a",
+         "size_bytes" : 11091
+      },
+      {
+         "path" : "docs/audits/native-proxy-observation-archive-release-ordinary-before-20260911/prepare.py",
+         "sha256" : "d5bd37ec2a27158165886a6583d91e7c3b5359490ad309ae66fc2bf858636af7",
+         "size_bytes" : 4683
+      },
+      {
+         "path" : "docs/audits/native-proxy-observation-archive-release-ordinary-before-20260911/plan.json",
+         "sha256" : "e305eefd918c99555ad5a0c9869e08ba5801357e212889e0b70fa1b57489770d",
+         "size_bytes" : 402707
+      },
+      {
+         "path" : "docs/audits/native-proxy-observation-archive-release-ordinary-before-20260911/flow-vectors.json",
+         "sha256" : "8e1d148150eef1d184b81dbb08bf49f9a7267c6bb24703248f386862af1296ba",
+         "size_bytes" : 2470300
+      },
+      {
+         "path" : "docs/audits/native-proxy-observation-archive-release-ordinary-before-20260911/flow-qualify.t",
+         "sha256" : "5cb2419d0a0de9781f5e15fb45fbe5782f2a8c1992bcf06358278ae2657fb87b",
+         "size_bytes" : 7405
+      }
+   ],
+   "rejected_selectors" : [
+      {
+         "error" : "selector fields differ from the pinned contract\n",
+         "inputs_unchanged" : 1,
+         "name" : "missing address",
+         "returned" : 0
+      },
+      {
+         "error" : "selector fields differ from the pinned contract\n",
+         "inputs_unchanged" : 1,
+         "name" : "stale numeric target",
+         "returned" : 0
+      },
+      {
+         "error" : "fault occurrence is outside the current input flow\n",
+         "inputs_unchanged" : 1,
+         "name" : "negative occurrence",
+         "returned" : 0
+      },
+      {
+         "error" : "fault occurrence is outside the current input flow\n",
+         "inputs_unchanged" : 1,
+         "name" : "leading-zero occurrence",
+         "returned" : 0
+      },
+      {
+         "error" : "fault occurrence is outside the current input flow\n",
+         "inputs_unchanged" : 1,
+         "name" : "out-of-domain occurrence",
+         "returned" : 0
+      },
+      {
+         "error" : "fault occurrence is outside the current input flow\n",
+         "inputs_unchanged" : 1,
+         "name" : "undefined occurrence",
+         "returned" : 0
+      },
+      {
+         "error" : "fault occurrence is outside the current input flow\n",
+         "inputs_unchanged" : 1,
+         "name" : "structured occurrence",
+         "returned" : 0
+      },
+      {
+         "error" : "fault occurrence is outside the current input flow\n",
+         "inputs_unchanged" : 1,
+         "name" : "unknown helper",
+         "returned" : 0
+      },
+      {
+         "error" : "unsupported fault phase\n",
+         "inputs_unchanged" : 1,
+         "name" : "unknown phase",
+         "returned" : 0
+      },
+      {
+         "error" : "fault address differs from its typed selection\n",
+         "inputs_unchanged" : 1,
+         "name" : "wrong address",
+         "returned" : 0
+      },
+      {
+         "error" : "unsafe source or sealed return selection\n",
+         "inputs_unchanged" : 1,
+         "name" : "source return",
+         "returned" : 0
+      },
+      {
+         "error" : "unsafe source or sealed return selection\n",
+         "inputs_unchanged" : 1,
+         "name" : "sealed return",
+         "returned" : 0
+      }
+   ],
+   "schema" : "fsmgen.release_call_flow_qualification.v1",
+   "success" : true
+}

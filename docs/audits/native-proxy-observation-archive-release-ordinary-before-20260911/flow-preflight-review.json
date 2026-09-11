@@ -1,0 +1,10 @@
+{
+  "assertions": 59,
+  "first_run": true,
+  "owner": "HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.12.4.1.3.4.4.3.2",
+  "result_path": ".artifacts/logs/native-proxy-observation-archive-release-ordinary-before-20260911/flow-qualification.json",
+  "result_sha256": "80ddfa37252d9d3e6920c73a9b22e50f2295b6801b288b6a0676dea555b55e82",
+  "schema": "fsmgen.release_before_flow_preflight_review.v1",
+  "scope": "The pure Perl resolver matches independently prepared Python flow hashes for four saved baselines and thirty-eight order-only skeletons, resolves all baseline safe selectors, and rejects twelve malformed or unsafe selector controls. This pure qualification allocated no new release fixture; the actual matrix is a distinct subsequent qualification domain.",
+  "source_pins": "flow-preflight-pins.json"
+}

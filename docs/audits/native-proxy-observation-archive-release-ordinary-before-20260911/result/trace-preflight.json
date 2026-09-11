@@ -1,0 +1,31 @@
+{
+  "existing_before_finish": {
+    "events": 694,
+    "handles": 156
+  },
+  "healthy": [
+    {
+      "events": 1973,
+      "handles": 171,
+      "profile": "ordinary_retired_other_observation"
+    },
+    {
+      "events": 1902,
+      "handles": 166,
+      "profile": "equal_reference_retired_other_observation"
+    },
+    {
+      "events": 2078,
+      "handles": 180,
+      "profile": "ordinary_active_runtime"
+    },
+    {
+      "events": 1718,
+      "handles": 148,
+      "profile": "ordinary_retired_last_observation"
+    }
+  ],
+  "schema": "fsmgen.release_before_trace_preflight.v1",
+  "scope": "Source-scope oracle matches four original healthy core/call streams after excluding sealed-after aliases, plus the existing before-finish failure core/cleanup stream. No original producer or new fixture runs.",
+  "success": true
+}

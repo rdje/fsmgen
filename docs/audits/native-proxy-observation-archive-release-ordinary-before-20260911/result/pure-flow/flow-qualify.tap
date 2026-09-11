@@ -1,0 +1,60 @@
+ok 1 - ordinary_retired_other_observation: exact independent flow and unchanged inputs
+ok 2 - ordinary_retired_other_observation: every typed selector resolves without input changes
+ok 3 - ordinary_retired_other_observation:order:0,1,2: exact independent flow and unchanged inputs
+ok 4 - ordinary_retired_other_observation:order:0,2,1: exact independent flow and unchanged inputs
+ok 5 - ordinary_retired_other_observation:order:1,0,2: exact independent flow and unchanged inputs
+ok 6 - ordinary_retired_other_observation:order:1,2,0: exact independent flow and unchanged inputs
+ok 7 - ordinary_retired_other_observation:order:2,0,1: exact independent flow and unchanged inputs
+ok 8 - ordinary_retired_other_observation:order:2,1,0: exact independent flow and unchanged inputs
+ok 9 - equal_reference_retired_other_observation: exact independent flow and unchanged inputs
+ok 10 - equal_reference_retired_other_observation: every typed selector resolves without input changes
+ok 11 - equal_reference_retired_other_observation:order:0,1,2: exact independent flow and unchanged inputs
+ok 12 - equal_reference_retired_other_observation:order:0,2,1: exact independent flow and unchanged inputs
+ok 13 - equal_reference_retired_other_observation:order:1,0,2: exact independent flow and unchanged inputs
+ok 14 - equal_reference_retired_other_observation:order:1,2,0: exact independent flow and unchanged inputs
+ok 15 - equal_reference_retired_other_observation:order:2,0,1: exact independent flow and unchanged inputs
+ok 16 - equal_reference_retired_other_observation:order:2,1,0: exact independent flow and unchanged inputs
+ok 17 - ordinary_active_runtime: exact independent flow and unchanged inputs
+ok 18 - ordinary_active_runtime: every typed selector resolves without input changes
+ok 19 - ordinary_active_runtime:order:0,1,2,3: exact independent flow and unchanged inputs
+ok 20 - ordinary_active_runtime:order:0,1,3,2: exact independent flow and unchanged inputs
+ok 21 - ordinary_active_runtime:order:0,2,1,3: exact independent flow and unchanged inputs
+ok 22 - ordinary_active_runtime:order:0,2,3,1: exact independent flow and unchanged inputs
+ok 23 - ordinary_active_runtime:order:0,3,1,2: exact independent flow and unchanged inputs
+ok 24 - ordinary_active_runtime:order:0,3,2,1: exact independent flow and unchanged inputs
+ok 25 - ordinary_active_runtime:order:1,0,2,3: exact independent flow and unchanged inputs
+ok 26 - ordinary_active_runtime:order:1,0,3,2: exact independent flow and unchanged inputs
+ok 27 - ordinary_active_runtime:order:1,2,0,3: exact independent flow and unchanged inputs
+ok 28 - ordinary_active_runtime:order:1,2,3,0: exact independent flow and unchanged inputs
+ok 29 - ordinary_active_runtime:order:1,3,0,2: exact independent flow and unchanged inputs
+ok 30 - ordinary_active_runtime:order:1,3,2,0: exact independent flow and unchanged inputs
+ok 31 - ordinary_active_runtime:order:2,0,1,3: exact independent flow and unchanged inputs
+ok 32 - ordinary_active_runtime:order:2,0,3,1: exact independent flow and unchanged inputs
+ok 33 - ordinary_active_runtime:order:2,1,0,3: exact independent flow and unchanged inputs
+ok 34 - ordinary_active_runtime:order:2,1,3,0: exact independent flow and unchanged inputs
+ok 35 - ordinary_active_runtime:order:2,3,0,1: exact independent flow and unchanged inputs
+ok 36 - ordinary_active_runtime:order:2,3,1,0: exact independent flow and unchanged inputs
+ok 37 - ordinary_active_runtime:order:3,0,1,2: exact independent flow and unchanged inputs
+ok 38 - ordinary_active_runtime:order:3,0,2,1: exact independent flow and unchanged inputs
+ok 39 - ordinary_active_runtime:order:3,1,0,2: exact independent flow and unchanged inputs
+ok 40 - ordinary_active_runtime:order:3,1,2,0: exact independent flow and unchanged inputs
+ok 41 - ordinary_active_runtime:order:3,2,0,1: exact independent flow and unchanged inputs
+ok 42 - ordinary_active_runtime:order:3,2,1,0: exact independent flow and unchanged inputs
+ok 43 - ordinary_retired_last_observation: exact independent flow and unchanged inputs
+ok 44 - ordinary_retired_last_observation: every typed selector resolves without input changes
+ok 45 - ordinary_retired_last_observation:order:0,1: exact independent flow and unchanged inputs
+ok 46 - ordinary_retired_last_observation:order:1,0: exact independent flow and unchanged inputs
+ok 47 - missing address: rejects before any fixture
+ok 48 - stale numeric target: rejects before any fixture
+ok 49 - negative occurrence: rejects before any fixture
+ok 50 - leading-zero occurrence: rejects before any fixture
+ok 51 - out-of-domain occurrence: rejects before any fixture
+ok 52 - undefined occurrence: rejects before any fixture
+ok 53 - structured occurrence: rejects before any fixture
+ok 54 - unknown helper: rejects before any fixture
+ok 55 - unknown phase: rejects before any fixture
+ok 56 - wrong address: rejects before any fixture
+ok 57 - source return: rejects before any fixture
+ok 58 - sealed return: rejects before any fixture
+ok 59 - no process attempt in pure flow qualification
+1..59
