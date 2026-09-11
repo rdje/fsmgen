@@ -1,0 +1,27 @@
+[
+  {
+    "path": "docs/audits/native-proxy-observation-work-records-20260911/plan.json",
+    "sha256": "0f406ab391998327bfe39422ef6f842c7d230c39f54ae5b7030799b9a040e5b5",
+    "size_bytes": 368087
+  },
+  {
+    "path": "docs/audits/native-proxy-observation-work-records-20260911/prepare.py",
+    "sha256": "ca9ed5b547b6965ae9ce8e37bbfa28bad594a71d0f4e00569cacb14f7383b56c",
+    "size_bytes": 13738
+  },
+  {
+    "path": "docs/audits/native-proxy-observation-work-records-20260911/WorkRecord.pm",
+    "sha256": "3f0f1351bc44a2a8b42502b7b814544f9d756ae8c39e17db470b312635a6e56d",
+    "size_bytes": 8126
+  },
+  {
+    "path": "docs/audits/native-proxy-observation-work-records-20260911/qualify.t",
+    "sha256": "f68093fbb2630175b65d9e93fac95a780dec52dc29afe7709dc4c396ba1a0430",
+    "size_bytes": 10984
+  },
+  {
+    "path": "docs/audits/native-proxy-observation-work-records-20260911/audit.py",
+    "sha256": "8f6239ddddb14548a96a6d0f362b105700e3e733cdb0d0110666652e1f9bd1fe",
+    "size_bytes": 17442
+  }
+]

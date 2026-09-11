@@ -1,0 +1,408 @@
+ok 1 - historical acquisition: original selection
+ok 2 - historical acquisition: canonical selection
+ok 3 - historical acquisition: selection decode
+ok 4 - historical acquisition: original settlement
+ok 5 - historical acquisition: canonical settlement
+ok 6 - historical acquisition: settlement decode
+ok 7 - historical acquisition: settlement validation
+ok 8 - historical acquisition: returned copies preserve every input scalar and byte flag
+ok 9 - historical reuse: original selection
+ok 10 - historical reuse: canonical selection
+ok 11 - historical reuse: selection decode
+ok 12 - historical reuse: original settlement
+ok 13 - historical reuse: canonical settlement
+ok 14 - historical reuse: settlement decode
+ok 15 - historical reuse: settlement validation
+ok 16 - historical reuse: returned copies preserve every input scalar and byte flag
+ok 17 - constructed binary snapshots: original selection
+ok 18 - constructed binary snapshots: canonical selection
+ok 19 - constructed binary snapshots: selection decode
+ok 20 - constructed binary snapshots: original settlement
+ok 21 - constructed binary snapshots: canonical settlement
+ok 22 - constructed binary snapshots: settlement decode
+ok 23 - constructed binary snapshots: settlement validation
+ok 24 - constructed binary snapshots: returned copies preserve every input scalar and byte flag
+ok 25 - one reserved never-started cancelled helper: original selection
+ok 26 - one reserved never-started cancelled helper: canonical selection
+ok 27 - one reserved never-started cancelled helper: selection decode
+ok 28 - one reserved never-started cancelled helper: original settlement
+ok 29 - one reserved never-started cancelled helper: canonical settlement
+ok 30 - one reserved never-started cancelled helper: settlement decode
+ok 31 - one reserved never-started cancelled helper: settlement validation
+ok 32 - one reserved never-started cancelled helper: returned copies preserve every input scalar and byte flag
+ok 33 - distinct work IDs can reserve the same owner token: original selection
+ok 34 - distinct work IDs can reserve the same owner token: canonical selection
+ok 35 - distinct work IDs can reserve the same owner token: selection decode
+ok 36 - distinct work IDs can reserve the same owner token: original settlement
+ok 37 - distinct work IDs can reserve the same owner token: canonical settlement
+ok 38 - distinct work IDs can reserve the same owner token: settlement decode
+ok 39 - distinct work IDs can reserve the same owner token: settlement validation
+ok 40 - distinct work IDs can reserve the same owner token: returned copies preserve every input scalar and byte flag
+ok 41 - work count and ID width ceilings: original selection
+ok 42 - work count and ID width ceilings: canonical selection
+ok 43 - work count and ID width ceilings: selection decode
+ok 44 - work count and ID width ceilings: original settlement
+ok 45 - work count and ID width ceilings: canonical settlement
+ok 46 - work count and ID width ceilings: settlement decode
+ok 47 - work count and ID width ceilings: settlement validation
+ok 48 - work count and ID width ceilings: returned copies preserve every input scalar and byte flag
+ok 49 - exact encoded selection ceiling: original selection
+ok 50 - exact encoded selection ceiling: canonical selection
+ok 51 - exact encoded selection ceiling: selection decode
+ok 52 - exact encoded selection ceiling: original settlement
+ok 53 - exact encoded selection ceiling: canonical settlement
+ok 54 - exact encoded selection ceiling: settlement decode
+ok 55 - exact encoded selection ceiling: settlement validation
+ok 56 - exact encoded selection ceiling: returned copies preserve every input scalar and byte flag
+ok 57 - cleanup:0
+ok 58 - cleanup:1
+ok 59 - cleanup:2
+ok 60 - cleanup:3
+ok 61 - cleanup:4
+ok 62 - cleanup:5
+ok 63 - cleanup:6
+ok 64 - cleanup:7
+ok 65 - cleanup:8
+ok 66 - cleanup:9
+ok 67 - cleanup:10
+ok 68 - cleanup:11
+ok 69 - cleanup:12
+ok 70 - cleanup:13
+ok 71 - cleanup:14
+ok 72 - cleanup:15
+ok 73 - cleanup:16
+ok 74 - cleanup:17
+ok 75 - cleanup:18
+ok 76 - cleanup:19
+ok 77 - cleanup:20
+ok 78 - cleanup:21
+ok 79 - cleanup:22
+ok 80 - cleanup:23
+ok 81 - cleanup:24
+ok 82 - cleanup:25
+ok 83 - cleanup:26
+ok 84 - cleanup:27
+ok 85 - cleanup:28
+ok 86 - cleanup:29
+ok 87 - cleanup:30
+ok 88 - cleanup:31
+ok 89 - cleanup:32
+ok 90 - cleanup:33
+ok 91 - cleanup:34
+ok 92 - cleanup:35
+ok 93 - cleanup:36
+ok 94 - cleanup:37
+ok 95 - cleanup:38
+ok 96 - cleanup:39
+ok 97 - cleanup:40
+ok 98 - cleanup:41
+ok 99 - cleanup:42
+ok 100 - cleanup:43
+ok 101 - cleanup:44
+ok 102 - cleanup:45
+ok 103 - cleanup:46
+ok 104 - cleanup:47
+ok 105 - cleanup:48
+ok 106 - cleanup:49
+ok 107 - cleanup:50
+ok 108 - cleanup:51
+ok 109 - cleanup:52
+ok 110 - cleanup:53
+ok 111 - cleanup:54
+ok 112 - cleanup:55
+ok 113 - cleanup:56
+ok 114 - cleanup:57
+ok 115 - cleanup:58
+ok 116 - cleanup:59
+ok 117 - cleanup:60
+ok 118 - cleanup:61
+ok 119 - cleanup:62
+ok 120 - cleanup:63
+ok 121 - cleanup:64
+ok 122 - cleanup:65
+ok 123 - cleanup:66
+ok 124 - cleanup:67
+ok 125 - cleanup:68
+ok 126 - cleanup:69
+ok 127 - cleanup:70
+ok 128 - cleanup:71
+ok 129 - cleanup:72
+ok 130 - cleanup:73
+ok 131 - cleanup:74
+ok 132 - cleanup:75
+ok 133 - cleanup:76
+ok 134 - cleanup:77
+ok 135 - cleanup:78
+ok 136 - cleanup:79
+ok 137 - cleanup:80
+ok 138 - cleanup:81
+ok 139 - cleanup:82
+ok 140 - cleanup:83
+ok 141 - cleanup:84
+ok 142 - cleanup:85
+ok 143 - cleanup:86
+ok 144 - cleanup:87
+ok 145 - cleanup:88
+ok 146 - cleanup:89
+ok 147 - cleanup:90
+ok 148 - cleanup:91
+ok 149 - cleanup:92
+ok 150 - cleanup:93
+ok 151 - cleanup:94
+ok 152 - cleanup:95
+ok 153 - cleanup:96
+ok 154 - cleanup:97
+ok 155 - cleanup:98
+ok 156 - cleanup:99
+ok 157 - cleanup:100
+ok 158 - cleanup:101
+ok 159 - cleanup:102
+ok 160 - cleanup:103
+ok 161 - cleanup:104
+ok 162 - cleanup:105
+ok 163 - cleanup:106
+ok 164 - cleanup:107
+ok 165 - cleanup:108
+ok 166 - cleanup:109
+ok 167 - cleanup:110
+ok 168 - cleanup:111
+ok 169 - cleanup:112
+ok 170 - cleanup:113
+ok 171 - cleanup:114
+ok 172 - cleanup:115
+ok 173 - cleanup:116
+ok 174 - cleanup:117
+ok 175 - cleanup:118
+ok 176 - cleanup:119
+ok 177 - cleanup:120
+ok 178 - cleanup:121
+ok 179 - cleanup:122
+ok 180 - cleanup:123
+ok 181 - cleanup:124
+ok 182 - cleanup:125
+ok 183 - cleanup:126
+ok 184 - cleanup:127
+ok 185 - cleanup:128
+ok 186 - cleanup:129
+ok 187 - cleanup:130
+ok 188 - cleanup:131
+ok 189 - cleanup:132
+ok 190 - cleanup:133
+ok 191 - cleanup:134
+ok 192 - cleanup:135
+ok 193 - cleanup:136
+ok 194 - cleanup:137
+ok 195 - cleanup:138
+ok 196 - cleanup:139
+ok 197 - cleanup:140
+ok 198 - cleanup:141
+ok 199 - cleanup:142
+ok 200 - cleanup:143
+ok 201 - cleanup:144
+ok 202 - cleanup:145
+ok 203 - cleanup:146
+ok 204 - cleanup:147
+ok 205 - cleanup:148
+ok 206 - cleanup:149
+ok 207 - cleanup:150
+ok 208 - cleanup:151
+ok 209 - cleanup:152
+ok 210 - cleanup:153
+ok 211 - cleanup:154
+ok 212 - cleanup:155
+ok 213 - cleanup:156
+ok 214 - cleanup:157
+ok 215 - cleanup:158
+ok 216 - cleanup:159
+ok 217 - cleanup:160
+ok 218 - cleanup:161
+ok 219 - cleanup:162
+ok 220 - cleanup:163
+ok 221 - cleanup:164
+ok 222 - cleanup:165
+ok 223 - cleanup:166
+ok 224 - cleanup:167
+ok 225 - cleanup:168
+ok 226 - cleanup:169
+ok 227 - cleanup:170
+ok 228 - cleanup:171
+ok 229 - cleanup:172
+ok 230 - cleanup:173
+ok 231 - cleanup:174
+ok 232 - cleanup:175
+ok 233 - cleanup:176
+ok 234 - cleanup:177
+ok 235 - cleanup:178
+ok 236 - cleanup:179
+ok 237 - cleanup:180
+ok 238 - cleanup:181
+ok 239 - cleanup:182
+ok 240 - cleanup:183
+ok 241 - cleanup:184
+ok 242 - cleanup:185
+ok 243 - cleanup:186
+ok 244 - cleanup:187
+ok 245 - cleanup:188
+ok 246 - cleanup:189
+ok 247 - cleanup:190
+ok 248 - cleanup:191
+ok 249 - selection missing schema
+ok 250 - selection missing runtime_authorized
+ok 251 - selection missing executable
+ok 252 - selection missing evidence_directory_identity
+ok 253 - selection missing observation_reference_key
+ok 254 - selection missing entries
+ok 255 - selection extra field
+ok 256 - selection invalid schema:0
+ok 257 - selection invalid schema:1
+ok 258 - selection invalid runtime_authorized:0
+ok 259 - selection invalid runtime_authorized:1
+ok 260 - selection invalid runtime_authorized:2
+ok 261 - selection invalid executable:0
+ok 262 - selection invalid observation_reference_key:0
+ok 263 - selection invalid evidence_directory_identity:0
+ok 264 - selection invalid evidence_directory_identity:1
+ok 265 - selection invalid entries:0
+ok 266 - selection invalid entries:1
+ok 267 - selection invalid entries:2
+ok 268 - selection changed evidence path
+ok 269 - selection changed evidence device
+ok 270 - selection changed evidence inode
+ok 271 - entry missing work_id
+ok 272 - entry missing ownership_token
+ok 273 - entry missing role
+ok 274 - entry extra field
+ok 275 - entry invalid work_id:0
+ok 276 - entry invalid work_id:1
+ok 277 - entry invalid work_id:2
+ok 278 - entry invalid work_id:3
+ok 279 - entry invalid work_id:4
+ok 280 - entry invalid work_id:5
+ok 281 - entry invalid work_id:6
+ok 282 - entry invalid ownership_token:0
+ok 283 - entry invalid ownership_token:1
+ok 284 - entry invalid ownership_token:2
+ok 285 - entry invalid ownership_token:3
+ok 286 - entry invalid role:0
+ok 287 - entry invalid role:1
+ok 288 - entry invalid role:2
+ok 289 - entry invalid role:3
+ok 290 - duplicate selected ID
+ok 291 - work count excess
+ok 292 - encoded selection excess
+ok 293 - settlement missing schema
+ok 294 - settlement missing runtime_authorized
+ok 295 - settlement missing executable
+ok 296 - settlement missing selection
+ok 297 - settlement missing selection_sealed
+ok 298 - settlement missing receipts
+ok 299 - settlement extra field
+ok 300 - settlement invalid schema:0
+ok 301 - settlement invalid schema:1
+ok 302 - settlement invalid runtime_authorized:0
+ok 303 - settlement invalid runtime_authorized:1
+ok 304 - settlement invalid runtime_authorized:2
+ok 305 - settlement invalid executable:0
+ok 306 - settlement invalid selection:0
+ok 307 - settlement invalid selection:1
+ok 308 - settlement invalid selection_sealed:0
+ok 309 - settlement invalid selection_sealed:1
+ok 310 - settlement invalid selection_sealed:2
+ok 311 - settlement invalid selection_sealed:3
+ok 312 - settlement invalid selection_sealed:4
+ok 313 - receipt missing work_id
+ok 314 - receipt missing ownership_token
+ok 315 - receipt missing role
+ok 316 - receipt missing outcome
+ok 317 - receipt missing cleanup
+ok 318 - receipt extra field
+ok 319 - missing receipt
+ok 320 - duplicate receipt
+ok 321 - reordered receipts
+ok 322 - invalid receipt list:0
+ok 323 - invalid receipt list:1
+ok 324 - invalid receipt list:2
+ok 325 - invalid receipt list:3
+ok 326 - receipt invalid work_id:0
+ok 327 - receipt invalid ownership_token:0
+ok 328 - receipt invalid role:0
+ok 329 - receipt invalid outcome:0
+ok 330 - receipt invalid outcome:1
+ok 331 - receipt invalid outcome:2
+ok 332 - receipt invalid outcome:3
+ok 333 - receipt invalid cleanup:0
+ok 334 - receipt invalid cleanup:1
+ok 335 - receipt invalid cleanup:2
+ok 336 - cleanup missing leader_started
+ok 337 - cleanup invalid leader_started:0
+ok 338 - cleanup invalid leader_started:1
+ok 339 - cleanup invalid leader_started:2
+ok 340 - cleanup invalid leader_started:3
+ok 341 - cleanup invalid leader_started:4
+ok 342 - cleanup invalid leader_started:5
+ok 343 - cleanup invalid leader_started:6
+ok 344 - cleanup invalid leader_started:7
+ok 345 - cleanup invalid leader_started:8
+ok 346 - cleanup missing leader_reaped
+ok 347 - cleanup invalid leader_reaped:0
+ok 348 - cleanup invalid leader_reaped:1
+ok 349 - cleanup invalid leader_reaped:2
+ok 350 - cleanup invalid leader_reaped:3
+ok 351 - cleanup invalid leader_reaped:4
+ok 352 - cleanup invalid leader_reaped:5
+ok 353 - cleanup invalid leader_reaped:6
+ok 354 - cleanup invalid leader_reaped:7
+ok 355 - cleanup invalid leader_reaped:8
+ok 356 - cleanup missing group_gone
+ok 357 - cleanup invalid group_gone:0
+ok 358 - cleanup invalid group_gone:1
+ok 359 - cleanup invalid group_gone:2
+ok 360 - cleanup invalid group_gone:3
+ok 361 - cleanup invalid group_gone:4
+ok 362 - cleanup invalid group_gone:5
+ok 363 - cleanup invalid group_gone:6
+ok 364 - cleanup invalid group_gone:7
+ok 365 - cleanup invalid group_gone:8
+ok 366 - cleanup extra field
+ok 367 - unreaped started owner
+ok 368 - surviving owner group
+ok 369 - unsealed selection
+ok 370 - selection_raw:whitespace
+ok 371 - selection_raw:malformed
+ok 372 - selection_raw:scalar
+ok 373 - selection_raw:duplicate key
+ok 374 - selection_raw:nonASCII
+ok 375 - selection_raw:overlong
+ok 376 - selection_raw:character-flag
+ok 377 - settlement_raw:whitespace
+ok 378 - settlement_raw:malformed
+ok 379 - settlement_raw:scalar
+ok 380 - settlement_raw:duplicate key
+ok 381 - settlement_raw:nonASCII
+ok 382 - settlement_raw:overlong
+ok 383 - settlement_raw:character-flag
+ok 384 - selection:arity:drop
+ok 385 - selection:arity:append
+ok 386 - encode_selection:arity:drop
+ok 387 - encode_selection:arity:append
+ok 388 - decode_selection:arity:drop
+ok 389 - decode_selection:arity:append
+ok 390 - settlement:arity:drop
+ok 391 - settlement:arity:append
+ok 392 - validate:arity:drop
+ok 393 - validate:arity:append
+ok 394 - encode_settlement:arity:drop
+ok 395 - encode_settlement:arity:append
+ok 396 - decode_settlement:arity:drop
+ok 397 - decode_settlement:arity:append
+ok 398 - foreign store
+ok 399 - changed requested evidence
+ok 400 - acquisition grants runtime authority
+ok 401 - changed retained octets
+ok 402 - swapped receipt owner token
+ok 403 - seal omitted: weakened helper accepts invalid settlement
+ok 404 - owner binding omitted: weakened helper accepts invalid settlement
+ok 405 - cleanup omitted: weakened helper accepts invalid settlement
+ok 406 - no current target or archive helper lookup
+ok 407 - no process attempt
+1..407

@@ -1,0 +1,9 @@
+{
+  "draft_review": "Guard receipt element types before reading their work IDs, preventing Perl autovivification from changing malformed caller data. Parenthesize the grep condition explicitly. Add malformed original acquisition/evidence/store controls before pinning. No qualifier or full auditor has run.",
+  "perl_module_and_harness_syntax": "pass",
+  "pins_before_first_qualification": true,
+  "prospective_pins": 5,
+  "python_domain_and_malformed_controls": "pass",
+  "schema": "fsmgen.inactive_observation_work_record_preflight_review.v1",
+  "source_inputs": 30
+}

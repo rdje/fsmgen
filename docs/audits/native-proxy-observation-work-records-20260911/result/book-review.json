@@ -1,0 +1,14 @@
+{
+  "cancelled_never_started_example_verified": true,
+  "exact_output_absent": true,
+  "exit_code": 0,
+  "native_seal_transport_and_release_gates_verified": true,
+  "new_passage_verified": true,
+  "output": ".artifacts/tmp/native-proxy-observation-work-records-book-20260911/book",
+  "ownership_order_and_input_preservation_verified": true,
+  "rendered_bytes": 23321761,
+  "rendered_directories": 3,
+  "rendered_files": 98,
+  "same_volume_direct_objects": true,
+  "synthetic_wire_boundary_verified": true
+}

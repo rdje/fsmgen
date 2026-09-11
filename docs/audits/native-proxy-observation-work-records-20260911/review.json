@@ -1,0 +1,30 @@
+{
+  "book": {
+    "cancelled_never_started_example_verified": true,
+    "exact_output_absent": true,
+    "exit_code": 0,
+    "native_seal_transport_and_release_gates_verified": true,
+    "new_passage_verified": true,
+    "output": ".artifacts/tmp/native-proxy-observation-work-records-book-20260911/book",
+    "ownership_order_and_input_preservation_verified": true,
+    "rendered_bytes": 23321761,
+    "rendered_directories": 3,
+    "rendered_files": 98,
+    "same_volume_direct_objects": true,
+    "synthetic_wire_boundary_verified": true
+  },
+  "counts": "result/audit.json",
+  "doctrines": "Focused task/Knowledge Map/rendered-book checks plus mandatory staged and commit-hook doctrines are required before durable completion.",
+  "durability": "Five prospective pins and fifteen exact raw copies retain syntax/domain preflight, first qualification and first independent audit. The task, bounded book/Knowledge Map, exact preceding acceptance suffix and Git carry scope and the next frontier.",
+  "falsification": "The complete declared scalar-cleanup/outcome grid, 154 malformed controls and three deliberately weakened helper witnesses establish rejection behavior. Seventeen altered-result and one missing-domain control independently reject. Input/result mutation checks retain scalar JSON types and byte flags, including malformed receipt element rejection before autovivifying reads.",
+  "knowledge_map": "knowledge-map: OK (1161 facts, 6406 unique questions, 6577 answer occurrences, 139 bounded topic shards; query parity verified)",
+  "knowledge_projection": "knowledge-projection.json",
+  "next_action": "Implement and qualify exact coordinator release; interruptions/applicability/native/startup/parent/full CI/push remain separately gated.",
+  "owner": "HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.12.4.1.3.4.3.1",
+  "recovery": "result/recovery-copies.json",
+  "rederivation": "First pure Perl qualifier and independent Python schema/domain oracle agree on all recorded canonical values, exact original bindings and outcome/cleanup decisions. Current predecessor sources and prospective inputs remain byte-exact. The domain joins historical acquisition/reuse data to explicit constructed inputs without reading target paths.",
+  "schema": "fsmgen.inactive_observation_work_record_review.v1",
+  "scope": "Pure inactive record consistency. Two historical acquisition bindings plus constructed byte/profile/limit data; no current target or archive lookup, process launch, actual late-launch prevention, native receipt authenticity, hold release or product activation. Cleanup accepts the existing scalar numeric/string zero/one spellings, independently of completed/failed/cancelled outcome. Work IDs are unique; the contract does not require distinct tokens for distinct work entries. Aggregate wire size derives conservatively from the bounded selection, receipt roster and fixed envelope.",
+  "task_integrity": "[task-tree-integrity] all active task-tree invariants hold (trees=4, nodes=1354, segments=3, compact_terminals=16, index_archives=1, migrations=1, acceptance_histories=1)",
+  "wire_boundary": "The exact and adjacent encoded-selection limits use consistent synthetic historical evidence-path strings. They qualify wire admission only, not existence or representability of those names on an operating-system filesystem. Per-receipt and aggregate envelope ceilings are conservative admission guards; no independently reached OS/process-capacity limit is claimed."
+}

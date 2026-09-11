@@ -2096,15 +2096,58 @@ authority. The future release route must remove only the exact original hold,
 leave images and other owners intact, and preserve a failure after unlink
 without inventing a retained hold or retrying the removal.
 
-This is a prospective contract with a finite abstract model, not implemented
-archive/release behavior or authenticated native cleanup. Structural bounds
-and the remaining ownership/transport gates are recorded in
+The original contract has a finite abstract model. Inactive archival is now
+qualified below; exact hold removal and authenticated native cleanup remain
+separate gates. Structural bounds and ownership/transport requirements are in
 `docs/audits/native-proxy-observation-release-contract-20260911/contract.json`.
 The source/model check performs no fixture or native execution:
 
 ```bash
 scripts/run_with_ram_guard.sh -- python3 -B docs/audits/native-proxy-observation-release-contract-20260911/audit.py
 ```
+
+Closed selected-work records now have a pure inactive implementation in
+`docs/audits/native-proxy-observation-work-records-20260911/WorkRecord.pm`.
+A selection binds the exact original evidence-directory identity and observation
+key to a nonempty ordered list of work IDs, reserved ownership tokens and
+capture/helper/query roles. Work IDs are unique; separate work entries may reserve
+the same owner token. Each receipt must match its selected entry exactly and
+appear in the original order. Missing, duplicate, extra or reordered work rejects.
+
+A settlement contains the complete original selection, an explicit seal and
+all matching receipts. Outcome and cleanup are independent. Given the matching
+selected helper entry, this is an explicit cancelled, never-started receipt:
+
+```json
+{
+  "cleanup": {
+    "group_gone": "1",
+    "leader_reaped": "0",
+    "leader_started": "0"
+  },
+  "outcome": "cancelled",
+  "ownership_token": "db99dcafd1d5eb773d52e2e4c8abfb2e018b104826ab4348b69d3c0d8d0e5acb",
+  "role": "helper",
+  "work_id": "work:0"
+}
+```
+
+A started leader requires reaping, and the group must be gone. The existing
+numeric and string zero/one cleanup spellings are preserved; JSON booleans and
+malformed values reject. A cancelled operation without its explicit matching
+receipt remains unsettled. The seal and cleanup fields describe supplied inert
+evidence; actual prevention of later starts and native receipt authenticity still
+require the separately qualified ownership and transport mechanism.
+
+Selections and settlements have closed fields and bounded canonical ASCII
+encodings. Extra fields, noncanonical JSON, character scalars supplied as raw
+bytes and altered original bindings reject. Returned records are independent
+copies, and rejection preserves the caller's scalar types and byte flags.
+Encoded-size boundary examples use synthetic historical path strings; they do
+not establish filesystem path capacity. Plans, original qualification, source
+pins and the independent schema/domain oracle are retained beside the module.
+These pure calls perform no current target/archive lookup, start no process and
+remove no hold. Exact coordinated release is the next implementation step.
 
 The inactive archive record implementation now derives a closed specification
 from the complete original acquisition and request. It keeps the ordered wrapper,
