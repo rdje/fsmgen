@@ -1,0 +1,16 @@
+{
+  "checked_passages": [
+    "The active-runtime after-call partition retains the same runtime reference, private workspace and both initial observation holds.",
+    "Setup still performs no retirement.",
+    "its completed cleanup remains complete while interrupted callers close only the handles they still own.",
+    "The preflight projects each admitted return from the just-qualified active healthy trace",
+    "active-after-20260911/audit.py --verify-saved"
+  ],
+  "exact_output_absent": true,
+  "exit_code": 0,
+  "output": ".artifacts/tmp/native-proxy-observation-archive-release-active-after-book-20260911/book",
+  "rendered_bytes": 23384580,
+  "rendered_directories": 3,
+  "rendered_files": 98,
+  "same_volume_direct_objects": true
+}

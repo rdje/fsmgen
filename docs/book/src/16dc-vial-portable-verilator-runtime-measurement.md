@@ -2392,6 +2392,23 @@ Inspect and revalidate the retained bodies with:
 python3 -B docs/audits/native-proxy-observation-archive-release-active-before-20260911/audit.py --verify-saved
 ```
 
+The active-runtime after-call partition retains the same runtime reference,
+private workspace and both initial observation holds. Setup still performs no
+retirement. A selected helper has returned normally when the injected fault
+fires; its completed cleanup remains complete while interrupted callers close
+only the handles they still own.
+
+The preflight projects each admitted return from the just-qualified active
+healthy trace and compares the remaining real close order with the unchanged
+after-call oracle. Each new fixture independently resolves its call address
+from current inputs. The audit checks exact runtime/workspace preservation,
+truthful unlink and absence results, and rejection of invented retirement or
+lost ownership records. Revalidate the complete retained bodies with:
+
+```sh
+python3 -B docs/audits/native-proxy-observation-archive-release-active-after-20260911/audit.py --verify-saved
+```
+
 Later lanes qualify the remaining profile/phase partitions, actual closes followed by modeled
 errors, deliberate close omissions with separate recovery, and the final
 source/evidence join. Primary errors outrank cleanup reports. These finite

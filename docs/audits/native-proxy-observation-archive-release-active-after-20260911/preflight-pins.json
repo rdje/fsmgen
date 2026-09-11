@@ -1,0 +1,47 @@
+[
+  {
+    "path": "docs/audits/native-proxy-observation-archive-release-active-after-20260911/plan.json",
+    "sha256": "b9d5ddb55e5ce6925685b560a09d930a9d05abd3918b949531bd95583b93fa1f",
+    "size_bytes": 1072157
+  },
+  {
+    "path": "docs/audits/native-proxy-observation-archive-release-active-after-20260911/prepare.py",
+    "sha256": "b8e47bda42f5669720df052bc83c4a28e4da0b5b1294a11adef5fb847da8e500",
+    "size_bytes": 2867
+  },
+  {
+    "path": "docs/audits/native-proxy-observation-archive-release-active-after-20260911/qualify.t",
+    "sha256": "ed77c590a621b50557bd88064ffb8bf1b815383868b7d351a45a375a9ce52a5b",
+    "size_bytes": 12026
+  },
+  {
+    "path": "docs/audits/native-proxy-observation-archive-release-active-after-20260911/audit.py",
+    "sha256": "0890ded6e21efacd43678d7e5b6e70d2d6e8dd7f8ecb43cfbb1c7ab9b370034a",
+    "size_bytes": 20851
+  },
+  {
+    "path": "docs/audits/native-proxy-observation-archive-release-active-after-20260911/trace-preflight.py",
+    "sha256": "3792fd882e7573f93fc216fcb540b271e7fe647fc3492205295844f7c94134c5",
+    "size_bytes": 5187
+  },
+  {
+    "path": "docs/audits/native-proxy-observation-archive-release-active-after-20260911/trace-preflight-pins.json",
+    "sha256": "46a56836c090e2a3f4a93a1f1cde9e66486789e027fc2497e308cce3e69531df",
+    "size_bytes": 658
+  },
+  {
+    "path": "docs/audits/native-proxy-observation-archive-release-active-after-20260911/result/trace-preflight.json",
+    "sha256": "32c03e1df95f91445b2142dfa20b31b03b617496ae6d9642af409937a2bec160",
+    "size_bytes": 249041
+  },
+  {
+    "path": "docs/audits/native-proxy-observation-archive-release-active-after-20260911/result/trace-preflight.stdout",
+    "sha256": "2089f1c86a6eab4824a8545ac971b7534f1474254dfedc7ee1942486dc242e8c",
+    "size_bytes": 48
+  },
+  {
+    "path": "docs/audits/native-proxy-observation-archive-release-active-after-20260911/result/trace-preflight.exit",
+    "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa",
+    "size_bytes": 2
+  }
+]
