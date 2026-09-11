@@ -1,0 +1,18 @@
+{
+  "finding": "Bare mdBook archive qualification commands require ignored preflight files and prior local evidence that a fresh checkout does not contain.",
+  "mechanism": "qualify.t reads the repository-derived .artifacts/logs/<component>/preflight-pins.json before ArchiveFixture::initialize can create its output directory. The commands shown in the book do not reconstruct that input. audit.py likewise reads the local qualification/evidence directory. Exact recovery copies exist in tracked result directories.",
+  "next": "Finish and commit equal-content existing call qualification, then qualify a self-contained same-volume replay/saved-evidence workflow with exact source pins and preserved originals before returning to partial writes.",
+  "observed_sources": [
+    "docs/audits/native-proxy-observation-archive-existing-calls-20260911/qualify.t",
+    "docs/audits/native-proxy-observation-archive-existing-calls-20260911/audit.py",
+    "docs/audits/native-proxy-observation-archive-boundaries-20260911/ArchiveFixture.pm",
+    "docs/book/src/16dc-vial-portable-verilator-runtime-measurement.md"
+  ],
+  "owner": "HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.12.4.1.3.4.2.3.5",
+  "read_only_evidence": "git ls-files reports the tracked result/preflight-pins.json copy and no .artifacts/logs preflight file; source reads precede initialization and no fallback or setup command is shown in the affected book passages.",
+  "schema": "fsmgen.inactive_archive_replay_issue.v1",
+  "scope": "Documentation/replay reproducibility defect; existing retained first-run qualification results remain valid. No historical producer, compiler or native experiment has been rerun to investigate this.",
+  "source_locus": "The existing-route qualify.t reads the preflight at line 32 and initializes output at line 46; git log -S preflight-pins identifies 83501699d4c9f45d0c5c43837453141f60d02e8b.",
+  "source_revision": "af76fe3c794dc020e4de71789d24a13eafcbca76",
+  "status": "open"
+}

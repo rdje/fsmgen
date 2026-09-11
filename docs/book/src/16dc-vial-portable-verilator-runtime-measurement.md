@@ -2130,7 +2130,18 @@ are independent copies of the caller's retained inputs.
 These checks use saved acquisitions and explicitly synthetic archive identities.
 They open no original target or archive file and establish no actual storage,
 permissions, descriptor custody, settlement or release authority. Actual
-archival qualifies below; interruption checks remain separate. Pure replay:
+archival qualifies below; interruption checks remain separate.
+
+The archive producer/audit commands below are authoring drivers for the
+original qualification workspace: they require its preflight pins and local
+result files. They are not yet self-contained fresh-checkout replay commands.
+Exact recovery copies are tracked under each audit's `result/` directory.
+The missing setup is a tracked reproducibility defect in
+`docs/audits/native-proxy-observation-archive-replay-20260911/issue.json`; a
+saved-evidence verification workflow that preserves original results is next.
+This does not invalidate the already retained first-run qualification.
+
+Pure authoring drivers:
 
 ```bash
 scripts/run_with_ram_guard.sh -- perl docs/audits/native-proxy-observation-archive-records-20260911/qualify.t
@@ -2185,8 +2196,9 @@ cleanup; injecting an adapter exception there would manufacture a handoff leak.
 That observation is excluded from throwing call-fault selectors. Close events
 are reserved for separately qualified return-error and omitted-close controls.
 Healthy traces prove this selection and ownership order; the following matrices
-add ordinary fresh/existing and equal-content fresh call cuts. Other
-interruption domains and native release authority remain open. Replay:
+add ordinary and equal-content fresh/existing call cuts. Partial-write and
+close domains, the final applicability join and native release remain open.
+Authoring drivers with the workspace prerequisites described above:
 
 ```bash
 scripts/run_with_ram_guard.sh -- perl docs/audits/native-proxy-observation-archive-boundaries-20260911/qualify.t
@@ -2209,8 +2221,9 @@ workspace stays absent. An existing partial archive still requires separately
 owned recovery; this path does not silently fill or repair it.
 
 These are throwing helper-call controls for the ordinary fresh route. Short
-writes, close-return errors, the equal-content existing route and native
-release have separate qualification gates. Further call cuts are described below. Inspect the saved qualification and oracle
+writes, close-return errors and native release have separate qualification
+gates. Further call cuts are described below. Inspect the saved qualification
+and oracle
 under `docs/audits/native-proxy-observation-archive-fresh-calls-20260911/result/`.
 The corresponding inert producer and independent checker are:
 
@@ -2233,8 +2246,8 @@ remain unchanged. Verification makes no writes and grants no release authority.
 The independent audit checks the entire preparation, the interrupted healthy
 prefix and cleanup order; it does not assume preparation succeeded.
 
-Equal-content existing calls, partial writes, close-return errors and native
-release remain separate gates. Saved evidence and the independent oracle live under
+Partial writes, close-return errors and native release remain separate gates.
+Saved evidence and the independent oracle live under
 `docs/audits/native-proxy-observation-archive-existing-calls-20260911/`. The inert
 qualification commands are:
 
@@ -2258,14 +2271,32 @@ source/writer/directory cleanup must match. Both observation holds, the other
 runtime/workspace and retained inputs remain unchanged after target retirement.
 An interrupted call does not return an archive receipt or grant release.
 
-The equal-content existing route, partial writes and close-return errors remain
-separate qualification gates. Inspect the saved evidence and independent audit
+Partial writes and close-return errors remain separate qualification gates.
+Inspect the saved evidence and independent audit
 under `docs/audits/native-proxy-observation-archive-equal-fresh-calls-20260911/`:
 
 ```bash
 scripts/run_with_ram_guard.sh -- perl docs/audits/native-proxy-observation-archive-equal-fresh-calls-20260911/qualify.t
 scripts/run_with_ram_guard.sh -- python3 -B docs/audits/native-proxy-observation-archive-equal-fresh-calls-20260911/audit.py
 ```
+
+The complete equal-content archive also has selected verification-call
+interruption coverage. Every case observes a successful fresh preparation,
+including the deduplicated files, all original source/archive bindings and
+actual source/writer/directory closure, before activating the selected failure.
+
+The interrupted verifier performs no writes and leaves the complete archive,
+its bytes and native identities, both observation holds and other owners
+unchanged. Independent checks require the shared wrapper/private/global bytes
+to retain three distinct original identities and one archive destination.
+Reread and retained-source handles explicitly close in their owned order; a
+late receipt-helper failure still propagates without a successful return.
+
+The saved qualification and independent audit are under
+`docs/audits/native-proxy-observation-archive-equal-existing-calls-20260911/result/`.
+The same fresh-checkout replay prerequisite issue described above applies to
+these authoring drivers. Their valid first-run evidence does not close partial
+writes, close-error controls, final source applicability or native release.
 
 The helper checks bounded regular source/output files and the native header,
 then sets executable permissions through the admitted open file handle. A

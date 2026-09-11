@@ -1,0 +1,77 @@
+{
+  "all_copies_byte_exact": true,
+  "files": [
+    {
+      "destination": "docs/audits/native-proxy-observation-archive-equal-existing-calls-20260911/result/plan.stdout",
+      "sha256": "71577b0c9c6e19e455acf7aa131d690049a2481f2d43d88f7fca300a07fdb272",
+      "size_bytes": 38,
+      "source": ".artifacts/logs/native-proxy-observation-archive-equal-existing-calls-20260911/plan.stdout"
+    },
+    {
+      "destination": "docs/audits/native-proxy-observation-archive-equal-existing-calls-20260911/result/plan.stderr",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "size_bytes": 0,
+      "source": ".artifacts/logs/native-proxy-observation-archive-equal-existing-calls-20260911/plan.stderr"
+    },
+    {
+      "destination": "docs/audits/native-proxy-observation-archive-equal-existing-calls-20260911/result/preflight-pins.json",
+      "sha256": "2ffdc897c8ce72c89a6a711ee98746aeb72f69ebd0d55a5312ccafbc193af341",
+      "size_bytes": 858,
+      "source": ".artifacts/logs/native-proxy-observation-archive-equal-existing-calls-20260911/preflight-pins.json"
+    },
+    {
+      "destination": "docs/audits/native-proxy-observation-archive-equal-existing-calls-20260911/result/qualification.json",
+      "sha256": "4dc31652e486697bda07a8d9c22c067050e17e52cabd1a2ef7d752f5e7a30c99",
+      "size_bytes": 19310565,
+      "source": ".artifacts/logs/native-proxy-observation-archive-equal-existing-calls-20260911/qualification.json"
+    },
+    {
+      "destination": "docs/audits/native-proxy-observation-archive-equal-existing-calls-20260911/result/admission.jsonl",
+      "sha256": "de9c29c69fd74eb50a8e5edf7e1de369e24da57f92fc946fefd026e31683048f",
+      "size_bytes": 50016,
+      "source": ".artifacts/logs/native-proxy-observation-archive-equal-existing-calls-20260911/admission.jsonl"
+    },
+    {
+      "destination": "docs/audits/native-proxy-observation-archive-equal-existing-calls-20260911/result/qualify.tap",
+      "sha256": "3e25a40266c2bb2d26a86dbd5de9fbe01bdc2f120e71fbd70bba52434777f8a8",
+      "size_bytes": 71969,
+      "source": ".artifacts/logs/native-proxy-observation-archive-equal-existing-calls-20260911/qualify.tap"
+    },
+    {
+      "destination": "docs/audits/native-proxy-observation-archive-equal-existing-calls-20260911/result/qualify.stderr",
+      "sha256": "ef8ffff41824fc2c2f2ff0b2b825fd7ff009ab185924f493fdb8263d769b1a4f",
+      "size_bytes": 91,
+      "source": ".artifacts/logs/native-proxy-observation-archive-equal-existing-calls-20260911/qualify.stderr"
+    },
+    {
+      "destination": "docs/audits/native-proxy-observation-archive-equal-existing-calls-20260911/result/qualify.exit",
+      "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa",
+      "size_bytes": 2,
+      "source": ".artifacts/logs/native-proxy-observation-archive-equal-existing-calls-20260911/qualify.exit"
+    },
+    {
+      "destination": "docs/audits/native-proxy-observation-archive-equal-existing-calls-20260911/result/audit.json",
+      "sha256": "c93c22870dc72b4528ecb3734ccaa7ce915f680d86928f2724333db7bd49b278",
+      "size_bytes": 2037,
+      "source": ".artifacts/logs/native-proxy-observation-archive-equal-existing-calls-20260911/audit.json"
+    },
+    {
+      "destination": "docs/audits/native-proxy-observation-archive-equal-existing-calls-20260911/result/audit.stdout",
+      "sha256": "f89dcffacb6b918179b115e319ee8217bca05e3d65543d48c2386823edcab55d",
+      "size_bytes": 1851,
+      "source": ".artifacts/logs/native-proxy-observation-archive-equal-existing-calls-20260911/audit.stdout"
+    },
+    {
+      "destination": "docs/audits/native-proxy-observation-archive-equal-existing-calls-20260911/result/audit.stderr",
+      "sha256": "32582e0422c9ddf998ca8a748652833554bb2068069df54ec6ef6a1a734ebf53",
+      "size_bytes": 91,
+      "source": ".artifacts/logs/native-proxy-observation-archive-equal-existing-calls-20260911/audit.stderr"
+    },
+    {
+      "destination": "docs/audits/native-proxy-observation-archive-equal-existing-calls-20260911/result/audit.exit",
+      "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa",
+      "size_bytes": 2,
+      "source": ".artifacts/logs/native-proxy-observation-archive-equal-existing-calls-20260911/audit.exit"
+    }
+  ]
+}

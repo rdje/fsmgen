@@ -1,0 +1,28 @@
+{
+  "book": {
+    "exact_output_absent": true,
+    "exit_code": 0,
+    "new_passage_verified": true,
+    "output": ".artifacts/tmp/native-proxy-observation-archive-equal-existing-calls-book-20260911/book",
+    "rendered_bytes": 23244007,
+    "rendered_files": 98,
+    "replay_prerequisite_disclosure_verified": true,
+    "same_volume_direct_objects": true
+  },
+  "discovery": {
+    "finding": "Archive authoring commands require ignored local preflight/evidence files and are not self-contained fresh-checkout replay. Existing first-run results are valid. The book discloses the missing prerequisite; repair is the immediate next committed frontier before partial-write qualification.",
+    "issue": "docs/audits/native-proxy-observation-archive-replay-20260911/issue.json",
+    "owner": "HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.12.4.1.3.4.2.3.5"
+  },
+  "doctrines": "Final staged-index and commit-hook passes are required conditions of the durable work-unit commit; full CI/push and startup/native/parent gates remain open.",
+  "documentation": "documentation.json",
+  "durability": "Thirty-eight predecessor inputs remain byte-identical to af76fe3c794dc020e4de71789d24a13eafcbca76, including twenty-one Perl modules and the qualified adapters/oracle used for this profile adaptation. Four prospective pins and twelve exact raw recovery copies preserve the first producer/oracle results. The healthy equal-content receipt is authenticated directly from Git and independently rechecked without rerunning its matrix. Current task/book/Knowledge Map and exact predecessor acceptance history preserve continuity.",
+  "falsification": "Thirty altered reports reject omitted/duplicate/misselected/unhit cases, false success/primary errors, hidden/failed preparation, lost preparation events/bindings, missing or false preparation/verification/observer cleanup, foreign identities, changed archive bytes/modes, verification writes, original target reads, removal of the exact other observation hold, altered input/shared bytes, collapsed original identity, lost allocations and process attempts. Four domain controls reject duplicate, unsafe ownership-transfer and omitted selectors and omitted preparation events. Genuine omitted-close and modeled close-return controls remain separately owned.",
+  "knowledge_map": "knowledge-map: OK (1161 facts, 6392 unique questions, 6563 answer occurrences, 139 bounded topic shards; query parity verified)",
+  "knowledge_projection": "knowledge-projection.json",
+  "limits": "Only the selected equal-reference existing helper-call cuts are executed. Partial syswrite progress, modeled close reports, omitted-close implementations, bounds/layout and final applicability join remain owned siblings. No original target reopen, compiler/native execution, archive release, crash or arbitrary-writer atomicity claim. Handle/event counts are instances within operation namespaces, not globally distinct descriptor integers or strings. Directory-stat duplicates close immediately; directory CLOEXEC is unmeasured. Verification source and preparation source/writer CLOEXEC is checked. No first-run qualification repair or historical/native/compiler matrix rerun occurred.",
+  "owner": "HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.12.4.1.3.4.2.3.2.4",
+  "rederivation": "First guarded producer and independent oracle runs exit 0. All 96 selected equal-reference existing cuts follow fully observed complete fresh preparation: 192 operations and 673 TAP assertions. Preparation contributes 18816 events and 1728 owned handles (864 sources, 288 writers, 576 directories); verification contributes 6203 events and 425 owned handles (282 sources, no writers, 143 directories). Independent physical/record/lifetime and prefix/unwind checks verify exact prepared-archive preservation without writes, shared complete bytes and distinct original identities. All 2153 owned instances explicitly close and all 384 distinct roots are absent.",
+  "schema": "fsmgen.inactive_archive_equal_existing_calls_review.v1",
+  "task_integrity": "all active task-tree invariants hold (trees=4, nodes=1352, segments=3, compact_terminals=13, index_archives=1, migrations=1, acceptance_histories=1)"
+}

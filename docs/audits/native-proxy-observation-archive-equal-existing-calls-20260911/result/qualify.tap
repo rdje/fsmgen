@@ -1,0 +1,674 @@
+ok 1 - equal_reference:existing:limits:before: complete healthy preparation is observed
+ok 2 - equal_reference:existing:limits:before: all actual preparation handles explicitly close
+ok 3 - equal_reference:existing:limits:before: actual inactive retirement precedes both operations
+ok 4 - equal_reference:existing:limits:before: exact single fault propagates without success
+ok 5 - equal_reference:existing:limits:before: every actual verification handle explicitly closes
+ok 6 - equal_reference:existing:limits:before: retained inputs unchanged through both operations
+ok 7 - equal_reference:existing:limits:before: complete archive and all other owners preserved
+ok 8 - equal_reference:existing:limits:after: complete healthy preparation is observed
+ok 9 - equal_reference:existing:limits:after: all actual preparation handles explicitly close
+ok 10 - equal_reference:existing:limits:after: actual inactive retirement precedes both operations
+ok 11 - equal_reference:existing:limits:after: exact single fault propagates without success
+ok 12 - equal_reference:existing:limits:after: every actual verification handle explicitly closes
+ok 13 - equal_reference:existing:limits:after: retained inputs unchanged through both operations
+ok 14 - equal_reference:existing:limits:after: complete archive and all other owners preserved
+ok 15 - equal_reference:existing:prior:0:before: complete healthy preparation is observed
+ok 16 - equal_reference:existing:prior:0:before: all actual preparation handles explicitly close
+ok 17 - equal_reference:existing:prior:0:before: actual inactive retirement precedes both operations
+ok 18 - equal_reference:existing:prior:0:before: exact single fault propagates without success
+ok 19 - equal_reference:existing:prior:0:before: every actual verification handle explicitly closes
+ok 20 - equal_reference:existing:prior:0:before: retained inputs unchanged through both operations
+ok 21 - equal_reference:existing:prior:0:before: complete archive and all other owners preserved
+ok 22 - equal_reference:existing:directory:evidence:0:before: complete healthy preparation is observed
+ok 23 - equal_reference:existing:directory:evidence:0:before: all actual preparation handles explicitly close
+ok 24 - equal_reference:existing:directory:evidence:0:before: actual inactive retirement precedes both operations
+ok 25 - equal_reference:existing:directory:evidence:0:before: exact single fault propagates without success
+ok 26 - equal_reference:existing:directory:evidence:0:before: every actual verification handle explicitly closes
+ok 27 - equal_reference:existing:directory:evidence:0:before: retained inputs unchanged through both operations
+ok 28 - equal_reference:existing:directory:evidence:0:before: complete archive and all other owners preserved
+ok 29 - equal_reference:existing:directory:evidence:0:after: complete healthy preparation is observed
+ok 30 - equal_reference:existing:directory:evidence:0:after: all actual preparation handles explicitly close
+ok 31 - equal_reference:existing:directory:evidence:0:after: actual inactive retirement precedes both operations
+ok 32 - equal_reference:existing:directory:evidence:0:after: exact single fault propagates without success
+ok 33 - equal_reference:existing:directory:evidence:0:after: every actual verification handle explicitly closes
+ok 34 - equal_reference:existing:directory:evidence:0:after: retained inputs unchanged through both operations
+ok 35 - equal_reference:existing:directory:evidence:0:after: complete archive and all other owners preserved
+ok 36 - equal_reference:existing:prior:0:after: complete healthy preparation is observed
+ok 37 - equal_reference:existing:prior:0:after: all actual preparation handles explicitly close
+ok 38 - equal_reference:existing:prior:0:after: actual inactive retirement precedes both operations
+ok 39 - equal_reference:existing:prior:0:after: exact single fault propagates without success
+ok 40 - equal_reference:existing:prior:0:after: every actual verification handle explicitly closes
+ok 41 - equal_reference:existing:prior:0:after: retained inputs unchanged through both operations
+ok 42 - equal_reference:existing:prior:0:after: complete archive and all other owners preserved
+ok 43 - equal_reference:existing:directory:archive:0:before: complete healthy preparation is observed
+ok 44 - equal_reference:existing:directory:archive:0:before: all actual preparation handles explicitly close
+ok 45 - equal_reference:existing:directory:archive:0:before: actual inactive retirement precedes both operations
+ok 46 - equal_reference:existing:directory:archive:0:before: exact single fault propagates without success
+ok 47 - equal_reference:existing:directory:archive:0:before: every actual verification handle explicitly closes
+ok 48 - equal_reference:existing:directory:archive:0:before: retained inputs unchanged through both operations
+ok 49 - equal_reference:existing:directory:archive:0:before: complete archive and all other owners preserved
+ok 50 - equal_reference:existing:directory:archive:0:after: complete healthy preparation is observed
+ok 51 - equal_reference:existing:directory:archive:0:after: all actual preparation handles explicitly close
+ok 52 - equal_reference:existing:directory:archive:0:after: actual inactive retirement precedes both operations
+ok 53 - equal_reference:existing:directory:archive:0:after: exact single fault propagates without success
+ok 54 - equal_reference:existing:directory:archive:0:after: every actual verification handle explicitly closes
+ok 55 - equal_reference:existing:directory:archive:0:after: retained inputs unchanged through both operations
+ok 56 - equal_reference:existing:directory:archive:0:after: complete archive and all other owners preserved
+ok 57 - equal_reference:existing:directory_closure:0:before: complete healthy preparation is observed
+ok 58 - equal_reference:existing:directory_closure:0:before: all actual preparation handles explicitly close
+ok 59 - equal_reference:existing:directory_closure:0:before: actual inactive retirement precedes both operations
+ok 60 - equal_reference:existing:directory_closure:0:before: exact single fault propagates without success
+ok 61 - equal_reference:existing:directory_closure:0:before: every actual verification handle explicitly closes
+ok 62 - equal_reference:existing:directory_closure:0:before: retained inputs unchanged through both operations
+ok 63 - equal_reference:existing:directory_closure:0:before: complete archive and all other owners preserved
+ok 64 - equal_reference:existing:directory:evidence:1:before: complete healthy preparation is observed
+ok 65 - equal_reference:existing:directory:evidence:1:before: all actual preparation handles explicitly close
+ok 66 - equal_reference:existing:directory:evidence:1:before: actual inactive retirement precedes both operations
+ok 67 - equal_reference:existing:directory:evidence:1:before: exact single fault propagates without success
+ok 68 - equal_reference:existing:directory:evidence:1:before: every actual verification handle explicitly closes
+ok 69 - equal_reference:existing:directory:evidence:1:before: retained inputs unchanged through both operations
+ok 70 - equal_reference:existing:directory:evidence:1:before: complete archive and all other owners preserved
+ok 71 - equal_reference:existing:directory:evidence:1:after: complete healthy preparation is observed
+ok 72 - equal_reference:existing:directory:evidence:1:after: all actual preparation handles explicitly close
+ok 73 - equal_reference:existing:directory:evidence:1:after: actual inactive retirement precedes both operations
+ok 74 - equal_reference:existing:directory:evidence:1:after: exact single fault propagates without success
+ok 75 - equal_reference:existing:directory:evidence:1:after: every actual verification handle explicitly closes
+ok 76 - equal_reference:existing:directory:evidence:1:after: retained inputs unchanged through both operations
+ok 77 - equal_reference:existing:directory:evidence:1:after: complete archive and all other owners preserved
+ok 78 - equal_reference:existing:directory:archive:1:before: complete healthy preparation is observed
+ok 79 - equal_reference:existing:directory:archive:1:before: all actual preparation handles explicitly close
+ok 80 - equal_reference:existing:directory:archive:1:before: actual inactive retirement precedes both operations
+ok 81 - equal_reference:existing:directory:archive:1:before: exact single fault propagates without success
+ok 82 - equal_reference:existing:directory:archive:1:before: every actual verification handle explicitly closes
+ok 83 - equal_reference:existing:directory:archive:1:before: retained inputs unchanged through both operations
+ok 84 - equal_reference:existing:directory:archive:1:before: complete archive and all other owners preserved
+ok 85 - equal_reference:existing:directory:archive:1:after: complete healthy preparation is observed
+ok 86 - equal_reference:existing:directory:archive:1:after: all actual preparation handles explicitly close
+ok 87 - equal_reference:existing:directory:archive:1:after: actual inactive retirement precedes both operations
+ok 88 - equal_reference:existing:directory:archive:1:after: exact single fault propagates without success
+ok 89 - equal_reference:existing:directory:archive:1:after: every actual verification handle explicitly closes
+ok 90 - equal_reference:existing:directory:archive:1:after: retained inputs unchanged through both operations
+ok 91 - equal_reference:existing:directory:archive:1:after: complete archive and all other owners preserved
+ok 92 - equal_reference:existing:directory_closure:0:after: complete healthy preparation is observed
+ok 93 - equal_reference:existing:directory_closure:0:after: all actual preparation handles explicitly close
+ok 94 - equal_reference:existing:directory_closure:0:after: actual inactive retirement precedes both operations
+ok 95 - equal_reference:existing:directory_closure:0:after: exact single fault propagates without success
+ok 96 - equal_reference:existing:directory_closure:0:after: every actual verification handle explicitly closes
+ok 97 - equal_reference:existing:directory_closure:0:after: retained inputs unchanged through both operations
+ok 98 - equal_reference:existing:directory_closure:0:after: complete archive and all other owners preserved
+ok 99 - equal_reference:existing:members:0:before: complete healthy preparation is observed
+ok 100 - equal_reference:existing:members:0:before: all actual preparation handles explicitly close
+ok 101 - equal_reference:existing:members:0:before: actual inactive retirement precedes both operations
+ok 102 - equal_reference:existing:members:0:before: exact single fault propagates without success
+ok 103 - equal_reference:existing:members:0:before: every actual verification handle explicitly closes
+ok 104 - equal_reference:existing:members:0:before: retained inputs unchanged through both operations
+ok 105 - equal_reference:existing:members:0:before: complete archive and all other owners preserved
+ok 106 - equal_reference:existing:names:0:before: complete healthy preparation is observed
+ok 107 - equal_reference:existing:names:0:before: all actual preparation handles explicitly close
+ok 108 - equal_reference:existing:names:0:before: actual inactive retirement precedes both operations
+ok 109 - equal_reference:existing:names:0:before: exact single fault propagates without success
+ok 110 - equal_reference:existing:names:0:before: every actual verification handle explicitly closes
+ok 111 - equal_reference:existing:names:0:before: retained inputs unchanged through both operations
+ok 112 - equal_reference:existing:names:0:before: complete archive and all other owners preserved
+ok 113 - equal_reference:existing:names:0:after: complete healthy preparation is observed
+ok 114 - equal_reference:existing:names:0:after: all actual preparation handles explicitly close
+ok 115 - equal_reference:existing:names:0:after: actual inactive retirement precedes both operations
+ok 116 - equal_reference:existing:names:0:after: exact single fault propagates without success
+ok 117 - equal_reference:existing:names:0:after: every actual verification handle explicitly closes
+ok 118 - equal_reference:existing:names:0:after: retained inputs unchanged through both operations
+ok 119 - equal_reference:existing:names:0:after: complete archive and all other owners preserved
+ok 120 - equal_reference:existing:members:0:after: complete healthy preparation is observed
+ok 121 - equal_reference:existing:members:0:after: all actual preparation handles explicitly close
+ok 122 - equal_reference:existing:members:0:after: actual inactive retirement precedes both operations
+ok 123 - equal_reference:existing:members:0:after: exact single fault propagates without success
+ok 124 - equal_reference:existing:members:0:after: every actual verification handle explicitly closes
+ok 125 - equal_reference:existing:members:0:after: retained inputs unchanged through both operations
+ok 126 - equal_reference:existing:members:0:after: complete archive and all other owners preserved
+ok 127 - equal_reference:existing:directory_closure:1:before: complete healthy preparation is observed
+ok 128 - equal_reference:existing:directory_closure:1:before: all actual preparation handles explicitly close
+ok 129 - equal_reference:existing:directory_closure:1:before: actual inactive retirement precedes both operations
+ok 130 - equal_reference:existing:directory_closure:1:before: exact single fault propagates without success
+ok 131 - equal_reference:existing:directory_closure:1:before: every actual verification handle explicitly closes
+ok 132 - equal_reference:existing:directory_closure:1:before: retained inputs unchanged through both operations
+ok 133 - equal_reference:existing:directory_closure:1:before: complete archive and all other owners preserved
+ok 134 - equal_reference:existing:directory:evidence:2:before: complete healthy preparation is observed
+ok 135 - equal_reference:existing:directory:evidence:2:before: all actual preparation handles explicitly close
+ok 136 - equal_reference:existing:directory:evidence:2:before: actual inactive retirement precedes both operations
+ok 137 - equal_reference:existing:directory:evidence:2:before: exact single fault propagates without success
+ok 138 - equal_reference:existing:directory:evidence:2:before: every actual verification handle explicitly closes
+ok 139 - equal_reference:existing:directory:evidence:2:before: retained inputs unchanged through both operations
+ok 140 - equal_reference:existing:directory:evidence:2:before: complete archive and all other owners preserved
+ok 141 - equal_reference:existing:directory:evidence:2:after: complete healthy preparation is observed
+ok 142 - equal_reference:existing:directory:evidence:2:after: all actual preparation handles explicitly close
+ok 143 - equal_reference:existing:directory:evidence:2:after: actual inactive retirement precedes both operations
+ok 144 - equal_reference:existing:directory:evidence:2:after: exact single fault propagates without success
+ok 145 - equal_reference:existing:directory:evidence:2:after: every actual verification handle explicitly closes
+ok 146 - equal_reference:existing:directory:evidence:2:after: retained inputs unchanged through both operations
+ok 147 - equal_reference:existing:directory:evidence:2:after: complete archive and all other owners preserved
+ok 148 - equal_reference:existing:directory:archive:2:before: complete healthy preparation is observed
+ok 149 - equal_reference:existing:directory:archive:2:before: all actual preparation handles explicitly close
+ok 150 - equal_reference:existing:directory:archive:2:before: actual inactive retirement precedes both operations
+ok 151 - equal_reference:existing:directory:archive:2:before: exact single fault propagates without success
+ok 152 - equal_reference:existing:directory:archive:2:before: every actual verification handle explicitly closes
+ok 153 - equal_reference:existing:directory:archive:2:before: retained inputs unchanged through both operations
+ok 154 - equal_reference:existing:directory:archive:2:before: complete archive and all other owners preserved
+ok 155 - equal_reference:existing:directory:archive:2:after: complete healthy preparation is observed
+ok 156 - equal_reference:existing:directory:archive:2:after: all actual preparation handles explicitly close
+ok 157 - equal_reference:existing:directory:archive:2:after: actual inactive retirement precedes both operations
+ok 158 - equal_reference:existing:directory:archive:2:after: exact single fault propagates without success
+ok 159 - equal_reference:existing:directory:archive:2:after: every actual verification handle explicitly closes
+ok 160 - equal_reference:existing:directory:archive:2:after: retained inputs unchanged through both operations
+ok 161 - equal_reference:existing:directory:archive:2:after: complete archive and all other owners preserved
+ok 162 - equal_reference:existing:directory_closure:1:after: complete healthy preparation is observed
+ok 163 - equal_reference:existing:directory_closure:1:after: all actual preparation handles explicitly close
+ok 164 - equal_reference:existing:directory_closure:1:after: actual inactive retirement precedes both operations
+ok 165 - equal_reference:existing:directory_closure:1:after: exact single fault propagates without success
+ok 166 - equal_reference:existing:directory_closure:1:after: every actual verification handle explicitly closes
+ok 167 - equal_reference:existing:directory_closure:1:after: retained inputs unchanged through both operations
+ok 168 - equal_reference:existing:directory_closure:1:after: complete archive and all other owners preserved
+ok 169 - equal_reference:existing:source:0:0:before: complete healthy preparation is observed
+ok 170 - equal_reference:existing:source:0:0:before: all actual preparation handles explicitly close
+ok 171 - equal_reference:existing:source:0:0:before: actual inactive retirement precedes both operations
+ok 172 - equal_reference:existing:source:0:0:before: exact single fault propagates without success
+ok 173 - equal_reference:existing:source:0:0:before: every actual verification handle explicitly closes
+ok 174 - equal_reference:existing:source:0:0:before: retained inputs unchanged through both operations
+ok 175 - equal_reference:existing:source:0:0:before: complete archive and all other owners preserved
+ok 176 - equal_reference:existing:recheck:source:0:0:0:before: complete healthy preparation is observed
+ok 177 - equal_reference:existing:recheck:source:0:0:0:before: all actual preparation handles explicitly close
+ok 178 - equal_reference:existing:recheck:source:0:0:0:before: actual inactive retirement precedes both operations
+ok 179 - equal_reference:existing:recheck:source:0:0:0:before: exact single fault propagates without success
+ok 180 - equal_reference:existing:recheck:source:0:0:0:before: every actual verification handle explicitly closes
+ok 181 - equal_reference:existing:recheck:source:0:0:0:before: retained inputs unchanged through both operations
+ok 182 - equal_reference:existing:recheck:source:0:0:0:before: complete archive and all other owners preserved
+ok 183 - equal_reference:existing:recheck:source:0:0:0:after: complete healthy preparation is observed
+ok 184 - equal_reference:existing:recheck:source:0:0:0:after: all actual preparation handles explicitly close
+ok 185 - equal_reference:existing:recheck:source:0:0:0:after: actual inactive retirement precedes both operations
+ok 186 - equal_reference:existing:recheck:source:0:0:0:after: exact single fault propagates without success
+ok 187 - equal_reference:existing:recheck:source:0:0:0:after: every actual verification handle explicitly closes
+ok 188 - equal_reference:existing:recheck:source:0:0:0:after: retained inputs unchanged through both operations
+ok 189 - equal_reference:existing:recheck:source:0:0:0:after: complete archive and all other owners preserved
+ok 190 - equal_reference:existing:directory_closure:2:before: complete healthy preparation is observed
+ok 191 - equal_reference:existing:directory_closure:2:before: all actual preparation handles explicitly close
+ok 192 - equal_reference:existing:directory_closure:2:before: actual inactive retirement precedes both operations
+ok 193 - equal_reference:existing:directory_closure:2:before: exact single fault propagates without success
+ok 194 - equal_reference:existing:directory_closure:2:before: every actual verification handle explicitly closes
+ok 195 - equal_reference:existing:directory_closure:2:before: retained inputs unchanged through both operations
+ok 196 - equal_reference:existing:directory_closure:2:before: complete archive and all other owners preserved
+ok 197 - equal_reference:existing:directory:evidence:3:before: complete healthy preparation is observed
+ok 198 - equal_reference:existing:directory:evidence:3:before: all actual preparation handles explicitly close
+ok 199 - equal_reference:existing:directory:evidence:3:before: actual inactive retirement precedes both operations
+ok 200 - equal_reference:existing:directory:evidence:3:before: exact single fault propagates without success
+ok 201 - equal_reference:existing:directory:evidence:3:before: every actual verification handle explicitly closes
+ok 202 - equal_reference:existing:directory:evidence:3:before: retained inputs unchanged through both operations
+ok 203 - equal_reference:existing:directory:evidence:3:before: complete archive and all other owners preserved
+ok 204 - equal_reference:existing:directory:evidence:3:after: complete healthy preparation is observed
+ok 205 - equal_reference:existing:directory:evidence:3:after: all actual preparation handles explicitly close
+ok 206 - equal_reference:existing:directory:evidence:3:after: actual inactive retirement precedes both operations
+ok 207 - equal_reference:existing:directory:evidence:3:after: exact single fault propagates without success
+ok 208 - equal_reference:existing:directory:evidence:3:after: every actual verification handle explicitly closes
+ok 209 - equal_reference:existing:directory:evidence:3:after: retained inputs unchanged through both operations
+ok 210 - equal_reference:existing:directory:evidence:3:after: complete archive and all other owners preserved
+ok 211 - equal_reference:existing:directory:archive:3:before: complete healthy preparation is observed
+ok 212 - equal_reference:existing:directory:archive:3:before: all actual preparation handles explicitly close
+ok 213 - equal_reference:existing:directory:archive:3:before: actual inactive retirement precedes both operations
+ok 214 - equal_reference:existing:directory:archive:3:before: exact single fault propagates without success
+ok 215 - equal_reference:existing:directory:archive:3:before: every actual verification handle explicitly closes
+ok 216 - equal_reference:existing:directory:archive:3:before: retained inputs unchanged through both operations
+ok 217 - equal_reference:existing:directory:archive:3:before: complete archive and all other owners preserved
+ok 218 - equal_reference:existing:directory:archive:3:after: complete healthy preparation is observed
+ok 219 - equal_reference:existing:directory:archive:3:after: all actual preparation handles explicitly close
+ok 220 - equal_reference:existing:directory:archive:3:after: actual inactive retirement precedes both operations
+ok 221 - equal_reference:existing:directory:archive:3:after: exact single fault propagates without success
+ok 222 - equal_reference:existing:directory:archive:3:after: every actual verification handle explicitly closes
+ok 223 - equal_reference:existing:directory:archive:3:after: retained inputs unchanged through both operations
+ok 224 - equal_reference:existing:directory:archive:3:after: complete archive and all other owners preserved
+ok 225 - equal_reference:existing:directory_closure:2:after: complete healthy preparation is observed
+ok 226 - equal_reference:existing:directory_closure:2:after: all actual preparation handles explicitly close
+ok 227 - equal_reference:existing:directory_closure:2:after: actual inactive retirement precedes both operations
+ok 228 - equal_reference:existing:directory_closure:2:after: exact single fault propagates without success
+ok 229 - equal_reference:existing:directory_closure:2:after: every actual verification handle explicitly closes
+ok 230 - equal_reference:existing:directory_closure:2:after: retained inputs unchanged through both operations
+ok 231 - equal_reference:existing:directory_closure:2:after: complete archive and all other owners preserved
+ok 232 - equal_reference:existing:source:1:0:before: complete healthy preparation is observed
+ok 233 - equal_reference:existing:source:1:0:before: all actual preparation handles explicitly close
+ok 234 - equal_reference:existing:source:1:0:before: actual inactive retirement precedes both operations
+ok 235 - equal_reference:existing:source:1:0:before: exact single fault propagates without success
+ok 236 - equal_reference:existing:source:1:0:before: every actual verification handle explicitly closes
+ok 237 - equal_reference:existing:source:1:0:before: retained inputs unchanged through both operations
+ok 238 - equal_reference:existing:source:1:0:before: complete archive and all other owners preserved
+ok 239 - equal_reference:existing:recheck:source:1:0:0:before: complete healthy preparation is observed
+ok 240 - equal_reference:existing:recheck:source:1:0:0:before: all actual preparation handles explicitly close
+ok 241 - equal_reference:existing:recheck:source:1:0:0:before: actual inactive retirement precedes both operations
+ok 242 - equal_reference:existing:recheck:source:1:0:0:before: exact single fault propagates without success
+ok 243 - equal_reference:existing:recheck:source:1:0:0:before: every actual verification handle explicitly closes
+ok 244 - equal_reference:existing:recheck:source:1:0:0:before: retained inputs unchanged through both operations
+ok 245 - equal_reference:existing:recheck:source:1:0:0:before: complete archive and all other owners preserved
+ok 246 - equal_reference:existing:recheck:source:1:0:0:after: complete healthy preparation is observed
+ok 247 - equal_reference:existing:recheck:source:1:0:0:after: all actual preparation handles explicitly close
+ok 248 - equal_reference:existing:recheck:source:1:0:0:after: actual inactive retirement precedes both operations
+ok 249 - equal_reference:existing:recheck:source:1:0:0:after: exact single fault propagates without success
+ok 250 - equal_reference:existing:recheck:source:1:0:0:after: every actual verification handle explicitly closes
+ok 251 - equal_reference:existing:recheck:source:1:0:0:after: retained inputs unchanged through both operations
+ok 252 - equal_reference:existing:recheck:source:1:0:0:after: complete archive and all other owners preserved
+ok 253 - equal_reference:existing:directory_closure:3:before: complete healthy preparation is observed
+ok 254 - equal_reference:existing:directory_closure:3:before: all actual preparation handles explicitly close
+ok 255 - equal_reference:existing:directory_closure:3:before: actual inactive retirement precedes both operations
+ok 256 - equal_reference:existing:directory_closure:3:before: exact single fault propagates without success
+ok 257 - equal_reference:existing:directory_closure:3:before: every actual verification handle explicitly closes
+ok 258 - equal_reference:existing:directory_closure:3:before: retained inputs unchanged through both operations
+ok 259 - equal_reference:existing:directory_closure:3:before: complete archive and all other owners preserved
+ok 260 - equal_reference:existing:directory:evidence:4:before: complete healthy preparation is observed
+ok 261 - equal_reference:existing:directory:evidence:4:before: all actual preparation handles explicitly close
+ok 262 - equal_reference:existing:directory:evidence:4:before: actual inactive retirement precedes both operations
+ok 263 - equal_reference:existing:directory:evidence:4:before: exact single fault propagates without success
+ok 264 - equal_reference:existing:directory:evidence:4:before: every actual verification handle explicitly closes
+ok 265 - equal_reference:existing:directory:evidence:4:before: retained inputs unchanged through both operations
+ok 266 - equal_reference:existing:directory:evidence:4:before: complete archive and all other owners preserved
+ok 267 - equal_reference:existing:directory:evidence:4:after: complete healthy preparation is observed
+ok 268 - equal_reference:existing:directory:evidence:4:after: all actual preparation handles explicitly close
+ok 269 - equal_reference:existing:directory:evidence:4:after: actual inactive retirement precedes both operations
+ok 270 - equal_reference:existing:directory:evidence:4:after: exact single fault propagates without success
+ok 271 - equal_reference:existing:directory:evidence:4:after: every actual verification handle explicitly closes
+ok 272 - equal_reference:existing:directory:evidence:4:after: retained inputs unchanged through both operations
+ok 273 - equal_reference:existing:directory:evidence:4:after: complete archive and all other owners preserved
+ok 274 - equal_reference:existing:directory:archive:4:before: complete healthy preparation is observed
+ok 275 - equal_reference:existing:directory:archive:4:before: all actual preparation handles explicitly close
+ok 276 - equal_reference:existing:directory:archive:4:before: actual inactive retirement precedes both operations
+ok 277 - equal_reference:existing:directory:archive:4:before: exact single fault propagates without success
+ok 278 - equal_reference:existing:directory:archive:4:before: every actual verification handle explicitly closes
+ok 279 - equal_reference:existing:directory:archive:4:before: retained inputs unchanged through both operations
+ok 280 - equal_reference:existing:directory:archive:4:before: complete archive and all other owners preserved
+ok 281 - equal_reference:existing:directory:archive:4:after: complete healthy preparation is observed
+ok 282 - equal_reference:existing:directory:archive:4:after: all actual preparation handles explicitly close
+ok 283 - equal_reference:existing:directory:archive:4:after: actual inactive retirement precedes both operations
+ok 284 - equal_reference:existing:directory:archive:4:after: exact single fault propagates without success
+ok 285 - equal_reference:existing:directory:archive:4:after: every actual verification handle explicitly closes
+ok 286 - equal_reference:existing:directory:archive:4:after: retained inputs unchanged through both operations
+ok 287 - equal_reference:existing:directory:archive:4:after: complete archive and all other owners preserved
+ok 288 - equal_reference:existing:directory_closure:3:after: complete healthy preparation is observed
+ok 289 - equal_reference:existing:directory_closure:3:after: all actual preparation handles explicitly close
+ok 290 - equal_reference:existing:directory_closure:3:after: actual inactive retirement precedes both operations
+ok 291 - equal_reference:existing:directory_closure:3:after: exact single fault propagates without success
+ok 292 - equal_reference:existing:directory_closure:3:after: every actual verification handle explicitly closes
+ok 293 - equal_reference:existing:directory_closure:3:after: retained inputs unchanged through both operations
+ok 294 - equal_reference:existing:directory_closure:3:after: complete archive and all other owners preserved
+ok 295 - equal_reference:existing:source:2:0:before: complete healthy preparation is observed
+ok 296 - equal_reference:existing:source:2:0:before: all actual preparation handles explicitly close
+ok 297 - equal_reference:existing:source:2:0:before: actual inactive retirement precedes both operations
+ok 298 - equal_reference:existing:source:2:0:before: exact single fault propagates without success
+ok 299 - equal_reference:existing:source:2:0:before: every actual verification handle explicitly closes
+ok 300 - equal_reference:existing:source:2:0:before: retained inputs unchanged through both operations
+ok 301 - equal_reference:existing:source:2:0:before: complete archive and all other owners preserved
+ok 302 - equal_reference:existing:recheck:source:2:0:0:before: complete healthy preparation is observed
+ok 303 - equal_reference:existing:recheck:source:2:0:0:before: all actual preparation handles explicitly close
+ok 304 - equal_reference:existing:recheck:source:2:0:0:before: actual inactive retirement precedes both operations
+ok 305 - equal_reference:existing:recheck:source:2:0:0:before: exact single fault propagates without success
+ok 306 - equal_reference:existing:recheck:source:2:0:0:before: every actual verification handle explicitly closes
+ok 307 - equal_reference:existing:recheck:source:2:0:0:before: retained inputs unchanged through both operations
+ok 308 - equal_reference:existing:recheck:source:2:0:0:before: complete archive and all other owners preserved
+ok 309 - equal_reference:existing:recheck:source:2:0:0:after: complete healthy preparation is observed
+ok 310 - equal_reference:existing:recheck:source:2:0:0:after: all actual preparation handles explicitly close
+ok 311 - equal_reference:existing:recheck:source:2:0:0:after: actual inactive retirement precedes both operations
+ok 312 - equal_reference:existing:recheck:source:2:0:0:after: exact single fault propagates without success
+ok 313 - equal_reference:existing:recheck:source:2:0:0:after: every actual verification handle explicitly closes
+ok 314 - equal_reference:existing:recheck:source:2:0:0:after: retained inputs unchanged through both operations
+ok 315 - equal_reference:existing:recheck:source:2:0:0:after: complete archive and all other owners preserved
+ok 316 - equal_reference:existing:members:1:before: complete healthy preparation is observed
+ok 317 - equal_reference:existing:members:1:before: all actual preparation handles explicitly close
+ok 318 - equal_reference:existing:members:1:before: actual inactive retirement precedes both operations
+ok 319 - equal_reference:existing:members:1:before: exact single fault propagates without success
+ok 320 - equal_reference:existing:members:1:before: every actual verification handle explicitly closes
+ok 321 - equal_reference:existing:members:1:before: retained inputs unchanged through both operations
+ok 322 - equal_reference:existing:members:1:before: complete archive and all other owners preserved
+ok 323 - equal_reference:existing:names:1:before: complete healthy preparation is observed
+ok 324 - equal_reference:existing:names:1:before: all actual preparation handles explicitly close
+ok 325 - equal_reference:existing:names:1:before: actual inactive retirement precedes both operations
+ok 326 - equal_reference:existing:names:1:before: exact single fault propagates without success
+ok 327 - equal_reference:existing:names:1:before: every actual verification handle explicitly closes
+ok 328 - equal_reference:existing:names:1:before: retained inputs unchanged through both operations
+ok 329 - equal_reference:existing:names:1:before: complete archive and all other owners preserved
+ok 330 - equal_reference:existing:names:1:after: complete healthy preparation is observed
+ok 331 - equal_reference:existing:names:1:after: all actual preparation handles explicitly close
+ok 332 - equal_reference:existing:names:1:after: actual inactive retirement precedes both operations
+ok 333 - equal_reference:existing:names:1:after: exact single fault propagates without success
+ok 334 - equal_reference:existing:names:1:after: every actual verification handle explicitly closes
+ok 335 - equal_reference:existing:names:1:after: retained inputs unchanged through both operations
+ok 336 - equal_reference:existing:names:1:after: complete archive and all other owners preserved
+ok 337 - equal_reference:existing:members:1:after: complete healthy preparation is observed
+ok 338 - equal_reference:existing:members:1:after: all actual preparation handles explicitly close
+ok 339 - equal_reference:existing:members:1:after: actual inactive retirement precedes both operations
+ok 340 - equal_reference:existing:members:1:after: exact single fault propagates without success
+ok 341 - equal_reference:existing:members:1:after: every actual verification handle explicitly closes
+ok 342 - equal_reference:existing:members:1:after: retained inputs unchanged through both operations
+ok 343 - equal_reference:existing:members:1:after: complete archive and all other owners preserved
+ok 344 - equal_reference:existing:directory_closure:4:before: complete healthy preparation is observed
+ok 345 - equal_reference:existing:directory_closure:4:before: all actual preparation handles explicitly close
+ok 346 - equal_reference:existing:directory_closure:4:before: actual inactive retirement precedes both operations
+ok 347 - equal_reference:existing:directory_closure:4:before: exact single fault propagates without success
+ok 348 - equal_reference:existing:directory_closure:4:before: every actual verification handle explicitly closes
+ok 349 - equal_reference:existing:directory_closure:4:before: retained inputs unchanged through both operations
+ok 350 - equal_reference:existing:directory_closure:4:before: complete archive and all other owners preserved
+ok 351 - equal_reference:existing:directory:evidence:5:before: complete healthy preparation is observed
+ok 352 - equal_reference:existing:directory:evidence:5:before: all actual preparation handles explicitly close
+ok 353 - equal_reference:existing:directory:evidence:5:before: actual inactive retirement precedes both operations
+ok 354 - equal_reference:existing:directory:evidence:5:before: exact single fault propagates without success
+ok 355 - equal_reference:existing:directory:evidence:5:before: every actual verification handle explicitly closes
+ok 356 - equal_reference:existing:directory:evidence:5:before: retained inputs unchanged through both operations
+ok 357 - equal_reference:existing:directory:evidence:5:before: complete archive and all other owners preserved
+ok 358 - equal_reference:existing:directory:evidence:5:after: complete healthy preparation is observed
+ok 359 - equal_reference:existing:directory:evidence:5:after: all actual preparation handles explicitly close
+ok 360 - equal_reference:existing:directory:evidence:5:after: actual inactive retirement precedes both operations
+ok 361 - equal_reference:existing:directory:evidence:5:after: exact single fault propagates without success
+ok 362 - equal_reference:existing:directory:evidence:5:after: every actual verification handle explicitly closes
+ok 363 - equal_reference:existing:directory:evidence:5:after: retained inputs unchanged through both operations
+ok 364 - equal_reference:existing:directory:evidence:5:after: complete archive and all other owners preserved
+ok 365 - equal_reference:existing:directory:archive:5:before: complete healthy preparation is observed
+ok 366 - equal_reference:existing:directory:archive:5:before: all actual preparation handles explicitly close
+ok 367 - equal_reference:existing:directory:archive:5:before: actual inactive retirement precedes both operations
+ok 368 - equal_reference:existing:directory:archive:5:before: exact single fault propagates without success
+ok 369 - equal_reference:existing:directory:archive:5:before: every actual verification handle explicitly closes
+ok 370 - equal_reference:existing:directory:archive:5:before: retained inputs unchanged through both operations
+ok 371 - equal_reference:existing:directory:archive:5:before: complete archive and all other owners preserved
+ok 372 - equal_reference:existing:directory:archive:5:after: complete healthy preparation is observed
+ok 373 - equal_reference:existing:directory:archive:5:after: all actual preparation handles explicitly close
+ok 374 - equal_reference:existing:directory:archive:5:after: actual inactive retirement precedes both operations
+ok 375 - equal_reference:existing:directory:archive:5:after: exact single fault propagates without success
+ok 376 - equal_reference:existing:directory:archive:5:after: every actual verification handle explicitly closes
+ok 377 - equal_reference:existing:directory:archive:5:after: retained inputs unchanged through both operations
+ok 378 - equal_reference:existing:directory:archive:5:after: complete archive and all other owners preserved
+ok 379 - equal_reference:existing:directory_closure:4:after: complete healthy preparation is observed
+ok 380 - equal_reference:existing:directory_closure:4:after: all actual preparation handles explicitly close
+ok 381 - equal_reference:existing:directory_closure:4:after: actual inactive retirement precedes both operations
+ok 382 - equal_reference:existing:directory_closure:4:after: exact single fault propagates without success
+ok 383 - equal_reference:existing:directory_closure:4:after: every actual verification handle explicitly closes
+ok 384 - equal_reference:existing:directory_closure:4:after: retained inputs unchanged through both operations
+ok 385 - equal_reference:existing:directory_closure:4:after: complete archive and all other owners preserved
+ok 386 - equal_reference:existing:source_closure:before: complete healthy preparation is observed
+ok 387 - equal_reference:existing:source_closure:before: all actual preparation handles explicitly close
+ok 388 - equal_reference:existing:source_closure:before: actual inactive retirement precedes both operations
+ok 389 - equal_reference:existing:source_closure:before: exact single fault propagates without success
+ok 390 - equal_reference:existing:source_closure:before: every actual verification handle explicitly closes
+ok 391 - equal_reference:existing:source_closure:before: retained inputs unchanged through both operations
+ok 392 - equal_reference:existing:source_closure:before: complete archive and all other owners preserved
+ok 393 - equal_reference:existing:recheck:source:0:0:1:before: complete healthy preparation is observed
+ok 394 - equal_reference:existing:recheck:source:0:0:1:before: all actual preparation handles explicitly close
+ok 395 - equal_reference:existing:recheck:source:0:0:1:before: actual inactive retirement precedes both operations
+ok 396 - equal_reference:existing:recheck:source:0:0:1:before: exact single fault propagates without success
+ok 397 - equal_reference:existing:recheck:source:0:0:1:before: every actual verification handle explicitly closes
+ok 398 - equal_reference:existing:recheck:source:0:0:1:before: retained inputs unchanged through both operations
+ok 399 - equal_reference:existing:recheck:source:0:0:1:before: complete archive and all other owners preserved
+ok 400 - equal_reference:existing:recheck:source:0:0:1:after: complete healthy preparation is observed
+ok 401 - equal_reference:existing:recheck:source:0:0:1:after: all actual preparation handles explicitly close
+ok 402 - equal_reference:existing:recheck:source:0:0:1:after: actual inactive retirement precedes both operations
+ok 403 - equal_reference:existing:recheck:source:0:0:1:after: exact single fault propagates without success
+ok 404 - equal_reference:existing:recheck:source:0:0:1:after: every actual verification handle explicitly closes
+ok 405 - equal_reference:existing:recheck:source:0:0:1:after: retained inputs unchanged through both operations
+ok 406 - equal_reference:existing:recheck:source:0:0:1:after: complete archive and all other owners preserved
+ok 407 - equal_reference:existing:source:0:1:before: complete healthy preparation is observed
+ok 408 - equal_reference:existing:source:0:1:before: all actual preparation handles explicitly close
+ok 409 - equal_reference:existing:source:0:1:before: actual inactive retirement precedes both operations
+ok 410 - equal_reference:existing:source:0:1:before: exact single fault propagates without success
+ok 411 - equal_reference:existing:source:0:1:before: every actual verification handle explicitly closes
+ok 412 - equal_reference:existing:source:0:1:before: retained inputs unchanged through both operations
+ok 413 - equal_reference:existing:source:0:1:before: complete archive and all other owners preserved
+ok 414 - equal_reference:existing:recheck:source:0:1:0:before: complete healthy preparation is observed
+ok 415 - equal_reference:existing:recheck:source:0:1:0:before: all actual preparation handles explicitly close
+ok 416 - equal_reference:existing:recheck:source:0:1:0:before: actual inactive retirement precedes both operations
+ok 417 - equal_reference:existing:recheck:source:0:1:0:before: exact single fault propagates without success
+ok 418 - equal_reference:existing:recheck:source:0:1:0:before: every actual verification handle explicitly closes
+ok 419 - equal_reference:existing:recheck:source:0:1:0:before: retained inputs unchanged through both operations
+ok 420 - equal_reference:existing:recheck:source:0:1:0:before: complete archive and all other owners preserved
+ok 421 - equal_reference:existing:recheck:source:0:1:0:after: complete healthy preparation is observed
+ok 422 - equal_reference:existing:recheck:source:0:1:0:after: all actual preparation handles explicitly close
+ok 423 - equal_reference:existing:recheck:source:0:1:0:after: actual inactive retirement precedes both operations
+ok 424 - equal_reference:existing:recheck:source:0:1:0:after: exact single fault propagates without success
+ok 425 - equal_reference:existing:recheck:source:0:1:0:after: every actual verification handle explicitly closes
+ok 426 - equal_reference:existing:recheck:source:0:1:0:after: retained inputs unchanged through both operations
+ok 427 - equal_reference:existing:recheck:source:0:1:0:after: complete archive and all other owners preserved
+ok 428 - equal_reference:existing:recheck:source:1:0:1:before: complete healthy preparation is observed
+ok 429 - equal_reference:existing:recheck:source:1:0:1:before: all actual preparation handles explicitly close
+ok 430 - equal_reference:existing:recheck:source:1:0:1:before: actual inactive retirement precedes both operations
+ok 431 - equal_reference:existing:recheck:source:1:0:1:before: exact single fault propagates without success
+ok 432 - equal_reference:existing:recheck:source:1:0:1:before: every actual verification handle explicitly closes
+ok 433 - equal_reference:existing:recheck:source:1:0:1:before: retained inputs unchanged through both operations
+ok 434 - equal_reference:existing:recheck:source:1:0:1:before: complete archive and all other owners preserved
+ok 435 - equal_reference:existing:recheck:source:1:0:1:after: complete healthy preparation is observed
+ok 436 - equal_reference:existing:recheck:source:1:0:1:after: all actual preparation handles explicitly close
+ok 437 - equal_reference:existing:recheck:source:1:0:1:after: actual inactive retirement precedes both operations
+ok 438 - equal_reference:existing:recheck:source:1:0:1:after: exact single fault propagates without success
+ok 439 - equal_reference:existing:recheck:source:1:0:1:after: every actual verification handle explicitly closes
+ok 440 - equal_reference:existing:recheck:source:1:0:1:after: retained inputs unchanged through both operations
+ok 441 - equal_reference:existing:recheck:source:1:0:1:after: complete archive and all other owners preserved
+ok 442 - equal_reference:existing:source:1:1:before: complete healthy preparation is observed
+ok 443 - equal_reference:existing:source:1:1:before: all actual preparation handles explicitly close
+ok 444 - equal_reference:existing:source:1:1:before: actual inactive retirement precedes both operations
+ok 445 - equal_reference:existing:source:1:1:before: exact single fault propagates without success
+ok 446 - equal_reference:existing:source:1:1:before: every actual verification handle explicitly closes
+ok 447 - equal_reference:existing:source:1:1:before: retained inputs unchanged through both operations
+ok 448 - equal_reference:existing:source:1:1:before: complete archive and all other owners preserved
+ok 449 - equal_reference:existing:recheck:source:1:1:0:before: complete healthy preparation is observed
+ok 450 - equal_reference:existing:recheck:source:1:1:0:before: all actual preparation handles explicitly close
+ok 451 - equal_reference:existing:recheck:source:1:1:0:before: actual inactive retirement precedes both operations
+ok 452 - equal_reference:existing:recheck:source:1:1:0:before: exact single fault propagates without success
+ok 453 - equal_reference:existing:recheck:source:1:1:0:before: every actual verification handle explicitly closes
+ok 454 - equal_reference:existing:recheck:source:1:1:0:before: retained inputs unchanged through both operations
+ok 455 - equal_reference:existing:recheck:source:1:1:0:before: complete archive and all other owners preserved
+ok 456 - equal_reference:existing:recheck:source:1:1:0:after: complete healthy preparation is observed
+ok 457 - equal_reference:existing:recheck:source:1:1:0:after: all actual preparation handles explicitly close
+ok 458 - equal_reference:existing:recheck:source:1:1:0:after: actual inactive retirement precedes both operations
+ok 459 - equal_reference:existing:recheck:source:1:1:0:after: exact single fault propagates without success
+ok 460 - equal_reference:existing:recheck:source:1:1:0:after: every actual verification handle explicitly closes
+ok 461 - equal_reference:existing:recheck:source:1:1:0:after: retained inputs unchanged through both operations
+ok 462 - equal_reference:existing:recheck:source:1:1:0:after: complete archive and all other owners preserved
+ok 463 - equal_reference:existing:recheck:source:2:0:1:before: complete healthy preparation is observed
+ok 464 - equal_reference:existing:recheck:source:2:0:1:before: all actual preparation handles explicitly close
+ok 465 - equal_reference:existing:recheck:source:2:0:1:before: actual inactive retirement precedes both operations
+ok 466 - equal_reference:existing:recheck:source:2:0:1:before: exact single fault propagates without success
+ok 467 - equal_reference:existing:recheck:source:2:0:1:before: every actual verification handle explicitly closes
+ok 468 - equal_reference:existing:recheck:source:2:0:1:before: retained inputs unchanged through both operations
+ok 469 - equal_reference:existing:recheck:source:2:0:1:before: complete archive and all other owners preserved
+ok 470 - equal_reference:existing:recheck:source:2:0:1:after: complete healthy preparation is observed
+ok 471 - equal_reference:existing:recheck:source:2:0:1:after: all actual preparation handles explicitly close
+ok 472 - equal_reference:existing:recheck:source:2:0:1:after: actual inactive retirement precedes both operations
+ok 473 - equal_reference:existing:recheck:source:2:0:1:after: exact single fault propagates without success
+ok 474 - equal_reference:existing:recheck:source:2:0:1:after: every actual verification handle explicitly closes
+ok 475 - equal_reference:existing:recheck:source:2:0:1:after: retained inputs unchanged through both operations
+ok 476 - equal_reference:existing:recheck:source:2:0:1:after: complete archive and all other owners preserved
+ok 477 - equal_reference:existing:source:2:1:before: complete healthy preparation is observed
+ok 478 - equal_reference:existing:source:2:1:before: all actual preparation handles explicitly close
+ok 479 - equal_reference:existing:source:2:1:before: actual inactive retirement precedes both operations
+ok 480 - equal_reference:existing:source:2:1:before: exact single fault propagates without success
+ok 481 - equal_reference:existing:source:2:1:before: every actual verification handle explicitly closes
+ok 482 - equal_reference:existing:source:2:1:before: retained inputs unchanged through both operations
+ok 483 - equal_reference:existing:source:2:1:before: complete archive and all other owners preserved
+ok 484 - equal_reference:existing:recheck:source:2:1:0:before: complete healthy preparation is observed
+ok 485 - equal_reference:existing:recheck:source:2:1:0:before: all actual preparation handles explicitly close
+ok 486 - equal_reference:existing:recheck:source:2:1:0:before: actual inactive retirement precedes both operations
+ok 487 - equal_reference:existing:recheck:source:2:1:0:before: exact single fault propagates without success
+ok 488 - equal_reference:existing:recheck:source:2:1:0:before: every actual verification handle explicitly closes
+ok 489 - equal_reference:existing:recheck:source:2:1:0:before: retained inputs unchanged through both operations
+ok 490 - equal_reference:existing:recheck:source:2:1:0:before: complete archive and all other owners preserved
+ok 491 - equal_reference:existing:recheck:source:2:1:0:after: complete healthy preparation is observed
+ok 492 - equal_reference:existing:recheck:source:2:1:0:after: all actual preparation handles explicitly close
+ok 493 - equal_reference:existing:recheck:source:2:1:0:after: actual inactive retirement precedes both operations
+ok 494 - equal_reference:existing:recheck:source:2:1:0:after: exact single fault propagates without success
+ok 495 - equal_reference:existing:recheck:source:2:1:0:after: every actual verification handle explicitly closes
+ok 496 - equal_reference:existing:recheck:source:2:1:0:after: retained inputs unchanged through both operations
+ok 497 - equal_reference:existing:recheck:source:2:1:0:after: complete archive and all other owners preserved
+ok 498 - equal_reference:existing:recheck:source:0:0:2:before: complete healthy preparation is observed
+ok 499 - equal_reference:existing:recheck:source:0:0:2:before: all actual preparation handles explicitly close
+ok 500 - equal_reference:existing:recheck:source:0:0:2:before: actual inactive retirement precedes both operations
+ok 501 - equal_reference:existing:recheck:source:0:0:2:before: exact single fault propagates without success
+ok 502 - equal_reference:existing:recheck:source:0:0:2:before: every actual verification handle explicitly closes
+ok 503 - equal_reference:existing:recheck:source:0:0:2:before: retained inputs unchanged through both operations
+ok 504 - equal_reference:existing:recheck:source:0:0:2:before: complete archive and all other owners preserved
+ok 505 - equal_reference:existing:recheck:source:0:0:2:after: complete healthy preparation is observed
+ok 506 - equal_reference:existing:recheck:source:0:0:2:after: all actual preparation handles explicitly close
+ok 507 - equal_reference:existing:recheck:source:0:0:2:after: actual inactive retirement precedes both operations
+ok 508 - equal_reference:existing:recheck:source:0:0:2:after: exact single fault propagates without success
+ok 509 - equal_reference:existing:recheck:source:0:0:2:after: every actual verification handle explicitly closes
+ok 510 - equal_reference:existing:recheck:source:0:0:2:after: retained inputs unchanged through both operations
+ok 511 - equal_reference:existing:recheck:source:0:0:2:after: complete archive and all other owners preserved
+ok 512 - equal_reference:existing:recheck:source:1:0:2:before: complete healthy preparation is observed
+ok 513 - equal_reference:existing:recheck:source:1:0:2:before: all actual preparation handles explicitly close
+ok 514 - equal_reference:existing:recheck:source:1:0:2:before: actual inactive retirement precedes both operations
+ok 515 - equal_reference:existing:recheck:source:1:0:2:before: exact single fault propagates without success
+ok 516 - equal_reference:existing:recheck:source:1:0:2:before: every actual verification handle explicitly closes
+ok 517 - equal_reference:existing:recheck:source:1:0:2:before: retained inputs unchanged through both operations
+ok 518 - equal_reference:existing:recheck:source:1:0:2:before: complete archive and all other owners preserved
+ok 519 - equal_reference:existing:recheck:source:1:0:2:after: complete healthy preparation is observed
+ok 520 - equal_reference:existing:recheck:source:1:0:2:after: all actual preparation handles explicitly close
+ok 521 - equal_reference:existing:recheck:source:1:0:2:after: actual inactive retirement precedes both operations
+ok 522 - equal_reference:existing:recheck:source:1:0:2:after: exact single fault propagates without success
+ok 523 - equal_reference:existing:recheck:source:1:0:2:after: every actual verification handle explicitly closes
+ok 524 - equal_reference:existing:recheck:source:1:0:2:after: retained inputs unchanged through both operations
+ok 525 - equal_reference:existing:recheck:source:1:0:2:after: complete archive and all other owners preserved
+ok 526 - equal_reference:existing:recheck:source:2:0:2:before: complete healthy preparation is observed
+ok 527 - equal_reference:existing:recheck:source:2:0:2:before: all actual preparation handles explicitly close
+ok 528 - equal_reference:existing:recheck:source:2:0:2:before: actual inactive retirement precedes both operations
+ok 529 - equal_reference:existing:recheck:source:2:0:2:before: exact single fault propagates without success
+ok 530 - equal_reference:existing:recheck:source:2:0:2:before: every actual verification handle explicitly closes
+ok 531 - equal_reference:existing:recheck:source:2:0:2:before: retained inputs unchanged through both operations
+ok 532 - equal_reference:existing:recheck:source:2:0:2:before: complete archive and all other owners preserved
+ok 533 - equal_reference:existing:recheck:source:2:0:2:after: complete healthy preparation is observed
+ok 534 - equal_reference:existing:recheck:source:2:0:2:after: all actual preparation handles explicitly close
+ok 535 - equal_reference:existing:recheck:source:2:0:2:after: actual inactive retirement precedes both operations
+ok 536 - equal_reference:existing:recheck:source:2:0:2:after: exact single fault propagates without success
+ok 537 - equal_reference:existing:recheck:source:2:0:2:after: every actual verification handle explicitly closes
+ok 538 - equal_reference:existing:recheck:source:2:0:2:after: retained inputs unchanged through both operations
+ok 539 - equal_reference:existing:recheck:source:2:0:2:after: complete archive and all other owners preserved
+ok 540 - equal_reference:existing:source_closure:after: complete healthy preparation is observed
+ok 541 - equal_reference:existing:source_closure:after: all actual preparation handles explicitly close
+ok 542 - equal_reference:existing:source_closure:after: actual inactive retirement precedes both operations
+ok 543 - equal_reference:existing:source_closure:after: exact single fault propagates without success
+ok 544 - equal_reference:existing:source_closure:after: every actual verification handle explicitly closes
+ok 545 - equal_reference:existing:source_closure:after: retained inputs unchanged through both operations
+ok 546 - equal_reference:existing:source_closure:after: complete archive and all other owners preserved
+ok 547 - equal_reference:existing:receipt:before: complete healthy preparation is observed
+ok 548 - equal_reference:existing:receipt:before: all actual preparation handles explicitly close
+ok 549 - equal_reference:existing:receipt:before: actual inactive retirement precedes both operations
+ok 550 - equal_reference:existing:receipt:before: exact single fault propagates without success
+ok 551 - equal_reference:existing:receipt:before: every actual verification handle explicitly closes
+ok 552 - equal_reference:existing:receipt:before: retained inputs unchanged through both operations
+ok 553 - equal_reference:existing:receipt:before: complete archive and all other owners preserved
+ok 554 - equal_reference:existing:receipt:after: complete healthy preparation is observed
+ok 555 - equal_reference:existing:receipt:after: all actual preparation handles explicitly close
+ok 556 - equal_reference:existing:receipt:after: actual inactive retirement precedes both operations
+ok 557 - equal_reference:existing:receipt:after: exact single fault propagates without success
+ok 558 - equal_reference:existing:receipt:after: every actual verification handle explicitly closes
+ok 559 - equal_reference:existing:receipt:after: retained inputs unchanged through both operations
+ok 560 - equal_reference:existing:receipt:after: complete archive and all other owners preserved
+ok 561 - equal_reference:existing:members:2:before: complete healthy preparation is observed
+ok 562 - equal_reference:existing:members:2:before: all actual preparation handles explicitly close
+ok 563 - equal_reference:existing:members:2:before: actual inactive retirement precedes both operations
+ok 564 - equal_reference:existing:members:2:before: exact single fault propagates without success
+ok 565 - equal_reference:existing:members:2:before: every actual verification handle explicitly closes
+ok 566 - equal_reference:existing:members:2:before: retained inputs unchanged through both operations
+ok 567 - equal_reference:existing:members:2:before: complete archive and all other owners preserved
+ok 568 - equal_reference:existing:names:2:before: complete healthy preparation is observed
+ok 569 - equal_reference:existing:names:2:before: all actual preparation handles explicitly close
+ok 570 - equal_reference:existing:names:2:before: actual inactive retirement precedes both operations
+ok 571 - equal_reference:existing:names:2:before: exact single fault propagates without success
+ok 572 - equal_reference:existing:names:2:before: every actual verification handle explicitly closes
+ok 573 - equal_reference:existing:names:2:before: retained inputs unchanged through both operations
+ok 574 - equal_reference:existing:names:2:before: complete archive and all other owners preserved
+ok 575 - equal_reference:existing:names:2:after: complete healthy preparation is observed
+ok 576 - equal_reference:existing:names:2:after: all actual preparation handles explicitly close
+ok 577 - equal_reference:existing:names:2:after: actual inactive retirement precedes both operations
+ok 578 - equal_reference:existing:names:2:after: exact single fault propagates without success
+ok 579 - equal_reference:existing:names:2:after: every actual verification handle explicitly closes
+ok 580 - equal_reference:existing:names:2:after: retained inputs unchanged through both operations
+ok 581 - equal_reference:existing:names:2:after: complete archive and all other owners preserved
+ok 582 - equal_reference:existing:members:2:after: complete healthy preparation is observed
+ok 583 - equal_reference:existing:members:2:after: all actual preparation handles explicitly close
+ok 584 - equal_reference:existing:members:2:after: actual inactive retirement precedes both operations
+ok 585 - equal_reference:existing:members:2:after: exact single fault propagates without success
+ok 586 - equal_reference:existing:members:2:after: every actual verification handle explicitly closes
+ok 587 - equal_reference:existing:members:2:after: retained inputs unchanged through both operations
+ok 588 - equal_reference:existing:members:2:after: complete archive and all other owners preserved
+ok 589 - equal_reference:existing:directory_closure:5:before: complete healthy preparation is observed
+ok 590 - equal_reference:existing:directory_closure:5:before: all actual preparation handles explicitly close
+ok 591 - equal_reference:existing:directory_closure:5:before: actual inactive retirement precedes both operations
+ok 592 - equal_reference:existing:directory_closure:5:before: exact single fault propagates without success
+ok 593 - equal_reference:existing:directory_closure:5:before: every actual verification handle explicitly closes
+ok 594 - equal_reference:existing:directory_closure:5:before: retained inputs unchanged through both operations
+ok 595 - equal_reference:existing:directory_closure:5:before: complete archive and all other owners preserved
+ok 596 - equal_reference:existing:directory:evidence:6:before: complete healthy preparation is observed
+ok 597 - equal_reference:existing:directory:evidence:6:before: all actual preparation handles explicitly close
+ok 598 - equal_reference:existing:directory:evidence:6:before: actual inactive retirement precedes both operations
+ok 599 - equal_reference:existing:directory:evidence:6:before: exact single fault propagates without success
+ok 600 - equal_reference:existing:directory:evidence:6:before: every actual verification handle explicitly closes
+ok 601 - equal_reference:existing:directory:evidence:6:before: retained inputs unchanged through both operations
+ok 602 - equal_reference:existing:directory:evidence:6:before: complete archive and all other owners preserved
+ok 603 - equal_reference:existing:directory:evidence:6:after: complete healthy preparation is observed
+ok 604 - equal_reference:existing:directory:evidence:6:after: all actual preparation handles explicitly close
+ok 605 - equal_reference:existing:directory:evidence:6:after: actual inactive retirement precedes both operations
+ok 606 - equal_reference:existing:directory:evidence:6:after: exact single fault propagates without success
+ok 607 - equal_reference:existing:directory:evidence:6:after: every actual verification handle explicitly closes
+ok 608 - equal_reference:existing:directory:evidence:6:after: retained inputs unchanged through both operations
+ok 609 - equal_reference:existing:directory:evidence:6:after: complete archive and all other owners preserved
+ok 610 - equal_reference:existing:directory:archive:6:before: complete healthy preparation is observed
+ok 611 - equal_reference:existing:directory:archive:6:before: all actual preparation handles explicitly close
+ok 612 - equal_reference:existing:directory:archive:6:before: actual inactive retirement precedes both operations
+ok 613 - equal_reference:existing:directory:archive:6:before: exact single fault propagates without success
+ok 614 - equal_reference:existing:directory:archive:6:before: every actual verification handle explicitly closes
+ok 615 - equal_reference:existing:directory:archive:6:before: retained inputs unchanged through both operations
+ok 616 - equal_reference:existing:directory:archive:6:before: complete archive and all other owners preserved
+ok 617 - equal_reference:existing:directory:archive:6:after: complete healthy preparation is observed
+ok 618 - equal_reference:existing:directory:archive:6:after: all actual preparation handles explicitly close
+ok 619 - equal_reference:existing:directory:archive:6:after: actual inactive retirement precedes both operations
+ok 620 - equal_reference:existing:directory:archive:6:after: exact single fault propagates without success
+ok 621 - equal_reference:existing:directory:archive:6:after: every actual verification handle explicitly closes
+ok 622 - equal_reference:existing:directory:archive:6:after: retained inputs unchanged through both operations
+ok 623 - equal_reference:existing:directory:archive:6:after: complete archive and all other owners preserved
+ok 624 - equal_reference:existing:directory_closure:5:after: complete healthy preparation is observed
+ok 625 - equal_reference:existing:directory_closure:5:after: all actual preparation handles explicitly close
+ok 626 - equal_reference:existing:directory_closure:5:after: actual inactive retirement precedes both operations
+ok 627 - equal_reference:existing:directory_closure:5:after: exact single fault propagates without success
+ok 628 - equal_reference:existing:directory_closure:5:after: every actual verification handle explicitly closes
+ok 629 - equal_reference:existing:directory_closure:5:after: retained inputs unchanged through both operations
+ok 630 - equal_reference:existing:directory_closure:5:after: complete archive and all other owners preserved
+ok 631 - equal_reference:existing:recheck:source:0:0:3:before: complete healthy preparation is observed
+ok 632 - equal_reference:existing:recheck:source:0:0:3:before: all actual preparation handles explicitly close
+ok 633 - equal_reference:existing:recheck:source:0:0:3:before: actual inactive retirement precedes both operations
+ok 634 - equal_reference:existing:recheck:source:0:0:3:before: exact single fault propagates without success
+ok 635 - equal_reference:existing:recheck:source:0:0:3:before: every actual verification handle explicitly closes
+ok 636 - equal_reference:existing:recheck:source:0:0:3:before: retained inputs unchanged through both operations
+ok 637 - equal_reference:existing:recheck:source:0:0:3:before: complete archive and all other owners preserved
+ok 638 - equal_reference:existing:recheck:source:0:0:3:after: complete healthy preparation is observed
+ok 639 - equal_reference:existing:recheck:source:0:0:3:after: all actual preparation handles explicitly close
+ok 640 - equal_reference:existing:recheck:source:0:0:3:after: actual inactive retirement precedes both operations
+ok 641 - equal_reference:existing:recheck:source:0:0:3:after: exact single fault propagates without success
+ok 642 - equal_reference:existing:recheck:source:0:0:3:after: every actual verification handle explicitly closes
+ok 643 - equal_reference:existing:recheck:source:0:0:3:after: retained inputs unchanged through both operations
+ok 644 - equal_reference:existing:recheck:source:0:0:3:after: complete archive and all other owners preserved
+ok 645 - equal_reference:existing:recheck:source:1:0:3:before: complete healthy preparation is observed
+ok 646 - equal_reference:existing:recheck:source:1:0:3:before: all actual preparation handles explicitly close
+ok 647 - equal_reference:existing:recheck:source:1:0:3:before: actual inactive retirement precedes both operations
+ok 648 - equal_reference:existing:recheck:source:1:0:3:before: exact single fault propagates without success
+ok 649 - equal_reference:existing:recheck:source:1:0:3:before: every actual verification handle explicitly closes
+ok 650 - equal_reference:existing:recheck:source:1:0:3:before: retained inputs unchanged through both operations
+ok 651 - equal_reference:existing:recheck:source:1:0:3:before: complete archive and all other owners preserved
+ok 652 - equal_reference:existing:recheck:source:1:0:3:after: complete healthy preparation is observed
+ok 653 - equal_reference:existing:recheck:source:1:0:3:after: all actual preparation handles explicitly close
+ok 654 - equal_reference:existing:recheck:source:1:0:3:after: actual inactive retirement precedes both operations
+ok 655 - equal_reference:existing:recheck:source:1:0:3:after: exact single fault propagates without success
+ok 656 - equal_reference:existing:recheck:source:1:0:3:after: every actual verification handle explicitly closes
+ok 657 - equal_reference:existing:recheck:source:1:0:3:after: retained inputs unchanged through both operations
+ok 658 - equal_reference:existing:recheck:source:1:0:3:after: complete archive and all other owners preserved
+ok 659 - equal_reference:existing:recheck:source:2:0:3:before: complete healthy preparation is observed
+ok 660 - equal_reference:existing:recheck:source:2:0:3:before: all actual preparation handles explicitly close
+ok 661 - equal_reference:existing:recheck:source:2:0:3:before: actual inactive retirement precedes both operations
+ok 662 - equal_reference:existing:recheck:source:2:0:3:before: exact single fault propagates without success
+ok 663 - equal_reference:existing:recheck:source:2:0:3:before: every actual verification handle explicitly closes
+ok 664 - equal_reference:existing:recheck:source:2:0:3:before: retained inputs unchanged through both operations
+ok 665 - equal_reference:existing:recheck:source:2:0:3:before: complete archive and all other owners preserved
+ok 666 - equal_reference:existing:recheck:source:2:0:3:after: complete healthy preparation is observed
+ok 667 - equal_reference:existing:recheck:source:2:0:3:after: all actual preparation handles explicitly close
+ok 668 - equal_reference:existing:recheck:source:2:0:3:after: actual inactive retirement precedes both operations
+ok 669 - equal_reference:existing:recheck:source:2:0:3:after: exact single fault propagates without success
+ok 670 - equal_reference:existing:recheck:source:2:0:3:after: every actual verification handle explicitly closes
+ok 671 - equal_reference:existing:recheck:source:2:0:3:after: retained inputs unchanged through both operations
+ok 672 - equal_reference:existing:recheck:source:2:0:3:after: complete archive and all other owners preserved
+ok 673 - no compiler or native process attempt
+1..673
