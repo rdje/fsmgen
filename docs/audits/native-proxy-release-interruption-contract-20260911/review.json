@@ -1,0 +1,38 @@
+{
+  "acceptance_history_revision": "da27b5cbaf01af7cbe294c8f851c8273dd750856",
+  "book": {
+    "checked_passages": [
+      "Its finite model separates an unlink attempt, completed unlink, each absence observation and final success.",
+      "Early rejection preserves the supplied initial name state: it cannot prove that a missing original hold exists.",
+      "\"last_reference_check\": {\"phase\": \"finish\", \"state\": \"unknown\"}",
+      "This example is a prospective interruption state, not completed filesystem fault coverage.",
+      "throwing at that transfer point is excluded from ordinary call cuts.",
+      "deliberate close omissions with separate recovery",
+      "These finite checks grant no native ownership authority or guarantee against arbitrary asynchronous writers."
+    ],
+    "exact_output_absent": true,
+    "exit_code": 0,
+    "output": ".artifacts/tmp/native-proxy-release-interruption-contract-book-20260911/book",
+    "rendered_bytes": 23344805,
+    "rendered_directories": 3,
+    "rendered_files": 98,
+    "same_volume_direct_objects": true
+  },
+  "compaction": "compaction-review.json: the checker rejects nested compact terminals because retrieved leaves require ordinary Acceptance fields. Restore the complete archive subtree exactly and retain those nested terminals live. A fresh owner census admits only the flat seven-node diagnostic archive successor; source/goal/count/history bindings pass without changing the checker.",
+  "contract": "contract.json",
+  "counts": "result/audit.json",
+  "doctrines": "Focused task, book and final Knowledge Map checks pass; mandatory staged-index and commit-hook doctrines gate durable completion.",
+  "durability": "Five original prospective pins, a separately timed corrected-auditor pin and nine byte-exact recovery copies preserve model/qualification/audit provenance. The first failed auditor and nested-compaction candidate each retain their exact initial sources and outputs. Traceback bytes reconstruct exactly from their hex representation. Task, book, bounded facts, exact acceptance history and Git preserve the next frontier.",
+  "falsification": "Four deliberately weakened model programs produce 156 independently reconstructed witnesses. Eighteen changed-report and five domain controls reject lost effects, invented absence, missing initial names, false success/authority, cleanup reordering, missing/duplicate witnesses and unsafe source-return fault selection.",
+  "first_audit_failure": "first-audit-review.json: the missing-witness falsifier exposed next(...) without a prior cardinality assertion. The correction requires exactly one witness and adds duplicate rejection. The original model and qualification were not changed or rerun.",
+  "knowledge_map": "knowledge-map: OK (1161 facts, 6409 unique questions, 6580 answer occurrences, 139 bounded topic shards; query parity verified)",
+  "knowledge_projection": "knowledge-projection.json",
+  "next_action": "Record actual healthy call occurrences and source/lock/directory lifetimes for the declared profile basis; then qualify interruptions, close reports, omissions and final applicability. Historical startup/parent/full CI/push remain gated.",
+  "owner": "HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.12.4.1.3.4.4.1",
+  "prior_acceptance_sections_unchanged": 37,
+  "recovery": "result/recovery-copies.json",
+  "rederivation": "The first symbolic qualifier agrees with a separate closed-form phase/cleanup oracle. Exact current source bodies identify safe calls and ownership-transfer exclusions. An unchanged saved-data oracle rechecks every original release case and its physical/record/descriptor evidence; selected result projections agree with the model and original roots remain absent. No original producer or audit main is invoked.",
+  "schema": "fsmgen.release_interruption_contract_review.v1",
+  "scope": "Finite symbolic effect/cleanup transitions, exact sources and saved-state projections. Aggregate close categories are assumptions, not concrete per-handle reachability. Explicit replacement events are prospective control inputs, not OS or asynchronous-writer proof. Native authentication, actual prevention of later launches, complete interruption/close qualification and product activation remain separate.",
+  "task_integrity": "[task-tree-integrity] all active task-tree invariants hold (trees=4, nodes=1354, segments=3, compact_terminals=17, index_archives=1, migrations=1, acceptance_histories=1)"
+}

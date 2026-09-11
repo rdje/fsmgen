@@ -2,6 +2,7 @@
 id: test-subprocess-policy-adapters
 title: Test subprocesses share one mechanism behind sealed policy adapters
 answers:
+  - "how are release interruption boundaries selected?"
   - "what does an inactive observation release attempt report?"
   - "what do closed observation work records validate?"
   - "what does final inactive archive signoff prove?"
@@ -114,10 +115,9 @@ reverify: >-
   t/1813-process-coordinator-connection.t t/1814-process-coordinator-service.t
   t/1815-rust-proxy-fixture.t t/1816-rust-proxy-integration.t t/1817-test-supervision-architecture.t
 ---
-Decisions `0087`/`0101`: `FSM::Support::ProcessSupervisor`; adapters seal local argv/capture/group cleanup. T1669 checks ownership.
-`exec_handoff_monotonic_ns` is EOF, not main entry; absent EOF leaves timing unknown.
+Decisions `0087`/`0101`: `FSM::Support::ProcessSupervisor`; adapters seal local argv/capture/group cleanup. T1669 checks ownership. `exec_handoff_monotonic_ns` is EOF, not main entry; absent EOF leaves timing unknown.
 `VerilatorRuntime`: decision `0086`. `TaskAcceptanceFixtureRuntime`: owned roots/fixed Git argv.
-History: `79b43fd019387acdf1fc3280b3f88847125fbb60:docs/knowledge/test-subprocess-policy-adapters.md`. Archive/work, replay, reader/caller and startup evidence: history.
-Release: `docs/audits/native-proxy-observation-archive-release-20260911/review.json`; exact settled hold removal, preserved archive/other owners, actual closure and separate unlink/absence/error facts. Inactive only; complete interruptions and native authority remain open.
+History: `da27b5cbaf01af7cbe294c8f851c8273dd750856:docs/knowledge/test-subprocess-policy-adapters.md`. Archive/work, replay, reader/caller and startup evidence: history.
+Release: `docs/audits/native-proxy-release-interruption-contract-20260911/review.json`; finite effect/custody plan and saved-state projections. Concrete interruption/close coverage and native authority remain open. Exact release: history.
 Replay: `scripts/run_with_ram_guard.sh -- python3 -B -m unittest discover -s t/python -p 'test_fixture_policy_archive*.py'`. Other controls: history.
 HIAL/VIAL `.19.2.3.1.2.2.5.5` owns repair/hostile controls; neutral-verifier extraction stays blocked.

@@ -1,0 +1,227 @@
+"""Independent closed-form oracle for effects, cleanup order and saved bindings."""
+from __future__ import annotations
+
+import copy
+import hashlib
+import importlib.util
+import itertools
+import json
+from pathlib import Path
+import re
+import subprocess
+
+BASE = Path(__file__).resolve().parent
+ROOT = BASE.parents[2]
+LOG = ROOT / '.artifacts/logs' / BASE.name
+RELEASE = 'docs/audits/native-proxy-observation-archive-release-20260911'
+REVISION = 'da27b5cbaf01af7cbe294c8f851c8273dd750856'
+
+
+def load(path): return json.loads(path.read_bytes())
+
+
+def rejects(action):
+    try: action()
+    except (AssertionError, KeyError, TypeError, ValueError, IndexError): return True
+    return False
+
+
+def domain(plan):
+    assert plan['source_revision'] == REVISION
+    boundaries = plan['source_boundaries']
+    assert len(boundaries) == len({(b['path'], b['symbol']) for b in boundaries}) == 37
+    special = {'_same': 'pure_not_selected', '_copy': 'pure_not_selected', '_snapshot': 'pure_not_selected',
+               '_close_owned': 'closure_category_only', 'release_observation_reference': 'public_envelope_only',
+               '_transaction': 'coordinator_envelope_only', '_source': 'before_only_returned_handle'}
+    for boundary in boundaries:
+        assert boundary['category'] == special.get(boundary['symbol'], 'safe_before_after')
+    stages = ['before_prepare', 'before_lock', 'before_unlink', 'unlink_rejected', 'after_unlink', 'first_absence_error',
+              'first_absence_present', 'after_first_absence', 'finish_absence_error', 'finish_absence_present', 'after_finish_absence', 'complete']
+    expected_names = []
+    for index, stage in enumerate(stages):
+        initials = ['original', 'absent', 'replacement'] if index < 2 else ['original']
+        owners = [] if index == 0 else ['archive_sources'] if index == 1 else ['lock', 'archive_sources', 'live_sources']
+        errors = [set(owner for i, owner in enumerate(owners) if bit[i]) for bit in itertools.product((False, True), repeat=len(owners))]
+        actual = [case for case in plan['cases'] if case['stage'] == stage]
+        assert len(actual) == len(initials) * len(errors)
+        for initial in initials:
+            selected = [case for case in actual if case['initial_name'] == initial]
+            assert {tuple(case['close_errors']) for case in selected} == {tuple(o for o in owners if o in error) for error in errors}
+            assert all(case['owned_closures'] == owners for case in selected)
+            expected_names.extend(stage + ':' + initial + ':' + str(i) for i in range(1 << len(owners)))
+    assert [case['name'] for case in plan['cases']] == expected_names
+    assert len(expected_names) == len(set(expected_names))
+    assert plan['profiles'] == ['ordinary_retired_other_observation', 'equal_reference_retired_other_observation', 'ordinary_active_runtime', 'ordinary_retired_last_observation']
+    for case in plan['cases']:
+        # Derive required events from the declared phase, not by executing the
+        # producer's stage constructor or consuming its success verdict.
+        index = stages.index(case['stage']); events = []
+        if index >= 3: events.append(dict(kind='unlink_attempt'))
+        if index >= 4: events.append(dict(kind='unlink_complete'))
+        if index == 6: events.append(dict(kind='replacement_appears'))
+        if index >= 5: events.append(dict(kind='absence_begin', phase='after_unlink'))
+        if index >= 6: events.append(dict(kind='absence_result', state='present' if index == 6 else 'absent'))
+        if index == 9: events.append(dict(kind='replacement_appears'))
+        if index >= 8: events.append(dict(kind='absence_begin', phase='finish'))
+        if index >= 9: events.append(dict(kind='absence_result', state='present' if index == 9 else 'absent'))
+        if index != 11: events.append(dict(kind='error', error='primary:' + case['stage']))
+        assert case['events'] == events
+    return stages
+
+
+def expected(case):
+    stage = case['stage']
+    attempted = stage not in ('before_prepare', 'before_lock', 'before_unlink')
+    unlinked = attempted and stage != 'unlink_rejected'
+    first_succeeded = stage in ('after_first_absence', 'finish_absence_error', 'finish_absence_present', 'after_finish_absence', 'complete')
+    check = None
+    if stage in ('first_absence_error', 'first_absence_present', 'after_first_absence'):
+        check = dict(phase='after_unlink', state={'first_absence_error': 'unknown', 'first_absence_present': 'present', 'after_first_absence': 'absent'}[stage])
+    elif stage.startswith('finish_absence') or stage in ('after_finish_absence', 'complete'):
+        check = dict(phase='finish', state={'finish_absence_error': 'unknown', 'finish_absence_present': 'present'}.get(stage, 'absent'))
+    named = 'replacement' if stage.endswith('_present') else 'absent' if unlinked else case['initial_name']
+    error = ('close:' + case['close_errors'][0] if case['close_errors'] else '') if stage == 'complete' else 'primary:' + stage
+    return dict(success=not error, error=error, effects=dict(unlink_attempted=int(attempted), unlink_completed=int(unlinked),
+        reference_absence_verified=int(first_succeeded), last_reference_check=check), current_name=named,
+        closes=[dict(owner=o, actual_close=True, reported_error='close:' + o if o in case['close_errors'] else '') for o in case['owned_closures']],
+        successful_receipt=not error, runtime_authorized=False, events_consumed=len(case['events']))
+
+
+def verify(plan, report):
+    domain(plan)
+    assert report['schema'] == 'fsmgen.inactive_release_interruption_model_qualification.v1'
+    assert report['success'] is True and report['forbidden_lookup_or_process_attempts'] == 0
+    assert report['prospective_pins'] == load(BASE / 'preflight-pins.json')
+    assert [r['name'] for r in report['cases']] == [c['name'] for c in plan['cases']]
+    for case, row in zip(plan['cases'], report['cases'], strict=True):
+        assert row['input_unchanged'] is True and row['output'] == expected(case)
+    mutants = ['erase unlink on failure', 'close error becomes success', 'erase earlier absence', 'cleanup replaces primary']
+    assert [row['name'] for row in report['mutants']] == mutants
+    for mutant in report['mutants']:
+        expected_names = []
+        for case in plan['cases']:
+            output = expected(case); altered = copy.deepcopy(output)
+            if mutant['name'] == mutants[0] and output['error']: altered['effects']['unlink_completed'] = 0
+            if mutant['name'] == mutants[1] and output['error'].startswith('close:'): altered.update(success=True, successful_receipt=True)
+            if mutant['name'] == mutants[2] and output['effects']['last_reference_check'] and output['effects']['last_reference_check']['state'] != 'absent': altered['effects']['reference_absence_verified'] = 0
+            if mutant['name'] == mutants[3] and case['close_errors']:
+                altered['error'] = 'close:' + case['close_errors'][-1]
+            if altered != output:
+                expected_names.append(case['name'])
+                witness = next(row for row in mutant['witnesses'] if row['name'] == case['name'])
+                assert witness['output'] == altered and witness['output'] != output
+        assert [row['name'] for row in mutant['witnesses']] == expected_names and expected_names
+    return dict(model_cases=len(report['cases']), successful_model_cases=sum(row['output']['success'] for row in report['cases']),
+                model_mutants=len(report['mutants']), mutant_witnesses=sum(len(row['witnesses']) for row in report['mutants']))
+
+
+def authenticate(plan):
+    pins = load(BASE / 'preflight-pins.json')
+    assert [p['path'] for p in pins] == [str((BASE / name).relative_to(ROOT)) for name in ('contract.json', 'prepare.py', 'model.py', 'qualify.py', 'audit.py')]
+    for pin in plan['inputs'] + pins:
+        path = ROOT / pin['path']; raw = path.read_bytes()
+        assert path.stat().st_dev == ROOT.stat().st_dev
+        for ancestor in [path, *path.parents]:
+            if ancestor == ROOT: break
+            assert not ancestor.is_symlink()
+        assert len(raw) == pin['size_bytes'] and hashlib.sha256(raw).hexdigest() == pin['sha256']
+        if pin in plan['inputs']: assert raw == subprocess.check_output(['git', 'show', REVISION + ':' + pin['path']], cwd=ROOT)
+    for boundary in plan['source_boundaries']:
+        lines = (ROOT / boundary['path']).read_bytes().splitlines(keepends=True)
+        raw = b''.join(lines[boundary['start_line'] - 1:boundary['start_line'] - 1 + boundary['lines']])
+        assert len(raw) == boundary['size_bytes'] and hashlib.sha256(raw).hexdigest() == boundary['sha256']
+        assert raw.startswith(('sub ' + boundary['symbol'] + ' {').encode())
+    release = (ROOT / RELEASE / 'ObservationRelease.pm').read_text()
+    symbols = re.findall(r'^sub (\w+) ', release, re.M)
+    assert {b['symbol'] for b in plan['source_boundaries'] if b['path'] == RELEASE + '/ObservationRelease.pm'} == set(symbols)
+    source = next(b for b in plan['source_boundaries'] if b['symbol'] == '_source')
+    assert source['category'] == 'before_only_returned_handle'
+    assert next(b for b in plan['source_boundaries'] if b['symbol'] == '_close_owned')['category'] == 'closure_category_only'
+    assert next(b for b in plan['source_boundaries'] if b['symbol'] == '_transaction')['category'] == 'coordinator_envelope_only'
+    assert release.index('unlink_completed} = 1') < release.index('sub _assert_absent')
+    assert 'my $check = {phase => $phase, state => \'unknown\'};' in release
+    assert release.index('$state->{effect}{last_reference_check} = $check;') < release.index('my $absent = NativeProxyPrivateWorkspace::_absent($path);')
+    assert 'reference_absence_verified} = 0' not in release
+    return pins
+
+
+def saved_join(plan):
+    spec = importlib.util.spec_from_file_location('contract_saved_release', ROOT / RELEASE / 'audit.py')
+    old = importlib.util.module_from_spec(spec); spec.loader.exec_module(old)
+    prior = load(ROOT / RELEASE / 'plan.json'); report = load(ROOT / RELEASE / 'result/qualification.json')
+    counts = old.verify(prior, report)
+    assert counts == {key: load(ROOT / RELEASE / 'result/audit.json')[key] for key in counts}
+    admissions = [json.loads(line) for line in (ROOT / RELEASE / 'result/admission.jsonl').read_text().splitlines()]
+    assert admissions == report['allocated']
+    for row in admissions:
+        path = ROOT / row['path']; assert not path.exists() and not path.is_symlink()
+    projections = []
+    for row in report['cases']:
+        name = row['name']; control = row['selection']['control']
+        if not (name.startswith('healthy:') or name.startswith('post-unlink:') or name in ('rejected:missing-hold', 'rejected:replaced-hold')): continue
+        case_name = 'complete:original:0'
+        if control == 'before-finish': case_name = 'after_first_absence:original:0'
+        if control == 'primary-and-source-close': case_name = 'after_first_absence:original:2'
+        if control == 'source-close-after-unlink': case_name = 'complete:original:2'
+        if control == 'lock-close-after-unlink': case_name = 'complete:original:1'
+        if name == 'rejected:missing-hold': case_name = 'before_lock:absent:0'
+        if name == 'rejected:replaced-hold': case_name = 'before_lock:replacement:0'
+        abstract = expected(next(c for c in plan['cases'] if c['name'] == case_name)); actual = row['operation']['result']
+        assert bool(actual['success']) is abstract['success']
+        assert {key: actual[key] for key in abstract['effects']} == abstract['effects']
+        hold = row['context']['acquired']['observation_reference']['source']['identity']; store = row['context']['store']['path']
+        node = row['operation']['after']['store'].get(hold['path'][len(store) + 1:])
+        current = 'absent' if node is None else 'original' if (node['device'], node['inode']) == (hold['device'], hold['inode']) else 'replacement'
+        assert current == abstract['current_name']
+        projections.append(dict(original_case=name, abstract_case=case_name, meaning='Effect/name/success projection only; not exact interruption timing or per-handle reachability.'))
+    assert len(projections) == 14
+    return dict(original_cases=counts['cases'], original_roots=counts['roots'], projections=projections,
+                limits='All original cases are independently rechecked; fourteen selected state projections support the effect model only. No original producer or original audit main runs; planned interruption points remain unexecuted.')
+
+
+def main():
+    plan = load(BASE / 'contract.json'); pins = authenticate(plan); report = load(LOG / 'qualification.json')
+    counts = verify(plan, report); joined = saved_join(plan)
+    def output(report, stage): return next(row['output'] for row in report['cases'] if row['name'].startswith(stage + ':'))
+    changes = [
+        ('missing model case', lambda r: r['cases'].pop()),
+        ('false success', lambda r: output(r, 'before_unlink').update(success=True)),
+        ('lost actual unlink', lambda r: output(r, 'after_unlink')['effects'].update(unlink_completed=0)),
+        ('invented absence', lambda r: output(r, 'after_unlink')['effects'].update(reference_absence_verified=1)),
+        ('lost prior absence', lambda r: output(r, 'finish_absence_error')['effects'].update(reference_absence_verified=0)),
+        ('unknown becomes absent', lambda r: output(r, 'finish_absence_error')['effects']['last_reference_check'].update(state='absent')),
+        ('replacement becomes absent', lambda r: output(r, 'finish_absence_present').update(current_name='absent')),
+        ('missing initial name becomes present', lambda r: next(row['output'] for row in r['cases'] if row['name']=='before_prepare:absent:0').update(current_name='original')),
+        ('lost primary error', lambda r: output(r, 'after_unlink').update(error='')),
+        ('lost closure', lambda r: output(r, 'after_unlink')['closes'].pop()),
+        ('reordered cleanup', lambda r: output(r, 'after_unlink')['closes'].reverse()),
+        ('false runtime authority', lambda r: output(r, 'complete').update(runtime_authorized=True)),
+        ('lost input preservation', lambda r: r['cases'][0].update(input_unchanged=False)),
+        ('hidden lookup', lambda r: r.update(forbidden_lookup_or_process_attempts=1)),
+        ('missing mutant', lambda r: r['mutants'].pop()),
+        ('missing mutant witness', lambda r: r['mutants'][0]['witnesses'].pop()),
+        ('false mutant witness', lambda r: r['mutants'][0]['witnesses'][0]['output']['effects'].update(unlink_completed=1)),
+    ]
+    for name, change in changes:
+        altered = copy.deepcopy(report); change(altered); assert rejects(lambda: verify(plan, altered)), name
+    domains = []
+    for name in ('missing cleanup combination', 'wrong cleanup order', 'invented earlier absence', 'unsafe source-return fault', 'duplicate source boundary'):
+        altered = copy.deepcopy(plan)
+        if name == 'missing cleanup combination': altered['cases'].pop()
+        elif name == 'wrong cleanup order': next(c for c in altered['cases'] if c['stage']=='after_unlink')['owned_closures'].reverse()
+        elif name == 'invented earlier absence': next(c for c in altered['cases'] if c['stage']=='after_unlink')['events'].insert(2, dict(kind='absence_result', state='absent'))
+        elif name == 'unsafe source-return fault': next(b for b in altered['source_boundaries'] if b['symbol']=='_source')['category']='safe_before_after'
+        else: altered['source_boundaries'].append(copy.deepcopy(altered['source_boundaries'][0]))
+        assert rejects(lambda: domain(altered)), name; domains.append(name)
+    assert (LOG / 'qualify.exit').read_bytes() == b'0\n'
+    output = dict(schema='fsmgen.inactive_release_interruption_contract_audit.v1', success=True, **counts, saved_join=joined,
+                  source_inputs=len(plan['inputs']), prospective_pins=len(pins), source_boundaries=len(plan['source_boundaries']),
+                  before_after_symbols=sum(b['category']=='safe_before_after' for b in plan['source_boundaries']),
+                  before_only_source_symbols=sum(b['category']=='before_only_returned_handle' for b in plan['source_boundaries']),
+                  report_falsifiers=[name for name, _ in changes], domain_falsifiers=domains, limits=plan['limits'])
+    with (LOG / 'audit.json').open('x') as stream: stream.write(json.dumps(output, indent=2, sort_keys=True) + '\n')
+    print(json.dumps(output, sort_keys=True))
+
+
+if __name__ == '__main__':
+    main()

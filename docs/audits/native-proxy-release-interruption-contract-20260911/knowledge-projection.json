@@ -1,0 +1,19 @@
+{
+  "additional_card_projection": {
+    "after_bytes": 3491024,
+    "after_lines": 47265,
+    "before_bytes": 3492390,
+    "before_lines": 47288,
+    "checked_before_live_write": true,
+    "path": "docs/knowledge/task-tree-sealed-segments-and-compact-terminals.md"
+  },
+  "after_bytes": 3491024,
+  "after_lines": 47265,
+  "allowance_bytes": 3492424,
+  "allowance_lines": 47288,
+  "allowance_unchanged": true,
+  "before_bytes": 3492369,
+  "before_lines": 47288,
+  "checked_before_live_write": true,
+  "head": "da27b5cbaf01af7cbe294c8f851c8273dd750856"
+}

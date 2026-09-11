@@ -2209,6 +2209,37 @@ source applicability. Complete interruption/close coverage, actual native
 receipt authentication and prevention of future launches remain separate gates.
 No compiler, original native fixture, helper or collector runs in this suite.
 
+The next interruption contract is recorded in
+`docs/audits/native-proxy-release-interruption-contract-20260911/contract.json`.
+Its finite model separates an unlink attempt, completed unlink, each absence
+observation and final success. Early rejection preserves the supplied initial
+name state: it cannot prove that a missing original hold exists. A later failed
+absence read can leave this symbolic state:
+
+```json
+{
+  "unlink_completed": 1,
+  "reference_absence_verified": 1,
+  "last_reference_check": {"phase": "finish", "state": "unknown"}
+}
+```
+
+The earlier absence observation remains historical evidence. The latest check
+is unknown, so the model does not claim current absence. This example is a
+prospective interruption state, not completed filesystem fault coverage.
+Saved successful, post-unlink-failure and missing/replaced-hold cases support
+state projections; they do not establish every selected interruption point.
+
+The source boundary inventory distinguishes safe call cuts from ownership
+transfers. A reader returning an open descriptor is observed before its caller
+assumes ownership; throwing at that transfer point is excluded from ordinary
+call cuts. Aggregate cleanup and public/coordinator envelopes have dedicated
+closure domains. Later lanes first record healthy call and handle lifetimes,
+then qualify safe interruptions, actual closes followed by modeled errors,
+deliberate close omissions with separate recovery, and the final source/evidence
+join. Primary errors outrank cleanup reports. These finite checks grant no
+native ownership authority or guarantee against arbitrary asynchronous writers.
+
 The inactive archive record implementation now derives a closed specification
 from the complete original acquisition and request. It keeps the ordered wrapper,
 private reference, global reference, C source and image snapshots, including

@@ -1,0 +1,6 @@
+{
+  "path": "docs/audits/native-proxy-release-interruption-contract-20260911/audit.py",
+  "sha256": "bdb9e0099fa70e7459ce7f192213201c35d51f66a6fe1ddbabcc384274559d59",
+  "size_bytes": 17313,
+  "timing": "after original model qualification and preserved first audit failure; before corrected audit"
+}

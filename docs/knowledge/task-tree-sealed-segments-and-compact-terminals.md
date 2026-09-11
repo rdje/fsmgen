@@ -2,6 +2,7 @@
 id: task-tree-sealed-segments-and-compact-terminals
 title: Long-running task trees use exact-provenance sealed segments or compact terminals
 answers:
+  - "can a compact task terminal contain older compact terminals?"
   - "how can a task-tree file be bounded without losing completed nodes?"
   - "what is a task-tree sealed subtree segment?"
   - "what is the task-tree segment manifest format?"
@@ -20,44 +21,20 @@ evidence: docs/decisions/0042-task-trees-seal-completed-subtrees-with-exact-prov
 reverify: scripts/check_task_tree_integrity.pl && scripts/check_claim_verification.pl
 ---
 
-Decision `0042` keeps the live task Markdown file as the readable front door:
-metadata, the top-level root, every nonterminal node, and every ancestor needed
-to reach the frontier stay live. PNT therefore never consults archived history.
+Decision `0042` keeps active nodes and frontier ancestry in the live task tree.
+Sealed segments require exact source equality, disjoint complete terminal roots,
+finite per-part/aggregate bounds and one validated combined graph. A compact
+`version_object` retains its original goal, full revision/path/file digest,
+node count, named retention contract, closed verification and commit evidence.
+Before compaction, census live registry owners; keep every live `owner_task` ID.
 
-When a long-running tree approaches its local pressure budget, one optional
-repository-relative JSONL manifest may address content-named Markdown segments.
-The manifest declares finite record/byte bounds for itself plus independent
-per-segment and aggregate node/line/byte bounds, so sharding cannot merely move
-the pressure. Every segment record carries disjoint completed-subtree roots,
-node count, SHA-256, exact source revision/path, and a named retention contract. The checker requires
-the segment filename to equal its digest, proves every node matches its exact-
-source node, requires each named root's full source subtree, then validates one
-combined ID/ancestry/child/status/evidence graph across the live file and
-segments.
+Current compact retrieval validates retrieved leaves as ordinary leaves.
+Nested compact terminals lack the required Acceptance field and reject. Keep
+those terminals live and select a flat completed subtree; the checker remains
+unchanged. Exact failed-candidate bytes, diagnostics, restoration and a fresh
+flat-owner census: `docs/audits/native-proxy-release-interruption-contract-20260911/compaction-review.json`.
 
-A fully completed subtree can instead remain as one compact `version_object`
-terminal. Its exact revision/path, retrieved-file digest, archived-node count,
-retention contract, goal, verification, and commit reference let the checker reload and validate
-the whole terminal subtree through git. Missing revisions, digest or count
-drift, nonterminal archived nodes, broken child closure, and pending leaf
-evidence all fail closed.
-
-Before compaction, check live claim owners too. `CLAIM-VERIFICATION` requires
-each `owner_task` ID in the live task file; a compact terminal does not satisfy it. Keep those owners live and select a different subtree.
-
-Initial migration figures follow.
-
-Both forms are optional. Existing one-file trees remain valid. `.7` performs
-the first migration: one exact-source segment now holds all 844 terminal IAL2
-children while the 85-line live task file retains its active root. A separate
-bounded JSONL version-object manifest seals 540 unique terminal index rows;
-the live 558-line index contains only active/proposed selection plus retrieval
-instructions. The checker reconstructs 882 nodes and proves one segment plus
-one completed-index archive. Completed task files remain directly browsable.
-
-Leaf `.22` adds a separate migration manifest rather than pretending these
-retention products are disjoint line ranges. It retrieves and identifies the
-complete former source, checks all 844 semantic nodes, measures the current
-root/manifest/segment working set, and records any unretained residue. The live
-record declares overlapping products and zero residue; source, count,
-working-set, false-partition, missing-history, and residue fixtures fail closed.
+History: `da27b5cbaf01af7cbe294c8f851c8273dd750856:docs/knowledge/task-tree-sealed-segments-and-compact-terminals.md`.
+That source preserves full segment/manifest/migration contracts and initial
+migration measurements. Both forms remain optional; ordinary one-file trees
+stay valid, and PNT selects current work only from live nodes.

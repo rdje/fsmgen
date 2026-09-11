@@ -1,0 +1,62 @@
+{
+  "all_copies_byte_exact": true,
+  "files": [
+    {
+      "destination": "docs/audits/native-proxy-release-interruption-contract-20260911/result/preflight-pins.json",
+      "sha256": "e662c60cf9ee6e86e1a259fbfa80a0e1311409ef1a87d6109df2c9fbc4baea70",
+      "size_bytes": 1024,
+      "source": ".artifacts/logs/native-proxy-release-interruption-contract-20260911/preflight-pins.json"
+    },
+    {
+      "destination": "docs/audits/native-proxy-release-interruption-contract-20260911/result/qualify.stdout",
+      "sha256": "c0ed87ac781cc422b2c54c817299ea2447419f1af71fe02d3e02f3631e790bf1",
+      "size_bytes": 63,
+      "source": ".artifacts/logs/native-proxy-release-interruption-contract-20260911/qualify.stdout"
+    },
+    {
+      "destination": "docs/audits/native-proxy-release-interruption-contract-20260911/result/qualify.stderr",
+      "sha256": "5ec6f6abf2922524546bc2f9602f503ba348a1bee65614bfbde26a8083208b78",
+      "size_bytes": 91,
+      "source": ".artifacts/logs/native-proxy-release-interruption-contract-20260911/qualify.stderr"
+    },
+    {
+      "destination": "docs/audits/native-proxy-release-interruption-contract-20260911/result/qualify.exit",
+      "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa",
+      "size_bytes": 2,
+      "source": ".artifacts/logs/native-proxy-release-interruption-contract-20260911/qualify.exit"
+    },
+    {
+      "destination": "docs/audits/native-proxy-release-interruption-contract-20260911/result/qualification.json",
+      "sha256": "3d035deccd70a14f585c30597e8caf5c3c734fcc51e238ab9af9eb3b6a0c8bdb",
+      "size_bytes": 259670,
+      "source": ".artifacts/logs/native-proxy-release-interruption-contract-20260911/qualification.json"
+    },
+    {
+      "destination": "docs/audits/native-proxy-release-interruption-contract-20260911/result/audit.stdout",
+      "sha256": "bc09fd51230551c1f130fe331db5c634006dfa2e43edea9864f0798449020a24",
+      "size_bytes": 4500,
+      "source": ".artifacts/logs/native-proxy-release-interruption-contract-20260911/audit.stdout"
+    },
+    {
+      "destination": "docs/audits/native-proxy-release-interruption-contract-20260911/result/audit.stderr",
+      "sha256": "30d064f082cbc84a6fb635cd4e0408d6dd56e57f41badb3d2b8d480cb3730876",
+      "size_bytes": 91,
+      "source": ".artifacts/logs/native-proxy-release-interruption-contract-20260911/audit.stderr"
+    },
+    {
+      "destination": "docs/audits/native-proxy-release-interruption-contract-20260911/result/audit.exit",
+      "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa",
+      "size_bytes": 2,
+      "source": ".artifacts/logs/native-proxy-release-interruption-contract-20260911/audit.exit"
+    },
+    {
+      "destination": "docs/audits/native-proxy-release-interruption-contract-20260911/result/audit.json",
+      "sha256": "b1a6002ad5eb56c9d1c43432c32d8bb0ef8f79a2bccc0903540da5eb50326253",
+      "size_bytes": 5190,
+      "source": ".artifacts/logs/native-proxy-release-interruption-contract-20260911/audit.json"
+    }
+  ],
+  "first_failed_auditor": "first-audit",
+  "first_failed_traceback": "first-audit/stderr-exact.json",
+  "schema": "fsmgen.release_interruption_contract_recovery.v1"
+}

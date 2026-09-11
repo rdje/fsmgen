@@ -1,0 +1,13 @@
+{
+  "admitted_census": "flat-compaction-census.json",
+  "checker_unchanged": true,
+  "first_attempt": "result/first-compaction",
+  "flat_source_nodes": 7,
+  "flat_terminal": "HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.2",
+  "nested_archive_subtree_restored_byte_exact": true,
+  "registry_owner_matches": [],
+  "rejected_census": "compaction-census.json",
+  "scope": "The current compact-terminal retrieval path validates ordinary terminal leaves and does not accept nested compact terminals without Acceptance fields. Keep those terminals live. The admitted flat diagnostic archive successor preserves exact history without changing that validation contract.",
+  "source_revision": "da27b5cbaf01af7cbe294c8f851c8273dd750856",
+  "source_sha256": "4472e1dbb0b2955ca969201c531824a3438a17d14c194b9f44b5311fc50088d8"
+}

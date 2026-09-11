@@ -1,0 +1,13 @@
+{
+  "draft_review": "A returned source handle is observation-only after return; aggregate cleanup and public/coordinator envelopes have dedicated closure domains. The latest absence check can be unknown/present while an earlier successful absence fact remains true. Early rejection preserves the supplied initial name state without inventing a hold.",
+  "independent_domain": true,
+  "model_cases": 89,
+  "model_mutants": 4,
+  "original_model_equals_closed_form": true,
+  "pins_before_qualification": true,
+  "prospective_pins": 5,
+  "prospective_plan_reproduction": true,
+  "python_syntax": true,
+  "schema": "fsmgen.release_interruption_contract_preflight.v1",
+  "source_boundaries": 37
+}

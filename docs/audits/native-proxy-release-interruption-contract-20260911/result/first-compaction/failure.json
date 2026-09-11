@@ -1,0 +1,8 @@
+{
+  "initial_task_bytes": 1107819,
+  "initial_task_sha256": "516fc579a4816b2c135ef7701e0ea9c0174ffb1fc1cc764fe4f7cf1f5dcfd040",
+  "rejected_terminal": "HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.12.4.1.3.4.2",
+  "resolution": "Restore the exact completed archive subtree. Keep nested terminals live and choose a flat complete subtree with no nested terminals after a fresh owner census. Do not weaken the checker.",
+  "root_cause": "validate_compact_terminal validates each retrieved child through ordinary leaf acceptance rules; nested compact terminals have no Acceptance field and are unsupported in this retrieval path.",
+  "source": "scripts/check_task_tree_integrity.pl"
+}

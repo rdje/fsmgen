@@ -1,0 +1,7 @@
+{
+  "model_or_qualifier_changed": false,
+  "original_failure": "result/first-audit",
+  "producer_rerun": false,
+  "repair": "Require exactly one matching witness before reading it. Retain the original missing-witness control and add duplicate-witness rejection. Authenticate the original prospective auditor through its exact retained source and separately pin this post-qualification correction.",
+  "root_cause": "The original oracle used next(...) before asserting that a named mutant witness exists. Its missing-witness falsifier raised StopIteration outside the bounded rejection wrapper instead of reporting a controlled assertion. The original model comparison and saved release join completed before this falsifier."
+}
