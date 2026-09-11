@@ -2333,7 +2333,27 @@ The same saved-data verification mode applies:
 python3 -B docs/audits/native-proxy-observation-archive-release-ordinary-after-20260911/audit.py --verify-saved
 ```
 
-Later lanes qualify the remaining profiles, actual closes followed by modeled
+The equal-content before-call partition covers the profile where the wrapper
+and both retained runtime-reference snapshots share bytes. Their original
+identities remain distinct, while they share one archived payload. The C source
+and image remain separate payloads. Release must preserve those original
+bindings and the complete shared archive even when an interruption prevents
+the selected observation hold from being released.
+
+This profile has its own healthy event and handle basis. Its preflight removes
+only the already-declared sealed completion aliases and compares each selected
+before-call prefix and outstanding-handle cleanup with the unchanged source-scope
+oracle. Every actual fault resolves against its newly constructed fixture; the
+ordinary profile's numeric call IDs or counts are not reused. The exact archive,
+other observation and other runtime owner remain part of each physical-state
+comparison. Saved bodies and their independent audit live under
+`docs/audits/native-proxy-observation-archive-release-equal-before-20260911/`:
+
+```sh
+python3 -B docs/audits/native-proxy-observation-archive-release-equal-before-20260911/audit.py --verify-saved
+```
+
+Later lanes qualify the remaining profile/phase partitions, actual closes followed by modeled
 errors, deliberate close omissions with separate recovery, and the final
 source/evidence join. Primary errors outrank cleanup reports. These finite
 checks grant no native ownership authority or guarantee against arbitrary

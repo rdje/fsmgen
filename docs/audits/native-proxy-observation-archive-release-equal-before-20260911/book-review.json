@@ -1,0 +1,16 @@
+{
+  "checked_passages": [
+    "Their original identities remain distinct, while they share one archived payload.",
+    "Release must preserve those original bindings and the complete shared archive",
+    "This profile has its own healthy event and handle basis.",
+    "Every actual fault resolves against its newly constructed fixture;",
+    "equal-before-20260911/audit.py --verify-saved"
+  ],
+  "exact_output_absent": true,
+  "exit_code": 0,
+  "output": ".artifacts/tmp/native-proxy-observation-archive-release-equal-before-book-20260911/book",
+  "rendered_bytes": 23374539,
+  "rendered_directories": 3,
+  "rendered_files": 98,
+  "same_volume_direct_objects": true
+}
