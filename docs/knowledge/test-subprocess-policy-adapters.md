@@ -33,6 +33,7 @@ answers:
   - "how do archive records preserve all retained source identities?"
   - "can retained snapshots be archived after the workspace is retired?"
   - "how are repeated archive boundaries and handle lifetimes distinguished?"
+  - "what survives ordinary fresh archive call interruptions?"
   - "why did integrated proxy qualification fail?"
   - "why does t1545 not use IPC Cmd?"
   - "where does T1545 preserve empty-output checker failure diagnostics?"
@@ -101,14 +102,13 @@ Decisions `0087`/`0101` select `FSM::Support::ProcessSupervisor`; adapters seal 
 `VerilatorRuntime` follows decision `0086`.
 `TaskAcceptanceFixtureRuntime` seals owned fixture roots/fixed local Git argv.
 Supervisor, checker, locality, startup/capture/STOP controls: history; absent witnesses stay unknown.
-History: `ff71d28f1e47c6bf34db96029862f6be5fe96051:docs/knowledge/test-subprocess-policy-adapters.md`.
-PST parsing normalizes 1–16 lowercase hex digits; malformed fields and contradictions reject.
-Serial queue contention is supported; causal/native limits and controls: history.
-Fixed CLI limits: history.
+History: `cbb62267a741dd059132d745d429c12d86fc5967:docs/knowledge/test-subprocess-policy-adapters.md`.
+PST parsing, serial-queue evidence, fixed CLI limits and controls: history.
 Records, custody, acquisition and unique-occurrence correction: history.
 A scoped settled event can leave a caller-owned helper running; release still needs every selected owner settled, including cancellation. Contract/model: history.
-Archive records, retained-byte archival after retirement, complete reuse without target reopens and physical custody: history.
-Unique archive boundaries identify each read and owned handle. Source-return and close observations are not throwing fault selectors. Healthy lifetimes/domains: `docs/audits/native-proxy-observation-archive-boundaries-20260911/audit.py`; fault/native/release coverage remains open.
+Archive records, post-retirement archival and stable reuse: history.
+Unique archive calls/handles: history. Source-return and close observations are not throwing fault selectors.
+Ordinary fresh call cuts preserve exact partial files, both holds and other owners; all observed handles close. Evidence: `docs/audits/native-proxy-observation-archive-fresh-calls-20260911/audit.py`. Other routes, partial writes, close reports and release remain open.
 Caller-sealed test wrappers use tail goto to preserve caller.
 Replay: `scripts/run_with_ram_guard.sh -- python3 -B -m unittest discover -s t/python -p 'test_fixture_policy_archive*.py'`.
 RAM guard/T1595/T1811/T1669 controls and open causes: history.

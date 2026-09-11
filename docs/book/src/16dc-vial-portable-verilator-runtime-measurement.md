@@ -2184,12 +2184,39 @@ temporarily owns the returned handle before the caller can register it for
 cleanup; injecting an adapter exception there would manufacture a handoff leak.
 That observation is excluded from throwing call-fault selectors. Close events
 are reserved for separately qualified return-error and omitted-close controls.
-Healthy traces prove this selection and ownership order; interruption coverage
-and native release authority remain open. Replay:
+Healthy traces prove this selection and ownership order; the following matrix
+adds ordinary fresh call cuts. Other interruption domains and native release
+authority remain open. Replay:
 
 ```bash
 scripts/run_with_ram_guard.sh -- perl docs/audits/native-proxy-observation-archive-boundaries-20260911/qualify.t
 scripts/run_with_ram_guard.sh -- python3 -B docs/audits/native-proxy-observation-archive-boundaries-20260911/audit.py
+```
+
+Ordinary fresh archival now has selected helper-call interruption coverage.
+Each selected before/after call exception is propagated as the operation's
+failure, and all observed source, writer and directory handles explicitly
+close. The independent audit derives the interrupted healthy prefix, cleanup
+order and exact remaining files from the original retained bytes.
+
+For example, failure immediately after archive-directory creation leaves that
+empty directory. Failure at writer byte-mode setup leaves its empty exclusively
+created file and any earlier complete files. Later helper failures retain the
+complete bytes already written. These conservative remnants do not produce an
+archive receipt or release a hold. Original retained inputs, both observation
+holds, the other runtime and workspace stay unchanged; the retired target
+workspace stays absent. An existing partial archive still requires separately
+owned recovery; this path does not silently fill or repair it.
+
+These are throwing helper-call controls for the ordinary fresh route. Short
+writes, close-return errors, existing/equal-content routes and native release
+have separate qualification gates. Inspect the saved qualification and oracle
+under `docs/audits/native-proxy-observation-archive-fresh-calls-20260911/result/`.
+The corresponding inert producer and independent checker are:
+
+```bash
+scripts/run_with_ram_guard.sh -- perl docs/audits/native-proxy-observation-archive-fresh-calls-20260911/qualify.t
+scripts/run_with_ram_guard.sh -- python3 -B docs/audits/native-proxy-observation-archive-fresh-calls-20260911/audit.py
 ```
 
 The helper checks bounded regular source/output files and the native header,

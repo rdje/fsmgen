@@ -1,0 +1,842 @@
+ok 1 - ordinary:fresh:limits:before: actual inactive retirement precedes interruption
+ok 2 - ordinary:fresh:limits:before: exact single fault propagates without success
+ok 3 - ordinary:fresh:limits:before: every actual owned handle explicitly closes
+ok 4 - ordinary:fresh:limits:before: retained inputs unchanged
+ok 5 - ordinary:fresh:limits:before: all other owners and retired workspace preserved
+ok 6 - ordinary:fresh:limits:after: actual inactive retirement precedes interruption
+ok 7 - ordinary:fresh:limits:after: exact single fault propagates without success
+ok 8 - ordinary:fresh:limits:after: every actual owned handle explicitly closes
+ok 9 - ordinary:fresh:limits:after: retained inputs unchanged
+ok 10 - ordinary:fresh:limits:after: all other owners and retired workspace preserved
+ok 11 - ordinary:fresh:prior:0:before: actual inactive retirement precedes interruption
+ok 12 - ordinary:fresh:prior:0:before: exact single fault propagates without success
+ok 13 - ordinary:fresh:prior:0:before: every actual owned handle explicitly closes
+ok 14 - ordinary:fresh:prior:0:before: retained inputs unchanged
+ok 15 - ordinary:fresh:prior:0:before: all other owners and retired workspace preserved
+ok 16 - ordinary:fresh:directory:evidence:0:before: actual inactive retirement precedes interruption
+ok 17 - ordinary:fresh:directory:evidence:0:before: exact single fault propagates without success
+ok 18 - ordinary:fresh:directory:evidence:0:before: every actual owned handle explicitly closes
+ok 19 - ordinary:fresh:directory:evidence:0:before: retained inputs unchanged
+ok 20 - ordinary:fresh:directory:evidence:0:before: all other owners and retired workspace preserved
+ok 21 - ordinary:fresh:directory:evidence:0:after: actual inactive retirement precedes interruption
+ok 22 - ordinary:fresh:directory:evidence:0:after: exact single fault propagates without success
+ok 23 - ordinary:fresh:directory:evidence:0:after: every actual owned handle explicitly closes
+ok 24 - ordinary:fresh:directory:evidence:0:after: retained inputs unchanged
+ok 25 - ordinary:fresh:directory:evidence:0:after: all other owners and retired workspace preserved
+ok 26 - ordinary:fresh:prior:0:after: actual inactive retirement precedes interruption
+ok 27 - ordinary:fresh:prior:0:after: exact single fault propagates without success
+ok 28 - ordinary:fresh:prior:0:after: every actual owned handle explicitly closes
+ok 29 - ordinary:fresh:prior:0:after: retained inputs unchanged
+ok 30 - ordinary:fresh:prior:0:after: all other owners and retired workspace preserved
+ok 31 - ordinary:fresh:prior:1:before: actual inactive retirement precedes interruption
+ok 32 - ordinary:fresh:prior:1:before: exact single fault propagates without success
+ok 33 - ordinary:fresh:prior:1:before: every actual owned handle explicitly closes
+ok 34 - ordinary:fresh:prior:1:before: retained inputs unchanged
+ok 35 - ordinary:fresh:prior:1:before: all other owners and retired workspace preserved
+ok 36 - ordinary:fresh:directory:evidence:1:before: actual inactive retirement precedes interruption
+ok 37 - ordinary:fresh:directory:evidence:1:before: exact single fault propagates without success
+ok 38 - ordinary:fresh:directory:evidence:1:before: every actual owned handle explicitly closes
+ok 39 - ordinary:fresh:directory:evidence:1:before: retained inputs unchanged
+ok 40 - ordinary:fresh:directory:evidence:1:before: all other owners and retired workspace preserved
+ok 41 - ordinary:fresh:directory:evidence:1:after: actual inactive retirement precedes interruption
+ok 42 - ordinary:fresh:directory:evidence:1:after: exact single fault propagates without success
+ok 43 - ordinary:fresh:directory:evidence:1:after: every actual owned handle explicitly closes
+ok 44 - ordinary:fresh:directory:evidence:1:after: retained inputs unchanged
+ok 45 - ordinary:fresh:directory:evidence:1:after: all other owners and retired workspace preserved
+ok 46 - ordinary:fresh:prior:1:after: actual inactive retirement precedes interruption
+ok 47 - ordinary:fresh:prior:1:after: exact single fault propagates without success
+ok 48 - ordinary:fresh:prior:1:after: every actual owned handle explicitly closes
+ok 49 - ordinary:fresh:prior:1:after: retained inputs unchanged
+ok 50 - ordinary:fresh:prior:1:after: all other owners and retired workspace preserved
+ok 51 - ordinary:fresh:mkdir:before: actual inactive retirement precedes interruption
+ok 52 - ordinary:fresh:mkdir:before: exact single fault propagates without success
+ok 53 - ordinary:fresh:mkdir:before: every actual owned handle explicitly closes
+ok 54 - ordinary:fresh:mkdir:before: retained inputs unchanged
+ok 55 - ordinary:fresh:mkdir:before: all other owners and retired workspace preserved
+ok 56 - ordinary:fresh:mkdir:after: actual inactive retirement precedes interruption
+ok 57 - ordinary:fresh:mkdir:after: exact single fault propagates without success
+ok 58 - ordinary:fresh:mkdir:after: every actual owned handle explicitly closes
+ok 59 - ordinary:fresh:mkdir:after: retained inputs unchanged
+ok 60 - ordinary:fresh:mkdir:after: all other owners and retired workspace preserved
+ok 61 - ordinary:fresh:directory:archive:0:before: actual inactive retirement precedes interruption
+ok 62 - ordinary:fresh:directory:archive:0:before: exact single fault propagates without success
+ok 63 - ordinary:fresh:directory:archive:0:before: every actual owned handle explicitly closes
+ok 64 - ordinary:fresh:directory:archive:0:before: retained inputs unchanged
+ok 65 - ordinary:fresh:directory:archive:0:before: all other owners and retired workspace preserved
+ok 66 - ordinary:fresh:directory:archive:0:after: actual inactive retirement precedes interruption
+ok 67 - ordinary:fresh:directory:archive:0:after: exact single fault propagates without success
+ok 68 - ordinary:fresh:directory:archive:0:after: every actual owned handle explicitly closes
+ok 69 - ordinary:fresh:directory:archive:0:after: retained inputs unchanged
+ok 70 - ordinary:fresh:directory:archive:0:after: all other owners and retired workspace preserved
+ok 71 - ordinary:fresh:directory_closure:0:before: actual inactive retirement precedes interruption
+ok 72 - ordinary:fresh:directory_closure:0:before: exact single fault propagates without success
+ok 73 - ordinary:fresh:directory_closure:0:before: every actual owned handle explicitly closes
+ok 74 - ordinary:fresh:directory_closure:0:before: retained inputs unchanged
+ok 75 - ordinary:fresh:directory_closure:0:before: all other owners and retired workspace preserved
+ok 76 - ordinary:fresh:directory:evidence:2:before: actual inactive retirement precedes interruption
+ok 77 - ordinary:fresh:directory:evidence:2:before: exact single fault propagates without success
+ok 78 - ordinary:fresh:directory:evidence:2:before: every actual owned handle explicitly closes
+ok 79 - ordinary:fresh:directory:evidence:2:before: retained inputs unchanged
+ok 80 - ordinary:fresh:directory:evidence:2:before: all other owners and retired workspace preserved
+ok 81 - ordinary:fresh:directory:evidence:2:after: actual inactive retirement precedes interruption
+ok 82 - ordinary:fresh:directory:evidence:2:after: exact single fault propagates without success
+ok 83 - ordinary:fresh:directory:evidence:2:after: every actual owned handle explicitly closes
+ok 84 - ordinary:fresh:directory:evidence:2:after: retained inputs unchanged
+ok 85 - ordinary:fresh:directory:evidence:2:after: all other owners and retired workspace preserved
+ok 86 - ordinary:fresh:directory:archive:1:before: actual inactive retirement precedes interruption
+ok 87 - ordinary:fresh:directory:archive:1:before: exact single fault propagates without success
+ok 88 - ordinary:fresh:directory:archive:1:before: every actual owned handle explicitly closes
+ok 89 - ordinary:fresh:directory:archive:1:before: retained inputs unchanged
+ok 90 - ordinary:fresh:directory:archive:1:before: all other owners and retired workspace preserved
+ok 91 - ordinary:fresh:directory:archive:1:after: actual inactive retirement precedes interruption
+ok 92 - ordinary:fresh:directory:archive:1:after: exact single fault propagates without success
+ok 93 - ordinary:fresh:directory:archive:1:after: every actual owned handle explicitly closes
+ok 94 - ordinary:fresh:directory:archive:1:after: retained inputs unchanged
+ok 95 - ordinary:fresh:directory:archive:1:after: all other owners and retired workspace preserved
+ok 96 - ordinary:fresh:directory_closure:0:after: actual inactive retirement precedes interruption
+ok 97 - ordinary:fresh:directory_closure:0:after: exact single fault propagates without success
+ok 98 - ordinary:fresh:directory_closure:0:after: every actual owned handle explicitly closes
+ok 99 - ordinary:fresh:directory_closure:0:after: retained inputs unchanged
+ok 100 - ordinary:fresh:directory_closure:0:after: all other owners and retired workspace preserved
+ok 101 - ordinary:fresh:members:0:before: actual inactive retirement precedes interruption
+ok 102 - ordinary:fresh:members:0:before: exact single fault propagates without success
+ok 103 - ordinary:fresh:members:0:before: every actual owned handle explicitly closes
+ok 104 - ordinary:fresh:members:0:before: retained inputs unchanged
+ok 105 - ordinary:fresh:members:0:before: all other owners and retired workspace preserved
+ok 106 - ordinary:fresh:names:0:before: actual inactive retirement precedes interruption
+ok 107 - ordinary:fresh:names:0:before: exact single fault propagates without success
+ok 108 - ordinary:fresh:names:0:before: every actual owned handle explicitly closes
+ok 109 - ordinary:fresh:names:0:before: retained inputs unchanged
+ok 110 - ordinary:fresh:names:0:before: all other owners and retired workspace preserved
+ok 111 - ordinary:fresh:names:0:after: actual inactive retirement precedes interruption
+ok 112 - ordinary:fresh:names:0:after: exact single fault propagates without success
+ok 113 - ordinary:fresh:names:0:after: every actual owned handle explicitly closes
+ok 114 - ordinary:fresh:names:0:after: retained inputs unchanged
+ok 115 - ordinary:fresh:names:0:after: all other owners and retired workspace preserved
+ok 116 - ordinary:fresh:members:0:after: actual inactive retirement precedes interruption
+ok 117 - ordinary:fresh:members:0:after: exact single fault propagates without success
+ok 118 - ordinary:fresh:members:0:after: every actual owned handle explicitly closes
+ok 119 - ordinary:fresh:members:0:after: retained inputs unchanged
+ok 120 - ordinary:fresh:members:0:after: all other owners and retired workspace preserved
+ok 121 - ordinary:fresh:directory_closure:1:before: actual inactive retirement precedes interruption
+ok 122 - ordinary:fresh:directory_closure:1:before: exact single fault propagates without success
+ok 123 - ordinary:fresh:directory_closure:1:before: every actual owned handle explicitly closes
+ok 124 - ordinary:fresh:directory_closure:1:before: retained inputs unchanged
+ok 125 - ordinary:fresh:directory_closure:1:before: all other owners and retired workspace preserved
+ok 126 - ordinary:fresh:directory:evidence:3:before: actual inactive retirement precedes interruption
+ok 127 - ordinary:fresh:directory:evidence:3:before: exact single fault propagates without success
+ok 128 - ordinary:fresh:directory:evidence:3:before: every actual owned handle explicitly closes
+ok 129 - ordinary:fresh:directory:evidence:3:before: retained inputs unchanged
+ok 130 - ordinary:fresh:directory:evidence:3:before: all other owners and retired workspace preserved
+ok 131 - ordinary:fresh:directory:evidence:3:after: actual inactive retirement precedes interruption
+ok 132 - ordinary:fresh:directory:evidence:3:after: exact single fault propagates without success
+ok 133 - ordinary:fresh:directory:evidence:3:after: every actual owned handle explicitly closes
+ok 134 - ordinary:fresh:directory:evidence:3:after: retained inputs unchanged
+ok 135 - ordinary:fresh:directory:evidence:3:after: all other owners and retired workspace preserved
+ok 136 - ordinary:fresh:directory:archive:2:before: actual inactive retirement precedes interruption
+ok 137 - ordinary:fresh:directory:archive:2:before: exact single fault propagates without success
+ok 138 - ordinary:fresh:directory:archive:2:before: every actual owned handle explicitly closes
+ok 139 - ordinary:fresh:directory:archive:2:before: retained inputs unchanged
+ok 140 - ordinary:fresh:directory:archive:2:before: all other owners and retired workspace preserved
+ok 141 - ordinary:fresh:directory:archive:2:after: actual inactive retirement precedes interruption
+ok 142 - ordinary:fresh:directory:archive:2:after: exact single fault propagates without success
+ok 143 - ordinary:fresh:directory:archive:2:after: every actual owned handle explicitly closes
+ok 144 - ordinary:fresh:directory:archive:2:after: retained inputs unchanged
+ok 145 - ordinary:fresh:directory:archive:2:after: all other owners and retired workspace preserved
+ok 146 - ordinary:fresh:directory_closure:1:after: actual inactive retirement precedes interruption
+ok 147 - ordinary:fresh:directory_closure:1:after: exact single fault propagates without success
+ok 148 - ordinary:fresh:directory_closure:1:after: every actual owned handle explicitly closes
+ok 149 - ordinary:fresh:directory_closure:1:after: retained inputs unchanged
+ok 150 - ordinary:fresh:directory_closure:1:after: all other owners and retired workspace preserved
+ok 151 - ordinary:fresh:members:1:before: actual inactive retirement precedes interruption
+ok 152 - ordinary:fresh:members:1:before: exact single fault propagates without success
+ok 153 - ordinary:fresh:members:1:before: every actual owned handle explicitly closes
+ok 154 - ordinary:fresh:members:1:before: retained inputs unchanged
+ok 155 - ordinary:fresh:members:1:before: all other owners and retired workspace preserved
+ok 156 - ordinary:fresh:names:1:before: actual inactive retirement precedes interruption
+ok 157 - ordinary:fresh:names:1:before: exact single fault propagates without success
+ok 158 - ordinary:fresh:names:1:before: every actual owned handle explicitly closes
+ok 159 - ordinary:fresh:names:1:before: retained inputs unchanged
+ok 160 - ordinary:fresh:names:1:before: all other owners and retired workspace preserved
+ok 161 - ordinary:fresh:names:1:after: actual inactive retirement precedes interruption
+ok 162 - ordinary:fresh:names:1:after: exact single fault propagates without success
+ok 163 - ordinary:fresh:names:1:after: every actual owned handle explicitly closes
+ok 164 - ordinary:fresh:names:1:after: retained inputs unchanged
+ok 165 - ordinary:fresh:names:1:after: all other owners and retired workspace preserved
+ok 166 - ordinary:fresh:members:1:after: actual inactive retirement precedes interruption
+ok 167 - ordinary:fresh:members:1:after: exact single fault propagates without success
+ok 168 - ordinary:fresh:members:1:after: every actual owned handle explicitly closes
+ok 169 - ordinary:fresh:members:1:after: retained inputs unchanged
+ok 170 - ordinary:fresh:members:1:after: all other owners and retired workspace preserved
+ok 171 - ordinary:fresh:write:0:before: actual inactive retirement precedes interruption
+ok 172 - ordinary:fresh:write:0:before: exact single fault propagates without success
+ok 173 - ordinary:fresh:write:0:before: every actual owned handle explicitly closes
+ok 174 - ordinary:fresh:write:0:before: retained inputs unchanged
+ok 175 - ordinary:fresh:write:0:before: all other owners and retired workspace preserved
+ok 176 - ordinary:fresh:writer:0:binmode: actual inactive retirement precedes interruption
+ok 177 - ordinary:fresh:writer:0:binmode: exact single fault propagates without success
+ok 178 - ordinary:fresh:writer:0:binmode: every actual owned handle explicitly closes
+ok 179 - ordinary:fresh:writer:0:binmode: retained inputs unchanged
+ok 180 - ordinary:fresh:writer:0:binmode: all other owners and retired workspace preserved
+ok 181 - ordinary:fresh:source:0:0:before: actual inactive retirement precedes interruption
+ok 182 - ordinary:fresh:source:0:0:before: exact single fault propagates without success
+ok 183 - ordinary:fresh:source:0:0:before: every actual owned handle explicitly closes
+ok 184 - ordinary:fresh:source:0:0:before: retained inputs unchanged
+ok 185 - ordinary:fresh:source:0:0:before: all other owners and retired workspace preserved
+ok 186 - ordinary:fresh:recheck:source:0:0:0:before: actual inactive retirement precedes interruption
+ok 187 - ordinary:fresh:recheck:source:0:0:0:before: exact single fault propagates without success
+ok 188 - ordinary:fresh:recheck:source:0:0:0:before: every actual owned handle explicitly closes
+ok 189 - ordinary:fresh:recheck:source:0:0:0:before: retained inputs unchanged
+ok 190 - ordinary:fresh:recheck:source:0:0:0:before: all other owners and retired workspace preserved
+ok 191 - ordinary:fresh:recheck:source:0:0:0:after: actual inactive retirement precedes interruption
+ok 192 - ordinary:fresh:recheck:source:0:0:0:after: exact single fault propagates without success
+ok 193 - ordinary:fresh:recheck:source:0:0:0:after: every actual owned handle explicitly closes
+ok 194 - ordinary:fresh:recheck:source:0:0:0:after: retained inputs unchanged
+ok 195 - ordinary:fresh:recheck:source:0:0:0:after: all other owners and retired workspace preserved
+ok 196 - ordinary:fresh:seal:0:before: actual inactive retirement precedes interruption
+ok 197 - ordinary:fresh:seal:0:before: exact single fault propagates without success
+ok 198 - ordinary:fresh:seal:0:before: every actual owned handle explicitly closes
+ok 199 - ordinary:fresh:seal:0:before: retained inputs unchanged
+ok 200 - ordinary:fresh:seal:0:before: all other owners and retired workspace preserved
+ok 201 - ordinary:fresh:seal:0:after: actual inactive retirement precedes interruption
+ok 202 - ordinary:fresh:seal:0:after: exact single fault propagates without success
+ok 203 - ordinary:fresh:seal:0:after: every actual owned handle explicitly closes
+ok 204 - ordinary:fresh:seal:0:after: retained inputs unchanged
+ok 205 - ordinary:fresh:seal:0:after: all other owners and retired workspace preserved
+ok 206 - ordinary:fresh:write:0:after: actual inactive retirement precedes interruption
+ok 207 - ordinary:fresh:write:0:after: exact single fault propagates without success
+ok 208 - ordinary:fresh:write:0:after: every actual owned handle explicitly closes
+ok 209 - ordinary:fresh:write:0:after: retained inputs unchanged
+ok 210 - ordinary:fresh:write:0:after: all other owners and retired workspace preserved
+ok 211 - ordinary:fresh:source:0:1:before: actual inactive retirement precedes interruption
+ok 212 - ordinary:fresh:source:0:1:before: exact single fault propagates without success
+ok 213 - ordinary:fresh:source:0:1:before: every actual owned handle explicitly closes
+ok 214 - ordinary:fresh:source:0:1:before: retained inputs unchanged
+ok 215 - ordinary:fresh:source:0:1:before: all other owners and retired workspace preserved
+ok 216 - ordinary:fresh:recheck:source:0:1:0:before: actual inactive retirement precedes interruption
+ok 217 - ordinary:fresh:recheck:source:0:1:0:before: exact single fault propagates without success
+ok 218 - ordinary:fresh:recheck:source:0:1:0:before: every actual owned handle explicitly closes
+ok 219 - ordinary:fresh:recheck:source:0:1:0:before: retained inputs unchanged
+ok 220 - ordinary:fresh:recheck:source:0:1:0:before: all other owners and retired workspace preserved
+ok 221 - ordinary:fresh:recheck:source:0:1:0:after: actual inactive retirement precedes interruption
+ok 222 - ordinary:fresh:recheck:source:0:1:0:after: exact single fault propagates without success
+ok 223 - ordinary:fresh:recheck:source:0:1:0:after: every actual owned handle explicitly closes
+ok 224 - ordinary:fresh:recheck:source:0:1:0:after: retained inputs unchanged
+ok 225 - ordinary:fresh:recheck:source:0:1:0:after: all other owners and retired workspace preserved
+ok 226 - ordinary:fresh:directory_closure:2:before: actual inactive retirement precedes interruption
+ok 227 - ordinary:fresh:directory_closure:2:before: exact single fault propagates without success
+ok 228 - ordinary:fresh:directory_closure:2:before: every actual owned handle explicitly closes
+ok 229 - ordinary:fresh:directory_closure:2:before: retained inputs unchanged
+ok 230 - ordinary:fresh:directory_closure:2:before: all other owners and retired workspace preserved
+ok 231 - ordinary:fresh:directory:evidence:4:before: actual inactive retirement precedes interruption
+ok 232 - ordinary:fresh:directory:evidence:4:before: exact single fault propagates without success
+ok 233 - ordinary:fresh:directory:evidence:4:before: every actual owned handle explicitly closes
+ok 234 - ordinary:fresh:directory:evidence:4:before: retained inputs unchanged
+ok 235 - ordinary:fresh:directory:evidence:4:before: all other owners and retired workspace preserved
+ok 236 - ordinary:fresh:directory:evidence:4:after: actual inactive retirement precedes interruption
+ok 237 - ordinary:fresh:directory:evidence:4:after: exact single fault propagates without success
+ok 238 - ordinary:fresh:directory:evidence:4:after: every actual owned handle explicitly closes
+ok 239 - ordinary:fresh:directory:evidence:4:after: retained inputs unchanged
+ok 240 - ordinary:fresh:directory:evidence:4:after: all other owners and retired workspace preserved
+ok 241 - ordinary:fresh:directory:archive:3:before: actual inactive retirement precedes interruption
+ok 242 - ordinary:fresh:directory:archive:3:before: exact single fault propagates without success
+ok 243 - ordinary:fresh:directory:archive:3:before: every actual owned handle explicitly closes
+ok 244 - ordinary:fresh:directory:archive:3:before: retained inputs unchanged
+ok 245 - ordinary:fresh:directory:archive:3:before: all other owners and retired workspace preserved
+ok 246 - ordinary:fresh:directory:archive:3:after: actual inactive retirement precedes interruption
+ok 247 - ordinary:fresh:directory:archive:3:after: exact single fault propagates without success
+ok 248 - ordinary:fresh:directory:archive:3:after: every actual owned handle explicitly closes
+ok 249 - ordinary:fresh:directory:archive:3:after: retained inputs unchanged
+ok 250 - ordinary:fresh:directory:archive:3:after: all other owners and retired workspace preserved
+ok 251 - ordinary:fresh:directory_closure:2:after: actual inactive retirement precedes interruption
+ok 252 - ordinary:fresh:directory_closure:2:after: exact single fault propagates without success
+ok 253 - ordinary:fresh:directory_closure:2:after: every actual owned handle explicitly closes
+ok 254 - ordinary:fresh:directory_closure:2:after: retained inputs unchanged
+ok 255 - ordinary:fresh:directory_closure:2:after: all other owners and retired workspace preserved
+ok 256 - ordinary:fresh:members:2:before: actual inactive retirement precedes interruption
+ok 257 - ordinary:fresh:members:2:before: exact single fault propagates without success
+ok 258 - ordinary:fresh:members:2:before: every actual owned handle explicitly closes
+ok 259 - ordinary:fresh:members:2:before: retained inputs unchanged
+ok 260 - ordinary:fresh:members:2:before: all other owners and retired workspace preserved
+ok 261 - ordinary:fresh:names:2:before: actual inactive retirement precedes interruption
+ok 262 - ordinary:fresh:names:2:before: exact single fault propagates without success
+ok 263 - ordinary:fresh:names:2:before: every actual owned handle explicitly closes
+ok 264 - ordinary:fresh:names:2:before: retained inputs unchanged
+ok 265 - ordinary:fresh:names:2:before: all other owners and retired workspace preserved
+ok 266 - ordinary:fresh:names:2:after: actual inactive retirement precedes interruption
+ok 267 - ordinary:fresh:names:2:after: exact single fault propagates without success
+ok 268 - ordinary:fresh:names:2:after: every actual owned handle explicitly closes
+ok 269 - ordinary:fresh:names:2:after: retained inputs unchanged
+ok 270 - ordinary:fresh:names:2:after: all other owners and retired workspace preserved
+ok 271 - ordinary:fresh:members:2:after: actual inactive retirement precedes interruption
+ok 272 - ordinary:fresh:members:2:after: exact single fault propagates without success
+ok 273 - ordinary:fresh:members:2:after: every actual owned handle explicitly closes
+ok 274 - ordinary:fresh:members:2:after: retained inputs unchanged
+ok 275 - ordinary:fresh:members:2:after: all other owners and retired workspace preserved
+ok 276 - ordinary:fresh:write:1:before: actual inactive retirement precedes interruption
+ok 277 - ordinary:fresh:write:1:before: exact single fault propagates without success
+ok 278 - ordinary:fresh:write:1:before: every actual owned handle explicitly closes
+ok 279 - ordinary:fresh:write:1:before: retained inputs unchanged
+ok 280 - ordinary:fresh:write:1:before: all other owners and retired workspace preserved
+ok 281 - ordinary:fresh:writer:1:binmode: actual inactive retirement precedes interruption
+ok 282 - ordinary:fresh:writer:1:binmode: exact single fault propagates without success
+ok 283 - ordinary:fresh:writer:1:binmode: every actual owned handle explicitly closes
+ok 284 - ordinary:fresh:writer:1:binmode: retained inputs unchanged
+ok 285 - ordinary:fresh:writer:1:binmode: all other owners and retired workspace preserved
+ok 286 - ordinary:fresh:source:1:0:before: actual inactive retirement precedes interruption
+ok 287 - ordinary:fresh:source:1:0:before: exact single fault propagates without success
+ok 288 - ordinary:fresh:source:1:0:before: every actual owned handle explicitly closes
+ok 289 - ordinary:fresh:source:1:0:before: retained inputs unchanged
+ok 290 - ordinary:fresh:source:1:0:before: all other owners and retired workspace preserved
+ok 291 - ordinary:fresh:recheck:source:1:0:0:before: actual inactive retirement precedes interruption
+ok 292 - ordinary:fresh:recheck:source:1:0:0:before: exact single fault propagates without success
+ok 293 - ordinary:fresh:recheck:source:1:0:0:before: every actual owned handle explicitly closes
+ok 294 - ordinary:fresh:recheck:source:1:0:0:before: retained inputs unchanged
+ok 295 - ordinary:fresh:recheck:source:1:0:0:before: all other owners and retired workspace preserved
+ok 296 - ordinary:fresh:recheck:source:1:0:0:after: actual inactive retirement precedes interruption
+ok 297 - ordinary:fresh:recheck:source:1:0:0:after: exact single fault propagates without success
+ok 298 - ordinary:fresh:recheck:source:1:0:0:after: every actual owned handle explicitly closes
+ok 299 - ordinary:fresh:recheck:source:1:0:0:after: retained inputs unchanged
+ok 300 - ordinary:fresh:recheck:source:1:0:0:after: all other owners and retired workspace preserved
+ok 301 - ordinary:fresh:seal:1:before: actual inactive retirement precedes interruption
+ok 302 - ordinary:fresh:seal:1:before: exact single fault propagates without success
+ok 303 - ordinary:fresh:seal:1:before: every actual owned handle explicitly closes
+ok 304 - ordinary:fresh:seal:1:before: retained inputs unchanged
+ok 305 - ordinary:fresh:seal:1:before: all other owners and retired workspace preserved
+ok 306 - ordinary:fresh:seal:1:after: actual inactive retirement precedes interruption
+ok 307 - ordinary:fresh:seal:1:after: exact single fault propagates without success
+ok 308 - ordinary:fresh:seal:1:after: every actual owned handle explicitly closes
+ok 309 - ordinary:fresh:seal:1:after: retained inputs unchanged
+ok 310 - ordinary:fresh:seal:1:after: all other owners and retired workspace preserved
+ok 311 - ordinary:fresh:write:1:after: actual inactive retirement precedes interruption
+ok 312 - ordinary:fresh:write:1:after: exact single fault propagates without success
+ok 313 - ordinary:fresh:write:1:after: every actual owned handle explicitly closes
+ok 314 - ordinary:fresh:write:1:after: retained inputs unchanged
+ok 315 - ordinary:fresh:write:1:after: all other owners and retired workspace preserved
+ok 316 - ordinary:fresh:source:1:1:before: actual inactive retirement precedes interruption
+ok 317 - ordinary:fresh:source:1:1:before: exact single fault propagates without success
+ok 318 - ordinary:fresh:source:1:1:before: every actual owned handle explicitly closes
+ok 319 - ordinary:fresh:source:1:1:before: retained inputs unchanged
+ok 320 - ordinary:fresh:source:1:1:before: all other owners and retired workspace preserved
+ok 321 - ordinary:fresh:recheck:source:1:1:0:before: actual inactive retirement precedes interruption
+ok 322 - ordinary:fresh:recheck:source:1:1:0:before: exact single fault propagates without success
+ok 323 - ordinary:fresh:recheck:source:1:1:0:before: every actual owned handle explicitly closes
+ok 324 - ordinary:fresh:recheck:source:1:1:0:before: retained inputs unchanged
+ok 325 - ordinary:fresh:recheck:source:1:1:0:before: all other owners and retired workspace preserved
+ok 326 - ordinary:fresh:recheck:source:1:1:0:after: actual inactive retirement precedes interruption
+ok 327 - ordinary:fresh:recheck:source:1:1:0:after: exact single fault propagates without success
+ok 328 - ordinary:fresh:recheck:source:1:1:0:after: every actual owned handle explicitly closes
+ok 329 - ordinary:fresh:recheck:source:1:1:0:after: retained inputs unchanged
+ok 330 - ordinary:fresh:recheck:source:1:1:0:after: all other owners and retired workspace preserved
+ok 331 - ordinary:fresh:directory_closure:3:before: actual inactive retirement precedes interruption
+ok 332 - ordinary:fresh:directory_closure:3:before: exact single fault propagates without success
+ok 333 - ordinary:fresh:directory_closure:3:before: every actual owned handle explicitly closes
+ok 334 - ordinary:fresh:directory_closure:3:before: retained inputs unchanged
+ok 335 - ordinary:fresh:directory_closure:3:before: all other owners and retired workspace preserved
+ok 336 - ordinary:fresh:directory:evidence:5:before: actual inactive retirement precedes interruption
+ok 337 - ordinary:fresh:directory:evidence:5:before: exact single fault propagates without success
+ok 338 - ordinary:fresh:directory:evidence:5:before: every actual owned handle explicitly closes
+ok 339 - ordinary:fresh:directory:evidence:5:before: retained inputs unchanged
+ok 340 - ordinary:fresh:directory:evidence:5:before: all other owners and retired workspace preserved
+ok 341 - ordinary:fresh:directory:evidence:5:after: actual inactive retirement precedes interruption
+ok 342 - ordinary:fresh:directory:evidence:5:after: exact single fault propagates without success
+ok 343 - ordinary:fresh:directory:evidence:5:after: every actual owned handle explicitly closes
+ok 344 - ordinary:fresh:directory:evidence:5:after: retained inputs unchanged
+ok 345 - ordinary:fresh:directory:evidence:5:after: all other owners and retired workspace preserved
+ok 346 - ordinary:fresh:directory:archive:4:before: actual inactive retirement precedes interruption
+ok 347 - ordinary:fresh:directory:archive:4:before: exact single fault propagates without success
+ok 348 - ordinary:fresh:directory:archive:4:before: every actual owned handle explicitly closes
+ok 349 - ordinary:fresh:directory:archive:4:before: retained inputs unchanged
+ok 350 - ordinary:fresh:directory:archive:4:before: all other owners and retired workspace preserved
+ok 351 - ordinary:fresh:directory:archive:4:after: actual inactive retirement precedes interruption
+ok 352 - ordinary:fresh:directory:archive:4:after: exact single fault propagates without success
+ok 353 - ordinary:fresh:directory:archive:4:after: every actual owned handle explicitly closes
+ok 354 - ordinary:fresh:directory:archive:4:after: retained inputs unchanged
+ok 355 - ordinary:fresh:directory:archive:4:after: all other owners and retired workspace preserved
+ok 356 - ordinary:fresh:directory_closure:3:after: actual inactive retirement precedes interruption
+ok 357 - ordinary:fresh:directory_closure:3:after: exact single fault propagates without success
+ok 358 - ordinary:fresh:directory_closure:3:after: every actual owned handle explicitly closes
+ok 359 - ordinary:fresh:directory_closure:3:after: retained inputs unchanged
+ok 360 - ordinary:fresh:directory_closure:3:after: all other owners and retired workspace preserved
+ok 361 - ordinary:fresh:members:3:before: actual inactive retirement precedes interruption
+ok 362 - ordinary:fresh:members:3:before: exact single fault propagates without success
+ok 363 - ordinary:fresh:members:3:before: every actual owned handle explicitly closes
+ok 364 - ordinary:fresh:members:3:before: retained inputs unchanged
+ok 365 - ordinary:fresh:members:3:before: all other owners and retired workspace preserved
+ok 366 - ordinary:fresh:names:3:before: actual inactive retirement precedes interruption
+ok 367 - ordinary:fresh:names:3:before: exact single fault propagates without success
+ok 368 - ordinary:fresh:names:3:before: every actual owned handle explicitly closes
+ok 369 - ordinary:fresh:names:3:before: retained inputs unchanged
+ok 370 - ordinary:fresh:names:3:before: all other owners and retired workspace preserved
+ok 371 - ordinary:fresh:names:3:after: actual inactive retirement precedes interruption
+ok 372 - ordinary:fresh:names:3:after: exact single fault propagates without success
+ok 373 - ordinary:fresh:names:3:after: every actual owned handle explicitly closes
+ok 374 - ordinary:fresh:names:3:after: retained inputs unchanged
+ok 375 - ordinary:fresh:names:3:after: all other owners and retired workspace preserved
+ok 376 - ordinary:fresh:members:3:after: actual inactive retirement precedes interruption
+ok 377 - ordinary:fresh:members:3:after: exact single fault propagates without success
+ok 378 - ordinary:fresh:members:3:after: every actual owned handle explicitly closes
+ok 379 - ordinary:fresh:members:3:after: retained inputs unchanged
+ok 380 - ordinary:fresh:members:3:after: all other owners and retired workspace preserved
+ok 381 - ordinary:fresh:write:2:before: actual inactive retirement precedes interruption
+ok 382 - ordinary:fresh:write:2:before: exact single fault propagates without success
+ok 383 - ordinary:fresh:write:2:before: every actual owned handle explicitly closes
+ok 384 - ordinary:fresh:write:2:before: retained inputs unchanged
+ok 385 - ordinary:fresh:write:2:before: all other owners and retired workspace preserved
+ok 386 - ordinary:fresh:writer:2:binmode: actual inactive retirement precedes interruption
+ok 387 - ordinary:fresh:writer:2:binmode: exact single fault propagates without success
+ok 388 - ordinary:fresh:writer:2:binmode: every actual owned handle explicitly closes
+ok 389 - ordinary:fresh:writer:2:binmode: retained inputs unchanged
+ok 390 - ordinary:fresh:writer:2:binmode: all other owners and retired workspace preserved
+ok 391 - ordinary:fresh:source:2:0:before: actual inactive retirement precedes interruption
+ok 392 - ordinary:fresh:source:2:0:before: exact single fault propagates without success
+ok 393 - ordinary:fresh:source:2:0:before: every actual owned handle explicitly closes
+ok 394 - ordinary:fresh:source:2:0:before: retained inputs unchanged
+ok 395 - ordinary:fresh:source:2:0:before: all other owners and retired workspace preserved
+ok 396 - ordinary:fresh:recheck:source:2:0:0:before: actual inactive retirement precedes interruption
+ok 397 - ordinary:fresh:recheck:source:2:0:0:before: exact single fault propagates without success
+ok 398 - ordinary:fresh:recheck:source:2:0:0:before: every actual owned handle explicitly closes
+ok 399 - ordinary:fresh:recheck:source:2:0:0:before: retained inputs unchanged
+ok 400 - ordinary:fresh:recheck:source:2:0:0:before: all other owners and retired workspace preserved
+ok 401 - ordinary:fresh:recheck:source:2:0:0:after: actual inactive retirement precedes interruption
+ok 402 - ordinary:fresh:recheck:source:2:0:0:after: exact single fault propagates without success
+ok 403 - ordinary:fresh:recheck:source:2:0:0:after: every actual owned handle explicitly closes
+ok 404 - ordinary:fresh:recheck:source:2:0:0:after: retained inputs unchanged
+ok 405 - ordinary:fresh:recheck:source:2:0:0:after: all other owners and retired workspace preserved
+ok 406 - ordinary:fresh:seal:2:before: actual inactive retirement precedes interruption
+ok 407 - ordinary:fresh:seal:2:before: exact single fault propagates without success
+ok 408 - ordinary:fresh:seal:2:before: every actual owned handle explicitly closes
+ok 409 - ordinary:fresh:seal:2:before: retained inputs unchanged
+ok 410 - ordinary:fresh:seal:2:before: all other owners and retired workspace preserved
+ok 411 - ordinary:fresh:seal:2:after: actual inactive retirement precedes interruption
+ok 412 - ordinary:fresh:seal:2:after: exact single fault propagates without success
+ok 413 - ordinary:fresh:seal:2:after: every actual owned handle explicitly closes
+ok 414 - ordinary:fresh:seal:2:after: retained inputs unchanged
+ok 415 - ordinary:fresh:seal:2:after: all other owners and retired workspace preserved
+ok 416 - ordinary:fresh:write:2:after: actual inactive retirement precedes interruption
+ok 417 - ordinary:fresh:write:2:after: exact single fault propagates without success
+ok 418 - ordinary:fresh:write:2:after: every actual owned handle explicitly closes
+ok 419 - ordinary:fresh:write:2:after: retained inputs unchanged
+ok 420 - ordinary:fresh:write:2:after: all other owners and retired workspace preserved
+ok 421 - ordinary:fresh:source:2:1:before: actual inactive retirement precedes interruption
+ok 422 - ordinary:fresh:source:2:1:before: exact single fault propagates without success
+ok 423 - ordinary:fresh:source:2:1:before: every actual owned handle explicitly closes
+ok 424 - ordinary:fresh:source:2:1:before: retained inputs unchanged
+ok 425 - ordinary:fresh:source:2:1:before: all other owners and retired workspace preserved
+ok 426 - ordinary:fresh:recheck:source:2:1:0:before: actual inactive retirement precedes interruption
+ok 427 - ordinary:fresh:recheck:source:2:1:0:before: exact single fault propagates without success
+ok 428 - ordinary:fresh:recheck:source:2:1:0:before: every actual owned handle explicitly closes
+ok 429 - ordinary:fresh:recheck:source:2:1:0:before: retained inputs unchanged
+ok 430 - ordinary:fresh:recheck:source:2:1:0:before: all other owners and retired workspace preserved
+ok 431 - ordinary:fresh:recheck:source:2:1:0:after: actual inactive retirement precedes interruption
+ok 432 - ordinary:fresh:recheck:source:2:1:0:after: exact single fault propagates without success
+ok 433 - ordinary:fresh:recheck:source:2:1:0:after: every actual owned handle explicitly closes
+ok 434 - ordinary:fresh:recheck:source:2:1:0:after: retained inputs unchanged
+ok 435 - ordinary:fresh:recheck:source:2:1:0:after: all other owners and retired workspace preserved
+ok 436 - ordinary:fresh:directory_closure:4:before: actual inactive retirement precedes interruption
+ok 437 - ordinary:fresh:directory_closure:4:before: exact single fault propagates without success
+ok 438 - ordinary:fresh:directory_closure:4:before: every actual owned handle explicitly closes
+ok 439 - ordinary:fresh:directory_closure:4:before: retained inputs unchanged
+ok 440 - ordinary:fresh:directory_closure:4:before: all other owners and retired workspace preserved
+ok 441 - ordinary:fresh:directory:evidence:6:before: actual inactive retirement precedes interruption
+ok 442 - ordinary:fresh:directory:evidence:6:before: exact single fault propagates without success
+ok 443 - ordinary:fresh:directory:evidence:6:before: every actual owned handle explicitly closes
+ok 444 - ordinary:fresh:directory:evidence:6:before: retained inputs unchanged
+ok 445 - ordinary:fresh:directory:evidence:6:before: all other owners and retired workspace preserved
+ok 446 - ordinary:fresh:directory:evidence:6:after: actual inactive retirement precedes interruption
+ok 447 - ordinary:fresh:directory:evidence:6:after: exact single fault propagates without success
+ok 448 - ordinary:fresh:directory:evidence:6:after: every actual owned handle explicitly closes
+ok 449 - ordinary:fresh:directory:evidence:6:after: retained inputs unchanged
+ok 450 - ordinary:fresh:directory:evidence:6:after: all other owners and retired workspace preserved
+ok 451 - ordinary:fresh:directory:archive:5:before: actual inactive retirement precedes interruption
+ok 452 - ordinary:fresh:directory:archive:5:before: exact single fault propagates without success
+ok 453 - ordinary:fresh:directory:archive:5:before: every actual owned handle explicitly closes
+ok 454 - ordinary:fresh:directory:archive:5:before: retained inputs unchanged
+ok 455 - ordinary:fresh:directory:archive:5:before: all other owners and retired workspace preserved
+ok 456 - ordinary:fresh:directory:archive:5:after: actual inactive retirement precedes interruption
+ok 457 - ordinary:fresh:directory:archive:5:after: exact single fault propagates without success
+ok 458 - ordinary:fresh:directory:archive:5:after: every actual owned handle explicitly closes
+ok 459 - ordinary:fresh:directory:archive:5:after: retained inputs unchanged
+ok 460 - ordinary:fresh:directory:archive:5:after: all other owners and retired workspace preserved
+ok 461 - ordinary:fresh:directory_closure:4:after: actual inactive retirement precedes interruption
+ok 462 - ordinary:fresh:directory_closure:4:after: exact single fault propagates without success
+ok 463 - ordinary:fresh:directory_closure:4:after: every actual owned handle explicitly closes
+ok 464 - ordinary:fresh:directory_closure:4:after: retained inputs unchanged
+ok 465 - ordinary:fresh:directory_closure:4:after: all other owners and retired workspace preserved
+ok 466 - ordinary:fresh:members:4:before: actual inactive retirement precedes interruption
+ok 467 - ordinary:fresh:members:4:before: exact single fault propagates without success
+ok 468 - ordinary:fresh:members:4:before: every actual owned handle explicitly closes
+ok 469 - ordinary:fresh:members:4:before: retained inputs unchanged
+ok 470 - ordinary:fresh:members:4:before: all other owners and retired workspace preserved
+ok 471 - ordinary:fresh:names:4:before: actual inactive retirement precedes interruption
+ok 472 - ordinary:fresh:names:4:before: exact single fault propagates without success
+ok 473 - ordinary:fresh:names:4:before: every actual owned handle explicitly closes
+ok 474 - ordinary:fresh:names:4:before: retained inputs unchanged
+ok 475 - ordinary:fresh:names:4:before: all other owners and retired workspace preserved
+ok 476 - ordinary:fresh:names:4:after: actual inactive retirement precedes interruption
+ok 477 - ordinary:fresh:names:4:after: exact single fault propagates without success
+ok 478 - ordinary:fresh:names:4:after: every actual owned handle explicitly closes
+ok 479 - ordinary:fresh:names:4:after: retained inputs unchanged
+ok 480 - ordinary:fresh:names:4:after: all other owners and retired workspace preserved
+ok 481 - ordinary:fresh:members:4:after: actual inactive retirement precedes interruption
+ok 482 - ordinary:fresh:members:4:after: exact single fault propagates without success
+ok 483 - ordinary:fresh:members:4:after: every actual owned handle explicitly closes
+ok 484 - ordinary:fresh:members:4:after: retained inputs unchanged
+ok 485 - ordinary:fresh:members:4:after: all other owners and retired workspace preserved
+ok 486 - ordinary:fresh:write:3:before: actual inactive retirement precedes interruption
+ok 487 - ordinary:fresh:write:3:before: exact single fault propagates without success
+ok 488 - ordinary:fresh:write:3:before: every actual owned handle explicitly closes
+ok 489 - ordinary:fresh:write:3:before: retained inputs unchanged
+ok 490 - ordinary:fresh:write:3:before: all other owners and retired workspace preserved
+ok 491 - ordinary:fresh:writer:3:binmode: actual inactive retirement precedes interruption
+ok 492 - ordinary:fresh:writer:3:binmode: exact single fault propagates without success
+ok 493 - ordinary:fresh:writer:3:binmode: every actual owned handle explicitly closes
+ok 494 - ordinary:fresh:writer:3:binmode: retained inputs unchanged
+ok 495 - ordinary:fresh:writer:3:binmode: all other owners and retired workspace preserved
+ok 496 - ordinary:fresh:source:3:0:before: actual inactive retirement precedes interruption
+ok 497 - ordinary:fresh:source:3:0:before: exact single fault propagates without success
+ok 498 - ordinary:fresh:source:3:0:before: every actual owned handle explicitly closes
+ok 499 - ordinary:fresh:source:3:0:before: retained inputs unchanged
+ok 500 - ordinary:fresh:source:3:0:before: all other owners and retired workspace preserved
+ok 501 - ordinary:fresh:recheck:source:3:0:0:before: actual inactive retirement precedes interruption
+ok 502 - ordinary:fresh:recheck:source:3:0:0:before: exact single fault propagates without success
+ok 503 - ordinary:fresh:recheck:source:3:0:0:before: every actual owned handle explicitly closes
+ok 504 - ordinary:fresh:recheck:source:3:0:0:before: retained inputs unchanged
+ok 505 - ordinary:fresh:recheck:source:3:0:0:before: all other owners and retired workspace preserved
+ok 506 - ordinary:fresh:recheck:source:3:0:0:after: actual inactive retirement precedes interruption
+ok 507 - ordinary:fresh:recheck:source:3:0:0:after: exact single fault propagates without success
+ok 508 - ordinary:fresh:recheck:source:3:0:0:after: every actual owned handle explicitly closes
+ok 509 - ordinary:fresh:recheck:source:3:0:0:after: retained inputs unchanged
+ok 510 - ordinary:fresh:recheck:source:3:0:0:after: all other owners and retired workspace preserved
+ok 511 - ordinary:fresh:seal:3:before: actual inactive retirement precedes interruption
+ok 512 - ordinary:fresh:seal:3:before: exact single fault propagates without success
+ok 513 - ordinary:fresh:seal:3:before: every actual owned handle explicitly closes
+ok 514 - ordinary:fresh:seal:3:before: retained inputs unchanged
+ok 515 - ordinary:fresh:seal:3:before: all other owners and retired workspace preserved
+ok 516 - ordinary:fresh:seal:3:after: actual inactive retirement precedes interruption
+ok 517 - ordinary:fresh:seal:3:after: exact single fault propagates without success
+ok 518 - ordinary:fresh:seal:3:after: every actual owned handle explicitly closes
+ok 519 - ordinary:fresh:seal:3:after: retained inputs unchanged
+ok 520 - ordinary:fresh:seal:3:after: all other owners and retired workspace preserved
+ok 521 - ordinary:fresh:write:3:after: actual inactive retirement precedes interruption
+ok 522 - ordinary:fresh:write:3:after: exact single fault propagates without success
+ok 523 - ordinary:fresh:write:3:after: every actual owned handle explicitly closes
+ok 524 - ordinary:fresh:write:3:after: retained inputs unchanged
+ok 525 - ordinary:fresh:write:3:after: all other owners and retired workspace preserved
+ok 526 - ordinary:fresh:source:3:1:before: actual inactive retirement precedes interruption
+ok 527 - ordinary:fresh:source:3:1:before: exact single fault propagates without success
+ok 528 - ordinary:fresh:source:3:1:before: every actual owned handle explicitly closes
+ok 529 - ordinary:fresh:source:3:1:before: retained inputs unchanged
+ok 530 - ordinary:fresh:source:3:1:before: all other owners and retired workspace preserved
+ok 531 - ordinary:fresh:recheck:source:3:1:0:before: actual inactive retirement precedes interruption
+ok 532 - ordinary:fresh:recheck:source:3:1:0:before: exact single fault propagates without success
+ok 533 - ordinary:fresh:recheck:source:3:1:0:before: every actual owned handle explicitly closes
+ok 534 - ordinary:fresh:recheck:source:3:1:0:before: retained inputs unchanged
+ok 535 - ordinary:fresh:recheck:source:3:1:0:before: all other owners and retired workspace preserved
+ok 536 - ordinary:fresh:recheck:source:3:1:0:after: actual inactive retirement precedes interruption
+ok 537 - ordinary:fresh:recheck:source:3:1:0:after: exact single fault propagates without success
+ok 538 - ordinary:fresh:recheck:source:3:1:0:after: every actual owned handle explicitly closes
+ok 539 - ordinary:fresh:recheck:source:3:1:0:after: retained inputs unchanged
+ok 540 - ordinary:fresh:recheck:source:3:1:0:after: all other owners and retired workspace preserved
+ok 541 - ordinary:fresh:members:5:before: actual inactive retirement precedes interruption
+ok 542 - ordinary:fresh:members:5:before: exact single fault propagates without success
+ok 543 - ordinary:fresh:members:5:before: every actual owned handle explicitly closes
+ok 544 - ordinary:fresh:members:5:before: retained inputs unchanged
+ok 545 - ordinary:fresh:members:5:before: all other owners and retired workspace preserved
+ok 546 - ordinary:fresh:names:5:before: actual inactive retirement precedes interruption
+ok 547 - ordinary:fresh:names:5:before: exact single fault propagates without success
+ok 548 - ordinary:fresh:names:5:before: every actual owned handle explicitly closes
+ok 549 - ordinary:fresh:names:5:before: retained inputs unchanged
+ok 550 - ordinary:fresh:names:5:before: all other owners and retired workspace preserved
+ok 551 - ordinary:fresh:names:5:after: actual inactive retirement precedes interruption
+ok 552 - ordinary:fresh:names:5:after: exact single fault propagates without success
+ok 553 - ordinary:fresh:names:5:after: every actual owned handle explicitly closes
+ok 554 - ordinary:fresh:names:5:after: retained inputs unchanged
+ok 555 - ordinary:fresh:names:5:after: all other owners and retired workspace preserved
+ok 556 - ordinary:fresh:members:5:after: actual inactive retirement precedes interruption
+ok 557 - ordinary:fresh:members:5:after: exact single fault propagates without success
+ok 558 - ordinary:fresh:members:5:after: every actual owned handle explicitly closes
+ok 559 - ordinary:fresh:members:5:after: retained inputs unchanged
+ok 560 - ordinary:fresh:members:5:after: all other owners and retired workspace preserved
+ok 561 - ordinary:fresh:directory_closure:5:before: actual inactive retirement precedes interruption
+ok 562 - ordinary:fresh:directory_closure:5:before: exact single fault propagates without success
+ok 563 - ordinary:fresh:directory_closure:5:before: every actual owned handle explicitly closes
+ok 564 - ordinary:fresh:directory_closure:5:before: retained inputs unchanged
+ok 565 - ordinary:fresh:directory_closure:5:before: all other owners and retired workspace preserved
+ok 566 - ordinary:fresh:directory:evidence:7:before: actual inactive retirement precedes interruption
+ok 567 - ordinary:fresh:directory:evidence:7:before: exact single fault propagates without success
+ok 568 - ordinary:fresh:directory:evidence:7:before: every actual owned handle explicitly closes
+ok 569 - ordinary:fresh:directory:evidence:7:before: retained inputs unchanged
+ok 570 - ordinary:fresh:directory:evidence:7:before: all other owners and retired workspace preserved
+ok 571 - ordinary:fresh:directory:evidence:7:after: actual inactive retirement precedes interruption
+ok 572 - ordinary:fresh:directory:evidence:7:after: exact single fault propagates without success
+ok 573 - ordinary:fresh:directory:evidence:7:after: every actual owned handle explicitly closes
+ok 574 - ordinary:fresh:directory:evidence:7:after: retained inputs unchanged
+ok 575 - ordinary:fresh:directory:evidence:7:after: all other owners and retired workspace preserved
+ok 576 - ordinary:fresh:directory:archive:6:before: actual inactive retirement precedes interruption
+ok 577 - ordinary:fresh:directory:archive:6:before: exact single fault propagates without success
+ok 578 - ordinary:fresh:directory:archive:6:before: every actual owned handle explicitly closes
+ok 579 - ordinary:fresh:directory:archive:6:before: retained inputs unchanged
+ok 580 - ordinary:fresh:directory:archive:6:before: all other owners and retired workspace preserved
+ok 581 - ordinary:fresh:directory:archive:6:after: actual inactive retirement precedes interruption
+ok 582 - ordinary:fresh:directory:archive:6:after: exact single fault propagates without success
+ok 583 - ordinary:fresh:directory:archive:6:after: every actual owned handle explicitly closes
+ok 584 - ordinary:fresh:directory:archive:6:after: retained inputs unchanged
+ok 585 - ordinary:fresh:directory:archive:6:after: all other owners and retired workspace preserved
+ok 586 - ordinary:fresh:directory_closure:5:after: actual inactive retirement precedes interruption
+ok 587 - ordinary:fresh:directory_closure:5:after: exact single fault propagates without success
+ok 588 - ordinary:fresh:directory_closure:5:after: every actual owned handle explicitly closes
+ok 589 - ordinary:fresh:directory_closure:5:after: retained inputs unchanged
+ok 590 - ordinary:fresh:directory_closure:5:after: all other owners and retired workspace preserved
+ok 591 - ordinary:fresh:source_closure:before: actual inactive retirement precedes interruption
+ok 592 - ordinary:fresh:source_closure:before: exact single fault propagates without success
+ok 593 - ordinary:fresh:source_closure:before: every actual owned handle explicitly closes
+ok 594 - ordinary:fresh:source_closure:before: retained inputs unchanged
+ok 595 - ordinary:fresh:source_closure:before: all other owners and retired workspace preserved
+ok 596 - ordinary:fresh:recheck:source:0:1:1:before: actual inactive retirement precedes interruption
+ok 597 - ordinary:fresh:recheck:source:0:1:1:before: exact single fault propagates without success
+ok 598 - ordinary:fresh:recheck:source:0:1:1:before: every actual owned handle explicitly closes
+ok 599 - ordinary:fresh:recheck:source:0:1:1:before: retained inputs unchanged
+ok 600 - ordinary:fresh:recheck:source:0:1:1:before: all other owners and retired workspace preserved
+ok 601 - ordinary:fresh:recheck:source:0:1:1:after: actual inactive retirement precedes interruption
+ok 602 - ordinary:fresh:recheck:source:0:1:1:after: exact single fault propagates without success
+ok 603 - ordinary:fresh:recheck:source:0:1:1:after: every actual owned handle explicitly closes
+ok 604 - ordinary:fresh:recheck:source:0:1:1:after: retained inputs unchanged
+ok 605 - ordinary:fresh:recheck:source:0:1:1:after: all other owners and retired workspace preserved
+ok 606 - ordinary:fresh:source:0:2:before: actual inactive retirement precedes interruption
+ok 607 - ordinary:fresh:source:0:2:before: exact single fault propagates without success
+ok 608 - ordinary:fresh:source:0:2:before: every actual owned handle explicitly closes
+ok 609 - ordinary:fresh:source:0:2:before: retained inputs unchanged
+ok 610 - ordinary:fresh:source:0:2:before: all other owners and retired workspace preserved
+ok 611 - ordinary:fresh:recheck:source:0:2:0:before: actual inactive retirement precedes interruption
+ok 612 - ordinary:fresh:recheck:source:0:2:0:before: exact single fault propagates without success
+ok 613 - ordinary:fresh:recheck:source:0:2:0:before: every actual owned handle explicitly closes
+ok 614 - ordinary:fresh:recheck:source:0:2:0:before: retained inputs unchanged
+ok 615 - ordinary:fresh:recheck:source:0:2:0:before: all other owners and retired workspace preserved
+ok 616 - ordinary:fresh:recheck:source:0:2:0:after: actual inactive retirement precedes interruption
+ok 617 - ordinary:fresh:recheck:source:0:2:0:after: exact single fault propagates without success
+ok 618 - ordinary:fresh:recheck:source:0:2:0:after: every actual owned handle explicitly closes
+ok 619 - ordinary:fresh:recheck:source:0:2:0:after: retained inputs unchanged
+ok 620 - ordinary:fresh:recheck:source:0:2:0:after: all other owners and retired workspace preserved
+ok 621 - ordinary:fresh:recheck:source:1:1:1:before: actual inactive retirement precedes interruption
+ok 622 - ordinary:fresh:recheck:source:1:1:1:before: exact single fault propagates without success
+ok 623 - ordinary:fresh:recheck:source:1:1:1:before: every actual owned handle explicitly closes
+ok 624 - ordinary:fresh:recheck:source:1:1:1:before: retained inputs unchanged
+ok 625 - ordinary:fresh:recheck:source:1:1:1:before: all other owners and retired workspace preserved
+ok 626 - ordinary:fresh:recheck:source:1:1:1:after: actual inactive retirement precedes interruption
+ok 627 - ordinary:fresh:recheck:source:1:1:1:after: exact single fault propagates without success
+ok 628 - ordinary:fresh:recheck:source:1:1:1:after: every actual owned handle explicitly closes
+ok 629 - ordinary:fresh:recheck:source:1:1:1:after: retained inputs unchanged
+ok 630 - ordinary:fresh:recheck:source:1:1:1:after: all other owners and retired workspace preserved
+ok 631 - ordinary:fresh:source:1:2:before: actual inactive retirement precedes interruption
+ok 632 - ordinary:fresh:source:1:2:before: exact single fault propagates without success
+ok 633 - ordinary:fresh:source:1:2:before: every actual owned handle explicitly closes
+ok 634 - ordinary:fresh:source:1:2:before: retained inputs unchanged
+ok 635 - ordinary:fresh:source:1:2:before: all other owners and retired workspace preserved
+ok 636 - ordinary:fresh:recheck:source:1:2:0:before: actual inactive retirement precedes interruption
+ok 637 - ordinary:fresh:recheck:source:1:2:0:before: exact single fault propagates without success
+ok 638 - ordinary:fresh:recheck:source:1:2:0:before: every actual owned handle explicitly closes
+ok 639 - ordinary:fresh:recheck:source:1:2:0:before: retained inputs unchanged
+ok 640 - ordinary:fresh:recheck:source:1:2:0:before: all other owners and retired workspace preserved
+ok 641 - ordinary:fresh:recheck:source:1:2:0:after: actual inactive retirement precedes interruption
+ok 642 - ordinary:fresh:recheck:source:1:2:0:after: exact single fault propagates without success
+ok 643 - ordinary:fresh:recheck:source:1:2:0:after: every actual owned handle explicitly closes
+ok 644 - ordinary:fresh:recheck:source:1:2:0:after: retained inputs unchanged
+ok 645 - ordinary:fresh:recheck:source:1:2:0:after: all other owners and retired workspace preserved
+ok 646 - ordinary:fresh:recheck:source:2:1:1:before: actual inactive retirement precedes interruption
+ok 647 - ordinary:fresh:recheck:source:2:1:1:before: exact single fault propagates without success
+ok 648 - ordinary:fresh:recheck:source:2:1:1:before: every actual owned handle explicitly closes
+ok 649 - ordinary:fresh:recheck:source:2:1:1:before: retained inputs unchanged
+ok 650 - ordinary:fresh:recheck:source:2:1:1:before: all other owners and retired workspace preserved
+ok 651 - ordinary:fresh:recheck:source:2:1:1:after: actual inactive retirement precedes interruption
+ok 652 - ordinary:fresh:recheck:source:2:1:1:after: exact single fault propagates without success
+ok 653 - ordinary:fresh:recheck:source:2:1:1:after: every actual owned handle explicitly closes
+ok 654 - ordinary:fresh:recheck:source:2:1:1:after: retained inputs unchanged
+ok 655 - ordinary:fresh:recheck:source:2:1:1:after: all other owners and retired workspace preserved
+ok 656 - ordinary:fresh:source:2:2:before: actual inactive retirement precedes interruption
+ok 657 - ordinary:fresh:source:2:2:before: exact single fault propagates without success
+ok 658 - ordinary:fresh:source:2:2:before: every actual owned handle explicitly closes
+ok 659 - ordinary:fresh:source:2:2:before: retained inputs unchanged
+ok 660 - ordinary:fresh:source:2:2:before: all other owners and retired workspace preserved
+ok 661 - ordinary:fresh:recheck:source:2:2:0:before: actual inactive retirement precedes interruption
+ok 662 - ordinary:fresh:recheck:source:2:2:0:before: exact single fault propagates without success
+ok 663 - ordinary:fresh:recheck:source:2:2:0:before: every actual owned handle explicitly closes
+ok 664 - ordinary:fresh:recheck:source:2:2:0:before: retained inputs unchanged
+ok 665 - ordinary:fresh:recheck:source:2:2:0:before: all other owners and retired workspace preserved
+ok 666 - ordinary:fresh:recheck:source:2:2:0:after: actual inactive retirement precedes interruption
+ok 667 - ordinary:fresh:recheck:source:2:2:0:after: exact single fault propagates without success
+ok 668 - ordinary:fresh:recheck:source:2:2:0:after: every actual owned handle explicitly closes
+ok 669 - ordinary:fresh:recheck:source:2:2:0:after: retained inputs unchanged
+ok 670 - ordinary:fresh:recheck:source:2:2:0:after: all other owners and retired workspace preserved
+ok 671 - ordinary:fresh:recheck:source:3:1:1:before: actual inactive retirement precedes interruption
+ok 672 - ordinary:fresh:recheck:source:3:1:1:before: exact single fault propagates without success
+ok 673 - ordinary:fresh:recheck:source:3:1:1:before: every actual owned handle explicitly closes
+ok 674 - ordinary:fresh:recheck:source:3:1:1:before: retained inputs unchanged
+ok 675 - ordinary:fresh:recheck:source:3:1:1:before: all other owners and retired workspace preserved
+ok 676 - ordinary:fresh:recheck:source:3:1:1:after: actual inactive retirement precedes interruption
+ok 677 - ordinary:fresh:recheck:source:3:1:1:after: exact single fault propagates without success
+ok 678 - ordinary:fresh:recheck:source:3:1:1:after: every actual owned handle explicitly closes
+ok 679 - ordinary:fresh:recheck:source:3:1:1:after: retained inputs unchanged
+ok 680 - ordinary:fresh:recheck:source:3:1:1:after: all other owners and retired workspace preserved
+ok 681 - ordinary:fresh:source:3:2:before: actual inactive retirement precedes interruption
+ok 682 - ordinary:fresh:source:3:2:before: exact single fault propagates without success
+ok 683 - ordinary:fresh:source:3:2:before: every actual owned handle explicitly closes
+ok 684 - ordinary:fresh:source:3:2:before: retained inputs unchanged
+ok 685 - ordinary:fresh:source:3:2:before: all other owners and retired workspace preserved
+ok 686 - ordinary:fresh:recheck:source:3:2:0:before: actual inactive retirement precedes interruption
+ok 687 - ordinary:fresh:recheck:source:3:2:0:before: exact single fault propagates without success
+ok 688 - ordinary:fresh:recheck:source:3:2:0:before: every actual owned handle explicitly closes
+ok 689 - ordinary:fresh:recheck:source:3:2:0:before: retained inputs unchanged
+ok 690 - ordinary:fresh:recheck:source:3:2:0:before: all other owners and retired workspace preserved
+ok 691 - ordinary:fresh:recheck:source:3:2:0:after: actual inactive retirement precedes interruption
+ok 692 - ordinary:fresh:recheck:source:3:2:0:after: exact single fault propagates without success
+ok 693 - ordinary:fresh:recheck:source:3:2:0:after: every actual owned handle explicitly closes
+ok 694 - ordinary:fresh:recheck:source:3:2:0:after: retained inputs unchanged
+ok 695 - ordinary:fresh:recheck:source:3:2:0:after: all other owners and retired workspace preserved
+ok 696 - ordinary:fresh:recheck:source:0:1:2:before: actual inactive retirement precedes interruption
+ok 697 - ordinary:fresh:recheck:source:0:1:2:before: exact single fault propagates without success
+ok 698 - ordinary:fresh:recheck:source:0:1:2:before: every actual owned handle explicitly closes
+ok 699 - ordinary:fresh:recheck:source:0:1:2:before: retained inputs unchanged
+ok 700 - ordinary:fresh:recheck:source:0:1:2:before: all other owners and retired workspace preserved
+ok 701 - ordinary:fresh:recheck:source:0:1:2:after: actual inactive retirement precedes interruption
+ok 702 - ordinary:fresh:recheck:source:0:1:2:after: exact single fault propagates without success
+ok 703 - ordinary:fresh:recheck:source:0:1:2:after: every actual owned handle explicitly closes
+ok 704 - ordinary:fresh:recheck:source:0:1:2:after: retained inputs unchanged
+ok 705 - ordinary:fresh:recheck:source:0:1:2:after: all other owners and retired workspace preserved
+ok 706 - ordinary:fresh:recheck:source:1:1:2:before: actual inactive retirement precedes interruption
+ok 707 - ordinary:fresh:recheck:source:1:1:2:before: exact single fault propagates without success
+ok 708 - ordinary:fresh:recheck:source:1:1:2:before: every actual owned handle explicitly closes
+ok 709 - ordinary:fresh:recheck:source:1:1:2:before: retained inputs unchanged
+ok 710 - ordinary:fresh:recheck:source:1:1:2:before: all other owners and retired workspace preserved
+ok 711 - ordinary:fresh:recheck:source:1:1:2:after: actual inactive retirement precedes interruption
+ok 712 - ordinary:fresh:recheck:source:1:1:2:after: exact single fault propagates without success
+ok 713 - ordinary:fresh:recheck:source:1:1:2:after: every actual owned handle explicitly closes
+ok 714 - ordinary:fresh:recheck:source:1:1:2:after: retained inputs unchanged
+ok 715 - ordinary:fresh:recheck:source:1:1:2:after: all other owners and retired workspace preserved
+ok 716 - ordinary:fresh:recheck:source:2:1:2:before: actual inactive retirement precedes interruption
+ok 717 - ordinary:fresh:recheck:source:2:1:2:before: exact single fault propagates without success
+ok 718 - ordinary:fresh:recheck:source:2:1:2:before: every actual owned handle explicitly closes
+ok 719 - ordinary:fresh:recheck:source:2:1:2:before: retained inputs unchanged
+ok 720 - ordinary:fresh:recheck:source:2:1:2:before: all other owners and retired workspace preserved
+ok 721 - ordinary:fresh:recheck:source:2:1:2:after: actual inactive retirement precedes interruption
+ok 722 - ordinary:fresh:recheck:source:2:1:2:after: exact single fault propagates without success
+ok 723 - ordinary:fresh:recheck:source:2:1:2:after: every actual owned handle explicitly closes
+ok 724 - ordinary:fresh:recheck:source:2:1:2:after: retained inputs unchanged
+ok 725 - ordinary:fresh:recheck:source:2:1:2:after: all other owners and retired workspace preserved
+ok 726 - ordinary:fresh:recheck:source:3:1:2:before: actual inactive retirement precedes interruption
+ok 727 - ordinary:fresh:recheck:source:3:1:2:before: exact single fault propagates without success
+ok 728 - ordinary:fresh:recheck:source:3:1:2:before: every actual owned handle explicitly closes
+ok 729 - ordinary:fresh:recheck:source:3:1:2:before: retained inputs unchanged
+ok 730 - ordinary:fresh:recheck:source:3:1:2:before: all other owners and retired workspace preserved
+ok 731 - ordinary:fresh:recheck:source:3:1:2:after: actual inactive retirement precedes interruption
+ok 732 - ordinary:fresh:recheck:source:3:1:2:after: exact single fault propagates without success
+ok 733 - ordinary:fresh:recheck:source:3:1:2:after: every actual owned handle explicitly closes
+ok 734 - ordinary:fresh:recheck:source:3:1:2:after: retained inputs unchanged
+ok 735 - ordinary:fresh:recheck:source:3:1:2:after: all other owners and retired workspace preserved
+ok 736 - ordinary:fresh:source_closure:after: actual inactive retirement precedes interruption
+ok 737 - ordinary:fresh:source_closure:after: exact single fault propagates without success
+ok 738 - ordinary:fresh:source_closure:after: every actual owned handle explicitly closes
+ok 739 - ordinary:fresh:source_closure:after: retained inputs unchanged
+ok 740 - ordinary:fresh:source_closure:after: all other owners and retired workspace preserved
+ok 741 - ordinary:fresh:receipt:before: actual inactive retirement precedes interruption
+ok 742 - ordinary:fresh:receipt:before: exact single fault propagates without success
+ok 743 - ordinary:fresh:receipt:before: every actual owned handle explicitly closes
+ok 744 - ordinary:fresh:receipt:before: retained inputs unchanged
+ok 745 - ordinary:fresh:receipt:before: all other owners and retired workspace preserved
+ok 746 - ordinary:fresh:receipt:after: actual inactive retirement precedes interruption
+ok 747 - ordinary:fresh:receipt:after: exact single fault propagates without success
+ok 748 - ordinary:fresh:receipt:after: every actual owned handle explicitly closes
+ok 749 - ordinary:fresh:receipt:after: retained inputs unchanged
+ok 750 - ordinary:fresh:receipt:after: all other owners and retired workspace preserved
+ok 751 - ordinary:fresh:members:6:before: actual inactive retirement precedes interruption
+ok 752 - ordinary:fresh:members:6:before: exact single fault propagates without success
+ok 753 - ordinary:fresh:members:6:before: every actual owned handle explicitly closes
+ok 754 - ordinary:fresh:members:6:before: retained inputs unchanged
+ok 755 - ordinary:fresh:members:6:before: all other owners and retired workspace preserved
+ok 756 - ordinary:fresh:names:6:before: actual inactive retirement precedes interruption
+ok 757 - ordinary:fresh:names:6:before: exact single fault propagates without success
+ok 758 - ordinary:fresh:names:6:before: every actual owned handle explicitly closes
+ok 759 - ordinary:fresh:names:6:before: retained inputs unchanged
+ok 760 - ordinary:fresh:names:6:before: all other owners and retired workspace preserved
+ok 761 - ordinary:fresh:names:6:after: actual inactive retirement precedes interruption
+ok 762 - ordinary:fresh:names:6:after: exact single fault propagates without success
+ok 763 - ordinary:fresh:names:6:after: every actual owned handle explicitly closes
+ok 764 - ordinary:fresh:names:6:after: retained inputs unchanged
+ok 765 - ordinary:fresh:names:6:after: all other owners and retired workspace preserved
+ok 766 - ordinary:fresh:members:6:after: actual inactive retirement precedes interruption
+ok 767 - ordinary:fresh:members:6:after: exact single fault propagates without success
+ok 768 - ordinary:fresh:members:6:after: every actual owned handle explicitly closes
+ok 769 - ordinary:fresh:members:6:after: retained inputs unchanged
+ok 770 - ordinary:fresh:members:6:after: all other owners and retired workspace preserved
+ok 771 - ordinary:fresh:directory_closure:6:before: actual inactive retirement precedes interruption
+ok 772 - ordinary:fresh:directory_closure:6:before: exact single fault propagates without success
+ok 773 - ordinary:fresh:directory_closure:6:before: every actual owned handle explicitly closes
+ok 774 - ordinary:fresh:directory_closure:6:before: retained inputs unchanged
+ok 775 - ordinary:fresh:directory_closure:6:before: all other owners and retired workspace preserved
+ok 776 - ordinary:fresh:directory:evidence:8:before: actual inactive retirement precedes interruption
+ok 777 - ordinary:fresh:directory:evidence:8:before: exact single fault propagates without success
+ok 778 - ordinary:fresh:directory:evidence:8:before: every actual owned handle explicitly closes
+ok 779 - ordinary:fresh:directory:evidence:8:before: retained inputs unchanged
+ok 780 - ordinary:fresh:directory:evidence:8:before: all other owners and retired workspace preserved
+ok 781 - ordinary:fresh:directory:evidence:8:after: actual inactive retirement precedes interruption
+ok 782 - ordinary:fresh:directory:evidence:8:after: exact single fault propagates without success
+ok 783 - ordinary:fresh:directory:evidence:8:after: every actual owned handle explicitly closes
+ok 784 - ordinary:fresh:directory:evidence:8:after: retained inputs unchanged
+ok 785 - ordinary:fresh:directory:evidence:8:after: all other owners and retired workspace preserved
+ok 786 - ordinary:fresh:directory:archive:7:before: actual inactive retirement precedes interruption
+ok 787 - ordinary:fresh:directory:archive:7:before: exact single fault propagates without success
+ok 788 - ordinary:fresh:directory:archive:7:before: every actual owned handle explicitly closes
+ok 789 - ordinary:fresh:directory:archive:7:before: retained inputs unchanged
+ok 790 - ordinary:fresh:directory:archive:7:before: all other owners and retired workspace preserved
+ok 791 - ordinary:fresh:directory:archive:7:after: actual inactive retirement precedes interruption
+ok 792 - ordinary:fresh:directory:archive:7:after: exact single fault propagates without success
+ok 793 - ordinary:fresh:directory:archive:7:after: every actual owned handle explicitly closes
+ok 794 - ordinary:fresh:directory:archive:7:after: retained inputs unchanged
+ok 795 - ordinary:fresh:directory:archive:7:after: all other owners and retired workspace preserved
+ok 796 - ordinary:fresh:directory_closure:6:after: actual inactive retirement precedes interruption
+ok 797 - ordinary:fresh:directory_closure:6:after: exact single fault propagates without success
+ok 798 - ordinary:fresh:directory_closure:6:after: every actual owned handle explicitly closes
+ok 799 - ordinary:fresh:directory_closure:6:after: retained inputs unchanged
+ok 800 - ordinary:fresh:directory_closure:6:after: all other owners and retired workspace preserved
+ok 801 - ordinary:fresh:recheck:source:0:1:3:before: actual inactive retirement precedes interruption
+ok 802 - ordinary:fresh:recheck:source:0:1:3:before: exact single fault propagates without success
+ok 803 - ordinary:fresh:recheck:source:0:1:3:before: every actual owned handle explicitly closes
+ok 804 - ordinary:fresh:recheck:source:0:1:3:before: retained inputs unchanged
+ok 805 - ordinary:fresh:recheck:source:0:1:3:before: all other owners and retired workspace preserved
+ok 806 - ordinary:fresh:recheck:source:0:1:3:after: actual inactive retirement precedes interruption
+ok 807 - ordinary:fresh:recheck:source:0:1:3:after: exact single fault propagates without success
+ok 808 - ordinary:fresh:recheck:source:0:1:3:after: every actual owned handle explicitly closes
+ok 809 - ordinary:fresh:recheck:source:0:1:3:after: retained inputs unchanged
+ok 810 - ordinary:fresh:recheck:source:0:1:3:after: all other owners and retired workspace preserved
+ok 811 - ordinary:fresh:recheck:source:1:1:3:before: actual inactive retirement precedes interruption
+ok 812 - ordinary:fresh:recheck:source:1:1:3:before: exact single fault propagates without success
+ok 813 - ordinary:fresh:recheck:source:1:1:3:before: every actual owned handle explicitly closes
+ok 814 - ordinary:fresh:recheck:source:1:1:3:before: retained inputs unchanged
+ok 815 - ordinary:fresh:recheck:source:1:1:3:before: all other owners and retired workspace preserved
+ok 816 - ordinary:fresh:recheck:source:1:1:3:after: actual inactive retirement precedes interruption
+ok 817 - ordinary:fresh:recheck:source:1:1:3:after: exact single fault propagates without success
+ok 818 - ordinary:fresh:recheck:source:1:1:3:after: every actual owned handle explicitly closes
+ok 819 - ordinary:fresh:recheck:source:1:1:3:after: retained inputs unchanged
+ok 820 - ordinary:fresh:recheck:source:1:1:3:after: all other owners and retired workspace preserved
+ok 821 - ordinary:fresh:recheck:source:2:1:3:before: actual inactive retirement precedes interruption
+ok 822 - ordinary:fresh:recheck:source:2:1:3:before: exact single fault propagates without success
+ok 823 - ordinary:fresh:recheck:source:2:1:3:before: every actual owned handle explicitly closes
+ok 824 - ordinary:fresh:recheck:source:2:1:3:before: retained inputs unchanged
+ok 825 - ordinary:fresh:recheck:source:2:1:3:before: all other owners and retired workspace preserved
+ok 826 - ordinary:fresh:recheck:source:2:1:3:after: actual inactive retirement precedes interruption
+ok 827 - ordinary:fresh:recheck:source:2:1:3:after: exact single fault propagates without success
+ok 828 - ordinary:fresh:recheck:source:2:1:3:after: every actual owned handle explicitly closes
+ok 829 - ordinary:fresh:recheck:source:2:1:3:after: retained inputs unchanged
+ok 830 - ordinary:fresh:recheck:source:2:1:3:after: all other owners and retired workspace preserved
+ok 831 - ordinary:fresh:recheck:source:3:1:3:before: actual inactive retirement precedes interruption
+ok 832 - ordinary:fresh:recheck:source:3:1:3:before: exact single fault propagates without success
+ok 833 - ordinary:fresh:recheck:source:3:1:3:before: every actual owned handle explicitly closes
+ok 834 - ordinary:fresh:recheck:source:3:1:3:before: retained inputs unchanged
+ok 835 - ordinary:fresh:recheck:source:3:1:3:before: all other owners and retired workspace preserved
+ok 836 - ordinary:fresh:recheck:source:3:1:3:after: actual inactive retirement precedes interruption
+ok 837 - ordinary:fresh:recheck:source:3:1:3:after: exact single fault propagates without success
+ok 838 - ordinary:fresh:recheck:source:3:1:3:after: every actual owned handle explicitly closes
+ok 839 - ordinary:fresh:recheck:source:3:1:3:after: retained inputs unchanged
+ok 840 - ordinary:fresh:recheck:source:3:1:3:after: all other owners and retired workspace preserved
+ok 841 - no compiler or native process attempt
+1..841

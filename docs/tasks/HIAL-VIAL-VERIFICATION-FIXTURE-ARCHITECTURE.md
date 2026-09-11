@@ -2670,9 +2670,46 @@ decomposes the architecture needed to move beyond that bounded foundation.
   Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.12.4.1.3.4.2.3.1: pin unique archive boundary selectors`
 
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.12.4.1.3.4.2.3.2`
-  Status: `proposed`
+  Status: `active`
   Goal: `Qualify archive publication and verification interruptions.`
   Acceptance: `Use the prospectively fixed unique selectors to inject selected before/after call and partial publication failures across fresh/existing archival. Independently reconstruct exact conservative partial files, preserved original/other holds and complete cleanup; reject false archive success and preserve first failed evidence. Decompose further before implementation if write/reader subdomains exceed a safe leaf. Do not claim every syscall or arbitrary-writer atomicity.`
+  Verification: `pending`
+  Commit: `pending`
+
+  Children: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.12.4.1.3.4.2.3.2.1, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.12.4.1.3.4.2.3.2.2, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.12.4.1.3.4.2.3.2.3, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.12.4.1.3.4.2.3.2.4, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.12.4.1.3.4.2.3.2.5`
+
+- ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.12.4.1.3.4.2.3.2.1`
+  Status: `done`
+  Goal: `Qualify ordinary fresh archive interruptions.`
+  Acceptance: `Inject every selected helper call failure during ordinary fresh archival; independently derive prefix, cleanup and exact empty/full conservative files. Preserve all other owners, original retained inputs and absent retired workspace. Prove actual owned handles close. Authenticate prospective selectors and unchanged sources; no partial syswrite or close-return claim.`
+  Verification: `First guarded producer and independent oracle both exit zero: 168 selected cases, 841 TAP assertions, 20582 boundary events and 1970 actual owned handle instances (926 sources, 406 writers, 638 directories). Every selected exception propagates without success; independent healthy-prefix/unwind and retained-byte physical reconstruction match exact empty/full archive remnants, actual native identities and explicit all-owned cleanup. Both observation holds, other runtime/workspace and retained inputs remain unchanged after actual inert target retirement. All 672 distinct allocated roots are absent. Twenty-two altered-report and three invalid-domain falsifiers reject. Thirty-three predecessor inputs including twenty-one Perl modules remain byte-identical to cbb62267a741dd059132d745d429c12d86fc5967; four prospective pins and twelve exact recovery copies survive under docs/audits/native-proxy-observation-archive-fresh-calls-20260911/result. Re-derivation/falsification/durability and explicit scope are in review.json. No first-run repair, original matrix rerun, compiler/native process, partial-syswrite or close-error claim. Book/Knowledge Map and mandatory staged/hook gates belong to this commit; remaining routes and write/close/native/release gates stay open.`
+  Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.12.4.1.3.4.2.3.2.1: qualify ordinary fresh archive call interruptions`
+
+- ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.12.4.1.3.4.2.3.2.2`
+  Status: `proposed`
+  Goal: `Qualify ordinary existing archive interruptions.`
+  Acceptance: `Inject every selected helper call failure while verifying the complete ordinary archive. Observe preparation, preserve every preexisting archive byte and identity, prove actual owned cleanup and unchanged sources.`
+  Verification: `pending`
+  Commit: `pending`
+
+- ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.12.4.1.3.4.2.3.2.3`
+  Status: `proposed`
+  Goal: `Qualify equal-reference fresh archive interruptions.`
+  Acceptance: `Qualify selected fresh-archive helper failures when wrapper and runtime references share content. Prove deduplicated exact partial files and separate original identities with all-owned cleanup.`
+  Verification: `pending`
+  Commit: `pending`
+
+- ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.12.4.1.3.4.2.3.2.4`
+  Status: `proposed`
+  Goal: `Qualify equal-reference existing archive interruptions.`
+  Acceptance: `Qualify selected complete-archive verification failures with equal-reference content. Observe preparation, preserve exact archive/other owners and prove all-owned cleanup.`
+  Verification: `pending`
+  Commit: `pending`
+
+- ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.12.4.1.3.4.2.3.2.5`
+  Status: `proposed`
+  Goal: `Qualify partial payload writes archive interruptions.`
+  Acceptance: `Prospectively select lower payload write interruptions and partial progress, including bounded short/zero/error outcomes with explicit syscall-adapter scope. Independently reconstruct retained file prefixes and all actual source/writer cleanup; preserve first failures and distinguish modeled errors from arbitrary writers or crashes.`
   Verification: `pending`
   Commit: `pending`
 
@@ -3707,7 +3744,7 @@ decomposes the architecture needed to move beyond that bounded foundation.
 
 ## Current Frontier
 
-Current frontier: .3.2.15.7.3.12.4.1.3.4.2.3.2 qualifies archive call/publication interruptions from the pinned unique selectors, in bounded children. Close-error and final limits/applicability joins follow. Exact release, compatibility, combined lifetimes and native ownership/transport remain open. Startup/parent, full CI and push stay gated.
+Current frontier: .3.2.15.7.3.12.4.1.3.4.2.3.2.2 qualifies ordinary existing archive call interruptions, including observed complete preparation. Equal-reference routes, partial writes, close-error and final applicability joins follow. Exact release, compatibility, combined lifetimes and native ownership/transport remain open. Startup/parent, full CI and push stay gated.
 
 Architecture audit `.1` is complete. Decision `0032` selects one public
 `.vial` source language, private immutable `VIALSemanticIR` and
@@ -6300,11 +6337,11 @@ Completed native-proxy feasibility through runtime-source-controls acceptance: r
 
 - Acceptance history manifest: `docs/tasks/history/HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE/acceptance-history.jsonl`
 
-The manifest binds the completed actual-archive acceptance suffix at `ff71d28f1e47c6bf34db96029862f6be5fe96051`. That source preserves the earlier history pointer and versioned manifest chain; current node contracts remain authoritative.
+The manifest binds the completed archive-boundary acceptance suffix at `cbb62267a741dd059132d745d429c12d86fc5967`. That source preserves the earlier history pointer and versioned manifest chain; current node contracts remain authoritative.
 
 
-## Acceptance Checklist (archive boundary selection .3.2.15.7.3.12.4.1.3.4.2.3.1)
+## Acceptance Checklist (ordinary fresh archive calls .3.2.15.7.3.12.4.1.3.4.2.3.2.1)
 
-- [x] **ROOT CAUSE (WHY + WHERE)** — `git log -S 'sub archive_retained_sources' -1 --format='%H %s' -- docs/audits/native-proxy-observation-archive-20260911/ObservationArchive.pm` identifies `ff71d28f1e47c6bf34db96029862f6be5fe96051`. Its healthy archive checks do not define a merged unique interruption/ownership domain. Repeated reads and close obligations need distinct selectors, and a test observer must not throw during an ownership transfer it has intercepted. The prospective plan and exact helper-extraction manifest precede fixture execution; no product defect or native authority is inferred.
-- [x] **ADDRESSED (verified qualification)** — Guarded `perl docs/audits/native-proxy-observation-archive-boundaries-20260911/qualify.t` exits 0 with 23 TAP assertions. Guarded `python3 -B docs/audits/native-proxy-observation-archive-boundaries-20260911/audit.py` exits 0: four operations, 715 ordered unique events, 61 owned handles and eight absent allocations. Re-derivation joins independent physical custody, closed records, ownership stacks and exact recheck counts. Seventeen report falsifiers and four invalid-domain controls reject; 516 eligible call-fault points are selected, not yet fault-tested. Seven prospective pins, twenty-six unchanged source inputs, eight byte-exact extracted helper bodies and twelve exact recovery copies provide durability. See result/audit.json, extraction.json and result/recovery-copies.json in that directory. No first-run repair was needed.
-- [x] **NO REGRESSION** — Nineteen declared predecessor Perl modules remain byte-identical to `ff71d28f1e47c6bf34db96029862f6be5fe96051`; only new task-local observation/fixture support is introduced. The prior physical/record oracle validates every fresh/existing result, actual handle/native identities and unchanged other owners; all eight roots are absent and process/target-read traps remain unused. `knowledge-map: OK` (1161 facts, 6388 unique questions, 6559 answer occurrences, 139 bounded shards); task-tree integrity reports all invariants hold (1346 live/compact nodes). mdBook exits 0; new passages and direct same-volume output were inspected before exact render/empty-parent removal. result/book-review.json and review.json preserve the scope. Final staged-index and commit-hook doctrine passes are mandatory conditions of this commit; full CI/push and native/startup/parent gates remain open.
+- [x] **ROOT CAUSE (WHY + WHERE)** — `git log -S 'sub archive_retained_sources' -1 --format='%H %s' -- docs/audits/native-proxy-observation-archive-20260911/ObservationArchive.pm` identifies `ff71d28f1e47c6bf34db96029862f6be5fe96051`. The subsequent `cbb62267a741dd059132d745d429c12d86fc5967` boundary domain qualifies healthy ownership traces but does not execute its selected call faults. This leaf applies the ordinary fresh subset without changing those sources. Root cause is the missing interruption qualification leg, not an inferred product defect; source-return and close events remain outside the throwing domain.
+- [x] **ADDRESSED (verified qualification)** — Guarded `perl docs/audits/native-proxy-observation-archive-fresh-calls-20260911/qualify.t` exits 0 with 841 TAP assertions over 168 cuts. Guarded `python3 -B docs/audits/native-proxy-observation-archive-fresh-calls-20260911/audit.py` exits 0: 20582 events, 1970 owned handle instances and 672 absent roots. Independent prefix/unwind and physical retained-byte reconstruction match exact conservative remnants and preserved both holds/other owners. Twenty-two report and three domain falsifiers reject. Thirty-three unchanged predecessor inputs, four prospective pins and twelve exact recovery copies provide durability; result/audit.json, result/recovery-copies.json and review.json distinguish the claim legs and scope. First producer/oracle runs passed without repair.
+- [x] **NO REGRESSION** — Twenty-one predecessor Perl modules remain byte-identical to `cbb62267a741dd059132d745d429c12d86fc5967`; no archive implementation changed. The prior healthy trace/physical oracle revalidates its saved receipt, and the new independent audit checks actual handles, retained inputs, exact retirement, both observation holds and other runtime/workspace. All 672 roots are absent and target-read/process traps remain unused. `knowledge-map: OK` (1161 facts, 6389 unique questions, 6560 answer occurrences, 139 bounded shards); task-tree integrity reports all invariants hold (1351 nodes). mdBook exits 0; new rendered passages and direct same-volume objects were inspected before exact output/empty-parent removal. Book review, scope and unchanged Knowledge Map allowance are recorded under the audit directory. Final staged-index and commit-hook passes are required conditions of this commit; remaining route/write/close/native, startup/parent and full CI/push gates stay open.
