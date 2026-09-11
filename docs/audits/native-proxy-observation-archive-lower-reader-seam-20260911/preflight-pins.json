@@ -1,0 +1,32 @@
+[
+  {
+    "path": "docs/audits/native-proxy-observation-archive-lower-reader-seam-20260911/plan.py",
+    "sha256": "ac0641e9252edf36b272e4368bad6f7b214223c510691bb321217515072f1cd5",
+    "size_bytes": 2791
+  },
+  {
+    "path": "docs/audits/native-proxy-observation-archive-lower-reader-seam-20260911/plan.json",
+    "sha256": "b886c9108cfb4b445464f9a4ba7553ef500f5475168dd8d91d7597fc8c3e2c41",
+    "size_bytes": 10184
+  },
+  {
+    "path": "docs/audits/native-proxy-observation-archive-lower-reader-seam-20260911/LowerReaderTrace.pm",
+    "sha256": "a402657a73524c74d31f3586dc585fdd1ba6a36dad93b3d507f39289f1a47207",
+    "size_bytes": 8101
+  },
+  {
+    "path": "docs/audits/native-proxy-observation-archive-lower-reader-seam-20260911/qualify.t",
+    "sha256": "1ae936c189802a5c47612e211260c4742cf3136e75defa6d45bb883839dcb978",
+    "size_bytes": 7029
+  },
+  {
+    "path": "docs/audits/native-proxy-observation-archive-lower-reader-seam-20260911/audit.py",
+    "sha256": "8170f734f81daf7e9624ef35a30f771c5a4eb989c83f0260a266bd19359a04bd",
+    "size_bytes": 17565
+  },
+  {
+    "path": "docs/audits/native-proxy-observation-archive-lower-reader-seam-20260911/toolchain-reference.json",
+    "sha256": "50d6f797fc28e47484f566fafeac2f90b5fa218cd34580623000a5cb267a20e9",
+    "size_bytes": 1074
+  }
+]

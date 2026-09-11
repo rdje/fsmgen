@@ -2485,11 +2485,31 @@ state checks and falsifiers are retained at
 These are deterministic synchronous controls, not a qualification of arbitrary
 concurrent writers or operating-system race atomicity.
 
-The current tracer observes source handles after admission returns. It cannot
+The archive tracer observes source handles after admission returns. It cannot
 certify cleanup for a lower-reader failure before that handoff. That observation
 gap has a separate task owner; it is not evidence of a runtime leak. Lower-reader custody, the final archive join and exact observation release
 remain open. These inert controls do not qualify native
 execution or asynchronous filesystem races.
+
+A separate lower-reader observer now has its own qualification. Ordinary
+instrumentation retains weak handle aliases, allowing the reader's lexical
+cleanup to occur. Immediately after the call, an actual descriptor-duplication
+probe distinguishes an open descriptor from `EBADF`. Every successful probe
+closes only its own duplicate and verifies that duplicate is closed.
+
+The controls distinguish the reader's explicit close, a successful keep-open
+return followed by caller cleanup, and cleanup after a read error. A paired
+counterexample deliberately retains a strong alias: the same read error then
+leaves the descriptor open until the control explicitly closes it. The original
+error and the observation before recovery remain unchanged. This demonstrates
+observer bias; it does not demonstrate a runtime leak.
+
+The direct-helper cases, exact source and toolchain-reference pins, actual
+open/read/close records, independent checker and falsifiers are retained at
+`docs/audits/native-proxy-observation-archive-lower-reader-seam-20260911/`.
+Successful empty, binary and maximum-size reads cover both return modes. The
+broader type/size/read-admission failure matrix and its composition with archive
+cleanup remain separately owned; these direct calls are not full archive runs.
 
 The helper checks bounded regular source/output files and the native header,
 then sets executable permissions through the admitted open file handle. A

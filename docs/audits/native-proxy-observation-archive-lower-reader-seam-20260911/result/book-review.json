@@ -1,0 +1,12 @@
+{
+  "exact_output_absent": true,
+  "exit_code": 0,
+  "new_passage_verified": true,
+  "observer_bias_and_runtime_leak_distinction_verified": true,
+  "open_failure_and_composition_scope_verified": true,
+  "output": ".artifacts/tmp/native-proxy-observation-archive-lower-reader-seam-book-20260911/book",
+  "rendered_bytes": 23289999,
+  "rendered_files": 98,
+  "replay_scope_verified": true,
+  "same_volume_direct_objects": true
+}

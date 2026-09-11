@@ -1,0 +1,11 @@
+{
+  "access": "Necessary read-only operating-system/toolchain dependency; no project data is written outside the repository volume.",
+  "excerpts": {
+    "close": "=item C<close>\n\nClose the file.  This uses file descriptors such as those obtained by calling\nC<POSIX::open>.\n\n\t$fd = POSIX::open( \"foo\", &POSIX::O_RDONLY );\n\tPOSIX::close( $fd );\n\nReturns C<undef> on failure.\n\nSee also L<perlfunc/close>.",
+    "dup": "=item C<dup>\n\nThis is similar to the C function C<dup()>, for duplicating a file\ndescriptor.\n\nThis uses file descriptors such as those obtained by calling\nC<POSIX::open>.\n\nReturns C<undef> on failure."
+  },
+  "full_source_bytes": 82515,
+  "full_source_sha256": "6ff9d730104edf1adb6c4422b5c651613963c76c34b3b25c15042569bb12352c",
+  "interpretation": "POSIX dup operates on numeric descriptors and returns undef on failure; close accepts the owned duplicate descriptor and returns undef on failure. Ordinary original descriptors are never numerically closed by the observer.",
+  "provider": "Installed system Perl POSIX documentation"
+}

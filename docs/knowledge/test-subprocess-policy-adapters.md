@@ -45,6 +45,7 @@ answers:
   - "why can archive aggregate excess be unreachable after earlier guards?"
   - "how do archive namespace and symlink controls preserve owned files?"
   - "how are byte-identical archive replacements detected after admission?"
+  - "why must a lower-reader observer retain only weak handle aliases?"
   - "why did integrated proxy qualification fail?"
   - "why does t1545 not use IPC Cmd?"
   - "where does T1545 preserve empty-output checker failure diagnostics?"
@@ -113,10 +114,9 @@ Decisions `0087`/`0101` select `FSM::Support::ProcessSupervisor`; adapters seal 
 `VerilatorRuntime` follows decision `0086`.
 `TaskAcceptanceFixtureRuntime` seals owned fixture roots/fixed local Git argv.
 Supervisor, checker, locality, startup/capture/STOP controls: history; absent witnesses stay unknown.
-History: `cb070ba4b28151f6089aae2555846f6a154296e5:docs/knowledge/test-subprocess-policy-adapters.md`. PST/queue evidence and fixed CLI limits/controls: history.
-Records, custody, acquisition and unique-occurrence correction: history. A scoped settled event can leave a caller-owned helper running; release still needs every selected owner settled, including cancellation. Contract/model: history.
-Archive domains: history. Replacement custody: `docs/audits/native-proxy-observation-archive-replacements-20260911/audit.py`; lower-reader failures remain open. Caller-sealed test wrappers use tail goto to preserve caller.
-Replay: `scripts/run_with_ram_guard.sh -- python3 -B -m unittest discover -s t/python -p 'test_fixture_policy_archive*.py'`.
+History: `94ba98609063049d44a46f1dddd19fd065e130cd:docs/knowledge/test-subprocess-policy-adapters.md`. PST/queue evidence and fixed CLI limits/controls: history.
+Custody, acquisition, unique occurrences and settled-event/release distinctions: history.
+Archive domains: history. Weak lower-reader observation: `docs/audits/native-proxy-observation-archive-lower-reader-seam-20260911/audit.py`; full failure/composition checks remain open. Caller-sealed test wrappers use tail goto to preserve caller. Replay: `scripts/run_with_ram_guard.sh -- python3 -B -m unittest discover -s t/python -p 'test_fixture_policy_archive*.py'`.
 Per-group cleanup cannot prove nested cleanup; actual counterexample: history.
 HIAL/VIAL `.19.2.3.1.2.2.5.5` owns ownership design, repair and hostile controls;
 neutral-verifier extraction stays provisional/blocked.

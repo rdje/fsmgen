@@ -1,0 +1,50 @@
+ok 1 - empty:0: observer completed
+ok 2 - empty:0: original lower-reader outcome retained
+ok 3 - empty:0: return bytes match direct source
+ok 4 - empty:0: actual reader-return liveness distinguished
+ok 5 - empty:0: caller or control cleanup leaves the actual descriptor closed
+ok 6 - empty:0: source and bystander preserved
+ok 7 - empty:1: observer completed
+ok 8 - empty:1: original lower-reader outcome retained
+ok 9 - empty:1: return bytes match direct source
+ok 10 - empty:1: actual reader-return liveness distinguished
+ok 11 - empty:1: caller or control cleanup leaves the actual descriptor closed
+ok 12 - empty:1: source and bystander preserved
+ok 13 - binary:0: observer completed
+ok 14 - binary:0: original lower-reader outcome retained
+ok 15 - binary:0: return bytes match direct source
+ok 16 - binary:0: actual reader-return liveness distinguished
+ok 17 - binary:0: caller or control cleanup leaves the actual descriptor closed
+ok 18 - binary:0: source and bystander preserved
+ok 19 - binary:1: observer completed
+ok 20 - binary:1: original lower-reader outcome retained
+ok 21 - binary:1: return bytes match direct source
+ok 22 - binary:1: actual reader-return liveness distinguished
+ok 23 - binary:1: caller or control cleanup leaves the actual descriptor closed
+ok 24 - binary:1: source and bystander preserved
+ok 25 - maximum:0: observer completed
+ok 26 - maximum:0: original lower-reader outcome retained
+ok 27 - maximum:0: return bytes match direct source
+ok 28 - maximum:0: actual reader-return liveness distinguished
+ok 29 - maximum:0: caller or control cleanup leaves the actual descriptor closed
+ok 30 - maximum:0: source and bystander preserved
+ok 31 - maximum:1: observer completed
+ok 32 - maximum:1: original lower-reader outcome retained
+ok 33 - maximum:1: return bytes match direct source
+ok 34 - maximum:1: actual reader-return liveness distinguished
+ok 35 - maximum:1: caller or control cleanup leaves the actual descriptor closed
+ok 36 - maximum:1: source and bystander preserved
+ok 37 - read-failure:weak: observer completed
+ok 38 - read-failure:weak: original lower-reader outcome retained
+ok 39 - read-failure:weak: return bytes match direct source
+ok 40 - read-failure:weak: actual reader-return liveness distinguished
+ok 41 - read-failure:weak: caller or control cleanup leaves the actual descriptor closed
+ok 42 - read-failure:weak: source and bystander preserved
+ok 43 - read-failure:strong-counterexample: observer completed
+ok 44 - read-failure:strong-counterexample: original lower-reader outcome retained
+ok 45 - read-failure:strong-counterexample: return bytes match direct source
+ok 46 - read-failure:strong-counterexample: actual reader-return liveness distinguished
+ok 47 - read-failure:strong-counterexample: caller or control cleanup leaves the actual descriptor closed
+ok 48 - read-failure:strong-counterexample: source and bystander preserved
+ok 49 - no compiler or native process attempt
+1..49

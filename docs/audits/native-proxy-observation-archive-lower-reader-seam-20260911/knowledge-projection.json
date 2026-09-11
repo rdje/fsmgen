@@ -1,0 +1,11 @@
+{
+  "after_bytes": 3492367,
+  "after_lines": 47288,
+  "allowance_bytes": 3492424,
+  "allowance_lines": 47288,
+  "allowance_unchanged": true,
+  "before_bytes": 3492416,
+  "before_lines": 47288,
+  "checked_before_live_write": true,
+  "head": "94ba98609063049d44a46f1dddd19fd065e130cd"
+}

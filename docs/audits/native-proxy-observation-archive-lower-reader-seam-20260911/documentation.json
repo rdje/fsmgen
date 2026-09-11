@@ -1,0 +1,15 @@
+{
+  "book_after": {
+    "bytes_total": 3325589,
+    "files": 63,
+    "lines_total": 60688
+  },
+  "book_before": {
+    "bytes_total": 3324307,
+    "files": 63,
+    "lines_total": 60668
+  },
+  "knowledge_projection": "knowledge-projection.json",
+  "root_document_bytes": 261648,
+  "task_lines": 6397
+}
