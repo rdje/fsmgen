@@ -1,0 +1,1 @@
+{"equal_reference:existing": {"call_fault_selectors": 96, "events": 127, "handles": 9}, "equal_reference:fresh": {"call_fault_selectors": 138, "events": 196, "handles": 18}, "ordinary:existing": {"call_fault_selectors": 114, "events": 151, "handles": 11}, "ordinary:fresh": {"call_fault_selectors": 168, "events": 241, "handles": 23}}

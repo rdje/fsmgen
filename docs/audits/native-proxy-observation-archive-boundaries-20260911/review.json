@@ -1,0 +1,21 @@
+{
+  "book": {
+    "exact_output_absent": true,
+    "exit_code": 0,
+    "new_passage_verified": true,
+    "rendered_bytes": 23220338,
+    "rendered_files": 98,
+    "same_volume_direct_objects": true
+  },
+  "doctrines": "Final staged-index and commit-hook gates are required before commit; their successful completion is a condition of the durable work-unit commit.",
+  "documentation": "documentation.json",
+  "durability": "Twenty-six exact predecessor inputs, including nineteen unchanged Perl modules, and seven prospective source/data pins are authenticated. extraction.json binds eight byte-exact fixture helper bodies to ff71d28f; only package initialization/report plumbing is new. Twelve byte-exact process/admission/pin recovery copies, current docs and acceptance history survive independently of this conversation.",
+  "falsification": "Seventeen altered reports reject omitted/reordered/duplicate observations, false source/writer/directory/observer closure, native identity/content binding changes, hidden target reads, changed inputs and lost allocations. Four prospective-domain controls reject duplicate events/handles and throwing faults at source-return or close observations. The 516 eligible call-fault points are selected only; actual injection and omitted-close coverage remain owned children.",
+  "knowledge_map": "knowledge-map: OK (1161 facts, 6388 unique questions, 6559 answer occurrences, 139 bounded topic shards; query parity verified)",
+  "knowledge_projection": "knowledge-projection.json",
+  "limits": "Prospective selected helper-call and actual returned-handle observations, not every syscall or failure. Source ownership-transfer observations and aggregate/actual close events are not throwing call-fault selectors. Partial writes, modeled close reports, real omitted-close counterimplementations, bounds/layout and applicability closure remain owned children. No original fixture rerun, compiler, native work, observation release or activation. Source and writer CLOEXEC is observed before close; directory CLOEXEC is explicitly unmeasured. Sixty-one is a count of handle instances within operation namespaces, not distinct numeric descriptor values. No prior matrix or compiler/native process is rerun.",
+  "owner": "HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.12.4.1.3.4.2.3.1",
+  "rederivation": "First guarded producer and independent oracle runs exit 0. Four complete fresh/existing operations follow actual inert retirement in two profiles. Independent physical/record checks, a balanced ownership-stack interpreter, per-role recheck counts and actual named/descriptor identities match 715 ordered observations and 61 source/writer/directory instances. Directory observer duplicates close immediately; all eight allocated roots are absent.",
+  "schema": "fsmgen.inactive_archive_boundary_review.v1",
+  "task_integrity": "all active task-tree invariants hold (trees=4, nodes=1346, segments=3, compact_terminals=13, index_archives=1, migrations=1, acceptance_histories=1)"
+}

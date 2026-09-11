@@ -2172,6 +2172,26 @@ scripts/run_with_ram_guard.sh -- perl docs/audits/native-proxy-observation-archi
 scripts/run_with_ram_guard.sh -- python3 -B docs/audits/native-proxy-observation-archive-20260911/audit.py
 ```
 
+The prospective archive interruption plan is now checked against complete
+healthy fresh/existing traces for ordinary and equal-content layouts. Each
+selected call, repeated source read and owned file/directory handle has a unique
+occurrence identity. For example, a later reread of the same content file cannot
+be substituted by its first read. The audit checks the complete ordered trace,
+actual handle lifetimes and final physical archive identities.
+
+Observation points and fault-injection points differ. A source-return observer
+temporarily owns the returned handle before the caller can register it for
+cleanup; injecting an adapter exception there would manufacture a handoff leak.
+That observation is excluded from throwing call-fault selectors. Close events
+are reserved for separately qualified return-error and omitted-close controls.
+Healthy traces prove this selection and ownership order; interruption coverage
+and native release authority remain open. Replay:
+
+```bash
+scripts/run_with_ram_guard.sh -- perl docs/audits/native-proxy-observation-archive-boundaries-20260911/qualify.t
+scripts/run_with_ram_guard.sh -- python3 -B docs/audits/native-proxy-observation-archive-boundaries-20260911/audit.py
+```
+
 The helper checks bounded regular source/output files and the native header,
 then sets executable permissions through the admitted open file handle. A
 regression exposed path-based permission changes affecting a substituted file

@@ -1,0 +1,58 @@
+{
+  "adaptation": "New package-scoped initialization and report flushing inject the task-local log component/result map/process-counter reference. Eight selected helper bodies are byte-exact copies; original harness and evidence remain unchanged. Initialization itself allocates only repository-local artifact parents, not fixture roots; context records every fresh inert root before population.",
+  "exact_helper_bodies": [
+    {
+      "bytes": 71,
+      "name": "clone",
+      "sha256": "d4ea95cc3b2efff276b27ff1e81f478ce22bdddd91627efb0f88c7b928d04437",
+      "source_start_line": 56
+    },
+    {
+      "bytes": 172,
+      "name": "read_bytes",
+      "sha256": "a485b9eb21cf2a3376ec36fd35a536590784558644964cc066195622e88b8467",
+      "source_start_line": 57
+    },
+    {
+      "bytes": 320,
+      "name": "write_bytes",
+      "sha256": "ee27994260c2814e833f835f8d8dbcbfd98ef1358590d057df225cec3294a474",
+      "source_start_line": 61
+    },
+    {
+      "bytes": 466,
+      "name": "allocate",
+      "sha256": "228a153f11cd575e3fc2fb705dc7a4126413eaa63f270cd23933b4408901fb7c",
+      "source_start_line": 72
+    },
+    {
+      "bytes": 1844,
+      "name": "tree",
+      "sha256": "c3a614940f7f4a269d739a188603635aae0be3d9557946c4b875d906b0c03e49",
+      "source_start_line": 81
+    },
+    {
+      "bytes": 142,
+      "name": "footprint",
+      "sha256": "a626411dbe082d589287c99b53fbe1179a3cb410892b13446962c6dd5dcee94e",
+      "source_start_line": 122
+    },
+    {
+      "bytes": 223,
+      "name": "cleanup_receipts",
+      "sha256": "a52517b869995b0944327db09b3a9d4eeffa43541f26862c72c6c755e892cda0",
+      "source_start_line": 126
+    },
+    {
+      "bytes": 2264,
+      "name": "context",
+      "sha256": "2a9e449db70c1030726413f018f6475330f073635c9d49adc5ab8797c82e3c1b",
+      "source_start_line": 130
+    }
+  ],
+  "schema": "fsmgen.archive_fixture_extraction.v1",
+  "source_bytes": 15004,
+  "source_path": "docs/audits/native-proxy-observation-archive-20260911/qualify.t",
+  "source_revision": "ff71d28f1e47c6bf34db96029862f6be5fe96051",
+  "source_sha256": "ec9522a8358730d9c8bbfb6cc52ce880311b22efb5e28c82ce78e5aaafc869ff"
+}

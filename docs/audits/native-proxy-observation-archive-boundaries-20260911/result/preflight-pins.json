@@ -1,0 +1,37 @@
+[
+  {
+    "path": "docs/audits/native-proxy-observation-archive-boundaries-20260911/ArchiveFixture.pm",
+    "sha256": "bcde885a6cf72865e3a4d996e3889a40f64f10910ac5a1ec0abe821b1d6661e5",
+    "size_bytes": 7707
+  },
+  {
+    "path": "docs/audits/native-proxy-observation-archive-boundaries-20260911/ArchiveTrace.pm",
+    "sha256": "033a42ff3b526f69f202cbb0ac6b27b8ffb9918fad38e1cc785015d040f6a363",
+    "size_bytes": 10649
+  },
+  {
+    "path": "docs/audits/native-proxy-observation-archive-boundaries-20260911/extraction.json",
+    "sha256": "f894abcb4e6205b5a1677b07c14e0e5da5962f763c2633fcb04ef2456ecbd38c",
+    "size_bytes": 2137
+  },
+  {
+    "path": "docs/audits/native-proxy-observation-archive-boundaries-20260911/plan.py",
+    "sha256": "7c12f4df764a78c3dbf19378434c09b55daa9aa1f09fe4ffffa519aff5b7c255",
+    "size_bytes": 5938
+  },
+  {
+    "path": "docs/audits/native-proxy-observation-archive-boundaries-20260911/plan.json",
+    "sha256": "fcae15dbf0d83c29b4a2b6c53873bd3df583f49cf2011e112790639e3aa2f6ec",
+    "size_bytes": 87982
+  },
+  {
+    "path": "docs/audits/native-proxy-observation-archive-boundaries-20260911/qualify.t",
+    "sha256": "0eae08bd598e0c18e78ed5471f7ef3a1611ee1afbe6708f7968a93a8529cba95",
+    "size_bytes": 6026
+  },
+  {
+    "path": "docs/audits/native-proxy-observation-archive-boundaries-20260911/audit.py",
+    "sha256": "30c2ccb08d2aa588eadb6035e81db3d882c53817b09eec9ec851d95a3f25cb16",
+    "size_bytes": 14060
+  }
+]

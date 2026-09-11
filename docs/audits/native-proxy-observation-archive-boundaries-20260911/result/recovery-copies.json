@@ -1,0 +1,77 @@
+{
+  "all_copies_byte_exact": true,
+  "files": [
+    {
+      "destination": "docs/audits/native-proxy-observation-archive-boundaries-20260911/result/plan.stdout",
+      "sha256": "4dbbe65fd503a4abc9096393138cf1429dcf75bf8490f46af5f21e806a914dcd",
+      "size_bytes": 335,
+      "source": ".artifacts/logs/native-proxy-observation-archive-boundaries-20260911/plan.stdout"
+    },
+    {
+      "destination": "docs/audits/native-proxy-observation-archive-boundaries-20260911/result/plan.stderr",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "size_bytes": 0,
+      "source": ".artifacts/logs/native-proxy-observation-archive-boundaries-20260911/plan.stderr"
+    },
+    {
+      "destination": "docs/audits/native-proxy-observation-archive-boundaries-20260911/result/preflight-pins.json",
+      "sha256": "abd2dfd9eaeec12b2f2121b9d00568cf51f14b0bd61e7061771ceb2cd70a94b2",
+      "size_bytes": 1451,
+      "source": ".artifacts/logs/native-proxy-observation-archive-boundaries-20260911/preflight-pins.json"
+    },
+    {
+      "destination": "docs/audits/native-proxy-observation-archive-boundaries-20260911/result/qualification.json",
+      "sha256": "99a469ca1df6b2f2ab81be6d3d2634518eab6b0392977c09eb0632e81cb93335",
+      "size_bytes": 651443,
+      "source": ".artifacts/logs/native-proxy-observation-archive-boundaries-20260911/qualification.json"
+    },
+    {
+      "destination": "docs/audits/native-proxy-observation-archive-boundaries-20260911/result/admission.jsonl",
+      "sha256": "4b2007685e16b49470f5d146e790ece10609ea2cfebb81d726173c180f9bfd23",
+      "size_bytes": 1042,
+      "source": ".artifacts/logs/native-proxy-observation-archive-boundaries-20260911/admission.jsonl"
+    },
+    {
+      "destination": "docs/audits/native-proxy-observation-archive-boundaries-20260911/result/qualify.tap",
+      "sha256": "5d669113bbdfd616635ba1d6092ff2e8d8d97539dd8494a199200457a3227918",
+      "size_bytes": 1464,
+      "source": ".artifacts/logs/native-proxy-observation-archive-boundaries-20260911/qualify.tap"
+    },
+    {
+      "destination": "docs/audits/native-proxy-observation-archive-boundaries-20260911/result/qualify.stderr",
+      "sha256": "efe1e0d927d2b6f9fe1ecdbafb26b1ce212a9fc3e9c810eace70e293746e8171",
+      "size_bytes": 91,
+      "source": ".artifacts/logs/native-proxy-observation-archive-boundaries-20260911/qualify.stderr"
+    },
+    {
+      "destination": "docs/audits/native-proxy-observation-archive-boundaries-20260911/result/qualify.exit",
+      "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa",
+      "size_bytes": 2,
+      "source": ".artifacts/logs/native-proxy-observation-archive-boundaries-20260911/qualify.exit"
+    },
+    {
+      "destination": "docs/audits/native-proxy-observation-archive-boundaries-20260911/result/audit.json",
+      "sha256": "51486f5f6dd0d4e2eb00c7f0711950f82e79fd9ab63b4eb59f5b309755822448",
+      "size_bytes": 1414,
+      "source": ".artifacts/logs/native-proxy-observation-archive-boundaries-20260911/audit.json"
+    },
+    {
+      "destination": "docs/audits/native-proxy-observation-archive-boundaries-20260911/result/audit.stdout",
+      "sha256": "e05d51a22ad8950f7c8c316f0a24ef7738aa8db09ee853abb29ceb3ca38e126c",
+      "size_bytes": 1290,
+      "source": ".artifacts/logs/native-proxy-observation-archive-boundaries-20260911/audit.stdout"
+    },
+    {
+      "destination": "docs/audits/native-proxy-observation-archive-boundaries-20260911/result/audit.stderr",
+      "sha256": "d2fc832b687579811f59433b42e900cb12d290aaa1bd2b2834e100910156e791",
+      "size_bytes": 91,
+      "source": ".artifacts/logs/native-proxy-observation-archive-boundaries-20260911/audit.stderr"
+    },
+    {
+      "destination": "docs/audits/native-proxy-observation-archive-boundaries-20260911/result/audit.exit",
+      "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa",
+      "size_bytes": 2,
+      "source": ".artifacts/logs/native-proxy-observation-archive-boundaries-20260911/audit.exit"
+    }
+  ]
+}

@@ -1,0 +1,24 @@
+ok 1 - ordinary: actual inactive retirement before traces
+ok 2 - ordinary:fresh: complete ordered unique boundaries
+ok 3 - ordinary:fresh: actual archive returns
+ok 4 - ordinary:fresh: explicit source/writer/directory closure
+ok 5 - ordinary:fresh: retained input is unchanged
+ok 6 - ordinary:fresh: other owners and retired workspace remain unchanged
+ok 7 - ordinary:existing: complete ordered unique boundaries
+ok 8 - ordinary:existing: actual archive returns
+ok 9 - ordinary:existing: explicit source/writer/directory closure
+ok 10 - ordinary:existing: retained input is unchanged
+ok 11 - ordinary:existing: other owners and retired workspace remain unchanged
+ok 12 - equal_reference: actual inactive retirement before traces
+ok 13 - equal_reference:fresh: complete ordered unique boundaries
+ok 14 - equal_reference:fresh: actual archive returns
+ok 15 - equal_reference:fresh: explicit source/writer/directory closure
+ok 16 - equal_reference:fresh: retained input is unchanged
+ok 17 - equal_reference:fresh: other owners and retired workspace remain unchanged
+ok 18 - equal_reference:existing: complete ordered unique boundaries
+ok 19 - equal_reference:existing: actual archive returns
+ok 20 - equal_reference:existing: explicit source/writer/directory closure
+ok 21 - equal_reference:existing: retained input is unchanged
+ok 22 - equal_reference:existing: other owners and retired workspace remain unchanged
+ok 23 - no compiler or native process attempt
+1..23

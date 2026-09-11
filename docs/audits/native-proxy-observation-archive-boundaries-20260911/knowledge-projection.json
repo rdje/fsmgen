@@ -1,0 +1,8 @@
+{
+  "after": 3492270,
+  "allowance": 3492424,
+  "before": 3492354,
+  "checked_before_live_write": true,
+  "history_revision": "ff71d28f1e47c6bf34db96029862f6be5fe96051",
+  "routing": "Move prior archive implementation/codec details and the longer release-contract pointer through exact ff71 history; retain target-reopen and complete-owner settlement limits alongside the current boundary fact."
+}
