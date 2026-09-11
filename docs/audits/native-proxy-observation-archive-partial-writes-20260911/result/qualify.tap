@@ -1,0 +1,412 @@
+ok 1 - ordinary:file:0:short: actual inactive retirement precedes archive writes
+ok 2 - ordinary:file:0:short: selected progress or exact modeled failure is observed
+ok 3 - ordinary:file:0:short: every actual owned handle explicitly closes
+ok 4 - ordinary:file:0:short: retained inputs unchanged
+ok 5 - ordinary:file:0:short: all other owners and retired workspace preserved
+ok 6 - ordinary:file:0:zero:start: actual inactive retirement precedes archive writes
+ok 7 - ordinary:file:0:zero:start: selected progress or exact modeled failure is observed
+ok 8 - ordinary:file:0:zero:start: every actual owned handle explicitly closes
+ok 9 - ordinary:file:0:zero:start: retained inputs unchanged
+ok 10 - ordinary:file:0:zero:start: all other owners and retired workspace preserved
+ok 11 - ordinary:file:0:zero:one: actual inactive retirement precedes archive writes
+ok 12 - ordinary:file:0:zero:one: selected progress or exact modeled failure is observed
+ok 13 - ordinary:file:0:zero:one: every actual owned handle explicitly closes
+ok 14 - ordinary:file:0:zero:one: retained inputs unchanged
+ok 15 - ordinary:file:0:zero:one: all other owners and retired workspace preserved
+ok 16 - ordinary:file:0:zero:middle: actual inactive retirement precedes archive writes
+ok 17 - ordinary:file:0:zero:middle: selected progress or exact modeled failure is observed
+ok 18 - ordinary:file:0:zero:middle: every actual owned handle explicitly closes
+ok 19 - ordinary:file:0:zero:middle: retained inputs unchanged
+ok 20 - ordinary:file:0:zero:middle: all other owners and retired workspace preserved
+ok 21 - ordinary:file:0:zero:last: actual inactive retirement precedes archive writes
+ok 22 - ordinary:file:0:zero:last: selected progress or exact modeled failure is observed
+ok 23 - ordinary:file:0:zero:last: every actual owned handle explicitly closes
+ok 24 - ordinary:file:0:zero:last: retained inputs unchanged
+ok 25 - ordinary:file:0:zero:last: all other owners and retired workspace preserved
+ok 26 - ordinary:file:0:error:start: actual inactive retirement precedes archive writes
+ok 27 - ordinary:file:0:error:start: selected progress or exact modeled failure is observed
+ok 28 - ordinary:file:0:error:start: every actual owned handle explicitly closes
+ok 29 - ordinary:file:0:error:start: retained inputs unchanged
+ok 30 - ordinary:file:0:error:start: all other owners and retired workspace preserved
+ok 31 - ordinary:file:0:error:one: actual inactive retirement precedes archive writes
+ok 32 - ordinary:file:0:error:one: selected progress or exact modeled failure is observed
+ok 33 - ordinary:file:0:error:one: every actual owned handle explicitly closes
+ok 34 - ordinary:file:0:error:one: retained inputs unchanged
+ok 35 - ordinary:file:0:error:one: all other owners and retired workspace preserved
+ok 36 - ordinary:file:0:error:middle: actual inactive retirement precedes archive writes
+ok 37 - ordinary:file:0:error:middle: selected progress or exact modeled failure is observed
+ok 38 - ordinary:file:0:error:middle: every actual owned handle explicitly closes
+ok 39 - ordinary:file:0:error:middle: retained inputs unchanged
+ok 40 - ordinary:file:0:error:middle: all other owners and retired workspace preserved
+ok 41 - ordinary:file:0:error:last: actual inactive retirement precedes archive writes
+ok 42 - ordinary:file:0:error:last: selected progress or exact modeled failure is observed
+ok 43 - ordinary:file:0:error:last: every actual owned handle explicitly closes
+ok 44 - ordinary:file:0:error:last: retained inputs unchanged
+ok 45 - ordinary:file:0:error:last: all other owners and retired workspace preserved
+ok 46 - ordinary:file:1:short: actual inactive retirement precedes archive writes
+ok 47 - ordinary:file:1:short: selected progress or exact modeled failure is observed
+ok 48 - ordinary:file:1:short: every actual owned handle explicitly closes
+ok 49 - ordinary:file:1:short: retained inputs unchanged
+ok 50 - ordinary:file:1:short: all other owners and retired workspace preserved
+ok 51 - ordinary:file:1:zero:start: actual inactive retirement precedes archive writes
+ok 52 - ordinary:file:1:zero:start: selected progress or exact modeled failure is observed
+ok 53 - ordinary:file:1:zero:start: every actual owned handle explicitly closes
+ok 54 - ordinary:file:1:zero:start: retained inputs unchanged
+ok 55 - ordinary:file:1:zero:start: all other owners and retired workspace preserved
+ok 56 - ordinary:file:1:zero:one: actual inactive retirement precedes archive writes
+ok 57 - ordinary:file:1:zero:one: selected progress or exact modeled failure is observed
+ok 58 - ordinary:file:1:zero:one: every actual owned handle explicitly closes
+ok 59 - ordinary:file:1:zero:one: retained inputs unchanged
+ok 60 - ordinary:file:1:zero:one: all other owners and retired workspace preserved
+ok 61 - ordinary:file:1:zero:middle: actual inactive retirement precedes archive writes
+ok 62 - ordinary:file:1:zero:middle: selected progress or exact modeled failure is observed
+ok 63 - ordinary:file:1:zero:middle: every actual owned handle explicitly closes
+ok 64 - ordinary:file:1:zero:middle: retained inputs unchanged
+ok 65 - ordinary:file:1:zero:middle: all other owners and retired workspace preserved
+ok 66 - ordinary:file:1:zero:last: actual inactive retirement precedes archive writes
+ok 67 - ordinary:file:1:zero:last: selected progress or exact modeled failure is observed
+ok 68 - ordinary:file:1:zero:last: every actual owned handle explicitly closes
+ok 69 - ordinary:file:1:zero:last: retained inputs unchanged
+ok 70 - ordinary:file:1:zero:last: all other owners and retired workspace preserved
+ok 71 - ordinary:file:1:error:start: actual inactive retirement precedes archive writes
+ok 72 - ordinary:file:1:error:start: selected progress or exact modeled failure is observed
+ok 73 - ordinary:file:1:error:start: every actual owned handle explicitly closes
+ok 74 - ordinary:file:1:error:start: retained inputs unchanged
+ok 75 - ordinary:file:1:error:start: all other owners and retired workspace preserved
+ok 76 - ordinary:file:1:error:one: actual inactive retirement precedes archive writes
+ok 77 - ordinary:file:1:error:one: selected progress or exact modeled failure is observed
+ok 78 - ordinary:file:1:error:one: every actual owned handle explicitly closes
+ok 79 - ordinary:file:1:error:one: retained inputs unchanged
+ok 80 - ordinary:file:1:error:one: all other owners and retired workspace preserved
+ok 81 - ordinary:file:1:error:middle: actual inactive retirement precedes archive writes
+ok 82 - ordinary:file:1:error:middle: selected progress or exact modeled failure is observed
+ok 83 - ordinary:file:1:error:middle: every actual owned handle explicitly closes
+ok 84 - ordinary:file:1:error:middle: retained inputs unchanged
+ok 85 - ordinary:file:1:error:middle: all other owners and retired workspace preserved
+ok 86 - ordinary:file:1:error:last: actual inactive retirement precedes archive writes
+ok 87 - ordinary:file:1:error:last: selected progress or exact modeled failure is observed
+ok 88 - ordinary:file:1:error:last: every actual owned handle explicitly closes
+ok 89 - ordinary:file:1:error:last: retained inputs unchanged
+ok 90 - ordinary:file:1:error:last: all other owners and retired workspace preserved
+ok 91 - ordinary:file:2:short: actual inactive retirement precedes archive writes
+ok 92 - ordinary:file:2:short: selected progress or exact modeled failure is observed
+ok 93 - ordinary:file:2:short: every actual owned handle explicitly closes
+ok 94 - ordinary:file:2:short: retained inputs unchanged
+ok 95 - ordinary:file:2:short: all other owners and retired workspace preserved
+ok 96 - ordinary:file:2:zero:start: actual inactive retirement precedes archive writes
+ok 97 - ordinary:file:2:zero:start: selected progress or exact modeled failure is observed
+ok 98 - ordinary:file:2:zero:start: every actual owned handle explicitly closes
+ok 99 - ordinary:file:2:zero:start: retained inputs unchanged
+ok 100 - ordinary:file:2:zero:start: all other owners and retired workspace preserved
+ok 101 - ordinary:file:2:zero:one: actual inactive retirement precedes archive writes
+ok 102 - ordinary:file:2:zero:one: selected progress or exact modeled failure is observed
+ok 103 - ordinary:file:2:zero:one: every actual owned handle explicitly closes
+ok 104 - ordinary:file:2:zero:one: retained inputs unchanged
+ok 105 - ordinary:file:2:zero:one: all other owners and retired workspace preserved
+ok 106 - ordinary:file:2:zero:middle: actual inactive retirement precedes archive writes
+ok 107 - ordinary:file:2:zero:middle: selected progress or exact modeled failure is observed
+ok 108 - ordinary:file:2:zero:middle: every actual owned handle explicitly closes
+ok 109 - ordinary:file:2:zero:middle: retained inputs unchanged
+ok 110 - ordinary:file:2:zero:middle: all other owners and retired workspace preserved
+ok 111 - ordinary:file:2:zero:last: actual inactive retirement precedes archive writes
+ok 112 - ordinary:file:2:zero:last: selected progress or exact modeled failure is observed
+ok 113 - ordinary:file:2:zero:last: every actual owned handle explicitly closes
+ok 114 - ordinary:file:2:zero:last: retained inputs unchanged
+ok 115 - ordinary:file:2:zero:last: all other owners and retired workspace preserved
+ok 116 - ordinary:file:2:error:start: actual inactive retirement precedes archive writes
+ok 117 - ordinary:file:2:error:start: selected progress or exact modeled failure is observed
+ok 118 - ordinary:file:2:error:start: every actual owned handle explicitly closes
+ok 119 - ordinary:file:2:error:start: retained inputs unchanged
+ok 120 - ordinary:file:2:error:start: all other owners and retired workspace preserved
+ok 121 - ordinary:file:2:error:one: actual inactive retirement precedes archive writes
+ok 122 - ordinary:file:2:error:one: selected progress or exact modeled failure is observed
+ok 123 - ordinary:file:2:error:one: every actual owned handle explicitly closes
+ok 124 - ordinary:file:2:error:one: retained inputs unchanged
+ok 125 - ordinary:file:2:error:one: all other owners and retired workspace preserved
+ok 126 - ordinary:file:2:error:middle: actual inactive retirement precedes archive writes
+ok 127 - ordinary:file:2:error:middle: selected progress or exact modeled failure is observed
+ok 128 - ordinary:file:2:error:middle: every actual owned handle explicitly closes
+ok 129 - ordinary:file:2:error:middle: retained inputs unchanged
+ok 130 - ordinary:file:2:error:middle: all other owners and retired workspace preserved
+ok 131 - ordinary:file:2:error:last: actual inactive retirement precedes archive writes
+ok 132 - ordinary:file:2:error:last: selected progress or exact modeled failure is observed
+ok 133 - ordinary:file:2:error:last: every actual owned handle explicitly closes
+ok 134 - ordinary:file:2:error:last: retained inputs unchanged
+ok 135 - ordinary:file:2:error:last: all other owners and retired workspace preserved
+ok 136 - ordinary:file:3:short: actual inactive retirement precedes archive writes
+ok 137 - ordinary:file:3:short: selected progress or exact modeled failure is observed
+ok 138 - ordinary:file:3:short: every actual owned handle explicitly closes
+ok 139 - ordinary:file:3:short: retained inputs unchanged
+ok 140 - ordinary:file:3:short: all other owners and retired workspace preserved
+ok 141 - ordinary:file:3:zero:start: actual inactive retirement precedes archive writes
+ok 142 - ordinary:file:3:zero:start: selected progress or exact modeled failure is observed
+ok 143 - ordinary:file:3:zero:start: every actual owned handle explicitly closes
+ok 144 - ordinary:file:3:zero:start: retained inputs unchanged
+ok 145 - ordinary:file:3:zero:start: all other owners and retired workspace preserved
+ok 146 - ordinary:file:3:zero:one: actual inactive retirement precedes archive writes
+ok 147 - ordinary:file:3:zero:one: selected progress or exact modeled failure is observed
+ok 148 - ordinary:file:3:zero:one: every actual owned handle explicitly closes
+ok 149 - ordinary:file:3:zero:one: retained inputs unchanged
+ok 150 - ordinary:file:3:zero:one: all other owners and retired workspace preserved
+ok 151 - ordinary:file:3:zero:middle: actual inactive retirement precedes archive writes
+ok 152 - ordinary:file:3:zero:middle: selected progress or exact modeled failure is observed
+ok 153 - ordinary:file:3:zero:middle: every actual owned handle explicitly closes
+ok 154 - ordinary:file:3:zero:middle: retained inputs unchanged
+ok 155 - ordinary:file:3:zero:middle: all other owners and retired workspace preserved
+ok 156 - ordinary:file:3:zero:last: actual inactive retirement precedes archive writes
+ok 157 - ordinary:file:3:zero:last: selected progress or exact modeled failure is observed
+ok 158 - ordinary:file:3:zero:last: every actual owned handle explicitly closes
+ok 159 - ordinary:file:3:zero:last: retained inputs unchanged
+ok 160 - ordinary:file:3:zero:last: all other owners and retired workspace preserved
+ok 161 - ordinary:file:3:error:start: actual inactive retirement precedes archive writes
+ok 162 - ordinary:file:3:error:start: selected progress or exact modeled failure is observed
+ok 163 - ordinary:file:3:error:start: every actual owned handle explicitly closes
+ok 164 - ordinary:file:3:error:start: retained inputs unchanged
+ok 165 - ordinary:file:3:error:start: all other owners and retired workspace preserved
+ok 166 - ordinary:file:3:error:one: actual inactive retirement precedes archive writes
+ok 167 - ordinary:file:3:error:one: selected progress or exact modeled failure is observed
+ok 168 - ordinary:file:3:error:one: every actual owned handle explicitly closes
+ok 169 - ordinary:file:3:error:one: retained inputs unchanged
+ok 170 - ordinary:file:3:error:one: all other owners and retired workspace preserved
+ok 171 - ordinary:file:3:error:middle: actual inactive retirement precedes archive writes
+ok 172 - ordinary:file:3:error:middle: selected progress or exact modeled failure is observed
+ok 173 - ordinary:file:3:error:middle: every actual owned handle explicitly closes
+ok 174 - ordinary:file:3:error:middle: retained inputs unchanged
+ok 175 - ordinary:file:3:error:middle: all other owners and retired workspace preserved
+ok 176 - ordinary:file:3:error:last: actual inactive retirement precedes archive writes
+ok 177 - ordinary:file:3:error:last: selected progress or exact modeled failure is observed
+ok 178 - ordinary:file:3:error:last: every actual owned handle explicitly closes
+ok 179 - ordinary:file:3:error:last: retained inputs unchanged
+ok 180 - ordinary:file:3:error:last: all other owners and retired workspace preserved
+ok 181 - equal_reference:file:0:short: actual inactive retirement precedes archive writes
+ok 182 - equal_reference:file:0:short: selected progress or exact modeled failure is observed
+ok 183 - equal_reference:file:0:short: every actual owned handle explicitly closes
+ok 184 - equal_reference:file:0:short: retained inputs unchanged
+ok 185 - equal_reference:file:0:short: all other owners and retired workspace preserved
+ok 186 - equal_reference:file:0:zero:start: actual inactive retirement precedes archive writes
+ok 187 - equal_reference:file:0:zero:start: selected progress or exact modeled failure is observed
+ok 188 - equal_reference:file:0:zero:start: every actual owned handle explicitly closes
+ok 189 - equal_reference:file:0:zero:start: retained inputs unchanged
+ok 190 - equal_reference:file:0:zero:start: all other owners and retired workspace preserved
+ok 191 - equal_reference:file:0:zero:one: actual inactive retirement precedes archive writes
+ok 192 - equal_reference:file:0:zero:one: selected progress or exact modeled failure is observed
+ok 193 - equal_reference:file:0:zero:one: every actual owned handle explicitly closes
+ok 194 - equal_reference:file:0:zero:one: retained inputs unchanged
+ok 195 - equal_reference:file:0:zero:one: all other owners and retired workspace preserved
+ok 196 - equal_reference:file:0:zero:middle: actual inactive retirement precedes archive writes
+ok 197 - equal_reference:file:0:zero:middle: selected progress or exact modeled failure is observed
+ok 198 - equal_reference:file:0:zero:middle: every actual owned handle explicitly closes
+ok 199 - equal_reference:file:0:zero:middle: retained inputs unchanged
+ok 200 - equal_reference:file:0:zero:middle: all other owners and retired workspace preserved
+ok 201 - equal_reference:file:0:zero:last: actual inactive retirement precedes archive writes
+ok 202 - equal_reference:file:0:zero:last: selected progress or exact modeled failure is observed
+ok 203 - equal_reference:file:0:zero:last: every actual owned handle explicitly closes
+ok 204 - equal_reference:file:0:zero:last: retained inputs unchanged
+ok 205 - equal_reference:file:0:zero:last: all other owners and retired workspace preserved
+ok 206 - equal_reference:file:0:error:start: actual inactive retirement precedes archive writes
+ok 207 - equal_reference:file:0:error:start: selected progress or exact modeled failure is observed
+ok 208 - equal_reference:file:0:error:start: every actual owned handle explicitly closes
+ok 209 - equal_reference:file:0:error:start: retained inputs unchanged
+ok 210 - equal_reference:file:0:error:start: all other owners and retired workspace preserved
+ok 211 - equal_reference:file:0:error:one: actual inactive retirement precedes archive writes
+ok 212 - equal_reference:file:0:error:one: selected progress or exact modeled failure is observed
+ok 213 - equal_reference:file:0:error:one: every actual owned handle explicitly closes
+ok 214 - equal_reference:file:0:error:one: retained inputs unchanged
+ok 215 - equal_reference:file:0:error:one: all other owners and retired workspace preserved
+ok 216 - equal_reference:file:0:error:middle: actual inactive retirement precedes archive writes
+ok 217 - equal_reference:file:0:error:middle: selected progress or exact modeled failure is observed
+ok 218 - equal_reference:file:0:error:middle: every actual owned handle explicitly closes
+ok 219 - equal_reference:file:0:error:middle: retained inputs unchanged
+ok 220 - equal_reference:file:0:error:middle: all other owners and retired workspace preserved
+ok 221 - equal_reference:file:0:error:last: actual inactive retirement precedes archive writes
+ok 222 - equal_reference:file:0:error:last: selected progress or exact modeled failure is observed
+ok 223 - equal_reference:file:0:error:last: every actual owned handle explicitly closes
+ok 224 - equal_reference:file:0:error:last: retained inputs unchanged
+ok 225 - equal_reference:file:0:error:last: all other owners and retired workspace preserved
+ok 226 - equal_reference:file:1:short: actual inactive retirement precedes archive writes
+ok 227 - equal_reference:file:1:short: selected progress or exact modeled failure is observed
+ok 228 - equal_reference:file:1:short: every actual owned handle explicitly closes
+ok 229 - equal_reference:file:1:short: retained inputs unchanged
+ok 230 - equal_reference:file:1:short: all other owners and retired workspace preserved
+ok 231 - equal_reference:file:1:zero:start: actual inactive retirement precedes archive writes
+ok 232 - equal_reference:file:1:zero:start: selected progress or exact modeled failure is observed
+ok 233 - equal_reference:file:1:zero:start: every actual owned handle explicitly closes
+ok 234 - equal_reference:file:1:zero:start: retained inputs unchanged
+ok 235 - equal_reference:file:1:zero:start: all other owners and retired workspace preserved
+ok 236 - equal_reference:file:1:zero:one: actual inactive retirement precedes archive writes
+ok 237 - equal_reference:file:1:zero:one: selected progress or exact modeled failure is observed
+ok 238 - equal_reference:file:1:zero:one: every actual owned handle explicitly closes
+ok 239 - equal_reference:file:1:zero:one: retained inputs unchanged
+ok 240 - equal_reference:file:1:zero:one: all other owners and retired workspace preserved
+ok 241 - equal_reference:file:1:zero:middle: actual inactive retirement precedes archive writes
+ok 242 - equal_reference:file:1:zero:middle: selected progress or exact modeled failure is observed
+ok 243 - equal_reference:file:1:zero:middle: every actual owned handle explicitly closes
+ok 244 - equal_reference:file:1:zero:middle: retained inputs unchanged
+ok 245 - equal_reference:file:1:zero:middle: all other owners and retired workspace preserved
+ok 246 - equal_reference:file:1:zero:last: actual inactive retirement precedes archive writes
+ok 247 - equal_reference:file:1:zero:last: selected progress or exact modeled failure is observed
+ok 248 - equal_reference:file:1:zero:last: every actual owned handle explicitly closes
+ok 249 - equal_reference:file:1:zero:last: retained inputs unchanged
+ok 250 - equal_reference:file:1:zero:last: all other owners and retired workspace preserved
+ok 251 - equal_reference:file:1:error:start: actual inactive retirement precedes archive writes
+ok 252 - equal_reference:file:1:error:start: selected progress or exact modeled failure is observed
+ok 253 - equal_reference:file:1:error:start: every actual owned handle explicitly closes
+ok 254 - equal_reference:file:1:error:start: retained inputs unchanged
+ok 255 - equal_reference:file:1:error:start: all other owners and retired workspace preserved
+ok 256 - equal_reference:file:1:error:one: actual inactive retirement precedes archive writes
+ok 257 - equal_reference:file:1:error:one: selected progress or exact modeled failure is observed
+ok 258 - equal_reference:file:1:error:one: every actual owned handle explicitly closes
+ok 259 - equal_reference:file:1:error:one: retained inputs unchanged
+ok 260 - equal_reference:file:1:error:one: all other owners and retired workspace preserved
+ok 261 - equal_reference:file:1:error:middle: actual inactive retirement precedes archive writes
+ok 262 - equal_reference:file:1:error:middle: selected progress or exact modeled failure is observed
+ok 263 - equal_reference:file:1:error:middle: every actual owned handle explicitly closes
+ok 264 - equal_reference:file:1:error:middle: retained inputs unchanged
+ok 265 - equal_reference:file:1:error:middle: all other owners and retired workspace preserved
+ok 266 - equal_reference:file:1:error:last: actual inactive retirement precedes archive writes
+ok 267 - equal_reference:file:1:error:last: selected progress or exact modeled failure is observed
+ok 268 - equal_reference:file:1:error:last: every actual owned handle explicitly closes
+ok 269 - equal_reference:file:1:error:last: retained inputs unchanged
+ok 270 - equal_reference:file:1:error:last: all other owners and retired workspace preserved
+ok 271 - equal_reference:file:2:short: actual inactive retirement precedes archive writes
+ok 272 - equal_reference:file:2:short: selected progress or exact modeled failure is observed
+ok 273 - equal_reference:file:2:short: every actual owned handle explicitly closes
+ok 274 - equal_reference:file:2:short: retained inputs unchanged
+ok 275 - equal_reference:file:2:short: all other owners and retired workspace preserved
+ok 276 - equal_reference:file:2:zero:start: actual inactive retirement precedes archive writes
+ok 277 - equal_reference:file:2:zero:start: selected progress or exact modeled failure is observed
+ok 278 - equal_reference:file:2:zero:start: every actual owned handle explicitly closes
+ok 279 - equal_reference:file:2:zero:start: retained inputs unchanged
+ok 280 - equal_reference:file:2:zero:start: all other owners and retired workspace preserved
+ok 281 - equal_reference:file:2:zero:one: actual inactive retirement precedes archive writes
+ok 282 - equal_reference:file:2:zero:one: selected progress or exact modeled failure is observed
+ok 283 - equal_reference:file:2:zero:one: every actual owned handle explicitly closes
+ok 284 - equal_reference:file:2:zero:one: retained inputs unchanged
+ok 285 - equal_reference:file:2:zero:one: all other owners and retired workspace preserved
+ok 286 - equal_reference:file:2:zero:middle: actual inactive retirement precedes archive writes
+ok 287 - equal_reference:file:2:zero:middle: selected progress or exact modeled failure is observed
+ok 288 - equal_reference:file:2:zero:middle: every actual owned handle explicitly closes
+ok 289 - equal_reference:file:2:zero:middle: retained inputs unchanged
+ok 290 - equal_reference:file:2:zero:middle: all other owners and retired workspace preserved
+ok 291 - equal_reference:file:2:zero:last: actual inactive retirement precedes archive writes
+ok 292 - equal_reference:file:2:zero:last: selected progress or exact modeled failure is observed
+ok 293 - equal_reference:file:2:zero:last: every actual owned handle explicitly closes
+ok 294 - equal_reference:file:2:zero:last: retained inputs unchanged
+ok 295 - equal_reference:file:2:zero:last: all other owners and retired workspace preserved
+ok 296 - equal_reference:file:2:error:start: actual inactive retirement precedes archive writes
+ok 297 - equal_reference:file:2:error:start: selected progress or exact modeled failure is observed
+ok 298 - equal_reference:file:2:error:start: every actual owned handle explicitly closes
+ok 299 - equal_reference:file:2:error:start: retained inputs unchanged
+ok 300 - equal_reference:file:2:error:start: all other owners and retired workspace preserved
+ok 301 - equal_reference:file:2:error:one: actual inactive retirement precedes archive writes
+ok 302 - equal_reference:file:2:error:one: selected progress or exact modeled failure is observed
+ok 303 - equal_reference:file:2:error:one: every actual owned handle explicitly closes
+ok 304 - equal_reference:file:2:error:one: retained inputs unchanged
+ok 305 - equal_reference:file:2:error:one: all other owners and retired workspace preserved
+ok 306 - equal_reference:file:2:error:middle: actual inactive retirement precedes archive writes
+ok 307 - equal_reference:file:2:error:middle: selected progress or exact modeled failure is observed
+ok 308 - equal_reference:file:2:error:middle: every actual owned handle explicitly closes
+ok 309 - equal_reference:file:2:error:middle: retained inputs unchanged
+ok 310 - equal_reference:file:2:error:middle: all other owners and retired workspace preserved
+ok 311 - equal_reference:file:2:error:last: actual inactive retirement precedes archive writes
+ok 312 - equal_reference:file:2:error:last: selected progress or exact modeled failure is observed
+ok 313 - equal_reference:file:2:error:last: every actual owned handle explicitly closes
+ok 314 - equal_reference:file:2:error:last: retained inputs unchanged
+ok 315 - equal_reference:file:2:error:last: all other owners and retired workspace preserved
+ok 316 - binary:file:0:short: actual inactive retirement precedes archive writes
+ok 317 - binary:file:0:short: selected progress or exact modeled failure is observed
+ok 318 - binary:file:0:short: every actual owned handle explicitly closes
+ok 319 - binary:file:0:short: retained inputs unchanged
+ok 320 - binary:file:0:short: all other owners and retired workspace preserved
+ok 321 - binary:file:0:zero:start: actual inactive retirement precedes archive writes
+ok 322 - binary:file:0:zero:start: selected progress or exact modeled failure is observed
+ok 323 - binary:file:0:zero:start: every actual owned handle explicitly closes
+ok 324 - binary:file:0:zero:start: retained inputs unchanged
+ok 325 - binary:file:0:zero:start: all other owners and retired workspace preserved
+ok 326 - binary:file:0:zero:one: actual inactive retirement precedes archive writes
+ok 327 - binary:file:0:zero:one: selected progress or exact modeled failure is observed
+ok 328 - binary:file:0:zero:one: every actual owned handle explicitly closes
+ok 329 - binary:file:0:zero:one: retained inputs unchanged
+ok 330 - binary:file:0:zero:one: all other owners and retired workspace preserved
+ok 331 - binary:file:0:zero:middle: actual inactive retirement precedes archive writes
+ok 332 - binary:file:0:zero:middle: selected progress or exact modeled failure is observed
+ok 333 - binary:file:0:zero:middle: every actual owned handle explicitly closes
+ok 334 - binary:file:0:zero:middle: retained inputs unchanged
+ok 335 - binary:file:0:zero:middle: all other owners and retired workspace preserved
+ok 336 - binary:file:0:zero:last: actual inactive retirement precedes archive writes
+ok 337 - binary:file:0:zero:last: selected progress or exact modeled failure is observed
+ok 338 - binary:file:0:zero:last: every actual owned handle explicitly closes
+ok 339 - binary:file:0:zero:last: retained inputs unchanged
+ok 340 - binary:file:0:zero:last: all other owners and retired workspace preserved
+ok 341 - binary:file:0:error:start: actual inactive retirement precedes archive writes
+ok 342 - binary:file:0:error:start: selected progress or exact modeled failure is observed
+ok 343 - binary:file:0:error:start: every actual owned handle explicitly closes
+ok 344 - binary:file:0:error:start: retained inputs unchanged
+ok 345 - binary:file:0:error:start: all other owners and retired workspace preserved
+ok 346 - binary:file:0:error:one: actual inactive retirement precedes archive writes
+ok 347 - binary:file:0:error:one: selected progress or exact modeled failure is observed
+ok 348 - binary:file:0:error:one: every actual owned handle explicitly closes
+ok 349 - binary:file:0:error:one: retained inputs unchanged
+ok 350 - binary:file:0:error:one: all other owners and retired workspace preserved
+ok 351 - binary:file:0:error:middle: actual inactive retirement precedes archive writes
+ok 352 - binary:file:0:error:middle: selected progress or exact modeled failure is observed
+ok 353 - binary:file:0:error:middle: every actual owned handle explicitly closes
+ok 354 - binary:file:0:error:middle: retained inputs unchanged
+ok 355 - binary:file:0:error:middle: all other owners and retired workspace preserved
+ok 356 - binary:file:0:error:last: actual inactive retirement precedes archive writes
+ok 357 - binary:file:0:error:last: selected progress or exact modeled failure is observed
+ok 358 - binary:file:0:error:last: every actual owned handle explicitly closes
+ok 359 - binary:file:0:error:last: retained inputs unchanged
+ok 360 - binary:file:0:error:last: all other owners and retired workspace preserved
+ok 361 - empty:file:0:empty: actual inactive retirement precedes archive writes
+ok 362 - empty:file:0:empty: selected progress or exact modeled failure is observed
+ok 363 - empty:file:0:empty: every actual owned handle explicitly closes
+ok 364 - empty:file:0:empty: retained inputs unchanged
+ok 365 - empty:file:0:empty: all other owners and retired workspace preserved
+ok 366 - maximum:file:0:short: actual inactive retirement precedes archive writes
+ok 367 - maximum:file:0:short: selected progress or exact modeled failure is observed
+ok 368 - maximum:file:0:short: every actual owned handle explicitly closes
+ok 369 - maximum:file:0:short: retained inputs unchanged
+ok 370 - maximum:file:0:short: all other owners and retired workspace preserved
+ok 371 - maximum:file:0:zero:start: actual inactive retirement precedes archive writes
+ok 372 - maximum:file:0:zero:start: selected progress or exact modeled failure is observed
+ok 373 - maximum:file:0:zero:start: every actual owned handle explicitly closes
+ok 374 - maximum:file:0:zero:start: retained inputs unchanged
+ok 375 - maximum:file:0:zero:start: all other owners and retired workspace preserved
+ok 376 - maximum:file:0:zero:one: actual inactive retirement precedes archive writes
+ok 377 - maximum:file:0:zero:one: selected progress or exact modeled failure is observed
+ok 378 - maximum:file:0:zero:one: every actual owned handle explicitly closes
+ok 379 - maximum:file:0:zero:one: retained inputs unchanged
+ok 380 - maximum:file:0:zero:one: all other owners and retired workspace preserved
+ok 381 - maximum:file:0:zero:middle: actual inactive retirement precedes archive writes
+ok 382 - maximum:file:0:zero:middle: selected progress or exact modeled failure is observed
+ok 383 - maximum:file:0:zero:middle: every actual owned handle explicitly closes
+ok 384 - maximum:file:0:zero:middle: retained inputs unchanged
+ok 385 - maximum:file:0:zero:middle: all other owners and retired workspace preserved
+ok 386 - maximum:file:0:zero:last: actual inactive retirement precedes archive writes
+ok 387 - maximum:file:0:zero:last: selected progress or exact modeled failure is observed
+ok 388 - maximum:file:0:zero:last: every actual owned handle explicitly closes
+ok 389 - maximum:file:0:zero:last: retained inputs unchanged
+ok 390 - maximum:file:0:zero:last: all other owners and retired workspace preserved
+ok 391 - maximum:file:0:error:start: actual inactive retirement precedes archive writes
+ok 392 - maximum:file:0:error:start: selected progress or exact modeled failure is observed
+ok 393 - maximum:file:0:error:start: every actual owned handle explicitly closes
+ok 394 - maximum:file:0:error:start: retained inputs unchanged
+ok 395 - maximum:file:0:error:start: all other owners and retired workspace preserved
+ok 396 - maximum:file:0:error:one: actual inactive retirement precedes archive writes
+ok 397 - maximum:file:0:error:one: selected progress or exact modeled failure is observed
+ok 398 - maximum:file:0:error:one: every actual owned handle explicitly closes
+ok 399 - maximum:file:0:error:one: retained inputs unchanged
+ok 400 - maximum:file:0:error:one: all other owners and retired workspace preserved
+ok 401 - maximum:file:0:error:middle: actual inactive retirement precedes archive writes
+ok 402 - maximum:file:0:error:middle: selected progress or exact modeled failure is observed
+ok 403 - maximum:file:0:error:middle: every actual owned handle explicitly closes
+ok 404 - maximum:file:0:error:middle: retained inputs unchanged
+ok 405 - maximum:file:0:error:middle: all other owners and retired workspace preserved
+ok 406 - maximum:file:0:error:last: actual inactive retirement precedes archive writes
+ok 407 - maximum:file:0:error:last: selected progress or exact modeled failure is observed
+ok 408 - maximum:file:0:error:last: every actual owned handle explicitly closes
+ok 409 - maximum:file:0:error:last: retained inputs unchanged
+ok 410 - maximum:file:0:error:last: all other owners and retired workspace preserved
+ok 411 - no compiler or native process attempt
+1..411

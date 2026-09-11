@@ -1,0 +1,38 @@
+{
+  "files": [
+    {
+      "destination": "docs/audits/native-proxy-observation-archive-partial-writes-20260911/result/initial-plan/plan.py.initial-source",
+      "sha256": "4147c551c431d9590c49d930da07187d0361e7b3352b1514426e7e97160dfd83",
+      "size_bytes": 3484,
+      "source": "docs/audits/native-proxy-observation-archive-partial-writes-20260911/plan.py"
+    },
+    {
+      "destination": "docs/audits/native-proxy-observation-archive-partial-writes-20260911/result/initial-plan/plan.json",
+      "sha256": "971b4d10253544de86d6fc404a3000f333afe547381af90ad8d55485ca787db6",
+      "size_bytes": 23502,
+      "source": "docs/audits/native-proxy-observation-archive-partial-writes-20260911/plan.json"
+    },
+    {
+      "destination": "docs/audits/native-proxy-observation-archive-partial-writes-20260911/result/initial-plan/plan.stdout",
+      "sha256": "c1640daa2201f0884472e483f89e5cb828b9d59b4de9a0ed163997b4362d6500",
+      "size_bytes": 53,
+      "source": ".artifacts/logs/native-proxy-observation-archive-partial-writes-20260911/plan.stdout"
+    },
+    {
+      "destination": "docs/audits/native-proxy-observation-archive-partial-writes-20260911/result/initial-plan/plan.stderr",
+      "sha256": "dc26423d0d6351b3e03cbdd1c1fcd65219169cf4d84cfee96f34a168b1b864e8",
+      "size_bytes": 91,
+      "source": ".artifacts/logs/native-proxy-observation-archive-partial-writes-20260911/plan.stderr"
+    },
+    {
+      "destination": "docs/audits/native-proxy-observation-archive-partial-writes-20260911/result/initial-plan/plan.exit",
+      "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa",
+      "size_bytes": 2,
+      "source": ".artifacts/logs/native-proxy-observation-archive-partial-writes-20260911/plan.exit"
+    }
+  ],
+  "original_inputs": 34,
+  "qualification_executed": false,
+  "reason": "The initial inherited source set covered runtime dependencies but omitted the fresh-call plan read by the new planner. Add that exact inherited plan to the catalogue and independently enforce the full dependency set before prospective pins or any qualification execution.",
+  "schema": "fsmgen.archive_partial_initial_plan_review.v1"
+}

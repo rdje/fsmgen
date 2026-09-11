@@ -2135,7 +2135,7 @@ archival qualifies below; interruption checks remain separate.
 The archive results can be revalidated from a checkout containing the tracked
 recovery copies and their pinned sources. Use the repository's Python 3 toolchain
 and Git with the recorded history available; no ignored qualification workspace
-is required. From the repo root, check every saved archive matrix with:
+is required. From the repo root, check the supported saved archive matrices with:
 
 ```bash
 scripts/run_with_ram_guard.sh -- python3 -B docs/audits/native-proxy-observation-archive-replay-20260911/replay.py --matrix all
@@ -2316,6 +2316,34 @@ scripts/run_with_ram_guard.sh -- python3 -B docs/audits/native-proxy-observation
 
 Their first-run evidence does not close partial writes, close-error controls,
 final source applicability or native release.
+
+Payload-write progress now has separate inert qualification. Positive short
+writes repeatedly use the actual payload descriptor until the complete retained
+bytes are written. Selected zero or error results stop publication, propagate
+the write error and explicitly close the current writer and all earlier retained
+sources. These failing results are supplied by a syscall adapter; positive
+prefix writes use the real operating-system call.
+
+The independent oracle reconstructs each caller offset and remaining length,
+actual bounded request and returned progress, accepted bytes and descriptor-bound
+file-size changes. For example, an error after a short prefix leaves exactly that
+prefix in its retained-source file. Earlier archive files remain complete and
+later files are absent. The operation returns no successful archive receipt.
+Both observation holds, the other runtime/workspace and original retained
+snapshots remain unchanged after actual inert retirement of the target workspace.
+
+The selected cases cover every ordinary and equal-content archive payload,
+along with binary, empty and maximum-length wrapper profiles. An empty payload
+still acquires and closes its writer but makes no payload write call; successful
+short writes still undergo complete readback, receipt and native-identity checks.
+Actual writer/source inheritance flags and every observed source, writer and
+directory close are checked. The saved qualification, independent oracle and
+exact recovery copies are under
+`docs/audits/native-proxy-observation-archive-partial-writes-20260911/`.
+The replay command above covers the earlier record, filesystem and helper-call
+matrices at its pinned source revision. Partial-write evidence has its own saved
+oracle. Modeled close reports, genuine omitted-close controls, final hostile
+layout/source applicability and native release remain separate gates.
 
 The helper checks bounded regular source/output files and the native header,
 then sets executable permissions through the admitted open file handle. A

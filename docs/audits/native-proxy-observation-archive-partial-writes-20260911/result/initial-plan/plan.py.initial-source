@@ -1,0 +1,51 @@
+"""Select archive payload progress and modeled write failures before execution."""
+import hashlib
+import json
+from pathlib import Path
+import subprocess
+
+BASE = Path(__file__).resolve().parent
+ROOT = BASE.parents[2]
+REVISION = '2a3af00cd390b0801396c52af7e1fa8d6ef57c12'
+BOUNDARY = BASE.parent / 'native-proxy-observation-archive-boundaries-20260911'
+FRESH = BASE.parent / 'native-proxy-observation-archive-fresh-calls-20260911'
+
+
+def build():
+    prior = json.loads((FRESH / 'plan.json').read_bytes())
+    paths = {pin['path'] for pin in prior['inputs']}
+    paths.add(str((FRESH / 'audit.py').relative_to(ROOT)))
+    inputs = []
+    for path in sorted(paths):
+        raw = (ROOT / path).read_bytes()
+        assert raw == subprocess.check_output(['git', 'show', REVISION + ':' + path], cwd=ROOT)
+        inputs.append(dict(path=path, size_bytes=len(raw), sha256=hashlib.sha256(raw).hexdigest()))
+    profiles = [
+        dict(name='ordinary', wrapper='ordinary', files=4, targets=[0, 1, 2, 3], chunk=7),
+        dict(name='equal_reference', wrapper='equal_reference', files=3, targets=[0, 1, 2], chunk=7),
+        dict(name='binary', wrapper='binary', files=4, targets=[0], chunk=7),
+        dict(name='empty', wrapper='empty', files=4, targets=[0], chunk=7),
+        dict(name='maximum', wrapper='maximum', files=4, targets=[0], chunk=4096),
+    ]
+    cases = []
+    for profile in profiles:
+        for target in profile['targets']:
+            modes = [('empty', None)] if profile['name'] == 'empty' else [
+                ('short', None), *((mode, offset) for mode in ('zero', 'error')
+                                  for offset in ('start', 'one', 'middle', 'last'))]
+            for mode, offset in modes:
+                name = f"{profile['name']}:file:{target}:{mode}" + (':' + offset if offset else '')
+                cases.append(dict(name=name, profile=profile['name'], file_index=target,
+                                  mode=mode, offset=offset, chunk=profile['chunk']))
+    assert len({case['name'] for case in cases}) == len(cases)
+    return dict(schema='fsmgen.inactive_archive_partial_writes_plan.v1', source_revision=REVISION,
+        owner='HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.12.4.1.3.4.2.3.2.5',
+        inputs=inputs, profiles=profiles, cases=cases, syscall_calls_per_operation=4096,
+        injection='Selected positive progress calls CORE::syswrite with a bounded shorter request. A selected zero/EIO or undef/EIO return occurs without a syscall at offset 0, 1, floor(length/2), or length-1. Record actual and reported results separately, actual writer identity/CLOEXEC/size before and after, complete buffer digest and accepted slice bytes. No close override or observer recovery.',
+        limits='Only these finite inert payload-write cases are qualified. Error and zero returns are syscall-adapter models, not operating-system write failures. Actual prefix bytes, descriptor cleanup and preserved owners are checked. Close-return/omitted-close, final hostile-layout/source join, native ownership and release remain separate; no compiler/native or original matrix rerun, asynchronous crash or arbitrary-writer atomicity claim.')
+
+
+if __name__ == '__main__':
+    plan = build()
+    (BASE / 'plan.json').write_text(json.dumps(plan, indent=2, sort_keys=True) + '\n')
+    print(json.dumps(dict(cases=len(plan['cases']), profiles=len(plan['profiles']), unchanged_inputs=len(plan['inputs'])), sort_keys=True))
