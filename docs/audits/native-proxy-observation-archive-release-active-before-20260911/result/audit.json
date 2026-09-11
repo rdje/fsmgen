@@ -1,0 +1,82 @@
+{
+  "assertions": 6455,
+  "byte_falsifiers": [
+    "wrong case size",
+    "wrong case digest"
+  ],
+  "caller_controls": 6,
+  "calls": 207087,
+  "case_bytes": 326522615,
+  "cases": 643,
+  "directories": 15997,
+  "domain_falsifiers": [
+    "missing selector",
+    "unsafe source after",
+    "stale numeric target"
+  ],
+  "events": 674140,
+  "faults": 642,
+  "handles": 59162,
+  "healthy": 1,
+  "inherited_pure_flow": {
+    "assertions": 59,
+    "baselines": 4,
+    "order_skeletons": 38,
+    "rejected_selectors": 12,
+    "resolved_selectors": 4265
+  },
+  "locks": 594,
+  "manifest_falsifiers": [
+    "missing case receipt",
+    "reordered cases",
+    "unfinished current case",
+    "hidden process",
+    "caller guard bypass",
+    "foreign case path"
+  ],
+  "previous_roots": 8636,
+  "prospective_pins": 9,
+  "reads": 42571,
+  "roots": 2572,
+  "row_falsifiers": [
+    "lost actual unlink",
+    "invented early unlink",
+    "lost primary error",
+    "false success",
+    "false native authority",
+    "lost prior absence",
+    "wrong current resolution",
+    "missing call",
+    "wrong caller",
+    "lost continuation",
+    "wrong source alias",
+    "lost prefix event",
+    "extra post-fault call",
+    "lost interrupted frame",
+    "missing fault hit",
+    "unclosed source",
+    "unclosed directory",
+    "unclosed lock",
+    "wrong cleanup owner",
+    "wrong read limit",
+    "changed archive receipt",
+    "lost other-owner state",
+    "changed input flags",
+    "changed fingerprint",
+    "unproved root cleanup",
+    "invented target retirement",
+    "lost target runtime reference",
+    "lost active private workspace"
+  ],
+  "schema": "fsmgen.release_active_before_audit.v1",
+  "scope": "One new healthy active-runtime control and the complete ordinary active-runtime before-call partition. Keep the target runtime reference and its private workspace present; omit retirement. The selected helper and its callers remain interrupted. Source returns and sealed-after aliases are excluded. No original qualifier, native process, other profile, readback mutation, modeled close report or omitted close.",
+  "sources": 42571,
+  "success": true,
+  "trace_preflight": {
+    "basis": "saved active-runtime healthy event projection",
+    "cases": 642,
+    "new_fixture_allocations": 0
+  },
+  "unchanged_inputs": 2436,
+  "unlinks": 196
+}

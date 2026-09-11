@@ -2370,7 +2370,29 @@ root-cleanup evidence and independent saved-data verification are retained under
 python3 -B docs/audits/native-proxy-observation-archive-release-equal-after-20260911/audit.py --verify-saved
 ```
 
-Later lanes qualify the remaining profiles, actual closes followed by modeled
+The active-runtime before-call profile keeps the target runtime reference and
+its private workspace present throughout release setup. It also retains both
+observation holds until the selected release attempt begins. These are inert
+ownership records; the fixture launches no runtime process. Setup performs no
+runtime retirement and produces no retirement receipt.
+
+The extra runtime reference participates in the combined census, so this
+profile uses its own healthy call and handle basis. Each selected fault resolves
+against the newly constructed input state. A failed attempt must preserve the
+target runtime reference, its workspace, the other observation and the other
+runtime owner. A completed unlink removes only the selected observation hold.
+Explicit altered-record controls check that invented retirement, a missing
+target runtime reference or a cleared active workspace cannot pass the audit.
+
+The unchanged before-call oracle is checked against this profile's saved
+healthy event prefix and outstanding-handle close order before new fixtures.
+Inspect and revalidate the retained bodies with:
+
+```sh
+python3 -B docs/audits/native-proxy-observation-archive-release-active-before-20260911/audit.py --verify-saved
+```
+
+Later lanes qualify the remaining profile/phase partitions, actual closes followed by modeled
 errors, deliberate close omissions with separate recovery, and the final
 source/evidence join. Primary errors outrank cleanup reports. These finite
 checks grant no native ownership authority or guarantee against arbitrary

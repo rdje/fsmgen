@@ -1,0 +1,10 @@
+{
+  "cases": 643,
+  "inputs": 2436,
+  "prospective_pins": 9,
+  "trace_preflight": {
+    "basis": "saved active-runtime healthy event projection",
+    "cases": 642,
+    "new_fixture_allocations": 0
+  }
+}

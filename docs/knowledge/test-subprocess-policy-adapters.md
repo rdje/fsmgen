@@ -2,6 +2,7 @@
 id: test-subprocess-policy-adapters
 title: Test subprocesses share one mechanism behind sealed policy adapters
 answers:
+  - "what survives active-runtime release before-call faults?"
   - "what survives equal-reference release after-call faults?"
   - "what survives equal-reference release before-call faults?"
   - "what survives ordinary release after-call faults?"
@@ -124,8 +125,8 @@ reverify: >-
 ---
 Decisions `0087`/`0101`: `FSM::Support::ProcessSupervisor`; adapters seal local argv/capture/group cleanup. T1669 checks ownership. `exec_handoff_monotonic_ns` is EOF, not main entry; absent EOF leaves timing unknown.
 `VerilatorRuntime`: decision `0086`. `TaskAcceptanceFixtureRuntime`: owned roots/fixed Git argv.
-History: `15f811c3ead1aeec72123f0f4c24f5ee462b666f:docs/knowledge/test-subprocess-policy-adapters.md`. Archive/work, replay, reader/caller and startup evidence: history.
-Release: `docs/audits/native-proxy-observation-archive-release-equal-after-20260911/review.json`. Equal-reference after-call faults keep returned helpers complete, unwind only remaining callers and preserve separate original bindings despite shared archived bytes. Its own healthy event/open-handle projection agrees with the unchanged after-call oracle before new fixtures. Current-input resolution, actual closes, unlink/absence, inputs and other owners are independently checked; immutable cases publish after root cleanup and support saved-data audit. Earlier partitions: history. Active-runtime/last-observation and close domains remain open.
+History: `1d6b2d083a3c699d7251df58556c378aee0e79be:docs/knowledge/test-subprocess-policy-adapters.md`. Archive/work, replay, reader/caller and startup evidence: history.
+Release: `docs/audits/native-proxy-observation-archive-release-active-before-20260911/review.json`. Active-runtime before-call faults preserve the target runtime reference and private workspace; setup has no retirement or receipt. These are inert records, not a running process. The saved healthy prefix/open-handle projection checks the unchanged before-call oracle before allocation. Current-input resolution, actual closes, exact unlink/absence and other owners are independently checked. Immutable cases publish after root cleanup and support saved-data audit. Earlier partitions: history. Active-runtime after-call, last-observation and close domains remain open.
 Proxy: `t/fixtures/rust-tool-proxy.c` is C; Perl `t/lib/FSM/Test/RustProxyFixture.pm` builds it and the Perl harness launches a separate process to impersonate rustup resolution. Rust names the substituted tool, not the native implementation language.
 Replay: `scripts/run_with_ram_guard.sh -- python3 -B -m unittest discover -s t/python -p 'test_fixture_policy_archive*.py'`. Other controls: history.
 HIAL/VIAL `.19.2.3.1.2.2.5.5` owns repair/hostile controls; neutral-verifier extraction stays blocked.
