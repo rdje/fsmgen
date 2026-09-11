@@ -1,0 +1,17 @@
+[
+  {
+    "path": "docs/audits/native-proxy-observation-archive-close-join-20260911/plan.json",
+    "sha256": "22b1a78924386d142e290229b8d7b0391e471cc59c959618840b4f47010d6b86",
+    "size_bytes": 1848
+  },
+  {
+    "path": "docs/audits/native-proxy-observation-archive-close-join-20260911/inventory.py",
+    "sha256": "cbbcb59954df76dfa8d2e27ae2f19d61969180e1e82ae47524cf63183fa081cf",
+    "size_bytes": 5214
+  },
+  {
+    "path": "docs/audits/native-proxy-observation-archive-close-join-20260911/audit.py",
+    "sha256": "539b542f92fbbf6fdf13547dee355a3635b4e64d72b9a433c7c2327ebffe9562",
+    "size_bytes": 21328
+  }
+]

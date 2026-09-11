@@ -1,0 +1,24 @@
+{
+  "schema": "fsmgen.inactive_archive_close_join_plan.v1",
+  "owner": "HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.12.4.1.3.4.2.3.3.3",
+  "source_revision": "254e3e1af3f061e7720112ded0d9337c3b13c31b",
+  "matrices": [
+    {
+      "name": "reports",
+      "source": "docs/audits/native-proxy-observation-archive-close-reports-20260911",
+      "adapter": "CloseReports.pm",
+      "source_epoch": "7e1f2daa01c9ef5760954089c36ec6c778c25f17",
+      "completed_revision": "2ad652d308348e8ce82bb8e4e11a968c731a8ebe"
+    },
+    {
+      "name": "omissions",
+      "source": "docs/audits/native-proxy-observation-archive-omitted-closes-20260911",
+      "adapter": "OmittedCloses.pm",
+      "source_epoch": "2ad652d308348e8ce82bb8e4e11a968c731a8ebe",
+      "completed_revision": "254e3e1af3f061e7720112ded0d9337c3b13c31b"
+    }
+  ],
+  "input_limits": {"files": 128, "file_bytes": 33554432, "total_bytes": 134217728},
+  "contract": "Authenticate both completed close domains from tracked source pins, recovery manifests and raw evidence. Require exact current source applicability with no admitted replacements, original single-close coverage, independent cleanup/error/recovery oracles and disjoint absent allocations. Preserve all inputs and distinguish actual close success, modeled report failure and actual omitted close plus observer recovery.",
+  "limits": "Finite inactive archive close-domain join only. No original qualification producer, archive operation, compiler/native experiment or old audit main is rerun. Final hostile layout and complete archive source applicability, exact observation release, native ownership, operating-system close ambiguity and asynchronous crash recovery remain separate gates. Counts denote matrix cases and per-operation instances, not globally unique descriptors or inodes."
+}

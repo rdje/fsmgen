@@ -1,0 +1,502 @@
+{
+  "all_allocations_absent": true,
+  "all_inputs_unchanged": true,
+  "child_counts": {
+    "omissions": {
+      "cases": 98,
+      "closure_rejections": 94,
+      "counterimplementation_returns": 65,
+      "directory_handles": 691,
+      "events": 24360,
+      "healthy_controls": 4,
+      "omitted_and_recovered": 248,
+      "operations": 133,
+      "preparations": 35,
+      "primary_failures": 29,
+      "roots": 392,
+      "source_handles": 1189,
+      "writer_handles": 332
+    },
+    "reports": {
+      "cases": 101,
+      "close_reports": 1180,
+      "directory_handles": 595,
+      "events": 20263,
+      "healthy_returns": 4,
+      "modeled_errors": 190,
+      "operations": 134,
+      "preparations": 33,
+      "primary_failures": 25,
+      "roots": 404,
+      "source_handles": 969,
+      "writer_handles": 300
+    }
+  },
+  "counts": {
+    "cases": 199,
+    "close_reports": 1180,
+    "closed_by_implementation": 3828,
+    "closure_rejections": 94,
+    "counterimplementation_returns": 65,
+    "directory_handles": 1286,
+    "events": 44623,
+    "handles": 4076,
+    "healthy_controls": 8,
+    "matrices": 2,
+    "modeled_errors": 190,
+    "omitted_handles": 248,
+    "operations": 267,
+    "preparations": 68,
+    "primary_failures": 54,
+    "recovered_handles": 248,
+    "roots": 796,
+    "source_handles": 2158,
+    "tap_assertions": 1231,
+    "writer_handles": 632
+  },
+  "coverage": [
+    {
+      "all_omission_case": "ordinary:fresh:all-group",
+      "archive_files": 4,
+      "flow": "ordinary:fresh",
+      "labels": [
+        "directory_handle:0",
+        "directory_handle:1",
+        "source:0:0",
+        "writer:0",
+        "directory_handle:2",
+        "source:1:0",
+        "writer:1",
+        "directory_handle:3",
+        "source:2:0",
+        "writer:2",
+        "directory_handle:4",
+        "source:3:0",
+        "writer:3",
+        "directory_handle:5",
+        "source:0:2",
+        "source:1:2",
+        "source:2:2",
+        "source:3:2",
+        "directory_handle:6",
+        "source:0:1",
+        "source:1:1",
+        "source:2:1",
+        "source:3:1"
+      ],
+      "single_omission_cases": [
+        "ordinary:fresh:single:directory_handle:0",
+        "ordinary:fresh:single:directory_handle:1",
+        "ordinary:fresh:single:source:0:0",
+        "ordinary:fresh:single:writer:0",
+        "ordinary:fresh:single:directory_handle:2",
+        "ordinary:fresh:single:source:1:0",
+        "ordinary:fresh:single:writer:1",
+        "ordinary:fresh:single:directory_handle:3",
+        "ordinary:fresh:single:source:2:0",
+        "ordinary:fresh:single:writer:2",
+        "ordinary:fresh:single:directory_handle:4",
+        "ordinary:fresh:single:source:3:0",
+        "ordinary:fresh:single:writer:3",
+        "ordinary:fresh:single:directory_handle:5",
+        "ordinary:fresh:single:source:0:2",
+        "ordinary:fresh:single:source:1:2",
+        "ordinary:fresh:single:source:2:2",
+        "ordinary:fresh:single:source:3:2",
+        "ordinary:fresh:single:directory_handle:6",
+        "ordinary:fresh:single:source:0:1",
+        "ordinary:fresh:single:source:1:1",
+        "ordinary:fresh:single:source:2:1",
+        "ordinary:fresh:single:source:3:1"
+      ],
+      "single_report_cases": [
+        "ordinary:fresh:single:directory_handle:0",
+        "ordinary:fresh:single:directory_handle:1",
+        "ordinary:fresh:single:source:0:0",
+        "ordinary:fresh:single:writer:0",
+        "ordinary:fresh:single:directory_handle:2",
+        "ordinary:fresh:single:source:1:0",
+        "ordinary:fresh:single:writer:1",
+        "ordinary:fresh:single:directory_handle:3",
+        "ordinary:fresh:single:source:2:0",
+        "ordinary:fresh:single:writer:2",
+        "ordinary:fresh:single:directory_handle:4",
+        "ordinary:fresh:single:source:3:0",
+        "ordinary:fresh:single:writer:3",
+        "ordinary:fresh:single:directory_handle:5",
+        "ordinary:fresh:single:source:0:2",
+        "ordinary:fresh:single:source:1:2",
+        "ordinary:fresh:single:source:2:2",
+        "ordinary:fresh:single:source:3:2",
+        "ordinary:fresh:single:directory_handle:6",
+        "ordinary:fresh:single:source:0:1",
+        "ordinary:fresh:single:source:1:1",
+        "ordinary:fresh:single:source:2:1",
+        "ordinary:fresh:single:source:3:1"
+      ]
+    },
+    {
+      "all_omission_case": "ordinary:existing:all-group",
+      "archive_files": 4,
+      "flow": "ordinary:existing",
+      "labels": [
+        "directory_handle:0",
+        "directory_handle:1",
+        "source:0:1",
+        "source:1:1",
+        "source:2:1",
+        "source:3:1",
+        "directory_handle:2",
+        "source:0:0",
+        "source:1:0",
+        "source:2:0",
+        "source:3:0"
+      ],
+      "single_omission_cases": [
+        "ordinary:existing:single:directory_handle:0",
+        "ordinary:existing:single:directory_handle:1",
+        "ordinary:existing:single:source:0:1",
+        "ordinary:existing:single:source:1:1",
+        "ordinary:existing:single:source:2:1",
+        "ordinary:existing:single:source:3:1",
+        "ordinary:existing:single:directory_handle:2",
+        "ordinary:existing:single:source:0:0",
+        "ordinary:existing:single:source:1:0",
+        "ordinary:existing:single:source:2:0",
+        "ordinary:existing:single:source:3:0"
+      ],
+      "single_report_cases": [
+        "ordinary:existing:single:directory_handle:0",
+        "ordinary:existing:single:directory_handle:1",
+        "ordinary:existing:single:source:0:1",
+        "ordinary:existing:single:source:1:1",
+        "ordinary:existing:single:source:2:1",
+        "ordinary:existing:single:source:3:1",
+        "ordinary:existing:single:directory_handle:2",
+        "ordinary:existing:single:source:0:0",
+        "ordinary:existing:single:source:1:0",
+        "ordinary:existing:single:source:2:0",
+        "ordinary:existing:single:source:3:0"
+      ]
+    },
+    {
+      "all_omission_case": "equal_reference:fresh:all-group",
+      "archive_files": 3,
+      "flow": "equal_reference:fresh",
+      "labels": [
+        "directory_handle:0",
+        "directory_handle:1",
+        "source:0:0",
+        "writer:0",
+        "directory_handle:2",
+        "source:1:0",
+        "writer:1",
+        "directory_handle:3",
+        "source:2:0",
+        "writer:2",
+        "directory_handle:4",
+        "source:0:2",
+        "source:1:2",
+        "source:2:2",
+        "directory_handle:5",
+        "source:0:1",
+        "source:1:1",
+        "source:2:1"
+      ],
+      "single_omission_cases": [
+        "equal_reference:fresh:single:directory_handle:0",
+        "equal_reference:fresh:single:directory_handle:1",
+        "equal_reference:fresh:single:source:0:0",
+        "equal_reference:fresh:single:writer:0",
+        "equal_reference:fresh:single:directory_handle:2",
+        "equal_reference:fresh:single:source:1:0",
+        "equal_reference:fresh:single:writer:1",
+        "equal_reference:fresh:single:directory_handle:3",
+        "equal_reference:fresh:single:source:2:0",
+        "equal_reference:fresh:single:writer:2",
+        "equal_reference:fresh:single:directory_handle:4",
+        "equal_reference:fresh:single:source:0:2",
+        "equal_reference:fresh:single:source:1:2",
+        "equal_reference:fresh:single:source:2:2",
+        "equal_reference:fresh:single:directory_handle:5",
+        "equal_reference:fresh:single:source:0:1",
+        "equal_reference:fresh:single:source:1:1",
+        "equal_reference:fresh:single:source:2:1"
+      ],
+      "single_report_cases": [
+        "equal_reference:fresh:single:directory_handle:0",
+        "equal_reference:fresh:single:directory_handle:1",
+        "equal_reference:fresh:single:source:0:0",
+        "equal_reference:fresh:single:writer:0",
+        "equal_reference:fresh:single:directory_handle:2",
+        "equal_reference:fresh:single:source:1:0",
+        "equal_reference:fresh:single:writer:1",
+        "equal_reference:fresh:single:directory_handle:3",
+        "equal_reference:fresh:single:source:2:0",
+        "equal_reference:fresh:single:writer:2",
+        "equal_reference:fresh:single:directory_handle:4",
+        "equal_reference:fresh:single:source:0:2",
+        "equal_reference:fresh:single:source:1:2",
+        "equal_reference:fresh:single:source:2:2",
+        "equal_reference:fresh:single:directory_handle:5",
+        "equal_reference:fresh:single:source:0:1",
+        "equal_reference:fresh:single:source:1:1",
+        "equal_reference:fresh:single:source:2:1"
+      ]
+    },
+    {
+      "all_omission_case": "equal_reference:existing:all-group",
+      "archive_files": 3,
+      "flow": "equal_reference:existing",
+      "labels": [
+        "directory_handle:0",
+        "directory_handle:1",
+        "source:0:1",
+        "source:1:1",
+        "source:2:1",
+        "directory_handle:2",
+        "source:0:0",
+        "source:1:0",
+        "source:2:0"
+      ],
+      "single_omission_cases": [
+        "equal_reference:existing:single:directory_handle:0",
+        "equal_reference:existing:single:directory_handle:1",
+        "equal_reference:existing:single:source:0:1",
+        "equal_reference:existing:single:source:1:1",
+        "equal_reference:existing:single:source:2:1",
+        "equal_reference:existing:single:directory_handle:2",
+        "equal_reference:existing:single:source:0:0",
+        "equal_reference:existing:single:source:1:0",
+        "equal_reference:existing:single:source:2:0"
+      ],
+      "single_report_cases": [
+        "equal_reference:existing:single:directory_handle:0",
+        "equal_reference:existing:single:directory_handle:1",
+        "equal_reference:existing:single:source:0:1",
+        "equal_reference:existing:single:source:1:1",
+        "equal_reference:existing:single:source:2:1",
+        "equal_reference:existing:single:directory_handle:2",
+        "equal_reference:existing:single:source:0:0",
+        "equal_reference:existing:single:source:1:0",
+        "equal_reference:existing:single:source:2:0"
+      ]
+    }
+  ],
+  "epoch_comparisons": 71,
+  "falsifiers": [
+    "old ignored content access",
+    "reports: missing saved case",
+    "reports: duplicate saved case",
+    "reports: omitted declared close",
+    "omissions: missing saved case",
+    "omissions: duplicate saved case",
+    "omissions: omitted declared close",
+    "reports: modeled error hides failed actual close",
+    "reports: modeled error lost",
+    "reports: retained close omitted",
+    "reports: replaced primary error",
+    "omissions: original omission verdict healed",
+    "omissions: foreign open witness",
+    "omissions: recovery close omitted",
+    "omissions: replaced primary error",
+    "reports: missing recovery copy",
+    "reports: changed recovery digest",
+    "reports: foreign original source",
+    "omissions: missing recovery copy",
+    "omissions: changed recovery digest",
+    "omissions: foreign original source",
+    "missing matrix",
+    "duplicate matrix",
+    "wrong source epoch",
+    "wrong completion epoch",
+    "missing source",
+    "extra source",
+    "changed source digest",
+    "changed source identity",
+    "lost epoch comparison",
+    "changed epoch result",
+    "wrong source total",
+    "lost single report",
+    "aliased single omission",
+    "incomplete omission group",
+    "overlapping allocation rosters",
+    "false root absence",
+    "lost TAP assertion",
+    "skipped TAP assertion",
+    "failed TAP assertion"
+  ],
+  "limits": "Finite inactive archive close-domain join only. No original qualification producer, archive operation, compiler/native experiment or old audit main is rerun. Final hostile layout and complete archive source applicability, exact observation release, native ownership, operating-system close ambiguity and asynchronous crash recovery remain separate gates. Counts denote matrix cases and per-operation instances, not globally unique descriptors or inodes.",
+  "predecessor_perl_modules": 21,
+  "prospective_inputs_unchanged": 3,
+  "receipts": {
+    "omissions": [
+      {
+        "path": "docs/audits/native-proxy-observation-archive-omitted-closes-20260911/result/plan.stdout",
+        "sha256": "a98e7cc2d2464f5f05dc2259466bebe845cff9f1efa87aa4b7c36f719b24b5b7",
+        "size_bytes": 38
+      },
+      {
+        "path": "docs/audits/native-proxy-observation-archive-omitted-closes-20260911/result/plan.stderr",
+        "sha256": "df20fd234ba332148c95b108a7e43edfd417a6f58fd50d5b24e83b5c944f0e9b",
+        "size_bytes": 91
+      },
+      {
+        "path": "docs/audits/native-proxy-observation-archive-omitted-closes-20260911/result/plan.exit",
+        "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa",
+        "size_bytes": 2
+      },
+      {
+        "path": "docs/audits/native-proxy-observation-archive-omitted-closes-20260911/result/syntax.stdout",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "size_bytes": 0
+      },
+      {
+        "path": "docs/audits/native-proxy-observation-archive-omitted-closes-20260911/result/syntax.stderr",
+        "sha256": "77b6fc5ec9895f5bf63688c93dad27bcdb1faf3d926fac76bcb7210161a95d7a",
+        "size_bytes": 180
+      },
+      {
+        "path": "docs/audits/native-proxy-observation-archive-omitted-closes-20260911/result/syntax.exit",
+        "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa",
+        "size_bytes": 2
+      },
+      {
+        "path": "docs/audits/native-proxy-observation-archive-omitted-closes-20260911/result/preflight-pins.json",
+        "sha256": "82b7f669ef83c04da1f7b224a1e4647cb852ddf806f0a898b84b6b48bdd7f2bb",
+        "size_bytes": 1049
+      },
+      {
+        "path": "docs/audits/native-proxy-observation-archive-omitted-closes-20260911/result/qualification.json",
+        "sha256": "72d559496f26f064a9e8c6b8c4b6be1881ffa08da5e22d72834d90fe1382c5ad",
+        "size_bytes": 18787475
+      },
+      {
+        "path": "docs/audits/native-proxy-observation-archive-omitted-closes-20260911/result/admission.jsonl",
+        "sha256": "55081207eb150d3c039bdd7afe87b863f5783ef106fdcb2f6e9c811a94b5f186",
+        "size_bytes": 51058
+      },
+      {
+        "path": "docs/audits/native-proxy-observation-archive-omitted-closes-20260911/result/qualify.tap",
+        "sha256": "6c3dd9237dcc3b9fcc88c8ce5db8beabb804a6beb7fd733052b806b2c5d60f40",
+        "size_bytes": 64038
+      },
+      {
+        "path": "docs/audits/native-proxy-observation-archive-omitted-closes-20260911/result/qualify.stderr",
+        "sha256": "a1202b9c5d19031c7d266682889bb84e538767b5647b31a1ab548a7f76f89fc7",
+        "size_bytes": 91
+      },
+      {
+        "path": "docs/audits/native-proxy-observation-archive-omitted-closes-20260911/result/qualify.exit",
+        "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa",
+        "size_bytes": 2
+      },
+      {
+        "path": "docs/audits/native-proxy-observation-archive-omitted-closes-20260911/result/audit.json",
+        "sha256": "b69b5dfa2f6e1545c873aa942a28a64a3beb6866adbf8ace2e50cbf109eab8dc",
+        "size_bytes": 2488
+      },
+      {
+        "path": "docs/audits/native-proxy-observation-archive-omitted-closes-20260911/result/audit.stdout",
+        "sha256": "812564f185780c0bc9964a7218a351b2ea584267738763337277b1dc31d9b077",
+        "size_bytes": 2222
+      },
+      {
+        "path": "docs/audits/native-proxy-observation-archive-omitted-closes-20260911/result/audit.stderr",
+        "sha256": "9a684f63da54234c21fda7078a23e794d48fdda1358c29b9d2fdeb9faae9b88e",
+        "size_bytes": 91
+      },
+      {
+        "path": "docs/audits/native-proxy-observation-archive-omitted-closes-20260911/result/audit.exit",
+        "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa",
+        "size_bytes": 2
+      }
+    ],
+    "reports": [
+      {
+        "path": "docs/audits/native-proxy-observation-archive-close-reports-20260911/result/plan.stdout",
+        "sha256": "51097ca45997798c557b56486e787170d8e730997d59b7a99d2ffaa0e819e7c9",
+        "size_bytes": 39
+      },
+      {
+        "path": "docs/audits/native-proxy-observation-archive-close-reports-20260911/result/plan.stderr",
+        "sha256": "babd53b571f3ab621eb823b0a168a7d518db0c0165ef843874689c1c2ced0e21",
+        "size_bytes": 90
+      },
+      {
+        "path": "docs/audits/native-proxy-observation-archive-close-reports-20260911/result/plan.exit",
+        "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa",
+        "size_bytes": 2
+      },
+      {
+        "path": "docs/audits/native-proxy-observation-archive-close-reports-20260911/result/syntax.stdout",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "size_bytes": 0
+      },
+      {
+        "path": "docs/audits/native-proxy-observation-archive-close-reports-20260911/result/syntax.stderr",
+        "sha256": "962e5be6fd54b47729ad3258748b2073c9a5e3279c4ded206764080e782cfa82",
+        "size_bytes": 178
+      },
+      {
+        "path": "docs/audits/native-proxy-observation-archive-close-reports-20260911/result/syntax.exit",
+        "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa",
+        "size_bytes": 2
+      },
+      {
+        "path": "docs/audits/native-proxy-observation-archive-close-reports-20260911/result/preflight-pins.json",
+        "sha256": "bf19d9619e6d14343474d42746c8812525f236af89ac9ec7825e886faeb75d4b",
+        "size_bytes": 1043
+      },
+      {
+        "path": "docs/audits/native-proxy-observation-archive-close-reports-20260911/result/qualification.json",
+        "sha256": "a80bb778f128252007b1ac2114afdee797cfd51ae1b33aa60874f81103a91a3f",
+        "size_bytes": 18667138
+      },
+      {
+        "path": "docs/audits/native-proxy-observation-archive-close-reports-20260911/result/admission.jsonl",
+        "sha256": "fb3d08257cacc19edbbfdeb2d5f4bcf4584f55e460a97b7f9ec1704873ed27fd",
+        "size_bytes": 52621
+      },
+      {
+        "path": "docs/audits/native-proxy-observation-archive-close-reports-20260911/result/qualify.tap",
+        "sha256": "b4125ec2b26a090a202aa78122ff5d3bd4a22609af1cf9e24c472d692834866e",
+        "size_bytes": 52502
+      },
+      {
+        "path": "docs/audits/native-proxy-observation-archive-close-reports-20260911/result/qualify.stderr",
+        "sha256": "1e5b093d8668227bc70dc7687619c4f93821e5809295d11ea7599c6ccb171e13",
+        "size_bytes": 91
+      },
+      {
+        "path": "docs/audits/native-proxy-observation-archive-close-reports-20260911/result/qualify.exit",
+        "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa",
+        "size_bytes": 2
+      },
+      {
+        "path": "docs/audits/native-proxy-observation-archive-close-reports-20260911/result/audit.json",
+        "sha256": "7abe2b515fb3b8885e9e818c144ecfb6757f70265c6c44cf355a06bd181ff080",
+        "size_bytes": 2011
+      },
+      {
+        "path": "docs/audits/native-proxy-observation-archive-close-reports-20260911/result/audit.stdout",
+        "sha256": "caf7e3c205568efc5562c587c77e08419121b491cc1ec35c09370523eb4dbaef",
+        "size_bytes": 1803
+      },
+      {
+        "path": "docs/audits/native-proxy-observation-archive-close-reports-20260911/result/audit.stderr",
+        "sha256": "3e9e11927266728f89522d075d5d526d6a813a1c93f3aa01ee585ade7dd293e0",
+        "size_bytes": 91
+      },
+      {
+        "path": "docs/audits/native-proxy-observation-archive-close-reports-20260911/result/audit.exit",
+        "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa",
+        "size_bytes": 2
+      }
+    ]
+  },
+  "schema": "fsmgen.inactive_archive_close_join_audit.v1",
+  "source_bytes": 39911281,
+  "source_files": 81,
+  "success": true
+}

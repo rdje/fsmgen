@@ -1,0 +1,78 @@
+{
+  "all_copies_byte_exact": true,
+  "files": [
+    {
+      "destination": "docs/audits/native-proxy-observation-archive-close-join-20260911/result/syntax.stdout",
+      "sha256": "df091bdd28af1ee3a6a6ecbc05726ebbf1d2cb8bce03e088c3964036ab50098e",
+      "size_bytes": 57,
+      "source": ".artifacts/logs/native-proxy-observation-archive-close-join-20260911/syntax.stdout"
+    },
+    {
+      "destination": "docs/audits/native-proxy-observation-archive-close-join-20260911/result/syntax.stderr",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "size_bytes": 0,
+      "source": ".artifacts/logs/native-proxy-observation-archive-close-join-20260911/syntax.stderr"
+    },
+    {
+      "destination": "docs/audits/native-proxy-observation-archive-close-join-20260911/result/syntax.exit",
+      "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa",
+      "size_bytes": 2,
+      "source": ".artifacts/logs/native-proxy-observation-archive-close-join-20260911/syntax.exit"
+    },
+    {
+      "destination": "docs/audits/native-proxy-observation-archive-close-join-20260911/result/preflight-pins.json",
+      "sha256": "758c93f5755c2922642e97df6761ecd156d0e1687b2f1a69af2ff1293f636f13",
+      "size_bytes": 618,
+      "source": ".artifacts/logs/native-proxy-observation-archive-close-join-20260911/preflight-pins.json"
+    },
+    {
+      "destination": "docs/audits/native-proxy-observation-archive-close-join-20260911/result/source-inventory.json",
+      "sha256": "aa862fa3ca952a509525fe46a16e937ef0fb11cb9fd7f1ce6b7d34923e276fc1",
+      "size_bytes": 49809,
+      "source": ".artifacts/logs/native-proxy-observation-archive-close-join-20260911/source-inventory.json"
+    },
+    {
+      "destination": "docs/audits/native-proxy-observation-archive-close-join-20260911/result/inventory.stdout",
+      "sha256": "9cec731d3d15f7a758f01278d1a6a4a2fb31183054f70bf51c59b195090b73f8",
+      "size_bytes": 71,
+      "source": ".artifacts/logs/native-proxy-observation-archive-close-join-20260911/inventory.stdout"
+    },
+    {
+      "destination": "docs/audits/native-proxy-observation-archive-close-join-20260911/result/inventory.stderr",
+      "sha256": "d292540cc655c079f79d6d3a35df42ce73f75f980e7972cddabd0466ab590c0e",
+      "size_bytes": 91,
+      "source": ".artifacts/logs/native-proxy-observation-archive-close-join-20260911/inventory.stderr"
+    },
+    {
+      "destination": "docs/audits/native-proxy-observation-archive-close-join-20260911/result/inventory.exit",
+      "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa",
+      "size_bytes": 2,
+      "source": ".artifacts/logs/native-proxy-observation-archive-close-join-20260911/inventory.exit"
+    },
+    {
+      "destination": "docs/audits/native-proxy-observation-archive-close-join-20260911/result/audit.json",
+      "sha256": "b9ff79cdca34d7a48ff0ceb0a01da4674933d19a7e06fcfe1e32010e70fb5fd0",
+      "size_bytes": 19729,
+      "source": ".artifacts/logs/native-proxy-observation-archive-close-join-20260911/audit.json"
+    },
+    {
+      "destination": "docs/audits/native-proxy-observation-archive-close-join-20260911/result/audit.stdout",
+      "sha256": "977e75f1308b84fe6828a894da3aa1e36db288018f8ddd499b4e8d7ce6895c66",
+      "size_bytes": 530,
+      "source": ".artifacts/logs/native-proxy-observation-archive-close-join-20260911/audit.stdout"
+    },
+    {
+      "destination": "docs/audits/native-proxy-observation-archive-close-join-20260911/result/audit.stderr",
+      "sha256": "867d61c9e1652e32e6f84b63830a6fc6188eebe15a13ba583fe52d65cfd80f11",
+      "size_bytes": 91,
+      "source": ".artifacts/logs/native-proxy-observation-archive-close-join-20260911/audit.stderr"
+    },
+    {
+      "destination": "docs/audits/native-proxy-observation-archive-close-join-20260911/result/audit.exit",
+      "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa",
+      "size_bytes": 2,
+      "source": ".artifacts/logs/native-proxy-observation-archive-close-join-20260911/audit.exit"
+    }
+  ],
+  "schema": "fsmgen.inactive_archive_close_join_recovery.v1"
+}

@@ -41,6 +41,7 @@ answers:
   - "how do partial archive writes preserve bytes and cleanup?"
   - "how do archive close errors preserve primary errors and cleanup?"
   - "how are genuine omitted archive closes detected and recovered?"
+  - "how are archive close domains joined against unchanged sources?"
   - "why did integrated proxy qualification fail?"
   - "why does t1545 not use IPC Cmd?"
   - "where does T1545 preserve empty-output checker failure diagnostics?"
@@ -109,12 +110,11 @@ Decisions `0087`/`0101` select `FSM::Support::ProcessSupervisor`; adapters seal 
 `VerilatorRuntime` follows decision `0086`.
 `TaskAcceptanceFixtureRuntime` seals owned fixture roots/fixed local Git argv.
 Supervisor, checker, locality, startup/capture/STOP controls: history; absent witnesses stay unknown.
-History: `2ad652d308348e8ce82bb8e4e11a968c731a8ebe:docs/knowledge/test-subprocess-policy-adapters.md`.
+History: `254e3e1af3f061e7720112ded0d9337c3b13c31b:docs/knowledge/test-subprocess-policy-adapters.md`.
 PST parsing, serial-queue evidence, fixed CLI limits and controls: history.
 Records, custody, acquisition and unique-occurrence correction: history.
 A scoped settled event can leave a caller-owned helper running; release still needs every selected owner settled, including cancellation. Contract/model: history.
-Archive records, call cuts and ownership events: history.
-Partial archive progress and close reports: history. Genuine omitted archive handles stay alive through observation; the unchanged closure oracle rejects, then explicit closes recover them. See `docs/audits/native-proxy-observation-archive-omitted-closes-20260911/audit.py`.
+Archive records, call cuts and ownership events: history. Partial writes, close reports and genuine omission/recovery: history. The close-domain join authenticates unchanged sources, complete selected close sites and distinct absent roots: `docs/audits/native-proxy-observation-archive-close-join-20260911/audit.py`.
 Caller-sealed test wrappers use tail goto to preserve caller.
 Replay: `scripts/run_with_ram_guard.sh -- python3 -B -m unittest discover -s t/python -p 'test_fixture_policy_archive*.py'`.
 Per-group cleanup cannot prove nested cleanup; actual counterexample: history.

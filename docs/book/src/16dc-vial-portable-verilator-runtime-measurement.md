@@ -2392,8 +2392,29 @@ independent oracle are at
 `docs/audits/native-proxy-observation-archive-omitted-closes-20260911/`.
 These controls qualify detection and recovery of their deliberate omissions;
 they do not certify correct cleanup by the defective counterimplementations
-or recovery from a process crash. The close-domain join, final hostile
-layout/source applicability and native release remain separate gates.
+or recovery from a process crash.
+
+The close-domain join now authenticates both suites against their original
+source epochs and the current checkout. Their prototype, tracer and fixture
+inputs match exactly; no source replacement is inferred from similar output.
+The join rechecks the saved cases with their independent oracles and requires
+every original source, writer and directory close occurrence to have both a
+single reported-error case and a genuine single-omission case. Grouped omissions
+cover the complete observed handle set for each archive layout and route.
+
+Aggregate accounting keeps normal closes, modeled errors and real omissions
+separate. Every omitted handle has an explicit recovery record; allocations
+are disjoint across both suites and remain absent. Preserved raw TAP, admission
+journals, manifests and source pins bind the results. Checks reject incomplete
+coverage, changed sources or receipts, hidden cleanup failures, replaced primary
+errors, missing recovery and overlapping allocation rosters.
+
+The source inventory, independent join and exact recovery copies are at
+`docs/audits/native-proxy-observation-archive-close-join-20260911/`.
+This audit reads tracked saved evidence without rerunning the original producers
+or archive operations. It closes the finite close-control gate. Final hostile
+layout and complete archive source applicability, exact observation release,
+actual native ownership and asynchronous crash behavior remain separate gates.
 
 The helper checks bounded regular source/output files and the native header,
 then sets executable permissions through the admitted open file handle. A
