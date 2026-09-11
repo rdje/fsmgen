@@ -1,0 +1,12 @@
+{
+  "admission_and_current_name_distinction_verified": true,
+  "exact_output_absent": true,
+  "exit_code": 0,
+  "new_passage_verified": true,
+  "open_lower_reader_scope_verified": true,
+  "output": ".artifacts/tmp/native-proxy-observation-archive-replacements-book-20260911/book",
+  "rendered_bytes": 23284602,
+  "rendered_files": 98,
+  "replay_scope_verified": true,
+  "same_volume_direct_objects": true
+}

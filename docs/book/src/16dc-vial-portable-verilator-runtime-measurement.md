@@ -2467,11 +2467,28 @@ The first audit's unsupported assumption about initial symlink permissions
 is preserved with its correction; the successful fixture run was not repeated.
 Link permissions remain observed metadata, and verification must preserve them.
 
+A separate replacement suite now checks identity changes after admission.
+Starting from observed healthy archives, it replaces an early or late canonical
+file, or the whole archive directory, at a selected owned verification boundary.
+Every replacement contains the same bytes as its original. For example, an open
+source descriptor still refers to the retained original while its canonical
+filename refers to a newly created inode; the source recheck rejects that change.
+Replacing the directory is rejected by directory-identity closure.
+
+The displaced objects remain in a separate owned evidence location. Actual
+source descriptor identities and close-on-exec flags are witnessed immediately
+before and after mutation. The independent checker joins handles to the census
+at admission and canonical names to the later replacement census, then verifies
+the original cleanup verdict without changing it. Exact sources, observations,
+state checks and falsifiers are retained at
+`docs/audits/native-proxy-observation-archive-replacements-20260911/`.
+These are deterministic synchronous controls, not a qualification of arbitrary
+concurrent writers or operating-system race atomicity.
+
 The current tracer observes source handles after admission returns. It cannot
 certify cleanup for a lower-reader failure before that handoff. That observation
-gap has a separate task owner; it is not evidence of a runtime leak. Replacement
-after source admission, lower-reader custody, the final archive join and exact
-observation release remain open. These inert controls do not qualify native
+gap has a separate task owner; it is not evidence of a runtime leak. Lower-reader custody, the final archive join and exact observation release
+remain open. These inert controls do not qualify native
 execution or asynchronous filesystem races.
 
 The helper checks bounded regular source/output files and the native header,
