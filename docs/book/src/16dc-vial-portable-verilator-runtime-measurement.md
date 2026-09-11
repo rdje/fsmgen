@@ -2132,20 +2132,39 @@ They open no original target or archive file and establish no actual storage,
 permissions, descriptor custody, settlement or release authority. Actual
 archival qualifies below; interruption checks remain separate.
 
-The archive producer/audit commands below are authoring drivers for the
-original qualification workspace: they require its preflight pins and local
-result files. They are not yet self-contained fresh-checkout replay commands.
-Exact recovery copies are tracked under each audit's `result/` directory.
-The missing setup is a tracked reproducibility defect in
-`docs/audits/native-proxy-observation-archive-replay-20260911/issue.json`; a
-saved-evidence verification workflow that preserves original results is next.
-This does not invalidate the already retained first-run qualification.
-
-Pure authoring drivers:
+The archive results can be revalidated from a checkout containing the tracked
+recovery copies and their pinned sources. Use the repository's Python 3 toolchain
+and Git with the recorded history available; no ignored qualification workspace
+is required. From the repo root, check every saved archive matrix with:
 
 ```bash
-scripts/run_with_ram_guard.sh -- perl docs/audits/native-proxy-observation-archive-records-20260911/qualify.t
-scripts/run_with_ram_guard.sh -- python3 -B docs/audits/native-proxy-observation-archive-records-20260911/audit.py
+scripts/run_with_ram_guard.sh -- python3 -B docs/audits/native-proxy-observation-archive-replay-20260911/replay.py --matrix all
+```
+
+The command authenticates selected inputs against their recorded Git versions,
+reconstructs each audit's inputs from tracked `result/` copies, and executes the
+unchanged independent audit. Every regenerated audit must match its tracked
+result byte for byte. Missing or changed sources, altered seeds, unsafe output
+parents and failed or changed audit results cause a nonzero exit.
+
+Each invocation creates a fresh private directory beneath
+`.artifacts/logs/native-proxy-observation-archive-replay-20260911/runs/` on the
+repository volume. Its JSON output names the relative directory containing
+admission, reconstructed inputs, captured diagnostics and the final report.
+Outputs are retained for inspection; original source and qualification files
+are preserved. Paths are derived from the script location, so its Python entry
+point also works when invoked from another working directory.
+
+This verifies saved first-run evidence. It does not execute an original fixture,
+compiler or native experiment, or qualify new archive behavior. The qualification
+of this workflow blocks legacy artifact content access while running all saved
+auditors, checks original evidence before and after, and exercises missing and
+altered-input controls. Evidence and the resolved prerequisite defect are under
+`docs/audits/native-proxy-observation-archive-replay-20260911/`.
+To check only the pure record results, select:
+
+```bash
+scripts/run_with_ram_guard.sh -- python3 -B docs/audits/native-proxy-observation-archive-replay-20260911/replay.py --matrix records
 ```
 
 The inactive filesystem archiver now writes the original retained snapshots to
@@ -2176,11 +2195,10 @@ bytes, metadata and returned descriptor closure, then verifies that all fixture
 roots are absent. Birth and cleanup records are synthetic; no fixture, compiler
 or native capture is executed. Interruption/close-error qualification, complete
 native cleanup ownership and exact observation release remain separate gates.
-Replay the inert filesystem cases and independent audit from the repo root:
+Revalidate the saved inert filesystem results from the repo root:
 
 ```bash
-scripts/run_with_ram_guard.sh -- perl docs/audits/native-proxy-observation-archive-20260911/qualify.t
-scripts/run_with_ram_guard.sh -- python3 -B docs/audits/native-proxy-observation-archive-20260911/audit.py
+scripts/run_with_ram_guard.sh -- python3 -B docs/audits/native-proxy-observation-archive-replay-20260911/replay.py --matrix files
 ```
 
 The prospective archive interruption plan is now checked against complete
@@ -2198,11 +2216,10 @@ are reserved for separately qualified return-error and omitted-close controls.
 Healthy traces prove this selection and ownership order; the following matrices
 add ordinary and equal-content fresh/existing call cuts. Partial-write and
 close domains, the final applicability join and native release remain open.
-Authoring drivers with the workspace prerequisites described above:
+Revalidate the saved healthy traces:
 
 ```bash
-scripts/run_with_ram_guard.sh -- perl docs/audits/native-proxy-observation-archive-boundaries-20260911/qualify.t
-scripts/run_with_ram_guard.sh -- python3 -B docs/audits/native-proxy-observation-archive-boundaries-20260911/audit.py
+scripts/run_with_ram_guard.sh -- python3 -B docs/audits/native-proxy-observation-archive-replay-20260911/replay.py --matrix boundaries
 ```
 
 Ordinary fresh archival now has selected helper-call interruption coverage.
@@ -2225,11 +2242,10 @@ writes, close-return errors and native release have separate qualification
 gates. Further call cuts are described below. Inspect the saved qualification
 and oracle
 under `docs/audits/native-proxy-observation-archive-fresh-calls-20260911/result/`.
-The corresponding inert producer and independent checker are:
+Revalidate these saved interruption results:
 
 ```bash
-scripts/run_with_ram_guard.sh -- perl docs/audits/native-proxy-observation-archive-fresh-calls-20260911/qualify.t
-scripts/run_with_ram_guard.sh -- python3 -B docs/audits/native-proxy-observation-archive-fresh-calls-20260911/audit.py
+scripts/run_with_ram_guard.sh -- python3 -B docs/audits/native-proxy-observation-archive-replay-20260911/replay.py --matrix ordinary-fresh
 ```
 
 Ordinary existing-archive verification now has selected helper-call
@@ -2248,12 +2264,11 @@ prefix and cleanup order; it does not assume preparation succeeded.
 
 Partial writes, close-return errors and native release remain separate gates.
 Saved evidence and the independent oracle live under
-`docs/audits/native-proxy-observation-archive-existing-calls-20260911/`. The inert
-qualification commands are:
+`docs/audits/native-proxy-observation-archive-existing-calls-20260911/`. Revalidate
+these saved results with:
 
 ```bash
-scripts/run_with_ram_guard.sh -- perl docs/audits/native-proxy-observation-archive-existing-calls-20260911/qualify.t
-scripts/run_with_ram_guard.sh -- python3 -B docs/audits/native-proxy-observation-archive-existing-calls-20260911/audit.py
+scripts/run_with_ram_guard.sh -- python3 -B docs/audits/native-proxy-observation-archive-replay-20260911/replay.py --matrix ordinary-existing
 ```
 
 Selected fresh-archive call failures are also qualified when several original
@@ -2276,8 +2291,7 @@ Inspect the saved evidence and independent audit
 under `docs/audits/native-proxy-observation-archive-equal-fresh-calls-20260911/`:
 
 ```bash
-scripts/run_with_ram_guard.sh -- perl docs/audits/native-proxy-observation-archive-equal-fresh-calls-20260911/qualify.t
-scripts/run_with_ram_guard.sh -- python3 -B docs/audits/native-proxy-observation-archive-equal-fresh-calls-20260911/audit.py
+scripts/run_with_ram_guard.sh -- python3 -B docs/audits/native-proxy-observation-archive-replay-20260911/replay.py --matrix equal-fresh
 ```
 
 The complete equal-content archive also has selected verification-call
@@ -2294,9 +2308,14 @@ late receipt-helper failure still propagates without a successful return.
 
 The saved qualification and independent audit are under
 `docs/audits/native-proxy-observation-archive-equal-existing-calls-20260911/result/`.
-The same fresh-checkout replay prerequisite issue described above applies to
-these authoring drivers. Their valid first-run evidence does not close partial
-writes, close-error controls, final source applicability or native release.
+Revalidate these saved results with:
+
+```bash
+scripts/run_with_ram_guard.sh -- python3 -B docs/audits/native-proxy-observation-archive-replay-20260911/replay.py --matrix equal-existing
+```
+
+Their first-run evidence does not close partial writes, close-error controls,
+final source applicability or native release.
 
 The helper checks bounded regular source/output files and the native header,
 then sets executable permissions through the admitted open file handle. A

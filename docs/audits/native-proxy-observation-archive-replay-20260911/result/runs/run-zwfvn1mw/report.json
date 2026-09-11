@@ -1,0 +1,17 @@
+{
+  "matrices": [
+    {
+      "name": "records",
+      "reconstructed_inputs": 4,
+      "result": ".artifacts/logs/native-proxy-observation-archive-replay-20260911/runs/run-zwfvn1mw/records/audit.json",
+      "sha256": "db2a54fddd137012aff0e30d7255e31b9ca72440fea78aaa5e4d741683d14d29",
+      "size_bytes": 1302
+    }
+  ],
+  "output": ".artifacts/logs/native-proxy-observation-archive-replay-20260911/runs/run-zwfvn1mw",
+  "schema": "fsmgen.inactive_archive_saved_replay.v1",
+  "scope": "saved evidence revalidation; no original producer, compiler, native experiment or release authority",
+  "source_inputs": 40,
+  "source_revision": "698f99da3ca3dfe47b89fc17db142b3784f37907",
+  "success": true
+}

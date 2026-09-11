@@ -1,0 +1,29 @@
+{
+  "forbidden_process_attempts": 0,
+  "input_bytes": 94002521,
+  "legacy_content_attempts": 0,
+  "matrices": 7,
+  "original_entries": 305,
+  "original_evidence_unchanged": true,
+  "qualification_controls": 14,
+  "reconstructed_inputs": 34,
+  "report_falsifiers": [
+    "false success",
+    "false preservation",
+    "producer executed",
+    "legacy content access",
+    "non-Git process",
+    "missing control",
+    "accepted rejection",
+    "allocated rejection",
+    "missing matrix",
+    "wrong result digest",
+    "failed CLI",
+    "missing repeated execution",
+    "changed original identity"
+  ],
+  "schema": "fsmgen.inactive_archive_saved_replay_audit.v1",
+  "scope": "Unchanged saved audit mains revalidate tracked first-run evidence. No historical producer or native experiment reruns, fresh fixture qualification, archive release, partial-write/close or startup-repair claim.",
+  "source_inputs": 148,
+  "success": true
+}

@@ -1,0 +1,16 @@
+{
+  "device": 16777244,
+  "inode": 77188484,
+  "matrices": [
+    "records",
+    "files",
+    "boundaries",
+    "ordinary-fresh",
+    "ordinary-existing",
+    "equal-fresh",
+    "equal-existing"
+  ],
+  "path": ".artifacts/logs/native-proxy-observation-archive-replay-20260911/runs/run-qb4nw9o0",
+  "schema": "fsmgen.inactive_archive_replay_admission.v1",
+  "source_revision": "698f99da3ca3dfe47b89fc17db142b3784f37907"
+}

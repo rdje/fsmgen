@@ -1,0 +1,25 @@
+{
+  "book": {
+    "all_matrix_commands_present": true,
+    "exact_output_absent": true,
+    "exit_code": 0,
+    "new_passage_verified": true,
+    "output": ".artifacts/tmp/native-proxy-observation-archive-replay-book-20260911/book",
+    "rendered_bytes": 23246210,
+    "rendered_files": 98,
+    "same_volume_direct_objects": true
+  },
+  "doctrines": "Final staged-index and commit-hook passes are required conditions of the work-unit commit; full CI/push and startup/native/parent gates remain open.",
+  "documentation": "documentation.json",
+  "durability": "Five prospective source pins, the exact-version plan, 83 raw recovery copies and 84 seed bindings to pre-existing tracked copies preserve the qualification and CLI receipts. Original legacy logs and tracked inputs remain unchanged. result/recovery-copies.json maps exact source/destination bytes; task/book/Knowledge Map and versioned predecessor acceptance preserve continuity.",
+  "falsification": "Fourteen qualification controls cover missing/altered input, catalogue/seed/result drift, unknown/duplicate selection, symlink output parent, auditor failure/result change, legacy-content guard, non-root caller, distinct repeated output and preservation. Thirteen independent report/identity falsifiers reject. Python content-open and subprocess instrumentation qualifies the unchanged saved audit path; it is not an operating-system sandbox or a new fixture/native execution proof.",
+  "first_staged_gate": "result/first-staged-gate.json preserves the initial root-document excess and undisposed Python interpreter identifier, exact failed gate outputs and initial Memory. Only pointer wording and claim bookkeeping change; qualification remains first-run green.",
+  "knowledge_map": "knowledge-map: OK (1161 facts, 6393 unique questions, 6564 answer occurrences, 139 bounded topic shards; query parity verified)",
+  "knowledge_projection": "knowledge-projection.json",
+  "limits": "Unchanged saved audit mains revalidate tracked first-run evidence. No historical producer or native experiment reruns, fresh fixture qualification, archive release, partial-write/close or startup-repair claim.",
+  "owner": "HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.12.4.1.3.4.2.3.5",
+  "rederivation": "The first guarded qualification reconstructs the missing preflight state without a historical harness run, then revalidates seven saved matrices from 148 tracked inputs totaling 94002521 bytes. Thirty-four audit seeds and every regenerated audit match tracked bytes. The independent checker and exact all-matrix book CLI exit zero; original source/log census has 305 unchanged objects.",
+  "schema": "fsmgen.inactive_archive_saved_replay_review.v1",
+  "second_staged_gate": "result/second-staged-gate.json preserves the follow-up canonical-encoding failure and exact delta. Existing registry rows are restored byte-for-byte; only the new disposition is inserted. No qualification or book source changes.",
+  "task_integrity": "all active task-tree invariants hold (trees=4, nodes=1352, segments=3, compact_terminals=13, index_archives=1, migrations=1, acceptance_histories=1)"
+}

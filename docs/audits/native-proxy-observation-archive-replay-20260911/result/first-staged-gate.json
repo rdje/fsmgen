@@ -1,0 +1,45 @@
+{
+  "claim": {
+    "candidate_id": "published-50426cca78d5b0aa6aceb53f",
+    "classification": "reviewed interpreter version identifier",
+    "disposition": "doctrine/claim_verification/dispositions.jsonl",
+    "line": 2136,
+    "source": "docs/book/src/16dc-vial-portable-verilator-runtime-measurement.md"
+  },
+  "first_exit": 1,
+  "first_sources": [
+    {
+      "destination": "docs/audits/native-proxy-observation-archive-replay-20260911/result/first-staged-gate/MEMORY.md.initial-source",
+      "sha256": "c7878b8563f6dc26d0e6c7d09d0e0be9f9969cd2d6dfe76404de053adb81d120",
+      "size_bytes": 816,
+      "source": "MEMORY.md"
+    },
+    {
+      "destination": "docs/audits/native-proxy-observation-archive-replay-20260911/result/first-staged-gate/staged-doctrines.stdout",
+      "sha256": "43d4fc55e1ef8594ee8b177c5fbf369cdcd4274cc5b47a042769e9213f170584",
+      "size_bytes": 47275,
+      "source": ".artifacts/logs/native-proxy-observation-archive-replay-20260911/staged-doctrines.stdout"
+    },
+    {
+      "destination": "docs/audits/native-proxy-observation-archive-replay-20260911/result/first-staged-gate/staged-doctrines.stderr",
+      "sha256": "e2a45642fae7cde4ecb722a385bfbda7ee2f16c0da817c1ef81ecd3840e05eee",
+      "size_bytes": 4572,
+      "source": ".artifacts/logs/native-proxy-observation-archive-replay-20260911/staged-doctrines.stderr"
+    },
+    {
+      "destination": "docs/audits/native-proxy-observation-archive-replay-20260911/result/first-staged-gate/staged-doctrines.exit",
+      "sha256": "4355a46b19d348dc2f57c046f8ef63d4538ebb936000f3c9ee954a27460dd865",
+      "size_bytes": 2,
+      "source": ".artifacts/logs/native-proxy-observation-archive-replay-20260911/staged-doctrines.exit"
+    }
+  ],
+  "owner": "HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.12.4.1.3.4.2.3.5",
+  "resolution": "Shorten only the bounded resume pointer and add the required reviewed version-identifier disposition. No qualification source, output, book text, evidence or ceiling changes. Repeat the staged gate after both repairs.",
+  "root_documents": {
+    "after_bytes": 261714,
+    "allowance_bytes": 261750,
+    "allowance_unchanged": true,
+    "before_bytes": 261789
+  },
+  "schema": "fsmgen.archive_replay_commit_gate_recovery.v1"
+}

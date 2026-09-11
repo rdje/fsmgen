@@ -37,6 +37,7 @@ answers:
   - "what survives existing archive verification interruptions?"
   - "how do equal-content archive failures preserve original identities?"
   - "what survives equal-content existing archive interruptions?"
+  - "how can archive evidence be revalidated from a fresh checkout?"
   - "why did integrated proxy qualification fail?"
   - "why does t1545 not use IPC Cmd?"
   - "where does T1545 preserve empty-output checker failure diagnostics?"
@@ -105,17 +106,17 @@ Decisions `0087`/`0101` select `FSM::Support::ProcessSupervisor`; adapters seal 
 `VerilatorRuntime` follows decision `0086`.
 `TaskAcceptanceFixtureRuntime` seals owned fixture roots/fixed local Git argv.
 Supervisor, checker, locality, startup/capture/STOP controls: history; absent witnesses stay unknown.
-History: `af76fe3c794dc020e4de71789d24a13eafcbca76:docs/knowledge/test-subprocess-policy-adapters.md`.
+History: `698f99da3ca3dfe47b89fc17db142b3784f37907:docs/knowledge/test-subprocess-policy-adapters.md`.
 PST parsing, serial-queue evidence, fixed CLI limits and controls: history.
 Records, custody, acquisition and unique-occurrence correction: history.
 A scoped settled event can leave a caller-owned helper running; release still needs every selected owner settled, including cancellation. Contract/model: history.
 Archive records, retirement/reuse and earlier call cuts: history.
 Unique archive calls/handles: history. Source-return and close observations are not throwing fault selectors.
-Equal-content existing cuts preserve complete deduplicated archives and distinct original identities; preparation and cleanup are observed. Evidence: `docs/audits/native-proxy-observation-archive-equal-existing-calls-20260911/audit.py`. Partial-write, close and release gates remain open.
+Equal-content existing cuts and original identities: history. Partial-write, close and release gates remain open.
 Caller-sealed test wrappers use tail goto to preserve caller.
 Replay: `scripts/run_with_ram_guard.sh -- python3 -B -m unittest discover -s t/python -p 'test_fixture_policy_archive*.py'`.
 RAM guard/T1595/T1811/T1669 controls and open causes: history.
 Per-group cleanup cannot prove nested cleanup; actual counterexample: history.
 HIAL/VIAL `.19.2.3.1.2.2.5.5` owns ownership design, repair and hostile controls;
 neutral-verifier extraction stays provisional/blocked.
-Coordinator selection and open gates: history. Archive replay prerequisites: `docs/audits/native-proxy-observation-archive-replay-20260911/issue.json`.
+Coordinator selection and open gates: history. Archive replay: `docs/audits/native-proxy-observation-archive-replay-20260911/replay.py --matrix all` revalidates tracked evidence in fresh local output; pinned sources/history are required. No original fixture or native rerun.

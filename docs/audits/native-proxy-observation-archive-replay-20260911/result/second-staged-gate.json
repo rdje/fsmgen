@@ -1,0 +1,38 @@
+{
+  "cause": "Whole-registry JSON serialization escaped non-ASCII characters in two pre-existing records. Their parsed data were unchanged, but the registry requires its canonical raw encoding. Inventory regeneration rejected; the following staged gate also rejected canonicality and the stale migration-owner projection.",
+  "exact_initial_diff": "docs/audits/native-proxy-observation-archive-replay-20260911/result/second-staged-gate/dispositions.initial.patch",
+  "existing_records_byte_exact": true,
+  "files": [
+    {
+      "destination": "docs/audits/native-proxy-observation-archive-replay-20260911/result/second-staged-gate/staged-doctrines.stdout",
+      "sha256": "7f05db42e8a9a7dae4d4c7b30759b4d5ccac7acab2173204c9a76bf706635822",
+      "size_bytes": 47341,
+      "source": ".artifacts/logs/native-proxy-observation-archive-replay-20260911/staged-doctrines.stdout"
+    },
+    {
+      "destination": "docs/audits/native-proxy-observation-archive-replay-20260911/result/second-staged-gate/staged-doctrines.stderr",
+      "sha256": "aaeb30b33e75ad5cd01cda553034e85cc73fdcff87e1437839ae6429f2ea188c",
+      "size_bytes": 4594,
+      "source": ".artifacts/logs/native-proxy-observation-archive-replay-20260911/staged-doctrines.stderr"
+    },
+    {
+      "destination": "docs/audits/native-proxy-observation-archive-replay-20260911/result/second-staged-gate/staged-doctrines.exit",
+      "sha256": "4355a46b19d348dc2f57c046f8ef63d4538ebb936000f3c9ee954a27460dd865",
+      "size_bytes": 2,
+      "source": ".artifacts/logs/native-proxy-observation-archive-replay-20260911/staged-doctrines.exit"
+    },
+    {
+      "destination": "docs/audits/native-proxy-observation-archive-replay-20260911/result/second-staged-gate/claim-inventory.stderr",
+      "sha256": "bf87d84224e2fe5431cc5ac6aea1832f2b00b187233b27b17199e0e031538562",
+      "size_bytes": 281,
+      "source": ".artifacts/logs/native-proxy-observation-archive-replay-20260911/claim-inventory.stderr"
+    }
+  ],
+  "first_exit": 1,
+  "initial_bytes": 1988948,
+  "initial_sha256": "a8781d20dbda5512e50bfd25d4cc3860500b78b3cfac2383e8ca97f7b730ae6b",
+  "resolution": "Preserve every pre-existing HEAD line byte-for-byte, insert only the new canonical version-identifier disposition in sorted order, regenerate inventory successfully and consume that result before repeating the staged gate.",
+  "schema": "fsmgen.archive_replay_canonical_registry_recovery.v1",
+  "source_path": "doctrine/claim_verification/dispositions.jsonl",
+  "source_revision": "698f99da3ca3dfe47b89fc17db142b3784f37907"
+}

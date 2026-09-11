@@ -1,0 +1,59 @@
+{
+  "matrices": [
+    {
+      "name": "records",
+      "reconstructed_inputs": 4,
+      "result": ".artifacts/logs/native-proxy-observation-archive-replay-20260911/runs/run-l4iii00h/records/audit.json",
+      "sha256": "db2a54fddd137012aff0e30d7255e31b9ca72440fea78aaa5e4d741683d14d29",
+      "size_bytes": 1302
+    },
+    {
+      "name": "files",
+      "reconstructed_inputs": 5,
+      "result": ".artifacts/logs/native-proxy-observation-archive-replay-20260911/runs/run-l4iii00h/files/audit.json",
+      "sha256": "520e54d439d0e5550bbe9d226501ed2240385675953fd6368f0c963b27685309",
+      "size_bytes": 1192
+    },
+    {
+      "name": "boundaries",
+      "reconstructed_inputs": 5,
+      "result": ".artifacts/logs/native-proxy-observation-archive-replay-20260911/runs/run-l4iii00h/boundaries/audit.json",
+      "sha256": "51486f5f6dd0d4e2eb00c7f0711950f82e79fd9ab63b4eb59f5b309755822448",
+      "size_bytes": 1414
+    },
+    {
+      "name": "ordinary-fresh",
+      "reconstructed_inputs": 5,
+      "result": ".artifacts/logs/native-proxy-observation-archive-replay-20260911/runs/run-l4iii00h/ordinary-fresh/audit.json",
+      "sha256": "d87bda8026471c2bb122c6a0fe148385eaab8da2f1835cfeabd05740255e48ce",
+      "size_bytes": 1473
+    },
+    {
+      "name": "ordinary-existing",
+      "reconstructed_inputs": 5,
+      "result": ".artifacts/logs/native-proxy-observation-archive-replay-20260911/runs/run-l4iii00h/ordinary-existing/audit.json",
+      "sha256": "50f68679e2e994a33d3cbaa5151fc25b7dd3d3a8ec180a2e678cd6a5185bdc4f",
+      "size_bytes": 1973
+    },
+    {
+      "name": "equal-fresh",
+      "reconstructed_inputs": 5,
+      "result": ".artifacts/logs/native-proxy-observation-archive-replay-20260911/runs/run-l4iii00h/equal-fresh/audit.json",
+      "sha256": "666be31f97cbeaad641e250a18e5b869c956d80df73388046a5ed7b78a465ec9",
+      "size_bytes": 1562
+    },
+    {
+      "name": "equal-existing",
+      "reconstructed_inputs": 5,
+      "result": ".artifacts/logs/native-proxy-observation-archive-replay-20260911/runs/run-l4iii00h/equal-existing/audit.json",
+      "sha256": "c93c22870dc72b4528ecb3734ccaa7ce915f680d86928f2724333db7bd49b278",
+      "size_bytes": 2037
+    }
+  ],
+  "output": ".artifacts/logs/native-proxy-observation-archive-replay-20260911/runs/run-l4iii00h",
+  "schema": "fsmgen.inactive_archive_saved_replay.v1",
+  "scope": "saved evidence revalidation; no original producer, compiler, native experiment or release authority",
+  "source_inputs": 148,
+  "source_revision": "698f99da3ca3dfe47b89fc17db142b3784f37907",
+  "success": true
+}

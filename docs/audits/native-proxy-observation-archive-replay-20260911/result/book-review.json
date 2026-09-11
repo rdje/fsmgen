@@ -1,0 +1,10 @@
+{
+  "all_matrix_commands_present": true,
+  "exact_output_absent": true,
+  "exit_code": 0,
+  "new_passage_verified": true,
+  "output": ".artifacts/tmp/native-proxy-observation-archive-replay-book-20260911/book",
+  "rendered_bytes": 23246210,
+  "rendered_files": 98,
+  "same_volume_direct_objects": true
+}

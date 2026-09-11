@@ -1,0 +1,37 @@
+{
+  "helper_mutants": 3,
+  "historical_inputs": 2,
+  "limits": "Pure data with synthetic archive native IDs. Historical acquisitions are authenticated but their target files are never reopened. No archival, descriptor/permission proof, hold release, process execution, native authority or receipt transport. The selected 65536-byte canonical ASCII receipt ceiling is structural only.",
+  "positive_vectors": 6,
+  "predecessor_inputs_unchanged": 23,
+  "prospective_inputs_unchanged": 5,
+  "record_falsifiers": [
+    "wrong canonical bytes",
+    "lost original identity",
+    "lost binary source",
+    "lost byte representation flag",
+    "character representation",
+    "missing positive",
+    "missing rejection",
+    "duplicate rejection",
+    "accepted invalid record",
+    "input mutated",
+    "filesystem lookup",
+    "process attempt",
+    "missing mutant",
+    "ineffective mutant",
+    "mutant valid receipt"
+  ],
+  "rejected_controls": 142,
+  "schema": "fsmgen.inactive_archive_record_audit.v1",
+  "success": true,
+  "tap_assertions": 177,
+  "unique_files_by_vector": {
+    "constructed binary wrapper": 4,
+    "constructed empty wrapper": 4,
+    "constructed three equal sources": 3,
+    "constructed wrapper exact ceiling": 4,
+    "historical acquisition": 4,
+    "historical reuse": 4
+  }
+}
