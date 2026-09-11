@@ -1,0 +1,692 @@
+ok 1 - equal_reference:fresh:limits:before: actual inactive retirement precedes interruption
+ok 2 - equal_reference:fresh:limits:before: exact single fault propagates without success
+ok 3 - equal_reference:fresh:limits:before: every actual owned handle explicitly closes
+ok 4 - equal_reference:fresh:limits:before: retained inputs unchanged
+ok 5 - equal_reference:fresh:limits:before: all other owners and retired workspace preserved
+ok 6 - equal_reference:fresh:limits:after: actual inactive retirement precedes interruption
+ok 7 - equal_reference:fresh:limits:after: exact single fault propagates without success
+ok 8 - equal_reference:fresh:limits:after: every actual owned handle explicitly closes
+ok 9 - equal_reference:fresh:limits:after: retained inputs unchanged
+ok 10 - equal_reference:fresh:limits:after: all other owners and retired workspace preserved
+ok 11 - equal_reference:fresh:prior:0:before: actual inactive retirement precedes interruption
+ok 12 - equal_reference:fresh:prior:0:before: exact single fault propagates without success
+ok 13 - equal_reference:fresh:prior:0:before: every actual owned handle explicitly closes
+ok 14 - equal_reference:fresh:prior:0:before: retained inputs unchanged
+ok 15 - equal_reference:fresh:prior:0:before: all other owners and retired workspace preserved
+ok 16 - equal_reference:fresh:directory:evidence:0:before: actual inactive retirement precedes interruption
+ok 17 - equal_reference:fresh:directory:evidence:0:before: exact single fault propagates without success
+ok 18 - equal_reference:fresh:directory:evidence:0:before: every actual owned handle explicitly closes
+ok 19 - equal_reference:fresh:directory:evidence:0:before: retained inputs unchanged
+ok 20 - equal_reference:fresh:directory:evidence:0:before: all other owners and retired workspace preserved
+ok 21 - equal_reference:fresh:directory:evidence:0:after: actual inactive retirement precedes interruption
+ok 22 - equal_reference:fresh:directory:evidence:0:after: exact single fault propagates without success
+ok 23 - equal_reference:fresh:directory:evidence:0:after: every actual owned handle explicitly closes
+ok 24 - equal_reference:fresh:directory:evidence:0:after: retained inputs unchanged
+ok 25 - equal_reference:fresh:directory:evidence:0:after: all other owners and retired workspace preserved
+ok 26 - equal_reference:fresh:prior:0:after: actual inactive retirement precedes interruption
+ok 27 - equal_reference:fresh:prior:0:after: exact single fault propagates without success
+ok 28 - equal_reference:fresh:prior:0:after: every actual owned handle explicitly closes
+ok 29 - equal_reference:fresh:prior:0:after: retained inputs unchanged
+ok 30 - equal_reference:fresh:prior:0:after: all other owners and retired workspace preserved
+ok 31 - equal_reference:fresh:prior:1:before: actual inactive retirement precedes interruption
+ok 32 - equal_reference:fresh:prior:1:before: exact single fault propagates without success
+ok 33 - equal_reference:fresh:prior:1:before: every actual owned handle explicitly closes
+ok 34 - equal_reference:fresh:prior:1:before: retained inputs unchanged
+ok 35 - equal_reference:fresh:prior:1:before: all other owners and retired workspace preserved
+ok 36 - equal_reference:fresh:directory:evidence:1:before: actual inactive retirement precedes interruption
+ok 37 - equal_reference:fresh:directory:evidence:1:before: exact single fault propagates without success
+ok 38 - equal_reference:fresh:directory:evidence:1:before: every actual owned handle explicitly closes
+ok 39 - equal_reference:fresh:directory:evidence:1:before: retained inputs unchanged
+ok 40 - equal_reference:fresh:directory:evidence:1:before: all other owners and retired workspace preserved
+ok 41 - equal_reference:fresh:directory:evidence:1:after: actual inactive retirement precedes interruption
+ok 42 - equal_reference:fresh:directory:evidence:1:after: exact single fault propagates without success
+ok 43 - equal_reference:fresh:directory:evidence:1:after: every actual owned handle explicitly closes
+ok 44 - equal_reference:fresh:directory:evidence:1:after: retained inputs unchanged
+ok 45 - equal_reference:fresh:directory:evidence:1:after: all other owners and retired workspace preserved
+ok 46 - equal_reference:fresh:prior:1:after: actual inactive retirement precedes interruption
+ok 47 - equal_reference:fresh:prior:1:after: exact single fault propagates without success
+ok 48 - equal_reference:fresh:prior:1:after: every actual owned handle explicitly closes
+ok 49 - equal_reference:fresh:prior:1:after: retained inputs unchanged
+ok 50 - equal_reference:fresh:prior:1:after: all other owners and retired workspace preserved
+ok 51 - equal_reference:fresh:mkdir:before: actual inactive retirement precedes interruption
+ok 52 - equal_reference:fresh:mkdir:before: exact single fault propagates without success
+ok 53 - equal_reference:fresh:mkdir:before: every actual owned handle explicitly closes
+ok 54 - equal_reference:fresh:mkdir:before: retained inputs unchanged
+ok 55 - equal_reference:fresh:mkdir:before: all other owners and retired workspace preserved
+ok 56 - equal_reference:fresh:mkdir:after: actual inactive retirement precedes interruption
+ok 57 - equal_reference:fresh:mkdir:after: exact single fault propagates without success
+ok 58 - equal_reference:fresh:mkdir:after: every actual owned handle explicitly closes
+ok 59 - equal_reference:fresh:mkdir:after: retained inputs unchanged
+ok 60 - equal_reference:fresh:mkdir:after: all other owners and retired workspace preserved
+ok 61 - equal_reference:fresh:directory:archive:0:before: actual inactive retirement precedes interruption
+ok 62 - equal_reference:fresh:directory:archive:0:before: exact single fault propagates without success
+ok 63 - equal_reference:fresh:directory:archive:0:before: every actual owned handle explicitly closes
+ok 64 - equal_reference:fresh:directory:archive:0:before: retained inputs unchanged
+ok 65 - equal_reference:fresh:directory:archive:0:before: all other owners and retired workspace preserved
+ok 66 - equal_reference:fresh:directory:archive:0:after: actual inactive retirement precedes interruption
+ok 67 - equal_reference:fresh:directory:archive:0:after: exact single fault propagates without success
+ok 68 - equal_reference:fresh:directory:archive:0:after: every actual owned handle explicitly closes
+ok 69 - equal_reference:fresh:directory:archive:0:after: retained inputs unchanged
+ok 70 - equal_reference:fresh:directory:archive:0:after: all other owners and retired workspace preserved
+ok 71 - equal_reference:fresh:directory_closure:0:before: actual inactive retirement precedes interruption
+ok 72 - equal_reference:fresh:directory_closure:0:before: exact single fault propagates without success
+ok 73 - equal_reference:fresh:directory_closure:0:before: every actual owned handle explicitly closes
+ok 74 - equal_reference:fresh:directory_closure:0:before: retained inputs unchanged
+ok 75 - equal_reference:fresh:directory_closure:0:before: all other owners and retired workspace preserved
+ok 76 - equal_reference:fresh:directory:evidence:2:before: actual inactive retirement precedes interruption
+ok 77 - equal_reference:fresh:directory:evidence:2:before: exact single fault propagates without success
+ok 78 - equal_reference:fresh:directory:evidence:2:before: every actual owned handle explicitly closes
+ok 79 - equal_reference:fresh:directory:evidence:2:before: retained inputs unchanged
+ok 80 - equal_reference:fresh:directory:evidence:2:before: all other owners and retired workspace preserved
+ok 81 - equal_reference:fresh:directory:evidence:2:after: actual inactive retirement precedes interruption
+ok 82 - equal_reference:fresh:directory:evidence:2:after: exact single fault propagates without success
+ok 83 - equal_reference:fresh:directory:evidence:2:after: every actual owned handle explicitly closes
+ok 84 - equal_reference:fresh:directory:evidence:2:after: retained inputs unchanged
+ok 85 - equal_reference:fresh:directory:evidence:2:after: all other owners and retired workspace preserved
+ok 86 - equal_reference:fresh:directory:archive:1:before: actual inactive retirement precedes interruption
+ok 87 - equal_reference:fresh:directory:archive:1:before: exact single fault propagates without success
+ok 88 - equal_reference:fresh:directory:archive:1:before: every actual owned handle explicitly closes
+ok 89 - equal_reference:fresh:directory:archive:1:before: retained inputs unchanged
+ok 90 - equal_reference:fresh:directory:archive:1:before: all other owners and retired workspace preserved
+ok 91 - equal_reference:fresh:directory:archive:1:after: actual inactive retirement precedes interruption
+ok 92 - equal_reference:fresh:directory:archive:1:after: exact single fault propagates without success
+ok 93 - equal_reference:fresh:directory:archive:1:after: every actual owned handle explicitly closes
+ok 94 - equal_reference:fresh:directory:archive:1:after: retained inputs unchanged
+ok 95 - equal_reference:fresh:directory:archive:1:after: all other owners and retired workspace preserved
+ok 96 - equal_reference:fresh:directory_closure:0:after: actual inactive retirement precedes interruption
+ok 97 - equal_reference:fresh:directory_closure:0:after: exact single fault propagates without success
+ok 98 - equal_reference:fresh:directory_closure:0:after: every actual owned handle explicitly closes
+ok 99 - equal_reference:fresh:directory_closure:0:after: retained inputs unchanged
+ok 100 - equal_reference:fresh:directory_closure:0:after: all other owners and retired workspace preserved
+ok 101 - equal_reference:fresh:members:0:before: actual inactive retirement precedes interruption
+ok 102 - equal_reference:fresh:members:0:before: exact single fault propagates without success
+ok 103 - equal_reference:fresh:members:0:before: every actual owned handle explicitly closes
+ok 104 - equal_reference:fresh:members:0:before: retained inputs unchanged
+ok 105 - equal_reference:fresh:members:0:before: all other owners and retired workspace preserved
+ok 106 - equal_reference:fresh:names:0:before: actual inactive retirement precedes interruption
+ok 107 - equal_reference:fresh:names:0:before: exact single fault propagates without success
+ok 108 - equal_reference:fresh:names:0:before: every actual owned handle explicitly closes
+ok 109 - equal_reference:fresh:names:0:before: retained inputs unchanged
+ok 110 - equal_reference:fresh:names:0:before: all other owners and retired workspace preserved
+ok 111 - equal_reference:fresh:names:0:after: actual inactive retirement precedes interruption
+ok 112 - equal_reference:fresh:names:0:after: exact single fault propagates without success
+ok 113 - equal_reference:fresh:names:0:after: every actual owned handle explicitly closes
+ok 114 - equal_reference:fresh:names:0:after: retained inputs unchanged
+ok 115 - equal_reference:fresh:names:0:after: all other owners and retired workspace preserved
+ok 116 - equal_reference:fresh:members:0:after: actual inactive retirement precedes interruption
+ok 117 - equal_reference:fresh:members:0:after: exact single fault propagates without success
+ok 118 - equal_reference:fresh:members:0:after: every actual owned handle explicitly closes
+ok 119 - equal_reference:fresh:members:0:after: retained inputs unchanged
+ok 120 - equal_reference:fresh:members:0:after: all other owners and retired workspace preserved
+ok 121 - equal_reference:fresh:directory_closure:1:before: actual inactive retirement precedes interruption
+ok 122 - equal_reference:fresh:directory_closure:1:before: exact single fault propagates without success
+ok 123 - equal_reference:fresh:directory_closure:1:before: every actual owned handle explicitly closes
+ok 124 - equal_reference:fresh:directory_closure:1:before: retained inputs unchanged
+ok 125 - equal_reference:fresh:directory_closure:1:before: all other owners and retired workspace preserved
+ok 126 - equal_reference:fresh:directory:evidence:3:before: actual inactive retirement precedes interruption
+ok 127 - equal_reference:fresh:directory:evidence:3:before: exact single fault propagates without success
+ok 128 - equal_reference:fresh:directory:evidence:3:before: every actual owned handle explicitly closes
+ok 129 - equal_reference:fresh:directory:evidence:3:before: retained inputs unchanged
+ok 130 - equal_reference:fresh:directory:evidence:3:before: all other owners and retired workspace preserved
+ok 131 - equal_reference:fresh:directory:evidence:3:after: actual inactive retirement precedes interruption
+ok 132 - equal_reference:fresh:directory:evidence:3:after: exact single fault propagates without success
+ok 133 - equal_reference:fresh:directory:evidence:3:after: every actual owned handle explicitly closes
+ok 134 - equal_reference:fresh:directory:evidence:3:after: retained inputs unchanged
+ok 135 - equal_reference:fresh:directory:evidence:3:after: all other owners and retired workspace preserved
+ok 136 - equal_reference:fresh:directory:archive:2:before: actual inactive retirement precedes interruption
+ok 137 - equal_reference:fresh:directory:archive:2:before: exact single fault propagates without success
+ok 138 - equal_reference:fresh:directory:archive:2:before: every actual owned handle explicitly closes
+ok 139 - equal_reference:fresh:directory:archive:2:before: retained inputs unchanged
+ok 140 - equal_reference:fresh:directory:archive:2:before: all other owners and retired workspace preserved
+ok 141 - equal_reference:fresh:directory:archive:2:after: actual inactive retirement precedes interruption
+ok 142 - equal_reference:fresh:directory:archive:2:after: exact single fault propagates without success
+ok 143 - equal_reference:fresh:directory:archive:2:after: every actual owned handle explicitly closes
+ok 144 - equal_reference:fresh:directory:archive:2:after: retained inputs unchanged
+ok 145 - equal_reference:fresh:directory:archive:2:after: all other owners and retired workspace preserved
+ok 146 - equal_reference:fresh:directory_closure:1:after: actual inactive retirement precedes interruption
+ok 147 - equal_reference:fresh:directory_closure:1:after: exact single fault propagates without success
+ok 148 - equal_reference:fresh:directory_closure:1:after: every actual owned handle explicitly closes
+ok 149 - equal_reference:fresh:directory_closure:1:after: retained inputs unchanged
+ok 150 - equal_reference:fresh:directory_closure:1:after: all other owners and retired workspace preserved
+ok 151 - equal_reference:fresh:members:1:before: actual inactive retirement precedes interruption
+ok 152 - equal_reference:fresh:members:1:before: exact single fault propagates without success
+ok 153 - equal_reference:fresh:members:1:before: every actual owned handle explicitly closes
+ok 154 - equal_reference:fresh:members:1:before: retained inputs unchanged
+ok 155 - equal_reference:fresh:members:1:before: all other owners and retired workspace preserved
+ok 156 - equal_reference:fresh:names:1:before: actual inactive retirement precedes interruption
+ok 157 - equal_reference:fresh:names:1:before: exact single fault propagates without success
+ok 158 - equal_reference:fresh:names:1:before: every actual owned handle explicitly closes
+ok 159 - equal_reference:fresh:names:1:before: retained inputs unchanged
+ok 160 - equal_reference:fresh:names:1:before: all other owners and retired workspace preserved
+ok 161 - equal_reference:fresh:names:1:after: actual inactive retirement precedes interruption
+ok 162 - equal_reference:fresh:names:1:after: exact single fault propagates without success
+ok 163 - equal_reference:fresh:names:1:after: every actual owned handle explicitly closes
+ok 164 - equal_reference:fresh:names:1:after: retained inputs unchanged
+ok 165 - equal_reference:fresh:names:1:after: all other owners and retired workspace preserved
+ok 166 - equal_reference:fresh:members:1:after: actual inactive retirement precedes interruption
+ok 167 - equal_reference:fresh:members:1:after: exact single fault propagates without success
+ok 168 - equal_reference:fresh:members:1:after: every actual owned handle explicitly closes
+ok 169 - equal_reference:fresh:members:1:after: retained inputs unchanged
+ok 170 - equal_reference:fresh:members:1:after: all other owners and retired workspace preserved
+ok 171 - equal_reference:fresh:write:0:before: actual inactive retirement precedes interruption
+ok 172 - equal_reference:fresh:write:0:before: exact single fault propagates without success
+ok 173 - equal_reference:fresh:write:0:before: every actual owned handle explicitly closes
+ok 174 - equal_reference:fresh:write:0:before: retained inputs unchanged
+ok 175 - equal_reference:fresh:write:0:before: all other owners and retired workspace preserved
+ok 176 - equal_reference:fresh:writer:0:binmode: actual inactive retirement precedes interruption
+ok 177 - equal_reference:fresh:writer:0:binmode: exact single fault propagates without success
+ok 178 - equal_reference:fresh:writer:0:binmode: every actual owned handle explicitly closes
+ok 179 - equal_reference:fresh:writer:0:binmode: retained inputs unchanged
+ok 180 - equal_reference:fresh:writer:0:binmode: all other owners and retired workspace preserved
+ok 181 - equal_reference:fresh:source:0:0:before: actual inactive retirement precedes interruption
+ok 182 - equal_reference:fresh:source:0:0:before: exact single fault propagates without success
+ok 183 - equal_reference:fresh:source:0:0:before: every actual owned handle explicitly closes
+ok 184 - equal_reference:fresh:source:0:0:before: retained inputs unchanged
+ok 185 - equal_reference:fresh:source:0:0:before: all other owners and retired workspace preserved
+ok 186 - equal_reference:fresh:recheck:source:0:0:0:before: actual inactive retirement precedes interruption
+ok 187 - equal_reference:fresh:recheck:source:0:0:0:before: exact single fault propagates without success
+ok 188 - equal_reference:fresh:recheck:source:0:0:0:before: every actual owned handle explicitly closes
+ok 189 - equal_reference:fresh:recheck:source:0:0:0:before: retained inputs unchanged
+ok 190 - equal_reference:fresh:recheck:source:0:0:0:before: all other owners and retired workspace preserved
+ok 191 - equal_reference:fresh:recheck:source:0:0:0:after: actual inactive retirement precedes interruption
+ok 192 - equal_reference:fresh:recheck:source:0:0:0:after: exact single fault propagates without success
+ok 193 - equal_reference:fresh:recheck:source:0:0:0:after: every actual owned handle explicitly closes
+ok 194 - equal_reference:fresh:recheck:source:0:0:0:after: retained inputs unchanged
+ok 195 - equal_reference:fresh:recheck:source:0:0:0:after: all other owners and retired workspace preserved
+ok 196 - equal_reference:fresh:seal:0:before: actual inactive retirement precedes interruption
+ok 197 - equal_reference:fresh:seal:0:before: exact single fault propagates without success
+ok 198 - equal_reference:fresh:seal:0:before: every actual owned handle explicitly closes
+ok 199 - equal_reference:fresh:seal:0:before: retained inputs unchanged
+ok 200 - equal_reference:fresh:seal:0:before: all other owners and retired workspace preserved
+ok 201 - equal_reference:fresh:seal:0:after: actual inactive retirement precedes interruption
+ok 202 - equal_reference:fresh:seal:0:after: exact single fault propagates without success
+ok 203 - equal_reference:fresh:seal:0:after: every actual owned handle explicitly closes
+ok 204 - equal_reference:fresh:seal:0:after: retained inputs unchanged
+ok 205 - equal_reference:fresh:seal:0:after: all other owners and retired workspace preserved
+ok 206 - equal_reference:fresh:write:0:after: actual inactive retirement precedes interruption
+ok 207 - equal_reference:fresh:write:0:after: exact single fault propagates without success
+ok 208 - equal_reference:fresh:write:0:after: every actual owned handle explicitly closes
+ok 209 - equal_reference:fresh:write:0:after: retained inputs unchanged
+ok 210 - equal_reference:fresh:write:0:after: all other owners and retired workspace preserved
+ok 211 - equal_reference:fresh:source:0:1:before: actual inactive retirement precedes interruption
+ok 212 - equal_reference:fresh:source:0:1:before: exact single fault propagates without success
+ok 213 - equal_reference:fresh:source:0:1:before: every actual owned handle explicitly closes
+ok 214 - equal_reference:fresh:source:0:1:before: retained inputs unchanged
+ok 215 - equal_reference:fresh:source:0:1:before: all other owners and retired workspace preserved
+ok 216 - equal_reference:fresh:recheck:source:0:1:0:before: actual inactive retirement precedes interruption
+ok 217 - equal_reference:fresh:recheck:source:0:1:0:before: exact single fault propagates without success
+ok 218 - equal_reference:fresh:recheck:source:0:1:0:before: every actual owned handle explicitly closes
+ok 219 - equal_reference:fresh:recheck:source:0:1:0:before: retained inputs unchanged
+ok 220 - equal_reference:fresh:recheck:source:0:1:0:before: all other owners and retired workspace preserved
+ok 221 - equal_reference:fresh:recheck:source:0:1:0:after: actual inactive retirement precedes interruption
+ok 222 - equal_reference:fresh:recheck:source:0:1:0:after: exact single fault propagates without success
+ok 223 - equal_reference:fresh:recheck:source:0:1:0:after: every actual owned handle explicitly closes
+ok 224 - equal_reference:fresh:recheck:source:0:1:0:after: retained inputs unchanged
+ok 225 - equal_reference:fresh:recheck:source:0:1:0:after: all other owners and retired workspace preserved
+ok 226 - equal_reference:fresh:directory_closure:2:before: actual inactive retirement precedes interruption
+ok 227 - equal_reference:fresh:directory_closure:2:before: exact single fault propagates without success
+ok 228 - equal_reference:fresh:directory_closure:2:before: every actual owned handle explicitly closes
+ok 229 - equal_reference:fresh:directory_closure:2:before: retained inputs unchanged
+ok 230 - equal_reference:fresh:directory_closure:2:before: all other owners and retired workspace preserved
+ok 231 - equal_reference:fresh:directory:evidence:4:before: actual inactive retirement precedes interruption
+ok 232 - equal_reference:fresh:directory:evidence:4:before: exact single fault propagates without success
+ok 233 - equal_reference:fresh:directory:evidence:4:before: every actual owned handle explicitly closes
+ok 234 - equal_reference:fresh:directory:evidence:4:before: retained inputs unchanged
+ok 235 - equal_reference:fresh:directory:evidence:4:before: all other owners and retired workspace preserved
+ok 236 - equal_reference:fresh:directory:evidence:4:after: actual inactive retirement precedes interruption
+ok 237 - equal_reference:fresh:directory:evidence:4:after: exact single fault propagates without success
+ok 238 - equal_reference:fresh:directory:evidence:4:after: every actual owned handle explicitly closes
+ok 239 - equal_reference:fresh:directory:evidence:4:after: retained inputs unchanged
+ok 240 - equal_reference:fresh:directory:evidence:4:after: all other owners and retired workspace preserved
+ok 241 - equal_reference:fresh:directory:archive:3:before: actual inactive retirement precedes interruption
+ok 242 - equal_reference:fresh:directory:archive:3:before: exact single fault propagates without success
+ok 243 - equal_reference:fresh:directory:archive:3:before: every actual owned handle explicitly closes
+ok 244 - equal_reference:fresh:directory:archive:3:before: retained inputs unchanged
+ok 245 - equal_reference:fresh:directory:archive:3:before: all other owners and retired workspace preserved
+ok 246 - equal_reference:fresh:directory:archive:3:after: actual inactive retirement precedes interruption
+ok 247 - equal_reference:fresh:directory:archive:3:after: exact single fault propagates without success
+ok 248 - equal_reference:fresh:directory:archive:3:after: every actual owned handle explicitly closes
+ok 249 - equal_reference:fresh:directory:archive:3:after: retained inputs unchanged
+ok 250 - equal_reference:fresh:directory:archive:3:after: all other owners and retired workspace preserved
+ok 251 - equal_reference:fresh:directory_closure:2:after: actual inactive retirement precedes interruption
+ok 252 - equal_reference:fresh:directory_closure:2:after: exact single fault propagates without success
+ok 253 - equal_reference:fresh:directory_closure:2:after: every actual owned handle explicitly closes
+ok 254 - equal_reference:fresh:directory_closure:2:after: retained inputs unchanged
+ok 255 - equal_reference:fresh:directory_closure:2:after: all other owners and retired workspace preserved
+ok 256 - equal_reference:fresh:members:2:before: actual inactive retirement precedes interruption
+ok 257 - equal_reference:fresh:members:2:before: exact single fault propagates without success
+ok 258 - equal_reference:fresh:members:2:before: every actual owned handle explicitly closes
+ok 259 - equal_reference:fresh:members:2:before: retained inputs unchanged
+ok 260 - equal_reference:fresh:members:2:before: all other owners and retired workspace preserved
+ok 261 - equal_reference:fresh:names:2:before: actual inactive retirement precedes interruption
+ok 262 - equal_reference:fresh:names:2:before: exact single fault propagates without success
+ok 263 - equal_reference:fresh:names:2:before: every actual owned handle explicitly closes
+ok 264 - equal_reference:fresh:names:2:before: retained inputs unchanged
+ok 265 - equal_reference:fresh:names:2:before: all other owners and retired workspace preserved
+ok 266 - equal_reference:fresh:names:2:after: actual inactive retirement precedes interruption
+ok 267 - equal_reference:fresh:names:2:after: exact single fault propagates without success
+ok 268 - equal_reference:fresh:names:2:after: every actual owned handle explicitly closes
+ok 269 - equal_reference:fresh:names:2:after: retained inputs unchanged
+ok 270 - equal_reference:fresh:names:2:after: all other owners and retired workspace preserved
+ok 271 - equal_reference:fresh:members:2:after: actual inactive retirement precedes interruption
+ok 272 - equal_reference:fresh:members:2:after: exact single fault propagates without success
+ok 273 - equal_reference:fresh:members:2:after: every actual owned handle explicitly closes
+ok 274 - equal_reference:fresh:members:2:after: retained inputs unchanged
+ok 275 - equal_reference:fresh:members:2:after: all other owners and retired workspace preserved
+ok 276 - equal_reference:fresh:write:1:before: actual inactive retirement precedes interruption
+ok 277 - equal_reference:fresh:write:1:before: exact single fault propagates without success
+ok 278 - equal_reference:fresh:write:1:before: every actual owned handle explicitly closes
+ok 279 - equal_reference:fresh:write:1:before: retained inputs unchanged
+ok 280 - equal_reference:fresh:write:1:before: all other owners and retired workspace preserved
+ok 281 - equal_reference:fresh:writer:1:binmode: actual inactive retirement precedes interruption
+ok 282 - equal_reference:fresh:writer:1:binmode: exact single fault propagates without success
+ok 283 - equal_reference:fresh:writer:1:binmode: every actual owned handle explicitly closes
+ok 284 - equal_reference:fresh:writer:1:binmode: retained inputs unchanged
+ok 285 - equal_reference:fresh:writer:1:binmode: all other owners and retired workspace preserved
+ok 286 - equal_reference:fresh:source:1:0:before: actual inactive retirement precedes interruption
+ok 287 - equal_reference:fresh:source:1:0:before: exact single fault propagates without success
+ok 288 - equal_reference:fresh:source:1:0:before: every actual owned handle explicitly closes
+ok 289 - equal_reference:fresh:source:1:0:before: retained inputs unchanged
+ok 290 - equal_reference:fresh:source:1:0:before: all other owners and retired workspace preserved
+ok 291 - equal_reference:fresh:recheck:source:1:0:0:before: actual inactive retirement precedes interruption
+ok 292 - equal_reference:fresh:recheck:source:1:0:0:before: exact single fault propagates without success
+ok 293 - equal_reference:fresh:recheck:source:1:0:0:before: every actual owned handle explicitly closes
+ok 294 - equal_reference:fresh:recheck:source:1:0:0:before: retained inputs unchanged
+ok 295 - equal_reference:fresh:recheck:source:1:0:0:before: all other owners and retired workspace preserved
+ok 296 - equal_reference:fresh:recheck:source:1:0:0:after: actual inactive retirement precedes interruption
+ok 297 - equal_reference:fresh:recheck:source:1:0:0:after: exact single fault propagates without success
+ok 298 - equal_reference:fresh:recheck:source:1:0:0:after: every actual owned handle explicitly closes
+ok 299 - equal_reference:fresh:recheck:source:1:0:0:after: retained inputs unchanged
+ok 300 - equal_reference:fresh:recheck:source:1:0:0:after: all other owners and retired workspace preserved
+ok 301 - equal_reference:fresh:seal:1:before: actual inactive retirement precedes interruption
+ok 302 - equal_reference:fresh:seal:1:before: exact single fault propagates without success
+ok 303 - equal_reference:fresh:seal:1:before: every actual owned handle explicitly closes
+ok 304 - equal_reference:fresh:seal:1:before: retained inputs unchanged
+ok 305 - equal_reference:fresh:seal:1:before: all other owners and retired workspace preserved
+ok 306 - equal_reference:fresh:seal:1:after: actual inactive retirement precedes interruption
+ok 307 - equal_reference:fresh:seal:1:after: exact single fault propagates without success
+ok 308 - equal_reference:fresh:seal:1:after: every actual owned handle explicitly closes
+ok 309 - equal_reference:fresh:seal:1:after: retained inputs unchanged
+ok 310 - equal_reference:fresh:seal:1:after: all other owners and retired workspace preserved
+ok 311 - equal_reference:fresh:write:1:after: actual inactive retirement precedes interruption
+ok 312 - equal_reference:fresh:write:1:after: exact single fault propagates without success
+ok 313 - equal_reference:fresh:write:1:after: every actual owned handle explicitly closes
+ok 314 - equal_reference:fresh:write:1:after: retained inputs unchanged
+ok 315 - equal_reference:fresh:write:1:after: all other owners and retired workspace preserved
+ok 316 - equal_reference:fresh:source:1:1:before: actual inactive retirement precedes interruption
+ok 317 - equal_reference:fresh:source:1:1:before: exact single fault propagates without success
+ok 318 - equal_reference:fresh:source:1:1:before: every actual owned handle explicitly closes
+ok 319 - equal_reference:fresh:source:1:1:before: retained inputs unchanged
+ok 320 - equal_reference:fresh:source:1:1:before: all other owners and retired workspace preserved
+ok 321 - equal_reference:fresh:recheck:source:1:1:0:before: actual inactive retirement precedes interruption
+ok 322 - equal_reference:fresh:recheck:source:1:1:0:before: exact single fault propagates without success
+ok 323 - equal_reference:fresh:recheck:source:1:1:0:before: every actual owned handle explicitly closes
+ok 324 - equal_reference:fresh:recheck:source:1:1:0:before: retained inputs unchanged
+ok 325 - equal_reference:fresh:recheck:source:1:1:0:before: all other owners and retired workspace preserved
+ok 326 - equal_reference:fresh:recheck:source:1:1:0:after: actual inactive retirement precedes interruption
+ok 327 - equal_reference:fresh:recheck:source:1:1:0:after: exact single fault propagates without success
+ok 328 - equal_reference:fresh:recheck:source:1:1:0:after: every actual owned handle explicitly closes
+ok 329 - equal_reference:fresh:recheck:source:1:1:0:after: retained inputs unchanged
+ok 330 - equal_reference:fresh:recheck:source:1:1:0:after: all other owners and retired workspace preserved
+ok 331 - equal_reference:fresh:directory_closure:3:before: actual inactive retirement precedes interruption
+ok 332 - equal_reference:fresh:directory_closure:3:before: exact single fault propagates without success
+ok 333 - equal_reference:fresh:directory_closure:3:before: every actual owned handle explicitly closes
+ok 334 - equal_reference:fresh:directory_closure:3:before: retained inputs unchanged
+ok 335 - equal_reference:fresh:directory_closure:3:before: all other owners and retired workspace preserved
+ok 336 - equal_reference:fresh:directory:evidence:5:before: actual inactive retirement precedes interruption
+ok 337 - equal_reference:fresh:directory:evidence:5:before: exact single fault propagates without success
+ok 338 - equal_reference:fresh:directory:evidence:5:before: every actual owned handle explicitly closes
+ok 339 - equal_reference:fresh:directory:evidence:5:before: retained inputs unchanged
+ok 340 - equal_reference:fresh:directory:evidence:5:before: all other owners and retired workspace preserved
+ok 341 - equal_reference:fresh:directory:evidence:5:after: actual inactive retirement precedes interruption
+ok 342 - equal_reference:fresh:directory:evidence:5:after: exact single fault propagates without success
+ok 343 - equal_reference:fresh:directory:evidence:5:after: every actual owned handle explicitly closes
+ok 344 - equal_reference:fresh:directory:evidence:5:after: retained inputs unchanged
+ok 345 - equal_reference:fresh:directory:evidence:5:after: all other owners and retired workspace preserved
+ok 346 - equal_reference:fresh:directory:archive:4:before: actual inactive retirement precedes interruption
+ok 347 - equal_reference:fresh:directory:archive:4:before: exact single fault propagates without success
+ok 348 - equal_reference:fresh:directory:archive:4:before: every actual owned handle explicitly closes
+ok 349 - equal_reference:fresh:directory:archive:4:before: retained inputs unchanged
+ok 350 - equal_reference:fresh:directory:archive:4:before: all other owners and retired workspace preserved
+ok 351 - equal_reference:fresh:directory:archive:4:after: actual inactive retirement precedes interruption
+ok 352 - equal_reference:fresh:directory:archive:4:after: exact single fault propagates without success
+ok 353 - equal_reference:fresh:directory:archive:4:after: every actual owned handle explicitly closes
+ok 354 - equal_reference:fresh:directory:archive:4:after: retained inputs unchanged
+ok 355 - equal_reference:fresh:directory:archive:4:after: all other owners and retired workspace preserved
+ok 356 - equal_reference:fresh:directory_closure:3:after: actual inactive retirement precedes interruption
+ok 357 - equal_reference:fresh:directory_closure:3:after: exact single fault propagates without success
+ok 358 - equal_reference:fresh:directory_closure:3:after: every actual owned handle explicitly closes
+ok 359 - equal_reference:fresh:directory_closure:3:after: retained inputs unchanged
+ok 360 - equal_reference:fresh:directory_closure:3:after: all other owners and retired workspace preserved
+ok 361 - equal_reference:fresh:members:3:before: actual inactive retirement precedes interruption
+ok 362 - equal_reference:fresh:members:3:before: exact single fault propagates without success
+ok 363 - equal_reference:fresh:members:3:before: every actual owned handle explicitly closes
+ok 364 - equal_reference:fresh:members:3:before: retained inputs unchanged
+ok 365 - equal_reference:fresh:members:3:before: all other owners and retired workspace preserved
+ok 366 - equal_reference:fresh:names:3:before: actual inactive retirement precedes interruption
+ok 367 - equal_reference:fresh:names:3:before: exact single fault propagates without success
+ok 368 - equal_reference:fresh:names:3:before: every actual owned handle explicitly closes
+ok 369 - equal_reference:fresh:names:3:before: retained inputs unchanged
+ok 370 - equal_reference:fresh:names:3:before: all other owners and retired workspace preserved
+ok 371 - equal_reference:fresh:names:3:after: actual inactive retirement precedes interruption
+ok 372 - equal_reference:fresh:names:3:after: exact single fault propagates without success
+ok 373 - equal_reference:fresh:names:3:after: every actual owned handle explicitly closes
+ok 374 - equal_reference:fresh:names:3:after: retained inputs unchanged
+ok 375 - equal_reference:fresh:names:3:after: all other owners and retired workspace preserved
+ok 376 - equal_reference:fresh:members:3:after: actual inactive retirement precedes interruption
+ok 377 - equal_reference:fresh:members:3:after: exact single fault propagates without success
+ok 378 - equal_reference:fresh:members:3:after: every actual owned handle explicitly closes
+ok 379 - equal_reference:fresh:members:3:after: retained inputs unchanged
+ok 380 - equal_reference:fresh:members:3:after: all other owners and retired workspace preserved
+ok 381 - equal_reference:fresh:write:2:before: actual inactive retirement precedes interruption
+ok 382 - equal_reference:fresh:write:2:before: exact single fault propagates without success
+ok 383 - equal_reference:fresh:write:2:before: every actual owned handle explicitly closes
+ok 384 - equal_reference:fresh:write:2:before: retained inputs unchanged
+ok 385 - equal_reference:fresh:write:2:before: all other owners and retired workspace preserved
+ok 386 - equal_reference:fresh:writer:2:binmode: actual inactive retirement precedes interruption
+ok 387 - equal_reference:fresh:writer:2:binmode: exact single fault propagates without success
+ok 388 - equal_reference:fresh:writer:2:binmode: every actual owned handle explicitly closes
+ok 389 - equal_reference:fresh:writer:2:binmode: retained inputs unchanged
+ok 390 - equal_reference:fresh:writer:2:binmode: all other owners and retired workspace preserved
+ok 391 - equal_reference:fresh:source:2:0:before: actual inactive retirement precedes interruption
+ok 392 - equal_reference:fresh:source:2:0:before: exact single fault propagates without success
+ok 393 - equal_reference:fresh:source:2:0:before: every actual owned handle explicitly closes
+ok 394 - equal_reference:fresh:source:2:0:before: retained inputs unchanged
+ok 395 - equal_reference:fresh:source:2:0:before: all other owners and retired workspace preserved
+ok 396 - equal_reference:fresh:recheck:source:2:0:0:before: actual inactive retirement precedes interruption
+ok 397 - equal_reference:fresh:recheck:source:2:0:0:before: exact single fault propagates without success
+ok 398 - equal_reference:fresh:recheck:source:2:0:0:before: every actual owned handle explicitly closes
+ok 399 - equal_reference:fresh:recheck:source:2:0:0:before: retained inputs unchanged
+ok 400 - equal_reference:fresh:recheck:source:2:0:0:before: all other owners and retired workspace preserved
+ok 401 - equal_reference:fresh:recheck:source:2:0:0:after: actual inactive retirement precedes interruption
+ok 402 - equal_reference:fresh:recheck:source:2:0:0:after: exact single fault propagates without success
+ok 403 - equal_reference:fresh:recheck:source:2:0:0:after: every actual owned handle explicitly closes
+ok 404 - equal_reference:fresh:recheck:source:2:0:0:after: retained inputs unchanged
+ok 405 - equal_reference:fresh:recheck:source:2:0:0:after: all other owners and retired workspace preserved
+ok 406 - equal_reference:fresh:seal:2:before: actual inactive retirement precedes interruption
+ok 407 - equal_reference:fresh:seal:2:before: exact single fault propagates without success
+ok 408 - equal_reference:fresh:seal:2:before: every actual owned handle explicitly closes
+ok 409 - equal_reference:fresh:seal:2:before: retained inputs unchanged
+ok 410 - equal_reference:fresh:seal:2:before: all other owners and retired workspace preserved
+ok 411 - equal_reference:fresh:seal:2:after: actual inactive retirement precedes interruption
+ok 412 - equal_reference:fresh:seal:2:after: exact single fault propagates without success
+ok 413 - equal_reference:fresh:seal:2:after: every actual owned handle explicitly closes
+ok 414 - equal_reference:fresh:seal:2:after: retained inputs unchanged
+ok 415 - equal_reference:fresh:seal:2:after: all other owners and retired workspace preserved
+ok 416 - equal_reference:fresh:write:2:after: actual inactive retirement precedes interruption
+ok 417 - equal_reference:fresh:write:2:after: exact single fault propagates without success
+ok 418 - equal_reference:fresh:write:2:after: every actual owned handle explicitly closes
+ok 419 - equal_reference:fresh:write:2:after: retained inputs unchanged
+ok 420 - equal_reference:fresh:write:2:after: all other owners and retired workspace preserved
+ok 421 - equal_reference:fresh:source:2:1:before: actual inactive retirement precedes interruption
+ok 422 - equal_reference:fresh:source:2:1:before: exact single fault propagates without success
+ok 423 - equal_reference:fresh:source:2:1:before: every actual owned handle explicitly closes
+ok 424 - equal_reference:fresh:source:2:1:before: retained inputs unchanged
+ok 425 - equal_reference:fresh:source:2:1:before: all other owners and retired workspace preserved
+ok 426 - equal_reference:fresh:recheck:source:2:1:0:before: actual inactive retirement precedes interruption
+ok 427 - equal_reference:fresh:recheck:source:2:1:0:before: exact single fault propagates without success
+ok 428 - equal_reference:fresh:recheck:source:2:1:0:before: every actual owned handle explicitly closes
+ok 429 - equal_reference:fresh:recheck:source:2:1:0:before: retained inputs unchanged
+ok 430 - equal_reference:fresh:recheck:source:2:1:0:before: all other owners and retired workspace preserved
+ok 431 - equal_reference:fresh:recheck:source:2:1:0:after: actual inactive retirement precedes interruption
+ok 432 - equal_reference:fresh:recheck:source:2:1:0:after: exact single fault propagates without success
+ok 433 - equal_reference:fresh:recheck:source:2:1:0:after: every actual owned handle explicitly closes
+ok 434 - equal_reference:fresh:recheck:source:2:1:0:after: retained inputs unchanged
+ok 435 - equal_reference:fresh:recheck:source:2:1:0:after: all other owners and retired workspace preserved
+ok 436 - equal_reference:fresh:members:4:before: actual inactive retirement precedes interruption
+ok 437 - equal_reference:fresh:members:4:before: exact single fault propagates without success
+ok 438 - equal_reference:fresh:members:4:before: every actual owned handle explicitly closes
+ok 439 - equal_reference:fresh:members:4:before: retained inputs unchanged
+ok 440 - equal_reference:fresh:members:4:before: all other owners and retired workspace preserved
+ok 441 - equal_reference:fresh:names:4:before: actual inactive retirement precedes interruption
+ok 442 - equal_reference:fresh:names:4:before: exact single fault propagates without success
+ok 443 - equal_reference:fresh:names:4:before: every actual owned handle explicitly closes
+ok 444 - equal_reference:fresh:names:4:before: retained inputs unchanged
+ok 445 - equal_reference:fresh:names:4:before: all other owners and retired workspace preserved
+ok 446 - equal_reference:fresh:names:4:after: actual inactive retirement precedes interruption
+ok 447 - equal_reference:fresh:names:4:after: exact single fault propagates without success
+ok 448 - equal_reference:fresh:names:4:after: every actual owned handle explicitly closes
+ok 449 - equal_reference:fresh:names:4:after: retained inputs unchanged
+ok 450 - equal_reference:fresh:names:4:after: all other owners and retired workspace preserved
+ok 451 - equal_reference:fresh:members:4:after: actual inactive retirement precedes interruption
+ok 452 - equal_reference:fresh:members:4:after: exact single fault propagates without success
+ok 453 - equal_reference:fresh:members:4:after: every actual owned handle explicitly closes
+ok 454 - equal_reference:fresh:members:4:after: retained inputs unchanged
+ok 455 - equal_reference:fresh:members:4:after: all other owners and retired workspace preserved
+ok 456 - equal_reference:fresh:directory_closure:4:before: actual inactive retirement precedes interruption
+ok 457 - equal_reference:fresh:directory_closure:4:before: exact single fault propagates without success
+ok 458 - equal_reference:fresh:directory_closure:4:before: every actual owned handle explicitly closes
+ok 459 - equal_reference:fresh:directory_closure:4:before: retained inputs unchanged
+ok 460 - equal_reference:fresh:directory_closure:4:before: all other owners and retired workspace preserved
+ok 461 - equal_reference:fresh:directory:evidence:6:before: actual inactive retirement precedes interruption
+ok 462 - equal_reference:fresh:directory:evidence:6:before: exact single fault propagates without success
+ok 463 - equal_reference:fresh:directory:evidence:6:before: every actual owned handle explicitly closes
+ok 464 - equal_reference:fresh:directory:evidence:6:before: retained inputs unchanged
+ok 465 - equal_reference:fresh:directory:evidence:6:before: all other owners and retired workspace preserved
+ok 466 - equal_reference:fresh:directory:evidence:6:after: actual inactive retirement precedes interruption
+ok 467 - equal_reference:fresh:directory:evidence:6:after: exact single fault propagates without success
+ok 468 - equal_reference:fresh:directory:evidence:6:after: every actual owned handle explicitly closes
+ok 469 - equal_reference:fresh:directory:evidence:6:after: retained inputs unchanged
+ok 470 - equal_reference:fresh:directory:evidence:6:after: all other owners and retired workspace preserved
+ok 471 - equal_reference:fresh:directory:archive:5:before: actual inactive retirement precedes interruption
+ok 472 - equal_reference:fresh:directory:archive:5:before: exact single fault propagates without success
+ok 473 - equal_reference:fresh:directory:archive:5:before: every actual owned handle explicitly closes
+ok 474 - equal_reference:fresh:directory:archive:5:before: retained inputs unchanged
+ok 475 - equal_reference:fresh:directory:archive:5:before: all other owners and retired workspace preserved
+ok 476 - equal_reference:fresh:directory:archive:5:after: actual inactive retirement precedes interruption
+ok 477 - equal_reference:fresh:directory:archive:5:after: exact single fault propagates without success
+ok 478 - equal_reference:fresh:directory:archive:5:after: every actual owned handle explicitly closes
+ok 479 - equal_reference:fresh:directory:archive:5:after: retained inputs unchanged
+ok 480 - equal_reference:fresh:directory:archive:5:after: all other owners and retired workspace preserved
+ok 481 - equal_reference:fresh:directory_closure:4:after: actual inactive retirement precedes interruption
+ok 482 - equal_reference:fresh:directory_closure:4:after: exact single fault propagates without success
+ok 483 - equal_reference:fresh:directory_closure:4:after: every actual owned handle explicitly closes
+ok 484 - equal_reference:fresh:directory_closure:4:after: retained inputs unchanged
+ok 485 - equal_reference:fresh:directory_closure:4:after: all other owners and retired workspace preserved
+ok 486 - equal_reference:fresh:source_closure:before: actual inactive retirement precedes interruption
+ok 487 - equal_reference:fresh:source_closure:before: exact single fault propagates without success
+ok 488 - equal_reference:fresh:source_closure:before: every actual owned handle explicitly closes
+ok 489 - equal_reference:fresh:source_closure:before: retained inputs unchanged
+ok 490 - equal_reference:fresh:source_closure:before: all other owners and retired workspace preserved
+ok 491 - equal_reference:fresh:recheck:source:0:1:1:before: actual inactive retirement precedes interruption
+ok 492 - equal_reference:fresh:recheck:source:0:1:1:before: exact single fault propagates without success
+ok 493 - equal_reference:fresh:recheck:source:0:1:1:before: every actual owned handle explicitly closes
+ok 494 - equal_reference:fresh:recheck:source:0:1:1:before: retained inputs unchanged
+ok 495 - equal_reference:fresh:recheck:source:0:1:1:before: all other owners and retired workspace preserved
+ok 496 - equal_reference:fresh:recheck:source:0:1:1:after: actual inactive retirement precedes interruption
+ok 497 - equal_reference:fresh:recheck:source:0:1:1:after: exact single fault propagates without success
+ok 498 - equal_reference:fresh:recheck:source:0:1:1:after: every actual owned handle explicitly closes
+ok 499 - equal_reference:fresh:recheck:source:0:1:1:after: retained inputs unchanged
+ok 500 - equal_reference:fresh:recheck:source:0:1:1:after: all other owners and retired workspace preserved
+ok 501 - equal_reference:fresh:source:0:2:before: actual inactive retirement precedes interruption
+ok 502 - equal_reference:fresh:source:0:2:before: exact single fault propagates without success
+ok 503 - equal_reference:fresh:source:0:2:before: every actual owned handle explicitly closes
+ok 504 - equal_reference:fresh:source:0:2:before: retained inputs unchanged
+ok 505 - equal_reference:fresh:source:0:2:before: all other owners and retired workspace preserved
+ok 506 - equal_reference:fresh:recheck:source:0:2:0:before: actual inactive retirement precedes interruption
+ok 507 - equal_reference:fresh:recheck:source:0:2:0:before: exact single fault propagates without success
+ok 508 - equal_reference:fresh:recheck:source:0:2:0:before: every actual owned handle explicitly closes
+ok 509 - equal_reference:fresh:recheck:source:0:2:0:before: retained inputs unchanged
+ok 510 - equal_reference:fresh:recheck:source:0:2:0:before: all other owners and retired workspace preserved
+ok 511 - equal_reference:fresh:recheck:source:0:2:0:after: actual inactive retirement precedes interruption
+ok 512 - equal_reference:fresh:recheck:source:0:2:0:after: exact single fault propagates without success
+ok 513 - equal_reference:fresh:recheck:source:0:2:0:after: every actual owned handle explicitly closes
+ok 514 - equal_reference:fresh:recheck:source:0:2:0:after: retained inputs unchanged
+ok 515 - equal_reference:fresh:recheck:source:0:2:0:after: all other owners and retired workspace preserved
+ok 516 - equal_reference:fresh:recheck:source:1:1:1:before: actual inactive retirement precedes interruption
+ok 517 - equal_reference:fresh:recheck:source:1:1:1:before: exact single fault propagates without success
+ok 518 - equal_reference:fresh:recheck:source:1:1:1:before: every actual owned handle explicitly closes
+ok 519 - equal_reference:fresh:recheck:source:1:1:1:before: retained inputs unchanged
+ok 520 - equal_reference:fresh:recheck:source:1:1:1:before: all other owners and retired workspace preserved
+ok 521 - equal_reference:fresh:recheck:source:1:1:1:after: actual inactive retirement precedes interruption
+ok 522 - equal_reference:fresh:recheck:source:1:1:1:after: exact single fault propagates without success
+ok 523 - equal_reference:fresh:recheck:source:1:1:1:after: every actual owned handle explicitly closes
+ok 524 - equal_reference:fresh:recheck:source:1:1:1:after: retained inputs unchanged
+ok 525 - equal_reference:fresh:recheck:source:1:1:1:after: all other owners and retired workspace preserved
+ok 526 - equal_reference:fresh:source:1:2:before: actual inactive retirement precedes interruption
+ok 527 - equal_reference:fresh:source:1:2:before: exact single fault propagates without success
+ok 528 - equal_reference:fresh:source:1:2:before: every actual owned handle explicitly closes
+ok 529 - equal_reference:fresh:source:1:2:before: retained inputs unchanged
+ok 530 - equal_reference:fresh:source:1:2:before: all other owners and retired workspace preserved
+ok 531 - equal_reference:fresh:recheck:source:1:2:0:before: actual inactive retirement precedes interruption
+ok 532 - equal_reference:fresh:recheck:source:1:2:0:before: exact single fault propagates without success
+ok 533 - equal_reference:fresh:recheck:source:1:2:0:before: every actual owned handle explicitly closes
+ok 534 - equal_reference:fresh:recheck:source:1:2:0:before: retained inputs unchanged
+ok 535 - equal_reference:fresh:recheck:source:1:2:0:before: all other owners and retired workspace preserved
+ok 536 - equal_reference:fresh:recheck:source:1:2:0:after: actual inactive retirement precedes interruption
+ok 537 - equal_reference:fresh:recheck:source:1:2:0:after: exact single fault propagates without success
+ok 538 - equal_reference:fresh:recheck:source:1:2:0:after: every actual owned handle explicitly closes
+ok 539 - equal_reference:fresh:recheck:source:1:2:0:after: retained inputs unchanged
+ok 540 - equal_reference:fresh:recheck:source:1:2:0:after: all other owners and retired workspace preserved
+ok 541 - equal_reference:fresh:recheck:source:2:1:1:before: actual inactive retirement precedes interruption
+ok 542 - equal_reference:fresh:recheck:source:2:1:1:before: exact single fault propagates without success
+ok 543 - equal_reference:fresh:recheck:source:2:1:1:before: every actual owned handle explicitly closes
+ok 544 - equal_reference:fresh:recheck:source:2:1:1:before: retained inputs unchanged
+ok 545 - equal_reference:fresh:recheck:source:2:1:1:before: all other owners and retired workspace preserved
+ok 546 - equal_reference:fresh:recheck:source:2:1:1:after: actual inactive retirement precedes interruption
+ok 547 - equal_reference:fresh:recheck:source:2:1:1:after: exact single fault propagates without success
+ok 548 - equal_reference:fresh:recheck:source:2:1:1:after: every actual owned handle explicitly closes
+ok 549 - equal_reference:fresh:recheck:source:2:1:1:after: retained inputs unchanged
+ok 550 - equal_reference:fresh:recheck:source:2:1:1:after: all other owners and retired workspace preserved
+ok 551 - equal_reference:fresh:source:2:2:before: actual inactive retirement precedes interruption
+ok 552 - equal_reference:fresh:source:2:2:before: exact single fault propagates without success
+ok 553 - equal_reference:fresh:source:2:2:before: every actual owned handle explicitly closes
+ok 554 - equal_reference:fresh:source:2:2:before: retained inputs unchanged
+ok 555 - equal_reference:fresh:source:2:2:before: all other owners and retired workspace preserved
+ok 556 - equal_reference:fresh:recheck:source:2:2:0:before: actual inactive retirement precedes interruption
+ok 557 - equal_reference:fresh:recheck:source:2:2:0:before: exact single fault propagates without success
+ok 558 - equal_reference:fresh:recheck:source:2:2:0:before: every actual owned handle explicitly closes
+ok 559 - equal_reference:fresh:recheck:source:2:2:0:before: retained inputs unchanged
+ok 560 - equal_reference:fresh:recheck:source:2:2:0:before: all other owners and retired workspace preserved
+ok 561 - equal_reference:fresh:recheck:source:2:2:0:after: actual inactive retirement precedes interruption
+ok 562 - equal_reference:fresh:recheck:source:2:2:0:after: exact single fault propagates without success
+ok 563 - equal_reference:fresh:recheck:source:2:2:0:after: every actual owned handle explicitly closes
+ok 564 - equal_reference:fresh:recheck:source:2:2:0:after: retained inputs unchanged
+ok 565 - equal_reference:fresh:recheck:source:2:2:0:after: all other owners and retired workspace preserved
+ok 566 - equal_reference:fresh:recheck:source:0:1:2:before: actual inactive retirement precedes interruption
+ok 567 - equal_reference:fresh:recheck:source:0:1:2:before: exact single fault propagates without success
+ok 568 - equal_reference:fresh:recheck:source:0:1:2:before: every actual owned handle explicitly closes
+ok 569 - equal_reference:fresh:recheck:source:0:1:2:before: retained inputs unchanged
+ok 570 - equal_reference:fresh:recheck:source:0:1:2:before: all other owners and retired workspace preserved
+ok 571 - equal_reference:fresh:recheck:source:0:1:2:after: actual inactive retirement precedes interruption
+ok 572 - equal_reference:fresh:recheck:source:0:1:2:after: exact single fault propagates without success
+ok 573 - equal_reference:fresh:recheck:source:0:1:2:after: every actual owned handle explicitly closes
+ok 574 - equal_reference:fresh:recheck:source:0:1:2:after: retained inputs unchanged
+ok 575 - equal_reference:fresh:recheck:source:0:1:2:after: all other owners and retired workspace preserved
+ok 576 - equal_reference:fresh:recheck:source:1:1:2:before: actual inactive retirement precedes interruption
+ok 577 - equal_reference:fresh:recheck:source:1:1:2:before: exact single fault propagates without success
+ok 578 - equal_reference:fresh:recheck:source:1:1:2:before: every actual owned handle explicitly closes
+ok 579 - equal_reference:fresh:recheck:source:1:1:2:before: retained inputs unchanged
+ok 580 - equal_reference:fresh:recheck:source:1:1:2:before: all other owners and retired workspace preserved
+ok 581 - equal_reference:fresh:recheck:source:1:1:2:after: actual inactive retirement precedes interruption
+ok 582 - equal_reference:fresh:recheck:source:1:1:2:after: exact single fault propagates without success
+ok 583 - equal_reference:fresh:recheck:source:1:1:2:after: every actual owned handle explicitly closes
+ok 584 - equal_reference:fresh:recheck:source:1:1:2:after: retained inputs unchanged
+ok 585 - equal_reference:fresh:recheck:source:1:1:2:after: all other owners and retired workspace preserved
+ok 586 - equal_reference:fresh:recheck:source:2:1:2:before: actual inactive retirement precedes interruption
+ok 587 - equal_reference:fresh:recheck:source:2:1:2:before: exact single fault propagates without success
+ok 588 - equal_reference:fresh:recheck:source:2:1:2:before: every actual owned handle explicitly closes
+ok 589 - equal_reference:fresh:recheck:source:2:1:2:before: retained inputs unchanged
+ok 590 - equal_reference:fresh:recheck:source:2:1:2:before: all other owners and retired workspace preserved
+ok 591 - equal_reference:fresh:recheck:source:2:1:2:after: actual inactive retirement precedes interruption
+ok 592 - equal_reference:fresh:recheck:source:2:1:2:after: exact single fault propagates without success
+ok 593 - equal_reference:fresh:recheck:source:2:1:2:after: every actual owned handle explicitly closes
+ok 594 - equal_reference:fresh:recheck:source:2:1:2:after: retained inputs unchanged
+ok 595 - equal_reference:fresh:recheck:source:2:1:2:after: all other owners and retired workspace preserved
+ok 596 - equal_reference:fresh:source_closure:after: actual inactive retirement precedes interruption
+ok 597 - equal_reference:fresh:source_closure:after: exact single fault propagates without success
+ok 598 - equal_reference:fresh:source_closure:after: every actual owned handle explicitly closes
+ok 599 - equal_reference:fresh:source_closure:after: retained inputs unchanged
+ok 600 - equal_reference:fresh:source_closure:after: all other owners and retired workspace preserved
+ok 601 - equal_reference:fresh:receipt:before: actual inactive retirement precedes interruption
+ok 602 - equal_reference:fresh:receipt:before: exact single fault propagates without success
+ok 603 - equal_reference:fresh:receipt:before: every actual owned handle explicitly closes
+ok 604 - equal_reference:fresh:receipt:before: retained inputs unchanged
+ok 605 - equal_reference:fresh:receipt:before: all other owners and retired workspace preserved
+ok 606 - equal_reference:fresh:receipt:after: actual inactive retirement precedes interruption
+ok 607 - equal_reference:fresh:receipt:after: exact single fault propagates without success
+ok 608 - equal_reference:fresh:receipt:after: every actual owned handle explicitly closes
+ok 609 - equal_reference:fresh:receipt:after: retained inputs unchanged
+ok 610 - equal_reference:fresh:receipt:after: all other owners and retired workspace preserved
+ok 611 - equal_reference:fresh:members:5:before: actual inactive retirement precedes interruption
+ok 612 - equal_reference:fresh:members:5:before: exact single fault propagates without success
+ok 613 - equal_reference:fresh:members:5:before: every actual owned handle explicitly closes
+ok 614 - equal_reference:fresh:members:5:before: retained inputs unchanged
+ok 615 - equal_reference:fresh:members:5:before: all other owners and retired workspace preserved
+ok 616 - equal_reference:fresh:names:5:before: actual inactive retirement precedes interruption
+ok 617 - equal_reference:fresh:names:5:before: exact single fault propagates without success
+ok 618 - equal_reference:fresh:names:5:before: every actual owned handle explicitly closes
+ok 619 - equal_reference:fresh:names:5:before: retained inputs unchanged
+ok 620 - equal_reference:fresh:names:5:before: all other owners and retired workspace preserved
+ok 621 - equal_reference:fresh:names:5:after: actual inactive retirement precedes interruption
+ok 622 - equal_reference:fresh:names:5:after: exact single fault propagates without success
+ok 623 - equal_reference:fresh:names:5:after: every actual owned handle explicitly closes
+ok 624 - equal_reference:fresh:names:5:after: retained inputs unchanged
+ok 625 - equal_reference:fresh:names:5:after: all other owners and retired workspace preserved
+ok 626 - equal_reference:fresh:members:5:after: actual inactive retirement precedes interruption
+ok 627 - equal_reference:fresh:members:5:after: exact single fault propagates without success
+ok 628 - equal_reference:fresh:members:5:after: every actual owned handle explicitly closes
+ok 629 - equal_reference:fresh:members:5:after: retained inputs unchanged
+ok 630 - equal_reference:fresh:members:5:after: all other owners and retired workspace preserved
+ok 631 - equal_reference:fresh:directory_closure:5:before: actual inactive retirement precedes interruption
+ok 632 - equal_reference:fresh:directory_closure:5:before: exact single fault propagates without success
+ok 633 - equal_reference:fresh:directory_closure:5:before: every actual owned handle explicitly closes
+ok 634 - equal_reference:fresh:directory_closure:5:before: retained inputs unchanged
+ok 635 - equal_reference:fresh:directory_closure:5:before: all other owners and retired workspace preserved
+ok 636 - equal_reference:fresh:directory:evidence:7:before: actual inactive retirement precedes interruption
+ok 637 - equal_reference:fresh:directory:evidence:7:before: exact single fault propagates without success
+ok 638 - equal_reference:fresh:directory:evidence:7:before: every actual owned handle explicitly closes
+ok 639 - equal_reference:fresh:directory:evidence:7:before: retained inputs unchanged
+ok 640 - equal_reference:fresh:directory:evidence:7:before: all other owners and retired workspace preserved
+ok 641 - equal_reference:fresh:directory:evidence:7:after: actual inactive retirement precedes interruption
+ok 642 - equal_reference:fresh:directory:evidence:7:after: exact single fault propagates without success
+ok 643 - equal_reference:fresh:directory:evidence:7:after: every actual owned handle explicitly closes
+ok 644 - equal_reference:fresh:directory:evidence:7:after: retained inputs unchanged
+ok 645 - equal_reference:fresh:directory:evidence:7:after: all other owners and retired workspace preserved
+ok 646 - equal_reference:fresh:directory:archive:6:before: actual inactive retirement precedes interruption
+ok 647 - equal_reference:fresh:directory:archive:6:before: exact single fault propagates without success
+ok 648 - equal_reference:fresh:directory:archive:6:before: every actual owned handle explicitly closes
+ok 649 - equal_reference:fresh:directory:archive:6:before: retained inputs unchanged
+ok 650 - equal_reference:fresh:directory:archive:6:before: all other owners and retired workspace preserved
+ok 651 - equal_reference:fresh:directory:archive:6:after: actual inactive retirement precedes interruption
+ok 652 - equal_reference:fresh:directory:archive:6:after: exact single fault propagates without success
+ok 653 - equal_reference:fresh:directory:archive:6:after: every actual owned handle explicitly closes
+ok 654 - equal_reference:fresh:directory:archive:6:after: retained inputs unchanged
+ok 655 - equal_reference:fresh:directory:archive:6:after: all other owners and retired workspace preserved
+ok 656 - equal_reference:fresh:directory_closure:5:after: actual inactive retirement precedes interruption
+ok 657 - equal_reference:fresh:directory_closure:5:after: exact single fault propagates without success
+ok 658 - equal_reference:fresh:directory_closure:5:after: every actual owned handle explicitly closes
+ok 659 - equal_reference:fresh:directory_closure:5:after: retained inputs unchanged
+ok 660 - equal_reference:fresh:directory_closure:5:after: all other owners and retired workspace preserved
+ok 661 - equal_reference:fresh:recheck:source:0:1:3:before: actual inactive retirement precedes interruption
+ok 662 - equal_reference:fresh:recheck:source:0:1:3:before: exact single fault propagates without success
+ok 663 - equal_reference:fresh:recheck:source:0:1:3:before: every actual owned handle explicitly closes
+ok 664 - equal_reference:fresh:recheck:source:0:1:3:before: retained inputs unchanged
+ok 665 - equal_reference:fresh:recheck:source:0:1:3:before: all other owners and retired workspace preserved
+ok 666 - equal_reference:fresh:recheck:source:0:1:3:after: actual inactive retirement precedes interruption
+ok 667 - equal_reference:fresh:recheck:source:0:1:3:after: exact single fault propagates without success
+ok 668 - equal_reference:fresh:recheck:source:0:1:3:after: every actual owned handle explicitly closes
+ok 669 - equal_reference:fresh:recheck:source:0:1:3:after: retained inputs unchanged
+ok 670 - equal_reference:fresh:recheck:source:0:1:3:after: all other owners and retired workspace preserved
+ok 671 - equal_reference:fresh:recheck:source:1:1:3:before: actual inactive retirement precedes interruption
+ok 672 - equal_reference:fresh:recheck:source:1:1:3:before: exact single fault propagates without success
+ok 673 - equal_reference:fresh:recheck:source:1:1:3:before: every actual owned handle explicitly closes
+ok 674 - equal_reference:fresh:recheck:source:1:1:3:before: retained inputs unchanged
+ok 675 - equal_reference:fresh:recheck:source:1:1:3:before: all other owners and retired workspace preserved
+ok 676 - equal_reference:fresh:recheck:source:1:1:3:after: actual inactive retirement precedes interruption
+ok 677 - equal_reference:fresh:recheck:source:1:1:3:after: exact single fault propagates without success
+ok 678 - equal_reference:fresh:recheck:source:1:1:3:after: every actual owned handle explicitly closes
+ok 679 - equal_reference:fresh:recheck:source:1:1:3:after: retained inputs unchanged
+ok 680 - equal_reference:fresh:recheck:source:1:1:3:after: all other owners and retired workspace preserved
+ok 681 - equal_reference:fresh:recheck:source:2:1:3:before: actual inactive retirement precedes interruption
+ok 682 - equal_reference:fresh:recheck:source:2:1:3:before: exact single fault propagates without success
+ok 683 - equal_reference:fresh:recheck:source:2:1:3:before: every actual owned handle explicitly closes
+ok 684 - equal_reference:fresh:recheck:source:2:1:3:before: retained inputs unchanged
+ok 685 - equal_reference:fresh:recheck:source:2:1:3:before: all other owners and retired workspace preserved
+ok 686 - equal_reference:fresh:recheck:source:2:1:3:after: actual inactive retirement precedes interruption
+ok 687 - equal_reference:fresh:recheck:source:2:1:3:after: exact single fault propagates without success
+ok 688 - equal_reference:fresh:recheck:source:2:1:3:after: every actual owned handle explicitly closes
+ok 689 - equal_reference:fresh:recheck:source:2:1:3:after: retained inputs unchanged
+ok 690 - equal_reference:fresh:recheck:source:2:1:3:after: all other owners and retired workspace preserved
+ok 691 - no compiler or native process attempt
+1..691

@@ -1,0 +1,22 @@
+{
+  "book": {
+    "exact_output_absent": true,
+    "exit_code": 0,
+    "new_passage_verified": true,
+    "output": ".artifacts/tmp/native-proxy-observation-archive-equal-fresh-calls-book-20260911/book",
+    "rendered_bytes": 23236918,
+    "rendered_files": 98,
+    "same_volume_direct_objects": true
+  },
+  "doctrines": "Final staged-index and commit-hook passes are required conditions of the durable work-unit commit; full CI/push and startup/native/parent gates remain open.",
+  "documentation": "documentation.json",
+  "durability": "Thirty-six predecessor inputs remain byte-identical to 83501699d4c9f45d0c5c43837453141f60d02e8b, including twenty-one Perl modules and the ordinary-fresh adapter sources used for this profile adaptation. Four prospective pins and twelve exact raw recovery copies preserve the first producer/oracle results. The healthy equal-content receipt is authenticated directly from Git and independently rechecked without rerunning its matrix. Current task/book/Knowledge Map and exact predecessor acceptance history preserve continuity.",
+  "falsification": "Twenty-four altered reports reject case/occurrence omissions or aliases, unhit faults, false success/primary errors, omitted cleanup and source/writer/directory/observer closure, foreign identities, changed bytes/permissions, hidden target reads, removal of the exact other observation hold, changed input/shared bytes, collapsed original identity, lost allocations and process attempts. Three domain controls reject duplicate, unsafe ownership-transfer and omitted selectors. These are report/domain controls; genuine omitted-close implementations and modeled close reports remain separate owned work.",
+  "knowledge_map": "knowledge-map: OK (1161 facts, 6391 unique questions, 6562 answer occurrences, 139 bounded topic shards; query parity verified)",
+  "knowledge_projection": "knowledge-projection.json",
+  "limits": "Only the selected equal-reference fresh helper-call cuts are executed. Partial syswrite progress, equal-reference existing route, modeled close reports, omitted-close implementations, bounds/layout and final applicability join remain owned siblings. No original target reopen, compiler/native execution, archive release, crash or arbitrary-writer atomicity claim. Handle/event totals are instances in separate case namespaces, not distinct numeric descriptor values or globally unique strings. Directory-stat duplicates close immediately; directory CLOEXEC is explicitly unmeasured. Source and later-writer flags are checked, while the early binmode cut records the actual flag without claiming later explicit writer setup. No implementation change, first-run repair or historical/native/compiler matrix rerun occurred.",
+  "owner": "HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.12.4.1.3.4.2.3.2.3",
+  "rederivation": "First guarded producer and independent oracle runs exit 0. All 138 selected equal-reference fresh cuts propagate one exact fault without success: 691 TAP assertions, 13691 events and 1238 owned handle instances (558 sources, 246 writers, 434 directories). Independent retained-byte grouping requires wrapper/private/global bytes to agree, their three original paths/native identities to remain distinct, and their destination to be shared. Healthy-prefix/unwind and direct physical checks derive exact deduplicated empty/full remnants and actual handle/native equality. All observed owned handles explicitly close; all 552 distinct roots are absent.",
+  "schema": "fsmgen.inactive_archive_equal_fresh_calls_review.v1",
+  "task_integrity": "all active task-tree invariants hold (trees=4, nodes=1351, segments=3, compact_terminals=13, index_archives=1, migrations=1, acceptance_histories=1)"
+}

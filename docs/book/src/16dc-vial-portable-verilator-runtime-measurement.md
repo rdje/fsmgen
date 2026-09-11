@@ -2185,8 +2185,8 @@ cleanup; injecting an adapter exception there would manufacture a handoff leak.
 That observation is excluded from throwing call-fault selectors. Close events
 are reserved for separately qualified return-error and omitted-close controls.
 Healthy traces prove this selection and ownership order; the following matrices
-add ordinary fresh/existing call cuts. Other interruption domains and native
-release authority remain open. Replay:
+add ordinary fresh/existing and equal-content fresh call cuts. Other
+interruption domains and native release authority remain open. Replay:
 
 ```bash
 scripts/run_with_ram_guard.sh -- perl docs/audits/native-proxy-observation-archive-boundaries-20260911/qualify.t
@@ -2209,8 +2209,8 @@ workspace stays absent. An existing partial archive still requires separately
 owned recovery; this path does not silently fill or repair it.
 
 These are throwing helper-call controls for the ordinary fresh route. Short
-writes, close-return errors, equal-content routes and native release have
-separate qualification gates. Existing-route call cuts are described below. Inspect the saved qualification and oracle
+writes, close-return errors, the equal-content existing route and native
+release have separate qualification gates. Further call cuts are described below. Inspect the saved qualification and oracle
 under `docs/audits/native-proxy-observation-archive-fresh-calls-20260911/result/`.
 The corresponding inert producer and independent checker are:
 
@@ -2233,14 +2233,38 @@ remain unchanged. Verification makes no writes and grants no release authority.
 The independent audit checks the entire preparation, the interrupted healthy
 prefix and cleanup order; it does not assume preparation succeeded.
 
-Equal-content routes, partial writes, close-return errors and native release
-remain separate gates. Saved evidence and the independent oracle live under
+Equal-content existing calls, partial writes, close-return errors and native
+release remain separate gates. Saved evidence and the independent oracle live under
 `docs/audits/native-proxy-observation-archive-existing-calls-20260911/`. The inert
 qualification commands are:
 
 ```bash
 scripts/run_with_ram_guard.sh -- perl docs/audits/native-proxy-observation-archive-existing-calls-20260911/qualify.t
 scripts/run_with_ram_guard.sh -- python3 -B docs/audits/native-proxy-observation-archive-existing-calls-20260911/audit.py
+```
+
+Selected fresh-archive call failures are also qualified when several original
+sources have identical bytes. In this profile, the wrapper and the private and
+global runtime references contain the same complete byte string. Their original
+paths and native identities remain distinct, while all three map to one
+content-addressed archive file. The C and image bytes remain separate files.
+
+The independent audit reconstructs grouping from complete retained bytes and
+explicitly checks the original identities. For example, a failure before the
+shared file is populated leaves its empty exclusive file; a later interruption
+retains the complete shared bytes without adding a file for each matching
+source. The ordered selected trace, conservative file set and all observed
+source/writer/directory cleanup must match. Both observation holds, the other
+runtime/workspace and retained inputs remain unchanged after target retirement.
+An interrupted call does not return an archive receipt or grant release.
+
+The equal-content existing route, partial writes and close-return errors remain
+separate qualification gates. Inspect the saved evidence and independent audit
+under `docs/audits/native-proxy-observation-archive-equal-fresh-calls-20260911/`:
+
+```bash
+scripts/run_with_ram_guard.sh -- perl docs/audits/native-proxy-observation-archive-equal-fresh-calls-20260911/qualify.t
+scripts/run_with_ram_guard.sh -- python3 -B docs/audits/native-proxy-observation-archive-equal-fresh-calls-20260911/audit.py
 ```
 
 The helper checks bounded regular source/output files and the native header,

@@ -1,0 +1,9 @@
+{
+  "exact_output_absent": true,
+  "exit_code": 0,
+  "new_passage_verified": true,
+  "output": ".artifacts/tmp/native-proxy-observation-archive-equal-fresh-calls-book-20260911/book",
+  "rendered_bytes": 23236918,
+  "rendered_files": 98,
+  "same_volume_direct_objects": true
+}
