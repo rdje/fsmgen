@@ -1,0 +1,85 @@
+{
+  "allocations": 1308,
+  "assertions": 655,
+  "cases": 315,
+  "cut_counts": {
+    "fresh": {
+      "post": 80,
+      "pre": 71
+    },
+    "reuse": {
+      "post": 80,
+      "pre": 80
+    }
+  },
+  "falsifiers": [
+    "hidden failure",
+    "lost semantic boundary",
+    "wrong order binding",
+    "lost call",
+    "lost directory",
+    "lost source",
+    "lost observer close",
+    "invented lock identity",
+    "lost lock seal",
+    "lost other owner",
+    "lost failed hold",
+    "wrong actual mutant occurrence",
+    "lost omitted close report",
+    "authority type changed",
+    "lost allocation",
+    "forbidden process"
+  ],
+  "limits": "Finite synchronous census call-boundary controls. Census/target/lock close reports, every aggregate-reader internal instruction or syscall error, asynchronous crashes, native ownership, archive/capture settlement, exact release, activation and historical startup repair remain separately owned or unqualified.",
+  "mutants": [
+    "fresh:pre:omit_original_reference_close",
+    "fresh:pre:omit_image_input_close",
+    "fresh:pre:omit_fresh_reference_close",
+    "fresh:post:omit_original_reference_close",
+    "fresh:post:omit_image_input_close",
+    "fresh:post:omit_fresh_reference_close",
+    "reuse:pre:omit_original_reference_close",
+    "reuse:pre:omit_image_input_close",
+    "reuse:pre:omit_fresh_reference_close",
+    "reuse:post:omit_original_reference_close",
+    "reuse:post:omit_image_input_close",
+    "reuse:post:omit_fresh_reference_close"
+  ],
+  "observed_bindings": {
+    "fresh": {
+      "post": [
+        "other,other,primary,primary",
+        "other,primary,other,primary",
+        "other,primary,primary,other",
+        "primary,other,other,primary",
+        "primary,other,primary,other",
+        "primary,primary,other,other"
+      ],
+      "pre": [
+        "other,other,primary",
+        "other,primary,other",
+        "primary,other,other"
+      ]
+    },
+    "reuse": {
+      "post": [
+        "other,other,primary,primary",
+        "other,primary,other,primary",
+        "other,primary,primary,other",
+        "primary,other,other,primary",
+        "primary,other,primary,other",
+        "primary,primary,other,other"
+      ],
+      "pre": [
+        "other,other,primary,primary",
+        "other,primary,other,primary",
+        "other,primary,primary,other",
+        "primary,other,other,primary",
+        "primary,other,primary,other",
+        "primary,primary,other,other"
+      ]
+    }
+  },
+  "schema": "fsmgen.inactive_observation_semantic_cut_audit.v1",
+  "success": true
+}

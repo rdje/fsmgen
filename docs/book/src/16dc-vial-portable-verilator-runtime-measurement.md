@@ -1983,6 +1983,26 @@ scripts/run_with_ram_guard.sh -- perl docs/audits/native-proxy-observation-coord
 python3 -B docs/audits/native-proxy-observation-coordinator-cuts-20260911/audit.py
 ```
 
+The semantic-census interruption controls cover reference reads, decoding,
+filename keys, image matching and snapshots, plus image-input checks and
+retained/fresh reference closure. Complete image readers are checked at entry
+and after they return closed snapshots. Both acquisition routes and both
+semantic passes are exercised.
+
+Canonical reference filenames can sort differently in each fixture. The plan
+declares the possible image-read orders before execution, and the oracle binds
+each case to its actual records. Each cut runs with one actual order; this is
+not every cut-by-order combination. Repeated reads of the same path are checked
+as separate handle occurrences, so a closed reread cannot stand in for an open
+original. Conservative holds and other owners remain unchanged as specified.
+Census close reports and deeper aggregate-reader internals remain separate.
+Replay:
+
+```bash
+scripts/run_with_ram_guard.sh -- perl docs/audits/native-proxy-observation-semantic-cuts-20260911/qualify.t
+python3 -B docs/audits/native-proxy-observation-semantic-cuts-20260911/audit.py
+```
+
 The helper checks bounded regular source/output files and the native header,
 then sets executable permissions through the admitted open file handle. A
 regression exposed path-based permission changes affecting a substituted file

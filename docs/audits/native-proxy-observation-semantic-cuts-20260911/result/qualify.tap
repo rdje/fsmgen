@@ -1,0 +1,656 @@
+ok 1 - fresh:pre:complete: exact executed prefix and outcome
+ok 2 - fresh:pre:complete: explicit descriptor disposition and observer recovery
+ok 3 - fresh:pre:inspect:enter: exact executed prefix and outcome
+ok 4 - fresh:pre:inspect:enter: explicit descriptor disposition and observer recovery
+ok 5 - fresh:pre:reference:initial:0:read: exact executed prefix and outcome
+ok 6 - fresh:pre:reference:initial:0:read: explicit descriptor disposition and observer recovery
+ok 7 - fresh:pre:reference:initial:0:decode: exact executed prefix and outcome
+ok 8 - fresh:pre:reference:initial:0:decode: explicit descriptor disposition and observer recovery
+ok 9 - fresh:pre:reference:initial:0:key: exact executed prefix and outcome
+ok 10 - fresh:pre:reference:initial:0:key: explicit descriptor disposition and observer recovery
+ok 11 - fresh:pre:image:initial:other:enter: exact executed prefix and outcome
+ok 12 - fresh:pre:image:initial:other:enter: explicit descriptor disposition and observer recovery
+ok 13 - fresh:pre:image:initial:other:directory:initial: exact executed prefix and outcome
+ok 14 - fresh:pre:image:initial:other:directory:initial: explicit descriptor disposition and observer recovery
+ok 15 - fresh:pre:image:initial:other:input:c:read: exact executed prefix and outcome
+ok 16 - fresh:pre:image:initial:other:input:c:read: explicit descriptor disposition and observer recovery
+ok 17 - fresh:pre:image:initial:other:input:image:read: exact executed prefix and outcome
+ok 18 - fresh:pre:image:initial:other:input:image:read: explicit descriptor disposition and observer recovery
+ok 19 - fresh:pre:image:initial:other:reader:enter: exact executed prefix and outcome
+ok 20 - fresh:pre:image:initial:other:reader:enter: explicit descriptor disposition and observer recovery
+ok 21 - fresh:pre:image:initial:other:reader:return: exact executed prefix and outcome
+ok 22 - fresh:pre:image:initial:other:reader:return: explicit descriptor disposition and observer recovery
+ok 23 - fresh:pre:image:initial:other:input:c:check: exact executed prefix and outcome
+ok 24 - fresh:pre:image:initial:other:input:c:check: explicit descriptor disposition and observer recovery
+ok 25 - fresh:pre:image:initial:other:input:image:check: exact executed prefix and outcome
+ok 26 - fresh:pre:image:initial:other:input:image:check: explicit descriptor disposition and observer recovery
+ok 27 - fresh:pre:image:initial:other:directory:final: exact executed prefix and outcome
+ok 28 - fresh:pre:image:initial:other:directory:final: explicit descriptor disposition and observer recovery
+ok 29 - fresh:pre:image:initial:other:return: exact executed prefix and outcome
+ok 30 - fresh:pre:image:initial:other:return: explicit descriptor disposition and observer recovery
+ok 31 - fresh:pre:reference:initial:0:match: exact executed prefix and outcome
+ok 32 - fresh:pre:reference:initial:0:match: explicit descriptor disposition and observer recovery
+ok 33 - fresh:pre:reference:initial:0:check: exact executed prefix and outcome
+ok 34 - fresh:pre:reference:initial:0:check: explicit descriptor disposition and observer recovery
+ok 35 - fresh:pre:reference:initial:0:snapshot: exact executed prefix and outcome
+ok 36 - fresh:pre:reference:initial:0:snapshot: explicit descriptor disposition and observer recovery
+ok 37 - fresh:pre:reference:initial:1:read: exact executed prefix and outcome
+ok 38 - fresh:pre:reference:initial:1:read: explicit descriptor disposition and observer recovery
+ok 39 - fresh:pre:reference:initial:1:decode: exact executed prefix and outcome
+ok 40 - fresh:pre:reference:initial:1:decode: explicit descriptor disposition and observer recovery
+ok 41 - fresh:pre:reference:initial:1:key: exact executed prefix and outcome
+ok 42 - fresh:pre:reference:initial:1:key: explicit descriptor disposition and observer recovery
+ok 43 - fresh:pre:reference:initial:1:match: exact executed prefix and outcome
+ok 44 - fresh:pre:reference:initial:1:match: explicit descriptor disposition and observer recovery
+ok 45 - fresh:pre:reference:initial:1:check: exact executed prefix and outcome
+ok 46 - fresh:pre:reference:initial:1:check: explicit descriptor disposition and observer recovery
+ok 47 - fresh:pre:reference:initial:1:snapshot: exact executed prefix and outcome
+ok 48 - fresh:pre:reference:initial:1:snapshot: explicit descriptor disposition and observer recovery
+ok 49 - fresh:pre:reference:initial:2:read: exact executed prefix and outcome
+ok 50 - fresh:pre:reference:initial:2:read: explicit descriptor disposition and observer recovery
+ok 51 - fresh:pre:reference:initial:2:decode: exact executed prefix and outcome
+ok 52 - fresh:pre:reference:initial:2:decode: explicit descriptor disposition and observer recovery
+ok 53 - fresh:pre:reference:initial:2:key: exact executed prefix and outcome
+ok 54 - fresh:pre:reference:initial:2:key: explicit descriptor disposition and observer recovery
+ok 55 - fresh:pre:image:initial:primary:enter: exact executed prefix and outcome
+ok 56 - fresh:pre:image:initial:primary:enter: explicit descriptor disposition and observer recovery
+ok 57 - fresh:pre:image:initial:primary:directory:initial: exact executed prefix and outcome
+ok 58 - fresh:pre:image:initial:primary:directory:initial: explicit descriptor disposition and observer recovery
+ok 59 - fresh:pre:image:initial:primary:input:c:read: exact executed prefix and outcome
+ok 60 - fresh:pre:image:initial:primary:input:c:read: explicit descriptor disposition and observer recovery
+ok 61 - fresh:pre:image:initial:primary:input:image:read: exact executed prefix and outcome
+ok 62 - fresh:pre:image:initial:primary:input:image:read: explicit descriptor disposition and observer recovery
+ok 63 - fresh:pre:image:initial:primary:reader:enter: exact executed prefix and outcome
+ok 64 - fresh:pre:image:initial:primary:reader:enter: explicit descriptor disposition and observer recovery
+ok 65 - fresh:pre:image:initial:primary:reader:return: exact executed prefix and outcome
+ok 66 - fresh:pre:image:initial:primary:reader:return: explicit descriptor disposition and observer recovery
+ok 67 - fresh:pre:image:initial:primary:input:c:check: exact executed prefix and outcome
+ok 68 - fresh:pre:image:initial:primary:input:c:check: explicit descriptor disposition and observer recovery
+ok 69 - fresh:pre:image:initial:primary:input:image:check: exact executed prefix and outcome
+ok 70 - fresh:pre:image:initial:primary:input:image:check: explicit descriptor disposition and observer recovery
+ok 71 - fresh:pre:image:initial:primary:directory:final: exact executed prefix and outcome
+ok 72 - fresh:pre:image:initial:primary:directory:final: explicit descriptor disposition and observer recovery
+ok 73 - fresh:pre:image:initial:primary:return: exact executed prefix and outcome
+ok 74 - fresh:pre:image:initial:primary:return: explicit descriptor disposition and observer recovery
+ok 75 - fresh:pre:reference:initial:2:match: exact executed prefix and outcome
+ok 76 - fresh:pre:reference:initial:2:match: explicit descriptor disposition and observer recovery
+ok 77 - fresh:pre:reference:initial:2:check: exact executed prefix and outcome
+ok 78 - fresh:pre:reference:initial:2:check: explicit descriptor disposition and observer recovery
+ok 79 - fresh:pre:reference:initial:2:snapshot: exact executed prefix and outcome
+ok 80 - fresh:pre:reference:initial:2:snapshot: explicit descriptor disposition and observer recovery
+ok 81 - fresh:pre:closure:enter: exact executed prefix and outcome
+ok 82 - fresh:pre:closure:enter: explicit descriptor disposition and observer recovery
+ok 83 - fresh:pre:closure:names: exact executed prefix and outcome
+ok 84 - fresh:pre:closure:names: explicit descriptor disposition and observer recovery
+ok 85 - fresh:pre:reference:closure:0:original: exact executed prefix and outcome
+ok 86 - fresh:pre:reference:closure:0:original: explicit descriptor disposition and observer recovery
+ok 87 - fresh:pre:reference:closure:0:read: exact executed prefix and outcome
+ok 88 - fresh:pre:reference:closure:0:read: explicit descriptor disposition and observer recovery
+ok 89 - fresh:pre:reference:closure:0:fresh: exact executed prefix and outcome
+ok 90 - fresh:pre:reference:closure:0:fresh: explicit descriptor disposition and observer recovery
+ok 91 - fresh:pre:reference:closure:1:original: exact executed prefix and outcome
+ok 92 - fresh:pre:reference:closure:1:original: explicit descriptor disposition and observer recovery
+ok 93 - fresh:pre:reference:closure:1:read: exact executed prefix and outcome
+ok 94 - fresh:pre:reference:closure:1:read: explicit descriptor disposition and observer recovery
+ok 95 - fresh:pre:reference:closure:1:fresh: exact executed prefix and outcome
+ok 96 - fresh:pre:reference:closure:1:fresh: explicit descriptor disposition and observer recovery
+ok 97 - fresh:pre:reference:closure:2:original: exact executed prefix and outcome
+ok 98 - fresh:pre:reference:closure:2:original: explicit descriptor disposition and observer recovery
+ok 99 - fresh:pre:reference:closure:2:read: exact executed prefix and outcome
+ok 100 - fresh:pre:reference:closure:2:read: explicit descriptor disposition and observer recovery
+ok 101 - fresh:pre:reference:closure:2:fresh: exact executed prefix and outcome
+ok 102 - fresh:pre:reference:closure:2:fresh: explicit descriptor disposition and observer recovery
+ok 103 - fresh:pre:image:closure:other:enter: exact executed prefix and outcome
+ok 104 - fresh:pre:image:closure:other:enter: explicit descriptor disposition and observer recovery
+ok 105 - fresh:pre:image:closure:other:directory:initial: exact executed prefix and outcome
+ok 106 - fresh:pre:image:closure:other:directory:initial: explicit descriptor disposition and observer recovery
+ok 107 - fresh:pre:image:closure:other:input:c:read: exact executed prefix and outcome
+ok 108 - fresh:pre:image:closure:other:input:c:read: explicit descriptor disposition and observer recovery
+ok 109 - fresh:pre:image:closure:other:input:image:read: exact executed prefix and outcome
+ok 110 - fresh:pre:image:closure:other:input:image:read: explicit descriptor disposition and observer recovery
+ok 111 - fresh:pre:image:closure:other:reader:enter: exact executed prefix and outcome
+ok 112 - fresh:pre:image:closure:other:reader:enter: explicit descriptor disposition and observer recovery
+ok 113 - fresh:pre:image:closure:other:reader:return: exact executed prefix and outcome
+ok 114 - fresh:pre:image:closure:other:reader:return: explicit descriptor disposition and observer recovery
+ok 115 - fresh:pre:image:closure:other:input:c:check: exact executed prefix and outcome
+ok 116 - fresh:pre:image:closure:other:input:c:check: explicit descriptor disposition and observer recovery
+ok 117 - fresh:pre:image:closure:other:input:image:check: exact executed prefix and outcome
+ok 118 - fresh:pre:image:closure:other:input:image:check: explicit descriptor disposition and observer recovery
+ok 119 - fresh:pre:image:closure:other:directory:final: exact executed prefix and outcome
+ok 120 - fresh:pre:image:closure:other:directory:final: explicit descriptor disposition and observer recovery
+ok 121 - fresh:pre:image:closure:other:return: exact executed prefix and outcome
+ok 122 - fresh:pre:image:closure:other:return: explicit descriptor disposition and observer recovery
+ok 123 - fresh:pre:image:closure:primary:enter: exact executed prefix and outcome
+ok 124 - fresh:pre:image:closure:primary:enter: explicit descriptor disposition and observer recovery
+ok 125 - fresh:pre:image:closure:primary:directory:initial: exact executed prefix and outcome
+ok 126 - fresh:pre:image:closure:primary:directory:initial: explicit descriptor disposition and observer recovery
+ok 127 - fresh:pre:image:closure:primary:input:c:read: exact executed prefix and outcome
+ok 128 - fresh:pre:image:closure:primary:input:c:read: explicit descriptor disposition and observer recovery
+ok 129 - fresh:pre:image:closure:primary:input:image:read: exact executed prefix and outcome
+ok 130 - fresh:pre:image:closure:primary:input:image:read: explicit descriptor disposition and observer recovery
+ok 131 - fresh:pre:image:closure:primary:reader:enter: exact executed prefix and outcome
+ok 132 - fresh:pre:image:closure:primary:reader:enter: explicit descriptor disposition and observer recovery
+ok 133 - fresh:pre:image:closure:primary:reader:return: exact executed prefix and outcome
+ok 134 - fresh:pre:image:closure:primary:reader:return: explicit descriptor disposition and observer recovery
+ok 135 - fresh:pre:image:closure:primary:input:c:check: exact executed prefix and outcome
+ok 136 - fresh:pre:image:closure:primary:input:c:check: explicit descriptor disposition and observer recovery
+ok 137 - fresh:pre:image:closure:primary:input:image:check: exact executed prefix and outcome
+ok 138 - fresh:pre:image:closure:primary:input:image:check: explicit descriptor disposition and observer recovery
+ok 139 - fresh:pre:image:closure:primary:directory:final: exact executed prefix and outcome
+ok 140 - fresh:pre:image:closure:primary:directory:final: explicit descriptor disposition and observer recovery
+ok 141 - fresh:pre:image:closure:primary:return: exact executed prefix and outcome
+ok 142 - fresh:pre:image:closure:primary:return: explicit descriptor disposition and observer recovery
+ok 143 - fresh:pre:closure:return: exact executed prefix and outcome
+ok 144 - fresh:pre:closure:return: explicit descriptor disposition and observer recovery
+ok 145 - fresh:post:complete: exact executed prefix and outcome
+ok 146 - fresh:post:complete: explicit descriptor disposition and observer recovery
+ok 147 - fresh:post:inspect:enter: exact executed prefix and outcome
+ok 148 - fresh:post:inspect:enter: explicit descriptor disposition and observer recovery
+ok 149 - fresh:post:reference:initial:0:read: exact executed prefix and outcome
+ok 150 - fresh:post:reference:initial:0:read: explicit descriptor disposition and observer recovery
+ok 151 - fresh:post:reference:initial:0:decode: exact executed prefix and outcome
+ok 152 - fresh:post:reference:initial:0:decode: explicit descriptor disposition and observer recovery
+ok 153 - fresh:post:reference:initial:0:key: exact executed prefix and outcome
+ok 154 - fresh:post:reference:initial:0:key: explicit descriptor disposition and observer recovery
+ok 155 - fresh:post:image:initial:other:enter: exact executed prefix and outcome
+ok 156 - fresh:post:image:initial:other:enter: explicit descriptor disposition and observer recovery
+ok 157 - fresh:post:image:initial:other:directory:initial: exact executed prefix and outcome
+ok 158 - fresh:post:image:initial:other:directory:initial: explicit descriptor disposition and observer recovery
+ok 159 - fresh:post:image:initial:other:input:c:read: exact executed prefix and outcome
+ok 160 - fresh:post:image:initial:other:input:c:read: explicit descriptor disposition and observer recovery
+ok 161 - fresh:post:image:initial:other:input:image:read: exact executed prefix and outcome
+ok 162 - fresh:post:image:initial:other:input:image:read: explicit descriptor disposition and observer recovery
+ok 163 - fresh:post:image:initial:other:reader:enter: exact executed prefix and outcome
+ok 164 - fresh:post:image:initial:other:reader:enter: explicit descriptor disposition and observer recovery
+ok 165 - fresh:post:image:initial:other:reader:return: exact executed prefix and outcome
+ok 166 - fresh:post:image:initial:other:reader:return: explicit descriptor disposition and observer recovery
+ok 167 - fresh:post:image:initial:other:input:c:check: exact executed prefix and outcome
+ok 168 - fresh:post:image:initial:other:input:c:check: explicit descriptor disposition and observer recovery
+ok 169 - fresh:post:image:initial:other:input:image:check: exact executed prefix and outcome
+ok 170 - fresh:post:image:initial:other:input:image:check: explicit descriptor disposition and observer recovery
+ok 171 - fresh:post:image:initial:other:directory:final: exact executed prefix and outcome
+ok 172 - fresh:post:image:initial:other:directory:final: explicit descriptor disposition and observer recovery
+ok 173 - fresh:post:image:initial:other:return: exact executed prefix and outcome
+ok 174 - fresh:post:image:initial:other:return: explicit descriptor disposition and observer recovery
+ok 175 - fresh:post:reference:initial:0:match: exact executed prefix and outcome
+ok 176 - fresh:post:reference:initial:0:match: explicit descriptor disposition and observer recovery
+ok 177 - fresh:post:reference:initial:0:check: exact executed prefix and outcome
+ok 178 - fresh:post:reference:initial:0:check: explicit descriptor disposition and observer recovery
+ok 179 - fresh:post:reference:initial:0:snapshot: exact executed prefix and outcome
+ok 180 - fresh:post:reference:initial:0:snapshot: explicit descriptor disposition and observer recovery
+ok 181 - fresh:post:reference:initial:1:read: exact executed prefix and outcome
+ok 182 - fresh:post:reference:initial:1:read: explicit descriptor disposition and observer recovery
+ok 183 - fresh:post:reference:initial:1:decode: exact executed prefix and outcome
+ok 184 - fresh:post:reference:initial:1:decode: explicit descriptor disposition and observer recovery
+ok 185 - fresh:post:reference:initial:1:key: exact executed prefix and outcome
+ok 186 - fresh:post:reference:initial:1:key: explicit descriptor disposition and observer recovery
+ok 187 - fresh:post:reference:initial:1:match: exact executed prefix and outcome
+ok 188 - fresh:post:reference:initial:1:match: explicit descriptor disposition and observer recovery
+ok 189 - fresh:post:reference:initial:1:check: exact executed prefix and outcome
+ok 190 - fresh:post:reference:initial:1:check: explicit descriptor disposition and observer recovery
+ok 191 - fresh:post:reference:initial:1:snapshot: exact executed prefix and outcome
+ok 192 - fresh:post:reference:initial:1:snapshot: explicit descriptor disposition and observer recovery
+ok 193 - fresh:post:reference:initial:2:read: exact executed prefix and outcome
+ok 194 - fresh:post:reference:initial:2:read: explicit descriptor disposition and observer recovery
+ok 195 - fresh:post:reference:initial:2:decode: exact executed prefix and outcome
+ok 196 - fresh:post:reference:initial:2:decode: explicit descriptor disposition and observer recovery
+ok 197 - fresh:post:reference:initial:2:key: exact executed prefix and outcome
+ok 198 - fresh:post:reference:initial:2:key: explicit descriptor disposition and observer recovery
+ok 199 - fresh:post:image:initial:primary:enter: exact executed prefix and outcome
+ok 200 - fresh:post:image:initial:primary:enter: explicit descriptor disposition and observer recovery
+ok 201 - fresh:post:image:initial:primary:directory:initial: exact executed prefix and outcome
+ok 202 - fresh:post:image:initial:primary:directory:initial: explicit descriptor disposition and observer recovery
+ok 203 - fresh:post:image:initial:primary:input:c:read: exact executed prefix and outcome
+ok 204 - fresh:post:image:initial:primary:input:c:read: explicit descriptor disposition and observer recovery
+ok 205 - fresh:post:image:initial:primary:input:image:read: exact executed prefix and outcome
+ok 206 - fresh:post:image:initial:primary:input:image:read: explicit descriptor disposition and observer recovery
+ok 207 - fresh:post:image:initial:primary:reader:enter: exact executed prefix and outcome
+ok 208 - fresh:post:image:initial:primary:reader:enter: explicit descriptor disposition and observer recovery
+ok 209 - fresh:post:image:initial:primary:reader:return: exact executed prefix and outcome
+ok 210 - fresh:post:image:initial:primary:reader:return: explicit descriptor disposition and observer recovery
+ok 211 - fresh:post:image:initial:primary:input:c:check: exact executed prefix and outcome
+ok 212 - fresh:post:image:initial:primary:input:c:check: explicit descriptor disposition and observer recovery
+ok 213 - fresh:post:image:initial:primary:input:image:check: exact executed prefix and outcome
+ok 214 - fresh:post:image:initial:primary:input:image:check: explicit descriptor disposition and observer recovery
+ok 215 - fresh:post:image:initial:primary:directory:final: exact executed prefix and outcome
+ok 216 - fresh:post:image:initial:primary:directory:final: explicit descriptor disposition and observer recovery
+ok 217 - fresh:post:image:initial:primary:return: exact executed prefix and outcome
+ok 218 - fresh:post:image:initial:primary:return: explicit descriptor disposition and observer recovery
+ok 219 - fresh:post:reference:initial:2:match: exact executed prefix and outcome
+ok 220 - fresh:post:reference:initial:2:match: explicit descriptor disposition and observer recovery
+ok 221 - fresh:post:reference:initial:2:check: exact executed prefix and outcome
+ok 222 - fresh:post:reference:initial:2:check: explicit descriptor disposition and observer recovery
+ok 223 - fresh:post:reference:initial:2:snapshot: exact executed prefix and outcome
+ok 224 - fresh:post:reference:initial:2:snapshot: explicit descriptor disposition and observer recovery
+ok 225 - fresh:post:reference:initial:3:read: exact executed prefix and outcome
+ok 226 - fresh:post:reference:initial:3:read: explicit descriptor disposition and observer recovery
+ok 227 - fresh:post:reference:initial:3:decode: exact executed prefix and outcome
+ok 228 - fresh:post:reference:initial:3:decode: explicit descriptor disposition and observer recovery
+ok 229 - fresh:post:reference:initial:3:key: exact executed prefix and outcome
+ok 230 - fresh:post:reference:initial:3:key: explicit descriptor disposition and observer recovery
+ok 231 - fresh:post:reference:initial:3:match: exact executed prefix and outcome
+ok 232 - fresh:post:reference:initial:3:match: explicit descriptor disposition and observer recovery
+ok 233 - fresh:post:reference:initial:3:check: exact executed prefix and outcome
+ok 234 - fresh:post:reference:initial:3:check: explicit descriptor disposition and observer recovery
+ok 235 - fresh:post:reference:initial:3:snapshot: exact executed prefix and outcome
+ok 236 - fresh:post:reference:initial:3:snapshot: explicit descriptor disposition and observer recovery
+ok 237 - fresh:post:closure:enter: exact executed prefix and outcome
+ok 238 - fresh:post:closure:enter: explicit descriptor disposition and observer recovery
+ok 239 - fresh:post:closure:names: exact executed prefix and outcome
+ok 240 - fresh:post:closure:names: explicit descriptor disposition and observer recovery
+ok 241 - fresh:post:reference:closure:0:original: exact executed prefix and outcome
+ok 242 - fresh:post:reference:closure:0:original: explicit descriptor disposition and observer recovery
+ok 243 - fresh:post:reference:closure:0:read: exact executed prefix and outcome
+ok 244 - fresh:post:reference:closure:0:read: explicit descriptor disposition and observer recovery
+ok 245 - fresh:post:reference:closure:0:fresh: exact executed prefix and outcome
+ok 246 - fresh:post:reference:closure:0:fresh: explicit descriptor disposition and observer recovery
+ok 247 - fresh:post:reference:closure:1:original: exact executed prefix and outcome
+ok 248 - fresh:post:reference:closure:1:original: explicit descriptor disposition and observer recovery
+ok 249 - fresh:post:reference:closure:1:read: exact executed prefix and outcome
+ok 250 - fresh:post:reference:closure:1:read: explicit descriptor disposition and observer recovery
+ok 251 - fresh:post:reference:closure:1:fresh: exact executed prefix and outcome
+ok 252 - fresh:post:reference:closure:1:fresh: explicit descriptor disposition and observer recovery
+ok 253 - fresh:post:reference:closure:2:original: exact executed prefix and outcome
+ok 254 - fresh:post:reference:closure:2:original: explicit descriptor disposition and observer recovery
+ok 255 - fresh:post:reference:closure:2:read: exact executed prefix and outcome
+ok 256 - fresh:post:reference:closure:2:read: explicit descriptor disposition and observer recovery
+ok 257 - fresh:post:reference:closure:2:fresh: exact executed prefix and outcome
+ok 258 - fresh:post:reference:closure:2:fresh: explicit descriptor disposition and observer recovery
+ok 259 - fresh:post:reference:closure:3:original: exact executed prefix and outcome
+ok 260 - fresh:post:reference:closure:3:original: explicit descriptor disposition and observer recovery
+ok 261 - fresh:post:reference:closure:3:read: exact executed prefix and outcome
+ok 262 - fresh:post:reference:closure:3:read: explicit descriptor disposition and observer recovery
+ok 263 - fresh:post:reference:closure:3:fresh: exact executed prefix and outcome
+ok 264 - fresh:post:reference:closure:3:fresh: explicit descriptor disposition and observer recovery
+ok 265 - fresh:post:image:closure:other:enter: exact executed prefix and outcome
+ok 266 - fresh:post:image:closure:other:enter: explicit descriptor disposition and observer recovery
+ok 267 - fresh:post:image:closure:other:directory:initial: exact executed prefix and outcome
+ok 268 - fresh:post:image:closure:other:directory:initial: explicit descriptor disposition and observer recovery
+ok 269 - fresh:post:image:closure:other:input:c:read: exact executed prefix and outcome
+ok 270 - fresh:post:image:closure:other:input:c:read: explicit descriptor disposition and observer recovery
+ok 271 - fresh:post:image:closure:other:input:image:read: exact executed prefix and outcome
+ok 272 - fresh:post:image:closure:other:input:image:read: explicit descriptor disposition and observer recovery
+ok 273 - fresh:post:image:closure:other:reader:enter: exact executed prefix and outcome
+ok 274 - fresh:post:image:closure:other:reader:enter: explicit descriptor disposition and observer recovery
+ok 275 - fresh:post:image:closure:other:reader:return: exact executed prefix and outcome
+ok 276 - fresh:post:image:closure:other:reader:return: explicit descriptor disposition and observer recovery
+ok 277 - fresh:post:image:closure:other:input:c:check: exact executed prefix and outcome
+ok 278 - fresh:post:image:closure:other:input:c:check: explicit descriptor disposition and observer recovery
+ok 279 - fresh:post:image:closure:other:input:image:check: exact executed prefix and outcome
+ok 280 - fresh:post:image:closure:other:input:image:check: explicit descriptor disposition and observer recovery
+ok 281 - fresh:post:image:closure:other:directory:final: exact executed prefix and outcome
+ok 282 - fresh:post:image:closure:other:directory:final: explicit descriptor disposition and observer recovery
+ok 283 - fresh:post:image:closure:other:return: exact executed prefix and outcome
+ok 284 - fresh:post:image:closure:other:return: explicit descriptor disposition and observer recovery
+ok 285 - fresh:post:image:closure:primary:enter: exact executed prefix and outcome
+ok 286 - fresh:post:image:closure:primary:enter: explicit descriptor disposition and observer recovery
+ok 287 - fresh:post:image:closure:primary:directory:initial: exact executed prefix and outcome
+ok 288 - fresh:post:image:closure:primary:directory:initial: explicit descriptor disposition and observer recovery
+ok 289 - fresh:post:image:closure:primary:input:c:read: exact executed prefix and outcome
+ok 290 - fresh:post:image:closure:primary:input:c:read: explicit descriptor disposition and observer recovery
+ok 291 - fresh:post:image:closure:primary:input:image:read: exact executed prefix and outcome
+ok 292 - fresh:post:image:closure:primary:input:image:read: explicit descriptor disposition and observer recovery
+ok 293 - fresh:post:image:closure:primary:reader:enter: exact executed prefix and outcome
+ok 294 - fresh:post:image:closure:primary:reader:enter: explicit descriptor disposition and observer recovery
+ok 295 - fresh:post:image:closure:primary:reader:return: exact executed prefix and outcome
+ok 296 - fresh:post:image:closure:primary:reader:return: explicit descriptor disposition and observer recovery
+ok 297 - fresh:post:image:closure:primary:input:c:check: exact executed prefix and outcome
+ok 298 - fresh:post:image:closure:primary:input:c:check: explicit descriptor disposition and observer recovery
+ok 299 - fresh:post:image:closure:primary:input:image:check: exact executed prefix and outcome
+ok 300 - fresh:post:image:closure:primary:input:image:check: explicit descriptor disposition and observer recovery
+ok 301 - fresh:post:image:closure:primary:directory:final: exact executed prefix and outcome
+ok 302 - fresh:post:image:closure:primary:directory:final: explicit descriptor disposition and observer recovery
+ok 303 - fresh:post:image:closure:primary:return: exact executed prefix and outcome
+ok 304 - fresh:post:image:closure:primary:return: explicit descriptor disposition and observer recovery
+ok 305 - fresh:post:closure:return: exact executed prefix and outcome
+ok 306 - fresh:post:closure:return: explicit descriptor disposition and observer recovery
+ok 307 - reuse:pre:complete: exact executed prefix and outcome
+ok 308 - reuse:pre:complete: explicit descriptor disposition and observer recovery
+ok 309 - reuse:pre:inspect:enter: exact executed prefix and outcome
+ok 310 - reuse:pre:inspect:enter: explicit descriptor disposition and observer recovery
+ok 311 - reuse:pre:reference:initial:0:read: exact executed prefix and outcome
+ok 312 - reuse:pre:reference:initial:0:read: explicit descriptor disposition and observer recovery
+ok 313 - reuse:pre:reference:initial:0:decode: exact executed prefix and outcome
+ok 314 - reuse:pre:reference:initial:0:decode: explicit descriptor disposition and observer recovery
+ok 315 - reuse:pre:reference:initial:0:key: exact executed prefix and outcome
+ok 316 - reuse:pre:reference:initial:0:key: explicit descriptor disposition and observer recovery
+ok 317 - reuse:pre:image:initial:other:enter: exact executed prefix and outcome
+ok 318 - reuse:pre:image:initial:other:enter: explicit descriptor disposition and observer recovery
+ok 319 - reuse:pre:image:initial:other:directory:initial: exact executed prefix and outcome
+ok 320 - reuse:pre:image:initial:other:directory:initial: explicit descriptor disposition and observer recovery
+ok 321 - reuse:pre:image:initial:other:input:c:read: exact executed prefix and outcome
+ok 322 - reuse:pre:image:initial:other:input:c:read: explicit descriptor disposition and observer recovery
+ok 323 - reuse:pre:image:initial:other:input:image:read: exact executed prefix and outcome
+ok 324 - reuse:pre:image:initial:other:input:image:read: explicit descriptor disposition and observer recovery
+ok 325 - reuse:pre:image:initial:other:reader:enter: exact executed prefix and outcome
+ok 326 - reuse:pre:image:initial:other:reader:enter: explicit descriptor disposition and observer recovery
+ok 327 - reuse:pre:image:initial:other:reader:return: exact executed prefix and outcome
+ok 328 - reuse:pre:image:initial:other:reader:return: explicit descriptor disposition and observer recovery
+ok 329 - reuse:pre:image:initial:other:input:c:check: exact executed prefix and outcome
+ok 330 - reuse:pre:image:initial:other:input:c:check: explicit descriptor disposition and observer recovery
+ok 331 - reuse:pre:image:initial:other:input:image:check: exact executed prefix and outcome
+ok 332 - reuse:pre:image:initial:other:input:image:check: explicit descriptor disposition and observer recovery
+ok 333 - reuse:pre:image:initial:other:directory:final: exact executed prefix and outcome
+ok 334 - reuse:pre:image:initial:other:directory:final: explicit descriptor disposition and observer recovery
+ok 335 - reuse:pre:image:initial:other:return: exact executed prefix and outcome
+ok 336 - reuse:pre:image:initial:other:return: explicit descriptor disposition and observer recovery
+ok 337 - reuse:pre:reference:initial:0:match: exact executed prefix and outcome
+ok 338 - reuse:pre:reference:initial:0:match: explicit descriptor disposition and observer recovery
+ok 339 - reuse:pre:reference:initial:0:check: exact executed prefix and outcome
+ok 340 - reuse:pre:reference:initial:0:check: explicit descriptor disposition and observer recovery
+ok 341 - reuse:pre:reference:initial:0:snapshot: exact executed prefix and outcome
+ok 342 - reuse:pre:reference:initial:0:snapshot: explicit descriptor disposition and observer recovery
+ok 343 - reuse:pre:reference:initial:1:read: exact executed prefix and outcome
+ok 344 - reuse:pre:reference:initial:1:read: explicit descriptor disposition and observer recovery
+ok 345 - reuse:pre:reference:initial:1:decode: exact executed prefix and outcome
+ok 346 - reuse:pre:reference:initial:1:decode: explicit descriptor disposition and observer recovery
+ok 347 - reuse:pre:reference:initial:1:key: exact executed prefix and outcome
+ok 348 - reuse:pre:reference:initial:1:key: explicit descriptor disposition and observer recovery
+ok 349 - reuse:pre:reference:initial:1:match: exact executed prefix and outcome
+ok 350 - reuse:pre:reference:initial:1:match: explicit descriptor disposition and observer recovery
+ok 351 - reuse:pre:reference:initial:1:check: exact executed prefix and outcome
+ok 352 - reuse:pre:reference:initial:1:check: explicit descriptor disposition and observer recovery
+ok 353 - reuse:pre:reference:initial:1:snapshot: exact executed prefix and outcome
+ok 354 - reuse:pre:reference:initial:1:snapshot: explicit descriptor disposition and observer recovery
+ok 355 - reuse:pre:reference:initial:2:read: exact executed prefix and outcome
+ok 356 - reuse:pre:reference:initial:2:read: explicit descriptor disposition and observer recovery
+ok 357 - reuse:pre:reference:initial:2:decode: exact executed prefix and outcome
+ok 358 - reuse:pre:reference:initial:2:decode: explicit descriptor disposition and observer recovery
+ok 359 - reuse:pre:reference:initial:2:key: exact executed prefix and outcome
+ok 360 - reuse:pre:reference:initial:2:key: explicit descriptor disposition and observer recovery
+ok 361 - reuse:pre:image:initial:primary:enter: exact executed prefix and outcome
+ok 362 - reuse:pre:image:initial:primary:enter: explicit descriptor disposition and observer recovery
+ok 363 - reuse:pre:image:initial:primary:directory:initial: exact executed prefix and outcome
+ok 364 - reuse:pre:image:initial:primary:directory:initial: explicit descriptor disposition and observer recovery
+ok 365 - reuse:pre:image:initial:primary:input:c:read: exact executed prefix and outcome
+ok 366 - reuse:pre:image:initial:primary:input:c:read: explicit descriptor disposition and observer recovery
+ok 367 - reuse:pre:image:initial:primary:input:image:read: exact executed prefix and outcome
+ok 368 - reuse:pre:image:initial:primary:input:image:read: explicit descriptor disposition and observer recovery
+ok 369 - reuse:pre:image:initial:primary:reader:enter: exact executed prefix and outcome
+ok 370 - reuse:pre:image:initial:primary:reader:enter: explicit descriptor disposition and observer recovery
+ok 371 - reuse:pre:image:initial:primary:reader:return: exact executed prefix and outcome
+ok 372 - reuse:pre:image:initial:primary:reader:return: explicit descriptor disposition and observer recovery
+ok 373 - reuse:pre:image:initial:primary:input:c:check: exact executed prefix and outcome
+ok 374 - reuse:pre:image:initial:primary:input:c:check: explicit descriptor disposition and observer recovery
+ok 375 - reuse:pre:image:initial:primary:input:image:check: exact executed prefix and outcome
+ok 376 - reuse:pre:image:initial:primary:input:image:check: explicit descriptor disposition and observer recovery
+ok 377 - reuse:pre:image:initial:primary:directory:final: exact executed prefix and outcome
+ok 378 - reuse:pre:image:initial:primary:directory:final: explicit descriptor disposition and observer recovery
+ok 379 - reuse:pre:image:initial:primary:return: exact executed prefix and outcome
+ok 380 - reuse:pre:image:initial:primary:return: explicit descriptor disposition and observer recovery
+ok 381 - reuse:pre:reference:initial:2:match: exact executed prefix and outcome
+ok 382 - reuse:pre:reference:initial:2:match: explicit descriptor disposition and observer recovery
+ok 383 - reuse:pre:reference:initial:2:check: exact executed prefix and outcome
+ok 384 - reuse:pre:reference:initial:2:check: explicit descriptor disposition and observer recovery
+ok 385 - reuse:pre:reference:initial:2:snapshot: exact executed prefix and outcome
+ok 386 - reuse:pre:reference:initial:2:snapshot: explicit descriptor disposition and observer recovery
+ok 387 - reuse:pre:reference:initial:3:read: exact executed prefix and outcome
+ok 388 - reuse:pre:reference:initial:3:read: explicit descriptor disposition and observer recovery
+ok 389 - reuse:pre:reference:initial:3:decode: exact executed prefix and outcome
+ok 390 - reuse:pre:reference:initial:3:decode: explicit descriptor disposition and observer recovery
+ok 391 - reuse:pre:reference:initial:3:key: exact executed prefix and outcome
+ok 392 - reuse:pre:reference:initial:3:key: explicit descriptor disposition and observer recovery
+ok 393 - reuse:pre:reference:initial:3:match: exact executed prefix and outcome
+ok 394 - reuse:pre:reference:initial:3:match: explicit descriptor disposition and observer recovery
+ok 395 - reuse:pre:reference:initial:3:check: exact executed prefix and outcome
+ok 396 - reuse:pre:reference:initial:3:check: explicit descriptor disposition and observer recovery
+ok 397 - reuse:pre:reference:initial:3:snapshot: exact executed prefix and outcome
+ok 398 - reuse:pre:reference:initial:3:snapshot: explicit descriptor disposition and observer recovery
+ok 399 - reuse:pre:closure:enter: exact executed prefix and outcome
+ok 400 - reuse:pre:closure:enter: explicit descriptor disposition and observer recovery
+ok 401 - reuse:pre:closure:names: exact executed prefix and outcome
+ok 402 - reuse:pre:closure:names: explicit descriptor disposition and observer recovery
+ok 403 - reuse:pre:reference:closure:0:original: exact executed prefix and outcome
+ok 404 - reuse:pre:reference:closure:0:original: explicit descriptor disposition and observer recovery
+ok 405 - reuse:pre:reference:closure:0:read: exact executed prefix and outcome
+ok 406 - reuse:pre:reference:closure:0:read: explicit descriptor disposition and observer recovery
+ok 407 - reuse:pre:reference:closure:0:fresh: exact executed prefix and outcome
+ok 408 - reuse:pre:reference:closure:0:fresh: explicit descriptor disposition and observer recovery
+ok 409 - reuse:pre:reference:closure:1:original: exact executed prefix and outcome
+ok 410 - reuse:pre:reference:closure:1:original: explicit descriptor disposition and observer recovery
+ok 411 - reuse:pre:reference:closure:1:read: exact executed prefix and outcome
+ok 412 - reuse:pre:reference:closure:1:read: explicit descriptor disposition and observer recovery
+ok 413 - reuse:pre:reference:closure:1:fresh: exact executed prefix and outcome
+ok 414 - reuse:pre:reference:closure:1:fresh: explicit descriptor disposition and observer recovery
+ok 415 - reuse:pre:reference:closure:2:original: exact executed prefix and outcome
+ok 416 - reuse:pre:reference:closure:2:original: explicit descriptor disposition and observer recovery
+ok 417 - reuse:pre:reference:closure:2:read: exact executed prefix and outcome
+ok 418 - reuse:pre:reference:closure:2:read: explicit descriptor disposition and observer recovery
+ok 419 - reuse:pre:reference:closure:2:fresh: exact executed prefix and outcome
+ok 420 - reuse:pre:reference:closure:2:fresh: explicit descriptor disposition and observer recovery
+ok 421 - reuse:pre:reference:closure:3:original: exact executed prefix and outcome
+ok 422 - reuse:pre:reference:closure:3:original: explicit descriptor disposition and observer recovery
+ok 423 - reuse:pre:reference:closure:3:read: exact executed prefix and outcome
+ok 424 - reuse:pre:reference:closure:3:read: explicit descriptor disposition and observer recovery
+ok 425 - reuse:pre:reference:closure:3:fresh: exact executed prefix and outcome
+ok 426 - reuse:pre:reference:closure:3:fresh: explicit descriptor disposition and observer recovery
+ok 427 - reuse:pre:image:closure:other:enter: exact executed prefix and outcome
+ok 428 - reuse:pre:image:closure:other:enter: explicit descriptor disposition and observer recovery
+ok 429 - reuse:pre:image:closure:other:directory:initial: exact executed prefix and outcome
+ok 430 - reuse:pre:image:closure:other:directory:initial: explicit descriptor disposition and observer recovery
+ok 431 - reuse:pre:image:closure:other:input:c:read: exact executed prefix and outcome
+ok 432 - reuse:pre:image:closure:other:input:c:read: explicit descriptor disposition and observer recovery
+ok 433 - reuse:pre:image:closure:other:input:image:read: exact executed prefix and outcome
+ok 434 - reuse:pre:image:closure:other:input:image:read: explicit descriptor disposition and observer recovery
+ok 435 - reuse:pre:image:closure:other:reader:enter: exact executed prefix and outcome
+ok 436 - reuse:pre:image:closure:other:reader:enter: explicit descriptor disposition and observer recovery
+ok 437 - reuse:pre:image:closure:other:reader:return: exact executed prefix and outcome
+ok 438 - reuse:pre:image:closure:other:reader:return: explicit descriptor disposition and observer recovery
+ok 439 - reuse:pre:image:closure:other:input:c:check: exact executed prefix and outcome
+ok 440 - reuse:pre:image:closure:other:input:c:check: explicit descriptor disposition and observer recovery
+ok 441 - reuse:pre:image:closure:other:input:image:check: exact executed prefix and outcome
+ok 442 - reuse:pre:image:closure:other:input:image:check: explicit descriptor disposition and observer recovery
+ok 443 - reuse:pre:image:closure:other:directory:final: exact executed prefix and outcome
+ok 444 - reuse:pre:image:closure:other:directory:final: explicit descriptor disposition and observer recovery
+ok 445 - reuse:pre:image:closure:other:return: exact executed prefix and outcome
+ok 446 - reuse:pre:image:closure:other:return: explicit descriptor disposition and observer recovery
+ok 447 - reuse:pre:image:closure:primary:enter: exact executed prefix and outcome
+ok 448 - reuse:pre:image:closure:primary:enter: explicit descriptor disposition and observer recovery
+ok 449 - reuse:pre:image:closure:primary:directory:initial: exact executed prefix and outcome
+ok 450 - reuse:pre:image:closure:primary:directory:initial: explicit descriptor disposition and observer recovery
+ok 451 - reuse:pre:image:closure:primary:input:c:read: exact executed prefix and outcome
+ok 452 - reuse:pre:image:closure:primary:input:c:read: explicit descriptor disposition and observer recovery
+ok 453 - reuse:pre:image:closure:primary:input:image:read: exact executed prefix and outcome
+ok 454 - reuse:pre:image:closure:primary:input:image:read: explicit descriptor disposition and observer recovery
+ok 455 - reuse:pre:image:closure:primary:reader:enter: exact executed prefix and outcome
+ok 456 - reuse:pre:image:closure:primary:reader:enter: explicit descriptor disposition and observer recovery
+ok 457 - reuse:pre:image:closure:primary:reader:return: exact executed prefix and outcome
+ok 458 - reuse:pre:image:closure:primary:reader:return: explicit descriptor disposition and observer recovery
+ok 459 - reuse:pre:image:closure:primary:input:c:check: exact executed prefix and outcome
+ok 460 - reuse:pre:image:closure:primary:input:c:check: explicit descriptor disposition and observer recovery
+ok 461 - reuse:pre:image:closure:primary:input:image:check: exact executed prefix and outcome
+ok 462 - reuse:pre:image:closure:primary:input:image:check: explicit descriptor disposition and observer recovery
+ok 463 - reuse:pre:image:closure:primary:directory:final: exact executed prefix and outcome
+ok 464 - reuse:pre:image:closure:primary:directory:final: explicit descriptor disposition and observer recovery
+ok 465 - reuse:pre:image:closure:primary:return: exact executed prefix and outcome
+ok 466 - reuse:pre:image:closure:primary:return: explicit descriptor disposition and observer recovery
+ok 467 - reuse:pre:closure:return: exact executed prefix and outcome
+ok 468 - reuse:pre:closure:return: explicit descriptor disposition and observer recovery
+ok 469 - reuse:post:complete: exact executed prefix and outcome
+ok 470 - reuse:post:complete: explicit descriptor disposition and observer recovery
+ok 471 - reuse:post:inspect:enter: exact executed prefix and outcome
+ok 472 - reuse:post:inspect:enter: explicit descriptor disposition and observer recovery
+ok 473 - reuse:post:reference:initial:0:read: exact executed prefix and outcome
+ok 474 - reuse:post:reference:initial:0:read: explicit descriptor disposition and observer recovery
+ok 475 - reuse:post:reference:initial:0:decode: exact executed prefix and outcome
+ok 476 - reuse:post:reference:initial:0:decode: explicit descriptor disposition and observer recovery
+ok 477 - reuse:post:reference:initial:0:key: exact executed prefix and outcome
+ok 478 - reuse:post:reference:initial:0:key: explicit descriptor disposition and observer recovery
+ok 479 - reuse:post:image:initial:other:enter: exact executed prefix and outcome
+ok 480 - reuse:post:image:initial:other:enter: explicit descriptor disposition and observer recovery
+ok 481 - reuse:post:image:initial:other:directory:initial: exact executed prefix and outcome
+ok 482 - reuse:post:image:initial:other:directory:initial: explicit descriptor disposition and observer recovery
+ok 483 - reuse:post:image:initial:other:input:c:read: exact executed prefix and outcome
+ok 484 - reuse:post:image:initial:other:input:c:read: explicit descriptor disposition and observer recovery
+ok 485 - reuse:post:image:initial:other:input:image:read: exact executed prefix and outcome
+ok 486 - reuse:post:image:initial:other:input:image:read: explicit descriptor disposition and observer recovery
+ok 487 - reuse:post:image:initial:other:reader:enter: exact executed prefix and outcome
+ok 488 - reuse:post:image:initial:other:reader:enter: explicit descriptor disposition and observer recovery
+ok 489 - reuse:post:image:initial:other:reader:return: exact executed prefix and outcome
+ok 490 - reuse:post:image:initial:other:reader:return: explicit descriptor disposition and observer recovery
+ok 491 - reuse:post:image:initial:other:input:c:check: exact executed prefix and outcome
+ok 492 - reuse:post:image:initial:other:input:c:check: explicit descriptor disposition and observer recovery
+ok 493 - reuse:post:image:initial:other:input:image:check: exact executed prefix and outcome
+ok 494 - reuse:post:image:initial:other:input:image:check: explicit descriptor disposition and observer recovery
+ok 495 - reuse:post:image:initial:other:directory:final: exact executed prefix and outcome
+ok 496 - reuse:post:image:initial:other:directory:final: explicit descriptor disposition and observer recovery
+ok 497 - reuse:post:image:initial:other:return: exact executed prefix and outcome
+ok 498 - reuse:post:image:initial:other:return: explicit descriptor disposition and observer recovery
+ok 499 - reuse:post:reference:initial:0:match: exact executed prefix and outcome
+ok 500 - reuse:post:reference:initial:0:match: explicit descriptor disposition and observer recovery
+ok 501 - reuse:post:reference:initial:0:check: exact executed prefix and outcome
+ok 502 - reuse:post:reference:initial:0:check: explicit descriptor disposition and observer recovery
+ok 503 - reuse:post:reference:initial:0:snapshot: exact executed prefix and outcome
+ok 504 - reuse:post:reference:initial:0:snapshot: explicit descriptor disposition and observer recovery
+ok 505 - reuse:post:reference:initial:1:read: exact executed prefix and outcome
+ok 506 - reuse:post:reference:initial:1:read: explicit descriptor disposition and observer recovery
+ok 507 - reuse:post:reference:initial:1:decode: exact executed prefix and outcome
+ok 508 - reuse:post:reference:initial:1:decode: explicit descriptor disposition and observer recovery
+ok 509 - reuse:post:reference:initial:1:key: exact executed prefix and outcome
+ok 510 - reuse:post:reference:initial:1:key: explicit descriptor disposition and observer recovery
+ok 511 - reuse:post:reference:initial:1:match: exact executed prefix and outcome
+ok 512 - reuse:post:reference:initial:1:match: explicit descriptor disposition and observer recovery
+ok 513 - reuse:post:reference:initial:1:check: exact executed prefix and outcome
+ok 514 - reuse:post:reference:initial:1:check: explicit descriptor disposition and observer recovery
+ok 515 - reuse:post:reference:initial:1:snapshot: exact executed prefix and outcome
+ok 516 - reuse:post:reference:initial:1:snapshot: explicit descriptor disposition and observer recovery
+ok 517 - reuse:post:reference:initial:2:read: exact executed prefix and outcome
+ok 518 - reuse:post:reference:initial:2:read: explicit descriptor disposition and observer recovery
+ok 519 - reuse:post:reference:initial:2:decode: exact executed prefix and outcome
+ok 520 - reuse:post:reference:initial:2:decode: explicit descriptor disposition and observer recovery
+ok 521 - reuse:post:reference:initial:2:key: exact executed prefix and outcome
+ok 522 - reuse:post:reference:initial:2:key: explicit descriptor disposition and observer recovery
+ok 523 - reuse:post:image:initial:primary:enter: exact executed prefix and outcome
+ok 524 - reuse:post:image:initial:primary:enter: explicit descriptor disposition and observer recovery
+ok 525 - reuse:post:image:initial:primary:directory:initial: exact executed prefix and outcome
+ok 526 - reuse:post:image:initial:primary:directory:initial: explicit descriptor disposition and observer recovery
+ok 527 - reuse:post:image:initial:primary:input:c:read: exact executed prefix and outcome
+ok 528 - reuse:post:image:initial:primary:input:c:read: explicit descriptor disposition and observer recovery
+ok 529 - reuse:post:image:initial:primary:input:image:read: exact executed prefix and outcome
+ok 530 - reuse:post:image:initial:primary:input:image:read: explicit descriptor disposition and observer recovery
+ok 531 - reuse:post:image:initial:primary:reader:enter: exact executed prefix and outcome
+ok 532 - reuse:post:image:initial:primary:reader:enter: explicit descriptor disposition and observer recovery
+ok 533 - reuse:post:image:initial:primary:reader:return: exact executed prefix and outcome
+ok 534 - reuse:post:image:initial:primary:reader:return: explicit descriptor disposition and observer recovery
+ok 535 - reuse:post:image:initial:primary:input:c:check: exact executed prefix and outcome
+ok 536 - reuse:post:image:initial:primary:input:c:check: explicit descriptor disposition and observer recovery
+ok 537 - reuse:post:image:initial:primary:input:image:check: exact executed prefix and outcome
+ok 538 - reuse:post:image:initial:primary:input:image:check: explicit descriptor disposition and observer recovery
+ok 539 - reuse:post:image:initial:primary:directory:final: exact executed prefix and outcome
+ok 540 - reuse:post:image:initial:primary:directory:final: explicit descriptor disposition and observer recovery
+ok 541 - reuse:post:image:initial:primary:return: exact executed prefix and outcome
+ok 542 - reuse:post:image:initial:primary:return: explicit descriptor disposition and observer recovery
+ok 543 - reuse:post:reference:initial:2:match: exact executed prefix and outcome
+ok 544 - reuse:post:reference:initial:2:match: explicit descriptor disposition and observer recovery
+ok 545 - reuse:post:reference:initial:2:check: exact executed prefix and outcome
+ok 546 - reuse:post:reference:initial:2:check: explicit descriptor disposition and observer recovery
+ok 547 - reuse:post:reference:initial:2:snapshot: exact executed prefix and outcome
+ok 548 - reuse:post:reference:initial:2:snapshot: explicit descriptor disposition and observer recovery
+ok 549 - reuse:post:reference:initial:3:read: exact executed prefix and outcome
+ok 550 - reuse:post:reference:initial:3:read: explicit descriptor disposition and observer recovery
+ok 551 - reuse:post:reference:initial:3:decode: exact executed prefix and outcome
+ok 552 - reuse:post:reference:initial:3:decode: explicit descriptor disposition and observer recovery
+ok 553 - reuse:post:reference:initial:3:key: exact executed prefix and outcome
+ok 554 - reuse:post:reference:initial:3:key: explicit descriptor disposition and observer recovery
+ok 555 - reuse:post:reference:initial:3:match: exact executed prefix and outcome
+ok 556 - reuse:post:reference:initial:3:match: explicit descriptor disposition and observer recovery
+ok 557 - reuse:post:reference:initial:3:check: exact executed prefix and outcome
+ok 558 - reuse:post:reference:initial:3:check: explicit descriptor disposition and observer recovery
+ok 559 - reuse:post:reference:initial:3:snapshot: exact executed prefix and outcome
+ok 560 - reuse:post:reference:initial:3:snapshot: explicit descriptor disposition and observer recovery
+ok 561 - reuse:post:closure:enter: exact executed prefix and outcome
+ok 562 - reuse:post:closure:enter: explicit descriptor disposition and observer recovery
+ok 563 - reuse:post:closure:names: exact executed prefix and outcome
+ok 564 - reuse:post:closure:names: explicit descriptor disposition and observer recovery
+ok 565 - reuse:post:reference:closure:0:original: exact executed prefix and outcome
+ok 566 - reuse:post:reference:closure:0:original: explicit descriptor disposition and observer recovery
+ok 567 - reuse:post:reference:closure:0:read: exact executed prefix and outcome
+ok 568 - reuse:post:reference:closure:0:read: explicit descriptor disposition and observer recovery
+ok 569 - reuse:post:reference:closure:0:fresh: exact executed prefix and outcome
+ok 570 - reuse:post:reference:closure:0:fresh: explicit descriptor disposition and observer recovery
+ok 571 - reuse:post:reference:closure:1:original: exact executed prefix and outcome
+ok 572 - reuse:post:reference:closure:1:original: explicit descriptor disposition and observer recovery
+ok 573 - reuse:post:reference:closure:1:read: exact executed prefix and outcome
+ok 574 - reuse:post:reference:closure:1:read: explicit descriptor disposition and observer recovery
+ok 575 - reuse:post:reference:closure:1:fresh: exact executed prefix and outcome
+ok 576 - reuse:post:reference:closure:1:fresh: explicit descriptor disposition and observer recovery
+ok 577 - reuse:post:reference:closure:2:original: exact executed prefix and outcome
+ok 578 - reuse:post:reference:closure:2:original: explicit descriptor disposition and observer recovery
+ok 579 - reuse:post:reference:closure:2:read: exact executed prefix and outcome
+ok 580 - reuse:post:reference:closure:2:read: explicit descriptor disposition and observer recovery
+ok 581 - reuse:post:reference:closure:2:fresh: exact executed prefix and outcome
+ok 582 - reuse:post:reference:closure:2:fresh: explicit descriptor disposition and observer recovery
+ok 583 - reuse:post:reference:closure:3:original: exact executed prefix and outcome
+ok 584 - reuse:post:reference:closure:3:original: explicit descriptor disposition and observer recovery
+ok 585 - reuse:post:reference:closure:3:read: exact executed prefix and outcome
+ok 586 - reuse:post:reference:closure:3:read: explicit descriptor disposition and observer recovery
+ok 587 - reuse:post:reference:closure:3:fresh: exact executed prefix and outcome
+ok 588 - reuse:post:reference:closure:3:fresh: explicit descriptor disposition and observer recovery
+ok 589 - reuse:post:image:closure:other:enter: exact executed prefix and outcome
+ok 590 - reuse:post:image:closure:other:enter: explicit descriptor disposition and observer recovery
+ok 591 - reuse:post:image:closure:other:directory:initial: exact executed prefix and outcome
+ok 592 - reuse:post:image:closure:other:directory:initial: explicit descriptor disposition and observer recovery
+ok 593 - reuse:post:image:closure:other:input:c:read: exact executed prefix and outcome
+ok 594 - reuse:post:image:closure:other:input:c:read: explicit descriptor disposition and observer recovery
+ok 595 - reuse:post:image:closure:other:input:image:read: exact executed prefix and outcome
+ok 596 - reuse:post:image:closure:other:input:image:read: explicit descriptor disposition and observer recovery
+ok 597 - reuse:post:image:closure:other:reader:enter: exact executed prefix and outcome
+ok 598 - reuse:post:image:closure:other:reader:enter: explicit descriptor disposition and observer recovery
+ok 599 - reuse:post:image:closure:other:reader:return: exact executed prefix and outcome
+ok 600 - reuse:post:image:closure:other:reader:return: explicit descriptor disposition and observer recovery
+ok 601 - reuse:post:image:closure:other:input:c:check: exact executed prefix and outcome
+ok 602 - reuse:post:image:closure:other:input:c:check: explicit descriptor disposition and observer recovery
+ok 603 - reuse:post:image:closure:other:input:image:check: exact executed prefix and outcome
+ok 604 - reuse:post:image:closure:other:input:image:check: explicit descriptor disposition and observer recovery
+ok 605 - reuse:post:image:closure:other:directory:final: exact executed prefix and outcome
+ok 606 - reuse:post:image:closure:other:directory:final: explicit descriptor disposition and observer recovery
+ok 607 - reuse:post:image:closure:other:return: exact executed prefix and outcome
+ok 608 - reuse:post:image:closure:other:return: explicit descriptor disposition and observer recovery
+ok 609 - reuse:post:image:closure:primary:enter: exact executed prefix and outcome
+ok 610 - reuse:post:image:closure:primary:enter: explicit descriptor disposition and observer recovery
+ok 611 - reuse:post:image:closure:primary:directory:initial: exact executed prefix and outcome
+ok 612 - reuse:post:image:closure:primary:directory:initial: explicit descriptor disposition and observer recovery
+ok 613 - reuse:post:image:closure:primary:input:c:read: exact executed prefix and outcome
+ok 614 - reuse:post:image:closure:primary:input:c:read: explicit descriptor disposition and observer recovery
+ok 615 - reuse:post:image:closure:primary:input:image:read: exact executed prefix and outcome
+ok 616 - reuse:post:image:closure:primary:input:image:read: explicit descriptor disposition and observer recovery
+ok 617 - reuse:post:image:closure:primary:reader:enter: exact executed prefix and outcome
+ok 618 - reuse:post:image:closure:primary:reader:enter: explicit descriptor disposition and observer recovery
+ok 619 - reuse:post:image:closure:primary:reader:return: exact executed prefix and outcome
+ok 620 - reuse:post:image:closure:primary:reader:return: explicit descriptor disposition and observer recovery
+ok 621 - reuse:post:image:closure:primary:input:c:check: exact executed prefix and outcome
+ok 622 - reuse:post:image:closure:primary:input:c:check: explicit descriptor disposition and observer recovery
+ok 623 - reuse:post:image:closure:primary:input:image:check: exact executed prefix and outcome
+ok 624 - reuse:post:image:closure:primary:input:image:check: explicit descriptor disposition and observer recovery
+ok 625 - reuse:post:image:closure:primary:directory:final: exact executed prefix and outcome
+ok 626 - reuse:post:image:closure:primary:directory:final: explicit descriptor disposition and observer recovery
+ok 627 - reuse:post:image:closure:primary:return: exact executed prefix and outcome
+ok 628 - reuse:post:image:closure:primary:return: explicit descriptor disposition and observer recovery
+ok 629 - reuse:post:closure:return: exact executed prefix and outcome
+ok 630 - reuse:post:closure:return: explicit descriptor disposition and observer recovery
+ok 631 - fresh:pre:omit_original_reference_close: exact executed prefix and outcome
+ok 632 - fresh:pre:omit_original_reference_close: explicit descriptor disposition and observer recovery
+ok 633 - fresh:pre:omit_image_input_close: exact executed prefix and outcome
+ok 634 - fresh:pre:omit_image_input_close: explicit descriptor disposition and observer recovery
+ok 635 - fresh:pre:omit_fresh_reference_close: exact executed prefix and outcome
+ok 636 - fresh:pre:omit_fresh_reference_close: explicit descriptor disposition and observer recovery
+ok 637 - fresh:post:omit_original_reference_close: exact executed prefix and outcome
+ok 638 - fresh:post:omit_original_reference_close: explicit descriptor disposition and observer recovery
+ok 639 - fresh:post:omit_image_input_close: exact executed prefix and outcome
+ok 640 - fresh:post:omit_image_input_close: explicit descriptor disposition and observer recovery
+ok 641 - fresh:post:omit_fresh_reference_close: exact executed prefix and outcome
+ok 642 - fresh:post:omit_fresh_reference_close: explicit descriptor disposition and observer recovery
+ok 643 - reuse:pre:omit_original_reference_close: exact executed prefix and outcome
+ok 644 - reuse:pre:omit_original_reference_close: explicit descriptor disposition and observer recovery
+ok 645 - reuse:pre:omit_image_input_close: exact executed prefix and outcome
+ok 646 - reuse:pre:omit_image_input_close: explicit descriptor disposition and observer recovery
+ok 647 - reuse:pre:omit_fresh_reference_close: exact executed prefix and outcome
+ok 648 - reuse:pre:omit_fresh_reference_close: explicit descriptor disposition and observer recovery
+ok 649 - reuse:post:omit_original_reference_close: exact executed prefix and outcome
+ok 650 - reuse:post:omit_original_reference_close: explicit descriptor disposition and observer recovery
+ok 651 - reuse:post:omit_image_input_close: exact executed prefix and outcome
+ok 652 - reuse:post:omit_image_input_close: explicit descriptor disposition and observer recovery
+ok 653 - reuse:post:omit_fresh_reference_close: exact executed prefix and outcome
+ok 654 - reuse:post:omit_fresh_reference_close: explicit descriptor disposition and observer recovery
+ok 655 - no process attempt
+1..655

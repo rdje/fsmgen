@@ -1,0 +1,71 @@
+{
+  "all_copies_byte_exact": true,
+  "files": [
+    {
+      "destination": "docs/audits/native-proxy-observation-semantic-cuts-20260911/result/qualification.json",
+      "sha256": "172f74b18371793b66b530c6984db691c916f9dedf9042d2a24f1e6d74f84bac",
+      "size_bytes": 55152244,
+      "source": ".artifacts/logs/native-proxy-observation-semantic-cuts-20260911/qualification.json"
+    },
+    {
+      "destination": "docs/audits/native-proxy-observation-semantic-cuts-20260911/result/admission.jsonl",
+      "sha256": "36a96d2d430d7c6014f58a7abf16185f5c4305ba3ae62f2495a31e444596274a",
+      "size_bytes": 168405,
+      "source": ".artifacts/logs/native-proxy-observation-semantic-cuts-20260911/admission.jsonl"
+    },
+    {
+      "destination": "docs/audits/native-proxy-observation-semantic-cuts-20260911/result/rows.jsonl",
+      "sha256": "fa9d58c6720121067d3477cfec6306d7d07737069177c59e0ab5ab67a66c51c4",
+      "size_bytes": 34606837,
+      "source": ".artifacts/logs/native-proxy-observation-semantic-cuts-20260911/rows.jsonl"
+    },
+    {
+      "destination": "docs/audits/native-proxy-observation-semantic-cuts-20260911/result/progress.json",
+      "sha256": "0506e6e4acc163be17149fb1c6218786fc8b1ccb00f2209f6aeadd36d645c144",
+      "size_bytes": 143,
+      "source": ".artifacts/logs/native-proxy-observation-semantic-cuts-20260911/progress.json"
+    },
+    {
+      "destination": "docs/audits/native-proxy-observation-semantic-cuts-20260911/result/qualify.tap",
+      "sha256": "00fe0f76ff94da6f04c7ee1d6a93fcfe7c164f43f373ae49ef299876cfac4808",
+      "size_bytes": 61469,
+      "source": ".artifacts/logs/native-proxy-observation-semantic-cuts-20260911/qualify.tap"
+    },
+    {
+      "destination": "docs/audits/native-proxy-observation-semantic-cuts-20260911/result/qualify.stderr",
+      "sha256": "f5726d0b239efdf5db4d18a6fa540a4b2950aac450f71c9b9e37b9e21e07ac5c",
+      "size_bytes": 91,
+      "source": ".artifacts/logs/native-proxy-observation-semantic-cuts-20260911/qualify.stderr"
+    },
+    {
+      "destination": "docs/audits/native-proxy-observation-semantic-cuts-20260911/result/audit.json",
+      "sha256": "5a38c4945f76bbd9ce4a794f9e1d61a2b71fdfa4709c89e3bc940d5b642589ef",
+      "size_bytes": 2550,
+      "source": ".artifacts/logs/native-proxy-observation-semantic-cuts-20260911/audit.json"
+    },
+    {
+      "destination": "docs/audits/native-proxy-observation-semantic-cuts-20260911/result/audit.stdout",
+      "sha256": "3eb3303749be23a00e2fb8e3f0f098ff7be34442515fd1224bf523ed3ed29248",
+      "size_bytes": 2112,
+      "source": ".artifacts/logs/native-proxy-observation-semantic-cuts-20260911/audit.stdout"
+    },
+    {
+      "destination": "docs/audits/native-proxy-observation-semantic-cuts-20260911/result/audit.stderr",
+      "sha256": "3c6c6e5dce5233f18927c9292f47a6f484aa28fcb0737a47e5182773a8a91b4f",
+      "size_bytes": 91,
+      "source": ".artifacts/logs/native-proxy-observation-semantic-cuts-20260911/audit.stderr"
+    },
+    {
+      "destination": "docs/audits/native-proxy-observation-semantic-cuts-20260911/result/closure.json",
+      "sha256": "34a87711ffc23f48ac45b8b0d02ab61b16aedb2e686b3c0ace441759500b5c6f",
+      "size_bytes": 1175,
+      "source": ".artifacts/logs/native-proxy-observation-semantic-cuts-20260911/closure.json"
+    },
+    {
+      "destination": "docs/audits/native-proxy-observation-semantic-cuts-20260911/result/preflight-pins.json",
+      "sha256": "98a1f916430e9aef2ea632a8a187762ae01b042467cd758f550722fa14987d11",
+      "size_bytes": 9062,
+      "source": ".artifacts/logs/native-proxy-observation-semantic-cuts-20260911/preflight-pins.json"
+    }
+  ]
+}

@@ -1,0 +1,8 @@
+{
+  "build_completion_evidence": "mdBook completion message and exact rendered HTML; owned build process absent. Exit status unavailable after output compaction.",
+  "exact_output_absent": true,
+  "new_passage_verified": true,
+  "rendered_bytes": 23175085,
+  "rendered_files": 98,
+  "same_volume_direct_objects": true
+}
