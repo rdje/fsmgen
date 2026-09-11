@@ -24,6 +24,7 @@ answers:
   - "how does inactive image membership reject enumeration errors?"
   - "what do inactive coordinator interruption cuts prove?"
   - "what do inactive semantic-census interruption cuts prove?"
+  - "how do census close errors preserve the primary failure?"
   - "why did integrated proxy qualification fail?"
   - "why does t1545 not use IPC Cmd?"
   - "where does T1545 preserve empty-output checker failure diagnostics?"
@@ -98,14 +99,15 @@ Darwin env/direct-Bash startup and locality controls: history.
 T1545 controls: historical card; absent witnesses stay unknown.
 Env/direct Perl timeouts refute a shebang-only cure. Startup cause, authenticated capture and STOP limits: task/book/history.
 T1669 uses process-supervisor-tests roots; ps skips only verified disappearance. Other errors fail; the historical changed field stays open (.3.2.11).
-History: `c2bd1d2aa7e78a85571d34fc36cdcc02fe0485dd:docs/knowledge/test-subprocess-policy-adapters.md`.
+History: `829df81b7df7cc2a8f61e740b67655db8093ea40:docs/knowledge/test-subprocess-policy-adapters.md`.
 PST parsing normalizes 1–16 lowercase hex digits; malformed fields and contradictions reject.
 Serial queue contention is supported; causal/native limits and controls: history.
 Fixed CLI contracts/limits: history.
-Combined census, fresh/reuse custody, FixtureClone types/octet flags, handoff/snapshot/publication controls and conservative holds: history. Release/capture/coordinator/native closure stays open.
-Inactive namespace/image-member errno and explicit-cleanup repairs, retained-directory controls and limits: history.
+Combined records, fresh/reuse custody, byte flags, publication and conservative holds: history.
+Namespace/image membership read-error and cleanup repairs: history.
 Coordinator lock/namespace prefixes and actual source/directory counts: history.
-Semantic cuts bind canonical reference order, distinguish repeated source-handle occurrences and retain conservative holds. Replay: `docs/audits/native-proxy-observation-semantic-cuts-20260911/audit.py`. One order per cut; close reports/native closure stay open.
+Semantic call order, handle occurrences and conservative holds: history.
+Census reports follow actual close; all owned closes run and primary/first errors prevail. Exact occurrences and omitted closes: `docs/audits/native-proxy-observation-semantic-close-20260911/audit.py`. One order per selector; target/lock/native closure stays open.
 Caller-sealed test wrappers use tail goto to preserve caller.
 Replay: `scripts/run_with_ram_guard.sh -- python3 -B -m unittest discover -s t/python -p 'test_fixture_policy_archive*.py'`.
 T1595 pre-main cause open; `.19.2.3.1.2.2.6.2` fixes capture.

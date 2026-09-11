@@ -1,0 +1,324 @@
+ok 1 - fresh:pre:complete: exact executed prefix and outcome
+ok 2 - fresh:pre:complete: explicit descriptor disposition and close-report recovery
+ok 3 - fresh:pre:original:0: exact executed prefix and outcome
+ok 4 - fresh:pre:original:0: explicit descriptor disposition and close-report recovery
+ok 5 - fresh:pre:original:1: exact executed prefix and outcome
+ok 6 - fresh:pre:original:1: explicit descriptor disposition and close-report recovery
+ok 7 - fresh:pre:original:2: exact executed prefix and outcome
+ok 8 - fresh:pre:original:2: explicit descriptor disposition and close-report recovery
+ok 9 - fresh:pre:all_originals: exact executed prefix and outcome
+ok 10 - fresh:pre:all_originals: explicit descriptor disposition and close-report recovery
+ok 11 - fresh:pre:fresh:0: exact executed prefix and outcome
+ok 12 - fresh:pre:fresh:0: explicit descriptor disposition and close-report recovery
+ok 13 - fresh:pre:fresh:1: exact executed prefix and outcome
+ok 14 - fresh:pre:fresh:1: explicit descriptor disposition and close-report recovery
+ok 15 - fresh:pre:fresh:2: exact executed prefix and outcome
+ok 16 - fresh:pre:fresh:2: explicit descriptor disposition and close-report recovery
+ok 17 - fresh:pre:fresh_and_originals:0: exact executed prefix and outcome
+ok 18 - fresh:pre:fresh_and_originals:0: explicit descriptor disposition and close-report recovery
+ok 19 - fresh:pre:fresh_and_originals:2: exact executed prefix and outcome
+ok 20 - fresh:pre:fresh_and_originals:2: explicit descriptor disposition and close-report recovery
+ok 21 - fresh:pre:image:initial:primary:c: exact executed prefix and outcome
+ok 22 - fresh:pre:image:initial:primary:c: explicit descriptor disposition and close-report recovery
+ok 23 - fresh:pre:image:initial:primary:image: exact executed prefix and outcome
+ok 24 - fresh:pre:image:initial:primary:image: explicit descriptor disposition and close-report recovery
+ok 25 - fresh:pre:image:initial:primary:both: exact executed prefix and outcome
+ok 26 - fresh:pre:image:initial:primary:both: explicit descriptor disposition and close-report recovery
+ok 27 - fresh:pre:image:initial:primary:both_and_original: exact executed prefix and outcome
+ok 28 - fresh:pre:image:initial:primary:both_and_original: explicit descriptor disposition and close-report recovery
+ok 29 - fresh:pre:image:initial:primary:primary_and_closes: exact executed prefix and outcome
+ok 30 - fresh:pre:image:initial:primary:primary_and_closes: explicit descriptor disposition and close-report recovery
+ok 31 - fresh:pre:image:initial:other:c: exact executed prefix and outcome
+ok 32 - fresh:pre:image:initial:other:c: explicit descriptor disposition and close-report recovery
+ok 33 - fresh:pre:image:initial:other:image: exact executed prefix and outcome
+ok 34 - fresh:pre:image:initial:other:image: explicit descriptor disposition and close-report recovery
+ok 35 - fresh:pre:image:initial:other:both: exact executed prefix and outcome
+ok 36 - fresh:pre:image:initial:other:both: explicit descriptor disposition and close-report recovery
+ok 37 - fresh:pre:image:initial:other:both_and_original: exact executed prefix and outcome
+ok 38 - fresh:pre:image:initial:other:both_and_original: explicit descriptor disposition and close-report recovery
+ok 39 - fresh:pre:image:initial:other:primary_and_closes: exact executed prefix and outcome
+ok 40 - fresh:pre:image:initial:other:primary_and_closes: explicit descriptor disposition and close-report recovery
+ok 41 - fresh:pre:image:closure:primary:c: exact executed prefix and outcome
+ok 42 - fresh:pre:image:closure:primary:c: explicit descriptor disposition and close-report recovery
+ok 43 - fresh:pre:image:closure:primary:image: exact executed prefix and outcome
+ok 44 - fresh:pre:image:closure:primary:image: explicit descriptor disposition and close-report recovery
+ok 45 - fresh:pre:image:closure:primary:both: exact executed prefix and outcome
+ok 46 - fresh:pre:image:closure:primary:both: explicit descriptor disposition and close-report recovery
+ok 47 - fresh:pre:image:closure:primary:both_and_original: exact executed prefix and outcome
+ok 48 - fresh:pre:image:closure:primary:both_and_original: explicit descriptor disposition and close-report recovery
+ok 49 - fresh:pre:image:closure:primary:primary_and_closes: exact executed prefix and outcome
+ok 50 - fresh:pre:image:closure:primary:primary_and_closes: explicit descriptor disposition and close-report recovery
+ok 51 - fresh:pre:image:closure:other:c: exact executed prefix and outcome
+ok 52 - fresh:pre:image:closure:other:c: explicit descriptor disposition and close-report recovery
+ok 53 - fresh:pre:image:closure:other:image: exact executed prefix and outcome
+ok 54 - fresh:pre:image:closure:other:image: explicit descriptor disposition and close-report recovery
+ok 55 - fresh:pre:image:closure:other:both: exact executed prefix and outcome
+ok 56 - fresh:pre:image:closure:other:both: explicit descriptor disposition and close-report recovery
+ok 57 - fresh:pre:image:closure:other:both_and_original: exact executed prefix and outcome
+ok 58 - fresh:pre:image:closure:other:both_and_original: explicit descriptor disposition and close-report recovery
+ok 59 - fresh:pre:image:closure:other:primary_and_closes: exact executed prefix and outcome
+ok 60 - fresh:pre:image:closure:other:primary_and_closes: explicit descriptor disposition and close-report recovery
+ok 61 - fresh:pre:original_primary:0: exact executed prefix and outcome
+ok 62 - fresh:pre:original_primary:0: explicit descriptor disposition and close-report recovery
+ok 63 - fresh:pre:original_primary:2: exact executed prefix and outcome
+ok 64 - fresh:pre:original_primary:2: explicit descriptor disposition and close-report recovery
+ok 65 - fresh:pre:fresh_primary:0: exact executed prefix and outcome
+ok 66 - fresh:pre:fresh_primary:0: explicit descriptor disposition and close-report recovery
+ok 67 - fresh:pre:fresh_primary:1: exact executed prefix and outcome
+ok 68 - fresh:pre:fresh_primary:1: explicit descriptor disposition and close-report recovery
+ok 69 - fresh:pre:fresh_primary:2: exact executed prefix and outcome
+ok 70 - fresh:pre:fresh_primary:2: explicit descriptor disposition and close-report recovery
+ok 71 - fresh:post:complete: exact executed prefix and outcome
+ok 72 - fresh:post:complete: explicit descriptor disposition and close-report recovery
+ok 73 - fresh:post:original:0: exact executed prefix and outcome
+ok 74 - fresh:post:original:0: explicit descriptor disposition and close-report recovery
+ok 75 - fresh:post:original:1: exact executed prefix and outcome
+ok 76 - fresh:post:original:1: explicit descriptor disposition and close-report recovery
+ok 77 - fresh:post:original:2: exact executed prefix and outcome
+ok 78 - fresh:post:original:2: explicit descriptor disposition and close-report recovery
+ok 79 - fresh:post:original:3: exact executed prefix and outcome
+ok 80 - fresh:post:original:3: explicit descriptor disposition and close-report recovery
+ok 81 - fresh:post:all_originals: exact executed prefix and outcome
+ok 82 - fresh:post:all_originals: explicit descriptor disposition and close-report recovery
+ok 83 - fresh:post:fresh:0: exact executed prefix and outcome
+ok 84 - fresh:post:fresh:0: explicit descriptor disposition and close-report recovery
+ok 85 - fresh:post:fresh:1: exact executed prefix and outcome
+ok 86 - fresh:post:fresh:1: explicit descriptor disposition and close-report recovery
+ok 87 - fresh:post:fresh:2: exact executed prefix and outcome
+ok 88 - fresh:post:fresh:2: explicit descriptor disposition and close-report recovery
+ok 89 - fresh:post:fresh:3: exact executed prefix and outcome
+ok 90 - fresh:post:fresh:3: explicit descriptor disposition and close-report recovery
+ok 91 - fresh:post:fresh_and_originals:0: exact executed prefix and outcome
+ok 92 - fresh:post:fresh_and_originals:0: explicit descriptor disposition and close-report recovery
+ok 93 - fresh:post:fresh_and_originals:3: exact executed prefix and outcome
+ok 94 - fresh:post:fresh_and_originals:3: explicit descriptor disposition and close-report recovery
+ok 95 - fresh:post:image:initial:primary:c: exact executed prefix and outcome
+ok 96 - fresh:post:image:initial:primary:c: explicit descriptor disposition and close-report recovery
+ok 97 - fresh:post:image:initial:primary:image: exact executed prefix and outcome
+ok 98 - fresh:post:image:initial:primary:image: explicit descriptor disposition and close-report recovery
+ok 99 - fresh:post:image:initial:primary:both: exact executed prefix and outcome
+ok 100 - fresh:post:image:initial:primary:both: explicit descriptor disposition and close-report recovery
+ok 101 - fresh:post:image:initial:primary:both_and_original: exact executed prefix and outcome
+ok 102 - fresh:post:image:initial:primary:both_and_original: explicit descriptor disposition and close-report recovery
+ok 103 - fresh:post:image:initial:primary:primary_and_closes: exact executed prefix and outcome
+ok 104 - fresh:post:image:initial:primary:primary_and_closes: explicit descriptor disposition and close-report recovery
+ok 105 - fresh:post:image:initial:other:c: exact executed prefix and outcome
+ok 106 - fresh:post:image:initial:other:c: explicit descriptor disposition and close-report recovery
+ok 107 - fresh:post:image:initial:other:image: exact executed prefix and outcome
+ok 108 - fresh:post:image:initial:other:image: explicit descriptor disposition and close-report recovery
+ok 109 - fresh:post:image:initial:other:both: exact executed prefix and outcome
+ok 110 - fresh:post:image:initial:other:both: explicit descriptor disposition and close-report recovery
+ok 111 - fresh:post:image:initial:other:both_and_original: exact executed prefix and outcome
+ok 112 - fresh:post:image:initial:other:both_and_original: explicit descriptor disposition and close-report recovery
+ok 113 - fresh:post:image:initial:other:primary_and_closes: exact executed prefix and outcome
+ok 114 - fresh:post:image:initial:other:primary_and_closes: explicit descriptor disposition and close-report recovery
+ok 115 - fresh:post:image:closure:primary:c: exact executed prefix and outcome
+ok 116 - fresh:post:image:closure:primary:c: explicit descriptor disposition and close-report recovery
+ok 117 - fresh:post:image:closure:primary:image: exact executed prefix and outcome
+ok 118 - fresh:post:image:closure:primary:image: explicit descriptor disposition and close-report recovery
+ok 119 - fresh:post:image:closure:primary:both: exact executed prefix and outcome
+ok 120 - fresh:post:image:closure:primary:both: explicit descriptor disposition and close-report recovery
+ok 121 - fresh:post:image:closure:primary:both_and_original: exact executed prefix and outcome
+ok 122 - fresh:post:image:closure:primary:both_and_original: explicit descriptor disposition and close-report recovery
+ok 123 - fresh:post:image:closure:primary:primary_and_closes: exact executed prefix and outcome
+ok 124 - fresh:post:image:closure:primary:primary_and_closes: explicit descriptor disposition and close-report recovery
+ok 125 - fresh:post:image:closure:other:c: exact executed prefix and outcome
+ok 126 - fresh:post:image:closure:other:c: explicit descriptor disposition and close-report recovery
+ok 127 - fresh:post:image:closure:other:image: exact executed prefix and outcome
+ok 128 - fresh:post:image:closure:other:image: explicit descriptor disposition and close-report recovery
+ok 129 - fresh:post:image:closure:other:both: exact executed prefix and outcome
+ok 130 - fresh:post:image:closure:other:both: explicit descriptor disposition and close-report recovery
+ok 131 - fresh:post:image:closure:other:both_and_original: exact executed prefix and outcome
+ok 132 - fresh:post:image:closure:other:both_and_original: explicit descriptor disposition and close-report recovery
+ok 133 - fresh:post:image:closure:other:primary_and_closes: exact executed prefix and outcome
+ok 134 - fresh:post:image:closure:other:primary_and_closes: explicit descriptor disposition and close-report recovery
+ok 135 - fresh:post:original_primary:0: exact executed prefix and outcome
+ok 136 - fresh:post:original_primary:0: explicit descriptor disposition and close-report recovery
+ok 137 - fresh:post:original_primary:3: exact executed prefix and outcome
+ok 138 - fresh:post:original_primary:3: explicit descriptor disposition and close-report recovery
+ok 139 - fresh:post:fresh_primary:0: exact executed prefix and outcome
+ok 140 - fresh:post:fresh_primary:0: explicit descriptor disposition and close-report recovery
+ok 141 - fresh:post:fresh_primary:1: exact executed prefix and outcome
+ok 142 - fresh:post:fresh_primary:1: explicit descriptor disposition and close-report recovery
+ok 143 - fresh:post:fresh_primary:2: exact executed prefix and outcome
+ok 144 - fresh:post:fresh_primary:2: explicit descriptor disposition and close-report recovery
+ok 145 - fresh:post:fresh_primary:3: exact executed prefix and outcome
+ok 146 - fresh:post:fresh_primary:3: explicit descriptor disposition and close-report recovery
+ok 147 - reuse:pre:complete: exact executed prefix and outcome
+ok 148 - reuse:pre:complete: explicit descriptor disposition and close-report recovery
+ok 149 - reuse:pre:original:0: exact executed prefix and outcome
+ok 150 - reuse:pre:original:0: explicit descriptor disposition and close-report recovery
+ok 151 - reuse:pre:original:1: exact executed prefix and outcome
+ok 152 - reuse:pre:original:1: explicit descriptor disposition and close-report recovery
+ok 153 - reuse:pre:original:2: exact executed prefix and outcome
+ok 154 - reuse:pre:original:2: explicit descriptor disposition and close-report recovery
+ok 155 - reuse:pre:original:3: exact executed prefix and outcome
+ok 156 - reuse:pre:original:3: explicit descriptor disposition and close-report recovery
+ok 157 - reuse:pre:all_originals: exact executed prefix and outcome
+ok 158 - reuse:pre:all_originals: explicit descriptor disposition and close-report recovery
+ok 159 - reuse:pre:fresh:0: exact executed prefix and outcome
+ok 160 - reuse:pre:fresh:0: explicit descriptor disposition and close-report recovery
+ok 161 - reuse:pre:fresh:1: exact executed prefix and outcome
+ok 162 - reuse:pre:fresh:1: explicit descriptor disposition and close-report recovery
+ok 163 - reuse:pre:fresh:2: exact executed prefix and outcome
+ok 164 - reuse:pre:fresh:2: explicit descriptor disposition and close-report recovery
+ok 165 - reuse:pre:fresh:3: exact executed prefix and outcome
+ok 166 - reuse:pre:fresh:3: explicit descriptor disposition and close-report recovery
+ok 167 - reuse:pre:fresh_and_originals:0: exact executed prefix and outcome
+ok 168 - reuse:pre:fresh_and_originals:0: explicit descriptor disposition and close-report recovery
+ok 169 - reuse:pre:fresh_and_originals:3: exact executed prefix and outcome
+ok 170 - reuse:pre:fresh_and_originals:3: explicit descriptor disposition and close-report recovery
+ok 171 - reuse:pre:image:initial:primary:c: exact executed prefix and outcome
+ok 172 - reuse:pre:image:initial:primary:c: explicit descriptor disposition and close-report recovery
+ok 173 - reuse:pre:image:initial:primary:image: exact executed prefix and outcome
+ok 174 - reuse:pre:image:initial:primary:image: explicit descriptor disposition and close-report recovery
+ok 175 - reuse:pre:image:initial:primary:both: exact executed prefix and outcome
+ok 176 - reuse:pre:image:initial:primary:both: explicit descriptor disposition and close-report recovery
+ok 177 - reuse:pre:image:initial:primary:both_and_original: exact executed prefix and outcome
+ok 178 - reuse:pre:image:initial:primary:both_and_original: explicit descriptor disposition and close-report recovery
+ok 179 - reuse:pre:image:initial:primary:primary_and_closes: exact executed prefix and outcome
+ok 180 - reuse:pre:image:initial:primary:primary_and_closes: explicit descriptor disposition and close-report recovery
+ok 181 - reuse:pre:image:initial:other:c: exact executed prefix and outcome
+ok 182 - reuse:pre:image:initial:other:c: explicit descriptor disposition and close-report recovery
+ok 183 - reuse:pre:image:initial:other:image: exact executed prefix and outcome
+ok 184 - reuse:pre:image:initial:other:image: explicit descriptor disposition and close-report recovery
+ok 185 - reuse:pre:image:initial:other:both: exact executed prefix and outcome
+ok 186 - reuse:pre:image:initial:other:both: explicit descriptor disposition and close-report recovery
+ok 187 - reuse:pre:image:initial:other:both_and_original: exact executed prefix and outcome
+ok 188 - reuse:pre:image:initial:other:both_and_original: explicit descriptor disposition and close-report recovery
+ok 189 - reuse:pre:image:initial:other:primary_and_closes: exact executed prefix and outcome
+ok 190 - reuse:pre:image:initial:other:primary_and_closes: explicit descriptor disposition and close-report recovery
+ok 191 - reuse:pre:image:closure:primary:c: exact executed prefix and outcome
+ok 192 - reuse:pre:image:closure:primary:c: explicit descriptor disposition and close-report recovery
+ok 193 - reuse:pre:image:closure:primary:image: exact executed prefix and outcome
+ok 194 - reuse:pre:image:closure:primary:image: explicit descriptor disposition and close-report recovery
+ok 195 - reuse:pre:image:closure:primary:both: exact executed prefix and outcome
+ok 196 - reuse:pre:image:closure:primary:both: explicit descriptor disposition and close-report recovery
+ok 197 - reuse:pre:image:closure:primary:both_and_original: exact executed prefix and outcome
+ok 198 - reuse:pre:image:closure:primary:both_and_original: explicit descriptor disposition and close-report recovery
+ok 199 - reuse:pre:image:closure:primary:primary_and_closes: exact executed prefix and outcome
+ok 200 - reuse:pre:image:closure:primary:primary_and_closes: explicit descriptor disposition and close-report recovery
+ok 201 - reuse:pre:image:closure:other:c: exact executed prefix and outcome
+ok 202 - reuse:pre:image:closure:other:c: explicit descriptor disposition and close-report recovery
+ok 203 - reuse:pre:image:closure:other:image: exact executed prefix and outcome
+ok 204 - reuse:pre:image:closure:other:image: explicit descriptor disposition and close-report recovery
+ok 205 - reuse:pre:image:closure:other:both: exact executed prefix and outcome
+ok 206 - reuse:pre:image:closure:other:both: explicit descriptor disposition and close-report recovery
+ok 207 - reuse:pre:image:closure:other:both_and_original: exact executed prefix and outcome
+ok 208 - reuse:pre:image:closure:other:both_and_original: explicit descriptor disposition and close-report recovery
+ok 209 - reuse:pre:image:closure:other:primary_and_closes: exact executed prefix and outcome
+ok 210 - reuse:pre:image:closure:other:primary_and_closes: explicit descriptor disposition and close-report recovery
+ok 211 - reuse:pre:original_primary:0: exact executed prefix and outcome
+ok 212 - reuse:pre:original_primary:0: explicit descriptor disposition and close-report recovery
+ok 213 - reuse:pre:original_primary:3: exact executed prefix and outcome
+ok 214 - reuse:pre:original_primary:3: explicit descriptor disposition and close-report recovery
+ok 215 - reuse:pre:fresh_primary:0: exact executed prefix and outcome
+ok 216 - reuse:pre:fresh_primary:0: explicit descriptor disposition and close-report recovery
+ok 217 - reuse:pre:fresh_primary:1: exact executed prefix and outcome
+ok 218 - reuse:pre:fresh_primary:1: explicit descriptor disposition and close-report recovery
+ok 219 - reuse:pre:fresh_primary:2: exact executed prefix and outcome
+ok 220 - reuse:pre:fresh_primary:2: explicit descriptor disposition and close-report recovery
+ok 221 - reuse:pre:fresh_primary:3: exact executed prefix and outcome
+ok 222 - reuse:pre:fresh_primary:3: explicit descriptor disposition and close-report recovery
+ok 223 - reuse:post:complete: exact executed prefix and outcome
+ok 224 - reuse:post:complete: explicit descriptor disposition and close-report recovery
+ok 225 - reuse:post:original:0: exact executed prefix and outcome
+ok 226 - reuse:post:original:0: explicit descriptor disposition and close-report recovery
+ok 227 - reuse:post:original:1: exact executed prefix and outcome
+ok 228 - reuse:post:original:1: explicit descriptor disposition and close-report recovery
+ok 229 - reuse:post:original:2: exact executed prefix and outcome
+ok 230 - reuse:post:original:2: explicit descriptor disposition and close-report recovery
+ok 231 - reuse:post:original:3: exact executed prefix and outcome
+ok 232 - reuse:post:original:3: explicit descriptor disposition and close-report recovery
+ok 233 - reuse:post:all_originals: exact executed prefix and outcome
+ok 234 - reuse:post:all_originals: explicit descriptor disposition and close-report recovery
+ok 235 - reuse:post:fresh:0: exact executed prefix and outcome
+ok 236 - reuse:post:fresh:0: explicit descriptor disposition and close-report recovery
+ok 237 - reuse:post:fresh:1: exact executed prefix and outcome
+ok 238 - reuse:post:fresh:1: explicit descriptor disposition and close-report recovery
+ok 239 - reuse:post:fresh:2: exact executed prefix and outcome
+ok 240 - reuse:post:fresh:2: explicit descriptor disposition and close-report recovery
+ok 241 - reuse:post:fresh:3: exact executed prefix and outcome
+ok 242 - reuse:post:fresh:3: explicit descriptor disposition and close-report recovery
+ok 243 - reuse:post:fresh_and_originals:0: exact executed prefix and outcome
+ok 244 - reuse:post:fresh_and_originals:0: explicit descriptor disposition and close-report recovery
+ok 245 - reuse:post:fresh_and_originals:3: exact executed prefix and outcome
+ok 246 - reuse:post:fresh_and_originals:3: explicit descriptor disposition and close-report recovery
+ok 247 - reuse:post:image:initial:primary:c: exact executed prefix and outcome
+ok 248 - reuse:post:image:initial:primary:c: explicit descriptor disposition and close-report recovery
+ok 249 - reuse:post:image:initial:primary:image: exact executed prefix and outcome
+ok 250 - reuse:post:image:initial:primary:image: explicit descriptor disposition and close-report recovery
+ok 251 - reuse:post:image:initial:primary:both: exact executed prefix and outcome
+ok 252 - reuse:post:image:initial:primary:both: explicit descriptor disposition and close-report recovery
+ok 253 - reuse:post:image:initial:primary:both_and_original: exact executed prefix and outcome
+ok 254 - reuse:post:image:initial:primary:both_and_original: explicit descriptor disposition and close-report recovery
+ok 255 - reuse:post:image:initial:primary:primary_and_closes: exact executed prefix and outcome
+ok 256 - reuse:post:image:initial:primary:primary_and_closes: explicit descriptor disposition and close-report recovery
+ok 257 - reuse:post:image:initial:other:c: exact executed prefix and outcome
+ok 258 - reuse:post:image:initial:other:c: explicit descriptor disposition and close-report recovery
+ok 259 - reuse:post:image:initial:other:image: exact executed prefix and outcome
+ok 260 - reuse:post:image:initial:other:image: explicit descriptor disposition and close-report recovery
+ok 261 - reuse:post:image:initial:other:both: exact executed prefix and outcome
+ok 262 - reuse:post:image:initial:other:both: explicit descriptor disposition and close-report recovery
+ok 263 - reuse:post:image:initial:other:both_and_original: exact executed prefix and outcome
+ok 264 - reuse:post:image:initial:other:both_and_original: explicit descriptor disposition and close-report recovery
+ok 265 - reuse:post:image:initial:other:primary_and_closes: exact executed prefix and outcome
+ok 266 - reuse:post:image:initial:other:primary_and_closes: explicit descriptor disposition and close-report recovery
+ok 267 - reuse:post:image:closure:primary:c: exact executed prefix and outcome
+ok 268 - reuse:post:image:closure:primary:c: explicit descriptor disposition and close-report recovery
+ok 269 - reuse:post:image:closure:primary:image: exact executed prefix and outcome
+ok 270 - reuse:post:image:closure:primary:image: explicit descriptor disposition and close-report recovery
+ok 271 - reuse:post:image:closure:primary:both: exact executed prefix and outcome
+ok 272 - reuse:post:image:closure:primary:both: explicit descriptor disposition and close-report recovery
+ok 273 - reuse:post:image:closure:primary:both_and_original: exact executed prefix and outcome
+ok 274 - reuse:post:image:closure:primary:both_and_original: explicit descriptor disposition and close-report recovery
+ok 275 - reuse:post:image:closure:primary:primary_and_closes: exact executed prefix and outcome
+ok 276 - reuse:post:image:closure:primary:primary_and_closes: explicit descriptor disposition and close-report recovery
+ok 277 - reuse:post:image:closure:other:c: exact executed prefix and outcome
+ok 278 - reuse:post:image:closure:other:c: explicit descriptor disposition and close-report recovery
+ok 279 - reuse:post:image:closure:other:image: exact executed prefix and outcome
+ok 280 - reuse:post:image:closure:other:image: explicit descriptor disposition and close-report recovery
+ok 281 - reuse:post:image:closure:other:both: exact executed prefix and outcome
+ok 282 - reuse:post:image:closure:other:both: explicit descriptor disposition and close-report recovery
+ok 283 - reuse:post:image:closure:other:both_and_original: exact executed prefix and outcome
+ok 284 - reuse:post:image:closure:other:both_and_original: explicit descriptor disposition and close-report recovery
+ok 285 - reuse:post:image:closure:other:primary_and_closes: exact executed prefix and outcome
+ok 286 - reuse:post:image:closure:other:primary_and_closes: explicit descriptor disposition and close-report recovery
+ok 287 - reuse:post:original_primary:0: exact executed prefix and outcome
+ok 288 - reuse:post:original_primary:0: explicit descriptor disposition and close-report recovery
+ok 289 - reuse:post:original_primary:3: exact executed prefix and outcome
+ok 290 - reuse:post:original_primary:3: explicit descriptor disposition and close-report recovery
+ok 291 - reuse:post:fresh_primary:0: exact executed prefix and outcome
+ok 292 - reuse:post:fresh_primary:0: explicit descriptor disposition and close-report recovery
+ok 293 - reuse:post:fresh_primary:1: exact executed prefix and outcome
+ok 294 - reuse:post:fresh_primary:1: explicit descriptor disposition and close-report recovery
+ok 295 - reuse:post:fresh_primary:2: exact executed prefix and outcome
+ok 296 - reuse:post:fresh_primary:2: explicit descriptor disposition and close-report recovery
+ok 297 - reuse:post:fresh_primary:3: exact executed prefix and outcome
+ok 298 - reuse:post:fresh_primary:3: explicit descriptor disposition and close-report recovery
+ok 299 - fresh:pre:omit_original_reference_close: exact executed prefix and outcome
+ok 300 - fresh:pre:omit_original_reference_close: explicit descriptor disposition and close-report recovery
+ok 301 - fresh:pre:omit_image_input_close: exact executed prefix and outcome
+ok 302 - fresh:pre:omit_image_input_close: explicit descriptor disposition and close-report recovery
+ok 303 - fresh:pre:omit_fresh_reference_close: exact executed prefix and outcome
+ok 304 - fresh:pre:omit_fresh_reference_close: explicit descriptor disposition and close-report recovery
+ok 305 - fresh:post:omit_original_reference_close: exact executed prefix and outcome
+ok 306 - fresh:post:omit_original_reference_close: explicit descriptor disposition and close-report recovery
+ok 307 - fresh:post:omit_image_input_close: exact executed prefix and outcome
+ok 308 - fresh:post:omit_image_input_close: explicit descriptor disposition and close-report recovery
+ok 309 - fresh:post:omit_fresh_reference_close: exact executed prefix and outcome
+ok 310 - fresh:post:omit_fresh_reference_close: explicit descriptor disposition and close-report recovery
+ok 311 - reuse:pre:omit_original_reference_close: exact executed prefix and outcome
+ok 312 - reuse:pre:omit_original_reference_close: explicit descriptor disposition and close-report recovery
+ok 313 - reuse:pre:omit_image_input_close: exact executed prefix and outcome
+ok 314 - reuse:pre:omit_image_input_close: explicit descriptor disposition and close-report recovery
+ok 315 - reuse:pre:omit_fresh_reference_close: exact executed prefix and outcome
+ok 316 - reuse:pre:omit_fresh_reference_close: explicit descriptor disposition and close-report recovery
+ok 317 - reuse:post:omit_original_reference_close: exact executed prefix and outcome
+ok 318 - reuse:post:omit_original_reference_close: explicit descriptor disposition and close-report recovery
+ok 319 - reuse:post:omit_image_input_close: exact executed prefix and outcome
+ok 320 - reuse:post:omit_image_input_close: explicit descriptor disposition and close-report recovery
+ok 321 - reuse:post:omit_fresh_reference_close: exact executed prefix and outcome
+ok 322 - reuse:post:omit_fresh_reference_close: explicit descriptor disposition and close-report recovery
+ok 323 - no process attempt
+1..323

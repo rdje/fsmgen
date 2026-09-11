@@ -1995,12 +1995,34 @@ each case to its actual records. Each cut runs with one actual order; this is
 not every cut-by-order combination. Repeated reads of the same path are checked
 as separate handle occurrences, so a closed reread cannot stand in for an open
 original. Conservative holds and other owners remain unchanged as specified.
-Census close reports and deeper aggregate-reader internals remain separate.
+The separate close-report controls below cover census cleanup; deeper
+aggregate-reader internals remain unqualified.
 Replay:
 
 ```bash
 scripts/run_with_ram_guard.sh -- perl docs/audits/native-proxy-observation-semantic-cuts-20260911/qualify.t
 python3 -B docs/audits/native-proxy-observation-semantic-cuts-20260911/audit.py
+```
+
+Census close-report controls perform the actual close before reporting a modeled
+`EIO` or `ENOSPC`. They cover every retained original reference, fresh reference
+and image-input close on both routes and semantic passes. Grouped failures
+check that every owned handle is still closed. For example, a failed image-input
+close must not prevent closing the second input or the outer retained references;
+an earlier image-validation error must remain the reported cause despite those
+cleanup errors. Without an earlier error, the first close failure is preserved.
+
+The audit binds each close to its actual read occurrence, checks closure before
+the modeled error return, and verifies conservative holds and other owners.
+Separate omitted-close controls leave an actual handle open for detection and
+observer recovery. These synchronous reports do not establish operating-system
+close ambiguity or crash behavior. Target-source and permanent-lock close
+reports, native ownership, archive settlement and release remain separately
+owned. Replay:
+
+```bash
+scripts/run_with_ram_guard.sh -- perl docs/audits/native-proxy-observation-semantic-close-20260911/qualify.t
+python3 -B docs/audits/native-proxy-observation-semantic-close-20260911/audit.py
 ```
 
 The helper checks bounded regular source/output files and the native header,

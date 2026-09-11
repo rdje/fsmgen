@@ -2678,11 +2678,11 @@ decomposes the architecture needed to move beyond that bounded foundation.
   Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.12.4.1.3.3.2.2.2.2.1: qualify observation publication interruption states`
 
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.12.4.1.3.3.2.2.2.2.2`
-  Status: `active`
+  Status: `done`
   Goal: `Qualify observation coordinator and census interruption states.`
   Acceptance: `After publication cuts close, prospectively enumerate both routes through existing-lock setup, structural and semantic census entries/closures, final store/root/namespace/lock checks, preserving exact conservative hold state and every other owner. Inject only boundaries with established descriptor ownership; independently verify executed prefixes and full descriptor/namespace disposition. No asynchronous crash, native experiment, retry or release.`
-  Verification: `Child .1 qualifies and repairs namespace read-error rejection and explicit directory cleanup using preserved unqualified baseline and actual retained-handle controls. Child .2 now owns the complete coordinator/census matrix; no ordinary runtime leak or full-acquisition bypass is inferred.`
-  Commit: `pending`
+  Verification: `All declared children qualify: both directory enumeration repairs, coordinator call prefixes, semantic reference/image calls and census close batches have exact native-handle/namespace evidence. The semantic-close child authenticates twenty-seven prerequisite receipts and independently rederives their archived controls; all 3164 joined roots are disjoint and absent without old fixture reruns. The declared finite coordinator/census union closes with unchanged prototypes. Target/permanent-lock close reports and final acquisition join remain in parent sibling .3; asynchronous crashes, every syscall/aggregate-reader internal failure, native ownership and activation are not inferred.`
+  Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.12.4.1.3.3.2.2.2.2.2.2.2.2.2: qualify census close reports and error precedence`
   Children: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.12.4.1.3.3.2.2.2.2.2.1, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.12.4.1.3.3.2.2.2.2.2.2`
 
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.12.4.1.3.3.2.2.2.2.2.1`
@@ -2693,11 +2693,11 @@ decomposes the architecture needed to move beyond that bounded foundation.
   Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.12.4.1.3.3.2.2.2.2.2.1: reject inactive namespace read errors and close directories`
 
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.12.4.1.3.3.2.2.2.2.2.2`
-  Status: `active`
+  Status: `done`
   Goal: `Qualify the complete finite observation coordinator and census cut matrix.`
   Acceptance: `After bounded namespace failure handling qualifies, prospectively enumerate both fresh/reuse routes through existing-lock setup, structural/semantic census entries and closures, and final store/root/namespace/lock identity checks. Interrupt only with established ownership and independently reconstruct every returned directory/source/lock descriptor, exact executed trace and conservative hold/other-owner state. Preserve already qualified publication/snapshot paths and final close-report ownership. No asynchronous crash, native experiment, retry or release.`
-  Verification: `Child .1 preserves and qualifies the image-member errno/explicit-directory-close baseline and repair. Both inactive namespace readers now reject modeled read errors and explicitly close after capacity/read failures. Child .2 retains the complete coordinator/census matrix and its separate ownership proof.`
-  Commit: `pending`
+  Verification: `All declared children qualify: both directory enumeration repairs, coordinator call prefixes, semantic reference/image calls and census close batches have exact native-handle/namespace evidence. The semantic-close child authenticates twenty-seven prerequisite receipts and independently rederives their archived controls; all 3164 joined roots are disjoint and absent without old fixture reruns. The declared finite coordinator/census union closes with unchanged prototypes. Target/permanent-lock close reports and final acquisition join remain in parent sibling .3; asynchronous crashes, every syscall/aggregate-reader internal failure, native ownership and activation are not inferred.`
+  Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.12.4.1.3.3.2.2.2.2.2.2.2.2.2: qualify census close reports and error precedence`
 
   Children: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.12.4.1.3.3.2.2.2.2.2.2.1, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.12.4.1.3.3.2.2.2.2.2.2.2`
 
@@ -2709,11 +2709,11 @@ decomposes the architecture needed to move beyond that bounded foundation.
   Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.12.4.1.3.3.2.2.2.2.2.2.1: reject inactive image enumeration errors and close directories`
 
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.12.4.1.3.3.2.2.2.2.2.2.2`
-  Status: `active`
+  Status: `done`
   Goal: `Qualify the complete finite coordinator and semantic census interruption matrix.`
   Acceptance: `After both namespace readers qualify, enumerate fresh/reuse routes through existing-lock setup, structural/semantic census entries/closures and final store/root/namespace/lock checks. Interrupt only with established descriptor ownership; independently reconstruct exact call prefixes, every returned directory/source/lock handle, conservative hold state and unchanged other owners. Preserve snapshot/publication qualification and separately owned final close-report closure. No asynchronous crash, native experiment, retry or release.`
-  Verification: `Child .1 qualifies coordinator operation/lock/namespace calls with exact source/directory custody and conservative hold state. Child .2 remains active for semantic-census internal cuts and modeled census close reports. Both directory-reader prerequisites remain qualified; the parent is incomplete until both children close.`
-  Commit: `pending`
+  Verification: `All declared children qualify: both directory enumeration repairs, coordinator call prefixes, semantic reference/image calls and census close batches have exact native-handle/namespace evidence. The semantic-close child authenticates twenty-seven prerequisite receipts and independently rederives their archived controls; all 3164 joined roots are disjoint and absent without old fixture reruns. The declared finite coordinator/census union closes with unchanged prototypes. Target/permanent-lock close reports and final acquisition join remain in parent sibling .3; asynchronous crashes, every syscall/aggregate-reader internal failure, native ownership and activation are not inferred.`
+  Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.12.4.1.3.3.2.2.2.2.2.2.2.2.2: qualify census close reports and error precedence`
 
   Children: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.12.4.1.3.3.2.2.2.2.2.2.2.1, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.12.4.1.3.3.2.2.2.2.2.2.2.2`
 
@@ -2725,11 +2725,11 @@ decomposes the architecture needed to move beyond that bounded foundation.
   Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.12.4.1.3.3.2.2.2.2.2.2.2.1: qualify inactive coordinator interruption custody`
 
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.12.4.1.3.3.2.2.2.2.2.2.2.2`
-  Status: `active`
+  Status: `done`
   Goal: `Qualify semantic-census internal interruption and cleanup boundaries.`
   Acceptance: `After coordinator calls qualify, independently enumerate both routes and both semantic passes through reference decode/key/image matching, complete image reader entry/closure, retained/fresh reference checks and semantic closure. Inject only established ownership boundaries, including explicitly modeled census close reports where applicable. Reconstruct exact source/directory custody, executed traces and conservative hold/other-owner state; falsify omitted guards and preserve exact failed/pass evidence. Join both children without reclassifying synchronous cuts as crash/native proof. No process, compiler, native query, archive/release/retry or activation.`
-  Verification: `Child .1 qualifies synchronous reference/image semantic call boundaries on both routes and passes, with independent actual-order and exact handle-occurrence oracles. Child .2 remains active for census close reports and the semantic join. Coordinator, snapshot, publication and directory-reader evidence remains preserved.`
-  Commit: `pending`
+  Verification: `All declared children qualify: both directory enumeration repairs, coordinator call prefixes, semantic reference/image calls and census close batches have exact native-handle/namespace evidence. The semantic-close child authenticates twenty-seven prerequisite receipts and independently rederives their archived controls; all 3164 joined roots are disjoint and absent without old fixture reruns. The declared finite coordinator/census union closes with unchanged prototypes. Target/permanent-lock close reports and final acquisition join remain in parent sibling .3; asynchronous crashes, every syscall/aggregate-reader internal failure, native ownership and activation are not inferred.`
+  Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.12.4.1.3.3.2.2.2.2.2.2.2.2.2: qualify census close reports and error precedence`
 
   Children: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.12.4.1.3.3.2.2.2.2.2.2.2.2.1, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.12.4.1.3.3.2.2.2.2.2.2.2.2.2`
 
@@ -2741,14 +2741,14 @@ decomposes the architecture needed to move beyond that bounded foundation.
   Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.12.4.1.3.3.2.2.2.2.2.2.2.2.1: qualify inactive semantic call-boundary custody`
 
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.12.4.1.3.3.2.2.2.2.2.2.2.2.2`
-  Status: `active`
+  Status: `done`
   Goal: `Qualify semantic-census close reports and join semantic custody evidence.`
   Acceptance: `After call-boundary cuts qualify, prospectively select census-owned original/fresh reference and image-input close reports, including competing primary errors and all-close behavior. Perform actual close before reporting errors, distinguish deliberate omitted-close controls, and independently verify exact diagnostics, retained handles and conservative hold/other-owner state. Join current call/coordinator and prerequisite evidence without replaying closed native experiments. Keep target/permanent-lock close reports separately owned. No native process, compiler, archive/release/retry or activation.`
-  Verification: `pending`
-  Commit: `pending`
+  Verification: `The first guarded harness passes 323 assertions across 149 cases and twelve actual omitted-close mutants, with no prototype or harness repair. Cases cover 145 modeled-report scenarios and 39 competing primary errors on fresh/reuse and pre/post semantic passes. Re-derivation: the prospective independent Python plan declares canonical-order call flow and original-reference, fresh-reference and image-input close batches. Every reported EIO/ENOSPC follows actual successful CORE::close and observed closure. Every owned batch member is attempted; primary call errors outrank cleanup reports, and the first inner close report outranks later outer cleanup reports. The independent oracle binds each close to the exact actual source-read occurrence, validates reported and native outcomes, and reconstructs full-operation call/resource prefixes, conservative primary holds and every other owner. Falsification: twelve deliberately omitted original/fresh/image closes each expose one actual retained open handle, rejected independently by strict handle and close-call oracles and recovered by the observer. Eighteen altered result controls reject missing attempts, false closure, wrong occurrence, suppressed or reordered errors, lost calls/handles, owner/hold evidence and authority/process changes. The distinct no-regression leg authenticates twenty-seven committed prerequisite copies and independently rederives semantic/coordinator/namespace/image-member/snapshot 655/249/29/29/345 archived assertions without old fixture reruns or ignored-output rewrites. All 3164 current/prerequisite roots are disjoint and absent, including 644 new allocations. Fifty-two prospective inputs remain unchanged; forty-seven predecessor inputs remain exact at 829df81b7. Durability: docs/audits/native-proxy-observation-semantic-close-20260911 retains the prospective plan, recorder, independent audit/closure/review and eleven byte-exact new recovery copies. The semantic/census child union closes its finite scope; target/permanent-lock close reports and the full acquisition join remain separately owned. Book build exits zero, its new passage is inspected and exact output removed; Knowledge Map parity and task/history routing agree without allowance increases. Staged doctrines and commit-hook gates close the slice. This proves synchronous modeled reports after actual closure, not operating-system close ambiguity, every syscall or aggregate-reader internal failure, asynchronous crashes, native ownership, archive/release, activation or historical startup repair. Each selector executes with one actual order, not every selector-by-order combination. Parent/full CI/push gates remain open.`
+  Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.12.4.1.3.3.2.2.2.2.2.2.2.2.2: qualify census close reports and error precedence`
 
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.12.4.1.3.3.2.2.2.2.3`
-  Status: `proposed`
+  Status: `active`
   Goal: `Qualify close-report faults and join the full observation acquisition matrix.`
   Acceptance: `After source, publication and coordinator boundaries close, inject reported retained-target-source and permanent-lock close failures and competing primary errors without relying on lexical destruction; join the already qualified publication reader/writer close-report controls. Independently join all declared matrices and unchanged fresh/reuse/handoff prerequisites, retaining precise limits and exact recovery evidence. Close acquisition only when every admitted boundary, descriptor and conservative hold state is accounted for. Native lifetime/archive/release and activation stay gated.`
   Verification: `pending`
@@ -3764,7 +3764,7 @@ decomposes the architecture needed to move beyond that bounded foundation.
 
 ## Current Frontier
 
-Current frontier: .3.2.15.7.3.12.4.1.3.3.2.2.2.2.2.2.2.2.2 owns census close reports and semantic join; semantic calls, coordinator and directory readers qualify; parent sibling .3 retains target/lock close reports and matrix join. Publication interruption states are qualified. Snapshot interruptions, failed handoff closure, fresh acquisition and stable reuse are qualified. Children .3.3-.3.6 own custody, settlement, compatibility and combined closure. Actual ownership/compiler profiles remain prerequisites of .1.5; startup/parent, full CI and push stay gated.
+Current frontier: .3.2.15.7.3.12.4.1.3.3.2.2.2.2.3 owns remaining close reports and the full acquisition matrix join; the finite coordinator/census union now qualifies with both directory readers and semantic call/close controls. Publication interruption states are qualified. Snapshot interruptions, failed handoff closure, fresh acquisition and stable reuse are qualified. Children .3.3-.3.6 own custody, settlement, compatibility and combined closure. Actual ownership/compiler profiles remain prerequisites of .1.5; startup/parent, full CI and push stay gated.
 
 Architecture audit `.1` is complete. Decision `0032` selects one public
 `.vial` source language, private immutable `VIALSemanticIR` and
@@ -6360,8 +6360,8 @@ Completed native-proxy feasibility through runtime-source-controls acceptance: r
 The manifest binds the completed publication-interruption acceptance suffix at `295d186656a5d517894c1bdbd550b0633d2b2fc4`. That source preserves the earlier history pointer and versioned manifest chain; current node contracts remain authoritative.
 
 
-## Acceptance Checklist (semantic calls .3.2.15.7.3.12.4.1.3.3.2.2.2.2.2.2.2.2.1)
+## Acceptance Checklist (semantic close reports .3.2.15.7.3.12.4.1.3.3.2.2.2.2.2.2.2.2.2)
 
-- [x] **ROOT CAUSE (WHY + WHERE)** — `git log -S 'sub _closure' -1 -- docs/audits/native-proxy-runtime-census-20260910/ReferenceCensus.pm` identifies `6d87fd64c4ab4abcecee0d1ad8f8259350719e53`. The coordinator matrix treats the semantic census as an aggregate, leaving internal reference/image ownership boundaries unqualified; this leaf supplies their independent finite call matrix.
-- [x] **ADDRESSED (verified qualification)** — Guarded `docs/audits/native-proxy-observation-semantic-cuts-20260911/qualify.t` passes 655 assertions on the first run; `audit.py` independently validates 315 cases, twelve actual omitted-close mutants and sixteen altered-record falsifiers. Canonical-record order and exact repeated-path handle occurrences independently determine the oracle; each selector executes once, not all order combinations. Eleven exact recovery copies are retained.
-- [x] **NO REGRESSION** — `knowledge-map: OK` reports 1161 facts, 6379 unique questions, 6550 answer occurrences and 139 shards. Staged `scripts/check_doctrines.sh` gates closure. Read-only `closure.py` authenticates twenty prerequisite copies and independently rederives 249/29/29/345 archived assertions, without old fixture reruns or output rewrites. All 2520 roots are absent and disjoint; forty-seven prospective and forty-three committed predecessor inputs remain exact. Book rendering is inspected and removed, with completion evidence and unavailable tool exit status recorded; no product/native activation.
+- [x] **ROOT CAUSE (WHY + WHERE)** — `git log -S 'cannot close fresh reference' -1 -- docs/audits/native-proxy-runtime-census-20260910/ReferenceCensus.pm` identifies `6d87fd64c4ab4abcecee0d1ad8f8259350719e53`. Prior semantic cuts left reported original/fresh-reference and image-input close failures, complete close batches and competing-error precedence unqualified.
+- [x] **ADDRESSED (verified qualification)** — The first guarded 323-assertion harness and independent audit pass: 149 cases, twelve actual omitted-close mutants and eighteen altered-record falsifiers. Exact read occurrences bind real close attempts and closure before modeled EIO/ENOSPC reports; all owned batch members close and primary/first-error precedence holds. No prototype or harness repair; eleven exact recovery copies preserve the result.
+- [x] **NO REGRESSION** — `knowledge-map: OK` reports 1161 facts, 6380 unique questions, 6551 answer occurrences and 139 shards. Read-only prerequisite closure authenticates twenty-seven committed copies and independently rederives 655/249/29/29/345 archived assertions. All 3164 roots are disjoint and absent, with fifty-two prospective and forty-seven committed predecessor inputs unchanged. Book rendering exits zero and is inspected/removed; staged doctrines and commit-hook gates close the slice.
