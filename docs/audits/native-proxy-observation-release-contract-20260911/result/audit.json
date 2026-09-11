@@ -1,0 +1,220 @@
+{
+  "abstract_scenarios": 4096,
+  "admitted_scenarios": 64,
+  "failed_cancelled_examples": {
+    "(False, False)": {
+      "admitted": true,
+      "hold_present": false,
+      "image_present": true,
+      "other_hold_present": true,
+      "outcomes": [
+        "failed",
+        "cancelled"
+      ],
+      "returned": true
+    },
+    "(False, True)": {
+      "admitted": true,
+      "hold_present": false,
+      "image_present": true,
+      "other_hold_present": true,
+      "outcomes": [
+        "failed",
+        "cancelled"
+      ],
+      "returned": false
+    },
+    "(True, False)": {
+      "admitted": true,
+      "hold_present": false,
+      "image_present": true,
+      "other_hold_present": true,
+      "outcomes": [
+        "failed",
+        "cancelled"
+      ],
+      "returned": true
+    },
+    "(True, True)": {
+      "admitted": true,
+      "hold_present": false,
+      "image_present": true,
+      "other_hold_present": true,
+      "outcomes": [
+        "failed",
+        "cancelled"
+      ],
+      "returned": false
+    }
+  },
+  "inherited_bounds": {
+    "archive_total_bytes": 4194304,
+    "archive_unique_files": 64,
+    "coordination_poll_seconds": 0.005,
+    "coordination_wait_seconds": 2,
+    "reference_bytes_each": 4096,
+    "source_bytes_each": 65536
+  },
+  "inputs_unchanged": 12,
+  "limits": "This is a finite symbolic selection check with two declared work slots and supplied archive/hold predicates. It never allocates a fixture, opens an archive or hold, launches work, or establishes native ownership, loaded-image identity or transport completeness. File custody, concrete closed schemas and release errors need the owned implementation children. The structural work envelope is selected, not a measured production profile.",
+  "maximum_model_roster": {
+    "entries": 17,
+    "selection_bytes": 3078,
+    "work_id_bytes": 64
+  },
+  "mutant_counterexamples": {
+    "accept_partial_roster": {
+      "owner_states": [
+        "missing",
+        "missing"
+      ],
+      "predicates": {
+        "archive_bytes_match": true,
+        "archive_identity_matches": true,
+        "exact_hold": true,
+        "failure_after_unlink": false,
+        "private_present": false,
+        "selection_sealed": true
+      }
+    },
+    "ignore_archive_bytes": {
+      "owner_states": [
+        "success",
+        "success"
+      ],
+      "predicates": {
+        "archive_bytes_match": false,
+        "archive_identity_matches": true,
+        "exact_hold": true,
+        "failure_after_unlink": false,
+        "private_present": false,
+        "selection_sealed": true
+      }
+    },
+    "ignore_archive_identity": {
+      "owner_states": [
+        "success",
+        "success"
+      ],
+      "predicates": {
+        "archive_bytes_match": true,
+        "archive_identity_matches": false,
+        "exact_hold": true,
+        "failure_after_unlink": false,
+        "private_present": false,
+        "selection_sealed": true
+      }
+    },
+    "ignore_group_cleanup": {
+      "owner_states": [
+        "group_survives",
+        "group_survives"
+      ],
+      "predicates": {
+        "archive_bytes_match": true,
+        "archive_identity_matches": true,
+        "exact_hold": true,
+        "failure_after_unlink": false,
+        "private_present": false,
+        "selection_sealed": true
+      }
+    },
+    "ignore_helper_cleanup": {
+      "owner_states": [
+        "success",
+        "running"
+      ],
+      "predicates": {
+        "archive_bytes_match": true,
+        "archive_identity_matches": true,
+        "exact_hold": true,
+        "failure_after_unlink": false,
+        "private_present": false,
+        "selection_sealed": true
+      }
+    },
+    "ignore_hold_identity": {
+      "owner_states": [
+        "success",
+        "success"
+      ],
+      "predicates": {
+        "archive_bytes_match": true,
+        "archive_identity_matches": true,
+        "exact_hold": false,
+        "failure_after_unlink": false,
+        "private_present": false,
+        "selection_sealed": true
+      }
+    },
+    "ignore_owner_token": {
+      "control": "owner token replaced"
+    },
+    "ignore_reaping": {
+      "owner_states": [
+        "unreaped",
+        "unreaped"
+      ],
+      "predicates": {
+        "archive_bytes_match": true,
+        "archive_identity_matches": true,
+        "exact_hold": true,
+        "failure_after_unlink": false,
+        "private_present": false,
+        "selection_sealed": true
+      }
+    },
+    "ignore_selection_seal": {
+      "owner_states": [
+        "success",
+        "success"
+      ],
+      "predicates": {
+        "archive_bytes_match": true,
+        "archive_identity_matches": true,
+        "exact_hold": true,
+        "failure_after_unlink": false,
+        "private_present": false,
+        "selection_sealed": false
+      }
+    }
+  },
+  "rejected_record_controls": [
+    "duplicate receipt",
+    "extra receipt",
+    "duplicate selection",
+    "reordered receipts",
+    "reordered selection",
+    "missing selection",
+    "owner token replaced",
+    "work role replaced",
+    "boolean cleanup flag",
+    "missing cleanup flag",
+    "unknown cleanup field",
+    "invalid scalar spelling",
+    "unknown outcome",
+    "legacy settled event",
+    "work roster exceeds selected envelope",
+    "work ID exceeds selected envelope"
+  ],
+  "returned_successfully": 32,
+  "schema": "fsmgen.inactive_observation_release_contract_audit.v1",
+  "selected_inert_bounds": {
+    "meaning": "Explicit structural qualification ceilings, not observed process counts or production transport/capacity proof. Seventeen permits an inert profile with the existing sixteen request slots and one helper; real query, capture, helper and nested-owner inventories still require the separately owned native admission review. Reject an overflowing real profile; never omit work to fit.",
+    "receipt_bytes_each": 4096,
+    "selection_bytes": 4096,
+    "work_entries": 17,
+    "work_id_bytes": 64
+  },
+  "source_example": {
+    "archive_reopen_line": 144,
+    "borrowed_helper_branch_settled": true,
+    "helper_shutdown_owner": "caller",
+    "helper_stopped": false,
+    "native_or_product_execution": false,
+    "settled_assignment_line": 462,
+    "settled_event_line": 471,
+    "source": "scripts/observe_fixture_startup.py"
+  },
+  "success": true
+}

@@ -28,6 +28,8 @@ answers:
   - "why must snapshot cut selectors identify unique occurrences?"
   - "which remaining acquisition close reports are qualified?"
   - "how is the complete inactive acquisition matrix joined?"
+  - "why can an observer settled event leave a helper running?"
+  - "what must settle before an observation hold is released?"
   - "why did integrated proxy qualification fail?"
   - "why does t1545 not use IPC Cmd?"
   - "where does T1545 preserve empty-output checker failure diagnostics?"
@@ -98,23 +100,22 @@ Post-KILL cleanup and blocking-wait controls: history.
 `VerilatorRuntime` follows decision `0086`.
 `TaskAcceptanceFixtureRuntime` seals owned fixture roots/fixed local Git argv.
 Git/checker, Darwin locality and T1545 controls: history; absent witnesses stay unknown.
-Historical startup/capture and STOP limits: task/book/history.
+Startup/capture/STOP limits: history.
 T1669 locality/census error policy and changed field (.3.2.11): history.
-History: `25e463466e052bb7417f860723c38e2c8c43c6f0:docs/knowledge/test-subprocess-policy-adapters.md`.
+History: `5e84e56e04238a9e076f0b37dee9ae2dc6a14f35:docs/knowledge/test-subprocess-policy-adapters.md`.
 PST parsing normalizes 1–16 lowercase hex digits; malformed fields and contradictions reject.
 Serial queue contention is supported; causal/native limits and controls: history.
-Fixed CLI contracts/limits: history.
+Fixed CLI limits: history.
 Records, holds, byte flags, publication, enumeration and coordinator/semantic custody: history.
 Census reports follow actual close; all-owned cleanup and primary/first-error controls: history.
 Snapshot cuts need unique event/case IDs; legacy aliases missed four later checks. Correction/substitution controls: history.
 Remaining source/hold/census/lock close reports: history.
-Finite acquisition joins authenticated matrix-local domains and exact source epochs in `docs/audits/native-proxy-observation-acquisition-join-20260911/audit.py`; qualified directory repairs are explicit exceptions. Native/lifetime work remains open.
+Finite acquisition applicability/domain join: history.
+Proposed release requires retained-byte archival and every selected owner settled, including cancellation. Legacy settled can leave a caller-owned helper running; it is not release authority. Contract/source-model check: `docs/audits/native-proxy-observation-release-contract-20260911/audit.py`; implementation/native custody remain open.
 Caller-sealed test wrappers use tail goto to preserve caller.
 Replay: `scripts/run_with_ram_guard.sh -- python3 -B -m unittest discover -s t/python -p 'test_fixture_policy_archive*.py'`.
-T1595 pre-main cause open; `.19.2.3.1.2.2.6.2` fixes capture.
-`RamGuardFixtureRuntime` seals tools/argv, paths, bounds and full results.
-T1811/T1669 prove signal/stream failures and group cleanup; T1595 keeps metrics.
-Outer timeout proved its group gone but left an inner group alive; terminated and absence verified. Per-group cleanup cannot prove nested cleanup.
+RAM guard/T1595/T1811/T1669 controls and open causes: history.
+Per-group cleanup cannot prove nested cleanup; actual counterexample: history.
 HIAL/VIAL `.19.2.3.1.2.2.5.5` owns ownership design, repair and hostile controls;
 neutral-verifier extraction stays provisional/blocked.
 Selected: one coordinator, private clients, reserved identities, bounded wire/context/lifecycle.

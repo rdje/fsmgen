@@ -1,0 +1,16 @@
+{
+  "after": 3492415,
+  "allowance": 3492424,
+  "before": 3492402,
+  "candidate_bytes": 8559,
+  "candidate_is_reconstructed": true,
+  "candidate_path": "docs/audits/native-proxy-observation-release-contract-20260911/result/knowledge-card.md.initial-projection",
+  "candidate_sha256": "411c184262bd1508ad02abfa8a3281b962c5d43079c779f2e5bd215d225bb725",
+  "candidate_was_written_to_live_card": false,
+  "diagnosis": "The first pre-write assertion rejected 26 bytes of excess. A first attempted older-prose shortening remained one byte over, also caught before live-card mutation. Earlier book/authority writes succeeded; set -e stopped generation and task compaction. The proposed candidate was reconstructed from the still-unchanged committed card and the exact deterministic replacements; no raw process transcript is fabricated.",
+  "excess": 26,
+  "initial_projection": 3492450,
+  "intermediate_unwritten_projection": 3492425,
+  "repair": "Route additional older startup/STOP and fixed-CLI prose through exact 5e84e56e history. Preserve the release contract/shared-helper finding and unchanged allowance.",
+  "schema": "fsmgen.release_contract_knowledge_projection_recovery.v1"
+}

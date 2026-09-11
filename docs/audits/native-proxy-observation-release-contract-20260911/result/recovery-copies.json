@@ -1,0 +1,41 @@
+{
+  "all_copies_byte_exact": true,
+  "files": [
+    {
+      "destination": "docs/audits/native-proxy-observation-release-contract-20260911/result/audit.json",
+      "sha256": "75932effd82f5563fdf3b1ac9d7b641931789a72c8ab98bc67b09af2e9cc025b",
+      "size_bytes": 6278,
+      "source": ".artifacts/logs/native-proxy-observation-release-contract-20260911/audit.json"
+    },
+    {
+      "destination": "docs/audits/native-proxy-observation-release-contract-20260911/result/audit.stdout",
+      "sha256": "35eb6cc3e28b87d458675ac45c9df1f7082cbcdb233d946b67bd5ed404210b6c",
+      "size_bytes": 120,
+      "source": ".artifacts/logs/native-proxy-observation-release-contract-20260911/audit.stdout"
+    },
+    {
+      "destination": "docs/audits/native-proxy-observation-release-contract-20260911/result/audit.stderr",
+      "sha256": "6d02f27a3c004dd68f1b527fe63d268540bbd8cd352ddd24a009ecfb8967db61",
+      "size_bytes": 91,
+      "source": ".artifacts/logs/native-proxy-observation-release-contract-20260911/audit.stderr"
+    },
+    {
+      "destination": "docs/audits/native-proxy-observation-release-contract-20260911/result/audit.exit",
+      "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa",
+      "size_bytes": 2,
+      "source": ".artifacts/logs/native-proxy-observation-release-contract-20260911/audit.exit"
+    },
+    {
+      "destination": "docs/audits/native-proxy-observation-release-contract-20260911/result/source-pins.json",
+      "sha256": "8d19ed972b35da89f90f40e804c768d7d1004d93bd08f21f9beb976c25fe0f94",
+      "size_bytes": 2299,
+      "source": ".artifacts/logs/native-proxy-observation-release-contract-20260911/source-pins.json"
+    },
+    {
+      "destination": "docs/audits/native-proxy-observation-release-contract-20260911/result/preflight-pins.json",
+      "sha256": "45051257e136e77f7a2db05a0691bea2a9c6c474295e8a40563c7639505c6674",
+      "size_bytes": 613,
+      "source": ".artifacts/logs/native-proxy-observation-release-contract-20260911/preflight-pins.json"
+    }
+  ]
+}

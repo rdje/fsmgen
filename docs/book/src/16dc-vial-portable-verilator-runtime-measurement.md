@@ -2077,6 +2077,35 @@ scripts/run_with_ram_guard.sh -- python3 -B docs/audits/native-proxy-observation
 scripts/run_with_ram_guard.sh -- python3 -B docs/audits/native-proxy-observation-acquisition-join-20260911/closure.py
 ```
 
+The next pinned, inactive release contract requires verified archival of the
+original retained snapshots before removing an observation hold. Archival must
+work after private workspace retirement and preserve each source identity even
+when identical private/global reference bytes share one content file. Archive
+readback must match the complete retained bytes and exact filesystem custody.
+
+Release also requires the complete preselected work roster and a matching
+settled receipt for every capture, helper or query obligation. Failed and
+cancelled work can settle; its failure outcome remains recorded. Missing
+receipts, surviving groups, unreaped started leaders or uncertain ownership
+keep the hold pinned. No new work may start after the roster is sealed.
+
+For example, the current observer can report `settled` with
+`helper_stopped: false` and `helper_shutdown_owner: caller` when a shared helper
+stays running. That scoped event cannot substitute for complete release
+authority. The future release route must remove only the exact original hold,
+leave images and other owners intact, and preserve a failure after unlink
+without inventing a retained hold or retrying the removal.
+
+This is a prospective contract with a finite abstract model, not implemented
+archive/release behavior or authenticated native cleanup. Structural bounds
+and the remaining ownership/transport gates are recorded in
+`docs/audits/native-proxy-observation-release-contract-20260911/contract.json`.
+The source/model check performs no fixture or native execution:
+
+```bash
+scripts/run_with_ram_guard.sh -- python3 -B docs/audits/native-proxy-observation-release-contract-20260911/audit.py
+```
+
 The helper checks bounded regular source/output files and the native header,
 then sets executable permissions through the admitted open file handle. A
 regression exposed path-based permission changes affecting a substituted file

@@ -1,0 +1,26 @@
+{
+  "book_after": {
+    "bytes_total": 3300690,
+    "files": 63,
+    "lines_total": 60283
+  },
+  "book_before": {
+    "bytes_total": 3299016,
+    "files": 63,
+    "lines_total": 60254
+  },
+  "compaction": {
+    "all_nodes_done": true,
+    "archived_nodes": 24,
+    "live_registry_references": [],
+    "root": "HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.12.4.1.3.3",
+    "source_bytes": 1156938,
+    "source_lines": 6399,
+    "source_revision": "5e84e56e04238a9e076f0b37dee9ae2dc6a14f35",
+    "source_sha256": "d4824bb158ea27d6947c0f510bb07f62d5145c05c0fb4b8248787327e512a876",
+    "source_subtree_bytes": 72229,
+    "source_subtree_lines": 184
+  },
+  "knowledge_recovery": "knowledge-recovery.json",
+  "task_lines": 6257
+}

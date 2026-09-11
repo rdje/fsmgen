@@ -1,0 +1,17 @@
+[
+  {
+    "path": "docs/audits/native-proxy-observation-release-contract-20260911/audit.py",
+    "sha256": "0427d24fef5c6cfbd43d9a93e8f8854ec5ce40c732b3ee8592dd405b94d6f902",
+    "size_bytes": 12728
+  },
+  {
+    "path": "docs/audits/native-proxy-observation-release-contract-20260911/contract.json",
+    "sha256": "06f5a8f998baabe772c0683798c3cf95e28a4d7d39d7fac19c9ea72e7cd075c5",
+    "size_bytes": 12823
+  },
+  {
+    "path": "docs/audits/native-proxy-observation-release-contract-20260911/model.py",
+    "sha256": "8ab7961fb5c4d7f56fbe484a1e59267afe5ac723f51e871d2312db4cbe2db3b7",
+    "size_bytes": 3536
+  }
+]

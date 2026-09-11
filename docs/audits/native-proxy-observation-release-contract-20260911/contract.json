@@ -1,0 +1,135 @@
+{
+  "custody": {
+    "archive_directory": "A fixed retained-sources directory beneath the exact prior evidence directory, under its existing private same-volume namespace. Old product archive layout/semantics remain unchanged; versioned capture integration is a separate gate.",
+    "files": "Derive each archive filename solely as <sha256>.source beneath that fixed directory. Write original retained octets with exclusive creation and explicit closure; seal newly completed files read-only. An existing complete identical archive file may be reused only after full byte/native/permission verification. Never overwrite, repair, follow aliases or infer bytes from a missing original path.",
+    "history": "After runtime retirement, original workspace and global runtime-reference paths may be absent. Validate retained bytes and their original identities without reopening those paths or requiring old native IDs to be current. A fabricated caller receipt is not authenticated process evidence.",
+    "identities": "Preserve all five ordered source identities even when equal bytes share one archive file. The private/global runtime records ordinarily share bytes but remain distinct source identities. A digest alone is not full byte equality or inode custody.",
+    "input": "The original complete inactive acquisition plus its exact request. Reuse the pure closed receipt/birth/path/byte validators; preserve scalar byte flags. The hold record is separate from the five ordered wrapper/private-reference/global-reference/C/executable target snapshots.",
+    "limits": "Count every archive-directory member against the fixed namespace limit. Unknown/partial/indirect entries reject conservatively. Enforce per-file and aggregate byte bounds; keep data within the repository volume. Do not archive changing observation-hold metadata as a target source.",
+    "verification": "Independently read each exact archive file using bounded direct no-follow source custody, verify complete original bytes plus length/digest and native identity, and recheck original evidence/archive directories and all retained archive descriptors before returning. A partial archive is never a completed archive receipt. Preserve all existing artifacts on failure; no silent retry or restoration."
+  },
+  "inherited_bounds": {
+    "archive_total_bytes": 4194304,
+    "archive_unique_files": 64,
+    "coordination_poll_seconds": 0.005,
+    "coordination_wait_seconds": 2,
+    "reference_bytes_each": 4096,
+    "source_bytes_each": 65536
+  },
+  "inputs": [
+    {
+      "path": "docs/audits/native-proxy-canonical-contract-20260910/contract.json",
+      "sha256": "f3f981398afae72540ab4ac0194b8380d4743c3d2146c1172a85365add053222",
+      "size_bytes": 21927
+    },
+    {
+      "path": "docs/audits/native-proxy-observation-acquisition-20260910/ObservationAcquisition.pm",
+      "sha256": "809c013255ab6973a2d0dabcfd5b0ae5c55c97696d7acc77b10cf68149006470",
+      "size_bytes": 16517
+    },
+    {
+      "path": "docs/audits/native-proxy-observation-records-20260910/ObservationRecord.pm",
+      "sha256": "35445ee951c8f5e7dc204f58cffe1b2f6273286cc3e7715953d705b33e7158d5",
+      "size_bytes": 4369
+    },
+    {
+      "path": "docs/audits/native-proxy-image-coordination-20260910/Coordination.pm",
+      "sha256": "51c36432bdcaf35180dd84b7fde709312682e57a4a3fbdc679c1f4d2f01fd00d",
+      "size_bytes": 17012
+    },
+    {
+      "path": "docs/audits/native-proxy-image-custody-20260910/ImageCustody.pm",
+      "sha256": "927f1ab39f7f26742e36878985d1ff545ddf2dee119d4bf6b7b41bf2c9360ccc",
+      "size_bytes": 8619
+    },
+    {
+      "path": "docs/audits/native-proxy-image-publication-20260910/Publication.pm",
+      "sha256": "34ca8717856492a09ebf16af8810f04b1dea4c6c8c84ff7b3f5c11c07e7dc2bf",
+      "size_bytes": 5371
+    },
+    {
+      "path": "docs/audits/native-proxy-runtime-census-20260910/ReferenceCensus.pm",
+      "sha256": "9fd74767e8c10831f2732fa8ad426b7e4fff8c17bab06584aa671cdd013b6247",
+      "size_bytes": 8024
+    },
+    {
+      "path": "docs/audits/native-proxy-runtime-retirement-20260910/RuntimeRetirement.pm",
+      "sha256": "766348d16243d3868ca5f8b653f757f8f2eaf5c1aba8ec27fd2d9c67e9fd0bcc",
+      "size_bytes": 8727
+    },
+    {
+      "path": "docs/audits/native-proxy-cleanup-receipts-20260910/CleanupReceipts.pm",
+      "sha256": "5b22cecf6ff131f62fdeb237a3e77b67b5b29a172ff82320a67772b03cd24de0",
+      "size_bytes": 1300
+    },
+    {
+      "path": "scripts/observe_fixture_startup.py",
+      "sha256": "05144eb1ebd86ebf132ad36b86b4c93b23687db928fc369f633615f0b870fe06",
+      "size_bytes": 25563
+    },
+    {
+      "path": "scripts/fixture_kernel_sampler.py",
+      "sha256": "50c94165893b74b758c560f561ff744f294683812a26b429071ef43009aac2dc",
+      "size_bytes": 22040
+    },
+    {
+      "path": "t/lib/FSM/Test/RustProxyFixture.pm",
+      "sha256": "d9c4ab52cf8074526c59b7a5dcb9da870ca7ffdacb4eb236dacb23b5db6d8bfb",
+      "size_bytes": 11466
+    }
+  ],
+  "owner": "HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.12.4.1.3.4.1",
+  "qualification_layers": {
+    "current_leaf": "Static source/boundary re-derivation and a finite abstract release model with explicit adversarial controls only. It is not filesystem, descriptor, process or wire-transport qualification.",
+    "native_gate": "Actual compiler/outer/inner and observation-query/capture/helper ownership, complete selected-stage transport, workspace/capacity profiles, cross-language contention, version compatibility and combined lifetime closure remain owned prerequisites before any new native admission.",
+    "next": "Archive, settled exact release and interruption/applicability children each pin concrete closed schemas, plans and recorder/oracle source inputs before their first inert allocation."
+  },
+  "release": {
+    "admission": "Accept only a complete original acquisition, matching request, complete independently verified archive custody and exact settled work roster. Incomplete acquisition/publication with no original complete custody receipt remains pinned for separately owned recovery; never reconstruct release authority from a pathname or stale record alone.",
+    "before_lock": "Validate bounded data and archive custody outside coordination. No process, native query, capture, helper callback or arbitrary caller callback runs under the store lock. Keep all selected work sealed against new starts.",
+    "closure": "Every retained archive/source/lock descriptor closes explicitly on all admitted paths; primary errors outrank cleanup reports. Preserve complete archive bytes, all other owners and the canonical image. A last observation release leaves an unreferenced image intact for separate maintenance.",
+    "failure": "Before exact unlink, errors retain the hold and return no success. After exact unlink, later errors can leave the hold absent and must record that exact state without claiming success, re-creating the record or retrying release. A missing/replaced hold at admission is not idempotent success. Unknown ownership, cleanup or archive state pins.",
+    "mutation": "Recheck current hold and all admitted ownership/archive evidence immediately before unlink. Remove only the exact selected observation reference. Never remove or chmod the permanent lock, another reference, archive content, private workspace or image. Report absence only when explicitly checked.",
+    "under_lock": "Open only the existing permanent lock and compare its original identity. Use the combined current runtime/observation census; the original runtime reference may already be retired. Require the exact original observation record/source inode and bytes, its canonical image/C pair and the original evidence/archive directory identities. Retain/recheck the bounded archive descriptors through the release admission; no original target-path reopen."
+  },
+  "required_controls": [
+    "Retire the private workspace/global runtime reference before archiving; prove no target path is reopened and all original bytes/identities survive.",
+    "Equal-byte distinct source identities share content without dropping ordered bindings; mismatched bytes with a claimed digest reject.",
+    "Exact archive limits, overflow, exclusive-write/partial/seal/readback/close failures, symlinks, hard links, foreign or replaced directories/files and same-byte inode replacement.",
+    "Missing/duplicate/extra/reordered or token-swapped work; unsealed selection; late launch; started-but-unreaped or surviving group; explicit never-started, failed and cancelled-but-settled owners.",
+    "A legacy settled event with helper_shutdown_owner=caller and helper_stopped=false does not discharge selected helper work.",
+    "Missing/changed/replaced hold, evidence identity, lock or image; preserve other runtime/observation owners on both images and leave unreferenced image bytes intact.",
+    "Every declared selected release call and close-report boundary, before and after exact unlink; unique occurrence/case IDs, actual retained-handle observation and complete disjoint absent allocation ledgers.",
+    "Independent saved-receipt/source applicability join before release closure; no native or historical fixture rerun."
+  ],
+  "schema": "fsmgen.inactive_observation_release_contract.v1",
+  "scope": "An inactive, finite refinement of the canonical observation lifetime: archive original retained snapshots, prove all preselected observation work settled, then remove only the exact observation hold. No compiler, fixture executable, native identity query, helper, collector, original experiment or product route is admitted by this contract.",
+  "selected_inert_bounds": {
+    "meaning": "Explicit structural qualification ceilings, not observed process counts or production transport/capacity proof. Seventeen permits an inert profile with the existing sixteen request slots and one helper; real query, capture, helper and nested-owner inventories still require the separately owned native admission review. Reject an overflowing real profile; never omit work to fit.",
+    "receipt_bytes_each": 4096,
+    "selection_bytes": 4096,
+    "work_entries": 17,
+    "work_id_bytes": 64
+  },
+  "settlement": {
+    "authority": "The inert prototype checks synthetic record consistency only. A caller-provided token, cleanup flag, legacy settled event, capture result or helper-stopped flag is not native authority. Actual complete authenticated ownership and receipt transport remain mandatory before product/native activation.",
+    "never_started": "A reserved but never-started operation can settle only with an explicit matching receipt and a sealed selection that prevents later launch. An empty array, missing callback, lost result or absent PID cannot stand in for that receipt.",
+    "receipt": "Require exactly one closed receipt for every selected work_id, with the matching ownership token and role. Reject missing, duplicate, extra, replaced or unbounded entries. Outcome is completed, failed or cancelled, independently of cleanup. Existing scalar 0/1 leader_started, leader_reaped and group_gone semantics apply: group_gone must be true and every started leader must be reaped.",
+    "seal": "No additional work or restart is allowed after the settlement roster is frozen for release. Cancellation does not waive any ownership or archive obligation. Observed failure remains failure after storage is released.",
+    "selection": "Freeze a nonempty ordered unique work roster before the first selected observation operation can start or archival can fail. Bind it to the exact evidence-directory identity and observation-reference key. Each entry has a bounded work_id, a reserved ownership token and a closed role: capture, helper or query. A shared helper remains an obligation until its selected work is proven settled by its actual owner; do not infer settlement from a borrowed-helper observer return."
+  },
+  "source_findings": [
+    {
+      "disposition": "Keep the frozen current route unchanged. The new inactive archive uses captured octets, and release requires an exact independently settled work roster. Native conversion requires separately qualified ownership/transport, not a boolean alias.",
+      "finding": "Current source retention reopens record.path. In borrowed-helper mode, observe can emit settled with helper_stopped=false and helper_shutdown_owner=caller after a capture result is present. That deliberately scoped event cannot be reinterpreted as complete selected helper/process cleanup.",
+      "source": "scripts/observe_fixture_startup.py",
+      "symbols": [
+        "Evidence.retain_sources",
+        "observe",
+        "CaptureSession.stopped"
+      ]
+    }
+  ],
+  "source_revision": "5e84e56e04238a9e076f0b37dee9ae2dc6a14f35",
+  "status": "prospective_before_implementation"
+}
