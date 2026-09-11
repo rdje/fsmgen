@@ -1,0 +1,41 @@
+{
+  "baseline": {
+    "sha256": "51c36432bdcaf35180dd84b7fde709312682e57a4a3fbdc679c1f4d2f01fd00d",
+    "size_bytes": 17012
+  },
+  "changes": [
+    {
+      "after": "            || ($operation eq 'reuse_observation_reference' && @payload == 2\n                && defined(&NativeProxyObservationAcquisition::_admit_locked)\n                && defined(&NativeProxyReferenceCensus::_inspect_locked))\n            || ($operation eq 'release_observation_reference' && @payload == 1\n                && (caller eq 'NativeProxyObservationRelease')\n                && defined(&NativeProxyObservationRelease::_coordinator_request)\n                && defined(&NativeProxyObservationRelease::_admit_locked)\n                && defined(&NativeProxyObservationRelease::_release_locked)\n                && defined(&NativeProxyObservationRelease::_finish_locked)\n                && defined(&NativeProxyReferenceCensus::_inspect_locked)));",
+      "before": "            || ($operation eq 'reuse_observation_reference' && @payload == 2\n                && defined(&NativeProxyObservationAcquisition::_admit_locked)\n                && defined(&NativeProxyReferenceCensus::_inspect_locked)));"
+    },
+    {
+      "after": "        NativeProxyObservationAcquisition::_previous($case, $request, $payload[1]);\n    }\n    NativeProxyObservationRelease::_coordinator_request($case, @payload)\n        if $operation eq 'release_observation_reference';\n",
+      "before": "        NativeProxyObservationAcquisition::_previous($case, $request, $payload[1]);\n    }\n"
+    },
+    {
+      "after": "        || $operation eq 'acquire_observation_reference' || $operation eq 'reuse_observation_reference'\n        || $operation eq 'release_observation_reference';",
+      "before": "        || $operation eq 'acquire_observation_reference' || $operation eq 'reuse_observation_reference';"
+    },
+    {
+      "after": "                && ($before->[0] != $payload[1]{lock}{device} || $before->[1] != $payload[1]{lock}{inode});\n        die \"release lock differs from acquired identity\\n\"\n            if $operation eq 'release_observation_reference'\n                && ($before->[0] != $payload[0]{acquired}{lock}{device}\n                    || $before->[1] != $payload[0]{acquired}{lock}{inode});\n",
+      "before": "                && ($before->[0] != $payload[1]{lock}{device} || $before->[1] != $payload[1]{lock}{inode});\n"
+    },
+    {
+      "after": "        my $release;\n        if ($operation eq 'release_observation_reference') {\n            my $before = NativeProxyReferenceCensus::_inspect_locked($case, $census);\n            my $plan = NativeProxyObservationRelease::_admit_locked($case, $before, $payload[0]);\n            my $current = NativeProxyReferenceCensus::_inspect_locked($case, _census($base));\n            NativeProxyObservationRelease::_release_locked($case, $plan, $current);\n            my $final_census = _census($base);\n            die \"observation release changed image namespace membership\\n\"\n                unless join(',', @{$census->{images}}) eq join(',', @{$final_census->{images}});\n            my $after = NativeProxyReferenceCensus::_inspect_locked($case, $final_census);\n            $release = NativeProxyObservationRelease::_finish_locked($case, $plan, $after);\n        }\n        my $observation;\n",
+      "before": "        my $observation;\n"
+    },
+    {
+      "after": "            : $operation eq 'release_observation_reference'\n            ? {schema => 'fsmgen.inactive_observation_release.v1', runtime_authorized => 0,\n               executable => undef, lock => $lock, %$release}\n            : $operation eq 'acquire_observation_reference' || $operation eq 'reuse_observation_reference'\n            ? {schema => 'fsmgen.inactive_observation_acquisition.v1'",
+      "before": "            : $operation eq 'acquire_observation_reference' || $operation eq 'reuse_observation_reference'\n            ? {schema => 'fsmgen.inactive_observation_acquisition.v1'"
+    }
+  ],
+  "current": {
+    "sha256": "a0d99769147f28ca7c35e9ac80ba88f7cf14760e3bef7b51841d8badebc060e5",
+    "size_bytes": 19061
+  },
+  "exact_reverse_restores_predecessor": true,
+  "path": "docs/audits/native-proxy-image-coordination-20260910/Coordination.pm",
+  "schema": "fsmgen.inactive_observation_release_coordinator_extension.v1",
+  "scope": "Only fixed release-operation branches are added. Existing operation strings cannot select them, and direct external release transaction admission is rejected before any lookup. This proves source applicability, not every runtime interleaving.",
+  "source_revision": "79b43fd019387acdf1fc3280b3f88847125fbb60"
+}

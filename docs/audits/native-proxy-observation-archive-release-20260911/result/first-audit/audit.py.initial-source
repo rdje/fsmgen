@@ -1,0 +1,423 @@
+"""Independent physical effects, original record bindings and descriptor oracle.
+
+Consumes the new inert qualification and unchanged pure predecessor oracles;
+never invokes an original qualification main or native process.
+"""
+from __future__ import annotations
+
+import copy
+import errno
+import hashlib
+import importlib.util
+import json
+import os
+from pathlib import Path
+import re
+import stat
+import subprocess
+
+BASE = Path(__file__).resolve().parent
+ROOT = BASE.parents[2]
+LOG = ROOT / '.artifacts/logs' / BASE.name
+REVISION = '79b43fd019387acdf1fc3280b3f88847125fbb60'
+COORDINATOR = 'docs/audits/native-proxy-image-coordination-20260910/Coordination.pm'
+
+
+def module(name, relative):
+    spec = importlib.util.spec_from_file_location(name, BASE.parent / relative / 'audit.py')
+    value = importlib.util.module_from_spec(spec); spec.loader.exec_module(value)
+    return value
+
+
+PHYSICAL = module('release_physical', 'native-proxy-observation-archive-20260911')
+WORK = module('release_work', 'native-proxy-observation-work-records-20260911')
+canonical = WORK.canonical
+same = WORK.same
+rejects = WORK.rejects
+
+
+def domain(plan):
+    assert plan['source_revision'] == REVISION and plan['component'] == BASE.name
+    healthy = ['ordinary', 'binary', 'empty', 'maximum', 'equal_reference', 'runtime-still-active',
+               'last-observation', 'never-started-cancelled-helper']
+    pure = ['unsealed', 'missing-receipt', 'wrong-owner', 'unreaped', 'surviving-group',
+            'legacy-helper-event', 'foreign-archive-receipt', 'foreign-selection']
+    physical = ['missing-archive', 'partial-archive', 'changed-archive', 'replaced-archive-file', 'archive-mode',
+                'replaced-evidence', 'missing-hold', 'changed-hold', 'replaced-hold', 'missing-lock',
+                'replaced-lock', 'lock-mode', 'changed-image', 'replaced-image']
+    direct = ['direct-coordinator', 'direct-unlink', 'arity-drop', 'arity-append']
+    late = ['before-finish', 'source-close-after-unlink', 'lock-close-after-unlink', 'primary-and-source-close']
+    names = ['healthy:' + n for n in healthy] + ['rejected:' + n for n in pure + physical + direct] + ['post-unlink:' + n for n in late]
+    assert [row['name'] for row in plan['cases']] == names
+    for row in plan['cases']:
+        group, name = row['name'].split(':', 1)
+        assert row['expected_success'] is (group == 'healthy')
+        assert row['expected_unlinked'] is (group != 'rejected')
+        assert row['expected_public_return'] is (name not in direct)
+        assert row['mutation'] == (name if name in pure + physical else 'none')
+        assert row['control'] == (name if name in late + direct[:2] else 'none')
+        assert row['wrapper'] == (name if name in healthy[:5] else 'ordinary')
+        assert row['runtime'] == ('active' if name == 'runtime-still-active' else 'retired')
+        assert row['last_observation'] is (name == 'last-observation')
+        assert row['cleanup'] == ('never-started' if name == 'never-started-cancelled-helper' else 'mixed')
+        assert row['argument_change'] == (name.removeprefix('arity-') if name.startswith('arity-') else None)
+        assert type(row['expected_error']) is str and bool(row['expected_error']) is (group != 'healthy')
+    return pure, physical
+
+
+def flattened(context, footprint):
+    result = {}
+    assert set(footprint) == {'store', 'workspace', 'other_workspace', 'evidence'}
+    for kind, nodes in footprint.items():
+        for relative, node in nodes.items():
+            path = context[kind]['path'] + ('/' + relative if relative else '')
+            assert path not in result and not Path(path).is_absolute() and '..' not in Path(path).parts
+            assert node['device'] == context[kind]['device']
+            assert type(node['inode']) is int and node['inode'] > 0
+            assert node['kind'] in ('file', 'directory') and 0 <= node['mode'] <= 0o777
+            if node['kind'] == 'file': PHYSICAL.file_identity(path, node)
+            result[path] = node
+    return result
+
+
+def work_records(row):
+    context = row['context']
+    value = dict(case=context['store']['path'], request=context['request'], acquired=PHYSICAL.wire(context['acquired']))
+    entries = [dict(work_id='work:' + str(i), ownership_token=hashlib.sha256(('owner:' + str(i)).encode()).hexdigest(), role=role)
+               for i, role in enumerate(('capture', 'helper', 'query'))]
+    expected = WORK.create_selection(dict(value, entries=entries)); same(row['work_selection'], expected)
+    receipts = [dict(entry, outcome=outcome, cleanup=dict(leader_started=1, leader_reaped=1, group_gone=1))
+                for entry, outcome in zip(entries, ('completed', 'failed', 'cancelled'), strict=True)]
+    if row['selection']['cleanup'] == 'never-started':
+        receipts[1].update(outcome='cancelled', cleanup=dict(leader_started='0', leader_reaped='0', group_gone='1'))
+    settled = WORK.create_settlement(dict(value, selection=expected, receipts=receipts, sealed=1))
+    same(row['work_settlement'], settled)
+    return value
+
+
+def setup(row):
+    context = row['context']; selection = row['selection']; initial = row['setup_before']
+    flattened(context, initial); PHYSICAL.target_inputs(context, initial)
+    for kind in initial:
+        node = initial[kind]['']; identity = context[kind]
+        assert node['kind'] == 'directory' and node['mode'] == 0o700
+        assert (node['device'], node['inode']) == (identity['device'], identity['inode'])
+    expected = copy.deepcopy(initial); store = context['store']['path']
+    if selection['runtime'] == 'retired':
+        path = context['runtime']['reference']['global']['identity']['path']
+        del expected['store'][path[len(store) + 1:]]; expected['workspace'] = {}
+        retirement = row['retirement']; WORK.inactive(retirement, 'fsmgen.inactive_runtime_retirement.v1')
+        assert retirement['released_reference'] == path and retirement['retired_workspace'] == context['workspace']['path']
+    else: assert 'retirement' not in row
+    if selection['last_observation']:
+        path = context['other_observation']['observation_reference']['source']['identity']['path']
+        assert row['controlled_setup_removed_hold'] == path
+        del expected['store'][path[len(store) + 1:]]
+    else: assert 'controlled_setup_removed_hold' not in row
+    same(row['before_archive'], expected)
+    for kind in ('store', 'workspace', 'other_workspace'): same(row['before_mutation'][kind], expected[kind])
+    spec, receipt = PHYSICAL.physical_receipt(context, dict(before=expected, after=row['before_mutation'], result=row['archive_receipt']))
+    return spec, receipt
+
+
+def mutation(row):
+    context = row['context']; selection = row['selection']; kind = selection['mutation']
+    before = flattened(context, row['before_mutation']); after = flattened(context, row['operation']['before'])
+    expected = copy.deepcopy(before)
+    evidence = context['evidence']['path']; archive = row['archive_receipt']['archive_directory_identity']['path']
+    file = row['archive_receipt']['source_bindings'][0]['archive']['path']
+    hold = context['acquired']['observation_reference']['source']['identity']['path']
+    lock = context['acquired']['lock']['path']; image = context['acquired']['target_sources'][4]['identity']['path']
+    args = [context['store']['path'], context['request'], context['acquired'], row['archive_receipt'], row['work_selection'], row['work_settlement']]
+    args = copy.deepcopy(args); retained = []
+    def move(source, destination):
+        assert destination not in expected; retained.append(destination)
+        members = [p for p in expected if p == source or p.startswith(source + '/')]
+        assert members
+        for path in members: expected[destination + path[len(source):]] = expected.pop(path)
+    def replacement(path, mode):
+        original = before[path]; current = after[path]
+        assert current['inode'] != original['inode'] and current['mode'] == mode
+        same({k: v for k, v in current.items() if k != 'inode'}, {k: v for k, v in original.items() if k != 'inode'})
+        expected[path] = current
+    if kind == 'missing-archive': move(archive, evidence + '/retained-original-archive')
+    elif kind == 'partial-archive': move(file, evidence + '/retained-original-archive-source')
+    elif kind in ('replaced-archive-file', 'replaced-hold', 'replaced-lock', 'replaced-image'):
+        path, suffix, mode = {'replaced-archive-file': (file, 'archive-source', 0o400), 'replaced-hold': (hold, 'hold', 0o400),
+                              'replaced-lock': (lock, 'lock', 0o600), 'replaced-image': (image, 'image', 0o500)}[kind]
+        move(path, evidence + '/retained-original-' + suffix); replacement(path, mode)
+    elif kind in ('missing-hold', 'missing-lock'):
+        move(hold if kind == 'missing-hold' else lock, evidence + '/retained-original-' + kind.removeprefix('missing-'))
+    elif kind in ('changed-archive', 'changed-image', 'changed-hold'):
+        path = {'changed-archive': file, 'changed-image': image, 'changed-hold': hold}[kind]
+        raw = bytes.fromhex(before[path]['bytes_hex'])
+        raw = raw + b'\n' if kind == 'changed-hold' else (b'Y' if raw[:1] == b'X' else b'X') + raw[1:]
+        expected[path].update(bytes_hex=raw.hex(), size_bytes=len(raw), sha256=hashlib.sha256(raw).hexdigest())
+    elif kind == 'archive-mode': expected[archive]['mode'] = 0o755
+    elif kind == 'lock-mode': expected[lock]['mode'] = 0o400
+    elif kind == 'replaced-evidence':
+        move(evidence, context['store']['path'] + '/retained-original-evidence'); replacement(evidence, 0o700)
+    elif kind == 'unsealed': args[5]['selection_sealed'] = 0
+    elif kind == 'missing-receipt': args[5]['receipts'].pop()
+    elif kind == 'wrong-owner': args[5]['receipts'][0]['ownership_token'] = '0' * 64
+    elif kind == 'unreaped': args[5]['receipts'][1]['cleanup']['leader_reaped'] = 0
+    elif kind == 'surviving-group': args[5]['receipts'][1]['cleanup']['group_gone'] = 0
+    elif kind == 'legacy-helper-event': args[5]['receipts'][1] = dict(event='settled', helper_stopped=False, helper_shutdown_owner='caller')
+    elif kind == 'foreign-archive-receipt': args[3]['observation_reference_key'] = '0' * 64
+    elif kind == 'foreign-selection': args[4]['observation_reference_key'] = '0' * 64
+    else: assert kind == 'none'
+    same(after, expected); same(row['mutation'], dict(kind=kind, retained_original_paths=retained))
+    if selection['argument_change'] == 'drop': args.pop()
+    if selection['argument_change'] == 'append': args.append('extra')
+    same(row['arguments'], args)
+    return len(retained)
+
+
+def trace(row, spec):
+    context = row['context']; operation = row['operation']; planned = row['selection']
+    before = flattened(context, operation['before']); events = operation['events']; handles = operation['handles']
+    assert events[0] == 'operation:begin' and len(events) == len(set(events))
+    assert events.count('operation:end') == operation['returned']
+    if operation['returned']: assert events[-1] == 'operation:end'
+    by_label = {h['label']: h for h in handles}; assert len(by_label) == len(handles)
+    assert [event[7:] for event in events if event.startswith('opened:')] == list(by_label)
+    active = set(); stack = []
+    for event in events:
+        if event.startswith('opened:'):
+            label = event[7:]; assert label not in active; active.add(label)
+        elif event.startswith('close:'):
+            label, side = event[6:].rsplit(':', 1)
+            if side == 'before': assert label in active; stack.append(label)
+            else: assert side == 'after' and stack.pop() == label; active.remove(label)
+    assert not active and not stack and operation['all_observed_handles_closed'] == 1
+    for key, prefix in [('reads', 'read:'), ('source_requests', 'source_request:')]:
+        assert [event for event in events if event.startswith(prefix)] == [prefix + str(i) for i in range(len(operation[key]))]
+    archive_paths = {f['path'] for f in spec['files']}
+    store = context['store']['path']; archive = context['evidence']['path'] + '/retained-sources'
+    allowed = archive_paths | {p for p, n in before.items() if n['kind'] == 'file' and (
+        re.fullmatch(re.escape(store) + r'/references/[0-9a-f]{64}\.json', p)
+        or re.fullmatch(re.escape(store) + r'/images/[0-9a-f]{64}/(?:rustup\.c|rustup|image\.json)', p))}
+    assert set(operation['reads']) <= allowed
+    for request in operation['source_requests']:
+        assert request['path'] in allowed
+        image_file = request['path'].endswith('/rustup')
+        reference = '/references/' in request['path']
+        assert request['mode'] == (0o500 if image_file else 0o400)
+        assert request['limit'] == (4096 if reference else 65536)
+    sources = [h for h in handles if h['kind'] == 'source']
+    assert len(sources) <= len(operation['source_requests']) == len(operation['reads'])
+    for h in handles:
+        node = before[h['path']]; native = h['native_at_admission']
+        assert len(native) == 13 and h['descriptor'] >= 0
+        assert (h['device'], h['inode']) == (node['device'], node['inode']) == (native[0], native[1])
+        assert stat.S_IMODE(native[2]) == node['mode'] and native[4] == node['uid']
+        assert h['actual_close_ok'] == h['closed_after_call'] == h['closed_at_return'] == 1 and h['actual_errno'] == 0
+        assert h['reported_return'] == (0 if 'modeled_close_errno' in h else 1)
+        assert h['reported_errno'] == (errno.EIO if 'modeled_close_errno' in h else 0)
+        if h['kind'] == 'directory':
+            assert stat.S_ISDIR(native[2]) and node['kind'] == 'directory'
+            assert h['observer_closed'] == 1 and h['observer_descriptor'] >= 0 and h['observer_descriptor'] != h['descriptor']
+            assert h['path'] in (store, store + '/images', store + '/references', archive) or re.fullmatch(re.escape(store) + '/images/[0-9a-f]{64}', h['path'])
+        else:
+            assert stat.S_ISREG(native[2]) and h['cloexec_before_close'] == 1
+            assert native[3] == node['links'] == 1 and native[7] == node['size_bytes']
+            if h['kind'] == 'source':
+                assert h['path'] in allowed and h['cloexec_at_handoff'] == 1
+                assert (h['sha256'], h['size_bytes']) == (node['sha256'], node['size_bytes'])
+            else: assert h['kind'] == 'lock' and h['path'] == context['acquired']['lock']['path']
+    locks = [h for h in handles if h['kind'] == 'lock']
+    assert len(locks) == sum(o['returned'] for o in operation['lock_opens']) <= 1
+    for attempt in operation['lock_opens']:
+        assert attempt['path'] == context['acquired']['lock']['path']
+        assert not attempt['flags'] & (os.O_CREAT | os.O_EXCL | os.O_TRUNC)
+    if locks:
+        opened = events.index('opened:' + locks[0]['label'])
+        for i, path in enumerate(operation['reads']):
+            if path not in archive_paths: assert opened < events.index('read:' + str(i))
+        if planned['expected_unlinked']:
+            assert (locks[0]['device'], locks[0]['inode']) == (context['acquired']['lock']['device'], context['acquired']['lock']['inode'])
+            assert {h['path'] for h in sources if events.index('opened:' + h['label']) < opened} == archive_paths
+    assert operation['forbidden_mutation_attempts'] == operation['forbidden_source_attempts'] == 0
+    return dict(handles=len(handles), sources=len(sources), directories=sum(h['kind'] == 'directory' for h in handles),
+                locks=len(locks), events=len(events), reads=len(operation['reads']))
+
+
+def attempt(row, spec):
+    op = row['operation']; selected = row['selection']; context = row['context']
+    assert op['returned'] == int(selected['expected_public_return'])
+    hold = context['acquired']['observation_reference']['source']['identity']['path']; assert op['expected_hold'] == hold
+    expected = copy.deepcopy(op['before'])
+    if selected['expected_unlinked']:
+        del expected['store'][hold[len(context['store']['path']) + 1:]]
+        same(op['unlinks'], [dict(paths=[hold], actual_count=1, actual_errno=0)])
+        assert [e for e in op['events'] if e.startswith('unlink:')] == ['unlink:0:before', 'unlink:0:after']
+        lock = next(h for h in op['handles'] if h['kind'] == 'lock')
+        assert op['events'].index('opened:' + lock['label']) < op['events'].index('unlink:0:before') < op['events'].index('close:' + lock['label'] + ':before')
+    else: assert op['unlinks'] == [] and not any(e.startswith('unlink:') for e in op['events'])
+    same(op['after'], expected)
+    if not op['returned']:
+        assert op.get('result') is None and re.search(selected['expected_error'], op['error'])
+        assert not op['reads'] and not op['handles'] and not op['lock_opens']
+        return
+    assert op['error'] == ''
+    result = op['result']; WORK.closed(result, 'schema runtime_authorized executable success error unlink_attempted unlink_completed reference_absence_verified last_reference_check release')
+    WORK.inactive(result, 'fsmgen.inactive_observation_release_attempt.v1')
+    for field in ['success', 'unlink_attempted', 'unlink_completed', 'reference_absence_verified']:
+        assert type(result[field]) is int and result[field] == int(selected['expected_success'] if field == 'success' else selected['expected_unlinked'])
+    if selected['expected_unlinked']:
+        phase = 'after_unlink' if selected['control'] in ('before-finish', 'primary-and-source-close') else 'finish'
+        same(result['last_reference_check'], dict(phase=phase, state='absent'))
+    else: assert result['last_reference_check'] is None
+    modeled = [h for h in op['handles'] if 'modeled_close_errno' in h]
+    assert len(modeled) == op['modeled_close_hits'] == int('close' in selected['control'])
+    for h in modeled:
+        assert h['modeled_close_errno'] == errno.EIO and op['events'].index('unlink:0:after') < op['events'].index('close:' + h['label'] + ':before')
+        assert h['kind'] == ('lock' if selected['control'] == 'lock-close-after-unlink' else 'source')
+    if selected['expected_success']:
+        assert result['error'] == ''
+        release = result['release']; WORK.closed(release, 'schema runtime_authorized executable lock released_reference image archive settlement')
+        WORK.inactive(release, 'fsmgen.inactive_observation_release.v1')
+        same(release['lock'], context['acquired']['lock']); assert release['released_reference'] == hold
+        same(release['archive'], row['archive_receipt']); same(release['settlement'], row['work_settlement'])
+        image = release['image']; WORK.closed(image, 'key snapshots')
+        assert image['key'] == context['acquired']['observation_reference']['record']['image_key']
+        assert len(image['snapshots']) == 3; same(image['snapshots'][:2], context['acquired']['target_sources'][3:])
+        physical = flattened(context, op['after'])
+        for source in image['snapshots']:
+            path = source['identity']['path']; same(PHYSICAL.file_identity(path, physical[path]), source['identity'])
+            assert physical[path]['bytes_hex'] == source['bytes'].encode('latin1').hex()
+    else:
+        assert result['release'] is None and re.search(selected['expected_error'], result['error'])
+        if selected['mutation'] in domain_pure or 'archive' in selected['mutation'] or selected['mutation'] == 'replaced-evidence':
+            assert not op['lock_opens']
+            assert all(p in {f['path'] for f in spec['files']} for p in op['reads'])
+
+
+domain_pure = ['unsealed', 'missing-receipt', 'wrong-owner', 'unreaped', 'surviving-group', 'legacy-helper-event', 'foreign-archive-receipt', 'foreign-selection']
+
+
+def verify(plan, report):
+    domain(plan)
+    assert report['schema'] == 'fsmgen.inactive_observation_release_qualification.v1'
+    assert report['success'] is True and report['forbidden_process_attempts'] == 0
+    assert report['prospective_pins'] == json.loads((BASE / 'preflight-pins.json').read_bytes())
+    assert [r['name'] for r in report['cases']] == [s['name'] for s in plan['cases']]
+    roots = []; totals = dict(cases=0, successes=0, post_unlink_failures=0, unlinks=0, retained_setup_roots=0,
+                              handles=0, sources=0, directories=0, locks=0, events=0, reads=0)
+    for selected, row in zip(plan['cases'], report['cases'], strict=True):
+        same(row['selection'], selected); assert row['inputs_unchanged'] == 1
+        context = row['context']; work_records(row); spec, _ = setup(row)
+        totals['retained_setup_roots'] += mutation(row)
+        for key, value in trace(row, spec).items(): totals[key] += value
+        attempt(row, spec)
+        totals['cases'] += 1; totals['successes'] += selected['expected_success']
+        totals['unlinks'] += selected['expected_unlinked']; totals['post_unlink_failures'] += selected['expected_unlinked'] and not selected['expected_success']
+        roots.extend(dict(kind=kind, **context[kind]) for kind in ('store', 'workspace', 'other_workspace', 'evidence'))
+    same(report['allocated'], roots); assert len({r['path'] for r in roots}) == len(roots)
+    return dict(totals, roots=len(roots))
+
+
+def extension(manifest, current, baseline):
+    assert manifest['path'] == COORDINATOR and manifest['source_revision'] == REVISION
+    for label, raw in [('baseline', baseline), ('current', current)]:
+        assert manifest[label] == dict(size_bytes=len(raw), sha256=hashlib.sha256(raw).hexdigest())
+    assert len(manifest['changes']) == 6
+    restored = current
+    for change in reversed(manifest['changes']):
+        before, after = change['before'].encode(), change['after'].encode()
+        assert restored.count(after) == 1 and before != after
+        restored = restored.replace(after, before, 1)
+    assert restored == baseline and manifest['exact_reverse_restores_predecessor'] is True
+
+
+def authenticate(plan):
+    pins = json.loads((BASE / 'preflight-pins.json').read_bytes())
+    names = ['contract.json', 'coordination-extension.json', 'plan.json', 'prepare.py', 'ObservationRelease.pm', 'ReleaseTrace.pm', 'ReleaseFixture.pm', 'qualify.t', 'audit.py']
+    assert [p['path'] for p in pins] == [str((BASE / name).relative_to(ROOT)) for name in names] + [COORDINATOR]
+    for pin in pins + plan['inputs']:
+        path = ROOT / pin['path']; raw = path.read_bytes()
+        assert path.stat().st_dev == ROOT.stat().st_dev
+        for ancestor in [path, *path.parents]:
+            if ancestor == ROOT: break
+            assert not ancestor.is_symlink()
+        if pin.get('applicability') == 'exact_reverse_extension':
+            assert pin['path'] == COORDINATOR
+            raw = subprocess.check_output(['git', 'show', REVISION + ':' + COORDINATOR], cwd=ROOT)
+        else:
+            if 'applicability' in pin:
+                assert pin['applicability'] == 'unchanged_current_source'
+                assert raw == subprocess.check_output(['git', 'show', REVISION + ':' + pin['path']], cwd=ROOT)
+        assert len(raw) == pin['size_bytes'] and hashlib.sha256(raw).hexdigest() == pin['sha256']
+    current = (ROOT / COORDINATOR).read_bytes()
+    baseline = subprocess.check_output(['git', 'show', REVISION + ':' + COORDINATOR], cwd=ROOT)
+    extension(json.loads((BASE / 'coordination-extension.json').read_bytes()), current, baseline)
+    return pins
+
+
+def main():
+    plan = json.loads((BASE / 'plan.json').read_bytes()); pins = authenticate(plan)
+    report = json.loads((LOG / 'qualification.json').read_bytes()); counts = verify(plan, report)
+    admission = [json.loads(line) for line in (LOG / 'admission.jsonl').read_text().splitlines()]
+    same(admission, report['allocated'])
+    for row in admission:
+        path = ROOT / row['path']; assert not path.exists() and not path.is_symlink()
+    tap = (LOG / 'qualify.tap').read_text(); assertions = len(plan['cases']) * 8 + 1
+    assert re.findall(r'^ok ([0-9]+) - ', tap, re.M) == [str(i) for i in range(1, assertions + 1)]
+    assert re.findall(r'^1\.\.([0-9]+)$', tap, re.M) == [str(assertions)]
+    assert not re.search(r'^(not ok|Bail out!)|#\s*(skip|todo)\b', tap, re.M | re.I)
+    assert (LOG / 'qualify.exit').read_bytes() == b'0\n'
+    def op(report): return report['cases'][0]['operation']
+    def handle(report, kind): return next(h for h in op(report)['handles'] if h['kind'] == kind)
+    def late(report): return next(r for r in report['cases'] if r['name'] == 'post-unlink:primary-and-source-close')['operation']
+    changes = [
+        ('missing case', lambda r: r['cases'].pop()), ('duplicate case', lambda r: r['cases'].append(copy.deepcopy(r['cases'][0]))),
+        ('false success', lambda r: op(r)['result'].update(success=0)),
+        ('lost unlink fact', lambda r: late(r)['result'].update(unlink_completed=0)),
+        ('false late receipt', lambda r: late(r)['result'].update(release=copy.deepcopy(op(r)['result']['release']))),
+        ('lost primary error', lambda r: late(r)['result'].update(error='cannot close retained release descriptor')),
+        ('missing unlink', lambda r: op(r)['unlinks'].clear()),
+        ('wrong unlink target', lambda r: op(r)['unlinks'][0].update(paths=['foreign'])),
+        ('lost other owner', lambda r: op(r)['after']['store'].pop('coordination.lock')),
+        ('changed input', lambda r: r['cases'][0].update(inputs_unchanged=0)),
+        ('foreign archive receipt', lambda r: op(r)['result']['release']['archive']['source_bindings'][0]['archive'].update(inode=7)),
+        ('changed outcome', lambda r: op(r)['result']['release']['settlement']['receipts'][1].update(outcome='completed')),
+        ('unclosed source', lambda r: handle(r, 'source').update(closed_at_return=0)),
+        ('unclosed lock', lambda r: handle(r, 'lock').update(actual_close_ok=0)),
+        ('unclosed directory', lambda r: handle(r, 'directory').update(closed_after_call=0)),
+        ('unclosed observer', lambda r: handle(r, 'directory').update(observer_closed=0)),
+        ('foreign source inode', lambda r: handle(r, 'source').update(inode=7)),
+        ('unsealed source', lambda r: handle(r, 'source').update(cloexec_at_handoff=0)),
+        ('missing source', lambda r: op(r)['handles'].pop()),
+        ('missing close event', lambda r: op(r)['events'].remove(next(e for e in op(r)['events'] if e.startswith('close:')))),
+        ('private source read', lambda r: op(r)['reads'].append(r['cases'][0]['context']['workspace']['path'] + '/rust-tool-resolution')),
+        ('publication attempt', lambda r: op(r).update(forbidden_mutation_attempts=1)),
+        ('lost absence evidence', lambda r: op(r)['result'].update(last_reference_check=None)),
+        ('false setup retirement', lambda r: r['cases'][0]['before_archive'].update(workspace=copy.deepcopy(r['cases'][0]['setup_before']['workspace']))),
+        ('lost allocation', lambda r: r['allocated'].pop()), ('process attempt', lambda r: r.update(forbidden_process_attempts=1)),
+    ]
+    for name, change in changes:
+        altered = copy.deepcopy(report); change(altered); assert rejects(lambda: verify(plan, altered)), name
+    domains = []
+    for name in ('missing domain', 'wrong unlink expectation', 'hidden active runtime'):
+        altered = copy.deepcopy(plan)
+        if name == 'missing domain': altered['cases'].pop()
+        elif name == 'wrong unlink expectation': altered['cases'][-1]['expected_unlinked'] = False
+        else: altered['cases'][5]['runtime'] = 'retired'
+        assert rejects(lambda: domain(altered)), name; domains.append(name)
+    manifest = json.loads((BASE / 'coordination-extension.json').read_bytes())
+    current = (ROOT / COORDINATOR).read_bytes(); baseline = subprocess.check_output(['git', 'show', REVISION + ':' + COORDINATOR], cwd=ROOT)
+    altered = copy.deepcopy(manifest); altered['changes'].pop()
+    assert rejects(lambda: extension(altered, current, baseline))
+    assert rejects(lambda: extension(manifest, current + b'\n', baseline))
+    authenticate(plan)
+    output = dict(schema='fsmgen.inactive_observation_release_audit.v1', success=True, **counts, tap_assertions=assertions,
+                  predecessor_inputs=len(plan['inputs']), unchanged_predecessor_files=len(plan['inputs']) - 1,
+                  exact_coordinator_extensions=6, prospective_inputs=len(pins), report_falsifiers=[name for name, _ in changes],
+                  domain_falsifiers=domains, source_falsifiers=['lost extension', 'unrelated current source change'],
+                  all_allocations_absent=True, limits=plan['limits'])
+    with (LOG / 'audit.json').open('x') as stream: stream.write(json.dumps(output, indent=2, sort_keys=True) + '\n')
+    print(json.dumps(output, sort_keys=True))
+
+
+if __name__ == '__main__':
+    main()

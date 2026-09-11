@@ -1,0 +1,1 @@
+5d5fa132737989dd3041bb190a19a350e70c0e1d HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.8.7: share one helper across bounded diagnostics

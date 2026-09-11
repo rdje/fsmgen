@@ -1,0 +1,21 @@
+{
+  "checked_passages": [
+    "release_observation_reference(store, request, acquisition, archive_receipt, original_selection, settlement)",
+    "Missing, partial, changed or replaced archive custody rejects before opening the permanent store lock.",
+    "They do not reconstruct missing archived bytes.",
+    "release leaves that image in place for separately qualified maintenance.",
+    "\"success\": 0",
+    "\"unlink_completed\": 1",
+    "\"last_reference_check\": {\"phase\": \"after_unlink\", \"state\": \"absent\"}",
+    "A failure does not mean the hold remains.",
+    "The first error survives a later close error.",
+    "Complete interruption/close coverage, actual native receipt authentication and prevention of future launches remain separate gates."
+  ],
+  "exact_output_absent": true,
+  "exit_code": 0,
+  "output": ".artifacts/tmp/native-proxy-observation-archive-release-book-20260911/book",
+  "rendered_bytes": 23338548,
+  "rendered_directories": 3,
+  "rendered_files": 98,
+  "same_volume_direct_objects": true
+}

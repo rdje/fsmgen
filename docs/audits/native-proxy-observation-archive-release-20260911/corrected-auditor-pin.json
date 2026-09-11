@@ -1,0 +1,6 @@
+{
+  "path": "docs/audits/native-proxy-observation-archive-release-20260911/audit.py",
+  "sha256": "eefc989d4d346c5f119445ebe0259c7ad46bba37ee9590ddd3caa865fb828994",
+  "size_bytes": 29589,
+  "timing": "after original qualification and preserved first audit failure; before corrected audit"
+}

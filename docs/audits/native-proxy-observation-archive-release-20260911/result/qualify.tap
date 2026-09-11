@@ -1,0 +1,306 @@
+ok 1 - healthy:ordinary: public return contract
+ok 2 - healthy:ordinary: release success contract
+ok 3 - healthy:ordinary: original diagnostic retained
+ok 4 - healthy:ordinary: actual unlink effect
+ok 5 - healthy:ordinary: actual observed source, lock and directory closure
+ok 6 - healthy:ordinary: input scalar types and byte flags preserved
+ok 7 - healthy:ordinary: no publication, unrelated mutation or private source read
+ok 8 - healthy:ordinary: exact selected effect and preserved owners/archive
+ok 9 - healthy:binary: public return contract
+ok 10 - healthy:binary: release success contract
+ok 11 - healthy:binary: original diagnostic retained
+ok 12 - healthy:binary: actual unlink effect
+ok 13 - healthy:binary: actual observed source, lock and directory closure
+ok 14 - healthy:binary: input scalar types and byte flags preserved
+ok 15 - healthy:binary: no publication, unrelated mutation or private source read
+ok 16 - healthy:binary: exact selected effect and preserved owners/archive
+ok 17 - healthy:empty: public return contract
+ok 18 - healthy:empty: release success contract
+ok 19 - healthy:empty: original diagnostic retained
+ok 20 - healthy:empty: actual unlink effect
+ok 21 - healthy:empty: actual observed source, lock and directory closure
+ok 22 - healthy:empty: input scalar types and byte flags preserved
+ok 23 - healthy:empty: no publication, unrelated mutation or private source read
+ok 24 - healthy:empty: exact selected effect and preserved owners/archive
+ok 25 - healthy:maximum: public return contract
+ok 26 - healthy:maximum: release success contract
+ok 27 - healthy:maximum: original diagnostic retained
+ok 28 - healthy:maximum: actual unlink effect
+ok 29 - healthy:maximum: actual observed source, lock and directory closure
+ok 30 - healthy:maximum: input scalar types and byte flags preserved
+ok 31 - healthy:maximum: no publication, unrelated mutation or private source read
+ok 32 - healthy:maximum: exact selected effect and preserved owners/archive
+ok 33 - healthy:equal_reference: public return contract
+ok 34 - healthy:equal_reference: release success contract
+ok 35 - healthy:equal_reference: original diagnostic retained
+ok 36 - healthy:equal_reference: actual unlink effect
+ok 37 - healthy:equal_reference: actual observed source, lock and directory closure
+ok 38 - healthy:equal_reference: input scalar types and byte flags preserved
+ok 39 - healthy:equal_reference: no publication, unrelated mutation or private source read
+ok 40 - healthy:equal_reference: exact selected effect and preserved owners/archive
+ok 41 - healthy:runtime-still-active: public return contract
+ok 42 - healthy:runtime-still-active: release success contract
+ok 43 - healthy:runtime-still-active: original diagnostic retained
+ok 44 - healthy:runtime-still-active: actual unlink effect
+ok 45 - healthy:runtime-still-active: actual observed source, lock and directory closure
+ok 46 - healthy:runtime-still-active: input scalar types and byte flags preserved
+ok 47 - healthy:runtime-still-active: no publication, unrelated mutation or private source read
+ok 48 - healthy:runtime-still-active: exact selected effect and preserved owners/archive
+ok 49 - healthy:last-observation: public return contract
+ok 50 - healthy:last-observation: release success contract
+ok 51 - healthy:last-observation: original diagnostic retained
+ok 52 - healthy:last-observation: actual unlink effect
+ok 53 - healthy:last-observation: actual observed source, lock and directory closure
+ok 54 - healthy:last-observation: input scalar types and byte flags preserved
+ok 55 - healthy:last-observation: no publication, unrelated mutation or private source read
+ok 56 - healthy:last-observation: exact selected effect and preserved owners/archive
+ok 57 - healthy:never-started-cancelled-helper: public return contract
+ok 58 - healthy:never-started-cancelled-helper: release success contract
+ok 59 - healthy:never-started-cancelled-helper: original diagnostic retained
+ok 60 - healthy:never-started-cancelled-helper: actual unlink effect
+ok 61 - healthy:never-started-cancelled-helper: actual observed source, lock and directory closure
+ok 62 - healthy:never-started-cancelled-helper: input scalar types and byte flags preserved
+ok 63 - healthy:never-started-cancelled-helper: no publication, unrelated mutation or private source read
+ok 64 - healthy:never-started-cancelled-helper: exact selected effect and preserved owners/archive
+ok 65 - rejected:unsealed: public return contract
+ok 66 - rejected:unsealed: release success contract
+ok 67 - rejected:unsealed: original diagnostic retained
+ok 68 - rejected:unsealed: actual unlink effect
+ok 69 - rejected:unsealed: actual observed source, lock and directory closure
+ok 70 - rejected:unsealed: input scalar types and byte flags preserved
+ok 71 - rejected:unsealed: no publication, unrelated mutation or private source read
+ok 72 - rejected:unsealed: exact selected effect and preserved owners/archive
+ok 73 - rejected:missing-receipt: public return contract
+ok 74 - rejected:missing-receipt: release success contract
+ok 75 - rejected:missing-receipt: original diagnostic retained
+ok 76 - rejected:missing-receipt: actual unlink effect
+ok 77 - rejected:missing-receipt: actual observed source, lock and directory closure
+ok 78 - rejected:missing-receipt: input scalar types and byte flags preserved
+ok 79 - rejected:missing-receipt: no publication, unrelated mutation or private source read
+ok 80 - rejected:missing-receipt: exact selected effect and preserved owners/archive
+ok 81 - rejected:wrong-owner: public return contract
+ok 82 - rejected:wrong-owner: release success contract
+ok 83 - rejected:wrong-owner: original diagnostic retained
+ok 84 - rejected:wrong-owner: actual unlink effect
+ok 85 - rejected:wrong-owner: actual observed source, lock and directory closure
+ok 86 - rejected:wrong-owner: input scalar types and byte flags preserved
+ok 87 - rejected:wrong-owner: no publication, unrelated mutation or private source read
+ok 88 - rejected:wrong-owner: exact selected effect and preserved owners/archive
+ok 89 - rejected:unreaped: public return contract
+ok 90 - rejected:unreaped: release success contract
+ok 91 - rejected:unreaped: original diagnostic retained
+ok 92 - rejected:unreaped: actual unlink effect
+ok 93 - rejected:unreaped: actual observed source, lock and directory closure
+ok 94 - rejected:unreaped: input scalar types and byte flags preserved
+ok 95 - rejected:unreaped: no publication, unrelated mutation or private source read
+ok 96 - rejected:unreaped: exact selected effect and preserved owners/archive
+ok 97 - rejected:surviving-group: public return contract
+ok 98 - rejected:surviving-group: release success contract
+ok 99 - rejected:surviving-group: original diagnostic retained
+ok 100 - rejected:surviving-group: actual unlink effect
+ok 101 - rejected:surviving-group: actual observed source, lock and directory closure
+ok 102 - rejected:surviving-group: input scalar types and byte flags preserved
+ok 103 - rejected:surviving-group: no publication, unrelated mutation or private source read
+ok 104 - rejected:surviving-group: exact selected effect and preserved owners/archive
+ok 105 - rejected:legacy-helper-event: public return contract
+ok 106 - rejected:legacy-helper-event: release success contract
+ok 107 - rejected:legacy-helper-event: original diagnostic retained
+ok 108 - rejected:legacy-helper-event: actual unlink effect
+ok 109 - rejected:legacy-helper-event: actual observed source, lock and directory closure
+ok 110 - rejected:legacy-helper-event: input scalar types and byte flags preserved
+ok 111 - rejected:legacy-helper-event: no publication, unrelated mutation or private source read
+ok 112 - rejected:legacy-helper-event: exact selected effect and preserved owners/archive
+ok 113 - rejected:foreign-archive-receipt: public return contract
+ok 114 - rejected:foreign-archive-receipt: release success contract
+ok 115 - rejected:foreign-archive-receipt: original diagnostic retained
+ok 116 - rejected:foreign-archive-receipt: actual unlink effect
+ok 117 - rejected:foreign-archive-receipt: actual observed source, lock and directory closure
+ok 118 - rejected:foreign-archive-receipt: input scalar types and byte flags preserved
+ok 119 - rejected:foreign-archive-receipt: no publication, unrelated mutation or private source read
+ok 120 - rejected:foreign-archive-receipt: exact selected effect and preserved owners/archive
+ok 121 - rejected:foreign-selection: public return contract
+ok 122 - rejected:foreign-selection: release success contract
+ok 123 - rejected:foreign-selection: original diagnostic retained
+ok 124 - rejected:foreign-selection: actual unlink effect
+ok 125 - rejected:foreign-selection: actual observed source, lock and directory closure
+ok 126 - rejected:foreign-selection: input scalar types and byte flags preserved
+ok 127 - rejected:foreign-selection: no publication, unrelated mutation or private source read
+ok 128 - rejected:foreign-selection: exact selected effect and preserved owners/archive
+ok 129 - rejected:missing-archive: public return contract
+ok 130 - rejected:missing-archive: release success contract
+ok 131 - rejected:missing-archive: original diagnostic retained
+ok 132 - rejected:missing-archive: actual unlink effect
+ok 133 - rejected:missing-archive: actual observed source, lock and directory closure
+ok 134 - rejected:missing-archive: input scalar types and byte flags preserved
+ok 135 - rejected:missing-archive: no publication, unrelated mutation or private source read
+ok 136 - rejected:missing-archive: exact selected effect and preserved owners/archive
+ok 137 - rejected:partial-archive: public return contract
+ok 138 - rejected:partial-archive: release success contract
+ok 139 - rejected:partial-archive: original diagnostic retained
+ok 140 - rejected:partial-archive: actual unlink effect
+ok 141 - rejected:partial-archive: actual observed source, lock and directory closure
+ok 142 - rejected:partial-archive: input scalar types and byte flags preserved
+ok 143 - rejected:partial-archive: no publication, unrelated mutation or private source read
+ok 144 - rejected:partial-archive: exact selected effect and preserved owners/archive
+ok 145 - rejected:changed-archive: public return contract
+ok 146 - rejected:changed-archive: release success contract
+ok 147 - rejected:changed-archive: original diagnostic retained
+ok 148 - rejected:changed-archive: actual unlink effect
+ok 149 - rejected:changed-archive: actual observed source, lock and directory closure
+ok 150 - rejected:changed-archive: input scalar types and byte flags preserved
+ok 151 - rejected:changed-archive: no publication, unrelated mutation or private source read
+ok 152 - rejected:changed-archive: exact selected effect and preserved owners/archive
+ok 153 - rejected:replaced-archive-file: public return contract
+ok 154 - rejected:replaced-archive-file: release success contract
+ok 155 - rejected:replaced-archive-file: original diagnostic retained
+ok 156 - rejected:replaced-archive-file: actual unlink effect
+ok 157 - rejected:replaced-archive-file: actual observed source, lock and directory closure
+ok 158 - rejected:replaced-archive-file: input scalar types and byte flags preserved
+ok 159 - rejected:replaced-archive-file: no publication, unrelated mutation or private source read
+ok 160 - rejected:replaced-archive-file: exact selected effect and preserved owners/archive
+ok 161 - rejected:archive-mode: public return contract
+ok 162 - rejected:archive-mode: release success contract
+ok 163 - rejected:archive-mode: original diagnostic retained
+ok 164 - rejected:archive-mode: actual unlink effect
+ok 165 - rejected:archive-mode: actual observed source, lock and directory closure
+ok 166 - rejected:archive-mode: input scalar types and byte flags preserved
+ok 167 - rejected:archive-mode: no publication, unrelated mutation or private source read
+ok 168 - rejected:archive-mode: exact selected effect and preserved owners/archive
+ok 169 - rejected:replaced-evidence: public return contract
+ok 170 - rejected:replaced-evidence: release success contract
+ok 171 - rejected:replaced-evidence: original diagnostic retained
+ok 172 - rejected:replaced-evidence: actual unlink effect
+ok 173 - rejected:replaced-evidence: actual observed source, lock and directory closure
+ok 174 - rejected:replaced-evidence: input scalar types and byte flags preserved
+ok 175 - rejected:replaced-evidence: no publication, unrelated mutation or private source read
+ok 176 - rejected:replaced-evidence: exact selected effect and preserved owners/archive
+ok 177 - rejected:missing-hold: public return contract
+ok 178 - rejected:missing-hold: release success contract
+ok 179 - rejected:missing-hold: original diagnostic retained
+ok 180 - rejected:missing-hold: actual unlink effect
+ok 181 - rejected:missing-hold: actual observed source, lock and directory closure
+ok 182 - rejected:missing-hold: input scalar types and byte flags preserved
+ok 183 - rejected:missing-hold: no publication, unrelated mutation or private source read
+ok 184 - rejected:missing-hold: exact selected effect and preserved owners/archive
+ok 185 - rejected:changed-hold: public return contract
+ok 186 - rejected:changed-hold: release success contract
+ok 187 - rejected:changed-hold: original diagnostic retained
+ok 188 - rejected:changed-hold: actual unlink effect
+ok 189 - rejected:changed-hold: actual observed source, lock and directory closure
+ok 190 - rejected:changed-hold: input scalar types and byte flags preserved
+ok 191 - rejected:changed-hold: no publication, unrelated mutation or private source read
+ok 192 - rejected:changed-hold: exact selected effect and preserved owners/archive
+ok 193 - rejected:replaced-hold: public return contract
+ok 194 - rejected:replaced-hold: release success contract
+ok 195 - rejected:replaced-hold: original diagnostic retained
+ok 196 - rejected:replaced-hold: actual unlink effect
+ok 197 - rejected:replaced-hold: actual observed source, lock and directory closure
+ok 198 - rejected:replaced-hold: input scalar types and byte flags preserved
+ok 199 - rejected:replaced-hold: no publication, unrelated mutation or private source read
+ok 200 - rejected:replaced-hold: exact selected effect and preserved owners/archive
+ok 201 - rejected:missing-lock: public return contract
+ok 202 - rejected:missing-lock: release success contract
+ok 203 - rejected:missing-lock: original diagnostic retained
+ok 204 - rejected:missing-lock: actual unlink effect
+ok 205 - rejected:missing-lock: actual observed source, lock and directory closure
+ok 206 - rejected:missing-lock: input scalar types and byte flags preserved
+ok 207 - rejected:missing-lock: no publication, unrelated mutation or private source read
+ok 208 - rejected:missing-lock: exact selected effect and preserved owners/archive
+ok 209 - rejected:replaced-lock: public return contract
+ok 210 - rejected:replaced-lock: release success contract
+ok 211 - rejected:replaced-lock: original diagnostic retained
+ok 212 - rejected:replaced-lock: actual unlink effect
+ok 213 - rejected:replaced-lock: actual observed source, lock and directory closure
+ok 214 - rejected:replaced-lock: input scalar types and byte flags preserved
+ok 215 - rejected:replaced-lock: no publication, unrelated mutation or private source read
+ok 216 - rejected:replaced-lock: exact selected effect and preserved owners/archive
+ok 217 - rejected:lock-mode: public return contract
+ok 218 - rejected:lock-mode: release success contract
+ok 219 - rejected:lock-mode: original diagnostic retained
+ok 220 - rejected:lock-mode: actual unlink effect
+ok 221 - rejected:lock-mode: actual observed source, lock and directory closure
+ok 222 - rejected:lock-mode: input scalar types and byte flags preserved
+ok 223 - rejected:lock-mode: no publication, unrelated mutation or private source read
+ok 224 - rejected:lock-mode: exact selected effect and preserved owners/archive
+ok 225 - rejected:changed-image: public return contract
+ok 226 - rejected:changed-image: release success contract
+ok 227 - rejected:changed-image: original diagnostic retained
+ok 228 - rejected:changed-image: actual unlink effect
+ok 229 - rejected:changed-image: actual observed source, lock and directory closure
+ok 230 - rejected:changed-image: input scalar types and byte flags preserved
+ok 231 - rejected:changed-image: no publication, unrelated mutation or private source read
+ok 232 - rejected:changed-image: exact selected effect and preserved owners/archive
+ok 233 - rejected:replaced-image: public return contract
+ok 234 - rejected:replaced-image: release success contract
+ok 235 - rejected:replaced-image: original diagnostic retained
+ok 236 - rejected:replaced-image: actual unlink effect
+ok 237 - rejected:replaced-image: actual observed source, lock and directory closure
+ok 238 - rejected:replaced-image: input scalar types and byte flags preserved
+ok 239 - rejected:replaced-image: no publication, unrelated mutation or private source read
+ok 240 - rejected:replaced-image: exact selected effect and preserved owners/archive
+ok 241 - rejected:direct-coordinator: public return contract
+ok 242 - rejected:direct-coordinator: release success contract
+ok 243 - rejected:direct-coordinator: original diagnostic retained
+ok 244 - rejected:direct-coordinator: actual unlink effect
+ok 245 - rejected:direct-coordinator: actual observed source, lock and directory closure
+ok 246 - rejected:direct-coordinator: input scalar types and byte flags preserved
+ok 247 - rejected:direct-coordinator: no publication, unrelated mutation or private source read
+ok 248 - rejected:direct-coordinator: exact selected effect and preserved owners/archive
+ok 249 - rejected:direct-unlink: public return contract
+ok 250 - rejected:direct-unlink: release success contract
+ok 251 - rejected:direct-unlink: original diagnostic retained
+ok 252 - rejected:direct-unlink: actual unlink effect
+ok 253 - rejected:direct-unlink: actual observed source, lock and directory closure
+ok 254 - rejected:direct-unlink: input scalar types and byte flags preserved
+ok 255 - rejected:direct-unlink: no publication, unrelated mutation or private source read
+ok 256 - rejected:direct-unlink: exact selected effect and preserved owners/archive
+ok 257 - rejected:arity-drop: public return contract
+ok 258 - rejected:arity-drop: release success contract
+ok 259 - rejected:arity-drop: original diagnostic retained
+ok 260 - rejected:arity-drop: actual unlink effect
+ok 261 - rejected:arity-drop: actual observed source, lock and directory closure
+ok 262 - rejected:arity-drop: input scalar types and byte flags preserved
+ok 263 - rejected:arity-drop: no publication, unrelated mutation or private source read
+ok 264 - rejected:arity-drop: exact selected effect and preserved owners/archive
+ok 265 - rejected:arity-append: public return contract
+ok 266 - rejected:arity-append: release success contract
+ok 267 - rejected:arity-append: original diagnostic retained
+ok 268 - rejected:arity-append: actual unlink effect
+ok 269 - rejected:arity-append: actual observed source, lock and directory closure
+ok 270 - rejected:arity-append: input scalar types and byte flags preserved
+ok 271 - rejected:arity-append: no publication, unrelated mutation or private source read
+ok 272 - rejected:arity-append: exact selected effect and preserved owners/archive
+ok 273 - post-unlink:before-finish: public return contract
+ok 274 - post-unlink:before-finish: release success contract
+ok 275 - post-unlink:before-finish: original diagnostic retained
+ok 276 - post-unlink:before-finish: actual unlink effect
+ok 277 - post-unlink:before-finish: actual observed source, lock and directory closure
+ok 278 - post-unlink:before-finish: input scalar types and byte flags preserved
+ok 279 - post-unlink:before-finish: no publication, unrelated mutation or private source read
+ok 280 - post-unlink:before-finish: exact selected effect and preserved owners/archive
+ok 281 - post-unlink:source-close-after-unlink: public return contract
+ok 282 - post-unlink:source-close-after-unlink: release success contract
+ok 283 - post-unlink:source-close-after-unlink: original diagnostic retained
+ok 284 - post-unlink:source-close-after-unlink: actual unlink effect
+ok 285 - post-unlink:source-close-after-unlink: actual observed source, lock and directory closure
+ok 286 - post-unlink:source-close-after-unlink: input scalar types and byte flags preserved
+ok 287 - post-unlink:source-close-after-unlink: no publication, unrelated mutation or private source read
+ok 288 - post-unlink:source-close-after-unlink: exact selected effect and preserved owners/archive
+ok 289 - post-unlink:lock-close-after-unlink: public return contract
+ok 290 - post-unlink:lock-close-after-unlink: release success contract
+ok 291 - post-unlink:lock-close-after-unlink: original diagnostic retained
+ok 292 - post-unlink:lock-close-after-unlink: actual unlink effect
+ok 293 - post-unlink:lock-close-after-unlink: actual observed source, lock and directory closure
+ok 294 - post-unlink:lock-close-after-unlink: input scalar types and byte flags preserved
+ok 295 - post-unlink:lock-close-after-unlink: no publication, unrelated mutation or private source read
+ok 296 - post-unlink:lock-close-after-unlink: exact selected effect and preserved owners/archive
+ok 297 - post-unlink:primary-and-source-close: public return contract
+ok 298 - post-unlink:primary-and-source-close: release success contract
+ok 299 - post-unlink:primary-and-source-close: original diagnostic retained
+ok 300 - post-unlink:primary-and-source-close: actual unlink effect
+ok 301 - post-unlink:primary-and-source-close: actual observed source, lock and directory closure
+ok 302 - post-unlink:primary-and-source-close: input scalar types and byte flags preserved
+ok 303 - post-unlink:primary-and-source-close: no publication, unrelated mutation or private source read
+ok 304 - post-unlink:primary-and-source-close: exact selected effect and preserved owners/archive
+ok 305 - no original producer, compiler or native process attempt
+1..305

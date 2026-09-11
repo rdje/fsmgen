@@ -1,0 +1,8 @@
+{
+  "manifest_limit": 4096,
+  "observed_manifest_read_limit": 4096,
+  "original_oracle_assumption": 65536,
+  "remaining_case_failures": [],
+  "source": "docs/audits/native-proxy-image-custody-20260910/ImageCustody.pm",
+  "source_member": "read_entry"
+}

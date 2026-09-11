@@ -2,6 +2,7 @@
 id: test-subprocess-policy-adapters
 title: Test subprocesses share one mechanism behind sealed policy adapters
 answers:
+  - "what does an inactive observation release attempt report?"
   - "what do closed observation work records validate?"
   - "what does final inactive archive signoff prove?"
   - "how are FSMGen test subprocesses bounded?"
@@ -113,11 +114,10 @@ reverify: >-
   t/1813-process-coordinator-connection.t t/1814-process-coordinator-service.t
   t/1815-rust-proxy-fixture.t t/1816-rust-proxy-integration.t t/1817-test-supervision-architecture.t
 ---
-
 Decisions `0087`/`0101`: `FSM::Support::ProcessSupervisor`; adapters seal local argv/capture/group cleanup. T1669 checks ownership.
 `exec_handoff_monotonic_ns` is EOF, not main entry; absent EOF leaves timing unknown.
 `VerilatorRuntime`: decision `0086`. `TaskAcceptanceFixtureRuntime`: owned roots/fixed Git argv.
-History: `da75e940ec226936828984e77774e9c044cdd8ed:docs/knowledge/test-subprocess-policy-adapters.md`. Archive signoff, replay limits, reader/caller and startup evidence: history.
-Work records: `docs/audits/native-proxy-observation-work-records-20260911/WorkRecord.pm`; exact ordered selection/receipt binding and scalar cleanup consistency. Failed/cancelled outcomes remain; a supplied seal proves no native ownership or late-launch prevention. Actual release remains open.
+History: `79b43fd019387acdf1fc3280b3f88847125fbb60:docs/knowledge/test-subprocess-policy-adapters.md`. Archive/work, replay, reader/caller and startup evidence: history.
+Release: `docs/audits/native-proxy-observation-archive-release-20260911/review.json`; exact settled hold removal, preserved archive/other owners, actual closure and separate unlink/absence/error facts. Inactive only; complete interruptions and native authority remain open.
 Replay: `scripts/run_with_ram_guard.sh -- python3 -B -m unittest discover -s t/python -p 'test_fixture_policy_archive*.py'`. Other controls: history.
 HIAL/VIAL `.19.2.3.1.2.2.5.5` owns repair/hostile controls; neutral-verifier extraction stays blocked.

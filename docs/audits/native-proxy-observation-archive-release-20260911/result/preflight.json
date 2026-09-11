@@ -1,0 +1,9 @@
+{
+  "domain_cases": 38,
+  "exact_reversed_fragments": 6,
+  "independent_domain": true,
+  "predecessor_inputs": 46,
+  "prospective_plan_reproduction": true,
+  "python_syntax": true,
+  "schema": "fsmgen.inactive_observation_release_preflight.v1"
+}

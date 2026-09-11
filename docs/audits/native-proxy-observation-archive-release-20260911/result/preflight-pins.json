@@ -1,0 +1,52 @@
+[
+  {
+    "path": "docs/audits/native-proxy-observation-archive-release-20260911/contract.json",
+    "sha256": "5283975e59d2309e4e6018a2b67b1c5b91736d94e00232e8c1ffcdfe1ccd7de0",
+    "size_bytes": 5470
+  },
+  {
+    "path": "docs/audits/native-proxy-observation-archive-release-20260911/coordination-extension.json",
+    "sha256": "5ec48abff08cdedf083a738788c4d88bfb09d08af852e1d622d698f3a86e9408",
+    "size_bytes": 4671
+  },
+  {
+    "path": "docs/audits/native-proxy-observation-archive-release-20260911/plan.json",
+    "sha256": "909fea33151d474a687be8104a817ff8d8b53179dff0f9811e94c35578519f44",
+    "size_bytes": 28609
+  },
+  {
+    "path": "docs/audits/native-proxy-observation-archive-release-20260911/prepare.py",
+    "sha256": "a143647fba6778641e25520b90810b21960872f83b9ec1c1f628e7a62ab0cf64",
+    "size_bytes": 6054
+  },
+  {
+    "path": "docs/audits/native-proxy-observation-archive-release-20260911/ObservationRelease.pm",
+    "sha256": "08236265e6e6973ab23e9e31ee26071272f39e8879c2d420ab2382fc800345ab",
+    "size_bytes": 10294
+  },
+  {
+    "path": "docs/audits/native-proxy-observation-archive-release-20260911/ReleaseTrace.pm",
+    "sha256": "43f16583db2901de809834a0959f97a54f217bc5c8d408d92d4c514ffed4827b",
+    "size_bytes": 10026
+  },
+  {
+    "path": "docs/audits/native-proxy-observation-archive-release-20260911/ReleaseFixture.pm",
+    "sha256": "adc44f93c9d55e3bc2302a841440e87b92e459c10d50c2acde1f2926399f1b0e",
+    "size_bytes": 6097
+  },
+  {
+    "path": "docs/audits/native-proxy-observation-archive-release-20260911/qualify.t",
+    "sha256": "1fa2470b46ab7323c3699e1351628fb3a235f90a1b257a07a961ae8f33cd5159",
+    "size_bytes": 7744
+  },
+  {
+    "path": "docs/audits/native-proxy-observation-archive-release-20260911/audit.py",
+    "sha256": "0b1164b544aa45ccd89b62084ca5cfef6a3d70258b665055957dd62df66a5be0",
+    "size_bytes": 28726
+  },
+  {
+    "path": "docs/audits/native-proxy-image-coordination-20260910/Coordination.pm",
+    "sha256": "a0d99769147f28ca7c35e9ac80ba88f7cf14760e3bef7b51841d8badebc060e5",
+    "size_bytes": 19061
+  }
+]

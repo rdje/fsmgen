@@ -168,6 +168,13 @@ sub _transaction {
                 && defined(&NativeProxyReferenceCensus::_inspect_locked))
             || ($operation eq 'reuse_observation_reference' && @payload == 2
                 && defined(&NativeProxyObservationAcquisition::_admit_locked)
+                && defined(&NativeProxyReferenceCensus::_inspect_locked))
+            || ($operation eq 'release_observation_reference' && @payload == 1
+                && (caller eq 'NativeProxyObservationRelease')
+                && defined(&NativeProxyObservationRelease::_coordinator_request)
+                && defined(&NativeProxyObservationRelease::_admit_locked)
+                && defined(&NativeProxyObservationRelease::_release_locked)
+                && defined(&NativeProxyObservationRelease::_finish_locked)
                 && defined(&NativeProxyReferenceCensus::_inspect_locked)));
     NativeProxyImageCustody::image_key(@payload) if $operation eq 'publish_image';
     NativeProxyReferenceAcquisition::_request(@payload) if $operation eq 'acquire_runtime_reference';
@@ -178,6 +185,8 @@ sub _transaction {
         my $request = NativeProxyObservationAcquisition::_request($payload[0]);
         NativeProxyObservationAcquisition::_previous($case, $request, $payload[1]);
     }
+    NativeProxyObservationRelease::_coordinator_request($case, @payload)
+        if $operation eq 'release_observation_reference';
     NativeProxyImageCustody::_relative_path($case);
     die "only the inactive qualification namespace is admitted\n"
         unless $case =~ /\A\Q$CASE_PREFIX\Efsmgen-[A-Za-z0-9_]+\z/;
@@ -185,7 +194,8 @@ sub _transaction {
     my $root_before = NativeProxyImageCustody::_directory($base);
     my $path = "$base/coordination.lock";
     my $existing_only = $operation eq 'retire_runtime_reference' || $operation eq 'remove_unreferenced_image'
-        || $operation eq 'acquire_observation_reference' || $operation eq 'reuse_observation_reference';
+        || $operation eq 'acquire_observation_reference' || $operation eq 'reuse_observation_reference'
+        || $operation eq 'release_observation_reference';
     my $purpose = $operation eq 'retire_runtime_reference' ? 'retirement'
         : $operation eq 'remove_unreferenced_image' ? 'maintenance' : 'observation';
     my $handle = $existing_only
@@ -205,6 +215,10 @@ sub _transaction {
         die "observation lock differs from acquired identity\n"
             if $operation eq 'reuse_observation_reference'
                 && ($before->[0] != $payload[1]{lock}{device} || $before->[1] != $payload[1]{lock}{inode});
+        die "release lock differs from acquired identity\n"
+            if $operation eq 'release_observation_reference'
+                && ($before->[0] != $payload[0]{acquired}{lock}{device}
+                    || $before->[1] != $payload[0]{acquired}{lock}{inode});
         die "store root replaced during acquisition\n"
             unless NativeProxyImageCustody::_same_metadata(
                 $root_before, NativeProxyImageCustody::_directory($base), 0,1,2,4);
@@ -250,6 +264,18 @@ sub _transaction {
             my $after = _census($base);
             my $after_references = NativeProxyReferenceCensus::_inspect_locked($case, $after);
             $maintenance = NativeProxyImageMaintenance::_finish_locked($case, $plan, $after, $after_references);
+        }
+        my $release;
+        if ($operation eq 'release_observation_reference') {
+            my $before = NativeProxyReferenceCensus::_inspect_locked($case, $census);
+            my $plan = NativeProxyObservationRelease::_admit_locked($case, $before, $payload[0]);
+            my $current = NativeProxyReferenceCensus::_inspect_locked($case, _census($base));
+            NativeProxyObservationRelease::_release_locked($case, $plan, $current);
+            my $final_census = _census($base);
+            die "observation release changed image namespace membership\n"
+                unless join(',', @{$census->{images}}) eq join(',', @{$final_census->{images}});
+            my $after = NativeProxyReferenceCensus::_inspect_locked($case, $final_census);
+            $release = NativeProxyObservationRelease::_finish_locked($case, $plan, $after);
         }
         my $observation;
         if ($operation eq 'acquire_observation_reference' || $operation eq 'reuse_observation_reference') {
@@ -301,6 +327,9 @@ sub _transaction {
             : $operation eq 'remove_unreferenced_image'
             ? {schema => 'fsmgen.inactive_image_maintenance.v1', runtime_authorized => 0,
                executable => undef, lock => $lock, %$maintenance}
+            : $operation eq 'release_observation_reference'
+            ? {schema => 'fsmgen.inactive_observation_release.v1', runtime_authorized => 0,
+               executable => undef, lock => $lock, %$release}
             : $operation eq 'acquire_observation_reference' || $operation eq 'reuse_observation_reference'
             ? {schema => 'fsmgen.inactive_observation_acquisition.v1', runtime_authorized => 0,
                executable => undef, lock => $lock, %$observation}

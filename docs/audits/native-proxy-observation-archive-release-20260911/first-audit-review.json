@@ -1,0 +1,7 @@
+{
+  "preserved": "result/first-audit retains exact original auditor, prospective pins, stdout and nonzero exit; stderr-exact.json reconstructs the original traceback bytes.",
+  "producer_rerun": false,
+  "remaining_case_failures": [],
+  "repair": "Classify reference JSON and image.json as bounded records. Add an altered manifest-limit report falsifier. Authenticate the original prospective auditor through its retained first source and separately bind the corrected auditor after the original run.",
+  "root_cause": "The original independent trace oracle classified every images-directory source as a 65536-byte C/image payload. ImageCustody.pm read_entry explicitly reads image.json with the distinct 4096-byte manifest limit. The unchanged source and all original observed manifest requests agree; the implementation and qualifier did not require repair."
+}

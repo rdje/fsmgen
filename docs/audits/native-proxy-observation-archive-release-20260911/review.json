@@ -1,0 +1,43 @@
+{
+  "book": {
+    "checked_passages": [
+      "release_observation_reference(store, request, acquisition, archive_receipt, original_selection, settlement)",
+      "Missing, partial, changed or replaced archive custody rejects before opening the permanent store lock.",
+      "They do not reconstruct missing archived bytes.",
+      "release leaves that image in place for separately qualified maintenance.",
+      "\"success\": 0",
+      "\"unlink_completed\": 1",
+      "\"last_reference_check\": {\"phase\": \"after_unlink\", \"state\": \"absent\"}",
+      "A failure does not mean the hold remains.",
+      "The first error survives a later close error.",
+      "Complete interruption/close coverage, actual native receipt authentication and prevention of future launches remain separate gates."
+    ],
+    "exact_output_absent": true,
+    "exit_code": 0,
+    "output": ".artifacts/tmp/native-proxy-observation-archive-release-book-20260911/book",
+    "rendered_bytes": 23338548,
+    "rendered_directories": 3,
+    "rendered_files": 98,
+    "same_volume_direct_objects": true
+  },
+  "contract": "contract.json",
+  "counts": "result/audit.json",
+  "doctrines": "Focused rendered-book, task and Knowledge Map checks pass. Mandatory staged-index and commit-hook doctrines must pass before durable completion.",
+  "durability": "Ten prospective pins bind the first implementation/qualifier/auditor inputs. Fifteen exact raw recovery copies retain preflight, syntax, original qualification and corrected audit. The exact first failed auditor, original pins/stdout/exit and byte-reconstructible traceback remain under result/first-audit. corrected-auditor-pin.json binds the post-qualification correction separately. Task, book, fact/history route and Git carry the next frontier.",
+  "effect_semantics": "A valid-arity invocation returns a closed inactive attempt. Success requires all closure; monotonic actual unlink-attempt/completion and historical absence facts survive later errors. last_reference_check retains the latest explicit phase/state, not a prediction. Failures contain no successful release receipt and imply no restoration, retry or idempotent missing-hold success.",
+  "falsification": "The prospective domain includes eight healthy cases, twenty-six pre-unlink rejections and four truthful post-unlink failures. Twenty-seven altered-report, three domain and two source-applicability falsifiers reject. Actual close syscalls precede modeled EIO returns; first-error precedence remains explicit.",
+  "first_failure": "first-audit-review.json: the original oracle incorrectly used the C/image payload limit for image.json. Unchanged source and actual requests establish the smaller manifest limit. The corrected auditor passes with a dedicated manifest-limit falsifier; the implementation/qualifier and original result were not changed or rerun.",
+  "knowledge_map": "knowledge-map: OK (1161 facts, 6407 unique questions, 6578 answer occurrences, 139 bounded topic shards; query parity verified)",
+  "knowledge_projection": "knowledge-projection.json",
+  "next_action": "Qualify complete release interruption, close and evidence applicability; native/lifetime and historical startup/parent/full CI/push remain gated.",
+  "owner": "HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.12.4.1.3.4.3.2",
+  "preceding_acceptance_history_revision": "79b43fd019387acdf1fc3280b3f88847125fbb60",
+  "prior_acceptance_sections_unchanged": 37,
+  "read_authority": "Complete original archive custody rejects before coordination if missing, partial, altered or replaced. Current canonical C/image and reference reads under the original lock are fresh store-census authority, never reconstruction of missing archived target bytes. Private original targets are not reopened.",
+  "recovery": "result/recovery-copies.json",
+  "rederivation": "Original inert Perl qualification and independent Python physical/record oracle agree on exact selected effects, untouched other-owner/image/archive bytes and identities, all returned source/lock/directory handles and absent allocations. Current work and archive oracles are used as pure saved-data helpers; no original qualification main or native process is invoked.",
+  "schema": "fsmgen.inactive_observation_release_review.v1",
+  "scope": "Inactive actual owned files with synthetic births, reserved work entries and supplied cleanup records. Returned-handle custody is observed through strong aliases until the original return verdict, with real close/closedir and closed observer duplicates. This leaf does not exhaust lower-reader failures, close omissions, arbitrary interruptions or asynchronous writers/crashes. Complete interruption/close/applicability and native authentication/late-launch prevention remain separate gates.",
+  "source_applicability": "Forty-five predecessor files remain byte-exact. The remaining predecessor input is Coordination.pm: six precisely reversible release additions reconstruct its complete preceding Git bytes. Prior operation branches are unchanged by that transformation; this does not claim every possible runtime interleaving.",
+  "task_integrity": "[task-tree-integrity] all active task-tree invariants hold (trees=4, nodes=1354, segments=3, compact_terminals=16, index_archives=1, migrations=1, acceptance_histories=1)"
+}

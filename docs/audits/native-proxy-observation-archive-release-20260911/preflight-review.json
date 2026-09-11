@@ -1,0 +1,10 @@
+{
+  "domain_cases": 38,
+  "draft_review": "Separate monotonic unlink facts from final success; retain latest absence check without predicting later state. Reject missing or partial archives before live store reads. Record actual closes before modeled errors, keep all returned handle aliases through verdict, count forbidden source/mutation attempts, and preserve exact old coordinator bytes by reversing only six release fragments. No prior qualifier, compiler or native process is rerun.",
+  "perl_module_and_harness_syntax": "pass",
+  "pins_before_first_qualification": true,
+  "predecessor_inputs": 46,
+  "prospective_pins": 10,
+  "python_domain_and_plan_reproduction": "pass",
+  "schema": "fsmgen.inactive_observation_release_preflight_review.v1"
+}

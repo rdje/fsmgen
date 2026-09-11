@@ -1,0 +1,35 @@
+{
+  "api": {
+    "absence_evidence": "reference_absence_verified retains a successful observation as a historical fact; last_reference_check records the latest explicit phase and absent/present/unknown state. Neither field predicts later arbitrary mutation.",
+    "argument_count": 6,
+    "entry": "release_observation_reference(store, request, acquisition, archive_receipt, original_selection, settlement)",
+    "result": "Closed attempt record carrying success/error and separate monotonic unlink-attempt, successful-unlink and checked-absence facts. A failed attempt has no successful release receipt. Invalid arity throws before an attempt starts. No retry, restoration, missing-hold idempotence or inferred native authority.",
+    "success": "Only after all retained descriptors and the permanent lock have closed successfully, return the coordinator release receipt and unchanged settlement outcomes. A later close/closure error retains recorded unlink facts while reporting failure."
+  },
+  "flow": [
+    "Validate and defensively copy original acquisition/request, archive receipt and exact original selection/settlement before filesystem access.",
+    "Open and retain complete existing archive sources; verify bytes, native identities, directory/member closure and original receipt outside coordination.",
+    "Enter only the fixed coordinator release operation from its exact internal caller; open the existing permanent lock and match original lock identity.",
+    "Use the combined current census, admit the exact original observation source and C/image pair, retain live hold/image descriptors, and preserve every other current owner.",
+    "Recheck full current census, archive bytes/custody, selected live image and exact hold immediately before unlink; bounded archive readback is repeated under the lock through the qualified closure helper. No process/query/capture or arbitrary callback runs there. Record effects at the actual operation boundary.",
+    "Unlink only the exact selected hold; explicitly check absence and revalidate unchanged other owners, archive, image namespace and released image contents.",
+    "Close all held sources and the lock on success/failure, preserving the first error and observed unlink state. Return success only after all closure succeeds."
+  ],
+  "owner": "HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.12.4.1.3.4.3.2",
+  "qualification": "Prospectively enumerate healthy ordinary/binary/empty/maximum/equal-byte cases; settled completed/failed/cancelled/never-started and malformed/unfinished work; active versus retired runtime and other/last observation ownership; missing/changed/replaced hold, lock, archive, evidence and image; direct-coordinator admission rejection; explicit post-unlink failure truth. Record setup versus observed release effects, every actual returned source/lock/directory handle, preserved before/after bytes/native identities, exact allocation journals and absence. The following sibling owns the complete selected interruption, close-return and applicability join.",
+  "read_authority": {
+    "archive": "Always verify actual archive files against retained original bytes and the supplied original archive receipt. Missing/partial/changed archive state rejects before lock acquisition; never reconstruct it from current target paths. Retain archive readers through coordination and final rechecks.",
+    "interpretation": "The canonical parent specifically forbids reopening paths after retirement to reconstruct missing bytes. The later short phrase no original target-path reopen is applied to that archival source authority, consistently with its explicit requirement to run the live store census. The C/image names can equal historical target names; path-string equality does not make a fresh store check archival reconstruction.",
+    "sources": [
+      "docs/audits/native-proxy-canonical-contract-20260910/contract.json:required_controls",
+      "docs/audits/native-proxy-observation-release-contract-20260911/contract.json:release.under_lock",
+      "docs/audits/native-proxy-runtime-census-20260910/ReferenceCensus.pm:_image",
+      "docs/audits/native-proxy-observation-acquisition-20260910/ObservationAcquisition.pm:_previous"
+    ],
+    "store": "The required current combined reference census reads canonical images and current reference records under the original existing lock. These fresh store-custody reads are separately derived from the admitted store/image key; they do not supply missing archived snapshots."
+  },
+  "schema": "fsmgen.inactive_exact_observation_release_plan.v1",
+  "scope": "Inactive owned inert fixtures only. No compiler/native/helper/collector or original fixture producer is executed. Exact release consumes qualified archive and work-record contracts; native authentication, prevention of future starts, complete ownership transport, interruption/applicability closure and asynchronous crash/arbitrary-writer atomicity remain separate gates.",
+  "source_applicability": "Pin exact new coordinator extensions. Removing only those fixed release-operation fragments must reconstruct the preceding coordinator bytes exactly; all preexisting operation branches and other qualified source bodies remain unchanged. Current fixture setup and independent saved-data checks qualify the explicitly extended source, without rerunning old producers.",
+  "source_revision": "79b43fd019387acdf1fc3280b3f88847125fbb60"
+}

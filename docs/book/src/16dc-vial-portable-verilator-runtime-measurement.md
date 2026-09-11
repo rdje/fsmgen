@@ -2092,12 +2092,13 @@ keep the hold pinned. No new work may start after the roster is sealed.
 For example, the current observer can report `settled` with
 `helper_stopped: false` and `helper_shutdown_owner: caller` when a shared helper
 stays running. That scoped event cannot substitute for complete release
-authority. The future release route must remove only the exact original hold,
-leave images and other owners intact, and preserve a failure after unlink
+authority. The inactive release route removes only the exact original hold,
+leaves images and other owners intact, and preserves a failure after unlink
 without inventing a retained hold or retrying the removal.
 
 The original contract has a finite abstract model. Inactive archival is now
-qualified below; exact hold removal and authenticated native cleanup remain
+qualified below. Exact hold removal has the bounded inactive qualification
+described here; interruption closure and authenticated native cleanup remain
 separate gates. Structural bounds and ownership/transport requirements are in
 `docs/audits/native-proxy-observation-release-contract-20260911/contract.json`.
 The source/model check performs no fixture or native execution:
@@ -2147,7 +2148,66 @@ Encoded-size boundary examples use synthetic historical path strings; they do
 not establish filesystem path capacity. Plans, original qualification, source
 pins and the independent schema/domain oracle are retained beside the module.
 These pure calls perform no current target/archive lookup, start no process and
-remove no hold. Exact coordinated release is the next implementation step.
+remove no hold. The following inactive release implementation consumes them.
+
+`docs/audits/native-proxy-observation-archive-release-20260911/ObservationRelease.pm`
+implements `release_observation_reference(store, request, acquisition,
+archive_receipt, original_selection, settlement)`. It first validates the full
+original bindings and opens the already complete archive. Missing, partial,
+changed or replaced archive custody rejects before opening the permanent store
+lock. Release never creates or repairs archive files from current targets.
+
+Under the original existing lock, release checks the combined current runtime
+and observation references, exact selected hold and canonical C/image custody.
+The live store census reads current canonical files and reference records;
+these reads verify present store ownership. They do not reconstruct missing
+archived bytes. Retained archive readers remain owned across coordination,
+readback and final checks. Private wrappers and private runtime records are
+not reopened by release.
+
+Only the selected observation hold is unlinked. Other runtime and observation
+owners, the permanent lock, every image and the archive retain their bytes and
+identities. This also applies when release removes the last observation for an
+image: release leaves that image in place for separately qualified maintenance.
+An active runtime reference is preserved. Completed, failed and cancelled work
+can permit release when every exact selected owner has settled; the original
+outcomes remain in the successful receipt.
+
+Valid argument counts return an inactive attempt record with separate success,
+error and effect fields. Wrong arity throws before an attempt begins. For
+example, a controlled closure failure after unlink produces these fields:
+
+```json
+{
+  "success": 0,
+  "error": "controlled failure after exact unlink\n",
+  "unlink_attempted": 1,
+  "unlink_completed": 1,
+  "reference_absence_verified": 1,
+  "last_reference_check": {"phase": "after_unlink", "state": "absent"},
+  "release": null
+}
+```
+
+This is an excerpt; the complete record also declares its schema,
+`runtime_authorized: 0` and `executable: null`. A failure does not mean the hold
+remains. Absence evidence records what was checked at its named phase; it does
+not predict a later arbitrary mutation. There is no retry, recreated hold or
+missing-hold idempotent success. A successful release receipt is returned only
+after the lock and every retained source close successfully. The first error
+survives a later close error.
+
+The retained qualification covers ordinary, binary, empty, maximum-size and
+equal-byte snapshots; active/retired runtime owners; another/last observation;
+explicit never-started cancelled cleanup; malformed or incomplete work; and
+missing, changed or replaced archive, evidence, hold, lock and image state.
+Post-unlink controls distinguish actual successful closes from modeled error
+returns. The independent physical oracle reconstructs setup changes separately
+from release and retains its corrected manifest-read-limit failure evidence.
+Exact source pins and reversible coordinator additions establish the declared
+source applicability. Complete interruption/close coverage, actual native
+receipt authentication and prevention of future launches remain separate gates.
+No compiler, original native fixture, helper or collector runs in this suite.
 
 The inactive archive record implementation now derives a closed specification
 from the complete original acquisition and request. It keeps the ordered wrapper,

@@ -1,0 +1,826 @@
+{
+  "cases": [
+    {
+      "argument_change": null,
+      "cleanup": "mixed",
+      "control": "none",
+      "expected_error": "",
+      "expected_public_return": true,
+      "expected_success": true,
+      "expected_unlinked": true,
+      "last_observation": false,
+      "mutation": "none",
+      "name": "healthy:ordinary",
+      "runtime": "retired",
+      "wrapper": "ordinary"
+    },
+    {
+      "argument_change": null,
+      "cleanup": "mixed",
+      "control": "none",
+      "expected_error": "",
+      "expected_public_return": true,
+      "expected_success": true,
+      "expected_unlinked": true,
+      "last_observation": false,
+      "mutation": "none",
+      "name": "healthy:binary",
+      "runtime": "retired",
+      "wrapper": "binary"
+    },
+    {
+      "argument_change": null,
+      "cleanup": "mixed",
+      "control": "none",
+      "expected_error": "",
+      "expected_public_return": true,
+      "expected_success": true,
+      "expected_unlinked": true,
+      "last_observation": false,
+      "mutation": "none",
+      "name": "healthy:empty",
+      "runtime": "retired",
+      "wrapper": "empty"
+    },
+    {
+      "argument_change": null,
+      "cleanup": "mixed",
+      "control": "none",
+      "expected_error": "",
+      "expected_public_return": true,
+      "expected_success": true,
+      "expected_unlinked": true,
+      "last_observation": false,
+      "mutation": "none",
+      "name": "healthy:maximum",
+      "runtime": "retired",
+      "wrapper": "maximum"
+    },
+    {
+      "argument_change": null,
+      "cleanup": "mixed",
+      "control": "none",
+      "expected_error": "",
+      "expected_public_return": true,
+      "expected_success": true,
+      "expected_unlinked": true,
+      "last_observation": false,
+      "mutation": "none",
+      "name": "healthy:equal_reference",
+      "runtime": "retired",
+      "wrapper": "equal_reference"
+    },
+    {
+      "argument_change": null,
+      "cleanup": "mixed",
+      "control": "none",
+      "expected_error": "",
+      "expected_public_return": true,
+      "expected_success": true,
+      "expected_unlinked": true,
+      "last_observation": false,
+      "mutation": "none",
+      "name": "healthy:runtime-still-active",
+      "runtime": "active",
+      "wrapper": "ordinary"
+    },
+    {
+      "argument_change": null,
+      "cleanup": "mixed",
+      "control": "none",
+      "expected_error": "",
+      "expected_public_return": true,
+      "expected_success": true,
+      "expected_unlinked": true,
+      "last_observation": true,
+      "mutation": "none",
+      "name": "healthy:last-observation",
+      "runtime": "retired",
+      "wrapper": "ordinary"
+    },
+    {
+      "argument_change": null,
+      "cleanup": "never-started",
+      "control": "none",
+      "expected_error": "",
+      "expected_public_return": true,
+      "expected_success": true,
+      "expected_unlinked": true,
+      "last_observation": false,
+      "mutation": "none",
+      "name": "healthy:never-started-cancelled-helper",
+      "runtime": "retired",
+      "wrapper": "ordinary"
+    },
+    {
+      "argument_change": null,
+      "cleanup": "mixed",
+      "control": "none",
+      "expected_error": "selected work is not sealed",
+      "expected_public_return": true,
+      "expected_success": false,
+      "expected_unlinked": false,
+      "last_observation": false,
+      "mutation": "unsealed",
+      "name": "rejected:unsealed",
+      "runtime": "retired",
+      "wrapper": "ordinary"
+    },
+    {
+      "argument_change": null,
+      "cleanup": "mixed",
+      "control": "none",
+      "expected_error": "every selected work receipt",
+      "expected_public_return": true,
+      "expected_success": false,
+      "expected_unlinked": false,
+      "last_observation": false,
+      "mutation": "missing-receipt",
+      "name": "rejected:missing-receipt",
+      "runtime": "retired",
+      "wrapper": "ordinary"
+    },
+    {
+      "argument_change": null,
+      "cleanup": "mixed",
+      "control": "none",
+      "expected_error": "changes selected ownership",
+      "expected_public_return": true,
+      "expected_success": false,
+      "expected_unlinked": false,
+      "last_observation": false,
+      "mutation": "wrong-owner",
+      "name": "rejected:wrong-owner",
+      "runtime": "retired",
+      "wrapper": "ordinary"
+    },
+    {
+      "argument_change": null,
+      "cleanup": "mixed",
+      "control": "none",
+      "expected_error": "cleanup is incomplete",
+      "expected_public_return": true,
+      "expected_success": false,
+      "expected_unlinked": false,
+      "last_observation": false,
+      "mutation": "unreaped",
+      "name": "rejected:unreaped",
+      "runtime": "retired",
+      "wrapper": "ordinary"
+    },
+    {
+      "argument_change": null,
+      "cleanup": "mixed",
+      "control": "none",
+      "expected_error": "cleanup is incomplete",
+      "expected_public_return": true,
+      "expected_success": false,
+      "expected_unlinked": false,
+      "last_observation": false,
+      "mutation": "surviving-group",
+      "name": "rejected:surviving-group",
+      "runtime": "retired",
+      "wrapper": "ordinary"
+    },
+    {
+      "argument_change": null,
+      "cleanup": "mixed",
+      "control": "none",
+      "expected_error": "every selected work receipt",
+      "expected_public_return": true,
+      "expected_success": false,
+      "expected_unlinked": false,
+      "last_observation": false,
+      "mutation": "legacy-helper-event",
+      "name": "rejected:legacy-helper-event",
+      "runtime": "retired",
+      "wrapper": "ordinary"
+    },
+    {
+      "argument_change": null,
+      "cleanup": "mixed",
+      "control": "none",
+      "expected_error": "archive observation reference differs",
+      "expected_public_return": true,
+      "expected_success": false,
+      "expected_unlinked": false,
+      "last_observation": false,
+      "mutation": "foreign-archive-receipt",
+      "name": "rejected:foreign-archive-receipt",
+      "runtime": "retired",
+      "wrapper": "ordinary"
+    },
+    {
+      "argument_change": null,
+      "cleanup": "mixed",
+      "control": "none",
+      "expected_error": "work selection differs from original observation key",
+      "expected_public_return": true,
+      "expected_success": false,
+      "expected_unlinked": false,
+      "last_observation": false,
+      "mutation": "foreign-selection",
+      "name": "rejected:foreign-selection",
+      "runtime": "retired",
+      "wrapper": "ordinary"
+    },
+    {
+      "argument_change": null,
+      "cleanup": "mixed",
+      "control": "none",
+      "expected_error": ".+",
+      "expected_public_return": true,
+      "expected_success": false,
+      "expected_unlinked": false,
+      "last_observation": false,
+      "mutation": "missing-archive",
+      "name": "rejected:missing-archive",
+      "runtime": "retired",
+      "wrapper": "ordinary"
+    },
+    {
+      "argument_change": null,
+      "cleanup": "mixed",
+      "control": "none",
+      "expected_error": ".+",
+      "expected_public_return": true,
+      "expected_success": false,
+      "expected_unlinked": false,
+      "last_observation": false,
+      "mutation": "partial-archive",
+      "name": "rejected:partial-archive",
+      "runtime": "retired",
+      "wrapper": "ordinary"
+    },
+    {
+      "argument_change": null,
+      "cleanup": "mixed",
+      "control": "none",
+      "expected_error": ".+",
+      "expected_public_return": true,
+      "expected_success": false,
+      "expected_unlinked": false,
+      "last_observation": false,
+      "mutation": "changed-archive",
+      "name": "rejected:changed-archive",
+      "runtime": "retired",
+      "wrapper": "ordinary"
+    },
+    {
+      "argument_change": null,
+      "cleanup": "mixed",
+      "control": "none",
+      "expected_error": ".+",
+      "expected_public_return": true,
+      "expected_success": false,
+      "expected_unlinked": false,
+      "last_observation": false,
+      "mutation": "replaced-archive-file",
+      "name": "rejected:replaced-archive-file",
+      "runtime": "retired",
+      "wrapper": "ordinary"
+    },
+    {
+      "argument_change": null,
+      "cleanup": "mixed",
+      "control": "none",
+      "expected_error": ".+",
+      "expected_public_return": true,
+      "expected_success": false,
+      "expected_unlinked": false,
+      "last_observation": false,
+      "mutation": "archive-mode",
+      "name": "rejected:archive-mode",
+      "runtime": "retired",
+      "wrapper": "ordinary"
+    },
+    {
+      "argument_change": null,
+      "cleanup": "mixed",
+      "control": "none",
+      "expected_error": ".+",
+      "expected_public_return": true,
+      "expected_success": false,
+      "expected_unlinked": false,
+      "last_observation": false,
+      "mutation": "replaced-evidence",
+      "name": "rejected:replaced-evidence",
+      "runtime": "retired",
+      "wrapper": "ordinary"
+    },
+    {
+      "argument_change": null,
+      "cleanup": "mixed",
+      "control": "none",
+      "expected_error": ".+",
+      "expected_public_return": true,
+      "expected_success": false,
+      "expected_unlinked": false,
+      "last_observation": false,
+      "mutation": "missing-hold",
+      "name": "rejected:missing-hold",
+      "runtime": "retired",
+      "wrapper": "ordinary"
+    },
+    {
+      "argument_change": null,
+      "cleanup": "mixed",
+      "control": "none",
+      "expected_error": ".+",
+      "expected_public_return": true,
+      "expected_success": false,
+      "expected_unlinked": false,
+      "last_observation": false,
+      "mutation": "changed-hold",
+      "name": "rejected:changed-hold",
+      "runtime": "retired",
+      "wrapper": "ordinary"
+    },
+    {
+      "argument_change": null,
+      "cleanup": "mixed",
+      "control": "none",
+      "expected_error": ".+",
+      "expected_public_return": true,
+      "expected_success": false,
+      "expected_unlinked": false,
+      "last_observation": false,
+      "mutation": "replaced-hold",
+      "name": "rejected:replaced-hold",
+      "runtime": "retired",
+      "wrapper": "ordinary"
+    },
+    {
+      "argument_change": null,
+      "cleanup": "mixed",
+      "control": "none",
+      "expected_error": ".+",
+      "expected_public_return": true,
+      "expected_success": false,
+      "expected_unlinked": false,
+      "last_observation": false,
+      "mutation": "missing-lock",
+      "name": "rejected:missing-lock",
+      "runtime": "retired",
+      "wrapper": "ordinary"
+    },
+    {
+      "argument_change": null,
+      "cleanup": "mixed",
+      "control": "none",
+      "expected_error": ".+",
+      "expected_public_return": true,
+      "expected_success": false,
+      "expected_unlinked": false,
+      "last_observation": false,
+      "mutation": "replaced-lock",
+      "name": "rejected:replaced-lock",
+      "runtime": "retired",
+      "wrapper": "ordinary"
+    },
+    {
+      "argument_change": null,
+      "cleanup": "mixed",
+      "control": "none",
+      "expected_error": ".+",
+      "expected_public_return": true,
+      "expected_success": false,
+      "expected_unlinked": false,
+      "last_observation": false,
+      "mutation": "lock-mode",
+      "name": "rejected:lock-mode",
+      "runtime": "retired",
+      "wrapper": "ordinary"
+    },
+    {
+      "argument_change": null,
+      "cleanup": "mixed",
+      "control": "none",
+      "expected_error": ".+",
+      "expected_public_return": true,
+      "expected_success": false,
+      "expected_unlinked": false,
+      "last_observation": false,
+      "mutation": "changed-image",
+      "name": "rejected:changed-image",
+      "runtime": "retired",
+      "wrapper": "ordinary"
+    },
+    {
+      "argument_change": null,
+      "cleanup": "mixed",
+      "control": "none",
+      "expected_error": ".+",
+      "expected_public_return": true,
+      "expected_success": false,
+      "expected_unlinked": false,
+      "last_observation": false,
+      "mutation": "replaced-image",
+      "name": "rejected:replaced-image",
+      "runtime": "retired",
+      "wrapper": "ordinary"
+    },
+    {
+      "argument_change": null,
+      "cleanup": "mixed",
+      "control": "direct-coordinator",
+      "expected_error": "unknown inactive transaction",
+      "expected_public_return": false,
+      "expected_success": false,
+      "expected_unlinked": false,
+      "last_observation": false,
+      "mutation": "none",
+      "name": "rejected:direct-coordinator",
+      "runtime": "retired",
+      "wrapper": "ordinary"
+    },
+    {
+      "argument_change": null,
+      "cleanup": "mixed",
+      "control": "direct-unlink",
+      "expected_error": "exact unlink requires the release owner",
+      "expected_public_return": false,
+      "expected_success": false,
+      "expected_unlinked": false,
+      "last_observation": false,
+      "mutation": "none",
+      "name": "rejected:direct-unlink",
+      "runtime": "retired",
+      "wrapper": "ordinary"
+    },
+    {
+      "argument_change": "drop",
+      "cleanup": "mixed",
+      "control": "none",
+      "expected_error": "expected store, request, acquisition, archive",
+      "expected_public_return": false,
+      "expected_success": false,
+      "expected_unlinked": false,
+      "last_observation": false,
+      "mutation": "none",
+      "name": "rejected:arity-drop",
+      "runtime": "retired",
+      "wrapper": "ordinary"
+    },
+    {
+      "argument_change": "append",
+      "cleanup": "mixed",
+      "control": "none",
+      "expected_error": "expected store, request, acquisition, archive",
+      "expected_public_return": false,
+      "expected_success": false,
+      "expected_unlinked": false,
+      "last_observation": false,
+      "mutation": "none",
+      "name": "rejected:arity-append",
+      "runtime": "retired",
+      "wrapper": "ordinary"
+    },
+    {
+      "argument_change": null,
+      "cleanup": "mixed",
+      "control": "before-finish",
+      "expected_error": "controlled failure after exact unlink",
+      "expected_public_return": true,
+      "expected_success": false,
+      "expected_unlinked": true,
+      "last_observation": false,
+      "mutation": "none",
+      "name": "post-unlink:before-finish",
+      "runtime": "retired",
+      "wrapper": "ordinary"
+    },
+    {
+      "argument_change": null,
+      "cleanup": "mixed",
+      "control": "source-close-after-unlink",
+      "expected_error": "cannot close retained release descriptor",
+      "expected_public_return": true,
+      "expected_success": false,
+      "expected_unlinked": true,
+      "last_observation": false,
+      "mutation": "none",
+      "name": "post-unlink:source-close-after-unlink",
+      "runtime": "retired",
+      "wrapper": "ordinary"
+    },
+    {
+      "argument_change": null,
+      "cleanup": "mixed",
+      "control": "lock-close-after-unlink",
+      "expected_error": "cannot close permanent lock",
+      "expected_public_return": true,
+      "expected_success": false,
+      "expected_unlinked": true,
+      "last_observation": false,
+      "mutation": "none",
+      "name": "post-unlink:lock-close-after-unlink",
+      "runtime": "retired",
+      "wrapper": "ordinary"
+    },
+    {
+      "argument_change": null,
+      "cleanup": "mixed",
+      "control": "primary-and-source-close",
+      "expected_error": "controlled failure after exact unlink",
+      "expected_public_return": true,
+      "expected_success": false,
+      "expected_unlinked": true,
+      "last_observation": false,
+      "mutation": "none",
+      "name": "post-unlink:primary-and-source-close",
+      "runtime": "retired",
+      "wrapper": "ordinary"
+    }
+  ],
+  "component": "native-proxy-observation-archive-release-20260911",
+  "contract": "contract.json",
+  "effect_fields": [
+    "unlink_attempted",
+    "unlink_completed",
+    "reference_absence_verified",
+    "last_reference_check"
+  ],
+  "inputs": [
+    {
+      "applicability": "unchanged_current_source",
+      "path": "docs/audits/native-proxy-cleanup-receipts-20260910/CleanupReceipts.pm",
+      "sha256": "5b22cecf6ff131f62fdeb237a3e77b67b5b29a172ff82320a67772b03cd24de0",
+      "size_bytes": 1300
+    },
+    {
+      "applicability": "exact_reverse_extension",
+      "path": "docs/audits/native-proxy-image-coordination-20260910/Coordination.pm",
+      "sha256": "51c36432bdcaf35180dd84b7fde709312682e57a4a3fbdc679c1f4d2f01fd00d",
+      "size_bytes": 17012
+    },
+    {
+      "applicability": "unchanged_current_source",
+      "path": "docs/audits/native-proxy-image-custody-20260910/ImageCustody.pm",
+      "sha256": "927f1ab39f7f26742e36878985d1ff545ddf2dee119d4bf6b7b41bf2c9360ccc",
+      "size_bytes": 8619
+    },
+    {
+      "applicability": "unchanged_current_source",
+      "path": "docs/audits/native-proxy-image-custody-20260910/vectors.json",
+      "sha256": "60992f01705436d9c7efbc280d6de73f4c132d91ffea9359852c10c9afb7890d",
+      "size_bytes": 1373
+    },
+    {
+      "applicability": "unchanged_current_source",
+      "path": "docs/audits/native-proxy-image-maintenance-20260910/ImageMaintenance.pm",
+      "sha256": "1295957d97737e764c0e800885a2c3f9adfa327a0d41b35d122dde3e21698cac",
+      "size_bytes": 5678
+    },
+    {
+      "applicability": "unchanged_current_source",
+      "path": "docs/audits/native-proxy-image-publication-20260910/Publication.pm",
+      "sha256": "34ca8717856492a09ebf16af8810f04b1dea4c6c8c84ff7b3f5c11c07e7dc2bf",
+      "size_bytes": 5371
+    },
+    {
+      "applicability": "unchanged_current_source",
+      "path": "docs/audits/native-proxy-observation-acquisition-20260910/ObservationAcquisition.pm",
+      "sha256": "809c013255ab6973a2d0dabcfd5b0ae5c55c97696d7acc77b10cf68149006470",
+      "size_bytes": 16517
+    },
+    {
+      "applicability": "unchanged_current_source",
+      "path": "docs/audits/native-proxy-observation-acquisition-20260910/result/qualification.json",
+      "sha256": "5c201ce2c6e91a03a07f80180e7d66215038ed6c75e8c9fada6c8e59b2bce3bf",
+      "size_bytes": 1424879
+    },
+    {
+      "applicability": "unchanged_current_source",
+      "path": "docs/audits/native-proxy-observation-acquisition-20260910/result/recovery-copies.json",
+      "sha256": "276358759a2d7429fba28b8fc27cba4157ec8ec63587dbb7536de054eae637a7",
+      "size_bytes": 8515
+    },
+    {
+      "applicability": "unchanged_current_source",
+      "path": "docs/audits/native-proxy-observation-acquisition-join-20260911/result/source-inventory.json",
+      "sha256": "751949360499e53b07aedd784daa8b38b9785c984421d63569522818e60dda6b",
+      "size_bytes": 32004
+    },
+    {
+      "applicability": "unchanged_current_source",
+      "path": "docs/audits/native-proxy-observation-archive-20260911/ObservationArchive.pm",
+      "sha256": "79454039421822af31f9891d0a3d3ebe1b4c1ebcc6f6c8decd1f78e081736e87",
+      "size_bytes": 6196
+    },
+    {
+      "applicability": "unchanged_current_source",
+      "path": "docs/audits/native-proxy-observation-archive-20260911/audit.py",
+      "sha256": "87d276239f8190ae6ebc5988befb935be76e38520e27c2445164a338db0b4622",
+      "size_bytes": 13218
+    },
+    {
+      "applicability": "unchanged_current_source",
+      "path": "docs/audits/native-proxy-observation-archive-20260911/plan.json",
+      "sha256": "052ba7f727ec3b1a18611861a35a6d88b2dfd421290ba1dc0f9f0ab3e3031339",
+      "size_bytes": 10409
+    },
+    {
+      "applicability": "unchanged_current_source",
+      "path": "docs/audits/native-proxy-observation-archive-20260911/qualify.t",
+      "sha256": "ec9522a8358730d9c8bbfb6cc52ce880311b22efb5e28c82ce78e5aaafc869ff",
+      "size_bytes": 15004
+    },
+    {
+      "applicability": "unchanged_current_source",
+      "path": "docs/audits/native-proxy-observation-archive-boundaries-20260911/ArchiveFixture.pm",
+      "sha256": "bcde885a6cf72865e3a4d996e3889a40f64f10910ac5a1ec0abe821b1d6661e5",
+      "size_bytes": 7707
+    },
+    {
+      "applicability": "unchanged_current_source",
+      "path": "docs/audits/native-proxy-observation-archive-boundaries-20260911/ArchiveTrace.pm",
+      "sha256": "033a42ff3b526f69f202cbb0ac6b27b8ffb9918fad38e1cc785015d040f6a363",
+      "size_bytes": 10649
+    },
+    {
+      "applicability": "unchanged_current_source",
+      "path": "docs/audits/native-proxy-observation-archive-boundaries-20260911/audit.py",
+      "sha256": "30c2ccb08d2aa588eadb6035e81db3d882c53817b09eec9ec851d95a3f25cb16",
+      "size_bytes": 14060
+    },
+    {
+      "applicability": "unchanged_current_source",
+      "path": "docs/audits/native-proxy-observation-archive-boundaries-20260911/plan.json",
+      "sha256": "fcae15dbf0d83c29b4a2b6c53873bd3df583f49cf2011e112790639e3aa2f6ec",
+      "size_bytes": 87982
+    },
+    {
+      "applicability": "unchanged_current_source",
+      "path": "docs/audits/native-proxy-observation-archive-boundaries-20260911/result/qualification.json",
+      "sha256": "99a469ca1df6b2f2ab81be6d3d2634518eab6b0392977c09eb0632e81cb93335",
+      "size_bytes": 651443
+    },
+    {
+      "applicability": "unchanged_current_source",
+      "path": "docs/audits/native-proxy-observation-archive-final-join-20260911/result/audit.json",
+      "sha256": "337b0145185846affecbbb7af8d6116f7608ee6936c1e5ca11864f67c03a5a71",
+      "size_bytes": 4449
+    },
+    {
+      "applicability": "unchanged_current_source",
+      "path": "docs/audits/native-proxy-observation-archive-records-20260911/ArchiveRecord.pm",
+      "sha256": "38fb47a97157d1b052b3e0f4e148fa6cacd27f4d8defb63ca469133ac6ec1af1",
+      "size_bytes": 9873
+    },
+    {
+      "applicability": "unchanged_current_source",
+      "path": "docs/audits/native-proxy-observation-archive-records-20260911/audit.py",
+      "sha256": "0c75f945c005b5b5fb2fff80e5acb75e2d3a9b942e9c98db7be010c24b7397a3",
+      "size_bytes": 15049
+    },
+    {
+      "applicability": "unchanged_current_source",
+      "path": "docs/audits/native-proxy-observation-archive-records-20260911/plan.json",
+      "sha256": "186bb995f5b769c67a6ab6595856a0b46122a1b101b4b5fb4228c9f810b240b7",
+      "size_bytes": 1018306
+    },
+    {
+      "applicability": "unchanged_current_source",
+      "path": "docs/audits/native-proxy-observation-records-20260910/ObservationRecord.pm",
+      "sha256": "35445ee951c8f5e7dc204f58cffe1b2f6273286cc3e7715953d705b33e7158d5",
+      "size_bytes": 4369
+    },
+    {
+      "applicability": "unchanged_current_source",
+      "path": "docs/audits/native-proxy-observation-release-contract-20260911/audit.py",
+      "sha256": "0427d24fef5c6cfbd43d9a93e8f8854ec5ce40c732b3ee8592dd405b94d6f902",
+      "size_bytes": 12728
+    },
+    {
+      "applicability": "unchanged_current_source",
+      "path": "docs/audits/native-proxy-observation-release-contract-20260911/contract.json",
+      "sha256": "06f5a8f998baabe772c0683798c3cf95e28a4d7d39d7fac19c9ea72e7cd075c5",
+      "size_bytes": 12823
+    },
+    {
+      "applicability": "unchanged_current_source",
+      "path": "docs/audits/native-proxy-observation-release-contract-20260911/model.py",
+      "sha256": "8ab7961fb5c4d7f56fbe484a1e59267afe5ac723f51e871d2312db4cbe2db3b7",
+      "size_bytes": 3536
+    },
+    {
+      "applicability": "unchanged_current_source",
+      "path": "docs/audits/native-proxy-observation-release-contract-20260911/result/audit.json",
+      "sha256": "75932effd82f5563fdf3b1ac9d7b641931789a72c8ab98bc67b09af2e9cc025b",
+      "size_bytes": 6278
+    },
+    {
+      "applicability": "unchanged_current_source",
+      "path": "docs/audits/native-proxy-observation-reuse-20260910/FixtureClone.pm",
+      "sha256": "d68a2d93f785b1c96689e352f7271e97b0bd239f2cf228f2c8e119dbb6aaf234",
+      "size_bytes": 1053
+    },
+    {
+      "applicability": "unchanged_current_source",
+      "path": "docs/audits/native-proxy-observation-reuse-20260910/result/qualification.json",
+      "sha256": "348c434f7a40012fc8a46a7c7b4b6842ad7d30ca56f3a82947b82231974f6296",
+      "size_bytes": 3707937
+    },
+    {
+      "applicability": "unchanged_current_source",
+      "path": "docs/audits/native-proxy-observation-reuse-20260910/result/recovery-copies.json",
+      "sha256": "af8532e629c095b678b2ac0e610876b422f3e9eed711dfc9af4d488f23d1b092",
+      "size_bytes": 13430
+    },
+    {
+      "applicability": "unchanged_current_source",
+      "path": "docs/audits/native-proxy-observation-work-records-20260911/WorkRecord.pm",
+      "sha256": "3f0f1351bc44a2a8b42502b7b814544f9d756ae8c39e17db470b312635a6e56d",
+      "size_bytes": 8126
+    },
+    {
+      "applicability": "unchanged_current_source",
+      "path": "docs/audits/native-proxy-observation-work-records-20260911/audit.py",
+      "sha256": "8f6239ddddb14548a96a6d0f362b105700e3e733cdb0d0110666652e1f9bd1fe",
+      "size_bytes": 17442
+    },
+    {
+      "applicability": "unchanged_current_source",
+      "path": "docs/audits/native-proxy-observation-work-records-20260911/plan.json",
+      "sha256": "0f406ab391998327bfe39422ef6f842c7d230c39f54ae5b7030799b9a040e5b5",
+      "size_bytes": 368087
+    },
+    {
+      "applicability": "unchanged_current_source",
+      "path": "docs/audits/native-proxy-observation-work-records-20260911/preflight-pins.json",
+      "sha256": "1b6a8dae67ba14d5487fe5aaf6c9bb48fbfa11dc10f12ac66446cbd2d19868a2",
+      "size_bytes": 1002
+    },
+    {
+      "applicability": "unchanged_current_source",
+      "path": "docs/audits/native-proxy-observation-work-records-20260911/result/audit.json",
+      "sha256": "efceb6c1524143f1efcc8602c927f607854f4750091260f0772e940c3cf31ccd",
+      "size_bytes": 1583
+    },
+    {
+      "applicability": "unchanged_current_source",
+      "path": "docs/audits/native-proxy-observation-work-records-20260911/result/qualification.json",
+      "sha256": "d1438155f5ea32c2386d491ee815b06b8f9337610e0ae9af08c55b1fbaa9f207",
+      "size_bytes": 336355
+    },
+    {
+      "applicability": "unchanged_current_source",
+      "path": "docs/audits/native-proxy-runtime-acquisition-20260910/ReferenceAcquisition.pm",
+      "sha256": "b751c88d709e102f7f9b9dd17e0222c39e0a81acc16d7194f7f7c3f4c8535b57",
+      "size_bytes": 6565
+    },
+    {
+      "applicability": "unchanged_current_source",
+      "path": "docs/audits/native-proxy-runtime-census-20260910/ReferenceCensus.pm",
+      "sha256": "9fd74767e8c10831f2732fa8ad426b7e4fff8c17bab06584aa671cdd013b6247",
+      "size_bytes": 8024
+    },
+    {
+      "applicability": "unchanged_current_source",
+      "path": "docs/audits/native-proxy-runtime-records-20260910/RuntimeRecord.pm",
+      "sha256": "013c0a02e7df59dc3a5af944b603cd44121252a02ca0228d6fdc3e1dd28e6745",
+      "size_bytes": 4078
+    },
+    {
+      "applicability": "unchanged_current_source",
+      "path": "docs/audits/native-proxy-runtime-retirement-20260910/PrivateWorkspace.pm",
+      "sha256": "fb87393846eb10147f868aa40ba444f5e5d56cef7f0aaf6a1ff295216a90e9c1",
+      "size_bytes": 6080
+    },
+    {
+      "applicability": "unchanged_current_source",
+      "path": "docs/audits/native-proxy-runtime-retirement-20260910/RuntimeRetirement.pm",
+      "sha256": "766348d16243d3868ca5f8b653f757f8f2eaf5c1aba8ec27fd2d9c67e9fd0bcc",
+      "size_bytes": 8727
+    },
+    {
+      "applicability": "unchanged_current_source",
+      "path": "perl/FSM/ProjectDataLocality.pm",
+      "sha256": "14aece4a50b35956bc2585099aa8d26753942288663c641922da9d36ad4bc893",
+      "size_bytes": 6017
+    },
+    {
+      "applicability": "unchanged_current_source",
+      "path": "perl/FSM/Support/ProcessSupervisor.pm",
+      "sha256": "684882d91f673ea7145f43ed3aad31acf099f13508574be7b2d8911123988637",
+      "size_bytes": 27990
+    },
+    {
+      "applicability": "unchanged_current_source",
+      "path": "t/lib/FSM/Test/ProcessSupervisor.pm",
+      "sha256": "52e467023ea8a776167e227a767abdd3dddf185f1f7c539aac8ca1c4a0a06680",
+      "size_bytes": 773
+    },
+    {
+      "applicability": "unchanged_current_source",
+      "path": "t/lib/FSM/Test/RustProxyFixture.pm",
+      "sha256": "d9c4ab52cf8074526c59b7a5dcb9da870ca7ffdacb4eb236dacb23b5db6d8bfb",
+      "size_bytes": 11466
+    }
+  ],
+  "limits": "Only declared inert actual-file release cases. Outcomes and preselected owner records are synthetic. Deliberate setup changes are captured before the observed release, and relocated original files are retained in owned fixture roots until cleanup. Actual and modeled close returns remain separate. No original matrix, native process, arbitrary callback under lock, original-byte reconstruction, OS close ambiguity or asynchronous crash/race claim. The following leaf owns complete selected interruption/close/applicability closure.",
+  "owner": "HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.12.4.1.3.4.3.2",
+  "schema": "fsmgen.inactive_observation_release_qualification_plan.v1",
+  "source_revision": "79b43fd019387acdf1fc3280b3f88847125fbb60"
+}
