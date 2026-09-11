@@ -1,0 +1,13 @@
+The flags, access permissions, owner/group and modification time of
+an existing symbolic link can be changed by means of the
+.Xr lchflags 2 ,
+.Xr lchmod 2 ,
+.Xr lchown 2 ,
+and
+.Xr lutimes 3
+system calls, respectively.
+Of these, only the flags and ownership are used by the system;
+the access permissions are ignored.
+.Pp
+The
+.Bx 4.4

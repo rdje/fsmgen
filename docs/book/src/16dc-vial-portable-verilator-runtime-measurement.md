@@ -2440,9 +2440,39 @@ private structural helper does not make an empty public archive valid.
 The prospective cases, actual helper call records, independent outcome and
 reachability oracle, altered-report/bound/roster controls and exact recovery
 copies are at `docs/audits/native-proxy-observation-archive-guards-20260911/`.
-This qualification leaves archive files untouched. The tested helper invokes
-no target/archive filesystem helper or process. Invalid namespace/layout and replacement
-controls, the final archive join and exact observation release remain open.
+This pure qualification leaves archive files untouched and invokes no
+filesystem helper or process.
+
+The subsequent namespace and source-indirection suite operates on actual
+isolated archives after inert workspace retirement. Every case first observes
+a healthy publication, including its actual file and directory handles. It
+then verifies an unchanged healthy archive or applies one declared mutation.
+For example, adding unknown empty files up to the namespace cap produces the
+member-set diagnostic; adding one beyond it produces the earlier namespace
+capacity diagnostic. Both paths close their enumeration handle and preserve
+the controlled archive.
+
+The symlink cases move an early or late canonical file to a separate owned
+evidence filename, preserving its bytes and native identity. The canonical
+name then becomes either a link to another existing archive file or a dangling
+link. Both fail with `symlink ancestry is forbidden` before the lower reader
+opens that source. Previously admitted source handles still close. The
+independent checker distinguishes the failed read attempt from an opened
+handle and checks the complete before/after state, including other owners.
+
+Exact source pins, actual observations, the independent mutation/cleanup
+oracle and altered-evidence controls are retained at
+`docs/audits/native-proxy-observation-archive-namespace-layouts-20260911/`.
+The first audit's unsupported assumption about initial symlink permissions
+is preserved with its correction; the successful fixture run was not repeated.
+Link permissions remain observed metadata, and verification must preserve them.
+
+The current tracer observes source handles after admission returns. It cannot
+certify cleanup for a lower-reader failure before that handoff. That observation
+gap has a separate task owner; it is not evidence of a runtime leak. Replacement
+after source admission, lower-reader custody, the final archive join and exact
+observation release remain open. These inert controls do not qualify native
+execution or asynchronous filesystem races.
 
 The helper checks bounded regular source/output files and the native header,
 then sets executable permissions through the admitted open file handle. A

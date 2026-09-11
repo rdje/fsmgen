@@ -1,0 +1,14 @@
+ram-guard: PID 81226; host 65.8%; host cutoff 88%; descendant RSS cutoff 4096 MiB; poll 2s
+Traceback (most recent call last):
+  File "/Volumes/SSD/Documents/github/fsmgen/docs/audits/native-proxy-observation-archive-namespace-layouts-20260911/audit.py", line 324, in <module>
+    main()
+    ~~~~^^
+  File "/Volumes/SSD/Documents/github/fsmgen/docs/audits/native-proxy-observation-archive-namespace-layouts-20260911/audit.py", line 223, in main
+    counts = verify(plan, report, original, baseline)
+  File "/Volumes/SSD/Documents/github/fsmgen/docs/audits/native-proxy-observation-archive-namespace-layouts-20260911/audit.py", line 160, in verify
+    mutation(selection, row, spec)
+    ~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^
+  File "/Volumes/SSD/Documents/github/fsmgen/docs/audits/native-proxy-observation-archive-namespace-layouts-20260911/audit.py", line 101, in mutation
+    assert node['kind'] == 'symlink' and node['target'] == target and node['mode'] == 0o777
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError

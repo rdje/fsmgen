@@ -1,0 +1,22 @@
+[
+  {
+    "path": "docs/audits/native-proxy-observation-archive-namespace-layouts-20260911/plan.py",
+    "sha256": "84892a4a16c6420a6fcc5820516c970f738f964e0b8422d8164aaeab1c4cc395",
+    "size_bytes": 2959
+  },
+  {
+    "path": "docs/audits/native-proxy-observation-archive-namespace-layouts-20260911/plan.json",
+    "sha256": "15b63a3be4ced2669a2ffa4892bbc17cbaade35d7f1c9d0c48608cf07567d2ae",
+    "size_bytes": 11547
+  },
+  {
+    "path": "docs/audits/native-proxy-observation-archive-namespace-layouts-20260911/qualify.t",
+    "sha256": "70a83977b181780be9cdd14876f9117947a615ed2d0114f97afce665881d8c1d",
+    "size_bytes": 8530
+  },
+  {
+    "path": "docs/audits/native-proxy-observation-archive-namespace-layouts-20260911/audit.py",
+    "sha256": "9dba8efa2ea0516445576d99ef6445733befebade3c2c01daaa2681e4398b5cc",
+    "size_bytes": 20131
+  }
+]

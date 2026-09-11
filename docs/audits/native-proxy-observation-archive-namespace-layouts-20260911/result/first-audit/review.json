@@ -1,0 +1,21 @@
+{
+  "correction": "Check the actual symlink type, exact target, ordinary permission-bit domain, owner and distinct native identity. Preserve its complete observed metadata unchanged across verification. Source evidence proves pre-open rejection regardless of those ordinary permission bits. Add a special-mode falsifier.",
+  "erroneous_oracle_mode_octal": "0777",
+  "observed_mode_octal": "0755",
+  "observed_symlinks": 8,
+  "operating_system_reference": {
+    "access": "Necessary read-only operating-system documentation exception; no off-volume project data or writes.",
+    "document": "symlink(7)",
+    "excerpt_lines": [
+      156,
+      168
+    ],
+    "full_source_bytes": 13041,
+    "full_source_sha256": "a6a3370eaf4712ac84a57b88b2e2c59a83cb33b189fc42337d25d776298b1e5a",
+    "meaning": "Link permissions are recorded metadata; this manual states that access permissions on symlinks are ignored.",
+    "provider": "Apple installed macOS SDK"
+  },
+  "qualification_sha256": "cfde2d820c27d4148a7d37fc2d867f8a05d77d455638c4d808a314e44be0f3b2",
+  "root_cause": "The checker imposed a universal symlink creation mode absent from the prospective plan and source admission contract. All actual links were 0755. The current shell umask is 0022, consistent with these permissions, but no historical child umask was captured, so that cause is not asserted.",
+  "unchanged": "All original qualification bytes, 113 TAP assertions, fixture sources and the four original prospective pins remain exact; only the saved-evidence auditor changes and receives a separate post-run pin. No fixture rerun."
+}

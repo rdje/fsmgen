@@ -1,0 +1,114 @@
+ok 1 - ordinary:healthy: healthy preparation observed
+ok 2 - ordinary:healthy: actual preparation handles close
+ok 3 - ordinary:healthy: actual inactive retirement precedes controls
+ok 4 - ordinary:healthy: exact original admission outcome
+ok 5 - ordinary:healthy: every admitted handle explicitly closes
+ok 6 - ordinary:healthy: retained inputs unchanged
+ok 7 - ordinary:healthy: verifier preserves controlled archive and other owners
+ok 8 - ordinary:namespace:63: healthy preparation observed
+ok 9 - ordinary:namespace:63: actual preparation handles close
+ok 10 - ordinary:namespace:63: actual inactive retirement precedes controls
+ok 11 - ordinary:namespace:63: exact original admission outcome
+ok 12 - ordinary:namespace:63: every admitted handle explicitly closes
+ok 13 - ordinary:namespace:63: retained inputs unchanged
+ok 14 - ordinary:namespace:63: verifier preserves controlled archive and other owners
+ok 15 - ordinary:namespace:64: healthy preparation observed
+ok 16 - ordinary:namespace:64: actual preparation handles close
+ok 17 - ordinary:namespace:64: actual inactive retirement precedes controls
+ok 18 - ordinary:namespace:64: exact original admission outcome
+ok 19 - ordinary:namespace:64: every admitted handle explicitly closes
+ok 20 - ordinary:namespace:64: retained inputs unchanged
+ok 21 - ordinary:namespace:64: verifier preserves controlled archive and other owners
+ok 22 - ordinary:namespace:65: healthy preparation observed
+ok 23 - ordinary:namespace:65: actual preparation handles close
+ok 24 - ordinary:namespace:65: actual inactive retirement precedes controls
+ok 25 - ordinary:namespace:65: exact original admission outcome
+ok 26 - ordinary:namespace:65: every admitted handle explicitly closes
+ok 27 - ordinary:namespace:65: retained inputs unchanged
+ok 28 - ordinary:namespace:65: verifier preserves controlled archive and other owners
+ok 29 - ordinary:valid-symlink:0: healthy preparation observed
+ok 30 - ordinary:valid-symlink:0: actual preparation handles close
+ok 31 - ordinary:valid-symlink:0: actual inactive retirement precedes controls
+ok 32 - ordinary:valid-symlink:0: exact original admission outcome
+ok 33 - ordinary:valid-symlink:0: every admitted handle explicitly closes
+ok 34 - ordinary:valid-symlink:0: retained inputs unchanged
+ok 35 - ordinary:valid-symlink:0: verifier preserves controlled archive and other owners
+ok 36 - ordinary:valid-symlink:3: healthy preparation observed
+ok 37 - ordinary:valid-symlink:3: actual preparation handles close
+ok 38 - ordinary:valid-symlink:3: actual inactive retirement precedes controls
+ok 39 - ordinary:valid-symlink:3: exact original admission outcome
+ok 40 - ordinary:valid-symlink:3: every admitted handle explicitly closes
+ok 41 - ordinary:valid-symlink:3: retained inputs unchanged
+ok 42 - ordinary:valid-symlink:3: verifier preserves controlled archive and other owners
+ok 43 - ordinary:dangling-symlink:0: healthy preparation observed
+ok 44 - ordinary:dangling-symlink:0: actual preparation handles close
+ok 45 - ordinary:dangling-symlink:0: actual inactive retirement precedes controls
+ok 46 - ordinary:dangling-symlink:0: exact original admission outcome
+ok 47 - ordinary:dangling-symlink:0: every admitted handle explicitly closes
+ok 48 - ordinary:dangling-symlink:0: retained inputs unchanged
+ok 49 - ordinary:dangling-symlink:0: verifier preserves controlled archive and other owners
+ok 50 - ordinary:dangling-symlink:3: healthy preparation observed
+ok 51 - ordinary:dangling-symlink:3: actual preparation handles close
+ok 52 - ordinary:dangling-symlink:3: actual inactive retirement precedes controls
+ok 53 - ordinary:dangling-symlink:3: exact original admission outcome
+ok 54 - ordinary:dangling-symlink:3: every admitted handle explicitly closes
+ok 55 - ordinary:dangling-symlink:3: retained inputs unchanged
+ok 56 - ordinary:dangling-symlink:3: verifier preserves controlled archive and other owners
+ok 57 - equal_reference:healthy: healthy preparation observed
+ok 58 - equal_reference:healthy: actual preparation handles close
+ok 59 - equal_reference:healthy: actual inactive retirement precedes controls
+ok 60 - equal_reference:healthy: exact original admission outcome
+ok 61 - equal_reference:healthy: every admitted handle explicitly closes
+ok 62 - equal_reference:healthy: retained inputs unchanged
+ok 63 - equal_reference:healthy: verifier preserves controlled archive and other owners
+ok 64 - equal_reference:namespace:63: healthy preparation observed
+ok 65 - equal_reference:namespace:63: actual preparation handles close
+ok 66 - equal_reference:namespace:63: actual inactive retirement precedes controls
+ok 67 - equal_reference:namespace:63: exact original admission outcome
+ok 68 - equal_reference:namespace:63: every admitted handle explicitly closes
+ok 69 - equal_reference:namespace:63: retained inputs unchanged
+ok 70 - equal_reference:namespace:63: verifier preserves controlled archive and other owners
+ok 71 - equal_reference:namespace:64: healthy preparation observed
+ok 72 - equal_reference:namespace:64: actual preparation handles close
+ok 73 - equal_reference:namespace:64: actual inactive retirement precedes controls
+ok 74 - equal_reference:namespace:64: exact original admission outcome
+ok 75 - equal_reference:namespace:64: every admitted handle explicitly closes
+ok 76 - equal_reference:namespace:64: retained inputs unchanged
+ok 77 - equal_reference:namespace:64: verifier preserves controlled archive and other owners
+ok 78 - equal_reference:namespace:65: healthy preparation observed
+ok 79 - equal_reference:namespace:65: actual preparation handles close
+ok 80 - equal_reference:namespace:65: actual inactive retirement precedes controls
+ok 81 - equal_reference:namespace:65: exact original admission outcome
+ok 82 - equal_reference:namespace:65: every admitted handle explicitly closes
+ok 83 - equal_reference:namespace:65: retained inputs unchanged
+ok 84 - equal_reference:namespace:65: verifier preserves controlled archive and other owners
+ok 85 - equal_reference:valid-symlink:0: healthy preparation observed
+ok 86 - equal_reference:valid-symlink:0: actual preparation handles close
+ok 87 - equal_reference:valid-symlink:0: actual inactive retirement precedes controls
+ok 88 - equal_reference:valid-symlink:0: exact original admission outcome
+ok 89 - equal_reference:valid-symlink:0: every admitted handle explicitly closes
+ok 90 - equal_reference:valid-symlink:0: retained inputs unchanged
+ok 91 - equal_reference:valid-symlink:0: verifier preserves controlled archive and other owners
+ok 92 - equal_reference:valid-symlink:2: healthy preparation observed
+ok 93 - equal_reference:valid-symlink:2: actual preparation handles close
+ok 94 - equal_reference:valid-symlink:2: actual inactive retirement precedes controls
+ok 95 - equal_reference:valid-symlink:2: exact original admission outcome
+ok 96 - equal_reference:valid-symlink:2: every admitted handle explicitly closes
+ok 97 - equal_reference:valid-symlink:2: retained inputs unchanged
+ok 98 - equal_reference:valid-symlink:2: verifier preserves controlled archive and other owners
+ok 99 - equal_reference:dangling-symlink:0: healthy preparation observed
+ok 100 - equal_reference:dangling-symlink:0: actual preparation handles close
+ok 101 - equal_reference:dangling-symlink:0: actual inactive retirement precedes controls
+ok 102 - equal_reference:dangling-symlink:0: exact original admission outcome
+ok 103 - equal_reference:dangling-symlink:0: every admitted handle explicitly closes
+ok 104 - equal_reference:dangling-symlink:0: retained inputs unchanged
+ok 105 - equal_reference:dangling-symlink:0: verifier preserves controlled archive and other owners
+ok 106 - equal_reference:dangling-symlink:2: healthy preparation observed
+ok 107 - equal_reference:dangling-symlink:2: actual preparation handles close
+ok 108 - equal_reference:dangling-symlink:2: actual inactive retirement precedes controls
+ok 109 - equal_reference:dangling-symlink:2: exact original admission outcome
+ok 110 - equal_reference:dangling-symlink:2: every admitted handle explicitly closes
+ok 111 - equal_reference:dangling-symlink:2: retained inputs unchanged
+ok 112 - equal_reference:dangling-symlink:2: verifier preserves controlled archive and other owners
+ok 113 - no compiler or native process attempt
+1..113

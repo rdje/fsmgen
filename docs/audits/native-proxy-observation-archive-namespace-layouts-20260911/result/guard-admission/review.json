@@ -1,0 +1,5 @@
+{
+  "action": "Keep guard and source unchanged; use authorized process-inspection escalation.",
+  "reason": "Sandbox forbids process-tree inspection required by the unchanged RAM guard.",
+  "stage": "Before plan invocation; guarded child was not started."
+}

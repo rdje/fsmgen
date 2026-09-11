@@ -1,0 +1,11 @@
+{
+  "exact_output_absent": true,
+  "exit_code": 0,
+  "new_passage_verified": true,
+  "output": ".artifacts/tmp/native-proxy-observation-archive-namespace-layouts-book-20260911/book",
+  "preopen_versus_lower_reader_scope_verified": true,
+  "rendered_bytes": 23280988,
+  "rendered_files": 98,
+  "replay_scope_verified": true,
+  "same_volume_direct_objects": true
+}

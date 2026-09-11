@@ -43,6 +43,7 @@ answers:
   - "how are genuine omitted archive closes detected and recovered?"
   - "how are archive close domains joined against unchanged sources?"
   - "why can archive aggregate excess be unreachable after earlier guards?"
+  - "how do archive namespace and symlink controls preserve owned files?"
   - "why did integrated proxy qualification fail?"
   - "why does t1545 not use IPC Cmd?"
   - "where does T1545 preserve empty-output checker failure diagnostics?"
@@ -111,11 +112,10 @@ Decisions `0087`/`0101` select `FSM::Support::ProcessSupervisor`; adapters seal 
 `VerilatorRuntime` follows decision `0086`.
 `TaskAcceptanceFixtureRuntime` seals owned fixture roots/fixed local Git argv.
 Supervisor, checker, locality, startup/capture/STOP controls: history; absent witnesses stay unknown.
-History: `94e66c8c68017e49ea7bf59017fe67d4a53e5c2c:docs/knowledge/test-subprocess-policy-adapters.md`.
+History: `68ac6ef03c1bce45cb422d4e1739dd4866b8a6b7:docs/knowledge/test-subprocess-policy-adapters.md`.
 PST parsing, serial-queue evidence, fixed CLI limits and controls: history.
 Records, custody, acquisition and unique-occurrence correction: history. A scoped settled event can leave a caller-owned helper running; release still needs every selected owner settled, including cancellation. Contract/model: history.
-Archive records and call/write/close joins: history. Archive guard ordering and unreachable aggregate excess: `docs/audits/native-proxy-observation-archive-guards-20260911/audit.py`; bounds are structural or public as declared.
-Caller-sealed test wrappers use tail goto to preserve caller.
+Archive guards and prior domains: history. Namespace/symlink checks: `docs/audits/native-proxy-observation-archive-namespace-layouts-20260911/audit.py`; lower-reader custody remains open. Caller-sealed test wrappers use tail goto to preserve caller.
 Replay: `scripts/run_with_ram_guard.sh -- python3 -B -m unittest discover -s t/python -p 'test_fixture_policy_archive*.py'`.
 Per-group cleanup cannot prove nested cleanup; actual counterexample: history.
 HIAL/VIAL `.19.2.3.1.2.2.5.5` owns ownership design, repair and hostile controls;

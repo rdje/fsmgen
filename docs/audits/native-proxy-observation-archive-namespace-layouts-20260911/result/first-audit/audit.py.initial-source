@@ -1,0 +1,324 @@
+"""Independently verify real namespace mutations, pre-open rejection and custody."""
+from __future__ import annotations
+
+import copy
+import hashlib
+import importlib.util
+import json
+import os
+from pathlib import Path
+import re
+import subprocess
+
+BASE = Path(__file__).resolve().parent
+ROOT = BASE.parents[2]
+LOG = ROOT / '.artifacts/logs/native-proxy-observation-archive-namespace-layouts-20260911'
+BOUNDARY = BASE.parent / 'native-proxy-observation-archive-boundaries-20260911'
+CLOSE_BASE = BASE.parent / 'native-proxy-observation-archive-close-reports-20260911'
+specification = importlib.util.spec_from_file_location('archive_namespace_custody_oracle', CLOSE_BASE / 'audit.py')
+CLOSE = importlib.util.module_from_spec(specification)
+specification.loader.exec_module(CLOSE)
+PARTIAL, FRESH, TRACE, PHYSICAL = CLOSE.PARTIAL, CLOSE.FRESH, CLOSE.TRACE, CLOSE.PHYSICAL
+REVISION = '68ac6ef03c1bce45cb422d4e1739dd4866b8a6b7'
+
+
+def domain(plan, original, baseline):
+    TRACE.verify(original, baseline)
+    profiles = [dict(name='ordinary', wrapper='ordinary', files=4),
+                dict(name='equal_reference', wrapper='equal_reference', files=3)]
+    assert plan['profiles'] == profiles
+    cases = []
+    for profile, last in [('ordinary', 3), ('equal_reference', 2)]:
+        selected = [('healthy', None, None)]
+        selected += [('namespace', value, None) for value in range(63, 66)]
+        selected += [(kind, None, index) for kind in ['valid-symlink', 'dangling-symlink'] for index in [0, last]]
+        for kind, value, index in selected:
+            suffix = kind + (f':{value}' if value is not None else '') + (f':{index}' if index is not None else '')
+            cases.append(dict(name=profile + ':' + suffix, profile=profile, kind=kind, value=value, index=index))
+    assert plan['cases'] == cases and len({row['name'] for row in cases}) == len(cases)
+
+
+def source_proof(archive, names, reader, containment):
+    members = archive.split('sub _members {', 1)[1].split('\nsub ', 1)[0]
+    assert 'my $FILE_LIMIT = 64;' in archive
+    assert members.index('::_names(') < members.index('archive has incomplete or unknown members')
+    assert '$FILE_LIMIT)' in members
+    bounded = names.split('sub _names {', 1)[1].split('\nsub ', 1)[0]
+    assert "next if $name eq '.' || $name eq '..';" in bounded
+    assert bounded.index('push @names, $name;') < bounded.index('if @names > $limit;') < bounded.index('closedir($directory)')
+    assert bounded.index('closedir($directory)') < bounded.index('die $error unless $ok;')
+    low = reader.split('sub _read_file {', 1)[1].split('\nsub ', 1)[0]
+    assert low.index('repository_contained_path($path, must_exist => 1)') < low.index('die "$error\\n" if defined $error;') < low.index('sysopen(')
+    canonical = containment.split('sub repository_contained_path {', 1)[1].split('\nsub ', 1)[0]
+    assert "if $must_exist && !-e $absolute && !-l $absolute;" in canonical
+    assert "last unless -e $cursor || -l $cursor;" in canonical
+    assert "return (undef, 'symlink ancestry is forbidden') if -l $cursor;" in canonical
+    assert canonical.index("'symlink ancestry is forbidden'") < canonical.index('return ($absolute, undef);')
+
+
+def mutation(selection, row, spec):
+    before, after = row['preparation']['after'], row['operation']['before']
+    for kind in ('store', 'workspace', 'other_workspace'):
+        assert before[kind] == after[kind]
+    expected = copy.deepcopy(before['evidence'])
+    actual = after['evidence']
+    evidence = row['context']['evidence']['path']
+    paths = [file['path'] for file in spec['files']]
+    relative = lambda path: path.removeprefix(evidence + '/')
+    descriptor = dict(kind=selection['kind'], added=[])
+    kind = selection['kind']
+    original_native = {(node['device'], node['inode']) for node in expected.values()}
+    if kind == 'namespace':
+        count = selection['value'] - len(paths)
+        for index in range(count):
+            path = evidence + '/retained-sources/unknown-' + str(index) + '.member'
+            descriptor['added'].append(path)
+            key = relative(path); assert key not in expected
+            node = actual[key]
+            assert set(node) == {'device', 'inode', 'mode', 'uid', 'kind', 'bytes_hex', 'size_bytes', 'sha256', 'links'}
+            assert node['kind'] == 'file' and node['mode'] == 0o400 and node['links'] == 1
+            assert node['bytes_hex'] == '' and node['size_bytes'] == 0 and node['sha256'] == hashlib.sha256(b'').hexdigest()
+            assert node['device'] == expected['']['device'] and node['uid'] == expected['']['uid']
+            assert type(node['inode']) is int and node['inode'] > 0
+            native = (node['device'], node['inode'])
+            assert native not in original_native; original_native.add(native)
+            expected[key] = node
+        assert sum(key.startswith('retained-sources/') for key in actual) == selection['value']
+    elif kind.endswith('-symlink'):
+        index = selection['index']; path = paths[index]
+        retained = evidence + '/retained-original-' + str(index) + '.source'
+        key = relative(path); saved = relative(retained)
+        assert saved not in expected
+        target = Path(paths[(index + 1) % len(paths)]).name if kind == 'valid-symlink' else 'missing-owned-source'
+        if kind == 'valid-symlink':
+            assert expected['retained-sources/' + target]['kind'] == 'file'
+        else:
+            assert 'retained-sources/' + target not in expected
+        descriptor.update(path=path, retained=retained, target=target)
+        expected[saved] = expected.pop(key)
+        node = actual[key]
+        assert set(node) == {'device', 'inode', 'mode', 'uid', 'kind', 'target'}
+        assert node['kind'] == 'symlink' and node['target'] == target and node['mode'] == 0o777
+        assert node['device'] == expected['']['device'] and node['uid'] == expected['']['uid']
+        assert type(node['inode']) is int and node['inode'] > 0
+        assert (node['device'], node['inode']) not in original_native
+        expected[key] = node
+    else:
+        assert kind == 'healthy'
+    assert actual == expected and row['mutation'] == descriptor
+
+
+def events(selection, healthy):
+    kind = selection['kind']
+    if kind == 'healthy':
+        return healthy, healthy
+    cut = ('names:0:after' if selection['value'] <= 64 else 'close:directory_handle:0:after') if kind == 'namespace' else f"source:{selection['index']}:0:before"
+    return CLOSE.unwind(dict(kind='primary', reports=[], primary=cut, route='existing'), healthy)
+
+
+def verify(plan, report, original, baseline):
+    assert report['schema'] == 'fsmgen.inactive_archive_namespace_layouts_qualification.v1'
+    assert report['success'] is True and report['forbidden_process_attempts'] == 0
+    assert [row['name'] for row in report['cases']] == [case['name'] for case in plan['cases']]
+    flows = {row['name']: row['operation']['events'] for row in baseline['cases']}
+    roots = []
+    counts = dict(cases=0, operations=0, preparations=0, healthy_returns=0, namespace_rejections=0,
+                  preopen_symlink_rejections=0, events=0, source_handles=0, writer_handles=0, directory_handles=0,
+                  unknown_files=0, preserved_displaced_files=0, attempted_source_reads=0)
+    for selection, row in zip(plan['cases'], report['cases'], strict=True):
+        assert row['selection'] == selection and row['inputs_unchanged'] == 1
+        context, prior, retired = row['context'], row['prior_retirement'], row['retired']
+        for kind in ('store', 'workspace', 'other_workspace', 'evidence'):
+            identity = context[kind]; roots.append(dict(kind=kind, **identity))
+            node = prior[kind]['']
+            assert node['kind'] == 'directory' and node['mode'] == 0o700
+            assert (node['device'], node['inode']) == (identity['device'], identity['inode'])
+        PHYSICAL.target_inputs(context, prior)
+        assert retired['workspace'] == {}
+        global_path = context['runtime']['reference']['global']['identity']['path']
+        store = copy.deepcopy(prior['store']); del store[global_path[len(context['store']['path']) + 1:]]
+        assert retired['store'] == store
+        for kind in ('evidence', 'other_workspace'):
+            assert retired[kind] == prior[kind]
+        retirement = row['retirement']
+        assert retirement['schema'] == 'fsmgen.inactive_runtime_retirement.v1'
+        assert retirement['runtime_authorized'] == 0 and retirement['executable'] is None
+        assert retirement['retired_workspace'] == context['workspace']['path'] and retirement['released_reference'] == global_path
+        spec = PARTIAL.retained_spec(context, selection['profile'])
+        paths = [file['path'] for file in spec['files']]
+        preparation, operation = row['preparation'], row['operation']
+        assert preparation['before'] == retired
+        PHYSICAL.operation_checks(context, preparation, True, '')
+        fresh = selection['profile'] + ':fresh'
+        assert preparation['events'] == flows[fresh]
+        TRACE.lifetimes(original['flows'][fresh], preparation)
+        CLOSE.projection(preparation)
+        kinds = FRESH.handles(preparation, flows[fresh], paths)
+        for kind, number in kinds.items():
+            counts[kind + '_handles'] += number
+        counts['preparations'] += 1; counts['operations'] += 1; counts['events'] += len(preparation['events'])
+        mutation(selection, row, spec)
+        assert operation['before'] == operation['after'] and operation['writes'] == []
+        flow = selection['profile'] + ':existing'
+        prefix, complete = events(selection, flows[flow])
+        assert operation['events'] == complete and len(complete) == len(set(complete))
+        kind = selection['kind']
+        if kind == 'healthy':
+            PHYSICAL.operation_checks(context, operation, True, '')
+            TRACE.lifetimes(original['flows'][flow], operation)
+            counts['healthy_returns'] += 1
+        else:
+            assert operation['returned'] == 0 and operation.get('result') is None
+            if kind == 'namespace':
+                error = 'namespace capacity exceeded\n' if selection['value'] > 64 else 'archive has incomplete or unknown members\n'
+                counts['namespace_rejections'] += 1
+                counts['unknown_files'] += selection['value'] - len(paths)
+            else:
+                error = 'symlink ancestry is forbidden\n'
+                counts['preopen_symlink_rejections'] += 1; counts['preserved_displaced_files'] += 1
+            assert operation['error'] == error
+        CLOSE.projection(operation)
+        kinds = FRESH.handles(operation, prefix, paths)
+        assert kinds['writer'] == 0
+        reads = [paths[int(event.split(':')[2])] for event in prefix if event.startswith('opened:source:')]
+        if kind.endswith('-symlink'):
+            reads.append(paths[selection['index']])  # attempted lower call fails before opening
+        assert operation['reads'] == reads
+        assert operation['directories'] == [context['evidence']['path'] + ('/retained-sources' if event.split(':')[1] == 'archive' else '')
+            for event in prefix if re.fullmatch(r'directory:(?:evidence|archive):[0-9]+:before', event)]
+        for kind, number in kinds.items():
+            counts[kind + '_handles'] += number
+        counts['cases'] += 1; counts['operations'] += 1; counts['events'] += len(complete)
+        counts['attempted_source_reads'] += len(reads) + len(preparation['reads'])
+    assert roots == report['allocated'] and len({row['path'] for row in roots}) == len(roots)
+    return dict(counts, roots=len(roots))
+
+
+def main():
+    plan = json.loads((BASE / 'plan.json').read_bytes())
+    assert plan['source_revision'] == REVISION
+    predecessor = json.loads((CLOSE_BASE / 'plan.json').read_bytes())
+    dependencies = {pin['path'] for pin in predecessor['inputs']}
+    dependencies.update(str((CLOSE_BASE / name).relative_to(ROOT)) for name in ('plan.json', 'audit.py'))
+    assert [pin['path'] for pin in plan['inputs']] == sorted(dependencies)
+    pins = json.loads((BASE / 'preflight-pins.json').read_bytes())
+    assert [pin['path'] for pin in pins] == [str((BASE / name).relative_to(ROOT)) for name in ('plan.py', 'plan.json', 'qualify.t', 'audit.py')]
+    def authenticate():
+        for pin in plan['inputs'] + pins:
+            raw = (ROOT / pin['path']).read_bytes()
+            assert len(raw) == pin['size_bytes'] and hashlib.sha256(raw).hexdigest() == pin['sha256']
+            if pin in plan['inputs']:
+                assert raw == subprocess.check_output(['git', 'show', REVISION + ':' + pin['path']], cwd=ROOT)
+    authenticate()
+    source_paths = ['docs/audits/native-proxy-observation-archive-20260911/ObservationArchive.pm',
+                    'docs/audits/native-proxy-image-coordination-20260910/Coordination.pm',
+                    't/lib/FSM/Test/RustProxyFixture.pm', 'perl/FSM/Support/ProcessSupervisor.pm']
+    assert set(source_paths) <= dependencies
+    sources = [(ROOT / path).read_text() for path in source_paths]
+    source_proof(*sources)
+    original = json.loads((BOUNDARY / 'plan.json').read_bytes())
+    baseline = json.loads((BOUNDARY / 'result/qualification.json').read_bytes())
+    domain(plan, original, baseline)
+    report = json.loads((LOG / 'qualification.json').read_bytes())
+    counts = verify(plan, report, original, baseline)
+    admission = [json.loads(line) for line in (LOG / 'admission.jsonl').read_text().splitlines()]
+    assert admission == report['allocated']
+    device = ROOT.stat().st_dev
+    for row in admission:
+        path = ROOT / row['path']
+        assert not path.exists() and not path.is_symlink() and row['device'] == device
+        parent = path.parent
+        while parent != ROOT:
+            assert not parent.is_symlink() and parent.is_dir() and parent.stat().st_dev == device
+            parent = parent.parent
+    assertions = len(plan['cases']) * 7 + 1
+    tap = (LOG / 'qualify.tap').read_text()
+    assert re.findall(r'^1\.\.([0-9]+)$', tap, re.M) == [str(assertions)]
+    assert [int(value) for value in re.findall(r'^ok ([0-9]+) - ', tap, re.M)] == list(range(1, assertions + 1))
+    assert not re.search(r'^(?:not ok|Bail out!)|#\s*(?:SKIP|TODO)', tap, re.M)
+    assert (LOG / 'qualify.exit').read_text().strip() == '0'
+    def linked(value):
+        return next(row for row in value['cases'] if row['selection']['kind'] == 'valid-symlink' and row['selection']['index'] > 0)
+    def operation(value):
+        return linked(value)['operation']
+    def preparation(value):
+        return linked(value)['preparation']
+    def handle(value, kind):
+        return next(row for row in operation(value)['handles'] if row['kind'] == kind)
+    def link_node(value):
+        return next(node for node in operation(value)['before']['evidence'].values() if node['kind'] == 'symlink')
+    def displaced(value):
+        return next(node for key, node in operation(value)['before']['evidence'].items() if key.startswith('retained-original-'))
+    def extra(value):
+        row = next(row for row in value['cases'] if row['selection']['kind'] == 'namespace')
+        return next(node for key, node in row['operation']['before']['evidence'].items() if '/unknown-' in key)
+    def other_hold(value):
+        row = linked(value)
+        path = row['context']['other_observation']['observation_reference']['source']['identity']['path']
+        del row['operation']['after']['store'][path[len(row['context']['store']['path']) + 1:]]
+    changes = [
+        ('missing case', lambda r: r['cases'].pop()),
+        ('duplicate case', lambda r: r['cases'].append(copy.deepcopy(r['cases'][0]))),
+        ('changed selection', lambda r: linked(r)['selection'].update(index=0)),
+        ('lost preparation', lambda r: linked(r).pop('preparation')),
+        ('failed preparation', lambda r: preparation(r).update(returned=0)),
+        ('missing preparation event', lambda r: preparation(r)['events'].pop()),
+        ('unclosed preparation handle', lambda r: preparation(r)['handles'][0].update(closed_at_return=0)),
+        ('missing preparation binding', lambda r: preparation(r)['result']['source_bindings'].pop()),
+        ('wrong first error', lambda r: operation(r).update(error='wrong error\n')),
+        ('hidden successful verification', lambda r: operation(r).update(returned=1)),
+        ('missing cleanup event', lambda r: operation(r)['events'].pop()),
+        ('unclosed admitted source', lambda r: handle(r, 'source').update(closed_at_return=0)),
+        ('unclosed directory', lambda r: handle(r, 'directory').update(actual_close_ok=0)),
+        ('unclosed observer duplicate', lambda r: handle(r, 'directory').update(observer_closed=0)),
+        ('wrong source identity', lambda r: handle(r, 'source').update(inode=7)),
+        ('lost source CLOEXEC', lambda r: handle(r, 'source').update(cloexec_before_close=0)),
+        ('missing failed read attempt', lambda r: operation(r)['reads'].pop()),
+        ('original target read', lambda r: operation(r)['reads'].append('original-target')),
+        ('unexpected write', lambda r: operation(r)['writes'].append('unexpected')),
+        ('changed symlink target', lambda r: link_node(r).update(target='foreign-target')),
+        ('changed symlink type', lambda r: link_node(r).update(kind='file')),
+        ('lost displaced bytes', lambda r: displaced(r).update(bytes_hex='00')),
+        ('replaced displaced identity', lambda r: displaced(r).update(inode=7)),
+        ('nonempty unknown member', lambda r: extra(r).update(bytes_hex='00')),
+        ('writable unknown member', lambda r: extra(r).update(mode=0o600)),
+        ('wrong mutation receipt', lambda r: linked(r)['mutation'].update(target='foreign')),
+        ('removed other hold', other_hold),
+        ('changed retained input', lambda r: linked(r).update(inputs_unchanged=0)),
+        ('lost allocation', lambda r: r['allocated'].pop()),
+        ('process attempt', lambda r: r.update(forbidden_process_attempts=1)),
+    ]
+    for name, change in changes:
+        altered = copy.deepcopy(report); change(altered)
+        assert TRACE.reject(lambda: verify(plan, altered, original, baseline)), name
+    domain_changes = [
+        ('omitted excess', lambda p: p['cases'].pop(3)),
+        ('aliased late source', lambda p: p['cases'][5].update(index=0)),
+        ('changed namespace bound', lambda p: p['cases'][2].update(value=63)),
+        ('missing healthy control', lambda p: p['cases'].pop(0)),
+        ('changed equal profile', lambda p: p['profiles'][1].update(files=4)),
+    ]
+    for name, change in domain_changes:
+        altered = copy.deepcopy(plan); change(altered)
+        assert TRACE.reject(lambda: domain(altered, original, baseline)), name
+    source_changes = [
+        ('changed namespace cap', 0, 'my $FILE_LIMIT = 64;', 'my $FILE_LIMIT = 65;'),
+        ('rejected exact namespace cap', 1, 'if @names > $limit;', 'if @names >= $limit;'),
+        ('lost pre-open rejection', 2, 'die "$error\\n" if defined $error;', '# ignored path error'),
+        ('lost leaf symlink rejection', 3, "return (undef, 'symlink ancestry is forbidden') if -l $cursor;", '# allow symlink'),
+    ]
+    for name, index, old, new in source_changes:
+        altered = sources.copy(); assert old in altered[index]; altered[index] = altered[index].replace(old, new)
+        assert TRACE.reject(lambda: source_proof(*altered)), name
+    authenticate()
+    output = dict(schema='fsmgen.inactive_archive_namespace_layouts_audit.v1', success=True, **counts,
+        tap_assertions=assertions, report_falsifiers=[name for name, _ in changes],
+        domain_falsifiers=[name for name, _ in domain_changes], source_falsifiers=[row[0] for row in source_changes],
+        predecessor_inputs_unchanged=len(plan['inputs']), prospective_inputs_unchanged=len(pins),
+        all_allocations_absent=True, symlink_rejection_precedes_sysopen=True, limits=plan['limits'])
+    (LOG / 'audit.json').write_text(json.dumps(output, indent=2, sort_keys=True) + '\n')
+    print(json.dumps(output, sort_keys=True))
+
+
+if __name__ == '__main__':
+    main()
