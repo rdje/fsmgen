@@ -1,0 +1,16 @@
+{
+  "checked_passages": [
+    "The equal-content after-call partition keeps the same original identity and shared-payload checks",
+    "its interrupted caller still closes any handles it owns.",
+    "Sharing archived bytes does not merge handle ownership or excuse missing cleanup.",
+    "Any completed unlink and earlier absence observation remain visible when the overall attempt fails.",
+    "equal-after-20260911/audit.py --verify-saved"
+  ],
+  "exact_output_absent": true,
+  "exit_code": 0,
+  "output": ".artifacts/tmp/native-proxy-observation-archive-release-equal-after-book-20260911/book",
+  "rendered_bytes": 23377523,
+  "rendered_directories": 3,
+  "rendered_files": 98,
+  "same_volume_direct_objects": true
+}

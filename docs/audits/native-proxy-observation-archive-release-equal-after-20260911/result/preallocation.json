@@ -1,0 +1,10 @@
+{
+  "cases": 467,
+  "inputs": 1930,
+  "prospective_pins": 9,
+  "trace_preflight": {
+    "basis": "saved equal-reference healthy event projection",
+    "cases": 466,
+    "new_fixture_allocations": 0
+  }
+}

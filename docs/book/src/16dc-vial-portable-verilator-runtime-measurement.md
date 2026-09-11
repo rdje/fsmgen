@@ -2353,7 +2353,24 @@ comparison. Saved bodies and their independent audit live under
 python3 -B docs/audits/native-proxy-observation-archive-release-equal-before-20260911/audit.py --verify-saved
 ```
 
-Later lanes qualify the remaining profile/phase partitions, actual closes followed by modeled
+The equal-content after-call partition keeps the same original identity and
+shared-payload checks while interrupting after admitted helpers return. A
+completed helper remains complete. For example, when `_image` has already
+closed its readers, those closes stay recorded as complete; its interrupted
+caller still closes any handles it owns. Sharing archived bytes does not merge
+handle ownership or excuse missing cleanup. Any completed unlink and earlier
+absence observation remain visible when the overall attempt fails.
+
+Its preflight uses the newly qualified equal-content healthy trace, and each
+actual fault still resolves from its own current fixture. Complete case bodies,
+root-cleanup evidence and independent saved-data verification are retained under
+`docs/audits/native-proxy-observation-archive-release-equal-after-20260911/`:
+
+```sh
+python3 -B docs/audits/native-proxy-observation-archive-release-equal-after-20260911/audit.py --verify-saved
+```
+
+Later lanes qualify the remaining profiles, actual closes followed by modeled
 errors, deliberate close omissions with separate recovery, and the final
 source/evidence join. Primary errors outrank cleanup reports. These finite
 checks grant no native ownership authority or guarantee against arbitrary
