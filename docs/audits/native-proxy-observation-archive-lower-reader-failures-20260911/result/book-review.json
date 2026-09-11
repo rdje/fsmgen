@@ -1,0 +1,12 @@
+{
+  "actual_and_controlled_reads_distinguished": true,
+  "exact_output_absent": true,
+  "exit_code": 0,
+  "new_passage_verified": true,
+  "open_archive_composition_scope_verified": true,
+  "output": ".artifacts/tmp/native-proxy-observation-archive-lower-reader-failures-book-20260911/book",
+  "rendered_bytes": 23294147,
+  "rendered_files": 98,
+  "replay_scope_verified": true,
+  "same_volume_direct_objects": true
+}

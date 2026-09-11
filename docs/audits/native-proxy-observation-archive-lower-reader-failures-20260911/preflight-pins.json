@@ -1,0 +1,27 @@
+[
+  {
+    "path": "docs/audits/native-proxy-observation-archive-lower-reader-failures-20260911/plan.py",
+    "sha256": "38095c03991494315cc71f1af052a5361f1cffd67366271ea64e0f615509c43b",
+    "size_bytes": 3265
+  },
+  {
+    "path": "docs/audits/native-proxy-observation-archive-lower-reader-failures-20260911/plan.json",
+    "sha256": "3ed0ae772975b0a124a6efb263c318776b0a66813f6b3c34513b9e7d8a6d6603",
+    "size_bytes": 12820
+  },
+  {
+    "path": "docs/audits/native-proxy-observation-archive-lower-reader-failures-20260911/LowerReadControls.pm",
+    "sha256": "55ec78eb48ecf0559f5d7c7edeb2e994c6b4b7f97308b6ed8da512a51819b32b",
+    "size_bytes": 4574
+  },
+  {
+    "path": "docs/audits/native-proxy-observation-archive-lower-reader-failures-20260911/qualify.t",
+    "sha256": "0b27dd7f74e039eb917557f5b00b71792138afeebc3f50c46bef2fedb0ac5284",
+    "size_bytes": 9018
+  },
+  {
+    "path": "docs/audits/native-proxy-observation-archive-lower-reader-failures-20260911/audit.py",
+    "sha256": "5cc0bb556beb81134c1edd0a5fa37edd7d9be910d67fb7b7d1aff85909088813",
+    "size_bytes": 20175
+  }
+]

@@ -1,0 +1,25 @@
+{
+  "book": {
+    "actual_and_controlled_reads_distinguished": true,
+    "exact_output_absent": true,
+    "exit_code": 0,
+    "new_passage_verified": true,
+    "open_archive_composition_scope_verified": true,
+    "output": ".artifacts/tmp/native-proxy-observation-archive-lower-reader-failures-book-20260911/book",
+    "rendered_bytes": 23294147,
+    "rendered_files": 98,
+    "replay_scope_verified": true,
+    "same_volume_direct_objects": true
+  },
+  "doctrines": "Successful staged-index and commit-hook gates are required conditions of the durable work-unit commit; archive composition/final join, full CI/push and historical startup/native/parent gates remain open.",
+  "documentation": "documentation.json",
+  "durability": "Forty-seven unchanged predecessor inputs including 22 Perl modules, five prospective pins and fifteen exact raw recovery copies preserve first-run evidence. Saved observer qualification is independently re-verified without running its producer. No qualified observer or product-source change, first-run repair or fixture rerun occurs. Exact acceptance history, task/book/Knowledge Map and Git retain continuity.",
+  "falsification": "Thirty changed reports, four changed domains and four source assumptions reject. Controls distinguish original caller requests from one-byte delegation, actual partial data from modeled EIO/EOF, same bytes from changed named identity, actual closed descriptor probes from invented caller cleanup, and fixture capacity from the unchanged product bound. Missing/altered handoffs, controls, originals, identities, caller/probe closure, allocations and process traps are rejected.",
+  "knowledge_map": "knowledge-map: OK (1161 facts, 6402 unique questions, 6573 answer occurrences, 139 bounded topic shards; query parity verified)",
+  "knowledge_projection": "knowledge-projection.json",
+  "limits": "Finite direct-helper failure domain. No new full archive operation, native fixture execution, asynchronous race or arbitrary reader error is qualified. The observer source and product size limit remain unchanged. Broader archive coverage requires the separately owned source/custody composition.",
+  "owner": "HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.12.4.1.3.4.2.3.4.2.3.2",
+  "ownership": "The qualified weak observer remains exact. Its first liveness probe precedes caller/control cleanup, and no cleanup is performed for these failed handoffs. The read adapter preserves caller identity with tail delegation and changes only the request argument slot for the actual one-byte read, retaining the buffer alias. The fixture census represents the selected one-byte excess; the lower-reader product limit is unchanged.",
+  "rederivation": "First direct-helper qualification and independent audit pass nine cases and 55 assertions, with three successful keep-open handoffs and six rejections: two type/size, two EIO and two final read-agreement failures. All six failed descriptors close lexically before handoff; three successful handles receive explicit caller cleanup and three observer duplicates close immediately. Eleven observed read calls comprise eight actual syscalls and three controlled returns, with 66049 actual read-byte instances. All nine roots are absent, the replaced original remains byte/native-identical at an owned sibling, and bystanders remain unchanged.",
+  "schema": "fsmgen.inactive_archive_lower_reader_failures_review.v1"
+}

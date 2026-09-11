@@ -1,0 +1,56 @@
+ok 1 - empty: observer completed
+ok 2 - empty: original lower-reader outcome retained
+ok 3 - empty: return bytes or rejected handoff agree
+ok 4 - empty: actual reader-return liveness distinguished
+ok 5 - empty: caller or control cleanup leaves the actual descriptor closed
+ok 6 - empty: original source and bystander preserved
+ok 7 - binary: observer completed
+ok 8 - binary: original lower-reader outcome retained
+ok 9 - binary: return bytes or rejected handoff agree
+ok 10 - binary: actual reader-return liveness distinguished
+ok 11 - binary: caller or control cleanup leaves the actual descriptor closed
+ok 12 - binary: original source and bystander preserved
+ok 13 - maximum: observer completed
+ok 14 - maximum: original lower-reader outcome retained
+ok 15 - maximum: return bytes or rejected handoff agree
+ok 16 - maximum: actual reader-return liveness distinguished
+ok 17 - maximum: caller or control cleanup leaves the actual descriptor closed
+ok 18 - maximum: original source and bystander preserved
+ok 19 - directory: observer completed
+ok 20 - directory: original lower-reader outcome retained
+ok 21 - directory: return bytes or rejected handoff agree
+ok 22 - directory: actual reader-return liveness distinguished
+ok 23 - directory: caller or control cleanup leaves the actual descriptor closed
+ok 24 - directory: original source and bystander preserved
+ok 25 - oversized: observer completed
+ok 26 - oversized: original lower-reader outcome retained
+ok 27 - oversized: return bytes or rejected handoff agree
+ok 28 - oversized: actual reader-return liveness distinguished
+ok 29 - oversized: caller or control cleanup leaves the actual descriptor closed
+ok 30 - oversized: original source and bystander preserved
+ok 31 - first-eio: observer completed
+ok 32 - first-eio: original lower-reader outcome retained
+ok 33 - first-eio: return bytes or rejected handoff agree
+ok 34 - first-eio: actual reader-return liveness distinguished
+ok 35 - first-eio: caller or control cleanup leaves the actual descriptor closed
+ok 36 - first-eio: original source and bystander preserved
+ok 37 - partial-eio: observer completed
+ok 38 - partial-eio: original lower-reader outcome retained
+ok 39 - partial-eio: return bytes or rejected handoff agree
+ok 40 - partial-eio: actual reader-return liveness distinguished
+ok 41 - partial-eio: caller or control cleanup leaves the actual descriptor closed
+ok 42 - partial-eio: original source and bystander preserved
+ok 43 - early-eof: observer completed
+ok 44 - early-eof: original lower-reader outcome retained
+ok 45 - early-eof: return bytes or rejected handoff agree
+ok 46 - early-eof: actual reader-return liveness distinguished
+ok 47 - early-eof: caller or control cleanup leaves the actual descriptor closed
+ok 48 - early-eof: original source and bystander preserved
+ok 49 - named-replacement: observer completed
+ok 50 - named-replacement: original lower-reader outcome retained
+ok 51 - named-replacement: return bytes or rejected handoff agree
+ok 52 - named-replacement: actual reader-return liveness distinguished
+ok 53 - named-replacement: caller or control cleanup leaves the actual descriptor closed
+ok 54 - named-replacement: original source and bystander preserved
+ok 55 - no compiler or native process attempt
+1..55

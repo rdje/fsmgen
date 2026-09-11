@@ -1,0 +1,95 @@
+{
+  "all_copies_byte_exact": true,
+  "files": [
+    {
+      "destination": "docs/audits/native-proxy-observation-archive-lower-reader-failures-20260911/result/plan.stdout",
+      "sha256": "83484d1777a9f205da03b5c3e29bd69c32ac06de949e7dcaac9d7b379dd049cd",
+      "size_bytes": 37,
+      "source": ".artifacts/logs/native-proxy-observation-archive-lower-reader-failures-20260911/plan.stdout"
+    },
+    {
+      "destination": "docs/audits/native-proxy-observation-archive-lower-reader-failures-20260911/result/plan.stderr",
+      "sha256": "1d29036493eb7946047d8c451462d2b89566efd34784abed11e6967e486fb061",
+      "size_bytes": 90,
+      "source": ".artifacts/logs/native-proxy-observation-archive-lower-reader-failures-20260911/plan.stderr"
+    },
+    {
+      "destination": "docs/audits/native-proxy-observation-archive-lower-reader-failures-20260911/result/plan.exit",
+      "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa",
+      "size_bytes": 2,
+      "source": ".artifacts/logs/native-proxy-observation-archive-lower-reader-failures-20260911/plan.exit"
+    },
+    {
+      "destination": "docs/audits/native-proxy-observation-archive-lower-reader-failures-20260911/result/syntax.stdout",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "size_bytes": 0,
+      "source": ".artifacts/logs/native-proxy-observation-archive-lower-reader-failures-20260911/syntax.stdout"
+    },
+    {
+      "destination": "docs/audits/native-proxy-observation-archive-lower-reader-failures-20260911/result/syntax.stderr",
+      "sha256": "d4ea5de9c04f023d8b1fc2fb0e6e5868b64ef386c314ecdc265c346a1ef4b969",
+      "size_bytes": 186,
+      "source": ".artifacts/logs/native-proxy-observation-archive-lower-reader-failures-20260911/syntax.stderr"
+    },
+    {
+      "destination": "docs/audits/native-proxy-observation-archive-lower-reader-failures-20260911/result/syntax.exit",
+      "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa",
+      "size_bytes": 2,
+      "source": ".artifacts/logs/native-proxy-observation-archive-lower-reader-failures-20260911/syntax.exit"
+    },
+    {
+      "destination": "docs/audits/native-proxy-observation-archive-lower-reader-failures-20260911/result/admission.jsonl",
+      "sha256": "aca4c5d05bf89aea0f235599706b95fee524d8b049d15efae2aa86546c285d12",
+      "size_bytes": 1323,
+      "source": ".artifacts/logs/native-proxy-observation-archive-lower-reader-failures-20260911/admission.jsonl"
+    },
+    {
+      "destination": "docs/audits/native-proxy-observation-archive-lower-reader-failures-20260911/result/qualification.json",
+      "sha256": "ac2eec7da6be0f8d5ab9fc7427995c3ad87f591494e71557c3d79536654d5f5b",
+      "size_bytes": 848276,
+      "source": ".artifacts/logs/native-proxy-observation-archive-lower-reader-failures-20260911/qualification.json"
+    },
+    {
+      "destination": "docs/audits/native-proxy-observation-archive-lower-reader-failures-20260911/result/qualify.tap",
+      "sha256": "acb77b614a31342c1fc9acf7b14157b284ec3c8c6523cb3cc42847280a5e8732",
+      "size_bytes": 3262,
+      "source": ".artifacts/logs/native-proxy-observation-archive-lower-reader-failures-20260911/qualify.tap"
+    },
+    {
+      "destination": "docs/audits/native-proxy-observation-archive-lower-reader-failures-20260911/result/qualify.stderr",
+      "sha256": "9ace87b4c4abc71f8386dbe3a8bbbf5dcefd45f6fe7a3e5ecc32fa5f0a707d2c",
+      "size_bytes": 91,
+      "source": ".artifacts/logs/native-proxy-observation-archive-lower-reader-failures-20260911/qualify.stderr"
+    },
+    {
+      "destination": "docs/audits/native-proxy-observation-archive-lower-reader-failures-20260911/result/qualify.exit",
+      "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa",
+      "size_bytes": 2,
+      "source": ".artifacts/logs/native-proxy-observation-archive-lower-reader-failures-20260911/qualify.exit"
+    },
+    {
+      "destination": "docs/audits/native-proxy-observation-archive-lower-reader-failures-20260911/result/audit.json",
+      "sha256": "406c4deb77ae993ce94cd9b102f36c545e3b5d034575cb86a8fbbce7f810232f",
+      "size_bytes": 2701,
+      "source": ".artifacts/logs/native-proxy-observation-archive-lower-reader-failures-20260911/audit.json"
+    },
+    {
+      "destination": "docs/audits/native-proxy-observation-archive-lower-reader-failures-20260911/result/audit.stdout",
+      "sha256": "a0974d68866cdcaf2849979cdca70ff2639be530255aaf5a779478697b06012c",
+      "size_bytes": 2411,
+      "source": ".artifacts/logs/native-proxy-observation-archive-lower-reader-failures-20260911/audit.stdout"
+    },
+    {
+      "destination": "docs/audits/native-proxy-observation-archive-lower-reader-failures-20260911/result/audit.stderr",
+      "sha256": "35f43530752ea0416c9802e98d3ce6cdb11929ee29e372de45b36eb53ea4a0eb",
+      "size_bytes": 91,
+      "source": ".artifacts/logs/native-proxy-observation-archive-lower-reader-failures-20260911/audit.stderr"
+    },
+    {
+      "destination": "docs/audits/native-proxy-observation-archive-lower-reader-failures-20260911/result/audit.exit",
+      "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa",
+      "size_bytes": 2,
+      "source": ".artifacts/logs/native-proxy-observation-archive-lower-reader-failures-20260911/audit.exit"
+    }
+  ]
+}

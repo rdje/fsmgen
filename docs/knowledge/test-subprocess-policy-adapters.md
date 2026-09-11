@@ -46,6 +46,7 @@ answers:
   - "how do archive namespace and symlink controls preserve owned files?"
   - "how are byte-identical archive replacements detected after admission?"
   - "why must a lower-reader observer retain only weak handle aliases?"
+  - "how do lower-reader admission failures close before source handoff?"
   - "why did integrated proxy qualification fail?"
   - "why does t1545 not use IPC Cmd?"
   - "where does T1545 preserve empty-output checker failure diagnostics?"
@@ -114,10 +115,9 @@ Decisions `0087`/`0101` select `FSM::Support::ProcessSupervisor`; adapters seal 
 `VerilatorRuntime` follows decision `0086`.
 `TaskAcceptanceFixtureRuntime` seals owned fixture roots/fixed local Git argv.
 Supervisor, checker, locality, startup/capture/STOP controls: history; absent witnesses stay unknown.
-History: `94ba98609063049d44a46f1dddd19fd065e130cd:docs/knowledge/test-subprocess-policy-adapters.md`. PST/queue evidence and fixed CLI limits/controls: history.
-Custody, acquisition, unique occurrences and settled-event/release distinctions: history.
-Archive domains: history. Weak lower-reader observation: `docs/audits/native-proxy-observation-archive-lower-reader-seam-20260911/audit.py`; full failure/composition checks remain open. Caller-sealed test wrappers use tail goto to preserve caller. Replay: `scripts/run_with_ram_guard.sh -- python3 -B -m unittest discover -s t/python -p 'test_fixture_policy_archive*.py'`.
-Per-group cleanup cannot prove nested cleanup; actual counterexample: history.
+History: `05957842d584b6b3f434e2b2d20c65316e16e39c:docs/knowledge/test-subprocess-policy-adapters.md`. PST/queue evidence and fixed CLI limits/controls: history.
+Custody, acquisition and release distinctions: history.
+Archive domains: history. Lower-reader failures: `docs/audits/native-proxy-observation-archive-lower-reader-failures-20260911/audit.py`; archive composition remains open. Caller-sealed test wrappers use tail goto to preserve caller. Replay: `scripts/run_with_ram_guard.sh -- python3 -B -m unittest discover -s t/python -p 'test_fixture_policy_archive*.py'`. Per-group cleanup cannot prove nested cleanup; actual counterexample: history.
 HIAL/VIAL `.19.2.3.1.2.2.5.5` owns ownership design, repair and hostile controls;
 neutral-verifier extraction stays provisional/blocked.
 Coordinator selection, archive replay and open gates: history.

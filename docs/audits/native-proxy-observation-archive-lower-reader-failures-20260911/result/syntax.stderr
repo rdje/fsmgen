@@ -1,0 +1,2 @@
+ram-guard: PID 4115; host 59.9%; host cutoff 88%; descendant RSS cutoff 4096 MiB; poll 2s
+docs/audits/native-proxy-observation-archive-lower-reader-failures-20260911/qualify.t syntax OK

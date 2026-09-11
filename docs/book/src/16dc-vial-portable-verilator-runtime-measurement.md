@@ -2507,9 +2507,28 @@ observer bias; it does not demonstrate a runtime leak.
 The direct-helper cases, exact source and toolchain-reference pins, actual
 open/read/close records, independent checker and falsifiers are retained at
 `docs/audits/native-proxy-observation-archive-lower-reader-seam-20260911/`.
-Successful empty, binary and maximum-size reads cover both return modes. The
-broader type/size/read-admission failure matrix and its composition with archive
-cleanup remain separately owned; these direct calls are not full archive runs.
+Successful empty, binary and maximum-size reads cover both return modes.
+
+The subsequent direct-reader failure matrix uses that observer unchanged.
+Actual directory and oversized-file inputs are opened and then rejected by the
+regular-file/size admission check. The read controls include an immediate error,
+an actual one-byte read followed by an error, and premature EOF. A separate case
+retains the original file and replaces its name with identical bytes before the
+final read; native/name agreement rejects that change. The adapter records the
+reader's original request separately from a controlled request or return, and
+preserves the immediate caller when delegating to the qualified read hook.
+
+Actual descriptor probes establish that rejected calls close before handoff;
+no caller cleanup is needed for those failures. Successful keep-open controls
+retain their handle until the caller closes it. The original named-replacement
+file remains in an owned sibling, and the independent checker verifies complete
+before/after bytes and native identities plus the unchanged bystander.
+Sources, saved observer applicability, actual records and falsifiers are at
+`docs/audits/native-proxy-observation-archive-lower-reader-failures-20260911/`.
+The product source limit is unchanged; the fixture census is separately bounded
+to represent its selected oversized witness. No runtime leak was demonstrated.
+Composition with archive cleanup remains open; these direct calls are not full
+archive runs or qualification of asynchronous filesystem races.
 
 The helper checks bounded regular source/output files and the native header,
 then sets executable permissions through the admitted open file handle. A
