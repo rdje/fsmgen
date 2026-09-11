@@ -1,0 +1,133 @@
+{
+  "live_owner_matches": [],
+  "owner": "HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.12.4.1.3.4.4.3.1",
+  "registry_files": [
+    {
+      "path": "doctrine/claim_verification/claim_registries.jsonl",
+      "sha256": "e2ee36acd874c7c55b24661d2efeb127f442a385ce1b23d1c64704390d649307",
+      "size_bytes": 510
+    },
+    {
+      "path": "doctrine/claim_verification/claims-0002.jsonl",
+      "sha256": "425060f0e9b09f6d6e8b22cc72fde98008ad4f3abfb27cc328ec16c7726cb7b3",
+      "size_bytes": 65184
+    },
+    {
+      "path": "doctrine/claim_verification/claims-0003.jsonl",
+      "sha256": "f7e94a24ebd47b825c09675be25d3b6897d2fa9de242c2d22c31ba9a0a2dee41",
+      "size_bytes": 29293
+    },
+    {
+      "path": "doctrine/claim_verification/claims.jsonl",
+      "sha256": "38b77b69f5fdad6350e665e0aa4abbf19c89ed94097e7b3ad424a0d3179170bc",
+      "size_bytes": 65381
+    },
+    {
+      "path": "doctrine/claim_verification/disposition_groups.jsonl",
+      "sha256": "e49615623ca95e92d7a9adda4eb3aa51249fa9158075a0f3089483172d319fe6",
+      "size_bytes": 3273
+    },
+    {
+      "path": "doctrine/claim_verification/dispositions.jsonl",
+      "sha256": "966993589edb96bbd52d9fa08a68dacb6f7e093abf36cda1fb814d75f969a28b",
+      "size_bytes": 1988932
+    },
+    {
+      "path": "doctrine/claim_verification/inventory.jsonl",
+      "sha256": "bc2053240dc4909a15ad3887e8ced7b04e93b5a3408cb1264550de20d66372f1",
+      "size_bytes": 2966032
+    },
+    {
+      "path": "doctrine/claim_verification/inventory_scope.json",
+      "sha256": "c036edacb9562508510b130335e9295a4052d88eaec04f83e4e2661ebcbc1f35",
+      "size_bytes": 1083
+    },
+    {
+      "path": "doctrine/claim_verification/original_constant_baseline.jsonl",
+      "sha256": "161efb1102420e65986ad5a13d996e5e215e5af339dfe79431ddb3936db56041",
+      "size_bytes": 2898
+    },
+    {
+      "path": "doctrine/live_document_size/archive_descriptors.jsonl",
+      "sha256": "ba172f31a2b39bb34eea202ad72847f6f7d19fceb856989ccab73cd69f8abb2f",
+      "size_bytes": 9206
+    },
+    {
+      "path": "doctrine/live_document_size/ceiling_increase_authorities.jsonl",
+      "sha256": "fde35752b4d08d5e39d68b41894b5e7dadc8854e55df6a81a84cdf3524296e66",
+      "size_bytes": 8139
+    },
+    {
+      "path": "doctrine/live_document_size/derived_state_contracts.jsonl",
+      "sha256": "f7167169022e867220b14d1f51dcdd66c437174b3e91f6f715f42047ad52d5c2",
+      "size_bytes": 1243
+    },
+    {
+      "path": "doctrine/live_document_size/evidence_maps.jsonl",
+      "sha256": "297febbf1693a80756ec55f811cdf6fb234963c1441615990d37ff3da4d2d4da",
+      "size_bytes": 594
+    },
+    {
+      "path": "doctrine/live_document_size/isf_reference_partitions.jsonl",
+      "sha256": "fda84f111a1ade73377b99bd46c8af5ffa264f7323c4016a6d46b24834848982",
+      "size_bytes": 11243
+    },
+    {
+      "path": "doctrine/live_document_size/ledger_manifests.jsonl",
+      "sha256": "cc440686fc2e3cdb12dc9f59c89a68f0d8fcac3a91b8c548468c3493c4fc1742",
+      "size_bytes": 2101
+    },
+    {
+      "path": "doctrine/live_document_size/surfaces.jsonl",
+      "sha256": "94dc07ce3659469a5dc73accd095c8fffb3612f8e214c6252b315ed1803fb53d",
+      "size_bytes": 23579
+    },
+    {
+      "path": "doctrine/live_document_size/version_retention_contracts.jsonl",
+      "sha256": "ab72dd778aa41345de30991160f7a6757e58cfb19c6c0c610b526010ba94074d",
+      "size_bytes": 689
+    },
+    {
+      "path": "doctrine/readme_entrypoint/routed_destinations.jsonl",
+      "sha256": "33de2eb80235e7fce8ca73991598658477df3d2688d474ae1017a490c7628161",
+      "size_bytes": 3651
+    },
+    {
+      "path": "doctrine/task_tree/index_archives.jsonl",
+      "sha256": "309fbf03e97faf401bee211ab758bbafbf6662652e1d2e51ad64be1952d46f02",
+      "size_bytes": 570
+    }
+  ],
+  "schema": "fsmgen.release_call_selection_compaction_census.v1",
+  "scope": "Recursive owner-named scalar/list fields in all current doctrine JSON/JSONL registries; exact flat completed subtrees only; no checker change.",
+  "source_bytes": 1117504,
+  "source_path": "docs/tasks/HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.md",
+  "source_revision": "e0cfaecedbfb44f757e44660fa940bf15df47e6b",
+  "source_sha256": "e0b67d91c5d21bd9b90d21809c4297819d9e9040ec96839a855666e1c1569305",
+  "terminals": [
+    {
+      "all_done": true,
+      "compact_lines": 12,
+      "nested_terminals": 0,
+      "nodes": 7,
+      "root": "HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.3.3",
+      "source_lines": 52
+    },
+    {
+      "all_done": true,
+      "compact_lines": 12,
+      "nested_terminals": 0,
+      "nodes": 6,
+      "root": "HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.2",
+      "source_lines": 44
+    },
+    {
+      "all_done": true,
+      "compact_lines": 12,
+      "nested_terminals": 0,
+      "nodes": 5,
+      "root": "HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.2",
+      "source_lines": 37
+    }
+  ]
+}

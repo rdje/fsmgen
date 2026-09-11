@@ -1,0 +1,66 @@
+{
+  "baseline_profiles": 4,
+  "cases_by_partition": [
+    612,
+    484,
+    589,
+    466,
+    642,
+    505,
+    538,
+    429
+  ],
+  "domain_falsifiers": [
+    "missing partition",
+    "missing selector",
+    "duplicate selector",
+    "stale numeric injection binding",
+    "wrong occurrence",
+    "wrong effect",
+    "unsafe source after",
+    "independent sealed after",
+    "invented runtime authority"
+  ],
+  "new_fixture_allocations": 0,
+  "numeric_symbol_orders": [
+    {
+      "distinct_numeric_symbol_orders": 2,
+      "profile_id": "ordinary_retired_other_observation"
+    },
+    {
+      "distinct_numeric_symbol_orders": 2,
+      "profile_id": "equal_reference_retired_other_observation"
+    },
+    {
+      "distinct_numeric_symbol_orders": 4,
+      "profile_id": "ordinary_active_runtime"
+    },
+    {
+      "distinct_numeric_symbol_orders": 1,
+      "profile_id": "ordinary_retired_last_observation"
+    }
+  ],
+  "partitions": 8,
+  "preserved_healthy_roots_absent": 16,
+  "prospective_pins": 7,
+  "pure_order_skeletons": 38,
+  "report_falsifiers": [
+    "missing baseline",
+    "duplicate baseline",
+    "changed selector count",
+    "changed effect vector",
+    "missing order",
+    "duplicated order",
+    "reordered traversal",
+    "changed topology",
+    "changed effect on reordered input",
+    "unexpected fixture",
+    "hidden process",
+    "changed input"
+  ],
+  "schema": "fsmgen.release_call_selection_audit.v1",
+  "scope": "Finite prospective safe-call partitions and pure effect/order-skeleton models. Original healthy runs remain exact. Synthetic order permutations are not valid reference codecs or admitted filesystem fixtures. No interruption matrix, close-error, omission, original producer or native execution runs in this leaf.",
+  "selected_cases": 4265,
+  "success": true,
+  "unchanged_inputs": 97
+}

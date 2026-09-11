@@ -2259,6 +2259,30 @@ completion names its following before-call alias. Neither receives an independen
 fault cut. These healthy observations do not yet prove cleanup after throwing
 at a selected boundary.
 
+Saved numeric call IDs identify one retained run. Fresh fixture identities
+change content-derived reference filenames; sorting those names can change
+when a census first inspects each image. The same numeric call ID can therefore
+name a different helper in another otherwise equivalent healthy fixture.
+The prospective call plan at
+`docs/audits/native-proxy-release-call-selection-20260911/plan.json`
+uses the exact helper name, its zero-based occurrence and the admitted phase.
+For example, `NativeProxyImageCustody::_source#0:before` selects the first
+archive-source open in the chosen profile. Its after-return counterpart remains
+excluded because the caller has not yet taken ownership.
+
+Before a future fault invocation, its expected call flow must be derived from
+that fixture's constructed physical inputs and the selector resolved uniquely
+within that flow. The saved numeric ID remains evidence provenance. The
+execution audit must check the actual prefix, handle custody and effect state
+against the current inputs. Separate before/after partitions cover each selected
+healthy profile; readback, failed-unlink and absence controls follow separately.
+
+The pure selector model checks reordered reference-loop inputs against an
+independent calculation of completed call subtrees and effect milestones.
+Those order-only permutations demonstrate selector and effect consistency;
+they do not construct valid reference records, admit new filesystem fixtures
+or prove actual interruption cleanup.
+
 Later lanes qualify safe interruptions, actual closes followed by modeled
 errors, deliberate close omissions with separate recovery, and the final
 source/evidence join. Primary errors outrank cleanup reports. These finite

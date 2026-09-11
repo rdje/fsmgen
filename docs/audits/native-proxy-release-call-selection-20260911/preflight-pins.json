@@ -1,0 +1,37 @@
+[
+  {
+    "path": "docs/audits/native-proxy-release-call-selection-20260911/plan.json",
+    "size_bytes": 2210663,
+    "sha256": "d55ac3653bc40f0bdd0cf3ce2b855352c17ea55dde7ae8c115e75f5741d65194"
+  },
+  {
+    "path": "docs/audits/native-proxy-release-call-selection-20260911/prepare.py",
+    "size_bytes": 4055,
+    "sha256": "e6bc251039a74203e28c26eb91a3cbcbb711ac7788fb3bbfeeec89758cabbdfd"
+  },
+  {
+    "path": "docs/audits/native-proxy-release-call-selection-20260911/model.py",
+    "size_bytes": 2782,
+    "sha256": "9ecf68956361a42b4222d136e414ee872f0a63f8a0c0e2f9b8fd7cd841124a08"
+  },
+  {
+    "path": "docs/audits/native-proxy-release-call-selection-20260911/qualify.py",
+    "size_bytes": 2990,
+    "sha256": "7d2bf6fd4747e4ae53366f1ba5fe59e5f6628e87dc69c0470234c1709d4069dd"
+  },
+  {
+    "path": "docs/audits/native-proxy-release-call-selection-20260911/audit.py",
+    "size_bytes": 13556,
+    "sha256": "ff332d7f00e067ab687abdea04c2fd5c81254d381fe6fa8b81f7f247d403649d"
+  },
+  {
+    "path": "docs/audits/native-proxy-release-call-selection-20260911/reference-order-review.json",
+    "size_bytes": 7060,
+    "sha256": "de2077fc024bdffae8c5416232b68886a52564de7f09eb6dc8cad6bb8f8ec025"
+  },
+  {
+    "path": "docs/audits/native-proxy-release-call-selection-20260911/compaction-census.json",
+    "size_bytes": 4924,
+    "sha256": "52247e5453506cbb62e9ff98785c8d9680c0fa9d69641dc1b9883d05cafd234a"
+  }
+]

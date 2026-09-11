@@ -1,0 +1,178 @@
+{
+  "mechanism": "Global reference filenames are content-derived keys containing fixture identities. New inert roots change those keys. Sorted reference census order controls when each distinct image is first inspected, so a saved numeric preorder call ID need not name the same helper in a fresh context, even when per-symbol counts are identical.",
+  "owner": "HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.12.4.1.3.4.4.3.1",
+  "resolution": "Select by exact package/symbol, zero-based occurrence and admitted phase. Derive the full expected flow from each constructed before-release physical record set before invoking release, resolve that selector to its current call ID, and independently compare the executed prefix and actual custody. Retain the original saved ID only as provenance. Tail-return aliases and returned-source exclusions remain exact.",
+  "rows": [
+    {
+      "boundary_order": [
+        {
+          "image": "other",
+          "name": "references/546c359ad0d4e0af1ed0935a88d7c23096f6693406ae6b64f84c8734c03e971c.json",
+          "role": "runtime"
+        },
+        {
+          "image": "selected",
+          "name": "references/6da6a49a995bc631ee235356eb1ab28bb9fba0d19b5e8ccdd547081381787c86.json",
+          "role": "other_observation"
+        },
+        {
+          "image": "selected",
+          "name": "references/e7bb353f32a1fa0012b7adbadbd101698d6678cc0e715e54dd27c6abc6571ec9.json",
+          "role": "selected_observation"
+        }
+      ],
+      "first_numeric_id_symbol_difference": {
+        "id": 101,
+        "new": "NativeProxyReferenceCensus::_image",
+        "old": "NativeProxyReferenceCensus::_matches_image"
+      },
+      "original_order": [
+        {
+          "image": "selected",
+          "name": "references/637f7f2a925c9c938edc4dd4740bbfabdd54651d4ae345e0ca30aa54c3a983cf.json",
+          "role": "other_observation"
+        },
+        {
+          "image": "selected",
+          "name": "references/c15dbc46b9777e7f101d5636a26771fc28633b25bc88154ea7b5cce9ca919df7.json",
+          "role": "selected_observation"
+        },
+        {
+          "image": "other",
+          "name": "references/c6f66fa9b6052934edb0c62ef07729736f49f9fd674147a9af5bff35b9e98ac9.json",
+          "role": "runtime"
+        }
+      ],
+      "profile": "ordinary_retired_other_observation",
+      "same_symbol_occurrence_counts": true
+    },
+    {
+      "boundary_order": [
+        {
+          "image": "selected",
+          "name": "references/bdf7dddc264330c0abab779fedcb4f14468d1bef22d30a56b521eecb0e130637.json",
+          "role": "selected_observation"
+        },
+        {
+          "image": "other",
+          "name": "references/cebefe88983b522cec32b5cb136a8b6a0401f3affc31ee7ef0c0272e943b3162.json",
+          "role": "runtime"
+        },
+        {
+          "image": "selected",
+          "name": "references/ed4b510ec183403d6ff6a066b517502e845304b225a30d1d21b0c26e353f4997.json",
+          "role": "other_observation"
+        }
+      ],
+      "first_numeric_id_symbol_difference": {
+        "id": 94,
+        "new": "NativeProxyReferenceCensus::_image",
+        "old": "NativeProxyReferenceCensus::_matches_image"
+      },
+      "original_order": [
+        {
+          "image": "selected",
+          "name": "references/c28db3e0371215e6a2845233a9d6b1cb375a2f2de951eda52a67f98d90ca67ef.json",
+          "role": "other_observation"
+        },
+        {
+          "image": "selected",
+          "name": "references/cea92a99b68c5a88a70fa160c1538e2814e59af02eca8e3644bd9954e11008f5.json",
+          "role": "selected_observation"
+        },
+        {
+          "image": "other",
+          "name": "references/e0bffa4e8a95b6583e981e6cb49a77034ba4ba81a26ad993be661a07a77552f9.json",
+          "role": "runtime"
+        }
+      ],
+      "profile": "equal_reference_retired_other_observation",
+      "same_symbol_occurrence_counts": true
+    },
+    {
+      "boundary_order": [
+        {
+          "image": "selected",
+          "name": "references/5d0fadb2a0cd89c49f50fad8cdc34d92f0e912aa1652682451da95cb5831d06a.json",
+          "role": "runtime"
+        },
+        {
+          "image": "other",
+          "name": "references/ac659da88d5bf58f2b073b0019dd0819ebbc949fa54e9fac7ea218c5569b7287.json",
+          "role": "runtime"
+        },
+        {
+          "image": "selected",
+          "name": "references/e4c7dda47564a1881c82d672de252683ceb54536402ba7859fc26e2b1e0dd1ee.json",
+          "role": "other_observation"
+        },
+        {
+          "image": "selected",
+          "name": "references/ead7b79cfcfb9e9903b7f4d85cf507a2625afbd3e0447d01399c7322c4c9d63f.json",
+          "role": "selected_observation"
+        }
+      ],
+      "first_numeric_id_symbol_difference": {
+        "id": 103,
+        "new": "NativeProxyReferenceCensus::_image",
+        "old": "NativeProxyReferenceCensus::_matches_image"
+      },
+      "original_order": [
+        {
+          "image": "selected",
+          "name": "references/260f0aa0a0c8279208c8624fc7d4ced0dcaef4e62aa780034c745000c4a2fc14.json",
+          "role": "selected_observation"
+        },
+        {
+          "image": "selected",
+          "name": "references/27716f9af5b15e5b188dda90633ebf8c09cd43800d8bcffef29bb283d273cca1.json",
+          "role": "runtime"
+        },
+        {
+          "image": "selected",
+          "name": "references/714450303574d73a924ca52a278311f2af0b8105fa4c8aa2c11f17685c08364d.json",
+          "role": "other_observation"
+        },
+        {
+          "image": "other",
+          "name": "references/9ff50b1eacef1136fac450fc67eb1178f01f8ba6d57d129bfecd9df5a550f623.json",
+          "role": "runtime"
+        }
+      ],
+      "profile": "ordinary_active_runtime",
+      "same_symbol_occurrence_counts": true
+    },
+    {
+      "boundary_order": [
+        {
+          "image": "selected",
+          "name": "references/7a675d01e5cd42a62b8f203a8a56059fa5c42b4f0f4676a7a15c9afdb666b71b.json",
+          "role": "selected_observation"
+        },
+        {
+          "image": "other",
+          "name": "references/d4f88346e844083d407e72d06612c64d5a503f6bcdbe6599a87e4fe01a485fc7.json",
+          "role": "runtime"
+        }
+      ],
+      "first_numeric_id_symbol_difference": null,
+      "original_order": [
+        {
+          "image": "selected",
+          "name": "references/0a9be463c15f5c84a0bff9d872e260c90b52d482da89228b255ea45955dcdb44.json",
+          "role": "selected_observation"
+        },
+        {
+          "image": "other",
+          "name": "references/5785a1c5f2ef21314b4b99aba12980abde0e528459db84f8e70af3af9394e776.json",
+          "role": "runtime"
+        }
+      ],
+      "profile": "ordinary_retired_last_observation",
+      "same_symbol_occurrence_counts": true
+    }
+  ],
+  "schema": "fsmgen.release_call_order_root_cause.v1",
+  "scope": "Existing saved-data comparison only; no new allocation, original qualifier or native process. This is a selector portability constraint, not evidence of an original release defect.",
+  "source_revision": "e0cfaecedbfb44f757e44660fa940bf15df47e6b"
+}
