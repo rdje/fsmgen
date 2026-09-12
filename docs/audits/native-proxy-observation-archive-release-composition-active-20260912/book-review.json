@@ -1,0 +1,20 @@
+{
+  "checked_passages": [
+    "Active-runtime release composition qualification covers 45 cases: 1 healthy control, 20 grouped-close cases and 24 primary-error cases, with 610 TAP assertions.",
+    "No runtime retirement occurs.",
+    "Cleanup targets the settled observation hold while preserving the runtime's ownership and source files.",
+    "A failure after unlink preserves the deletion and the latest recorded absence state.",
+    "Last-observation compositions remain pending,",
+    "python3 -B docs/audits/native-proxy-observation-archive-release-composition-active-20260912/audit.py --verify-saved"
+  ],
+  "exact_output_absent": true,
+  "exit_code": 0,
+  "output": ".artifacts/tmp/native-proxy-release-composition-active-book-20260912/book",
+  "rendered_bytes": 23472787,
+  "rendered_directories": 3,
+  "rendered_files": 98,
+  "renderer_warnings": [
+    "WARN search index is very large (13235971 bytes)"
+  ],
+  "same_volume_direct_objects": true
+}

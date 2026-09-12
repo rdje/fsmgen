@@ -1,0 +1,1627 @@
+{
+   "allocated" : [
+      {
+         "device" : 16777244,
+         "inode" : 82623498,
+         "kind" : "store",
+         "path" : ".artifacts/tmp/native-proxy-image-custody/cases/fsmgen-_B2NoO05"
+      },
+      {
+         "device" : 16777244,
+         "inode" : 82623499,
+         "kind" : "workspace",
+         "path" : ".artifacts/tmp/process-supervisor-tests/fsmgen-MPNkTw4K"
+      },
+      {
+         "device" : 16777244,
+         "inode" : 82623500,
+         "kind" : "other_workspace",
+         "path" : ".artifacts/tmp/process-supervisor-tests/fsmgen-ZjeRtyMo"
+      },
+      {
+         "device" : 16777244,
+         "inode" : 82623501,
+         "kind" : "evidence",
+         "path" : ".artifacts/logs/native-proxy-observation-acquisition-20260910/cases/fsmgen-zU63656a"
+      },
+      {
+         "device" : 16777244,
+         "inode" : 82623529,
+         "kind" : "store",
+         "path" : ".artifacts/tmp/native-proxy-image-custody/cases/fsmgen-BXJNduxV"
+      },
+      {
+         "device" : 16777244,
+         "inode" : 82623530,
+         "kind" : "workspace",
+         "path" : ".artifacts/tmp/process-supervisor-tests/fsmgen-N2jsROcW"
+      },
+      {
+         "device" : 16777244,
+         "inode" : 82623531,
+         "kind" : "other_workspace",
+         "path" : ".artifacts/tmp/process-supervisor-tests/fsmgen-khw33oFc"
+      },
+      {
+         "device" : 16777244,
+         "inode" : 82623532,
+         "kind" : "evidence",
+         "path" : ".artifacts/logs/native-proxy-observation-acquisition-20260910/cases/fsmgen-2xUC7EXf"
+      },
+      {
+         "device" : 16777244,
+         "inode" : 82623560,
+         "kind" : "store",
+         "path" : ".artifacts/tmp/native-proxy-image-custody/cases/fsmgen-TsTheemx"
+      },
+      {
+         "device" : 16777244,
+         "inode" : 82623561,
+         "kind" : "workspace",
+         "path" : ".artifacts/tmp/process-supervisor-tests/fsmgen-Obz4MYy1"
+      },
+      {
+         "device" : 16777244,
+         "inode" : 82623562,
+         "kind" : "other_workspace",
+         "path" : ".artifacts/tmp/process-supervisor-tests/fsmgen-9MnQJnrq"
+      },
+      {
+         "device" : 16777244,
+         "inode" : 82623563,
+         "kind" : "evidence",
+         "path" : ".artifacts/logs/native-proxy-observation-acquisition-20260910/cases/fsmgen-pWm9sQMj"
+      },
+      {
+         "device" : 16777244,
+         "inode" : 82623591,
+         "kind" : "store",
+         "path" : ".artifacts/tmp/native-proxy-image-custody/cases/fsmgen-w_ejw3xZ"
+      },
+      {
+         "device" : 16777244,
+         "inode" : 82623592,
+         "kind" : "workspace",
+         "path" : ".artifacts/tmp/process-supervisor-tests/fsmgen-YuZybaiJ"
+      },
+      {
+         "device" : 16777244,
+         "inode" : 82623593,
+         "kind" : "other_workspace",
+         "path" : ".artifacts/tmp/process-supervisor-tests/fsmgen-TulYXo51"
+      },
+      {
+         "device" : 16777244,
+         "inode" : 82623594,
+         "kind" : "evidence",
+         "path" : ".artifacts/logs/native-proxy-observation-acquisition-20260910/cases/fsmgen-AcMZ7elQ"
+      },
+      {
+         "device" : 16777244,
+         "inode" : 82623622,
+         "kind" : "store",
+         "path" : ".artifacts/tmp/native-proxy-image-custody/cases/fsmgen-PP_KJuaq"
+      },
+      {
+         "device" : 16777244,
+         "inode" : 82623623,
+         "kind" : "workspace",
+         "path" : ".artifacts/tmp/process-supervisor-tests/fsmgen-xXajNRWK"
+      },
+      {
+         "device" : 16777244,
+         "inode" : 82623624,
+         "kind" : "other_workspace",
+         "path" : ".artifacts/tmp/process-supervisor-tests/fsmgen-HMQo3XIH"
+      },
+      {
+         "device" : 16777244,
+         "inode" : 82623625,
+         "kind" : "evidence",
+         "path" : ".artifacts/logs/native-proxy-observation-acquisition-20260910/cases/fsmgen-BzzKCXQn"
+      },
+      {
+         "device" : 16777244,
+         "inode" : 82623653,
+         "kind" : "store",
+         "path" : ".artifacts/tmp/native-proxy-image-custody/cases/fsmgen-Uq9pVrsN"
+      },
+      {
+         "device" : 16777244,
+         "inode" : 82623654,
+         "kind" : "workspace",
+         "path" : ".artifacts/tmp/process-supervisor-tests/fsmgen-677WWeZs"
+      },
+      {
+         "device" : 16777244,
+         "inode" : 82623655,
+         "kind" : "other_workspace",
+         "path" : ".artifacts/tmp/process-supervisor-tests/fsmgen-YH7P1foX"
+      },
+      {
+         "device" : 16777244,
+         "inode" : 82623656,
+         "kind" : "evidence",
+         "path" : ".artifacts/logs/native-proxy-observation-acquisition-20260910/cases/fsmgen-_oKa7nLz"
+      },
+      {
+         "device" : 16777244,
+         "inode" : 82623684,
+         "kind" : "store",
+         "path" : ".artifacts/tmp/native-proxy-image-custody/cases/fsmgen-IusJHYKR"
+      },
+      {
+         "device" : 16777244,
+         "inode" : 82623685,
+         "kind" : "workspace",
+         "path" : ".artifacts/tmp/process-supervisor-tests/fsmgen-qPwbzH_0"
+      },
+      {
+         "device" : 16777244,
+         "inode" : 82623686,
+         "kind" : "other_workspace",
+         "path" : ".artifacts/tmp/process-supervisor-tests/fsmgen-DKZg2HLj"
+      },
+      {
+         "device" : 16777244,
+         "inode" : 82623687,
+         "kind" : "evidence",
+         "path" : ".artifacts/logs/native-proxy-observation-acquisition-20260910/cases/fsmgen-7_Ygzq1Q"
+      },
+      {
+         "device" : 16777244,
+         "inode" : 82623715,
+         "kind" : "store",
+         "path" : ".artifacts/tmp/native-proxy-image-custody/cases/fsmgen-RfSkDM24"
+      },
+      {
+         "device" : 16777244,
+         "inode" : 82623716,
+         "kind" : "workspace",
+         "path" : ".artifacts/tmp/process-supervisor-tests/fsmgen-BEC2UWGy"
+      },
+      {
+         "device" : 16777244,
+         "inode" : 82623717,
+         "kind" : "other_workspace",
+         "path" : ".artifacts/tmp/process-supervisor-tests/fsmgen-8WG_h3ka"
+      },
+      {
+         "device" : 16777244,
+         "inode" : 82623718,
+         "kind" : "evidence",
+         "path" : ".artifacts/logs/native-proxy-observation-acquisition-20260910/cases/fsmgen-T4e8UGjf"
+      },
+      {
+         "device" : 16777244,
+         "inode" : 82623746,
+         "kind" : "store",
+         "path" : ".artifacts/tmp/native-proxy-image-custody/cases/fsmgen-k_MHe7Rh"
+      },
+      {
+         "device" : 16777244,
+         "inode" : 82623747,
+         "kind" : "workspace",
+         "path" : ".artifacts/tmp/process-supervisor-tests/fsmgen-UvV10A82"
+      },
+      {
+         "device" : 16777244,
+         "inode" : 82623748,
+         "kind" : "other_workspace",
+         "path" : ".artifacts/tmp/process-supervisor-tests/fsmgen-BheJNRcd"
+      },
+      {
+         "device" : 16777244,
+         "inode" : 82623749,
+         "kind" : "evidence",
+         "path" : ".artifacts/logs/native-proxy-observation-acquisition-20260910/cases/fsmgen-RyqGzjGH"
+      },
+      {
+         "device" : 16777244,
+         "inode" : 82623777,
+         "kind" : "store",
+         "path" : ".artifacts/tmp/native-proxy-image-custody/cases/fsmgen-Fy9Uz1WW"
+      },
+      {
+         "device" : 16777244,
+         "inode" : 82623778,
+         "kind" : "workspace",
+         "path" : ".artifacts/tmp/process-supervisor-tests/fsmgen-Zgp9Auhp"
+      },
+      {
+         "device" : 16777244,
+         "inode" : 82623779,
+         "kind" : "other_workspace",
+         "path" : ".artifacts/tmp/process-supervisor-tests/fsmgen-xX6I0pKg"
+      },
+      {
+         "device" : 16777244,
+         "inode" : 82623780,
+         "kind" : "evidence",
+         "path" : ".artifacts/logs/native-proxy-observation-acquisition-20260910/cases/fsmgen-Rqq98Vdj"
+      },
+      {
+         "device" : 16777244,
+         "inode" : 82623808,
+         "kind" : "store",
+         "path" : ".artifacts/tmp/native-proxy-image-custody/cases/fsmgen-1p1lKtDN"
+      },
+      {
+         "device" : 16777244,
+         "inode" : 82623809,
+         "kind" : "workspace",
+         "path" : ".artifacts/tmp/process-supervisor-tests/fsmgen-7o0roNIc"
+      },
+      {
+         "device" : 16777244,
+         "inode" : 82623810,
+         "kind" : "other_workspace",
+         "path" : ".artifacts/tmp/process-supervisor-tests/fsmgen-9im9rZpQ"
+      },
+      {
+         "device" : 16777244,
+         "inode" : 82623811,
+         "kind" : "evidence",
+         "path" : ".artifacts/logs/native-proxy-observation-acquisition-20260910/cases/fsmgen-Fc1tTQGJ"
+      },
+      {
+         "device" : 16777244,
+         "inode" : 82623900,
+         "kind" : "store",
+         "path" : ".artifacts/tmp/native-proxy-image-custody/cases/fsmgen-9WoXVTHA"
+      },
+      {
+         "device" : 16777244,
+         "inode" : 82623901,
+         "kind" : "workspace",
+         "path" : ".artifacts/tmp/process-supervisor-tests/fsmgen-AJ34J_29"
+      },
+      {
+         "device" : 16777244,
+         "inode" : 82623904,
+         "kind" : "other_workspace",
+         "path" : ".artifacts/tmp/process-supervisor-tests/fsmgen-rk8Bdzvl"
+      },
+      {
+         "device" : 16777244,
+         "inode" : 82623905,
+         "kind" : "evidence",
+         "path" : ".artifacts/logs/native-proxy-observation-acquisition-20260910/cases/fsmgen-EJbTaiFr"
+      },
+      {
+         "device" : 16777244,
+         "inode" : 82623961,
+         "kind" : "store",
+         "path" : ".artifacts/tmp/native-proxy-image-custody/cases/fsmgen-cgZpIxW2"
+      },
+      {
+         "device" : 16777244,
+         "inode" : 82623962,
+         "kind" : "workspace",
+         "path" : ".artifacts/tmp/process-supervisor-tests/fsmgen-slyyuNJJ"
+      },
+      {
+         "device" : 16777244,
+         "inode" : 82623963,
+         "kind" : "other_workspace",
+         "path" : ".artifacts/tmp/process-supervisor-tests/fsmgen-dsPqSMIz"
+      },
+      {
+         "device" : 16777244,
+         "inode" : 82623964,
+         "kind" : "evidence",
+         "path" : ".artifacts/logs/native-proxy-observation-acquisition-20260910/cases/fsmgen-KTcxyxzd"
+      },
+      {
+         "device" : 16777244,
+         "inode" : 82624011,
+         "kind" : "store",
+         "path" : ".artifacts/tmp/native-proxy-image-custody/cases/fsmgen-OzaUCkJv"
+      },
+      {
+         "device" : 16777244,
+         "inode" : 82624012,
+         "kind" : "workspace",
+         "path" : ".artifacts/tmp/process-supervisor-tests/fsmgen-4QRw1NNP"
+      },
+      {
+         "device" : 16777244,
+         "inode" : 82624013,
+         "kind" : "other_workspace",
+         "path" : ".artifacts/tmp/process-supervisor-tests/fsmgen-BclRskym"
+      },
+      {
+         "device" : 16777244,
+         "inode" : 82624014,
+         "kind" : "evidence",
+         "path" : ".artifacts/logs/native-proxy-observation-acquisition-20260910/cases/fsmgen-2Jzva2o2"
+      },
+      {
+         "device" : 16777244,
+         "inode" : 82624103,
+         "kind" : "store",
+         "path" : ".artifacts/tmp/native-proxy-image-custody/cases/fsmgen-E_DtEJd0"
+      },
+      {
+         "device" : 16777244,
+         "inode" : 82624104,
+         "kind" : "workspace",
+         "path" : ".artifacts/tmp/process-supervisor-tests/fsmgen-TVvjW1lM"
+      },
+      {
+         "device" : 16777244,
+         "inode" : 82624105,
+         "kind" : "other_workspace",
+         "path" : ".artifacts/tmp/process-supervisor-tests/fsmgen-2VIkHwcC"
+      },
+      {
+         "device" : 16777244,
+         "inode" : 82624108,
+         "kind" : "evidence",
+         "path" : ".artifacts/logs/native-proxy-observation-acquisition-20260910/cases/fsmgen-8CIhHPHN"
+      },
+      {
+         "device" : 16777244,
+         "inode" : 82624141,
+         "kind" : "store",
+         "path" : ".artifacts/tmp/native-proxy-image-custody/cases/fsmgen-rVr_QQDO"
+      },
+      {
+         "device" : 16777244,
+         "inode" : 82624142,
+         "kind" : "workspace",
+         "path" : ".artifacts/tmp/process-supervisor-tests/fsmgen-ZxhdyniK"
+      },
+      {
+         "device" : 16777244,
+         "inode" : 82624143,
+         "kind" : "other_workspace",
+         "path" : ".artifacts/tmp/process-supervisor-tests/fsmgen-hLpL00FN"
+      },
+      {
+         "device" : 16777244,
+         "inode" : 82624144,
+         "kind" : "evidence",
+         "path" : ".artifacts/logs/native-proxy-observation-acquisition-20260910/cases/fsmgen-VinYdzDb"
+      },
+      {
+         "device" : 16777244,
+         "inode" : 82624172,
+         "kind" : "store",
+         "path" : ".artifacts/tmp/native-proxy-image-custody/cases/fsmgen-p_xtHLQp"
+      },
+      {
+         "device" : 16777244,
+         "inode" : 82624173,
+         "kind" : "workspace",
+         "path" : ".artifacts/tmp/process-supervisor-tests/fsmgen-x5O0izmP"
+      },
+      {
+         "device" : 16777244,
+         "inode" : 82624174,
+         "kind" : "other_workspace",
+         "path" : ".artifacts/tmp/process-supervisor-tests/fsmgen-xgWblIg4"
+      },
+      {
+         "device" : 16777244,
+         "inode" : 82624175,
+         "kind" : "evidence",
+         "path" : ".artifacts/logs/native-proxy-observation-acquisition-20260910/cases/fsmgen-iCvgpbPx"
+      },
+      {
+         "device" : 16777244,
+         "inode" : 82624203,
+         "kind" : "store",
+         "path" : ".artifacts/tmp/native-proxy-image-custody/cases/fsmgen-fl8dvN1T"
+      },
+      {
+         "device" : 16777244,
+         "inode" : 82624204,
+         "kind" : "workspace",
+         "path" : ".artifacts/tmp/process-supervisor-tests/fsmgen-dwOl7H4g"
+      },
+      {
+         "device" : 16777244,
+         "inode" : 82624205,
+         "kind" : "other_workspace",
+         "path" : ".artifacts/tmp/process-supervisor-tests/fsmgen-WsFj6rW6"
+      },
+      {
+         "device" : 16777244,
+         "inode" : 82624206,
+         "kind" : "evidence",
+         "path" : ".artifacts/logs/native-proxy-observation-acquisition-20260910/cases/fsmgen-WsCHv4Ac"
+      },
+      {
+         "device" : 16777244,
+         "inode" : 82624234,
+         "kind" : "store",
+         "path" : ".artifacts/tmp/native-proxy-image-custody/cases/fsmgen-w78WAWms"
+      },
+      {
+         "device" : 16777244,
+         "inode" : 82624235,
+         "kind" : "workspace",
+         "path" : ".artifacts/tmp/process-supervisor-tests/fsmgen-eRbDXasK"
+      },
+      {
+         "device" : 16777244,
+         "inode" : 82624236,
+         "kind" : "other_workspace",
+         "path" : ".artifacts/tmp/process-supervisor-tests/fsmgen-uItKvAph"
+      },
+      {
+         "device" : 16777244,
+         "inode" : 82624237,
+         "kind" : "evidence",
+         "path" : ".artifacts/logs/native-proxy-observation-acquisition-20260910/cases/fsmgen-FGkM_jXS"
+      },
+      {
+         "device" : 16777244,
+         "inode" : 82624265,
+         "kind" : "store",
+         "path" : ".artifacts/tmp/native-proxy-image-custody/cases/fsmgen-F4EsSQ5y"
+      },
+      {
+         "device" : 16777244,
+         "inode" : 82624266,
+         "kind" : "workspace",
+         "path" : ".artifacts/tmp/process-supervisor-tests/fsmgen-ZFCvUIwD"
+      },
+      {
+         "device" : 16777244,
+         "inode" : 82624267,
+         "kind" : "other_workspace",
+         "path" : ".artifacts/tmp/process-supervisor-tests/fsmgen-Y__y5aIX"
+      },
+      {
+         "device" : 16777244,
+         "inode" : 82624268,
+         "kind" : "evidence",
+         "path" : ".artifacts/logs/native-proxy-observation-acquisition-20260910/cases/fsmgen-_RmdYjHQ"
+      },
+      {
+         "device" : 16777244,
+         "inode" : 82624296,
+         "kind" : "store",
+         "path" : ".artifacts/tmp/native-proxy-image-custody/cases/fsmgen-OKEvWMA_"
+      },
+      {
+         "device" : 16777244,
+         "inode" : 82624297,
+         "kind" : "workspace",
+         "path" : ".artifacts/tmp/process-supervisor-tests/fsmgen-WNylWjyO"
+      },
+      {
+         "device" : 16777244,
+         "inode" : 82624298,
+         "kind" : "other_workspace",
+         "path" : ".artifacts/tmp/process-supervisor-tests/fsmgen-IScI8vGp"
+      },
+      {
+         "device" : 16777244,
+         "inode" : 82624299,
+         "kind" : "evidence",
+         "path" : ".artifacts/logs/native-proxy-observation-acquisition-20260910/cases/fsmgen-WQ57kXbN"
+      },
+      {
+         "device" : 16777244,
+         "inode" : 82624327,
+         "kind" : "store",
+         "path" : ".artifacts/tmp/native-proxy-image-custody/cases/fsmgen-YnrOtYUc"
+      },
+      {
+         "device" : 16777244,
+         "inode" : 82624328,
+         "kind" : "workspace",
+         "path" : ".artifacts/tmp/process-supervisor-tests/fsmgen-tYA_Kyx6"
+      },
+      {
+         "device" : 16777244,
+         "inode" : 82624329,
+         "kind" : "other_workspace",
+         "path" : ".artifacts/tmp/process-supervisor-tests/fsmgen-1b4Fzj0z"
+      },
+      {
+         "device" : 16777244,
+         "inode" : 82624330,
+         "kind" : "evidence",
+         "path" : ".artifacts/logs/native-proxy-observation-acquisition-20260910/cases/fsmgen-rOTrvUdR"
+      },
+      {
+         "device" : 16777244,
+         "inode" : 82624358,
+         "kind" : "store",
+         "path" : ".artifacts/tmp/native-proxy-image-custody/cases/fsmgen-CUzQPZdT"
+      },
+      {
+         "device" : 16777244,
+         "inode" : 82624359,
+         "kind" : "workspace",
+         "path" : ".artifacts/tmp/process-supervisor-tests/fsmgen-gSGYS3ei"
+      },
+      {
+         "device" : 16777244,
+         "inode" : 82624360,
+         "kind" : "other_workspace",
+         "path" : ".artifacts/tmp/process-supervisor-tests/fsmgen-Z6_gwrvT"
+      },
+      {
+         "device" : 16777244,
+         "inode" : 82624361,
+         "kind" : "evidence",
+         "path" : ".artifacts/logs/native-proxy-observation-acquisition-20260910/cases/fsmgen-l9zN4SVd"
+      },
+      {
+         "device" : 16777244,
+         "inode" : 82624389,
+         "kind" : "store",
+         "path" : ".artifacts/tmp/native-proxy-image-custody/cases/fsmgen-Z88BG6SM"
+      },
+      {
+         "device" : 16777244,
+         "inode" : 82624390,
+         "kind" : "workspace",
+         "path" : ".artifacts/tmp/process-supervisor-tests/fsmgen-UUHoQOrF"
+      },
+      {
+         "device" : 16777244,
+         "inode" : 82624391,
+         "kind" : "other_workspace",
+         "path" : ".artifacts/tmp/process-supervisor-tests/fsmgen-_sO9PVDA"
+      },
+      {
+         "device" : 16777244,
+         "inode" : 82624392,
+         "kind" : "evidence",
+         "path" : ".artifacts/logs/native-proxy-observation-acquisition-20260910/cases/fsmgen-vGDEMPTI"
+      },
+      {
+         "device" : 16777244,
+         "inode" : 82624425,
+         "kind" : "store",
+         "path" : ".artifacts/tmp/native-proxy-image-custody/cases/fsmgen-ZSgmEapl"
+      },
+      {
+         "device" : 16777244,
+         "inode" : 82624426,
+         "kind" : "workspace",
+         "path" : ".artifacts/tmp/process-supervisor-tests/fsmgen-9Vk2IXql"
+      },
+      {
+         "device" : 16777244,
+         "inode" : 82624427,
+         "kind" : "other_workspace",
+         "path" : ".artifacts/tmp/process-supervisor-tests/fsmgen-doM7AkEs"
+      },
+      {
+         "device" : 16777244,
+         "inode" : 82624428,
+         "kind" : "evidence",
+         "path" : ".artifacts/logs/native-proxy-observation-acquisition-20260910/cases/fsmgen-mfMApHOe"
+      },
+      {
+         "device" : 16777244,
+         "inode" : 82624456,
+         "kind" : "store",
+         "path" : ".artifacts/tmp/native-proxy-image-custody/cases/fsmgen-8wa0KREm"
+      },
+      {
+         "device" : 16777244,
+         "inode" : 82624457,
+         "kind" : "workspace",
+         "path" : ".artifacts/tmp/process-supervisor-tests/fsmgen-2_QMjJcC"
+      },
+      {
+         "device" : 16777244,
+         "inode" : 82624458,
+         "kind" : "other_workspace",
+         "path" : ".artifacts/tmp/process-supervisor-tests/fsmgen-SoGKHQLL"
+      },
+      {
+         "device" : 16777244,
+         "inode" : 82624459,
+         "kind" : "evidence",
+         "path" : ".artifacts/logs/native-proxy-observation-acquisition-20260910/cases/fsmgen-FiSb8iH8"
+      },
+      {
+         "device" : 16777244,
+         "inode" : 82624487,
+         "kind" : "store",
+         "path" : ".artifacts/tmp/native-proxy-image-custody/cases/fsmgen-JMhMk_Ug"
+      },
+      {
+         "device" : 16777244,
+         "inode" : 82624488,
+         "kind" : "workspace",
+         "path" : ".artifacts/tmp/process-supervisor-tests/fsmgen-u6e9T9RN"
+      },
+      {
+         "device" : 16777244,
+         "inode" : 82624489,
+         "kind" : "other_workspace",
+         "path" : ".artifacts/tmp/process-supervisor-tests/fsmgen-a2qbQZVb"
+      },
+      {
+         "device" : 16777244,
+         "inode" : 82624490,
+         "kind" : "evidence",
+         "path" : ".artifacts/logs/native-proxy-observation-acquisition-20260910/cases/fsmgen-GlDdbwJu"
+      },
+      {
+         "device" : 16777244,
+         "inode" : 82624520,
+         "kind" : "store",
+         "path" : ".artifacts/tmp/native-proxy-image-custody/cases/fsmgen-kvRoAl0q"
+      },
+      {
+         "device" : 16777244,
+         "inode" : 82624521,
+         "kind" : "workspace",
+         "path" : ".artifacts/tmp/process-supervisor-tests/fsmgen-bpNtEuu9"
+      },
+      {
+         "device" : 16777244,
+         "inode" : 82624522,
+         "kind" : "other_workspace",
+         "path" : ".artifacts/tmp/process-supervisor-tests/fsmgen-slShzBOZ"
+      },
+      {
+         "device" : 16777244,
+         "inode" : 82624523,
+         "kind" : "evidence",
+         "path" : ".artifacts/logs/native-proxy-observation-acquisition-20260910/cases/fsmgen-GI8EWhuA"
+      },
+      {
+         "device" : 16777244,
+         "inode" : 82624551,
+         "kind" : "store",
+         "path" : ".artifacts/tmp/native-proxy-image-custody/cases/fsmgen-ZwMrNN6V"
+      },
+      {
+         "device" : 16777244,
+         "inode" : 82624552,
+         "kind" : "workspace",
+         "path" : ".artifacts/tmp/process-supervisor-tests/fsmgen-8PuqHoVs"
+      },
+      {
+         "device" : 16777244,
+         "inode" : 82624553,
+         "kind" : "other_workspace",
+         "path" : ".artifacts/tmp/process-supervisor-tests/fsmgen-aNaibVD4"
+      },
+      {
+         "device" : 16777244,
+         "inode" : 82624554,
+         "kind" : "evidence",
+         "path" : ".artifacts/logs/native-proxy-observation-acquisition-20260910/cases/fsmgen-RW_9WO6b"
+      },
+      {
+         "device" : 16777244,
+         "inode" : 82624582,
+         "kind" : "store",
+         "path" : ".artifacts/tmp/native-proxy-image-custody/cases/fsmgen-2AvRE6Bv"
+      },
+      {
+         "device" : 16777244,
+         "inode" : 82624583,
+         "kind" : "workspace",
+         "path" : ".artifacts/tmp/process-supervisor-tests/fsmgen-etDM4vj6"
+      },
+      {
+         "device" : 16777244,
+         "inode" : 82624584,
+         "kind" : "other_workspace",
+         "path" : ".artifacts/tmp/process-supervisor-tests/fsmgen-L0eYRl4D"
+      },
+      {
+         "device" : 16777244,
+         "inode" : 82624585,
+         "kind" : "evidence",
+         "path" : ".artifacts/logs/native-proxy-observation-acquisition-20260910/cases/fsmgen-8TkrIx8Z"
+      },
+      {
+         "device" : 16777244,
+         "inode" : 82624613,
+         "kind" : "store",
+         "path" : ".artifacts/tmp/native-proxy-image-custody/cases/fsmgen-Wx15srhG"
+      },
+      {
+         "device" : 16777244,
+         "inode" : 82624614,
+         "kind" : "workspace",
+         "path" : ".artifacts/tmp/process-supervisor-tests/fsmgen-oN7ejgVN"
+      },
+      {
+         "device" : 16777244,
+         "inode" : 82624615,
+         "kind" : "other_workspace",
+         "path" : ".artifacts/tmp/process-supervisor-tests/fsmgen-8DuvrDs8"
+      },
+      {
+         "device" : 16777244,
+         "inode" : 82624616,
+         "kind" : "evidence",
+         "path" : ".artifacts/logs/native-proxy-observation-acquisition-20260910/cases/fsmgen-oZGMO_Ob"
+      },
+      {
+         "device" : 16777244,
+         "inode" : 82624644,
+         "kind" : "store",
+         "path" : ".artifacts/tmp/native-proxy-image-custody/cases/fsmgen-7g0jTi00"
+      },
+      {
+         "device" : 16777244,
+         "inode" : 82624645,
+         "kind" : "workspace",
+         "path" : ".artifacts/tmp/process-supervisor-tests/fsmgen-55tWm3NT"
+      },
+      {
+         "device" : 16777244,
+         "inode" : 82624646,
+         "kind" : "other_workspace",
+         "path" : ".artifacts/tmp/process-supervisor-tests/fsmgen-iV0Ent6t"
+      },
+      {
+         "device" : 16777244,
+         "inode" : 82624647,
+         "kind" : "evidence",
+         "path" : ".artifacts/logs/native-proxy-observation-acquisition-20260910/cases/fsmgen-FsuwNiNU"
+      },
+      {
+         "device" : 16777244,
+         "inode" : 82624675,
+         "kind" : "store",
+         "path" : ".artifacts/tmp/native-proxy-image-custody/cases/fsmgen-eAH53960"
+      },
+      {
+         "device" : 16777244,
+         "inode" : 82624676,
+         "kind" : "workspace",
+         "path" : ".artifacts/tmp/process-supervisor-tests/fsmgen-OwmVOcsZ"
+      },
+      {
+         "device" : 16777244,
+         "inode" : 82624677,
+         "kind" : "other_workspace",
+         "path" : ".artifacts/tmp/process-supervisor-tests/fsmgen-MeSJhNs3"
+      },
+      {
+         "device" : 16777244,
+         "inode" : 82624678,
+         "kind" : "evidence",
+         "path" : ".artifacts/logs/native-proxy-observation-acquisition-20260910/cases/fsmgen-KS3j0d9h"
+      },
+      {
+         "device" : 16777244,
+         "inode" : 82624706,
+         "kind" : "store",
+         "path" : ".artifacts/tmp/native-proxy-image-custody/cases/fsmgen-MROVreD8"
+      },
+      {
+         "device" : 16777244,
+         "inode" : 82624707,
+         "kind" : "workspace",
+         "path" : ".artifacts/tmp/process-supervisor-tests/fsmgen-hy5r4Tcu"
+      },
+      {
+         "device" : 16777244,
+         "inode" : 82624708,
+         "kind" : "other_workspace",
+         "path" : ".artifacts/tmp/process-supervisor-tests/fsmgen-hxpp4aqI"
+      },
+      {
+         "device" : 16777244,
+         "inode" : 82624709,
+         "kind" : "evidence",
+         "path" : ".artifacts/logs/native-proxy-observation-acquisition-20260910/cases/fsmgen-zpuKlWjQ"
+      },
+      {
+         "device" : 16777244,
+         "inode" : 82624737,
+         "kind" : "store",
+         "path" : ".artifacts/tmp/native-proxy-image-custody/cases/fsmgen-1JiQtSFV"
+      },
+      {
+         "device" : 16777244,
+         "inode" : 82624738,
+         "kind" : "workspace",
+         "path" : ".artifacts/tmp/process-supervisor-tests/fsmgen-xdnzmtmT"
+      },
+      {
+         "device" : 16777244,
+         "inode" : 82624739,
+         "kind" : "other_workspace",
+         "path" : ".artifacts/tmp/process-supervisor-tests/fsmgen-tTjUQMid"
+      },
+      {
+         "device" : 16777244,
+         "inode" : 82624740,
+         "kind" : "evidence",
+         "path" : ".artifacts/logs/native-proxy-observation-acquisition-20260910/cases/fsmgen-jGnAX26z"
+      },
+      {
+         "device" : 16777244,
+         "inode" : 82624768,
+         "kind" : "store",
+         "path" : ".artifacts/tmp/native-proxy-image-custody/cases/fsmgen-RUfGxX8F"
+      },
+      {
+         "device" : 16777244,
+         "inode" : 82624769,
+         "kind" : "workspace",
+         "path" : ".artifacts/tmp/process-supervisor-tests/fsmgen-tbHpYl69"
+      },
+      {
+         "device" : 16777244,
+         "inode" : 82624770,
+         "kind" : "other_workspace",
+         "path" : ".artifacts/tmp/process-supervisor-tests/fsmgen-DxeBB69j"
+      },
+      {
+         "device" : 16777244,
+         "inode" : 82624771,
+         "kind" : "evidence",
+         "path" : ".artifacts/logs/native-proxy-observation-acquisition-20260910/cases/fsmgen-WBc0cE6m"
+      },
+      {
+         "device" : 16777244,
+         "inode" : 82624799,
+         "kind" : "store",
+         "path" : ".artifacts/tmp/native-proxy-image-custody/cases/fsmgen-uMXurdu4"
+      },
+      {
+         "device" : 16777244,
+         "inode" : 82624800,
+         "kind" : "workspace",
+         "path" : ".artifacts/tmp/process-supervisor-tests/fsmgen-LX9Zf7Gh"
+      },
+      {
+         "device" : 16777244,
+         "inode" : 82624801,
+         "kind" : "other_workspace",
+         "path" : ".artifacts/tmp/process-supervisor-tests/fsmgen-djbhjIYj"
+      },
+      {
+         "device" : 16777244,
+         "inode" : 82624802,
+         "kind" : "evidence",
+         "path" : ".artifacts/logs/native-proxy-observation-acquisition-20260910/cases/fsmgen-3a31ZKlc"
+      },
+      {
+         "device" : 16777244,
+         "inode" : 82624831,
+         "kind" : "store",
+         "path" : ".artifacts/tmp/native-proxy-image-custody/cases/fsmgen-XPjm4gu5"
+      },
+      {
+         "device" : 16777244,
+         "inode" : 82624832,
+         "kind" : "workspace",
+         "path" : ".artifacts/tmp/process-supervisor-tests/fsmgen-PVBNxy1Q"
+      },
+      {
+         "device" : 16777244,
+         "inode" : 82624833,
+         "kind" : "other_workspace",
+         "path" : ".artifacts/tmp/process-supervisor-tests/fsmgen-zWRKK2JR"
+      },
+      {
+         "device" : 16777244,
+         "inode" : 82624834,
+         "kind" : "evidence",
+         "path" : ".artifacts/logs/native-proxy-observation-acquisition-20260910/cases/fsmgen-FHj_p5ng"
+      },
+      {
+         "device" : 16777244,
+         "inode" : 82624862,
+         "kind" : "store",
+         "path" : ".artifacts/tmp/native-proxy-image-custody/cases/fsmgen-lBkIXFUe"
+      },
+      {
+         "device" : 16777244,
+         "inode" : 82624863,
+         "kind" : "workspace",
+         "path" : ".artifacts/tmp/process-supervisor-tests/fsmgen-sEqNyZSh"
+      },
+      {
+         "device" : 16777244,
+         "inode" : 82624864,
+         "kind" : "other_workspace",
+         "path" : ".artifacts/tmp/process-supervisor-tests/fsmgen-39FGYNlm"
+      },
+      {
+         "device" : 16777244,
+         "inode" : 82624865,
+         "kind" : "evidence",
+         "path" : ".artifacts/logs/native-proxy-observation-acquisition-20260910/cases/fsmgen-YYQ_wcQj"
+      },
+      {
+         "device" : 16777244,
+         "inode" : 82624893,
+         "kind" : "store",
+         "path" : ".artifacts/tmp/native-proxy-image-custody/cases/fsmgen-q0U5CL2Q"
+      },
+      {
+         "device" : 16777244,
+         "inode" : 82624894,
+         "kind" : "workspace",
+         "path" : ".artifacts/tmp/process-supervisor-tests/fsmgen-hwHiJx5w"
+      },
+      {
+         "device" : 16777244,
+         "inode" : 82624895,
+         "kind" : "other_workspace",
+         "path" : ".artifacts/tmp/process-supervisor-tests/fsmgen-It9pHjZb"
+      },
+      {
+         "device" : 16777244,
+         "inode" : 82624896,
+         "kind" : "evidence",
+         "path" : ".artifacts/logs/native-proxy-observation-acquisition-20260910/cases/fsmgen-8E4XY7F6"
+      },
+      {
+         "device" : 16777244,
+         "inode" : 82624924,
+         "kind" : "store",
+         "path" : ".artifacts/tmp/native-proxy-image-custody/cases/fsmgen-EFQSNBHG"
+      },
+      {
+         "device" : 16777244,
+         "inode" : 82624925,
+         "kind" : "workspace",
+         "path" : ".artifacts/tmp/process-supervisor-tests/fsmgen-tBEwce_Z"
+      },
+      {
+         "device" : 16777244,
+         "inode" : 82624926,
+         "kind" : "other_workspace",
+         "path" : ".artifacts/tmp/process-supervisor-tests/fsmgen-W8HFHE1s"
+      },
+      {
+         "device" : 16777244,
+         "inode" : 82624927,
+         "kind" : "evidence",
+         "path" : ".artifacts/logs/native-proxy-observation-acquisition-20260910/cases/fsmgen-pOfX8dci"
+      },
+      {
+         "device" : 16777244,
+         "inode" : 82624989,
+         "kind" : "store",
+         "path" : ".artifacts/tmp/native-proxy-image-custody/cases/fsmgen-HCsimP9b"
+      },
+      {
+         "device" : 16777244,
+         "inode" : 82624990,
+         "kind" : "workspace",
+         "path" : ".artifacts/tmp/process-supervisor-tests/fsmgen-9EcHl1fZ"
+      },
+      {
+         "device" : 16777244,
+         "inode" : 82624991,
+         "kind" : "other_workspace",
+         "path" : ".artifacts/tmp/process-supervisor-tests/fsmgen-5PMfNtZD"
+      },
+      {
+         "device" : 16777244,
+         "inode" : 82624992,
+         "kind" : "evidence",
+         "path" : ".artifacts/logs/native-proxy-observation-acquisition-20260910/cases/fsmgen-LTKxDvx8"
+      },
+      {
+         "device" : 16777244,
+         "inode" : 82625022,
+         "kind" : "store",
+         "path" : ".artifacts/tmp/native-proxy-image-custody/cases/fsmgen-YkKinEmV"
+      },
+      {
+         "device" : 16777244,
+         "inode" : 82625023,
+         "kind" : "workspace",
+         "path" : ".artifacts/tmp/process-supervisor-tests/fsmgen-0LSOqXep"
+      },
+      {
+         "device" : 16777244,
+         "inode" : 82625024,
+         "kind" : "other_workspace",
+         "path" : ".artifacts/tmp/process-supervisor-tests/fsmgen-6q8L9qQn"
+      },
+      {
+         "device" : 16777244,
+         "inode" : 82625025,
+         "kind" : "evidence",
+         "path" : ".artifacts/logs/native-proxy-observation-acquisition-20260910/cases/fsmgen-zwvplUdW"
+      },
+      {
+         "device" : 16777244,
+         "inode" : 82625053,
+         "kind" : "store",
+         "path" : ".artifacts/tmp/native-proxy-image-custody/cases/fsmgen-ZIuB551D"
+      },
+      {
+         "device" : 16777244,
+         "inode" : 82625054,
+         "kind" : "workspace",
+         "path" : ".artifacts/tmp/process-supervisor-tests/fsmgen-of1zGlD2"
+      },
+      {
+         "device" : 16777244,
+         "inode" : 82625055,
+         "kind" : "other_workspace",
+         "path" : ".artifacts/tmp/process-supervisor-tests/fsmgen-DsSGMRFW"
+      },
+      {
+         "device" : 16777244,
+         "inode" : 82625056,
+         "kind" : "evidence",
+         "path" : ".artifacts/logs/native-proxy-observation-acquisition-20260910/cases/fsmgen-SUx9eSkb"
+      },
+      {
+         "device" : 16777244,
+         "inode" : 82625086,
+         "kind" : "store",
+         "path" : ".artifacts/tmp/native-proxy-image-custody/cases/fsmgen-BsgQU5JU"
+      },
+      {
+         "device" : 16777244,
+         "inode" : 82625087,
+         "kind" : "workspace",
+         "path" : ".artifacts/tmp/process-supervisor-tests/fsmgen-C14qeEla"
+      },
+      {
+         "device" : 16777244,
+         "inode" : 82625088,
+         "kind" : "other_workspace",
+         "path" : ".artifacts/tmp/process-supervisor-tests/fsmgen-NXa1mQ2a"
+      },
+      {
+         "device" : 16777244,
+         "inode" : 82625089,
+         "kind" : "evidence",
+         "path" : ".artifacts/logs/native-proxy-observation-acquisition-20260910/cases/fsmgen-TbCJSnTZ"
+      }
+   ],
+   "caller_controls" : [
+      {
+         "baseline_error" : "release admission requires the fixed coordinator\n",
+         "baseline_returned" : 0,
+         "calls" : [
+            {
+               "caller" : "NativeProxyReleaseCallFaultTrace",
+               "depth" : 8,
+               "id" : 0,
+               "name" : "NativeProxyObservationRelease::_coordinator_request",
+               "occurrence" : 0,
+               "parent" : null,
+               "tail" : 1
+            }
+         ],
+         "events" : [
+            "call:0:before"
+         ],
+         "instrumented_error" : "release admission requires the fixed coordinator\n",
+         "instrumented_returned" : 0,
+         "interrupted_boundary_ids" : [
+            0
+         ],
+         "name" : "NativeProxyObservationRelease::_coordinator_request"
+      },
+      {
+         "baseline_error" : "release ownership admission requires the fixed coordinator\n",
+         "baseline_returned" : 0,
+         "calls" : [
+            {
+               "caller" : "NativeProxyReleaseCallFaultTrace",
+               "depth" : 8,
+               "id" : 0,
+               "name" : "NativeProxyObservationRelease::_admit_locked",
+               "occurrence" : 0,
+               "parent" : null,
+               "tail" : 1
+            }
+         ],
+         "events" : [
+            "call:0:before"
+         ],
+         "instrumented_error" : "release ownership admission requires the fixed coordinator\n",
+         "instrumented_returned" : 0,
+         "interrupted_boundary_ids" : [
+            0
+         ],
+         "name" : "NativeProxyObservationRelease::_admit_locked"
+      },
+      {
+         "baseline_error" : "exact unlink requires the release owner\n",
+         "baseline_returned" : 0,
+         "calls" : [
+            {
+               "caller" : "NativeProxyReleaseCallFaultTrace",
+               "depth" : 8,
+               "id" : 0,
+               "name" : "NativeProxyObservationRelease::_unlink_exact",
+               "occurrence" : 0,
+               "parent" : null,
+               "tail" : 1
+            }
+         ],
+         "events" : [
+            "call:0:before"
+         ],
+         "instrumented_error" : "exact unlink requires the release owner\n",
+         "instrumented_returned" : 0,
+         "interrupted_boundary_ids" : [
+            0
+         ],
+         "name" : "NativeProxyObservationRelease::_unlink_exact"
+      },
+      {
+         "baseline_error" : "exact release requires the fixed coordinator\n",
+         "baseline_returned" : 0,
+         "calls" : [
+            {
+               "caller" : "NativeProxyReleaseCallFaultTrace",
+               "depth" : 8,
+               "id" : 0,
+               "name" : "NativeProxyObservationRelease::_release_locked",
+               "occurrence" : 0,
+               "parent" : null,
+               "tail" : 1
+            }
+         ],
+         "events" : [
+            "call:0:before"
+         ],
+         "instrumented_error" : "exact release requires the fixed coordinator\n",
+         "instrumented_returned" : 0,
+         "interrupted_boundary_ids" : [
+            0
+         ],
+         "name" : "NativeProxyObservationRelease::_release_locked"
+      },
+      {
+         "baseline_error" : "release closure requires the fixed coordinator\n",
+         "baseline_returned" : 0,
+         "calls" : [
+            {
+               "caller" : "NativeProxyReleaseCallFaultTrace",
+               "depth" : 8,
+               "id" : 0,
+               "name" : "NativeProxyObservationRelease::_finish_locked",
+               "occurrence" : 0,
+               "parent" : null,
+               "tail" : 1
+            }
+         ],
+         "events" : [
+            "call:0:before"
+         ],
+         "instrumented_error" : "release closure requires the fixed coordinator\n",
+         "instrumented_returned" : 0,
+         "interrupted_boundary_ids" : [
+            0
+         ],
+         "name" : "NativeProxyObservationRelease::_finish_locked"
+      },
+      {
+         "baseline_error" : "reference inspection requires the sealed coordinator\n",
+         "baseline_returned" : 0,
+         "calls" : [
+            {
+               "caller" : "NativeProxyReleaseCallFaultTrace",
+               "depth" : 8,
+               "id" : 0,
+               "name" : "NativeProxyReferenceCensus::_inspect_locked",
+               "occurrence" : 0,
+               "parent" : null,
+               "tail" : 1
+            }
+         ],
+         "events" : [
+            "call:0:before"
+         ],
+         "instrumented_error" : "reference inspection requires the sealed coordinator\n",
+         "instrumented_returned" : 0,
+         "interrupted_boundary_ids" : [
+            0
+         ],
+         "name" : "NativeProxyReferenceCensus::_inspect_locked"
+      }
+   ],
+   "case_files" : [
+      {
+         "index" : 0,
+         "name" : "healthy:None:none",
+         "path" : ".artifacts/logs/native-proxy-observation-archive-release-composition-active-20260912/cases/case-0000.json",
+         "sha256" : "1aa86e33556b32cbad8c55309b12f71997a88ec054a6fb6e588103bf34045971",
+         "size_bytes" : 930219
+      },
+      {
+         "index" : 1,
+         "name" : "group:NativeProxyImageCoordination::_census:observed",
+         "path" : ".artifacts/logs/native-proxy-observation-archive-release-composition-active-20260912/cases/case-0001.json",
+         "sha256" : "2ff6c27bcfa531fb7684dcda1e15ab1a6eee25a1f8fdd1d5d02e9b8a4f57bbd6",
+         "size_bytes" : 272301
+      },
+      {
+         "index" : 2,
+         "name" : "group:NativeProxyImageCoordination::_census:reversed",
+         "path" : ".artifacts/logs/native-proxy-observation-archive-release-composition-active-20260912/cases/case-0002.json",
+         "sha256" : "03fc24c65792778614997df6c12405d606aecb12d9081d8cb01d20865b9b5917",
+         "size_bytes" : 272301
+      },
+      {
+         "index" : 3,
+         "name" : "group:NativeProxyImageCoordination::_names:observed",
+         "path" : ".artifacts/logs/native-proxy-observation-archive-release-composition-active-20260912/cases/case-0003.json",
+         "sha256" : "a03ef97aca1d6f6386e521e28a89a73d17940a7f36009e6a518284ea645e6972",
+         "size_bytes" : 224024
+      },
+      {
+         "index" : 4,
+         "name" : "group:NativeProxyImageCoordination::_names:reversed",
+         "path" : ".artifacts/logs/native-proxy-observation-archive-release-composition-active-20260912/cases/case-0004.json",
+         "sha256" : "55afecf9c98ab3c83174e9601f9e56d57fa0acd5e490eedd750b5402eb4f7b56",
+         "size_bytes" : 224024
+      },
+      {
+         "index" : 5,
+         "name" : "group:NativeProxyImageCoordination::_transaction:observed",
+         "path" : ".artifacts/logs/native-proxy-observation-archive-release-composition-active-20260912/cases/case-0005.json",
+         "sha256" : "d3322a7b4ba8d330845287e78ef371f548197d3039e2f0d74396fdfcc123b8dc",
+         "size_bytes" : 930934
+      },
+      {
+         "index" : 6,
+         "name" : "group:NativeProxyImageCoordination::_transaction:reversed",
+         "path" : ".artifacts/logs/native-proxy-observation-archive-release-composition-active-20260912/cases/case-0006.json",
+         "sha256" : "171d0e92b0b4586c20de02d4e312cac2522ef1f4a773d156818c9613f2675c99",
+         "size_bytes" : 930934
+      },
+      {
+         "index" : 7,
+         "name" : "group:NativeProxyImageCustody::_members:observed",
+         "path" : ".artifacts/logs/native-proxy-observation-archive-release-composition-active-20260912/cases/case-0007.json",
+         "sha256" : "dcef5c5183f608092c02ac46d21ea943e937195e35f8925bff39fbb0cce907c4",
+         "size_bytes" : 301112
+      },
+      {
+         "index" : 8,
+         "name" : "group:NativeProxyImageCustody::_members:reversed",
+         "path" : ".artifacts/logs/native-proxy-observation-archive-release-composition-active-20260912/cases/case-0008.json",
+         "sha256" : "350960dbe12212e74d7b62b556de456fef5f55f2edd234521f7c8e8a55024636",
+         "size_bytes" : 301112
+      },
+      {
+         "index" : 9,
+         "name" : "group:NativeProxyImageCustody::read_entry:observed",
+         "path" : ".artifacts/logs/native-proxy-observation-archive-release-composition-active-20260912/cases/case-0009.json",
+         "sha256" : "e0521ebfada2b105dbcc1d17b9d4ebc45268796501855390ab915a1d461c4d13",
+         "size_bytes" : 317456
+      },
+      {
+         "index" : 10,
+         "name" : "group:NativeProxyImageCustody::read_entry:reversed",
+         "path" : ".artifacts/logs/native-proxy-observation-archive-release-composition-active-20260912/cases/case-0010.json",
+         "sha256" : "69dee427c8c21b9b58c9455e7475e9956ff1697639f7caed507b5998d3331cda",
+         "size_bytes" : 317459
+      },
+      {
+         "index" : 11,
+         "name" : "group:NativeProxyObservationArchive::_source_closure:observed",
+         "path" : ".artifacts/logs/native-proxy-observation-archive-release-composition-active-20260912/cases/case-0011.json",
+         "sha256" : "d47b5a471570958637a9b7caa2fed807350169b36adc4a5f33bf3cb64cfdbfe4",
+         "size_bytes" : 230111
+      },
+      {
+         "index" : 12,
+         "name" : "group:NativeProxyObservationArchive::_source_closure:reversed",
+         "path" : ".artifacts/logs/native-proxy-observation-archive-release-composition-active-20260912/cases/case-0012.json",
+         "sha256" : "5784f63d4cffc51c1598aacb837601922a26bd534ed27be8c7a685a159fd2b68",
+         "size_bytes" : 230111
+      },
+      {
+         "index" : 13,
+         "name" : "group:NativeProxyObservationRelease::_close_owned:observed",
+         "path" : ".artifacts/logs/native-proxy-observation-archive-release-composition-active-20260912/cases/case-0013.json",
+         "sha256" : "c4b3145858a72767302862df436783414025c0f92b6838e6045b2d88267d4a46",
+         "size_bytes" : 929851
+      },
+      {
+         "index" : 14,
+         "name" : "group:NativeProxyObservationRelease::_close_owned:reversed",
+         "path" : ".artifacts/logs/native-proxy-observation-archive-release-composition-active-20260912/cases/case-0014.json",
+         "sha256" : "b2ab037abd699ce78454b1bbc831841ee4bfb5ced477ced30d941947bc74cef7",
+         "size_bytes" : 929851
+      },
+      {
+         "index" : 15,
+         "name" : "group:NativeProxyReferenceCensus::_closure:observed",
+         "path" : ".artifacts/logs/native-proxy-observation-archive-release-composition-active-20260912/cases/case-0015.json",
+         "sha256" : "295f4cbe37cd2de21da41c40020c75533267e8b16e277f54b1ee2e6f6c4d3535",
+         "size_bytes" : 365957
+      },
+      {
+         "index" : 16,
+         "name" : "group:NativeProxyReferenceCensus::_closure:reversed",
+         "path" : ".artifacts/logs/native-proxy-observation-archive-release-composition-active-20260912/cases/case-0016.json",
+         "sha256" : "42cefb5b795eb293d90654ded67c57da54b75fa3c1d7666326f04d433ab43891",
+         "size_bytes" : 365955
+      },
+      {
+         "index" : 17,
+         "name" : "group:NativeProxyReferenceCensus::_image:observed",
+         "path" : ".artifacts/logs/native-proxy-observation-archive-release-composition-active-20260912/cases/case-0017.json",
+         "sha256" : "5597ca60be03ff58e6eabda21abf4c101a0c90c2648dee7e7c8ebc2348995503",
+         "size_bytes" : 315824
+      },
+      {
+         "index" : 18,
+         "name" : "group:NativeProxyReferenceCensus::_image:reversed",
+         "path" : ".artifacts/logs/native-proxy-observation-archive-release-composition-active-20260912/cases/case-0018.json",
+         "sha256" : "1794b93c9b8a5e438a110e753e4bb5d2a52ac3157aa2336baba8242ca1ae01af",
+         "size_bytes" : 315822
+      },
+      {
+         "index" : 19,
+         "name" : "group:NativeProxyReferenceCensus::_inspect_locked:observed",
+         "path" : ".artifacts/logs/native-proxy-observation-archive-release-composition-active-20260912/cases/case-0019.json",
+         "sha256" : "ea81ffdeecc0ed5c417ddbd3cb2f53b385a7b523352321b2708bb6ad11b66285",
+         "size_bytes" : 430289
+      },
+      {
+         "index" : 20,
+         "name" : "group:NativeProxyReferenceCensus::_inspect_locked:reversed",
+         "path" : ".artifacts/logs/native-proxy-observation-archive-release-composition-active-20260912/cases/case-0020.json",
+         "sha256" : "0de5e41c6e44644ae7957a44c15252df6b76de320395a508fd6008c7286b7d25",
+         "size_bytes" : 430289
+      },
+      {
+         "index" : 21,
+         "name" : "source-primary:NativeProxyImageCoordination::_census:observed",
+         "path" : ".artifacts/logs/native-proxy-observation-archive-release-composition-active-20260912/cases/case-0021.json",
+         "sha256" : "be2952c3a44afda3e39a2a06845b9cce9ea5fa65e34549d9be2ac9ce00b9fdba",
+         "size_bytes" : 272834
+      },
+      {
+         "index" : 22,
+         "name" : "source-primary:NativeProxyImageCoordination::_census:reversed",
+         "path" : ".artifacts/logs/native-proxy-observation-archive-release-composition-active-20260912/cases/case-0022.json",
+         "sha256" : "b5c345b2f5b53f6fbafbd604038438d1abd87c4db7862f5ec52cc8e81b0205b4",
+         "size_bytes" : 272832
+      },
+      {
+         "index" : 23,
+         "name" : "source-primary:NativeProxyImageCustody::read_entry:observed",
+         "path" : ".artifacts/logs/native-proxy-observation-archive-release-composition-active-20260912/cases/case-0023.json",
+         "sha256" : "09e2fc81f6167bc17db9ad7d8150149cc9f5e189405c8801f1f62cbc23d4d5b2",
+         "size_bytes" : 316843
+      },
+      {
+         "index" : 24,
+         "name" : "source-primary:NativeProxyImageCustody::read_entry:reversed",
+         "path" : ".artifacts/logs/native-proxy-observation-archive-release-composition-active-20260912/cases/case-0024.json",
+         "sha256" : "dbbec0c4eab4807357572d1cc9a9ff2cadfd2e32fa53884ca40c6b9d4eb81fc8",
+         "size_bytes" : 316845
+      },
+      {
+         "index" : 25,
+         "name" : "source-primary:NativeProxyObservationArchive::_source_closure:observed",
+         "path" : ".artifacts/logs/native-proxy-observation-archive-release-composition-active-20260912/cases/case-0025.json",
+         "sha256" : "453a3dc4066dd63cb678a1411aa5647d1caa4dda2fa82c64c7d63574ecab7e64",
+         "size_bytes" : 230628
+      },
+      {
+         "index" : 26,
+         "name" : "source-primary:NativeProxyObservationArchive::_source_closure:reversed",
+         "path" : ".artifacts/logs/native-proxy-observation-archive-release-composition-active-20260912/cases/case-0026.json",
+         "sha256" : "3a354d0ee34c572df5c77f5120139d31b48e916193a9b24b24d7dc19255626a6",
+         "size_bytes" : 230628
+      },
+      {
+         "index" : 27,
+         "name" : "source-primary:NativeProxyObservationRelease::_close_owned:observed",
+         "path" : ".artifacts/logs/native-proxy-observation-archive-release-composition-active-20260912/cases/case-0027.json",
+         "sha256" : "7c34024a181d269e19a8677171bddf91b9eb1f759df23a1d7f94c034831d0639",
+         "size_bytes" : 211129
+      },
+      {
+         "index" : 28,
+         "name" : "source-primary:NativeProxyObservationRelease::_close_owned:reversed",
+         "path" : ".artifacts/logs/native-proxy-observation-archive-release-composition-active-20260912/cases/case-0028.json",
+         "sha256" : "6a55b0285a4ce68845afb3e4edad8a2fd6eb867a8f2fa83944707ac4c8090f07",
+         "size_bytes" : 211129
+      },
+      {
+         "index" : 29,
+         "name" : "source-primary:NativeProxyReferenceCensus::_closure:observed",
+         "path" : ".artifacts/logs/native-proxy-observation-archive-release-composition-active-20260912/cases/case-0029.json",
+         "sha256" : "c8088b36079d93b9c3bad7e976634ecc2ff2ce20cb7e3cb60f0681221c56d0f3",
+         "size_bytes" : 366490
+      },
+      {
+         "index" : 30,
+         "name" : "source-primary:NativeProxyReferenceCensus::_closure:reversed",
+         "path" : ".artifacts/logs/native-proxy-observation-archive-release-composition-active-20260912/cases/case-0030.json",
+         "sha256" : "2a11449412fffc872ab8006722184c1c67a5c2ca29d52138dc0888f8e4b45e23",
+         "size_bytes" : 366490
+      },
+      {
+         "index" : 31,
+         "name" : "source-primary:NativeProxyReferenceCensus::_image:observed",
+         "path" : ".artifacts/logs/native-proxy-observation-archive-release-composition-active-20260912/cases/case-0031.json",
+         "sha256" : "1e67d56b4de5ca91b6fac11948cb5355930b9f13c19c259e023764bc2c9d703c",
+         "size_bytes" : 315264
+      },
+      {
+         "index" : 32,
+         "name" : "source-primary:NativeProxyReferenceCensus::_image:reversed",
+         "path" : ".artifacts/logs/native-proxy-observation-archive-release-composition-active-20260912/cases/case-0032.json",
+         "sha256" : "5e012d88c98f96c7a56e69fba681c5fd0e141d787727158ff3ca0794d145667c",
+         "size_bytes" : 315262
+      },
+      {
+         "index" : 33,
+         "name" : "source-primary:NativeProxyReferenceCensus::_inspect_locked:observed",
+         "path" : ".artifacts/logs/native-proxy-observation-archive-release-composition-active-20260912/cases/case-0033.json",
+         "sha256" : "f09cc034daaedd5430c660ca0f3ccf6fc35c546ba61df0b433dc77e5fad2a449",
+         "size_bytes" : 315142
+      },
+      {
+         "index" : 34,
+         "name" : "source-primary:NativeProxyReferenceCensus::_inspect_locked:reversed",
+         "path" : ".artifacts/logs/native-proxy-observation-archive-release-composition-active-20260912/cases/case-0034.json",
+         "sha256" : "81d6a2e580bc948c58a51b9c2380b2a9bb2d74ab04cb736e654d9732e42bf113",
+         "size_bytes" : 315144
+      },
+      {
+         "index" : 35,
+         "name" : "directory-primary:NativeProxyImageCoordination::_names:observed",
+         "path" : ".artifacts/logs/native-proxy-observation-archive-release-composition-active-20260912/cases/case-0035.json",
+         "sha256" : "63da83f8cd7a253d5cd2e181d7b417842ebc6eea1d3ae2ab5f417e33af195402",
+         "size_bytes" : 203624
+      },
+      {
+         "index" : 36,
+         "name" : "directory-primary:NativeProxyImageCoordination::_names:reversed",
+         "path" : ".artifacts/logs/native-proxy-observation-archive-release-composition-active-20260912/cases/case-0036.json",
+         "sha256" : "f904fcdcfb6abd8a7e7c7775783ccf66f27ca5bb3187c36225cabcb8bbc80936",
+         "size_bytes" : 203624
+      },
+      {
+         "index" : 37,
+         "name" : "directory-primary:NativeProxyImageCustody::_members:observed",
+         "path" : ".artifacts/logs/native-proxy-observation-archive-release-composition-active-20260912/cases/case-0037.json",
+         "sha256" : "12f23a356add15dd557b56a750276c736fae341fe1c96de505cabab20764a90c",
+         "size_bytes" : 302751
+      },
+      {
+         "index" : 38,
+         "name" : "directory-primary:NativeProxyImageCustody::_members:reversed",
+         "path" : ".artifacts/logs/native-proxy-observation-archive-release-composition-active-20260912/cases/case-0038.json",
+         "sha256" : "c49471d499e34b6171c6470ac057e704d022e98169637f110ae14288eed52aca",
+         "size_bytes" : 302751
+      },
+      {
+         "index" : 39,
+         "name" : "milestone-primary:before-unlink:observed",
+         "path" : ".artifacts/logs/native-proxy-observation-archive-release-composition-active-20260912/cases/case-0039.json",
+         "sha256" : "95747fb10f982144722bb331611abd80f1debccc8fe7db1cf09db56b3d69f9d4",
+         "size_bytes" : 714725
+      },
+      {
+         "index" : 40,
+         "name" : "milestone-primary:before-unlink:reversed",
+         "path" : ".artifacts/logs/native-proxy-observation-archive-release-composition-active-20260912/cases/case-0040.json",
+         "sha256" : "f2521368c16585221ba13bbee4a495b343bae4068d877848598aebe34af04129",
+         "size_bytes" : 714725
+      },
+      {
+         "index" : 41,
+         "name" : "milestone-primary:after-unlink-unknown:observed",
+         "path" : ".artifacts/logs/native-proxy-observation-archive-release-composition-active-20260912/cases/case-0041.json",
+         "sha256" : "cbbbae70324c5238830e14bac24fc87f219c8c01caa5c8903ca19cdfcbdc2652",
+         "size_bytes" : 713173
+      },
+      {
+         "index" : 42,
+         "name" : "milestone-primary:after-unlink-unknown:reversed",
+         "path" : ".artifacts/logs/native-proxy-observation-archive-release-composition-active-20260912/cases/case-0042.json",
+         "sha256" : "a05b6c95d2920534d488eb9e24f7053ae6343cdf9692f6be5b17ef5a0be29be8",
+         "size_bytes" : 713173
+      },
+      {
+         "index" : 43,
+         "name" : "milestone-primary:final-lock-identity:observed",
+         "path" : ".artifacts/logs/native-proxy-observation-archive-release-composition-active-20260912/cases/case-0043.json",
+         "sha256" : "478678d65d75de820c6da05efab96e763d92250f13189515d0c54b55b536f460",
+         "size_bytes" : 931468
+      },
+      {
+         "index" : 44,
+         "name" : "milestone-primary:final-lock-identity:reversed",
+         "path" : ".artifacts/logs/native-proxy-observation-archive-release-composition-active-20260912/cases/case-0044.json",
+         "sha256" : "e51d8336740bfb4cdb04bf6ca455aa21bcf38620584c6bf05684467dd49676d5",
+         "size_bytes" : 931468
+      }
+   ],
+   "cases" : [],
+   "current_case" : null,
+   "errno_constants" : {
+      "EIO" : 5,
+      "ENOSPC" : 28
+   },
+   "errno_text" : {
+      "EIO" : "Input/output error",
+      "ENOSPC" : "No space left on device"
+   },
+   "forbidden_process_attempts" : 0,
+   "prospective_pins" : [
+      {
+         "path" : "docs/audits/native-proxy-observation-archive-release-composition-active-20260912/plan.json",
+         "sha256" : "155f7ea090cbf245782a73075b5426ec8d43ee74c5a3feda2b141fdfbeab17c8",
+         "size_bytes" : 140375
+      },
+      {
+         "path" : "docs/audits/native-proxy-observation-archive-release-composition-active-20260912/prepare.py",
+         "sha256" : "ab514b0238a45ed02ceadc0da4ffa67d4638c3e6f18d3e6f0ded0ffccf49dc0d",
+         "size_bytes" : 3772
+      },
+      {
+         "path" : "docs/audits/native-proxy-observation-archive-release-composition-active-20260912/prepare-pin.json",
+         "sha256" : "72f11ffd530cb706393e6f8a2e94d0a7acb82ad95e918958af90162c26c9a524",
+         "size_bytes" : 210
+      },
+      {
+         "path" : "docs/audits/native-proxy-observation-archive-release-composition-active-20260912/qualify.t",
+         "sha256" : "15bd96708b67289a932fb0aa2ffa10f348a604dfaec7271ae85abe02f7f09bb3",
+         "size_bytes" : 15703
+      },
+      {
+         "path" : "docs/audits/native-proxy-observation-archive-release-composition-active-20260912/qualifier-pin.json",
+         "sha256" : "45870a01ff46fbf1c883eb84115900e647296e993d35b5788c42ab63f5ed62d2",
+         "size_bytes" : 210
+      },
+      {
+         "path" : "docs/audits/native-proxy-observation-archive-release-composition-active-20260912/audit.py",
+         "sha256" : "05f1d18e8eddf291954ec8afa191dcd46d0e999d4d20bb08b008ecad11e9578a",
+         "size_bytes" : 20140
+      },
+      {
+         "path" : "docs/audits/native-proxy-observation-archive-release-composition-active-20260912/oracle-preflight.py",
+         "sha256" : "b63b7aacd83fd85780ad8abe17bbdb1fb6217ecc6e17f928b86f72f527c08323",
+         "size_bytes" : 4908
+      },
+      {
+         "path" : "docs/audits/native-proxy-observation-archive-release-composition-active-20260912/oracle-pins.json",
+         "sha256" : "31125ca68ce8c6678c018a772fa75e7b30388dddb40563376b41edbba0cbea80",
+         "size_bytes" : 1571
+      },
+      {
+         "path" : "docs/audits/native-proxy-observation-archive-release-composition-active-20260912/result/preflight/oracle.json",
+         "sha256" : "202d7868cf70ed9f5ac2155a65027a1f40236c7f9b5025060a3429eea78bd182",
+         "size_bytes" : 389281
+      },
+      {
+         "path" : "docs/audits/native-proxy-observation-archive-release-composition-active-20260912/result/preflight/oracle.stdout",
+         "sha256" : "6f6e80a6a26dd5d414166e38297ecf18cb09e3ce127b10ac2274f049dd7497d8",
+         "size_bytes" : 398
+      },
+      {
+         "path" : "docs/audits/native-proxy-observation-archive-release-composition-active-20260912/result/preflight/oracle.stderr",
+         "sha256" : "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+         "size_bytes" : 0
+      },
+      {
+         "path" : "docs/audits/native-proxy-observation-archive-release-composition-active-20260912/result/preflight/oracle.exit",
+         "sha256" : "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa",
+         "size_bytes" : 2
+      },
+      {
+         "path" : "docs/audits/native-proxy-observation-archive-release-composition-active-20260912/result/preflight/recovery.json",
+         "sha256" : "1cc362cf760cad3a3b0aa9757449e9a86437090e6278f321d979de3b73299685",
+         "size_bytes" : 1446
+      }
+   ],
+   "schema" : "fsmgen.release_active_composition_qualification.v1",
+   "success" : true
+}

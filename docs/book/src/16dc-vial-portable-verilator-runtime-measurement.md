@@ -2832,7 +2832,27 @@ primaries, missing closes and incorrect effects. Verify the saved evidence:
 python3 -B docs/audits/native-proxy-observation-archive-release-composition-equal-20260912/audit.py --verify-saved
 ```
 
-Active-runtime and last-observation compositions remain pending,
+Active-runtime release composition qualification covers 45 cases: 1 healthy control, 20 grouped-close cases and 24 primary-error cases, with 610 TAP assertions.
+
+The original runtime reference and private workspace remain present throughout
+observation release. No runtime retirement occurs. Cleanup targets the settled
+observation hold while preserving the runtime's ownership and source files.
+
+Source and directory primary errors survive later cleanup reports. Actual close
+order decides the first cleanup error when no primary exists, regardless of
+report declaration order. Every observed handle closes. A failure after unlink
+preserves the deletion and the latest recorded absence state.
+
+The independent active-state check follows the original runtime reference and
+workspace through each snapshot. Controls reject invented retirement, missing
+runtime references, lost workspace files and a substituted retired setup,
+alongside altered errors, closes and file effects. Verify the saved evidence:
+
+```sh
+python3 -B docs/audits/native-proxy-observation-archive-release-composition-active-20260912/audit.py --verify-saved
+```
+
+Last-observation compositions remain pending,
 as do genuine omissions and complete release applicability. These reported errors
 follow successful actual reads or closes; they do not qualify ambiguous operating-system
 failures or authorize native execution.

@@ -1,0 +1,8 @@
+[
+  {
+    "candidate_id": "published-a7676c818ad36ba2be9cc5be",
+    "excerpt": "Active-runtime release composition qualification covers 45 cases: 1 healthy control, 20 grouped-close cases and 24 primary-error cases, with 610 TAP assertions.",
+    "path": "docs/book/src/16dc-vial-portable-verilator-runtime-measurement.md",
+    "source_line_sha256": "1a4dc3c2577bed999f22870c42b7189790384e450cfb9c47e21cb43be533177b"
+  }
+]

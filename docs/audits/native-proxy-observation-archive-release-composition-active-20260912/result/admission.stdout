@@ -1,0 +1,1 @@
+{"admitted": true, "inputs": 482, "new_fixture_roots": 0, "pins": 13, "prerequisites": {"baseline_falsifiers": 11, "baseline_predictions": 45, "copies": 4, "inherited": {"assertions": 105, "copies": 8, "predictions": 1890, "variants": 42}}, "previous_roots_absent": 27716}

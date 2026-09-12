@@ -1,0 +1,35 @@
+{
+  "audit_result": "docs/audits/native-proxy-observation-archive-release-composition-active-20260912/result/audit.json",
+  "book_review": "docs/audits/native-proxy-observation-archive-release-composition-active-20260912/book-review.json",
+  "claim_legs": {
+    "durability": "Exact Git-bound inputs, prospective source pins and complete first-run copies are tracked. Saved-only audit/recovery pass without raw-log access or fixture replay. Book, Knowledge Map, task and exact acceptance history preserve outcomes and the next frontier.",
+    "falsify": "Unchanged recursive and independent interval/source-scope oracles agree with current actual rows. The prospectively verified row-body adaptation forbids retirement; the original active-state oracle checks preserved runtime ownership across snapshots. Altered rows, domains, headers, predictions, recovery and book counts reject.",
+    "rederive": "Pinned recipes and immutable active-runtime case records distinguish actual reads/closes from reported errors and retain runtime reference/workspace identity, public attempts and effects. Original TAP and the independent book watcher recount the published domain."
+  },
+  "commit_gate": "Required staged doctrines and normal commit hooks must pass before commit.",
+  "dispositions": {
+    "added": [
+      "published-a7676c818ad36ba2be9cc5be"
+    ],
+    "prior_records_byte_exact": 1933
+  },
+  "limits": "Last-observation compositions, complete close-report join, genuine omissions, final release, native/lifetime and historical startup/parent/full CI/push remain open.",
+  "owner": "HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.12.4.1.3.4.4.4.6.4",
+  "raw_verification_outputs": "docs/audits/native-proxy-observation-archive-release-composition-active-20260912/verification-outputs.json",
+  "recovery": {
+    "bytes": 19517347,
+    "copies": 63,
+    "falsifiers": [
+      "omitted-copy",
+      "foreign-destination",
+      "changed-copy-digest"
+    ],
+    "source_reaccess": true,
+    "success": true
+  },
+  "schema": "fsmgen.release_active_composition_review.v1",
+  "scope": "Active-runtime inert file-fixture compositions only. Qualified pure binding, real-close-first reporting, directory-read reporting and independent trace oracles remain unchanged. The original runtime reference and private workspace remain present; no retirement call or receipt is permitted. No prior fixture, other-profile fixture, producer/main, compiler or native process is replayed.",
+  "source_review": "docs/audits/native-proxy-observation-archive-release-composition-active-20260912/source-review.json",
+  "source_revision": "a02e077a060690a9afe1198ae6194b149a1f24d1",
+  "success": true
+}
