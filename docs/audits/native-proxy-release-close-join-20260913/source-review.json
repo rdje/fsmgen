@@ -1,0 +1,52 @@
+{
+  "admission": "Exact historical rosters and Git identities are checked through a flat input catalog. Original row/state/native-close oracles and their source epochs remain unchanged.",
+  "book_actual": {
+    "bytes_total": 3378239,
+    "files": 63,
+    "lines_total": 61596
+  },
+  "book_baseline": {
+    "bytes_total": 3376844,
+    "files": 63,
+    "lines_total": 61573
+  },
+  "book_delta": {
+    "bytes_total": 1395,
+    "files": 0,
+    "lines_total": 23
+  },
+  "correction": "docs/audits/native-proxy-release-close-join-20260913/result/correction/preflight.json",
+  "first_failure": "docs/audits/native-proxy-release-close-join-20260913/first-failure/review.json",
+  "history": {
+    "history_bytes": 1906,
+    "history_id": "through_6f15c1402a32",
+    "history_lines": 5,
+    "history_sections": 1,
+    "history_sha256": "689978d516dfd836638020bf95d1aaac1ae6600ca05232dee1dd5ec5f0765011",
+    "live_heading": "Version-Retrievable Historical Views",
+    "record_type": "acceptance_history",
+    "retention_contract": "fsmgen_required_history",
+    "schema_version": 1,
+    "source_bytes": 1060503,
+    "source_lines": 6365,
+    "source_path": "docs/tasks/HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.md",
+    "source_revision": "6f15c1402a32f6e05948a51fe79d7f2465b559f2",
+    "source_sha256": "2cc72422de2d4046a46808c04efecf7024df6b6d7ced97b10c5cd176764a1625",
+    "start_heading": "Acceptance Checklist (bounded release composition join .3.2.15.7.3.12.4.1.3.4.4.4.6.6)"
+  },
+  "initial_admission_sources_still_exact": true,
+  "knowledge_byte_delta": 10,
+  "knowledge_questions_unchanged": true,
+  "new_candidate": "published-cb7126926fba0a34ef396aea",
+  "owner": "HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.12.4.1.3.4.4.4.7",
+  "predecessor_source_files_unchanged": true,
+  "preserved_prior_acceptance_sections": 37,
+  "prior_dispositions_byte_exact": 1936,
+  "recovery": "The unexecuted initial helper source and pin are retained before binding corrected admission/join log names. The first successful copy execution and saved-only verification use the corrected names; original failed logs are not overwritten.",
+  "scope": "Join every selected single-close report and bounded primary/grouped composition from original retained rows. Authenticate exact source epochs, complete coverage, actual versus reported closure, first-error precedence, profile state, effects and recovery. No fixture, old main, original producer, native process or new root. Genuine omissions, final release applicability, native/lifetime and historical startup/parent/full CI/push remain separately gated; this does not qualify all Cartesian compositions or ambiguous operating-system close failures.",
+  "selector_adapter": "The first auditor used live bindings where archived selectors were required. The separately pinned correction reconstructs original selector fields and event offsets; independent event-stack selection agrees across every original profile. The original auditor still rejects valid records and its failed output is retained.",
+  "source_delta": "Preflight proves the complete corrected auditor differs only by the new selector reconstruction function, its call at the original domain boundary and the corrected prospective-proof admission block.",
+  "source_revision": "6f15c1402a32f6e05948a51fe79d7f2465b559f2",
+  "task_integrity": "[task-tree-integrity] all active task-tree invariants hold (trees=4, nodes=1336, segments=3, compact_terminals=36, index_archives=1, migrations=1, acceptance_histories=1)",
+  "task_lines": 6365
+}

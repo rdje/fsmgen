@@ -1,0 +1,67 @@
+[
+  {
+    "path": "docs/audits/native-proxy-release-close-join-20260913/prepare.py",
+    "sha256": "52d9ff30bfb0ab48921280c8e7b331729c4ab0d29c681a0d25bbab729ae3e1fd",
+    "size_bytes": 4555
+  },
+  {
+    "path": "docs/audits/native-proxy-release-close-join-20260913/prepare-pins.json",
+    "sha256": "d727d2ffeac981a86ad4a80e03f8c60967ccbf30796f5fc31459d4a536df9d0e",
+    "size_bytes": 196
+  },
+  {
+    "path": "docs/audits/native-proxy-release-close-join-20260913/plan.json",
+    "sha256": "39745d202e196e47da2e65cd806744d2445869502064c330bb8ab270f376bc68",
+    "size_bytes": 449047
+  },
+  {
+    "path": "docs/audits/native-proxy-release-close-join-20260913/audit.py",
+    "sha256": "a03469088ac0ee8ea8e4dd2a6884c43af6a3f54752e009a1c49404d7460bde3d",
+    "size_bytes": 20818
+  },
+  {
+    "path": "docs/audits/native-proxy-release-close-join-20260913/preflight-pins.json",
+    "sha256": "6a503fe0a4bdb3025255697723795e481b62733c26ef6f8c2aac312ddd2e19e5",
+    "size_bytes": 781
+  },
+  {
+    "path": "docs/audits/native-proxy-release-close-join-20260913/audit-corrected.py",
+    "sha256": "d35b7c8465e00be027a8892774df3a0ece197e940bc42be59a79c3a1a341f4fb",
+    "size_bytes": 22577
+  },
+  {
+    "path": "docs/audits/native-proxy-release-close-join-20260913/correction-preflight.py",
+    "sha256": "5503d674f58f5fbc2d3e96e2dea66e6e03557cb48e102c9e38ac7007fd31d179",
+    "size_bytes": 6602
+  },
+  {
+    "path": "docs/audits/native-proxy-release-close-join-20260913/correction-pins.json",
+    "sha256": "23b8aba687ad0c5a5b8e4235c45c7193794fb21ddaab9b4ce6781401bfdb89ec",
+    "size_bytes": 998
+  },
+  {
+    "path": "docs/audits/native-proxy-release-close-join-20260913/result/correction/preflight.json",
+    "sha256": "c0b8dc206895563a071c5496c7f43ee64221a3d395c145ef53b52a4b97e5b8e2",
+    "size_bytes": 5749
+  },
+  {
+    "path": "docs/audits/native-proxy-release-close-join-20260913/result/correction/preflight.stdout",
+    "sha256": "8b220f8c864aa4772ec1c4ba408125ca2e3917fa150bb48e94ff34127214866e",
+    "size_bytes": 170
+  },
+  {
+    "path": "docs/audits/native-proxy-release-close-join-20260913/result/correction/preflight.stderr",
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "size_bytes": 0
+  },
+  {
+    "path": "docs/audits/native-proxy-release-close-join-20260913/result/correction/preflight.exit",
+    "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa",
+    "size_bytes": 2
+  },
+  {
+    "path": "docs/audits/native-proxy-release-close-join-20260913/result/correction/recovery.json",
+    "sha256": "ed2e8b566f17443939e414c22630bddefd353335a402211edb39538039722f43",
+    "size_bytes": 1292
+  }
+]

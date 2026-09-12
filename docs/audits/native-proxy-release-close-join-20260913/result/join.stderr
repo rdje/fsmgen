@@ -1,0 +1,8 @@
+{"domain": "single", "profile": "ordinary_retired_other_observation", "verified": true, "cases": 172}
+{"domain": "single", "profile": "equal_reference_retired_other_observation", "verified": true, "cases": 167}
+{"domain": "single", "profile": "ordinary_active_runtime", "verified": true, "cases": 181}
+{"domain": "single", "profile": "ordinary_retired_last_observation", "verified": true, "cases": 149}
+{"domain": "composition", "profile": "ordinary_retired_other_observation", "verified": true, "cases": 45}
+{"domain": "composition", "profile": "equal_reference_retired_other_observation", "verified": true, "cases": 45}
+{"domain": "composition", "profile": "ordinary_active_runtime", "verified": true, "cases": 45}
+{"domain": "composition", "profile": "ordinary_retired_last_observation", "verified": true, "cases": 45}

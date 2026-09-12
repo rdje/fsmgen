@@ -1,0 +1,20 @@
+{
+  "checked_passages": [
+    "Complete selected release close-report qualification verifies 849 cases: 669 single-close cases and 180 composition cases, including 8 healthy controls, with 10,568 original TAP assertions.",
+    "The original error survives cleanup, every observed handle closes, and actual unlink effects remain distinct from the final success or failure result.",
+    "The first combined verifier passed live bindings to an archived-selector check and rejected valid evidence.",
+    "The original rejection and correction proof remain retained.",
+    "The composition partition reproduces its previously qualified domain, and same-input reversal preserves its complete predicted behavior.",
+    "python3 -B docs/audits/native-proxy-release-close-join-20260913/audit-corrected.py --verify-saved"
+  ],
+  "exact_output_absent": true,
+  "exit_code": 0,
+  "output": ".artifacts/tmp/native-proxy-release-close-join-book-20260913/book",
+  "rendered_bytes": 23485346,
+  "rendered_directories": 3,
+  "rendered_files": 98,
+  "renderer_warnings": [
+    "WARN search index is very large (13240757 bytes)"
+  ],
+  "same_volume_direct_objects": true
+}

@@ -1,0 +1,26 @@
+[
+  {
+    "destination": "docs/audits/native-proxy-release-close-join-20260913/result/correction/preflight.json",
+    "sha256": "c0b8dc206895563a071c5496c7f43ee64221a3d395c145ef53b52a4b97e5b8e2",
+    "size_bytes": 5749,
+    "source": ".artifacts/logs/native-proxy-release-close-join-20260913/correction-preflight.json"
+  },
+  {
+    "destination": "docs/audits/native-proxy-release-close-join-20260913/result/correction/preflight.stdout",
+    "sha256": "8b220f8c864aa4772ec1c4ba408125ca2e3917fa150bb48e94ff34127214866e",
+    "size_bytes": 170,
+    "source": ".artifacts/logs/native-proxy-release-close-join-20260913/correction-preflight.stdout"
+  },
+  {
+    "destination": "docs/audits/native-proxy-release-close-join-20260913/result/correction/preflight.stderr",
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "size_bytes": 0,
+    "source": ".artifacts/logs/native-proxy-release-close-join-20260913/correction-preflight.stderr"
+  },
+  {
+    "destination": "docs/audits/native-proxy-release-close-join-20260913/result/correction/preflight.exit",
+    "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa",
+    "size_bytes": 2,
+    "source": ".artifacts/logs/native-proxy-release-close-join-20260913/correction-preflight.exit"
+  }
+]

@@ -2894,8 +2894,31 @@ receipts. Verify the retained evidence without starting a fixture:
 python3 -B docs/audits/native-proxy-release-composition-join-20260913/audit.py --verify-saved
 ```
 
-The full close-report join, genuine omissions and final
-release applicability remain pending. These reported errors
+Complete selected release close-report qualification verifies 849 cases: 669 single-close cases and 180 composition cases, including 8 healthy controls, with 10,568 original TAP assertions.
+
+The single-report cases cover each normal source, directory and lock close
+selected for each profile. Bounded compositions add competing primary errors
+and grouped cleanup reports. The join authenticates their original source
+versions, checks every saved row and independently recounts physical events.
+The original error survives cleanup, every observed handle closes, and actual
+unlink effects remain distinct from the final success or failure result.
+
+The first combined verifier passed live bindings to an archived-selector check
+and rejected valid evidence. Its corrected adapter reconstructs the original
+selector records from source ownership and event positions; an independent
+selector agrees. The original rejection and correction proof remain retained.
+
+Profile checks preserve equal bytes with distinct source identities, active
+runtime references and workspaces, and the canonical image after its final hold
+is removed. The composition partition reproduces its previously qualified
+domain, and same-input reversal preserves its complete predicted behavior.
+Verify the saved result without starting a fixture:
+
+```sh
+python3 -B docs/audits/native-proxy-release-close-join-20260913/audit-corrected.py --verify-saved
+```
+
+Genuine omissions and final release applicability remain pending. These reported errors
 follow successful actual reads or closes; they do not qualify ambiguous operating-system
 failures or authorize native execution.
 

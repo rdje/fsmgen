@@ -2698,11 +2698,11 @@ decomposes the architecture needed to move beyond that bounded foundation.
   Commit: `this commit`
 
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.12.4.1.3.4.4.4`
-  Status: `active`
+  Status: `done`
   Goal: `Qualify release close-error reporting and primary-error precedence.`
   Acceptance: `Select each actual retained source, lock and directory close from authenticated flows. Perform the real close first and then model each declared error return, preserving actual and reported outcomes separately. Cross selected primary failures with cleanup reports, retain exact post-unlink truth and all other-owner/archive/image state, and independently verify every actual close and absent root. A modeled return is not proof of ambiguous operating-system close behavior.`
-  Verification: `pending`
-  Commit: `pending`
+  Verification: `Every selected single-report and bounded composition child passes through the complete retained-evidence join. docs/audits/native-proxy-release-close-join-20260913/result/join.json authenticates exact source epochs, source ownership, native closure, error precedence, profile state, unlink effects, recovery and absent roots. The first selector-adapter rejection is retained and its separately qualified correction passes. Genuine omissions, final release and historical gates remain separately owned.`
+  Commit: `this commit`
 
   Children: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.12.4.1.3.4.4.4.1, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.12.4.1.3.4.4.4.2, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.12.4.1.3.4.4.4.3, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.12.4.1.3.4.4.4.4, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.12.4.1.3.4.4.4.5, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.12.4.1.3.4.4.4.6, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.12.4.1.3.4.4.4.7`
 
@@ -2793,11 +2793,11 @@ decomposes the architecture needed to move beyond that bounded foundation.
   Commit: `this commit`
 
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.12.4.1.3.4.4.4.7`
-  Status: `proposed`
+  Status: `done`
   Goal: `Join complete selected release close-report applicability.`
   Acceptance: `Authenticate every selector, source, prospective receipt and retained single/grouped/primary matrix. Independently reproduce exact coverage, actual versus reported closes, first-error precedence, unchanged other-owner/archive/image state, failures and recovery. Close this parent only when every child passes; genuine omissions, final release applicability, native/lifetime and historical startup/parent/full CI/push remain separate.`
-  Verification: `pending`
-  Commit: `pending`
+  Verification: `Preparation authenticates 1478 exact Git-bound inputs totaling 529231799 bytes. The first combined auditor rejects live ownership bindings passed to the archived selector interface before any profile evaluation; exact source, pins and failed output remain retained. Separate correction preflight reproduces rejection on every original profile, proves 665 reconstructed selectors agree with the independent event-stack selector, rejects sixteen altered-selector controls and verifies the precise source delta. Corrected admission, complete join, recovery and saved-only join/recovery pass. All 849 selected cases (669 single-close and 180 composition) retain 10568 original TAP assertions. Independent counts verify 72731 actual closed handles, 2001 modeled reports, 80 helper and 16 directory primaries, 276 actual unlinks and 268 post-unlink failures. All 3396 selected and 24680 disjoint predecessor roots are absent. Original profile-state oracles and same-input declaration reversal remain complete; the prior composition domain and every partition reproduce exactly. Thirteen join falsifiers reject domain, coverage, outcome, source and root corruption. Ten exact final copies/26225 bytes and the separate correction copies preserve evidence; no original fixture or main is replayed. Book recount/redistribution, rendering, Knowledge Map, exact acceptance history and staged doctrine/normal hooks gate commit. Review and distinct claim legs: docs/audits/native-proxy-release-close-join-20260913/review.json. The complete selected close-report parent closes; genuine omission controls are next. Final release, native/lifetime and historical startup/parent/full CI/push remain separate.`
+  Commit: `this commit`
 
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.12.4.1.3.4.4.5`
   Status: `proposed`
@@ -3762,7 +3762,7 @@ decomposes the architecture needed to move beyond that bounded foundation.
 
 ## Current Frontier
 
-Current frontier: .3.2.15.7.3.12.4.1.3.4.4.4.7 joins complete selected release close-report applicability. Complete close-report applicability, omissions, final release applicability, native/lifetime and historical startup/parent/full CI/push remain open.
+Current frontier: .3.2.15.7.3.12.4.1.3.4.4.5 qualifies genuine omitted-close controls with separately observed recovery. Final release applicability, native/lifetime and historical startup/parent/full CI/push remain open.
 
 Architecture audit `.1` is complete. Decision `0032` selects one public
 `.vial` source language, private immutable `VIALSemanticIR` and
@@ -6358,8 +6358,8 @@ Completed native-proxy feasibility through runtime-source-controls acceptance: r
 The manifest binds the immediately preceding acceptance suffix to its exact Git source. That source preserves the earlier history pointer and versioned manifest chain; current node contracts remain authoritative.
 
 
-## Acceptance Checklist (bounded release composition join .3.2.15.7.3.12.4.1.3.4.4.4.6.6)
+## Acceptance Checklist (complete release close-report join .3.2.15.7.3.12.4.1.3.4.4.4.7)
 
-- [x] **ROOT CAUSE (WHY + WHERE)** — `git log -S 'cannot close retained release descriptor' -1 --format='%H %s' -- docs/audits/native-proxy-observation-archive-release-20260911/ObservationRelease.pm` identifies `da27b5cbaf01af7cbe294c8f851c8273dd750856`. Separate passing profiles cannot prove complete selected coverage or cross-profile assignment. The join authenticates exact historical input rosters and reuses unchanged row/state/native-close oracles; same-input reversal compares complete independent predictions.
-- [x] **ADDRESSED (verified)** — First `python3 -B docs/audits/native-proxy-release-composition-join-20260913/prepare.py` and `python3 -B docs/audits/native-proxy-release-composition-join-20260913/audit.py` pass. Selected recipes join original rows exactly; direct physical counts agree with scope-based counts, every primary survives cleanup and declaration reversal preserves complete predictions. Coverage, assignment, error, cleanup, root and historical identity falsifiers reject. Exact recovery and saved-only join/recovery pass; `docs/audits/native-proxy-release-composition-join-20260913/review.json` owns distinct claim legs and original evidence.
-- [x] **NO REGRESSION** — `knowledge-map: OK` is the task-directed regression signature. The joined profile domain and same-input declaration reversals pass without fixture replay or shared-source changes. Original equal/active/last-state checks, native closure and disjoint absent roots remain verified. Book recount and total-preserving redistribution controls, rendered passages, exact output cleanup, task integrity and acceptance-history retrieval pass. All older claim rows and Knowledge Map questions remain exact; staged doctrine and normal commit hooks gate this slice. Historical startup/parent/full CI/push remain gated.
+- [x] **ROOT CAUSE (WHY + WHERE)** — `git log -S 'cannot close retained release descriptor' -1 --format='%H %s' -- docs/audits/native-proxy-observation-archive-release-20260911/ObservationRelease.pm` identifies `da27b5cbaf01af7cbe294c8f851c8273dd750856`. The first combined auditor also exposes its own live-binding versus archived-selector mismatch; `docs/audits/native-proxy-release-close-join-20260913/first-failure/review.json` retains the exact assertion and source. The correction reconstructs archived fields and event offsets from original ownership/events, agrees with the independent selector, and preserves the original rejection.
+- [x] **ADDRESSED (verified)** — `python3 -B docs/audits/native-proxy-release-close-join-20260913/correction-preflight.py` and `python3 -B docs/audits/native-proxy-release-close-join-20260913/audit-corrected.py` pass after preserving the first failed auditor. Complete selected single/composition coverage, source epochs, actual closure, primary precedence, profile state and unlink truth agree with unchanged row oracles and independent physical counts. Altered selectors and joined domains reject; exact recovery and saved-only checks pass. `docs/audits/native-proxy-release-close-join-20260913/review.json` owns distinct claim legs, source-delta proof and original failure evidence.
+- [x] **NO REGRESSION** — `knowledge-map: OK` is the task-directed regression signature. The complete close-report domain reconstructs the previously qualified composition partitions while preserving every original single-report case, profile-state check and absent root. Same-input reversal and the corrected archived-selector boundary remain independently verified. Book count/redistribution and rendering checks, exact output cleanup, task integrity, acceptance history and all older claim/question identities pass. Staged doctrines and normal hooks gate this slice; genuine omissions, final release and historical startup/parent/full CI/push remain open.

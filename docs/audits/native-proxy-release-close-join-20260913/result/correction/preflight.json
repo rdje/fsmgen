@@ -1,0 +1,183 @@
+{
+  "comparisons": [
+    {
+      "archived_fields": [
+        "address",
+        "baseline_close_caller",
+        "baseline_close_event",
+        "baseline_close_scope",
+        "baseline_handle",
+        "baseline_open_call_id",
+        "baseline_open_event",
+        "baseline_path",
+        "kind",
+        "occurrence",
+        "symbol"
+      ],
+      "binding_fields": [
+        "address",
+        "close_caller",
+        "close_scope",
+        "kind",
+        "label",
+        "occurrence",
+        "open_call_id",
+        "path",
+        "symbol"
+      ],
+      "corrected_adapter_accepts": true,
+      "first_auditor_rejects": true,
+      "profile": "ordinary_retired_other_observation",
+      "selector_sha256": "99eb5c908ae45642d96b67c44e4df9d51c32ee4519ec83c8e23323818a525891",
+      "selectors": 171,
+      "source_bindings": 171
+    },
+    {
+      "archived_fields": [
+        "address",
+        "baseline_close_caller",
+        "baseline_close_event",
+        "baseline_close_scope",
+        "baseline_handle",
+        "baseline_open_call_id",
+        "baseline_open_event",
+        "baseline_path",
+        "kind",
+        "occurrence",
+        "symbol"
+      ],
+      "binding_fields": [
+        "address",
+        "close_caller",
+        "close_scope",
+        "kind",
+        "label",
+        "occurrence",
+        "open_call_id",
+        "path",
+        "symbol"
+      ],
+      "corrected_adapter_accepts": true,
+      "first_auditor_rejects": true,
+      "profile": "equal_reference_retired_other_observation",
+      "selector_sha256": "05129c26c57c9a8426476fab81fea95bc11dc1a54f3bc7c6bb198f14449a3087",
+      "selectors": 166,
+      "source_bindings": 166
+    },
+    {
+      "archived_fields": [
+        "address",
+        "baseline_close_caller",
+        "baseline_close_event",
+        "baseline_close_scope",
+        "baseline_handle",
+        "baseline_open_call_id",
+        "baseline_open_event",
+        "baseline_path",
+        "kind",
+        "occurrence",
+        "symbol"
+      ],
+      "binding_fields": [
+        "address",
+        "close_caller",
+        "close_scope",
+        "kind",
+        "label",
+        "occurrence",
+        "open_call_id",
+        "path",
+        "symbol"
+      ],
+      "corrected_adapter_accepts": true,
+      "first_auditor_rejects": true,
+      "profile": "ordinary_active_runtime",
+      "selector_sha256": "0cac3d59eac52077b86b706c111a1a589764afdd8fb6df472d41149fdd2ea535",
+      "selectors": 180,
+      "source_bindings": 180
+    },
+    {
+      "archived_fields": [
+        "address",
+        "baseline_close_caller",
+        "baseline_close_event",
+        "baseline_close_scope",
+        "baseline_handle",
+        "baseline_open_call_id",
+        "baseline_open_event",
+        "baseline_path",
+        "kind",
+        "occurrence",
+        "symbol"
+      ],
+      "binding_fields": [
+        "address",
+        "close_caller",
+        "close_scope",
+        "kind",
+        "label",
+        "occurrence",
+        "open_call_id",
+        "path",
+        "symbol"
+      ],
+      "corrected_adapter_accepts": true,
+      "first_auditor_rejects": true,
+      "profile": "ordinary_retired_last_observation",
+      "selector_sha256": "77e2326d7157d90b70ed020d798a81f71bb39b7fa8cdd357bf295731e04ea26b",
+      "selectors": 148,
+      "source_bindings": 148
+    }
+  ],
+  "exact_source_delta": true,
+  "falsifiers": [
+    "ordinary_retired_other_observation:wrong-open-event",
+    "ordinary_retired_other_observation:wrong-close-scope",
+    "ordinary_retired_other_observation:missing-selector",
+    "ordinary_retired_other_observation:wrong-open-call",
+    "equal_reference_retired_other_observation:wrong-open-event",
+    "equal_reference_retired_other_observation:wrong-close-scope",
+    "equal_reference_retired_other_observation:missing-selector",
+    "equal_reference_retired_other_observation:wrong-open-call",
+    "ordinary_active_runtime:wrong-open-event",
+    "ordinary_active_runtime:wrong-close-scope",
+    "ordinary_active_runtime:missing-selector",
+    "ordinary_active_runtime:wrong-open-call",
+    "ordinary_retired_last_observation:wrong-open-event",
+    "ordinary_retired_last_observation:wrong-close-scope",
+    "ordinary_retired_last_observation:missing-selector",
+    "ordinary_retired_last_observation:wrong-open-call"
+  ],
+  "fixture_replays": 0,
+  "prospective_pins": [
+    {
+      "path": "docs/audits/native-proxy-release-close-join-20260913/plan.json",
+      "sha256": "39745d202e196e47da2e65cd806744d2445869502064c330bb8ab270f376bc68",
+      "size_bytes": 449047
+    },
+    {
+      "path": "docs/audits/native-proxy-release-close-join-20260913/preflight-pins.json",
+      "sha256": "6a503fe0a4bdb3025255697723795e481b62733c26ef6f8c2aac312ddd2e19e5",
+      "size_bytes": 781
+    },
+    {
+      "path": "docs/audits/native-proxy-release-close-join-20260913/audit.py",
+      "sha256": "a03469088ac0ee8ea8e4dd2a6884c43af6a3f54752e009a1c49404d7460bde3d",
+      "size_bytes": 20818
+    },
+    {
+      "path": "docs/audits/native-proxy-release-close-join-20260913/audit-corrected.py",
+      "sha256": "d35b7c8465e00be027a8892774df3a0ece197e940bc42be59a79c3a1a341f4fb",
+      "size_bytes": 22577
+    },
+    {
+      "path": "docs/audits/native-proxy-release-close-join-20260913/correction-preflight.py",
+      "sha256": "5503d674f58f5fbc2d3e96e2dea66e6e03557cb48e102c9e38ac7007fd31d179",
+      "size_bytes": 6602
+    }
+  ],
+  "schema": "fsmgen.release_close_join_selector_adapter.v1",
+  "scope": "Reconstruct archived selector records from original source ownership and event positions; independent event-stack selection agrees. Original failed auditor and output remain retained.",
+  "source_revision": "6f15c1402a32f6e05948a51fe79d7f2465b559f2",
+  "success": true
+}

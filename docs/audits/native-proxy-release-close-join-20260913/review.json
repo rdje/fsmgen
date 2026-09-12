@@ -1,0 +1,53 @@
+{
+  "book_review": "docs/audits/native-proxy-release-close-join-20260913/book-review.json",
+  "claim_legs": {
+    "durability": "The original failed auditor, its prospective pins and exact failed output remain tracked beside the separately qualified correction. Exact copy plans and saved-only join/recovery retain all final evidence without fixture replay or raw-log access; the book source is watched.",
+    "falsify": "The original selector adapter rejects valid records; the corrected source/event reconstruction agrees with the independent selector and rejects altered archived records. Joined coverage, source, root and reversal controls reject, as do independent book count and redistribution controls.",
+    "rederive": "Exact selected single/composition domains, historical source rosters and unchanged row/state/native-close oracles agree with independent physical-record counts. The composition partitions reconstruct the previously qualified join."
+  },
+  "commit_gate": "Staged doctrine checks and normal commit hooks must pass before this atomic slice is committed.",
+  "correction": "docs/audits/native-proxy-release-close-join-20260913/result/correction/preflight.json",
+  "dispositions": {
+    "added": [
+      "published-cb7126926fba0a34ef396aea"
+    ],
+    "prior_records_byte_exact": 1936
+  },
+  "earlier_falsifiers": "Original source and saved verdicts authenticated; unchanged row/state/header oracles rerun. Earlier main routines and their complete embedded falsifier loops are not replayed.",
+  "first_executions": {
+    "book": true,
+    "book_claims": true,
+    "book_inspection": true,
+    "corrected_admission": true,
+    "corrected_join": true,
+    "correction_preflight": true,
+    "knowledge": true,
+    "original_admission": true,
+    "original_join": false,
+    "prepare": true,
+    "recovery": true,
+    "saved_join": true,
+    "saved_recovery": true,
+    "task": true
+  },
+  "first_failure": "docs/audits/native-proxy-release-close-join-20260913/first-failure/review.json",
+  "join_result": "docs/audits/native-proxy-release-close-join-20260913/result/join.json",
+  "owner": "HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.12.4.1.3.4.4.4.7",
+  "raw_verification_outputs": "docs/audits/native-proxy-release-close-join-20260913/verification-outputs.json",
+  "recovery": {
+    "bytes": 26225,
+    "copies": 10,
+    "falsifiers": [
+      "missing-copy",
+      "foreign-destination",
+      "corrupt-copy-digest"
+    ],
+    "source_reaccess": false,
+    "success": true
+  },
+  "schema": "fsmgen.release_close_report_join_review.v1",
+  "scope": "Join every selected single-close report and bounded primary/grouped composition from original retained rows. Authenticate exact source epochs, complete coverage, actual versus reported closure, first-error precedence, profile state, effects and recovery. No fixture, old main, original producer, native process or new root. Genuine omissions, final release applicability, native/lifetime and historical startup/parent/full CI/push remain separately gated; this does not qualify all Cartesian compositions or ambiguous operating-system close failures.",
+  "source_review": "docs/audits/native-proxy-release-close-join-20260913/source-review.json",
+  "source_revision": "6f15c1402a32f6e05948a51fe79d7f2465b559f2",
+  "success": true
+}

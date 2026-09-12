@@ -1,0 +1,27 @@
+[
+  {
+    "path": "docs/audits/native-proxy-release-close-join-20260913/plan.json",
+    "sha256": "39745d202e196e47da2e65cd806744d2445869502064c330bb8ab270f376bc68",
+    "size_bytes": 449047
+  },
+  {
+    "path": "docs/audits/native-proxy-release-close-join-20260913/preflight-pins.json",
+    "sha256": "6a503fe0a4bdb3025255697723795e481b62733c26ef6f8c2aac312ddd2e19e5",
+    "size_bytes": 781
+  },
+  {
+    "path": "docs/audits/native-proxy-release-close-join-20260913/audit.py",
+    "sha256": "a03469088ac0ee8ea8e4dd2a6884c43af6a3f54752e009a1c49404d7460bde3d",
+    "size_bytes": 20818
+  },
+  {
+    "path": "docs/audits/native-proxy-release-close-join-20260913/audit-corrected.py",
+    "sha256": "d35b7c8465e00be027a8892774df3a0ece197e940bc42be59a79c3a1a341f4fb",
+    "size_bytes": 22577
+  },
+  {
+    "path": "docs/audits/native-proxy-release-close-join-20260913/correction-preflight.py",
+    "sha256": "5503d674f58f5fbc2d3e96e2dea66e6e03557cb48e102c9e38ac7007fd31d179",
+    "size_bytes": 6602
+  }
+]

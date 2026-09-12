@@ -1,0 +1,27 @@
+{
+  "original_auditor": "docs/audits/native-proxy-release-close-join-20260913/audit.py",
+  "original_pins": "docs/audits/native-proxy-release-close-join-20260913/preflight-pins.json",
+  "outputs": [
+    {
+      "path": ".artifacts/logs/native-proxy-release-close-join-20260913/join.stdout",
+      "raw_hex": "",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "size_bytes": 0
+    },
+    {
+      "path": ".artifacts/logs/native-proxy-release-close-join-20260913/join.stderr",
+      "raw_hex": "54726163656261636b20286d6f737420726563656e742063616c6c206c617374293a0a202046696c6520222f566f6c756d65732f5353442f446f63756d656e74732f6769746875622f66736d67656e2f646f63732f6175646974732f6e61746976652d70726f78792d72656c656173652d636c6f73652d6a6f696e2d32303236303931332f61756469742e7079222c206c696e65203331392c20696e203c6d6f64756c653e0a202020206d61696e28290a202020207e7e7e7e5e5e0a202046696c6520222f566f6c756d65732f5353442f446f63756d656e74732f6769746875622f66736d67656e2f646f63732f6175646974732f6e61746976652d70726f78792d72656c656173652d636c6f73652d6a6f696e2d32303236303931332f61756469742e7079222c206c696e65203137362c20696e206d61696e0a20202020636f72652e53454c4543542e646f6d61696e2873696e676c652c2062696e64696e67732c206f726967696e616c290a202020207e7e7e7e7e7e7e7e7e7e7e7e7e7e7e7e7e7e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e0a202046696c6520222f566f6c756d65732f5353442f446f63756d656e74732f6769746875622f66736d67656e2f646f63732f6175646974732f6e61746976652d70726f78792d72656c656173652d636c6f73652d73656c656374696f6e2d32303236303931322f61756469742e7079222c206c696e652036322c20696e20646f6d61696e0a202020206173736572742070726f66696c655b2773656c6563746f7273275d203d3d2065787065637465640a20202020202020202020205e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e0a417373657274696f6e4572726f720a",
+      "sha256": "bbb0ed8e7473cf7a1fb6ef0557fba69220206d14c27ae1b376db479a2be58de9",
+      "size_bytes": 653
+    },
+    {
+      "path": ".artifacts/logs/native-proxy-release-close-join-20260913/join.exit",
+      "raw_hex": "310a",
+      "sha256": "4355a46b19d348dc2f57c046f8ef63d4538ebb936000f3c9ee954a27460dd865",
+      "size_bytes": 2
+    }
+  ],
+  "owner": "HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.12.4.1.3.4.4.4.7",
+  "resolution": "Retain the original auditor and failed run. A separate corrected auditor reconstructs the archived shape from source ownership and original events, following the historical independent selector oracle; correction preflight checks all original profiles and deliberately altered selectors before a corrected join.",
+  "root_cause": "The first join passes live ownership bindings to the archived selector domain checker. Live bindings carry label/path/open_call_id/close_scope; archived selectors carry baseline-prefixed identity fields and original event offsets. Exact equality correctly rejects this interface mismatch before any profile row is evaluated."
+}
