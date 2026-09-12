@@ -1,0 +1,23 @@
+{
+  "history": {
+    "history_bytes": 1976,
+    "history_id": "through_fe025fbc5c15",
+    "history_lines": 5,
+    "history_sections": 1,
+    "history_sha256": "c4c0cdb14643e462ed7676f1c3e510bb490b5c4b1a978ebd1bd78677b283ddfc",
+    "live_heading": "Version-Retrievable Historical Views",
+    "record_type": "acceptance_history",
+    "retention_contract": "fsmgen_required_history",
+    "schema_version": 1,
+    "source_bytes": 1108019,
+    "source_lines": 6395,
+    "source_path": "docs/tasks/HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.md",
+    "source_revision": "fe025fbc5c153cddb32e97d4e9f724f8d84d81be",
+    "source_sha256": "d5c7dbc8726d8fcbd241d5f6383fd6fc180edd4e6dd2ae3e48252c750b201e01",
+    "start_heading": "Acceptance Checklist (equal-reference readback .3.2.15.7.3.12.4.1.3.4.4.3.10.3)"
+  },
+  "live_lines": 6395,
+  "prior_sections_unchanged": 37,
+  "source_lines": 6395,
+  "source_revision": "fe025fbc5c153cddb32e97d4e9f724f8d84d81be"
+}

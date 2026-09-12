@@ -1,0 +1,32 @@
+{
+  "adaptation": {
+    "current_body_sha256": "f7c0902055f31548cf9dcdbde3b1361eeb9f98e3ac5b91004b6da5b0ae02b23e",
+    "exact_changes": [
+      "Rename the row verifier to _verify_readback for the active wrapper.",
+      "Remove retirement from the required closed row-key set; the original setup oracle already rejects retirement on active rows.",
+      "Qualify the unchanged shared reader_trace call through SHARED."
+    ],
+    "original_body_sha256": "c7fc7e101030696271a6ac3cbc2ae6493cf698d6267af325fde56d5edb9e2e94",
+    "other_body_bytes_unchanged": true,
+    "predecessor": "docs/audits/native-proxy-observation-archive-release-readback-ordinary-20260911/audit-corrected.py"
+  },
+  "history": {
+    "argv": [
+      "git",
+      "log",
+      "-S",
+      "my $count = sysread($fh, my $chunk",
+      "-1",
+      "--format=%H %s",
+      "--",
+      "t/lib/FSM/Test/RustProxyFixture.pm"
+    ],
+    "stdout": "e0d74bb051465ba641227acc11975e25e5d879a7 HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.8: seal portable proxy preparation and descriptor custody\n"
+  },
+  "limits": "An active fixture record is not a live native process. Original global/private reference, workspace and other-owner state are independently checked from full snapshots; runtime startup, lifetime and full CI/push remain gated.",
+  "mechanism": "The unchanged weak read observer preserves original lexical descriptor lifetime and returned Source ownership. This active profile omits runtime retirement, retains the original runtime reference and complete private workspace, and makes no native-process claim.",
+  "owner": "HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.12.4.1.3.4.4.3.10.4",
+  "saved_active_state_precheck": "The active_state predicate passes on the original retained healthy active-runtime row, independently confirming the original global runtime reference and complete private workspace throughout its saved release. No fixture or prior producer is invoked.",
+  "schema": "fsmgen.active_readback_source_review.v1",
+  "source_revision": "fe025fbc5c153cddb32e97d4e9f724f8d84d81be"
+}

@@ -1,0 +1,2 @@
+ram-guard: PID 67842; host 78.9%; host cutoff 88%; descendant RSS cutoff 4096 MiB; poll 2s
+knowledge-map: OK (1161 facts, 6427 unique questions, 6598 answer occurrences, 139 bounded topic shards; query parity verified)

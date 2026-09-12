@@ -1,0 +1,8 @@
+[
+  {
+    "candidate_id": "published-69ec7ffae226ea84c8010538",
+    "excerpt": "The active-runtime partition passes 518 primary cases and 5,723 assertions: 13 releases succeed and 505 attempts reject.",
+    "path": "docs/book/src/16dc-vial-portable-verilator-runtime-measurement.md",
+    "source_line_sha256": "91fc68c68a17c392d16f88e57d8d0de42caf41723c61e198a01006b052427177"
+  }
+]

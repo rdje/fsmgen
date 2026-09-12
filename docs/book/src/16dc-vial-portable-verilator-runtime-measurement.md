@@ -2507,9 +2507,8 @@ I/O module load-order conflict, and the first audit wrongly demanded zero
 `errno` after a successful open. [Perl permits nonzero successful-call `errno`](https://perldoc.perl.org/variables/%24%21);
 the corrected audit retains it as data and uses the actual return and native
 identity to establish success. The same saved cases pass the separately pinned
-correction; no fixture is rerun to repair the oracle. Active-runtime and
-last-observation readback, syscall reports, close controls and native lifetime
-qualification remain open.
+correction; no fixture is rerun to repair the oracle. Last-observation readback,
+syscall reports, close controls and native lifetime qualification remain open.
 
 The equal-reference partition passes 462 primary cases and 5,107 assertions: 10 releases succeed and 452 attempts reject.
 For example, when the wrapper contains the same bytes as the private and global
@@ -2528,6 +2527,25 @@ identities, invented archive identities and incorrect retirement records:
 
 ```sh
 python3 -B docs/audits/native-proxy-observation-archive-release-readback-equal-20260912/audit.py --verify-saved
+```
+
+The active-runtime partition passes 518 primary cases and 5,723 assertions: 13 releases succeed and 505 attempts reject.
+Here, active means that the inert runtime reference and private workspace remain
+present during release. For example, removing the selected observation hold
+leaves the original global runtime reference, wrapper and private reference
+unchanged. Readback failures preserve that same state, including failures after
+unlink. The independent audit rejects invented retirement, a missing runtime
+reference, a missing private workspace and a substituted retired setup.
+
+Failed readers close before source handoff, and returned sources retain their
+original consumer's cleanup. Actual filesystem effects and reported read
+controls remain separate. This profile reuses the qualified weak observer and
+authenticates the earlier strong-reference counterexample separately. An active
+fixture record makes no claim that a native process is running. Revalidate the
+saved cases without executing a fixture:
+
+```sh
+python3 -B docs/audits/native-proxy-observation-archive-release-readback-active-20260912/audit.py --verify-saved
 ```
 
 The syscall-report plan separates suppressed calls from actual operations.

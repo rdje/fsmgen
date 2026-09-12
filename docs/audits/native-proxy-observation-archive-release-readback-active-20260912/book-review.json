@@ -1,0 +1,20 @@
+{
+  "checked_passages": [
+    "The active-runtime partition passes 518 primary cases and 5,723 assertions: 13 releases succeed and 505 attempts reject.",
+    "active means that the inert runtime reference and private workspace remain present during release.",
+    "Readback failures preserve that same state, including failures after unlink.",
+    "a missing private workspace and a substituted retired setup.",
+    "An active fixture record makes no claim that a native process is running.",
+    "native-proxy-observation-archive-release-readback-active-20260912/audit.py --verify-saved"
+  ],
+  "exact_output_absent": true,
+  "exit_code": 0,
+  "output": ".artifacts/tmp/native-proxy-release-readback-active-book-20260912/book",
+  "rendered_bytes": 23413846,
+  "rendered_directories": 3,
+  "rendered_files": 98,
+  "renderer_warnings": [
+    "WARN search index is very large (13213306 bytes)"
+  ],
+  "same_volume_direct_objects": true
+}

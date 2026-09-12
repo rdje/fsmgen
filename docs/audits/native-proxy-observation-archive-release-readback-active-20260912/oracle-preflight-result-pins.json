@@ -1,0 +1,22 @@
+[
+  {
+    "path": "docs/audits/native-proxy-observation-archive-release-readback-active-20260912/result/oracle-preflight/oracle-preflight.json",
+    "sha256": "77197619ef360bb435121fb15af156d5f8b761cde2cec60906df6f3b569a2fdb",
+    "size_bytes": 278336
+  },
+  {
+    "path": "docs/audits/native-proxy-observation-archive-release-readback-active-20260912/result/oracle-preflight/oracle-preflight.stdout",
+    "sha256": "0b51e2251d80e5a7344935a8f0908eb490d4a1cfde5a67cf7bf55021a3c4739a",
+    "size_bytes": 91
+  },
+  {
+    "path": "docs/audits/native-proxy-observation-archive-release-readback-active-20260912/result/oracle-preflight/oracle-preflight.stderr",
+    "sha256": "e9959cefdfdfc3602155600097eba581b822529b41b025ae9b82c5468abc0461",
+    "size_bytes": 91
+  },
+  {
+    "path": "docs/audits/native-proxy-observation-archive-release-readback-active-20260912/result/oracle-preflight/oracle-preflight.exit",
+    "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa",
+    "size_bytes": 2
+  }
+]
