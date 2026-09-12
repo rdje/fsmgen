@@ -1,0 +1,13 @@
+{"partition": "docs/audits/native-proxy-observation-archive-release-ordinary-before-20260911", "cases": 613, "verified": true}
+{"partition": "docs/audits/native-proxy-observation-archive-release-ordinary-after-20260911", "cases": 485, "verified": true}
+{"partition": "docs/audits/native-proxy-observation-archive-release-equal-before-20260911", "cases": 590, "verified": true}
+{"partition": "docs/audits/native-proxy-observation-archive-release-equal-after-20260911", "cases": 467, "verified": true}
+{"partition": "docs/audits/native-proxy-observation-archive-release-active-before-20260911", "cases": 643, "verified": true}
+{"partition": "docs/audits/native-proxy-observation-archive-release-active-after-20260911", "cases": 506, "verified": true}
+{"partition": "docs/audits/native-proxy-observation-archive-release-last-before-20260911", "cases": 539, "verified": true}
+{"partition": "docs/audits/native-proxy-observation-archive-release-last-after-20260911", "cases": 430, "verified": true}
+{"partition": "docs/audits/native-proxy-observation-archive-release-readback-ordinary-20260911", "cases": 483, "verified": true}
+{"partition": "docs/audits/native-proxy-observation-archive-release-readback-equal-20260912", "cases": 462, "verified": true}
+{"partition": "docs/audits/native-proxy-observation-archive-release-readback-active-20260912", "cases": 518, "verified": true}
+{"partition": "docs/audits/native-proxy-observation-archive-release-readback-last-20260912", "cases": 406, "verified": true}
+{"partition": "docs/audits/native-proxy-observation-archive-release-syscall-20260912", "cases": 24, "verified": true}

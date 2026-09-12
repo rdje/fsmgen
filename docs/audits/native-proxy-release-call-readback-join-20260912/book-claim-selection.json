@@ -1,0 +1,8 @@
+[
+  {
+    "candidate_id": "published-c82d78fda85fb8922b763ef5",
+    "excerpt": "The complete selected release domain verifies 6,165 primary cases: 52 releases succeed and 6,113 attempts reject; 1 separate strong-observer counterexample brings the saved suite to 63,878 assertions.",
+    "path": "docs/book/src/16dc-vial-portable-verilator-runtime-measurement.md",
+    "source_line_sha256": "73c9b2b82b7245297a9584811820fc54b6eaa1eb32fafee439ca116bece3a5f4"
+  }
+]

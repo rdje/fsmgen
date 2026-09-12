@@ -1,0 +1,20 @@
+{
+  "checked_passages": [
+    "The complete selected release domain verifies 6,165 primary cases: 52 releases succeed and 6,113 attempts reject; 1 separate strong-observer counterexample brings the saved suite to 63,878 assertions.",
+    "The assertion total comes from retained runs; this join executes no fixture.",
+    "Each original source revision and prospective input receipt is authenticated.",
+    "The prior readback/syscall coverage identity is preserved exactly.",
+    "Combining the saved domains does not establish simultaneous-failure coverage.",
+    "native-proxy-release-call-readback-join-20260912/audit.py --verify-saved"
+  ],
+  "exact_output_absent": true,
+  "exit_code": 0,
+  "output": ".artifacts/tmp/native-proxy-release-call-readback-join-book-20260912/book",
+  "rendered_bytes": 23432238,
+  "rendered_directories": 3,
+  "rendered_files": 98,
+  "renderer_warnings": [
+    "WARN search index is very large (13220491 bytes)"
+  ],
+  "same_volume_direct_objects": true
+}

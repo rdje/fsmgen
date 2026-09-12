@@ -2,6 +2,7 @@
 id: test-subprocess-policy-adapters
 title: Test subprocesses share one mechanism behind sealed policy adapters
 answers:
+  - "how is complete release call readback fault coverage verified?"
   - "how is selected release readback syscall evidence joined?"
   - "how are release unlink absence reports verified?"
   - "how does last-observation readback preserve an unreferenced image?"
@@ -130,12 +131,12 @@ evidence: >-
   t/lib/FSM/Test/RustProxyFixture.pm; t/1815-rust-proxy-fixture.t; t/1816-rust-proxy-integration.t; t/1817-test-supervision-architecture.t
 reverify: >-
   scripts/run_with_ram_guard.sh -- python3 -B
-  docs/audits/native-proxy-release-readback-join-20260912/audit.py --verify-saved
+  docs/audits/native-proxy-release-call-readback-join-20260912/audit.py --verify-saved
 ---
 Decisions `0087`/`0101`: `FSM::Support::ProcessSupervisor`; adapters seal local argv/capture/group cleanup. T1669 checks ownership. `exec_handoff_monotonic_ns` is EOF, not main entry; absent EOF leaves timing unknown.
 `VerilatorRuntime`: decision `0086`. `TaskAcceptanceFixtureRuntime`: owned roots/fixed Git argv.
-History: `ce10cbe5e63bd2d8f34304490ae491c37372786e:docs/knowledge/test-subprocess-policy-adapters.md`. Earlier contracts and replay: history.
-Selected readback/syscall join: see reverify. Every primary case is unique; the strong observer stays separate. Saved physical/call/custody evidence, failures and root absence are authenticated. No new fixture runs. Earlier report/readback contracts: history. Wider call joins, close composition and native lifetime remain open.
+History: `accc2c3f32a57365450ba57546485aca784f6820:docs/knowledge/test-subprocess-policy-adapters.md`. Earlier contracts and replay: history.
+Release faults: see reverify. Safe calls and readback/syscall reports have unique coverage; the strong observer stays separate. Sources, effects, custody and root absence are verified. Details: history. Close, final release and native work remain open.
 Binding, I/O load order and successful-open nonzero errno: predecessor history. Successful errno is retained data; return and native identity establish success.
 Proxy: `t/fixtures/rust-tool-proxy.c` is C; Perl `t/lib/FSM/Test/RustProxyFixture.pm` builds it and the Perl harness launches a separate process to impersonate rustup resolution. Rust names the substituted tool, not the native implementation language.
 HIAL/VIAL `.19.2.3.1.2.2.5.5` owns repair/hostile controls; neutral-verifier extraction stays blocked.

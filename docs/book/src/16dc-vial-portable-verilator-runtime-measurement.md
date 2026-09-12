@@ -2596,8 +2596,8 @@ python3 -B docs/audits/native-proxy-observation-archive-release-syscall-20260912
 ```
 
 These modeled reports do not establish naturally occurring OS-error behavior.
-Later lanes own the complete evidence join, actual closes followed by modeled
-errors, and deliberate close omissions with separate recovery. Cleanup-error
+The complete selected evidence join is documented below. Later lanes own
+actual closes followed by modeled errors and close omissions with recovery. Cleanup-error
 composition and arbitrary asynchronous writers remain outside this domain;
 these inactive checks grant no native ownership authority.
 
@@ -2620,8 +2620,31 @@ python3 -B docs/audits/native-proxy-release-readback-join-20260912/audit.py --ve
 ```
 
 This closes the selected readback and syscall-report domain. The wider
-safe-call join, close-error and omission compositions, and native lifetime
-remain separate work.
+safe-call join follows below. Close-error and omission compositions and
+native lifetime remain separate work.
+
+The complete selected release domain verifies 6,165 primary cases: 52 releases succeed and 6,113 attempts reject; 1 separate strong-observer counterexample brings the saved suite to 63,878 assertions.
+The assertion total comes from retained runs; this join executes no fixture.
+It adds every selected safe before-call and after-call occurrence to the
+readback and syscall-report domain. Healthy controls remain distinct by
+profile and domain, including before-call versus after-call qualification.
+
+Each original source revision and prospective input receipt is authenticated.
+The join checks current-input call resolution, exact interrupted prefixes,
+actual filesystem effects and every observed descriptor close against the
+saved case bytes. Separate record counts agree with the scope oracles, and
+all selected roots remain absent and disjoint from the original healthy basis.
+The prior readback/syscall coverage identity is preserved exactly. Revalidate:
+
+```sh
+python3 -B docs/audits/native-proxy-release-call-readback-join-20260912/audit.py --verify-saved
+```
+
+Successful source-return handoffs and sealed-return aliases are not safe
+call-injection sites; lower-reader failures have their own qualified domain.
+Combining the saved domains does not establish simultaneous-failure coverage.
+Close-error reporting, deliberate close omissions, complete release
+applicability and native lifetime remain separately owned work.
 
 The inactive archive record implementation now derives a closed specification
 from the complete original acquisition and request. It keeps the ordered wrapper,

@@ -1,0 +1,31 @@
+{
+  "files": [
+    {
+      "destination": "docs/audits/native-proxy-release-call-readback-join-20260912/first-task-failure/acceptance-history.jsonl",
+      "sha256": "17a029317408b6a151393b154c75435a8dfa338b82a54a7d079ce470370e94bd",
+      "size_bytes": 1548,
+      "source": "docs/tasks/history/HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE/acceptance-history.jsonl"
+    },
+    {
+      "destination": "docs/audits/native-proxy-release-call-readback-join-20260912/first-task-failure/task.stdout",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "size_bytes": 0,
+      "source": ".artifacts/logs/native-proxy-release-call-readback-join-20260912/task.stdout"
+    },
+    {
+      "destination": "docs/audits/native-proxy-release-call-readback-join-20260912/first-task-failure/task.stderr",
+      "sha256": "d4df23f6a27cb01e9b2a2ebc87017cbd4343e4f53e9e40e1e9c281ccb9371be2",
+      "size_bytes": 398,
+      "source": ".artifacts/logs/native-proxy-release-call-readback-join-20260912/task.stderr"
+    },
+    {
+      "destination": "docs/audits/native-proxy-release-call-readback-join-20260912/first-task-failure/task.exit",
+      "sha256": "4355a46b19d348dc2f57c046f8ef63d4538ebb936000f3c9ee954a27460dd865",
+      "size_bytes": 2,
+      "source": ".artifacts/logs/native-proxy-release-call-readback-join-20260912/task.exit"
+    }
+  ],
+  "old_manifest_revision": "accc2c3f32a57365450ba57546485aca784f6820",
+  "resolution": "Replace the current record with the exact HEAD suffix receipt. The previous manifest and record remain byte-exact in HEAD history, and all earlier live acceptance sections remain unchanged.",
+  "root_cause": "The bounded acceptance-history manifest permits exactly one current record. This slice incorrectly appended its rollover, leaving two records."
+}

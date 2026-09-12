@@ -1,0 +1,24 @@
+{
+  "files": [
+    {
+      "path": "docs/audits/native-proxy-release-call-readback-join-20260912/first-command-failure/knowledge-generate.stdout",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "size_bytes": 0
+    },
+    {
+      "path": "docs/audits/native-proxy-release-call-readback-join-20260912/first-command-failure/knowledge-generate.stderr",
+      "sha256": "dea4ca5cd443f683f28260b2e085a9e086831782cdd33c3a1416b4361971bc83",
+      "size_bytes": 89
+    },
+    {
+      "path": "docs/audits/native-proxy-release-call-readback-join-20260912/first-command-failure/knowledge-generate.exit",
+      "sha256": "743c7850cccfba5e53a9002663ec1ddd1079315a98bdbfdde10e6044f56abefe",
+      "size_bytes": 4
+    }
+  ],
+  "owner": "HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.12.4.1.3.4.4.3.11",
+  "resolution": "Run the existing gen_knowledge_map.sh and preserve these first raw diagnostics.",
+  "root_cause": "The invocation used nonexistent generate_knowledge_map.sh; tracked script is gen_knowledge_map.sh.",
+  "scope": "This command did not execute any generator or write generated files.",
+  "success": false
+}
