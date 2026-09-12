@@ -2,6 +2,7 @@
 id: test-subprocess-policy-adapters
 title: Test subprocesses share one mechanism behind sealed policy adapters
 answers:
+  - "how do ordinary release compositions preserve primary errors?"
   - "how are release error compositions selected?"
   - "what survives last-observation close reports?"
   - "how do active-runtime close reports preserve runtime state?"
@@ -137,10 +138,9 @@ evidence: >-
   t/lib/FSM/Test/RustProxyFixture.pm; t/1815-rust-proxy-fixture.t; t/1816-rust-proxy-integration.t; t/1817-test-supervision-architecture.t
 reverify: >-
   scripts/run_with_ram_guard.sh -- python3 -B
-  docs/audits/native-proxy-release-close-composition-selection-20260912/audit.py --verify-saved
+  docs/audits/native-proxy-observation-archive-release-composition-ordinary-20260912/audit.py --verify-saved
 ---
 Decisions `0087`/`0101`: `FSM::Support::ProcessSupervisor`; adapters seal local argv/capture/group cleanup. T1669 checks ownership. `exec_handoff_monotonic_ns` is EOF, not main entry; absent EOF leaves timing unknown.
-History: `49a4d1f50cec77149eeadf799501d0ee33447f12:docs/knowledge/test-subprocess-policy-adapters.md`.
-Release composition recipes select current-flow cleanup owners and primary errors; paired declarations preserve the predicted winner. Execution is pending.
-Proxy: `t/fixtures/rust-tool-proxy.c` is C. Perl `t/lib/FSM/Test/RustProxyFixture.pm` builds it; the harness launches it separately to impersonate rustup. Rust names the substituted tool.
-`VerilatorRuntime`: decision `0086`. `TaskAcceptanceFixtureRuntime`: owned roots/fixed Git argv. HIAL/VIAL `.19.2.3.1.2.2.5.5` owns repair/hostile controls; neutral-verifier extraction stays blocked.
+History: `83b32c80721c2ce76c42b426b274ec72761b360c:docs/knowledge/test-subprocess-policy-adapters.md`.
+Ordinary compositions preserve primary errors through cleanup: reverify. Other profiles remain pending.
+Proxy: `t/fixtures/rust-tool-proxy.c` is C. Perl `t/lib/FSM/Test/RustProxyFixture.pm` builds it; the harness launches it separately to impersonate rustup. Rust names the substituted tool. `VerilatorRuntime`: decision `0086`. `TaskAcceptanceFixtureRuntime`: owned roots/fixed Git argv. HIAL/VIAL `.19.2.3.1.2.2.5.5` owns repair/hostile controls; neutral-verifier extraction stays blocked.

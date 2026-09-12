@@ -1,0 +1,611 @@
+ok 1 - NativeProxyObservationRelease::_coordinator_request: original external caller rejects
+ok 2 - NativeProxyObservationRelease::_coordinator_request: fault wrapper preserves caller rejection
+ok 3 - NativeProxyObservationRelease::_coordinator_request: original caller diagnostic remains exact
+ok 4 - NativeProxyObservationRelease::_coordinator_request: rejected original call stays an interrupted prefix
+ok 5 - NativeProxyObservationRelease::_admit_locked: original external caller rejects
+ok 6 - NativeProxyObservationRelease::_admit_locked: fault wrapper preserves caller rejection
+ok 7 - NativeProxyObservationRelease::_admit_locked: original caller diagnostic remains exact
+ok 8 - NativeProxyObservationRelease::_admit_locked: rejected original call stays an interrupted prefix
+ok 9 - NativeProxyObservationRelease::_unlink_exact: original external caller rejects
+ok 10 - NativeProxyObservationRelease::_unlink_exact: fault wrapper preserves caller rejection
+ok 11 - NativeProxyObservationRelease::_unlink_exact: original caller diagnostic remains exact
+ok 12 - NativeProxyObservationRelease::_unlink_exact: rejected original call stays an interrupted prefix
+ok 13 - NativeProxyObservationRelease::_release_locked: original external caller rejects
+ok 14 - NativeProxyObservationRelease::_release_locked: fault wrapper preserves caller rejection
+ok 15 - NativeProxyObservationRelease::_release_locked: original caller diagnostic remains exact
+ok 16 - NativeProxyObservationRelease::_release_locked: rejected original call stays an interrupted prefix
+ok 17 - NativeProxyObservationRelease::_finish_locked: original external caller rejects
+ok 18 - NativeProxyObservationRelease::_finish_locked: fault wrapper preserves caller rejection
+ok 19 - NativeProxyObservationRelease::_finish_locked: original caller diagnostic remains exact
+ok 20 - NativeProxyObservationRelease::_finish_locked: rejected original call stays an interrupted prefix
+ok 21 - NativeProxyReferenceCensus::_inspect_locked: original external caller rejects
+ok 22 - NativeProxyReferenceCensus::_inspect_locked: fault wrapper preserves caller rejection
+ok 23 - NativeProxyReferenceCensus::_inspect_locked: original caller diagnostic remains exact
+ok 24 - NativeProxyReferenceCensus::_inspect_locked: rejected original call stays an interrupted prefix
+ok 25 - healthy:None:none: original public attempt returns
+ok 26 - healthy:None:none: exact success disposition
+ok 27 - healthy:None:none: exact first-error diagnostic
+ok 28 - healthy:None:none: observed report order is independent of declaration order
+ok 29 - healthy:None:none: exact selected helper primary count
+ok 30 - healthy:None:none: actual directory read and reported primary remain distinct
+ok 31 - healthy:None:none: actual unlink and historical/latest absence remain truthful
+ok 32 - healthy:None:none: every actual observed descriptor closes without recovery
+ok 33 - healthy:None:none: actual close and substituted return remain separately truthful
+ok 34 - healthy:None:none: original input bytes and types remain unchanged
+ok 35 - healthy:None:none: no unrelated publication mutation or private-source read
+ok 36 - healthy:None:none: exact physical effect preserves archive and every other owner
+ok 37 - healthy:None:none: inactive receipt authority stays closed
+ok 38 - group:NativeProxyImageCoordination::_census:observed: original public attempt returns
+ok 39 - group:NativeProxyImageCoordination::_census:observed: exact success disposition
+ok 40 - group:NativeProxyImageCoordination::_census:observed: exact first-error diagnostic
+ok 41 - group:NativeProxyImageCoordination::_census:observed: observed report order is independent of declaration order
+ok 42 - group:NativeProxyImageCoordination::_census:observed: exact selected helper primary count
+ok 43 - group:NativeProxyImageCoordination::_census:observed: actual directory read and reported primary remain distinct
+ok 44 - group:NativeProxyImageCoordination::_census:observed: actual unlink and historical/latest absence remain truthful
+ok 45 - group:NativeProxyImageCoordination::_census:observed: every actual observed descriptor closes without recovery
+ok 46 - group:NativeProxyImageCoordination::_census:observed: actual close and substituted return remain separately truthful
+ok 47 - group:NativeProxyImageCoordination::_census:observed: original input bytes and types remain unchanged
+ok 48 - group:NativeProxyImageCoordination::_census:observed: no unrelated publication mutation or private-source read
+ok 49 - group:NativeProxyImageCoordination::_census:observed: exact physical effect preserves archive and every other owner
+ok 50 - group:NativeProxyImageCoordination::_census:observed: inactive receipt authority stays closed
+ok 51 - group:NativeProxyImageCoordination::_census:reversed: original public attempt returns
+ok 52 - group:NativeProxyImageCoordination::_census:reversed: exact success disposition
+ok 53 - group:NativeProxyImageCoordination::_census:reversed: exact first-error diagnostic
+ok 54 - group:NativeProxyImageCoordination::_census:reversed: observed report order is independent of declaration order
+ok 55 - group:NativeProxyImageCoordination::_census:reversed: exact selected helper primary count
+ok 56 - group:NativeProxyImageCoordination::_census:reversed: actual directory read and reported primary remain distinct
+ok 57 - group:NativeProxyImageCoordination::_census:reversed: actual unlink and historical/latest absence remain truthful
+ok 58 - group:NativeProxyImageCoordination::_census:reversed: every actual observed descriptor closes without recovery
+ok 59 - group:NativeProxyImageCoordination::_census:reversed: actual close and substituted return remain separately truthful
+ok 60 - group:NativeProxyImageCoordination::_census:reversed: original input bytes and types remain unchanged
+ok 61 - group:NativeProxyImageCoordination::_census:reversed: no unrelated publication mutation or private-source read
+ok 62 - group:NativeProxyImageCoordination::_census:reversed: exact physical effect preserves archive and every other owner
+ok 63 - group:NativeProxyImageCoordination::_census:reversed: inactive receipt authority stays closed
+ok 64 - group:NativeProxyImageCoordination::_names:observed: original public attempt returns
+ok 65 - group:NativeProxyImageCoordination::_names:observed: exact success disposition
+ok 66 - group:NativeProxyImageCoordination::_names:observed: exact first-error diagnostic
+ok 67 - group:NativeProxyImageCoordination::_names:observed: observed report order is independent of declaration order
+ok 68 - group:NativeProxyImageCoordination::_names:observed: exact selected helper primary count
+ok 69 - group:NativeProxyImageCoordination::_names:observed: actual directory read and reported primary remain distinct
+ok 70 - group:NativeProxyImageCoordination::_names:observed: actual unlink and historical/latest absence remain truthful
+ok 71 - group:NativeProxyImageCoordination::_names:observed: every actual observed descriptor closes without recovery
+ok 72 - group:NativeProxyImageCoordination::_names:observed: actual close and substituted return remain separately truthful
+ok 73 - group:NativeProxyImageCoordination::_names:observed: original input bytes and types remain unchanged
+ok 74 - group:NativeProxyImageCoordination::_names:observed: no unrelated publication mutation or private-source read
+ok 75 - group:NativeProxyImageCoordination::_names:observed: exact physical effect preserves archive and every other owner
+ok 76 - group:NativeProxyImageCoordination::_names:observed: inactive receipt authority stays closed
+ok 77 - group:NativeProxyImageCoordination::_names:reversed: original public attempt returns
+ok 78 - group:NativeProxyImageCoordination::_names:reversed: exact success disposition
+ok 79 - group:NativeProxyImageCoordination::_names:reversed: exact first-error diagnostic
+ok 80 - group:NativeProxyImageCoordination::_names:reversed: observed report order is independent of declaration order
+ok 81 - group:NativeProxyImageCoordination::_names:reversed: exact selected helper primary count
+ok 82 - group:NativeProxyImageCoordination::_names:reversed: actual directory read and reported primary remain distinct
+ok 83 - group:NativeProxyImageCoordination::_names:reversed: actual unlink and historical/latest absence remain truthful
+ok 84 - group:NativeProxyImageCoordination::_names:reversed: every actual observed descriptor closes without recovery
+ok 85 - group:NativeProxyImageCoordination::_names:reversed: actual close and substituted return remain separately truthful
+ok 86 - group:NativeProxyImageCoordination::_names:reversed: original input bytes and types remain unchanged
+ok 87 - group:NativeProxyImageCoordination::_names:reversed: no unrelated publication mutation or private-source read
+ok 88 - group:NativeProxyImageCoordination::_names:reversed: exact physical effect preserves archive and every other owner
+ok 89 - group:NativeProxyImageCoordination::_names:reversed: inactive receipt authority stays closed
+ok 90 - group:NativeProxyImageCoordination::_transaction:observed: original public attempt returns
+ok 91 - group:NativeProxyImageCoordination::_transaction:observed: exact success disposition
+ok 92 - group:NativeProxyImageCoordination::_transaction:observed: exact first-error diagnostic
+ok 93 - group:NativeProxyImageCoordination::_transaction:observed: observed report order is independent of declaration order
+ok 94 - group:NativeProxyImageCoordination::_transaction:observed: exact selected helper primary count
+ok 95 - group:NativeProxyImageCoordination::_transaction:observed: actual directory read and reported primary remain distinct
+ok 96 - group:NativeProxyImageCoordination::_transaction:observed: actual unlink and historical/latest absence remain truthful
+ok 97 - group:NativeProxyImageCoordination::_transaction:observed: every actual observed descriptor closes without recovery
+ok 98 - group:NativeProxyImageCoordination::_transaction:observed: actual close and substituted return remain separately truthful
+ok 99 - group:NativeProxyImageCoordination::_transaction:observed: original input bytes and types remain unchanged
+ok 100 - group:NativeProxyImageCoordination::_transaction:observed: no unrelated publication mutation or private-source read
+ok 101 - group:NativeProxyImageCoordination::_transaction:observed: exact physical effect preserves archive and every other owner
+ok 102 - group:NativeProxyImageCoordination::_transaction:observed: inactive receipt authority stays closed
+ok 103 - group:NativeProxyImageCoordination::_transaction:reversed: original public attempt returns
+ok 104 - group:NativeProxyImageCoordination::_transaction:reversed: exact success disposition
+ok 105 - group:NativeProxyImageCoordination::_transaction:reversed: exact first-error diagnostic
+ok 106 - group:NativeProxyImageCoordination::_transaction:reversed: observed report order is independent of declaration order
+ok 107 - group:NativeProxyImageCoordination::_transaction:reversed: exact selected helper primary count
+ok 108 - group:NativeProxyImageCoordination::_transaction:reversed: actual directory read and reported primary remain distinct
+ok 109 - group:NativeProxyImageCoordination::_transaction:reversed: actual unlink and historical/latest absence remain truthful
+ok 110 - group:NativeProxyImageCoordination::_transaction:reversed: every actual observed descriptor closes without recovery
+ok 111 - group:NativeProxyImageCoordination::_transaction:reversed: actual close and substituted return remain separately truthful
+ok 112 - group:NativeProxyImageCoordination::_transaction:reversed: original input bytes and types remain unchanged
+ok 113 - group:NativeProxyImageCoordination::_transaction:reversed: no unrelated publication mutation or private-source read
+ok 114 - group:NativeProxyImageCoordination::_transaction:reversed: exact physical effect preserves archive and every other owner
+ok 115 - group:NativeProxyImageCoordination::_transaction:reversed: inactive receipt authority stays closed
+ok 116 - group:NativeProxyImageCustody::_members:observed: original public attempt returns
+ok 117 - group:NativeProxyImageCustody::_members:observed: exact success disposition
+ok 118 - group:NativeProxyImageCustody::_members:observed: exact first-error diagnostic
+ok 119 - group:NativeProxyImageCustody::_members:observed: observed report order is independent of declaration order
+ok 120 - group:NativeProxyImageCustody::_members:observed: exact selected helper primary count
+ok 121 - group:NativeProxyImageCustody::_members:observed: actual directory read and reported primary remain distinct
+ok 122 - group:NativeProxyImageCustody::_members:observed: actual unlink and historical/latest absence remain truthful
+ok 123 - group:NativeProxyImageCustody::_members:observed: every actual observed descriptor closes without recovery
+ok 124 - group:NativeProxyImageCustody::_members:observed: actual close and substituted return remain separately truthful
+ok 125 - group:NativeProxyImageCustody::_members:observed: original input bytes and types remain unchanged
+ok 126 - group:NativeProxyImageCustody::_members:observed: no unrelated publication mutation or private-source read
+ok 127 - group:NativeProxyImageCustody::_members:observed: exact physical effect preserves archive and every other owner
+ok 128 - group:NativeProxyImageCustody::_members:observed: inactive receipt authority stays closed
+ok 129 - group:NativeProxyImageCustody::_members:reversed: original public attempt returns
+ok 130 - group:NativeProxyImageCustody::_members:reversed: exact success disposition
+ok 131 - group:NativeProxyImageCustody::_members:reversed: exact first-error diagnostic
+ok 132 - group:NativeProxyImageCustody::_members:reversed: observed report order is independent of declaration order
+ok 133 - group:NativeProxyImageCustody::_members:reversed: exact selected helper primary count
+ok 134 - group:NativeProxyImageCustody::_members:reversed: actual directory read and reported primary remain distinct
+ok 135 - group:NativeProxyImageCustody::_members:reversed: actual unlink and historical/latest absence remain truthful
+ok 136 - group:NativeProxyImageCustody::_members:reversed: every actual observed descriptor closes without recovery
+ok 137 - group:NativeProxyImageCustody::_members:reversed: actual close and substituted return remain separately truthful
+ok 138 - group:NativeProxyImageCustody::_members:reversed: original input bytes and types remain unchanged
+ok 139 - group:NativeProxyImageCustody::_members:reversed: no unrelated publication mutation or private-source read
+ok 140 - group:NativeProxyImageCustody::_members:reversed: exact physical effect preserves archive and every other owner
+ok 141 - group:NativeProxyImageCustody::_members:reversed: inactive receipt authority stays closed
+ok 142 - group:NativeProxyImageCustody::read_entry:observed: original public attempt returns
+ok 143 - group:NativeProxyImageCustody::read_entry:observed: exact success disposition
+ok 144 - group:NativeProxyImageCustody::read_entry:observed: exact first-error diagnostic
+ok 145 - group:NativeProxyImageCustody::read_entry:observed: observed report order is independent of declaration order
+ok 146 - group:NativeProxyImageCustody::read_entry:observed: exact selected helper primary count
+ok 147 - group:NativeProxyImageCustody::read_entry:observed: actual directory read and reported primary remain distinct
+ok 148 - group:NativeProxyImageCustody::read_entry:observed: actual unlink and historical/latest absence remain truthful
+ok 149 - group:NativeProxyImageCustody::read_entry:observed: every actual observed descriptor closes without recovery
+ok 150 - group:NativeProxyImageCustody::read_entry:observed: actual close and substituted return remain separately truthful
+ok 151 - group:NativeProxyImageCustody::read_entry:observed: original input bytes and types remain unchanged
+ok 152 - group:NativeProxyImageCustody::read_entry:observed: no unrelated publication mutation or private-source read
+ok 153 - group:NativeProxyImageCustody::read_entry:observed: exact physical effect preserves archive and every other owner
+ok 154 - group:NativeProxyImageCustody::read_entry:observed: inactive receipt authority stays closed
+ok 155 - group:NativeProxyImageCustody::read_entry:reversed: original public attempt returns
+ok 156 - group:NativeProxyImageCustody::read_entry:reversed: exact success disposition
+ok 157 - group:NativeProxyImageCustody::read_entry:reversed: exact first-error diagnostic
+ok 158 - group:NativeProxyImageCustody::read_entry:reversed: observed report order is independent of declaration order
+ok 159 - group:NativeProxyImageCustody::read_entry:reversed: exact selected helper primary count
+ok 160 - group:NativeProxyImageCustody::read_entry:reversed: actual directory read and reported primary remain distinct
+ok 161 - group:NativeProxyImageCustody::read_entry:reversed: actual unlink and historical/latest absence remain truthful
+ok 162 - group:NativeProxyImageCustody::read_entry:reversed: every actual observed descriptor closes without recovery
+ok 163 - group:NativeProxyImageCustody::read_entry:reversed: actual close and substituted return remain separately truthful
+ok 164 - group:NativeProxyImageCustody::read_entry:reversed: original input bytes and types remain unchanged
+ok 165 - group:NativeProxyImageCustody::read_entry:reversed: no unrelated publication mutation or private-source read
+ok 166 - group:NativeProxyImageCustody::read_entry:reversed: exact physical effect preserves archive and every other owner
+ok 167 - group:NativeProxyImageCustody::read_entry:reversed: inactive receipt authority stays closed
+ok 168 - group:NativeProxyObservationArchive::_source_closure:observed: original public attempt returns
+ok 169 - group:NativeProxyObservationArchive::_source_closure:observed: exact success disposition
+ok 170 - group:NativeProxyObservationArchive::_source_closure:observed: exact first-error diagnostic
+ok 171 - group:NativeProxyObservationArchive::_source_closure:observed: observed report order is independent of declaration order
+ok 172 - group:NativeProxyObservationArchive::_source_closure:observed: exact selected helper primary count
+ok 173 - group:NativeProxyObservationArchive::_source_closure:observed: actual directory read and reported primary remain distinct
+ok 174 - group:NativeProxyObservationArchive::_source_closure:observed: actual unlink and historical/latest absence remain truthful
+ok 175 - group:NativeProxyObservationArchive::_source_closure:observed: every actual observed descriptor closes without recovery
+ok 176 - group:NativeProxyObservationArchive::_source_closure:observed: actual close and substituted return remain separately truthful
+ok 177 - group:NativeProxyObservationArchive::_source_closure:observed: original input bytes and types remain unchanged
+ok 178 - group:NativeProxyObservationArchive::_source_closure:observed: no unrelated publication mutation or private-source read
+ok 179 - group:NativeProxyObservationArchive::_source_closure:observed: exact physical effect preserves archive and every other owner
+ok 180 - group:NativeProxyObservationArchive::_source_closure:observed: inactive receipt authority stays closed
+ok 181 - group:NativeProxyObservationArchive::_source_closure:reversed: original public attempt returns
+ok 182 - group:NativeProxyObservationArchive::_source_closure:reversed: exact success disposition
+ok 183 - group:NativeProxyObservationArchive::_source_closure:reversed: exact first-error diagnostic
+ok 184 - group:NativeProxyObservationArchive::_source_closure:reversed: observed report order is independent of declaration order
+ok 185 - group:NativeProxyObservationArchive::_source_closure:reversed: exact selected helper primary count
+ok 186 - group:NativeProxyObservationArchive::_source_closure:reversed: actual directory read and reported primary remain distinct
+ok 187 - group:NativeProxyObservationArchive::_source_closure:reversed: actual unlink and historical/latest absence remain truthful
+ok 188 - group:NativeProxyObservationArchive::_source_closure:reversed: every actual observed descriptor closes without recovery
+ok 189 - group:NativeProxyObservationArchive::_source_closure:reversed: actual close and substituted return remain separately truthful
+ok 190 - group:NativeProxyObservationArchive::_source_closure:reversed: original input bytes and types remain unchanged
+ok 191 - group:NativeProxyObservationArchive::_source_closure:reversed: no unrelated publication mutation or private-source read
+ok 192 - group:NativeProxyObservationArchive::_source_closure:reversed: exact physical effect preserves archive and every other owner
+ok 193 - group:NativeProxyObservationArchive::_source_closure:reversed: inactive receipt authority stays closed
+ok 194 - group:NativeProxyObservationRelease::_close_owned:observed: original public attempt returns
+ok 195 - group:NativeProxyObservationRelease::_close_owned:observed: exact success disposition
+ok 196 - group:NativeProxyObservationRelease::_close_owned:observed: exact first-error diagnostic
+ok 197 - group:NativeProxyObservationRelease::_close_owned:observed: observed report order is independent of declaration order
+ok 198 - group:NativeProxyObservationRelease::_close_owned:observed: exact selected helper primary count
+ok 199 - group:NativeProxyObservationRelease::_close_owned:observed: actual directory read and reported primary remain distinct
+ok 200 - group:NativeProxyObservationRelease::_close_owned:observed: actual unlink and historical/latest absence remain truthful
+ok 201 - group:NativeProxyObservationRelease::_close_owned:observed: every actual observed descriptor closes without recovery
+ok 202 - group:NativeProxyObservationRelease::_close_owned:observed: actual close and substituted return remain separately truthful
+ok 203 - group:NativeProxyObservationRelease::_close_owned:observed: original input bytes and types remain unchanged
+ok 204 - group:NativeProxyObservationRelease::_close_owned:observed: no unrelated publication mutation or private-source read
+ok 205 - group:NativeProxyObservationRelease::_close_owned:observed: exact physical effect preserves archive and every other owner
+ok 206 - group:NativeProxyObservationRelease::_close_owned:observed: inactive receipt authority stays closed
+ok 207 - group:NativeProxyObservationRelease::_close_owned:reversed: original public attempt returns
+ok 208 - group:NativeProxyObservationRelease::_close_owned:reversed: exact success disposition
+ok 209 - group:NativeProxyObservationRelease::_close_owned:reversed: exact first-error diagnostic
+ok 210 - group:NativeProxyObservationRelease::_close_owned:reversed: observed report order is independent of declaration order
+ok 211 - group:NativeProxyObservationRelease::_close_owned:reversed: exact selected helper primary count
+ok 212 - group:NativeProxyObservationRelease::_close_owned:reversed: actual directory read and reported primary remain distinct
+ok 213 - group:NativeProxyObservationRelease::_close_owned:reversed: actual unlink and historical/latest absence remain truthful
+ok 214 - group:NativeProxyObservationRelease::_close_owned:reversed: every actual observed descriptor closes without recovery
+ok 215 - group:NativeProxyObservationRelease::_close_owned:reversed: actual close and substituted return remain separately truthful
+ok 216 - group:NativeProxyObservationRelease::_close_owned:reversed: original input bytes and types remain unchanged
+ok 217 - group:NativeProxyObservationRelease::_close_owned:reversed: no unrelated publication mutation or private-source read
+ok 218 - group:NativeProxyObservationRelease::_close_owned:reversed: exact physical effect preserves archive and every other owner
+ok 219 - group:NativeProxyObservationRelease::_close_owned:reversed: inactive receipt authority stays closed
+ok 220 - group:NativeProxyReferenceCensus::_closure:observed: original public attempt returns
+ok 221 - group:NativeProxyReferenceCensus::_closure:observed: exact success disposition
+ok 222 - group:NativeProxyReferenceCensus::_closure:observed: exact first-error diagnostic
+ok 223 - group:NativeProxyReferenceCensus::_closure:observed: observed report order is independent of declaration order
+ok 224 - group:NativeProxyReferenceCensus::_closure:observed: exact selected helper primary count
+ok 225 - group:NativeProxyReferenceCensus::_closure:observed: actual directory read and reported primary remain distinct
+ok 226 - group:NativeProxyReferenceCensus::_closure:observed: actual unlink and historical/latest absence remain truthful
+ok 227 - group:NativeProxyReferenceCensus::_closure:observed: every actual observed descriptor closes without recovery
+ok 228 - group:NativeProxyReferenceCensus::_closure:observed: actual close and substituted return remain separately truthful
+ok 229 - group:NativeProxyReferenceCensus::_closure:observed: original input bytes and types remain unchanged
+ok 230 - group:NativeProxyReferenceCensus::_closure:observed: no unrelated publication mutation or private-source read
+ok 231 - group:NativeProxyReferenceCensus::_closure:observed: exact physical effect preserves archive and every other owner
+ok 232 - group:NativeProxyReferenceCensus::_closure:observed: inactive receipt authority stays closed
+ok 233 - group:NativeProxyReferenceCensus::_closure:reversed: original public attempt returns
+ok 234 - group:NativeProxyReferenceCensus::_closure:reversed: exact success disposition
+ok 235 - group:NativeProxyReferenceCensus::_closure:reversed: exact first-error diagnostic
+ok 236 - group:NativeProxyReferenceCensus::_closure:reversed: observed report order is independent of declaration order
+ok 237 - group:NativeProxyReferenceCensus::_closure:reversed: exact selected helper primary count
+ok 238 - group:NativeProxyReferenceCensus::_closure:reversed: actual directory read and reported primary remain distinct
+ok 239 - group:NativeProxyReferenceCensus::_closure:reversed: actual unlink and historical/latest absence remain truthful
+ok 240 - group:NativeProxyReferenceCensus::_closure:reversed: every actual observed descriptor closes without recovery
+ok 241 - group:NativeProxyReferenceCensus::_closure:reversed: actual close and substituted return remain separately truthful
+ok 242 - group:NativeProxyReferenceCensus::_closure:reversed: original input bytes and types remain unchanged
+ok 243 - group:NativeProxyReferenceCensus::_closure:reversed: no unrelated publication mutation or private-source read
+ok 244 - group:NativeProxyReferenceCensus::_closure:reversed: exact physical effect preserves archive and every other owner
+ok 245 - group:NativeProxyReferenceCensus::_closure:reversed: inactive receipt authority stays closed
+ok 246 - group:NativeProxyReferenceCensus::_image:observed: original public attempt returns
+ok 247 - group:NativeProxyReferenceCensus::_image:observed: exact success disposition
+ok 248 - group:NativeProxyReferenceCensus::_image:observed: exact first-error diagnostic
+ok 249 - group:NativeProxyReferenceCensus::_image:observed: observed report order is independent of declaration order
+ok 250 - group:NativeProxyReferenceCensus::_image:observed: exact selected helper primary count
+ok 251 - group:NativeProxyReferenceCensus::_image:observed: actual directory read and reported primary remain distinct
+ok 252 - group:NativeProxyReferenceCensus::_image:observed: actual unlink and historical/latest absence remain truthful
+ok 253 - group:NativeProxyReferenceCensus::_image:observed: every actual observed descriptor closes without recovery
+ok 254 - group:NativeProxyReferenceCensus::_image:observed: actual close and substituted return remain separately truthful
+ok 255 - group:NativeProxyReferenceCensus::_image:observed: original input bytes and types remain unchanged
+ok 256 - group:NativeProxyReferenceCensus::_image:observed: no unrelated publication mutation or private-source read
+ok 257 - group:NativeProxyReferenceCensus::_image:observed: exact physical effect preserves archive and every other owner
+ok 258 - group:NativeProxyReferenceCensus::_image:observed: inactive receipt authority stays closed
+ok 259 - group:NativeProxyReferenceCensus::_image:reversed: original public attempt returns
+ok 260 - group:NativeProxyReferenceCensus::_image:reversed: exact success disposition
+ok 261 - group:NativeProxyReferenceCensus::_image:reversed: exact first-error diagnostic
+ok 262 - group:NativeProxyReferenceCensus::_image:reversed: observed report order is independent of declaration order
+ok 263 - group:NativeProxyReferenceCensus::_image:reversed: exact selected helper primary count
+ok 264 - group:NativeProxyReferenceCensus::_image:reversed: actual directory read and reported primary remain distinct
+ok 265 - group:NativeProxyReferenceCensus::_image:reversed: actual unlink and historical/latest absence remain truthful
+ok 266 - group:NativeProxyReferenceCensus::_image:reversed: every actual observed descriptor closes without recovery
+ok 267 - group:NativeProxyReferenceCensus::_image:reversed: actual close and substituted return remain separately truthful
+ok 268 - group:NativeProxyReferenceCensus::_image:reversed: original input bytes and types remain unchanged
+ok 269 - group:NativeProxyReferenceCensus::_image:reversed: no unrelated publication mutation or private-source read
+ok 270 - group:NativeProxyReferenceCensus::_image:reversed: exact physical effect preserves archive and every other owner
+ok 271 - group:NativeProxyReferenceCensus::_image:reversed: inactive receipt authority stays closed
+ok 272 - group:NativeProxyReferenceCensus::_inspect_locked:observed: original public attempt returns
+ok 273 - group:NativeProxyReferenceCensus::_inspect_locked:observed: exact success disposition
+ok 274 - group:NativeProxyReferenceCensus::_inspect_locked:observed: exact first-error diagnostic
+ok 275 - group:NativeProxyReferenceCensus::_inspect_locked:observed: observed report order is independent of declaration order
+ok 276 - group:NativeProxyReferenceCensus::_inspect_locked:observed: exact selected helper primary count
+ok 277 - group:NativeProxyReferenceCensus::_inspect_locked:observed: actual directory read and reported primary remain distinct
+ok 278 - group:NativeProxyReferenceCensus::_inspect_locked:observed: actual unlink and historical/latest absence remain truthful
+ok 279 - group:NativeProxyReferenceCensus::_inspect_locked:observed: every actual observed descriptor closes without recovery
+ok 280 - group:NativeProxyReferenceCensus::_inspect_locked:observed: actual close and substituted return remain separately truthful
+ok 281 - group:NativeProxyReferenceCensus::_inspect_locked:observed: original input bytes and types remain unchanged
+ok 282 - group:NativeProxyReferenceCensus::_inspect_locked:observed: no unrelated publication mutation or private-source read
+ok 283 - group:NativeProxyReferenceCensus::_inspect_locked:observed: exact physical effect preserves archive and every other owner
+ok 284 - group:NativeProxyReferenceCensus::_inspect_locked:observed: inactive receipt authority stays closed
+ok 285 - group:NativeProxyReferenceCensus::_inspect_locked:reversed: original public attempt returns
+ok 286 - group:NativeProxyReferenceCensus::_inspect_locked:reversed: exact success disposition
+ok 287 - group:NativeProxyReferenceCensus::_inspect_locked:reversed: exact first-error diagnostic
+ok 288 - group:NativeProxyReferenceCensus::_inspect_locked:reversed: observed report order is independent of declaration order
+ok 289 - group:NativeProxyReferenceCensus::_inspect_locked:reversed: exact selected helper primary count
+ok 290 - group:NativeProxyReferenceCensus::_inspect_locked:reversed: actual directory read and reported primary remain distinct
+ok 291 - group:NativeProxyReferenceCensus::_inspect_locked:reversed: actual unlink and historical/latest absence remain truthful
+ok 292 - group:NativeProxyReferenceCensus::_inspect_locked:reversed: every actual observed descriptor closes without recovery
+ok 293 - group:NativeProxyReferenceCensus::_inspect_locked:reversed: actual close and substituted return remain separately truthful
+ok 294 - group:NativeProxyReferenceCensus::_inspect_locked:reversed: original input bytes and types remain unchanged
+ok 295 - group:NativeProxyReferenceCensus::_inspect_locked:reversed: no unrelated publication mutation or private-source read
+ok 296 - group:NativeProxyReferenceCensus::_inspect_locked:reversed: exact physical effect preserves archive and every other owner
+ok 297 - group:NativeProxyReferenceCensus::_inspect_locked:reversed: inactive receipt authority stays closed
+ok 298 - source-primary:NativeProxyImageCoordination::_census:observed: original public attempt returns
+ok 299 - source-primary:NativeProxyImageCoordination::_census:observed: exact success disposition
+ok 300 - source-primary:NativeProxyImageCoordination::_census:observed: exact first-error diagnostic
+ok 301 - source-primary:NativeProxyImageCoordination::_census:observed: observed report order is independent of declaration order
+ok 302 - source-primary:NativeProxyImageCoordination::_census:observed: exact selected helper primary count
+ok 303 - source-primary:NativeProxyImageCoordination::_census:observed: actual directory read and reported primary remain distinct
+ok 304 - source-primary:NativeProxyImageCoordination::_census:observed: actual unlink and historical/latest absence remain truthful
+ok 305 - source-primary:NativeProxyImageCoordination::_census:observed: every actual observed descriptor closes without recovery
+ok 306 - source-primary:NativeProxyImageCoordination::_census:observed: actual close and substituted return remain separately truthful
+ok 307 - source-primary:NativeProxyImageCoordination::_census:observed: original input bytes and types remain unchanged
+ok 308 - source-primary:NativeProxyImageCoordination::_census:observed: no unrelated publication mutation or private-source read
+ok 309 - source-primary:NativeProxyImageCoordination::_census:observed: exact physical effect preserves archive and every other owner
+ok 310 - source-primary:NativeProxyImageCoordination::_census:observed: inactive receipt authority stays closed
+ok 311 - source-primary:NativeProxyImageCoordination::_census:reversed: original public attempt returns
+ok 312 - source-primary:NativeProxyImageCoordination::_census:reversed: exact success disposition
+ok 313 - source-primary:NativeProxyImageCoordination::_census:reversed: exact first-error diagnostic
+ok 314 - source-primary:NativeProxyImageCoordination::_census:reversed: observed report order is independent of declaration order
+ok 315 - source-primary:NativeProxyImageCoordination::_census:reversed: exact selected helper primary count
+ok 316 - source-primary:NativeProxyImageCoordination::_census:reversed: actual directory read and reported primary remain distinct
+ok 317 - source-primary:NativeProxyImageCoordination::_census:reversed: actual unlink and historical/latest absence remain truthful
+ok 318 - source-primary:NativeProxyImageCoordination::_census:reversed: every actual observed descriptor closes without recovery
+ok 319 - source-primary:NativeProxyImageCoordination::_census:reversed: actual close and substituted return remain separately truthful
+ok 320 - source-primary:NativeProxyImageCoordination::_census:reversed: original input bytes and types remain unchanged
+ok 321 - source-primary:NativeProxyImageCoordination::_census:reversed: no unrelated publication mutation or private-source read
+ok 322 - source-primary:NativeProxyImageCoordination::_census:reversed: exact physical effect preserves archive and every other owner
+ok 323 - source-primary:NativeProxyImageCoordination::_census:reversed: inactive receipt authority stays closed
+ok 324 - source-primary:NativeProxyImageCustody::read_entry:observed: original public attempt returns
+ok 325 - source-primary:NativeProxyImageCustody::read_entry:observed: exact success disposition
+ok 326 - source-primary:NativeProxyImageCustody::read_entry:observed: exact first-error diagnostic
+ok 327 - source-primary:NativeProxyImageCustody::read_entry:observed: observed report order is independent of declaration order
+ok 328 - source-primary:NativeProxyImageCustody::read_entry:observed: exact selected helper primary count
+ok 329 - source-primary:NativeProxyImageCustody::read_entry:observed: actual directory read and reported primary remain distinct
+ok 330 - source-primary:NativeProxyImageCustody::read_entry:observed: actual unlink and historical/latest absence remain truthful
+ok 331 - source-primary:NativeProxyImageCustody::read_entry:observed: every actual observed descriptor closes without recovery
+ok 332 - source-primary:NativeProxyImageCustody::read_entry:observed: actual close and substituted return remain separately truthful
+ok 333 - source-primary:NativeProxyImageCustody::read_entry:observed: original input bytes and types remain unchanged
+ok 334 - source-primary:NativeProxyImageCustody::read_entry:observed: no unrelated publication mutation or private-source read
+ok 335 - source-primary:NativeProxyImageCustody::read_entry:observed: exact physical effect preserves archive and every other owner
+ok 336 - source-primary:NativeProxyImageCustody::read_entry:observed: inactive receipt authority stays closed
+ok 337 - source-primary:NativeProxyImageCustody::read_entry:reversed: original public attempt returns
+ok 338 - source-primary:NativeProxyImageCustody::read_entry:reversed: exact success disposition
+ok 339 - source-primary:NativeProxyImageCustody::read_entry:reversed: exact first-error diagnostic
+ok 340 - source-primary:NativeProxyImageCustody::read_entry:reversed: observed report order is independent of declaration order
+ok 341 - source-primary:NativeProxyImageCustody::read_entry:reversed: exact selected helper primary count
+ok 342 - source-primary:NativeProxyImageCustody::read_entry:reversed: actual directory read and reported primary remain distinct
+ok 343 - source-primary:NativeProxyImageCustody::read_entry:reversed: actual unlink and historical/latest absence remain truthful
+ok 344 - source-primary:NativeProxyImageCustody::read_entry:reversed: every actual observed descriptor closes without recovery
+ok 345 - source-primary:NativeProxyImageCustody::read_entry:reversed: actual close and substituted return remain separately truthful
+ok 346 - source-primary:NativeProxyImageCustody::read_entry:reversed: original input bytes and types remain unchanged
+ok 347 - source-primary:NativeProxyImageCustody::read_entry:reversed: no unrelated publication mutation or private-source read
+ok 348 - source-primary:NativeProxyImageCustody::read_entry:reversed: exact physical effect preserves archive and every other owner
+ok 349 - source-primary:NativeProxyImageCustody::read_entry:reversed: inactive receipt authority stays closed
+ok 350 - source-primary:NativeProxyObservationArchive::_source_closure:observed: original public attempt returns
+ok 351 - source-primary:NativeProxyObservationArchive::_source_closure:observed: exact success disposition
+ok 352 - source-primary:NativeProxyObservationArchive::_source_closure:observed: exact first-error diagnostic
+ok 353 - source-primary:NativeProxyObservationArchive::_source_closure:observed: observed report order is independent of declaration order
+ok 354 - source-primary:NativeProxyObservationArchive::_source_closure:observed: exact selected helper primary count
+ok 355 - source-primary:NativeProxyObservationArchive::_source_closure:observed: actual directory read and reported primary remain distinct
+ok 356 - source-primary:NativeProxyObservationArchive::_source_closure:observed: actual unlink and historical/latest absence remain truthful
+ok 357 - source-primary:NativeProxyObservationArchive::_source_closure:observed: every actual observed descriptor closes without recovery
+ok 358 - source-primary:NativeProxyObservationArchive::_source_closure:observed: actual close and substituted return remain separately truthful
+ok 359 - source-primary:NativeProxyObservationArchive::_source_closure:observed: original input bytes and types remain unchanged
+ok 360 - source-primary:NativeProxyObservationArchive::_source_closure:observed: no unrelated publication mutation or private-source read
+ok 361 - source-primary:NativeProxyObservationArchive::_source_closure:observed: exact physical effect preserves archive and every other owner
+ok 362 - source-primary:NativeProxyObservationArchive::_source_closure:observed: inactive receipt authority stays closed
+ok 363 - source-primary:NativeProxyObservationArchive::_source_closure:reversed: original public attempt returns
+ok 364 - source-primary:NativeProxyObservationArchive::_source_closure:reversed: exact success disposition
+ok 365 - source-primary:NativeProxyObservationArchive::_source_closure:reversed: exact first-error diagnostic
+ok 366 - source-primary:NativeProxyObservationArchive::_source_closure:reversed: observed report order is independent of declaration order
+ok 367 - source-primary:NativeProxyObservationArchive::_source_closure:reversed: exact selected helper primary count
+ok 368 - source-primary:NativeProxyObservationArchive::_source_closure:reversed: actual directory read and reported primary remain distinct
+ok 369 - source-primary:NativeProxyObservationArchive::_source_closure:reversed: actual unlink and historical/latest absence remain truthful
+ok 370 - source-primary:NativeProxyObservationArchive::_source_closure:reversed: every actual observed descriptor closes without recovery
+ok 371 - source-primary:NativeProxyObservationArchive::_source_closure:reversed: actual close and substituted return remain separately truthful
+ok 372 - source-primary:NativeProxyObservationArchive::_source_closure:reversed: original input bytes and types remain unchanged
+ok 373 - source-primary:NativeProxyObservationArchive::_source_closure:reversed: no unrelated publication mutation or private-source read
+ok 374 - source-primary:NativeProxyObservationArchive::_source_closure:reversed: exact physical effect preserves archive and every other owner
+ok 375 - source-primary:NativeProxyObservationArchive::_source_closure:reversed: inactive receipt authority stays closed
+ok 376 - source-primary:NativeProxyObservationRelease::_close_owned:observed: original public attempt returns
+ok 377 - source-primary:NativeProxyObservationRelease::_close_owned:observed: exact success disposition
+ok 378 - source-primary:NativeProxyObservationRelease::_close_owned:observed: exact first-error diagnostic
+ok 379 - source-primary:NativeProxyObservationRelease::_close_owned:observed: observed report order is independent of declaration order
+ok 380 - source-primary:NativeProxyObservationRelease::_close_owned:observed: exact selected helper primary count
+ok 381 - source-primary:NativeProxyObservationRelease::_close_owned:observed: actual directory read and reported primary remain distinct
+ok 382 - source-primary:NativeProxyObservationRelease::_close_owned:observed: actual unlink and historical/latest absence remain truthful
+ok 383 - source-primary:NativeProxyObservationRelease::_close_owned:observed: every actual observed descriptor closes without recovery
+ok 384 - source-primary:NativeProxyObservationRelease::_close_owned:observed: actual close and substituted return remain separately truthful
+ok 385 - source-primary:NativeProxyObservationRelease::_close_owned:observed: original input bytes and types remain unchanged
+ok 386 - source-primary:NativeProxyObservationRelease::_close_owned:observed: no unrelated publication mutation or private-source read
+ok 387 - source-primary:NativeProxyObservationRelease::_close_owned:observed: exact physical effect preserves archive and every other owner
+ok 388 - source-primary:NativeProxyObservationRelease::_close_owned:observed: inactive receipt authority stays closed
+ok 389 - source-primary:NativeProxyObservationRelease::_close_owned:reversed: original public attempt returns
+ok 390 - source-primary:NativeProxyObservationRelease::_close_owned:reversed: exact success disposition
+ok 391 - source-primary:NativeProxyObservationRelease::_close_owned:reversed: exact first-error diagnostic
+ok 392 - source-primary:NativeProxyObservationRelease::_close_owned:reversed: observed report order is independent of declaration order
+ok 393 - source-primary:NativeProxyObservationRelease::_close_owned:reversed: exact selected helper primary count
+ok 394 - source-primary:NativeProxyObservationRelease::_close_owned:reversed: actual directory read and reported primary remain distinct
+ok 395 - source-primary:NativeProxyObservationRelease::_close_owned:reversed: actual unlink and historical/latest absence remain truthful
+ok 396 - source-primary:NativeProxyObservationRelease::_close_owned:reversed: every actual observed descriptor closes without recovery
+ok 397 - source-primary:NativeProxyObservationRelease::_close_owned:reversed: actual close and substituted return remain separately truthful
+ok 398 - source-primary:NativeProxyObservationRelease::_close_owned:reversed: original input bytes and types remain unchanged
+ok 399 - source-primary:NativeProxyObservationRelease::_close_owned:reversed: no unrelated publication mutation or private-source read
+ok 400 - source-primary:NativeProxyObservationRelease::_close_owned:reversed: exact physical effect preserves archive and every other owner
+ok 401 - source-primary:NativeProxyObservationRelease::_close_owned:reversed: inactive receipt authority stays closed
+ok 402 - source-primary:NativeProxyReferenceCensus::_closure:observed: original public attempt returns
+ok 403 - source-primary:NativeProxyReferenceCensus::_closure:observed: exact success disposition
+ok 404 - source-primary:NativeProxyReferenceCensus::_closure:observed: exact first-error diagnostic
+ok 405 - source-primary:NativeProxyReferenceCensus::_closure:observed: observed report order is independent of declaration order
+ok 406 - source-primary:NativeProxyReferenceCensus::_closure:observed: exact selected helper primary count
+ok 407 - source-primary:NativeProxyReferenceCensus::_closure:observed: actual directory read and reported primary remain distinct
+ok 408 - source-primary:NativeProxyReferenceCensus::_closure:observed: actual unlink and historical/latest absence remain truthful
+ok 409 - source-primary:NativeProxyReferenceCensus::_closure:observed: every actual observed descriptor closes without recovery
+ok 410 - source-primary:NativeProxyReferenceCensus::_closure:observed: actual close and substituted return remain separately truthful
+ok 411 - source-primary:NativeProxyReferenceCensus::_closure:observed: original input bytes and types remain unchanged
+ok 412 - source-primary:NativeProxyReferenceCensus::_closure:observed: no unrelated publication mutation or private-source read
+ok 413 - source-primary:NativeProxyReferenceCensus::_closure:observed: exact physical effect preserves archive and every other owner
+ok 414 - source-primary:NativeProxyReferenceCensus::_closure:observed: inactive receipt authority stays closed
+ok 415 - source-primary:NativeProxyReferenceCensus::_closure:reversed: original public attempt returns
+ok 416 - source-primary:NativeProxyReferenceCensus::_closure:reversed: exact success disposition
+ok 417 - source-primary:NativeProxyReferenceCensus::_closure:reversed: exact first-error diagnostic
+ok 418 - source-primary:NativeProxyReferenceCensus::_closure:reversed: observed report order is independent of declaration order
+ok 419 - source-primary:NativeProxyReferenceCensus::_closure:reversed: exact selected helper primary count
+ok 420 - source-primary:NativeProxyReferenceCensus::_closure:reversed: actual directory read and reported primary remain distinct
+ok 421 - source-primary:NativeProxyReferenceCensus::_closure:reversed: actual unlink and historical/latest absence remain truthful
+ok 422 - source-primary:NativeProxyReferenceCensus::_closure:reversed: every actual observed descriptor closes without recovery
+ok 423 - source-primary:NativeProxyReferenceCensus::_closure:reversed: actual close and substituted return remain separately truthful
+ok 424 - source-primary:NativeProxyReferenceCensus::_closure:reversed: original input bytes and types remain unchanged
+ok 425 - source-primary:NativeProxyReferenceCensus::_closure:reversed: no unrelated publication mutation or private-source read
+ok 426 - source-primary:NativeProxyReferenceCensus::_closure:reversed: exact physical effect preserves archive and every other owner
+ok 427 - source-primary:NativeProxyReferenceCensus::_closure:reversed: inactive receipt authority stays closed
+ok 428 - source-primary:NativeProxyReferenceCensus::_image:observed: original public attempt returns
+ok 429 - source-primary:NativeProxyReferenceCensus::_image:observed: exact success disposition
+ok 430 - source-primary:NativeProxyReferenceCensus::_image:observed: exact first-error diagnostic
+ok 431 - source-primary:NativeProxyReferenceCensus::_image:observed: observed report order is independent of declaration order
+ok 432 - source-primary:NativeProxyReferenceCensus::_image:observed: exact selected helper primary count
+ok 433 - source-primary:NativeProxyReferenceCensus::_image:observed: actual directory read and reported primary remain distinct
+ok 434 - source-primary:NativeProxyReferenceCensus::_image:observed: actual unlink and historical/latest absence remain truthful
+ok 435 - source-primary:NativeProxyReferenceCensus::_image:observed: every actual observed descriptor closes without recovery
+ok 436 - source-primary:NativeProxyReferenceCensus::_image:observed: actual close and substituted return remain separately truthful
+ok 437 - source-primary:NativeProxyReferenceCensus::_image:observed: original input bytes and types remain unchanged
+ok 438 - source-primary:NativeProxyReferenceCensus::_image:observed: no unrelated publication mutation or private-source read
+ok 439 - source-primary:NativeProxyReferenceCensus::_image:observed: exact physical effect preserves archive and every other owner
+ok 440 - source-primary:NativeProxyReferenceCensus::_image:observed: inactive receipt authority stays closed
+ok 441 - source-primary:NativeProxyReferenceCensus::_image:reversed: original public attempt returns
+ok 442 - source-primary:NativeProxyReferenceCensus::_image:reversed: exact success disposition
+ok 443 - source-primary:NativeProxyReferenceCensus::_image:reversed: exact first-error diagnostic
+ok 444 - source-primary:NativeProxyReferenceCensus::_image:reversed: observed report order is independent of declaration order
+ok 445 - source-primary:NativeProxyReferenceCensus::_image:reversed: exact selected helper primary count
+ok 446 - source-primary:NativeProxyReferenceCensus::_image:reversed: actual directory read and reported primary remain distinct
+ok 447 - source-primary:NativeProxyReferenceCensus::_image:reversed: actual unlink and historical/latest absence remain truthful
+ok 448 - source-primary:NativeProxyReferenceCensus::_image:reversed: every actual observed descriptor closes without recovery
+ok 449 - source-primary:NativeProxyReferenceCensus::_image:reversed: actual close and substituted return remain separately truthful
+ok 450 - source-primary:NativeProxyReferenceCensus::_image:reversed: original input bytes and types remain unchanged
+ok 451 - source-primary:NativeProxyReferenceCensus::_image:reversed: no unrelated publication mutation or private-source read
+ok 452 - source-primary:NativeProxyReferenceCensus::_image:reversed: exact physical effect preserves archive and every other owner
+ok 453 - source-primary:NativeProxyReferenceCensus::_image:reversed: inactive receipt authority stays closed
+ok 454 - source-primary:NativeProxyReferenceCensus::_inspect_locked:observed: original public attempt returns
+ok 455 - source-primary:NativeProxyReferenceCensus::_inspect_locked:observed: exact success disposition
+ok 456 - source-primary:NativeProxyReferenceCensus::_inspect_locked:observed: exact first-error diagnostic
+ok 457 - source-primary:NativeProxyReferenceCensus::_inspect_locked:observed: observed report order is independent of declaration order
+ok 458 - source-primary:NativeProxyReferenceCensus::_inspect_locked:observed: exact selected helper primary count
+ok 459 - source-primary:NativeProxyReferenceCensus::_inspect_locked:observed: actual directory read and reported primary remain distinct
+ok 460 - source-primary:NativeProxyReferenceCensus::_inspect_locked:observed: actual unlink and historical/latest absence remain truthful
+ok 461 - source-primary:NativeProxyReferenceCensus::_inspect_locked:observed: every actual observed descriptor closes without recovery
+ok 462 - source-primary:NativeProxyReferenceCensus::_inspect_locked:observed: actual close and substituted return remain separately truthful
+ok 463 - source-primary:NativeProxyReferenceCensus::_inspect_locked:observed: original input bytes and types remain unchanged
+ok 464 - source-primary:NativeProxyReferenceCensus::_inspect_locked:observed: no unrelated publication mutation or private-source read
+ok 465 - source-primary:NativeProxyReferenceCensus::_inspect_locked:observed: exact physical effect preserves archive and every other owner
+ok 466 - source-primary:NativeProxyReferenceCensus::_inspect_locked:observed: inactive receipt authority stays closed
+ok 467 - source-primary:NativeProxyReferenceCensus::_inspect_locked:reversed: original public attempt returns
+ok 468 - source-primary:NativeProxyReferenceCensus::_inspect_locked:reversed: exact success disposition
+ok 469 - source-primary:NativeProxyReferenceCensus::_inspect_locked:reversed: exact first-error diagnostic
+ok 470 - source-primary:NativeProxyReferenceCensus::_inspect_locked:reversed: observed report order is independent of declaration order
+ok 471 - source-primary:NativeProxyReferenceCensus::_inspect_locked:reversed: exact selected helper primary count
+ok 472 - source-primary:NativeProxyReferenceCensus::_inspect_locked:reversed: actual directory read and reported primary remain distinct
+ok 473 - source-primary:NativeProxyReferenceCensus::_inspect_locked:reversed: actual unlink and historical/latest absence remain truthful
+ok 474 - source-primary:NativeProxyReferenceCensus::_inspect_locked:reversed: every actual observed descriptor closes without recovery
+ok 475 - source-primary:NativeProxyReferenceCensus::_inspect_locked:reversed: actual close and substituted return remain separately truthful
+ok 476 - source-primary:NativeProxyReferenceCensus::_inspect_locked:reversed: original input bytes and types remain unchanged
+ok 477 - source-primary:NativeProxyReferenceCensus::_inspect_locked:reversed: no unrelated publication mutation or private-source read
+ok 478 - source-primary:NativeProxyReferenceCensus::_inspect_locked:reversed: exact physical effect preserves archive and every other owner
+ok 479 - source-primary:NativeProxyReferenceCensus::_inspect_locked:reversed: inactive receipt authority stays closed
+ok 480 - directory-primary:NativeProxyImageCoordination::_names:observed: original public attempt returns
+ok 481 - directory-primary:NativeProxyImageCoordination::_names:observed: exact success disposition
+ok 482 - directory-primary:NativeProxyImageCoordination::_names:observed: exact first-error diagnostic
+ok 483 - directory-primary:NativeProxyImageCoordination::_names:observed: observed report order is independent of declaration order
+ok 484 - directory-primary:NativeProxyImageCoordination::_names:observed: exact selected helper primary count
+ok 485 - directory-primary:NativeProxyImageCoordination::_names:observed: actual directory read and reported primary remain distinct
+ok 486 - directory-primary:NativeProxyImageCoordination::_names:observed: actual unlink and historical/latest absence remain truthful
+ok 487 - directory-primary:NativeProxyImageCoordination::_names:observed: every actual observed descriptor closes without recovery
+ok 488 - directory-primary:NativeProxyImageCoordination::_names:observed: actual close and substituted return remain separately truthful
+ok 489 - directory-primary:NativeProxyImageCoordination::_names:observed: original input bytes and types remain unchanged
+ok 490 - directory-primary:NativeProxyImageCoordination::_names:observed: no unrelated publication mutation or private-source read
+ok 491 - directory-primary:NativeProxyImageCoordination::_names:observed: exact physical effect preserves archive and every other owner
+ok 492 - directory-primary:NativeProxyImageCoordination::_names:observed: inactive receipt authority stays closed
+ok 493 - directory-primary:NativeProxyImageCoordination::_names:reversed: original public attempt returns
+ok 494 - directory-primary:NativeProxyImageCoordination::_names:reversed: exact success disposition
+ok 495 - directory-primary:NativeProxyImageCoordination::_names:reversed: exact first-error diagnostic
+ok 496 - directory-primary:NativeProxyImageCoordination::_names:reversed: observed report order is independent of declaration order
+ok 497 - directory-primary:NativeProxyImageCoordination::_names:reversed: exact selected helper primary count
+ok 498 - directory-primary:NativeProxyImageCoordination::_names:reversed: actual directory read and reported primary remain distinct
+ok 499 - directory-primary:NativeProxyImageCoordination::_names:reversed: actual unlink and historical/latest absence remain truthful
+ok 500 - directory-primary:NativeProxyImageCoordination::_names:reversed: every actual observed descriptor closes without recovery
+ok 501 - directory-primary:NativeProxyImageCoordination::_names:reversed: actual close and substituted return remain separately truthful
+ok 502 - directory-primary:NativeProxyImageCoordination::_names:reversed: original input bytes and types remain unchanged
+ok 503 - directory-primary:NativeProxyImageCoordination::_names:reversed: no unrelated publication mutation or private-source read
+ok 504 - directory-primary:NativeProxyImageCoordination::_names:reversed: exact physical effect preserves archive and every other owner
+ok 505 - directory-primary:NativeProxyImageCoordination::_names:reversed: inactive receipt authority stays closed
+ok 506 - directory-primary:NativeProxyImageCustody::_members:observed: original public attempt returns
+ok 507 - directory-primary:NativeProxyImageCustody::_members:observed: exact success disposition
+ok 508 - directory-primary:NativeProxyImageCustody::_members:observed: exact first-error diagnostic
+ok 509 - directory-primary:NativeProxyImageCustody::_members:observed: observed report order is independent of declaration order
+ok 510 - directory-primary:NativeProxyImageCustody::_members:observed: exact selected helper primary count
+ok 511 - directory-primary:NativeProxyImageCustody::_members:observed: actual directory read and reported primary remain distinct
+ok 512 - directory-primary:NativeProxyImageCustody::_members:observed: actual unlink and historical/latest absence remain truthful
+ok 513 - directory-primary:NativeProxyImageCustody::_members:observed: every actual observed descriptor closes without recovery
+ok 514 - directory-primary:NativeProxyImageCustody::_members:observed: actual close and substituted return remain separately truthful
+ok 515 - directory-primary:NativeProxyImageCustody::_members:observed: original input bytes and types remain unchanged
+ok 516 - directory-primary:NativeProxyImageCustody::_members:observed: no unrelated publication mutation or private-source read
+ok 517 - directory-primary:NativeProxyImageCustody::_members:observed: exact physical effect preserves archive and every other owner
+ok 518 - directory-primary:NativeProxyImageCustody::_members:observed: inactive receipt authority stays closed
+ok 519 - directory-primary:NativeProxyImageCustody::_members:reversed: original public attempt returns
+ok 520 - directory-primary:NativeProxyImageCustody::_members:reversed: exact success disposition
+ok 521 - directory-primary:NativeProxyImageCustody::_members:reversed: exact first-error diagnostic
+ok 522 - directory-primary:NativeProxyImageCustody::_members:reversed: observed report order is independent of declaration order
+ok 523 - directory-primary:NativeProxyImageCustody::_members:reversed: exact selected helper primary count
+ok 524 - directory-primary:NativeProxyImageCustody::_members:reversed: actual directory read and reported primary remain distinct
+ok 525 - directory-primary:NativeProxyImageCustody::_members:reversed: actual unlink and historical/latest absence remain truthful
+ok 526 - directory-primary:NativeProxyImageCustody::_members:reversed: every actual observed descriptor closes without recovery
+ok 527 - directory-primary:NativeProxyImageCustody::_members:reversed: actual close and substituted return remain separately truthful
+ok 528 - directory-primary:NativeProxyImageCustody::_members:reversed: original input bytes and types remain unchanged
+ok 529 - directory-primary:NativeProxyImageCustody::_members:reversed: no unrelated publication mutation or private-source read
+ok 530 - directory-primary:NativeProxyImageCustody::_members:reversed: exact physical effect preserves archive and every other owner
+ok 531 - directory-primary:NativeProxyImageCustody::_members:reversed: inactive receipt authority stays closed
+ok 532 - milestone-primary:before-unlink:observed: original public attempt returns
+ok 533 - milestone-primary:before-unlink:observed: exact success disposition
+ok 534 - milestone-primary:before-unlink:observed: exact first-error diagnostic
+ok 535 - milestone-primary:before-unlink:observed: observed report order is independent of declaration order
+ok 536 - milestone-primary:before-unlink:observed: exact selected helper primary count
+ok 537 - milestone-primary:before-unlink:observed: actual directory read and reported primary remain distinct
+ok 538 - milestone-primary:before-unlink:observed: actual unlink and historical/latest absence remain truthful
+ok 539 - milestone-primary:before-unlink:observed: every actual observed descriptor closes without recovery
+ok 540 - milestone-primary:before-unlink:observed: actual close and substituted return remain separately truthful
+ok 541 - milestone-primary:before-unlink:observed: original input bytes and types remain unchanged
+ok 542 - milestone-primary:before-unlink:observed: no unrelated publication mutation or private-source read
+ok 543 - milestone-primary:before-unlink:observed: exact physical effect preserves archive and every other owner
+ok 544 - milestone-primary:before-unlink:observed: inactive receipt authority stays closed
+ok 545 - milestone-primary:before-unlink:reversed: original public attempt returns
+ok 546 - milestone-primary:before-unlink:reversed: exact success disposition
+ok 547 - milestone-primary:before-unlink:reversed: exact first-error diagnostic
+ok 548 - milestone-primary:before-unlink:reversed: observed report order is independent of declaration order
+ok 549 - milestone-primary:before-unlink:reversed: exact selected helper primary count
+ok 550 - milestone-primary:before-unlink:reversed: actual directory read and reported primary remain distinct
+ok 551 - milestone-primary:before-unlink:reversed: actual unlink and historical/latest absence remain truthful
+ok 552 - milestone-primary:before-unlink:reversed: every actual observed descriptor closes without recovery
+ok 553 - milestone-primary:before-unlink:reversed: actual close and substituted return remain separately truthful
+ok 554 - milestone-primary:before-unlink:reversed: original input bytes and types remain unchanged
+ok 555 - milestone-primary:before-unlink:reversed: no unrelated publication mutation or private-source read
+ok 556 - milestone-primary:before-unlink:reversed: exact physical effect preserves archive and every other owner
+ok 557 - milestone-primary:before-unlink:reversed: inactive receipt authority stays closed
+ok 558 - milestone-primary:after-unlink-unknown:observed: original public attempt returns
+ok 559 - milestone-primary:after-unlink-unknown:observed: exact success disposition
+ok 560 - milestone-primary:after-unlink-unknown:observed: exact first-error diagnostic
+ok 561 - milestone-primary:after-unlink-unknown:observed: observed report order is independent of declaration order
+ok 562 - milestone-primary:after-unlink-unknown:observed: exact selected helper primary count
+ok 563 - milestone-primary:after-unlink-unknown:observed: actual directory read and reported primary remain distinct
+ok 564 - milestone-primary:after-unlink-unknown:observed: actual unlink and historical/latest absence remain truthful
+ok 565 - milestone-primary:after-unlink-unknown:observed: every actual observed descriptor closes without recovery
+ok 566 - milestone-primary:after-unlink-unknown:observed: actual close and substituted return remain separately truthful
+ok 567 - milestone-primary:after-unlink-unknown:observed: original input bytes and types remain unchanged
+ok 568 - milestone-primary:after-unlink-unknown:observed: no unrelated publication mutation or private-source read
+ok 569 - milestone-primary:after-unlink-unknown:observed: exact physical effect preserves archive and every other owner
+ok 570 - milestone-primary:after-unlink-unknown:observed: inactive receipt authority stays closed
+ok 571 - milestone-primary:after-unlink-unknown:reversed: original public attempt returns
+ok 572 - milestone-primary:after-unlink-unknown:reversed: exact success disposition
+ok 573 - milestone-primary:after-unlink-unknown:reversed: exact first-error diagnostic
+ok 574 - milestone-primary:after-unlink-unknown:reversed: observed report order is independent of declaration order
+ok 575 - milestone-primary:after-unlink-unknown:reversed: exact selected helper primary count
+ok 576 - milestone-primary:after-unlink-unknown:reversed: actual directory read and reported primary remain distinct
+ok 577 - milestone-primary:after-unlink-unknown:reversed: actual unlink and historical/latest absence remain truthful
+ok 578 - milestone-primary:after-unlink-unknown:reversed: every actual observed descriptor closes without recovery
+ok 579 - milestone-primary:after-unlink-unknown:reversed: actual close and substituted return remain separately truthful
+ok 580 - milestone-primary:after-unlink-unknown:reversed: original input bytes and types remain unchanged
+ok 581 - milestone-primary:after-unlink-unknown:reversed: no unrelated publication mutation or private-source read
+ok 582 - milestone-primary:after-unlink-unknown:reversed: exact physical effect preserves archive and every other owner
+ok 583 - milestone-primary:after-unlink-unknown:reversed: inactive receipt authority stays closed
+ok 584 - milestone-primary:final-lock-identity:observed: original public attempt returns
+ok 585 - milestone-primary:final-lock-identity:observed: exact success disposition
+ok 586 - milestone-primary:final-lock-identity:observed: exact first-error diagnostic
+ok 587 - milestone-primary:final-lock-identity:observed: observed report order is independent of declaration order
+ok 588 - milestone-primary:final-lock-identity:observed: exact selected helper primary count
+ok 589 - milestone-primary:final-lock-identity:observed: actual directory read and reported primary remain distinct
+ok 590 - milestone-primary:final-lock-identity:observed: actual unlink and historical/latest absence remain truthful
+ok 591 - milestone-primary:final-lock-identity:observed: every actual observed descriptor closes without recovery
+ok 592 - milestone-primary:final-lock-identity:observed: actual close and substituted return remain separately truthful
+ok 593 - milestone-primary:final-lock-identity:observed: original input bytes and types remain unchanged
+ok 594 - milestone-primary:final-lock-identity:observed: no unrelated publication mutation or private-source read
+ok 595 - milestone-primary:final-lock-identity:observed: exact physical effect preserves archive and every other owner
+ok 596 - milestone-primary:final-lock-identity:observed: inactive receipt authority stays closed
+ok 597 - milestone-primary:final-lock-identity:reversed: original public attempt returns
+ok 598 - milestone-primary:final-lock-identity:reversed: exact success disposition
+ok 599 - milestone-primary:final-lock-identity:reversed: exact first-error diagnostic
+ok 600 - milestone-primary:final-lock-identity:reversed: observed report order is independent of declaration order
+ok 601 - milestone-primary:final-lock-identity:reversed: exact selected helper primary count
+ok 602 - milestone-primary:final-lock-identity:reversed: actual directory read and reported primary remain distinct
+ok 603 - milestone-primary:final-lock-identity:reversed: actual unlink and historical/latest absence remain truthful
+ok 604 - milestone-primary:final-lock-identity:reversed: every actual observed descriptor closes without recovery
+ok 605 - milestone-primary:final-lock-identity:reversed: actual close and substituted return remain separately truthful
+ok 606 - milestone-primary:final-lock-identity:reversed: original input bytes and types remain unchanged
+ok 607 - milestone-primary:final-lock-identity:reversed: no unrelated publication mutation or private-source read
+ok 608 - milestone-primary:final-lock-identity:reversed: exact physical effect preserves archive and every other owner
+ok 609 - milestone-primary:final-lock-identity:reversed: inactive receipt authority stays closed
+ok 610 - no original producer, compiler or native process attempt
+1..610

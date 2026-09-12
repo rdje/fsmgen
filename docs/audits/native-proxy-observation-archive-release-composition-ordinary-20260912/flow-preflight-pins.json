@@ -1,0 +1,52 @@
+[
+  {
+    "path": "docs/audits/native-proxy-observation-archive-release-composition-ordinary-20260912/CompositionPlan.pm",
+    "sha256": "6578218808d6f65933670bde089f551b819fdde0330f7f5896d1c6925711530a",
+    "size_bytes": 11730
+  },
+  {
+    "path": "docs/audits/native-proxy-observation-archive-release-composition-ordinary-20260912/DirectoryRead.pm",
+    "sha256": "4a6b612e561730ec725fecd675b7acd0f6f418b82176eac198f93a50fbdd2a47",
+    "size_bytes": 1869
+  },
+  {
+    "path": "docs/audits/native-proxy-observation-archive-release-composition-ordinary-20260912/CompositionReports.pm",
+    "sha256": "bee686f8b29f1751812db8b6e40a3bd99e0bd2696a6da7c78d86863a7d5c674a",
+    "size_bytes": 3574
+  },
+  {
+    "path": "docs/audits/native-proxy-observation-archive-release-composition-ordinary-20260912/expected_trace.py",
+    "sha256": "0ad751bf59c6ebc56f00db64f037654089376237b20d58d1d7b15ca04991edce",
+    "size_bytes": 9003
+  },
+  {
+    "path": "docs/audits/native-proxy-observation-archive-release-composition-ordinary-20260912/prepare.py",
+    "sha256": "e33198029853f04695b8f361ff0085a97eeee34012ff4702400183ca4126089c",
+    "size_bytes": 5888
+  },
+  {
+    "path": "docs/audits/native-proxy-observation-archive-release-composition-ordinary-20260912/prepare-pin.json",
+    "sha256": "edf45958e4e991b51691bc133a6fe3c5adaa74f84f4f9aff9cfdcb85727f3339",
+    "size_bytes": 212
+  },
+  {
+    "path": "docs/audits/native-proxy-observation-archive-release-composition-ordinary-20260912/plan.json",
+    "sha256": "bc1a83d70401c55ebca8d022454debf549920db9d5dbbd61076d0af2aef01d6b",
+    "size_bytes": 92389
+  },
+  {
+    "path": "docs/audits/native-proxy-observation-archive-release-composition-ordinary-20260912/flow-vectors.json",
+    "sha256": "37255a6b21d7a218e182fd3790a567beccfd783ed184b176003d9f5b3653efa0",
+    "size_bytes": 26765445
+  },
+  {
+    "path": "docs/audits/native-proxy-observation-archive-release-composition-ordinary-20260912/flow-qualify.t",
+    "sha256": "50aa782498cd34fec79be9f7f0b45422da4be9bd522c3b8072f56fa3c0336b61",
+    "size_bytes": 5487
+  },
+  {
+    "path": "docs/audits/native-proxy-observation-archive-release-composition-ordinary-20260912/preflight.py",
+    "sha256": "e25c97aa76239cceb4e47c9b0c4db3c36b6b56346a85a62e6d21e217c88e8776",
+    "size_bytes": 10367
+  }
+]

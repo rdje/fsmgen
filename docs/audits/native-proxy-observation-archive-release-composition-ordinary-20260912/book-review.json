@@ -1,0 +1,20 @@
+{
+  "checked_passages": [
+    "Ordinary release composition qualification covers 45 cases: 1 healthy control, 20 grouped-close cases and 24 primary-error cases, with 610 TAP assertions.",
+    "An existing primary error survives every later cleanup report.",
+    "Every observed handle still closes.",
+    "The reader keeps the EIO read error.",
+    "Cleanup reports do not erase these facts or restore a deleted observation hold.",
+    "python3 -B docs/audits/native-proxy-observation-archive-release-composition-ordinary-20260912/audit.py --verify-saved"
+  ],
+  "exact_output_absent": true,
+  "exit_code": 0,
+  "output": ".artifacts/tmp/native-proxy-release-composition-ordinary-book-20260912/book",
+  "rendered_bytes": 23465502,
+  "rendered_directories": 3,
+  "rendered_files": 98,
+  "renderer_warnings": [
+    "WARN search index is very large (13233465 bytes)"
+  ],
+  "same_volume_direct_objects": true
+}

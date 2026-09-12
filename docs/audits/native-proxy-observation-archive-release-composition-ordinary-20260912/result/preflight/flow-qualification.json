@@ -1,0 +1,406 @@
+{
+   "allocated" : [],
+   "controls" : [
+      {
+         "error" : "composition recipe fields differ\n",
+         "name" : "missing kind",
+         "returned" : 0
+      },
+      {
+         "error" : "composition recipe fields differ\n",
+         "name" : "stale numeric call",
+         "returned" : 0
+      },
+      {
+         "error" : "composition recipe text is missing or structured\n",
+         "name" : "structured kind",
+         "returned" : 0
+      },
+      {
+         "error" : "composition recipe text is missing or structured\n",
+         "name" : "missing order",
+         "returned" : 0
+      },
+      {
+         "error" : "unknown composition declaration order\n",
+         "name" : "unknown order",
+         "returned" : 0
+      },
+      {
+         "error" : "composition scope is missing or structured\n",
+         "name" : "missing scope",
+         "returned" : 0
+      },
+      {
+         "error" : "composition scope is missing or structured\n",
+         "name" : "structured scope",
+         "returned" : 0
+      },
+      {
+         "error" : "unknown composition kind or scope\n",
+         "name" : "foreign scope",
+         "returned" : 0
+      },
+      {
+         "error" : "unknown composition kind or scope\n",
+         "name" : "foreign kind",
+         "returned" : 0
+      },
+      {
+         "error" : "healthy composition carries a scope or order\n",
+         "name" : "scoped healthy",
+         "returned" : 0
+      }
+   ],
+   "forbidden_process_attempts" : 0,
+   "prospective_pins" : [
+      {
+         "path" : "docs/audits/native-proxy-observation-archive-release-composition-ordinary-20260912/CompositionPlan.pm",
+         "sha256" : "6578218808d6f65933670bde089f551b819fdde0330f7f5896d1c6925711530a",
+         "size_bytes" : 11730
+      },
+      {
+         "path" : "docs/audits/native-proxy-observation-archive-release-composition-ordinary-20260912/DirectoryRead.pm",
+         "sha256" : "4a6b612e561730ec725fecd675b7acd0f6f418b82176eac198f93a50fbdd2a47",
+         "size_bytes" : 1869
+      },
+      {
+         "path" : "docs/audits/native-proxy-observation-archive-release-composition-ordinary-20260912/CompositionReports.pm",
+         "sha256" : "bee686f8b29f1751812db8b6e40a3bd99e0bd2696a6da7c78d86863a7d5c674a",
+         "size_bytes" : 3574
+      },
+      {
+         "path" : "docs/audits/native-proxy-observation-archive-release-composition-ordinary-20260912/expected_trace.py",
+         "sha256" : "0ad751bf59c6ebc56f00db64f037654089376237b20d58d1d7b15ca04991edce",
+         "size_bytes" : 9003
+      },
+      {
+         "path" : "docs/audits/native-proxy-observation-archive-release-composition-ordinary-20260912/prepare.py",
+         "sha256" : "e33198029853f04695b8f361ff0085a97eeee34012ff4702400183ca4126089c",
+         "size_bytes" : 5888
+      },
+      {
+         "path" : "docs/audits/native-proxy-observation-archive-release-composition-ordinary-20260912/prepare-pin.json",
+         "sha256" : "edf45958e4e991b51691bc133a6fe3c5adaa74f84f4f9aff9cfdcb85727f3339",
+         "size_bytes" : 212
+      },
+      {
+         "path" : "docs/audits/native-proxy-observation-archive-release-composition-ordinary-20260912/plan.json",
+         "sha256" : "bc1a83d70401c55ebca8d022454debf549920db9d5dbbd61076d0af2aef01d6b",
+         "size_bytes" : 92389
+      },
+      {
+         "path" : "docs/audits/native-proxy-observation-archive-release-composition-ordinary-20260912/flow-vectors.json",
+         "sha256" : "37255a6b21d7a218e182fd3790a567beccfd783ed184b176003d9f5b3653efa0",
+         "size_bytes" : 26765445
+      },
+      {
+         "path" : "docs/audits/native-proxy-observation-archive-release-composition-ordinary-20260912/flow-qualify.t",
+         "sha256" : "50aa782498cd34fec79be9f7f0b45422da4be9bd522c3b8072f56fa3c0336b61",
+         "size_bytes" : 5487
+      },
+      {
+         "path" : "docs/audits/native-proxy-observation-archive-release-composition-ordinary-20260912/preflight.py",
+         "sha256" : "e25c97aa76239cceb4e47c9b0c4db3c36b6b56346a85a62e6d21e217c88e8776",
+         "size_bytes" : 10367
+      }
+   ],
+   "schema" : "fsmgen.release_composition_binding_qualification.v1",
+   "success" : true,
+   "variants" : [
+      {
+         "inputs_unchanged" : 1,
+         "name" : "baseline",
+         "profile" : "ordinary_retired_other_observation",
+         "resolution_sha256" : "cd26b32a021a3476772a1fc543b01399e7b69bf3600813a8a2aa40790338fecd",
+         "resolved" : 45
+      },
+      {
+         "inputs_unchanged" : 1,
+         "name" : "order:0,1,2",
+         "profile" : "ordinary_retired_other_observation",
+         "resolution_sha256" : "a86a0a569c3b8f71cb6ddbd97cbe0a9ad3413526c2408353891633c149d5ddc6",
+         "resolved" : 45
+      },
+      {
+         "inputs_unchanged" : 1,
+         "name" : "order:0,2,1",
+         "profile" : "ordinary_retired_other_observation",
+         "resolution_sha256" : "239b3d85932cfcf5bf43f9cbdc3959f61c1c1611742cbd7cf4b039a766e083a0",
+         "resolved" : 45
+      },
+      {
+         "inputs_unchanged" : 1,
+         "name" : "order:1,0,2",
+         "profile" : "ordinary_retired_other_observation",
+         "resolution_sha256" : "c4868bd0db9e9c1c18533eada7f74c21800be5c94e78f970ec3f87fb7b4ce457",
+         "resolved" : 45
+      },
+      {
+         "inputs_unchanged" : 1,
+         "name" : "order:1,2,0",
+         "profile" : "ordinary_retired_other_observation",
+         "resolution_sha256" : "2e3ab0190a87980131f3df2f64ee04d85b30c10da33ae4fe616aeedfbc443dbd",
+         "resolved" : 45
+      },
+      {
+         "inputs_unchanged" : 1,
+         "name" : "order:2,0,1",
+         "profile" : "ordinary_retired_other_observation",
+         "resolution_sha256" : "027a8d7916a02e523394f95b8ebbc8635c86228ebbc009c3af8f3fdede9d2769",
+         "resolved" : 45
+      },
+      {
+         "inputs_unchanged" : 1,
+         "name" : "order:2,1,0",
+         "profile" : "ordinary_retired_other_observation",
+         "resolution_sha256" : "58397831427854dae5944ad931a11fb989875daaad81f5eaa848d0aaa57901f0",
+         "resolved" : 45
+      },
+      {
+         "inputs_unchanged" : 1,
+         "name" : "baseline",
+         "profile" : "equal_reference_retired_other_observation",
+         "resolution_sha256" : "ceae93bbfa8bb2582eca24e69ecdd96e4ab7d97f783167fdd6a2f356ebcf7709",
+         "resolved" : 45
+      },
+      {
+         "inputs_unchanged" : 1,
+         "name" : "order:0,1,2",
+         "profile" : "equal_reference_retired_other_observation",
+         "resolution_sha256" : "2823009a511e2a1ab39a93f04575c6dc75f8574bead3b767820c5c4b1dc00208",
+         "resolved" : 45
+      },
+      {
+         "inputs_unchanged" : 1,
+         "name" : "order:0,2,1",
+         "profile" : "equal_reference_retired_other_observation",
+         "resolution_sha256" : "619cb948271904ca9d51e4aea3e0a0e69f67d81f43c4f586d12e2308aef924f6",
+         "resolved" : 45
+      },
+      {
+         "inputs_unchanged" : 1,
+         "name" : "order:1,0,2",
+         "profile" : "equal_reference_retired_other_observation",
+         "resolution_sha256" : "8903040a3ec20e8793f5a12bdcda659d2bdd26bad01a52d6853e6efb3baf5604",
+         "resolved" : 45
+      },
+      {
+         "inputs_unchanged" : 1,
+         "name" : "order:1,2,0",
+         "profile" : "equal_reference_retired_other_observation",
+         "resolution_sha256" : "0e7911b0a7c7eb039e0946f72f1cd005d86cd8c9a61d1071d8d80f299e259ad1",
+         "resolved" : 45
+      },
+      {
+         "inputs_unchanged" : 1,
+         "name" : "order:2,0,1",
+         "profile" : "equal_reference_retired_other_observation",
+         "resolution_sha256" : "a7a02c8c649892e7b7b470ecb5d31797b52c646ee81c1702242d8487b113acac",
+         "resolved" : 45
+      },
+      {
+         "inputs_unchanged" : 1,
+         "name" : "order:2,1,0",
+         "profile" : "equal_reference_retired_other_observation",
+         "resolution_sha256" : "d18478804e8eae92d86d0f39fb9510bebb29f948db08feff69076fa2b0575a9a",
+         "resolved" : 45
+      },
+      {
+         "inputs_unchanged" : 1,
+         "name" : "baseline",
+         "profile" : "ordinary_active_runtime",
+         "resolution_sha256" : "0412ae258b212f016a1eb52922b240e066c079de5dbb5799470d1b2e57662144",
+         "resolved" : 45
+      },
+      {
+         "inputs_unchanged" : 1,
+         "name" : "order:0,1,2,3",
+         "profile" : "ordinary_active_runtime",
+         "resolution_sha256" : "7f4d6f4d6e6dd5833336412b0ff01b26a7a8e81856ae3d23fc48f6deb991f9b2",
+         "resolved" : 45
+      },
+      {
+         "inputs_unchanged" : 1,
+         "name" : "order:0,1,3,2",
+         "profile" : "ordinary_active_runtime",
+         "resolution_sha256" : "c6daa2c2e245a1ab981fadaf7036ce9ba8457da4738de0a2e58c35c477d3bd4d",
+         "resolved" : 45
+      },
+      {
+         "inputs_unchanged" : 1,
+         "name" : "order:0,2,1,3",
+         "profile" : "ordinary_active_runtime",
+         "resolution_sha256" : "656717c00902698a6b23ea2d5ba8679e518dfdd6de6213eacc0d06c02ca932a1",
+         "resolved" : 45
+      },
+      {
+         "inputs_unchanged" : 1,
+         "name" : "order:0,2,3,1",
+         "profile" : "ordinary_active_runtime",
+         "resolution_sha256" : "68e3ea542e04c4030dd24e9745e9b7f2ae5aa79ac2c6168d129921c499621a42",
+         "resolved" : 45
+      },
+      {
+         "inputs_unchanged" : 1,
+         "name" : "order:0,3,1,2",
+         "profile" : "ordinary_active_runtime",
+         "resolution_sha256" : "b325f7131c5c23ef82462adef453a354f031ffa060d5f3a54ee6afa7c66e9886",
+         "resolved" : 45
+      },
+      {
+         "inputs_unchanged" : 1,
+         "name" : "order:0,3,2,1",
+         "profile" : "ordinary_active_runtime",
+         "resolution_sha256" : "e738a7a3a821ce09fcafca750059fdff2c70081b16e841e9a2b36ac6254faa6b",
+         "resolved" : 45
+      },
+      {
+         "inputs_unchanged" : 1,
+         "name" : "order:1,0,2,3",
+         "profile" : "ordinary_active_runtime",
+         "resolution_sha256" : "bcf0a7b3c0e633a606d11e1eed81c837fd0e2b77250afac9c9b7166684cc387a",
+         "resolved" : 45
+      },
+      {
+         "inputs_unchanged" : 1,
+         "name" : "order:1,0,3,2",
+         "profile" : "ordinary_active_runtime",
+         "resolution_sha256" : "d1dc514dbcf003ad5df3c0340ab331563a309d87020e6982f493af8fef91d837",
+         "resolved" : 45
+      },
+      {
+         "inputs_unchanged" : 1,
+         "name" : "order:1,2,0,3",
+         "profile" : "ordinary_active_runtime",
+         "resolution_sha256" : "bcf0a7b3c0e633a606d11e1eed81c837fd0e2b77250afac9c9b7166684cc387a",
+         "resolved" : 45
+      },
+      {
+         "inputs_unchanged" : 1,
+         "name" : "order:1,2,3,0",
+         "profile" : "ordinary_active_runtime",
+         "resolution_sha256" : "d1dc514dbcf003ad5df3c0340ab331563a309d87020e6982f493af8fef91d837",
+         "resolved" : 45
+      },
+      {
+         "inputs_unchanged" : 1,
+         "name" : "order:1,3,0,2",
+         "profile" : "ordinary_active_runtime",
+         "resolution_sha256" : "9fca0e34a12acb92b79c80596b93a92ae450a9a685b40ebf174082c86a842879",
+         "resolved" : 45
+      },
+      {
+         "inputs_unchanged" : 1,
+         "name" : "order:1,3,2,0",
+         "profile" : "ordinary_active_runtime",
+         "resolution_sha256" : "9fca0e34a12acb92b79c80596b93a92ae450a9a685b40ebf174082c86a842879",
+         "resolved" : 45
+      },
+      {
+         "inputs_unchanged" : 1,
+         "name" : "order:2,0,1,3",
+         "profile" : "ordinary_active_runtime",
+         "resolution_sha256" : "656717c00902698a6b23ea2d5ba8679e518dfdd6de6213eacc0d06c02ca932a1",
+         "resolved" : 45
+      },
+      {
+         "inputs_unchanged" : 1,
+         "name" : "order:2,0,3,1",
+         "profile" : "ordinary_active_runtime",
+         "resolution_sha256" : "68e3ea542e04c4030dd24e9745e9b7f2ae5aa79ac2c6168d129921c499621a42",
+         "resolved" : 45
+      },
+      {
+         "inputs_unchanged" : 1,
+         "name" : "order:2,1,0,3",
+         "profile" : "ordinary_active_runtime",
+         "resolution_sha256" : "7f4d6f4d6e6dd5833336412b0ff01b26a7a8e81856ae3d23fc48f6deb991f9b2",
+         "resolved" : 45
+      },
+      {
+         "inputs_unchanged" : 1,
+         "name" : "order:2,1,3,0",
+         "profile" : "ordinary_active_runtime",
+         "resolution_sha256" : "c6daa2c2e245a1ab981fadaf7036ce9ba8457da4738de0a2e58c35c477d3bd4d",
+         "resolved" : 45
+      },
+      {
+         "inputs_unchanged" : 1,
+         "name" : "order:2,3,0,1",
+         "profile" : "ordinary_active_runtime",
+         "resolution_sha256" : "e738a7a3a821ce09fcafca750059fdff2c70081b16e841e9a2b36ac6254faa6b",
+         "resolved" : 45
+      },
+      {
+         "inputs_unchanged" : 1,
+         "name" : "order:2,3,1,0",
+         "profile" : "ordinary_active_runtime",
+         "resolution_sha256" : "b325f7131c5c23ef82462adef453a354f031ffa060d5f3a54ee6afa7c66e9886",
+         "resolved" : 45
+      },
+      {
+         "inputs_unchanged" : 1,
+         "name" : "order:3,0,1,2",
+         "profile" : "ordinary_active_runtime",
+         "resolution_sha256" : "87d19e5b58e5d196ccef8cffa4595a0243a67f205c5ffaef541a512101594834",
+         "resolved" : 45
+      },
+      {
+         "inputs_unchanged" : 1,
+         "name" : "order:3,0,2,1",
+         "profile" : "ordinary_active_runtime",
+         "resolution_sha256" : "cbfb7ae43d64f5629cb951a11c7b5e1667106bf3df4177c644c6af66bdd6d6fe",
+         "resolved" : 45
+      },
+      {
+         "inputs_unchanged" : 1,
+         "name" : "order:3,1,0,2",
+         "profile" : "ordinary_active_runtime",
+         "resolution_sha256" : "7ab84e334211a9a6ef30aeffd36f4b17e6ff2884c4c557fa32af3689df88e345",
+         "resolved" : 45
+      },
+      {
+         "inputs_unchanged" : 1,
+         "name" : "order:3,1,2,0",
+         "profile" : "ordinary_active_runtime",
+         "resolution_sha256" : "7ab84e334211a9a6ef30aeffd36f4b17e6ff2884c4c557fa32af3689df88e345",
+         "resolved" : 45
+      },
+      {
+         "inputs_unchanged" : 1,
+         "name" : "order:3,2,0,1",
+         "profile" : "ordinary_active_runtime",
+         "resolution_sha256" : "cbfb7ae43d64f5629cb951a11c7b5e1667106bf3df4177c644c6af66bdd6d6fe",
+         "resolved" : 45
+      },
+      {
+         "inputs_unchanged" : 1,
+         "name" : "order:3,2,1,0",
+         "profile" : "ordinary_active_runtime",
+         "resolution_sha256" : "87d19e5b58e5d196ccef8cffa4595a0243a67f205c5ffaef541a512101594834",
+         "resolved" : 45
+      },
+      {
+         "inputs_unchanged" : 1,
+         "name" : "baseline",
+         "profile" : "ordinary_retired_last_observation",
+         "resolution_sha256" : "567649bab421f093eaf7403edb25d8d283fa801d1edac1413da1cac494bce880",
+         "resolved" : 45
+      },
+      {
+         "inputs_unchanged" : 1,
+         "name" : "order:0,1",
+         "profile" : "ordinary_retired_last_observation",
+         "resolution_sha256" : "9d39509edd6c12dfa2e5eaf4a48a1b898d56a276941e51839f995358fef2af08",
+         "resolved" : 45
+      },
+      {
+         "inputs_unchanged" : 1,
+         "name" : "order:1,0",
+         "profile" : "ordinary_retired_last_observation",
+         "resolution_sha256" : "01a9bb60c020a6049b7a452bd8c063576ef7657d4615816234ec58f9f4cd1292",
+         "resolved" : 45
+      }
+   ]
+}

@@ -1,0 +1,6 @@
+{
+  "adapted_body_sha256": "bff886c98ff78369aa109af03dd7882c63eb5f45e5242427a53a38c7190656a5",
+  "contract": "Only function naming, explicit original footprint qualification and the per-handle reported errno expression differ. The row oracle separately binds each modeled errno to its exact selected EIO/ENOSPC report; native closure, identity, source and lock checks remain complete.",
+  "original_body_sha256": "40de0a356358c1890ea152f71507390c2fbc212feac31df55acdd84776883391",
+  "original_path": "docs/audits/native-proxy-observation-archive-release-20260911/audit.py"
+}

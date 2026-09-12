@@ -1,0 +1,35 @@
+{
+  "audit_result": "docs/audits/native-proxy-observation-archive-release-composition-ordinary-20260912/result/audit.json",
+  "book_review": "docs/audits/native-proxy-observation-archive-release-composition-ordinary-20260912/book-review.json",
+  "claim_legs": {
+    "durability": "Prospective source pins, exact predecessor inputs and complete first-run copies are tracked. Saved-only audit/recovery/preflight pass without original raw logs or fixture replay. Native trace adaptation authenticates mechanically; book, Knowledge Map, task evidence and exact acceptance history preserve the resume frontier.",
+    "falsify": "Recursive source-scope predictions agree with committed interval selection and independent original-scope or prefix reconstruction across pure variants and actual cases. Altered row/domain/header, recipe, prediction, recovery and book controls reject lost or changed ownership, primaries, declaration order, errors, reads, closes and effects.",
+    "rederive": "Prospective current-flow recipes and immutable ordinary observations separately record actual reads, actual closes, reported errors, primary exceptions, public attempts and file effects. The book watcher recounts categories and original TAP independently."
+  },
+  "commit_gate": "Required staged doctrine and normal commit hooks must pass before commit.",
+  "dispositions": {
+    "added": [
+      "published-78f9445869ea3f9511afee9b"
+    ],
+    "prior_records_byte_exact": 1931
+  },
+  "limits": "Equal-reference, active-runtime and last-observation file-fixture compositions, full close-report join, genuine omissions, final release, native/lifetime and historical startup/parent/full CI/push remain open.",
+  "owner": "HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.12.4.1.3.4.4.4.6.2",
+  "raw_verification_outputs": "docs/audits/native-proxy-observation-archive-release-composition-ordinary-20260912/verification-outputs.json",
+  "recovery": {
+    "bytes": 18150181,
+    "copies": 63,
+    "falsifiers": [
+      "omitted-copy",
+      "foreign-destination",
+      "changed-copy-digest"
+    ],
+    "source_reaccess": true,
+    "success": true
+  },
+  "schema": "fsmgen.release_ordinary_composition_review.v1",
+  "scope": "Only the ordinary actual composition matrix executes; other profiles receive pure binding/oracle checks only.",
+  "source_review": "docs/audits/native-proxy-observation-archive-release-composition-ordinary-20260912/source-review.json",
+  "source_revision": "83b32c80721c2ce76c42b426b274ec72761b360c",
+  "success": true
+}

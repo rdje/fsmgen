@@ -1,0 +1,106 @@
+ok 1 - ordinary_retired_other_observation:baseline: independent current-flow composition agrees
+ok 2 - ordinary_retired_other_observation:baseline: input bytes and numeric/string representations remain unchanged
+ok 3 - ordinary_retired_other_observation:order:0,1,2: independent current-flow composition agrees
+ok 4 - ordinary_retired_other_observation:order:0,1,2: input bytes and numeric/string representations remain unchanged
+ok 5 - ordinary_retired_other_observation:order:0,2,1: independent current-flow composition agrees
+ok 6 - ordinary_retired_other_observation:order:0,2,1: input bytes and numeric/string representations remain unchanged
+ok 7 - ordinary_retired_other_observation:order:1,0,2: independent current-flow composition agrees
+ok 8 - ordinary_retired_other_observation:order:1,0,2: input bytes and numeric/string representations remain unchanged
+ok 9 - ordinary_retired_other_observation:order:1,2,0: independent current-flow composition agrees
+ok 10 - ordinary_retired_other_observation:order:1,2,0: input bytes and numeric/string representations remain unchanged
+ok 11 - ordinary_retired_other_observation:order:2,0,1: independent current-flow composition agrees
+ok 12 - ordinary_retired_other_observation:order:2,0,1: input bytes and numeric/string representations remain unchanged
+ok 13 - ordinary_retired_other_observation:order:2,1,0: independent current-flow composition agrees
+ok 14 - ordinary_retired_other_observation:order:2,1,0: input bytes and numeric/string representations remain unchanged
+ok 15 - equal_reference_retired_other_observation:baseline: independent current-flow composition agrees
+ok 16 - equal_reference_retired_other_observation:baseline: input bytes and numeric/string representations remain unchanged
+ok 17 - equal_reference_retired_other_observation:order:0,1,2: independent current-flow composition agrees
+ok 18 - equal_reference_retired_other_observation:order:0,1,2: input bytes and numeric/string representations remain unchanged
+ok 19 - equal_reference_retired_other_observation:order:0,2,1: independent current-flow composition agrees
+ok 20 - equal_reference_retired_other_observation:order:0,2,1: input bytes and numeric/string representations remain unchanged
+ok 21 - equal_reference_retired_other_observation:order:1,0,2: independent current-flow composition agrees
+ok 22 - equal_reference_retired_other_observation:order:1,0,2: input bytes and numeric/string representations remain unchanged
+ok 23 - equal_reference_retired_other_observation:order:1,2,0: independent current-flow composition agrees
+ok 24 - equal_reference_retired_other_observation:order:1,2,0: input bytes and numeric/string representations remain unchanged
+ok 25 - equal_reference_retired_other_observation:order:2,0,1: independent current-flow composition agrees
+ok 26 - equal_reference_retired_other_observation:order:2,0,1: input bytes and numeric/string representations remain unchanged
+ok 27 - equal_reference_retired_other_observation:order:2,1,0: independent current-flow composition agrees
+ok 28 - equal_reference_retired_other_observation:order:2,1,0: input bytes and numeric/string representations remain unchanged
+ok 29 - ordinary_active_runtime:baseline: independent current-flow composition agrees
+ok 30 - ordinary_active_runtime:baseline: input bytes and numeric/string representations remain unchanged
+ok 31 - ordinary_active_runtime:order:0,1,2,3: independent current-flow composition agrees
+ok 32 - ordinary_active_runtime:order:0,1,2,3: input bytes and numeric/string representations remain unchanged
+ok 33 - ordinary_active_runtime:order:0,1,3,2: independent current-flow composition agrees
+ok 34 - ordinary_active_runtime:order:0,1,3,2: input bytes and numeric/string representations remain unchanged
+ok 35 - ordinary_active_runtime:order:0,2,1,3: independent current-flow composition agrees
+ok 36 - ordinary_active_runtime:order:0,2,1,3: input bytes and numeric/string representations remain unchanged
+ok 37 - ordinary_active_runtime:order:0,2,3,1: independent current-flow composition agrees
+ok 38 - ordinary_active_runtime:order:0,2,3,1: input bytes and numeric/string representations remain unchanged
+ok 39 - ordinary_active_runtime:order:0,3,1,2: independent current-flow composition agrees
+ok 40 - ordinary_active_runtime:order:0,3,1,2: input bytes and numeric/string representations remain unchanged
+ok 41 - ordinary_active_runtime:order:0,3,2,1: independent current-flow composition agrees
+ok 42 - ordinary_active_runtime:order:0,3,2,1: input bytes and numeric/string representations remain unchanged
+ok 43 - ordinary_active_runtime:order:1,0,2,3: independent current-flow composition agrees
+ok 44 - ordinary_active_runtime:order:1,0,2,3: input bytes and numeric/string representations remain unchanged
+ok 45 - ordinary_active_runtime:order:1,0,3,2: independent current-flow composition agrees
+ok 46 - ordinary_active_runtime:order:1,0,3,2: input bytes and numeric/string representations remain unchanged
+ok 47 - ordinary_active_runtime:order:1,2,0,3: independent current-flow composition agrees
+ok 48 - ordinary_active_runtime:order:1,2,0,3: input bytes and numeric/string representations remain unchanged
+ok 49 - ordinary_active_runtime:order:1,2,3,0: independent current-flow composition agrees
+ok 50 - ordinary_active_runtime:order:1,2,3,0: input bytes and numeric/string representations remain unchanged
+ok 51 - ordinary_active_runtime:order:1,3,0,2: independent current-flow composition agrees
+ok 52 - ordinary_active_runtime:order:1,3,0,2: input bytes and numeric/string representations remain unchanged
+ok 53 - ordinary_active_runtime:order:1,3,2,0: independent current-flow composition agrees
+ok 54 - ordinary_active_runtime:order:1,3,2,0: input bytes and numeric/string representations remain unchanged
+ok 55 - ordinary_active_runtime:order:2,0,1,3: independent current-flow composition agrees
+ok 56 - ordinary_active_runtime:order:2,0,1,3: input bytes and numeric/string representations remain unchanged
+ok 57 - ordinary_active_runtime:order:2,0,3,1: independent current-flow composition agrees
+ok 58 - ordinary_active_runtime:order:2,0,3,1: input bytes and numeric/string representations remain unchanged
+ok 59 - ordinary_active_runtime:order:2,1,0,3: independent current-flow composition agrees
+ok 60 - ordinary_active_runtime:order:2,1,0,3: input bytes and numeric/string representations remain unchanged
+ok 61 - ordinary_active_runtime:order:2,1,3,0: independent current-flow composition agrees
+ok 62 - ordinary_active_runtime:order:2,1,3,0: input bytes and numeric/string representations remain unchanged
+ok 63 - ordinary_active_runtime:order:2,3,0,1: independent current-flow composition agrees
+ok 64 - ordinary_active_runtime:order:2,3,0,1: input bytes and numeric/string representations remain unchanged
+ok 65 - ordinary_active_runtime:order:2,3,1,0: independent current-flow composition agrees
+ok 66 - ordinary_active_runtime:order:2,3,1,0: input bytes and numeric/string representations remain unchanged
+ok 67 - ordinary_active_runtime:order:3,0,1,2: independent current-flow composition agrees
+ok 68 - ordinary_active_runtime:order:3,0,1,2: input bytes and numeric/string representations remain unchanged
+ok 69 - ordinary_active_runtime:order:3,0,2,1: independent current-flow composition agrees
+ok 70 - ordinary_active_runtime:order:3,0,2,1: input bytes and numeric/string representations remain unchanged
+ok 71 - ordinary_active_runtime:order:3,1,0,2: independent current-flow composition agrees
+ok 72 - ordinary_active_runtime:order:3,1,0,2: input bytes and numeric/string representations remain unchanged
+ok 73 - ordinary_active_runtime:order:3,1,2,0: independent current-flow composition agrees
+ok 74 - ordinary_active_runtime:order:3,1,2,0: input bytes and numeric/string representations remain unchanged
+ok 75 - ordinary_active_runtime:order:3,2,0,1: independent current-flow composition agrees
+ok 76 - ordinary_active_runtime:order:3,2,0,1: input bytes and numeric/string representations remain unchanged
+ok 77 - ordinary_active_runtime:order:3,2,1,0: independent current-flow composition agrees
+ok 78 - ordinary_active_runtime:order:3,2,1,0: input bytes and numeric/string representations remain unchanged
+ok 79 - ordinary_retired_last_observation:baseline: independent current-flow composition agrees
+ok 80 - ordinary_retired_last_observation:baseline: input bytes and numeric/string representations remain unchanged
+ok 81 - ordinary_retired_last_observation:order:0,1: independent current-flow composition agrees
+ok 82 - ordinary_retired_last_observation:order:0,1: input bytes and numeric/string representations remain unchanged
+ok 83 - ordinary_retired_last_observation:order:1,0: independent current-flow composition agrees
+ok 84 - ordinary_retired_last_observation:order:1,0: input bytes and numeric/string representations remain unchanged
+ok 85 - missing kind: rejected before flow resolution
+ok 86 - missing kind: exact closed-contract diagnostic
+ok 87 - stale numeric call: rejected before flow resolution
+ok 88 - stale numeric call: exact closed-contract diagnostic
+ok 89 - structured kind: rejected before flow resolution
+ok 90 - structured kind: exact closed-contract diagnostic
+ok 91 - missing order: rejected before flow resolution
+ok 92 - missing order: exact closed-contract diagnostic
+ok 93 - unknown order: rejected before flow resolution
+ok 94 - unknown order: exact closed-contract diagnostic
+ok 95 - missing scope: rejected before flow resolution
+ok 96 - missing scope: exact closed-contract diagnostic
+ok 97 - structured scope: rejected before flow resolution
+ok 98 - structured scope: exact closed-contract diagnostic
+ok 99 - foreign scope: rejected before flow resolution
+ok 100 - foreign scope: exact closed-contract diagnostic
+ok 101 - foreign kind: rejected before flow resolution
+ok 102 - foreign kind: exact closed-contract diagnostic
+ok 103 - scoped healthy: rejected before flow resolution
+ok 104 - scoped healthy: exact closed-contract diagnostic
+ok 105 - pure resolution makes no process attempt
+1..105

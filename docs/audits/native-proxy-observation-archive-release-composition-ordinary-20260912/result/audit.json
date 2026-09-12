@@ -1,0 +1,171 @@
+{
+  "assertions": 610,
+  "case_bytes": 17984428,
+  "domain_falsifiers": [
+    "missing-case",
+    "duplicate-case",
+    "wrong-recipe"
+  ],
+  "header_falsifiers": [
+    "missing-pin",
+    "missing-receipt",
+    "invented-process",
+    "wrong-errno"
+  ],
+  "input_files": 288,
+  "prerequisites": {
+    "assertions": 105,
+    "copies": 8,
+    "predictions": 1890,
+    "variants": 42
+  },
+  "prior_roots_absent": 27356,
+  "prospective_pins": [
+    {
+      "path": "docs/audits/native-proxy-observation-archive-release-composition-ordinary-20260912/plan.json",
+      "sha256": "bc1a83d70401c55ebca8d022454debf549920db9d5dbbd61076d0af2aef01d6b",
+      "size_bytes": 92389
+    },
+    {
+      "path": "docs/audits/native-proxy-observation-archive-release-composition-ordinary-20260912/prepare.py",
+      "sha256": "e33198029853f04695b8f361ff0085a97eeee34012ff4702400183ca4126089c",
+      "size_bytes": 5888
+    },
+    {
+      "path": "docs/audits/native-proxy-observation-archive-release-composition-ordinary-20260912/prepare-pin.json",
+      "sha256": "edf45958e4e991b51691bc133a6fe3c5adaa74f84f4f9aff9cfdcb85727f3339",
+      "size_bytes": 212
+    },
+    {
+      "path": "docs/audits/native-proxy-observation-archive-release-composition-ordinary-20260912/qualify.t",
+      "sha256": "ff3633d634ba1ea3cd45b07fd1b6b7022abea34f38d3ef1e87a2fcae2efb79bb",
+      "size_bytes": 15819
+    },
+    {
+      "path": "docs/audits/native-proxy-observation-archive-release-composition-ordinary-20260912/qualifier-pin.json",
+      "sha256": "59e746a7a508ffc29e5c5db2c6ed25c3ecf0a2e6c7ede2c7949c840e99009516",
+      "size_bytes": 212
+    },
+    {
+      "path": "docs/audits/native-proxy-observation-archive-release-composition-ordinary-20260912/audit.py",
+      "sha256": "673134b141e7eb5bb8e28cf5bfc0f75f8ef9485afe0b4ac9cb88293ee6a55f80",
+      "size_bytes": 27165
+    },
+    {
+      "path": "docs/audits/native-proxy-observation-archive-release-composition-ordinary-20260912/trace-adaptation.json",
+      "sha256": "82e4688151a6b8afb5b27b6d2c1ee85b003c52dd7fedbe80254a13809ef7de87",
+      "size_bytes": 575
+    },
+    {
+      "path": "docs/audits/native-proxy-observation-archive-release-composition-ordinary-20260912/flow-preflight-pins.json",
+      "sha256": "a3165a4abf9c39a4d7afcee165b8f25089b452accbe2aa98dd78d204f09169fd",
+      "size_bytes": 2289
+    },
+    {
+      "path": "docs/audits/native-proxy-observation-archive-release-composition-ordinary-20260912/result/preflight/flow-qualification.json",
+      "sha256": "87b997cd42190ff63191f2db7ddca609e4213e48967e83bfe8f8171108c3abd6",
+      "size_bytes": 15159
+    },
+    {
+      "path": "docs/audits/native-proxy-observation-archive-release-composition-ordinary-20260912/result/preflight/flow-qualify.tap",
+      "sha256": "d68c9382ca633e6cf7737e0db08873dc03eaf4a6b5f872d51ff2f4c55c496882",
+      "size_bytes": 10027
+    },
+    {
+      "path": "docs/audits/native-proxy-observation-archive-release-composition-ordinary-20260912/result/preflight/flow-qualify.stderr",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "size_bytes": 0
+    },
+    {
+      "path": "docs/audits/native-proxy-observation-archive-release-composition-ordinary-20260912/result/preflight/flow-qualify.exit",
+      "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa",
+      "size_bytes": 2
+    },
+    {
+      "path": "docs/audits/native-proxy-observation-archive-release-composition-ordinary-20260912/result/preflight/preflight.json",
+      "sha256": "284b717934cbd619cc8e0935ecb3ce08e0cb42f8791c8ad42395c22807ebb27f",
+      "size_bytes": 11779
+    },
+    {
+      "path": "docs/audits/native-proxy-observation-archive-release-composition-ordinary-20260912/result/preflight/preflight.stdout",
+      "sha256": "d6122c8871ad15f69831076e11b0f82d5da5f822af6afd05330d2d325b742eec",
+      "size_bytes": 716
+    },
+    {
+      "path": "docs/audits/native-proxy-observation-archive-release-composition-ordinary-20260912/result/preflight/preflight.stderr",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "size_bytes": 0
+    },
+    {
+      "path": "docs/audits/native-proxy-observation-archive-release-composition-ordinary-20260912/result/preflight/preflight.exit",
+      "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa",
+      "size_bytes": 2
+    },
+    {
+      "path": "docs/audits/native-proxy-observation-archive-release-composition-ordinary-20260912/result/preflight/recovery.json",
+      "sha256": "5d1071ea58e7268e67717a1c75a38e6b6dbc5f4fa7a2de35c9fcc79cd71d461c",
+      "size_bytes": 2999
+    }
+  ],
+  "roots_absent": 180,
+  "row_falsifiers": [
+    "lost-actual-close",
+    "open-at-return",
+    "open-lock",
+    "lost-directory-observer",
+    "changed-inode",
+    "lost-modeled-hit",
+    "lost-report-hit",
+    "reversed-hit-order",
+    "missing-report",
+    "false-actual-return",
+    "hidden-reported-error",
+    "wrong-errno",
+    "invented-call-primary",
+    "lost-call-primary",
+    "lost-close-event",
+    "wrong-caller",
+    "lost-pending-scope",
+    "wrong-current-owner",
+    "changed-input",
+    "lost-other-owner",
+    "lost-unlink",
+    "lost-absence",
+    "masked-primary",
+    "false-success",
+    "native-authority",
+    "missing-directory-read",
+    "missing-directory-hit",
+    "foreign-directory-name",
+    "wrong-directory-inode",
+    "false-actual-read",
+    "actual-read-error",
+    "successful-reported-read",
+    "wrong-directory-errno",
+    "masked-directory-primary",
+    "private-read",
+    "publication-attempt"
+  ],
+  "schema": "fsmgen.release_ordinary_composition_audit.v1",
+  "scope": "Ordinary inert file-fixture composition partition only. Pure source binding and oracle vectors cover committed profiles without their file fixtures. Actual close/read truth and reports remain separate; no prior fixture/main, compiler or native process is replayed.",
+  "source_revision": "83b32c80721c2ce76c42b426b274ec72761b360c",
+  "success": true,
+  "totals": {
+    "call_primaries": 20,
+    "calls": 8608,
+    "cases": 45,
+    "close_reports": 2411,
+    "directories": 728,
+    "directory_primaries": 4,
+    "events": 27649,
+    "failures": 44,
+    "handles": 2411,
+    "healthy": 1,
+    "locks": 35,
+    "modeled_reports": 344,
+    "post_unlink_failures": 8,
+    "reads": 1648,
+    "sources": 1648,
+    "unlinks": 9
+  }
+}

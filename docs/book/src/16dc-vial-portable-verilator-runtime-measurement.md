@@ -2760,6 +2760,9 @@ without another fixture run:
 python3 -B docs/audits/native-proxy-observation-archive-release-close-last-20260912/audit.py --verify-saved
 ```
 
+The saved plan established this prospective baseline before any composition
+execution:
+
 The release composition plan selects 180 cases: 4 healthy controls, 80 grouped-close cases and 96 primary-error cases; execution remains pending.
 
 Each profile has its own execution task. Grouped recipes select an error at an
@@ -2785,9 +2788,33 @@ The saved plan and its independent interval/source-scope checks can be verified:
 python3 -B docs/audits/native-proxy-release-close-composition-selection-20260912/audit.py --verify-saved
 ```
 
-Composition execution, genuine omissions and complete release applicability remain
-pending. A reported error after successful closure does not test an ambiguous
-operating-system close failure or authorize native execution.
+Ordinary release composition qualification covers 45 cases: 1 healthy control, 20 grouped-close cases and 24 primary-error cases, with 610 TAP assertions.
+
+The ordinary cases execute both report-declaration orders against their current
+input flow. An existing primary error survives every later cleanup report.
+When cleanup itself produces the first error, actual close order determines
+which error the attempt returns. Every observed handle still closes.
+
+For example, a directory case reads a real entry and records its name and native
+handle identity before reporting EIO to the original reader. The real directory
+close then succeeds, and its report is changed to ENOSPC. The reader keeps the
+EIO read error. An injected source-recheck exception likewise survives cleanup
+reports from the local source, enclosing owners, lock and retained release files.
+
+The release milestones preserve whether unlink happened and whether absence
+was still unknown or already verified when the primary error arose. Cleanup
+reports do not erase these facts or restore a deleted observation hold.
+Independent checks reject replaced primaries, reversed observed error order,
+lost closes, false read results, changed identities and incorrect file effects.
+
+```sh
+python3 -B docs/audits/native-proxy-observation-archive-release-composition-ordinary-20260912/audit.py --verify-saved
+```
+
+Equal-reference, active-runtime and last-observation compositions remain pending,
+as do genuine omissions and complete release applicability. These reported errors
+follow successful actual reads or closes; they do not qualify ambiguous operating-system
+failures or authorize native execution.
 
 The inactive archive record implementation now derives a closed specification
 from the complete original acquisition and request. It keeps the ordered wrapper,
