@@ -1,0 +1,8 @@
+Traceback (most recent call last):
+  File "/Volumes/SSD/Documents/github/fsmgen/docs/audits/native-proxy-observation-archive-release-syscall-20260912/oracle-preflight.py", line 59, in <module>
+    main()
+    ~~~~^^
+  File "/Volumes/SSD/Documents/github/fsmgen/docs/audits/native-proxy-observation-archive-release-syscall-20260912/oracle-preflight.py", line 47, in main
+    assert actual['events'] == row['operation']['events']
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError

@@ -2568,18 +2568,38 @@ fixture:
 python3 -B docs/audits/native-proxy-observation-archive-release-readback-last-20260912/audit.py --verify-saved
 ```
 
-The syscall-report plan separates suppressed calls from actual operations.
-It models rejected unlink while the original hold stays present, and errors
-or reported presence in either absence check after a real unlink. Modeled
-presence does not recreate the file. A later failed check preserves the earlier
-absence observation while reporting the latest result separately. These are
-planned reported-failure controls, not naturally occurring OS-error evidence.
+The syscall-report partition passes 24 cases and 289 assertions: 4 releases succeed and 20 attempts reject.
+Each profile has a healthy release and modeled reports at the actual unlink
+or absence-check syscall. Ordinary retired, equal-reference, active-runtime
+and last-observation setups retain their original ownership contracts.
+The observer records actual syscall results separately from reported results:
 
-Later lanes qualify these planned controls, actual closes followed by modeled
-errors, deliberate close omissions with separate recovery, and the final
-source/evidence join. Primary errors outrank cleanup reports. These finite
-checks grant no native ownership authority or guarantee against arbitrary
-asynchronous writers.
+| Controlled report | Actual hold after release | Absence previously verified | Latest check |
+| --- | --- | --- | --- |
+| Unlink denied with EACCES | Present; unlink was suppressed | No | None |
+| Early absence check reports EIO | Absent; unlink completed | No | Unknown |
+| Early absence check reports presence | Absent; unlink completed | No | Present |
+| Final absence check reports EIO | Absent; unlink completed | Yes | Unknown |
+| Final absence check reports presence | Absent; unlink completed | Yes | Present |
+
+For example, a final check can report presence after the early check verified
+absence. The failed attempt retains that earlier verification, records the
+latest report as present, and preserves the completed unlink. The modeled
+presence report does not recreate the file. Every observed descriptor actually
+closes, and the archive, selected image and other owners remain unchanged.
+The first preflight comparison and first auditor header defects are preserved
+with their corrections; the successful fixture run was not repeated.
+Revalidate the saved evidence without executing a fixture:
+
+```sh
+python3 -B docs/audits/native-proxy-observation-archive-release-syscall-20260912/audit-corrected.py --verify-saved
+```
+
+These modeled reports do not establish naturally occurring OS-error behavior.
+Later lanes own the complete evidence join, actual closes followed by modeled
+errors, and deliberate close omissions with separate recovery. Cleanup-error
+composition and arbitrary asynchronous writers remain outside this domain;
+these inactive checks grant no native ownership authority.
 
 The inactive archive record implementation now derives a closed specification
 from the complete original acquisition and request. It keeps the ordered wrapper,

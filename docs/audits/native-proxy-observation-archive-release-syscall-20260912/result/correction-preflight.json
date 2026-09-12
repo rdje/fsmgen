@@ -1,0 +1,12 @@
+{
+  "corrected_header_accepts": true,
+  "falsifiers": [
+    "missing-process-counter",
+    "invented-counter-alias",
+    "actual-process-attempt"
+  ],
+  "original_header_rejects": true,
+  "source_diff_exact": true,
+  "success": true,
+  "unchanged_fixture": true
+}

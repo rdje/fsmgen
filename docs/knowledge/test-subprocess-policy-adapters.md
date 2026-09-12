@@ -2,6 +2,7 @@
 id: test-subprocess-policy-adapters
 title: Test subprocesses share one mechanism behind sealed policy adapters
 answers:
+  - "how are release unlink absence reports verified?"
   - "how does last-observation readback preserve an unreferenced image?"
   - "how do active-runtime readback controls preserve runtime state?"
   - "how do equal-reference readback controls preserve source identity?"
@@ -128,12 +129,12 @@ evidence: >-
   t/lib/FSM/Test/RustProxyFixture.pm; t/1815-rust-proxy-fixture.t; t/1816-rust-proxy-integration.t; t/1817-test-supervision-architecture.t
 reverify: >-
   scripts/run_with_ram_guard.sh -- python3 -B
-  docs/audits/native-proxy-observation-archive-release-readback-last-20260912/audit.py --verify-saved
+  docs/audits/native-proxy-observation-archive-release-syscall-20260912/audit-corrected.py --verify-saved
 ---
 Decisions `0087`/`0101`: `FSM::Support::ProcessSupervisor`; adapters seal local argv/capture/group cleanup. T1669 checks ownership. `exec_handoff_monotonic_ns` is EOF, not main entry; absent EOF leaves timing unknown.
 `VerilatorRuntime`: decision `0086`. `TaskAcceptanceFixtureRuntime`: owned roots/fixed Git argv.
-History: `70c1fe9e82267dc52df7be14177f91114d980f60:docs/knowledge/test-subprocess-policy-adapters.md`. Earlier contracts and replay: history.
-Readback: see reverify. Last-observation controls retire the runtime and verify other-hold removal. The image survives removal of its final reference, including later read failures. Weak lexical closure and returned-source cleanup hold. Earlier readback profiles, census behavior and separate strong-observer recovery: history. Syscall reports and native lifetime remain open.
+History: `b6d957ca33c99956ccc7559764fa863e9f89567a:docs/knowledge/test-subprocess-policy-adapters.md`. Earlier contracts and replay: history.
+Syscall reports: denied unlink preserves the hold without a syscall. Actual unlink precedes modeled absence errors/presence; later failure preserves earlier absence. Latest reports and real closes stay exact. Preflight/header defects and corrections are retained without rerun. Readback/image preservation: history. Joins, close composition and native lifetime remain open.
 Binding, I/O load order and successful-open nonzero errno: predecessor history. Successful errno is retained data; return and native identity establish success.
 Proxy: `t/fixtures/rust-tool-proxy.c` is C; Perl `t/lib/FSM/Test/RustProxyFixture.pm` builds it and the Perl harness launches a separate process to impersonate rustup resolution. Rust names the substituted tool, not the native implementation language.
 HIAL/VIAL `.19.2.3.1.2.2.5.5` owns repair/hostile controls; neutral-verifier extraction stays blocked.

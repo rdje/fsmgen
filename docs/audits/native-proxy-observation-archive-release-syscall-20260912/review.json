@@ -1,0 +1,110 @@
+{
+  "behavioral_audit": {
+    "assertions": 289,
+    "falsifiers": [
+      "invented-unlink",
+      "wrong-unlink-errno",
+      "invented-actual-absence-error",
+      "concealed-modeled-presence",
+      "lost-historical-absence",
+      "stale-latest-absence",
+      "wrong-error-precedence",
+      "unclosed-source",
+      "lost-archive",
+      "lost-other-owner",
+      "invented-runtime-retirement",
+      "missing-final-hold-setup",
+      "lost-final-image",
+      "wrong-call-prefix",
+      "wrong-absence-phase",
+      "wrong-native-identity",
+      "missing-case",
+      "duplicate-case",
+      "wrong-selected-phase",
+      "incomplete-report",
+      "lost-receipt",
+      "unconsumed-case",
+      "altered-pin",
+      "corrupt-case-size_bytes",
+      "corrupt-case-sha256"
+    ],
+    "prior_roots_absent": 24584,
+    "prospective_pins": 8,
+    "roots_absent": 96,
+    "scope": "Selected healthy profiles and modeled unlink/absence reports only. Actual syscalls, reported results and physical snapshots are separate. No native execution, OS-failure guarantee, concurrent-writer atomicity, close-error composition or reader-control cross product.",
+    "success": true,
+    "totals": {
+      "absence_syscalls": 32,
+      "calls": 12157,
+      "cases": 24,
+      "directories": 968,
+      "events": 39209,
+      "handles": 3395,
+      "locks": 24,
+      "modeled_reports": 20,
+      "reads": 2403,
+      "rejections": 20,
+      "sources": 2403,
+      "successes": 4,
+      "suppressed_unlinks": 4,
+      "unlink_syscalls": 20
+    },
+    "unchanged_inputs": 317
+  },
+  "book_review": {
+    "checked_passages": [
+      "The syscall-report partition passes 24 cases and 289 assertions: 4 releases succeed and 20 attempts reject.",
+      "The observer records actual syscall results separately from reported results:",
+      "The modeled presence report does not recreate the file.",
+      "Every observed descriptor actually closes, and the archive, selected image and other owners remain unchanged.",
+      "These modeled reports do not establish naturally occurring OS-error behavior.",
+      "native-proxy-observation-archive-release-syscall-20260912/audit-corrected.py --verify-saved"
+    ],
+    "exact_output_absent": true,
+    "exit_code": 0,
+    "output": ".artifacts/tmp/native-proxy-release-syscall-book-20260912/book",
+    "rendered_bytes": 23422222,
+    "rendered_directories": 3,
+    "rendered_files": 98,
+    "renderer_warnings": [
+      "WARN search index is very large (13216204 bytes)"
+    ],
+    "same_volume_direct_objects": true
+  },
+  "claim_dispositions": {
+    "added": [
+      "published-e779144cfeb6f2ad7f7b91bd"
+    ],
+    "prior_byte_exact": 1922
+  },
+  "claims": {
+    "durability": "All producer sources, first failures, prospective/correction pins, cases, raw outputs and copy manifests are tracked. audit-corrected.py --verify-saved and recover.py --verify-saved revalidate retained data without fixture execution; the claim disposition names the book watcher.",
+    "falsify": "Independent current-input call derivation, source-scope cleanup oracle and physical-file/state validation reject row/domain/header/case corruptions. Original call-cut oracles qualify the new oracle; the first header is RED and its narrow correction GREEN. The separate book watcher rejects count changes and conserved-total redistribution.",
+    "rederive": "The prospectively pinned qualifier captures actual syscall execution/report metadata and immutable cases/TAP. The saved report and physical snapshots preserve original ownership and effects."
+  },
+  "limits": [
+    "No original producer, compiler, collector or native execution.",
+    "Modeled reports do not establish real OS failure behavior or concurrent-writer atomicity.",
+    "Reader-control cross products, close-error compositions and complete evidence joins remain separately owned."
+  ],
+  "owner": "HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.12.4.1.3.4.4.3.10.6",
+  "recovery": {
+    "additional_verification_bytes": 3446,
+    "additional_verification_copies": 28,
+    "main_bytes": 16103950,
+    "main_copies": 53,
+    "overlap": "Main manifest includes oracle/correction preflight results. Verification copies are separate stdout/stderr/exit captures; neither counts the first-failure source archives."
+  },
+  "schema": "fsmgen.release_syscall_review.v1",
+  "source_review": "docs/audits/native-proxy-observation-archive-release-syscall-20260912/source-review.json",
+  "source_revision": "b6d957ca33c99956ccc7559764fa863e9f89567a",
+  "success": true,
+  "verification": {
+    "book_claims": true,
+    "knowledge_map": true,
+    "saved_audit": true,
+    "saved_recovery": true,
+    "staged_doctrines": "required before commit",
+    "task_integrity": true
+  }
+}

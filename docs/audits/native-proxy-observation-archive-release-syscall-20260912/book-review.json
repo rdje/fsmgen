@@ -1,0 +1,20 @@
+{
+  "checked_passages": [
+    "The syscall-report partition passes 24 cases and 289 assertions: 4 releases succeed and 20 attempts reject.",
+    "The observer records actual syscall results separately from reported results:",
+    "The modeled presence report does not recreate the file.",
+    "Every observed descriptor actually closes, and the archive, selected image and other owners remain unchanged.",
+    "These modeled reports do not establish naturally occurring OS-error behavior.",
+    "native-proxy-observation-archive-release-syscall-20260912/audit-corrected.py --verify-saved"
+  ],
+  "exact_output_absent": true,
+  "exit_code": 0,
+  "output": ".artifacts/tmp/native-proxy-release-syscall-book-20260912/book",
+  "rendered_bytes": 23422222,
+  "rendered_directories": 3,
+  "rendered_files": 98,
+  "renderer_warnings": [
+    "WARN search index is very large (13216204 bytes)"
+  ],
+  "same_volume_direct_objects": true
+}

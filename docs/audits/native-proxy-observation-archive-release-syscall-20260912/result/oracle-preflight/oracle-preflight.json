@@ -1,0 +1,193 @@
+{
+  "allocated_fixtures": 0,
+  "comparisons": [
+    {
+      "calls": 612,
+      "case": "ordinary_retired_other_observation:healthy",
+      "event_sha256": "4758cb4c1bcbb86c10ad8f744be34277f291ab3c9e801ccc75b9e4356dc437ec",
+      "events": 1973
+    },
+    {
+      "calls": 427,
+      "case": "ordinary_retired_other_observation:unlink-eacces:None",
+      "event_sha256": "4d7c009efd04fb5c6ddd7bb5719481baf5816076e73f84c9d3a05ab98665cdcf",
+      "events": 1379
+    },
+    {
+      "calls": 429,
+      "case": "ordinary_retired_other_observation:absence-eio:after_unlink",
+      "event_sha256": "b79382ac56f2383d8e8d30d9e6f9d2ee17dd2cb01f77e64a89e4860cb306ca80",
+      "events": 1381
+    },
+    {
+      "calls": 429,
+      "case": "ordinary_retired_other_observation:absence-present:after_unlink",
+      "event_sha256": "b3b63644bb6e6a725f3cd6598aa1d5020bd3eab480ad069f65acbdace9ebf222",
+      "events": 1382
+    },
+    {
+      "calls": 603,
+      "case": "ordinary_retired_other_observation:absence-eio:finish",
+      "event_sha256": "f2e455aa5cfa45be05292eb43265ca41b633fcdb1f16174a9a48c762348fefa9",
+      "events": 1947
+    },
+    {
+      "calls": 603,
+      "case": "ordinary_retired_other_observation:absence-present:finish",
+      "event_sha256": "32a3463dcb7bbbe8cc055d5ddda17893e3410fc5ce784f6f869eb6593d23b5f3",
+      "events": 1948
+    },
+    {
+      "calls": 589,
+      "case": "equal_reference_retired_other_observation:healthy",
+      "event_sha256": "225f643a7a1b6b7eb9f4c746f5386acf99f0069a216f74df608ac27785d0ecc2",
+      "events": 1902
+    },
+    {
+      "calls": 409,
+      "case": "equal_reference_retired_other_observation:unlink-eacces:None",
+      "event_sha256": "6d8b157663363475dfbd1c25a5c669d127f7aebc7688c66911142e818a90f860",
+      "events": 1323
+    },
+    {
+      "calls": 411,
+      "case": "equal_reference_retired_other_observation:absence-eio:after_unlink",
+      "event_sha256": "db2d0a35514fcf731ddabdaaf21ee10b91b135a8851f1a54f7fc67c227258fce",
+      "events": 1325
+    },
+    {
+      "calls": 411,
+      "case": "equal_reference_retired_other_observation:absence-present:after_unlink",
+      "event_sha256": "2cb6c011fad6c0522950cc4a542dda74611f9d47153d314a42bfbd2f28c28455",
+      "events": 1326
+    },
+    {
+      "calls": 580,
+      "case": "equal_reference_retired_other_observation:absence-eio:finish",
+      "event_sha256": "2382a1fe49e51b8044460d451a89640629ace2bd99c870c512bb46c7d9e126a3",
+      "events": 1876
+    },
+    {
+      "calls": 580,
+      "case": "equal_reference_retired_other_observation:absence-present:finish",
+      "event_sha256": "c30199c800ec72d6ed67138d30f621730780adc06c851cb5b455d8aca8ae3788",
+      "events": 1877
+    },
+    {
+      "calls": 642,
+      "case": "ordinary_active_runtime:healthy",
+      "event_sha256": "06f2e6cd8bac6e1a44fdaed04b9a6ed8db3c0c8b39da8883fb29d2dd02ada886",
+      "events": 2078
+    },
+    {
+      "calls": 447,
+      "case": "ordinary_active_runtime:unlink-eacces:None",
+      "event_sha256": "6e8619ed3cb474f482cc210eabb6da07640bf686908caaf4628d1d15b4b08eb5",
+      "events": 1449
+    },
+    {
+      "calls": 449,
+      "case": "ordinary_active_runtime:absence-eio:after_unlink",
+      "event_sha256": "578947493789061a804a06715568ad9ec9c3c2922e3656085df83c8a5d355d8c",
+      "events": 1451
+    },
+    {
+      "calls": 449,
+      "case": "ordinary_active_runtime:absence-present:after_unlink",
+      "event_sha256": "373d1eec943fcf191f32e834635d5af8947aaf68a6ae4d841e5d7b49671f8a2b",
+      "events": 1452
+    },
+    {
+      "calls": 633,
+      "case": "ordinary_active_runtime:absence-eio:finish",
+      "event_sha256": "e8b468a1ca2cd42810f8d51799b2dc74dbe64e1d6b7ef29d86cbacb8f97172c8",
+      "events": 2052
+    },
+    {
+      "calls": 633,
+      "case": "ordinary_active_runtime:absence-present:finish",
+      "event_sha256": "da055abcc9652bcdf476c9449e2f5e48cf2b18d6345bcd35dc41d8a0150b8387",
+      "events": 2053
+    },
+    {
+      "calls": 538,
+      "case": "ordinary_retired_last_observation:healthy",
+      "event_sha256": "07b89929dada85a33a055ed3f779767c66c2e280d85361a314e0bed236c381dc",
+      "events": 1718
+    },
+    {
+      "calls": 407,
+      "case": "ordinary_retired_last_observation:unlink-eacces:None",
+      "event_sha256": "4af9354ad532346a9c0829d2fa8be4f2aef184652bd5aa3f752d44945ecbfba4",
+      "events": 1309
+    },
+    {
+      "calls": 409,
+      "case": "ordinary_retired_last_observation:absence-eio:after_unlink",
+      "event_sha256": "f030fdceb8fb44fce68b8c99a702ad899650ff1d781d239279cf452dd5b47f93",
+      "events": 1311
+    },
+    {
+      "calls": 409,
+      "case": "ordinary_retired_last_observation:absence-present:after_unlink",
+      "event_sha256": "02135af1f1e38676da57badb4ba81ffd7faf273880bc4e563613d713b39bca37",
+      "events": 1312
+    },
+    {
+      "calls": 529,
+      "case": "ordinary_retired_last_observation:absence-eio:finish",
+      "event_sha256": "dc2f50e846b74f77e777d6840c1f77327866727c1209f3e94cf82c5997686ac9",
+      "events": 1692
+    },
+    {
+      "calls": 529,
+      "case": "ordinary_retired_last_observation:absence-present:finish",
+      "event_sha256": "9988c4eed0e3820ca09045ef02e5a45236fdf5cea5f55b9ee4bdf16120f7b154",
+      "events": 1693
+    }
+  ],
+  "prospective_pins": [
+    {
+      "path": "docs/audits/native-proxy-observation-archive-release-syscall-20260912/prepare.py",
+      "sha256": "a9616ba1e77d8c28ba26054e9f3d82d7cecde22a3a1e2acd79c76740fbb1173f",
+      "size_bytes": 4116
+    },
+    {
+      "path": "docs/audits/native-proxy-observation-archive-release-syscall-20260912/prepare-pins.json",
+      "sha256": "b1b5cd49108fbc59493da2369d777395a974ae5cf91fb2168e80ab206fa06e36",
+      "size_bytes": 213
+    },
+    {
+      "path": "docs/audits/native-proxy-observation-archive-release-syscall-20260912/plan.json",
+      "sha256": "9e6d90872970bcbc4ed14416e2b94a9449012b11d01b933c36a6b0e8e750d643",
+      "size_bytes": 114485
+    },
+    {
+      "path": "docs/audits/native-proxy-observation-archive-release-syscall-20260912/qualify.t",
+      "sha256": "f93a1cd0d027c381d3b818d5bd07d319f08bc021919806af8df6fdc7bcddbbf6",
+      "size_bytes": 14319
+    },
+    {
+      "path": "docs/audits/native-proxy-observation-archive-release-syscall-20260912/SyscallTrace.pm",
+      "sha256": "99911ff6c80d7f33b642c48493025cbcbd7a5e9c562d8304dc1ad59d30958dfd",
+      "size_bytes": 5054
+    },
+    {
+      "path": "docs/audits/native-proxy-observation-archive-release-syscall-20260912/expected_trace.py",
+      "sha256": "f750ace8532b022c6915c15efefcb4a49af92928b084c938bffdf5b77789369c",
+      "size_bytes": 6560
+    },
+    {
+      "path": "docs/audits/native-proxy-observation-archive-release-syscall-20260912/audit.py",
+      "sha256": "64e4c5650867ff2ad9f06aa6970919bb98ebdcad17c7e4b187d6a7b215bf90bb",
+      "size_bytes": 18183
+    },
+    {
+      "path": "docs/audits/native-proxy-observation-archive-release-syscall-20260912/oracle-preflight.py",
+      "sha256": "a2d4235465e0b4d37bb4dd8870a3bf98fa282d651ae06aae078d6d8297b6aa05",
+      "size_bytes": 3805
+    }
+  ],
+  "scope": "Pure retained healthy traces and independently qualified before/after call cuts; no fixture execution.",
+  "success": true
+}

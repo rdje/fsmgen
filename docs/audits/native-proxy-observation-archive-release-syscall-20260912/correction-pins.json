@@ -1,0 +1,12 @@
+[
+  {
+    "path": "docs/audits/native-proxy-observation-archive-release-syscall-20260912/audit-corrected.py",
+    "sha256": "f0a8747c5885e8930f0944acab3b94fd9ea67cc6862fe09b88a0f322b6648ff2",
+    "size_bytes": 18366
+  },
+  {
+    "path": "docs/audits/native-proxy-observation-archive-release-syscall-20260912/correction-preflight.py",
+    "sha256": "4092d14555676192d50a5a6f1a0e84c9b7e2596fe1bf0dbec32cc2ec5644603b",
+    "size_bytes": 2225
+  }
+]

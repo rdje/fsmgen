@@ -1,0 +1,290 @@
+ok 1 - NativeProxyObservationRelease::_coordinator_request: original external caller rejects
+ok 2 - NativeProxyObservationRelease::_coordinator_request: fault wrapper preserves caller rejection
+ok 3 - NativeProxyObservationRelease::_coordinator_request: original caller diagnostic remains exact
+ok 4 - NativeProxyObservationRelease::_coordinator_request: rejected original call stays an interrupted prefix
+ok 5 - NativeProxyObservationRelease::_admit_locked: original external caller rejects
+ok 6 - NativeProxyObservationRelease::_admit_locked: fault wrapper preserves caller rejection
+ok 7 - NativeProxyObservationRelease::_admit_locked: original caller diagnostic remains exact
+ok 8 - NativeProxyObservationRelease::_admit_locked: rejected original call stays an interrupted prefix
+ok 9 - NativeProxyObservationRelease::_unlink_exact: original external caller rejects
+ok 10 - NativeProxyObservationRelease::_unlink_exact: fault wrapper preserves caller rejection
+ok 11 - NativeProxyObservationRelease::_unlink_exact: original caller diagnostic remains exact
+ok 12 - NativeProxyObservationRelease::_unlink_exact: rejected original call stays an interrupted prefix
+ok 13 - NativeProxyObservationRelease::_release_locked: original external caller rejects
+ok 14 - NativeProxyObservationRelease::_release_locked: fault wrapper preserves caller rejection
+ok 15 - NativeProxyObservationRelease::_release_locked: original caller diagnostic remains exact
+ok 16 - NativeProxyObservationRelease::_release_locked: rejected original call stays an interrupted prefix
+ok 17 - NativeProxyObservationRelease::_finish_locked: original external caller rejects
+ok 18 - NativeProxyObservationRelease::_finish_locked: fault wrapper preserves caller rejection
+ok 19 - NativeProxyObservationRelease::_finish_locked: original caller diagnostic remains exact
+ok 20 - NativeProxyObservationRelease::_finish_locked: rejected original call stays an interrupted prefix
+ok 21 - NativeProxyReferenceCensus::_inspect_locked: original external caller rejects
+ok 22 - NativeProxyReferenceCensus::_inspect_locked: fault wrapper preserves caller rejection
+ok 23 - NativeProxyReferenceCensus::_inspect_locked: original caller diagnostic remains exact
+ok 24 - NativeProxyReferenceCensus::_inspect_locked: rejected original call stays an interrupted prefix
+ok 25 - ordinary_retired_other_observation:healthy: original public attempt returns
+ok 26 - ordinary_retired_other_observation:healthy: exact success disposition
+ok 27 - ordinary_retired_other_observation:healthy: exact primary diagnostic
+ok 28 - ordinary_retired_other_observation:healthy: only the selected syscall report is hit
+ok 29 - ordinary_retired_other_observation:healthy: actual unlink and historical/latest absence remain truthful
+ok 30 - ordinary_retired_other_observation:healthy: every actual observed descriptor closes without recovery
+ok 31 - ordinary_retired_other_observation:healthy: original input bytes and types remain unchanged
+ok 32 - ordinary_retired_other_observation:healthy: no unrelated publication mutation or private-source read
+ok 33 - ordinary_retired_other_observation:healthy: exact physical effect preserves archive and every other owner
+ok 34 - ordinary_retired_other_observation:healthy: inactive receipt authority stays closed
+ok 35 - ordinary_retired_other_observation:healthy: actual syscall execution and modeled report remain separate
+ok 36 - ordinary_retired_other_observation:unlink-eacces:None: original public attempt returns
+ok 37 - ordinary_retired_other_observation:unlink-eacces:None: exact success disposition
+ok 38 - ordinary_retired_other_observation:unlink-eacces:None: exact primary diagnostic
+ok 39 - ordinary_retired_other_observation:unlink-eacces:None: only the selected syscall report is hit
+ok 40 - ordinary_retired_other_observation:unlink-eacces:None: actual unlink and historical/latest absence remain truthful
+ok 41 - ordinary_retired_other_observation:unlink-eacces:None: every actual observed descriptor closes without recovery
+ok 42 - ordinary_retired_other_observation:unlink-eacces:None: original input bytes and types remain unchanged
+ok 43 - ordinary_retired_other_observation:unlink-eacces:None: no unrelated publication mutation or private-source read
+ok 44 - ordinary_retired_other_observation:unlink-eacces:None: exact physical effect preserves archive and every other owner
+ok 45 - ordinary_retired_other_observation:unlink-eacces:None: inactive receipt authority stays closed
+ok 46 - ordinary_retired_other_observation:unlink-eacces:None: actual syscall execution and modeled report remain separate
+ok 47 - ordinary_retired_other_observation:absence-eio:after_unlink: original public attempt returns
+ok 48 - ordinary_retired_other_observation:absence-eio:after_unlink: exact success disposition
+ok 49 - ordinary_retired_other_observation:absence-eio:after_unlink: exact primary diagnostic
+ok 50 - ordinary_retired_other_observation:absence-eio:after_unlink: only the selected syscall report is hit
+ok 51 - ordinary_retired_other_observation:absence-eio:after_unlink: actual unlink and historical/latest absence remain truthful
+ok 52 - ordinary_retired_other_observation:absence-eio:after_unlink: every actual observed descriptor closes without recovery
+ok 53 - ordinary_retired_other_observation:absence-eio:after_unlink: original input bytes and types remain unchanged
+ok 54 - ordinary_retired_other_observation:absence-eio:after_unlink: no unrelated publication mutation or private-source read
+ok 55 - ordinary_retired_other_observation:absence-eio:after_unlink: exact physical effect preserves archive and every other owner
+ok 56 - ordinary_retired_other_observation:absence-eio:after_unlink: inactive receipt authority stays closed
+ok 57 - ordinary_retired_other_observation:absence-eio:after_unlink: actual syscall execution and modeled report remain separate
+ok 58 - ordinary_retired_other_observation:absence-present:after_unlink: original public attempt returns
+ok 59 - ordinary_retired_other_observation:absence-present:after_unlink: exact success disposition
+ok 60 - ordinary_retired_other_observation:absence-present:after_unlink: exact primary diagnostic
+ok 61 - ordinary_retired_other_observation:absence-present:after_unlink: only the selected syscall report is hit
+ok 62 - ordinary_retired_other_observation:absence-present:after_unlink: actual unlink and historical/latest absence remain truthful
+ok 63 - ordinary_retired_other_observation:absence-present:after_unlink: every actual observed descriptor closes without recovery
+ok 64 - ordinary_retired_other_observation:absence-present:after_unlink: original input bytes and types remain unchanged
+ok 65 - ordinary_retired_other_observation:absence-present:after_unlink: no unrelated publication mutation or private-source read
+ok 66 - ordinary_retired_other_observation:absence-present:after_unlink: exact physical effect preserves archive and every other owner
+ok 67 - ordinary_retired_other_observation:absence-present:after_unlink: inactive receipt authority stays closed
+ok 68 - ordinary_retired_other_observation:absence-present:after_unlink: actual syscall execution and modeled report remain separate
+ok 69 - ordinary_retired_other_observation:absence-eio:finish: original public attempt returns
+ok 70 - ordinary_retired_other_observation:absence-eio:finish: exact success disposition
+ok 71 - ordinary_retired_other_observation:absence-eio:finish: exact primary diagnostic
+ok 72 - ordinary_retired_other_observation:absence-eio:finish: only the selected syscall report is hit
+ok 73 - ordinary_retired_other_observation:absence-eio:finish: actual unlink and historical/latest absence remain truthful
+ok 74 - ordinary_retired_other_observation:absence-eio:finish: every actual observed descriptor closes without recovery
+ok 75 - ordinary_retired_other_observation:absence-eio:finish: original input bytes and types remain unchanged
+ok 76 - ordinary_retired_other_observation:absence-eio:finish: no unrelated publication mutation or private-source read
+ok 77 - ordinary_retired_other_observation:absence-eio:finish: exact physical effect preserves archive and every other owner
+ok 78 - ordinary_retired_other_observation:absence-eio:finish: inactive receipt authority stays closed
+ok 79 - ordinary_retired_other_observation:absence-eio:finish: actual syscall execution and modeled report remain separate
+ok 80 - ordinary_retired_other_observation:absence-present:finish: original public attempt returns
+ok 81 - ordinary_retired_other_observation:absence-present:finish: exact success disposition
+ok 82 - ordinary_retired_other_observation:absence-present:finish: exact primary diagnostic
+ok 83 - ordinary_retired_other_observation:absence-present:finish: only the selected syscall report is hit
+ok 84 - ordinary_retired_other_observation:absence-present:finish: actual unlink and historical/latest absence remain truthful
+ok 85 - ordinary_retired_other_observation:absence-present:finish: every actual observed descriptor closes without recovery
+ok 86 - ordinary_retired_other_observation:absence-present:finish: original input bytes and types remain unchanged
+ok 87 - ordinary_retired_other_observation:absence-present:finish: no unrelated publication mutation or private-source read
+ok 88 - ordinary_retired_other_observation:absence-present:finish: exact physical effect preserves archive and every other owner
+ok 89 - ordinary_retired_other_observation:absence-present:finish: inactive receipt authority stays closed
+ok 90 - ordinary_retired_other_observation:absence-present:finish: actual syscall execution and modeled report remain separate
+ok 91 - equal_reference_retired_other_observation:healthy: original public attempt returns
+ok 92 - equal_reference_retired_other_observation:healthy: exact success disposition
+ok 93 - equal_reference_retired_other_observation:healthy: exact primary diagnostic
+ok 94 - equal_reference_retired_other_observation:healthy: only the selected syscall report is hit
+ok 95 - equal_reference_retired_other_observation:healthy: actual unlink and historical/latest absence remain truthful
+ok 96 - equal_reference_retired_other_observation:healthy: every actual observed descriptor closes without recovery
+ok 97 - equal_reference_retired_other_observation:healthy: original input bytes and types remain unchanged
+ok 98 - equal_reference_retired_other_observation:healthy: no unrelated publication mutation or private-source read
+ok 99 - equal_reference_retired_other_observation:healthy: exact physical effect preserves archive and every other owner
+ok 100 - equal_reference_retired_other_observation:healthy: inactive receipt authority stays closed
+ok 101 - equal_reference_retired_other_observation:healthy: actual syscall execution and modeled report remain separate
+ok 102 - equal_reference_retired_other_observation:unlink-eacces:None: original public attempt returns
+ok 103 - equal_reference_retired_other_observation:unlink-eacces:None: exact success disposition
+ok 104 - equal_reference_retired_other_observation:unlink-eacces:None: exact primary diagnostic
+ok 105 - equal_reference_retired_other_observation:unlink-eacces:None: only the selected syscall report is hit
+ok 106 - equal_reference_retired_other_observation:unlink-eacces:None: actual unlink and historical/latest absence remain truthful
+ok 107 - equal_reference_retired_other_observation:unlink-eacces:None: every actual observed descriptor closes without recovery
+ok 108 - equal_reference_retired_other_observation:unlink-eacces:None: original input bytes and types remain unchanged
+ok 109 - equal_reference_retired_other_observation:unlink-eacces:None: no unrelated publication mutation or private-source read
+ok 110 - equal_reference_retired_other_observation:unlink-eacces:None: exact physical effect preserves archive and every other owner
+ok 111 - equal_reference_retired_other_observation:unlink-eacces:None: inactive receipt authority stays closed
+ok 112 - equal_reference_retired_other_observation:unlink-eacces:None: actual syscall execution and modeled report remain separate
+ok 113 - equal_reference_retired_other_observation:absence-eio:after_unlink: original public attempt returns
+ok 114 - equal_reference_retired_other_observation:absence-eio:after_unlink: exact success disposition
+ok 115 - equal_reference_retired_other_observation:absence-eio:after_unlink: exact primary diagnostic
+ok 116 - equal_reference_retired_other_observation:absence-eio:after_unlink: only the selected syscall report is hit
+ok 117 - equal_reference_retired_other_observation:absence-eio:after_unlink: actual unlink and historical/latest absence remain truthful
+ok 118 - equal_reference_retired_other_observation:absence-eio:after_unlink: every actual observed descriptor closes without recovery
+ok 119 - equal_reference_retired_other_observation:absence-eio:after_unlink: original input bytes and types remain unchanged
+ok 120 - equal_reference_retired_other_observation:absence-eio:after_unlink: no unrelated publication mutation or private-source read
+ok 121 - equal_reference_retired_other_observation:absence-eio:after_unlink: exact physical effect preserves archive and every other owner
+ok 122 - equal_reference_retired_other_observation:absence-eio:after_unlink: inactive receipt authority stays closed
+ok 123 - equal_reference_retired_other_observation:absence-eio:after_unlink: actual syscall execution and modeled report remain separate
+ok 124 - equal_reference_retired_other_observation:absence-present:after_unlink: original public attempt returns
+ok 125 - equal_reference_retired_other_observation:absence-present:after_unlink: exact success disposition
+ok 126 - equal_reference_retired_other_observation:absence-present:after_unlink: exact primary diagnostic
+ok 127 - equal_reference_retired_other_observation:absence-present:after_unlink: only the selected syscall report is hit
+ok 128 - equal_reference_retired_other_observation:absence-present:after_unlink: actual unlink and historical/latest absence remain truthful
+ok 129 - equal_reference_retired_other_observation:absence-present:after_unlink: every actual observed descriptor closes without recovery
+ok 130 - equal_reference_retired_other_observation:absence-present:after_unlink: original input bytes and types remain unchanged
+ok 131 - equal_reference_retired_other_observation:absence-present:after_unlink: no unrelated publication mutation or private-source read
+ok 132 - equal_reference_retired_other_observation:absence-present:after_unlink: exact physical effect preserves archive and every other owner
+ok 133 - equal_reference_retired_other_observation:absence-present:after_unlink: inactive receipt authority stays closed
+ok 134 - equal_reference_retired_other_observation:absence-present:after_unlink: actual syscall execution and modeled report remain separate
+ok 135 - equal_reference_retired_other_observation:absence-eio:finish: original public attempt returns
+ok 136 - equal_reference_retired_other_observation:absence-eio:finish: exact success disposition
+ok 137 - equal_reference_retired_other_observation:absence-eio:finish: exact primary diagnostic
+ok 138 - equal_reference_retired_other_observation:absence-eio:finish: only the selected syscall report is hit
+ok 139 - equal_reference_retired_other_observation:absence-eio:finish: actual unlink and historical/latest absence remain truthful
+ok 140 - equal_reference_retired_other_observation:absence-eio:finish: every actual observed descriptor closes without recovery
+ok 141 - equal_reference_retired_other_observation:absence-eio:finish: original input bytes and types remain unchanged
+ok 142 - equal_reference_retired_other_observation:absence-eio:finish: no unrelated publication mutation or private-source read
+ok 143 - equal_reference_retired_other_observation:absence-eio:finish: exact physical effect preserves archive and every other owner
+ok 144 - equal_reference_retired_other_observation:absence-eio:finish: inactive receipt authority stays closed
+ok 145 - equal_reference_retired_other_observation:absence-eio:finish: actual syscall execution and modeled report remain separate
+ok 146 - equal_reference_retired_other_observation:absence-present:finish: original public attempt returns
+ok 147 - equal_reference_retired_other_observation:absence-present:finish: exact success disposition
+ok 148 - equal_reference_retired_other_observation:absence-present:finish: exact primary diagnostic
+ok 149 - equal_reference_retired_other_observation:absence-present:finish: only the selected syscall report is hit
+ok 150 - equal_reference_retired_other_observation:absence-present:finish: actual unlink and historical/latest absence remain truthful
+ok 151 - equal_reference_retired_other_observation:absence-present:finish: every actual observed descriptor closes without recovery
+ok 152 - equal_reference_retired_other_observation:absence-present:finish: original input bytes and types remain unchanged
+ok 153 - equal_reference_retired_other_observation:absence-present:finish: no unrelated publication mutation or private-source read
+ok 154 - equal_reference_retired_other_observation:absence-present:finish: exact physical effect preserves archive and every other owner
+ok 155 - equal_reference_retired_other_observation:absence-present:finish: inactive receipt authority stays closed
+ok 156 - equal_reference_retired_other_observation:absence-present:finish: actual syscall execution and modeled report remain separate
+ok 157 - ordinary_active_runtime:healthy: original public attempt returns
+ok 158 - ordinary_active_runtime:healthy: exact success disposition
+ok 159 - ordinary_active_runtime:healthy: exact primary diagnostic
+ok 160 - ordinary_active_runtime:healthy: only the selected syscall report is hit
+ok 161 - ordinary_active_runtime:healthy: actual unlink and historical/latest absence remain truthful
+ok 162 - ordinary_active_runtime:healthy: every actual observed descriptor closes without recovery
+ok 163 - ordinary_active_runtime:healthy: original input bytes and types remain unchanged
+ok 164 - ordinary_active_runtime:healthy: no unrelated publication mutation or private-source read
+ok 165 - ordinary_active_runtime:healthy: exact physical effect preserves archive and every other owner
+ok 166 - ordinary_active_runtime:healthy: inactive receipt authority stays closed
+ok 167 - ordinary_active_runtime:healthy: actual syscall execution and modeled report remain separate
+ok 168 - ordinary_active_runtime:unlink-eacces:None: original public attempt returns
+ok 169 - ordinary_active_runtime:unlink-eacces:None: exact success disposition
+ok 170 - ordinary_active_runtime:unlink-eacces:None: exact primary diagnostic
+ok 171 - ordinary_active_runtime:unlink-eacces:None: only the selected syscall report is hit
+ok 172 - ordinary_active_runtime:unlink-eacces:None: actual unlink and historical/latest absence remain truthful
+ok 173 - ordinary_active_runtime:unlink-eacces:None: every actual observed descriptor closes without recovery
+ok 174 - ordinary_active_runtime:unlink-eacces:None: original input bytes and types remain unchanged
+ok 175 - ordinary_active_runtime:unlink-eacces:None: no unrelated publication mutation or private-source read
+ok 176 - ordinary_active_runtime:unlink-eacces:None: exact physical effect preserves archive and every other owner
+ok 177 - ordinary_active_runtime:unlink-eacces:None: inactive receipt authority stays closed
+ok 178 - ordinary_active_runtime:unlink-eacces:None: actual syscall execution and modeled report remain separate
+ok 179 - ordinary_active_runtime:absence-eio:after_unlink: original public attempt returns
+ok 180 - ordinary_active_runtime:absence-eio:after_unlink: exact success disposition
+ok 181 - ordinary_active_runtime:absence-eio:after_unlink: exact primary diagnostic
+ok 182 - ordinary_active_runtime:absence-eio:after_unlink: only the selected syscall report is hit
+ok 183 - ordinary_active_runtime:absence-eio:after_unlink: actual unlink and historical/latest absence remain truthful
+ok 184 - ordinary_active_runtime:absence-eio:after_unlink: every actual observed descriptor closes without recovery
+ok 185 - ordinary_active_runtime:absence-eio:after_unlink: original input bytes and types remain unchanged
+ok 186 - ordinary_active_runtime:absence-eio:after_unlink: no unrelated publication mutation or private-source read
+ok 187 - ordinary_active_runtime:absence-eio:after_unlink: exact physical effect preserves archive and every other owner
+ok 188 - ordinary_active_runtime:absence-eio:after_unlink: inactive receipt authority stays closed
+ok 189 - ordinary_active_runtime:absence-eio:after_unlink: actual syscall execution and modeled report remain separate
+ok 190 - ordinary_active_runtime:absence-present:after_unlink: original public attempt returns
+ok 191 - ordinary_active_runtime:absence-present:after_unlink: exact success disposition
+ok 192 - ordinary_active_runtime:absence-present:after_unlink: exact primary diagnostic
+ok 193 - ordinary_active_runtime:absence-present:after_unlink: only the selected syscall report is hit
+ok 194 - ordinary_active_runtime:absence-present:after_unlink: actual unlink and historical/latest absence remain truthful
+ok 195 - ordinary_active_runtime:absence-present:after_unlink: every actual observed descriptor closes without recovery
+ok 196 - ordinary_active_runtime:absence-present:after_unlink: original input bytes and types remain unchanged
+ok 197 - ordinary_active_runtime:absence-present:after_unlink: no unrelated publication mutation or private-source read
+ok 198 - ordinary_active_runtime:absence-present:after_unlink: exact physical effect preserves archive and every other owner
+ok 199 - ordinary_active_runtime:absence-present:after_unlink: inactive receipt authority stays closed
+ok 200 - ordinary_active_runtime:absence-present:after_unlink: actual syscall execution and modeled report remain separate
+ok 201 - ordinary_active_runtime:absence-eio:finish: original public attempt returns
+ok 202 - ordinary_active_runtime:absence-eio:finish: exact success disposition
+ok 203 - ordinary_active_runtime:absence-eio:finish: exact primary diagnostic
+ok 204 - ordinary_active_runtime:absence-eio:finish: only the selected syscall report is hit
+ok 205 - ordinary_active_runtime:absence-eio:finish: actual unlink and historical/latest absence remain truthful
+ok 206 - ordinary_active_runtime:absence-eio:finish: every actual observed descriptor closes without recovery
+ok 207 - ordinary_active_runtime:absence-eio:finish: original input bytes and types remain unchanged
+ok 208 - ordinary_active_runtime:absence-eio:finish: no unrelated publication mutation or private-source read
+ok 209 - ordinary_active_runtime:absence-eio:finish: exact physical effect preserves archive and every other owner
+ok 210 - ordinary_active_runtime:absence-eio:finish: inactive receipt authority stays closed
+ok 211 - ordinary_active_runtime:absence-eio:finish: actual syscall execution and modeled report remain separate
+ok 212 - ordinary_active_runtime:absence-present:finish: original public attempt returns
+ok 213 - ordinary_active_runtime:absence-present:finish: exact success disposition
+ok 214 - ordinary_active_runtime:absence-present:finish: exact primary diagnostic
+ok 215 - ordinary_active_runtime:absence-present:finish: only the selected syscall report is hit
+ok 216 - ordinary_active_runtime:absence-present:finish: actual unlink and historical/latest absence remain truthful
+ok 217 - ordinary_active_runtime:absence-present:finish: every actual observed descriptor closes without recovery
+ok 218 - ordinary_active_runtime:absence-present:finish: original input bytes and types remain unchanged
+ok 219 - ordinary_active_runtime:absence-present:finish: no unrelated publication mutation or private-source read
+ok 220 - ordinary_active_runtime:absence-present:finish: exact physical effect preserves archive and every other owner
+ok 221 - ordinary_active_runtime:absence-present:finish: inactive receipt authority stays closed
+ok 222 - ordinary_active_runtime:absence-present:finish: actual syscall execution and modeled report remain separate
+ok 223 - ordinary_retired_last_observation:healthy: original public attempt returns
+ok 224 - ordinary_retired_last_observation:healthy: exact success disposition
+ok 225 - ordinary_retired_last_observation:healthy: exact primary diagnostic
+ok 226 - ordinary_retired_last_observation:healthy: only the selected syscall report is hit
+ok 227 - ordinary_retired_last_observation:healthy: actual unlink and historical/latest absence remain truthful
+ok 228 - ordinary_retired_last_observation:healthy: every actual observed descriptor closes without recovery
+ok 229 - ordinary_retired_last_observation:healthy: original input bytes and types remain unchanged
+ok 230 - ordinary_retired_last_observation:healthy: no unrelated publication mutation or private-source read
+ok 231 - ordinary_retired_last_observation:healthy: exact physical effect preserves archive and every other owner
+ok 232 - ordinary_retired_last_observation:healthy: inactive receipt authority stays closed
+ok 233 - ordinary_retired_last_observation:healthy: actual syscall execution and modeled report remain separate
+ok 234 - ordinary_retired_last_observation:unlink-eacces:None: original public attempt returns
+ok 235 - ordinary_retired_last_observation:unlink-eacces:None: exact success disposition
+ok 236 - ordinary_retired_last_observation:unlink-eacces:None: exact primary diagnostic
+ok 237 - ordinary_retired_last_observation:unlink-eacces:None: only the selected syscall report is hit
+ok 238 - ordinary_retired_last_observation:unlink-eacces:None: actual unlink and historical/latest absence remain truthful
+ok 239 - ordinary_retired_last_observation:unlink-eacces:None: every actual observed descriptor closes without recovery
+ok 240 - ordinary_retired_last_observation:unlink-eacces:None: original input bytes and types remain unchanged
+ok 241 - ordinary_retired_last_observation:unlink-eacces:None: no unrelated publication mutation or private-source read
+ok 242 - ordinary_retired_last_observation:unlink-eacces:None: exact physical effect preserves archive and every other owner
+ok 243 - ordinary_retired_last_observation:unlink-eacces:None: inactive receipt authority stays closed
+ok 244 - ordinary_retired_last_observation:unlink-eacces:None: actual syscall execution and modeled report remain separate
+ok 245 - ordinary_retired_last_observation:absence-eio:after_unlink: original public attempt returns
+ok 246 - ordinary_retired_last_observation:absence-eio:after_unlink: exact success disposition
+ok 247 - ordinary_retired_last_observation:absence-eio:after_unlink: exact primary diagnostic
+ok 248 - ordinary_retired_last_observation:absence-eio:after_unlink: only the selected syscall report is hit
+ok 249 - ordinary_retired_last_observation:absence-eio:after_unlink: actual unlink and historical/latest absence remain truthful
+ok 250 - ordinary_retired_last_observation:absence-eio:after_unlink: every actual observed descriptor closes without recovery
+ok 251 - ordinary_retired_last_observation:absence-eio:after_unlink: original input bytes and types remain unchanged
+ok 252 - ordinary_retired_last_observation:absence-eio:after_unlink: no unrelated publication mutation or private-source read
+ok 253 - ordinary_retired_last_observation:absence-eio:after_unlink: exact physical effect preserves archive and every other owner
+ok 254 - ordinary_retired_last_observation:absence-eio:after_unlink: inactive receipt authority stays closed
+ok 255 - ordinary_retired_last_observation:absence-eio:after_unlink: actual syscall execution and modeled report remain separate
+ok 256 - ordinary_retired_last_observation:absence-present:after_unlink: original public attempt returns
+ok 257 - ordinary_retired_last_observation:absence-present:after_unlink: exact success disposition
+ok 258 - ordinary_retired_last_observation:absence-present:after_unlink: exact primary diagnostic
+ok 259 - ordinary_retired_last_observation:absence-present:after_unlink: only the selected syscall report is hit
+ok 260 - ordinary_retired_last_observation:absence-present:after_unlink: actual unlink and historical/latest absence remain truthful
+ok 261 - ordinary_retired_last_observation:absence-present:after_unlink: every actual observed descriptor closes without recovery
+ok 262 - ordinary_retired_last_observation:absence-present:after_unlink: original input bytes and types remain unchanged
+ok 263 - ordinary_retired_last_observation:absence-present:after_unlink: no unrelated publication mutation or private-source read
+ok 264 - ordinary_retired_last_observation:absence-present:after_unlink: exact physical effect preserves archive and every other owner
+ok 265 - ordinary_retired_last_observation:absence-present:after_unlink: inactive receipt authority stays closed
+ok 266 - ordinary_retired_last_observation:absence-present:after_unlink: actual syscall execution and modeled report remain separate
+ok 267 - ordinary_retired_last_observation:absence-eio:finish: original public attempt returns
+ok 268 - ordinary_retired_last_observation:absence-eio:finish: exact success disposition
+ok 269 - ordinary_retired_last_observation:absence-eio:finish: exact primary diagnostic
+ok 270 - ordinary_retired_last_observation:absence-eio:finish: only the selected syscall report is hit
+ok 271 - ordinary_retired_last_observation:absence-eio:finish: actual unlink and historical/latest absence remain truthful
+ok 272 - ordinary_retired_last_observation:absence-eio:finish: every actual observed descriptor closes without recovery
+ok 273 - ordinary_retired_last_observation:absence-eio:finish: original input bytes and types remain unchanged
+ok 274 - ordinary_retired_last_observation:absence-eio:finish: no unrelated publication mutation or private-source read
+ok 275 - ordinary_retired_last_observation:absence-eio:finish: exact physical effect preserves archive and every other owner
+ok 276 - ordinary_retired_last_observation:absence-eio:finish: inactive receipt authority stays closed
+ok 277 - ordinary_retired_last_observation:absence-eio:finish: actual syscall execution and modeled report remain separate
+ok 278 - ordinary_retired_last_observation:absence-present:finish: original public attempt returns
+ok 279 - ordinary_retired_last_observation:absence-present:finish: exact success disposition
+ok 280 - ordinary_retired_last_observation:absence-present:finish: exact primary diagnostic
+ok 281 - ordinary_retired_last_observation:absence-present:finish: only the selected syscall report is hit
+ok 282 - ordinary_retired_last_observation:absence-present:finish: actual unlink and historical/latest absence remain truthful
+ok 283 - ordinary_retired_last_observation:absence-present:finish: every actual observed descriptor closes without recovery
+ok 284 - ordinary_retired_last_observation:absence-present:finish: original input bytes and types remain unchanged
+ok 285 - ordinary_retired_last_observation:absence-present:finish: no unrelated publication mutation or private-source read
+ok 286 - ordinary_retired_last_observation:absence-present:finish: exact physical effect preserves archive and every other owner
+ok 287 - ordinary_retired_last_observation:absence-present:finish: inactive receipt authority stays closed
+ok 288 - ordinary_retired_last_observation:absence-present:finish: actual syscall execution and modeled report remain separate
+ok 289 - no original producer, compiler or native process attempt
+1..289

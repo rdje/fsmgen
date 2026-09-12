@@ -1,0 +1,170 @@
+[
+  {
+    "destination": "docs/audits/native-proxy-observation-archive-release-syscall-20260912/result/verification/recover.stdout",
+    "sha256": "f61537b5327c7383c76ea51d9f400538353b01c8a027cf24676de7b08c2fc594",
+    "size_bytes": 92,
+    "source": ".artifacts/logs/native-proxy-observation-archive-release-syscall-20260912/recover.stdout"
+  },
+  {
+    "destination": "docs/audits/native-proxy-observation-archive-release-syscall-20260912/result/verification/recover.stderr",
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "size_bytes": 0,
+    "source": ".artifacts/logs/native-proxy-observation-archive-release-syscall-20260912/recover.stderr"
+  },
+  {
+    "destination": "docs/audits/native-proxy-observation-archive-release-syscall-20260912/result/verification/recover.exit",
+    "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa",
+    "size_bytes": 2,
+    "source": ".artifacts/logs/native-proxy-observation-archive-release-syscall-20260912/recover.exit"
+  },
+  {
+    "destination": "docs/audits/native-proxy-observation-archive-release-syscall-20260912/result/verification/saved-audit.stdout",
+    "sha256": "e7046787de9d8d5c0eee2e1501c39b04f03a537b7a7d0a0699b5b0083a4651c1",
+    "size_bytes": 1261,
+    "source": ".artifacts/logs/native-proxy-observation-archive-release-syscall-20260912/saved-audit.stdout"
+  },
+  {
+    "destination": "docs/audits/native-proxy-observation-archive-release-syscall-20260912/result/verification/saved-audit.stderr",
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "size_bytes": 0,
+    "source": ".artifacts/logs/native-proxy-observation-archive-release-syscall-20260912/saved-audit.stderr"
+  },
+  {
+    "destination": "docs/audits/native-proxy-observation-archive-release-syscall-20260912/result/verification/saved-audit.exit",
+    "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa",
+    "size_bytes": 2,
+    "source": ".artifacts/logs/native-proxy-observation-archive-release-syscall-20260912/saved-audit.exit"
+  },
+  {
+    "destination": "docs/audits/native-proxy-observation-archive-release-syscall-20260912/result/verification/saved-recovery.stdout",
+    "sha256": "5fff8bfee9d8679731645bcc926a1017ddcf08d6c49c934621c498ae86cae3eb",
+    "size_bytes": 67,
+    "source": ".artifacts/logs/native-proxy-observation-archive-release-syscall-20260912/saved-recovery.stdout"
+  },
+  {
+    "destination": "docs/audits/native-proxy-observation-archive-release-syscall-20260912/result/verification/saved-recovery.stderr",
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "size_bytes": 0,
+    "source": ".artifacts/logs/native-proxy-observation-archive-release-syscall-20260912/saved-recovery.stderr"
+  },
+  {
+    "destination": "docs/audits/native-proxy-observation-archive-release-syscall-20260912/result/verification/saved-recovery.exit",
+    "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa",
+    "size_bytes": 2,
+    "source": ".artifacts/logs/native-proxy-observation-archive-release-syscall-20260912/saved-recovery.exit"
+  },
+  {
+    "destination": "docs/audits/native-proxy-observation-archive-release-syscall-20260912/result/verification/book-claims.stdout",
+    "sha256": "104718ece5297153ba6d718d43e30b1fea23d62a26a9523a0062ac867846d89f",
+    "size_bytes": 583,
+    "source": ".artifacts/logs/native-proxy-observation-archive-release-syscall-20260912/book-claims.stdout"
+  },
+  {
+    "destination": "docs/audits/native-proxy-observation-archive-release-syscall-20260912/result/verification/book-claims.stderr",
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "size_bytes": 0,
+    "source": ".artifacts/logs/native-proxy-observation-archive-release-syscall-20260912/book-claims.stderr"
+  },
+  {
+    "destination": "docs/audits/native-proxy-observation-archive-release-syscall-20260912/result/verification/book-claims.exit",
+    "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa",
+    "size_bytes": 2,
+    "source": ".artifacts/logs/native-proxy-observation-archive-release-syscall-20260912/book-claims.exit"
+  },
+  {
+    "destination": "docs/audits/native-proxy-observation-archive-release-syscall-20260912/result/verification/knowledge-gen.stdout",
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "size_bytes": 0,
+    "source": ".artifacts/logs/native-proxy-observation-archive-release-syscall-20260912/knowledge-gen.stdout"
+  },
+  {
+    "destination": "docs/audits/native-proxy-observation-archive-release-syscall-20260912/result/verification/knowledge-gen.stderr",
+    "sha256": "dde66ee0091d0f70772aa41074c91fe536a63275348ed45e97a40c2d98e2e90c",
+    "size_bytes": 121,
+    "source": ".artifacts/logs/native-proxy-observation-archive-release-syscall-20260912/knowledge-gen.stderr"
+  },
+  {
+    "destination": "docs/audits/native-proxy-observation-archive-release-syscall-20260912/result/verification/knowledge-gen.exit",
+    "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa",
+    "size_bytes": 2,
+    "source": ".artifacts/logs/native-proxy-observation-archive-release-syscall-20260912/knowledge-gen.exit"
+  },
+  {
+    "destination": "docs/audits/native-proxy-observation-archive-release-syscall-20260912/result/verification/knowledge-check.stdout",
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "size_bytes": 0,
+    "source": ".artifacts/logs/native-proxy-observation-archive-release-syscall-20260912/knowledge-check.stdout"
+  },
+  {
+    "destination": "docs/audits/native-proxy-observation-archive-release-syscall-20260912/result/verification/knowledge-check.stderr",
+    "sha256": "7f6f64516918fd3b4c9d6a9092e83a458835feeedab3e0ba5d9f611f098c29da",
+    "size_bytes": 128,
+    "source": ".artifacts/logs/native-proxy-observation-archive-release-syscall-20260912/knowledge-check.stderr"
+  },
+  {
+    "destination": "docs/audits/native-proxy-observation-archive-release-syscall-20260912/result/verification/knowledge-check.exit",
+    "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa",
+    "size_bytes": 2,
+    "source": ".artifacts/logs/native-proxy-observation-archive-release-syscall-20260912/knowledge-check.exit"
+  },
+  {
+    "destination": "docs/audits/native-proxy-observation-archive-release-syscall-20260912/result/verification/knowledge-query.stdout",
+    "sha256": "93a9b56e896c87b688879597a6ee0d333a8c10e48459307977eacc21b6f73461",
+    "size_bytes": 131,
+    "source": ".artifacts/logs/native-proxy-observation-archive-release-syscall-20260912/knowledge-query.stdout"
+  },
+  {
+    "destination": "docs/audits/native-proxy-observation-archive-release-syscall-20260912/result/verification/knowledge-query.stderr",
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "size_bytes": 0,
+    "source": ".artifacts/logs/native-proxy-observation-archive-release-syscall-20260912/knowledge-query.stderr"
+  },
+  {
+    "destination": "docs/audits/native-proxy-observation-archive-release-syscall-20260912/result/verification/knowledge-query.exit",
+    "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa",
+    "size_bytes": 2,
+    "source": ".artifacts/logs/native-proxy-observation-archive-release-syscall-20260912/knowledge-query.exit"
+  },
+  {
+    "destination": "docs/audits/native-proxy-observation-archive-release-syscall-20260912/result/verification/book-review.stdout",
+    "sha256": "67a9b98a9846495bc367d1777bf354cb91cb62cce0cb9837868faf28157f7e4a",
+    "size_bytes": 872,
+    "source": ".artifacts/logs/native-proxy-observation-archive-release-syscall-20260912/book-review.stdout"
+  },
+  {
+    "destination": "docs/audits/native-proxy-observation-archive-release-syscall-20260912/result/verification/book-review.stderr",
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "size_bytes": 0,
+    "source": ".artifacts/logs/native-proxy-observation-archive-release-syscall-20260912/book-review.stderr"
+  },
+  {
+    "destination": "docs/audits/native-proxy-observation-archive-release-syscall-20260912/result/verification/book-review.exit",
+    "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa",
+    "size_bytes": 2,
+    "source": ".artifacts/logs/native-proxy-observation-archive-release-syscall-20260912/book-review.exit"
+  },
+  {
+    "destination": "docs/audits/native-proxy-observation-archive-release-syscall-20260912/result/verification/task.stdout",
+    "sha256": "16a3af2753426d44c76e31f4a0430c2b2ba9f1c0bd0efbf148453eec7b7ac29a",
+    "size_bytes": 171,
+    "source": ".artifacts/logs/native-proxy-observation-archive-release-syscall-20260912/task.stdout"
+  },
+  {
+    "destination": "docs/audits/native-proxy-observation-archive-release-syscall-20260912/result/verification/task.stderr",
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "size_bytes": 0,
+    "source": ".artifacts/logs/native-proxy-observation-archive-release-syscall-20260912/task.stderr"
+  },
+  {
+    "destination": "docs/audits/native-proxy-observation-archive-release-syscall-20260912/result/verification/task.exit",
+    "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa",
+    "size_bytes": 2,
+    "source": ".artifacts/logs/native-proxy-observation-archive-release-syscall-20260912/task.exit"
+  },
+  {
+    "destination": "docs/audits/native-proxy-observation-archive-release-syscall-20260912/result/verification/book.exit",
+    "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa",
+    "size_bytes": 2,
+    "source": ".artifacts/logs/native-proxy-observation-archive-release-syscall-20260912/book.exit"
+  }
+]

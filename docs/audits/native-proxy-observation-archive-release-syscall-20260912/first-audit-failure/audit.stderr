@@ -1,0 +1,11 @@
+Traceback (most recent call last):
+  File "/Volumes/SSD/Documents/github/fsmgen/docs/audits/native-proxy-observation-archive-release-syscall-20260912/audit.py", line 289, in <module>
+    main()
+    ~~~~^^
+  File "/Volumes/SSD/Documents/github/fsmgen/docs/audits/native-proxy-observation-archive-release-syscall-20260912/audit.py", line 228, in main
+    report = load(storage / 'qualification.json'); header(plan, report, pins, support)
+                                                   ~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Volumes/SSD/Documents/github/fsmgen/docs/audits/native-proxy-observation-archive-release-syscall-20260912/audit.py", line 199, in header
+    assert set(report) == set('schema success prospective_pins cases case_files allocated caller_controls current_case forbidden_attempts'.split())
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError

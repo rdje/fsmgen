@@ -1,0 +1,25 @@
+{
+  "copies": [
+    {
+      "destination": "docs/audits/native-proxy-observation-archive-release-syscall-20260912/first-audit-failure/audit.stdout",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "size_bytes": 0,
+      "source": ".artifacts/logs/native-proxy-observation-archive-release-syscall-20260912/audit.stdout"
+    },
+    {
+      "destination": "docs/audits/native-proxy-observation-archive-release-syscall-20260912/first-audit-failure/audit.stderr",
+      "sha256": "22b100d028c52b6bbc467e68bbe716c2d34c3e47ce8f0348f4837653cb1a2844",
+      "size_bytes": 980,
+      "source": ".artifacts/logs/native-proxy-observation-archive-release-syscall-20260912/audit.stderr"
+    },
+    {
+      "destination": "docs/audits/native-proxy-observation-archive-release-syscall-20260912/first-audit-failure/audit.exit",
+      "sha256": "4355a46b19d348dc2f57c046f8ef63d4538ebb936000f3c9ee954a27460dd865",
+      "size_bytes": 2,
+      "source": ".artifacts/logs/native-proxy-observation-archive-release-syscall-20260912/audit.exit"
+    }
+  ],
+  "prospective_pins": "docs/audits/native-proxy-observation-archive-release-syscall-20260912/preflight-pins.json",
+  "root_cause": "New auditor header used forbidden_attempts; ArchiveFixture::save_result emits forbidden_process_attempts. First fixture passed and is retained without rerun.",
+  "source": "docs/audits/native-proxy-observation-archive-release-syscall-20260912/audit.py"
+}

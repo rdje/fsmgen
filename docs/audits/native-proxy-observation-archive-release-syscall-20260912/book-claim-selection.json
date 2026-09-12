@@ -1,0 +1,8 @@
+[
+  {
+    "candidate_id": "published-e779144cfeb6f2ad7f7b91bd",
+    "excerpt": "The syscall-report partition passes 24 cases and 289 assertions: 4 releases succeed and 20 attempts reject.",
+    "path": "docs/book/src/16dc-vial-portable-verilator-runtime-measurement.md",
+    "source_line_sha256": "c811b013c06ff691238193a437294d0873aa8d23c0cd53059d4d51174c087fcc"
+  }
+]

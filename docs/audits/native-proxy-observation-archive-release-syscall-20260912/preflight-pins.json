@@ -1,0 +1,42 @@
+[
+  {
+    "path": "docs/audits/native-proxy-observation-archive-release-syscall-20260912/prepare.py",
+    "sha256": "a9616ba1e77d8c28ba26054e9f3d82d7cecde22a3a1e2acd79c76740fbb1173f",
+    "size_bytes": 4116
+  },
+  {
+    "path": "docs/audits/native-proxy-observation-archive-release-syscall-20260912/prepare-pins.json",
+    "sha256": "b1b5cd49108fbc59493da2369d777395a974ae5cf91fb2168e80ab206fa06e36",
+    "size_bytes": 213
+  },
+  {
+    "path": "docs/audits/native-proxy-observation-archive-release-syscall-20260912/plan.json",
+    "sha256": "9e6d90872970bcbc4ed14416e2b94a9449012b11d01b933c36a6b0e8e750d643",
+    "size_bytes": 114485
+  },
+  {
+    "path": "docs/audits/native-proxy-observation-archive-release-syscall-20260912/qualify.t",
+    "sha256": "f93a1cd0d027c381d3b818d5bd07d319f08bc021919806af8df6fdc7bcddbbf6",
+    "size_bytes": 14319
+  },
+  {
+    "path": "docs/audits/native-proxy-observation-archive-release-syscall-20260912/SyscallTrace.pm",
+    "sha256": "99911ff6c80d7f33b642c48493025cbcbd7a5e9c562d8304dc1ad59d30958dfd",
+    "size_bytes": 5054
+  },
+  {
+    "path": "docs/audits/native-proxy-observation-archive-release-syscall-20260912/expected_trace.py",
+    "sha256": "f750ace8532b022c6915c15efefcb4a49af92928b084c938bffdf5b77789369c",
+    "size_bytes": 6560
+  },
+  {
+    "path": "docs/audits/native-proxy-observation-archive-release-syscall-20260912/audit.py",
+    "sha256": "64e4c5650867ff2ad9f06aa6970919bb98ebdcad17c7e4b187d6a7b215bf90bb",
+    "size_bytes": 18183
+  },
+  {
+    "path": "docs/audits/native-proxy-observation-archive-release-syscall-20260912/oracle-preflight.py",
+    "sha256": "a2d4235465e0b4d37bb4dd8870a3bf98fa282d651ae06aae078d6d8297b6aa05",
+    "size_bytes": 3805
+  }
+]
