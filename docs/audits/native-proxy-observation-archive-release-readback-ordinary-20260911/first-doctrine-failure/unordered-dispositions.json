@@ -1,0 +1,224 @@
+[
+  {
+    "candidate_id": "published-334ee6ba80c6ab2651f7a926",
+    "disposition": "derived_gate",
+    "durability": {
+      "evidence": "Exact producer/correction pins and 518 recovery copies retain the source and every case. Saved-only audit, recovery and the source-excerpt watcher fail on altered evidence or book values; candidate identities are joined by the unconditional disposition gate.",
+      "producer_paths": [
+        "docs/audits/native-proxy-observation-archive-release-readback-ordinary-20260911/qualify.t",
+        "docs/audits/native-proxy-observation-archive-release-readback-ordinary-20260911/plan.json",
+        "docs/audits/native-proxy-observation-archive-release-readback-ordinary-20260911/result/recovery-copies.json"
+      ],
+      "watcher_paths": [
+        "docs/audits/native-proxy-observation-archive-release-readback-ordinary-20260911/verify_book_claims.py",
+        "docs/audits/native-proxy-observation-archive-release-readback-ordinary-20260911/recover.py",
+        "docs/audits/native-proxy-observation-archive-release-readback-ordinary-20260911/audit-corrected.py"
+      ]
+    },
+    "falsify": {
+      "competing_hypothesis": "A total could conceal success/rejection redistribution, count strong-observer recovery as original cleanup, omit a returned reader or conflate new and historical roots.",
+      "evidence": "The independent source-scope and physical audit rejects 54 changed rows, six manifests, two byte receipts and seven domains. The book watcher independently recounts immutable observations and rejects each changed published value plus a conserved-total redistribution.",
+      "oracle_paths": [
+        "docs/audits/native-proxy-observation-archive-release-readback-ordinary-20260911/audit-corrected.py",
+        "docs/audits/native-proxy-observation-archive-release-readback-ordinary-20260911/expected_trace.py"
+      ]
+    },
+    "owner_path": "docs/tasks/CLAIM-VERIFICATION-ADOPTION.md",
+    "owner_task": "CLAIM-VERIFICATION-ADOPTION.5.6",
+    "record_type": "disposition",
+    "rederive": {
+      "evidence": "Ordinary readback selected successful reader returns under original consumer custody is derived from the exact saved qualifier cases, selected role/outcome records, descriptor observations, TAP and allocation manifests; this source edit is owned by HIAL/VIAL readback leaf .3.10.2.2.",
+      "producer_paths": [
+        "docs/audits/native-proxy-observation-archive-release-readback-ordinary-20260911/qualify.t",
+        "docs/audits/native-proxy-observation-archive-release-readback-ordinary-20260911/ReadbackTrace.pm",
+        "docs/audits/native-proxy-observation-archive-release-readback-ordinary-20260911/ReadbackCore.pm"
+      ]
+    },
+    "schema_version": 1
+  },
+  {
+    "candidate_id": "published-409eec4433dcf73b3179da86",
+    "disposition": "derived_gate",
+    "durability": {
+      "evidence": "Exact producer/correction pins and 518 recovery copies retain the source and every case. Saved-only audit, recovery and the source-excerpt watcher fail on altered evidence or book values; candidate identities are joined by the unconditional disposition gate.",
+      "producer_paths": [
+        "docs/audits/native-proxy-observation-archive-release-readback-ordinary-20260911/qualify.t",
+        "docs/audits/native-proxy-observation-archive-release-readback-ordinary-20260911/plan.json",
+        "docs/audits/native-proxy-observation-archive-release-readback-ordinary-20260911/result/recovery-copies.json"
+      ],
+      "watcher_paths": [
+        "docs/audits/native-proxy-observation-archive-release-readback-ordinary-20260911/verify_book_claims.py",
+        "docs/audits/native-proxy-observation-archive-release-readback-ordinary-20260911/recover.py",
+        "docs/audits/native-proxy-observation-archive-release-readback-ordinary-20260911/audit-corrected.py"
+      ]
+    },
+    "falsify": {
+      "competing_hypothesis": "A total could conceal success/rejection redistribution, count strong-observer recovery as original cleanup, omit a returned reader or conflate new and historical roots.",
+      "evidence": "The independent source-scope and physical audit rejects 54 changed rows, six manifests, two byte receipts and seven domains. The book watcher independently recounts immutable observations and rejects each changed published value plus a conserved-total redistribution.",
+      "oracle_paths": [
+        "docs/audits/native-proxy-observation-archive-release-readback-ordinary-20260911/audit-corrected.py",
+        "docs/audits/native-proxy-observation-archive-release-readback-ordinary-20260911/expected_trace.py"
+      ]
+    },
+    "owner_path": "docs/tasks/CLAIM-VERIFICATION-ADOPTION.md",
+    "owner_task": "CLAIM-VERIFICATION-ADOPTION.5.6",
+    "record_type": "disposition",
+    "rederive": {
+      "evidence": "Ordinary readback primary case domain and successful release count is derived from the exact saved qualifier cases, selected role/outcome records, descriptor observations, TAP and allocation manifests; this source edit is owned by HIAL/VIAL readback leaf .3.10.2.2.",
+      "producer_paths": [
+        "docs/audits/native-proxy-observation-archive-release-readback-ordinary-20260911/qualify.t",
+        "docs/audits/native-proxy-observation-archive-release-readback-ordinary-20260911/ReadbackTrace.pm",
+        "docs/audits/native-proxy-observation-archive-release-readback-ordinary-20260911/ReadbackCore.pm"
+      ]
+    },
+    "schema_version": 1
+  },
+  {
+    "candidate_id": "published-57e224a863112fe81d1e5143",
+    "disposition": "derived_gate",
+    "durability": {
+      "evidence": "Exact producer/correction pins and 518 recovery copies retain the source and every case. Saved-only audit, recovery and the source-excerpt watcher fail on altered evidence or book values; candidate identities are joined by the unconditional disposition gate.",
+      "producer_paths": [
+        "docs/audits/native-proxy-observation-archive-release-readback-ordinary-20260911/qualify.t",
+        "docs/audits/native-proxy-observation-archive-release-readback-ordinary-20260911/plan.json",
+        "docs/audits/native-proxy-observation-archive-release-readback-ordinary-20260911/result/recovery-copies.json"
+      ],
+      "watcher_paths": [
+        "docs/audits/native-proxy-observation-archive-release-readback-ordinary-20260911/verify_book_claims.py",
+        "docs/audits/native-proxy-observation-archive-release-readback-ordinary-20260911/recover.py",
+        "docs/audits/native-proxy-observation-archive-release-readback-ordinary-20260911/audit-corrected.py"
+      ]
+    },
+    "falsify": {
+      "competing_hypothesis": "A total could conceal success/rejection redistribution, count strong-observer recovery as original cleanup, omit a returned reader or conflate new and historical roots.",
+      "evidence": "The independent source-scope and physical audit rejects 54 changed rows, six manifests, two byte receipts and seven domains. The book watcher independently recounts immutable observations and rejects each changed published value plus a conserved-total redistribution.",
+      "oracle_paths": [
+        "docs/audits/native-proxy-observation-archive-release-readback-ordinary-20260911/audit-corrected.py",
+        "docs/audits/native-proxy-observation-archive-release-readback-ordinary-20260911/expected_trace.py"
+      ]
+    },
+    "owner_path": "docs/tasks/CLAIM-VERIFICATION-ADOPTION.md",
+    "owner_task": "CLAIM-VERIFICATION-ADOPTION.5.6",
+    "record_type": "disposition",
+    "rederive": {
+      "evidence": "Ordinary readback disjoint absent predecessor roots is derived from the exact saved qualifier cases, selected role/outcome records, descriptor observations, TAP and allocation manifests; this source edit is owned by HIAL/VIAL readback leaf .3.10.2.2.",
+      "producer_paths": [
+        "docs/audits/native-proxy-observation-archive-release-readback-ordinary-20260911/qualify.t",
+        "docs/audits/native-proxy-observation-archive-release-readback-ordinary-20260911/ReadbackTrace.pm",
+        "docs/audits/native-proxy-observation-archive-release-readback-ordinary-20260911/ReadbackCore.pm"
+      ]
+    },
+    "schema_version": 1
+  },
+  {
+    "candidate_id": "published-9a3883306243a05cb1919ff7",
+    "disposition": "derived_gate",
+    "durability": {
+      "evidence": "Exact producer/correction pins and 518 recovery copies retain the source and every case. Saved-only audit, recovery and the source-excerpt watcher fail on altered evidence or book values; candidate identities are joined by the unconditional disposition gate.",
+      "producer_paths": [
+        "docs/audits/native-proxy-observation-archive-release-readback-ordinary-20260911/qualify.t",
+        "docs/audits/native-proxy-observation-archive-release-readback-ordinary-20260911/plan.json",
+        "docs/audits/native-proxy-observation-archive-release-readback-ordinary-20260911/result/recovery-copies.json"
+      ],
+      "watcher_paths": [
+        "docs/audits/native-proxy-observation-archive-release-readback-ordinary-20260911/verify_book_claims.py",
+        "docs/audits/native-proxy-observation-archive-release-readback-ordinary-20260911/recover.py",
+        "docs/audits/native-proxy-observation-archive-release-readback-ordinary-20260911/audit-corrected.py"
+      ]
+    },
+    "falsify": {
+      "competing_hypothesis": "A total could conceal success/rejection redistribution, count strong-observer recovery as original cleanup, omit a returned reader or conflate new and historical roots.",
+      "evidence": "The independent source-scope and physical audit rejects 54 changed rows, six manifests, two byte receipts and seven domains. The book watcher independently recounts immutable observations and rejects each changed published value plus a conserved-total redistribution.",
+      "oracle_paths": [
+        "docs/audits/native-proxy-observation-archive-release-readback-ordinary-20260911/audit-corrected.py",
+        "docs/audits/native-proxy-observation-archive-release-readback-ordinary-20260911/expected_trace.py"
+      ]
+    },
+    "owner_path": "docs/tasks/CLAIM-VERIFICATION-ADOPTION.md",
+    "owner_task": "CLAIM-VERIFICATION-ADOPTION.5.6",
+    "record_type": "disposition",
+    "rederive": {
+      "evidence": "Ordinary readback new absent fixture roots is derived from the exact saved qualifier cases, selected role/outcome records, descriptor observations, TAP and allocation manifests; this source edit is owned by HIAL/VIAL readback leaf .3.10.2.2.",
+      "producer_paths": [
+        "docs/audits/native-proxy-observation-archive-release-readback-ordinary-20260911/qualify.t",
+        "docs/audits/native-proxy-observation-archive-release-readback-ordinary-20260911/ReadbackTrace.pm",
+        "docs/audits/native-proxy-observation-archive-release-readback-ordinary-20260911/ReadbackCore.pm"
+      ]
+    },
+    "schema_version": 1
+  },
+  {
+    "candidate_id": "published-a12a5e42f029ef8d221f051e",
+    "disposition": "derived_gate",
+    "durability": {
+      "evidence": "Exact producer/correction pins and 518 recovery copies retain the source and every case. Saved-only audit, recovery and the source-excerpt watcher fail on altered evidence or book values; candidate identities are joined by the unconditional disposition gate.",
+      "producer_paths": [
+        "docs/audits/native-proxy-observation-archive-release-readback-ordinary-20260911/qualify.t",
+        "docs/audits/native-proxy-observation-archive-release-readback-ordinary-20260911/plan.json",
+        "docs/audits/native-proxy-observation-archive-release-readback-ordinary-20260911/result/recovery-copies.json"
+      ],
+      "watcher_paths": [
+        "docs/audits/native-proxy-observation-archive-release-readback-ordinary-20260911/verify_book_claims.py",
+        "docs/audits/native-proxy-observation-archive-release-readback-ordinary-20260911/recover.py",
+        "docs/audits/native-proxy-observation-archive-release-readback-ordinary-20260911/audit-corrected.py"
+      ]
+    },
+    "falsify": {
+      "competing_hypothesis": "A total could conceal success/rejection redistribution, count strong-observer recovery as original cleanup, omit a returned reader or conflate new and historical roots.",
+      "evidence": "The independent source-scope and physical audit rejects 54 changed rows, six manifests, two byte receipts and seven domains. The book watcher independently recounts immutable observations and rejects each changed published value plus a conserved-total redistribution.",
+      "oracle_paths": [
+        "docs/audits/native-proxy-observation-archive-release-readback-ordinary-20260911/audit-corrected.py",
+        "docs/audits/native-proxy-observation-archive-release-readback-ordinary-20260911/expected_trace.py"
+      ]
+    },
+    "owner_path": "docs/tasks/CLAIM-VERIFICATION-ADOPTION.md",
+    "owner_task": "CLAIM-VERIFICATION-ADOPTION.5.6",
+    "record_type": "disposition",
+    "rederive": {
+      "evidence": "Ordinary readback primary failed-reader lexical closures before Source handoff is derived from the exact saved qualifier cases, selected role/outcome records, descriptor observations, TAP and allocation manifests; this source edit is owned by HIAL/VIAL readback leaf .3.10.2.2.",
+      "producer_paths": [
+        "docs/audits/native-proxy-observation-archive-release-readback-ordinary-20260911/qualify.t",
+        "docs/audits/native-proxy-observation-archive-release-readback-ordinary-20260911/ReadbackTrace.pm",
+        "docs/audits/native-proxy-observation-archive-release-readback-ordinary-20260911/ReadbackCore.pm"
+      ]
+    },
+    "schema_version": 1
+  },
+  {
+    "candidate_id": "published-dfe501430e92a1b287e42a96",
+    "disposition": "derived_gate",
+    "durability": {
+      "evidence": "Exact producer/correction pins and 518 recovery copies retain the source and every case. Saved-only audit, recovery and the source-excerpt watcher fail on altered evidence or book values; candidate identities are joined by the unconditional disposition gate.",
+      "producer_paths": [
+        "docs/audits/native-proxy-observation-archive-release-readback-ordinary-20260911/qualify.t",
+        "docs/audits/native-proxy-observation-archive-release-readback-ordinary-20260911/plan.json",
+        "docs/audits/native-proxy-observation-archive-release-readback-ordinary-20260911/result/recovery-copies.json"
+      ],
+      "watcher_paths": [
+        "docs/audits/native-proxy-observation-archive-release-readback-ordinary-20260911/verify_book_claims.py",
+        "docs/audits/native-proxy-observation-archive-release-readback-ordinary-20260911/recover.py",
+        "docs/audits/native-proxy-observation-archive-release-readback-ordinary-20260911/audit-corrected.py"
+      ]
+    },
+    "falsify": {
+      "competing_hypothesis": "A total could conceal success/rejection redistribution, count strong-observer recovery as original cleanup, omit a returned reader or conflate new and historical roots.",
+      "evidence": "The independent source-scope and physical audit rejects 54 changed rows, six manifests, two byte receipts and seven domains. The book watcher independently recounts immutable observations and rejects each changed published value plus a conserved-total redistribution.",
+      "oracle_paths": [
+        "docs/audits/native-proxy-observation-archive-release-readback-ordinary-20260911/audit-corrected.py",
+        "docs/audits/native-proxy-observation-archive-release-readback-ordinary-20260911/expected_trace.py"
+      ]
+    },
+    "owner_path": "docs/tasks/CLAIM-VERIFICATION-ADOPTION.md",
+    "owner_task": "CLAIM-VERIFICATION-ADOPTION.5.6",
+    "record_type": "disposition",
+    "rederive": {
+      "evidence": "Ordinary readback rejected release count and complete TAP assertion count is derived from the exact saved qualifier cases, selected role/outcome records, descriptor observations, TAP and allocation manifests; this source edit is owned by HIAL/VIAL readback leaf .3.10.2.2.",
+      "producer_paths": [
+        "docs/audits/native-proxy-observation-archive-release-readback-ordinary-20260911/qualify.t",
+        "docs/audits/native-proxy-observation-archive-release-readback-ordinary-20260911/ReadbackTrace.pm",
+        "docs/audits/native-proxy-observation-archive-release-readback-ordinary-20260911/ReadbackCore.pm"
+      ]
+    },
+    "schema_version": 1
+  }
+]

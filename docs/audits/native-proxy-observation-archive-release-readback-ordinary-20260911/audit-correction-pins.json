@@ -1,0 +1,32 @@
+[
+  {
+    "path": "docs/audits/native-proxy-observation-archive-release-readback-ordinary-20260911/audit-corrected.py",
+    "sha256": "a90b56c0ddc5a0eb1f580be4cabfb174e31dd3d141de38b16a9a9f6192670749",
+    "size_bytes": 35223
+  },
+  {
+    "path": "docs/audits/native-proxy-observation-archive-release-readback-ordinary-20260911/first-audit-failure/audit.py",
+    "sha256": "99b33c48fc8f732261b3e81fd004d0731843d2ca566c67f4415b881bc7a52ad5",
+    "size_bytes": 33229
+  },
+  {
+    "path": "docs/audits/native-proxy-observation-archive-release-readback-ordinary-20260911/first-audit-failure/preflight-pins.json",
+    "sha256": "95485c0a6df470242d3420fbc4d8d95b9a475f2149d9a270be725e5c0cc07b74",
+    "size_bytes": 7163
+  },
+  {
+    "path": "docs/audits/native-proxy-observation-archive-release-readback-ordinary-20260911/first-audit-failure/raw.json",
+    "sha256": "6e0269e7e05f295e4134bfe9e783062b351f4455c25e4a76041e75458b631a05",
+    "size_bytes": 3356
+  },
+  {
+    "path": "docs/audits/native-proxy-observation-archive-release-readback-ordinary-20260911/first-audit-failure/review.json",
+    "sha256": "d6498d47fd7f19922ceb646605b1baedfd07d16628e2ce84fecea50dee455654",
+    "size_bytes": 1792
+  },
+  {
+    "path": "docs/audits/native-proxy-observation-archive-release-readback-ordinary-20260911/first-audit-failure/open-census.json",
+    "sha256": "2c3c59a042079a1feeac16d16366a41d2e142eaf790af62e4385465c4121356b",
+    "size_bytes": 70165
+  }
+]

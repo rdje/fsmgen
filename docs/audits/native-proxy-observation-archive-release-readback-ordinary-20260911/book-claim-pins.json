@@ -1,0 +1,12 @@
+[
+  {
+    "path": "docs/audits/native-proxy-observation-archive-release-readback-ordinary-20260911/verify_book_claims.py",
+    "sha256": "5f6db48a1cb3ce8b2c8757ae5bebb08d56ab0cd75d4d5041b78f71df11b96a51",
+    "size_bytes": 7030
+  },
+  {
+    "path": "docs/audits/native-proxy-observation-archive-release-readback-ordinary-20260911/book-claim-selection.json",
+    "sha256": "ef43a5a902fe75c4801f675294d36a458931da983c14b75d3d630ce05f5d5a5e",
+    "size_bytes": 1991
+  }
+]

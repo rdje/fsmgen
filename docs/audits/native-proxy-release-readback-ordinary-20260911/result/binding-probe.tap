@@ -1,0 +1,13 @@
+ok 1 - compiled three-argument read reaches replacement hook
+ok 2 - read buffer alias survives tail delegation
+ok 3 - slot replacement leaves caller request scalar intact
+ok 4 - read handle argument remains intact
+ok 5 - compiled four-argument read reaches replacement hook
+ok 6 - four-argument read retains buffer alias
+ok 7 - compiled three-argument open reaches replacement hook
+ok 8 - open handle slot remains a caller alias
+ok 9 - compiled four-argument open reaches replacement hook
+ok 10 - four-argument open retains caller handle alias
+ok 11 - wrappers preserve original arity and record caller request before reducing it
+ok 12 - compiled calls use replacement hooks with exact caller, aliases and delegated arguments
+1..12

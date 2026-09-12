@@ -1,0 +1,27 @@
+{
+  "binding": "docs/audits/native-proxy-release-readback-ordinary-20260911/binding-review.json",
+  "first_compile_failure": "first-syntax-failure/review.json",
+  "history": {
+    "argv": [
+      "git",
+      "log",
+      "-S",
+      "my $count = sysread($fh, my $chunk",
+      "-1",
+      "--format=%H %s",
+      "--",
+      "t/lib/FSM/Test/RustProxyFixture.pm"
+    ],
+    "stdout": "e0d74bb051465ba641227acc11975e25e5d879a7 HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.8: seal portable proxy preparation and descriptor custody\n"
+  },
+  "limits": "Source and language-mechanism evidence alone do not qualify real descriptor cleanup. The independent matrix audit supplies that leg; no native process startup is tested.",
+  "mechanism": "The original bounded reader owns its lexical descriptor until keep_open return. The new observer holds only a weak alias before that return and records actual/report separation around the original CORE reads. Returned Source handles retain original consumer cleanup. A separately declared strong alias demonstrates observer-induced retention and explicit observer-only recovery.",
+  "owner": "HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.12.4.1.3.4.4.3.10.2.2",
+  "path": "t/lib/FSM/Test/RustProxyFixture.pm",
+  "reader_body": "sub _read_file {\n    my ($path, $keep_open) = @_;\n    my ($absolute, $error) = repository_contained_path($path, must_exist => 1);\n    die \"$error\\n\" if defined $error;\n    sysopen(my $fh, $absolute, O_RDONLY | O_NOFOLLOW | O_NONBLOCK) or die \"cannot read fixture: $!\\n\";\n    binmode($fh);\n    my @before = stat($fh);\n    die \"fixture must be an owned bounded regular file\\n\"\n        unless @before && S_ISREG($before[2]) && $before[4] == $<\n            && $before[0] == (stat($ROOT))[0] && $before[7] <= $LIMIT;\n    my $body = '';\n    while (length($body) <= $LIMIT) {\n        my $count = sysread($fh, my $chunk, $LIMIT + 1 - length($body));\n        die \"cannot read fixture bytes: $!\\n\" unless defined $count;\n        last unless $count;\n        $body .= $chunk;\n    }\n    my @after = stat($fh);\n    my @named = lstat($absolute);\n    die \"fixture changed during its bounded read\\n\"\n        unless @after && @named && length($body) == $before[7] && length($body) <= $LIMIT\n            && join(':', @before[0,1,2,4,7,9,10]) eq join(':', @after[0,1,2,4,7,9,10])\n            && join(':', @before[0,1,2,4,7,9,10]) eq join(':', @named[0,1,2,4,7,9,10]);\n    close($fh) or die \"cannot close fixture: $!\\n\" unless $keep_open;\n    return ($body, \\@before, $keep_open ? $fh : undef);\n}\n",
+  "reader_body_sha256": "4273cb07c9712e219e78bad7531ab430898fe227e732c3f4841d4d15963bb43e",
+  "schema": "fsmgen.release_readback_reader_source_review.v1",
+  "sha256": "d9c4ab52cf8074526c59b7a5dcb9da870ca7ffdacb4eb236dacb23b5db6d8bfb",
+  "size_bytes": 11466,
+  "source_revision": "efadb9148c14391fde011851e766a72b84bcfda8"
+}

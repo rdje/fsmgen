@@ -1,0 +1,12 @@
+[
+  {
+    "path": "docs/audits/native-proxy-release-readback-ordinary-20260911/binding-probe.t",
+    "sha256": "bd1924555be2c22ea3867af4d939ce666ba8dbe0ee2eb5656124c368fee289cf",
+    "size_bytes": 4270
+  },
+  {
+    "path": "docs/audits/native-proxy-release-readback-ordinary-20260911/binding-probe-plan.json",
+    "sha256": "3006868b75eee07f169bc65d46948be2c92a28228c6a98e1a255639198b98849",
+    "size_bytes": 543
+  }
+]

@@ -1,0 +1,38 @@
+[
+  {
+    "candidate_id": "published-409eec4433dcf73b3179da86",
+    "excerpt": "The ordinary retired partition now exercises all 482 primary cases: ten",
+    "path": "docs/book/src/16dc-vial-portable-verilator-runtime-measurement.md",
+    "source_line_sha256": "53876b5cf37ed279122395e6d7f13a656f5bb34ee5edd56e58906288896ce741"
+  },
+  {
+    "candidate_id": "published-dfe501430e92a1b287e42a96",
+    "excerpt": "successful releases and 472 rejections. The first integrated run passes 5,338",
+    "path": "docs/book/src/16dc-vial-portable-verilator-runtime-measurement.md",
+    "source_line_sha256": "751f4e8985292468e90feac077a75f78289fc3b631a97d34b365a66955e245e2"
+  },
+  {
+    "candidate_id": "published-a12a5e42f029ef8d221f051e",
+    "excerpt": "EOF fails before a source handle returns. All 360 primary failed readers close",
+    "path": "docs/book/src/16dc-vial-portable-verilator-runtime-measurement.md",
+    "source_line_sha256": "8da31dd49f0b03b7195ec21d7f7291b2454f025533dae37cb95352ed55e90da0"
+  },
+  {
+    "candidate_id": "published-334ee6ba80c6ab2651f7a926",
+    "excerpt": "weak alias is retained, so observation does not extend that lifetime. The 121",
+    "path": "docs/book/src/16dc-vial-portable-verilator-runtime-measurement.md",
+    "source_line_sha256": "3e9773315f6db670631660e621f5746c62dbe9567e2badf895d545e70bc40ddf"
+  },
+  {
+    "candidate_id": "published-9a3883306243a05cb1919ff7",
+    "excerpt": "implementation cleanup. All 1,932 new roots are absent and disjoint from the",
+    "path": "docs/book/src/16dc-vial-portable-verilator-runtime-measurement.md",
+    "source_line_sha256": "ae607c8aeb6f9816f895462498dfdedb6299f8fc565a69c63154101a132144ab"
+  },
+  {
+    "candidate_id": "published-57e224a863112fe81d1e5143",
+    "excerpt": "17,108 roots in the selected predecessor reports.",
+    "path": "docs/book/src/16dc-vial-portable-verilator-runtime-measurement.md",
+    "source_line_sha256": "b719ff27f1a424c2d876a71676f8f98652682012d86d06d85a74b9e7772a15c5"
+  }
+]

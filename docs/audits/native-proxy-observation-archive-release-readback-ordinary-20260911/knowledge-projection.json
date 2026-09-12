@@ -1,0 +1,17 @@
+{
+  "after_bytes": 3492233,
+  "after_lines": 47278,
+  "allowance_bytes": 3492424,
+  "allowance_lines": 47288,
+  "allowance_unchanged": true,
+  "before_bytes": 3492330,
+  "before_lines": 47279,
+  "checked_before_live_write": true,
+  "first_draft": {
+    "projected_bytes": 3492472,
+    "projected_lines": 47282,
+    "refused_before_card_write": true
+  },
+  "head": "efadb9148c14391fde011851e766a72b84bcfda8",
+  "routing": "Current reverify now uses the saved readback audit. Historical gated producer commands and earlier facts remain exactly recoverable from the predecessor card; no question or proxy-language answer is removed."
+}

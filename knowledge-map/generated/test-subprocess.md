@@ -1,7 +1,7 @@
 # Knowledge Map: `test-subprocess`
 
 > **AUTO-GENERATED — DO NOT EDIT.** Return to the [Knowledge Map](../../KNOWLEDGE_MAP.md).
-> **1** facts · **99** uniquely owned question entries.
+> **1** facts · **102** uniquely owned question entries.
 
 ## Questions → facts
 
@@ -9,6 +9,7 @@
 - q="can native thread state replace kernel sampling of fixture startup?" · facts=[test-subprocess-policy-adapters](../../docs/knowledge/test-subprocess-policy-adapters.md)
 - q="can post-KILL leader reaping bypass the cleanup deadline?" · facts=[test-subprocess-policy-adapters](../../docs/knowledge/test-subprocess-policy-adapters.md)
 - q="can retained snapshots be archived after the workspace is retired?" · facts=[test-subprocess-policy-adapters](../../docs/knowledge/test-subprocess-policy-adapters.md)
+- q="can successful Perl sysopen leave nonzero errno?" · facts=[test-subprocess-policy-adapters](../../docs/knowledge/test-subprocess-policy-adapters.md)
 - q="how are FSMGen test subprocesses bounded?" · facts=[test-subprocess-policy-adapters](../../docs/knowledge/test-subprocess-policy-adapters.md)
 - q="how are archive close domains joined against unchanged sources?" · facts=[test-subprocess-policy-adapters](../../docs/knowledge/test-subprocess-policy-adapters.md)
 - q="how are byte-identical archive replacements detected after admission?" · facts=[test-subprocess-policy-adapters](../../docs/knowledge/test-subprocess-policy-adapters.md)
@@ -18,6 +19,7 @@
 - q="how are genuine omitted archive closes detected and recovered?" · facts=[test-subprocess-policy-adapters](../../docs/knowledge/test-subprocess-policy-adapters.md)
 - q="how are healthy release call and handle boundaries verified?" · facts=[test-subprocess-policy-adapters](../../docs/knowledge/test-subprocess-policy-adapters.md)
 - q="how are native Rust proxy fixtures built and qualified?" · facts=[test-subprocess-policy-adapters](../../docs/knowledge/test-subprocess-policy-adapters.md)
+- q="how are ordinary release readback failures and cleanup verified?" · facts=[test-subprocess-policy-adapters](../../docs/knowledge/test-subprocess-policy-adapters.md)
 - q="how are passive fixture identities and sources tracked?" · facts=[test-subprocess-policy-adapters](../../docs/knowledge/test-subprocess-policy-adapters.md)
 - q="how are queued-only fixture policy tokens attributed?" · facts=[test-subprocess-policy-adapters](../../docs/knowledge/test-subprocess-policy-adapters.md)
 - q="how are release interruption boundaries selected?" · facts=[test-subprocess-policy-adapters](../../docs/knowledge/test-subprocess-policy-adapters.md)
@@ -33,6 +35,7 @@
 - q="how do equal-content archive failures preserve original identities?" · facts=[test-subprocess-policy-adapters](../../docs/knowledge/test-subprocess-policy-adapters.md)
 - q="how do lower-reader admission failures close before source handoff?" · facts=[test-subprocess-policy-adapters](../../docs/knowledge/test-subprocess-policy-adapters.md)
 - q="how do partial archive writes preserve bytes and cleanup?" · facts=[test-subprocess-policy-adapters](../../docs/knowledge/test-subprocess-policy-adapters.md)
+- q="how do readback syscall hooks preserve compiled calls and aliases?" · facts=[test-subprocess-policy-adapters](../../docs/knowledge/test-subprocess-policy-adapters.md)
 - q="how does fresh observation acquisition retain source snapshots?" · facts=[test-subprocess-policy-adapters](../../docs/knowledge/test-subprocess-policy-adapters.md)
 - q="how does inactive acquisition order global and private references?" · facts=[test-subprocess-policy-adapters](../../docs/knowledge/test-subprocess-policy-adapters.md)
 - q="how does inactive image membership reject enumeration errors?" · facts=[test-subprocess-policy-adapters](../../docs/knowledge/test-subprocess-policy-adapters.md)
@@ -111,5 +114,5 @@
 
 _Test subprocesses share one mechanism behind sealed policy adapters_
 
-- **date:** 2026-09-11 · **status:** current
+- **date:** 2026-09-12 · **status:** current
 - **source and verification:** [`docs/knowledge/test-subprocess-policy-adapters.md`](../../docs/knowledge/test-subprocess-policy-adapters.md)

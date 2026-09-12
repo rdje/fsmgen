@@ -2,6 +2,9 @@
 id: test-subprocess-policy-adapters
 title: Test subprocesses share one mechanism behind sealed policy adapters
 answers:
+  - "how are ordinary release readback failures and cleanup verified?"
+  - "can successful Perl sysopen leave nonzero errno?"
+  - "how do readback syscall hooks preserve compiled calls and aliases?"
   - "why can altered census read bytes leave release successful?"
   - "what is the selected release readback failure domain?"
   - "what survives last-observation release after-call faults?"
@@ -101,7 +104,7 @@ answers:
   - "can post-KILL leader reaping bypass the cleanup deadline?"
   - "which ownership model is selected for nested supervision?"
   - "how does the private coordinator preserve execution bytes?"
-date: 2026-09-11
+date: 2026-09-12
 status: current
 tags: [tests, subprocess, supervision, task-acceptance, darwin, locality]
 evidence: >-
@@ -121,17 +124,13 @@ evidence: >-
   t/1669-task-acceptance-fixture-runtime.t; t/python/test_fixture_runtime_sources.py;
   t/lib/FSM/Test/RustProxyFixture.pm; t/1815-rust-proxy-fixture.t; t/1816-rust-proxy-integration.t; t/1817-test-supervision-architecture.t
 reverify: >-
-  scripts/run_with_ram_guard.sh -- prove -Iperl -It/lib
-  t/1545-task-acceptance-doctrine.t
-  t/1668-darwin-inline-verilator-test-runtime.t
-  t/1669-task-acceptance-fixture-runtime.t t/1812-process-coordinator-endpoint.t
-  t/1813-process-coordinator-connection.t t/1814-process-coordinator-service.t
-  t/1815-rust-proxy-fixture.t t/1816-rust-proxy-integration.t t/1817-test-supervision-architecture.t
+  scripts/run_with_ram_guard.sh -- python3 -B
+  docs/audits/native-proxy-observation-archive-release-readback-ordinary-20260911/audit-corrected.py --verify-saved
 ---
 Decisions `0087`/`0101`: `FSM::Support::ProcessSupervisor`; adapters seal local argv/capture/group cleanup. T1669 checks ownership. `exec_handoff_monotonic_ns` is EOF, not main entry; absent EOF leaves timing unknown.
 `VerilatorRuntime`: decision `0086`. `TaskAcceptanceFixtureRuntime`: owned roots/fixed Git argv.
-History: `5cb6a683c65b2bdb992b8447e14f23205f492722:docs/knowledge/test-subprocess-policy-adapters.md`. Archive/work, replay, reader/caller and startup evidence: history.
-Release applicability: `docs/audits/native-proxy-release-readback-applicability-20260911/applicability.json` supersedes blanket body-XOR rejection. Structural census discards returned bytes after metadata checks and close; a reported-only body change leaves its release outcome successful. Other consumers retain content-rejection expectations. The original plan and all selectors stay exact; actual readback execution remains open. Qualified call partitions and other boundaries: history.
+History: `efadb9148c14391fde011851e766a72b84bcfda8:docs/knowledge/test-subprocess-policy-adapters.md`. Earlier contracts and replay: history.
+Readback: `docs/audits/native-proxy-observation-archive-release-readback-ordinary-20260911/audit-corrected.py --verify-saved`. Ordinary controls qualify failed-reader lexical closure, returned-source cleanup and separate strong-observer recovery. Structural census discards altered reports; content-sensitive consumers reject them. Other profiles and native lifetime remain open.
+Binding, I/O load order and successful-open nonzero errno: that directory's `source-review.json`, `first-syntax-failure/` and `first-audit-failure/`. Successful errno is retained data; return and native identity establish success.
 Proxy: `t/fixtures/rust-tool-proxy.c` is C; Perl `t/lib/FSM/Test/RustProxyFixture.pm` builds it and the Perl harness launches a separate process to impersonate rustup resolution. Rust names the substituted tool, not the native implementation language.
-Replay: `scripts/run_with_ram_guard.sh -- python3 -B -m unittest discover -s t/python -p 'test_fixture_policy_archive*.py'`. Other controls: history.
 HIAL/VIAL `.19.2.3.1.2.2.5.5` owns repair/hostile controls; neutral-verifier extraction stays blocked.

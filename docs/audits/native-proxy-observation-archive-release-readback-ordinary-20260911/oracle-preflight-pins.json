@@ -1,0 +1,17 @@
+[
+  {
+    "path": "docs/audits/native-proxy-observation-archive-release-readback-ordinary-20260911/oracle-preflight.py",
+    "sha256": "141c798922928b9958c9a272fe3bab3489e0139b1a76c4135559bfe0951cae98",
+    "size_bytes": 9661
+  },
+  {
+    "path": "docs/audits/native-proxy-observation-archive-release-readback-ordinary-20260911/expected_trace.py",
+    "sha256": "f60970f584f0766d9c13b62f0763de5e1e1112fc73abc9e40b77a26b366df179",
+    "size_bytes": 9078
+  },
+  {
+    "path": "docs/audits/native-proxy-observation-archive-release-readback-ordinary-20260911/oracle-preflight-plan.json",
+    "sha256": "5e229c69ca118b6ce9393242ec33c7aad398a4f68bfd777d38bd4d760250eb96",
+    "size_bytes": 49677
+  }
+]

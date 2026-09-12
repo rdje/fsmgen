@@ -2474,14 +2474,41 @@ evidence. Reconstruct the corrected partition without executing fixtures with:
 python3 -B docs/audits/native-proxy-release-readback-applicability-20260911/audit.py
 ```
 
-This correction changes an expected test outcome. Actual readback execution
-and consumer cleanup qualification remain open.
+The ordinary retired partition now exercises all 482 primary cases: ten
+successful releases and 472 rejections. The first integrated run passes 5,338
+assertions, including a separately counted strong-reference counterexample.
+The independent audit checks exact call prefixes, actual reads, descriptor
+identity and cleanup, original diagnostics, physical effects and every other
+owner's unchanged state. Its changed-record controls reject fabricated
+observations; the saved cases remain the authority for revalidation:
 
-A reader failure can happen before a source handle returns. Its observer must
-use a weak alias and inspect closure immediately, so observation itself does
-not keep the handle alive. A successfully returned source instead belongs to
-its real consumer and follows that consumer's cleanup path. These execution
-obligations remain open; validating the plan does not qualify their behavior.
+```sh
+python3 -B docs/audits/native-proxy-observation-archive-release-readback-ordinary-20260911/audit-corrected.py --verify-saved
+```
+
+For example, a read error before any bytes, after one actual byte, or premature
+EOF fails before a source handle returns. All 360 primary failed readers close
+their lexical descriptor before the observer's immediate native probe. Only a
+weak alias is retained, so observation does not extend that lifetime. The 121
+selected readers that return a source follow their original consumer's cleanup;
+this includes the positive short read and altered-body cases. Eight structural
+census alterations finish successfully; content-sensitive consumers reject the
+altered bytes after receiving ownership. An error after unlink preserves the
+actual unlink and previously verified absence in the attempt result.
+
+The additional strong-reference counterexample intentionally keeps the failed
+reader open. Its native probes expose that observer bias before an explicitly
+identified observer recovery closes it. That recovery is never counted as
+implementation cleanup. All 1,932 new roots are absent and disjoint from the
+17,108 roots in the selected predecessor reports.
+
+Two instrument failures remain preserved: the first syntax check exposed an
+I/O module load-order conflict, and the first audit wrongly demanded zero
+`errno` after a successful open. [Perl permits nonzero successful-call `errno`](https://perldoc.perl.org/variables/%24%21);
+the corrected audit retains it as data and uses the actual return and native
+identity to establish success. The same saved cases pass the separately pinned
+correction; no fixture is rerun to repair the oracle. Other readback profiles,
+syscall reports, close controls and native lifetime qualification remain open.
 
 The syscall-report plan separates suppressed calls from actual operations.
 It models rejected unlink while the original hold stays present, and errors

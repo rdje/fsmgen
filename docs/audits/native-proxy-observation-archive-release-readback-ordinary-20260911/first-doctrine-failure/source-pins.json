@@ -1,0 +1,14 @@
+[
+  {
+    "path": "doctrine/claim_verification/dispositions.jsonl",
+    "sha256": "966993589edb96bbd52d9fa08a68dacb6f7e093abf36cda1fb814d75f969a28b",
+    "size_bytes": 1988932,
+    "source_revision": "efadb9148c14391fde011851e766a72b84bcfda8"
+  },
+  {
+    "path": "doctrine/claim_verification/disposition_groups.jsonl",
+    "sha256": "e49615623ca95e92d7a9adda4eb3aa51249fa9158075a0f3089483172d319fe6",
+    "size_bytes": 3273,
+    "source_revision": "efadb9148c14391fde011851e766a72b84bcfda8"
+  }
+]

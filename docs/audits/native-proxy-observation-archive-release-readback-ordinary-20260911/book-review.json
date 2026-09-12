@@ -1,0 +1,18 @@
+{
+  "checked_passages": [
+    "The ordinary retired partition now exercises all 482 primary cases",
+    "All 360 primary failed readers close their lexical descriptor",
+    "Eight structural census alterations finish successfully",
+    "That recovery is never counted as implementation cleanup.",
+    "All 1,932 new roots are absent and disjoint",
+    "native-proxy-observation-archive-release-readback-ordinary-20260911/audit-corrected.py --verify-saved"
+  ],
+  "exact_output_absent": true,
+  "exit_code": 0,
+  "output": ".artifacts/tmp/native-proxy-release-readback-ordinary-book-20260912/book",
+  "rendered_bytes": 23405776,
+  "rendered_directories": 3,
+  "rendered_files": 98,
+  "renderer_warning": "search index is very large (13210028 bytes)",
+  "same_volume_direct_objects": true
+}

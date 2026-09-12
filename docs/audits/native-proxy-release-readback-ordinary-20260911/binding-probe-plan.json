@@ -1,0 +1,12 @@
+{
+  "allocated_fixtures": 0,
+  "expected_assertions": 12,
+  "expected_calls": 4,
+  "expected_early_calls": 0,
+  "integration_qualified": false,
+  "owner": "HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.12.4.1.3.4.4.3.10.2.2",
+  "real_syscalls": 0,
+  "schema": "fsmgen.release_readback_binding_probe.v1",
+  "scope": "Pure Perl hook replacement and tail-delegation argument/caller binding; no branch performs an actual read or open syscall.",
+  "source_revision": "efadb9148c14391fde011851e766a72b84bcfda8"
+}
