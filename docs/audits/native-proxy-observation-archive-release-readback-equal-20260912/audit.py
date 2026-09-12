@@ -1,0 +1,345 @@
+"""Audit equal-reference readback from immutable cases; never execute a fixture.
+
+The shared corrected reader/custody verifier is authenticated before import.
+This partition independently admits its domain and verifies equal-byte source
+identity, archived sharing, current selections and predecessor root separation.
+"""
+from collections import Counter
+import copy
+import hashlib
+import importlib.util
+import json
+from pathlib import Path
+import re
+import subprocess
+import sys
+
+BASE = Path(__file__).resolve().parent
+ROOT = BASE.parents[2]
+LOG = ROOT / '.artifacts/logs' / BASE.name
+REVISION = 'de1e17c8cbdef50ce19e96eaa9eb95fb63fc56f2'
+OWNER = 'HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.12.4.1.3.4.4.3.10.3'
+ORDINARY = BASE.with_name('native-proxy-observation-archive-release-readback-ordinary-20260911')
+BEFORE = BASE.with_name('native-proxy-observation-archive-release-ordinary-before-20260911')
+ORIGINAL = BASE.with_name('native-proxy-release-readback-selection-20260911')
+CORRECTION = BASE.with_name('native-proxy-release-readback-applicability-20260911')
+SOURCE = 'NativeProxyImageCustody::_source'
+MODES = ('first-eio', 'partial-eio', 'early-eof', 'body-xor')
+PIN_PATHS = [BASE / n for n in ('prepare.py', 'prepare-pins.json', 'plan.json',
+                               'qualify.t', 'audit.py', 'oracle-preflight.py')]
+SHARED = None
+
+
+def load(path):
+    return json.loads(path.read_bytes())
+
+
+def signature(value):
+    return hashlib.sha256(json.dumps(value, sort_keys=True, separators=(',', ':')).encode()).hexdigest()
+
+
+def module(name, path):
+    spec = importlib.util.spec_from_file_location(name, path)
+    value = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(value)
+    return value
+
+
+def rejects(action):
+    try:
+        action()
+    except (AssertionError, KeyError, TypeError, ValueError, IndexError):
+        return True
+    return False
+
+
+def domain(plan):
+    original = load(ORIGINAL / 'plan.json')['profiles'][1]
+    corrected = load(CORRECTION / 'applicability.json')['profiles'][1]
+    old = load(ORDINARY / 'plan.json')
+    assert plan['schema'] == 'fsmgen.release_readback_equal_plan.v1'
+    assert plan['source_revision'] == REVISION and plan['owner'] == corrected['execution_owner'] == OWNER
+    assert plan['component'] == BASE.name and plan['profile_id'] == original['id'] == corrected['id']
+    assert plan['selection'] == original['selection']
+    assert plan['source_boundaries'] == old['source_boundaries'] and plan['sealed_symbols'] == old['sealed_symbols']
+    assert plan['publication'] == old['publication']
+    assert (plan['primary_cases'], plan['primary_successes'], plan['primary_rejections'], plan['seam_counterexamples']) == (462, 10, 452, 0)
+    assert len(plan['cases']) == 462 and len(original['sources']) == len(corrected['body_xor']) == 115
+    final = dict(unlink_attempted=1, unlink_completed=1, reference_absence_verified=1,
+                 last_reference_check=dict(phase='finish', state='absent'))
+    for index, case in enumerate(plan['cases']):
+        assert set(case) == {'index', 'name', 'role', 'selector', 'expected_success', 'expected_effects'}
+        assert type(case['index']) is int and case['index'] == index and type(case['expected_success']) is int
+        assert case['role'] == 'primary'
+        if index == 0:
+            name, selector, success, effects = 'healthy:equal-reference', None, 1, final
+        elif index == 1:
+            name = 'first-source-one-byte-then-normal'
+            selector, success, effects = dict(control='one-byte', occurrence=0, strong_alias=0), 1, final
+        else:
+            ordinal, mode = divmod(index - 2, 4)
+            control = MODES[mode]
+            selector = dict(control=control, occurrence=ordinal, strong_alias=0)
+            name = 'source#' + str(ordinal) + ':' + control
+            assert original['sources'][ordinal]['occurrence'] == corrected['body_xor'][ordinal]['occurrence'] == ordinal
+            success = int(control == 'body-xor' and corrected['body_xor'][ordinal]['expected_success'])
+            effects = final if success else original['sources'][ordinal]['effects_before_source']
+        assert (case['name'], case['selector'], case['expected_success'], case['expected_effects']) == (name, selector, success, effects)
+        if selector is not None:
+            assert type(case['selector']['occurrence']) is type(case['selector']['strong_alias']) is int
+    reports = old['previous_root_reports'] + [str((ORDINARY / 'result/qualification.json').relative_to(ROOT))]
+    assert plan['previous_root_reports'] == reports
+    paths = {p['path'] for p in old['inputs']}
+    for name in ('preflight-pins.json', 'audit-correction-pins.json'):
+        paths.update(p['path'] for p in load(ORDINARY / name))
+    paths.update(str((ORDINARY / name).relative_to(ROOT)) for name in (
+        'plan.json', 'preflight-pins.json', 'audit-correction-pins.json',
+        'result/qualification.json', 'result/audit.json', 'result/cases/case-0482.json'))
+    assert [p['path'] for p in plan['inputs']] == sorted(paths | set(reports))
+
+
+def authenticate(plan):
+    pins = load(BASE / 'preflight-pins.json')
+    assert [p['path'] for p in pins] == [str(p.relative_to(ROOT)) for p in PIN_PATHS]
+    for pin in pins + plan['inputs']:
+        path = ROOT / pin['path']
+        for ancestor in [path, *path.parents]:
+            if ancestor == ROOT:
+                break
+            assert not ancestor.is_symlink() and ancestor.stat().st_dev == ROOT.stat().st_dev
+        raw = path.read_bytes()
+        assert pin == dict(path=pin['path'], size_bytes=len(raw), sha256=hashlib.sha256(raw).hexdigest())
+        if pin in plan['inputs']:
+            assert raw == subprocess.check_output(['git', 'show', REVISION + ':' + pin['path']], cwd=ROOT)
+    return pins
+
+
+def prerequisites(support):
+    paths = [BASE / 'result/oracle-preflight' / ('oracle-preflight.' + suffix)
+             for suffix in ('json', 'stdout', 'stderr', 'exit')]
+    pins = load(BASE / 'oracle-preflight-result-pins.json')
+    assert [p['path'] for p in pins] == [str(p.relative_to(ROOT)) for p in paths]
+    for pin, path in zip(pins, paths, strict=True):
+        assert not path.is_symlink() and path.stat().st_dev == ROOT.stat().st_dev
+        raw = path.read_bytes()
+        assert len(raw) == pin['size_bytes'] and hashlib.sha256(raw).hexdigest() == pin['sha256']
+    prior = load(paths[0])
+    assert prior['success'] is True and prior['allocated'] == []
+    assert prior['prospective_pins'] == load(BASE / 'preflight-pins.json')
+    assert len(prior['projections']) == 462 and len(prior['order_only_skeletons']) == 6
+    assert sum(p['expected_success'] for p in prior['projections']) == 10
+    assert paths[-1].read_bytes() == b'0\n'
+    previous = load(ORDINARY / 'plan.json')
+    report = load(ORDINARY / 'result/qualification.json')
+    receipt = report['case_files'][482]
+    strong = support.read_case(ORDINARY / 'result', receipt)
+    oracle = module('equal_prior_counterexample_scope', ORDINARY / 'expected_trace.py')
+    counts, _ = SHARED.verify_row(previous, previous['cases'][482], strong, support, oracle)
+    assert counts['strong_bias_detected'] == counts['strong_counterexample_recoveries'] == 1
+    return dict(saved_event_projections=462, order_only_skeletons=6,
+                authenticated_prior_strong_counterexamples=1, new_strong_counterexamples=0)
+
+
+def header(plan, report, support):
+    assert report['schema'] == 'fsmgen.release_readback_equal_qualification.v1' and report['success'] is True
+    assert report['prospective_pins'] == load(BASE / 'preflight-pins.json')
+    assert report['cases'] == [] and report['current_case'] is None and report['forbidden_process_attempts'] == 0
+    support.caller_controls(plan, report['caller_controls'])
+    assert len(report['case_files']) == len(plan['cases'])
+    for case, receipt in zip(plan['cases'], report['case_files'], strict=True):
+        assert set(receipt) == {'index', 'name', 'path', 'size_bytes', 'sha256'}
+        assert type(receipt['index']) is int and receipt['index'] == case['index'] and receipt['name'] == case['name']
+        assert receipt['path'] == '.artifacts/logs/' + BASE.name + '/cases/case-%04d.json' % case['index']
+        assert type(receipt['size_bytes']) is int and receipt['size_bytes'] > 0 and re.fullmatch('[0-9a-f]{64}', receipt['sha256'])
+
+
+def equal_identities(row, support):
+    """Reconstruct equal bytes and distinct native sources from initial files."""
+    bindings = row['archive_receipt']['source_bindings'][:3]
+    assert [b['role'] for b in bindings] == ['wrapper', 'private_reference', 'global_reference']
+    initial = support.OLD.flattened(row['context'], row['setup_before'])
+    sources = [b['source'] for b in bindings]
+    assert len({s['path'] for s in sources}) == 3
+    assert len({(s['device'], s['inode']) for s in sources}) == 3
+    assert len({initial[s['path']]['bytes_hex'] for s in sources}) == 1
+    for source in sources:
+        node = initial[source['path']]
+        assert all(source[k] == node[k] for k in ('device', 'inode', 'sha256', 'size_bytes'))
+    assert bindings[0]['archive'] == bindings[1]['archive'] == bindings[2]['archive']
+    archived = bindings[0]['archive']
+    assert (archived['device'], archived['inode']) not in {(s['device'], s['inode']) for s in sources}
+    assert all((s['size_bytes'], s['sha256']) == (archived['size_bytes'], archived['sha256']) for s in sources)
+
+
+def verify_row(plan, case, row, support, oracle):
+    counts, roots = SHARED.verify_row(plan, case, row, support, oracle)
+    equal_identities(row, support)
+    counts['equal_identity_cases'] += 1
+    return counts, roots
+
+
+def main():
+    assert sys.argv[1:] in ([], ['--verify-saved'], ['--admit-only'])
+    saved = sys.argv[1:] == ['--verify-saved']
+    storage = BASE / 'result' if saved else LOG
+    plan = load(BASE / 'plan.json')
+    domain(plan)
+    pins = authenticate(plan)
+    global SHARED
+    SHARED = module('equal_shared_corrected_reader_audit', ORDINARY / 'audit-corrected.py')
+    support = module('readback_retained_audit_support', BEFORE / 'audit.py')
+    oracle = module('readback_independent_source_scope', ORDINARY / 'expected_trace.py')
+    preflight = prerequisites(support)
+    if sys.argv[1:] == ['--admit-only']:
+        print(json.dumps(dict(admitted=True, allocated_fixtures=0, prospective_pins=len(pins),
+            unchanged_inputs=len(plan['inputs']), preflight=preflight), sort_keys=True))
+        return
+    report = load(storage / 'qualification.json')
+    header(plan, report, support)
+    totals, roots, examples = Counter(), [], {}
+    for case, receipt in zip(plan['cases'], report['case_files'], strict=True):
+        row = support.read_case(storage, receipt)
+        counts, allocated = verify_row(plan, case, row, support, oracle)
+        totals.update(counts)
+        roots.extend(allocated)
+        index = case['index']
+        if index in (0, 1, 2, 3, 4, 5, 29, 458):
+            examples[index] = (case, row)
+    assert (totals['primary_cases'], totals['primary_successes'], totals['primary_rejections'], totals['seam_counterexamples']) == (462, 10, 452, 0)
+    assert totals['strong_bias_detected'] == totals['strong_counterexample_recoveries'] == 0
+    assert totals['unreturned_reader_lexical_closes'] == 345
+    assert totals['equal_identity_cases'] == 462
+    assert report['allocated'] == roots and len({r['path'] for r in roots}) == len(roots) == 1848
+    assert [json.loads(line) for line in (storage / 'admission.jsonl').read_text().splitlines()] == roots
+    prior_roots = [r for p in plan['previous_root_reports'] for r in load(ROOT / p)['allocated']]
+    prior_paths = {r['path'] for r in prior_roots}
+    assert len(prior_paths) == len(prior_roots) == 19040
+    assert not prior_paths & {r['path'] for r in roots}
+    for relative in prior_paths | {r['path'] for r in roots}:
+        path = Path(relative)
+        assert not path.is_absolute() and '..' not in path.parts and relative.startswith('.artifacts/')
+        assert not (ROOT / path).exists() and not (ROOT / path).is_symlink()
+    assert {p.name for p in (storage / 'cases').iterdir()} == {'case-%04d.json' % c['index'] for c in plan['cases']}
+    assertions = 24 + len(plan['cases']) * 11 + 1
+    support.tap(storage / 'qualify.tap', assertions)
+    assert (storage / 'qualify.exit').read_bytes() == b'0\n'
+
+    def op(r):
+        return r['operation']
+
+    def reader(r):
+        return op(r)['readback']
+
+    def handle(r, kind):
+        return next(h for h in op(r)['handles'] if h['kind'] == kind)
+
+    changes = [
+        ('collapsed original equal-byte identity', 0, lambda r: r['archive_receipt']['source_bindings'][1].update(source=copy.deepcopy(r['archive_receipt']['source_bindings'][0]['source']))),
+        ('lost shared archive identity', 0, lambda r: r['archive_receipt']['source_bindings'][1]['archive'].update(inode=7)),
+        ('equal bytes claimed for ordinary profile', 0, lambda r: r['selection'].update(wrapper='ordinary')),
+        ('missing original retirement', 0, lambda r: r.pop('retirement')),
+        ('lost successful open', 1, lambda r: reader(r)['open'].update(returned=0)),
+        ('foreign open flags', 1, lambda r: reader(r)['open'].update(flags=0)),
+        ('malformed successful errno', 1, lambda r: reader(r)['open'].update(errno='25')),
+        ('negative successful errno', 1, lambda r: reader(r)['open'].update(errno=-1)),
+        ('lost actual late unlink', 458, lambda r: op(r)['result'].update(unlink_completed=0)),
+        ('invented early unlink', 2, lambda r: op(r)['result'].update(unlink_completed=1)),
+        ('lost original read diagnostic', 2, lambda r: op(r)['result'].update(error='')),
+        ('lost consumer diagnostic', 5, lambda r: op(r)['result'].update(error='')),
+        ('false early success', 2, lambda r: op(r)['result'].update(success=1)),
+        ('false structural rejection', 29, lambda r: op(r)['result'].update(success=0)),
+        ('false native authority', 0, lambda r: op(r)['result'].update(runtime_authorized=1)),
+        ('lost historical absence', 458, lambda r: op(r)['result'].update(reference_absence_verified=0)),
+        ('stale current helper ID', 2, lambda r: r['prospective']['resolved'].update(call_id=0)),
+        ('missing helper call', 0, lambda r: op(r)['boundary_calls'].pop()),
+        ('foreign helper caller', 0, lambda r: op(r)['boundary_calls'][0].update(caller='Foreign')),
+        ('lost sealed continuation', 0, lambda r: next(c for c in op(r)['boundary_calls'] if c.get('completion') == 'caller_continuation').update(continuation='Foreign')),
+        ('wrong source alias', 0, lambda r: next(c for c in op(r)['boundary_calls'] if 'source_handle' in c).update(source_handle='source:1')),
+        ('lost prefix event', 458, lambda r: op(r)['events'].pop(1)),
+        ('extra post-failure call', 458, lambda r: op(r)['events'].insert(-1, 'call:999:before')),
+        ('lost pending reader frame', 2, lambda r: op(r)['interrupted_boundary_ids'].clear()),
+        ('missing selected hit', 2, lambda r: op(r).update(readback_hits=0)),
+        ('invented helper injection', 2, lambda r: op(r).update(injected_hits=1)),
+        ('unclosed source', 0, lambda r: handle(r, 'source').update(closed_at_return=0)),
+        ('unclosed directory', 0, lambda r: handle(r, 'directory').update(closed_at_return=0)),
+        ('unclosed lock', 0, lambda r: handle(r, 'lock').update(closed_at_return=0)),
+        ('foreign cleanup owner', 0, lambda r: handle(r, 'source').update(close_caller='Foreign')),
+        ('wrong source bound', 0, lambda r: op(r)['source_requests'][0].update(limit=4096)),
+        ('lost unreturned read request', 2, lambda r: op(r)['source_requests'].pop()),
+        ('lost other-owner state', 458, lambda r: op(r)['after']['store'].pop('coordination.lock')),
+        ('changed archive receipt', 0, lambda r: op(r)['result']['release']['archive']['source_bindings'][0]['archive'].update(inode=7)),
+        ('changed input flags', 0, lambda r: r.update(inputs_unchanged=0)),
+        ('changed input fingerprint', 0, lambda r: r.update(input_fingerprint_after='0' * 64)),
+        ('unproved fixture cleanup', 0, lambda r: r.update(roots_absent=False)),
+        ('missing selected reader', 2, lambda r: op(r).update(readback=None)),
+        ('invented actual EIO syscall', 2, lambda r: reader(r)['reads'][0].update(actual=copy.deepcopy(reader(r)['reads'][0]['reported']))),
+        ('wrong controlled errno', 2, lambda r: reader(r)['reads'][0]['reported'].update(errno=0)),
+        ('invented EOF body', 4, lambda r: reader(r)['reads'][0]['reported']['buffer'].update(bytes_hex='ff')),
+        ('lost positive short read', 1, lambda r: reader(r)['reads'][0].update(delegated_requested=65537)),
+        ('wrong partial continuation bound', 3, lambda r: reader(r)['reads'][1].update(requested=65537)),
+        ('altered actual physical byte', 5, lambda r: reader(r)['reads'][0]['actual']['buffer'].update(bytes_hex='ff')),
+        ('lost reported byte alteration', 5, lambda r: reader(r)['reads'][0].update(reported=copy.deepcopy(reader(r)['reads'][0]['actual']))),
+        ('lost returned source digest', 5, lambda r: handle(r, 'source').update(sha256='0' * 64)),
+        ('unflagged-byte claim lost', 5, lambda r: reader(r)['result'].update(bytes_utf8=1)),
+        ('wrong opened native identity', 1, lambda r: reader(r)['opened']['metadata'].__setitem__(1, 7)),
+        ('strong observer disguised as weak', 2, lambda r: reader(r).update(alias_is_weak=0)),
+        ('failed reader retained at return', 2, lambda r: reader(r).update(weak_open_at_return=1)),
+        ('closed reader probe forged', 2, lambda r: reader(r)['at_reader_return'].update(errno=0)),
+        ('open source probe erased', 1, lambda r: reader(r)['at_reader_return'].update(duplicate=None)),
+        ('observer duplicate close lost', 1, lambda r: reader(r)['at_reader_return']['duplicate_close'].update(returned=0)),
+        ('primary observer cleanup inserted', 2, lambda r: reader(r)['recovery'].append(dict(role='observer'))),
+    ]
+    for name, index, change in changes:
+        case, original = examples[index]
+        altered = copy.deepcopy(original)
+        change(altered)
+        assert rejects(lambda: verify_row(plan, case, altered, support, oracle)), name
+    manifests = [
+        ('missing case receipt', lambda r: r['case_files'].pop()),
+        ('reordered case receipts', lambda r: r['case_files'].reverse()),
+        ('unfinished current case', lambda r: r.update(current_case=plan['cases'][0])),
+        ('hidden process attempt', lambda r: r.update(forbidden_process_attempts=1)),
+        ('caller guard bypass', lambda r: r['caller_controls'][0].update(instrumented_returned=1)),
+        ('foreign case path', lambda r: r['case_files'][0].update(path='foreign')),
+    ]
+    for name, change in manifests:
+        altered = copy.deepcopy(report)
+        change(altered)
+        assert rejects(lambda: header(plan, altered, support)), name
+    byte_controls = []
+    for name in ('wrong case size', 'wrong case digest'):
+        altered = copy.deepcopy(report['case_files'][0])
+        if name == 'wrong case size':
+            altered['size_bytes'] += 1
+        else:
+            altered['sha256'] = '0' * 64
+        assert rejects(lambda: support.read_case(storage, altered)), name
+        byte_controls.append(name)
+    domain_controls = [
+        ('missing primary case', lambda p: p['cases'].pop(2)),
+        ('stale numeric selection', lambda p: p['cases'][2]['selector'].update(call_id=6)),
+        ('unsafe after-return selection', lambda p: p['cases'][2]['selector'].update(phase='after')),
+        ('restored blanket XOR rejection', lambda p: p['cases'][29].update(expected_success=0)),
+        ('foreign profile selection', lambda p: p['selection'].update(wrapper='ordinary')),
+        ('strong alias in primary domain', lambda p: p['cases'][2]['selector'].update(strong_alias=1)),
+        ('omitted predecessor root census', lambda p: p['previous_root_reports'].pop()),
+    ]
+    for name, change in domain_controls:
+        altered = copy.deepcopy(plan)
+        change(altered)
+        assert rejects(lambda: domain(altered)), name
+    result = dict(schema='fsmgen.release_readback_equal_audit.v1', success=True, **dict(totals),
+        cases=len(plan['cases']), roots=len(roots), prior_disjoint_absent_roots=len(prior_paths),
+        assertions=assertions, preflight=preflight, caller_controls=6, prospective_pins=len(pins),
+        unchanged_inputs=len(plan['inputs']), row_falsifiers=[n for n, _, _ in changes],
+        manifest_falsifiers=[n for n, _ in manifests], byte_falsifiers=byte_controls,
+        domain_falsifiers=[n for n, _ in domain_controls],
+        case_bytes=sum(r['size_bytes'] for r in report['case_files']), scope=plan['scope'])
+    if not saved:
+        with (LOG / 'audit.json').open('x') as output:
+            output.write(json.dumps(result, indent=2, sort_keys=True) + '\n')
+    print(json.dumps(result, sort_keys=True))
+
+
+if __name__ == '__main__':
+    main()

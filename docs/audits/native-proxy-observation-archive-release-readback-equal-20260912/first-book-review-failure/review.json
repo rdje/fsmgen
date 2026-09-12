@@ -1,0 +1,25 @@
+{
+  "actual": "A failed reader closes before source handoff; a returned source follows its original consumer\u2019s cleanup.",
+  "correction": "Normalize U+2019 to ASCII apostrophe solely in the rendered text comparison. Reinspect the same generated HTML; do not rerun the book build or any fixture.",
+  "diagnostic": "Traceback (most recent call last):\n  File \"<stdin>\", line 10, in <module>\nAssertionError: A failed reader closes before source handoff; a returned source follows its original consumer's cleanup.\n",
+  "exit_code": 1,
+  "expected": "A failed reader closes before source handoff; a returned source follows its original consumer's cleanup.",
+  "first_source": {
+    "path": "docs/audits/native-proxy-observation-archive-release-readback-equal-20260912/first-book-review-failure/inspect.py",
+    "sha256": "c04833820a1128cea5dbfe604a03b0f6495a7e011e813f2d409e07e128a35e98",
+    "size_bytes": 2169
+  },
+  "html": {
+    "path": ".artifacts/tmp/native-proxy-release-readback-equal-book-20260912/book/16dc-vial-portable-verilator-runtime-measurement.html",
+    "sha256": "cc4efce859c04e918fce71f52dc2f3280197793dbbd2c1a149534bcad1230039",
+    "size_bytes": 272448
+  },
+  "owner": "HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.12.4.1.3.4.4.3.10.3",
+  "raw": {
+    "exit_hex": "310a",
+    "stderr_hex": "54726163656261636b20286d6f737420726563656e742063616c6c206c617374293a0a202046696c6520223c737464696e3e222c206c696e652031302c20696e203c6d6f64756c653e0a417373657274696f6e4572726f723a2041206661696c65642072656164657220636c6f736573206265666f726520736f757263652068616e646f66663b20612072657475726e656420736f7572636520666f6c6c6f777320697473206f726967696e616c20636f6e73756d6572277320636c65616e75702e0a",
+    "stdout_hex": ""
+  },
+  "root_cause": "mdBook typographic rendering converts the ASCII apostrophe U+0027 into U+2019. The first parser joined whitespace but did not normalize that typographic substitution. The complete expected and rendered passage differ only at that code point.",
+  "schema": "fsmgen.equal_readback_book_review_failure.v1"
+}

@@ -1,0 +1,2 @@
+ram-guard: PID 41772; host 75.7%; host cutoff 88%; descendant RSS cutoff 4096 MiB; poll 2s
+knowledge-map: wrote KNOWLEDGE_MAP.md plus 139 topic shards (1161 facts, 6426 unique questions, 6597 answer occurrences)

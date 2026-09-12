@@ -2760,11 +2760,11 @@ decomposes the architecture needed to move beyond that bounded foundation.
   Commit: `this commit`
 
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.12.4.1.3.4.4.3.10.3`
-  Status: `proposed`
+  Status: `done`
   Goal: `Qualify equal-reference retired release readback controls.`
   Acceptance: `Execute every pinned source control for equal-reference retired setup using current-input selection. Preserve distinct original identities despite equal archived bytes, independent actual read/handle/effect evidence, primary failures and other owners. Authenticate unchanged shared instrumentation and original sources before allocation, retain complete raw evidence and prove disjoint root absence. No ordinary-profile result substitutes for this profile.`
-  Verification: `pending`
-  Commit: `pending`
+  Verification: `First fixture run: 462 primary cases, 5107 TAP assertions, ten successes and 452 rejections. Independent audit authenticates six prospective pins and 274 unchanged inputs; 137136 calls, 445309 events, 39278 handles (27225 Source, 11615 directory, 438 lock), 345 failed-reader lexical closes, 116 returned selected readers, 144 actual unlinks and every equal-byte original identity. All 1848 new roots are absent and disjoint from 19040 selected predecessor roots. Fifty-four row, six manifest, two byte and seven domain falsifiers reject. Pure preflight: 462 saved-event projections, six ordering models; prior strong counterexample reverified without a new fixture or double counting. Evidence and three-leg claims: docs/audits/native-proxy-observation-archive-release-readback-equal-20260912/review.json and result/audit.json; saved-only audit/recovery and staged doctrines gate commit. The book inspection preserves and corrects one typographic-apostrophe mismatch against the same rendered HTML; no fixture or book rebuild.`
+  Commit: `this commit`
 
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.12.4.1.3.4.4.3.10.4`
   Status: `proposed`
@@ -3792,7 +3792,7 @@ decomposes the architecture needed to move beyond that bounded foundation.
 
 ## Current Frontier
 
-Current frontier: .3.2.15.7.3.12.4.1.3.4.4.3.10.3 executes equal-reference retired readback controls next. Ordinary readback is complete; other profile/report, close/native/lifetime and historical startup/parent/full CI/push work remains open.
+Current frontier: .3.2.15.7.3.12.4.1.3.4.4.3.10.4 executes active-runtime readback controls next. Ordinary and equal-reference readback are complete; other profile/report, close/native/lifetime and historical startup/parent/full CI/push work remains open.
 
 Architecture audit `.1` is complete. Decision `0032` selects one public
 `.vial` source language, private immutable `VIALSemanticIR` and
@@ -6385,11 +6385,11 @@ Completed native-proxy feasibility through runtime-source-controls acceptance: r
 
 - Acceptance history manifest: `docs/tasks/history/HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE/acceptance-history.jsonl`
 
-The manifest binds the corrected-applicability acceptance suffix at `efadb9148c14391fde011851e766a72b84bcfda8`. That source preserves the earlier history pointer and versioned manifest chain; current node contracts remain authoritative.
+The manifest binds the ordinary-readback acceptance suffix at `de1e17c8cbdef50ce19e96eaa9eb95fb63fc56f2`. That source preserves the earlier history pointer and versioned manifest chain; current node contracts remain authoritative.
 
 
-## Acceptance Checklist (ordinary readback execution .3.2.15.7.3.12.4.1.3.4.4.3.10.2.2)
+## Acceptance Checklist (equal-reference readback .3.2.15.7.3.12.4.1.3.4.4.3.10.3)
 
-- [x] **ROOT CAUSE (WHY + WHERE)** — Fresh `git log -S 'my $count = sysread($fh, my $chunk' -1 --format='%H %s' -- t/lib/FSM/Test/RustProxyFixture.pm` identifies `e0d74bb051465ba641227acc11975e25e5d879a7`: its lexical descriptor may close before Source handoff, so a strong observer would bias the evidence. The pure hook-binding probe and exact reader body establish the seam. First syntax failure and first audit failure remain preserved: I/O prerequisite loading repairs the former; Perl's successful-errno contract and older independent reader evidence root-cause the latter. No original producer is rerun.
-- [x] **ADDRESSED (verified ordinary readback)** — The first fixture run passes 5338 TAP assertions across 482 primary cases and one separate observer counterexample. A separately pinned corrected audit verifies ten primary successes, 472 rejections, 360 primary failed-reader lexical closes, 121 selected returned readers and explicit counterexample recovery. Exact current-input call/effect/custody, actual-versus-reported bytes and other-owner state pass; 54 row, six manifest, two byte and seven domain falsifiers reject. All 1932 new roots are absent and disjoint from 17108 selected predecessor roots. Original prospective pins, original failed verifier, complete cases and six correction pins remain exact; saved-only revalidation executes no fixture.
-- [x] **NO REGRESSION (scope + continuity)** — `knowledge-map: OK` and query parity pass. The corrected Perl harness reports syntax OK; the book builds and six passages render before exact generated-output cleanup. Recovery manifests, bounded fact history and exact acceptance-suffix retrieval preserve continuation and every older checklist. The first staged gate exposes six missing book claim dispositions; explicit evidence joins and the source watcher repair them without changing measured outcomes. Staged-index and commit-hook `scripts/check_doctrines.sh` gate the slice. Equal-reference readback is next; other profiles/reports/joins, close and native/lifetime work plus historical startup/parent/full CI/push remain open.
+- [x] **ROOT CAUSE (WHY + WHERE)** — Fresh `git log -S 'my $count = sysread($fh, my $chunk' -1 --format='%H %s' -- t/lib/FSM/Test/RustProxyFixture.pm` identifies `e0d74bb051465ba641227acc11975e25e5d879a7`: the original lexical reader owns its descriptor before Source return. Equal wrapper/private/global bytes share archive identity but retain distinct original native identities; ordinary-profile evidence cannot substitute for this domain. The unchanged observer and corrected reader oracle are authenticated before allocation; saved source identity and event-projection checks establish the prospective seam.
+- [x] **ADDRESSED (verified equal-reference readback)** — The first fixture run passes 5107 TAP assertions across 462 primary cases. Independent auditing verifies ten successes, 452 rejections, 345 failed-reader lexical closes, 116 returned selected readers and every original equal-byte identity. Current-input calls, actual versus reported bytes, original diagnostics, cleanup and exact effects pass. All 1848 new roots are absent and disjoint from 19040 selected predecessor roots; 54 row, six manifest, two byte and seven domain falsifiers reject. The prior strong counterexample is authenticated separately, without a new fixture or inclusion in current totals.
+- [x] **NO REGRESSION (scope + continuity)** — `knowledge-map: OK` and query parity pass. The Perl harness reports syntax OK; the book builds and six passages render after correcting a preserved typography-only inspection mismatch. Exact recovery and saved-only auditing, the separately pinned book-count watcher and staged-index/commit-hook `scripts/check_doctrines.sh` gate commit. The predecessor acceptance suffix and all older checklists remain version-retrievable. Active-runtime readback is next; last/report/join, close/native/lifetime and historical startup/parent/full CI/push work remains open.

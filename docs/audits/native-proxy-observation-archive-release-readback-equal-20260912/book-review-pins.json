@@ -1,0 +1,17 @@
+[
+  {
+    "path": "docs/audits/native-proxy-observation-archive-release-readback-equal-20260912/inspect-book.py",
+    "sha256": "e4aca22e3a8ca2d8bbda52fcabc76788893c46d42a5372fba365420f6c493519",
+    "size_bytes": 2277
+  },
+  {
+    "path": "docs/audits/native-proxy-observation-archive-release-readback-equal-20260912/first-book-review-failure/inspect.py",
+    "sha256": "c04833820a1128cea5dbfe604a03b0f6495a7e011e813f2d409e07e128a35e98",
+    "size_bytes": 2169
+  },
+  {
+    "path": "docs/audits/native-proxy-observation-archive-release-readback-equal-20260912/first-book-review-failure/review.json",
+    "sha256": "89ceb724c9cf8cf76b05c9e17d50a03fa3dead1484ce13f38d27fe13c2841050",
+    "size_bytes": 2095
+  }
+]

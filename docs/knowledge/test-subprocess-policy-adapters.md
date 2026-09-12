@@ -2,6 +2,7 @@
 id: test-subprocess-policy-adapters
 title: Test subprocesses share one mechanism behind sealed policy adapters
 answers:
+  - "how do equal-reference readback controls preserve source identity?"
   - "how are ordinary release readback failures and cleanup verified?"
   - "can successful Perl sysopen leave nonzero errno?"
   - "how do readback syscall hooks preserve compiled calls and aliases?"
@@ -125,12 +126,12 @@ evidence: >-
   t/lib/FSM/Test/RustProxyFixture.pm; t/1815-rust-proxy-fixture.t; t/1816-rust-proxy-integration.t; t/1817-test-supervision-architecture.t
 reverify: >-
   scripts/run_with_ram_guard.sh -- python3 -B
-  docs/audits/native-proxy-observation-archive-release-readback-ordinary-20260911/audit-corrected.py --verify-saved
+  docs/audits/native-proxy-observation-archive-release-readback-equal-20260912/audit.py --verify-saved
 ---
 Decisions `0087`/`0101`: `FSM::Support::ProcessSupervisor`; adapters seal local argv/capture/group cleanup. T1669 checks ownership. `exec_handoff_monotonic_ns` is EOF, not main entry; absent EOF leaves timing unknown.
 `VerilatorRuntime`: decision `0086`. `TaskAcceptanceFixtureRuntime`: owned roots/fixed Git argv.
-History: `efadb9148c14391fde011851e766a72b84bcfda8:docs/knowledge/test-subprocess-policy-adapters.md`. Earlier contracts and replay: history.
-Readback: `docs/audits/native-proxy-observation-archive-release-readback-ordinary-20260911/audit-corrected.py --verify-saved`. Ordinary controls qualify failed-reader lexical closure, returned-source cleanup and separate strong-observer recovery. Structural census discards altered reports; content-sensitive consumers reject them. Other profiles and native lifetime remain open.
-Binding, I/O load order and successful-open nonzero errno: that directory's `source-review.json`, `first-syntax-failure/` and `first-audit-failure/`. Successful errno is retained data; return and native identity establish success.
+History: `de1e17c8cbdef50ce19e96eaa9eb95fb63fc56f2:docs/knowledge/test-subprocess-policy-adapters.md`. Earlier contracts and replay: history.
+Readback: see reverify. Equal-reference controls preserve distinct wrapper/private/global identities despite shared archive bytes; failed readers close lexically and returned sources follow original cleanup. Structural census discards altered reports; content-sensitive consumers reject them. Ordinary readback and strong-observer recovery: history. Active/last profiles and native lifetime remain open.
+Binding, I/O load order and successful-open nonzero errno: predecessor history. Successful errno is retained data; return and native identity establish success.
 Proxy: `t/fixtures/rust-tool-proxy.c` is C; Perl `t/lib/FSM/Test/RustProxyFixture.pm` builds it and the Perl harness launches a separate process to impersonate rustup resolution. Rust names the substituted tool, not the native implementation language.
 HIAL/VIAL `.19.2.3.1.2.2.5.5` owns repair/hostile controls; neutral-verifier extraction stays blocked.

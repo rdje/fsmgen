@@ -1,0 +1,8 @@
+[
+  {
+    "candidate_id": "published-ba21f2d8f84437e15e05d089",
+    "excerpt": "The equal-reference partition passes 462 primary cases and 5,107 assertions: 10 releases succeed and 452 attempts reject.",
+    "path": "docs/book/src/16dc-vial-portable-verilator-runtime-measurement.md",
+    "source_line_sha256": "7981ee43dfac0dbb3ebbaf927d974ef448a81637d4ba7a9d6d542454741f9900"
+  }
+]

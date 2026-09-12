@@ -1,0 +1,20 @@
+{
+  "checked_passages": [
+    "The equal-reference partition passes 462 primary cases and 5,107 assertions: 10 releases succeed and 452 attempts reject.",
+    "release preserves their distinct original paths and native identities while they share an archived content file.",
+    "A failed reader closes before source handoff; a returned source follows its original consumer's cleanup.",
+    "The earlier strong-reference counterexample remains separately authenticated evidence and is excluded from this partition's totals.",
+    "rejects collapsed original identities, invented archive identities and incorrect retirement records",
+    "native-proxy-observation-archive-release-readback-equal-20260912/audit.py --verify-saved"
+  ],
+  "exact_output_absent": true,
+  "exit_code": 0,
+  "output": ".artifacts/tmp/native-proxy-release-readback-equal-book-20260912/book",
+  "rendered_bytes": 23410153,
+  "rendered_directories": 3,
+  "rendered_files": 98,
+  "renderer_warnings": [
+    "WARN search index is very large (13211957 bytes)"
+  ],
+  "same_volume_direct_objects": true
+}

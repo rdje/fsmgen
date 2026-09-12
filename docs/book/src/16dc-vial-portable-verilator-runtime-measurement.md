@@ -2507,8 +2507,28 @@ I/O module load-order conflict, and the first audit wrongly demanded zero
 `errno` after a successful open. [Perl permits nonzero successful-call `errno`](https://perldoc.perl.org/variables/%24%21);
 the corrected audit retains it as data and uses the actual return and native
 identity to establish success. The same saved cases pass the separately pinned
-correction; no fixture is rerun to repair the oracle. Other readback profiles,
-syscall reports, close controls and native lifetime qualification remain open.
+correction; no fixture is rerun to repair the oracle. Active-runtime and
+last-observation readback, syscall reports, close controls and native lifetime
+qualification remain open.
+
+The equal-reference partition passes 462 primary cases and 5,107 assertions: 10 releases succeed and 452 attempts reject.
+For example, when the wrapper contains the same bytes as the private and global
+references, release preserves their distinct original paths and native identities
+while they share an archived content file. Readback failures preserve that
+binding and every other owner's state. A failed reader closes before source
+handoff; a returned source follows its original consumer's cleanup. Structural
+census alterations can succeed because that census discards the read body;
+later semantic reads still receive the unchanged file bytes.
+
+The equal-reference cases reuse the qualified weak observer. The earlier
+strong-reference counterexample remains separately authenticated evidence and
+is excluded from this partition's totals. The saved audit reconstructs the
+current selections and actual cleanup, and rejects collapsed original
+identities, invented archive identities and incorrect retirement records:
+
+```sh
+python3 -B docs/audits/native-proxy-observation-archive-release-readback-equal-20260912/audit.py --verify-saved
+```
 
 The syscall-report plan separates suppressed calls from actual operations.
 It models rejected unlink while the original hold stays present, and errors

@@ -1,0 +1,22 @@
+{
+  "history": {
+    "argv": [
+      "git",
+      "log",
+      "-S",
+      "my $count = sysread($fh, my $chunk",
+      "-1",
+      "--format=%H %s",
+      "--",
+      "t/lib/FSM/Test/RustProxyFixture.pm"
+    ],
+    "stdout": "e0d74bb051465ba641227acc11975e25e5d879a7 HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.8: seal portable proxy preparation and descriptor custody\n"
+  },
+  "limits": "Prior ordinary results do not qualify this profile. The separately authenticated prior strong-alias case only qualifies the unchanged shared observer seam; it is excluded from this matrix and its totals.",
+  "mechanism": "The existing weak observer preserves original lexical reader custody before Source return. The equal-reference wrapper copies the original private-reference bytes; wrapper, private and global reference retain distinct source identities and share the content-addressed archive object. Unchanged original source, scope model, trace hooks and corrected read oracle are admitted by exact committed bytes before any allocation.",
+  "owner": "HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.12.4.1.3.4.4.3.10.3",
+  "saved_identity_precheck": "The new equal_identities verifier passes against the unchanged retained equal-reference healthy row. Its setup footprint reconstructs equal wrapper/private/global bytes, distinct path/device/inode source identities and shared archived identity. No saved producer or fixture is invoked.",
+  "schema": "fsmgen.equal_readback_source_review.v1",
+  "shared_source_review": "docs/audits/native-proxy-observation-archive-release-readback-ordinary-20260911/source-review.json",
+  "source_revision": "de1e17c8cbdef50ce19e96eaa9eb95fb63fc56f2"
+}
