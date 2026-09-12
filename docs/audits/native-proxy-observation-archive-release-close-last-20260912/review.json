@@ -1,0 +1,35 @@
+{
+  "audit_result": "docs/audits/native-proxy-observation-archive-release-close-last-20260912/result/audit.json",
+  "book_review": "docs/audits/native-proxy-observation-archive-release-close-last-20260912/book-review.json",
+  "claim_legs": {
+    "durability": "Prospective source pins, exact committed dependencies, first-run observations and complete recovery manifests are tracked. Saved-only audit/recovery authenticate without new fixtures or original raw-log access. The preflight verifies exact original setup and row-oracle adaptation; the book disposition names the explicit watcher.",
+    "falsify": "Independent source-scope and healthy-prefix/remaining-owner oracles agree before and after execution. Row/domain/header controls reject lost closes, altered effects, wrong controlled setup, changed canonical image/source and a restored final reference. Recovery-copy and book-count controls reject missing or redirected evidence and outcome redistribution.",
+    "rederive": "Committed selectors define the last-observation domain. Immutable observations preserve actual calls, close returns, EIO reports, inactive attempts and file effects. The original last-state oracle reads stored reference JSON and compares the entire canonical image subtree to its original identities and bytes. The book watcher independently recounts cases and TAP."
+  },
+  "commit_gate": "Staged doctrines and normal commit hooks must pass before commit.",
+  "dispositions": {
+    "added": [
+      "published-b5c80ee123b012cae5c18b56"
+    ],
+    "prior_records_byte_exact": 1929
+  },
+  "limits": "Primary/grouped errors, genuine omissions, final report/release applicability and native/lifetime remain separate. No prior qualifier/fixture, original main or native process is replayed. Historical startup/parent/full CI/push remain gated.",
+  "owner": "HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.12.4.1.3.4.4.4.5",
+  "raw_verification_outputs": "docs/audits/native-proxy-observation-archive-release-close-last-20260912/verification-outputs.json",
+  "recovery": {
+    "bytes": 74930627,
+    "copies": 167,
+    "falsifiers": [
+      "omitted-copy",
+      "foreign-destination",
+      "changed-copy-digest"
+    ],
+    "source_reaccess": false,
+    "success": true
+  },
+  "schema": "fsmgen.release_last_close_review.v1",
+  "scope": "Last-observation healthy control and every selected single EIO close report. Identity-checked controlled setup precedes observed release. Actual close success and native closure precede substituted EIO; final-hold effects and exact canonical-image preservation are verified separately.",
+  "source_review": "docs/audits/native-proxy-observation-archive-release-close-last-20260912/source-review.json",
+  "source_revision": "85cc24eeb184f6197f72a8275ff55f8c5f59d112",
+  "success": true
+}

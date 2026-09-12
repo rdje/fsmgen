@@ -2,6 +2,7 @@
 id: test-subprocess-policy-adapters
 title: Test subprocesses share one mechanism behind sealed policy adapters
 answers:
+  - "what survives last-observation close reports?"
   - "how do active-runtime close reports preserve runtime state?"
   - "how are equal-reference release close reports verified?"
   - "how are ordinary release close reports verified?"
@@ -135,11 +136,11 @@ evidence: >-
   t/lib/FSM/Test/RustProxyFixture.pm; t/1815-rust-proxy-fixture.t; t/1816-rust-proxy-integration.t; t/1817-test-supervision-architecture.t
 reverify: >-
   scripts/run_with_ram_guard.sh -- python3 -B
-  docs/audits/native-proxy-observation-archive-release-close-active-20260912/audit.py --verify-saved
+  docs/audits/native-proxy-observation-archive-release-close-last-20260912/audit.py --verify-saved
 ---
 Decisions `0087`/`0101`: `FSM::Support::ProcessSupervisor`; adapters seal local argv/capture/group cleanup. T1669 checks ownership. `exec_handoff_monotonic_ns` is EOF, not main entry; absent EOF leaves timing unknown.
 `VerilatorRuntime`: decision `0086`. `TaskAcceptanceFixtureRuntime`: owned roots/fixed Git argv.
-History: `171c7dcb125f41be6b115593a753c03fbcd50428:docs/knowledge/test-subprocess-policy-adapters.md`.
-Active-runtime close reports preserve the original runtime and workspace. Actual closure, unwind and effects: reverify. Prior cases: history.
+History: `85cc24eeb184f6197f72a8275ff55f8c5f59d112:docs/knowledge/test-subprocess-policy-adapters.md`.
+Last-observation close reports preserve the canonical image after the final hold is removed. Exact closure, unwind and effects: reverify. Prior cases: history.
 Proxy: `t/fixtures/rust-tool-proxy.c` is C; Perl `t/lib/FSM/Test/RustProxyFixture.pm` builds it and the Perl harness launches a separate process to impersonate rustup resolution. Rust names the substituted tool, not the native implementation language.
 HIAL/VIAL `.19.2.3.1.2.2.5.5` owns repair/hostile controls; neutral-verifier extraction stays blocked.

@@ -1,0 +1,20 @@
+{
+  "checked_passages": [
+    "Last-observation release close qualification covers 149 cases: 1 healthy control and 148 single EIO reports, with 1813 TAP assertions.",
+    "The observed release begins with only the selected hold referencing the image.",
+    "An early close error leaves that hold intact.",
+    "The canonical image directory, source, executable bytes and metadata keep their original identities and contents.",
+    "The auditor counts image references from the stored reference records and checks the entire original image subtree.",
+    "python3 -B docs/audits/native-proxy-observation-archive-release-close-last-20260912/audit.py --verify-saved"
+  ],
+  "exact_output_absent": true,
+  "exit_code": 0,
+  "output": ".artifacts/tmp/native-proxy-release-close-last-book-20260912/book",
+  "rendered_bytes": 23454945,
+  "rendered_directories": 3,
+  "rendered_files": 98,
+  "renderer_warnings": [
+    "WARN search index is very large (13229159 bytes)"
+  ],
+  "same_volume_direct_objects": true
+}

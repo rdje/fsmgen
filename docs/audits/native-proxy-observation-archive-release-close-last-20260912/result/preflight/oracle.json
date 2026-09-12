@@ -1,0 +1,4202 @@
+{
+  "falsifiers": [
+    "lost-close",
+    "changed-error",
+    "false-success",
+    "wrong-owner",
+    "lost-unlink",
+    "lost-absence"
+  ],
+  "fixture_allocations": 0,
+  "predictions": [
+    {
+      "calls": 538,
+      "effects": {
+        "last_reference_check": {
+          "phase": "finish",
+          "state": "absent"
+        },
+        "reference_absence_verified": 1,
+        "unlink_attempted": 1,
+        "unlink_completed": 1
+      },
+      "handles": 148,
+      "index": 0,
+      "name": "healthy",
+      "prediction_sha256": "f57a8dfe5546d99b182211a3f14ecb939bb2e11a067e5a9f6eaad459204340fc",
+      "resolved": [],
+      "success": 1
+    },
+    {
+      "calls": 6,
+      "effects": {
+        "last_reference_check": null,
+        "reference_absence_verified": 0,
+        "unlink_attempted": 0,
+        "unlink_completed": 0
+      },
+      "handles": 1,
+      "index": 1,
+      "name": "single:directory|NativeProxyImageCoordination::_names#0",
+      "prediction_sha256": "cf21cba065b47d6b48d9726c4ba7c6ba4f5246ba418dfbe0a0e579444be3cdee",
+      "resolved": [
+        {
+          "address": "directory|NativeProxyImageCoordination::_names#0",
+          "close_caller": "NativeProxyImageCoordination",
+          "close_scope": "NativeProxyImageCoordination::_names",
+          "kind": "directory",
+          "label": "directory:0",
+          "occurrence": 0,
+          "open_call_id": 5,
+          "path": ".artifacts/logs/native-proxy-observation-acquisition-20260910/cases/fsmgen-bb_hICGm/retained-sources",
+          "symbol": "NativeProxyImageCoordination::_names"
+        }
+      ],
+      "success": 0
+    },
+    {
+      "calls": 17,
+      "effects": {
+        "last_reference_check": null,
+        "reference_absence_verified": 0,
+        "unlink_attempted": 0,
+        "unlink_completed": 0
+      },
+      "handles": 6,
+      "index": 2,
+      "name": "single:directory|NativeProxyImageCoordination::_names#1",
+      "prediction_sha256": "65e8d5b44c2a255248c8125c97a816b2340cf9115c7d057d6a339b1267f56061",
+      "resolved": [
+        {
+          "address": "directory|NativeProxyImageCoordination::_names#1",
+          "close_caller": "NativeProxyImageCoordination",
+          "close_scope": "NativeProxyImageCoordination::_names",
+          "kind": "directory",
+          "label": "directory:1",
+          "occurrence": 1,
+          "open_call_id": 16,
+          "path": ".artifacts/logs/native-proxy-observation-acquisition-20260910/cases/fsmgen-bb_hICGm/retained-sources",
+          "symbol": "NativeProxyImageCoordination::_names"
+        }
+      ],
+      "success": 0
+    },
+    {
+      "calls": 219,
+      "effects": {
+        "last_reference_check": null,
+        "reference_absence_verified": 0,
+        "unlink_attempted": 0,
+        "unlink_completed": 0
+      },
+      "handles": 61,
+      "index": 3,
+      "name": "single:directory|NativeProxyImageCoordination::_names#10",
+      "prediction_sha256": "fc74b3966967d55ca89b95e98bc88aff46739c3ca43e5c13fdce06a474931ed1",
+      "resolved": [
+        {
+          "address": "directory|NativeProxyImageCoordination::_names#10",
+          "close_caller": "NativeProxyImageCoordination",
+          "close_scope": "NativeProxyImageCoordination::_names",
+          "kind": "directory",
+          "label": "directory:18",
+          "occurrence": 10,
+          "open_call_id": 218,
+          "path": ".artifacts/tmp/native-proxy-image-custody/cases/fsmgen-4cU8Qp9p/images",
+          "symbol": "NativeProxyImageCoordination::_names"
+        }
+      ],
+      "success": 0
+    },
+    {
+      "calls": 220,
+      "effects": {
+        "last_reference_check": null,
+        "reference_absence_verified": 0,
+        "unlink_attempted": 0,
+        "unlink_completed": 0
+      },
+      "handles": 62,
+      "index": 4,
+      "name": "single:directory|NativeProxyImageCoordination::_names#11",
+      "prediction_sha256": "8087ac745273d805dc5eda2d7a2bf2c8479ce3ef8c3173b3daa2ae889d47418d",
+      "resolved": [
+        {
+          "address": "directory|NativeProxyImageCoordination::_names#11",
+          "close_caller": "NativeProxyImageCoordination",
+          "close_scope": "NativeProxyImageCoordination::_names",
+          "kind": "directory",
+          "label": "directory:19",
+          "occurrence": 11,
+          "open_call_id": 219,
+          "path": ".artifacts/tmp/native-proxy-image-custody/cases/fsmgen-4cU8Qp9p/references",
+          "symbol": "NativeProxyImageCoordination::_names"
+        }
+      ],
+      "success": 0
+    },
+    {
+      "calls": 283,
+      "effects": {
+        "last_reference_check": null,
+        "reference_absence_verified": 0,
+        "unlink_attempted": 0,
+        "unlink_completed": 0
+      },
+      "handles": 81,
+      "index": 5,
+      "name": "single:directory|NativeProxyImageCoordination::_names#12",
+      "prediction_sha256": "6ed72c1a7a9adf5155186b260ec801b93211f1926aadf66599aac2b758526893",
+      "resolved": [
+        {
+          "address": "directory|NativeProxyImageCoordination::_names#12",
+          "close_caller": "NativeProxyImageCoordination",
+          "close_scope": "NativeProxyImageCoordination::_names",
+          "kind": "directory",
+          "label": "directory:24",
+          "occurrence": 12,
+          "open_call_id": 282,
+          "path": ".artifacts/tmp/native-proxy-image-custody/cases/fsmgen-4cU8Qp9p/references",
+          "symbol": "NativeProxyImageCoordination::_names"
+        }
+      ],
+      "success": 0
+    },
+    {
+      "calls": 337,
+      "effects": {
+        "last_reference_check": null,
+        "reference_absence_verified": 0,
+        "unlink_attempted": 0,
+        "unlink_completed": 0
+      },
+      "handles": 98,
+      "index": 6,
+      "name": "single:directory|NativeProxyImageCoordination::_names#13",
+      "prediction_sha256": "87d4c586ce50b2c0cc2968c7bcfa0bbeccfdbbb6a460f39a0f22060683623e51",
+      "resolved": [
+        {
+          "address": "directory|NativeProxyImageCoordination::_names#13",
+          "close_caller": "NativeProxyImageCoordination",
+          "close_scope": "NativeProxyImageCoordination::_names",
+          "kind": "directory",
+          "label": "directory:29",
+          "occurrence": 13,
+          "open_call_id": 336,
+          "path": ".artifacts/logs/native-proxy-observation-acquisition-20260910/cases/fsmgen-bb_hICGm/retained-sources",
+          "symbol": "NativeProxyImageCoordination::_names"
+        }
+      ],
+      "success": 0
+    },
+    {
+      "calls": 360,
+      "effects": {
+        "last_reference_check": null,
+        "reference_absence_verified": 0,
+        "unlink_attempted": 0,
+        "unlink_completed": 0
+      },
+      "handles": 103,
+      "index": 7,
+      "name": "single:directory|NativeProxyImageCoordination::_names#14",
+      "prediction_sha256": "cd54bd7ce1506aad6803204b4b9c12d9876c7482c7b77abaaaa790f076ed3809",
+      "resolved": [
+        {
+          "address": "directory|NativeProxyImageCoordination::_names#14",
+          "close_caller": "NativeProxyImageCoordination",
+          "close_scope": "NativeProxyImageCoordination::_names",
+          "kind": "directory",
+          "label": "directory:30",
+          "occurrence": 14,
+          "open_call_id": 359,
+          "path": ".artifacts/logs/native-proxy-observation-acquisition-20260910/cases/fsmgen-bb_hICGm/retained-sources",
+          "symbol": "NativeProxyImageCoordination::_names"
+        }
+      ],
+      "success": 0
+    },
+    {
+      "calls": 411,
+      "effects": {
+        "last_reference_check": {
+          "phase": "after_unlink",
+          "state": "absent"
+        },
+        "reference_absence_verified": 1,
+        "unlink_attempted": 1,
+        "unlink_completed": 1
+      },
+      "handles": 114,
+      "index": 8,
+      "name": "single:directory|NativeProxyImageCoordination::_names#15",
+      "prediction_sha256": "6bc757f9152d0e28c127a1b75dcceed03842c42f5162eb9ec24f8d39727a7497",
+      "resolved": [
+        {
+          "address": "directory|NativeProxyImageCoordination::_names#15",
+          "close_caller": "NativeProxyImageCoordination",
+          "close_scope": "NativeProxyImageCoordination::_names",
+          "kind": "directory",
+          "label": "directory:33",
+          "occurrence": 15,
+          "open_call_id": 410,
+          "path": ".artifacts/tmp/native-proxy-image-custody/cases/fsmgen-4cU8Qp9p/images",
+          "symbol": "NativeProxyImageCoordination::_names"
+        }
+      ],
+      "success": 0
+    },
+    {
+      "calls": 412,
+      "effects": {
+        "last_reference_check": {
+          "phase": "after_unlink",
+          "state": "absent"
+        },
+        "reference_absence_verified": 1,
+        "unlink_attempted": 1,
+        "unlink_completed": 1
+      },
+      "handles": 115,
+      "index": 9,
+      "name": "single:directory|NativeProxyImageCoordination::_names#16",
+      "prediction_sha256": "a467778cb165f053f89adf01e2eca3c05fa96570fd2e994d253c4ad4b5217417",
+      "resolved": [
+        {
+          "address": "directory|NativeProxyImageCoordination::_names#16",
+          "close_caller": "NativeProxyImageCoordination",
+          "close_scope": "NativeProxyImageCoordination::_names",
+          "kind": "directory",
+          "label": "directory:34",
+          "occurrence": 16,
+          "open_call_id": 411,
+          "path": ".artifacts/tmp/native-proxy-image-custody/cases/fsmgen-4cU8Qp9p/references",
+          "symbol": "NativeProxyImageCoordination::_names"
+        }
+      ],
+      "success": 0
+    },
+    {
+      "calls": 446,
+      "effects": {
+        "last_reference_check": {
+          "phase": "after_unlink",
+          "state": "absent"
+        },
+        "reference_absence_verified": 1,
+        "unlink_attempted": 1,
+        "unlink_completed": 1
+      },
+      "handles": 125,
+      "index": 10,
+      "name": "single:directory|NativeProxyImageCoordination::_names#17",
+      "prediction_sha256": "fb8d0c22f5ff25eb0c60bd783e76eea07497627bda64bccf28ec3ee8aa479fcb",
+      "resolved": [
+        {
+          "address": "directory|NativeProxyImageCoordination::_names#17",
+          "close_caller": "NativeProxyImageCoordination",
+          "close_scope": "NativeProxyImageCoordination::_names",
+          "kind": "directory",
+          "label": "directory:37",
+          "occurrence": 17,
+          "open_call_id": 445,
+          "path": ".artifacts/tmp/native-proxy-image-custody/cases/fsmgen-4cU8Qp9p/references",
+          "symbol": "NativeProxyImageCoordination::_names"
+        }
+      ],
+      "success": 0
+    },
+    {
+      "calls": 497,
+      "effects": {
+        "last_reference_check": {
+          "phase": "after_unlink",
+          "state": "absent"
+        },
+        "reference_absence_verified": 1,
+        "unlink_attempted": 1,
+        "unlink_completed": 1
+      },
+      "handles": 141,
+      "index": 11,
+      "name": "single:directory|NativeProxyImageCoordination::_names#18",
+      "prediction_sha256": "1efa7cc612bcdb7e54d4ca07a1082f8134345a9af18a2e925177e85835c50d87",
+      "resolved": [
+        {
+          "address": "directory|NativeProxyImageCoordination::_names#18",
+          "close_caller": "NativeProxyImageCoordination",
+          "close_scope": "NativeProxyImageCoordination::_names",
+          "kind": "directory",
+          "label": "directory:42",
+          "occurrence": 18,
+          "open_call_id": 496,
+          "path": ".artifacts/logs/native-proxy-observation-acquisition-20260910/cases/fsmgen-bb_hICGm/retained-sources",
+          "symbol": "NativeProxyImageCoordination::_names"
+        }
+      ],
+      "success": 0
+    },
+    {
+      "calls": 520,
+      "effects": {
+        "last_reference_check": {
+          "phase": "after_unlink",
+          "state": "absent"
+        },
+        "reference_absence_verified": 1,
+        "unlink_attempted": 1,
+        "unlink_completed": 1
+      },
+      "handles": 146,
+      "index": 12,
+      "name": "single:directory|NativeProxyImageCoordination::_names#19",
+      "prediction_sha256": "c0fc590a58183bb2d4d4b615282f8dea64e5e06f0cce9e9c4ee21c0385f07beb",
+      "resolved": [
+        {
+          "address": "directory|NativeProxyImageCoordination::_names#19",
+          "close_caller": "NativeProxyImageCoordination",
+          "close_scope": "NativeProxyImageCoordination::_names",
+          "kind": "directory",
+          "label": "directory:43",
+          "occurrence": 19,
+          "open_call_id": 519,
+          "path": ".artifacts/logs/native-proxy-observation-acquisition-20260910/cases/fsmgen-bb_hICGm/retained-sources",
+          "symbol": "NativeProxyImageCoordination::_names"
+        }
+      ],
+      "success": 0
+    },
+    {
+      "calls": 40,
+      "effects": {
+        "last_reference_check": null,
+        "reference_absence_verified": 0,
+        "unlink_attempted": 0,
+        "unlink_completed": 0
+      },
+      "handles": 11,
+      "index": 13,
+      "name": "single:directory|NativeProxyImageCoordination::_names#2",
+      "prediction_sha256": "5334ff2d8e82061f078306ebf5a9b45513cb85cef86736d0094c6418b0390685",
+      "resolved": [
+        {
+          "address": "directory|NativeProxyImageCoordination::_names#2",
+          "close_caller": "NativeProxyImageCoordination",
+          "close_scope": "NativeProxyImageCoordination::_names",
+          "kind": "directory",
+          "label": "directory:2",
+          "occurrence": 2,
+          "open_call_id": 39,
+          "path": ".artifacts/logs/native-proxy-observation-acquisition-20260910/cases/fsmgen-bb_hICGm/retained-sources",
+          "symbol": "NativeProxyImageCoordination::_names"
+        }
+      ],
+      "success": 0
+    },
+    {
+      "calls": 531,
+      "effects": {
+        "last_reference_check": {
+          "phase": "finish",
+          "state": "absent"
+        },
+        "reference_absence_verified": 1,
+        "unlink_attempted": 1,
+        "unlink_completed": 1
+      },
+      "handles": 147,
+      "index": 14,
+      "name": "single:directory|NativeProxyImageCoordination::_names#20",
+      "prediction_sha256": "8daf1da2209ff11bca249fdddd5af6f85966afd08ae40e8f3bca8aae96262d9b",
+      "resolved": [
+        {
+          "address": "directory|NativeProxyImageCoordination::_names#20",
+          "close_caller": "NativeProxyImageCoordination",
+          "close_scope": "NativeProxyImageCoordination::_names",
+          "kind": "directory",
+          "label": "directory:44",
+          "occurrence": 20,
+          "open_call_id": 530,
+          "path": ".artifacts/tmp/native-proxy-image-custody/cases/fsmgen-4cU8Qp9p",
+          "symbol": "NativeProxyImageCoordination::_names"
+        }
+      ],
+      "success": 0
+    },
+    {
+      "calls": 534,
+      "effects": {
+        "last_reference_check": {
+          "phase": "finish",
+          "state": "absent"
+        },
+        "reference_absence_verified": 1,
+        "unlink_attempted": 1,
+        "unlink_completed": 1
+      },
+      "handles": 148,
+      "index": 15,
+      "name": "single:directory|NativeProxyImageCoordination::_names#21",
+      "prediction_sha256": "911f005322139d6752f13cbb294e66086e0fc2a59125cdd1501652b699cbe534",
+      "resolved": [
+        {
+          "address": "directory|NativeProxyImageCoordination::_names#21",
+          "close_caller": "NativeProxyImageCoordination",
+          "close_scope": "NativeProxyImageCoordination::_names",
+          "kind": "directory",
+          "label": "directory:45",
+          "occurrence": 21,
+          "open_call_id": 533,
+          "path": ".artifacts/tmp/native-proxy-image-custody/cases/fsmgen-4cU8Qp9p",
+          "symbol": "NativeProxyImageCoordination::_names"
+        }
+      ],
+      "success": 0
+    },
+    {
+      "calls": 54,
+      "effects": {
+        "last_reference_check": null,
+        "reference_absence_verified": 0,
+        "unlink_attempted": 0,
+        "unlink_completed": 0
+      },
+      "handles": 13,
+      "index": 16,
+      "name": "single:directory|NativeProxyImageCoordination::_names#3",
+      "prediction_sha256": "fdcb6506a17cad869a94a0dd4a93f3da2e95a0d1eb275a2d330d64b2b21e1abd",
+      "resolved": [
+        {
+          "address": "directory|NativeProxyImageCoordination::_names#3",
+          "close_caller": "NativeProxyImageCoordination",
+          "close_scope": "NativeProxyImageCoordination::_names",
+          "kind": "directory",
+          "label": "directory:3",
+          "occurrence": 3,
+          "open_call_id": 53,
+          "path": ".artifacts/tmp/native-proxy-image-custody/cases/fsmgen-4cU8Qp9p",
+          "symbol": "NativeProxyImageCoordination::_names"
+        }
+      ],
+      "success": 0
+    },
+    {
+      "calls": 57,
+      "effects": {
+        "last_reference_check": null,
+        "reference_absence_verified": 0,
+        "unlink_attempted": 0,
+        "unlink_completed": 0
+      },
+      "handles": 14,
+      "index": 17,
+      "name": "single:directory|NativeProxyImageCoordination::_names#4",
+      "prediction_sha256": "4503c8c9166c306aade5098b89307060f4facde0b0993dd877cdfc7d8748bcfe",
+      "resolved": [
+        {
+          "address": "directory|NativeProxyImageCoordination::_names#4",
+          "close_caller": "NativeProxyImageCoordination",
+          "close_scope": "NativeProxyImageCoordination::_names",
+          "kind": "directory",
+          "label": "directory:4",
+          "occurrence": 4,
+          "open_call_id": 56,
+          "path": ".artifacts/tmp/native-proxy-image-custody/cases/fsmgen-4cU8Qp9p",
+          "symbol": "NativeProxyImageCoordination::_names"
+        }
+      ],
+      "success": 0
+    },
+    {
+      "calls": 61,
+      "effects": {
+        "last_reference_check": null,
+        "reference_absence_verified": 0,
+        "unlink_attempted": 0,
+        "unlink_completed": 0
+      },
+      "handles": 15,
+      "index": 18,
+      "name": "single:directory|NativeProxyImageCoordination::_names#5",
+      "prediction_sha256": "ca352074cee4524296f97d6392daaca655a240de825fb30bc0b1076a49964d2b",
+      "resolved": [
+        {
+          "address": "directory|NativeProxyImageCoordination::_names#5",
+          "close_caller": "NativeProxyImageCoordination",
+          "close_scope": "NativeProxyImageCoordination::_names",
+          "kind": "directory",
+          "label": "directory:5",
+          "occurrence": 5,
+          "open_call_id": 60,
+          "path": ".artifacts/tmp/native-proxy-image-custody/cases/fsmgen-4cU8Qp9p/images",
+          "symbol": "NativeProxyImageCoordination::_names"
+        }
+      ],
+      "success": 0
+    },
+    {
+      "calls": 62,
+      "effects": {
+        "last_reference_check": null,
+        "reference_absence_verified": 0,
+        "unlink_attempted": 0,
+        "unlink_completed": 0
+      },
+      "handles": 16,
+      "index": 19,
+      "name": "single:directory|NativeProxyImageCoordination::_names#6",
+      "prediction_sha256": "c6d160dcdc163e769ce11c033f280b813cf527e49d632a56a1dfb179a714985b",
+      "resolved": [
+        {
+          "address": "directory|NativeProxyImageCoordination::_names#6",
+          "close_caller": "NativeProxyImageCoordination",
+          "close_scope": "NativeProxyImageCoordination::_names",
+          "kind": "directory",
+          "label": "directory:6",
+          "occurrence": 6,
+          "open_call_id": 61,
+          "path": ".artifacts/tmp/native-proxy-image-custody/cases/fsmgen-4cU8Qp9p/references",
+          "symbol": "NativeProxyImageCoordination::_names"
+        }
+      ],
+      "success": 0
+    },
+    {
+      "calls": 125,
+      "effects": {
+        "last_reference_check": null,
+        "reference_absence_verified": 0,
+        "unlink_attempted": 0,
+        "unlink_completed": 0
+      },
+      "handles": 35,
+      "index": 20,
+      "name": "single:directory|NativeProxyImageCoordination::_names#7",
+      "prediction_sha256": "4543adbe478dc49827342c9d8e7a6b24705e50a549d2276d2e6a7112ed8041a7",
+      "resolved": [
+        {
+          "address": "directory|NativeProxyImageCoordination::_names#7",
+          "close_caller": "NativeProxyImageCoordination",
+          "close_scope": "NativeProxyImageCoordination::_names",
+          "kind": "directory",
+          "label": "directory:11",
+          "occurrence": 7,
+          "open_call_id": 124,
+          "path": ".artifacts/tmp/native-proxy-image-custody/cases/fsmgen-4cU8Qp9p/references",
+          "symbol": "NativeProxyImageCoordination::_names"
+        }
+      ],
+      "success": 0
+    },
+    {
+      "calls": 180,
+      "effects": {
+        "last_reference_check": null,
+        "reference_absence_verified": 0,
+        "unlink_attempted": 0,
+        "unlink_completed": 0
+      },
+      "handles": 52,
+      "index": 21,
+      "name": "single:directory|NativeProxyImageCoordination::_names#8",
+      "prediction_sha256": "76a85677919f3c3f0d554324a9ce860b5eb398dc3fa8604185e83d6255273c71",
+      "resolved": [
+        {
+          "address": "directory|NativeProxyImageCoordination::_names#8",
+          "close_caller": "NativeProxyImageCoordination",
+          "close_scope": "NativeProxyImageCoordination::_names",
+          "kind": "directory",
+          "label": "directory:16",
+          "occurrence": 8,
+          "open_call_id": 179,
+          "path": ".artifacts/logs/native-proxy-observation-acquisition-20260910/cases/fsmgen-bb_hICGm/retained-sources",
+          "symbol": "NativeProxyImageCoordination::_names"
+        }
+      ],
+      "success": 0
+    },
+    {
+      "calls": 203,
+      "effects": {
+        "last_reference_check": null,
+        "reference_absence_verified": 0,
+        "unlink_attempted": 0,
+        "unlink_completed": 0
+      },
+      "handles": 57,
+      "index": 22,
+      "name": "single:directory|NativeProxyImageCoordination::_names#9",
+      "prediction_sha256": "a575c5a5df7bc246e20c64df547bb5905a2a7de8461a9133754fecffa27d8c1d",
+      "resolved": [
+        {
+          "address": "directory|NativeProxyImageCoordination::_names#9",
+          "close_caller": "NativeProxyImageCoordination",
+          "close_scope": "NativeProxyImageCoordination::_names",
+          "kind": "directory",
+          "label": "directory:17",
+          "occurrence": 9,
+          "open_call_id": 202,
+          "path": ".artifacts/logs/native-proxy-observation-acquisition-20260910/cases/fsmgen-bb_hICGm/retained-sources",
+          "symbol": "NativeProxyImageCoordination::_names"
+        }
+      ],
+      "success": 0
+    },
+    {
+      "calls": 81,
+      "effects": {
+        "last_reference_check": null,
+        "reference_absence_verified": 0,
+        "unlink_attempted": 0,
+        "unlink_completed": 0
+      },
+      "handles": 22,
+      "index": 23,
+      "name": "single:directory|NativeProxyImageCustody::_members#0",
+      "prediction_sha256": "d96ad024e70665ce8e7726f70e0901d77ce01610a5107f280ba4ec27abff3743",
+      "resolved": [
+        {
+          "address": "directory|NativeProxyImageCustody::_members#0",
+          "close_caller": "NativeProxyImageCustody",
+          "close_scope": "NativeProxyImageCustody::_members",
+          "kind": "directory",
+          "label": "directory:7",
+          "occurrence": 0,
+          "open_call_id": 80,
+          "path": ".artifacts/tmp/native-proxy-image-custody/cases/fsmgen-4cU8Qp9p/images/efd497b0e847884b3c1cfcde14d8b645991c52ebab90c54e58984ccbc303c146",
+          "symbol": "NativeProxyImageCustody::_members"
+        }
+      ],
+      "success": 0
+    },
+    {
+      "calls": 85,
+      "effects": {
+        "last_reference_check": null,
+        "reference_absence_verified": 0,
+        "unlink_attempted": 0,
+        "unlink_completed": 0
+      },
+      "handles": 26,
+      "index": 24,
+      "name": "single:directory|NativeProxyImageCustody::_members#1",
+      "prediction_sha256": "92cbfccfd99462254ad5330caedeeec9dfb7a89a3341405d21eab9c1fec5fb7d",
+      "resolved": [
+        {
+          "address": "directory|NativeProxyImageCustody::_members#1",
+          "close_caller": "NativeProxyImageCustody",
+          "close_scope": "NativeProxyImageCustody::_members",
+          "kind": "directory",
+          "label": "directory:8",
+          "occurrence": 1,
+          "open_call_id": 84,
+          "path": ".artifacts/tmp/native-proxy-image-custody/cases/fsmgen-4cU8Qp9p/images/efd497b0e847884b3c1cfcde14d8b645991c52ebab90c54e58984ccbc303c146",
+          "symbol": "NativeProxyImageCustody::_members"
+        }
+      ],
+      "success": 0
+    },
+    {
+      "calls": 266,
+      "effects": {
+        "last_reference_check": null,
+        "reference_absence_verified": 0,
+        "unlink_attempted": 0,
+        "unlink_completed": 0
+      },
+      "handles": 76,
+      "index": 25,
+      "name": "single:directory|NativeProxyImageCustody::_members#10",
+      "prediction_sha256": "a2c4836c7e73833258bce1183d4c35eafabdf100ded62144e138e4b5e8d1e94a",
+      "resolved": [
+        {
+          "address": "directory|NativeProxyImageCustody::_members#10",
+          "close_caller": "NativeProxyImageCustody",
+          "close_scope": "NativeProxyImageCustody::_members",
+          "kind": "directory",
+          "label": "directory:22",
+          "occurrence": 10,
+          "open_call_id": 265,
+          "path": ".artifacts/tmp/native-proxy-image-custody/cases/fsmgen-4cU8Qp9p/images/183f0d4d18572a250ac97756196732d884f1a2217a23dcbf7df6390d03302187",
+          "symbol": "NativeProxyImageCustody::_members"
+        }
+      ],
+      "success": 0
+    },
+    {
+      "calls": 270,
+      "effects": {
+        "last_reference_check": null,
+        "reference_absence_verified": 0,
+        "unlink_attempted": 0,
+        "unlink_completed": 0
+      },
+      "handles": 80,
+      "index": 26,
+      "name": "single:directory|NativeProxyImageCustody::_members#11",
+      "prediction_sha256": "a504b76e55a91189629ef83ca25b992bf5b0bd07d64538611372ed373f6dfeaa",
+      "resolved": [
+        {
+          "address": "directory|NativeProxyImageCustody::_members#11",
+          "close_caller": "NativeProxyImageCustody",
+          "close_scope": "NativeProxyImageCustody::_members",
+          "kind": "directory",
+          "label": "directory:23",
+          "occurrence": 11,
+          "open_call_id": 269,
+          "path": ".artifacts/tmp/native-proxy-image-custody/cases/fsmgen-4cU8Qp9p/images/183f0d4d18572a250ac97756196732d884f1a2217a23dcbf7df6390d03302187",
+          "symbol": "NativeProxyImageCustody::_members"
+        }
+      ],
+      "success": 0
+    },
+    {
+      "calls": 298,
+      "effects": {
+        "last_reference_check": null,
+        "reference_absence_verified": 0,
+        "unlink_attempted": 0,
+        "unlink_completed": 0
+      },
+      "handles": 86,
+      "index": 27,
+      "name": "single:directory|NativeProxyImageCustody::_members#12",
+      "prediction_sha256": "1b30720a0a4338e730ae7bf7cf7a134ee8562df782972020508e5b4bd7cdca53",
+      "resolved": [
+        {
+          "address": "directory|NativeProxyImageCustody::_members#12",
+          "close_caller": "NativeProxyImageCustody",
+          "close_scope": "NativeProxyImageCustody::_members",
+          "kind": "directory",
+          "label": "directory:25",
+          "occurrence": 12,
+          "open_call_id": 297,
+          "path": ".artifacts/tmp/native-proxy-image-custody/cases/fsmgen-4cU8Qp9p/images/183f0d4d18572a250ac97756196732d884f1a2217a23dcbf7df6390d03302187",
+          "symbol": "NativeProxyImageCustody::_members"
+        }
+      ],
+      "success": 0
+    },
+    {
+      "calls": 302,
+      "effects": {
+        "last_reference_check": null,
+        "reference_absence_verified": 0,
+        "unlink_attempted": 0,
+        "unlink_completed": 0
+      },
+      "handles": 90,
+      "index": 28,
+      "name": "single:directory|NativeProxyImageCustody::_members#13",
+      "prediction_sha256": "2d2694222f9b7ae577a12025d69cb6c1bbaa0e55e6e12f3d5d571e9e834e61ff",
+      "resolved": [
+        {
+          "address": "directory|NativeProxyImageCustody::_members#13",
+          "close_caller": "NativeProxyImageCustody",
+          "close_scope": "NativeProxyImageCustody::_members",
+          "kind": "directory",
+          "label": "directory:26",
+          "occurrence": 13,
+          "open_call_id": 301,
+          "path": ".artifacts/tmp/native-proxy-image-custody/cases/fsmgen-4cU8Qp9p/images/183f0d4d18572a250ac97756196732d884f1a2217a23dcbf7df6390d03302187",
+          "symbol": "NativeProxyImageCustody::_members"
+        }
+      ],
+      "success": 0
+    },
+    {
+      "calls": 320,
+      "effects": {
+        "last_reference_check": null,
+        "reference_absence_verified": 0,
+        "unlink_attempted": 0,
+        "unlink_completed": 0
+      },
+      "handles": 93,
+      "index": 29,
+      "name": "single:directory|NativeProxyImageCustody::_members#14",
+      "prediction_sha256": "3117ea4a089ac2fa3bae4066bb0f053fa7c2fdb0248d4bcbcc8f06c60f3831d6",
+      "resolved": [
+        {
+          "address": "directory|NativeProxyImageCustody::_members#14",
+          "close_caller": "NativeProxyImageCustody",
+          "close_scope": "NativeProxyImageCustody::_members",
+          "kind": "directory",
+          "label": "directory:27",
+          "occurrence": 14,
+          "open_call_id": 319,
+          "path": ".artifacts/tmp/native-proxy-image-custody/cases/fsmgen-4cU8Qp9p/images/efd497b0e847884b3c1cfcde14d8b645991c52ebab90c54e58984ccbc303c146",
+          "symbol": "NativeProxyImageCustody::_members"
+        }
+      ],
+      "success": 0
+    },
+    {
+      "calls": 324,
+      "effects": {
+        "last_reference_check": null,
+        "reference_absence_verified": 0,
+        "unlink_attempted": 0,
+        "unlink_completed": 0
+      },
+      "handles": 97,
+      "index": 30,
+      "name": "single:directory|NativeProxyImageCustody::_members#15",
+      "prediction_sha256": "8d07fc90ce278b0a015705bc4a64b85ffe75509d0fb1ec1480ea9f69dd721547",
+      "resolved": [
+        {
+          "address": "directory|NativeProxyImageCustody::_members#15",
+          "close_caller": "NativeProxyImageCustody",
+          "close_scope": "NativeProxyImageCustody::_members",
+          "kind": "directory",
+          "label": "directory:28",
+          "occurrence": 15,
+          "open_call_id": 323,
+          "path": ".artifacts/tmp/native-proxy-image-custody/cases/fsmgen-4cU8Qp9p/images/efd497b0e847884b3c1cfcde14d8b645991c52ebab90c54e58984ccbc303c146",
+          "symbol": "NativeProxyImageCustody::_members"
+        }
+      ],
+      "success": 0
+    },
+    {
+      "calls": 376,
+      "effects": {
+        "last_reference_check": null,
+        "reference_absence_verified": 0,
+        "unlink_attempted": 0,
+        "unlink_completed": 0
+      },
+      "handles": 106,
+      "index": 31,
+      "name": "single:directory|NativeProxyImageCustody::_members#16",
+      "prediction_sha256": "7add4f46e8b3c67647e662ca50d929edad05ad05c721b5d3425d6d5177115631",
+      "resolved": [
+        {
+          "address": "directory|NativeProxyImageCustody::_members#16",
+          "close_caller": "NativeProxyImageCustody",
+          "close_scope": "NativeProxyImageCustody::_members",
+          "kind": "directory",
+          "label": "directory:31",
+          "occurrence": 16,
+          "open_call_id": 375,
+          "path": ".artifacts/tmp/native-proxy-image-custody/cases/fsmgen-4cU8Qp9p/images/efd497b0e847884b3c1cfcde14d8b645991c52ebab90c54e58984ccbc303c146",
+          "symbol": "NativeProxyImageCustody::_members"
+        }
+      ],
+      "success": 0
+    },
+    {
+      "calls": 380,
+      "effects": {
+        "last_reference_check": null,
+        "reference_absence_verified": 0,
+        "unlink_attempted": 0,
+        "unlink_completed": 0
+      },
+      "handles": 110,
+      "index": 32,
+      "name": "single:directory|NativeProxyImageCustody::_members#17",
+      "prediction_sha256": "c5bfe0ff55b3a89e5a75bdb8dbd0f49637dc2c05a75dee6e742d8376c29564c0",
+      "resolved": [
+        {
+          "address": "directory|NativeProxyImageCustody::_members#17",
+          "close_caller": "NativeProxyImageCustody",
+          "close_scope": "NativeProxyImageCustody::_members",
+          "kind": "directory",
+          "label": "directory:32",
+          "occurrence": 17,
+          "open_call_id": 379,
+          "path": ".artifacts/tmp/native-proxy-image-custody/cases/fsmgen-4cU8Qp9p/images/efd497b0e847884b3c1cfcde14d8b645991c52ebab90c54e58984ccbc303c146",
+          "symbol": "NativeProxyImageCustody::_members"
+        }
+      ],
+      "success": 0
+    },
+    {
+      "calls": 429,
+      "effects": {
+        "last_reference_check": {
+          "phase": "after_unlink",
+          "state": "absent"
+        },
+        "reference_absence_verified": 1,
+        "unlink_attempted": 1,
+        "unlink_completed": 1
+      },
+      "handles": 120,
+      "index": 33,
+      "name": "single:directory|NativeProxyImageCustody::_members#18",
+      "prediction_sha256": "d8b1ec3613e39865c3511ca067beada1e21b72c2efc6c6858277f3dbce2835b4",
+      "resolved": [
+        {
+          "address": "directory|NativeProxyImageCustody::_members#18",
+          "close_caller": "NativeProxyImageCustody",
+          "close_scope": "NativeProxyImageCustody::_members",
+          "kind": "directory",
+          "label": "directory:35",
+          "occurrence": 18,
+          "open_call_id": 428,
+          "path": ".artifacts/tmp/native-proxy-image-custody/cases/fsmgen-4cU8Qp9p/images/183f0d4d18572a250ac97756196732d884f1a2217a23dcbf7df6390d03302187",
+          "symbol": "NativeProxyImageCustody::_members"
+        }
+      ],
+      "success": 0
+    },
+    {
+      "calls": 433,
+      "effects": {
+        "last_reference_check": {
+          "phase": "after_unlink",
+          "state": "absent"
+        },
+        "reference_absence_verified": 1,
+        "unlink_attempted": 1,
+        "unlink_completed": 1
+      },
+      "handles": 124,
+      "index": 34,
+      "name": "single:directory|NativeProxyImageCustody::_members#19",
+      "prediction_sha256": "7091cb52085c760053d7880dc0c0f968d52a25f43035f8d91775086cff401d3b",
+      "resolved": [
+        {
+          "address": "directory|NativeProxyImageCustody::_members#19",
+          "close_caller": "NativeProxyImageCustody",
+          "close_scope": "NativeProxyImageCustody::_members",
+          "kind": "directory",
+          "label": "directory:36",
+          "occurrence": 19,
+          "open_call_id": 432,
+          "path": ".artifacts/tmp/native-proxy-image-custody/cases/fsmgen-4cU8Qp9p/images/183f0d4d18572a250ac97756196732d884f1a2217a23dcbf7df6390d03302187",
+          "symbol": "NativeProxyImageCustody::_members"
+        }
+      ],
+      "success": 0
+    },
+    {
+      "calls": 108,
+      "effects": {
+        "last_reference_check": null,
+        "reference_absence_verified": 0,
+        "unlink_attempted": 0,
+        "unlink_completed": 0
+      },
+      "handles": 30,
+      "index": 35,
+      "name": "single:directory|NativeProxyImageCustody::_members#2",
+      "prediction_sha256": "1a20e5a4afca791a1998d7b14af840c137bea54d2b55343fa125b914de312af5",
+      "resolved": [
+        {
+          "address": "directory|NativeProxyImageCustody::_members#2",
+          "close_caller": "NativeProxyImageCustody",
+          "close_scope": "NativeProxyImageCustody::_members",
+          "kind": "directory",
+          "label": "directory:9",
+          "occurrence": 2,
+          "open_call_id": 107,
+          "path": ".artifacts/tmp/native-proxy-image-custody/cases/fsmgen-4cU8Qp9p/images/183f0d4d18572a250ac97756196732d884f1a2217a23dcbf7df6390d03302187",
+          "symbol": "NativeProxyImageCustody::_members"
+        }
+      ],
+      "success": 0
+    },
+    {
+      "calls": 458,
+      "effects": {
+        "last_reference_check": {
+          "phase": "after_unlink",
+          "state": "absent"
+        },
+        "reference_absence_verified": 1,
+        "unlink_attempted": 1,
+        "unlink_completed": 1
+      },
+      "handles": 129,
+      "index": 36,
+      "name": "single:directory|NativeProxyImageCustody::_members#20",
+      "prediction_sha256": "e9229f41249b7d4e011410f666925fcfddedf04a0fe5b84ba427b736f84dfa42",
+      "resolved": [
+        {
+          "address": "directory|NativeProxyImageCustody::_members#20",
+          "close_caller": "NativeProxyImageCustody",
+          "close_scope": "NativeProxyImageCustody::_members",
+          "kind": "directory",
+          "label": "directory:38",
+          "occurrence": 20,
+          "open_call_id": 457,
+          "path": ".artifacts/tmp/native-proxy-image-custody/cases/fsmgen-4cU8Qp9p/images/183f0d4d18572a250ac97756196732d884f1a2217a23dcbf7df6390d03302187",
+          "symbol": "NativeProxyImageCustody::_members"
+        }
+      ],
+      "success": 0
+    },
+    {
+      "calls": 462,
+      "effects": {
+        "last_reference_check": {
+          "phase": "after_unlink",
+          "state": "absent"
+        },
+        "reference_absence_verified": 1,
+        "unlink_attempted": 1,
+        "unlink_completed": 1
+      },
+      "handles": 133,
+      "index": 37,
+      "name": "single:directory|NativeProxyImageCustody::_members#21",
+      "prediction_sha256": "caab771448c572b1b545d82c1b27ed925aacbb38b2c4e89b86138c9e16a936d0",
+      "resolved": [
+        {
+          "address": "directory|NativeProxyImageCustody::_members#21",
+          "close_caller": "NativeProxyImageCustody",
+          "close_scope": "NativeProxyImageCustody::_members",
+          "kind": "directory",
+          "label": "directory:39",
+          "occurrence": 21,
+          "open_call_id": 461,
+          "path": ".artifacts/tmp/native-proxy-image-custody/cases/fsmgen-4cU8Qp9p/images/183f0d4d18572a250ac97756196732d884f1a2217a23dcbf7df6390d03302187",
+          "symbol": "NativeProxyImageCustody::_members"
+        }
+      ],
+      "success": 0
+    },
+    {
+      "calls": 481,
+      "effects": {
+        "last_reference_check": {
+          "phase": "after_unlink",
+          "state": "absent"
+        },
+        "reference_absence_verified": 1,
+        "unlink_attempted": 1,
+        "unlink_completed": 1
+      },
+      "handles": 136,
+      "index": 38,
+      "name": "single:directory|NativeProxyImageCustody::_members#22",
+      "prediction_sha256": "cb3033757cd44aff01196dcb71ab53c765c611b25f42aa52e17673ef83d993ba",
+      "resolved": [
+        {
+          "address": "directory|NativeProxyImageCustody::_members#22",
+          "close_caller": "NativeProxyImageCustody",
+          "close_scope": "NativeProxyImageCustody::_members",
+          "kind": "directory",
+          "label": "directory:40",
+          "occurrence": 22,
+          "open_call_id": 480,
+          "path": ".artifacts/tmp/native-proxy-image-custody/cases/fsmgen-4cU8Qp9p/images/efd497b0e847884b3c1cfcde14d8b645991c52ebab90c54e58984ccbc303c146",
+          "symbol": "NativeProxyImageCustody::_members"
+        }
+      ],
+      "success": 0
+    },
+    {
+      "calls": 485,
+      "effects": {
+        "last_reference_check": {
+          "phase": "after_unlink",
+          "state": "absent"
+        },
+        "reference_absence_verified": 1,
+        "unlink_attempted": 1,
+        "unlink_completed": 1
+      },
+      "handles": 140,
+      "index": 39,
+      "name": "single:directory|NativeProxyImageCustody::_members#23",
+      "prediction_sha256": "d3228c3c8eeb3dc449861edf7726686034b47d08b1e8f602b27149ffc7de8c29",
+      "resolved": [
+        {
+          "address": "directory|NativeProxyImageCustody::_members#23",
+          "close_caller": "NativeProxyImageCustody",
+          "close_scope": "NativeProxyImageCustody::_members",
+          "kind": "directory",
+          "label": "directory:41",
+          "occurrence": 23,
+          "open_call_id": 484,
+          "path": ".artifacts/tmp/native-proxy-image-custody/cases/fsmgen-4cU8Qp9p/images/efd497b0e847884b3c1cfcde14d8b645991c52ebab90c54e58984ccbc303c146",
+          "symbol": "NativeProxyImageCustody::_members"
+        }
+      ],
+      "success": 0
+    },
+    {
+      "calls": 112,
+      "effects": {
+        "last_reference_check": null,
+        "reference_absence_verified": 0,
+        "unlink_attempted": 0,
+        "unlink_completed": 0
+      },
+      "handles": 34,
+      "index": 40,
+      "name": "single:directory|NativeProxyImageCustody::_members#3",
+      "prediction_sha256": "d43381fdbc0432cf570f06d160f72e4aa61071898d373b1b1ccb397cfbdc82a9",
+      "resolved": [
+        {
+          "address": "directory|NativeProxyImageCustody::_members#3",
+          "close_caller": "NativeProxyImageCustody",
+          "close_scope": "NativeProxyImageCustody::_members",
+          "kind": "directory",
+          "label": "directory:10",
+          "occurrence": 3,
+          "open_call_id": 111,
+          "path": ".artifacts/tmp/native-proxy-image-custody/cases/fsmgen-4cU8Qp9p/images/183f0d4d18572a250ac97756196732d884f1a2217a23dcbf7df6390d03302187",
+          "symbol": "NativeProxyImageCustody::_members"
+        }
+      ],
+      "success": 0
+    },
+    {
+      "calls": 140,
+      "effects": {
+        "last_reference_check": null,
+        "reference_absence_verified": 0,
+        "unlink_attempted": 0,
+        "unlink_completed": 0
+      },
+      "handles": 40,
+      "index": 41,
+      "name": "single:directory|NativeProxyImageCustody::_members#4",
+      "prediction_sha256": "97e14543244d7c6c5e16a85bd1096c3176d51a416ce17ed860d208338c62834c",
+      "resolved": [
+        {
+          "address": "directory|NativeProxyImageCustody::_members#4",
+          "close_caller": "NativeProxyImageCustody",
+          "close_scope": "NativeProxyImageCustody::_members",
+          "kind": "directory",
+          "label": "directory:12",
+          "occurrence": 4,
+          "open_call_id": 139,
+          "path": ".artifacts/tmp/native-proxy-image-custody/cases/fsmgen-4cU8Qp9p/images/183f0d4d18572a250ac97756196732d884f1a2217a23dcbf7df6390d03302187",
+          "symbol": "NativeProxyImageCustody::_members"
+        }
+      ],
+      "success": 0
+    },
+    {
+      "calls": 144,
+      "effects": {
+        "last_reference_check": null,
+        "reference_absence_verified": 0,
+        "unlink_attempted": 0,
+        "unlink_completed": 0
+      },
+      "handles": 44,
+      "index": 42,
+      "name": "single:directory|NativeProxyImageCustody::_members#5",
+      "prediction_sha256": "cac0f209704eeeb1485795ca7176edfc0bd9e1d5a96d883fc8a87acb50dc3e12",
+      "resolved": [
+        {
+          "address": "directory|NativeProxyImageCustody::_members#5",
+          "close_caller": "NativeProxyImageCustody",
+          "close_scope": "NativeProxyImageCustody::_members",
+          "kind": "directory",
+          "label": "directory:13",
+          "occurrence": 5,
+          "open_call_id": 143,
+          "path": ".artifacts/tmp/native-proxy-image-custody/cases/fsmgen-4cU8Qp9p/images/183f0d4d18572a250ac97756196732d884f1a2217a23dcbf7df6390d03302187",
+          "symbol": "NativeProxyImageCustody::_members"
+        }
+      ],
+      "success": 0
+    },
+    {
+      "calls": 162,
+      "effects": {
+        "last_reference_check": null,
+        "reference_absence_verified": 0,
+        "unlink_attempted": 0,
+        "unlink_completed": 0
+      },
+      "handles": 47,
+      "index": 43,
+      "name": "single:directory|NativeProxyImageCustody::_members#6",
+      "prediction_sha256": "1a4bcd8ef6233e9a524aa2aea103b21e46450eb48e880dd16e571bb8f31a7b9a",
+      "resolved": [
+        {
+          "address": "directory|NativeProxyImageCustody::_members#6",
+          "close_caller": "NativeProxyImageCustody",
+          "close_scope": "NativeProxyImageCustody::_members",
+          "kind": "directory",
+          "label": "directory:14",
+          "occurrence": 6,
+          "open_call_id": 161,
+          "path": ".artifacts/tmp/native-proxy-image-custody/cases/fsmgen-4cU8Qp9p/images/efd497b0e847884b3c1cfcde14d8b645991c52ebab90c54e58984ccbc303c146",
+          "symbol": "NativeProxyImageCustody::_members"
+        }
+      ],
+      "success": 0
+    },
+    {
+      "calls": 166,
+      "effects": {
+        "last_reference_check": null,
+        "reference_absence_verified": 0,
+        "unlink_attempted": 0,
+        "unlink_completed": 0
+      },
+      "handles": 51,
+      "index": 44,
+      "name": "single:directory|NativeProxyImageCustody::_members#7",
+      "prediction_sha256": "efcd6f7b905a659cd8412dbc23056a471a709d23f81ba073fbdc52b8f86af589",
+      "resolved": [
+        {
+          "address": "directory|NativeProxyImageCustody::_members#7",
+          "close_caller": "NativeProxyImageCustody",
+          "close_scope": "NativeProxyImageCustody::_members",
+          "kind": "directory",
+          "label": "directory:15",
+          "occurrence": 7,
+          "open_call_id": 165,
+          "path": ".artifacts/tmp/native-proxy-image-custody/cases/fsmgen-4cU8Qp9p/images/efd497b0e847884b3c1cfcde14d8b645991c52ebab90c54e58984ccbc303c146",
+          "symbol": "NativeProxyImageCustody::_members"
+        }
+      ],
+      "success": 0
+    },
+    {
+      "calls": 239,
+      "effects": {
+        "last_reference_check": null,
+        "reference_absence_verified": 0,
+        "unlink_attempted": 0,
+        "unlink_completed": 0
+      },
+      "handles": 68,
+      "index": 45,
+      "name": "single:directory|NativeProxyImageCustody::_members#8",
+      "prediction_sha256": "00968be2ce1a09bf8d3b77bb4d9f0c3c9212889e3e813bb5180e5f5509492b0a",
+      "resolved": [
+        {
+          "address": "directory|NativeProxyImageCustody::_members#8",
+          "close_caller": "NativeProxyImageCustody",
+          "close_scope": "NativeProxyImageCustody::_members",
+          "kind": "directory",
+          "label": "directory:20",
+          "occurrence": 8,
+          "open_call_id": 238,
+          "path": ".artifacts/tmp/native-proxy-image-custody/cases/fsmgen-4cU8Qp9p/images/efd497b0e847884b3c1cfcde14d8b645991c52ebab90c54e58984ccbc303c146",
+          "symbol": "NativeProxyImageCustody::_members"
+        }
+      ],
+      "success": 0
+    },
+    {
+      "calls": 243,
+      "effects": {
+        "last_reference_check": null,
+        "reference_absence_verified": 0,
+        "unlink_attempted": 0,
+        "unlink_completed": 0
+      },
+      "handles": 72,
+      "index": 46,
+      "name": "single:directory|NativeProxyImageCustody::_members#9",
+      "prediction_sha256": "797ef776f8d70b05ed5fc8deea00ec3b54b0d5d035cc397e8e6f658c296e54c1",
+      "resolved": [
+        {
+          "address": "directory|NativeProxyImageCustody::_members#9",
+          "close_caller": "NativeProxyImageCustody",
+          "close_scope": "NativeProxyImageCustody::_members",
+          "kind": "directory",
+          "label": "directory:21",
+          "occurrence": 9,
+          "open_call_id": 242,
+          "path": ".artifacts/tmp/native-proxy-image-custody/cases/fsmgen-4cU8Qp9p/images/efd497b0e847884b3c1cfcde14d8b645991c52ebab90c54e58984ccbc303c146",
+          "symbol": "NativeProxyImageCustody::_members"
+        }
+      ],
+      "success": 0
+    },
+    {
+      "calls": 538,
+      "effects": {
+        "last_reference_check": {
+          "phase": "finish",
+          "state": "absent"
+        },
+        "reference_absence_verified": 1,
+        "unlink_attempted": 1,
+        "unlink_completed": 1
+      },
+      "handles": 148,
+      "index": 47,
+      "name": "single:lock|NativeProxyImageCoordination::_transaction#0",
+      "prediction_sha256": "0b8365544ac091db7b32e1225c9838b7c9daf06495de2a3ee134b7005462eceb",
+      "resolved": [
+        {
+          "address": "lock|NativeProxyImageCoordination::_transaction#0",
+          "close_caller": "NativeProxyImageCoordination",
+          "close_scope": "NativeProxyImageCoordination::_transaction",
+          "kind": "lock",
+          "label": "lock:0",
+          "occurrence": 0,
+          "open_call_id": null,
+          "path": ".artifacts/tmp/native-proxy-image-custody/cases/fsmgen-4cU8Qp9p/coordination.lock",
+          "symbol": "NativeProxyImageCoordination::_transaction"
+        }
+      ],
+      "success": 0
+    },
+    {
+      "calls": 538,
+      "effects": {
+        "last_reference_check": {
+          "phase": "finish",
+          "state": "absent"
+        },
+        "reference_absence_verified": 1,
+        "unlink_attempted": 1,
+        "unlink_completed": 1
+      },
+      "handles": 148,
+      "index": 48,
+      "name": "single:source|NativeProxyImageCustody::_source#0",
+      "prediction_sha256": "682bd391efa9c951ec05332d0a79843dc9e2a26a1e3303f2d00453a82867f409",
+      "resolved": [
+        {
+          "address": "source|NativeProxyImageCustody::_source#0",
+          "close_caller": "NativeProxyObservationRelease",
+          "close_scope": "NativeProxyObservationRelease::_close_owned",
+          "kind": "source",
+          "label": "source:0",
+          "occurrence": 0,
+          "open_call_id": 6,
+          "path": ".artifacts/logs/native-proxy-observation-acquisition-20260910/cases/fsmgen-bb_hICGm/retained-sources/d42ab2b4e413bd694a831c4a8307a0c4cd760b3bfdcf5fc93dc0b6772fdd632b.source",
+          "symbol": "NativeProxyImageCustody::_source"
+        }
+      ],
+      "success": 0
+    },
+    {
+      "calls": 538,
+      "effects": {
+        "last_reference_check": {
+          "phase": "finish",
+          "state": "absent"
+        },
+        "reference_absence_verified": 1,
+        "unlink_attempted": 1,
+        "unlink_completed": 1
+      },
+      "handles": 148,
+      "index": 49,
+      "name": "single:source|NativeProxyImageCustody::_source#1",
+      "prediction_sha256": "780726ed6420aa3ad32cb5eb2934d4b7eed117f28f78891039c45f4726592d18",
+      "resolved": [
+        {
+          "address": "source|NativeProxyImageCustody::_source#1",
+          "close_caller": "NativeProxyObservationRelease",
+          "close_scope": "NativeProxyObservationRelease::_close_owned",
+          "kind": "source",
+          "label": "source:1",
+          "occurrence": 1,
+          "open_call_id": 8,
+          "path": ".artifacts/logs/native-proxy-observation-acquisition-20260910/cases/fsmgen-bb_hICGm/retained-sources/1a71a0c95d346f2fa9925bba734dfbdc4bd789b851d33d07eccc567f330b2153.source",
+          "symbol": "NativeProxyImageCustody::_source"
+        }
+      ],
+      "success": 0
+    },
+    {
+      "calls": 175,
+      "effects": {
+        "last_reference_check": null,
+        "reference_absence_verified": 0,
+        "unlink_attempted": 0,
+        "unlink_completed": 0
+      },
+      "handles": 51,
+      "index": 50,
+      "name": "single:source|NativeProxyImageCustody::_source#10",
+      "prediction_sha256": "574116d3df30e412600532c742465b36885f05c3e44c6f16b54547a3a0a4fa06",
+      "resolved": [
+        {
+          "address": "source|NativeProxyImageCustody::_source#10",
+          "close_caller": "NativeProxyReferenceCensus",
+          "close_scope": "NativeProxyReferenceCensus::_inspect_locked",
+          "kind": "source",
+          "label": "source:10",
+          "occurrence": 10,
+          "open_call_id": 69,
+          "path": ".artifacts/tmp/native-proxy-image-custody/cases/fsmgen-4cU8Qp9p/references/7a675d01e5cd42a62b8f203a8a56059fa5c42b4f0f4676a7a15c9afdb666b71b.json",
+          "symbol": "NativeProxyImageCustody::_source"
+        }
+      ],
+      "success": 0
+    },
+    {
+      "calls": 513,
+      "effects": {
+        "last_reference_check": {
+          "phase": "after_unlink",
+          "state": "absent"
+        },
+        "reference_absence_verified": 1,
+        "unlink_attempted": 1,
+        "unlink_completed": 1
+      },
+      "handles": 145,
+      "index": 51,
+      "name": "single:source|NativeProxyImageCustody::_source#100",
+      "prediction_sha256": "6e272c59c50f6c0d7a13e59f2351dcea65413872b40e7f60889328b6ccfd7a16",
+      "resolved": [
+        {
+          "address": "source|NativeProxyImageCustody::_source#100",
+          "close_caller": "NativeProxyObservationArchive",
+          "close_scope": "NativeProxyObservationArchive::_source_closure",
+          "kind": "source",
+          "label": "source:100",
+          "occurrence": 100,
+          "open_call_id": 511,
+          "path": ".artifacts/logs/native-proxy-observation-acquisition-20260910/cases/fsmgen-bb_hICGm/retained-sources/e7f06f27e18528c7d10e8c4a4ab42b5e70d1423cdb80e83048597719c9c7eb67.source",
+          "symbol": "NativeProxyImageCustody::_source"
+        }
+      ],
+      "success": 0
+    },
+    {
+      "calls": 94,
+      "effects": {
+        "last_reference_check": null,
+        "reference_absence_verified": 0,
+        "unlink_attempted": 0,
+        "unlink_completed": 0
+      },
+      "handles": 26,
+      "index": 52,
+      "name": "single:source|NativeProxyImageCustody::_source#11",
+      "prediction_sha256": "db1c9e62afe5d51026fedeb6636fd8a1aec1d52ae69ba82a315da38947c1afae",
+      "resolved": [
+        {
+          "address": "source|NativeProxyImageCustody::_source#11",
+          "close_caller": "NativeProxyReferenceCensus",
+          "close_scope": "NativeProxyReferenceCensus::_image",
+          "kind": "source",
+          "label": "source:11",
+          "occurrence": 11,
+          "open_call_id": 74,
+          "path": ".artifacts/tmp/native-proxy-image-custody/cases/fsmgen-4cU8Qp9p/images/efd497b0e847884b3c1cfcde14d8b645991c52ebab90c54e58984ccbc303c146/rustup.c",
+          "symbol": "NativeProxyImageCustody::_source"
+        }
+      ],
+      "success": 0
+    },
+    {
+      "calls": 94,
+      "effects": {
+        "last_reference_check": null,
+        "reference_absence_verified": 0,
+        "unlink_attempted": 0,
+        "unlink_completed": 0
+      },
+      "handles": 26,
+      "index": 53,
+      "name": "single:source|NativeProxyImageCustody::_source#12",
+      "prediction_sha256": "901dbc3a2a8b8aaf0e9f4a5b689e308fb5760edb6b4294fc079e2901716187de",
+      "resolved": [
+        {
+          "address": "source|NativeProxyImageCustody::_source#12",
+          "close_caller": "NativeProxyReferenceCensus",
+          "close_scope": "NativeProxyReferenceCensus::_image",
+          "kind": "source",
+          "label": "source:12",
+          "occurrence": 12,
+          "open_call_id": 75,
+          "path": ".artifacts/tmp/native-proxy-image-custody/cases/fsmgen-4cU8Qp9p/images/efd497b0e847884b3c1cfcde14d8b645991c52ebab90c54e58984ccbc303c146/rustup",
+          "symbol": "NativeProxyImageCustody::_source"
+        }
+      ],
+      "success": 0
+    },
+    {
+      "calls": 91,
+      "effects": {
+        "last_reference_check": null,
+        "reference_absence_verified": 0,
+        "unlink_attempted": 0,
+        "unlink_completed": 0
+      },
+      "handles": 26,
+      "index": 54,
+      "name": "single:source|NativeProxyImageCustody::_source#13",
+      "prediction_sha256": "837ea1a329d42b43dabaf0124bd5e2cb671bf0e8e0a7e901505d86f2579df8ef",
+      "resolved": [
+        {
+          "address": "source|NativeProxyImageCustody::_source#13",
+          "close_caller": "NativeProxyImageCustody",
+          "close_scope": "NativeProxyImageCustody::read_entry",
+          "kind": "source",
+          "label": "source:13",
+          "occurrence": 13,
+          "open_call_id": 81,
+          "path": ".artifacts/tmp/native-proxy-image-custody/cases/fsmgen-4cU8Qp9p/images/efd497b0e847884b3c1cfcde14d8b645991c52ebab90c54e58984ccbc303c146/rustup.c",
+          "symbol": "NativeProxyImageCustody::_source"
+        }
+      ],
+      "success": 0
+    },
+    {
+      "calls": 91,
+      "effects": {
+        "last_reference_check": null,
+        "reference_absence_verified": 0,
+        "unlink_attempted": 0,
+        "unlink_completed": 0
+      },
+      "handles": 26,
+      "index": 55,
+      "name": "single:source|NativeProxyImageCustody::_source#14",
+      "prediction_sha256": "996bc315ec8bd5cad90eb8562f36d39bd400d3d0227bcbfea798617809db9cd4",
+      "resolved": [
+        {
+          "address": "source|NativeProxyImageCustody::_source#14",
+          "close_caller": "NativeProxyImageCustody",
+          "close_scope": "NativeProxyImageCustody::read_entry",
+          "kind": "source",
+          "label": "source:14",
+          "occurrence": 14,
+          "open_call_id": 82,
+          "path": ".artifacts/tmp/native-proxy-image-custody/cases/fsmgen-4cU8Qp9p/images/efd497b0e847884b3c1cfcde14d8b645991c52ebab90c54e58984ccbc303c146/rustup",
+          "symbol": "NativeProxyImageCustody::_source"
+        }
+      ],
+      "success": 0
+    },
+    {
+      "calls": 91,
+      "effects": {
+        "last_reference_check": null,
+        "reference_absence_verified": 0,
+        "unlink_attempted": 0,
+        "unlink_completed": 0
+      },
+      "handles": 26,
+      "index": 56,
+      "name": "single:source|NativeProxyImageCustody::_source#15",
+      "prediction_sha256": "f29dbea4591484bc0d35296eec07f72c4681b9c2660bb02a60008398fc430541",
+      "resolved": [
+        {
+          "address": "source|NativeProxyImageCustody::_source#15",
+          "close_caller": "NativeProxyImageCustody",
+          "close_scope": "NativeProxyImageCustody::read_entry",
+          "kind": "source",
+          "label": "source:15",
+          "occurrence": 15,
+          "open_call_id": 83,
+          "path": ".artifacts/tmp/native-proxy-image-custody/cases/fsmgen-4cU8Qp9p/images/efd497b0e847884b3c1cfcde14d8b645991c52ebab90c54e58984ccbc303c146/image.json",
+          "symbol": "NativeProxyImageCustody::_source"
+        }
+      ],
+      "success": 0
+    },
+    {
+      "calls": 175,
+      "effects": {
+        "last_reference_check": null,
+        "reference_absence_verified": 0,
+        "unlink_attempted": 0,
+        "unlink_completed": 0
+      },
+      "handles": 51,
+      "index": 57,
+      "name": "single:source|NativeProxyImageCustody::_source#16",
+      "prediction_sha256": "c762196cef99cc6d05cc75f52fb8a8dd236b689fcf8b1903d9bc895d8d5f71ba",
+      "resolved": [
+        {
+          "address": "source|NativeProxyImageCustody::_source#16",
+          "close_caller": "NativeProxyReferenceCensus",
+          "close_scope": "NativeProxyReferenceCensus::_inspect_locked",
+          "kind": "source",
+          "label": "source:16",
+          "occurrence": 16,
+          "open_call_id": 96,
+          "path": ".artifacts/tmp/native-proxy-image-custody/cases/fsmgen-4cU8Qp9p/references/d4f88346e844083d407e72d06612c64d5a503f6bcdbe6599a87e4fe01a485fc7.json",
+          "symbol": "NativeProxyImageCustody::_source"
+        }
+      ],
+      "success": 0
+    },
+    {
+      "calls": 121,
+      "effects": {
+        "last_reference_check": null,
+        "reference_absence_verified": 0,
+        "unlink_attempted": 0,
+        "unlink_completed": 0
+      },
+      "handles": 34,
+      "index": 58,
+      "name": "single:source|NativeProxyImageCustody::_source#17",
+      "prediction_sha256": "7ba994d89a4af6259e28c0a2dfd9e698de19789b87e5ad4426e45d1f22538951",
+      "resolved": [
+        {
+          "address": "source|NativeProxyImageCustody::_source#17",
+          "close_caller": "NativeProxyReferenceCensus",
+          "close_scope": "NativeProxyReferenceCensus::_image",
+          "kind": "source",
+          "label": "source:17",
+          "occurrence": 17,
+          "open_call_id": 101,
+          "path": ".artifacts/tmp/native-proxy-image-custody/cases/fsmgen-4cU8Qp9p/images/183f0d4d18572a250ac97756196732d884f1a2217a23dcbf7df6390d03302187/rustup.c",
+          "symbol": "NativeProxyImageCustody::_source"
+        }
+      ],
+      "success": 0
+    },
+    {
+      "calls": 121,
+      "effects": {
+        "last_reference_check": null,
+        "reference_absence_verified": 0,
+        "unlink_attempted": 0,
+        "unlink_completed": 0
+      },
+      "handles": 34,
+      "index": 59,
+      "name": "single:source|NativeProxyImageCustody::_source#18",
+      "prediction_sha256": "f218eee8532ea2dafeb1c8dcd1d8b1806edb0697a0715b8ec5ec8aa4e844923c",
+      "resolved": [
+        {
+          "address": "source|NativeProxyImageCustody::_source#18",
+          "close_caller": "NativeProxyReferenceCensus",
+          "close_scope": "NativeProxyReferenceCensus::_image",
+          "kind": "source",
+          "label": "source:18",
+          "occurrence": 18,
+          "open_call_id": 102,
+          "path": ".artifacts/tmp/native-proxy-image-custody/cases/fsmgen-4cU8Qp9p/images/183f0d4d18572a250ac97756196732d884f1a2217a23dcbf7df6390d03302187/rustup",
+          "symbol": "NativeProxyImageCustody::_source"
+        }
+      ],
+      "success": 0
+    },
+    {
+      "calls": 118,
+      "effects": {
+        "last_reference_check": null,
+        "reference_absence_verified": 0,
+        "unlink_attempted": 0,
+        "unlink_completed": 0
+      },
+      "handles": 34,
+      "index": 60,
+      "name": "single:source|NativeProxyImageCustody::_source#19",
+      "prediction_sha256": "7b601b80f4dc054794fb6a7ed5660324882524cdd66c92c33d6bead3dbb15089",
+      "resolved": [
+        {
+          "address": "source|NativeProxyImageCustody::_source#19",
+          "close_caller": "NativeProxyImageCustody",
+          "close_scope": "NativeProxyImageCustody::read_entry",
+          "kind": "source",
+          "label": "source:19",
+          "occurrence": 19,
+          "open_call_id": 108,
+          "path": ".artifacts/tmp/native-proxy-image-custody/cases/fsmgen-4cU8Qp9p/images/183f0d4d18572a250ac97756196732d884f1a2217a23dcbf7df6390d03302187/rustup.c",
+          "symbol": "NativeProxyImageCustody::_source"
+        }
+      ],
+      "success": 0
+    },
+    {
+      "calls": 538,
+      "effects": {
+        "last_reference_check": {
+          "phase": "finish",
+          "state": "absent"
+        },
+        "reference_absence_verified": 1,
+        "unlink_attempted": 1,
+        "unlink_completed": 1
+      },
+      "handles": 148,
+      "index": 61,
+      "name": "single:source|NativeProxyImageCustody::_source#2",
+      "prediction_sha256": "1821e88b10e1b6c28c7ece2bfc11627cae1de501a30eed9b1c4e3dd228bf7bd8",
+      "resolved": [
+        {
+          "address": "source|NativeProxyImageCustody::_source#2",
+          "close_caller": "NativeProxyObservationRelease",
+          "close_scope": "NativeProxyObservationRelease::_close_owned",
+          "kind": "source",
+          "label": "source:2",
+          "occurrence": 2,
+          "open_call_id": 10,
+          "path": ".artifacts/logs/native-proxy-observation-acquisition-20260910/cases/fsmgen-bb_hICGm/retained-sources/a7d92e28ec1c8308e37c6003df167bc42bd2341cf3a69d677f45330271ffba56.source",
+          "symbol": "NativeProxyImageCustody::_source"
+        }
+      ],
+      "success": 0
+    },
+    {
+      "calls": 118,
+      "effects": {
+        "last_reference_check": null,
+        "reference_absence_verified": 0,
+        "unlink_attempted": 0,
+        "unlink_completed": 0
+      },
+      "handles": 34,
+      "index": 62,
+      "name": "single:source|NativeProxyImageCustody::_source#20",
+      "prediction_sha256": "beef9a324f0d07f9def3d446f9e2ce9e2e09f3b7c2630d5d8685efcb7b34801f",
+      "resolved": [
+        {
+          "address": "source|NativeProxyImageCustody::_source#20",
+          "close_caller": "NativeProxyImageCustody",
+          "close_scope": "NativeProxyImageCustody::read_entry",
+          "kind": "source",
+          "label": "source:20",
+          "occurrence": 20,
+          "open_call_id": 109,
+          "path": ".artifacts/tmp/native-proxy-image-custody/cases/fsmgen-4cU8Qp9p/images/183f0d4d18572a250ac97756196732d884f1a2217a23dcbf7df6390d03302187/rustup",
+          "symbol": "NativeProxyImageCustody::_source"
+        }
+      ],
+      "success": 0
+    },
+    {
+      "calls": 118,
+      "effects": {
+        "last_reference_check": null,
+        "reference_absence_verified": 0,
+        "unlink_attempted": 0,
+        "unlink_completed": 0
+      },
+      "handles": 34,
+      "index": 63,
+      "name": "single:source|NativeProxyImageCustody::_source#21",
+      "prediction_sha256": "e6527b00e76030e2d67d5e63503d87d26ac675bbc69da9920f2b79d9e692252e",
+      "resolved": [
+        {
+          "address": "source|NativeProxyImageCustody::_source#21",
+          "close_caller": "NativeProxyImageCustody",
+          "close_scope": "NativeProxyImageCustody::read_entry",
+          "kind": "source",
+          "label": "source:21",
+          "occurrence": 21,
+          "open_call_id": 110,
+          "path": ".artifacts/tmp/native-proxy-image-custody/cases/fsmgen-4cU8Qp9p/images/183f0d4d18572a250ac97756196732d884f1a2217a23dcbf7df6390d03302187/image.json",
+          "symbol": "NativeProxyImageCustody::_source"
+        }
+      ],
+      "success": 0
+    },
+    {
+      "calls": 128,
+      "effects": {
+        "last_reference_check": null,
+        "reference_absence_verified": 0,
+        "unlink_attempted": 0,
+        "unlink_completed": 0
+      },
+      "handles": 36,
+      "index": 64,
+      "name": "single:source|NativeProxyImageCustody::_source#22",
+      "prediction_sha256": "d35193f42d0e3ae71622ec44ec6380ab6c21a11703b1821e5deaf639150617dc",
+      "resolved": [
+        {
+          "address": "source|NativeProxyImageCustody::_source#22",
+          "close_caller": "NativeProxyReferenceCensus",
+          "close_scope": "NativeProxyReferenceCensus::_closure",
+          "kind": "source",
+          "label": "source:22",
+          "occurrence": 22,
+          "open_call_id": 126,
+          "path": ".artifacts/tmp/native-proxy-image-custody/cases/fsmgen-4cU8Qp9p/references/7a675d01e5cd42a62b8f203a8a56059fa5c42b4f0f4676a7a15c9afdb666b71b.json",
+          "symbol": "NativeProxyImageCustody::_source"
+        }
+      ],
+      "success": 0
+    },
+    {
+      "calls": 131,
+      "effects": {
+        "last_reference_check": null,
+        "reference_absence_verified": 0,
+        "unlink_attempted": 0,
+        "unlink_completed": 0
+      },
+      "handles": 37,
+      "index": 65,
+      "name": "single:source|NativeProxyImageCustody::_source#23",
+      "prediction_sha256": "7459f7b19256c97bebb2c387c459eda26eb36e2f798631a7d2c4ba5453b7a4ac",
+      "resolved": [
+        {
+          "address": "source|NativeProxyImageCustody::_source#23",
+          "close_caller": "NativeProxyReferenceCensus",
+          "close_scope": "NativeProxyReferenceCensus::_closure",
+          "kind": "source",
+          "label": "source:23",
+          "occurrence": 23,
+          "open_call_id": 129,
+          "path": ".artifacts/tmp/native-proxy-image-custody/cases/fsmgen-4cU8Qp9p/references/d4f88346e844083d407e72d06612c64d5a503f6bcdbe6599a87e4fe01a485fc7.json",
+          "symbol": "NativeProxyImageCustody::_source"
+        }
+      ],
+      "success": 0
+    },
+    {
+      "calls": 153,
+      "effects": {
+        "last_reference_check": null,
+        "reference_absence_verified": 0,
+        "unlink_attempted": 0,
+        "unlink_completed": 0
+      },
+      "handles": 44,
+      "index": 66,
+      "name": "single:source|NativeProxyImageCustody::_source#24",
+      "prediction_sha256": "74b167a5777bb4023b850494f5ab61f6b442a5bcd33183658784ce71fe6089e5",
+      "resolved": [
+        {
+          "address": "source|NativeProxyImageCustody::_source#24",
+          "close_caller": "NativeProxyReferenceCensus",
+          "close_scope": "NativeProxyReferenceCensus::_image",
+          "kind": "source",
+          "label": "source:24",
+          "occurrence": 24,
+          "open_call_id": 133,
+          "path": ".artifacts/tmp/native-proxy-image-custody/cases/fsmgen-4cU8Qp9p/images/183f0d4d18572a250ac97756196732d884f1a2217a23dcbf7df6390d03302187/rustup.c",
+          "symbol": "NativeProxyImageCustody::_source"
+        }
+      ],
+      "success": 0
+    },
+    {
+      "calls": 153,
+      "effects": {
+        "last_reference_check": null,
+        "reference_absence_verified": 0,
+        "unlink_attempted": 0,
+        "unlink_completed": 0
+      },
+      "handles": 44,
+      "index": 67,
+      "name": "single:source|NativeProxyImageCustody::_source#25",
+      "prediction_sha256": "e695b648b2e61f56d45889a5726f731e6b7ec390232b25f7ffcd99bafc9c3a4c",
+      "resolved": [
+        {
+          "address": "source|NativeProxyImageCustody::_source#25",
+          "close_caller": "NativeProxyReferenceCensus",
+          "close_scope": "NativeProxyReferenceCensus::_image",
+          "kind": "source",
+          "label": "source:25",
+          "occurrence": 25,
+          "open_call_id": 134,
+          "path": ".artifacts/tmp/native-proxy-image-custody/cases/fsmgen-4cU8Qp9p/images/183f0d4d18572a250ac97756196732d884f1a2217a23dcbf7df6390d03302187/rustup",
+          "symbol": "NativeProxyImageCustody::_source"
+        }
+      ],
+      "success": 0
+    },
+    {
+      "calls": 150,
+      "effects": {
+        "last_reference_check": null,
+        "reference_absence_verified": 0,
+        "unlink_attempted": 0,
+        "unlink_completed": 0
+      },
+      "handles": 44,
+      "index": 68,
+      "name": "single:source|NativeProxyImageCustody::_source#26",
+      "prediction_sha256": "0ee95a0e35ec296045671c84f3a11628d01bea011c400522929b641e9f4d2435",
+      "resolved": [
+        {
+          "address": "source|NativeProxyImageCustody::_source#26",
+          "close_caller": "NativeProxyImageCustody",
+          "close_scope": "NativeProxyImageCustody::read_entry",
+          "kind": "source",
+          "label": "source:26",
+          "occurrence": 26,
+          "open_call_id": 140,
+          "path": ".artifacts/tmp/native-proxy-image-custody/cases/fsmgen-4cU8Qp9p/images/183f0d4d18572a250ac97756196732d884f1a2217a23dcbf7df6390d03302187/rustup.c",
+          "symbol": "NativeProxyImageCustody::_source"
+        }
+      ],
+      "success": 0
+    },
+    {
+      "calls": 150,
+      "effects": {
+        "last_reference_check": null,
+        "reference_absence_verified": 0,
+        "unlink_attempted": 0,
+        "unlink_completed": 0
+      },
+      "handles": 44,
+      "index": 69,
+      "name": "single:source|NativeProxyImageCustody::_source#27",
+      "prediction_sha256": "6a44e008f58d900ebcd3fa1138b2e883d6a7076e7b1621be6009559d79e8d781",
+      "resolved": [
+        {
+          "address": "source|NativeProxyImageCustody::_source#27",
+          "close_caller": "NativeProxyImageCustody",
+          "close_scope": "NativeProxyImageCustody::read_entry",
+          "kind": "source",
+          "label": "source:27",
+          "occurrence": 27,
+          "open_call_id": 141,
+          "path": ".artifacts/tmp/native-proxy-image-custody/cases/fsmgen-4cU8Qp9p/images/183f0d4d18572a250ac97756196732d884f1a2217a23dcbf7df6390d03302187/rustup",
+          "symbol": "NativeProxyImageCustody::_source"
+        }
+      ],
+      "success": 0
+    },
+    {
+      "calls": 150,
+      "effects": {
+        "last_reference_check": null,
+        "reference_absence_verified": 0,
+        "unlink_attempted": 0,
+        "unlink_completed": 0
+      },
+      "handles": 44,
+      "index": 70,
+      "name": "single:source|NativeProxyImageCustody::_source#28",
+      "prediction_sha256": "88a01bd4cfa85ba141daf034a70bc1cfd6b6791f555b8249fe87f5e769b14950",
+      "resolved": [
+        {
+          "address": "source|NativeProxyImageCustody::_source#28",
+          "close_caller": "NativeProxyImageCustody",
+          "close_scope": "NativeProxyImageCustody::read_entry",
+          "kind": "source",
+          "label": "source:28",
+          "occurrence": 28,
+          "open_call_id": 142,
+          "path": ".artifacts/tmp/native-proxy-image-custody/cases/fsmgen-4cU8Qp9p/images/183f0d4d18572a250ac97756196732d884f1a2217a23dcbf7df6390d03302187/image.json",
+          "symbol": "NativeProxyImageCustody::_source"
+        }
+      ],
+      "success": 0
+    },
+    {
+      "calls": 175,
+      "effects": {
+        "last_reference_check": null,
+        "reference_absence_verified": 0,
+        "unlink_attempted": 0,
+        "unlink_completed": 0
+      },
+      "handles": 51,
+      "index": 71,
+      "name": "single:source|NativeProxyImageCustody::_source#29",
+      "prediction_sha256": "9146fec799f328be37f739bc00bd604315a3c097038fba2a6a230d70f55fc411",
+      "resolved": [
+        {
+          "address": "source|NativeProxyImageCustody::_source#29",
+          "close_caller": "NativeProxyReferenceCensus",
+          "close_scope": "NativeProxyReferenceCensus::_image",
+          "kind": "source",
+          "label": "source:29",
+          "occurrence": 29,
+          "open_call_id": 155,
+          "path": ".artifacts/tmp/native-proxy-image-custody/cases/fsmgen-4cU8Qp9p/images/efd497b0e847884b3c1cfcde14d8b645991c52ebab90c54e58984ccbc303c146/rustup.c",
+          "symbol": "NativeProxyImageCustody::_source"
+        }
+      ],
+      "success": 0
+    },
+    {
+      "calls": 538,
+      "effects": {
+        "last_reference_check": {
+          "phase": "finish",
+          "state": "absent"
+        },
+        "reference_absence_verified": 1,
+        "unlink_attempted": 1,
+        "unlink_completed": 1
+      },
+      "handles": 148,
+      "index": 72,
+      "name": "single:source|NativeProxyImageCustody::_source#3",
+      "prediction_sha256": "b886b442f8f32ab2a49884d6dc25c2c7055d1b4a8e556ffe4f1ee8aedacf1165",
+      "resolved": [
+        {
+          "address": "source|NativeProxyImageCustody::_source#3",
+          "close_caller": "NativeProxyObservationRelease",
+          "close_scope": "NativeProxyObservationRelease::_close_owned",
+          "kind": "source",
+          "label": "source:3",
+          "occurrence": 3,
+          "open_call_id": 12,
+          "path": ".artifacts/logs/native-proxy-observation-acquisition-20260910/cases/fsmgen-bb_hICGm/retained-sources/e7f06f27e18528c7d10e8c4a4ab42b5e70d1423cdb80e83048597719c9c7eb67.source",
+          "symbol": "NativeProxyImageCustody::_source"
+        }
+      ],
+      "success": 0
+    },
+    {
+      "calls": 175,
+      "effects": {
+        "last_reference_check": null,
+        "reference_absence_verified": 0,
+        "unlink_attempted": 0,
+        "unlink_completed": 0
+      },
+      "handles": 51,
+      "index": 73,
+      "name": "single:source|NativeProxyImageCustody::_source#30",
+      "prediction_sha256": "bb676988b95b4f310a46399224d2fd751313ccddcfc8e38aa691ed71b615a0c3",
+      "resolved": [
+        {
+          "address": "source|NativeProxyImageCustody::_source#30",
+          "close_caller": "NativeProxyReferenceCensus",
+          "close_scope": "NativeProxyReferenceCensus::_image",
+          "kind": "source",
+          "label": "source:30",
+          "occurrence": 30,
+          "open_call_id": 156,
+          "path": ".artifacts/tmp/native-proxy-image-custody/cases/fsmgen-4cU8Qp9p/images/efd497b0e847884b3c1cfcde14d8b645991c52ebab90c54e58984ccbc303c146/rustup",
+          "symbol": "NativeProxyImageCustody::_source"
+        }
+      ],
+      "success": 0
+    },
+    {
+      "calls": 172,
+      "effects": {
+        "last_reference_check": null,
+        "reference_absence_verified": 0,
+        "unlink_attempted": 0,
+        "unlink_completed": 0
+      },
+      "handles": 51,
+      "index": 74,
+      "name": "single:source|NativeProxyImageCustody::_source#31",
+      "prediction_sha256": "89a7f87cd251a28bc11806e47b31afc5b8db4d7e4228857040bcb3e981a25d7d",
+      "resolved": [
+        {
+          "address": "source|NativeProxyImageCustody::_source#31",
+          "close_caller": "NativeProxyImageCustody",
+          "close_scope": "NativeProxyImageCustody::read_entry",
+          "kind": "source",
+          "label": "source:31",
+          "occurrence": 31,
+          "open_call_id": 162,
+          "path": ".artifacts/tmp/native-proxy-image-custody/cases/fsmgen-4cU8Qp9p/images/efd497b0e847884b3c1cfcde14d8b645991c52ebab90c54e58984ccbc303c146/rustup.c",
+          "symbol": "NativeProxyImageCustody::_source"
+        }
+      ],
+      "success": 0
+    },
+    {
+      "calls": 172,
+      "effects": {
+        "last_reference_check": null,
+        "reference_absence_verified": 0,
+        "unlink_attempted": 0,
+        "unlink_completed": 0
+      },
+      "handles": 51,
+      "index": 75,
+      "name": "single:source|NativeProxyImageCustody::_source#32",
+      "prediction_sha256": "f56bf400e3d3dbd98b3713e81be4c77f8953c6c29ddb84ebc732ab4eb72bdc0d",
+      "resolved": [
+        {
+          "address": "source|NativeProxyImageCustody::_source#32",
+          "close_caller": "NativeProxyImageCustody",
+          "close_scope": "NativeProxyImageCustody::read_entry",
+          "kind": "source",
+          "label": "source:32",
+          "occurrence": 32,
+          "open_call_id": 163,
+          "path": ".artifacts/tmp/native-proxy-image-custody/cases/fsmgen-4cU8Qp9p/images/efd497b0e847884b3c1cfcde14d8b645991c52ebab90c54e58984ccbc303c146/rustup",
+          "symbol": "NativeProxyImageCustody::_source"
+        }
+      ],
+      "success": 0
+    },
+    {
+      "calls": 172,
+      "effects": {
+        "last_reference_check": null,
+        "reference_absence_verified": 0,
+        "unlink_attempted": 0,
+        "unlink_completed": 0
+      },
+      "handles": 51,
+      "index": 76,
+      "name": "single:source|NativeProxyImageCustody::_source#33",
+      "prediction_sha256": "65576e7d0f258a4e7b6911a04b3f1ae051a2969ec6141730ee752f33d46a85a0",
+      "resolved": [
+        {
+          "address": "source|NativeProxyImageCustody::_source#33",
+          "close_caller": "NativeProxyImageCustody",
+          "close_scope": "NativeProxyImageCustody::read_entry",
+          "kind": "source",
+          "label": "source:33",
+          "occurrence": 33,
+          "open_call_id": 164,
+          "path": ".artifacts/tmp/native-proxy-image-custody/cases/fsmgen-4cU8Qp9p/images/efd497b0e847884b3c1cfcde14d8b645991c52ebab90c54e58984ccbc303c146/image.json",
+          "symbol": "NativeProxyImageCustody::_source"
+        }
+      ],
+      "success": 0
+    },
+    {
+      "calls": 187,
+      "effects": {
+        "last_reference_check": null,
+        "reference_absence_verified": 0,
+        "unlink_attempted": 0,
+        "unlink_completed": 0
+      },
+      "handles": 53,
+      "index": 77,
+      "name": "single:source|NativeProxyImageCustody::_source#34",
+      "prediction_sha256": "dc2086e40e346d02a41b9d9596dfb95b99bda3229567ca90a32f744cc33cc200",
+      "resolved": [
+        {
+          "address": "source|NativeProxyImageCustody::_source#34",
+          "close_caller": "NativeProxyObservationArchive",
+          "close_scope": "NativeProxyObservationArchive::_source_closure",
+          "kind": "source",
+          "label": "source:34",
+          "occurrence": 34,
+          "open_call_id": 185,
+          "path": ".artifacts/logs/native-proxy-observation-acquisition-20260910/cases/fsmgen-bb_hICGm/retained-sources/d42ab2b4e413bd694a831c4a8307a0c4cd760b3bfdcf5fc93dc0b6772fdd632b.source",
+          "symbol": "NativeProxyImageCustody::_source"
+        }
+      ],
+      "success": 0
+    },
+    {
+      "calls": 190,
+      "effects": {
+        "last_reference_check": null,
+        "reference_absence_verified": 0,
+        "unlink_attempted": 0,
+        "unlink_completed": 0
+      },
+      "handles": 54,
+      "index": 78,
+      "name": "single:source|NativeProxyImageCustody::_source#35",
+      "prediction_sha256": "4242d69c65276a01f10e1d747d626e0d0105aa2cbb89cb57e1f6797c55cc34a4",
+      "resolved": [
+        {
+          "address": "source|NativeProxyImageCustody::_source#35",
+          "close_caller": "NativeProxyObservationArchive",
+          "close_scope": "NativeProxyObservationArchive::_source_closure",
+          "kind": "source",
+          "label": "source:35",
+          "occurrence": 35,
+          "open_call_id": 188,
+          "path": ".artifacts/logs/native-proxy-observation-acquisition-20260910/cases/fsmgen-bb_hICGm/retained-sources/1a71a0c95d346f2fa9925bba734dfbdc4bd789b851d33d07eccc567f330b2153.source",
+          "symbol": "NativeProxyImageCustody::_source"
+        }
+      ],
+      "success": 0
+    },
+    {
+      "calls": 193,
+      "effects": {
+        "last_reference_check": null,
+        "reference_absence_verified": 0,
+        "unlink_attempted": 0,
+        "unlink_completed": 0
+      },
+      "handles": 55,
+      "index": 79,
+      "name": "single:source|NativeProxyImageCustody::_source#36",
+      "prediction_sha256": "cffcdd4efbdca3402108e98ac336cc38191de521b999a0811e912f2150a13d52",
+      "resolved": [
+        {
+          "address": "source|NativeProxyImageCustody::_source#36",
+          "close_caller": "NativeProxyObservationArchive",
+          "close_scope": "NativeProxyObservationArchive::_source_closure",
+          "kind": "source",
+          "label": "source:36",
+          "occurrence": 36,
+          "open_call_id": 191,
+          "path": ".artifacts/logs/native-proxy-observation-acquisition-20260910/cases/fsmgen-bb_hICGm/retained-sources/a7d92e28ec1c8308e37c6003df167bc42bd2341cf3a69d677f45330271ffba56.source",
+          "symbol": "NativeProxyImageCustody::_source"
+        }
+      ],
+      "success": 0
+    },
+    {
+      "calls": 196,
+      "effects": {
+        "last_reference_check": null,
+        "reference_absence_verified": 0,
+        "unlink_attempted": 0,
+        "unlink_completed": 0
+      },
+      "handles": 56,
+      "index": 80,
+      "name": "single:source|NativeProxyImageCustody::_source#37",
+      "prediction_sha256": "1a249ba730c675b35b35e1c5592dc47c2c60cc930d797d3a7b4a96deb49a457a",
+      "resolved": [
+        {
+          "address": "source|NativeProxyImageCustody::_source#37",
+          "close_caller": "NativeProxyObservationArchive",
+          "close_scope": "NativeProxyObservationArchive::_source_closure",
+          "kind": "source",
+          "label": "source:37",
+          "occurrence": 37,
+          "open_call_id": 194,
+          "path": ".artifacts/logs/native-proxy-observation-acquisition-20260910/cases/fsmgen-bb_hICGm/retained-sources/e7f06f27e18528c7d10e8c4a4ab42b5e70d1423cdb80e83048597719c9c7eb67.source",
+          "symbol": "NativeProxyImageCustody::_source"
+        }
+      ],
+      "success": 0
+    },
+    {
+      "calls": 538,
+      "effects": {
+        "last_reference_check": {
+          "phase": "finish",
+          "state": "absent"
+        },
+        "reference_absence_verified": 1,
+        "unlink_attempted": 1,
+        "unlink_completed": 1
+      },
+      "handles": 148,
+      "index": 81,
+      "name": "single:source|NativeProxyImageCustody::_source#38",
+      "prediction_sha256": "2c8c102c0bf1fd4a0cea75a5c4820a3fe6f6eca1bdd32c69ea28ebda3863d136",
+      "resolved": [
+        {
+          "address": "source|NativeProxyImageCustody::_source#38",
+          "close_caller": "NativeProxyObservationRelease",
+          "close_scope": "NativeProxyObservationRelease::_close_owned",
+          "kind": "source",
+          "label": "source:38",
+          "occurrence": 38,
+          "open_call_id": 211,
+          "path": ".artifacts/tmp/native-proxy-image-custody/cases/fsmgen-4cU8Qp9p/images/efd497b0e847884b3c1cfcde14d8b645991c52ebab90c54e58984ccbc303c146/rustup.c",
+          "symbol": "NativeProxyImageCustody::_source"
+        }
+      ],
+      "success": 0
+    },
+    {
+      "calls": 538,
+      "effects": {
+        "last_reference_check": {
+          "phase": "finish",
+          "state": "absent"
+        },
+        "reference_absence_verified": 1,
+        "unlink_attempted": 1,
+        "unlink_completed": 1
+      },
+      "handles": 148,
+      "index": 82,
+      "name": "single:source|NativeProxyImageCustody::_source#39",
+      "prediction_sha256": "18783f2c4a30c7af122cf46dc3345958c5a5dafa17df9af51c3da0dff5c20d09",
+      "resolved": [
+        {
+          "address": "source|NativeProxyImageCustody::_source#39",
+          "close_caller": "NativeProxyObservationRelease",
+          "close_scope": "NativeProxyObservationRelease::_close_owned",
+          "kind": "source",
+          "label": "source:39",
+          "occurrence": 39,
+          "open_call_id": 213,
+          "path": ".artifacts/tmp/native-proxy-image-custody/cases/fsmgen-4cU8Qp9p/images/efd497b0e847884b3c1cfcde14d8b645991c52ebab90c54e58984ccbc303c146/rustup",
+          "symbol": "NativeProxyImageCustody::_source"
+        }
+      ],
+      "success": 0
+    },
+    {
+      "calls": 24,
+      "effects": {
+        "last_reference_check": null,
+        "reference_absence_verified": 0,
+        "unlink_attempted": 0,
+        "unlink_completed": 0
+      },
+      "handles": 7,
+      "index": 83,
+      "name": "single:source|NativeProxyImageCustody::_source#4",
+      "prediction_sha256": "793ef68361c2478970003fec0198fdefaa1aac43f39ff018ca5ece3e8c644380",
+      "resolved": [
+        {
+          "address": "source|NativeProxyImageCustody::_source#4",
+          "close_caller": "NativeProxyObservationArchive",
+          "close_scope": "NativeProxyObservationArchive::_source_closure",
+          "kind": "source",
+          "label": "source:4",
+          "occurrence": 4,
+          "open_call_id": 22,
+          "path": ".artifacts/logs/native-proxy-observation-acquisition-20260910/cases/fsmgen-bb_hICGm/retained-sources/d42ab2b4e413bd694a831c4a8307a0c4cd760b3bfdcf5fc93dc0b6772fdd632b.source",
+          "symbol": "NativeProxyImageCustody::_source"
+        }
+      ],
+      "success": 0
+    },
+    {
+      "calls": 538,
+      "effects": {
+        "last_reference_check": {
+          "phase": "finish",
+          "state": "absent"
+        },
+        "reference_absence_verified": 1,
+        "unlink_attempted": 1,
+        "unlink_completed": 1
+      },
+      "handles": 148,
+      "index": 84,
+      "name": "single:source|NativeProxyImageCustody::_source#40",
+      "prediction_sha256": "22cf91ab37f0b358c1737d06d17bbe0f7ce937823dc88af540db1c512442aa93",
+      "resolved": [
+        {
+          "address": "source|NativeProxyImageCustody::_source#40",
+          "close_caller": "NativeProxyObservationRelease",
+          "close_scope": "NativeProxyObservationRelease::_close_owned",
+          "kind": "source",
+          "label": "source:40",
+          "occurrence": 40,
+          "open_call_id": 215,
+          "path": ".artifacts/tmp/native-proxy-image-custody/cases/fsmgen-4cU8Qp9p/references/7a675d01e5cd42a62b8f203a8a56059fa5c42b4f0f4676a7a15c9afdb666b71b.json",
+          "symbol": "NativeProxyImageCustody::_source"
+        }
+      ],
+      "success": 0
+    },
+    {
+      "calls": 224,
+      "effects": {
+        "last_reference_check": null,
+        "reference_absence_verified": 0,
+        "unlink_attempted": 0,
+        "unlink_completed": 0
+      },
+      "handles": 63,
+      "index": 85,
+      "name": "single:source|NativeProxyImageCustody::_source#41",
+      "prediction_sha256": "a90ad1836b8fc927de0e3a3cdb09db1b82e2a5762648141380463c8d53aa166c",
+      "resolved": [
+        {
+          "address": "source|NativeProxyImageCustody::_source#41",
+          "close_caller": "NativeProxyImageCoordination",
+          "close_scope": "NativeProxyImageCoordination::_census",
+          "kind": "source",
+          "label": "source:41",
+          "occurrence": 41,
+          "open_call_id": 222,
+          "path": ".artifacts/tmp/native-proxy-image-custody/cases/fsmgen-4cU8Qp9p/references/7a675d01e5cd42a62b8f203a8a56059fa5c42b4f0f4676a7a15c9afdb666b71b.json",
+          "symbol": "NativeProxyImageCustody::_source"
+        }
+      ],
+      "success": 0
+    },
+    {
+      "calls": 226,
+      "effects": {
+        "last_reference_check": null,
+        "reference_absence_verified": 0,
+        "unlink_attempted": 0,
+        "unlink_completed": 0
+      },
+      "handles": 64,
+      "index": 86,
+      "name": "single:source|NativeProxyImageCustody::_source#42",
+      "prediction_sha256": "6dd590d37ec8219be2794358c4995567a6b277d278eca0d3a79f20607d3c34f3",
+      "resolved": [
+        {
+          "address": "source|NativeProxyImageCustody::_source#42",
+          "close_caller": "NativeProxyImageCoordination",
+          "close_scope": "NativeProxyImageCoordination::_census",
+          "kind": "source",
+          "label": "source:42",
+          "occurrence": 42,
+          "open_call_id": 224,
+          "path": ".artifacts/tmp/native-proxy-image-custody/cases/fsmgen-4cU8Qp9p/references/d4f88346e844083d407e72d06612c64d5a503f6bcdbe6599a87e4fe01a485fc7.json",
+          "symbol": "NativeProxyImageCustody::_source"
+        }
+      ],
+      "success": 0
+    },
+    {
+      "calls": 333,
+      "effects": {
+        "last_reference_check": null,
+        "reference_absence_verified": 0,
+        "unlink_attempted": 0,
+        "unlink_completed": 0
+      },
+      "handles": 97,
+      "index": 87,
+      "name": "single:source|NativeProxyImageCustody::_source#43",
+      "prediction_sha256": "1e719c89f9237353aeed58d8d29f9361b78a25246d266352a8cc5269fe56c730",
+      "resolved": [
+        {
+          "address": "source|NativeProxyImageCustody::_source#43",
+          "close_caller": "NativeProxyReferenceCensus",
+          "close_scope": "NativeProxyReferenceCensus::_inspect_locked",
+          "kind": "source",
+          "label": "source:43",
+          "occurrence": 43,
+          "open_call_id": 227,
+          "path": ".artifacts/tmp/native-proxy-image-custody/cases/fsmgen-4cU8Qp9p/references/7a675d01e5cd42a62b8f203a8a56059fa5c42b4f0f4676a7a15c9afdb666b71b.json",
+          "symbol": "NativeProxyImageCustody::_source"
+        }
+      ],
+      "success": 0
+    },
+    {
+      "calls": 252,
+      "effects": {
+        "last_reference_check": null,
+        "reference_absence_verified": 0,
+        "unlink_attempted": 0,
+        "unlink_completed": 0
+      },
+      "handles": 72,
+      "index": 88,
+      "name": "single:source|NativeProxyImageCustody::_source#44",
+      "prediction_sha256": "c94a0dd1a55397941dd63c4449471383214a0bcd4c54e96cda299d32500065c4",
+      "resolved": [
+        {
+          "address": "source|NativeProxyImageCustody::_source#44",
+          "close_caller": "NativeProxyReferenceCensus",
+          "close_scope": "NativeProxyReferenceCensus::_image",
+          "kind": "source",
+          "label": "source:44",
+          "occurrence": 44,
+          "open_call_id": 232,
+          "path": ".artifacts/tmp/native-proxy-image-custody/cases/fsmgen-4cU8Qp9p/images/efd497b0e847884b3c1cfcde14d8b645991c52ebab90c54e58984ccbc303c146/rustup.c",
+          "symbol": "NativeProxyImageCustody::_source"
+        }
+      ],
+      "success": 0
+    },
+    {
+      "calls": 252,
+      "effects": {
+        "last_reference_check": null,
+        "reference_absence_verified": 0,
+        "unlink_attempted": 0,
+        "unlink_completed": 0
+      },
+      "handles": 72,
+      "index": 89,
+      "name": "single:source|NativeProxyImageCustody::_source#45",
+      "prediction_sha256": "90fed0ac05d7301de711b4a8b1c01d9547a28160f6270399773e436f0724a5b0",
+      "resolved": [
+        {
+          "address": "source|NativeProxyImageCustody::_source#45",
+          "close_caller": "NativeProxyReferenceCensus",
+          "close_scope": "NativeProxyReferenceCensus::_image",
+          "kind": "source",
+          "label": "source:45",
+          "occurrence": 45,
+          "open_call_id": 233,
+          "path": ".artifacts/tmp/native-proxy-image-custody/cases/fsmgen-4cU8Qp9p/images/efd497b0e847884b3c1cfcde14d8b645991c52ebab90c54e58984ccbc303c146/rustup",
+          "symbol": "NativeProxyImageCustody::_source"
+        }
+      ],
+      "success": 0
+    },
+    {
+      "calls": 249,
+      "effects": {
+        "last_reference_check": null,
+        "reference_absence_verified": 0,
+        "unlink_attempted": 0,
+        "unlink_completed": 0
+      },
+      "handles": 72,
+      "index": 90,
+      "name": "single:source|NativeProxyImageCustody::_source#46",
+      "prediction_sha256": "6bdf4ed17ab169d31439125a07776702723e9fc0bb2bc6437002dfc297080d0d",
+      "resolved": [
+        {
+          "address": "source|NativeProxyImageCustody::_source#46",
+          "close_caller": "NativeProxyImageCustody",
+          "close_scope": "NativeProxyImageCustody::read_entry",
+          "kind": "source",
+          "label": "source:46",
+          "occurrence": 46,
+          "open_call_id": 239,
+          "path": ".artifacts/tmp/native-proxy-image-custody/cases/fsmgen-4cU8Qp9p/images/efd497b0e847884b3c1cfcde14d8b645991c52ebab90c54e58984ccbc303c146/rustup.c",
+          "symbol": "NativeProxyImageCustody::_source"
+        }
+      ],
+      "success": 0
+    },
+    {
+      "calls": 249,
+      "effects": {
+        "last_reference_check": null,
+        "reference_absence_verified": 0,
+        "unlink_attempted": 0,
+        "unlink_completed": 0
+      },
+      "handles": 72,
+      "index": 91,
+      "name": "single:source|NativeProxyImageCustody::_source#47",
+      "prediction_sha256": "fe01220d851456bd5a315089fe7485ca6b3d3ba5ac32a5b21bcc8c488f7b7407",
+      "resolved": [
+        {
+          "address": "source|NativeProxyImageCustody::_source#47",
+          "close_caller": "NativeProxyImageCustody",
+          "close_scope": "NativeProxyImageCustody::read_entry",
+          "kind": "source",
+          "label": "source:47",
+          "occurrence": 47,
+          "open_call_id": 240,
+          "path": ".artifacts/tmp/native-proxy-image-custody/cases/fsmgen-4cU8Qp9p/images/efd497b0e847884b3c1cfcde14d8b645991c52ebab90c54e58984ccbc303c146/rustup",
+          "symbol": "NativeProxyImageCustody::_source"
+        }
+      ],
+      "success": 0
+    },
+    {
+      "calls": 249,
+      "effects": {
+        "last_reference_check": null,
+        "reference_absence_verified": 0,
+        "unlink_attempted": 0,
+        "unlink_completed": 0
+      },
+      "handles": 72,
+      "index": 92,
+      "name": "single:source|NativeProxyImageCustody::_source#48",
+      "prediction_sha256": "e0096d4fe1ac9466b6bd227cd7f73718af1899831b024d8d401d24ca16cc1fd0",
+      "resolved": [
+        {
+          "address": "source|NativeProxyImageCustody::_source#48",
+          "close_caller": "NativeProxyImageCustody",
+          "close_scope": "NativeProxyImageCustody::read_entry",
+          "kind": "source",
+          "label": "source:48",
+          "occurrence": 48,
+          "open_call_id": 241,
+          "path": ".artifacts/tmp/native-proxy-image-custody/cases/fsmgen-4cU8Qp9p/images/efd497b0e847884b3c1cfcde14d8b645991c52ebab90c54e58984ccbc303c146/image.json",
+          "symbol": "NativeProxyImageCustody::_source"
+        }
+      ],
+      "success": 0
+    },
+    {
+      "calls": 333,
+      "effects": {
+        "last_reference_check": null,
+        "reference_absence_verified": 0,
+        "unlink_attempted": 0,
+        "unlink_completed": 0
+      },
+      "handles": 97,
+      "index": 93,
+      "name": "single:source|NativeProxyImageCustody::_source#49",
+      "prediction_sha256": "0ad876b08e46fdfc3d3b9f2470b3fb347fe60ea5501b3d246040dfee580b3213",
+      "resolved": [
+        {
+          "address": "source|NativeProxyImageCustody::_source#49",
+          "close_caller": "NativeProxyReferenceCensus",
+          "close_scope": "NativeProxyReferenceCensus::_inspect_locked",
+          "kind": "source",
+          "label": "source:49",
+          "occurrence": 49,
+          "open_call_id": 254,
+          "path": ".artifacts/tmp/native-proxy-image-custody/cases/fsmgen-4cU8Qp9p/references/d4f88346e844083d407e72d06612c64d5a503f6bcdbe6599a87e4fe01a485fc7.json",
+          "symbol": "NativeProxyImageCustody::_source"
+        }
+      ],
+      "success": 0
+    },
+    {
+      "calls": 27,
+      "effects": {
+        "last_reference_check": null,
+        "reference_absence_verified": 0,
+        "unlink_attempted": 0,
+        "unlink_completed": 0
+      },
+      "handles": 8,
+      "index": 94,
+      "name": "single:source|NativeProxyImageCustody::_source#5",
+      "prediction_sha256": "464bc5d65d5990f75afeab69fcc08065bbbedcbd5beece0dec671986b58bb629",
+      "resolved": [
+        {
+          "address": "source|NativeProxyImageCustody::_source#5",
+          "close_caller": "NativeProxyObservationArchive",
+          "close_scope": "NativeProxyObservationArchive::_source_closure",
+          "kind": "source",
+          "label": "source:5",
+          "occurrence": 5,
+          "open_call_id": 25,
+          "path": ".artifacts/logs/native-proxy-observation-acquisition-20260910/cases/fsmgen-bb_hICGm/retained-sources/1a71a0c95d346f2fa9925bba734dfbdc4bd789b851d33d07eccc567f330b2153.source",
+          "symbol": "NativeProxyImageCustody::_source"
+        }
+      ],
+      "success": 0
+    },
+    {
+      "calls": 279,
+      "effects": {
+        "last_reference_check": null,
+        "reference_absence_verified": 0,
+        "unlink_attempted": 0,
+        "unlink_completed": 0
+      },
+      "handles": 80,
+      "index": 95,
+      "name": "single:source|NativeProxyImageCustody::_source#50",
+      "prediction_sha256": "78a1eb44ef8e28e90f44a32198e3dd27d5ec852b6e9b1b4de4ab0290483a9367",
+      "resolved": [
+        {
+          "address": "source|NativeProxyImageCustody::_source#50",
+          "close_caller": "NativeProxyReferenceCensus",
+          "close_scope": "NativeProxyReferenceCensus::_image",
+          "kind": "source",
+          "label": "source:50",
+          "occurrence": 50,
+          "open_call_id": 259,
+          "path": ".artifacts/tmp/native-proxy-image-custody/cases/fsmgen-4cU8Qp9p/images/183f0d4d18572a250ac97756196732d884f1a2217a23dcbf7df6390d03302187/rustup.c",
+          "symbol": "NativeProxyImageCustody::_source"
+        }
+      ],
+      "success": 0
+    },
+    {
+      "calls": 279,
+      "effects": {
+        "last_reference_check": null,
+        "reference_absence_verified": 0,
+        "unlink_attempted": 0,
+        "unlink_completed": 0
+      },
+      "handles": 80,
+      "index": 96,
+      "name": "single:source|NativeProxyImageCustody::_source#51",
+      "prediction_sha256": "dab2afff4678a2c43a07833e815580a44cfa504f22628fbd30ca8098f36567f4",
+      "resolved": [
+        {
+          "address": "source|NativeProxyImageCustody::_source#51",
+          "close_caller": "NativeProxyReferenceCensus",
+          "close_scope": "NativeProxyReferenceCensus::_image",
+          "kind": "source",
+          "label": "source:51",
+          "occurrence": 51,
+          "open_call_id": 260,
+          "path": ".artifacts/tmp/native-proxy-image-custody/cases/fsmgen-4cU8Qp9p/images/183f0d4d18572a250ac97756196732d884f1a2217a23dcbf7df6390d03302187/rustup",
+          "symbol": "NativeProxyImageCustody::_source"
+        }
+      ],
+      "success": 0
+    },
+    {
+      "calls": 276,
+      "effects": {
+        "last_reference_check": null,
+        "reference_absence_verified": 0,
+        "unlink_attempted": 0,
+        "unlink_completed": 0
+      },
+      "handles": 80,
+      "index": 97,
+      "name": "single:source|NativeProxyImageCustody::_source#52",
+      "prediction_sha256": "ac526f75b5a1fcfe18daea3ffeb7b03eaa2e5fe91686072ecab7c34f00667218",
+      "resolved": [
+        {
+          "address": "source|NativeProxyImageCustody::_source#52",
+          "close_caller": "NativeProxyImageCustody",
+          "close_scope": "NativeProxyImageCustody::read_entry",
+          "kind": "source",
+          "label": "source:52",
+          "occurrence": 52,
+          "open_call_id": 266,
+          "path": ".artifacts/tmp/native-proxy-image-custody/cases/fsmgen-4cU8Qp9p/images/183f0d4d18572a250ac97756196732d884f1a2217a23dcbf7df6390d03302187/rustup.c",
+          "symbol": "NativeProxyImageCustody::_source"
+        }
+      ],
+      "success": 0
+    },
+    {
+      "calls": 276,
+      "effects": {
+        "last_reference_check": null,
+        "reference_absence_verified": 0,
+        "unlink_attempted": 0,
+        "unlink_completed": 0
+      },
+      "handles": 80,
+      "index": 98,
+      "name": "single:source|NativeProxyImageCustody::_source#53",
+      "prediction_sha256": "f438d53c4c5afc220c2b6aab244b11adc322b97287bae084b39675a6c5ba8352",
+      "resolved": [
+        {
+          "address": "source|NativeProxyImageCustody::_source#53",
+          "close_caller": "NativeProxyImageCustody",
+          "close_scope": "NativeProxyImageCustody::read_entry",
+          "kind": "source",
+          "label": "source:53",
+          "occurrence": 53,
+          "open_call_id": 267,
+          "path": ".artifacts/tmp/native-proxy-image-custody/cases/fsmgen-4cU8Qp9p/images/183f0d4d18572a250ac97756196732d884f1a2217a23dcbf7df6390d03302187/rustup",
+          "symbol": "NativeProxyImageCustody::_source"
+        }
+      ],
+      "success": 0
+    },
+    {
+      "calls": 276,
+      "effects": {
+        "last_reference_check": null,
+        "reference_absence_verified": 0,
+        "unlink_attempted": 0,
+        "unlink_completed": 0
+      },
+      "handles": 80,
+      "index": 99,
+      "name": "single:source|NativeProxyImageCustody::_source#54",
+      "prediction_sha256": "cfba80e7386d488c73ed4cd2f54aad919353ba56a1cb98d618a25fd506770608",
+      "resolved": [
+        {
+          "address": "source|NativeProxyImageCustody::_source#54",
+          "close_caller": "NativeProxyImageCustody",
+          "close_scope": "NativeProxyImageCustody::read_entry",
+          "kind": "source",
+          "label": "source:54",
+          "occurrence": 54,
+          "open_call_id": 268,
+          "path": ".artifacts/tmp/native-proxy-image-custody/cases/fsmgen-4cU8Qp9p/images/183f0d4d18572a250ac97756196732d884f1a2217a23dcbf7df6390d03302187/image.json",
+          "symbol": "NativeProxyImageCustody::_source"
+        }
+      ],
+      "success": 0
+    },
+    {
+      "calls": 286,
+      "effects": {
+        "last_reference_check": null,
+        "reference_absence_verified": 0,
+        "unlink_attempted": 0,
+        "unlink_completed": 0
+      },
+      "handles": 82,
+      "index": 100,
+      "name": "single:source|NativeProxyImageCustody::_source#55",
+      "prediction_sha256": "4d05a368d94b69e7ac9ef2e205b01f1f8f43bbafb43239cc08afc5894aa3241a",
+      "resolved": [
+        {
+          "address": "source|NativeProxyImageCustody::_source#55",
+          "close_caller": "NativeProxyReferenceCensus",
+          "close_scope": "NativeProxyReferenceCensus::_closure",
+          "kind": "source",
+          "label": "source:55",
+          "occurrence": 55,
+          "open_call_id": 284,
+          "path": ".artifacts/tmp/native-proxy-image-custody/cases/fsmgen-4cU8Qp9p/references/7a675d01e5cd42a62b8f203a8a56059fa5c42b4f0f4676a7a15c9afdb666b71b.json",
+          "symbol": "NativeProxyImageCustody::_source"
+        }
+      ],
+      "success": 0
+    },
+    {
+      "calls": 289,
+      "effects": {
+        "last_reference_check": null,
+        "reference_absence_verified": 0,
+        "unlink_attempted": 0,
+        "unlink_completed": 0
+      },
+      "handles": 83,
+      "index": 101,
+      "name": "single:source|NativeProxyImageCustody::_source#56",
+      "prediction_sha256": "3966fbeb89ae141bd4ec7034deb6a4cd4237f376ef8ca7dd496df5fedcfbff73",
+      "resolved": [
+        {
+          "address": "source|NativeProxyImageCustody::_source#56",
+          "close_caller": "NativeProxyReferenceCensus",
+          "close_scope": "NativeProxyReferenceCensus::_closure",
+          "kind": "source",
+          "label": "source:56",
+          "occurrence": 56,
+          "open_call_id": 287,
+          "path": ".artifacts/tmp/native-proxy-image-custody/cases/fsmgen-4cU8Qp9p/references/d4f88346e844083d407e72d06612c64d5a503f6bcdbe6599a87e4fe01a485fc7.json",
+          "symbol": "NativeProxyImageCustody::_source"
+        }
+      ],
+      "success": 0
+    },
+    {
+      "calls": 311,
+      "effects": {
+        "last_reference_check": null,
+        "reference_absence_verified": 0,
+        "unlink_attempted": 0,
+        "unlink_completed": 0
+      },
+      "handles": 90,
+      "index": 102,
+      "name": "single:source|NativeProxyImageCustody::_source#57",
+      "prediction_sha256": "53fddabe3c1770a4b6f542c874e95abf5f05de277c06f6ecd598469f414d704e",
+      "resolved": [
+        {
+          "address": "source|NativeProxyImageCustody::_source#57",
+          "close_caller": "NativeProxyReferenceCensus",
+          "close_scope": "NativeProxyReferenceCensus::_image",
+          "kind": "source",
+          "label": "source:57",
+          "occurrence": 57,
+          "open_call_id": 291,
+          "path": ".artifacts/tmp/native-proxy-image-custody/cases/fsmgen-4cU8Qp9p/images/183f0d4d18572a250ac97756196732d884f1a2217a23dcbf7df6390d03302187/rustup.c",
+          "symbol": "NativeProxyImageCustody::_source"
+        }
+      ],
+      "success": 0
+    },
+    {
+      "calls": 311,
+      "effects": {
+        "last_reference_check": null,
+        "reference_absence_verified": 0,
+        "unlink_attempted": 0,
+        "unlink_completed": 0
+      },
+      "handles": 90,
+      "index": 103,
+      "name": "single:source|NativeProxyImageCustody::_source#58",
+      "prediction_sha256": "bf39a860f1f551eb080fbe7b586c6a5b89a840c02a31bfc5b69e1ad232a8b5de",
+      "resolved": [
+        {
+          "address": "source|NativeProxyImageCustody::_source#58",
+          "close_caller": "NativeProxyReferenceCensus",
+          "close_scope": "NativeProxyReferenceCensus::_image",
+          "kind": "source",
+          "label": "source:58",
+          "occurrence": 58,
+          "open_call_id": 292,
+          "path": ".artifacts/tmp/native-proxy-image-custody/cases/fsmgen-4cU8Qp9p/images/183f0d4d18572a250ac97756196732d884f1a2217a23dcbf7df6390d03302187/rustup",
+          "symbol": "NativeProxyImageCustody::_source"
+        }
+      ],
+      "success": 0
+    },
+    {
+      "calls": 308,
+      "effects": {
+        "last_reference_check": null,
+        "reference_absence_verified": 0,
+        "unlink_attempted": 0,
+        "unlink_completed": 0
+      },
+      "handles": 90,
+      "index": 104,
+      "name": "single:source|NativeProxyImageCustody::_source#59",
+      "prediction_sha256": "fe32c7e6c610110cd679dc2423c3f62f004d22f464b1e33283b8cd1f5a6d6f00",
+      "resolved": [
+        {
+          "address": "source|NativeProxyImageCustody::_source#59",
+          "close_caller": "NativeProxyImageCustody",
+          "close_scope": "NativeProxyImageCustody::read_entry",
+          "kind": "source",
+          "label": "source:59",
+          "occurrence": 59,
+          "open_call_id": 298,
+          "path": ".artifacts/tmp/native-proxy-image-custody/cases/fsmgen-4cU8Qp9p/images/183f0d4d18572a250ac97756196732d884f1a2217a23dcbf7df6390d03302187/rustup.c",
+          "symbol": "NativeProxyImageCustody::_source"
+        }
+      ],
+      "success": 0
+    },
+    {
+      "calls": 30,
+      "effects": {
+        "last_reference_check": null,
+        "reference_absence_verified": 0,
+        "unlink_attempted": 0,
+        "unlink_completed": 0
+      },
+      "handles": 9,
+      "index": 105,
+      "name": "single:source|NativeProxyImageCustody::_source#6",
+      "prediction_sha256": "bd686ec57656f8fa80ab03ae722b66bd53b57e54b58277c72efb4b024b539f9a",
+      "resolved": [
+        {
+          "address": "source|NativeProxyImageCustody::_source#6",
+          "close_caller": "NativeProxyObservationArchive",
+          "close_scope": "NativeProxyObservationArchive::_source_closure",
+          "kind": "source",
+          "label": "source:6",
+          "occurrence": 6,
+          "open_call_id": 28,
+          "path": ".artifacts/logs/native-proxy-observation-acquisition-20260910/cases/fsmgen-bb_hICGm/retained-sources/a7d92e28ec1c8308e37c6003df167bc42bd2341cf3a69d677f45330271ffba56.source",
+          "symbol": "NativeProxyImageCustody::_source"
+        }
+      ],
+      "success": 0
+    },
+    {
+      "calls": 308,
+      "effects": {
+        "last_reference_check": null,
+        "reference_absence_verified": 0,
+        "unlink_attempted": 0,
+        "unlink_completed": 0
+      },
+      "handles": 90,
+      "index": 106,
+      "name": "single:source|NativeProxyImageCustody::_source#60",
+      "prediction_sha256": "c54ef4b9358f6669f4d473e122f4216262b794878427e1c08fffaf1d7cc27f69",
+      "resolved": [
+        {
+          "address": "source|NativeProxyImageCustody::_source#60",
+          "close_caller": "NativeProxyImageCustody",
+          "close_scope": "NativeProxyImageCustody::read_entry",
+          "kind": "source",
+          "label": "source:60",
+          "occurrence": 60,
+          "open_call_id": 299,
+          "path": ".artifacts/tmp/native-proxy-image-custody/cases/fsmgen-4cU8Qp9p/images/183f0d4d18572a250ac97756196732d884f1a2217a23dcbf7df6390d03302187/rustup",
+          "symbol": "NativeProxyImageCustody::_source"
+        }
+      ],
+      "success": 0
+    },
+    {
+      "calls": 308,
+      "effects": {
+        "last_reference_check": null,
+        "reference_absence_verified": 0,
+        "unlink_attempted": 0,
+        "unlink_completed": 0
+      },
+      "handles": 90,
+      "index": 107,
+      "name": "single:source|NativeProxyImageCustody::_source#61",
+      "prediction_sha256": "024a4f5a05f77ee38c04de24b3f9de1bb2d8ed6a3bab60f5a8aa72d976c8e0e2",
+      "resolved": [
+        {
+          "address": "source|NativeProxyImageCustody::_source#61",
+          "close_caller": "NativeProxyImageCustody",
+          "close_scope": "NativeProxyImageCustody::read_entry",
+          "kind": "source",
+          "label": "source:61",
+          "occurrence": 61,
+          "open_call_id": 300,
+          "path": ".artifacts/tmp/native-proxy-image-custody/cases/fsmgen-4cU8Qp9p/images/183f0d4d18572a250ac97756196732d884f1a2217a23dcbf7df6390d03302187/image.json",
+          "symbol": "NativeProxyImageCustody::_source"
+        }
+      ],
+      "success": 0
+    },
+    {
+      "calls": 333,
+      "effects": {
+        "last_reference_check": null,
+        "reference_absence_verified": 0,
+        "unlink_attempted": 0,
+        "unlink_completed": 0
+      },
+      "handles": 97,
+      "index": 108,
+      "name": "single:source|NativeProxyImageCustody::_source#62",
+      "prediction_sha256": "05f7027779f23273991070aa9a4aca00987a507adbba51d4ab559e8cbb106336",
+      "resolved": [
+        {
+          "address": "source|NativeProxyImageCustody::_source#62",
+          "close_caller": "NativeProxyReferenceCensus",
+          "close_scope": "NativeProxyReferenceCensus::_image",
+          "kind": "source",
+          "label": "source:62",
+          "occurrence": 62,
+          "open_call_id": 313,
+          "path": ".artifacts/tmp/native-proxy-image-custody/cases/fsmgen-4cU8Qp9p/images/efd497b0e847884b3c1cfcde14d8b645991c52ebab90c54e58984ccbc303c146/rustup.c",
+          "symbol": "NativeProxyImageCustody::_source"
+        }
+      ],
+      "success": 0
+    },
+    {
+      "calls": 333,
+      "effects": {
+        "last_reference_check": null,
+        "reference_absence_verified": 0,
+        "unlink_attempted": 0,
+        "unlink_completed": 0
+      },
+      "handles": 97,
+      "index": 109,
+      "name": "single:source|NativeProxyImageCustody::_source#63",
+      "prediction_sha256": "8c7bb1ecb59a81f147d2ff6e8e165a779bb3c7115c315967c277de7f616e0288",
+      "resolved": [
+        {
+          "address": "source|NativeProxyImageCustody::_source#63",
+          "close_caller": "NativeProxyReferenceCensus",
+          "close_scope": "NativeProxyReferenceCensus::_image",
+          "kind": "source",
+          "label": "source:63",
+          "occurrence": 63,
+          "open_call_id": 314,
+          "path": ".artifacts/tmp/native-proxy-image-custody/cases/fsmgen-4cU8Qp9p/images/efd497b0e847884b3c1cfcde14d8b645991c52ebab90c54e58984ccbc303c146/rustup",
+          "symbol": "NativeProxyImageCustody::_source"
+        }
+      ],
+      "success": 0
+    },
+    {
+      "calls": 330,
+      "effects": {
+        "last_reference_check": null,
+        "reference_absence_verified": 0,
+        "unlink_attempted": 0,
+        "unlink_completed": 0
+      },
+      "handles": 97,
+      "index": 110,
+      "name": "single:source|NativeProxyImageCustody::_source#64",
+      "prediction_sha256": "050d72f48af43b97d96f8a9455401d3a8c1d954b0984435cc00d9fa043ddea0d",
+      "resolved": [
+        {
+          "address": "source|NativeProxyImageCustody::_source#64",
+          "close_caller": "NativeProxyImageCustody",
+          "close_scope": "NativeProxyImageCustody::read_entry",
+          "kind": "source",
+          "label": "source:64",
+          "occurrence": 64,
+          "open_call_id": 320,
+          "path": ".artifacts/tmp/native-proxy-image-custody/cases/fsmgen-4cU8Qp9p/images/efd497b0e847884b3c1cfcde14d8b645991c52ebab90c54e58984ccbc303c146/rustup.c",
+          "symbol": "NativeProxyImageCustody::_source"
+        }
+      ],
+      "success": 0
+    },
+    {
+      "calls": 330,
+      "effects": {
+        "last_reference_check": null,
+        "reference_absence_verified": 0,
+        "unlink_attempted": 0,
+        "unlink_completed": 0
+      },
+      "handles": 97,
+      "index": 111,
+      "name": "single:source|NativeProxyImageCustody::_source#65",
+      "prediction_sha256": "f8868d6d66bed37ee7bc8b28021018912a4b8b37daa7ce1c27ebd5dd4537250b",
+      "resolved": [
+        {
+          "address": "source|NativeProxyImageCustody::_source#65",
+          "close_caller": "NativeProxyImageCustody",
+          "close_scope": "NativeProxyImageCustody::read_entry",
+          "kind": "source",
+          "label": "source:65",
+          "occurrence": 65,
+          "open_call_id": 321,
+          "path": ".artifacts/tmp/native-proxy-image-custody/cases/fsmgen-4cU8Qp9p/images/efd497b0e847884b3c1cfcde14d8b645991c52ebab90c54e58984ccbc303c146/rustup",
+          "symbol": "NativeProxyImageCustody::_source"
+        }
+      ],
+      "success": 0
+    },
+    {
+      "calls": 330,
+      "effects": {
+        "last_reference_check": null,
+        "reference_absence_verified": 0,
+        "unlink_attempted": 0,
+        "unlink_completed": 0
+      },
+      "handles": 97,
+      "index": 112,
+      "name": "single:source|NativeProxyImageCustody::_source#66",
+      "prediction_sha256": "f0b1338894ac1ac075ab573b89a08643e166d575432c332fb3a1bb6f89bfb314",
+      "resolved": [
+        {
+          "address": "source|NativeProxyImageCustody::_source#66",
+          "close_caller": "NativeProxyImageCustody",
+          "close_scope": "NativeProxyImageCustody::read_entry",
+          "kind": "source",
+          "label": "source:66",
+          "occurrence": 66,
+          "open_call_id": 322,
+          "path": ".artifacts/tmp/native-proxy-image-custody/cases/fsmgen-4cU8Qp9p/images/efd497b0e847884b3c1cfcde14d8b645991c52ebab90c54e58984ccbc303c146/image.json",
+          "symbol": "NativeProxyImageCustody::_source"
+        }
+      ],
+      "success": 0
+    },
+    {
+      "calls": 344,
+      "effects": {
+        "last_reference_check": null,
+        "reference_absence_verified": 0,
+        "unlink_attempted": 0,
+        "unlink_completed": 0
+      },
+      "handles": 99,
+      "index": 113,
+      "name": "single:source|NativeProxyImageCustody::_source#67",
+      "prediction_sha256": "6ca5866454bbc2f6d664c343e2053750c5acbe79ec48a76d0fd16c040c062403",
+      "resolved": [
+        {
+          "address": "source|NativeProxyImageCustody::_source#67",
+          "close_caller": "NativeProxyObservationArchive",
+          "close_scope": "NativeProxyObservationArchive::_source_closure",
+          "kind": "source",
+          "label": "source:67",
+          "occurrence": 67,
+          "open_call_id": 342,
+          "path": ".artifacts/logs/native-proxy-observation-acquisition-20260910/cases/fsmgen-bb_hICGm/retained-sources/d42ab2b4e413bd694a831c4a8307a0c4cd760b3bfdcf5fc93dc0b6772fdd632b.source",
+          "symbol": "NativeProxyImageCustody::_source"
+        }
+      ],
+      "success": 0
+    },
+    {
+      "calls": 347,
+      "effects": {
+        "last_reference_check": null,
+        "reference_absence_verified": 0,
+        "unlink_attempted": 0,
+        "unlink_completed": 0
+      },
+      "handles": 100,
+      "index": 114,
+      "name": "single:source|NativeProxyImageCustody::_source#68",
+      "prediction_sha256": "a3ff8e88781a0431fc326863685a9abbee31b5e467891387ab00e32bf726d001",
+      "resolved": [
+        {
+          "address": "source|NativeProxyImageCustody::_source#68",
+          "close_caller": "NativeProxyObservationArchive",
+          "close_scope": "NativeProxyObservationArchive::_source_closure",
+          "kind": "source",
+          "label": "source:68",
+          "occurrence": 68,
+          "open_call_id": 345,
+          "path": ".artifacts/logs/native-proxy-observation-acquisition-20260910/cases/fsmgen-bb_hICGm/retained-sources/1a71a0c95d346f2fa9925bba734dfbdc4bd789b851d33d07eccc567f330b2153.source",
+          "symbol": "NativeProxyImageCustody::_source"
+        }
+      ],
+      "success": 0
+    },
+    {
+      "calls": 350,
+      "effects": {
+        "last_reference_check": null,
+        "reference_absence_verified": 0,
+        "unlink_attempted": 0,
+        "unlink_completed": 0
+      },
+      "handles": 101,
+      "index": 115,
+      "name": "single:source|NativeProxyImageCustody::_source#69",
+      "prediction_sha256": "9641ce3abb2bb8d0e712a4b0a9602e342f3afb47516b06f0038b8afd83247d0f",
+      "resolved": [
+        {
+          "address": "source|NativeProxyImageCustody::_source#69",
+          "close_caller": "NativeProxyObservationArchive",
+          "close_scope": "NativeProxyObservationArchive::_source_closure",
+          "kind": "source",
+          "label": "source:69",
+          "occurrence": 69,
+          "open_call_id": 348,
+          "path": ".artifacts/logs/native-proxy-observation-acquisition-20260910/cases/fsmgen-bb_hICGm/retained-sources/a7d92e28ec1c8308e37c6003df167bc42bd2341cf3a69d677f45330271ffba56.source",
+          "symbol": "NativeProxyImageCustody::_source"
+        }
+      ],
+      "success": 0
+    },
+    {
+      "calls": 33,
+      "effects": {
+        "last_reference_check": null,
+        "reference_absence_verified": 0,
+        "unlink_attempted": 0,
+        "unlink_completed": 0
+      },
+      "handles": 10,
+      "index": 116,
+      "name": "single:source|NativeProxyImageCustody::_source#7",
+      "prediction_sha256": "d132c3711f3e1bc02c8e37e97a11d5bf1b671fd12b10bf5922a25ed997fac90c",
+      "resolved": [
+        {
+          "address": "source|NativeProxyImageCustody::_source#7",
+          "close_caller": "NativeProxyObservationArchive",
+          "close_scope": "NativeProxyObservationArchive::_source_closure",
+          "kind": "source",
+          "label": "source:7",
+          "occurrence": 7,
+          "open_call_id": 31,
+          "path": ".artifacts/logs/native-proxy-observation-acquisition-20260910/cases/fsmgen-bb_hICGm/retained-sources/e7f06f27e18528c7d10e8c4a4ab42b5e70d1423cdb80e83048597719c9c7eb67.source",
+          "symbol": "NativeProxyImageCustody::_source"
+        }
+      ],
+      "success": 0
+    },
+    {
+      "calls": 353,
+      "effects": {
+        "last_reference_check": null,
+        "reference_absence_verified": 0,
+        "unlink_attempted": 0,
+        "unlink_completed": 0
+      },
+      "handles": 102,
+      "index": 117,
+      "name": "single:source|NativeProxyImageCustody::_source#70",
+      "prediction_sha256": "c8fecf31aebd75f083a2e47bfc3be5b043401e40a672897b8a0a4d1f78f2c3d1",
+      "resolved": [
+        {
+          "address": "source|NativeProxyImageCustody::_source#70",
+          "close_caller": "NativeProxyObservationArchive",
+          "close_scope": "NativeProxyObservationArchive::_source_closure",
+          "kind": "source",
+          "label": "source:70",
+          "occurrence": 70,
+          "open_call_id": 351,
+          "path": ".artifacts/logs/native-proxy-observation-acquisition-20260910/cases/fsmgen-bb_hICGm/retained-sources/e7f06f27e18528c7d10e8c4a4ab42b5e70d1423cdb80e83048597719c9c7eb67.source",
+          "symbol": "NativeProxyImageCustody::_source"
+        }
+      ],
+      "success": 0
+    },
+    {
+      "calls": 389,
+      "effects": {
+        "last_reference_check": null,
+        "reference_absence_verified": 0,
+        "unlink_attempted": 0,
+        "unlink_completed": 0
+      },
+      "handles": 110,
+      "index": 118,
+      "name": "single:source|NativeProxyImageCustody::_source#71",
+      "prediction_sha256": "20bffeafa306203ba90d9f3e82a082421ecd3dd62f017a91713aec7838fd794a",
+      "resolved": [
+        {
+          "address": "source|NativeProxyImageCustody::_source#71",
+          "close_caller": "NativeProxyReferenceCensus",
+          "close_scope": "NativeProxyReferenceCensus::_image",
+          "kind": "source",
+          "label": "source:71",
+          "occurrence": 71,
+          "open_call_id": 369,
+          "path": ".artifacts/tmp/native-proxy-image-custody/cases/fsmgen-4cU8Qp9p/images/efd497b0e847884b3c1cfcde14d8b645991c52ebab90c54e58984ccbc303c146/rustup.c",
+          "symbol": "NativeProxyImageCustody::_source"
+        }
+      ],
+      "success": 0
+    },
+    {
+      "calls": 389,
+      "effects": {
+        "last_reference_check": null,
+        "reference_absence_verified": 0,
+        "unlink_attempted": 0,
+        "unlink_completed": 0
+      },
+      "handles": 110,
+      "index": 119,
+      "name": "single:source|NativeProxyImageCustody::_source#72",
+      "prediction_sha256": "05f3f6d599bc4724192ad9629f5fe55959e084b25436c5ac31e56e2cf5dd11bd",
+      "resolved": [
+        {
+          "address": "source|NativeProxyImageCustody::_source#72",
+          "close_caller": "NativeProxyReferenceCensus",
+          "close_scope": "NativeProxyReferenceCensus::_image",
+          "kind": "source",
+          "label": "source:72",
+          "occurrence": 72,
+          "open_call_id": 370,
+          "path": ".artifacts/tmp/native-proxy-image-custody/cases/fsmgen-4cU8Qp9p/images/efd497b0e847884b3c1cfcde14d8b645991c52ebab90c54e58984ccbc303c146/rustup",
+          "symbol": "NativeProxyImageCustody::_source"
+        }
+      ],
+      "success": 0
+    },
+    {
+      "calls": 386,
+      "effects": {
+        "last_reference_check": null,
+        "reference_absence_verified": 0,
+        "unlink_attempted": 0,
+        "unlink_completed": 0
+      },
+      "handles": 110,
+      "index": 120,
+      "name": "single:source|NativeProxyImageCustody::_source#73",
+      "prediction_sha256": "e1f16627855cc257b23d1256a10350cf661d44c3784d5e9325aedad6f87db939",
+      "resolved": [
+        {
+          "address": "source|NativeProxyImageCustody::_source#73",
+          "close_caller": "NativeProxyImageCustody",
+          "close_scope": "NativeProxyImageCustody::read_entry",
+          "kind": "source",
+          "label": "source:73",
+          "occurrence": 73,
+          "open_call_id": 376,
+          "path": ".artifacts/tmp/native-proxy-image-custody/cases/fsmgen-4cU8Qp9p/images/efd497b0e847884b3c1cfcde14d8b645991c52ebab90c54e58984ccbc303c146/rustup.c",
+          "symbol": "NativeProxyImageCustody::_source"
+        }
+      ],
+      "success": 0
+    },
+    {
+      "calls": 386,
+      "effects": {
+        "last_reference_check": null,
+        "reference_absence_verified": 0,
+        "unlink_attempted": 0,
+        "unlink_completed": 0
+      },
+      "handles": 110,
+      "index": 121,
+      "name": "single:source|NativeProxyImageCustody::_source#74",
+      "prediction_sha256": "a45ed28398efa535000fd77d690456e0ecd5905a57945738f0a99cc0d761afc5",
+      "resolved": [
+        {
+          "address": "source|NativeProxyImageCustody::_source#74",
+          "close_caller": "NativeProxyImageCustody",
+          "close_scope": "NativeProxyImageCustody::read_entry",
+          "kind": "source",
+          "label": "source:74",
+          "occurrence": 74,
+          "open_call_id": 377,
+          "path": ".artifacts/tmp/native-proxy-image-custody/cases/fsmgen-4cU8Qp9p/images/efd497b0e847884b3c1cfcde14d8b645991c52ebab90c54e58984ccbc303c146/rustup",
+          "symbol": "NativeProxyImageCustody::_source"
+        }
+      ],
+      "success": 0
+    },
+    {
+      "calls": 386,
+      "effects": {
+        "last_reference_check": null,
+        "reference_absence_verified": 0,
+        "unlink_attempted": 0,
+        "unlink_completed": 0
+      },
+      "handles": 110,
+      "index": 122,
+      "name": "single:source|NativeProxyImageCustody::_source#75",
+      "prediction_sha256": "31bcf1ddf8728138fcd9aa0bce1c672df408db1ba72ae63e1f458d1b34f8e3bc",
+      "resolved": [
+        {
+          "address": "source|NativeProxyImageCustody::_source#75",
+          "close_caller": "NativeProxyImageCustody",
+          "close_scope": "NativeProxyImageCustody::read_entry",
+          "kind": "source",
+          "label": "source:75",
+          "occurrence": 75,
+          "open_call_id": 378,
+          "path": ".artifacts/tmp/native-proxy-image-custody/cases/fsmgen-4cU8Qp9p/images/efd497b0e847884b3c1cfcde14d8b645991c52ebab90c54e58984ccbc303c146/image.json",
+          "symbol": "NativeProxyImageCustody::_source"
+        }
+      ],
+      "success": 0
+    },
+    {
+      "calls": 538,
+      "effects": {
+        "last_reference_check": {
+          "phase": "finish",
+          "state": "absent"
+        },
+        "reference_absence_verified": 1,
+        "unlink_attempted": 1,
+        "unlink_completed": 1
+      },
+      "handles": 148,
+      "index": 123,
+      "name": "single:source|NativeProxyImageCustody::_source#76",
+      "prediction_sha256": "a343fb13b2ad57c04bf7b84ee5239269ed9d37748fe28d06c6cd24622aad4b2c",
+      "resolved": [
+        {
+          "address": "source|NativeProxyImageCustody::_source#76",
+          "close_caller": "NativeProxyObservationRelease",
+          "close_scope": "NativeProxyObservationRelease::_close_owned",
+          "kind": "source",
+          "label": "source:76",
+          "occurrence": 76,
+          "open_call_id": 390,
+          "path": ".artifacts/tmp/native-proxy-image-custody/cases/fsmgen-4cU8Qp9p/images/efd497b0e847884b3c1cfcde14d8b645991c52ebab90c54e58984ccbc303c146/rustup.c",
+          "symbol": "NativeProxyImageCustody::_source"
+        }
+      ],
+      "success": 0
+    },
+    {
+      "calls": 538,
+      "effects": {
+        "last_reference_check": {
+          "phase": "finish",
+          "state": "absent"
+        },
+        "reference_absence_verified": 1,
+        "unlink_attempted": 1,
+        "unlink_completed": 1
+      },
+      "handles": 148,
+      "index": 124,
+      "name": "single:source|NativeProxyImageCustody::_source#77",
+      "prediction_sha256": "a2e3d670910a315bdc9abd8fbd1a772c90a137633a1b65c13a0ff001850f975f",
+      "resolved": [
+        {
+          "address": "source|NativeProxyImageCustody::_source#77",
+          "close_caller": "NativeProxyObservationRelease",
+          "close_scope": "NativeProxyObservationRelease::_close_owned",
+          "kind": "source",
+          "label": "source:77",
+          "occurrence": 77,
+          "open_call_id": 392,
+          "path": ".artifacts/tmp/native-proxy-image-custody/cases/fsmgen-4cU8Qp9p/images/efd497b0e847884b3c1cfcde14d8b645991c52ebab90c54e58984ccbc303c146/rustup",
+          "symbol": "NativeProxyImageCustody::_source"
+        }
+      ],
+      "success": 0
+    },
+    {
+      "calls": 538,
+      "effects": {
+        "last_reference_check": {
+          "phase": "finish",
+          "state": "absent"
+        },
+        "reference_absence_verified": 1,
+        "unlink_attempted": 1,
+        "unlink_completed": 1
+      },
+      "handles": 148,
+      "index": 125,
+      "name": "single:source|NativeProxyImageCustody::_source#78",
+      "prediction_sha256": "c5f8953b8cfd5551e499aafc7997bc9249d32a5ab08efdc4b4709a99c88bd886",
+      "resolved": [
+        {
+          "address": "source|NativeProxyImageCustody::_source#78",
+          "close_caller": "NativeProxyObservationRelease",
+          "close_scope": "NativeProxyObservationRelease::_close_owned",
+          "kind": "source",
+          "label": "source:78",
+          "occurrence": 78,
+          "open_call_id": 394,
+          "path": ".artifacts/tmp/native-proxy-image-custody/cases/fsmgen-4cU8Qp9p/references/7a675d01e5cd42a62b8f203a8a56059fa5c42b4f0f4676a7a15c9afdb666b71b.json",
+          "symbol": "NativeProxyImageCustody::_source"
+        }
+      ],
+      "success": 0
+    },
+    {
+      "calls": 416,
+      "effects": {
+        "last_reference_check": {
+          "phase": "after_unlink",
+          "state": "absent"
+        },
+        "reference_absence_verified": 1,
+        "unlink_attempted": 1,
+        "unlink_completed": 1
+      },
+      "handles": 116,
+      "index": 126,
+      "name": "single:source|NativeProxyImageCustody::_source#79",
+      "prediction_sha256": "c2ed34f64d13bcd2b84884297e4f661488aa71b15b33d56d3f3a641ae4637f52",
+      "resolved": [
+        {
+          "address": "source|NativeProxyImageCustody::_source#79",
+          "close_caller": "NativeProxyImageCoordination",
+          "close_scope": "NativeProxyImageCoordination::_census",
+          "kind": "source",
+          "label": "source:79",
+          "occurrence": 79,
+          "open_call_id": 414,
+          "path": ".artifacts/tmp/native-proxy-image-custody/cases/fsmgen-4cU8Qp9p/references/d4f88346e844083d407e72d06612c64d5a503f6bcdbe6599a87e4fe01a485fc7.json",
+          "symbol": "NativeProxyImageCustody::_source"
+        }
+      ],
+      "success": 0
+    },
+    {
+      "calls": 66,
+      "effects": {
+        "last_reference_check": null,
+        "reference_absence_verified": 0,
+        "unlink_attempted": 0,
+        "unlink_completed": 0
+      },
+      "handles": 17,
+      "index": 127,
+      "name": "single:source|NativeProxyImageCustody::_source#8",
+      "prediction_sha256": "c2d28e3de14a94da25cc852a103e0347900e1cbd44e773e217d9b0f0dcd833f2",
+      "resolved": [
+        {
+          "address": "source|NativeProxyImageCustody::_source#8",
+          "close_caller": "NativeProxyImageCoordination",
+          "close_scope": "NativeProxyImageCoordination::_census",
+          "kind": "source",
+          "label": "source:8",
+          "occurrence": 8,
+          "open_call_id": 64,
+          "path": ".artifacts/tmp/native-proxy-image-custody/cases/fsmgen-4cU8Qp9p/references/7a675d01e5cd42a62b8f203a8a56059fa5c42b4f0f4676a7a15c9afdb666b71b.json",
+          "symbol": "NativeProxyImageCustody::_source"
+        }
+      ],
+      "success": 0
+    },
+    {
+      "calls": 471,
+      "effects": {
+        "last_reference_check": {
+          "phase": "after_unlink",
+          "state": "absent"
+        },
+        "reference_absence_verified": 1,
+        "unlink_attempted": 1,
+        "unlink_completed": 1
+      },
+      "handles": 133,
+      "index": 128,
+      "name": "single:source|NativeProxyImageCustody::_source#80",
+      "prediction_sha256": "a1b7c4c3b69c5de18b6c387a7ca7fb0bcd5d6825be703c43368f3f71a6cf5f01",
+      "resolved": [
+        {
+          "address": "source|NativeProxyImageCustody::_source#80",
+          "close_caller": "NativeProxyReferenceCensus",
+          "close_scope": "NativeProxyReferenceCensus::_inspect_locked",
+          "kind": "source",
+          "label": "source:80",
+          "occurrence": 80,
+          "open_call_id": 417,
+          "path": ".artifacts/tmp/native-proxy-image-custody/cases/fsmgen-4cU8Qp9p/references/d4f88346e844083d407e72d06612c64d5a503f6bcdbe6599a87e4fe01a485fc7.json",
+          "symbol": "NativeProxyImageCustody::_source"
+        }
+      ],
+      "success": 0
+    },
+    {
+      "calls": 442,
+      "effects": {
+        "last_reference_check": {
+          "phase": "after_unlink",
+          "state": "absent"
+        },
+        "reference_absence_verified": 1,
+        "unlink_attempted": 1,
+        "unlink_completed": 1
+      },
+      "handles": 124,
+      "index": 129,
+      "name": "single:source|NativeProxyImageCustody::_source#81",
+      "prediction_sha256": "0e3a9591e851854a9971bca63bdee58dd403462c08ba8a607cefb57cce2b3e4a",
+      "resolved": [
+        {
+          "address": "source|NativeProxyImageCustody::_source#81",
+          "close_caller": "NativeProxyReferenceCensus",
+          "close_scope": "NativeProxyReferenceCensus::_image",
+          "kind": "source",
+          "label": "source:81",
+          "occurrence": 81,
+          "open_call_id": 422,
+          "path": ".artifacts/tmp/native-proxy-image-custody/cases/fsmgen-4cU8Qp9p/images/183f0d4d18572a250ac97756196732d884f1a2217a23dcbf7df6390d03302187/rustup.c",
+          "symbol": "NativeProxyImageCustody::_source"
+        }
+      ],
+      "success": 0
+    },
+    {
+      "calls": 442,
+      "effects": {
+        "last_reference_check": {
+          "phase": "after_unlink",
+          "state": "absent"
+        },
+        "reference_absence_verified": 1,
+        "unlink_attempted": 1,
+        "unlink_completed": 1
+      },
+      "handles": 124,
+      "index": 130,
+      "name": "single:source|NativeProxyImageCustody::_source#82",
+      "prediction_sha256": "d26268534f93c434aee5d93771e6b63404598b1248f6e0f288dd5dd693a3ccd5",
+      "resolved": [
+        {
+          "address": "source|NativeProxyImageCustody::_source#82",
+          "close_caller": "NativeProxyReferenceCensus",
+          "close_scope": "NativeProxyReferenceCensus::_image",
+          "kind": "source",
+          "label": "source:82",
+          "occurrence": 82,
+          "open_call_id": 423,
+          "path": ".artifacts/tmp/native-proxy-image-custody/cases/fsmgen-4cU8Qp9p/images/183f0d4d18572a250ac97756196732d884f1a2217a23dcbf7df6390d03302187/rustup",
+          "symbol": "NativeProxyImageCustody::_source"
+        }
+      ],
+      "success": 0
+    },
+    {
+      "calls": 439,
+      "effects": {
+        "last_reference_check": {
+          "phase": "after_unlink",
+          "state": "absent"
+        },
+        "reference_absence_verified": 1,
+        "unlink_attempted": 1,
+        "unlink_completed": 1
+      },
+      "handles": 124,
+      "index": 131,
+      "name": "single:source|NativeProxyImageCustody::_source#83",
+      "prediction_sha256": "61a7a3d5c9f4cfbd0a137d37dde0890476808a46b47d40f125dfcc60747893b3",
+      "resolved": [
+        {
+          "address": "source|NativeProxyImageCustody::_source#83",
+          "close_caller": "NativeProxyImageCustody",
+          "close_scope": "NativeProxyImageCustody::read_entry",
+          "kind": "source",
+          "label": "source:83",
+          "occurrence": 83,
+          "open_call_id": 429,
+          "path": ".artifacts/tmp/native-proxy-image-custody/cases/fsmgen-4cU8Qp9p/images/183f0d4d18572a250ac97756196732d884f1a2217a23dcbf7df6390d03302187/rustup.c",
+          "symbol": "NativeProxyImageCustody::_source"
+        }
+      ],
+      "success": 0
+    },
+    {
+      "calls": 439,
+      "effects": {
+        "last_reference_check": {
+          "phase": "after_unlink",
+          "state": "absent"
+        },
+        "reference_absence_verified": 1,
+        "unlink_attempted": 1,
+        "unlink_completed": 1
+      },
+      "handles": 124,
+      "index": 132,
+      "name": "single:source|NativeProxyImageCustody::_source#84",
+      "prediction_sha256": "0f0daff5515fab89343e41c58960fdaab3fa60211e8bc0edd4091fb654addc46",
+      "resolved": [
+        {
+          "address": "source|NativeProxyImageCustody::_source#84",
+          "close_caller": "NativeProxyImageCustody",
+          "close_scope": "NativeProxyImageCustody::read_entry",
+          "kind": "source",
+          "label": "source:84",
+          "occurrence": 84,
+          "open_call_id": 430,
+          "path": ".artifacts/tmp/native-proxy-image-custody/cases/fsmgen-4cU8Qp9p/images/183f0d4d18572a250ac97756196732d884f1a2217a23dcbf7df6390d03302187/rustup",
+          "symbol": "NativeProxyImageCustody::_source"
+        }
+      ],
+      "success": 0
+    },
+    {
+      "calls": 439,
+      "effects": {
+        "last_reference_check": {
+          "phase": "after_unlink",
+          "state": "absent"
+        },
+        "reference_absence_verified": 1,
+        "unlink_attempted": 1,
+        "unlink_completed": 1
+      },
+      "handles": 124,
+      "index": 133,
+      "name": "single:source|NativeProxyImageCustody::_source#85",
+      "prediction_sha256": "10a4bbd0557e086322ac389a620e1e66a8dbf5fe4155ca5594b8cf7bf69b3eb2",
+      "resolved": [
+        {
+          "address": "source|NativeProxyImageCustody::_source#85",
+          "close_caller": "NativeProxyImageCustody",
+          "close_scope": "NativeProxyImageCustody::read_entry",
+          "kind": "source",
+          "label": "source:85",
+          "occurrence": 85,
+          "open_call_id": 431,
+          "path": ".artifacts/tmp/native-proxy-image-custody/cases/fsmgen-4cU8Qp9p/images/183f0d4d18572a250ac97756196732d884f1a2217a23dcbf7df6390d03302187/image.json",
+          "symbol": "NativeProxyImageCustody::_source"
+        }
+      ],
+      "success": 0
+    },
+    {
+      "calls": 449,
+      "effects": {
+        "last_reference_check": {
+          "phase": "after_unlink",
+          "state": "absent"
+        },
+        "reference_absence_verified": 1,
+        "unlink_attempted": 1,
+        "unlink_completed": 1
+      },
+      "handles": 126,
+      "index": 134,
+      "name": "single:source|NativeProxyImageCustody::_source#86",
+      "prediction_sha256": "2162ef170503c11b6a47b45d54429f7ce0ff14a518692b8a7ce6f65715b79f06",
+      "resolved": [
+        {
+          "address": "source|NativeProxyImageCustody::_source#86",
+          "close_caller": "NativeProxyReferenceCensus",
+          "close_scope": "NativeProxyReferenceCensus::_closure",
+          "kind": "source",
+          "label": "source:86",
+          "occurrence": 86,
+          "open_call_id": 447,
+          "path": ".artifacts/tmp/native-proxy-image-custody/cases/fsmgen-4cU8Qp9p/references/d4f88346e844083d407e72d06612c64d5a503f6bcdbe6599a87e4fe01a485fc7.json",
+          "symbol": "NativeProxyImageCustody::_source"
+        }
+      ],
+      "success": 0
+    },
+    {
+      "calls": 471,
+      "effects": {
+        "last_reference_check": {
+          "phase": "after_unlink",
+          "state": "absent"
+        },
+        "reference_absence_verified": 1,
+        "unlink_attempted": 1,
+        "unlink_completed": 1
+      },
+      "handles": 133,
+      "index": 135,
+      "name": "single:source|NativeProxyImageCustody::_source#87",
+      "prediction_sha256": "9ad712a78e110d4b630e0c7c834ccbc2a16768291bb108b8be4e957ac49927c4",
+      "resolved": [
+        {
+          "address": "source|NativeProxyImageCustody::_source#87",
+          "close_caller": "NativeProxyReferenceCensus",
+          "close_scope": "NativeProxyReferenceCensus::_image",
+          "kind": "source",
+          "label": "source:87",
+          "occurrence": 87,
+          "open_call_id": 451,
+          "path": ".artifacts/tmp/native-proxy-image-custody/cases/fsmgen-4cU8Qp9p/images/183f0d4d18572a250ac97756196732d884f1a2217a23dcbf7df6390d03302187/rustup.c",
+          "symbol": "NativeProxyImageCustody::_source"
+        }
+      ],
+      "success": 0
+    },
+    {
+      "calls": 471,
+      "effects": {
+        "last_reference_check": {
+          "phase": "after_unlink",
+          "state": "absent"
+        },
+        "reference_absence_verified": 1,
+        "unlink_attempted": 1,
+        "unlink_completed": 1
+      },
+      "handles": 133,
+      "index": 136,
+      "name": "single:source|NativeProxyImageCustody::_source#88",
+      "prediction_sha256": "ca7d0dce202c0cd4aa4c07559714a7985764e789a532bd574e394729441bcdc9",
+      "resolved": [
+        {
+          "address": "source|NativeProxyImageCustody::_source#88",
+          "close_caller": "NativeProxyReferenceCensus",
+          "close_scope": "NativeProxyReferenceCensus::_image",
+          "kind": "source",
+          "label": "source:88",
+          "occurrence": 88,
+          "open_call_id": 452,
+          "path": ".artifacts/tmp/native-proxy-image-custody/cases/fsmgen-4cU8Qp9p/images/183f0d4d18572a250ac97756196732d884f1a2217a23dcbf7df6390d03302187/rustup",
+          "symbol": "NativeProxyImageCustody::_source"
+        }
+      ],
+      "success": 0
+    },
+    {
+      "calls": 468,
+      "effects": {
+        "last_reference_check": {
+          "phase": "after_unlink",
+          "state": "absent"
+        },
+        "reference_absence_verified": 1,
+        "unlink_attempted": 1,
+        "unlink_completed": 1
+      },
+      "handles": 133,
+      "index": 137,
+      "name": "single:source|NativeProxyImageCustody::_source#89",
+      "prediction_sha256": "54f62bada9108f9ad84fb6de6caece9e4e305a77a2780ce6be5672a704bab7ea",
+      "resolved": [
+        {
+          "address": "source|NativeProxyImageCustody::_source#89",
+          "close_caller": "NativeProxyImageCustody",
+          "close_scope": "NativeProxyImageCustody::read_entry",
+          "kind": "source",
+          "label": "source:89",
+          "occurrence": 89,
+          "open_call_id": 458,
+          "path": ".artifacts/tmp/native-proxy-image-custody/cases/fsmgen-4cU8Qp9p/images/183f0d4d18572a250ac97756196732d884f1a2217a23dcbf7df6390d03302187/rustup.c",
+          "symbol": "NativeProxyImageCustody::_source"
+        }
+      ],
+      "success": 0
+    },
+    {
+      "calls": 68,
+      "effects": {
+        "last_reference_check": null,
+        "reference_absence_verified": 0,
+        "unlink_attempted": 0,
+        "unlink_completed": 0
+      },
+      "handles": 18,
+      "index": 138,
+      "name": "single:source|NativeProxyImageCustody::_source#9",
+      "prediction_sha256": "e288cc8c2941216f49524b54745da19524f3b2e2efb883930b73ac90c3b26495",
+      "resolved": [
+        {
+          "address": "source|NativeProxyImageCustody::_source#9",
+          "close_caller": "NativeProxyImageCoordination",
+          "close_scope": "NativeProxyImageCoordination::_census",
+          "kind": "source",
+          "label": "source:9",
+          "occurrence": 9,
+          "open_call_id": 66,
+          "path": ".artifacts/tmp/native-proxy-image-custody/cases/fsmgen-4cU8Qp9p/references/d4f88346e844083d407e72d06612c64d5a503f6bcdbe6599a87e4fe01a485fc7.json",
+          "symbol": "NativeProxyImageCustody::_source"
+        }
+      ],
+      "success": 0
+    },
+    {
+      "calls": 468,
+      "effects": {
+        "last_reference_check": {
+          "phase": "after_unlink",
+          "state": "absent"
+        },
+        "reference_absence_verified": 1,
+        "unlink_attempted": 1,
+        "unlink_completed": 1
+      },
+      "handles": 133,
+      "index": 139,
+      "name": "single:source|NativeProxyImageCustody::_source#90",
+      "prediction_sha256": "0621c11058a7b9cc4c8d820bafaa33b10ae584ecaacc92f9a2b2485a9b8a39b7",
+      "resolved": [
+        {
+          "address": "source|NativeProxyImageCustody::_source#90",
+          "close_caller": "NativeProxyImageCustody",
+          "close_scope": "NativeProxyImageCustody::read_entry",
+          "kind": "source",
+          "label": "source:90",
+          "occurrence": 90,
+          "open_call_id": 459,
+          "path": ".artifacts/tmp/native-proxy-image-custody/cases/fsmgen-4cU8Qp9p/images/183f0d4d18572a250ac97756196732d884f1a2217a23dcbf7df6390d03302187/rustup",
+          "symbol": "NativeProxyImageCustody::_source"
+        }
+      ],
+      "success": 0
+    },
+    {
+      "calls": 468,
+      "effects": {
+        "last_reference_check": {
+          "phase": "after_unlink",
+          "state": "absent"
+        },
+        "reference_absence_verified": 1,
+        "unlink_attempted": 1,
+        "unlink_completed": 1
+      },
+      "handles": 133,
+      "index": 140,
+      "name": "single:source|NativeProxyImageCustody::_source#91",
+      "prediction_sha256": "705340a63f88d20c40d46280e1cf07e097c789afc911d8549ea9838bd6ebd0f2",
+      "resolved": [
+        {
+          "address": "source|NativeProxyImageCustody::_source#91",
+          "close_caller": "NativeProxyImageCustody",
+          "close_scope": "NativeProxyImageCustody::read_entry",
+          "kind": "source",
+          "label": "source:91",
+          "occurrence": 91,
+          "open_call_id": 460,
+          "path": ".artifacts/tmp/native-proxy-image-custody/cases/fsmgen-4cU8Qp9p/images/183f0d4d18572a250ac97756196732d884f1a2217a23dcbf7df6390d03302187/image.json",
+          "symbol": "NativeProxyImageCustody::_source"
+        }
+      ],
+      "success": 0
+    },
+    {
+      "calls": 494,
+      "effects": {
+        "last_reference_check": {
+          "phase": "after_unlink",
+          "state": "absent"
+        },
+        "reference_absence_verified": 1,
+        "unlink_attempted": 1,
+        "unlink_completed": 1
+      },
+      "handles": 140,
+      "index": 141,
+      "name": "single:source|NativeProxyImageCustody::_source#92",
+      "prediction_sha256": "6766c22b88129d50c5205a37defe001330e68e47b71b72a64ae6fe73d81905cc",
+      "resolved": [
+        {
+          "address": "source|NativeProxyImageCustody::_source#92",
+          "close_caller": "NativeProxyReferenceCensus",
+          "close_scope": "NativeProxyReferenceCensus::_image",
+          "kind": "source",
+          "label": "source:92",
+          "occurrence": 92,
+          "open_call_id": 474,
+          "path": ".artifacts/tmp/native-proxy-image-custody/cases/fsmgen-4cU8Qp9p/images/efd497b0e847884b3c1cfcde14d8b645991c52ebab90c54e58984ccbc303c146/rustup.c",
+          "symbol": "NativeProxyImageCustody::_source"
+        }
+      ],
+      "success": 0
+    },
+    {
+      "calls": 494,
+      "effects": {
+        "last_reference_check": {
+          "phase": "after_unlink",
+          "state": "absent"
+        },
+        "reference_absence_verified": 1,
+        "unlink_attempted": 1,
+        "unlink_completed": 1
+      },
+      "handles": 140,
+      "index": 142,
+      "name": "single:source|NativeProxyImageCustody::_source#93",
+      "prediction_sha256": "77ce9f97559174891ee5a7991e91a920334a0f3afb3a3550d33ac323dbe63e41",
+      "resolved": [
+        {
+          "address": "source|NativeProxyImageCustody::_source#93",
+          "close_caller": "NativeProxyReferenceCensus",
+          "close_scope": "NativeProxyReferenceCensus::_image",
+          "kind": "source",
+          "label": "source:93",
+          "occurrence": 93,
+          "open_call_id": 475,
+          "path": ".artifacts/tmp/native-proxy-image-custody/cases/fsmgen-4cU8Qp9p/images/efd497b0e847884b3c1cfcde14d8b645991c52ebab90c54e58984ccbc303c146/rustup",
+          "symbol": "NativeProxyImageCustody::_source"
+        }
+      ],
+      "success": 0
+    },
+    {
+      "calls": 491,
+      "effects": {
+        "last_reference_check": {
+          "phase": "after_unlink",
+          "state": "absent"
+        },
+        "reference_absence_verified": 1,
+        "unlink_attempted": 1,
+        "unlink_completed": 1
+      },
+      "handles": 140,
+      "index": 143,
+      "name": "single:source|NativeProxyImageCustody::_source#94",
+      "prediction_sha256": "b51984de818e4d4bc93c4f8d07c986a05c3c3001e7234dc93584d1749c1a3d0a",
+      "resolved": [
+        {
+          "address": "source|NativeProxyImageCustody::_source#94",
+          "close_caller": "NativeProxyImageCustody",
+          "close_scope": "NativeProxyImageCustody::read_entry",
+          "kind": "source",
+          "label": "source:94",
+          "occurrence": 94,
+          "open_call_id": 481,
+          "path": ".artifacts/tmp/native-proxy-image-custody/cases/fsmgen-4cU8Qp9p/images/efd497b0e847884b3c1cfcde14d8b645991c52ebab90c54e58984ccbc303c146/rustup.c",
+          "symbol": "NativeProxyImageCustody::_source"
+        }
+      ],
+      "success": 0
+    },
+    {
+      "calls": 491,
+      "effects": {
+        "last_reference_check": {
+          "phase": "after_unlink",
+          "state": "absent"
+        },
+        "reference_absence_verified": 1,
+        "unlink_attempted": 1,
+        "unlink_completed": 1
+      },
+      "handles": 140,
+      "index": 144,
+      "name": "single:source|NativeProxyImageCustody::_source#95",
+      "prediction_sha256": "e9974f132c129ac43ba64df197f2aafc1cb549900e6f4dbdf4e8bf83c4367194",
+      "resolved": [
+        {
+          "address": "source|NativeProxyImageCustody::_source#95",
+          "close_caller": "NativeProxyImageCustody",
+          "close_scope": "NativeProxyImageCustody::read_entry",
+          "kind": "source",
+          "label": "source:95",
+          "occurrence": 95,
+          "open_call_id": 482,
+          "path": ".artifacts/tmp/native-proxy-image-custody/cases/fsmgen-4cU8Qp9p/images/efd497b0e847884b3c1cfcde14d8b645991c52ebab90c54e58984ccbc303c146/rustup",
+          "symbol": "NativeProxyImageCustody::_source"
+        }
+      ],
+      "success": 0
+    },
+    {
+      "calls": 491,
+      "effects": {
+        "last_reference_check": {
+          "phase": "after_unlink",
+          "state": "absent"
+        },
+        "reference_absence_verified": 1,
+        "unlink_attempted": 1,
+        "unlink_completed": 1
+      },
+      "handles": 140,
+      "index": 145,
+      "name": "single:source|NativeProxyImageCustody::_source#96",
+      "prediction_sha256": "9b72a149f427b39aa883a00b4eaa1ad1b2164b1da494f1f12b2c653c031da09a",
+      "resolved": [
+        {
+          "address": "source|NativeProxyImageCustody::_source#96",
+          "close_caller": "NativeProxyImageCustody",
+          "close_scope": "NativeProxyImageCustody::read_entry",
+          "kind": "source",
+          "label": "source:96",
+          "occurrence": 96,
+          "open_call_id": 483,
+          "path": ".artifacts/tmp/native-proxy-image-custody/cases/fsmgen-4cU8Qp9p/images/efd497b0e847884b3c1cfcde14d8b645991c52ebab90c54e58984ccbc303c146/image.json",
+          "symbol": "NativeProxyImageCustody::_source"
+        }
+      ],
+      "success": 0
+    },
+    {
+      "calls": 504,
+      "effects": {
+        "last_reference_check": {
+          "phase": "after_unlink",
+          "state": "absent"
+        },
+        "reference_absence_verified": 1,
+        "unlink_attempted": 1,
+        "unlink_completed": 1
+      },
+      "handles": 142,
+      "index": 146,
+      "name": "single:source|NativeProxyImageCustody::_source#97",
+      "prediction_sha256": "2f9193a39fa9a3134bb0a2cb8da0b696edbb26b2066e6fd3f4f93b4217810a82",
+      "resolved": [
+        {
+          "address": "source|NativeProxyImageCustody::_source#97",
+          "close_caller": "NativeProxyObservationArchive",
+          "close_scope": "NativeProxyObservationArchive::_source_closure",
+          "kind": "source",
+          "label": "source:97",
+          "occurrence": 97,
+          "open_call_id": 502,
+          "path": ".artifacts/logs/native-proxy-observation-acquisition-20260910/cases/fsmgen-bb_hICGm/retained-sources/d42ab2b4e413bd694a831c4a8307a0c4cd760b3bfdcf5fc93dc0b6772fdd632b.source",
+          "symbol": "NativeProxyImageCustody::_source"
+        }
+      ],
+      "success": 0
+    },
+    {
+      "calls": 507,
+      "effects": {
+        "last_reference_check": {
+          "phase": "after_unlink",
+          "state": "absent"
+        },
+        "reference_absence_verified": 1,
+        "unlink_attempted": 1,
+        "unlink_completed": 1
+      },
+      "handles": 143,
+      "index": 147,
+      "name": "single:source|NativeProxyImageCustody::_source#98",
+      "prediction_sha256": "580e80f1b236a31ade3137141f3a75db1c696a31376659d18280c93490a9a4af",
+      "resolved": [
+        {
+          "address": "source|NativeProxyImageCustody::_source#98",
+          "close_caller": "NativeProxyObservationArchive",
+          "close_scope": "NativeProxyObservationArchive::_source_closure",
+          "kind": "source",
+          "label": "source:98",
+          "occurrence": 98,
+          "open_call_id": 505,
+          "path": ".artifacts/logs/native-proxy-observation-acquisition-20260910/cases/fsmgen-bb_hICGm/retained-sources/1a71a0c95d346f2fa9925bba734dfbdc4bd789b851d33d07eccc567f330b2153.source",
+          "symbol": "NativeProxyImageCustody::_source"
+        }
+      ],
+      "success": 0
+    },
+    {
+      "calls": 510,
+      "effects": {
+        "last_reference_check": {
+          "phase": "after_unlink",
+          "state": "absent"
+        },
+        "reference_absence_verified": 1,
+        "unlink_attempted": 1,
+        "unlink_completed": 1
+      },
+      "handles": 144,
+      "index": 148,
+      "name": "single:source|NativeProxyImageCustody::_source#99",
+      "prediction_sha256": "ce10c7b3d195531fb1b5def57eee068c944dae6dd14a5636120b7fc377e5a6a1",
+      "resolved": [
+        {
+          "address": "source|NativeProxyImageCustody::_source#99",
+          "close_caller": "NativeProxyObservationArchive",
+          "close_scope": "NativeProxyObservationArchive::_source_closure",
+          "kind": "source",
+          "label": "source:99",
+          "occurrence": 99,
+          "open_call_id": 508,
+          "path": ".artifacts/logs/native-proxy-observation-acquisition-20260910/cases/fsmgen-bb_hICGm/retained-sources/a7d92e28ec1c8308e37c6003df167bc42bd2341cf3a69d677f45330271ffba56.source",
+          "symbol": "NativeProxyImageCustody::_source"
+        }
+      ],
+      "success": 0
+    }
+  ],
+  "prior_last_state_verified": true,
+  "prospective_pins": [
+    {
+      "path": "docs/audits/native-proxy-observation-archive-release-close-last-20260912/plan.json",
+      "sha256": "010b2030e61b0b4d3be88d3a4c15104851bcb01302042ac85452a80a824064b1",
+      "size_bytes": 126517
+    },
+    {
+      "path": "docs/audits/native-proxy-observation-archive-release-close-last-20260912/prepare.py",
+      "sha256": "5342035181f481cec0a2a1038bc8edc859fe8b4de61af8740160141717efb760",
+      "size_bytes": 3755
+    },
+    {
+      "path": "docs/audits/native-proxy-observation-archive-release-close-last-20260912/prepare-pin.json",
+      "sha256": "9e260604812d8f9ff34a85435415b7a6681aac15b4492614d12743450409645e",
+      "size_bytes": 202
+    },
+    {
+      "path": "docs/audits/native-proxy-observation-archive-release-close-last-20260912/qualify.t",
+      "sha256": "ee023dfce79d9640ea8a2a13e2dcde040c2133366525e5cf8b2f0e8b772d4b9f",
+      "size_bytes": 15134
+    },
+    {
+      "path": "docs/audits/native-proxy-observation-archive-release-close-last-20260912/audit.py",
+      "sha256": "3c9a7b9098941a5851300b538c065baae0f34559625a2f65734f84921828bff9",
+      "size_bytes": 18519
+    },
+    {
+      "path": "docs/audits/native-proxy-observation-archive-release-close-last-20260912/oracle-preflight.py",
+      "sha256": "deaa7a89fa0d04746f8c56f988c20f75183383663d47518946d93cfd1847e316",
+      "size_bytes": 5026
+    }
+  ],
+  "schema": "fsmgen.release_last_close_oracle_preflight.v1",
+  "scope": "Pure predictions against original last-observation inputs; actual new fixture coverage remains pending.",
+  "source_revision": "85cc24eeb184f6197f72a8275ff55f8c5f59d112",
+  "success": true
+}

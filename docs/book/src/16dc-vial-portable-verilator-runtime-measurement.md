@@ -2658,8 +2658,8 @@ source-opening call after the fixture identities determine reference order.
 The saved handle number, path, call ID and cleanup scope are provenance;
 they must not replace the current resolution or its independently derived owner.
 
-The planned adapter must close the actual handle successfully and observe it
-closed before substituting EIO. Unexpected real close failures remain visible.
+The adapter closes the actual handle successfully and observes it closed before
+substituting EIO. Unexpected real close failures remain visible.
 A substituted return does not establish that an operating-system close failed.
 The prospective selector audit compares saved close events with independent
 source-scope ownership and checks order-only reference permutations. These
@@ -2737,8 +2737,31 @@ retired setup, in addition to its close and unwind checks.
 python3 -B docs/audits/native-proxy-observation-archive-release-close-active-20260912/audit.py --verify-saved
 ```
 
-Last-observation execution, competing primary errors, grouped reports and
-genuine omissions remain pending. A modeled EIO after
+Last-observation release close qualification covers 149 cases: 1 healthy control and 148 single EIO reports, with 1813 TAP assertions.
+
+The original controlled setup retires the runtime and removes the distinct
+other observation hold before the observed release. That setup removal checks
+the other hold's native identity and bytes and records its exact path separately.
+The observed release begins with only the selected hold referencing the image.
+
+An early close error leaves that hold intact. If release reaches its real unlink,
+the image becomes unreferenced even when a later close report makes the attempt
+unsuccessful. The canonical image directory, source, executable bytes and metadata
+keep their original identities and contents. Image removal is outside this release
+operation; the error does not restore the deleted hold.
+
+The auditor counts image references from the stored reference records and checks
+the entire original image subtree. Its controls reject a missing or misdirected
+setup receipt, removed or changed image content, a false last-observation profile
+and a final reference reintroduced after unlink. The saved cases can be checked
+without another fixture run:
+
+```sh
+python3 -B docs/audits/native-proxy-observation-archive-release-close-last-20260912/audit.py --verify-saved
+```
+
+Competing primary errors, grouped reports, genuine omissions and complete release
+applicability remain pending. A modeled EIO after
 successful closure does not test an ambiguous operating-system close failure
 or authorize native execution.
 
