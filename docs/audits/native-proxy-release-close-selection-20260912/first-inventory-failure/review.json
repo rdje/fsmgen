@@ -1,0 +1,28 @@
+{
+  "candidate": "published-ce9f83bf7c00b3f136fb35ba",
+  "files": [
+    {
+      "path": "docs/audits/native-proxy-release-close-selection-20260912/first-inventory-failure/claim-inventory.stdout",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "size_bytes": 0
+    },
+    {
+      "path": "docs/audits/native-proxy-release-close-selection-20260912/first-inventory-failure/claim-inventory.stderr",
+      "sha256": "9f765d4410b86d4e1c3dc1f8f9d337aacc9a79bb4bc767bb9484c33feea3c4e4",
+      "size_bytes": 96
+    },
+    {
+      "path": "docs/audits/native-proxy-release-close-selection-20260912/first-inventory-failure/claim-inventory.exit",
+      "sha256": "4355a46b19d348dc2f57c046f8ef63d4538ebb936000f3c9ee954a27460dd865",
+      "size_bytes": 2
+    }
+  ],
+  "original_registry": {
+    "line": 1548,
+    "path": "doctrine/claim_verification/dispositions.jsonl",
+    "sha256": "042e7620ddc1ee2f1aebdab7334326fdbacf9ab7bb76f2e193c7495f0443979e",
+    "size_bytes": 2019846
+  },
+  "resolution": "Sort keys in only the new row, retaining its original bytes and the failed inventory output here.",
+  "root_cause": "The new disposition row was encoded without sorted keys; the registry requires canonical JSON. All existing rows were preserved."
+}

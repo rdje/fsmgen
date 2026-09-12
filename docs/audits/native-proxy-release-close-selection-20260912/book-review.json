@@ -1,0 +1,20 @@
+{
+  "checked_passages": [
+    "The release close-report plan selects 665 individual close reports and 4 healthy controls across the existing profiles; fault execution remains pending.",
+    "Each single report targets a retained source, directory or permanent lock.",
+    "The saved handle number, path, call ID and cleanup scope are provenance; they must not replace the current resolution or its independently derived owner.",
+    "The planned adapter must close the actual handle successfully and observe it closed before substituting EIO.",
+    "These synthetic orders do not allocate files or qualify fault execution.",
+    "python3 -B docs/audits/native-proxy-release-close-selection-20260912/audit.py --verify-saved"
+  ],
+  "exact_output_absent": true,
+  "exit_code": 0,
+  "output": ".artifacts/tmp/native-proxy-release-close-selection-book-20260912/book",
+  "rendered_bytes": 23436896,
+  "rendered_directories": 3,
+  "rendered_files": 98,
+  "renderer_warnings": [
+    "WARN search index is very large (13222122 bytes)"
+  ],
+  "same_volume_direct_objects": true
+}

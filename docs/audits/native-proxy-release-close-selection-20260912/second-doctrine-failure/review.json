@@ -1,0 +1,26 @@
+{
+  "files": [
+    {
+      "path": "docs/audits/native-proxy-release-close-selection-20260912/second-doctrine-failure/surfaces.jsonl",
+      "sha256": "369b220bc5fb6d208196e6da689d559de9b1eff804886f99a4c6d72717f43968",
+      "size_bytes": 24849
+    },
+    {
+      "path": "docs/audits/native-proxy-release-close-selection-20260912/second-doctrine-failure/doctrines.stdout",
+      "sha256": "0c1ccd1dc9ab022944bdde16f72246d41e7c1eefcfd80457def26e8af1a3a59a",
+      "size_bytes": 48434
+    },
+    {
+      "path": "docs/audits/native-proxy-release-close-selection-20260912/second-doctrine-failure/doctrines.stderr",
+      "sha256": "49e3a3b3200d313cbb5b9a34081f3f56469a94e4aba158232cb576a9cc0cf8be",
+      "size_bytes": 5241
+    },
+    {
+      "path": "docs/audits/native-proxy-release-close-selection-20260912/second-doctrine-failure/doctrines.exit",
+      "sha256": "4355a46b19d348dc2f57c046f8ef63d4538ebb936000f3c9ee954a27460dd865",
+      "size_bytes": 2
+    }
+  ],
+  "resolution": "Restore the exact normal task surface and reduce the live task tree through the established version-object terminal mechanism. Perform a fresh live-owner census before compaction; retain all exact historical source evidence.",
+  "root_cause": "Declaring warning_debt without a baseline is incomplete under the debt schema. Merely adding a baseline would leave new live append pressure."
+}

@@ -1,0 +1,27 @@
+[
+  {
+    "path": "docs/audits/native-proxy-release-close-selection-20260912/prepare.py",
+    "sha256": "6cc6f84ec5a08ec5465eb2ff63fa431677d378963c3f927703abc31218b91dda",
+    "size_bytes": 4691
+  },
+  {
+    "path": "docs/audits/native-proxy-release-close-selection-20260912/model.py",
+    "sha256": "c7e8d7e69e92d49419dba603c1aba0e461a8b3c222b6e450bbf2c2b776ac1dfd",
+    "size_bytes": 5026
+  },
+  {
+    "path": "docs/audits/native-proxy-release-close-selection-20260912/audit.py",
+    "sha256": "9ea146338543d63abb555c5ac8b97ac49fbddd9b99fea7c6bd35f326dadb755a",
+    "size_bytes": 11846
+  },
+  {
+    "path": "docs/audits/native-proxy-release-close-selection-20260912/source-pins.json",
+    "sha256": "6dca3538b027a44ef8af82cd8a7ea40b3966b27afdd4ee0482d2a6f20cc51a4e",
+    "size_bytes": 594
+  },
+  {
+    "path": "docs/audits/native-proxy-release-close-selection-20260912/plan.json",
+    "sha256": "ee6df1ad18017f395600869236ea92b34d2d43cd24e10dd7fab9f99379adfb11",
+    "size_bytes": 765801
+  }
+]

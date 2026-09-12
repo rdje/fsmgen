@@ -1,0 +1,34 @@
+{
+  "audit_result": "docs/audits/native-proxy-release-close-selection-20260912/result/audit.json",
+  "book_review": "docs/audits/native-proxy-release-close-selection-20260912/book-review.json",
+  "claim_legs": {
+    "durability": "Prospective sources, exact version-bound inputs, first-green plan/audit output and raw copies are tracked. audit.py --verify-saved rederives the saved result; recover.py --verify-saved authenticates saved bytes without original source reaccess. Book count disposition names the current watcher.",
+    "falsify": "Altered domain/resolver controls reject omission, duplication, wrong owner/kind, invented primary, successful modeled return, stale numeric IDs, negative/boolean occurrences and unknown addresses. Order-only input permutations re-resolve the exact current path and owner. A separate book watcher rejects changed or redistributed planned counts.",
+    "rederive": "Raw healthy opening/close events enumerate the selector plan; an independent source forest and original ownership oracle rederive every source, directory and lock owner, actual healthy closure and complete per-profile domain."
+  },
+  "commit_gate": "Staged doctrines and normal commit hooks must pass before commit.",
+  "compaction_census": "docs/audits/native-proxy-release-close-selection-20260912/compaction-census.json",
+  "dispositions": {
+    "added": [
+      "published-ce9f83bf7c00b3f136fb35ba"
+    ],
+    "prior_records_byte_exact": 1925
+  },
+  "doctrine_failure_review": "docs/audits/native-proxy-release-close-selection-20260912/first-doctrine-failure/review.json",
+  "inventory_failure_review": "docs/audits/native-proxy-release-close-selection-20260912/first-inventory-failure/review.json",
+  "limits": "Prospective single-error selection only. No modeled close execution or simultaneous-failure coverage. Primary/grouped compositions, omissions, complete release applicability and native work remain separately owned.",
+  "owner": "HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.12.4.1.3.4.4.4.1",
+  "raw_verification_outputs": "docs/audits/native-proxy-release-close-selection-20260912/verification-outputs.json",
+  "recovery": {
+    "bytes": 19000,
+    "copies": 7,
+    "verified_without_source_reaccess": true
+  },
+  "schema": "fsmgen.release_close_selection_review.v1",
+  "scope": "Pure saved-evidence selection and current-flow binding. No new fixture root, close control, original producer/main, native process or operating-system close ambiguity experiment.",
+  "second_doctrine_failure_review": "docs/audits/native-proxy-release-close-selection-20260912/second-doctrine-failure/review.json",
+  "source_review": "docs/audits/native-proxy-release-close-selection-20260912/source-review.json",
+  "source_revision": "fccfa04cb74f4604582aa3d5cb788d5ccd0a054e",
+  "success": true,
+  "task_integrity": "Final compacted tree passes with every original node either live or exactly version-retrievable. The earlier task-compacted output belongs to the unchanged tree after the whole-subtree candidate was rejected before mutation."
+}

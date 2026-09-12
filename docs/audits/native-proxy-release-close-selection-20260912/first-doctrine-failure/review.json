@@ -1,0 +1,21 @@
+{
+  "files": [
+    {
+      "path": "docs/audits/native-proxy-release-close-selection-20260912/first-doctrine-failure/doctrines.stdout",
+      "sha256": "ab80984d5cc11ce64f2883339d27e4982e6b15817705a5178cdb2ed3c2e8db30",
+      "size_bytes": 48422
+    },
+    {
+      "path": "docs/audits/native-proxy-release-close-selection-20260912/first-doctrine-failure/doctrines.stderr",
+      "sha256": "bc89bcb4c57aefdcd72a8a6f57e964368fca6682ceeb55c212f3d40a004f5cda",
+      "size_bytes": 4219
+    },
+    {
+      "path": "docs/audits/native-proxy-release-close-selection-20260912/first-doctrine-failure/doctrines.exit",
+      "sha256": "4355a46b19d348dc2f57c046f8ef63d4538ebb936000f3c9ee954a27460dd865",
+      "size_bytes": 2
+    }
+  ],
+  "resolution": "Declare warning_debt on task_evidence, retaining all health targets, enforcement ceilings, milestones and ownership unchanged. Earlier task evidence remains live or exact-version retrievable.",
+  "root_cause": "Adding seven owned execution/planning children moved the longest live task tree to 6446 lines, above the declared 80 percent warning milestone of its unchanged 8000-line ceiling. The surface still declared normal."
+}

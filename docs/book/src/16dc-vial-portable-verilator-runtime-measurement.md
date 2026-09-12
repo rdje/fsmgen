@@ -2646,6 +2646,31 @@ Combining the saved domains does not establish simultaneous-failure coverage.
 Close-error reporting, deliberate close omissions, complete release
 applicability and native lifetime remain separately owned work.
 
+The release close-report plan selects 665 individual close reports and 4 healthy controls across the existing profiles; fault execution remains pending.
+
+Each single report targets a retained source, directory or permanent lock.
+Its address names the handle kind, opening helper and occurrence in the
+current input flow. For example, a source selection resolves the corresponding
+source-opening call after the fixture identities determine reference order.
+The saved handle number, path, call ID and cleanup scope are provenance;
+they must not replace the current resolution or its independently derived owner.
+
+The planned adapter must close the actual handle successfully and observe it
+closed before substituting EIO. Unexpected real close failures remain visible.
+A substituted return does not establish that an operating-system close failed.
+The prospective selector audit compares saved close events with independent
+source-scope ownership and checks order-only reference permutations. These
+synthetic orders do not allocate files or qualify fault execution.
+
+```sh
+python3 -B docs/audits/native-proxy-release-close-selection-20260912/audit.py --verify-saved
+```
+
+Ordinary, equal-reference, active-runtime and last-observation execution
+partitions follow this plan. Grouped reports with competing primary errors
+have separate prospective selection and execution work; genuine omissions
+and final release applicability remain separate as well.
+
 The inactive archive record implementation now derives a closed specification
 from the complete original acquisition and request. It keeps the ordered wrapper,
 private reference, global reference, C source and image snapshots, including
