@@ -1,0 +1,1112 @@
+[
+  {
+    "destination": "docs/audits/native-proxy-observation-archive-release-close-equal-20260912/result/prepare.stdout",
+    "sha256": "8dacea8d8ab815edda4e99c592e21059e182ee822d66e47b730c9ad4a5a09aff",
+    "size_bytes": 47,
+    "source": ".artifacts/logs/native-proxy-observation-archive-release-close-equal-20260912/prepare.stdout"
+  },
+  {
+    "destination": "docs/audits/native-proxy-observation-archive-release-close-equal-20260912/result/prepare.stderr",
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "size_bytes": 0,
+    "source": ".artifacts/logs/native-proxy-observation-archive-release-close-equal-20260912/prepare.stderr"
+  },
+  {
+    "destination": "docs/audits/native-proxy-observation-archive-release-close-equal-20260912/result/prepare.exit",
+    "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa",
+    "size_bytes": 2,
+    "source": ".artifacts/logs/native-proxy-observation-archive-release-close-equal-20260912/prepare.exit"
+  },
+  {
+    "destination": "docs/audits/native-proxy-observation-archive-release-close-equal-20260912/result/syntax.stdout",
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "size_bytes": 0,
+    "source": ".artifacts/logs/native-proxy-observation-archive-release-close-equal-20260912/syntax.stdout"
+  },
+  {
+    "destination": "docs/audits/native-proxy-observation-archive-release-close-equal-20260912/result/syntax.stderr",
+    "sha256": "10be3c713ab563d28362f6bbfa3c1153b40a7f299b6fe8d01f545b3bf93c8165",
+    "size_bytes": 94,
+    "source": ".artifacts/logs/native-proxy-observation-archive-release-close-equal-20260912/syntax.stderr"
+  },
+  {
+    "destination": "docs/audits/native-proxy-observation-archive-release-close-equal-20260912/result/syntax.exit",
+    "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa",
+    "size_bytes": 2,
+    "source": ".artifacts/logs/native-proxy-observation-archive-release-close-equal-20260912/syntax.exit"
+  },
+  {
+    "destination": "docs/audits/native-proxy-observation-archive-release-close-equal-20260912/result/admission.stdout",
+    "sha256": "a4594b9b5c134e614ed446d6b08bf389a5fe680361fe86f1ce26f884618e6326",
+    "size_bytes": 267,
+    "source": ".artifacts/logs/native-proxy-observation-archive-release-close-equal-20260912/admission.stdout"
+  },
+  {
+    "destination": "docs/audits/native-proxy-observation-archive-release-close-equal-20260912/result/admission.stderr",
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "size_bytes": 0,
+    "source": ".artifacts/logs/native-proxy-observation-archive-release-close-equal-20260912/admission.stderr"
+  },
+  {
+    "destination": "docs/audits/native-proxy-observation-archive-release-close-equal-20260912/result/admission.exit",
+    "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa",
+    "size_bytes": 2,
+    "source": ".artifacts/logs/native-proxy-observation-archive-release-close-equal-20260912/admission.exit"
+  },
+  {
+    "destination": "docs/audits/native-proxy-observation-archive-release-close-equal-20260912/result/qualify.tap",
+    "sha256": "7949b86ef431750842d5a0b810fd6b2c1c787de6339ac8801b505b6385d96879",
+    "size_bytes": 217684,
+    "source": ".artifacts/logs/native-proxy-observation-archive-release-close-equal-20260912/qualify.tap"
+  },
+  {
+    "destination": "docs/audits/native-proxy-observation-archive-release-close-equal-20260912/result/qualify.stderr",
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "size_bytes": 0,
+    "source": ".artifacts/logs/native-proxy-observation-archive-release-close-equal-20260912/qualify.stderr"
+  },
+  {
+    "destination": "docs/audits/native-proxy-observation-archive-release-close-equal-20260912/result/qualify.exit",
+    "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa",
+    "size_bytes": 2,
+    "source": ".artifacts/logs/native-proxy-observation-archive-release-close-equal-20260912/qualify.exit"
+  },
+  {
+    "destination": "docs/audits/native-proxy-observation-archive-release-close-equal-20260912/result/qualification.json",
+    "sha256": "0496e1d72759727f55f0f719893f290c9f8a0904fc45fd0eeb4838da7ea78755",
+    "size_bytes": 195270,
+    "source": ".artifacts/logs/native-proxy-observation-archive-release-close-equal-20260912/qualification.json"
+  },
+  {
+    "destination": "docs/audits/native-proxy-observation-archive-release-close-equal-20260912/result/admission.jsonl",
+    "sha256": "d9d33af01f39aa0f2470130c6add71ff4f192ae8c32854f3e0c168a0bec95763",
+    "size_bytes": 87007,
+    "source": ".artifacts/logs/native-proxy-observation-archive-release-close-equal-20260912/admission.jsonl"
+  },
+  {
+    "destination": "docs/audits/native-proxy-observation-archive-release-close-equal-20260912/result/audit.stdout",
+    "sha256": "d0f1eec630e735f22d024965d259747e677863a1addf5e1c5b6a4c324af23aee",
+    "size_bytes": 4484,
+    "source": ".artifacts/logs/native-proxy-observation-archive-release-close-equal-20260912/audit.stdout"
+  },
+  {
+    "destination": "docs/audits/native-proxy-observation-archive-release-close-equal-20260912/result/audit.stderr",
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "size_bytes": 0,
+    "source": ".artifacts/logs/native-proxy-observation-archive-release-close-equal-20260912/audit.stderr"
+  },
+  {
+    "destination": "docs/audits/native-proxy-observation-archive-release-close-equal-20260912/result/audit.exit",
+    "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa",
+    "size_bytes": 2,
+    "source": ".artifacts/logs/native-proxy-observation-archive-release-close-equal-20260912/audit.exit"
+  },
+  {
+    "destination": "docs/audits/native-proxy-observation-archive-release-close-equal-20260912/result/audit.json",
+    "sha256": "4df691fe70daa54471627998eb211a49c714c4830f056ec16d595f80c83fe79a",
+    "size_bytes": 5140,
+    "source": ".artifacts/logs/native-proxy-observation-archive-release-close-equal-20260912/audit.json"
+  },
+  {
+    "destination": "docs/audits/native-proxy-observation-archive-release-close-equal-20260912/result/cases/case-0000.json",
+    "sha256": "6998a3f7c991b8ff7c416e351d10aaaf23f4ba883784f0bfd548c402baa0c386",
+    "size_bytes": 849485,
+    "source": ".artifacts/logs/native-proxy-observation-archive-release-close-equal-20260912/cases/case-0000.json"
+  },
+  {
+    "destination": "docs/audits/native-proxy-observation-archive-release-close-equal-20260912/result/cases/case-0001.json",
+    "sha256": "376c6856216d4a20f2bd5838850403b5f5eb3ab3cb7cfe57acd4521e36c4a764",
+    "size_bytes": 184152,
+    "source": ".artifacts/logs/native-proxy-observation-archive-release-close-equal-20260912/cases/case-0001.json"
+  },
+  {
+    "destination": "docs/audits/native-proxy-observation-archive-release-close-equal-20260912/result/cases/case-0002.json",
+    "sha256": "8821e7ff85c2bed52f5e06c6c0e21ac27003cda9107588366094549e601ab410",
+    "size_bytes": 197896,
+    "source": ".artifacts/logs/native-proxy-observation-archive-release-close-equal-20260912/cases/case-0002.json"
+  },
+  {
+    "destination": "docs/audits/native-proxy-observation-archive-release-close-equal-20260912/result/cases/case-0003.json",
+    "sha256": "8b784466b363394fe1744fc1d3571ffb1785e77fb2cb20a2f7f66744cc36da47",
+    "size_bytes": 421356,
+    "source": ".artifacts/logs/native-proxy-observation-archive-release-close-equal-20260912/cases/case-0003.json"
+  },
+  {
+    "destination": "docs/audits/native-proxy-observation-archive-release-close-equal-20260912/result/cases/case-0004.json",
+    "sha256": "e5f70773c928661863c1ffe5f425942b2bf2455eb2ed983578eced8bb4e885ad",
+    "size_bytes": 423442,
+    "source": ".artifacts/logs/native-proxy-observation-archive-release-close-equal-20260912/cases/case-0004.json"
+  },
+  {
+    "destination": "docs/audits/native-proxy-observation-archive-release-close-equal-20260912/result/cases/case-0005.json",
+    "sha256": "22a0e6e2faaa3b1fa1f34fb7154abd3bfabfacaaa71a4af063efbe476b8a0560",
+    "size_bytes": 505049,
+    "source": ".artifacts/logs/native-proxy-observation-archive-release-close-equal-20260912/cases/case-0005.json"
+  },
+  {
+    "destination": "docs/audits/native-proxy-observation-archive-release-close-equal-20260912/result/cases/case-0006.json",
+    "sha256": "dfbdad87994dbeb6b9331eed938e43eb28d5fa26ad973e494e1abd90f3163cce",
+    "size_bytes": 573796,
+    "source": ".artifacts/logs/native-proxy-observation-archive-release-close-equal-20260912/cases/case-0006.json"
+  },
+  {
+    "destination": "docs/audits/native-proxy-observation-archive-release-close-equal-20260912/result/cases/case-0007.json",
+    "sha256": "88a9a938f113de3f56625a8bbe5c5c5f0765e9a7f9dcbedc195f931ea364a38c",
+    "size_bytes": 593082,
+    "source": ".artifacts/logs/native-proxy-observation-archive-release-close-equal-20260912/cases/case-0007.json"
+  },
+  {
+    "destination": "docs/audits/native-proxy-observation-archive-release-close-equal-20260912/result/cases/case-0008.json",
+    "sha256": "ec8617208bf8142026c71ef3c507a220f1498266abda0fad384ddb491b85290b",
+    "size_bytes": 640505,
+    "source": ".artifacts/logs/native-proxy-observation-archive-release-close-equal-20260912/cases/case-0008.json"
+  },
+  {
+    "destination": "docs/audits/native-proxy-observation-archive-release-close-equal-20260912/result/cases/case-0009.json",
+    "sha256": "73c973237ac75cdb376c5a33ae71bf8935516f6ff2b55ba232ad8f4627e72cc4",
+    "size_bytes": 642591,
+    "source": ".artifacts/logs/native-proxy-observation-archive-release-close-equal-20260912/cases/case-0009.json"
+  },
+  {
+    "destination": "docs/audits/native-proxy-observation-archive-release-close-equal-20260912/result/cases/case-0010.json",
+    "sha256": "374ff050d7863ce664ea3d39dbb6d7718cc5f5c72588d226358b6e5c8ec799fe",
+    "size_bytes": 716071,
+    "source": ".artifacts/logs/native-proxy-observation-archive-release-close-equal-20260912/cases/case-0010.json"
+  },
+  {
+    "destination": "docs/audits/native-proxy-observation-archive-release-close-equal-20260912/result/cases/case-0011.json",
+    "sha256": "5704678ee91866fe8d5f65d8eb3298f48d9d019f544b83468772e935e0df809c",
+    "size_bytes": 807492,
+    "source": ".artifacts/logs/native-proxy-observation-archive-release-close-equal-20260912/cases/case-0011.json"
+  },
+  {
+    "destination": "docs/audits/native-proxy-observation-archive-release-close-equal-20260912/result/cases/case-0012.json",
+    "sha256": "2dd8bf0bff796b764b3906ce633792916b06f8322791e30a1e28f2d87e85a369",
+    "size_bytes": 826827,
+    "source": ".artifacts/logs/native-proxy-observation-archive-release-close-equal-20260912/cases/case-0012.json"
+  },
+  {
+    "destination": "docs/audits/native-proxy-observation-archive-release-close-equal-20260912/result/cases/case-0013.json",
+    "sha256": "5dea62d95a91796b23982b41531b427d6e4f32e2ad3ad5dc616449cab7c9855c",
+    "size_bytes": 217076,
+    "source": ".artifacts/logs/native-proxy-observation-archive-release-close-equal-20260912/cases/case-0013.json"
+  },
+  {
+    "destination": "docs/audits/native-proxy-observation-archive-release-close-equal-20260912/result/cases/case-0014.json",
+    "sha256": "009639610dec4d54ea0779e2b30e1439fa70f2f984101bdb0a3fe336d294f4f8",
+    "size_bytes": 833526,
+    "source": ".artifacts/logs/native-proxy-observation-archive-release-close-equal-20260912/cases/case-0014.json"
+  },
+  {
+    "destination": "docs/audits/native-proxy-observation-archive-release-close-equal-20260912/result/cases/case-0015.json",
+    "sha256": "3cc3bf3d26522471c92a41e172a20879665735e0422d2b8e756c873261781a67",
+    "size_bytes": 836509,
+    "source": ".artifacts/logs/native-proxy-observation-archive-release-close-equal-20260912/cases/case-0015.json"
+  },
+  {
+    "destination": "docs/audits/native-proxy-observation-archive-release-close-equal-20260912/result/cases/case-0016.json",
+    "sha256": "1b8bf95c24d23c018bf430825844f8f7f114c3234557072f3ed407993c518365",
+    "size_bytes": 226588,
+    "source": ".artifacts/logs/native-proxy-observation-archive-release-close-equal-20260912/cases/case-0016.json"
+  },
+  {
+    "destination": "docs/audits/native-proxy-observation-archive-release-close-equal-20260912/result/cases/case-0017.json",
+    "sha256": "bf310852768e45a0f64cd92de17eadfbbd1ac0d4072b89dd9c18827a105e40cf",
+    "size_bytes": 229549,
+    "source": ".artifacts/logs/native-proxy-observation-archive-release-close-equal-20260912/cases/case-0017.json"
+  },
+  {
+    "destination": "docs/audits/native-proxy-observation-archive-release-close-equal-20260912/result/cases/case-0018.json",
+    "sha256": "d9e516886353c9607eb97092522bf7a1833b115ed807a8d50457dae016468141",
+    "size_bytes": 232912,
+    "source": ".artifacts/logs/native-proxy-observation-archive-release-close-equal-20260912/cases/case-0018.json"
+  },
+  {
+    "destination": "docs/audits/native-proxy-observation-archive-release-close-equal-20260912/result/cases/case-0019.json",
+    "sha256": "7d651c52250d4fb8749a0d500a05a8992a33cd7611aee8e19868ed726254f011",
+    "size_bytes": 234988,
+    "source": ".artifacts/logs/native-proxy-observation-archive-release-close-equal-20260912/cases/case-0019.json"
+  },
+  {
+    "destination": "docs/audits/native-proxy-observation-archive-release-close-equal-20260912/result/cases/case-0020.json",
+    "sha256": "ff716b331acfc3e2bc7fcac99ea1829fad8df15741d03d3fed901c5b99c90b74",
+    "size_bytes": 316340,
+    "source": ".artifacts/logs/native-proxy-observation-archive-release-close-equal-20260912/cases/case-0020.json"
+  },
+  {
+    "destination": "docs/audits/native-proxy-observation-archive-release-close-equal-20260912/result/cases/case-0021.json",
+    "sha256": "2d09af1cbf14d1c59e2e9b8573e09910f7c2e94c772fd561fc1f6087055913f9",
+    "size_bytes": 385457,
+    "source": ".artifacts/logs/native-proxy-observation-archive-release-close-equal-20260912/cases/case-0021.json"
+  },
+  {
+    "destination": "docs/audits/native-proxy-observation-archive-release-close-equal-20260912/result/cases/case-0022.json",
+    "sha256": "054dd23abcd4bf35724b20a79d35485d1d464e1e1d522a0958fc4854e591f4d9",
+    "size_bytes": 404753,
+    "source": ".artifacts/logs/native-proxy-observation-archive-release-close-equal-20260912/cases/case-0022.json"
+  },
+  {
+    "destination": "docs/audits/native-proxy-observation-archive-release-close-equal-20260912/result/cases/case-0023.json",
+    "sha256": "f0a190790b6023d18bafa4a773bd660ce62706e6f36f92b610d95859dc1e62ee",
+    "size_bytes": 261447,
+    "source": ".artifacts/logs/native-proxy-observation-archive-release-close-equal-20260912/cases/case-0023.json"
+  },
+  {
+    "destination": "docs/audits/native-proxy-observation-archive-release-close-equal-20260912/result/cases/case-0024.json",
+    "sha256": "ac175bed930fdbdc3e5a872c24a2c8ebb789afa36cfde85db42f9f6f234a27cc",
+    "size_bytes": 272344,
+    "source": ".artifacts/logs/native-proxy-observation-archive-release-close-equal-20260912/cases/case-0024.json"
+  },
+  {
+    "destination": "docs/audits/native-proxy-observation-archive-release-close-equal-20260912/result/cases/case-0025.json",
+    "sha256": "51ff5a76c3734fd85d1540c48f43e7b84cdfcb2347b4302f9c36a065c66a8642",
+    "size_bytes": 481230,
+    "source": ".artifacts/logs/native-proxy-observation-archive-release-close-equal-20260912/cases/case-0025.json"
+  },
+  {
+    "destination": "docs/audits/native-proxy-observation-archive-release-close-equal-20260912/result/cases/case-0026.json",
+    "sha256": "2bf941c094d449590cb8b0dc3b28a1d68c5a0accdc92ccc109ae053ad749202a",
+    "size_bytes": 492149,
+    "source": ".artifacts/logs/native-proxy-observation-archive-release-close-equal-20260912/cases/case-0026.json"
+  },
+  {
+    "destination": "docs/audits/native-proxy-observation-archive-release-close-equal-20260912/result/cases/case-0027.json",
+    "sha256": "73955e3603258b4e71f80593bfcf97c2c8659b59fcb0173cc63b0fe2df7655cd",
+    "size_bytes": 527978,
+    "source": ".artifacts/logs/native-proxy-observation-archive-release-close-equal-20260912/cases/case-0027.json"
+  },
+  {
+    "destination": "docs/audits/native-proxy-observation-archive-release-close-equal-20260912/result/cases/case-0028.json",
+    "sha256": "6d995214528821614c743e0d2131fb7827e7e9963f89879e577762456c1a0327",
+    "size_bytes": 538911,
+    "source": ".artifacts/logs/native-proxy-observation-archive-release-close-equal-20260912/cases/case-0028.json"
+  },
+  {
+    "destination": "docs/audits/native-proxy-observation-archive-release-close-equal-20260912/result/cases/case-0029.json",
+    "sha256": "a5ffa73d882a6e97a5731f1b0a901e41df2c77d70be6d395f3622ed0562ea7a7",
+    "size_bytes": 554601,
+    "source": ".artifacts/logs/native-proxy-observation-archive-release-close-equal-20260912/cases/case-0029.json"
+  },
+  {
+    "destination": "docs/audits/native-proxy-observation-archive-release-close-equal-20260912/result/cases/case-0030.json",
+    "sha256": "dddcc053c240091f9b7abc8f733c6ea5a99c0d107df5574406ac954c86e3c2ba",
+    "size_bytes": 565506,
+    "source": ".artifacts/logs/native-proxy-observation-archive-release-close-equal-20260912/cases/case-0030.json"
+  },
+  {
+    "destination": "docs/audits/native-proxy-observation-archive-release-close-equal-20260912/result/cases/case-0031.json",
+    "sha256": "b0b529a45896ec32ac463c0bddeed9bd8870d2c4a3971cc0e6d52a42ef12dfb8",
+    "size_bytes": 607110,
+    "source": ".artifacts/logs/native-proxy-observation-archive-release-close-equal-20260912/cases/case-0031.json"
+  },
+  {
+    "destination": "docs/audits/native-proxy-observation-archive-release-close-equal-20260912/result/cases/case-0032.json",
+    "sha256": "edcb462780e803f298d56135d7b9d91c1fa0931e6121d89cf0d4264a23a71189",
+    "size_bytes": 618043,
+    "source": ".artifacts/logs/native-proxy-observation-archive-release-close-equal-20260912/cases/case-0032.json"
+  },
+  {
+    "destination": "docs/audits/native-proxy-observation-archive-release-close-equal-20260912/result/cases/case-0033.json",
+    "sha256": "b5fa5605e0922c099d2238927c916fb2d3bbddb6cffbd8913de56ccf9dc6e1a2",
+    "size_bytes": 665602,
+    "source": ".artifacts/logs/native-proxy-observation-archive-release-close-equal-20260912/cases/case-0033.json"
+  },
+  {
+    "destination": "docs/audits/native-proxy-observation-archive-release-close-equal-20260912/result/cases/case-0034.json",
+    "sha256": "6949c865d00a3bfbcffda96b81b0ef1dddea78367756fecc9026b691d09f989c",
+    "size_bytes": 676523,
+    "source": ".artifacts/logs/native-proxy-observation-archive-release-close-equal-20260912/cases/case-0034.json"
+  },
+  {
+    "destination": "docs/audits/native-proxy-observation-archive-release-close-equal-20260912/result/cases/case-0035.json",
+    "sha256": "cebbe3ec6022b39f15a34a189889309419241036f52f83d50ab5dde9887471ab",
+    "size_bytes": 292542,
+    "source": ".artifacts/logs/native-proxy-observation-archive-release-close-equal-20260912/cases/case-0035.json"
+  },
+  {
+    "destination": "docs/audits/native-proxy-observation-archive-release-close-equal-20260912/result/cases/case-0036.json",
+    "sha256": "8572759cd947829581d98f764ea96314c91b6206c8ffd9479079be8241b6d197",
+    "size_bytes": 696840,
+    "source": ".artifacts/logs/native-proxy-observation-archive-release-close-equal-20260912/cases/case-0036.json"
+  },
+  {
+    "destination": "docs/audits/native-proxy-observation-archive-release-close-equal-20260912/result/cases/case-0037.json",
+    "sha256": "002c6e1f4019fbc2ce58b1d355d732e204809f2676ab29b629dd29c425512dfa",
+    "size_bytes": 707745,
+    "source": ".artifacts/logs/native-proxy-observation-archive-release-close-equal-20260912/cases/case-0037.json"
+  },
+  {
+    "destination": "docs/audits/native-proxy-observation-archive-release-close-equal-20260912/result/cases/case-0038.json",
+    "sha256": "df732234ef4f31602dbbf3baa12bb13cda4721ad44f6d81310c64d4be019d83f",
+    "size_bytes": 734944,
+    "source": ".artifacts/logs/native-proxy-observation-archive-release-close-equal-20260912/cases/case-0038.json"
+  },
+  {
+    "destination": "docs/audits/native-proxy-observation-archive-release-close-equal-20260912/result/cases/case-0039.json",
+    "sha256": "f331cedca79529932a329fc8aa650e25382c83a716709fdcde9ea502a862ebae",
+    "size_bytes": 745879,
+    "source": ".artifacts/logs/native-proxy-observation-archive-release-close-equal-20260912/cases/case-0039.json"
+  },
+  {
+    "destination": "docs/audits/native-proxy-observation-archive-release-close-equal-20260912/result/cases/case-0040.json",
+    "sha256": "621092a4d9e99828399e499eb9c4d08a3910effea2d8104592320210737875fb",
+    "size_bytes": 761588,
+    "source": ".artifacts/logs/native-proxy-observation-archive-release-close-equal-20260912/cases/case-0040.json"
+  },
+  {
+    "destination": "docs/audits/native-proxy-observation-archive-release-close-equal-20260912/result/cases/case-0041.json",
+    "sha256": "71af37647bc25b375fe81a5d67f7ed4c5214d37a4a292c63bc520e079b16d20f",
+    "size_bytes": 772531,
+    "source": ".artifacts/logs/native-proxy-observation-archive-release-close-equal-20260912/cases/case-0041.json"
+  },
+  {
+    "destination": "docs/audits/native-proxy-observation-archive-release-close-equal-20260912/result/cases/case-0042.json",
+    "sha256": "60626719892e92ba954fd869f9ccad2c080aadd083826513e8dacee3581260ce",
+    "size_bytes": 788753,
+    "source": ".artifacts/logs/native-proxy-observation-archive-release-close-equal-20260912/cases/case-0042.json"
+  },
+  {
+    "destination": "docs/audits/native-proxy-observation-archive-release-close-equal-20260912/result/cases/case-0043.json",
+    "sha256": "bc5b2fea35dfc786829a80c569c09f98de35bac796c252eb35e419f42aca381c",
+    "size_bytes": 799710,
+    "source": ".artifacts/logs/native-proxy-observation-archive-release-close-equal-20260912/cases/case-0043.json"
+  },
+  {
+    "destination": "docs/audits/native-proxy-observation-archive-release-close-equal-20260912/result/cases/case-0044.json",
+    "sha256": "0c647ad031f0d0c71be1cda198023d3817cc0cbb7312b3e360556ee02399c907",
+    "size_bytes": 303457,
+    "source": ".artifacts/logs/native-proxy-observation-archive-release-close-equal-20260912/cases/case-0044.json"
+  },
+  {
+    "destination": "docs/audits/native-proxy-observation-archive-release-close-equal-20260912/result/cases/case-0045.json",
+    "sha256": "6df161038b9b51899f66809193692af9f987f5c6ac4c2efee52230d7db3b0d9c",
+    "size_bytes": 339280,
+    "source": ".artifacts/logs/native-proxy-observation-archive-release-close-equal-20260912/cases/case-0045.json"
+  },
+  {
+    "destination": "docs/audits/native-proxy-observation-archive-release-close-equal-20260912/result/cases/case-0046.json",
+    "sha256": "5ec7eef0420ad1583cda5c7e86d8f1e2d5ddcfdee341973edd76606ed14e3203",
+    "size_bytes": 350184,
+    "source": ".artifacts/logs/native-proxy-observation-archive-release-close-equal-20260912/cases/case-0046.json"
+  },
+  {
+    "destination": "docs/audits/native-proxy-observation-archive-release-close-equal-20260912/result/cases/case-0047.json",
+    "sha256": "54394171a273864cf9650fb78363e806380caa1f1b3b0abbc2ba5ef5f308493c",
+    "size_bytes": 365873,
+    "source": ".artifacts/logs/native-proxy-observation-archive-release-close-equal-20260912/cases/case-0047.json"
+  },
+  {
+    "destination": "docs/audits/native-proxy-observation-archive-release-close-equal-20260912/result/cases/case-0048.json",
+    "sha256": "9c7316015cd194791c4aeefafeefe36b83d1f67ff8b4b9ae727e57dc404e230a",
+    "size_bytes": 376791,
+    "source": ".artifacts/logs/native-proxy-observation-archive-release-close-equal-20260912/cases/case-0048.json"
+  },
+  {
+    "destination": "docs/audits/native-proxy-observation-archive-release-close-equal-20260912/result/cases/case-0049.json",
+    "sha256": "658c1321d2e7d20227f3b68027acf8541eee6dc49e961e17f72e0fa7b1f4e6a4",
+    "size_bytes": 450016,
+    "source": ".artifacts/logs/native-proxy-observation-archive-release-close-equal-20260912/cases/case-0049.json"
+  },
+  {
+    "destination": "docs/audits/native-proxy-observation-archive-release-close-equal-20260912/result/cases/case-0050.json",
+    "sha256": "4afa890f02d0b68637b60ded507602ed54f3a3683e12da0cd069f32b6820a605",
+    "size_bytes": 460934,
+    "source": ".artifacts/logs/native-proxy-observation-archive-release-close-equal-20260912/cases/case-0050.json"
+  },
+  {
+    "destination": "docs/audits/native-proxy-observation-archive-release-close-equal-20260912/result/cases/case-0051.json",
+    "sha256": "ae65451769acf2e3234fc7257411888e4ecc062e4698a6b21220125e0809d211",
+    "size_bytes": 838406,
+    "source": ".artifacts/logs/native-proxy-observation-archive-release-close-equal-20260912/cases/case-0051.json"
+  },
+  {
+    "destination": "docs/audits/native-proxy-observation-archive-release-close-equal-20260912/result/cases/case-0052.json",
+    "sha256": "3d6123353d9686fa9da1a0f3a9f44238120fac711f5d7c5b692a7a6f5739e28d",
+    "size_bytes": 838455,
+    "source": ".artifacts/logs/native-proxy-observation-archive-release-close-equal-20260912/cases/case-0052.json"
+  },
+  {
+    "destination": "docs/audits/native-proxy-observation-archive-release-close-equal-20260912/result/cases/case-0053.json",
+    "sha256": "9bbfd99cda4b951bcc9a93558aecaf2d48b803a917eebcf8d3d41ecc452b19f5",
+    "size_bytes": 838455,
+    "source": ".artifacts/logs/native-proxy-observation-archive-release-close-equal-20260912/cases/case-0053.json"
+  },
+  {
+    "destination": "docs/audits/native-proxy-observation-archive-release-close-equal-20260912/result/cases/case-0054.json",
+    "sha256": "b7b8b420474ba605b9ee950e5f0e0d70bc7139402eefc2453dc8aadd068fb6c2",
+    "size_bytes": 277279,
+    "source": ".artifacts/logs/native-proxy-observation-archive-release-close-equal-20260912/cases/case-0054.json"
+  },
+  {
+    "destination": "docs/audits/native-proxy-observation-archive-release-close-equal-20260912/result/cases/case-0055.json",
+    "sha256": "04c07b45ed3e84b7c16d68d602fc8fd785e10e4ef417856d9d72ac98bfc1016e",
+    "size_bytes": 749109,
+    "source": ".artifacts/logs/native-proxy-observation-archive-release-close-equal-20260912/cases/case-0055.json"
+  },
+  {
+    "destination": "docs/audits/native-proxy-observation-archive-release-close-equal-20260912/result/cases/case-0056.json",
+    "sha256": "b9f0a429347e9a020f7d93a9ce9a8fd4b03a51130fcf207304951e98ea846c78",
+    "size_bytes": 749099,
+    "source": ".artifacts/logs/native-proxy-observation-archive-release-close-equal-20260912/cases/case-0056.json"
+  },
+  {
+    "destination": "docs/audits/native-proxy-observation-archive-release-close-equal-20260912/result/cases/case-0057.json",
+    "sha256": "9c150d3598f3948741eba98716bb7af5b67e1015c5e6ac382357e57a81ca46f1",
+    "size_bytes": 777516,
+    "source": ".artifacts/logs/native-proxy-observation-archive-release-close-equal-20260912/cases/case-0057.json"
+  },
+  {
+    "destination": "docs/audits/native-proxy-observation-archive-release-close-equal-20260912/result/cases/case-0058.json",
+    "sha256": "5baaf26593dac76418328e9efc8d1f27e9358bfad55134b26f1604c5c2087ed5",
+    "size_bytes": 777528,
+    "source": ".artifacts/logs/native-proxy-observation-archive-release-close-equal-20260912/cases/case-0058.json"
+  },
+  {
+    "destination": "docs/audits/native-proxy-observation-archive-release-close-equal-20260912/result/cases/case-0059.json",
+    "sha256": "117d57a54387dcb89a189fdc453a6e39f78a66f215da3a634aa714a7bbc0159f",
+    "size_bytes": 775764,
+    "source": ".artifacts/logs/native-proxy-observation-archive-release-close-equal-20260912/cases/case-0059.json"
+  },
+  {
+    "destination": "docs/audits/native-proxy-observation-archive-release-close-equal-20260912/result/cases/case-0060.json",
+    "sha256": "e5ca32d19b8177d19744d901874ff3900f14ad2f45efb0634dea3cde8530bb47",
+    "size_bytes": 775762,
+    "source": ".artifacts/logs/native-proxy-observation-archive-release-close-equal-20260912/cases/case-0060.json"
+  },
+  {
+    "destination": "docs/audits/native-proxy-observation-archive-release-close-equal-20260912/result/cases/case-0061.json",
+    "sha256": "564ba8ab659865268f7ef6daa3ee50346f229b16fdfa0db51fb64238d218acf8",
+    "size_bytes": 775766,
+    "source": ".artifacts/logs/native-proxy-observation-archive-release-close-equal-20260912/cases/case-0061.json"
+  },
+  {
+    "destination": "docs/audits/native-proxy-observation-archive-release-close-equal-20260912/result/cases/case-0062.json",
+    "sha256": "682497c3079312f1e54335dd3d62ec27cab240831b78a8a5e7114dfcd39cfb6e",
+    "size_bytes": 804681,
+    "source": ".artifacts/logs/native-proxy-observation-archive-release-close-equal-20260912/cases/case-0062.json"
+  },
+  {
+    "destination": "docs/audits/native-proxy-observation-archive-release-close-equal-20260912/result/cases/case-0063.json",
+    "sha256": "b27593260cede29890ccbe1f262a41b8527223b5c78ed2f41a7f1a20a43f915f",
+    "size_bytes": 804679,
+    "source": ".artifacts/logs/native-proxy-observation-archive-release-close-equal-20260912/cases/case-0063.json"
+  },
+  {
+    "destination": "docs/audits/native-proxy-observation-archive-release-close-equal-20260912/result/cases/case-0064.json",
+    "sha256": "8e3e902347e9512b5fb9f2a3389954f6a6ba7008770e84df39bddfb8b7f65dc8",
+    "size_bytes": 802929,
+    "source": ".artifacts/logs/native-proxy-observation-archive-release-close-equal-20260912/cases/case-0064.json"
+  },
+  {
+    "destination": "docs/audits/native-proxy-observation-archive-release-close-equal-20260912/result/cases/case-0065.json",
+    "sha256": "20cdef4a1034f0e1668d44779db55d911629837e207061c0dfe753a4c7d6afc1",
+    "size_bytes": 277275,
+    "source": ".artifacts/logs/native-proxy-observation-archive-release-close-equal-20260912/cases/case-0065.json"
+  },
+  {
+    "destination": "docs/audits/native-proxy-observation-archive-release-close-equal-20260912/result/cases/case-0066.json",
+    "sha256": "c4b48251b4947af33b3edc719c638e9c1f8daf6a3e74f12a3b7244cd529512f6",
+    "size_bytes": 802927,
+    "source": ".artifacts/logs/native-proxy-observation-archive-release-close-equal-20260912/cases/case-0066.json"
+  },
+  {
+    "destination": "docs/audits/native-proxy-observation-archive-release-close-equal-20260912/result/cases/case-0067.json",
+    "sha256": "541aa6322bc8c23eee1f7c2246e085728ea90248e59706d7bfab5d8d1f239ca2",
+    "size_bytes": 802931,
+    "source": ".artifacts/logs/native-proxy-observation-archive-release-close-equal-20260912/cases/case-0067.json"
+  },
+  {
+    "destination": "docs/audits/native-proxy-observation-archive-release-close-equal-20260912/result/cases/case-0068.json",
+    "sha256": "67698949c072bf2ee915bfd7e6a6d79d1d34d95636e198a0be429556652d86bf",
+    "size_bytes": 813617,
+    "source": ".artifacts/logs/native-proxy-observation-archive-release-close-equal-20260912/cases/case-0068.json"
+  },
+  {
+    "destination": "docs/audits/native-proxy-observation-archive-release-close-equal-20260912/result/cases/case-0069.json",
+    "sha256": "f6eeb8d15ab8a17db9e73b97c1f1493f233270654e812023857edb46ba9140a6",
+    "size_bytes": 817898,
+    "source": ".artifacts/logs/native-proxy-observation-archive-release-close-equal-20260912/cases/case-0069.json"
+  },
+  {
+    "destination": "docs/audits/native-proxy-observation-archive-release-close-equal-20260912/result/cases/case-0070.json",
+    "sha256": "912c156212d5be4c7811dcb357927e60b1df8f748f0059bfe345744485a111e2",
+    "size_bytes": 822179,
+    "source": ".artifacts/logs/native-proxy-observation-archive-release-close-equal-20260912/cases/case-0070.json"
+  },
+  {
+    "destination": "docs/audits/native-proxy-observation-archive-release-close-equal-20260912/result/cases/case-0071.json",
+    "sha256": "3ee3425710bc6969900be66ffd47efef1a3274920264d896e5a6c8c953194962",
+    "size_bytes": 275544,
+    "source": ".artifacts/logs/native-proxy-observation-archive-release-close-equal-20260912/cases/case-0071.json"
+  },
+  {
+    "destination": "docs/audits/native-proxy-observation-archive-release-close-equal-20260912/result/cases/case-0072.json",
+    "sha256": "1d8de39cf2bb62d8d725606820f07e38dfb41d447fb348a9149f75d659463ffa",
+    "size_bytes": 275540,
+    "source": ".artifacts/logs/native-proxy-observation-archive-release-close-equal-20260912/cases/case-0072.json"
+  },
+  {
+    "destination": "docs/audits/native-proxy-observation-archive-release-close-equal-20260912/result/cases/case-0073.json",
+    "sha256": "c3d83391e102cf8c383f22bc59695980c219b19815f0106b19a007ec9124d57e",
+    "size_bytes": 275544,
+    "source": ".artifacts/logs/native-proxy-observation-archive-release-close-equal-20260912/cases/case-0073.json"
+  },
+  {
+    "destination": "docs/audits/native-proxy-observation-archive-release-close-equal-20260912/result/cases/case-0074.json",
+    "sha256": "8fb59f70d8715cdb82f53caa9fb51049034a7b3a0381f964eb229196ae04af59",
+    "size_bytes": 381881,
+    "source": ".artifacts/logs/native-proxy-observation-archive-release-close-equal-20260912/cases/case-0074.json"
+  },
+  {
+    "destination": "docs/audits/native-proxy-observation-archive-release-close-equal-20260912/result/cases/case-0075.json",
+    "sha256": "7621d34677a7a41cb7599993564e2deda7c5e9542657f8e84e9c4372f0594416",
+    "size_bytes": 308417,
+    "source": ".artifacts/logs/native-proxy-observation-archive-release-close-equal-20260912/cases/case-0075.json"
+  },
+  {
+    "destination": "docs/audits/native-proxy-observation-archive-release-close-equal-20260912/result/cases/case-0076.json",
+    "sha256": "a8ed56ad6380adfcd4092b0cf50d93e0577005ee6a44d1152d3ab23ffd83f1c3",
+    "size_bytes": 308415,
+    "source": ".artifacts/logs/native-proxy-observation-archive-release-close-equal-20260912/cases/case-0076.json"
+  },
+  {
+    "destination": "docs/audits/native-proxy-observation-archive-release-close-equal-20260912/result/cases/case-0077.json",
+    "sha256": "3ae0448ec04ff667700acddf877181ae1227ac19d6d046ecf5e46df22f11577e",
+    "size_bytes": 306674,
+    "source": ".artifacts/logs/native-proxy-observation-archive-release-close-equal-20260912/cases/case-0077.json"
+  },
+  {
+    "destination": "docs/audits/native-proxy-observation-archive-release-close-equal-20260912/result/cases/case-0078.json",
+    "sha256": "1ea6649dc283fcadb66c4241c48b1c4ad07329bd7575d72dcb5acfa471606a3e",
+    "size_bytes": 306672,
+    "source": ".artifacts/logs/native-proxy-observation-archive-release-close-equal-20260912/cases/case-0078.json"
+  },
+  {
+    "destination": "docs/audits/native-proxy-observation-archive-release-close-equal-20260912/result/cases/case-0079.json",
+    "sha256": "a8d8028489e322b99e031c506deb162e889e55155b09931aa560299c3ee1e8a9",
+    "size_bytes": 838456,
+    "source": ".artifacts/logs/native-proxy-observation-archive-release-close-equal-20260912/cases/case-0079.json"
+  },
+  {
+    "destination": "docs/audits/native-proxy-observation-archive-release-close-equal-20260912/result/cases/case-0080.json",
+    "sha256": "f7e05d570854545f67dc8d99c31574634d6bd7907194a6e17d46dba1263caf39",
+    "size_bytes": 306676,
+    "source": ".artifacts/logs/native-proxy-observation-archive-release-close-equal-20260912/cases/case-0080.json"
+  },
+  {
+    "destination": "docs/audits/native-proxy-observation-archive-release-close-equal-20260912/result/cases/case-0081.json",
+    "sha256": "5f0b705698572c711dad4e8c75b7c2baa242d6eec75d7e9a1981a1e98fe8e35e",
+    "size_bytes": 381882,
+    "source": ".artifacts/logs/native-proxy-observation-archive-release-close-equal-20260912/cases/case-0081.json"
+  },
+  {
+    "destination": "docs/audits/native-proxy-observation-archive-release-close-equal-20260912/result/cases/case-0082.json",
+    "sha256": "8617995dd9fb3c36a3e2e0397b102f5901d4f23e73b2fb604a35e3c9b11326cd",
+    "size_bytes": 320482,
+    "source": ".artifacts/logs/native-proxy-observation-archive-release-close-equal-20260912/cases/case-0082.json"
+  },
+  {
+    "destination": "docs/audits/native-proxy-observation-archive-release-close-equal-20260912/result/cases/case-0083.json",
+    "sha256": "d7d8a7f995afc85b1cb477adf2eda8246692d3f3af25625e11c3d27d9ddfcf9a",
+    "size_bytes": 324545,
+    "source": ".artifacts/logs/native-proxy-observation-archive-release-close-equal-20260912/cases/case-0083.json"
+  },
+  {
+    "destination": "docs/audits/native-proxy-observation-archive-release-close-equal-20260912/result/cases/case-0084.json",
+    "sha256": "535eb61915ebf07d764bca2487eb6a9d5134c06956fdd4482f3f31d1442bf5f4",
+    "size_bytes": 328610,
+    "source": ".artifacts/logs/native-proxy-observation-archive-release-close-equal-20260912/cases/case-0084.json"
+  },
+  {
+    "destination": "docs/audits/native-proxy-observation-archive-release-close-equal-20260912/result/cases/case-0085.json",
+    "sha256": "108b6ab6fc258c8605bdcef23960a18e5404edf1677eacd67d44efce9835cc82",
+    "size_bytes": 355168,
+    "source": ".artifacts/logs/native-proxy-observation-archive-release-close-equal-20260912/cases/case-0085.json"
+  },
+  {
+    "destination": "docs/audits/native-proxy-observation-archive-release-close-equal-20260912/result/cases/case-0086.json",
+    "sha256": "64c57522d81ea878ad57a5770cdfce6fe873d2d10e8b1e6b5cb23b790dd82164",
+    "size_bytes": 355152,
+    "source": ".artifacts/logs/native-proxy-observation-archive-release-close-equal-20260912/cases/case-0086.json"
+  },
+  {
+    "destination": "docs/audits/native-proxy-observation-archive-release-close-equal-20260912/result/cases/case-0087.json",
+    "sha256": "b4bd1f4c14f39a4a362a3967ce64dbd94819b0e4709647b7a8c316f540184755",
+    "size_bytes": 353407,
+    "source": ".artifacts/logs/native-proxy-observation-archive-release-close-equal-20260912/cases/case-0087.json"
+  },
+  {
+    "destination": "docs/audits/native-proxy-observation-archive-release-close-equal-20260912/result/cases/case-0088.json",
+    "sha256": "033b65783d38d5a4803d21a4b4eda00d5f51132b6b06b4ed1f9d6d6749002160",
+    "size_bytes": 353405,
+    "source": ".artifacts/logs/native-proxy-observation-archive-release-close-equal-20260912/cases/case-0088.json"
+  },
+  {
+    "destination": "docs/audits/native-proxy-observation-archive-release-close-equal-20260912/result/cases/case-0089.json",
+    "sha256": "686a39dfe2d50873265c708fee8ec6c566d2268f67a85d4ebe5729ab74576237",
+    "size_bytes": 353423,
+    "source": ".artifacts/logs/native-proxy-observation-archive-release-close-equal-20260912/cases/case-0089.json"
+  },
+  {
+    "destination": "docs/audits/native-proxy-observation-archive-release-close-equal-20260912/result/cases/case-0090.json",
+    "sha256": "b4e8cad2d59f3fda4b25002058cec10eb938193af5e963107ccbae4134a02a91",
+    "size_bytes": 203960,
+    "source": ".artifacts/logs/native-proxy-observation-archive-release-close-equal-20260912/cases/case-0090.json"
+  },
+  {
+    "destination": "docs/audits/native-proxy-observation-archive-release-close-equal-20260912/result/cases/case-0091.json",
+    "sha256": "5d62f4c7a6db4a7f973944174436008076cf3f7dbb7f586d0927fbd514d8673c",
+    "size_bytes": 381775,
+    "source": ".artifacts/logs/native-proxy-observation-archive-release-close-equal-20260912/cases/case-0091.json"
+  },
+  {
+    "destination": "docs/audits/native-proxy-observation-archive-release-close-equal-20260912/result/cases/case-0092.json",
+    "sha256": "b58d4111b0eeb7755187b32c9d6c3c452211d872f00f35afe071fa89bfc8b352",
+    "size_bytes": 381759,
+    "source": ".artifacts/logs/native-proxy-observation-archive-release-close-equal-20260912/cases/case-0092.json"
+  },
+  {
+    "destination": "docs/audits/native-proxy-observation-archive-release-close-equal-20260912/result/cases/case-0093.json",
+    "sha256": "3f2a82768d5b5de0f0eeb1ed66d50c7c4d0df56e88cff3ab40f22106cfc0e656",
+    "size_bytes": 380014,
+    "source": ".artifacts/logs/native-proxy-observation-archive-release-close-equal-20260912/cases/case-0093.json"
+  },
+  {
+    "destination": "docs/audits/native-proxy-observation-archive-release-close-equal-20260912/result/cases/case-0094.json",
+    "sha256": "97d441f2986cb3b35852f263d2f82fcf938737ed63d81d2f02e034856fd939a7",
+    "size_bytes": 380012,
+    "source": ".artifacts/logs/native-proxy-observation-archive-release-close-equal-20260912/cases/case-0094.json"
+  },
+  {
+    "destination": "docs/audits/native-proxy-observation-archive-release-close-equal-20260912/result/cases/case-0095.json",
+    "sha256": "91f06335b87e13559ab3d75251b52eaa06ef0e8e58003e42d53e0944866f11ba",
+    "size_bytes": 380030,
+    "source": ".artifacts/logs/native-proxy-observation-archive-release-close-equal-20260912/cases/case-0095.json"
+  },
+  {
+    "destination": "docs/audits/native-proxy-observation-archive-release-close-equal-20260912/result/cases/case-0096.json",
+    "sha256": "c0ec443764d6d83f5ce77fe133a9c59eed52d8d2d849e51e84730608dc2c4713",
+    "size_bytes": 391568,
+    "source": ".artifacts/logs/native-proxy-observation-archive-release-close-equal-20260912/cases/case-0096.json"
+  },
+  {
+    "destination": "docs/audits/native-proxy-observation-archive-release-close-equal-20260912/result/cases/case-0097.json",
+    "sha256": "8c64177e8f5da70e533f119ee45472884fbe91d2f5e0f7d2a63bdbcb8402dc47",
+    "size_bytes": 395824,
+    "source": ".artifacts/logs/native-proxy-observation-archive-release-close-equal-20260912/cases/case-0097.json"
+  },
+  {
+    "destination": "docs/audits/native-proxy-observation-archive-release-close-equal-20260912/result/cases/case-0098.json",
+    "sha256": "13f7a24c8f32b370238a096b6a985e513a7a8553b820a9bfe1c0db0a5334717e",
+    "size_bytes": 400094,
+    "source": ".artifacts/logs/native-proxy-observation-archive-release-close-equal-20260912/cases/case-0098.json"
+  },
+  {
+    "destination": "docs/audits/native-proxy-observation-archive-release-close-equal-20260912/result/cases/case-0099.json",
+    "sha256": "1140c7d3bc45f8d4638891d93a75415d5b514dadd6c2280a41564adf46cf8b9a",
+    "size_bytes": 838437,
+    "source": ".artifacts/logs/native-proxy-observation-archive-release-close-equal-20260912/cases/case-0099.json"
+  },
+  {
+    "destination": "docs/audits/native-proxy-observation-archive-release-close-equal-20260912/result/cases/case-0100.json",
+    "sha256": "81eb1e4098a37078eb288629a304c38f3cecf7078e34ffe000b113ca02dd6f59",
+    "size_bytes": 838436,
+    "source": ".artifacts/logs/native-proxy-observation-archive-release-close-equal-20260912/cases/case-0100.json"
+  },
+  {
+    "destination": "docs/audits/native-proxy-observation-archive-release-close-equal-20260912/result/cases/case-0101.json",
+    "sha256": "75b6c94fe423ce7fa036173dc028326fb72565eb4c28184dcf9ffd3e3afae4f6",
+    "size_bytes": 208208,
+    "source": ".artifacts/logs/native-proxy-observation-archive-release-close-equal-20260912/cases/case-0101.json"
+  },
+  {
+    "destination": "docs/audits/native-proxy-observation-archive-release-close-equal-20260912/result/cases/case-0102.json",
+    "sha256": "4e2933638b991cd8e64340da664440386ebda16f01fe3c0c163eae1578edb108",
+    "size_bytes": 838438,
+    "source": ".artifacts/logs/native-proxy-observation-archive-release-close-equal-20260912/cases/case-0102.json"
+  },
+  {
+    "destination": "docs/audits/native-proxy-observation-archive-release-close-equal-20260912/result/cases/case-0103.json",
+    "sha256": "81d7e58d8339e7394cd1b23cefffe2b0b09de9f9f1aa42a039a047b61203f7bf",
+    "size_bytes": 428062,
+    "source": ".artifacts/logs/native-proxy-observation-archive-release-close-equal-20260912/cases/case-0103.json"
+  },
+  {
+    "destination": "docs/audits/native-proxy-observation-archive-release-close-equal-20260912/result/cases/case-0104.json",
+    "sha256": "5d9d5d941ab45d92ccbcd6ed2406a85a74b9ec99f6fd8808c98eb5f0c960bc29",
+    "size_bytes": 431565,
+    "source": ".artifacts/logs/native-proxy-observation-archive-release-close-equal-20260912/cases/case-0104.json"
+  },
+  {
+    "destination": "docs/audits/native-proxy-observation-archive-release-close-equal-20260912/result/cases/case-0105.json",
+    "sha256": "8a266249d86b17ba11a6726ad0d1acdb5d5407da29d794827fc75f10fb734ff2",
+    "size_bytes": 435036,
+    "source": ".artifacts/logs/native-proxy-observation-archive-release-close-equal-20260912/cases/case-0105.json"
+  },
+  {
+    "destination": "docs/audits/native-proxy-observation-archive-release-close-equal-20260912/result/cases/case-0106.json",
+    "sha256": "3c3ee7f27a09d6a04d4e4e753e32ff9d38023cffae36b0f12e5419e54c8a8dad",
+    "size_bytes": 570591,
+    "source": ".artifacts/logs/native-proxy-observation-archive-release-close-equal-20260912/cases/case-0106.json"
+  },
+  {
+    "destination": "docs/audits/native-proxy-observation-archive-release-close-equal-20260912/result/cases/case-0107.json",
+    "sha256": "8fdcf016beba8fd15cf1dc397daf0538daa479672102d6cd7a8fba9892f0e7cc",
+    "size_bytes": 465921,
+    "source": ".artifacts/logs/native-proxy-observation-archive-release-close-equal-20260912/cases/case-0107.json"
+  },
+  {
+    "destination": "docs/audits/native-proxy-observation-archive-release-close-equal-20260912/result/cases/case-0108.json",
+    "sha256": "a8271bff77848b53d0e251683e5f9018080b0450beb0da1ec7f550861de5cb19",
+    "size_bytes": 465903,
+    "source": ".artifacts/logs/native-proxy-observation-archive-release-close-equal-20260912/cases/case-0108.json"
+  },
+  {
+    "destination": "docs/audits/native-proxy-observation-archive-release-close-equal-20260912/result/cases/case-0109.json",
+    "sha256": "a2ab68f1b492bebc87ff9f39551ab74c78c705adf742fa6ecfb242bbc8efe476",
+    "size_bytes": 464160,
+    "source": ".artifacts/logs/native-proxy-observation-archive-release-close-equal-20260912/cases/case-0109.json"
+  },
+  {
+    "destination": "docs/audits/native-proxy-observation-archive-release-close-equal-20260912/result/cases/case-0110.json",
+    "sha256": "5b711be79a657ee146577aa01f032b8e9feea7cfa68fe7ea8f39c687e065bdc6",
+    "size_bytes": 464158,
+    "source": ".artifacts/logs/native-proxy-observation-archive-release-close-equal-20260912/cases/case-0110.json"
+  },
+  {
+    "destination": "docs/audits/native-proxy-observation-archive-release-close-equal-20260912/result/cases/case-0111.json",
+    "sha256": "a33de729bf4342382aa4859a5aaa2b0e7bb5dade5f0eec8b1c7dd725b46dff67",
+    "size_bytes": 464162,
+    "source": ".artifacts/logs/native-proxy-observation-archive-release-close-equal-20260912/cases/case-0111.json"
+  },
+  {
+    "destination": "docs/audits/native-proxy-observation-archive-release-close-equal-20260912/result/cases/case-0112.json",
+    "sha256": "0a8c1ff598d111d0b7d8f7db70e45e8ec2ba3b66eeb1d2ec10ce19c7200e39c0",
+    "size_bytes": 212455,
+    "source": ".artifacts/logs/native-proxy-observation-archive-release-close-equal-20260912/cases/case-0112.json"
+  },
+  {
+    "destination": "docs/audits/native-proxy-observation-archive-release-close-equal-20260912/result/cases/case-0113.json",
+    "sha256": "1ca72a40908b9f3b160d72c8637663a9a9c951ff800ad0a151c8a2bcb9801bdd",
+    "size_bytes": 570591,
+    "source": ".artifacts/logs/native-proxy-observation-archive-release-close-equal-20260912/cases/case-0113.json"
+  },
+  {
+    "destination": "docs/audits/native-proxy-observation-archive-release-close-equal-20260912/result/cases/case-0114.json",
+    "sha256": "0a406ab67a3d1cc2b96d6491238001346b18e6e7f7e6da785ad53b509c1923e8",
+    "size_bytes": 570605,
+    "source": ".artifacts/logs/native-proxy-observation-archive-release-close-equal-20260912/cases/case-0114.json"
+  },
+  {
+    "destination": "docs/audits/native-proxy-observation-archive-release-close-equal-20260912/result/cases/case-0115.json",
+    "sha256": "a0ccb696297e9f862cdc773cd0268d4f4c3897e770e01d399131608ddcc7805a",
+    "size_bytes": 501726,
+    "source": ".artifacts/logs/native-proxy-observation-archive-release-close-equal-20260912/cases/case-0115.json"
+  },
+  {
+    "destination": "docs/audits/native-proxy-observation-archive-release-close-equal-20260912/result/cases/case-0116.json",
+    "sha256": "0247f8a65f6c34fc3e2f84aee6fe6668aa4f76a0c3ab7d9145125b5fb0ff722d",
+    "size_bytes": 501724,
+    "source": ".artifacts/logs/native-proxy-observation-archive-release-close-equal-20260912/cases/case-0116.json"
+  },
+  {
+    "destination": "docs/audits/native-proxy-observation-archive-release-close-equal-20260912/result/cases/case-0117.json",
+    "sha256": "ba49d3a1d394dc583195fc3f74a42afa1191b554736af3cb225c64a03cf23307",
+    "size_bytes": 495364,
+    "source": ".artifacts/logs/native-proxy-observation-archive-release-close-equal-20260912/cases/case-0117.json"
+  },
+  {
+    "destination": "docs/audits/native-proxy-observation-archive-release-close-equal-20260912/result/cases/case-0118.json",
+    "sha256": "fe969163091167fefb672ba8a8e1975ccdd6c5cfad66ac0a034fa76e56b3eb02",
+    "size_bytes": 499977,
+    "source": ".artifacts/logs/native-proxy-observation-archive-release-close-equal-20260912/cases/case-0118.json"
+  },
+  {
+    "destination": "docs/audits/native-proxy-observation-archive-release-close-equal-20260912/result/cases/case-0119.json",
+    "sha256": "d46dbf28f3a5ad166851c345c6a0699112f913e2df511a11e118c81ecd4f7e27",
+    "size_bytes": 570591,
+    "source": ".artifacts/logs/native-proxy-observation-archive-release-close-equal-20260912/cases/case-0119.json"
+  },
+  {
+    "destination": "docs/audits/native-proxy-observation-archive-release-close-equal-20260912/result/cases/case-0120.json",
+    "sha256": "607e2b3b808b4fed250962440727d747da6eb3466abf0eb75083a44320a29839",
+    "size_bytes": 509187,
+    "source": ".artifacts/logs/native-proxy-observation-archive-release-close-equal-20260912/cases/case-0120.json"
+  },
+  {
+    "destination": "docs/audits/native-proxy-observation-archive-release-close-equal-20260912/result/cases/case-0121.json",
+    "sha256": "bbb0e3039c65f84b3d5b8ef7d424b3834a302840ee9bdec74a69398c520de1f8",
+    "size_bytes": 513250,
+    "source": ".artifacts/logs/native-proxy-observation-archive-release-close-equal-20260912/cases/case-0121.json"
+  },
+  {
+    "destination": "docs/audits/native-proxy-observation-archive-release-close-equal-20260912/result/cases/case-0122.json",
+    "sha256": "b5676f6c78c8c358eaf1aa3e31f795c8f0a11ba8098bda337a33e170c4a0c211",
+    "size_bytes": 517315,
+    "source": ".artifacts/logs/native-proxy-observation-archive-release-close-equal-20260912/cases/case-0122.json"
+  },
+  {
+    "destination": "docs/audits/native-proxy-observation-archive-release-close-equal-20260912/result/cases/case-0123.json",
+    "sha256": "821ff6c23f792aa4cdaa359b80381587bc16ed1642c410728c55b89a0c666927",
+    "size_bytes": 239584,
+    "source": ".artifacts/logs/native-proxy-observation-archive-release-close-equal-20260912/cases/case-0123.json"
+  },
+  {
+    "destination": "docs/audits/native-proxy-observation-archive-release-close-equal-20260912/result/cases/case-0124.json",
+    "sha256": "be02b68dc7aaf9c44ccca6338f626b09351f1d4892001dd53e9d2eb3fb7c3d0b",
+    "size_bytes": 543861,
+    "source": ".artifacts/logs/native-proxy-observation-archive-release-close-equal-20260912/cases/case-0124.json"
+  },
+  {
+    "destination": "docs/audits/native-proxy-observation-archive-release-close-equal-20260912/result/cases/case-0125.json",
+    "sha256": "45acb9f6e068ad40faec29a03a67594fe5f7edd0d03501cc7a6898bcb7e32276",
+    "size_bytes": 543873,
+    "source": ".artifacts/logs/native-proxy-observation-archive-release-close-equal-20260912/cases/case-0125.json"
+  },
+  {
+    "destination": "docs/audits/native-proxy-observation-archive-release-close-equal-20260912/result/cases/case-0126.json",
+    "sha256": "5dff7540ac45314b6b8813c2bbcc8cda0969583533da32ba5624866a2859057b",
+    "size_bytes": 542128,
+    "source": ".artifacts/logs/native-proxy-observation-archive-release-close-equal-20260912/cases/case-0126.json"
+  },
+  {
+    "destination": "docs/audits/native-proxy-observation-archive-release-close-equal-20260912/result/cases/case-0127.json",
+    "sha256": "71603dfce33e1b88754ac2737af032039c4dd5dc38939f847e0baa3d7242d5c1",
+    "size_bytes": 542126,
+    "source": ".artifacts/logs/native-proxy-observation-archive-release-close-equal-20260912/cases/case-0127.json"
+  },
+  {
+    "destination": "docs/audits/native-proxy-observation-archive-release-close-equal-20260912/result/cases/case-0128.json",
+    "sha256": "38ec0ff93ad33831c9eb470e93e156f28aaabcc494956174e365a7db334d19f2",
+    "size_bytes": 542130,
+    "source": ".artifacts/logs/native-proxy-observation-archive-release-close-equal-20260912/cases/case-0128.json"
+  },
+  {
+    "destination": "docs/audits/native-proxy-observation-archive-release-close-equal-20260912/result/cases/case-0129.json",
+    "sha256": "c784b42aba00cba3c455d13a90f38e7e388a6a53f949a05224913c1bad27ff26",
+    "size_bytes": 570470,
+    "source": ".artifacts/logs/native-proxy-observation-archive-release-close-equal-20260912/cases/case-0129.json"
+  },
+  {
+    "destination": "docs/audits/native-proxy-observation-archive-release-close-equal-20260912/result/cases/case-0130.json",
+    "sha256": "3f69a0a830eeb91d91e88fe9489cca46bc32fafa2ebae56e69dc08ceb73048dd",
+    "size_bytes": 570468,
+    "source": ".artifacts/logs/native-proxy-observation-archive-release-close-equal-20260912/cases/case-0130.json"
+  },
+  {
+    "destination": "docs/audits/native-proxy-observation-archive-release-close-equal-20260912/result/cases/case-0131.json",
+    "sha256": "a17123568e8da02af97a398f93c085fa5479559aa528d93fa8cec2a3d9bea8c3",
+    "size_bytes": 568737,
+    "source": ".artifacts/logs/native-proxy-observation-archive-release-close-equal-20260912/cases/case-0131.json"
+  },
+  {
+    "destination": "docs/audits/native-proxy-observation-archive-release-close-equal-20260912/result/cases/case-0132.json",
+    "sha256": "283add0b07eb3d60e1e0323956546658475c9eebdb12831fa99d7864f67e0547",
+    "size_bytes": 568721,
+    "source": ".artifacts/logs/native-proxy-observation-archive-release-close-equal-20260912/cases/case-0132.json"
+  },
+  {
+    "destination": "docs/audits/native-proxy-observation-archive-release-close-equal-20260912/result/cases/case-0133.json",
+    "sha256": "b4f3704c7d0ea5b409d055ddb7aeec42069f0cb75fa3a1ace039780dd3404e54",
+    "size_bytes": 568725,
+    "source": ".artifacts/logs/native-proxy-observation-archive-release-close-equal-20260912/cases/case-0133.json"
+  },
+  {
+    "destination": "docs/audits/native-proxy-observation-archive-release-close-equal-20260912/result/cases/case-0134.json",
+    "sha256": "69a66a0140ca3ba7c55418779fb8394595024fa3c297310808f93df0f77d74dc",
+    "size_bytes": 243052,
+    "source": ".artifacts/logs/native-proxy-observation-archive-release-close-equal-20260912/cases/case-0134.json"
+  },
+  {
+    "destination": "docs/audits/native-proxy-observation-archive-release-close-equal-20260912/result/cases/case-0135.json",
+    "sha256": "a010f4f10dffea77821abb4b368fb8c4f7984b116adda290abcf797b8d131734",
+    "size_bytes": 579888,
+    "source": ".artifacts/logs/native-proxy-observation-archive-release-close-equal-20260912/cases/case-0135.json"
+  },
+  {
+    "destination": "docs/audits/native-proxy-observation-archive-release-close-equal-20260912/result/cases/case-0136.json",
+    "sha256": "f2c3e889c6c92054918b46b3ea060b7b6e14d3c608797340f2f4d6f41cfa98fa",
+    "size_bytes": 584158,
+    "source": ".artifacts/logs/native-proxy-observation-archive-release-close-equal-20260912/cases/case-0136.json"
+  },
+  {
+    "destination": "docs/audits/native-proxy-observation-archive-release-close-equal-20260912/result/cases/case-0137.json",
+    "sha256": "f90efc0aebbe1e9fc5f9568fde6fd1a30856b16898ae7f56096c41f00b2f676f",
+    "size_bytes": 588442,
+    "source": ".artifacts/logs/native-proxy-observation-archive-release-close-equal-20260912/cases/case-0137.json"
+  },
+  {
+    "destination": "docs/audits/native-proxy-observation-archive-release-close-equal-20260912/result/cases/case-0138.json",
+    "sha256": "20caa0e5bfa6b7045040b092920fcaca8b54e1271fe4e63b0ae91d42a27fafbe",
+    "size_bytes": 622998,
+    "source": ".artifacts/logs/native-proxy-observation-archive-release-close-equal-20260912/cases/case-0138.json"
+  },
+  {
+    "destination": "docs/audits/native-proxy-observation-archive-release-close-equal-20260912/result/cases/case-0139.json",
+    "sha256": "d540d353b16e598f97eee765c070b51a05e96e2ab12e25a69bb13b9109b6eba9",
+    "size_bytes": 623010,
+    "source": ".artifacts/logs/native-proxy-observation-archive-release-close-equal-20260912/cases/case-0139.json"
+  },
+  {
+    "destination": "docs/audits/native-proxy-observation-archive-release-close-equal-20260912/result/cases/case-0140.json",
+    "sha256": "2f78651715bc40ab3bc891f7a6014a9c1d25ac60a7cfab3c913e27fa77298ffa",
+    "size_bytes": 621249,
+    "source": ".artifacts/logs/native-proxy-observation-archive-release-close-equal-20260912/cases/case-0140.json"
+  },
+  {
+    "destination": "docs/audits/native-proxy-observation-archive-release-close-equal-20260912/result/cases/case-0141.json",
+    "sha256": "2a065e99920ce41b9c20dd5be8bf6f5f19ac00e88e0b4dac9ea5eab3e1ffa9dd",
+    "size_bytes": 621247,
+    "source": ".artifacts/logs/native-proxy-observation-archive-release-close-equal-20260912/cases/case-0141.json"
+  },
+  {
+    "destination": "docs/audits/native-proxy-observation-archive-release-close-equal-20260912/result/cases/case-0142.json",
+    "sha256": "60c990b726a4f88a5ee13699c910d9373d7c09f2a02766f96a9702f49eede2f4",
+    "size_bytes": 621251,
+    "source": ".artifacts/logs/native-proxy-observation-archive-release-close-equal-20260912/cases/case-0142.json"
+  },
+  {
+    "destination": "docs/audits/native-proxy-observation-archive-release-close-equal-20260912/result/cases/case-0143.json",
+    "sha256": "dff9b502a1e69db07940d1917784c48de18827d01bf8fee6c2fd08dd98709c08",
+    "size_bytes": 838438,
+    "source": ".artifacts/logs/native-proxy-observation-archive-release-close-equal-20260912/cases/case-0143.json"
+  },
+  {
+    "destination": "docs/audits/native-proxy-observation-archive-release-close-equal-20260912/result/cases/case-0144.json",
+    "sha256": "98718b309da5cb5c74f2c4618e1a38a34d691f72540d0814834f5236b3b082b0",
+    "size_bytes": 838436,
+    "source": ".artifacts/logs/native-proxy-observation-archive-release-close-equal-20260912/cases/case-0144.json"
+  },
+  {
+    "destination": "docs/audits/native-proxy-observation-archive-release-close-equal-20260912/result/cases/case-0145.json",
+    "sha256": "bfbc5bd698e804537eaf127091788b5111ec99bbfbb3eed14a3dda87ebbbd7e2",
+    "size_bytes": 246522,
+    "source": ".artifacts/logs/native-proxy-observation-archive-release-close-equal-20260912/cases/case-0145.json"
+  },
+  {
+    "destination": "docs/audits/native-proxy-observation-archive-release-close-equal-20260912/result/cases/case-0146.json",
+    "sha256": "9a023347539602d6c025d06fdf8babae0ed4ad4936ab1bdb121b8843a4d10aa5",
+    "size_bytes": 838438,
+    "source": ".artifacts/logs/native-proxy-observation-archive-release-close-equal-20260912/cases/case-0146.json"
+  },
+  {
+    "destination": "docs/audits/native-proxy-observation-archive-release-close-equal-20260912/result/cases/case-0147.json",
+    "sha256": "dd60f5e33bda64a7befb5de12086d4b21a07ed0e38ab170e3c58ace420257d55",
+    "size_bytes": 647228,
+    "source": ".artifacts/logs/native-proxy-observation-archive-release-close-equal-20260912/cases/case-0147.json"
+  },
+  {
+    "destination": "docs/audits/native-proxy-observation-archive-release-close-equal-20260912/result/cases/case-0148.json",
+    "sha256": "a4013bbfb399770ee30136fa1dd960edc201f066a185f45387d77e6e2676e214",
+    "size_bytes": 650700,
+    "source": ".artifacts/logs/native-proxy-observation-archive-release-close-equal-20260912/cases/case-0148.json"
+  },
+  {
+    "destination": "docs/audits/native-proxy-observation-archive-release-close-equal-20260912/result/cases/case-0149.json",
+    "sha256": "5a7519e5834e9938e06c281cda7c982d7c02b55fd9464377181ddc95465dd1e1",
+    "size_bytes": 777630,
+    "source": ".artifacts/logs/native-proxy-observation-archive-release-close-equal-20260912/cases/case-0149.json"
+  },
+  {
+    "destination": "docs/audits/native-proxy-observation-archive-release-close-equal-20260912/result/cases/case-0150.json",
+    "sha256": "9c64fb4fccc8fed194f9e5fd13b9d4e0b306a5024b5e738fbcbc2cce3575b1b7",
+    "size_bytes": 681494,
+    "source": ".artifacts/logs/native-proxy-observation-archive-release-close-equal-20260912/cases/case-0150.json"
+  },
+  {
+    "destination": "docs/audits/native-proxy-observation-archive-release-close-equal-20260912/result/cases/case-0151.json",
+    "sha256": "6ac6a07a60cd1588582b2941339d12902986cc36cc8095cc753c9778c4f65d84",
+    "size_bytes": 681492,
+    "source": ".artifacts/logs/native-proxy-observation-archive-release-close-equal-20260912/cases/case-0151.json"
+  },
+  {
+    "destination": "docs/audits/native-proxy-observation-archive-release-close-equal-20260912/result/cases/case-0152.json",
+    "sha256": "f5d0a660642b30ee0bea0386e84c8b4b235ed7bf85836b12aa562d20917eb0d3",
+    "size_bytes": 679744,
+    "source": ".artifacts/logs/native-proxy-observation-archive-release-close-equal-20260912/cases/case-0152.json"
+  },
+  {
+    "destination": "docs/audits/native-proxy-observation-archive-release-close-equal-20260912/result/cases/case-0153.json",
+    "sha256": "7152b5028c0a12b61324e2a935822c9b60f6481187ae93e7ebe6447cc8f3f909",
+    "size_bytes": 679758,
+    "source": ".artifacts/logs/native-proxy-observation-archive-release-close-equal-20260912/cases/case-0153.json"
+  },
+  {
+    "destination": "docs/audits/native-proxy-observation-archive-release-close-equal-20260912/result/cases/case-0154.json",
+    "sha256": "6d3661e9857f7b4ce596c3aa7c07e8ad66018f4bbd0419a3022009260623c6cf",
+    "size_bytes": 679746,
+    "source": ".artifacts/logs/native-proxy-observation-archive-release-close-equal-20260912/cases/case-0154.json"
+  },
+  {
+    "destination": "docs/audits/native-proxy-observation-archive-release-close-equal-20260912/result/cases/case-0155.json",
+    "sha256": "680f9214d8a3775bf5fbe14a9c2d9bb22690256ae6342446648521ff55b603d2",
+    "size_bytes": 777644,
+    "source": ".artifacts/logs/native-proxy-observation-archive-release-close-equal-20260912/cases/case-0155.json"
+  },
+  {
+    "destination": "docs/audits/native-proxy-observation-archive-release-close-equal-20260912/result/cases/case-0156.json",
+    "sha256": "6dd9956c908cdaa559f571f3a22a78c3b2d1bf4c23635db918d9eedbd28060a8",
+    "size_bytes": 381874,
+    "source": ".artifacts/logs/native-proxy-observation-archive-release-close-equal-20260912/cases/case-0156.json"
+  },
+  {
+    "destination": "docs/audits/native-proxy-observation-archive-release-close-equal-20260912/result/cases/case-0157.json",
+    "sha256": "4be4c264338bfa5ea78c7fcb1b8d4e4156b338db1d4e12d6c08d4ce682509d9a",
+    "size_bytes": 712718,
+    "source": ".artifacts/logs/native-proxy-observation-archive-release-close-equal-20260912/cases/case-0157.json"
+  },
+  {
+    "destination": "docs/audits/native-proxy-observation-archive-release-close-equal-20260912/result/cases/case-0158.json",
+    "sha256": "027a635ef67b1f9025da956637739c5cdadd4e279827a1c60efa5b53f9edae6c",
+    "size_bytes": 712716,
+    "source": ".artifacts/logs/native-proxy-observation-archive-release-close-equal-20260912/cases/case-0158.json"
+  },
+  {
+    "destination": "docs/audits/native-proxy-observation-archive-release-close-equal-20260912/result/cases/case-0159.json",
+    "sha256": "9338b05d2e978924bb4c93a5197397e05cbf6466936b413f599494813415771e",
+    "size_bytes": 710982,
+    "source": ".artifacts/logs/native-proxy-observation-archive-release-close-equal-20260912/cases/case-0159.json"
+  },
+  {
+    "destination": "docs/audits/native-proxy-observation-archive-release-close-equal-20260912/result/cases/case-0160.json",
+    "sha256": "430c9ea4e72c7b1ea3c59acde8ca6c1ce3211ee208a20f4ba5e6f09d0469fcc6",
+    "size_bytes": 710980,
+    "source": ".artifacts/logs/native-proxy-observation-archive-release-close-equal-20260912/cases/case-0160.json"
+  },
+  {
+    "destination": "docs/audits/native-proxy-observation-archive-release-close-equal-20260912/result/cases/case-0161.json",
+    "sha256": "fa6330c565f8257e51ac9b7bdf57722ec0a001d8b020edf26a1be1f9448d221b",
+    "size_bytes": 710970,
+    "source": ".artifacts/logs/native-proxy-observation-archive-release-close-equal-20260912/cases/case-0161.json"
+  },
+  {
+    "destination": "docs/audits/native-proxy-observation-archive-release-close-equal-20260912/result/cases/case-0162.json",
+    "sha256": "a3df7db16902bb665abb16886797a60790442f30f0d9a546e919446e87d2471a",
+    "size_bytes": 720194,
+    "source": ".artifacts/logs/native-proxy-observation-archive-release-close-equal-20260912/cases/case-0162.json"
+  },
+  {
+    "destination": "docs/audits/native-proxy-observation-archive-release-close-equal-20260912/result/cases/case-0163.json",
+    "sha256": "c461e51ee610478f9f00a9ba036975ae8b8eb1ed7fd2e396cce28d6304079e18",
+    "size_bytes": 724275,
+    "source": ".artifacts/logs/native-proxy-observation-archive-release-close-equal-20260912/cases/case-0163.json"
+  },
+  {
+    "destination": "docs/audits/native-proxy-observation-archive-release-close-equal-20260912/result/cases/case-0164.json",
+    "sha256": "7e690c39584069f73293d6c98fe82053d69d51ad06fafe391793aa179fb58000",
+    "size_bytes": 750840,
+    "source": ".artifacts/logs/native-proxy-observation-archive-release-close-equal-20260912/cases/case-0164.json"
+  },
+  {
+    "destination": "docs/audits/native-proxy-observation-archive-release-close-equal-20260912/result/cases/case-0165.json",
+    "sha256": "37f72e29d96f2bf835c7a85e3844e00ccdc005d043e51b6db67577e2164675c2",
+    "size_bytes": 750852,
+    "source": ".artifacts/logs/native-proxy-observation-archive-release-close-equal-20260912/cases/case-0165.json"
+  },
+  {
+    "destination": "docs/audits/native-proxy-observation-archive-release-close-equal-20260912/result/cases/case-0166.json",
+    "sha256": "15d38d9e62b531a646a2709d44fffe8202f19d2ae362e39150f1518d0b837b9a",
+    "size_bytes": 749104,
+    "source": ".artifacts/logs/native-proxy-observation-archive-release-close-equal-20260912/cases/case-0166.json"
+  }
+]

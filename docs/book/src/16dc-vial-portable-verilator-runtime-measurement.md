@@ -2697,9 +2697,30 @@ executed ordinary file fixtures.
 python3 -B docs/audits/native-proxy-observation-archive-release-close-ordinary-20260912/audit.py --verify-saved
 ```
 
-The other profile executions, competing primary errors, grouped reports and
-genuine omissions remain pending. A modeled EIO after successful closure does
-not test an ambiguous operating-system close failure or authorize native execution.
+Equal-reference release close qualification covers 167 cases: 1 healthy control and 166 single EIO reports, with 2029 TAP assertions.
+
+The archive bindings retain distinct native source identities for the wrapper,
+private reference and global reference even when their bytes match. Those
+bindings share the archived content object. Close-error reporting preserves
+this provenance, the shared archive object, other owners and the image.
+For example, a cleanup error after the hold was unlinked still returns an
+unsuccessful inactive attempt with the completed unlink and absence facts.
+It does not restore the deleted hold or merge equal-byte source identities.
+
+The equal-reference partition uses the unchanged qualified close observer
+and independently checks each actual unwind against both source-scope and
+healthy-prefix predictions. Identity controls reject collapsed source bindings,
+a changed shared archive identity and an ordinary wrapper mislabeled as equal.
+The saved evidence can be verified without creating another fixture:
+
+```sh
+python3 -B docs/audits/native-proxy-observation-archive-release-close-equal-20260912/audit.py --verify-saved
+```
+
+Active-runtime and last-observation executions, competing primary errors,
+grouped reports and genuine omissions remain pending. A modeled EIO after
+successful closure does not test an ambiguous operating-system close failure
+or authorize native execution.
 
 The inactive archive record implementation now derives a closed specification
 from the complete original acquisition and request. It keeps the ordered wrapper,

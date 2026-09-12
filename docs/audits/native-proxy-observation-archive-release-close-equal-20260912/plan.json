@@ -1,0 +1,3761 @@
+{
+  "cases": [
+    {
+      "index": 0,
+      "name": "healthy",
+      "primary": null,
+      "reports": []
+    },
+    {
+      "index": 1,
+      "name": "single:directory|NativeProxyImageCoordination::_names#0",
+      "primary": null,
+      "reports": [
+        {
+          "address": "directory|NativeProxyImageCoordination::_names#0",
+          "errno": "EIO",
+          "kind": "directory",
+          "occurrence": 0,
+          "symbol": "NativeProxyImageCoordination::_names"
+        }
+      ]
+    },
+    {
+      "index": 2,
+      "name": "single:directory|NativeProxyImageCoordination::_names#1",
+      "primary": null,
+      "reports": [
+        {
+          "address": "directory|NativeProxyImageCoordination::_names#1",
+          "errno": "EIO",
+          "kind": "directory",
+          "occurrence": 1,
+          "symbol": "NativeProxyImageCoordination::_names"
+        }
+      ]
+    },
+    {
+      "index": 3,
+      "name": "single:directory|NativeProxyImageCoordination::_names#10",
+      "primary": null,
+      "reports": [
+        {
+          "address": "directory|NativeProxyImageCoordination::_names#10",
+          "errno": "EIO",
+          "kind": "directory",
+          "occurrence": 10,
+          "symbol": "NativeProxyImageCoordination::_names"
+        }
+      ]
+    },
+    {
+      "index": 4,
+      "name": "single:directory|NativeProxyImageCoordination::_names#11",
+      "primary": null,
+      "reports": [
+        {
+          "address": "directory|NativeProxyImageCoordination::_names#11",
+          "errno": "EIO",
+          "kind": "directory",
+          "occurrence": 11,
+          "symbol": "NativeProxyImageCoordination::_names"
+        }
+      ]
+    },
+    {
+      "index": 5,
+      "name": "single:directory|NativeProxyImageCoordination::_names#12",
+      "primary": null,
+      "reports": [
+        {
+          "address": "directory|NativeProxyImageCoordination::_names#12",
+          "errno": "EIO",
+          "kind": "directory",
+          "occurrence": 12,
+          "symbol": "NativeProxyImageCoordination::_names"
+        }
+      ]
+    },
+    {
+      "index": 6,
+      "name": "single:directory|NativeProxyImageCoordination::_names#13",
+      "primary": null,
+      "reports": [
+        {
+          "address": "directory|NativeProxyImageCoordination::_names#13",
+          "errno": "EIO",
+          "kind": "directory",
+          "occurrence": 13,
+          "symbol": "NativeProxyImageCoordination::_names"
+        }
+      ]
+    },
+    {
+      "index": 7,
+      "name": "single:directory|NativeProxyImageCoordination::_names#14",
+      "primary": null,
+      "reports": [
+        {
+          "address": "directory|NativeProxyImageCoordination::_names#14",
+          "errno": "EIO",
+          "kind": "directory",
+          "occurrence": 14,
+          "symbol": "NativeProxyImageCoordination::_names"
+        }
+      ]
+    },
+    {
+      "index": 8,
+      "name": "single:directory|NativeProxyImageCoordination::_names#15",
+      "primary": null,
+      "reports": [
+        {
+          "address": "directory|NativeProxyImageCoordination::_names#15",
+          "errno": "EIO",
+          "kind": "directory",
+          "occurrence": 15,
+          "symbol": "NativeProxyImageCoordination::_names"
+        }
+      ]
+    },
+    {
+      "index": 9,
+      "name": "single:directory|NativeProxyImageCoordination::_names#16",
+      "primary": null,
+      "reports": [
+        {
+          "address": "directory|NativeProxyImageCoordination::_names#16",
+          "errno": "EIO",
+          "kind": "directory",
+          "occurrence": 16,
+          "symbol": "NativeProxyImageCoordination::_names"
+        }
+      ]
+    },
+    {
+      "index": 10,
+      "name": "single:directory|NativeProxyImageCoordination::_names#17",
+      "primary": null,
+      "reports": [
+        {
+          "address": "directory|NativeProxyImageCoordination::_names#17",
+          "errno": "EIO",
+          "kind": "directory",
+          "occurrence": 17,
+          "symbol": "NativeProxyImageCoordination::_names"
+        }
+      ]
+    },
+    {
+      "index": 11,
+      "name": "single:directory|NativeProxyImageCoordination::_names#18",
+      "primary": null,
+      "reports": [
+        {
+          "address": "directory|NativeProxyImageCoordination::_names#18",
+          "errno": "EIO",
+          "kind": "directory",
+          "occurrence": 18,
+          "symbol": "NativeProxyImageCoordination::_names"
+        }
+      ]
+    },
+    {
+      "index": 12,
+      "name": "single:directory|NativeProxyImageCoordination::_names#19",
+      "primary": null,
+      "reports": [
+        {
+          "address": "directory|NativeProxyImageCoordination::_names#19",
+          "errno": "EIO",
+          "kind": "directory",
+          "occurrence": 19,
+          "symbol": "NativeProxyImageCoordination::_names"
+        }
+      ]
+    },
+    {
+      "index": 13,
+      "name": "single:directory|NativeProxyImageCoordination::_names#2",
+      "primary": null,
+      "reports": [
+        {
+          "address": "directory|NativeProxyImageCoordination::_names#2",
+          "errno": "EIO",
+          "kind": "directory",
+          "occurrence": 2,
+          "symbol": "NativeProxyImageCoordination::_names"
+        }
+      ]
+    },
+    {
+      "index": 14,
+      "name": "single:directory|NativeProxyImageCoordination::_names#20",
+      "primary": null,
+      "reports": [
+        {
+          "address": "directory|NativeProxyImageCoordination::_names#20",
+          "errno": "EIO",
+          "kind": "directory",
+          "occurrence": 20,
+          "symbol": "NativeProxyImageCoordination::_names"
+        }
+      ]
+    },
+    {
+      "index": 15,
+      "name": "single:directory|NativeProxyImageCoordination::_names#21",
+      "primary": null,
+      "reports": [
+        {
+          "address": "directory|NativeProxyImageCoordination::_names#21",
+          "errno": "EIO",
+          "kind": "directory",
+          "occurrence": 21,
+          "symbol": "NativeProxyImageCoordination::_names"
+        }
+      ]
+    },
+    {
+      "index": 16,
+      "name": "single:directory|NativeProxyImageCoordination::_names#3",
+      "primary": null,
+      "reports": [
+        {
+          "address": "directory|NativeProxyImageCoordination::_names#3",
+          "errno": "EIO",
+          "kind": "directory",
+          "occurrence": 3,
+          "symbol": "NativeProxyImageCoordination::_names"
+        }
+      ]
+    },
+    {
+      "index": 17,
+      "name": "single:directory|NativeProxyImageCoordination::_names#4",
+      "primary": null,
+      "reports": [
+        {
+          "address": "directory|NativeProxyImageCoordination::_names#4",
+          "errno": "EIO",
+          "kind": "directory",
+          "occurrence": 4,
+          "symbol": "NativeProxyImageCoordination::_names"
+        }
+      ]
+    },
+    {
+      "index": 18,
+      "name": "single:directory|NativeProxyImageCoordination::_names#5",
+      "primary": null,
+      "reports": [
+        {
+          "address": "directory|NativeProxyImageCoordination::_names#5",
+          "errno": "EIO",
+          "kind": "directory",
+          "occurrence": 5,
+          "symbol": "NativeProxyImageCoordination::_names"
+        }
+      ]
+    },
+    {
+      "index": 19,
+      "name": "single:directory|NativeProxyImageCoordination::_names#6",
+      "primary": null,
+      "reports": [
+        {
+          "address": "directory|NativeProxyImageCoordination::_names#6",
+          "errno": "EIO",
+          "kind": "directory",
+          "occurrence": 6,
+          "symbol": "NativeProxyImageCoordination::_names"
+        }
+      ]
+    },
+    {
+      "index": 20,
+      "name": "single:directory|NativeProxyImageCoordination::_names#7",
+      "primary": null,
+      "reports": [
+        {
+          "address": "directory|NativeProxyImageCoordination::_names#7",
+          "errno": "EIO",
+          "kind": "directory",
+          "occurrence": 7,
+          "symbol": "NativeProxyImageCoordination::_names"
+        }
+      ]
+    },
+    {
+      "index": 21,
+      "name": "single:directory|NativeProxyImageCoordination::_names#8",
+      "primary": null,
+      "reports": [
+        {
+          "address": "directory|NativeProxyImageCoordination::_names#8",
+          "errno": "EIO",
+          "kind": "directory",
+          "occurrence": 8,
+          "symbol": "NativeProxyImageCoordination::_names"
+        }
+      ]
+    },
+    {
+      "index": 22,
+      "name": "single:directory|NativeProxyImageCoordination::_names#9",
+      "primary": null,
+      "reports": [
+        {
+          "address": "directory|NativeProxyImageCoordination::_names#9",
+          "errno": "EIO",
+          "kind": "directory",
+          "occurrence": 9,
+          "symbol": "NativeProxyImageCoordination::_names"
+        }
+      ]
+    },
+    {
+      "index": 23,
+      "name": "single:directory|NativeProxyImageCustody::_members#0",
+      "primary": null,
+      "reports": [
+        {
+          "address": "directory|NativeProxyImageCustody::_members#0",
+          "errno": "EIO",
+          "kind": "directory",
+          "occurrence": 0,
+          "symbol": "NativeProxyImageCustody::_members"
+        }
+      ]
+    },
+    {
+      "index": 24,
+      "name": "single:directory|NativeProxyImageCustody::_members#1",
+      "primary": null,
+      "reports": [
+        {
+          "address": "directory|NativeProxyImageCustody::_members#1",
+          "errno": "EIO",
+          "kind": "directory",
+          "occurrence": 1,
+          "symbol": "NativeProxyImageCustody::_members"
+        }
+      ]
+    },
+    {
+      "index": 25,
+      "name": "single:directory|NativeProxyImageCustody::_members#10",
+      "primary": null,
+      "reports": [
+        {
+          "address": "directory|NativeProxyImageCustody::_members#10",
+          "errno": "EIO",
+          "kind": "directory",
+          "occurrence": 10,
+          "symbol": "NativeProxyImageCustody::_members"
+        }
+      ]
+    },
+    {
+      "index": 26,
+      "name": "single:directory|NativeProxyImageCustody::_members#11",
+      "primary": null,
+      "reports": [
+        {
+          "address": "directory|NativeProxyImageCustody::_members#11",
+          "errno": "EIO",
+          "kind": "directory",
+          "occurrence": 11,
+          "symbol": "NativeProxyImageCustody::_members"
+        }
+      ]
+    },
+    {
+      "index": 27,
+      "name": "single:directory|NativeProxyImageCustody::_members#12",
+      "primary": null,
+      "reports": [
+        {
+          "address": "directory|NativeProxyImageCustody::_members#12",
+          "errno": "EIO",
+          "kind": "directory",
+          "occurrence": 12,
+          "symbol": "NativeProxyImageCustody::_members"
+        }
+      ]
+    },
+    {
+      "index": 28,
+      "name": "single:directory|NativeProxyImageCustody::_members#13",
+      "primary": null,
+      "reports": [
+        {
+          "address": "directory|NativeProxyImageCustody::_members#13",
+          "errno": "EIO",
+          "kind": "directory",
+          "occurrence": 13,
+          "symbol": "NativeProxyImageCustody::_members"
+        }
+      ]
+    },
+    {
+      "index": 29,
+      "name": "single:directory|NativeProxyImageCustody::_members#14",
+      "primary": null,
+      "reports": [
+        {
+          "address": "directory|NativeProxyImageCustody::_members#14",
+          "errno": "EIO",
+          "kind": "directory",
+          "occurrence": 14,
+          "symbol": "NativeProxyImageCustody::_members"
+        }
+      ]
+    },
+    {
+      "index": 30,
+      "name": "single:directory|NativeProxyImageCustody::_members#15",
+      "primary": null,
+      "reports": [
+        {
+          "address": "directory|NativeProxyImageCustody::_members#15",
+          "errno": "EIO",
+          "kind": "directory",
+          "occurrence": 15,
+          "symbol": "NativeProxyImageCustody::_members"
+        }
+      ]
+    },
+    {
+      "index": 31,
+      "name": "single:directory|NativeProxyImageCustody::_members#16",
+      "primary": null,
+      "reports": [
+        {
+          "address": "directory|NativeProxyImageCustody::_members#16",
+          "errno": "EIO",
+          "kind": "directory",
+          "occurrence": 16,
+          "symbol": "NativeProxyImageCustody::_members"
+        }
+      ]
+    },
+    {
+      "index": 32,
+      "name": "single:directory|NativeProxyImageCustody::_members#17",
+      "primary": null,
+      "reports": [
+        {
+          "address": "directory|NativeProxyImageCustody::_members#17",
+          "errno": "EIO",
+          "kind": "directory",
+          "occurrence": 17,
+          "symbol": "NativeProxyImageCustody::_members"
+        }
+      ]
+    },
+    {
+      "index": 33,
+      "name": "single:directory|NativeProxyImageCustody::_members#18",
+      "primary": null,
+      "reports": [
+        {
+          "address": "directory|NativeProxyImageCustody::_members#18",
+          "errno": "EIO",
+          "kind": "directory",
+          "occurrence": 18,
+          "symbol": "NativeProxyImageCustody::_members"
+        }
+      ]
+    },
+    {
+      "index": 34,
+      "name": "single:directory|NativeProxyImageCustody::_members#19",
+      "primary": null,
+      "reports": [
+        {
+          "address": "directory|NativeProxyImageCustody::_members#19",
+          "errno": "EIO",
+          "kind": "directory",
+          "occurrence": 19,
+          "symbol": "NativeProxyImageCustody::_members"
+        }
+      ]
+    },
+    {
+      "index": 35,
+      "name": "single:directory|NativeProxyImageCustody::_members#2",
+      "primary": null,
+      "reports": [
+        {
+          "address": "directory|NativeProxyImageCustody::_members#2",
+          "errno": "EIO",
+          "kind": "directory",
+          "occurrence": 2,
+          "symbol": "NativeProxyImageCustody::_members"
+        }
+      ]
+    },
+    {
+      "index": 36,
+      "name": "single:directory|NativeProxyImageCustody::_members#20",
+      "primary": null,
+      "reports": [
+        {
+          "address": "directory|NativeProxyImageCustody::_members#20",
+          "errno": "EIO",
+          "kind": "directory",
+          "occurrence": 20,
+          "symbol": "NativeProxyImageCustody::_members"
+        }
+      ]
+    },
+    {
+      "index": 37,
+      "name": "single:directory|NativeProxyImageCustody::_members#21",
+      "primary": null,
+      "reports": [
+        {
+          "address": "directory|NativeProxyImageCustody::_members#21",
+          "errno": "EIO",
+          "kind": "directory",
+          "occurrence": 21,
+          "symbol": "NativeProxyImageCustody::_members"
+        }
+      ]
+    },
+    {
+      "index": 38,
+      "name": "single:directory|NativeProxyImageCustody::_members#22",
+      "primary": null,
+      "reports": [
+        {
+          "address": "directory|NativeProxyImageCustody::_members#22",
+          "errno": "EIO",
+          "kind": "directory",
+          "occurrence": 22,
+          "symbol": "NativeProxyImageCustody::_members"
+        }
+      ]
+    },
+    {
+      "index": 39,
+      "name": "single:directory|NativeProxyImageCustody::_members#23",
+      "primary": null,
+      "reports": [
+        {
+          "address": "directory|NativeProxyImageCustody::_members#23",
+          "errno": "EIO",
+          "kind": "directory",
+          "occurrence": 23,
+          "symbol": "NativeProxyImageCustody::_members"
+        }
+      ]
+    },
+    {
+      "index": 40,
+      "name": "single:directory|NativeProxyImageCustody::_members#24",
+      "primary": null,
+      "reports": [
+        {
+          "address": "directory|NativeProxyImageCustody::_members#24",
+          "errno": "EIO",
+          "kind": "directory",
+          "occurrence": 24,
+          "symbol": "NativeProxyImageCustody::_members"
+        }
+      ]
+    },
+    {
+      "index": 41,
+      "name": "single:directory|NativeProxyImageCustody::_members#25",
+      "primary": null,
+      "reports": [
+        {
+          "address": "directory|NativeProxyImageCustody::_members#25",
+          "errno": "EIO",
+          "kind": "directory",
+          "occurrence": 25,
+          "symbol": "NativeProxyImageCustody::_members"
+        }
+      ]
+    },
+    {
+      "index": 42,
+      "name": "single:directory|NativeProxyImageCustody::_members#26",
+      "primary": null,
+      "reports": [
+        {
+          "address": "directory|NativeProxyImageCustody::_members#26",
+          "errno": "EIO",
+          "kind": "directory",
+          "occurrence": 26,
+          "symbol": "NativeProxyImageCustody::_members"
+        }
+      ]
+    },
+    {
+      "index": 43,
+      "name": "single:directory|NativeProxyImageCustody::_members#27",
+      "primary": null,
+      "reports": [
+        {
+          "address": "directory|NativeProxyImageCustody::_members#27",
+          "errno": "EIO",
+          "kind": "directory",
+          "occurrence": 27,
+          "symbol": "NativeProxyImageCustody::_members"
+        }
+      ]
+    },
+    {
+      "index": 44,
+      "name": "single:directory|NativeProxyImageCustody::_members#3",
+      "primary": null,
+      "reports": [
+        {
+          "address": "directory|NativeProxyImageCustody::_members#3",
+          "errno": "EIO",
+          "kind": "directory",
+          "occurrence": 3,
+          "symbol": "NativeProxyImageCustody::_members"
+        }
+      ]
+    },
+    {
+      "index": 45,
+      "name": "single:directory|NativeProxyImageCustody::_members#4",
+      "primary": null,
+      "reports": [
+        {
+          "address": "directory|NativeProxyImageCustody::_members#4",
+          "errno": "EIO",
+          "kind": "directory",
+          "occurrence": 4,
+          "symbol": "NativeProxyImageCustody::_members"
+        }
+      ]
+    },
+    {
+      "index": 46,
+      "name": "single:directory|NativeProxyImageCustody::_members#5",
+      "primary": null,
+      "reports": [
+        {
+          "address": "directory|NativeProxyImageCustody::_members#5",
+          "errno": "EIO",
+          "kind": "directory",
+          "occurrence": 5,
+          "symbol": "NativeProxyImageCustody::_members"
+        }
+      ]
+    },
+    {
+      "index": 47,
+      "name": "single:directory|NativeProxyImageCustody::_members#6",
+      "primary": null,
+      "reports": [
+        {
+          "address": "directory|NativeProxyImageCustody::_members#6",
+          "errno": "EIO",
+          "kind": "directory",
+          "occurrence": 6,
+          "symbol": "NativeProxyImageCustody::_members"
+        }
+      ]
+    },
+    {
+      "index": 48,
+      "name": "single:directory|NativeProxyImageCustody::_members#7",
+      "primary": null,
+      "reports": [
+        {
+          "address": "directory|NativeProxyImageCustody::_members#7",
+          "errno": "EIO",
+          "kind": "directory",
+          "occurrence": 7,
+          "symbol": "NativeProxyImageCustody::_members"
+        }
+      ]
+    },
+    {
+      "index": 49,
+      "name": "single:directory|NativeProxyImageCustody::_members#8",
+      "primary": null,
+      "reports": [
+        {
+          "address": "directory|NativeProxyImageCustody::_members#8",
+          "errno": "EIO",
+          "kind": "directory",
+          "occurrence": 8,
+          "symbol": "NativeProxyImageCustody::_members"
+        }
+      ]
+    },
+    {
+      "index": 50,
+      "name": "single:directory|NativeProxyImageCustody::_members#9",
+      "primary": null,
+      "reports": [
+        {
+          "address": "directory|NativeProxyImageCustody::_members#9",
+          "errno": "EIO",
+          "kind": "directory",
+          "occurrence": 9,
+          "symbol": "NativeProxyImageCustody::_members"
+        }
+      ]
+    },
+    {
+      "index": 51,
+      "name": "single:lock|NativeProxyImageCoordination::_transaction#0",
+      "primary": null,
+      "reports": [
+        {
+          "address": "lock|NativeProxyImageCoordination::_transaction#0",
+          "errno": "EIO",
+          "kind": "lock",
+          "occurrence": 0,
+          "symbol": "NativeProxyImageCoordination::_transaction"
+        }
+      ]
+    },
+    {
+      "index": 52,
+      "name": "single:source|NativeProxyImageCustody::_source#0",
+      "primary": null,
+      "reports": [
+        {
+          "address": "source|NativeProxyImageCustody::_source#0",
+          "errno": "EIO",
+          "kind": "source",
+          "occurrence": 0,
+          "symbol": "NativeProxyImageCustody::_source"
+        }
+      ]
+    },
+    {
+      "index": 53,
+      "name": "single:source|NativeProxyImageCustody::_source#1",
+      "primary": null,
+      "reports": [
+        {
+          "address": "source|NativeProxyImageCustody::_source#1",
+          "errno": "EIO",
+          "kind": "source",
+          "occurrence": 1,
+          "symbol": "NativeProxyImageCustody::_source"
+        }
+      ]
+    },
+    {
+      "index": 54,
+      "name": "single:source|NativeProxyImageCustody::_source#10",
+      "primary": null,
+      "reports": [
+        {
+          "address": "source|NativeProxyImageCustody::_source#10",
+          "errno": "EIO",
+          "kind": "source",
+          "occurrence": 10,
+          "symbol": "NativeProxyImageCustody::_source"
+        }
+      ]
+    },
+    {
+      "index": 55,
+      "name": "single:source|NativeProxyImageCustody::_source#100",
+      "primary": null,
+      "reports": [
+        {
+          "address": "source|NativeProxyImageCustody::_source#100",
+          "errno": "EIO",
+          "kind": "source",
+          "occurrence": 100,
+          "symbol": "NativeProxyImageCustody::_source"
+        }
+      ]
+    },
+    {
+      "index": 56,
+      "name": "single:source|NativeProxyImageCustody::_source#101",
+      "primary": null,
+      "reports": [
+        {
+          "address": "source|NativeProxyImageCustody::_source#101",
+          "errno": "EIO",
+          "kind": "source",
+          "occurrence": 101,
+          "symbol": "NativeProxyImageCustody::_source"
+        }
+      ]
+    },
+    {
+      "index": 57,
+      "name": "single:source|NativeProxyImageCustody::_source#102",
+      "primary": null,
+      "reports": [
+        {
+          "address": "source|NativeProxyImageCustody::_source#102",
+          "errno": "EIO",
+          "kind": "source",
+          "occurrence": 102,
+          "symbol": "NativeProxyImageCustody::_source"
+        }
+      ]
+    },
+    {
+      "index": 58,
+      "name": "single:source|NativeProxyImageCustody::_source#103",
+      "primary": null,
+      "reports": [
+        {
+          "address": "source|NativeProxyImageCustody::_source#103",
+          "errno": "EIO",
+          "kind": "source",
+          "occurrence": 103,
+          "symbol": "NativeProxyImageCustody::_source"
+        }
+      ]
+    },
+    {
+      "index": 59,
+      "name": "single:source|NativeProxyImageCustody::_source#104",
+      "primary": null,
+      "reports": [
+        {
+          "address": "source|NativeProxyImageCustody::_source#104",
+          "errno": "EIO",
+          "kind": "source",
+          "occurrence": 104,
+          "symbol": "NativeProxyImageCustody::_source"
+        }
+      ]
+    },
+    {
+      "index": 60,
+      "name": "single:source|NativeProxyImageCustody::_source#105",
+      "primary": null,
+      "reports": [
+        {
+          "address": "source|NativeProxyImageCustody::_source#105",
+          "errno": "EIO",
+          "kind": "source",
+          "occurrence": 105,
+          "symbol": "NativeProxyImageCustody::_source"
+        }
+      ]
+    },
+    {
+      "index": 61,
+      "name": "single:source|NativeProxyImageCustody::_source#106",
+      "primary": null,
+      "reports": [
+        {
+          "address": "source|NativeProxyImageCustody::_source#106",
+          "errno": "EIO",
+          "kind": "source",
+          "occurrence": 106,
+          "symbol": "NativeProxyImageCustody::_source"
+        }
+      ]
+    },
+    {
+      "index": 62,
+      "name": "single:source|NativeProxyImageCustody::_source#107",
+      "primary": null,
+      "reports": [
+        {
+          "address": "source|NativeProxyImageCustody::_source#107",
+          "errno": "EIO",
+          "kind": "source",
+          "occurrence": 107,
+          "symbol": "NativeProxyImageCustody::_source"
+        }
+      ]
+    },
+    {
+      "index": 63,
+      "name": "single:source|NativeProxyImageCustody::_source#108",
+      "primary": null,
+      "reports": [
+        {
+          "address": "source|NativeProxyImageCustody::_source#108",
+          "errno": "EIO",
+          "kind": "source",
+          "occurrence": 108,
+          "symbol": "NativeProxyImageCustody::_source"
+        }
+      ]
+    },
+    {
+      "index": 64,
+      "name": "single:source|NativeProxyImageCustody::_source#109",
+      "primary": null,
+      "reports": [
+        {
+          "address": "source|NativeProxyImageCustody::_source#109",
+          "errno": "EIO",
+          "kind": "source",
+          "occurrence": 109,
+          "symbol": "NativeProxyImageCustody::_source"
+        }
+      ]
+    },
+    {
+      "index": 65,
+      "name": "single:source|NativeProxyImageCustody::_source#11",
+      "primary": null,
+      "reports": [
+        {
+          "address": "source|NativeProxyImageCustody::_source#11",
+          "errno": "EIO",
+          "kind": "source",
+          "occurrence": 11,
+          "symbol": "NativeProxyImageCustody::_source"
+        }
+      ]
+    },
+    {
+      "index": 66,
+      "name": "single:source|NativeProxyImageCustody::_source#110",
+      "primary": null,
+      "reports": [
+        {
+          "address": "source|NativeProxyImageCustody::_source#110",
+          "errno": "EIO",
+          "kind": "source",
+          "occurrence": 110,
+          "symbol": "NativeProxyImageCustody::_source"
+        }
+      ]
+    },
+    {
+      "index": 67,
+      "name": "single:source|NativeProxyImageCustody::_source#111",
+      "primary": null,
+      "reports": [
+        {
+          "address": "source|NativeProxyImageCustody::_source#111",
+          "errno": "EIO",
+          "kind": "source",
+          "occurrence": 111,
+          "symbol": "NativeProxyImageCustody::_source"
+        }
+      ]
+    },
+    {
+      "index": 68,
+      "name": "single:source|NativeProxyImageCustody::_source#112",
+      "primary": null,
+      "reports": [
+        {
+          "address": "source|NativeProxyImageCustody::_source#112",
+          "errno": "EIO",
+          "kind": "source",
+          "occurrence": 112,
+          "symbol": "NativeProxyImageCustody::_source"
+        }
+      ]
+    },
+    {
+      "index": 69,
+      "name": "single:source|NativeProxyImageCustody::_source#113",
+      "primary": null,
+      "reports": [
+        {
+          "address": "source|NativeProxyImageCustody::_source#113",
+          "errno": "EIO",
+          "kind": "source",
+          "occurrence": 113,
+          "symbol": "NativeProxyImageCustody::_source"
+        }
+      ]
+    },
+    {
+      "index": 70,
+      "name": "single:source|NativeProxyImageCustody::_source#114",
+      "primary": null,
+      "reports": [
+        {
+          "address": "source|NativeProxyImageCustody::_source#114",
+          "errno": "EIO",
+          "kind": "source",
+          "occurrence": 114,
+          "symbol": "NativeProxyImageCustody::_source"
+        }
+      ]
+    },
+    {
+      "index": 71,
+      "name": "single:source|NativeProxyImageCustody::_source#12",
+      "primary": null,
+      "reports": [
+        {
+          "address": "source|NativeProxyImageCustody::_source#12",
+          "errno": "EIO",
+          "kind": "source",
+          "occurrence": 12,
+          "symbol": "NativeProxyImageCustody::_source"
+        }
+      ]
+    },
+    {
+      "index": 72,
+      "name": "single:source|NativeProxyImageCustody::_source#13",
+      "primary": null,
+      "reports": [
+        {
+          "address": "source|NativeProxyImageCustody::_source#13",
+          "errno": "EIO",
+          "kind": "source",
+          "occurrence": 13,
+          "symbol": "NativeProxyImageCustody::_source"
+        }
+      ]
+    },
+    {
+      "index": 73,
+      "name": "single:source|NativeProxyImageCustody::_source#14",
+      "primary": null,
+      "reports": [
+        {
+          "address": "source|NativeProxyImageCustody::_source#14",
+          "errno": "EIO",
+          "kind": "source",
+          "occurrence": 14,
+          "symbol": "NativeProxyImageCustody::_source"
+        }
+      ]
+    },
+    {
+      "index": 74,
+      "name": "single:source|NativeProxyImageCustody::_source#15",
+      "primary": null,
+      "reports": [
+        {
+          "address": "source|NativeProxyImageCustody::_source#15",
+          "errno": "EIO",
+          "kind": "source",
+          "occurrence": 15,
+          "symbol": "NativeProxyImageCustody::_source"
+        }
+      ]
+    },
+    {
+      "index": 75,
+      "name": "single:source|NativeProxyImageCustody::_source#16",
+      "primary": null,
+      "reports": [
+        {
+          "address": "source|NativeProxyImageCustody::_source#16",
+          "errno": "EIO",
+          "kind": "source",
+          "occurrence": 16,
+          "symbol": "NativeProxyImageCustody::_source"
+        }
+      ]
+    },
+    {
+      "index": 76,
+      "name": "single:source|NativeProxyImageCustody::_source#17",
+      "primary": null,
+      "reports": [
+        {
+          "address": "source|NativeProxyImageCustody::_source#17",
+          "errno": "EIO",
+          "kind": "source",
+          "occurrence": 17,
+          "symbol": "NativeProxyImageCustody::_source"
+        }
+      ]
+    },
+    {
+      "index": 77,
+      "name": "single:source|NativeProxyImageCustody::_source#18",
+      "primary": null,
+      "reports": [
+        {
+          "address": "source|NativeProxyImageCustody::_source#18",
+          "errno": "EIO",
+          "kind": "source",
+          "occurrence": 18,
+          "symbol": "NativeProxyImageCustody::_source"
+        }
+      ]
+    },
+    {
+      "index": 78,
+      "name": "single:source|NativeProxyImageCustody::_source#19",
+      "primary": null,
+      "reports": [
+        {
+          "address": "source|NativeProxyImageCustody::_source#19",
+          "errno": "EIO",
+          "kind": "source",
+          "occurrence": 19,
+          "symbol": "NativeProxyImageCustody::_source"
+        }
+      ]
+    },
+    {
+      "index": 79,
+      "name": "single:source|NativeProxyImageCustody::_source#2",
+      "primary": null,
+      "reports": [
+        {
+          "address": "source|NativeProxyImageCustody::_source#2",
+          "errno": "EIO",
+          "kind": "source",
+          "occurrence": 2,
+          "symbol": "NativeProxyImageCustody::_source"
+        }
+      ]
+    },
+    {
+      "index": 80,
+      "name": "single:source|NativeProxyImageCustody::_source#20",
+      "primary": null,
+      "reports": [
+        {
+          "address": "source|NativeProxyImageCustody::_source#20",
+          "errno": "EIO",
+          "kind": "source",
+          "occurrence": 20,
+          "symbol": "NativeProxyImageCustody::_source"
+        }
+      ]
+    },
+    {
+      "index": 81,
+      "name": "single:source|NativeProxyImageCustody::_source#21",
+      "primary": null,
+      "reports": [
+        {
+          "address": "source|NativeProxyImageCustody::_source#21",
+          "errno": "EIO",
+          "kind": "source",
+          "occurrence": 21,
+          "symbol": "NativeProxyImageCustody::_source"
+        }
+      ]
+    },
+    {
+      "index": 82,
+      "name": "single:source|NativeProxyImageCustody::_source#22",
+      "primary": null,
+      "reports": [
+        {
+          "address": "source|NativeProxyImageCustody::_source#22",
+          "errno": "EIO",
+          "kind": "source",
+          "occurrence": 22,
+          "symbol": "NativeProxyImageCustody::_source"
+        }
+      ]
+    },
+    {
+      "index": 83,
+      "name": "single:source|NativeProxyImageCustody::_source#23",
+      "primary": null,
+      "reports": [
+        {
+          "address": "source|NativeProxyImageCustody::_source#23",
+          "errno": "EIO",
+          "kind": "source",
+          "occurrence": 23,
+          "symbol": "NativeProxyImageCustody::_source"
+        }
+      ]
+    },
+    {
+      "index": 84,
+      "name": "single:source|NativeProxyImageCustody::_source#24",
+      "primary": null,
+      "reports": [
+        {
+          "address": "source|NativeProxyImageCustody::_source#24",
+          "errno": "EIO",
+          "kind": "source",
+          "occurrence": 24,
+          "symbol": "NativeProxyImageCustody::_source"
+        }
+      ]
+    },
+    {
+      "index": 85,
+      "name": "single:source|NativeProxyImageCustody::_source#25",
+      "primary": null,
+      "reports": [
+        {
+          "address": "source|NativeProxyImageCustody::_source#25",
+          "errno": "EIO",
+          "kind": "source",
+          "occurrence": 25,
+          "symbol": "NativeProxyImageCustody::_source"
+        }
+      ]
+    },
+    {
+      "index": 86,
+      "name": "single:source|NativeProxyImageCustody::_source#26",
+      "primary": null,
+      "reports": [
+        {
+          "address": "source|NativeProxyImageCustody::_source#26",
+          "errno": "EIO",
+          "kind": "source",
+          "occurrence": 26,
+          "symbol": "NativeProxyImageCustody::_source"
+        }
+      ]
+    },
+    {
+      "index": 87,
+      "name": "single:source|NativeProxyImageCustody::_source#27",
+      "primary": null,
+      "reports": [
+        {
+          "address": "source|NativeProxyImageCustody::_source#27",
+          "errno": "EIO",
+          "kind": "source",
+          "occurrence": 27,
+          "symbol": "NativeProxyImageCustody::_source"
+        }
+      ]
+    },
+    {
+      "index": 88,
+      "name": "single:source|NativeProxyImageCustody::_source#28",
+      "primary": null,
+      "reports": [
+        {
+          "address": "source|NativeProxyImageCustody::_source#28",
+          "errno": "EIO",
+          "kind": "source",
+          "occurrence": 28,
+          "symbol": "NativeProxyImageCustody::_source"
+        }
+      ]
+    },
+    {
+      "index": 89,
+      "name": "single:source|NativeProxyImageCustody::_source#29",
+      "primary": null,
+      "reports": [
+        {
+          "address": "source|NativeProxyImageCustody::_source#29",
+          "errno": "EIO",
+          "kind": "source",
+          "occurrence": 29,
+          "symbol": "NativeProxyImageCustody::_source"
+        }
+      ]
+    },
+    {
+      "index": 90,
+      "name": "single:source|NativeProxyImageCustody::_source#3",
+      "primary": null,
+      "reports": [
+        {
+          "address": "source|NativeProxyImageCustody::_source#3",
+          "errno": "EIO",
+          "kind": "source",
+          "occurrence": 3,
+          "symbol": "NativeProxyImageCustody::_source"
+        }
+      ]
+    },
+    {
+      "index": 91,
+      "name": "single:source|NativeProxyImageCustody::_source#30",
+      "primary": null,
+      "reports": [
+        {
+          "address": "source|NativeProxyImageCustody::_source#30",
+          "errno": "EIO",
+          "kind": "source",
+          "occurrence": 30,
+          "symbol": "NativeProxyImageCustody::_source"
+        }
+      ]
+    },
+    {
+      "index": 92,
+      "name": "single:source|NativeProxyImageCustody::_source#31",
+      "primary": null,
+      "reports": [
+        {
+          "address": "source|NativeProxyImageCustody::_source#31",
+          "errno": "EIO",
+          "kind": "source",
+          "occurrence": 31,
+          "symbol": "NativeProxyImageCustody::_source"
+        }
+      ]
+    },
+    {
+      "index": 93,
+      "name": "single:source|NativeProxyImageCustody::_source#32",
+      "primary": null,
+      "reports": [
+        {
+          "address": "source|NativeProxyImageCustody::_source#32",
+          "errno": "EIO",
+          "kind": "source",
+          "occurrence": 32,
+          "symbol": "NativeProxyImageCustody::_source"
+        }
+      ]
+    },
+    {
+      "index": 94,
+      "name": "single:source|NativeProxyImageCustody::_source#33",
+      "primary": null,
+      "reports": [
+        {
+          "address": "source|NativeProxyImageCustody::_source#33",
+          "errno": "EIO",
+          "kind": "source",
+          "occurrence": 33,
+          "symbol": "NativeProxyImageCustody::_source"
+        }
+      ]
+    },
+    {
+      "index": 95,
+      "name": "single:source|NativeProxyImageCustody::_source#34",
+      "primary": null,
+      "reports": [
+        {
+          "address": "source|NativeProxyImageCustody::_source#34",
+          "errno": "EIO",
+          "kind": "source",
+          "occurrence": 34,
+          "symbol": "NativeProxyImageCustody::_source"
+        }
+      ]
+    },
+    {
+      "index": 96,
+      "name": "single:source|NativeProxyImageCustody::_source#35",
+      "primary": null,
+      "reports": [
+        {
+          "address": "source|NativeProxyImageCustody::_source#35",
+          "errno": "EIO",
+          "kind": "source",
+          "occurrence": 35,
+          "symbol": "NativeProxyImageCustody::_source"
+        }
+      ]
+    },
+    {
+      "index": 97,
+      "name": "single:source|NativeProxyImageCustody::_source#36",
+      "primary": null,
+      "reports": [
+        {
+          "address": "source|NativeProxyImageCustody::_source#36",
+          "errno": "EIO",
+          "kind": "source",
+          "occurrence": 36,
+          "symbol": "NativeProxyImageCustody::_source"
+        }
+      ]
+    },
+    {
+      "index": 98,
+      "name": "single:source|NativeProxyImageCustody::_source#37",
+      "primary": null,
+      "reports": [
+        {
+          "address": "source|NativeProxyImageCustody::_source#37",
+          "errno": "EIO",
+          "kind": "source",
+          "occurrence": 37,
+          "symbol": "NativeProxyImageCustody::_source"
+        }
+      ]
+    },
+    {
+      "index": 99,
+      "name": "single:source|NativeProxyImageCustody::_source#38",
+      "primary": null,
+      "reports": [
+        {
+          "address": "source|NativeProxyImageCustody::_source#38",
+          "errno": "EIO",
+          "kind": "source",
+          "occurrence": 38,
+          "symbol": "NativeProxyImageCustody::_source"
+        }
+      ]
+    },
+    {
+      "index": 100,
+      "name": "single:source|NativeProxyImageCustody::_source#39",
+      "primary": null,
+      "reports": [
+        {
+          "address": "source|NativeProxyImageCustody::_source#39",
+          "errno": "EIO",
+          "kind": "source",
+          "occurrence": 39,
+          "symbol": "NativeProxyImageCustody::_source"
+        }
+      ]
+    },
+    {
+      "index": 101,
+      "name": "single:source|NativeProxyImageCustody::_source#4",
+      "primary": null,
+      "reports": [
+        {
+          "address": "source|NativeProxyImageCustody::_source#4",
+          "errno": "EIO",
+          "kind": "source",
+          "occurrence": 4,
+          "symbol": "NativeProxyImageCustody::_source"
+        }
+      ]
+    },
+    {
+      "index": 102,
+      "name": "single:source|NativeProxyImageCustody::_source#40",
+      "primary": null,
+      "reports": [
+        {
+          "address": "source|NativeProxyImageCustody::_source#40",
+          "errno": "EIO",
+          "kind": "source",
+          "occurrence": 40,
+          "symbol": "NativeProxyImageCustody::_source"
+        }
+      ]
+    },
+    {
+      "index": 103,
+      "name": "single:source|NativeProxyImageCustody::_source#41",
+      "primary": null,
+      "reports": [
+        {
+          "address": "source|NativeProxyImageCustody::_source#41",
+          "errno": "EIO",
+          "kind": "source",
+          "occurrence": 41,
+          "symbol": "NativeProxyImageCustody::_source"
+        }
+      ]
+    },
+    {
+      "index": 104,
+      "name": "single:source|NativeProxyImageCustody::_source#42",
+      "primary": null,
+      "reports": [
+        {
+          "address": "source|NativeProxyImageCustody::_source#42",
+          "errno": "EIO",
+          "kind": "source",
+          "occurrence": 42,
+          "symbol": "NativeProxyImageCustody::_source"
+        }
+      ]
+    },
+    {
+      "index": 105,
+      "name": "single:source|NativeProxyImageCustody::_source#43",
+      "primary": null,
+      "reports": [
+        {
+          "address": "source|NativeProxyImageCustody::_source#43",
+          "errno": "EIO",
+          "kind": "source",
+          "occurrence": 43,
+          "symbol": "NativeProxyImageCustody::_source"
+        }
+      ]
+    },
+    {
+      "index": 106,
+      "name": "single:source|NativeProxyImageCustody::_source#44",
+      "primary": null,
+      "reports": [
+        {
+          "address": "source|NativeProxyImageCustody::_source#44",
+          "errno": "EIO",
+          "kind": "source",
+          "occurrence": 44,
+          "symbol": "NativeProxyImageCustody::_source"
+        }
+      ]
+    },
+    {
+      "index": 107,
+      "name": "single:source|NativeProxyImageCustody::_source#45",
+      "primary": null,
+      "reports": [
+        {
+          "address": "source|NativeProxyImageCustody::_source#45",
+          "errno": "EIO",
+          "kind": "source",
+          "occurrence": 45,
+          "symbol": "NativeProxyImageCustody::_source"
+        }
+      ]
+    },
+    {
+      "index": 108,
+      "name": "single:source|NativeProxyImageCustody::_source#46",
+      "primary": null,
+      "reports": [
+        {
+          "address": "source|NativeProxyImageCustody::_source#46",
+          "errno": "EIO",
+          "kind": "source",
+          "occurrence": 46,
+          "symbol": "NativeProxyImageCustody::_source"
+        }
+      ]
+    },
+    {
+      "index": 109,
+      "name": "single:source|NativeProxyImageCustody::_source#47",
+      "primary": null,
+      "reports": [
+        {
+          "address": "source|NativeProxyImageCustody::_source#47",
+          "errno": "EIO",
+          "kind": "source",
+          "occurrence": 47,
+          "symbol": "NativeProxyImageCustody::_source"
+        }
+      ]
+    },
+    {
+      "index": 110,
+      "name": "single:source|NativeProxyImageCustody::_source#48",
+      "primary": null,
+      "reports": [
+        {
+          "address": "source|NativeProxyImageCustody::_source#48",
+          "errno": "EIO",
+          "kind": "source",
+          "occurrence": 48,
+          "symbol": "NativeProxyImageCustody::_source"
+        }
+      ]
+    },
+    {
+      "index": 111,
+      "name": "single:source|NativeProxyImageCustody::_source#49",
+      "primary": null,
+      "reports": [
+        {
+          "address": "source|NativeProxyImageCustody::_source#49",
+          "errno": "EIO",
+          "kind": "source",
+          "occurrence": 49,
+          "symbol": "NativeProxyImageCustody::_source"
+        }
+      ]
+    },
+    {
+      "index": 112,
+      "name": "single:source|NativeProxyImageCustody::_source#5",
+      "primary": null,
+      "reports": [
+        {
+          "address": "source|NativeProxyImageCustody::_source#5",
+          "errno": "EIO",
+          "kind": "source",
+          "occurrence": 5,
+          "symbol": "NativeProxyImageCustody::_source"
+        }
+      ]
+    },
+    {
+      "index": 113,
+      "name": "single:source|NativeProxyImageCustody::_source#50",
+      "primary": null,
+      "reports": [
+        {
+          "address": "source|NativeProxyImageCustody::_source#50",
+          "errno": "EIO",
+          "kind": "source",
+          "occurrence": 50,
+          "symbol": "NativeProxyImageCustody::_source"
+        }
+      ]
+    },
+    {
+      "index": 114,
+      "name": "single:source|NativeProxyImageCustody::_source#51",
+      "primary": null,
+      "reports": [
+        {
+          "address": "source|NativeProxyImageCustody::_source#51",
+          "errno": "EIO",
+          "kind": "source",
+          "occurrence": 51,
+          "symbol": "NativeProxyImageCustody::_source"
+        }
+      ]
+    },
+    {
+      "index": 115,
+      "name": "single:source|NativeProxyImageCustody::_source#52",
+      "primary": null,
+      "reports": [
+        {
+          "address": "source|NativeProxyImageCustody::_source#52",
+          "errno": "EIO",
+          "kind": "source",
+          "occurrence": 52,
+          "symbol": "NativeProxyImageCustody::_source"
+        }
+      ]
+    },
+    {
+      "index": 116,
+      "name": "single:source|NativeProxyImageCustody::_source#53",
+      "primary": null,
+      "reports": [
+        {
+          "address": "source|NativeProxyImageCustody::_source#53",
+          "errno": "EIO",
+          "kind": "source",
+          "occurrence": 53,
+          "symbol": "NativeProxyImageCustody::_source"
+        }
+      ]
+    },
+    {
+      "index": 117,
+      "name": "single:source|NativeProxyImageCustody::_source#54",
+      "primary": null,
+      "reports": [
+        {
+          "address": "source|NativeProxyImageCustody::_source#54",
+          "errno": "EIO",
+          "kind": "source",
+          "occurrence": 54,
+          "symbol": "NativeProxyImageCustody::_source"
+        }
+      ]
+    },
+    {
+      "index": 118,
+      "name": "single:source|NativeProxyImageCustody::_source#55",
+      "primary": null,
+      "reports": [
+        {
+          "address": "source|NativeProxyImageCustody::_source#55",
+          "errno": "EIO",
+          "kind": "source",
+          "occurrence": 55,
+          "symbol": "NativeProxyImageCustody::_source"
+        }
+      ]
+    },
+    {
+      "index": 119,
+      "name": "single:source|NativeProxyImageCustody::_source#56",
+      "primary": null,
+      "reports": [
+        {
+          "address": "source|NativeProxyImageCustody::_source#56",
+          "errno": "EIO",
+          "kind": "source",
+          "occurrence": 56,
+          "symbol": "NativeProxyImageCustody::_source"
+        }
+      ]
+    },
+    {
+      "index": 120,
+      "name": "single:source|NativeProxyImageCustody::_source#57",
+      "primary": null,
+      "reports": [
+        {
+          "address": "source|NativeProxyImageCustody::_source#57",
+          "errno": "EIO",
+          "kind": "source",
+          "occurrence": 57,
+          "symbol": "NativeProxyImageCustody::_source"
+        }
+      ]
+    },
+    {
+      "index": 121,
+      "name": "single:source|NativeProxyImageCustody::_source#58",
+      "primary": null,
+      "reports": [
+        {
+          "address": "source|NativeProxyImageCustody::_source#58",
+          "errno": "EIO",
+          "kind": "source",
+          "occurrence": 58,
+          "symbol": "NativeProxyImageCustody::_source"
+        }
+      ]
+    },
+    {
+      "index": 122,
+      "name": "single:source|NativeProxyImageCustody::_source#59",
+      "primary": null,
+      "reports": [
+        {
+          "address": "source|NativeProxyImageCustody::_source#59",
+          "errno": "EIO",
+          "kind": "source",
+          "occurrence": 59,
+          "symbol": "NativeProxyImageCustody::_source"
+        }
+      ]
+    },
+    {
+      "index": 123,
+      "name": "single:source|NativeProxyImageCustody::_source#6",
+      "primary": null,
+      "reports": [
+        {
+          "address": "source|NativeProxyImageCustody::_source#6",
+          "errno": "EIO",
+          "kind": "source",
+          "occurrence": 6,
+          "symbol": "NativeProxyImageCustody::_source"
+        }
+      ]
+    },
+    {
+      "index": 124,
+      "name": "single:source|NativeProxyImageCustody::_source#60",
+      "primary": null,
+      "reports": [
+        {
+          "address": "source|NativeProxyImageCustody::_source#60",
+          "errno": "EIO",
+          "kind": "source",
+          "occurrence": 60,
+          "symbol": "NativeProxyImageCustody::_source"
+        }
+      ]
+    },
+    {
+      "index": 125,
+      "name": "single:source|NativeProxyImageCustody::_source#61",
+      "primary": null,
+      "reports": [
+        {
+          "address": "source|NativeProxyImageCustody::_source#61",
+          "errno": "EIO",
+          "kind": "source",
+          "occurrence": 61,
+          "symbol": "NativeProxyImageCustody::_source"
+        }
+      ]
+    },
+    {
+      "index": 126,
+      "name": "single:source|NativeProxyImageCustody::_source#62",
+      "primary": null,
+      "reports": [
+        {
+          "address": "source|NativeProxyImageCustody::_source#62",
+          "errno": "EIO",
+          "kind": "source",
+          "occurrence": 62,
+          "symbol": "NativeProxyImageCustody::_source"
+        }
+      ]
+    },
+    {
+      "index": 127,
+      "name": "single:source|NativeProxyImageCustody::_source#63",
+      "primary": null,
+      "reports": [
+        {
+          "address": "source|NativeProxyImageCustody::_source#63",
+          "errno": "EIO",
+          "kind": "source",
+          "occurrence": 63,
+          "symbol": "NativeProxyImageCustody::_source"
+        }
+      ]
+    },
+    {
+      "index": 128,
+      "name": "single:source|NativeProxyImageCustody::_source#64",
+      "primary": null,
+      "reports": [
+        {
+          "address": "source|NativeProxyImageCustody::_source#64",
+          "errno": "EIO",
+          "kind": "source",
+          "occurrence": 64,
+          "symbol": "NativeProxyImageCustody::_source"
+        }
+      ]
+    },
+    {
+      "index": 129,
+      "name": "single:source|NativeProxyImageCustody::_source#65",
+      "primary": null,
+      "reports": [
+        {
+          "address": "source|NativeProxyImageCustody::_source#65",
+          "errno": "EIO",
+          "kind": "source",
+          "occurrence": 65,
+          "symbol": "NativeProxyImageCustody::_source"
+        }
+      ]
+    },
+    {
+      "index": 130,
+      "name": "single:source|NativeProxyImageCustody::_source#66",
+      "primary": null,
+      "reports": [
+        {
+          "address": "source|NativeProxyImageCustody::_source#66",
+          "errno": "EIO",
+          "kind": "source",
+          "occurrence": 66,
+          "symbol": "NativeProxyImageCustody::_source"
+        }
+      ]
+    },
+    {
+      "index": 131,
+      "name": "single:source|NativeProxyImageCustody::_source#67",
+      "primary": null,
+      "reports": [
+        {
+          "address": "source|NativeProxyImageCustody::_source#67",
+          "errno": "EIO",
+          "kind": "source",
+          "occurrence": 67,
+          "symbol": "NativeProxyImageCustody::_source"
+        }
+      ]
+    },
+    {
+      "index": 132,
+      "name": "single:source|NativeProxyImageCustody::_source#68",
+      "primary": null,
+      "reports": [
+        {
+          "address": "source|NativeProxyImageCustody::_source#68",
+          "errno": "EIO",
+          "kind": "source",
+          "occurrence": 68,
+          "symbol": "NativeProxyImageCustody::_source"
+        }
+      ]
+    },
+    {
+      "index": 133,
+      "name": "single:source|NativeProxyImageCustody::_source#69",
+      "primary": null,
+      "reports": [
+        {
+          "address": "source|NativeProxyImageCustody::_source#69",
+          "errno": "EIO",
+          "kind": "source",
+          "occurrence": 69,
+          "symbol": "NativeProxyImageCustody::_source"
+        }
+      ]
+    },
+    {
+      "index": 134,
+      "name": "single:source|NativeProxyImageCustody::_source#7",
+      "primary": null,
+      "reports": [
+        {
+          "address": "source|NativeProxyImageCustody::_source#7",
+          "errno": "EIO",
+          "kind": "source",
+          "occurrence": 7,
+          "symbol": "NativeProxyImageCustody::_source"
+        }
+      ]
+    },
+    {
+      "index": 135,
+      "name": "single:source|NativeProxyImageCustody::_source#70",
+      "primary": null,
+      "reports": [
+        {
+          "address": "source|NativeProxyImageCustody::_source#70",
+          "errno": "EIO",
+          "kind": "source",
+          "occurrence": 70,
+          "symbol": "NativeProxyImageCustody::_source"
+        }
+      ]
+    },
+    {
+      "index": 136,
+      "name": "single:source|NativeProxyImageCustody::_source#71",
+      "primary": null,
+      "reports": [
+        {
+          "address": "source|NativeProxyImageCustody::_source#71",
+          "errno": "EIO",
+          "kind": "source",
+          "occurrence": 71,
+          "symbol": "NativeProxyImageCustody::_source"
+        }
+      ]
+    },
+    {
+      "index": 137,
+      "name": "single:source|NativeProxyImageCustody::_source#72",
+      "primary": null,
+      "reports": [
+        {
+          "address": "source|NativeProxyImageCustody::_source#72",
+          "errno": "EIO",
+          "kind": "source",
+          "occurrence": 72,
+          "symbol": "NativeProxyImageCustody::_source"
+        }
+      ]
+    },
+    {
+      "index": 138,
+      "name": "single:source|NativeProxyImageCustody::_source#73",
+      "primary": null,
+      "reports": [
+        {
+          "address": "source|NativeProxyImageCustody::_source#73",
+          "errno": "EIO",
+          "kind": "source",
+          "occurrence": 73,
+          "symbol": "NativeProxyImageCustody::_source"
+        }
+      ]
+    },
+    {
+      "index": 139,
+      "name": "single:source|NativeProxyImageCustody::_source#74",
+      "primary": null,
+      "reports": [
+        {
+          "address": "source|NativeProxyImageCustody::_source#74",
+          "errno": "EIO",
+          "kind": "source",
+          "occurrence": 74,
+          "symbol": "NativeProxyImageCustody::_source"
+        }
+      ]
+    },
+    {
+      "index": 140,
+      "name": "single:source|NativeProxyImageCustody::_source#75",
+      "primary": null,
+      "reports": [
+        {
+          "address": "source|NativeProxyImageCustody::_source#75",
+          "errno": "EIO",
+          "kind": "source",
+          "occurrence": 75,
+          "symbol": "NativeProxyImageCustody::_source"
+        }
+      ]
+    },
+    {
+      "index": 141,
+      "name": "single:source|NativeProxyImageCustody::_source#76",
+      "primary": null,
+      "reports": [
+        {
+          "address": "source|NativeProxyImageCustody::_source#76",
+          "errno": "EIO",
+          "kind": "source",
+          "occurrence": 76,
+          "symbol": "NativeProxyImageCustody::_source"
+        }
+      ]
+    },
+    {
+      "index": 142,
+      "name": "single:source|NativeProxyImageCustody::_source#77",
+      "primary": null,
+      "reports": [
+        {
+          "address": "source|NativeProxyImageCustody::_source#77",
+          "errno": "EIO",
+          "kind": "source",
+          "occurrence": 77,
+          "symbol": "NativeProxyImageCustody::_source"
+        }
+      ]
+    },
+    {
+      "index": 143,
+      "name": "single:source|NativeProxyImageCustody::_source#78",
+      "primary": null,
+      "reports": [
+        {
+          "address": "source|NativeProxyImageCustody::_source#78",
+          "errno": "EIO",
+          "kind": "source",
+          "occurrence": 78,
+          "symbol": "NativeProxyImageCustody::_source"
+        }
+      ]
+    },
+    {
+      "index": 144,
+      "name": "single:source|NativeProxyImageCustody::_source#79",
+      "primary": null,
+      "reports": [
+        {
+          "address": "source|NativeProxyImageCustody::_source#79",
+          "errno": "EIO",
+          "kind": "source",
+          "occurrence": 79,
+          "symbol": "NativeProxyImageCustody::_source"
+        }
+      ]
+    },
+    {
+      "index": 145,
+      "name": "single:source|NativeProxyImageCustody::_source#8",
+      "primary": null,
+      "reports": [
+        {
+          "address": "source|NativeProxyImageCustody::_source#8",
+          "errno": "EIO",
+          "kind": "source",
+          "occurrence": 8,
+          "symbol": "NativeProxyImageCustody::_source"
+        }
+      ]
+    },
+    {
+      "index": 146,
+      "name": "single:source|NativeProxyImageCustody::_source#80",
+      "primary": null,
+      "reports": [
+        {
+          "address": "source|NativeProxyImageCustody::_source#80",
+          "errno": "EIO",
+          "kind": "source",
+          "occurrence": 80,
+          "symbol": "NativeProxyImageCustody::_source"
+        }
+      ]
+    },
+    {
+      "index": 147,
+      "name": "single:source|NativeProxyImageCustody::_source#81",
+      "primary": null,
+      "reports": [
+        {
+          "address": "source|NativeProxyImageCustody::_source#81",
+          "errno": "EIO",
+          "kind": "source",
+          "occurrence": 81,
+          "symbol": "NativeProxyImageCustody::_source"
+        }
+      ]
+    },
+    {
+      "index": 148,
+      "name": "single:source|NativeProxyImageCustody::_source#82",
+      "primary": null,
+      "reports": [
+        {
+          "address": "source|NativeProxyImageCustody::_source#82",
+          "errno": "EIO",
+          "kind": "source",
+          "occurrence": 82,
+          "symbol": "NativeProxyImageCustody::_source"
+        }
+      ]
+    },
+    {
+      "index": 149,
+      "name": "single:source|NativeProxyImageCustody::_source#83",
+      "primary": null,
+      "reports": [
+        {
+          "address": "source|NativeProxyImageCustody::_source#83",
+          "errno": "EIO",
+          "kind": "source",
+          "occurrence": 83,
+          "symbol": "NativeProxyImageCustody::_source"
+        }
+      ]
+    },
+    {
+      "index": 150,
+      "name": "single:source|NativeProxyImageCustody::_source#84",
+      "primary": null,
+      "reports": [
+        {
+          "address": "source|NativeProxyImageCustody::_source#84",
+          "errno": "EIO",
+          "kind": "source",
+          "occurrence": 84,
+          "symbol": "NativeProxyImageCustody::_source"
+        }
+      ]
+    },
+    {
+      "index": 151,
+      "name": "single:source|NativeProxyImageCustody::_source#85",
+      "primary": null,
+      "reports": [
+        {
+          "address": "source|NativeProxyImageCustody::_source#85",
+          "errno": "EIO",
+          "kind": "source",
+          "occurrence": 85,
+          "symbol": "NativeProxyImageCustody::_source"
+        }
+      ]
+    },
+    {
+      "index": 152,
+      "name": "single:source|NativeProxyImageCustody::_source#86",
+      "primary": null,
+      "reports": [
+        {
+          "address": "source|NativeProxyImageCustody::_source#86",
+          "errno": "EIO",
+          "kind": "source",
+          "occurrence": 86,
+          "symbol": "NativeProxyImageCustody::_source"
+        }
+      ]
+    },
+    {
+      "index": 153,
+      "name": "single:source|NativeProxyImageCustody::_source#87",
+      "primary": null,
+      "reports": [
+        {
+          "address": "source|NativeProxyImageCustody::_source#87",
+          "errno": "EIO",
+          "kind": "source",
+          "occurrence": 87,
+          "symbol": "NativeProxyImageCustody::_source"
+        }
+      ]
+    },
+    {
+      "index": 154,
+      "name": "single:source|NativeProxyImageCustody::_source#88",
+      "primary": null,
+      "reports": [
+        {
+          "address": "source|NativeProxyImageCustody::_source#88",
+          "errno": "EIO",
+          "kind": "source",
+          "occurrence": 88,
+          "symbol": "NativeProxyImageCustody::_source"
+        }
+      ]
+    },
+    {
+      "index": 155,
+      "name": "single:source|NativeProxyImageCustody::_source#89",
+      "primary": null,
+      "reports": [
+        {
+          "address": "source|NativeProxyImageCustody::_source#89",
+          "errno": "EIO",
+          "kind": "source",
+          "occurrence": 89,
+          "symbol": "NativeProxyImageCustody::_source"
+        }
+      ]
+    },
+    {
+      "index": 156,
+      "name": "single:source|NativeProxyImageCustody::_source#9",
+      "primary": null,
+      "reports": [
+        {
+          "address": "source|NativeProxyImageCustody::_source#9",
+          "errno": "EIO",
+          "kind": "source",
+          "occurrence": 9,
+          "symbol": "NativeProxyImageCustody::_source"
+        }
+      ]
+    },
+    {
+      "index": 157,
+      "name": "single:source|NativeProxyImageCustody::_source#90",
+      "primary": null,
+      "reports": [
+        {
+          "address": "source|NativeProxyImageCustody::_source#90",
+          "errno": "EIO",
+          "kind": "source",
+          "occurrence": 90,
+          "symbol": "NativeProxyImageCustody::_source"
+        }
+      ]
+    },
+    {
+      "index": 158,
+      "name": "single:source|NativeProxyImageCustody::_source#91",
+      "primary": null,
+      "reports": [
+        {
+          "address": "source|NativeProxyImageCustody::_source#91",
+          "errno": "EIO",
+          "kind": "source",
+          "occurrence": 91,
+          "symbol": "NativeProxyImageCustody::_source"
+        }
+      ]
+    },
+    {
+      "index": 159,
+      "name": "single:source|NativeProxyImageCustody::_source#92",
+      "primary": null,
+      "reports": [
+        {
+          "address": "source|NativeProxyImageCustody::_source#92",
+          "errno": "EIO",
+          "kind": "source",
+          "occurrence": 92,
+          "symbol": "NativeProxyImageCustody::_source"
+        }
+      ]
+    },
+    {
+      "index": 160,
+      "name": "single:source|NativeProxyImageCustody::_source#93",
+      "primary": null,
+      "reports": [
+        {
+          "address": "source|NativeProxyImageCustody::_source#93",
+          "errno": "EIO",
+          "kind": "source",
+          "occurrence": 93,
+          "symbol": "NativeProxyImageCustody::_source"
+        }
+      ]
+    },
+    {
+      "index": 161,
+      "name": "single:source|NativeProxyImageCustody::_source#94",
+      "primary": null,
+      "reports": [
+        {
+          "address": "source|NativeProxyImageCustody::_source#94",
+          "errno": "EIO",
+          "kind": "source",
+          "occurrence": 94,
+          "symbol": "NativeProxyImageCustody::_source"
+        }
+      ]
+    },
+    {
+      "index": 162,
+      "name": "single:source|NativeProxyImageCustody::_source#95",
+      "primary": null,
+      "reports": [
+        {
+          "address": "source|NativeProxyImageCustody::_source#95",
+          "errno": "EIO",
+          "kind": "source",
+          "occurrence": 95,
+          "symbol": "NativeProxyImageCustody::_source"
+        }
+      ]
+    },
+    {
+      "index": 163,
+      "name": "single:source|NativeProxyImageCustody::_source#96",
+      "primary": null,
+      "reports": [
+        {
+          "address": "source|NativeProxyImageCustody::_source#96",
+          "errno": "EIO",
+          "kind": "source",
+          "occurrence": 96,
+          "symbol": "NativeProxyImageCustody::_source"
+        }
+      ]
+    },
+    {
+      "index": 164,
+      "name": "single:source|NativeProxyImageCustody::_source#97",
+      "primary": null,
+      "reports": [
+        {
+          "address": "source|NativeProxyImageCustody::_source#97",
+          "errno": "EIO",
+          "kind": "source",
+          "occurrence": 97,
+          "symbol": "NativeProxyImageCustody::_source"
+        }
+      ]
+    },
+    {
+      "index": 165,
+      "name": "single:source|NativeProxyImageCustody::_source#98",
+      "primary": null,
+      "reports": [
+        {
+          "address": "source|NativeProxyImageCustody::_source#98",
+          "errno": "EIO",
+          "kind": "source",
+          "occurrence": 98,
+          "symbol": "NativeProxyImageCustody::_source"
+        }
+      ]
+    },
+    {
+      "index": 166,
+      "name": "single:source|NativeProxyImageCustody::_source#99",
+      "primary": null,
+      "reports": [
+        {
+          "address": "source|NativeProxyImageCustody::_source#99",
+          "errno": "EIO",
+          "kind": "source",
+          "occurrence": 99,
+          "symbol": "NativeProxyImageCustody::_source"
+        }
+      ]
+    }
+  ],
+  "component": "native-proxy-observation-archive-release-close-equal-20260912",
+  "inputs": [
+    {
+      "path": "docs/audits/native-proxy-cleanup-receipts-20260910/CleanupReceipts.pm",
+      "sha256": "5b22cecf6ff131f62fdeb237a3e77b67b5b29a172ff82320a67772b03cd24de0",
+      "size_bytes": 1300
+    },
+    {
+      "path": "docs/audits/native-proxy-image-coordination-20260910/Coordination.pm",
+      "sha256": "a0d99769147f28ca7c35e9ac80ba88f7cf14760e3bef7b51841d8badebc060e5",
+      "size_bytes": 19061
+    },
+    {
+      "path": "docs/audits/native-proxy-image-custody-20260910/ImageCustody.pm",
+      "sha256": "927f1ab39f7f26742e36878985d1ff545ddf2dee119d4bf6b7b41bf2c9360ccc",
+      "size_bytes": 8619
+    },
+    {
+      "path": "docs/audits/native-proxy-image-custody-20260910/vectors.json",
+      "sha256": "60992f01705436d9c7efbc280d6de73f4c132d91ffea9359852c10c9afb7890d",
+      "size_bytes": 1373
+    },
+    {
+      "path": "docs/audits/native-proxy-image-maintenance-20260910/ImageMaintenance.pm",
+      "sha256": "1295957d97737e764c0e800885a2c3f9adfa327a0d41b35d122dde3e21698cac",
+      "size_bytes": 5678
+    },
+    {
+      "path": "docs/audits/native-proxy-image-publication-20260910/Publication.pm",
+      "sha256": "34ca8717856492a09ebf16af8810f04b1dea4c6c8c84ff7b3f5c11c07e7dc2bf",
+      "size_bytes": 5371
+    },
+    {
+      "path": "docs/audits/native-proxy-observation-acquisition-20260910/ObservationAcquisition.pm",
+      "sha256": "809c013255ab6973a2d0dabcfd5b0ae5c55c97696d7acc77b10cf68149006470",
+      "size_bytes": 16517
+    },
+    {
+      "path": "docs/audits/native-proxy-observation-acquisition-20260910/result/qualification.json",
+      "sha256": "5c201ce2c6e91a03a07f80180e7d66215038ed6c75e8c9fada6c8e59b2bce3bf",
+      "size_bytes": 1424879
+    },
+    {
+      "path": "docs/audits/native-proxy-observation-acquisition-20260910/result/recovery-copies.json",
+      "sha256": "276358759a2d7429fba28b8fc27cba4157ec8ec63587dbb7536de054eae637a7",
+      "size_bytes": 8515
+    },
+    {
+      "path": "docs/audits/native-proxy-observation-acquisition-join-20260911/result/source-inventory.json",
+      "sha256": "751949360499e53b07aedd784daa8b38b9785c984421d63569522818e60dda6b",
+      "size_bytes": 32004
+    },
+    {
+      "path": "docs/audits/native-proxy-observation-archive-20260911/ObservationArchive.pm",
+      "sha256": "79454039421822af31f9891d0a3d3ebe1b4c1ebcc6f6c8decd1f78e081736e87",
+      "size_bytes": 6196
+    },
+    {
+      "path": "docs/audits/native-proxy-observation-archive-20260911/audit.py",
+      "sha256": "87d276239f8190ae6ebc5988befb935be76e38520e27c2445164a338db0b4622",
+      "size_bytes": 13218
+    },
+    {
+      "path": "docs/audits/native-proxy-observation-archive-20260911/plan.json",
+      "sha256": "052ba7f727ec3b1a18611861a35a6d88b2dfd421290ba1dc0f9f0ab3e3031339",
+      "size_bytes": 10409
+    },
+    {
+      "path": "docs/audits/native-proxy-observation-archive-20260911/qualify.t",
+      "sha256": "ec9522a8358730d9c8bbfb6cc52ce880311b22efb5e28c82ce78e5aaafc869ff",
+      "size_bytes": 15004
+    },
+    {
+      "path": "docs/audits/native-proxy-observation-archive-boundaries-20260911/ArchiveFixture.pm",
+      "sha256": "bcde885a6cf72865e3a4d996e3889a40f64f10910ac5a1ec0abe821b1d6661e5",
+      "size_bytes": 7707
+    },
+    {
+      "path": "docs/audits/native-proxy-observation-archive-boundaries-20260911/ArchiveTrace.pm",
+      "sha256": "033a42ff3b526f69f202cbb0ac6b27b8ffb9918fad38e1cc785015d040f6a363",
+      "size_bytes": 10649
+    },
+    {
+      "path": "docs/audits/native-proxy-observation-archive-boundaries-20260911/audit.py",
+      "sha256": "30c2ccb08d2aa588eadb6035e81db3d882c53817b09eec9ec851d95a3f25cb16",
+      "size_bytes": 14060
+    },
+    {
+      "path": "docs/audits/native-proxy-observation-archive-boundaries-20260911/plan.json",
+      "sha256": "fcae15dbf0d83c29b4a2b6c53873bd3df583f49cf2011e112790639e3aa2f6ec",
+      "size_bytes": 87982
+    },
+    {
+      "path": "docs/audits/native-proxy-observation-archive-boundaries-20260911/result/qualification.json",
+      "sha256": "99a469ca1df6b2f2ab81be6d3d2634518eab6b0392977c09eb0632e81cb93335",
+      "size_bytes": 651443
+    },
+    {
+      "path": "docs/audits/native-proxy-observation-archive-final-join-20260911/result/audit.json",
+      "sha256": "337b0145185846affecbbb7af8d6116f7608ee6936c1e5ca11864f67c03a5a71",
+      "size_bytes": 4449
+    },
+    {
+      "path": "docs/audits/native-proxy-observation-archive-records-20260911/ArchiveRecord.pm",
+      "sha256": "38fb47a97157d1b052b3e0f4e148fa6cacd27f4d8defb63ca469133ac6ec1af1",
+      "size_bytes": 9873
+    },
+    {
+      "path": "docs/audits/native-proxy-observation-archive-records-20260911/audit.py",
+      "sha256": "0c75f945c005b5b5fb2fff80e5acb75e2d3a9b942e9c98db7be010c24b7397a3",
+      "size_bytes": 15049
+    },
+    {
+      "path": "docs/audits/native-proxy-observation-archive-records-20260911/plan.json",
+      "sha256": "186bb995f5b769c67a6ab6595856a0b46122a1b101b4b5fb4228c9f810b240b7",
+      "size_bytes": 1018306
+    },
+    {
+      "path": "docs/audits/native-proxy-observation-archive-release-20260911/ObservationRelease.pm",
+      "sha256": "08236265e6e6973ab23e9e31ee26071272f39e8879c2d420ab2382fc800345ab",
+      "size_bytes": 10294
+    },
+    {
+      "path": "docs/audits/native-proxy-observation-archive-release-20260911/ReleaseFixture.pm",
+      "sha256": "adc44f93c9d55e3bc2302a841440e87b92e459c10d50c2acde1f2926399f1b0e",
+      "size_bytes": 6097
+    },
+    {
+      "path": "docs/audits/native-proxy-observation-archive-release-20260911/ReleaseTrace.pm",
+      "sha256": "43f16583db2901de809834a0959f97a54f217bc5c8d408d92d4c514ffed4827b",
+      "size_bytes": 10026
+    },
+    {
+      "path": "docs/audits/native-proxy-observation-archive-release-20260911/audit.py",
+      "sha256": "eefc989d4d346c5f119445ebe0259c7ad46bba37ee9590ddd3caa865fb828994",
+      "size_bytes": 29589
+    },
+    {
+      "path": "docs/audits/native-proxy-observation-archive-release-20260911/contract.json",
+      "sha256": "5283975e59d2309e4e6018a2b67b1c5b91736d94e00232e8c1ffcdfe1ccd7de0",
+      "size_bytes": 5470
+    },
+    {
+      "path": "docs/audits/native-proxy-observation-archive-release-20260911/coordination-extension.json",
+      "sha256": "5ec48abff08cdedf083a738788c4d88bfb09d08af852e1d622d698f3a86e9408",
+      "size_bytes": 4671
+    },
+    {
+      "path": "docs/audits/native-proxy-observation-archive-release-20260911/corrected-auditor-pin.json",
+      "sha256": "eb028b6adc5abc4e36e02f1ad369a6d5854248a0fe6665c2f1e34c43ded7ed60",
+      "size_bytes": 292
+    },
+    {
+      "path": "docs/audits/native-proxy-observation-archive-release-20260911/plan.json",
+      "sha256": "909fea33151d474a687be8104a817ff8d8b53179dff0f9811e94c35578519f44",
+      "size_bytes": 28609
+    },
+    {
+      "path": "docs/audits/native-proxy-observation-archive-release-20260911/preflight-pins.json",
+      "sha256": "bc99396e396421640f1c574279e5a5cc7f867fec10e9722fb8e0f53da04b4580",
+      "size_bytes": 2063
+    },
+    {
+      "path": "docs/audits/native-proxy-observation-archive-release-20260911/qualify.t",
+      "sha256": "1fa2470b46ab7323c3699e1351628fb3a235f90a1b257a07a961ae8f33cd5159",
+      "size_bytes": 7744
+    },
+    {
+      "path": "docs/audits/native-proxy-observation-archive-release-20260911/result/admission.jsonl",
+      "sha256": "c96ca7e6aed97b77aade648c955c3e86f1e3a2c90494eda1df5a619fc0ea6e06",
+      "size_bytes": 19798
+    },
+    {
+      "path": "docs/audits/native-proxy-observation-archive-release-20260911/result/audit.json",
+      "sha256": "15e1343fa9fa77a9bcf7d2ef6b86e7fe422c8d4f086685433cd0c7e8b4097305",
+      "size_bytes": 1960
+    },
+    {
+      "path": "docs/audits/native-proxy-observation-archive-release-20260911/result/qualification.json",
+      "sha256": "6a653b267b1f6d19d0a2f91c549cc34705039fc55278fe23cd513bdfd48432d6",
+      "size_bytes": 12105806
+    },
+    {
+      "path": "docs/audits/native-proxy-observation-archive-release-20260911/result/qualify.exit",
+      "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa",
+      "size_bytes": 2
+    },
+    {
+      "path": "docs/audits/native-proxy-observation-archive-release-20260911/result/qualify.tap",
+      "sha256": "cf19682d6774379f508f8a2cc9b352c1e9bfc819ce92b59d517e48deb88e4065",
+      "size_bytes": 21985
+    },
+    {
+      "path": "docs/audits/native-proxy-observation-archive-release-active-after-20260911/result/qualification.json",
+      "sha256": "86c4bd6a1462994f682bbf65f37c6a68a9eebd05d61d37e422c38999a14ae952",
+      "size_bytes": 573373
+    },
+    {
+      "path": "docs/audits/native-proxy-observation-archive-release-active-before-20260911/result/qualification.json",
+      "sha256": "f9c95191037a5a008d3986c4b16feffca45488dc74986ba54db1de317eeb1392",
+      "size_bytes": 727262
+    },
+    {
+      "path": "docs/audits/native-proxy-observation-archive-release-boundaries-20260911/BoundaryTrace.pm",
+      "sha256": "f0d9b6dcdc65d67e31e90ea8168333ae041be6f9143ebffa36fd8a5b76d9865e",
+      "size_bytes": 8394
+    },
+    {
+      "path": "docs/audits/native-proxy-observation-archive-release-boundaries-20260911/acceptance-preservation.json",
+      "sha256": "11bc5205eb4a24b19c093e24d6220acf80c8754493009151bd40df99a2217d3a",
+      "size_bytes": 173
+    },
+    {
+      "path": "docs/audits/native-proxy-observation-archive-release-boundaries-20260911/audit.py",
+      "sha256": "685f1ea76c3e966374558c3c65ba83281baa512a254d0002f59e9c4948dd04df",
+      "size_bytes": 18707
+    },
+    {
+      "path": "docs/audits/native-proxy-observation-archive-release-boundaries-20260911/book-review.json",
+      "sha256": "06ebddeedc4f0415b1f78816b8c1cc3c13a43750b627ac92ae0019814927d6e9",
+      "size_bytes": 696
+    },
+    {
+      "path": "docs/audits/native-proxy-observation-archive-release-boundaries-20260911/flow_model.py",
+      "sha256": "b84e53d4eefe9409a96cdd4a4e68bce032cf6aa3315357dc93f503d76515ab46",
+      "size_bytes": 7189
+    },
+    {
+      "path": "docs/audits/native-proxy-observation-archive-release-boundaries-20260911/knowledge-projection.json",
+      "sha256": "7d3917683b2243e2cc9ffd13f8093a72cba342371f4d515b84091651100f9b89",
+      "size_bytes": 285
+    },
+    {
+      "path": "docs/audits/native-proxy-observation-archive-release-boundaries-20260911/plan.json",
+      "sha256": "f67ad8f59a6885df8ad3b9f6b51626879475031e7f9cfa227a387517c23fe7f6",
+      "size_bytes": 38998
+    },
+    {
+      "path": "docs/audits/native-proxy-observation-archive-release-boundaries-20260911/preflight-pins.json",
+      "sha256": "01a31c974db22f6ce6cfc2b318151adcf8e4c48c46975b303b6d88c42e621c68",
+      "size_bytes": 1288
+    },
+    {
+      "path": "docs/audits/native-proxy-observation-archive-release-boundaries-20260911/prepare.py",
+      "sha256": "3cf90ff83962f004d6201b558f91bdb7bd9132bdc437ca02eeaed7d944c4e13e",
+      "size_bytes": 6127
+    },
+    {
+      "path": "docs/audits/native-proxy-observation-archive-release-boundaries-20260911/qualify.t",
+      "sha256": "667b5a7c24f4dee45fb4cb43101872967af375f150bec6d10e52e29a5ebc31b6",
+      "size_bytes": 8432
+    },
+    {
+      "path": "docs/audits/native-proxy-observation-archive-release-boundaries-20260911/result/admission.jsonl",
+      "sha256": "37d48093c0ba77219b5dae71547c496a4f220f3eae17c519d07a42f65eb3e81b",
+      "size_bytes": 2084
+    },
+    {
+      "path": "docs/audits/native-proxy-observation-archive-release-boundaries-20260911/result/audit.exit",
+      "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa",
+      "size_bytes": 2
+    },
+    {
+      "path": "docs/audits/native-proxy-observation-archive-release-boundaries-20260911/result/audit.json",
+      "sha256": "e2172a58c3bc45a97128498dac9e06ab2e2de4560442016ba966f0ea1c3d36c5",
+      "size_bytes": 1677
+    },
+    {
+      "path": "docs/audits/native-proxy-observation-archive-release-boundaries-20260911/result/audit.stderr",
+      "sha256": "26f845d486064596b3e639d4dea145c857a511c2e214d056295ac2064395660f",
+      "size_bytes": 91
+    },
+    {
+      "path": "docs/audits/native-proxy-observation-archive-release-boundaries-20260911/result/audit.stdout",
+      "sha256": "5e2c4ba45423813e42a68527f8bbb6a74552144d8da95d8388c795e9b2a6c7d7",
+      "size_bytes": 1485
+    },
+    {
+      "path": "docs/audits/native-proxy-observation-archive-release-boundaries-20260911/result/fault-domain.json",
+      "sha256": "fd50e324ea9a5db4e6fb52be80b7209d7fe6cb2d034dc7cfd91b9fd1aba97e64",
+      "size_bytes": 2661151
+    },
+    {
+      "path": "docs/audits/native-proxy-observation-archive-release-boundaries-20260911/result/preflight.json",
+      "sha256": "bbd2681711e4241536bcc46e7e41ff6674e505ad15960be788a00ba62985dc07",
+      "size_bytes": 628
+    },
+    {
+      "path": "docs/audits/native-proxy-observation-archive-release-boundaries-20260911/result/qualification.json",
+      "sha256": "9475b28e460dd3705ade3cb0eaf1dbb2a289ab6a8cdd6df784c07ff733147230",
+      "size_bytes": 3866202
+    },
+    {
+      "path": "docs/audits/native-proxy-observation-archive-release-boundaries-20260911/result/qualify.exit",
+      "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa",
+      "size_bytes": 2
+    },
+    {
+      "path": "docs/audits/native-proxy-observation-archive-release-boundaries-20260911/result/qualify.stderr",
+      "sha256": "854a39d29e76aff275937abe5a95ce57e96ac867ec333947f2c4e384eaec579f",
+      "size_bytes": 91
+    },
+    {
+      "path": "docs/audits/native-proxy-observation-archive-release-boundaries-20260911/result/qualify.tap",
+      "sha256": "3e29a0aeeeafdd10194994a8e9f5d27a8f9a5a84a88a92310cd091229e48a052",
+      "size_bytes": 5398
+    },
+    {
+      "path": "docs/audits/native-proxy-observation-archive-release-boundaries-20260911/result/recovery-copies.json",
+      "sha256": "bee7575fb56e5c7bb4ca95e86b54e345f577de422f85e673bd6dc0dbddfabec4",
+      "size_bytes": 5033
+    },
+    {
+      "path": "docs/audits/native-proxy-observation-archive-release-boundaries-20260911/result/syntax.exit",
+      "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa",
+      "size_bytes": 2
+    },
+    {
+      "path": "docs/audits/native-proxy-observation-archive-release-boundaries-20260911/result/syntax.stderr",
+      "sha256": "09697e4d5a45cbc22299b6c9ff788e2294e5deb2d2dc563f0e9d175c4e21b422",
+      "size_bytes": 93
+    },
+    {
+      "path": "docs/audits/native-proxy-observation-archive-release-boundaries-20260911/result/syntax.stdout",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "size_bytes": 0
+    },
+    {
+      "path": "docs/audits/native-proxy-observation-archive-release-boundaries-20260911/review.json",
+      "sha256": "8f03e3e6c0f54d471ad407257058317c3e90b6204d0becad9e027d192e45cd33",
+      "size_bytes": 4255
+    },
+    {
+      "path": "docs/audits/native-proxy-observation-archive-release-boundaries-20260911/source-review.json",
+      "sha256": "c82b0ed95175481964dc1d0eef69dd902f4f1704854e5e6a81db78483a326cfe",
+      "size_bytes": 2465
+    },
+    {
+      "path": "docs/audits/native-proxy-observation-archive-release-close-ordinary-20260912/ClosePlan.pm",
+      "sha256": "981ac8ac04fbded66a4020b881b40cd0c8ea8272e5d04cf8d9eb911eb964e0e2",
+      "size_bytes": 3375
+    },
+    {
+      "path": "docs/audits/native-proxy-observation-archive-release-close-ordinary-20260912/CloseReports.pm",
+      "sha256": "bbad512deca3a8978600e8ebc9d9c2f472687e8092870ad8e9940695e922c80a",
+      "size_bytes": 2759
+    },
+    {
+      "path": "docs/audits/native-proxy-observation-archive-release-close-ordinary-20260912/audit.py",
+      "sha256": "9139691e55731fa585cf22362ac69a98d9f49d1c63ff8b0680c3cc0afd71ed16",
+      "size_bytes": 19265
+    },
+    {
+      "path": "docs/audits/native-proxy-observation-archive-release-close-ordinary-20260912/expected_trace.py",
+      "sha256": "fb90f11e8d7752cb442f463207f11abf97e7e6bde2ee03f8b4840eed49505806",
+      "size_bytes": 7599
+    },
+    {
+      "path": "docs/audits/native-proxy-observation-archive-release-close-ordinary-20260912/flow-preflight-pins.json",
+      "sha256": "0dfa10942d1383653ea7cc7d19982923bfc616a9639f93a12d947433f6d873b6",
+      "size_bytes": 1772
+    },
+    {
+      "path": "docs/audits/native-proxy-observation-archive-release-close-ordinary-20260912/flow-qualify.t",
+      "sha256": "e03c8cae22382ec171056311966db67b251ff57bc3d6c1d774175e01cbf42136",
+      "size_bytes": 5403
+    },
+    {
+      "path": "docs/audits/native-proxy-observation-archive-release-close-ordinary-20260912/flow-vectors.json",
+      "sha256": "759d6f11e3b5ea269eaeaf1ba25b2e9ce2a88db23ae83519de87cc0763ab7c56",
+      "size_bytes": 14104971
+    },
+    {
+      "path": "docs/audits/native-proxy-observation-archive-release-close-ordinary-20260912/plan.json",
+      "sha256": "5c8c718864772971c23af85364e520a87d4b4965075393404f58937d4aad10a0",
+      "size_bytes": 120394
+    },
+    {
+      "path": "docs/audits/native-proxy-observation-archive-release-close-ordinary-20260912/preflight-pins.json",
+      "sha256": "a6ffa7425f658ac4e4ac61955fd9eb042610a420a45a4e31bb74eb7aa6ca38a5",
+      "size_bytes": 4812
+    },
+    {
+      "path": "docs/audits/native-proxy-observation-archive-release-close-ordinary-20260912/preflight.py",
+      "sha256": "abda4b062a942eef0bfeafd2f1967798a6f9184c44d5baa9c12dc126eb2c5053",
+      "size_bytes": 10764
+    },
+    {
+      "path": "docs/audits/native-proxy-observation-archive-release-close-ordinary-20260912/prepare-pin.json",
+      "sha256": "c6b8400147cba8965b8dcc7a764a0b2cf9413a1a757bb520d5ea3ce82f8df79a",
+      "size_bytes": 206
+    },
+    {
+      "path": "docs/audits/native-proxy-observation-archive-release-close-ordinary-20260912/prepare.py",
+      "sha256": "ae69ba03e7bbec841a37be2f4b9386582509a63f6812b67fd8079f08f03476f1",
+      "size_bytes": 5823
+    },
+    {
+      "path": "docs/audits/native-proxy-observation-archive-release-close-ordinary-20260912/qualify.t",
+      "sha256": "776892503fa1ad37adfca173680e29441a20cb3721250b69120a665c6d25483c",
+      "size_bytes": 14227
+    },
+    {
+      "path": "docs/audits/native-proxy-observation-archive-release-close-ordinary-20260912/result/audit.json",
+      "sha256": "f759067120522d153d919689fcbc048749aeccb4f4c7966f4f8dff6f4d1719e1",
+      "size_bytes": 7049
+    },
+    {
+      "path": "docs/audits/native-proxy-observation-archive-release-close-ordinary-20260912/result/preflight/flow-qualification.json",
+      "sha256": "d52b9618f0cef51d3bbe6ad9f79e52e530a0af543671358f70cd3ad80b7f488d",
+      "size_bytes": 14651
+    },
+    {
+      "path": "docs/audits/native-proxy-observation-archive-release-close-ordinary-20260912/result/preflight/flow-qualify.exit",
+      "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa",
+      "size_bytes": 2
+    },
+    {
+      "path": "docs/audits/native-proxy-observation-archive-release-close-ordinary-20260912/result/preflight/flow-qualify.stderr",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "size_bytes": 0
+    },
+    {
+      "path": "docs/audits/native-proxy-observation-archive-release-close-ordinary-20260912/result/preflight/flow-qualify.tap",
+      "sha256": "11073dab8fb3a343ebbaf5610609c5c83bfe1768045b0c534dd9701f31132444",
+      "size_bytes": 13776
+    },
+    {
+      "path": "docs/audits/native-proxy-observation-archive-release-close-ordinary-20260912/result/preflight/preflight.exit",
+      "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa",
+      "size_bytes": 2
+    },
+    {
+      "path": "docs/audits/native-proxy-observation-archive-release-close-ordinary-20260912/result/preflight/preflight.json",
+      "sha256": "7f2677198fe7d787d273d73a0bb93e5ee7d8e8219ce2cb456e4f0ebecebb72a0",
+      "size_bytes": 11283
+    },
+    {
+      "path": "docs/audits/native-proxy-observation-archive-release-close-ordinary-20260912/result/preflight/preflight.stderr",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "size_bytes": 0
+    },
+    {
+      "path": "docs/audits/native-proxy-observation-archive-release-close-ordinary-20260912/result/preflight/preflight.stdout",
+      "sha256": "9fbc4abe8e165c36a043b39401ac85f53a44a4311762de85d64739ef781f0a44",
+      "size_bytes": 603
+    },
+    {
+      "path": "docs/audits/native-proxy-observation-archive-release-close-ordinary-20260912/result/preflight/recovery.json",
+      "sha256": "ecf1a6423e6ede3d2fd4d0e82a0e63a82f5ee51f0f04d5082b4a90d8a1ded57b",
+      "size_bytes": 2903
+    },
+    {
+      "path": "docs/audits/native-proxy-observation-archive-release-close-ordinary-20260912/result/qualification.json",
+      "sha256": "92629928503cc65bf574f0ab3ab2fc0c257aa29172d56375eac93e3f7578060c",
+      "size_bytes": 203758
+    },
+    {
+      "path": "docs/audits/native-proxy-observation-archive-release-close-ordinary-20260912/result/recovery-copies.json",
+      "sha256": "949b4a26e6b07fd6659e8383b43cb694202827eb20d2011e567f3f5f564ad4c5",
+      "size_bytes": 68471
+    },
+    {
+      "path": "docs/audits/native-proxy-observation-archive-release-equal-after-20260911/result/qualification.json",
+      "sha256": "7b6c9ff81786fa630bfb7fc0ab81cc445d5aeb64b3210a5501b15c0d0bc52afc",
+      "size_bytes": 529138
+    },
+    {
+      "path": "docs/audits/native-proxy-observation-archive-release-equal-before-20260911/result/qualification.json",
+      "sha256": "f78d38b036a14fabefe21e428453f354e09b06c2249adb0c3fb389fd7dc0acbc",
+      "size_bytes": 667203
+    },
+    {
+      "path": "docs/audits/native-proxy-observation-archive-release-last-after-20260911/result/qualification.json",
+      "sha256": "ab7d232202b5736090e1928712e67a5a21cd57f430bcf8bfd1c5104e15df5231",
+      "size_bytes": 487364
+    },
+    {
+      "path": "docs/audits/native-proxy-observation-archive-release-last-before-20260911/result/qualification.json",
+      "sha256": "d1c6c2c6d87cdfa1b0cfb745c3802badff4a40befc02640370c1d1ecabc68551",
+      "size_bytes": 609636
+    },
+    {
+      "path": "docs/audits/native-proxy-observation-archive-release-ordinary-after-20260911/result/qualification.json",
+      "sha256": "e1de2c8ddcd10bd1d46c0e93ed4e48099a2cfa4503b43f7399b3ab147a64ce0a",
+      "size_bytes": 551044
+    },
+    {
+      "path": "docs/audits/native-proxy-observation-archive-release-ordinary-before-20260911/CallFaultTrace.pm",
+      "sha256": "338333fd93063d8586be5384523612876c910d3cabd5cf0cbc19da1f38084367",
+      "size_bytes": 7850
+    },
+    {
+      "path": "docs/audits/native-proxy-observation-archive-release-ordinary-before-20260911/CallPlan.pm",
+      "sha256": "8d792d3bf590fa83330298af703aa0ab25e7eaa31aba34d097a70d3d4bb15c6a",
+      "size_bytes": 11091
+    },
+    {
+      "path": "docs/audits/native-proxy-observation-archive-release-ordinary-before-20260911/audit.py",
+      "sha256": "9db7afba16e735467d41f4d65be41a933bcee8a8f553b85545f03a6f14340e1c",
+      "size_bytes": 21605
+    },
+    {
+      "path": "docs/audits/native-proxy-observation-archive-release-ordinary-before-20260911/expected_trace.py",
+      "sha256": "6047cd1561f95108991ef4fc7c13a09b82d5508af4a10f6583bd83e9de5f53e7",
+      "size_bytes": 6113
+    },
+    {
+      "path": "docs/audits/native-proxy-observation-archive-release-ordinary-before-20260911/result/qualification.json",
+      "sha256": "419d9aca776a4a827cf9dd34244219ca249f2cdedfbc35df86597893262bf682",
+      "size_bytes": 695877
+    },
+    {
+      "path": "docs/audits/native-proxy-observation-archive-release-readback-active-20260912/result/qualification.json",
+      "sha256": "bb2f74d88d77631812d80c029ac7fed93ba1766f3cdaebcfb333680d95506aaf",
+      "size_bytes": 573312
+    },
+    {
+      "path": "docs/audits/native-proxy-observation-archive-release-readback-equal-20260912/audit.py",
+      "sha256": "4735418a1c3ce6daceebf6ef8d0f6d453743ad5ede64fa2590c243f4d99a74ae",
+      "size_bytes": 21115
+    },
+    {
+      "path": "docs/audits/native-proxy-observation-archive-release-readback-equal-20260912/result/qualification.json",
+      "sha256": "847a555641d51f2b34a1ba68a2e39a53a4d5ee55fc7a705740e5805ddd169f42",
+      "size_bytes": 511510
+    },
+    {
+      "path": "docs/audits/native-proxy-observation-archive-release-readback-last-20260912/result/qualification.json",
+      "sha256": "94e392a3756cad04784d37c3f51a508c688f27561c01cf0771353c8f11abd37a",
+      "size_bytes": 449820
+    },
+    {
+      "path": "docs/audits/native-proxy-observation-archive-release-readback-ordinary-20260911/result/qualification.json",
+      "sha256": "b29369ddbc7a3568d111176351229712b1529795764361f44a33fa83897671d6",
+      "size_bytes": 542436
+    },
+    {
+      "path": "docs/audits/native-proxy-observation-archive-release-syscall-20260912/result/qualification.json",
+      "sha256": "e886077fa4ff9633c54d4449f494547043a7f16797f977cf58b19ac6d2460d48",
+      "size_bytes": 33788
+    },
+    {
+      "path": "docs/audits/native-proxy-observation-records-20260910/ObservationRecord.pm",
+      "sha256": "35445ee951c8f5e7dc204f58cffe1b2f6273286cc3e7715953d705b33e7158d5",
+      "size_bytes": 4369
+    },
+    {
+      "path": "docs/audits/native-proxy-observation-release-contract-20260911/audit.py",
+      "sha256": "0427d24fef5c6cfbd43d9a93e8f8854ec5ce40c732b3ee8592dd405b94d6f902",
+      "size_bytes": 12728
+    },
+    {
+      "path": "docs/audits/native-proxy-observation-release-contract-20260911/contract.json",
+      "sha256": "06f5a8f998baabe772c0683798c3cf95e28a4d7d39d7fac19c9ea72e7cd075c5",
+      "size_bytes": 12823
+    },
+    {
+      "path": "docs/audits/native-proxy-observation-release-contract-20260911/model.py",
+      "sha256": "8ab7961fb5c4d7f56fbe484a1e59267afe5ac723f51e871d2312db4cbe2db3b7",
+      "size_bytes": 3536
+    },
+    {
+      "path": "docs/audits/native-proxy-observation-release-contract-20260911/result/audit.json",
+      "sha256": "75932effd82f5563fdf3b1ac9d7b641931789a72c8ab98bc67b09af2e9cc025b",
+      "size_bytes": 6278
+    },
+    {
+      "path": "docs/audits/native-proxy-observation-reuse-20260910/FixtureClone.pm",
+      "sha256": "d68a2d93f785b1c96689e352f7271e97b0bd239f2cf228f2c8e119dbb6aaf234",
+      "size_bytes": 1053
+    },
+    {
+      "path": "docs/audits/native-proxy-observation-reuse-20260910/result/qualification.json",
+      "sha256": "348c434f7a40012fc8a46a7c7b4b6842ad7d30ca56f3a82947b82231974f6296",
+      "size_bytes": 3707937
+    },
+    {
+      "path": "docs/audits/native-proxy-observation-reuse-20260910/result/recovery-copies.json",
+      "sha256": "af8532e629c095b678b2ac0e610876b422f3e9eed711dfc9af4d488f23d1b092",
+      "size_bytes": 13430
+    },
+    {
+      "path": "docs/audits/native-proxy-observation-work-records-20260911/WorkRecord.pm",
+      "sha256": "3f0f1351bc44a2a8b42502b7b814544f9d756ae8c39e17db470b312635a6e56d",
+      "size_bytes": 8126
+    },
+    {
+      "path": "docs/audits/native-proxy-observation-work-records-20260911/audit.py",
+      "sha256": "8f6239ddddb14548a96a6d0f362b105700e3e733cdb0d0110666652e1f9bd1fe",
+      "size_bytes": 17442
+    },
+    {
+      "path": "docs/audits/native-proxy-observation-work-records-20260911/plan.json",
+      "sha256": "0f406ab391998327bfe39422ef6f842c7d230c39f54ae5b7030799b9a040e5b5",
+      "size_bytes": 368087
+    },
+    {
+      "path": "docs/audits/native-proxy-observation-work-records-20260911/preflight-pins.json",
+      "sha256": "1b6a8dae67ba14d5487fe5aaf6c9bb48fbfa11dc10f12ac66446cbd2d19868a2",
+      "size_bytes": 1002
+    },
+    {
+      "path": "docs/audits/native-proxy-observation-work-records-20260911/result/audit.json",
+      "sha256": "efceb6c1524143f1efcc8602c927f607854f4750091260f0772e940c3cf31ccd",
+      "size_bytes": 1583
+    },
+    {
+      "path": "docs/audits/native-proxy-observation-work-records-20260911/result/qualification.json",
+      "sha256": "d1438155f5ea32c2386d491ee815b06b8f9337610e0ae9af08c55b1fbaa9f207",
+      "size_bytes": 336355
+    },
+    {
+      "path": "docs/audits/native-proxy-release-call-readback-join-20260912/preflight-pins.json",
+      "sha256": "b91e21c569002c6e1f5109c73d5733763edc45bfb69204b1ceb095254256b790",
+      "size_bytes": 814
+    },
+    {
+      "path": "docs/audits/native-proxy-release-call-readback-join-20260912/result/join.json",
+      "sha256": "bfc785daa0bd40bccc6d1644448d18052e3feb6df5653bc1b3a10d27b8af6958",
+      "size_bytes": 22017
+    },
+    {
+      "path": "docs/audits/native-proxy-release-call-selection-20260911/audit.py",
+      "sha256": "ff332d7f00e067ab687abdea04c2fd5c81254d381fe6fa8b81f7f247d403649d",
+      "size_bytes": 13556
+    },
+    {
+      "path": "docs/audits/native-proxy-release-call-selection-20260911/book-review.json",
+      "sha256": "af9abf1abfde8aa552226ef43174c28bfcf6dc7f925414ccf5f4a4a35c1da471",
+      "size_bytes": 690
+    },
+    {
+      "path": "docs/audits/native-proxy-release-call-selection-20260911/compaction-census.json",
+      "sha256": "52247e5453506cbb62e9ff98785c8d9680c0fa9d69641dc1b9883d05cafd234a",
+      "size_bytes": 4924
+    },
+    {
+      "path": "docs/audits/native-proxy-release-call-selection-20260911/knowledge-projection.json",
+      "sha256": "ff00d63b5ec4b13a9cb823277bd5e238c0a4233042a4c802c818ea77ff1d57e7",
+      "size_bytes": 285
+    },
+    {
+      "path": "docs/audits/native-proxy-release-call-selection-20260911/model.py",
+      "sha256": "9ecf68956361a42b4222d136e414ee872f0a63f8a0c0e2f9b8fd7cd841124a08",
+      "size_bytes": 2782
+    },
+    {
+      "path": "docs/audits/native-proxy-release-call-selection-20260911/plan.json",
+      "sha256": "d55ac3653bc40f0bdd0cf3ce2b855352c17ea55dde7ae8c115e75f5741d65194",
+      "size_bytes": 2210663
+    },
+    {
+      "path": "docs/audits/native-proxy-release-call-selection-20260911/preflight-pins.json",
+      "sha256": "4d4ac5627a72edd27f263a7ae2e28df51e6f712fc27d41e082c5f41211466d55",
+      "size_bytes": 1410
+    },
+    {
+      "path": "docs/audits/native-proxy-release-call-selection-20260911/prepare.py",
+      "sha256": "e6bc251039a74203e28c26eb91a3cbcbb711ac7788fb3bbfeeec89758cabbdfd",
+      "size_bytes": 4055
+    },
+    {
+      "path": "docs/audits/native-proxy-release-call-selection-20260911/qualify.py",
+      "sha256": "7d2bf6fd4747e4ae53366f1ba5fe59e5f6628e87dc69c0470234c1709d4069dd",
+      "size_bytes": 2990
+    },
+    {
+      "path": "docs/audits/native-proxy-release-call-selection-20260911/reference-order-review.json",
+      "sha256": "de2077fc024bdffae8c5416232b68886a52564de7f09eb6dc8cad6bb8f8ec025",
+      "size_bytes": 7060
+    },
+    {
+      "path": "docs/audits/native-proxy-release-call-selection-20260911/result/audit.exit",
+      "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa",
+      "size_bytes": 2
+    },
+    {
+      "path": "docs/audits/native-proxy-release-call-selection-20260911/result/audit.json",
+      "sha256": "bbb62f68f7adf5113413175752f805ee1dae6fa9a7482efecbe6661dcb7b7edd",
+      "size_bytes": 1832
+    },
+    {
+      "path": "docs/audits/native-proxy-release-call-selection-20260911/result/audit.stderr",
+      "sha256": "a5b93fc1aa66dd1a837e8637538dfe35ab656a279f1bdb5706fcfda4535d1680",
+      "size_bytes": 91
+    },
+    {
+      "path": "docs/audits/native-proxy-release-call-selection-20260911/result/audit.stdout",
+      "sha256": "eafd7ab5fdd3ff94a74cd7a4c8f94aaa248e3d12e459604e211d25ea753d5dd1",
+      "size_bytes": 1580
+    },
+    {
+      "path": "docs/audits/native-proxy-release-call-selection-20260911/result/preflight.json",
+      "sha256": "0e1ca44f8f145304d3ee72b20cbfd69846705b27c96ecc1466ad8a4e729f8600",
+      "size_bytes": 1016
+    },
+    {
+      "path": "docs/audits/native-proxy-release-call-selection-20260911/result/prepare.exit",
+      "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa",
+      "size_bytes": 2
+    },
+    {
+      "path": "docs/audits/native-proxy-release-call-selection-20260911/result/prepare.stderr",
+      "sha256": "32b25a8dee692ee51c439e023e8a02dc70c335c7ef3662b6baa08458ce7cfdce",
+      "size_bytes": 91
+    },
+    {
+      "path": "docs/audits/native-proxy-release-call-selection-20260911/result/prepare.stdout",
+      "sha256": "3d02812c54d035feef207357a1dc7704f0a80fe969fc2f017123a627ce9dc09b",
+      "size_bytes": 83
+    },
+    {
+      "path": "docs/audits/native-proxy-release-call-selection-20260911/result/qualification.json",
+      "sha256": "9acfa17b343f2271e33560ce0ebb1a8c0110bafd0cd0c6839b29428d77ae3d66",
+      "size_bytes": 16574
+    },
+    {
+      "path": "docs/audits/native-proxy-release-call-selection-20260911/result/qualify.exit",
+      "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa",
+      "size_bytes": 2
+    },
+    {
+      "path": "docs/audits/native-proxy-release-call-selection-20260911/result/qualify.stderr",
+      "sha256": "e7a64545d6b04c0f7b2e9c4a3faa653c0c2fdd4d181f2c3a6b74b706e118757d",
+      "size_bytes": 91
+    },
+    {
+      "path": "docs/audits/native-proxy-release-call-selection-20260911/result/qualify.stdout",
+      "sha256": "87c10274c486972e0276d4d98a65105a1074d7b857fc1a44fc98365dc6b567d0",
+      "size_bytes": 57
+    },
+    {
+      "path": "docs/audits/native-proxy-release-call-selection-20260911/result/recovery-copies.json",
+      "sha256": "213c5c5d853a3d06cb560e1c3d92b05974ab1bedc5ce7a268f9678fbeb86ad72",
+      "size_bytes": 3908
+    },
+    {
+      "path": "docs/audits/native-proxy-release-call-selection-20260911/review.json",
+      "sha256": "7dd567632c6b66994e86c433be35e6da9c092f081b8e396aa031955ed711864d",
+      "size_bytes": 4268
+    },
+    {
+      "path": "docs/audits/native-proxy-release-close-selection-20260912/audit.py",
+      "sha256": "9ea146338543d63abb555c5ac8b97ac49fbddd9b99fea7c6bd35f326dadb755a",
+      "size_bytes": 11846
+    },
+    {
+      "path": "docs/audits/native-proxy-release-close-selection-20260912/book-claim-pins.json",
+      "sha256": "97a42276a85c87afae0dd75ff987832780d544ed3898d04c323d8e08271f53ae",
+      "size_bytes": 424
+    },
+    {
+      "path": "docs/audits/native-proxy-release-close-selection-20260912/book-claim-selection.json",
+      "sha256": "10386785d8ee522e09f3a77228dc91cccb1afc35079a64a6cef92704e012fe63",
+      "size_bytes": 415
+    },
+    {
+      "path": "docs/audits/native-proxy-release-close-selection-20260912/book-review-pins.json",
+      "sha256": "ed794b77c4c9aef07e8e48be68c5e2d528ba60566fc72fbaf97c94c0695893f0",
+      "size_bytes": 206
+    },
+    {
+      "path": "docs/audits/native-proxy-release-close-selection-20260912/book-review.json",
+      "sha256": "2a1f019ae72b8cbdea365f5b598123e9370d06eee3410cea5b28aff0a4d99724",
+      "size_bytes": 1071
+    },
+    {
+      "path": "docs/audits/native-proxy-release-close-selection-20260912/claim-review.json",
+      "sha256": "371fd0b287c82e0fc394117d6167c2fe8714af5fb874ad2bee45339d6d26e760",
+      "size_bytes": 3866
+    },
+    {
+      "path": "docs/audits/native-proxy-release-close-selection-20260912/compaction-census.json",
+      "sha256": "08d179de507d97edab15f1ee1a79e196552dfd3bfe9363d881ceeb7a66e72ad7",
+      "size_bytes": 6084
+    },
+    {
+      "path": "docs/audits/native-proxy-release-close-selection-20260912/first-doctrine-failure/doctrines.exit",
+      "sha256": "4355a46b19d348dc2f57c046f8ef63d4538ebb936000f3c9ee954a27460dd865",
+      "size_bytes": 2
+    },
+    {
+      "path": "docs/audits/native-proxy-release-close-selection-20260912/first-doctrine-failure/doctrines.stderr",
+      "sha256": "bc89bcb4c57aefdcd72a8a6f57e964368fca6682ceeb55c212f3d40a004f5cda",
+      "size_bytes": 4219
+    },
+    {
+      "path": "docs/audits/native-proxy-release-close-selection-20260912/first-doctrine-failure/doctrines.stdout",
+      "sha256": "ab80984d5cc11ce64f2883339d27e4982e6b15817705a5178cdb2ed3c2e8db30",
+      "size_bytes": 48422
+    },
+    {
+      "path": "docs/audits/native-proxy-release-close-selection-20260912/first-doctrine-failure/review.json",
+      "sha256": "fdb3c1f40b0cfab7ff7c85c7190d7160bbe9fc44dd44b9ede4701f6655b31a26",
+      "size_bytes": 1171
+    },
+    {
+      "path": "docs/audits/native-proxy-release-close-selection-20260912/first-doctrine-failure/task-evidence-surface.jsonl",
+      "sha256": "7a10ad9b0ef27439e94804d5db6e98176a9de6cc1ec0ccdd93e52f517544b91b",
+      "size_bytes": 779
+    },
+    {
+      "path": "docs/audits/native-proxy-release-close-selection-20260912/first-inventory-failure/claim-inventory.exit",
+      "sha256": "4355a46b19d348dc2f57c046f8ef63d4538ebb936000f3c9ee954a27460dd865",
+      "size_bytes": 2
+    },
+    {
+      "path": "docs/audits/native-proxy-release-close-selection-20260912/first-inventory-failure/claim-inventory.stderr",
+      "sha256": "9f765d4410b86d4e1c3dc1f8f9d337aacc9a79bb4bc767bb9484c33feea3c4e4",
+      "size_bytes": 96
+    },
+    {
+      "path": "docs/audits/native-proxy-release-close-selection-20260912/first-inventory-failure/claim-inventory.stdout",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "size_bytes": 0
+    },
+    {
+      "path": "docs/audits/native-proxy-release-close-selection-20260912/first-inventory-failure/disposition.jsonl",
+      "sha256": "16a2e1b7b7eb6f4ce6a4579c83a39daa672b95f13bc23dff981ab1367f69aa4b",
+      "size_bytes": 2064
+    },
+    {
+      "path": "docs/audits/native-proxy-release-close-selection-20260912/first-inventory-failure/review.json",
+      "sha256": "11a276271ce6c7f2ec0ee41cd5ec2664e89b81941b5ea776099b3f1f6377c50f",
+      "size_bytes": 1278
+    },
+    {
+      "path": "docs/audits/native-proxy-release-close-selection-20260912/inspect-book.py",
+      "sha256": "583d8b9858c5e5e9ad6b181c1e9c3d9ebb0d26cf4c3f5517031c462ca9b98e93",
+      "size_bytes": 2857
+    },
+    {
+      "path": "docs/audits/native-proxy-release-close-selection-20260912/model.py",
+      "sha256": "c7e8d7e69e92d49419dba603c1aba0e461a8b3c222b6e450bbf2c2b776ac1dfd",
+      "size_bytes": 5026
+    },
+    {
+      "path": "docs/audits/native-proxy-release-close-selection-20260912/plan.json",
+      "sha256": "ee6df1ad18017f395600869236ea92b34d2d43cd24e10dd7fab9f99379adfb11",
+      "size_bytes": 765801
+    },
+    {
+      "path": "docs/audits/native-proxy-release-close-selection-20260912/preflight-pins.json",
+      "sha256": "bd60fe44d595d8762a80ab8624a36fa5503d122c637e3afc61f49969b0c84af8",
+      "size_bytes": 996
+    },
+    {
+      "path": "docs/audits/native-proxy-release-close-selection-20260912/prepare.py",
+      "sha256": "6cc6f84ec5a08ec5465eb2ff63fa431677d378963c3f927703abc31218b91dda",
+      "size_bytes": 4691
+    },
+    {
+      "path": "docs/audits/native-proxy-release-close-selection-20260912/recover.py",
+      "sha256": "80c7158f275d55b09f8424ad28fb4a59842c7ebbf14a709ffa31a2efe3b2f3ad",
+      "size_bytes": 2438
+    },
+    {
+      "path": "docs/audits/native-proxy-release-close-selection-20260912/result/audit.exit",
+      "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa",
+      "size_bytes": 2
+    },
+    {
+      "path": "docs/audits/native-proxy-release-close-selection-20260912/result/audit.json",
+      "sha256": "00ffa0f56748ba662f0bbcb9ac55c4efbc4237c8f5cee99c5a4cae5e568ce93b",
+      "size_bytes": 10063
+    },
+    {
+      "path": "docs/audits/native-proxy-release-close-selection-20260912/result/audit.stderr",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "size_bytes": 0
+    },
+    {
+      "path": "docs/audits/native-proxy-release-close-selection-20260912/result/audit.stdout",
+      "sha256": "9f351a4cad3ebbe74fb637f5db381945c50511f368464e8e5bf730d68dac756c",
+      "size_bytes": 8825
+    },
+    {
+      "path": "docs/audits/native-proxy-release-close-selection-20260912/result/prepare.exit",
+      "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa",
+      "size_bytes": 2
+    },
+    {
+      "path": "docs/audits/native-proxy-release-close-selection-20260912/result/prepare.stderr",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "size_bytes": 0
+    },
+    {
+      "path": "docs/audits/native-proxy-release-close-selection-20260912/result/prepare.stdout",
+      "sha256": "5f201aac3a2d1913c3d918a87859d6b59ffaeb1345181e98f54d5b1260908c06",
+      "size_bytes": 108
+    },
+    {
+      "path": "docs/audits/native-proxy-release-close-selection-20260912/result/recovery-copies.json",
+      "sha256": "68ca72081311a235e948902dec46300374c0b6344094a8d94677bb37132db2c2",
+      "size_bytes": 2133
+    },
+    {
+      "path": "docs/audits/native-proxy-release-close-selection-20260912/review.json",
+      "sha256": "bb223153f53294cd7211924d9710127ef6ac7a2205db64826c138a112fce0d27",
+      "size_bytes": 3089
+    },
+    {
+      "path": "docs/audits/native-proxy-release-close-selection-20260912/second-doctrine-failure/doctrines.exit",
+      "sha256": "4355a46b19d348dc2f57c046f8ef63d4538ebb936000f3c9ee954a27460dd865",
+      "size_bytes": 2
+    },
+    {
+      "path": "docs/audits/native-proxy-release-close-selection-20260912/second-doctrine-failure/doctrines.stderr",
+      "sha256": "49e3a3b3200d313cbb5b9a34081f3f56469a94e4aba158232cb576a9cc0cf8be",
+      "size_bytes": 5241
+    },
+    {
+      "path": "docs/audits/native-proxy-release-close-selection-20260912/second-doctrine-failure/doctrines.stdout",
+      "sha256": "0c1ccd1dc9ab022944bdde16f72246d41e7c1eefcfd80457def26e8af1a3a59a",
+      "size_bytes": 48434
+    },
+    {
+      "path": "docs/audits/native-proxy-release-close-selection-20260912/second-doctrine-failure/review.json",
+      "sha256": "3b8bd80a2cbf7c68f862f6d352a95c48ff98097f1de9dced91c5266b257e0c64",
+      "size_bytes": 1372
+    },
+    {
+      "path": "docs/audits/native-proxy-release-close-selection-20260912/second-doctrine-failure/surfaces.jsonl",
+      "sha256": "369b220bc5fb6d208196e6da689d559de9b1eff804886f99a4c6d72717f43968",
+      "size_bytes": 24849
+    },
+    {
+      "path": "docs/audits/native-proxy-release-close-selection-20260912/source-pins.json",
+      "sha256": "6dca3538b027a44ef8af82cd8a7ea40b3966b27afdd4ee0482d2a6f20cc51a4e",
+      "size_bytes": 594
+    },
+    {
+      "path": "docs/audits/native-proxy-release-close-selection-20260912/source-review.json",
+      "sha256": "5b5ca40fb899664b65bd01b56f86aac9233355a6409f27de1bc14e06bfe576e5",
+      "size_bytes": 1940
+    },
+    {
+      "path": "docs/audits/native-proxy-release-close-selection-20260912/verification-outputs.json",
+      "sha256": "1e213c923337404e3ae491c395a0a6b598b47aba3d79d4447e6bc1a5adf5f5f4",
+      "size_bytes": 29941
+    },
+    {
+      "path": "docs/audits/native-proxy-release-close-selection-20260912/verify_book_claims.py",
+      "sha256": "829755f9d56752c431c197497ac0b3067b2912ab9f8f47ed33b066a49c9accf2",
+      "size_bytes": 3051
+    },
+    {
+      "path": "docs/audits/native-proxy-release-interruption-contract-20260911/audit.py",
+      "sha256": "bdb9e0099fa70e7459ce7f192213201c35d51f66a6fe1ddbabcc384274559d59",
+      "size_bytes": 17313
+    },
+    {
+      "path": "docs/audits/native-proxy-release-interruption-contract-20260911/contract.json",
+      "sha256": "8b46fcd193c8bd4805c10b4bbc538bf4add764668d209d80ebe85ec25f3f3411",
+      "size_bytes": 86083
+    },
+    {
+      "path": "docs/audits/native-proxy-release-interruption-contract-20260911/corrected-auditor-pin.json",
+      "sha256": "ee824fcb1d63d2db92c978e5f4204b036bcdc11fd1749bdd8d7d9180a0e97089",
+      "size_bytes": 300
+    },
+    {
+      "path": "docs/audits/native-proxy-release-interruption-contract-20260911/model.py",
+      "sha256": "3b82c3a5f2c0d77cb2cb24fe32f2bf662eba052226d5eb4ac80480f0b31b1c0d",
+      "size_bytes": 2400
+    },
+    {
+      "path": "docs/audits/native-proxy-release-interruption-contract-20260911/preflight-pins.json",
+      "sha256": "e662c60cf9ee6e86e1a259fbfa80a0e1311409ef1a87d6109df2c9fbc4baea70",
+      "size_bytes": 1024
+    },
+    {
+      "path": "docs/audits/native-proxy-release-interruption-contract-20260911/prepare.py",
+      "sha256": "dbfb3abc22b59fe178aa5987653ca3498dcd11f2a37b10a0e1f366a28a7b971f",
+      "size_bytes": 9382
+    },
+    {
+      "path": "docs/audits/native-proxy-release-interruption-contract-20260911/qualify.py",
+      "sha256": "c01260bb85be0df1a6a27dfd29918153938e5cc596bf13fde16ee88bd05eb901",
+      "size_bytes": 3762
+    },
+    {
+      "path": "docs/audits/native-proxy-release-interruption-contract-20260911/result/audit.json",
+      "sha256": "b1a6002ad5eb56c9d1c43432c32d8bb0ef8f79a2bccc0903540da5eb50326253",
+      "size_bytes": 5190
+    },
+    {
+      "path": "docs/audits/native-proxy-release-interruption-contract-20260911/result/qualification.json",
+      "sha256": "3d035deccd70a14f585c30597e8caf5c3c734fcc51e238ab9af9eb3b6a0c8bdb",
+      "size_bytes": 259670
+    },
+    {
+      "path": "docs/audits/native-proxy-runtime-acquisition-20260910/ReferenceAcquisition.pm",
+      "sha256": "b751c88d709e102f7f9b9dd17e0222c39e0a81acc16d7194f7f7c3f4c8535b57",
+      "size_bytes": 6565
+    },
+    {
+      "path": "docs/audits/native-proxy-runtime-census-20260910/ReferenceCensus.pm",
+      "sha256": "9fd74767e8c10831f2732fa8ad426b7e4fff8c17bab06584aa671cdd013b6247",
+      "size_bytes": 8024
+    },
+    {
+      "path": "docs/audits/native-proxy-runtime-records-20260910/RuntimeRecord.pm",
+      "sha256": "013c0a02e7df59dc3a5af944b603cd44121252a02ca0228d6fdc3e1dd28e6745",
+      "size_bytes": 4078
+    },
+    {
+      "path": "docs/audits/native-proxy-runtime-retirement-20260910/PrivateWorkspace.pm",
+      "sha256": "fb87393846eb10147f868aa40ba444f5e5d56cef7f0aaf6a1ff295216a90e9c1",
+      "size_bytes": 6080
+    },
+    {
+      "path": "docs/audits/native-proxy-runtime-retirement-20260910/RuntimeRetirement.pm",
+      "sha256": "766348d16243d3868ca5f8b653f757f8f2eaf5c1aba8ec27fd2d9c67e9fd0bcc",
+      "size_bytes": 8727
+    },
+    {
+      "path": "perl/FSM/ProjectDataLocality.pm",
+      "sha256": "14aece4a50b35956bc2585099aa8d26753942288663c641922da9d36ad4bc893",
+      "size_bytes": 6017
+    },
+    {
+      "path": "perl/FSM/Support/ProcessSupervisor.pm",
+      "sha256": "684882d91f673ea7145f43ed3aad31acf099f13508574be7b2d8911123988637",
+      "size_bytes": 27990
+    },
+    {
+      "path": "t/lib/FSM/Test/ProcessSupervisor.pm",
+      "sha256": "52e467023ea8a776167e227a767abdd3dddf185f1f7c539aac8ca1c4a0a06680",
+      "size_bytes": 773
+    },
+    {
+      "path": "t/lib/FSM/Test/RustProxyFixture.pm",
+      "sha256": "d9c4ab52cf8074526c59b7a5dcb9da870ca7ffdacb4eb236dacb23b5db6d8bfb",
+      "size_bytes": 11466
+    }
+  ],
+  "owner": "HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.12.4.1.3.4.4.4.3",
+  "previous_root_reports": [
+    "docs/audits/native-proxy-observation-archive-release-boundaries-20260911/result/qualification.json",
+    "docs/audits/native-proxy-observation-archive-release-ordinary-before-20260911/result/qualification.json",
+    "docs/audits/native-proxy-observation-archive-release-ordinary-after-20260911/result/qualification.json",
+    "docs/audits/native-proxy-observation-archive-release-equal-before-20260911/result/qualification.json",
+    "docs/audits/native-proxy-observation-archive-release-equal-after-20260911/result/qualification.json",
+    "docs/audits/native-proxy-observation-archive-release-active-before-20260911/result/qualification.json",
+    "docs/audits/native-proxy-observation-archive-release-active-after-20260911/result/qualification.json",
+    "docs/audits/native-proxy-observation-archive-release-last-before-20260911/result/qualification.json",
+    "docs/audits/native-proxy-observation-archive-release-last-after-20260911/result/qualification.json",
+    "docs/audits/native-proxy-observation-archive-release-readback-ordinary-20260911/result/qualification.json",
+    "docs/audits/native-proxy-observation-archive-release-readback-equal-20260912/result/qualification.json",
+    "docs/audits/native-proxy-observation-archive-release-readback-active-20260912/result/qualification.json",
+    "docs/audits/native-proxy-observation-archive-release-readback-last-20260912/result/qualification.json",
+    "docs/audits/native-proxy-observation-archive-release-syscall-20260912/result/qualification.json",
+    "docs/audits/native-proxy-observation-archive-release-close-ordinary-20260912/result/qualification.json"
+  ],
+  "profile_id": "equal_reference_retired_other_observation",
+  "publication": "Publish each complete case as immutable bytes only after its exact roots are absent. Preserve one in-flight body, exact admission records and prospective binding before release.",
+  "report_contract": {
+    "actual_close_first": true,
+    "errno": "EIO",
+    "modeled_return": 0,
+    "operating_system_close_failure_claim": false,
+    "preserve_unexpected_actual_failure": true,
+    "require_actual_success": true,
+    "require_native_closed": true
+  },
+  "schema": "fsmgen.release_equal_close_plan.v1",
+  "scope": "Equal-reference healthy control and every pinned single EIO close report. Unchanged qualified binding, actual-close observer and independent scope/prefix oracles are reused. Equal wrapper, private and global bytes retain distinct native sources and a shared archived copy. No ordinary fixture replay, other-profile file fixture, grouped/primary-error composition, omission, original producer/main or native process.",
+  "sealed_symbols": [
+    "NativeProxyObservationRelease::_admit_locked",
+    "NativeProxyObservationRelease::_coordinator_request",
+    "NativeProxyObservationRelease::_finish_locked",
+    "NativeProxyObservationRelease::_release_locked",
+    "NativeProxyObservationRelease::_unlink_exact",
+    "NativeProxyReferenceCensus::_inspect_locked"
+  ],
+  "selection": {
+    "argument_change": null,
+    "cleanup": "mixed",
+    "control": "none",
+    "expected_error": "",
+    "expected_public_return": true,
+    "expected_success": true,
+    "expected_unlinked": true,
+    "last_observation": false,
+    "mutation": "none",
+    "name": "healthy:equal_reference",
+    "runtime": "retired",
+    "wrapper": "equal_reference"
+  },
+  "source_boundaries": [
+    {
+      "category": "safe_before_after",
+      "lines": 32,
+      "path": "docs/audits/native-proxy-observation-archive-release-20260911/ObservationRelease.pm",
+      "sha256": "41e0c8a668f830545c71662b35d1c8d5c54af348ace9243390ef27012bcbc4fb",
+      "size_bytes": 2312,
+      "start_line": 48,
+      "symbol": "_prepare"
+    },
+    {
+      "category": "safe_before_after",
+      "lines": 14,
+      "path": "docs/audits/native-proxy-observation-archive-release-20260911/ObservationRelease.pm",
+      "sha256": "c089ba11aa88288b4cd7c10f1db9327d5c94d840082536bf211c43b77a665aec",
+      "size_bytes": 778,
+      "start_line": 33,
+      "symbol": "_archive_closure"
+    },
+    {
+      "category": "safe_before_after",
+      "lines": 8,
+      "path": "docs/audits/native-proxy-observation-archive-release-20260911/ObservationRelease.pm",
+      "sha256": "c9dc471ca686e814fa343530921ebd9f8d02e4664a9df920ba01359b972963b7",
+      "size_bytes": 542,
+      "start_line": 81,
+      "symbol": "_coordinator_request"
+    },
+    {
+      "category": "safe_before_after",
+      "lines": 6,
+      "path": "docs/audits/native-proxy-observation-archive-release-20260911/ObservationRelease.pm",
+      "sha256": "93bd977ccc9c4c6acb1e297e54562eac2281d6b493c3896ba700ef969bb2a3bb",
+      "size_bytes": 329,
+      "start_line": 90,
+      "symbol": "_current_image"
+    },
+    {
+      "category": "safe_before_after",
+      "lines": 16,
+      "path": "docs/audits/native-proxy-observation-archive-release-20260911/ObservationRelease.pm",
+      "sha256": "f4014792e246e3b8b006cd48bff7eb2df49a5a80265761259ea76bc878364453",
+      "size_bytes": 866,
+      "start_line": 97,
+      "symbol": "_retain_live_sources"
+    },
+    {
+      "category": "safe_before_after",
+      "lines": 13,
+      "path": "docs/audits/native-proxy-observation-archive-release-20260911/ObservationRelease.pm",
+      "sha256": "cedc35e47b15212d7a5041a6a71a55aa00f91d22be43c43bd8ef73358b19e33f",
+      "size_bytes": 734,
+      "start_line": 114,
+      "symbol": "_admit_locked"
+    },
+    {
+      "category": "safe_before_after",
+      "lines": 9,
+      "path": "docs/audits/native-proxy-observation-archive-release-20260911/ObservationRelease.pm",
+      "sha256": "18932afacbe71b97dbc321d57ee3dbf077102ba00bf69a09f78f54decd63778c",
+      "size_bytes": 455,
+      "start_line": 128,
+      "symbol": "_unlink_exact"
+    },
+    {
+      "category": "safe_before_after",
+      "lines": 10,
+      "path": "docs/audits/native-proxy-observation-archive-release-20260911/ObservationRelease.pm",
+      "sha256": "e35b143c70767025225a30c5493c83a084c4695c626cfb1c05f94797c701400f",
+      "size_bytes": 483,
+      "start_line": 138,
+      "symbol": "_assert_absent"
+    },
+    {
+      "category": "safe_before_after",
+      "lines": 12,
+      "path": "docs/audits/native-proxy-observation-archive-release-20260911/ObservationRelease.pm",
+      "sha256": "fb4ed79c1e3fa836dde1bee5dbed1a6fe72891e1de3cf15b08d4f464ffb8f853",
+      "size_bytes": 662,
+      "start_line": 149,
+      "symbol": "_release_locked"
+    },
+    {
+      "category": "safe_before_after",
+      "lines": 17,
+      "path": "docs/audits/native-proxy-observation-archive-release-20260911/ObservationRelease.pm",
+      "sha256": "15adfbdcbb264a74c979681dabc08f64376583710abc1552e76b53bd0a02780a",
+      "size_bytes": 1162,
+      "start_line": 162,
+      "symbol": "_finish_locked"
+    },
+    {
+      "category": "pure_not_selected",
+      "lines": 1,
+      "path": "docs/audits/native-proxy-observation-archive-release-20260911/ObservationRelease.pm",
+      "sha256": "865380e165a8c69aded2fd4408e6006d77796802a9d04bd26994cb82f9a8d4e2",
+      "size_bytes": 67,
+      "start_line": 21,
+      "symbol": "_same"
+    },
+    {
+      "category": "pure_not_selected",
+      "lines": 1,
+      "path": "docs/audits/native-proxy-observation-archive-release-20260911/ObservationRelease.pm",
+      "sha256": "0ec7842f9cb7cfe3e33275ed6a54419a70aa17bcc1d64991fcf8e93545aee614",
+      "size_bytes": 58,
+      "start_line": 22,
+      "symbol": "_copy"
+    },
+    {
+      "category": "closure_category_only",
+      "lines": 8,
+      "path": "docs/audits/native-proxy-observation-archive-release-20260911/ObservationRelease.pm",
+      "sha256": "2504d1110ad7a5d10677b2470c68c60540230fa35a966a59f1934b63c77852cf",
+      "size_bytes": 224,
+      "start_line": 24,
+      "symbol": "_close_owned"
+    },
+    {
+      "category": "public_envelope_only",
+      "lines": 19,
+      "path": "docs/audits/native-proxy-observation-archive-release-20260911/ObservationRelease.pm",
+      "sha256": "c49a9c9cc1b95db0ed437a897287f7ece59998c44439cdedd4b3069d1a0ae0a2",
+      "size_bytes": 1077,
+      "start_line": 180,
+      "symbol": "release_observation_reference"
+    },
+    {
+      "category": "safe_before_after",
+      "lines": 24,
+      "path": "docs/audits/native-proxy-image-coordination-20260910/Coordination.pm",
+      "sha256": "287b03b60eac27b3bc88b7cece10aff9950986c2f977fb3d154cffcfa9be788f",
+      "size_bytes": 733,
+      "start_line": 81,
+      "symbol": "_names"
+    },
+    {
+      "category": "safe_before_after",
+      "lines": 14,
+      "path": "docs/audits/native-proxy-image-coordination-20260910/Coordination.pm",
+      "sha256": "6d20972a03d9909e90a09c4d0c6db543c784af6e800f9dde7b783deda84ad95a",
+      "size_bytes": 615,
+      "start_line": 106,
+      "symbol": "_structure"
+    },
+    {
+      "category": "safe_before_after",
+      "lines": 21,
+      "path": "docs/audits/native-proxy-image-coordination-20260910/Coordination.pm",
+      "sha256": "fc92ae45eb502604e42f2f902f88fa3f30a3a0cd173ee3075dc3051528890772",
+      "size_bytes": 1012,
+      "start_line": 121,
+      "symbol": "_census"
+    },
+    {
+      "category": "safe_before_after",
+      "lines": 11,
+      "path": "docs/audits/native-proxy-image-coordination-20260910/Coordination.pm",
+      "sha256": "b2e2c212e162b35a0f79bcb7e3bf2fa8c2c1842b65d11cabbb16cb78e23a9053",
+      "size_bytes": 493,
+      "start_line": 28,
+      "symbol": "_lock_identity"
+    },
+    {
+      "category": "coordinator_envelope_only",
+      "lines": 202,
+      "path": "docs/audits/native-proxy-image-coordination-20260910/Coordination.pm",
+      "sha256": "549846ad5cc1ca03e45e17cd69af9f2d7444236fc9849cc7072a058bb03c2b19",
+      "size_bytes": 13527,
+      "start_line": 148,
+      "symbol": "_transaction"
+    },
+    {
+      "category": "safe_before_after",
+      "lines": 10,
+      "path": "docs/audits/native-proxy-image-custody-20260910/ImageCustody.pm",
+      "sha256": "3b70e9746898f53742ec70c5cde1eb29299baa43a2c860d1bcaf7907f50733e5",
+      "size_bytes": 428,
+      "start_line": 103,
+      "symbol": "_directory"
+    },
+    {
+      "category": "safe_before_after",
+      "lines": 25,
+      "path": "docs/audits/native-proxy-image-custody-20260910/ImageCustody.pm",
+      "sha256": "453d871289a76de9bd2b16d213722b5d7ee779f9d26e2e6b9fec42841dcd5e08",
+      "size_bytes": 828,
+      "start_line": 114,
+      "symbol": "_members"
+    },
+    {
+      "category": "safe_before_after",
+      "lines": 9,
+      "path": "docs/audits/native-proxy-image-custody-20260910/ImageCustody.pm",
+      "sha256": "d2c2eedbea12362c281ae42f1b7c60b04e9eaa479f07eb586160e51ac681026c",
+      "size_bytes": 385,
+      "start_line": 165,
+      "symbol": "_recheck_source"
+    },
+    {
+      "category": "safe_before_after",
+      "lines": 45,
+      "path": "docs/audits/native-proxy-image-custody-20260910/ImageCustody.pm",
+      "sha256": "1a17b69add764279d039e8e6df3a0bda07bfce1e0c831ad9acb04baa27f09662",
+      "size_bytes": 2140,
+      "start_line": 175,
+      "symbol": "read_entry"
+    },
+    {
+      "category": "before_only_returned_handle",
+      "lines": 24,
+      "path": "docs/audits/native-proxy-image-custody-20260910/ImageCustody.pm",
+      "sha256": "83b68e387b8be166cc2112d5b54b3f030c1ad5c3bf69c1fe5a0fe98c0a40d57b",
+      "size_bytes": 1074,
+      "start_line": 140,
+      "symbol": "_source"
+    },
+    {
+      "category": "safe_before_after",
+      "lines": 10,
+      "path": "docs/audits/native-proxy-observation-archive-20260911/ObservationArchive.pm",
+      "sha256": "31cb2c9a3d38e3b5c0ce5fd0963550df3a84232cccf7168a2c0e97ed8c2b651d",
+      "size_bytes": 377,
+      "start_line": 21,
+      "symbol": "_limits"
+    },
+    {
+      "category": "safe_before_after",
+      "lines": 6,
+      "path": "docs/audits/native-proxy-observation-archive-20260911/ObservationArchive.pm",
+      "sha256": "46af9388c20e5f5c16b0a98e69c5deb7cee227bface59af1c62646469579f398",
+      "size_bytes": 288,
+      "start_line": 41,
+      "symbol": "_members"
+    },
+    {
+      "category": "safe_before_after",
+      "lines": 8,
+      "path": "docs/audits/native-proxy-observation-archive-20260911/ObservationArchive.pm",
+      "sha256": "1a12db81c2c4c029567a1c78f8e76206e7cfc6e6452339c19a5f83711e7eaa3c",
+      "size_bytes": 350,
+      "start_line": 32,
+      "symbol": "_directory_closure"
+    },
+    {
+      "category": "safe_before_after",
+      "lines": 20,
+      "path": "docs/audits/native-proxy-observation-archive-20260911/ObservationArchive.pm",
+      "sha256": "89efeec24f9b1e9590ec83611b1ae92b604b01e8c057b2b3e222c919d3459f20",
+      "size_bytes": 878,
+      "start_line": 57,
+      "symbol": "_source_closure"
+    },
+    {
+      "category": "safe_before_after",
+      "lines": 7,
+      "path": "docs/audits/native-proxy-observation-archive-20260911/ObservationArchive.pm",
+      "sha256": "0627e1ef723bc6643a515a8fdc071134aaccafbc79e0c11a022d64ef616ca666",
+      "size_bytes": 363,
+      "start_line": 83,
+      "symbol": "_receipt"
+    },
+    {
+      "category": "safe_before_after",
+      "lines": 28,
+      "path": "docs/audits/native-proxy-runtime-census-20260910/ReferenceCensus.pm",
+      "sha256": "bac1e9bfccfa9aaf2d2c8552f17399d0a78b7f0dbb0d10e26a04fb79e5db0280",
+      "size_bytes": 1338,
+      "start_line": 61,
+      "symbol": "_image"
+    },
+    {
+      "category": "safe_before_after",
+      "lines": 36,
+      "path": "docs/audits/native-proxy-runtime-census-20260910/ReferenceCensus.pm",
+      "sha256": "58fcc61e688e6244fc10e1bef9ebed317d0c1d833bb70b69851da818762c9f93",
+      "size_bytes": 1705,
+      "start_line": 145,
+      "symbol": "_inspect_locked"
+    },
+    {
+      "category": "safe_before_after",
+      "lines": 35,
+      "path": "docs/audits/native-proxy-runtime-census-20260910/ReferenceCensus.pm",
+      "sha256": "f44dd97e50bd5076e85be9a768a6446fcd705fe1049885c43f5d3b08ec406d31",
+      "size_bytes": 1689,
+      "start_line": 109,
+      "symbol": "_closure"
+    },
+    {
+      "category": "safe_before_after",
+      "lines": 12,
+      "path": "docs/audits/native-proxy-runtime-census-20260910/ReferenceCensus.pm",
+      "sha256": "9b09471b8c72da2405d324de5ff8b15fd15b662471d622059b86c78d59a6e533",
+      "size_bytes": 573,
+      "start_line": 90,
+      "symbol": "_matches_image"
+    },
+    {
+      "category": "safe_before_after",
+      "lines": 18,
+      "path": "docs/audits/native-proxy-runtime-census-20260910/ReferenceCensus.pm",
+      "sha256": "92890fc36f84eb6bcce3413f1ff1675e0c6f1193181fe43802727ae45a93d711",
+      "size_bytes": 1094,
+      "start_line": 34,
+      "symbol": "_decode_record"
+    },
+    {
+      "category": "safe_before_after",
+      "lines": 5,
+      "path": "docs/audits/native-proxy-runtime-census-20260910/ReferenceCensus.pm",
+      "sha256": "1921c96c73ec5cdff1227f7805f7ce1476ff4c4b7a91fa690faf0fa75179ac33",
+      "size_bytes": 171,
+      "start_line": 103,
+      "symbol": "_filename_key"
+    },
+    {
+      "category": "pure_not_selected",
+      "lines": 7,
+      "path": "docs/audits/native-proxy-runtime-census-20260910/ReferenceCensus.pm",
+      "sha256": "9b73dd16ce044a6bb006d52696a9dbfb76ff54a05bb5fe501613f502ce7fc3b0",
+      "size_bytes": 320,
+      "start_line": 53,
+      "symbol": "_snapshot"
+    },
+    {
+      "category": "safe_before_after",
+      "lines": 7,
+      "path": "docs/audits/native-proxy-runtime-retirement-20260910/PrivateWorkspace.pm",
+      "sha256": "a42a2bcc3071a4f00f88f9fdd7f545b3139396bd252172cb9b0247af920e6fa6",
+      "size_bytes": 192,
+      "start_line": 20,
+      "symbol": "_absent"
+    }
+  ],
+  "source_revision": "733c0ac205fd2ceacbf396806568a06e4ae62560"
+}

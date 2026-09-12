@@ -1,0 +1,35 @@
+{
+  "audit_result": "docs/audits/native-proxy-observation-archive-release-close-equal-20260912/result/audit.json",
+  "book_review": "docs/audits/native-proxy-observation-archive-release-close-equal-20260912/book-review.json",
+  "claim_legs": {
+    "durability": "Prospective source pins and exact Git-bound dependencies, first-run observations and complete recovery manifests are tracked. Saved-only audit and recovery authenticate without fixture replay or original raw-log access. The book disposition names its explicit watcher.",
+    "falsify": "Unchanged recursive source-scope and independent healthy-prefix/remaining-owner oracles agree before and after execution. Row/domain/header controls reject altered evidence, including collapsed equal sources, changed shared archive identity and false profile selection. Recovery-copy and book-count controls reject omissions, wrong destinations/digests and outcome redistribution.",
+    "rederive": "Committed selectors define the exact equal-reference domain. Immutable case receipts preserve actual calls, close returns, reported errors, inactive attempts, file effects and cleanup. The original equal-identity oracle reconstructs source bytes and native identities from initial files. The book watcher independently recounts original cases and TAP."
+  },
+  "commit_gate": "Staged doctrines and normal commit hooks must pass before commit.",
+  "dispositions": {
+    "added": [
+      "published-26e69190db614bdc5cf6bee6"
+    ],
+    "prior_records_byte_exact": 1927
+  },
+  "limits": "Active-runtime, last-observation, primary/grouped errors, genuine omissions, final release applicability and native/lifetime remain separate. No earlier qualifier, fixture, original main or native process is replayed. Historical startup/parent/full CI/push remain gated.",
+  "owner": "HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.12.4.1.3.4.4.4.3",
+  "raw_verification_outputs": "docs/audits/native-proxy-observation-archive-release-close-equal-20260912/verification-outputs.json",
+  "recovery": {
+    "bytes": 91879895,
+    "copies": 185,
+    "falsifiers": [
+      "omitted-copy",
+      "foreign-destination",
+      "changed-copy-digest"
+    ],
+    "source_reaccess": false,
+    "success": true
+  },
+  "schema": "fsmgen.release_equal_close_review.v1",
+  "scope": "Equal-reference healthy control and every selected single EIO close report. Actual close success and native closure precede substitution. Original equal-byte source identities and shared archived identity remain distinct facts.",
+  "source_review": "docs/audits/native-proxy-observation-archive-release-close-equal-20260912/source-review.json",
+  "source_revision": "733c0ac205fd2ceacbf396806568a06e4ae62560",
+  "success": true
+}

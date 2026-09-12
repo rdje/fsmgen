@@ -1,0 +1,1 @@
+{"falsifiers": ["lost-close", "changed-error", "false-success", "wrong-owner", "lost-unlink", "lost-absence"], "fixture_allocations": 0, "predictions": 167, "prior_identity_verified": true, "success": true}

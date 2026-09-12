@@ -2,6 +2,7 @@
 id: test-subprocess-policy-adapters
 title: Test subprocesses share one mechanism behind sealed policy adapters
 answers:
+  - "how are equal-reference release close reports verified?"
   - "how are ordinary release close reports verified?"
   - "how are release close reports selected?"
   - "how is complete release call readback fault coverage verified?"
@@ -133,12 +134,12 @@ evidence: >-
   t/lib/FSM/Test/RustProxyFixture.pm; t/1815-rust-proxy-fixture.t; t/1816-rust-proxy-integration.t; t/1817-test-supervision-architecture.t
 reverify: >-
   scripts/run_with_ram_guard.sh -- python3 -B
-  docs/audits/native-proxy-observation-archive-release-close-ordinary-20260912/audit.py --verify-saved
+  docs/audits/native-proxy-observation-archive-release-close-equal-20260912/audit.py --verify-saved
 ---
 Decisions `0087`/`0101`: `FSM::Support::ProcessSupervisor`; adapters seal local argv/capture/group cleanup. T1669 checks ownership. `exec_handoff_monotonic_ns` is EOF, not main entry; absent EOF leaves timing unknown.
 `VerilatorRuntime`: decision `0086`. `TaskAcceptanceFixtureRuntime`: owned roots/fixed Git argv.
-History: `ac6208a46c3d2bab8d668c0a942b056520b0bfc6:docs/knowledge/test-subprocess-policy-adapters.md`. Earlier contracts and replay: history.
-Ordinary close reports: actual closure, EIO, unwind and effects verified. Other profiles/compositions remain open. Prior selection: history.
+History: `733c0ac205fd2ceacbf396806568a06e4ae62560:docs/knowledge/test-subprocess-policy-adapters.md`.
+Equal-reference close reports: distinct equal-byte sources, shared archive, closure and effects verified. Prior proof: history.
 Binding, I/O load order and successful-open nonzero errno: predecessor history. Successful errno is retained data; return and native identity establish success.
 Proxy: `t/fixtures/rust-tool-proxy.c` is C; Perl `t/lib/FSM/Test/RustProxyFixture.pm` builds it and the Perl harness launches a separate process to impersonate rustup resolution. Rust names the substituted tool, not the native implementation language.
 HIAL/VIAL `.19.2.3.1.2.2.5.5` owns repair/hostile controls; neutral-verifier extraction stays blocked.

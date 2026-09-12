@@ -1,0 +1,20 @@
+{
+  "checked_passages": [
+    "Equal-reference release close qualification covers 167 cases: 1 healthy control and 166 single EIO reports, with 2029 TAP assertions.",
+    "The archive bindings retain distinct native source identities for the wrapper, private reference and global reference even when their bytes match.",
+    "Those bindings share the archived content object.",
+    "It does not restore the deleted hold or merge equal-byte source identities.",
+    "Identity controls reject collapsed source bindings, a changed shared archive identity and an ordinary wrapper mislabeled as equal.",
+    "python3 -B docs/audits/native-proxy-observation-archive-release-close-equal-20260912/audit.py --verify-saved"
+  ],
+  "exact_output_absent": true,
+  "exit_code": 0,
+  "output": ".artifacts/tmp/native-proxy-release-close-equal-book-20260912/book",
+  "rendered_bytes": 23446463,
+  "rendered_directories": 3,
+  "rendered_files": 98,
+  "renderer_warnings": [
+    "WARN search index is very large (13225760 bytes)"
+  ],
+  "same_volume_direct_objects": true
+}
