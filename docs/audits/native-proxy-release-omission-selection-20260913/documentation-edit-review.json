@@ -1,0 +1,16 @@
+{
+  "book_actual": {
+    "bytes_total": 3379321,
+    "files": 63,
+    "lines_total": 61616
+  },
+  "book_baseline": {
+    "bytes_total": 3378239,
+    "files": 63,
+    "lines_total": 61596
+  },
+  "cause": "Author-side aggregate-byte assertions rejected proposed card wording before any card or authority write. The already inserted book passage remained unchanged.",
+  "knowledge_byte_delta": 11,
+  "rejected_card_candidates": 2,
+  "resolution": "Route superseded prose to exact Git history and shorten the current pointer while preserving every previous question and the C/Perl explanation."
+}

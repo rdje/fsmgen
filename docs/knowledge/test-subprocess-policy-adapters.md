@@ -2,6 +2,7 @@
 id: test-subprocess-policy-adapters
 title: Test subprocesses share one mechanism behind sealed policy adapters
 answers:
+  - "how are genuine omitted release closes selected?"
   - "how do equal-reference release compositions preserve ownership?"
   - "how do ordinary release compositions preserve primary errors?"
   - "how are release error compositions selected?"
@@ -138,9 +139,8 @@ evidence: >-
   t/1669-task-acceptance-fixture-runtime.t; t/python/test_fixture_runtime_sources.py;
   t/lib/FSM/Test/RustProxyFixture.pm; t/1815-rust-proxy-fixture.t; t/1816-rust-proxy-integration.t; t/1817-test-supervision-architecture.t
 reverify: >-
-  scripts/run_with_ram_guard.sh -- python3 -B
-  docs/audits/native-proxy-release-close-join-20260913/audit-corrected.py --verify-saved
+  scripts/run_with_ram_guard.sh -- python3 -B docs/audits/native-proxy-release-omission-selection-20260913/audit.py --verify-saved
 ---
 Decisions `0087`/`0101`: `FSM::Support::ProcessSupervisor`; adapters seal local argv/capture/group cleanup. T1669 checks ownership. `exec_handoff_monotonic_ns` is EOF, not main entry; absent EOF leaves timing unknown.
-History: `6f15c1402a32f6e05948a51fe79d7f2465b559f2:docs/knowledge/test-subprocess-policy-adapters.md`. The selected close-report join preserves primary errors, actual closure and profile state: reverify. Omissions and release signoff remain open.
+History: `b31f942cd6e8d7407594b8ed4a8a9a1d87f2ae67:docs/knowledge/test-subprocess-policy-adapters.md`. Release omissions: selected, unexecuted; recovery follows the original verdict. Reverify; signoff open.
 Proxy: `t/fixtures/rust-tool-proxy.c` is C, built by Perl `t/lib/FSM/Test/RustProxyFixture.pm` and launched separately to imitate rustup. `VerilatorRuntime`: decision `0086`. HIAL/VIAL `.19.2.3.1.2.2.5.5` owns repair/hostile controls; neutral-verifier extraction stays blocked.

@@ -1,0 +1,48 @@
+{
+  "book_publication": "Qualitative prospective protocol and explicit unexecuted scope; no new quantitative headline.",
+  "book_review": "docs/audits/native-proxy-release-omission-selection-20260913/book-review.json",
+  "claim_legs": {
+    "durability": "Prospective source pins, original Git-bound inputs, exact resumable output copies and saved-only audit/recovery are tracked. The new fact question routes directly to the saved verifier. Actual current-input binding and fixture execution remain separately owned pending legs, never counted as complete.",
+    "falsify": "Changed profile/case identity, scope/kind, native source/event witnesses and numeric-index types reject; altered retention/verdict/liveness/recovery contracts reject; missing or repeated predecessor-root domains reject.",
+    "rederive": "The original event-stack selector agrees with independent source ownership and archived event-position reconstruction. Original observer source is authenticated before protocol review; every original cleanup scope has a profile-owned representative."
+  },
+  "commit_gate": "Staged doctrines and normal hooks must pass before this slice is committed.",
+  "continuity_review": "docs/audits/native-proxy-release-omission-selection-20260913/continuity-review.json",
+  "documentation_edit_review": "docs/audits/native-proxy-release-omission-selection-20260913/documentation-edit-review.json",
+  "first_executions": {
+    "audit": true,
+    "book": true,
+    "book_inspection": true,
+    "knowledge": true,
+    "prepare": true,
+    "recovery": true,
+    "saved_audit": true,
+    "saved_recovery": true
+  },
+  "knowledge_aggregate": {
+    "bytes_total": 3492411,
+    "files": 1160,
+    "lines_total": 47288
+  },
+  "new_fact_question": "how are genuine omitted release closes selected?",
+  "old_fact_questions_preserved": 116,
+  "owner": "HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.12.4.1.3.4.4.5.1",
+  "raw_verification_outputs": "docs/audits/native-proxy-release-omission-selection-20260913/verification-outputs.json",
+  "recovery": {
+    "bytes": 18230,
+    "copies": 7,
+    "falsifiers": [
+      "missing-copy",
+      "foreign-destination",
+      "corrupt-copy-digest"
+    ],
+    "source_reaccess": false,
+    "success": true
+  },
+  "schema": "fsmgen.release_omission_selection_review.v1",
+  "scope": "Pure retained-evidence selection and observer protocol only. No new fixture, omitted close, original producer/main, compiler, native process or collector. Actual omissions, final release applicability, native/lifetime and historical startup/parent/full CI/push remain separately gated.",
+  "selection_result": "docs/audits/native-proxy-release-omission-selection-20260913/result/audit.json",
+  "source_review": "docs/audits/native-proxy-release-omission-selection-20260913/observer-source-review.json",
+  "source_revision": "b31f942cd6e8d7407594b8ed4a8a9a1d87f2ae67",
+  "success": true
+}

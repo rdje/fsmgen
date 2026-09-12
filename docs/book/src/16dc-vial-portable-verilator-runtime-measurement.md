@@ -2918,6 +2918,26 @@ Verify the saved result without starting a fixture:
 python3 -B docs/audits/native-proxy-release-close-join-20260913/audit-corrected.py --verify-saved
 ```
 
+Prospective omitted-close cases now cover source, directory and lock cleanup
+scopes across the existing release profiles. Selection compares original close
+events with independently reconstructed source ownership. Missing, duplicate or
+misbound cases and altered observation/recovery contracts are rejected.
+
+The deliberate fault must retain the exact selected handle past the original
+observer return. First preserve the original verdict and prove that handle is
+still open; then close that same object during separately recorded recovery.
+Recovery never counts as closure by the implementation. Intentional retention
+also does not establish ordinary Perl scope cleanup without that retention.
+
+For example, a selected directory omission must leave its original directory
+handle open through the verdict; later recovery uses `CORE::closedir` on that
+same object. These cases are selected but have not yet executed. Verify the
+selection and protocol from retained evidence:
+
+```sh
+python3 -B docs/audits/native-proxy-release-omission-selection-20260913/audit.py --verify-saved
+```
+
 Genuine omissions and final release applicability remain pending. These reported errors
 follow successful actual reads or closes; they do not qualify ambiguous operating-system
 failures or authorize native execution.

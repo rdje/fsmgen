@@ -1,0 +1,17 @@
+[
+  {
+    "path": "docs/audits/native-proxy-release-omission-selection-20260913/prepare.py",
+    "sha256": "cd4fad652b68afdf84ed4b0c463757be64bc6b852bf55a5ef223f701b395b514",
+    "size_bytes": 7332
+  },
+  {
+    "path": "docs/audits/native-proxy-release-omission-selection-20260913/model.py",
+    "sha256": "e9ce0725e9482e2b09fe46292074ede6e257eb556f075aab2ccfa9dfdadaed71",
+    "size_bytes": 1118
+  },
+  {
+    "path": "docs/audits/native-proxy-release-omission-selection-20260913/audit.py",
+    "sha256": "a5c9373ea56a53b7e15fceea47bfbb775eb8b4cac33c1aeaaf11eecf91f27ff8",
+    "size_bytes": 11339
+  }
+]

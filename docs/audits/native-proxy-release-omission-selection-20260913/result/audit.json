@@ -1,0 +1,335 @@
+{
+  "case_falsifiers": [
+    "ordinary_retired_other_observation:missing-case",
+    "ordinary_retired_other_observation:duplicate-case",
+    "ordinary_retired_other_observation:wrong-scope",
+    "ordinary_retired_other_observation:wrong-kind",
+    "ordinary_retired_other_observation:changed-close-event",
+    "ordinary_retired_other_observation:changed-native-source-path",
+    "ordinary_retired_other_observation:boolean-case-index",
+    "ordinary_retired_other_observation:foreign-profile",
+    "equal_reference_retired_other_observation:missing-case",
+    "equal_reference_retired_other_observation:duplicate-case",
+    "equal_reference_retired_other_observation:wrong-scope",
+    "equal_reference_retired_other_observation:wrong-kind",
+    "equal_reference_retired_other_observation:changed-close-event",
+    "equal_reference_retired_other_observation:changed-native-source-path",
+    "equal_reference_retired_other_observation:boolean-case-index",
+    "equal_reference_retired_other_observation:foreign-profile",
+    "ordinary_active_runtime:missing-case",
+    "ordinary_active_runtime:duplicate-case",
+    "ordinary_active_runtime:wrong-scope",
+    "ordinary_active_runtime:wrong-kind",
+    "ordinary_active_runtime:changed-close-event",
+    "ordinary_active_runtime:changed-native-source-path",
+    "ordinary_active_runtime:boolean-case-index",
+    "ordinary_active_runtime:foreign-profile",
+    "ordinary_retired_last_observation:missing-case",
+    "ordinary_retired_last_observation:duplicate-case",
+    "ordinary_retired_last_observation:wrong-scope",
+    "ordinary_retired_last_observation:wrong-kind",
+    "ordinary_retired_last_observation:changed-close-event",
+    "ordinary_retired_last_observation:changed-native-source-path",
+    "ordinary_retired_last_observation:boolean-case-index",
+    "ordinary_retired_last_observation:foreign-profile"
+  ],
+  "executed_omissions": 0,
+  "input_bytes": 529837772,
+  "input_files": 1518,
+  "native_executions": 0,
+  "new_fixture_roots": 0,
+  "original_boundary": {
+    "caller_controls": 6,
+    "calls": 2381,
+    "cases": 4,
+    "continuation_aliases": 32,
+    "directories": 196,
+    "eligible": 4265,
+    "events": 7703,
+    "handles": 665,
+    "locks": 4,
+    "ownership_only": 465,
+    "reads": 465,
+    "roots": 16,
+    "sources": 465
+  },
+  "original_observer": {
+    "explicit_alias_needed_after_return": true,
+    "holds_through_original_snapshot": true,
+    "returned_records_exclude_handles": true,
+    "source": {
+      "path": "docs/audits/native-proxy-observation-archive-release-20260911/ReleaseTrace.pm",
+      "sha256": "43f16583db2901de809834a0959f97a54f217bc5c8d408d92d4c514ffed4827b",
+      "size_bytes": 10026
+    }
+  },
+  "predecessor_roots_absent": 28076,
+  "profiles": [
+    {
+      "counts": {
+        "directory_omissions": 2,
+        "healthy_controls": 1,
+        "lock_omissions": 1,
+        "prospective_cases": 11,
+        "source_omissions": 7
+      },
+      "original_normal_closes": 171,
+      "owner": "HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.12.4.1.3.4.4.5.2",
+      "profile": "ordinary_retired_other_observation",
+      "selected_scopes": [
+        "NativeProxyImageCoordination::_census",
+        "NativeProxyImageCoordination::_names",
+        "NativeProxyImageCoordination::_transaction",
+        "NativeProxyImageCustody::_members",
+        "NativeProxyImageCustody::read_entry",
+        "NativeProxyObservationArchive::_source_closure",
+        "NativeProxyObservationRelease::_close_owned",
+        "NativeProxyReferenceCensus::_closure",
+        "NativeProxyReferenceCensus::_image",
+        "NativeProxyReferenceCensus::_inspect_locked"
+      ]
+    },
+    {
+      "counts": {
+        "directory_omissions": 2,
+        "healthy_controls": 1,
+        "lock_omissions": 1,
+        "prospective_cases": 11,
+        "source_omissions": 7
+      },
+      "original_normal_closes": 166,
+      "owner": "HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.12.4.1.3.4.4.5.3",
+      "profile": "equal_reference_retired_other_observation",
+      "selected_scopes": [
+        "NativeProxyImageCoordination::_census",
+        "NativeProxyImageCoordination::_names",
+        "NativeProxyImageCoordination::_transaction",
+        "NativeProxyImageCustody::_members",
+        "NativeProxyImageCustody::read_entry",
+        "NativeProxyObservationArchive::_source_closure",
+        "NativeProxyObservationRelease::_close_owned",
+        "NativeProxyReferenceCensus::_closure",
+        "NativeProxyReferenceCensus::_image",
+        "NativeProxyReferenceCensus::_inspect_locked"
+      ]
+    },
+    {
+      "counts": {
+        "directory_omissions": 2,
+        "healthy_controls": 1,
+        "lock_omissions": 1,
+        "prospective_cases": 11,
+        "source_omissions": 7
+      },
+      "original_normal_closes": 180,
+      "owner": "HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.12.4.1.3.4.4.5.4",
+      "profile": "ordinary_active_runtime",
+      "selected_scopes": [
+        "NativeProxyImageCoordination::_census",
+        "NativeProxyImageCoordination::_names",
+        "NativeProxyImageCoordination::_transaction",
+        "NativeProxyImageCustody::_members",
+        "NativeProxyImageCustody::read_entry",
+        "NativeProxyObservationArchive::_source_closure",
+        "NativeProxyObservationRelease::_close_owned",
+        "NativeProxyReferenceCensus::_closure",
+        "NativeProxyReferenceCensus::_image",
+        "NativeProxyReferenceCensus::_inspect_locked"
+      ]
+    },
+    {
+      "counts": {
+        "directory_omissions": 2,
+        "healthy_controls": 1,
+        "lock_omissions": 1,
+        "prospective_cases": 11,
+        "source_omissions": 7
+      },
+      "original_normal_closes": 148,
+      "owner": "HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.12.4.1.3.4.4.5.5",
+      "profile": "ordinary_retired_last_observation",
+      "selected_scopes": [
+        "NativeProxyImageCoordination::_census",
+        "NativeProxyImageCoordination::_names",
+        "NativeProxyImageCoordination::_transaction",
+        "NativeProxyImageCustody::_members",
+        "NativeProxyImageCustody::read_entry",
+        "NativeProxyObservationArchive::_source_closure",
+        "NativeProxyObservationRelease::_close_owned",
+        "NativeProxyReferenceCensus::_closure",
+        "NativeProxyReferenceCensus::_image",
+        "NativeProxyReferenceCensus::_inspect_locked"
+      ]
+    }
+  ],
+  "prospective_pins": [
+    {
+      "path": "docs/audits/native-proxy-release-omission-selection-20260913/prepare.py",
+      "sha256": "cd4fad652b68afdf84ed4b0c463757be64bc6b852bf55a5ef223f701b395b514",
+      "size_bytes": 7332
+    },
+    {
+      "path": "docs/audits/native-proxy-release-omission-selection-20260913/model.py",
+      "sha256": "e9ce0725e9482e2b09fe46292074ede6e257eb556f075aab2ccfa9dfdadaed71",
+      "size_bytes": 1118
+    },
+    {
+      "path": "docs/audits/native-proxy-release-omission-selection-20260913/audit.py",
+      "sha256": "a5c9373ea56a53b7e15fceea47bfbb775eb8b4cac33c1aeaaf11eecf91f27ff8",
+      "size_bytes": 11339
+    },
+    {
+      "path": "docs/audits/native-proxy-release-omission-selection-20260913/source-pins.json",
+      "sha256": "0e84852f1ed3b3c3074187065a01cc160e8434cbdcb210d4bdf2cd691ff64fe7",
+      "size_bytes": 603
+    },
+    {
+      "path": "docs/audits/native-proxy-release-omission-selection-20260913/plan.json",
+      "sha256": "3d376b862650564b68068405d8a2524f7d9651520e2b99c74585b9a96995b468",
+      "size_bytes": 516747
+    },
+    {
+      "path": "docs/audits/native-proxy-release-omission-selection-20260913/continuity.py",
+      "sha256": "5d86ba6de0e4ec1d21dba0be297bebfdc8a4f78d421a8042277b1679c72a9fdf",
+      "size_bytes": 4974
+    },
+    {
+      "path": "docs/audits/native-proxy-release-omission-selection-20260913/observer-source-review.json",
+      "sha256": "d3237c85ed9352d0f881ab97ce67aa4307a158bffdcf82ada54faaf237c68691",
+      "size_bytes": 1244
+    }
+  ],
+  "protocol_falsifiers": [
+    "omission_contract:retain_exact_object",
+    "omission_contract:actual_close_executed",
+    "omission_contract:mark_actual_success",
+    "omission_contract:reported_return",
+    "omission_contract:original_observer_closed",
+    "observation_contract:alias_survives_observe_return",
+    "observation_contract:require_native_open_after_return",
+    "observation_contract:preserve_original_trace",
+    "observation_contract:observer_duplicates_close",
+    "recovery_contract:only_after_original_verdict_and_liveness",
+    "recovery_contract:exact_original_object",
+    "recovery_contract:directory_primitive",
+    "recovery_contract:recovery_is_implementation_closure",
+    "recovery_contract:no_root_cleanup_before_recovery"
+  ],
+  "root_falsifiers": [
+    "missing-root-domain",
+    "repeated-root-domain"
+  ],
+  "schema": "fsmgen.release_omission_selection_audit.v1",
+  "scope": "Pure retained-evidence selection and observer protocol only. No new fixture, omitted close, original producer/main, compiler, native process or collector. Actual omissions, final release applicability, native/lifetime and historical startup/parent/full CI/push remain separately gated.",
+  "source_contracts": {
+    "NativeProxyImageCoordination::_census": {
+      "body_sha256": "edf33e14c61d77a9736bf0abf083a8dd41b2adb69377a6097fc19c206e086b51",
+      "error_prefix": "cannot close census reference",
+      "path": "docs/audits/native-proxy-image-coordination-20260910/Coordination.pm",
+      "source_pin": {
+        "path": "docs/audits/native-proxy-image-coordination-20260910/Coordination.pm",
+        "sha256": "a0d99769147f28ca7c35e9ac80ba88f7cf14760e3bef7b51841d8badebc060e5",
+        "size_bytes": 19061
+      }
+    },
+    "NativeProxyImageCoordination::_names": {
+      "body_sha256": "2aa29b8c0a0f1fe9924dbdd477a0296cb40a9a17627462440d61e8c32eeaf6dd",
+      "error_prefix": "cannot close bounded namespace",
+      "path": "docs/audits/native-proxy-image-coordination-20260910/Coordination.pm",
+      "source_pin": {
+        "path": "docs/audits/native-proxy-image-coordination-20260910/Coordination.pm",
+        "sha256": "a0d99769147f28ca7c35e9ac80ba88f7cf14760e3bef7b51841d8badebc060e5",
+        "size_bytes": 19061
+      }
+    },
+    "NativeProxyImageCoordination::_transaction": {
+      "body_sha256": "631796fc99c6a3dc16a163dfd4fab064aeeab9bf6ebcf88e3e07531f934a8680",
+      "error_prefix": "cannot close permanent lock",
+      "path": "docs/audits/native-proxy-image-coordination-20260910/Coordination.pm",
+      "source_pin": {
+        "path": "docs/audits/native-proxy-image-coordination-20260910/Coordination.pm",
+        "sha256": "a0d99769147f28ca7c35e9ac80ba88f7cf14760e3bef7b51841d8badebc060e5",
+        "size_bytes": 19061
+      }
+    },
+    "NativeProxyImageCustody::_members": {
+      "body_sha256": "f181ee7a990c926f3f9a88a2cff94b6a53de8bd71c46b6a840bc61459f165f98",
+      "error_prefix": "cannot close image directory",
+      "path": "docs/audits/native-proxy-image-custody-20260910/ImageCustody.pm",
+      "source_pin": {
+        "path": "docs/audits/native-proxy-image-custody-20260910/ImageCustody.pm",
+        "sha256": "927f1ab39f7f26742e36878985d1ff545ddf2dee119d4bf6b7b41bf2c9360ccc",
+        "size_bytes": 8619
+      }
+    },
+    "NativeProxyImageCustody::read_entry": {
+      "body_sha256": "944499a3641354a508e0496c722fe6504cae95597a2be5b3578412ad86150ce7",
+      "error_prefix": "cannot close image descriptor",
+      "path": "docs/audits/native-proxy-image-custody-20260910/ImageCustody.pm",
+      "source_pin": {
+        "path": "docs/audits/native-proxy-image-custody-20260910/ImageCustody.pm",
+        "sha256": "927f1ab39f7f26742e36878985d1ff545ddf2dee119d4bf6b7b41bf2c9360ccc",
+        "size_bytes": 8619
+      }
+    },
+    "NativeProxyObservationArchive::_source_closure": {
+      "body_sha256": "2ec9d6a80783fc7bb916aa28020846a9438b64bf5d136607802bf19974a7f689",
+      "error_prefix": "cannot close archive reread descriptor",
+      "path": "docs/audits/native-proxy-observation-archive-20260911/ObservationArchive.pm",
+      "source_pin": {
+        "path": "docs/audits/native-proxy-observation-archive-20260911/ObservationArchive.pm",
+        "sha256": "79454039421822af31f9891d0a3d3ebe1b4c1ebcc6f6c8decd1f78e081736e87",
+        "size_bytes": 6196
+      }
+    },
+    "NativeProxyObservationRelease::_close_owned": {
+      "body_sha256": "d9c5e1572bf0226e055650ced5794371e9564a180c19e5fe879ea23b9a38ced2",
+      "error_prefix": "cannot close retained release descriptor",
+      "path": "docs/audits/native-proxy-observation-archive-release-20260911/ObservationRelease.pm",
+      "source_pin": {
+        "path": "docs/audits/native-proxy-observation-archive-release-20260911/ObservationRelease.pm",
+        "sha256": "08236265e6e6973ab23e9e31ee26071272f39e8879c2d420ab2382fc800345ab",
+        "size_bytes": 10294
+      }
+    },
+    "NativeProxyReferenceCensus::_closure": {
+      "body_sha256": "b17c5f34bb0795140bd0ef7783e96e5ce9405151d989a52eb84937c516baa209",
+      "error_prefix": "cannot close fresh reference",
+      "path": "docs/audits/native-proxy-runtime-census-20260910/ReferenceCensus.pm",
+      "source_pin": {
+        "path": "docs/audits/native-proxy-runtime-census-20260910/ReferenceCensus.pm",
+        "sha256": "9fd74767e8c10831f2732fa8ad426b7e4fff8c17bab06584aa671cdd013b6247",
+        "size_bytes": 8024
+      }
+    },
+    "NativeProxyReferenceCensus::_image": {
+      "body_sha256": "00a09ea7646760d50ffe298b663baa2722ec9776462abf51ff1aad59a58b47a4",
+      "error_prefix": "cannot close image input",
+      "path": "docs/audits/native-proxy-runtime-census-20260910/ReferenceCensus.pm",
+      "source_pin": {
+        "path": "docs/audits/native-proxy-runtime-census-20260910/ReferenceCensus.pm",
+        "sha256": "9fd74767e8c10831f2732fa8ad426b7e4fff8c17bab06584aa671cdd013b6247",
+        "size_bytes": 8024
+      }
+    },
+    "NativeProxyReferenceCensus::_inspect_locked": {
+      "body_sha256": "2dc6f0edd9e9325feb447a01b335ba78e96ce467c133fda9e9ef0c23a4509897",
+      "error_prefix": "cannot close ",
+      "path": "docs/audits/native-proxy-runtime-census-20260910/ReferenceCensus.pm",
+      "source_pin": {
+        "path": "docs/audits/native-proxy-runtime-census-20260910/ReferenceCensus.pm",
+        "sha256": "9fd74767e8c10831f2732fa8ad426b7e4fff8c17bab06584aa671cdd013b6247",
+        "size_bytes": 8024
+      }
+    }
+  },
+  "source_revision": "b31f942cd6e8d7407594b8ed4a8a9a1d87f2ae67",
+  "success": true,
+  "totals": {
+    "directory_omissions": 8,
+    "healthy_controls": 4,
+    "lock_omissions": 4,
+    "prospective_cases": 44,
+    "source_omissions": 28
+  }
+}
