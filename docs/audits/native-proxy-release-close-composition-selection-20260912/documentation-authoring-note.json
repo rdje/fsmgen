@@ -1,0 +1,5 @@
+{
+  "correction": "Inspected the actual answers key and inserted the question there, restoring line parity and preserving all prior questions. No verifier, file fixture, source pin or producer replay was involved.",
+  "failure": "The line-neutral card edit asserted after looking for questions rather than the actual answers front-matter key. The intended question was not inserted, leaving a one-line reduction.",
+  "stage": "before documentation verification"
+}

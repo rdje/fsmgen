@@ -2760,10 +2760,34 @@ without another fixture run:
 python3 -B docs/audits/native-proxy-observation-archive-release-close-last-20260912/audit.py --verify-saved
 ```
 
-Competing primary errors, grouped reports, genuine omissions and complete release
-applicability remain pending. A modeled EIO after
-successful closure does not test an ambiguous operating-system close failure
-or authorize native execution.
+The release composition plan selects 180 cases: 4 healthy controls, 80 grouped-close cases and 96 primary-error cases; execution remains pending.
+
+Each profile has its own execution task. Grouped recipes select an error at an
+actual cleanup scope and additional reports from the handles still open there.
+Source-primary recipes interrupt a source recheck after ownership has transferred.
+Directory-primary recipes require an actual scalar directory read before reporting
+an error to the original reader; its saved read error must survive the close report.
+
+Release milestones include a failure before unlink, a failure after unlink while
+absence is still unknown, and a final lock-identity failure after absence was
+verified. These distinguish the returned error from the file effects already done.
+For example, a cleanup error cannot turn a completed unlink into an untouched hold.
+
+Paired cases use the same reports in observed and reversed declaration order.
+The earliest error encountered during execution must win, and every actual owner
+must still close. The runner must select from its current input flow; archived
+handle labels and numeric call identifiers are evidence, not injection targets.
+The finite selection does not claim every possible combination of errors.
+
+The saved plan and its independent interval/source-scope checks can be verified:
+
+```sh
+python3 -B docs/audits/native-proxy-release-close-composition-selection-20260912/audit.py --verify-saved
+```
+
+Composition execution, genuine omissions and complete release applicability remain
+pending. A reported error after successful closure does not test an ambiguous
+operating-system close failure or authorize native execution.
 
 The inactive archive record implementation now derives a closed specification
 from the complete original acquisition and request. It keeps the ordered wrapper,

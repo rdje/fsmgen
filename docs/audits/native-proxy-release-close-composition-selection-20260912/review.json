@@ -1,0 +1,36 @@
+{
+  "audit_result": "docs/audits/native-proxy-release-close-composition-selection-20260912/result/audit.json",
+  "book_review": "docs/audits/native-proxy-release-close-composition-selection-20260912/book-review.json",
+  "claim_legs": {
+    "durability": "Prospective source pins and exact predecessor inputs bind first-run outputs. Complete exact recovery copies and saved-only audit/recovery pass without raw-log access or any fixture replay. Exact completed task subtrees and prior acceptance histories remain Git-retrievable; book and Knowledge Map route the frontier.",
+    "falsify": "Separate lifetime intervals and original call/single-close source-scope interpreters reproduce winners, cleanup and effects across input-order permutations. Altered-domain and book count/redistribution controls reject wrong coverage, primaries, order, closure and effects.",
+    "rederive": "Current healthy events and source-owned cleanup bindings derive the finite recipes and report sets. The book watcher independently recounts saved categories."
+  },
+  "claim_metadata_failure": "docs/audits/native-proxy-release-close-composition-selection-20260912/first-claim-metadata-failure.json",
+  "commit_gate": "Staged doctrines and normal commit hooks must pass before commit.",
+  "dispositions": {
+    "added": [
+      "published-ba8bd5d7b2dcc077109c5f12"
+    ],
+    "prior_records_byte_exact": 1930
+  },
+  "limits": "Actual composition execution is owned by the profile children. Full close-report join, genuine omissions, final release, native/lifetime and historical startup/parent/full CI/push remain open.",
+  "owner": "HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.12.4.1.3.4.4.4.6.1",
+  "raw_verification_outputs": "docs/audits/native-proxy-release-close-composition-selection-20260912/verification-outputs.json",
+  "recovery": {
+    "bytes": 25944,
+    "copies": 7,
+    "falsifiers": [
+      "omitted-copy",
+      "foreign-destination",
+      "changed-copy-digest"
+    ],
+    "source_reaccess": true,
+    "success": true
+  },
+  "schema": "fsmgen.release_close_composition_selection_review.v1",
+  "scope": "Prospective bounded release error compositions; no actual file fixture or read/close report executes.",
+  "source_review": "docs/audits/native-proxy-release-close-composition-selection-20260912/source-review.json",
+  "source_revision": "49a4d1f50cec77149eeadf799501d0ee33447f12",
+  "success": true
+}

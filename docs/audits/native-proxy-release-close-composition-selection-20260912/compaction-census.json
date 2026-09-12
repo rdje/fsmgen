@@ -1,0 +1,175 @@
+{
+  "final_census_after_inventory": true,
+  "live_owner_matches": [],
+  "owner": "HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.12.4.1.3.4.4.4.6.1",
+  "registry_files": [
+    {
+      "path": "doctrine/claim_verification/claim_registries.jsonl",
+      "sha256": "e2ee36acd874c7c55b24661d2efeb127f442a385ce1b23d1c64704390d649307",
+      "size_bytes": 510
+    },
+    {
+      "path": "doctrine/claim_verification/claims-0002.jsonl",
+      "sha256": "425060f0e9b09f6d6e8b22cc72fde98008ad4f3abfb27cc328ec16c7726cb7b3",
+      "size_bytes": 65184
+    },
+    {
+      "path": "doctrine/claim_verification/claims-0003.jsonl",
+      "sha256": "f7e94a24ebd47b825c09675be25d3b6897d2fa9de242c2d22c31ba9a0a2dee41",
+      "size_bytes": 29293
+    },
+    {
+      "path": "doctrine/claim_verification/claims.jsonl",
+      "sha256": "38b77b69f5fdad6350e665e0aa4abbf19c89ed94097e7b3ad424a0d3179170bc",
+      "size_bytes": 65381
+    },
+    {
+      "path": "doctrine/claim_verification/disposition_groups.jsonl",
+      "sha256": "e49615623ca95e92d7a9adda4eb3aa51249fa9158075a0f3089483172d319fe6",
+      "size_bytes": 3273
+    },
+    {
+      "path": "doctrine/claim_verification/dispositions.jsonl",
+      "sha256": "48019de66760da540e883708c84658266ec596233c716ba4fe94440ad805ccce",
+      "size_bytes": 2031421
+    },
+    {
+      "path": "doctrine/claim_verification/inventory.jsonl",
+      "sha256": "a6de10bcacc09f837b17bca49077548471d60fcc870aaeb0fdfb4cfda511b4f7",
+      "size_bytes": 2998806
+    },
+    {
+      "path": "doctrine/claim_verification/inventory_scope.json",
+      "sha256": "c036edacb9562508510b130335e9295a4052d88eaec04f83e4e2661ebcbc1f35",
+      "size_bytes": 1083
+    },
+    {
+      "path": "doctrine/claim_verification/original_constant_baseline.jsonl",
+      "sha256": "161efb1102420e65986ad5a13d996e5e215e5af339dfe79431ddb3936db56041",
+      "size_bytes": 2898
+    },
+    {
+      "path": "doctrine/live_document_size/archive_descriptors.jsonl",
+      "sha256": "ba172f31a2b39bb34eea202ad72847f6f7d19fceb856989ccab73cd69f8abb2f",
+      "size_bytes": 9206
+    },
+    {
+      "path": "doctrine/live_document_size/ceiling_increase_authorities.jsonl",
+      "sha256": "fde35752b4d08d5e39d68b41894b5e7dadc8854e55df6a81a84cdf3524296e66",
+      "size_bytes": 8139
+    },
+    {
+      "path": "doctrine/live_document_size/derived_state_contracts.jsonl",
+      "sha256": "f7167169022e867220b14d1f51dcdd66c437174b3e91f6f715f42047ad52d5c2",
+      "size_bytes": 1243
+    },
+    {
+      "path": "doctrine/live_document_size/evidence_maps.jsonl",
+      "sha256": "297febbf1693a80756ec55f811cdf6fb234963c1441615990d37ff3da4d2d4da",
+      "size_bytes": 594
+    },
+    {
+      "path": "doctrine/live_document_size/isf_reference_partitions.jsonl",
+      "sha256": "fda84f111a1ade73377b99bd46c8af5ffa264f7323c4016a6d46b24834848982",
+      "size_bytes": 11243
+    },
+    {
+      "path": "doctrine/live_document_size/ledger_manifests.jsonl",
+      "sha256": "cc440686fc2e3cdb12dc9f59c89a68f0d8fcac3a91b8c548468c3493c4fc1742",
+      "size_bytes": 2101
+    },
+    {
+      "path": "doctrine/live_document_size/surfaces.jsonl",
+      "sha256": "c0823136894af38affef12a9187b4da3fe9cbce3abe0326ef431e86d996ba027",
+      "size_bytes": 24871
+    },
+    {
+      "path": "doctrine/live_document_size/version_retention_contracts.jsonl",
+      "sha256": "ab72dd778aa41345de30991160f7a6757e58cfb19c6c0c610b526010ba94074d",
+      "size_bytes": 689
+    },
+    {
+      "path": "doctrine/readme_entrypoint/routed_destinations.jsonl",
+      "sha256": "33de2eb80235e7fce8ca73991598658477df3d2688d474ae1017a490c7628161",
+      "size_bytes": 3651
+    },
+    {
+      "path": "doctrine/task_tree/index_archives.jsonl",
+      "sha256": "309fbf03e97faf401bee211ab758bbafbf6662652e1d2e51ad64be1952d46f02",
+      "size_bytes": 570
+    }
+  ],
+  "schema": "fsmgen.release_composition_continuity_census.v1",
+  "source_bytes": 1092174,
+  "source_lines": 6392,
+  "source_path": "docs/tasks/HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.md",
+  "source_revision": "49a4d1f50cec77149eeadf799501d0ee33447f12",
+  "source_sha256": "6b1c0a6f2c7004102346858385b670061426fe3bdf2ad23e724a72405e4bd592",
+  "task_lines": 6365,
+  "terminals": [
+    {
+      "all_done": true,
+      "compact_lines": 12,
+      "nested_terminals": 0,
+      "nodes": 3,
+      "root": "HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.5.2.5.4.2",
+      "source_lines": 22
+    },
+    {
+      "all_done": true,
+      "compact_lines": 12,
+      "nested_terminals": 0,
+      "nodes": 4,
+      "root": "HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.5.3.3",
+      "source_lines": 25
+    },
+    {
+      "all_done": true,
+      "compact_lines": 12,
+      "nested_terminals": 0,
+      "nodes": 3,
+      "root": "HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.1",
+      "source_lines": 22
+    },
+    {
+      "all_done": true,
+      "compact_lines": 12,
+      "nested_terminals": 0,
+      "nodes": 3,
+      "root": "HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.5.2",
+      "source_lines": 19
+    },
+    {
+      "all_done": true,
+      "compact_lines": 12,
+      "nested_terminals": 0,
+      "nodes": 3,
+      "root": "HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.5.3",
+      "source_lines": 19
+    },
+    {
+      "all_done": true,
+      "compact_lines": 12,
+      "nested_terminals": 0,
+      "nodes": 3,
+      "root": "HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.5.4",
+      "source_lines": 19
+    },
+    {
+      "all_done": true,
+      "compact_lines": 12,
+      "nested_terminals": 0,
+      "nodes": 3,
+      "root": "HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.6",
+      "source_lines": 19
+    },
+    {
+      "all_done": true,
+      "compact_lines": 12,
+      "nested_terminals": 0,
+      "nodes": 3,
+      "root": "HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.8.10",
+      "source_lines": 22
+    }
+  ]
+}

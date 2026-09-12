@@ -2,6 +2,7 @@
 id: test-subprocess-policy-adapters
 title: Test subprocesses share one mechanism behind sealed policy adapters
 answers:
+  - "how are release error compositions selected?"
   - "what survives last-observation close reports?"
   - "how do active-runtime close reports preserve runtime state?"
   - "how are equal-reference release close reports verified?"
@@ -136,11 +137,10 @@ evidence: >-
   t/lib/FSM/Test/RustProxyFixture.pm; t/1815-rust-proxy-fixture.t; t/1816-rust-proxy-integration.t; t/1817-test-supervision-architecture.t
 reverify: >-
   scripts/run_with_ram_guard.sh -- python3 -B
-  docs/audits/native-proxy-observation-archive-release-close-last-20260912/audit.py --verify-saved
+  docs/audits/native-proxy-release-close-composition-selection-20260912/audit.py --verify-saved
 ---
 Decisions `0087`/`0101`: `FSM::Support::ProcessSupervisor`; adapters seal local argv/capture/group cleanup. T1669 checks ownership. `exec_handoff_monotonic_ns` is EOF, not main entry; absent EOF leaves timing unknown.
-`VerilatorRuntime`: decision `0086`. `TaskAcceptanceFixtureRuntime`: owned roots/fixed Git argv.
-History: `85cc24eeb184f6197f72a8275ff55f8c5f59d112:docs/knowledge/test-subprocess-policy-adapters.md`.
-Last-observation close reports preserve the canonical image after the final hold is removed. Exact closure, unwind and effects: reverify. Prior cases: history.
-Proxy: `t/fixtures/rust-tool-proxy.c` is C; Perl `t/lib/FSM/Test/RustProxyFixture.pm` builds it and the Perl harness launches a separate process to impersonate rustup resolution. Rust names the substituted tool, not the native implementation language.
-HIAL/VIAL `.19.2.3.1.2.2.5.5` owns repair/hostile controls; neutral-verifier extraction stays blocked.
+History: `49a4d1f50cec77149eeadf799501d0ee33447f12:docs/knowledge/test-subprocess-policy-adapters.md`.
+Release composition recipes select current-flow cleanup owners and primary errors; paired declarations preserve the predicted winner. Execution is pending.
+Proxy: `t/fixtures/rust-tool-proxy.c` is C. Perl `t/lib/FSM/Test/RustProxyFixture.pm` builds it; the harness launches it separately to impersonate rustup. Rust names the substituted tool.
+`VerilatorRuntime`: decision `0086`. `TaskAcceptanceFixtureRuntime`: owned roots/fixed Git argv. HIAL/VIAL `.19.2.3.1.2.2.5.5` owns repair/hostile controls; neutral-verifier extraction stays blocked.

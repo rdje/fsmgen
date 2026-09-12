@@ -1,0 +1,20 @@
+{
+  "checked_passages": [
+    "The release composition plan selects 180 cases: 4 healthy controls, 80 grouped-close cases and 96 primary-error cases; execution remains pending.",
+    "Each profile has its own execution task.",
+    "For example, a cleanup error cannot turn a completed unlink into an untouched hold.",
+    "Paired cases use the same reports in observed and reversed declaration order.",
+    "The finite selection does not claim every possible combination of errors.",
+    "python3 -B docs/audits/native-proxy-release-close-composition-selection-20260912/audit.py --verify-saved"
+  ],
+  "exact_output_absent": true,
+  "exit_code": 0,
+  "output": ".artifacts/tmp/native-proxy-release-composition-book-20260912/book",
+  "rendered_bytes": 23460491,
+  "rendered_directories": 3,
+  "rendered_files": 98,
+  "renderer_warnings": [
+    "WARN search index is very large (13231651 bytes)"
+  ],
+  "same_volume_direct_objects": true
+}
