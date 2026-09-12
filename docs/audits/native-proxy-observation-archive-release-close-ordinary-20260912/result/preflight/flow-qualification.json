@@ -1,0 +1,396 @@
+{
+   "allocated" : [],
+   "controls" : [
+      {
+         "error" : "close-report fields differ from the pinned contract\n",
+         "name" : "missing errno",
+         "returned" : 0
+      },
+      {
+         "error" : "close-report fields differ from the pinned contract\n",
+         "name" : "stale numeric call",
+         "returned" : 0
+      },
+      {
+         "error" : "unsupported close-report errno\n",
+         "name" : "unknown errno",
+         "returned" : 0
+      },
+      {
+         "error" : "invalid close-report occurrence\n",
+         "name" : "negative occurrence",
+         "returned" : 0
+      },
+      {
+         "error" : "invalid close-report occurrence\n",
+         "name" : "string occurrence",
+         "returned" : 0
+      },
+      {
+         "error" : "invalid close-report occurrence\n",
+         "name" : "boolean occurrence",
+         "returned" : 0
+      },
+      {
+         "error" : "invalid close-report occurrence\n",
+         "name" : "structured occurrence",
+         "returned" : 0
+      },
+      {
+         "error" : "close-report address differs from its fields\n",
+         "name" : "wrong address",
+         "returned" : 0
+      },
+      {
+         "error" : "duplicate or unknown close report\n",
+         "name" : "unknown opening",
+         "returned" : 0
+      },
+      {
+         "error" : "expected prospective flow, context and single close reports\n",
+         "name" : "multiple reports",
+         "returned" : 0
+      }
+   ],
+   "forbidden_process_attempts" : 0,
+   "prospective_pins" : [
+      {
+         "path" : "docs/audits/native-proxy-observation-archive-release-close-ordinary-20260912/ClosePlan.pm",
+         "sha256" : "981ac8ac04fbded66a4020b881b40cd0c8ea8272e5d04cf8d9eb911eb964e0e2",
+         "size_bytes" : 3375
+      },
+      {
+         "path" : "docs/audits/native-proxy-observation-archive-release-close-ordinary-20260912/expected_trace.py",
+         "sha256" : "fb90f11e8d7752cb442f463207f11abf97e7e6bde2ee03f8b4840eed49505806",
+         "size_bytes" : 7599
+      },
+      {
+         "path" : "docs/audits/native-proxy-observation-archive-release-close-ordinary-20260912/prepare.py",
+         "sha256" : "ae69ba03e7bbec841a37be2f4b9386582509a63f6812b67fd8079f08f03476f1",
+         "size_bytes" : 5823
+      },
+      {
+         "path" : "docs/audits/native-proxy-observation-archive-release-close-ordinary-20260912/prepare-pin.json",
+         "sha256" : "c6b8400147cba8965b8dcc7a764a0b2cf9413a1a757bb520d5ea3ce82f8df79a",
+         "size_bytes" : 206
+      },
+      {
+         "path" : "docs/audits/native-proxy-observation-archive-release-close-ordinary-20260912/plan.json",
+         "sha256" : "5c8c718864772971c23af85364e520a87d4b4965075393404f58937d4aad10a0",
+         "size_bytes" : 120394
+      },
+      {
+         "path" : "docs/audits/native-proxy-observation-archive-release-close-ordinary-20260912/flow-vectors.json",
+         "sha256" : "759d6f11e3b5ea269eaeaf1ba25b2e9ce2a88db23ae83519de87cc0763ab7c56",
+         "size_bytes" : 14104971
+      },
+      {
+         "path" : "docs/audits/native-proxy-observation-archive-release-close-ordinary-20260912/flow-qualify.t",
+         "sha256" : "e03c8cae22382ec171056311966db67b251ff57bc3d6c1d774175e01cbf42136",
+         "size_bytes" : 5403
+      },
+      {
+         "path" : "docs/audits/native-proxy-observation-archive-release-close-ordinary-20260912/preflight.py",
+         "sha256" : "abda4b062a942eef0bfeafd2f1967798a6f9184c44d5baa9c12dc126eb2c5053",
+         "size_bytes" : 10764
+      }
+   ],
+   "schema" : "fsmgen.release_close_binding_qualification.v1",
+   "success" : true,
+   "variants" : [
+      {
+         "inputs_unchanged" : 1,
+         "name" : "baseline",
+         "profile" : "ordinary_retired_other_observation",
+         "resolution_sha256" : "73c1973720052cfee755ff375be97b9940ee3699238c908f0619262805b91995",
+         "resolved" : 171
+      },
+      {
+         "inputs_unchanged" : 1,
+         "name" : "order:0,1,2",
+         "profile" : "ordinary_retired_other_observation",
+         "resolution_sha256" : "01af7e31f6ba10d9c4c8ee165aa6734a9bac667086afda594ac799cab4cb05fb",
+         "resolved" : 171
+      },
+      {
+         "inputs_unchanged" : 1,
+         "name" : "order:0,2,1",
+         "profile" : "ordinary_retired_other_observation",
+         "resolution_sha256" : "98fd32d6d68716c7ffaa72b4eb8d80d4858b6b9c194dc3ec9988bfc66c46f5c1",
+         "resolved" : 171
+      },
+      {
+         "inputs_unchanged" : 1,
+         "name" : "order:1,0,2",
+         "profile" : "ordinary_retired_other_observation",
+         "resolution_sha256" : "eb7bec5f2891ff91f5cf214f189dd1b5cdc2b1e38aa9b15ae1b04bc1b18b2df5",
+         "resolved" : 171
+      },
+      {
+         "inputs_unchanged" : 1,
+         "name" : "order:1,2,0",
+         "profile" : "ordinary_retired_other_observation",
+         "resolution_sha256" : "0bb44ae394b21c2ec3e116d7e7ac78a197e7c7d884c77559b687cdd07996c044",
+         "resolved" : 171
+      },
+      {
+         "inputs_unchanged" : 1,
+         "name" : "order:2,0,1",
+         "profile" : "ordinary_retired_other_observation",
+         "resolution_sha256" : "7f48767cef7b14eb6bce123d3028ac16d45005980197f8c81c0b23bb71f2007d",
+         "resolved" : 171
+      },
+      {
+         "inputs_unchanged" : 1,
+         "name" : "order:2,1,0",
+         "profile" : "ordinary_retired_other_observation",
+         "resolution_sha256" : "66ee32e35446e659325c5f538658ae065faa19cde7de3630cc79fda603d899d9",
+         "resolved" : 171
+      },
+      {
+         "inputs_unchanged" : 1,
+         "name" : "baseline",
+         "profile" : "equal_reference_retired_other_observation",
+         "resolution_sha256" : "5b19d2ef80f232353b7a888077c12179f78be2a697d6a4308317ddf8a6bebc37",
+         "resolved" : 166
+      },
+      {
+         "inputs_unchanged" : 1,
+         "name" : "order:0,1,2",
+         "profile" : "equal_reference_retired_other_observation",
+         "resolution_sha256" : "25be6dbc8a17fbfc4d33a9c09f3dce862205d3ea03aa46eb3e4eab2eca42cb49",
+         "resolved" : 166
+      },
+      {
+         "inputs_unchanged" : 1,
+         "name" : "order:0,2,1",
+         "profile" : "equal_reference_retired_other_observation",
+         "resolution_sha256" : "36a289549dba2ce99eebc9734023c4bfe86a0f5334fe072c3626ea5f0dda4efa",
+         "resolved" : 166
+      },
+      {
+         "inputs_unchanged" : 1,
+         "name" : "order:1,0,2",
+         "profile" : "equal_reference_retired_other_observation",
+         "resolution_sha256" : "b5ff6258b440cb3690aa2338f66c61e87e919e1e7b30f1903acecd4d12a76c90",
+         "resolved" : 166
+      },
+      {
+         "inputs_unchanged" : 1,
+         "name" : "order:1,2,0",
+         "profile" : "equal_reference_retired_other_observation",
+         "resolution_sha256" : "cfb49275b7e3f6a13116e6bfe18a17c9a7a263b40a8fdf7e828cfe1f7d4baa7d",
+         "resolved" : 166
+      },
+      {
+         "inputs_unchanged" : 1,
+         "name" : "order:2,0,1",
+         "profile" : "equal_reference_retired_other_observation",
+         "resolution_sha256" : "a039798f25e94cb616753058d10fc0ce4472f0880435197b9f6c014a23b31e15",
+         "resolved" : 166
+      },
+      {
+         "inputs_unchanged" : 1,
+         "name" : "order:2,1,0",
+         "profile" : "equal_reference_retired_other_observation",
+         "resolution_sha256" : "5d7da0710e6c3d5df6903f8a7841ed1035a94ae9e15966892ef2173b41813158",
+         "resolved" : 166
+      },
+      {
+         "inputs_unchanged" : 1,
+         "name" : "baseline",
+         "profile" : "ordinary_active_runtime",
+         "resolution_sha256" : "cd36fd518383b301f1d07faee2404caa58e242e84c52853109fb09963f70e270",
+         "resolved" : 180
+      },
+      {
+         "inputs_unchanged" : 1,
+         "name" : "order:0,1,2,3",
+         "profile" : "ordinary_active_runtime",
+         "resolution_sha256" : "b7cbecf047672065d38af524033230bab7ae362cb22c64a68253623edd6e238f",
+         "resolved" : 180
+      },
+      {
+         "inputs_unchanged" : 1,
+         "name" : "order:0,1,3,2",
+         "profile" : "ordinary_active_runtime",
+         "resolution_sha256" : "5d540b75d439626220aab0c0d5272195c30225558f23747b82dfa68a9787e9d4",
+         "resolved" : 180
+      },
+      {
+         "inputs_unchanged" : 1,
+         "name" : "order:0,2,1,3",
+         "profile" : "ordinary_active_runtime",
+         "resolution_sha256" : "c29c81612282b70d455b54e43f7ee9e96f5be5ab46de8305e9db671c2e089bbb",
+         "resolved" : 180
+      },
+      {
+         "inputs_unchanged" : 1,
+         "name" : "order:0,2,3,1",
+         "profile" : "ordinary_active_runtime",
+         "resolution_sha256" : "f1f11249c8a11260574919ad9001bf97b45ce48ec9cbab11daeef6156a376977",
+         "resolved" : 180
+      },
+      {
+         "inputs_unchanged" : 1,
+         "name" : "order:0,3,1,2",
+         "profile" : "ordinary_active_runtime",
+         "resolution_sha256" : "3fa6f5b5d710346c888d29f7034110ce4f8022d51eabbe2d1bf704c240ca67df",
+         "resolved" : 180
+      },
+      {
+         "inputs_unchanged" : 1,
+         "name" : "order:0,3,2,1",
+         "profile" : "ordinary_active_runtime",
+         "resolution_sha256" : "0d6d97e70b7f45f6b2eea7b22ef314cb73a217484346e91f5878754277928f3e",
+         "resolved" : 180
+      },
+      {
+         "inputs_unchanged" : 1,
+         "name" : "order:1,0,2,3",
+         "profile" : "ordinary_active_runtime",
+         "resolution_sha256" : "a84cbee1d3402f7d5fb02ad37d5a0ac925bda966f696c005b12ac6034f349f0e",
+         "resolved" : 180
+      },
+      {
+         "inputs_unchanged" : 1,
+         "name" : "order:1,0,3,2",
+         "profile" : "ordinary_active_runtime",
+         "resolution_sha256" : "6ffb9a1853816916960a6d036d0fdd0f83b5037b6baebf8ee1e9c05c71a1eef5",
+         "resolved" : 180
+      },
+      {
+         "inputs_unchanged" : 1,
+         "name" : "order:1,2,0,3",
+         "profile" : "ordinary_active_runtime",
+         "resolution_sha256" : "a84cbee1d3402f7d5fb02ad37d5a0ac925bda966f696c005b12ac6034f349f0e",
+         "resolved" : 180
+      },
+      {
+         "inputs_unchanged" : 1,
+         "name" : "order:1,2,3,0",
+         "profile" : "ordinary_active_runtime",
+         "resolution_sha256" : "6ffb9a1853816916960a6d036d0fdd0f83b5037b6baebf8ee1e9c05c71a1eef5",
+         "resolved" : 180
+      },
+      {
+         "inputs_unchanged" : 1,
+         "name" : "order:1,3,0,2",
+         "profile" : "ordinary_active_runtime",
+         "resolution_sha256" : "2350379540256d250d3e5cda5e4dde403b142c51878d7ef87cf16678c4bd3995",
+         "resolved" : 180
+      },
+      {
+         "inputs_unchanged" : 1,
+         "name" : "order:1,3,2,0",
+         "profile" : "ordinary_active_runtime",
+         "resolution_sha256" : "2350379540256d250d3e5cda5e4dde403b142c51878d7ef87cf16678c4bd3995",
+         "resolved" : 180
+      },
+      {
+         "inputs_unchanged" : 1,
+         "name" : "order:2,0,1,3",
+         "profile" : "ordinary_active_runtime",
+         "resolution_sha256" : "c29c81612282b70d455b54e43f7ee9e96f5be5ab46de8305e9db671c2e089bbb",
+         "resolved" : 180
+      },
+      {
+         "inputs_unchanged" : 1,
+         "name" : "order:2,0,3,1",
+         "profile" : "ordinary_active_runtime",
+         "resolution_sha256" : "f1f11249c8a11260574919ad9001bf97b45ce48ec9cbab11daeef6156a376977",
+         "resolved" : 180
+      },
+      {
+         "inputs_unchanged" : 1,
+         "name" : "order:2,1,0,3",
+         "profile" : "ordinary_active_runtime",
+         "resolution_sha256" : "b7cbecf047672065d38af524033230bab7ae362cb22c64a68253623edd6e238f",
+         "resolved" : 180
+      },
+      {
+         "inputs_unchanged" : 1,
+         "name" : "order:2,1,3,0",
+         "profile" : "ordinary_active_runtime",
+         "resolution_sha256" : "5d540b75d439626220aab0c0d5272195c30225558f23747b82dfa68a9787e9d4",
+         "resolved" : 180
+      },
+      {
+         "inputs_unchanged" : 1,
+         "name" : "order:2,3,0,1",
+         "profile" : "ordinary_active_runtime",
+         "resolution_sha256" : "0d6d97e70b7f45f6b2eea7b22ef314cb73a217484346e91f5878754277928f3e",
+         "resolved" : 180
+      },
+      {
+         "inputs_unchanged" : 1,
+         "name" : "order:2,3,1,0",
+         "profile" : "ordinary_active_runtime",
+         "resolution_sha256" : "3fa6f5b5d710346c888d29f7034110ce4f8022d51eabbe2d1bf704c240ca67df",
+         "resolved" : 180
+      },
+      {
+         "inputs_unchanged" : 1,
+         "name" : "order:3,0,1,2",
+         "profile" : "ordinary_active_runtime",
+         "resolution_sha256" : "1a0fafffeeb102f3c4ca9a137198631af45312868e4a29e9b55aefb5dd3dc3ef",
+         "resolved" : 180
+      },
+      {
+         "inputs_unchanged" : 1,
+         "name" : "order:3,0,2,1",
+         "profile" : "ordinary_active_runtime",
+         "resolution_sha256" : "33a2950b2dfe68b87bfc43efefa509768a721138c128a2226c1327d4b5806030",
+         "resolved" : 180
+      },
+      {
+         "inputs_unchanged" : 1,
+         "name" : "order:3,1,0,2",
+         "profile" : "ordinary_active_runtime",
+         "resolution_sha256" : "56fa31a5664528e06ebc98c82b49dced6a8d52a132d4a37b663b0a1b9eb5421e",
+         "resolved" : 180
+      },
+      {
+         "inputs_unchanged" : 1,
+         "name" : "order:3,1,2,0",
+         "profile" : "ordinary_active_runtime",
+         "resolution_sha256" : "56fa31a5664528e06ebc98c82b49dced6a8d52a132d4a37b663b0a1b9eb5421e",
+         "resolved" : 180
+      },
+      {
+         "inputs_unchanged" : 1,
+         "name" : "order:3,2,0,1",
+         "profile" : "ordinary_active_runtime",
+         "resolution_sha256" : "33a2950b2dfe68b87bfc43efefa509768a721138c128a2226c1327d4b5806030",
+         "resolved" : 180
+      },
+      {
+         "inputs_unchanged" : 1,
+         "name" : "order:3,2,1,0",
+         "profile" : "ordinary_active_runtime",
+         "resolution_sha256" : "1a0fafffeeb102f3c4ca9a137198631af45312868e4a29e9b55aefb5dd3dc3ef",
+         "resolved" : 180
+      },
+      {
+         "inputs_unchanged" : 1,
+         "name" : "baseline",
+         "profile" : "ordinary_retired_last_observation",
+         "resolution_sha256" : "53611f05d5688bdc727e23050bbb3c40af273a4299d952b82b864003e7bc8351",
+         "resolved" : 148
+      },
+      {
+         "inputs_unchanged" : 1,
+         "name" : "order:0,1",
+         "profile" : "ordinary_retired_last_observation",
+         "resolution_sha256" : "4c6d684bbd2020aefda9f2e22311e66feef645c3c5c0468a181a6eb1e68259a2",
+         "resolved" : 148
+      },
+      {
+         "inputs_unchanged" : 1,
+         "name" : "order:1,0",
+         "profile" : "ordinary_retired_last_observation",
+         "resolution_sha256" : "44ef4e2275822e66d81d7cfd8acef4e4b9afce4c508d2ee76d9bf25d0db09436",
+         "resolved" : 148
+      }
+   ]
+}

@@ -2646,6 +2646,9 @@ Combining the saved domains does not establish simultaneous-failure coverage.
 Close-error reporting, deliberate close omissions, complete release
 applicability and native lifetime remain separately owned work.
 
+Before the profile executions below, the saved selection established this
+prospective baseline:
+
 The release close-report plan selects 665 individual close reports and 4 healthy controls across the existing profiles; fault execution remains pending.
 
 Each single report targets a retained source, directory or permanent lock.
@@ -2670,6 +2673,33 @@ Ordinary, equal-reference, active-runtime and last-observation execution
 partitions follow this plan. Grouped reports with competing primary errors
 have separate prospective selection and execution work; genuine omissions
 and final release applicability remain separate as well.
+
+Ordinary release close qualification covers 172 cases: 1 healthy control and 171 single EIO reports, with 2089 TAP assertions.
+
+Every selected report follows an actual successful close and an observed closed
+native handle. The observer records the actual return separately from the EIO
+reported to the owning cleanup scope. A local directory or source close error
+interrupts that scope; cleanup still closes every remaining owned handle.
+An error from a retained release descriptor or permanent lock also leaves the
+operation unsuccessful. The returned attempt remains inactive and carries the
+original error text.
+
+For example, an early directory close error leaves the observation hold intact.
+A late retained-source close error can follow a real hold unlink and verified
+absence: the attempt reports failure while retaining those completed effects.
+Other owners, archive bytes and the image keep their original identities.
+Independent recursive-scope and healthy-prefix oracles check the interrupted
+calls, remaining closes, error precedence and physical state. Pure reference-order
+controls qualify current-flow binding; their predictions are separate from the
+executed ordinary file fixtures.
+
+```sh
+python3 -B docs/audits/native-proxy-observation-archive-release-close-ordinary-20260912/audit.py --verify-saved
+```
+
+The other profile executions, competing primary errors, grouped reports and
+genuine omissions remain pending. A modeled EIO after successful closure does
+not test an ambiguous operating-system close failure or authorize native execution.
 
 The inactive archive record implementation now derives a closed specification
 from the complete original acquisition and request. It keeps the ordered wrapper,

@@ -1,0 +1,20 @@
+{
+  "checked_passages": [
+    "Ordinary release close qualification covers 172 cases: 1 healthy control and 171 single EIO reports, with 2089 TAP assertions.",
+    "Every selected report follows an actual successful close and an observed closed native handle.",
+    "cleanup still closes every remaining owned handle.",
+    "A late retained-source close error can follow a real hold unlink and verified absence: the attempt reports failure while retaining those completed effects.",
+    "Other owners, archive bytes and the image keep their original identities.",
+    "python3 -B docs/audits/native-proxy-observation-archive-release-close-ordinary-20260912/audit.py --verify-saved"
+  ],
+  "exact_output_absent": true,
+  "exit_code": 0,
+  "output": ".artifacts/tmp/native-proxy-release-close-ordinary-book-20260912/book",
+  "rendered_bytes": 23442619,
+  "rendered_directories": 3,
+  "rendered_files": 98,
+  "renderer_warnings": [
+    "WARN search index is very large (13224385 bytes)"
+  ],
+  "same_volume_direct_objects": true
+}

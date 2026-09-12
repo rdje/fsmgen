@@ -1,0 +1,148 @@
+ok 1 - ordinary_retired_other_observation:baseline: independently derived current ownership matches
+ok 2 - ordinary_retired_other_observation:baseline: input values and numeric/string representation remain unchanged
+ok 3 - ordinary_retired_other_observation:baseline: healthy selection resolves empty
+ok 4 - ordinary_retired_other_observation:order:0,1,2: independently derived current ownership matches
+ok 5 - ordinary_retired_other_observation:order:0,1,2: input values and numeric/string representation remain unchanged
+ok 6 - ordinary_retired_other_observation:order:0,1,2: healthy selection resolves empty
+ok 7 - ordinary_retired_other_observation:order:0,2,1: independently derived current ownership matches
+ok 8 - ordinary_retired_other_observation:order:0,2,1: input values and numeric/string representation remain unchanged
+ok 9 - ordinary_retired_other_observation:order:0,2,1: healthy selection resolves empty
+ok 10 - ordinary_retired_other_observation:order:1,0,2: independently derived current ownership matches
+ok 11 - ordinary_retired_other_observation:order:1,0,2: input values and numeric/string representation remain unchanged
+ok 12 - ordinary_retired_other_observation:order:1,0,2: healthy selection resolves empty
+ok 13 - ordinary_retired_other_observation:order:1,2,0: independently derived current ownership matches
+ok 14 - ordinary_retired_other_observation:order:1,2,0: input values and numeric/string representation remain unchanged
+ok 15 - ordinary_retired_other_observation:order:1,2,0: healthy selection resolves empty
+ok 16 - ordinary_retired_other_observation:order:2,0,1: independently derived current ownership matches
+ok 17 - ordinary_retired_other_observation:order:2,0,1: input values and numeric/string representation remain unchanged
+ok 18 - ordinary_retired_other_observation:order:2,0,1: healthy selection resolves empty
+ok 19 - ordinary_retired_other_observation:order:2,1,0: independently derived current ownership matches
+ok 20 - ordinary_retired_other_observation:order:2,1,0: input values and numeric/string representation remain unchanged
+ok 21 - ordinary_retired_other_observation:order:2,1,0: healthy selection resolves empty
+ok 22 - equal_reference_retired_other_observation:baseline: independently derived current ownership matches
+ok 23 - equal_reference_retired_other_observation:baseline: input values and numeric/string representation remain unchanged
+ok 24 - equal_reference_retired_other_observation:baseline: healthy selection resolves empty
+ok 25 - equal_reference_retired_other_observation:order:0,1,2: independently derived current ownership matches
+ok 26 - equal_reference_retired_other_observation:order:0,1,2: input values and numeric/string representation remain unchanged
+ok 27 - equal_reference_retired_other_observation:order:0,1,2: healthy selection resolves empty
+ok 28 - equal_reference_retired_other_observation:order:0,2,1: independently derived current ownership matches
+ok 29 - equal_reference_retired_other_observation:order:0,2,1: input values and numeric/string representation remain unchanged
+ok 30 - equal_reference_retired_other_observation:order:0,2,1: healthy selection resolves empty
+ok 31 - equal_reference_retired_other_observation:order:1,0,2: independently derived current ownership matches
+ok 32 - equal_reference_retired_other_observation:order:1,0,2: input values and numeric/string representation remain unchanged
+ok 33 - equal_reference_retired_other_observation:order:1,0,2: healthy selection resolves empty
+ok 34 - equal_reference_retired_other_observation:order:1,2,0: independently derived current ownership matches
+ok 35 - equal_reference_retired_other_observation:order:1,2,0: input values and numeric/string representation remain unchanged
+ok 36 - equal_reference_retired_other_observation:order:1,2,0: healthy selection resolves empty
+ok 37 - equal_reference_retired_other_observation:order:2,0,1: independently derived current ownership matches
+ok 38 - equal_reference_retired_other_observation:order:2,0,1: input values and numeric/string representation remain unchanged
+ok 39 - equal_reference_retired_other_observation:order:2,0,1: healthy selection resolves empty
+ok 40 - equal_reference_retired_other_observation:order:2,1,0: independently derived current ownership matches
+ok 41 - equal_reference_retired_other_observation:order:2,1,0: input values and numeric/string representation remain unchanged
+ok 42 - equal_reference_retired_other_observation:order:2,1,0: healthy selection resolves empty
+ok 43 - ordinary_active_runtime:baseline: independently derived current ownership matches
+ok 44 - ordinary_active_runtime:baseline: input values and numeric/string representation remain unchanged
+ok 45 - ordinary_active_runtime:baseline: healthy selection resolves empty
+ok 46 - ordinary_active_runtime:order:0,1,2,3: independently derived current ownership matches
+ok 47 - ordinary_active_runtime:order:0,1,2,3: input values and numeric/string representation remain unchanged
+ok 48 - ordinary_active_runtime:order:0,1,2,3: healthy selection resolves empty
+ok 49 - ordinary_active_runtime:order:0,1,3,2: independently derived current ownership matches
+ok 50 - ordinary_active_runtime:order:0,1,3,2: input values and numeric/string representation remain unchanged
+ok 51 - ordinary_active_runtime:order:0,1,3,2: healthy selection resolves empty
+ok 52 - ordinary_active_runtime:order:0,2,1,3: independently derived current ownership matches
+ok 53 - ordinary_active_runtime:order:0,2,1,3: input values and numeric/string representation remain unchanged
+ok 54 - ordinary_active_runtime:order:0,2,1,3: healthy selection resolves empty
+ok 55 - ordinary_active_runtime:order:0,2,3,1: independently derived current ownership matches
+ok 56 - ordinary_active_runtime:order:0,2,3,1: input values and numeric/string representation remain unchanged
+ok 57 - ordinary_active_runtime:order:0,2,3,1: healthy selection resolves empty
+ok 58 - ordinary_active_runtime:order:0,3,1,2: independently derived current ownership matches
+ok 59 - ordinary_active_runtime:order:0,3,1,2: input values and numeric/string representation remain unchanged
+ok 60 - ordinary_active_runtime:order:0,3,1,2: healthy selection resolves empty
+ok 61 - ordinary_active_runtime:order:0,3,2,1: independently derived current ownership matches
+ok 62 - ordinary_active_runtime:order:0,3,2,1: input values and numeric/string representation remain unchanged
+ok 63 - ordinary_active_runtime:order:0,3,2,1: healthy selection resolves empty
+ok 64 - ordinary_active_runtime:order:1,0,2,3: independently derived current ownership matches
+ok 65 - ordinary_active_runtime:order:1,0,2,3: input values and numeric/string representation remain unchanged
+ok 66 - ordinary_active_runtime:order:1,0,2,3: healthy selection resolves empty
+ok 67 - ordinary_active_runtime:order:1,0,3,2: independently derived current ownership matches
+ok 68 - ordinary_active_runtime:order:1,0,3,2: input values and numeric/string representation remain unchanged
+ok 69 - ordinary_active_runtime:order:1,0,3,2: healthy selection resolves empty
+ok 70 - ordinary_active_runtime:order:1,2,0,3: independently derived current ownership matches
+ok 71 - ordinary_active_runtime:order:1,2,0,3: input values and numeric/string representation remain unchanged
+ok 72 - ordinary_active_runtime:order:1,2,0,3: healthy selection resolves empty
+ok 73 - ordinary_active_runtime:order:1,2,3,0: independently derived current ownership matches
+ok 74 - ordinary_active_runtime:order:1,2,3,0: input values and numeric/string representation remain unchanged
+ok 75 - ordinary_active_runtime:order:1,2,3,0: healthy selection resolves empty
+ok 76 - ordinary_active_runtime:order:1,3,0,2: independently derived current ownership matches
+ok 77 - ordinary_active_runtime:order:1,3,0,2: input values and numeric/string representation remain unchanged
+ok 78 - ordinary_active_runtime:order:1,3,0,2: healthy selection resolves empty
+ok 79 - ordinary_active_runtime:order:1,3,2,0: independently derived current ownership matches
+ok 80 - ordinary_active_runtime:order:1,3,2,0: input values and numeric/string representation remain unchanged
+ok 81 - ordinary_active_runtime:order:1,3,2,0: healthy selection resolves empty
+ok 82 - ordinary_active_runtime:order:2,0,1,3: independently derived current ownership matches
+ok 83 - ordinary_active_runtime:order:2,0,1,3: input values and numeric/string representation remain unchanged
+ok 84 - ordinary_active_runtime:order:2,0,1,3: healthy selection resolves empty
+ok 85 - ordinary_active_runtime:order:2,0,3,1: independently derived current ownership matches
+ok 86 - ordinary_active_runtime:order:2,0,3,1: input values and numeric/string representation remain unchanged
+ok 87 - ordinary_active_runtime:order:2,0,3,1: healthy selection resolves empty
+ok 88 - ordinary_active_runtime:order:2,1,0,3: independently derived current ownership matches
+ok 89 - ordinary_active_runtime:order:2,1,0,3: input values and numeric/string representation remain unchanged
+ok 90 - ordinary_active_runtime:order:2,1,0,3: healthy selection resolves empty
+ok 91 - ordinary_active_runtime:order:2,1,3,0: independently derived current ownership matches
+ok 92 - ordinary_active_runtime:order:2,1,3,0: input values and numeric/string representation remain unchanged
+ok 93 - ordinary_active_runtime:order:2,1,3,0: healthy selection resolves empty
+ok 94 - ordinary_active_runtime:order:2,3,0,1: independently derived current ownership matches
+ok 95 - ordinary_active_runtime:order:2,3,0,1: input values and numeric/string representation remain unchanged
+ok 96 - ordinary_active_runtime:order:2,3,0,1: healthy selection resolves empty
+ok 97 - ordinary_active_runtime:order:2,3,1,0: independently derived current ownership matches
+ok 98 - ordinary_active_runtime:order:2,3,1,0: input values and numeric/string representation remain unchanged
+ok 99 - ordinary_active_runtime:order:2,3,1,0: healthy selection resolves empty
+ok 100 - ordinary_active_runtime:order:3,0,1,2: independently derived current ownership matches
+ok 101 - ordinary_active_runtime:order:3,0,1,2: input values and numeric/string representation remain unchanged
+ok 102 - ordinary_active_runtime:order:3,0,1,2: healthy selection resolves empty
+ok 103 - ordinary_active_runtime:order:3,0,2,1: independently derived current ownership matches
+ok 104 - ordinary_active_runtime:order:3,0,2,1: input values and numeric/string representation remain unchanged
+ok 105 - ordinary_active_runtime:order:3,0,2,1: healthy selection resolves empty
+ok 106 - ordinary_active_runtime:order:3,1,0,2: independently derived current ownership matches
+ok 107 - ordinary_active_runtime:order:3,1,0,2: input values and numeric/string representation remain unchanged
+ok 108 - ordinary_active_runtime:order:3,1,0,2: healthy selection resolves empty
+ok 109 - ordinary_active_runtime:order:3,1,2,0: independently derived current ownership matches
+ok 110 - ordinary_active_runtime:order:3,1,2,0: input values and numeric/string representation remain unchanged
+ok 111 - ordinary_active_runtime:order:3,1,2,0: healthy selection resolves empty
+ok 112 - ordinary_active_runtime:order:3,2,0,1: independently derived current ownership matches
+ok 113 - ordinary_active_runtime:order:3,2,0,1: input values and numeric/string representation remain unchanged
+ok 114 - ordinary_active_runtime:order:3,2,0,1: healthy selection resolves empty
+ok 115 - ordinary_active_runtime:order:3,2,1,0: independently derived current ownership matches
+ok 116 - ordinary_active_runtime:order:3,2,1,0: input values and numeric/string representation remain unchanged
+ok 117 - ordinary_active_runtime:order:3,2,1,0: healthy selection resolves empty
+ok 118 - ordinary_retired_last_observation:baseline: independently derived current ownership matches
+ok 119 - ordinary_retired_last_observation:baseline: input values and numeric/string representation remain unchanged
+ok 120 - ordinary_retired_last_observation:baseline: healthy selection resolves empty
+ok 121 - ordinary_retired_last_observation:order:0,1: independently derived current ownership matches
+ok 122 - ordinary_retired_last_observation:order:0,1: input values and numeric/string representation remain unchanged
+ok 123 - ordinary_retired_last_observation:order:0,1: healthy selection resolves empty
+ok 124 - ordinary_retired_last_observation:order:1,0: independently derived current ownership matches
+ok 125 - ordinary_retired_last_observation:order:1,0: input values and numeric/string representation remain unchanged
+ok 126 - ordinary_retired_last_observation:order:1,0: healthy selection resolves empty
+ok 127 - missing errno: rejected before resolution
+ok 128 - missing errno: exact closed-contract diagnostic
+ok 129 - stale numeric call: rejected before resolution
+ok 130 - stale numeric call: exact closed-contract diagnostic
+ok 131 - unknown errno: rejected before resolution
+ok 132 - unknown errno: exact closed-contract diagnostic
+ok 133 - negative occurrence: rejected before resolution
+ok 134 - negative occurrence: exact closed-contract diagnostic
+ok 135 - string occurrence: rejected before resolution
+ok 136 - string occurrence: exact closed-contract diagnostic
+ok 137 - boolean occurrence: rejected before resolution
+ok 138 - boolean occurrence: exact closed-contract diagnostic
+ok 139 - structured occurrence: rejected before resolution
+ok 140 - structured occurrence: exact closed-contract diagnostic
+ok 141 - wrong address: rejected before resolution
+ok 142 - wrong address: exact closed-contract diagnostic
+ok 143 - unknown opening: rejected before resolution
+ok 144 - unknown opening: exact closed-contract diagnostic
+ok 145 - multiple reports: rejected before resolution
+ok 146 - multiple reports: exact closed-contract diagnostic
+ok 147 - pure resolution makes no process attempt
+1..147

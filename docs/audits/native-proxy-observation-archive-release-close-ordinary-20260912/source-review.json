@@ -1,0 +1,39 @@
+{
+  "book_baseline": {
+    "bytes_total": 3364042,
+    "files": 63,
+    "lines_total": 61345
+  },
+  "book_delta": {
+    "bytes_total": 1658,
+    "files": 0,
+    "lines_total": 30
+  },
+  "history": {
+    "history_bytes": 2648,
+    "history_id": "through_ac6208a46c3d",
+    "history_lines": 5,
+    "history_sections": 1,
+    "history_sha256": "78177903f6e9f301757b31762c15ff0d955dff0d6e1c4ccda962a494f180901e",
+    "live_heading": "Version-Retrievable Historical Views",
+    "record_type": "acceptance_history",
+    "retention_contract": "fsmgen_required_history",
+    "schema_version": 1,
+    "source_bytes": 1085852,
+    "source_lines": 6392,
+    "source_path": "docs/tasks/HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.md",
+    "source_revision": "ac6208a46c3d2bab8d668c0a942b056520b0bfc6",
+    "source_sha256": "de89d9d99d027102a249c82613134c154643da60612451d6e2fcfda40855d798",
+    "start_heading": "Acceptance Checklist (release close selection .3.2.15.7.3.12.4.1.3.4.4.4.1)"
+  },
+  "history_navigation_correction": "The live history sentence previously named an older active-runtime suffix while the manifest had advanced. It now describes the exact manifest-derived predecessor without storing a second revision. Original versioned suffix bytes remain unchanged.",
+  "knowledge_byte_delta": 4,
+  "new_candidate": "published-9acfee8ba133f1bdb4922e83",
+  "owner": "HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.12.4.1.3.4.4.4.2",
+  "preserved_prior_acceptance_sections": 37,
+  "prior_dispositions_byte_exact": 1926,
+  "source_review": "CloseReports invokes the original close first and only substitutes EIO after successful actual closure. ClosePlan resolves current opening occurrences before allocation-dependent execution; original IDs remain provenance. The independently written recursive-scope oracle and healthy-prefix oracle agree across all pure order variants and actual ordinary cases. Original sealed callers, cleanup sources and readback oracles remain unchanged. Recovery verifies the complete exact file set, with omission/destination/digest controls. Historical startup/native and original producer mains remain gated.",
+  "source_revision": "ac6208a46c3d2bab8d668c0a942b056520b0bfc6",
+  "task_integrity": "[task-tree-integrity] all active task-tree invariants hold (trees=4, nodes=1347, segments=3, compact_terminals=28, index_archives=1, migrations=1, acceptance_histories=1)",
+  "task_lines": 6392
+}

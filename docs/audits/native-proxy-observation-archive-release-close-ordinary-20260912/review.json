@@ -1,0 +1,35 @@
+{
+  "audit_result": "docs/audits/native-proxy-observation-archive-release-close-ordinary-20260912/result/audit.json",
+  "book_review": "docs/audits/native-proxy-observation-archive-release-close-ordinary-20260912/book-review.json",
+  "claim_legs": {
+    "durability": "Prospective source/input pins, first-run case bodies, complete byte-exact recovery manifests and audit outputs are tracked. audit.py --verify-saved and recover.py --verify-saved revalidate saved evidence without new fixture allocation or original raw-log access. The book disposition names its explicit watcher.",
+    "falsify": "Recursive source-scope and independently constructed healthy-prefix/remaining-owner oracles agree on pure order variants and actual rows. Altered row/domain/header evidence rejects; pure resolver, prediction, recovery-copy and book-count controls also reject. All actual closes and absent roots are checked.",
+    "rederive": "The unchanged source contracts and committed portable selector define the exact ordinary domain. Immutable case receipts retain actual calls, handles, close returns, error reports, inactive results, file effects and cleanup. The book watcher independently recounts case outcomes and original TAP."
+  },
+  "commit_gate": "Staged doctrines and normal commit hooks must pass before commit.",
+  "dispositions": {
+    "added": [
+      "published-9acfee8ba133f1bdb4922e83"
+    ],
+    "prior_records_byte_exact": 1926
+  },
+  "limits": "Other profiles, primary/grouped errors, genuine omitted closes, complete release applicability and native/lifetime remain separate. No original producer/main or native process runs. Historical startup/parent/full CI/push remain gated.",
+  "owner": "HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.12.4.1.3.4.4.4.2",
+  "raw_verification_outputs": "docs/audits/native-proxy-observation-archive-release-close-ordinary-20260912/verification-outputs.json",
+  "recovery": {
+    "bytes": 96875827,
+    "copies": 190,
+    "falsifiers": [
+      "omitted-copy",
+      "foreign-destination",
+      "changed-copy-digest"
+    ],
+    "source_reaccess": false,
+    "success": true
+  },
+  "schema": "fsmgen.release_ordinary_close_review.v1",
+  "scope": "Ordinary healthy and every selected single EIO close report. Actual close success and native closure precede substitution; pure cross-profile/order predictions qualify shared binding only.",
+  "source_review": "docs/audits/native-proxy-observation-archive-release-close-ordinary-20260912/source-review.json",
+  "source_revision": "ac6208a46c3d2bab8d668c0a942b056520b0bfc6",
+  "success": true
+}
