@@ -2852,8 +2852,29 @@ alongside altered errors, closes and file effects. Verify the saved evidence:
 python3 -B docs/audits/native-proxy-observation-archive-release-composition-active-20260912/audit.py --verify-saved
 ```
 
-Last-observation compositions remain pending,
-as do genuine omissions and complete release applicability. These reported errors
+Last-observation release composition qualification covers 45 cases: 1 healthy control, 20 grouped-close cases and 24 primary-error cases, with 610 TAP assertions.
+
+Controlled setup retires the runtime and removes the other observation hold
+before the observed release. The selected hold is then the final reference to
+its image. These setup removals remain distinct from the release's actual
+unlink and absence checks.
+
+Grouped reports preserve actual close order, and source or directory primary
+errors survive later cleanup reports. Every observed handle closes. If release
+unlinks the final hold, a later error does not recreate that reference.
+The canonical image and its source remain unchanged after release.
+
+The independent last-state check reconstructs the remaining references from
+stored records and compares the complete original image subtree. Controls
+reject a substituted setup target, a restored final reference, lost image bytes,
+changed source identity and incorrect errors or effects. Verify the saved evidence:
+
+```sh
+python3 -B docs/audits/native-proxy-observation-archive-release-composition-last-20260912/audit.py --verify-saved
+```
+
+The composition and full close-report joins, genuine omissions and final
+release applicability remain pending. These reported errors
 follow successful actual reads or closes; they do not qualify ambiguous operating-system
 failures or authorize native execution.
 

@@ -1,0 +1,56 @@
+{
+  "adapted_row_body_sha256": "73225e425c7bcedddc3b0971087f3bac247143fbfb382254d0d03d3bfa48448d",
+  "book_actual": {
+    "bytes_total": 3375705,
+    "files": 63,
+    "lines_total": 61552
+  },
+  "book_baseline": {
+    "bytes_total": 3374543,
+    "files": 63,
+    "lines_total": 61531
+  },
+  "book_delta": {
+    "bytes_total": 1162,
+    "files": 0,
+    "lines_total": 21
+  },
+  "completion_date": "2026-09-13",
+  "component_date": "The source/evidence component retains its pinned start-date name.",
+  "first_task_acceptance_failure": "docs/audits/native-proxy-observation-archive-release-composition-last-20260912/first-task-acceptance-failure.json",
+  "history": {
+    "history_bytes": 2080,
+    "history_id": "through_8791889f587e",
+    "history_lines": 5,
+    "history_sections": 1,
+    "history_sha256": "59ad46a35e3f51cdb765b3003100680b450142e937049336dfcc9533d06c2be8",
+    "live_heading": "Version-Retrievable Historical Views",
+    "record_type": "acceptance_history",
+    "retention_contract": "fsmgen_required_history",
+    "schema_version": 1,
+    "source_bytes": 1056546,
+    "source_lines": 6365,
+    "source_path": "docs/tasks/HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.md",
+    "source_revision": "8791889f587ee4c917e0a1e1785800f4cbef059a",
+    "source_sha256": "c73ed7e84396e67e3848cbec8d721cf824293d79b350e73af4d4be0adb10221d",
+    "start_heading": "Acceptance Checklist (active-runtime release error compositions .3.2.15.7.3.12.4.1.3.4.4.4.6.4)"
+  },
+  "knowledge_byte_delta": -1,
+  "knowledge_questions_unchanged": true,
+  "new_candidate": "published-8a3744279b9ff87ce29ec083",
+  "original_row_body_sha256": "c1c07a233300158cdba3ce0e43748679906eef5a22c39bd1b2463e8be10da935",
+  "original_setup_path": "docs/audits/native-proxy-observation-archive-release-readback-last-20260912/qualify.t",
+  "original_setup_sha256": "d81b2e75e39f2f8ea3abcae817dce477fe5ab3ea9950b99bb46bf35869d17a03",
+  "owner": "HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.12.4.1.3.4.4.4.6.5",
+  "preflight_copy_bytes": 378617,
+  "preserved_prior_acceptance_sections": 37,
+  "prior_dispositions_byte_exact": 1934,
+  "qualifier_adaptation": "Only the input diagnostic label, qualification schema and insertion of the exact original last-observation setup differ from the committed equal-reference qualifier. Retirement and controlled other-hold removal precede the observed release; every original per-case assertion remains unchanged.",
+  "recovery_source_byte_exact": true,
+  "row_oracle_adaptation": "The complete qualified composition row body is preserved with only function naming, admission of the original controlled-setup field and explicit shared resolver qualification. The original last-state oracle independently reconstructs final references and exact image custody. Preflight mechanically checks both row-body equality and the complete original setup block before admission.",
+  "scope": "Inactive last-observation file-fixture compositions; no actual runtime, compiler or native-proxy activation.",
+  "shared_sources_unchanged": true,
+  "source_revision": "8791889f587ee4c917e0a1e1785800f4cbef059a",
+  "task_integrity": "[task-tree-integrity] all active task-tree invariants hold (trees=4, nodes=1336, segments=3, compact_terminals=36, index_archives=1, migrations=1, acceptance_histories=1)",
+  "task_lines": 6365
+}

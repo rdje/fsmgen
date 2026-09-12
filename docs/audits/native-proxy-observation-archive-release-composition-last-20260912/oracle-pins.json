@@ -1,0 +1,37 @@
+[
+  {
+    "path": "docs/audits/native-proxy-observation-archive-release-composition-last-20260912/plan.json",
+    "sha256": "8f3ad2e3ee86b3fc7f25e027bcd127d50851eb000ecb3fc6e4cda6423d1d3247",
+    "size_bytes": 162865
+  },
+  {
+    "path": "docs/audits/native-proxy-observation-archive-release-composition-last-20260912/prepare.py",
+    "sha256": "56255b943f02a488daa91e40caee508d5e1db3c36de0092e12f85a4603c70455",
+    "size_bytes": 3915
+  },
+  {
+    "path": "docs/audits/native-proxy-observation-archive-release-composition-last-20260912/prepare-pin.json",
+    "sha256": "d55bddb526fb41716cf7c0284f620ecb3b49431f9f435e6d5304088057f86241",
+    "size_bytes": 208
+  },
+  {
+    "path": "docs/audits/native-proxy-observation-archive-release-composition-last-20260912/qualify.t",
+    "sha256": "b43850142db96d2f21ce883f20d1e3a327060b8d4fa1fd4e0898ef27246148a6",
+    "size_bytes": 16712
+  },
+  {
+    "path": "docs/audits/native-proxy-observation-archive-release-composition-last-20260912/qualifier-pin.json",
+    "sha256": "e5d3e633667ca0260aa3cbc708c117a5f83581c50ce2616a14131d2a1e8978a8",
+    "size_bytes": 208
+  },
+  {
+    "path": "docs/audits/native-proxy-observation-archive-release-composition-last-20260912/audit.py",
+    "sha256": "a512c027a2539527b110202a3f2775c542aa0e75f04a1cd3cba9153a18c1d996",
+    "size_bytes": 20686
+  },
+  {
+    "path": "docs/audits/native-proxy-observation-archive-release-composition-last-20260912/oracle-preflight.py",
+    "sha256": "b1a1c84be1a6f82c41965c09c25049d8049ab872942918f75de9a7a2ebd9a496",
+    "size_bytes": 5188
+  }
+]

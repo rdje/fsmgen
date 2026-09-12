@@ -1,0 +1,36 @@
+{
+  "audit_result": "docs/audits/native-proxy-observation-archive-release-composition-last-20260912/result/audit.json",
+  "book_review": "docs/audits/native-proxy-observation-archive-release-composition-last-20260912/book-review.json",
+  "claim_legs": {
+    "durability": "Exact Git-bound inputs, prospective source pins and complete first-run copies are tracked. Saved-only audit/recovery pass without raw-log access or fixture replay. Book, Knowledge Map, task and exact acceptance history preserve outcomes and the next frontier.",
+    "falsify": "Unchanged recursive and independent interval/source-scope oracles agree with current rows. Prospectively bound original setup and the exact row adaptation preserve the original last-state oracle, which reconstructs final references and image custody. Altered rows, domains, headers, predictions, recovery and book counts reject.",
+    "rederive": "Pinned recipes and immutable last-observation records distinguish actual reads/closes and release effects from reported errors and controlled setup. Original reference/image snapshots, TAP and the independent book watcher recount the observed domain."
+  },
+  "commit_gate": "Required staged doctrines and normal commit hooks must pass before commit.",
+  "dispositions": {
+    "added": [
+      "published-8a3744279b9ff87ce29ec083"
+    ],
+    "prior_records_byte_exact": 1934
+  },
+  "first_task_acceptance_failure": "docs/audits/native-proxy-observation-archive-release-composition-last-20260912/first-task-acceptance-failure.json",
+  "limits": "Bounded composition join, complete close-report join, genuine omissions, final release, native/lifetime and historical startup/parent/full CI/push remain open.",
+  "owner": "HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.12.4.1.3.4.4.4.6.5",
+  "raw_verification_outputs": "docs/audits/native-proxy-observation-archive-release-composition-last-20260912/verification-outputs.json",
+  "recovery": {
+    "bytes": 16777602,
+    "copies": 63,
+    "falsifiers": [
+      "omitted-copy",
+      "foreign-destination",
+      "changed-copy-digest"
+    ],
+    "source_reaccess": true,
+    "success": true
+  },
+  "schema": "fsmgen.release_last_composition_review.v1",
+  "scope": "Last-observation inert file-fixture compositions only. Qualified pure binding, real-close-first reporting, directory-read reporting and independent trace oracles remain unchanged. The original controlled setup retires the runtime and removes the other observation hold before the observed release. Final-hold unlink/absence truth and the exact unreferenced image remain independent. No prior fixture, other-profile fixture, producer/main, compiler or native process is replayed.",
+  "source_review": "docs/audits/native-proxy-observation-archive-release-composition-last-20260912/source-review.json",
+  "source_revision": "8791889f587ee4c917e0a1e1785800f4cbef059a",
+  "success": true
+}

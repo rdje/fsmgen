@@ -1,0 +1,20 @@
+{
+  "checked_passages": [
+    "Last-observation release composition qualification covers 45 cases: 1 healthy control, 20 grouped-close cases and 24 primary-error cases, with 610 TAP assertions.",
+    "The selected hold is then the final reference to its image.",
+    "These setup removals remain distinct from the release's actual unlink and absence checks.",
+    "If release unlinks the final hold, a later error does not recreate that reference.",
+    "The canonical image and its source remain unchanged after release.",
+    "python3 -B docs/audits/native-proxy-observation-archive-release-composition-last-20260912/audit.py --verify-saved"
+  ],
+  "exact_output_absent": true,
+  "exit_code": 0,
+  "output": ".artifacts/tmp/native-proxy-release-composition-last-book-20260912/book",
+  "rendered_bytes": 23476531,
+  "rendered_directories": 3,
+  "rendered_files": 98,
+  "renderer_warnings": [
+    "WARN search index is very large (13237262 bytes)"
+  ],
+  "same_volume_direct_objects": true
+}
