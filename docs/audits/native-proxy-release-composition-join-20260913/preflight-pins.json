@@ -1,0 +1,22 @@
+[
+  {
+    "path": "docs/audits/native-proxy-release-composition-join-20260913/prepare.py",
+    "sha256": "8dd743900730feed81f60b5816af06483b0d311f616e51302ac693d7feb5a9be",
+    "size_bytes": 4098
+  },
+  {
+    "path": "docs/audits/native-proxy-release-composition-join-20260913/prepare-pins.json",
+    "sha256": "e15972fa4728b539b662861dc73866add2a830cbe4f3172366ba37c275743bed",
+    "size_bytes": 202
+  },
+  {
+    "path": "docs/audits/native-proxy-release-composition-join-20260913/plan.json",
+    "sha256": "3d752522afa07aff70a150389332a3272792f778b7564c0505fb9ec54b397f0f",
+    "size_bytes": 200743
+  },
+  {
+    "path": "docs/audits/native-proxy-release-composition-join-20260913/audit.py",
+    "sha256": "a2f8ba07545d88b1f0797874bc762bd47f72eff28c9a3dc8e1b4191e63692fb9",
+    "size_bytes": 19297
+  }
+]

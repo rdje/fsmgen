@@ -1,0 +1,328 @@
+{
+  "assertions": 2440,
+  "cases": 180,
+  "domain_sha256": "664961b5e7e010e9095e0c5a3e655ecaae4fec08d635a736da2520a6c1cd4d40",
+  "earlier_falsifiers": "Original source and saved verdicts authenticated; unchanged row/state/header oracles rerun. Earlier main routines and their complete embedded falsifier loops are not replayed.",
+  "independent_counts": {
+    "call_primaries": 80,
+    "calls": 33711,
+    "cases": 180,
+    "close_reports": 9441,
+    "directories": 2884,
+    "directory_primaries": 16,
+    "events": 108195,
+    "failures": 176,
+    "handles": 9441,
+    "healthy": 4,
+    "locks": 140,
+    "modeled_reports": 1336,
+    "post_unlink_failures": 32,
+    "reads": 6417,
+    "sources": 6417,
+    "unlinks": 36
+  },
+  "input_bytes": 156357460,
+  "input_files": 665,
+  "join_falsifiers": [
+    "omitted-case",
+    "duplicated-case",
+    "wrong-outcome",
+    "foreign-profile",
+    "case-redistribution",
+    "declaration-dependent-winner",
+    "changed-report-errno",
+    "changed-cleanup-order",
+    "declaration-dependent-events",
+    "duplicate-current-root",
+    "predecessor-root-overlap",
+    "missing-historical-input",
+    "changed-input-receipt",
+    "changed-historical-git-identity"
+  ],
+  "new_fixture_roots": 0,
+  "partitions": [
+    {
+      "assertions": 610,
+      "case_bytes": 17984428,
+      "directory": "docs/audits/native-proxy-observation-archive-release-composition-ordinary-20260912",
+      "independent_counts": {
+        "call_primaries": 20,
+        "calls": 8608,
+        "cases": 45,
+        "close_reports": 2411,
+        "directories": 728,
+        "directory_primaries": 4,
+        "events": 27649,
+        "failures": 44,
+        "handles": 2411,
+        "healthy": 1,
+        "locks": 35,
+        "modeled_reports": 344,
+        "post_unlink_failures": 8,
+        "reads": 1648,
+        "sources": 1648,
+        "unlinks": 9
+      },
+      "prerequisites": {
+        "assertions": 105,
+        "copies": 8,
+        "predictions": 1890,
+        "variants": 42
+      },
+      "profile_id": "ordinary_retired_other_observation",
+      "recovery": {
+        "bytes": 18150181,
+        "copies": 63
+      },
+      "retained_row_falsifiers": 36,
+      "totals": {
+        "call_primaries": 20,
+        "calls": 8608,
+        "cases": 45,
+        "close_reports": 2411,
+        "directories": 728,
+        "directory_primaries": 4,
+        "events": 27649,
+        "failures": 44,
+        "handles": 2411,
+        "healthy": 1,
+        "locks": 35,
+        "modeled_reports": 344,
+        "post_unlink_failures": 8,
+        "reads": 1648,
+        "sources": 1648,
+        "unlinks": 9
+      }
+    },
+    {
+      "assertions": 610,
+      "case_bytes": 17570523,
+      "directory": "docs/audits/native-proxy-observation-archive-release-composition-equal-20260912",
+      "independent_counts": {
+        "call_primaries": 20,
+        "calls": 8195,
+        "cases": 45,
+        "close_reports": 2306,
+        "directories": 728,
+        "directory_primaries": 4,
+        "events": 26298,
+        "failures": 44,
+        "handles": 2306,
+        "healthy": 1,
+        "locks": 35,
+        "modeled_reports": 304,
+        "post_unlink_failures": 8,
+        "reads": 1543,
+        "sources": 1543,
+        "unlinks": 9
+      },
+      "prerequisites": {
+        "baseline_falsifiers": 11,
+        "baseline_predictions": 45,
+        "copies": 4,
+        "inherited": {
+          "assertions": 105,
+          "copies": 8,
+          "predictions": 1890,
+          "variants": 42
+        }
+      },
+      "profile_id": "equal_reference_retired_other_observation",
+      "recovery": {
+        "bytes": 17733642,
+        "copies": 63
+      },
+      "retained_row_falsifiers": 39,
+      "totals": {
+        "call_primaries": 20,
+        "calls": 8195,
+        "cases": 45,
+        "close_reports": 2306,
+        "directories": 728,
+        "directory_primaries": 4,
+        "equal_identity_cases": 45,
+        "events": 26298,
+        "failures": 44,
+        "handles": 2306,
+        "healthy": 1,
+        "locks": 35,
+        "modeled_reports": 304,
+        "post_unlink_failures": 8,
+        "reads": 1543,
+        "sources": 1543,
+        "unlinks": 9
+      }
+    },
+    {
+      "assertions": 610,
+      "case_bytes": 19354078,
+      "directory": "docs/audits/native-proxy-observation-archive-release-composition-active-20260912",
+      "independent_counts": {
+        "call_primaries": 20,
+        "calls": 8974,
+        "cases": 45,
+        "close_reports": 2526,
+        "directories": 728,
+        "directory_primaries": 4,
+        "events": 28956,
+        "failures": 44,
+        "handles": 2526,
+        "healthy": 1,
+        "locks": 35,
+        "modeled_reports": 350,
+        "post_unlink_failures": 8,
+        "reads": 1763,
+        "sources": 1763,
+        "unlinks": 9
+      },
+      "prerequisites": {
+        "baseline_falsifiers": 11,
+        "baseline_predictions": 45,
+        "copies": 4,
+        "inherited": {
+          "assertions": 105,
+          "copies": 8,
+          "predictions": 1890,
+          "variants": 42
+        }
+      },
+      "profile_id": "ordinary_active_runtime",
+      "recovery": {
+        "bytes": 19517347,
+        "copies": 63
+      },
+      "retained_row_falsifiers": 40,
+      "totals": {
+        "active_state_cases": 45,
+        "call_primaries": 20,
+        "calls": 8974,
+        "cases": 45,
+        "close_reports": 2526,
+        "directories": 728,
+        "directory_primaries": 4,
+        "events": 28956,
+        "failures": 44,
+        "handles": 2526,
+        "healthy": 1,
+        "locks": 35,
+        "modeled_reports": 350,
+        "post_unlink_failures": 8,
+        "reads": 1763,
+        "sources": 1763,
+        "unlinks": 9
+      }
+    },
+    {
+      "assertions": 610,
+      "case_bytes": 16614139,
+      "directory": "docs/audits/native-proxy-observation-archive-release-composition-last-20260912",
+      "independent_counts": {
+        "call_primaries": 20,
+        "calls": 7934,
+        "cases": 45,
+        "close_reports": 2198,
+        "directories": 700,
+        "directory_primaries": 4,
+        "events": 25292,
+        "failures": 44,
+        "handles": 2198,
+        "healthy": 1,
+        "locks": 35,
+        "modeled_reports": 338,
+        "post_unlink_failures": 8,
+        "reads": 1463,
+        "sources": 1463,
+        "unlinks": 9
+      },
+      "prerequisites": {
+        "baseline_falsifiers": 11,
+        "baseline_predictions": 45,
+        "copies": 4,
+        "inherited": {
+          "assertions": 105,
+          "copies": 8,
+          "predictions": 1890,
+          "variants": 42
+        }
+      },
+      "profile_id": "ordinary_retired_last_observation",
+      "recovery": {
+        "bytes": 16777602,
+        "copies": 63
+      },
+      "retained_row_falsifiers": 42,
+      "totals": {
+        "call_primaries": 20,
+        "calls": 7934,
+        "cases": 45,
+        "close_reports": 2198,
+        "directories": 700,
+        "directory_primaries": 4,
+        "events": 25292,
+        "failures": 44,
+        "handles": 2198,
+        "healthy": 1,
+        "last_state_cases": 45,
+        "locks": 35,
+        "modeled_reports": 338,
+        "post_unlink_failures": 8,
+        "reads": 1463,
+        "sources": 1463,
+        "unlinks": 9,
+        "unreferenced_image_cases": 9
+      }
+    }
+  ],
+  "prior_roots_absent": 27356,
+  "prospective_pins": [
+    {
+      "path": "docs/audits/native-proxy-release-composition-join-20260913/prepare.py",
+      "sha256": "8dd743900730feed81f60b5816af06483b0d311f616e51302ac693d7feb5a9be",
+      "size_bytes": 4098
+    },
+    {
+      "path": "docs/audits/native-proxy-release-composition-join-20260913/prepare-pins.json",
+      "sha256": "e15972fa4728b539b662861dc73866add2a830cbe4f3172366ba37c275743bed",
+      "size_bytes": 202
+    },
+    {
+      "path": "docs/audits/native-proxy-release-composition-join-20260913/plan.json",
+      "sha256": "3d752522afa07aff70a150389332a3272792f778b7564c0505fb9ec54b397f0f",
+      "size_bytes": 200743
+    },
+    {
+      "path": "docs/audits/native-proxy-release-composition-join-20260913/audit.py",
+      "sha256": "a2f8ba07545d88b1f0797874bc762bd47f72eff28c9a3dc8e1b4191e63692fb9",
+      "size_bytes": 19297
+    }
+  ],
+  "runtime_authorized": false,
+  "same_input_reversal_predictions": 176,
+  "schema": "fsmgen.release_composition_join.v1",
+  "scope": "Join the complete selected bounded composition domain from original retained rows. Revalidate source epochs, physical closure, primary precedence, declaration reversal, profile state and recovery without fixture replay, old main calls or native execution. This is finite representative coverage, not all Cartesian error combinations. Single-report join, genuine omissions, final release, native/lifetime and historical startup/parent/full CI/push remain separate.",
+  "selected_roots_absent": 720,
+  "source_revision": "5361f8818cbbaf247fd5a34aa0884624257fce11",
+  "success": true,
+  "totals": {
+    "active_state_cases": 45,
+    "call_primaries": 80,
+    "calls": 33711,
+    "cases": 180,
+    "close_reports": 9441,
+    "directories": 2884,
+    "directory_primaries": 16,
+    "equal_identity_cases": 45,
+    "events": 108195,
+    "failures": 176,
+    "handles": 9441,
+    "healthy": 4,
+    "last_state_cases": 45,
+    "locks": 140,
+    "modeled_reports": 1336,
+    "post_unlink_failures": 32,
+    "reads": 6417,
+    "sources": 6417,
+    "unlinks": 36,
+    "unreferenced_image_cases": 9
+  }
+}

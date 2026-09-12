@@ -139,8 +139,8 @@ evidence: >-
   t/lib/FSM/Test/RustProxyFixture.pm; t/1815-rust-proxy-fixture.t; t/1816-rust-proxy-integration.t; t/1817-test-supervision-architecture.t
 reverify: >-
   scripts/run_with_ram_guard.sh -- python3 -B
-  docs/audits/native-proxy-observation-archive-release-composition-last-20260912/audit.py --verify-saved
+  docs/audits/native-proxy-release-composition-join-20260913/audit.py --verify-saved
 ---
 Decisions `0087`/`0101`: `FSM::Support::ProcessSupervisor`; adapters seal local argv/capture/group cleanup. T1669 checks ownership. `exec_handoff_monotonic_ns` is EOF, not main entry; absent EOF leaves timing unknown.
-History: `8791889f587ee4c917e0a1e1785800f4cbef059a:docs/knowledge/test-subprocess-policy-adapters.md`. Last-observation compositions preserve final-hold truth, image custody and primary errors: reverify. Joins are pending.
+History: `5361f8818cbbaf247fd5a34aa0884624257fce11:docs/knowledge/test-subprocess-policy-adapters.md`. The bounded composition join preserves primary errors, actual closure and profile state: reverify. Complete release signoff remains open.
 Proxy: `t/fixtures/rust-tool-proxy.c` is C, built by Perl `t/lib/FSM/Test/RustProxyFixture.pm` and launched separately to imitate rustup. `VerilatorRuntime`: decision `0086`. HIAL/VIAL `.19.2.3.1.2.2.5.5` owns repair/hostile controls; neutral-verifier extraction stays blocked.

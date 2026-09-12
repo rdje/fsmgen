@@ -1,0 +1,47 @@
+{
+  "admission": "Flat exact-version input rosters replace recursive predecessor traversal only; domain, row, state, native-close and source-scope oracles are unchanged. No monkeypatching or old main invocation.",
+  "book_actual": {
+    "bytes_total": 3376844,
+    "files": 63,
+    "lines_total": 61573
+  },
+  "book_baseline": {
+    "bytes_total": 3375705,
+    "files": 63,
+    "lines_total": 61552
+  },
+  "book_delta": {
+    "bytes_total": 1139,
+    "files": 0,
+    "lines_total": 21
+  },
+  "history": {
+    "history_bytes": 2195,
+    "history_id": "through_5361f8818cbb",
+    "history_lines": 5,
+    "history_sections": 1,
+    "history_sha256": "a23d9ea315e20aaf7695edc2f958a9d5e12a48e5181f854ac513e2f77dbab8ee",
+    "live_heading": "Version-Retrievable Historical Views",
+    "record_type": "acceptance_history",
+    "retention_contract": "fsmgen_required_history",
+    "schema_version": 1,
+    "source_bytes": 1058990,
+    "source_lines": 6365,
+    "source_path": "docs/tasks/HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.md",
+    "source_revision": "5361f8818cbbaf247fd5a34aa0884624257fce11",
+    "source_sha256": "df0f498f994116b845d02cea65d6832219c3023555e4e5fb636fae88ed736edc",
+    "start_heading": "Acceptance Checklist (last-observation release error compositions .3.2.15.7.3.12.4.1.3.4.4.4.6.5)"
+  },
+  "knowledge_byte_delta": -2,
+  "knowledge_questions_unchanged": true,
+  "new_candidate": "published-aaa232ff7d6a493b7e3db5d6",
+  "owner": "HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.12.4.1.3.4.4.4.6.6",
+  "preserved_prior_acceptance_sections": 37,
+  "prior_dispositions_byte_exact": 1935,
+  "reversal": "Opposite declarations are resolved on the same actual case inputs. Full independent and recursive predictions, error assignment, winner, primary, cleanup and effects agree; distinct fixture inputs are never compared as if identical.",
+  "scope": "Join the complete selected bounded composition domain from original retained rows. Revalidate source epochs, physical closure, primary precedence, declaration reversal, profile state and recovery without fixture replay, old main calls or native execution. This is finite representative coverage, not all Cartesian error combinations. Single-report join, genuine omissions, final release, native/lifetime and historical startup/parent/full CI/push remain separate.",
+  "source_files_unchanged": true,
+  "source_revision": "5361f8818cbbaf247fd5a34aa0884624257fce11",
+  "task_integrity": "[task-tree-integrity] all active task-tree invariants hold (trees=4, nodes=1336, segments=3, compact_terminals=36, index_archives=1, migrations=1, acceptance_histories=1)",
+  "task_lines": 6365
+}

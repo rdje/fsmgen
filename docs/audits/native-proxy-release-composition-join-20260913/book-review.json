@@ -1,0 +1,20 @@
+{
+  "checked_passages": [
+    "The bounded release-composition join verifies 180 cases: 4 healthy controls, 80 grouped-close cases and 96 primary-error cases, with 2,440 original TAP assertions.",
+    "Every observed handle closes, and the earliest primary error survives later cleanup reports.",
+    "Actual reads and closes remain distinct from reported errors.",
+    "For each fault recipe, a pure comparison reverses declaration order on the same saved inputs.",
+    "This comparison adds no fixture execution or TAP assertions.",
+    "python3 -B docs/audits/native-proxy-release-composition-join-20260913/audit.py --verify-saved"
+  ],
+  "exact_output_absent": true,
+  "exit_code": 0,
+  "output": ".artifacts/tmp/native-proxy-release-composition-join-book-20260913/book",
+  "rendered_bytes": 23480691,
+  "rendered_directories": 3,
+  "rendered_files": 98,
+  "renderer_warnings": [
+    "WARN search index is very large (13239019 bytes)"
+  ],
+  "same_volume_direct_objects": true
+}

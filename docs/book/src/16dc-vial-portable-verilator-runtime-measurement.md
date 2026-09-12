@@ -2873,7 +2873,28 @@ changed source identity and incorrect errors or effects. Verify the saved eviden
 python3 -B docs/audits/native-proxy-observation-archive-release-composition-last-20260912/audit.py --verify-saved
 ```
 
-The composition and full close-report joins, genuine omissions and final
+The bounded release-composition join verifies 180 cases: 4 healthy controls, 80 grouped-close cases and 96 primary-error cases, with 2,440 original TAP assertions.
+
+This joins the ordinary, equal-reference, active-runtime and last-observation
+profiles against the selected recipes and their original source versions.
+Every observed handle closes, and the earliest primary error survives later
+cleanup reports. Actual reads and closes remain distinct from reported errors.
+
+For each fault recipe, a pure comparison reverses declaration order on the
+same saved inputs. The predicted error, cleanup order and file effects remain
+unchanged. This comparison adds no fixture execution or TAP assertions.
+The original profile checks preserve other owners, active workspace state and
+the final image after its last reference is removed.
+
+The join rejects missing or duplicate cases, incorrect profile assignment,
+changed outcomes, declaration-dependent errors, root overlap and stale source
+receipts. Verify the retained evidence without starting a fixture:
+
+```sh
+python3 -B docs/audits/native-proxy-release-composition-join-20260913/audit.py --verify-saved
+```
+
+The full close-report join, genuine omissions and final
 release applicability remain pending. These reported errors
 follow successful actual reads or closes; they do not qualify ambiguous operating-system
 failures or authorize native execution.

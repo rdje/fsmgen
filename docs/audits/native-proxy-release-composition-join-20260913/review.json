@@ -1,0 +1,48 @@
+{
+  "book_review": "docs/audits/native-proxy-release-composition-join-20260913/book-review.json",
+  "claim_legs": {
+    "durability": "Tracked preparation, audit, copy plan and complete exact saved outputs reverify without raw-log access or fixture replay. The book watcher rederives current claims from original saved cases and TAP.",
+    "falsify": "Join controls reject coverage omissions, duplication, misassignment, wrong outcomes, declaration dependence, root overlap and historical source corruption. Full independent predictions match on opposite declarations of the same inputs; the book watcher rejects count changes and category redistribution.",
+    "rederive": "Exact selected recipe/profile coverage, historical Git input rosters and unchanged complete per-row/state/native-close oracles independently agree with direct physical counts."
+  },
+  "commit_gate": "Required staged doctrine checks and normal commit hooks must pass before this atomic slice is committed.",
+  "dispositions": {
+    "added": [
+      "published-aaa232ff7d6a493b7e3db5d6"
+    ],
+    "prior_records_byte_exact": 1935
+  },
+  "earlier_falsifiers": "Original source and saved verdicts authenticated; unchanged row/state/header oracles rerun. Earlier main routines and their complete embedded falsifier loops are not replayed.",
+  "first_executions": {
+    "admission": true,
+    "book": true,
+    "book_claims": true,
+    "book_inspection": true,
+    "join": true,
+    "knowledge": true,
+    "prepare": true,
+    "recovery": true,
+    "saved_join": true,
+    "saved_recovery": true,
+    "task": true
+  },
+  "join_result": "docs/audits/native-proxy-release-composition-join-20260913/result/join.json",
+  "owner": "HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.12.4.1.3.4.4.4.6.6",
+  "raw_verification_outputs": "docs/audits/native-proxy-release-composition-join-20260913/verification-outputs.json",
+  "recovery": {
+    "bytes": 12151,
+    "copies": 10,
+    "falsifiers": [
+      "missing-copy",
+      "foreign-destination",
+      "corrupt-copy-digest"
+    ],
+    "source_reaccess": false,
+    "success": true
+  },
+  "schema": "fsmgen.release_composition_join_review.v1",
+  "scope": "Join the complete selected bounded composition domain from original retained rows. Revalidate source epochs, physical closure, primary precedence, declaration reversal, profile state and recovery without fixture replay, old main calls or native execution. This is finite representative coverage, not all Cartesian error combinations. Single-report join, genuine omissions, final release, native/lifetime and historical startup/parent/full CI/push remain separate.",
+  "source_review": "docs/audits/native-proxy-release-composition-join-20260913/source-review.json",
+  "source_revision": "5361f8818cbbaf247fd5a34aa0884624257fce11",
+  "success": true
+}
