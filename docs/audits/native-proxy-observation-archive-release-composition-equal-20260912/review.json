@@ -1,0 +1,36 @@
+{
+  "audit_result": "docs/audits/native-proxy-observation-archive-release-composition-equal-20260912/result/audit.json",
+  "book_review": "docs/audits/native-proxy-observation-archive-release-composition-equal-20260912/book-review.json",
+  "claim_legs": {
+    "durability": "Exact Git-bound inputs, prospective source pins and complete first-run copies are tracked. Saved-only audit/recovery pass without raw-log access or fixture replay. Book, Knowledge Map, task and exact acceptance history preserve outcomes and the next frontier.",
+    "falsify": "Unchanged recursive and independent interval/source-scope oracles agree with current actual rows; original equal-reference identity reconstruction checks distinct sources and shared archive custody. Altered rows, domains, headers, baseline predictions, recovery and book counts reject.",
+    "rederive": "Pinned recipes and immutable actual equal-reference case records distinguish reads/closes from reported errors and retain original native identities, public attempts and effects. Original TAP and the independent book watcher recount the published domain."
+  },
+  "commit_gate": "Required staged doctrines and normal commit hooks must pass before commit.",
+  "dispositions": {
+    "added": [
+      "published-d3406180fdb58e6d6e0577e7"
+    ],
+    "prior_records_byte_exact": 1932
+  },
+  "documentation_authoring_note": "docs/audits/native-proxy-observation-archive-release-composition-equal-20260912/documentation-authoring-note.json",
+  "limits": "Active-runtime and last-observation compositions, complete close-report join, genuine omissions, final release, native/lifetime and historical startup/parent/full CI/push remain open.",
+  "owner": "HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.12.4.1.3.4.4.4.6.3",
+  "raw_verification_outputs": "docs/audits/native-proxy-observation-archive-release-composition-equal-20260912/verification-outputs.json",
+  "recovery": {
+    "bytes": 17733642,
+    "copies": 63,
+    "falsifiers": [
+      "omitted-copy",
+      "foreign-destination",
+      "changed-copy-digest"
+    ],
+    "source_reaccess": true,
+    "success": true
+  },
+  "schema": "fsmgen.release_equal_composition_review.v1",
+  "scope": "Equal-reference inert file-fixture compositions only. Qualified pure binding, real-close-first reporting, directory-read reporting and independent trace oracles remain unchanged. Equal source bytes retain distinct native identities and share an independently identified archive copy. No ordinary fixture, other-profile fixture, prior producer/main, compiler or native process is replayed.",
+  "source_review": "docs/audits/native-proxy-observation-archive-release-composition-equal-20260912/source-review.json",
+  "source_revision": "c89aef75c494e7216b31d20ff441bcd7e7f20cf0",
+  "success": true
+}

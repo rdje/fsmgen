@@ -1,0 +1,20 @@
+{
+  "checked_passages": [
+    "Equal-reference release composition qualification covers 45 cases: 1 healthy control, 20 grouped-close cases and 24 primary-error cases, with 610 TAP assertions.",
+    "content equality never authorizes releasing another owner's reference.",
+    "Source and directory primary errors survive later cleanup reports.",
+    "A primary error after unlink preserves the recorded deletion and the latest known absence state.",
+    "Active-runtime and last-observation compositions remain pending,",
+    "python3 -B docs/audits/native-proxy-observation-archive-release-composition-equal-20260912/audit.py --verify-saved"
+  ],
+  "exact_output_absent": true,
+  "exit_code": 0,
+  "output": ".artifacts/tmp/native-proxy-release-composition-equal-book-20260912/book",
+  "rendered_bytes": 23469067,
+  "rendered_directories": 3,
+  "rendered_files": 98,
+  "renderer_warnings": [
+    "WARN search index is very large (13234603 bytes)"
+  ],
+  "same_volume_direct_objects": true
+}

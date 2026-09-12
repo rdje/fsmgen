@@ -2811,7 +2811,28 @@ lost closes, false read results, changed identities and incorrect file effects.
 python3 -B docs/audits/native-proxy-observation-archive-release-composition-ordinary-20260912/audit.py --verify-saved
 ```
 
-Equal-reference, active-runtime and last-observation compositions remain pending,
+Equal-reference release composition qualification covers 45 cases: 1 healthy control, 20 grouped-close cases and 24 primary-error cases, with 610 TAP assertions.
+
+The wrapper, private reference and global reference contain equal bytes while
+retaining distinct original paths and native identities. Their archived bytes
+share a separate content file. Error handling preserves this distinction:
+content equality never authorizes releasing another owner's reference.
+
+Grouped cleanup reports retain actual close order even when declarations are
+reversed. Source and directory primary errors survive later cleanup reports.
+All observed handles close, and the archive, image and other observation owner
+remain intact. A primary error after unlink preserves the recorded deletion
+and the latest known absence state.
+
+Independent checks reconstruct the original identities for every case and
+reject collapsed source identities, changed shared-archive identity, replaced
+primaries, missing closes and incorrect effects. Verify the saved evidence:
+
+```sh
+python3 -B docs/audits/native-proxy-observation-archive-release-composition-equal-20260912/audit.py --verify-saved
+```
+
+Active-runtime and last-observation compositions remain pending,
 as do genuine omissions and complete release applicability. These reported errors
 follow successful actual reads or closes; they do not qualify ambiguous operating-system
 failures or authorize native execution.

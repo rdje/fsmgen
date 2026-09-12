@@ -1,0 +1,48 @@
+{
+  "book_actual": {
+    "bytes_total": 3373431,
+    "files": 63,
+    "lines_total": 61511
+  },
+  "book_baseline": {
+    "bytes_total": 3372282,
+    "files": 63,
+    "lines_total": 61490
+  },
+  "book_delta": {
+    "bytes_total": 1149,
+    "files": 0,
+    "lines_total": 21
+  },
+  "documentation_authoring_note": "docs/audits/native-proxy-observation-archive-release-composition-equal-20260912/documentation-authoring-note.json",
+  "history": {
+    "history_bytes": 2223,
+    "history_id": "through_c89aef75c494",
+    "history_lines": 5,
+    "history_sections": 1,
+    "history_sha256": "2e796186becfc87fd42673beebe4659b59cb092bc7af15257f3e70e030c4508e",
+    "live_heading": "Version-Retrievable Historical Views",
+    "record_type": "acceptance_history",
+    "retention_contract": "fsmgen_required_history",
+    "schema_version": 1,
+    "source_bytes": 1052892,
+    "source_lines": 6365,
+    "source_path": "docs/tasks/HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.md",
+    "source_revision": "c89aef75c494e7216b31d20ff441bcd7e7f20cf0",
+    "source_sha256": "12d188332aea5054e7c8cd82b8b23ce9d30b8fa77570cbe377b2965376a86670",
+    "start_heading": "Acceptance Checklist (ordinary release error compositions .3.2.15.7.3.12.4.1.3.4.4.4.6.2)"
+  },
+  "knowledge_byte_delta": -18,
+  "new_candidate": "published-d3406180fdb58e6d6e0577e7",
+  "owner": "HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.12.4.1.3.4.4.4.6.3",
+  "preflight_copy_bytes": 346257,
+  "preserved_prior_acceptance_sections": 37,
+  "prior_dispositions_byte_exact": 1932,
+  "qualifier_adaptation": "Only the qualified composition module search path, input diagnostic label and qualification schema change; original caller, setup, source-flow resolution, actual-read/close and thirteen per-case assertions remain byte-exact.",
+  "recovery_source_byte_exact": true,
+  "scope": "Inactive equal-reference file-fixture composition partition; no product behavior, compiler or native process activation.",
+  "shared_sources_unchanged": true,
+  "source_revision": "c89aef75c494e7216b31d20ff441bcd7e7f20cf0",
+  "task_integrity": "[task-tree-integrity] all active task-tree invariants hold (trees=4, nodes=1336, segments=3, compact_terminals=36, index_archives=1, migrations=1, acceptance_histories=1)",
+  "task_lines": 6365
+}

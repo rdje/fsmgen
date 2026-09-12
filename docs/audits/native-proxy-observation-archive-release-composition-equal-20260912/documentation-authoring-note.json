@@ -1,0 +1,6 @@
+{
+  "first_authoring_failure": "AssertionError: (42, 0)",
+  "meaning": "The proposed Knowledge Card grew by forty-two bytes while line-neutral. Its bound assertion stopped before writing the card. The already written book insertion remains singular.",
+  "owner": "HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.12.4.1.3.4.4.4.6.3",
+  "resolution": "Route the historical TaskAcceptanceFixtureRuntime sentence through the exact committed card history already named by the new card; preserve all previous questions and the line count. No bound or qualified source is changed."
+}

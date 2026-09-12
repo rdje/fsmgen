@@ -1,0 +1,12 @@
+[
+  {
+    "path": "docs/audits/native-proxy-observation-archive-release-composition-equal-20260912/verify_book_claims.py",
+    "sha256": "9dae8fadf090ba2c3460506b95c15a4824ba88af694cd218ae232898fe463fbf",
+    "size_bytes": 5214
+  },
+  {
+    "path": "docs/audits/native-proxy-observation-archive-release-composition-equal-20260912/book-claim-selection.json",
+    "sha256": "fb7c6dd3666376bd0265f0d942d314242b63880c2821dac8a4559b7485d8a417",
+    "size_bytes": 424
+  }
+]
