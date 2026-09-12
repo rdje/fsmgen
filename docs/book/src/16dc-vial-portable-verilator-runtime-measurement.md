@@ -2601,6 +2601,28 @@ errors, and deliberate close omissions with separate recovery. Cleanup-error
 composition and arbitrary asynchronous writers remain outside this domain;
 these inactive checks grant no native ownership authority.
 
+The joined domain verifies 1,892 primary cases: 44 releases succeed and 1,848 attempts reject; 1 separate strong-observer counterexample brings the saved suite to 20,948 assertions.
+These assertions come from the original saved runs; the join starts no fixture.
+Every selected readback and syscall-report case is present exactly once.
+Healthy controls in different domains retain separate execution identities.
+The strong observer's explicit recovery is verified separately and never
+counted again when another profile's auditor checks that prior witness.
+
+The join authenticates the original plan, its corrected structural-census
+expectations, every execution source and retained failure epoch, and complete
+saved case bytes. Independent case verification and direct record counts agree.
+Original call-cut oracles and the earlier applicability falsifiers are checked
+again; earlier main routines and their full embedded falsifier loops are not
+rerun. Saved roots remain absent and disjoint from predecessor roots. Verify:
+
+```sh
+python3 -B docs/audits/native-proxy-release-readback-join-20260912/audit.py --verify-saved
+```
+
+This closes the selected readback and syscall-report domain. The wider
+safe-call join, close-error and omission compositions, and native lifetime
+remain separate work.
+
 The inactive archive record implementation now derives a closed specification
 from the complete original acquisition and request. It keeps the ordered wrapper,
 private reference, global reference, C source and image snapshots, including

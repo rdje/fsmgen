@@ -1,0 +1,38 @@
+{
+  "book_review": "docs/audits/native-proxy-release-readback-join-20260912/book-review.json",
+  "claim_legs": {
+    "durability": "All join producers and output bytes are tracked. audit.py --verify-saved reconstructs and compares the saved result; recover.py --verify-saved authenticates exact saved output. The explicit claim disposition owns the current source watcher.",
+    "falsify": "Original selection/applicability falsifiers rerun; join controls reject omission, duplication, wrong outcomes, observer misclassification and root overlap. Original errno/header auditors remain RED on valid saved evidence and corrected verification is GREEN. The independent book watcher rejects changed counts and total-conserving redistribution.",
+    "rederive": "Exact version-bound source and evidence catalog, complete prospective domain, original per-case verification and direct record counts reproduce selected coverage and outcomes from saved bytes."
+  },
+  "commit_gate": "Staged doctrines and required commit hooks must pass before this verified slice is committed.",
+  "dispositions": {
+    "added": [
+      "published-12f4402b9aae10c0c432741b"
+    ],
+    "prior_records_byte_exact": 1923
+  },
+  "earlier_falsifiers": "Source and exact saved verdicts authenticated; selected per-row oracles rerun. Earlier main routines and their full embedded falsifier loops are not rerun.",
+  "first_executions": {
+    "book": true,
+    "book_claims": true,
+    "join": true,
+    "knowledge": true,
+    "prepare": true,
+    "saved_join": true,
+    "task": true
+  },
+  "join_result": "docs/audits/native-proxy-release-readback-join-20260912/result/join.json",
+  "owner": "HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.12.4.1.3.4.4.3.10.7",
+  "raw_verification_outputs": "docs/audits/native-proxy-release-readback-join-20260912/verification-outputs.json",
+  "recovery": {
+    "bytes": 15132,
+    "copies": 10,
+    "verified_without_source_reaccess": true
+  },
+  "schema": "fsmgen.release_readback_join_review.v1",
+  "scope": "Revalidate only retained selected release-readback and syscall-report cases. Primary coverage and the strong-observer counterexample are disjoint. No fixture, old main, original producer, native process or new test root. Safe-call joins, close-error/omission composition and native lifetime remain separate.",
+  "source_review": "docs/audits/native-proxy-release-readback-join-20260912/source-review.json",
+  "source_revision": "ce10cbe5e63bd2d8f34304490ae491c37372786e",
+  "success": true
+}

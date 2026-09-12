@@ -1,0 +1,25 @@
+{
+  "first_join_passed": true,
+  "history": {
+    "history_bytes": 2249,
+    "history_id": "through_ce10cbe5e63b",
+    "history_lines": 5,
+    "history_sections": 1,
+    "history_sha256": "15c6b28814dc0aea97a1607d8b65507327f50fec4dd2657a1c2d650940c7096a",
+    "live_heading": "Version-Retrievable Historical Views",
+    "record_type": "acceptance_history",
+    "retention_contract": "fsmgen_required_history",
+    "schema_version": 1,
+    "source_bytes": 1112067,
+    "source_lines": 6395,
+    "source_path": "docs/tasks/HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.md",
+    "source_revision": "ce10cbe5e63bd2d8f34304490ae491c37372786e",
+    "source_sha256": "209ae9d5365dd7a078753452e602c5342bace801905f86f683109191fae02f70",
+    "start_heading": "Acceptance Checklist (syscall reports .3.2.15.7.3.12.4.1.3.4.4.3.10.6)"
+  },
+  "knowledge_byte_delta": -5,
+  "old_mains_invoked": false,
+  "preserved_prior_acceptance_sections": 37,
+  "source_revision": "ce10cbe5e63bd2d8f34304490ae491c37372786e",
+  "task_lines": 6395
+}
