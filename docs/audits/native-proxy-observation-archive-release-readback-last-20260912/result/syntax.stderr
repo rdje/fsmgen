@@ -1,0 +1,2 @@
+ram-guard: PID 32538; host 76.7%; host cutoff 88%; descendant RSS cutoff 4096 MiB; poll 2s
+docs/audits/native-proxy-observation-archive-release-readback-last-20260912/qualify.t syntax OK

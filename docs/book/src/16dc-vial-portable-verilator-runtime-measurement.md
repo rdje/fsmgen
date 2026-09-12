@@ -2507,8 +2507,8 @@ I/O module load-order conflict, and the first audit wrongly demanded zero
 `errno` after a successful open. [Perl permits nonzero successful-call `errno`](https://perldoc.perl.org/variables/%24%21);
 the corrected audit retains it as data and uses the actual return and native
 identity to establish success. The same saved cases pass the separately pinned
-correction; no fixture is rerun to repair the oracle. Last-observation readback,
-syscall reports, close controls and native lifetime qualification remain open.
+correction; no fixture is rerun to repair the oracle. Syscall reports, close
+controls and native lifetime qualification remain open.
 
 The equal-reference partition passes 462 primary cases and 5,107 assertions: 10 releases succeed and 452 attempts reject.
 For example, when the wrapper contains the same bytes as the private and global
@@ -2546,6 +2546,26 @@ saved cases without executing a fixture:
 
 ```sh
 python3 -B docs/audits/native-proxy-observation-archive-release-readback-active-20260912/audit.py --verify-saved
+```
+
+The last-observation partition passes 406 primary cases and 4,491 assertions: 7 releases succeed and 399 attempts reject.
+After the target runtime is retired and the other observation hold is removed,
+the selected hold is the image's sole remaining reference before release.
+The image stays unchanged after that hold is removed, including when a later readback fails.
+Its directory, C source, image and manifest preserve their original bytes and
+native identities. The failed attempt still reports the actual unlink and
+previously verified absence truthfully.
+
+In each case, the controlled setup removal is verified separately from the
+observed release unlink. The independent audit counts current image references
+from saved file bytes, verifies retired-workspace absence and exact image
+preservation, and rejects missing retirement, a wrong setup-removal target and loss of the unreferenced image.
+Failed readers retain lexical cleanup; returned sources follow their original
+consumer's cleanup. Revalidate the complete saved cases without executing a
+fixture:
+
+```sh
+python3 -B docs/audits/native-proxy-observation-archive-release-readback-last-20260912/audit.py --verify-saved
 ```
 
 The syscall-report plan separates suppressed calls from actual operations.

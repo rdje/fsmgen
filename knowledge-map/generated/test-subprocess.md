@@ -1,7 +1,7 @@
 # Knowledge Map: `test-subprocess`
 
 > **AUTO-GENERATED — DO NOT EDIT.** Return to the [Knowledge Map](../../KNOWLEDGE_MAP.md).
-> **1** facts · **104** uniquely owned question entries.
+> **1** facts · **105** uniquely owned question entries.
 
 ## Questions → facts
 
@@ -43,6 +43,7 @@
 - q="how does inactive image membership reject enumeration errors?" · facts=[test-subprocess-policy-adapters](../../docs/knowledge/test-subprocess-policy-adapters.md)
 - q="how does inactive namespace enumeration reject read errors?" · facts=[test-subprocess-policy-adapters](../../docs/knowledge/test-subprocess-policy-adapters.md)
 - q="how does inactive private workspace retirement retain image pins?" · facts=[test-subprocess-policy-adapters](../../docs/knowledge/test-subprocess-policy-adapters.md)
+- q="how does last-observation readback preserve an unreferenced image?" · facts=[test-subprocess-policy-adapters](../../docs/knowledge/test-subprocess-policy-adapters.md)
 - q="how does policy publication handle replaced directories?" · facts=[test-subprocess-policy-adapters](../../docs/knowledge/test-subprocess-policy-adapters.md)
 - q="how does stable observation reuse preserve the original hold?" · facts=[test-subprocess-policy-adapters](../../docs/knowledge/test-subprocess-policy-adapters.md)
 - q="how does the finite daemon sequence preserve its budget and helper?" · facts=[test-subprocess-policy-adapters](../../docs/knowledge/test-subprocess-policy-adapters.md)

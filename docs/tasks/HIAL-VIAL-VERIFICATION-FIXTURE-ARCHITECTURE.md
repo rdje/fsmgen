@@ -2774,11 +2774,11 @@ decomposes the architecture needed to move beyond that bounded foundation.
   Commit: `this commit`
 
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.12.4.1.3.4.4.3.10.5`
-  Status: `proposed`
+  Status: `done`
   Goal: `Qualify last-observation release readback controls.`
   Acceptance: `Execute every pinned source control after original runtime retirement and authenticated controlled other-hold removal. Preserve the selected image even after its final reference is removed. Independently verify original setup, real reads, unreturned versus returned handles, first failures, exact effects and other owners; reject missing retirement, wrong removal or lost image. Keep all raw evidence and prove disjoint root absence.`
-  Verification: `pending`
-  Commit: `pending`
+  Verification: `First fixture run: 406 primary cases and 4491 TAP assertions; independent audit verifies seven successes and 399 rejections, exact original retirement/setup removal and image preservation in every case. All 94 actual release unlinks leave the selected image unchanged with no remaining references. Six prospective pins authenticate 303 unchanged inputs. Observations: 107744 calls, 347678 events, 30499 handles (20872 Source, 9253 directory, 374 lock), 303 failed-reader lexical closes and 102 returned selected readers. All 1624 new roots are absent and disjoint from 22960 selected predecessor roots. Fifty-five row, six manifest, two byte and seven domain falsifiers reject, including missing retirement, wrong setup removal and lost image. Pure preflight passes 406 saved-event projections and two ordering models; the prior strong counterexample is separately reverified without repetition. Evidence and three-leg claims: docs/audits/native-proxy-observation-archive-release-readback-last-20260912/review.json and result/audit.json. Source-scope adaptation and original setup block are byte-compared. Book inspection, Knowledge Map, saved recovery/audit, watched counts and staged doctrines gate commit. Controlled setup unlink is separate from observed release effects; no original producer or native execution.`
+  Commit: `this commit`
 
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.12.4.1.3.4.4.3.10.6`
   Status: `proposed`
@@ -3792,7 +3792,7 @@ decomposes the architecture needed to move beyond that bounded foundation.
 
 ## Current Frontier
 
-Current frontier: .3.2.15.7.3.12.4.1.3.4.4.3.10.5 executes last-observation readback controls next. Ordinary, equal-reference and active-runtime readback are complete; other profile/report, close/native/lifetime and historical startup/parent/full CI/push work remains open.
+Current frontier: .3.2.15.7.3.12.4.1.3.4.4.3.10.6 qualifies unlink and absence-report controls next. All selected readback profiles are complete; syscall/report/join, close/native/lifetime and historical startup/parent/full CI/push work remains open.
 
 Architecture audit `.1` is complete. Decision `0032` selects one public
 `.vial` source language, private immutable `VIALSemanticIR` and
@@ -6385,11 +6385,11 @@ Completed native-proxy feasibility through runtime-source-controls acceptance: r
 
 - Acceptance history manifest: `docs/tasks/history/HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE/acceptance-history.jsonl`
 
-The manifest binds the equal-reference readback acceptance suffix at `fe025fbc5c153cddb32e97d4e9f724f8d84d81be`. That source preserves the earlier history pointer and versioned manifest chain; current node contracts remain authoritative.
+The manifest binds the active-runtime readback acceptance suffix at `70c1fe9e82267dc52df7be14177f91114d980f60`. That source preserves the earlier history pointer and versioned manifest chain; current node contracts remain authoritative.
 
 
-## Acceptance Checklist (active-runtime readback .3.2.15.7.3.12.4.1.3.4.4.3.10.4)
+## Acceptance Checklist (last-observation readback .3.2.15.7.3.12.4.1.3.4.4.3.10.5)
 
-- [x] **ROOT CAUSE (WHY + WHERE)** — Fresh `git log -S 'my $count = sysread($fh, my $chunk' -1 --format='%H %s' -- t/lib/FSM/Test/RustProxyFixture.pm` identifies `e0d74bb051465ba641227acc11975e25e5d879a7`: lexical reader custody precedes Source handoff. Active setup retains the original runtime reference and workspace, so its closed evidence shape excludes retirement. Exact source comparison proves the shared Source-scope body changes only that shape and its explicit shared-reader delegation; active-state checks independently reconstruct preserved runtime/workspace snapshots. The weak observer itself is unchanged and pinned before allocation.
-- [x] **ADDRESSED (verified active-runtime readback)** — The first fixture run passes 5723 TAP assertions across 518 primary cases. Independent auditing verifies 13 successes, 505 rejections, 387 failed-reader lexical closes, 130 returned selected readers and runtime/workspace preservation in every case. Exact current-input calls, actual/reported reads, cleanup and unlink/absence effects pass; all 2072 new roots are absent and disjoint from 20888 selected predecessor roots. Fifty-four row, six manifest, two byte and seven domain falsifiers reject, including invented retirement and lost active state. The prior strong observer case is separately authenticated without repetition or double counting.
-- [x] **NO REGRESSION (scope + continuity)** — `knowledge-map: OK` and query parity pass. Perl syntax, prospective trace/order models and hook admission pass; the book builds and six passages render before exact generated-output cleanup. Saved-only audit/recovery, the pinned book-count watcher and staged-index/commit-hook `scripts/check_doctrines.sh` gate commit. All older checklists remain exact and the predecessor suffix is version-retrievable. Last-observation readback is next; syscall/report/join, close/native/lifetime and historical startup/parent/full CI/push work remains open. An active fixture record is not a running native process.
+- [x] **ROOT CAUSE (WHY + WHERE)** — Fresh `git log -S 'my $count = sysread($fh, my $chunk' -1 --format='%H %s' -- t/lib/FSM/Test/RustProxyFixture.pm` identifies `e0d74bb051465ba641227acc11975e25e5d879a7`: the original lexical reader owns its descriptor before Source handoff. Last-observation setup retires the runtime and authenticates removal of the other hold. Exact source comparison preserves the original setup block and adapts only the verifier name, closed setup-removal field and shared-reader delegation. Current reference-byte membership and the original image subtree independently establish final-reference removal with image preservation; setup unlink remains outside observed release effects.
+- [x] **ADDRESSED (verified last-observation readback)** — The first fixture run passes 4491 TAP assertions across 406 primary cases. Independent auditing verifies seven successes, 399 rejections, 303 failed-reader lexical closes, 102 returned selected readers and image preservation in every case. All 94 completed release unlinks leave the image without references and unchanged. Exact current-input calls, actual/reported reads, original cleanup and truthful effects pass; all 1624 new roots are absent and disjoint from 22960 selected predecessor roots. Fifty-five row, six manifest, two byte and seven domain falsifiers reject. The prior strong observer case is separately authenticated without repetition or double counting.
+- [x] **NO REGRESSION (scope + continuity)** — `knowledge-map: OK` and query parity pass. Perl syntax, prospective trace/order models and hook admission pass; the book builds and six passages render before exact generated-output cleanup. Saved-only audit/recovery, the pinned book-count watcher and staged-index/commit-hook `scripts/check_doctrines.sh` gate commit. Every earlier checklist remains exact and the predecessor suffix is version-retrievable. Unlink/absence reports are next; their join, close/native/lifetime and historical startup/parent/full CI/push work remains open. These inert cases grant no native authority or concurrent-writer guarantee.

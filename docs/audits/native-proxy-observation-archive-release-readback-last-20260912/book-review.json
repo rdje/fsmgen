@@ -1,0 +1,20 @@
+{
+  "checked_passages": [
+    "The last-observation partition passes 406 primary cases and 4,491 assertions: 7 releases succeed and 399 attempts reject.",
+    "the selected hold is the image's sole remaining reference before release.",
+    "The image stays unchanged after that hold is removed, including when a later readback fails.",
+    "the controlled setup removal is verified separately from the observed release unlink.",
+    "rejects missing retirement, a wrong setup-removal target and loss of the unreferenced image.",
+    "native-proxy-observation-archive-release-readback-last-20260912/audit.py --verify-saved"
+  ],
+  "exact_output_absent": true,
+  "exit_code": 0,
+  "output": ".artifacts/tmp/native-proxy-release-readback-last-book-20260912/book",
+  "rendered_bytes": 23417810,
+  "rendered_directories": 3,
+  "rendered_files": 98,
+  "renderer_warnings": [
+    "WARN search index is very large (13214840 bytes)"
+  ],
+  "same_volume_direct_objects": true
+}
