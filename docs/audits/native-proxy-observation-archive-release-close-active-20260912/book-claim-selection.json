@@ -1,0 +1,8 @@
+[
+  {
+    "candidate_id": "published-3fec040236da7aa8c84db2e4",
+    "excerpt": "Active-runtime release close qualification covers 181 cases: 1 healthy control and 180 single EIO reports, with 2197 TAP assertions.",
+    "path": "docs/book/src/16dc-vial-portable-verilator-runtime-measurement.md",
+    "source_line_sha256": "eb3a5ce5bbe157e40e31482127d8e3f8f1e8637db8bc898fb38ba27e8ea8d7d5"
+  }
+]

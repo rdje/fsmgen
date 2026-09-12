@@ -1,0 +1,20 @@
+{
+  "checked_passages": [
+    "Active-runtime release close qualification covers 181 cases: 1 healthy control and 180 single EIO reports, with 2197 TAP assertions.",
+    "In this inert profile, the original runtime reference and private workspace remain unchanged through the release operation.",
+    "Releasing an observation hold does not retire that runtime.",
+    "The fixture makes no retirement call and records no retirement receipt;",
+    "The unsuccessful attempt preserves the completed unlink and absence facts, the original error, archive contents and other owners.",
+    "python3 -B docs/audits/native-proxy-observation-archive-release-close-active-20260912/audit.py --verify-saved"
+  ],
+  "exact_output_absent": true,
+  "exit_code": 0,
+  "output": ".artifacts/tmp/native-proxy-release-close-active-book-20260912/book",
+  "rendered_bytes": 23450143,
+  "rendered_directories": 3,
+  "rendered_files": 98,
+  "renderer_warnings": [
+    "WARN search index is very large (13227090 bytes)"
+  ],
+  "same_volume_direct_objects": true
+}

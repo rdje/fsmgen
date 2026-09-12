@@ -1,0 +1,35 @@
+{
+  "audit_result": "docs/audits/native-proxy-observation-archive-release-close-active-20260912/result/audit.json",
+  "book_review": "docs/audits/native-proxy-observation-archive-release-close-active-20260912/book-review.json",
+  "claim_legs": {
+    "durability": "Prospective source pins, exact Git-bound dependencies, first-run observations and complete recovery manifests are tracked. Saved-only audit/recovery authenticate without a new fixture or original raw-log access; the explicit book watcher binds the current published count. The preflight also proves exact adaptation of the qualified row-oracle body.",
+    "falsify": "Independent source-scope and healthy-prefix/remaining-owner oracles agree before and after execution. Row/domain/header controls reject lost closes, altered effects, invented retirement, missing runtime reference, changed workspace and retired setup. Recovery-copy and book-count controls reject omitted or redirected evidence and outcome redistribution.",
+    "rederive": "Committed selectors define the complete active-runtime domain. Immutable observations preserve actual calls, close returns, EIO reports, inactive attempts and file effects. The original active-state oracle compares runtime reference/workspace snapshots with their initial identities. The book watcher independently recounts cases and original TAP."
+  },
+  "commit_gate": "Staged doctrines and normal commit hooks must pass before commit.",
+  "dispositions": {
+    "added": [
+      "published-3fec040236da7aa8c84db2e4"
+    ],
+    "prior_records_byte_exact": 1928
+  },
+  "limits": "Last-observation, primary/grouped errors, genuine omissions, final release applicability and native/lifetime remain separate. No prior qualifier/fixture, original main or native process is replayed. Historical startup/parent/full CI/push remain gated.",
+  "owner": "HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.12.4.1.3.4.4.4.4",
+  "raw_verification_outputs": "docs/audits/native-proxy-observation-archive-release-close-active-20260912/verification-outputs.json",
+  "recovery": {
+    "bytes": 109262664,
+    "copies": 199,
+    "falsifiers": [
+      "omitted-copy",
+      "foreign-destination",
+      "changed-copy-digest"
+    ],
+    "source_reaccess": false,
+    "success": true
+  },
+  "schema": "fsmgen.release_active_close_review.v1",
+  "scope": "Active-runtime healthy control and every selected single EIO close report. Actual successful close and observed native closure precede substitution. The original runtime reference and private workspace remain unchanged through release; fixture cleanup subsequently removes the owned roots.",
+  "source_review": "docs/audits/native-proxy-observation-archive-release-close-active-20260912/source-review.json",
+  "source_revision": "171c7dcb125f41be6b115593a753c03fbcd50428",
+  "success": true
+}

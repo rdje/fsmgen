@@ -2717,8 +2717,28 @@ The saved evidence can be verified without creating another fixture:
 python3 -B docs/audits/native-proxy-observation-archive-release-close-equal-20260912/audit.py --verify-saved
 ```
 
-Active-runtime and last-observation executions, competing primary errors,
-grouped reports and genuine omissions remain pending. A modeled EIO after
+Active-runtime release close qualification covers 181 cases: 1 healthy control and 180 single EIO reports, with 2197 TAP assertions.
+
+In this inert profile, the original runtime reference and private workspace
+remain unchanged through the release operation. Releasing an observation hold
+does not retire that runtime. The fixture makes no retirement call and records
+no retirement receipt; the auditor checks the original runtime reference and
+workspace against their initial state before and after release.
+
+For example, a late retained-source close error can follow deletion of the
+observation hold while the runtime reference and workspace remain intact.
+The unsuccessful attempt preserves the completed unlink and absence facts,
+the original error, archive contents and other owners. It grants no native
+execution authority. The independent audit rejects an invented retirement,
+a missing runtime reference, a changed private workspace or a substituted
+retired setup, in addition to its close and unwind checks.
+
+```sh
+python3 -B docs/audits/native-proxy-observation-archive-release-close-active-20260912/audit.py --verify-saved
+```
+
+Last-observation execution, competing primary errors, grouped reports and
+genuine omissions remain pending. A modeled EIO after
 successful closure does not test an ambiguous operating-system close failure
 or authorize native execution.
 
