@@ -1,0 +1,19 @@
+{
+  "checked_passages": [
+    "The inactive native preparation codec now checks closed records and canonical JSON bytes.",
+    "A failed preparation always has executable: null",
+    "These are checks of retained data.",
+    "A separate presentation encoder preserves the canonical nested bytes.",
+    "scripts/run_with_ram_guard.sh -- python3 -B docs/audits/native-proxy-preparation-records-20260913/audit_corrected.py --verify-saved"
+  ],
+  "exact_output_absent": true,
+  "exit_code": 0,
+  "output": ".artifacts/tmp/native-proxy-preparation-records-book-20260913/book",
+  "rendered_bytes": 23525303,
+  "rendered_directories": 2,
+  "rendered_files": 98,
+  "renderer_warnings": [
+    "WARN search index is very large (13257522 bytes)"
+  ],
+  "same_volume_direct_objects": true
+}

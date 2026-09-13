@@ -1,0 +1,12 @@
+ram-guard: PID 30621; host 70.3%; host cutoff 88%; descendant RSS cutoff 4096 MiB; poll 2s
+Traceback (most recent call last):
+  File "/Volumes/SSD/Documents/github/fsmgen/docs/audits/native-proxy-preparation-records-20260913/audit.py", line 237, in <module>
+    main()
+    ~~~~^^
+  File "/Volumes/SSD/Documents/github/fsmgen/docs/audits/native-proxy-preparation-records-20260913/audit.py", line 207, in main
+    check_result(result, vectors, old_runtime)
+    ~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Volumes/SSD/Documents/github/fsmgen/docs/audits/native-proxy-preparation-records-20260913/audit.py", line 167, in check_result
+    assert result["original_v1_raw"] == vectors["original_v1_raw"]
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError

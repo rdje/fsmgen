@@ -1,0 +1,113 @@
+{
+  "failure_policy": "Keep first pinned source and raw outputs, root-cause any unexpected result before corrective admission; no fixture replay.",
+  "fixed_store": ".artifacts/cache/rust-proxy-images/v1",
+  "image_reference_shape": {
+    "consistency": "Both identities must match the canonical runtime record byte length and digest; matching source identities alone do not prove current filesystem bytes.",
+    "fields": [
+      "record",
+      "global",
+      "private"
+    ],
+    "global": "Actual source identity record for the fixed store references/<reference_key>.json.",
+    "private": "Actual source identity record for <workspace>/rust-tools/image-reference.json.",
+    "record": "Closed runtime reference record; workspace key and canonical selected C/image paths rederive."
+  },
+  "implementation": "Inactive pure Perl v2 preparation record encode/decode plus independent Python record/byte oracle; product preparation and older codecs remain unchanged.",
+  "independent_runtime_oracle": "Compile only original canonical/key/pairs/validate definitions. After independently checking the fixed canonical source prefix, translate only its selected-source prefix to the old isolated case for the unchanged frozen structural oracle. No original oracle main or fixture is executed; the original canonical record byte digest is checked before any translation.",
+  "inputs": [
+    {
+      "path": "docs/audits/native-proxy-version-contracts-20260913/contracts.json",
+      "sha256": "3871fa8a0a26518cc6d756e84823a7b1281b2b569e59f28eb21a2efa91eb81a9",
+      "size_bytes": 50158
+    },
+    {
+      "path": "docs/audits/native-proxy-version-contracts-20260913/dispatch.py",
+      "sha256": "34d4ca4c34fa98a7fa2e1b157e01eb409fb98e0bf1dd6b18ac3065e5eb0e5077",
+      "size_bytes": 1537
+    },
+    {
+      "path": "docs/audits/native-proxy-version-contracts-20260913/result/qualification.json",
+      "sha256": "f0935151d8cf9d08da9616b2df338d604bb270a2b295050953eef5ad92fa1f09",
+      "size_bytes": 16126
+    },
+    {
+      "path": "docs/audits/native-proxy-canonical-contract-20260910/contract.json",
+      "sha256": "f3f981398afae72540ab4ac0194b8380d4743c3d2146c1172a85365add053222",
+      "size_bytes": 21927
+    },
+    {
+      "path": "t/lib/FSM/Test/RustProxyFixture.pm",
+      "sha256": "d9c4ab52cf8074526c59b7a5dcb9da870ca7ffdacb4eb236dacb23b5db6d8bfb",
+      "size_bytes": 11466
+    },
+    {
+      "path": "perl/FSM/Support/ProcessSupervisor.pm",
+      "sha256": "684882d91f673ea7145f43ed3aad31acf099f13508574be7b2d8911123988637",
+      "size_bytes": 27990
+    },
+    {
+      "path": "t/1669-task-acceptance-fixture-runtime.t",
+      "sha256": "bdebbf03308cd5e0699324f9ab96a249c11c9ab05634309569d33874391a196f",
+      "size_bytes": 67582
+    },
+    {
+      "path": "t/1816-rust-proxy-integration.t",
+      "sha256": "2040114c98f2f4c22f05d2b4c036cfa5779f2e2293d23bd10da4d804d3b9d024",
+      "size_bytes": 10317
+    },
+    {
+      "path": "docs/audits/native-proxy-runtime-records-20260910/RuntimeRecord.pm",
+      "sha256": "013c0a02e7df59dc3a5af944b603cd44121252a02ca0228d6fdc3e1dd28e6745",
+      "size_bytes": 4078
+    },
+    {
+      "path": "docs/audits/native-proxy-runtime-acquisition-20260910/ReferenceAcquisition.pm",
+      "sha256": "b751c88d709e102f7f9b9dd17e0222c39e0a81acc16d7194f7f7c3f4c8535b57",
+      "size_bytes": 6565
+    },
+    {
+      "path": "docs/audits/native-proxy-runtime-acquisition-20260910/result/qualification.json",
+      "sha256": "8d3b8eb0d7cbd120964eedebb8fdf71d1f1196b2f6841076a5ea5cba19989b07",
+      "size_bytes": 86400
+    },
+    {
+      "path": "docs/audits/native-proxy-image-custody-20260910/ImageCustody.pm",
+      "sha256": "927f1ab39f7f26742e36878985d1ff545ddf2dee119d4bf6b7b41bf2c9360ccc",
+      "size_bytes": 8619
+    },
+    {
+      "path": "docs/audits/native-proxy-hardlink-20260910/result/preparation.json",
+      "sha256": "b6923ee459e94be8e788e8e6188f12a81a8ce4e8a1a71f720d4c9ddde93895e3",
+      "size_bytes": 2986
+    },
+    {
+      "path": "docs/audits/native-proxy-runtime-records-20260910/audit.py",
+      "sha256": "ece89eeb01cdd6e5b6c48a8e124bd4a4bde4e30f1bc53745d9ac2109748f0c83",
+      "size_bytes": 9573
+    }
+  ],
+  "outcomes": {
+    "failure": "ok zero always requires executable null and non-success status with a bounded diagnostic. Preserve available compilation and source evidence; image_reference may be null until complete acquisition. image_admission and image_reference failures retain invocation_error.",
+    "legacy": "Selected Perl, private-native v1 and early unselected v1 failure stay on the original path; no v1 record is silently upgraded or normalized by this codec.",
+    "success": "Native selection, successful settled compilation, complete private and canonical source pairs with equal lengths/digests, complete matching references, canonical executable, success status and null failure_stage."
+  },
+  "owner": "HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.12.4.1.3.5.2",
+  "qualification": "Pin vectors, implementation and Python oracle before execution. Use source-derived original compilation/preparation fields, inert canonical records with synthetic IDs, independent JSON/key/digest reconstruction, cross-version/field/type/path/order/reference/failed-executable controls, original saved v1 preservation and source-bound diagnostic-before-runtime ordering. Compare both valid bytes and rejected cases; never run compiler, native proxy, collector or old qualification mains.",
+  "record_schema": "fsmgen.test.rust_proxy_fixture.v2",
+  "remaining": "Actual source/custody provenance, current inode/volume/permission checks, image content key rederivation from actual compiled bytes, native ancestry, ownership transport and activation remain outside this pure record codec. Preserve all historical failures.",
+  "schema": "fsmgen.inactive_preparation_record_plan.v1",
+  "selected_limits": {
+    "diagnostic_characters": 2048,
+    "json_depth": 16,
+    "meaning": "Preparation envelope ceiling is a selected in-memory policy bound, not a measured reachable boundary; original compiler and runtime ceilings remain unchanged.",
+    "preparation_record_bytes": 65536,
+    "reference_record_bytes": 4096,
+    "source_bytes_each": 65536
+  },
+  "source_meanings": {
+    "compilation_sources": "Available private generated C and executable identity prefix in that order; success requires the complete pair.",
+    "identity": "Closed path/device/inode/size_bytes/sha256 records; exact fixed paths, bounds and distinct file identities; source consistency is historical metadata, not a fresh byte observation.",
+    "sources": "Available selected canonical C/executable pair in that order, or empty before selection. A complete image_reference must match it exactly."
+  },
+  "source_revision": "79101643fd047fd7d9fc9c7e1448f0748fc0fc35"
+}

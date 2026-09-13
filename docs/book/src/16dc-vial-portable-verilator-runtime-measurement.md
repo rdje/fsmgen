@@ -3065,7 +3065,7 @@ For example, an early workspace failure can retain `implementation: null`,
 new format. The prospective `fsmgen.test.rust_proxy_fixture.v2` layout is
 reserved for shared-image native preparation; it adds `compilation_sources`
 and `image_reference`. Recognizing a layout grants no runtime authority.
-Complete preparation status, source and reference validation remains separate.
+The inactive record codec validates preparation status and reference consistency.
 
 Source ordering follows each producer. Legacy preparation lists generated C
 before the executable; legacy native capture lists the wrapper, executable
@@ -3076,12 +3076,43 @@ canonical identities must remain distinct in the new preparation record.
 The frozen execution-context reader still rejects canonical-only or mixed
 source prefixes and altered command quoting. Daemon-only command bytes remain
 unchanged and do not satisfy that execution-context reader. Native main entry
-remains unknown. The source contracts preserve these boundaries for the next
-preparation, capture and retained-format implementation slices. Recheck the
+remains unknown. The source contracts preserve these boundaries for the
+preparation codec and next capture/retained-format slices. Recheck the
 saved finite layout and pure command controls without launching fixtures:
 
 ```sh
 scripts/run_with_ram_guard.sh -- python3 -B docs/audits/native-proxy-version-contracts-20260913/qualify.py --verify-saved
+```
+
+The inactive native preparation codec now checks closed records and canonical
+JSON bytes. Successful records require settled successful compilation, complete
+private and canonical source pairs, and matching global/private reference
+identities. The selected executable must be the canonical image path.
+Compiler arguments retain their sealed ordering and original bounds.
+
+A failed preparation always has `executable: null`. Available compiler and
+source evidence survives failure. For example, a late `image_reference` failure
+can retain a complete reference record while keeping `ok: 0` and
+`status: invocation_error`. Earlier failures cannot claim later compilation or
+image-selection evidence. Reference byte lengths and digests must match the
+canonical runtime record, whose selected sources must match the preparation.
+Supplied device identities must agree and file identities must be distinct.
+
+These are checks of retained data. Current file contents, permissions, native
+identity, actual image-key derivation and permission to launch require the
+separately owned integration. Existing legacy preparation records keep their
+original format. The finite controls include malformed fields, source order,
+compiler outcomes, reference mismatches and byte/string boundaries.
+
+The first harness output exposed a serialization defect: enabling pretty
+printing on a shared JSON encoder changed an embedded legacy record before
+the enclosing call evaluated its arguments. A separate presentation encoder
+preserves the canonical nested bytes. Original passing assertions and the
+failed saved-output audit remain available beside the corrected result;
+the codec and independent validation rules are unchanged by that repair.
+
+```sh
+scripts/run_with_ram_guard.sh -- python3 -B docs/audits/native-proxy-preparation-records-20260913/audit_corrected.py --verify-saved
 ```
 
 The inactive archive record implementation now derives a closed specification

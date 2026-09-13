@@ -1,0 +1,26 @@
+{
+  "docs/audits/native-proxy-preparation-records-20260913/first-failure/qualify.stdout": {
+    "encoded_path": "docs/audits/native-proxy-preparation-records-20260913/first-failure/qualify.stdout.hex",
+    "encoded_sha256": "e9f951a6fdde2ec1c813f30e379ab1a0f2c4634dc2a87158731af609e97a725a",
+    "encoded_size_bytes": 16557,
+    "encoding": "lowercase_hex_lf",
+    "raw_sha256": "43c27e027be7a9f28884efb871328b72eac96f5fd1d302f30e0f45ac86a33433",
+    "raw_size_bytes": 8278
+  },
+  "docs/audits/native-proxy-preparation-records-20260913/result/corrected-qualify.stdout": {
+    "encoded_path": "docs/audits/native-proxy-preparation-records-20260913/result/corrected-qualify.stdout.hex",
+    "encoded_sha256": "30a034ef75a316ae72315704153f7a34d7c1723e86371e009466ceb78ee0d114",
+    "encoded_size_bytes": 16557,
+    "encoding": "lowercase_hex_lf",
+    "raw_sha256": "493f10fb15fe85fd45c244308ffa1bd9255094a02ab617b103751c4df31b7fb4",
+    "raw_size_bytes": 8278
+  },
+  "docs/audits/native-proxy-preparation-records-20260913/result/serialization-order.stdout": {
+    "encoded_path": "docs/audits/native-proxy-preparation-records-20260913/result/serialization-order.stdout.hex",
+    "encoded_sha256": "8be374bc1790f35ccfc87c404c368df004da1cd75ed8c0901f7f46aab24cef8e",
+    "encoded_size_bytes": 1099,
+    "encoding": "lowercase_hex_lf",
+    "raw_sha256": "ef6d1e42b0fb0ee36849a92598b7b0b3f1779ad540cdaf8cea39f1dbf49703b3",
+    "raw_size_bytes": 549
+  }
+}

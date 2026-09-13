@@ -1,0 +1,20 @@
+{
+  "accepted": 26,
+  "claim_legs": {
+    "durability": "Tracked code, vector builder, oracle, before-run pins, exact first failure sources/outputs, corrected result and byte-verified raw copies remain usable without original logs or fixture recreation. This review checks original-versus-corrected source and result equality independently.",
+    "falsification": "Cross-version, malformed, incomplete-reference and runnable-failure controls reject; deliberately broken validators are independently contradicted. Original shared-encoder behavior reproduces the saved failure, while isolated presentation preserves exact bytes. Missing/changed verdicts, lost mutants and hidden launches reject.",
+    "re_derivation": "audit_corrected.py --verify-saved authenticates source pins, derives vector shapes from producers, runs unchanged independent runtime-record rules and compares every saved verdict and byte string."
+  },
+  "codec_assertions": 166,
+  "correction": "A separate presentation encoder restores only the nested canonical legacy string. All other result fields and case verdicts are unchanged; codec and independent validation rules remain exact.",
+  "limits": "Pure finite data/serialization qualification. Synthetic identities and a copied compiler template do not attest current files, native births, actual compilation, image-key custody, transport or permission to execute. Original startup and hard-link failures remain failed.",
+  "next_action": "Qualify inactive target and collection version dispatch under .5.3.",
+  "original_outcome": "Perl assertions passed; the independent audit correctly rejected the noncanonical embedded legacy record.",
+  "outcome": "Inactive preparation codec and complete finite corrected qualification pass.",
+  "owner": "HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.12.4.1.3.5.2.1",
+  "raw_capture_encoding": "Exact TAP bytes containing trailing whitespace are retained as lowercase hex; raw-capture-encodings.json binds logical captures to their byte-identical decoded storage. Original receipt hashes remain unchanged.",
+  "schema": "fsmgen.inactive_preparation_review.v1",
+  "serialization_assertions": 5,
+  "source_revision": "79101643fd047fd7d9fc9c7e1448f0748fc0fc35",
+  "vectors": 129
+}

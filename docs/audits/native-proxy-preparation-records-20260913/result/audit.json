@@ -1,0 +1,15 @@
+{
+  "accepted": 26,
+  "original_v1_unchanged": true,
+  "result_falsifiers": [
+    "missing_case",
+    "changed_verdict",
+    "changed_encoded_bytes",
+    "lost_mutant",
+    "hidden_launch"
+  ],
+  "schema": "fsmgen.inactive_preparation_audit.v1",
+  "scope": "Finite inert records and serialization; no native authority or current filesystem custody.",
+  "success": true,
+  "vectors": 129
+}

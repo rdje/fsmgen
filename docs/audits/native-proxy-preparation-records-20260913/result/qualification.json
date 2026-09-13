@@ -1,0 +1,811 @@
+{
+   "fixture_allocations" : 0,
+   "forbidden_process_attempts" : 0,
+   "interface_controls" : [
+      {
+         "name" : "extra encode argument",
+         "rejected" : 1
+      },
+      {
+         "name" : "missing decode argument",
+         "rejected" : 1
+      },
+      {
+         "name" : "character input",
+         "rejected" : 1
+      },
+      {
+         "name" : "reference input",
+         "rejected" : 1
+      }
+   ],
+   "mutants" : [
+      {
+         "name" : "validation_of_sanitized_copy",
+         "raw" : "{\"compilation\":{\"capture_limit_bytes\":4096,\"cleanup\":{\"containment\":\"rust_proxy_compiler_group\",\"group_gone\":1,\"kill_sent\":0,\"leader_reaped\":1,\"leader_started\":1,\"surviving_descendants\":0,\"term_sent\":0},\"diagnostic\":\"supervised process completed successfully\",\"exec_error\":null,\"exec_failed\":0,\"exec_handoff_monotonic_ns\":396706569599000,\"exec_to_first_output_ns\":null,\"execution_ns\":112123000,\"exit_code\":0,\"finished_monotonic_ns\":396706681722000,\"first_output_monotonic_ns\":null,\"first_output_to_exit_ns\":null,\"ok\":1,\"output_limited\":0,\"schema\":\"fsmgen.test.rust_proxy_compilation.v1\",\"schema_version\":1,\"signal\":0,\"spawn_to_exec_ns\":2896000,\"stage\":\"compile_proxy\",\"started_monotonic_ns\":396706566703000,\"status\":\"success\",\"stderr\":\"\",\"stderr_bytes\":0,\"stdout\":\"\",\"stdout_bytes\":0,\"timed_out\":0,\"timeout_seconds\":10},\"compilation_argv\":[\"/Library/Developer/CommandLineTools/usr/bin/clang\",\"--no-default-config\",\"-isysroot\",\"/Library/Developer/CommandLineTools/SDKs/MacOSX26.5.sdk\",\"-arch\",\"arm64\",\"-mmacosx-version-min=11.0\",\"-O2\",\"-Wall\",\"-Wextra\",\"-Werror\",\"-fno-builtin\",\"-fno-modules\",\".artifacts/tmp/process-supervisor-tests/fsmgen-Preparation20260913/rust-tools/rustup.c\",\"-o\",\".artifacts/tmp/process-supervisor-tests/fsmgen-Preparation20260913/rust-tools/rustup\"],\"compilation_sources\":[{\"device\":17,\"inode\":101,\"path\":\".artifacts/tmp/process-supervisor-tests/fsmgen-Preparation20260913/rust-tools/rustup.c\",\"sha256\":\"e0adaf4cff2704fe69a70fcd31e95d3e3a4d80f4b51dc62b67ec1514fb9b0cde\",\"size_bytes\":31},{\"device\":17,\"inode\":102,\"path\":\".artifacts/tmp/process-supervisor-tests/fsmgen-Preparation20260913/rust-tools/rustup\",\"sha256\":\"5bc09e390b4ed95dbfe8dfbe141ceaeaa5e804ee351d51885a08786fb2108977\",\"size_bytes\":28}],\"diagnostic\":\"controlled reference failure\",\"executable\":\".artifacts/cache/rust-proxy-images/v1/images/0e50de07cf2ede17d4dcb7454d6d8038270eac69da832e2507836dcf2916c1f5/rustup\",\"failure_stage\":\"image_reference\",\"image_reference\":{\"global\":{\"device\":17,\"inode\":301,\"path\":\".artifacts/cache/rust-proxy-images/v1/references/131dd5d6b48507c88be2cf57f4173b530330c9a3145dd0217f2e2b7ccb6770c9.json\",\"sha256\":\"9cb23f9e13b9b880aad2c658e5c7ff3c95ea9a238734c2c661bc0bc7c40ac6ec\",\"size_bytes\":931},\"private\":{\"device\":17,\"inode\":302,\"path\":\".artifacts/tmp/process-supervisor-tests/fsmgen-Preparation20260913/rust-tools/image-reference.json\",\"sha256\":\"9cb23f9e13b9b880aad2c658e5c7ff3c95ea9a238734c2c661bc0bc7c40ac6ec\",\"size_bytes\":931},\"record\":{\"image_key\":\"0e50de07cf2ede17d4dcb7454d6d8038270eac69da832e2507836dcf2916c1f5\",\"reference_key\":\"131dd5d6b48507c88be2cf57f4173b530330c9a3145dd0217f2e2b7ccb6770c9\",\"schema\":\"fsmgen.test.rust_proxy_image_reference.v1\",\"selected_sources\":[{\"device\":17,\"inode\":201,\"path\":\".artifacts/cache/rust-proxy-images/v1/images/0e50de07cf2ede17d4dcb7454d6d8038270eac69da832e2507836dcf2916c1f5/rustup.c\",\"sha256\":\"e0adaf4cff2704fe69a70fcd31e95d3e3a4d80f4b51dc62b67ec1514fb9b0cde\",\"size_bytes\":31},{\"device\":17,\"inode\":202,\"path\":\".artifacts/cache/rust-proxy-images/v1/images/0e50de07cf2ede17d4dcb7454d6d8038270eac69da832e2507836dcf2916c1f5/rustup\",\"sha256\":\"5bc09e390b4ed95dbfe8dfbe141ceaeaa5e804ee351d51885a08786fb2108977\",\"size_bytes\":28}],\"workspace\":\".artifacts/tmp/process-supervisor-tests/fsmgen-Preparation20260913\",\"workspace_identity\":{\"device\":17,\"inode\":100,\"path\":\".artifacts/tmp/process-supervisor-tests/fsmgen-Preparation20260913\"}}},\"implementation\":\"native\",\"ok\":0,\"schema\":\"fsmgen.test.rust_proxy_fixture.v2\",\"selection_reason\":\"darwin_arm64_command_line_tools\",\"sources\":[{\"device\":17,\"inode\":201,\"path\":\".artifacts/cache/rust-proxy-images/v1/images/0e50de07cf2ede17d4dcb7454d6d8038270eac69da832e2507836dcf2916c1f5/rustup.c\",\"sha256\":\"e0adaf4cff2704fe69a70fcd31e95d3e3a4d80f4b51dc62b67ec1514fb9b0cde\",\"size_bytes\":31},{\"device\":17,\"inode\":202,\"path\":\".artifacts/cache/rust-proxy-images/v1/images/0e50de07cf2ede17d4dcb7454d6d8038270eac69da832e2507836dcf2916c1f5/rustup\",\"sha256\":\"5bc09e390b4ed95dbfe8dfbe141ceaeaa5e804ee351d51885a08786fb2108977\",\"size_bytes\":28}],\"status\":\"invocation_error\"}"
+      },
+      {
+         "name" : "omitted_reference_validation",
+         "raw" : "{\"compilation\":{\"capture_limit_bytes\":4096,\"cleanup\":{\"containment\":\"rust_proxy_compiler_group\",\"group_gone\":1,\"kill_sent\":0,\"leader_reaped\":1,\"leader_started\":1,\"surviving_descendants\":0,\"term_sent\":0},\"diagnostic\":\"supervised process completed successfully\",\"exec_error\":null,\"exec_failed\":0,\"exec_handoff_monotonic_ns\":396706569599000,\"exec_to_first_output_ns\":null,\"execution_ns\":112123000,\"exit_code\":0,\"finished_monotonic_ns\":396706681722000,\"first_output_monotonic_ns\":null,\"first_output_to_exit_ns\":null,\"ok\":1,\"output_limited\":0,\"schema\":\"fsmgen.test.rust_proxy_compilation.v1\",\"schema_version\":1,\"signal\":0,\"spawn_to_exec_ns\":2896000,\"stage\":\"compile_proxy\",\"started_monotonic_ns\":396706566703000,\"status\":\"success\",\"stderr\":\"\",\"stderr_bytes\":0,\"stdout\":\"\",\"stdout_bytes\":0,\"timed_out\":0,\"timeout_seconds\":10},\"compilation_argv\":[\"/Library/Developer/CommandLineTools/usr/bin/clang\",\"--no-default-config\",\"-isysroot\",\"/Library/Developer/CommandLineTools/SDKs/MacOSX26.5.sdk\",\"-arch\",\"arm64\",\"-mmacosx-version-min=11.0\",\"-O2\",\"-Wall\",\"-Wextra\",\"-Werror\",\"-fno-builtin\",\"-fno-modules\",\".artifacts/tmp/process-supervisor-tests/fsmgen-Preparation20260913/rust-tools/rustup.c\",\"-o\",\".artifacts/tmp/process-supervisor-tests/fsmgen-Preparation20260913/rust-tools/rustup\"],\"compilation_sources\":[{\"device\":17,\"inode\":101,\"path\":\".artifacts/tmp/process-supervisor-tests/fsmgen-Preparation20260913/rust-tools/rustup.c\",\"sha256\":\"e0adaf4cff2704fe69a70fcd31e95d3e3a4d80f4b51dc62b67ec1514fb9b0cde\",\"size_bytes\":31},{\"device\":17,\"inode\":102,\"path\":\".artifacts/tmp/process-supervisor-tests/fsmgen-Preparation20260913/rust-tools/rustup\",\"sha256\":\"5bc09e390b4ed95dbfe8dfbe141ceaeaa5e804ee351d51885a08786fb2108977\",\"size_bytes\":28}],\"diagnostic\":\"immutable proxy fixture prepared\",\"executable\":\".artifacts/cache/rust-proxy-images/v1/images/0e50de07cf2ede17d4dcb7454d6d8038270eac69da832e2507836dcf2916c1f5/rustup\",\"failure_stage\":null,\"image_reference\":{\"global\":{\"device\":17,\"inode\":301,\"path\":\".artifacts/cache/rust-proxy-images/v1/references/131dd5d6b48507c88be2cf57f4173b530330c9a3145dd0217f2e2b7ccb6770c9.json\",\"sha256\":\"0000000000000000000000000000000000000000000000000000000000000000\",\"size_bytes\":931},\"private\":{\"device\":17,\"inode\":302,\"path\":\".artifacts/tmp/process-supervisor-tests/fsmgen-Preparation20260913/rust-tools/image-reference.json\",\"sha256\":\"9cb23f9e13b9b880aad2c658e5c7ff3c95ea9a238734c2c661bc0bc7c40ac6ec\",\"size_bytes\":931},\"record\":{\"image_key\":\"0e50de07cf2ede17d4dcb7454d6d8038270eac69da832e2507836dcf2916c1f5\",\"reference_key\":\"131dd5d6b48507c88be2cf57f4173b530330c9a3145dd0217f2e2b7ccb6770c9\",\"schema\":\"fsmgen.test.rust_proxy_image_reference.v1\",\"selected_sources\":[{\"device\":17,\"inode\":201,\"path\":\".artifacts/cache/rust-proxy-images/v1/images/0e50de07cf2ede17d4dcb7454d6d8038270eac69da832e2507836dcf2916c1f5/rustup.c\",\"sha256\":\"e0adaf4cff2704fe69a70fcd31e95d3e3a4d80f4b51dc62b67ec1514fb9b0cde\",\"size_bytes\":31},{\"device\":17,\"inode\":202,\"path\":\".artifacts/cache/rust-proxy-images/v1/images/0e50de07cf2ede17d4dcb7454d6d8038270eac69da832e2507836dcf2916c1f5/rustup\",\"sha256\":\"5bc09e390b4ed95dbfe8dfbe141ceaeaa5e804ee351d51885a08786fb2108977\",\"size_bytes\":28}],\"workspace\":\".artifacts/tmp/process-supervisor-tests/fsmgen-Preparation20260913\",\"workspace_identity\":{\"device\":17,\"inode\":100,\"path\":\".artifacts/tmp/process-supervisor-tests/fsmgen-Preparation20260913\"}}},\"implementation\":\"native\",\"ok\":1,\"schema\":\"fsmgen.test.rust_proxy_fixture.v2\",\"selection_reason\":\"darwin_arm64_command_line_tools\",\"sources\":[{\"device\":17,\"inode\":201,\"path\":\".artifacts/cache/rust-proxy-images/v1/images/0e50de07cf2ede17d4dcb7454d6d8038270eac69da832e2507836dcf2916c1f5/rustup.c\",\"sha256\":\"e0adaf4cff2704fe69a70fcd31e95d3e3a4d80f4b51dc62b67ec1514fb9b0cde\",\"size_bytes\":31},{\"device\":17,\"inode\":202,\"path\":\".artifacts/cache/rust-proxy-images/v1/images/0e50de07cf2ede17d4dcb7454d6d8038270eac69da832e2507836dcf2916c1f5/rustup\",\"sha256\":\"5bc09e390b4ed95dbfe8dfbe141ceaeaa5e804ee351d51885a08786fb2108977\",\"size_bytes\":28}],\"status\":\"success\"}"
+      }
+   ],
+   "original_v1_raw" : "{\"compilation\":{\"capture_limit_bytes\":4096,\"cleanup\":{\"containment\":\"rust_proxy_compiler_group\",\"group_gone\":1,\"kill_sent\":0,\"leader_reaped\":1,\"leader_started\":1,\"surviving_descendants\":0,\"term_sent\":0},\"diagnostic\":\"supervised process completed successfully\",\"exec_error\":null,\"exec_failed\":0,\"exec_handoff_monotonic_ns\":396706569599000,\"exec_to_first_output_ns\":null,\"execution_ns\":112123000,\"exit_code\":0,\"finished_monotonic_ns\":396706681722000,\"first_output_monotonic_ns\":null,\"first_output_to_exit_ns\":null,\"ok\":1,\"output_limited\":0,\"schema\":\"fsmgen.test.rust_proxy_compilation.v1\",\"schema_version\":1,\"signal\":0,\"spawn_to_exec_ns\":2896000,\"stage\":\"compile_proxy\",\"started_monotonic_ns\":396706566703000,\"status\":\"success\",\"stderr\":\"\",\"stderr_bytes\":0,\"stdout\":\"\",\"stdout_bytes\":0,\"timed_out\":0,\"timeout_seconds\":10},\"compilation_argv\":[\"/Library/Developer/CommandLineTools/usr/bin/clang\",\"--no-default-config\",\"-isysroot\",\"/Library/Developer/CommandLineTools/SDKs/MacOSX26.5.sdk\",\"-arch\",\"arm64\",\"-mmacosx-version-min=11.0\",\"-O2\",\"-Wall\",\"-Wextra\",\"-Werror\",\"-fno-builtin\",\"-fno-modules\",\".artifacts/tmp/process-supervisor-tests/fsmgen-HardlinkBase20260910/rust-tools/rustup.c\",\"-o\",\".artifacts/tmp/process-supervisor-tests/fsmgen-HardlinkBase20260910/rust-tools/rustup\"],\"diagnostic\":\"immutable proxy fixture prepared\",\"executable\":\".artifacts/tmp/process-supervisor-tests/fsmgen-HardlinkBase20260910/rust-tools/rustup\",\"failure_stage\":null,\"implementation\":\"native\",\"ok\":1,\"schema\":\"fsmgen.test.rust_proxy_fixture.v1\",\"selection_reason\":\"darwin_arm64_command_line_tools\",\"sources\":[{\"device\":16777244,\"inode\":76712047,\"path\":\".artifacts/tmp/process-supervisor-tests/fsmgen-HardlinkBase20260910/rust-tools/rustup.c\",\"sha256\":\"6349a566c74b9645543699d8158092b6618678f8c153c56c423d454524bef27f\",\"size_bytes\":710},{\"device\":16777244,\"inode\":76712085,\"path\":\".artifacts/tmp/process-supervisor-tests/fsmgen-HardlinkBase20260910/rust-tools/rustup\",\"sha256\":\"1c5f4010ca29a66de933b98429407055ba714854d77ff6c8276b2926392e3e2b\",\"size_bytes\":50040}],\"status\":\"success\"}",
+   "rows" : [
+      {
+         "accepted" : 1,
+         "diagnostic" : "",
+         "encoded" : "{\"compilation\":{\"capture_limit_bytes\":4096,\"cleanup\":{\"containment\":\"rust_proxy_compiler_group\",\"group_gone\":1,\"kill_sent\":0,\"leader_reaped\":1,\"leader_started\":1,\"surviving_descendants\":0,\"term_sent\":0},\"diagnostic\":\"supervised process completed successfully\",\"exec_error\":null,\"exec_failed\":0,\"exec_handoff_monotonic_ns\":396706569599000,\"exec_to_first_output_ns\":null,\"execution_ns\":112123000,\"exit_code\":0,\"finished_monotonic_ns\":396706681722000,\"first_output_monotonic_ns\":null,\"first_output_to_exit_ns\":null,\"ok\":1,\"output_limited\":0,\"schema\":\"fsmgen.test.rust_proxy_compilation.v1\",\"schema_version\":1,\"signal\":0,\"spawn_to_exec_ns\":2896000,\"stage\":\"compile_proxy\",\"started_monotonic_ns\":396706566703000,\"status\":\"success\",\"stderr\":\"\",\"stderr_bytes\":0,\"stdout\":\"\",\"stdout_bytes\":0,\"timed_out\":0,\"timeout_seconds\":10},\"compilation_argv\":[\"/Library/Developer/CommandLineTools/usr/bin/clang\",\"--no-default-config\",\"-isysroot\",\"/Library/Developer/CommandLineTools/SDKs/MacOSX26.5.sdk\",\"-arch\",\"arm64\",\"-mmacosx-version-min=11.0\",\"-O2\",\"-Wall\",\"-Wextra\",\"-Werror\",\"-fno-builtin\",\"-fno-modules\",\".artifacts/tmp/process-supervisor-tests/fsmgen-Preparation20260913/rust-tools/rustup.c\",\"-o\",\".artifacts/tmp/process-supervisor-tests/fsmgen-Preparation20260913/rust-tools/rustup\"],\"compilation_sources\":[{\"device\":17,\"inode\":101,\"path\":\".artifacts/tmp/process-supervisor-tests/fsmgen-Preparation20260913/rust-tools/rustup.c\",\"sha256\":\"e0adaf4cff2704fe69a70fcd31e95d3e3a4d80f4b51dc62b67ec1514fb9b0cde\",\"size_bytes\":31},{\"device\":17,\"inode\":102,\"path\":\".artifacts/tmp/process-supervisor-tests/fsmgen-Preparation20260913/rust-tools/rustup\",\"sha256\":\"5bc09e390b4ed95dbfe8dfbe141ceaeaa5e804ee351d51885a08786fb2108977\",\"size_bytes\":28}],\"diagnostic\":\"immutable proxy fixture prepared\",\"executable\":\".artifacts/cache/rust-proxy-images/v1/images/0e50de07cf2ede17d4dcb7454d6d8038270eac69da832e2507836dcf2916c1f5/rustup\",\"failure_stage\":null,\"image_reference\":{\"global\":{\"device\":17,\"inode\":301,\"path\":\".artifacts/cache/rust-proxy-images/v1/references/131dd5d6b48507c88be2cf57f4173b530330c9a3145dd0217f2e2b7ccb6770c9.json\",\"sha256\":\"9cb23f9e13b9b880aad2c658e5c7ff3c95ea9a238734c2c661bc0bc7c40ac6ec\",\"size_bytes\":931},\"private\":{\"device\":17,\"inode\":302,\"path\":\".artifacts/tmp/process-supervisor-tests/fsmgen-Preparation20260913/rust-tools/image-reference.json\",\"sha256\":\"9cb23f9e13b9b880aad2c658e5c7ff3c95ea9a238734c2c661bc0bc7c40ac6ec\",\"size_bytes\":931},\"record\":{\"image_key\":\"0e50de07cf2ede17d4dcb7454d6d8038270eac69da832e2507836dcf2916c1f5\",\"reference_key\":\"131dd5d6b48507c88be2cf57f4173b530330c9a3145dd0217f2e2b7ccb6770c9\",\"schema\":\"fsmgen.test.rust_proxy_image_reference.v1\",\"selected_sources\":[{\"device\":17,\"inode\":201,\"path\":\".artifacts/cache/rust-proxy-images/v1/images/0e50de07cf2ede17d4dcb7454d6d8038270eac69da832e2507836dcf2916c1f5/rustup.c\",\"sha256\":\"e0adaf4cff2704fe69a70fcd31e95d3e3a4d80f4b51dc62b67ec1514fb9b0cde\",\"size_bytes\":31},{\"device\":17,\"inode\":202,\"path\":\".artifacts/cache/rust-proxy-images/v1/images/0e50de07cf2ede17d4dcb7454d6d8038270eac69da832e2507836dcf2916c1f5/rustup\",\"sha256\":\"5bc09e390b4ed95dbfe8dfbe141ceaeaa5e804ee351d51885a08786fb2108977\",\"size_bytes\":28}],\"workspace\":\".artifacts/tmp/process-supervisor-tests/fsmgen-Preparation20260913\",\"workspace_identity\":{\"device\":17,\"inode\":100,\"path\":\".artifacts/tmp/process-supervisor-tests/fsmgen-Preparation20260913\"}}},\"implementation\":\"native\",\"ok\":1,\"schema\":\"fsmgen.test.rust_proxy_fixture.v2\",\"selection_reason\":\"darwin_arm64_command_line_tools\",\"sources\":[{\"device\":17,\"inode\":201,\"path\":\".artifacts/cache/rust-proxy-images/v1/images/0e50de07cf2ede17d4dcb7454d6d8038270eac69da832e2507836dcf2916c1f5/rustup.c\",\"sha256\":\"e0adaf4cff2704fe69a70fcd31e95d3e3a4d80f4b51dc62b67ec1514fb9b0cde\",\"size_bytes\":31},{\"device\":17,\"inode\":202,\"path\":\".artifacts/cache/rust-proxy-images/v1/images/0e50de07cf2ede17d4dcb7454d6d8038270eac69da832e2507836dcf2916c1f5/rustup\",\"sha256\":\"5bc09e390b4ed95dbfe8dfbe141ceaeaa5e804ee351d51885a08786fb2108977\",\"size_bytes\":28}],\"status\":\"success\"}",
+         "name" : "complete_shared_native"
+      },
+      {
+         "accepted" : 1,
+         "diagnostic" : "",
+         "encoded" : "{\"compilation\":null,\"compilation_argv\":null,\"compilation_sources\":[],\"diagnostic\":\"controlled invocation failure\",\"executable\":null,\"failure_stage\":\"invocation\",\"image_reference\":null,\"implementation\":\"native\",\"ok\":0,\"schema\":\"fsmgen.test.rust_proxy_fixture.v2\",\"selection_reason\":\"darwin_arm64_command_line_tools\",\"sources\":[],\"status\":\"invocation_error\"}",
+         "name" : "early_invocation_0"
+      },
+      {
+         "accepted" : 1,
+         "diagnostic" : "",
+         "encoded" : "{\"compilation\":null,\"compilation_argv\":null,\"compilation_sources\":[],\"diagnostic\":\"controlled workspace failure\",\"executable\":null,\"failure_stage\":\"workspace\",\"image_reference\":null,\"implementation\":\"native\",\"ok\":0,\"schema\":\"fsmgen.test.rust_proxy_fixture.v2\",\"selection_reason\":\"darwin_arm64_command_line_tools\",\"sources\":[],\"status\":\"invocation_error\"}",
+         "name" : "early_workspace_0"
+      },
+      {
+         "accepted" : 1,
+         "diagnostic" : "",
+         "encoded" : "{\"compilation\":null,\"compilation_argv\":null,\"compilation_sources\":[],\"diagnostic\":\"controlled source failure\",\"executable\":null,\"failure_stage\":\"source\",\"image_reference\":null,\"implementation\":\"native\",\"ok\":0,\"schema\":\"fsmgen.test.rust_proxy_fixture.v2\",\"selection_reason\":\"darwin_arm64_command_line_tools\",\"sources\":[],\"status\":\"invocation_error\"}",
+         "name" : "early_source_0"
+      },
+      {
+         "accepted" : 1,
+         "diagnostic" : "",
+         "encoded" : "{\"compilation\":null,\"compilation_argv\":null,\"compilation_sources\":[{\"device\":17,\"inode\":101,\"path\":\".artifacts/tmp/process-supervisor-tests/fsmgen-Preparation20260913/rust-tools/rustup.c\",\"sha256\":\"e0adaf4cff2704fe69a70fcd31e95d3e3a4d80f4b51dc62b67ec1514fb9b0cde\",\"size_bytes\":31}],\"diagnostic\":\"controlled source failure\",\"executable\":null,\"failure_stage\":\"source\",\"image_reference\":null,\"implementation\":\"native\",\"ok\":0,\"schema\":\"fsmgen.test.rust_proxy_fixture.v2\",\"selection_reason\":\"darwin_arm64_command_line_tools\",\"sources\":[],\"status\":\"invocation_error\"}",
+         "name" : "early_source_1"
+      },
+      {
+         "accepted" : 1,
+         "diagnostic" : "",
+         "encoded" : "{\"compilation\":null,\"compilation_argv\":[\"/Library/Developer/CommandLineTools/usr/bin/clang\",\"--no-default-config\",\"-isysroot\",\"/Library/Developer/CommandLineTools/SDKs/MacOSX26.5.sdk\",\"-arch\",\"arm64\",\"-mmacosx-version-min=11.0\",\"-O2\",\"-Wall\",\"-Wextra\",\"-Werror\",\"-fno-builtin\",\"-fno-modules\",\".artifacts/tmp/process-supervisor-tests/fsmgen-Preparation20260913/rust-tools/rustup.c\",\"-o\",\".artifacts/tmp/process-supervisor-tests/fsmgen-Preparation20260913/rust-tools/rustup\"],\"compilation_sources\":[{\"device\":17,\"inode\":101,\"path\":\".artifacts/tmp/process-supervisor-tests/fsmgen-Preparation20260913/rust-tools/rustup.c\",\"sha256\":\"e0adaf4cff2704fe69a70fcd31e95d3e3a4d80f4b51dc62b67ec1514fb9b0cde\",\"size_bytes\":31}],\"diagnostic\":\"controlled compile failure\",\"executable\":null,\"failure_stage\":\"compile\",\"image_reference\":null,\"implementation\":\"native\",\"ok\":0,\"schema\":\"fsmgen.test.rust_proxy_fixture.v2\",\"selection_reason\":\"darwin_arm64_command_line_tools\",\"sources\":[],\"status\":\"invocation_error\"}",
+         "name" : "compiler_invocation_exception"
+      },
+      {
+         "accepted" : 1,
+         "diagnostic" : "",
+         "encoded" : "{\"compilation\":{\"capture_limit_bytes\":4096,\"cleanup\":{\"containment\":\"rust_proxy_compiler_group\",\"group_gone\":1,\"kill_sent\":0,\"leader_reaped\":1,\"leader_started\":1,\"surviving_descendants\":0,\"term_sent\":0},\"diagnostic\":\"supervised process completed successfully\",\"exec_error\":null,\"exec_failed\":0,\"exec_handoff_monotonic_ns\":396706569599000,\"exec_to_first_output_ns\":null,\"execution_ns\":112123000,\"exit_code\":9,\"finished_monotonic_ns\":396706681722000,\"first_output_monotonic_ns\":null,\"first_output_to_exit_ns\":null,\"ok\":0,\"output_limited\":0,\"schema\":\"fsmgen.test.rust_proxy_compilation.v1\",\"schema_version\":1,\"signal\":0,\"spawn_to_exec_ns\":2896000,\"stage\":\"compile_proxy\",\"started_monotonic_ns\":396706566703000,\"status\":\"invocation_error\",\"stderr\":\"\",\"stderr_bytes\":0,\"stdout\":\"\",\"stdout_bytes\":0,\"timed_out\":0,\"timeout_seconds\":10},\"compilation_argv\":[\"/Library/Developer/CommandLineTools/usr/bin/clang\",\"--no-default-config\",\"-isysroot\",\"/Library/Developer/CommandLineTools/SDKs/MacOSX26.5.sdk\",\"-arch\",\"arm64\",\"-mmacosx-version-min=11.0\",\"-O2\",\"-Wall\",\"-Wextra\",\"-Werror\",\"-fno-builtin\",\"-fno-modules\",\".artifacts/tmp/process-supervisor-tests/fsmgen-Preparation20260913/rust-tools/rustup.c\",\"-o\",\".artifacts/tmp/process-supervisor-tests/fsmgen-Preparation20260913/rust-tools/rustup\"],\"compilation_sources\":[{\"device\":17,\"inode\":101,\"path\":\".artifacts/tmp/process-supervisor-tests/fsmgen-Preparation20260913/rust-tools/rustup.c\",\"sha256\":\"e0adaf4cff2704fe69a70fcd31e95d3e3a4d80f4b51dc62b67ec1514fb9b0cde\",\"size_bytes\":31}],\"diagnostic\":\"controlled compile failure\",\"executable\":null,\"failure_stage\":\"compile\",\"image_reference\":null,\"implementation\":\"native\",\"ok\":0,\"schema\":\"fsmgen.test.rust_proxy_fixture.v2\",\"selection_reason\":\"darwin_arm64_command_line_tools\",\"sources\":[],\"status\":\"invocation_error\"}",
+         "name" : "compiler_invocation_error"
+      },
+      {
+         "accepted" : 1,
+         "diagnostic" : "",
+         "encoded" : "{\"compilation\":{\"capture_limit_bytes\":4096,\"cleanup\":{\"containment\":\"rust_proxy_compiler_group\",\"group_gone\":1,\"kill_sent\":0,\"leader_reaped\":1,\"leader_started\":1,\"surviving_descendants\":0,\"term_sent\":0},\"diagnostic\":\"supervised process completed successfully\",\"exec_error\":null,\"exec_failed\":0,\"exec_handoff_monotonic_ns\":396706569599000,\"exec_to_first_output_ns\":null,\"execution_ns\":112123000,\"exit_code\":9,\"finished_monotonic_ns\":396706681722000,\"first_output_monotonic_ns\":null,\"first_output_to_exit_ns\":null,\"ok\":0,\"output_limited\":0,\"schema\":\"fsmgen.test.rust_proxy_compilation.v1\",\"schema_version\":1,\"signal\":0,\"spawn_to_exec_ns\":2896000,\"stage\":\"compile_proxy\",\"started_monotonic_ns\":396706566703000,\"status\":\"host_error\",\"stderr\":\"\",\"stderr_bytes\":0,\"stdout\":\"\",\"stdout_bytes\":0,\"timed_out\":0,\"timeout_seconds\":10},\"compilation_argv\":[\"/Library/Developer/CommandLineTools/usr/bin/clang\",\"--no-default-config\",\"-isysroot\",\"/Library/Developer/CommandLineTools/SDKs/MacOSX26.5.sdk\",\"-arch\",\"arm64\",\"-mmacosx-version-min=11.0\",\"-O2\",\"-Wall\",\"-Wextra\",\"-Werror\",\"-fno-builtin\",\"-fno-modules\",\".artifacts/tmp/process-supervisor-tests/fsmgen-Preparation20260913/rust-tools/rustup.c\",\"-o\",\".artifacts/tmp/process-supervisor-tests/fsmgen-Preparation20260913/rust-tools/rustup\"],\"compilation_sources\":[{\"device\":17,\"inode\":101,\"path\":\".artifacts/tmp/process-supervisor-tests/fsmgen-Preparation20260913/rust-tools/rustup.c\",\"sha256\":\"e0adaf4cff2704fe69a70fcd31e95d3e3a4d80f4b51dc62b67ec1514fb9b0cde\",\"size_bytes\":31}],\"diagnostic\":\"controlled compile failure\",\"executable\":null,\"failure_stage\":\"compile\",\"image_reference\":null,\"implementation\":\"native\",\"ok\":0,\"schema\":\"fsmgen.test.rust_proxy_fixture.v2\",\"selection_reason\":\"darwin_arm64_command_line_tools\",\"sources\":[],\"status\":\"host_error\"}",
+         "name" : "compiler_host_error"
+      },
+      {
+         "accepted" : 1,
+         "diagnostic" : "",
+         "encoded" : "{\"compilation\":{\"capture_limit_bytes\":4096,\"cleanup\":{\"containment\":\"rust_proxy_compiler_group\",\"group_gone\":1,\"kill_sent\":0,\"leader_reaped\":1,\"leader_started\":1,\"surviving_descendants\":0,\"term_sent\":0},\"diagnostic\":\"supervised process completed successfully\",\"exec_error\":null,\"exec_failed\":0,\"exec_handoff_monotonic_ns\":396706569599000,\"exec_to_first_output_ns\":null,\"execution_ns\":112123000,\"exit_code\":9,\"finished_monotonic_ns\":396706681722000,\"first_output_monotonic_ns\":null,\"first_output_to_exit_ns\":null,\"ok\":0,\"output_limited\":0,\"schema\":\"fsmgen.test.rust_proxy_compilation.v1\",\"schema_version\":1,\"signal\":0,\"spawn_to_exec_ns\":2896000,\"stage\":\"compile_proxy\",\"started_monotonic_ns\":396706566703000,\"status\":\"timed_out\",\"stderr\":\"\",\"stderr_bytes\":0,\"stdout\":\"\",\"stdout_bytes\":0,\"timed_out\":1,\"timeout_seconds\":10},\"compilation_argv\":[\"/Library/Developer/CommandLineTools/usr/bin/clang\",\"--no-default-config\",\"-isysroot\",\"/Library/Developer/CommandLineTools/SDKs/MacOSX26.5.sdk\",\"-arch\",\"arm64\",\"-mmacosx-version-min=11.0\",\"-O2\",\"-Wall\",\"-Wextra\",\"-Werror\",\"-fno-builtin\",\"-fno-modules\",\".artifacts/tmp/process-supervisor-tests/fsmgen-Preparation20260913/rust-tools/rustup.c\",\"-o\",\".artifacts/tmp/process-supervisor-tests/fsmgen-Preparation20260913/rust-tools/rustup\"],\"compilation_sources\":[{\"device\":17,\"inode\":101,\"path\":\".artifacts/tmp/process-supervisor-tests/fsmgen-Preparation20260913/rust-tools/rustup.c\",\"sha256\":\"e0adaf4cff2704fe69a70fcd31e95d3e3a4d80f4b51dc62b67ec1514fb9b0cde\",\"size_bytes\":31}],\"diagnostic\":\"controlled compile failure\",\"executable\":null,\"failure_stage\":\"compile\",\"image_reference\":null,\"implementation\":\"native\",\"ok\":0,\"schema\":\"fsmgen.test.rust_proxy_fixture.v2\",\"selection_reason\":\"darwin_arm64_command_line_tools\",\"sources\":[],\"status\":\"timed_out\"}",
+         "name" : "compiler_timed_out"
+      },
+      {
+         "accepted" : 1,
+         "diagnostic" : "",
+         "encoded" : "{\"compilation\":{\"capture_limit_bytes\":4096,\"cleanup\":{\"containment\":\"rust_proxy_compiler_group\",\"group_gone\":1,\"kill_sent\":0,\"leader_reaped\":1,\"leader_started\":1,\"surviving_descendants\":0,\"term_sent\":0},\"diagnostic\":\"supervised process completed successfully\",\"exec_error\":null,\"exec_failed\":0,\"exec_handoff_monotonic_ns\":396706569599000,\"exec_to_first_output_ns\":null,\"execution_ns\":112123000,\"exit_code\":9,\"finished_monotonic_ns\":396706681722000,\"first_output_monotonic_ns\":null,\"first_output_to_exit_ns\":null,\"ok\":0,\"output_limited\":1,\"schema\":\"fsmgen.test.rust_proxy_compilation.v1\",\"schema_version\":1,\"signal\":0,\"spawn_to_exec_ns\":2896000,\"stage\":\"compile_proxy\",\"started_monotonic_ns\":396706566703000,\"status\":\"output_limited\",\"stderr\":\"\",\"stderr_bytes\":0,\"stdout\":\"\",\"stdout_bytes\":0,\"timed_out\":0,\"timeout_seconds\":10},\"compilation_argv\":[\"/Library/Developer/CommandLineTools/usr/bin/clang\",\"--no-default-config\",\"-isysroot\",\"/Library/Developer/CommandLineTools/SDKs/MacOSX26.5.sdk\",\"-arch\",\"arm64\",\"-mmacosx-version-min=11.0\",\"-O2\",\"-Wall\",\"-Wextra\",\"-Werror\",\"-fno-builtin\",\"-fno-modules\",\".artifacts/tmp/process-supervisor-tests/fsmgen-Preparation20260913/rust-tools/rustup.c\",\"-o\",\".artifacts/tmp/process-supervisor-tests/fsmgen-Preparation20260913/rust-tools/rustup\"],\"compilation_sources\":[{\"device\":17,\"inode\":101,\"path\":\".artifacts/tmp/process-supervisor-tests/fsmgen-Preparation20260913/rust-tools/rustup.c\",\"sha256\":\"e0adaf4cff2704fe69a70fcd31e95d3e3a4d80f4b51dc62b67ec1514fb9b0cde\",\"size_bytes\":31}],\"diagnostic\":\"controlled compile failure\",\"executable\":null,\"failure_stage\":\"compile\",\"image_reference\":null,\"implementation\":\"native\",\"ok\":0,\"schema\":\"fsmgen.test.rust_proxy_fixture.v2\",\"selection_reason\":\"darwin_arm64_command_line_tools\",\"sources\":[],\"status\":\"output_limited\"}",
+         "name" : "compiler_output_limited"
+      },
+      {
+         "accepted" : 1,
+         "diagnostic" : "",
+         "encoded" : "{\"compilation\":{\"capture_limit_bytes\":4096,\"cleanup\":{\"containment\":\"rust_proxy_compiler_group\",\"group_gone\":1,\"kill_sent\":0,\"leader_reaped\":1,\"leader_started\":1,\"surviving_descendants\":0,\"term_sent\":0},\"diagnostic\":\"supervised process completed successfully\",\"exec_error\":\"controlled exec failure\",\"exec_failed\":1,\"exec_handoff_monotonic_ns\":396706569599000,\"exec_to_first_output_ns\":null,\"execution_ns\":112123000,\"exit_code\":9,\"finished_monotonic_ns\":396706681722000,\"first_output_monotonic_ns\":null,\"first_output_to_exit_ns\":null,\"ok\":0,\"output_limited\":0,\"schema\":\"fsmgen.test.rust_proxy_compilation.v1\",\"schema_version\":1,\"signal\":0,\"spawn_to_exec_ns\":2896000,\"stage\":\"compile_proxy\",\"started_monotonic_ns\":396706566703000,\"status\":\"exec_error\",\"stderr\":\"\",\"stderr_bytes\":0,\"stdout\":\"\",\"stdout_bytes\":0,\"timed_out\":0,\"timeout_seconds\":10},\"compilation_argv\":[\"/Library/Developer/CommandLineTools/usr/bin/clang\",\"--no-default-config\",\"-isysroot\",\"/Library/Developer/CommandLineTools/SDKs/MacOSX26.5.sdk\",\"-arch\",\"arm64\",\"-mmacosx-version-min=11.0\",\"-O2\",\"-Wall\",\"-Wextra\",\"-Werror\",\"-fno-builtin\",\"-fno-modules\",\".artifacts/tmp/process-supervisor-tests/fsmgen-Preparation20260913/rust-tools/rustup.c\",\"-o\",\".artifacts/tmp/process-supervisor-tests/fsmgen-Preparation20260913/rust-tools/rustup\"],\"compilation_sources\":[{\"device\":17,\"inode\":101,\"path\":\".artifacts/tmp/process-supervisor-tests/fsmgen-Preparation20260913/rust-tools/rustup.c\",\"sha256\":\"e0adaf4cff2704fe69a70fcd31e95d3e3a4d80f4b51dc62b67ec1514fb9b0cde\",\"size_bytes\":31}],\"diagnostic\":\"controlled compile failure\",\"executable\":null,\"failure_stage\":\"compile\",\"image_reference\":null,\"implementation\":\"native\",\"ok\":0,\"schema\":\"fsmgen.test.rust_proxy_fixture.v2\",\"selection_reason\":\"darwin_arm64_command_line_tools\",\"sources\":[],\"status\":\"exec_error\"}",
+         "name" : "compiler_exec_error"
+      },
+      {
+         "accepted" : 1,
+         "diagnostic" : "",
+         "encoded" : "{\"compilation\":{\"capture_limit_bytes\":4096,\"cleanup\":{\"containment\":\"rust_proxy_compiler_group\",\"group_gone\":1,\"kill_sent\":0,\"leader_reaped\":1,\"leader_started\":1,\"surviving_descendants\":1,\"term_sent\":0},\"diagnostic\":\"supervised process completed successfully\",\"exec_error\":null,\"exec_failed\":0,\"exec_handoff_monotonic_ns\":396706569599000,\"exec_to_first_output_ns\":null,\"execution_ns\":112123000,\"exit_code\":9,\"finished_monotonic_ns\":396706681722000,\"first_output_monotonic_ns\":null,\"first_output_to_exit_ns\":null,\"ok\":0,\"output_limited\":0,\"schema\":\"fsmgen.test.rust_proxy_compilation.v1\",\"schema_version\":1,\"signal\":0,\"spawn_to_exec_ns\":2896000,\"stage\":\"compile_proxy\",\"started_monotonic_ns\":396706566703000,\"status\":\"surviving_descendants\",\"stderr\":\"\",\"stderr_bytes\":0,\"stdout\":\"\",\"stdout_bytes\":0,\"timed_out\":0,\"timeout_seconds\":10},\"compilation_argv\":[\"/Library/Developer/CommandLineTools/usr/bin/clang\",\"--no-default-config\",\"-isysroot\",\"/Library/Developer/CommandLineTools/SDKs/MacOSX26.5.sdk\",\"-arch\",\"arm64\",\"-mmacosx-version-min=11.0\",\"-O2\",\"-Wall\",\"-Wextra\",\"-Werror\",\"-fno-builtin\",\"-fno-modules\",\".artifacts/tmp/process-supervisor-tests/fsmgen-Preparation20260913/rust-tools/rustup.c\",\"-o\",\".artifacts/tmp/process-supervisor-tests/fsmgen-Preparation20260913/rust-tools/rustup\"],\"compilation_sources\":[{\"device\":17,\"inode\":101,\"path\":\".artifacts/tmp/process-supervisor-tests/fsmgen-Preparation20260913/rust-tools/rustup.c\",\"sha256\":\"e0adaf4cff2704fe69a70fcd31e95d3e3a4d80f4b51dc62b67ec1514fb9b0cde\",\"size_bytes\":31}],\"diagnostic\":\"controlled compile failure\",\"executable\":null,\"failure_stage\":\"compile\",\"image_reference\":null,\"implementation\":\"native\",\"ok\":0,\"schema\":\"fsmgen.test.rust_proxy_fixture.v2\",\"selection_reason\":\"darwin_arm64_command_line_tools\",\"sources\":[],\"status\":\"surviving_descendants\"}",
+         "name" : "compiler_surviving_descendants"
+      },
+      {
+         "accepted" : 1,
+         "diagnostic" : "",
+         "encoded" : "{\"compilation\":{\"capture_limit_bytes\":4096,\"cleanup\":{\"containment\":\"rust_proxy_compiler_group\",\"group_gone\":0,\"kill_sent\":0,\"leader_reaped\":1,\"leader_started\":1,\"surviving_descendants\":0,\"term_sent\":0},\"diagnostic\":\"supervised process completed successfully\",\"exec_error\":null,\"exec_failed\":0,\"exec_handoff_monotonic_ns\":396706569599000,\"exec_to_first_output_ns\":null,\"execution_ns\":112123000,\"exit_code\":9,\"finished_monotonic_ns\":396706681722000,\"first_output_monotonic_ns\":null,\"first_output_to_exit_ns\":null,\"ok\":0,\"output_limited\":0,\"schema\":\"fsmgen.test.rust_proxy_compilation.v1\",\"schema_version\":1,\"signal\":0,\"spawn_to_exec_ns\":2896000,\"stage\":\"compile_proxy\",\"started_monotonic_ns\":396706566703000,\"status\":\"cleanup_failed\",\"stderr\":\"\",\"stderr_bytes\":0,\"stdout\":\"\",\"stdout_bytes\":0,\"timed_out\":0,\"timeout_seconds\":10},\"compilation_argv\":[\"/Library/Developer/CommandLineTools/usr/bin/clang\",\"--no-default-config\",\"-isysroot\",\"/Library/Developer/CommandLineTools/SDKs/MacOSX26.5.sdk\",\"-arch\",\"arm64\",\"-mmacosx-version-min=11.0\",\"-O2\",\"-Wall\",\"-Wextra\",\"-Werror\",\"-fno-builtin\",\"-fno-modules\",\".artifacts/tmp/process-supervisor-tests/fsmgen-Preparation20260913/rust-tools/rustup.c\",\"-o\",\".artifacts/tmp/process-supervisor-tests/fsmgen-Preparation20260913/rust-tools/rustup\"],\"compilation_sources\":[{\"device\":17,\"inode\":101,\"path\":\".artifacts/tmp/process-supervisor-tests/fsmgen-Preparation20260913/rust-tools/rustup.c\",\"sha256\":\"e0adaf4cff2704fe69a70fcd31e95d3e3a4d80f4b51dc62b67ec1514fb9b0cde\",\"size_bytes\":31}],\"diagnostic\":\"controlled compile failure\",\"executable\":null,\"failure_stage\":\"compile\",\"image_reference\":null,\"implementation\":\"native\",\"ok\":0,\"schema\":\"fsmgen.test.rust_proxy_fixture.v2\",\"selection_reason\":\"darwin_arm64_command_line_tools\",\"sources\":[],\"status\":\"cleanup_failed\"}",
+         "name" : "compiler_cleanup_failed"
+      },
+      {
+         "accepted" : 1,
+         "diagnostic" : "",
+         "encoded" : "{\"compilation\":{\"capture_limit_bytes\":4096,\"cleanup\":{\"containment\":\"rust_proxy_compiler_group\",\"group_gone\":1,\"kill_sent\":0,\"leader_reaped\":1,\"leader_started\":1,\"surviving_descendants\":0,\"term_sent\":0},\"diagnostic\":\"supervised process completed successfully\",\"exec_error\":null,\"exec_failed\":0,\"exec_handoff_monotonic_ns\":396706569599000,\"exec_to_first_output_ns\":null,\"execution_ns\":112123000,\"exit_code\":null,\"finished_monotonic_ns\":396706681722000,\"first_output_monotonic_ns\":null,\"first_output_to_exit_ns\":null,\"ok\":0,\"output_limited\":0,\"schema\":\"fsmgen.test.rust_proxy_compilation.v1\",\"schema_version\":1,\"signal\":9,\"spawn_to_exec_ns\":2896000,\"stage\":\"compile_proxy\",\"started_monotonic_ns\":396706566703000,\"status\":\"signaled\",\"stderr\":\"\",\"stderr_bytes\":0,\"stdout\":\"\",\"stdout_bytes\":0,\"timed_out\":0,\"timeout_seconds\":10},\"compilation_argv\":[\"/Library/Developer/CommandLineTools/usr/bin/clang\",\"--no-default-config\",\"-isysroot\",\"/Library/Developer/CommandLineTools/SDKs/MacOSX26.5.sdk\",\"-arch\",\"arm64\",\"-mmacosx-version-min=11.0\",\"-O2\",\"-Wall\",\"-Wextra\",\"-Werror\",\"-fno-builtin\",\"-fno-modules\",\".artifacts/tmp/process-supervisor-tests/fsmgen-Preparation20260913/rust-tools/rustup.c\",\"-o\",\".artifacts/tmp/process-supervisor-tests/fsmgen-Preparation20260913/rust-tools/rustup\"],\"compilation_sources\":[{\"device\":17,\"inode\":101,\"path\":\".artifacts/tmp/process-supervisor-tests/fsmgen-Preparation20260913/rust-tools/rustup.c\",\"sha256\":\"e0adaf4cff2704fe69a70fcd31e95d3e3a4d80f4b51dc62b67ec1514fb9b0cde\",\"size_bytes\":31}],\"diagnostic\":\"controlled compile failure\",\"executable\":null,\"failure_stage\":\"compile\",\"image_reference\":null,\"implementation\":\"native\",\"ok\":0,\"schema\":\"fsmgen.test.rust_proxy_fixture.v2\",\"selection_reason\":\"darwin_arm64_command_line_tools\",\"sources\":[],\"status\":\"signaled\"}",
+         "name" : "compiler_signaled"
+      },
+      {
+         "accepted" : 1,
+         "diagnostic" : "",
+         "encoded" : "{\"compilation\":{\"capture_limit_bytes\":4096,\"cleanup\":{\"containment\":\"rust_proxy_compiler_group\",\"group_gone\":1,\"kill_sent\":0,\"leader_reaped\":1,\"leader_started\":1,\"surviving_descendants\":0,\"term_sent\":0},\"diagnostic\":\"supervised process completed successfully\",\"exec_error\":null,\"exec_failed\":0,\"exec_handoff_monotonic_ns\":396706569599000,\"exec_to_first_output_ns\":null,\"execution_ns\":112123000,\"exit_code\":9,\"finished_monotonic_ns\":396706681722000,\"first_output_monotonic_ns\":null,\"first_output_to_exit_ns\":null,\"ok\":0,\"output_limited\":0,\"schema\":\"fsmgen.test.rust_proxy_compilation.v1\",\"schema_version\":1,\"signal\":0,\"spawn_to_exec_ns\":2896000,\"stage\":\"compile_proxy\",\"started_monotonic_ns\":396706566703000,\"status\":\"nonzero_exit\",\"stderr\":\"\",\"stderr_bytes\":0,\"stdout\":\"\",\"stdout_bytes\":0,\"timed_out\":0,\"timeout_seconds\":10},\"compilation_argv\":[\"/Library/Developer/CommandLineTools/usr/bin/clang\",\"--no-default-config\",\"-isysroot\",\"/Library/Developer/CommandLineTools/SDKs/MacOSX26.5.sdk\",\"-arch\",\"arm64\",\"-mmacosx-version-min=11.0\",\"-O2\",\"-Wall\",\"-Wextra\",\"-Werror\",\"-fno-builtin\",\"-fno-modules\",\".artifacts/tmp/process-supervisor-tests/fsmgen-Preparation20260913/rust-tools/rustup.c\",\"-o\",\".artifacts/tmp/process-supervisor-tests/fsmgen-Preparation20260913/rust-tools/rustup\"],\"compilation_sources\":[{\"device\":17,\"inode\":101,\"path\":\".artifacts/tmp/process-supervisor-tests/fsmgen-Preparation20260913/rust-tools/rustup.c\",\"sha256\":\"e0adaf4cff2704fe69a70fcd31e95d3e3a4d80f4b51dc62b67ec1514fb9b0cde\",\"size_bytes\":31}],\"diagnostic\":\"controlled compile failure\",\"executable\":null,\"failure_stage\":\"compile\",\"image_reference\":null,\"implementation\":\"native\",\"ok\":0,\"schema\":\"fsmgen.test.rust_proxy_fixture.v2\",\"selection_reason\":\"darwin_arm64_command_line_tools\",\"sources\":[],\"status\":\"nonzero_exit\"}",
+         "name" : "compiler_nonzero_exit"
+      },
+      {
+         "accepted" : 1,
+         "diagnostic" : "",
+         "encoded" : "{\"compilation\":{\"capture_limit_bytes\":4096,\"cleanup\":{\"containment\":\"rust_proxy_compiler_group\",\"group_gone\":0,\"kill_sent\":0,\"leader_reaped\":1,\"leader_started\":1,\"surviving_descendants\":0,\"term_sent\":0},\"diagnostic\":\"supervised process completed successfully\",\"exec_error\":null,\"exec_failed\":0,\"exec_handoff_monotonic_ns\":396706569599000,\"exec_to_first_output_ns\":null,\"execution_ns\":112123000,\"exit_code\":0,\"finished_monotonic_ns\":396706681722000,\"first_output_monotonic_ns\":null,\"first_output_to_exit_ns\":null,\"ok\":1,\"output_limited\":0,\"schema\":\"fsmgen.test.rust_proxy_compilation.v1\",\"schema_version\":1,\"signal\":0,\"spawn_to_exec_ns\":2896000,\"stage\":\"compile_proxy\",\"started_monotonic_ns\":396706566703000,\"status\":\"success\",\"stderr\":\"\",\"stderr_bytes\":0,\"stdout\":\"\",\"stdout_bytes\":0,\"timed_out\":0,\"timeout_seconds\":10},\"compilation_argv\":[\"/Library/Developer/CommandLineTools/usr/bin/clang\",\"--no-default-config\",\"-isysroot\",\"/Library/Developer/CommandLineTools/SDKs/MacOSX26.5.sdk\",\"-arch\",\"arm64\",\"-mmacosx-version-min=11.0\",\"-O2\",\"-Wall\",\"-Wextra\",\"-Werror\",\"-fno-builtin\",\"-fno-modules\",\".artifacts/tmp/process-supervisor-tests/fsmgen-Preparation20260913/rust-tools/rustup.c\",\"-o\",\".artifacts/tmp/process-supervisor-tests/fsmgen-Preparation20260913/rust-tools/rustup\"],\"compilation_sources\":[{\"device\":17,\"inode\":101,\"path\":\".artifacts/tmp/process-supervisor-tests/fsmgen-Preparation20260913/rust-tools/rustup.c\",\"sha256\":\"e0adaf4cff2704fe69a70fcd31e95d3e3a4d80f4b51dc62b67ec1514fb9b0cde\",\"size_bytes\":31}],\"diagnostic\":\"controlled compile failure\",\"executable\":null,\"failure_stage\":\"compile\",\"image_reference\":null,\"implementation\":\"native\",\"ok\":0,\"schema\":\"fsmgen.test.rust_proxy_fixture.v2\",\"selection_reason\":\"darwin_arm64_command_line_tools\",\"sources\":[],\"status\":\"cleanup_failed\"}",
+         "name" : "compiler_success_with_unsettled_cleanup"
+      },
+      {
+         "accepted" : 1,
+         "diagnostic" : "",
+         "encoded" : "{\"compilation\":{\"capture_limit_bytes\":4096,\"cleanup\":{\"containment\":\"rust_proxy_compiler_group\",\"group_gone\":1,\"kill_sent\":0,\"leader_reaped\":1,\"leader_started\":1,\"surviving_descendants\":0,\"term_sent\":0},\"diagnostic\":\"supervised process completed successfully\",\"exec_error\":null,\"exec_failed\":0,\"exec_handoff_monotonic_ns\":396706569599000,\"exec_to_first_output_ns\":null,\"execution_ns\":112123000,\"exit_code\":0,\"finished_monotonic_ns\":396706681722000,\"first_output_monotonic_ns\":null,\"first_output_to_exit_ns\":null,\"ok\":1,\"output_limited\":0,\"schema\":\"fsmgen.test.rust_proxy_compilation.v1\",\"schema_version\":1,\"signal\":0,\"spawn_to_exec_ns\":2896000,\"stage\":\"compile_proxy\",\"started_monotonic_ns\":396706566703000,\"status\":\"success\",\"stderr\":\"\",\"stderr_bytes\":0,\"stdout\":\"\",\"stdout_bytes\":0,\"timed_out\":0,\"timeout_seconds\":10},\"compilation_argv\":[\"/Library/Developer/CommandLineTools/usr/bin/clang\",\"--no-default-config\",\"-isysroot\",\"/Library/Developer/CommandLineTools/SDKs/MacOSX26.5.sdk\",\"-arch\",\"arm64\",\"-mmacosx-version-min=11.0\",\"-O2\",\"-Wall\",\"-Wextra\",\"-Werror\",\"-fno-builtin\",\"-fno-modules\",\".artifacts/tmp/process-supervisor-tests/fsmgen-Preparation20260913/rust-tools/rustup.c\",\"-o\",\".artifacts/tmp/process-supervisor-tests/fsmgen-Preparation20260913/rust-tools/rustup\"],\"compilation_sources\":[{\"device\":17,\"inode\":101,\"path\":\".artifacts/tmp/process-supervisor-tests/fsmgen-Preparation20260913/rust-tools/rustup.c\",\"sha256\":\"e0adaf4cff2704fe69a70fcd31e95d3e3a4d80f4b51dc62b67ec1514fb9b0cde\",\"size_bytes\":31}],\"diagnostic\":\"controlled artifact_admission failure\",\"executable\":null,\"failure_stage\":\"artifact_admission\",\"image_reference\":null,\"implementation\":\"native\",\"ok\":0,\"schema\":\"fsmgen.test.rust_proxy_fixture.v2\",\"selection_reason\":\"darwin_arm64_command_line_tools\",\"sources\":[],\"status\":\"invocation_error\"}",
+         "name" : "artifact_failure_1"
+      },
+      {
+         "accepted" : 1,
+         "diagnostic" : "",
+         "encoded" : "{\"compilation\":{\"capture_limit_bytes\":4096,\"cleanup\":{\"containment\":\"rust_proxy_compiler_group\",\"group_gone\":1,\"kill_sent\":0,\"leader_reaped\":1,\"leader_started\":1,\"surviving_descendants\":0,\"term_sent\":0},\"diagnostic\":\"supervised process completed successfully\",\"exec_error\":null,\"exec_failed\":0,\"exec_handoff_monotonic_ns\":396706569599000,\"exec_to_first_output_ns\":null,\"execution_ns\":112123000,\"exit_code\":0,\"finished_monotonic_ns\":396706681722000,\"first_output_monotonic_ns\":null,\"first_output_to_exit_ns\":null,\"ok\":1,\"output_limited\":0,\"schema\":\"fsmgen.test.rust_proxy_compilation.v1\",\"schema_version\":1,\"signal\":0,\"spawn_to_exec_ns\":2896000,\"stage\":\"compile_proxy\",\"started_monotonic_ns\":396706566703000,\"status\":\"success\",\"stderr\":\"\",\"stderr_bytes\":0,\"stdout\":\"\",\"stdout_bytes\":0,\"timed_out\":0,\"timeout_seconds\":10},\"compilation_argv\":[\"/Library/Developer/CommandLineTools/usr/bin/clang\",\"--no-default-config\",\"-isysroot\",\"/Library/Developer/CommandLineTools/SDKs/MacOSX26.5.sdk\",\"-arch\",\"arm64\",\"-mmacosx-version-min=11.0\",\"-O2\",\"-Wall\",\"-Wextra\",\"-Werror\",\"-fno-builtin\",\"-fno-modules\",\".artifacts/tmp/process-supervisor-tests/fsmgen-Preparation20260913/rust-tools/rustup.c\",\"-o\",\".artifacts/tmp/process-supervisor-tests/fsmgen-Preparation20260913/rust-tools/rustup\"],\"compilation_sources\":[{\"device\":17,\"inode\":101,\"path\":\".artifacts/tmp/process-supervisor-tests/fsmgen-Preparation20260913/rust-tools/rustup.c\",\"sha256\":\"e0adaf4cff2704fe69a70fcd31e95d3e3a4d80f4b51dc62b67ec1514fb9b0cde\",\"size_bytes\":31},{\"device\":17,\"inode\":102,\"path\":\".artifacts/tmp/process-supervisor-tests/fsmgen-Preparation20260913/rust-tools/rustup\",\"sha256\":\"5bc09e390b4ed95dbfe8dfbe141ceaeaa5e804ee351d51885a08786fb2108977\",\"size_bytes\":28}],\"diagnostic\":\"controlled artifact_admission failure\",\"executable\":null,\"failure_stage\":\"artifact_admission\",\"image_reference\":null,\"implementation\":\"native\",\"ok\":0,\"schema\":\"fsmgen.test.rust_proxy_fixture.v2\",\"selection_reason\":\"darwin_arm64_command_line_tools\",\"sources\":[],\"status\":\"invocation_error\"}",
+         "name" : "artifact_failure_2"
+      },
+      {
+         "accepted" : 1,
+         "diagnostic" : "",
+         "encoded" : "{\"compilation\":{\"capture_limit_bytes\":4096,\"cleanup\":{\"containment\":\"rust_proxy_compiler_group\",\"group_gone\":1,\"kill_sent\":0,\"leader_reaped\":1,\"leader_started\":1,\"surviving_descendants\":0,\"term_sent\":0},\"diagnostic\":\"supervised process completed successfully\",\"exec_error\":null,\"exec_failed\":0,\"exec_handoff_monotonic_ns\":396706569599000,\"exec_to_first_output_ns\":null,\"execution_ns\":112123000,\"exit_code\":0,\"finished_monotonic_ns\":396706681722000,\"first_output_monotonic_ns\":null,\"first_output_to_exit_ns\":null,\"ok\":1,\"output_limited\":0,\"schema\":\"fsmgen.test.rust_proxy_compilation.v1\",\"schema_version\":1,\"signal\":0,\"spawn_to_exec_ns\":2896000,\"stage\":\"compile_proxy\",\"started_monotonic_ns\":396706566703000,\"status\":\"success\",\"stderr\":\"\",\"stderr_bytes\":0,\"stdout\":\"\",\"stdout_bytes\":0,\"timed_out\":0,\"timeout_seconds\":10},\"compilation_argv\":[\"/Library/Developer/CommandLineTools/usr/bin/clang\",\"--no-default-config\",\"-isysroot\",\"/Library/Developer/CommandLineTools/SDKs/MacOSX26.5.sdk\",\"-arch\",\"arm64\",\"-mmacosx-version-min=11.0\",\"-O2\",\"-Wall\",\"-Wextra\",\"-Werror\",\"-fno-builtin\",\"-fno-modules\",\".artifacts/tmp/process-supervisor-tests/fsmgen-Preparation20260913/rust-tools/rustup.c\",\"-o\",\".artifacts/tmp/process-supervisor-tests/fsmgen-Preparation20260913/rust-tools/rustup\"],\"compilation_sources\":[{\"device\":17,\"inode\":101,\"path\":\".artifacts/tmp/process-supervisor-tests/fsmgen-Preparation20260913/rust-tools/rustup.c\",\"sha256\":\"e0adaf4cff2704fe69a70fcd31e95d3e3a4d80f4b51dc62b67ec1514fb9b0cde\",\"size_bytes\":31},{\"device\":17,\"inode\":102,\"path\":\".artifacts/tmp/process-supervisor-tests/fsmgen-Preparation20260913/rust-tools/rustup\",\"sha256\":\"5bc09e390b4ed95dbfe8dfbe141ceaeaa5e804ee351d51885a08786fb2108977\",\"size_bytes\":28}],\"diagnostic\":\"controlled image_admission failure\",\"executable\":null,\"failure_stage\":\"image_admission\",\"image_reference\":null,\"implementation\":\"native\",\"ok\":0,\"schema\":\"fsmgen.test.rust_proxy_fixture.v2\",\"selection_reason\":\"darwin_arm64_command_line_tools\",\"sources\":[],\"status\":\"invocation_error\"}",
+         "name" : "image_admission_selected_0"
+      },
+      {
+         "accepted" : 1,
+         "diagnostic" : "",
+         "encoded" : "{\"compilation\":{\"capture_limit_bytes\":4096,\"cleanup\":{\"containment\":\"rust_proxy_compiler_group\",\"group_gone\":1,\"kill_sent\":0,\"leader_reaped\":1,\"leader_started\":1,\"surviving_descendants\":0,\"term_sent\":0},\"diagnostic\":\"supervised process completed successfully\",\"exec_error\":null,\"exec_failed\":0,\"exec_handoff_monotonic_ns\":396706569599000,\"exec_to_first_output_ns\":null,\"execution_ns\":112123000,\"exit_code\":0,\"finished_monotonic_ns\":396706681722000,\"first_output_monotonic_ns\":null,\"first_output_to_exit_ns\":null,\"ok\":1,\"output_limited\":0,\"schema\":\"fsmgen.test.rust_proxy_compilation.v1\",\"schema_version\":1,\"signal\":0,\"spawn_to_exec_ns\":2896000,\"stage\":\"compile_proxy\",\"started_monotonic_ns\":396706566703000,\"status\":\"success\",\"stderr\":\"\",\"stderr_bytes\":0,\"stdout\":\"\",\"stdout_bytes\":0,\"timed_out\":0,\"timeout_seconds\":10},\"compilation_argv\":[\"/Library/Developer/CommandLineTools/usr/bin/clang\",\"--no-default-config\",\"-isysroot\",\"/Library/Developer/CommandLineTools/SDKs/MacOSX26.5.sdk\",\"-arch\",\"arm64\",\"-mmacosx-version-min=11.0\",\"-O2\",\"-Wall\",\"-Wextra\",\"-Werror\",\"-fno-builtin\",\"-fno-modules\",\".artifacts/tmp/process-supervisor-tests/fsmgen-Preparation20260913/rust-tools/rustup.c\",\"-o\",\".artifacts/tmp/process-supervisor-tests/fsmgen-Preparation20260913/rust-tools/rustup\"],\"compilation_sources\":[{\"device\":17,\"inode\":101,\"path\":\".artifacts/tmp/process-supervisor-tests/fsmgen-Preparation20260913/rust-tools/rustup.c\",\"sha256\":\"e0adaf4cff2704fe69a70fcd31e95d3e3a4d80f4b51dc62b67ec1514fb9b0cde\",\"size_bytes\":31},{\"device\":17,\"inode\":102,\"path\":\".artifacts/tmp/process-supervisor-tests/fsmgen-Preparation20260913/rust-tools/rustup\",\"sha256\":\"5bc09e390b4ed95dbfe8dfbe141ceaeaa5e804ee351d51885a08786fb2108977\",\"size_bytes\":28}],\"diagnostic\":\"controlled image_admission failure\",\"executable\":null,\"failure_stage\":\"image_admission\",\"image_reference\":null,\"implementation\":\"native\",\"ok\":0,\"schema\":\"fsmgen.test.rust_proxy_fixture.v2\",\"selection_reason\":\"darwin_arm64_command_line_tools\",\"sources\":[{\"device\":17,\"inode\":201,\"path\":\".artifacts/cache/rust-proxy-images/v1/images/0e50de07cf2ede17d4dcb7454d6d8038270eac69da832e2507836dcf2916c1f5/rustup.c\",\"sha256\":\"e0adaf4cff2704fe69a70fcd31e95d3e3a4d80f4b51dc62b67ec1514fb9b0cde\",\"size_bytes\":31},{\"device\":17,\"inode\":202,\"path\":\".artifacts/cache/rust-proxy-images/v1/images/0e50de07cf2ede17d4dcb7454d6d8038270eac69da832e2507836dcf2916c1f5/rustup\",\"sha256\":\"5bc09e390b4ed95dbfe8dfbe141ceaeaa5e804ee351d51885a08786fb2108977\",\"size_bytes\":28}],\"status\":\"invocation_error\"}",
+         "name" : "image_admission_selected_1"
+      },
+      {
+         "accepted" : 1,
+         "diagnostic" : "",
+         "encoded" : "{\"compilation\":{\"capture_limit_bytes\":4096,\"cleanup\":{\"containment\":\"rust_proxy_compiler_group\",\"group_gone\":1,\"kill_sent\":0,\"leader_reaped\":1,\"leader_started\":1,\"surviving_descendants\":0,\"term_sent\":0},\"diagnostic\":\"supervised process completed successfully\",\"exec_error\":null,\"exec_failed\":0,\"exec_handoff_monotonic_ns\":396706569599000,\"exec_to_first_output_ns\":null,\"execution_ns\":112123000,\"exit_code\":0,\"finished_monotonic_ns\":396706681722000,\"first_output_monotonic_ns\":null,\"first_output_to_exit_ns\":null,\"ok\":1,\"output_limited\":0,\"schema\":\"fsmgen.test.rust_proxy_compilation.v1\",\"schema_version\":1,\"signal\":0,\"spawn_to_exec_ns\":2896000,\"stage\":\"compile_proxy\",\"started_monotonic_ns\":396706566703000,\"status\":\"success\",\"stderr\":\"\",\"stderr_bytes\":0,\"stdout\":\"\",\"stdout_bytes\":0,\"timed_out\":0,\"timeout_seconds\":10},\"compilation_argv\":[\"/Library/Developer/CommandLineTools/usr/bin/clang\",\"--no-default-config\",\"-isysroot\",\"/Library/Developer/CommandLineTools/SDKs/MacOSX26.5.sdk\",\"-arch\",\"arm64\",\"-mmacosx-version-min=11.0\",\"-O2\",\"-Wall\",\"-Wextra\",\"-Werror\",\"-fno-builtin\",\"-fno-modules\",\".artifacts/tmp/process-supervisor-tests/fsmgen-Preparation20260913/rust-tools/rustup.c\",\"-o\",\".artifacts/tmp/process-supervisor-tests/fsmgen-Preparation20260913/rust-tools/rustup\"],\"compilation_sources\":[{\"device\":17,\"inode\":101,\"path\":\".artifacts/tmp/process-supervisor-tests/fsmgen-Preparation20260913/rust-tools/rustup.c\",\"sha256\":\"e0adaf4cff2704fe69a70fcd31e95d3e3a4d80f4b51dc62b67ec1514fb9b0cde\",\"size_bytes\":31},{\"device\":17,\"inode\":102,\"path\":\".artifacts/tmp/process-supervisor-tests/fsmgen-Preparation20260913/rust-tools/rustup\",\"sha256\":\"5bc09e390b4ed95dbfe8dfbe141ceaeaa5e804ee351d51885a08786fb2108977\",\"size_bytes\":28}],\"diagnostic\":\"controlled image_reference failure\",\"executable\":null,\"failure_stage\":\"image_reference\",\"image_reference\":null,\"implementation\":\"native\",\"ok\":0,\"schema\":\"fsmgen.test.rust_proxy_fixture.v2\",\"selection_reason\":\"darwin_arm64_command_line_tools\",\"sources\":[],\"status\":\"invocation_error\"}",
+         "name" : "image_reference_selected_0"
+      },
+      {
+         "accepted" : 1,
+         "diagnostic" : "",
+         "encoded" : "{\"compilation\":{\"capture_limit_bytes\":4096,\"cleanup\":{\"containment\":\"rust_proxy_compiler_group\",\"group_gone\":1,\"kill_sent\":0,\"leader_reaped\":1,\"leader_started\":1,\"surviving_descendants\":0,\"term_sent\":0},\"diagnostic\":\"supervised process completed successfully\",\"exec_error\":null,\"exec_failed\":0,\"exec_handoff_monotonic_ns\":396706569599000,\"exec_to_first_output_ns\":null,\"execution_ns\":112123000,\"exit_code\":0,\"finished_monotonic_ns\":396706681722000,\"first_output_monotonic_ns\":null,\"first_output_to_exit_ns\":null,\"ok\":1,\"output_limited\":0,\"schema\":\"fsmgen.test.rust_proxy_compilation.v1\",\"schema_version\":1,\"signal\":0,\"spawn_to_exec_ns\":2896000,\"stage\":\"compile_proxy\",\"started_monotonic_ns\":396706566703000,\"status\":\"success\",\"stderr\":\"\",\"stderr_bytes\":0,\"stdout\":\"\",\"stdout_bytes\":0,\"timed_out\":0,\"timeout_seconds\":10},\"compilation_argv\":[\"/Library/Developer/CommandLineTools/usr/bin/clang\",\"--no-default-config\",\"-isysroot\",\"/Library/Developer/CommandLineTools/SDKs/MacOSX26.5.sdk\",\"-arch\",\"arm64\",\"-mmacosx-version-min=11.0\",\"-O2\",\"-Wall\",\"-Wextra\",\"-Werror\",\"-fno-builtin\",\"-fno-modules\",\".artifacts/tmp/process-supervisor-tests/fsmgen-Preparation20260913/rust-tools/rustup.c\",\"-o\",\".artifacts/tmp/process-supervisor-tests/fsmgen-Preparation20260913/rust-tools/rustup\"],\"compilation_sources\":[{\"device\":17,\"inode\":101,\"path\":\".artifacts/tmp/process-supervisor-tests/fsmgen-Preparation20260913/rust-tools/rustup.c\",\"sha256\":\"e0adaf4cff2704fe69a70fcd31e95d3e3a4d80f4b51dc62b67ec1514fb9b0cde\",\"size_bytes\":31},{\"device\":17,\"inode\":102,\"path\":\".artifacts/tmp/process-supervisor-tests/fsmgen-Preparation20260913/rust-tools/rustup\",\"sha256\":\"5bc09e390b4ed95dbfe8dfbe141ceaeaa5e804ee351d51885a08786fb2108977\",\"size_bytes\":28}],\"diagnostic\":\"controlled image_reference failure\",\"executable\":null,\"failure_stage\":\"image_reference\",\"image_reference\":null,\"implementation\":\"native\",\"ok\":0,\"schema\":\"fsmgen.test.rust_proxy_fixture.v2\",\"selection_reason\":\"darwin_arm64_command_line_tools\",\"sources\":[{\"device\":17,\"inode\":201,\"path\":\".artifacts/cache/rust-proxy-images/v1/images/0e50de07cf2ede17d4dcb7454d6d8038270eac69da832e2507836dcf2916c1f5/rustup.c\",\"sha256\":\"e0adaf4cff2704fe69a70fcd31e95d3e3a4d80f4b51dc62b67ec1514fb9b0cde\",\"size_bytes\":31},{\"device\":17,\"inode\":202,\"path\":\".artifacts/cache/rust-proxy-images/v1/images/0e50de07cf2ede17d4dcb7454d6d8038270eac69da832e2507836dcf2916c1f5/rustup\",\"sha256\":\"5bc09e390b4ed95dbfe8dfbe141ceaeaa5e804ee351d51885a08786fb2108977\",\"size_bytes\":28}],\"status\":\"invocation_error\"}",
+         "name" : "image_reference_selected_1"
+      },
+      {
+         "accepted" : 1,
+         "diagnostic" : "",
+         "encoded" : "{\"compilation\":{\"capture_limit_bytes\":4096,\"cleanup\":{\"containment\":\"rust_proxy_compiler_group\",\"group_gone\":1,\"kill_sent\":0,\"leader_reaped\":1,\"leader_started\":1,\"surviving_descendants\":0,\"term_sent\":0},\"diagnostic\":\"supervised process completed successfully\",\"exec_error\":null,\"exec_failed\":0,\"exec_handoff_monotonic_ns\":396706569599000,\"exec_to_first_output_ns\":null,\"execution_ns\":112123000,\"exit_code\":0,\"finished_monotonic_ns\":396706681722000,\"first_output_monotonic_ns\":null,\"first_output_to_exit_ns\":null,\"ok\":1,\"output_limited\":0,\"schema\":\"fsmgen.test.rust_proxy_compilation.v1\",\"schema_version\":1,\"signal\":0,\"spawn_to_exec_ns\":2896000,\"stage\":\"compile_proxy\",\"started_monotonic_ns\":396706566703000,\"status\":\"success\",\"stderr\":\"\",\"stderr_bytes\":0,\"stdout\":\"\",\"stdout_bytes\":0,\"timed_out\":0,\"timeout_seconds\":10},\"compilation_argv\":[\"/Library/Developer/CommandLineTools/usr/bin/clang\",\"--no-default-config\",\"-isysroot\",\"/Library/Developer/CommandLineTools/SDKs/MacOSX26.5.sdk\",\"-arch\",\"arm64\",\"-mmacosx-version-min=11.0\",\"-O2\",\"-Wall\",\"-Wextra\",\"-Werror\",\"-fno-builtin\",\"-fno-modules\",\".artifacts/tmp/process-supervisor-tests/fsmgen-Preparation20260913/rust-tools/rustup.c\",\"-o\",\".artifacts/tmp/process-supervisor-tests/fsmgen-Preparation20260913/rust-tools/rustup\"],\"compilation_sources\":[{\"device\":17,\"inode\":101,\"path\":\".artifacts/tmp/process-supervisor-tests/fsmgen-Preparation20260913/rust-tools/rustup.c\",\"sha256\":\"e0adaf4cff2704fe69a70fcd31e95d3e3a4d80f4b51dc62b67ec1514fb9b0cde\",\"size_bytes\":31},{\"device\":17,\"inode\":102,\"path\":\".artifacts/tmp/process-supervisor-tests/fsmgen-Preparation20260913/rust-tools/rustup\",\"sha256\":\"5bc09e390b4ed95dbfe8dfbe141ceaeaa5e804ee351d51885a08786fb2108977\",\"size_bytes\":28}],\"diagnostic\":\"controlled image_reference failure\",\"executable\":null,\"failure_stage\":\"image_reference\",\"image_reference\":{\"global\":{\"device\":17,\"inode\":301,\"path\":\".artifacts/cache/rust-proxy-images/v1/references/131dd5d6b48507c88be2cf57f4173b530330c9a3145dd0217f2e2b7ccb6770c9.json\",\"sha256\":\"9cb23f9e13b9b880aad2c658e5c7ff3c95ea9a238734c2c661bc0bc7c40ac6ec\",\"size_bytes\":931},\"private\":{\"device\":17,\"inode\":302,\"path\":\".artifacts/tmp/process-supervisor-tests/fsmgen-Preparation20260913/rust-tools/image-reference.json\",\"sha256\":\"9cb23f9e13b9b880aad2c658e5c7ff3c95ea9a238734c2c661bc0bc7c40ac6ec\",\"size_bytes\":931},\"record\":{\"image_key\":\"0e50de07cf2ede17d4dcb7454d6d8038270eac69da832e2507836dcf2916c1f5\",\"reference_key\":\"131dd5d6b48507c88be2cf57f4173b530330c9a3145dd0217f2e2b7ccb6770c9\",\"schema\":\"fsmgen.test.rust_proxy_image_reference.v1\",\"selected_sources\":[{\"device\":17,\"inode\":201,\"path\":\".artifacts/cache/rust-proxy-images/v1/images/0e50de07cf2ede17d4dcb7454d6d8038270eac69da832e2507836dcf2916c1f5/rustup.c\",\"sha256\":\"e0adaf4cff2704fe69a70fcd31e95d3e3a4d80f4b51dc62b67ec1514fb9b0cde\",\"size_bytes\":31},{\"device\":17,\"inode\":202,\"path\":\".artifacts/cache/rust-proxy-images/v1/images/0e50de07cf2ede17d4dcb7454d6d8038270eac69da832e2507836dcf2916c1f5/rustup\",\"sha256\":\"5bc09e390b4ed95dbfe8dfbe141ceaeaa5e804ee351d51885a08786fb2108977\",\"size_bytes\":28}],\"workspace\":\".artifacts/tmp/process-supervisor-tests/fsmgen-Preparation20260913\",\"workspace_identity\":{\"device\":17,\"inode\":100,\"path\":\".artifacts/tmp/process-supervisor-tests/fsmgen-Preparation20260913\"}}},\"implementation\":\"native\",\"ok\":0,\"schema\":\"fsmgen.test.rust_proxy_fixture.v2\",\"selection_reason\":\"darwin_arm64_command_line_tools\",\"sources\":[{\"device\":17,\"inode\":201,\"path\":\".artifacts/cache/rust-proxy-images/v1/images/0e50de07cf2ede17d4dcb7454d6d8038270eac69da832e2507836dcf2916c1f5/rustup.c\",\"sha256\":\"e0adaf4cff2704fe69a70fcd31e95d3e3a4d80f4b51dc62b67ec1514fb9b0cde\",\"size_bytes\":31},{\"device\":17,\"inode\":202,\"path\":\".artifacts/cache/rust-proxy-images/v1/images/0e50de07cf2ede17d4dcb7454d6d8038270eac69da832e2507836dcf2916c1f5/rustup\",\"sha256\":\"5bc09e390b4ed95dbfe8dfbe141ceaeaa5e804ee351d51885a08786fb2108977\",\"size_bytes\":28}],\"status\":\"invocation_error\"}",
+         "name" : "failed_with_complete_retained_reference"
+      },
+      {
+         "accepted" : 1,
+         "diagnostic" : "",
+         "encoded" : "{\"compilation\":{\"capture_limit_bytes\":4096,\"cleanup\":{\"containment\":\"rust_proxy_compiler_group\",\"group_gone\":1,\"kill_sent\":0,\"leader_reaped\":1,\"leader_started\":1,\"surviving_descendants\":0,\"term_sent\":0},\"diagnostic\":\"supervised process completed successfully\",\"exec_error\":null,\"exec_failed\":0,\"exec_handoff_monotonic_ns\":396706569599000,\"exec_to_first_output_ns\":null,\"execution_ns\":112123000,\"exit_code\":0,\"finished_monotonic_ns\":396706681722000,\"first_output_monotonic_ns\":null,\"first_output_to_exit_ns\":null,\"ok\":1,\"output_limited\":0,\"schema\":\"fsmgen.test.rust_proxy_compilation.v1\",\"schema_version\":1,\"signal\":0,\"spawn_to_exec_ns\":2896000,\"stage\":\"compile_proxy\",\"started_monotonic_ns\":396706566703000,\"status\":\"success\",\"stderr\":\"\",\"stderr_bytes\":0,\"stdout\":\"\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\\u0000\\u00ff\",\"stdout_bytes\":4096,\"timed_out\":0,\"timeout_seconds\":10},\"compilation_argv\":[\"/Library/Developer/CommandLineTools/usr/bin/clang\",\"--no-default-config\",\"-isysroot\",\"/Library/Developer/CommandLineTools/SDKs/MacOSX26.5.sdk\",\"-arch\",\"arm64\",\"-mmacosx-version-min=11.0\",\"-O2\",\"-Wall\",\"-Wextra\",\"-Werror\",\"-fno-builtin\",\"-fno-modules\",\".artifacts/tmp/process-supervisor-tests/fsmgen-Preparation20260913/rust-tools/rustup.c\",\"-o\",\".artifacts/tmp/process-supervisor-tests/fsmgen-Preparation20260913/rust-tools/rustup\"],\"compilation_sources\":[{\"device\":17,\"inode\":101,\"path\":\".artifacts/tmp/process-supervisor-tests/fsmgen-Preparation20260913/rust-tools/rustup.c\",\"sha256\":\"e0adaf4cff2704fe69a70fcd31e95d3e3a4d80f4b51dc62b67ec1514fb9b0cde\",\"size_bytes\":31},{\"device\":17,\"inode\":102,\"path\":\".artifacts/tmp/process-supervisor-tests/fsmgen-Preparation20260913/rust-tools/rustup\",\"sha256\":\"5bc09e390b4ed95dbfe8dfbe141ceaeaa5e804ee351d51885a08786fb2108977\",\"size_bytes\":28}],\"diagnostic\":\"immutable proxy fixture prepared\",\"executable\":\".artifacts/cache/rust-proxy-images/v1/images/0e50de07cf2ede17d4dcb7454d6d8038270eac69da832e2507836dcf2916c1f5/rustup\",\"failure_stage\":null,\"image_reference\":{\"global\":{\"device\":17,\"inode\":301,\"path\":\".artifacts/cache/rust-proxy-images/v1/references/131dd5d6b48507c88be2cf57f4173b530330c9a3145dd0217f2e2b7ccb6770c9.json\",\"sha256\":\"9cb23f9e13b9b880aad2c658e5c7ff3c95ea9a238734c2c661bc0bc7c40ac6ec\",\"size_bytes\":931},\"private\":{\"device\":17,\"inode\":302,\"path\":\".artifacts/tmp/process-supervisor-tests/fsmgen-Preparation20260913/rust-tools/image-reference.json\",\"sha256\":\"9cb23f9e13b9b880aad2c658e5c7ff3c95ea9a238734c2c661bc0bc7c40ac6ec\",\"size_bytes\":931},\"record\":{\"image_key\":\"0e50de07cf2ede17d4dcb7454d6d8038270eac69da832e2507836dcf2916c1f5\",\"reference_key\":\"131dd5d6b48507c88be2cf57f4173b530330c9a3145dd0217f2e2b7ccb6770c9\",\"schema\":\"fsmgen.test.rust_proxy_image_reference.v1\",\"selected_sources\":[{\"device\":17,\"inode\":201,\"path\":\".artifacts/cache/rust-proxy-images/v1/images/0e50de07cf2ede17d4dcb7454d6d8038270eac69da832e2507836dcf2916c1f5/rustup.c\",\"sha256\":\"e0adaf4cff2704fe69a70fcd31e95d3e3a4d80f4b51dc62b67ec1514fb9b0cde\",\"size_bytes\":31},{\"device\":17,\"inode\":202,\"path\":\".artifacts/cache/rust-proxy-images/v1/images/0e50de07cf2ede17d4dcb7454d6d8038270eac69da832e2507836dcf2916c1f5/rustup\",\"sha256\":\"5bc09e390b4ed95dbfe8dfbe141ceaeaa5e804ee351d51885a08786fb2108977\",\"size_bytes\":28}],\"workspace\":\".artifacts/tmp/process-supervisor-tests/fsmgen-Preparation20260913\",\"workspace_identity\":{\"device\":17,\"inode\":100,\"path\":\".artifacts/tmp/process-supervisor-tests/fsmgen-Preparation20260913\"}}},\"implementation\":\"native\",\"ok\":1,\"schema\":\"fsmgen.test.rust_proxy_fixture.v2\",\"selection_reason\":\"darwin_arm64_command_line_tools\",\"sources\":[{\"device\":17,\"inode\":201,\"path\":\".artifacts/cache/rust-proxy-images/v1/images/0e50de07cf2ede17d4dcb7454d6d8038270eac69da832e2507836dcf2916c1f5/rustup.c\",\"sha256\":\"e0adaf4cff2704fe69a70fcd31e95d3e3a4d80f4b51dc62b67ec1514fb9b0cde\",\"size_bytes\":31},{\"device\":17,\"inode\":202,\"path\":\".artifacts/cache/rust-proxy-images/v1/images/0e50de07cf2ede17d4dcb7454d6d8038270eac69da832e2507836dcf2916c1f5/rustup\",\"sha256\":\"5bc09e390b4ed95dbfe8dfbe141ceaeaa5e804ee351d51885a08786fb2108977\",\"size_bytes\":28}],\"status\":\"success\"}",
+         "name" : "compiler_aggregate_octet_boundary"
+      },
+      {
+         "accepted" : 1,
+         "diagnostic" : "",
+         "encoded" : "{\"compilation\":{\"capture_limit_bytes\":4096,\"cleanup\":{\"containment\":\"rust_proxy_compiler_group\",\"group_gone\":1,\"kill_sent\":0,\"leader_reaped\":1,\"leader_started\":1,\"surviving_descendants\":0,\"term_sent\":0},\"diagnostic\":\"supervised process completed successfully\",\"exec_error\":null,\"exec_failed\":0,\"exec_handoff_monotonic_ns\":396706569599000,\"exec_to_first_output_ns\":null,\"execution_ns\":112123000,\"exit_code\":0,\"finished_monotonic_ns\":396706681722000,\"first_output_monotonic_ns\":null,\"first_output_to_exit_ns\":null,\"ok\":1,\"output_limited\":0,\"schema\":\"fsmgen.test.rust_proxy_compilation.v1\",\"schema_version\":1,\"signal\":0,\"spawn_to_exec_ns\":2896000,\"stage\":\"compile_proxy\",\"started_monotonic_ns\":396706566703000,\"status\":\"success\",\"stderr\":\"\",\"stderr_bytes\":0,\"stdout\":\"\",\"stdout_bytes\":0,\"timed_out\":0,\"timeout_seconds\":10},\"compilation_argv\":[\"/Library/Developer/CommandLineTools/usr/bin/clang\",\"--no-default-config\",\"-isysroot\",\"/Library/Developer/CommandLineTools/SDKs/MacOSX26.5.sdk\",\"-arch\",\"arm64\",\"-mmacosx-version-min=11.0\",\"-O2\",\"-Wall\",\"-Wextra\",\"-Werror\",\"-fno-builtin\",\"-fno-modules\",\".artifacts/tmp/process-supervisor-tests/fsmgen-Preparation20260913/rust-tools/rustup.c\",\"-o\",\".artifacts/tmp/process-supervisor-tests/fsmgen-Preparation20260913/rust-tools/rustup\"],\"compilation_sources\":[{\"device\":17,\"inode\":101,\"path\":\".artifacts/tmp/process-supervisor-tests/fsmgen-Preparation20260913/rust-tools/rustup.c\",\"sha256\":\"e0adaf4cff2704fe69a70fcd31e95d3e3a4d80f4b51dc62b67ec1514fb9b0cde\",\"size_bytes\":31},{\"device\":17,\"inode\":102,\"path\":\".artifacts/tmp/process-supervisor-tests/fsmgen-Preparation20260913/rust-tools/rustup\",\"sha256\":\"5bc09e390b4ed95dbfe8dfbe141ceaeaa5e804ee351d51885a08786fb2108977\",\"size_bytes\":28}],\"diagnostic\":\"xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx\",\"executable\":null,\"failure_stage\":\"image_reference\",\"image_reference\":{\"global\":{\"device\":17,\"inode\":301,\"path\":\".artifacts/cache/rust-proxy-images/v1/references/131dd5d6b48507c88be2cf57f4173b530330c9a3145dd0217f2e2b7ccb6770c9.json\",\"sha256\":\"9cb23f9e13b9b880aad2c658e5c7ff3c95ea9a238734c2c661bc0bc7c40ac6ec\",\"size_bytes\":931},\"private\":{\"device\":17,\"inode\":302,\"path\":\".artifacts/tmp/process-supervisor-tests/fsmgen-Preparation20260913/rust-tools/image-reference.json\",\"sha256\":\"9cb23f9e13b9b880aad2c658e5c7ff3c95ea9a238734c2c661bc0bc7c40ac6ec\",\"size_bytes\":931},\"record\":{\"image_key\":\"0e50de07cf2ede17d4dcb7454d6d8038270eac69da832e2507836dcf2916c1f5\",\"reference_key\":\"131dd5d6b48507c88be2cf57f4173b530330c9a3145dd0217f2e2b7ccb6770c9\",\"schema\":\"fsmgen.test.rust_proxy_image_reference.v1\",\"selected_sources\":[{\"device\":17,\"inode\":201,\"path\":\".artifacts/cache/rust-proxy-images/v1/images/0e50de07cf2ede17d4dcb7454d6d8038270eac69da832e2507836dcf2916c1f5/rustup.c\",\"sha256\":\"e0adaf4cff2704fe69a70fcd31e95d3e3a4d80f4b51dc62b67ec1514fb9b0cde\",\"size_bytes\":31},{\"device\":17,\"inode\":202,\"path\":\".artifacts/cache/rust-proxy-images/v1/images/0e50de07cf2ede17d4dcb7454d6d8038270eac69da832e2507836dcf2916c1f5/rustup\",\"sha256\":\"5bc09e390b4ed95dbfe8dfbe141ceaeaa5e804ee351d51885a08786fb2108977\",\"size_bytes\":28}],\"workspace\":\".artifacts/tmp/process-supervisor-tests/fsmgen-Preparation20260913\",\"workspace_identity\":{\"device\":17,\"inode\":100,\"path\":\".artifacts/tmp/process-supervisor-tests/fsmgen-Preparation20260913\"}}},\"implementation\":\"native\",\"ok\":0,\"schema\":\"fsmgen.test.rust_proxy_fixture.v2\",\"selection_reason\":\"darwin_arm64_command_line_tools\",\"sources\":[{\"device\":17,\"inode\":201,\"path\":\".artifacts/cache/rust-proxy-images/v1/images/0e50de07cf2ede17d4dcb7454d6d8038270eac69da832e2507836dcf2916c1f5/rustup.c\",\"sha256\":\"e0adaf4cff2704fe69a70fcd31e95d3e3a4d80f4b51dc62b67ec1514fb9b0cde\",\"size_bytes\":31},{\"device\":17,\"inode\":202,\"path\":\".artifacts/cache/rust-proxy-images/v1/images/0e50de07cf2ede17d4dcb7454d6d8038270eac69da832e2507836dcf2916c1f5/rustup\",\"sha256\":\"5bc09e390b4ed95dbfe8dfbe141ceaeaa5e804ee351d51885a08786fb2108977\",\"size_bytes\":28}],\"status\":\"invocation_error\"}",
+         "name" : "diagnostic_character_boundary"
+      },
+      {
+         "accepted" : 1,
+         "diagnostic" : "",
+         "encoded" : "{\"compilation\":{\"capture_limit_bytes\":4096,\"cleanup\":{\"containment\":\"rust_proxy_compiler_group\",\"group_gone\":1,\"kill_sent\":0,\"leader_reaped\":1,\"leader_started\":1,\"surviving_descendants\":0,\"term_sent\":0},\"diagnostic\":\"supervised process completed successfully\",\"exec_error\":null,\"exec_failed\":0,\"exec_handoff_monotonic_ns\":396706569599000,\"exec_to_first_output_ns\":null,\"execution_ns\":112123000,\"exit_code\":0,\"finished_monotonic_ns\":396706681722000,\"first_output_monotonic_ns\":null,\"first_output_to_exit_ns\":null,\"ok\":1,\"output_limited\":0,\"schema\":\"fsmgen.test.rust_proxy_compilation.v1\",\"schema_version\":1,\"signal\":0,\"spawn_to_exec_ns\":2896000,\"stage\":\"compile_proxy\",\"started_monotonic_ns\":396706566703000,\"status\":\"success\",\"stderr\":\"\",\"stderr_bytes\":0,\"stdout\":\"\",\"stdout_bytes\":0,\"timed_out\":0,\"timeout_seconds\":10},\"compilation_argv\":[\"/Library/Developer/CommandLineTools/usr/bin/clang\",\"--no-default-config\",\"-isysroot\",\"/Library/Developer/CommandLineTools/SDKs/MacOSX26.5.sdk\",\"-arch\",\"arm64\",\"-mmacosx-version-min=11.0\",\"-O2\",\"-Wall\",\"-Wextra\",\"-Werror\",\"-fno-builtin\",\"-fno-modules\",\".artifacts/tmp/process-supervisor-tests/fsmgen-Preparation20260913/rust-tools/rustup.c\",\"-o\",\".artifacts/tmp/process-supervisor-tests/fsmgen-Preparation20260913/rust-tools/rustup\"],\"compilation_sources\":[{\"device\":17,\"inode\":101,\"path\":\".artifacts/tmp/process-supervisor-tests/fsmgen-Preparation20260913/rust-tools/rustup.c\",\"sha256\":\"e0adaf4cff2704fe69a70fcd31e95d3e3a4d80f4b51dc62b67ec1514fb9b0cde\",\"size_bytes\":31},{\"device\":17,\"inode\":9007199254740993,\"path\":\".artifacts/tmp/process-supervisor-tests/fsmgen-Preparation20260913/rust-tools/rustup\",\"sha256\":\"5bc09e390b4ed95dbfe8dfbe141ceaeaa5e804ee351d51885a08786fb2108977\",\"size_bytes\":28}],\"diagnostic\":\"immutable proxy fixture prepared\",\"executable\":\".artifacts/cache/rust-proxy-images/v1/images/0e50de07cf2ede17d4dcb7454d6d8038270eac69da832e2507836dcf2916c1f5/rustup\",\"failure_stage\":null,\"image_reference\":{\"global\":{\"device\":17,\"inode\":301,\"path\":\".artifacts/cache/rust-proxy-images/v1/references/131dd5d6b48507c88be2cf57f4173b530330c9a3145dd0217f2e2b7ccb6770c9.json\",\"sha256\":\"9cb23f9e13b9b880aad2c658e5c7ff3c95ea9a238734c2c661bc0bc7c40ac6ec\",\"size_bytes\":931},\"private\":{\"device\":17,\"inode\":302,\"path\":\".artifacts/tmp/process-supervisor-tests/fsmgen-Preparation20260913/rust-tools/image-reference.json\",\"sha256\":\"9cb23f9e13b9b880aad2c658e5c7ff3c95ea9a238734c2c661bc0bc7c40ac6ec\",\"size_bytes\":931},\"record\":{\"image_key\":\"0e50de07cf2ede17d4dcb7454d6d8038270eac69da832e2507836dcf2916c1f5\",\"reference_key\":\"131dd5d6b48507c88be2cf57f4173b530330c9a3145dd0217f2e2b7ccb6770c9\",\"schema\":\"fsmgen.test.rust_proxy_image_reference.v1\",\"selected_sources\":[{\"device\":17,\"inode\":201,\"path\":\".artifacts/cache/rust-proxy-images/v1/images/0e50de07cf2ede17d4dcb7454d6d8038270eac69da832e2507836dcf2916c1f5/rustup.c\",\"sha256\":\"e0adaf4cff2704fe69a70fcd31e95d3e3a4d80f4b51dc62b67ec1514fb9b0cde\",\"size_bytes\":31},{\"device\":17,\"inode\":202,\"path\":\".artifacts/cache/rust-proxy-images/v1/images/0e50de07cf2ede17d4dcb7454d6d8038270eac69da832e2507836dcf2916c1f5/rustup\",\"sha256\":\"5bc09e390b4ed95dbfe8dfbe141ceaeaa5e804ee351d51885a08786fb2108977\",\"size_bytes\":28}],\"workspace\":\".artifacts/tmp/process-supervisor-tests/fsmgen-Preparation20260913\",\"workspace_identity\":{\"device\":17,\"inode\":100,\"path\":\".artifacts/tmp/process-supervisor-tests/fsmgen-Preparation20260913\"}}},\"implementation\":\"native\",\"ok\":1,\"schema\":\"fsmgen.test.rust_proxy_fixture.v2\",\"selection_reason\":\"darwin_arm64_command_line_tools\",\"sources\":[{\"device\":17,\"inode\":201,\"path\":\".artifacts/cache/rust-proxy-images/v1/images/0e50de07cf2ede17d4dcb7454d6d8038270eac69da832e2507836dcf2916c1f5/rustup.c\",\"sha256\":\"e0adaf4cff2704fe69a70fcd31e95d3e3a4d80f4b51dc62b67ec1514fb9b0cde\",\"size_bytes\":31},{\"device\":17,\"inode\":202,\"path\":\".artifacts/cache/rust-proxy-images/v1/images/0e50de07cf2ede17d4dcb7454d6d8038270eac69da832e2507836dcf2916c1f5/rustup\",\"sha256\":\"5bc09e390b4ed95dbfe8dfbe141ceaeaa5e804ee351d51885a08786fb2108977\",\"size_bytes\":28}],\"status\":\"success\"}",
+         "name" : "integer_above_binary64_precision"
+      },
+      {
+         "accepted" : 0,
+         "diagnostic" : "expected closed record fields\n",
+         "encoded" : null,
+         "name" : "missing_preparation_schema"
+      },
+      {
+         "accepted" : 0,
+         "diagnostic" : "expected closed record fields\n",
+         "encoded" : null,
+         "name" : "missing_preparation_ok"
+      },
+      {
+         "accepted" : 0,
+         "diagnostic" : "expected closed record fields\n",
+         "encoded" : null,
+         "name" : "missing_preparation_status"
+      },
+      {
+         "accepted" : 0,
+         "diagnostic" : "expected closed record fields\n",
+         "encoded" : null,
+         "name" : "missing_preparation_failure_stage"
+      },
+      {
+         "accepted" : 0,
+         "diagnostic" : "expected closed record fields\n",
+         "encoded" : null,
+         "name" : "missing_preparation_diagnostic"
+      },
+      {
+         "accepted" : 0,
+         "diagnostic" : "expected closed record fields\n",
+         "encoded" : null,
+         "name" : "missing_preparation_implementation"
+      },
+      {
+         "accepted" : 0,
+         "diagnostic" : "expected closed record fields\n",
+         "encoded" : null,
+         "name" : "missing_preparation_selection_reason"
+      },
+      {
+         "accepted" : 0,
+         "diagnostic" : "expected closed record fields\n",
+         "encoded" : null,
+         "name" : "missing_preparation_executable"
+      },
+      {
+         "accepted" : 0,
+         "diagnostic" : "expected closed record fields\n",
+         "encoded" : null,
+         "name" : "missing_preparation_sources"
+      },
+      {
+         "accepted" : 0,
+         "diagnostic" : "expected closed record fields\n",
+         "encoded" : null,
+         "name" : "missing_preparation_compilation"
+      },
+      {
+         "accepted" : 0,
+         "diagnostic" : "expected closed record fields\n",
+         "encoded" : null,
+         "name" : "missing_preparation_compilation_argv"
+      },
+      {
+         "accepted" : 0,
+         "diagnostic" : "expected closed record fields\n",
+         "encoded" : null,
+         "name" : "missing_preparation_compilation_sources"
+      },
+      {
+         "accepted" : 0,
+         "diagnostic" : "expected closed record fields\n",
+         "encoded" : null,
+         "name" : "missing_preparation_image_reference"
+      },
+      {
+         "accepted" : 0,
+         "diagnostic" : "expected closed record fields\n",
+         "encoded" : null,
+         "name" : "unknown_preparation_field"
+      },
+      {
+         "accepted" : 0,
+         "diagnostic" : "expected closed record fields\n",
+         "encoded" : null,
+         "name" : "missing_compiler_schema"
+      },
+      {
+         "accepted" : 0,
+         "diagnostic" : "expected closed record fields\n",
+         "encoded" : null,
+         "name" : "missing_compiler_schema_version"
+      },
+      {
+         "accepted" : 0,
+         "diagnostic" : "expected closed record fields\n",
+         "encoded" : null,
+         "name" : "missing_compiler_stage"
+      },
+      {
+         "accepted" : 0,
+         "diagnostic" : "expected closed record fields\n",
+         "encoded" : null,
+         "name" : "missing_compiler_ok"
+      },
+      {
+         "accepted" : 0,
+         "diagnostic" : "expected closed record fields\n",
+         "encoded" : null,
+         "name" : "missing_compiler_status"
+      },
+      {
+         "accepted" : 0,
+         "diagnostic" : "expected closed record fields\n",
+         "encoded" : null,
+         "name" : "missing_compiler_diagnostic"
+      },
+      {
+         "accepted" : 0,
+         "diagnostic" : "expected closed record fields\n",
+         "encoded" : null,
+         "name" : "missing_compiler_stdout"
+      },
+      {
+         "accepted" : 0,
+         "diagnostic" : "expected closed record fields\n",
+         "encoded" : null,
+         "name" : "missing_compiler_stderr"
+      },
+      {
+         "accepted" : 0,
+         "diagnostic" : "expected closed record fields\n",
+         "encoded" : null,
+         "name" : "missing_compiler_stdout_bytes"
+      },
+      {
+         "accepted" : 0,
+         "diagnostic" : "expected closed record fields\n",
+         "encoded" : null,
+         "name" : "missing_compiler_stderr_bytes"
+      },
+      {
+         "accepted" : 0,
+         "diagnostic" : "expected closed record fields\n",
+         "encoded" : null,
+         "name" : "missing_compiler_exit_code"
+      },
+      {
+         "accepted" : 0,
+         "diagnostic" : "expected closed record fields\n",
+         "encoded" : null,
+         "name" : "missing_compiler_signal"
+      },
+      {
+         "accepted" : 0,
+         "diagnostic" : "expected closed record fields\n",
+         "encoded" : null,
+         "name" : "missing_compiler_timed_out"
+      },
+      {
+         "accepted" : 0,
+         "diagnostic" : "expected closed record fields\n",
+         "encoded" : null,
+         "name" : "missing_compiler_output_limited"
+      },
+      {
+         "accepted" : 0,
+         "diagnostic" : "expected closed record fields\n",
+         "encoded" : null,
+         "name" : "missing_compiler_exec_failed"
+      },
+      {
+         "accepted" : 0,
+         "diagnostic" : "expected closed record fields\n",
+         "encoded" : null,
+         "name" : "missing_compiler_exec_error"
+      },
+      {
+         "accepted" : 0,
+         "diagnostic" : "expected closed record fields\n",
+         "encoded" : null,
+         "name" : "missing_compiler_timeout_seconds"
+      },
+      {
+         "accepted" : 0,
+         "diagnostic" : "expected closed record fields\n",
+         "encoded" : null,
+         "name" : "missing_compiler_capture_limit_bytes"
+      },
+      {
+         "accepted" : 0,
+         "diagnostic" : "expected closed record fields\n",
+         "encoded" : null,
+         "name" : "missing_compiler_started_monotonic_ns"
+      },
+      {
+         "accepted" : 0,
+         "diagnostic" : "expected closed record fields\n",
+         "encoded" : null,
+         "name" : "missing_compiler_exec_handoff_monotonic_ns"
+      },
+      {
+         "accepted" : 0,
+         "diagnostic" : "expected closed record fields\n",
+         "encoded" : null,
+         "name" : "missing_compiler_first_output_monotonic_ns"
+      },
+      {
+         "accepted" : 0,
+         "diagnostic" : "expected closed record fields\n",
+         "encoded" : null,
+         "name" : "missing_compiler_finished_monotonic_ns"
+      },
+      {
+         "accepted" : 0,
+         "diagnostic" : "expected closed record fields\n",
+         "encoded" : null,
+         "name" : "missing_compiler_spawn_to_exec_ns"
+      },
+      {
+         "accepted" : 0,
+         "diagnostic" : "expected closed record fields\n",
+         "encoded" : null,
+         "name" : "missing_compiler_execution_ns"
+      },
+      {
+         "accepted" : 0,
+         "diagnostic" : "expected closed record fields\n",
+         "encoded" : null,
+         "name" : "missing_compiler_exec_to_first_output_ns"
+      },
+      {
+         "accepted" : 0,
+         "diagnostic" : "expected closed record fields\n",
+         "encoded" : null,
+         "name" : "missing_compiler_first_output_to_exit_ns"
+      },
+      {
+         "accepted" : 0,
+         "diagnostic" : "expected closed record fields\n",
+         "encoded" : null,
+         "name" : "missing_compiler_cleanup"
+      },
+      {
+         "accepted" : 0,
+         "diagnostic" : "expected shared native preparation version\n",
+         "encoded" : null,
+         "name" : "wrong_version"
+      },
+      {
+         "accepted" : 0,
+         "diagnostic" : "expected shared native preparation version\n",
+         "encoded" : null,
+         "name" : "perl_in_native_version"
+      },
+      {
+         "accepted" : 0,
+         "diagnostic" : "expected nonnegative JSON integer\n",
+         "encoded" : null,
+         "name" : "preparation_ok_boolean"
+      },
+      {
+         "accepted" : 0,
+         "diagnostic" : "expected nonnegative JSON integer\n",
+         "encoded" : null,
+         "name" : "preparation_ok_string"
+      },
+      {
+         "accepted" : 0,
+         "diagnostic" : "expected integer zero or one\n",
+         "encoded" : null,
+         "name" : "preparation_ok_range"
+      },
+      {
+         "accepted" : 0,
+         "diagnostic" : "failed preparation exposes an executable\n",
+         "encoded" : null,
+         "name" : "failed_executable"
+      },
+      {
+         "accepted" : 0,
+         "diagnostic" : "failed preparation has success status\n",
+         "encoded" : null,
+         "name" : "failed_success_status"
+      },
+      {
+         "accepted" : 0,
+         "diagnostic" : "failed preparation lacks a diagnostic\n",
+         "encoded" : null,
+         "name" : "failed_empty_diagnostic"
+      },
+      {
+         "accepted" : 0,
+         "diagnostic" : "preparation diagnostic exceeds character bound\n",
+         "encoded" : null,
+         "name" : "excess_diagnostic"
+      },
+      {
+         "accepted" : 0,
+         "diagnostic" : "successful preparation lacks complete settled inputs\n",
+         "encoded" : null,
+         "name" : "missing_complete_reference"
+      },
+      {
+         "accepted" : 0,
+         "diagnostic" : "compilation failure outcome was rewritten\n",
+         "encoded" : null,
+         "name" : "compile_outcome_rewritten"
+      },
+      {
+         "accepted" : 0,
+         "diagnostic" : "image selection precedes settled compilation\n",
+         "encoded" : null,
+         "name" : "unsettled_success"
+      },
+      {
+         "accepted" : 0,
+         "diagnostic" : "successful compiler outcome contradicts exit evidence\n",
+         "encoded" : null,
+         "name" : "compiler_exit_contradicts_success"
+      },
+      {
+         "accepted" : 0,
+         "diagnostic" : "compilation schema, stage or bounds differ\n",
+         "encoded" : null,
+         "name" : "compiler_bound_changed"
+      },
+      {
+         "accepted" : 0,
+         "diagnostic" : "compiler argv differs from sealed preparation policy\n",
+         "encoded" : null,
+         "name" : "compiler_argv_changed"
+      },
+      {
+         "accepted" : 0,
+         "diagnostic" : "compiler argv differs from sealed preparation policy\n",
+         "encoded" : null,
+         "name" : "compiler_argv_private_path_changed"
+      },
+      {
+         "accepted" : 0,
+         "diagnostic" : "compiler output length differs\n",
+         "encoded" : null,
+         "name" : "compiler_byte_count_changed"
+      },
+      {
+         "accepted" : 0,
+         "diagnostic" : "compiler output exceeds aggregate bound\n",
+         "encoded" : null,
+         "name" : "compiler_output_over_bound"
+      },
+      {
+         "accepted" : 0,
+         "diagnostic" : "expected canonical generated C path\n",
+         "encoded" : null,
+         "name" : "sources_reversed"
+      },
+      {
+         "accepted" : 0,
+         "diagnostic" : "expected selected source pair or empty list\n",
+         "encoded" : null,
+         "name" : "sources_missing_image"
+      },
+      {
+         "accepted" : 0,
+         "diagnostic" : "expected canonical generated C path\n",
+         "encoded" : null,
+         "name" : "sources_foreign_prefix"
+      },
+      {
+         "accepted" : 0,
+         "diagnostic" : "expected nonnegative JSON integer\n",
+         "encoded" : null,
+         "name" : "sources_0_inode_invalid"
+      },
+      {
+         "accepted" : 0,
+         "diagnostic" : "expected nonnegative JSON integer\n",
+         "encoded" : null,
+         "name" : "sources_0_device_invalid"
+      },
+      {
+         "accepted" : 0,
+         "diagnostic" : "source exceeds byte ceiling\n",
+         "encoded" : null,
+         "name" : "sources_0_size_bytes_invalid"
+      },
+      {
+         "accepted" : 0,
+         "diagnostic" : "expected lowercase SHA-256\n",
+         "encoded" : null,
+         "name" : "sources_0_sha256_invalid"
+      },
+      {
+         "accepted" : 0,
+         "diagnostic" : "expected nonnegative JSON integer\n",
+         "encoded" : null,
+         "name" : "sources_1_inode_invalid"
+      },
+      {
+         "accepted" : 0,
+         "diagnostic" : "expected nonnegative JSON integer\n",
+         "encoded" : null,
+         "name" : "sources_1_device_invalid"
+      },
+      {
+         "accepted" : 0,
+         "diagnostic" : "source exceeds byte ceiling\n",
+         "encoded" : null,
+         "name" : "sources_1_size_bytes_invalid"
+      },
+      {
+         "accepted" : 0,
+         "diagnostic" : "expected lowercase SHA-256\n",
+         "encoded" : null,
+         "name" : "sources_1_sha256_invalid"
+      },
+      {
+         "accepted" : 0,
+         "diagnostic" : "expected private generated C path\n",
+         "encoded" : null,
+         "name" : "compilation_sources_reversed"
+      },
+      {
+         "accepted" : 0,
+         "diagnostic" : "selected image requires complete compilation sources\n",
+         "encoded" : null,
+         "name" : "compilation_sources_missing_image"
+      },
+      {
+         "accepted" : 0,
+         "diagnostic" : "expected private generated C path\n",
+         "encoded" : null,
+         "name" : "compilation_sources_foreign_prefix"
+      },
+      {
+         "accepted" : 0,
+         "diagnostic" : "expected nonnegative JSON integer\n",
+         "encoded" : null,
+         "name" : "compilation_sources_0_inode_invalid"
+      },
+      {
+         "accepted" : 0,
+         "diagnostic" : "expected nonnegative JSON integer\n",
+         "encoded" : null,
+         "name" : "compilation_sources_0_device_invalid"
+      },
+      {
+         "accepted" : 0,
+         "diagnostic" : "source exceeds byte ceiling\n",
+         "encoded" : null,
+         "name" : "compilation_sources_0_size_bytes_invalid"
+      },
+      {
+         "accepted" : 0,
+         "diagnostic" : "expected lowercase SHA-256\n",
+         "encoded" : null,
+         "name" : "compilation_sources_0_sha256_invalid"
+      },
+      {
+         "accepted" : 0,
+         "diagnostic" : "expected nonnegative JSON integer\n",
+         "encoded" : null,
+         "name" : "compilation_sources_1_inode_invalid"
+      },
+      {
+         "accepted" : 0,
+         "diagnostic" : "expected nonnegative JSON integer\n",
+         "encoded" : null,
+         "name" : "compilation_sources_1_device_invalid"
+      },
+      {
+         "accepted" : 0,
+         "diagnostic" : "source exceeds byte ceiling\n",
+         "encoded" : null,
+         "name" : "compilation_sources_1_size_bytes_invalid"
+      },
+      {
+         "accepted" : 0,
+         "diagnostic" : "expected lowercase SHA-256\n",
+         "encoded" : null,
+         "name" : "compilation_sources_1_sha256_invalid"
+      },
+      {
+         "accepted" : 0,
+         "diagnostic" : "selected image bytes differ from compilation identities\n",
+         "encoded" : null,
+         "name" : "source_digest_disagreement"
+      },
+      {
+         "accepted" : 0,
+         "diagnostic" : "reference byte identity differs from canonical record\n",
+         "encoded" : null,
+         "name" : "source_inode_alias"
+      },
+      {
+         "accepted" : 0,
+         "diagnostic" : "reference byte identity differs from canonical record\n",
+         "encoded" : null,
+         "name" : "source_volume_disagreement"
+      },
+      {
+         "accepted" : 0,
+         "diagnostic" : "expected closed record fields\n",
+         "encoded" : null,
+         "name" : "missing_reference_global"
+      },
+      {
+         "accepted" : 0,
+         "diagnostic" : "expected closed record fields\n",
+         "encoded" : null,
+         "name" : "missing_reference_private"
+      },
+      {
+         "accepted" : 0,
+         "diagnostic" : "expected closed record fields\n",
+         "encoded" : null,
+         "name" : "missing_reference_record"
+      },
+      {
+         "accepted" : 0,
+         "diagnostic" : "reference byte identity differs from canonical record\n",
+         "encoded" : null,
+         "name" : "global_reference_digest"
+      },
+      {
+         "accepted" : 0,
+         "diagnostic" : "reference byte identity differs from canonical record\n",
+         "encoded" : null,
+         "name" : "global_reference_size"
+      },
+      {
+         "accepted" : 0,
+         "diagnostic" : "source path differs from fixed layout\n",
+         "encoded" : null,
+         "name" : "global_reference_path"
+      },
+      {
+         "accepted" : 0,
+         "diagnostic" : "reference byte identity differs from canonical record\n",
+         "encoded" : null,
+         "name" : "private_reference_digest"
+      },
+      {
+         "accepted" : 0,
+         "diagnostic" : "reference byte identity differs from canonical record\n",
+         "encoded" : null,
+         "name" : "private_reference_size"
+      },
+      {
+         "accepted" : 0,
+         "diagnostic" : "source path differs from fixed layout\n",
+         "encoded" : null,
+         "name" : "private_reference_path"
+      },
+      {
+         "accepted" : 0,
+         "diagnostic" : "runtime reference key differs from workspace\n",
+         "encoded" : null,
+         "name" : "reference_key_changed"
+      },
+      {
+         "accepted" : 0,
+         "diagnostic" : "expected runtime reference schema\n",
+         "encoded" : null,
+         "name" : "reference_schema_changed"
+      },
+      {
+         "accepted" : 0,
+         "diagnostic" : "reference workspace or image differs\n",
+         "encoded" : null,
+         "name" : "reference_workspace_changed"
+      },
+      {
+         "accepted" : 0,
+         "diagnostic" : "reference selected sources differ\n",
+         "encoded" : null,
+         "name" : "reference_selected_sources_reversed"
+      },
+      {
+         "accepted" : 0,
+         "diagnostic" : "preparation JSON is not canonical\n",
+         "encoded" : null,
+         "name" : "newline"
+      },
+      {
+         "accepted" : 0,
+         "diagnostic" : "preparation JSON is not canonical\n",
+         "encoded" : null,
+         "name" : "duplicate_schema"
+      },
+      {
+         "accepted" : 0,
+         "diagnostic" : "preparation JSON is not canonical\n",
+         "encoded" : null,
+         "name" : "noncanonical_integer"
+      },
+      {
+         "accepted" : 0,
+         "diagnostic" : "invalid preparation JSON\n",
+         "encoded" : null,
+         "name" : "invalid_json"
+      },
+      {
+         "accepted" : 0,
+         "diagnostic" : "expected closed record fields\n",
+         "encoded" : null,
+         "name" : "non_object"
+      },
+      {
+         "accepted" : 0,
+         "diagnostic" : "expected bounded ASCII preparation bytes\n",
+         "encoded" : null,
+         "name" : "decode_bound"
+      }
+   ],
+   "schema" : "fsmgen.inactive_preparation_qualification.v1",
+   "success" : true
+}

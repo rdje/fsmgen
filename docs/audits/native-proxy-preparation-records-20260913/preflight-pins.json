@@ -1,0 +1,37 @@
+[
+  {
+    "path": "docs/audits/native-proxy-preparation-records-20260913/plan.json",
+    "sha256": "9cc17deb1038ec3acb228bd9ca1c440b01f217075bb7ec3f2710821b523975c3",
+    "size_bytes": 6854
+  },
+  {
+    "path": "docs/audits/native-proxy-preparation-records-20260913/PreparationRecord.pm",
+    "sha256": "ebcdfbb89d244b88bd6e29067ccc49e6af3818aaf599df70c0a6343ddbf47e3a",
+    "size_bytes": 14826
+  },
+  {
+    "path": "docs/audits/native-proxy-preparation-records-20260913/prepare.py",
+    "sha256": "43acc15a5180ea28d6b6b3d4bf0edde1731ce7b8a7d7eef83f688629fbe95a7f",
+    "size_bytes": 11926
+  },
+  {
+    "path": "docs/audits/native-proxy-preparation-records-20260913/qualify.t",
+    "sha256": "639b22fd2418ac6f8890d6e58e1d5d636f8e43a3e9f6e16f664e909f63556e1f",
+    "size_bytes": 4534
+  },
+  {
+    "path": "docs/audits/native-proxy-preparation-records-20260913/audit.py",
+    "sha256": "86a4f72ac3b033714d17c8d785199e6eeaeb71aa6f3a7c0a213c4cb6f4eca672",
+    "size_bytes": 11973
+  },
+  {
+    "path": "docs/audits/native-proxy-preparation-records-20260913/prepare-pins.json",
+    "sha256": "cae742c55dce39ea2dc2ccc1ccb00d190e3f270696dd234cad6143f409577405",
+    "size_bytes": 982
+  },
+  {
+    "path": "docs/audits/native-proxy-preparation-records-20260913/vectors.json",
+    "sha256": "93ffb66a7926c12224213637b05340991dedf7def3f0a4b0c5f504c4549d474e",
+    "size_bytes": 608064
+  }
+]

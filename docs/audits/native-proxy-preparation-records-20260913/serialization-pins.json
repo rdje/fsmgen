@@ -1,0 +1,47 @@
+[
+  {
+    "path": "docs/audits/native-proxy-preparation-records-20260913/serialization_order.t",
+    "sha256": "23109317451f079941366565c910bd3f2a73c5e5ffb40fd2da277170efb6c732",
+    "size_bytes": 1276
+  },
+  {
+    "path": "docs/audits/native-proxy-preparation-records-20260913/qualify.t",
+    "sha256": "a38e5fe7f55fc55364a37ff0c9944e59d77b590ed5961bc4c23059a6a4b9ed66",
+    "size_bytes": 4594
+  },
+  {
+    "path": "docs/audits/native-proxy-preparation-records-20260913/PreparationRecord.pm",
+    "sha256": "ebcdfbb89d244b88bd6e29067ccc49e6af3818aaf599df70c0a6343ddbf47e3a",
+    "size_bytes": 14826
+  },
+  {
+    "path": "docs/audits/native-proxy-preparation-records-20260913/audit.py",
+    "sha256": "86a4f72ac3b033714d17c8d785199e6eeaeb71aa6f3a7c0a213c4cb6f4eca672",
+    "size_bytes": 11973
+  },
+  {
+    "path": "docs/audits/native-proxy-preparation-records-20260913/prepare.py",
+    "sha256": "43acc15a5180ea28d6b6b3d4bf0edde1731ce7b8a7d7eef83f688629fbe95a7f",
+    "size_bytes": 11926
+  },
+  {
+    "path": "docs/audits/native-proxy-preparation-records-20260913/plan.json",
+    "sha256": "9cc17deb1038ec3acb228bd9ca1c440b01f217075bb7ec3f2710821b523975c3",
+    "size_bytes": 6854
+  },
+  {
+    "path": "docs/audits/native-proxy-preparation-records-20260913/vectors.json",
+    "sha256": "93ffb66a7926c12224213637b05340991dedf7def3f0a4b0c5f504c4549d474e",
+    "size_bytes": 608064
+  },
+  {
+    "path": "docs/audits/native-proxy-preparation-records-20260913/first-failure/review.json",
+    "sha256": "62fba39fc87332067496fb19092e891db86f0e7226ba6efea132b9de6d2cf031",
+    "size_bytes": 7137
+  },
+  {
+    "path": "docs/audits/native-proxy-preparation-records-20260913/compaction-census.json",
+    "sha256": "3000820da12a52478d68f14ddcc9ebeda8a04b4c0b4d49916c8cc8fd9e866a16",
+    "size_bytes": 4323
+  }
+]
