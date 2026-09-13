@@ -141,6 +141,6 @@ evidence: >-
   t/1669-task-acceptance-fixture-runtime.t; t/python/test_fixture_runtime_sources.py;
   t/lib/FSM/Test/RustProxyFixture.pm; t/1815-rust-proxy-fixture.t; t/1816-rust-proxy-integration.t; t/1817-test-supervision-architecture.t
 reverify: >-
-  scripts/run_with_ram_guard.sh -- python3 -B docs/audits/native-proxy-compiler-profile-admission-20260913/epoch.py --verify-saved
+  scripts/run_with_ram_guard.sh -- python3 -B docs/audits/native-proxy-compiler-census-admission-20260913/audit.py --verify-saved
 ---
-History: `bf970040d39492973b1222076dbd6556e246ba5a:docs/knowledge/test-subprocess-policy-adapters.md`. C proxy; Perl builder/launcher. Exact wrapper mode retires in inert qualification; complete compiler profiles need their own census. Compiler bytes and default SDK changed; even the old SDK label has a new directory identity. Revalidate the current epoch before separately admitted execution. No historical startup cause follows.
+History: `012adadf38a529c93233584632fbf182fd88a217:docs/knowledge/test-subprocess-policy-adapters.md`. Compiler census source admission is qualified; actual profiles need the separately owned sole execution. Revalidate the compiler/SDK epoch, consume the one-use permit and compiler settlement, compare complete workspace membership before exact cleanup. Wrapper and Cargo roles stay unexecuted. No native/live or historical startup claim follows.

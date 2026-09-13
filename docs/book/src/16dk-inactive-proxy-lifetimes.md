@@ -334,6 +334,19 @@ compiler libraries are not exhaustively attested. The required installed OS and
 toolchain inputs are read-only dependencies on the OS volume; project evidence
 continues to stay on the repository volume.
 
+The compiler-only census procedure is now qualified as source and model checks.
+It still requires its admission commit, a separately active execution task and
+fresh checks of the installed compiler and SDK before a one-use permit can run.
+The original builder keeps its existing arguments, environment and limits.
+
+The procedure records the original compiler exit and settled process group,
+then accounts for every workspace directory, file and link. A separate reader
+compares complete membership, identities, permissions and file contents before
+exact cleanup. The source-derived wrapper and relative Cargo link are controlled
+additions; neither is executed. A missing entry, changed file, incomplete capture
+or failed compiler stops the sequence and preserves the workspace for diagnosis.
+These checks qualify the procedure; actual compiler profiles remain pending.
+
 | Remaining work | Required result |
 | --- | --- |
 | Workspace profiles | The narrow wrapper repair is qualified; establish authentic compiler-workspace profiles and capacity evidence. |
@@ -352,6 +365,7 @@ remain required before any product activation.
 scripts/run_with_ram_guard.sh -- python3 -B docs/audits/native-proxy-wrapper-compatibility-20260913/audit.py --verify-saved
 scripts/run_with_ram_guard.sh -- python3 -B docs/audits/native-proxy-compiler-profile-inventory-20260913/audit.py --verify-saved
 scripts/run_with_ram_guard.sh -- python3 -B docs/audits/native-proxy-compiler-profile-admission-20260913/epoch.py --verify-saved
+scripts/run_with_ram_guard.sh -- python3 -B docs/audits/native-proxy-compiler-census-admission-20260913/audit.py --verify-saved
 ```
 
 [Return to runtime measurement](16dc-vial-portable-verilator-runtime-measurement.md).

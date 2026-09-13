@@ -1,0 +1,10 @@
+{
+  "frontier_after": "Current frontier: .3.2.15.7.3.12.4.1.5.2.2.2 is active for current-epoch compiler-only census source/data admission; child .2.1 epoch disposition is committed. Pin the full census, fixed compiler supervision and failure/cleanup contract before the admission commit and separately owned .5.2.2.3 execution. No compiler or fixture operation is admitted yet.",
+  "frontier_before": "Current frontier: .3.2.15.7.3.12.4.1.5.2.2.2.1 installed-toolchain epoch qualification is done. Commit it, then continue active .5.2.2.2 with current-epoch compiler-only census source/data admission and pre-execution revalidation. No compiler/fixture execution is admitted yet; all later profile/protocol/native/live/startup/full CI/push gates remain open.",
+  "no_ceiling_change": true,
+  "owner": "HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.12.4.1.5.2.2.2",
+  "result_lines": 6370,
+  "source_lines": 6370,
+  "source_revision": "012adadf38a529c93233584632fbf182fd88a217",
+  "source_sha256": "89b5b52dd08a0de76e0e65fbd17b8864e5819cd0f2d159f7e94e618ee401c9da"
+}

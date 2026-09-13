@@ -1,0 +1,76 @@
+"""Join compiler census source admission, document checks and durable continuity."""
+import argparse
+import json
+import re
+import subprocess
+
+from audit import BASE, ROOT, PLAN, pin, verify as verify_admission
+from admission import digest, save
+
+LOG=ROOT/'.artifacts/logs'/BASE.name
+STAGES=['admission-saved','knowledge-generate-fixed','knowledge-check','knowledge-query','pickaxe',
+        'epoch-saved','inventory-saved','book','book-inspection','claims-write','claims-check','claims-review']
+
+
+def read(path):return json.loads(path.read_bytes())
+
+
+def old(path):
+    return subprocess.check_output(['git','show',PLAN['source_revision']+':'+path],cwd=ROOT)
+
+
+def verify(outputs):
+    for row in read(BASE/'completion-pins.json'):assert pin(ROOT/row['path'])==row
+    assert set(outputs)==set(STAGES+['knowledge-generate','document-suite'])
+    for stage in STAGES:assert outputs[stage]['exit']=='0\n',stage
+    assert outputs['knowledge-generate']['exit']==outputs['document-suite']['exit']=='127\n'
+    assert 'generate_knowledge_map.sh: No such file or directory' in outputs['knowledge-generate']['stderr']
+    admission=verify_admission()
+    assert json.loads(outputs['admission-saved']['stdout'])==admission
+    assert 'knowledge-map: OK' in outputs['knowledge-check']['stdout']+outputs['knowledge-check']['stderr']
+    assert 'test-subprocess-policy-adapters\tdocs/knowledge/test-subprocess-policy-adapters.md' in outputs['knowledge-query']['stdout']
+    assert outputs['pickaxe']['stdout'].strip()
+    assert json.loads(outputs['epoch-saved']['stdout'])['current_revalidation_required_before_execution']
+    assert json.loads(outputs['inventory-saved']['stdout'])['complete_workspace_profiles']==0
+    book=read(BASE/'book-review.json');claims=read(BASE/'claim-review.json')
+    assert book['same_volume_direct_objects'] and book['exact_output_absent']
+    assert len(book['checked_passages'])==6 and len(book['checked_runtime_passages'])==2
+    assert not (ROOT/book['output']).exists()
+    assert claims['book_baseline']==dict(files=64,lines_total=62238,bytes_total=3416724)
+    assert claims['book_delta']==dict(files=0,lines_total=14,bytes_total=998)
+    assert claims['candidate_identities_and_semantics_unchanged'] and claims['dispositions_unchanged']
+    card='docs/knowledge/test-subprocess-policy-adapters.md';current=(ROOT/card).read_text()
+    questions=lambda text:re.findall(r'^  - ".*"$',text,re.M)
+    assert questions(current)==questions(old(card).decode()) and len(questions(current))==121
+    assert PLAN['source_revision']+':'+card in current
+    assert str(BASE.relative_to(ROOT))+'/audit.py --verify-saved' in current
+    manifest=[json.loads(line) for line in
+        (ROOT/'docs/tasks/history/HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE/acceptance-history.jsonl').read_bytes().splitlines()]
+    assert len(manifest)==2
+    h=manifest[1];source=old(h['source_path']);suffix=source[source.rfind(b'## Acceptance Checklist'):]
+    assert h['source_revision']==PLAN['source_revision'] and h['source_sha256']==digest(source)
+    assert h['source_bytes']==len(source) and h['source_lines']==source.count(b'\n')
+    assert h['history_bytes']==len(suffix) and h['history_lines']==suffix.count(b'\n')==5
+    assert h['history_sha256']==digest(suffix)
+    task=(ROOT/h['source_path']).read_text()
+    section=lambda owner:task.split('- ID: `'+owner+'`\n')[1].split('- ID: `',1)[0]
+    assert 'Status: `done`' in section(PLAN['owner'])
+    assert 'Status: `active`' in section(PLAN['owner'].rsplit('.',1)[0])
+    assert 'Status: `proposed`' in section(PLAN['execution_owner']) and task.count('\n')<=6370
+    return dict(owner=PLAN['owner'],next_owner=PLAN['execution_owner'],source_revision=PLAN['source_revision'],
+        source_admission=admission,previous_acceptance=h,book=book,claims=pin(BASE/'claim-review.json'),
+        compiler_execution_pending=True,native_live_integration_pending=True,raw_outputs=outputs)
+
+
+if __name__=='__main__':
+    parser=argparse.ArgumentParser(description=__doc__)
+    flags=parser.add_mutually_exclusive_group(required=True)
+    flags.add_argument('--retain',action='store_true');flags.add_argument('--verify-saved',action='store_true')
+    args=parser.parse_args()
+    if args.retain:
+        outputs={s:{e:(LOG/(s+'.'+e)).read_text() for e in ['stdout','stderr','exit']}
+                 for s in STAGES+['knowledge-generate','document-suite']}
+        save(BASE/'completion.json',verify(outputs))
+    else:
+        saved=read(BASE/'completion.json');assert verify(saved['raw_outputs'])==saved
+    print('Compiler census source admission completion: OK; sole compiler execution remains proposed.')

@@ -1,0 +1,67 @@
+[
+  {
+    "path": "docs/audits/native-proxy-compiler-census-admission-20260913/plan.json",
+    "sha256": "7cb3764d4023d0dcb9dc0abc3a801c73e77501027580363611d9d42736f4501b",
+    "size_bytes": 15473
+  },
+  {
+    "path": "docs/audits/native-proxy-compiler-census-admission-20260913/CompilerProfile.pm",
+    "sha256": "00ffeefa1e75d8f28d61455ca36d91bc8a5c42cf7a03e3d266edb89c4b0a8a30",
+    "size_bytes": 4394
+  },
+  {
+    "path": "docs/audits/native-proxy-compiler-census-admission-20260913/qualify_compiler.t",
+    "sha256": "a9beaf30b44ac7afc12b6f83ab2bfb4c6eb99af5effc9dfcea32d41d33de4025",
+    "size_bytes": 5714
+  },
+  {
+    "path": "docs/audits/native-proxy-compiler-census-admission-20260913/projection-model.json",
+    "sha256": "841dc5a561bfd0290b9d7a4e6202a3bdb51201596a6b83678b4a53487c271b20",
+    "size_bytes": 3422
+  },
+  {
+    "path": "docs/audits/native-proxy-compiler-census-admission-20260913/source_contract.py",
+    "sha256": "34ce5f61d319b5d706dde1ad4d208723b4da0f6b226eff896c8a1b1bb0b1d783",
+    "size_bytes": 2437
+  },
+  {
+    "path": "docs/audits/native-proxy-compiler-census-admission-20260913/profile_files.py",
+    "sha256": "10c50217b5a2ee745c3232a9305969757e730811166ad1d0a7c987dc736f5ae9",
+    "size_bytes": 5939
+  },
+  {
+    "path": "docs/audits/native-proxy-compiler-census-admission-20260913/admission.py",
+    "sha256": "a9db2505d2df17e67c2e83142a1679c6072600872b602b7fc262c21ebf071bab",
+    "size_bytes": 7900
+  },
+  {
+    "path": "docs/audits/native-proxy-compiler-census-admission-20260913/compile_profile.pl",
+    "sha256": "f4e643d775c7fb9ba2f315f3903368b2bbc15c38048e809134108eb80ef95c32",
+    "size_bytes": 7597
+  },
+  {
+    "path": "docs/audits/native-proxy-compiler-census-admission-20260913/execute_once.sh",
+    "sha256": "ab1ec893955a9047f206c13798b450a94fe56eb20cbbb1db0389512d587218f7",
+    "size_bytes": 720
+  },
+  {
+    "path": "docs/audits/native-proxy-compiler-census-admission-20260913/review_profile.py",
+    "sha256": "f8254b237958db5067a15a36b0ab2187473363bcc4b35acc3822aeb067512921",
+    "size_bytes": 10653
+  },
+  {
+    "path": "docs/audits/native-proxy-compiler-census-admission-20260913/qualify_profile.py",
+    "sha256": "703e88d61550ada12f1666daa550d0edc266d85dd98cc3ae33ee4f481e98dc66",
+    "size_bytes": 12106
+  },
+  {
+    "path": "docs/audits/native-proxy-compiler-census-admission-20260913/audit.py",
+    "sha256": "c02a3186d4d15c044c62d8c7e0ddbb973a144687709b067dad6d9780541e1fe9",
+    "size_bytes": 3929
+  },
+  {
+    "path": "docs/audits/native-proxy-compiler-census-admission-20260913/PROCEDURE.md",
+    "sha256": "49790949277cbba328b9df0859670b204561ce5eb17280c81256522714186909",
+    "size_bytes": 4005
+  }
+]

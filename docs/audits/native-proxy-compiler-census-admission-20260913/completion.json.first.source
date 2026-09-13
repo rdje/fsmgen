@@ -1,0 +1,137 @@
+{
+  "book": {
+    "checked_passages": [
+      "The compiler-only census procedure is now qualified as source and model checks.",
+      "The original builder keeps its existing arguments, environment and limits.",
+      "A separate reader compares complete membership, identities, permissions and file contents before exact cleanup.",
+      "The source-derived wrapper and relative Cargo link are controlled additions; neither is executed.",
+      "These checks qualify the procedure; actual compiler profiles remain pending.",
+      "docs/audits/native-proxy-compiler-census-admission-20260913/audit.py --verify-saved"
+    ],
+    "checked_runtime_passages": [
+      "observer lifetimes and selected empty-store coordination are qualified below; native behavior and populated-worker qualification remain open.",
+      "real receipt transport and native behavior remain open."
+    ],
+    "exact_output_absent": true,
+    "exit_code": 0,
+    "output": ".artifacts/tmp/native-proxy-compiler-census-book-20260913/book",
+    "rendered_bytes": 23666693,
+    "rendered_directories": 2,
+    "rendered_files": 99,
+    "renderer_warnings": [
+      "WARN search index is very large (13318313 bytes)"
+    ],
+    "same_volume_direct_objects": true
+  },
+  "claims": {
+    "path": "docs/audits/native-proxy-compiler-census-admission-20260913/claim-review.json",
+    "sha256": "dda99d70ae1e49dacda7bf202712cdb9cac01420b9e29ff9e6cf34e80b119137",
+    "size_bytes": 3718
+  },
+  "compiler_execution_pending": true,
+  "native_live_integration_pending": true,
+  "next_owner": "HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.12.4.1.5.2.2.3",
+  "owner": "HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.12.4.1.5.2.2.2",
+  "previous_acceptance": {
+    "history_bytes": 1593,
+    "history_id": "through_012adadf38a5",
+    "history_lines": 5,
+    "history_sections": 1,
+    "history_sha256": "ed0670810336d252f33f8629771475317b6837dc6b811c25227eaf0787cd3c3d",
+    "live_heading": "Version-Retrievable Historical Views",
+    "record_type": "acceptance_history",
+    "retention_contract": "fsmgen_required_history",
+    "schema_version": 1,
+    "source_bytes": 1119495,
+    "source_lines": 6370,
+    "source_path": "docs/tasks/HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.md",
+    "source_revision": "012adadf38a529c93233584632fbf182fd88a217",
+    "source_sha256": "89b5b52dd08a0de76e0e65fbd17b8864e5819cd0f2d159f7e94e618ee401c9da",
+    "start_heading": "Acceptance Checklist (compiler/SDK epoch .3.2.15.7.3.12.4.1.5.2.2.2.1)"
+  },
+  "raw_outputs": {
+    "admission-saved": {
+      "exit": "0\n",
+      "stderr": "ram-guard: PID 52559; host 73.9%; host cutoff 88%; descendant RSS cutoff 4096 MiB; poll 2s\n",
+      "stdout": "{\"authentic_profiles_pending\": true, \"compiler_invocations\": 0, \"compiler_model_checks\": 29, \"current_epoch_revalidation_required\": true, \"fixture_allocations\": 0, \"implementation_inputs\": 13, \"profile_rejected_controls\": 42, \"source_admission_only\": true, \"source_inputs\": 15, \"wrapper_source_rejected_controls\": 5}\n"
+    },
+    "book": {
+      "exit": "0\n",
+      "stderr": " INFO Book building has started\n INFO Running the html backend\n WARN search index is very large (13318313 bytes)\n INFO HTML book written to `/Volumes/SSD/Documents/github/fsmgen/.artifacts/tmp/native-proxy-compiler-census-book-20260913/book`\n",
+      "stdout": ""
+    },
+    "book-inspection": {
+      "exit": "0\n",
+      "stderr": "",
+      "stdout": "{\"checked_passages\": [\"The compiler-only census procedure is now qualified as source and model checks.\", \"The original builder keeps its existing arguments, environment and limits.\", \"A separate reader compares complete membership, identities, permissions and file contents before exact cleanup.\", \"The source-derived wrapper and relative Cargo link are controlled additions; neither is executed.\", \"These checks qualify the procedure; actual compiler profiles remain pending.\", \"docs/audits/native-proxy-compiler-census-admission-20260913/audit.py --verify-saved\"], \"checked_runtime_passages\": [\"observer lifetimes and selected empty-store coordination are qualified below; native behavior and populated-worker qualification remain open.\", \"real receipt transport and native behavior remain open.\"], \"exact_output_absent\": true, \"exit_code\": 0, \"output\": \".artifacts/tmp/native-proxy-compiler-census-book-20260913/book\", \"rendered_bytes\": 23666693, \"rendered_directories\": 2, \"rendered_files\": 99, \"renderer_warnings\": [\"WARN search index is very large (13318313 bytes)\"], \"same_volume_direct_objects\": true}\n"
+    },
+    "claims-check": {
+      "exit": "0\n",
+      "stderr": "",
+      "stdout": "claim-inventory: current-surface census and independent census agree (numeric_lines=12630, candidates=1937, quantified=952, conservative=985, constants=2722, original_constants=615, open_migration_owners=0, untracked_producers=0, unwatched_candidates=1937)\n"
+    },
+    "claims-review": {
+      "exit": "0\n",
+      "stderr": "",
+      "stdout": "{\"claim_identity_unchanged\": true, \"shifted_candidates\": 0, \"rederived_constants\": 4}\n"
+    },
+    "claims-write": {
+      "exit": "0\n",
+      "stderr": "",
+      "stdout": "claim-inventory: wrote doctrine/claim_verification/inventory.jsonl\nclaim-inventory: current-surface census and independent census agree (numeric_lines=12630, candidates=1937, quantified=952, conservative=985, constants=2722, original_constants=615, open_migration_owners=0, untracked_producers=0, unwatched_candidates=1937)\n"
+    },
+    "document-suite": {
+      "exit": "127\n",
+      "stderr": "ram-guard: PID 94315; host 74.0%; host cutoff 88%; descendant RSS cutoff 4096 MiB; poll 2s\n",
+      "stdout": ""
+    },
+    "epoch-saved": {
+      "exit": "0\n",
+      "stderr": "",
+      "stdout": "{\"compiler_bytes_changed\": true, \"current_revalidation_required_before_execution\": true, \"default_sdk_changed\": true, \"new_compiler_or_fixture_invocation\": false, \"old_sdk_directory_identity_changed\": true, \"rejected_controls\": 8}\n"
+    },
+    "inventory-saved": {
+      "exit": "0\n",
+      "stderr": "",
+      "stdout": "{\"complete_workspace_profiles\": 0, \"fresh_compiler_admission_required\": true, \"hypothetical_missing_profile_witnesses\": 5, \"new_execution\": false, \"profiles\": 7, \"rejected_controls\": 9}\n"
+    },
+    "knowledge-check": {
+      "exit": "0\n",
+      "stderr": "knowledge-map: OK (1161 facts, 6444 unique questions, 6615 answer occurrences, 139 bounded topic shards; query parity verified)\n",
+      "stdout": ""
+    },
+    "knowledge-generate": {
+      "exit": "127\n",
+      "stderr": "/bin/bash: line 6: knowledge-map/scripts/generate_knowledge_map.sh: No such file or directory\n",
+      "stdout": ""
+    },
+    "knowledge-generate-fixed": {
+      "exit": "0\n",
+      "stderr": "knowledge-map: wrote KNOWLEDGE_MAP.md plus 139 topic shards (1161 facts, 6444 unique questions, 6615 answer occurrences)\n",
+      "stdout": ""
+    },
+    "knowledge-query": {
+      "exit": "0\n",
+      "stderr": "",
+      "stdout": "why does inactive retirement reject the real Rust proxy wrapper?\ttest-subprocess-policy-adapters\tdocs/knowledge/test-subprocess-policy-adapters.md\n"
+    },
+    "pickaxe": {
+      "exit": "0\n",
+      "stderr": "",
+      "stdout": "e0d74bb051465ba641227acc11975e25e5d879a7 HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.8: seal portable proxy preparation and descriptor custody\n"
+    }
+  },
+  "source_admission": {
+    "authentic_profiles_pending": true,
+    "compiler_invocations": 0,
+    "compiler_model_checks": 29,
+    "current_epoch_revalidation_required": true,
+    "fixture_allocations": 0,
+    "implementation_inputs": 13,
+    "profile_rejected_controls": 42,
+    "source_admission_only": true,
+    "source_inputs": 15,
+    "wrapper_source_rejected_controls": 5
+  },
+  "source_revision": "012adadf38a529c93233584632fbf182fd88a217"
+}

@@ -1,0 +1,22 @@
+{
+  "claims-review-final": {
+    "exit": "0\n",
+    "stderr": "ram-guard: PID 51045; host 80.1%; host cutoff 88%; descendant RSS cutoff 4096 MiB; poll 2s\n",
+    "stdout": "{\"claim_identity_unchanged\": true, \"shifted_candidates\": 0, \"rederived_constants\": 4}\n"
+  },
+  "completion": {
+    "exit": "0\n",
+    "stderr": "ram-guard: PID 56560; host 75.5%; host cutoff 88%; descendant RSS cutoff 4096 MiB; poll 2s\n",
+    "stdout": "Compiler census source admission completion: OK; sole compiler execution remains proposed.\n"
+  },
+  "completion-final": {
+    "exit": "0\n",
+    "stderr": "ram-guard: PID 51799; host 77.4%; host cutoff 88%; descendant RSS cutoff 4096 MiB; poll 2s\n",
+    "stdout": "Compiler census source admission completion: OK; sole compiler execution remains proposed.\n"
+  },
+  "containment-repair": {
+    "exit": "1\n",
+    "stderr": "ram-guard: PID 29532; host 75.9%; host cutoff 88%; descendant RSS cutoff 4096 MiB; poll 2s\n",
+    "stdout": ""
+  }
+}

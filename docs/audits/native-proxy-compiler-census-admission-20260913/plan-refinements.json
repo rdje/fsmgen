@@ -1,0 +1,9 @@
+{
+  "actual_new_execution": false,
+  "after_sha256": "da0120305f1884a4fe100dc78e61286e40b70a3d0c8eb0fc7fac8b62cfd85949",
+  "before_plan_recovery": "compiler-model-first.json /sources entry ending plan.json",
+  "before_sha256": "e97d7274203bb860f02c753c90b048b08c2e73e80a041160a4b1bb03de52fa37",
+  "change": "Draft journal evidence ceiling is sized for worst-case JSON escaping of both admitted workspaces before runtime code or execution. Compiler and retirement limits are unchanged.",
+  "minimum_bytes": 64368640,
+  "owner": "HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.12.4.1.5.2.2.2"
+}

@@ -1,0 +1,13 @@
+{
+  "checks": [
+    {
+      "diagnostic": "KeyError: 'cargo_link'",
+      "resolution": "Use existing cargo_role path_suffix and relative_target."
+    },
+    {
+      "diagnostic": "epoch.external_pin AssertionError on Python uid 501",
+      "resolution": "Dedicated read-only interpreter identity pin explicitly allows root or current-user ownership. Compiler/SDK root-owned reader unchanged."
+    }
+  ],
+  "scope": "Read-only authoring checks, no permit or compiler/fixture operation"
+}

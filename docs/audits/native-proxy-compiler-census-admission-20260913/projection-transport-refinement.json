@@ -1,0 +1,7 @@
+{
+  "compiler_or_fixture_operations": 0,
+  "journal_bytes_unchanged": 67108864,
+  "original": "profile-model-first.json",
+  "reason": "The first draft duplicated the complete compiler metadata projection before the final full-byte capture. A worst-case duplicate can exceed the fixed journal allocation.",
+  "resolution": "Store the original canonical metadata-projection digest and counts, then independently reconstruct it from final full membership excluding exactly the controlled roles. Keep one full-byte final census per case."
+}

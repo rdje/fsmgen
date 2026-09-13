@@ -1,0 +1,33 @@
+{
+  "after": {
+    "bytes_total": 3417722,
+    "files": 64,
+    "lines_total": 62252
+  },
+  "authority": {
+    "authority_id": "INACTIVE-COMPILER-CENSUS-ADMISSION-20260913",
+    "baseline": {
+      "bytes_total": 3416724,
+      "files": 64,
+      "lines_total": 62238
+    },
+    "delta": {
+      "bytes_total": 998,
+      "files": 0,
+      "lines_total": 14
+    },
+    "owner": "HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.12.4.1.5.2.2.2",
+    "rationale": "Explain qualified compiler-census source procedure, one-use execution boundary, complete workspace comparison and retained pending actual/native evidence."
+  },
+  "baseline": {
+    "bytes_total": 3416724,
+    "files": 64,
+    "lines_total": 62238
+  },
+  "delta": {
+    "bytes_total": 998,
+    "files": 0,
+    "lines_total": 14
+  },
+  "source_revision": "012adadf38a529c93233584632fbf182fd88a217"
+}
