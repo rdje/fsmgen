@@ -2931,15 +2931,37 @@ also does not establish ordinary Perl scope cleanup without that retention.
 
 For example, a selected directory omission must leave its original directory
 handle open through the verdict; later recovery uses `CORE::closedir` on that
-same object. These cases are selected but have not yet executed. Verify the
-selection and protocol from retained evidence:
+same object. The selection check itself executes no omitted-close case. Verify
+the selection and protocol from retained evidence:
 
 ```sh
 python3 -B docs/audits/native-proxy-release-omission-selection-20260913/audit.py --verify-saved
 ```
 
-Genuine omissions and final release applicability remain pending. These reported errors
-follow successful actual reads or closes; they do not qualify ambiguous operating-system
+Ordinary release omission controls now pass. Each selected source, directory
+or lock omission leaves its exact handle open after the original observer
+returns, while release itself reports success. The unchanged original closure
+verifier rejects that original snapshot. Later observer recovery closes the
+same object and preserves the complete original snapshot unchanged.
+
+For example, a directory witness duplicates the still-open descriptor only to
+inspect its native identity, closes that probe, and then recovery calls
+`CORE::closedir` on the original retained handle. Source and lock witnesses
+check native identity and descriptor flags before recovery uses `CORE::close`.
+The healthy control closes through the implementation without observer recovery.
+
+The audit rejects substituted native identities, missing witnesses, duplicate
+or failed recovery, rewritten original closure flags, altered effects and
+changed current-input bindings. Original unlink and absence results preserve
+the archive, canonical image and other owners. Every allocated fixture root is
+absent before its complete case is published. Verify the retained evidence:
+
+```sh
+python3 -B docs/audits/native-proxy-observation-archive-release-omissions-ordinary-20260913/audit.py --verify-saved
+```
+
+Other omission profiles and final release applicability remain pending.
+These deliberate faults do not qualify ambiguous operating-system close
 failures or authorize native execution.
 
 The inactive archive record implementation now derives a closed specification

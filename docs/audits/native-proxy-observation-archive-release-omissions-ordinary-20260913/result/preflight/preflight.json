@@ -1,0 +1,59 @@
+{
+  "allocated": [],
+  "counts": {
+    "assertions": 147,
+    "resolutions": 462,
+    "variants": 42
+  },
+  "falsifiers": [
+    "missing-variant",
+    "repeated-variant",
+    "wrong-scope",
+    "stale-label",
+    "foreign-path",
+    "stale-call",
+    "healthy-target",
+    "omitted-current-target"
+  ],
+  "prospective_pins": [
+    {
+      "path": "docs/audits/native-proxy-observation-archive-release-omissions-ordinary-20260913/prepare.py",
+      "sha256": "d534bc1970ee1e599ae967078e9d746cd446e21a64ef71e876c3fbbf5d34c5cf",
+      "size_bytes": 4851
+    },
+    {
+      "path": "docs/audits/native-proxy-observation-archive-release-omissions-ordinary-20260913/model.py",
+      "sha256": "a9ff7ac64213b449f73d26435fcfce85c0b8886fc3cdffc9dc4bed6deb20c955",
+      "size_bytes": 1154
+    },
+    {
+      "path": "docs/audits/native-proxy-observation-archive-release-omissions-ordinary-20260913/OmissionPlan.pm",
+      "sha256": "71223f610e3a3855f75ea771647db244a5112371a39a56309d991ec53212d7c3",
+      "size_bytes": 2980
+    },
+    {
+      "path": "docs/audits/native-proxy-observation-archive-release-omissions-ordinary-20260913/binding.t",
+      "sha256": "91505ace958c6864b37f0a3f4923d6f0b6fc985afa2e396e99c94083cdc36229",
+      "size_bytes": 5313
+    },
+    {
+      "path": "docs/audits/native-proxy-observation-archive-release-omissions-ordinary-20260913/preflight.py",
+      "sha256": "a91a28eb4aa8ec049f2702d962315b10e7e2f32d7043a8d795d02c6146209434",
+      "size_bytes": 4108
+    },
+    {
+      "path": "docs/audits/native-proxy-observation-archive-release-omissions-ordinary-20260913/source-pins.json",
+      "sha256": "2baf4a45e32b4f7220924c9e2683e9654699557fd494ddccb3713aff5f435344",
+      "size_bytes": 1112
+    },
+    {
+      "path": "docs/audits/native-proxy-observation-archive-release-omissions-ordinary-20260913/plan.json",
+      "sha256": "a49159816db2a64db23de5c0e12e8c07b8148b34a5fd587058f92fbd99ee0ef8",
+      "size_bytes": 533698
+    }
+  ],
+  "recipe_controls": 10,
+  "schema": "fsmgen.release_omission_preflight.v1",
+  "scope": "Pure current-flow binding only; no omitted-close or file fixture executed.",
+  "success": true
+}

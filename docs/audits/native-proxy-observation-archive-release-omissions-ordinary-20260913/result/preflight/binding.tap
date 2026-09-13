@@ -1,0 +1,148 @@
+ok 1 - ordinary_retired_other_observation:baseline: healthy resolves without a target
+ok 2 - ordinary_retired_other_observation:baseline: each omission resolves exactly one current target
+ok 3 - ordinary_retired_other_observation:baseline: input bytes and types remain unchanged
+ok 4 - ordinary_retired_other_observation:order:0,1,2: healthy resolves without a target
+ok 5 - ordinary_retired_other_observation:order:0,1,2: each omission resolves exactly one current target
+ok 6 - ordinary_retired_other_observation:order:0,1,2: input bytes and types remain unchanged
+ok 7 - ordinary_retired_other_observation:order:0,2,1: healthy resolves without a target
+ok 8 - ordinary_retired_other_observation:order:0,2,1: each omission resolves exactly one current target
+ok 9 - ordinary_retired_other_observation:order:0,2,1: input bytes and types remain unchanged
+ok 10 - ordinary_retired_other_observation:order:1,0,2: healthy resolves without a target
+ok 11 - ordinary_retired_other_observation:order:1,0,2: each omission resolves exactly one current target
+ok 12 - ordinary_retired_other_observation:order:1,0,2: input bytes and types remain unchanged
+ok 13 - ordinary_retired_other_observation:order:1,2,0: healthy resolves without a target
+ok 14 - ordinary_retired_other_observation:order:1,2,0: each omission resolves exactly one current target
+ok 15 - ordinary_retired_other_observation:order:1,2,0: input bytes and types remain unchanged
+ok 16 - ordinary_retired_other_observation:order:2,0,1: healthy resolves without a target
+ok 17 - ordinary_retired_other_observation:order:2,0,1: each omission resolves exactly one current target
+ok 18 - ordinary_retired_other_observation:order:2,0,1: input bytes and types remain unchanged
+ok 19 - ordinary_retired_other_observation:order:2,1,0: healthy resolves without a target
+ok 20 - ordinary_retired_other_observation:order:2,1,0: each omission resolves exactly one current target
+ok 21 - ordinary_retired_other_observation:order:2,1,0: input bytes and types remain unchanged
+ok 22 - equal_reference_retired_other_observation:baseline: healthy resolves without a target
+ok 23 - equal_reference_retired_other_observation:baseline: each omission resolves exactly one current target
+ok 24 - equal_reference_retired_other_observation:baseline: input bytes and types remain unchanged
+ok 25 - equal_reference_retired_other_observation:order:0,1,2: healthy resolves without a target
+ok 26 - equal_reference_retired_other_observation:order:0,1,2: each omission resolves exactly one current target
+ok 27 - equal_reference_retired_other_observation:order:0,1,2: input bytes and types remain unchanged
+ok 28 - equal_reference_retired_other_observation:order:0,2,1: healthy resolves without a target
+ok 29 - equal_reference_retired_other_observation:order:0,2,1: each omission resolves exactly one current target
+ok 30 - equal_reference_retired_other_observation:order:0,2,1: input bytes and types remain unchanged
+ok 31 - equal_reference_retired_other_observation:order:1,0,2: healthy resolves without a target
+ok 32 - equal_reference_retired_other_observation:order:1,0,2: each omission resolves exactly one current target
+ok 33 - equal_reference_retired_other_observation:order:1,0,2: input bytes and types remain unchanged
+ok 34 - equal_reference_retired_other_observation:order:1,2,0: healthy resolves without a target
+ok 35 - equal_reference_retired_other_observation:order:1,2,0: each omission resolves exactly one current target
+ok 36 - equal_reference_retired_other_observation:order:1,2,0: input bytes and types remain unchanged
+ok 37 - equal_reference_retired_other_observation:order:2,0,1: healthy resolves without a target
+ok 38 - equal_reference_retired_other_observation:order:2,0,1: each omission resolves exactly one current target
+ok 39 - equal_reference_retired_other_observation:order:2,0,1: input bytes and types remain unchanged
+ok 40 - equal_reference_retired_other_observation:order:2,1,0: healthy resolves without a target
+ok 41 - equal_reference_retired_other_observation:order:2,1,0: each omission resolves exactly one current target
+ok 42 - equal_reference_retired_other_observation:order:2,1,0: input bytes and types remain unchanged
+ok 43 - ordinary_active_runtime:baseline: healthy resolves without a target
+ok 44 - ordinary_active_runtime:baseline: each omission resolves exactly one current target
+ok 45 - ordinary_active_runtime:baseline: input bytes and types remain unchanged
+ok 46 - ordinary_active_runtime:order:0,1,2,3: healthy resolves without a target
+ok 47 - ordinary_active_runtime:order:0,1,2,3: each omission resolves exactly one current target
+ok 48 - ordinary_active_runtime:order:0,1,2,3: input bytes and types remain unchanged
+ok 49 - ordinary_active_runtime:order:0,1,3,2: healthy resolves without a target
+ok 50 - ordinary_active_runtime:order:0,1,3,2: each omission resolves exactly one current target
+ok 51 - ordinary_active_runtime:order:0,1,3,2: input bytes and types remain unchanged
+ok 52 - ordinary_active_runtime:order:0,2,1,3: healthy resolves without a target
+ok 53 - ordinary_active_runtime:order:0,2,1,3: each omission resolves exactly one current target
+ok 54 - ordinary_active_runtime:order:0,2,1,3: input bytes and types remain unchanged
+ok 55 - ordinary_active_runtime:order:0,2,3,1: healthy resolves without a target
+ok 56 - ordinary_active_runtime:order:0,2,3,1: each omission resolves exactly one current target
+ok 57 - ordinary_active_runtime:order:0,2,3,1: input bytes and types remain unchanged
+ok 58 - ordinary_active_runtime:order:0,3,1,2: healthy resolves without a target
+ok 59 - ordinary_active_runtime:order:0,3,1,2: each omission resolves exactly one current target
+ok 60 - ordinary_active_runtime:order:0,3,1,2: input bytes and types remain unchanged
+ok 61 - ordinary_active_runtime:order:0,3,2,1: healthy resolves without a target
+ok 62 - ordinary_active_runtime:order:0,3,2,1: each omission resolves exactly one current target
+ok 63 - ordinary_active_runtime:order:0,3,2,1: input bytes and types remain unchanged
+ok 64 - ordinary_active_runtime:order:1,0,2,3: healthy resolves without a target
+ok 65 - ordinary_active_runtime:order:1,0,2,3: each omission resolves exactly one current target
+ok 66 - ordinary_active_runtime:order:1,0,2,3: input bytes and types remain unchanged
+ok 67 - ordinary_active_runtime:order:1,0,3,2: healthy resolves without a target
+ok 68 - ordinary_active_runtime:order:1,0,3,2: each omission resolves exactly one current target
+ok 69 - ordinary_active_runtime:order:1,0,3,2: input bytes and types remain unchanged
+ok 70 - ordinary_active_runtime:order:1,2,0,3: healthy resolves without a target
+ok 71 - ordinary_active_runtime:order:1,2,0,3: each omission resolves exactly one current target
+ok 72 - ordinary_active_runtime:order:1,2,0,3: input bytes and types remain unchanged
+ok 73 - ordinary_active_runtime:order:1,2,3,0: healthy resolves without a target
+ok 74 - ordinary_active_runtime:order:1,2,3,0: each omission resolves exactly one current target
+ok 75 - ordinary_active_runtime:order:1,2,3,0: input bytes and types remain unchanged
+ok 76 - ordinary_active_runtime:order:1,3,0,2: healthy resolves without a target
+ok 77 - ordinary_active_runtime:order:1,3,0,2: each omission resolves exactly one current target
+ok 78 - ordinary_active_runtime:order:1,3,0,2: input bytes and types remain unchanged
+ok 79 - ordinary_active_runtime:order:1,3,2,0: healthy resolves without a target
+ok 80 - ordinary_active_runtime:order:1,3,2,0: each omission resolves exactly one current target
+ok 81 - ordinary_active_runtime:order:1,3,2,0: input bytes and types remain unchanged
+ok 82 - ordinary_active_runtime:order:2,0,1,3: healthy resolves without a target
+ok 83 - ordinary_active_runtime:order:2,0,1,3: each omission resolves exactly one current target
+ok 84 - ordinary_active_runtime:order:2,0,1,3: input bytes and types remain unchanged
+ok 85 - ordinary_active_runtime:order:2,0,3,1: healthy resolves without a target
+ok 86 - ordinary_active_runtime:order:2,0,3,1: each omission resolves exactly one current target
+ok 87 - ordinary_active_runtime:order:2,0,3,1: input bytes and types remain unchanged
+ok 88 - ordinary_active_runtime:order:2,1,0,3: healthy resolves without a target
+ok 89 - ordinary_active_runtime:order:2,1,0,3: each omission resolves exactly one current target
+ok 90 - ordinary_active_runtime:order:2,1,0,3: input bytes and types remain unchanged
+ok 91 - ordinary_active_runtime:order:2,1,3,0: healthy resolves without a target
+ok 92 - ordinary_active_runtime:order:2,1,3,0: each omission resolves exactly one current target
+ok 93 - ordinary_active_runtime:order:2,1,3,0: input bytes and types remain unchanged
+ok 94 - ordinary_active_runtime:order:2,3,0,1: healthy resolves without a target
+ok 95 - ordinary_active_runtime:order:2,3,0,1: each omission resolves exactly one current target
+ok 96 - ordinary_active_runtime:order:2,3,0,1: input bytes and types remain unchanged
+ok 97 - ordinary_active_runtime:order:2,3,1,0: healthy resolves without a target
+ok 98 - ordinary_active_runtime:order:2,3,1,0: each omission resolves exactly one current target
+ok 99 - ordinary_active_runtime:order:2,3,1,0: input bytes and types remain unchanged
+ok 100 - ordinary_active_runtime:order:3,0,1,2: healthy resolves without a target
+ok 101 - ordinary_active_runtime:order:3,0,1,2: each omission resolves exactly one current target
+ok 102 - ordinary_active_runtime:order:3,0,1,2: input bytes and types remain unchanged
+ok 103 - ordinary_active_runtime:order:3,0,2,1: healthy resolves without a target
+ok 104 - ordinary_active_runtime:order:3,0,2,1: each omission resolves exactly one current target
+ok 105 - ordinary_active_runtime:order:3,0,2,1: input bytes and types remain unchanged
+ok 106 - ordinary_active_runtime:order:3,1,0,2: healthy resolves without a target
+ok 107 - ordinary_active_runtime:order:3,1,0,2: each omission resolves exactly one current target
+ok 108 - ordinary_active_runtime:order:3,1,0,2: input bytes and types remain unchanged
+ok 109 - ordinary_active_runtime:order:3,1,2,0: healthy resolves without a target
+ok 110 - ordinary_active_runtime:order:3,1,2,0: each omission resolves exactly one current target
+ok 111 - ordinary_active_runtime:order:3,1,2,0: input bytes and types remain unchanged
+ok 112 - ordinary_active_runtime:order:3,2,0,1: healthy resolves without a target
+ok 113 - ordinary_active_runtime:order:3,2,0,1: each omission resolves exactly one current target
+ok 114 - ordinary_active_runtime:order:3,2,0,1: input bytes and types remain unchanged
+ok 115 - ordinary_active_runtime:order:3,2,1,0: healthy resolves without a target
+ok 116 - ordinary_active_runtime:order:3,2,1,0: each omission resolves exactly one current target
+ok 117 - ordinary_active_runtime:order:3,2,1,0: input bytes and types remain unchanged
+ok 118 - ordinary_retired_last_observation:baseline: healthy resolves without a target
+ok 119 - ordinary_retired_last_observation:baseline: each omission resolves exactly one current target
+ok 120 - ordinary_retired_last_observation:baseline: input bytes and types remain unchanged
+ok 121 - ordinary_retired_last_observation:order:0,1: healthy resolves without a target
+ok 122 - ordinary_retired_last_observation:order:0,1: each omission resolves exactly one current target
+ok 123 - ordinary_retired_last_observation:order:0,1: input bytes and types remain unchanged
+ok 124 - ordinary_retired_last_observation:order:1,0: healthy resolves without a target
+ok 125 - ordinary_retired_last_observation:order:1,0: each omission resolves exactly one current target
+ok 126 - ordinary_retired_last_observation:order:1,0: input bytes and types remain unchanged
+ok 127 - missing field: rejected before resolution
+ok 128 - missing field: exact closed-contract diagnostic
+ok 129 - stale numeric call: rejected before resolution
+ok 130 - stale numeric call: exact closed-contract diagnostic
+ok 131 - archived label: rejected before resolution
+ok 132 - archived label: exact closed-contract diagnostic
+ok 133 - unknown kind: rejected before resolution
+ok 134 - unknown kind: exact closed-contract diagnostic
+ok 135 - structured kind: rejected before resolution
+ok 136 - structured kind: exact closed-contract diagnostic
+ok 137 - healthy with target: rejected before resolution
+ok 138 - healthy with target: exact closed-contract diagnostic
+ok 139 - missing target: rejected before resolution
+ok 140 - missing target: exact closed-contract diagnostic
+ok 141 - structured target: rejected before resolution
+ok 142 - structured target: exact closed-contract diagnostic
+ok 143 - foreign scope: rejected before resolution
+ok 144 - foreign scope: exact closed-contract diagnostic
+ok 145 - wrong handle kind: rejected before resolution
+ok 146 - wrong handle kind: exact closed-contract diagnostic
+ok 147 - pure omission resolution makes no process attempt
+1..147

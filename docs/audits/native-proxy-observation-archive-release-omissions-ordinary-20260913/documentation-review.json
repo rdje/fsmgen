@@ -1,0 +1,16 @@
+{
+  "author_guard": "The first candidate exceeded existing aggregate byte headroom and was rejected before the card or authority write. Superseded prose is retained at the exact history revision; the shorter current pointer keeps all questions.",
+  "book_actual": {
+    "bytes_total": 3380568,
+    "files": 63,
+    "lines_total": 61638
+  },
+  "book_baseline": {
+    "bytes_total": 3379321,
+    "files": 63,
+    "lines_total": 61616
+  },
+  "knowledge_byte_delta": 4,
+  "rejected_card_candidates": 1,
+  "scope": "Qualitative ordinary omission outcome; retain original selection scope and mark other profiles pending."
+}

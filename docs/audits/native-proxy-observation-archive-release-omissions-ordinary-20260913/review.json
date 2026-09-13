@@ -1,0 +1,90 @@
+{
+  "assertions": 179,
+  "book_review": "docs/audits/native-proxy-observation-archive-release-omissions-ordinary-20260913/book-review.json",
+  "claim_legs": {
+    "durability": "Exact main and preflight copies, first prospective source pins, native witnesses, original digests, complete TAP, admission roots and saved-only audit/recovery are tracked. The Knowledge Map routes to saved verification without any fixture replay.",
+    "falsify": "Every actual omission is rejected by the unchanged original closure oracle. Native alias substitution, absent witnesses and failed/duplicate/wrong-object recovery reject; rewritten closure flags reject even after rebuilding coherent snapshot digests. Healthy and all unselected handles close normally.",
+    "rederive": "Current Perl bindings agree with independent source ownership and healthy close order. Native admission/source/lock checks preserve all original assertions outside the declared omission predicates. Original receipt/effect and original closure oracles run unchanged on each untouched snapshot."
+  },
+  "commit_gate": "Staged doctrines and normal commit hooks must pass before this slice is committed.",
+  "continuity_review": "docs/audits/native-proxy-observation-archive-release-omissions-ordinary-20260913/continuity-review.json",
+  "documentation_review": "docs/audits/native-proxy-observation-archive-release-omissions-ordinary-20260913/documentation-review.json",
+  "first_executions": {
+    "admission": true,
+    "audit": true,
+    "binding": true,
+    "book": true,
+    "book-inspection": true,
+    "history": true,
+    "knowledge": true,
+    "knowledge-generate": true,
+    "preflight": true,
+    "preflight-recovery": true,
+    "prepare": true,
+    "qualify": true,
+    "recovery": true,
+    "saved-audit": true,
+    "saved-preflight": true,
+    "saved-preflight-recovery": true,
+    "saved-recovery": true,
+    "syntax": true
+  },
+  "knowledge_aggregate": {
+    "bytes_total": 3492415,
+    "files": 1160,
+    "lines_total": 47288
+  },
+  "knowledge_questions_preserved": 117,
+  "limits": "Only the ordinary selected representative omissions execute. Other profiles, the complete omission join, final release and native/startup/parent/full CI/push remain open.",
+  "owner": "HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.12.4.1.3.4.4.5.2",
+  "preflight_recovery": {
+    "bytes": 358854,
+    "copies": 8,
+    "falsifiers": [
+      "missing-copy",
+      "foreign-destination",
+      "corrupt-copy-digest"
+    ],
+    "source_reaccess": false,
+    "success": true
+  },
+  "prerequisites": {
+    "assertions": 147,
+    "copies": 8,
+    "resolutions": 462,
+    "variants": 42
+  },
+  "raw_verification_outputs": "docs/audits/native-proxy-observation-archive-release-omissions-ordinary-20260913/verification-outputs.json",
+  "recovery": {
+    "bytes": 8575277,
+    "copies": 29,
+    "falsifiers": [
+      "omitted-copy",
+      "foreign-destination",
+      "changed-copy-digest"
+    ],
+    "source_reaccess": false,
+    "success": true
+  },
+  "result": "docs/audits/native-proxy-observation-archive-release-omissions-ordinary-20260913/result/audit.json",
+  "schema": "fsmgen.release_ordinary_omission_review.v1",
+  "scope": "Ordinary healthy control and selected representative source, directory and lock omissions. Cross-profile order variations qualify only the pure resolver. Original verdict, native open alias and later recovery remain distinct. No other-profile fixture, original producer/main, compiler, native fixture process or collector; final release and historical startup/parent/full CI/push remain gated.",
+  "source_review": "docs/audits/native-proxy-observation-archive-release-omissions-ordinary-20260913/native-trace-source-review.json",
+  "source_revision": "06b29e55fe3e4c269a5a3e0489bd3bf19a2250b2",
+  "success": true,
+  "totals": {
+    "calls": 6732,
+    "cases": 11,
+    "directories": 550,
+    "events": 21703,
+    "handles": 1881,
+    "healthy": 1,
+    "locks": 11,
+    "original_auditor_rejections": 10,
+    "original_open_verdicts": 10,
+    "reads": 1320,
+    "separately_recovered": 10,
+    "sources": 1320,
+    "unlinks": 11
+  }
+}
