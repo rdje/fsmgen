@@ -1,0 +1,9 @@
+{
+  "accepted": 36,
+  "envelope_cases": 172,
+  "legacy_checks": 96,
+  "raw_controls": 24,
+  "saved_result_falsifiers": 6,
+  "scope": "Private envelope and frozen-format interpretation only; no original archive replay, native authentication, collector outcome or public artifact consumption.",
+  "source_revision": "4f0fc4c115876377109c3b7f0680d2eac663119a"
+}

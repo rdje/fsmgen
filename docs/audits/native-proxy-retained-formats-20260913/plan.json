@@ -1,0 +1,172 @@
+{
+  "claim_legs": {
+    "durability": "Exact Git input hashes, prospective sources, original case stream, retained canonical envelopes and saved-only auditor survive without captures or ignored outputs.",
+    "falsification": "Wrong versions, changed prefixes, missing references, stale identities, malformed encoding, wrong anchors, oversized input before parsing and changed saved results must reject.",
+    "rederivation": "Reuse the unchanged independent target oracle and compare original frozen reader outputs directly. Independently reconstruct canonical envelope bytes, bindings and the finite declared domain."
+  },
+  "contract": "Canonical ASCII plus LF, independently pinned digest, explicit shared-native capture carrier and exact collector command projection. Root and system-Perl placeholders must stay literal in retained data. The qualified capture adapter checks supplied references, snapshots and births; it does not authenticate current reality.",
+  "decision": "Use a private envelope rather than broadening frozen public records. Collector outcomes, raw policy records and public publication are explicitly outside its fields. Future live integration remains separately owned.",
+  "frozen_reader_scope": "Original read_manifest, read_report, read_receipt, read_index, read_page and retained_scope functions keep exact schemas, bytes, prefix rules and bounds. New structural examples exercise formats only; no original archive replay, file consumption, calibration or publication is executed. An existing daemon collector result remains byte-exact and its old outcome is not promoted.",
+  "inputs": [
+    {
+      "path": "docs/audits/native-proxy-canonical-contract-20260910/contract.json",
+      "sha256": "f3f981398afae72540ab4ac0194b8380d4743c3d2146c1172a85365add053222",
+      "size_bytes": 21927
+    },
+    {
+      "path": "docs/audits/native-proxy-capture-dispatch-20260913/audit.py",
+      "sha256": "d262f7e7804c0a4e2faa5b376a4057ddc66da18ad449e412c64f9259aa5813f0",
+      "size_bytes": 16048
+    },
+    {
+      "path": "docs/audits/native-proxy-capture-dispatch-20260913/capture_contract.py",
+      "sha256": "1b4a9ed369aa35cf9443caebb6249961334cfa0118f3bdf4cc9544078eaa783b",
+      "size_bytes": 13623
+    },
+    {
+      "path": "docs/audits/native-proxy-capture-dispatch-20260913/plan.json",
+      "sha256": "790c6a05cba53b6a52e51d354db26094d417dcd381854e87eb07a0b9272526c2",
+      "size_bytes": 5654
+    },
+    {
+      "path": "docs/audits/native-proxy-capture-dispatch-20260913/preflight-pins.json",
+      "sha256": "7ab1648fbad51e86a154ef74909171e0d9b4874e2b4f050d007a0c8cf628bde0",
+      "size_bytes": 1359
+    },
+    {
+      "path": "docs/audits/native-proxy-capture-dispatch-20260913/result/audit.json",
+      "sha256": "eef9a72494a1ecb6a95d611166fa130af9ba6d23e54bbca5cf9fd1114d1bf908",
+      "size_bytes": 322
+    },
+    {
+      "path": "docs/audits/native-proxy-capture-dispatch-20260913/result/qualification.json",
+      "sha256": "910e3669fba98333fc1b8be350f3756f570f4dcf8c7be6bf1bb1639846217969",
+      "size_bytes": 272135
+    },
+    {
+      "path": "docs/audits/native-proxy-capture-dispatch-20260913/vectors.json",
+      "sha256": "b31ebbbccf56de677c3044e218bd404208c8bc6696135f00155f41ace2335765",
+      "size_bytes": 333942
+    },
+    {
+      "path": "docs/audits/native-proxy-daemon-original-20260910/policy-result.json",
+      "sha256": "7711fcc614e12555145436dbaf66747327c15ce4954b58473e15834c78550396",
+      "size_bytes": 1551
+    },
+    {
+      "path": "docs/audits/native-proxy-image-custody-20260910/ImageCustody.pm",
+      "sha256": "927f1ab39f7f26742e36878985d1ff545ddf2dee119d4bf6b7b41bf2c9360ccc",
+      "size_bytes": 8619
+    },
+    {
+      "path": "docs/audits/native-proxy-observation-acquisition-20260910/ObservationAcquisition.pm",
+      "sha256": "809c013255ab6973a2d0dabcfd5b0ae5c55c97696d7acc77b10cf68149006470",
+      "size_bytes": 16517
+    },
+    {
+      "path": "docs/audits/native-proxy-observation-records-20260910/ObservationRecord.pm",
+      "sha256": "35445ee951c8f5e7dc204f58cffe1b2f6273286cc3e7715953d705b33e7158d5",
+      "size_bytes": 4369
+    },
+    {
+      "path": "docs/audits/native-proxy-observation-records-20260910/audit.py",
+      "sha256": "a8ab1e4c5a99273f31f36870db6c21daae2a9e285ab726a5ae4512837da602d8",
+      "size_bytes": 19918
+    },
+    {
+      "path": "docs/audits/native-proxy-preparation-records-20260913/PreparationRecord.pm",
+      "sha256": "ebcdfbb89d244b88bd6e29067ccc49e6af3818aaf599df70c0a6343ddbf47e3a",
+      "size_bytes": 14826
+    },
+    {
+      "path": "docs/audits/native-proxy-preparation-records-20260913/result/audit.json",
+      "sha256": "e2a70dd20ce4d550b0f16c0aa8e10ce2cb5391bf4b2c8a5a3ba7521a37e2188f",
+      "size_bytes": 389
+    },
+    {
+      "path": "docs/audits/native-proxy-runtime-records-20260910/RuntimeRecord.pm",
+      "sha256": "013c0a02e7df59dc3a5af944b603cd44121252a02ca0228d6fdc3e1dd28e6745",
+      "size_bytes": 4078
+    },
+    {
+      "path": "docs/audits/native-proxy-runtime-records-20260910/audit.py",
+      "sha256": "ece89eeb01cdd6e5b6c48a8e124bd4a4bde4e30f1bc53745d9ac2109748f0c83",
+      "size_bytes": 9573
+    },
+    {
+      "path": "docs/audits/native-proxy-version-contracts-20260913/contracts.json",
+      "sha256": "3871fa8a0a26518cc6d756e84823a7b1281b2b569e59f28eb21a2efa91eb81a9",
+      "size_bytes": 50158
+    },
+    {
+      "path": "docs/audits/native-proxy-version-contracts-20260913/dispatch.py",
+      "sha256": "34d4ca4c34fa98a7fa2e1b157e01eb409fb98e0bf1dd6b18ac3065e5eb0e5077",
+      "size_bytes": 1537
+    },
+    {
+      "path": "scripts/analyze_fixture_policy.py",
+      "sha256": "25a98f7b8bcdac695455a64121e88637a46599552f992eb530726eec8f07b40a",
+      "size_bytes": 17432
+    },
+    {
+      "path": "scripts/fixture_kernel_sampler.py",
+      "sha256": "50c94165893b74b758c560f561ff744f294683812a26b429071ef43009aac2dc",
+      "size_bytes": 22040
+    },
+    {
+      "path": "scripts/fixture_policy_archive.py",
+      "sha256": "f72355164d6af97e9c6de678018fe864bfab537280d95a87f986825970ad50e2",
+      "size_bytes": 21652
+    },
+    {
+      "path": "scripts/fixture_policy_associations.py",
+      "sha256": "921fb245ca7882559753bed04fdfa33d3a71bb1c30f54e7eea510da6dd54da3f",
+      "size_bytes": 19916
+    },
+    {
+      "path": "scripts/fixture_policy_diagnostics.py",
+      "sha256": "f7637df4e28151c4d79aa588e593ff6e35404fa692d2290ecb5a87c048e23575",
+      "size_bytes": 14321
+    },
+    {
+      "path": "scripts/fixture_policy_log.py",
+      "sha256": "ed3db21b5fffbed8073fbbe7d80982062e914c974f2f5512e781ce4f9eb8812c",
+      "size_bytes": 12764
+    },
+    {
+      "path": "scripts/fixture_policy_publication.py",
+      "sha256": "34d0bc53b4c28b41e1b489480799caaac30ffa02d92881f765ef2fdc556562b9",
+      "size_bytes": 6792
+    },
+    {
+      "path": "scripts/observe_fixture_startup.py",
+      "sha256": "05144eb1ebd86ebf132ad36b86b4c93b23687db928fc369f633615f0b870fe06",
+      "size_bytes": 25563
+    },
+    {
+      "path": "t/fixtures/rust-tool-proxy.c",
+      "sha256": "be8b66690a93c8432c0f33094ac15c26f7fef0940c18f6935fd5b0994d9f4ede",
+      "size_bytes": 721
+    },
+    {
+      "path": "t/lib/FSM/Test/RustProxyFixture.pm",
+      "sha256": "d9c4ab52cf8074526c59b7a5dcb9da870ca7ffdacb4eb236dacb23b5db6d8bfb",
+      "size_bytes": 11466
+    }
+  ],
+  "limits": {
+    "authority": "separately_retained_digest_not_authentication",
+    "collector_outcome": "not_included",
+    "filesystem_custody": "historical_snapshots_not_current_identity",
+    "loaded_image": "not_attested",
+    "native_authentication": "not_claimed",
+    "policy_records": "not_included",
+    "publication": "not_authorized",
+    "source_bodies": "private"
+  },
+  "max_bytes": 2097152,
+  "new_schema": "fsmgen.inactive_retained_proxy_capture.v2",
+  "owner": "HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.12.4.1.3.5.4",
+  "schema": "fsmgen.inactive_retained_plan.v1",
+  "source_revision": "4f0fc4c115876377109c3b7f0680d2eac663119a"
+}

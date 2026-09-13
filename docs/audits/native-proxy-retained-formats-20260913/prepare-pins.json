@@ -1,0 +1,27 @@
+[
+  {
+    "path": "docs/audits/native-proxy-retained-formats-20260913/plan.json",
+    "sha256": "74c349e106f6866ac5fe86cc42ec6b1879c7ca92a99c4c11132f2289c8a4fec3",
+    "size_bytes": 8008
+  },
+  {
+    "path": "docs/audits/native-proxy-retained-formats-20260913/retained_contract.py",
+    "sha256": "258008458fea2fbee9b3e020f74966803e899f00dabcf362feec129818a1a95a",
+    "size_bytes": 6961
+  },
+  {
+    "path": "docs/audits/native-proxy-retained-formats-20260913/prepare.py",
+    "sha256": "3f5a5ed147cc45f0bdb58008690d7f774d2eb2f6508f561899efafb791c5637b",
+    "size_bytes": 9236
+  },
+  {
+    "path": "docs/audits/native-proxy-retained-formats-20260913/qualify.py",
+    "sha256": "1e871b040a3c2361ba447d6d63c6d7c9de1795a88a398175811a0ed13ca7448f",
+    "size_bytes": 8422
+  },
+  {
+    "path": "docs/audits/native-proxy-retained-formats-20260913/audit.py",
+    "sha256": "7d870e2b90ad2df7cf1284bfc627d5df5ae35b1acaf1e594e95b2c7e998ba368",
+    "size_bytes": 9922
+  }
+]

@@ -3077,7 +3077,7 @@ The frozen execution-context reader still rejects canonical-only or mixed
 source prefixes and altered command quoting. Daemon-only command bytes remain
 unchanged and do not satisfy that execution-context reader. Native main entry
 remains unknown. The source contracts preserve these boundaries for the
-preparation and capture codecs and the remaining retained-format slice. Recheck the
+preparation, capture and retained-format adapters. Recheck the
 saved finite layout and pure command controls without launching fixtures:
 
 ```sh
@@ -3152,6 +3152,37 @@ Recheck the saved target and command evidence without replaying qualification:
 
 ```sh
 scripts/run_with_ram_guard.sh -- python3 -B docs/audits/native-proxy-capture-dispatch-20260913/audit.py --verify-saved
+```
+
+Private shared-image snapshots now have an explicit retained envelope:
+`fsmgen.inactive_retained_proxy_capture.v2`. It stores the checked capture
+carrier, its normal-user identity, the collector command contract and fixed
+authority limits. Source bodies and the separate observer hold remain private.
+The envelope preserves the ordered sources, matching references and historical
+birth checks from the capture adapter.
+
+Its encoding is canonical ASCII JSON followed by a newline, bound to a digest
+retained separately by the caller. Repository and system-Perl placeholders keep
+process spellings relocatable; recorded source paths remain relative to the
+repository. A machine-local process path is rejected even if it happens to
+match the current checkout. Oversized input rejects before JSON parsing.
+
+This format explicitly excludes collector outcomes, policy records and
+publication claims. It does not turn a historical snapshot or supplied digest
+into native authentication, current file custody or loaded-image attestation.
+For example, changing the publication limit to claim authorization invalidates
+the envelope; so does inserting an old collector command under the new version.
+
+Frozen association, diagnostic, publication, archive-index and archive-page
+readers keep their existing schemas and source-prefix rules. The original
+collector record also keeps its bytes and interpretation. Shared-image envelopes
+are rejected by those readers, and old records cannot be relabeled as the new
+private format. Changed source prefixes, missing references, altered command
+scope, duplicate fields and noncanonical encoding reject independently.
+The format checks create no public artifact and replay no original archive.
+
+```sh
+scripts/run_with_ram_guard.sh -- python3 -B docs/audits/native-proxy-retained-formats-20260913/audit.py --verify-saved
 ```
 
 The inactive archive record implementation now derives a closed specification

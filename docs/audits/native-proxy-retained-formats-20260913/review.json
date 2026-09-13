@@ -1,0 +1,22 @@
+{
+  "accepted": 36,
+  "canonical_envelopes": 9,
+  "claim_legs": {
+    "durability": "Exact Git input hashes, prospective sources, original case stream, retained canonical envelopes and saved-only auditor survive without captures or ignored outputs.",
+    "falsification": "Wrong versions, changed prefixes, missing references, stale identities, malformed encoding, wrong anchors, oversized input before parsing and changed saved results must reject.",
+    "rederivation": "Reuse the unchanged independent target oracle and compare original frozen reader outputs directly. Independently reconstruct canonical envelope bytes, bindings and the finite declared domain."
+  },
+  "envelope_cases": 172,
+  "legacy_checks": 96,
+  "limits": "New private envelope syntax and finite frozen-format interpretation only. Supplied process IDs, bodies and digests are not native authentication or current custody. Collector outcomes and policy records are excluded; no public artifact consumption, calibration, original archive replay, publication or native execution is qualified.",
+  "next_action": "Join complete inactive version compatibility and source applicability under .5.5.",
+  "outcome": "First qualification, independent audit, saved-only verification and documentation checks pass. Frozen legacy bytes and reader semantics remain unchanged.",
+  "owner": "HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.12.4.1.3.5.4",
+  "prospective_pins": 7,
+  "raw_controls": 24,
+  "raw_copies": 24,
+  "saved_result_falsifiers": 6,
+  "schema": "fsmgen.inactive_retained_review.v1",
+  "source_inputs": 29,
+  "source_revision": "4f0fc4c115876377109c3b7f0680d2eac663119a"
+}

@@ -1,0 +1,1844 @@
+{
+  "legacy": [
+    {
+      "cross": "changed_prefix_or_fields",
+      "kind": "associations",
+      "rejected": true,
+      "root": "ordinary"
+    },
+    {
+      "accepted": true,
+      "interpreted_sha256": "7050de98c80093a63dcb2a4347ec94857b9bdd5687e4bf93d76bede42475197b",
+      "kind": "associations",
+      "raw_sha256": "7050de98c80093a63dcb2a4347ec94857b9bdd5687e4bf93d76bede42475197b",
+      "root": "ordinary"
+    },
+    {
+      "cross": "old_to_new",
+      "kind": "associations",
+      "rejected": true,
+      "root": "ordinary"
+    },
+    {
+      "cross": "new_to_old",
+      "kind": "associations",
+      "rejected": true,
+      "root": "ordinary"
+    },
+    {
+      "cross": "changed_prefix_or_fields",
+      "kind": "diagnostics",
+      "rejected": true,
+      "root": "ordinary"
+    },
+    {
+      "accepted": true,
+      "interpreted_sha256": "2495f97a904cef6577530d3a3c351e31ed398762dbe8624974c2b93c98d7ad9d",
+      "kind": "diagnostics",
+      "raw_sha256": "2495f97a904cef6577530d3a3c351e31ed398762dbe8624974c2b93c98d7ad9d",
+      "root": "ordinary"
+    },
+    {
+      "cross": "old_to_new",
+      "kind": "diagnostics",
+      "rejected": true,
+      "root": "ordinary"
+    },
+    {
+      "cross": "new_to_old",
+      "kind": "diagnostics",
+      "rejected": true,
+      "root": "ordinary"
+    },
+    {
+      "cross": "changed_prefix_or_fields",
+      "kind": "publication",
+      "rejected": true,
+      "root": "ordinary"
+    },
+    {
+      "accepted": true,
+      "interpreted_sha256": "b88a6ac670f37aa1db075082a5ee4d1b60a1bd10e50c2d0713d9a1a8240e4a0d",
+      "kind": "publication",
+      "raw_sha256": "b88a6ac670f37aa1db075082a5ee4d1b60a1bd10e50c2d0713d9a1a8240e4a0d",
+      "root": "ordinary"
+    },
+    {
+      "cross": "old_to_new",
+      "kind": "publication",
+      "rejected": true,
+      "root": "ordinary"
+    },
+    {
+      "cross": "new_to_old",
+      "kind": "publication",
+      "rejected": true,
+      "root": "ordinary"
+    },
+    {
+      "cross": "changed_prefix_or_fields",
+      "kind": "archive",
+      "rejected": true,
+      "root": "ordinary"
+    },
+    {
+      "accepted": true,
+      "interpreted_sha256": "9213de17ace06341651360e28610724a82dc1090e6cfbfbef56815175b8cc892",
+      "kind": "archive",
+      "raw_sha256": "9213de17ace06341651360e28610724a82dc1090e6cfbfbef56815175b8cc892",
+      "root": "ordinary"
+    },
+    {
+      "cross": "old_to_new",
+      "kind": "archive",
+      "rejected": true,
+      "root": "ordinary"
+    },
+    {
+      "cross": "new_to_old",
+      "kind": "archive",
+      "rejected": true,
+      "root": "ordinary"
+    },
+    {
+      "cross": "changed_prefix_or_fields",
+      "kind": "archive_page",
+      "rejected": true,
+      "root": "ordinary"
+    },
+    {
+      "accepted": true,
+      "interpreted_sha256": "60308a083ef57829564a51d07021277616186de587a9f440f8e08087ed6fe0b4",
+      "kind": "archive_page",
+      "raw_sha256": "60308a083ef57829564a51d07021277616186de587a9f440f8e08087ed6fe0b4",
+      "root": "ordinary"
+    },
+    {
+      "cross": "old_to_new",
+      "kind": "archive_page",
+      "rejected": true,
+      "root": "ordinary"
+    },
+    {
+      "cross": "new_to_old",
+      "kind": "archive_page",
+      "rejected": true,
+      "root": "ordinary"
+    },
+    {
+      "cross": "changed_prefix_or_fields",
+      "kind": "collector",
+      "rejected": true,
+      "root": "ordinary"
+    },
+    {
+      "accepted": true,
+      "interpreted_sha256": "a5ff7f7c9074e47208f9599779b624e60538ceede2c841e37655fcc4fcb819ef",
+      "kind": "collector",
+      "raw_sha256": "7711fcc614e12555145436dbaf66747327c15ce4954b58473e15834c78550396",
+      "root": "ordinary"
+    },
+    {
+      "cross": "old_to_new",
+      "kind": "collector",
+      "rejected": true,
+      "root": "ordinary"
+    },
+    {
+      "cross": "new_to_old",
+      "kind": "collector",
+      "rejected": true,
+      "root": "ordinary"
+    },
+    {
+      "cross": "changed_prefix_or_fields",
+      "kind": "associations",
+      "rejected": true,
+      "root": "space in checkout"
+    },
+    {
+      "accepted": true,
+      "interpreted_sha256": "7050de98c80093a63dcb2a4347ec94857b9bdd5687e4bf93d76bede42475197b",
+      "kind": "associations",
+      "raw_sha256": "7050de98c80093a63dcb2a4347ec94857b9bdd5687e4bf93d76bede42475197b",
+      "root": "space in checkout"
+    },
+    {
+      "cross": "old_to_new",
+      "kind": "associations",
+      "rejected": true,
+      "root": "space in checkout"
+    },
+    {
+      "cross": "new_to_old",
+      "kind": "associations",
+      "rejected": true,
+      "root": "space in checkout"
+    },
+    {
+      "cross": "changed_prefix_or_fields",
+      "kind": "diagnostics",
+      "rejected": true,
+      "root": "space in checkout"
+    },
+    {
+      "accepted": true,
+      "interpreted_sha256": "2495f97a904cef6577530d3a3c351e31ed398762dbe8624974c2b93c98d7ad9d",
+      "kind": "diagnostics",
+      "raw_sha256": "2495f97a904cef6577530d3a3c351e31ed398762dbe8624974c2b93c98d7ad9d",
+      "root": "space in checkout"
+    },
+    {
+      "cross": "old_to_new",
+      "kind": "diagnostics",
+      "rejected": true,
+      "root": "space in checkout"
+    },
+    {
+      "cross": "new_to_old",
+      "kind": "diagnostics",
+      "rejected": true,
+      "root": "space in checkout"
+    },
+    {
+      "cross": "changed_prefix_or_fields",
+      "kind": "publication",
+      "rejected": true,
+      "root": "space in checkout"
+    },
+    {
+      "accepted": true,
+      "interpreted_sha256": "b88a6ac670f37aa1db075082a5ee4d1b60a1bd10e50c2d0713d9a1a8240e4a0d",
+      "kind": "publication",
+      "raw_sha256": "b88a6ac670f37aa1db075082a5ee4d1b60a1bd10e50c2d0713d9a1a8240e4a0d",
+      "root": "space in checkout"
+    },
+    {
+      "cross": "old_to_new",
+      "kind": "publication",
+      "rejected": true,
+      "root": "space in checkout"
+    },
+    {
+      "cross": "new_to_old",
+      "kind": "publication",
+      "rejected": true,
+      "root": "space in checkout"
+    },
+    {
+      "cross": "changed_prefix_or_fields",
+      "kind": "archive",
+      "rejected": true,
+      "root": "space in checkout"
+    },
+    {
+      "accepted": true,
+      "interpreted_sha256": "9213de17ace06341651360e28610724a82dc1090e6cfbfbef56815175b8cc892",
+      "kind": "archive",
+      "raw_sha256": "9213de17ace06341651360e28610724a82dc1090e6cfbfbef56815175b8cc892",
+      "root": "space in checkout"
+    },
+    {
+      "cross": "old_to_new",
+      "kind": "archive",
+      "rejected": true,
+      "root": "space in checkout"
+    },
+    {
+      "cross": "new_to_old",
+      "kind": "archive",
+      "rejected": true,
+      "root": "space in checkout"
+    },
+    {
+      "cross": "changed_prefix_or_fields",
+      "kind": "archive_page",
+      "rejected": true,
+      "root": "space in checkout"
+    },
+    {
+      "accepted": true,
+      "interpreted_sha256": "60308a083ef57829564a51d07021277616186de587a9f440f8e08087ed6fe0b4",
+      "kind": "archive_page",
+      "raw_sha256": "60308a083ef57829564a51d07021277616186de587a9f440f8e08087ed6fe0b4",
+      "root": "space in checkout"
+    },
+    {
+      "cross": "old_to_new",
+      "kind": "archive_page",
+      "rejected": true,
+      "root": "space in checkout"
+    },
+    {
+      "cross": "new_to_old",
+      "kind": "archive_page",
+      "rejected": true,
+      "root": "space in checkout"
+    },
+    {
+      "cross": "changed_prefix_or_fields",
+      "kind": "collector",
+      "rejected": true,
+      "root": "space in checkout"
+    },
+    {
+      "accepted": true,
+      "interpreted_sha256": "a5ff7f7c9074e47208f9599779b624e60538ceede2c841e37655fcc4fcb819ef",
+      "kind": "collector",
+      "raw_sha256": "7711fcc614e12555145436dbaf66747327c15ce4954b58473e15834c78550396",
+      "root": "space in checkout"
+    },
+    {
+      "cross": "old_to_new",
+      "kind": "collector",
+      "rejected": true,
+      "root": "space in checkout"
+    },
+    {
+      "cross": "new_to_old",
+      "kind": "collector",
+      "rejected": true,
+      "root": "space in checkout"
+    },
+    {
+      "cross": "changed_prefix_or_fields",
+      "kind": "associations",
+      "rejected": true,
+      "root": "quote\"and\\slash"
+    },
+    {
+      "accepted": true,
+      "interpreted_sha256": "7050de98c80093a63dcb2a4347ec94857b9bdd5687e4bf93d76bede42475197b",
+      "kind": "associations",
+      "raw_sha256": "7050de98c80093a63dcb2a4347ec94857b9bdd5687e4bf93d76bede42475197b",
+      "root": "quote\"and\\slash"
+    },
+    {
+      "cross": "old_to_new",
+      "kind": "associations",
+      "rejected": true,
+      "root": "quote\"and\\slash"
+    },
+    {
+      "cross": "new_to_old",
+      "kind": "associations",
+      "rejected": true,
+      "root": "quote\"and\\slash"
+    },
+    {
+      "cross": "changed_prefix_or_fields",
+      "kind": "diagnostics",
+      "rejected": true,
+      "root": "quote\"and\\slash"
+    },
+    {
+      "accepted": true,
+      "interpreted_sha256": "2495f97a904cef6577530d3a3c351e31ed398762dbe8624974c2b93c98d7ad9d",
+      "kind": "diagnostics",
+      "raw_sha256": "2495f97a904cef6577530d3a3c351e31ed398762dbe8624974c2b93c98d7ad9d",
+      "root": "quote\"and\\slash"
+    },
+    {
+      "cross": "old_to_new",
+      "kind": "diagnostics",
+      "rejected": true,
+      "root": "quote\"and\\slash"
+    },
+    {
+      "cross": "new_to_old",
+      "kind": "diagnostics",
+      "rejected": true,
+      "root": "quote\"and\\slash"
+    },
+    {
+      "cross": "changed_prefix_or_fields",
+      "kind": "publication",
+      "rejected": true,
+      "root": "quote\"and\\slash"
+    },
+    {
+      "accepted": true,
+      "interpreted_sha256": "b88a6ac670f37aa1db075082a5ee4d1b60a1bd10e50c2d0713d9a1a8240e4a0d",
+      "kind": "publication",
+      "raw_sha256": "b88a6ac670f37aa1db075082a5ee4d1b60a1bd10e50c2d0713d9a1a8240e4a0d",
+      "root": "quote\"and\\slash"
+    },
+    {
+      "cross": "old_to_new",
+      "kind": "publication",
+      "rejected": true,
+      "root": "quote\"and\\slash"
+    },
+    {
+      "cross": "new_to_old",
+      "kind": "publication",
+      "rejected": true,
+      "root": "quote\"and\\slash"
+    },
+    {
+      "cross": "changed_prefix_or_fields",
+      "kind": "archive",
+      "rejected": true,
+      "root": "quote\"and\\slash"
+    },
+    {
+      "accepted": true,
+      "interpreted_sha256": "9213de17ace06341651360e28610724a82dc1090e6cfbfbef56815175b8cc892",
+      "kind": "archive",
+      "raw_sha256": "9213de17ace06341651360e28610724a82dc1090e6cfbfbef56815175b8cc892",
+      "root": "quote\"and\\slash"
+    },
+    {
+      "cross": "old_to_new",
+      "kind": "archive",
+      "rejected": true,
+      "root": "quote\"and\\slash"
+    },
+    {
+      "cross": "new_to_old",
+      "kind": "archive",
+      "rejected": true,
+      "root": "quote\"and\\slash"
+    },
+    {
+      "cross": "changed_prefix_or_fields",
+      "kind": "archive_page",
+      "rejected": true,
+      "root": "quote\"and\\slash"
+    },
+    {
+      "accepted": true,
+      "interpreted_sha256": "60308a083ef57829564a51d07021277616186de587a9f440f8e08087ed6fe0b4",
+      "kind": "archive_page",
+      "raw_sha256": "60308a083ef57829564a51d07021277616186de587a9f440f8e08087ed6fe0b4",
+      "root": "quote\"and\\slash"
+    },
+    {
+      "cross": "old_to_new",
+      "kind": "archive_page",
+      "rejected": true,
+      "root": "quote\"and\\slash"
+    },
+    {
+      "cross": "new_to_old",
+      "kind": "archive_page",
+      "rejected": true,
+      "root": "quote\"and\\slash"
+    },
+    {
+      "cross": "changed_prefix_or_fields",
+      "kind": "collector",
+      "rejected": true,
+      "root": "quote\"and\\slash"
+    },
+    {
+      "accepted": true,
+      "interpreted_sha256": "a5ff7f7c9074e47208f9599779b624e60538ceede2c841e37655fcc4fcb819ef",
+      "kind": "collector",
+      "raw_sha256": "7711fcc614e12555145436dbaf66747327c15ce4954b58473e15834c78550396",
+      "root": "quote\"and\\slash"
+    },
+    {
+      "cross": "old_to_new",
+      "kind": "collector",
+      "rejected": true,
+      "root": "quote\"and\\slash"
+    },
+    {
+      "cross": "new_to_old",
+      "kind": "collector",
+      "rejected": true,
+      "root": "quote\"and\\slash"
+    },
+    {
+      "cross": "changed_prefix_or_fields",
+      "kind": "associations",
+      "rejected": true,
+      "root": "unicode-\u00e9-\ud83d\ude00"
+    },
+    {
+      "accepted": true,
+      "interpreted_sha256": "7050de98c80093a63dcb2a4347ec94857b9bdd5687e4bf93d76bede42475197b",
+      "kind": "associations",
+      "raw_sha256": "7050de98c80093a63dcb2a4347ec94857b9bdd5687e4bf93d76bede42475197b",
+      "root": "unicode-\u00e9-\ud83d\ude00"
+    },
+    {
+      "cross": "old_to_new",
+      "kind": "associations",
+      "rejected": true,
+      "root": "unicode-\u00e9-\ud83d\ude00"
+    },
+    {
+      "cross": "new_to_old",
+      "kind": "associations",
+      "rejected": true,
+      "root": "unicode-\u00e9-\ud83d\ude00"
+    },
+    {
+      "cross": "changed_prefix_or_fields",
+      "kind": "diagnostics",
+      "rejected": true,
+      "root": "unicode-\u00e9-\ud83d\ude00"
+    },
+    {
+      "accepted": true,
+      "interpreted_sha256": "2495f97a904cef6577530d3a3c351e31ed398762dbe8624974c2b93c98d7ad9d",
+      "kind": "diagnostics",
+      "raw_sha256": "2495f97a904cef6577530d3a3c351e31ed398762dbe8624974c2b93c98d7ad9d",
+      "root": "unicode-\u00e9-\ud83d\ude00"
+    },
+    {
+      "cross": "old_to_new",
+      "kind": "diagnostics",
+      "rejected": true,
+      "root": "unicode-\u00e9-\ud83d\ude00"
+    },
+    {
+      "cross": "new_to_old",
+      "kind": "diagnostics",
+      "rejected": true,
+      "root": "unicode-\u00e9-\ud83d\ude00"
+    },
+    {
+      "cross": "changed_prefix_or_fields",
+      "kind": "publication",
+      "rejected": true,
+      "root": "unicode-\u00e9-\ud83d\ude00"
+    },
+    {
+      "accepted": true,
+      "interpreted_sha256": "b88a6ac670f37aa1db075082a5ee4d1b60a1bd10e50c2d0713d9a1a8240e4a0d",
+      "kind": "publication",
+      "raw_sha256": "b88a6ac670f37aa1db075082a5ee4d1b60a1bd10e50c2d0713d9a1a8240e4a0d",
+      "root": "unicode-\u00e9-\ud83d\ude00"
+    },
+    {
+      "cross": "old_to_new",
+      "kind": "publication",
+      "rejected": true,
+      "root": "unicode-\u00e9-\ud83d\ude00"
+    },
+    {
+      "cross": "new_to_old",
+      "kind": "publication",
+      "rejected": true,
+      "root": "unicode-\u00e9-\ud83d\ude00"
+    },
+    {
+      "cross": "changed_prefix_or_fields",
+      "kind": "archive",
+      "rejected": true,
+      "root": "unicode-\u00e9-\ud83d\ude00"
+    },
+    {
+      "accepted": true,
+      "interpreted_sha256": "9213de17ace06341651360e28610724a82dc1090e6cfbfbef56815175b8cc892",
+      "kind": "archive",
+      "raw_sha256": "9213de17ace06341651360e28610724a82dc1090e6cfbfbef56815175b8cc892",
+      "root": "unicode-\u00e9-\ud83d\ude00"
+    },
+    {
+      "cross": "old_to_new",
+      "kind": "archive",
+      "rejected": true,
+      "root": "unicode-\u00e9-\ud83d\ude00"
+    },
+    {
+      "cross": "new_to_old",
+      "kind": "archive",
+      "rejected": true,
+      "root": "unicode-\u00e9-\ud83d\ude00"
+    },
+    {
+      "cross": "changed_prefix_or_fields",
+      "kind": "archive_page",
+      "rejected": true,
+      "root": "unicode-\u00e9-\ud83d\ude00"
+    },
+    {
+      "accepted": true,
+      "interpreted_sha256": "60308a083ef57829564a51d07021277616186de587a9f440f8e08087ed6fe0b4",
+      "kind": "archive_page",
+      "raw_sha256": "60308a083ef57829564a51d07021277616186de587a9f440f8e08087ed6fe0b4",
+      "root": "unicode-\u00e9-\ud83d\ude00"
+    },
+    {
+      "cross": "old_to_new",
+      "kind": "archive_page",
+      "rejected": true,
+      "root": "unicode-\u00e9-\ud83d\ude00"
+    },
+    {
+      "cross": "new_to_old",
+      "kind": "archive_page",
+      "rejected": true,
+      "root": "unicode-\u00e9-\ud83d\ude00"
+    },
+    {
+      "cross": "changed_prefix_or_fields",
+      "kind": "collector",
+      "rejected": true,
+      "root": "unicode-\u00e9-\ud83d\ude00"
+    },
+    {
+      "accepted": true,
+      "interpreted_sha256": "a5ff7f7c9074e47208f9599779b624e60538ceede2c841e37655fcc4fcb819ef",
+      "kind": "collector",
+      "raw_sha256": "7711fcc614e12555145436dbaf66747327c15ce4954b58473e15834c78550396",
+      "root": "unicode-\u00e9-\ud83d\ude00"
+    },
+    {
+      "cross": "old_to_new",
+      "kind": "collector",
+      "rejected": true,
+      "root": "unicode-\u00e9-\ud83d\ude00"
+    },
+    {
+      "cross": "new_to_old",
+      "kind": "collector",
+      "rejected": true,
+      "root": "unicode-\u00e9-\ud83d\ude00"
+    }
+  ],
+  "process_attempts": [],
+  "raw_controls": [
+    {
+      "bytes": 21873,
+      "name": "wrong_anchor",
+      "rejected": true,
+      "root": "ordinary",
+      "sha256": "8c6c7174942964b51560a2d27a7a01ee53d72692e36d093bf783e4b20d062504"
+    },
+    {
+      "bytes": 24688,
+      "name": "pretty_json",
+      "rejected": true,
+      "root": "ordinary",
+      "sha256": "a776e9b56ed816f90404cc19c899777badef8db67172aa4d1f724628718ef479"
+    },
+    {
+      "bytes": 21872,
+      "name": "missing_lf",
+      "rejected": true,
+      "root": "ordinary",
+      "sha256": "785159c2a3a9cf20d4b4cc2e5d7e12ecb26c058f34e04642009cd916403fe573"
+    },
+    {
+      "bytes": 21894,
+      "name": "duplicate_schema",
+      "rejected": true,
+      "root": "ordinary",
+      "sha256": "06d07904b1da8f18fb944e6cff37619406b7364b7f80a78e2913e49880d8efdb"
+    },
+    {
+      "bytes": 2097153,
+      "name": "oversized_bytes",
+      "rejected": true,
+      "root": "ordinary",
+      "sha256": "e7d99e4db1392275f200e288c860f9780a935c945e2d55f98c1b68a1f9f3fb5c"
+    },
+    {
+      "name": "absolute_process_paths",
+      "rejected": true,
+      "root": "ordinary"
+    },
+    {
+      "bytes": 21873,
+      "name": "wrong_anchor",
+      "rejected": true,
+      "root": "space in checkout",
+      "sha256": "8c6c7174942964b51560a2d27a7a01ee53d72692e36d093bf783e4b20d062504"
+    },
+    {
+      "bytes": 24688,
+      "name": "pretty_json",
+      "rejected": true,
+      "root": "space in checkout",
+      "sha256": "a776e9b56ed816f90404cc19c899777badef8db67172aa4d1f724628718ef479"
+    },
+    {
+      "bytes": 21872,
+      "name": "missing_lf",
+      "rejected": true,
+      "root": "space in checkout",
+      "sha256": "785159c2a3a9cf20d4b4cc2e5d7e12ecb26c058f34e04642009cd916403fe573"
+    },
+    {
+      "bytes": 21894,
+      "name": "duplicate_schema",
+      "rejected": true,
+      "root": "space in checkout",
+      "sha256": "06d07904b1da8f18fb944e6cff37619406b7364b7f80a78e2913e49880d8efdb"
+    },
+    {
+      "bytes": 2097153,
+      "name": "oversized_bytes",
+      "rejected": true,
+      "root": "space in checkout",
+      "sha256": "e7d99e4db1392275f200e288c860f9780a935c945e2d55f98c1b68a1f9f3fb5c"
+    },
+    {
+      "name": "absolute_process_paths",
+      "rejected": true,
+      "root": "space in checkout"
+    },
+    {
+      "bytes": 21873,
+      "name": "wrong_anchor",
+      "rejected": true,
+      "root": "quote\"and\\slash",
+      "sha256": "8c6c7174942964b51560a2d27a7a01ee53d72692e36d093bf783e4b20d062504"
+    },
+    {
+      "bytes": 24688,
+      "name": "pretty_json",
+      "rejected": true,
+      "root": "quote\"and\\slash",
+      "sha256": "a776e9b56ed816f90404cc19c899777badef8db67172aa4d1f724628718ef479"
+    },
+    {
+      "bytes": 21872,
+      "name": "missing_lf",
+      "rejected": true,
+      "root": "quote\"and\\slash",
+      "sha256": "785159c2a3a9cf20d4b4cc2e5d7e12ecb26c058f34e04642009cd916403fe573"
+    },
+    {
+      "bytes": 21894,
+      "name": "duplicate_schema",
+      "rejected": true,
+      "root": "quote\"and\\slash",
+      "sha256": "06d07904b1da8f18fb944e6cff37619406b7364b7f80a78e2913e49880d8efdb"
+    },
+    {
+      "bytes": 2097153,
+      "name": "oversized_bytes",
+      "rejected": true,
+      "root": "quote\"and\\slash",
+      "sha256": "e7d99e4db1392275f200e288c860f9780a935c945e2d55f98c1b68a1f9f3fb5c"
+    },
+    {
+      "name": "absolute_process_paths",
+      "rejected": true,
+      "root": "quote\"and\\slash"
+    },
+    {
+      "bytes": 21873,
+      "name": "wrong_anchor",
+      "rejected": true,
+      "root": "unicode-\u00e9-\ud83d\ude00",
+      "sha256": "8c6c7174942964b51560a2d27a7a01ee53d72692e36d093bf783e4b20d062504"
+    },
+    {
+      "bytes": 24688,
+      "name": "pretty_json",
+      "rejected": true,
+      "root": "unicode-\u00e9-\ud83d\ude00",
+      "sha256": "a776e9b56ed816f90404cc19c899777badef8db67172aa4d1f724628718ef479"
+    },
+    {
+      "bytes": 21872,
+      "name": "missing_lf",
+      "rejected": true,
+      "root": "unicode-\u00e9-\ud83d\ude00",
+      "sha256": "785159c2a3a9cf20d4b4cc2e5d7e12ecb26c058f34e04642009cd916403fe573"
+    },
+    {
+      "bytes": 21894,
+      "name": "duplicate_schema",
+      "rejected": true,
+      "root": "unicode-\u00e9-\ud83d\ude00",
+      "sha256": "06d07904b1da8f18fb944e6cff37619406b7364b7f80a78e2913e49880d8efdb"
+    },
+    {
+      "bytes": 2097153,
+      "name": "oversized_bytes",
+      "rejected": true,
+      "root": "unicode-\u00e9-\ud83d\ude00",
+      "sha256": "e7d99e4db1392275f200e288c860f9780a935c945e2d55f98c1b68a1f9f3fb5c"
+    },
+    {
+      "name": "absolute_process_paths",
+      "rejected": true,
+      "root": "unicode-\u00e9-\ud83d\ude00"
+    }
+  ],
+  "roots": [
+    "ordinary",
+    "space in checkout",
+    "quote\"and\\slash",
+    "unicode-\u00e9-\ud83d\ude00"
+  ],
+  "rows": [
+    {
+      "accepted": true,
+      "bytes": 21823,
+      "name": "shared_0_fixture_path",
+      "root": "ordinary",
+      "sha256": "0e971692afd6f5a2a719bde184728170bd469942cd5e811683ff95637998ee1f"
+    },
+    {
+      "accepted": true,
+      "bytes": 21873,
+      "name": "shared_0_execution_context",
+      "root": "ordinary",
+      "sha256": "8c6c7174942964b51560a2d27a7a01ee53d72692e36d093bf783e4b20d062504"
+    },
+    {
+      "accepted": true,
+      "bytes": 21670,
+      "name": "shared_0_daemon_context",
+      "root": "ordinary",
+      "sha256": "fa0300c987b2c12d726b2521da344ed5039fbe3c796a9265d01b0ee455cb39f6"
+    },
+    {
+      "accepted": true,
+      "bytes": 21823,
+      "name": "shared_1_fixture_path",
+      "root": "ordinary",
+      "sha256": "03c966c3d46af90a856e450265cc339e7c2ef55f0c0638afe77da576f21963d8"
+    },
+    {
+      "accepted": true,
+      "bytes": 21873,
+      "name": "shared_1_execution_context",
+      "root": "ordinary",
+      "sha256": "9b7ffcf9803348b2e4e879ffb52c9f4d42b589a067ffb05c7852a55f961ecf7b"
+    },
+    {
+      "accepted": true,
+      "bytes": 21670,
+      "name": "shared_1_daemon_context",
+      "root": "ordinary",
+      "sha256": "745a9eae5e4c81e1005511f323264971163e52c5abd579a2482c58709b410770"
+    },
+    {
+      "accepted": true,
+      "bytes": 21823,
+      "name": "shared_other_observer_fixture_path",
+      "root": "ordinary",
+      "sha256": "f0e569549b54b728d6d6f33314bda5b67084dae9d8d8d954f19cb38c4d4b9c5b"
+    },
+    {
+      "accepted": true,
+      "bytes": 21873,
+      "name": "shared_other_observer_execution_context",
+      "root": "ordinary",
+      "sha256": "c006c40a7aa5fbfbd92fc6f6b8e3c760390352446037cc82d7e90fbdc1493a27"
+    },
+    {
+      "accepted": true,
+      "bytes": 21670,
+      "name": "shared_other_observer_daemon_context",
+      "root": "ordinary",
+      "sha256": "f526e92cd71fca33fbb826304a0a50f4f045777099a265e214ed571dba0829af"
+    },
+    {
+      "accepted": false,
+      "error": "retained object fields differ",
+      "name": "missing_schema",
+      "root": "ordinary"
+    },
+    {
+      "accepted": false,
+      "error": "retained object fields differ",
+      "name": "missing_normal_uid",
+      "root": "ordinary"
+    },
+    {
+      "accepted": false,
+      "error": "retained object fields differ",
+      "name": "missing_capture",
+      "root": "ordinary"
+    },
+    {
+      "accepted": false,
+      "error": "retained object fields differ",
+      "name": "missing_collector_contract",
+      "root": "ordinary"
+    },
+    {
+      "accepted": false,
+      "error": "retained object fields differ",
+      "name": "missing_limits",
+      "root": "ordinary"
+    },
+    {
+      "accepted": false,
+      "error": "retained version or authority limits differ",
+      "name": "promote_authority",
+      "root": "ordinary"
+    },
+    {
+      "accepted": false,
+      "error": "retained version or authority limits differ",
+      "name": "promote_collector_outcome",
+      "root": "ordinary"
+    },
+    {
+      "accepted": false,
+      "error": "retained version or authority limits differ",
+      "name": "promote_filesystem_custody",
+      "root": "ordinary"
+    },
+    {
+      "accepted": false,
+      "error": "retained version or authority limits differ",
+      "name": "promote_loaded_image",
+      "root": "ordinary"
+    },
+    {
+      "accepted": false,
+      "error": "retained version or authority limits differ",
+      "name": "promote_native_authentication",
+      "root": "ordinary"
+    },
+    {
+      "accepted": false,
+      "error": "retained version or authority limits differ",
+      "name": "promote_policy_records",
+      "root": "ordinary"
+    },
+    {
+      "accepted": false,
+      "error": "retained version or authority limits differ",
+      "name": "promote_publication",
+      "root": "ordinary"
+    },
+    {
+      "accepted": false,
+      "error": "retained version or authority limits differ",
+      "name": "promote_source_bodies",
+      "root": "ordinary"
+    },
+    {
+      "accepted": false,
+      "error": "retained object fields differ",
+      "name": "unknown_outer_field",
+      "root": "ordinary"
+    },
+    {
+      "accepted": false,
+      "error": "retained version or authority limits differ",
+      "name": "legacy_outer_version",
+      "root": "ordinary"
+    },
+    {
+      "accepted": false,
+      "error": "shared native envelope requires the new collector contract",
+      "name": "legacy_collector_version",
+      "root": "ordinary"
+    },
+    {
+      "accepted": false,
+      "error": "unknown collection scope",
+      "name": "foreign_scope",
+      "root": "ordinary"
+    },
+    {
+      "accepted": false,
+      "error": "retained object fields differ",
+      "name": "foreign_collector_field",
+      "root": "ordinary"
+    },
+    {
+      "accepted": false,
+      "error": "retained object fields differ",
+      "name": "unversioned_collector",
+      "root": "ordinary"
+    },
+    {
+      "accepted": false,
+      "error": "retained collector command differs from its exact version and scope",
+      "name": "mixed_legacy_command",
+      "root": "ordinary"
+    },
+    {
+      "accepted": false,
+      "error": "retained collector command differs from its exact version and scope",
+      "name": "broadened_canonical_prefix",
+      "root": "ordinary"
+    },
+    {
+      "accepted": false,
+      "error": "new retained envelope requires explicit shared-native layout",
+      "name": "wrong_capture_family_perl",
+      "root": "ordinary"
+    },
+    {
+      "accepted": false,
+      "error": "new retained envelope requires explicit shared-native layout",
+      "name": "wrong_capture_family_private_0",
+      "root": "ordinary"
+    },
+    {
+      "accepted": false,
+      "error": "expected five stable target snapshots",
+      "name": "missing_source_0",
+      "root": "ordinary"
+    },
+    {
+      "accepted": false,
+      "error": "expected five stable target snapshots",
+      "name": "missing_source_1",
+      "root": "ordinary"
+    },
+    {
+      "accepted": false,
+      "error": "expected five stable target snapshots",
+      "name": "missing_source_2",
+      "root": "ordinary"
+    },
+    {
+      "accepted": false,
+      "error": "expected five stable target snapshots",
+      "name": "missing_source_3",
+      "root": "ordinary"
+    },
+    {
+      "accepted": false,
+      "error": "expected five stable target snapshots",
+      "name": "missing_source_4",
+      "root": "ordinary"
+    },
+    {
+      "accepted": false,
+      "error": "record fields differ",
+      "name": "missing_hold",
+      "root": "ordinary"
+    },
+    {
+      "accepted": false,
+      "error": "record fields differ",
+      "name": "invented_native_entry",
+      "root": "ordinary"
+    },
+    {
+      "accepted": false,
+      "error": "process, source or observation identity changed",
+      "name": "stale_birth",
+      "root": "ordinary"
+    },
+    {
+      "accepted": false,
+      "error": "expected nonnegative integer",
+      "name": "normal_uid_bool",
+      "root": "ordinary"
+    },
+    {
+      "accepted": false,
+      "error": "normal-user contract excludes root",
+      "name": "root_uid",
+      "root": "ordinary"
+    },
+    {
+      "accepted": false,
+      "error": "process, source or observation identity changed",
+      "name": "reference_byte_drift",
+      "root": "ordinary"
+    },
+    {
+      "accepted": true,
+      "bytes": 21823,
+      "name": "shared_0_fixture_path",
+      "root": "space in checkout",
+      "sha256": "0e971692afd6f5a2a719bde184728170bd469942cd5e811683ff95637998ee1f"
+    },
+    {
+      "accepted": true,
+      "bytes": 21873,
+      "name": "shared_0_execution_context",
+      "root": "space in checkout",
+      "sha256": "8c6c7174942964b51560a2d27a7a01ee53d72692e36d093bf783e4b20d062504"
+    },
+    {
+      "accepted": true,
+      "bytes": 21670,
+      "name": "shared_0_daemon_context",
+      "root": "space in checkout",
+      "sha256": "fa0300c987b2c12d726b2521da344ed5039fbe3c796a9265d01b0ee455cb39f6"
+    },
+    {
+      "accepted": true,
+      "bytes": 21823,
+      "name": "shared_1_fixture_path",
+      "root": "space in checkout",
+      "sha256": "03c966c3d46af90a856e450265cc339e7c2ef55f0c0638afe77da576f21963d8"
+    },
+    {
+      "accepted": true,
+      "bytes": 21873,
+      "name": "shared_1_execution_context",
+      "root": "space in checkout",
+      "sha256": "9b7ffcf9803348b2e4e879ffb52c9f4d42b589a067ffb05c7852a55f961ecf7b"
+    },
+    {
+      "accepted": true,
+      "bytes": 21670,
+      "name": "shared_1_daemon_context",
+      "root": "space in checkout",
+      "sha256": "745a9eae5e4c81e1005511f323264971163e52c5abd579a2482c58709b410770"
+    },
+    {
+      "accepted": true,
+      "bytes": 21823,
+      "name": "shared_other_observer_fixture_path",
+      "root": "space in checkout",
+      "sha256": "f0e569549b54b728d6d6f33314bda5b67084dae9d8d8d954f19cb38c4d4b9c5b"
+    },
+    {
+      "accepted": true,
+      "bytes": 21873,
+      "name": "shared_other_observer_execution_context",
+      "root": "space in checkout",
+      "sha256": "c006c40a7aa5fbfbd92fc6f6b8e3c760390352446037cc82d7e90fbdc1493a27"
+    },
+    {
+      "accepted": true,
+      "bytes": 21670,
+      "name": "shared_other_observer_daemon_context",
+      "root": "space in checkout",
+      "sha256": "f526e92cd71fca33fbb826304a0a50f4f045777099a265e214ed571dba0829af"
+    },
+    {
+      "accepted": false,
+      "error": "retained object fields differ",
+      "name": "missing_schema",
+      "root": "space in checkout"
+    },
+    {
+      "accepted": false,
+      "error": "retained object fields differ",
+      "name": "missing_normal_uid",
+      "root": "space in checkout"
+    },
+    {
+      "accepted": false,
+      "error": "retained object fields differ",
+      "name": "missing_capture",
+      "root": "space in checkout"
+    },
+    {
+      "accepted": false,
+      "error": "retained object fields differ",
+      "name": "missing_collector_contract",
+      "root": "space in checkout"
+    },
+    {
+      "accepted": false,
+      "error": "retained object fields differ",
+      "name": "missing_limits",
+      "root": "space in checkout"
+    },
+    {
+      "accepted": false,
+      "error": "retained version or authority limits differ",
+      "name": "promote_authority",
+      "root": "space in checkout"
+    },
+    {
+      "accepted": false,
+      "error": "retained version or authority limits differ",
+      "name": "promote_collector_outcome",
+      "root": "space in checkout"
+    },
+    {
+      "accepted": false,
+      "error": "retained version or authority limits differ",
+      "name": "promote_filesystem_custody",
+      "root": "space in checkout"
+    },
+    {
+      "accepted": false,
+      "error": "retained version or authority limits differ",
+      "name": "promote_loaded_image",
+      "root": "space in checkout"
+    },
+    {
+      "accepted": false,
+      "error": "retained version or authority limits differ",
+      "name": "promote_native_authentication",
+      "root": "space in checkout"
+    },
+    {
+      "accepted": false,
+      "error": "retained version or authority limits differ",
+      "name": "promote_policy_records",
+      "root": "space in checkout"
+    },
+    {
+      "accepted": false,
+      "error": "retained version or authority limits differ",
+      "name": "promote_publication",
+      "root": "space in checkout"
+    },
+    {
+      "accepted": false,
+      "error": "retained version or authority limits differ",
+      "name": "promote_source_bodies",
+      "root": "space in checkout"
+    },
+    {
+      "accepted": false,
+      "error": "retained object fields differ",
+      "name": "unknown_outer_field",
+      "root": "space in checkout"
+    },
+    {
+      "accepted": false,
+      "error": "retained version or authority limits differ",
+      "name": "legacy_outer_version",
+      "root": "space in checkout"
+    },
+    {
+      "accepted": false,
+      "error": "shared native envelope requires the new collector contract",
+      "name": "legacy_collector_version",
+      "root": "space in checkout"
+    },
+    {
+      "accepted": false,
+      "error": "unknown collection scope",
+      "name": "foreign_scope",
+      "root": "space in checkout"
+    },
+    {
+      "accepted": false,
+      "error": "retained object fields differ",
+      "name": "foreign_collector_field",
+      "root": "space in checkout"
+    },
+    {
+      "accepted": false,
+      "error": "retained object fields differ",
+      "name": "unversioned_collector",
+      "root": "space in checkout"
+    },
+    {
+      "accepted": false,
+      "error": "retained collector command differs from its exact version and scope",
+      "name": "mixed_legacy_command",
+      "root": "space in checkout"
+    },
+    {
+      "accepted": false,
+      "error": "retained collector command differs from its exact version and scope",
+      "name": "broadened_canonical_prefix",
+      "root": "space in checkout"
+    },
+    {
+      "accepted": false,
+      "error": "new retained envelope requires explicit shared-native layout",
+      "name": "wrong_capture_family_perl",
+      "root": "space in checkout"
+    },
+    {
+      "accepted": false,
+      "error": "new retained envelope requires explicit shared-native layout",
+      "name": "wrong_capture_family_private_0",
+      "root": "space in checkout"
+    },
+    {
+      "accepted": false,
+      "error": "expected five stable target snapshots",
+      "name": "missing_source_0",
+      "root": "space in checkout"
+    },
+    {
+      "accepted": false,
+      "error": "expected five stable target snapshots",
+      "name": "missing_source_1",
+      "root": "space in checkout"
+    },
+    {
+      "accepted": false,
+      "error": "expected five stable target snapshots",
+      "name": "missing_source_2",
+      "root": "space in checkout"
+    },
+    {
+      "accepted": false,
+      "error": "expected five stable target snapshots",
+      "name": "missing_source_3",
+      "root": "space in checkout"
+    },
+    {
+      "accepted": false,
+      "error": "expected five stable target snapshots",
+      "name": "missing_source_4",
+      "root": "space in checkout"
+    },
+    {
+      "accepted": false,
+      "error": "record fields differ",
+      "name": "missing_hold",
+      "root": "space in checkout"
+    },
+    {
+      "accepted": false,
+      "error": "record fields differ",
+      "name": "invented_native_entry",
+      "root": "space in checkout"
+    },
+    {
+      "accepted": false,
+      "error": "process, source or observation identity changed",
+      "name": "stale_birth",
+      "root": "space in checkout"
+    },
+    {
+      "accepted": false,
+      "error": "expected nonnegative integer",
+      "name": "normal_uid_bool",
+      "root": "space in checkout"
+    },
+    {
+      "accepted": false,
+      "error": "normal-user contract excludes root",
+      "name": "root_uid",
+      "root": "space in checkout"
+    },
+    {
+      "accepted": false,
+      "error": "process, source or observation identity changed",
+      "name": "reference_byte_drift",
+      "root": "space in checkout"
+    },
+    {
+      "accepted": true,
+      "bytes": 21823,
+      "name": "shared_0_fixture_path",
+      "root": "quote\"and\\slash",
+      "sha256": "0e971692afd6f5a2a719bde184728170bd469942cd5e811683ff95637998ee1f"
+    },
+    {
+      "accepted": true,
+      "bytes": 21873,
+      "name": "shared_0_execution_context",
+      "root": "quote\"and\\slash",
+      "sha256": "8c6c7174942964b51560a2d27a7a01ee53d72692e36d093bf783e4b20d062504"
+    },
+    {
+      "accepted": true,
+      "bytes": 21670,
+      "name": "shared_0_daemon_context",
+      "root": "quote\"and\\slash",
+      "sha256": "fa0300c987b2c12d726b2521da344ed5039fbe3c796a9265d01b0ee455cb39f6"
+    },
+    {
+      "accepted": true,
+      "bytes": 21823,
+      "name": "shared_1_fixture_path",
+      "root": "quote\"and\\slash",
+      "sha256": "03c966c3d46af90a856e450265cc339e7c2ef55f0c0638afe77da576f21963d8"
+    },
+    {
+      "accepted": true,
+      "bytes": 21873,
+      "name": "shared_1_execution_context",
+      "root": "quote\"and\\slash",
+      "sha256": "9b7ffcf9803348b2e4e879ffb52c9f4d42b589a067ffb05c7852a55f961ecf7b"
+    },
+    {
+      "accepted": true,
+      "bytes": 21670,
+      "name": "shared_1_daemon_context",
+      "root": "quote\"and\\slash",
+      "sha256": "745a9eae5e4c81e1005511f323264971163e52c5abd579a2482c58709b410770"
+    },
+    {
+      "accepted": true,
+      "bytes": 21823,
+      "name": "shared_other_observer_fixture_path",
+      "root": "quote\"and\\slash",
+      "sha256": "f0e569549b54b728d6d6f33314bda5b67084dae9d8d8d954f19cb38c4d4b9c5b"
+    },
+    {
+      "accepted": true,
+      "bytes": 21873,
+      "name": "shared_other_observer_execution_context",
+      "root": "quote\"and\\slash",
+      "sha256": "c006c40a7aa5fbfbd92fc6f6b8e3c760390352446037cc82d7e90fbdc1493a27"
+    },
+    {
+      "accepted": true,
+      "bytes": 21670,
+      "name": "shared_other_observer_daemon_context",
+      "root": "quote\"and\\slash",
+      "sha256": "f526e92cd71fca33fbb826304a0a50f4f045777099a265e214ed571dba0829af"
+    },
+    {
+      "accepted": false,
+      "error": "retained object fields differ",
+      "name": "missing_schema",
+      "root": "quote\"and\\slash"
+    },
+    {
+      "accepted": false,
+      "error": "retained object fields differ",
+      "name": "missing_normal_uid",
+      "root": "quote\"and\\slash"
+    },
+    {
+      "accepted": false,
+      "error": "retained object fields differ",
+      "name": "missing_capture",
+      "root": "quote\"and\\slash"
+    },
+    {
+      "accepted": false,
+      "error": "retained object fields differ",
+      "name": "missing_collector_contract",
+      "root": "quote\"and\\slash"
+    },
+    {
+      "accepted": false,
+      "error": "retained object fields differ",
+      "name": "missing_limits",
+      "root": "quote\"and\\slash"
+    },
+    {
+      "accepted": false,
+      "error": "retained version or authority limits differ",
+      "name": "promote_authority",
+      "root": "quote\"and\\slash"
+    },
+    {
+      "accepted": false,
+      "error": "retained version or authority limits differ",
+      "name": "promote_collector_outcome",
+      "root": "quote\"and\\slash"
+    },
+    {
+      "accepted": false,
+      "error": "retained version or authority limits differ",
+      "name": "promote_filesystem_custody",
+      "root": "quote\"and\\slash"
+    },
+    {
+      "accepted": false,
+      "error": "retained version or authority limits differ",
+      "name": "promote_loaded_image",
+      "root": "quote\"and\\slash"
+    },
+    {
+      "accepted": false,
+      "error": "retained version or authority limits differ",
+      "name": "promote_native_authentication",
+      "root": "quote\"and\\slash"
+    },
+    {
+      "accepted": false,
+      "error": "retained version or authority limits differ",
+      "name": "promote_policy_records",
+      "root": "quote\"and\\slash"
+    },
+    {
+      "accepted": false,
+      "error": "retained version or authority limits differ",
+      "name": "promote_publication",
+      "root": "quote\"and\\slash"
+    },
+    {
+      "accepted": false,
+      "error": "retained version or authority limits differ",
+      "name": "promote_source_bodies",
+      "root": "quote\"and\\slash"
+    },
+    {
+      "accepted": false,
+      "error": "retained object fields differ",
+      "name": "unknown_outer_field",
+      "root": "quote\"and\\slash"
+    },
+    {
+      "accepted": false,
+      "error": "retained version or authority limits differ",
+      "name": "legacy_outer_version",
+      "root": "quote\"and\\slash"
+    },
+    {
+      "accepted": false,
+      "error": "shared native envelope requires the new collector contract",
+      "name": "legacy_collector_version",
+      "root": "quote\"and\\slash"
+    },
+    {
+      "accepted": false,
+      "error": "unknown collection scope",
+      "name": "foreign_scope",
+      "root": "quote\"and\\slash"
+    },
+    {
+      "accepted": false,
+      "error": "retained object fields differ",
+      "name": "foreign_collector_field",
+      "root": "quote\"and\\slash"
+    },
+    {
+      "accepted": false,
+      "error": "retained object fields differ",
+      "name": "unversioned_collector",
+      "root": "quote\"and\\slash"
+    },
+    {
+      "accepted": false,
+      "error": "retained collector command differs from its exact version and scope",
+      "name": "mixed_legacy_command",
+      "root": "quote\"and\\slash"
+    },
+    {
+      "accepted": false,
+      "error": "retained collector command differs from its exact version and scope",
+      "name": "broadened_canonical_prefix",
+      "root": "quote\"and\\slash"
+    },
+    {
+      "accepted": false,
+      "error": "new retained envelope requires explicit shared-native layout",
+      "name": "wrong_capture_family_perl",
+      "root": "quote\"and\\slash"
+    },
+    {
+      "accepted": false,
+      "error": "new retained envelope requires explicit shared-native layout",
+      "name": "wrong_capture_family_private_0",
+      "root": "quote\"and\\slash"
+    },
+    {
+      "accepted": false,
+      "error": "expected five stable target snapshots",
+      "name": "missing_source_0",
+      "root": "quote\"and\\slash"
+    },
+    {
+      "accepted": false,
+      "error": "expected five stable target snapshots",
+      "name": "missing_source_1",
+      "root": "quote\"and\\slash"
+    },
+    {
+      "accepted": false,
+      "error": "expected five stable target snapshots",
+      "name": "missing_source_2",
+      "root": "quote\"and\\slash"
+    },
+    {
+      "accepted": false,
+      "error": "expected five stable target snapshots",
+      "name": "missing_source_3",
+      "root": "quote\"and\\slash"
+    },
+    {
+      "accepted": false,
+      "error": "expected five stable target snapshots",
+      "name": "missing_source_4",
+      "root": "quote\"and\\slash"
+    },
+    {
+      "accepted": false,
+      "error": "record fields differ",
+      "name": "missing_hold",
+      "root": "quote\"and\\slash"
+    },
+    {
+      "accepted": false,
+      "error": "record fields differ",
+      "name": "invented_native_entry",
+      "root": "quote\"and\\slash"
+    },
+    {
+      "accepted": false,
+      "error": "process, source or observation identity changed",
+      "name": "stale_birth",
+      "root": "quote\"and\\slash"
+    },
+    {
+      "accepted": false,
+      "error": "expected nonnegative integer",
+      "name": "normal_uid_bool",
+      "root": "quote\"and\\slash"
+    },
+    {
+      "accepted": false,
+      "error": "normal-user contract excludes root",
+      "name": "root_uid",
+      "root": "quote\"and\\slash"
+    },
+    {
+      "accepted": false,
+      "error": "process, source or observation identity changed",
+      "name": "reference_byte_drift",
+      "root": "quote\"and\\slash"
+    },
+    {
+      "accepted": true,
+      "bytes": 21823,
+      "name": "shared_0_fixture_path",
+      "root": "unicode-\u00e9-\ud83d\ude00",
+      "sha256": "0e971692afd6f5a2a719bde184728170bd469942cd5e811683ff95637998ee1f"
+    },
+    {
+      "accepted": true,
+      "bytes": 21873,
+      "name": "shared_0_execution_context",
+      "root": "unicode-\u00e9-\ud83d\ude00",
+      "sha256": "8c6c7174942964b51560a2d27a7a01ee53d72692e36d093bf783e4b20d062504"
+    },
+    {
+      "accepted": true,
+      "bytes": 21670,
+      "name": "shared_0_daemon_context",
+      "root": "unicode-\u00e9-\ud83d\ude00",
+      "sha256": "fa0300c987b2c12d726b2521da344ed5039fbe3c796a9265d01b0ee455cb39f6"
+    },
+    {
+      "accepted": true,
+      "bytes": 21823,
+      "name": "shared_1_fixture_path",
+      "root": "unicode-\u00e9-\ud83d\ude00",
+      "sha256": "03c966c3d46af90a856e450265cc339e7c2ef55f0c0638afe77da576f21963d8"
+    },
+    {
+      "accepted": true,
+      "bytes": 21873,
+      "name": "shared_1_execution_context",
+      "root": "unicode-\u00e9-\ud83d\ude00",
+      "sha256": "9b7ffcf9803348b2e4e879ffb52c9f4d42b589a067ffb05c7852a55f961ecf7b"
+    },
+    {
+      "accepted": true,
+      "bytes": 21670,
+      "name": "shared_1_daemon_context",
+      "root": "unicode-\u00e9-\ud83d\ude00",
+      "sha256": "745a9eae5e4c81e1005511f323264971163e52c5abd579a2482c58709b410770"
+    },
+    {
+      "accepted": true,
+      "bytes": 21823,
+      "name": "shared_other_observer_fixture_path",
+      "root": "unicode-\u00e9-\ud83d\ude00",
+      "sha256": "f0e569549b54b728d6d6f33314bda5b67084dae9d8d8d954f19cb38c4d4b9c5b"
+    },
+    {
+      "accepted": true,
+      "bytes": 21873,
+      "name": "shared_other_observer_execution_context",
+      "root": "unicode-\u00e9-\ud83d\ude00",
+      "sha256": "c006c40a7aa5fbfbd92fc6f6b8e3c760390352446037cc82d7e90fbdc1493a27"
+    },
+    {
+      "accepted": true,
+      "bytes": 21670,
+      "name": "shared_other_observer_daemon_context",
+      "root": "unicode-\u00e9-\ud83d\ude00",
+      "sha256": "f526e92cd71fca33fbb826304a0a50f4f045777099a265e214ed571dba0829af"
+    },
+    {
+      "accepted": false,
+      "error": "retained object fields differ",
+      "name": "missing_schema",
+      "root": "unicode-\u00e9-\ud83d\ude00"
+    },
+    {
+      "accepted": false,
+      "error": "retained object fields differ",
+      "name": "missing_normal_uid",
+      "root": "unicode-\u00e9-\ud83d\ude00"
+    },
+    {
+      "accepted": false,
+      "error": "retained object fields differ",
+      "name": "missing_capture",
+      "root": "unicode-\u00e9-\ud83d\ude00"
+    },
+    {
+      "accepted": false,
+      "error": "retained object fields differ",
+      "name": "missing_collector_contract",
+      "root": "unicode-\u00e9-\ud83d\ude00"
+    },
+    {
+      "accepted": false,
+      "error": "retained object fields differ",
+      "name": "missing_limits",
+      "root": "unicode-\u00e9-\ud83d\ude00"
+    },
+    {
+      "accepted": false,
+      "error": "retained version or authority limits differ",
+      "name": "promote_authority",
+      "root": "unicode-\u00e9-\ud83d\ude00"
+    },
+    {
+      "accepted": false,
+      "error": "retained version or authority limits differ",
+      "name": "promote_collector_outcome",
+      "root": "unicode-\u00e9-\ud83d\ude00"
+    },
+    {
+      "accepted": false,
+      "error": "retained version or authority limits differ",
+      "name": "promote_filesystem_custody",
+      "root": "unicode-\u00e9-\ud83d\ude00"
+    },
+    {
+      "accepted": false,
+      "error": "retained version or authority limits differ",
+      "name": "promote_loaded_image",
+      "root": "unicode-\u00e9-\ud83d\ude00"
+    },
+    {
+      "accepted": false,
+      "error": "retained version or authority limits differ",
+      "name": "promote_native_authentication",
+      "root": "unicode-\u00e9-\ud83d\ude00"
+    },
+    {
+      "accepted": false,
+      "error": "retained version or authority limits differ",
+      "name": "promote_policy_records",
+      "root": "unicode-\u00e9-\ud83d\ude00"
+    },
+    {
+      "accepted": false,
+      "error": "retained version or authority limits differ",
+      "name": "promote_publication",
+      "root": "unicode-\u00e9-\ud83d\ude00"
+    },
+    {
+      "accepted": false,
+      "error": "retained version or authority limits differ",
+      "name": "promote_source_bodies",
+      "root": "unicode-\u00e9-\ud83d\ude00"
+    },
+    {
+      "accepted": false,
+      "error": "retained object fields differ",
+      "name": "unknown_outer_field",
+      "root": "unicode-\u00e9-\ud83d\ude00"
+    },
+    {
+      "accepted": false,
+      "error": "retained version or authority limits differ",
+      "name": "legacy_outer_version",
+      "root": "unicode-\u00e9-\ud83d\ude00"
+    },
+    {
+      "accepted": false,
+      "error": "shared native envelope requires the new collector contract",
+      "name": "legacy_collector_version",
+      "root": "unicode-\u00e9-\ud83d\ude00"
+    },
+    {
+      "accepted": false,
+      "error": "unknown collection scope",
+      "name": "foreign_scope",
+      "root": "unicode-\u00e9-\ud83d\ude00"
+    },
+    {
+      "accepted": false,
+      "error": "retained object fields differ",
+      "name": "foreign_collector_field",
+      "root": "unicode-\u00e9-\ud83d\ude00"
+    },
+    {
+      "accepted": false,
+      "error": "retained object fields differ",
+      "name": "unversioned_collector",
+      "root": "unicode-\u00e9-\ud83d\ude00"
+    },
+    {
+      "accepted": false,
+      "error": "retained collector command differs from its exact version and scope",
+      "name": "mixed_legacy_command",
+      "root": "unicode-\u00e9-\ud83d\ude00"
+    },
+    {
+      "accepted": false,
+      "error": "retained collector command differs from its exact version and scope",
+      "name": "broadened_canonical_prefix",
+      "root": "unicode-\u00e9-\ud83d\ude00"
+    },
+    {
+      "accepted": false,
+      "error": "new retained envelope requires explicit shared-native layout",
+      "name": "wrong_capture_family_perl",
+      "root": "unicode-\u00e9-\ud83d\ude00"
+    },
+    {
+      "accepted": false,
+      "error": "new retained envelope requires explicit shared-native layout",
+      "name": "wrong_capture_family_private_0",
+      "root": "unicode-\u00e9-\ud83d\ude00"
+    },
+    {
+      "accepted": false,
+      "error": "expected five stable target snapshots",
+      "name": "missing_source_0",
+      "root": "unicode-\u00e9-\ud83d\ude00"
+    },
+    {
+      "accepted": false,
+      "error": "expected five stable target snapshots",
+      "name": "missing_source_1",
+      "root": "unicode-\u00e9-\ud83d\ude00"
+    },
+    {
+      "accepted": false,
+      "error": "expected five stable target snapshots",
+      "name": "missing_source_2",
+      "root": "unicode-\u00e9-\ud83d\ude00"
+    },
+    {
+      "accepted": false,
+      "error": "expected five stable target snapshots",
+      "name": "missing_source_3",
+      "root": "unicode-\u00e9-\ud83d\ude00"
+    },
+    {
+      "accepted": false,
+      "error": "expected five stable target snapshots",
+      "name": "missing_source_4",
+      "root": "unicode-\u00e9-\ud83d\ude00"
+    },
+    {
+      "accepted": false,
+      "error": "record fields differ",
+      "name": "missing_hold",
+      "root": "unicode-\u00e9-\ud83d\ude00"
+    },
+    {
+      "accepted": false,
+      "error": "record fields differ",
+      "name": "invented_native_entry",
+      "root": "unicode-\u00e9-\ud83d\ude00"
+    },
+    {
+      "accepted": false,
+      "error": "process, source or observation identity changed",
+      "name": "stale_birth",
+      "root": "unicode-\u00e9-\ud83d\ude00"
+    },
+    {
+      "accepted": false,
+      "error": "expected nonnegative integer",
+      "name": "normal_uid_bool",
+      "root": "unicode-\u00e9-\ud83d\ude00"
+    },
+    {
+      "accepted": false,
+      "error": "normal-user contract excludes root",
+      "name": "root_uid",
+      "root": "unicode-\u00e9-\ud83d\ude00"
+    },
+    {
+      "accepted": false,
+      "error": "process, source or observation identity changed",
+      "name": "reference_byte_drift",
+      "root": "unicode-\u00e9-\ud83d\ude00"
+    }
+  ],
+  "schema": "fsmgen.inactive_retained_qualification.v1"
+}

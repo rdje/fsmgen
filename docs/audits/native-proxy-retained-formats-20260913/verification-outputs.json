@@ -1,0 +1,146 @@
+[
+  {
+    "original": ".artifacts/logs/native-proxy-retained-formats-20260913/prepare.stdout",
+    "path": "docs/audits/native-proxy-retained-formats-20260913/result/prepare.stdout",
+    "sha256": "97e7c273525b08a035703021cc152d20a358df606c7fe1fce88ada60941161b6",
+    "size_bytes": 53
+  },
+  {
+    "original": ".artifacts/logs/native-proxy-retained-formats-20260913/prepare.stderr",
+    "path": "docs/audits/native-proxy-retained-formats-20260913/result/prepare.stderr",
+    "sha256": "06ab08cc6fba413890e4a6f5875a098614ad2ef310fb7f3124105226452e0112",
+    "size_bytes": 91
+  },
+  {
+    "original": ".artifacts/logs/native-proxy-retained-formats-20260913/prepare.exit",
+    "path": "docs/audits/native-proxy-retained-formats-20260913/result/prepare.exit",
+    "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa",
+    "size_bytes": 2
+  },
+  {
+    "original": ".artifacts/logs/native-proxy-retained-formats-20260913/qualify.stdout",
+    "path": "docs/audits/native-proxy-retained-formats-20260913/result/qualify.stdout",
+    "sha256": "ecc293f5489d3aa87f0d82b5bd00d8b01186f9251f7bcd259c3de62d8ca49183",
+    "size_bytes": 104
+  },
+  {
+    "original": ".artifacts/logs/native-proxy-retained-formats-20260913/qualify.stderr",
+    "path": "docs/audits/native-proxy-retained-formats-20260913/result/qualify.stderr",
+    "sha256": "9d1e614dca3f1e4fbdd410927bd37c1f7f7753cca9a9cc2c4ea53a83747625c9",
+    "size_bytes": 91
+  },
+  {
+    "original": ".artifacts/logs/native-proxy-retained-formats-20260913/qualify.exit",
+    "path": "docs/audits/native-proxy-retained-formats-20260913/result/qualify.exit",
+    "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa",
+    "size_bytes": 2
+  },
+  {
+    "original": ".artifacts/logs/native-proxy-retained-formats-20260913/audit.stdout",
+    "path": "docs/audits/native-proxy-retained-formats-20260913/result/audit.stdout",
+    "sha256": "2d8913bd1adb91f3f77d63160b573e0f3bef693362981325dc6d1afdb5dbc294",
+    "size_bytes": 343
+  },
+  {
+    "original": ".artifacts/logs/native-proxy-retained-formats-20260913/audit.stderr",
+    "path": "docs/audits/native-proxy-retained-formats-20260913/result/audit.stderr",
+    "sha256": "c9db90022fa5b4db2abc0795876ed37741ee46022b94d9dacb140d66c96d9bf6",
+    "size_bytes": 91
+  },
+  {
+    "original": ".artifacts/logs/native-proxy-retained-formats-20260913/audit.exit",
+    "path": "docs/audits/native-proxy-retained-formats-20260913/result/audit.exit",
+    "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa",
+    "size_bytes": 2
+  },
+  {
+    "original": ".artifacts/logs/native-proxy-retained-formats-20260913/saved.stdout",
+    "path": "docs/audits/native-proxy-retained-formats-20260913/result/saved.stdout",
+    "sha256": "2d8913bd1adb91f3f77d63160b573e0f3bef693362981325dc6d1afdb5dbc294",
+    "size_bytes": 343
+  },
+  {
+    "original": ".artifacts/logs/native-proxy-retained-formats-20260913/saved.stderr",
+    "path": "docs/audits/native-proxy-retained-formats-20260913/result/saved.stderr",
+    "sha256": "61fcb7fe0fea5f9fb50e17190f1d6d998b11905a392592b05c2be76c427f5c19",
+    "size_bytes": 91
+  },
+  {
+    "original": ".artifacts/logs/native-proxy-retained-formats-20260913/saved.exit",
+    "path": "docs/audits/native-proxy-retained-formats-20260913/result/saved.exit",
+    "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa",
+    "size_bytes": 2
+  },
+  {
+    "original": ".artifacts/logs/native-proxy-retained-formats-20260913/book.stdout",
+    "path": "docs/audits/native-proxy-retained-formats-20260913/result/book.stdout",
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "size_bytes": 0
+  },
+  {
+    "original": ".artifacts/logs/native-proxy-retained-formats-20260913/book.stderr",
+    "path": "docs/audits/native-proxy-retained-formats-20260913/result/book.stderr",
+    "sha256": "163e00449b8305dbe333b634e2c9d5e027f2ddf2a0c8d8549de06a3c5ded6ab5",
+    "size_bytes": 334
+  },
+  {
+    "original": ".artifacts/logs/native-proxy-retained-formats-20260913/book.exit",
+    "path": "docs/audits/native-proxy-retained-formats-20260913/result/book.exit",
+    "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa",
+    "size_bytes": 2
+  },
+  {
+    "original": ".artifacts/logs/native-proxy-retained-formats-20260913/book-inspect.stdout",
+    "path": "docs/audits/native-proxy-retained-formats-20260913/result/book-inspect.stdout",
+    "sha256": "c841ba804d494e460597e056d5457214301593cb856045a0d24f950eedbda5cb",
+    "size_bytes": 750
+  },
+  {
+    "original": ".artifacts/logs/native-proxy-retained-formats-20260913/book-inspect.stderr",
+    "path": "docs/audits/native-proxy-retained-formats-20260913/result/book-inspect.stderr",
+    "sha256": "e7c487cded679d2597abc285390e3d43ae517edbbd627dc875dd39ec2a16a2d3",
+    "size_bytes": 91
+  },
+  {
+    "original": ".artifacts/logs/native-proxy-retained-formats-20260913/book-inspect.exit",
+    "path": "docs/audits/native-proxy-retained-formats-20260913/result/book-inspect.exit",
+    "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa",
+    "size_bytes": 2
+  },
+  {
+    "original": ".artifacts/logs/native-proxy-retained-formats-20260913/knowledge-generate.stdout",
+    "path": "docs/audits/native-proxy-retained-formats-20260913/result/knowledge-generate.stdout",
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "size_bytes": 0
+  },
+  {
+    "original": ".artifacts/logs/native-proxy-retained-formats-20260913/knowledge-generate.stderr",
+    "path": "docs/audits/native-proxy-retained-formats-20260913/result/knowledge-generate.stderr",
+    "sha256": "30dcb6228f2ca09e8e6e849f26bdd61d230c97739fedc153248721fbba25890b",
+    "size_bytes": 212
+  },
+  {
+    "original": ".artifacts/logs/native-proxy-retained-formats-20260913/knowledge-generate.exit",
+    "path": "docs/audits/native-proxy-retained-formats-20260913/result/knowledge-generate.exit",
+    "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa",
+    "size_bytes": 2
+  },
+  {
+    "original": ".artifacts/logs/native-proxy-retained-formats-20260913/knowledge-check.stdout",
+    "path": "docs/audits/native-proxy-retained-formats-20260913/result/knowledge-check.stdout",
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "size_bytes": 0
+  },
+  {
+    "original": ".artifacts/logs/native-proxy-retained-formats-20260913/knowledge-check.stderr",
+    "path": "docs/audits/native-proxy-retained-formats-20260913/result/knowledge-check.stderr",
+    "sha256": "1b4d55c2f2af8ac67eabb891b86d6c764052ad1eba5f133cd6cb99a01e98bcae",
+    "size_bytes": 219
+  },
+  {
+    "original": ".artifacts/logs/native-proxy-retained-formats-20260913/knowledge-check.exit",
+    "path": "docs/audits/native-proxy-retained-formats-20260913/result/knowledge-check.exit",
+    "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa",
+    "size_bytes": 2
+  }
+]
