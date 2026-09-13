@@ -3057,6 +3057,33 @@ original startup qualification and product activation remain separately owned.
 It does not qualify arbitrary-writer atomicity or ambiguous operating-system
 close failures.
 
+Preparation compatibility now has source-bound, inactive version selection.
+The existing `fsmgen.test.rust_proxy_fixture.v1` layout covers selected Perl,
+private native preparation, and failures before an implementation is selected.
+For example, an early workspace failure can retain `implementation: null`,
+`ok: 0` and `executable: null`. Native implementation alone does not imply a
+new format. The prospective `fsmgen.test.rust_proxy_fixture.v2` layout is
+reserved for shared-image native preparation; it adds `compilation_sources`
+and `image_reference`. Recognizing a layout grants no runtime authority.
+Complete preparation status, source and reference validation remains separate.
+
+Source ordering follows each producer. Legacy preparation lists generated C
+before the executable; legacy native capture lists the wrapper, executable
+and C source. Shared-image acquisition snapshots the wrapper, private reference,
+global reference, C source and image. Compilation identities and selected
+canonical identities must remain distinct in the new preparation record.
+
+The frozen execution-context reader still rejects canonical-only or mixed
+source prefixes and altered command quoting. Daemon-only command bytes remain
+unchanged and do not satisfy that execution-context reader. Native main entry
+remains unknown. The source contracts preserve these boundaries for the next
+preparation, capture and retained-format implementation slices. Recheck the
+saved finite layout and pure command controls without launching fixtures:
+
+```sh
+scripts/run_with_ram_guard.sh -- python3 -B docs/audits/native-proxy-version-contracts-20260913/qualify.py --verify-saved
+```
+
 The inactive archive record implementation now derives a closed specification
 from the complete original acquisition and request. It keeps the ordered wrapper,
 private reference, global reference, C source and image snapshots, including

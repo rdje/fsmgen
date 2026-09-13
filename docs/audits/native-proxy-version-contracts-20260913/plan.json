@@ -1,0 +1,79 @@
+{
+  "accepted_coordinates": [
+    {
+      "coordinates": [
+        0,
+        0,
+        0
+      ],
+      "layout": "selected_perl_v1"
+    },
+    {
+      "coordinates": [
+        0,
+        1,
+        0
+      ],
+      "layout": "legacy_private_native_v1"
+    },
+    {
+      "coordinates": [
+        0,
+        2,
+        0
+      ],
+      "layout": "unselected_failure_v1"
+    },
+    {
+      "coordinates": [
+        1,
+        1,
+        1
+      ],
+      "layout": "shared_native_v2"
+    }
+  ],
+  "domain": {
+    "fields": [
+      "legacy",
+      "native",
+      "legacy_without_diagnostic",
+      "legacy_with_unknown"
+    ],
+    "implementations": [
+      "perl",
+      "native",
+      null,
+      "unknown",
+      [],
+      1,
+      true
+    ],
+    "schemas": [
+      "legacy_v1",
+      "shared_native_v2",
+      "unknown",
+      null
+    ]
+  },
+  "durability": "Commit contracts, scripts, pins, original input references and exact raw outputs; --verify-saved re-derives source contracts and finite selected domain read-only.",
+  "failure_policy": "Retain first source pins and raw stdout/stderr/exit; root-cause before changed admission. No original fixture replay.",
+  "limitations": [
+    "Layout selection is not complete preparation-record validation and grants no runtime authority.",
+    "Early legacy failures may have no selected implementation; failure remains non-runnable.",
+    "Full status, identity, reference, byte and cleanup validation belongs to preparation .5.2.",
+    "Target/collection admission belongs to .5.3; retained source/archive/publication extensions belong to .5.4.",
+    "Native shared-image collector and retained-format versions are not assigned by this planning slice.",
+    "No original producer/main, compiler, collector, native executable or library is run; pure old command/reader/main-entry definitions only.",
+    "Original failed hard-link and startup outcomes remain failed; no runtime or scan repair is claimed."
+  ],
+  "oracle_basis": {
+    "command": "Original launcher pure command/normalization definitions compared against the independently frozen execution-context reader; original daemon receipt checks unchanged daemon bytes.",
+    "legacy": "Exact original RustProxyFixture initial result, selected Perl/native branches and original saved native preparation; native implementation was already emitted with v1.",
+    "new": "Pre-existing canonical native design explicitly restricts native preparation v2; selected Perl stays exact v1.",
+    "source_order": "Original producer push order, sampler return syntax and qualified acquisition specification order; no shared normalized ordering is inferred."
+  },
+  "owner": "HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.12.4.1.3.5.1",
+  "schema": "fsmgen.inactive_proxy_version_plan.v1",
+  "source_revision": "8dbea4b6a76de2417a9a66e535b574572212c481"
+}

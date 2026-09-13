@@ -1,0 +1,27 @@
+[
+  {
+    "path": "docs/audits/native-proxy-version-contracts-20260913/source_contracts.py",
+    "sha256": "b0b44a082529c9d5e653913ccb0f2db981a4ce74f038215552ccfd80d6da25c5",
+    "size_bytes": 7067
+  },
+  {
+    "path": "docs/audits/native-proxy-version-contracts-20260913/dispatch.py",
+    "sha256": "34d4ca4c34fa98a7fa2e1b157e01eb409fb98e0bf1dd6b18ac3065e5eb0e5077",
+    "size_bytes": 1537
+  },
+  {
+    "path": "docs/audits/native-proxy-version-contracts-20260913/qualify.py",
+    "sha256": "388eed5194ab145f705b7360724de4dd78189b0d07349a4803aa7b5a7209b334",
+    "size_bytes": 8824
+  },
+  {
+    "path": "docs/audits/native-proxy-version-contracts-20260913/plan.json",
+    "sha256": "63e193aec6c2b23bb1b637be022fc5be3527e9927b2d050b5f436ff78c7ae0f2",
+    "size_bytes": 2891
+  },
+  {
+    "path": "docs/audits/native-proxy-version-contracts-20260913/compaction-census.json",
+    "sha256": "08fc6262df8d6444ab69604b22eb59fd763590035eb42f0edfb1c6fc47365787",
+    "size_bytes": 4319
+  }
+]

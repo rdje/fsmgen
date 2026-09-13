@@ -1,0 +1,1040 @@
+{
+  "classifier_counterexamples": [
+    {
+      "control": "native_implies_v2",
+      "correct": "legacy_private_native_v1",
+      "original_schema": "fsmgen.test.rust_proxy_fixture.v1",
+      "wrong": "shared_native_v2"
+    },
+    {
+      "control": "v1_implies_perl",
+      "correct": "unselected_failure_v1",
+      "wrong": "selected_perl_v1"
+    }
+  ],
+  "fixture_allocations": 0,
+  "limitations": [
+    "Layout selection is not complete preparation-record validation and grants no runtime authority.",
+    "Early legacy failures may have no selected implementation; failure remains non-runnable.",
+    "Full status, identity, reference, byte and cleanup validation belongs to preparation .5.2.",
+    "Target/collection admission belongs to .5.3; retained source/archive/publication extensions belong to .5.4.",
+    "Native shared-image collector and retained-format versions are not assigned by this planning slice.",
+    "No original producer/main, compiler, collector, native executable or library is run; pure old command/reader/main-entry definitions only.",
+    "Original failed hard-link and startup outcomes remain failed; no runtime or scan repair is claimed."
+  ],
+  "malformed_envelopes_rejected": 4,
+  "native_executions": 0,
+  "original_preparation_preserved": true,
+  "rows": [
+    {
+      "coordinates": [
+        0,
+        0,
+        0
+      ],
+      "outcome": "selected_perl_v1"
+    },
+    {
+      "coordinates": [
+        0,
+        0,
+        1
+      ],
+      "outcome": "rejected"
+    },
+    {
+      "coordinates": [
+        0,
+        0,
+        2
+      ],
+      "outcome": "rejected"
+    },
+    {
+      "coordinates": [
+        0,
+        0,
+        3
+      ],
+      "outcome": "rejected"
+    },
+    {
+      "coordinates": [
+        0,
+        1,
+        0
+      ],
+      "outcome": "legacy_private_native_v1"
+    },
+    {
+      "coordinates": [
+        0,
+        1,
+        1
+      ],
+      "outcome": "rejected"
+    },
+    {
+      "coordinates": [
+        0,
+        1,
+        2
+      ],
+      "outcome": "rejected"
+    },
+    {
+      "coordinates": [
+        0,
+        1,
+        3
+      ],
+      "outcome": "rejected"
+    },
+    {
+      "coordinates": [
+        0,
+        2,
+        0
+      ],
+      "outcome": "unselected_failure_v1"
+    },
+    {
+      "coordinates": [
+        0,
+        2,
+        1
+      ],
+      "outcome": "rejected"
+    },
+    {
+      "coordinates": [
+        0,
+        2,
+        2
+      ],
+      "outcome": "rejected"
+    },
+    {
+      "coordinates": [
+        0,
+        2,
+        3
+      ],
+      "outcome": "rejected"
+    },
+    {
+      "coordinates": [
+        0,
+        3,
+        0
+      ],
+      "outcome": "rejected"
+    },
+    {
+      "coordinates": [
+        0,
+        3,
+        1
+      ],
+      "outcome": "rejected"
+    },
+    {
+      "coordinates": [
+        0,
+        3,
+        2
+      ],
+      "outcome": "rejected"
+    },
+    {
+      "coordinates": [
+        0,
+        3,
+        3
+      ],
+      "outcome": "rejected"
+    },
+    {
+      "coordinates": [
+        0,
+        4,
+        0
+      ],
+      "outcome": "rejected"
+    },
+    {
+      "coordinates": [
+        0,
+        4,
+        1
+      ],
+      "outcome": "rejected"
+    },
+    {
+      "coordinates": [
+        0,
+        4,
+        2
+      ],
+      "outcome": "rejected"
+    },
+    {
+      "coordinates": [
+        0,
+        4,
+        3
+      ],
+      "outcome": "rejected"
+    },
+    {
+      "coordinates": [
+        0,
+        5,
+        0
+      ],
+      "outcome": "rejected"
+    },
+    {
+      "coordinates": [
+        0,
+        5,
+        1
+      ],
+      "outcome": "rejected"
+    },
+    {
+      "coordinates": [
+        0,
+        5,
+        2
+      ],
+      "outcome": "rejected"
+    },
+    {
+      "coordinates": [
+        0,
+        5,
+        3
+      ],
+      "outcome": "rejected"
+    },
+    {
+      "coordinates": [
+        0,
+        6,
+        0
+      ],
+      "outcome": "rejected"
+    },
+    {
+      "coordinates": [
+        0,
+        6,
+        1
+      ],
+      "outcome": "rejected"
+    },
+    {
+      "coordinates": [
+        0,
+        6,
+        2
+      ],
+      "outcome": "rejected"
+    },
+    {
+      "coordinates": [
+        0,
+        6,
+        3
+      ],
+      "outcome": "rejected"
+    },
+    {
+      "coordinates": [
+        1,
+        0,
+        0
+      ],
+      "outcome": "rejected"
+    },
+    {
+      "coordinates": [
+        1,
+        0,
+        1
+      ],
+      "outcome": "rejected"
+    },
+    {
+      "coordinates": [
+        1,
+        0,
+        2
+      ],
+      "outcome": "rejected"
+    },
+    {
+      "coordinates": [
+        1,
+        0,
+        3
+      ],
+      "outcome": "rejected"
+    },
+    {
+      "coordinates": [
+        1,
+        1,
+        0
+      ],
+      "outcome": "rejected"
+    },
+    {
+      "coordinates": [
+        1,
+        1,
+        1
+      ],
+      "outcome": "shared_native_v2"
+    },
+    {
+      "coordinates": [
+        1,
+        1,
+        2
+      ],
+      "outcome": "rejected"
+    },
+    {
+      "coordinates": [
+        1,
+        1,
+        3
+      ],
+      "outcome": "rejected"
+    },
+    {
+      "coordinates": [
+        1,
+        2,
+        0
+      ],
+      "outcome": "rejected"
+    },
+    {
+      "coordinates": [
+        1,
+        2,
+        1
+      ],
+      "outcome": "rejected"
+    },
+    {
+      "coordinates": [
+        1,
+        2,
+        2
+      ],
+      "outcome": "rejected"
+    },
+    {
+      "coordinates": [
+        1,
+        2,
+        3
+      ],
+      "outcome": "rejected"
+    },
+    {
+      "coordinates": [
+        1,
+        3,
+        0
+      ],
+      "outcome": "rejected"
+    },
+    {
+      "coordinates": [
+        1,
+        3,
+        1
+      ],
+      "outcome": "rejected"
+    },
+    {
+      "coordinates": [
+        1,
+        3,
+        2
+      ],
+      "outcome": "rejected"
+    },
+    {
+      "coordinates": [
+        1,
+        3,
+        3
+      ],
+      "outcome": "rejected"
+    },
+    {
+      "coordinates": [
+        1,
+        4,
+        0
+      ],
+      "outcome": "rejected"
+    },
+    {
+      "coordinates": [
+        1,
+        4,
+        1
+      ],
+      "outcome": "rejected"
+    },
+    {
+      "coordinates": [
+        1,
+        4,
+        2
+      ],
+      "outcome": "rejected"
+    },
+    {
+      "coordinates": [
+        1,
+        4,
+        3
+      ],
+      "outcome": "rejected"
+    },
+    {
+      "coordinates": [
+        1,
+        5,
+        0
+      ],
+      "outcome": "rejected"
+    },
+    {
+      "coordinates": [
+        1,
+        5,
+        1
+      ],
+      "outcome": "rejected"
+    },
+    {
+      "coordinates": [
+        1,
+        5,
+        2
+      ],
+      "outcome": "rejected"
+    },
+    {
+      "coordinates": [
+        1,
+        5,
+        3
+      ],
+      "outcome": "rejected"
+    },
+    {
+      "coordinates": [
+        1,
+        6,
+        0
+      ],
+      "outcome": "rejected"
+    },
+    {
+      "coordinates": [
+        1,
+        6,
+        1
+      ],
+      "outcome": "rejected"
+    },
+    {
+      "coordinates": [
+        1,
+        6,
+        2
+      ],
+      "outcome": "rejected"
+    },
+    {
+      "coordinates": [
+        1,
+        6,
+        3
+      ],
+      "outcome": "rejected"
+    },
+    {
+      "coordinates": [
+        2,
+        0,
+        0
+      ],
+      "outcome": "rejected"
+    },
+    {
+      "coordinates": [
+        2,
+        0,
+        1
+      ],
+      "outcome": "rejected"
+    },
+    {
+      "coordinates": [
+        2,
+        0,
+        2
+      ],
+      "outcome": "rejected"
+    },
+    {
+      "coordinates": [
+        2,
+        0,
+        3
+      ],
+      "outcome": "rejected"
+    },
+    {
+      "coordinates": [
+        2,
+        1,
+        0
+      ],
+      "outcome": "rejected"
+    },
+    {
+      "coordinates": [
+        2,
+        1,
+        1
+      ],
+      "outcome": "rejected"
+    },
+    {
+      "coordinates": [
+        2,
+        1,
+        2
+      ],
+      "outcome": "rejected"
+    },
+    {
+      "coordinates": [
+        2,
+        1,
+        3
+      ],
+      "outcome": "rejected"
+    },
+    {
+      "coordinates": [
+        2,
+        2,
+        0
+      ],
+      "outcome": "rejected"
+    },
+    {
+      "coordinates": [
+        2,
+        2,
+        1
+      ],
+      "outcome": "rejected"
+    },
+    {
+      "coordinates": [
+        2,
+        2,
+        2
+      ],
+      "outcome": "rejected"
+    },
+    {
+      "coordinates": [
+        2,
+        2,
+        3
+      ],
+      "outcome": "rejected"
+    },
+    {
+      "coordinates": [
+        2,
+        3,
+        0
+      ],
+      "outcome": "rejected"
+    },
+    {
+      "coordinates": [
+        2,
+        3,
+        1
+      ],
+      "outcome": "rejected"
+    },
+    {
+      "coordinates": [
+        2,
+        3,
+        2
+      ],
+      "outcome": "rejected"
+    },
+    {
+      "coordinates": [
+        2,
+        3,
+        3
+      ],
+      "outcome": "rejected"
+    },
+    {
+      "coordinates": [
+        2,
+        4,
+        0
+      ],
+      "outcome": "rejected"
+    },
+    {
+      "coordinates": [
+        2,
+        4,
+        1
+      ],
+      "outcome": "rejected"
+    },
+    {
+      "coordinates": [
+        2,
+        4,
+        2
+      ],
+      "outcome": "rejected"
+    },
+    {
+      "coordinates": [
+        2,
+        4,
+        3
+      ],
+      "outcome": "rejected"
+    },
+    {
+      "coordinates": [
+        2,
+        5,
+        0
+      ],
+      "outcome": "rejected"
+    },
+    {
+      "coordinates": [
+        2,
+        5,
+        1
+      ],
+      "outcome": "rejected"
+    },
+    {
+      "coordinates": [
+        2,
+        5,
+        2
+      ],
+      "outcome": "rejected"
+    },
+    {
+      "coordinates": [
+        2,
+        5,
+        3
+      ],
+      "outcome": "rejected"
+    },
+    {
+      "coordinates": [
+        2,
+        6,
+        0
+      ],
+      "outcome": "rejected"
+    },
+    {
+      "coordinates": [
+        2,
+        6,
+        1
+      ],
+      "outcome": "rejected"
+    },
+    {
+      "coordinates": [
+        2,
+        6,
+        2
+      ],
+      "outcome": "rejected"
+    },
+    {
+      "coordinates": [
+        2,
+        6,
+        3
+      ],
+      "outcome": "rejected"
+    },
+    {
+      "coordinates": [
+        3,
+        0,
+        0
+      ],
+      "outcome": "rejected"
+    },
+    {
+      "coordinates": [
+        3,
+        0,
+        1
+      ],
+      "outcome": "rejected"
+    },
+    {
+      "coordinates": [
+        3,
+        0,
+        2
+      ],
+      "outcome": "rejected"
+    },
+    {
+      "coordinates": [
+        3,
+        0,
+        3
+      ],
+      "outcome": "rejected"
+    },
+    {
+      "coordinates": [
+        3,
+        1,
+        0
+      ],
+      "outcome": "rejected"
+    },
+    {
+      "coordinates": [
+        3,
+        1,
+        1
+      ],
+      "outcome": "rejected"
+    },
+    {
+      "coordinates": [
+        3,
+        1,
+        2
+      ],
+      "outcome": "rejected"
+    },
+    {
+      "coordinates": [
+        3,
+        1,
+        3
+      ],
+      "outcome": "rejected"
+    },
+    {
+      "coordinates": [
+        3,
+        2,
+        0
+      ],
+      "outcome": "rejected"
+    },
+    {
+      "coordinates": [
+        3,
+        2,
+        1
+      ],
+      "outcome": "rejected"
+    },
+    {
+      "coordinates": [
+        3,
+        2,
+        2
+      ],
+      "outcome": "rejected"
+    },
+    {
+      "coordinates": [
+        3,
+        2,
+        3
+      ],
+      "outcome": "rejected"
+    },
+    {
+      "coordinates": [
+        3,
+        3,
+        0
+      ],
+      "outcome": "rejected"
+    },
+    {
+      "coordinates": [
+        3,
+        3,
+        1
+      ],
+      "outcome": "rejected"
+    },
+    {
+      "coordinates": [
+        3,
+        3,
+        2
+      ],
+      "outcome": "rejected"
+    },
+    {
+      "coordinates": [
+        3,
+        3,
+        3
+      ],
+      "outcome": "rejected"
+    },
+    {
+      "coordinates": [
+        3,
+        4,
+        0
+      ],
+      "outcome": "rejected"
+    },
+    {
+      "coordinates": [
+        3,
+        4,
+        1
+      ],
+      "outcome": "rejected"
+    },
+    {
+      "coordinates": [
+        3,
+        4,
+        2
+      ],
+      "outcome": "rejected"
+    },
+    {
+      "coordinates": [
+        3,
+        4,
+        3
+      ],
+      "outcome": "rejected"
+    },
+    {
+      "coordinates": [
+        3,
+        5,
+        0
+      ],
+      "outcome": "rejected"
+    },
+    {
+      "coordinates": [
+        3,
+        5,
+        1
+      ],
+      "outcome": "rejected"
+    },
+    {
+      "coordinates": [
+        3,
+        5,
+        2
+      ],
+      "outcome": "rejected"
+    },
+    {
+      "coordinates": [
+        3,
+        5,
+        3
+      ],
+      "outcome": "rejected"
+    },
+    {
+      "coordinates": [
+        3,
+        6,
+        0
+      ],
+      "outcome": "rejected"
+    },
+    {
+      "coordinates": [
+        3,
+        6,
+        1
+      ],
+      "outcome": "rejected"
+    },
+    {
+      "coordinates": [
+        3,
+        6,
+        2
+      ],
+      "outcome": "rejected"
+    },
+    {
+      "coordinates": [
+        3,
+        6,
+        3
+      ],
+      "outcome": "rejected"
+    }
+  ],
+  "schema": "fsmgen.inactive_proxy_version_qualification.v1",
+  "source_checks": {
+    "daemon_rejected_by_execution_reader": true,
+    "native_main_entry": "unknown",
+    "original_daemon_preserved": true,
+    "retained_command_controls": [
+      {
+        "rejected": [
+          "canonical_only",
+          "mixed_prefix",
+          "missing_delimiter",
+          "wrong_schema",
+          "unquoted_prefix"
+        ],
+        "retained_command": [
+          "/usr/bin/log",
+          "stream",
+          "--style",
+          "ndjson",
+          "--level",
+          "debug",
+          "--timeout",
+          "240",
+          "--predicate",
+          "process == \"syspolicyd\" AND (eventMessage CONTAINS \"<repo>/.artifacts/tmp/process-supervisor-tests/\" OR subsystem == \"com.apple.syspolicy.exec\")"
+        ],
+        "root_spelling": "<repo>"
+      },
+      {
+        "rejected": [
+          "canonical_only",
+          "mixed_prefix",
+          "missing_delimiter",
+          "wrong_schema",
+          "unquoted_prefix"
+        ],
+        "retained_command": [
+          "/usr/bin/log",
+          "stream",
+          "--style",
+          "ndjson",
+          "--level",
+          "debug",
+          "--timeout",
+          "240",
+          "--predicate",
+          "process == \"syspolicyd\" AND (eventMessage CONTAINS \"<repo>/.artifacts/tmp/process-supervisor-tests/\" OR subsystem == \"com.apple.syspolicy.exec\")"
+        ],
+        "root_spelling": "root with spaces"
+      },
+      {
+        "rejected": [
+          "canonical_only",
+          "mixed_prefix",
+          "missing_delimiter",
+          "wrong_schema",
+          "unquoted_prefix"
+        ],
+        "retained_command": [
+          "/usr/bin/log",
+          "stream",
+          "--style",
+          "ndjson",
+          "--level",
+          "debug",
+          "--timeout",
+          "240",
+          "--predicate",
+          "process == \"syspolicyd\" AND (eventMessage CONTAINS \"<repo>/.artifacts/tmp/process-supervisor-tests/\" OR subsystem == \"com.apple.syspolicy.exec\")"
+        ],
+        "root_spelling": "root\"quoted"
+      },
+      {
+        "rejected": [
+          "canonical_only",
+          "mixed_prefix",
+          "missing_delimiter",
+          "wrong_schema",
+          "unquoted_prefix"
+        ],
+        "retained_command": [
+          "/usr/bin/log",
+          "stream",
+          "--style",
+          "ndjson",
+          "--level",
+          "debug",
+          "--timeout",
+          "240",
+          "--predicate",
+          "process == \"syspolicyd\" AND (eventMessage CONTAINS \"<repo>/.artifacts/tmp/process-supervisor-tests/\" OR subsystem == \"com.apple.syspolicy.exec\")"
+        ],
+        "root_spelling": "root\\escaped"
+      }
+    ]
+  },
+  "unselected_failure_controls": [
+    {
+      "field": "ok",
+      "value": true
+    },
+    {
+      "field": "ok",
+      "value": 1
+    },
+    {
+      "field": "ok",
+      "value": "0"
+    },
+    {
+      "field": "executable",
+      "value": "inert/rustup"
+    }
+  ]
+}

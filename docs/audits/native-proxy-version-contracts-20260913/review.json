@@ -1,0 +1,23 @@
+{
+  "claim_legs": {
+    "durability": "Tracked source scripts, closed plan, before-run pins, original Git inputs, exact saved outcomes and byte-verified raw output copies survive without original private logs or fixture recreation. The saved verifier rejects source/result drift.",
+    "falsification": "Independent old native preparation and initial failure branch contradict inferred-version shortcuts. Unchanged launcher and separately frozen reader reject cross-version/mixed/canonical-prefix/quoting changes. Native main-entry pure branches stay unknown.",
+    "re_derivation": "qualify.py --verify-saved compares each current input with its exact selected Git epoch, re-derives all contract bodies and reruns every finite selected layout/command case."
+  },
+  "evidence": {
+    "admission_pins": "docs/audits/native-proxy-version-contracts-20260913/preflight-pins.json",
+    "book": "docs/audits/native-proxy-version-contracts-20260913/book-review.json",
+    "contracts": "docs/audits/native-proxy-version-contracts-20260913/contracts.json",
+    "history": "docs/audits/native-proxy-version-contracts-20260913/compaction-census.json",
+    "raw_outputs": "docs/audits/native-proxy-version-contracts-20260913/verification-outputs.json",
+    "results": "docs/audits/native-proxy-version-contracts-20260913/result/qualification.json",
+    "source_pins": "docs/audits/native-proxy-version-contracts-20260913/source-pins.json"
+  },
+  "next_action": "Implement inactive native shared-image preparation record validation under .5.2.",
+  "outcome": "Source contract, finite layout dispatch and frozen pure-reader qualification passed on first execution; saved-only verification passed.",
+  "owner": "HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.12.4.1.3.5.1",
+  "preserved": "Original hard-link experiment remains failed; old daemon receipt, legacy v1 interpretation, native bounds and historical startup gates remain unchanged.",
+  "schema": "fsmgen.inactive_proxy_version_review.v1",
+  "scope": "Not complete preparation record validation, capture admission, retained-format extension or native activation.",
+  "source_revision": "8dbea4b6a76de2417a9a66e535b574572212c481"
+}

@@ -2763,53 +2763,14 @@ decomposes the architecture needed to move beyond that bounded foundation.
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.12.4.1.3.4.4.5`
   Status: `done`
   Goal: `Falsify omitted release closure through retained live handles.`
-  Acceptance: `Deliberately omit declared source, lock and directory closes under uniquely identified counterimplementations. Retain actual descriptor aliases through the original verdict, independently detect every open handle even when the prototype returns success, and only then close each exact live object once through separately recorded observer recovery. Preserve original failed verdicts, before/after unlink facts, other-owner/archive/image state and disjoint absent allocations. Do not count recovery as implementation closure or rerun historical producers.`
-  Verification: `Selection, ordinary/equal/active/last execution and complete joined qualification are done under .5.1 through .5.6. The complete saved domain preserves every original failed closure verdict, actual open native alias, exact later recovery, profile state and absent root, with independent counts and source-epoch checks. Evidence and explicit representative-scope limits are retained in docs/audits/native-proxy-release-omission-join-20260913/result/join.json; this does not close final release, native/lifetime or historical startup/parent/full CI/push.`
-  Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.12.4.1.3.4.4.5.6: join complete selected release omission evidence`
-
-  Children: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.12.4.1.3.4.4.5.1, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.12.4.1.3.4.4.5.2, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.12.4.1.3.4.4.5.3, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.12.4.1.3.4.4.5.4, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.12.4.1.3.4.4.5.5, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.12.4.1.3.4.4.5.6`
-
-- ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.12.4.1.3.4.4.5.1`
-  Status: `done`
-  Goal: `Pin genuine omission cases and separately observed recovery.`
-  Acceptance: `Before any fixture, authenticate the original release observer and completed source/close-report domains; select bounded source, directory and lock omission controls across original profiles. Define independently identified held aliases, original verdict/liveness snapshots and exact later observer recovery, without counting recovery as implementation closure. Distinguish intentional retention from ordinary lexical cleanup and preserve original effects. Declare separately owned execution/join partitions and compact only completed unowned subtrees after a fresh live-registry census; no containment ceiling grows.`
-  Verification: `Pinned source/event selection agrees with independent source ownership across 44 prospective cases: 4 healthy, 28 source, 8 directory and 4 lock omissions. Original observer source proves strong references through its snapshot and their removal from returned records; exact alias retention, original liveness and later recovery are distinct. All 32 case, 14 protocol and 2 root-domain falsifiers reject; 28076 predecessor roots remain absent. Seven exact result copies and saved-only checks pass. No omission fixture or native process executed. Completed composition history is version-retrievable after fresh parsed/raw registry census; no ceiling grows. Book rendering, question preservation and task/claim gates accompany docs/audits/native-proxy-release-omission-selection-20260913/review.json; ordinary execution first qualifies current-input bindings.`
-  Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.12.4.1.3.4.4.5.1: pin genuine release omission selection and recovery`
-
-- ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.12.4.1.3.4.4.5.2`
-  Status: `done`
-  Goal: `Qualify ordinary genuine omitted-close controls.`
-  Acceptance: `Before ordinary fixtures, qualify portable current-input bindings and pure order variations. Execute only the pinned ordinary counterimplementations; retain exact selected aliases beyond the original verdict, prove native liveness and original-auditor rejection, then record exact separate observer recovery and disjoint absent roots. Healthy controls remain implementation-closed.`
-  Verification: `First pure binding and independent close-order preflight pass: 42 variants, 462 resolutions and 147 TAP assertions with 10 malformed recipes and 8 altered binding results rejected. First ordinary fixture and audit pass across 11 cases/179 TAP assertions: one healthy control and ten actual omissions. Every omitted alias survives the original open-handle verdict and unchanged original-auditor rejection, then exact separate recovery closes it while preserving the full original snapshot. Independent source/native/effect checks cover 1881 handles, 6732 calls, 21703 events, 1320 reads and 11 unlinks. All 19 row, 3 domain and 3 header falsifiers reject; 44 new and 28076 prior roots are absent. Twenty-nine exact main copies and eight preflight copies survive saved-only verification. Book rendering, original-question retention, exact acceptance history and task/claim gates accompany docs/audits/native-proxy-observation-archive-release-omissions-ordinary-20260913/review.json. No original producer, compiler or native fixture process is attempted; equal-reference omissions are next.`
-  Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.12.4.1.3.4.4.5.2: qualify ordinary release omissions and separate recovery`
-
-- ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.12.4.1.3.4.4.5.3`
-  Status: `done`
-  Goal: `Qualify equal-reference genuine omitted-close controls.`
-  Acceptance: `Execute only the pinned equal-reference omission partition; preserve equal source bytes with distinct native identities, original verdict and live descriptor evidence, exact later observer recovery, source/archive/image custody and disjoint absent roots.`
-  Verification: `First equal-reference harness and independent audit pass across 11 cases and 179 TAP assertions: one healthy control and ten actual omissions. Unchanged ordinary binding and omission machinery preserve original open-handle verdicts, ten original-auditor rejections and ten exact separate recoveries. Original equal-content identity checks pass in every case, with 1826 handles, 6479 calls, 20922 events, 1265 reads and 11 unlinks. All 22 row, 3 domain and 3 header falsifiers reject; 44 new and 28120 prior roots are absent. Twenty-nine exact saved copies and saved-only audit/recovery pass. Book rendering, original question retention, exact acceptance history and task/claim gates accompany docs/audits/native-proxy-observation-archive-release-omissions-equal-20260913/review.json. The documentation helper first rejected a metadata row before any document write; its corrected surface selection preserves unrelated authority bytes. No original fixture, producer, compiler or native process is replayed; active-runtime omissions are next.`
-  Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.12.4.1.3.4.4.5.3: qualify equal-reference release omissions and separate recovery`
-
-- ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.12.4.1.3.4.4.5.4`
-  Status: `done`
-  Goal: `Qualify active-runtime genuine omitted-close controls.`
-  Acceptance: `Execute only the pinned active-runtime omission partition without retirement; preserve runtime references and private workspace, original verdict and actual open-handle evidence, exact separate recovery and disjoint absent roots.`
-  Verification: `First active-runtime harness and independent audit pass across 11 cases and 179 TAP assertions: one healthy control and ten actual omissions. Unchanged binding and omission machinery preserve original open-handle verdicts, ten original-auditor rejections and ten exact separate recoveries. The only row-schema adaptation removes the forbidden retirement receipt; every other ordinary row assertion remains byte-exact. The original active-state oracle verifies unchanged runtime references and private workspace in every case, with 1980 handles, 7062 calls, 22858 events, 1419 reads and 11 unlinks. All 22 row, 3 domain and 3 header falsifiers reject; 44 new and 28164 prior roots are absent. Twenty-nine exact copies and saved-only audit/recovery pass. Book rendering, original question retention, exact acceptance history and task/claim gates accompany docs/audits/native-proxy-observation-archive-release-omissions-active-20260913/review.json. No original fixture, producer, compiler or native process is replayed; last-observation omissions are next.`
-  Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.12.4.1.3.4.4.5.4: qualify active-runtime release omissions and separate recovery`
-
-- ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.12.4.1.3.4.4.5.5`
-  Status: `done`
-  Goal: `Qualify last-observation genuine omitted-close controls.`
-  Acceptance: `Execute only the pinned last-observation omission partition; retain original controlled setup, final-hold unlink and exact unreferenced image truth, original open-handle verdict, separate observer recovery and disjoint absent roots.`
-  Verification: `First last-observation harness and independent audit pass across 11 cases and 179 TAP assertions: one healthy control and ten actual omissions. Original controlled setup remains byte-exact; the row schema only adds its receipt to the qualified ordinary assertions. Every omission preserves actual native liveness, original-auditor rejection and exact separate recovery. Original last-state checks verify final-hold removal and unchanged unreferenced images in all 11 cases, with 1628 handles, 5918 calls, 18898 events, 1111 reads and 11 unlinks. All 25 row, 3 domain and 3 header falsifiers reject; 44 new and 28208 prior roots are absent. Twenty-nine exact copies and saved-only audit/recovery pass. Book rendering, original question retention, exact acceptance history and task/claim gates accompany docs/audits/native-proxy-observation-archive-release-omissions-last-20260913/review.json. No historical fixture or original/native producer is replayed; the complete omission join is next.`
-  Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.12.4.1.3.4.4.5.5: qualify last-observation release omissions and separate recovery`
-
-- ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.12.4.1.3.4.4.5.6`
-  Status: `done`
-  Goal: `Join complete selected genuine omission evidence.`
-  Acceptance: `Authenticate every selected omission counterimplementation and original failure verdict, source/profile binding, actual descriptor liveness and exact later observer recovery. Independently join complete bounded coverage and all absent roots from recoverable first evidence. Close this parent only after all selected children pass; final release, native/lifetime and historical startup/parent/full CI/push remain separate.`
-  Verification: `First complete omission admission and join pass from 1753 Git-bound inputs. Independent source-owned baseline selection matches all 44 actual cases across four profiles: 4 healthy controls and 40 omissions, comprising 28 source, 8 directory and 4 lock omissions. Original native liveness, unchanged original-auditor rejection and exact separate recovery remain distinct. Independent counts agree on 7315 handles, 26191 calls, 84381 events, 5115 reads and 44 unlinks, with 716 original TAP assertions. Equal, active and last-state oracles pass; the final-hold cases preserve 11 unreferenced images. All 13 join falsifiers reject; 176 selected and 28076 prior roots are absent. Original source-adaptation proofs, every profile epoch and exact recovery copies are rechecked. Ten exact join copies and saved-only join/recovery pass. Book rendering, question retention, exact acceptance history and task/claim gates accompany docs/audits/native-proxy-release-omission-join-20260913/review.json. No fixture, original main or native execution occurs; finite final release applicability is next.`
-  Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.12.4.1.3.4.4.5.6: join complete selected release omission evidence`
+  Terminal: `version_object`
+  Revision: `8dbea4b6a76de2417a9a66e535b574572212c481`
+  Retrieval path: `docs/tasks/HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.md`
+  Retrieved SHA256: `fd748805c96e18d6ba4f5749f3c0179bd39c33b0d8af7243f5f7779ce6da12af`
+  Archived node count: `7`
+  Retention contract: `fsmgen_required_history`
+  Verification: `Exact predecessor retrieval preserves complete selected omission planning, every original profile verdict, separate native recovery, final coverage join and all original evidence. A fresh parsed/raw census finds no live registry owner in this flat completed subtree; all active ownership stays live.`
+  Commit: `8dbea4b6a76de2417a9a66e535b574572212c481`
 
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.12.4.1.3.4.4.6`
   Status: `done`
@@ -2819,9 +2780,46 @@ decomposes the architecture needed to move beyond that bounded foundation.
   Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.12.4.1.3.4.4.6: close finite inactive release qualification`
 
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.12.4.1.3.5`
-  Status: `proposed`
+  Status: `active`
   Goal: `Qualify inactive native preparation and capture version compatibility.`
   Acceptance: `Explicitly dispatch native shared-image v2 while preserving selected-Perl preparation v1 and frozen legacy command/source/archive semantics. Independently reject cross-version fields, source prefixes, incomplete references and runnable failures; preserve diagnostic ordering, target birth identity and native main-entry uncertainty.`
+  Verification: `Children pin frozen producer/reader contracts, native preparation records, target/collection dispatch, retained-format compatibility and a complete saved-source join. All remain inactive and cannot authorize native execution or rewrite frozen legacy evidence.`
+  Commit: `pending`
+
+  Children: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.12.4.1.3.5.1, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.12.4.1.3.5.2, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.12.4.1.3.5.3, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.12.4.1.3.5.4, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.12.4.1.3.5.5`
+
+- ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.12.4.1.3.5.1`
+  Status: `done`
+  Goal: `Pin source-derived preparation, capture and retained-format version contracts.`
+  Acceptance: `Read exact legacy producers and readers plus the canonical native contract. Bind closed field/schema, source ordering/prefix, literal command, diagnostic and main-entry semantics to current source bodies and original saved examples. Independently qualify a finite explicit version-dispatch domain and malformed/cross-version controls with no fixture or native execution. Own bounded future slices and exact completed-history compaction after a fresh live-registry census.`
+  Verification: `Pinned original preparation, target, collector and retained reader bodies plus the canonical native contract derive exact version fields and producer source order. Finite layout selection preserves selected-Perl, private-native and pre-selection failure v1; only shared native selects v2. Original native preparation and daemon receipt remain byte-unchanged. Frozen execution-context command checks reject canonical/mixed prefixes, wrong versions and malformed quoting; native main entry remains unknown. Saved-only qualification and exact raw outputs are retained in docs/audits/native-proxy-version-contracts-20260913/review.json. This is layout selection, not complete record validation or runtime authority. Fresh registry census permits exact completed omission-history compaction; prior acceptance remains Git-retrievable. Book, Knowledge Map, claim census and staged doctrines gate commit.`
+  Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.12.4.1.3.5.1: pin source-derived version compatibility contracts`
+
+- ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.12.4.1.3.5.2`
+  Status: `proposed`
+  Goal: `Qualify inactive native shared-image preparation records.`
+  Acceptance: `Implement and independently verify closed native v2 preparation success/failure records from qualified image/reference inputs. Preserve exact selected-Perl v1 and original legacy native interpretation; require null executable on failure, complete matching references on success, ordered compilation versus canonical sources, preserved compilation outcome and diagnostic-before-runtime ordering. No compiler, original or native execution.`
+  Verification: `pending`
+  Commit: `pending`
+
+- ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.12.4.1.3.5.3`
+  Status: `proposed`
+  Goal: `Qualify inactive target and collection version dispatch.`
+  Acceptance: `Version-dispatch exact legacy versus canonical native command/source families without broadening frozen predicates or literal argv. Preserve normal-user birth/ancestry checks, stable target snapshots, runtime/observation holds and native main-entry uncertainty. Qualify mixed prefixes, aliases, changed identities and incomplete sources under inert admission only; no collector, native query or original launch.`
+  Verification: `pending`
+  Commit: `pending`
+
+- ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.12.4.1.3.5.4`
+  Status: `proposed`
+  Goal: `Qualify explicit retained source and policy-format compatibility.`
+  Acceptance: `Keep frozen legacy source ordering, command normalization and archive/publication interpretation byte-exact. Add only explicitly tagged native shared-image retained semantics, independently rejecting cross-version prefixes, records and missing references. Preserve private evidence, digest/identity bindings, bounded storage and fail-closed old readers; no legacy archive or original producer replay.`
+  Verification: `pending`
+  Commit: `pending`
+
+- ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.12.4.1.3.5.5`
+  Status: `proposed`
+  Goal: `Join complete inactive version compatibility and source applicability.`
+  Acceptance: `Authenticate all version contract, preparation, target/collection and retained-format sources and saved controls. Independently rederive full selected old/new and cross-version coverage, preserve first failures and original legacy interpretation, verify every declared allocation absent and publish bounded book/fact/task closure. Combined lifetimes, actual native authentication/transport and historical startup/parent/full CI/push remain separate.`
   Verification: `pending`
   Commit: `pending`
 
@@ -3767,7 +3765,7 @@ decomposes the architecture needed to move beyond that bounded foundation.
 
 ## Current Frontier
 
-Current frontier: .3.2.15.7.3.12.4.1.3.4 is done; .3.5 qualifies inactive native preparation and capture version compatibility. Combined lifetimes, native authentication/transport and historical startup/parent/full CI/push remain open.
+Current frontier: .3.2.15.7.3.12.4.1.3.5.1 is done; .3.5.2 qualifies inactive shared-image preparation records. Capture/retained-format compatibility, combined lifetimes, native authentication/transport and historical startup/parent/full CI/push remain open.
 
 Architecture audit `.1` is complete. Decision `0032` selects one public
 `.vial` source language, private immutable `VIALSemanticIR` and
@@ -6363,8 +6361,8 @@ Completed native-proxy feasibility through runtime-source-controls acceptance: r
 The manifest binds the immediately preceding acceptance suffix to its exact Git source. That source preserves the earlier history pointer and versioned manifest chain; current node contracts remain authoritative.
 
 
-## Acceptance Checklist (final finite inactive release .3.2.15.7.3.12.4.1.3.4.4.6)
+## Acceptance Checklist (source-derived version contracts .3.2.15.7.3.12.4.1.3.5.1)
 
-- [x] **ROOT CAUSE (WHY + WHERE)** — `git log -S 'all_observed_handles_closed' -1 --format='%H %s' -- docs/audits/native-proxy-observation-archive-release-20260911/ReleaseTrace.pm` identifies the original pre-recovery observer. Final applicability requires independently joined source epochs and original domains. The first new counter incorrectly assumes every operation has a public result; original caller/arity rejections precede that envelope. Further cross-checking finds that the close observation list includes successful closes. Exact first sources and outputs are retained in this slice's failure and counter-review records.
-- [x] **ADDRESSED (verified)** — The final pinned join revalidates unchanged original contract, baseline and selected row/state oracles, independently reconstructs native lifetimes and complete coverage, and verifies all declared absent roots. Corrected outcome accounting distinguishes pre-envelope rejection, public success/failure, actual unlink, reported close failure and later recovery. Original returns agree with separate fault counters; changed outcomes, misplaced failure labels, altered source epochs, lost/duplicate domain cases and hidden cleanup reject. Exact copies and saved-only verification accompany docs/audits/native-proxy-release-final-join-20260913/review.json; original fixture and main routines are never replayed.
-- [x] **NO REGRESSION** — `knowledge-map: OK` preserves every question and routes to the final saved verifier. Original failure evidence and corrected pins remain distinct; conditional lower-reader composition and native/startup limits remain explicit. The rendered book is inspected and its exact disposable output removed. Exact predecessor acceptance retrieval preserves older checklists; task integrity, claim census, staged doctrines and normal hooks gate final finite-release closure. Version compatibility and combined lifetimes remain separate next work.
+- [x] **ROOT CAUSE (WHY + WHERE)** — `git log -S 'fsmgen.test.rust_proxy_fixture.v1' -1 --format='%H %s' -- t/lib/FSM/Test/RustProxyFixture.pm` identifies e0d74bb051465ba641227acc11975e25e5d879a7. The original producer uses the same version for selected Perl, private native and failures before selection; capture and preparation order sources differently. Pinned producer/reader bodies and original saved records establish the exact boundaries before new compatibility code.
+- [x] **ADDRESSED (verified)** — The pinned source-contract derivation, prospective admission and finite inactive layout/command qualification pass. Explicit field/schema/implementation selection rejects cross-version shapes; the original native record disproves native-implies-v2 and the initial failure branch disproves v1-implies-Perl. Unchanged launcher definitions agree with the independently frozen reader across escaped roots; mixed/canonical prefixes, wrong versions and unquoted predicates reject. Saved-only verification and byte-exact raw output retention support docs/audits/native-proxy-version-contracts-20260913/review.json. Complete record validation remains the next owned slice.
+- [x] **NO REGRESSION** — `knowledge-map: OK` preserves existing questions and routes to saved version-contract qualification. Original source, preparation and daemon evidence remain unchanged; pure main-entry evaluation stays unknown for Rust roles. Bounded completed-history compaction and exact preceding acceptance retrieval preserve continuity. Book rendering, claim census, task integrity, staged doctrines and normal hooks gate this source-contract slice; no fixture, compiler, collector or native execution is performed.

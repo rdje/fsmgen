@@ -1,0 +1,342 @@
+{
+  "capture": {
+    "canonical_root": ".artifacts/cache/rust-proxy-images/v1",
+    "constraints": {
+      "attribution": "A canonical image path or PST token may be shared by concurrent executions. Source/path context does not establish a unique native client or daemon request. Keep per-execution births/ancestry distinct and name any absent request-level association.",
+      "collection": "Add only a closed repository-derived canonical-image prefix where current path-filtered collection requires it; retain the existing legacy prefix. Daemon-only scope remains its existing predicate. No caller-supplied predicate, path, deadline or capture limit is introduced.",
+      "historical_evidence": "Do not replay, rewrite or promote the failed hard-link experiment, prior original outcomes or frozen policy archives. Missing rows never establish scan avoidance.",
+      "native_admission": "Preserve exact native birth, UID/RUID, parent and original-test ancestry and literal wrapper argv. Validate the private reference and global retention record, derive the sole canonical rustup path from its key, check current image/C bytes and qualified mode source, then compare the actual native executable and command to that canonical path. Repeat native/source/reference checks after observation. Reject arbitrary same-inode aliases and changed records.",
+      "preparation_format": {
+        "compatibility": "Use v2 for native shared-image preparation only. Preserve the exact existing v1 selected-Perl result. Existing fields retain their meanings, scalar/result truth and diagnostic-before-runtime ordering; old retained records remain interpretable.",
+        "failure": "No failed v2 preparation returns a runnable executable: executable is null whenever ok is zero. Preserve available compilation/source/failure evidence. Use failure_stage image_admission for layout/locking/content/capacity failure and image_reference for incomplete reference acquisition, retaining invocation_error status and a bounded specific diagnostic. Do not turn a retained global reference into implicit runtime authorization.",
+        "fields": [
+          "schema",
+          "ok",
+          "status",
+          "failure_stage",
+          "diagnostic",
+          "implementation",
+          "selection_reason",
+          "executable",
+          "sources",
+          "compilation",
+          "compilation_argv",
+          "compilation_sources",
+          "image_reference"
+        ],
+        "new_fields": "compilation_sources retains actual private generated-C/executable identities in that order; sources names the selected canonical C/executable in that order. image_reference names the checked global/private reference paths and their actual source identity records, or is null before complete acquisition.",
+        "schema": "fsmgen.test.rust_proxy_fixture.v2"
+      },
+      "retained_formats": "Preserve frozen v1 command/source-prefix and archive/publication interpretation. Add explicit version dispatch and v2 source-family/command contracts where required; never make a changed current default redefine an old receipt. Prove old fixtures remain accepted and cross-version/prefix substitutions reject before activation.",
+      "source_custody": "Retain wrapper, canonical executable/C and matching runtime reference records as identified sources, using bounded snapshots taken while coordinated storage ownership is acquired. Keep a separate per-birth observation hold until archiving/capture settles. Do not insert changing observer-hold state into the strict target snapshot. Legacy source ordering and main-entry interpretation remain unchanged; native main entry stays unknown unless independently witnessed."
+    },
+    "legacy_native_return_order": [
+      "executable",
+      "source"
+    ],
+    "legacy_prefix": ".artifacts/tmp/process-supervisor-tests/",
+    "observation_lifetime": [
+      "Prefetch native ancestry and command queries outside coordination. During a short coordinated filesystem operation, validate the current runtime reference and image, snapshot bounded wrapper/reference/C/image bytes and their descriptor identities, and reserve a separate observation reference before returning storage ownership. No ps, helper, process launch or long native query may run under coordination.",
+      "Recheck exact native births/path/commands after acquiring the storage hold, outside the lock. Failed admission cancels only its own observation work and releases the observation reference only after that work is settled. Record ownership before any archival or sampling action can fail.",
+      "Archive the already bounded source snapshot with independent length/digest checks; do not reopen a path after runtime retirement to reconstruct missing bytes. Snapshot custody is a dated descriptor/byte observation, not loaded-image attestation. Preserve existing source byte/file limits.",
+      "The passive census retains one stable observation reference per admitted target birth through source archival and its selected capture work. Repeated target-source comparisons exclude the observer's own hold metadata. Capture and native command checks run outside coordination; acquiring storage must never pin a global lock across a subprocess or its timeout.",
+      "Release only the exact observation reference after verified archive custody and all selected capture/helper work settle, including cancellation. Retain it on uncertain cleanup or ownership. Maintenance keeps the image while either runtime or observation references exist."
+    ],
+    "runtime_fields": [
+      "schema",
+      "reference_key",
+      "image_key",
+      "workspace",
+      "workspace_identity",
+      "selected_sources"
+    ],
+    "snapshot_paths": [
+      "$workspace->{path}/rust-tool-resolution",
+      "$workspace->{path}/rust-tools/image-reference.json",
+      "$case/references/$runtime_key.json",
+      "$case/images/$image_key/rustup.c",
+      "$case/images/$image_key/rustup"
+    ]
+  },
+  "definitions": {
+    "scripts/analyze_fixture_policy.py": [
+      {
+        "first_line": 44,
+        "last_line": 56,
+        "name": "verify_collector_command",
+        "source": "def verify_collector_command(collector):\n    # This is the frozen retained v1 contract, independent of current launcher\n    # defaults. A valid byte hash alone does not establish collection scope.\n    expected = [\"/usr/bin/log\", \"stream\", \"--style\", \"ndjson\", \"--level\", \"debug\",\n                \"--timeout\", \"240\", \"--predicate\",\n                'process == \"syspolicyd\" AND (eventMessage CONTAINS '\n                '\"<repo>/.artifacts/tmp/process-supervisor-tests/\" '\n                'OR subsystem == \"com.apple.syspolicy.exec\")']\n    if (not isinstance(collector, dict)\n            or collector.get(\"schema\") != \"fsmgen.fixture_policy_log.v1\"\n            or collector.get(\"scope\") != \"execution_context\"\n            or collector.get(\"command\") != expected):\n        raise ValueError(\"retained collector command is not the reviewed execution-context contract\")\n"
+      },
+      {
+        "first_line": 170,
+        "last_line": 239,
+        "name": "_load_capture_inputs",
+        "source": "def _load_capture_inputs(relative, root, *, daemon_capture):\n    \"\"\"Validate shared private inputs without selecting a record projection.\n\n    The frozen v1 loader below retains its original record bound. The archive\n    builder separately selects its ordered, bounded successor projection.\n    \"\"\"\n    directory = root / relative_path(relative, \".artifacts/logs/\")\n    journal_bytes = read_local(directory / \"observations.jsonl\", root)\n    journal = [decode_json(line) for line in journal_bytes.splitlines()]\n    if len(journal) > MAX_EVENTS:\n        raise ValueError(\"retained journal exceeds its event bound\")\n    sources = {}\n    for row in journal:\n        if not isinstance(row, dict):\n            raise ValueError(\"retained journal record is not an object\")\n        if row.get(\"event\") != \"candidate\":\n            continue\n        for source in row[\"evidence\"][\"sources\"]:\n            if set(source) != {\"path\", \"sha256\", \"device\", \"inode\", \"size_bytes\"}:\n                raise ValueError(\"retained source fields disagree with the archive contract\")\n            path = relative_path(source[\"path\"], FIXTURE_PREFIX)\n            if (not isinstance(source[\"sha256\"], str)\n                    or not re.fullmatch(r\"[0-9a-f]{64}\", source[\"sha256\"])\n                    or any(type(source[key]) is not int or source[key] < 0\n                           for key in (\"device\", \"inode\", \"size_bytes\"))):\n                raise ValueError(\"invalid retained source identity\")\n            if path in sources and sources[path] != source:\n                raise ValueError(\"source path has multiple observed identities\")\n            sources[path] = source\n            if len(sources) > MAX_SOURCES:\n                raise ValueError(\"retained sources exceed their fixed count bound\")\n    if not sources:\n        raise ValueError(\"run has no observed source archive\")\n    for source in sources.values():\n        data = read_local(directory / (source[\"sha256\"] + \".source\"), root, MAX_SOURCE_BYTES)\n        if len(data) != source[\"size_bytes\"] or hashlib.sha256(data).hexdigest() != source[\"sha256\"]:\n            raise ValueError(\"retained source archive does not match its byte identity\")\n\n    policy_bytes = read_local(directory / \"policy.stdout\", root)\n    collector_bytes = read_local(directory / \"policy-result.json\", root)\n    collector = decode_json(collector_bytes)\n    if daemon_capture:\n        expected = [\"/usr/bin/log\", \"stream\", \"--style\", \"ndjson\", \"--level\", \"debug\",\n                    \"--timeout\", \"240\", \"--predicate\", 'process == \"syspolicyd\"']\n        if (type(collector) is not dict or collector.get(\"schema\") != \"fsmgen.fixture_policy_log.v1\"\n                or collector.get(\"scope\") != \"daemon_context\" or collector.get(\"command\") != expected):\n            raise ValueError(\"daemon capture command is not the reviewed contract\")\n        if collector.get(\"capture_root_sha256\") != hashlib.sha256(str(root).encode(\"utf-8\")).hexdigest():\n            raise ValueError(\"daemon capture does not bind the current checkout\")\n    else:\n        verify_collector_command(collector)\n    retained = collector[\"outputs\"][\"stdout\"]\n    if (retained[\"path\"] != str((directory / \"policy.stdout\").relative_to(root))\n            or type(retained[\"bytes\"]) is not int or retained[\"bytes\"] != len(policy_bytes)\n            or retained[\"sha256\"] != hashlib.sha256(policy_bytes).hexdigest()\n            or retained[\"hash_complete\"] is not True or retained[\"path_identity_matches\"] is not True):\n        raise ValueError(\"retained policy bytes disagree with the collector manifest\")\n    lines = policy_bytes.decode(\"utf-8\").splitlines()\n    if not lines or not lines[0].startswith(\"Filtering the log data using \"):\n        raise ValueError(\"capture-root header is unavailable\")\n    if daemon_capture:\n        if lines[0] != 'Filtering the log data using \"process == \"syspolicyd\"\"':\n            raise ValueError(\"daemon capture header disagrees with the reviewed command\")\n        capture_root = str(root)\n    else:\n        capture_root = capture_root_from_header(lines[0])\n    return (dict(directory=relative, capture_root=capture_root, sources=sources,\n                 collector_result=collector),\n            {\"observations.jsonl\": journal_bytes, \"policy.stdout\": policy_bytes,\n             \"policy-result.json\": collector_bytes})\n"
+      }
+    ],
+    "scripts/fixture_kernel_sampler.py": [
+      {
+        "first_line": 148,
+        "last_line": 168,
+        "name": "_read_source",
+        "source": "def _read_source(fixture, root):\n    \"\"\"Return identity, bytes and metadata from one checked bounded descriptor.\"\"\"\n    if fixture.resolve() != fixture or fixture.stat().st_dev != root.stat().st_dev:\n        raise ValueError(\"fixture path is indirect or on a different volume\")\n    with os.fdopen(os.open(fixture, os.O_RDONLY | os.O_NOFOLLOW | os.O_NONBLOCK), \"rb\") as stream:\n        metadata = os.fstat(stream.fileno())\n        if (not stat.S_ISREG(metadata.st_mode) or metadata.st_dev != root.stat().st_dev\n                or metadata.st_uid != os.getuid()):\n            raise ValueError(\"fixture is not an owned repository-volume regular file\")\n        body = stream.read(65537)\n        after = os.fstat(stream.fileno())\n    if len(body) > 65536:\n        raise ValueError(\"fixture is not a bounded regular source file\")\n    fields = (\"st_dev\", \"st_ino\", \"st_mode\", \"st_uid\", \"st_size\", \"st_mtime_ns\", \"st_ctime_ns\")\n    before_identity = tuple(getattr(metadata, field) for field in fields)\n    if any(tuple(getattr(info, field) for field in fields) != before_identity\n           for info in (after, fixture.lstat())) or len(body) != metadata.st_size:\n        raise ValueError(\"fixture changed during inspection\")\n    record = {\"path\": str(fixture.relative_to(root)), \"sha256\": hashlib.sha256(body).hexdigest(),\n              \"device\": metadata.st_dev, \"inode\": metadata.st_ino, \"size_bytes\": len(body)}\n    return record, body, metadata\n"
+      },
+      {
+        "first_line": 171,
+        "last_line": 188,
+        "name": "_native_rust_sources",
+        "source": "def _native_rust_sources(fixture, root):\n    workspace = fixture.parent.parent\n    if not re.fullmatch(r\"fsmgen-[A-Za-z0-9_]+\", workspace.name):\n        raise ValueError(\"native Rust proxy workspace is not builder-owned\")\n    for directory in (workspace, fixture.parent):\n        metadata = directory.lstat()\n        if (not stat.S_ISDIR(metadata.st_mode) or directory.resolve() != directory\n                or metadata.st_uid != os.getuid() or metadata.st_mode & 0o077\n                or metadata.st_dev != root.stat().st_dev):\n            raise ValueError(\"native Rust proxy directory is not owned and private\")\n    executable, body, metadata = _read_source(fixture, root)\n    if (stat.S_IMODE(metadata.st_mode) != 0o500 or len(body) < 32\n            or struct.unpack_from(\"<4I\", body) != (0xfeedfacf, 0x0100000c, 0, 2)):\n        raise ValueError(\"Rust proxy is not the admitted read-only arm64 executable\")\n    source, _, metadata = _read_source(fixture.with_name(\"rustup.c\"), root)\n    if stat.S_IMODE(metadata.st_mode) != 0o400 or source[\"sha256\"] not in NATIVE_RUST_SOURCES:\n        raise ValueError(\"Rust proxy C source is not one of the qualified mode inputs\")\n    return [executable, source]\n"
+      },
+      {
+        "first_line": 205,
+        "last_line": 217,
+        "name": "_supervisor_wrapper",
+        "source": "def _supervisor_wrapper(command, root):\n    \"\"\"Literal argv shapes from T1669; no shell tokenization or free-form arguments.\"\"\"\n    includes = command.startswith(\"/usr/bin/perl -Iperl -It/lib \")\n    # T1669 uses create_project_tempdir with this explicit purpose; T1668's\n    # direct File::Temp fixture retains the separate default tests directory.\n    workspace = _workspace(command, root, includes, purpose=\"process-supervisor-tests\")\n    if command == f\"/usr/bin/perl -Iperl -It/lib {workspace}/rust-tool-resolution {workspace}/rust-tools\":\n        return \"rust-wrapper\", workspace, workspace / \"rust-tool-resolution\", None\n    for mode in (\"signal\", \"streams\"):\n        producer = workspace / (\"legacy-ram-\" + mode)\n        if command == f\"/usr/bin/perl {workspace}/legacy-ram-capture {workspace} {producer}\":\n            return \"legacy-wrapper\", workspace, workspace / \"legacy-ram-capture\", producer\n    raise ValueError(\"parent is not a selected T1669 wrapper command\")\n"
+      },
+      {
+        "first_line": 220,
+        "last_line": 296,
+        "name": "validate_target",
+        "source": "def validate_target(request, native, root):\n    \"\"\"Admit a closed direct fixture or one exact T1669 wrapper/producer chain.\"\"\"\n    prefixes = (\"\", \"parent_\") + ((\"ancestor_\",) if \"ancestor_pid\" in request else ())\n    observations = []\n    executables = []\n    perl = Path(\"/usr/bin/perl\").resolve()\n    for prefix in prefixes:\n        info = native.identity(request[prefix + \"pid\"])\n        if any(info[key] != request[prefix + key] for key in IDENTITY_FIELDS):\n            raise ValueError(\"stale or reused process identity\")\n        if any(info[key] != os.getuid() for key in (\"uid\", \"ruid\")):\n            raise ValueError(\"fixture and test must run as this normal user\")\n        executable = native.executable(info[\"pid\"])\n        if prefix and executable != perl:\n            raise ValueError(\"fixture and test must use the selected system Perl\")\n        executables.append(executable)\n        observations.append((info, native.command(info[\"pid\"])))\n    for (child, _), (parent, _) in zip(observations, observations[1:]):\n        if child[\"ppid\"] != parent[\"pid\"]:\n            raise ValueError(\"fixture no longer belongs to the requested parent\")\n\n    target_command = observations[0][1]\n    test_command = observations[-1][1]\n    native_proxy = False\n    if len(observations) == 2 and _test_command(test_command, TEST_PATH, root):\n        workspace = _workspace(target_command, root)\n        fixture = workspace / \"orphaning-runtime\"\n        if target_command != f\"/usr/bin/perl {fixture}\":\n            raise ValueError(\"target is not the selected orphaning-runtime fixture\")\n        role, sources = \"verilator-fixture\", [fixture]\n    elif _test_command(test_command, SUPERVISOR_TEST_PATH, root):\n        wrapper_command = observations[-2][1]\n        role, workspace, wrapper, producer = _supervisor_wrapper(wrapper_command, root)\n        fixture, sources = wrapper, [wrapper]\n        if producer is not None:\n            sources.append(producer)\n        if len(observations) == 3:\n            if role == \"rust-wrapper\":\n                fixture = workspace / \"rust-tools/rustup\"\n                native_proxy = executables[0] == fixture\n                expected = f\"{fixture} which cargo\" if native_proxy else f\"/usr/bin/perl {fixture} which cargo\"\n                sources.append(fixture)\n                role = \"rust-proxy\"\n            else:\n                fixture = producer\n                expected = (f\"/usr/bin/perl {fixture} --host-max-pct 88\"\n                            \" --process-max-rss-mb 4096 --poll-seconds 0.02\"\n                            \" --grace-seconds 0 -- unused\")\n                role = \"legacy-producer\"\n            if target_command != expected:\n                raise ValueError(\"target does not match its exact T1669 producer and workspace\")\n    else:\n        raise ValueError(\"ancestor is not the selected T1668 or T1669 invocation\")\n\n    expected_executable = fixture if native_proxy else perl\n    if executables[0] != expected_executable:\n        raise ValueError(\"fixture must use its exact admitted executable\")\n    if native_proxy:\n        source_records = [source_identity(sources[0], root), *_native_rust_sources(fixture, root)]\n    else:\n        source_records = [source_identity(path, root) for path in sources]\n    for (info, command), executable in zip(observations, executables):\n        if (native.identity(info[\"pid\"]) != info or native.executable(info[\"pid\"]) != executable\n                or native.command(info[\"pid\"]) != command):\n            raise ValueError(\"identity changed during inspection\")\n    if native_proxy:\n        after = [source_identity(sources[0], root), *_native_rust_sources(fixture, root)]\n        if after != source_records:\n            raise ValueError(\"native proxy sources changed during inspection\")\n    fixture_record = next(record for record in source_records\n                          if record[\"path\"] == str(fixture.relative_to(root)))\n    evidence = {\"child\": observations[0][0], \"parent\": observations[1][0],\n                \"fixture\": fixture_record[\"path\"], \"fixture_sha256\": fixture_record[\"sha256\"],\n                \"target_role\": role, \"sources\": source_records}\n    if len(observations) == 3:\n        evidence[\"ancestor\"] = observations[2][0]\n    return evidence\n"
+      }
+    ],
+    "scripts/fixture_policy_archive.py": [
+      {
+        "first_line": 126,
+        "last_line": 153,
+        "name": "validate_index",
+        "source": "def validate_index(index):\n    \"\"\"Validate the complete closed index before following any page path.\"\"\"\n    associations.fields(index, (\"schema\", \"context\", \"context_sha256\", \"pages\", \"record_count\",\n                                \"log_event_count\", \"metadata_count\", \"limits\"))\n    if index[\"schema\"] != SCHEMA or index[\"limits\"] != LIMITS:\n        raise ValueError(\"archive schema or limits disagree\")\n    validate_context(index[\"context\"])\n    associations.hex_value(index[\"context_sha256\"], 64)\n    if index[\"context_sha256\"] != associations.digest(associations.canonical(index[\"context\"])):\n        raise ValueError(\"archive context disagrees with its digest\")\n    associations.bounded_list(index[\"pages\"], MAX_PAGES, 1)\n    _validate_counts(index, MAX_RECORDS, nonempty=True)\n    totals = dict(record_count=0, log_event_count=0, metadata_count=0)\n    total_bytes = 0\n    for number, descriptor in enumerate(index[\"pages\"], 1):\n        _validate_descriptor(descriptor)\n        if (descriptor[\"path\"] != page_path(index[\"context\"][\"run\"], number)\n                or descriptor[\"first_record\"] != totals[\"record_count\"]):\n            raise ValueError(\"archive pages are not fixed consecutive paths and record ranges\")\n        for key in totals:\n            totals[key] += descriptor[key]\n        total_bytes += descriptor[\"bytes\"]\n    if any(index[key] != value for key, value in totals.items()):\n        raise ValueError(\"archive totals disagree with its page descriptors\")\n    if total_bytes > MAX_TOTAL_PAGE_BYTES:\n        raise ValueError(\"archive pages exceed their aggregate byte bound\")\n    if len(associations.canonical(index)) > MAX_INDEX_BYTES:\n        raise ValueError(\"archive index exceeds its byte bound\")\n"
+      },
+      {
+        "first_line": 182,
+        "last_line": 200,
+        "name": "validate_page",
+        "source": "def validate_page(page, descriptor, context_sha256):\n    _validate_descriptor(descriptor)\n    associations.hex_value(context_sha256, 64)\n    associations.fields(page, (\"schema\", \"context_sha256\", \"first_record\", \"records\"))\n    associations.integer(page[\"first_record\"], MAX_RECORDS - 1)\n    if (page[\"schema\"] != PAGE_SCHEMA or page[\"context_sha256\"] != context_sha256\n            or page[\"first_record\"] != descriptor[\"first_record\"]):\n        raise ValueError(\"archive page disagrees with its bound context or range\")\n    associations.bounded_list(page[\"records\"], MAX_PAGE_RECORDS, 1)\n    log_events = 0\n    for record in page[\"records\"]:\n        _validate_record(record)\n        log_events += record[\"kind\"] == \"log_event\"\n    if (len(page[\"records\"]) != descriptor[\"record_count\"]\n            or log_events != descriptor[\"log_event_count\"]\n            or len(page[\"records\"]) - log_events != descriptor[\"metadata_count\"]):\n        raise ValueError(\"archive page entries disagree with its descriptor counts\")\n    if len(associations.canonical(page)) > MAX_PAGE_BYTES:\n        raise ValueError(\"archive page exceeds its byte bound\")\n"
+      }
+    ],
+    "scripts/fixture_policy_associations.py": [
+      {
+        "first_line": 90,
+        "last_line": 95,
+        "name": "source_identity",
+        "source": "def source_identity(value):\n    fields(value, (\"path\", \"sha256\", \"size_bytes\", \"token\"))\n    path_value(value[\"path\"], analysis.FIXTURE_PREFIX)\n    hex_value(value[\"sha256\"], 64)\n    integer(value[\"size_bytes\"], analysis.MAX_SOURCE_BYTES)\n    hex_value(value[\"token\"], 16)\n"
+      },
+      {
+        "first_line": 118,
+        "last_line": 152,
+        "name": "validate",
+        "source": "def validate(manifest):\n    \"\"\"Validate the frozen replay schema; no live producer or native dependency.\"\"\"\n    fields(manifest, (\"schema\", \"algorithm\", \"producers\", \"target\", \"calibrations\", \"limits\"))\n    if manifest[\"schema\"] != SCHEMA or manifest[\"algorithm\"] != ALGORITHM or manifest[\"limits\"] != LIMITS:\n        raise ValueError(\"association schema, algorithm or replay limits disagree\")\n    fields(manifest[\"producers\"], PRODUCERS)\n    for producer in manifest[\"producers\"].values():\n        identity(producer, analysis.MAX_FILE_BYTES)\n    target = manifest[\"target\"]\n    fields(target, (\"run\", \"inputs\", \"sources\", \"records\"))\n    path_value(target[\"run\"], \".artifacts/logs/\")\n    input_identities(target[\"inputs\"])\n    unique_sources(target[\"sources\"], 1)\n    bounded_list(target[\"records\"], analysis.MAX_EVENTS)\n    for record in target[\"records\"]:\n        fields(record, (\"sha256\", \"tokens\", \"phase\"))\n        hex_value(record[\"sha256\"], 64)\n        bounded_list(record[\"tokens\"], MAX_RECORD_TOKENS)\n        for token in record[\"tokens\"]:\n            hex_value(token, 16)\n        if record[\"tokens\"] != sorted(set(record[\"tokens\"])):\n            raise ValueError(\"record tokens are not unique and canonically ordered\")\n        if record[\"phase\"] not in (\"queued\", \"started\", \"wakeups\", \"other\"):\n            raise ValueError(\"unknown association record phase\")\n    bounded_list(manifest[\"calibrations\"], analysis.MAX_CALIBRATIONS, 1)\n    runs = {target[\"run\"]}\n    for calibration in manifest[\"calibrations\"]:\n        calibration_identity(calibration)\n        if calibration[\"run\"] in runs:\n            raise ValueError(\"association calibration must use distinct separate runs\")\n        runs.add(calibration[\"run\"])\n    if [item[\"run\"] for item in manifest[\"calibrations\"]] != sorted(runs - {target[\"run\"]}):\n        raise ValueError(\"calibration runs are not in canonical order\")\n    if len(canonical(manifest)) > MAX_MANIFEST_BYTES:\n        raise ValueError(\"association manifest exceeds its fixed byte bound\")\n"
+      }
+    ],
+    "scripts/fixture_policy_diagnostics.py": [
+      {
+        "first_line": 95,
+        "last_line": 146,
+        "name": "validate",
+        "source": "def validate(report):\n    \"\"\"Closed report admission also protects the public consumption path.\"\"\"\n    associations.fields(report, (\"schema\", \"qualification\", \"manifest_sha256\", \"producer_sha256\", \"inputs\", \"scope\",\n        \"sources\", \"records\", \"metadata_records_omitted\", \"original\", \"collector\", \"omissions\", \"limits\"))\n    if (report[\"schema\"] != SCHEMA or report[\"qualification\"] != \"not_claimed\"\n            or report[\"scope\"] not in (\"execution_context\", \"daemon_context\")\n            or report[\"omissions\"] != OMISSIONS or report[\"limits\"] != LIMITS):\n        raise ValueError(\"diagnostic schema, scope or disclosure limits disagree\")\n    if any(value is not True for value in report[\"omissions\"].values()):\n        raise ValueError(\"diagnostic omission flags are not booleans\")\n    associations.hex_value(report[\"manifest_sha256\"], 64)\n    associations.hex_value(report[\"producer_sha256\"], 64)\n    associations.input_identities(report[\"inputs\"])\n    associations.unique_sources(report[\"sources\"], 1)\n    associations.bounded_list(report[\"records\"], associations.analysis.MAX_EVENTS)\n    associations.integer(report[\"metadata_records_omitted\"], associations.analysis.MAX_EVENTS)\n    if len(report[\"records\"]) + report[\"metadata_records_omitted\"] > associations.analysis.MAX_EVENTS:\n        raise ValueError(\"diagnostic records exceed the retained event bound\")\n    for record in report[\"records\"]:\n        associations.fields(record, (\"sha256\", \"tokens\", \"phase\", \"context\"))\n        associations.hex_value(record[\"sha256\"], 64)\n        associations.bounded_list(record[\"tokens\"], associations.MAX_RECORD_TOKENS)\n        for token in record[\"tokens\"]:\n            associations.hex_value(token, 16)\n        if record[\"tokens\"] != sorted(set(record[\"tokens\"])) or record[\"phase\"] not in (\"queued\", \"started\", \"wakeups\", \"other\"):\n            raise ValueError(\"diagnostic record projection disagrees with its closed domain\")\n        context = record[\"context\"]\n        associations.fields(context, (*CONTEXT_NUMBERS, \"timestamp\", \"subsystem\"))\n        for key, (_, maximum) in CONTEXT_NUMBERS.items():\n            if context[key] is not None:\n                associations.integer(context[key], maximum)\n        if context[\"timestamp\"] is not None and not admitted_timestamp(context[\"timestamp\"]):\n            raise ValueError(\"diagnostic timestamp is not admitted\")\n        if context[\"subsystem\"] not in (\"execution_policy\", \"other\", \"missing\"):\n            raise ValueError(\"diagnostic subsystem class is not admitted\")\n    associations.fields(report[\"original\"], (\"returncode\", \"timeout\", \"released\", \"leader_reaped\"))\n    associations.integer(report[\"original\"][\"returncode\"], 255, -255)\n    if type(report[\"original\"][\"timeout\"]) is not bool:\n        raise ValueError(\"diagnostic original timeout is not a boolean\")\n    for key in (\"released\", \"leader_reaped\"):\n        if report[\"original\"][key] is not None and type(report[\"original\"][key]) is not bool:\n            raise ValueError(\"diagnostic original flag is not admitted\")\n    associations.fields(report[\"collector\"], (\"returncode\", \"reported_failure\", \"leader_reaped\", \"forced_kill\"))\n    if report[\"collector\"][\"returncode\"] is not None:\n        associations.integer(report[\"collector\"][\"returncode\"], 255, -255)\n    if type(report[\"collector\"][\"reported_failure\"]) is not bool:\n        raise ValueError(\"diagnostic failure flag is not a boolean\")\n    for key in (\"leader_reaped\", \"forced_kill\"):\n        if report[\"collector\"][key] is not None and type(report[\"collector\"][key]) is not bool:\n            raise ValueError(\"diagnostic collector flag is not admitted\")\n    if len(associations.canonical(report)) > MAX_REPORT_BYTES:\n        raise ValueError(\"diagnostic report exceeds its fixed byte bound\")\n"
+      }
+    ],
+    "scripts/fixture_policy_log.py": [
+      {
+        "first_line": 30,
+        "last_line": 32,
+        "name": "require_scope",
+        "source": "def require_scope(scope):\n    if scope not in SCOPES:\n        raise ValueError(\"unknown policy collection scope\")\n"
+      },
+      {
+        "first_line": 35,
+        "last_line": 49,
+        "name": "command",
+        "source": "def command(root, *, scope=\"fixture_path\"):\n    require_scope(scope)\n    # JSON string quoting supplies an NSPredicate string literal, not shell text.\n    prefix = str(root / \".artifacts/tmp/process-supervisor-tests\") + \"/\"\n    predicate = 'process == \"syspolicyd\" AND eventMessage CONTAINS ' + json.dumps(prefix, ensure_ascii=False)\n    if scope == \"execution_context\":\n        predicate = ('process == \"syspolicyd\" AND (eventMessage CONTAINS '\n                     + json.dumps(prefix, ensure_ascii=False)\n                     + ' OR subsystem == \"com.apple.syspolicy.exec\")')\n    elif scope == \"daemon_context\":\n        # No message/path/subsystem condition: unrelated daemon context is the\n        # selected diagnostic scope. Its raw output remains private evidence.\n        predicate = 'process == \"syspolicyd\"'\n    return [\"/usr/bin/log\", \"stream\", \"--style\", \"ndjson\", \"--level\", \"debug\",\n            \"--timeout\", str(LIFETIME_SECONDS), \"--predicate\", predicate]\n"
+      },
+      {
+        "first_line": 52,
+        "last_line": 62,
+        "name": "retained_command",
+        "source": "def retained_command(argv, root):\n    \"\"\"Relocate only the exact quoted fixture prefix in the captured argv.\n\n    Literal-root substitution cannot handle JSON escaping and can turn malformed\n    unescaped predicates into apparently valid metadata. Keep every other byte,\n    including command drift, for the independent retained-command check.\n    \"\"\"\n    prefix = \".artifacts/tmp/process-supervisor-tests/\"\n    captured = json.dumps(str(root / prefix) + \"/\", ensure_ascii=False)\n    canonical = json.dumps(\"<repo>/\" + prefix, ensure_ascii=False)\n    return [arg.replace(captured, canonical) for arg in argv]\n"
+      }
+    ],
+    "scripts/fixture_policy_publication.py": [
+      {
+        "first_line": 28,
+        "last_line": 44,
+        "name": "validate_receipt",
+        "source": "def validate_receipt(receipt):\n    associations.fields(receipt, (\"schema\", \"run\", \"admission_sha256\", \"artifacts\", \"limits\"))\n    if receipt[\"schema\"] != SCHEMA or receipt[\"limits\"] != LIMITS:\n        raise ValueError(\"publication receipt schema or limits disagree\")\n    associations.path_value(receipt[\"run\"], \".artifacts/logs/\")\n    associations.hex_value(receipt[\"admission_sha256\"], 64)\n    associations.fields(receipt[\"artifacts\"], FILES)\n    for key, filename in FILES.items():\n        artifact = receipt[\"artifacts\"][key]\n        associations.fields(artifact, (\"path\", \"bytes\", \"sha256\"))\n        associations.path_value(artifact[\"path\"], \".artifacts/logs/\")\n        if artifact[\"path\"] != receipt[\"run\"] + \"/\" + filename:\n            raise ValueError(\"publication artifact path is outside its fixed capture\")\n        associations.integer(artifact[\"bytes\"], associations.MAX_MANIFEST_BYTES)\n        associations.hex_value(artifact[\"sha256\"], 64)\n    if len(associations.canonical(receipt)) > associations.MAX_MANIFEST_BYTES:\n        raise ValueError(\"publication receipt exceeds its fixed byte bound\")\n"
+      }
+    ],
+    "scripts/observe_fixture_startup.py": [
+      {
+        "first_line": 104,
+        "last_line": 152,
+        "name": "Evidence",
+        "source": "class Evidence:\n    def __init__(self, root):\n        base = sampler.local_directory(root / \".artifacts/logs/t1669-startup-observation\", root)\n        self.root = root\n        self.directory = base / (\"run-\" + uuid.uuid4().hex)\n        self.directory.mkdir(mode=0o700)\n        self.stream = (self.directory / \"observations.jsonl\").open(\"x\", buffering=1)\n        self.count = self.bytes = 0\n        self.sources = set()\n        self.source_bytes = 0\n        self.failures = {}\n\n    def problem(self, stage, error):\n        \"\"\"Keep terminal failure evidence even after ordinary event capacity is full.\"\"\"\n        if stage not in (\"observation\", \"cleanup\", \"final\"):\n            raise ValueError(\"unknown observer failure stage\")\n        reason = str(error).replace(str(self.root), \".\")\n        if len(reason.encode()) > 1024:\n            reason = reason.encode()[:1000].decode(errors=\"replace\") + \" [truncated]\"\n        self.failures.setdefault(stage, reason)\n        pending = self.directory / \"failure.next\"\n        pending.write_text(json.dumps({\"failures\": self.failures}, sort_keys=True) + \"\\n\")\n        pending.replace(self.directory / \"failure.json\")\n\n    def record(self, event, **fields):\n        record = {\"event\": event, \"monotonic_ns\": time.monotonic_ns(), **fields}\n        raw = json.dumps(record, sort_keys=True, separators=(\",\", \":\")) + \"\\n\"\n        size = len(raw.encode())\n        if (self.count >= MAX_EVENTS or size > MAX_EVENT_BYTES\n                or self.bytes + size > MAX_LOG_BYTES):\n            raise ValueError(\"observer evidence reached its fixed storage bound\")\n        self.stream.write(raw)\n        self.count += 1\n        self.bytes += size\n\n    def retain_sources(self, records):\n        for record in records:\n            digest = record[\"sha256\"]\n            if digest in self.sources:\n                continue\n            body = read_local_file(self.root / record[\"path\"], self.root, 65536)\n            if len(body) != record[\"size_bytes\"] or hashlib.sha256(body).hexdigest() != digest:\n                raise ValueError(\"inspected fixture bytes changed before retention\")\n            if len(self.sources) >= MAX_SOURCE_FILES or self.source_bytes + len(body) > MAX_SOURCE_BYTES:\n                raise RuntimeError(\"observer source archive reached its fixed storage bound\")\n            with (self.directory / (digest + \".source\")).open(\"xb\") as stream:\n                stream.write(body)\n            self.sources.add(digest)\n            self.source_bytes += len(body)\n"
+      },
+      {
+        "first_line": 243,
+        "last_line": 260,
+        "name": "main_entry",
+        "source": "def main_entry(evidence, root, *, include_wrapper=False):\n    role = evidence[\"target_role\"]\n    if role == \"legacy-wrapper\" and include_wrapper:\n        # Admission retains the exact wrapper and its selected producer in\n        # this order. This marker describes that producer, not wrapper entry.\n        fixture = evidence[\"sources\"][1][\"path\"]\n    elif role == \"legacy-producer\":\n        fixture = evidence[\"fixture\"]\n    else:\n        return \"unknown\"\n    marker = root / (fixture + \"-progress\")\n    try:\n        body = read_local_file(marker, root, 64)\n    except FileNotFoundError:\n        return \"not_observed\"\n    if body not in (b\"entered\\n\", b\"entered\\ndrained\\n\"):\n        raise ValueError(\"legacy main-entry marker is not a complete native progress record\")\n    return \"drained\" if body.endswith(b\"drained\\n\") else \"entered\"\n"
+      },
+      {
+        "first_line": 290,
+        "last_line": 380,
+        "name": "FixtureCensus",
+        "source": "class FixtureCensus:\n    \"\"\"Passive exact-fixture admission; callers own execution and capture policy.\n\n    Scanning and read-only settlement are separate so a scan failure cannot\n    prevent the enclosing caller from finishing its original test first.\n    Authenticated observation retains its existing permissive rejection policy;\n    the normal-user census additionally requires immutable admitted sources.\n    \"\"\"\n\n    def __init__(self, test, native, evidence, root, *, checkpoint=None,\n                 include_wrapper_progress=True, strict=True):\n        self.test, self.raw_native, self.evidence, self.root = test, native, evidence, root\n        self.native = CheckpointProcesses(native, checkpoint)\n        self.include_wrapper_progress, self.strict = include_wrapper_progress, strict\n        self.seen, self.admitted, self.first_seen, self.progress_seen = {}, {}, {}, {}\n        if (not still_live(self.native, test)\n                or any(self.native.identity(test[\"pid\"])[key] != os.getuid() for key in (\"uid\", \"ruid\"))\n                or self.native.executable(test[\"pid\"]) != Path(\"/usr/bin/perl\").resolve()\n                or not sampler._test_command(self.native.command(test[\"pid\"]), sampler.SUPERVISOR_TEST_PATH, root)):\n            raise ValueError(\"observer requires the exact normal-user T1669 invocation\")\n\n    def scan(self):\n        entries = []\n        for pid in self.native.children(self.test[\"pid\"]):\n            try:\n                parent = self.native.identity(pid)\n                if parent[\"ppid\"] != self.test[\"pid\"]:\n                    continue\n                sampler._supervisor_wrapper(self.native.command(pid), self.root)\n                chains = [[parent, self.test]]\n                for child_pid in self.native.children(pid):\n                    child = self.native.identity(child_pid)\n                    chains.insert(0, [child, parent, self.test])\n                for chain in chains:\n                    request = request_for(chain)\n                    admitted = sampler.validate_target(request, self.native, self.root)\n                    key = identity_key(admitted[\"child\"])\n                    if key not in self.seen:\n                        if len(self.seen) >= MAX_IDENTITIES:\n                            raise RuntimeError(\"observer identity capacity reached\")\n                        # Remember admission before any archival/journal failure:\n                        # the caller still needs to settle this observed birth.\n                        self.seen[key] = admitted[\"child\"]\n                        self.admitted[key] = admitted\n                        self.evidence.retain_sources(admitted[\"sources\"])\n                        # Preserve authenticated capture eligibility: archival\n                        # time is not part of its post-retention observation.\n                        self.first_seen[key] = time.monotonic()\n                        self.evidence.record(\"candidate\", evidence=admitted)\n                    elif self.strict and admitted != self.admitted[key]:\n                        raise RuntimeError(\"fixture identity or source changed for an observed native birth\")\n                    progress = main_entry(admitted, self.root, include_wrapper=self.include_wrapper_progress)\n                    if self.progress_seen.get(key) != progress:\n                        self.evidence.record(\"main_entry\", identity=admitted[\"child\"], progress=progress,\n                                             progress_scope=\"selected_producer\" if (\n                                                 self.include_wrapper_progress and admitted[\"target_role\"] == \"legacy-wrapper\"\n                                             ) else \"target\")\n                        self.progress_seen[key] = progress\n                    entries.append({\"request\": request, \"evidence\": admitted, \"progress\": progress,\n                                    \"leaf\": len(chain) == 3 or len(chains) == 1,\n                                    \"observed_at\": time.monotonic()})\n            except (FileNotFoundError, ProcessLookupError):\n                continue\n            except ValueError as error:\n                # Unrelated T1669 controls are outside this exact target policy.\n                known = any(info[\"pid\"] == pid or info[\"ppid\"] == pid for info in self.seen.values())\n                if known:\n                    self.evidence.record(\"candidate_rejected\", pid=pid,\n                                         reason=str(error).replace(str(self.root), \".\"))\n                    if self.strict:\n                        raise RuntimeError(\"observed fixture rejected: \" + str(error)) from error\n                continue\n        return entries\n\n    def require_coverage(self):\n        if not self.seen:\n            raise RuntimeError(\"no fixture was observed; coverage is unestablished\")\n\n    def survivors(self):\n        # The original and collector may already be settled; inspection here\n        # must not depend on their earlier scan-time checkpoints.\n        return [info for info in self.seen.values() if still_live(self.raw_native, info)]\n\n    def settle(self):\n        deadline = time.monotonic() + SETTLE_SECONDS\n        while self.survivors():\n            if time.monotonic() >= deadline:\n                raise RuntimeError(\"observer could not verify observed fixture cleanup\")\n            time.sleep(POLL_SECONDS)\n        return {\"observed_fixtures_gone\": True, \"observed_fixture_count\": len(self.seen),\n                \"unobserved_descendants\": \"unknown\"}\n"
+      }
+    ]
+  },
+  "inputs": [
+    {
+      "path": "t/lib/FSM/Test/RustProxyFixture.pm",
+      "sha256": "d9c4ab52cf8074526c59b7a5dcb9da870ca7ffdacb4eb236dacb23b5db6d8bfb",
+      "size_bytes": 11466
+    },
+    {
+      "path": "docs/audits/native-proxy-canonical-contract-20260910/contract.json",
+      "sha256": "f3f981398afae72540ab4ac0194b8380d4743c3d2146c1172a85365add053222",
+      "size_bytes": 21927
+    },
+    {
+      "path": "docs/audits/native-proxy-observation-acquisition-20260910/ObservationAcquisition.pm",
+      "sha256": "809c013255ab6973a2d0dabcfd5b0ae5c55c97696d7acc77b10cf68149006470",
+      "size_bytes": 16517
+    },
+    {
+      "path": "docs/audits/native-proxy-hardlink-20260910/result/preparation.json",
+      "sha256": "b6923ee459e94be8e788e8e6188f12a81a8ce4e8a1a71f720d4c9ddde93895e3",
+      "size_bytes": 2986
+    },
+    {
+      "path": "docs/audits/native-proxy-daemon-original-20260910/policy-result.json",
+      "sha256": "7711fcc614e12555145436dbaf66747327c15ce4954b58473e15834c78550396",
+      "size_bytes": 1551
+    },
+    {
+      "path": "t/1669-task-acceptance-fixture-runtime.t",
+      "sha256": "bdebbf03308cd5e0699324f9ab96a249c11c9ab05634309569d33874391a196f",
+      "size_bytes": 67582
+    },
+    {
+      "path": "t/1816-rust-proxy-integration.t",
+      "sha256": "2040114c98f2f4c22f05d2b4c036cfa5779f2e2293d23bd10da4d804d3b9d024",
+      "size_bytes": 10317
+    },
+    {
+      "path": "scripts/fixture_kernel_sampler.py",
+      "sha256": "50c94165893b74b758c560f561ff744f294683812a26b429071ef43009aac2dc",
+      "size_bytes": 22040
+    },
+    {
+      "path": "scripts/observe_fixture_startup.py",
+      "sha256": "05144eb1ebd86ebf132ad36b86b4c93b23687db928fc369f633615f0b870fe06",
+      "size_bytes": 25563
+    },
+    {
+      "path": "scripts/fixture_policy_log.py",
+      "sha256": "ed3db21b5fffbed8073fbbe7d80982062e914c974f2f5512e781ce4f9eb8812c",
+      "size_bytes": 12764
+    },
+    {
+      "path": "scripts/analyze_fixture_policy.py",
+      "sha256": "25a98f7b8bcdac695455a64121e88637a46599552f992eb530726eec8f07b40a",
+      "size_bytes": 17432
+    },
+    {
+      "path": "scripts/fixture_policy_associations.py",
+      "sha256": "921fb245ca7882559753bed04fdfa33d3a71bb1c30f54e7eea510da6dd54da3f",
+      "size_bytes": 19916
+    },
+    {
+      "path": "scripts/fixture_policy_diagnostics.py",
+      "sha256": "f7637df4e28151c4d79aa588e593ff6e35404fa692d2290ecb5a87c048e23575",
+      "size_bytes": 14321
+    },
+    {
+      "path": "scripts/fixture_policy_publication.py",
+      "sha256": "34d0bc53b4c28b41e1b489480799caaac30ffa02d92881f765ef2fdc556562b9",
+      "size_bytes": 6792
+    },
+    {
+      "path": "scripts/fixture_policy_archive.py",
+      "sha256": "f72355164d6af97e9c6de678018fe864bfab537280d95a87f986825970ad50e2",
+      "size_bytes": 21652
+    }
+  ],
+  "limits": "Original bounds, failures, main-entry uncertainty and frozen old readers remain authoritative.",
+  "preparation": {
+    "diagnostic_order_offsets": [
+      33979,
+      34206,
+      34364,
+      34705,
+      34827
+    ],
+    "legacy_fields": [
+      "schema",
+      "ok",
+      "status",
+      "failure_stage",
+      "diagnostic",
+      "implementation",
+      "selection_reason",
+      "executable",
+      "sources",
+      "compilation",
+      "compilation_argv"
+    ],
+    "legacy_initial_source": "        schema => 'fsmgen.test.rust_proxy_fixture.v1', ok => 0,\n        status => 'invocation_error', failure_stage => 'invocation',\n        diagnostic => '', implementation => undef, selection_reason => undef,\n        executable => undef, sources => [], compilation => undef, compilation_argv => undef,",
+    "legacy_schema": "fsmgen.test.rust_proxy_fixture.v1",
+    "native_fields": [
+      "schema",
+      "ok",
+      "status",
+      "failure_stage",
+      "diagnostic",
+      "implementation",
+      "selection_reason",
+      "executable",
+      "sources",
+      "compilation",
+      "compilation_argv",
+      "compilation_sources",
+      "image_reference"
+    ],
+    "native_format": {
+      "compatibility": "Use v2 for native shared-image preparation only. Preserve the exact existing v1 selected-Perl result. Existing fields retain their meanings, scalar/result truth and diagnostic-before-runtime ordering; old retained records remain interpretable.",
+      "failure": "No failed v2 preparation returns a runnable executable: executable is null whenever ok is zero. Preserve available compilation/source/failure evidence. Use failure_stage image_admission for layout/locking/content/capacity failure and image_reference for incomplete reference acquisition, retaining invocation_error status and a bounded specific diagnostic. Do not turn a retained global reference into implicit runtime authorization.",
+      "fields": [
+        "schema",
+        "ok",
+        "status",
+        "failure_stage",
+        "diagnostic",
+        "implementation",
+        "selection_reason",
+        "executable",
+        "sources",
+        "compilation",
+        "compilation_argv",
+        "compilation_sources",
+        "image_reference"
+      ],
+      "new_fields": "compilation_sources retains actual private generated-C/executable identities in that order; sources names the selected canonical C/executable in that order. image_reference names the checked global/private reference paths and their actual source identity records, or is null before complete acquisition.",
+      "schema": "fsmgen.test.rust_proxy_fixture.v2"
+    },
+    "native_schema": "fsmgen.test.rust_proxy_fixture.v2",
+    "source_order_offsets": [
+      3650,
+      6113,
+      6295,
+      6512
+    ]
+  },
+  "retained_schemas": {
+    "archive_page": "fsmgen.fixture_policy_archive_page.v1",
+    "scripts/fixture_policy_archive.py": "fsmgen.fixture_policy_archive.v1",
+    "scripts/fixture_policy_associations.py": "fsmgen.fixture_policy_associations.v1",
+    "scripts/fixture_policy_diagnostics.py": "fsmgen.fixture_policy_diagnostics.v1",
+    "scripts/fixture_policy_publication.py": "fsmgen.fixture_policy_publication.v1"
+  },
+  "schema": "fsmgen.inactive_proxy_version_contracts.v1",
+  "scope": "Source contract and layout selection only; not record validity, runtime authority or native qualification.",
+  "source_revision": "8dbea4b6a76de2417a9a66e535b574572212c481"
+}
