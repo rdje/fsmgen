@@ -1,0 +1,52 @@
+[
+  {
+    "path": "docs/audits/native-proxy-compiler-profile-inventory-20260913/review_completion.py",
+    "sha256": "7cf4ad0b6eb10fd3c5a8496d44a84ec7473af24e49b932212c761a2e512af990",
+    "size_bytes": 5852
+  },
+  {
+    "path": "docs/audits/native-proxy-compiler-profile-inventory-20260913/review_claims.py",
+    "sha256": "fe278cd704705f89155a5d600af87a9c26cbb0bdae5ac3c6a833288d5f29fea7",
+    "size_bytes": 5032
+  },
+  {
+    "path": "docs/audits/native-proxy-compiler-profile-inventory-20260913/inspect_book.py",
+    "sha256": "212a30a9ba89730e6da739646d81853cfde2c572d47b44213efadc49c707859f",
+    "size_bytes": 3337
+  },
+  {
+    "path": "docs/audits/native-proxy-compiler-profile-inventory-20260913/review.json",
+    "sha256": "d922054f2fcec51d5d671064e2faae034fbfcb2ba888b376a04fa68ca33517cd",
+    "size_bytes": 11636
+  },
+  {
+    "path": "docs/audits/native-proxy-compiler-profile-inventory-20260913/retained-inputs.json",
+    "sha256": "f22d5ebb5cb29f03276de18311849228dfae7192624b8c4eb1783c5744112cd7",
+    "size_bytes": 469022
+  },
+  {
+    "path": "docs/audits/native-proxy-compiler-profile-inventory-20260913/audit-pins.json",
+    "sha256": "b3aa23e4a25b85a3d74e4e5c9f3df75950e5f1882b3fbc6b3c1c7d7950f87a01",
+    "size_bytes": 611
+  },
+  {
+    "path": "docs/audits/native-proxy-compiler-profile-inventory-20260913/plan.json",
+    "sha256": "1d1678cc364600b814fb460e28d766860620340d5c114d5d5ac8051c692ee235",
+    "size_bytes": 19142
+  },
+  {
+    "path": "docs/audits/native-proxy-compiler-profile-inventory-20260913/book-review.json",
+    "sha256": "87aabbaaab0e1929035a014772fc285d926a8c4d4b88c4a5b01082a38f7bb125",
+    "size_bytes": 1233
+  },
+  {
+    "path": "docs/audits/native-proxy-compiler-profile-inventory-20260913/claim-review.json",
+    "sha256": "2981562ef1099ece0474ec6ab92d4e8c07c52a2c294aa587cd2d5012499b445d",
+    "size_bytes": 5065
+  },
+  {
+    "path": "docs/audits/native-proxy-compiler-profile-inventory-20260913/prerequisite-task-layout.json",
+    "sha256": "f726b59b3996c5dad435403b90660fff1c4bbc05c39b82ccba345d64f09ba82f",
+    "size_bytes": 5552
+  }
+]

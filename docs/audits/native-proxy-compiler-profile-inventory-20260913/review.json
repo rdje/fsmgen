@@ -1,0 +1,288 @@
+{
+  "input_bytes": 644103,
+  "input_files": 67,
+  "owner": "HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.12.4.1.5.2.2.1",
+  "rejected_controls": [
+    "missing_selected_source",
+    "promoted_census_field",
+    "unsettled_compiler",
+    "synthetic_implementation",
+    "changed_archived_image",
+    "widened_retirement_limit",
+    "promoted_authentic_complete_workspace_profile_found",
+    "promoted_producer_has_complete_census_transport",
+    "promoted_new_execution"
+  ],
+  "result": {
+    "authentic_complete_workspace_profile_found": false,
+    "fresh_compiler_admission_required": true,
+    "incomplete_projection_witnesses": [
+      {
+        "label": "unrecorded_mode",
+        "meaning": "Hypothetical data only; not observed compiler behavior.",
+        "selected_projection_sha256": "c97b58e1a4774e57c6690cacad8b8d5999decf9a9fc7b3bb07b2ddd1ee4fb8cd",
+        "unrecorded_node": {
+          "mode": 420,
+          "path": "rust-tools/compiler-cache/extra",
+          "size_bytes": 1
+        }
+      },
+      {
+        "label": "unrecorded_file_bound",
+        "meaning": "Hypothetical data only; not observed compiler behavior.",
+        "selected_projection_sha256": "c97b58e1a4774e57c6690cacad8b8d5999decf9a9fc7b3bb07b2ddd1ee4fb8cd",
+        "unrecorded_node": {
+          "mode": 384,
+          "path": "rust-tools/compiler-temp/extra",
+          "size_bytes": 65537
+        }
+      },
+      {
+        "label": "unrecorded_depth",
+        "meaning": "Hypothetical data only; not observed compiler behavior.",
+        "selected_projection_sha256": "c97b58e1a4774e57c6690cacad8b8d5999decf9a9fc7b3bb07b2ddd1ee4fb8cd",
+        "unrecorded_node": {
+          "mode": 384,
+          "path": "rust-tools/nested/nested/nested/nested/nested/nested/nested/nested/extra",
+          "size_bytes": 1
+        }
+      },
+      {
+        "label": "unrecorded_membership",
+        "meaning": "Hypothetical data only; not observed compiler behavior.",
+        "selected_projection_sha256": "c97b58e1a4774e57c6690cacad8b8d5999decf9a9fc7b3bb07b2ddd1ee4fb8cd",
+        "unrecorded_node": {
+          "count": 257,
+          "mode": 384,
+          "path": "rust-tools/compiler-cache/extra",
+          "size_bytes": 1
+        }
+      },
+      {
+        "label": "unrecorded_aggregate",
+        "meaning": "Hypothetical data only; not observed compiler behavior.",
+        "selected_projection_sha256": "c97b58e1a4774e57c6690cacad8b8d5999decf9a9fc7b3bb07b2ddd1ee4fb8cd",
+        "unrecorded_node": {
+          "count": 65,
+          "mode": 384,
+          "path": "rust-tools/compiler-cache/extra",
+          "size_bytes": 65536
+        }
+      }
+    ],
+    "limits": {
+      "DEPTH_LIMIT": 8,
+      "FILE_LIMIT": 65536,
+      "NODE_LIMIT": 256,
+      "TOTAL_LIMIT": 4194304
+    },
+    "new_execution": false,
+    "producer_has_complete_census_transport": false,
+    "profiles": [
+      {
+        "aggregate_regular_file_bytes": null,
+        "all_node_modes": false,
+        "compilation_arguments_retained": false,
+        "complete_membership": false,
+        "label": "builder/native/proxy_nonzero",
+        "max_depth": null,
+        "max_regular_file_bytes": null,
+        "selected_file_bytes": 50737,
+        "selected_sources": [
+          {
+            "device": 16777244,
+            "inode": 76415778,
+            "path": ".artifacts/tmp/process-supervisor-tests/fsmgen-QC5D3KUQ/rust-tools/rustup.c",
+            "sha256": "b689e2f7ee42bf7cac62f272a36d5313a272dddef15a75f8c66b126568fbf276",
+            "size_bytes": 745
+          },
+          {
+            "device": 16777244,
+            "inode": 76415784,
+            "path": ".artifacts/tmp/process-supervisor-tests/fsmgen-QC5D3KUQ/rust-tools/rustup",
+            "sha256": "1b4e9ed9995ec79b04d1e48cab53da6f96979a77364ad45eb880a226c86275a8",
+            "size_bytes": 49992
+          }
+        ],
+        "source_pair_within_file_bound": true,
+        "workspace": ".artifacts/tmp/process-supervisor-tests/fsmgen-QC5D3KUQ"
+      },
+      {
+        "aggregate_regular_file_bytes": null,
+        "all_node_modes": false,
+        "compilation_arguments_retained": false,
+        "complete_membership": false,
+        "label": "builder/native/proxy_decoy",
+        "max_depth": null,
+        "max_regular_file_bytes": null,
+        "selected_file_bytes": 50737,
+        "selected_sources": [
+          {
+            "device": 16777244,
+            "inode": 76415809,
+            "path": ".artifacts/tmp/process-supervisor-tests/fsmgen-3ocKUX0e/rust-tools/rustup.c",
+            "sha256": "a2ff3cf129d8c01d2b05c33b2df2ca18b68048972dcc86c00222786a6751defc",
+            "size_bytes": 745
+          },
+          {
+            "device": 16777244,
+            "inode": 76415814,
+            "path": ".artifacts/tmp/process-supervisor-tests/fsmgen-3ocKUX0e/rust-tools/rustup",
+            "sha256": "eb69147ec7c8d9e54b6b15742a5d34129003d040fb6be71f8c1f148bc9209954",
+            "size_bytes": 49992
+          }
+        ],
+        "source_pair_within_file_bound": true,
+        "workspace": ".artifacts/tmp/process-supervisor-tests/fsmgen-3ocKUX0e"
+      },
+      {
+        "aggregate_regular_file_bytes": null,
+        "all_node_modes": false,
+        "compilation_arguments_retained": true,
+        "complete_membership": false,
+        "label": "builder/native-final/proxy_nonzero",
+        "max_depth": null,
+        "max_regular_file_bytes": null,
+        "selected_file_bytes": 50737,
+        "selected_sources": [
+          {
+            "device": 16777244,
+            "inode": 76419842,
+            "path": ".artifacts/tmp/process-supervisor-tests/fsmgen-ORLk_NK8/rust-tools/rustup.c",
+            "sha256": "b689e2f7ee42bf7cac62f272a36d5313a272dddef15a75f8c66b126568fbf276",
+            "size_bytes": 745
+          },
+          {
+            "device": 16777244,
+            "inode": 76419847,
+            "path": ".artifacts/tmp/process-supervisor-tests/fsmgen-ORLk_NK8/rust-tools/rustup",
+            "sha256": "1b4e9ed9995ec79b04d1e48cab53da6f96979a77364ad45eb880a226c86275a8",
+            "size_bytes": 49992
+          }
+        ],
+        "source_pair_within_file_bound": true,
+        "workspace": ".artifacts/tmp/process-supervisor-tests/fsmgen-ORLk_NK8"
+      },
+      {
+        "aggregate_regular_file_bytes": null,
+        "all_node_modes": false,
+        "compilation_arguments_retained": true,
+        "complete_membership": false,
+        "label": "builder/native-final/proxy_decoy",
+        "max_depth": null,
+        "max_regular_file_bytes": null,
+        "selected_file_bytes": 50737,
+        "selected_sources": [
+          {
+            "device": 16777244,
+            "inode": 76419872,
+            "path": ".artifacts/tmp/process-supervisor-tests/fsmgen-1BPNgbyY/rust-tools/rustup.c",
+            "sha256": "a2ff3cf129d8c01d2b05c33b2df2ca18b68048972dcc86c00222786a6751defc",
+            "size_bytes": 745
+          },
+          {
+            "device": 16777244,
+            "inode": 76419877,
+            "path": ".artifacts/tmp/process-supervisor-tests/fsmgen-1BPNgbyY/rust-tools/rustup",
+            "sha256": "eb69147ec7c8d9e54b6b15742a5d34129003d040fb6be71f8c1f148bc9209954",
+            "size_bytes": 49992
+          }
+        ],
+        "source_pair_within_file_bound": true,
+        "workspace": ".artifacts/tmp/process-supervisor-tests/fsmgen-1BPNgbyY"
+      },
+      {
+        "aggregate_regular_file_bytes": null,
+        "all_node_modes": false,
+        "compilation_arguments_retained": true,
+        "complete_membership": false,
+        "label": "daemon-original/proxy_nonzero",
+        "max_depth": null,
+        "max_regular_file_bytes": null,
+        "selected_file_bytes": 50737,
+        "selected_sources": [
+          {
+            "device": 16777244,
+            "inode": 76521910,
+            "path": ".artifacts/tmp/process-supervisor-tests/fsmgen-BgloFnVu/rust-tools/rustup.c",
+            "sha256": "b689e2f7ee42bf7cac62f272a36d5313a272dddef15a75f8c66b126568fbf276",
+            "size_bytes": 745
+          },
+          {
+            "device": 16777244,
+            "inode": 76521915,
+            "path": ".artifacts/tmp/process-supervisor-tests/fsmgen-BgloFnVu/rust-tools/rustup",
+            "sha256": "1b4e9ed9995ec79b04d1e48cab53da6f96979a77364ad45eb880a226c86275a8",
+            "size_bytes": 49992
+          }
+        ],
+        "source_pair_within_file_bound": true,
+        "workspace": ".artifacts/tmp/process-supervisor-tests/fsmgen-BgloFnVu"
+      },
+      {
+        "aggregate_regular_file_bytes": null,
+        "all_node_modes": false,
+        "compilation_arguments_retained": true,
+        "complete_membership": false,
+        "label": "daemon-original/proxy_decoy",
+        "max_depth": null,
+        "max_regular_file_bytes": null,
+        "selected_file_bytes": 50737,
+        "selected_sources": [
+          {
+            "device": 16777244,
+            "inode": 76521924,
+            "path": ".artifacts/tmp/process-supervisor-tests/fsmgen-vIOv1Kqe/rust-tools/rustup.c",
+            "sha256": "a2ff3cf129d8c01d2b05c33b2df2ca18b68048972dcc86c00222786a6751defc",
+            "size_bytes": 745
+          },
+          {
+            "device": 16777244,
+            "inode": 76521929,
+            "path": ".artifacts/tmp/process-supervisor-tests/fsmgen-vIOv1Kqe/rust-tools/rustup",
+            "sha256": "eb69147ec7c8d9e54b6b15742a5d34129003d040fb6be71f8c1f148bc9209954",
+            "size_bytes": 49992
+          }
+        ],
+        "source_pair_within_file_bound": true,
+        "workspace": ".artifacts/tmp/process-supervisor-tests/fsmgen-vIOv1Kqe"
+      },
+      {
+        "aggregate_regular_file_bytes": null,
+        "all_node_modes": false,
+        "compilation_arguments_retained": true,
+        "complete_membership": false,
+        "label": "hardlink-held-control",
+        "max_depth": null,
+        "max_regular_file_bytes": null,
+        "selected_file_bytes": 50750,
+        "selected_sources": [
+          {
+            "device": 16777244,
+            "inode": 76712047,
+            "path": ".artifacts/tmp/process-supervisor-tests/fsmgen-HardlinkBase20260910/rust-tools/rustup.c",
+            "sha256": "6349a566c74b9645543699d8158092b6618678f8c153c56c423d454524bef27f",
+            "size_bytes": 710
+          },
+          {
+            "device": 16777244,
+            "inode": 76712085,
+            "path": ".artifacts/tmp/process-supervisor-tests/fsmgen-HardlinkBase20260910/rust-tools/rustup",
+            "sha256": "1c5f4010ca29a66de933b98429407055ba714854d77ff6c8276b2926392e3e2b",
+            "size_bytes": 50040
+          }
+        ],
+        "source_pair_within_file_bound": true,
+        "workspace": ".artifacts/tmp/process-supervisor-tests/fsmgen-HardlinkBase20260910"
+      }
+    ],
+    "scope": {
+      "meaning": "Bounded inventory of these authenticated retained epochs and current transport. Not a universal assertion about every unindexed artifact or every compiler/SDK.",
+      "private": "Both original native builder epochs and their complete mode preparation/workspace/qualification records, selected raw C/images, compiler-owner receipts and original drivers. Retain exact read-only copies here; do not rerun drivers or delete originals.",
+      "tracked": "Current producer, preparation/retirement schemas and selected original/daemon/hardlink evidence, including every archived selected source in those two successful observation epochs."
+    },
+    "source_revision": "715db54c7b77090dbdd1617d02bfbe7c2159ff29"
+  },
+  "retained_input_sha256": "f22d5ebb5cb29f03276de18311849228dfae7192624b8c4eb1783c5744112cd7",
+  "retained_only_inputs": 39
+}

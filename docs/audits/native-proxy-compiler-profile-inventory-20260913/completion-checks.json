@@ -1,0 +1,40 @@
+{
+  "outputs": [
+    {
+      "bytes_hex": "436f6d70696c65722d70726f66696c6520696e76656e746f727920636f6d706c6574696f6e3a204f4b3b2070726f737065637469766520636f6d70696c65722d6f6e6c792063656e7375732061646d697373696f6e206973206e6578742e0a",
+      "path": ".artifacts/logs/native-proxy-compiler-profile-inventory-20260913/completion.stdout",
+      "sha256": "56c7c616cccba3c048fd7022532d90a5bbe0f5bc41cabd74a98d374cc50df06e",
+      "size_bytes": 95
+    },
+    {
+      "bytes_hex": "72616d2d67756172643a205049442035303938323b20686f73742037382e36253b20686f7374206375746f6666203838253b2064657363656e64616e7420525353206375746f66662034303936204d69423b20706f6c6c2032730a",
+      "path": ".artifacts/logs/native-proxy-compiler-profile-inventory-20260913/completion.stderr",
+      "sha256": "ce8001f6b41d8c8ad4731f4a016619b25d3e067c2e734b21656223dfdbc24f62",
+      "size_bytes": 91
+    },
+    {
+      "bytes_hex": "300a",
+      "path": ".artifacts/logs/native-proxy-compiler-profile-inventory-20260913/completion.exit",
+      "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa",
+      "size_bytes": 2
+    },
+    {
+      "bytes_hex": "436f6d70696c65722d70726f66696c6520696e76656e746f727920636f6d706c6574696f6e3a204f4b3b2070726f737065637469766520636f6d70696c65722d6f6e6c792063656e7375732061646d697373696f6e206973206e6578742e0a",
+      "path": ".artifacts/logs/native-proxy-compiler-profile-inventory-20260913/completion-saved.stdout",
+      "sha256": "56c7c616cccba3c048fd7022532d90a5bbe0f5bc41cabd74a98d374cc50df06e",
+      "size_bytes": 95
+    },
+    {
+      "bytes_hex": "72616d2d67756172643a205049442035313233373b20686f73742038302e31253b20686f7374206375746f6666203838253b2064657363656e64616e7420525353206375746f66662034303936204d69423b20706f6c6c2032730a",
+      "path": ".artifacts/logs/native-proxy-compiler-profile-inventory-20260913/completion-saved.stderr",
+      "sha256": "3f8999816468b192ab450df59741e26dc4ee31549bf3f9d2fd2afdaee9cdc291",
+      "size_bytes": 91
+    },
+    {
+      "bytes_hex": "300a",
+      "path": ".artifacts/logs/native-proxy-compiler-profile-inventory-20260913/completion-saved.exit",
+      "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa",
+      "size_bytes": 2
+    }
+  ]
+}

@@ -306,7 +306,21 @@ the released reference disappears; the shared image remains unchanged.
 These process-cleanup receipts are synthetic. The result establishes the narrow
 filesystem compatibility repair; authentic compiler-workspace profiles and
 capacity remain unqualified. Earlier audits remain evidence for their pinned
-source revisions. The current re-verification command below checks this repair.
+source revisions. The current re-verification commands below check this repair
+and the retained compiler-profile inventory.
+
+The original compiler receipts retain generated C and executable identities;
+the successful observer also retains the wrapper. These selected files do not
+prove which other files the compiler left in its cache or temporary directory,
+their permissions, directory depth or total size. The inventory preserves those
+original records and tests hypothetical omitted files that leave the selected
+identities unchanged while violating cleanup policy. These examples demonstrate
+missing evidence; they are not observed compiler defects.
+
+The next step is a separately admitted, finite compiler-only census of the
+complete settled workspace. It must record actual files and ownership before
+cleanup while preserving current limits. It will not execute a generated proxy,
+wrapper, original test or collector.
 
 | Remaining work | Required result |
 | --- | --- |
@@ -324,6 +338,7 @@ remain required before any product activation.
 
 ```sh
 scripts/run_with_ram_guard.sh -- python3 -B docs/audits/native-proxy-wrapper-compatibility-20260913/audit.py --verify-saved
+scripts/run_with_ram_guard.sh -- python3 -B docs/audits/native-proxy-compiler-profile-inventory-20260913/audit.py --verify-saved
 ```
 
 [Return to runtime measurement](16dc-vial-portable-verilator-runtime-measurement.md).

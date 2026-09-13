@@ -1,0 +1,17 @@
+[
+  {
+    "path": "docs/audits/native-proxy-compiler-profile-inventory-20260913/audit.py",
+    "sha256": "9b51385d4dd70e8f125290defeb6088bf99c260dd559be018565918857f52eed",
+    "size_bytes": 14176
+  },
+  {
+    "path": "docs/audits/native-proxy-compiler-profile-inventory-20260913/plan.json",
+    "sha256": "1d1678cc364600b814fb460e28d766860620340d5c114d5d5ac8051c692ee235",
+    "size_bytes": 19142
+  },
+  {
+    "path": "docs/audits/native-proxy-compiler-profile-inventory-20260913/task-layout.json",
+    "sha256": "748736db9f1fea3e6ebd62b929e33c37a2077676c4e98704ffe9021cad9d66aa",
+    "size_bytes": 3762
+  }
+]

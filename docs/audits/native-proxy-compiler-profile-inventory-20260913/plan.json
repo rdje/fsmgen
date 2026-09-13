@@ -1,0 +1,431 @@
+{
+  "bounds": {
+    "input_bytes_each": 1048576,
+    "input_files": 80,
+    "total_input_bytes": 2097152
+  },
+  "claim_legs": {
+    "durability": "Pinned Git inputs, exact retained-only input copies, original scope and first review, with task/book/Knowledge Map commit.",
+    "falsification": "Reject selected source pairs promoted to complete workspaces, synthetic fixtures promoted to compiler output, altered archived bytes, missing modes/membership and widened policy limits.",
+    "rederivation": "Reconstruct original source/image sizes and hashes, preparation field coverage, current producer/observer traversal and unchanged retirement policy limits."
+  },
+  "inputs": [
+    {
+      "durability": "git",
+      "path": "docs/audits/native-proxy-daemon-original-20260910/1b4e9ed9995ec79b04d1e48cab53da6f96979a77364ad45eb880a226c86275a8.source",
+      "sha256": "1b4e9ed9995ec79b04d1e48cab53da6f96979a77364ad45eb880a226c86275a8",
+      "size_bytes": 49992
+    },
+    {
+      "durability": "git",
+      "path": "docs/audits/native-proxy-daemon-original-20260910/5b07f408da238e8a10bdfd82e25767c9b4dc4a6bad76e53804c21fd844998c90.source",
+      "sha256": "5b07f408da238e8a10bdfd82e25767c9b4dc4a6bad76e53804c21fd844998c90",
+      "size_bytes": 622
+    },
+    {
+      "durability": "git",
+      "path": "docs/audits/native-proxy-daemon-original-20260910/a2ff3cf129d8c01d2b05c33b2df2ca18b68048972dcc86c00222786a6751defc.source",
+      "sha256": "a2ff3cf129d8c01d2b05c33b2df2ca18b68048972dcc86c00222786a6751defc",
+      "size_bytes": 745
+    },
+    {
+      "durability": "git",
+      "path": "docs/audits/native-proxy-daemon-original-20260910/audit.py",
+      "sha256": "d1f8418bfd37539856f63a541c6ad23c550e1b2c2f4cc400c7eb166fe5f59b44",
+      "size_bytes": 13422
+    },
+    {
+      "durability": "git",
+      "path": "docs/audits/native-proxy-daemon-original-20260910/b689e2f7ee42bf7cac62f272a36d5313a272dddef15a75f8c66b126568fbf276.source",
+      "sha256": "b689e2f7ee42bf7cac62f272a36d5313a272dddef15a75f8c66b126568fbf276",
+      "size_bytes": 745
+    },
+    {
+      "durability": "git",
+      "path": "docs/audits/native-proxy-daemon-original-20260910/bd13191666dff15eefa7b79dbe3835e114efe6ba741ee6b9258547a4b835143c.source",
+      "sha256": "bd13191666dff15eefa7b79dbe3835e114efe6ba741ee6b9258547a4b835143c",
+      "size_bytes": 1079
+    },
+    {
+      "durability": "git",
+      "path": "docs/audits/native-proxy-daemon-original-20260910/df525c2166853a62c81b9a5aa70eea9606e3bd96c88c46f1844c1b4c55c7d2b0.source",
+      "sha256": "df525c2166853a62c81b9a5aa70eea9606e3bd96c88c46f1844c1b4c55c7d2b0",
+      "size_bytes": 188
+    },
+    {
+      "durability": "git",
+      "path": "docs/audits/native-proxy-daemon-original-20260910/eb69147ec7c8d9e54b6b15742a5d34129003d040fb6be71f8c1f148bc9209954.source",
+      "sha256": "eb69147ec7c8d9e54b6b15742a5d34129003d040fb6be71f8c1f148bc9209954",
+      "size_bytes": 49992
+    },
+    {
+      "durability": "git",
+      "path": "docs/audits/native-proxy-daemon-original-20260910/fe147925ab7393c452e7165f5da85dc58620bd2f1215b691bf661d720992f71c.source",
+      "sha256": "fe147925ab7393c452e7165f5da85dc58620bd2f1215b691bf661d720992f71c",
+      "size_bytes": 507
+    },
+    {
+      "durability": "git",
+      "path": "docs/audits/native-proxy-daemon-original-20260910/independent-audit.json",
+      "sha256": "7d2a5f85d836d5ee66e710344ad0630aab1df205a8fdbb7dfd43ff7f502784c0",
+      "size_bytes": 10067
+    },
+    {
+      "durability": "git",
+      "path": "docs/audits/native-proxy-daemon-original-20260910/observations.jsonl",
+      "sha256": "8ee81068b897a0b436092f8d8ffad3c1b44192f19695b7078264b64fac45f78c",
+      "size_bytes": 12516
+    },
+    {
+      "durability": "git",
+      "path": "docs/audits/native-proxy-daemon-original-20260910/test.stderr",
+      "sha256": "bcb8c299ae8225063244fad69b55c60cf8db2d1a98a4619815302e1584ce0711",
+      "size_bytes": 4135
+    },
+    {
+      "durability": "git",
+      "path": "docs/audits/native-proxy-hardlink-20260910/build.pl",
+      "sha256": "09121784d7cede1139677ee488134144fb83792cd6cec95eb89f4e98281c2015",
+      "size_bytes": 1870
+    },
+    {
+      "durability": "git",
+      "path": "docs/audits/native-proxy-hardlink-20260910/result/independent-audit.json",
+      "sha256": "183bed83b0bfabb20665f0a4be3a8dd15e4f68cf32b36a3479323ec9148fb3cf",
+      "size_bytes": 18784
+    },
+    {
+      "durability": "git",
+      "path": "docs/audits/native-proxy-hardlink-20260910/result/preparation.json",
+      "sha256": "b6923ee459e94be8e788e8e6188f12a81a8ce4e8a1a71f720d4c9ddde93895e3",
+      "size_bytes": 2986
+    },
+    {
+      "durability": "git",
+      "path": "docs/audits/native-proxy-hardlink-20260910/result/retirement.json",
+      "sha256": "a2872180c00d6a2a60d13766ca51c02286b9cf00cdd543e38ee611f69e2f3d3e",
+      "size_bytes": 998
+    },
+    {
+      "durability": "git",
+      "path": "docs/audits/native-proxy-hardlink-20260910/result/sources/1c5f4010ca29a66de933b98429407055ba714854d77ff6c8276b2926392e3e2b.source",
+      "sha256": "1c5f4010ca29a66de933b98429407055ba714854d77ff6c8276b2926392e3e2b",
+      "size_bytes": 50040
+    },
+    {
+      "durability": "git",
+      "path": "docs/audits/native-proxy-hardlink-20260910/result/sources/6349a566c74b9645543699d8158092b6618678f8c153c56c423d454524bef27f.source",
+      "sha256": "6349a566c74b9645543699d8158092b6618678f8c153c56c423d454524bef27f",
+      "size_bytes": 710
+    },
+    {
+      "durability": "git",
+      "path": "docs/audits/native-proxy-hardlink-20260910/result/workspace-base.json",
+      "sha256": "72f83112eefd5f4f647b5601ede9cd593d3e935d582c583258a618d118dc5565",
+      "size_bytes": 127
+    },
+    {
+      "durability": "git",
+      "path": "docs/audits/native-proxy-original-20260910/independent-audit.json",
+      "sha256": "722d4fb2e1d485e2ff72e9e37119e27d234b2837c102a212ac45883ecd3d6eaf",
+      "size_bytes": 12607
+    },
+    {
+      "durability": "git",
+      "path": "docs/audits/native-proxy-preparation-records-20260913/plan.json",
+      "sha256": "9cc17deb1038ec3acb228bd9ca1c440b01f217075bb7ec3f2710821b523975c3",
+      "size_bytes": 6854
+    },
+    {
+      "durability": "git",
+      "path": "docs/audits/native-proxy-runtime-retirement-20260910/PrivateWorkspace.pm",
+      "sha256": "98e324cf9ef89471ffb4ede683ce21a8e09fc02329739a0856285ecea067e18f",
+      "size_bytes": 6425
+    },
+    {
+      "durability": "git",
+      "path": "docs/audits/native-proxy-runtime-retirement-20260910/plan.json",
+      "sha256": "8244b6cbde73e0ca24ee2e90eb5f35daa7f1280f8fab63f8a4658c6624d6d213",
+      "size_bytes": 40860
+    },
+    {
+      "durability": "git",
+      "path": "docs/audits/native-proxy-wrapper-compatibility-20260913/review.json",
+      "sha256": "3af7361aa622a7dacb7e5aae603df42e6a82a767789baa24ed3a073d3f661463",
+      "size_bytes": 949
+    },
+    {
+      "durability": "git",
+      "path": "scripts/fixture_kernel_sampler.py",
+      "sha256": "50c94165893b74b758c560f561ff744f294683812a26b429071ef43009aac2dc",
+      "size_bytes": 22040
+    },
+    {
+      "durability": "git",
+      "path": "scripts/observe_fixture_startup.py",
+      "sha256": "05144eb1ebd86ebf132ad36b86b4c93b23687db928fc369f633615f0b870fe06",
+      "size_bytes": 25563
+    },
+    {
+      "durability": "git",
+      "path": "t/1669-task-acceptance-fixture-runtime.t",
+      "sha256": "bdebbf03308cd5e0699324f9ab96a249c11c9ab05634309569d33874391a196f",
+      "size_bytes": 67582
+    },
+    {
+      "durability": "git",
+      "path": "t/lib/FSM/Test/RustProxyFixture.pm",
+      "sha256": "d9c4ab52cf8074526c59b7a5dcb9da870ca7ffdacb4eb236dacb23b5db6d8bfb",
+      "size_bytes": 11466
+    },
+    {
+      "durability": "retained_copy_pending",
+      "path": ".artifacts/logs/native-proxy-builder-20260910/independent-audit.json",
+      "sha256": "fa9d8ab4c4ff39e08dc8c1a92d9ec3ecfe7c717d9ddf6ebf1828167183b3d7ee",
+      "size_bytes": 2192
+    },
+    {
+      "durability": "retained_copy_pending",
+      "path": ".artifacts/logs/native-proxy-builder-20260910/native-final/complete.json",
+      "sha256": "3446270d0fda3f34ac695ccd2f93b2799905cf46a0b8147e105d6737b0b164cc",
+      "size_bytes": 163
+    },
+    {
+      "durability": "retained_copy_pending",
+      "path": ".artifacts/logs/native-proxy-builder-20260910/native-final/inputs.json",
+      "sha256": "0a863dbfa37bd729954b747ca16de701772eb4a9986159cdbcf4890678be29d2",
+      "size_bytes": 1852
+    },
+    {
+      "durability": "retained_copy_pending",
+      "path": ".artifacts/logs/native-proxy-builder-20260910/native-final/proxy_decoy/preparation.json",
+      "sha256": "e10d752643d57a7c774fa3e046241c228a4a5b8931f74279107671d73be0d3d2",
+      "size_bytes": 2459
+    },
+    {
+      "durability": "retained_copy_pending",
+      "path": ".artifacts/logs/native-proxy-builder-20260910/native-final/proxy_decoy/prepare/cleanup.json",
+      "sha256": "6a0a6e2161e9b9745e6aafac79dc1b0ea0b9a90b3f1eff5e17af5f30b046d655",
+      "size_bytes": 72
+    },
+    {
+      "durability": "retained_copy_pending",
+      "path": ".artifacts/logs/native-proxy-builder-20260910/native-final/proxy_decoy/prepare/identity.json",
+      "sha256": "4c3a1630bd427c42c1ce8a2feeceaf7594095c6343cc149c7229e3258d3b6916",
+      "size_bytes": 116
+    },
+    {
+      "durability": "retained_copy_pending",
+      "path": ".artifacts/logs/native-proxy-builder-20260910/native-final/proxy_decoy/prepare/result.json",
+      "sha256": "3624d02244eb6a9742793c144f4dec847c9dda7d690a53e9a2eb95513229ca9e",
+      "size_bytes": 169
+    },
+    {
+      "durability": "retained_copy_pending",
+      "path": ".artifacts/logs/native-proxy-builder-20260910/native-final/proxy_decoy/qualification.json",
+      "sha256": "c2e3348f07b1fee1ce26b99d5e01fe00f788bc2cebde26bbaa507a06af954c38",
+      "size_bytes": 1049
+    },
+    {
+      "durability": "retained_copy_pending",
+      "path": ".artifacts/logs/native-proxy-builder-20260910/native-final/proxy_decoy/rustup",
+      "sha256": "eb69147ec7c8d9e54b6b15742a5d34129003d040fb6be71f8c1f148bc9209954",
+      "size_bytes": 49992
+    },
+    {
+      "durability": "retained_copy_pending",
+      "path": ".artifacts/logs/native-proxy-builder-20260910/native-final/proxy_decoy/rustup.c",
+      "sha256": "a2ff3cf129d8c01d2b05c33b2df2ca18b68048972dcc86c00222786a6751defc",
+      "size_bytes": 745
+    },
+    {
+      "durability": "retained_copy_pending",
+      "path": ".artifacts/logs/native-proxy-builder-20260910/native-final/proxy_decoy/workspace.json",
+      "sha256": "a58b070a945e16f1208f1dd7b30f871a45c0c12a8c1dfd4f3ad5a3602b7ee7f5",
+      "size_bytes": 102
+    },
+    {
+      "durability": "retained_copy_pending",
+      "path": ".artifacts/logs/native-proxy-builder-20260910/native-final/proxy_nonzero/preparation.json",
+      "sha256": "fbec239a66ec686abd63aeee371b75c7967b4923893883043524d95a26981de5",
+      "size_bytes": 2459
+    },
+    {
+      "durability": "retained_copy_pending",
+      "path": ".artifacts/logs/native-proxy-builder-20260910/native-final/proxy_nonzero/prepare/cleanup.json",
+      "sha256": "6a0a6e2161e9b9745e6aafac79dc1b0ea0b9a90b3f1eff5e17af5f30b046d655",
+      "size_bytes": 72
+    },
+    {
+      "durability": "retained_copy_pending",
+      "path": ".artifacts/logs/native-proxy-builder-20260910/native-final/proxy_nonzero/prepare/identity.json",
+      "sha256": "44776f0430c5b913ea1bdac440cbd5054170a4dd33e4eefc71483a20b284e5e7",
+      "size_bytes": 115
+    },
+    {
+      "durability": "retained_copy_pending",
+      "path": ".artifacts/logs/native-proxy-builder-20260910/native-final/proxy_nonzero/prepare/result.json",
+      "sha256": "027a7cb0e2f9f1963962793f76265dfbf5f991eb0e1c75f043e692a20d958e8a",
+      "size_bytes": 169
+    },
+    {
+      "durability": "retained_copy_pending",
+      "path": ".artifacts/logs/native-proxy-builder-20260910/native-final/proxy_nonzero/qualification.json",
+      "sha256": "f917c1c14979d85599a8a6ab088fdef055600c68770cdc4b34fb0525ac61395e",
+      "size_bytes": 1057
+    },
+    {
+      "durability": "retained_copy_pending",
+      "path": ".artifacts/logs/native-proxy-builder-20260910/native-final/proxy_nonzero/rustup",
+      "sha256": "1b4e9ed9995ec79b04d1e48cab53da6f96979a77364ad45eb880a226c86275a8",
+      "size_bytes": 49992
+    },
+    {
+      "durability": "retained_copy_pending",
+      "path": ".artifacts/logs/native-proxy-builder-20260910/native-final/proxy_nonzero/rustup.c",
+      "sha256": "b689e2f7ee42bf7cac62f272a36d5313a272dddef15a75f8c66b126568fbf276",
+      "size_bytes": 745
+    },
+    {
+      "durability": "retained_copy_pending",
+      "path": ".artifacts/logs/native-proxy-builder-20260910/native-final/proxy_nonzero/workspace.json",
+      "sha256": "5c7111efbf5052a8657af784c29fee01a9901ddc922bc4a3296b0a12cb5e2127",
+      "size_bytes": 102
+    },
+    {
+      "durability": "retained_copy_pending",
+      "path": ".artifacts/logs/native-proxy-builder-20260910/native/complete.json",
+      "sha256": "3446270d0fda3f34ac695ccd2f93b2799905cf46a0b8147e105d6737b0b164cc",
+      "size_bytes": 163
+    },
+    {
+      "durability": "retained_copy_pending",
+      "path": ".artifacts/logs/native-proxy-builder-20260910/native/inputs.json",
+      "sha256": "e22363cd416a378e52f732c4af3aa5aad74f5c5a3eebd92fc3e44aa0a52f844c",
+      "size_bytes": 1840
+    },
+    {
+      "durability": "retained_copy_pending",
+      "path": ".artifacts/logs/native-proxy-builder-20260910/native/proxy_decoy/preparation.json",
+      "sha256": "b814456451a8304db52a64ce4a938500d0d180db1a61b7f4add3c51049bfc8fb",
+      "size_bytes": 1940
+    },
+    {
+      "durability": "retained_copy_pending",
+      "path": ".artifacts/logs/native-proxy-builder-20260910/native/proxy_decoy/prepare/cleanup.json",
+      "sha256": "6a0a6e2161e9b9745e6aafac79dc1b0ea0b9a90b3f1eff5e17af5f30b046d655",
+      "size_bytes": 72
+    },
+    {
+      "durability": "retained_copy_pending",
+      "path": ".artifacts/logs/native-proxy-builder-20260910/native/proxy_decoy/prepare/identity.json",
+      "sha256": "226523ba5d1637e373e61cfbecdb95d4dfca2f77be5506e621a0c9b55f176062",
+      "size_bytes": 116
+    },
+    {
+      "durability": "retained_copy_pending",
+      "path": ".artifacts/logs/native-proxy-builder-20260910/native/proxy_decoy/prepare/result.json",
+      "sha256": "39b9d11464eae417c71fea1c4f427bb3253b5af165f9c7034cf5d791e6ab6cfa",
+      "size_bytes": 169
+    },
+    {
+      "durability": "retained_copy_pending",
+      "path": ".artifacts/logs/native-proxy-builder-20260910/native/proxy_decoy/qualification.json",
+      "sha256": "5e29cd308b2d15c0b3a50c9ed79e9ad71ef26e8d9d58394ac33f136f639bc7b2",
+      "size_bytes": 1049
+    },
+    {
+      "durability": "retained_copy_pending",
+      "path": ".artifacts/logs/native-proxy-builder-20260910/native/proxy_decoy/rustup",
+      "sha256": "eb69147ec7c8d9e54b6b15742a5d34129003d040fb6be71f8c1f148bc9209954",
+      "size_bytes": 49992
+    },
+    {
+      "durability": "retained_copy_pending",
+      "path": ".artifacts/logs/native-proxy-builder-20260910/native/proxy_decoy/rustup.c",
+      "sha256": "a2ff3cf129d8c01d2b05c33b2df2ca18b68048972dcc86c00222786a6751defc",
+      "size_bytes": 745
+    },
+    {
+      "durability": "retained_copy_pending",
+      "path": ".artifacts/logs/native-proxy-builder-20260910/native/proxy_decoy/workspace.json",
+      "sha256": "da8e34ed99fd9ef73f4885fa8d8bff0c8870e40d8788de9bd1bf30e5c0a49d03",
+      "size_bytes": 102
+    },
+    {
+      "durability": "retained_copy_pending",
+      "path": ".artifacts/logs/native-proxy-builder-20260910/native/proxy_nonzero/preparation.json",
+      "sha256": "90012867462edf92f2ee87c47800cc51f175fce84bdcbe5c22a838de698121ff",
+      "size_bytes": 1941
+    },
+    {
+      "durability": "retained_copy_pending",
+      "path": ".artifacts/logs/native-proxy-builder-20260910/native/proxy_nonzero/prepare/cleanup.json",
+      "sha256": "6a0a6e2161e9b9745e6aafac79dc1b0ea0b9a90b3f1eff5e17af5f30b046d655",
+      "size_bytes": 72
+    },
+    {
+      "durability": "retained_copy_pending",
+      "path": ".artifacts/logs/native-proxy-builder-20260910/native/proxy_nonzero/prepare/identity.json",
+      "sha256": "ccdb4e45b05b7e8542eb5fa5e9572d972c0adf7b7e280d22f417eff6de2cd2f3",
+      "size_bytes": 116
+    },
+    {
+      "durability": "retained_copy_pending",
+      "path": ".artifacts/logs/native-proxy-builder-20260910/native/proxy_nonzero/prepare/result.json",
+      "sha256": "b598444ac40327b377ed282a58017100ff6d4ebc9b8d0e6aa4e8f32abf69f4fa",
+      "size_bytes": 169
+    },
+    {
+      "durability": "retained_copy_pending",
+      "path": ".artifacts/logs/native-proxy-builder-20260910/native/proxy_nonzero/qualification.json",
+      "sha256": "5294b12d72950aa548f21e01bbab27543fde3df693b33621bc90452cd1f70c7b",
+      "size_bytes": 1057
+    },
+    {
+      "durability": "retained_copy_pending",
+      "path": ".artifacts/logs/native-proxy-builder-20260910/native/proxy_nonzero/rustup",
+      "sha256": "1b4e9ed9995ec79b04d1e48cab53da6f96979a77364ad45eb880a226c86275a8",
+      "size_bytes": 49992
+    },
+    {
+      "durability": "retained_copy_pending",
+      "path": ".artifacts/logs/native-proxy-builder-20260910/native/proxy_nonzero/rustup.c",
+      "sha256": "b689e2f7ee42bf7cac62f272a36d5313a272dddef15a75f8c66b126568fbf276",
+      "size_bytes": 745
+    },
+    {
+      "durability": "retained_copy_pending",
+      "path": ".artifacts/logs/native-proxy-builder-20260910/native/proxy_nonzero/workspace.json",
+      "sha256": "b823b3b1d3d326da49947fd04b9b349eabac07c8edf50031b74a37ae328e29b0",
+      "size_bytes": 102
+    },
+    {
+      "durability": "retained_copy_pending",
+      "path": ".artifacts/tmp/native-proxy-builder-20260910/native-final.pl",
+      "sha256": "92268bb1eb6c1b01f2225496ab08e1424206e77e52b2d6c3dde73696635c0d9a",
+      "size_bytes": 1203
+    },
+    {
+      "durability": "retained_copy_pending",
+      "path": ".artifacts/tmp/native-proxy-builder-20260910/native-final.py",
+      "sha256": "4c33f16923c66b456e25c67e583db01624128792d73ebacd9ef26b622ade085f",
+      "size_bytes": 5025
+    }
+  ],
+  "owner": "HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.12.4.1.5.2.2.1",
+  "profile_requirements": [
+    "complete_membership",
+    "all_node_modes",
+    "max_depth",
+    "max_regular_file_bytes",
+    "aggregate_regular_file_bytes"
+  ],
+  "scope": "Read-only evidence inventory. No compiler/native/fixture/collector execution and no cleanup or permission/size-bound change.",
+  "search_scope": {
+    "meaning": "Bounded inventory of these authenticated retained epochs and current transport. Not a universal assertion about every unindexed artifact or every compiler/SDK.",
+    "private": "Both original native builder epochs and their complete mode preparation/workspace/qualification records, selected raw C/images, compiler-owner receipts and original drivers. Retain exact read-only copies here; do not rerun drivers or delete originals.",
+    "tracked": "Current producer, preparation/retirement schemas and selected original/daemon/hardlink evidence, including every archived selected source in those two successful observation epochs."
+  },
+  "source_revision": "715db54c7b77090dbdd1617d02bfbe7c2159ff29"
+}
