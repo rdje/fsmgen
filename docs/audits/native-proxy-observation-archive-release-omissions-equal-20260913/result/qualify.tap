@@ -1,0 +1,180 @@
+ok 1 - NativeProxyObservationRelease::_coordinator_request: original external caller rejects
+ok 2 - NativeProxyObservationRelease::_coordinator_request: fault wrapper preserves caller rejection
+ok 3 - NativeProxyObservationRelease::_coordinator_request: original caller diagnostic remains exact
+ok 4 - NativeProxyObservationRelease::_coordinator_request: rejected original call stays an interrupted prefix
+ok 5 - NativeProxyObservationRelease::_admit_locked: original external caller rejects
+ok 6 - NativeProxyObservationRelease::_admit_locked: fault wrapper preserves caller rejection
+ok 7 - NativeProxyObservationRelease::_admit_locked: original caller diagnostic remains exact
+ok 8 - NativeProxyObservationRelease::_admit_locked: rejected original call stays an interrupted prefix
+ok 9 - NativeProxyObservationRelease::_unlink_exact: original external caller rejects
+ok 10 - NativeProxyObservationRelease::_unlink_exact: fault wrapper preserves caller rejection
+ok 11 - NativeProxyObservationRelease::_unlink_exact: original caller diagnostic remains exact
+ok 12 - NativeProxyObservationRelease::_unlink_exact: rejected original call stays an interrupted prefix
+ok 13 - NativeProxyObservationRelease::_release_locked: original external caller rejects
+ok 14 - NativeProxyObservationRelease::_release_locked: fault wrapper preserves caller rejection
+ok 15 - NativeProxyObservationRelease::_release_locked: original caller diagnostic remains exact
+ok 16 - NativeProxyObservationRelease::_release_locked: rejected original call stays an interrupted prefix
+ok 17 - NativeProxyObservationRelease::_finish_locked: original external caller rejects
+ok 18 - NativeProxyObservationRelease::_finish_locked: fault wrapper preserves caller rejection
+ok 19 - NativeProxyObservationRelease::_finish_locked: original caller diagnostic remains exact
+ok 20 - NativeProxyObservationRelease::_finish_locked: rejected original call stays an interrupted prefix
+ok 21 - NativeProxyReferenceCensus::_inspect_locked: original external caller rejects
+ok 22 - NativeProxyReferenceCensus::_inspect_locked: fault wrapper preserves caller rejection
+ok 23 - NativeProxyReferenceCensus::_inspect_locked: original caller diagnostic remains exact
+ok 24 - NativeProxyReferenceCensus::_inspect_locked: rejected original call stays an interrupted prefix
+ok 25 - healthy: original public attempt returns
+ok 26 - healthy: reported success remains original
+ok 27 - healthy: exact selected omission
+ok 28 - healthy: no helper or reported-error injection
+ok 29 - healthy: actual unlink and absence remain truthful
+ok 30 - healthy: original open-handle verdict is preserved
+ok 31 - healthy: omitted and actual closes remain distinct
+ok 32 - healthy: same native object remains open after the original verdict
+ok 33 - healthy: exact separate recovery closes each omitted object once
+ok 34 - healthy: recovery preserves the complete original snapshot and failure truth
+ok 35 - healthy: original input bytes and types remain unchanged
+ok 36 - healthy: no unrelated publication mutation or private-source read
+ok 37 - healthy: exact physical effect preserves archive and every other owner
+ok 38 - healthy: inactive receipt authority stays closed
+ok 39 - omit:NativeProxyImageCoordination::_census: original public attempt returns
+ok 40 - omit:NativeProxyImageCoordination::_census: reported success remains original
+ok 41 - omit:NativeProxyImageCoordination::_census: exact selected omission
+ok 42 - omit:NativeProxyImageCoordination::_census: no helper or reported-error injection
+ok 43 - omit:NativeProxyImageCoordination::_census: actual unlink and absence remain truthful
+ok 44 - omit:NativeProxyImageCoordination::_census: original open-handle verdict is preserved
+ok 45 - omit:NativeProxyImageCoordination::_census: omitted and actual closes remain distinct
+ok 46 - omit:NativeProxyImageCoordination::_census: same native object remains open after the original verdict
+ok 47 - omit:NativeProxyImageCoordination::_census: exact separate recovery closes each omitted object once
+ok 48 - omit:NativeProxyImageCoordination::_census: recovery preserves the complete original snapshot and failure truth
+ok 49 - omit:NativeProxyImageCoordination::_census: original input bytes and types remain unchanged
+ok 50 - omit:NativeProxyImageCoordination::_census: no unrelated publication mutation or private-source read
+ok 51 - omit:NativeProxyImageCoordination::_census: exact physical effect preserves archive and every other owner
+ok 52 - omit:NativeProxyImageCoordination::_census: inactive receipt authority stays closed
+ok 53 - omit:NativeProxyImageCoordination::_names: original public attempt returns
+ok 54 - omit:NativeProxyImageCoordination::_names: reported success remains original
+ok 55 - omit:NativeProxyImageCoordination::_names: exact selected omission
+ok 56 - omit:NativeProxyImageCoordination::_names: no helper or reported-error injection
+ok 57 - omit:NativeProxyImageCoordination::_names: actual unlink and absence remain truthful
+ok 58 - omit:NativeProxyImageCoordination::_names: original open-handle verdict is preserved
+ok 59 - omit:NativeProxyImageCoordination::_names: omitted and actual closes remain distinct
+ok 60 - omit:NativeProxyImageCoordination::_names: same native object remains open after the original verdict
+ok 61 - omit:NativeProxyImageCoordination::_names: exact separate recovery closes each omitted object once
+ok 62 - omit:NativeProxyImageCoordination::_names: recovery preserves the complete original snapshot and failure truth
+ok 63 - omit:NativeProxyImageCoordination::_names: original input bytes and types remain unchanged
+ok 64 - omit:NativeProxyImageCoordination::_names: no unrelated publication mutation or private-source read
+ok 65 - omit:NativeProxyImageCoordination::_names: exact physical effect preserves archive and every other owner
+ok 66 - omit:NativeProxyImageCoordination::_names: inactive receipt authority stays closed
+ok 67 - omit:NativeProxyImageCoordination::_transaction: original public attempt returns
+ok 68 - omit:NativeProxyImageCoordination::_transaction: reported success remains original
+ok 69 - omit:NativeProxyImageCoordination::_transaction: exact selected omission
+ok 70 - omit:NativeProxyImageCoordination::_transaction: no helper or reported-error injection
+ok 71 - omit:NativeProxyImageCoordination::_transaction: actual unlink and absence remain truthful
+ok 72 - omit:NativeProxyImageCoordination::_transaction: original open-handle verdict is preserved
+ok 73 - omit:NativeProxyImageCoordination::_transaction: omitted and actual closes remain distinct
+ok 74 - omit:NativeProxyImageCoordination::_transaction: same native object remains open after the original verdict
+ok 75 - omit:NativeProxyImageCoordination::_transaction: exact separate recovery closes each omitted object once
+ok 76 - omit:NativeProxyImageCoordination::_transaction: recovery preserves the complete original snapshot and failure truth
+ok 77 - omit:NativeProxyImageCoordination::_transaction: original input bytes and types remain unchanged
+ok 78 - omit:NativeProxyImageCoordination::_transaction: no unrelated publication mutation or private-source read
+ok 79 - omit:NativeProxyImageCoordination::_transaction: exact physical effect preserves archive and every other owner
+ok 80 - omit:NativeProxyImageCoordination::_transaction: inactive receipt authority stays closed
+ok 81 - omit:NativeProxyImageCustody::_members: original public attempt returns
+ok 82 - omit:NativeProxyImageCustody::_members: reported success remains original
+ok 83 - omit:NativeProxyImageCustody::_members: exact selected omission
+ok 84 - omit:NativeProxyImageCustody::_members: no helper or reported-error injection
+ok 85 - omit:NativeProxyImageCustody::_members: actual unlink and absence remain truthful
+ok 86 - omit:NativeProxyImageCustody::_members: original open-handle verdict is preserved
+ok 87 - omit:NativeProxyImageCustody::_members: omitted and actual closes remain distinct
+ok 88 - omit:NativeProxyImageCustody::_members: same native object remains open after the original verdict
+ok 89 - omit:NativeProxyImageCustody::_members: exact separate recovery closes each omitted object once
+ok 90 - omit:NativeProxyImageCustody::_members: recovery preserves the complete original snapshot and failure truth
+ok 91 - omit:NativeProxyImageCustody::_members: original input bytes and types remain unchanged
+ok 92 - omit:NativeProxyImageCustody::_members: no unrelated publication mutation or private-source read
+ok 93 - omit:NativeProxyImageCustody::_members: exact physical effect preserves archive and every other owner
+ok 94 - omit:NativeProxyImageCustody::_members: inactive receipt authority stays closed
+ok 95 - omit:NativeProxyImageCustody::read_entry: original public attempt returns
+ok 96 - omit:NativeProxyImageCustody::read_entry: reported success remains original
+ok 97 - omit:NativeProxyImageCustody::read_entry: exact selected omission
+ok 98 - omit:NativeProxyImageCustody::read_entry: no helper or reported-error injection
+ok 99 - omit:NativeProxyImageCustody::read_entry: actual unlink and absence remain truthful
+ok 100 - omit:NativeProxyImageCustody::read_entry: original open-handle verdict is preserved
+ok 101 - omit:NativeProxyImageCustody::read_entry: omitted and actual closes remain distinct
+ok 102 - omit:NativeProxyImageCustody::read_entry: same native object remains open after the original verdict
+ok 103 - omit:NativeProxyImageCustody::read_entry: exact separate recovery closes each omitted object once
+ok 104 - omit:NativeProxyImageCustody::read_entry: recovery preserves the complete original snapshot and failure truth
+ok 105 - omit:NativeProxyImageCustody::read_entry: original input bytes and types remain unchanged
+ok 106 - omit:NativeProxyImageCustody::read_entry: no unrelated publication mutation or private-source read
+ok 107 - omit:NativeProxyImageCustody::read_entry: exact physical effect preserves archive and every other owner
+ok 108 - omit:NativeProxyImageCustody::read_entry: inactive receipt authority stays closed
+ok 109 - omit:NativeProxyObservationArchive::_source_closure: original public attempt returns
+ok 110 - omit:NativeProxyObservationArchive::_source_closure: reported success remains original
+ok 111 - omit:NativeProxyObservationArchive::_source_closure: exact selected omission
+ok 112 - omit:NativeProxyObservationArchive::_source_closure: no helper or reported-error injection
+ok 113 - omit:NativeProxyObservationArchive::_source_closure: actual unlink and absence remain truthful
+ok 114 - omit:NativeProxyObservationArchive::_source_closure: original open-handle verdict is preserved
+ok 115 - omit:NativeProxyObservationArchive::_source_closure: omitted and actual closes remain distinct
+ok 116 - omit:NativeProxyObservationArchive::_source_closure: same native object remains open after the original verdict
+ok 117 - omit:NativeProxyObservationArchive::_source_closure: exact separate recovery closes each omitted object once
+ok 118 - omit:NativeProxyObservationArchive::_source_closure: recovery preserves the complete original snapshot and failure truth
+ok 119 - omit:NativeProxyObservationArchive::_source_closure: original input bytes and types remain unchanged
+ok 120 - omit:NativeProxyObservationArchive::_source_closure: no unrelated publication mutation or private-source read
+ok 121 - omit:NativeProxyObservationArchive::_source_closure: exact physical effect preserves archive and every other owner
+ok 122 - omit:NativeProxyObservationArchive::_source_closure: inactive receipt authority stays closed
+ok 123 - omit:NativeProxyObservationRelease::_close_owned: original public attempt returns
+ok 124 - omit:NativeProxyObservationRelease::_close_owned: reported success remains original
+ok 125 - omit:NativeProxyObservationRelease::_close_owned: exact selected omission
+ok 126 - omit:NativeProxyObservationRelease::_close_owned: no helper or reported-error injection
+ok 127 - omit:NativeProxyObservationRelease::_close_owned: actual unlink and absence remain truthful
+ok 128 - omit:NativeProxyObservationRelease::_close_owned: original open-handle verdict is preserved
+ok 129 - omit:NativeProxyObservationRelease::_close_owned: omitted and actual closes remain distinct
+ok 130 - omit:NativeProxyObservationRelease::_close_owned: same native object remains open after the original verdict
+ok 131 - omit:NativeProxyObservationRelease::_close_owned: exact separate recovery closes each omitted object once
+ok 132 - omit:NativeProxyObservationRelease::_close_owned: recovery preserves the complete original snapshot and failure truth
+ok 133 - omit:NativeProxyObservationRelease::_close_owned: original input bytes and types remain unchanged
+ok 134 - omit:NativeProxyObservationRelease::_close_owned: no unrelated publication mutation or private-source read
+ok 135 - omit:NativeProxyObservationRelease::_close_owned: exact physical effect preserves archive and every other owner
+ok 136 - omit:NativeProxyObservationRelease::_close_owned: inactive receipt authority stays closed
+ok 137 - omit:NativeProxyReferenceCensus::_closure: original public attempt returns
+ok 138 - omit:NativeProxyReferenceCensus::_closure: reported success remains original
+ok 139 - omit:NativeProxyReferenceCensus::_closure: exact selected omission
+ok 140 - omit:NativeProxyReferenceCensus::_closure: no helper or reported-error injection
+ok 141 - omit:NativeProxyReferenceCensus::_closure: actual unlink and absence remain truthful
+ok 142 - omit:NativeProxyReferenceCensus::_closure: original open-handle verdict is preserved
+ok 143 - omit:NativeProxyReferenceCensus::_closure: omitted and actual closes remain distinct
+ok 144 - omit:NativeProxyReferenceCensus::_closure: same native object remains open after the original verdict
+ok 145 - omit:NativeProxyReferenceCensus::_closure: exact separate recovery closes each omitted object once
+ok 146 - omit:NativeProxyReferenceCensus::_closure: recovery preserves the complete original snapshot and failure truth
+ok 147 - omit:NativeProxyReferenceCensus::_closure: original input bytes and types remain unchanged
+ok 148 - omit:NativeProxyReferenceCensus::_closure: no unrelated publication mutation or private-source read
+ok 149 - omit:NativeProxyReferenceCensus::_closure: exact physical effect preserves archive and every other owner
+ok 150 - omit:NativeProxyReferenceCensus::_closure: inactive receipt authority stays closed
+ok 151 - omit:NativeProxyReferenceCensus::_image: original public attempt returns
+ok 152 - omit:NativeProxyReferenceCensus::_image: reported success remains original
+ok 153 - omit:NativeProxyReferenceCensus::_image: exact selected omission
+ok 154 - omit:NativeProxyReferenceCensus::_image: no helper or reported-error injection
+ok 155 - omit:NativeProxyReferenceCensus::_image: actual unlink and absence remain truthful
+ok 156 - omit:NativeProxyReferenceCensus::_image: original open-handle verdict is preserved
+ok 157 - omit:NativeProxyReferenceCensus::_image: omitted and actual closes remain distinct
+ok 158 - omit:NativeProxyReferenceCensus::_image: same native object remains open after the original verdict
+ok 159 - omit:NativeProxyReferenceCensus::_image: exact separate recovery closes each omitted object once
+ok 160 - omit:NativeProxyReferenceCensus::_image: recovery preserves the complete original snapshot and failure truth
+ok 161 - omit:NativeProxyReferenceCensus::_image: original input bytes and types remain unchanged
+ok 162 - omit:NativeProxyReferenceCensus::_image: no unrelated publication mutation or private-source read
+ok 163 - omit:NativeProxyReferenceCensus::_image: exact physical effect preserves archive and every other owner
+ok 164 - omit:NativeProxyReferenceCensus::_image: inactive receipt authority stays closed
+ok 165 - omit:NativeProxyReferenceCensus::_inspect_locked: original public attempt returns
+ok 166 - omit:NativeProxyReferenceCensus::_inspect_locked: reported success remains original
+ok 167 - omit:NativeProxyReferenceCensus::_inspect_locked: exact selected omission
+ok 168 - omit:NativeProxyReferenceCensus::_inspect_locked: no helper or reported-error injection
+ok 169 - omit:NativeProxyReferenceCensus::_inspect_locked: actual unlink and absence remain truthful
+ok 170 - omit:NativeProxyReferenceCensus::_inspect_locked: original open-handle verdict is preserved
+ok 171 - omit:NativeProxyReferenceCensus::_inspect_locked: omitted and actual closes remain distinct
+ok 172 - omit:NativeProxyReferenceCensus::_inspect_locked: same native object remains open after the original verdict
+ok 173 - omit:NativeProxyReferenceCensus::_inspect_locked: exact separate recovery closes each omitted object once
+ok 174 - omit:NativeProxyReferenceCensus::_inspect_locked: recovery preserves the complete original snapshot and failure truth
+ok 175 - omit:NativeProxyReferenceCensus::_inspect_locked: original input bytes and types remain unchanged
+ok 176 - omit:NativeProxyReferenceCensus::_inspect_locked: no unrelated publication mutation or private-source read
+ok 177 - omit:NativeProxyReferenceCensus::_inspect_locked: exact physical effect preserves archive and every other owner
+ok 178 - omit:NativeProxyReferenceCensus::_inspect_locked: inactive receipt authority stays closed
+ok 179 - no original producer, compiler or native process attempt
+1..179

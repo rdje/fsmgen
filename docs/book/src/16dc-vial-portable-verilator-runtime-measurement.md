@@ -2960,7 +2960,20 @@ absent before its complete case is published. Verify the retained evidence:
 python3 -B docs/audits/native-proxy-observation-archive-release-omissions-ordinary-20260913/audit.py --verify-saved
 ```
 
-Other omission profiles and final release applicability remain pending.
+Equal-reference omission controls now pass as well. The wrapper, private
+reference and global reference contain equal bytes while keeping distinct
+native file identities and sharing the archived content. Deliberately omitting
+a close preserves those identities through the original open-handle verdict
+and later recovery. The audit rejects collapsed source identities, altered
+archive identity and substitution of an ordinary wrapper. Verify the saved
+cases and their unchanged shared oracles:
+
+```sh
+python3 -B docs/audits/native-proxy-observation-archive-release-omissions-equal-20260913/audit.py --verify-saved
+```
+
+Active-runtime and last-observation omissions, the complete omission join and
+final release applicability remain pending.
 These deliberate faults do not qualify ambiguous operating-system close
 failures or authorize native execution.
 

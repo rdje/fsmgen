@@ -1,0 +1,56 @@
+{
+  "harness_changes": [
+    "Load the committed ordinary omission modules from their existing directory.",
+    "Select the new equal profile through the pinned plan and use its qualification schema.",
+    "Update only profile diagnostics. All allocation, observer, verdict, recovery, effects and publication assertions remain exact."
+  ],
+  "harness_equivalence_verified": true,
+  "limits": "Reuse pure helper functions and saved proofs only. No original qualifier or auditor entrypoint is replayed.",
+  "owner": "HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.12.4.1.3.4.4.5.3",
+  "recovery_source_byte_exact": true,
+  "source_revision": "e1521879468807d63d0f624e8d21a67282a36bec",
+  "unchanged_qualified_dependencies": [
+    {
+      "git_blob": "4f384bc7c3b5d4ea2c433136e875c57c2f2a2b50",
+      "path": "docs/audits/native-proxy-observation-archive-release-omissions-ordinary-20260913/OmissionPlan.pm",
+      "sha256": "71223f610e3a3855f75ea771647db244a5112371a39a56309d991ec53212d7c3",
+      "size_bytes": 2980
+    },
+    {
+      "git_blob": "6300cb23ac0877eebfc020b8b2dfe39ba17505d3",
+      "path": "docs/audits/native-proxy-observation-archive-release-omissions-ordinary-20260913/Omissions.pm",
+      "sha256": "aa9b1f614befe6c5c7069552d2343c3f6a0250759d266a3cae519018f91382a5",
+      "size_bytes": 5826
+    },
+    {
+      "git_blob": "5047c00e385861cfc104feba13814272d89ec619",
+      "path": "docs/audits/native-proxy-observation-archive-release-omissions-ordinary-20260913/audit.py",
+      "sha256": "66630b16dc36a3e437cd4262439f6a02355e9d8dcad54345fd086d883a44ed9d",
+      "size_bytes": 22153
+    },
+    {
+      "git_blob": "3cad3833aa813841905c397a5102ace1c40c4c59",
+      "path": "docs/audits/native-proxy-observation-archive-release-omissions-ordinary-20260913/model.py",
+      "sha256": "a9ff7ac64213b449f73d26435fcfce85c0b8886fc3cdffc9dc4bed6deb20c955",
+      "size_bytes": 1154
+    },
+    {
+      "git_blob": "212f0bd55aa6ec09db9aa70adb81195d3199b9a1",
+      "path": "docs/audits/native-proxy-observation-archive-release-omissions-ordinary-20260913/preflight.py",
+      "sha256": "a91a28eb4aa8ec049f2702d962315b10e7e2f32d7043a8d795d02c6146209434",
+      "size_bytes": 4108
+    },
+    {
+      "git_blob": "173c7050eb659a16f1aff3be6d7835c767801645",
+      "path": "docs/audits/native-proxy-observation-archive-release-omissions-ordinary-20260913/native-trace-source-review.json",
+      "sha256": "f65fc3bedf1999fd222487b6e1831cf256f18830f28ef3f683cd34795716ab9c",
+      "size_bytes": 1921
+    },
+    {
+      "git_blob": "0c3a30e65be32152603d32cb5a6989355e454d34",
+      "path": "docs/audits/native-proxy-observation-archive-release-readback-equal-20260912/audit.py",
+      "sha256": "4735418a1c3ce6daceebf6ef8d0f6d453743ad5ede64fa2590c243f4d99a74ae",
+      "size_bytes": 21115
+    }
+  ]
+}

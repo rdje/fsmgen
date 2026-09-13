@@ -1,0 +1,81 @@
+{
+  "assertions": 179,
+  "book_review": "docs/audits/native-proxy-observation-archive-release-omissions-equal-20260913/book-review.json",
+  "claim_legs": {
+    "durability": "Exact source/Git pins, original snapshots, live-handle witnesses, separate recovery, complete TAP, immutable case receipts and absent allocation records survive in tracked copies with saved-only audit and recovery verification. The book and Knowledge Map route to that evidence.",
+    "falsify": "The unchanged original closure oracle rejects every deliberate omission. Altered equal-source identities and archive custody reject alongside the qualified alias, witness, recovery and coherent-checksum closure controls. Healthy implementation closure passes without recovery.",
+    "rederive": "Current bindings use the qualified independent source-ownership and healthy-close oracle. The unchanged ordinary row verifier and original equal-identity oracle independently verify every new saved row, native identity, original verdict and exact effects."
+  },
+  "commit_gate": "Staged doctrines and normal commit hooks must pass before this slice is committed.",
+  "continuity_review": "docs/audits/native-proxy-observation-archive-release-omissions-equal-20260913/continuity-review.json",
+  "documentation_review": "docs/audits/native-proxy-observation-archive-release-omissions-equal-20260913/documentation-review.json",
+  "first_executions": {
+    "admission": true,
+    "audit": true,
+    "book": true,
+    "book-inspection": true,
+    "history": true,
+    "knowledge": true,
+    "knowledge-generate": true,
+    "prepare": true,
+    "qualify": true,
+    "recovery": true,
+    "saved-audit": true,
+    "saved-recovery": true,
+    "syntax": true,
+    "task-integrity": true
+  },
+  "knowledge_aggregate": {
+    "bytes_total": 3492418,
+    "files": 1160,
+    "lines_total": 47288
+  },
+  "knowledge_questions_preserved": 117,
+  "limits": "Only the equal-reference representative omissions execute. Active-runtime and last-observation omissions, their complete join, final release and native/startup/parent/full CI/push remain open.",
+  "owner": "HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.12.4.1.3.4.4.5.3",
+  "prerequisites": {
+    "binding": {
+      "assertions": 147,
+      "copies": 8,
+      "resolutions": 462,
+      "variants": 42
+    },
+    "ordinary_copies": 29,
+    "ordinary_pins": 26
+  },
+  "raw_output_records": 39,
+  "raw_verification_outputs": "docs/audits/native-proxy-observation-archive-release-omissions-equal-20260913/verification-outputs.json",
+  "recovery": {
+    "bytes": 8345366,
+    "copies": 29,
+    "falsifiers": [
+      "omitted-copy",
+      "foreign-destination",
+      "changed-copy-digest"
+    ],
+    "source_reaccess": false,
+    "success": true
+  },
+  "result": "docs/audits/native-proxy-observation-archive-release-omissions-equal-20260913/result/audit.json",
+  "schema": "fsmgen.release_equal_omission_review.v1",
+  "scope": "Equal-reference healthy control and selected representative source, directory and lock omissions. Qualified current-input binding and omission observers remain unchanged. Equal source bytes retain distinct native identities and a shared archive. Original verdict, actual open alias and later recovery remain separate. No ordinary fixture replay, original producer/main, compiler, native fixture process or collector; final release and historical startup/parent/full CI/push remain gated.",
+  "source_review": "docs/audits/native-proxy-observation-archive-release-omissions-equal-20260913/source-review.json",
+  "source_revision": "e1521879468807d63d0f624e8d21a67282a36bec",
+  "success": true,
+  "totals": {
+    "calls": 6479,
+    "cases": 11,
+    "directories": 550,
+    "equal_identity_cases": 11,
+    "events": 20922,
+    "handles": 1826,
+    "healthy": 1,
+    "locks": 11,
+    "original_auditor_rejections": 10,
+    "original_open_verdicts": 10,
+    "reads": 1265,
+    "separately_recovered": 10,
+    "sources": 1265,
+    "unlinks": 11
+  }
+}

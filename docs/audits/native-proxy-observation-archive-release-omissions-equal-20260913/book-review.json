@@ -1,0 +1,20 @@
+{
+  "checked_passages": [
+    "Equal-reference omission controls now pass as well.",
+    "reference and global reference contain equal bytes while keeping distinct native file identities and sharing the archived content.",
+    "The audit rejects collapsed source identities, altered archive identity and substitution of an ordinary wrapper.",
+    "Active-runtime and last-observation omissions, the complete omission join and final release applicability remain pending.",
+    "The unchanged original closure verifier rejects that original snapshot.",
+    "python3 -B docs/audits/native-proxy-observation-archive-release-omissions-equal-20260913/audit.py --verify-saved"
+  ],
+  "exact_output_absent": true,
+  "exit_code": 0,
+  "output": ".artifacts/tmp/native-proxy-release-omissions-equal-book-20260913/book",
+  "rendered_bytes": 23496091,
+  "rendered_directories": 3,
+  "rendered_files": 98,
+  "renderer_warnings": [
+    "WARN search index is very large (13245124 bytes)"
+  ],
+  "same_volume_direct_objects": true
+}

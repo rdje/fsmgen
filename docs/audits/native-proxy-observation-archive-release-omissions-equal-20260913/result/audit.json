@@ -1,0 +1,106 @@
+{
+  "assertions": 179,
+  "domain_falsifiers": [
+    "missing-case",
+    "repeated-case",
+    "foreign-scope"
+  ],
+  "header_falsifiers": [
+    "missing-pin",
+    "missing-case-receipt",
+    "invented-process"
+  ],
+  "new_roots_absent": 44,
+  "prerequisites": {
+    "binding": {
+      "assertions": 147,
+      "copies": 8,
+      "resolutions": 462,
+      "variants": 42
+    },
+    "ordinary_copies": 29,
+    "ordinary_pins": 26
+  },
+  "prior_roots_absent": 28120,
+  "prospective_pins": [
+    {
+      "path": "docs/audits/native-proxy-observation-archive-release-omissions-equal-20260913/prepare.py",
+      "sha256": "9ee122bdad69dee3d70d3a74981a7aa2a4e37ed578806c9570095749dcdca0dd",
+      "size_bytes": 4863
+    },
+    {
+      "path": "docs/audits/native-proxy-observation-archive-release-omissions-equal-20260913/source-pins.json",
+      "sha256": "9b8491c9336ae89acaee8beec34c21130f5720113b7f0dfcf72d20459e2cee16",
+      "size_bytes": 221
+    },
+    {
+      "path": "docs/audits/native-proxy-observation-archive-release-omissions-equal-20260913/plan.json",
+      "sha256": "89922534c9769102ade1171c31ce16e3b07d2a2fa8f26d82148f984154f75139",
+      "size_bytes": 511317
+    },
+    {
+      "path": "docs/audits/native-proxy-observation-archive-release-omissions-equal-20260913/qualify.t",
+      "sha256": "8a87398262aced1eeb403fa65e4ba859f0bd16d0e8a92c06f87a279fed4d96c7",
+      "size_bytes": 14443
+    },
+    {
+      "path": "docs/audits/native-proxy-observation-archive-release-omissions-equal-20260913/audit.py",
+      "sha256": "0cb99a2f89d0f7769fc26368f103a3aa86e442eac760b1223aa8335448943302",
+      "size_bytes": 11256
+    },
+    {
+      "path": "docs/audits/native-proxy-observation-archive-release-omissions-equal-20260913/recover.py",
+      "sha256": "fb7ed05957a32f647c92cc2a44444171e4601c15b2519c72c1427051b4a61d57",
+      "size_bytes": 5962
+    },
+    {
+      "path": "docs/audits/native-proxy-observation-archive-release-omissions-equal-20260913/recovery-pins.json",
+      "sha256": "adb1285985727ef5ecd51bf0dccfc824093095166cd44c0cb0c1193fe57c39a5",
+      "size_bytes": 221
+    }
+  ],
+  "row_falsifiers": [
+    "source-closure-rewritten",
+    "lock-closure-rewritten",
+    "directory-closure-rewritten",
+    "missing-native-witness",
+    "wrong-native-inode",
+    "wrong-retained-object",
+    "unclosed-observer-duplicate",
+    "duplicate-recovery",
+    "wrong-recovery-object",
+    "wrong-recovery-primitive",
+    "failed-recovery-return",
+    "recovery-still-open",
+    "lost-original-snapshot",
+    "hidden-observer-error",
+    "wrong-current-binding",
+    "missing-call",
+    "lost-original-unlink",
+    "changed-other-owner",
+    "native-authority",
+    "collapsed-equal-source",
+    "lost-shared-archive",
+    "ordinary-wrapper-claimed"
+  ],
+  "schema": "fsmgen.release_equal_omission_audit.v1",
+  "scope": "Equal-reference healthy control and selected representative source, directory and lock omissions. Qualified current-input binding and omission observers remain unchanged. Equal source bytes retain distinct native identities and a shared archive. Original verdict, actual open alias and later recovery remain separate. No ordinary fixture replay, original producer/main, compiler, native fixture process or collector; final release and historical startup/parent/full CI/push remain gated.",
+  "source_revision": "e1521879468807d63d0f624e8d21a67282a36bec",
+  "success": true,
+  "totals": {
+    "calls": 6479,
+    "cases": 11,
+    "directories": 550,
+    "equal_identity_cases": 11,
+    "events": 20922,
+    "handles": 1826,
+    "healthy": 1,
+    "locks": 11,
+    "original_auditor_rejections": 10,
+    "original_open_verdicts": 10,
+    "reads": 1265,
+    "separately_recovered": 10,
+    "sources": 1265,
+    "unlinks": 11
+  }
+}
