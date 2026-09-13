@@ -291,16 +291,26 @@ Passing empty-store coordination does not establish populated publication,
 authentic runtime receipts or canonical native execution. The closure audit
 keeps these scopes distinct and assigns the missing work before activation.
 
-The next concrete fix is workspace compatibility. The current test wrapper
-requests executable permissions that the inactive retirement profile rejects;
-its inert wrapper fixture used a more restrictive mode. The source audit
-reproduces that mismatch and rejects confusing the wrapper with the proxy's
-separately sealed executable. Existing cleanup behavior is unchanged, and actual
-compiler-workspace capacity is still unqualified.
+The generated-wrapper permission mismatch is repaired in the inactive retirement
+prototype. Its exception matches only `rust-tool-resolution` directly inside the
+owned private workspace. Generic file permissions, ownership, link counts,
+byte limits and stable-identity checks retain their prior rules.
+
+The retained inert run reproduces the original rejection without changing the
+workspace, then completes retirement with the repaired guard. It checks existing
+private modes, nearby names, nested paths, aliases and the file-size boundary.
+For example, a sibling named `rust-tool-resolution.extra` or a wrapper inside a
+nested directory gains no permission exception. The private workspace disappears;
+the released reference disappears; the shared image remains unchanged.
+
+These process-cleanup receipts are synthetic. The result establishes the narrow
+filesystem compatibility repair; authentic compiler-workspace profiles and
+capacity remain unqualified. Earlier audits remain evidence for their pinned
+source revisions. The current re-verification command below checks this repair.
 
 | Remaining work | Required result |
 | --- | --- |
-| Workspace compatibility | Admit the exact real producer profile with ownership checks and authentic compiler-workspace capacity evidence. |
+| Workspace profiles | The narrow wrapper repair is qualified; establish authentic compiler-workspace profiles and capacity evidence. |
 | Populated-store workers | Qualify equal/different publication, separate references and observation holds through actual cancellation and retirement. |
 | Real receipt binding | Prove complete compiler/outer/inner ownership and prevent launches after settlement. |
 | Inactive adapter composition | Join preparation, native path/reference admission and observation custody before the separate native experiment. |
@@ -313,7 +323,7 @@ consumers. Live collector outcomes, policy records and public projection support
 remain required before any product activation.
 
 ```sh
-scripts/run_with_ram_guard.sh -- python3 -B docs/audits/native-proxy-protocol-frontier-20260913/audit.py --verify-saved
+scripts/run_with_ram_guard.sh -- python3 -B docs/audits/native-proxy-wrapper-compatibility-20260913/audit.py --verify-saved
 ```
 
 [Return to runtime measurement](16dc-vial-portable-verilator-runtime-measurement.md).

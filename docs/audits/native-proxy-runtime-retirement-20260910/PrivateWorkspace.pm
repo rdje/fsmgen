@@ -54,8 +54,13 @@ sub _node {
         return {kind => 'symlink', identity => _identity($path, \@metadata), target => $target};
     }
     my $mode = $metadata[2] & 07777;
+    # T1669 writes this wrapper with 0755 inside its owned private workspace.
+    # Keep the exception bound to that producer role, not every executable.
+    my $generated_wrapper = $path =~ m{\A\.artifacts/tmp/process-supervisor-tests/
+        fsmgen-[A-Za-z0-9_]+/rust-tool-resolution\z}x;
     die "workspace node is not a private regular file\n" unless S_ISREG($metadata[2])
-        && ($mode == 0400 || $mode == 0500 || $mode == 0600 || $mode == 0700);
+        && ($mode == 0400 || $mode == 0500 || $mode == 0600 || $mode == 0700
+            || ($mode == 0755 && $generated_wrapper));
     my $source = NativeProxyImageCustody::_source("$ROOT/$path", $mode, 65_536);
     my $result;
     my $ok = eval {

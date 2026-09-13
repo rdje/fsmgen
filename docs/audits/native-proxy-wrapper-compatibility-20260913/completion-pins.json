@@ -1,0 +1,47 @@
+[
+  {
+    "path": "docs/audits/native-proxy-wrapper-compatibility-20260913/review_completion.py",
+    "sha256": "45291a548f5814f09b7c894ebc53b7f9a27389e5241aa465fbb8ec04ee19ea45",
+    "size_bytes": 6223
+  },
+  {
+    "path": "docs/audits/native-proxy-wrapper-compatibility-20260913/review_claims.py",
+    "sha256": "6ea1c901b78a655142f08a59190106d37448562136baeea4ed35f6bc8a72a4e8",
+    "size_bytes": 5032
+  },
+  {
+    "path": "docs/audits/native-proxy-wrapper-compatibility-20260913/inspect_book.py",
+    "sha256": "f70afc13449940b83cf8af41bd29c2ebe1642a807faee43a9e7569a42ed0c8d1",
+    "size_bytes": 3273
+  },
+  {
+    "path": "docs/audits/native-proxy-wrapper-compatibility-20260913/review.json",
+    "sha256": "3af7361aa622a7dacb7e5aae603df42e6a82a767789baa24ed3a073d3f661463",
+    "size_bytes": 949
+  },
+  {
+    "path": "docs/audits/native-proxy-wrapper-compatibility-20260913/first-run.json",
+    "sha256": "cc6c4e2856767e7bf0f2e13af50c0034ff1b171319b150a5c85183962d8dc0f2",
+    "size_bytes": 223194
+  },
+  {
+    "path": "docs/audits/native-proxy-wrapper-compatibility-20260913/source-pins.json",
+    "sha256": "e777a69e15af709a5c54674432c236f8e7ccb19ef7ea66c38a43719823587db3",
+    "size_bytes": 4016
+  },
+  {
+    "path": "docs/audits/native-proxy-wrapper-compatibility-20260913/plan.json",
+    "sha256": "8ebc70a62967aafd6593716ffda9f72c5a88dd0ea61e9486de66235510b7bff9",
+    "size_bytes": 6133
+  },
+  {
+    "path": "docs/audits/native-proxy-wrapper-compatibility-20260913/book-review.json",
+    "sha256": "8e94b2618046afdb5466e8d9368c82c0ede189fa4f358d847aa3d18ebe848160",
+    "size_bytes": 1169
+  },
+  {
+    "path": "docs/audits/native-proxy-wrapper-compatibility-20260913/claim-review.json",
+    "sha256": "800d5689755eb60b5502feb9bc91f090e2a060bdcc210e8928b97b0d3142c492",
+    "size_bytes": 5032
+  }
+]

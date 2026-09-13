@@ -1,0 +1,159 @@
+{
+  "cases": [
+    {
+      "accepted": true,
+      "hardlink": false,
+      "mode": 493,
+      "name": "wrapper",
+      "path": ".artifacts/tmp/process-supervisor-tests/fsmgen-Wrapper20260913_wrapper/rust-tool-resolution",
+      "root": ".artifacts/tmp/process-supervisor-tests/fsmgen-Wrapper20260913_wrapper",
+      "size": 27
+    },
+    {
+      "accepted": true,
+      "hardlink": false,
+      "mode": 256,
+      "name": "old400",
+      "path": ".artifacts/tmp/process-supervisor-tests/fsmgen-Wrapper20260913_old400/other",
+      "root": ".artifacts/tmp/process-supervisor-tests/fsmgen-Wrapper20260913_old400",
+      "size": 27
+    },
+    {
+      "accepted": true,
+      "hardlink": false,
+      "mode": 320,
+      "name": "old500",
+      "path": ".artifacts/tmp/process-supervisor-tests/fsmgen-Wrapper20260913_old500/other",
+      "root": ".artifacts/tmp/process-supervisor-tests/fsmgen-Wrapper20260913_old500",
+      "size": 27
+    },
+    {
+      "accepted": true,
+      "hardlink": false,
+      "mode": 384,
+      "name": "old600",
+      "path": ".artifacts/tmp/process-supervisor-tests/fsmgen-Wrapper20260913_old600/other",
+      "root": ".artifacts/tmp/process-supervisor-tests/fsmgen-Wrapper20260913_old600",
+      "size": 27
+    },
+    {
+      "accepted": true,
+      "hardlink": false,
+      "mode": 448,
+      "name": "old700",
+      "path": ".artifacts/tmp/process-supervisor-tests/fsmgen-Wrapper20260913_old700/rust-tool-resolution",
+      "root": ".artifacts/tmp/process-supervisor-tests/fsmgen-Wrapper20260913_old700",
+      "size": 27
+    },
+    {
+      "accepted": false,
+      "hardlink": false,
+      "mode": 493,
+      "name": "other",
+      "path": ".artifacts/tmp/process-supervisor-tests/fsmgen-Wrapper20260913_other/other",
+      "root": ".artifacts/tmp/process-supervisor-tests/fsmgen-Wrapper20260913_other",
+      "size": 27
+    },
+    {
+      "accepted": false,
+      "hardlink": false,
+      "mode": 493,
+      "name": "near",
+      "path": ".artifacts/tmp/process-supervisor-tests/fsmgen-Wrapper20260913_near/rust-tool-resolution.extra",
+      "root": ".artifacts/tmp/process-supervisor-tests/fsmgen-Wrapper20260913_near",
+      "size": 27
+    },
+    {
+      "accepted": false,
+      "hardlink": false,
+      "mode": 493,
+      "name": "nested",
+      "path": ".artifacts/tmp/process-supervisor-tests/fsmgen-Wrapper20260913_nested/nested/rust-tool-resolution",
+      "root": ".artifacts/tmp/process-supervisor-tests/fsmgen-Wrapper20260913_nested",
+      "size": 27
+    },
+    {
+      "accepted": false,
+      "hardlink": false,
+      "mode": 493,
+      "name": "badroot",
+      "path": ".artifacts/tmp/process-supervisor-tests/fsmgen-Wrapper20260913_badroot-invalid/rust-tool-resolution",
+      "root": ".artifacts/tmp/process-supervisor-tests/fsmgen-Wrapper20260913_badroot-invalid",
+      "size": 27
+    },
+    {
+      "accepted": false,
+      "hardlink": false,
+      "mode": 488,
+      "name": "mode750",
+      "path": ".artifacts/tmp/process-supervisor-tests/fsmgen-Wrapper20260913_mode750/rust-tool-resolution",
+      "root": ".artifacts/tmp/process-supervisor-tests/fsmgen-Wrapper20260913_mode750",
+      "size": 27
+    },
+    {
+      "accepted": false,
+      "hardlink": false,
+      "mode": 420,
+      "name": "mode644",
+      "path": ".artifacts/tmp/process-supervisor-tests/fsmgen-Wrapper20260913_mode644/rust-tool-resolution",
+      "root": ".artifacts/tmp/process-supervisor-tests/fsmgen-Wrapper20260913_mode644",
+      "size": 27
+    },
+    {
+      "accepted": false,
+      "hardlink": false,
+      "mode": 509,
+      "name": "mode775",
+      "path": ".artifacts/tmp/process-supervisor-tests/fsmgen-Wrapper20260913_mode775/rust-tool-resolution",
+      "root": ".artifacts/tmp/process-supervisor-tests/fsmgen-Wrapper20260913_mode775",
+      "size": 27
+    },
+    {
+      "accepted": true,
+      "hardlink": false,
+      "mode": 493,
+      "name": "bound",
+      "path": ".artifacts/tmp/process-supervisor-tests/fsmgen-Wrapper20260913_bound/rust-tool-resolution",
+      "root": ".artifacts/tmp/process-supervisor-tests/fsmgen-Wrapper20260913_bound",
+      "size": 65536
+    },
+    {
+      "accepted": false,
+      "hardlink": false,
+      "mode": 493,
+      "name": "overflow",
+      "path": ".artifacts/tmp/process-supervisor-tests/fsmgen-Wrapper20260913_overflow/rust-tool-resolution",
+      "root": ".artifacts/tmp/process-supervisor-tests/fsmgen-Wrapper20260913_overflow",
+      "size": 65537
+    },
+    {
+      "accepted": false,
+      "hardlink": true,
+      "mode": 493,
+      "name": "alias",
+      "path": ".artifacts/tmp/process-supervisor-tests/fsmgen-Wrapper20260913_alias/rust-tool-resolution",
+      "root": ".artifacts/tmp/process-supervisor-tests/fsmgen-Wrapper20260913_alias",
+      "size": 27
+    }
+  ],
+  "claim_legs": {
+    "durability": "Prospective source pins, allocation journal, complete first outcomes, pre/post census, exact cleanup receipts and same-slice task/book/knowledge commit.",
+    "falsification": "Fixed path/mode/link/byte boundary controls and altered evidence rejected by independent review.",
+    "rederivation": "Independent Python byte/identity census joined to retained original and repaired Perl results and exact source diff."
+  },
+  "limits": {
+    "depth": 8,
+    "fixture_file_bytes": 65537,
+    "journal_bytes": 2097152,
+    "nodes": 96,
+    "qualifier_wall_seconds": 40,
+    "roots": 17,
+    "total_fixture_bytes": 262144
+  },
+  "owner": "HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.12.4.1.5.2.1",
+  "schema": "fsmgen.wrapper_compatibility_plan.v1",
+  "scope": "Inert files only. One fresh preparation, one Perl qualifier, independent Python review and exact owned cleanup. No child process, compiler, proxy execution, original or live collector. Synthetic cleanup receipts do not authenticate processes. Actual compiler capacity remains unqualified.",
+  "source_revision": "aa0fd91a3edce023e207a2a94af4f6f34907f698",
+  "store": ".artifacts/tmp/native-proxy-image-custody/cases/fsmgen-Wrapper20260913_store",
+  "workspace": ".artifacts/tmp/process-supervisor-tests/fsmgen-Wrapper20260913_retirement"
+}

@@ -1,0 +1,31 @@
+{
+  "first_run_sha256": "cc6c4e2856767e7bf0f2e13af50c0034ff1b171319b150a5c85183962d8dc0f2",
+  "owned_roots_absent": 17,
+  "raw_files": 13,
+  "rejected_controls": [
+    "accept_near_name",
+    "normalize_wrapper",
+    "lost_alias",
+    "lost_baseline_rejection",
+    "missing_inner_receipt",
+    "native_authority",
+    "lost_result",
+    "lost_post_node"
+  ],
+  "result": {
+    "actual_compiler_capacity_qualified": false,
+    "baseline_retirement_rejected_unchanged": true,
+    "native_or_live_execution": false,
+    "reader_calls": 30,
+    "reader_profiles": 15,
+    "repaired_retirement_removed_nodes": 10,
+    "synthetic_cleanup_only": true,
+    "transferred_handles_closed": 109
+  },
+  "source": {
+    "baseline_sha256": "fb87393846eb10147f868aa40ba444f5e5d56cef7f0aaf6a1ff295216a90e9c1",
+    "exact_guard_only": true,
+    "producer_mode": "0755",
+    "repaired_sha256": "98e324cf9ef89471ffb4ede683ce21a8e09fc02329739a0856285ecea067e18f"
+  }
+}

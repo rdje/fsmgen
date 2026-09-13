@@ -1,0 +1,40 @@
+{
+  "outputs": [
+    {
+      "bytes_hex": "5772617070657220636f6d7061746962696c69747920636f6d706c6574696f6e3a204f4b3b2061757468656e74696320636f6d70696c65722070726f66696c65732072656d61696e2070656e64696e672e0a",
+      "path": ".artifacts/logs/native-proxy-wrapper-compatibility-20260913/completion.stdout",
+      "sha256": "64a5f0856295275cc4e7b89f532280257222f60297dbbd2abfd210947a58fda0",
+      "size_bytes": 82
+    },
+    {
+      "bytes_hex": "72616d2d67756172643a205049442037303631363b20686f73742038332e32253b20686f7374206375746f6666203838253b2064657363656e64616e7420525353206375746f66662034303936204d69423b20706f6c6c2032730a",
+      "path": ".artifacts/logs/native-proxy-wrapper-compatibility-20260913/completion.stderr",
+      "sha256": "050b82d0027ecd0b240761a8cfe293784faf91bc3c1757363578f7172b09d9fd",
+      "size_bytes": 91
+    },
+    {
+      "bytes_hex": "300a",
+      "path": ".artifacts/logs/native-proxy-wrapper-compatibility-20260913/completion.exit",
+      "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa",
+      "size_bytes": 2
+    },
+    {
+      "bytes_hex": "5772617070657220636f6d7061746962696c69747920636f6d706c6574696f6e3a204f4b3b2061757468656e74696320636f6d70696c65722070726f66696c65732072656d61696e2070656e64696e672e0a",
+      "path": ".artifacts/logs/native-proxy-wrapper-compatibility-20260913/completion-saved.stdout",
+      "sha256": "64a5f0856295275cc4e7b89f532280257222f60297dbbd2abfd210947a58fda0",
+      "size_bytes": 82
+    },
+    {
+      "bytes_hex": "72616d2d67756172643a205049442037303838393b20686f73742038322e36253b20686f7374206375746f6666203838253b2064657363656e64616e7420525353206375746f66662034303936204d69423b20706f6c6c2032730a",
+      "path": ".artifacts/logs/native-proxy-wrapper-compatibility-20260913/completion-saved.stderr",
+      "sha256": "06bd653cc2539445b146c8266b1ba2299022ba55957259ec986d4cd3779c9812",
+      "size_bytes": 91
+    },
+    {
+      "bytes_hex": "300a",
+      "path": ".artifacts/logs/native-proxy-wrapper-compatibility-20260913/completion-saved.exit",
+      "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa",
+      "size_bytes": 2
+    }
+  ]
+}
