@@ -1,0 +1,19 @@
+{
+  "checked_passages": [
+    "The selected isolated-file lifetimes now pass independent execution review.",
+    "Observation holds still retain the image, and archival then copies the saved bytes even though the private source paths are gone.",
+    "The complete first-run journal is recoverable from tracked files;",
+    "They do not qualify interruption behavior, native process authentication or live-store integration.",
+    "docs/audits/native-proxy-lifetime-files-20260913/audit.py --verify-saved"
+  ],
+  "exact_output_absent": true,
+  "exit_code": 0,
+  "output": ".artifacts/tmp/native-proxy-lifetime-files-book-20260913/book",
+  "rendered_bytes": 23597154,
+  "rendered_directories": 2,
+  "rendered_files": 99,
+  "renderer_warnings": [
+    "WARN search index is very large (13282917 bytes)"
+  ],
+  "same_volume_direct_objects": true
+}

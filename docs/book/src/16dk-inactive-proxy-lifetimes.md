@@ -14,8 +14,8 @@ runtime and private-source custody.
 
 This verifies the proposed ordering domain, not the resulting runtime behavior.
 Independent enumeration rejects missing source links, missing orders, weakened
-dependencies and an incorrect dependency on another image's owner. State changes,
-actual isolated-file effects and interruption behavior remain separately owned.
+dependencies and an incorrect dependency on another image's owner. The checks
+below qualify modeled states and selected file effects; interruptions remain open.
 No native process, original qualifier or live canonical store is accessed.
 
 ```sh
@@ -42,8 +42,8 @@ infer rollback from the returned verdict.
 These are modeled effects, not filesystem observations. Constructed identities
 and inert byte carriers are checked by the unchanged record codecs. The first
 independent auditor failed on its own malformed-reference display assumption;
-that failure and its narrow correction remain retained. Actual isolated-file
-lifetimes, interruptions and native/live integration remain separately owned.
+that failure and its narrow correction remain retained. The file checks below
+qualify selected actual lifetimes; interruptions and native/live integration remain open.
 
 ```sh
 scripts/run_with_ram_guard.sh -- python3 -B docs/audits/native-proxy-lifetime-model-20260913/audit_corrected.py --verify-saved
@@ -68,12 +68,42 @@ separate descriptor recovery cannot turn an incomplete operation into success.
 
 Admission used inert data only. The tracing hook's initial optional-argument
 signature error and the auditor's source-reconstruction errors remain retained
-with their corrections. Actual file effects and interruptions still require
-their separately owned execution checks. Synthetic process births and settled
+with their corrections. Actual file effects required the separately owned
+execution checks below. Interruption controls remain open. Synthetic births and settled
 work records do not authenticate a native process or authorize the live store.
 
 ```sh
 scripts/run_with_ram_guard.sh -- python3 -B docs/audits/native-proxy-lifetime-files-admission-20260913/audit.py --verify-saved
+```
+
+The selected isolated-file lifetimes now pass independent execution review.
+The harness creates fresh private workspaces, runtime references, observation
+holds and image files from inert bytes. Its full journal preserves source and
+directory identities, API inputs and results, descriptor outcomes, and the
+physical state before and after each selected operation.
+
+For example, target retirement removes its private workspace before releasing
+the runtime reference. Observation holds still retain the image, and archival
+then copies the saved bytes even though the private source paths are gone.
+Conversely, releasing archived observations first leaves runtime ownership
+intact. Repeated observations preserve the original hold and strict snapshots.
+
+Explicit maintenance removes the selected image only after its owners release
+it. The different-image case also verifies that another healthy image and its
+runtime survive that removal. The harness's final fixture cleanup is recorded
+separately and removes only matching objects that the run created.
+
+Independent checks confirm every selected complete state, matching archive and
+settlement receipts, observed descriptor closure and absence of all fixture
+roots. Altered ownership, archive identity, close outcomes and removal order
+are rejected. The complete first-run journal is recoverable from tracked files;
+verification reads that evidence without replaying the harness.
+
+These results cover the selected complete file lifetimes. They do not qualify
+interruption behavior, native process authentication or live-store integration.
+
+```sh
+scripts/run_with_ram_guard.sh -- python3 -B docs/audits/native-proxy-lifetime-files-20260913/audit.py --verify-saved
 ```
 
 [Return to runtime measurement](16dc-vial-portable-verilator-runtime-measurement.md).

@@ -2793,11 +2793,11 @@ decomposes the architecture needed to move beyond that bounded foundation.
   Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.12.4.1.3.6.2: qualify inert combined lifetime states and record guards`
 
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.12.4.1.3.6.3`
-  Status: `active`
+  Status: `done`
   Goal: `Qualify bounded complete lifetimes over isolated inert files.`
   Acceptance: `Create separate prospective admission and execution leaves before allocating any new files. Pin exact new harness/module sources, declared stage schedules, ownership and handles, same-volume roots, walls and first-failure cleanup. Exercise complete acquisition/observation/archive/retirement/release/explicit-maintenance paths with supplied inert records, compare actual source identities and effects independently, and preserve every original qualifier. No compiler, native process, collector or live canonical store.`
-  Verification: `Create and commit prospective source, schedule, resource and cleanup admission under .3.6.3.1 before any new actual-file lifetime allocation. Only .3.6.3.2 executes the newly pinned inert harness; no original producer, compiler, native process, collector or live store.`
-  Commit: `pending`
+  Verification: `Prospective admission is committed at 7084cc4686d6e01cd19c9b7a93c9bb4cf60d90b3 before the sole new inert execution. Both image profiles, selected lifetime schedules, repeated observations, archive/work receipts, descriptor closure and exact owned cleanup pass independent saved-journal review under .3.6.3.2. Full first bytes and outcomes remain tracked in docs/audits/native-proxy-lifetime-files-20260913. This closes the selected complete-file path; interruptions and native/live integration remain separately owned.`
+  Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.12.4.1.3.6.3.2: qualify selected inert file lifetimes`
   Children: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.12.4.1.3.6.3.1, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.12.4.1.3.6.3.2`
 
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.12.4.1.3.6.3.1`
@@ -2808,11 +2808,11 @@ decomposes the architecture needed to move beyond that bounded foundation.
   Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.12.4.1.3.6.3.1: admit bounded inert file lifetimes`
 
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.12.4.1.3.6.3.2`
-  Status: `proposed`
+  Status: `done`
   Goal: `Execute and independently verify newly admitted inert file lifetimes.`
   Acceptance: `Authenticate the committed admission and exact harness before exclusive fixture allocation. Execute only the declared new cases once, retaining first outcomes, ordered effects and actual source/directory identities. Independently compare complete lifecycle state, matched archive/work records and preserved unrelated images or references. Consume every result and prove exact owned cleanup; no replay of original qualifiers, native process, compiler, collector or live canonical store.`
-  Verification: `pending`
-  Commit: `pending`
+  Verification: `Committed admission 7084cc4686d6e01cd19c9b7a93c9bb4cf60d90b3 precedes the authenticated one-use permit and sole new harness execution. All eight selected cases and 152 stages pass independently, including 56 complete-operation prefixes, exact cumulative setup and repeated observations. The full 250-record first journal contains 30,878,211 bytes; 464 observed traces account for 19,820 primary handles (11,636 file and 8,184 directory), 8,184 explicit directory-metadata observers and 40,220 recorded calls. All observed handles close without separate recovery; all 32 owned fixture roots are absent. Seven altered-journal controls reject. Byte-exact retained outputs, task-at-execution and permit are in docs/audits/native-proxy-lifetime-files-20260913/capture.json; independent/saved state, receipt, descriptor and cleanup review is review.json in that directory. Documentation, claim identities/dispositions and bounded continuity pass; completion.json and completion-checks.json retain the final checks. The first staged gate rejects an older unchecked task snapshot after an asynchronous finalization command was not consumed before staging; first-staged-gate.json preserves exact evidence. All sessions are now consumed before dependent writes and the final task is restaged. No harness replay, compiler, native payload, collector or live store; interruptions and native/live integration remain separately owned.`
+  Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.12.4.1.3.6.3.2: qualify selected inert file lifetimes`
 
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.12.4.1.3.6.4`
   Status: `proposed`
@@ -3763,7 +3763,7 @@ decomposes the architecture needed to move beyond that bounded foundation.
 
 ## Current Frontier
 
-Current frontier: .3.2.15.7.3.12.4.1.3.6.3.1 is done; .3.6.3.2 is next for new isolated-file execution after admission commits. Interruption controls and final closure follow. Native/live integration and historical startup/parent/full CI/push remain open.
+Current frontier: .3.2.15.7.3.12.4.1.3.6.3.2 and complete-file parent .3.6.3 are done; .3.6.4 is next for separately admitted interruption controls. Final lifetime closure follows. Native/live integration and historical startup/parent/full CI/push remain open.
 
 Architecture audit `.1` is complete. Decision `0032` selects one public
 `.vial` source language, private immutable `VIALSemanticIR` and
@@ -6359,8 +6359,8 @@ Completed native-proxy feasibility through runtime-source-controls acceptance: r
 The manifest binds the immediately preceding acceptance suffix to its exact Git source. That source preserves the earlier history pointer and versioned manifest chain; current node contracts remain authoritative.
 
 
-## Acceptance Checklist (inactive file lifetime admission .3.2.15.7.3.12.4.1.3.6.3.1)
+## Acceptance Checklist (actual inert file lifetimes .3.2.15.7.3.12.4.1.3.6.3.2)
 
-- [x] **ROOT CAUSE (WHY + WHERE)** — Image-specific maintenance follows `git log -S 'sub _referenced' -1 --format='%H %s' -- docs/audits/native-proxy-image-maintenance-20260910/ImageMaintenance.pm` at 0982590d6ef9b6f937ffa8752912e33eb52152b8. The inert model alone does not establish actual directory membership, native source identities or descriptor closure. Prospective admission owns a new exact-root observer and independent journal reader before any actual allocation. Retained first failures identify the new syswrite prototype and the auditor's separator/source-reconstruction assumptions precisely.
-- [x] **ADDRESSED (verified)** — Source and pure-data admission passes with unchanged lifecycle modules and original producer epochs. Independent current-owner projections agree with the Perl completed-event projection; altered membership, bytes, identities, authority and descriptor outcomes reject. Exclusive roots, first outcomes, bounded journals, ordinary wall budgets and exact owned cleanup are declared before execution. Original failures remain durable. Re-derivation, falsification, durability and explicit missing actual/native legs: docs/audits/native-proxy-lifetime-files-admission-20260913/review.json; the docs and first-output completion join is completion.json in the same directory. The first staged documentation failure and exact authoring-draft retirement are verified in retirement-review.json.
-- [x] **NO REGRESSION** — `knowledge-map: OK` verifies the unchanged questions and saved admission route. Corrected syntax, inert checks and saved-only audit pass. The rendered book, claim identities/dispositions and prior acceptance history are independently checked in the completion join. Staged doctrines and normal hooks gate the commit. Actual isolated-file effects, interruption behavior and native/live integration remain separately owned; no fixture producer, compiler, collector or native process runs here.
+- [x] **ROOT CAUSE (WHY + WHERE)** — `git log -S 'sub _referenced' -1 --format='%H %s' -- docs/audits/native-proxy-image-maintenance-20260910/ImageMaintenance.pm` locates image-specific retention at 0982590d6ef9b6f937ffa8752912e33eb52152b8. Source/data admission alone did not establish actual filesystem custody across combined lifetime operations. The committed admission binds exact new files, selected schedules, before/after observers and cleanup before this sole inert execution.
+- [x] **ADDRESSED (verified)** — The unchanged admitted harness executes the selected complete lifetimes once. The independent saved-journal consumer joins exact cumulative setup, current-owner state projections, archive/work receipts, API input preservation, observed descriptors and actual unlink/removal order. Altered journals reject; original bytes remain unchanged and every owned fixture root is absent. Re-derivation, falsification, complete first-output durability and explicit native/live gaps: docs/audits/native-proxy-lifetime-files-20260913/capture-plan.json, capture.json and review.json; documentation and continuity join: completion.json in the same directory.
+- [x] **NO REGRESSION** — `knowledge-map: OK` verifies unchanged questions and the saved actual-file audit route. Independent and saved-only journal audits pass without replay. Book rendering/inspection, claim identities/dispositions and exact prior acceptance recovery are checked before commit. Staged doctrines and normal hooks gate closure. These selected complete file effects do not qualify interruption behavior, native process authentication, live-store integration or the historical startup/parent/full-CI/push prerequisites.

@@ -1,0 +1,37 @@
+[
+  {
+    "path": "docs/audits/native-proxy-lifetime-files-20260913/review_completion.py",
+    "sha256": "26cedc6262214722e4a43021ae7e1651b4f1aaf2dc9031504c131a815cb91e82",
+    "size_bytes": 7720
+  },
+  {
+    "path": "docs/audits/native-proxy-lifetime-files-20260913/documentation-pins.json",
+    "sha256": "e38c226651e4a54d6f4fb2bee17b12a92dd4588d1e4460a5fbb7bc84d59b425d",
+    "size_bytes": 1275
+  },
+  {
+    "path": "docs/audits/native-proxy-lifetime-files-20260913/audit-pins.json",
+    "sha256": "90f4f25ae6fdab3d0cbd8527d47f21437a1f3de622fdb36928c5938c48658f60",
+    "size_bytes": 1180
+  },
+  {
+    "path": "docs/audits/native-proxy-lifetime-files-20260913/review.json",
+    "sha256": "818836a46ccfa20ea92bc75462537ffdea564afc6187df51e0e087b1564457c9",
+    "size_bytes": 9101
+  },
+  {
+    "path": "docs/audits/native-proxy-lifetime-files-20260913/book-review.json",
+    "sha256": "2ce7f53d16fd5ea77612e1b4c1bd5f1360954c4fb506192cd36c79c499d2cbbc",
+    "size_bytes": 843
+  },
+  {
+    "path": "docs/audits/native-proxy-lifetime-files-20260913/claim-review.json",
+    "sha256": "70d33699ccb7a4441b9e856de7b9b8de717a9ee7389db648e81d3cb8e011c834",
+    "size_bytes": 5068
+  },
+  {
+    "path": "docs/tasks/history/HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE/acceptance-history.jsonl",
+    "sha256": "ebc7147633122083eb95c782547d0958e4a7a6299420112e320445a4d829bb27",
+    "size_bytes": 858
+  }
+]

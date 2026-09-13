@@ -1,0 +1,37 @@
+[
+  {
+    "path": "docs/audits/native-proxy-lifetime-files-20260913/inspect_book.py",
+    "sha256": "9601b0a52db4aea192f124689c58919978961aedf66b8d967cf14bfd2f0e1e61",
+    "size_bytes": 2633
+  },
+  {
+    "path": "docs/audits/native-proxy-lifetime-files-20260913/review_claims.py",
+    "sha256": "aa2e6dafc645062d5b76c4d0618cd8d3432ed108b02b33309dc069f2bd05b023",
+    "size_bytes": 4867
+  },
+  {
+    "path": "docs/book/src/16dk-inactive-proxy-lifetimes.md",
+    "sha256": "c8c4d3e2190a584b0ea5018b12686108d14e260fe7f21f64097e72a91f0d9297",
+    "size_bytes": 6290
+  },
+  {
+    "path": "doctrine/live_document_size/surfaces.jsonl",
+    "sha256": "0e2f48193dbabd2afcf2d85a74bf6af9b22ed94b1f306b3a3370db235b8907d1",
+    "size_bytes": 24814
+  },
+  {
+    "path": "doctrine/claim_verification/inventory.jsonl",
+    "sha256": "69d21087b28580bb7595649ea049cc547946208b895ce5933e3fa6e08eb37cb1",
+    "size_bytes": 3007141
+  },
+  {
+    "path": "doctrine/claim_verification/dispositions.jsonl",
+    "sha256": "eaced4b2215cf01bd76361e69488099b19a94fdf0fe45cb97c777204f30e26aa",
+    "size_bytes": 2045074
+  },
+  {
+    "path": "docs/knowledge/test-subprocess-policy-adapters.md",
+    "sha256": "4cfc4f778e96ccd9b96adcc60c94387ec08b0caa026845003a9afe266a6d98fe",
+    "size_bytes": 9814
+  }
+]

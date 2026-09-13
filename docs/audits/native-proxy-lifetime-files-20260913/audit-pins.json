@@ -1,0 +1,32 @@
+[
+  {
+    "path": "docs/audits/native-proxy-lifetime-files-20260913/audit.py",
+    "sha256": "1ded88a45253869ff7fad76f9c8c0c25ae49efbdd7525d04fbc1bb6da90e1281",
+    "size_bytes": 12204
+  },
+  {
+    "path": "docs/audits/native-proxy-lifetime-files-20260913/capture.py",
+    "sha256": "11a990f30abaebd7994e3473f58668330161fce46029370e29225f2e9f34501a",
+    "size_bytes": 5184
+  },
+  {
+    "path": "docs/audits/native-proxy-lifetime-files-20260913/capture-plan.json",
+    "sha256": "bc3533d585bee0441f20fedd28999653948c6f2cf21955c20615618c1e527035",
+    "size_bytes": 1947
+  },
+  {
+    "path": "docs/audits/native-proxy-lifetime-files-20260913/capture.json",
+    "sha256": "fbafe70f427a7ce0c19db6adc0f18a6e26d97192bf88774b7ecc47f5571b630e",
+    "size_bytes": 126335
+  },
+  {
+    "path": "docs/audits/native-proxy-lifetime-files-20260913/execution-admission.json",
+    "sha256": "64e5521790af96ac6a6f92cdb242915a04a41599ef84a4308fa9d272f2dde033",
+    "size_bytes": 639
+  },
+  {
+    "path": "docs/audits/native-proxy-lifetime-files-20260913/task-at-execution.md.source",
+    "sha256": "7b2cffd75f25b3db124ce5e0be8a93a560e5bebe3da5436be8e3bf85bee7ae96",
+    "size_bytes": 1076257
+  }
+]

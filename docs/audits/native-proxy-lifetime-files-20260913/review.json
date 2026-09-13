@@ -1,0 +1,158 @@
+{
+  "actual_calls": 40220,
+  "admission_commit": "7084cc4686d6e01cd19c9b7a93c9bb4cf60d90b3",
+  "capture": {
+    "path": "docs/audits/native-proxy-lifetime-files-20260913/capture.json",
+    "sha256": "fbafe70f427a7ce0c19db6adc0f18a6e26d97192bf88774b7ecc47f5571b630e",
+    "size_bytes": 126335
+  },
+  "cases": [
+    {
+      "case": "same_runtime_first",
+      "prefixes": 7,
+      "roots": [
+        ".artifacts/tmp/native-proxy-image-custody/cases/fsmgen-LifetimeFiles20260913_same_runtime_first",
+        ".artifacts/tmp/process-supervisor-tests/fsmgen-LifetimeFiles20260913_same_runtime_first_target",
+        ".artifacts/tmp/process-supervisor-tests/fsmgen-LifetimeFiles20260913_same_runtime_first_other",
+        ".artifacts/logs/native-proxy-observation-acquisition-20260910/cases/fsmgen-LifetimeFiles20260913_same_runtime_first"
+      ],
+      "stages": 20
+    },
+    {
+      "case": "same_observation_first",
+      "prefixes": 7,
+      "roots": [
+        ".artifacts/tmp/native-proxy-image-custody/cases/fsmgen-LifetimeFiles20260913_same_observation_first",
+        ".artifacts/tmp/process-supervisor-tests/fsmgen-LifetimeFiles20260913_same_observation_first_target",
+        ".artifacts/tmp/process-supervisor-tests/fsmgen-LifetimeFiles20260913_same_observation_first_other",
+        ".artifacts/logs/native-proxy-observation-acquisition-20260910/cases/fsmgen-LifetimeFiles20260913_same_observation_first"
+      ],
+      "stages": 21
+    },
+    {
+      "case": "same_archive_late",
+      "prefixes": 7,
+      "roots": [
+        ".artifacts/tmp/native-proxy-image-custody/cases/fsmgen-LifetimeFiles20260913_same_archive_late",
+        ".artifacts/tmp/process-supervisor-tests/fsmgen-LifetimeFiles20260913_same_archive_late_target",
+        ".artifacts/tmp/process-supervisor-tests/fsmgen-LifetimeFiles20260913_same_archive_late_other",
+        ".artifacts/logs/native-proxy-observation-acquisition-20260910/cases/fsmgen-LifetimeFiles20260913_same_archive_late"
+      ],
+      "stages": 16
+    },
+    {
+      "case": "same_mixed",
+      "prefixes": 7,
+      "roots": [
+        ".artifacts/tmp/native-proxy-image-custody/cases/fsmgen-LifetimeFiles20260913_same_mixed",
+        ".artifacts/tmp/process-supervisor-tests/fsmgen-LifetimeFiles20260913_same_mixed_target",
+        ".artifacts/tmp/process-supervisor-tests/fsmgen-LifetimeFiles20260913_same_mixed_other",
+        ".artifacts/logs/native-proxy-observation-acquisition-20260910/cases/fsmgen-LifetimeFiles20260913_same_mixed"
+      ],
+      "stages": 19
+    },
+    {
+      "case": "different_late_other",
+      "prefixes": 7,
+      "roots": [
+        ".artifacts/tmp/native-proxy-image-custody/cases/fsmgen-LifetimeFiles20260913_different_late_other",
+        ".artifacts/tmp/process-supervisor-tests/fsmgen-LifetimeFiles20260913_different_late_other_target",
+        ".artifacts/tmp/process-supervisor-tests/fsmgen-LifetimeFiles20260913_different_late_other_other",
+        ".artifacts/logs/native-proxy-observation-acquisition-20260910/cases/fsmgen-LifetimeFiles20260913_different_late_other"
+      ],
+      "stages": 20
+    },
+    {
+      "case": "different_runtime_first",
+      "prefixes": 7,
+      "roots": [
+        ".artifacts/tmp/native-proxy-image-custody/cases/fsmgen-LifetimeFiles20260913_different_runtime_first",
+        ".artifacts/tmp/process-supervisor-tests/fsmgen-LifetimeFiles20260913_different_runtime_first_target",
+        ".artifacts/tmp/process-supervisor-tests/fsmgen-LifetimeFiles20260913_different_runtime_first_other",
+        ".artifacts/logs/native-proxy-observation-acquisition-20260910/cases/fsmgen-LifetimeFiles20260913_different_runtime_first"
+      ],
+      "stages": 16
+    },
+    {
+      "case": "different_observation_first",
+      "prefixes": 7,
+      "roots": [
+        ".artifacts/tmp/native-proxy-image-custody/cases/fsmgen-LifetimeFiles20260913_different_observation_first",
+        ".artifacts/tmp/process-supervisor-tests/fsmgen-LifetimeFiles20260913_different_observation_first_target",
+        ".artifacts/tmp/process-supervisor-tests/fsmgen-LifetimeFiles20260913_different_observation_first_other",
+        ".artifacts/logs/native-proxy-observation-acquisition-20260910/cases/fsmgen-LifetimeFiles20260913_different_observation_first"
+      ],
+      "stages": 20
+    },
+    {
+      "case": "different_mixed",
+      "prefixes": 7,
+      "roots": [
+        ".artifacts/tmp/native-proxy-image-custody/cases/fsmgen-LifetimeFiles20260913_different_mixed",
+        ".artifacts/tmp/process-supervisor-tests/fsmgen-LifetimeFiles20260913_different_mixed_target",
+        ".artifacts/tmp/process-supervisor-tests/fsmgen-LifetimeFiles20260913_different_mixed_other",
+        ".artifacts/logs/native-proxy-observation-acquisition-20260910/cases/fsmgen-LifetimeFiles20260913_different_mixed"
+      ],
+      "stages": 20
+    }
+  ],
+  "directory_handles": 8184,
+  "falsifiers": [
+    "omitted_record",
+    "open_descriptor",
+    "global_before_private",
+    "archive_identity",
+    "unsettled_work",
+    "native_authority",
+    "hold_reappears"
+  ],
+  "file_handles": 11636,
+  "journal_records": 250,
+  "journal_unchanged_by_auditor": true,
+  "metadata_observers": 8184,
+  "native_file_observation_traces": 464,
+  "native_process_authentication": false,
+  "original_harness_replayed": false,
+  "owner": "HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.12.4.1.3.6.3.2",
+  "prefixes": 56,
+  "primary_handles": 19820,
+  "record_bytes": 30878211,
+  "roots_absent": [
+    ".artifacts/logs/native-proxy-observation-acquisition-20260910/cases/fsmgen-LifetimeFiles20260913_different_late_other",
+    ".artifacts/logs/native-proxy-observation-acquisition-20260910/cases/fsmgen-LifetimeFiles20260913_different_mixed",
+    ".artifacts/logs/native-proxy-observation-acquisition-20260910/cases/fsmgen-LifetimeFiles20260913_different_observation_first",
+    ".artifacts/logs/native-proxy-observation-acquisition-20260910/cases/fsmgen-LifetimeFiles20260913_different_runtime_first",
+    ".artifacts/logs/native-proxy-observation-acquisition-20260910/cases/fsmgen-LifetimeFiles20260913_same_archive_late",
+    ".artifacts/logs/native-proxy-observation-acquisition-20260910/cases/fsmgen-LifetimeFiles20260913_same_mixed",
+    ".artifacts/logs/native-proxy-observation-acquisition-20260910/cases/fsmgen-LifetimeFiles20260913_same_observation_first",
+    ".artifacts/logs/native-proxy-observation-acquisition-20260910/cases/fsmgen-LifetimeFiles20260913_same_runtime_first",
+    ".artifacts/tmp/native-proxy-image-custody/cases/fsmgen-LifetimeFiles20260913_different_late_other",
+    ".artifacts/tmp/native-proxy-image-custody/cases/fsmgen-LifetimeFiles20260913_different_mixed",
+    ".artifacts/tmp/native-proxy-image-custody/cases/fsmgen-LifetimeFiles20260913_different_observation_first",
+    ".artifacts/tmp/native-proxy-image-custody/cases/fsmgen-LifetimeFiles20260913_different_runtime_first",
+    ".artifacts/tmp/native-proxy-image-custody/cases/fsmgen-LifetimeFiles20260913_same_archive_late",
+    ".artifacts/tmp/native-proxy-image-custody/cases/fsmgen-LifetimeFiles20260913_same_mixed",
+    ".artifacts/tmp/native-proxy-image-custody/cases/fsmgen-LifetimeFiles20260913_same_observation_first",
+    ".artifacts/tmp/native-proxy-image-custody/cases/fsmgen-LifetimeFiles20260913_same_runtime_first",
+    ".artifacts/tmp/process-supervisor-tests/fsmgen-LifetimeFiles20260913_different_late_other_other",
+    ".artifacts/tmp/process-supervisor-tests/fsmgen-LifetimeFiles20260913_different_late_other_target",
+    ".artifacts/tmp/process-supervisor-tests/fsmgen-LifetimeFiles20260913_different_mixed_other",
+    ".artifacts/tmp/process-supervisor-tests/fsmgen-LifetimeFiles20260913_different_mixed_target",
+    ".artifacts/tmp/process-supervisor-tests/fsmgen-LifetimeFiles20260913_different_observation_first_other",
+    ".artifacts/tmp/process-supervisor-tests/fsmgen-LifetimeFiles20260913_different_observation_first_target",
+    ".artifacts/tmp/process-supervisor-tests/fsmgen-LifetimeFiles20260913_different_runtime_first_other",
+    ".artifacts/tmp/process-supervisor-tests/fsmgen-LifetimeFiles20260913_different_runtime_first_target",
+    ".artifacts/tmp/process-supervisor-tests/fsmgen-LifetimeFiles20260913_same_archive_late_other",
+    ".artifacts/tmp/process-supervisor-tests/fsmgen-LifetimeFiles20260913_same_archive_late_target",
+    ".artifacts/tmp/process-supervisor-tests/fsmgen-LifetimeFiles20260913_same_mixed_other",
+    ".artifacts/tmp/process-supervisor-tests/fsmgen-LifetimeFiles20260913_same_mixed_target",
+    ".artifacts/tmp/process-supervisor-tests/fsmgen-LifetimeFiles20260913_same_observation_first_other",
+    ".artifacts/tmp/process-supervisor-tests/fsmgen-LifetimeFiles20260913_same_observation_first_target",
+    ".artifacts/tmp/process-supervisor-tests/fsmgen-LifetimeFiles20260913_same_runtime_first_other",
+    ".artifacts/tmp/process-supervisor-tests/fsmgen-LifetimeFiles20260913_same_runtime_first_target"
+  ],
+  "runtime_qualification": false,
+  "schema": "fsmgen.inactive_lifetime_actual_files_review.v1",
+  "separate_recoveries": 0,
+  "stages": 152
+}

@@ -1,0 +1,39 @@
+{
+  "admission_commit": "7084cc4686d6e01cd19c9b7a93c9bb4cf60d90b3",
+  "claim_legs": {
+    "durability": "Tracked complete raw records, pinned source epochs, exact first outputs, owning task and Git. Native/live qualification remains missing and separately owned.",
+    "falsification": "Incomplete or altered copies and lifecycle outcomes must reject; preserve first failures.",
+    "rederivation": "Exact input/copy bytes and hashes plus the independently rederived operation/state journal."
+  },
+  "maximum_journal_records": 250,
+  "owner": "HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.12.4.1.3.6.3.2",
+  "schema": "fsmgen.inactive_lifetime_execution_capture_plan.v1",
+  "scope": "Byte-exact retention of first terminal outputs and complete bounded journal. No fixture mutation, producer replay, compiler, native payload or collector.",
+  "sources": [
+    {
+      "path": "docs/audits/native-proxy-lifetime-files-20260913/capture.py",
+      "sha256": "11a990f30abaebd7994e3473f58668330161fce46029370e29225f2e9f34501a",
+      "size_bytes": 5184
+    },
+    {
+      "path": "docs/audits/native-proxy-lifetime-files-admission-20260913/selection.json",
+      "sha256": "32192d46841adba4ed68b73c6c0a5e3acb47f12af956bc29578499b67122f142",
+      "size_bytes": 9528
+    },
+    {
+      "path": "docs/audits/native-proxy-lifetime-files-admission-20260913/plan.json",
+      "sha256": "2861f6655bb5be36cdc7a4623322bac81914fbd35edceba47f2fa4e64314d955",
+      "size_bytes": 11517
+    },
+    {
+      "path": "docs/audits/native-proxy-lifetime-files-admission-20260913/preflight-pins.json",
+      "sha256": "bd2488f85a7e06b5b94fdf43be4c6fc213cd67d6c8f81649af6b1458894d6d53",
+      "size_bytes": 10376
+    },
+    {
+      "path": "docs/audits/native-proxy-lifetime-files-admission-20260913/consume.py",
+      "sha256": "ca1760ee44de89d9e2880e470591893d70b2e05cecad792cc28c682ce6fb2e39",
+      "size_bytes": 24582
+    }
+  ]
+}

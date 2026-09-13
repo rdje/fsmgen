@@ -1,0 +1,41 @@
+{
+  "completion_sha256": "867855d0b7aad1d75f89c7c3e740eead86c7400325b73dbfd7402873263ab813",
+  "raw_outputs": [
+    {
+      "path": ".artifacts/logs/native-proxy-lifetime-files-20260913/completion.stdout",
+      "raw_hex": "61637475616c206c69666574696d6520636f6d706c6574696f6e3a204f4b3b2072657461696e6564206f626a656374733d32353820726177206f7574707574733d333320726f6f74735f616273656e743d33320a",
+      "sha256": "78eed4fda824632f2efe3674f9e8144138e9187a05ec9ad32c4c48b5c106f920",
+      "size_bytes": 84
+    },
+    {
+      "path": ".artifacts/logs/native-proxy-lifetime-files-20260913/completion.stderr",
+      "raw_hex": "72616d2d67756172643a205049442038383635343b20686f73742037322e35253b20686f7374206375746f6666203838253b2064657363656e64616e7420525353206375746f66662034303936204d69423b20706f6c6c2032730a",
+      "sha256": "20a6ca646386bdac190138f87c2f6e74c051b336578e25768bbe861209d7618a",
+      "size_bytes": 91
+    },
+    {
+      "path": ".artifacts/logs/native-proxy-lifetime-files-20260913/completion.exit",
+      "raw_hex": "300a",
+      "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa",
+      "size_bytes": 2
+    },
+    {
+      "path": ".artifacts/logs/native-proxy-lifetime-files-20260913/completion-saved.stdout",
+      "raw_hex": "61637475616c206c69666574696d6520636f6d706c6574696f6e3a204f4b3b2072657461696e6564206f626a656374733d32353820726177206f7574707574733d333320726f6f74735f616273656e743d33320a",
+      "sha256": "78eed4fda824632f2efe3674f9e8144138e9187a05ec9ad32c4c48b5c106f920",
+      "size_bytes": 84
+    },
+    {
+      "path": ".artifacts/logs/native-proxy-lifetime-files-20260913/completion-saved.stderr",
+      "raw_hex": "72616d2d67756172643a205049442038393837313b20686f73742037302e36253b20686f7374206375746f6666203838253b2064657363656e64616e7420525353206375746f66662034303936204d69423b20706f6c6c2032730a",
+      "sha256": "e906a725b4a88ca9798be7a44b532f0425f11728e351f752bf05bb69e8efac89",
+      "size_bytes": 91
+    },
+    {
+      "path": ".artifacts/logs/native-proxy-lifetime-files-20260913/completion-saved.exit",
+      "raw_hex": "300a",
+      "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa",
+      "size_bytes": 2
+    }
+  ]
+}

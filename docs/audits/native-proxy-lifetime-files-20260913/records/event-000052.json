@@ -1,0 +1,1 @@
+{"kind":"prefix-verified","monotonic_ns":641824176992000,"schema":"fsmgen.inactive_lifetime_files_event.v1","sequence":52,"value":{"case":"same_observation_first","completed":["archive_a","archive_b","release_a"],"stable_state_sha256":"ed59c9ba03329143cc476cac5150e0aaeed0297a7b469c478530441310e0edba"}}
