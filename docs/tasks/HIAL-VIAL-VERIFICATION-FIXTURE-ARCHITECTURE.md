@@ -2268,11 +2268,11 @@ decomposes the architecture needed to move beyond that bounded foundation.
   Commit: `f1b0f0dc0657b0d583fa16493680f1445308c7be`
 
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.12.4.1.3`
-  Status: `active`
+  Status: `done`
   Goal: `Qualify observation custody and versioned capture compatibility.`
   Acceptance: `Add inactive observation references and bounded coordinated source snapshots, keeping command queries/capture outside coordination and strict target snapshots stable. Exercise retirement/archive/capture interleavings and old/new preparation, collector and source-family records independently. Preserve frozen v1 meaning and pin unresolved readers; no live capture or product activation.`
-  Verification: `Children separate pure record syntax, dual reference census, filesystem observation acquisition, settlement release, frozen-version compatibility and combined lifetime closure. No product/native activation is included.`
-  Commit: `pending`
+  Verification: `All six children are done: inactive record syntax, dual-reference census, coordinated acquisition, settled release, frozen-version compatibility and combined lifetime qualification. The final child joins selected current-source/model/actual evidence and exact owned cleanup in docs/audits/native-proxy-lifetime-closure-20260913/review.json; each preceding child retains its own original qualification epochs. Actual language-worker coordination follows under .12.4.1.4. Native authentication, real receipts, late-launch prevention, live collector/public integration and historical startup/parent/full CI/push remain separately owned; no product activation.`
+  Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.12.4.1.3.6.5: close combined inactive lifetime qualification`
   Children: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.12.4.1.3.1, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.12.4.1.3.2, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.12.4.1.3.3, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.12.4.1.3.4, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.12.4.1.3.5, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.12.4.1.3.6`
 
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.12.4.1.3.1`
@@ -2734,11 +2734,11 @@ decomposes the architecture needed to move beyond that bounded foundation.
   Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.12.4.1.3.5.5: join inactive version compatibility and matched records`
 
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.12.4.1.3.6`
-  Status: `active`
+  Status: `done`
   Goal: `Close combined observation, runtime retirement, archive and maintenance lifetimes.`
   Acceptance: `Independent inert interleavings prove stable strict target snapshots, archival from retained bytes after private deletion, image retention through either reference kind, settled exact release and explicit maintenance only after all holds are gone. Pin unresolved readers and actual ownership/transport limits for later native admission; no live capture or activation.`
-  Verification: `The source-contract child pins current lifecycle bodies and the complete declared ordering domain. Further children separately own pure transition/evidence qualification, prospectively admitted isolated-file lifetimes, interruption/uncertain-owner controls and complete source/cleanup closure. Original qualifiers are preserved; this parent remains active until actual selected effects and surviving ownership are independently proved. Native authentication, real compiler/returned-stage transport, canonical-store promotion and live public integration remain separately required.`
-  Commit: `pending`
+  Verification: `All five children are done. Current contracts, the complete declared serial model, selected complete-file runs, synchronous interruption controls and final source/evidence/cleanup join are qualified. docs/audits/native-proxy-lifetime-closure-20260913/review.json and completion.json preserve the exact scope, original failures, source identities, archive/work custody, physical effects versus return flags, disjoint allocations and absent roots. Modeled domain exhaustion is distinct from selected actual-file execution. No native process authentication, real compiler/returned-stage transport, canonical-store promotion or live public integration is claimed.`
+  Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.12.4.1.3.6.5: close combined inactive lifetime qualification`
   Children: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.12.4.1.3.6.1, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.12.4.1.3.6.2, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.12.4.1.3.6.3, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.12.4.1.3.6.4, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.12.4.1.3.6.5`
 
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.12.4.1.3.6.1`
@@ -2822,11 +2822,11 @@ decomposes the architecture needed to move beyond that bounded foundation.
   Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.12.4.1.3.6.4.2: qualify first synchronous lifetime controls`
 
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.12.4.1.3.6.5`
-  Status: `proposed`
+  Status: `done`
   Goal: `Join complete combined lifetime applicability and cleanup.`
   Acceptance: `Authenticate the full selected current-source and saved-domain closure with original epochs and first failures intact. Independently rederive qualified schedules, source/reference/archive identity preservation and distinct actual versus reported effects. Verify all owned allocations absent and every background outcome consumed. Keep native authentication, real receipt transport, late-launch prevention, live public integration and historical startup/parent/full CI/push prerequisites explicit before closing the parent.`
-  Verification: `pending`
-  Commit: `pending`
+  Verification: `Current-source and saved-domain closure passes in docs/audits/native-proxy-lifetime-closure-20260913/review.json. The independent census authenticates 945 Git inputs totaling 110,045,666 bytes across the eight selected phases and their declared imports. The contract and pure model agree on 390 serial orders and 3,120 prefix states; actual filesystem evidence covers eight selected complete cases and fourteen synchronous controls, not every modeled ordering. Their 384 stages retain 601 journal records and 74,571,891 bytes, with 46,441 primary handles, 19,503 metadata observers and 94,375 recorded source calls. All 88 disjoint fixture roots remain absent. Nine independent altered-join controls reject changed domain/order, missing cases/roots, coherent cross-run overlap and promoted native or recovery authority. Original evidence retains 465 embedded raw epochs, 148 distinct stage-exit epochs and fourteen nonzero historical exit epochs. The selected actual reviews and applicable admission source/data legs pass without replaying producers or reissuing permits. Current saved closure, both rendered book pages, unchanged claim identities/dispositions, exact Knowledge Map questions and preceding acceptance history join in completion.json and completion-checks.json. Actual process coordination is next; native authentication, real receipt transport, late-launch prevention, live public integration and historical startup/parent/full CI/push remain owned prerequisites.`
+  Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.12.4.1.3.6.5: close combined inactive lifetime qualification`
 
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.12.4.1.4`
   Status: `proposed`
@@ -3763,7 +3763,7 @@ decomposes the architecture needed to move beyond that bounded foundation.
 
 ## Current Frontier
 
-Current frontier: .3.2.15.7.3.12.4.1.3.6.4 is done; .3.6.5 next joins combined lifetime applicability and cleanup. The sole admitted control run is retained. Native/live and historical startup/parent/full CI/push remain gated.
+Current frontier: .3.2.15.7.3.12.4.1.3 observation custody is done, including .3.6 combined lifetime closure. Next .12.4.1.4 admits bounded actual language-worker coordination. Native/live and historical startup/parent/full CI/push remain gated.
 
 Architecture audit `.1` is complete. Decision `0032` selects one public
 `.vial` source language, private immutable `VIALSemanticIR` and
@@ -6359,8 +6359,8 @@ Completed native-proxy feasibility through runtime-source-controls acceptance: r
 The manifest binds the immediately preceding acceptance suffix to its exact Git source. That source preserves the earlier history pointer and versioned manifest chain; current node contracts remain authoritative.
 
 
-## Acceptance Checklist (actual synchronous controls .3.2.15.7.3.12.4.1.3.6.4.2)
+## Acceptance Checklist (combined lifetime closure .3.2.15.7.3.12.4.1.3.6.5)
 
-- [x] **ROOT CAUSE (WHY + WHERE)** — `git log -S 'unlink_attempted} = 1' -1 --format='%H %s' -- docs/audits/native-proxy-observation-archive-release-20260911/ObservationRelease.pm` locates the original exact-effect contract at da27b5cbaf01af7cbe294c8f851c8273dd750856. Source/data admission predicts partial removals, but actual combined interruption effects and original return flags still required independent first-run evidence.
-- [x] **ADDRESSED (verified)** — The committed permit precedes the sole new control execution. Actual rejections, partial removals, retained owners, explicit maintenance and exact cleanup pass the independently selected reader; only recorded descriptor closes follow the injected effect. First outcomes and the active execution task remain byte-retained. Eleven altered-journal controls reject, including coherent hit relocation. Re-derivation, falsification and durability: docs/audits/native-proxy-lifetime-controls-20260913/capture-plan.json, capture.json, review.json and completion.json. All observed resources close without separate recovery and every selected fixture root is absent.
-- [x] **NO REGRESSION** — `knowledge-map: OK` preserves the exact question set and current saved-evidence route. Independent and saved control review, rendered book inspection, unchanged claim identities/dispositions and exact prior acceptance recovery pass before staged doctrines and normal hooks. Earlier admission evidence remains intact; obsolete prospective-only commands are replaced by the current execution review. No original producer or native proxy is replayed. Combined closure, native/live integration and historical startup/parent/full CI/push remain gated.
+- [x] **ROOT CAUSE (WHY + WHERE)** — `git log -S 'cleanup.cleanup_receipts_settled' -1 --format='%H %s' -- docs/audits/native-proxy-lifetime-contracts-20260913` locates the source-ordering contract at c3fefd0e419a4edd510093f9efd548e1052b064f. Separate model, complete-file and interruption qualifications needed a current applicability and cleanup join before the combined parent could close.
+- [x] **ADDRESSED (verified)** — The independent closure authenticates current Git sources and original epochs, rederives the common ordering domain, selected actual cases, archive/work ownership and partial-effect return distinctions, and rejects nine altered joins including coherent case-root overlap. Every selected allocation is absent, original failures remain preserved and no producer or permit is replayed. Re-derivation, falsification and durability: docs/audits/native-proxy-lifetime-closure-20260913/plan.json, join_evidence.py, review.json and completion.json. Model-domain exhaustion and selected actual-file evidence remain explicit distinct claims.
+- [x] **NO REGRESSION** — `knowledge-map: OK` retains the exact questions and current saved-evidence route. Applicable source/data readers, independent and saved closure, both rendered book pages, unchanged claim identities/dispositions and exact prior acceptance recovery pass before staged doctrines and normal hooks. Observation custody and its combined-lifetime child close within their inactive scope. Actual language coordination is next; native authentication, real receipts, late-launch prevention, live integration and historical startup/parent/full CI/push remain gated.

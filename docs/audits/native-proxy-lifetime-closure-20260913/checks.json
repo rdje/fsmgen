@@ -1,0 +1,65 @@
+[
+  {
+    "argv": [
+      "python3",
+      "-B",
+      "docs/audits/native-proxy-lifetime-contracts-20260913/audit_corrected.py",
+      "--verify-saved"
+    ],
+    "name": "contracts"
+  },
+  {
+    "argv": [
+      "python3",
+      "-B",
+      "docs/audits/native-proxy-lifetime-model-20260913/audit_corrected.py",
+      "--verify-saved"
+    ],
+    "name": "model"
+  },
+  {
+    "argv": [
+      "python3",
+      "-B",
+      "docs/audits/native-proxy-lifetime-files-admission-20260913/audit.py",
+      "--verify-saved"
+    ],
+    "name": "complete_admission"
+  },
+  {
+    "argv": [
+      "python3",
+      "-B",
+      "docs/audits/native-proxy-lifetime-files-20260913/audit.py",
+      "--verify-saved"
+    ],
+    "name": "complete_actual"
+  },
+  {
+    "argv": [
+      "python3",
+      "-B",
+      "docs/audits/native-proxy-lifetime-controls-admission-20260913/audit.py",
+      "--verify-saved"
+    ],
+    "name": "matrix"
+  },
+  {
+    "argv": [
+      "python3",
+      "-B",
+      "docs/audits/native-proxy-lifetime-controls-20260913/audit.py",
+      "--verify-saved"
+    ],
+    "name": "controls_actual"
+  },
+  {
+    "argv": [
+      "python3",
+      "-B",
+      "docs/audits/native-proxy-lifetime-closure-20260913/review_admissions.py",
+      "--retain"
+    ],
+    "name": "admission_components"
+  }
+]

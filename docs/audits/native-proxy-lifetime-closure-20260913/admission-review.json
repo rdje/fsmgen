@@ -1,0 +1,22 @@
+{
+  "actual_fixture_operations": 0,
+  "actual_permits_written": 0,
+  "control_data_cases": 14,
+  "corrected_perl_checks": 96,
+  "harness_reader_countermodels": 41,
+  "integration_countermodels": 18,
+  "original_epochs": {
+    "fixture_and_process_attempts": 0,
+    "guarded_missing_archive_copy": true,
+    "original_bridge_failure_preserved": true
+  },
+  "permit_countermodels": 14,
+  "prospective_report_states_preserved_as_original_epochs": true,
+  "retained_healthy_stages": 152,
+  "schema": "fsmgen.lifetime_admission_source_data_reverification.v1",
+  "source_join": {
+    "adapted_journal_and_main": 2,
+    "new_control_functions": 4,
+    "unchanged_complete_harness_functions": 20
+  }
+}

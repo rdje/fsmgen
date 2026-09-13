@@ -1,0 +1,38 @@
+[
+  {
+    "bytes_hex": "496e616374697665206c69666574696d6520636c6f7375726520636f6d706c6574696f6e3a204f4b3b2061637475616c206c616e677561676520636f6f7264696e6174696f6e20666f6c6c6f77732e0a",
+    "path": ".artifacts/logs/native-proxy-lifetime-closure-20260913/completion.stdout",
+    "sha256": "fea5043bd3dd0740a931f55f02465a740a71c89474b5f433daf62d5216bb3a07",
+    "size_bytes": 80
+  },
+  {
+    "bytes_hex": "72616d2d67756172643a205049442033373531363b20686f73742036352e39253b20686f7374206375746f6666203838253b2064657363656e64616e7420525353206375746f66662034303936204d69423b20706f6c6c2032730a",
+    "path": ".artifacts/logs/native-proxy-lifetime-closure-20260913/completion.stderr",
+    "sha256": "a424c45c5aa08414c96697122a6df79be59cc679f20af93fbb600c063cc20ab1",
+    "size_bytes": 91
+  },
+  {
+    "bytes_hex": "300a",
+    "path": ".artifacts/logs/native-proxy-lifetime-closure-20260913/completion.exit",
+    "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa",
+    "size_bytes": 2
+  },
+  {
+    "bytes_hex": "496e616374697665206c69666574696d6520636c6f7375726520636f6d706c6574696f6e3a204f4b3b2061637475616c206c616e677561676520636f6f7264696e6174696f6e20666f6c6c6f77732e0a",
+    "path": ".artifacts/logs/native-proxy-lifetime-closure-20260913/completion-saved.stdout",
+    "sha256": "fea5043bd3dd0740a931f55f02465a740a71c89474b5f433daf62d5216bb3a07",
+    "size_bytes": 80
+  },
+  {
+    "bytes_hex": "72616d2d67756172643a205049442033383039303b20686f73742036362e31253b20686f7374206375746f6666203838253b2064657363656e64616e7420525353206375746f66662034303936204d69423b20706f6c6c2032730a",
+    "path": ".artifacts/logs/native-proxy-lifetime-closure-20260913/completion-saved.stderr",
+    "sha256": "f323bc876c3731729b77e8af80b70a6047e122e6a55e49402da2f0e027409149",
+    "size_bytes": 91
+  },
+  {
+    "bytes_hex": "300a",
+    "path": ".artifacts/logs/native-proxy-lifetime-closure-20260913/completion-saved.exit",
+    "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa",
+    "size_bytes": 2
+  }
+]

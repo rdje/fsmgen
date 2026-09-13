@@ -205,4 +205,32 @@ outside this result.
 scripts/run_with_ram_guard.sh -- python3 -B docs/audits/native-proxy-lifetime-controls-20260913/audit.py --verify-saved
 ```
 
+The combined inactive lifetime contract is now closed for its declared scope.
+The source ordering contract and independently checked state model describe the
+same complete serial domain. Selected actual complete lifetimes and rejection
+prefixes fit that domain, including archival after private retirement and
+maintenance while an unrelated image retains its own healthy owner.
+
+The final review joins source identity, archive and work receipts, actual
+partial effects, original return flags and exact cleanup. It authenticates the
+committed phase files and their pinned imports, and verifies retained original
+raw evidence, including earlier nonzero outcomes. Changed ordering, missing
+cases or cleanup roots, overlapping run ownership and promoted native authority
+are rejected. The original qualifiers are not replayed.
+
+Modeled coverage and actual-file coverage remain distinct: the finite serial
+model is exhausted, while filesystem evidence covers the explicitly selected
+complete and control cases. All their fixture roots are absent. Original clock
+domains remain separate; no timing is inferred across language boundaries.
+
+This also closes the inactive observation-custody activity together with its
+record, census, acquisition, settled-release and frozen-version children.
+Actual cooperation between language workers is next. Native authentication,
+real receipt transport, late-launch prevention, live-store/public integration
+and the original startup/parent qualification still have explicit owners.
+
+```sh
+scripts/run_with_ram_guard.sh -- python3 -B docs/audits/native-proxy-lifetime-closure-20260913/audit.py --verify-saved
+```
+
 [Return to runtime measurement](16dc-vial-portable-verilator-runtime-measurement.md).

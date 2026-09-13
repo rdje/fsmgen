@@ -1775,12 +1775,9 @@ retains the pin for recovery. An interruption after the final reference unlink
 can leave release completed without a success return, while preserving the image.
 There is no automatic retry or recreation of missing coordination state.
 These are inert filesystem qualifications; actual compiler-workspace capacity,
-complete receipt transport, observer lifetimes and native behavior remain open.
-The fixed qualification limits are recorded beside the replay harness:
-
-```bash
-scripts/run_with_ram_guard.sh -- perl docs/audits/native-proxy-runtime-retirement-20260910/qualify.t
-```
+real receipt transport and native behavior remain open. Selected inactive
+observer lifetimes and current saved-evidence checks are documented in
+[Inactive Proxy Lifetimes](16dk-inactive-proxy-lifetimes.md).
 
 Inactive maintenance is a separate operation for an explicitly selected image.
 It checks the complete bounded reference census and every image before deleting
@@ -1789,13 +1786,9 @@ missing owners never justify release. Unknown records or partial images stop
 maintenance before deletion. Successful removal preserves the permanent lock,
 all references and other images, and can free space for a later explicit
 publication. Interrupted removal leaves its exact partial state for separately
-owned recovery; it does not repair, retry or evict another image. Full observation
-and combined lifetimes still require qualification before activation.
-Replay the inert maintenance controls:
-
-```bash
-scripts/run_with_ram_guard.sh -- perl docs/audits/native-proxy-image-maintenance-20260910/qualify.t
-```
+owned recovery; it does not repair, retry or evict another image. Selected inactive
+observation and combined lifetimes now pass the saved-evidence review linked
+above. Native activation remains separately owned.
 
 The inactive observation codec defines a separate retention record for capture.
 Its key binds the evidence directory and the complete observer and target births
@@ -3051,9 +3044,10 @@ sources, without replaying a fixture:
 scripts/run_with_ram_guard.sh -- python3 -B docs/audits/native-proxy-release-final-join-20260913/audit.py --verify-saved
 ```
 
-This completes the declared finite inactive release contract. Version
-compatibility, combined lifetimes, native authentication and transport,
-original startup qualification and product activation remain separately owned.
+This completes the declared finite inactive release contract. The following
+sections qualify inactive version compatibility and combined file lifetimes.
+Native authentication, real transport, startup qualification and product activation
+remain separately owned.
 It does not qualify arbitrary-writer atomicity or ambiguous operating-system
 close failures.
 
@@ -3204,15 +3198,16 @@ their versions or replaying their producers. The earlier formatting failure
 continues to fail its original independent oracle; the corrected result passes.
 
 Public projection integration and actual collector outcomes remain separately owned.
-The private format does not provide those features. Native authentication,
-current file custody, compiler ownership transport and combined lifetimes also
-retain their own prerequisites. Recheck this data-only join from retained bytes:
+The private format does not provide those features. Native authentication and
+real compiler ownership transport retain their prerequisites. Selected inactive
+file custody and combined lifetimes are qualified separately below.
+Recheck this data-only join from retained bytes:
 
 ```sh
 scripts/run_with_ram_guard.sh -- python3 -B docs/audits/native-proxy-version-join-20260913/audit.py --verify-saved
 ```
 
-Combined lifetime contracts and the qualified inert state model are documented
+The combined source, model and actual-file lifetime closure is documented
 in [Inactive Proxy Lifetimes](16dk-inactive-proxy-lifetimes.md).
 
 The inactive archive record implementation now derives a closed specification

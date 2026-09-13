@@ -1,0 +1,25 @@
+{
+  "checked_passages": [
+    "The combined inactive lifetime contract is now closed for its declared scope.",
+    "The source ordering contract and independently checked state model describe the same complete serial domain.",
+    "Modeled coverage and actual-file coverage remain distinct: the finite serial model is exhausted, while filesystem evidence covers the explicitly selected complete and control cases.",
+    "Actual cooperation between language workers is next.",
+    "docs/audits/native-proxy-lifetime-closure-20260913/audit.py --verify-saved"
+  ],
+  "checked_runtime_passages": [
+    "Selected inactive observer lifetimes and current saved-evidence checks are documented in",
+    "Selected inactive observation and combined lifetimes now pass the saved-evidence review linked above.",
+    "The following sections qualify inactive version compatibility and combined file lifetimes.",
+    "Selected inactive file custody and combined lifetimes are qualified separately below."
+  ],
+  "exact_output_absent": true,
+  "exit_code": 0,
+  "output": ".artifacts/tmp/native-proxy-lifetime-closure-book-20260913/book",
+  "rendered_bytes": 23628279,
+  "rendered_directories": 2,
+  "rendered_files": 99,
+  "renderer_warnings": [
+    "WARN search index is very large (13298332 bytes)"
+  ],
+  "same_volume_direct_objects": true
+}

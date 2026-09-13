@@ -1,0 +1,32 @@
+[
+  {
+    "path": "docs/audits/native-proxy-lifetime-closure-20260913/review_completion.py",
+    "sha256": "6bbb8b2ad922486d9a586eb66b15ac58ca28867e9037247fea790cb5d717ad12",
+    "size_bytes": 7619
+  },
+  {
+    "path": "docs/audits/native-proxy-lifetime-closure-20260913/review.json",
+    "sha256": "eaf0a29f63bd7ffc2332d2515364d939ff048276de54072688f24180c11670ab",
+    "size_bytes": 264525
+  },
+  {
+    "path": "docs/audits/native-proxy-lifetime-closure-20260913/book-review.json",
+    "sha256": "1c92869dc18f73054ee723001179ed427146a1639bb784ec07adbbe1c2526302",
+    "size_bytes": 1329
+  },
+  {
+    "path": "docs/audits/native-proxy-lifetime-closure-20260913/claim-review.json",
+    "sha256": "bcf5b3e262234ba6247a9abee84dd2f6a51372867bb5f7a298e83aa5270fbab0",
+    "size_bytes": 13401
+  },
+  {
+    "path": "docs/audits/native-proxy-lifetime-closure-20260913/documentation-pins.json",
+    "sha256": "60c14187e8a916516ee7cf89aa1fec65d859fd409fbc601d516f95402eb1ccc4",
+    "size_bytes": 1693
+  },
+  {
+    "path": "docs/audits/native-proxy-lifetime-closure-20260913/closure-pins.json",
+    "sha256": "fd58d28ae1587c76fd7100d9110b281b81bb373fd8f235cacefb2d5109596297",
+    "size_bytes": 1779
+  }
+]
