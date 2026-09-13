@@ -1,0 +1,128 @@
+[
+  {
+    "original": ".artifacts/logs/native-proxy-capture-dispatch-20260913/prepare.stdout",
+    "path": "docs/audits/native-proxy-capture-dispatch-20260913/result/prepare.stdout",
+    "sha256": "661527aa8551b34fff189e3c035fe144c6cc072e1f000433791ef803e3dc4c60",
+    "size_bytes": 32
+  },
+  {
+    "original": ".artifacts/logs/native-proxy-capture-dispatch-20260913/prepare.stderr",
+    "path": "docs/audits/native-proxy-capture-dispatch-20260913/result/prepare.stderr",
+    "sha256": "b60b16b35e11979544202695d2ce29fe1783c77c60012db45ac2f309d6d6c211",
+    "size_bytes": 91
+  },
+  {
+    "original": ".artifacts/logs/native-proxy-capture-dispatch-20260913/prepare.exit",
+    "path": "docs/audits/native-proxy-capture-dispatch-20260913/result/prepare.exit",
+    "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa",
+    "size_bytes": 2
+  },
+  {
+    "original": ".artifacts/logs/native-proxy-capture-dispatch-20260913/qualify.stdout",
+    "path": "docs/audits/native-proxy-capture-dispatch-20260913/result/qualify.stdout",
+    "sha256": "d5eb1603da953f950953c6745db2dac75205c61b2fa111ce9c6db9fec1811a7d",
+    "size_bytes": 117
+  },
+  {
+    "original": ".artifacts/logs/native-proxy-capture-dispatch-20260913/qualify.stderr",
+    "path": "docs/audits/native-proxy-capture-dispatch-20260913/result/qualify.stderr",
+    "sha256": "45a462e38e0a4b41030bfb0cb1c5d8dd9f3180a80c349c1be30a960d2de6d604",
+    "size_bytes": 91
+  },
+  {
+    "original": ".artifacts/logs/native-proxy-capture-dispatch-20260913/qualify.exit",
+    "path": "docs/audits/native-proxy-capture-dispatch-20260913/result/qualify.exit",
+    "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa",
+    "size_bytes": 2
+  },
+  {
+    "original": ".artifacts/logs/native-proxy-capture-dispatch-20260913/audit.stdout",
+    "path": "docs/audits/native-proxy-capture-dispatch-20260913/result/audit.stdout",
+    "sha256": "f91b8482773557c41986f30b00159d638fe8e16505b6d2a578f9189f34fe0d95",
+    "size_bytes": 306
+  },
+  {
+    "original": ".artifacts/logs/native-proxy-capture-dispatch-20260913/audit.stderr",
+    "path": "docs/audits/native-proxy-capture-dispatch-20260913/result/audit.stderr",
+    "sha256": "58516be9814beef2af35180e71a7bc48620345cf5fccea6f51b9e1c4142cd5f9",
+    "size_bytes": 91
+  },
+  {
+    "original": ".artifacts/logs/native-proxy-capture-dispatch-20260913/audit.exit",
+    "path": "docs/audits/native-proxy-capture-dispatch-20260913/result/audit.exit",
+    "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa",
+    "size_bytes": 2
+  },
+  {
+    "original": ".artifacts/logs/native-proxy-capture-dispatch-20260913/saved.stdout",
+    "path": "docs/audits/native-proxy-capture-dispatch-20260913/result/saved.stdout",
+    "sha256": "f91b8482773557c41986f30b00159d638fe8e16505b6d2a578f9189f34fe0d95",
+    "size_bytes": 306
+  },
+  {
+    "original": ".artifacts/logs/native-proxy-capture-dispatch-20260913/saved.stderr",
+    "path": "docs/audits/native-proxy-capture-dispatch-20260913/result/saved.stderr",
+    "sha256": "203b7ffe7283965d0426df00b11f48d5f99b0b13e7b885e6a52343affbda3a6d",
+    "size_bytes": 91
+  },
+  {
+    "original": ".artifacts/logs/native-proxy-capture-dispatch-20260913/saved.exit",
+    "path": "docs/audits/native-proxy-capture-dispatch-20260913/result/saved.exit",
+    "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa",
+    "size_bytes": 2
+  },
+  {
+    "original": ".artifacts/logs/native-proxy-capture-dispatch-20260913/book.stdout",
+    "path": "docs/audits/native-proxy-capture-dispatch-20260913/result/book.stdout",
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "size_bytes": 0
+  },
+  {
+    "original": ".artifacts/logs/native-proxy-capture-dispatch-20260913/book.stderr",
+    "path": "docs/audits/native-proxy-capture-dispatch-20260913/result/book.stderr",
+    "sha256": "1c32b3ce6ce823d995db289869b4054bb21fbed35a91bfcd2f503973f767733c",
+    "size_bytes": 340
+  },
+  {
+    "original": ".artifacts/logs/native-proxy-capture-dispatch-20260913/book.exit",
+    "path": "docs/audits/native-proxy-capture-dispatch-20260913/result/book.exit",
+    "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa",
+    "size_bytes": 2
+  },
+  {
+    "original": ".artifacts/logs/native-proxy-capture-dispatch-20260913/book-inspect-corrected.stdout",
+    "path": "docs/audits/native-proxy-capture-dispatch-20260913/result/book-inspect-corrected.stdout",
+    "sha256": "68aa118b7c43a6f8164b722e4b7511afca6780ddc50824b525360da366dc6b67",
+    "size_bytes": 675
+  },
+  {
+    "original": ".artifacts/logs/native-proxy-capture-dispatch-20260913/book-inspect-corrected.stderr",
+    "path": "docs/audits/native-proxy-capture-dispatch-20260913/result/book-inspect-corrected.stderr",
+    "sha256": "7832b42cce0e23f714a358301ff4bb8464898ffbb1eb439fcb0caf7bad867f7c",
+    "size_bytes": 90
+  },
+  {
+    "original": ".artifacts/logs/native-proxy-capture-dispatch-20260913/book-inspect-corrected.exit",
+    "path": "docs/audits/native-proxy-capture-dispatch-20260913/result/book-inspect-corrected.exit",
+    "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa",
+    "size_bytes": 2
+  },
+  {
+    "original": ".artifacts/logs/native-proxy-capture-dispatch-20260913/knowledge-generate.stdout",
+    "path": "docs/audits/native-proxy-capture-dispatch-20260913/result/knowledge-generate.stdout",
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "size_bytes": 0
+  },
+  {
+    "original": ".artifacts/logs/native-proxy-capture-dispatch-20260913/knowledge-generate.stderr",
+    "path": "docs/audits/native-proxy-capture-dispatch-20260913/result/knowledge-generate.stderr",
+    "sha256": "7f3fc479969af0dac41ec3d52ca61d58b56ee8c741979daac9b39c3074fbf7c0",
+    "size_bytes": 212
+  },
+  {
+    "original": ".artifacts/logs/native-proxy-capture-dispatch-20260913/knowledge-generate.exit",
+    "path": "docs/audits/native-proxy-capture-dispatch-20260913/result/knowledge-generate.exit",
+    "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa",
+    "size_bytes": 2
+  }
+]

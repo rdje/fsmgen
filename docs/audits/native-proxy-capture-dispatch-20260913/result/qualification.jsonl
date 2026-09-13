@@ -1,0 +1,964 @@
+{"accepted": true, "name": "perl", "output": {"evidence": {"ancestor": {"pid": 101, "ppid": 99, "ruid": 501, "start_sec": 1234, "start_usec": 123, "uid": 501}, "child": {"pid": 103, "ppid": 102, "ruid": 501, "start_sec": 1234, "start_usec": 789, "uid": 501}, "fixture": ".artifacts/tmp/process-supervisor-tests/fsmgen-CaptureContract20260913/rust-tools/rustup", "fixture_sha256": "d4ce2ddd85885c6e3274b97ec9f5a83d5aed7cb6698cd231992d5682b0ce793b", "parent": {"pid": 102, "ppid": 101, "ruid": 501, "start_sec": 1234, "start_usec": 456, "uid": 501}, "sources": [{"device": 17, "inode": 201, "path": ".artifacts/tmp/process-supervisor-tests/fsmgen-CaptureContract20260913/rust-tool-resolution", "sha256": "793f10e8669af1003977f15ac55691c06e451f9561a71e3b4d2647c6b2c0d01e", "size_bytes": 21}, {"device": 17, "inode": 203, "path": ".artifacts/tmp/process-supervisor-tests/fsmgen-CaptureContract20260913/rust-tools/rustup", "sha256": "d4ce2ddd85885c6e3274b97ec9f5a83d5aed7cb6698cd231992d5682b0ce793b", "size_bytes": 24}], "target_role": "rust-proxy"}, "layout": "selected_perl_v1", "main_entry": "unknown", "runtime_authorized": false}, "root": "ordinary"}
+{"accepted": true, "name": "private_0", "output": {"evidence": {"ancestor": {"pid": 101, "ppid": 99, "ruid": 501, "start_sec": 1234, "start_usec": 123, "uid": 501}, "child": {"pid": 103, "ppid": 102, "ruid": 501, "start_sec": 1234, "start_usec": 789, "uid": 501}, "fixture": ".artifacts/tmp/process-supervisor-tests/fsmgen-CaptureContract20260913/rust-tools/rustup", "fixture_sha256": "ed1fd2db0c12ad449d21bdbcf00932e53c1d236856cf364dd45f381159828449", "parent": {"pid": 102, "ppid": 101, "ruid": 501, "start_sec": 1234, "start_usec": 456, "uid": 501}, "sources": [{"device": 17, "inode": 201, "path": ".artifacts/tmp/process-supervisor-tests/fsmgen-CaptureContract20260913/rust-tool-resolution", "sha256": "793f10e8669af1003977f15ac55691c06e451f9561a71e3b4d2647c6b2c0d01e", "size_bytes": 21}, {"device": 17, "inode": 203, "path": ".artifacts/tmp/process-supervisor-tests/fsmgen-CaptureContract20260913/rust-tools/rustup", "sha256": "ed1fd2db0c12ad449d21bdbcf00932e53c1d236856cf364dd45f381159828449", "size_bytes": 68}, {"device": 17, "inode": 202, "path": ".artifacts/tmp/process-supervisor-tests/fsmgen-CaptureContract20260913/rust-tools/rustup.c", "sha256": "a2ff3cf129d8c01d2b05c33b2df2ca18b68048972dcc86c00222786a6751defc", "size_bytes": 745}], "target_role": "rust-proxy"}, "layout": "legacy_private_native_v1", "main_entry": "unknown", "runtime_authorized": false}, "root": "ordinary"}
+{"accepted": true, "name": "private_1", "output": {"evidence": {"ancestor": {"pid": 101, "ppid": 99, "ruid": 501, "start_sec": 1234, "start_usec": 123, "uid": 501}, "child": {"pid": 103, "ppid": 102, "ruid": 501, "start_sec": 1234, "start_usec": 789, "uid": 501}, "fixture": ".artifacts/tmp/process-supervisor-tests/fsmgen-CaptureContract20260913/rust-tools/rustup", "fixture_sha256": "ed1fd2db0c12ad449d21bdbcf00932e53c1d236856cf364dd45f381159828449", "parent": {"pid": 102, "ppid": 101, "ruid": 501, "start_sec": 1234, "start_usec": 456, "uid": 501}, "sources": [{"device": 17, "inode": 201, "path": ".artifacts/tmp/process-supervisor-tests/fsmgen-CaptureContract20260913/rust-tool-resolution", "sha256": "793f10e8669af1003977f15ac55691c06e451f9561a71e3b4d2647c6b2c0d01e", "size_bytes": 21}, {"device": 17, "inode": 203, "path": ".artifacts/tmp/process-supervisor-tests/fsmgen-CaptureContract20260913/rust-tools/rustup", "sha256": "ed1fd2db0c12ad449d21bdbcf00932e53c1d236856cf364dd45f381159828449", "size_bytes": 68}, {"device": 17, "inode": 202, "path": ".artifacts/tmp/process-supervisor-tests/fsmgen-CaptureContract20260913/rust-tools/rustup.c", "sha256": "b689e2f7ee42bf7cac62f272a36d5313a272dddef15a75f8c66b126568fbf276", "size_bytes": 745}], "target_role": "rust-proxy"}, "layout": "legacy_private_native_v1", "main_entry": "unknown", "runtime_authorized": false}, "root": "ordinary"}
+{"accepted": true, "name": "shared_0", "output": {"evidence": {"ancestor": {"pid": 101, "ppid": 99, "ruid": 501, "start_sec": 1234, "start_usec": 123, "uid": 501}, "child": {"pid": 103, "ppid": 102, "ruid": 501, "start_sec": 1234, "start_usec": 789, "uid": 501}, "fixture": ".artifacts/cache/rust-proxy-images/v1/images/0de326d8726c6bbba60901bd647f0cbb10dacdaa2f32d00a1a9917024081877b/rustup", "fixture_sha256": "ed1fd2db0c12ad449d21bdbcf00932e53c1d236856cf364dd45f381159828449", "parent": {"pid": 102, "ppid": 101, "ruid": 501, "start_sec": 1234, "start_usec": 456, "uid": 501}, "sources": [{"device": 17, "inode": 201, "path": ".artifacts/tmp/process-supervisor-tests/fsmgen-CaptureContract20260913/rust-tool-resolution", "sha256": "793f10e8669af1003977f15ac55691c06e451f9561a71e3b4d2647c6b2c0d01e", "size_bytes": 21}, {"device": 17, "inode": 204, "path": ".artifacts/tmp/process-supervisor-tests/fsmgen-CaptureContract20260913/rust-tools/image-reference.json", "sha256": "300f39309034d39a5fa38328aac3408ce1ed12afe4eb0fae55102c12f034c2e8", "size_bytes": 940}, {"device": 17, "inode": 205, "path": ".artifacts/cache/rust-proxy-images/v1/references/6eca87291dc8cbbaa205425ae7e0961f00f84eaad98d087405ac987d2f655612.json", "sha256": "300f39309034d39a5fa38328aac3408ce1ed12afe4eb0fae55102c12f034c2e8", "size_bytes": 940}, {"device": 17, "inode": 202, "path": ".artifacts/cache/rust-proxy-images/v1/images/0de326d8726c6bbba60901bd647f0cbb10dacdaa2f32d00a1a9917024081877b/rustup.c", "sha256": "a2ff3cf129d8c01d2b05c33b2df2ca18b68048972dcc86c00222786a6751defc", "size_bytes": 745}, {"device": 17, "inode": 203, "path": ".artifacts/cache/rust-proxy-images/v1/images/0de326d8726c6bbba60901bd647f0cbb10dacdaa2f32d00a1a9917024081877b/rustup", "sha256": "ed1fd2db0c12ad449d21bdbcf00932e53c1d236856cf364dd45f381159828449", "size_bytes": 68}], "target_role": "rust-proxy"}, "layout": "shared_native_v2", "main_entry": "unknown", "runtime_authorized": false}, "root": "ordinary"}
+{"accepted": true, "name": "shared_1", "output": {"evidence": {"ancestor": {"pid": 101, "ppid": 99, "ruid": 501, "start_sec": 1234, "start_usec": 123, "uid": 501}, "child": {"pid": 103, "ppid": 102, "ruid": 501, "start_sec": 1234, "start_usec": 789, "uid": 501}, "fixture": ".artifacts/cache/rust-proxy-images/v1/images/e49e053e0328b34d91fd9e534b183efcd06ecc632cffeecaa45d2e7ba0f9875d/rustup", "fixture_sha256": "ed1fd2db0c12ad449d21bdbcf00932e53c1d236856cf364dd45f381159828449", "parent": {"pid": 102, "ppid": 101, "ruid": 501, "start_sec": 1234, "start_usec": 456, "uid": 501}, "sources": [{"device": 17, "inode": 201, "path": ".artifacts/tmp/process-supervisor-tests/fsmgen-CaptureContract20260913/rust-tool-resolution", "sha256": "793f10e8669af1003977f15ac55691c06e451f9561a71e3b4d2647c6b2c0d01e", "size_bytes": 21}, {"device": 17, "inode": 204, "path": ".artifacts/tmp/process-supervisor-tests/fsmgen-CaptureContract20260913/rust-tools/image-reference.json", "sha256": "e927d80c57b6caf5f9bd5098e85e410228924b92dd4fde331746ea18ac5c1a1c", "size_bytes": 940}, {"device": 17, "inode": 205, "path": ".artifacts/cache/rust-proxy-images/v1/references/6eca87291dc8cbbaa205425ae7e0961f00f84eaad98d087405ac987d2f655612.json", "sha256": "e927d80c57b6caf5f9bd5098e85e410228924b92dd4fde331746ea18ac5c1a1c", "size_bytes": 940}, {"device": 17, "inode": 202, "path": ".artifacts/cache/rust-proxy-images/v1/images/e49e053e0328b34d91fd9e534b183efcd06ecc632cffeecaa45d2e7ba0f9875d/rustup.c", "sha256": "b689e2f7ee42bf7cac62f272a36d5313a272dddef15a75f8c66b126568fbf276", "size_bytes": 745}, {"device": 17, "inode": 203, "path": ".artifacts/cache/rust-proxy-images/v1/images/e49e053e0328b34d91fd9e534b183efcd06ecc632cffeecaa45d2e7ba0f9875d/rustup", "sha256": "ed1fd2db0c12ad449d21bdbcf00932e53c1d236856cf364dd45f381159828449", "size_bytes": 68}], "target_role": "rust-proxy"}, "layout": "shared_native_v2", "main_entry": "unknown", "runtime_authorized": false}, "root": "ordinary"}
+{"accepted": true, "name": "shared_other_observer", "output": {"evidence": {"ancestor": {"pid": 101, "ppid": 99, "ruid": 501, "start_sec": 1234, "start_usec": 123, "uid": 501}, "child": {"pid": 103, "ppid": 102, "ruid": 501, "start_sec": 1234, "start_usec": 789, "uid": 501}, "fixture": ".artifacts/cache/rust-proxy-images/v1/images/0de326d8726c6bbba60901bd647f0cbb10dacdaa2f32d00a1a9917024081877b/rustup", "fixture_sha256": "ed1fd2db0c12ad449d21bdbcf00932e53c1d236856cf364dd45f381159828449", "parent": {"pid": 102, "ppid": 101, "ruid": 501, "start_sec": 1234, "start_usec": 456, "uid": 501}, "sources": [{"device": 17, "inode": 201, "path": ".artifacts/tmp/process-supervisor-tests/fsmgen-CaptureContract20260913/rust-tool-resolution", "sha256": "793f10e8669af1003977f15ac55691c06e451f9561a71e3b4d2647c6b2c0d01e", "size_bytes": 21}, {"device": 17, "inode": 204, "path": ".artifacts/tmp/process-supervisor-tests/fsmgen-CaptureContract20260913/rust-tools/image-reference.json", "sha256": "300f39309034d39a5fa38328aac3408ce1ed12afe4eb0fae55102c12f034c2e8", "size_bytes": 940}, {"device": 17, "inode": 205, "path": ".artifacts/cache/rust-proxy-images/v1/references/6eca87291dc8cbbaa205425ae7e0961f00f84eaad98d087405ac987d2f655612.json", "sha256": "300f39309034d39a5fa38328aac3408ce1ed12afe4eb0fae55102c12f034c2e8", "size_bytes": 940}, {"device": 17, "inode": 202, "path": ".artifacts/cache/rust-proxy-images/v1/images/0de326d8726c6bbba60901bd647f0cbb10dacdaa2f32d00a1a9917024081877b/rustup.c", "sha256": "a2ff3cf129d8c01d2b05c33b2df2ca18b68048972dcc86c00222786a6751defc", "size_bytes": 745}, {"device": 17, "inode": 203, "path": ".artifacts/cache/rust-proxy-images/v1/images/0de326d8726c6bbba60901bd647f0cbb10dacdaa2f32d00a1a9917024081877b/rustup", "sha256": "ed1fd2db0c12ad449d21bdbcf00932e53c1d236856cf364dd45f381159828449", "size_bytes": 68}], "target_role": "rust-proxy"}, "layout": "shared_native_v2", "main_entry": "unknown", "runtime_authorized": false}, "root": "ordinary"}
+{"accepted": false, "error": "unknown preparation layout", "name": "perl_wrong_layout", "root": "ordinary"}
+{"accepted": false, "error": "process, source or observation identity changed", "name": "perl_changed_after_0_pid", "root": "ordinary"}
+{"accepted": false, "error": "process, source or observation identity changed", "name": "perl_changed_after_0_ppid", "root": "ordinary"}
+{"accepted": false, "error": "process, source or observation identity changed", "name": "perl_changed_after_0_uid", "root": "ordinary"}
+{"accepted": false, "error": "process, source or observation identity changed", "name": "perl_changed_after_0_ruid", "root": "ordinary"}
+{"accepted": false, "error": "process, source or observation identity changed", "name": "perl_changed_after_0_start_sec", "root": "ordinary"}
+{"accepted": false, "error": "process, source or observation identity changed", "name": "perl_changed_after_0_start_usec", "root": "ordinary"}
+{"accepted": false, "error": "process user differs", "name": "perl_foreign_uid_0", "root": "ordinary"}
+{"accepted": false, "error": "literal proxy executable or command differs", "name": "perl_argv_alias_0", "root": "ordinary"}
+{"accepted": false, "error": "process, source or observation identity changed", "name": "perl_changed_after_1_pid", "root": "ordinary"}
+{"accepted": false, "error": "process, source or observation identity changed", "name": "perl_changed_after_1_ppid", "root": "ordinary"}
+{"accepted": false, "error": "process, source or observation identity changed", "name": "perl_changed_after_1_uid", "root": "ordinary"}
+{"accepted": false, "error": "process, source or observation identity changed", "name": "perl_changed_after_1_ruid", "root": "ordinary"}
+{"accepted": false, "error": "process, source or observation identity changed", "name": "perl_changed_after_1_start_sec", "root": "ordinary"}
+{"accepted": false, "error": "process, source or observation identity changed", "name": "perl_changed_after_1_start_usec", "root": "ordinary"}
+{"accepted": false, "error": "process user differs", "name": "perl_foreign_uid_1", "root": "ordinary"}
+{"accepted": false, "error": "literal wrapper command differs", "name": "perl_argv_alias_1", "root": "ordinary"}
+{"accepted": false, "error": "process, source or observation identity changed", "name": "perl_changed_after_2_pid", "root": "ordinary"}
+{"accepted": false, "error": "process, source or observation identity changed", "name": "perl_changed_after_2_ppid", "root": "ordinary"}
+{"accepted": false, "error": "process, source or observation identity changed", "name": "perl_changed_after_2_uid", "root": "ordinary"}
+{"accepted": false, "error": "process, source or observation identity changed", "name": "perl_changed_after_2_ruid", "root": "ordinary"}
+{"accepted": false, "error": "process, source or observation identity changed", "name": "perl_changed_after_2_start_sec", "root": "ordinary"}
+{"accepted": false, "error": "process, source or observation identity changed", "name": "perl_changed_after_2_start_usec", "root": "ordinary"}
+{"accepted": false, "error": "process user differs", "name": "perl_foreign_uid_2", "root": "ordinary"}
+{"accepted": false, "error": "literal original test command differs", "name": "perl_argv_alias_2", "root": "ordinary"}
+{"accepted": false, "error": "process, source or observation identity changed", "name": "perl_changed_source_0", "root": "ordinary"}
+{"accepted": false, "error": "process, source or observation identity changed", "name": "perl_changed_source_1", "root": "ordinary"}
+{"accepted": false, "error": "legacy source count differs", "name": "perl_incomplete_sources", "root": "ordinary"}
+{"accepted": false, "error": "literal proxy executable or command differs", "name": "perl_executable_alias", "root": "ordinary"}
+{"accepted": false, "error": "source path or ordering differs", "name": "perl_source_order", "root": "ordinary"}
+{"accepted": false, "error": "unknown preparation layout", "name": "private_0_wrong_layout", "root": "ordinary"}
+{"accepted": false, "error": "process, source or observation identity changed", "name": "private_0_changed_after_0_pid", "root": "ordinary"}
+{"accepted": false, "error": "process, source or observation identity changed", "name": "private_0_changed_after_0_ppid", "root": "ordinary"}
+{"accepted": false, "error": "process, source or observation identity changed", "name": "private_0_changed_after_0_uid", "root": "ordinary"}
+{"accepted": false, "error": "process, source or observation identity changed", "name": "private_0_changed_after_0_ruid", "root": "ordinary"}
+{"accepted": false, "error": "process, source or observation identity changed", "name": "private_0_changed_after_0_start_sec", "root": "ordinary"}
+{"accepted": false, "error": "process, source or observation identity changed", "name": "private_0_changed_after_0_start_usec", "root": "ordinary"}
+{"accepted": false, "error": "process user differs", "name": "private_0_foreign_uid_0", "root": "ordinary"}
+{"accepted": false, "error": "literal proxy executable or command differs", "name": "private_0_argv_alias_0", "root": "ordinary"}
+{"accepted": false, "error": "process, source or observation identity changed", "name": "private_0_changed_after_1_pid", "root": "ordinary"}
+{"accepted": false, "error": "process, source or observation identity changed", "name": "private_0_changed_after_1_ppid", "root": "ordinary"}
+{"accepted": false, "error": "process, source or observation identity changed", "name": "private_0_changed_after_1_uid", "root": "ordinary"}
+{"accepted": false, "error": "process, source or observation identity changed", "name": "private_0_changed_after_1_ruid", "root": "ordinary"}
+{"accepted": false, "error": "process, source or observation identity changed", "name": "private_0_changed_after_1_start_sec", "root": "ordinary"}
+{"accepted": false, "error": "process, source or observation identity changed", "name": "private_0_changed_after_1_start_usec", "root": "ordinary"}
+{"accepted": false, "error": "process user differs", "name": "private_0_foreign_uid_1", "root": "ordinary"}
+{"accepted": false, "error": "literal wrapper command differs", "name": "private_0_argv_alias_1", "root": "ordinary"}
+{"accepted": false, "error": "process, source or observation identity changed", "name": "private_0_changed_after_2_pid", "root": "ordinary"}
+{"accepted": false, "error": "process, source or observation identity changed", "name": "private_0_changed_after_2_ppid", "root": "ordinary"}
+{"accepted": false, "error": "process, source or observation identity changed", "name": "private_0_changed_after_2_uid", "root": "ordinary"}
+{"accepted": false, "error": "process, source or observation identity changed", "name": "private_0_changed_after_2_ruid", "root": "ordinary"}
+{"accepted": false, "error": "process, source or observation identity changed", "name": "private_0_changed_after_2_start_sec", "root": "ordinary"}
+{"accepted": false, "error": "process, source or observation identity changed", "name": "private_0_changed_after_2_start_usec", "root": "ordinary"}
+{"accepted": false, "error": "process user differs", "name": "private_0_foreign_uid_2", "root": "ordinary"}
+{"accepted": false, "error": "literal original test command differs", "name": "private_0_argv_alias_2", "root": "ordinary"}
+{"accepted": false, "error": "process, source or observation identity changed", "name": "private_0_changed_source_0", "root": "ordinary"}
+{"accepted": false, "error": "process, source or observation identity changed", "name": "private_0_changed_source_1", "root": "ordinary"}
+{"accepted": false, "error": "process, source or observation identity changed", "name": "private_0_changed_source_2", "root": "ordinary"}
+{"accepted": false, "error": "legacy source count differs", "name": "private_0_incomplete_sources", "root": "ordinary"}
+{"accepted": false, "error": "literal proxy executable or command differs", "name": "private_0_executable_alias", "root": "ordinary"}
+{"accepted": false, "error": "source path or ordering differs", "name": "private_0_source_order", "root": "ordinary"}
+{"accepted": false, "error": "unknown preparation layout", "name": "private_1_wrong_layout", "root": "ordinary"}
+{"accepted": false, "error": "process, source or observation identity changed", "name": "private_1_changed_after_0_pid", "root": "ordinary"}
+{"accepted": false, "error": "process, source or observation identity changed", "name": "private_1_changed_after_0_ppid", "root": "ordinary"}
+{"accepted": false, "error": "process, source or observation identity changed", "name": "private_1_changed_after_0_uid", "root": "ordinary"}
+{"accepted": false, "error": "process, source or observation identity changed", "name": "private_1_changed_after_0_ruid", "root": "ordinary"}
+{"accepted": false, "error": "process, source or observation identity changed", "name": "private_1_changed_after_0_start_sec", "root": "ordinary"}
+{"accepted": false, "error": "process, source or observation identity changed", "name": "private_1_changed_after_0_start_usec", "root": "ordinary"}
+{"accepted": false, "error": "process user differs", "name": "private_1_foreign_uid_0", "root": "ordinary"}
+{"accepted": false, "error": "literal proxy executable or command differs", "name": "private_1_argv_alias_0", "root": "ordinary"}
+{"accepted": false, "error": "process, source or observation identity changed", "name": "private_1_changed_after_1_pid", "root": "ordinary"}
+{"accepted": false, "error": "process, source or observation identity changed", "name": "private_1_changed_after_1_ppid", "root": "ordinary"}
+{"accepted": false, "error": "process, source or observation identity changed", "name": "private_1_changed_after_1_uid", "root": "ordinary"}
+{"accepted": false, "error": "process, source or observation identity changed", "name": "private_1_changed_after_1_ruid", "root": "ordinary"}
+{"accepted": false, "error": "process, source or observation identity changed", "name": "private_1_changed_after_1_start_sec", "root": "ordinary"}
+{"accepted": false, "error": "process, source or observation identity changed", "name": "private_1_changed_after_1_start_usec", "root": "ordinary"}
+{"accepted": false, "error": "process user differs", "name": "private_1_foreign_uid_1", "root": "ordinary"}
+{"accepted": false, "error": "literal wrapper command differs", "name": "private_1_argv_alias_1", "root": "ordinary"}
+{"accepted": false, "error": "process, source or observation identity changed", "name": "private_1_changed_after_2_pid", "root": "ordinary"}
+{"accepted": false, "error": "process, source or observation identity changed", "name": "private_1_changed_after_2_ppid", "root": "ordinary"}
+{"accepted": false, "error": "process, source or observation identity changed", "name": "private_1_changed_after_2_uid", "root": "ordinary"}
+{"accepted": false, "error": "process, source or observation identity changed", "name": "private_1_changed_after_2_ruid", "root": "ordinary"}
+{"accepted": false, "error": "process, source or observation identity changed", "name": "private_1_changed_after_2_start_sec", "root": "ordinary"}
+{"accepted": false, "error": "process, source or observation identity changed", "name": "private_1_changed_after_2_start_usec", "root": "ordinary"}
+{"accepted": false, "error": "process user differs", "name": "private_1_foreign_uid_2", "root": "ordinary"}
+{"accepted": false, "error": "literal original test command differs", "name": "private_1_argv_alias_2", "root": "ordinary"}
+{"accepted": false, "error": "process, source or observation identity changed", "name": "private_1_changed_source_0", "root": "ordinary"}
+{"accepted": false, "error": "process, source or observation identity changed", "name": "private_1_changed_source_1", "root": "ordinary"}
+{"accepted": false, "error": "process, source or observation identity changed", "name": "private_1_changed_source_2", "root": "ordinary"}
+{"accepted": false, "error": "legacy source count differs", "name": "private_1_incomplete_sources", "root": "ordinary"}
+{"accepted": false, "error": "literal proxy executable or command differs", "name": "private_1_executable_alias", "root": "ordinary"}
+{"accepted": false, "error": "source path or ordering differs", "name": "private_1_source_order", "root": "ordinary"}
+{"accepted": false, "error": "unknown preparation layout", "name": "shared_0_wrong_layout", "root": "ordinary"}
+{"accepted": false, "error": "process, source or observation identity changed", "name": "shared_0_changed_after_0_pid", "root": "ordinary"}
+{"accepted": false, "error": "process, source or observation identity changed", "name": "shared_0_changed_after_0_ppid", "root": "ordinary"}
+{"accepted": false, "error": "process, source or observation identity changed", "name": "shared_0_changed_after_0_uid", "root": "ordinary"}
+{"accepted": false, "error": "process, source or observation identity changed", "name": "shared_0_changed_after_0_ruid", "root": "ordinary"}
+{"accepted": false, "error": "process, source or observation identity changed", "name": "shared_0_changed_after_0_start_sec", "root": "ordinary"}
+{"accepted": false, "error": "process, source or observation identity changed", "name": "shared_0_changed_after_0_start_usec", "root": "ordinary"}
+{"accepted": false, "error": "process user differs", "name": "shared_0_foreign_uid_0", "root": "ordinary"}
+{"accepted": false, "error": "literal proxy executable or command differs", "name": "shared_0_argv_alias_0", "root": "ordinary"}
+{"accepted": false, "error": "process, source or observation identity changed", "name": "shared_0_changed_after_1_pid", "root": "ordinary"}
+{"accepted": false, "error": "process, source or observation identity changed", "name": "shared_0_changed_after_1_ppid", "root": "ordinary"}
+{"accepted": false, "error": "process, source or observation identity changed", "name": "shared_0_changed_after_1_uid", "root": "ordinary"}
+{"accepted": false, "error": "process, source or observation identity changed", "name": "shared_0_changed_after_1_ruid", "root": "ordinary"}
+{"accepted": false, "error": "process, source or observation identity changed", "name": "shared_0_changed_after_1_start_sec", "root": "ordinary"}
+{"accepted": false, "error": "process, source or observation identity changed", "name": "shared_0_changed_after_1_start_usec", "root": "ordinary"}
+{"accepted": false, "error": "process user differs", "name": "shared_0_foreign_uid_1", "root": "ordinary"}
+{"accepted": false, "error": "literal wrapper command differs", "name": "shared_0_argv_alias_1", "root": "ordinary"}
+{"accepted": false, "error": "process, source or observation identity changed", "name": "shared_0_changed_after_2_pid", "root": "ordinary"}
+{"accepted": false, "error": "process, source or observation identity changed", "name": "shared_0_changed_after_2_ppid", "root": "ordinary"}
+{"accepted": false, "error": "process, source or observation identity changed", "name": "shared_0_changed_after_2_uid", "root": "ordinary"}
+{"accepted": false, "error": "process, source or observation identity changed", "name": "shared_0_changed_after_2_ruid", "root": "ordinary"}
+{"accepted": false, "error": "process, source or observation identity changed", "name": "shared_0_changed_after_2_start_sec", "root": "ordinary"}
+{"accepted": false, "error": "process, source or observation identity changed", "name": "shared_0_changed_after_2_start_usec", "root": "ordinary"}
+{"accepted": false, "error": "process user differs", "name": "shared_0_foreign_uid_2", "root": "ordinary"}
+{"accepted": false, "error": "literal original test command differs", "name": "shared_0_argv_alias_2", "root": "ordinary"}
+{"accepted": false, "error": "process, source or observation identity changed", "name": "shared_0_changed_source_0", "root": "ordinary"}
+{"accepted": false, "error": "process, source or observation identity changed", "name": "shared_0_changed_source_1", "root": "ordinary"}
+{"accepted": false, "error": "process, source or observation identity changed", "name": "shared_0_changed_source_2", "root": "ordinary"}
+{"accepted": false, "error": "process, source or observation identity changed", "name": "shared_0_changed_source_3", "root": "ordinary"}
+{"accepted": false, "error": "process, source or observation identity changed", "name": "shared_0_changed_source_4", "root": "ordinary"}
+{"accepted": false, "error": "expected five stable target snapshots", "name": "shared_0_incomplete_sources", "root": "ordinary"}
+{"accepted": false, "error": "literal proxy executable or command differs", "name": "shared_0_executable_alias", "root": "ordinary"}
+{"accepted": false, "error": "source path or ordering differs", "name": "shared_0_source_order", "root": "ordinary"}
+{"accepted": false, "error": "unknown preparation layout", "name": "shared_1_wrong_layout", "root": "ordinary"}
+{"accepted": false, "error": "process, source or observation identity changed", "name": "shared_1_changed_after_0_pid", "root": "ordinary"}
+{"accepted": false, "error": "process, source or observation identity changed", "name": "shared_1_changed_after_0_ppid", "root": "ordinary"}
+{"accepted": false, "error": "process, source or observation identity changed", "name": "shared_1_changed_after_0_uid", "root": "ordinary"}
+{"accepted": false, "error": "process, source or observation identity changed", "name": "shared_1_changed_after_0_ruid", "root": "ordinary"}
+{"accepted": false, "error": "process, source or observation identity changed", "name": "shared_1_changed_after_0_start_sec", "root": "ordinary"}
+{"accepted": false, "error": "process, source or observation identity changed", "name": "shared_1_changed_after_0_start_usec", "root": "ordinary"}
+{"accepted": false, "error": "process user differs", "name": "shared_1_foreign_uid_0", "root": "ordinary"}
+{"accepted": false, "error": "literal proxy executable or command differs", "name": "shared_1_argv_alias_0", "root": "ordinary"}
+{"accepted": false, "error": "process, source or observation identity changed", "name": "shared_1_changed_after_1_pid", "root": "ordinary"}
+{"accepted": false, "error": "process, source or observation identity changed", "name": "shared_1_changed_after_1_ppid", "root": "ordinary"}
+{"accepted": false, "error": "process, source or observation identity changed", "name": "shared_1_changed_after_1_uid", "root": "ordinary"}
+{"accepted": false, "error": "process, source or observation identity changed", "name": "shared_1_changed_after_1_ruid", "root": "ordinary"}
+{"accepted": false, "error": "process, source or observation identity changed", "name": "shared_1_changed_after_1_start_sec", "root": "ordinary"}
+{"accepted": false, "error": "process, source or observation identity changed", "name": "shared_1_changed_after_1_start_usec", "root": "ordinary"}
+{"accepted": false, "error": "process user differs", "name": "shared_1_foreign_uid_1", "root": "ordinary"}
+{"accepted": false, "error": "literal wrapper command differs", "name": "shared_1_argv_alias_1", "root": "ordinary"}
+{"accepted": false, "error": "process, source or observation identity changed", "name": "shared_1_changed_after_2_pid", "root": "ordinary"}
+{"accepted": false, "error": "process, source or observation identity changed", "name": "shared_1_changed_after_2_ppid", "root": "ordinary"}
+{"accepted": false, "error": "process, source or observation identity changed", "name": "shared_1_changed_after_2_uid", "root": "ordinary"}
+{"accepted": false, "error": "process, source or observation identity changed", "name": "shared_1_changed_after_2_ruid", "root": "ordinary"}
+{"accepted": false, "error": "process, source or observation identity changed", "name": "shared_1_changed_after_2_start_sec", "root": "ordinary"}
+{"accepted": false, "error": "process, source or observation identity changed", "name": "shared_1_changed_after_2_start_usec", "root": "ordinary"}
+{"accepted": false, "error": "process user differs", "name": "shared_1_foreign_uid_2", "root": "ordinary"}
+{"accepted": false, "error": "literal original test command differs", "name": "shared_1_argv_alias_2", "root": "ordinary"}
+{"accepted": false, "error": "process, source or observation identity changed", "name": "shared_1_changed_source_0", "root": "ordinary"}
+{"accepted": false, "error": "process, source or observation identity changed", "name": "shared_1_changed_source_1", "root": "ordinary"}
+{"accepted": false, "error": "process, source or observation identity changed", "name": "shared_1_changed_source_2", "root": "ordinary"}
+{"accepted": false, "error": "process, source or observation identity changed", "name": "shared_1_changed_source_3", "root": "ordinary"}
+{"accepted": false, "error": "process, source or observation identity changed", "name": "shared_1_changed_source_4", "root": "ordinary"}
+{"accepted": false, "error": "expected five stable target snapshots", "name": "shared_1_incomplete_sources", "root": "ordinary"}
+{"accepted": false, "error": "literal proxy executable or command differs", "name": "shared_1_executable_alias", "root": "ordinary"}
+{"accepted": false, "error": "source path or ordering differs", "name": "shared_1_source_order", "root": "ordinary"}
+{"accepted": false, "error": "unknown preparation layout", "name": "shared_other_observer_wrong_layout", "root": "ordinary"}
+{"accepted": false, "error": "process, source or observation identity changed", "name": "shared_other_observer_changed_after_0_pid", "root": "ordinary"}
+{"accepted": false, "error": "process, source or observation identity changed", "name": "shared_other_observer_changed_after_0_ppid", "root": "ordinary"}
+{"accepted": false, "error": "process, source or observation identity changed", "name": "shared_other_observer_changed_after_0_uid", "root": "ordinary"}
+{"accepted": false, "error": "process, source or observation identity changed", "name": "shared_other_observer_changed_after_0_ruid", "root": "ordinary"}
+{"accepted": false, "error": "process, source or observation identity changed", "name": "shared_other_observer_changed_after_0_start_sec", "root": "ordinary"}
+{"accepted": false, "error": "process, source or observation identity changed", "name": "shared_other_observer_changed_after_0_start_usec", "root": "ordinary"}
+{"accepted": false, "error": "process user differs", "name": "shared_other_observer_foreign_uid_0", "root": "ordinary"}
+{"accepted": false, "error": "literal proxy executable or command differs", "name": "shared_other_observer_argv_alias_0", "root": "ordinary"}
+{"accepted": false, "error": "process, source or observation identity changed", "name": "shared_other_observer_changed_after_1_pid", "root": "ordinary"}
+{"accepted": false, "error": "process, source or observation identity changed", "name": "shared_other_observer_changed_after_1_ppid", "root": "ordinary"}
+{"accepted": false, "error": "process, source or observation identity changed", "name": "shared_other_observer_changed_after_1_uid", "root": "ordinary"}
+{"accepted": false, "error": "process, source or observation identity changed", "name": "shared_other_observer_changed_after_1_ruid", "root": "ordinary"}
+{"accepted": false, "error": "process, source or observation identity changed", "name": "shared_other_observer_changed_after_1_start_sec", "root": "ordinary"}
+{"accepted": false, "error": "process, source or observation identity changed", "name": "shared_other_observer_changed_after_1_start_usec", "root": "ordinary"}
+{"accepted": false, "error": "process user differs", "name": "shared_other_observer_foreign_uid_1", "root": "ordinary"}
+{"accepted": false, "error": "literal wrapper command differs", "name": "shared_other_observer_argv_alias_1", "root": "ordinary"}
+{"accepted": false, "error": "process, source or observation identity changed", "name": "shared_other_observer_changed_after_2_pid", "root": "ordinary"}
+{"accepted": false, "error": "process, source or observation identity changed", "name": "shared_other_observer_changed_after_2_ppid", "root": "ordinary"}
+{"accepted": false, "error": "process, source or observation identity changed", "name": "shared_other_observer_changed_after_2_uid", "root": "ordinary"}
+{"accepted": false, "error": "process, source or observation identity changed", "name": "shared_other_observer_changed_after_2_ruid", "root": "ordinary"}
+{"accepted": false, "error": "process, source or observation identity changed", "name": "shared_other_observer_changed_after_2_start_sec", "root": "ordinary"}
+{"accepted": false, "error": "process, source or observation identity changed", "name": "shared_other_observer_changed_after_2_start_usec", "root": "ordinary"}
+{"accepted": false, "error": "process user differs", "name": "shared_other_observer_foreign_uid_2", "root": "ordinary"}
+{"accepted": false, "error": "literal original test command differs", "name": "shared_other_observer_argv_alias_2", "root": "ordinary"}
+{"accepted": false, "error": "process, source or observation identity changed", "name": "shared_other_observer_changed_source_0", "root": "ordinary"}
+{"accepted": false, "error": "process, source or observation identity changed", "name": "shared_other_observer_changed_source_1", "root": "ordinary"}
+{"accepted": false, "error": "process, source or observation identity changed", "name": "shared_other_observer_changed_source_2", "root": "ordinary"}
+{"accepted": false, "error": "process, source or observation identity changed", "name": "shared_other_observer_changed_source_3", "root": "ordinary"}
+{"accepted": false, "error": "process, source or observation identity changed", "name": "shared_other_observer_changed_source_4", "root": "ordinary"}
+{"accepted": false, "error": "expected five stable target snapshots", "name": "shared_other_observer_incomplete_sources", "root": "ordinary"}
+{"accepted": false, "error": "literal proxy executable or command differs", "name": "shared_other_observer_executable_alias", "root": "ordinary"}
+{"accepted": false, "error": "source path or ordering differs", "name": "shared_other_observer_source_order", "root": "ordinary"}
+{"accepted": false, "error": "record fields differ", "name": "missing_bundle_schema", "root": "ordinary"}
+{"accepted": false, "error": "record fields differ", "name": "missing_bundle_layout", "root": "ordinary"}
+{"accepted": false, "error": "record fields differ", "name": "missing_bundle_workspace", "root": "ordinary"}
+{"accepted": false, "error": "record fields differ", "name": "missing_bundle_workspace_identity", "root": "ordinary"}
+{"accepted": false, "error": "record fields differ", "name": "missing_bundle_observer_birth", "root": "ordinary"}
+{"accepted": false, "error": "record fields differ", "name": "missing_bundle_evidence_directory_identity", "root": "ordinary"}
+{"accepted": false, "error": "record fields differ", "name": "missing_bundle_request", "root": "ordinary"}
+{"accepted": false, "error": "record fields differ", "name": "missing_bundle_before", "root": "ordinary"}
+{"accepted": false, "error": "record fields differ", "name": "missing_bundle_after", "root": "ordinary"}
+{"accepted": false, "error": "record fields differ", "name": "unknown_bundle_field", "root": "ordinary"}
+{"accepted": false, "error": "unknown capture input version", "name": "unknown_input_schema", "root": "ordinary"}
+{"accepted": false, "error": "expected nonnegative integer", "name": "request_bool_pid", "root": "ordinary"}
+{"accepted": false, "error": "expected nonnegative integer", "name": "request_bool_start_sec", "root": "ordinary"}
+{"accepted": false, "error": "expected nonnegative integer", "name": "request_bool_start_usec", "root": "ordinary"}
+{"accepted": false, "error": "expected nonnegative integer", "name": "request_bool_parent_pid", "root": "ordinary"}
+{"accepted": false, "error": "expected nonnegative integer", "name": "request_bool_parent_start_sec", "root": "ordinary"}
+{"accepted": false, "error": "expected nonnegative integer", "name": "request_bool_parent_start_usec", "root": "ordinary"}
+{"accepted": false, "error": "expected nonnegative integer", "name": "request_bool_ancestor_pid", "root": "ordinary"}
+{"accepted": false, "error": "expected nonnegative integer", "name": "request_bool_ancestor_start_sec", "root": "ordinary"}
+{"accepted": false, "error": "expected nonnegative integer", "name": "request_bool_ancestor_start_usec", "root": "ordinary"}
+{"accepted": false, "error": "record fields differ", "name": "before_missing_hold", "root": "ordinary"}
+{"accepted": false, "error": "expected proxy/wrapper/test chain", "name": "before_empty_processes", "root": "ordinary"}
+{"accepted": false, "error": "process, source or observation identity changed", "name": "after_missing_hold", "root": "ordinary"}
+{"accepted": false, "error": "process, source or observation identity changed", "name": "after_empty_processes", "root": "ordinary"}
+{"accepted": false, "error": "record fields differ", "name": "missing_shared_workspace_identity", "root": "ordinary"}
+{"accepted": false, "error": "record fields differ", "name": "missing_shared_observer_birth", "root": "ordinary"}
+{"accepted": false, "error": "record fields differ", "name": "missing_shared_evidence_directory_identity", "root": "ordinary"}
+{"accepted": false, "error": "workspace is not builder-owned", "name": "workspace_parent_alias", "root": "ordinary"}
+{"accepted": false, "error": "source or directory identities alias", "name": "runtime_identity_alias", "root": "ordinary"}
+{"accepted": false, "error": "source or evidence volume differs", "name": "cross_volume_source", "root": "ordinary"}
+{"accepted": false, "error": "expected five stable target snapshots", "name": "target_source_contains_hold", "root": "ordinary"}
+{"accepted": false, "error": "process, source or observation identity changed", "name": "after_numeric_type_drift", "root": "ordinary"}
+{"accepted": false, "error": "record fields differ", "name": "missing_snapshot_identity_0", "root": "ordinary"}
+{"accepted": false, "error": "source byte identity differs", "name": "incorrect_snapshot_bytes_0", "root": "ordinary"}
+{"accepted": false, "error": "record fields differ", "name": "missing_snapshot_identity_1", "root": "ordinary"}
+{"accepted": false, "error": "source byte identity differs", "name": "incorrect_snapshot_bytes_1", "root": "ordinary"}
+{"accepted": false, "error": "record fields differ", "name": "missing_snapshot_identity_2", "root": "ordinary"}
+{"accepted": false, "error": "source byte identity differs", "name": "incorrect_snapshot_bytes_2", "root": "ordinary"}
+{"accepted": false, "error": "record fields differ", "name": "missing_snapshot_identity_3", "root": "ordinary"}
+{"accepted": false, "error": "source byte identity differs", "name": "incorrect_snapshot_bytes_3", "root": "ordinary"}
+{"accepted": false, "error": "record fields differ", "name": "missing_snapshot_identity_4", "root": "ordinary"}
+{"accepted": false, "error": "source byte identity differs", "name": "incorrect_snapshot_bytes_4", "root": "ordinary"}
+{"accepted": false, "error": "legacy layout cannot acquire shared-image fields", "name": "perl_shared_hold", "root": "ordinary"}
+{"accepted": false, "error": "legacy layout cannot acquire shared-image fields", "name": "private_0_shared_hold", "root": "ordinary"}
+{"accepted": true, "name": "perl", "output": {"evidence": {"ancestor": {"pid": 101, "ppid": 99, "ruid": 501, "start_sec": 1234, "start_usec": 123, "uid": 501}, "child": {"pid": 103, "ppid": 102, "ruid": 501, "start_sec": 1234, "start_usec": 789, "uid": 501}, "fixture": ".artifacts/tmp/process-supervisor-tests/fsmgen-CaptureContract20260913/rust-tools/rustup", "fixture_sha256": "d4ce2ddd85885c6e3274b97ec9f5a83d5aed7cb6698cd231992d5682b0ce793b", "parent": {"pid": 102, "ppid": 101, "ruid": 501, "start_sec": 1234, "start_usec": 456, "uid": 501}, "sources": [{"device": 17, "inode": 201, "path": ".artifacts/tmp/process-supervisor-tests/fsmgen-CaptureContract20260913/rust-tool-resolution", "sha256": "793f10e8669af1003977f15ac55691c06e451f9561a71e3b4d2647c6b2c0d01e", "size_bytes": 21}, {"device": 17, "inode": 203, "path": ".artifacts/tmp/process-supervisor-tests/fsmgen-CaptureContract20260913/rust-tools/rustup", "sha256": "d4ce2ddd85885c6e3274b97ec9f5a83d5aed7cb6698cd231992d5682b0ce793b", "size_bytes": 24}], "target_role": "rust-proxy"}, "layout": "selected_perl_v1", "main_entry": "unknown", "runtime_authorized": false}, "root": "space in checkout"}
+{"accepted": true, "name": "private_0", "output": {"evidence": {"ancestor": {"pid": 101, "ppid": 99, "ruid": 501, "start_sec": 1234, "start_usec": 123, "uid": 501}, "child": {"pid": 103, "ppid": 102, "ruid": 501, "start_sec": 1234, "start_usec": 789, "uid": 501}, "fixture": ".artifacts/tmp/process-supervisor-tests/fsmgen-CaptureContract20260913/rust-tools/rustup", "fixture_sha256": "ed1fd2db0c12ad449d21bdbcf00932e53c1d236856cf364dd45f381159828449", "parent": {"pid": 102, "ppid": 101, "ruid": 501, "start_sec": 1234, "start_usec": 456, "uid": 501}, "sources": [{"device": 17, "inode": 201, "path": ".artifacts/tmp/process-supervisor-tests/fsmgen-CaptureContract20260913/rust-tool-resolution", "sha256": "793f10e8669af1003977f15ac55691c06e451f9561a71e3b4d2647c6b2c0d01e", "size_bytes": 21}, {"device": 17, "inode": 203, "path": ".artifacts/tmp/process-supervisor-tests/fsmgen-CaptureContract20260913/rust-tools/rustup", "sha256": "ed1fd2db0c12ad449d21bdbcf00932e53c1d236856cf364dd45f381159828449", "size_bytes": 68}, {"device": 17, "inode": 202, "path": ".artifacts/tmp/process-supervisor-tests/fsmgen-CaptureContract20260913/rust-tools/rustup.c", "sha256": "a2ff3cf129d8c01d2b05c33b2df2ca18b68048972dcc86c00222786a6751defc", "size_bytes": 745}], "target_role": "rust-proxy"}, "layout": "legacy_private_native_v1", "main_entry": "unknown", "runtime_authorized": false}, "root": "space in checkout"}
+{"accepted": true, "name": "private_1", "output": {"evidence": {"ancestor": {"pid": 101, "ppid": 99, "ruid": 501, "start_sec": 1234, "start_usec": 123, "uid": 501}, "child": {"pid": 103, "ppid": 102, "ruid": 501, "start_sec": 1234, "start_usec": 789, "uid": 501}, "fixture": ".artifacts/tmp/process-supervisor-tests/fsmgen-CaptureContract20260913/rust-tools/rustup", "fixture_sha256": "ed1fd2db0c12ad449d21bdbcf00932e53c1d236856cf364dd45f381159828449", "parent": {"pid": 102, "ppid": 101, "ruid": 501, "start_sec": 1234, "start_usec": 456, "uid": 501}, "sources": [{"device": 17, "inode": 201, "path": ".artifacts/tmp/process-supervisor-tests/fsmgen-CaptureContract20260913/rust-tool-resolution", "sha256": "793f10e8669af1003977f15ac55691c06e451f9561a71e3b4d2647c6b2c0d01e", "size_bytes": 21}, {"device": 17, "inode": 203, "path": ".artifacts/tmp/process-supervisor-tests/fsmgen-CaptureContract20260913/rust-tools/rustup", "sha256": "ed1fd2db0c12ad449d21bdbcf00932e53c1d236856cf364dd45f381159828449", "size_bytes": 68}, {"device": 17, "inode": 202, "path": ".artifacts/tmp/process-supervisor-tests/fsmgen-CaptureContract20260913/rust-tools/rustup.c", "sha256": "b689e2f7ee42bf7cac62f272a36d5313a272dddef15a75f8c66b126568fbf276", "size_bytes": 745}], "target_role": "rust-proxy"}, "layout": "legacy_private_native_v1", "main_entry": "unknown", "runtime_authorized": false}, "root": "space in checkout"}
+{"accepted": true, "name": "shared_0", "output": {"evidence": {"ancestor": {"pid": 101, "ppid": 99, "ruid": 501, "start_sec": 1234, "start_usec": 123, "uid": 501}, "child": {"pid": 103, "ppid": 102, "ruid": 501, "start_sec": 1234, "start_usec": 789, "uid": 501}, "fixture": ".artifacts/cache/rust-proxy-images/v1/images/0de326d8726c6bbba60901bd647f0cbb10dacdaa2f32d00a1a9917024081877b/rustup", "fixture_sha256": "ed1fd2db0c12ad449d21bdbcf00932e53c1d236856cf364dd45f381159828449", "parent": {"pid": 102, "ppid": 101, "ruid": 501, "start_sec": 1234, "start_usec": 456, "uid": 501}, "sources": [{"device": 17, "inode": 201, "path": ".artifacts/tmp/process-supervisor-tests/fsmgen-CaptureContract20260913/rust-tool-resolution", "sha256": "793f10e8669af1003977f15ac55691c06e451f9561a71e3b4d2647c6b2c0d01e", "size_bytes": 21}, {"device": 17, "inode": 204, "path": ".artifacts/tmp/process-supervisor-tests/fsmgen-CaptureContract20260913/rust-tools/image-reference.json", "sha256": "300f39309034d39a5fa38328aac3408ce1ed12afe4eb0fae55102c12f034c2e8", "size_bytes": 940}, {"device": 17, "inode": 205, "path": ".artifacts/cache/rust-proxy-images/v1/references/6eca87291dc8cbbaa205425ae7e0961f00f84eaad98d087405ac987d2f655612.json", "sha256": "300f39309034d39a5fa38328aac3408ce1ed12afe4eb0fae55102c12f034c2e8", "size_bytes": 940}, {"device": 17, "inode": 202, "path": ".artifacts/cache/rust-proxy-images/v1/images/0de326d8726c6bbba60901bd647f0cbb10dacdaa2f32d00a1a9917024081877b/rustup.c", "sha256": "a2ff3cf129d8c01d2b05c33b2df2ca18b68048972dcc86c00222786a6751defc", "size_bytes": 745}, {"device": 17, "inode": 203, "path": ".artifacts/cache/rust-proxy-images/v1/images/0de326d8726c6bbba60901bd647f0cbb10dacdaa2f32d00a1a9917024081877b/rustup", "sha256": "ed1fd2db0c12ad449d21bdbcf00932e53c1d236856cf364dd45f381159828449", "size_bytes": 68}], "target_role": "rust-proxy"}, "layout": "shared_native_v2", "main_entry": "unknown", "runtime_authorized": false}, "root": "space in checkout"}
+{"accepted": true, "name": "shared_1", "output": {"evidence": {"ancestor": {"pid": 101, "ppid": 99, "ruid": 501, "start_sec": 1234, "start_usec": 123, "uid": 501}, "child": {"pid": 103, "ppid": 102, "ruid": 501, "start_sec": 1234, "start_usec": 789, "uid": 501}, "fixture": ".artifacts/cache/rust-proxy-images/v1/images/e49e053e0328b34d91fd9e534b183efcd06ecc632cffeecaa45d2e7ba0f9875d/rustup", "fixture_sha256": "ed1fd2db0c12ad449d21bdbcf00932e53c1d236856cf364dd45f381159828449", "parent": {"pid": 102, "ppid": 101, "ruid": 501, "start_sec": 1234, "start_usec": 456, "uid": 501}, "sources": [{"device": 17, "inode": 201, "path": ".artifacts/tmp/process-supervisor-tests/fsmgen-CaptureContract20260913/rust-tool-resolution", "sha256": "793f10e8669af1003977f15ac55691c06e451f9561a71e3b4d2647c6b2c0d01e", "size_bytes": 21}, {"device": 17, "inode": 204, "path": ".artifacts/tmp/process-supervisor-tests/fsmgen-CaptureContract20260913/rust-tools/image-reference.json", "sha256": "e927d80c57b6caf5f9bd5098e85e410228924b92dd4fde331746ea18ac5c1a1c", "size_bytes": 940}, {"device": 17, "inode": 205, "path": ".artifacts/cache/rust-proxy-images/v1/references/6eca87291dc8cbbaa205425ae7e0961f00f84eaad98d087405ac987d2f655612.json", "sha256": "e927d80c57b6caf5f9bd5098e85e410228924b92dd4fde331746ea18ac5c1a1c", "size_bytes": 940}, {"device": 17, "inode": 202, "path": ".artifacts/cache/rust-proxy-images/v1/images/e49e053e0328b34d91fd9e534b183efcd06ecc632cffeecaa45d2e7ba0f9875d/rustup.c", "sha256": "b689e2f7ee42bf7cac62f272a36d5313a272dddef15a75f8c66b126568fbf276", "size_bytes": 745}, {"device": 17, "inode": 203, "path": ".artifacts/cache/rust-proxy-images/v1/images/e49e053e0328b34d91fd9e534b183efcd06ecc632cffeecaa45d2e7ba0f9875d/rustup", "sha256": "ed1fd2db0c12ad449d21bdbcf00932e53c1d236856cf364dd45f381159828449", "size_bytes": 68}], "target_role": "rust-proxy"}, "layout": "shared_native_v2", "main_entry": "unknown", "runtime_authorized": false}, "root": "space in checkout"}
+{"accepted": true, "name": "shared_other_observer", "output": {"evidence": {"ancestor": {"pid": 101, "ppid": 99, "ruid": 501, "start_sec": 1234, "start_usec": 123, "uid": 501}, "child": {"pid": 103, "ppid": 102, "ruid": 501, "start_sec": 1234, "start_usec": 789, "uid": 501}, "fixture": ".artifacts/cache/rust-proxy-images/v1/images/0de326d8726c6bbba60901bd647f0cbb10dacdaa2f32d00a1a9917024081877b/rustup", "fixture_sha256": "ed1fd2db0c12ad449d21bdbcf00932e53c1d236856cf364dd45f381159828449", "parent": {"pid": 102, "ppid": 101, "ruid": 501, "start_sec": 1234, "start_usec": 456, "uid": 501}, "sources": [{"device": 17, "inode": 201, "path": ".artifacts/tmp/process-supervisor-tests/fsmgen-CaptureContract20260913/rust-tool-resolution", "sha256": "793f10e8669af1003977f15ac55691c06e451f9561a71e3b4d2647c6b2c0d01e", "size_bytes": 21}, {"device": 17, "inode": 204, "path": ".artifacts/tmp/process-supervisor-tests/fsmgen-CaptureContract20260913/rust-tools/image-reference.json", "sha256": "300f39309034d39a5fa38328aac3408ce1ed12afe4eb0fae55102c12f034c2e8", "size_bytes": 940}, {"device": 17, "inode": 205, "path": ".artifacts/cache/rust-proxy-images/v1/references/6eca87291dc8cbbaa205425ae7e0961f00f84eaad98d087405ac987d2f655612.json", "sha256": "300f39309034d39a5fa38328aac3408ce1ed12afe4eb0fae55102c12f034c2e8", "size_bytes": 940}, {"device": 17, "inode": 202, "path": ".artifacts/cache/rust-proxy-images/v1/images/0de326d8726c6bbba60901bd647f0cbb10dacdaa2f32d00a1a9917024081877b/rustup.c", "sha256": "a2ff3cf129d8c01d2b05c33b2df2ca18b68048972dcc86c00222786a6751defc", "size_bytes": 745}, {"device": 17, "inode": 203, "path": ".artifacts/cache/rust-proxy-images/v1/images/0de326d8726c6bbba60901bd647f0cbb10dacdaa2f32d00a1a9917024081877b/rustup", "sha256": "ed1fd2db0c12ad449d21bdbcf00932e53c1d236856cf364dd45f381159828449", "size_bytes": 68}], "target_role": "rust-proxy"}, "layout": "shared_native_v2", "main_entry": "unknown", "runtime_authorized": false}, "root": "space in checkout"}
+{"accepted": false, "error": "unknown preparation layout", "name": "perl_wrong_layout", "root": "space in checkout"}
+{"accepted": false, "error": "process, source or observation identity changed", "name": "perl_changed_after_0_pid", "root": "space in checkout"}
+{"accepted": false, "error": "process, source or observation identity changed", "name": "perl_changed_after_0_ppid", "root": "space in checkout"}
+{"accepted": false, "error": "process, source or observation identity changed", "name": "perl_changed_after_0_uid", "root": "space in checkout"}
+{"accepted": false, "error": "process, source or observation identity changed", "name": "perl_changed_after_0_ruid", "root": "space in checkout"}
+{"accepted": false, "error": "process, source or observation identity changed", "name": "perl_changed_after_0_start_sec", "root": "space in checkout"}
+{"accepted": false, "error": "process, source or observation identity changed", "name": "perl_changed_after_0_start_usec", "root": "space in checkout"}
+{"accepted": false, "error": "process user differs", "name": "perl_foreign_uid_0", "root": "space in checkout"}
+{"accepted": false, "error": "literal proxy executable or command differs", "name": "perl_argv_alias_0", "root": "space in checkout"}
+{"accepted": false, "error": "process, source or observation identity changed", "name": "perl_changed_after_1_pid", "root": "space in checkout"}
+{"accepted": false, "error": "process, source or observation identity changed", "name": "perl_changed_after_1_ppid", "root": "space in checkout"}
+{"accepted": false, "error": "process, source or observation identity changed", "name": "perl_changed_after_1_uid", "root": "space in checkout"}
+{"accepted": false, "error": "process, source or observation identity changed", "name": "perl_changed_after_1_ruid", "root": "space in checkout"}
+{"accepted": false, "error": "process, source or observation identity changed", "name": "perl_changed_after_1_start_sec", "root": "space in checkout"}
+{"accepted": false, "error": "process, source or observation identity changed", "name": "perl_changed_after_1_start_usec", "root": "space in checkout"}
+{"accepted": false, "error": "process user differs", "name": "perl_foreign_uid_1", "root": "space in checkout"}
+{"accepted": false, "error": "literal wrapper command differs", "name": "perl_argv_alias_1", "root": "space in checkout"}
+{"accepted": false, "error": "process, source or observation identity changed", "name": "perl_changed_after_2_pid", "root": "space in checkout"}
+{"accepted": false, "error": "process, source or observation identity changed", "name": "perl_changed_after_2_ppid", "root": "space in checkout"}
+{"accepted": false, "error": "process, source or observation identity changed", "name": "perl_changed_after_2_uid", "root": "space in checkout"}
+{"accepted": false, "error": "process, source or observation identity changed", "name": "perl_changed_after_2_ruid", "root": "space in checkout"}
+{"accepted": false, "error": "process, source or observation identity changed", "name": "perl_changed_after_2_start_sec", "root": "space in checkout"}
+{"accepted": false, "error": "process, source or observation identity changed", "name": "perl_changed_after_2_start_usec", "root": "space in checkout"}
+{"accepted": false, "error": "process user differs", "name": "perl_foreign_uid_2", "root": "space in checkout"}
+{"accepted": false, "error": "literal original test command differs", "name": "perl_argv_alias_2", "root": "space in checkout"}
+{"accepted": false, "error": "process, source or observation identity changed", "name": "perl_changed_source_0", "root": "space in checkout"}
+{"accepted": false, "error": "process, source or observation identity changed", "name": "perl_changed_source_1", "root": "space in checkout"}
+{"accepted": false, "error": "legacy source count differs", "name": "perl_incomplete_sources", "root": "space in checkout"}
+{"accepted": false, "error": "literal proxy executable or command differs", "name": "perl_executable_alias", "root": "space in checkout"}
+{"accepted": false, "error": "source path or ordering differs", "name": "perl_source_order", "root": "space in checkout"}
+{"accepted": false, "error": "unknown preparation layout", "name": "private_0_wrong_layout", "root": "space in checkout"}
+{"accepted": false, "error": "process, source or observation identity changed", "name": "private_0_changed_after_0_pid", "root": "space in checkout"}
+{"accepted": false, "error": "process, source or observation identity changed", "name": "private_0_changed_after_0_ppid", "root": "space in checkout"}
+{"accepted": false, "error": "process, source or observation identity changed", "name": "private_0_changed_after_0_uid", "root": "space in checkout"}
+{"accepted": false, "error": "process, source or observation identity changed", "name": "private_0_changed_after_0_ruid", "root": "space in checkout"}
+{"accepted": false, "error": "process, source or observation identity changed", "name": "private_0_changed_after_0_start_sec", "root": "space in checkout"}
+{"accepted": false, "error": "process, source or observation identity changed", "name": "private_0_changed_after_0_start_usec", "root": "space in checkout"}
+{"accepted": false, "error": "process user differs", "name": "private_0_foreign_uid_0", "root": "space in checkout"}
+{"accepted": false, "error": "literal proxy executable or command differs", "name": "private_0_argv_alias_0", "root": "space in checkout"}
+{"accepted": false, "error": "process, source or observation identity changed", "name": "private_0_changed_after_1_pid", "root": "space in checkout"}
+{"accepted": false, "error": "process, source or observation identity changed", "name": "private_0_changed_after_1_ppid", "root": "space in checkout"}
+{"accepted": false, "error": "process, source or observation identity changed", "name": "private_0_changed_after_1_uid", "root": "space in checkout"}
+{"accepted": false, "error": "process, source or observation identity changed", "name": "private_0_changed_after_1_ruid", "root": "space in checkout"}
+{"accepted": false, "error": "process, source or observation identity changed", "name": "private_0_changed_after_1_start_sec", "root": "space in checkout"}
+{"accepted": false, "error": "process, source or observation identity changed", "name": "private_0_changed_after_1_start_usec", "root": "space in checkout"}
+{"accepted": false, "error": "process user differs", "name": "private_0_foreign_uid_1", "root": "space in checkout"}
+{"accepted": false, "error": "literal wrapper command differs", "name": "private_0_argv_alias_1", "root": "space in checkout"}
+{"accepted": false, "error": "process, source or observation identity changed", "name": "private_0_changed_after_2_pid", "root": "space in checkout"}
+{"accepted": false, "error": "process, source or observation identity changed", "name": "private_0_changed_after_2_ppid", "root": "space in checkout"}
+{"accepted": false, "error": "process, source or observation identity changed", "name": "private_0_changed_after_2_uid", "root": "space in checkout"}
+{"accepted": false, "error": "process, source or observation identity changed", "name": "private_0_changed_after_2_ruid", "root": "space in checkout"}
+{"accepted": false, "error": "process, source or observation identity changed", "name": "private_0_changed_after_2_start_sec", "root": "space in checkout"}
+{"accepted": false, "error": "process, source or observation identity changed", "name": "private_0_changed_after_2_start_usec", "root": "space in checkout"}
+{"accepted": false, "error": "process user differs", "name": "private_0_foreign_uid_2", "root": "space in checkout"}
+{"accepted": false, "error": "literal original test command differs", "name": "private_0_argv_alias_2", "root": "space in checkout"}
+{"accepted": false, "error": "process, source or observation identity changed", "name": "private_0_changed_source_0", "root": "space in checkout"}
+{"accepted": false, "error": "process, source or observation identity changed", "name": "private_0_changed_source_1", "root": "space in checkout"}
+{"accepted": false, "error": "process, source or observation identity changed", "name": "private_0_changed_source_2", "root": "space in checkout"}
+{"accepted": false, "error": "legacy source count differs", "name": "private_0_incomplete_sources", "root": "space in checkout"}
+{"accepted": false, "error": "literal proxy executable or command differs", "name": "private_0_executable_alias", "root": "space in checkout"}
+{"accepted": false, "error": "source path or ordering differs", "name": "private_0_source_order", "root": "space in checkout"}
+{"accepted": false, "error": "unknown preparation layout", "name": "private_1_wrong_layout", "root": "space in checkout"}
+{"accepted": false, "error": "process, source or observation identity changed", "name": "private_1_changed_after_0_pid", "root": "space in checkout"}
+{"accepted": false, "error": "process, source or observation identity changed", "name": "private_1_changed_after_0_ppid", "root": "space in checkout"}
+{"accepted": false, "error": "process, source or observation identity changed", "name": "private_1_changed_after_0_uid", "root": "space in checkout"}
+{"accepted": false, "error": "process, source or observation identity changed", "name": "private_1_changed_after_0_ruid", "root": "space in checkout"}
+{"accepted": false, "error": "process, source or observation identity changed", "name": "private_1_changed_after_0_start_sec", "root": "space in checkout"}
+{"accepted": false, "error": "process, source or observation identity changed", "name": "private_1_changed_after_0_start_usec", "root": "space in checkout"}
+{"accepted": false, "error": "process user differs", "name": "private_1_foreign_uid_0", "root": "space in checkout"}
+{"accepted": false, "error": "literal proxy executable or command differs", "name": "private_1_argv_alias_0", "root": "space in checkout"}
+{"accepted": false, "error": "process, source or observation identity changed", "name": "private_1_changed_after_1_pid", "root": "space in checkout"}
+{"accepted": false, "error": "process, source or observation identity changed", "name": "private_1_changed_after_1_ppid", "root": "space in checkout"}
+{"accepted": false, "error": "process, source or observation identity changed", "name": "private_1_changed_after_1_uid", "root": "space in checkout"}
+{"accepted": false, "error": "process, source or observation identity changed", "name": "private_1_changed_after_1_ruid", "root": "space in checkout"}
+{"accepted": false, "error": "process, source or observation identity changed", "name": "private_1_changed_after_1_start_sec", "root": "space in checkout"}
+{"accepted": false, "error": "process, source or observation identity changed", "name": "private_1_changed_after_1_start_usec", "root": "space in checkout"}
+{"accepted": false, "error": "process user differs", "name": "private_1_foreign_uid_1", "root": "space in checkout"}
+{"accepted": false, "error": "literal wrapper command differs", "name": "private_1_argv_alias_1", "root": "space in checkout"}
+{"accepted": false, "error": "process, source or observation identity changed", "name": "private_1_changed_after_2_pid", "root": "space in checkout"}
+{"accepted": false, "error": "process, source or observation identity changed", "name": "private_1_changed_after_2_ppid", "root": "space in checkout"}
+{"accepted": false, "error": "process, source or observation identity changed", "name": "private_1_changed_after_2_uid", "root": "space in checkout"}
+{"accepted": false, "error": "process, source or observation identity changed", "name": "private_1_changed_after_2_ruid", "root": "space in checkout"}
+{"accepted": false, "error": "process, source or observation identity changed", "name": "private_1_changed_after_2_start_sec", "root": "space in checkout"}
+{"accepted": false, "error": "process, source or observation identity changed", "name": "private_1_changed_after_2_start_usec", "root": "space in checkout"}
+{"accepted": false, "error": "process user differs", "name": "private_1_foreign_uid_2", "root": "space in checkout"}
+{"accepted": false, "error": "literal original test command differs", "name": "private_1_argv_alias_2", "root": "space in checkout"}
+{"accepted": false, "error": "process, source or observation identity changed", "name": "private_1_changed_source_0", "root": "space in checkout"}
+{"accepted": false, "error": "process, source or observation identity changed", "name": "private_1_changed_source_1", "root": "space in checkout"}
+{"accepted": false, "error": "process, source or observation identity changed", "name": "private_1_changed_source_2", "root": "space in checkout"}
+{"accepted": false, "error": "legacy source count differs", "name": "private_1_incomplete_sources", "root": "space in checkout"}
+{"accepted": false, "error": "literal proxy executable or command differs", "name": "private_1_executable_alias", "root": "space in checkout"}
+{"accepted": false, "error": "source path or ordering differs", "name": "private_1_source_order", "root": "space in checkout"}
+{"accepted": false, "error": "unknown preparation layout", "name": "shared_0_wrong_layout", "root": "space in checkout"}
+{"accepted": false, "error": "process, source or observation identity changed", "name": "shared_0_changed_after_0_pid", "root": "space in checkout"}
+{"accepted": false, "error": "process, source or observation identity changed", "name": "shared_0_changed_after_0_ppid", "root": "space in checkout"}
+{"accepted": false, "error": "process, source or observation identity changed", "name": "shared_0_changed_after_0_uid", "root": "space in checkout"}
+{"accepted": false, "error": "process, source or observation identity changed", "name": "shared_0_changed_after_0_ruid", "root": "space in checkout"}
+{"accepted": false, "error": "process, source or observation identity changed", "name": "shared_0_changed_after_0_start_sec", "root": "space in checkout"}
+{"accepted": false, "error": "process, source or observation identity changed", "name": "shared_0_changed_after_0_start_usec", "root": "space in checkout"}
+{"accepted": false, "error": "process user differs", "name": "shared_0_foreign_uid_0", "root": "space in checkout"}
+{"accepted": false, "error": "literal proxy executable or command differs", "name": "shared_0_argv_alias_0", "root": "space in checkout"}
+{"accepted": false, "error": "process, source or observation identity changed", "name": "shared_0_changed_after_1_pid", "root": "space in checkout"}
+{"accepted": false, "error": "process, source or observation identity changed", "name": "shared_0_changed_after_1_ppid", "root": "space in checkout"}
+{"accepted": false, "error": "process, source or observation identity changed", "name": "shared_0_changed_after_1_uid", "root": "space in checkout"}
+{"accepted": false, "error": "process, source or observation identity changed", "name": "shared_0_changed_after_1_ruid", "root": "space in checkout"}
+{"accepted": false, "error": "process, source or observation identity changed", "name": "shared_0_changed_after_1_start_sec", "root": "space in checkout"}
+{"accepted": false, "error": "process, source or observation identity changed", "name": "shared_0_changed_after_1_start_usec", "root": "space in checkout"}
+{"accepted": false, "error": "process user differs", "name": "shared_0_foreign_uid_1", "root": "space in checkout"}
+{"accepted": false, "error": "literal wrapper command differs", "name": "shared_0_argv_alias_1", "root": "space in checkout"}
+{"accepted": false, "error": "process, source or observation identity changed", "name": "shared_0_changed_after_2_pid", "root": "space in checkout"}
+{"accepted": false, "error": "process, source or observation identity changed", "name": "shared_0_changed_after_2_ppid", "root": "space in checkout"}
+{"accepted": false, "error": "process, source or observation identity changed", "name": "shared_0_changed_after_2_uid", "root": "space in checkout"}
+{"accepted": false, "error": "process, source or observation identity changed", "name": "shared_0_changed_after_2_ruid", "root": "space in checkout"}
+{"accepted": false, "error": "process, source or observation identity changed", "name": "shared_0_changed_after_2_start_sec", "root": "space in checkout"}
+{"accepted": false, "error": "process, source or observation identity changed", "name": "shared_0_changed_after_2_start_usec", "root": "space in checkout"}
+{"accepted": false, "error": "process user differs", "name": "shared_0_foreign_uid_2", "root": "space in checkout"}
+{"accepted": false, "error": "literal original test command differs", "name": "shared_0_argv_alias_2", "root": "space in checkout"}
+{"accepted": false, "error": "process, source or observation identity changed", "name": "shared_0_changed_source_0", "root": "space in checkout"}
+{"accepted": false, "error": "process, source or observation identity changed", "name": "shared_0_changed_source_1", "root": "space in checkout"}
+{"accepted": false, "error": "process, source or observation identity changed", "name": "shared_0_changed_source_2", "root": "space in checkout"}
+{"accepted": false, "error": "process, source or observation identity changed", "name": "shared_0_changed_source_3", "root": "space in checkout"}
+{"accepted": false, "error": "process, source or observation identity changed", "name": "shared_0_changed_source_4", "root": "space in checkout"}
+{"accepted": false, "error": "expected five stable target snapshots", "name": "shared_0_incomplete_sources", "root": "space in checkout"}
+{"accepted": false, "error": "literal proxy executable or command differs", "name": "shared_0_executable_alias", "root": "space in checkout"}
+{"accepted": false, "error": "source path or ordering differs", "name": "shared_0_source_order", "root": "space in checkout"}
+{"accepted": false, "error": "unknown preparation layout", "name": "shared_1_wrong_layout", "root": "space in checkout"}
+{"accepted": false, "error": "process, source or observation identity changed", "name": "shared_1_changed_after_0_pid", "root": "space in checkout"}
+{"accepted": false, "error": "process, source or observation identity changed", "name": "shared_1_changed_after_0_ppid", "root": "space in checkout"}
+{"accepted": false, "error": "process, source or observation identity changed", "name": "shared_1_changed_after_0_uid", "root": "space in checkout"}
+{"accepted": false, "error": "process, source or observation identity changed", "name": "shared_1_changed_after_0_ruid", "root": "space in checkout"}
+{"accepted": false, "error": "process, source or observation identity changed", "name": "shared_1_changed_after_0_start_sec", "root": "space in checkout"}
+{"accepted": false, "error": "process, source or observation identity changed", "name": "shared_1_changed_after_0_start_usec", "root": "space in checkout"}
+{"accepted": false, "error": "process user differs", "name": "shared_1_foreign_uid_0", "root": "space in checkout"}
+{"accepted": false, "error": "literal proxy executable or command differs", "name": "shared_1_argv_alias_0", "root": "space in checkout"}
+{"accepted": false, "error": "process, source or observation identity changed", "name": "shared_1_changed_after_1_pid", "root": "space in checkout"}
+{"accepted": false, "error": "process, source or observation identity changed", "name": "shared_1_changed_after_1_ppid", "root": "space in checkout"}
+{"accepted": false, "error": "process, source or observation identity changed", "name": "shared_1_changed_after_1_uid", "root": "space in checkout"}
+{"accepted": false, "error": "process, source or observation identity changed", "name": "shared_1_changed_after_1_ruid", "root": "space in checkout"}
+{"accepted": false, "error": "process, source or observation identity changed", "name": "shared_1_changed_after_1_start_sec", "root": "space in checkout"}
+{"accepted": false, "error": "process, source or observation identity changed", "name": "shared_1_changed_after_1_start_usec", "root": "space in checkout"}
+{"accepted": false, "error": "process user differs", "name": "shared_1_foreign_uid_1", "root": "space in checkout"}
+{"accepted": false, "error": "literal wrapper command differs", "name": "shared_1_argv_alias_1", "root": "space in checkout"}
+{"accepted": false, "error": "process, source or observation identity changed", "name": "shared_1_changed_after_2_pid", "root": "space in checkout"}
+{"accepted": false, "error": "process, source or observation identity changed", "name": "shared_1_changed_after_2_ppid", "root": "space in checkout"}
+{"accepted": false, "error": "process, source or observation identity changed", "name": "shared_1_changed_after_2_uid", "root": "space in checkout"}
+{"accepted": false, "error": "process, source or observation identity changed", "name": "shared_1_changed_after_2_ruid", "root": "space in checkout"}
+{"accepted": false, "error": "process, source or observation identity changed", "name": "shared_1_changed_after_2_start_sec", "root": "space in checkout"}
+{"accepted": false, "error": "process, source or observation identity changed", "name": "shared_1_changed_after_2_start_usec", "root": "space in checkout"}
+{"accepted": false, "error": "process user differs", "name": "shared_1_foreign_uid_2", "root": "space in checkout"}
+{"accepted": false, "error": "literal original test command differs", "name": "shared_1_argv_alias_2", "root": "space in checkout"}
+{"accepted": false, "error": "process, source or observation identity changed", "name": "shared_1_changed_source_0", "root": "space in checkout"}
+{"accepted": false, "error": "process, source or observation identity changed", "name": "shared_1_changed_source_1", "root": "space in checkout"}
+{"accepted": false, "error": "process, source or observation identity changed", "name": "shared_1_changed_source_2", "root": "space in checkout"}
+{"accepted": false, "error": "process, source or observation identity changed", "name": "shared_1_changed_source_3", "root": "space in checkout"}
+{"accepted": false, "error": "process, source or observation identity changed", "name": "shared_1_changed_source_4", "root": "space in checkout"}
+{"accepted": false, "error": "expected five stable target snapshots", "name": "shared_1_incomplete_sources", "root": "space in checkout"}
+{"accepted": false, "error": "literal proxy executable or command differs", "name": "shared_1_executable_alias", "root": "space in checkout"}
+{"accepted": false, "error": "source path or ordering differs", "name": "shared_1_source_order", "root": "space in checkout"}
+{"accepted": false, "error": "unknown preparation layout", "name": "shared_other_observer_wrong_layout", "root": "space in checkout"}
+{"accepted": false, "error": "process, source or observation identity changed", "name": "shared_other_observer_changed_after_0_pid", "root": "space in checkout"}
+{"accepted": false, "error": "process, source or observation identity changed", "name": "shared_other_observer_changed_after_0_ppid", "root": "space in checkout"}
+{"accepted": false, "error": "process, source or observation identity changed", "name": "shared_other_observer_changed_after_0_uid", "root": "space in checkout"}
+{"accepted": false, "error": "process, source or observation identity changed", "name": "shared_other_observer_changed_after_0_ruid", "root": "space in checkout"}
+{"accepted": false, "error": "process, source or observation identity changed", "name": "shared_other_observer_changed_after_0_start_sec", "root": "space in checkout"}
+{"accepted": false, "error": "process, source or observation identity changed", "name": "shared_other_observer_changed_after_0_start_usec", "root": "space in checkout"}
+{"accepted": false, "error": "process user differs", "name": "shared_other_observer_foreign_uid_0", "root": "space in checkout"}
+{"accepted": false, "error": "literal proxy executable or command differs", "name": "shared_other_observer_argv_alias_0", "root": "space in checkout"}
+{"accepted": false, "error": "process, source or observation identity changed", "name": "shared_other_observer_changed_after_1_pid", "root": "space in checkout"}
+{"accepted": false, "error": "process, source or observation identity changed", "name": "shared_other_observer_changed_after_1_ppid", "root": "space in checkout"}
+{"accepted": false, "error": "process, source or observation identity changed", "name": "shared_other_observer_changed_after_1_uid", "root": "space in checkout"}
+{"accepted": false, "error": "process, source or observation identity changed", "name": "shared_other_observer_changed_after_1_ruid", "root": "space in checkout"}
+{"accepted": false, "error": "process, source or observation identity changed", "name": "shared_other_observer_changed_after_1_start_sec", "root": "space in checkout"}
+{"accepted": false, "error": "process, source or observation identity changed", "name": "shared_other_observer_changed_after_1_start_usec", "root": "space in checkout"}
+{"accepted": false, "error": "process user differs", "name": "shared_other_observer_foreign_uid_1", "root": "space in checkout"}
+{"accepted": false, "error": "literal wrapper command differs", "name": "shared_other_observer_argv_alias_1", "root": "space in checkout"}
+{"accepted": false, "error": "process, source or observation identity changed", "name": "shared_other_observer_changed_after_2_pid", "root": "space in checkout"}
+{"accepted": false, "error": "process, source or observation identity changed", "name": "shared_other_observer_changed_after_2_ppid", "root": "space in checkout"}
+{"accepted": false, "error": "process, source or observation identity changed", "name": "shared_other_observer_changed_after_2_uid", "root": "space in checkout"}
+{"accepted": false, "error": "process, source or observation identity changed", "name": "shared_other_observer_changed_after_2_ruid", "root": "space in checkout"}
+{"accepted": false, "error": "process, source or observation identity changed", "name": "shared_other_observer_changed_after_2_start_sec", "root": "space in checkout"}
+{"accepted": false, "error": "process, source or observation identity changed", "name": "shared_other_observer_changed_after_2_start_usec", "root": "space in checkout"}
+{"accepted": false, "error": "process user differs", "name": "shared_other_observer_foreign_uid_2", "root": "space in checkout"}
+{"accepted": false, "error": "literal original test command differs", "name": "shared_other_observer_argv_alias_2", "root": "space in checkout"}
+{"accepted": false, "error": "process, source or observation identity changed", "name": "shared_other_observer_changed_source_0", "root": "space in checkout"}
+{"accepted": false, "error": "process, source or observation identity changed", "name": "shared_other_observer_changed_source_1", "root": "space in checkout"}
+{"accepted": false, "error": "process, source or observation identity changed", "name": "shared_other_observer_changed_source_2", "root": "space in checkout"}
+{"accepted": false, "error": "process, source or observation identity changed", "name": "shared_other_observer_changed_source_3", "root": "space in checkout"}
+{"accepted": false, "error": "process, source or observation identity changed", "name": "shared_other_observer_changed_source_4", "root": "space in checkout"}
+{"accepted": false, "error": "expected five stable target snapshots", "name": "shared_other_observer_incomplete_sources", "root": "space in checkout"}
+{"accepted": false, "error": "literal proxy executable or command differs", "name": "shared_other_observer_executable_alias", "root": "space in checkout"}
+{"accepted": false, "error": "source path or ordering differs", "name": "shared_other_observer_source_order", "root": "space in checkout"}
+{"accepted": false, "error": "record fields differ", "name": "missing_bundle_schema", "root": "space in checkout"}
+{"accepted": false, "error": "record fields differ", "name": "missing_bundle_layout", "root": "space in checkout"}
+{"accepted": false, "error": "record fields differ", "name": "missing_bundle_workspace", "root": "space in checkout"}
+{"accepted": false, "error": "record fields differ", "name": "missing_bundle_workspace_identity", "root": "space in checkout"}
+{"accepted": false, "error": "record fields differ", "name": "missing_bundle_observer_birth", "root": "space in checkout"}
+{"accepted": false, "error": "record fields differ", "name": "missing_bundle_evidence_directory_identity", "root": "space in checkout"}
+{"accepted": false, "error": "record fields differ", "name": "missing_bundle_request", "root": "space in checkout"}
+{"accepted": false, "error": "record fields differ", "name": "missing_bundle_before", "root": "space in checkout"}
+{"accepted": false, "error": "record fields differ", "name": "missing_bundle_after", "root": "space in checkout"}
+{"accepted": false, "error": "record fields differ", "name": "unknown_bundle_field", "root": "space in checkout"}
+{"accepted": false, "error": "unknown capture input version", "name": "unknown_input_schema", "root": "space in checkout"}
+{"accepted": false, "error": "expected nonnegative integer", "name": "request_bool_pid", "root": "space in checkout"}
+{"accepted": false, "error": "expected nonnegative integer", "name": "request_bool_start_sec", "root": "space in checkout"}
+{"accepted": false, "error": "expected nonnegative integer", "name": "request_bool_start_usec", "root": "space in checkout"}
+{"accepted": false, "error": "expected nonnegative integer", "name": "request_bool_parent_pid", "root": "space in checkout"}
+{"accepted": false, "error": "expected nonnegative integer", "name": "request_bool_parent_start_sec", "root": "space in checkout"}
+{"accepted": false, "error": "expected nonnegative integer", "name": "request_bool_parent_start_usec", "root": "space in checkout"}
+{"accepted": false, "error": "expected nonnegative integer", "name": "request_bool_ancestor_pid", "root": "space in checkout"}
+{"accepted": false, "error": "expected nonnegative integer", "name": "request_bool_ancestor_start_sec", "root": "space in checkout"}
+{"accepted": false, "error": "expected nonnegative integer", "name": "request_bool_ancestor_start_usec", "root": "space in checkout"}
+{"accepted": false, "error": "record fields differ", "name": "before_missing_hold", "root": "space in checkout"}
+{"accepted": false, "error": "expected proxy/wrapper/test chain", "name": "before_empty_processes", "root": "space in checkout"}
+{"accepted": false, "error": "process, source or observation identity changed", "name": "after_missing_hold", "root": "space in checkout"}
+{"accepted": false, "error": "process, source or observation identity changed", "name": "after_empty_processes", "root": "space in checkout"}
+{"accepted": false, "error": "record fields differ", "name": "missing_shared_workspace_identity", "root": "space in checkout"}
+{"accepted": false, "error": "record fields differ", "name": "missing_shared_observer_birth", "root": "space in checkout"}
+{"accepted": false, "error": "record fields differ", "name": "missing_shared_evidence_directory_identity", "root": "space in checkout"}
+{"accepted": false, "error": "workspace is not builder-owned", "name": "workspace_parent_alias", "root": "space in checkout"}
+{"accepted": false, "error": "source or directory identities alias", "name": "runtime_identity_alias", "root": "space in checkout"}
+{"accepted": false, "error": "source or evidence volume differs", "name": "cross_volume_source", "root": "space in checkout"}
+{"accepted": false, "error": "expected five stable target snapshots", "name": "target_source_contains_hold", "root": "space in checkout"}
+{"accepted": false, "error": "process, source or observation identity changed", "name": "after_numeric_type_drift", "root": "space in checkout"}
+{"accepted": false, "error": "record fields differ", "name": "missing_snapshot_identity_0", "root": "space in checkout"}
+{"accepted": false, "error": "source byte identity differs", "name": "incorrect_snapshot_bytes_0", "root": "space in checkout"}
+{"accepted": false, "error": "record fields differ", "name": "missing_snapshot_identity_1", "root": "space in checkout"}
+{"accepted": false, "error": "source byte identity differs", "name": "incorrect_snapshot_bytes_1", "root": "space in checkout"}
+{"accepted": false, "error": "record fields differ", "name": "missing_snapshot_identity_2", "root": "space in checkout"}
+{"accepted": false, "error": "source byte identity differs", "name": "incorrect_snapshot_bytes_2", "root": "space in checkout"}
+{"accepted": false, "error": "record fields differ", "name": "missing_snapshot_identity_3", "root": "space in checkout"}
+{"accepted": false, "error": "source byte identity differs", "name": "incorrect_snapshot_bytes_3", "root": "space in checkout"}
+{"accepted": false, "error": "record fields differ", "name": "missing_snapshot_identity_4", "root": "space in checkout"}
+{"accepted": false, "error": "source byte identity differs", "name": "incorrect_snapshot_bytes_4", "root": "space in checkout"}
+{"accepted": false, "error": "legacy layout cannot acquire shared-image fields", "name": "perl_shared_hold", "root": "space in checkout"}
+{"accepted": false, "error": "legacy layout cannot acquire shared-image fields", "name": "private_0_shared_hold", "root": "space in checkout"}
+{"accepted": true, "name": "perl", "output": {"evidence": {"ancestor": {"pid": 101, "ppid": 99, "ruid": 501, "start_sec": 1234, "start_usec": 123, "uid": 501}, "child": {"pid": 103, "ppid": 102, "ruid": 501, "start_sec": 1234, "start_usec": 789, "uid": 501}, "fixture": ".artifacts/tmp/process-supervisor-tests/fsmgen-CaptureContract20260913/rust-tools/rustup", "fixture_sha256": "d4ce2ddd85885c6e3274b97ec9f5a83d5aed7cb6698cd231992d5682b0ce793b", "parent": {"pid": 102, "ppid": 101, "ruid": 501, "start_sec": 1234, "start_usec": 456, "uid": 501}, "sources": [{"device": 17, "inode": 201, "path": ".artifacts/tmp/process-supervisor-tests/fsmgen-CaptureContract20260913/rust-tool-resolution", "sha256": "793f10e8669af1003977f15ac55691c06e451f9561a71e3b4d2647c6b2c0d01e", "size_bytes": 21}, {"device": 17, "inode": 203, "path": ".artifacts/tmp/process-supervisor-tests/fsmgen-CaptureContract20260913/rust-tools/rustup", "sha256": "d4ce2ddd85885c6e3274b97ec9f5a83d5aed7cb6698cd231992d5682b0ce793b", "size_bytes": 24}], "target_role": "rust-proxy"}, "layout": "selected_perl_v1", "main_entry": "unknown", "runtime_authorized": false}, "root": "quote\"and\\slash"}
+{"accepted": true, "name": "private_0", "output": {"evidence": {"ancestor": {"pid": 101, "ppid": 99, "ruid": 501, "start_sec": 1234, "start_usec": 123, "uid": 501}, "child": {"pid": 103, "ppid": 102, "ruid": 501, "start_sec": 1234, "start_usec": 789, "uid": 501}, "fixture": ".artifacts/tmp/process-supervisor-tests/fsmgen-CaptureContract20260913/rust-tools/rustup", "fixture_sha256": "ed1fd2db0c12ad449d21bdbcf00932e53c1d236856cf364dd45f381159828449", "parent": {"pid": 102, "ppid": 101, "ruid": 501, "start_sec": 1234, "start_usec": 456, "uid": 501}, "sources": [{"device": 17, "inode": 201, "path": ".artifacts/tmp/process-supervisor-tests/fsmgen-CaptureContract20260913/rust-tool-resolution", "sha256": "793f10e8669af1003977f15ac55691c06e451f9561a71e3b4d2647c6b2c0d01e", "size_bytes": 21}, {"device": 17, "inode": 203, "path": ".artifacts/tmp/process-supervisor-tests/fsmgen-CaptureContract20260913/rust-tools/rustup", "sha256": "ed1fd2db0c12ad449d21bdbcf00932e53c1d236856cf364dd45f381159828449", "size_bytes": 68}, {"device": 17, "inode": 202, "path": ".artifacts/tmp/process-supervisor-tests/fsmgen-CaptureContract20260913/rust-tools/rustup.c", "sha256": "a2ff3cf129d8c01d2b05c33b2df2ca18b68048972dcc86c00222786a6751defc", "size_bytes": 745}], "target_role": "rust-proxy"}, "layout": "legacy_private_native_v1", "main_entry": "unknown", "runtime_authorized": false}, "root": "quote\"and\\slash"}
+{"accepted": true, "name": "private_1", "output": {"evidence": {"ancestor": {"pid": 101, "ppid": 99, "ruid": 501, "start_sec": 1234, "start_usec": 123, "uid": 501}, "child": {"pid": 103, "ppid": 102, "ruid": 501, "start_sec": 1234, "start_usec": 789, "uid": 501}, "fixture": ".artifacts/tmp/process-supervisor-tests/fsmgen-CaptureContract20260913/rust-tools/rustup", "fixture_sha256": "ed1fd2db0c12ad449d21bdbcf00932e53c1d236856cf364dd45f381159828449", "parent": {"pid": 102, "ppid": 101, "ruid": 501, "start_sec": 1234, "start_usec": 456, "uid": 501}, "sources": [{"device": 17, "inode": 201, "path": ".artifacts/tmp/process-supervisor-tests/fsmgen-CaptureContract20260913/rust-tool-resolution", "sha256": "793f10e8669af1003977f15ac55691c06e451f9561a71e3b4d2647c6b2c0d01e", "size_bytes": 21}, {"device": 17, "inode": 203, "path": ".artifacts/tmp/process-supervisor-tests/fsmgen-CaptureContract20260913/rust-tools/rustup", "sha256": "ed1fd2db0c12ad449d21bdbcf00932e53c1d236856cf364dd45f381159828449", "size_bytes": 68}, {"device": 17, "inode": 202, "path": ".artifacts/tmp/process-supervisor-tests/fsmgen-CaptureContract20260913/rust-tools/rustup.c", "sha256": "b689e2f7ee42bf7cac62f272a36d5313a272dddef15a75f8c66b126568fbf276", "size_bytes": 745}], "target_role": "rust-proxy"}, "layout": "legacy_private_native_v1", "main_entry": "unknown", "runtime_authorized": false}, "root": "quote\"and\\slash"}
+{"accepted": true, "name": "shared_0", "output": {"evidence": {"ancestor": {"pid": 101, "ppid": 99, "ruid": 501, "start_sec": 1234, "start_usec": 123, "uid": 501}, "child": {"pid": 103, "ppid": 102, "ruid": 501, "start_sec": 1234, "start_usec": 789, "uid": 501}, "fixture": ".artifacts/cache/rust-proxy-images/v1/images/0de326d8726c6bbba60901bd647f0cbb10dacdaa2f32d00a1a9917024081877b/rustup", "fixture_sha256": "ed1fd2db0c12ad449d21bdbcf00932e53c1d236856cf364dd45f381159828449", "parent": {"pid": 102, "ppid": 101, "ruid": 501, "start_sec": 1234, "start_usec": 456, "uid": 501}, "sources": [{"device": 17, "inode": 201, "path": ".artifacts/tmp/process-supervisor-tests/fsmgen-CaptureContract20260913/rust-tool-resolution", "sha256": "793f10e8669af1003977f15ac55691c06e451f9561a71e3b4d2647c6b2c0d01e", "size_bytes": 21}, {"device": 17, "inode": 204, "path": ".artifacts/tmp/process-supervisor-tests/fsmgen-CaptureContract20260913/rust-tools/image-reference.json", "sha256": "300f39309034d39a5fa38328aac3408ce1ed12afe4eb0fae55102c12f034c2e8", "size_bytes": 940}, {"device": 17, "inode": 205, "path": ".artifacts/cache/rust-proxy-images/v1/references/6eca87291dc8cbbaa205425ae7e0961f00f84eaad98d087405ac987d2f655612.json", "sha256": "300f39309034d39a5fa38328aac3408ce1ed12afe4eb0fae55102c12f034c2e8", "size_bytes": 940}, {"device": 17, "inode": 202, "path": ".artifacts/cache/rust-proxy-images/v1/images/0de326d8726c6bbba60901bd647f0cbb10dacdaa2f32d00a1a9917024081877b/rustup.c", "sha256": "a2ff3cf129d8c01d2b05c33b2df2ca18b68048972dcc86c00222786a6751defc", "size_bytes": 745}, {"device": 17, "inode": 203, "path": ".artifacts/cache/rust-proxy-images/v1/images/0de326d8726c6bbba60901bd647f0cbb10dacdaa2f32d00a1a9917024081877b/rustup", "sha256": "ed1fd2db0c12ad449d21bdbcf00932e53c1d236856cf364dd45f381159828449", "size_bytes": 68}], "target_role": "rust-proxy"}, "layout": "shared_native_v2", "main_entry": "unknown", "runtime_authorized": false}, "root": "quote\"and\\slash"}
+{"accepted": true, "name": "shared_1", "output": {"evidence": {"ancestor": {"pid": 101, "ppid": 99, "ruid": 501, "start_sec": 1234, "start_usec": 123, "uid": 501}, "child": {"pid": 103, "ppid": 102, "ruid": 501, "start_sec": 1234, "start_usec": 789, "uid": 501}, "fixture": ".artifacts/cache/rust-proxy-images/v1/images/e49e053e0328b34d91fd9e534b183efcd06ecc632cffeecaa45d2e7ba0f9875d/rustup", "fixture_sha256": "ed1fd2db0c12ad449d21bdbcf00932e53c1d236856cf364dd45f381159828449", "parent": {"pid": 102, "ppid": 101, "ruid": 501, "start_sec": 1234, "start_usec": 456, "uid": 501}, "sources": [{"device": 17, "inode": 201, "path": ".artifacts/tmp/process-supervisor-tests/fsmgen-CaptureContract20260913/rust-tool-resolution", "sha256": "793f10e8669af1003977f15ac55691c06e451f9561a71e3b4d2647c6b2c0d01e", "size_bytes": 21}, {"device": 17, "inode": 204, "path": ".artifacts/tmp/process-supervisor-tests/fsmgen-CaptureContract20260913/rust-tools/image-reference.json", "sha256": "e927d80c57b6caf5f9bd5098e85e410228924b92dd4fde331746ea18ac5c1a1c", "size_bytes": 940}, {"device": 17, "inode": 205, "path": ".artifacts/cache/rust-proxy-images/v1/references/6eca87291dc8cbbaa205425ae7e0961f00f84eaad98d087405ac987d2f655612.json", "sha256": "e927d80c57b6caf5f9bd5098e85e410228924b92dd4fde331746ea18ac5c1a1c", "size_bytes": 940}, {"device": 17, "inode": 202, "path": ".artifacts/cache/rust-proxy-images/v1/images/e49e053e0328b34d91fd9e534b183efcd06ecc632cffeecaa45d2e7ba0f9875d/rustup.c", "sha256": "b689e2f7ee42bf7cac62f272a36d5313a272dddef15a75f8c66b126568fbf276", "size_bytes": 745}, {"device": 17, "inode": 203, "path": ".artifacts/cache/rust-proxy-images/v1/images/e49e053e0328b34d91fd9e534b183efcd06ecc632cffeecaa45d2e7ba0f9875d/rustup", "sha256": "ed1fd2db0c12ad449d21bdbcf00932e53c1d236856cf364dd45f381159828449", "size_bytes": 68}], "target_role": "rust-proxy"}, "layout": "shared_native_v2", "main_entry": "unknown", "runtime_authorized": false}, "root": "quote\"and\\slash"}
+{"accepted": true, "name": "shared_other_observer", "output": {"evidence": {"ancestor": {"pid": 101, "ppid": 99, "ruid": 501, "start_sec": 1234, "start_usec": 123, "uid": 501}, "child": {"pid": 103, "ppid": 102, "ruid": 501, "start_sec": 1234, "start_usec": 789, "uid": 501}, "fixture": ".artifacts/cache/rust-proxy-images/v1/images/0de326d8726c6bbba60901bd647f0cbb10dacdaa2f32d00a1a9917024081877b/rustup", "fixture_sha256": "ed1fd2db0c12ad449d21bdbcf00932e53c1d236856cf364dd45f381159828449", "parent": {"pid": 102, "ppid": 101, "ruid": 501, "start_sec": 1234, "start_usec": 456, "uid": 501}, "sources": [{"device": 17, "inode": 201, "path": ".artifacts/tmp/process-supervisor-tests/fsmgen-CaptureContract20260913/rust-tool-resolution", "sha256": "793f10e8669af1003977f15ac55691c06e451f9561a71e3b4d2647c6b2c0d01e", "size_bytes": 21}, {"device": 17, "inode": 204, "path": ".artifacts/tmp/process-supervisor-tests/fsmgen-CaptureContract20260913/rust-tools/image-reference.json", "sha256": "300f39309034d39a5fa38328aac3408ce1ed12afe4eb0fae55102c12f034c2e8", "size_bytes": 940}, {"device": 17, "inode": 205, "path": ".artifacts/cache/rust-proxy-images/v1/references/6eca87291dc8cbbaa205425ae7e0961f00f84eaad98d087405ac987d2f655612.json", "sha256": "300f39309034d39a5fa38328aac3408ce1ed12afe4eb0fae55102c12f034c2e8", "size_bytes": 940}, {"device": 17, "inode": 202, "path": ".artifacts/cache/rust-proxy-images/v1/images/0de326d8726c6bbba60901bd647f0cbb10dacdaa2f32d00a1a9917024081877b/rustup.c", "sha256": "a2ff3cf129d8c01d2b05c33b2df2ca18b68048972dcc86c00222786a6751defc", "size_bytes": 745}, {"device": 17, "inode": 203, "path": ".artifacts/cache/rust-proxy-images/v1/images/0de326d8726c6bbba60901bd647f0cbb10dacdaa2f32d00a1a9917024081877b/rustup", "sha256": "ed1fd2db0c12ad449d21bdbcf00932e53c1d236856cf364dd45f381159828449", "size_bytes": 68}], "target_role": "rust-proxy"}, "layout": "shared_native_v2", "main_entry": "unknown", "runtime_authorized": false}, "root": "quote\"and\\slash"}
+{"accepted": false, "error": "unknown preparation layout", "name": "perl_wrong_layout", "root": "quote\"and\\slash"}
+{"accepted": false, "error": "process, source or observation identity changed", "name": "perl_changed_after_0_pid", "root": "quote\"and\\slash"}
+{"accepted": false, "error": "process, source or observation identity changed", "name": "perl_changed_after_0_ppid", "root": "quote\"and\\slash"}
+{"accepted": false, "error": "process, source or observation identity changed", "name": "perl_changed_after_0_uid", "root": "quote\"and\\slash"}
+{"accepted": false, "error": "process, source or observation identity changed", "name": "perl_changed_after_0_ruid", "root": "quote\"and\\slash"}
+{"accepted": false, "error": "process, source or observation identity changed", "name": "perl_changed_after_0_start_sec", "root": "quote\"and\\slash"}
+{"accepted": false, "error": "process, source or observation identity changed", "name": "perl_changed_after_0_start_usec", "root": "quote\"and\\slash"}
+{"accepted": false, "error": "process user differs", "name": "perl_foreign_uid_0", "root": "quote\"and\\slash"}
+{"accepted": false, "error": "literal proxy executable or command differs", "name": "perl_argv_alias_0", "root": "quote\"and\\slash"}
+{"accepted": false, "error": "process, source or observation identity changed", "name": "perl_changed_after_1_pid", "root": "quote\"and\\slash"}
+{"accepted": false, "error": "process, source or observation identity changed", "name": "perl_changed_after_1_ppid", "root": "quote\"and\\slash"}
+{"accepted": false, "error": "process, source or observation identity changed", "name": "perl_changed_after_1_uid", "root": "quote\"and\\slash"}
+{"accepted": false, "error": "process, source or observation identity changed", "name": "perl_changed_after_1_ruid", "root": "quote\"and\\slash"}
+{"accepted": false, "error": "process, source or observation identity changed", "name": "perl_changed_after_1_start_sec", "root": "quote\"and\\slash"}
+{"accepted": false, "error": "process, source or observation identity changed", "name": "perl_changed_after_1_start_usec", "root": "quote\"and\\slash"}
+{"accepted": false, "error": "process user differs", "name": "perl_foreign_uid_1", "root": "quote\"and\\slash"}
+{"accepted": false, "error": "literal wrapper command differs", "name": "perl_argv_alias_1", "root": "quote\"and\\slash"}
+{"accepted": false, "error": "process, source or observation identity changed", "name": "perl_changed_after_2_pid", "root": "quote\"and\\slash"}
+{"accepted": false, "error": "process, source or observation identity changed", "name": "perl_changed_after_2_ppid", "root": "quote\"and\\slash"}
+{"accepted": false, "error": "process, source or observation identity changed", "name": "perl_changed_after_2_uid", "root": "quote\"and\\slash"}
+{"accepted": false, "error": "process, source or observation identity changed", "name": "perl_changed_after_2_ruid", "root": "quote\"and\\slash"}
+{"accepted": false, "error": "process, source or observation identity changed", "name": "perl_changed_after_2_start_sec", "root": "quote\"and\\slash"}
+{"accepted": false, "error": "process, source or observation identity changed", "name": "perl_changed_after_2_start_usec", "root": "quote\"and\\slash"}
+{"accepted": false, "error": "process user differs", "name": "perl_foreign_uid_2", "root": "quote\"and\\slash"}
+{"accepted": false, "error": "literal original test command differs", "name": "perl_argv_alias_2", "root": "quote\"and\\slash"}
+{"accepted": false, "error": "process, source or observation identity changed", "name": "perl_changed_source_0", "root": "quote\"and\\slash"}
+{"accepted": false, "error": "process, source or observation identity changed", "name": "perl_changed_source_1", "root": "quote\"and\\slash"}
+{"accepted": false, "error": "legacy source count differs", "name": "perl_incomplete_sources", "root": "quote\"and\\slash"}
+{"accepted": false, "error": "literal proxy executable or command differs", "name": "perl_executable_alias", "root": "quote\"and\\slash"}
+{"accepted": false, "error": "source path or ordering differs", "name": "perl_source_order", "root": "quote\"and\\slash"}
+{"accepted": false, "error": "unknown preparation layout", "name": "private_0_wrong_layout", "root": "quote\"and\\slash"}
+{"accepted": false, "error": "process, source or observation identity changed", "name": "private_0_changed_after_0_pid", "root": "quote\"and\\slash"}
+{"accepted": false, "error": "process, source or observation identity changed", "name": "private_0_changed_after_0_ppid", "root": "quote\"and\\slash"}
+{"accepted": false, "error": "process, source or observation identity changed", "name": "private_0_changed_after_0_uid", "root": "quote\"and\\slash"}
+{"accepted": false, "error": "process, source or observation identity changed", "name": "private_0_changed_after_0_ruid", "root": "quote\"and\\slash"}
+{"accepted": false, "error": "process, source or observation identity changed", "name": "private_0_changed_after_0_start_sec", "root": "quote\"and\\slash"}
+{"accepted": false, "error": "process, source or observation identity changed", "name": "private_0_changed_after_0_start_usec", "root": "quote\"and\\slash"}
+{"accepted": false, "error": "process user differs", "name": "private_0_foreign_uid_0", "root": "quote\"and\\slash"}
+{"accepted": false, "error": "literal proxy executable or command differs", "name": "private_0_argv_alias_0", "root": "quote\"and\\slash"}
+{"accepted": false, "error": "process, source or observation identity changed", "name": "private_0_changed_after_1_pid", "root": "quote\"and\\slash"}
+{"accepted": false, "error": "process, source or observation identity changed", "name": "private_0_changed_after_1_ppid", "root": "quote\"and\\slash"}
+{"accepted": false, "error": "process, source or observation identity changed", "name": "private_0_changed_after_1_uid", "root": "quote\"and\\slash"}
+{"accepted": false, "error": "process, source or observation identity changed", "name": "private_0_changed_after_1_ruid", "root": "quote\"and\\slash"}
+{"accepted": false, "error": "process, source or observation identity changed", "name": "private_0_changed_after_1_start_sec", "root": "quote\"and\\slash"}
+{"accepted": false, "error": "process, source or observation identity changed", "name": "private_0_changed_after_1_start_usec", "root": "quote\"and\\slash"}
+{"accepted": false, "error": "process user differs", "name": "private_0_foreign_uid_1", "root": "quote\"and\\slash"}
+{"accepted": false, "error": "literal wrapper command differs", "name": "private_0_argv_alias_1", "root": "quote\"and\\slash"}
+{"accepted": false, "error": "process, source or observation identity changed", "name": "private_0_changed_after_2_pid", "root": "quote\"and\\slash"}
+{"accepted": false, "error": "process, source or observation identity changed", "name": "private_0_changed_after_2_ppid", "root": "quote\"and\\slash"}
+{"accepted": false, "error": "process, source or observation identity changed", "name": "private_0_changed_after_2_uid", "root": "quote\"and\\slash"}
+{"accepted": false, "error": "process, source or observation identity changed", "name": "private_0_changed_after_2_ruid", "root": "quote\"and\\slash"}
+{"accepted": false, "error": "process, source or observation identity changed", "name": "private_0_changed_after_2_start_sec", "root": "quote\"and\\slash"}
+{"accepted": false, "error": "process, source or observation identity changed", "name": "private_0_changed_after_2_start_usec", "root": "quote\"and\\slash"}
+{"accepted": false, "error": "process user differs", "name": "private_0_foreign_uid_2", "root": "quote\"and\\slash"}
+{"accepted": false, "error": "literal original test command differs", "name": "private_0_argv_alias_2", "root": "quote\"and\\slash"}
+{"accepted": false, "error": "process, source or observation identity changed", "name": "private_0_changed_source_0", "root": "quote\"and\\slash"}
+{"accepted": false, "error": "process, source or observation identity changed", "name": "private_0_changed_source_1", "root": "quote\"and\\slash"}
+{"accepted": false, "error": "process, source or observation identity changed", "name": "private_0_changed_source_2", "root": "quote\"and\\slash"}
+{"accepted": false, "error": "legacy source count differs", "name": "private_0_incomplete_sources", "root": "quote\"and\\slash"}
+{"accepted": false, "error": "literal proxy executable or command differs", "name": "private_0_executable_alias", "root": "quote\"and\\slash"}
+{"accepted": false, "error": "source path or ordering differs", "name": "private_0_source_order", "root": "quote\"and\\slash"}
+{"accepted": false, "error": "unknown preparation layout", "name": "private_1_wrong_layout", "root": "quote\"and\\slash"}
+{"accepted": false, "error": "process, source or observation identity changed", "name": "private_1_changed_after_0_pid", "root": "quote\"and\\slash"}
+{"accepted": false, "error": "process, source or observation identity changed", "name": "private_1_changed_after_0_ppid", "root": "quote\"and\\slash"}
+{"accepted": false, "error": "process, source or observation identity changed", "name": "private_1_changed_after_0_uid", "root": "quote\"and\\slash"}
+{"accepted": false, "error": "process, source or observation identity changed", "name": "private_1_changed_after_0_ruid", "root": "quote\"and\\slash"}
+{"accepted": false, "error": "process, source or observation identity changed", "name": "private_1_changed_after_0_start_sec", "root": "quote\"and\\slash"}
+{"accepted": false, "error": "process, source or observation identity changed", "name": "private_1_changed_after_0_start_usec", "root": "quote\"and\\slash"}
+{"accepted": false, "error": "process user differs", "name": "private_1_foreign_uid_0", "root": "quote\"and\\slash"}
+{"accepted": false, "error": "literal proxy executable or command differs", "name": "private_1_argv_alias_0", "root": "quote\"and\\slash"}
+{"accepted": false, "error": "process, source or observation identity changed", "name": "private_1_changed_after_1_pid", "root": "quote\"and\\slash"}
+{"accepted": false, "error": "process, source or observation identity changed", "name": "private_1_changed_after_1_ppid", "root": "quote\"and\\slash"}
+{"accepted": false, "error": "process, source or observation identity changed", "name": "private_1_changed_after_1_uid", "root": "quote\"and\\slash"}
+{"accepted": false, "error": "process, source or observation identity changed", "name": "private_1_changed_after_1_ruid", "root": "quote\"and\\slash"}
+{"accepted": false, "error": "process, source or observation identity changed", "name": "private_1_changed_after_1_start_sec", "root": "quote\"and\\slash"}
+{"accepted": false, "error": "process, source or observation identity changed", "name": "private_1_changed_after_1_start_usec", "root": "quote\"and\\slash"}
+{"accepted": false, "error": "process user differs", "name": "private_1_foreign_uid_1", "root": "quote\"and\\slash"}
+{"accepted": false, "error": "literal wrapper command differs", "name": "private_1_argv_alias_1", "root": "quote\"and\\slash"}
+{"accepted": false, "error": "process, source or observation identity changed", "name": "private_1_changed_after_2_pid", "root": "quote\"and\\slash"}
+{"accepted": false, "error": "process, source or observation identity changed", "name": "private_1_changed_after_2_ppid", "root": "quote\"and\\slash"}
+{"accepted": false, "error": "process, source or observation identity changed", "name": "private_1_changed_after_2_uid", "root": "quote\"and\\slash"}
+{"accepted": false, "error": "process, source or observation identity changed", "name": "private_1_changed_after_2_ruid", "root": "quote\"and\\slash"}
+{"accepted": false, "error": "process, source or observation identity changed", "name": "private_1_changed_after_2_start_sec", "root": "quote\"and\\slash"}
+{"accepted": false, "error": "process, source or observation identity changed", "name": "private_1_changed_after_2_start_usec", "root": "quote\"and\\slash"}
+{"accepted": false, "error": "process user differs", "name": "private_1_foreign_uid_2", "root": "quote\"and\\slash"}
+{"accepted": false, "error": "literal original test command differs", "name": "private_1_argv_alias_2", "root": "quote\"and\\slash"}
+{"accepted": false, "error": "process, source or observation identity changed", "name": "private_1_changed_source_0", "root": "quote\"and\\slash"}
+{"accepted": false, "error": "process, source or observation identity changed", "name": "private_1_changed_source_1", "root": "quote\"and\\slash"}
+{"accepted": false, "error": "process, source or observation identity changed", "name": "private_1_changed_source_2", "root": "quote\"and\\slash"}
+{"accepted": false, "error": "legacy source count differs", "name": "private_1_incomplete_sources", "root": "quote\"and\\slash"}
+{"accepted": false, "error": "literal proxy executable or command differs", "name": "private_1_executable_alias", "root": "quote\"and\\slash"}
+{"accepted": false, "error": "source path or ordering differs", "name": "private_1_source_order", "root": "quote\"and\\slash"}
+{"accepted": false, "error": "unknown preparation layout", "name": "shared_0_wrong_layout", "root": "quote\"and\\slash"}
+{"accepted": false, "error": "process, source or observation identity changed", "name": "shared_0_changed_after_0_pid", "root": "quote\"and\\slash"}
+{"accepted": false, "error": "process, source or observation identity changed", "name": "shared_0_changed_after_0_ppid", "root": "quote\"and\\slash"}
+{"accepted": false, "error": "process, source or observation identity changed", "name": "shared_0_changed_after_0_uid", "root": "quote\"and\\slash"}
+{"accepted": false, "error": "process, source or observation identity changed", "name": "shared_0_changed_after_0_ruid", "root": "quote\"and\\slash"}
+{"accepted": false, "error": "process, source or observation identity changed", "name": "shared_0_changed_after_0_start_sec", "root": "quote\"and\\slash"}
+{"accepted": false, "error": "process, source or observation identity changed", "name": "shared_0_changed_after_0_start_usec", "root": "quote\"and\\slash"}
+{"accepted": false, "error": "process user differs", "name": "shared_0_foreign_uid_0", "root": "quote\"and\\slash"}
+{"accepted": false, "error": "literal proxy executable or command differs", "name": "shared_0_argv_alias_0", "root": "quote\"and\\slash"}
+{"accepted": false, "error": "process, source or observation identity changed", "name": "shared_0_changed_after_1_pid", "root": "quote\"and\\slash"}
+{"accepted": false, "error": "process, source or observation identity changed", "name": "shared_0_changed_after_1_ppid", "root": "quote\"and\\slash"}
+{"accepted": false, "error": "process, source or observation identity changed", "name": "shared_0_changed_after_1_uid", "root": "quote\"and\\slash"}
+{"accepted": false, "error": "process, source or observation identity changed", "name": "shared_0_changed_after_1_ruid", "root": "quote\"and\\slash"}
+{"accepted": false, "error": "process, source or observation identity changed", "name": "shared_0_changed_after_1_start_sec", "root": "quote\"and\\slash"}
+{"accepted": false, "error": "process, source or observation identity changed", "name": "shared_0_changed_after_1_start_usec", "root": "quote\"and\\slash"}
+{"accepted": false, "error": "process user differs", "name": "shared_0_foreign_uid_1", "root": "quote\"and\\slash"}
+{"accepted": false, "error": "literal wrapper command differs", "name": "shared_0_argv_alias_1", "root": "quote\"and\\slash"}
+{"accepted": false, "error": "process, source or observation identity changed", "name": "shared_0_changed_after_2_pid", "root": "quote\"and\\slash"}
+{"accepted": false, "error": "process, source or observation identity changed", "name": "shared_0_changed_after_2_ppid", "root": "quote\"and\\slash"}
+{"accepted": false, "error": "process, source or observation identity changed", "name": "shared_0_changed_after_2_uid", "root": "quote\"and\\slash"}
+{"accepted": false, "error": "process, source or observation identity changed", "name": "shared_0_changed_after_2_ruid", "root": "quote\"and\\slash"}
+{"accepted": false, "error": "process, source or observation identity changed", "name": "shared_0_changed_after_2_start_sec", "root": "quote\"and\\slash"}
+{"accepted": false, "error": "process, source or observation identity changed", "name": "shared_0_changed_after_2_start_usec", "root": "quote\"and\\slash"}
+{"accepted": false, "error": "process user differs", "name": "shared_0_foreign_uid_2", "root": "quote\"and\\slash"}
+{"accepted": false, "error": "literal original test command differs", "name": "shared_0_argv_alias_2", "root": "quote\"and\\slash"}
+{"accepted": false, "error": "process, source or observation identity changed", "name": "shared_0_changed_source_0", "root": "quote\"and\\slash"}
+{"accepted": false, "error": "process, source or observation identity changed", "name": "shared_0_changed_source_1", "root": "quote\"and\\slash"}
+{"accepted": false, "error": "process, source or observation identity changed", "name": "shared_0_changed_source_2", "root": "quote\"and\\slash"}
+{"accepted": false, "error": "process, source or observation identity changed", "name": "shared_0_changed_source_3", "root": "quote\"and\\slash"}
+{"accepted": false, "error": "process, source or observation identity changed", "name": "shared_0_changed_source_4", "root": "quote\"and\\slash"}
+{"accepted": false, "error": "expected five stable target snapshots", "name": "shared_0_incomplete_sources", "root": "quote\"and\\slash"}
+{"accepted": false, "error": "literal proxy executable or command differs", "name": "shared_0_executable_alias", "root": "quote\"and\\slash"}
+{"accepted": false, "error": "source path or ordering differs", "name": "shared_0_source_order", "root": "quote\"and\\slash"}
+{"accepted": false, "error": "unknown preparation layout", "name": "shared_1_wrong_layout", "root": "quote\"and\\slash"}
+{"accepted": false, "error": "process, source or observation identity changed", "name": "shared_1_changed_after_0_pid", "root": "quote\"and\\slash"}
+{"accepted": false, "error": "process, source or observation identity changed", "name": "shared_1_changed_after_0_ppid", "root": "quote\"and\\slash"}
+{"accepted": false, "error": "process, source or observation identity changed", "name": "shared_1_changed_after_0_uid", "root": "quote\"and\\slash"}
+{"accepted": false, "error": "process, source or observation identity changed", "name": "shared_1_changed_after_0_ruid", "root": "quote\"and\\slash"}
+{"accepted": false, "error": "process, source or observation identity changed", "name": "shared_1_changed_after_0_start_sec", "root": "quote\"and\\slash"}
+{"accepted": false, "error": "process, source or observation identity changed", "name": "shared_1_changed_after_0_start_usec", "root": "quote\"and\\slash"}
+{"accepted": false, "error": "process user differs", "name": "shared_1_foreign_uid_0", "root": "quote\"and\\slash"}
+{"accepted": false, "error": "literal proxy executable or command differs", "name": "shared_1_argv_alias_0", "root": "quote\"and\\slash"}
+{"accepted": false, "error": "process, source or observation identity changed", "name": "shared_1_changed_after_1_pid", "root": "quote\"and\\slash"}
+{"accepted": false, "error": "process, source or observation identity changed", "name": "shared_1_changed_after_1_ppid", "root": "quote\"and\\slash"}
+{"accepted": false, "error": "process, source or observation identity changed", "name": "shared_1_changed_after_1_uid", "root": "quote\"and\\slash"}
+{"accepted": false, "error": "process, source or observation identity changed", "name": "shared_1_changed_after_1_ruid", "root": "quote\"and\\slash"}
+{"accepted": false, "error": "process, source or observation identity changed", "name": "shared_1_changed_after_1_start_sec", "root": "quote\"and\\slash"}
+{"accepted": false, "error": "process, source or observation identity changed", "name": "shared_1_changed_after_1_start_usec", "root": "quote\"and\\slash"}
+{"accepted": false, "error": "process user differs", "name": "shared_1_foreign_uid_1", "root": "quote\"and\\slash"}
+{"accepted": false, "error": "literal wrapper command differs", "name": "shared_1_argv_alias_1", "root": "quote\"and\\slash"}
+{"accepted": false, "error": "process, source or observation identity changed", "name": "shared_1_changed_after_2_pid", "root": "quote\"and\\slash"}
+{"accepted": false, "error": "process, source or observation identity changed", "name": "shared_1_changed_after_2_ppid", "root": "quote\"and\\slash"}
+{"accepted": false, "error": "process, source or observation identity changed", "name": "shared_1_changed_after_2_uid", "root": "quote\"and\\slash"}
+{"accepted": false, "error": "process, source or observation identity changed", "name": "shared_1_changed_after_2_ruid", "root": "quote\"and\\slash"}
+{"accepted": false, "error": "process, source or observation identity changed", "name": "shared_1_changed_after_2_start_sec", "root": "quote\"and\\slash"}
+{"accepted": false, "error": "process, source or observation identity changed", "name": "shared_1_changed_after_2_start_usec", "root": "quote\"and\\slash"}
+{"accepted": false, "error": "process user differs", "name": "shared_1_foreign_uid_2", "root": "quote\"and\\slash"}
+{"accepted": false, "error": "literal original test command differs", "name": "shared_1_argv_alias_2", "root": "quote\"and\\slash"}
+{"accepted": false, "error": "process, source or observation identity changed", "name": "shared_1_changed_source_0", "root": "quote\"and\\slash"}
+{"accepted": false, "error": "process, source or observation identity changed", "name": "shared_1_changed_source_1", "root": "quote\"and\\slash"}
+{"accepted": false, "error": "process, source or observation identity changed", "name": "shared_1_changed_source_2", "root": "quote\"and\\slash"}
+{"accepted": false, "error": "process, source or observation identity changed", "name": "shared_1_changed_source_3", "root": "quote\"and\\slash"}
+{"accepted": false, "error": "process, source or observation identity changed", "name": "shared_1_changed_source_4", "root": "quote\"and\\slash"}
+{"accepted": false, "error": "expected five stable target snapshots", "name": "shared_1_incomplete_sources", "root": "quote\"and\\slash"}
+{"accepted": false, "error": "literal proxy executable or command differs", "name": "shared_1_executable_alias", "root": "quote\"and\\slash"}
+{"accepted": false, "error": "source path or ordering differs", "name": "shared_1_source_order", "root": "quote\"and\\slash"}
+{"accepted": false, "error": "unknown preparation layout", "name": "shared_other_observer_wrong_layout", "root": "quote\"and\\slash"}
+{"accepted": false, "error": "process, source or observation identity changed", "name": "shared_other_observer_changed_after_0_pid", "root": "quote\"and\\slash"}
+{"accepted": false, "error": "process, source or observation identity changed", "name": "shared_other_observer_changed_after_0_ppid", "root": "quote\"and\\slash"}
+{"accepted": false, "error": "process, source or observation identity changed", "name": "shared_other_observer_changed_after_0_uid", "root": "quote\"and\\slash"}
+{"accepted": false, "error": "process, source or observation identity changed", "name": "shared_other_observer_changed_after_0_ruid", "root": "quote\"and\\slash"}
+{"accepted": false, "error": "process, source or observation identity changed", "name": "shared_other_observer_changed_after_0_start_sec", "root": "quote\"and\\slash"}
+{"accepted": false, "error": "process, source or observation identity changed", "name": "shared_other_observer_changed_after_0_start_usec", "root": "quote\"and\\slash"}
+{"accepted": false, "error": "process user differs", "name": "shared_other_observer_foreign_uid_0", "root": "quote\"and\\slash"}
+{"accepted": false, "error": "literal proxy executable or command differs", "name": "shared_other_observer_argv_alias_0", "root": "quote\"and\\slash"}
+{"accepted": false, "error": "process, source or observation identity changed", "name": "shared_other_observer_changed_after_1_pid", "root": "quote\"and\\slash"}
+{"accepted": false, "error": "process, source or observation identity changed", "name": "shared_other_observer_changed_after_1_ppid", "root": "quote\"and\\slash"}
+{"accepted": false, "error": "process, source or observation identity changed", "name": "shared_other_observer_changed_after_1_uid", "root": "quote\"and\\slash"}
+{"accepted": false, "error": "process, source or observation identity changed", "name": "shared_other_observer_changed_after_1_ruid", "root": "quote\"and\\slash"}
+{"accepted": false, "error": "process, source or observation identity changed", "name": "shared_other_observer_changed_after_1_start_sec", "root": "quote\"and\\slash"}
+{"accepted": false, "error": "process, source or observation identity changed", "name": "shared_other_observer_changed_after_1_start_usec", "root": "quote\"and\\slash"}
+{"accepted": false, "error": "process user differs", "name": "shared_other_observer_foreign_uid_1", "root": "quote\"and\\slash"}
+{"accepted": false, "error": "literal wrapper command differs", "name": "shared_other_observer_argv_alias_1", "root": "quote\"and\\slash"}
+{"accepted": false, "error": "process, source or observation identity changed", "name": "shared_other_observer_changed_after_2_pid", "root": "quote\"and\\slash"}
+{"accepted": false, "error": "process, source or observation identity changed", "name": "shared_other_observer_changed_after_2_ppid", "root": "quote\"and\\slash"}
+{"accepted": false, "error": "process, source or observation identity changed", "name": "shared_other_observer_changed_after_2_uid", "root": "quote\"and\\slash"}
+{"accepted": false, "error": "process, source or observation identity changed", "name": "shared_other_observer_changed_after_2_ruid", "root": "quote\"and\\slash"}
+{"accepted": false, "error": "process, source or observation identity changed", "name": "shared_other_observer_changed_after_2_start_sec", "root": "quote\"and\\slash"}
+{"accepted": false, "error": "process, source or observation identity changed", "name": "shared_other_observer_changed_after_2_start_usec", "root": "quote\"and\\slash"}
+{"accepted": false, "error": "process user differs", "name": "shared_other_observer_foreign_uid_2", "root": "quote\"and\\slash"}
+{"accepted": false, "error": "literal original test command differs", "name": "shared_other_observer_argv_alias_2", "root": "quote\"and\\slash"}
+{"accepted": false, "error": "process, source or observation identity changed", "name": "shared_other_observer_changed_source_0", "root": "quote\"and\\slash"}
+{"accepted": false, "error": "process, source or observation identity changed", "name": "shared_other_observer_changed_source_1", "root": "quote\"and\\slash"}
+{"accepted": false, "error": "process, source or observation identity changed", "name": "shared_other_observer_changed_source_2", "root": "quote\"and\\slash"}
+{"accepted": false, "error": "process, source or observation identity changed", "name": "shared_other_observer_changed_source_3", "root": "quote\"and\\slash"}
+{"accepted": false, "error": "process, source or observation identity changed", "name": "shared_other_observer_changed_source_4", "root": "quote\"and\\slash"}
+{"accepted": false, "error": "expected five stable target snapshots", "name": "shared_other_observer_incomplete_sources", "root": "quote\"and\\slash"}
+{"accepted": false, "error": "literal proxy executable or command differs", "name": "shared_other_observer_executable_alias", "root": "quote\"and\\slash"}
+{"accepted": false, "error": "source path or ordering differs", "name": "shared_other_observer_source_order", "root": "quote\"and\\slash"}
+{"accepted": false, "error": "record fields differ", "name": "missing_bundle_schema", "root": "quote\"and\\slash"}
+{"accepted": false, "error": "record fields differ", "name": "missing_bundle_layout", "root": "quote\"and\\slash"}
+{"accepted": false, "error": "record fields differ", "name": "missing_bundle_workspace", "root": "quote\"and\\slash"}
+{"accepted": false, "error": "record fields differ", "name": "missing_bundle_workspace_identity", "root": "quote\"and\\slash"}
+{"accepted": false, "error": "record fields differ", "name": "missing_bundle_observer_birth", "root": "quote\"and\\slash"}
+{"accepted": false, "error": "record fields differ", "name": "missing_bundle_evidence_directory_identity", "root": "quote\"and\\slash"}
+{"accepted": false, "error": "record fields differ", "name": "missing_bundle_request", "root": "quote\"and\\slash"}
+{"accepted": false, "error": "record fields differ", "name": "missing_bundle_before", "root": "quote\"and\\slash"}
+{"accepted": false, "error": "record fields differ", "name": "missing_bundle_after", "root": "quote\"and\\slash"}
+{"accepted": false, "error": "record fields differ", "name": "unknown_bundle_field", "root": "quote\"and\\slash"}
+{"accepted": false, "error": "unknown capture input version", "name": "unknown_input_schema", "root": "quote\"and\\slash"}
+{"accepted": false, "error": "expected nonnegative integer", "name": "request_bool_pid", "root": "quote\"and\\slash"}
+{"accepted": false, "error": "expected nonnegative integer", "name": "request_bool_start_sec", "root": "quote\"and\\slash"}
+{"accepted": false, "error": "expected nonnegative integer", "name": "request_bool_start_usec", "root": "quote\"and\\slash"}
+{"accepted": false, "error": "expected nonnegative integer", "name": "request_bool_parent_pid", "root": "quote\"and\\slash"}
+{"accepted": false, "error": "expected nonnegative integer", "name": "request_bool_parent_start_sec", "root": "quote\"and\\slash"}
+{"accepted": false, "error": "expected nonnegative integer", "name": "request_bool_parent_start_usec", "root": "quote\"and\\slash"}
+{"accepted": false, "error": "expected nonnegative integer", "name": "request_bool_ancestor_pid", "root": "quote\"and\\slash"}
+{"accepted": false, "error": "expected nonnegative integer", "name": "request_bool_ancestor_start_sec", "root": "quote\"and\\slash"}
+{"accepted": false, "error": "expected nonnegative integer", "name": "request_bool_ancestor_start_usec", "root": "quote\"and\\slash"}
+{"accepted": false, "error": "record fields differ", "name": "before_missing_hold", "root": "quote\"and\\slash"}
+{"accepted": false, "error": "expected proxy/wrapper/test chain", "name": "before_empty_processes", "root": "quote\"and\\slash"}
+{"accepted": false, "error": "process, source or observation identity changed", "name": "after_missing_hold", "root": "quote\"and\\slash"}
+{"accepted": false, "error": "process, source or observation identity changed", "name": "after_empty_processes", "root": "quote\"and\\slash"}
+{"accepted": false, "error": "record fields differ", "name": "missing_shared_workspace_identity", "root": "quote\"and\\slash"}
+{"accepted": false, "error": "record fields differ", "name": "missing_shared_observer_birth", "root": "quote\"and\\slash"}
+{"accepted": false, "error": "record fields differ", "name": "missing_shared_evidence_directory_identity", "root": "quote\"and\\slash"}
+{"accepted": false, "error": "workspace is not builder-owned", "name": "workspace_parent_alias", "root": "quote\"and\\slash"}
+{"accepted": false, "error": "source or directory identities alias", "name": "runtime_identity_alias", "root": "quote\"and\\slash"}
+{"accepted": false, "error": "source or evidence volume differs", "name": "cross_volume_source", "root": "quote\"and\\slash"}
+{"accepted": false, "error": "expected five stable target snapshots", "name": "target_source_contains_hold", "root": "quote\"and\\slash"}
+{"accepted": false, "error": "process, source or observation identity changed", "name": "after_numeric_type_drift", "root": "quote\"and\\slash"}
+{"accepted": false, "error": "record fields differ", "name": "missing_snapshot_identity_0", "root": "quote\"and\\slash"}
+{"accepted": false, "error": "source byte identity differs", "name": "incorrect_snapshot_bytes_0", "root": "quote\"and\\slash"}
+{"accepted": false, "error": "record fields differ", "name": "missing_snapshot_identity_1", "root": "quote\"and\\slash"}
+{"accepted": false, "error": "source byte identity differs", "name": "incorrect_snapshot_bytes_1", "root": "quote\"and\\slash"}
+{"accepted": false, "error": "record fields differ", "name": "missing_snapshot_identity_2", "root": "quote\"and\\slash"}
+{"accepted": false, "error": "source byte identity differs", "name": "incorrect_snapshot_bytes_2", "root": "quote\"and\\slash"}
+{"accepted": false, "error": "record fields differ", "name": "missing_snapshot_identity_3", "root": "quote\"and\\slash"}
+{"accepted": false, "error": "source byte identity differs", "name": "incorrect_snapshot_bytes_3", "root": "quote\"and\\slash"}
+{"accepted": false, "error": "record fields differ", "name": "missing_snapshot_identity_4", "root": "quote\"and\\slash"}
+{"accepted": false, "error": "source byte identity differs", "name": "incorrect_snapshot_bytes_4", "root": "quote\"and\\slash"}
+{"accepted": false, "error": "legacy layout cannot acquire shared-image fields", "name": "perl_shared_hold", "root": "quote\"and\\slash"}
+{"accepted": false, "error": "legacy layout cannot acquire shared-image fields", "name": "private_0_shared_hold", "root": "quote\"and\\slash"}
+{"accepted": true, "name": "perl", "output": {"evidence": {"ancestor": {"pid": 101, "ppid": 99, "ruid": 501, "start_sec": 1234, "start_usec": 123, "uid": 501}, "child": {"pid": 103, "ppid": 102, "ruid": 501, "start_sec": 1234, "start_usec": 789, "uid": 501}, "fixture": ".artifacts/tmp/process-supervisor-tests/fsmgen-CaptureContract20260913/rust-tools/rustup", "fixture_sha256": "d4ce2ddd85885c6e3274b97ec9f5a83d5aed7cb6698cd231992d5682b0ce793b", "parent": {"pid": 102, "ppid": 101, "ruid": 501, "start_sec": 1234, "start_usec": 456, "uid": 501}, "sources": [{"device": 17, "inode": 201, "path": ".artifacts/tmp/process-supervisor-tests/fsmgen-CaptureContract20260913/rust-tool-resolution", "sha256": "793f10e8669af1003977f15ac55691c06e451f9561a71e3b4d2647c6b2c0d01e", "size_bytes": 21}, {"device": 17, "inode": 203, "path": ".artifacts/tmp/process-supervisor-tests/fsmgen-CaptureContract20260913/rust-tools/rustup", "sha256": "d4ce2ddd85885c6e3274b97ec9f5a83d5aed7cb6698cd231992d5682b0ce793b", "size_bytes": 24}], "target_role": "rust-proxy"}, "layout": "selected_perl_v1", "main_entry": "unknown", "runtime_authorized": false}, "root": "unicode-\u00e9-\ud83d\ude00"}
+{"accepted": true, "name": "private_0", "output": {"evidence": {"ancestor": {"pid": 101, "ppid": 99, "ruid": 501, "start_sec": 1234, "start_usec": 123, "uid": 501}, "child": {"pid": 103, "ppid": 102, "ruid": 501, "start_sec": 1234, "start_usec": 789, "uid": 501}, "fixture": ".artifacts/tmp/process-supervisor-tests/fsmgen-CaptureContract20260913/rust-tools/rustup", "fixture_sha256": "ed1fd2db0c12ad449d21bdbcf00932e53c1d236856cf364dd45f381159828449", "parent": {"pid": 102, "ppid": 101, "ruid": 501, "start_sec": 1234, "start_usec": 456, "uid": 501}, "sources": [{"device": 17, "inode": 201, "path": ".artifacts/tmp/process-supervisor-tests/fsmgen-CaptureContract20260913/rust-tool-resolution", "sha256": "793f10e8669af1003977f15ac55691c06e451f9561a71e3b4d2647c6b2c0d01e", "size_bytes": 21}, {"device": 17, "inode": 203, "path": ".artifacts/tmp/process-supervisor-tests/fsmgen-CaptureContract20260913/rust-tools/rustup", "sha256": "ed1fd2db0c12ad449d21bdbcf00932e53c1d236856cf364dd45f381159828449", "size_bytes": 68}, {"device": 17, "inode": 202, "path": ".artifacts/tmp/process-supervisor-tests/fsmgen-CaptureContract20260913/rust-tools/rustup.c", "sha256": "a2ff3cf129d8c01d2b05c33b2df2ca18b68048972dcc86c00222786a6751defc", "size_bytes": 745}], "target_role": "rust-proxy"}, "layout": "legacy_private_native_v1", "main_entry": "unknown", "runtime_authorized": false}, "root": "unicode-\u00e9-\ud83d\ude00"}
+{"accepted": true, "name": "private_1", "output": {"evidence": {"ancestor": {"pid": 101, "ppid": 99, "ruid": 501, "start_sec": 1234, "start_usec": 123, "uid": 501}, "child": {"pid": 103, "ppid": 102, "ruid": 501, "start_sec": 1234, "start_usec": 789, "uid": 501}, "fixture": ".artifacts/tmp/process-supervisor-tests/fsmgen-CaptureContract20260913/rust-tools/rustup", "fixture_sha256": "ed1fd2db0c12ad449d21bdbcf00932e53c1d236856cf364dd45f381159828449", "parent": {"pid": 102, "ppid": 101, "ruid": 501, "start_sec": 1234, "start_usec": 456, "uid": 501}, "sources": [{"device": 17, "inode": 201, "path": ".artifacts/tmp/process-supervisor-tests/fsmgen-CaptureContract20260913/rust-tool-resolution", "sha256": "793f10e8669af1003977f15ac55691c06e451f9561a71e3b4d2647c6b2c0d01e", "size_bytes": 21}, {"device": 17, "inode": 203, "path": ".artifacts/tmp/process-supervisor-tests/fsmgen-CaptureContract20260913/rust-tools/rustup", "sha256": "ed1fd2db0c12ad449d21bdbcf00932e53c1d236856cf364dd45f381159828449", "size_bytes": 68}, {"device": 17, "inode": 202, "path": ".artifacts/tmp/process-supervisor-tests/fsmgen-CaptureContract20260913/rust-tools/rustup.c", "sha256": "b689e2f7ee42bf7cac62f272a36d5313a272dddef15a75f8c66b126568fbf276", "size_bytes": 745}], "target_role": "rust-proxy"}, "layout": "legacy_private_native_v1", "main_entry": "unknown", "runtime_authorized": false}, "root": "unicode-\u00e9-\ud83d\ude00"}
+{"accepted": true, "name": "shared_0", "output": {"evidence": {"ancestor": {"pid": 101, "ppid": 99, "ruid": 501, "start_sec": 1234, "start_usec": 123, "uid": 501}, "child": {"pid": 103, "ppid": 102, "ruid": 501, "start_sec": 1234, "start_usec": 789, "uid": 501}, "fixture": ".artifacts/cache/rust-proxy-images/v1/images/0de326d8726c6bbba60901bd647f0cbb10dacdaa2f32d00a1a9917024081877b/rustup", "fixture_sha256": "ed1fd2db0c12ad449d21bdbcf00932e53c1d236856cf364dd45f381159828449", "parent": {"pid": 102, "ppid": 101, "ruid": 501, "start_sec": 1234, "start_usec": 456, "uid": 501}, "sources": [{"device": 17, "inode": 201, "path": ".artifacts/tmp/process-supervisor-tests/fsmgen-CaptureContract20260913/rust-tool-resolution", "sha256": "793f10e8669af1003977f15ac55691c06e451f9561a71e3b4d2647c6b2c0d01e", "size_bytes": 21}, {"device": 17, "inode": 204, "path": ".artifacts/tmp/process-supervisor-tests/fsmgen-CaptureContract20260913/rust-tools/image-reference.json", "sha256": "300f39309034d39a5fa38328aac3408ce1ed12afe4eb0fae55102c12f034c2e8", "size_bytes": 940}, {"device": 17, "inode": 205, "path": ".artifacts/cache/rust-proxy-images/v1/references/6eca87291dc8cbbaa205425ae7e0961f00f84eaad98d087405ac987d2f655612.json", "sha256": "300f39309034d39a5fa38328aac3408ce1ed12afe4eb0fae55102c12f034c2e8", "size_bytes": 940}, {"device": 17, "inode": 202, "path": ".artifacts/cache/rust-proxy-images/v1/images/0de326d8726c6bbba60901bd647f0cbb10dacdaa2f32d00a1a9917024081877b/rustup.c", "sha256": "a2ff3cf129d8c01d2b05c33b2df2ca18b68048972dcc86c00222786a6751defc", "size_bytes": 745}, {"device": 17, "inode": 203, "path": ".artifacts/cache/rust-proxy-images/v1/images/0de326d8726c6bbba60901bd647f0cbb10dacdaa2f32d00a1a9917024081877b/rustup", "sha256": "ed1fd2db0c12ad449d21bdbcf00932e53c1d236856cf364dd45f381159828449", "size_bytes": 68}], "target_role": "rust-proxy"}, "layout": "shared_native_v2", "main_entry": "unknown", "runtime_authorized": false}, "root": "unicode-\u00e9-\ud83d\ude00"}
+{"accepted": true, "name": "shared_1", "output": {"evidence": {"ancestor": {"pid": 101, "ppid": 99, "ruid": 501, "start_sec": 1234, "start_usec": 123, "uid": 501}, "child": {"pid": 103, "ppid": 102, "ruid": 501, "start_sec": 1234, "start_usec": 789, "uid": 501}, "fixture": ".artifacts/cache/rust-proxy-images/v1/images/e49e053e0328b34d91fd9e534b183efcd06ecc632cffeecaa45d2e7ba0f9875d/rustup", "fixture_sha256": "ed1fd2db0c12ad449d21bdbcf00932e53c1d236856cf364dd45f381159828449", "parent": {"pid": 102, "ppid": 101, "ruid": 501, "start_sec": 1234, "start_usec": 456, "uid": 501}, "sources": [{"device": 17, "inode": 201, "path": ".artifacts/tmp/process-supervisor-tests/fsmgen-CaptureContract20260913/rust-tool-resolution", "sha256": "793f10e8669af1003977f15ac55691c06e451f9561a71e3b4d2647c6b2c0d01e", "size_bytes": 21}, {"device": 17, "inode": 204, "path": ".artifacts/tmp/process-supervisor-tests/fsmgen-CaptureContract20260913/rust-tools/image-reference.json", "sha256": "e927d80c57b6caf5f9bd5098e85e410228924b92dd4fde331746ea18ac5c1a1c", "size_bytes": 940}, {"device": 17, "inode": 205, "path": ".artifacts/cache/rust-proxy-images/v1/references/6eca87291dc8cbbaa205425ae7e0961f00f84eaad98d087405ac987d2f655612.json", "sha256": "e927d80c57b6caf5f9bd5098e85e410228924b92dd4fde331746ea18ac5c1a1c", "size_bytes": 940}, {"device": 17, "inode": 202, "path": ".artifacts/cache/rust-proxy-images/v1/images/e49e053e0328b34d91fd9e534b183efcd06ecc632cffeecaa45d2e7ba0f9875d/rustup.c", "sha256": "b689e2f7ee42bf7cac62f272a36d5313a272dddef15a75f8c66b126568fbf276", "size_bytes": 745}, {"device": 17, "inode": 203, "path": ".artifacts/cache/rust-proxy-images/v1/images/e49e053e0328b34d91fd9e534b183efcd06ecc632cffeecaa45d2e7ba0f9875d/rustup", "sha256": "ed1fd2db0c12ad449d21bdbcf00932e53c1d236856cf364dd45f381159828449", "size_bytes": 68}], "target_role": "rust-proxy"}, "layout": "shared_native_v2", "main_entry": "unknown", "runtime_authorized": false}, "root": "unicode-\u00e9-\ud83d\ude00"}
+{"accepted": true, "name": "shared_other_observer", "output": {"evidence": {"ancestor": {"pid": 101, "ppid": 99, "ruid": 501, "start_sec": 1234, "start_usec": 123, "uid": 501}, "child": {"pid": 103, "ppid": 102, "ruid": 501, "start_sec": 1234, "start_usec": 789, "uid": 501}, "fixture": ".artifacts/cache/rust-proxy-images/v1/images/0de326d8726c6bbba60901bd647f0cbb10dacdaa2f32d00a1a9917024081877b/rustup", "fixture_sha256": "ed1fd2db0c12ad449d21bdbcf00932e53c1d236856cf364dd45f381159828449", "parent": {"pid": 102, "ppid": 101, "ruid": 501, "start_sec": 1234, "start_usec": 456, "uid": 501}, "sources": [{"device": 17, "inode": 201, "path": ".artifacts/tmp/process-supervisor-tests/fsmgen-CaptureContract20260913/rust-tool-resolution", "sha256": "793f10e8669af1003977f15ac55691c06e451f9561a71e3b4d2647c6b2c0d01e", "size_bytes": 21}, {"device": 17, "inode": 204, "path": ".artifacts/tmp/process-supervisor-tests/fsmgen-CaptureContract20260913/rust-tools/image-reference.json", "sha256": "300f39309034d39a5fa38328aac3408ce1ed12afe4eb0fae55102c12f034c2e8", "size_bytes": 940}, {"device": 17, "inode": 205, "path": ".artifacts/cache/rust-proxy-images/v1/references/6eca87291dc8cbbaa205425ae7e0961f00f84eaad98d087405ac987d2f655612.json", "sha256": "300f39309034d39a5fa38328aac3408ce1ed12afe4eb0fae55102c12f034c2e8", "size_bytes": 940}, {"device": 17, "inode": 202, "path": ".artifacts/cache/rust-proxy-images/v1/images/0de326d8726c6bbba60901bd647f0cbb10dacdaa2f32d00a1a9917024081877b/rustup.c", "sha256": "a2ff3cf129d8c01d2b05c33b2df2ca18b68048972dcc86c00222786a6751defc", "size_bytes": 745}, {"device": 17, "inode": 203, "path": ".artifacts/cache/rust-proxy-images/v1/images/0de326d8726c6bbba60901bd647f0cbb10dacdaa2f32d00a1a9917024081877b/rustup", "sha256": "ed1fd2db0c12ad449d21bdbcf00932e53c1d236856cf364dd45f381159828449", "size_bytes": 68}], "target_role": "rust-proxy"}, "layout": "shared_native_v2", "main_entry": "unknown", "runtime_authorized": false}, "root": "unicode-\u00e9-\ud83d\ude00"}
+{"accepted": false, "error": "unknown preparation layout", "name": "perl_wrong_layout", "root": "unicode-\u00e9-\ud83d\ude00"}
+{"accepted": false, "error": "process, source or observation identity changed", "name": "perl_changed_after_0_pid", "root": "unicode-\u00e9-\ud83d\ude00"}
+{"accepted": false, "error": "process, source or observation identity changed", "name": "perl_changed_after_0_ppid", "root": "unicode-\u00e9-\ud83d\ude00"}
+{"accepted": false, "error": "process, source or observation identity changed", "name": "perl_changed_after_0_uid", "root": "unicode-\u00e9-\ud83d\ude00"}
+{"accepted": false, "error": "process, source or observation identity changed", "name": "perl_changed_after_0_ruid", "root": "unicode-\u00e9-\ud83d\ude00"}
+{"accepted": false, "error": "process, source or observation identity changed", "name": "perl_changed_after_0_start_sec", "root": "unicode-\u00e9-\ud83d\ude00"}
+{"accepted": false, "error": "process, source or observation identity changed", "name": "perl_changed_after_0_start_usec", "root": "unicode-\u00e9-\ud83d\ude00"}
+{"accepted": false, "error": "process user differs", "name": "perl_foreign_uid_0", "root": "unicode-\u00e9-\ud83d\ude00"}
+{"accepted": false, "error": "literal proxy executable or command differs", "name": "perl_argv_alias_0", "root": "unicode-\u00e9-\ud83d\ude00"}
+{"accepted": false, "error": "process, source or observation identity changed", "name": "perl_changed_after_1_pid", "root": "unicode-\u00e9-\ud83d\ude00"}
+{"accepted": false, "error": "process, source or observation identity changed", "name": "perl_changed_after_1_ppid", "root": "unicode-\u00e9-\ud83d\ude00"}
+{"accepted": false, "error": "process, source or observation identity changed", "name": "perl_changed_after_1_uid", "root": "unicode-\u00e9-\ud83d\ude00"}
+{"accepted": false, "error": "process, source or observation identity changed", "name": "perl_changed_after_1_ruid", "root": "unicode-\u00e9-\ud83d\ude00"}
+{"accepted": false, "error": "process, source or observation identity changed", "name": "perl_changed_after_1_start_sec", "root": "unicode-\u00e9-\ud83d\ude00"}
+{"accepted": false, "error": "process, source or observation identity changed", "name": "perl_changed_after_1_start_usec", "root": "unicode-\u00e9-\ud83d\ude00"}
+{"accepted": false, "error": "process user differs", "name": "perl_foreign_uid_1", "root": "unicode-\u00e9-\ud83d\ude00"}
+{"accepted": false, "error": "literal wrapper command differs", "name": "perl_argv_alias_1", "root": "unicode-\u00e9-\ud83d\ude00"}
+{"accepted": false, "error": "process, source or observation identity changed", "name": "perl_changed_after_2_pid", "root": "unicode-\u00e9-\ud83d\ude00"}
+{"accepted": false, "error": "process, source or observation identity changed", "name": "perl_changed_after_2_ppid", "root": "unicode-\u00e9-\ud83d\ude00"}
+{"accepted": false, "error": "process, source or observation identity changed", "name": "perl_changed_after_2_uid", "root": "unicode-\u00e9-\ud83d\ude00"}
+{"accepted": false, "error": "process, source or observation identity changed", "name": "perl_changed_after_2_ruid", "root": "unicode-\u00e9-\ud83d\ude00"}
+{"accepted": false, "error": "process, source or observation identity changed", "name": "perl_changed_after_2_start_sec", "root": "unicode-\u00e9-\ud83d\ude00"}
+{"accepted": false, "error": "process, source or observation identity changed", "name": "perl_changed_after_2_start_usec", "root": "unicode-\u00e9-\ud83d\ude00"}
+{"accepted": false, "error": "process user differs", "name": "perl_foreign_uid_2", "root": "unicode-\u00e9-\ud83d\ude00"}
+{"accepted": false, "error": "literal original test command differs", "name": "perl_argv_alias_2", "root": "unicode-\u00e9-\ud83d\ude00"}
+{"accepted": false, "error": "process, source or observation identity changed", "name": "perl_changed_source_0", "root": "unicode-\u00e9-\ud83d\ude00"}
+{"accepted": false, "error": "process, source or observation identity changed", "name": "perl_changed_source_1", "root": "unicode-\u00e9-\ud83d\ude00"}
+{"accepted": false, "error": "legacy source count differs", "name": "perl_incomplete_sources", "root": "unicode-\u00e9-\ud83d\ude00"}
+{"accepted": false, "error": "literal proxy executable or command differs", "name": "perl_executable_alias", "root": "unicode-\u00e9-\ud83d\ude00"}
+{"accepted": false, "error": "source path or ordering differs", "name": "perl_source_order", "root": "unicode-\u00e9-\ud83d\ude00"}
+{"accepted": false, "error": "unknown preparation layout", "name": "private_0_wrong_layout", "root": "unicode-\u00e9-\ud83d\ude00"}
+{"accepted": false, "error": "process, source or observation identity changed", "name": "private_0_changed_after_0_pid", "root": "unicode-\u00e9-\ud83d\ude00"}
+{"accepted": false, "error": "process, source or observation identity changed", "name": "private_0_changed_after_0_ppid", "root": "unicode-\u00e9-\ud83d\ude00"}
+{"accepted": false, "error": "process, source or observation identity changed", "name": "private_0_changed_after_0_uid", "root": "unicode-\u00e9-\ud83d\ude00"}
+{"accepted": false, "error": "process, source or observation identity changed", "name": "private_0_changed_after_0_ruid", "root": "unicode-\u00e9-\ud83d\ude00"}
+{"accepted": false, "error": "process, source or observation identity changed", "name": "private_0_changed_after_0_start_sec", "root": "unicode-\u00e9-\ud83d\ude00"}
+{"accepted": false, "error": "process, source or observation identity changed", "name": "private_0_changed_after_0_start_usec", "root": "unicode-\u00e9-\ud83d\ude00"}
+{"accepted": false, "error": "process user differs", "name": "private_0_foreign_uid_0", "root": "unicode-\u00e9-\ud83d\ude00"}
+{"accepted": false, "error": "literal proxy executable or command differs", "name": "private_0_argv_alias_0", "root": "unicode-\u00e9-\ud83d\ude00"}
+{"accepted": false, "error": "process, source or observation identity changed", "name": "private_0_changed_after_1_pid", "root": "unicode-\u00e9-\ud83d\ude00"}
+{"accepted": false, "error": "process, source or observation identity changed", "name": "private_0_changed_after_1_ppid", "root": "unicode-\u00e9-\ud83d\ude00"}
+{"accepted": false, "error": "process, source or observation identity changed", "name": "private_0_changed_after_1_uid", "root": "unicode-\u00e9-\ud83d\ude00"}
+{"accepted": false, "error": "process, source or observation identity changed", "name": "private_0_changed_after_1_ruid", "root": "unicode-\u00e9-\ud83d\ude00"}
+{"accepted": false, "error": "process, source or observation identity changed", "name": "private_0_changed_after_1_start_sec", "root": "unicode-\u00e9-\ud83d\ude00"}
+{"accepted": false, "error": "process, source or observation identity changed", "name": "private_0_changed_after_1_start_usec", "root": "unicode-\u00e9-\ud83d\ude00"}
+{"accepted": false, "error": "process user differs", "name": "private_0_foreign_uid_1", "root": "unicode-\u00e9-\ud83d\ude00"}
+{"accepted": false, "error": "literal wrapper command differs", "name": "private_0_argv_alias_1", "root": "unicode-\u00e9-\ud83d\ude00"}
+{"accepted": false, "error": "process, source or observation identity changed", "name": "private_0_changed_after_2_pid", "root": "unicode-\u00e9-\ud83d\ude00"}
+{"accepted": false, "error": "process, source or observation identity changed", "name": "private_0_changed_after_2_ppid", "root": "unicode-\u00e9-\ud83d\ude00"}
+{"accepted": false, "error": "process, source or observation identity changed", "name": "private_0_changed_after_2_uid", "root": "unicode-\u00e9-\ud83d\ude00"}
+{"accepted": false, "error": "process, source or observation identity changed", "name": "private_0_changed_after_2_ruid", "root": "unicode-\u00e9-\ud83d\ude00"}
+{"accepted": false, "error": "process, source or observation identity changed", "name": "private_0_changed_after_2_start_sec", "root": "unicode-\u00e9-\ud83d\ude00"}
+{"accepted": false, "error": "process, source or observation identity changed", "name": "private_0_changed_after_2_start_usec", "root": "unicode-\u00e9-\ud83d\ude00"}
+{"accepted": false, "error": "process user differs", "name": "private_0_foreign_uid_2", "root": "unicode-\u00e9-\ud83d\ude00"}
+{"accepted": false, "error": "literal original test command differs", "name": "private_0_argv_alias_2", "root": "unicode-\u00e9-\ud83d\ude00"}
+{"accepted": false, "error": "process, source or observation identity changed", "name": "private_0_changed_source_0", "root": "unicode-\u00e9-\ud83d\ude00"}
+{"accepted": false, "error": "process, source or observation identity changed", "name": "private_0_changed_source_1", "root": "unicode-\u00e9-\ud83d\ude00"}
+{"accepted": false, "error": "process, source or observation identity changed", "name": "private_0_changed_source_2", "root": "unicode-\u00e9-\ud83d\ude00"}
+{"accepted": false, "error": "legacy source count differs", "name": "private_0_incomplete_sources", "root": "unicode-\u00e9-\ud83d\ude00"}
+{"accepted": false, "error": "literal proxy executable or command differs", "name": "private_0_executable_alias", "root": "unicode-\u00e9-\ud83d\ude00"}
+{"accepted": false, "error": "source path or ordering differs", "name": "private_0_source_order", "root": "unicode-\u00e9-\ud83d\ude00"}
+{"accepted": false, "error": "unknown preparation layout", "name": "private_1_wrong_layout", "root": "unicode-\u00e9-\ud83d\ude00"}
+{"accepted": false, "error": "process, source or observation identity changed", "name": "private_1_changed_after_0_pid", "root": "unicode-\u00e9-\ud83d\ude00"}
+{"accepted": false, "error": "process, source or observation identity changed", "name": "private_1_changed_after_0_ppid", "root": "unicode-\u00e9-\ud83d\ude00"}
+{"accepted": false, "error": "process, source or observation identity changed", "name": "private_1_changed_after_0_uid", "root": "unicode-\u00e9-\ud83d\ude00"}
+{"accepted": false, "error": "process, source or observation identity changed", "name": "private_1_changed_after_0_ruid", "root": "unicode-\u00e9-\ud83d\ude00"}
+{"accepted": false, "error": "process, source or observation identity changed", "name": "private_1_changed_after_0_start_sec", "root": "unicode-\u00e9-\ud83d\ude00"}
+{"accepted": false, "error": "process, source or observation identity changed", "name": "private_1_changed_after_0_start_usec", "root": "unicode-\u00e9-\ud83d\ude00"}
+{"accepted": false, "error": "process user differs", "name": "private_1_foreign_uid_0", "root": "unicode-\u00e9-\ud83d\ude00"}
+{"accepted": false, "error": "literal proxy executable or command differs", "name": "private_1_argv_alias_0", "root": "unicode-\u00e9-\ud83d\ude00"}
+{"accepted": false, "error": "process, source or observation identity changed", "name": "private_1_changed_after_1_pid", "root": "unicode-\u00e9-\ud83d\ude00"}
+{"accepted": false, "error": "process, source or observation identity changed", "name": "private_1_changed_after_1_ppid", "root": "unicode-\u00e9-\ud83d\ude00"}
+{"accepted": false, "error": "process, source or observation identity changed", "name": "private_1_changed_after_1_uid", "root": "unicode-\u00e9-\ud83d\ude00"}
+{"accepted": false, "error": "process, source or observation identity changed", "name": "private_1_changed_after_1_ruid", "root": "unicode-\u00e9-\ud83d\ude00"}
+{"accepted": false, "error": "process, source or observation identity changed", "name": "private_1_changed_after_1_start_sec", "root": "unicode-\u00e9-\ud83d\ude00"}
+{"accepted": false, "error": "process, source or observation identity changed", "name": "private_1_changed_after_1_start_usec", "root": "unicode-\u00e9-\ud83d\ude00"}
+{"accepted": false, "error": "process user differs", "name": "private_1_foreign_uid_1", "root": "unicode-\u00e9-\ud83d\ude00"}
+{"accepted": false, "error": "literal wrapper command differs", "name": "private_1_argv_alias_1", "root": "unicode-\u00e9-\ud83d\ude00"}
+{"accepted": false, "error": "process, source or observation identity changed", "name": "private_1_changed_after_2_pid", "root": "unicode-\u00e9-\ud83d\ude00"}
+{"accepted": false, "error": "process, source or observation identity changed", "name": "private_1_changed_after_2_ppid", "root": "unicode-\u00e9-\ud83d\ude00"}
+{"accepted": false, "error": "process, source or observation identity changed", "name": "private_1_changed_after_2_uid", "root": "unicode-\u00e9-\ud83d\ude00"}
+{"accepted": false, "error": "process, source or observation identity changed", "name": "private_1_changed_after_2_ruid", "root": "unicode-\u00e9-\ud83d\ude00"}
+{"accepted": false, "error": "process, source or observation identity changed", "name": "private_1_changed_after_2_start_sec", "root": "unicode-\u00e9-\ud83d\ude00"}
+{"accepted": false, "error": "process, source or observation identity changed", "name": "private_1_changed_after_2_start_usec", "root": "unicode-\u00e9-\ud83d\ude00"}
+{"accepted": false, "error": "process user differs", "name": "private_1_foreign_uid_2", "root": "unicode-\u00e9-\ud83d\ude00"}
+{"accepted": false, "error": "literal original test command differs", "name": "private_1_argv_alias_2", "root": "unicode-\u00e9-\ud83d\ude00"}
+{"accepted": false, "error": "process, source or observation identity changed", "name": "private_1_changed_source_0", "root": "unicode-\u00e9-\ud83d\ude00"}
+{"accepted": false, "error": "process, source or observation identity changed", "name": "private_1_changed_source_1", "root": "unicode-\u00e9-\ud83d\ude00"}
+{"accepted": false, "error": "process, source or observation identity changed", "name": "private_1_changed_source_2", "root": "unicode-\u00e9-\ud83d\ude00"}
+{"accepted": false, "error": "legacy source count differs", "name": "private_1_incomplete_sources", "root": "unicode-\u00e9-\ud83d\ude00"}
+{"accepted": false, "error": "literal proxy executable or command differs", "name": "private_1_executable_alias", "root": "unicode-\u00e9-\ud83d\ude00"}
+{"accepted": false, "error": "source path or ordering differs", "name": "private_1_source_order", "root": "unicode-\u00e9-\ud83d\ude00"}
+{"accepted": false, "error": "unknown preparation layout", "name": "shared_0_wrong_layout", "root": "unicode-\u00e9-\ud83d\ude00"}
+{"accepted": false, "error": "process, source or observation identity changed", "name": "shared_0_changed_after_0_pid", "root": "unicode-\u00e9-\ud83d\ude00"}
+{"accepted": false, "error": "process, source or observation identity changed", "name": "shared_0_changed_after_0_ppid", "root": "unicode-\u00e9-\ud83d\ude00"}
+{"accepted": false, "error": "process, source or observation identity changed", "name": "shared_0_changed_after_0_uid", "root": "unicode-\u00e9-\ud83d\ude00"}
+{"accepted": false, "error": "process, source or observation identity changed", "name": "shared_0_changed_after_0_ruid", "root": "unicode-\u00e9-\ud83d\ude00"}
+{"accepted": false, "error": "process, source or observation identity changed", "name": "shared_0_changed_after_0_start_sec", "root": "unicode-\u00e9-\ud83d\ude00"}
+{"accepted": false, "error": "process, source or observation identity changed", "name": "shared_0_changed_after_0_start_usec", "root": "unicode-\u00e9-\ud83d\ude00"}
+{"accepted": false, "error": "process user differs", "name": "shared_0_foreign_uid_0", "root": "unicode-\u00e9-\ud83d\ude00"}
+{"accepted": false, "error": "literal proxy executable or command differs", "name": "shared_0_argv_alias_0", "root": "unicode-\u00e9-\ud83d\ude00"}
+{"accepted": false, "error": "process, source or observation identity changed", "name": "shared_0_changed_after_1_pid", "root": "unicode-\u00e9-\ud83d\ude00"}
+{"accepted": false, "error": "process, source or observation identity changed", "name": "shared_0_changed_after_1_ppid", "root": "unicode-\u00e9-\ud83d\ude00"}
+{"accepted": false, "error": "process, source or observation identity changed", "name": "shared_0_changed_after_1_uid", "root": "unicode-\u00e9-\ud83d\ude00"}
+{"accepted": false, "error": "process, source or observation identity changed", "name": "shared_0_changed_after_1_ruid", "root": "unicode-\u00e9-\ud83d\ude00"}
+{"accepted": false, "error": "process, source or observation identity changed", "name": "shared_0_changed_after_1_start_sec", "root": "unicode-\u00e9-\ud83d\ude00"}
+{"accepted": false, "error": "process, source or observation identity changed", "name": "shared_0_changed_after_1_start_usec", "root": "unicode-\u00e9-\ud83d\ude00"}
+{"accepted": false, "error": "process user differs", "name": "shared_0_foreign_uid_1", "root": "unicode-\u00e9-\ud83d\ude00"}
+{"accepted": false, "error": "literal wrapper command differs", "name": "shared_0_argv_alias_1", "root": "unicode-\u00e9-\ud83d\ude00"}
+{"accepted": false, "error": "process, source or observation identity changed", "name": "shared_0_changed_after_2_pid", "root": "unicode-\u00e9-\ud83d\ude00"}
+{"accepted": false, "error": "process, source or observation identity changed", "name": "shared_0_changed_after_2_ppid", "root": "unicode-\u00e9-\ud83d\ude00"}
+{"accepted": false, "error": "process, source or observation identity changed", "name": "shared_0_changed_after_2_uid", "root": "unicode-\u00e9-\ud83d\ude00"}
+{"accepted": false, "error": "process, source or observation identity changed", "name": "shared_0_changed_after_2_ruid", "root": "unicode-\u00e9-\ud83d\ude00"}
+{"accepted": false, "error": "process, source or observation identity changed", "name": "shared_0_changed_after_2_start_sec", "root": "unicode-\u00e9-\ud83d\ude00"}
+{"accepted": false, "error": "process, source or observation identity changed", "name": "shared_0_changed_after_2_start_usec", "root": "unicode-\u00e9-\ud83d\ude00"}
+{"accepted": false, "error": "process user differs", "name": "shared_0_foreign_uid_2", "root": "unicode-\u00e9-\ud83d\ude00"}
+{"accepted": false, "error": "literal original test command differs", "name": "shared_0_argv_alias_2", "root": "unicode-\u00e9-\ud83d\ude00"}
+{"accepted": false, "error": "process, source or observation identity changed", "name": "shared_0_changed_source_0", "root": "unicode-\u00e9-\ud83d\ude00"}
+{"accepted": false, "error": "process, source or observation identity changed", "name": "shared_0_changed_source_1", "root": "unicode-\u00e9-\ud83d\ude00"}
+{"accepted": false, "error": "process, source or observation identity changed", "name": "shared_0_changed_source_2", "root": "unicode-\u00e9-\ud83d\ude00"}
+{"accepted": false, "error": "process, source or observation identity changed", "name": "shared_0_changed_source_3", "root": "unicode-\u00e9-\ud83d\ude00"}
+{"accepted": false, "error": "process, source or observation identity changed", "name": "shared_0_changed_source_4", "root": "unicode-\u00e9-\ud83d\ude00"}
+{"accepted": false, "error": "expected five stable target snapshots", "name": "shared_0_incomplete_sources", "root": "unicode-\u00e9-\ud83d\ude00"}
+{"accepted": false, "error": "literal proxy executable or command differs", "name": "shared_0_executable_alias", "root": "unicode-\u00e9-\ud83d\ude00"}
+{"accepted": false, "error": "source path or ordering differs", "name": "shared_0_source_order", "root": "unicode-\u00e9-\ud83d\ude00"}
+{"accepted": false, "error": "unknown preparation layout", "name": "shared_1_wrong_layout", "root": "unicode-\u00e9-\ud83d\ude00"}
+{"accepted": false, "error": "process, source or observation identity changed", "name": "shared_1_changed_after_0_pid", "root": "unicode-\u00e9-\ud83d\ude00"}
+{"accepted": false, "error": "process, source or observation identity changed", "name": "shared_1_changed_after_0_ppid", "root": "unicode-\u00e9-\ud83d\ude00"}
+{"accepted": false, "error": "process, source or observation identity changed", "name": "shared_1_changed_after_0_uid", "root": "unicode-\u00e9-\ud83d\ude00"}
+{"accepted": false, "error": "process, source or observation identity changed", "name": "shared_1_changed_after_0_ruid", "root": "unicode-\u00e9-\ud83d\ude00"}
+{"accepted": false, "error": "process, source or observation identity changed", "name": "shared_1_changed_after_0_start_sec", "root": "unicode-\u00e9-\ud83d\ude00"}
+{"accepted": false, "error": "process, source or observation identity changed", "name": "shared_1_changed_after_0_start_usec", "root": "unicode-\u00e9-\ud83d\ude00"}
+{"accepted": false, "error": "process user differs", "name": "shared_1_foreign_uid_0", "root": "unicode-\u00e9-\ud83d\ude00"}
+{"accepted": false, "error": "literal proxy executable or command differs", "name": "shared_1_argv_alias_0", "root": "unicode-\u00e9-\ud83d\ude00"}
+{"accepted": false, "error": "process, source or observation identity changed", "name": "shared_1_changed_after_1_pid", "root": "unicode-\u00e9-\ud83d\ude00"}
+{"accepted": false, "error": "process, source or observation identity changed", "name": "shared_1_changed_after_1_ppid", "root": "unicode-\u00e9-\ud83d\ude00"}
+{"accepted": false, "error": "process, source or observation identity changed", "name": "shared_1_changed_after_1_uid", "root": "unicode-\u00e9-\ud83d\ude00"}
+{"accepted": false, "error": "process, source or observation identity changed", "name": "shared_1_changed_after_1_ruid", "root": "unicode-\u00e9-\ud83d\ude00"}
+{"accepted": false, "error": "process, source or observation identity changed", "name": "shared_1_changed_after_1_start_sec", "root": "unicode-\u00e9-\ud83d\ude00"}
+{"accepted": false, "error": "process, source or observation identity changed", "name": "shared_1_changed_after_1_start_usec", "root": "unicode-\u00e9-\ud83d\ude00"}
+{"accepted": false, "error": "process user differs", "name": "shared_1_foreign_uid_1", "root": "unicode-\u00e9-\ud83d\ude00"}
+{"accepted": false, "error": "literal wrapper command differs", "name": "shared_1_argv_alias_1", "root": "unicode-\u00e9-\ud83d\ude00"}
+{"accepted": false, "error": "process, source or observation identity changed", "name": "shared_1_changed_after_2_pid", "root": "unicode-\u00e9-\ud83d\ude00"}
+{"accepted": false, "error": "process, source or observation identity changed", "name": "shared_1_changed_after_2_ppid", "root": "unicode-\u00e9-\ud83d\ude00"}
+{"accepted": false, "error": "process, source or observation identity changed", "name": "shared_1_changed_after_2_uid", "root": "unicode-\u00e9-\ud83d\ude00"}
+{"accepted": false, "error": "process, source or observation identity changed", "name": "shared_1_changed_after_2_ruid", "root": "unicode-\u00e9-\ud83d\ude00"}
+{"accepted": false, "error": "process, source or observation identity changed", "name": "shared_1_changed_after_2_start_sec", "root": "unicode-\u00e9-\ud83d\ude00"}
+{"accepted": false, "error": "process, source or observation identity changed", "name": "shared_1_changed_after_2_start_usec", "root": "unicode-\u00e9-\ud83d\ude00"}
+{"accepted": false, "error": "process user differs", "name": "shared_1_foreign_uid_2", "root": "unicode-\u00e9-\ud83d\ude00"}
+{"accepted": false, "error": "literal original test command differs", "name": "shared_1_argv_alias_2", "root": "unicode-\u00e9-\ud83d\ude00"}
+{"accepted": false, "error": "process, source or observation identity changed", "name": "shared_1_changed_source_0", "root": "unicode-\u00e9-\ud83d\ude00"}
+{"accepted": false, "error": "process, source or observation identity changed", "name": "shared_1_changed_source_1", "root": "unicode-\u00e9-\ud83d\ude00"}
+{"accepted": false, "error": "process, source or observation identity changed", "name": "shared_1_changed_source_2", "root": "unicode-\u00e9-\ud83d\ude00"}
+{"accepted": false, "error": "process, source or observation identity changed", "name": "shared_1_changed_source_3", "root": "unicode-\u00e9-\ud83d\ude00"}
+{"accepted": false, "error": "process, source or observation identity changed", "name": "shared_1_changed_source_4", "root": "unicode-\u00e9-\ud83d\ude00"}
+{"accepted": false, "error": "expected five stable target snapshots", "name": "shared_1_incomplete_sources", "root": "unicode-\u00e9-\ud83d\ude00"}
+{"accepted": false, "error": "literal proxy executable or command differs", "name": "shared_1_executable_alias", "root": "unicode-\u00e9-\ud83d\ude00"}
+{"accepted": false, "error": "source path or ordering differs", "name": "shared_1_source_order", "root": "unicode-\u00e9-\ud83d\ude00"}
+{"accepted": false, "error": "unknown preparation layout", "name": "shared_other_observer_wrong_layout", "root": "unicode-\u00e9-\ud83d\ude00"}
+{"accepted": false, "error": "process, source or observation identity changed", "name": "shared_other_observer_changed_after_0_pid", "root": "unicode-\u00e9-\ud83d\ude00"}
+{"accepted": false, "error": "process, source or observation identity changed", "name": "shared_other_observer_changed_after_0_ppid", "root": "unicode-\u00e9-\ud83d\ude00"}
+{"accepted": false, "error": "process, source or observation identity changed", "name": "shared_other_observer_changed_after_0_uid", "root": "unicode-\u00e9-\ud83d\ude00"}
+{"accepted": false, "error": "process, source or observation identity changed", "name": "shared_other_observer_changed_after_0_ruid", "root": "unicode-\u00e9-\ud83d\ude00"}
+{"accepted": false, "error": "process, source or observation identity changed", "name": "shared_other_observer_changed_after_0_start_sec", "root": "unicode-\u00e9-\ud83d\ude00"}
+{"accepted": false, "error": "process, source or observation identity changed", "name": "shared_other_observer_changed_after_0_start_usec", "root": "unicode-\u00e9-\ud83d\ude00"}
+{"accepted": false, "error": "process user differs", "name": "shared_other_observer_foreign_uid_0", "root": "unicode-\u00e9-\ud83d\ude00"}
+{"accepted": false, "error": "literal proxy executable or command differs", "name": "shared_other_observer_argv_alias_0", "root": "unicode-\u00e9-\ud83d\ude00"}
+{"accepted": false, "error": "process, source or observation identity changed", "name": "shared_other_observer_changed_after_1_pid", "root": "unicode-\u00e9-\ud83d\ude00"}
+{"accepted": false, "error": "process, source or observation identity changed", "name": "shared_other_observer_changed_after_1_ppid", "root": "unicode-\u00e9-\ud83d\ude00"}
+{"accepted": false, "error": "process, source or observation identity changed", "name": "shared_other_observer_changed_after_1_uid", "root": "unicode-\u00e9-\ud83d\ude00"}
+{"accepted": false, "error": "process, source or observation identity changed", "name": "shared_other_observer_changed_after_1_ruid", "root": "unicode-\u00e9-\ud83d\ude00"}
+{"accepted": false, "error": "process, source or observation identity changed", "name": "shared_other_observer_changed_after_1_start_sec", "root": "unicode-\u00e9-\ud83d\ude00"}
+{"accepted": false, "error": "process, source or observation identity changed", "name": "shared_other_observer_changed_after_1_start_usec", "root": "unicode-\u00e9-\ud83d\ude00"}
+{"accepted": false, "error": "process user differs", "name": "shared_other_observer_foreign_uid_1", "root": "unicode-\u00e9-\ud83d\ude00"}
+{"accepted": false, "error": "literal wrapper command differs", "name": "shared_other_observer_argv_alias_1", "root": "unicode-\u00e9-\ud83d\ude00"}
+{"accepted": false, "error": "process, source or observation identity changed", "name": "shared_other_observer_changed_after_2_pid", "root": "unicode-\u00e9-\ud83d\ude00"}
+{"accepted": false, "error": "process, source or observation identity changed", "name": "shared_other_observer_changed_after_2_ppid", "root": "unicode-\u00e9-\ud83d\ude00"}
+{"accepted": false, "error": "process, source or observation identity changed", "name": "shared_other_observer_changed_after_2_uid", "root": "unicode-\u00e9-\ud83d\ude00"}
+{"accepted": false, "error": "process, source or observation identity changed", "name": "shared_other_observer_changed_after_2_ruid", "root": "unicode-\u00e9-\ud83d\ude00"}
+{"accepted": false, "error": "process, source or observation identity changed", "name": "shared_other_observer_changed_after_2_start_sec", "root": "unicode-\u00e9-\ud83d\ude00"}
+{"accepted": false, "error": "process, source or observation identity changed", "name": "shared_other_observer_changed_after_2_start_usec", "root": "unicode-\u00e9-\ud83d\ude00"}
+{"accepted": false, "error": "process user differs", "name": "shared_other_observer_foreign_uid_2", "root": "unicode-\u00e9-\ud83d\ude00"}
+{"accepted": false, "error": "literal original test command differs", "name": "shared_other_observer_argv_alias_2", "root": "unicode-\u00e9-\ud83d\ude00"}
+{"accepted": false, "error": "process, source or observation identity changed", "name": "shared_other_observer_changed_source_0", "root": "unicode-\u00e9-\ud83d\ude00"}
+{"accepted": false, "error": "process, source or observation identity changed", "name": "shared_other_observer_changed_source_1", "root": "unicode-\u00e9-\ud83d\ude00"}
+{"accepted": false, "error": "process, source or observation identity changed", "name": "shared_other_observer_changed_source_2", "root": "unicode-\u00e9-\ud83d\ude00"}
+{"accepted": false, "error": "process, source or observation identity changed", "name": "shared_other_observer_changed_source_3", "root": "unicode-\u00e9-\ud83d\ude00"}
+{"accepted": false, "error": "process, source or observation identity changed", "name": "shared_other_observer_changed_source_4", "root": "unicode-\u00e9-\ud83d\ude00"}
+{"accepted": false, "error": "expected five stable target snapshots", "name": "shared_other_observer_incomplete_sources", "root": "unicode-\u00e9-\ud83d\ude00"}
+{"accepted": false, "error": "literal proxy executable or command differs", "name": "shared_other_observer_executable_alias", "root": "unicode-\u00e9-\ud83d\ude00"}
+{"accepted": false, "error": "source path or ordering differs", "name": "shared_other_observer_source_order", "root": "unicode-\u00e9-\ud83d\ude00"}
+{"accepted": false, "error": "record fields differ", "name": "missing_bundle_schema", "root": "unicode-\u00e9-\ud83d\ude00"}
+{"accepted": false, "error": "record fields differ", "name": "missing_bundle_layout", "root": "unicode-\u00e9-\ud83d\ude00"}
+{"accepted": false, "error": "record fields differ", "name": "missing_bundle_workspace", "root": "unicode-\u00e9-\ud83d\ude00"}
+{"accepted": false, "error": "record fields differ", "name": "missing_bundle_workspace_identity", "root": "unicode-\u00e9-\ud83d\ude00"}
+{"accepted": false, "error": "record fields differ", "name": "missing_bundle_observer_birth", "root": "unicode-\u00e9-\ud83d\ude00"}
+{"accepted": false, "error": "record fields differ", "name": "missing_bundle_evidence_directory_identity", "root": "unicode-\u00e9-\ud83d\ude00"}
+{"accepted": false, "error": "record fields differ", "name": "missing_bundle_request", "root": "unicode-\u00e9-\ud83d\ude00"}
+{"accepted": false, "error": "record fields differ", "name": "missing_bundle_before", "root": "unicode-\u00e9-\ud83d\ude00"}
+{"accepted": false, "error": "record fields differ", "name": "missing_bundle_after", "root": "unicode-\u00e9-\ud83d\ude00"}
+{"accepted": false, "error": "record fields differ", "name": "unknown_bundle_field", "root": "unicode-\u00e9-\ud83d\ude00"}
+{"accepted": false, "error": "unknown capture input version", "name": "unknown_input_schema", "root": "unicode-\u00e9-\ud83d\ude00"}
+{"accepted": false, "error": "expected nonnegative integer", "name": "request_bool_pid", "root": "unicode-\u00e9-\ud83d\ude00"}
+{"accepted": false, "error": "expected nonnegative integer", "name": "request_bool_start_sec", "root": "unicode-\u00e9-\ud83d\ude00"}
+{"accepted": false, "error": "expected nonnegative integer", "name": "request_bool_start_usec", "root": "unicode-\u00e9-\ud83d\ude00"}
+{"accepted": false, "error": "expected nonnegative integer", "name": "request_bool_parent_pid", "root": "unicode-\u00e9-\ud83d\ude00"}
+{"accepted": false, "error": "expected nonnegative integer", "name": "request_bool_parent_start_sec", "root": "unicode-\u00e9-\ud83d\ude00"}
+{"accepted": false, "error": "expected nonnegative integer", "name": "request_bool_parent_start_usec", "root": "unicode-\u00e9-\ud83d\ude00"}
+{"accepted": false, "error": "expected nonnegative integer", "name": "request_bool_ancestor_pid", "root": "unicode-\u00e9-\ud83d\ude00"}
+{"accepted": false, "error": "expected nonnegative integer", "name": "request_bool_ancestor_start_sec", "root": "unicode-\u00e9-\ud83d\ude00"}
+{"accepted": false, "error": "expected nonnegative integer", "name": "request_bool_ancestor_start_usec", "root": "unicode-\u00e9-\ud83d\ude00"}
+{"accepted": false, "error": "record fields differ", "name": "before_missing_hold", "root": "unicode-\u00e9-\ud83d\ude00"}
+{"accepted": false, "error": "expected proxy/wrapper/test chain", "name": "before_empty_processes", "root": "unicode-\u00e9-\ud83d\ude00"}
+{"accepted": false, "error": "process, source or observation identity changed", "name": "after_missing_hold", "root": "unicode-\u00e9-\ud83d\ude00"}
+{"accepted": false, "error": "process, source or observation identity changed", "name": "after_empty_processes", "root": "unicode-\u00e9-\ud83d\ude00"}
+{"accepted": false, "error": "record fields differ", "name": "missing_shared_workspace_identity", "root": "unicode-\u00e9-\ud83d\ude00"}
+{"accepted": false, "error": "record fields differ", "name": "missing_shared_observer_birth", "root": "unicode-\u00e9-\ud83d\ude00"}
+{"accepted": false, "error": "record fields differ", "name": "missing_shared_evidence_directory_identity", "root": "unicode-\u00e9-\ud83d\ude00"}
+{"accepted": false, "error": "workspace is not builder-owned", "name": "workspace_parent_alias", "root": "unicode-\u00e9-\ud83d\ude00"}
+{"accepted": false, "error": "source or directory identities alias", "name": "runtime_identity_alias", "root": "unicode-\u00e9-\ud83d\ude00"}
+{"accepted": false, "error": "source or evidence volume differs", "name": "cross_volume_source", "root": "unicode-\u00e9-\ud83d\ude00"}
+{"accepted": false, "error": "expected five stable target snapshots", "name": "target_source_contains_hold", "root": "unicode-\u00e9-\ud83d\ude00"}
+{"accepted": false, "error": "process, source or observation identity changed", "name": "after_numeric_type_drift", "root": "unicode-\u00e9-\ud83d\ude00"}
+{"accepted": false, "error": "record fields differ", "name": "missing_snapshot_identity_0", "root": "unicode-\u00e9-\ud83d\ude00"}
+{"accepted": false, "error": "source byte identity differs", "name": "incorrect_snapshot_bytes_0", "root": "unicode-\u00e9-\ud83d\ude00"}
+{"accepted": false, "error": "record fields differ", "name": "missing_snapshot_identity_1", "root": "unicode-\u00e9-\ud83d\ude00"}
+{"accepted": false, "error": "source byte identity differs", "name": "incorrect_snapshot_bytes_1", "root": "unicode-\u00e9-\ud83d\ude00"}
+{"accepted": false, "error": "record fields differ", "name": "missing_snapshot_identity_2", "root": "unicode-\u00e9-\ud83d\ude00"}
+{"accepted": false, "error": "source byte identity differs", "name": "incorrect_snapshot_bytes_2", "root": "unicode-\u00e9-\ud83d\ude00"}
+{"accepted": false, "error": "record fields differ", "name": "missing_snapshot_identity_3", "root": "unicode-\u00e9-\ud83d\ude00"}
+{"accepted": false, "error": "source byte identity differs", "name": "incorrect_snapshot_bytes_3", "root": "unicode-\u00e9-\ud83d\ude00"}
+{"accepted": false, "error": "record fields differ", "name": "missing_snapshot_identity_4", "root": "unicode-\u00e9-\ud83d\ude00"}
+{"accepted": false, "error": "source byte identity differs", "name": "incorrect_snapshot_bytes_4", "root": "unicode-\u00e9-\ud83d\ude00"}
+{"accepted": false, "error": "legacy layout cannot acquire shared-image fields", "name": "perl_shared_hold", "root": "unicode-\u00e9-\ud83d\ude00"}
+{"accepted": false, "error": "legacy layout cannot acquire shared-image fields", "name": "private_0_shared_hold", "root": "unicode-\u00e9-\ud83d\ude00"}

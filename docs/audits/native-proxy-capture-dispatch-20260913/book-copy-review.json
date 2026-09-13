@@ -1,0 +1,9 @@
+{
+  "all_file_hashes_agree": true,
+  "bytes": 23532151,
+  "files": 98,
+  "intended_root": ".artifacts/tmp/native-proxy-capture-dispatch-book-20260913/book",
+  "misplaced_root": "../../.artifacts/tmp/native-proxy-capture-dispatch-book-20260913/book",
+  "old_preserved_until_successful_inspection": true,
+  "same_volume": true
+}

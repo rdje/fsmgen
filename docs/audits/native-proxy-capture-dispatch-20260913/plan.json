@@ -1,0 +1,128 @@
+{
+  "fixed_limits": {
+    "collector_bytes": 16777216,
+    "collector_seconds": 240,
+    "reference_bytes": 4096,
+    "source_bytes": 65536
+  },
+  "independent_legs": {
+    "durability": "Exact Git input pins, preflight hashes, original case stream, complete result and independent saved-only verifier.",
+    "falsification": "Declared field, birth, argv, source, alias, reference and repeated-observation controls; weakened implementations and changed saved-result controls.",
+    "rederivation": "Source-derived C mode bodies and unchanged original sampler admission function over supplied native fields; unchanged original runtime and observation data oracles after independently checking new canonical paths."
+  },
+  "inputs": [
+    {
+      "path": "scripts/fixture_kernel_sampler.py",
+      "sha256": "50c94165893b74b758c560f561ff744f294683812a26b429071ef43009aac2dc",
+      "size_bytes": 22040
+    },
+    {
+      "path": "scripts/fixture_policy_log.py",
+      "sha256": "ed3db21b5fffbed8073fbbe7d80982062e914c974f2f5512e781ce4f9eb8812c",
+      "size_bytes": 12764
+    },
+    {
+      "path": "scripts/observe_fixture_startup.py",
+      "sha256": "05144eb1ebd86ebf132ad36b86b4c93b23687db928fc369f633615f0b870fe06",
+      "size_bytes": 25563
+    },
+    {
+      "path": "scripts/analyze_fixture_policy.py",
+      "sha256": "25a98f7b8bcdac695455a64121e88637a46599552f992eb530726eec8f07b40a",
+      "size_bytes": 17432
+    },
+    {
+      "path": "t/lib/FSM/Test/RustProxyFixture.pm",
+      "sha256": "d9c4ab52cf8074526c59b7a5dcb9da870ca7ffdacb4eb236dacb23b5db6d8bfb",
+      "size_bytes": 11466
+    },
+    {
+      "path": "t/fixtures/rust-tool-proxy.c",
+      "sha256": "be8b66690a93c8432c0f33094ac15c26f7fef0940c18f6935fd5b0994d9f4ede",
+      "size_bytes": 721
+    },
+    {
+      "path": "docs/audits/native-proxy-canonical-contract-20260910/contract.json",
+      "sha256": "f3f981398afae72540ab4ac0194b8380d4743c3d2146c1172a85365add053222",
+      "size_bytes": 21927
+    },
+    {
+      "path": "docs/audits/native-proxy-version-contracts-20260913/contracts.json",
+      "sha256": "3871fa8a0a26518cc6d756e84823a7b1281b2b569e59f28eb21a2efa91eb81a9",
+      "size_bytes": 50158
+    },
+    {
+      "path": "docs/audits/native-proxy-version-contracts-20260913/dispatch.py",
+      "sha256": "34d4ca4c34fa98a7fa2e1b157e01eb409fb98e0bf1dd6b18ac3065e5eb0e5077",
+      "size_bytes": 1537
+    },
+    {
+      "path": "docs/audits/native-proxy-image-custody-20260910/ImageCustody.pm",
+      "sha256": "927f1ab39f7f26742e36878985d1ff545ddf2dee119d4bf6b7b41bf2c9360ccc",
+      "size_bytes": 8619
+    },
+    {
+      "path": "docs/audits/native-proxy-runtime-records-20260910/RuntimeRecord.pm",
+      "sha256": "013c0a02e7df59dc3a5af944b603cd44121252a02ca0228d6fdc3e1dd28e6745",
+      "size_bytes": 4078
+    },
+    {
+      "path": "docs/audits/native-proxy-runtime-records-20260910/audit.py",
+      "sha256": "ece89eeb01cdd6e5b6c48a8e124bd4a4bde4e30f1bc53745d9ac2109748f0c83",
+      "size_bytes": 9573
+    },
+    {
+      "path": "docs/audits/native-proxy-observation-records-20260910/ObservationRecord.pm",
+      "sha256": "35445ee951c8f5e7dc204f58cffe1b2f6273286cc3e7715953d705b33e7158d5",
+      "size_bytes": 4369
+    },
+    {
+      "path": "docs/audits/native-proxy-observation-records-20260910/audit.py",
+      "sha256": "a8ab1e4c5a99273f31f36870db6c21daae2a9e285ab726a5ae4512837da602d8",
+      "size_bytes": 19918
+    },
+    {
+      "path": "docs/audits/native-proxy-observation-acquisition-20260910/ObservationAcquisition.pm",
+      "sha256": "809c013255ab6973a2d0dabcfd5b0ae5c55c97696d7acc77b10cf68149006470",
+      "size_bytes": 16517
+    },
+    {
+      "path": "docs/audits/native-proxy-preparation-records-20260913/PreparationRecord.pm",
+      "sha256": "ebcdfbb89d244b88bd6e29067ccc49e6af3818aaf599df70c0a6343ddbf47e3a",
+      "size_bytes": 14826
+    },
+    {
+      "path": "docs/audits/native-proxy-preparation-records-20260913/result/audit.json",
+      "sha256": "e2a70dd20ce4d550b0f16c0aa8e10ce2cb5391bf4b2c8a5a3ba7521a37e2188f",
+      "size_bytes": 389
+    }
+  ],
+  "owner": "HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.12.4.1.3.5.3",
+  "qualification_roots": "Runtime-derived lexical root spellings under .artifacts/tmp/inert-capture-roots; none is created.",
+  "schema": "fsmgen.inactive_capture_plan.v1",
+  "scopes": {
+    "collection": "Explicit v1/v2 command selection. Keep the frozen v1 command and daemon predicate exact. Add only the fixed canonical prefix in v2 path-filtered scopes. Retained record/publication integration remains the next leaf.",
+    "data": "Closed new inactive carrier schema stores supplied relative source identities and canonical hex bodies. Root placeholders expand only in memory. It is not a retained-v1 receipt or runtime authorization.",
+    "native": "Synthetic process records and a byte buffer with the existing checked Mach-O header, never a compiled or executable file. Actual filesystem mode, native authentication, transport, loaded-image attestation, delivery and integration remain separate.",
+    "target": "Only explicit Rust proxy producer layouts under the original T1669 wrapper/test chain. Existing wrapper-only, legacy RAM and T1668 target behavior is unchanged."
+  },
+  "snapshot_orders": {
+    "legacy_private_native_v1": [
+      "wrapper",
+      "executable",
+      "C"
+    ],
+    "selected_perl_v1": [
+      "wrapper",
+      "proxy"
+    ],
+    "shared_native_v2": [
+      "wrapper",
+      "private runtime reference",
+      "global runtime reference",
+      "C",
+      "executable"
+    ]
+  },
+  "source_revision": "a831a879bc1effe2385e728138c2f7744b38dd82"
+}

@@ -1,0 +1,19 @@
+{
+  "checked_passages": [
+    "Inactive Rust-proxy capture dispatch now distinguishes the selected preparation layout explicitly.",
+    "Shared native",
+    "The observer's hold stays outside stable target evidence",
+    "Rust-proxy main entry remains unknown",
+    "scripts/run_with_ram_guard.sh -- python3 -B docs/audits/native-proxy-capture-dispatch-20260913/audit.py --verify-saved"
+  ],
+  "exact_output_absent": true,
+  "exit_code": 0,
+  "output": ".artifacts/tmp/native-proxy-capture-dispatch-book-20260913/book",
+  "rendered_bytes": 23532151,
+  "rendered_directories": 2,
+  "rendered_files": 98,
+  "renderer_warnings": [
+    "WARN search index is very large (13259581 bytes)"
+  ],
+  "same_volume_direct_objects": true
+}

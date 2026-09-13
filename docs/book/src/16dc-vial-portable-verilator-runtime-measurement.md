@@ -3077,7 +3077,7 @@ The frozen execution-context reader still rejects canonical-only or mixed
 source prefixes and altered command quoting. Daemon-only command bytes remain
 unchanged and do not satisfy that execution-context reader. Native main entry
 remains unknown. The source contracts preserve these boundaries for the
-preparation codec and next capture/retained-format slices. Recheck the
+preparation and capture codecs and the remaining retained-format slice. Recheck the
 saved finite layout and pure command controls without launching fixtures:
 
 ```sh
@@ -3113,6 +3113,45 @@ the codec and independent validation rules are unchanged by that repair.
 
 ```sh
 scripts/run_with_ram_guard.sh -- python3 -B docs/audits/native-proxy-preparation-records-20260913/audit_corrected.py --verify-saved
+```
+
+Inactive Rust-proxy capture dispatch now distinguishes the selected preparation
+layout explicitly. Each family keeps its original source order:
+
+| Layout | Stable target sources |
+| --- | --- |
+| Selected Perl | Wrapper, proxy |
+| Private native | Wrapper, executable, C source |
+| Shared native | Wrapper, private runtime reference, global runtime reference, C source, executable |
+
+The supplied proxy, wrapper and original test must retain the same native
+births, normal-user identities, ancestry, executable paths and literal commands
+across inspection. A shared-image proxy must name its sole canonical executable;
+a private alias with equal identity does not satisfy that command contract.
+The shared source pair derives the image key from bounded bytes and preserves
+the qualified generated C mode and existing executable-header check.
+
+Matching private/global runtime records and the separate observation hold must
+bind the selected sources and original births. Changed bytes, identities,
+missing references, mixed source families and reordered snapshots reject.
+The observer's hold stays outside stable target evidence, so another observer
+can retain the same target without changing its source snapshot. Rust-proxy
+main entry remains `unknown`.
+
+Collector command selection is also explicit. Legacy commands keep their
+original predicate. Shared-image collection adds only the fixed canonical-image
+prefix to path-filtered scopes; daemon-only command bytes stay unchanged.
+The existing deadline and output bounds remain fixed. Exact quoted-prefix
+normalization preserves malformed quoting for rejection by retained readers.
+
+This is an inactive check of supplied data. It creates no executable fixture,
+queries no native process and starts no collector. Live authentication,
+filesystem permissions and custody, loaded-image identity, retained-format
+integration and delivery completeness require their separately owned work.
+Recheck the saved target and command evidence without replaying qualification:
+
+```sh
+scripts/run_with_ram_guard.sh -- python3 -B docs/audits/native-proxy-capture-dispatch-20260913/audit.py --verify-saved
 ```
 
 The inactive archive record implementation now derives a closed specification

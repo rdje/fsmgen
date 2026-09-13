@@ -1,0 +1,27 @@
+[
+  {
+    "path": "docs/audits/native-proxy-capture-dispatch-20260913/plan.json",
+    "sha256": "790c6a05cba53b6a52e51d354db26094d417dcd381854e87eb07a0b9272526c2",
+    "size_bytes": 5654
+  },
+  {
+    "path": "docs/audits/native-proxy-capture-dispatch-20260913/capture_contract.py",
+    "sha256": "1b4a9ed369aa35cf9443caebb6249961334cfa0118f3bdf4cc9544078eaa783b",
+    "size_bytes": 13623
+  },
+  {
+    "path": "docs/audits/native-proxy-capture-dispatch-20260913/prepare.py",
+    "sha256": "5ab1ff858cea453ccc39fe890e4d1dbc1e5cd3108d88c0f96fdfa3207fe87f2d",
+    "size_bytes": 10237
+  },
+  {
+    "path": "docs/audits/native-proxy-capture-dispatch-20260913/qualify.py",
+    "sha256": "1e58304b0314e021bf56756dc21f0770e2e42a72b141bf4b5c12762649b60eda",
+    "size_bytes": 5171
+  },
+  {
+    "path": "docs/audits/native-proxy-capture-dispatch-20260913/audit.py",
+    "sha256": "d262f7e7804c0a4e2faa5b376a4057ddc66da18ad449e412c64f9259aa5813f0",
+    "size_bytes": 16048
+  }
+]
