@@ -1,0 +1,84 @@
+{
+  "assertions": 179,
+  "book_review": "docs/audits/native-proxy-observation-archive-release-omissions-last-20260913/book-review.json",
+  "claim_legs": {
+    "durability": "Git-bound dependencies, prospective pins, exact source-adaptation proofs, first immutable cases, original snapshots and open-handle witnesses, separate recovery, TAP and absent-root ledgers survive in tracked copies. Saved-only audit/recovery, the book and Knowledge Map retain current truth.",
+    "falsify": "Every deliberate omission is rejected by the original closure oracle. Wrong or missing controlled setup, restored final references and altered canonical image files reject alongside substituted aliases, failed/duplicate recovery and closure rewrites with coherent digests. Healthy implementation closure passes.",
+    "rederive": "Independent current source ownership and healthy-close order predict the selected binding and trace. The original last-state oracle counts remaining references and compares the canonical image subtree, while original receipt/effect and closure oracles run unchanged on original snapshots."
+  },
+  "commit_gate": "Staged doctrines and normal commit hooks must pass before this slice is committed.",
+  "continuity_review": "docs/audits/native-proxy-observation-archive-release-omissions-last-20260913/continuity-review.json",
+  "documentation_review": "docs/audits/native-proxy-observation-archive-release-omissions-last-20260913/documentation-review.json",
+  "first_executions": {
+    "admission": true,
+    "audit": true,
+    "book": true,
+    "book-inspection": true,
+    "history": true,
+    "knowledge": true,
+    "knowledge-generate": true,
+    "prepare": true,
+    "qualify": true,
+    "recovery": true,
+    "saved-audit": true,
+    "saved-recovery": true,
+    "syntax": true,
+    "task-integrity": true
+  },
+  "knowledge_aggregate": {
+    "bytes_total": 3492419,
+    "files": 1160,
+    "lines_total": 47288
+  },
+  "knowledge_questions_preserved": 117,
+  "limits": "The complete omission join and final release applicability remain pending. Native/startup/parent/full CI/push are separate gates.",
+  "owner": "HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.12.4.1.3.4.4.5.5",
+  "prerequisites": {
+    "active_copies": 29,
+    "binding": {
+      "assertions": 147,
+      "copies": 8,
+      "resolutions": 462,
+      "variants": 42
+    },
+    "ordinary_copies": 29,
+    "ordinary_pins": 26
+  },
+  "raw_output_records": 39,
+  "raw_verification_outputs": "docs/audits/native-proxy-observation-archive-release-omissions-last-20260913/verification-outputs.json",
+  "recovery": {
+    "bytes": 7597547,
+    "copies": 29,
+    "falsifiers": [
+      "omitted-copy",
+      "foreign-destination",
+      "changed-copy-digest"
+    ],
+    "source_reaccess": false,
+    "success": true
+  },
+  "result": "docs/audits/native-proxy-observation-archive-release-omissions-last-20260913/result/audit.json",
+  "row_source_review": "docs/audits/native-proxy-observation-archive-release-omissions-last-20260913/row-source-review.json",
+  "schema": "fsmgen.release_last_omission_review.v1",
+  "scope": "Last-observation healthy control and selected representative source, directory and lock omissions. Original controlled setup retires the runtime and removes the distinct other hold before release. Actual release removes the final hold while preserving the exact now-unreferenced canonical image. Original open-handle verdict and exact later recovery remain separate. No prior fixture replay, original producer/main, compiler, native fixture process or collector; final release and historical startup/parent/full CI/push remain gated.",
+  "source_review": "docs/audits/native-proxy-observation-archive-release-omissions-last-20260913/source-review.json",
+  "source_revision": "8d872f2c05d21cffbfe29c0bfafcaedb30c18211",
+  "success": true,
+  "totals": {
+    "calls": 5918,
+    "cases": 11,
+    "directories": 506,
+    "events": 18898,
+    "handles": 1628,
+    "healthy": 1,
+    "last_state_cases": 11,
+    "locks": 11,
+    "original_auditor_rejections": 10,
+    "original_open_verdicts": 10,
+    "reads": 1111,
+    "separately_recovered": 10,
+    "sources": 1111,
+    "unlinks": 11,
+    "unreferenced_image_cases": 11
+  }
+}

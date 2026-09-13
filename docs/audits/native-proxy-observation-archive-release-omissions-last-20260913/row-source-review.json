@@ -1,0 +1,20 @@
+{
+  "adapted_function": "_verify_omission",
+  "adapted_sha256": "2e6c54ac225fd58ef7e27d1742c5848b7b1dabf29c925438b3fbc6a8dc557f20",
+  "changes": [
+    {
+      "original": "def verify_row(",
+      "replacement": "def _verify_omission("
+    },
+    {
+      "original": "work_settlement retirement before_archive",
+      "replacement": "work_settlement retirement controlled_setup_removed_hold before_archive"
+    }
+  ],
+  "original_function": "verify_row",
+  "original_sha256": "131005b5094b33b33da8fb29e4ae0e26e06d0a6283edcc93cf3adfb8c5467ec6",
+  "scope": "Only the closed row schema admits the original controlled-setup receipt. All other ordinary assertions remain byte-exact. The original last_state oracle independently counts final references and checks exact canonical image custody.",
+  "source_path": "docs/audits/native-proxy-observation-archive-release-omissions-ordinary-20260913/audit.py",
+  "source_revision": "8d872f2c05d21cffbfe29c0bfafcaedb30c18211",
+  "unmodified_assertions_verified": true
+}

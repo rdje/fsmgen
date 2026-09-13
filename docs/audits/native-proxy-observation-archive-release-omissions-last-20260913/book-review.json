@@ -1,0 +1,20 @@
+{
+  "checked_passages": [
+    "Last-observation omission controls now pass.",
+    "Their original controlled setup retires the runtime and removes the separate observation hold before release.",
+    "Release then removes the final hold while the canonical image directory, C source, executable bytes and image record remain unchanged.",
+    "Separate recovery closes that object without rewriting the verdict.",
+    "The complete omission join and final release applicability remain pending.",
+    "python3 -B docs/audits/native-proxy-observation-archive-release-omissions-last-20260913/audit.py --verify-saved"
+  ],
+  "exact_output_absent": true,
+  "exit_code": 0,
+  "output": ".artifacts/tmp/native-proxy-release-omissions-last-book-20260913/book",
+  "rendered_bytes": 23501379,
+  "rendered_directories": 3,
+  "rendered_files": 98,
+  "renderer_warnings": [
+    "WARN search index is very large (13247224 bytes)"
+  ],
+  "same_volume_direct_objects": true
+}

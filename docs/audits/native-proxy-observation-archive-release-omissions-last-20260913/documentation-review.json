@@ -1,0 +1,21 @@
+{
+  "book_actual": {
+    "bytes_total": 3382716,
+    "files": 63,
+    "lines_total": 61679
+  },
+  "book_baseline": {
+    "bytes_total": 3381912,
+    "files": 63,
+    "lines_total": 61664
+  },
+  "knowledge_aggregate": {
+    "bytes_total": 3492419,
+    "files": 1160,
+    "lines_total": 47288
+  },
+  "knowledge_byte_delta": 8,
+  "questions_preserved": 117,
+  "rejected_card_candidates": 0,
+  "scope": "Qualitative last-observation omission outcome; profile evidence remains distinct from the pending complete omission join. Earlier facts remain exact in Git and no ceiling changes."
+}

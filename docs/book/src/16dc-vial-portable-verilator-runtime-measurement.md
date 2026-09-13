@@ -2985,8 +2985,23 @@ controls. Verify the saved evidence:
 python3 -B docs/audits/native-proxy-observation-archive-release-omissions-active-20260913/audit.py --verify-saved
 ```
 
-Last-observation omissions, the complete omission join and final release
-applicability remain pending.
+Last-observation omission controls now pass. Their original controlled setup
+retires the runtime and removes the separate observation hold before release.
+Release then removes the final hold while the canonical image directory, C
+source, executable bytes and image record remain unchanged. The image is now
+unreferenced; that fact does not authorize deleting it or executing it.
+
+A deliberately omitted close still leaves the exact retained handle open
+through the original verdict. Separate recovery closes that object without
+rewriting the verdict. The audit rejects a missing or misidentified setup
+removal, a restored final reference and changed or missing canonical image
+files. Verify the saved cases:
+
+```sh
+python3 -B docs/audits/native-proxy-observation-archive-release-omissions-last-20260913/audit.py --verify-saved
+```
+
+The complete omission join and final release applicability remain pending.
 These deliberate faults do not qualify ambiguous operating-system close
 failures or authorize native execution.
 
