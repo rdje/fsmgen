@@ -1,0 +1,21 @@
+{
+  "book_actual": {
+    "bytes_total": 3381912,
+    "files": 63,
+    "lines_total": 61664
+  },
+  "book_baseline": {
+    "bytes_total": 3381237,
+    "files": 63,
+    "lines_total": 61651
+  },
+  "knowledge_aggregate": {
+    "bytes_total": 3492411,
+    "files": 1160,
+    "lines_total": 47288
+  },
+  "knowledge_byte_delta": -7,
+  "questions_preserved": 117,
+  "rejected_card_candidates": 0,
+  "scope": "Qualitative active-runtime omission outcome; earlier profile facts remain exact in Git and retained prerequisites. No containment ceiling changes."
+}

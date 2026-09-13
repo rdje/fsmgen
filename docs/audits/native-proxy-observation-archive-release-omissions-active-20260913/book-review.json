@@ -1,0 +1,20 @@
+{
+  "checked_passages": [
+    "Active-runtime omission controls also pass.",
+    "Release leaves the original runtime reference and private workspace intact, with no retirement call or receipt.",
+    "rust-tool-resolution and the private rust-tools/image-reference.json remain unchanged throughout.",
+    "The audit rejects an invented retirement receipt, a missing runtime reference or altered private workspace, alongside the shared omission and recovery controls.",
+    "Last-observation omissions, the complete omission join and final release applicability remain pending.",
+    "python3 -B docs/audits/native-proxy-observation-archive-release-omissions-active-20260913/audit.py --verify-saved"
+  ],
+  "exact_output_absent": true,
+  "exit_code": 0,
+  "output": ".artifacts/tmp/native-proxy-release-omissions-active-book-20260913/book",
+  "rendered_bytes": 23498601,
+  "rendered_directories": 3,
+  "rendered_files": 98,
+  "renderer_warnings": [
+    "WARN search index is very large (13246153 bytes)"
+  ],
+  "same_volume_direct_objects": true
+}

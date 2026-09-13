@@ -2791,11 +2791,11 @@ decomposes the architecture needed to move beyond that bounded foundation.
   Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.12.4.1.3.4.4.5.3: qualify equal-reference release omissions and separate recovery`
 
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.12.4.1.3.4.4.5.4`
-  Status: `proposed`
+  Status: `done`
   Goal: `Qualify active-runtime genuine omitted-close controls.`
   Acceptance: `Execute only the pinned active-runtime omission partition without retirement; preserve runtime references and private workspace, original verdict and actual open-handle evidence, exact separate recovery and disjoint absent roots.`
-  Verification: `pending`
-  Commit: `pending`
+  Verification: `First active-runtime harness and independent audit pass across 11 cases and 179 TAP assertions: one healthy control and ten actual omissions. Unchanged binding and omission machinery preserve original open-handle verdicts, ten original-auditor rejections and ten exact separate recoveries. The only row-schema adaptation removes the forbidden retirement receipt; every other ordinary row assertion remains byte-exact. The original active-state oracle verifies unchanged runtime references and private workspace in every case, with 1980 handles, 7062 calls, 22858 events, 1419 reads and 11 unlinks. All 22 row, 3 domain and 3 header falsifiers reject; 44 new and 28164 prior roots are absent. Twenty-nine exact copies and saved-only audit/recovery pass. Book rendering, original question retention, exact acceptance history and task/claim gates accompany docs/audits/native-proxy-observation-archive-release-omissions-active-20260913/review.json. No original fixture, producer, compiler or native process is replayed; last-observation omissions are next.`
+  Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.12.4.1.3.4.4.5.4: qualify active-runtime release omissions and separate recovery`
 
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.12.4.1.3.4.4.5.5`
   Status: `proposed`
@@ -3767,7 +3767,7 @@ decomposes the architecture needed to move beyond that bounded foundation.
 
 ## Current Frontier
 
-Current frontier: .3.2.15.7.3.12.4.1.3.4.4.5.3 is done; .5.4 qualifies active-runtime genuine omissions and separate recovery. Final release applicability, native/lifetime and historical startup/parent/full CI/push remain open.
+Current frontier: .3.2.15.7.3.12.4.1.3.4.4.5.4 is done; .5.5 qualifies last-observation genuine omissions and separate recovery. Final release applicability, native/lifetime and historical startup/parent/full CI/push remain open.
 
 Architecture audit `.1` is complete. Decision `0032` selects one public
 `.vial` source language, private immutable `VIALSemanticIR` and
@@ -6363,8 +6363,8 @@ Completed native-proxy feasibility through runtime-source-controls acceptance: r
 The manifest binds the immediately preceding acceptance suffix to its exact Git source. That source preserves the earlier history pointer and versioned manifest chain; current node contracts remain authoritative.
 
 
-## Acceptance Checklist (equal-reference genuine release omissions .3.2.15.7.3.12.4.1.3.4.4.5.3)
+## Acceptance Checklist (active-runtime genuine release omissions .3.2.15.7.3.12.4.1.3.4.4.5.4)
 
-- [x] **ROOT CAUSE (WHY + WHERE)** — `git log -S 'all_observed_handles_closed' -1 --format='%H %s' -- docs/audits/native-proxy-observation-archive-release-20260911/ReleaseTrace.pm` identifies the original closure observer. Equal-reference omission controls must distinguish identical content from native source identity while preserving the original open-handle verdict. `docs/audits/native-proxy-observation-archive-release-omissions-equal-20260913/source-review.json` proves the shared binding, omission and row oracles remain unchanged; the original equal-identity oracle is reused directly.
-- [x] **ADDRESSED (verified)** — The first new `qualify.t` and independent `audit.py` pass for the equal-reference partition. The unchanged original closure oracle rejects every deliberately omitted close; native liveness, exact separate recovery, equal source identities and shared archive custody are verified from the original rows. Altered identities, substituted aliases, failed or duplicated recovery and coherent-checksum closure rewrites reject. Exact result copies and saved-only audit/recovery pass; `docs/audits/native-proxy-observation-archive-release-omissions-equal-20260913/review.json` names distinct claim legs and first-run evidence.
-- [x] **NO REGRESSION** — `knowledge-map: OK` preserves all original questions and routes to the equal-reference verifier. The healthy control passes the unchanged closure oracle, and every unselected handle retains the qualified physical-source and closure checks. The inspected book records equal-reference outcomes and preserves active-runtime/last-observation scope as pending. Exact book output is removed, prior acceptance bodies and source pins remain exact, and task integrity, claim census, staged doctrines and normal hooks gate this equal-reference slice. Final release and historical startup/parent/full CI/push remain open.
+- [x] **ROOT CAUSE (WHY + WHERE)** — `git log -S 'all_observed_handles_closed' -1 --format='%H %s' -- docs/audits/native-proxy-observation-archive-release-20260911/ReleaseTrace.pm` identifies the original closure observer. Active-runtime omission controls must preserve the runtime reference and private workspace without retirement. `docs/audits/native-proxy-observation-archive-release-omissions-active-20260913/row-source-review.json` reconstructs the exact ordinary row oracle with only its retired-profile field removed; `docs/audits/native-proxy-observation-archive-release-omissions-active-20260913/source-review.json` binds unchanged omission machinery and the original active-state oracle.
+- [x] **ADDRESSED (verified)** — The first active-runtime `qualify.t` and independent `audit.py` pass with unchanged runtime/workspace snapshots and no retirement receipt. Every deliberate omission preserves its original open-handle verdict and unchanged original-auditor rejection, followed by exact separate recovery. Invented retirement, missing runtime state and changed workspace reject alongside altered native aliases, recovery and coherent-checksum closure controls. Exact copies and saved-only audit/recovery pass; `docs/audits/native-proxy-observation-archive-release-omissions-active-20260913/review.json` records distinct claim legs and first evidence.
+- [x] **NO REGRESSION** — `knowledge-map: OK` preserves the complete original question set and routes to saved active-runtime evidence. The healthy control closes through the unchanged original implementation; every unselected handle retains the qualified physical-source and closure checks. The inspected book explains active-runtime preservation and keeps last-observation omissions pending. Exact generated book output is removed, older acceptance bodies remain byte-exact, and task integrity, claim census, staged doctrines and normal hooks gate this active-runtime slice. Final release and historical startup/parent/full CI/push remain open.

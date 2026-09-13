@@ -2972,8 +2972,21 @@ cases and their unchanged shared oracles:
 python3 -B docs/audits/native-proxy-observation-archive-release-omissions-equal-20260913/audit.py --verify-saved
 ```
 
-Active-runtime and last-observation omissions, the complete omission join and
-final release applicability remain pending.
+Active-runtime omission controls also pass. Release leaves the original
+runtime reference and private workspace intact, with no retirement call or
+receipt. The selected handle remains open through the original verdict and
+closes only in separate observer recovery. For example, `rust-tool-resolution`
+and the private `rust-tools/image-reference.json` remain unchanged throughout.
+The audit rejects an invented retirement receipt, a missing runtime reference
+or altered private workspace, alongside the shared omission and recovery
+controls. Verify the saved evidence:
+
+```sh
+python3 -B docs/audits/native-proxy-observation-archive-release-omissions-active-20260913/audit.py --verify-saved
+```
+
+Last-observation omissions, the complete omission join and final release
+applicability remain pending.
 These deliberate faults do not qualify ambiguous operating-system close
 failures or authorize native execution.
 

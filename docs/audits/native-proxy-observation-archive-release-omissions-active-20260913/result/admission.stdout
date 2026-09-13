@@ -1,0 +1,1 @@
+{"admitted": true, "inputs": 1659, "new_fixture_roots": 0, "pins": 8, "prerequisites": {"binding": {"assertions": 147, "copies": 8, "resolutions": 462, "variants": 42}, "equal_copies": 29, "ordinary_copies": 29, "ordinary_pins": 26}}

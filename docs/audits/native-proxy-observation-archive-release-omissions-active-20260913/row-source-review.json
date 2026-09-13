@@ -1,0 +1,20 @@
+{
+  "adapted_function": "_verify_omission",
+  "adapted_sha256": "3c1b0be6e8f9121262d6ca4d37550675ecbd80b48d2dad76ab6ff091c5ff2e3d",
+  "changes": [
+    {
+      "original": "def verify_row(",
+      "replacement": "def _verify_omission("
+    },
+    {
+      "original": "work_settlement retirement before_archive",
+      "replacement": "work_settlement before_archive"
+    }
+  ],
+  "original_function": "verify_row",
+  "original_sha256": "131005b5094b33b33da8fb29e4ae0e26e06d0a6283edcc93cf3adfb8c5467ec6",
+  "scope": "Only the closed row schema omits the retired-profile receipt. Native trace, aliases, current-input binding, unchanged original closure rejection and exact effect checks remain byte-exact; the original active_state oracle adds runtime/workspace preservation.",
+  "source_path": "docs/audits/native-proxy-observation-archive-release-omissions-ordinary-20260913/audit.py",
+  "source_revision": "145e8fe2554651cfa80d23db3e8136d931c9255d",
+  "unmodified_assertions_verified": true
+}

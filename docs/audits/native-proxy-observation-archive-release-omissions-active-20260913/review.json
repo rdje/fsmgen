@@ -1,0 +1,83 @@
+{
+  "assertions": 179,
+  "book_review": "docs/audits/native-proxy-observation-archive-release-omissions-active-20260913/book-review.json",
+  "claim_legs": {
+    "durability": "Git-bound dependencies, prospective pins, immutable first case files, native liveness and exact separate recovery receipts, original snapshots, TAP and absent-root ledgers survive in tracked copies. Saved-only audit/recovery, the book and Knowledge Map preserve current truth.",
+    "falsify": "Every deliberate omission is rejected by the unchanged original closure oracle. Invented retirement, lost runtime and altered workspace reject, as do native witness substitution, failed/duplicate recovery and closure rewrites with coherent digests. Healthy implementation closure passes.",
+    "rederive": "Independent current source ownership and healthy-close order predict the selected binding and full trace. The original active-state oracle checks runtime/workspace snapshots, while original receipt/effect and closure oracles run unchanged on actual rows."
+  },
+  "commit_gate": "Staged doctrines and normal commit hooks must pass before this slice is committed.",
+  "continuity_review": "docs/audits/native-proxy-observation-archive-release-omissions-active-20260913/continuity-review.json",
+  "documentation_review": "docs/audits/native-proxy-observation-archive-release-omissions-active-20260913/documentation-review.json",
+  "first_executions": {
+    "admission": true,
+    "audit": true,
+    "book": true,
+    "book-inspection": true,
+    "history": true,
+    "knowledge": true,
+    "knowledge-generate": true,
+    "prepare": true,
+    "qualify": true,
+    "recovery": true,
+    "saved-audit": true,
+    "saved-recovery": true,
+    "syntax": true,
+    "task-integrity": true
+  },
+  "knowledge_aggregate": {
+    "bytes_total": 3492411,
+    "files": 1160,
+    "lines_total": 47288
+  },
+  "knowledge_questions_preserved": 117,
+  "limits": "Last-observation omissions and complete omission/final release joins remain open; native/startup/parent/full CI/push are separate gates.",
+  "owner": "HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.12.4.1.3.4.4.5.4",
+  "prerequisites": {
+    "binding": {
+      "assertions": 147,
+      "copies": 8,
+      "resolutions": 462,
+      "variants": 42
+    },
+    "equal_copies": 29,
+    "ordinary_copies": 29,
+    "ordinary_pins": 26
+  },
+  "raw_output_records": 39,
+  "raw_verification_outputs": "docs/audits/native-proxy-observation-archive-release-omissions-active-20260913/verification-outputs.json",
+  "recovery": {
+    "bytes": 9132361,
+    "copies": 29,
+    "falsifiers": [
+      "omitted-copy",
+      "foreign-destination",
+      "changed-copy-digest"
+    ],
+    "source_reaccess": false,
+    "success": true
+  },
+  "result": "docs/audits/native-proxy-observation-archive-release-omissions-active-20260913/result/audit.json",
+  "row_source_review": "docs/audits/native-proxy-observation-archive-release-omissions-active-20260913/row-source-review.json",
+  "schema": "fsmgen.release_active_omission_review.v1",
+  "scope": "Active-runtime healthy control and selected representative source, directory and lock omissions. Qualified current-input binding and omission observers remain unchanged. No retirement is performed; the original runtime reference and private workspace remain intact. Original verdict, actual open alias and later recovery remain separate. No prior fixture replay, original producer/main, compiler, native fixture process or collector; final release and historical startup/parent/full CI/push remain gated.",
+  "source_review": "docs/audits/native-proxy-observation-archive-release-omissions-active-20260913/source-review.json",
+  "source_revision": "145e8fe2554651cfa80d23db3e8136d931c9255d",
+  "success": true,
+  "totals": {
+    "active_state_cases": 11,
+    "calls": 7062,
+    "cases": 11,
+    "directories": 550,
+    "events": 22858,
+    "handles": 1980,
+    "healthy": 1,
+    "locks": 11,
+    "original_auditor_rejections": 10,
+    "original_open_verdicts": 10,
+    "reads": 1419,
+    "separately_recovered": 10,
+    "sources": 1419,
+    "unlinks": 11
+  }
+}
