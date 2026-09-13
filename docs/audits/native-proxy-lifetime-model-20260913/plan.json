@@ -1,0 +1,961 @@
+{
+  "claim_legs": {
+    "durability": "Prospective source/input hashes, complete prepared domain, first outputs, saved-only auditor, task tree, book, Knowledge Map and Git; actual filesystem and native behavior qualification are missing here and remain owned.",
+    "falsification": "Explicit invalid order, stale/uncertain evidence and cleanup controls, omitted-guard implementations and independently altered saved evidence must reject or differ from the healthy oracle.",
+    "rederivation": "Every finite schedule and every prefix state rederived from completed-event sets plus byte/identity projections; original Perl codecs validate independently constructed record carriers."
+  },
+  "controls": [
+    {
+      "changes": [],
+      "event": "maintain_target",
+      "name": "runtime_holds_image",
+      "prefix": [
+        "archive_a",
+        "archive_b",
+        "retire_other",
+        "release_a",
+        "release_b"
+      ],
+      "profile": "same_image",
+      "returned": false
+    },
+    {
+      "changes": [],
+      "event": "maintain_target",
+      "name": "observation_a_holds_image",
+      "prefix": [
+        "archive_a",
+        "archive_b",
+        "retire_target",
+        "retire_other",
+        "release_b"
+      ],
+      "profile": "same_image",
+      "returned": false
+    },
+    {
+      "changes": [],
+      "event": "maintain_target",
+      "name": "observation_b_holds_image",
+      "prefix": [
+        "archive_a",
+        "archive_b",
+        "retire_target",
+        "retire_other",
+        "release_a"
+      ],
+      "profile": "same_image",
+      "returned": false
+    },
+    {
+      "changes": [],
+      "event": "maintain_target",
+      "name": "other_runtime_holds_same_image",
+      "prefix": [
+        "archive_a",
+        "archive_b",
+        "retire_target",
+        "release_a",
+        "release_b"
+      ],
+      "profile": "same_image",
+      "returned": false
+    },
+    {
+      "changes": [],
+      "event": "maintain_target",
+      "name": "healthy_other_image_preserved",
+      "prefix": [
+        "archive_a",
+        "archive_b",
+        "retire_target",
+        "release_a",
+        "release_b"
+      ],
+      "profile": "different_image",
+      "returned": true
+    },
+    {
+      "changes": [],
+      "event": "maintain_target",
+      "name": "maintenance_explicit_after_all_releases",
+      "prefix": [
+        "archive_a",
+        "archive_b",
+        "retire_target",
+        "retire_other",
+        "release_a",
+        "release_b"
+      ],
+      "profile": "same_image",
+      "returned": true
+    },
+    {
+      "changes": [],
+      "event": "release_a",
+      "name": "release_before_archive",
+      "prefix": [],
+      "profile": "same_image",
+      "returned": false
+    },
+    {
+      "changes": [],
+      "event": "release_a",
+      "name": "repeated_release_rejects_absence",
+      "prefix": [
+        "archive_a",
+        "release_a"
+      ],
+      "profile": "same_image",
+      "returned": false
+    },
+    {
+      "changes": [],
+      "event": "archive_a",
+      "name": "archive_after_retirement",
+      "oracle": "previous",
+      "oracle_accept": true,
+      "prefix": [
+        "retire_target"
+      ],
+      "profile": "same_image",
+      "returned": true
+    },
+    {
+      "changes": [],
+      "event": "archive_a",
+      "name": "archive_before_retirement",
+      "oracle": "previous",
+      "oracle_accept": true,
+      "prefix": [],
+      "profile": "same_image",
+      "returned": true
+    },
+    {
+      "changes": [],
+      "event": "release_a",
+      "fault": "after_unlink",
+      "name": "post_unlink_failure",
+      "prefix": [
+        "archive_a"
+      ],
+      "profile": "same_image",
+      "returned": false
+    },
+    {
+      "changes": [
+        {
+          "op": "set",
+          "path": [
+            "seed",
+            "observers",
+            "a",
+            "settlement",
+            "selection_sealed"
+          ],
+          "value": 0
+        }
+      ],
+      "event": "release_a",
+      "name": "unsealed_work",
+      "oracle": "settlement",
+      "oracle_accept": false,
+      "prefix": [
+        "archive_a"
+      ],
+      "profile": "same_image",
+      "returned": false
+    },
+    {
+      "changes": [
+        {
+          "op": "delete",
+          "path": [
+            "seed",
+            "observers",
+            "a",
+            "settlement",
+            "receipts",
+            2
+          ]
+        }
+      ],
+      "event": "release_a",
+      "name": "missing_work_receipt",
+      "oracle": "settlement",
+      "oracle_accept": false,
+      "prefix": [
+        "archive_a"
+      ],
+      "profile": "same_image",
+      "returned": false
+    },
+    {
+      "changes": [
+        {
+          "op": "set",
+          "path": [
+            "seed",
+            "observers",
+            "a",
+            "settlement",
+            "receipts",
+            0,
+            "ownership_token"
+          ],
+          "value": "0000000000000000000000000000000000000000000000000000000000000000"
+        }
+      ],
+      "event": "release_a",
+      "name": "wrong_work_token",
+      "oracle": "settlement",
+      "oracle_accept": false,
+      "prefix": [
+        "archive_a"
+      ],
+      "profile": "same_image",
+      "returned": false
+    },
+    {
+      "changes": [
+        {
+          "op": "set",
+          "path": [
+            "seed",
+            "observers",
+            "a",
+            "settlement",
+            "selection",
+            "entries",
+            0,
+            "work_id"
+          ],
+          "value": "foreign"
+        }
+      ],
+      "event": "release_a",
+      "name": "replaced_work_selection",
+      "oracle": "settlement",
+      "oracle_accept": false,
+      "prefix": [
+        "archive_a"
+      ],
+      "profile": "same_image",
+      "returned": false
+    },
+    {
+      "changes": [
+        {
+          "op": "set",
+          "path": [
+            "seed",
+            "observers",
+            "a",
+            "settlement",
+            "receipts",
+            0,
+            "cleanup",
+            "leader_reaped"
+          ],
+          "value": 0
+        }
+      ],
+      "event": "release_a",
+      "name": "unreaped_worker",
+      "oracle": "settlement",
+      "oracle_accept": false,
+      "prefix": [
+        "archive_a"
+      ],
+      "profile": "same_image",
+      "returned": false
+    },
+    {
+      "changes": [
+        {
+          "op": "set",
+          "path": [
+            "seed",
+            "observers",
+            "a",
+            "settlement",
+            "receipts",
+            0,
+            "cleanup",
+            "group_gone"
+          ],
+          "value": 0
+        }
+      ],
+      "event": "release_a",
+      "name": "unknown_worker_group",
+      "oracle": "settlement",
+      "oracle_accept": false,
+      "prefix": [
+        "archive_a"
+      ],
+      "profile": "same_image",
+      "returned": false
+    },
+    {
+      "changes": [
+        {
+          "op": "set",
+          "path": [
+            "seed",
+            "observers",
+            "a",
+            "settlement",
+            "receipts",
+            0,
+            "outcome"
+          ],
+          "value": "unknown"
+        }
+      ],
+      "event": "release_a",
+      "name": "unknown_work_outcome",
+      "oracle": "settlement",
+      "oracle_accept": false,
+      "prefix": [
+        "archive_a"
+      ],
+      "profile": "same_image",
+      "returned": false
+    },
+    {
+      "changes": [],
+      "event": "release_a",
+      "name": "failed_and_cancelled_work_is_settled",
+      "oracle": "settlement",
+      "oracle_accept": true,
+      "prefix": [
+        "archive_a"
+      ],
+      "profile": "same_image",
+      "returned": true
+    },
+    {
+      "changes": [
+        {
+          "op": "set",
+          "path": [
+            "seed",
+            "observers",
+            "a",
+            "settlement",
+            "receipts",
+            2,
+            "cleanup"
+          ],
+          "value": {
+            "group_gone": "1",
+            "leader_reaped": "0",
+            "leader_started": "0"
+          }
+        }
+      ],
+      "event": "release_a",
+      "name": "never_started_cancelled_work_is_settled",
+      "oracle": "settlement",
+      "oracle_accept": true,
+      "prefix": [
+        "archive_a"
+      ],
+      "profile": "same_image",
+      "returned": true
+    },
+    {
+      "changes": [
+        {
+          "op": "set",
+          "path": [
+            "state",
+            "archives",
+            "a",
+            "observation_reference_key"
+          ],
+          "value": "0000000000000000000000000000000000000000000000000000000000000000"
+        }
+      ],
+      "event": "release_a",
+      "name": "wrong_archive_observation",
+      "oracle": "archive",
+      "oracle_accept": false,
+      "prefix": [
+        "archive_a"
+      ],
+      "profile": "same_image",
+      "returned": false
+    },
+    {
+      "changes": [
+        {
+          "op": "increment",
+          "path": [
+            "state",
+            "archives",
+            "a",
+            "source_bindings",
+            0,
+            "source",
+            "inode"
+          ]
+        }
+      ],
+      "event": "release_a",
+      "name": "wrong_archive_source_identity",
+      "oracle": "archive",
+      "oracle_accept": false,
+      "prefix": [
+        "archive_a"
+      ],
+      "profile": "same_image",
+      "returned": false
+    },
+    {
+      "changes": [
+        {
+          "op": "increment",
+          "path": [
+            "state",
+            "references",
+            "a",
+            "source",
+            "identity",
+            "inode"
+          ]
+        }
+      ],
+      "event": "release_a",
+      "name": "stale_observation_identity",
+      "prefix": [
+        "archive_a"
+      ],
+      "profile": "same_image",
+      "returned": false
+    },
+    {
+      "changes": [
+        {
+          "op": "set",
+          "path": [
+            "state",
+            "references",
+            "a",
+            "source",
+            "bytes_hex"
+          ],
+          "value": "00"
+        }
+      ],
+      "event": "release_a",
+      "name": "changed_observation_bytes",
+      "prefix": [
+        "archive_a"
+      ],
+      "profile": "same_image",
+      "returned": false
+    },
+    {
+      "changes": [
+        {
+          "op": "increment",
+          "path": [
+            "state",
+            "private",
+            "target",
+            0,
+            "identity",
+            "inode"
+          ]
+        }
+      ],
+      "event": "archive_a",
+      "name": "changed_live_wrapper_still_archivable",
+      "oracle": "previous",
+      "oracle_accept": true,
+      "prefix": [],
+      "profile": "same_image",
+      "returned": true
+    },
+    {
+      "changes": [
+        {
+          "op": "set",
+          "path": [
+            "seed",
+            "observers",
+            "a",
+            "acquired",
+            "target_sources",
+            0,
+            "bytes_hex"
+          ],
+          "value": "00"
+        }
+      ],
+      "event": "archive_a",
+      "name": "changed_retained_wrapper_rejects",
+      "oracle": "previous",
+      "oracle_accept": false,
+      "prefix": [],
+      "profile": "same_image",
+      "returned": false
+    },
+    {
+      "changes": [
+        {
+          "op": "increment",
+          "path": [
+            "state",
+            "workspaces",
+            "target",
+            "inode"
+          ]
+        }
+      ],
+      "event": "retire_target",
+      "name": "changed_workspace_blocks_retirement",
+      "prefix": [],
+      "profile": "same_image",
+      "returned": false
+    },
+    {
+      "changes": [
+        {
+          "op": "set",
+          "path": [
+            "seed",
+            "runtimes",
+            "target",
+            "cleanup",
+            0,
+            "outcome"
+          ],
+          "value": "failed"
+        }
+      ],
+      "event": "retire_target",
+      "name": "failed_command_settled_runtime",
+      "oracle": "cleanup",
+      "oracle_accept": true,
+      "prefix": [],
+      "profile": "same_image",
+      "returned": true
+    },
+    {
+      "changes": [
+        {
+          "op": "set",
+          "path": [
+            "seed",
+            "runtimes",
+            "target",
+            "cleanup",
+            2
+          ],
+          "value": []
+        }
+      ],
+      "event": "retire_target",
+      "name": "missing_runtime_stages",
+      "oracle": "cleanup",
+      "oracle_accept": false,
+      "prefix": [],
+      "profile": "same_image",
+      "returned": false
+    },
+    {
+      "changes": [
+        {
+          "op": "set",
+          "path": [
+            "seed",
+            "runtimes",
+            "target",
+            "cleanup",
+            1,
+            "cleanup",
+            "group_gone"
+          ],
+          "value": 0
+        }
+      ],
+      "event": "retire_target",
+      "name": "unknown_runtime_group",
+      "oracle": "cleanup",
+      "oracle_accept": false,
+      "prefix": [],
+      "profile": "same_image",
+      "returned": false
+    },
+    {
+      "changes": [
+        {
+          "op": "set",
+          "path": [
+            "seed",
+            "runtimes",
+            "target",
+            "cleanup",
+            2,
+            0,
+            "cleanup",
+            "leader_reaped"
+          ],
+          "value": 0
+        }
+      ],
+      "event": "retire_target",
+      "name": "unreaped_runtime_leader",
+      "oracle": "cleanup",
+      "oracle_accept": false,
+      "prefix": [],
+      "profile": "same_image",
+      "returned": false
+    },
+    {
+      "changes": [
+        {
+          "op": "set",
+          "path": [
+            "state",
+            "references",
+            "unclassified"
+          ],
+          "value": {}
+        }
+      ],
+      "event": "maintain_target",
+      "name": "unknown_reference_blocks_maintenance",
+      "prefix": [
+        "archive_a",
+        "archive_b",
+        "retire_target",
+        "retire_other",
+        "release_a",
+        "release_b"
+      ],
+      "profile": "same_image",
+      "returned": false
+    },
+    {
+      "changes": [
+        {
+          "op": "delete",
+          "path": [
+            "state",
+            "images",
+            "efd497b0e847884b3c1cfcde14d8b645991c52ebab90c54e58984ccbc303c146",
+            1
+          ]
+        }
+      ],
+      "event": "maintain_target",
+      "name": "partial_image_blocks_maintenance",
+      "prefix": [
+        "archive_a",
+        "archive_b",
+        "retire_target",
+        "retire_other",
+        "release_a",
+        "release_b"
+      ],
+      "profile": "same_image",
+      "returned": false
+    },
+    {
+      "changes": [
+        {
+          "op": "increment",
+          "path": [
+            "state",
+            "references",
+            "a",
+            "source",
+            "identity",
+            "inode"
+          ]
+        }
+      ],
+      "event": "maintain_target",
+      "name": "stale_owner_never_infers_release",
+      "prefix": [
+        "archive_a",
+        "archive_b",
+        "retire_target",
+        "retire_other",
+        "release_b"
+      ],
+      "profile": "same_image",
+      "returned": false
+    }
+  ],
+  "inputs": [
+    {
+      "path": "docs/audits/native-proxy-canonical-contract-20260910/contract.json",
+      "sha256": "f3f981398afae72540ab4ac0194b8380d4743c3d2146c1172a85365add053222",
+      "size_bytes": 21927
+    },
+    {
+      "path": "docs/audits/native-proxy-cleanup-receipts-20260910/CleanupReceipts.pm",
+      "sha256": "5b22cecf6ff131f62fdeb237a3e77b67b5b29a172ff82320a67772b03cd24de0",
+      "size_bytes": 1300
+    },
+    {
+      "path": "docs/audits/native-proxy-combined-census-20260910/review.json",
+      "sha256": "6176c26f23b6d8842bdfa91ff88b69c37aeb9bcf81c5be82b979cfc2558c0af8",
+      "size_bytes": 8435
+    },
+    {
+      "path": "docs/audits/native-proxy-image-coordination-20260910/Coordination.pm",
+      "sha256": "a0d99769147f28ca7c35e9ac80ba88f7cf14760e3bef7b51841d8badebc060e5",
+      "size_bytes": 19061
+    },
+    {
+      "path": "docs/audits/native-proxy-image-custody-20260910/ImageCustody.pm",
+      "sha256": "927f1ab39f7f26742e36878985d1ff545ddf2dee119d4bf6b7b41bf2c9360ccc",
+      "size_bytes": 8619
+    },
+    {
+      "path": "docs/audits/native-proxy-image-maintenance-20260910/ImageMaintenance.pm",
+      "sha256": "1295957d97737e764c0e800885a2c3f9adfa327a0d41b35d122dde3e21698cac",
+      "size_bytes": 5678
+    },
+    {
+      "path": "docs/audits/native-proxy-image-publication-20260910/Publication.pm",
+      "sha256": "34ca8717856492a09ebf16af8810f04b1dea4c6c8c84ff7b3f5c11c07e7dc2bf",
+      "size_bytes": 5371
+    },
+    {
+      "path": "docs/audits/native-proxy-lifetime-contracts-20260913/corrected-contracts.json",
+      "sha256": "6d5cf4c08d172f93ced0d86b821842f1664278f52b4c48d4c51df1ca49a04245",
+      "size_bytes": 106079
+    },
+    {
+      "path": "docs/audits/native-proxy-lifetime-contracts-20260913/corrected-plan.json",
+      "sha256": "561f6b90b456f166cf7b7dd930fa9c41aaa8ae4ed57ffd990751a97fe5a791e2",
+      "size_bytes": 15719
+    },
+    {
+      "path": "docs/audits/native-proxy-lifetime-contracts-20260913/first-failure.json",
+      "sha256": "f103273caf01358caffe6361dde998d3d1f79f5fc4047d22b815e50ce6adefa7",
+      "size_bytes": 5314
+    },
+    {
+      "path": "docs/audits/native-proxy-lifetime-contracts-20260913/review.json",
+      "sha256": "1ea0c3e26205a856b781335ed61897f85f98d33bfaa3c71bbf1687ccac342982",
+      "size_bytes": 3093
+    },
+    {
+      "path": "docs/audits/native-proxy-observation-acquisition-20260910/ObservationAcquisition.pm",
+      "sha256": "809c013255ab6973a2d0dabcfd5b0ae5c55c97696d7acc77b10cf68149006470",
+      "size_bytes": 16517
+    },
+    {
+      "path": "docs/audits/native-proxy-observation-acquisition-20260910/result/qualification.json",
+      "sha256": "5c201ce2c6e91a03a07f80180e7d66215038ed6c75e8c9fada6c8e59b2bce3bf",
+      "size_bytes": 1424879
+    },
+    {
+      "path": "docs/audits/native-proxy-observation-acquisition-20260910/result/recovery-copies.json",
+      "sha256": "276358759a2d7429fba28b8fc27cba4157ec8ec63587dbb7536de054eae637a7",
+      "size_bytes": 8515
+    },
+    {
+      "path": "docs/audits/native-proxy-observation-acquisition-join-20260911/result/source-inventory.json",
+      "sha256": "751949360499e53b07aedd784daa8b38b9785c984421d63569522818e60dda6b",
+      "size_bytes": 32004
+    },
+    {
+      "path": "docs/audits/native-proxy-observation-archive-20260911/ObservationArchive.pm",
+      "sha256": "79454039421822af31f9891d0a3d3ebe1b4c1ebcc6f6c8decd1f78e081736e87",
+      "size_bytes": 6196
+    },
+    {
+      "path": "docs/audits/native-proxy-observation-archive-final-join-20260911/result/audit.json",
+      "sha256": "337b0145185846affecbbb7af8d6116f7608ee6936c1e5ca11864f67c03a5a71",
+      "size_bytes": 4449
+    },
+    {
+      "path": "docs/audits/native-proxy-observation-archive-final-join-20260911/review.json",
+      "sha256": "29796c4dbed553e84c593e796daef4417f8cf3f87d595da92429c4afe563363d",
+      "size_bytes": 3554
+    },
+    {
+      "path": "docs/audits/native-proxy-observation-archive-records-20260911/ArchiveRecord.pm",
+      "sha256": "38fb47a97157d1b052b3e0f4e148fa6cacd27f4d8defb63ca469133ac6ec1af1",
+      "size_bytes": 9873
+    },
+    {
+      "path": "docs/audits/native-proxy-observation-archive-records-20260911/audit.py",
+      "sha256": "0c75f945c005b5b5fb2fff80e5acb75e2d3a9b942e9c98db7be010c24b7397a3",
+      "size_bytes": 15049
+    },
+    {
+      "path": "docs/audits/native-proxy-observation-archive-records-20260911/plan.json",
+      "sha256": "186bb995f5b769c67a6ab6595856a0b46122a1b101b4b5fb4228c9f810b240b7",
+      "size_bytes": 1018306
+    },
+    {
+      "path": "docs/audits/native-proxy-observation-archive-release-20260911/ObservationRelease.pm",
+      "sha256": "08236265e6e6973ab23e9e31ee26071272f39e8879c2d420ab2382fc800345ab",
+      "size_bytes": 10294
+    },
+    {
+      "path": "docs/audits/native-proxy-observation-records-20260910/ObservationRecord.pm",
+      "sha256": "35445ee951c8f5e7dc204f58cffe1b2f6273286cc3e7715953d705b33e7158d5",
+      "size_bytes": 4369
+    },
+    {
+      "path": "docs/audits/native-proxy-observation-release-contract-20260911/audit.py",
+      "sha256": "0427d24fef5c6cfbd43d9a93e8f8854ec5ce40c732b3ee8592dd405b94d6f902",
+      "size_bytes": 12728
+    },
+    {
+      "path": "docs/audits/native-proxy-observation-release-contract-20260911/contract.json",
+      "sha256": "06f5a8f998baabe772c0683798c3cf95e28a4d7d39d7fac19c9ea72e7cd075c5",
+      "size_bytes": 12823
+    },
+    {
+      "path": "docs/audits/native-proxy-observation-release-contract-20260911/model.py",
+      "sha256": "8ab7961fb5c4d7f56fbe484a1e59267afe5ac723f51e871d2312db4cbe2db3b7",
+      "size_bytes": 3536
+    },
+    {
+      "path": "docs/audits/native-proxy-observation-release-contract-20260911/result/audit.json",
+      "sha256": "75932effd82f5563fdf3b1ac9d7b641931789a72c8ab98bc67b09af2e9cc025b",
+      "size_bytes": 6278
+    },
+    {
+      "path": "docs/audits/native-proxy-observation-reuse-20260910/FixtureClone.pm",
+      "sha256": "d68a2d93f785b1c96689e352f7271e97b0bd239f2cf228f2c8e119dbb6aaf234",
+      "size_bytes": 1053
+    },
+    {
+      "path": "docs/audits/native-proxy-observation-reuse-20260910/result/qualification.json",
+      "sha256": "348c434f7a40012fc8a46a7c7b4b6842ad7d30ca56f3a82947b82231974f6296",
+      "size_bytes": 3707937
+    },
+    {
+      "path": "docs/audits/native-proxy-observation-reuse-20260910/result/recovery-copies.json",
+      "sha256": "af8532e629c095b678b2ac0e610876b422f3e9eed711dfc9af4d488f23d1b092",
+      "size_bytes": 13430
+    },
+    {
+      "path": "docs/audits/native-proxy-observation-work-records-20260911/WorkRecord.pm",
+      "sha256": "3f0f1351bc44a2a8b42502b7b814544f9d756ae8c39e17db470b312635a6e56d",
+      "size_bytes": 8126
+    },
+    {
+      "path": "docs/audits/native-proxy-observation-work-records-20260911/audit.py",
+      "sha256": "8f6239ddddb14548a96a6d0f362b105700e3e733cdb0d0110666652e1f9bd1fe",
+      "size_bytes": 17442
+    },
+    {
+      "path": "docs/audits/native-proxy-observation-work-records-20260911/plan.json",
+      "sha256": "0f406ab391998327bfe39422ef6f842c7d230c39f54ae5b7030799b9a040e5b5",
+      "size_bytes": 368087
+    },
+    {
+      "path": "docs/audits/native-proxy-release-final-join-20260913/review.json",
+      "sha256": "d2d0705d303c3d24d8fc599c1575a322aeaedb0963e7657443ba2d57fe8ef5b0",
+      "size_bytes": 5828
+    },
+    {
+      "path": "docs/audits/native-proxy-runtime-acquisition-20260910/ReferenceAcquisition.pm",
+      "sha256": "b751c88d709e102f7f9b9dd17e0222c39e0a81acc16d7194f7f7c3f4c8535b57",
+      "size_bytes": 6565
+    },
+    {
+      "path": "docs/audits/native-proxy-runtime-census-20260910/ReferenceCensus.pm",
+      "sha256": "9fd74767e8c10831f2732fa8ad426b7e4fff8c17bab06584aa671cdd013b6247",
+      "size_bytes": 8024
+    },
+    {
+      "path": "docs/audits/native-proxy-runtime-records-20260910/RuntimeRecord.pm",
+      "sha256": "013c0a02e7df59dc3a5af944b603cd44121252a02ca0228d6fdc3e1dd28e6745",
+      "size_bytes": 4078
+    },
+    {
+      "path": "docs/audits/native-proxy-runtime-retirement-20260910/PrivateWorkspace.pm",
+      "sha256": "fb87393846eb10147f868aa40ba444f5e5d56cef7f0aaf6a1ff295216a90e9c1",
+      "size_bytes": 6080
+    },
+    {
+      "path": "docs/audits/native-proxy-runtime-retirement-20260910/RuntimeRetirement.pm",
+      "sha256": "766348d16243d3868ca5f8b653f757f8f2eaf5c1aba8ec27fd2d9c67e9fd0bcc",
+      "size_bytes": 8727
+    },
+    {
+      "path": "docs/audits/native-proxy-version-join-20260913/review.json",
+      "sha256": "db20a6bc59f2bbb97aa820246d9267db29bcc482e2747b7e50aa8ffc07aeda1a",
+      "size_bytes": 2671
+    },
+    {
+      "path": "perl/FSM/ProjectDataLocality.pm",
+      "sha256": "14aece4a50b35956bc2585099aa8d26753942288663c641922da9d36ad4bc893",
+      "size_bytes": 6017
+    },
+    {
+      "path": "perl/FSM/Support/ProcessSupervisor.pm",
+      "sha256": "684882d91f673ea7145f43ed3aad31acf099f13508574be7b2d8911123988637",
+      "size_bytes": 27990
+    },
+    {
+      "path": "t/lib/FSM/Test/ProcessSupervisor.pm",
+      "sha256": "52e467023ea8a776167e227a767abdd3dddf185f1f7c539aac8ca1c4a0a06680",
+      "size_bytes": 773
+    },
+    {
+      "path": "t/lib/FSM/Test/RustProxyFixture.pm",
+      "sha256": "d9c4ab52cf8074526c59b7a5dcb9da870ca7ffdacb4eb236dacb23b5db6d8bfb",
+      "size_bytes": 11466
+    }
+  ],
+  "mutants": [
+    {
+      "name": "ignore_observation_b",
+      "witness": "observation_b_holds_image"
+    },
+    {
+      "name": "ignore_other_runtime",
+      "witness": "other_runtime_holds_same_image"
+    },
+    {
+      "name": "release_without_archive",
+      "witness": "release_before_archive"
+    },
+    {
+      "name": "release_without_settlement",
+      "witness": "missing_work_receipt"
+    },
+    {
+      "name": "archive_requires_live",
+      "witness": "archive_after_retirement"
+    },
+    {
+      "name": "retire_requires_success",
+      "witness": "failed_command_settled_runtime"
+    },
+    {
+      "name": "remove_other_image",
+      "witness": "healthy_other_image_preserved"
+    },
+    {
+      "name": "failure_rolls_back",
+      "witness": "post_unlink_failure"
+    }
+  ],
+  "owner": "HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.12.4.1.3.6.2",
+  "profiles": [
+    "same_image",
+    "different_image"
+  ],
+  "schema": "fsmgen.inactive_lifetime_model_plan.v1",
+  "scope": "Pure complete-operation transition model and supplied record consistency only. No actual file, lock, native owner, process, compiler, collector, live canonical store, original producer or original qualifier. Modeled post-unlink failure is not physical failure qualification. Actual-file and interruption admission/execution and native/live public integration remain separately owned.",
+  "source_epoch": "Original rejected lifetime contract remains rejected. This model selects the separately corrected plan and contract at the committed source revision. Original pure oracles are imported without invoking their mains.",
+  "source_revision": "c3fefd0e419a4edd510093f9efd548e1052b064f",
+  "synthetic_inputs": "All identities and ownership tokens are explicitly constructed in memory. Target C/image/wrapper bytes come from retained work context zero; a literal NUL plus lifetime-other suffix constructs a distinct inert image. No path is allocated; no bytes become an executable."
+}

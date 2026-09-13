@@ -1,0 +1,19 @@
+{
+  "checked_passages": [
+    "The combined lifetime model now separates live sources from retained bytes.",
+    "Archival can use the saved bytes after private retirement.",
+    "Failed or cancelled command outcomes can still have settled cleanup.",
+    "These are modeled effects, not filesystem observations.",
+    "docs/audits/native-proxy-lifetime-model-20260913/audit_corrected.py --verify-saved"
+  ],
+  "exact_output_absent": true,
+  "exit_code": 0,
+  "output": ".artifacts/tmp/native-proxy-lifetime-model-split-book-20260913/book",
+  "rendered_bytes": 23582468,
+  "rendered_directories": 2,
+  "rendered_files": 99,
+  "renderer_warnings": [
+    "WARN search index is very large (13275214 bytes)"
+  ],
+  "same_volume_direct_objects": true
+}

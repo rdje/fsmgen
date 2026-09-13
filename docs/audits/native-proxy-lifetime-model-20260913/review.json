@@ -1,0 +1,48 @@
+{
+  "actual_filesystem_effects": false,
+  "claim_legs": {
+    "durability": "Prospective source/input hashes, complete prepared domain, first outputs, saved-only auditor, task tree, book, Knowledge Map and Git; actual filesystem and native behavior qualification are missing here and remain owned.",
+    "falsification": "Explicit invalid order, stale/uncertain evidence and cleanup controls, omitted-guard implementations and independently altered saved evidence must reject or differ from the healthy oracle.",
+    "rederivation": "Every finite schedule and every prefix state rederived from completed-event sets plus byte/identity projections; original Perl codecs validate independently constructed record carriers."
+  },
+  "controls": 34,
+  "corrected_pins": 17,
+  "correction": "Keep malformed entries in complete state fingerprints and reference membership. Index live source paths only from entries with a source; missing source cannot supply a live-target match. Change only this projection and corrected input/output routing. Do not rerun preparation, record bridge or model producer.",
+  "domain_sha256": "e848a55a4697dcc1d0a790f4a45379c897b574891fd7dd230dd506e5ff866fce",
+  "exact_inert_roots_absent": [
+    ".artifacts/logs/native-proxy-observation-acquisition-20260910/cases/fsmgen-LifetimeEvidence",
+    ".artifacts/tmp/native-proxy-image-custody/cases/fsmgen-LifetimeModel",
+    ".artifacts/tmp/process-supervisor-tests/fsmgen-LifetimeOther",
+    ".artifacts/tmp/process-supervisor-tests/fsmgen-LifetimeTarget"
+  ],
+  "falsifiers": [
+    "missing_trace",
+    "changed_event_order",
+    "wrong_prefix_state",
+    "rejected_healthy",
+    "lost_partial_effect",
+    "changed_bridge_record",
+    "promoted_runtime_authority"
+  ],
+  "first_failure": "The independent live-source projection indexes source in every reference entry. The declared unknown-reference control inserts an empty entry; projection raises KeyError before comparing its expected maintenance rejection. The original model returns rejected with unchanged modeled state. This is an auditor projection defect, not a prototype or producer failure.",
+  "limits": "Pure complete-operation transition model and supplied record consistency only. No actual file, lock, native owner, process, compiler, collector, live canonical store, original producer or original qualifier. Modeled post-unlink failure is not physical failure qualification. Actual-file and interruption admission/execution and native/live public integration remain separately owned.",
+  "next_action": "Admit separately owned bounded actual-file lifetimes under .12.4.1.3.6.3 before any allocation or execution.",
+  "omitted_guard_witnesses": 8,
+  "original_record_tap": 42,
+  "owner": "HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.12.4.1.3.6.2",
+  "prefix_states": 3120,
+  "preflight_pins": 11,
+  "prepare_pins": 9,
+  "profiles": {
+    "different_image": 210,
+    "same_image": 180
+  },
+  "raw_captures": 30,
+  "record_controls": 19,
+  "runtime_qualification": false,
+  "schema": "fsmgen.inactive_lifetime_model_review.v1",
+  "serial_orders": 390,
+  "source_bytes": 6994260,
+  "source_inputs": 44,
+  "source_revision": "c3fefd0e419a4edd510093f9efd548e1052b064f"
+}

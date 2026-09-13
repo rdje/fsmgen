@@ -1,0 +1,17 @@
+{
+  "new_page": "docs/book/src/16dk-inactive-proxy-lifetimes.md",
+  "new_page_prefix": "# Inactive Proxy Lifetimes\n\n",
+  "new_page_suffix": "[Return to runtime measurement](16dc-vial-portable-verilator-runtime-measurement.md).\n",
+  "no_ceilings_changed": true,
+  "offset_units": "Unicode codepoints",
+  "replacement": "Combined lifetime contracts and the qualified inert state model are documented\nin [Inactive Proxy Lifetimes](16dk-inactive-proxy-lifetimes.md).\n\n",
+  "segment_end": 197335,
+  "segment_lines": 49,
+  "segment_sha256": "0cc303fec46374e2709c677adbf758b5aea3ace6d6ec3051fcd1f6534f5007cb",
+  "segment_start": 194505,
+  "source_chapter": "docs/book/src/16dc-vial-portable-verilator-runtime-measurement.md",
+  "source_summary": "docs/book/src/SUMMARY.md",
+  "summary_anchor": "    - [Portable Verilator Runtime Measurement](16dc-vial-portable-verilator-runtime-measurement.md)\n",
+  "summary_new_link": "    - [Inactive Proxy Lifetimes](16dk-inactive-proxy-lifetimes.md)\n",
+  "summary_normalization": "Remove exactly the empty line after the heading. Preserve every previous nonempty line and add the new topic link."
+}

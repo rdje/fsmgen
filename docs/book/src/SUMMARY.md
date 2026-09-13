@@ -1,5 +1,4 @@
 # Summary
-
 - [Introduction](00-introduction.md)
 - [Your First FSM](01-first-fsm.md)
 - [Language Basics](02-language-basics.md)
@@ -56,6 +55,7 @@
     - [Balanced Portable Composition](16da-vial-balanced-portable-composition.md)
     - [Structural Backend-Emission Matrix](16db-vial-structural-backend-emission-matrix.md)
     - [Portable Verilator Runtime Measurement](16dc-vial-portable-verilator-runtime-measurement.md)
+    - [Inactive Proxy Lifetimes](16dk-inactive-proxy-lifetimes.md)
     - [Portable VHDL Runtime Measurement](16dd-vial-portable-vhdl-runtime-measurement.md)
     - [OSVVM Runtime Execution Plan](16de-vial-osvvm-runtime-execution-plan.md)
     - [Architecture-Scale Cap Closeout](16df-vial-architecture-scale-cap-closeout.md)

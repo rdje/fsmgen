@@ -1,0 +1,1837 @@
+{
+   "controls" : [
+      {
+         "accepted" : 1,
+         "error" : "",
+         "name" : "archive_after_retirement"
+      },
+      {
+         "accepted" : 1,
+         "error" : "",
+         "name" : "archive_before_retirement"
+      },
+      {
+         "accepted" : 0,
+         "error" : "selected work is not sealed\n",
+         "name" : "unsealed_work"
+      },
+      {
+         "accepted" : 0,
+         "error" : "expected every selected work receipt in original order\n",
+         "name" : "missing_work_receipt"
+      },
+      {
+         "accepted" : 0,
+         "error" : "work receipt changes selected ownership or role\n",
+         "name" : "wrong_work_token"
+      },
+      {
+         "accepted" : 0,
+         "error" : "settlement replaces original selection\n",
+         "name" : "replaced_work_selection"
+      },
+      {
+         "accepted" : 0,
+         "error" : "selected work cleanup is incomplete\n",
+         "name" : "unreaped_worker"
+      },
+      {
+         "accepted" : 0,
+         "error" : "selected work cleanup is incomplete\n",
+         "name" : "unknown_worker_group"
+      },
+      {
+         "accepted" : 0,
+         "error" : "expected completed, failed or cancelled outcome\n",
+         "name" : "unknown_work_outcome"
+      },
+      {
+         "accepted" : 1,
+         "error" : "",
+         "name" : "failed_and_cancelled_work_is_settled"
+      },
+      {
+         "accepted" : 1,
+         "error" : "",
+         "name" : "never_started_cancelled_work_is_settled"
+      },
+      {
+         "accepted" : 0,
+         "error" : "archive observation reference differs\n",
+         "name" : "wrong_archive_observation"
+      },
+      {
+         "accepted" : 0,
+         "error" : "archive binding changes original source identity\n",
+         "name" : "wrong_archive_source_identity"
+      },
+      {
+         "accepted" : 1,
+         "error" : "",
+         "name" : "changed_live_wrapper_still_archivable"
+      },
+      {
+         "accepted" : 0,
+         "error" : "acquired snapshot bytes or path differ\n",
+         "name" : "changed_retained_wrapper_rejects"
+      },
+      {
+         "accepted" : 1,
+         "error" : "",
+         "name" : "failed_command_settled_runtime"
+      },
+      {
+         "accepted" : 0,
+         "error" : "unsettled cleanup at docs/audits/native-proxy-lifetime-model-20260913/bridge.pl line 109.\n",
+         "name" : "missing_runtime_stages"
+      },
+      {
+         "accepted" : 0,
+         "error" : "unsettled cleanup at docs/audits/native-proxy-lifetime-model-20260913/bridge.pl line 109.\n",
+         "name" : "unknown_runtime_group"
+      },
+      {
+         "accepted" : 0,
+         "error" : "unsettled cleanup at docs/audits/native-proxy-lifetime-model-20260913/bridge.pl line 109.\n",
+         "name" : "unreaped_runtime_leader"
+      }
+   ],
+   "fixture_lookup_attempts" : 0,
+   "input_unchanged" : true,
+   "process_attempts" : 0,
+   "schema" : "fsmgen.inactive_lifetime_record_bridge.v1",
+   "seeds" : {
+      "different_image" : {
+         "observations" : {
+            "a" : {
+               "archive" : {
+                  "archive_directory_identity" : {
+                     "device" : 1,
+                     "inode" : 50,
+                     "path" : ".artifacts/logs/native-proxy-observation-acquisition-20260910/cases/fsmgen-LifetimeEvidence/retained-sources"
+                  },
+                  "evidence_directory_identity" : {
+                     "device" : 1,
+                     "inode" : 3,
+                     "path" : ".artifacts/logs/native-proxy-observation-acquisition-20260910/cases/fsmgen-LifetimeEvidence"
+                  },
+                  "executable" : null,
+                  "observation_reference_key" : "5bdfab507fa1a5ef1b7ca2c2789ec83e5f8f0d899ee83c236b85724d7867f5aa",
+                  "runtime_authorized" : 0,
+                  "schema" : "fsmgen.inactive_observation_archive.v1",
+                  "source_bindings" : [
+                     {
+                        "archive" : {
+                           "device" : 1,
+                           "inode" : 51,
+                           "path" : ".artifacts/logs/native-proxy-observation-acquisition-20260910/cases/fsmgen-LifetimeEvidence/retained-sources/d42ab2b4e413bd694a831c4a8307a0c4cd760b3bfdcf5fc93dc0b6772fdd632b.source",
+                           "sha256" : "d42ab2b4e413bd694a831c4a8307a0c4cd760b3bfdcf5fc93dc0b6772fdd632b",
+                           "size_bytes" : 60
+                        },
+                        "role" : "wrapper",
+                        "source" : {
+                           "device" : 1,
+                           "inode" : 30,
+                           "path" : ".artifacts/tmp/process-supervisor-tests/fsmgen-LifetimeTarget/rust-tool-resolution",
+                           "sha256" : "d42ab2b4e413bd694a831c4a8307a0c4cd760b3bfdcf5fc93dc0b6772fdd632b",
+                           "size_bytes" : 60
+                        }
+                     },
+                     {
+                        "archive" : {
+                           "device" : 1,
+                           "inode" : 52,
+                           "path" : ".artifacts/logs/native-proxy-observation-acquisition-20260910/cases/fsmgen-LifetimeEvidence/retained-sources/f14e673e9e01e0c87c608dc1b4aacc027d6a2e2ae26d2b9efe051167fa07897e.source",
+                           "sha256" : "f14e673e9e01e0c87c608dc1b4aacc027d6a2e2ae26d2b9efe051167fa07897e",
+                           "size_bytes" : 976
+                        },
+                        "role" : "private_reference",
+                        "source" : {
+                           "device" : 1,
+                           "inode" : 31,
+                           "path" : ".artifacts/tmp/process-supervisor-tests/fsmgen-LifetimeTarget/rust-tools/image-reference.json",
+                           "sha256" : "f14e673e9e01e0c87c608dc1b4aacc027d6a2e2ae26d2b9efe051167fa07897e",
+                           "size_bytes" : 976
+                        }
+                     },
+                     {
+                        "archive" : {
+                           "device" : 1,
+                           "inode" : 52,
+                           "path" : ".artifacts/logs/native-proxy-observation-acquisition-20260910/cases/fsmgen-LifetimeEvidence/retained-sources/f14e673e9e01e0c87c608dc1b4aacc027d6a2e2ae26d2b9efe051167fa07897e.source",
+                           "sha256" : "f14e673e9e01e0c87c608dc1b4aacc027d6a2e2ae26d2b9efe051167fa07897e",
+                           "size_bytes" : 976
+                        },
+                        "role" : "global_reference",
+                        "source" : {
+                           "device" : 1,
+                           "inode" : 20,
+                           "path" : ".artifacts/tmp/native-proxy-image-custody/cases/fsmgen-LifetimeModel/references/747d676c11f338b31258e6dce42757fc2a827352aeb1ca6d8293650c290ed3cb.json",
+                           "sha256" : "f14e673e9e01e0c87c608dc1b4aacc027d6a2e2ae26d2b9efe051167fa07897e",
+                           "size_bytes" : 976
+                        }
+                     },
+                     {
+                        "archive" : {
+                           "device" : 1,
+                           "inode" : 53,
+                           "path" : ".artifacts/logs/native-proxy-observation-acquisition-20260910/cases/fsmgen-LifetimeEvidence/retained-sources/a7d92e28ec1c8308e37c6003df167bc42bd2341cf3a69d677f45330271ffba56.source",
+                           "sha256" : "a7d92e28ec1c8308e37c6003df167bc42bd2341cf3a69d677f45330271ffba56",
+                           "size_bytes" : 50
+                        },
+                        "role" : "c",
+                        "source" : {
+                           "device" : 1,
+                           "inode" : 10,
+                           "path" : ".artifacts/tmp/native-proxy-image-custody/cases/fsmgen-LifetimeModel/images/efd497b0e847884b3c1cfcde14d8b645991c52ebab90c54e58984ccbc303c146/rustup.c",
+                           "sha256" : "a7d92e28ec1c8308e37c6003df167bc42bd2341cf3a69d677f45330271ffba56",
+                           "size_bytes" : 50
+                        }
+                     },
+                     {
+                        "archive" : {
+                           "device" : 1,
+                           "inode" : 54,
+                           "path" : ".artifacts/logs/native-proxy-observation-acquisition-20260910/cases/fsmgen-LifetimeEvidence/retained-sources/e7f06f27e18528c7d10e8c4a4ab42b5e70d1423cdb80e83048597719c9c7eb67.source",
+                           "sha256" : "e7f06f27e18528c7d10e8c4a4ab42b5e70d1423cdb80e83048597719c9c7eb67",
+                           "size_bytes" : 53
+                        },
+                        "role" : "image",
+                        "source" : {
+                           "device" : 1,
+                           "inode" : 11,
+                           "path" : ".artifacts/tmp/native-proxy-image-custody/cases/fsmgen-LifetimeModel/images/efd497b0e847884b3c1cfcde14d8b645991c52ebab90c54e58984ccbc303c146/rustup",
+                           "sha256" : "e7f06f27e18528c7d10e8c4a4ab42b5e70d1423cdb80e83048597719c9c7eb67",
+                           "size_bytes" : 53
+                        }
+                     }
+                  ]
+               },
+               "previous" : {
+                  "executable" : null,
+                  "lock" : {
+                     "device" : 1,
+                     "inode" : 4,
+                     "path" : ".artifacts/tmp/native-proxy-image-custody/cases/fsmgen-LifetimeModel/coordination.lock"
+                  },
+                  "observation_reference" : {
+                     "record" : {
+                        "evidence_directory" : ".artifacts/logs/native-proxy-observation-acquisition-20260910/cases/fsmgen-LifetimeEvidence",
+                        "evidence_directory_identity" : {
+                           "device" : 1,
+                           "inode" : 3,
+                           "path" : ".artifacts/logs/native-proxy-observation-acquisition-20260910/cases/fsmgen-LifetimeEvidence"
+                        },
+                        "image_key" : "efd497b0e847884b3c1cfcde14d8b645991c52ebab90c54e58984ccbc303c146",
+                        "observer_birth" : {
+                           "pid" : 101,
+                           "ppid" : 100,
+                           "ruid" : 501,
+                           "start_sec" : 123,
+                           "start_usec" : 456,
+                           "uid" : 501
+                        },
+                        "reference_key" : "5bdfab507fa1a5ef1b7ca2c2789ec83e5f8f0d899ee83c236b85724d7867f5aa",
+                        "schema" : "fsmgen.test.rust_proxy_image_observation_reference.v1",
+                        "selected_sources" : [
+                           {
+                              "device" : 1,
+                              "inode" : 10,
+                              "path" : ".artifacts/tmp/native-proxy-image-custody/cases/fsmgen-LifetimeModel/images/efd497b0e847884b3c1cfcde14d8b645991c52ebab90c54e58984ccbc303c146/rustup.c",
+                              "sha256" : "a7d92e28ec1c8308e37c6003df167bc42bd2341cf3a69d677f45330271ffba56",
+                              "size_bytes" : 50
+                           },
+                           {
+                              "device" : 1,
+                              "inode" : 11,
+                              "path" : ".artifacts/tmp/native-proxy-image-custody/cases/fsmgen-LifetimeModel/images/efd497b0e847884b3c1cfcde14d8b645991c52ebab90c54e58984ccbc303c146/rustup",
+                              "sha256" : "e7f06f27e18528c7d10e8c4a4ab42b5e70d1423cdb80e83048597719c9c7eb67",
+                              "size_bytes" : 53
+                           }
+                        ],
+                        "target_birth" : {
+                           "pid" : 201,
+                           "ppid" : 200,
+                           "ruid" : 501,
+                           "start_sec" : 124,
+                           "start_usec" : 789,
+                           "uid" : 501
+                        }
+                     },
+                     "source" : {
+                        "bytes_hex" : "7b2265766964656e63655f6469726563746f7279223a222e6172746966616374732f6c6f67732f6e61746976652d70726f78792d6f62736572766174696f6e2d6163717569736974696f6e2d32303236303931302f63617365732f66736d67656e2d4c69666574696d6545766964656e6365222c2265766964656e63655f6469726563746f72795f6964656e74697479223a7b22646576696365223a312c22696e6f6465223a332c2270617468223a222e6172746966616374732f6c6f67732f6e61746976652d70726f78792d6f62736572766174696f6e2d6163717569736974696f6e2d32303236303931302f63617365732f66736d67656e2d4c69666574696d6545766964656e6365227d2c22696d6167655f6b6579223a2265666434393762306538343738383462336331636663646531346438623634353939316335326562616239306335346535383938346363626333303363313436222c226f627365727665725f6269727468223a7b22706964223a3130312c2270706964223a3130302c2272756964223a3530312c2273746172745f736563223a3132332c2273746172745f75736563223a3435362c22756964223a3530317d2c227265666572656e63655f6b6579223a2235626466616235303766613161356566316237636132633237383965633833653566386630643839396565383363323336623835373234643738363766356161222c22736368656d61223a2266736d67656e2e746573742e727573745f70726f78795f696d6167655f6f62736572766174696f6e5f7265666572656e63652e7631222c2273656c65637465645f736f7572636573223a5b7b22646576696365223a312c22696e6f6465223a31302c2270617468223a222e6172746966616374732f746d702f6e61746976652d70726f78792d696d6167652d637573746f64792f63617365732f66736d67656e2d4c69666574696d654d6f64656c2f696d616765732f656664343937623065383437383834623363316366636465313464386236343539393163353265626162393063353465353839383463636263333033633134362f7275737475702e63222c22736861323536223a2261376439326532386563316338333038653337633630303364663136376263343262643233343163663361363964363737663435333330323731666662613536222c2273697a655f6279746573223a35307d2c7b22646576696365223a312c22696e6f6465223a31312c2270617468223a222e6172746966616374732f746d702f6e61746976652d70726f78792d696d6167652d637573746f64792f63617365732f66736d67656e2d4c69666574696d654d6f64656c2f696d616765732f656664343937623065383437383834623363316366636465313464386236343539393163353265626162393063353465353839383463636263333033633134362f727573747570222c22736861323536223a2265376630366632376531383532386337643130653863346134616234326235653730643134323363646238306538333034383539373731396339633765623637222c2273697a655f6279746573223a35337d5d2c227461726765745f6269727468223a7b22706964223a3230312c2270706964223a3230302c2272756964223a3530312c2273746172745f736563223a3132342c2273746172745f75736563223a3738392c22756964223a3530317d7d",
+                        "identity" : {
+                           "device" : 1,
+                           "inode" : 40,
+                           "path" : ".artifacts/tmp/native-proxy-image-custody/cases/fsmgen-LifetimeModel/references/5bdfab507fa1a5ef1b7ca2c2789ec83e5f8f0d899ee83c236b85724d7867f5aa.json",
+                           "sha256" : "291aff93255834e3f6aaf9d84263cf0c5c6b434e1258bb1c2687e917e124be79",
+                           "size_bytes" : 1252
+                        }
+                     }
+                  },
+                  "runtime_authorized" : 0,
+                  "schema" : "fsmgen.inactive_observation_acquisition.v1",
+                  "target_sources" : [
+                     {
+                        "bytes_hex" : "23212f7573722f62696e2f7065726c0a2320696e657274206f62736572766174696f6e20777261707065723b206e657665722065786563757465640a",
+                        "identity" : {
+                           "device" : 1,
+                           "inode" : 30,
+                           "path" : ".artifacts/tmp/process-supervisor-tests/fsmgen-LifetimeTarget/rust-tool-resolution",
+                           "sha256" : "d42ab2b4e413bd694a831c4a8307a0c4cd760b3bfdcf5fc93dc0b6772fdd632b",
+                           "size_bytes" : 60
+                        }
+                     },
+                     {
+                        "bytes_hex" : "7b22696d6167655f6b6579223a2265666434393762306538343738383462336331636663646531346438623634353939316335326562616239306335346535383938346363626333303363313436222c227265666572656e63655f6b6579223a2237343764363736633131663333386233313235386536646365343237353766633261383237333532616562316361366438323933363530633239306564336362222c22736368656d61223a2266736d67656e2e746573742e727573745f70726f78795f696d6167655f7265666572656e63652e7631222c2273656c65637465645f736f7572636573223a5b7b22646576696365223a312c22696e6f6465223a31302c2270617468223a222e6172746966616374732f746d702f6e61746976652d70726f78792d696d6167652d637573746f64792f63617365732f66736d67656e2d4c69666574696d654d6f64656c2f696d616765732f656664343937623065383437383834623363316366636465313464386236343539393163353265626162393063353465353839383463636263333033633134362f7275737475702e63222c22736861323536223a2261376439326532386563316338333038653337633630303364663136376263343262643233343163663361363964363737663435333330323731666662613536222c2273697a655f6279746573223a35307d2c7b22646576696365223a312c22696e6f6465223a31312c2270617468223a222e6172746966616374732f746d702f6e61746976652d70726f78792d696d6167652d637573746f64792f63617365732f66736d67656e2d4c69666574696d654d6f64656c2f696d616765732f656664343937623065383437383834623363316366636465313464386236343539393163353265626162393063353465353839383463636263333033633134362f727573747570222c22736861323536223a2265376630366632376531383532386337643130653863346134616234326235653730643134323363646238306538333034383539373731396339633765623637222c2273697a655f6279746573223a35337d5d2c22776f726b7370616365223a222e6172746966616374732f746d702f70726f636573732d73757065727669736f722d74657374732f66736d67656e2d4c69666574696d65546172676574222c22776f726b73706163655f6964656e74697479223a7b22646576696365223a312c22696e6f6465223a312c2270617468223a222e6172746966616374732f746d702f70726f636573732d73757065727669736f722d74657374732f66736d67656e2d4c69666574696d65546172676574227d7d",
+                        "identity" : {
+                           "device" : 1,
+                           "inode" : 31,
+                           "path" : ".artifacts/tmp/process-supervisor-tests/fsmgen-LifetimeTarget/rust-tools/image-reference.json",
+                           "sha256" : "f14e673e9e01e0c87c608dc1b4aacc027d6a2e2ae26d2b9efe051167fa07897e",
+                           "size_bytes" : 976
+                        }
+                     },
+                     {
+                        "bytes_hex" : "7b22696d6167655f6b6579223a2265666434393762306538343738383462336331636663646531346438623634353939316335326562616239306335346535383938346363626333303363313436222c227265666572656e63655f6b6579223a2237343764363736633131663333386233313235386536646365343237353766633261383237333532616562316361366438323933363530633239306564336362222c22736368656d61223a2266736d67656e2e746573742e727573745f70726f78795f696d6167655f7265666572656e63652e7631222c2273656c65637465645f736f7572636573223a5b7b22646576696365223a312c22696e6f6465223a31302c2270617468223a222e6172746966616374732f746d702f6e61746976652d70726f78792d696d6167652d637573746f64792f63617365732f66736d67656e2d4c69666574696d654d6f64656c2f696d616765732f656664343937623065383437383834623363316366636465313464386236343539393163353265626162393063353465353839383463636263333033633134362f7275737475702e63222c22736861323536223a2261376439326532386563316338333038653337633630303364663136376263343262643233343163663361363964363737663435333330323731666662613536222c2273697a655f6279746573223a35307d2c7b22646576696365223a312c22696e6f6465223a31312c2270617468223a222e6172746966616374732f746d702f6e61746976652d70726f78792d696d6167652d637573746f64792f63617365732f66736d67656e2d4c69666574696d654d6f64656c2f696d616765732f656664343937623065383437383834623363316366636465313464386236343539393163353265626162393063353465353839383463636263333033633134362f727573747570222c22736861323536223a2265376630366632376531383532386337643130653863346134616234326235653730643134323363646238306538333034383539373731396339633765623637222c2273697a655f6279746573223a35337d5d2c22776f726b7370616365223a222e6172746966616374732f746d702f70726f636573732d73757065727669736f722d74657374732f66736d67656e2d4c69666574696d65546172676574222c22776f726b73706163655f6964656e74697479223a7b22646576696365223a312c22696e6f6465223a312c2270617468223a222e6172746966616374732f746d702f70726f636573732d73757065727669736f722d74657374732f66736d67656e2d4c69666574696d65546172676574227d7d",
+                        "identity" : {
+                           "device" : 1,
+                           "inode" : 20,
+                           "path" : ".artifacts/tmp/native-proxy-image-custody/cases/fsmgen-LifetimeModel/references/747d676c11f338b31258e6dce42757fc2a827352aeb1ca6d8293650c290ed3cb.json",
+                           "sha256" : "f14e673e9e01e0c87c608dc1b4aacc027d6a2e2ae26d2b9efe051167fa07897e",
+                           "size_bytes" : 976
+                        }
+                     },
+                     {
+                        "bytes_hex" : "2f2a20696e657274207175616c696669636174696f6e2062797465733b206e6576657220636f6d70696c6564202a2f0a00ff",
+                        "identity" : {
+                           "device" : 1,
+                           "inode" : 10,
+                           "path" : ".artifacts/tmp/native-proxy-image-custody/cases/fsmgen-LifetimeModel/images/efd497b0e847884b3c1cfcde14d8b645991c52ebab90c54e58984ccbc303c146/rustup.c",
+                           "sha256" : "a7d92e28ec1c8308e37c6003df167bc42bd2341cf3a69d677f45330271ffba56",
+                           "size_bytes" : 50
+                        }
+                     },
+                     {
+                        "bytes_hex" : "cffaedfe0c000001000000000200000000000000000000000000000000000000696e6572742d6e6f742d612d70726f6772616d00ff",
+                        "identity" : {
+                           "device" : 1,
+                           "inode" : 11,
+                           "path" : ".artifacts/tmp/native-proxy-image-custody/cases/fsmgen-LifetimeModel/images/efd497b0e847884b3c1cfcde14d8b645991c52ebab90c54e58984ccbc303c146/rustup",
+                           "sha256" : "e7f06f27e18528c7d10e8c4a4ab42b5e70d1423cdb80e83048597719c9c7eb67",
+                           "size_bytes" : 53
+                        }
+                     }
+                  ]
+               },
+               "selection" : {
+                  "entries" : [
+                     {
+                        "ownership_token" : "f107e8381642169a917b523559e84cd7eedf92aaffc1eced2a1de0b3286e9098",
+                        "role" : "capture",
+                        "work_id" : "a:capture"
+                     },
+                     {
+                        "ownership_token" : "bffd15672db7fe92ad405aabf421af036c3fae371ff250c0bacc877d4716f919",
+                        "role" : "helper",
+                        "work_id" : "a:helper"
+                     },
+                     {
+                        "ownership_token" : "d8b07bfe9ec28a0e1a66bd8fb1509f6af46867d2e14cfbec734e5d6ec0c439dd",
+                        "role" : "query",
+                        "work_id" : "a:query"
+                     }
+                  ],
+                  "evidence_directory_identity" : {
+                     "device" : 1,
+                     "inode" : 3,
+                     "path" : ".artifacts/logs/native-proxy-observation-acquisition-20260910/cases/fsmgen-LifetimeEvidence"
+                  },
+                  "executable" : null,
+                  "observation_reference_key" : "5bdfab507fa1a5ef1b7ca2c2789ec83e5f8f0d899ee83c236b85724d7867f5aa",
+                  "runtime_authorized" : 0,
+                  "schema" : "fsmgen.inactive_observation_work_selection.v1"
+               },
+               "settlement" : {
+                  "executable" : null,
+                  "receipts" : [
+                     {
+                        "cleanup" : {
+                           "group_gone" : 1,
+                           "leader_reaped" : 1,
+                           "leader_started" : 1
+                        },
+                        "outcome" : "completed",
+                        "ownership_token" : "f107e8381642169a917b523559e84cd7eedf92aaffc1eced2a1de0b3286e9098",
+                        "role" : "capture",
+                        "work_id" : "a:capture"
+                     },
+                     {
+                        "cleanup" : {
+                           "group_gone" : 1,
+                           "leader_reaped" : 1,
+                           "leader_started" : 1
+                        },
+                        "outcome" : "failed",
+                        "ownership_token" : "bffd15672db7fe92ad405aabf421af036c3fae371ff250c0bacc877d4716f919",
+                        "role" : "helper",
+                        "work_id" : "a:helper"
+                     },
+                     {
+                        "cleanup" : {
+                           "group_gone" : 1,
+                           "leader_reaped" : 1,
+                           "leader_started" : 1
+                        },
+                        "outcome" : "cancelled",
+                        "ownership_token" : "d8b07bfe9ec28a0e1a66bd8fb1509f6af46867d2e14cfbec734e5d6ec0c439dd",
+                        "role" : "query",
+                        "work_id" : "a:query"
+                     }
+                  ],
+                  "runtime_authorized" : 0,
+                  "schema" : "fsmgen.inactive_observation_work_settlement.v1",
+                  "selection" : {
+                     "entries" : [
+                        {
+                           "ownership_token" : "f107e8381642169a917b523559e84cd7eedf92aaffc1eced2a1de0b3286e9098",
+                           "role" : "capture",
+                           "work_id" : "a:capture"
+                        },
+                        {
+                           "ownership_token" : "bffd15672db7fe92ad405aabf421af036c3fae371ff250c0bacc877d4716f919",
+                           "role" : "helper",
+                           "work_id" : "a:helper"
+                        },
+                        {
+                           "ownership_token" : "d8b07bfe9ec28a0e1a66bd8fb1509f6af46867d2e14cfbec734e5d6ec0c439dd",
+                           "role" : "query",
+                           "work_id" : "a:query"
+                        }
+                     ],
+                     "evidence_directory_identity" : {
+                        "device" : 1,
+                        "inode" : 3,
+                        "path" : ".artifacts/logs/native-proxy-observation-acquisition-20260910/cases/fsmgen-LifetimeEvidence"
+                     },
+                     "executable" : null,
+                     "observation_reference_key" : "5bdfab507fa1a5ef1b7ca2c2789ec83e5f8f0d899ee83c236b85724d7867f5aa",
+                     "runtime_authorized" : 0,
+                     "schema" : "fsmgen.inactive_observation_work_selection.v1"
+                  },
+                  "selection_sealed" : 1
+               },
+               "specification" : {
+                  "archive_directory" : ".artifacts/logs/native-proxy-observation-acquisition-20260910/cases/fsmgen-LifetimeEvidence/retained-sources",
+                  "evidence_directory_identity" : {
+                     "device" : 1,
+                     "inode" : 3,
+                     "path" : ".artifacts/logs/native-proxy-observation-acquisition-20260910/cases/fsmgen-LifetimeEvidence"
+                  },
+                  "executable" : null,
+                  "files" : [
+                     {
+                        "bytes_hex" : "23212f7573722f62696e2f7065726c0a2320696e657274206f62736572766174696f6e20777261707065723b206e657665722065786563757465640a",
+                        "path" : ".artifacts/logs/native-proxy-observation-acquisition-20260910/cases/fsmgen-LifetimeEvidence/retained-sources/d42ab2b4e413bd694a831c4a8307a0c4cd760b3bfdcf5fc93dc0b6772fdd632b.source",
+                        "sha256" : "d42ab2b4e413bd694a831c4a8307a0c4cd760b3bfdcf5fc93dc0b6772fdd632b",
+                        "size_bytes" : 60
+                     },
+                     {
+                        "bytes_hex" : "7b22696d6167655f6b6579223a2265666434393762306538343738383462336331636663646531346438623634353939316335326562616239306335346535383938346363626333303363313436222c227265666572656e63655f6b6579223a2237343764363736633131663333386233313235386536646365343237353766633261383237333532616562316361366438323933363530633239306564336362222c22736368656d61223a2266736d67656e2e746573742e727573745f70726f78795f696d6167655f7265666572656e63652e7631222c2273656c65637465645f736f7572636573223a5b7b22646576696365223a312c22696e6f6465223a31302c2270617468223a222e6172746966616374732f746d702f6e61746976652d70726f78792d696d6167652d637573746f64792f63617365732f66736d67656e2d4c69666574696d654d6f64656c2f696d616765732f656664343937623065383437383834623363316366636465313464386236343539393163353265626162393063353465353839383463636263333033633134362f7275737475702e63222c22736861323536223a2261376439326532386563316338333038653337633630303364663136376263343262643233343163663361363964363737663435333330323731666662613536222c2273697a655f6279746573223a35307d2c7b22646576696365223a312c22696e6f6465223a31312c2270617468223a222e6172746966616374732f746d702f6e61746976652d70726f78792d696d6167652d637573746f64792f63617365732f66736d67656e2d4c69666574696d654d6f64656c2f696d616765732f656664343937623065383437383834623363316366636465313464386236343539393163353265626162393063353465353839383463636263333033633134362f727573747570222c22736861323536223a2265376630366632376531383532386337643130653863346134616234326235653730643134323363646238306538333034383539373731396339633765623637222c2273697a655f6279746573223a35337d5d2c22776f726b7370616365223a222e6172746966616374732f746d702f70726f636573732d73757065727669736f722d74657374732f66736d67656e2d4c69666574696d65546172676574222c22776f726b73706163655f6964656e74697479223a7b22646576696365223a312c22696e6f6465223a312c2270617468223a222e6172746966616374732f746d702f70726f636573732d73757065727669736f722d74657374732f66736d67656e2d4c69666574696d65546172676574227d7d",
+                        "path" : ".artifacts/logs/native-proxy-observation-acquisition-20260910/cases/fsmgen-LifetimeEvidence/retained-sources/f14e673e9e01e0c87c608dc1b4aacc027d6a2e2ae26d2b9efe051167fa07897e.source",
+                        "sha256" : "f14e673e9e01e0c87c608dc1b4aacc027d6a2e2ae26d2b9efe051167fa07897e",
+                        "size_bytes" : 976
+                     },
+                     {
+                        "bytes_hex" : "2f2a20696e657274207175616c696669636174696f6e2062797465733b206e6576657220636f6d70696c6564202a2f0a00ff",
+                        "path" : ".artifacts/logs/native-proxy-observation-acquisition-20260910/cases/fsmgen-LifetimeEvidence/retained-sources/a7d92e28ec1c8308e37c6003df167bc42bd2341cf3a69d677f45330271ffba56.source",
+                        "sha256" : "a7d92e28ec1c8308e37c6003df167bc42bd2341cf3a69d677f45330271ffba56",
+                        "size_bytes" : 50
+                     },
+                     {
+                        "bytes_hex" : "cffaedfe0c000001000000000200000000000000000000000000000000000000696e6572742d6e6f742d612d70726f6772616d00ff",
+                        "path" : ".artifacts/logs/native-proxy-observation-acquisition-20260910/cases/fsmgen-LifetimeEvidence/retained-sources/e7f06f27e18528c7d10e8c4a4ab42b5e70d1423cdb80e83048597719c9c7eb67.source",
+                        "sha256" : "e7f06f27e18528c7d10e8c4a4ab42b5e70d1423cdb80e83048597719c9c7eb67",
+                        "size_bytes" : 53
+                     }
+                  ],
+                  "observation_reference_key" : "5bdfab507fa1a5ef1b7ca2c2789ec83e5f8f0d899ee83c236b85724d7867f5aa",
+                  "runtime_authorized" : 0,
+                  "schema" : "fsmgen.inactive_observation_archive_specification.v1",
+                  "sources" : [
+                     {
+                        "destination" : ".artifacts/logs/native-proxy-observation-acquisition-20260910/cases/fsmgen-LifetimeEvidence/retained-sources/d42ab2b4e413bd694a831c4a8307a0c4cd760b3bfdcf5fc93dc0b6772fdd632b.source",
+                        "role" : "wrapper",
+                        "snapshot" : {
+                           "bytes_hex" : "23212f7573722f62696e2f7065726c0a2320696e657274206f62736572766174696f6e20777261707065723b206e657665722065786563757465640a",
+                           "identity" : {
+                              "device" : 1,
+                              "inode" : 30,
+                              "path" : ".artifacts/tmp/process-supervisor-tests/fsmgen-LifetimeTarget/rust-tool-resolution",
+                              "sha256" : "d42ab2b4e413bd694a831c4a8307a0c4cd760b3bfdcf5fc93dc0b6772fdd632b",
+                              "size_bytes" : 60
+                           }
+                        }
+                     },
+                     {
+                        "destination" : ".artifacts/logs/native-proxy-observation-acquisition-20260910/cases/fsmgen-LifetimeEvidence/retained-sources/f14e673e9e01e0c87c608dc1b4aacc027d6a2e2ae26d2b9efe051167fa07897e.source",
+                        "role" : "private_reference",
+                        "snapshot" : {
+                           "bytes_hex" : "7b22696d6167655f6b6579223a2265666434393762306538343738383462336331636663646531346438623634353939316335326562616239306335346535383938346363626333303363313436222c227265666572656e63655f6b6579223a2237343764363736633131663333386233313235386536646365343237353766633261383237333532616562316361366438323933363530633239306564336362222c22736368656d61223a2266736d67656e2e746573742e727573745f70726f78795f696d6167655f7265666572656e63652e7631222c2273656c65637465645f736f7572636573223a5b7b22646576696365223a312c22696e6f6465223a31302c2270617468223a222e6172746966616374732f746d702f6e61746976652d70726f78792d696d6167652d637573746f64792f63617365732f66736d67656e2d4c69666574696d654d6f64656c2f696d616765732f656664343937623065383437383834623363316366636465313464386236343539393163353265626162393063353465353839383463636263333033633134362f7275737475702e63222c22736861323536223a2261376439326532386563316338333038653337633630303364663136376263343262643233343163663361363964363737663435333330323731666662613536222c2273697a655f6279746573223a35307d2c7b22646576696365223a312c22696e6f6465223a31312c2270617468223a222e6172746966616374732f746d702f6e61746976652d70726f78792d696d6167652d637573746f64792f63617365732f66736d67656e2d4c69666574696d654d6f64656c2f696d616765732f656664343937623065383437383834623363316366636465313464386236343539393163353265626162393063353465353839383463636263333033633134362f727573747570222c22736861323536223a2265376630366632376531383532386337643130653863346134616234326235653730643134323363646238306538333034383539373731396339633765623637222c2273697a655f6279746573223a35337d5d2c22776f726b7370616365223a222e6172746966616374732f746d702f70726f636573732d73757065727669736f722d74657374732f66736d67656e2d4c69666574696d65546172676574222c22776f726b73706163655f6964656e74697479223a7b22646576696365223a312c22696e6f6465223a312c2270617468223a222e6172746966616374732f746d702f70726f636573732d73757065727669736f722d74657374732f66736d67656e2d4c69666574696d65546172676574227d7d",
+                           "identity" : {
+                              "device" : 1,
+                              "inode" : 31,
+                              "path" : ".artifacts/tmp/process-supervisor-tests/fsmgen-LifetimeTarget/rust-tools/image-reference.json",
+                              "sha256" : "f14e673e9e01e0c87c608dc1b4aacc027d6a2e2ae26d2b9efe051167fa07897e",
+                              "size_bytes" : 976
+                           }
+                        }
+                     },
+                     {
+                        "destination" : ".artifacts/logs/native-proxy-observation-acquisition-20260910/cases/fsmgen-LifetimeEvidence/retained-sources/f14e673e9e01e0c87c608dc1b4aacc027d6a2e2ae26d2b9efe051167fa07897e.source",
+                        "role" : "global_reference",
+                        "snapshot" : {
+                           "bytes_hex" : "7b22696d6167655f6b6579223a2265666434393762306538343738383462336331636663646531346438623634353939316335326562616239306335346535383938346363626333303363313436222c227265666572656e63655f6b6579223a2237343764363736633131663333386233313235386536646365343237353766633261383237333532616562316361366438323933363530633239306564336362222c22736368656d61223a2266736d67656e2e746573742e727573745f70726f78795f696d6167655f7265666572656e63652e7631222c2273656c65637465645f736f7572636573223a5b7b22646576696365223a312c22696e6f6465223a31302c2270617468223a222e6172746966616374732f746d702f6e61746976652d70726f78792d696d6167652d637573746f64792f63617365732f66736d67656e2d4c69666574696d654d6f64656c2f696d616765732f656664343937623065383437383834623363316366636465313464386236343539393163353265626162393063353465353839383463636263333033633134362f7275737475702e63222c22736861323536223a2261376439326532386563316338333038653337633630303364663136376263343262643233343163663361363964363737663435333330323731666662613536222c2273697a655f6279746573223a35307d2c7b22646576696365223a312c22696e6f6465223a31312c2270617468223a222e6172746966616374732f746d702f6e61746976652d70726f78792d696d6167652d637573746f64792f63617365732f66736d67656e2d4c69666574696d654d6f64656c2f696d616765732f656664343937623065383437383834623363316366636465313464386236343539393163353265626162393063353465353839383463636263333033633134362f727573747570222c22736861323536223a2265376630366632376531383532386337643130653863346134616234326235653730643134323363646238306538333034383539373731396339633765623637222c2273697a655f6279746573223a35337d5d2c22776f726b7370616365223a222e6172746966616374732f746d702f70726f636573732d73757065727669736f722d74657374732f66736d67656e2d4c69666574696d65546172676574222c22776f726b73706163655f6964656e74697479223a7b22646576696365223a312c22696e6f6465223a312c2270617468223a222e6172746966616374732f746d702f70726f636573732d73757065727669736f722d74657374732f66736d67656e2d4c69666574696d65546172676574227d7d",
+                           "identity" : {
+                              "device" : 1,
+                              "inode" : 20,
+                              "path" : ".artifacts/tmp/native-proxy-image-custody/cases/fsmgen-LifetimeModel/references/747d676c11f338b31258e6dce42757fc2a827352aeb1ca6d8293650c290ed3cb.json",
+                              "sha256" : "f14e673e9e01e0c87c608dc1b4aacc027d6a2e2ae26d2b9efe051167fa07897e",
+                              "size_bytes" : 976
+                           }
+                        }
+                     },
+                     {
+                        "destination" : ".artifacts/logs/native-proxy-observation-acquisition-20260910/cases/fsmgen-LifetimeEvidence/retained-sources/a7d92e28ec1c8308e37c6003df167bc42bd2341cf3a69d677f45330271ffba56.source",
+                        "role" : "c",
+                        "snapshot" : {
+                           "bytes_hex" : "2f2a20696e657274207175616c696669636174696f6e2062797465733b206e6576657220636f6d70696c6564202a2f0a00ff",
+                           "identity" : {
+                              "device" : 1,
+                              "inode" : 10,
+                              "path" : ".artifacts/tmp/native-proxy-image-custody/cases/fsmgen-LifetimeModel/images/efd497b0e847884b3c1cfcde14d8b645991c52ebab90c54e58984ccbc303c146/rustup.c",
+                              "sha256" : "a7d92e28ec1c8308e37c6003df167bc42bd2341cf3a69d677f45330271ffba56",
+                              "size_bytes" : 50
+                           }
+                        }
+                     },
+                     {
+                        "destination" : ".artifacts/logs/native-proxy-observation-acquisition-20260910/cases/fsmgen-LifetimeEvidence/retained-sources/e7f06f27e18528c7d10e8c4a4ab42b5e70d1423cdb80e83048597719c9c7eb67.source",
+                        "role" : "image",
+                        "snapshot" : {
+                           "bytes_hex" : "cffaedfe0c000001000000000200000000000000000000000000000000000000696e6572742d6e6f742d612d70726f6772616d00ff",
+                           "identity" : {
+                              "device" : 1,
+                              "inode" : 11,
+                              "path" : ".artifacts/tmp/native-proxy-image-custody/cases/fsmgen-LifetimeModel/images/efd497b0e847884b3c1cfcde14d8b645991c52ebab90c54e58984ccbc303c146/rustup",
+                              "sha256" : "e7f06f27e18528c7d10e8c4a4ab42b5e70d1423cdb80e83048597719c9c7eb67",
+                              "size_bytes" : 53
+                           }
+                        }
+                     }
+                  ]
+               }
+            },
+            "b" : {
+               "archive" : {
+                  "archive_directory_identity" : {
+                     "device" : 1,
+                     "inode" : 50,
+                     "path" : ".artifacts/logs/native-proxy-observation-acquisition-20260910/cases/fsmgen-LifetimeEvidence/retained-sources"
+                  },
+                  "evidence_directory_identity" : {
+                     "device" : 1,
+                     "inode" : 3,
+                     "path" : ".artifacts/logs/native-proxy-observation-acquisition-20260910/cases/fsmgen-LifetimeEvidence"
+                  },
+                  "executable" : null,
+                  "observation_reference_key" : "754d0750c089bd8909a15eea294fc1f161dcb983f0148b642e9efd61afbea45c",
+                  "runtime_authorized" : 0,
+                  "schema" : "fsmgen.inactive_observation_archive.v1",
+                  "source_bindings" : [
+                     {
+                        "archive" : {
+                           "device" : 1,
+                           "inode" : 51,
+                           "path" : ".artifacts/logs/native-proxy-observation-acquisition-20260910/cases/fsmgen-LifetimeEvidence/retained-sources/d42ab2b4e413bd694a831c4a8307a0c4cd760b3bfdcf5fc93dc0b6772fdd632b.source",
+                           "sha256" : "d42ab2b4e413bd694a831c4a8307a0c4cd760b3bfdcf5fc93dc0b6772fdd632b",
+                           "size_bytes" : 60
+                        },
+                        "role" : "wrapper",
+                        "source" : {
+                           "device" : 1,
+                           "inode" : 30,
+                           "path" : ".artifacts/tmp/process-supervisor-tests/fsmgen-LifetimeTarget/rust-tool-resolution",
+                           "sha256" : "d42ab2b4e413bd694a831c4a8307a0c4cd760b3bfdcf5fc93dc0b6772fdd632b",
+                           "size_bytes" : 60
+                        }
+                     },
+                     {
+                        "archive" : {
+                           "device" : 1,
+                           "inode" : 52,
+                           "path" : ".artifacts/logs/native-proxy-observation-acquisition-20260910/cases/fsmgen-LifetimeEvidence/retained-sources/f14e673e9e01e0c87c608dc1b4aacc027d6a2e2ae26d2b9efe051167fa07897e.source",
+                           "sha256" : "f14e673e9e01e0c87c608dc1b4aacc027d6a2e2ae26d2b9efe051167fa07897e",
+                           "size_bytes" : 976
+                        },
+                        "role" : "private_reference",
+                        "source" : {
+                           "device" : 1,
+                           "inode" : 31,
+                           "path" : ".artifacts/tmp/process-supervisor-tests/fsmgen-LifetimeTarget/rust-tools/image-reference.json",
+                           "sha256" : "f14e673e9e01e0c87c608dc1b4aacc027d6a2e2ae26d2b9efe051167fa07897e",
+                           "size_bytes" : 976
+                        }
+                     },
+                     {
+                        "archive" : {
+                           "device" : 1,
+                           "inode" : 52,
+                           "path" : ".artifacts/logs/native-proxy-observation-acquisition-20260910/cases/fsmgen-LifetimeEvidence/retained-sources/f14e673e9e01e0c87c608dc1b4aacc027d6a2e2ae26d2b9efe051167fa07897e.source",
+                           "sha256" : "f14e673e9e01e0c87c608dc1b4aacc027d6a2e2ae26d2b9efe051167fa07897e",
+                           "size_bytes" : 976
+                        },
+                        "role" : "global_reference",
+                        "source" : {
+                           "device" : 1,
+                           "inode" : 20,
+                           "path" : ".artifacts/tmp/native-proxy-image-custody/cases/fsmgen-LifetimeModel/references/747d676c11f338b31258e6dce42757fc2a827352aeb1ca6d8293650c290ed3cb.json",
+                           "sha256" : "f14e673e9e01e0c87c608dc1b4aacc027d6a2e2ae26d2b9efe051167fa07897e",
+                           "size_bytes" : 976
+                        }
+                     },
+                     {
+                        "archive" : {
+                           "device" : 1,
+                           "inode" : 53,
+                           "path" : ".artifacts/logs/native-proxy-observation-acquisition-20260910/cases/fsmgen-LifetimeEvidence/retained-sources/a7d92e28ec1c8308e37c6003df167bc42bd2341cf3a69d677f45330271ffba56.source",
+                           "sha256" : "a7d92e28ec1c8308e37c6003df167bc42bd2341cf3a69d677f45330271ffba56",
+                           "size_bytes" : 50
+                        },
+                        "role" : "c",
+                        "source" : {
+                           "device" : 1,
+                           "inode" : 10,
+                           "path" : ".artifacts/tmp/native-proxy-image-custody/cases/fsmgen-LifetimeModel/images/efd497b0e847884b3c1cfcde14d8b645991c52ebab90c54e58984ccbc303c146/rustup.c",
+                           "sha256" : "a7d92e28ec1c8308e37c6003df167bc42bd2341cf3a69d677f45330271ffba56",
+                           "size_bytes" : 50
+                        }
+                     },
+                     {
+                        "archive" : {
+                           "device" : 1,
+                           "inode" : 54,
+                           "path" : ".artifacts/logs/native-proxy-observation-acquisition-20260910/cases/fsmgen-LifetimeEvidence/retained-sources/e7f06f27e18528c7d10e8c4a4ab42b5e70d1423cdb80e83048597719c9c7eb67.source",
+                           "sha256" : "e7f06f27e18528c7d10e8c4a4ab42b5e70d1423cdb80e83048597719c9c7eb67",
+                           "size_bytes" : 53
+                        },
+                        "role" : "image",
+                        "source" : {
+                           "device" : 1,
+                           "inode" : 11,
+                           "path" : ".artifacts/tmp/native-proxy-image-custody/cases/fsmgen-LifetimeModel/images/efd497b0e847884b3c1cfcde14d8b645991c52ebab90c54e58984ccbc303c146/rustup",
+                           "sha256" : "e7f06f27e18528c7d10e8c4a4ab42b5e70d1423cdb80e83048597719c9c7eb67",
+                           "size_bytes" : 53
+                        }
+                     }
+                  ]
+               },
+               "previous" : {
+                  "executable" : null,
+                  "lock" : {
+                     "device" : 1,
+                     "inode" : 4,
+                     "path" : ".artifacts/tmp/native-proxy-image-custody/cases/fsmgen-LifetimeModel/coordination.lock"
+                  },
+                  "observation_reference" : {
+                     "record" : {
+                        "evidence_directory" : ".artifacts/logs/native-proxy-observation-acquisition-20260910/cases/fsmgen-LifetimeEvidence",
+                        "evidence_directory_identity" : {
+                           "device" : 1,
+                           "inode" : 3,
+                           "path" : ".artifacts/logs/native-proxy-observation-acquisition-20260910/cases/fsmgen-LifetimeEvidence"
+                        },
+                        "image_key" : "efd497b0e847884b3c1cfcde14d8b645991c52ebab90c54e58984ccbc303c146",
+                        "observer_birth" : {
+                           "pid" : 102,
+                           "ppid" : 100,
+                           "ruid" : 501,
+                           "start_sec" : 123,
+                           "start_usec" : 457,
+                           "uid" : 501
+                        },
+                        "reference_key" : "754d0750c089bd8909a15eea294fc1f161dcb983f0148b642e9efd61afbea45c",
+                        "schema" : "fsmgen.test.rust_proxy_image_observation_reference.v1",
+                        "selected_sources" : [
+                           {
+                              "device" : 1,
+                              "inode" : 10,
+                              "path" : ".artifacts/tmp/native-proxy-image-custody/cases/fsmgen-LifetimeModel/images/efd497b0e847884b3c1cfcde14d8b645991c52ebab90c54e58984ccbc303c146/rustup.c",
+                              "sha256" : "a7d92e28ec1c8308e37c6003df167bc42bd2341cf3a69d677f45330271ffba56",
+                              "size_bytes" : 50
+                           },
+                           {
+                              "device" : 1,
+                              "inode" : 11,
+                              "path" : ".artifacts/tmp/native-proxy-image-custody/cases/fsmgen-LifetimeModel/images/efd497b0e847884b3c1cfcde14d8b645991c52ebab90c54e58984ccbc303c146/rustup",
+                              "sha256" : "e7f06f27e18528c7d10e8c4a4ab42b5e70d1423cdb80e83048597719c9c7eb67",
+                              "size_bytes" : 53
+                           }
+                        ],
+                        "target_birth" : {
+                           "pid" : 201,
+                           "ppid" : 200,
+                           "ruid" : 501,
+                           "start_sec" : 124,
+                           "start_usec" : 789,
+                           "uid" : 501
+                        }
+                     },
+                     "source" : {
+                        "bytes_hex" : "7b2265766964656e63655f6469726563746f7279223a222e6172746966616374732f6c6f67732f6e61746976652d70726f78792d6f62736572766174696f6e2d6163717569736974696f6e2d32303236303931302f63617365732f66736d67656e2d4c69666574696d6545766964656e6365222c2265766964656e63655f6469726563746f72795f6964656e74697479223a7b22646576696365223a312c22696e6f6465223a332c2270617468223a222e6172746966616374732f6c6f67732f6e61746976652d70726f78792d6f62736572766174696f6e2d6163717569736974696f6e2d32303236303931302f63617365732f66736d67656e2d4c69666574696d6545766964656e6365227d2c22696d6167655f6b6579223a2265666434393762306538343738383462336331636663646531346438623634353939316335326562616239306335346535383938346363626333303363313436222c226f627365727665725f6269727468223a7b22706964223a3130322c2270706964223a3130302c2272756964223a3530312c2273746172745f736563223a3132332c2273746172745f75736563223a3435372c22756964223a3530317d2c227265666572656e63655f6b6579223a2237353464303735306330383962643839303961313565656132393466633166313631646362393833663031343862363432653965666436316166626561343563222c22736368656d61223a2266736d67656e2e746573742e727573745f70726f78795f696d6167655f6f62736572766174696f6e5f7265666572656e63652e7631222c2273656c65637465645f736f7572636573223a5b7b22646576696365223a312c22696e6f6465223a31302c2270617468223a222e6172746966616374732f746d702f6e61746976652d70726f78792d696d6167652d637573746f64792f63617365732f66736d67656e2d4c69666574696d654d6f64656c2f696d616765732f656664343937623065383437383834623363316366636465313464386236343539393163353265626162393063353465353839383463636263333033633134362f7275737475702e63222c22736861323536223a2261376439326532386563316338333038653337633630303364663136376263343262643233343163663361363964363737663435333330323731666662613536222c2273697a655f6279746573223a35307d2c7b22646576696365223a312c22696e6f6465223a31312c2270617468223a222e6172746966616374732f746d702f6e61746976652d70726f78792d696d6167652d637573746f64792f63617365732f66736d67656e2d4c69666574696d654d6f64656c2f696d616765732f656664343937623065383437383834623363316366636465313464386236343539393163353265626162393063353465353839383463636263333033633134362f727573747570222c22736861323536223a2265376630366632376531383532386337643130653863346134616234326235653730643134323363646238306538333034383539373731396339633765623637222c2273697a655f6279746573223a35337d5d2c227461726765745f6269727468223a7b22706964223a3230312c2270706964223a3230302c2272756964223a3530312c2273746172745f736563223a3132342c2273746172745f75736563223a3738392c22756964223a3530317d7d",
+                        "identity" : {
+                           "device" : 1,
+                           "inode" : 41,
+                           "path" : ".artifacts/tmp/native-proxy-image-custody/cases/fsmgen-LifetimeModel/references/754d0750c089bd8909a15eea294fc1f161dcb983f0148b642e9efd61afbea45c.json",
+                           "sha256" : "1cb98773605cc23da947dfe7f9fa86176609da54d3924969096870481c363eaa",
+                           "size_bytes" : 1252
+                        }
+                     }
+                  },
+                  "runtime_authorized" : 0,
+                  "schema" : "fsmgen.inactive_observation_acquisition.v1",
+                  "target_sources" : [
+                     {
+                        "bytes_hex" : "23212f7573722f62696e2f7065726c0a2320696e657274206f62736572766174696f6e20777261707065723b206e657665722065786563757465640a",
+                        "identity" : {
+                           "device" : 1,
+                           "inode" : 30,
+                           "path" : ".artifacts/tmp/process-supervisor-tests/fsmgen-LifetimeTarget/rust-tool-resolution",
+                           "sha256" : "d42ab2b4e413bd694a831c4a8307a0c4cd760b3bfdcf5fc93dc0b6772fdd632b",
+                           "size_bytes" : 60
+                        }
+                     },
+                     {
+                        "bytes_hex" : "7b22696d6167655f6b6579223a2265666434393762306538343738383462336331636663646531346438623634353939316335326562616239306335346535383938346363626333303363313436222c227265666572656e63655f6b6579223a2237343764363736633131663333386233313235386536646365343237353766633261383237333532616562316361366438323933363530633239306564336362222c22736368656d61223a2266736d67656e2e746573742e727573745f70726f78795f696d6167655f7265666572656e63652e7631222c2273656c65637465645f736f7572636573223a5b7b22646576696365223a312c22696e6f6465223a31302c2270617468223a222e6172746966616374732f746d702f6e61746976652d70726f78792d696d6167652d637573746f64792f63617365732f66736d67656e2d4c69666574696d654d6f64656c2f696d616765732f656664343937623065383437383834623363316366636465313464386236343539393163353265626162393063353465353839383463636263333033633134362f7275737475702e63222c22736861323536223a2261376439326532386563316338333038653337633630303364663136376263343262643233343163663361363964363737663435333330323731666662613536222c2273697a655f6279746573223a35307d2c7b22646576696365223a312c22696e6f6465223a31312c2270617468223a222e6172746966616374732f746d702f6e61746976652d70726f78792d696d6167652d637573746f64792f63617365732f66736d67656e2d4c69666574696d654d6f64656c2f696d616765732f656664343937623065383437383834623363316366636465313464386236343539393163353265626162393063353465353839383463636263333033633134362f727573747570222c22736861323536223a2265376630366632376531383532386337643130653863346134616234326235653730643134323363646238306538333034383539373731396339633765623637222c2273697a655f6279746573223a35337d5d2c22776f726b7370616365223a222e6172746966616374732f746d702f70726f636573732d73757065727669736f722d74657374732f66736d67656e2d4c69666574696d65546172676574222c22776f726b73706163655f6964656e74697479223a7b22646576696365223a312c22696e6f6465223a312c2270617468223a222e6172746966616374732f746d702f70726f636573732d73757065727669736f722d74657374732f66736d67656e2d4c69666574696d65546172676574227d7d",
+                        "identity" : {
+                           "device" : 1,
+                           "inode" : 31,
+                           "path" : ".artifacts/tmp/process-supervisor-tests/fsmgen-LifetimeTarget/rust-tools/image-reference.json",
+                           "sha256" : "f14e673e9e01e0c87c608dc1b4aacc027d6a2e2ae26d2b9efe051167fa07897e",
+                           "size_bytes" : 976
+                        }
+                     },
+                     {
+                        "bytes_hex" : "7b22696d6167655f6b6579223a2265666434393762306538343738383462336331636663646531346438623634353939316335326562616239306335346535383938346363626333303363313436222c227265666572656e63655f6b6579223a2237343764363736633131663333386233313235386536646365343237353766633261383237333532616562316361366438323933363530633239306564336362222c22736368656d61223a2266736d67656e2e746573742e727573745f70726f78795f696d6167655f7265666572656e63652e7631222c2273656c65637465645f736f7572636573223a5b7b22646576696365223a312c22696e6f6465223a31302c2270617468223a222e6172746966616374732f746d702f6e61746976652d70726f78792d696d6167652d637573746f64792f63617365732f66736d67656e2d4c69666574696d654d6f64656c2f696d616765732f656664343937623065383437383834623363316366636465313464386236343539393163353265626162393063353465353839383463636263333033633134362f7275737475702e63222c22736861323536223a2261376439326532386563316338333038653337633630303364663136376263343262643233343163663361363964363737663435333330323731666662613536222c2273697a655f6279746573223a35307d2c7b22646576696365223a312c22696e6f6465223a31312c2270617468223a222e6172746966616374732f746d702f6e61746976652d70726f78792d696d6167652d637573746f64792f63617365732f66736d67656e2d4c69666574696d654d6f64656c2f696d616765732f656664343937623065383437383834623363316366636465313464386236343539393163353265626162393063353465353839383463636263333033633134362f727573747570222c22736861323536223a2265376630366632376531383532386337643130653863346134616234326235653730643134323363646238306538333034383539373731396339633765623637222c2273697a655f6279746573223a35337d5d2c22776f726b7370616365223a222e6172746966616374732f746d702f70726f636573732d73757065727669736f722d74657374732f66736d67656e2d4c69666574696d65546172676574222c22776f726b73706163655f6964656e74697479223a7b22646576696365223a312c22696e6f6465223a312c2270617468223a222e6172746966616374732f746d702f70726f636573732d73757065727669736f722d74657374732f66736d67656e2d4c69666574696d65546172676574227d7d",
+                        "identity" : {
+                           "device" : 1,
+                           "inode" : 20,
+                           "path" : ".artifacts/tmp/native-proxy-image-custody/cases/fsmgen-LifetimeModel/references/747d676c11f338b31258e6dce42757fc2a827352aeb1ca6d8293650c290ed3cb.json",
+                           "sha256" : "f14e673e9e01e0c87c608dc1b4aacc027d6a2e2ae26d2b9efe051167fa07897e",
+                           "size_bytes" : 976
+                        }
+                     },
+                     {
+                        "bytes_hex" : "2f2a20696e657274207175616c696669636174696f6e2062797465733b206e6576657220636f6d70696c6564202a2f0a00ff",
+                        "identity" : {
+                           "device" : 1,
+                           "inode" : 10,
+                           "path" : ".artifacts/tmp/native-proxy-image-custody/cases/fsmgen-LifetimeModel/images/efd497b0e847884b3c1cfcde14d8b645991c52ebab90c54e58984ccbc303c146/rustup.c",
+                           "sha256" : "a7d92e28ec1c8308e37c6003df167bc42bd2341cf3a69d677f45330271ffba56",
+                           "size_bytes" : 50
+                        }
+                     },
+                     {
+                        "bytes_hex" : "cffaedfe0c000001000000000200000000000000000000000000000000000000696e6572742d6e6f742d612d70726f6772616d00ff",
+                        "identity" : {
+                           "device" : 1,
+                           "inode" : 11,
+                           "path" : ".artifacts/tmp/native-proxy-image-custody/cases/fsmgen-LifetimeModel/images/efd497b0e847884b3c1cfcde14d8b645991c52ebab90c54e58984ccbc303c146/rustup",
+                           "sha256" : "e7f06f27e18528c7d10e8c4a4ab42b5e70d1423cdb80e83048597719c9c7eb67",
+                           "size_bytes" : 53
+                        }
+                     }
+                  ]
+               },
+               "selection" : {
+                  "entries" : [
+                     {
+                        "ownership_token" : "a541c2a30b930715e0f077ccf356d5fe2303dfd73cab1d9a3295206c57799911",
+                        "role" : "capture",
+                        "work_id" : "b:capture"
+                     },
+                     {
+                        "ownership_token" : "f661cb8ad67f2aa78f09538ccd36f432ee8e8f45c81138873f62ff54bc9d9647",
+                        "role" : "helper",
+                        "work_id" : "b:helper"
+                     },
+                     {
+                        "ownership_token" : "47b1bc0da55a40a5c9427f30b9e888306201146e3befecb2df49460730a3f5c4",
+                        "role" : "query",
+                        "work_id" : "b:query"
+                     }
+                  ],
+                  "evidence_directory_identity" : {
+                     "device" : 1,
+                     "inode" : 3,
+                     "path" : ".artifacts/logs/native-proxy-observation-acquisition-20260910/cases/fsmgen-LifetimeEvidence"
+                  },
+                  "executable" : null,
+                  "observation_reference_key" : "754d0750c089bd8909a15eea294fc1f161dcb983f0148b642e9efd61afbea45c",
+                  "runtime_authorized" : 0,
+                  "schema" : "fsmgen.inactive_observation_work_selection.v1"
+               },
+               "settlement" : {
+                  "executable" : null,
+                  "receipts" : [
+                     {
+                        "cleanup" : {
+                           "group_gone" : 1,
+                           "leader_reaped" : 1,
+                           "leader_started" : 1
+                        },
+                        "outcome" : "completed",
+                        "ownership_token" : "a541c2a30b930715e0f077ccf356d5fe2303dfd73cab1d9a3295206c57799911",
+                        "role" : "capture",
+                        "work_id" : "b:capture"
+                     },
+                     {
+                        "cleanup" : {
+                           "group_gone" : 1,
+                           "leader_reaped" : 1,
+                           "leader_started" : 1
+                        },
+                        "outcome" : "failed",
+                        "ownership_token" : "f661cb8ad67f2aa78f09538ccd36f432ee8e8f45c81138873f62ff54bc9d9647",
+                        "role" : "helper",
+                        "work_id" : "b:helper"
+                     },
+                     {
+                        "cleanup" : {
+                           "group_gone" : 1,
+                           "leader_reaped" : 1,
+                           "leader_started" : 1
+                        },
+                        "outcome" : "cancelled",
+                        "ownership_token" : "47b1bc0da55a40a5c9427f30b9e888306201146e3befecb2df49460730a3f5c4",
+                        "role" : "query",
+                        "work_id" : "b:query"
+                     }
+                  ],
+                  "runtime_authorized" : 0,
+                  "schema" : "fsmgen.inactive_observation_work_settlement.v1",
+                  "selection" : {
+                     "entries" : [
+                        {
+                           "ownership_token" : "a541c2a30b930715e0f077ccf356d5fe2303dfd73cab1d9a3295206c57799911",
+                           "role" : "capture",
+                           "work_id" : "b:capture"
+                        },
+                        {
+                           "ownership_token" : "f661cb8ad67f2aa78f09538ccd36f432ee8e8f45c81138873f62ff54bc9d9647",
+                           "role" : "helper",
+                           "work_id" : "b:helper"
+                        },
+                        {
+                           "ownership_token" : "47b1bc0da55a40a5c9427f30b9e888306201146e3befecb2df49460730a3f5c4",
+                           "role" : "query",
+                           "work_id" : "b:query"
+                        }
+                     ],
+                     "evidence_directory_identity" : {
+                        "device" : 1,
+                        "inode" : 3,
+                        "path" : ".artifacts/logs/native-proxy-observation-acquisition-20260910/cases/fsmgen-LifetimeEvidence"
+                     },
+                     "executable" : null,
+                     "observation_reference_key" : "754d0750c089bd8909a15eea294fc1f161dcb983f0148b642e9efd61afbea45c",
+                     "runtime_authorized" : 0,
+                     "schema" : "fsmgen.inactive_observation_work_selection.v1"
+                  },
+                  "selection_sealed" : 1
+               },
+               "specification" : {
+                  "archive_directory" : ".artifacts/logs/native-proxy-observation-acquisition-20260910/cases/fsmgen-LifetimeEvidence/retained-sources",
+                  "evidence_directory_identity" : {
+                     "device" : 1,
+                     "inode" : 3,
+                     "path" : ".artifacts/logs/native-proxy-observation-acquisition-20260910/cases/fsmgen-LifetimeEvidence"
+                  },
+                  "executable" : null,
+                  "files" : [
+                     {
+                        "bytes_hex" : "23212f7573722f62696e2f7065726c0a2320696e657274206f62736572766174696f6e20777261707065723b206e657665722065786563757465640a",
+                        "path" : ".artifacts/logs/native-proxy-observation-acquisition-20260910/cases/fsmgen-LifetimeEvidence/retained-sources/d42ab2b4e413bd694a831c4a8307a0c4cd760b3bfdcf5fc93dc0b6772fdd632b.source",
+                        "sha256" : "d42ab2b4e413bd694a831c4a8307a0c4cd760b3bfdcf5fc93dc0b6772fdd632b",
+                        "size_bytes" : 60
+                     },
+                     {
+                        "bytes_hex" : "7b22696d6167655f6b6579223a2265666434393762306538343738383462336331636663646531346438623634353939316335326562616239306335346535383938346363626333303363313436222c227265666572656e63655f6b6579223a2237343764363736633131663333386233313235386536646365343237353766633261383237333532616562316361366438323933363530633239306564336362222c22736368656d61223a2266736d67656e2e746573742e727573745f70726f78795f696d6167655f7265666572656e63652e7631222c2273656c65637465645f736f7572636573223a5b7b22646576696365223a312c22696e6f6465223a31302c2270617468223a222e6172746966616374732f746d702f6e61746976652d70726f78792d696d6167652d637573746f64792f63617365732f66736d67656e2d4c69666574696d654d6f64656c2f696d616765732f656664343937623065383437383834623363316366636465313464386236343539393163353265626162393063353465353839383463636263333033633134362f7275737475702e63222c22736861323536223a2261376439326532386563316338333038653337633630303364663136376263343262643233343163663361363964363737663435333330323731666662613536222c2273697a655f6279746573223a35307d2c7b22646576696365223a312c22696e6f6465223a31312c2270617468223a222e6172746966616374732f746d702f6e61746976652d70726f78792d696d6167652d637573746f64792f63617365732f66736d67656e2d4c69666574696d654d6f64656c2f696d616765732f656664343937623065383437383834623363316366636465313464386236343539393163353265626162393063353465353839383463636263333033633134362f727573747570222c22736861323536223a2265376630366632376531383532386337643130653863346134616234326235653730643134323363646238306538333034383539373731396339633765623637222c2273697a655f6279746573223a35337d5d2c22776f726b7370616365223a222e6172746966616374732f746d702f70726f636573732d73757065727669736f722d74657374732f66736d67656e2d4c69666574696d65546172676574222c22776f726b73706163655f6964656e74697479223a7b22646576696365223a312c22696e6f6465223a312c2270617468223a222e6172746966616374732f746d702f70726f636573732d73757065727669736f722d74657374732f66736d67656e2d4c69666574696d65546172676574227d7d",
+                        "path" : ".artifacts/logs/native-proxy-observation-acquisition-20260910/cases/fsmgen-LifetimeEvidence/retained-sources/f14e673e9e01e0c87c608dc1b4aacc027d6a2e2ae26d2b9efe051167fa07897e.source",
+                        "sha256" : "f14e673e9e01e0c87c608dc1b4aacc027d6a2e2ae26d2b9efe051167fa07897e",
+                        "size_bytes" : 976
+                     },
+                     {
+                        "bytes_hex" : "2f2a20696e657274207175616c696669636174696f6e2062797465733b206e6576657220636f6d70696c6564202a2f0a00ff",
+                        "path" : ".artifacts/logs/native-proxy-observation-acquisition-20260910/cases/fsmgen-LifetimeEvidence/retained-sources/a7d92e28ec1c8308e37c6003df167bc42bd2341cf3a69d677f45330271ffba56.source",
+                        "sha256" : "a7d92e28ec1c8308e37c6003df167bc42bd2341cf3a69d677f45330271ffba56",
+                        "size_bytes" : 50
+                     },
+                     {
+                        "bytes_hex" : "cffaedfe0c000001000000000200000000000000000000000000000000000000696e6572742d6e6f742d612d70726f6772616d00ff",
+                        "path" : ".artifacts/logs/native-proxy-observation-acquisition-20260910/cases/fsmgen-LifetimeEvidence/retained-sources/e7f06f27e18528c7d10e8c4a4ab42b5e70d1423cdb80e83048597719c9c7eb67.source",
+                        "sha256" : "e7f06f27e18528c7d10e8c4a4ab42b5e70d1423cdb80e83048597719c9c7eb67",
+                        "size_bytes" : 53
+                     }
+                  ],
+                  "observation_reference_key" : "754d0750c089bd8909a15eea294fc1f161dcb983f0148b642e9efd61afbea45c",
+                  "runtime_authorized" : 0,
+                  "schema" : "fsmgen.inactive_observation_archive_specification.v1",
+                  "sources" : [
+                     {
+                        "destination" : ".artifacts/logs/native-proxy-observation-acquisition-20260910/cases/fsmgen-LifetimeEvidence/retained-sources/d42ab2b4e413bd694a831c4a8307a0c4cd760b3bfdcf5fc93dc0b6772fdd632b.source",
+                        "role" : "wrapper",
+                        "snapshot" : {
+                           "bytes_hex" : "23212f7573722f62696e2f7065726c0a2320696e657274206f62736572766174696f6e20777261707065723b206e657665722065786563757465640a",
+                           "identity" : {
+                              "device" : 1,
+                              "inode" : 30,
+                              "path" : ".artifacts/tmp/process-supervisor-tests/fsmgen-LifetimeTarget/rust-tool-resolution",
+                              "sha256" : "d42ab2b4e413bd694a831c4a8307a0c4cd760b3bfdcf5fc93dc0b6772fdd632b",
+                              "size_bytes" : 60
+                           }
+                        }
+                     },
+                     {
+                        "destination" : ".artifacts/logs/native-proxy-observation-acquisition-20260910/cases/fsmgen-LifetimeEvidence/retained-sources/f14e673e9e01e0c87c608dc1b4aacc027d6a2e2ae26d2b9efe051167fa07897e.source",
+                        "role" : "private_reference",
+                        "snapshot" : {
+                           "bytes_hex" : "7b22696d6167655f6b6579223a2265666434393762306538343738383462336331636663646531346438623634353939316335326562616239306335346535383938346363626333303363313436222c227265666572656e63655f6b6579223a2237343764363736633131663333386233313235386536646365343237353766633261383237333532616562316361366438323933363530633239306564336362222c22736368656d61223a2266736d67656e2e746573742e727573745f70726f78795f696d6167655f7265666572656e63652e7631222c2273656c65637465645f736f7572636573223a5b7b22646576696365223a312c22696e6f6465223a31302c2270617468223a222e6172746966616374732f746d702f6e61746976652d70726f78792d696d6167652d637573746f64792f63617365732f66736d67656e2d4c69666574696d654d6f64656c2f696d616765732f656664343937623065383437383834623363316366636465313464386236343539393163353265626162393063353465353839383463636263333033633134362f7275737475702e63222c22736861323536223a2261376439326532386563316338333038653337633630303364663136376263343262643233343163663361363964363737663435333330323731666662613536222c2273697a655f6279746573223a35307d2c7b22646576696365223a312c22696e6f6465223a31312c2270617468223a222e6172746966616374732f746d702f6e61746976652d70726f78792d696d6167652d637573746f64792f63617365732f66736d67656e2d4c69666574696d654d6f64656c2f696d616765732f656664343937623065383437383834623363316366636465313464386236343539393163353265626162393063353465353839383463636263333033633134362f727573747570222c22736861323536223a2265376630366632376531383532386337643130653863346134616234326235653730643134323363646238306538333034383539373731396339633765623637222c2273697a655f6279746573223a35337d5d2c22776f726b7370616365223a222e6172746966616374732f746d702f70726f636573732d73757065727669736f722d74657374732f66736d67656e2d4c69666574696d65546172676574222c22776f726b73706163655f6964656e74697479223a7b22646576696365223a312c22696e6f6465223a312c2270617468223a222e6172746966616374732f746d702f70726f636573732d73757065727669736f722d74657374732f66736d67656e2d4c69666574696d65546172676574227d7d",
+                           "identity" : {
+                              "device" : 1,
+                              "inode" : 31,
+                              "path" : ".artifacts/tmp/process-supervisor-tests/fsmgen-LifetimeTarget/rust-tools/image-reference.json",
+                              "sha256" : "f14e673e9e01e0c87c608dc1b4aacc027d6a2e2ae26d2b9efe051167fa07897e",
+                              "size_bytes" : 976
+                           }
+                        }
+                     },
+                     {
+                        "destination" : ".artifacts/logs/native-proxy-observation-acquisition-20260910/cases/fsmgen-LifetimeEvidence/retained-sources/f14e673e9e01e0c87c608dc1b4aacc027d6a2e2ae26d2b9efe051167fa07897e.source",
+                        "role" : "global_reference",
+                        "snapshot" : {
+                           "bytes_hex" : "7b22696d6167655f6b6579223a2265666434393762306538343738383462336331636663646531346438623634353939316335326562616239306335346535383938346363626333303363313436222c227265666572656e63655f6b6579223a2237343764363736633131663333386233313235386536646365343237353766633261383237333532616562316361366438323933363530633239306564336362222c22736368656d61223a2266736d67656e2e746573742e727573745f70726f78795f696d6167655f7265666572656e63652e7631222c2273656c65637465645f736f7572636573223a5b7b22646576696365223a312c22696e6f6465223a31302c2270617468223a222e6172746966616374732f746d702f6e61746976652d70726f78792d696d6167652d637573746f64792f63617365732f66736d67656e2d4c69666574696d654d6f64656c2f696d616765732f656664343937623065383437383834623363316366636465313464386236343539393163353265626162393063353465353839383463636263333033633134362f7275737475702e63222c22736861323536223a2261376439326532386563316338333038653337633630303364663136376263343262643233343163663361363964363737663435333330323731666662613536222c2273697a655f6279746573223a35307d2c7b22646576696365223a312c22696e6f6465223a31312c2270617468223a222e6172746966616374732f746d702f6e61746976652d70726f78792d696d6167652d637573746f64792f63617365732f66736d67656e2d4c69666574696d654d6f64656c2f696d616765732f656664343937623065383437383834623363316366636465313464386236343539393163353265626162393063353465353839383463636263333033633134362f727573747570222c22736861323536223a2265376630366632376531383532386337643130653863346134616234326235653730643134323363646238306538333034383539373731396339633765623637222c2273697a655f6279746573223a35337d5d2c22776f726b7370616365223a222e6172746966616374732f746d702f70726f636573732d73757065727669736f722d74657374732f66736d67656e2d4c69666574696d65546172676574222c22776f726b73706163655f6964656e74697479223a7b22646576696365223a312c22696e6f6465223a312c2270617468223a222e6172746966616374732f746d702f70726f636573732d73757065727669736f722d74657374732f66736d67656e2d4c69666574696d65546172676574227d7d",
+                           "identity" : {
+                              "device" : 1,
+                              "inode" : 20,
+                              "path" : ".artifacts/tmp/native-proxy-image-custody/cases/fsmgen-LifetimeModel/references/747d676c11f338b31258e6dce42757fc2a827352aeb1ca6d8293650c290ed3cb.json",
+                              "sha256" : "f14e673e9e01e0c87c608dc1b4aacc027d6a2e2ae26d2b9efe051167fa07897e",
+                              "size_bytes" : 976
+                           }
+                        }
+                     },
+                     {
+                        "destination" : ".artifacts/logs/native-proxy-observation-acquisition-20260910/cases/fsmgen-LifetimeEvidence/retained-sources/a7d92e28ec1c8308e37c6003df167bc42bd2341cf3a69d677f45330271ffba56.source",
+                        "role" : "c",
+                        "snapshot" : {
+                           "bytes_hex" : "2f2a20696e657274207175616c696669636174696f6e2062797465733b206e6576657220636f6d70696c6564202a2f0a00ff",
+                           "identity" : {
+                              "device" : 1,
+                              "inode" : 10,
+                              "path" : ".artifacts/tmp/native-proxy-image-custody/cases/fsmgen-LifetimeModel/images/efd497b0e847884b3c1cfcde14d8b645991c52ebab90c54e58984ccbc303c146/rustup.c",
+                              "sha256" : "a7d92e28ec1c8308e37c6003df167bc42bd2341cf3a69d677f45330271ffba56",
+                              "size_bytes" : 50
+                           }
+                        }
+                     },
+                     {
+                        "destination" : ".artifacts/logs/native-proxy-observation-acquisition-20260910/cases/fsmgen-LifetimeEvidence/retained-sources/e7f06f27e18528c7d10e8c4a4ab42b5e70d1423cdb80e83048597719c9c7eb67.source",
+                        "role" : "image",
+                        "snapshot" : {
+                           "bytes_hex" : "cffaedfe0c000001000000000200000000000000000000000000000000000000696e6572742d6e6f742d612d70726f6772616d00ff",
+                           "identity" : {
+                              "device" : 1,
+                              "inode" : 11,
+                              "path" : ".artifacts/tmp/native-proxy-image-custody/cases/fsmgen-LifetimeModel/images/efd497b0e847884b3c1cfcde14d8b645991c52ebab90c54e58984ccbc303c146/rustup",
+                              "sha256" : "e7f06f27e18528c7d10e8c4a4ab42b5e70d1423cdb80e83048597719c9c7eb67",
+                              "size_bytes" : 53
+                           }
+                        }
+                     }
+                  ]
+               }
+            }
+         },
+         "runtime_bytes" : {
+            "other" : "7b22696d6167655f6b6579223a2234643237326665663865333262386166383833663665393561336462313862333761646631366139393862623165653339356233323233616138623633326530222c227265666572656e63655f6b6579223a2230656535313962633666396235313338663733613935623137313338636663623033303165363839376465623334376236336531306135663765326130666532222c22736368656d61223a2266736d67656e2e746573742e727573745f70726f78795f696d6167655f7265666572656e63652e7631222c2273656c65637465645f736f7572636573223a5b7b22646576696365223a312c22696e6f6465223a31322c2270617468223a222e6172746966616374732f746d702f6e61746976652d70726f78792d696d6167652d637573746f64792f63617365732f66736d67656e2d4c69666574696d654d6f64656c2f696d616765732f346432373266656638653332623861663838336636653935613364623138623337616466313661393938626231656533393562333232336161386236333265302f7275737475702e63222c22736861323536223a2261376439326532386563316338333038653337633630303364663136376263343262643233343163663361363964363737663435333330323731666662613536222c2273697a655f6279746573223a35307d2c7b22646576696365223a312c22696e6f6465223a31332c2270617468223a222e6172746966616374732f746d702f6e61746976652d70726f78792d696d6167652d637573746f64792f63617365732f66736d67656e2d4c69666574696d654d6f64656c2f696d616765732f346432373266656638653332623861663838336636653935613364623138623337616466313661393938626231656533393562333232336161386236333265302f727573747570222c22736861323536223a2233306436346238386632373564363462646532633032373138336338663663333637626335626333373131306334643562666163656136336433653162366530222c2273697a655f6279746573223a36387d5d2c22776f726b7370616365223a222e6172746966616374732f746d702f70726f636573732d73757065727669736f722d74657374732f66736d67656e2d4c69666574696d654f74686572222c22776f726b73706163655f6964656e74697479223a7b22646576696365223a312c22696e6f6465223a322c2270617468223a222e6172746966616374732f746d702f70726f636573732d73757065727669736f722d74657374732f66736d67656e2d4c69666574696d654f74686572227d7d",
+            "target" : "7b22696d6167655f6b6579223a2265666434393762306538343738383462336331636663646531346438623634353939316335326562616239306335346535383938346363626333303363313436222c227265666572656e63655f6b6579223a2237343764363736633131663333386233313235386536646365343237353766633261383237333532616562316361366438323933363530633239306564336362222c22736368656d61223a2266736d67656e2e746573742e727573745f70726f78795f696d6167655f7265666572656e63652e7631222c2273656c65637465645f736f7572636573223a5b7b22646576696365223a312c22696e6f6465223a31302c2270617468223a222e6172746966616374732f746d702f6e61746976652d70726f78792d696d6167652d637573746f64792f63617365732f66736d67656e2d4c69666574696d654d6f64656c2f696d616765732f656664343937623065383437383834623363316366636465313464386236343539393163353265626162393063353465353839383463636263333033633134362f7275737475702e63222c22736861323536223a2261376439326532386563316338333038653337633630303364663136376263343262643233343163663361363964363737663435333330323731666662613536222c2273697a655f6279746573223a35307d2c7b22646576696365223a312c22696e6f6465223a31312c2270617468223a222e6172746966616374732f746d702f6e61746976652d70726f78792d696d6167652d637573746f64792f63617365732f66736d67656e2d4c69666574696d654d6f64656c2f696d616765732f656664343937623065383437383834623363316366636465313464386236343539393163353265626162393063353465353839383463636263333033633134362f727573747570222c22736861323536223a2265376630366632376531383532386337643130653863346134616234326235653730643134323363646238306538333034383539373731396339633765623637222c2273697a655f6279746573223a35337d5d2c22776f726b7370616365223a222e6172746966616374732f746d702f70726f636573732d73757065727669736f722d74657374732f66736d67656e2d4c69666574696d65546172676574222c22776f726b73706163655f6964656e74697479223a7b22646576696365223a312c22696e6f6465223a312c2270617468223a222e6172746966616374732f746d702f70726f636573732d73757065727669736f722d74657374732f66736d67656e2d4c69666574696d65546172676574227d7d"
+         }
+      },
+      "same_image" : {
+         "observations" : {
+            "a" : {
+               "archive" : {
+                  "archive_directory_identity" : {
+                     "device" : 1,
+                     "inode" : 50,
+                     "path" : ".artifacts/logs/native-proxy-observation-acquisition-20260910/cases/fsmgen-LifetimeEvidence/retained-sources"
+                  },
+                  "evidence_directory_identity" : {
+                     "device" : 1,
+                     "inode" : 3,
+                     "path" : ".artifacts/logs/native-proxy-observation-acquisition-20260910/cases/fsmgen-LifetimeEvidence"
+                  },
+                  "executable" : null,
+                  "observation_reference_key" : "5bdfab507fa1a5ef1b7ca2c2789ec83e5f8f0d899ee83c236b85724d7867f5aa",
+                  "runtime_authorized" : 0,
+                  "schema" : "fsmgen.inactive_observation_archive.v1",
+                  "source_bindings" : [
+                     {
+                        "archive" : {
+                           "device" : 1,
+                           "inode" : 51,
+                           "path" : ".artifacts/logs/native-proxy-observation-acquisition-20260910/cases/fsmgen-LifetimeEvidence/retained-sources/d42ab2b4e413bd694a831c4a8307a0c4cd760b3bfdcf5fc93dc0b6772fdd632b.source",
+                           "sha256" : "d42ab2b4e413bd694a831c4a8307a0c4cd760b3bfdcf5fc93dc0b6772fdd632b",
+                           "size_bytes" : 60
+                        },
+                        "role" : "wrapper",
+                        "source" : {
+                           "device" : 1,
+                           "inode" : 30,
+                           "path" : ".artifacts/tmp/process-supervisor-tests/fsmgen-LifetimeTarget/rust-tool-resolution",
+                           "sha256" : "d42ab2b4e413bd694a831c4a8307a0c4cd760b3bfdcf5fc93dc0b6772fdd632b",
+                           "size_bytes" : 60
+                        }
+                     },
+                     {
+                        "archive" : {
+                           "device" : 1,
+                           "inode" : 52,
+                           "path" : ".artifacts/logs/native-proxy-observation-acquisition-20260910/cases/fsmgen-LifetimeEvidence/retained-sources/f14e673e9e01e0c87c608dc1b4aacc027d6a2e2ae26d2b9efe051167fa07897e.source",
+                           "sha256" : "f14e673e9e01e0c87c608dc1b4aacc027d6a2e2ae26d2b9efe051167fa07897e",
+                           "size_bytes" : 976
+                        },
+                        "role" : "private_reference",
+                        "source" : {
+                           "device" : 1,
+                           "inode" : 31,
+                           "path" : ".artifacts/tmp/process-supervisor-tests/fsmgen-LifetimeTarget/rust-tools/image-reference.json",
+                           "sha256" : "f14e673e9e01e0c87c608dc1b4aacc027d6a2e2ae26d2b9efe051167fa07897e",
+                           "size_bytes" : 976
+                        }
+                     },
+                     {
+                        "archive" : {
+                           "device" : 1,
+                           "inode" : 52,
+                           "path" : ".artifacts/logs/native-proxy-observation-acquisition-20260910/cases/fsmgen-LifetimeEvidence/retained-sources/f14e673e9e01e0c87c608dc1b4aacc027d6a2e2ae26d2b9efe051167fa07897e.source",
+                           "sha256" : "f14e673e9e01e0c87c608dc1b4aacc027d6a2e2ae26d2b9efe051167fa07897e",
+                           "size_bytes" : 976
+                        },
+                        "role" : "global_reference",
+                        "source" : {
+                           "device" : 1,
+                           "inode" : 20,
+                           "path" : ".artifacts/tmp/native-proxy-image-custody/cases/fsmgen-LifetimeModel/references/747d676c11f338b31258e6dce42757fc2a827352aeb1ca6d8293650c290ed3cb.json",
+                           "sha256" : "f14e673e9e01e0c87c608dc1b4aacc027d6a2e2ae26d2b9efe051167fa07897e",
+                           "size_bytes" : 976
+                        }
+                     },
+                     {
+                        "archive" : {
+                           "device" : 1,
+                           "inode" : 53,
+                           "path" : ".artifacts/logs/native-proxy-observation-acquisition-20260910/cases/fsmgen-LifetimeEvidence/retained-sources/a7d92e28ec1c8308e37c6003df167bc42bd2341cf3a69d677f45330271ffba56.source",
+                           "sha256" : "a7d92e28ec1c8308e37c6003df167bc42bd2341cf3a69d677f45330271ffba56",
+                           "size_bytes" : 50
+                        },
+                        "role" : "c",
+                        "source" : {
+                           "device" : 1,
+                           "inode" : 10,
+                           "path" : ".artifacts/tmp/native-proxy-image-custody/cases/fsmgen-LifetimeModel/images/efd497b0e847884b3c1cfcde14d8b645991c52ebab90c54e58984ccbc303c146/rustup.c",
+                           "sha256" : "a7d92e28ec1c8308e37c6003df167bc42bd2341cf3a69d677f45330271ffba56",
+                           "size_bytes" : 50
+                        }
+                     },
+                     {
+                        "archive" : {
+                           "device" : 1,
+                           "inode" : 54,
+                           "path" : ".artifacts/logs/native-proxy-observation-acquisition-20260910/cases/fsmgen-LifetimeEvidence/retained-sources/e7f06f27e18528c7d10e8c4a4ab42b5e70d1423cdb80e83048597719c9c7eb67.source",
+                           "sha256" : "e7f06f27e18528c7d10e8c4a4ab42b5e70d1423cdb80e83048597719c9c7eb67",
+                           "size_bytes" : 53
+                        },
+                        "role" : "image",
+                        "source" : {
+                           "device" : 1,
+                           "inode" : 11,
+                           "path" : ".artifacts/tmp/native-proxy-image-custody/cases/fsmgen-LifetimeModel/images/efd497b0e847884b3c1cfcde14d8b645991c52ebab90c54e58984ccbc303c146/rustup",
+                           "sha256" : "e7f06f27e18528c7d10e8c4a4ab42b5e70d1423cdb80e83048597719c9c7eb67",
+                           "size_bytes" : 53
+                        }
+                     }
+                  ]
+               },
+               "previous" : {
+                  "executable" : null,
+                  "lock" : {
+                     "device" : 1,
+                     "inode" : 4,
+                     "path" : ".artifacts/tmp/native-proxy-image-custody/cases/fsmgen-LifetimeModel/coordination.lock"
+                  },
+                  "observation_reference" : {
+                     "record" : {
+                        "evidence_directory" : ".artifacts/logs/native-proxy-observation-acquisition-20260910/cases/fsmgen-LifetimeEvidence",
+                        "evidence_directory_identity" : {
+                           "device" : 1,
+                           "inode" : 3,
+                           "path" : ".artifacts/logs/native-proxy-observation-acquisition-20260910/cases/fsmgen-LifetimeEvidence"
+                        },
+                        "image_key" : "efd497b0e847884b3c1cfcde14d8b645991c52ebab90c54e58984ccbc303c146",
+                        "observer_birth" : {
+                           "pid" : 101,
+                           "ppid" : 100,
+                           "ruid" : 501,
+                           "start_sec" : 123,
+                           "start_usec" : 456,
+                           "uid" : 501
+                        },
+                        "reference_key" : "5bdfab507fa1a5ef1b7ca2c2789ec83e5f8f0d899ee83c236b85724d7867f5aa",
+                        "schema" : "fsmgen.test.rust_proxy_image_observation_reference.v1",
+                        "selected_sources" : [
+                           {
+                              "device" : 1,
+                              "inode" : 10,
+                              "path" : ".artifacts/tmp/native-proxy-image-custody/cases/fsmgen-LifetimeModel/images/efd497b0e847884b3c1cfcde14d8b645991c52ebab90c54e58984ccbc303c146/rustup.c",
+                              "sha256" : "a7d92e28ec1c8308e37c6003df167bc42bd2341cf3a69d677f45330271ffba56",
+                              "size_bytes" : 50
+                           },
+                           {
+                              "device" : 1,
+                              "inode" : 11,
+                              "path" : ".artifacts/tmp/native-proxy-image-custody/cases/fsmgen-LifetimeModel/images/efd497b0e847884b3c1cfcde14d8b645991c52ebab90c54e58984ccbc303c146/rustup",
+                              "sha256" : "e7f06f27e18528c7d10e8c4a4ab42b5e70d1423cdb80e83048597719c9c7eb67",
+                              "size_bytes" : 53
+                           }
+                        ],
+                        "target_birth" : {
+                           "pid" : 201,
+                           "ppid" : 200,
+                           "ruid" : 501,
+                           "start_sec" : 124,
+                           "start_usec" : 789,
+                           "uid" : 501
+                        }
+                     },
+                     "source" : {
+                        "bytes_hex" : "7b2265766964656e63655f6469726563746f7279223a222e6172746966616374732f6c6f67732f6e61746976652d70726f78792d6f62736572766174696f6e2d6163717569736974696f6e2d32303236303931302f63617365732f66736d67656e2d4c69666574696d6545766964656e6365222c2265766964656e63655f6469726563746f72795f6964656e74697479223a7b22646576696365223a312c22696e6f6465223a332c2270617468223a222e6172746966616374732f6c6f67732f6e61746976652d70726f78792d6f62736572766174696f6e2d6163717569736974696f6e2d32303236303931302f63617365732f66736d67656e2d4c69666574696d6545766964656e6365227d2c22696d6167655f6b6579223a2265666434393762306538343738383462336331636663646531346438623634353939316335326562616239306335346535383938346363626333303363313436222c226f627365727665725f6269727468223a7b22706964223a3130312c2270706964223a3130302c2272756964223a3530312c2273746172745f736563223a3132332c2273746172745f75736563223a3435362c22756964223a3530317d2c227265666572656e63655f6b6579223a2235626466616235303766613161356566316237636132633237383965633833653566386630643839396565383363323336623835373234643738363766356161222c22736368656d61223a2266736d67656e2e746573742e727573745f70726f78795f696d6167655f6f62736572766174696f6e5f7265666572656e63652e7631222c2273656c65637465645f736f7572636573223a5b7b22646576696365223a312c22696e6f6465223a31302c2270617468223a222e6172746966616374732f746d702f6e61746976652d70726f78792d696d6167652d637573746f64792f63617365732f66736d67656e2d4c69666574696d654d6f64656c2f696d616765732f656664343937623065383437383834623363316366636465313464386236343539393163353265626162393063353465353839383463636263333033633134362f7275737475702e63222c22736861323536223a2261376439326532386563316338333038653337633630303364663136376263343262643233343163663361363964363737663435333330323731666662613536222c2273697a655f6279746573223a35307d2c7b22646576696365223a312c22696e6f6465223a31312c2270617468223a222e6172746966616374732f746d702f6e61746976652d70726f78792d696d6167652d637573746f64792f63617365732f66736d67656e2d4c69666574696d654d6f64656c2f696d616765732f656664343937623065383437383834623363316366636465313464386236343539393163353265626162393063353465353839383463636263333033633134362f727573747570222c22736861323536223a2265376630366632376531383532386337643130653863346134616234326235653730643134323363646238306538333034383539373731396339633765623637222c2273697a655f6279746573223a35337d5d2c227461726765745f6269727468223a7b22706964223a3230312c2270706964223a3230302c2272756964223a3530312c2273746172745f736563223a3132342c2273746172745f75736563223a3738392c22756964223a3530317d7d",
+                        "identity" : {
+                           "device" : 1,
+                           "inode" : 40,
+                           "path" : ".artifacts/tmp/native-proxy-image-custody/cases/fsmgen-LifetimeModel/references/5bdfab507fa1a5ef1b7ca2c2789ec83e5f8f0d899ee83c236b85724d7867f5aa.json",
+                           "sha256" : "291aff93255834e3f6aaf9d84263cf0c5c6b434e1258bb1c2687e917e124be79",
+                           "size_bytes" : 1252
+                        }
+                     }
+                  },
+                  "runtime_authorized" : 0,
+                  "schema" : "fsmgen.inactive_observation_acquisition.v1",
+                  "target_sources" : [
+                     {
+                        "bytes_hex" : "23212f7573722f62696e2f7065726c0a2320696e657274206f62736572766174696f6e20777261707065723b206e657665722065786563757465640a",
+                        "identity" : {
+                           "device" : 1,
+                           "inode" : 30,
+                           "path" : ".artifacts/tmp/process-supervisor-tests/fsmgen-LifetimeTarget/rust-tool-resolution",
+                           "sha256" : "d42ab2b4e413bd694a831c4a8307a0c4cd760b3bfdcf5fc93dc0b6772fdd632b",
+                           "size_bytes" : 60
+                        }
+                     },
+                     {
+                        "bytes_hex" : "7b22696d6167655f6b6579223a2265666434393762306538343738383462336331636663646531346438623634353939316335326562616239306335346535383938346363626333303363313436222c227265666572656e63655f6b6579223a2237343764363736633131663333386233313235386536646365343237353766633261383237333532616562316361366438323933363530633239306564336362222c22736368656d61223a2266736d67656e2e746573742e727573745f70726f78795f696d6167655f7265666572656e63652e7631222c2273656c65637465645f736f7572636573223a5b7b22646576696365223a312c22696e6f6465223a31302c2270617468223a222e6172746966616374732f746d702f6e61746976652d70726f78792d696d6167652d637573746f64792f63617365732f66736d67656e2d4c69666574696d654d6f64656c2f696d616765732f656664343937623065383437383834623363316366636465313464386236343539393163353265626162393063353465353839383463636263333033633134362f7275737475702e63222c22736861323536223a2261376439326532386563316338333038653337633630303364663136376263343262643233343163663361363964363737663435333330323731666662613536222c2273697a655f6279746573223a35307d2c7b22646576696365223a312c22696e6f6465223a31312c2270617468223a222e6172746966616374732f746d702f6e61746976652d70726f78792d696d6167652d637573746f64792f63617365732f66736d67656e2d4c69666574696d654d6f64656c2f696d616765732f656664343937623065383437383834623363316366636465313464386236343539393163353265626162393063353465353839383463636263333033633134362f727573747570222c22736861323536223a2265376630366632376531383532386337643130653863346134616234326235653730643134323363646238306538333034383539373731396339633765623637222c2273697a655f6279746573223a35337d5d2c22776f726b7370616365223a222e6172746966616374732f746d702f70726f636573732d73757065727669736f722d74657374732f66736d67656e2d4c69666574696d65546172676574222c22776f726b73706163655f6964656e74697479223a7b22646576696365223a312c22696e6f6465223a312c2270617468223a222e6172746966616374732f746d702f70726f636573732d73757065727669736f722d74657374732f66736d67656e2d4c69666574696d65546172676574227d7d",
+                        "identity" : {
+                           "device" : 1,
+                           "inode" : 31,
+                           "path" : ".artifacts/tmp/process-supervisor-tests/fsmgen-LifetimeTarget/rust-tools/image-reference.json",
+                           "sha256" : "f14e673e9e01e0c87c608dc1b4aacc027d6a2e2ae26d2b9efe051167fa07897e",
+                           "size_bytes" : 976
+                        }
+                     },
+                     {
+                        "bytes_hex" : "7b22696d6167655f6b6579223a2265666434393762306538343738383462336331636663646531346438623634353939316335326562616239306335346535383938346363626333303363313436222c227265666572656e63655f6b6579223a2237343764363736633131663333386233313235386536646365343237353766633261383237333532616562316361366438323933363530633239306564336362222c22736368656d61223a2266736d67656e2e746573742e727573745f70726f78795f696d6167655f7265666572656e63652e7631222c2273656c65637465645f736f7572636573223a5b7b22646576696365223a312c22696e6f6465223a31302c2270617468223a222e6172746966616374732f746d702f6e61746976652d70726f78792d696d6167652d637573746f64792f63617365732f66736d67656e2d4c69666574696d654d6f64656c2f696d616765732f656664343937623065383437383834623363316366636465313464386236343539393163353265626162393063353465353839383463636263333033633134362f7275737475702e63222c22736861323536223a2261376439326532386563316338333038653337633630303364663136376263343262643233343163663361363964363737663435333330323731666662613536222c2273697a655f6279746573223a35307d2c7b22646576696365223a312c22696e6f6465223a31312c2270617468223a222e6172746966616374732f746d702f6e61746976652d70726f78792d696d6167652d637573746f64792f63617365732f66736d67656e2d4c69666574696d654d6f64656c2f696d616765732f656664343937623065383437383834623363316366636465313464386236343539393163353265626162393063353465353839383463636263333033633134362f727573747570222c22736861323536223a2265376630366632376531383532386337643130653863346134616234326235653730643134323363646238306538333034383539373731396339633765623637222c2273697a655f6279746573223a35337d5d2c22776f726b7370616365223a222e6172746966616374732f746d702f70726f636573732d73757065727669736f722d74657374732f66736d67656e2d4c69666574696d65546172676574222c22776f726b73706163655f6964656e74697479223a7b22646576696365223a312c22696e6f6465223a312c2270617468223a222e6172746966616374732f746d702f70726f636573732d73757065727669736f722d74657374732f66736d67656e2d4c69666574696d65546172676574227d7d",
+                        "identity" : {
+                           "device" : 1,
+                           "inode" : 20,
+                           "path" : ".artifacts/tmp/native-proxy-image-custody/cases/fsmgen-LifetimeModel/references/747d676c11f338b31258e6dce42757fc2a827352aeb1ca6d8293650c290ed3cb.json",
+                           "sha256" : "f14e673e9e01e0c87c608dc1b4aacc027d6a2e2ae26d2b9efe051167fa07897e",
+                           "size_bytes" : 976
+                        }
+                     },
+                     {
+                        "bytes_hex" : "2f2a20696e657274207175616c696669636174696f6e2062797465733b206e6576657220636f6d70696c6564202a2f0a00ff",
+                        "identity" : {
+                           "device" : 1,
+                           "inode" : 10,
+                           "path" : ".artifacts/tmp/native-proxy-image-custody/cases/fsmgen-LifetimeModel/images/efd497b0e847884b3c1cfcde14d8b645991c52ebab90c54e58984ccbc303c146/rustup.c",
+                           "sha256" : "a7d92e28ec1c8308e37c6003df167bc42bd2341cf3a69d677f45330271ffba56",
+                           "size_bytes" : 50
+                        }
+                     },
+                     {
+                        "bytes_hex" : "cffaedfe0c000001000000000200000000000000000000000000000000000000696e6572742d6e6f742d612d70726f6772616d00ff",
+                        "identity" : {
+                           "device" : 1,
+                           "inode" : 11,
+                           "path" : ".artifacts/tmp/native-proxy-image-custody/cases/fsmgen-LifetimeModel/images/efd497b0e847884b3c1cfcde14d8b645991c52ebab90c54e58984ccbc303c146/rustup",
+                           "sha256" : "e7f06f27e18528c7d10e8c4a4ab42b5e70d1423cdb80e83048597719c9c7eb67",
+                           "size_bytes" : 53
+                        }
+                     }
+                  ]
+               },
+               "selection" : {
+                  "entries" : [
+                     {
+                        "ownership_token" : "f107e8381642169a917b523559e84cd7eedf92aaffc1eced2a1de0b3286e9098",
+                        "role" : "capture",
+                        "work_id" : "a:capture"
+                     },
+                     {
+                        "ownership_token" : "bffd15672db7fe92ad405aabf421af036c3fae371ff250c0bacc877d4716f919",
+                        "role" : "helper",
+                        "work_id" : "a:helper"
+                     },
+                     {
+                        "ownership_token" : "d8b07bfe9ec28a0e1a66bd8fb1509f6af46867d2e14cfbec734e5d6ec0c439dd",
+                        "role" : "query",
+                        "work_id" : "a:query"
+                     }
+                  ],
+                  "evidence_directory_identity" : {
+                     "device" : 1,
+                     "inode" : 3,
+                     "path" : ".artifacts/logs/native-proxy-observation-acquisition-20260910/cases/fsmgen-LifetimeEvidence"
+                  },
+                  "executable" : null,
+                  "observation_reference_key" : "5bdfab507fa1a5ef1b7ca2c2789ec83e5f8f0d899ee83c236b85724d7867f5aa",
+                  "runtime_authorized" : 0,
+                  "schema" : "fsmgen.inactive_observation_work_selection.v1"
+               },
+               "settlement" : {
+                  "executable" : null,
+                  "receipts" : [
+                     {
+                        "cleanup" : {
+                           "group_gone" : 1,
+                           "leader_reaped" : 1,
+                           "leader_started" : 1
+                        },
+                        "outcome" : "completed",
+                        "ownership_token" : "f107e8381642169a917b523559e84cd7eedf92aaffc1eced2a1de0b3286e9098",
+                        "role" : "capture",
+                        "work_id" : "a:capture"
+                     },
+                     {
+                        "cleanup" : {
+                           "group_gone" : 1,
+                           "leader_reaped" : 1,
+                           "leader_started" : 1
+                        },
+                        "outcome" : "failed",
+                        "ownership_token" : "bffd15672db7fe92ad405aabf421af036c3fae371ff250c0bacc877d4716f919",
+                        "role" : "helper",
+                        "work_id" : "a:helper"
+                     },
+                     {
+                        "cleanup" : {
+                           "group_gone" : 1,
+                           "leader_reaped" : 1,
+                           "leader_started" : 1
+                        },
+                        "outcome" : "cancelled",
+                        "ownership_token" : "d8b07bfe9ec28a0e1a66bd8fb1509f6af46867d2e14cfbec734e5d6ec0c439dd",
+                        "role" : "query",
+                        "work_id" : "a:query"
+                     }
+                  ],
+                  "runtime_authorized" : 0,
+                  "schema" : "fsmgen.inactive_observation_work_settlement.v1",
+                  "selection" : {
+                     "entries" : [
+                        {
+                           "ownership_token" : "f107e8381642169a917b523559e84cd7eedf92aaffc1eced2a1de0b3286e9098",
+                           "role" : "capture",
+                           "work_id" : "a:capture"
+                        },
+                        {
+                           "ownership_token" : "bffd15672db7fe92ad405aabf421af036c3fae371ff250c0bacc877d4716f919",
+                           "role" : "helper",
+                           "work_id" : "a:helper"
+                        },
+                        {
+                           "ownership_token" : "d8b07bfe9ec28a0e1a66bd8fb1509f6af46867d2e14cfbec734e5d6ec0c439dd",
+                           "role" : "query",
+                           "work_id" : "a:query"
+                        }
+                     ],
+                     "evidence_directory_identity" : {
+                        "device" : 1,
+                        "inode" : 3,
+                        "path" : ".artifacts/logs/native-proxy-observation-acquisition-20260910/cases/fsmgen-LifetimeEvidence"
+                     },
+                     "executable" : null,
+                     "observation_reference_key" : "5bdfab507fa1a5ef1b7ca2c2789ec83e5f8f0d899ee83c236b85724d7867f5aa",
+                     "runtime_authorized" : 0,
+                     "schema" : "fsmgen.inactive_observation_work_selection.v1"
+                  },
+                  "selection_sealed" : 1
+               },
+               "specification" : {
+                  "archive_directory" : ".artifacts/logs/native-proxy-observation-acquisition-20260910/cases/fsmgen-LifetimeEvidence/retained-sources",
+                  "evidence_directory_identity" : {
+                     "device" : 1,
+                     "inode" : 3,
+                     "path" : ".artifacts/logs/native-proxy-observation-acquisition-20260910/cases/fsmgen-LifetimeEvidence"
+                  },
+                  "executable" : null,
+                  "files" : [
+                     {
+                        "bytes_hex" : "23212f7573722f62696e2f7065726c0a2320696e657274206f62736572766174696f6e20777261707065723b206e657665722065786563757465640a",
+                        "path" : ".artifacts/logs/native-proxy-observation-acquisition-20260910/cases/fsmgen-LifetimeEvidence/retained-sources/d42ab2b4e413bd694a831c4a8307a0c4cd760b3bfdcf5fc93dc0b6772fdd632b.source",
+                        "sha256" : "d42ab2b4e413bd694a831c4a8307a0c4cd760b3bfdcf5fc93dc0b6772fdd632b",
+                        "size_bytes" : 60
+                     },
+                     {
+                        "bytes_hex" : "7b22696d6167655f6b6579223a2265666434393762306538343738383462336331636663646531346438623634353939316335326562616239306335346535383938346363626333303363313436222c227265666572656e63655f6b6579223a2237343764363736633131663333386233313235386536646365343237353766633261383237333532616562316361366438323933363530633239306564336362222c22736368656d61223a2266736d67656e2e746573742e727573745f70726f78795f696d6167655f7265666572656e63652e7631222c2273656c65637465645f736f7572636573223a5b7b22646576696365223a312c22696e6f6465223a31302c2270617468223a222e6172746966616374732f746d702f6e61746976652d70726f78792d696d6167652d637573746f64792f63617365732f66736d67656e2d4c69666574696d654d6f64656c2f696d616765732f656664343937623065383437383834623363316366636465313464386236343539393163353265626162393063353465353839383463636263333033633134362f7275737475702e63222c22736861323536223a2261376439326532386563316338333038653337633630303364663136376263343262643233343163663361363964363737663435333330323731666662613536222c2273697a655f6279746573223a35307d2c7b22646576696365223a312c22696e6f6465223a31312c2270617468223a222e6172746966616374732f746d702f6e61746976652d70726f78792d696d6167652d637573746f64792f63617365732f66736d67656e2d4c69666574696d654d6f64656c2f696d616765732f656664343937623065383437383834623363316366636465313464386236343539393163353265626162393063353465353839383463636263333033633134362f727573747570222c22736861323536223a2265376630366632376531383532386337643130653863346134616234326235653730643134323363646238306538333034383539373731396339633765623637222c2273697a655f6279746573223a35337d5d2c22776f726b7370616365223a222e6172746966616374732f746d702f70726f636573732d73757065727669736f722d74657374732f66736d67656e2d4c69666574696d65546172676574222c22776f726b73706163655f6964656e74697479223a7b22646576696365223a312c22696e6f6465223a312c2270617468223a222e6172746966616374732f746d702f70726f636573732d73757065727669736f722d74657374732f66736d67656e2d4c69666574696d65546172676574227d7d",
+                        "path" : ".artifacts/logs/native-proxy-observation-acquisition-20260910/cases/fsmgen-LifetimeEvidence/retained-sources/f14e673e9e01e0c87c608dc1b4aacc027d6a2e2ae26d2b9efe051167fa07897e.source",
+                        "sha256" : "f14e673e9e01e0c87c608dc1b4aacc027d6a2e2ae26d2b9efe051167fa07897e",
+                        "size_bytes" : 976
+                     },
+                     {
+                        "bytes_hex" : "2f2a20696e657274207175616c696669636174696f6e2062797465733b206e6576657220636f6d70696c6564202a2f0a00ff",
+                        "path" : ".artifacts/logs/native-proxy-observation-acquisition-20260910/cases/fsmgen-LifetimeEvidence/retained-sources/a7d92e28ec1c8308e37c6003df167bc42bd2341cf3a69d677f45330271ffba56.source",
+                        "sha256" : "a7d92e28ec1c8308e37c6003df167bc42bd2341cf3a69d677f45330271ffba56",
+                        "size_bytes" : 50
+                     },
+                     {
+                        "bytes_hex" : "cffaedfe0c000001000000000200000000000000000000000000000000000000696e6572742d6e6f742d612d70726f6772616d00ff",
+                        "path" : ".artifacts/logs/native-proxy-observation-acquisition-20260910/cases/fsmgen-LifetimeEvidence/retained-sources/e7f06f27e18528c7d10e8c4a4ab42b5e70d1423cdb80e83048597719c9c7eb67.source",
+                        "sha256" : "e7f06f27e18528c7d10e8c4a4ab42b5e70d1423cdb80e83048597719c9c7eb67",
+                        "size_bytes" : 53
+                     }
+                  ],
+                  "observation_reference_key" : "5bdfab507fa1a5ef1b7ca2c2789ec83e5f8f0d899ee83c236b85724d7867f5aa",
+                  "runtime_authorized" : 0,
+                  "schema" : "fsmgen.inactive_observation_archive_specification.v1",
+                  "sources" : [
+                     {
+                        "destination" : ".artifacts/logs/native-proxy-observation-acquisition-20260910/cases/fsmgen-LifetimeEvidence/retained-sources/d42ab2b4e413bd694a831c4a8307a0c4cd760b3bfdcf5fc93dc0b6772fdd632b.source",
+                        "role" : "wrapper",
+                        "snapshot" : {
+                           "bytes_hex" : "23212f7573722f62696e2f7065726c0a2320696e657274206f62736572766174696f6e20777261707065723b206e657665722065786563757465640a",
+                           "identity" : {
+                              "device" : 1,
+                              "inode" : 30,
+                              "path" : ".artifacts/tmp/process-supervisor-tests/fsmgen-LifetimeTarget/rust-tool-resolution",
+                              "sha256" : "d42ab2b4e413bd694a831c4a8307a0c4cd760b3bfdcf5fc93dc0b6772fdd632b",
+                              "size_bytes" : 60
+                           }
+                        }
+                     },
+                     {
+                        "destination" : ".artifacts/logs/native-proxy-observation-acquisition-20260910/cases/fsmgen-LifetimeEvidence/retained-sources/f14e673e9e01e0c87c608dc1b4aacc027d6a2e2ae26d2b9efe051167fa07897e.source",
+                        "role" : "private_reference",
+                        "snapshot" : {
+                           "bytes_hex" : "7b22696d6167655f6b6579223a2265666434393762306538343738383462336331636663646531346438623634353939316335326562616239306335346535383938346363626333303363313436222c227265666572656e63655f6b6579223a2237343764363736633131663333386233313235386536646365343237353766633261383237333532616562316361366438323933363530633239306564336362222c22736368656d61223a2266736d67656e2e746573742e727573745f70726f78795f696d6167655f7265666572656e63652e7631222c2273656c65637465645f736f7572636573223a5b7b22646576696365223a312c22696e6f6465223a31302c2270617468223a222e6172746966616374732f746d702f6e61746976652d70726f78792d696d6167652d637573746f64792f63617365732f66736d67656e2d4c69666574696d654d6f64656c2f696d616765732f656664343937623065383437383834623363316366636465313464386236343539393163353265626162393063353465353839383463636263333033633134362f7275737475702e63222c22736861323536223a2261376439326532386563316338333038653337633630303364663136376263343262643233343163663361363964363737663435333330323731666662613536222c2273697a655f6279746573223a35307d2c7b22646576696365223a312c22696e6f6465223a31312c2270617468223a222e6172746966616374732f746d702f6e61746976652d70726f78792d696d6167652d637573746f64792f63617365732f66736d67656e2d4c69666574696d654d6f64656c2f696d616765732f656664343937623065383437383834623363316366636465313464386236343539393163353265626162393063353465353839383463636263333033633134362f727573747570222c22736861323536223a2265376630366632376531383532386337643130653863346134616234326235653730643134323363646238306538333034383539373731396339633765623637222c2273697a655f6279746573223a35337d5d2c22776f726b7370616365223a222e6172746966616374732f746d702f70726f636573732d73757065727669736f722d74657374732f66736d67656e2d4c69666574696d65546172676574222c22776f726b73706163655f6964656e74697479223a7b22646576696365223a312c22696e6f6465223a312c2270617468223a222e6172746966616374732f746d702f70726f636573732d73757065727669736f722d74657374732f66736d67656e2d4c69666574696d65546172676574227d7d",
+                           "identity" : {
+                              "device" : 1,
+                              "inode" : 31,
+                              "path" : ".artifacts/tmp/process-supervisor-tests/fsmgen-LifetimeTarget/rust-tools/image-reference.json",
+                              "sha256" : "f14e673e9e01e0c87c608dc1b4aacc027d6a2e2ae26d2b9efe051167fa07897e",
+                              "size_bytes" : 976
+                           }
+                        }
+                     },
+                     {
+                        "destination" : ".artifacts/logs/native-proxy-observation-acquisition-20260910/cases/fsmgen-LifetimeEvidence/retained-sources/f14e673e9e01e0c87c608dc1b4aacc027d6a2e2ae26d2b9efe051167fa07897e.source",
+                        "role" : "global_reference",
+                        "snapshot" : {
+                           "bytes_hex" : "7b22696d6167655f6b6579223a2265666434393762306538343738383462336331636663646531346438623634353939316335326562616239306335346535383938346363626333303363313436222c227265666572656e63655f6b6579223a2237343764363736633131663333386233313235386536646365343237353766633261383237333532616562316361366438323933363530633239306564336362222c22736368656d61223a2266736d67656e2e746573742e727573745f70726f78795f696d6167655f7265666572656e63652e7631222c2273656c65637465645f736f7572636573223a5b7b22646576696365223a312c22696e6f6465223a31302c2270617468223a222e6172746966616374732f746d702f6e61746976652d70726f78792d696d6167652d637573746f64792f63617365732f66736d67656e2d4c69666574696d654d6f64656c2f696d616765732f656664343937623065383437383834623363316366636465313464386236343539393163353265626162393063353465353839383463636263333033633134362f7275737475702e63222c22736861323536223a2261376439326532386563316338333038653337633630303364663136376263343262643233343163663361363964363737663435333330323731666662613536222c2273697a655f6279746573223a35307d2c7b22646576696365223a312c22696e6f6465223a31312c2270617468223a222e6172746966616374732f746d702f6e61746976652d70726f78792d696d6167652d637573746f64792f63617365732f66736d67656e2d4c69666574696d654d6f64656c2f696d616765732f656664343937623065383437383834623363316366636465313464386236343539393163353265626162393063353465353839383463636263333033633134362f727573747570222c22736861323536223a2265376630366632376531383532386337643130653863346134616234326235653730643134323363646238306538333034383539373731396339633765623637222c2273697a655f6279746573223a35337d5d2c22776f726b7370616365223a222e6172746966616374732f746d702f70726f636573732d73757065727669736f722d74657374732f66736d67656e2d4c69666574696d65546172676574222c22776f726b73706163655f6964656e74697479223a7b22646576696365223a312c22696e6f6465223a312c2270617468223a222e6172746966616374732f746d702f70726f636573732d73757065727669736f722d74657374732f66736d67656e2d4c69666574696d65546172676574227d7d",
+                           "identity" : {
+                              "device" : 1,
+                              "inode" : 20,
+                              "path" : ".artifacts/tmp/native-proxy-image-custody/cases/fsmgen-LifetimeModel/references/747d676c11f338b31258e6dce42757fc2a827352aeb1ca6d8293650c290ed3cb.json",
+                              "sha256" : "f14e673e9e01e0c87c608dc1b4aacc027d6a2e2ae26d2b9efe051167fa07897e",
+                              "size_bytes" : 976
+                           }
+                        }
+                     },
+                     {
+                        "destination" : ".artifacts/logs/native-proxy-observation-acquisition-20260910/cases/fsmgen-LifetimeEvidence/retained-sources/a7d92e28ec1c8308e37c6003df167bc42bd2341cf3a69d677f45330271ffba56.source",
+                        "role" : "c",
+                        "snapshot" : {
+                           "bytes_hex" : "2f2a20696e657274207175616c696669636174696f6e2062797465733b206e6576657220636f6d70696c6564202a2f0a00ff",
+                           "identity" : {
+                              "device" : 1,
+                              "inode" : 10,
+                              "path" : ".artifacts/tmp/native-proxy-image-custody/cases/fsmgen-LifetimeModel/images/efd497b0e847884b3c1cfcde14d8b645991c52ebab90c54e58984ccbc303c146/rustup.c",
+                              "sha256" : "a7d92e28ec1c8308e37c6003df167bc42bd2341cf3a69d677f45330271ffba56",
+                              "size_bytes" : 50
+                           }
+                        }
+                     },
+                     {
+                        "destination" : ".artifacts/logs/native-proxy-observation-acquisition-20260910/cases/fsmgen-LifetimeEvidence/retained-sources/e7f06f27e18528c7d10e8c4a4ab42b5e70d1423cdb80e83048597719c9c7eb67.source",
+                        "role" : "image",
+                        "snapshot" : {
+                           "bytes_hex" : "cffaedfe0c000001000000000200000000000000000000000000000000000000696e6572742d6e6f742d612d70726f6772616d00ff",
+                           "identity" : {
+                              "device" : 1,
+                              "inode" : 11,
+                              "path" : ".artifacts/tmp/native-proxy-image-custody/cases/fsmgen-LifetimeModel/images/efd497b0e847884b3c1cfcde14d8b645991c52ebab90c54e58984ccbc303c146/rustup",
+                              "sha256" : "e7f06f27e18528c7d10e8c4a4ab42b5e70d1423cdb80e83048597719c9c7eb67",
+                              "size_bytes" : 53
+                           }
+                        }
+                     }
+                  ]
+               }
+            },
+            "b" : {
+               "archive" : {
+                  "archive_directory_identity" : {
+                     "device" : 1,
+                     "inode" : 50,
+                     "path" : ".artifacts/logs/native-proxy-observation-acquisition-20260910/cases/fsmgen-LifetimeEvidence/retained-sources"
+                  },
+                  "evidence_directory_identity" : {
+                     "device" : 1,
+                     "inode" : 3,
+                     "path" : ".artifacts/logs/native-proxy-observation-acquisition-20260910/cases/fsmgen-LifetimeEvidence"
+                  },
+                  "executable" : null,
+                  "observation_reference_key" : "754d0750c089bd8909a15eea294fc1f161dcb983f0148b642e9efd61afbea45c",
+                  "runtime_authorized" : 0,
+                  "schema" : "fsmgen.inactive_observation_archive.v1",
+                  "source_bindings" : [
+                     {
+                        "archive" : {
+                           "device" : 1,
+                           "inode" : 51,
+                           "path" : ".artifacts/logs/native-proxy-observation-acquisition-20260910/cases/fsmgen-LifetimeEvidence/retained-sources/d42ab2b4e413bd694a831c4a8307a0c4cd760b3bfdcf5fc93dc0b6772fdd632b.source",
+                           "sha256" : "d42ab2b4e413bd694a831c4a8307a0c4cd760b3bfdcf5fc93dc0b6772fdd632b",
+                           "size_bytes" : 60
+                        },
+                        "role" : "wrapper",
+                        "source" : {
+                           "device" : 1,
+                           "inode" : 30,
+                           "path" : ".artifacts/tmp/process-supervisor-tests/fsmgen-LifetimeTarget/rust-tool-resolution",
+                           "sha256" : "d42ab2b4e413bd694a831c4a8307a0c4cd760b3bfdcf5fc93dc0b6772fdd632b",
+                           "size_bytes" : 60
+                        }
+                     },
+                     {
+                        "archive" : {
+                           "device" : 1,
+                           "inode" : 52,
+                           "path" : ".artifacts/logs/native-proxy-observation-acquisition-20260910/cases/fsmgen-LifetimeEvidence/retained-sources/f14e673e9e01e0c87c608dc1b4aacc027d6a2e2ae26d2b9efe051167fa07897e.source",
+                           "sha256" : "f14e673e9e01e0c87c608dc1b4aacc027d6a2e2ae26d2b9efe051167fa07897e",
+                           "size_bytes" : 976
+                        },
+                        "role" : "private_reference",
+                        "source" : {
+                           "device" : 1,
+                           "inode" : 31,
+                           "path" : ".artifacts/tmp/process-supervisor-tests/fsmgen-LifetimeTarget/rust-tools/image-reference.json",
+                           "sha256" : "f14e673e9e01e0c87c608dc1b4aacc027d6a2e2ae26d2b9efe051167fa07897e",
+                           "size_bytes" : 976
+                        }
+                     },
+                     {
+                        "archive" : {
+                           "device" : 1,
+                           "inode" : 52,
+                           "path" : ".artifacts/logs/native-proxy-observation-acquisition-20260910/cases/fsmgen-LifetimeEvidence/retained-sources/f14e673e9e01e0c87c608dc1b4aacc027d6a2e2ae26d2b9efe051167fa07897e.source",
+                           "sha256" : "f14e673e9e01e0c87c608dc1b4aacc027d6a2e2ae26d2b9efe051167fa07897e",
+                           "size_bytes" : 976
+                        },
+                        "role" : "global_reference",
+                        "source" : {
+                           "device" : 1,
+                           "inode" : 20,
+                           "path" : ".artifacts/tmp/native-proxy-image-custody/cases/fsmgen-LifetimeModel/references/747d676c11f338b31258e6dce42757fc2a827352aeb1ca6d8293650c290ed3cb.json",
+                           "sha256" : "f14e673e9e01e0c87c608dc1b4aacc027d6a2e2ae26d2b9efe051167fa07897e",
+                           "size_bytes" : 976
+                        }
+                     },
+                     {
+                        "archive" : {
+                           "device" : 1,
+                           "inode" : 53,
+                           "path" : ".artifacts/logs/native-proxy-observation-acquisition-20260910/cases/fsmgen-LifetimeEvidence/retained-sources/a7d92e28ec1c8308e37c6003df167bc42bd2341cf3a69d677f45330271ffba56.source",
+                           "sha256" : "a7d92e28ec1c8308e37c6003df167bc42bd2341cf3a69d677f45330271ffba56",
+                           "size_bytes" : 50
+                        },
+                        "role" : "c",
+                        "source" : {
+                           "device" : 1,
+                           "inode" : 10,
+                           "path" : ".artifacts/tmp/native-proxy-image-custody/cases/fsmgen-LifetimeModel/images/efd497b0e847884b3c1cfcde14d8b645991c52ebab90c54e58984ccbc303c146/rustup.c",
+                           "sha256" : "a7d92e28ec1c8308e37c6003df167bc42bd2341cf3a69d677f45330271ffba56",
+                           "size_bytes" : 50
+                        }
+                     },
+                     {
+                        "archive" : {
+                           "device" : 1,
+                           "inode" : 54,
+                           "path" : ".artifacts/logs/native-proxy-observation-acquisition-20260910/cases/fsmgen-LifetimeEvidence/retained-sources/e7f06f27e18528c7d10e8c4a4ab42b5e70d1423cdb80e83048597719c9c7eb67.source",
+                           "sha256" : "e7f06f27e18528c7d10e8c4a4ab42b5e70d1423cdb80e83048597719c9c7eb67",
+                           "size_bytes" : 53
+                        },
+                        "role" : "image",
+                        "source" : {
+                           "device" : 1,
+                           "inode" : 11,
+                           "path" : ".artifacts/tmp/native-proxy-image-custody/cases/fsmgen-LifetimeModel/images/efd497b0e847884b3c1cfcde14d8b645991c52ebab90c54e58984ccbc303c146/rustup",
+                           "sha256" : "e7f06f27e18528c7d10e8c4a4ab42b5e70d1423cdb80e83048597719c9c7eb67",
+                           "size_bytes" : 53
+                        }
+                     }
+                  ]
+               },
+               "previous" : {
+                  "executable" : null,
+                  "lock" : {
+                     "device" : 1,
+                     "inode" : 4,
+                     "path" : ".artifacts/tmp/native-proxy-image-custody/cases/fsmgen-LifetimeModel/coordination.lock"
+                  },
+                  "observation_reference" : {
+                     "record" : {
+                        "evidence_directory" : ".artifacts/logs/native-proxy-observation-acquisition-20260910/cases/fsmgen-LifetimeEvidence",
+                        "evidence_directory_identity" : {
+                           "device" : 1,
+                           "inode" : 3,
+                           "path" : ".artifacts/logs/native-proxy-observation-acquisition-20260910/cases/fsmgen-LifetimeEvidence"
+                        },
+                        "image_key" : "efd497b0e847884b3c1cfcde14d8b645991c52ebab90c54e58984ccbc303c146",
+                        "observer_birth" : {
+                           "pid" : 102,
+                           "ppid" : 100,
+                           "ruid" : 501,
+                           "start_sec" : 123,
+                           "start_usec" : 457,
+                           "uid" : 501
+                        },
+                        "reference_key" : "754d0750c089bd8909a15eea294fc1f161dcb983f0148b642e9efd61afbea45c",
+                        "schema" : "fsmgen.test.rust_proxy_image_observation_reference.v1",
+                        "selected_sources" : [
+                           {
+                              "device" : 1,
+                              "inode" : 10,
+                              "path" : ".artifacts/tmp/native-proxy-image-custody/cases/fsmgen-LifetimeModel/images/efd497b0e847884b3c1cfcde14d8b645991c52ebab90c54e58984ccbc303c146/rustup.c",
+                              "sha256" : "a7d92e28ec1c8308e37c6003df167bc42bd2341cf3a69d677f45330271ffba56",
+                              "size_bytes" : 50
+                           },
+                           {
+                              "device" : 1,
+                              "inode" : 11,
+                              "path" : ".artifacts/tmp/native-proxy-image-custody/cases/fsmgen-LifetimeModel/images/efd497b0e847884b3c1cfcde14d8b645991c52ebab90c54e58984ccbc303c146/rustup",
+                              "sha256" : "e7f06f27e18528c7d10e8c4a4ab42b5e70d1423cdb80e83048597719c9c7eb67",
+                              "size_bytes" : 53
+                           }
+                        ],
+                        "target_birth" : {
+                           "pid" : 201,
+                           "ppid" : 200,
+                           "ruid" : 501,
+                           "start_sec" : 124,
+                           "start_usec" : 789,
+                           "uid" : 501
+                        }
+                     },
+                     "source" : {
+                        "bytes_hex" : "7b2265766964656e63655f6469726563746f7279223a222e6172746966616374732f6c6f67732f6e61746976652d70726f78792d6f62736572766174696f6e2d6163717569736974696f6e2d32303236303931302f63617365732f66736d67656e2d4c69666574696d6545766964656e6365222c2265766964656e63655f6469726563746f72795f6964656e74697479223a7b22646576696365223a312c22696e6f6465223a332c2270617468223a222e6172746966616374732f6c6f67732f6e61746976652d70726f78792d6f62736572766174696f6e2d6163717569736974696f6e2d32303236303931302f63617365732f66736d67656e2d4c69666574696d6545766964656e6365227d2c22696d6167655f6b6579223a2265666434393762306538343738383462336331636663646531346438623634353939316335326562616239306335346535383938346363626333303363313436222c226f627365727665725f6269727468223a7b22706964223a3130322c2270706964223a3130302c2272756964223a3530312c2273746172745f736563223a3132332c2273746172745f75736563223a3435372c22756964223a3530317d2c227265666572656e63655f6b6579223a2237353464303735306330383962643839303961313565656132393466633166313631646362393833663031343862363432653965666436316166626561343563222c22736368656d61223a2266736d67656e2e746573742e727573745f70726f78795f696d6167655f6f62736572766174696f6e5f7265666572656e63652e7631222c2273656c65637465645f736f7572636573223a5b7b22646576696365223a312c22696e6f6465223a31302c2270617468223a222e6172746966616374732f746d702f6e61746976652d70726f78792d696d6167652d637573746f64792f63617365732f66736d67656e2d4c69666574696d654d6f64656c2f696d616765732f656664343937623065383437383834623363316366636465313464386236343539393163353265626162393063353465353839383463636263333033633134362f7275737475702e63222c22736861323536223a2261376439326532386563316338333038653337633630303364663136376263343262643233343163663361363964363737663435333330323731666662613536222c2273697a655f6279746573223a35307d2c7b22646576696365223a312c22696e6f6465223a31312c2270617468223a222e6172746966616374732f746d702f6e61746976652d70726f78792d696d6167652d637573746f64792f63617365732f66736d67656e2d4c69666574696d654d6f64656c2f696d616765732f656664343937623065383437383834623363316366636465313464386236343539393163353265626162393063353465353839383463636263333033633134362f727573747570222c22736861323536223a2265376630366632376531383532386337643130653863346134616234326235653730643134323363646238306538333034383539373731396339633765623637222c2273697a655f6279746573223a35337d5d2c227461726765745f6269727468223a7b22706964223a3230312c2270706964223a3230302c2272756964223a3530312c2273746172745f736563223a3132342c2273746172745f75736563223a3738392c22756964223a3530317d7d",
+                        "identity" : {
+                           "device" : 1,
+                           "inode" : 41,
+                           "path" : ".artifacts/tmp/native-proxy-image-custody/cases/fsmgen-LifetimeModel/references/754d0750c089bd8909a15eea294fc1f161dcb983f0148b642e9efd61afbea45c.json",
+                           "sha256" : "1cb98773605cc23da947dfe7f9fa86176609da54d3924969096870481c363eaa",
+                           "size_bytes" : 1252
+                        }
+                     }
+                  },
+                  "runtime_authorized" : 0,
+                  "schema" : "fsmgen.inactive_observation_acquisition.v1",
+                  "target_sources" : [
+                     {
+                        "bytes_hex" : "23212f7573722f62696e2f7065726c0a2320696e657274206f62736572766174696f6e20777261707065723b206e657665722065786563757465640a",
+                        "identity" : {
+                           "device" : 1,
+                           "inode" : 30,
+                           "path" : ".artifacts/tmp/process-supervisor-tests/fsmgen-LifetimeTarget/rust-tool-resolution",
+                           "sha256" : "d42ab2b4e413bd694a831c4a8307a0c4cd760b3bfdcf5fc93dc0b6772fdd632b",
+                           "size_bytes" : 60
+                        }
+                     },
+                     {
+                        "bytes_hex" : "7b22696d6167655f6b6579223a2265666434393762306538343738383462336331636663646531346438623634353939316335326562616239306335346535383938346363626333303363313436222c227265666572656e63655f6b6579223a2237343764363736633131663333386233313235386536646365343237353766633261383237333532616562316361366438323933363530633239306564336362222c22736368656d61223a2266736d67656e2e746573742e727573745f70726f78795f696d6167655f7265666572656e63652e7631222c2273656c65637465645f736f7572636573223a5b7b22646576696365223a312c22696e6f6465223a31302c2270617468223a222e6172746966616374732f746d702f6e61746976652d70726f78792d696d6167652d637573746f64792f63617365732f66736d67656e2d4c69666574696d654d6f64656c2f696d616765732f656664343937623065383437383834623363316366636465313464386236343539393163353265626162393063353465353839383463636263333033633134362f7275737475702e63222c22736861323536223a2261376439326532386563316338333038653337633630303364663136376263343262643233343163663361363964363737663435333330323731666662613536222c2273697a655f6279746573223a35307d2c7b22646576696365223a312c22696e6f6465223a31312c2270617468223a222e6172746966616374732f746d702f6e61746976652d70726f78792d696d6167652d637573746f64792f63617365732f66736d67656e2d4c69666574696d654d6f64656c2f696d616765732f656664343937623065383437383834623363316366636465313464386236343539393163353265626162393063353465353839383463636263333033633134362f727573747570222c22736861323536223a2265376630366632376531383532386337643130653863346134616234326235653730643134323363646238306538333034383539373731396339633765623637222c2273697a655f6279746573223a35337d5d2c22776f726b7370616365223a222e6172746966616374732f746d702f70726f636573732d73757065727669736f722d74657374732f66736d67656e2d4c69666574696d65546172676574222c22776f726b73706163655f6964656e74697479223a7b22646576696365223a312c22696e6f6465223a312c2270617468223a222e6172746966616374732f746d702f70726f636573732d73757065727669736f722d74657374732f66736d67656e2d4c69666574696d65546172676574227d7d",
+                        "identity" : {
+                           "device" : 1,
+                           "inode" : 31,
+                           "path" : ".artifacts/tmp/process-supervisor-tests/fsmgen-LifetimeTarget/rust-tools/image-reference.json",
+                           "sha256" : "f14e673e9e01e0c87c608dc1b4aacc027d6a2e2ae26d2b9efe051167fa07897e",
+                           "size_bytes" : 976
+                        }
+                     },
+                     {
+                        "bytes_hex" : "7b22696d6167655f6b6579223a2265666434393762306538343738383462336331636663646531346438623634353939316335326562616239306335346535383938346363626333303363313436222c227265666572656e63655f6b6579223a2237343764363736633131663333386233313235386536646365343237353766633261383237333532616562316361366438323933363530633239306564336362222c22736368656d61223a2266736d67656e2e746573742e727573745f70726f78795f696d6167655f7265666572656e63652e7631222c2273656c65637465645f736f7572636573223a5b7b22646576696365223a312c22696e6f6465223a31302c2270617468223a222e6172746966616374732f746d702f6e61746976652d70726f78792d696d6167652d637573746f64792f63617365732f66736d67656e2d4c69666574696d654d6f64656c2f696d616765732f656664343937623065383437383834623363316366636465313464386236343539393163353265626162393063353465353839383463636263333033633134362f7275737475702e63222c22736861323536223a2261376439326532386563316338333038653337633630303364663136376263343262643233343163663361363964363737663435333330323731666662613536222c2273697a655f6279746573223a35307d2c7b22646576696365223a312c22696e6f6465223a31312c2270617468223a222e6172746966616374732f746d702f6e61746976652d70726f78792d696d6167652d637573746f64792f63617365732f66736d67656e2d4c69666574696d654d6f64656c2f696d616765732f656664343937623065383437383834623363316366636465313464386236343539393163353265626162393063353465353839383463636263333033633134362f727573747570222c22736861323536223a2265376630366632376531383532386337643130653863346134616234326235653730643134323363646238306538333034383539373731396339633765623637222c2273697a655f6279746573223a35337d5d2c22776f726b7370616365223a222e6172746966616374732f746d702f70726f636573732d73757065727669736f722d74657374732f66736d67656e2d4c69666574696d65546172676574222c22776f726b73706163655f6964656e74697479223a7b22646576696365223a312c22696e6f6465223a312c2270617468223a222e6172746966616374732f746d702f70726f636573732d73757065727669736f722d74657374732f66736d67656e2d4c69666574696d65546172676574227d7d",
+                        "identity" : {
+                           "device" : 1,
+                           "inode" : 20,
+                           "path" : ".artifacts/tmp/native-proxy-image-custody/cases/fsmgen-LifetimeModel/references/747d676c11f338b31258e6dce42757fc2a827352aeb1ca6d8293650c290ed3cb.json",
+                           "sha256" : "f14e673e9e01e0c87c608dc1b4aacc027d6a2e2ae26d2b9efe051167fa07897e",
+                           "size_bytes" : 976
+                        }
+                     },
+                     {
+                        "bytes_hex" : "2f2a20696e657274207175616c696669636174696f6e2062797465733b206e6576657220636f6d70696c6564202a2f0a00ff",
+                        "identity" : {
+                           "device" : 1,
+                           "inode" : 10,
+                           "path" : ".artifacts/tmp/native-proxy-image-custody/cases/fsmgen-LifetimeModel/images/efd497b0e847884b3c1cfcde14d8b645991c52ebab90c54e58984ccbc303c146/rustup.c",
+                           "sha256" : "a7d92e28ec1c8308e37c6003df167bc42bd2341cf3a69d677f45330271ffba56",
+                           "size_bytes" : 50
+                        }
+                     },
+                     {
+                        "bytes_hex" : "cffaedfe0c000001000000000200000000000000000000000000000000000000696e6572742d6e6f742d612d70726f6772616d00ff",
+                        "identity" : {
+                           "device" : 1,
+                           "inode" : 11,
+                           "path" : ".artifacts/tmp/native-proxy-image-custody/cases/fsmgen-LifetimeModel/images/efd497b0e847884b3c1cfcde14d8b645991c52ebab90c54e58984ccbc303c146/rustup",
+                           "sha256" : "e7f06f27e18528c7d10e8c4a4ab42b5e70d1423cdb80e83048597719c9c7eb67",
+                           "size_bytes" : 53
+                        }
+                     }
+                  ]
+               },
+               "selection" : {
+                  "entries" : [
+                     {
+                        "ownership_token" : "a541c2a30b930715e0f077ccf356d5fe2303dfd73cab1d9a3295206c57799911",
+                        "role" : "capture",
+                        "work_id" : "b:capture"
+                     },
+                     {
+                        "ownership_token" : "f661cb8ad67f2aa78f09538ccd36f432ee8e8f45c81138873f62ff54bc9d9647",
+                        "role" : "helper",
+                        "work_id" : "b:helper"
+                     },
+                     {
+                        "ownership_token" : "47b1bc0da55a40a5c9427f30b9e888306201146e3befecb2df49460730a3f5c4",
+                        "role" : "query",
+                        "work_id" : "b:query"
+                     }
+                  ],
+                  "evidence_directory_identity" : {
+                     "device" : 1,
+                     "inode" : 3,
+                     "path" : ".artifacts/logs/native-proxy-observation-acquisition-20260910/cases/fsmgen-LifetimeEvidence"
+                  },
+                  "executable" : null,
+                  "observation_reference_key" : "754d0750c089bd8909a15eea294fc1f161dcb983f0148b642e9efd61afbea45c",
+                  "runtime_authorized" : 0,
+                  "schema" : "fsmgen.inactive_observation_work_selection.v1"
+               },
+               "settlement" : {
+                  "executable" : null,
+                  "receipts" : [
+                     {
+                        "cleanup" : {
+                           "group_gone" : 1,
+                           "leader_reaped" : 1,
+                           "leader_started" : 1
+                        },
+                        "outcome" : "completed",
+                        "ownership_token" : "a541c2a30b930715e0f077ccf356d5fe2303dfd73cab1d9a3295206c57799911",
+                        "role" : "capture",
+                        "work_id" : "b:capture"
+                     },
+                     {
+                        "cleanup" : {
+                           "group_gone" : 1,
+                           "leader_reaped" : 1,
+                           "leader_started" : 1
+                        },
+                        "outcome" : "failed",
+                        "ownership_token" : "f661cb8ad67f2aa78f09538ccd36f432ee8e8f45c81138873f62ff54bc9d9647",
+                        "role" : "helper",
+                        "work_id" : "b:helper"
+                     },
+                     {
+                        "cleanup" : {
+                           "group_gone" : 1,
+                           "leader_reaped" : 1,
+                           "leader_started" : 1
+                        },
+                        "outcome" : "cancelled",
+                        "ownership_token" : "47b1bc0da55a40a5c9427f30b9e888306201146e3befecb2df49460730a3f5c4",
+                        "role" : "query",
+                        "work_id" : "b:query"
+                     }
+                  ],
+                  "runtime_authorized" : 0,
+                  "schema" : "fsmgen.inactive_observation_work_settlement.v1",
+                  "selection" : {
+                     "entries" : [
+                        {
+                           "ownership_token" : "a541c2a30b930715e0f077ccf356d5fe2303dfd73cab1d9a3295206c57799911",
+                           "role" : "capture",
+                           "work_id" : "b:capture"
+                        },
+                        {
+                           "ownership_token" : "f661cb8ad67f2aa78f09538ccd36f432ee8e8f45c81138873f62ff54bc9d9647",
+                           "role" : "helper",
+                           "work_id" : "b:helper"
+                        },
+                        {
+                           "ownership_token" : "47b1bc0da55a40a5c9427f30b9e888306201146e3befecb2df49460730a3f5c4",
+                           "role" : "query",
+                           "work_id" : "b:query"
+                        }
+                     ],
+                     "evidence_directory_identity" : {
+                        "device" : 1,
+                        "inode" : 3,
+                        "path" : ".artifacts/logs/native-proxy-observation-acquisition-20260910/cases/fsmgen-LifetimeEvidence"
+                     },
+                     "executable" : null,
+                     "observation_reference_key" : "754d0750c089bd8909a15eea294fc1f161dcb983f0148b642e9efd61afbea45c",
+                     "runtime_authorized" : 0,
+                     "schema" : "fsmgen.inactive_observation_work_selection.v1"
+                  },
+                  "selection_sealed" : 1
+               },
+               "specification" : {
+                  "archive_directory" : ".artifacts/logs/native-proxy-observation-acquisition-20260910/cases/fsmgen-LifetimeEvidence/retained-sources",
+                  "evidence_directory_identity" : {
+                     "device" : 1,
+                     "inode" : 3,
+                     "path" : ".artifacts/logs/native-proxy-observation-acquisition-20260910/cases/fsmgen-LifetimeEvidence"
+                  },
+                  "executable" : null,
+                  "files" : [
+                     {
+                        "bytes_hex" : "23212f7573722f62696e2f7065726c0a2320696e657274206f62736572766174696f6e20777261707065723b206e657665722065786563757465640a",
+                        "path" : ".artifacts/logs/native-proxy-observation-acquisition-20260910/cases/fsmgen-LifetimeEvidence/retained-sources/d42ab2b4e413bd694a831c4a8307a0c4cd760b3bfdcf5fc93dc0b6772fdd632b.source",
+                        "sha256" : "d42ab2b4e413bd694a831c4a8307a0c4cd760b3bfdcf5fc93dc0b6772fdd632b",
+                        "size_bytes" : 60
+                     },
+                     {
+                        "bytes_hex" : "7b22696d6167655f6b6579223a2265666434393762306538343738383462336331636663646531346438623634353939316335326562616239306335346535383938346363626333303363313436222c227265666572656e63655f6b6579223a2237343764363736633131663333386233313235386536646365343237353766633261383237333532616562316361366438323933363530633239306564336362222c22736368656d61223a2266736d67656e2e746573742e727573745f70726f78795f696d6167655f7265666572656e63652e7631222c2273656c65637465645f736f7572636573223a5b7b22646576696365223a312c22696e6f6465223a31302c2270617468223a222e6172746966616374732f746d702f6e61746976652d70726f78792d696d6167652d637573746f64792f63617365732f66736d67656e2d4c69666574696d654d6f64656c2f696d616765732f656664343937623065383437383834623363316366636465313464386236343539393163353265626162393063353465353839383463636263333033633134362f7275737475702e63222c22736861323536223a2261376439326532386563316338333038653337633630303364663136376263343262643233343163663361363964363737663435333330323731666662613536222c2273697a655f6279746573223a35307d2c7b22646576696365223a312c22696e6f6465223a31312c2270617468223a222e6172746966616374732f746d702f6e61746976652d70726f78792d696d6167652d637573746f64792f63617365732f66736d67656e2d4c69666574696d654d6f64656c2f696d616765732f656664343937623065383437383834623363316366636465313464386236343539393163353265626162393063353465353839383463636263333033633134362f727573747570222c22736861323536223a2265376630366632376531383532386337643130653863346134616234326235653730643134323363646238306538333034383539373731396339633765623637222c2273697a655f6279746573223a35337d5d2c22776f726b7370616365223a222e6172746966616374732f746d702f70726f636573732d73757065727669736f722d74657374732f66736d67656e2d4c69666574696d65546172676574222c22776f726b73706163655f6964656e74697479223a7b22646576696365223a312c22696e6f6465223a312c2270617468223a222e6172746966616374732f746d702f70726f636573732d73757065727669736f722d74657374732f66736d67656e2d4c69666574696d65546172676574227d7d",
+                        "path" : ".artifacts/logs/native-proxy-observation-acquisition-20260910/cases/fsmgen-LifetimeEvidence/retained-sources/f14e673e9e01e0c87c608dc1b4aacc027d6a2e2ae26d2b9efe051167fa07897e.source",
+                        "sha256" : "f14e673e9e01e0c87c608dc1b4aacc027d6a2e2ae26d2b9efe051167fa07897e",
+                        "size_bytes" : 976
+                     },
+                     {
+                        "bytes_hex" : "2f2a20696e657274207175616c696669636174696f6e2062797465733b206e6576657220636f6d70696c6564202a2f0a00ff",
+                        "path" : ".artifacts/logs/native-proxy-observation-acquisition-20260910/cases/fsmgen-LifetimeEvidence/retained-sources/a7d92e28ec1c8308e37c6003df167bc42bd2341cf3a69d677f45330271ffba56.source",
+                        "sha256" : "a7d92e28ec1c8308e37c6003df167bc42bd2341cf3a69d677f45330271ffba56",
+                        "size_bytes" : 50
+                     },
+                     {
+                        "bytes_hex" : "cffaedfe0c000001000000000200000000000000000000000000000000000000696e6572742d6e6f742d612d70726f6772616d00ff",
+                        "path" : ".artifacts/logs/native-proxy-observation-acquisition-20260910/cases/fsmgen-LifetimeEvidence/retained-sources/e7f06f27e18528c7d10e8c4a4ab42b5e70d1423cdb80e83048597719c9c7eb67.source",
+                        "sha256" : "e7f06f27e18528c7d10e8c4a4ab42b5e70d1423cdb80e83048597719c9c7eb67",
+                        "size_bytes" : 53
+                     }
+                  ],
+                  "observation_reference_key" : "754d0750c089bd8909a15eea294fc1f161dcb983f0148b642e9efd61afbea45c",
+                  "runtime_authorized" : 0,
+                  "schema" : "fsmgen.inactive_observation_archive_specification.v1",
+                  "sources" : [
+                     {
+                        "destination" : ".artifacts/logs/native-proxy-observation-acquisition-20260910/cases/fsmgen-LifetimeEvidence/retained-sources/d42ab2b4e413bd694a831c4a8307a0c4cd760b3bfdcf5fc93dc0b6772fdd632b.source",
+                        "role" : "wrapper",
+                        "snapshot" : {
+                           "bytes_hex" : "23212f7573722f62696e2f7065726c0a2320696e657274206f62736572766174696f6e20777261707065723b206e657665722065786563757465640a",
+                           "identity" : {
+                              "device" : 1,
+                              "inode" : 30,
+                              "path" : ".artifacts/tmp/process-supervisor-tests/fsmgen-LifetimeTarget/rust-tool-resolution",
+                              "sha256" : "d42ab2b4e413bd694a831c4a8307a0c4cd760b3bfdcf5fc93dc0b6772fdd632b",
+                              "size_bytes" : 60
+                           }
+                        }
+                     },
+                     {
+                        "destination" : ".artifacts/logs/native-proxy-observation-acquisition-20260910/cases/fsmgen-LifetimeEvidence/retained-sources/f14e673e9e01e0c87c608dc1b4aacc027d6a2e2ae26d2b9efe051167fa07897e.source",
+                        "role" : "private_reference",
+                        "snapshot" : {
+                           "bytes_hex" : "7b22696d6167655f6b6579223a2265666434393762306538343738383462336331636663646531346438623634353939316335326562616239306335346535383938346363626333303363313436222c227265666572656e63655f6b6579223a2237343764363736633131663333386233313235386536646365343237353766633261383237333532616562316361366438323933363530633239306564336362222c22736368656d61223a2266736d67656e2e746573742e727573745f70726f78795f696d6167655f7265666572656e63652e7631222c2273656c65637465645f736f7572636573223a5b7b22646576696365223a312c22696e6f6465223a31302c2270617468223a222e6172746966616374732f746d702f6e61746976652d70726f78792d696d6167652d637573746f64792f63617365732f66736d67656e2d4c69666574696d654d6f64656c2f696d616765732f656664343937623065383437383834623363316366636465313464386236343539393163353265626162393063353465353839383463636263333033633134362f7275737475702e63222c22736861323536223a2261376439326532386563316338333038653337633630303364663136376263343262643233343163663361363964363737663435333330323731666662613536222c2273697a655f6279746573223a35307d2c7b22646576696365223a312c22696e6f6465223a31312c2270617468223a222e6172746966616374732f746d702f6e61746976652d70726f78792d696d6167652d637573746f64792f63617365732f66736d67656e2d4c69666574696d654d6f64656c2f696d616765732f656664343937623065383437383834623363316366636465313464386236343539393163353265626162393063353465353839383463636263333033633134362f727573747570222c22736861323536223a2265376630366632376531383532386337643130653863346134616234326235653730643134323363646238306538333034383539373731396339633765623637222c2273697a655f6279746573223a35337d5d2c22776f726b7370616365223a222e6172746966616374732f746d702f70726f636573732d73757065727669736f722d74657374732f66736d67656e2d4c69666574696d65546172676574222c22776f726b73706163655f6964656e74697479223a7b22646576696365223a312c22696e6f6465223a312c2270617468223a222e6172746966616374732f746d702f70726f636573732d73757065727669736f722d74657374732f66736d67656e2d4c69666574696d65546172676574227d7d",
+                           "identity" : {
+                              "device" : 1,
+                              "inode" : 31,
+                              "path" : ".artifacts/tmp/process-supervisor-tests/fsmgen-LifetimeTarget/rust-tools/image-reference.json",
+                              "sha256" : "f14e673e9e01e0c87c608dc1b4aacc027d6a2e2ae26d2b9efe051167fa07897e",
+                              "size_bytes" : 976
+                           }
+                        }
+                     },
+                     {
+                        "destination" : ".artifacts/logs/native-proxy-observation-acquisition-20260910/cases/fsmgen-LifetimeEvidence/retained-sources/f14e673e9e01e0c87c608dc1b4aacc027d6a2e2ae26d2b9efe051167fa07897e.source",
+                        "role" : "global_reference",
+                        "snapshot" : {
+                           "bytes_hex" : "7b22696d6167655f6b6579223a2265666434393762306538343738383462336331636663646531346438623634353939316335326562616239306335346535383938346363626333303363313436222c227265666572656e63655f6b6579223a2237343764363736633131663333386233313235386536646365343237353766633261383237333532616562316361366438323933363530633239306564336362222c22736368656d61223a2266736d67656e2e746573742e727573745f70726f78795f696d6167655f7265666572656e63652e7631222c2273656c65637465645f736f7572636573223a5b7b22646576696365223a312c22696e6f6465223a31302c2270617468223a222e6172746966616374732f746d702f6e61746976652d70726f78792d696d6167652d637573746f64792f63617365732f66736d67656e2d4c69666574696d654d6f64656c2f696d616765732f656664343937623065383437383834623363316366636465313464386236343539393163353265626162393063353465353839383463636263333033633134362f7275737475702e63222c22736861323536223a2261376439326532386563316338333038653337633630303364663136376263343262643233343163663361363964363737663435333330323731666662613536222c2273697a655f6279746573223a35307d2c7b22646576696365223a312c22696e6f6465223a31312c2270617468223a222e6172746966616374732f746d702f6e61746976652d70726f78792d696d6167652d637573746f64792f63617365732f66736d67656e2d4c69666574696d654d6f64656c2f696d616765732f656664343937623065383437383834623363316366636465313464386236343539393163353265626162393063353465353839383463636263333033633134362f727573747570222c22736861323536223a2265376630366632376531383532386337643130653863346134616234326235653730643134323363646238306538333034383539373731396339633765623637222c2273697a655f6279746573223a35337d5d2c22776f726b7370616365223a222e6172746966616374732f746d702f70726f636573732d73757065727669736f722d74657374732f66736d67656e2d4c69666574696d65546172676574222c22776f726b73706163655f6964656e74697479223a7b22646576696365223a312c22696e6f6465223a312c2270617468223a222e6172746966616374732f746d702f70726f636573732d73757065727669736f722d74657374732f66736d67656e2d4c69666574696d65546172676574227d7d",
+                           "identity" : {
+                              "device" : 1,
+                              "inode" : 20,
+                              "path" : ".artifacts/tmp/native-proxy-image-custody/cases/fsmgen-LifetimeModel/references/747d676c11f338b31258e6dce42757fc2a827352aeb1ca6d8293650c290ed3cb.json",
+                              "sha256" : "f14e673e9e01e0c87c608dc1b4aacc027d6a2e2ae26d2b9efe051167fa07897e",
+                              "size_bytes" : 976
+                           }
+                        }
+                     },
+                     {
+                        "destination" : ".artifacts/logs/native-proxy-observation-acquisition-20260910/cases/fsmgen-LifetimeEvidence/retained-sources/a7d92e28ec1c8308e37c6003df167bc42bd2341cf3a69d677f45330271ffba56.source",
+                        "role" : "c",
+                        "snapshot" : {
+                           "bytes_hex" : "2f2a20696e657274207175616c696669636174696f6e2062797465733b206e6576657220636f6d70696c6564202a2f0a00ff",
+                           "identity" : {
+                              "device" : 1,
+                              "inode" : 10,
+                              "path" : ".artifacts/tmp/native-proxy-image-custody/cases/fsmgen-LifetimeModel/images/efd497b0e847884b3c1cfcde14d8b645991c52ebab90c54e58984ccbc303c146/rustup.c",
+                              "sha256" : "a7d92e28ec1c8308e37c6003df167bc42bd2341cf3a69d677f45330271ffba56",
+                              "size_bytes" : 50
+                           }
+                        }
+                     },
+                     {
+                        "destination" : ".artifacts/logs/native-proxy-observation-acquisition-20260910/cases/fsmgen-LifetimeEvidence/retained-sources/e7f06f27e18528c7d10e8c4a4ab42b5e70d1423cdb80e83048597719c9c7eb67.source",
+                        "role" : "image",
+                        "snapshot" : {
+                           "bytes_hex" : "cffaedfe0c000001000000000200000000000000000000000000000000000000696e6572742d6e6f742d612d70726f6772616d00ff",
+                           "identity" : {
+                              "device" : 1,
+                              "inode" : 11,
+                              "path" : ".artifacts/tmp/native-proxy-image-custody/cases/fsmgen-LifetimeModel/images/efd497b0e847884b3c1cfcde14d8b645991c52ebab90c54e58984ccbc303c146/rustup",
+                              "sha256" : "e7f06f27e18528c7d10e8c4a4ab42b5e70d1423cdb80e83048597719c9c7eb67",
+                              "size_bytes" : 53
+                           }
+                        }
+                     }
+                  ]
+               }
+            }
+         },
+         "runtime_bytes" : {
+            "other" : "7b22696d6167655f6b6579223a2265666434393762306538343738383462336331636663646531346438623634353939316335326562616239306335346535383938346363626333303363313436222c227265666572656e63655f6b6579223a2230656535313962633666396235313338663733613935623137313338636663623033303165363839376465623334376236336531306135663765326130666532222c22736368656d61223a2266736d67656e2e746573742e727573745f70726f78795f696d6167655f7265666572656e63652e7631222c2273656c65637465645f736f7572636573223a5b7b22646576696365223a312c22696e6f6465223a31302c2270617468223a222e6172746966616374732f746d702f6e61746976652d70726f78792d696d6167652d637573746f64792f63617365732f66736d67656e2d4c69666574696d654d6f64656c2f696d616765732f656664343937623065383437383834623363316366636465313464386236343539393163353265626162393063353465353839383463636263333033633134362f7275737475702e63222c22736861323536223a2261376439326532386563316338333038653337633630303364663136376263343262643233343163663361363964363737663435333330323731666662613536222c2273697a655f6279746573223a35307d2c7b22646576696365223a312c22696e6f6465223a31312c2270617468223a222e6172746966616374732f746d702f6e61746976652d70726f78792d696d6167652d637573746f64792f63617365732f66736d67656e2d4c69666574696d654d6f64656c2f696d616765732f656664343937623065383437383834623363316366636465313464386236343539393163353265626162393063353465353839383463636263333033633134362f727573747570222c22736861323536223a2265376630366632376531383532386337643130653863346134616234326235653730643134323363646238306538333034383539373731396339633765623637222c2273697a655f6279746573223a35337d5d2c22776f726b7370616365223a222e6172746966616374732f746d702f70726f636573732d73757065727669736f722d74657374732f66736d67656e2d4c69666574696d654f74686572222c22776f726b73706163655f6964656e74697479223a7b22646576696365223a312c22696e6f6465223a322c2270617468223a222e6172746966616374732f746d702f70726f636573732d73757065727669736f722d74657374732f66736d67656e2d4c69666574696d654f74686572227d7d",
+            "target" : "7b22696d6167655f6b6579223a2265666434393762306538343738383462336331636663646531346438623634353939316335326562616239306335346535383938346363626333303363313436222c227265666572656e63655f6b6579223a2237343764363736633131663333386233313235386536646365343237353766633261383237333532616562316361366438323933363530633239306564336362222c22736368656d61223a2266736d67656e2e746573742e727573745f70726f78795f696d6167655f7265666572656e63652e7631222c2273656c65637465645f736f7572636573223a5b7b22646576696365223a312c22696e6f6465223a31302c2270617468223a222e6172746966616374732f746d702f6e61746976652d70726f78792d696d6167652d637573746f64792f63617365732f66736d67656e2d4c69666574696d654d6f64656c2f696d616765732f656664343937623065383437383834623363316366636465313464386236343539393163353265626162393063353465353839383463636263333033633134362f7275737475702e63222c22736861323536223a2261376439326532386563316338333038653337633630303364663136376263343262643233343163663361363964363737663435333330323731666662613536222c2273697a655f6279746573223a35307d2c7b22646576696365223a312c22696e6f6465223a31312c2270617468223a222e6172746966616374732f746d702f6e61746976652d70726f78792d696d6167652d637573746f64792f63617365732f66736d67656e2d4c69666574696d654d6f64656c2f696d616765732f656664343937623065383437383834623363316366636465313464386236343539393163353265626162393063353465353839383463636263333033633134362f727573747570222c22736861323536223a2265376630366632376531383532386337643130653863346134616234326235653730643134323363646238306538333034383539373731396339633765623637222c2273697a655f6279746573223a35337d5d2c22776f726b7370616365223a222e6172746966616374732f746d702f70726f636573732d73757065727669736f722d74657374732f66736d67656e2d4c69666574696d65546172676574222c22776f726b73706163655f6964656e74697479223a7b22646576696365223a312c22696e6f6465223a312c2270617468223a222e6172746966616374732f746d702f70726f636573732d73757065727669736f722d74657374732f66736d67656e2d4c69666574696d65546172676574227d7d"
+         }
+      }
+   }
+}

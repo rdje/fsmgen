@@ -1,0 +1,24 @@
+{
+  "actual_filesystem_effects": false,
+  "controls": 34,
+  "domain_sha256": "e848a55a4697dcc1d0a790f4a45379c897b574891fd7dd230dd506e5ff866fce",
+  "falsifiers": [
+    "missing_trace",
+    "changed_event_order",
+    "wrong_prefix_state",
+    "rejected_healthy",
+    "lost_partial_effect",
+    "changed_bridge_record",
+    "promoted_runtime_authority"
+  ],
+  "omitted_guard_witnesses": 8,
+  "prefix_states": 3120,
+  "profiles": {
+    "different_image": 210,
+    "same_image": 180
+  },
+  "record_controls": 19,
+  "runtime_qualification": false,
+  "schema": "fsmgen.inactive_lifetime_model_audit.v1",
+  "serial_orders": 390
+}

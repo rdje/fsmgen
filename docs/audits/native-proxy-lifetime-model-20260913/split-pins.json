@@ -1,0 +1,72 @@
+[
+  {
+    "path": "docs/audits/native-proxy-lifetime-model-20260913/book-split-plan.json",
+    "sha256": "7c98227549fe26f6bd98d7b4c1e9526f735e1bcb0f408edfe538c961b174af38",
+    "size_bytes": 1138
+  },
+  {
+    "path": "docs/audits/native-proxy-lifetime-model-20260913/first-staged-gate/0.source",
+    "sha256": "3f8f6f7cd84e2d169abfdd1c59c119373f5ae054bc3700f5f37a97f7de4299e1",
+    "size_bytes": 276810
+  },
+  {
+    "path": "docs/audits/native-proxy-lifetime-model-20260913/first-staged-gate/1.source",
+    "sha256": "d00418a39ef2be649b6ce6fc61ac3b50f6192c7370bd3a5098d2316b719254c9",
+    "size_bytes": 3922
+  },
+  {
+    "path": "docs/audits/native-proxy-lifetime-model-20260913/first-staged-gate/2.source",
+    "sha256": "ff8139ddef5be7768169735159193873dd6deb442b2ee66fd29470e642f8a146",
+    "size_bytes": 24826
+  },
+  {
+    "path": "docs/audits/native-proxy-lifetime-model-20260913/first-staged-gate/3.source",
+    "sha256": "7246d0321b3806c10a6e9390bcb9369b9df835cf306fdc0fc8875a84b34c14e1",
+    "size_bytes": 3007141
+  },
+  {
+    "path": "docs/audits/native-proxy-lifetime-model-20260913/first-staged-gate/4.source",
+    "sha256": "ca2003c98670eb07c9fb9ac0e390a3323af6be2b9d4489d13ee1300b2b3be89a",
+    "size_bytes": 1071349
+  },
+  {
+    "path": "docs/audits/native-proxy-lifetime-model-20260913/first-staged-gate/review.json",
+    "sha256": "55f7305cdd160e5a2b2bda146ebfb909191f39eec1df91b80ddf4d8fbea4da7d",
+    "size_bytes": 108392
+  },
+  {
+    "path": "docs/audits/native-proxy-lifetime-model-20260913/inspect_book_split.py",
+    "sha256": "6f11e41857aa55555b0c82f24c25976c3f17aa2636b5eeeb6865999da62c7724",
+    "size_bytes": 2555
+  },
+  {
+    "path": "docs/audits/native-proxy-lifetime-model-20260913/review_claims_split.py",
+    "sha256": "e00ed4cfa0c8d461110fb91158159ad32b6afaa1f3d43e6f38306aea43f06165",
+    "size_bytes": 4957
+  },
+  {
+    "path": "docs/audits/native-proxy-lifetime-model-20260913/review_split.py",
+    "sha256": "fc7cb05a48f280c6af5ebd2b8befcf8eb15dde90f2032d4dde2065c480cd6d22",
+    "size_bytes": 7653
+  },
+  {
+    "path": "docs/book/src/16dc-vial-portable-verilator-runtime-measurement.md",
+    "sha256": "e1fc9766fe9a03caa8157645d425ea7cf444b6f13e7440f0af4074d22aba6830",
+    "size_bytes": 274125
+  },
+  {
+    "path": "docs/book/src/16dk-inactive-proxy-lifetimes.md",
+    "sha256": "f122704128d6b8a07b5ef20a6a136eb02d5080f8871154b6f145afbc4374042f",
+    "size_bytes": 2944
+  },
+  {
+    "path": "docs/book/src/SUMMARY.md",
+    "sha256": "db6fd112545899db52b60357940a2a4a82e2aa9c8fb38bfc509b14d1f889d67b",
+    "size_bytes": 3988
+  },
+  {
+    "path": "doctrine/live_document_size/surfaces.jsonl",
+    "sha256": "21c5f758c059ac58af1b0a4e9b36525f5886c2c929e7148a60f55df654832aef",
+    "size_bytes": 24834
+  }
+]
