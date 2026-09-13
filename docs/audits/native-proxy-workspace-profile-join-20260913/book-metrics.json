@@ -1,0 +1,12 @@
+{
+  "baseline": {
+    "bytes_total": 3419626,
+    "files": 64,
+    "lines_total": 62280
+  },
+  "delta": {
+    "bytes_total": 262,
+    "files": 0,
+    "lines_total": 6
+  }
+}

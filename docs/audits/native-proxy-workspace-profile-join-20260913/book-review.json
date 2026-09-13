@@ -1,0 +1,24 @@
+{
+  "checked_passages": [
+    "The workspace compatibility join now connects the wrapper repair and actual compiler profiles to the same unchanged retirement source.",
+    "It preserves the exact wrapper mode exception and all existing capacity limits.",
+    "The inert wrapper test's cleanup receipts remain synthetic; they do not authenticate real compiler, outer or inner ownership.",
+    "This join runs no compiler or fixture.",
+    "Populated-store worker qualification is next.",
+    "docs/audits/native-proxy-workspace-profile-join-20260913/audit.py --verify-saved"
+  ],
+  "checked_runtime_passages": [
+    "observer lifetimes and selected empty-store coordination are qualified below; native behavior and populated-worker qualification remain open.",
+    "These are inert filesystem qualifications; real receipt transport and native behavior remain open."
+  ],
+  "exact_output_absent": true,
+  "exit_code": 0,
+  "output": ".artifacts/tmp/native-proxy-workspace-join-book-20260913/book",
+  "rendered_bytes": 23676752,
+  "rendered_directories": 2,
+  "rendered_files": 99,
+  "renderer_warnings": [
+    "WARN search index is very large (13323969 bytes)"
+  ],
+  "same_volume_direct_objects": true
+}

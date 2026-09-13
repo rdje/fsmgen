@@ -1,0 +1,191 @@
+{
+  "book": {
+    "checked_passages": [
+      "The workspace compatibility join now connects the wrapper repair and actual compiler profiles to the same unchanged retirement source.",
+      "It preserves the exact wrapper mode exception and all existing capacity limits.",
+      "The inert wrapper test's cleanup receipts remain synthetic; they do not authenticate real compiler, outer or inner ownership.",
+      "This join runs no compiler or fixture.",
+      "Populated-store worker qualification is next.",
+      "docs/audits/native-proxy-workspace-profile-join-20260913/audit.py --verify-saved"
+    ],
+    "checked_runtime_passages": [
+      "observer lifetimes and selected empty-store coordination are qualified below; native behavior and populated-worker qualification remain open.",
+      "These are inert filesystem qualifications; real receipt transport and native behavior remain open."
+    ],
+    "exact_output_absent": true,
+    "exit_code": 0,
+    "output": ".artifacts/tmp/native-proxy-workspace-join-book-20260913/book",
+    "rendered_bytes": 23676752,
+    "rendered_directories": 2,
+    "rendered_files": 99,
+    "renderer_warnings": [
+      "WARN search index is very large (13323969 bytes)"
+    ],
+    "same_volume_direct_objects": true
+  },
+  "claims": {
+    "path": "docs/audits/native-proxy-workspace-profile-join-20260913/claim-review.json",
+    "sha256": "2fe531da0a822fe40e70a18ab013c86ae5d9591f3765a68776fb9e93272b113e",
+    "size_bytes": 4069
+  },
+  "native_live_startup_qualification_open": true,
+  "next_owner": "HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.12.4.1.5.3",
+  "owner": "HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.12.4.1.5.2.3",
+  "populated_workers_pending": true,
+  "previous_acceptance": {
+    "history_bytes": 1626,
+    "history_id": "through_1df09124e5fe",
+    "history_lines": 5,
+    "history_sections": 1,
+    "history_sha256": "86965646fb98523bb362f0f30f58f542ee977c6519a6ab6f9e8db7a7bb98298c",
+    "live_heading": "Version-Retrievable Historical Views",
+    "record_type": "acceptance_history",
+    "retention_contract": "fsmgen_required_history",
+    "schema_version": 1,
+    "source_bytes": 1126182,
+    "source_lines": 6370,
+    "source_path": "docs/tasks/HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.md",
+    "source_revision": "1df09124e5feaa6e87d1602827ada116416072d3",
+    "source_sha256": "9f39dfccc8a516cae617e0e778b1ec42cb4c9e26e9d752873f3452c10abb4bb2",
+    "start_heading": "Acceptance Checklist (actual compiler census .3.2.15.7.3.12.4.1.5.2.2.3.3)"
+  },
+  "raw_outputs": {
+    "book": {
+      "exit": "0\n",
+      "stderr": "ram-guard: PID 4314; host 84.5%; host cutoff 88%; descendant RSS cutoff 4096 MiB; poll 2s\n INFO Book building has started\n INFO Running the html backend\n WARN search index is very large (13323969 bytes)\n INFO HTML book written to `/Volumes/SSD/Documents/github/fsmgen/.artifacts/tmp/native-proxy-workspace-join-book-20260913/book`\n",
+      "stdout": ""
+    },
+    "book-inspection": {
+      "exit": "0\n",
+      "stderr": "ram-guard: PID 4746; host 84.2%; host cutoff 88%; descendant RSS cutoff 4096 MiB; poll 2s\n",
+      "stdout": "{\"checked_passages\": [\"The workspace compatibility join now connects the wrapper repair and actual compiler profiles to the same unchanged retirement source.\", \"It preserves the exact wrapper mode exception and all existing capacity limits.\", \"The inert wrapper test's cleanup receipts remain synthetic; they do not authenticate real compiler, outer or inner ownership.\", \"This join runs no compiler or fixture.\", \"Populated-store worker qualification is next.\", \"docs/audits/native-proxy-workspace-profile-join-20260913/audit.py --verify-saved\"], \"checked_runtime_passages\": [\"observer lifetimes and selected empty-store coordination are qualified below; native behavior and populated-worker qualification remain open.\", \"These are inert filesystem qualifications; real receipt transport and native behavior remain open.\"], \"exact_output_absent\": true, \"exit_code\": 0, \"output\": \".artifacts/tmp/native-proxy-workspace-join-book-20260913/book\", \"rendered_bytes\": 23676752, \"rendered_directories\": 2, \"rendered_files\": 99, \"renderer_warnings\": [\"WARN search index is very large (13323969 bytes)\"], \"same_volume_direct_objects\": true}\n"
+    },
+    "claims-check": {
+      "exit": "0\n",
+      "stderr": "ram-guard: PID 5847; host 83.0%; host cutoff 88%; descendant RSS cutoff 4096 MiB; poll 2s\n",
+      "stdout": "claim-inventory: current-surface census and independent census agree (numeric_lines=12630, candidates=1937, quantified=952, conservative=985, constants=2736, original_constants=615, open_migration_owners=0, untracked_producers=0, unwatched_candidates=1937)\n"
+    },
+    "claims-review": {
+      "exit": "0\n",
+      "stderr": "ram-guard: PID 5977; host 84.8%; host cutoff 88%; descendant RSS cutoff 4096 MiB; poll 2s\n",
+      "stdout": "{\"claim_identity_unchanged\": true, \"shifted_candidates\": 0, \"rederived_constants\": 4}\n"
+    },
+    "claims-write": {
+      "exit": "0\n",
+      "stderr": "ram-guard: PID 5711; host 78.8%; host cutoff 88%; descendant RSS cutoff 4096 MiB; poll 2s\n",
+      "stdout": "claim-inventory: wrote doctrine/claim_verification/inventory.jsonl\nclaim-inventory: current-surface census and independent census agree (numeric_lines=12630, candidates=1937, quantified=952, conservative=985, constants=2736, original_constants=615, open_migration_owners=0, untracked_producers=0, unwatched_candidates=1937)\n"
+    },
+    "join": {
+      "exit": "0\n",
+      "stderr": "ram-guard: PID 2926; host 76.7%; host cutoff 88%; descendant RSS cutoff 4096 MiB; poll 2s\n",
+      "stdout": "{\"absent_owned_roots\": 19, \"claim_legs\": {\"durability\": \"Pinned committed sources, preserved original outcomes, repeatable joined audit, book and task evidence.\", \"falsify\": \"Changed policy, normalization, incomplete or stale membership/bytes and promoted synthetic receipt authority.\", \"rederive\": \"Exact current retirement source, saved wrapper qualification and complete actual compiler profile maps.\"}, \"compiler_invocations\": 0, \"fixture_allocations\": 0, \"joined\": {\"compiler_profiles_remain_actual\": true, \"guard_sha256\": \"98e324cf9ef89471ffb4ede683ce21a8e09fc02329739a0856285ecea067e18f\", \"native_execution_or_receipt_authority\": false, \"profiles\": [{\"measured\": {\"depth\": 2, \"file_bytes\": 49992, \"nodes\": 8, \"total_file_bytes\": 50925}, \"mode\": \"proxy_nonzero\", \"policy\": {\"depth\": 8, \"file_bytes\": 65536, \"nodes\": 256, \"total_file_bytes\": 4194304}, \"remaining\": {\"depth\": 6, \"file_bytes\": 15544, \"nodes\": 248, \"total_file_bytes\": 4143379}, \"workspace\": \".artifacts/tmp/process-supervisor-tests/fsmgen-CompilerProfile20260913_nonzero\"}, {\"measured\": {\"depth\": 2, \"file_bytes\": 49992, \"nodes\": 8, \"total_file_bytes\": 50925}, \"mode\": \"proxy_decoy\", \"policy\": {\"depth\": 8, \"file_bytes\": 65536, \"nodes\": 256, \"total_file_bytes\": 4194304}, \"remaining\": {\"depth\": 6, \"file_bytes\": 15544, \"nodes\": 248, \"total_file_bytes\": 4143379}, \"workspace\": \".artifacts/tmp/process-supervisor-tests/fsmgen-CompilerProfile20260913_decoy\"}], \"workspace_parent_can_close\": true, \"wrapper_inert_receipts_remain_synthetic\": true}, \"owner\": \"HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.12.4.1.5.2.3\", \"pinned_inputs\": 77, \"rejected_controls\": [\"stale_guard\", \"restored_old_guard\", \"raised_policy\", \"synthetic_promoted\", \"synthetic_receipts_hidden\", \"native_promoted\", \"capacity_normalized\", \"receipt_authority_promoted\"], \"remaining\": [\"populated workers\", \"complete real receipt binding\", \"inactive adapter composition\", \"native/live/startup qualification\"], \"retained_actual_controls\": 11, \"retained_wrapper_controls\": 8, \"source_revision\": \"1df09124e5feaa6e87d1602827ada116416072d3\", \"worker_invocations\": 0}\n"
+    },
+    "knowledge-check": {
+      "exit": "0\n",
+      "stderr": "ram-guard: PID 5017; host 78.3%; host cutoff 88%; descendant RSS cutoff 4096 MiB; poll 2s\nknowledge-map: OK (1161 facts, 6446 unique questions, 6617 answer occurrences, 139 bounded topic shards; query parity verified)\n",
+      "stdout": ""
+    },
+    "knowledge-generate": {
+      "exit": "0\n",
+      "stderr": "ram-guard: PID 4835; host 84.3%; host cutoff 88%; descendant RSS cutoff 4096 MiB; poll 2s\nknowledge-map: wrote KNOWLEDGE_MAP.md plus 139 topic shards (1161 facts, 6446 unique questions, 6617 answer occurrences)\n",
+      "stdout": ""
+    },
+    "knowledge-query": {
+      "exit": "0\n",
+      "stderr": "ram-guard: PID 5212; host 82.1%; host cutoff 88%; descendant RSS cutoff 4096 MiB; poll 2s\n",
+      "stdout": "why does inactive retirement reject the real Rust proxy wrapper?\ttest-subprocess-policy-adapters\tdocs/knowledge/test-subprocess-policy-adapters.md\n"
+    },
+    "pickaxe": {
+      "exit": "0\n",
+      "stderr": "ram-guard: PID 5322; host 82.9%; host cutoff 88%; descendant RSS cutoff 4096 MiB; poll 2s\n",
+      "stdout": "715db54c7b77090dbdd1617d02bfbe7c2159ff29 HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.12.4.1.5.2.1: repair exact generated-wrapper retirement mode\n"
+    }
+  },
+  "result": {
+    "absent_owned_roots": 19,
+    "claim_legs": {
+      "durability": "Pinned committed sources, preserved original outcomes, repeatable joined audit, book and task evidence.",
+      "falsify": "Changed policy, normalization, incomplete or stale membership/bytes and promoted synthetic receipt authority.",
+      "rederive": "Exact current retirement source, saved wrapper qualification and complete actual compiler profile maps."
+    },
+    "compiler_invocations": 0,
+    "fixture_allocations": 0,
+    "joined": {
+      "compiler_profiles_remain_actual": true,
+      "guard_sha256": "98e324cf9ef89471ffb4ede683ce21a8e09fc02329739a0856285ecea067e18f",
+      "native_execution_or_receipt_authority": false,
+      "profiles": [
+        {
+          "measured": {
+            "depth": 2,
+            "file_bytes": 49992,
+            "nodes": 8,
+            "total_file_bytes": 50925
+          },
+          "mode": "proxy_nonzero",
+          "policy": {
+            "depth": 8,
+            "file_bytes": 65536,
+            "nodes": 256,
+            "total_file_bytes": 4194304
+          },
+          "remaining": {
+            "depth": 6,
+            "file_bytes": 15544,
+            "nodes": 248,
+            "total_file_bytes": 4143379
+          },
+          "workspace": ".artifacts/tmp/process-supervisor-tests/fsmgen-CompilerProfile20260913_nonzero"
+        },
+        {
+          "measured": {
+            "depth": 2,
+            "file_bytes": 49992,
+            "nodes": 8,
+            "total_file_bytes": 50925
+          },
+          "mode": "proxy_decoy",
+          "policy": {
+            "depth": 8,
+            "file_bytes": 65536,
+            "nodes": 256,
+            "total_file_bytes": 4194304
+          },
+          "remaining": {
+            "depth": 6,
+            "file_bytes": 15544,
+            "nodes": 248,
+            "total_file_bytes": 4143379
+          },
+          "workspace": ".artifacts/tmp/process-supervisor-tests/fsmgen-CompilerProfile20260913_decoy"
+        }
+      ],
+      "workspace_parent_can_close": true,
+      "wrapper_inert_receipts_remain_synthetic": true
+    },
+    "owner": "HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.12.4.1.5.2.3",
+    "pinned_inputs": 77,
+    "rejected_controls": [
+      "stale_guard",
+      "restored_old_guard",
+      "raised_policy",
+      "synthetic_promoted",
+      "synthetic_receipts_hidden",
+      "native_promoted",
+      "capacity_normalized",
+      "receipt_authority_promoted"
+    ],
+    "remaining": [
+      "populated workers",
+      "complete real receipt binding",
+      "inactive adapter composition",
+      "native/live/startup qualification"
+    ],
+    "retained_actual_controls": 11,
+    "retained_wrapper_controls": 8,
+    "source_revision": "1df09124e5feaa6e87d1602827ada116416072d3",
+    "worker_invocations": 0
+  },
+  "source_revision": "1df09124e5feaa6e87d1602827ada116416072d3",
+  "workspace_parent_complete": true
+}

@@ -375,9 +375,15 @@ through the exact removal sequence. Both private roots are absent. This proves
 these selected compiler profiles and their controlled unexecuted roles; it does
 not qualify generated-proxy execution, populated workers or live integration.
 
+The workspace compatibility join now connects the wrapper repair and actual
+compiler profiles to the same unchanged retirement source. It preserves the
+exact wrapper mode exception and all existing capacity limits. The inert
+wrapper test's cleanup receipts remain synthetic; they do not authenticate real
+compiler, outer or inner ownership. This join runs no compiler or fixture.
+Populated-store worker qualification is next.
+
 | Remaining work | Required result |
 | --- | --- |
-| Workspace profiles | The narrow wrapper repair and selected authentic compiler profiles are qualified; join their current evidence before composition. |
 | Populated-store workers | Qualify equal/different publication, separate references and observation holds through actual cancellation and retirement. |
 | Real receipt binding | Prove complete compiler/outer/inner ownership and prevent launches after settlement. |
 | Inactive adapter composition | Join preparation, native path/reference admission and observation custody before the separate native experiment. |
@@ -393,7 +399,7 @@ remain required before any product activation.
 scripts/run_with_ram_guard.sh -- python3 -B docs/audits/native-proxy-wrapper-compatibility-20260913/audit.py --verify-saved
 scripts/run_with_ram_guard.sh -- python3 -B docs/audits/native-proxy-compiler-profile-inventory-20260913/audit.py --verify-saved
 scripts/run_with_ram_guard.sh -- python3 -B docs/audits/native-proxy-compiler-profile-admission-20260913/epoch.py --verify-saved
-scripts/run_with_ram_guard.sh -- python3 -B docs/audits/native-proxy-compiler-census-policy-execution-20260913/audit.py --verify-saved
+scripts/run_with_ram_guard.sh -- python3 -B docs/audits/native-proxy-workspace-profile-join-20260913/audit.py --verify-saved
 ```
 
 [Return to runtime measurement](16dc-vial-portable-verilator-runtime-measurement.md).

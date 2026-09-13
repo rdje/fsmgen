@@ -1,0 +1,117 @@
+[
+  {
+    "path": "KNOWLEDGE_MAP.md",
+    "sha256": "786471b8d0954f0cd615f75c185729539e50fad43009b74b801c0a911ab95219",
+    "size_bytes": 13325
+  },
+  {
+    "path": "MEMORY.md",
+    "sha256": "907a49d3632d05cad4d3d8f686a3fc67950f60bdb4bc42c703ce9204e04f4240",
+    "size_bytes": 684
+  },
+  {
+    "path": "docs/TASK_TREE.md",
+    "sha256": "e537a4c4656a787e0aab19729d316d0777fd2e33c1f255d6821e5ffc4d812515",
+    "size_bytes": 38818
+  },
+  {
+    "path": "docs/audits/native-proxy-workspace-profile-join-20260913/audit.py",
+    "sha256": "f239c9683ee4e0e63b7ef481ff19db478694f67941c615fc9a11085710375f7f",
+    "size_bytes": 7972
+  },
+  {
+    "path": "docs/audits/native-proxy-workspace-profile-join-20260913/book-metrics.json",
+    "sha256": "387ca449630ea85756eea5ce0e1b51819d632639bce7d5917dc3fd9615020eb4",
+    "size_bytes": 173
+  },
+  {
+    "path": "docs/audits/native-proxy-workspace-profile-join-20260913/book-review.json",
+    "sha256": "ccd40f1ed210e28095cd6a34a053374ccc32c993a3dd12fb4a4fb3e2c15eb8ce",
+    "size_bytes": 1203
+  },
+  {
+    "path": "docs/audits/native-proxy-workspace-profile-join-20260913/claim-review.json",
+    "sha256": "2fe531da0a822fe40e70a18ab013c86ae5d9591f3765a68776fb9e93272b113e",
+    "size_bytes": 4069
+  },
+  {
+    "path": "docs/audits/native-proxy-workspace-profile-join-20260913/completion-layout.json",
+    "sha256": "a49e6f3c7e0dd84237b3a2badd483007a7f387c8644c447d9c32d3bc389a3305",
+    "size_bytes": 1407
+  },
+  {
+    "path": "docs/audits/native-proxy-workspace-profile-join-20260913/input-pins.json",
+    "sha256": "45849b2a0b25d944722046079f660c865659b9f853bd30a8a98d6eeb842e2b48",
+    "size_bytes": 15985
+  },
+  {
+    "path": "docs/audits/native-proxy-workspace-profile-join-20260913/inspect_book.py",
+    "sha256": "12caa5807aaf22ec8d0510b78b41cb7acdad460cfca5ed4671598db5462aa460",
+    "size_bytes": 3305
+  },
+  {
+    "path": "docs/audits/native-proxy-workspace-profile-join-20260913/prior-checks.json",
+    "sha256": "43960e24ece8ce82264a1bc00e5fc0352fda7c38350611ddd7da752c2ea0a86e",
+    "size_bytes": 2657
+  },
+  {
+    "path": "docs/audits/native-proxy-workspace-profile-join-20260913/review.json",
+    "sha256": "2cbe7af73aa505fb80a994f9cf5df71c5f16352fb2b4a9b5f9ecb1b3ab69c73b",
+    "size_bytes": 2132
+  },
+  {
+    "path": "docs/audits/native-proxy-workspace-profile-join-20260913/review_claims.py",
+    "sha256": "f638385ca24bd84e09df2f0c879001197975fb5acd5c96789694dbcd55f4d95f",
+    "size_bytes": 5032
+  },
+  {
+    "path": "docs/audits/native-proxy-workspace-profile-join-20260913/review_completion.py",
+    "sha256": "0397f6d66e9f919107c5faa5867c2192da1d4cafaf1a9c0b7ef9cafa75cd5c24",
+    "size_bytes": 4572
+  },
+  {
+    "path": "docs/audits/native-proxy-workspace-profile-join-20260913/scope.json",
+    "sha256": "6728903a6e22d2ebc5d106b17f84a027d20e94e4404ec80fb9e633e03268c0de",
+    "size_bytes": 997
+  },
+  {
+    "path": "docs/audits/native-proxy-workspace-profile-join-20260913/task-layout.json",
+    "sha256": "20aec6dc23c2dc51537ea4c514c0af9a94cecc75e3291864f1373d0ce87ce37f",
+    "size_bytes": 258
+  },
+  {
+    "path": "docs/book/src/16dk-inactive-proxy-lifetimes.md",
+    "sha256": "979efbeb83fc917fdd219cd25b9deeb8a1a36d0126a8f7cdae8a7c3d86bfee3e",
+    "size_bytes": 25094
+  },
+  {
+    "path": "docs/knowledge/test-subprocess-policy-adapters.md",
+    "sha256": "8b641e44e1c2c147b976a4cb8dd54988231f1b8d0fee9dfe59f006b9ec82d996",
+    "size_bytes": 9856
+  },
+  {
+    "path": "docs/tasks/HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.md",
+    "sha256": "e8790bf8d6e857e9c9d9897e5a4cfc68f32a106a1599daecad99cfa052e4e7a2",
+    "size_bytes": 1126633
+  },
+  {
+    "path": "docs/tasks/history/HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE/acceptance-history.jsonl",
+    "sha256": "79285f29cf0d30bb0e56a9bac0a37a886bd6ded177281e98a699d03130e03010",
+    "size_bytes": 850
+  },
+  {
+    "path": "doctrine/claim_verification/inventory.jsonl",
+    "sha256": "4db50031ed81afee7251860e666411ba56a3cfb96b8279c85dbc73723569cece",
+    "size_bytes": 3015720
+  },
+  {
+    "path": "doctrine/live_document_size/surfaces.jsonl",
+    "sha256": "d46a0ea2bcf58dd494973978c8b2b95da38717c60f34124fba246231e55b4e33",
+    "size_bytes": 25893
+  },
+  {
+    "path": "knowledge-map/generated/test-subprocess.md",
+    "sha256": "abd52c77c5723542483526377f8d55be69b143ef29150d51f97c5a9f3aefb9d1",
+    "size_bytes": 20723
+  }
+]

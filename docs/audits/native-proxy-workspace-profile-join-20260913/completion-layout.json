@@ -1,0 +1,28 @@
+{
+  "after_sha256": "e8790bf8d6e857e9c9d9897e5a4cfc68f32a106a1599daecad99cfa052e4e7a2",
+  "before_sha256": "e8f620654e7eba584d2f9f1e3e5471dbeb6ee7bd5e6c5c5b59da5defa148810a",
+  "closed_owners": [
+    "HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.12.4.1.5.2.3",
+    "HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.12.4.1.5.2"
+  ],
+  "lines": 6370,
+  "next_owner": "HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.12.4.1.5.3",
+  "previous_acceptance": {
+    "history_bytes": 1626,
+    "history_id": "through_1df09124e5fe",
+    "history_lines": 5,
+    "history_sections": 1,
+    "history_sha256": "86965646fb98523bb362f0f30f58f542ee977c6519a6ab6f9e8db7a7bb98298c",
+    "live_heading": "Version-Retrievable Historical Views",
+    "record_type": "acceptance_history",
+    "retention_contract": "fsmgen_required_history",
+    "schema_version": 1,
+    "source_bytes": 1126182,
+    "source_lines": 6370,
+    "source_path": "docs/tasks/HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.md",
+    "source_revision": "1df09124e5feaa6e87d1602827ada116416072d3",
+    "source_sha256": "9f39dfccc8a516cae617e0e778b1ec42cb4c9e26e9d752873f3452c10abb4bb2",
+    "start_heading": "Acceptance Checklist (actual compiler census .3.2.15.7.3.12.4.1.5.2.2.3.3)"
+  },
+  "source_revision": "1df09124e5feaa6e87d1602827ada116416072d3"
+}

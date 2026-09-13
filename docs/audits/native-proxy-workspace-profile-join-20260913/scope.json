@@ -1,0 +1,23 @@
+{
+  "claim_legs": {
+    "durability": "Pinned committed sources, preserved original outcomes, repeatable joined audit, book and task evidence.",
+    "falsify": "Changed policy, normalization, incomplete or stale membership/bytes and promoted synthetic receipt authority.",
+    "rederive": "Exact current retirement source, saved wrapper qualification and complete actual compiler profile maps."
+  },
+  "compiler_invocations": 0,
+  "fixture_allocations": 0,
+  "inputs": [
+    "docs/audits/native-proxy-compiler-census-policy-execution-20260913",
+    "docs/audits/native-proxy-wrapper-compatibility-20260913"
+  ],
+  "owner": "HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.12.4.1.5.2.3",
+  "remaining": [
+    "populated workers",
+    "complete real receipt binding",
+    "inactive adapter composition",
+    "native/live/startup qualification"
+  ],
+  "source_only": true,
+  "source_revision": "1df09124e5feaa6e87d1602827ada116416072d3",
+  "worker_invocations": 0
+}
