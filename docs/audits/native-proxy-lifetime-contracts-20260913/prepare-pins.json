@@ -1,0 +1,22 @@
+[
+  {
+    "path": "docs/audits/native-proxy-lifetime-contracts-20260913/audit.py",
+    "sha256": "98e15690c778d908eb24ded2f82e58b87b748ab0afc66cc3d252506de5b51c66",
+    "size_bytes": 11593
+  },
+  {
+    "path": "docs/audits/native-proxy-lifetime-contracts-20260913/plan.json",
+    "sha256": "7439fcd2f1feb5b6605e52a775517de49d646ef7378742afd95ddcca5e00de1f",
+    "size_bytes": 15675
+  },
+  {
+    "path": "docs/audits/native-proxy-lifetime-contracts-20260913/prepare.py",
+    "sha256": "04fcabe2dbd05f6bff21e40560a60a660cd42f3937d49ae3dc65e8834b527f2f",
+    "size_bytes": 2972
+  },
+  {
+    "path": "docs/audits/native-proxy-lifetime-contracts-20260913/task-layout-review.json",
+    "sha256": "11cc79dbc73b2c11d39ca6344bee4c7216c4d13f8728a636340e1a2e1f6d0e2d",
+    "size_bytes": 1815
+  }
+]

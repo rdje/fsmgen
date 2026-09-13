@@ -1,0 +1,5083 @@
+{
+  "functions": [
+    {
+      "end": 19058,
+      "id": "coordinator._transaction",
+      "name": "_transaction",
+      "path": "docs/audits/native-proxy-image-coordination-20260910/Coordination.pm",
+      "sha256": "77be1936681bccfc750aba15bac507c4753086957fa62134e57652cd97c8200a",
+      "start": 5530
+    },
+    {
+      "end": 5403,
+      "id": "coordinator._census",
+      "name": "_census",
+      "path": "docs/audits/native-proxy-image-coordination-20260910/Coordination.pm",
+      "sha256": "edf33e14c61d77a9736bf0abf083a8dd41b2adb69377a6097fc19c206e086b51",
+      "start": 4390
+    },
+    {
+      "end": 3040,
+      "id": "coordinator._acquire",
+      "name": "_acquire",
+      "path": "docs/audits/native-proxy-image-coordination-20260910/Coordination.pm",
+      "sha256": "926a57c6b4fa95cf46b565a998b5a67cf52e44b4200af4e094027815c39d115d",
+      "start": 2135
+    },
+    {
+      "end": 2219,
+      "id": "census._decode_record",
+      "name": "_decode_record",
+      "path": "docs/audits/native-proxy-runtime-census-20260910/ReferenceCensus.pm",
+      "sha256": "e23f816fc8031a030e404b4dfbc6d809631bfa7a7e4f3c94249f04195c8bde08",
+      "start": 1124
+    },
+    {
+      "end": 8021,
+      "id": "census._inspect_locked",
+      "name": "_inspect_locked",
+      "path": "docs/audits/native-proxy-runtime-census-20260910/ReferenceCensus.pm",
+      "sha256": "6cec124537d92e7acd81643f73ac23ae243c9e9398b9592e80f528dc16287af3",
+      "start": 6315
+    },
+    {
+      "end": 649,
+      "id": "cleanup.cleanup_receipts_settled",
+      "name": "cleanup_receipts_settled",
+      "path": "docs/audits/native-proxy-cleanup-receipts-20260910/CleanupReceipts.pm",
+      "sha256": "6ba8d3314f8bfd22966df1760c2333fae0fb607b51507fb6258392339cb78080",
+      "start": 369
+    },
+    {
+      "end": 1297,
+      "id": "cleanup._settled_owner",
+      "name": "_settled_owner",
+      "path": "docs/audits/native-proxy-cleanup-receipts-20260910/CleanupReceipts.pm",
+      "sha256": "2460977b663324f2866daadee72300aa4cf2b382005346d37e5e59718fe88842",
+      "start": 649
+    },
+    {
+      "end": 3870,
+      "id": "retirement._request",
+      "name": "_request",
+      "path": "docs/audits/native-proxy-runtime-retirement-20260910/RuntimeRetirement.pm",
+      "sha256": "b625d44f74c4b8569dafbe6d29b305fae5ebab6b352f9e9b2e5b5a18c7eaf55c",
+      "start": 1369
+    },
+    {
+      "end": 6560,
+      "id": "retirement._retire_locked",
+      "name": "_retire_locked",
+      "path": "docs/audits/native-proxy-runtime-retirement-20260910/RuntimeRetirement.pm",
+      "sha256": "6b193c001a037ebab6794ed186fb49bfbab5ab5c5f0369ca662c7dd99071cae4",
+      "start": 6120
+    },
+    {
+      "end": 7435,
+      "id": "retirement._release_locked",
+      "name": "_release_locked",
+      "path": "docs/audits/native-proxy-runtime-retirement-20260910/RuntimeRetirement.pm",
+      "sha256": "b8d98af0c5ed15c745ad91a8981aa84063f2213d5d17a4557e1854c7823e26e0",
+      "start": 6837
+    },
+    {
+      "end": 8724,
+      "id": "retirement._finish_locked",
+      "name": "_finish_locked",
+      "path": "docs/audits/native-proxy-runtime-retirement-20260910/RuntimeRetirement.pm",
+      "sha256": "599591e1df2cdde331c278c69ce42e397023c945d04f5cf2fa32c5445f593718",
+      "start": 7435
+    },
+    {
+      "end": 4569,
+      "id": "workspace._capture",
+      "name": "_capture",
+      "path": "docs/audits/native-proxy-runtime-retirement-20260910/PrivateWorkspace.pm",
+      "sha256": "f63459f652a8ca83f7fb8af625a90d5f24305452720161aced8ee65d39f649e3",
+      "start": 3812
+    },
+    {
+      "end": 6077,
+      "id": "workspace._remove",
+      "name": "_remove",
+      "path": "docs/audits/native-proxy-runtime-retirement-20260910/PrivateWorkspace.pm",
+      "sha256": "c933707d7d812aaf23f5d162cbc60898c2d9c768e1be1034d839c61a8782fa14",
+      "start": 5050
+    },
+    {
+      "end": 5594,
+      "id": "observation._previous",
+      "name": "_previous",
+      "path": "docs/audits/native-proxy-observation-acquisition-20260910/ObservationAcquisition.pm",
+      "sha256": "8dba0509e3e67f5c36d94f85fb46103966cc70fae523e9b236aafa419d3f71b0",
+      "start": 2244
+    },
+    {
+      "end": 13792,
+      "id": "observation._admit_locked",
+      "name": "_admit_locked",
+      "path": "docs/audits/native-proxy-observation-acquisition-20260910/ObservationAcquisition.pm",
+      "sha256": "8867fadaf046f56f343e866c87aa305b7fb70725b92390d8571e47e67f32da85",
+      "start": 8637
+    },
+    {
+      "end": 6050,
+      "id": "observation._prior_targets_match",
+      "name": "_prior_targets_match",
+      "path": "docs/audits/native-proxy-observation-acquisition-20260910/ObservationAcquisition.pm",
+      "sha256": "415a7c87a277d0ef23d24e5e21f2ec4a5e19e5e1e4e8e197e3fafe794e53076d",
+      "start": 5825
+    },
+    {
+      "end": 14187,
+      "id": "observation._acquire_locked",
+      "name": "_acquire_locked",
+      "path": "docs/audits/native-proxy-observation-acquisition-20260910/ObservationAcquisition.pm",
+      "sha256": "51ac3dfc5e982adc8d02271450eea378a0d6fbfa427c4032f84309358eabb492",
+      "start": 13792
+    },
+    {
+      "end": 16514,
+      "id": "observation._finish_locked",
+      "name": "_finish_locked",
+      "path": "docs/audits/native-proxy-observation-acquisition-20260910/ObservationAcquisition.pm",
+      "sha256": "37ead1e6e5fcbee32a1e0e82ef0bf1a7dc5c3281a154218831699d69cd32bceb",
+      "start": 14991
+    },
+    {
+      "end": 4174,
+      "id": "archive_record.archive_specification",
+      "name": "archive_specification",
+      "path": "docs/audits/native-proxy-observation-archive-records-20260911/ArchiveRecord.pm",
+      "sha256": "4596517a0b821bc0faca970fd47b9af4f14e5c0f67de1b191139bc00e4abc4e5",
+      "start": 2084
+    },
+    {
+      "end": 7404,
+      "id": "archive_record.validate_archive_receipt",
+      "name": "validate_archive_receipt",
+      "path": "docs/audits/native-proxy-observation-archive-records-20260911/ArchiveRecord.pm",
+      "sha256": "9df66f283c19ea55721ea17e6752fff3a530de6b292a4bcb2beafecdf53235e1",
+      "start": 4174
+    },
+    {
+      "end": 6193,
+      "id": "archive.archive_retained_sources",
+      "name": "archive_retained_sources",
+      "path": "docs/audits/native-proxy-observation-archive-20260911/ObservationArchive.pm",
+      "sha256": "bfb13ed0fbdf42904aa6e525613fe82f11fc808c459d81255a4ae864f64cb55a",
+      "start": 3181
+    },
+    {
+      "end": 1837,
+      "id": "archive._close_sources",
+      "name": "_close_sources",
+      "path": "docs/audits/native-proxy-observation-archive-20260911/ObservationArchive.pm",
+      "sha256": "2dbdf8fcffc4ef4a57183edbfbcec35ed2c7722a5fc88ebf1cd632be3052ec7e",
+      "start": 1610
+    },
+    {
+      "end": 7158,
+      "id": "work.validate_work_settlement",
+      "name": "validate_work_settlement",
+      "path": "docs/audits/native-proxy-observation-work-records-20260911/WorkRecord.pm",
+      "sha256": "fada3a21cd4ccafcbc4c72f5507006d311449e47e4846c0464cd6d06e3d7fa5d",
+      "start": 5739
+    },
+    {
+      "end": 5257,
+      "id": "work._complete_order",
+      "name": "_complete_order",
+      "path": "docs/audits/native-proxy-observation-work-records-20260911/WorkRecord.pm",
+      "sha256": "100d2d92018ff75758d4d81283d7b33b14e81cbd326c55fb0ead4a62f286ef40",
+      "start": 4913
+    },
+    {
+      "end": 5465,
+      "id": "work._work_match",
+      "name": "_work_match",
+      "path": "docs/audits/native-proxy-observation-work-records-20260911/WorkRecord.pm",
+      "sha256": "2229c002ba1dee99ab474021d480d257bb6d61720351a91802b20e34b0fab1ec",
+      "start": 5257
+    },
+    {
+      "end": 4913,
+      "id": "work._sealed",
+      "name": "_sealed",
+      "path": "docs/audits/native-proxy-observation-work-records-20260911/WorkRecord.pm",
+      "sha256": "f80d9c1c91e442ec65e304e15d3658d8d573d1870d8065c8afbf2424318c8389",
+      "start": 4766
+    },
+    {
+      "end": 3972,
+      "id": "release._prepare",
+      "name": "_prepare",
+      "path": "docs/audits/native-proxy-observation-archive-release-20260911/ObservationRelease.pm",
+      "sha256": "5c2d5c4a7ef09fa54eb09c34e5b531081248538cfe76ee840c7f0ebe1ed9defc",
+      "start": 1659
+    },
+    {
+      "end": 8050,
+      "id": "release._release_locked",
+      "name": "_release_locked",
+      "path": "docs/audits/native-proxy-observation-archive-release-20260911/ObservationRelease.pm",
+      "sha256": "9d9d04bd8d5f374fbc407fd1fd58357a92029f485f770e143e4a34454c8094d2",
+      "start": 7387
+    },
+    {
+      "end": 9213,
+      "id": "release._finish_locked",
+      "name": "_finish_locked",
+      "path": "docs/audits/native-proxy-observation-archive-release-20260911/ObservationRelease.pm",
+      "sha256": "bf71d08f5ac247aff461decb5eba4f0c82c75a6235e1cf0ac294ec0a424b501a",
+      "start": 8050
+    },
+    {
+      "end": 6903,
+      "id": "release._unlink_exact",
+      "name": "_unlink_exact",
+      "path": "docs/audits/native-proxy-observation-archive-release-20260911/ObservationRelease.pm",
+      "sha256": "d0eca0edf97cab1aa1510e6461e7680bb965cf9df543ce146faa8cb44a9a9d9b",
+      "start": 6447
+    },
+    {
+      "end": 7387,
+      "id": "release._assert_absent",
+      "name": "_assert_absent",
+      "path": "docs/audits/native-proxy-observation-archive-release-20260911/ObservationRelease.pm",
+      "sha256": "d506eea8852e60cbcc3c5b7eabebcba2ddfe2a7fd31268b44c3a466975b3cdfc",
+      "start": 6903
+    },
+    {
+      "end": 10291,
+      "id": "release.release_observation_reference",
+      "name": "release_observation_reference",
+      "path": "docs/audits/native-proxy-observation-archive-release-20260911/ObservationRelease.pm",
+      "sha256": "2a0d7a8c9d3b5c11d3ad7b639367850e18ea4359c8fa08b86ed727a42b364fb7",
+      "start": 9213
+    },
+    {
+      "end": 1230,
+      "id": "maintenance._referenced",
+      "name": "_referenced",
+      "path": "docs/audits/native-proxy-image-maintenance-20260910/ImageMaintenance.pm",
+      "sha256": "92a92f0d457a7e62b4ec6ef94ba4864705d14260028d268e0862a7096fee764c",
+      "start": 1086
+    },
+    {
+      "end": 1884,
+      "id": "maintenance._admit_locked",
+      "name": "_admit_locked",
+      "path": "docs/audits/native-proxy-image-maintenance-20260910/ImageMaintenance.pm",
+      "sha256": "5d332fd9ea7f1f4805640e053e9b47fc6af189e8b50d2fbef95f05ecb2762b78",
+      "start": 1230
+    },
+    {
+      "end": 2557,
+      "id": "maintenance._closure_locked",
+      "name": "_closure_locked",
+      "path": "docs/audits/native-proxy-image-maintenance-20260910/ImageMaintenance.pm",
+      "sha256": "7f5197b8a8930bffa4c82adf6c2fd87259c667a97a0ed10fb689352c76d737ca",
+      "start": 1884
+    },
+    {
+      "end": 4722,
+      "id": "maintenance._remove_locked",
+      "name": "_remove_locked",
+      "path": "docs/audits/native-proxy-image-maintenance-20260910/ImageMaintenance.pm",
+      "sha256": "d7fb7b1269694c8c84fe9768102fcb5a009731c931dc7252cac89d72d6fb8a59",
+      "start": 3819
+    },
+    {
+      "end": 5675,
+      "id": "maintenance._finish_locked",
+      "name": "_finish_locked",
+      "path": "docs/audits/native-proxy-image-maintenance-20260910/ImageMaintenance.pm",
+      "sha256": "1775f02fe12a2e94f26cfdcad5f35c59226206a90fbeafff7bf8e346c041aa4d",
+      "start": 4722
+    }
+  ],
+  "invariants": [
+    {
+      "functions": [
+        "census._decode_record",
+        "census._inspect_locked",
+        "maintenance._referenced"
+      ],
+      "id": "both_reference_kinds",
+      "meaning": "Every valid runtime and observation reference pins only its selected image, regardless of absent or stale owner directories. The older runtime-only inspection stays separate."
+    },
+    {
+      "functions": [
+        "retirement._request",
+        "retirement._retire_locked",
+        "retirement._release_locked",
+        "retirement._finish_locked",
+        "workspace._capture",
+        "workspace._remove",
+        "cleanup.cleanup_receipts_settled"
+      ],
+      "id": "private_before_global",
+      "meaning": "Complete supplied cleanup and exact acquired custody precede private removal. Prove private absence before global unlink; preserve all other references and every image."
+    },
+    {
+      "functions": [
+        "observation._previous",
+        "observation._admit_locked",
+        "observation._prior_targets_match",
+        "observation._acquire_locked",
+        "observation._finish_locked"
+      ],
+      "id": "stable_target_snapshots",
+      "meaning": "Repeated observation preserves the original hold and target snapshots while current runtime/source custody remains. Its hold metadata is outside stable target evidence. A retired private workspace cannot satisfy a fresh or repeated live-source check."
+    },
+    {
+      "functions": [
+        "archive_record.archive_specification",
+        "archive_record.validate_archive_receipt",
+        "archive.archive_retained_sources",
+        "archive._close_sources"
+      ],
+      "id": "archive_from_retained_bytes",
+      "meaning": "Archival derives fixed private content files solely from retained target bytes; it can follow runtime retirement. Complete readback, identities and descriptor closure precede a returned archive receipt."
+    },
+    {
+      "functions": [
+        "work.validate_work_settlement",
+        "work._complete_order",
+        "work._work_match",
+        "work._sealed",
+        "cleanup._settled_owner"
+      ],
+      "id": "selected_work_settlement",
+      "meaning": "Release requires the original sealed selection and every selected owner receipt in order. Completed, failed and cancelled work can all be settled; missing ownership cannot be inferred from a successful outcome."
+    },
+    {
+      "functions": [
+        "release._prepare",
+        "release._release_locked",
+        "release._finish_locked",
+        "release.release_observation_reference"
+      ],
+      "id": "release_exact_hold",
+      "meaning": "Archive custody and supplied work settlement precede coordination. Release only the exact observation hold, preserve other owners and images, and close every acquired descriptor."
+    },
+    {
+      "functions": [
+        "release._unlink_exact",
+        "release._assert_absent",
+        "release.release_observation_reference",
+        "retirement._release_locked",
+        "coordinator._transaction"
+      ],
+      "id": "physical_effects_survive_failure",
+      "meaning": "A later failure cannot roll back a successful unlink. Returned failure is not proof a hold still exists. Preserve actual effects and current ownership separately; never retry or reconstruct implicitly."
+    },
+    {
+      "functions": [
+        "maintenance._admit_locked",
+        "maintenance._closure_locked",
+        "maintenance._remove_locked",
+        "maintenance._finish_locked",
+        "coordinator._transaction"
+      ],
+      "id": "maintenance_explicit_and_local",
+      "meaning": "Only explicit maintenance removes a selected complete unreferenced image. Another image and all other references remain intact. Partial or malformed state rejects; no eviction or automatic repair."
+    },
+    {
+      "functions": [
+        "coordinator._transaction",
+        "coordinator._census",
+        "coordinator._acquire"
+      ],
+      "id": "coordination_scope",
+      "meaning": "The existing checked lock serializes bounded storage operations. No caller-supplied callback, native query or process launch is admitted under this coordinator. Real external ownership/transport and contention remain separate."
+    }
+  ],
+  "schedule_domain_sha256": "e848a55a4697dcc1d0a790f4a45379c897b574891fd7dd230dd506e5ff866fce",
+  "schedules": [
+    {
+      "order": [
+        "archive_a",
+        "archive_b",
+        "retire_target",
+        "release_a",
+        "release_b",
+        "retire_other",
+        "maintain_target"
+      ],
+      "profile": "same_image"
+    },
+    {
+      "order": [
+        "archive_a",
+        "archive_b",
+        "retire_target",
+        "release_a",
+        "retire_other",
+        "release_b",
+        "maintain_target"
+      ],
+      "profile": "same_image"
+    },
+    {
+      "order": [
+        "archive_a",
+        "archive_b",
+        "retire_target",
+        "release_b",
+        "release_a",
+        "retire_other",
+        "maintain_target"
+      ],
+      "profile": "same_image"
+    },
+    {
+      "order": [
+        "archive_a",
+        "archive_b",
+        "retire_target",
+        "release_b",
+        "retire_other",
+        "release_a",
+        "maintain_target"
+      ],
+      "profile": "same_image"
+    },
+    {
+      "order": [
+        "archive_a",
+        "archive_b",
+        "retire_target",
+        "retire_other",
+        "release_a",
+        "release_b",
+        "maintain_target"
+      ],
+      "profile": "same_image"
+    },
+    {
+      "order": [
+        "archive_a",
+        "archive_b",
+        "retire_target",
+        "retire_other",
+        "release_b",
+        "release_a",
+        "maintain_target"
+      ],
+      "profile": "same_image"
+    },
+    {
+      "order": [
+        "archive_a",
+        "archive_b",
+        "release_a",
+        "retire_target",
+        "release_b",
+        "retire_other",
+        "maintain_target"
+      ],
+      "profile": "same_image"
+    },
+    {
+      "order": [
+        "archive_a",
+        "archive_b",
+        "release_a",
+        "retire_target",
+        "retire_other",
+        "release_b",
+        "maintain_target"
+      ],
+      "profile": "same_image"
+    },
+    {
+      "order": [
+        "archive_a",
+        "archive_b",
+        "release_a",
+        "release_b",
+        "retire_target",
+        "retire_other",
+        "maintain_target"
+      ],
+      "profile": "same_image"
+    },
+    {
+      "order": [
+        "archive_a",
+        "archive_b",
+        "release_a",
+        "release_b",
+        "retire_other",
+        "retire_target",
+        "maintain_target"
+      ],
+      "profile": "same_image"
+    },
+    {
+      "order": [
+        "archive_a",
+        "archive_b",
+        "release_a",
+        "retire_other",
+        "retire_target",
+        "release_b",
+        "maintain_target"
+      ],
+      "profile": "same_image"
+    },
+    {
+      "order": [
+        "archive_a",
+        "archive_b",
+        "release_a",
+        "retire_other",
+        "release_b",
+        "retire_target",
+        "maintain_target"
+      ],
+      "profile": "same_image"
+    },
+    {
+      "order": [
+        "archive_a",
+        "archive_b",
+        "release_b",
+        "retire_target",
+        "release_a",
+        "retire_other",
+        "maintain_target"
+      ],
+      "profile": "same_image"
+    },
+    {
+      "order": [
+        "archive_a",
+        "archive_b",
+        "release_b",
+        "retire_target",
+        "retire_other",
+        "release_a",
+        "maintain_target"
+      ],
+      "profile": "same_image"
+    },
+    {
+      "order": [
+        "archive_a",
+        "archive_b",
+        "release_b",
+        "release_a",
+        "retire_target",
+        "retire_other",
+        "maintain_target"
+      ],
+      "profile": "same_image"
+    },
+    {
+      "order": [
+        "archive_a",
+        "archive_b",
+        "release_b",
+        "release_a",
+        "retire_other",
+        "retire_target",
+        "maintain_target"
+      ],
+      "profile": "same_image"
+    },
+    {
+      "order": [
+        "archive_a",
+        "archive_b",
+        "release_b",
+        "retire_other",
+        "retire_target",
+        "release_a",
+        "maintain_target"
+      ],
+      "profile": "same_image"
+    },
+    {
+      "order": [
+        "archive_a",
+        "archive_b",
+        "release_b",
+        "retire_other",
+        "release_a",
+        "retire_target",
+        "maintain_target"
+      ],
+      "profile": "same_image"
+    },
+    {
+      "order": [
+        "archive_a",
+        "archive_b",
+        "retire_other",
+        "retire_target",
+        "release_a",
+        "release_b",
+        "maintain_target"
+      ],
+      "profile": "same_image"
+    },
+    {
+      "order": [
+        "archive_a",
+        "archive_b",
+        "retire_other",
+        "retire_target",
+        "release_b",
+        "release_a",
+        "maintain_target"
+      ],
+      "profile": "same_image"
+    },
+    {
+      "order": [
+        "archive_a",
+        "archive_b",
+        "retire_other",
+        "release_a",
+        "retire_target",
+        "release_b",
+        "maintain_target"
+      ],
+      "profile": "same_image"
+    },
+    {
+      "order": [
+        "archive_a",
+        "archive_b",
+        "retire_other",
+        "release_a",
+        "release_b",
+        "retire_target",
+        "maintain_target"
+      ],
+      "profile": "same_image"
+    },
+    {
+      "order": [
+        "archive_a",
+        "archive_b",
+        "retire_other",
+        "release_b",
+        "retire_target",
+        "release_a",
+        "maintain_target"
+      ],
+      "profile": "same_image"
+    },
+    {
+      "order": [
+        "archive_a",
+        "archive_b",
+        "retire_other",
+        "release_b",
+        "release_a",
+        "retire_target",
+        "maintain_target"
+      ],
+      "profile": "same_image"
+    },
+    {
+      "order": [
+        "archive_a",
+        "retire_target",
+        "archive_b",
+        "release_a",
+        "release_b",
+        "retire_other",
+        "maintain_target"
+      ],
+      "profile": "same_image"
+    },
+    {
+      "order": [
+        "archive_a",
+        "retire_target",
+        "archive_b",
+        "release_a",
+        "retire_other",
+        "release_b",
+        "maintain_target"
+      ],
+      "profile": "same_image"
+    },
+    {
+      "order": [
+        "archive_a",
+        "retire_target",
+        "archive_b",
+        "release_b",
+        "release_a",
+        "retire_other",
+        "maintain_target"
+      ],
+      "profile": "same_image"
+    },
+    {
+      "order": [
+        "archive_a",
+        "retire_target",
+        "archive_b",
+        "release_b",
+        "retire_other",
+        "release_a",
+        "maintain_target"
+      ],
+      "profile": "same_image"
+    },
+    {
+      "order": [
+        "archive_a",
+        "retire_target",
+        "archive_b",
+        "retire_other",
+        "release_a",
+        "release_b",
+        "maintain_target"
+      ],
+      "profile": "same_image"
+    },
+    {
+      "order": [
+        "archive_a",
+        "retire_target",
+        "archive_b",
+        "retire_other",
+        "release_b",
+        "release_a",
+        "maintain_target"
+      ],
+      "profile": "same_image"
+    },
+    {
+      "order": [
+        "archive_a",
+        "retire_target",
+        "release_a",
+        "archive_b",
+        "release_b",
+        "retire_other",
+        "maintain_target"
+      ],
+      "profile": "same_image"
+    },
+    {
+      "order": [
+        "archive_a",
+        "retire_target",
+        "release_a",
+        "archive_b",
+        "retire_other",
+        "release_b",
+        "maintain_target"
+      ],
+      "profile": "same_image"
+    },
+    {
+      "order": [
+        "archive_a",
+        "retire_target",
+        "release_a",
+        "retire_other",
+        "archive_b",
+        "release_b",
+        "maintain_target"
+      ],
+      "profile": "same_image"
+    },
+    {
+      "order": [
+        "archive_a",
+        "retire_target",
+        "retire_other",
+        "archive_b",
+        "release_a",
+        "release_b",
+        "maintain_target"
+      ],
+      "profile": "same_image"
+    },
+    {
+      "order": [
+        "archive_a",
+        "retire_target",
+        "retire_other",
+        "archive_b",
+        "release_b",
+        "release_a",
+        "maintain_target"
+      ],
+      "profile": "same_image"
+    },
+    {
+      "order": [
+        "archive_a",
+        "retire_target",
+        "retire_other",
+        "release_a",
+        "archive_b",
+        "release_b",
+        "maintain_target"
+      ],
+      "profile": "same_image"
+    },
+    {
+      "order": [
+        "archive_a",
+        "release_a",
+        "archive_b",
+        "retire_target",
+        "release_b",
+        "retire_other",
+        "maintain_target"
+      ],
+      "profile": "same_image"
+    },
+    {
+      "order": [
+        "archive_a",
+        "release_a",
+        "archive_b",
+        "retire_target",
+        "retire_other",
+        "release_b",
+        "maintain_target"
+      ],
+      "profile": "same_image"
+    },
+    {
+      "order": [
+        "archive_a",
+        "release_a",
+        "archive_b",
+        "release_b",
+        "retire_target",
+        "retire_other",
+        "maintain_target"
+      ],
+      "profile": "same_image"
+    },
+    {
+      "order": [
+        "archive_a",
+        "release_a",
+        "archive_b",
+        "release_b",
+        "retire_other",
+        "retire_target",
+        "maintain_target"
+      ],
+      "profile": "same_image"
+    },
+    {
+      "order": [
+        "archive_a",
+        "release_a",
+        "archive_b",
+        "retire_other",
+        "retire_target",
+        "release_b",
+        "maintain_target"
+      ],
+      "profile": "same_image"
+    },
+    {
+      "order": [
+        "archive_a",
+        "release_a",
+        "archive_b",
+        "retire_other",
+        "release_b",
+        "retire_target",
+        "maintain_target"
+      ],
+      "profile": "same_image"
+    },
+    {
+      "order": [
+        "archive_a",
+        "release_a",
+        "retire_target",
+        "archive_b",
+        "release_b",
+        "retire_other",
+        "maintain_target"
+      ],
+      "profile": "same_image"
+    },
+    {
+      "order": [
+        "archive_a",
+        "release_a",
+        "retire_target",
+        "archive_b",
+        "retire_other",
+        "release_b",
+        "maintain_target"
+      ],
+      "profile": "same_image"
+    },
+    {
+      "order": [
+        "archive_a",
+        "release_a",
+        "retire_target",
+        "retire_other",
+        "archive_b",
+        "release_b",
+        "maintain_target"
+      ],
+      "profile": "same_image"
+    },
+    {
+      "order": [
+        "archive_a",
+        "release_a",
+        "retire_other",
+        "archive_b",
+        "retire_target",
+        "release_b",
+        "maintain_target"
+      ],
+      "profile": "same_image"
+    },
+    {
+      "order": [
+        "archive_a",
+        "release_a",
+        "retire_other",
+        "archive_b",
+        "release_b",
+        "retire_target",
+        "maintain_target"
+      ],
+      "profile": "same_image"
+    },
+    {
+      "order": [
+        "archive_a",
+        "release_a",
+        "retire_other",
+        "retire_target",
+        "archive_b",
+        "release_b",
+        "maintain_target"
+      ],
+      "profile": "same_image"
+    },
+    {
+      "order": [
+        "archive_a",
+        "retire_other",
+        "archive_b",
+        "retire_target",
+        "release_a",
+        "release_b",
+        "maintain_target"
+      ],
+      "profile": "same_image"
+    },
+    {
+      "order": [
+        "archive_a",
+        "retire_other",
+        "archive_b",
+        "retire_target",
+        "release_b",
+        "release_a",
+        "maintain_target"
+      ],
+      "profile": "same_image"
+    },
+    {
+      "order": [
+        "archive_a",
+        "retire_other",
+        "archive_b",
+        "release_a",
+        "retire_target",
+        "release_b",
+        "maintain_target"
+      ],
+      "profile": "same_image"
+    },
+    {
+      "order": [
+        "archive_a",
+        "retire_other",
+        "archive_b",
+        "release_a",
+        "release_b",
+        "retire_target",
+        "maintain_target"
+      ],
+      "profile": "same_image"
+    },
+    {
+      "order": [
+        "archive_a",
+        "retire_other",
+        "archive_b",
+        "release_b",
+        "retire_target",
+        "release_a",
+        "maintain_target"
+      ],
+      "profile": "same_image"
+    },
+    {
+      "order": [
+        "archive_a",
+        "retire_other",
+        "archive_b",
+        "release_b",
+        "release_a",
+        "retire_target",
+        "maintain_target"
+      ],
+      "profile": "same_image"
+    },
+    {
+      "order": [
+        "archive_a",
+        "retire_other",
+        "retire_target",
+        "archive_b",
+        "release_a",
+        "release_b",
+        "maintain_target"
+      ],
+      "profile": "same_image"
+    },
+    {
+      "order": [
+        "archive_a",
+        "retire_other",
+        "retire_target",
+        "archive_b",
+        "release_b",
+        "release_a",
+        "maintain_target"
+      ],
+      "profile": "same_image"
+    },
+    {
+      "order": [
+        "archive_a",
+        "retire_other",
+        "retire_target",
+        "release_a",
+        "archive_b",
+        "release_b",
+        "maintain_target"
+      ],
+      "profile": "same_image"
+    },
+    {
+      "order": [
+        "archive_a",
+        "retire_other",
+        "release_a",
+        "archive_b",
+        "retire_target",
+        "release_b",
+        "maintain_target"
+      ],
+      "profile": "same_image"
+    },
+    {
+      "order": [
+        "archive_a",
+        "retire_other",
+        "release_a",
+        "archive_b",
+        "release_b",
+        "retire_target",
+        "maintain_target"
+      ],
+      "profile": "same_image"
+    },
+    {
+      "order": [
+        "archive_a",
+        "retire_other",
+        "release_a",
+        "retire_target",
+        "archive_b",
+        "release_b",
+        "maintain_target"
+      ],
+      "profile": "same_image"
+    },
+    {
+      "order": [
+        "archive_b",
+        "archive_a",
+        "retire_target",
+        "release_a",
+        "release_b",
+        "retire_other",
+        "maintain_target"
+      ],
+      "profile": "same_image"
+    },
+    {
+      "order": [
+        "archive_b",
+        "archive_a",
+        "retire_target",
+        "release_a",
+        "retire_other",
+        "release_b",
+        "maintain_target"
+      ],
+      "profile": "same_image"
+    },
+    {
+      "order": [
+        "archive_b",
+        "archive_a",
+        "retire_target",
+        "release_b",
+        "release_a",
+        "retire_other",
+        "maintain_target"
+      ],
+      "profile": "same_image"
+    },
+    {
+      "order": [
+        "archive_b",
+        "archive_a",
+        "retire_target",
+        "release_b",
+        "retire_other",
+        "release_a",
+        "maintain_target"
+      ],
+      "profile": "same_image"
+    },
+    {
+      "order": [
+        "archive_b",
+        "archive_a",
+        "retire_target",
+        "retire_other",
+        "release_a",
+        "release_b",
+        "maintain_target"
+      ],
+      "profile": "same_image"
+    },
+    {
+      "order": [
+        "archive_b",
+        "archive_a",
+        "retire_target",
+        "retire_other",
+        "release_b",
+        "release_a",
+        "maintain_target"
+      ],
+      "profile": "same_image"
+    },
+    {
+      "order": [
+        "archive_b",
+        "archive_a",
+        "release_a",
+        "retire_target",
+        "release_b",
+        "retire_other",
+        "maintain_target"
+      ],
+      "profile": "same_image"
+    },
+    {
+      "order": [
+        "archive_b",
+        "archive_a",
+        "release_a",
+        "retire_target",
+        "retire_other",
+        "release_b",
+        "maintain_target"
+      ],
+      "profile": "same_image"
+    },
+    {
+      "order": [
+        "archive_b",
+        "archive_a",
+        "release_a",
+        "release_b",
+        "retire_target",
+        "retire_other",
+        "maintain_target"
+      ],
+      "profile": "same_image"
+    },
+    {
+      "order": [
+        "archive_b",
+        "archive_a",
+        "release_a",
+        "release_b",
+        "retire_other",
+        "retire_target",
+        "maintain_target"
+      ],
+      "profile": "same_image"
+    },
+    {
+      "order": [
+        "archive_b",
+        "archive_a",
+        "release_a",
+        "retire_other",
+        "retire_target",
+        "release_b",
+        "maintain_target"
+      ],
+      "profile": "same_image"
+    },
+    {
+      "order": [
+        "archive_b",
+        "archive_a",
+        "release_a",
+        "retire_other",
+        "release_b",
+        "retire_target",
+        "maintain_target"
+      ],
+      "profile": "same_image"
+    },
+    {
+      "order": [
+        "archive_b",
+        "archive_a",
+        "release_b",
+        "retire_target",
+        "release_a",
+        "retire_other",
+        "maintain_target"
+      ],
+      "profile": "same_image"
+    },
+    {
+      "order": [
+        "archive_b",
+        "archive_a",
+        "release_b",
+        "retire_target",
+        "retire_other",
+        "release_a",
+        "maintain_target"
+      ],
+      "profile": "same_image"
+    },
+    {
+      "order": [
+        "archive_b",
+        "archive_a",
+        "release_b",
+        "release_a",
+        "retire_target",
+        "retire_other",
+        "maintain_target"
+      ],
+      "profile": "same_image"
+    },
+    {
+      "order": [
+        "archive_b",
+        "archive_a",
+        "release_b",
+        "release_a",
+        "retire_other",
+        "retire_target",
+        "maintain_target"
+      ],
+      "profile": "same_image"
+    },
+    {
+      "order": [
+        "archive_b",
+        "archive_a",
+        "release_b",
+        "retire_other",
+        "retire_target",
+        "release_a",
+        "maintain_target"
+      ],
+      "profile": "same_image"
+    },
+    {
+      "order": [
+        "archive_b",
+        "archive_a",
+        "release_b",
+        "retire_other",
+        "release_a",
+        "retire_target",
+        "maintain_target"
+      ],
+      "profile": "same_image"
+    },
+    {
+      "order": [
+        "archive_b",
+        "archive_a",
+        "retire_other",
+        "retire_target",
+        "release_a",
+        "release_b",
+        "maintain_target"
+      ],
+      "profile": "same_image"
+    },
+    {
+      "order": [
+        "archive_b",
+        "archive_a",
+        "retire_other",
+        "retire_target",
+        "release_b",
+        "release_a",
+        "maintain_target"
+      ],
+      "profile": "same_image"
+    },
+    {
+      "order": [
+        "archive_b",
+        "archive_a",
+        "retire_other",
+        "release_a",
+        "retire_target",
+        "release_b",
+        "maintain_target"
+      ],
+      "profile": "same_image"
+    },
+    {
+      "order": [
+        "archive_b",
+        "archive_a",
+        "retire_other",
+        "release_a",
+        "release_b",
+        "retire_target",
+        "maintain_target"
+      ],
+      "profile": "same_image"
+    },
+    {
+      "order": [
+        "archive_b",
+        "archive_a",
+        "retire_other",
+        "release_b",
+        "retire_target",
+        "release_a",
+        "maintain_target"
+      ],
+      "profile": "same_image"
+    },
+    {
+      "order": [
+        "archive_b",
+        "archive_a",
+        "retire_other",
+        "release_b",
+        "release_a",
+        "retire_target",
+        "maintain_target"
+      ],
+      "profile": "same_image"
+    },
+    {
+      "order": [
+        "archive_b",
+        "retire_target",
+        "archive_a",
+        "release_a",
+        "release_b",
+        "retire_other",
+        "maintain_target"
+      ],
+      "profile": "same_image"
+    },
+    {
+      "order": [
+        "archive_b",
+        "retire_target",
+        "archive_a",
+        "release_a",
+        "retire_other",
+        "release_b",
+        "maintain_target"
+      ],
+      "profile": "same_image"
+    },
+    {
+      "order": [
+        "archive_b",
+        "retire_target",
+        "archive_a",
+        "release_b",
+        "release_a",
+        "retire_other",
+        "maintain_target"
+      ],
+      "profile": "same_image"
+    },
+    {
+      "order": [
+        "archive_b",
+        "retire_target",
+        "archive_a",
+        "release_b",
+        "retire_other",
+        "release_a",
+        "maintain_target"
+      ],
+      "profile": "same_image"
+    },
+    {
+      "order": [
+        "archive_b",
+        "retire_target",
+        "archive_a",
+        "retire_other",
+        "release_a",
+        "release_b",
+        "maintain_target"
+      ],
+      "profile": "same_image"
+    },
+    {
+      "order": [
+        "archive_b",
+        "retire_target",
+        "archive_a",
+        "retire_other",
+        "release_b",
+        "release_a",
+        "maintain_target"
+      ],
+      "profile": "same_image"
+    },
+    {
+      "order": [
+        "archive_b",
+        "retire_target",
+        "release_b",
+        "archive_a",
+        "release_a",
+        "retire_other",
+        "maintain_target"
+      ],
+      "profile": "same_image"
+    },
+    {
+      "order": [
+        "archive_b",
+        "retire_target",
+        "release_b",
+        "archive_a",
+        "retire_other",
+        "release_a",
+        "maintain_target"
+      ],
+      "profile": "same_image"
+    },
+    {
+      "order": [
+        "archive_b",
+        "retire_target",
+        "release_b",
+        "retire_other",
+        "archive_a",
+        "release_a",
+        "maintain_target"
+      ],
+      "profile": "same_image"
+    },
+    {
+      "order": [
+        "archive_b",
+        "retire_target",
+        "retire_other",
+        "archive_a",
+        "release_a",
+        "release_b",
+        "maintain_target"
+      ],
+      "profile": "same_image"
+    },
+    {
+      "order": [
+        "archive_b",
+        "retire_target",
+        "retire_other",
+        "archive_a",
+        "release_b",
+        "release_a",
+        "maintain_target"
+      ],
+      "profile": "same_image"
+    },
+    {
+      "order": [
+        "archive_b",
+        "retire_target",
+        "retire_other",
+        "release_b",
+        "archive_a",
+        "release_a",
+        "maintain_target"
+      ],
+      "profile": "same_image"
+    },
+    {
+      "order": [
+        "archive_b",
+        "release_b",
+        "archive_a",
+        "retire_target",
+        "release_a",
+        "retire_other",
+        "maintain_target"
+      ],
+      "profile": "same_image"
+    },
+    {
+      "order": [
+        "archive_b",
+        "release_b",
+        "archive_a",
+        "retire_target",
+        "retire_other",
+        "release_a",
+        "maintain_target"
+      ],
+      "profile": "same_image"
+    },
+    {
+      "order": [
+        "archive_b",
+        "release_b",
+        "archive_a",
+        "release_a",
+        "retire_target",
+        "retire_other",
+        "maintain_target"
+      ],
+      "profile": "same_image"
+    },
+    {
+      "order": [
+        "archive_b",
+        "release_b",
+        "archive_a",
+        "release_a",
+        "retire_other",
+        "retire_target",
+        "maintain_target"
+      ],
+      "profile": "same_image"
+    },
+    {
+      "order": [
+        "archive_b",
+        "release_b",
+        "archive_a",
+        "retire_other",
+        "retire_target",
+        "release_a",
+        "maintain_target"
+      ],
+      "profile": "same_image"
+    },
+    {
+      "order": [
+        "archive_b",
+        "release_b",
+        "archive_a",
+        "retire_other",
+        "release_a",
+        "retire_target",
+        "maintain_target"
+      ],
+      "profile": "same_image"
+    },
+    {
+      "order": [
+        "archive_b",
+        "release_b",
+        "retire_target",
+        "archive_a",
+        "release_a",
+        "retire_other",
+        "maintain_target"
+      ],
+      "profile": "same_image"
+    },
+    {
+      "order": [
+        "archive_b",
+        "release_b",
+        "retire_target",
+        "archive_a",
+        "retire_other",
+        "release_a",
+        "maintain_target"
+      ],
+      "profile": "same_image"
+    },
+    {
+      "order": [
+        "archive_b",
+        "release_b",
+        "retire_target",
+        "retire_other",
+        "archive_a",
+        "release_a",
+        "maintain_target"
+      ],
+      "profile": "same_image"
+    },
+    {
+      "order": [
+        "archive_b",
+        "release_b",
+        "retire_other",
+        "archive_a",
+        "retire_target",
+        "release_a",
+        "maintain_target"
+      ],
+      "profile": "same_image"
+    },
+    {
+      "order": [
+        "archive_b",
+        "release_b",
+        "retire_other",
+        "archive_a",
+        "release_a",
+        "retire_target",
+        "maintain_target"
+      ],
+      "profile": "same_image"
+    },
+    {
+      "order": [
+        "archive_b",
+        "release_b",
+        "retire_other",
+        "retire_target",
+        "archive_a",
+        "release_a",
+        "maintain_target"
+      ],
+      "profile": "same_image"
+    },
+    {
+      "order": [
+        "archive_b",
+        "retire_other",
+        "archive_a",
+        "retire_target",
+        "release_a",
+        "release_b",
+        "maintain_target"
+      ],
+      "profile": "same_image"
+    },
+    {
+      "order": [
+        "archive_b",
+        "retire_other",
+        "archive_a",
+        "retire_target",
+        "release_b",
+        "release_a",
+        "maintain_target"
+      ],
+      "profile": "same_image"
+    },
+    {
+      "order": [
+        "archive_b",
+        "retire_other",
+        "archive_a",
+        "release_a",
+        "retire_target",
+        "release_b",
+        "maintain_target"
+      ],
+      "profile": "same_image"
+    },
+    {
+      "order": [
+        "archive_b",
+        "retire_other",
+        "archive_a",
+        "release_a",
+        "release_b",
+        "retire_target",
+        "maintain_target"
+      ],
+      "profile": "same_image"
+    },
+    {
+      "order": [
+        "archive_b",
+        "retire_other",
+        "archive_a",
+        "release_b",
+        "retire_target",
+        "release_a",
+        "maintain_target"
+      ],
+      "profile": "same_image"
+    },
+    {
+      "order": [
+        "archive_b",
+        "retire_other",
+        "archive_a",
+        "release_b",
+        "release_a",
+        "retire_target",
+        "maintain_target"
+      ],
+      "profile": "same_image"
+    },
+    {
+      "order": [
+        "archive_b",
+        "retire_other",
+        "retire_target",
+        "archive_a",
+        "release_a",
+        "release_b",
+        "maintain_target"
+      ],
+      "profile": "same_image"
+    },
+    {
+      "order": [
+        "archive_b",
+        "retire_other",
+        "retire_target",
+        "archive_a",
+        "release_b",
+        "release_a",
+        "maintain_target"
+      ],
+      "profile": "same_image"
+    },
+    {
+      "order": [
+        "archive_b",
+        "retire_other",
+        "retire_target",
+        "release_b",
+        "archive_a",
+        "release_a",
+        "maintain_target"
+      ],
+      "profile": "same_image"
+    },
+    {
+      "order": [
+        "archive_b",
+        "retire_other",
+        "release_b",
+        "archive_a",
+        "retire_target",
+        "release_a",
+        "maintain_target"
+      ],
+      "profile": "same_image"
+    },
+    {
+      "order": [
+        "archive_b",
+        "retire_other",
+        "release_b",
+        "archive_a",
+        "release_a",
+        "retire_target",
+        "maintain_target"
+      ],
+      "profile": "same_image"
+    },
+    {
+      "order": [
+        "archive_b",
+        "retire_other",
+        "release_b",
+        "retire_target",
+        "archive_a",
+        "release_a",
+        "maintain_target"
+      ],
+      "profile": "same_image"
+    },
+    {
+      "order": [
+        "retire_target",
+        "archive_a",
+        "archive_b",
+        "release_a",
+        "release_b",
+        "retire_other",
+        "maintain_target"
+      ],
+      "profile": "same_image"
+    },
+    {
+      "order": [
+        "retire_target",
+        "archive_a",
+        "archive_b",
+        "release_a",
+        "retire_other",
+        "release_b",
+        "maintain_target"
+      ],
+      "profile": "same_image"
+    },
+    {
+      "order": [
+        "retire_target",
+        "archive_a",
+        "archive_b",
+        "release_b",
+        "release_a",
+        "retire_other",
+        "maintain_target"
+      ],
+      "profile": "same_image"
+    },
+    {
+      "order": [
+        "retire_target",
+        "archive_a",
+        "archive_b",
+        "release_b",
+        "retire_other",
+        "release_a",
+        "maintain_target"
+      ],
+      "profile": "same_image"
+    },
+    {
+      "order": [
+        "retire_target",
+        "archive_a",
+        "archive_b",
+        "retire_other",
+        "release_a",
+        "release_b",
+        "maintain_target"
+      ],
+      "profile": "same_image"
+    },
+    {
+      "order": [
+        "retire_target",
+        "archive_a",
+        "archive_b",
+        "retire_other",
+        "release_b",
+        "release_a",
+        "maintain_target"
+      ],
+      "profile": "same_image"
+    },
+    {
+      "order": [
+        "retire_target",
+        "archive_a",
+        "release_a",
+        "archive_b",
+        "release_b",
+        "retire_other",
+        "maintain_target"
+      ],
+      "profile": "same_image"
+    },
+    {
+      "order": [
+        "retire_target",
+        "archive_a",
+        "release_a",
+        "archive_b",
+        "retire_other",
+        "release_b",
+        "maintain_target"
+      ],
+      "profile": "same_image"
+    },
+    {
+      "order": [
+        "retire_target",
+        "archive_a",
+        "release_a",
+        "retire_other",
+        "archive_b",
+        "release_b",
+        "maintain_target"
+      ],
+      "profile": "same_image"
+    },
+    {
+      "order": [
+        "retire_target",
+        "archive_a",
+        "retire_other",
+        "archive_b",
+        "release_a",
+        "release_b",
+        "maintain_target"
+      ],
+      "profile": "same_image"
+    },
+    {
+      "order": [
+        "retire_target",
+        "archive_a",
+        "retire_other",
+        "archive_b",
+        "release_b",
+        "release_a",
+        "maintain_target"
+      ],
+      "profile": "same_image"
+    },
+    {
+      "order": [
+        "retire_target",
+        "archive_a",
+        "retire_other",
+        "release_a",
+        "archive_b",
+        "release_b",
+        "maintain_target"
+      ],
+      "profile": "same_image"
+    },
+    {
+      "order": [
+        "retire_target",
+        "archive_b",
+        "archive_a",
+        "release_a",
+        "release_b",
+        "retire_other",
+        "maintain_target"
+      ],
+      "profile": "same_image"
+    },
+    {
+      "order": [
+        "retire_target",
+        "archive_b",
+        "archive_a",
+        "release_a",
+        "retire_other",
+        "release_b",
+        "maintain_target"
+      ],
+      "profile": "same_image"
+    },
+    {
+      "order": [
+        "retire_target",
+        "archive_b",
+        "archive_a",
+        "release_b",
+        "release_a",
+        "retire_other",
+        "maintain_target"
+      ],
+      "profile": "same_image"
+    },
+    {
+      "order": [
+        "retire_target",
+        "archive_b",
+        "archive_a",
+        "release_b",
+        "retire_other",
+        "release_a",
+        "maintain_target"
+      ],
+      "profile": "same_image"
+    },
+    {
+      "order": [
+        "retire_target",
+        "archive_b",
+        "archive_a",
+        "retire_other",
+        "release_a",
+        "release_b",
+        "maintain_target"
+      ],
+      "profile": "same_image"
+    },
+    {
+      "order": [
+        "retire_target",
+        "archive_b",
+        "archive_a",
+        "retire_other",
+        "release_b",
+        "release_a",
+        "maintain_target"
+      ],
+      "profile": "same_image"
+    },
+    {
+      "order": [
+        "retire_target",
+        "archive_b",
+        "release_b",
+        "archive_a",
+        "release_a",
+        "retire_other",
+        "maintain_target"
+      ],
+      "profile": "same_image"
+    },
+    {
+      "order": [
+        "retire_target",
+        "archive_b",
+        "release_b",
+        "archive_a",
+        "retire_other",
+        "release_a",
+        "maintain_target"
+      ],
+      "profile": "same_image"
+    },
+    {
+      "order": [
+        "retire_target",
+        "archive_b",
+        "release_b",
+        "retire_other",
+        "archive_a",
+        "release_a",
+        "maintain_target"
+      ],
+      "profile": "same_image"
+    },
+    {
+      "order": [
+        "retire_target",
+        "archive_b",
+        "retire_other",
+        "archive_a",
+        "release_a",
+        "release_b",
+        "maintain_target"
+      ],
+      "profile": "same_image"
+    },
+    {
+      "order": [
+        "retire_target",
+        "archive_b",
+        "retire_other",
+        "archive_a",
+        "release_b",
+        "release_a",
+        "maintain_target"
+      ],
+      "profile": "same_image"
+    },
+    {
+      "order": [
+        "retire_target",
+        "archive_b",
+        "retire_other",
+        "release_b",
+        "archive_a",
+        "release_a",
+        "maintain_target"
+      ],
+      "profile": "same_image"
+    },
+    {
+      "order": [
+        "retire_target",
+        "retire_other",
+        "archive_a",
+        "archive_b",
+        "release_a",
+        "release_b",
+        "maintain_target"
+      ],
+      "profile": "same_image"
+    },
+    {
+      "order": [
+        "retire_target",
+        "retire_other",
+        "archive_a",
+        "archive_b",
+        "release_b",
+        "release_a",
+        "maintain_target"
+      ],
+      "profile": "same_image"
+    },
+    {
+      "order": [
+        "retire_target",
+        "retire_other",
+        "archive_a",
+        "release_a",
+        "archive_b",
+        "release_b",
+        "maintain_target"
+      ],
+      "profile": "same_image"
+    },
+    {
+      "order": [
+        "retire_target",
+        "retire_other",
+        "archive_b",
+        "archive_a",
+        "release_a",
+        "release_b",
+        "maintain_target"
+      ],
+      "profile": "same_image"
+    },
+    {
+      "order": [
+        "retire_target",
+        "retire_other",
+        "archive_b",
+        "archive_a",
+        "release_b",
+        "release_a",
+        "maintain_target"
+      ],
+      "profile": "same_image"
+    },
+    {
+      "order": [
+        "retire_target",
+        "retire_other",
+        "archive_b",
+        "release_b",
+        "archive_a",
+        "release_a",
+        "maintain_target"
+      ],
+      "profile": "same_image"
+    },
+    {
+      "order": [
+        "retire_other",
+        "archive_a",
+        "archive_b",
+        "retire_target",
+        "release_a",
+        "release_b",
+        "maintain_target"
+      ],
+      "profile": "same_image"
+    },
+    {
+      "order": [
+        "retire_other",
+        "archive_a",
+        "archive_b",
+        "retire_target",
+        "release_b",
+        "release_a",
+        "maintain_target"
+      ],
+      "profile": "same_image"
+    },
+    {
+      "order": [
+        "retire_other",
+        "archive_a",
+        "archive_b",
+        "release_a",
+        "retire_target",
+        "release_b",
+        "maintain_target"
+      ],
+      "profile": "same_image"
+    },
+    {
+      "order": [
+        "retire_other",
+        "archive_a",
+        "archive_b",
+        "release_a",
+        "release_b",
+        "retire_target",
+        "maintain_target"
+      ],
+      "profile": "same_image"
+    },
+    {
+      "order": [
+        "retire_other",
+        "archive_a",
+        "archive_b",
+        "release_b",
+        "retire_target",
+        "release_a",
+        "maintain_target"
+      ],
+      "profile": "same_image"
+    },
+    {
+      "order": [
+        "retire_other",
+        "archive_a",
+        "archive_b",
+        "release_b",
+        "release_a",
+        "retire_target",
+        "maintain_target"
+      ],
+      "profile": "same_image"
+    },
+    {
+      "order": [
+        "retire_other",
+        "archive_a",
+        "retire_target",
+        "archive_b",
+        "release_a",
+        "release_b",
+        "maintain_target"
+      ],
+      "profile": "same_image"
+    },
+    {
+      "order": [
+        "retire_other",
+        "archive_a",
+        "retire_target",
+        "archive_b",
+        "release_b",
+        "release_a",
+        "maintain_target"
+      ],
+      "profile": "same_image"
+    },
+    {
+      "order": [
+        "retire_other",
+        "archive_a",
+        "retire_target",
+        "release_a",
+        "archive_b",
+        "release_b",
+        "maintain_target"
+      ],
+      "profile": "same_image"
+    },
+    {
+      "order": [
+        "retire_other",
+        "archive_a",
+        "release_a",
+        "archive_b",
+        "retire_target",
+        "release_b",
+        "maintain_target"
+      ],
+      "profile": "same_image"
+    },
+    {
+      "order": [
+        "retire_other",
+        "archive_a",
+        "release_a",
+        "archive_b",
+        "release_b",
+        "retire_target",
+        "maintain_target"
+      ],
+      "profile": "same_image"
+    },
+    {
+      "order": [
+        "retire_other",
+        "archive_a",
+        "release_a",
+        "retire_target",
+        "archive_b",
+        "release_b",
+        "maintain_target"
+      ],
+      "profile": "same_image"
+    },
+    {
+      "order": [
+        "retire_other",
+        "archive_b",
+        "archive_a",
+        "retire_target",
+        "release_a",
+        "release_b",
+        "maintain_target"
+      ],
+      "profile": "same_image"
+    },
+    {
+      "order": [
+        "retire_other",
+        "archive_b",
+        "archive_a",
+        "retire_target",
+        "release_b",
+        "release_a",
+        "maintain_target"
+      ],
+      "profile": "same_image"
+    },
+    {
+      "order": [
+        "retire_other",
+        "archive_b",
+        "archive_a",
+        "release_a",
+        "retire_target",
+        "release_b",
+        "maintain_target"
+      ],
+      "profile": "same_image"
+    },
+    {
+      "order": [
+        "retire_other",
+        "archive_b",
+        "archive_a",
+        "release_a",
+        "release_b",
+        "retire_target",
+        "maintain_target"
+      ],
+      "profile": "same_image"
+    },
+    {
+      "order": [
+        "retire_other",
+        "archive_b",
+        "archive_a",
+        "release_b",
+        "retire_target",
+        "release_a",
+        "maintain_target"
+      ],
+      "profile": "same_image"
+    },
+    {
+      "order": [
+        "retire_other",
+        "archive_b",
+        "archive_a",
+        "release_b",
+        "release_a",
+        "retire_target",
+        "maintain_target"
+      ],
+      "profile": "same_image"
+    },
+    {
+      "order": [
+        "retire_other",
+        "archive_b",
+        "retire_target",
+        "archive_a",
+        "release_a",
+        "release_b",
+        "maintain_target"
+      ],
+      "profile": "same_image"
+    },
+    {
+      "order": [
+        "retire_other",
+        "archive_b",
+        "retire_target",
+        "archive_a",
+        "release_b",
+        "release_a",
+        "maintain_target"
+      ],
+      "profile": "same_image"
+    },
+    {
+      "order": [
+        "retire_other",
+        "archive_b",
+        "retire_target",
+        "release_b",
+        "archive_a",
+        "release_a",
+        "maintain_target"
+      ],
+      "profile": "same_image"
+    },
+    {
+      "order": [
+        "retire_other",
+        "archive_b",
+        "release_b",
+        "archive_a",
+        "retire_target",
+        "release_a",
+        "maintain_target"
+      ],
+      "profile": "same_image"
+    },
+    {
+      "order": [
+        "retire_other",
+        "archive_b",
+        "release_b",
+        "archive_a",
+        "release_a",
+        "retire_target",
+        "maintain_target"
+      ],
+      "profile": "same_image"
+    },
+    {
+      "order": [
+        "retire_other",
+        "archive_b",
+        "release_b",
+        "retire_target",
+        "archive_a",
+        "release_a",
+        "maintain_target"
+      ],
+      "profile": "same_image"
+    },
+    {
+      "order": [
+        "retire_other",
+        "retire_target",
+        "archive_a",
+        "archive_b",
+        "release_a",
+        "release_b",
+        "maintain_target"
+      ],
+      "profile": "same_image"
+    },
+    {
+      "order": [
+        "retire_other",
+        "retire_target",
+        "archive_a",
+        "archive_b",
+        "release_b",
+        "release_a",
+        "maintain_target"
+      ],
+      "profile": "same_image"
+    },
+    {
+      "order": [
+        "retire_other",
+        "retire_target",
+        "archive_a",
+        "release_a",
+        "archive_b",
+        "release_b",
+        "maintain_target"
+      ],
+      "profile": "same_image"
+    },
+    {
+      "order": [
+        "retire_other",
+        "retire_target",
+        "archive_b",
+        "archive_a",
+        "release_a",
+        "release_b",
+        "maintain_target"
+      ],
+      "profile": "same_image"
+    },
+    {
+      "order": [
+        "retire_other",
+        "retire_target",
+        "archive_b",
+        "archive_a",
+        "release_b",
+        "release_a",
+        "maintain_target"
+      ],
+      "profile": "same_image"
+    },
+    {
+      "order": [
+        "retire_other",
+        "retire_target",
+        "archive_b",
+        "release_b",
+        "archive_a",
+        "release_a",
+        "maintain_target"
+      ],
+      "profile": "same_image"
+    },
+    {
+      "order": [
+        "archive_a",
+        "archive_b",
+        "retire_target",
+        "release_a",
+        "release_b",
+        "retire_other",
+        "maintain_target"
+      ],
+      "profile": "different_image"
+    },
+    {
+      "order": [
+        "archive_a",
+        "archive_b",
+        "retire_target",
+        "release_a",
+        "release_b",
+        "maintain_target",
+        "retire_other"
+      ],
+      "profile": "different_image"
+    },
+    {
+      "order": [
+        "archive_a",
+        "archive_b",
+        "retire_target",
+        "release_a",
+        "retire_other",
+        "release_b",
+        "maintain_target"
+      ],
+      "profile": "different_image"
+    },
+    {
+      "order": [
+        "archive_a",
+        "archive_b",
+        "retire_target",
+        "release_b",
+        "release_a",
+        "retire_other",
+        "maintain_target"
+      ],
+      "profile": "different_image"
+    },
+    {
+      "order": [
+        "archive_a",
+        "archive_b",
+        "retire_target",
+        "release_b",
+        "release_a",
+        "maintain_target",
+        "retire_other"
+      ],
+      "profile": "different_image"
+    },
+    {
+      "order": [
+        "archive_a",
+        "archive_b",
+        "retire_target",
+        "release_b",
+        "retire_other",
+        "release_a",
+        "maintain_target"
+      ],
+      "profile": "different_image"
+    },
+    {
+      "order": [
+        "archive_a",
+        "archive_b",
+        "retire_target",
+        "retire_other",
+        "release_a",
+        "release_b",
+        "maintain_target"
+      ],
+      "profile": "different_image"
+    },
+    {
+      "order": [
+        "archive_a",
+        "archive_b",
+        "retire_target",
+        "retire_other",
+        "release_b",
+        "release_a",
+        "maintain_target"
+      ],
+      "profile": "different_image"
+    },
+    {
+      "order": [
+        "archive_a",
+        "archive_b",
+        "release_a",
+        "retire_target",
+        "release_b",
+        "retire_other",
+        "maintain_target"
+      ],
+      "profile": "different_image"
+    },
+    {
+      "order": [
+        "archive_a",
+        "archive_b",
+        "release_a",
+        "retire_target",
+        "release_b",
+        "maintain_target",
+        "retire_other"
+      ],
+      "profile": "different_image"
+    },
+    {
+      "order": [
+        "archive_a",
+        "archive_b",
+        "release_a",
+        "retire_target",
+        "retire_other",
+        "release_b",
+        "maintain_target"
+      ],
+      "profile": "different_image"
+    },
+    {
+      "order": [
+        "archive_a",
+        "archive_b",
+        "release_a",
+        "release_b",
+        "retire_target",
+        "retire_other",
+        "maintain_target"
+      ],
+      "profile": "different_image"
+    },
+    {
+      "order": [
+        "archive_a",
+        "archive_b",
+        "release_a",
+        "release_b",
+        "retire_target",
+        "maintain_target",
+        "retire_other"
+      ],
+      "profile": "different_image"
+    },
+    {
+      "order": [
+        "archive_a",
+        "archive_b",
+        "release_a",
+        "release_b",
+        "retire_other",
+        "retire_target",
+        "maintain_target"
+      ],
+      "profile": "different_image"
+    },
+    {
+      "order": [
+        "archive_a",
+        "archive_b",
+        "release_a",
+        "retire_other",
+        "retire_target",
+        "release_b",
+        "maintain_target"
+      ],
+      "profile": "different_image"
+    },
+    {
+      "order": [
+        "archive_a",
+        "archive_b",
+        "release_a",
+        "retire_other",
+        "release_b",
+        "retire_target",
+        "maintain_target"
+      ],
+      "profile": "different_image"
+    },
+    {
+      "order": [
+        "archive_a",
+        "archive_b",
+        "release_b",
+        "retire_target",
+        "release_a",
+        "retire_other",
+        "maintain_target"
+      ],
+      "profile": "different_image"
+    },
+    {
+      "order": [
+        "archive_a",
+        "archive_b",
+        "release_b",
+        "retire_target",
+        "release_a",
+        "maintain_target",
+        "retire_other"
+      ],
+      "profile": "different_image"
+    },
+    {
+      "order": [
+        "archive_a",
+        "archive_b",
+        "release_b",
+        "retire_target",
+        "retire_other",
+        "release_a",
+        "maintain_target"
+      ],
+      "profile": "different_image"
+    },
+    {
+      "order": [
+        "archive_a",
+        "archive_b",
+        "release_b",
+        "release_a",
+        "retire_target",
+        "retire_other",
+        "maintain_target"
+      ],
+      "profile": "different_image"
+    },
+    {
+      "order": [
+        "archive_a",
+        "archive_b",
+        "release_b",
+        "release_a",
+        "retire_target",
+        "maintain_target",
+        "retire_other"
+      ],
+      "profile": "different_image"
+    },
+    {
+      "order": [
+        "archive_a",
+        "archive_b",
+        "release_b",
+        "release_a",
+        "retire_other",
+        "retire_target",
+        "maintain_target"
+      ],
+      "profile": "different_image"
+    },
+    {
+      "order": [
+        "archive_a",
+        "archive_b",
+        "release_b",
+        "retire_other",
+        "retire_target",
+        "release_a",
+        "maintain_target"
+      ],
+      "profile": "different_image"
+    },
+    {
+      "order": [
+        "archive_a",
+        "archive_b",
+        "release_b",
+        "retire_other",
+        "release_a",
+        "retire_target",
+        "maintain_target"
+      ],
+      "profile": "different_image"
+    },
+    {
+      "order": [
+        "archive_a",
+        "archive_b",
+        "retire_other",
+        "retire_target",
+        "release_a",
+        "release_b",
+        "maintain_target"
+      ],
+      "profile": "different_image"
+    },
+    {
+      "order": [
+        "archive_a",
+        "archive_b",
+        "retire_other",
+        "retire_target",
+        "release_b",
+        "release_a",
+        "maintain_target"
+      ],
+      "profile": "different_image"
+    },
+    {
+      "order": [
+        "archive_a",
+        "archive_b",
+        "retire_other",
+        "release_a",
+        "retire_target",
+        "release_b",
+        "maintain_target"
+      ],
+      "profile": "different_image"
+    },
+    {
+      "order": [
+        "archive_a",
+        "archive_b",
+        "retire_other",
+        "release_a",
+        "release_b",
+        "retire_target",
+        "maintain_target"
+      ],
+      "profile": "different_image"
+    },
+    {
+      "order": [
+        "archive_a",
+        "archive_b",
+        "retire_other",
+        "release_b",
+        "retire_target",
+        "release_a",
+        "maintain_target"
+      ],
+      "profile": "different_image"
+    },
+    {
+      "order": [
+        "archive_a",
+        "archive_b",
+        "retire_other",
+        "release_b",
+        "release_a",
+        "retire_target",
+        "maintain_target"
+      ],
+      "profile": "different_image"
+    },
+    {
+      "order": [
+        "archive_a",
+        "retire_target",
+        "archive_b",
+        "release_a",
+        "release_b",
+        "retire_other",
+        "maintain_target"
+      ],
+      "profile": "different_image"
+    },
+    {
+      "order": [
+        "archive_a",
+        "retire_target",
+        "archive_b",
+        "release_a",
+        "release_b",
+        "maintain_target",
+        "retire_other"
+      ],
+      "profile": "different_image"
+    },
+    {
+      "order": [
+        "archive_a",
+        "retire_target",
+        "archive_b",
+        "release_a",
+        "retire_other",
+        "release_b",
+        "maintain_target"
+      ],
+      "profile": "different_image"
+    },
+    {
+      "order": [
+        "archive_a",
+        "retire_target",
+        "archive_b",
+        "release_b",
+        "release_a",
+        "retire_other",
+        "maintain_target"
+      ],
+      "profile": "different_image"
+    },
+    {
+      "order": [
+        "archive_a",
+        "retire_target",
+        "archive_b",
+        "release_b",
+        "release_a",
+        "maintain_target",
+        "retire_other"
+      ],
+      "profile": "different_image"
+    },
+    {
+      "order": [
+        "archive_a",
+        "retire_target",
+        "archive_b",
+        "release_b",
+        "retire_other",
+        "release_a",
+        "maintain_target"
+      ],
+      "profile": "different_image"
+    },
+    {
+      "order": [
+        "archive_a",
+        "retire_target",
+        "archive_b",
+        "retire_other",
+        "release_a",
+        "release_b",
+        "maintain_target"
+      ],
+      "profile": "different_image"
+    },
+    {
+      "order": [
+        "archive_a",
+        "retire_target",
+        "archive_b",
+        "retire_other",
+        "release_b",
+        "release_a",
+        "maintain_target"
+      ],
+      "profile": "different_image"
+    },
+    {
+      "order": [
+        "archive_a",
+        "retire_target",
+        "release_a",
+        "archive_b",
+        "release_b",
+        "retire_other",
+        "maintain_target"
+      ],
+      "profile": "different_image"
+    },
+    {
+      "order": [
+        "archive_a",
+        "retire_target",
+        "release_a",
+        "archive_b",
+        "release_b",
+        "maintain_target",
+        "retire_other"
+      ],
+      "profile": "different_image"
+    },
+    {
+      "order": [
+        "archive_a",
+        "retire_target",
+        "release_a",
+        "archive_b",
+        "retire_other",
+        "release_b",
+        "maintain_target"
+      ],
+      "profile": "different_image"
+    },
+    {
+      "order": [
+        "archive_a",
+        "retire_target",
+        "release_a",
+        "retire_other",
+        "archive_b",
+        "release_b",
+        "maintain_target"
+      ],
+      "profile": "different_image"
+    },
+    {
+      "order": [
+        "archive_a",
+        "retire_target",
+        "retire_other",
+        "archive_b",
+        "release_a",
+        "release_b",
+        "maintain_target"
+      ],
+      "profile": "different_image"
+    },
+    {
+      "order": [
+        "archive_a",
+        "retire_target",
+        "retire_other",
+        "archive_b",
+        "release_b",
+        "release_a",
+        "maintain_target"
+      ],
+      "profile": "different_image"
+    },
+    {
+      "order": [
+        "archive_a",
+        "retire_target",
+        "retire_other",
+        "release_a",
+        "archive_b",
+        "release_b",
+        "maintain_target"
+      ],
+      "profile": "different_image"
+    },
+    {
+      "order": [
+        "archive_a",
+        "release_a",
+        "archive_b",
+        "retire_target",
+        "release_b",
+        "retire_other",
+        "maintain_target"
+      ],
+      "profile": "different_image"
+    },
+    {
+      "order": [
+        "archive_a",
+        "release_a",
+        "archive_b",
+        "retire_target",
+        "release_b",
+        "maintain_target",
+        "retire_other"
+      ],
+      "profile": "different_image"
+    },
+    {
+      "order": [
+        "archive_a",
+        "release_a",
+        "archive_b",
+        "retire_target",
+        "retire_other",
+        "release_b",
+        "maintain_target"
+      ],
+      "profile": "different_image"
+    },
+    {
+      "order": [
+        "archive_a",
+        "release_a",
+        "archive_b",
+        "release_b",
+        "retire_target",
+        "retire_other",
+        "maintain_target"
+      ],
+      "profile": "different_image"
+    },
+    {
+      "order": [
+        "archive_a",
+        "release_a",
+        "archive_b",
+        "release_b",
+        "retire_target",
+        "maintain_target",
+        "retire_other"
+      ],
+      "profile": "different_image"
+    },
+    {
+      "order": [
+        "archive_a",
+        "release_a",
+        "archive_b",
+        "release_b",
+        "retire_other",
+        "retire_target",
+        "maintain_target"
+      ],
+      "profile": "different_image"
+    },
+    {
+      "order": [
+        "archive_a",
+        "release_a",
+        "archive_b",
+        "retire_other",
+        "retire_target",
+        "release_b",
+        "maintain_target"
+      ],
+      "profile": "different_image"
+    },
+    {
+      "order": [
+        "archive_a",
+        "release_a",
+        "archive_b",
+        "retire_other",
+        "release_b",
+        "retire_target",
+        "maintain_target"
+      ],
+      "profile": "different_image"
+    },
+    {
+      "order": [
+        "archive_a",
+        "release_a",
+        "retire_target",
+        "archive_b",
+        "release_b",
+        "retire_other",
+        "maintain_target"
+      ],
+      "profile": "different_image"
+    },
+    {
+      "order": [
+        "archive_a",
+        "release_a",
+        "retire_target",
+        "archive_b",
+        "release_b",
+        "maintain_target",
+        "retire_other"
+      ],
+      "profile": "different_image"
+    },
+    {
+      "order": [
+        "archive_a",
+        "release_a",
+        "retire_target",
+        "archive_b",
+        "retire_other",
+        "release_b",
+        "maintain_target"
+      ],
+      "profile": "different_image"
+    },
+    {
+      "order": [
+        "archive_a",
+        "release_a",
+        "retire_target",
+        "retire_other",
+        "archive_b",
+        "release_b",
+        "maintain_target"
+      ],
+      "profile": "different_image"
+    },
+    {
+      "order": [
+        "archive_a",
+        "release_a",
+        "retire_other",
+        "archive_b",
+        "retire_target",
+        "release_b",
+        "maintain_target"
+      ],
+      "profile": "different_image"
+    },
+    {
+      "order": [
+        "archive_a",
+        "release_a",
+        "retire_other",
+        "archive_b",
+        "release_b",
+        "retire_target",
+        "maintain_target"
+      ],
+      "profile": "different_image"
+    },
+    {
+      "order": [
+        "archive_a",
+        "release_a",
+        "retire_other",
+        "retire_target",
+        "archive_b",
+        "release_b",
+        "maintain_target"
+      ],
+      "profile": "different_image"
+    },
+    {
+      "order": [
+        "archive_a",
+        "retire_other",
+        "archive_b",
+        "retire_target",
+        "release_a",
+        "release_b",
+        "maintain_target"
+      ],
+      "profile": "different_image"
+    },
+    {
+      "order": [
+        "archive_a",
+        "retire_other",
+        "archive_b",
+        "retire_target",
+        "release_b",
+        "release_a",
+        "maintain_target"
+      ],
+      "profile": "different_image"
+    },
+    {
+      "order": [
+        "archive_a",
+        "retire_other",
+        "archive_b",
+        "release_a",
+        "retire_target",
+        "release_b",
+        "maintain_target"
+      ],
+      "profile": "different_image"
+    },
+    {
+      "order": [
+        "archive_a",
+        "retire_other",
+        "archive_b",
+        "release_a",
+        "release_b",
+        "retire_target",
+        "maintain_target"
+      ],
+      "profile": "different_image"
+    },
+    {
+      "order": [
+        "archive_a",
+        "retire_other",
+        "archive_b",
+        "release_b",
+        "retire_target",
+        "release_a",
+        "maintain_target"
+      ],
+      "profile": "different_image"
+    },
+    {
+      "order": [
+        "archive_a",
+        "retire_other",
+        "archive_b",
+        "release_b",
+        "release_a",
+        "retire_target",
+        "maintain_target"
+      ],
+      "profile": "different_image"
+    },
+    {
+      "order": [
+        "archive_a",
+        "retire_other",
+        "retire_target",
+        "archive_b",
+        "release_a",
+        "release_b",
+        "maintain_target"
+      ],
+      "profile": "different_image"
+    },
+    {
+      "order": [
+        "archive_a",
+        "retire_other",
+        "retire_target",
+        "archive_b",
+        "release_b",
+        "release_a",
+        "maintain_target"
+      ],
+      "profile": "different_image"
+    },
+    {
+      "order": [
+        "archive_a",
+        "retire_other",
+        "retire_target",
+        "release_a",
+        "archive_b",
+        "release_b",
+        "maintain_target"
+      ],
+      "profile": "different_image"
+    },
+    {
+      "order": [
+        "archive_a",
+        "retire_other",
+        "release_a",
+        "archive_b",
+        "retire_target",
+        "release_b",
+        "maintain_target"
+      ],
+      "profile": "different_image"
+    },
+    {
+      "order": [
+        "archive_a",
+        "retire_other",
+        "release_a",
+        "archive_b",
+        "release_b",
+        "retire_target",
+        "maintain_target"
+      ],
+      "profile": "different_image"
+    },
+    {
+      "order": [
+        "archive_a",
+        "retire_other",
+        "release_a",
+        "retire_target",
+        "archive_b",
+        "release_b",
+        "maintain_target"
+      ],
+      "profile": "different_image"
+    },
+    {
+      "order": [
+        "archive_b",
+        "archive_a",
+        "retire_target",
+        "release_a",
+        "release_b",
+        "retire_other",
+        "maintain_target"
+      ],
+      "profile": "different_image"
+    },
+    {
+      "order": [
+        "archive_b",
+        "archive_a",
+        "retire_target",
+        "release_a",
+        "release_b",
+        "maintain_target",
+        "retire_other"
+      ],
+      "profile": "different_image"
+    },
+    {
+      "order": [
+        "archive_b",
+        "archive_a",
+        "retire_target",
+        "release_a",
+        "retire_other",
+        "release_b",
+        "maintain_target"
+      ],
+      "profile": "different_image"
+    },
+    {
+      "order": [
+        "archive_b",
+        "archive_a",
+        "retire_target",
+        "release_b",
+        "release_a",
+        "retire_other",
+        "maintain_target"
+      ],
+      "profile": "different_image"
+    },
+    {
+      "order": [
+        "archive_b",
+        "archive_a",
+        "retire_target",
+        "release_b",
+        "release_a",
+        "maintain_target",
+        "retire_other"
+      ],
+      "profile": "different_image"
+    },
+    {
+      "order": [
+        "archive_b",
+        "archive_a",
+        "retire_target",
+        "release_b",
+        "retire_other",
+        "release_a",
+        "maintain_target"
+      ],
+      "profile": "different_image"
+    },
+    {
+      "order": [
+        "archive_b",
+        "archive_a",
+        "retire_target",
+        "retire_other",
+        "release_a",
+        "release_b",
+        "maintain_target"
+      ],
+      "profile": "different_image"
+    },
+    {
+      "order": [
+        "archive_b",
+        "archive_a",
+        "retire_target",
+        "retire_other",
+        "release_b",
+        "release_a",
+        "maintain_target"
+      ],
+      "profile": "different_image"
+    },
+    {
+      "order": [
+        "archive_b",
+        "archive_a",
+        "release_a",
+        "retire_target",
+        "release_b",
+        "retire_other",
+        "maintain_target"
+      ],
+      "profile": "different_image"
+    },
+    {
+      "order": [
+        "archive_b",
+        "archive_a",
+        "release_a",
+        "retire_target",
+        "release_b",
+        "maintain_target",
+        "retire_other"
+      ],
+      "profile": "different_image"
+    },
+    {
+      "order": [
+        "archive_b",
+        "archive_a",
+        "release_a",
+        "retire_target",
+        "retire_other",
+        "release_b",
+        "maintain_target"
+      ],
+      "profile": "different_image"
+    },
+    {
+      "order": [
+        "archive_b",
+        "archive_a",
+        "release_a",
+        "release_b",
+        "retire_target",
+        "retire_other",
+        "maintain_target"
+      ],
+      "profile": "different_image"
+    },
+    {
+      "order": [
+        "archive_b",
+        "archive_a",
+        "release_a",
+        "release_b",
+        "retire_target",
+        "maintain_target",
+        "retire_other"
+      ],
+      "profile": "different_image"
+    },
+    {
+      "order": [
+        "archive_b",
+        "archive_a",
+        "release_a",
+        "release_b",
+        "retire_other",
+        "retire_target",
+        "maintain_target"
+      ],
+      "profile": "different_image"
+    },
+    {
+      "order": [
+        "archive_b",
+        "archive_a",
+        "release_a",
+        "retire_other",
+        "retire_target",
+        "release_b",
+        "maintain_target"
+      ],
+      "profile": "different_image"
+    },
+    {
+      "order": [
+        "archive_b",
+        "archive_a",
+        "release_a",
+        "retire_other",
+        "release_b",
+        "retire_target",
+        "maintain_target"
+      ],
+      "profile": "different_image"
+    },
+    {
+      "order": [
+        "archive_b",
+        "archive_a",
+        "release_b",
+        "retire_target",
+        "release_a",
+        "retire_other",
+        "maintain_target"
+      ],
+      "profile": "different_image"
+    },
+    {
+      "order": [
+        "archive_b",
+        "archive_a",
+        "release_b",
+        "retire_target",
+        "release_a",
+        "maintain_target",
+        "retire_other"
+      ],
+      "profile": "different_image"
+    },
+    {
+      "order": [
+        "archive_b",
+        "archive_a",
+        "release_b",
+        "retire_target",
+        "retire_other",
+        "release_a",
+        "maintain_target"
+      ],
+      "profile": "different_image"
+    },
+    {
+      "order": [
+        "archive_b",
+        "archive_a",
+        "release_b",
+        "release_a",
+        "retire_target",
+        "retire_other",
+        "maintain_target"
+      ],
+      "profile": "different_image"
+    },
+    {
+      "order": [
+        "archive_b",
+        "archive_a",
+        "release_b",
+        "release_a",
+        "retire_target",
+        "maintain_target",
+        "retire_other"
+      ],
+      "profile": "different_image"
+    },
+    {
+      "order": [
+        "archive_b",
+        "archive_a",
+        "release_b",
+        "release_a",
+        "retire_other",
+        "retire_target",
+        "maintain_target"
+      ],
+      "profile": "different_image"
+    },
+    {
+      "order": [
+        "archive_b",
+        "archive_a",
+        "release_b",
+        "retire_other",
+        "retire_target",
+        "release_a",
+        "maintain_target"
+      ],
+      "profile": "different_image"
+    },
+    {
+      "order": [
+        "archive_b",
+        "archive_a",
+        "release_b",
+        "retire_other",
+        "release_a",
+        "retire_target",
+        "maintain_target"
+      ],
+      "profile": "different_image"
+    },
+    {
+      "order": [
+        "archive_b",
+        "archive_a",
+        "retire_other",
+        "retire_target",
+        "release_a",
+        "release_b",
+        "maintain_target"
+      ],
+      "profile": "different_image"
+    },
+    {
+      "order": [
+        "archive_b",
+        "archive_a",
+        "retire_other",
+        "retire_target",
+        "release_b",
+        "release_a",
+        "maintain_target"
+      ],
+      "profile": "different_image"
+    },
+    {
+      "order": [
+        "archive_b",
+        "archive_a",
+        "retire_other",
+        "release_a",
+        "retire_target",
+        "release_b",
+        "maintain_target"
+      ],
+      "profile": "different_image"
+    },
+    {
+      "order": [
+        "archive_b",
+        "archive_a",
+        "retire_other",
+        "release_a",
+        "release_b",
+        "retire_target",
+        "maintain_target"
+      ],
+      "profile": "different_image"
+    },
+    {
+      "order": [
+        "archive_b",
+        "archive_a",
+        "retire_other",
+        "release_b",
+        "retire_target",
+        "release_a",
+        "maintain_target"
+      ],
+      "profile": "different_image"
+    },
+    {
+      "order": [
+        "archive_b",
+        "archive_a",
+        "retire_other",
+        "release_b",
+        "release_a",
+        "retire_target",
+        "maintain_target"
+      ],
+      "profile": "different_image"
+    },
+    {
+      "order": [
+        "archive_b",
+        "retire_target",
+        "archive_a",
+        "release_a",
+        "release_b",
+        "retire_other",
+        "maintain_target"
+      ],
+      "profile": "different_image"
+    },
+    {
+      "order": [
+        "archive_b",
+        "retire_target",
+        "archive_a",
+        "release_a",
+        "release_b",
+        "maintain_target",
+        "retire_other"
+      ],
+      "profile": "different_image"
+    },
+    {
+      "order": [
+        "archive_b",
+        "retire_target",
+        "archive_a",
+        "release_a",
+        "retire_other",
+        "release_b",
+        "maintain_target"
+      ],
+      "profile": "different_image"
+    },
+    {
+      "order": [
+        "archive_b",
+        "retire_target",
+        "archive_a",
+        "release_b",
+        "release_a",
+        "retire_other",
+        "maintain_target"
+      ],
+      "profile": "different_image"
+    },
+    {
+      "order": [
+        "archive_b",
+        "retire_target",
+        "archive_a",
+        "release_b",
+        "release_a",
+        "maintain_target",
+        "retire_other"
+      ],
+      "profile": "different_image"
+    },
+    {
+      "order": [
+        "archive_b",
+        "retire_target",
+        "archive_a",
+        "release_b",
+        "retire_other",
+        "release_a",
+        "maintain_target"
+      ],
+      "profile": "different_image"
+    },
+    {
+      "order": [
+        "archive_b",
+        "retire_target",
+        "archive_a",
+        "retire_other",
+        "release_a",
+        "release_b",
+        "maintain_target"
+      ],
+      "profile": "different_image"
+    },
+    {
+      "order": [
+        "archive_b",
+        "retire_target",
+        "archive_a",
+        "retire_other",
+        "release_b",
+        "release_a",
+        "maintain_target"
+      ],
+      "profile": "different_image"
+    },
+    {
+      "order": [
+        "archive_b",
+        "retire_target",
+        "release_b",
+        "archive_a",
+        "release_a",
+        "retire_other",
+        "maintain_target"
+      ],
+      "profile": "different_image"
+    },
+    {
+      "order": [
+        "archive_b",
+        "retire_target",
+        "release_b",
+        "archive_a",
+        "release_a",
+        "maintain_target",
+        "retire_other"
+      ],
+      "profile": "different_image"
+    },
+    {
+      "order": [
+        "archive_b",
+        "retire_target",
+        "release_b",
+        "archive_a",
+        "retire_other",
+        "release_a",
+        "maintain_target"
+      ],
+      "profile": "different_image"
+    },
+    {
+      "order": [
+        "archive_b",
+        "retire_target",
+        "release_b",
+        "retire_other",
+        "archive_a",
+        "release_a",
+        "maintain_target"
+      ],
+      "profile": "different_image"
+    },
+    {
+      "order": [
+        "archive_b",
+        "retire_target",
+        "retire_other",
+        "archive_a",
+        "release_a",
+        "release_b",
+        "maintain_target"
+      ],
+      "profile": "different_image"
+    },
+    {
+      "order": [
+        "archive_b",
+        "retire_target",
+        "retire_other",
+        "archive_a",
+        "release_b",
+        "release_a",
+        "maintain_target"
+      ],
+      "profile": "different_image"
+    },
+    {
+      "order": [
+        "archive_b",
+        "retire_target",
+        "retire_other",
+        "release_b",
+        "archive_a",
+        "release_a",
+        "maintain_target"
+      ],
+      "profile": "different_image"
+    },
+    {
+      "order": [
+        "archive_b",
+        "release_b",
+        "archive_a",
+        "retire_target",
+        "release_a",
+        "retire_other",
+        "maintain_target"
+      ],
+      "profile": "different_image"
+    },
+    {
+      "order": [
+        "archive_b",
+        "release_b",
+        "archive_a",
+        "retire_target",
+        "release_a",
+        "maintain_target",
+        "retire_other"
+      ],
+      "profile": "different_image"
+    },
+    {
+      "order": [
+        "archive_b",
+        "release_b",
+        "archive_a",
+        "retire_target",
+        "retire_other",
+        "release_a",
+        "maintain_target"
+      ],
+      "profile": "different_image"
+    },
+    {
+      "order": [
+        "archive_b",
+        "release_b",
+        "archive_a",
+        "release_a",
+        "retire_target",
+        "retire_other",
+        "maintain_target"
+      ],
+      "profile": "different_image"
+    },
+    {
+      "order": [
+        "archive_b",
+        "release_b",
+        "archive_a",
+        "release_a",
+        "retire_target",
+        "maintain_target",
+        "retire_other"
+      ],
+      "profile": "different_image"
+    },
+    {
+      "order": [
+        "archive_b",
+        "release_b",
+        "archive_a",
+        "release_a",
+        "retire_other",
+        "retire_target",
+        "maintain_target"
+      ],
+      "profile": "different_image"
+    },
+    {
+      "order": [
+        "archive_b",
+        "release_b",
+        "archive_a",
+        "retire_other",
+        "retire_target",
+        "release_a",
+        "maintain_target"
+      ],
+      "profile": "different_image"
+    },
+    {
+      "order": [
+        "archive_b",
+        "release_b",
+        "archive_a",
+        "retire_other",
+        "release_a",
+        "retire_target",
+        "maintain_target"
+      ],
+      "profile": "different_image"
+    },
+    {
+      "order": [
+        "archive_b",
+        "release_b",
+        "retire_target",
+        "archive_a",
+        "release_a",
+        "retire_other",
+        "maintain_target"
+      ],
+      "profile": "different_image"
+    },
+    {
+      "order": [
+        "archive_b",
+        "release_b",
+        "retire_target",
+        "archive_a",
+        "release_a",
+        "maintain_target",
+        "retire_other"
+      ],
+      "profile": "different_image"
+    },
+    {
+      "order": [
+        "archive_b",
+        "release_b",
+        "retire_target",
+        "archive_a",
+        "retire_other",
+        "release_a",
+        "maintain_target"
+      ],
+      "profile": "different_image"
+    },
+    {
+      "order": [
+        "archive_b",
+        "release_b",
+        "retire_target",
+        "retire_other",
+        "archive_a",
+        "release_a",
+        "maintain_target"
+      ],
+      "profile": "different_image"
+    },
+    {
+      "order": [
+        "archive_b",
+        "release_b",
+        "retire_other",
+        "archive_a",
+        "retire_target",
+        "release_a",
+        "maintain_target"
+      ],
+      "profile": "different_image"
+    },
+    {
+      "order": [
+        "archive_b",
+        "release_b",
+        "retire_other",
+        "archive_a",
+        "release_a",
+        "retire_target",
+        "maintain_target"
+      ],
+      "profile": "different_image"
+    },
+    {
+      "order": [
+        "archive_b",
+        "release_b",
+        "retire_other",
+        "retire_target",
+        "archive_a",
+        "release_a",
+        "maintain_target"
+      ],
+      "profile": "different_image"
+    },
+    {
+      "order": [
+        "archive_b",
+        "retire_other",
+        "archive_a",
+        "retire_target",
+        "release_a",
+        "release_b",
+        "maintain_target"
+      ],
+      "profile": "different_image"
+    },
+    {
+      "order": [
+        "archive_b",
+        "retire_other",
+        "archive_a",
+        "retire_target",
+        "release_b",
+        "release_a",
+        "maintain_target"
+      ],
+      "profile": "different_image"
+    },
+    {
+      "order": [
+        "archive_b",
+        "retire_other",
+        "archive_a",
+        "release_a",
+        "retire_target",
+        "release_b",
+        "maintain_target"
+      ],
+      "profile": "different_image"
+    },
+    {
+      "order": [
+        "archive_b",
+        "retire_other",
+        "archive_a",
+        "release_a",
+        "release_b",
+        "retire_target",
+        "maintain_target"
+      ],
+      "profile": "different_image"
+    },
+    {
+      "order": [
+        "archive_b",
+        "retire_other",
+        "archive_a",
+        "release_b",
+        "retire_target",
+        "release_a",
+        "maintain_target"
+      ],
+      "profile": "different_image"
+    },
+    {
+      "order": [
+        "archive_b",
+        "retire_other",
+        "archive_a",
+        "release_b",
+        "release_a",
+        "retire_target",
+        "maintain_target"
+      ],
+      "profile": "different_image"
+    },
+    {
+      "order": [
+        "archive_b",
+        "retire_other",
+        "retire_target",
+        "archive_a",
+        "release_a",
+        "release_b",
+        "maintain_target"
+      ],
+      "profile": "different_image"
+    },
+    {
+      "order": [
+        "archive_b",
+        "retire_other",
+        "retire_target",
+        "archive_a",
+        "release_b",
+        "release_a",
+        "maintain_target"
+      ],
+      "profile": "different_image"
+    },
+    {
+      "order": [
+        "archive_b",
+        "retire_other",
+        "retire_target",
+        "release_b",
+        "archive_a",
+        "release_a",
+        "maintain_target"
+      ],
+      "profile": "different_image"
+    },
+    {
+      "order": [
+        "archive_b",
+        "retire_other",
+        "release_b",
+        "archive_a",
+        "retire_target",
+        "release_a",
+        "maintain_target"
+      ],
+      "profile": "different_image"
+    },
+    {
+      "order": [
+        "archive_b",
+        "retire_other",
+        "release_b",
+        "archive_a",
+        "release_a",
+        "retire_target",
+        "maintain_target"
+      ],
+      "profile": "different_image"
+    },
+    {
+      "order": [
+        "archive_b",
+        "retire_other",
+        "release_b",
+        "retire_target",
+        "archive_a",
+        "release_a",
+        "maintain_target"
+      ],
+      "profile": "different_image"
+    },
+    {
+      "order": [
+        "retire_target",
+        "archive_a",
+        "archive_b",
+        "release_a",
+        "release_b",
+        "retire_other",
+        "maintain_target"
+      ],
+      "profile": "different_image"
+    },
+    {
+      "order": [
+        "retire_target",
+        "archive_a",
+        "archive_b",
+        "release_a",
+        "release_b",
+        "maintain_target",
+        "retire_other"
+      ],
+      "profile": "different_image"
+    },
+    {
+      "order": [
+        "retire_target",
+        "archive_a",
+        "archive_b",
+        "release_a",
+        "retire_other",
+        "release_b",
+        "maintain_target"
+      ],
+      "profile": "different_image"
+    },
+    {
+      "order": [
+        "retire_target",
+        "archive_a",
+        "archive_b",
+        "release_b",
+        "release_a",
+        "retire_other",
+        "maintain_target"
+      ],
+      "profile": "different_image"
+    },
+    {
+      "order": [
+        "retire_target",
+        "archive_a",
+        "archive_b",
+        "release_b",
+        "release_a",
+        "maintain_target",
+        "retire_other"
+      ],
+      "profile": "different_image"
+    },
+    {
+      "order": [
+        "retire_target",
+        "archive_a",
+        "archive_b",
+        "release_b",
+        "retire_other",
+        "release_a",
+        "maintain_target"
+      ],
+      "profile": "different_image"
+    },
+    {
+      "order": [
+        "retire_target",
+        "archive_a",
+        "archive_b",
+        "retire_other",
+        "release_a",
+        "release_b",
+        "maintain_target"
+      ],
+      "profile": "different_image"
+    },
+    {
+      "order": [
+        "retire_target",
+        "archive_a",
+        "archive_b",
+        "retire_other",
+        "release_b",
+        "release_a",
+        "maintain_target"
+      ],
+      "profile": "different_image"
+    },
+    {
+      "order": [
+        "retire_target",
+        "archive_a",
+        "release_a",
+        "archive_b",
+        "release_b",
+        "retire_other",
+        "maintain_target"
+      ],
+      "profile": "different_image"
+    },
+    {
+      "order": [
+        "retire_target",
+        "archive_a",
+        "release_a",
+        "archive_b",
+        "release_b",
+        "maintain_target",
+        "retire_other"
+      ],
+      "profile": "different_image"
+    },
+    {
+      "order": [
+        "retire_target",
+        "archive_a",
+        "release_a",
+        "archive_b",
+        "retire_other",
+        "release_b",
+        "maintain_target"
+      ],
+      "profile": "different_image"
+    },
+    {
+      "order": [
+        "retire_target",
+        "archive_a",
+        "release_a",
+        "retire_other",
+        "archive_b",
+        "release_b",
+        "maintain_target"
+      ],
+      "profile": "different_image"
+    },
+    {
+      "order": [
+        "retire_target",
+        "archive_a",
+        "retire_other",
+        "archive_b",
+        "release_a",
+        "release_b",
+        "maintain_target"
+      ],
+      "profile": "different_image"
+    },
+    {
+      "order": [
+        "retire_target",
+        "archive_a",
+        "retire_other",
+        "archive_b",
+        "release_b",
+        "release_a",
+        "maintain_target"
+      ],
+      "profile": "different_image"
+    },
+    {
+      "order": [
+        "retire_target",
+        "archive_a",
+        "retire_other",
+        "release_a",
+        "archive_b",
+        "release_b",
+        "maintain_target"
+      ],
+      "profile": "different_image"
+    },
+    {
+      "order": [
+        "retire_target",
+        "archive_b",
+        "archive_a",
+        "release_a",
+        "release_b",
+        "retire_other",
+        "maintain_target"
+      ],
+      "profile": "different_image"
+    },
+    {
+      "order": [
+        "retire_target",
+        "archive_b",
+        "archive_a",
+        "release_a",
+        "release_b",
+        "maintain_target",
+        "retire_other"
+      ],
+      "profile": "different_image"
+    },
+    {
+      "order": [
+        "retire_target",
+        "archive_b",
+        "archive_a",
+        "release_a",
+        "retire_other",
+        "release_b",
+        "maintain_target"
+      ],
+      "profile": "different_image"
+    },
+    {
+      "order": [
+        "retire_target",
+        "archive_b",
+        "archive_a",
+        "release_b",
+        "release_a",
+        "retire_other",
+        "maintain_target"
+      ],
+      "profile": "different_image"
+    },
+    {
+      "order": [
+        "retire_target",
+        "archive_b",
+        "archive_a",
+        "release_b",
+        "release_a",
+        "maintain_target",
+        "retire_other"
+      ],
+      "profile": "different_image"
+    },
+    {
+      "order": [
+        "retire_target",
+        "archive_b",
+        "archive_a",
+        "release_b",
+        "retire_other",
+        "release_a",
+        "maintain_target"
+      ],
+      "profile": "different_image"
+    },
+    {
+      "order": [
+        "retire_target",
+        "archive_b",
+        "archive_a",
+        "retire_other",
+        "release_a",
+        "release_b",
+        "maintain_target"
+      ],
+      "profile": "different_image"
+    },
+    {
+      "order": [
+        "retire_target",
+        "archive_b",
+        "archive_a",
+        "retire_other",
+        "release_b",
+        "release_a",
+        "maintain_target"
+      ],
+      "profile": "different_image"
+    },
+    {
+      "order": [
+        "retire_target",
+        "archive_b",
+        "release_b",
+        "archive_a",
+        "release_a",
+        "retire_other",
+        "maintain_target"
+      ],
+      "profile": "different_image"
+    },
+    {
+      "order": [
+        "retire_target",
+        "archive_b",
+        "release_b",
+        "archive_a",
+        "release_a",
+        "maintain_target",
+        "retire_other"
+      ],
+      "profile": "different_image"
+    },
+    {
+      "order": [
+        "retire_target",
+        "archive_b",
+        "release_b",
+        "archive_a",
+        "retire_other",
+        "release_a",
+        "maintain_target"
+      ],
+      "profile": "different_image"
+    },
+    {
+      "order": [
+        "retire_target",
+        "archive_b",
+        "release_b",
+        "retire_other",
+        "archive_a",
+        "release_a",
+        "maintain_target"
+      ],
+      "profile": "different_image"
+    },
+    {
+      "order": [
+        "retire_target",
+        "archive_b",
+        "retire_other",
+        "archive_a",
+        "release_a",
+        "release_b",
+        "maintain_target"
+      ],
+      "profile": "different_image"
+    },
+    {
+      "order": [
+        "retire_target",
+        "archive_b",
+        "retire_other",
+        "archive_a",
+        "release_b",
+        "release_a",
+        "maintain_target"
+      ],
+      "profile": "different_image"
+    },
+    {
+      "order": [
+        "retire_target",
+        "archive_b",
+        "retire_other",
+        "release_b",
+        "archive_a",
+        "release_a",
+        "maintain_target"
+      ],
+      "profile": "different_image"
+    },
+    {
+      "order": [
+        "retire_target",
+        "retire_other",
+        "archive_a",
+        "archive_b",
+        "release_a",
+        "release_b",
+        "maintain_target"
+      ],
+      "profile": "different_image"
+    },
+    {
+      "order": [
+        "retire_target",
+        "retire_other",
+        "archive_a",
+        "archive_b",
+        "release_b",
+        "release_a",
+        "maintain_target"
+      ],
+      "profile": "different_image"
+    },
+    {
+      "order": [
+        "retire_target",
+        "retire_other",
+        "archive_a",
+        "release_a",
+        "archive_b",
+        "release_b",
+        "maintain_target"
+      ],
+      "profile": "different_image"
+    },
+    {
+      "order": [
+        "retire_target",
+        "retire_other",
+        "archive_b",
+        "archive_a",
+        "release_a",
+        "release_b",
+        "maintain_target"
+      ],
+      "profile": "different_image"
+    },
+    {
+      "order": [
+        "retire_target",
+        "retire_other",
+        "archive_b",
+        "archive_a",
+        "release_b",
+        "release_a",
+        "maintain_target"
+      ],
+      "profile": "different_image"
+    },
+    {
+      "order": [
+        "retire_target",
+        "retire_other",
+        "archive_b",
+        "release_b",
+        "archive_a",
+        "release_a",
+        "maintain_target"
+      ],
+      "profile": "different_image"
+    },
+    {
+      "order": [
+        "retire_other",
+        "archive_a",
+        "archive_b",
+        "retire_target",
+        "release_a",
+        "release_b",
+        "maintain_target"
+      ],
+      "profile": "different_image"
+    },
+    {
+      "order": [
+        "retire_other",
+        "archive_a",
+        "archive_b",
+        "retire_target",
+        "release_b",
+        "release_a",
+        "maintain_target"
+      ],
+      "profile": "different_image"
+    },
+    {
+      "order": [
+        "retire_other",
+        "archive_a",
+        "archive_b",
+        "release_a",
+        "retire_target",
+        "release_b",
+        "maintain_target"
+      ],
+      "profile": "different_image"
+    },
+    {
+      "order": [
+        "retire_other",
+        "archive_a",
+        "archive_b",
+        "release_a",
+        "release_b",
+        "retire_target",
+        "maintain_target"
+      ],
+      "profile": "different_image"
+    },
+    {
+      "order": [
+        "retire_other",
+        "archive_a",
+        "archive_b",
+        "release_b",
+        "retire_target",
+        "release_a",
+        "maintain_target"
+      ],
+      "profile": "different_image"
+    },
+    {
+      "order": [
+        "retire_other",
+        "archive_a",
+        "archive_b",
+        "release_b",
+        "release_a",
+        "retire_target",
+        "maintain_target"
+      ],
+      "profile": "different_image"
+    },
+    {
+      "order": [
+        "retire_other",
+        "archive_a",
+        "retire_target",
+        "archive_b",
+        "release_a",
+        "release_b",
+        "maintain_target"
+      ],
+      "profile": "different_image"
+    },
+    {
+      "order": [
+        "retire_other",
+        "archive_a",
+        "retire_target",
+        "archive_b",
+        "release_b",
+        "release_a",
+        "maintain_target"
+      ],
+      "profile": "different_image"
+    },
+    {
+      "order": [
+        "retire_other",
+        "archive_a",
+        "retire_target",
+        "release_a",
+        "archive_b",
+        "release_b",
+        "maintain_target"
+      ],
+      "profile": "different_image"
+    },
+    {
+      "order": [
+        "retire_other",
+        "archive_a",
+        "release_a",
+        "archive_b",
+        "retire_target",
+        "release_b",
+        "maintain_target"
+      ],
+      "profile": "different_image"
+    },
+    {
+      "order": [
+        "retire_other",
+        "archive_a",
+        "release_a",
+        "archive_b",
+        "release_b",
+        "retire_target",
+        "maintain_target"
+      ],
+      "profile": "different_image"
+    },
+    {
+      "order": [
+        "retire_other",
+        "archive_a",
+        "release_a",
+        "retire_target",
+        "archive_b",
+        "release_b",
+        "maintain_target"
+      ],
+      "profile": "different_image"
+    },
+    {
+      "order": [
+        "retire_other",
+        "archive_b",
+        "archive_a",
+        "retire_target",
+        "release_a",
+        "release_b",
+        "maintain_target"
+      ],
+      "profile": "different_image"
+    },
+    {
+      "order": [
+        "retire_other",
+        "archive_b",
+        "archive_a",
+        "retire_target",
+        "release_b",
+        "release_a",
+        "maintain_target"
+      ],
+      "profile": "different_image"
+    },
+    {
+      "order": [
+        "retire_other",
+        "archive_b",
+        "archive_a",
+        "release_a",
+        "retire_target",
+        "release_b",
+        "maintain_target"
+      ],
+      "profile": "different_image"
+    },
+    {
+      "order": [
+        "retire_other",
+        "archive_b",
+        "archive_a",
+        "release_a",
+        "release_b",
+        "retire_target",
+        "maintain_target"
+      ],
+      "profile": "different_image"
+    },
+    {
+      "order": [
+        "retire_other",
+        "archive_b",
+        "archive_a",
+        "release_b",
+        "retire_target",
+        "release_a",
+        "maintain_target"
+      ],
+      "profile": "different_image"
+    },
+    {
+      "order": [
+        "retire_other",
+        "archive_b",
+        "archive_a",
+        "release_b",
+        "release_a",
+        "retire_target",
+        "maintain_target"
+      ],
+      "profile": "different_image"
+    },
+    {
+      "order": [
+        "retire_other",
+        "archive_b",
+        "retire_target",
+        "archive_a",
+        "release_a",
+        "release_b",
+        "maintain_target"
+      ],
+      "profile": "different_image"
+    },
+    {
+      "order": [
+        "retire_other",
+        "archive_b",
+        "retire_target",
+        "archive_a",
+        "release_b",
+        "release_a",
+        "maintain_target"
+      ],
+      "profile": "different_image"
+    },
+    {
+      "order": [
+        "retire_other",
+        "archive_b",
+        "retire_target",
+        "release_b",
+        "archive_a",
+        "release_a",
+        "maintain_target"
+      ],
+      "profile": "different_image"
+    },
+    {
+      "order": [
+        "retire_other",
+        "archive_b",
+        "release_b",
+        "archive_a",
+        "retire_target",
+        "release_a",
+        "maintain_target"
+      ],
+      "profile": "different_image"
+    },
+    {
+      "order": [
+        "retire_other",
+        "archive_b",
+        "release_b",
+        "archive_a",
+        "release_a",
+        "retire_target",
+        "maintain_target"
+      ],
+      "profile": "different_image"
+    },
+    {
+      "order": [
+        "retire_other",
+        "archive_b",
+        "release_b",
+        "retire_target",
+        "archive_a",
+        "release_a",
+        "maintain_target"
+      ],
+      "profile": "different_image"
+    },
+    {
+      "order": [
+        "retire_other",
+        "retire_target",
+        "archive_a",
+        "archive_b",
+        "release_a",
+        "release_b",
+        "maintain_target"
+      ],
+      "profile": "different_image"
+    },
+    {
+      "order": [
+        "retire_other",
+        "retire_target",
+        "archive_a",
+        "archive_b",
+        "release_b",
+        "release_a",
+        "maintain_target"
+      ],
+      "profile": "different_image"
+    },
+    {
+      "order": [
+        "retire_other",
+        "retire_target",
+        "archive_a",
+        "release_a",
+        "archive_b",
+        "release_b",
+        "maintain_target"
+      ],
+      "profile": "different_image"
+    },
+    {
+      "order": [
+        "retire_other",
+        "retire_target",
+        "archive_b",
+        "archive_a",
+        "release_a",
+        "release_b",
+        "maintain_target"
+      ],
+      "profile": "different_image"
+    },
+    {
+      "order": [
+        "retire_other",
+        "retire_target",
+        "archive_b",
+        "archive_a",
+        "release_b",
+        "release_a",
+        "maintain_target"
+      ],
+      "profile": "different_image"
+    },
+    {
+      "order": [
+        "retire_other",
+        "retire_target",
+        "archive_b",
+        "release_b",
+        "archive_a",
+        "release_a",
+        "maintain_target"
+      ],
+      "profile": "different_image"
+    }
+  ],
+  "schema": "fsmgen.inactive_lifetime_source_contract.v1",
+  "scope": "Source-bound prospective inactive lifetime domain only. No filesystem experiment, original qualifier, native process, compiler, collector or live canonical store. Existing modules admit isolated case paths; promotion to actual canonical storage, native authentication, returned-stage transport, late-launch prevention, public collector/projection integration and historical startup/parent/full CI/push remain owned prerequisites.",
+  "source_revision": "a8cd5d618e4bdc2674735ba34482d06703797b23"
+}

@@ -3212,6 +3212,28 @@ retain their own prerequisites. Recheck this data-only join from retained bytes:
 scripts/run_with_ram_guard.sh -- python3 -B docs/audits/native-proxy-version-join-20260913/audit.py --verify-saved
 ```
 
+Combined lifetime qualification now has a source-bound ordering contract.
+It connects the current cleanup, observation, archive, release and maintenance
+rules to their exact implementation bodies. A complete archive must precede
+release of its observation hold. Private retirement and every reference to the
+selected image must finish before that image becomes eligible for maintenance.
+
+The planned profiles distinguish owners of the same image from owners of
+another complete, valid image. An unrelated image's owner does not pin the
+selected image. Archival can precede or follow private retirement because it
+uses the retained snapshots. Repeated live-source checks still require current
+runtime and private-source custody.
+
+This verifies the proposed ordering domain, not the resulting runtime behavior.
+Independent enumeration rejects missing source links, missing orders, weakened
+dependencies and an incorrect dependency on another image's owner. State changes,
+actual isolated-file effects and interruption behavior remain separately owned.
+No native process, original qualifier or live canonical store is accessed.
+
+```sh
+scripts/run_with_ram_guard.sh -- python3 -B docs/audits/native-proxy-lifetime-contracts-20260913/audit_corrected.py --verify-saved
+```
+
 The inactive archive record implementation now derives a closed specification
 from the complete original acquisition and request. It keeps the ordered wrapper,
 private reference, global reference, C source and image snapshots, including

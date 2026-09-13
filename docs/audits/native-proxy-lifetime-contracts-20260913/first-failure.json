@@ -1,0 +1,78 @@
+{
+  "correction": "Retain all original files unchanged. Add exactly the missing cleanup helper to the corrected private-before-global invariant, with separate corrected plan, contract and preflight pins. Keep the same source bodies, enumerated schedules and validation logic.",
+  "missing_link": [
+    "cleanup.cleanup_receipts_settled"
+  ],
+  "outputs": [
+    {
+      "path": ".artifacts/logs/native-proxy-lifetime-contracts-20260913/prepare.stdout",
+      "raw_hex": "7b22736f757263655f66756e6374696f6e73223a2033372c202270726f73706563746976655f7363686564756c6573223a203339302c202272756e74696d655f7175616c696669636174696f6e223a2066616c73657d0a",
+      "sha256": "062b0b6d34c0ba657919de06754d316b2d78480ddb4698a70fe67784bcd174b9",
+      "size_bytes": 87
+    },
+    {
+      "path": ".artifacts/logs/native-proxy-lifetime-contracts-20260913/prepare.stderr",
+      "raw_hex": "72616d2d67756172643a2050494420343831353b20686f73742037392e36253b20686f7374206375746f6666203838253b2064657363656e64616e7420525353206375746f66662034303936204d69423b20706f6c6c2032730a",
+      "sha256": "5bc894c14b87b74be07fbf7aa98a3318c1b082dfed55eca06c39e215e1812bef",
+      "size_bytes": 90
+    },
+    {
+      "path": ".artifacts/logs/native-proxy-lifetime-contracts-20260913/prepare.exit",
+      "raw_hex": "300a",
+      "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa",
+      "size_bytes": 2
+    },
+    {
+      "path": ".artifacts/logs/native-proxy-lifetime-contracts-20260913/audit.stdout",
+      "raw_hex": "",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "size_bytes": 0
+    },
+    {
+      "path": ".artifacts/logs/native-proxy-lifetime-contracts-20260913/audit.stderr",
+      "raw_hex": "72616d2d67756172643a2050494420353234333b20686f73742037392e31253b20686f7374206375746f6666203838253b2064657363656e64616e7420525353206375746f66662034303936204d69423b20706f6c6c2032730a54726163656261636b20286d6f737420726563656e742063616c6c206c617374293a0a202046696c6520222f566f6c756d65732f5353442f446f63756d656e74732f6769746875622f66736d67656e2f646f63732f6175646974732f6e61746976652d70726f78792d6c69666574696d652d636f6e7472616374732d32303236303931332f61756469742e7079222c206c696e65203230322c20696e203c6d6f64756c653e0a202020206d61696e28290a202020207e7e7e7e5e5e0a202046696c6520222f566f6c756d65732f5353442f446f63756d656e74732f6769746875622f66736d67656e2f646f63732f6175646974732f6e61746976652d70726f78792d6c69666574696d652d636f6e7472616374732d32303236303931332f61756469742e7079222c206c696e65203135332c20696e206d61696e0a202020207265706f7274203d2076657269667928636f6e74726163742c20706c616e290a202046696c6520222f566f6c756d65732f5353442f446f63756d656e74732f6769746875622f66736d67656e2f646f63732f6175646974732f6e61746976652d70726f78792d6c69666574696d652d636f6e7472616374732d32303236303931332f61756469742e7079222c206c696e65203133322c20696e207665726966790a20202020617373657274207b6e616d6520666f7220726f7720696e20636f6e74726163745b22696e76617269616e7473225d20666f72206e616d6520696e20726f775b2266756e6374696f6e73225d7d203d3d2073657428626f64696573290a20202020202020202020205e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e0a417373657274696f6e4572726f720a",
+      "sha256": "2c64dbea34a148cc02fa59fa4bb56dd41976c2a888c6080a8d6c61bc19b3ff60",
+      "size_bytes": 777
+    },
+    {
+      "path": ".artifacts/logs/native-proxy-lifetime-contracts-20260913/audit.exit",
+      "raw_hex": "310a",
+      "sha256": "4355a46b19d348dc2f57c046f8ef63d4538ebb936000f3c9ee954a27460dd865",
+      "size_bytes": 2
+    }
+  ],
+  "owner": "HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.12.4.1.3.6.1",
+  "root_cause": "The prospective private-before-global invariant named RuntimeRetirement._request but omitted the separately pinned cleanup_receipts_settled helper that it invokes. The independent complete-binding assertion correctly rejects this omission before source/domain signoff.",
+  "unchanged_first_files": [
+    {
+      "path": "docs/audits/native-proxy-lifetime-contracts-20260913/prepare.py",
+      "sha256": "04fcabe2dbd05f6bff21e40560a60a660cd42f3937d49ae3dc65e8834b527f2f",
+      "size_bytes": 2972
+    },
+    {
+      "path": "docs/audits/native-proxy-lifetime-contracts-20260913/audit.py",
+      "sha256": "98e15690c778d908eb24ded2f82e58b87b748ab0afc66cc3d252506de5b51c66",
+      "size_bytes": 11593
+    },
+    {
+      "path": "docs/audits/native-proxy-lifetime-contracts-20260913/plan.json",
+      "sha256": "7439fcd2f1feb5b6605e52a775517de49d646ef7378742afd95ddcca5e00de1f",
+      "size_bytes": 15675
+    },
+    {
+      "path": "docs/audits/native-proxy-lifetime-contracts-20260913/contracts.json",
+      "sha256": "9869a3e077a2c02d4c4d357094f2e41818164bcd90da202eafbaf11bc839f2ee",
+      "size_bytes": 106035
+    },
+    {
+      "path": "docs/audits/native-proxy-lifetime-contracts-20260913/prepare-pins.json",
+      "sha256": "275a64debeb9db780ed14e8256daa334cc910f4c4c0bde092d7001a4430c0063",
+      "size_bytes": 787
+    },
+    {
+      "path": "docs/audits/native-proxy-lifetime-contracts-20260913/preflight-pins.json",
+      "sha256": "cebc5925a72e99226eb9f0a154bc9234faeb668a871315c39c7da18ca860039b",
+      "size_bytes": 1185
+    }
+  ]
+}

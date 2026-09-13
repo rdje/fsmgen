@@ -1,0 +1,396 @@
+{
+  "boundary_controls": [
+    "fresh_observation_after_retirement",
+    "repeated_observation_after_retirement",
+    "repeated_observation_after_hold_release",
+    "unsettled_runtime_cleanup",
+    "unsealed_work_selection",
+    "missing_selected_receipt",
+    "changed_work_ownership",
+    "failed_but_settled_work",
+    "cancelled_but_settled_work",
+    "missing_archive_blocks_release",
+    "changed_archive_identity",
+    "stale_runtime_hold_blocks_maintenance",
+    "stale_observation_hold_blocks_maintenance",
+    "unknown_reference_blocks_maintenance",
+    "post_unlink_failure_keeps_actual_effect",
+    "other_image_owner_does_not_pin_target"
+  ],
+  "claim_legs": {
+    "durability": "Commit exact prospective plan, source spans, complete enumerated domain, original first outputs and saved-only checks; generated fixtures and ignored logs are unnecessary for recovery.",
+    "falsification": "Changed/missing source bindings, omitted rule ownership and weakened or overconstrained dependency edges must disagree with the independent declared source/domain contract.",
+    "rederivation": "Authenticate complete selected bodies against Git; independently recover named declaration spans and required guard/order markers. Compare permutation filtering against recursive topological enumeration."
+  },
+  "common_edges": [
+    [
+      "archive_a",
+      "release_a"
+    ],
+    [
+      "archive_b",
+      "release_b"
+    ],
+    [
+      "retire_target",
+      "maintain_target"
+    ],
+    [
+      "release_a",
+      "maintain_target"
+    ],
+    [
+      "release_b",
+      "maintain_target"
+    ]
+  ],
+  "domain_meaning": "Enumerate each complete serial event once under the declared dependency edges. This validates domain construction only. Later model and actual-file leaves must prove effects, identity preservation and rejection behavior; serial orders do not claim arbitrary concurrent or crashing process interleavings.",
+  "events": [
+    "archive_a",
+    "archive_b",
+    "retire_target",
+    "release_a",
+    "release_b",
+    "retire_other",
+    "maintain_target"
+  ],
+  "inputs": [
+    {
+      "path": "docs/audits/native-proxy-canonical-contract-20260910/contract.json",
+      "sha256": "f3f981398afae72540ab4ac0194b8380d4743c3d2146c1172a85365add053222",
+      "size_bytes": 21927
+    },
+    {
+      "path": "docs/audits/native-proxy-cleanup-receipts-20260910/CleanupReceipts.pm",
+      "sha256": "5b22cecf6ff131f62fdeb237a3e77b67b5b29a172ff82320a67772b03cd24de0",
+      "size_bytes": 1300
+    },
+    {
+      "path": "docs/audits/native-proxy-combined-census-20260910/review.json",
+      "sha256": "6176c26f23b6d8842bdfa91ff88b69c37aeb9bcf81c5be82b979cfc2558c0af8",
+      "size_bytes": 8435
+    },
+    {
+      "path": "docs/audits/native-proxy-image-coordination-20260910/Coordination.pm",
+      "sha256": "a0d99769147f28ca7c35e9ac80ba88f7cf14760e3bef7b51841d8badebc060e5",
+      "size_bytes": 19061
+    },
+    {
+      "path": "docs/audits/native-proxy-image-custody-20260910/ImageCustody.pm",
+      "sha256": "927f1ab39f7f26742e36878985d1ff545ddf2dee119d4bf6b7b41bf2c9360ccc",
+      "size_bytes": 8619
+    },
+    {
+      "path": "docs/audits/native-proxy-image-maintenance-20260910/ImageMaintenance.pm",
+      "sha256": "1295957d97737e764c0e800885a2c3f9adfa327a0d41b35d122dde3e21698cac",
+      "size_bytes": 5678
+    },
+    {
+      "path": "docs/audits/native-proxy-image-publication-20260910/Publication.pm",
+      "sha256": "34ca8717856492a09ebf16af8810f04b1dea4c6c8c84ff7b3f5c11c07e7dc2bf",
+      "size_bytes": 5371
+    },
+    {
+      "path": "docs/audits/native-proxy-observation-acquisition-20260910/ObservationAcquisition.pm",
+      "sha256": "809c013255ab6973a2d0dabcfd5b0ae5c55c97696d7acc77b10cf68149006470",
+      "size_bytes": 16517
+    },
+    {
+      "path": "docs/audits/native-proxy-observation-archive-20260911/ObservationArchive.pm",
+      "sha256": "79454039421822af31f9891d0a3d3ebe1b4c1ebcc6f6c8decd1f78e081736e87",
+      "size_bytes": 6196
+    },
+    {
+      "path": "docs/audits/native-proxy-observation-archive-final-join-20260911/review.json",
+      "sha256": "29796c4dbed553e84c593e796daef4417f8cf3f87d595da92429c4afe563363d",
+      "size_bytes": 3554
+    },
+    {
+      "path": "docs/audits/native-proxy-observation-archive-records-20260911/ArchiveRecord.pm",
+      "sha256": "38fb47a97157d1b052b3e0f4e148fa6cacd27f4d8defb63ca469133ac6ec1af1",
+      "size_bytes": 9873
+    },
+    {
+      "path": "docs/audits/native-proxy-observation-archive-release-20260911/ObservationRelease.pm",
+      "sha256": "08236265e6e6973ab23e9e31ee26071272f39e8879c2d420ab2382fc800345ab",
+      "size_bytes": 10294
+    },
+    {
+      "path": "docs/audits/native-proxy-observation-records-20260910/ObservationRecord.pm",
+      "sha256": "35445ee951c8f5e7dc204f58cffe1b2f6273286cc3e7715953d705b33e7158d5",
+      "size_bytes": 4369
+    },
+    {
+      "path": "docs/audits/native-proxy-observation-work-records-20260911/WorkRecord.pm",
+      "sha256": "3f0f1351bc44a2a8b42502b7b814544f9d756ae8c39e17db470b312635a6e56d",
+      "size_bytes": 8126
+    },
+    {
+      "path": "docs/audits/native-proxy-release-final-join-20260913/review.json",
+      "sha256": "d2d0705d303c3d24d8fc599c1575a322aeaedb0963e7657443ba2d57fe8ef5b0",
+      "size_bytes": 5828
+    },
+    {
+      "path": "docs/audits/native-proxy-runtime-acquisition-20260910/ReferenceAcquisition.pm",
+      "sha256": "b751c88d709e102f7f9b9dd17e0222c39e0a81acc16d7194f7f7c3f4c8535b57",
+      "size_bytes": 6565
+    },
+    {
+      "path": "docs/audits/native-proxy-runtime-census-20260910/ReferenceCensus.pm",
+      "sha256": "9fd74767e8c10831f2732fa8ad426b7e4fff8c17bab06584aa671cdd013b6247",
+      "size_bytes": 8024
+    },
+    {
+      "path": "docs/audits/native-proxy-runtime-records-20260910/RuntimeRecord.pm",
+      "sha256": "013c0a02e7df59dc3a5af944b603cd44121252a02ca0228d6fdc3e1dd28e6745",
+      "size_bytes": 4078
+    },
+    {
+      "path": "docs/audits/native-proxy-runtime-retirement-20260910/PrivateWorkspace.pm",
+      "sha256": "fb87393846eb10147f868aa40ba444f5e5d56cef7f0aaf6a1ff295216a90e9c1",
+      "size_bytes": 6080
+    },
+    {
+      "path": "docs/audits/native-proxy-runtime-retirement-20260910/RuntimeRetirement.pm",
+      "sha256": "766348d16243d3868ca5f8b653f757f8f2eaf5c1aba8ec27fd2d9c67e9fd0bcc",
+      "size_bytes": 8727
+    },
+    {
+      "path": "docs/audits/native-proxy-version-join-20260913/review.json",
+      "sha256": "db20a6bc59f2bbb97aa820246d9267db29bcc482e2747b7e50aa8ffc07aeda1a",
+      "size_bytes": 2671
+    }
+  ],
+  "invariants": [
+    {
+      "functions": [
+        "census._decode_record",
+        "census._inspect_locked",
+        "maintenance._referenced"
+      ],
+      "id": "both_reference_kinds",
+      "meaning": "Every valid runtime and observation reference pins only its selected image, regardless of absent or stale owner directories. The older runtime-only inspection stays separate."
+    },
+    {
+      "functions": [
+        "retirement._request",
+        "retirement._retire_locked",
+        "retirement._release_locked",
+        "retirement._finish_locked",
+        "workspace._capture",
+        "workspace._remove",
+        "cleanup.cleanup_receipts_settled"
+      ],
+      "id": "private_before_global",
+      "meaning": "Complete supplied cleanup and exact acquired custody precede private removal. Prove private absence before global unlink; preserve all other references and every image."
+    },
+    {
+      "functions": [
+        "observation._previous",
+        "observation._admit_locked",
+        "observation._prior_targets_match",
+        "observation._acquire_locked",
+        "observation._finish_locked"
+      ],
+      "id": "stable_target_snapshots",
+      "meaning": "Repeated observation preserves the original hold and target snapshots while current runtime/source custody remains. Its hold metadata is outside stable target evidence. A retired private workspace cannot satisfy a fresh or repeated live-source check."
+    },
+    {
+      "functions": [
+        "archive_record.archive_specification",
+        "archive_record.validate_archive_receipt",
+        "archive.archive_retained_sources",
+        "archive._close_sources"
+      ],
+      "id": "archive_from_retained_bytes",
+      "meaning": "Archival derives fixed private content files solely from retained target bytes; it can follow runtime retirement. Complete readback, identities and descriptor closure precede a returned archive receipt."
+    },
+    {
+      "functions": [
+        "work.validate_work_settlement",
+        "work._complete_order",
+        "work._work_match",
+        "work._sealed",
+        "cleanup._settled_owner"
+      ],
+      "id": "selected_work_settlement",
+      "meaning": "Release requires the original sealed selection and every selected owner receipt in order. Completed, failed and cancelled work can all be settled; missing ownership cannot be inferred from a successful outcome."
+    },
+    {
+      "functions": [
+        "release._prepare",
+        "release._release_locked",
+        "release._finish_locked",
+        "release.release_observation_reference"
+      ],
+      "id": "release_exact_hold",
+      "meaning": "Archive custody and supplied work settlement precede coordination. Release only the exact observation hold, preserve other owners and images, and close every acquired descriptor."
+    },
+    {
+      "functions": [
+        "release._unlink_exact",
+        "release._assert_absent",
+        "release.release_observation_reference",
+        "retirement._release_locked",
+        "coordinator._transaction"
+      ],
+      "id": "physical_effects_survive_failure",
+      "meaning": "A later failure cannot roll back a successful unlink. Returned failure is not proof a hold still exists. Preserve actual effects and current ownership separately; never retry or reconstruct implicitly."
+    },
+    {
+      "functions": [
+        "maintenance._admit_locked",
+        "maintenance._closure_locked",
+        "maintenance._remove_locked",
+        "maintenance._finish_locked",
+        "coordinator._transaction"
+      ],
+      "id": "maintenance_explicit_and_local",
+      "meaning": "Only explicit maintenance removes a selected complete unreferenced image. Another image and all other references remain intact. Partial or malformed state rejects; no eviction or automatic repair."
+    },
+    {
+      "functions": [
+        "coordinator._transaction",
+        "coordinator._census",
+        "coordinator._acquire"
+      ],
+      "id": "coordination_scope",
+      "meaning": "The existing checked lock serializes bounded storage operations. No caller-supplied callback, native query or process launch is admitted under this coordinator. Real external ownership/transport and contention remain separate."
+    }
+  ],
+  "modules": [
+    {
+      "functions": [
+        "_transaction",
+        "_census",
+        "_acquire"
+      ],
+      "id": "coordinator",
+      "path": "docs/audits/native-proxy-image-coordination-20260910/Coordination.pm"
+    },
+    {
+      "functions": [
+        "_decode_record",
+        "_inspect_locked"
+      ],
+      "id": "census",
+      "path": "docs/audits/native-proxy-runtime-census-20260910/ReferenceCensus.pm"
+    },
+    {
+      "functions": [
+        "cleanup_receipts_settled",
+        "_settled_owner"
+      ],
+      "id": "cleanup",
+      "path": "docs/audits/native-proxy-cleanup-receipts-20260910/CleanupReceipts.pm"
+    },
+    {
+      "functions": [
+        "_request",
+        "_retire_locked",
+        "_release_locked",
+        "_finish_locked"
+      ],
+      "id": "retirement",
+      "path": "docs/audits/native-proxy-runtime-retirement-20260910/RuntimeRetirement.pm"
+    },
+    {
+      "functions": [
+        "_capture",
+        "_remove"
+      ],
+      "id": "workspace",
+      "path": "docs/audits/native-proxy-runtime-retirement-20260910/PrivateWorkspace.pm"
+    },
+    {
+      "functions": [
+        "_previous",
+        "_admit_locked",
+        "_prior_targets_match",
+        "_acquire_locked",
+        "_finish_locked"
+      ],
+      "id": "observation",
+      "path": "docs/audits/native-proxy-observation-acquisition-20260910/ObservationAcquisition.pm"
+    },
+    {
+      "functions": [
+        "archive_specification",
+        "validate_archive_receipt"
+      ],
+      "id": "archive_record",
+      "path": "docs/audits/native-proxy-observation-archive-records-20260911/ArchiveRecord.pm"
+    },
+    {
+      "functions": [
+        "archive_retained_sources",
+        "_close_sources"
+      ],
+      "id": "archive",
+      "path": "docs/audits/native-proxy-observation-archive-20260911/ObservationArchive.pm"
+    },
+    {
+      "functions": [
+        "validate_work_settlement",
+        "_complete_order",
+        "_work_match",
+        "_sealed"
+      ],
+      "id": "work",
+      "path": "docs/audits/native-proxy-observation-work-records-20260911/WorkRecord.pm"
+    },
+    {
+      "functions": [
+        "_prepare",
+        "_release_locked",
+        "_finish_locked",
+        "_unlink_exact",
+        "_assert_absent",
+        "release_observation_reference"
+      ],
+      "id": "release",
+      "path": "docs/audits/native-proxy-observation-archive-release-20260911/ObservationRelease.pm"
+    },
+    {
+      "functions": [
+        "_referenced",
+        "_admit_locked",
+        "_closure_locked",
+        "_remove_locked",
+        "_finish_locked"
+      ],
+      "id": "maintenance",
+      "path": "docs/audits/native-proxy-image-maintenance-20260910/ImageMaintenance.pm"
+    }
+  ],
+  "owner": "HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.12.4.1.3.6.1",
+  "profiles": [
+    {
+      "additional_edges": [
+        [
+          "retire_other",
+          "maintain_target"
+        ]
+      ],
+      "name": "same_image",
+      "other_runtime_image": "target_image"
+    },
+    {
+      "additional_edges": [],
+      "name": "different_image",
+      "other_runtime_image": "other_image"
+    }
+  ],
+  "schema": "fsmgen.inactive_lifetime_contract_plan.v1",
+  "scope": "Source-bound prospective inactive lifetime domain only. No filesystem experiment, original qualifier, native process, compiler, collector or live canonical store. Existing modules admit isolated case paths; promotion to actual canonical storage, native authentication, returned-stage transport, late-launch prevention, public collector/projection integration and historical startup/parent/full CI/push remain owned prerequisites.",
+  "setup": "Prospective complete-operation domain starts after two runtime acquisitions and two distinct observation holds on the target runtime. Both observers retain the same strict target snapshot. Supplied cleanup/work records are complete for healthy transitions; invalid or uncertain settlement is a separate control domain.",
+  "source_epoch_scope": "Current lifecycle source bodies are pinned at this revision. Selected prior reviews retain their original source/failure epochs unchanged; this contract does not relabel their historical limits as current closure or replay their mains.",
+  "source_revision": "a8cd5d618e4bdc2674735ba34482d06703797b23",
+  "stage_ownership": {
+    "actual_files": "HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.12.4.1.3.6.3",
+    "final_join": "HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.12.4.1.3.6.5",
+    "interruptions": "HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.12.4.1.3.6.4",
+    "model": "HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.12.4.1.3.6.2",
+    "native_and_live_integration": "HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.12.4.1.5"
+  }
+}

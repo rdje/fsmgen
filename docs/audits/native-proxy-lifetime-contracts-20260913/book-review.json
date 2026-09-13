@@ -1,0 +1,19 @@
+{
+  "checked_passages": [
+    "Combined lifetime qualification now has a source-bound ordering contract.",
+    "An unrelated image's owner does not pin the selected image.",
+    "This verifies the proposed ordering domain, not the resulting runtime behavior.",
+    "No native process, original qualifier or live canonical store is accessed.",
+    "scripts/run_with_ram_guard.sh -- python3 -B docs/audits/native-proxy-lifetime-contracts-20260913/audit_corrected.py --verify-saved"
+  ],
+  "exact_output_absent": true,
+  "exit_code": 0,
+  "output": ".artifacts/tmp/native-proxy-lifetime-contracts-book-20260913/book",
+  "rendered_bytes": 23548408,
+  "rendered_directories": 2,
+  "rendered_files": 98,
+  "renderer_warnings": [
+    "WARN search index is very large (13266035 bytes)"
+  ],
+  "same_volume_direct_objects": true
+}

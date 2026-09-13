@@ -1,0 +1,48 @@
+{
+  "claim_legs": {
+    "durability": "Commit exact prospective plan, source spans, complete enumerated domain, original first outputs and saved-only checks; generated fixtures and ignored logs are unnecessary for recovery.",
+    "falsification": "Changed/missing source bindings, omitted rule ownership and weakened or overconstrained dependency edges must disagree with the independent declared source/domain contract.",
+    "rederivation": "Authenticate complete selected bodies against Git; independently recover named declaration spans and required guard/order markers. Compare permutation filtering against recursive topological enumeration."
+  },
+  "falsifiers": [
+    "missing_function",
+    "changed_source_span",
+    "missing_invariant",
+    "missing_schedule",
+    "changed_domain_hash",
+    "ignore_target_runtime",
+    "ignore_observation_b",
+    "release_before_archive",
+    "unrelated_image_overconstrained"
+  ],
+  "first_failure": "The independent complete-binding check rejected one omitted cleanup-helper link. Original sources, plan, contract, pins and failed output remain unchanged. Corrected inputs add exactly that link; validation functions, source bodies and ordering domain remain exact.",
+  "limits": "Source-bound prospective inactive lifetime domain only. No filesystem experiment, original qualifier, native process, compiler, collector or live canonical store. Existing modules admit isolated case paths; promotion to actual canonical storage, native authentication, returned-stage transport, late-launch prevention, public collector/projection integration and historical startup/parent/full CI/push remain owned prerequisites.",
+  "next_action": "Qualify pure combined lifetime transitions and matched evidence under .12.4.1.3.6.2, using corrected-plan.json and corrected-contracts.json.",
+  "owner": "HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.12.4.1.3.6.1",
+  "prospective_pins": 13,
+  "prospective_schedules": 390,
+  "raw_captures": 27,
+  "schedule_domain_sha256": "e848a55a4697dcc1d0a790f4a45379c897b574891fd7dd230dd506e5ff866fce",
+  "schedules_by_profile": {
+    "different_image": 210,
+    "same_image": 180
+  },
+  "schema": "fsmgen.inactive_lifetime_contract_review.v1",
+  "source_bytes": 171293,
+  "source_functions": 37,
+  "source_inputs": 21,
+  "source_invariants": 9,
+  "source_revision": "a8cd5d618e4bdc2674735ba34482d06703797b23",
+  "task_layout": {
+    "added_children": [
+      "HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.12.4.1.3.6.1",
+      "HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.12.4.1.3.6.2",
+      "HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.12.4.1.3.6.3",
+      "HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.12.4.1.3.6.4",
+      "HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.12.4.1.3.6.5"
+    ],
+    "captured_task_lines": 6366,
+    "exact_reconstruction": true,
+    "removed_empty_separators": 36
+  }
+}

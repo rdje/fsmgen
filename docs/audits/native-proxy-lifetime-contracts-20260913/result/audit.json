@@ -1,0 +1,27 @@
+{
+  "falsifiers": [
+    "missing_function",
+    "changed_source_span",
+    "missing_invariant",
+    "missing_schedule",
+    "changed_domain_hash",
+    "ignore_target_runtime",
+    "ignore_observation_b",
+    "release_before_archive",
+    "unrelated_image_overconstrained"
+  ],
+  "prospective_pins": 13,
+  "prospective_schedules": 390,
+  "runtime_qualification": false,
+  "schedule_domain_sha256": "e848a55a4697dcc1d0a790f4a45379c897b574891fd7dd230dd506e5ff866fce",
+  "schedules_by_profile": {
+    "different_image": 210,
+    "same_image": 180
+  },
+  "schema": "fsmgen.inactive_lifetime_contract_audit.v1",
+  "scope": "Source-bound prospective inactive lifetime domain only. No filesystem experiment, original qualifier, native process, compiler, collector or live canonical store. Existing modules admit isolated case paths; promotion to actual canonical storage, native authentication, returned-stage transport, late-launch prevention, public collector/projection integration and historical startup/parent/full CI/push remain owned prerequisites.",
+  "source_functions": 37,
+  "source_inputs": 21,
+  "source_invariants": 9,
+  "source_revision": "a8cd5d618e4bdc2674735ba34482d06703797b23"
+}
