@@ -1,0 +1,27 @@
+{
+  "closed_parents": [
+    "HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.12.4.1.3.4.4",
+    "HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.12.4.1.3.4"
+  ],
+  "history": {
+    "history_bytes": 1985,
+    "history_id": "through_b1cf7dae0ad9",
+    "history_lines": 5,
+    "history_sections": 1,
+    "history_sha256": "497c3099c8595522e80e576216b70248369cf6442e7c06a298c9691178f1c8c0",
+    "live_heading": "Version-Retrievable Historical Views",
+    "record_type": "acceptance_history",
+    "retention_contract": "fsmgen_required_history",
+    "schema_version": 1,
+    "source_bytes": 1059027,
+    "source_lines": 6370,
+    "source_path": "docs/tasks/HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.md",
+    "source_revision": "b1cf7dae0ad9185ec10b1ea2a989e0377742ff8b",
+    "source_sha256": "d0eec799a450a5d0844b53f5cfcfe9049d83865e4bb26637a4620948ec86c993",
+    "start_heading": "Acceptance Checklist (complete selected release omissions .3.2.15.7.3.12.4.1.3.4.4.5.6)"
+  },
+  "next_owner": "HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.12.4.1.3.5",
+  "owner": "HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.12.4.1.3.4.4.6",
+  "preserved_prior_acceptance_sections": 37,
+  "task_lines": 6370
+}

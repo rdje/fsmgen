@@ -1,0 +1,20 @@
+{
+  "checked_passages": [
+    "Finite inactive release qualification is now complete for the declared domains.",
+    "A rejection before the public envelope has no public attempt record.",
+    "Later observer recovery never counts as closure by the implementation.",
+    "The final count distinguishes all close observations from reported close failures.",
+    "Conditional lower-reader composition does not establish failure reachability at every release site.",
+    "scripts/run_with_ram_guard.sh -- python3 -B docs/audits/native-proxy-release-final-join-20260913/audit.py --verify-saved"
+  ],
+  "exact_output_absent": true,
+  "exit_code": 0,
+  "output": ".artifacts/tmp/native-proxy-release-final-join-book-20260913/book",
+  "rendered_bytes": 23510506,
+  "rendered_directories": 2,
+  "rendered_files": 98,
+  "renderer_warnings": [
+    "WARN search index is very large (13250253 bytes)"
+  ],
+  "same_volume_direct_objects": true
+}

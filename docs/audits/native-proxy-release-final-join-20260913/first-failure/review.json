@@ -1,0 +1,81 @@
+{
+  "affected_original_cases": [
+    "rejected:direct-coordinator",
+    "rejected:direct-unlink",
+    "rejected:arity-drop",
+    "rejected:arity-append"
+  ],
+  "outputs": [
+    {
+      "destination": "docs/audits/native-proxy-release-final-join-20260913/first-failure/admission.stdout",
+      "path": ".artifacts/logs/native-proxy-release-final-join-20260913/admission.stdout",
+      "sha256": "fa71d6142dfcec321891b9c4bce18904f9bf16117d05af99c8fcacc6d6255500",
+      "size_bytes": 109
+    },
+    {
+      "destination": "docs/audits/native-proxy-release-final-join-20260913/first-failure/admission.stderr",
+      "path": ".artifacts/logs/native-proxy-release-final-join-20260913/admission.stderr",
+      "sha256": "bba4d4655f4bf94668aff66c0d25a4f367a4bb0d974dd43a4d0f8e6502201484",
+      "size_bytes": 91
+    },
+    {
+      "destination": "docs/audits/native-proxy-release-final-join-20260913/first-failure/admission.exit",
+      "path": ".artifacts/logs/native-proxy-release-final-join-20260913/admission.exit",
+      "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa",
+      "size_bytes": 2
+    },
+    {
+      "destination": "docs/audits/native-proxy-release-final-join-20260913/first-failure/join.stdout",
+      "path": ".artifacts/logs/native-proxy-release-final-join-20260913/join.stdout",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "size_bytes": 0
+    },
+    {
+      "destination": "docs/audits/native-proxy-release-final-join-20260913/first-failure/join.stderr",
+      "path": ".artifacts/logs/native-proxy-release-final-join-20260913/join.stderr",
+      "sha256": "b4a9f14ef3ed6ae80c18bd383517ae009aac39965109d70c9ddcb9e5a0b2b341",
+      "size_bytes": 1061
+    },
+    {
+      "destination": "docs/audits/native-proxy-release-final-join-20260913/first-failure/join.exit",
+      "path": ".artifacts/logs/native-proxy-release-final-join-20260913/join.exit",
+      "sha256": "4355a46b19d348dc2f57c046f8ef63d4538ebb936000f3c9ee954a27460dd865",
+      "size_bytes": 2
+    }
+  ],
+  "owner": "HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.12.4.1.3.4.4.6",
+  "recovery": "Preserve first source and raw failure. Correct only outcome counting, prove the first counter rejects every valid missing-envelope row, recheck unchanged original oracles, and reject erased outcomes and invented envelope results. No fixture or original main replay.",
+  "root_cause": "common.py:physical indexed operation.result unconditionally. ReleaseTrace.pm only assigns result when a call returns; direct coordinator/unlink and invalid arity controls throw before the public envelope. The unchanged original attempt oracle requires absent result, returned=0 and matching error for those four rows. The first final join fails during original foundation counting, before any new selected-domain row iteration.",
+  "sources": [
+    {
+      "destination": "docs/audits/native-proxy-release-final-join-20260913/first-failure/common.py.initial-source",
+      "sha256": "0d2f39d391087003e4f5b911ba6ef2d01587430371a6552fb8f8b4f66b656ecf",
+      "size_bytes": 5735,
+      "source": "docs/audits/native-proxy-release-final-join-20260913/common.py"
+    },
+    {
+      "destination": "docs/audits/native-proxy-release-final-join-20260913/first-failure/domains.py.initial-source",
+      "sha256": "a9615c426b34b9edffd962fe2e07a197ea7687196d922af8c56f3f6517147eed",
+      "size_bytes": 17883,
+      "source": "docs/audits/native-proxy-release-final-join-20260913/domains.py"
+    },
+    {
+      "destination": "docs/audits/native-proxy-release-final-join-20260913/first-failure/applicability.py.initial-source",
+      "sha256": "87696a91efa731e6299cae30c3cdb631e20d32b05b12cf63d143c359fed06bb4",
+      "size_bytes": 8533,
+      "source": "docs/audits/native-proxy-release-final-join-20260913/applicability.py"
+    },
+    {
+      "destination": "docs/audits/native-proxy-release-final-join-20260913/first-failure/audit.py.initial-source",
+      "sha256": "ec2a7248cf9fb7b31da7d103240ae2c99d27e1e4b518247c1cca8bb7d4cda1f3",
+      "size_bytes": 5867,
+      "source": "docs/audits/native-proxy-release-final-join-20260913/audit.py"
+    },
+    {
+      "destination": "docs/audits/native-proxy-release-final-join-20260913/first-failure/preflight-pins.json.initial-source",
+      "sha256": "56a90535f3e369038337ce71fb917eaacf639f4a7355aa841035618312412518",
+      "size_bytes": 1759,
+      "source": "docs/audits/native-proxy-release-final-join-20260913/preflight-pins.json"
+    }
+  ]
+}

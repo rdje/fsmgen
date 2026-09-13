@@ -1,0 +1,44 @@
+"""Prove the outcome-counter correction against unchanged original rejections."""
+import copy
+import hashlib
+from common import BASE, ROOT, load, module, physical, rejects
+
+
+def verify():
+    review = load(BASE / 'first-failure/review.json')
+    for record in review['sources'] + review['outputs']:
+        raw = (ROOT / record['destination']).read_bytes()
+        assert len(raw) == record['size_bytes'] and hashlib.sha256(raw).hexdigest() == record['sha256']
+    original = (BASE / 'first-failure/common.py.initial-source').read_text()
+    change = load(BASE / 'correction-review.json')
+    assert original.count(change['before']) == 1
+    assert original.replace(change['before'], change['after']) == (BASE / 'common.py').read_text()
+    namespace = {'__file__': str(BASE / 'common.py')}
+    exec(compile(original, str(BASE / 'first-failure/common.py.initial-source'), 'exec'), namespace)
+    release = BASE.parent / 'native-proxy-observation-archive-release-20260911'
+    oracle = module(release / 'audit.py')
+    report = load(release / 'result/qualification.json')
+    missing = [row for row in report['cases'] if 'result' not in row['operation']]
+    assert [row['name'] for row in missing] == review['affected_original_cases']
+    controls = []
+    for row in missing:
+        spec, _ = oracle.setup(row)
+        oracle.attempt(row, spec)
+        assert rejects(lambda: namespace['physical'](row))
+        measured = physical(row)
+        assert measured['pre_envelope_rejections'] == 1
+        assert measured['public_rejections'] == measured['public_successes'] == measured['handles'] == measured['actual_unlinks'] == 0
+        for name, mutate in [('erased-error', lambda value: value['operation'].update(error='')),
+                             ('invented-envelope', lambda value: value['operation'].update(result={'success': 0})),
+                             ('false-return', lambda value: value['operation'].update(returned=1))]:
+            altered = copy.deepcopy(row)
+            mutate(altered)
+            assert rejects(lambda: physical(altered))
+            controls.append(row['name'] + ':' + name)
+    return dict(first_counter_rejections=len(missing), corrected_pre_envelope_rejections=len(missing),
+                falsifiers=controls, exact_single_source_replacement=True)
+
+
+if __name__ == '__main__':
+    import json
+    print(json.dumps(verify(), sort_keys=True))

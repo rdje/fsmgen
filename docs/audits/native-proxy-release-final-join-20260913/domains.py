@@ -1,0 +1,283 @@
+"""Join original release partitions through their qualified row oracles."""
+from collections import Counter
+import sys
+
+from common import BASE, ROOT, copies, journal, load, match_domain, module, physical, signature, subset
+
+
+def finish_partition(directory, current, report, roots, support, multiplier, counts):
+    journal(directory, report, roots)
+    assert {p.name for p in (directory / 'result/cases').iterdir()} == {
+        'case-%04d.json' % case['index'] for case in current['cases']}
+    assertions = 25 + multiplier * len(current['cases'])
+    support.tap(directory / 'result/qualify.tap', assertions)
+    assert (directory / 'result/qualify.exit').read_bytes() == b'0\n'
+    saved = load(directory / 'result/audit.json')
+    assert saved['success'] is True and saved['assertions'] == assertions
+    subset(saved.get('totals', saved), dict(counts))
+    return saved, assertions
+
+
+def call_readback(prepare, catalog, versions, witnesses):
+    directory = BASE.parent / prepare.JOINS[0]
+    context = module(directory / 'prepare.py')
+    joined = module(directory / 'audit.py')
+    saved = load(directory / 'result/join.json')
+    plan = load(directory / 'plan.json')
+    original_dir = BASE.parent / context.SELECTION
+    original = load(original_dir / 'plan.json')
+    healthy = load(ROOT / original['healthy_input'])
+    selection = module(original_dir / 'audit.py')
+    selection.authenticate(original)
+    selection.domain(original, healthy)
+    corrected_dir = BASE.parent / context.APPLICABILITY
+    corrected = load(corrected_dir / 'applicability.json')
+    correction = module(corrected_dir / 'audit.py')
+    correction.authenticate(corrected, original)
+    correction.domain(corrected, original, healthy)
+    call_dir = BASE.parent / context.CALL_SELECTION
+    call_plan = load(call_dir / 'plan.json')
+    selector = module(call_dir / 'audit.py')
+    selector.authenticate(call_plan)
+    call_domain = selector.verify(call_plan, load(call_dir / 'result/qualification.json'))
+    assert call_domain == saved['call_domain']
+    required = joined.required_domain(original, corrected, call_plan)
+    support = module(BASE.parent / context.CALLS[0] / 'audit.py')
+    ordinary = BASE.parent / context.READBACK[0]
+    shared = module(ordinary / 'audit-corrected.py')
+    read_oracle = module(ordinary / 'expected_trace.py')
+    observed, counterexamples, roots, parts, previous_reports = [], [], [], [], []
+    raw_totals = Counter()
+    for index, part in enumerate(plan['partitions']):
+        path = ROOT / part['directory']
+        current = load(path / 'plan.json')
+        report = load(path / 'result/qualification.json')
+        audit = shared if path == ordinary else module(path / part['audit'])
+        audit.domain(current)
+        domain = part['domain']
+        if domain == 'call':
+            pins = joined.authenticate_call_epoch(context, path, current, index, catalog, versions)
+            audit.header(current, report)
+            prerequisite = audit.pure_flow() if index == 0 else audit.trace_preflight(current)
+            oracle = None
+        else:
+            pins = audit.authenticate(current)
+            if domain == 'readback':
+                audit.SHARED = shared  # The original profile's explicit dependency slot.
+                if path == ordinary:
+                    audit.authenticate_correction()
+                prerequisite = audit.prerequisites(support)
+                audit.header(current, report, support)
+                oracle = read_oracle
+            else:
+                audit.header(current, report, pins, support)
+                first = module(path / 'audit.py')
+                assert joined.rejects(lambda: first.header(current, report, pins, support))
+                correction_report = load(path / 'result/correction-preflight.json')
+                assert all(correction_report[key] is True for key in
+                    ('success', 'source_diff_exact', 'original_header_rejects', 'corrected_header_accepts'))
+                oracle = module(path / 'expected_trace.py')
+                prerequisite = load(path / 'result/oracle-preflight/oracle-preflight.json')
+                assert prerequisite['success'] is True and prerequisite['prospective_pins'] == pins
+                assert [row['case'] for row in prerequisite['comparisons']] == [case['name'] for case in current['cases']]
+        counts, independent, allocated = Counter(), Counter(), []
+        for case, receipt in zip(current['cases'], report['case_files'], strict=True):
+            row = support.read_case(path / 'result', receipt)
+            values, owned = (audit.verify_row(current, case, row) if domain == 'call'
+                else audit.verify_row(current, case, row, support, oracle))
+            direct = joined.independent_counts(row, part)
+            subset(values, {key: value for key, value in direct.items()
+                if key != 'cases' and not (domain == 'syscall' and key == 'unlinks')})
+            counts.update(values)
+            independent.update(direct)
+            raw_totals.update(physical(row))
+            allocated.extend(owned)
+            ident = joined.case_key(part, current, case)
+            outcome = bool(row['operation']['result']['success'])
+            (observed if ident[-1] == 'primary' else counterexamples).append((ident, outcome))
+            if path == ordinary and case['index'] == 1:
+                first = module(ordinary / 'audit.py')
+                assert joined.rejects(lambda: first.verify_row(current, case, row, support, oracle))
+                witnesses['errno_correction'] = dict(path=str(path.relative_to(ROOT)), case=case['index'])
+        published, assertions = finish_partition(path, current, report, allocated, support, 10 if domain == 'call' else 11, counts)
+        falsifiers = published['falsifiers'] if domain == 'syscall' else published['row_falsifiers']
+        assert falsifiers and len(falsifiers) == len(set(falsifiers))
+        entry = dict(directory=part['directory'], totals=dict(counts), independent_counts=dict(independent),
+            assertions=assertions, case_bytes=sum(row['size_bytes'] for row in report['case_files']),
+            recovery=copies(path, prepare), retained_row_falsifiers=len(falsifiers),
+            prerequisite=prerequisite if domain != 'syscall' else dict(comparisons=len(prerequisite['comparisons'])))
+        parts.append(entry)
+        roots.extend(allocated)
+        previous_reports.extend(p for p in current.get('previous_root_reports', []) if p not in previous_reports)
+        print('Verified saved ' + part['directory'], file=sys.stderr, flush=True)
+    joined.coverage(required, observed, counterexamples)
+    assert parts == saved['partitions']
+    assert signature(sorted(observed)) == saved['primary_domain_sha256']
+    assert (len(observed), sum(outcome for _, outcome in observed), len(counterexamples)) == (
+        saved['primary_cases'], saved['primary_successes'], saved['seam_counterexamples'])
+    assert sum(part['assertions'] for part in parts) == saved['assertions']
+    reports = {part['directory'] + '/result/qualification.json' for part in plan['partitions']}
+    previous = [row for path in previous_reports if path not in reports for row in load(ROOT / path)['allocated']]
+    joined.root_closure(roots, [row['path'] for row in previous])
+    assert (len(roots), len(previous)) == (saved['selected_roots_absent'], saved['prior_roots_absent'])
+    return dict(domain_sha256=saved['primary_domain_sha256'], primary_cases=len(observed),
+        counterexamples=len(counterexamples), assertions=saved['assertions'], physical=dict(raw_totals),
+        partitions=parts, recovery=copies(directory, prepare)), roots, previous, observed, required
+
+
+def close_reports(prepare, catalog, versions, witnesses):
+    directory = BASE.parent / prepare.JOINS[1]
+    context = module(directory / 'prepare.py')
+    joined = module(directory / 'audit-corrected.py')
+    adapter = module(directory / 'correction-preflight.py')
+    adapter.verify_saved()
+    plan = load(directory / 'plan.json')
+    saved = load(directory / 'result/join.json')
+    core = module(BASE.parent / context.SINGLES[0] / 'audit.py')
+    composed = module(BASE.parent / context.PROFILES[0] / 'audit.py')
+    singles = load(BASE.parent / context.SINGLE_SELECTION / 'plan.json')
+    compositions = load(BASE.parent / context.SELECTION / 'plan.json')
+    boundary = load(core.PREPARE.BOUNDARY / 'plan.json')
+    baseline = load(core.PREPARE.BOUNDARY / 'result/qualification.json')
+    contracts = core.SELECT.source_contracts(prepare)
+    assert contracts == saved['source_contracts']
+    required = {}
+    for single, composition, original, row in zip(singles['profiles'], compositions['profiles'], boundary['profiles'], baseline['cases'], strict=True):
+        spec, _ = core.OLD.setup(row)
+        calls = core.FLOW.derive(row['context'], row['operation']['before'], spec)
+        core.SELECT.domain(single, joined.single_selectors(core, calls, row, contracts), original)
+        composed.PREPARE.SELECTION_AUDIT.domain(composition, original, calls, row['context'], compositions['sealed_symbols'])
+        for domain, profile in [('single', single), ('composition', composition)]:
+            for case in profile['cases']:
+                ident = joined.key(domain, profile['id'], case)
+                assert ident not in required
+                required[ident] = not case['reports'] if domain == 'single' else case['recipe']['kind'] == 'healthy'
+    inherited_single = core.prerequisites(load(core.BASE / 'plan.json'))
+    inherited_composed = composed.prerequisites(load(composed.BASE / 'flow-vectors.json'))
+    assert load(composed.BASE / 'trace-adaptation.json') == composed.trace_adaptation()
+    prior_reports = load(core.BASE / 'plan.json')['previous_root_reports']
+    previous = [row for path in prior_reports for row in load(ROOT / path)['allocated']]
+    all_reports = list(prior_reports)
+    observed, roots, parts = [], [], []
+    raw_totals, totals, independent = Counter(), Counter(), Counter()
+    reversals = 0
+    for part in plan['partitions']:
+        domain = part['domain']
+        path = ROOT / part['directory']
+        index = (context.SINGLES if domain == 'single' else context.PROFILES).index(path.name)
+        current = load(path / 'plan.json')
+        audit = (core if domain == 'single' else composed) if index == 0 else module(path / 'audit.py')
+        audit.domain(current)
+        assert current['previous_root_reports'] == all_reports
+        if domain == 'single':
+            pins = joined.authenticate_single_epoch(context, path, current, index, catalog, versions, audit)
+            prerequisite = joined.single_prerequisites(core, audit, path, current, index, baseline['cases'][index], inherited_single)
+        else:
+            pins = joined.SHARED.authenticate_epoch(context, path, current, index, catalog, versions, audit)
+            prerequisite = joined.SHARED.retained_prerequisites(composed, audit, path, current, index, baseline['cases'][index], inherited_composed)
+        report = load(path / 'result/qualification.json')
+        audit.header(current, report, pins)
+        counts, direct_counts, allocated = Counter(), Counter(), []
+        for case, receipt in zip(current['cases'], report['case_files'], strict=True):
+            row = core.SUPPORT.read_case(path / 'result', receipt)
+            values, owned = audit.verify_row(current, case, row)
+            direct = joined.independent_single_counts(row) if domain == 'single' else joined.SHARED.independent_counts(row)
+            subset(values, direct)
+            counts.update(values)
+            direct_counts.update(direct)
+            raw_totals.update(physical(row))
+            allocated.extend(owned)
+            observed.append((joined.key(domain, current['profile_id'], case), bool(row['operation']['result']['success'])))
+            if domain == 'composition':
+                pair = joined.SHARED.reversal(composed, current, case, row)
+                if pair is not None:
+                    reversals += 1
+            if case['index'] == 0:
+                witnesses.setdefault('healthy', row)
+        published, assertions = finish_partition(path, current, report, allocated, core.SUPPORT, 12 if domain == 'single' else 13, counts)
+        assert published['prospective_pins'] == pins and published['prerequisites'] == prerequisite
+        assert published['prior_roots_absent'] == len(previous) + len(roots)
+        entry = dict(domain=domain, profile_id=current['profile_id'], directory=part['directory'], totals=dict(counts),
+            independent_counts=dict(direct_counts), assertions=assertions,
+            case_bytes=sum(row['size_bytes'] for row in report['case_files']),
+            recovery=joined.verify_recovery(path), retained_row_falsifiers=len(published['row_falsifiers']), prerequisites=prerequisite)
+        parts.append(entry)
+        totals.update(counts)
+        independent.update(direct_counts)
+        roots.extend(allocated)
+        all_reports.append(str((path / 'result/qualification.json').relative_to(ROOT)))
+        print('Verified saved ' + part['directory'], file=sys.stderr, flush=True)
+    match_domain(required, observed)
+    assert parts == saved['partitions'] and dict(totals) == saved['totals']
+    assert dict(independent) == saved['independent_counts']
+    assert signature(sorted(observed)) == saved['domain_sha256']
+    assert reversals == saved['same_input_reversal_predictions']
+    assert raw_totals['reported_close_failures'] == saved['totals']['modeled_reports']
+    joined.SHARED.root_closure(roots, [row['path'] for row in previous])
+    assert (len(roots), len(previous)) == (saved['selected_roots_absent'], saved['prior_roots_absent'])
+    return dict(domain_sha256=saved['domain_sha256'], cases=len(observed), assertions=sum(p['assertions'] for p in parts),
+        physical=dict(raw_totals), partitions=parts, same_input_reversals=reversals,
+        recovery=joined.verify_recovery(directory)), roots, previous, observed, required
+
+
+def omissions(prepare, catalog, versions, witnesses):
+    directory = BASE.parent / prepare.JOINS[2]
+    context = module(directory / 'prepare.py')
+    joined = module(directory / 'audit.py')
+    plan = load(directory / 'plan.json')
+    saved = load(directory / 'result/join.json')
+    ordinary_dir = BASE.parent / context.PROFILES[0]
+    sys.path.insert(0, str(ordinary_dir))
+    ordinary = module(ordinary_dir / 'audit.py')
+    selected, required, selection_evidence = joined.selected_domain(context, ordinary)
+    selection_evidence['source_adaptation_proofs'] = joined.source_proofs(context)
+    assert selection_evidence == saved['selection_evidence']
+    inherited = ordinary.prerequisites(load(ordinary_dir / 'plan.json'))
+    assert inherited == saved['inherited_binding']
+    totals, kinds, raw_totals = Counter(), Counter(), Counter()
+    observed, roots, parts = [], [], []
+    for index, part in enumerate(plan['partitions']):
+        path = ROOT / part['directory']
+        audit = ordinary if index == 0 else module(path / 'audit.py')
+        current = load(path / 'plan.json')
+        audit.domain(current)
+        assert current['cases'] == selected['profiles'][index]['cases']
+        pins = joined.authenticate_epoch(context, path, current, index, catalog, versions, audit)
+        recovery = module(path / 'recover.py')
+        records = load(path / 'result/recovery-copies.json')
+        assert records == load(path / 'result/recovery-plan.json')
+        recovery.verify(records)
+        report = load(path / 'result/qualification.json')
+        audit.header(current, report, pins)
+        counts, allocated = Counter(), []
+        for case, receipt in zip(current['cases'], report['case_files'], strict=True):
+            row = audit.SUPPORT.read_case(path / 'result', receipt)
+            values, owned = audit.verify_row(current, case, row)
+            direct, physical_kinds = joined.independent_counts(row)
+            subset(values, direct)
+            counts.update(values)
+            kinds.update(physical_kinds)
+            raw_totals.update(physical(row, True))
+            allocated.extend(owned)
+            observed.append((joined.case_key(current['profile_id'], row['matrix_case']['recipe']), row['matrix_case']))
+            if case['recipe']['kind'] != 'healthy':
+                witnesses.setdefault('omission', row)
+        published, assertions = finish_partition(path, current, report, allocated, audit.SUPPORT, 14, counts)
+        assert published['prospective_pins'] == pins
+        prior = [row['path'] for p in current['previous_root_reports'] for row in load(ROOT / p)['allocated']]
+        joined.root_closure(allocated, prior)
+        assert published['prior_roots_absent'] == len(prior)
+        parts.append(dict(part, counts=dict(counts), assertions=assertions, copies=len(records),
+            copy_bytes=sum(record['size_bytes'] for record in records), roots_absent=len(allocated)))
+        totals.update(counts)
+        roots.extend(allocated)
+        print('Verified saved ' + part['directory'], file=sys.stderr, flush=True)
+    match_domain(required, observed)
+    assert parts == saved['partitions'] and dict(totals) == saved['totals'] and dict(kinds) == saved['omission_kinds']
+    assert signature([dict(profile=key[0], case=value) for key, value in observed]) == saved['domain_sha256']
+    previous = [row for path in selected['previous_root_reports'] for row in load(ROOT / path)['allocated']]
+    joined.root_closure(roots, [row['path'] for row in previous])
+    assert (len(roots), len(previous)) == (saved['selected_roots_absent'], saved['prior_roots_absent'])
+    return dict(domain_sha256=saved['domain_sha256'], cases=len(observed), assertions=sum(p['assertions'] for p in parts),
+        physical=dict(raw_totals), partitions=parts, omission_kinds=dict(kinds),
+        recovery=copies(directory, prepare)), roots, previous, observed, required

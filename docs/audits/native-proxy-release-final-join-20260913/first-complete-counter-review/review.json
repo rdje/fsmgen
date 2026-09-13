@@ -1,0 +1,90 @@
+{
+  "correction": "Count reported close failures from original handle reported_return values. Cross-check them against native close records/report_applied when present and the original modeled_close_hits otherwise. Preserve pre-envelope rejection correction and every original domain result.",
+  "records": [
+    {
+      "destination": "docs/audits/native-proxy-release-final-join-20260913/first-complete-counter-review/common.py.initial-source",
+      "sha256": "13e334ba38a5ad45f4cc374ff66c9cc88d982cd5d87a9cd1753fa39a3c96afbb",
+      "size_bytes": 6125,
+      "source": "docs/audits/native-proxy-release-final-join-20260913/common.py"
+    },
+    {
+      "destination": "docs/audits/native-proxy-release-final-join-20260913/first-complete-counter-review/domains.py.initial-source",
+      "sha256": "a9615c426b34b9edffd962fe2e07a197ea7687196d922af8c56f3f6517147eed",
+      "size_bytes": 17883,
+      "source": "docs/audits/native-proxy-release-final-join-20260913/domains.py"
+    },
+    {
+      "destination": "docs/audits/native-proxy-release-final-join-20260913/first-complete-counter-review/applicability.py.initial-source",
+      "sha256": "87696a91efa731e6299cae30c3cdb631e20d32b05b12cf63d143c359fed06bb4",
+      "size_bytes": 8533,
+      "source": "docs/audits/native-proxy-release-final-join-20260913/applicability.py"
+    },
+    {
+      "destination": "docs/audits/native-proxy-release-final-join-20260913/first-complete-counter-review/audit.py.initial-source",
+      "sha256": "881d453ad735f8d7aed4e87694e38083e04f2d171fbf861ed32fd423f9bd87b8",
+      "size_bytes": 5978,
+      "source": "docs/audits/native-proxy-release-final-join-20260913/audit.py"
+    },
+    {
+      "destination": "docs/audits/native-proxy-release-final-join-20260913/first-complete-counter-review/correction.py.initial-source",
+      "sha256": "66144250dffb1648d70bcc17d64f8df53f77b092842cd7a0c2bc91128a4b26a6",
+      "size_bytes": 2393,
+      "source": "docs/audits/native-proxy-release-final-join-20260913/correction.py"
+    },
+    {
+      "destination": "docs/audits/native-proxy-release-final-join-20260913/first-complete-counter-review/correction-review.json.initial-source",
+      "sha256": "187255a4d89f71e184a2eac45bac7f42aaed4010015a3c8d99f81e1a9dfc1f01",
+      "size_bytes": 1363,
+      "source": "docs/audits/native-proxy-release-final-join-20260913/correction-review.json"
+    },
+    {
+      "destination": "docs/audits/native-proxy-release-final-join-20260913/first-complete-counter-review/corrected-preflight-pins.json.initial-source",
+      "sha256": "6af0b7f8418101a1d08cc79cea128c679860a6d1a4d66ee4de8b6bfa582832e2",
+      "size_bytes": 2160,
+      "source": "docs/audits/native-proxy-release-final-join-20260913/corrected-preflight-pins.json"
+    },
+    {
+      "destination": "docs/audits/native-proxy-release-final-join-20260913/first-complete-counter-review/corrected-admission.stdout",
+      "sha256": "fa71d6142dfcec321891b9c4bce18904f9bf16117d05af99c8fcacc6d6255500",
+      "size_bytes": 109,
+      "source": ".artifacts/logs/native-proxy-release-final-join-20260913/corrected-admission.stdout"
+    },
+    {
+      "destination": "docs/audits/native-proxy-release-final-join-20260913/first-complete-counter-review/corrected-admission.stderr",
+      "sha256": "b8bd3329fdeab7089246d5fbdefba6efea8b40ee06a9f0604f8bb4896097879f",
+      "size_bytes": 91,
+      "source": ".artifacts/logs/native-proxy-release-final-join-20260913/corrected-admission.stderr"
+    },
+    {
+      "destination": "docs/audits/native-proxy-release-final-join-20260913/first-complete-counter-review/corrected-admission.exit",
+      "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa",
+      "size_bytes": 2,
+      "source": ".artifacts/logs/native-proxy-release-final-join-20260913/corrected-admission.exit"
+    },
+    {
+      "destination": "docs/audits/native-proxy-release-final-join-20260913/first-complete-counter-review/corrected-join.stdout",
+      "sha256": "44a986de23d406fbaa8b0c48d042098a91f5d8c853e18cf20871f00d85aa9bda",
+      "size_bytes": 1159,
+      "source": ".artifacts/logs/native-proxy-release-final-join-20260913/corrected-join.stdout"
+    },
+    {
+      "destination": "docs/audits/native-proxy-release-final-join-20260913/first-complete-counter-review/corrected-join.stderr",
+      "sha256": "daeead8a58eaae5b80a868a7f70f0e75e2774b90c71e7c5f9fdd85f49b841436",
+      "size_bytes": 2386,
+      "source": ".artifacts/logs/native-proxy-release-final-join-20260913/corrected-join.stderr"
+    },
+    {
+      "destination": "docs/audits/native-proxy-release-final-join-20260913/first-complete-counter-review/corrected-join.exit",
+      "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa",
+      "size_bytes": 2,
+      "source": ".artifacts/logs/native-proxy-release-final-join-20260913/corrected-join.exit"
+    },
+    {
+      "destination": "docs/audits/native-proxy-release-final-join-20260913/first-complete-counter-review/join.json",
+      "sha256": "714d01f4dd87729fcb0b059774f9a7e388638de8ef8ea4104c1e5e45c048147c",
+      "size_bytes": 2936483,
+      "source": ".artifacts/logs/native-proxy-release-final-join-20260913/join.json"
+    }
+  ],
+  "root_cause": "common.py:physical called len(operation.close_reports) close_error_reports. The producer appends every close observation, including successful unmodified closes. The unchanged complete close join explicitly distinguishes close_reports=72731 from modeled_reports=2001. Original release has three further modeled close failures represented on handles and modeled_close_hits, without a close_reports list. The first complete join is preserved as a successful row/domain check with an incorrect aggregate label; it is not final quantitative signoff."
+}

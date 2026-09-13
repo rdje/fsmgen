@@ -2393,11 +2393,11 @@ decomposes the architecture needed to move beyond that bounded foundation.
   Commit: `5e84e56e04238a9e076f0b37dee9ae2dc6a14f35`
 
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.12.4.1.3.4`
-  Status: `active`
+  Status: `done`
   Goal: `Qualify exact observation release after archive and capture settlement.`
   Acceptance: `Retain original snapshots for archive after private retirement. Release only the exact observation record after independently verified archived bytes and every selected capture/helper cleanup receipt, including cancellation. Unknown ownership and incomplete cleanup pin; no PID heuristic or image deletion.`
-  Verification: `Prospective contract, retained-byte archival, exact settled release and interruption/closure qualification are separate bounded children. All remain inactive; actual capture ownership/transport and native activation stay separately gated.`
-  Commit: `pending`
+  Verification: `All declared children are complete. The final finite release join at docs/audits/native-proxy-release-final-join-20260913/review.json authenticates original source applicability and independently verifies selected coverage, actual native closure, reported outcomes, retained first failures and separate recovery. Every declared release allocation is absent; lower-reader composition remains conditional. Compatibility, combined lifetimes, actual native ownership/transport and historical startup/parent/full CI/push remain separate gates.`
+  Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.12.4.1.3.4.4.6: close finite inactive release qualification`
 
   Children: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.12.4.1.3.4.1, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.12.4.1.3.4.2, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.12.4.1.3.4.3, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.12.4.1.3.4.4`
 
@@ -2534,11 +2534,11 @@ decomposes the architecture needed to move beyond that bounded foundation.
   Commit: `fccfa04cb74f4604582aa3d5cb788d5ccd0a054e`
 
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.12.4.1.3.4.4`
-  Status: `active`
+  Status: `done`
   Goal: `Close observation release interruption and evidence applicability qualification.`
   Acceptance: `Declare and qualify the finite release call, archive readback, descriptor-close and before/after exact-unlink failure boundaries with preserved first failures. Independently reconstruct every conservative state and actual retained handle, complete the selected cancellation/cleanup matrix and source/receipt applicability join, and prove exact allocation absence. Do not conflate reported post-unlink failure with retained ownership. Combined runtime/observation/maintenance lifetime interleavings and actual native ownership/transport remain separately owned.`
-  Verification: `From clean da27b5cbaf01af7cbe294c8f851c8273dd750856, pin the finite interruption/effect/custody contract before new controls. Keep actual unlink effects, latest absence observations and final success separate; preceding qualification does not exhaust interruption, omission or native ownership states.`
-  Commit: `pending`
+  Verification: `All declared children are complete. The final finite release join at docs/audits/native-proxy-release-final-join-20260913/review.json authenticates original source applicability and independently verifies selected coverage, actual native closure, reported outcomes, retained first failures and separate recovery. Every declared release allocation is absent; lower-reader composition remains conditional. Compatibility, combined lifetimes, actual native ownership/transport and historical startup/parent/full CI/push remain separate gates.`
+  Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.12.4.1.3.4.4.6: close finite inactive release qualification`
   Children: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.12.4.1.3.4.4.1, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.12.4.1.3.4.4.2, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.12.4.1.3.4.4.3, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.12.4.1.3.4.4.4, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.12.4.1.3.4.4.5, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.12.4.1.3.4.4.6`
 
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.12.4.1.3.4.4.1`
@@ -2812,11 +2812,11 @@ decomposes the architecture needed to move beyond that bounded foundation.
   Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.12.4.1.3.4.4.5.6: join complete selected release omission evidence`
 
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.12.4.1.3.4.4.6`
-  Status: `proposed`
+  Status: `done`
   Goal: `Join complete finite release evidence and source applicability.`
   Acceptance: `Authenticate the complete original contract, baseline, call/readback/absence, close-report and omission domains, their exact sources, prospective/corrected pins and retained first failures. Independently rederive coverage and native handle lifetimes from original rows, distinguish actual/report/recovery facts, preserve separate cleanup outcomes and conditional lower-reader composition, verify every declared root absent and publish bounded book/fact/task signoff. Close this finite release parent only when all children pass; combined lifetimes, native authentication/transport, compatibility, startup/parent/full CI/push remain separate gates.`
-  Verification: `pending`
-  Commit: `pending`
+  Verification: `Final saved-only join passes from 8973 Git-bound inputs, reconstructing original contract, baseline and every selected call/readback/absence, close-report/composition and omission domain. Independent counts cover 7101 operations and 613887 native handle instances: 613847 implementation closes and 40 originally open handles with exact separate recovery. All 75532 original release assertions remain qualified, with 28404 original roots and 157 separate conditional reader/caller roots absent. Original failure/corrected pins remain distinct. The first final counter fails on four pre-envelope rejections; its exact correction passes unchanged original oracles and altered-result controls. Additional review identifies the all-close versus failure-label defect; final original-handle accounting agrees with existing injected-fault counters on 2004 reported close failures. Both earlier sources and outputs remain retained. Coverage and native/root falsifiers reject; docs/audits/native-proxy-release-final-join-20260913/review.json separates claim legs, exact output recovery and saved-only verification. Book/fact/history and task/claim/doctrine/normal-hook checks gate closure. No fixture, historical main or native producer runs. Compatibility and combined lifetimes remain next; historical startup/parent/full CI/push remain gated.`
+  Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.12.4.1.3.4.4.6: close finite inactive release qualification`
 
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.12.4.1.3.5`
   Status: `proposed`
@@ -3767,7 +3767,7 @@ decomposes the architecture needed to move beyond that bounded foundation.
 
 ## Current Frontier
 
-Current frontier: .3.2.15.7.3.12.4.1.3.4.4.5 is done; .4.4.6 joins complete finite release evidence and source applicability. Final release applicability, native/lifetime and historical startup/parent/full CI/push remain open.
+Current frontier: .3.2.15.7.3.12.4.1.3.4 is done; .3.5 qualifies inactive native preparation and capture version compatibility. Combined lifetimes, native authentication/transport and historical startup/parent/full CI/push remain open.
 
 Architecture audit `.1` is complete. Decision `0032` selects one public
 `.vial` source language, private immutable `VIALSemanticIR` and
@@ -6363,8 +6363,8 @@ Completed native-proxy feasibility through runtime-source-controls acceptance: r
 The manifest binds the immediately preceding acceptance suffix to its exact Git source. That source preserves the earlier history pointer and versioned manifest chain; current node contracts remain authoritative.
 
 
-## Acceptance Checklist (complete selected release omissions .3.2.15.7.3.12.4.1.3.4.4.5.6)
+## Acceptance Checklist (final finite inactive release .3.2.15.7.3.12.4.1.3.4.4.6)
 
-- [x] **ROOT CAUSE (WHY + WHERE)** — `git log -S 'all_observed_handles_closed' -1 --format='%H %s' -- docs/audits/native-proxy-observation-archive-release-20260911/ReleaseTrace.pm` identifies the original pre-recovery closure verdict. A complete omission claim requires the original selected domain, every profile source epoch and actual native records to agree without counting later recovery as implementation closure. `docs/audits/native-proxy-release-omission-join-20260913/audit.py` reconstructs source-owned selection and source adaptations, then independently counts original open handles and separate recovery.
-- [x] **ADDRESSED (verified)** — The first combined admission and join pass; every selected case matches its original scope and baseline witness. Each original profile row oracle and state oracle passes, while independent native/event counts reproduce retained totals. Missing/duplicated cases, changed scope/baseline, rewritten original closure with coherent digests, substituted recovery and overlapping roots reject. Exact join copies and saved-only verification pass. `docs/audits/native-proxy-release-omission-join-20260913/review.json` retains distinct claim legs, source proofs and first-run evidence; no original fixture or main is replayed.
-- [x] **NO REGRESSION** — `knowledge-map: OK` preserves every original question and routes to the complete saved omission verifier. Healthy implementation closure and all unselected physical-source checks remain qualified; original failure verdicts and later cleanup stay separate. The inspected book records representative-scope completion and retains final release/native limits. Exact generated output is removed, older acceptance bodies remain byte-exact, and task integrity, claim census, staged doctrines and normal hooks gate this complete omission join. Historical startup/parent/full CI/push remain separate.
+- [x] **ROOT CAUSE (WHY + WHERE)** — `git log -S 'all_observed_handles_closed' -1 --format='%H %s' -- docs/audits/native-proxy-observation-archive-release-20260911/ReleaseTrace.pm` identifies the original pre-recovery observer. Final applicability requires independently joined source epochs and original domains. The first new counter incorrectly assumes every operation has a public result; original caller/arity rejections precede that envelope. Further cross-checking finds that the close observation list includes successful closes. Exact first sources and outputs are retained in this slice's failure and counter-review records.
+- [x] **ADDRESSED (verified)** — The final pinned join revalidates unchanged original contract, baseline and selected row/state oracles, independently reconstructs native lifetimes and complete coverage, and verifies all declared absent roots. Corrected outcome accounting distinguishes pre-envelope rejection, public success/failure, actual unlink, reported close failure and later recovery. Original returns agree with separate fault counters; changed outcomes, misplaced failure labels, altered source epochs, lost/duplicate domain cases and hidden cleanup reject. Exact copies and saved-only verification accompany docs/audits/native-proxy-release-final-join-20260913/review.json; original fixture and main routines are never replayed.
+- [x] **NO REGRESSION** — `knowledge-map: OK` preserves every question and routes to the final saved verifier. Original failure evidence and corrected pins remain distinct; conditional lower-reader composition and native/startup limits remain explicit. The rendered book is inspected and its exact disposable output removed. Exact predecessor acceptance retrieval preserves older checklists; task integrity, claim census, staged doctrines and normal hooks gate final finite-release closure. Version compatibility and combined lifetimes remain separate next work.

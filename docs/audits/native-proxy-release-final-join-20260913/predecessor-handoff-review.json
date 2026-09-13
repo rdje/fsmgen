@@ -1,0 +1,8 @@
+{
+  "author_check_correction": "The first post-commit inline assertion searched commit.stdout for the hook success marker. Normal hooks wrote that marker to commit.stderr. The commit had succeeded and the tree was already clean. Inspecting both retained streams established the cause; the corrected stream assertion passed and cleared the brief. No check or commit was replayed.",
+  "brief_bytes": 0,
+  "clean": true,
+  "commit_exit": 0,
+  "hooks_passed": true,
+  "source_revision": "b1cf7dae0ad9185ec10b1ea2a989e0377742ff8b"
+}

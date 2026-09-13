@@ -1,0 +1,20 @@
+{
+  "book_actual": {
+    "bytes_total": 3385640,
+    "files": 63,
+    "lines_total": 61731
+  },
+  "book_baseline": {
+    "bytes_total": 3383708,
+    "files": 63,
+    "lines_total": 61697
+  },
+  "knowledge_aggregate": {
+    "bytes_total": 3492377,
+    "files": 1160,
+    "lines_total": 47288
+  },
+  "knowledge_byte_delta": -11,
+  "questions_preserved": 117,
+  "scope": "Qualitative final finite inactive release signoff; exact quantitative results are source-bound in the saved join and independent counter correction. No containment ceiling changes."
+}

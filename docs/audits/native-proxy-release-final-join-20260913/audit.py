@@ -1,0 +1,105 @@
+"""Final finite inactive release signoff from authenticated original records."""
+from collections import Counter
+import copy
+import json
+import sys
+
+import applicability
+from common import BASE, ROOT, absent, falsify_lifetimes, load, match_domain, module, rejects, signature
+import domains
+
+LOG = ROOT / '.artifacts/logs' / BASE.name
+MAIN_NAMES = ['prepare.py', 'prepare-pins.json', 'plan.json', 'common.py', 'domains.py',
+              'applicability.py', 'audit.py', 'recover.py', 'recovery-pins.json',
+              'correction.py', 'correction-review.json', 'recover-final.py', 'recovery-final-pins.json']
+
+
+def final_coverage(required, rows):
+    match_domain(required, rows)
+    assert {key[0] for key, _ in rows} == {'call_readback', 'close_reports', 'omissions'}
+
+
+def main():
+    assert sys.argv[1:] in ([], ['--admit-only'], ['--verify-saved'])
+    prepare = module(BASE / 'prepare.py')
+    plan = load(BASE / 'plan.json')
+    assert plan == prepare.build()
+    pins = load(BASE / 'final-preflight-pins.json')
+    assert pins == [prepare.pin(BASE / name) for name in MAIN_NAMES]
+    catalog = {row['path']: row for row in plan['inputs']}
+    assert len(catalog) == len(plan['inputs'])
+    corrections = module(BASE / 'correction.py').verify()
+    epochs = applicability.joined_epochs(prepare, catalog)
+    failures = applicability.retained_failures(prepare, catalog)
+    if sys.argv[1:] == ['--admit-only']:
+        print(json.dumps(dict(admitted=True, inputs=len(catalog), source_epochs=len(epochs),
+            retained_nonzero_exits=len(failures['nonzero_saved_exits']), new_fixture_roots=0), sort_keys=True))
+        return
+    witnesses = {}
+    foundation, roots = applicability.original_contract(prepare, witnesses)
+    lower, lower_roots = applicability.lower_reader(prepare)
+    summaries, combined, prior_rows, required = {}, [], [], {}
+    versions = {}
+    for name, function in [('call_readback', domains.call_readback), ('close_reports', domains.close_reports),
+                           ('omissions', domains.omissions)]:
+        summary, allocated, previous, observed, expected = function(prepare, catalog, versions, witnesses)
+        summaries[name] = summary
+        roots.extend(allocated)
+        prior_rows.extend(previous)
+        combined.extend(((name, *key), value) for key, value in observed)
+        required.update({(name, *key): value for key, value in expected.items()})
+    # Repeated predecessor declarations are references to the same allocation,
+    # while every original execution allocation remains pairwise distinct.
+    absent(roots)
+    declared = {row['path']: row for row in roots}
+    for row in prior_rows:
+        assert row['path'] in declared and declared[row['path']] == row
+    assert not {row['path'] for row in roots} & {row['path'] for row in lower_roots}
+    absent(lower_roots)
+    final_coverage(required, combined)
+    controls = falsify_lifetimes(witnesses)
+    for name, mutate in [('missing-domain-case', lambda rows: rows.pop()),
+                         ('duplicated-domain-case', lambda rows: rows.append(copy.deepcopy(rows[0]))),
+                         ('foreign-family', lambda rows: rows.__setitem__(0, (('foreign', *rows[0][0][1:]), rows[0][1]))),
+                         ('changed-original-outcome', lambda rows: rows.__setitem__(0, (rows[0][0], not rows[0][1])))]:
+        changed = copy.deepcopy(combined)
+        mutate(changed)
+        assert rejects(lambda: final_coverage(required, changed)), name
+        controls.append(name)
+    assert rejects(lambda: absent(roots + roots[:1]))
+    controls.append('duplicated-original-allocation')
+    changed = copy.deepcopy(roots)
+    changed[0]['path'] = '../foreign'
+    assert rejects(lambda: absent(changed))
+    controls.append('escaping-allocation')
+    changed_catalog = dict(catalog)
+    first = load(BASE.parent / prepare.JOINS[0] / 'plan.json')['inputs'][0]['path']
+    changed_catalog[first] = dict(changed_catalog[first], sha256='0' * 64)
+    assert rejects(lambda: applicability.joined_epochs(prepare, changed_catalog))
+    controls.append('changed-original-source-epoch')
+    total = Counter(foundation['physical'])
+    for summary in summaries.values():
+        total.update(summary['physical'])
+    assert total['handles'] == total['implementation_closed'] + total['original_open']
+    assert total['original_open'] == total['observer_recoveries'] == summaries['omissions']['physical']['original_open']
+    result = dict(schema='fsmgen.release_final_join.v1', owner=prepare.OWNER, success=True,
+        finite_release_qualified=True, runtime_authorized=False, source_revision=prepare.REVISION,
+        prospective_pins=pins, input_files=len(catalog), input_bytes=sum(row['size_bytes'] for row in plan['inputs']),
+        source_epochs=epochs, foundation=foundation, conditional_lower_reader=lower, domains=summaries,
+        physical_totals=dict(total), assertions=foundation['assertions'] + sum(item['assertions'] for item in summaries.values()),
+        selected_domain_entries=len(combined), domain_sha256=signature(combined), roots_absent=len(roots),
+        conditional_reader_roots_absent=len(lower_roots), predecessor_declarations=len(prior_rows),
+        falsifiers=controls, retained_failures=failures, counter_corrections=corrections, successful_open_errno_correction=witnesses['errno_correction'],
+        new_fixture_roots=0, original_main_calls=0, native_executions=0, scope=plan['scope'])
+    if sys.argv[1:]:
+        assert result == load(BASE / 'result/join.json')
+    else:
+        with (LOG / 'final-join.json').open('x') as stream:
+            stream.write(json.dumps(result, sort_keys=True, indent=2) + '\n')
+    print(json.dumps({key: result[key] for key in ('success', 'finite_release_qualified', 'input_files', 'input_bytes',
+        'physical_totals', 'assertions', 'selected_domain_entries', 'domain_sha256', 'roots_absent',
+        'conditional_reader_roots_absent', 'falsifiers', 'new_fixture_roots', 'original_main_calls', 'native_executions')}, sort_keys=True))
+
+
+if __name__ == '__main__':
+    main()

@@ -1,0 +1,6 @@
+{
+  "after": "    result = op.get('result')\n    if op['returned']:\n        assert isinstance(result, dict) and op['error'] == ''\n        success = bool(result['success'])\n    else:\n        assert result is None and op['error']\n        assert row['selection']['expected_public_return'] is False\n        assert not handles and not op['unlinks']\n        success = False\n    counts['public_successes'] = int(success)\n    counts['public_rejections'] = int(bool(op['returned']) and not success)\n    counts['pre_envelope_rejections'] = int(not op['returned'])\n    counts['actual_unlinks'] = sum(item['actual_count'] for item in op['unlinks'])\n    counts['post_unlink_rejections'] = int(bool(counts['actual_unlinks']) and not success)\n",
+  "before": "    counts['public_successes'] = int(bool(op['result']['success']))\n    counts['public_rejections'] = 1 - counts['public_successes']\n    counts['actual_unlinks'] = sum(item['actual_count'] for item in op['unlinks'])\n    counts['post_unlink_rejections'] = int(bool(counts['actual_unlinks']) and not op['result']['success'])\n",
+  "change": "Count pre-envelope rejection separately; require original absent result and empty native effects. All other physical and original row checks remain unchanged.",
+  "first_failure": "docs/audits/native-proxy-release-final-join-20260913/first-failure/review.json"
+}

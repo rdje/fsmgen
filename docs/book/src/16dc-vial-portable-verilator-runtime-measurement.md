@@ -2643,8 +2643,8 @@ python3 -B docs/audits/native-proxy-release-call-readback-join-20260912/audit.py
 Successful source-return handoffs and sealed-return aliases are not safe
 call-injection sites; lower-reader failures have their own qualified domain.
 Combining the saved domains does not establish simultaneous-failure coverage.
-Close-error reporting, deliberate close omissions, complete release
-applicability and native lifetime remain separately owned work.
+Close-report, representative omission and complete finite release reviews
+follow below. Native lifetime remains separately owned work.
 
 Before the profile executions below, the saved selection established this
 prospective baseline:
@@ -3018,10 +3018,44 @@ Verify the combined evidence without replaying a fixture:
 python3 -B docs/audits/native-proxy-release-omission-join-20260913/audit.py --verify-saved
 ```
 
-Coverage remains bounded to the selected representative cleanup scopes. Final
-release applicability and the later native/lifetime gates remain pending.
+Coverage remains bounded to the selected representative cleanup scopes.
 These deliberate faults do not qualify ambiguous operating-system close
 failures or authorize native execution.
+
+Finite inactive release qualification is now complete for the declared domains.
+The final review authenticates the original release contract and healthy
+boundaries together with saved call, readback, absence, close-report,
+composition and representative omitted-close evidence. Every selected profile
+is checked against its original source version and operation records.
+
+A rejection before the public envelope has no public attempt record. A failed
+release after unlink still preserves the actual deletion and its subsequent
+absence observations. An omitted handle remains open in the original verdict.
+Later observer recovery never counts as closure by the implementation.
+
+The final verifier retains its first missing-result failure and the separate
+correction that recognizes rejection before the public envelope. Review also
+caught an aggregate that counted successful close observations as failures.
+The final count distinguishes all close observations from reported close failures.
+Original per-handle returns agree with the existing injected-fault counters;
+altered records and invented outcomes reject. Original failure evidence stays
+available alongside the corrected verifier and its separate source pins.
+
+All declared original and predecessor allocations are absent. The final review
+also preserves the qualified lower-reader closure and selected archive caller
+cleanup. Conditional lower-reader composition does not establish failure
+reachability at every release site. Verify the saved evidence from tracked
+sources, without replaying a fixture:
+
+```sh
+scripts/run_with_ram_guard.sh -- python3 -B docs/audits/native-proxy-release-final-join-20260913/audit.py --verify-saved
+```
+
+This completes the declared finite inactive release contract. Version
+compatibility, combined lifetimes, native authentication and transport,
+original startup qualification and product activation remain separately owned.
+It does not qualify arbitrary-writer atomicity or ambiguous operating-system
+close failures.
 
 The inactive archive record implementation now derives a closed specification
 from the complete original acquisition and request. It keeps the ordered wrapper,

@@ -1,0 +1,26 @@
+ram-guard: PID 39698; host 66.8%; host cutoff 88%; descendant RSS cutoff 4096 MiB; poll 2s
+Verified saved docs/audits/native-proxy-observation-archive-release-ordinary-before-20260911
+Verified saved docs/audits/native-proxy-observation-archive-release-ordinary-after-20260911
+Verified saved docs/audits/native-proxy-observation-archive-release-equal-before-20260911
+Verified saved docs/audits/native-proxy-observation-archive-release-equal-after-20260911
+Verified saved docs/audits/native-proxy-observation-archive-release-active-before-20260911
+Verified saved docs/audits/native-proxy-observation-archive-release-active-after-20260911
+Verified saved docs/audits/native-proxy-observation-archive-release-last-before-20260911
+Verified saved docs/audits/native-proxy-observation-archive-release-last-after-20260911
+Verified saved docs/audits/native-proxy-observation-archive-release-readback-ordinary-20260911
+Verified saved docs/audits/native-proxy-observation-archive-release-readback-equal-20260912
+Verified saved docs/audits/native-proxy-observation-archive-release-readback-active-20260912
+Verified saved docs/audits/native-proxy-observation-archive-release-readback-last-20260912
+Verified saved docs/audits/native-proxy-observation-archive-release-syscall-20260912
+Verified saved docs/audits/native-proxy-observation-archive-release-close-ordinary-20260912
+Verified saved docs/audits/native-proxy-observation-archive-release-close-equal-20260912
+Verified saved docs/audits/native-proxy-observation-archive-release-close-active-20260912
+Verified saved docs/audits/native-proxy-observation-archive-release-close-last-20260912
+Verified saved docs/audits/native-proxy-observation-archive-release-composition-ordinary-20260912
+Verified saved docs/audits/native-proxy-observation-archive-release-composition-equal-20260912
+Verified saved docs/audits/native-proxy-observation-archive-release-composition-active-20260912
+Verified saved docs/audits/native-proxy-observation-archive-release-composition-last-20260912
+Verified saved docs/audits/native-proxy-observation-archive-release-omissions-ordinary-20260913
+Verified saved docs/audits/native-proxy-observation-archive-release-omissions-equal-20260913
+Verified saved docs/audits/native-proxy-observation-archive-release-omissions-active-20260913
+Verified saved docs/audits/native-proxy-observation-archive-release-omissions-last-20260913

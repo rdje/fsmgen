@@ -1,0 +1,15 @@
+ram-guard: PID 80734; host 72.7%; host cutoff 88%; descendant RSS cutoff 4096 MiB; poll 2s
+Traceback (most recent call last):
+  File "/Volumes/SSD/Documents/github/fsmgen/docs/audits/native-proxy-release-final-join-20260913/audit.py", line 103, in <module>
+    main()
+    ~~~~^^
+  File "/Volumes/SSD/Documents/github/fsmgen/docs/audits/native-proxy-release-final-join-20260913/audit.py", line 37, in main
+    foundation, roots = applicability.original_contract(prepare, witnesses)
+                        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^
+  File "/Volumes/SSD/Documents/github/fsmgen/docs/audits/native-proxy-release-final-join-20260913/applicability.py", line 73, in original_contract
+    physical_counts.update(physical(row))
+                           ~~~~~~~~^^^^^
+  File "/Volumes/SSD/Documents/github/fsmgen/docs/audits/native-proxy-release-final-join-20260913/common.py", line 103, in physical
+    counts['public_successes'] = int(bool(op['result']['success']))
+                                          ~~^^^^^^^^^^
+KeyError: 'result'
