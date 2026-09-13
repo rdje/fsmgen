@@ -1,0 +1,22 @@
+[
+  {
+    "path": "docs/audits/native-proxy-lifetime-files-admission-20260913/review_retirement.py",
+    "sha256": "bdc808cb95f965245955f09aee601c932dd484292c03b3dae758a31eec3ab22f",
+    "size_bytes": 3239
+  },
+  {
+    "path": "docs/audits/native-proxy-lifetime-files-admission-20260913/draft-retirement.json",
+    "sha256": "98dc8614593442cfb5d34b85b39354688188b1ac2a1e3997766711c73ea8b7e7",
+    "size_bytes": 108948
+  },
+  {
+    "path": "docs/audits/native-proxy-lifetime-files-admission-20260913/preflight-pins.json",
+    "sha256": "bd2488f85a7e06b5b94fdf43be4c6fc213cd67d6c8f81649af6b1458894d6d53",
+    "size_bytes": 10376
+  },
+  {
+    "path": "docs/audits/native-proxy-lifetime-files-admission-20260913/completion-pins.json",
+    "sha256": "e958752884f7afe1d8f07aca42008a4a1e0ebd6e12ded0ef6504e89e0d0c9902",
+    "size_bytes": 1460
+  }
+]

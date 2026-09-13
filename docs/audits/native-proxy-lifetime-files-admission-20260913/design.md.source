@@ -1,0 +1,61 @@
+# Prospective inert file lifetime admission
+
+Owner: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.12.4.1.3.6.3.1`.
+Execution belongs only to `.3.6.3.2`, after admission is committed. This is a
+working design, not an execution receipt or a completed admission.
+
+Use the complete model domain committed at
+`f451fda60b2761441deb3429bef6aac5852c458f`. Select a bounded representative
+subset explicitly, with both image profiles, runtime-first and observation-first
+release, archival before/after retirement, and different-image maintenance
+before the unrelated runtime retires. Preserve exact membership in the original
+ordering domain; do not claim that a selected physical subset executes every
+modeled ordering.
+
+Construct new exclusive inert case roots, two private workspaces and one evidence
+directory per case. All roots must use the existing admitted repository-relative
+namespaces and normal-user, same-volume ownership. Never use the model's
+synthetic root spellings as actual allocations. Reuse retained inert payload
+bytes as data; never compile or execute them. Supply explicitly synthetic births,
+work tokens and settled cleanup records, without claiming native authentication.
+
+Call the unchanged public inactive acquisition, reuse, archive, retirement,
+release and explicit-maintenance entrypoints from a new harness. Do not execute
+an old qualifier or fixture producer. The existing `FixtureClone.pm` is a pure
+JSON/octet clone helper, not an allocation helper. Existing release trace modules
+are operation-specific and must not be treated as general lifetime observers.
+
+A new observer must capture actual successful descriptor ownership at opening,
+including lower-reader acquisition before a later validation could throw. Keep
+actual close outcomes, descriptor absence and any separate recovery distinct.
+Preserve errno even when a successful call leaves it nonzero; nonzero errno alone
+is not a failed call. Compile hooks before the target modules and retain original
+call context and argument aliases. No injected failures belong in this complete
+lifetime stage; interruption controls remain separately owned by `.3.6.4`.
+
+Independently snapshot exact owned tree membership, file bytes and stable native
+identities before and after each selected complete operation. Directory times or
+link counts can change with valid child creation/removal; do not confuse those
+with replacement of an unchanged directory inode. Compare expected paths from
+completed-event sets, and compare unchanged file identities/bytes independently.
+An archive for the second observer may reuse existing content files while
+returning its own differently keyed receipt; distinguish logical receipt
+creation from physical file creation. A complete image includes its manifest,
+not only the selected C/image pair.
+
+Retain a journal before allocation and every first outcome before cleanup. Stop
+starting cases after the first unexpected result. Bound nodes, bytes, handles,
+output and wall time prospectively. Cleanup only exact newly owned roots after
+independent closure, identity and membership checks. Preserve uncertain objects
+and primary errors. Keep pre-cleanup observed effects and any separate cleanup
+or handle recovery visible. Never silently retry a case or relabel an earlier
+failure as successful. Source-only admission must not invoke lifecycle filesystem
+operations or allocate fixture roots.
+
+Current source facts: observation wrappers require mode 0700; canonical C and
+records require 0400 and inert images 0500. Runtime retirement takes a cleanup
+object with compiler, outer and stages. Release takes original acquisition,
+archive, selection and settlement. Maintenance is explicitly image-specific.
+The permanent lock remains named until the new harness performs its separately
+recorded final cleanup. These source facts must be pinned and checked by the
+prospective admission rather than inferred from model-only identities.

@@ -139,8 +139,8 @@ evidence: >-
   t/1669-task-acceptance-fixture-runtime.t; t/python/test_fixture_runtime_sources.py;
   t/lib/FSM/Test/RustProxyFixture.pm; t/1815-rust-proxy-fixture.t; t/1816-rust-proxy-integration.t; t/1817-test-supervision-architecture.t
 reverify: >-
-  scripts/run_with_ram_guard.sh -- python3 -B docs/audits/native-proxy-lifetime-model-20260913/audit_corrected.py --verify-saved
+  scripts/run_with_ram_guard.sh -- python3 -B docs/audits/native-proxy-lifetime-files-admission-20260913/audit.py --verify-saved
 ---
 Decisions `0087`/`0101`: `FSM::Support::ProcessSupervisor`; adapters seal local argv/capture/group cleanup. T1669 checks ownership. `exec_handoff_monotonic_ns` is EOF, not main entry; absent EOF leaves timing unknown.
-History: `c3fefd0e419a4edd510093f9efd548e1052b064f:docs/knowledge/test-subprocess-policy-adapters.md`. Lifetime model passes; file effects follow.
+History: `f451fda60b2761441deb3429bef6aac5852c458f:docs/knowledge/test-subprocess-policy-adapters.md`. Lifetime admission passes; file run follows.
 Proxy: `t/fixtures/rust-tool-proxy.c` is C, built by Perl `t/lib/FSM/Test/RustProxyFixture.pm` and launched separately to imitate rustup. `VerilatorRuntime`: decision `0086`. HIAL/VIAL `.19.2.3.1.2.2.5.5` owns repair/hostile controls; neutral-verifier extraction stays blocked.

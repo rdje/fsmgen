@@ -1,0 +1,234 @@
+package NativeProxyLifetimeFiles;
+
+use strict;
+use warnings;
+use LifetimeTrace;
+use Digest::SHA qw(sha256_hex);
+use Errno qw(ENOENT);
+use JSON::PP ();
+use Fcntl qw(O_RDONLY O_WRONLY O_CREAT O_EXCL O_NOFOLLOW O_NONBLOCK
+             F_GETFD F_SETFD FD_CLOEXEC S_ISDIR S_ISREG);
+
+our ($ROOT, $DEVICE, $UID);
+
+sub initialize {
+    die "expected one canonical repository root\n" unless @_ == 1;
+    ($ROOT) = @_;
+    my @root = lstat($ROOT);
+    die "invalid repository directory\n" unless @root && S_ISDIR($root[2]);
+    ($DEVICE, $UID) = ($root[0], $<);
+}
+
+sub _metadata {
+    my ($relative, $absent_ok) = @_;
+    $! = 0;
+    my @native = lstat("$ROOT/$relative");
+    my $errno = 0 + $!;
+    return undef if !@native && $absent_ok && $errno == ENOENT;
+    die "cannot establish owned file identity: $relative ($errno)\n" unless @native
+        && $native[0] == $DEVICE && $native[4] == $UID
+        && (S_ISDIR($native[2]) || S_ISREG($native[2]));
+    return \@native;
+}
+
+sub _ancestors {
+    my ($relative) = @_;
+    die "noncanonical owned path\n" if !defined($relative) || ref($relative)
+        || grep { $_ eq '' || $_ eq '.' || $_ eq '..' } split('/', $relative, -1);
+    my @parts = split('/', $relative); pop @parts;
+    my $path = '';
+    for my $part (@parts) {
+        $path = length($path) ? "$path/$part" : $part;
+        my $native = _metadata($path, 0);
+        die "owned path traverses a nondirectory\n" unless S_ISDIR($native->[2]);
+    }
+}
+
+sub absent {
+    my ($relative) = @_;
+    _ancestors($relative);
+    return !defined(_metadata($relative, 1));
+}
+
+sub directory_identity {
+    my ($relative) = @_;
+    _ancestors($relative);
+    my $native = _metadata($relative, 0);
+    die "expected private owned directory\n" unless S_ISDIR($native->[2]) && ($native->[2] & 07777) == 0700;
+    return {path => $relative, device => $native->[0], inode => $native->[1]};
+}
+
+sub create_directory {
+    my ($relative) = @_;
+    _ancestors($relative);
+    die "planned directory already exists\n" unless absent($relative);
+    mkdir("$ROOT/$relative", 0700) or die "exclusive owned directory: $!\n";
+    return directory_identity($relative);
+}
+
+sub write_exclusive {
+    my ($relative, $bytes, $mode, $limit) = @_;
+    _ancestors($relative);
+    die "unbounded owned bytes\n" if !defined($bytes) || ref($bytes) || utf8::is_utf8($bytes) || length($bytes) > $limit;
+    sysopen(my $handle, "$ROOT/$relative", O_WRONLY | O_CREAT | O_EXCL | O_NOFOLLOW, 0600)
+        or die "exclusive owned file: $!\n";
+    my $ok = eval {
+        binmode($handle) or die "owned byte mode: $!\n";
+        my $flags = fcntl($handle, F_GETFD, 0);
+        die "owned descriptor flags: $!\n" unless defined($flags);
+        fcntl($handle, F_SETFD, $flags | FD_CLOEXEC) or die "owned descriptor inheritance: $!\n";
+        my $offset = 0;
+        while ($offset < length($bytes)) {
+            my $written = syswrite($handle, $bytes, length($bytes) - $offset, $offset);
+            die "owned write: $!\n" unless defined($written) && $written > 0;
+            $offset += $written;
+        }
+        chmod($mode, $handle) == 1 or die "owned file mode: $!\n";
+        1;
+    };
+    my $error = $@;
+    my $closed = close($handle);
+    die $error unless $ok;
+    die "owned writer close: $!\n" unless $closed;
+}
+
+sub _file {
+    my ($relative, $named) = @_;
+    die "unexpected owned file mode or links\n" unless $named->[3] == 1
+        && grep { ($named->[2] & 07777) == $_ } (0400, 0500, 0600, 0700);
+    sysopen(my $handle, "$ROOT/$relative", O_RDONLY | O_NOFOLLOW | O_NONBLOCK)
+        or die "independent owned read: $!\n";
+    my ($bytes, $before, $after);
+    my $ok = eval {
+        binmode($handle) or die "independent read mode: $!\n";
+        my $flags = fcntl($handle, F_GETFD, 0);
+        die "independent reader flags: $!\n" unless defined($flags);
+        fcntl($handle, F_SETFD, $flags | FD_CLOEXEC) or die "independent reader inheritance: $!\n";
+        $before = [stat($handle)];
+        die "independent opened identity differs\n" unless @$before
+            && join(':', @$before[0,1,2,3,4,7,9,10]) eq join(':', @$named[0,1,2,3,4,7,9,10]);
+        die "independent file byte bound\n" if $before->[7] > 65536;
+        $bytes = '';
+        while (length($bytes) <= 65536) {
+            my $count = sysread($handle, my $chunk, 65537 - length($bytes));
+            die "independent read: $!\n" unless defined($count);
+            last unless $count;
+            $bytes .= $chunk;
+        }
+        $after = [stat($handle)];
+        my $current = _metadata($relative, 0);
+        die "independent read changed\n" unless length($bytes) == $before->[7] && length($bytes) <= 65536
+            && join(':', @$before[0,1,2,3,4,7,9,10]) eq join(':', @$after[0,1,2,3,4,7,9,10])
+            && join(':', @$before[0,1,2,3,4,7,9,10]) eq join(':', @$current[0,1,2,3,4,7,9,10]);
+        1;
+    };
+    my $error = $@;
+    my $closed = close($handle);
+    die $error unless $ok;
+    die "independent reader close: $!\n" unless $closed;
+    return {kind => 'file', mode => $before->[2] & 07777, uid => $before->[4], links => $before->[3],
+        bytes_hex => unpack('H*', $bytes), native_before => $before, native_after => $after,
+        identity => {path => $relative, device => $before->[0], inode => $before->[1],
+                     size_bytes => length($bytes), sha256 => sha256_hex($bytes)}};
+}
+
+sub _members {
+    my ($relative) = @_;
+    opendir(my $directory, "$ROOT/$relative") or die "independent tree directory: $!\n";
+    my @members;
+    my $ok = eval {
+        while (1) {
+            $! = 0;
+            my $name = readdir($directory);
+            die "independent directory read: $!\n" if !defined($name) && $!;
+            last unless defined($name);
+            next if $name eq '.' || $name eq '..';
+            push @members, $name;
+            die "independent directory member bound\n" if @members > 128;
+        }
+        1;
+    };
+    my $error = $@;
+    my $closed = closedir($directory);
+    die $error unless $ok;
+    die "independent directory close: $!\n" unless $closed;
+    return [sort @members];
+}
+
+sub _walk {
+    my ($relative, $nodes, $depth) = @_;
+    die "independent tree depth or node bound\n" if $depth > 8 || keys(%$nodes) >= 128;
+    my $native = _metadata($relative, 0);
+    if (S_ISREG($native->[2])) {
+        $nodes->{$relative} = _file($relative, $native);
+        return;
+    }
+    die "unexpected owned directory mode\n" unless ($native->[2] & 07777) == 0700;
+    $nodes->{$relative} = {kind => 'directory', mode => 0700, uid => $native->[4], native => $native,
+                           identity => {path => $relative, device => $native->[0], inode => $native->[1]}};
+    my $members = _members($relative);
+    _walk("$relative/$_", $nodes, $depth + 1) for @$members;
+    my $after_members = _members($relative);
+    die "independent directory membership changed\n" unless join("\0", @$members) eq join("\0", @$after_members);
+    my $current = _metadata($relative, 0);
+    die "independent directory replaced\n"
+        unless join(':', @$native[0,1,2,4]) eq join(':', @$current[0,1,2,4]);
+}
+
+sub snapshot {
+    my ($roots) = @_;
+    my (%nodes, @absent);
+    for my $root (@$roots) {
+        _ancestors($root);
+        if (absent($root)) { push @absent, $root; next; }
+        _walk($root, \%nodes, 0);
+    }
+    my $bytes = 0;
+    $bytes += $_->{identity}{size_bytes} for grep { $_->{kind} eq 'file' } values %nodes;
+    die "independent aggregate byte bound\n" if $bytes > 4194304;
+    return {nodes => \%nodes, absent_roots => \@absent, file_bytes => $bytes};
+}
+
+sub stable {
+    my ($snapshot) = @_;
+    return {map {
+        my %value = %{$snapshot->{nodes}{$_}};
+        delete @value{qw(native native_before native_after)};
+        ($_ => \%value);
+    } keys %{$snapshot->{nodes}}};
+}
+
+sub cleanup_exact {
+    die "expected exact roots and independently established owned snapshot\n" unless @_ == 2;
+    my ($roots, $expected) = @_;
+    my $json = JSON::PP->new->canonical->ascii;
+    my $current = snapshot($roots);
+    die "owned cleanup snapshot changed before removal\n"
+        unless $json->encode(stable($current)) eq $json->encode(stable($expected))
+            && $json->encode($current->{absent_roots}) eq $json->encode($expected->{absent_roots});
+    my @removed;
+    my @paths = sort { scalar(split('/', $b)) <=> scalar(split('/', $a)) || $a cmp $b }
+        keys %{$expected->{nodes}};
+    for my $path (@paths) {
+        my $node = $expected->{nodes}{$path};
+        my $native = _metadata($path, 0);
+        die "owned cleanup identity changed\n" unless $native->[0] == $node->{identity}{device}
+            && $native->[1] == $node->{identity}{inode} && $native->[4] == $node->{uid}
+            && ($native->[2] & 07777) == $node->{mode};
+        if ($node->{kind} eq 'file') {
+            die "owned cleanup file bytes changed\n"
+                unless $json->encode(stable({nodes => {$path => _file($path, $native)}}))
+                    eq $json->encode(stable({nodes => {$path => $node}}));
+            unlink("$ROOT/$path") == 1 or die "owned file cleanup: $!\n";
+        } else {
+            die "owned cleanup directory gained members\n" if @{_members($path)};
+            rmdir("$ROOT/$path") or die "owned directory cleanup: $!\n";
+        }
+        die "removed owned name remains present\n" if defined(_metadata($path, 1));
+        push @removed, $path;
+    }
+    die "owned root remains after cleanup\n" if grep { !absent($_) } @$roots;
+    return {removed => \@removed, absent_roots => [@$roots]};
+}
+
+1;

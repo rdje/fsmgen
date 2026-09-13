@@ -49,4 +49,31 @@ lifetimes, interruptions and native/live integration remain separately owned.
 scripts/run_with_ram_guard.sh -- python3 -B docs/audits/native-proxy-lifetime-model-20260913/audit_corrected.py --verify-saved
 ```
 
+The isolated-file lifetime harness has passed source and data admission.
+Its selected schedules cover runtime retirement before observation release,
+observation release before runtime retirement, archival after retirement, and
+maintenance while a healthy owner of another image remains. Repeated
+observations must preserve the original hold and strict source snapshots.
+
+The planned file checks compare complete directory membership, bytes, modes and
+native identities before and after each operation. They include the image
+manifest and the archive's reused content files. An independent journal reader
+also checks API receipts, descriptor closure and private-before-global removal.
+Successful calls can retain a nonzero errno; that alone is not a failed call.
+
+Cleanup is limited to newly created objects whose observed identities still
+match. The first operation outcome is retained before cleanup. Unknown objects,
+changed identities and journal failures preserve the affected files for recovery;
+separate descriptor recovery cannot turn an incomplete operation into success.
+
+Admission used inert data only. The tracing hook's initial optional-argument
+signature error and the auditor's source-reconstruction errors remain retained
+with their corrections. Actual file effects and interruptions still require
+their separately owned execution checks. Synthetic process births and settled
+work records do not authenticate a native process or authorize the live store.
+
+```sh
+scripts/run_with_ram_guard.sh -- python3 -B docs/audits/native-proxy-lifetime-files-admission-20260913/audit.py --verify-saved
+```
+
 [Return to runtime measurement](16dc-vial-portable-verilator-runtime-measurement.md).

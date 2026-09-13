@@ -1,0 +1,24 @@
+{
+  "exit_code": 0,
+  "outputs": [
+    {
+      "path": ".artifacts/logs/native-proxy-lifetime-files-admission-20260913/first-syntax.stdout",
+      "raw_hex": "",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "size_bytes": 0
+    },
+    {
+      "path": ".artifacts/logs/native-proxy-lifetime-files-admission-20260913/first-syntax.stderr",
+      "raw_hex": "72616d2d67756172643a205049442038383530393b20686f73742036392e31253b20686f7374206375746f6666203838253b2064657363656e64616e7420525353206375746f66662034303936204d69423b20706f6c6c2032730a646f63732f6175646974732f6e61746976652d70726f78792d6c69666574696d652d66696c65732d61646d697373696f6e2d32303236303931332f4c69666574696d6546696c65732e706d2073796e746178204f4b0a",
+      "sha256": "b48ac6a7f17a50926f540e65d1bfb1547b6728df411c811d39287f10b9df0f30",
+      "size_bytes": 177
+    },
+    {
+      "path": ".artifacts/logs/native-proxy-lifetime-files-admission-20260913/first-syntax.exit",
+      "raw_hex": "300a",
+      "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa",
+      "size_bytes": 2
+    }
+  ],
+  "scope": "Syntax only; no fixture-root allocation or lifecycle filesystem execution."
+}

@@ -1,0 +1,23 @@
+{
+  "exact_derived_manifest_update": true,
+  "exact_preflight_path_replacement": true,
+  "no_fixture_execution": true,
+  "no_fixture_source_changes": true,
+  "no_new_document_allowances": true,
+  "original_completion_unchanged": {
+    "path": "docs/audits/native-proxy-lifetime-files-admission-20260913/completion.json",
+    "sha256": "e4c2463093a9a1b691649c6cc96890ceb0b8d0b4e3c93f750f88be1066f78261",
+    "size_bytes": 23394
+  },
+  "original_draft": {
+    "path": "docs/audits/native-proxy-lifetime-files-admission-20260913/design.md.source",
+    "sha256": "35a5671561b34a24e50d45e225e250ddbff766f48ab44c312bcd2658d89f1584",
+    "size_bytes": 3973
+  },
+  "schema": "fsmgen.inactive_lifetime_authoring_retirement_review.v1",
+  "source_record": {
+    "path": "docs/audits/native-proxy-lifetime-files-admission-20260913/draft-retirement.json",
+    "sha256": "98dc8614593442cfb5d34b85b39354688188b1ac2a1e3997766711c73ea8b7e7",
+    "size_bytes": 108948
+  }
+}

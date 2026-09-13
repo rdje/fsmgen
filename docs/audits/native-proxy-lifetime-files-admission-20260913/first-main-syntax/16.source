@@ -1,0 +1,38 @@
+{
+  "added_children": [
+    "HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.12.4.1.3.6.3.1",
+    "HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.12.4.1.3.6.3.2"
+  ],
+  "expanded_sha256": "ed691b5c64f476d7d6d3d86ec73976c7d50ca92fc89b672345bf36aedc5f989d",
+  "live_lines": 6366,
+  "no_ceiling_increase": true,
+  "no_nonempty_normalization_loss": true,
+  "normalized_sha256": "2fdaeab9e144c3bd5e294df810d8ddc8e1706d1be2cb1f4fe1bf03caed6686b3",
+  "offset_units": "Unicode codepoints",
+  "owner": "HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.12.4.1.3.6.3.1",
+  "removed_empty_line_offsets": [
+    77878,
+    79910,
+    82817,
+    85720,
+    87731,
+    89875,
+    91986,
+    94291,
+    97481,
+    99335,
+    101770,
+    103801,
+    105489,
+    107312,
+    109270
+  ],
+  "source_edit": {
+    "end": 751951,
+    "replacement": "- ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.12.4.1.3.6.3`\n  Status: `active`\n  Goal: `Qualify bounded complete lifetimes over isolated inert files.`\n  Acceptance: `Create separate prospective admission and execution leaves before allocating any new files. Pin exact new harness/module sources, declared stage schedules, ownership and handles, same-volume roots, walls and first-failure cleanup. Exercise complete acquisition/observation/archive/retirement/release/explicit-maintenance paths with supplied inert records, compare actual source identities and effects independently, and preserve every original qualifier. No compiler, native process, collector or live canonical store.`\n  Verification: `Create and commit prospective source, schedule, resource and cleanup admission under .3.6.3.1 before any new actual-file lifetime allocation. Only .3.6.3.2 executes the newly pinned inert harness; no original producer, compiler, native process, collector or live store.`\n  Commit: `pending`\n  Children: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.12.4.1.3.6.3.1, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.12.4.1.3.6.3.2`\n\n- ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.12.4.1.3.6.3.1`\n  Status: `active`\n  Goal: `Admit bounded actual-file lifetime qualification without execution.`\n  Acceptance: `Pin exact new inert harness and dependency sources, finite complete-operation schedules, evidence fields and independent physical-state oracles. Declare same-volume roots, normal-user ownership, exclusive allocation, handle closure, walls, first-failure retention and exact cleanup before execution. Qualify admission from source and pure data only; do not allocate fixture roots or invoke any lifecycle filesystem operation. Preserve the model and all original qualifier epochs.`\n  Verification: `Read the qualified model and current public inactive lifecycle entrypoints. Construct a new bounded harness over retained inert byte payloads with two runtime owners and distinct observers; select representative serial schedules explicitly from the complete model domain. No actual-file execution until this admission is committed and the execution leaf is active.`\n  Commit: `pending`\n\n- ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.12.4.1.3.6.3.2`\n  Status: `proposed`\n  Goal: `Execute and independently verify newly admitted inert file lifetimes.`\n  Acceptance: `Authenticate the committed admission and exact harness before exclusive fixture allocation. Execute only the declared new cases once, retaining first outcomes, ordered effects and actual source/directory identities. Independently compare complete lifecycle state, matched archive/work records and preserved unrelated images or references. Consume every result and prove exact owned cleanup; no replay of original qualifiers, native process, compiler, collector or live canonical store.`\n  Verification: `pending`\n  Commit: `pending`\n",
+    "start": 751174
+  },
+  "source_git_sha256": "30aca9d54e7a75ba038430c0dc6eec8ce67df82d98281782df778fcb15f60030",
+  "source_revision": "f451fda60b2761441deb3429bef6aac5852c458f",
+  "source_task": "docs/tasks/HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.md"
+}

@@ -1,0 +1,19 @@
+{
+  "checked_passages": [
+    "The isolated-file lifetime harness has passed source and data admission.",
+    "Successful calls can retain a nonzero errno; that alone is not a failed call.",
+    "The first operation outcome is retained before cleanup.",
+    "Admission used inert data only.",
+    "docs/audits/native-proxy-lifetime-files-admission-20260913/audit.py --verify-saved"
+  ],
+  "exact_output_absent": true,
+  "exit_code": 0,
+  "output": ".artifacts/tmp/native-proxy-lifetime-files-admission-book-20260913/book",
+  "rendered_bytes": 23589963,
+  "rendered_directories": 2,
+  "rendered_files": 99,
+  "renderer_warnings": [
+    "WARN search index is very large (13279348 bytes)"
+  ],
+  "same_volume_direct_objects": true
+}

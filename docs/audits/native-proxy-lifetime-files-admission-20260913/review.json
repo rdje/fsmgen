@@ -1,0 +1,473 @@
+{
+  "actual_fixture_execution": false,
+  "admission_falsifiers": [
+    "duplicate_case",
+    "invalid_order",
+    "foreign_root",
+    "runtime_authority",
+    "missing_execution_barrier",
+    "missing_task_pin",
+    "wrong_syswrite_prototype"
+  ],
+  "audit_failures": [
+    {
+      "actual_fixture_operations": 0,
+      "cause": "The new auditor expected the retained separator offset to select the second LF. The original task-layout offsets select the first LF of each two-LF separator before an ID. Reverse removal exactly reproduces the already pinned normalized hash and preserves every nonempty line.",
+      "correction": "Validate the exact LF LF - ID prefix at each recorded offset. Keep original offsets, source and normalized hashes, task text and all data qualification results unchanged.",
+      "first_exit": 1,
+      "raw_captures": [
+        {
+          "bytes_hex": "",
+          "path": ".artifacts/logs/native-proxy-lifetime-files-admission-20260913/audit.stdout",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "size_bytes": 0
+        },
+        {
+          "bytes_hex": "72616d2d67756172643a205049442039353231323b20686f73742037312e33253b20686f7374206375746f6666203838253b2064657363656e64616e7420525353206375746f66662034303936204d69423b20706f6c6c2032730a54726163656261636b20286d6f737420726563656e742063616c6c206c617374293a0a202046696c6520222f566f6c756d65732f5353442f446f63756d656e74732f6769746875622f66736d67656e2f646f63732f6175646974732f6e61746976652d70726f78792d6c69666574696d652d66696c65732d61646d697373696f6e2d32303236303931332f61756469742e7079222c206c696e65203236392c20696e203c6d6f64756c653e0a202020206d61696e28290a202020207e7e7e7e5e5e0a202046696c6520222f566f6c756d65732f5353442f446f63756d656e74732f6769746875622f66736d67656e2f646f63732f6175646974732f6e61746976652d70726f78792d6c69666574696d652d66696c65732d61646d697373696f6e2d32303236303931332f61756469742e7079222c206c696e65203235322c20696e206d61696e0a20202020726573756c74203d2076657269667928706c616e290a202046696c6520222f566f6c756d65732f5353442f446f63756d656e74732f6769746875622f66736d67656e2f646f63732f6175646974732f6e61746976652d70726f78792d6c69666574696d652d66696c65732d61646d697373696f6e2d32303236303931332f61756469742e7079222c206c696e65203230372c20696e207665726966790a20202020726573756c74203d20646963742873656c656374696f6e3d73656c656374696f6e5f636865636b732873656c656374696f6e2c20646f6d61696e292c20736f757263653d736f757263655f636865636b7328736f7572636573292c206c61796f75743d6c61796f75745f636865636b7328706c616e292c0a202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020207e7e7e7e7e7e7e7e7e7e7e7e7e5e5e5e5e5e5e0a202046696c6520222f566f6c756d65732f5353442f446f63756d656e74732f6769746875622f66736d67656e2f646f63732f6175646974732f6e61746976652d70726f78792d6c69666574696d652d66696c65732d61646d697373696f6e2d32303236303931332f61756469742e7079222c206c696e652039342c20696e206c61796f75745f636865636b730a2020202061737365727420657870616e6465645b6f66667365745d203d3d20275c6e2720616e6420657870616e6465645b6f6666736574202d20315d203d3d20275c6e270a20202020202020202020205e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e0a417373657274696f6e4572726f720a",
+          "path": ".artifacts/logs/native-proxy-lifetime-files-admission-20260913/audit.stderr",
+          "sha256": "32e4b7bae490f9bb314b73193d9b533ce944efa356a9f9f077d79634c43fb5eb",
+          "size_bytes": 1120
+        },
+        {
+          "bytes_hex": "310a",
+          "path": ".artifacts/logs/native-proxy-lifetime-files-admission-20260913/audit.exit",
+          "sha256": "4355a46b19d348dc2f57c046f8ef63d4538ebb936000f3c9ee954a27460dd865",
+          "size_bytes": 2
+        }
+      ],
+      "source_copies": [
+        {
+          "copy": "docs/audits/native-proxy-lifetime-files-admission-20260913/first-audit/audit.py.source",
+          "original": "docs/audits/native-proxy-lifetime-files-admission-20260913/audit.py",
+          "sha256": "79e22a9ebad427cffc7fc583b7e566a428f08f5c2d2c04b706f305f94fb96d55",
+          "size_bytes": 17082
+        },
+        {
+          "copy": "docs/audits/native-proxy-lifetime-files-admission-20260913/first-audit/preflight-pins.json.source",
+          "original": "docs/audits/native-proxy-lifetime-files-admission-20260913/preflight-pins.json",
+          "sha256": "5d4222b64f5fd2ea2c8a0ff879df726e1c113f4a9ef39d750926c238180c8086",
+          "size_bytes": 8843
+        }
+      ]
+    },
+    {
+      "actual_fixture_operations": 0,
+      "cause": "The auditor reconstructed the syswrite signature correction with an unscoped first prototype-text replacement. The identical original signature also occurs earlier on sysopen, so its reconstructed source wrongly changed sysopen. The actual trace implementation changed only syswrite and its argument forwarding.",
+      "correction": "Scope source reconstruction to the exact CORE::GLOBAL::syswrite assignment; preserve sysopen, producer outputs and both first auditor epochs.",
+      "first_exit": 1,
+      "raw_captures": [
+        {
+          "bytes_hex": "",
+          "path": ".artifacts/logs/native-proxy-lifetime-files-admission-20260913/corrected-audit.stdout",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "size_bytes": 0
+        },
+        {
+          "bytes_hex": "72616d2d67756172643a205049442031373731323b20686f73742037322e37253b20686f7374206375746f6666203838253b2064657363656e64616e7420525353206375746f66662034303936204d69423b20706f6c6c2032730a54726163656261636b20286d6f737420726563656e742063616c6c206c617374293a0a202046696c6520222f566f6c756d65732f5353442f446f63756d656e74732f6769746875622f66736d67656e2f646f63732f6175646974732f6e61746976652d70726f78792d6c69666574696d652d66696c65732d61646d697373696f6e2d32303236303931332f61756469742e7079222c206c696e65203237372c20696e203c6d6f64756c653e0a202020206d61696e28290a202020207e7e7e7e5e5e0a202046696c6520222f566f6c756d65732f5353442f446f63756d656e74732f6769746875622f66736d67656e2f646f63732f6175646974732f6e61746976652d70726f78792d6c69666574696d652d66696c65732d61646d697373696f6e2d32303236303931332f61756469742e7079222c206c696e65203236302c20696e206d61696e0a20202020726573756c74203d2076657269667928706c616e290a202046696c6520222f566f6c756d65732f5353442f446f63756d656e74732f6769746875622f66736d67656e2f646f63732f6175646974732f6e61746976652d70726f78792d6c69666574696d652d66696c65732d61646d697373696f6e2d32303236303931332f61756469742e7079222c206c696e65203230382c20696e207665726966790a2020202066697273745f6661696c7572653d66697273745f6661696c75726528292c20696e6572743d696e6572745f636865636b732873656c656374696f6e292c207472616365733d74726163655f636f6e74726f6c732829290a2020202020202020202020202020202020207e7e7e7e7e7e7e7e7e7e7e7e7e5e5e0a202046696c6520222f566f6c756d65732f5353442f446f63756d656e74732f6769746875622f66736d67656e2f646f63732f6175646974732f6e61746976652d70726f78792d6c69666574696d652d66696c65732d61646d697373696f6e2d32303236303931332f61756469742e7079222c206c696e65203131392c20696e2066697273745f6661696c7572650a2020202061737365727420636f72726563746564203d3d202842415345202f20274c69666574696d6554726163652e706d27292e726561645f74657874282920616e6420636f7272656374656420213d206f6c640a20202020202020202020205e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e0a417373657274696f6e4572726f720a",
+          "path": ".artifacts/logs/native-proxy-lifetime-files-admission-20260913/corrected-audit.stderr",
+          "sha256": "446e522e1bf2caa0bed31eb85e09b6dd1623d02faecaece2136a1d87c0690664",
+          "size_bytes": 1031
+        },
+        {
+          "bytes_hex": "310a",
+          "path": ".artifacts/logs/native-proxy-lifetime-files-admission-20260913/corrected-audit.exit",
+          "sha256": "4355a46b19d348dc2f57c046f8ef63d4538ebb936000f3c9ee954a27460dd865",
+          "size_bytes": 2
+        }
+      ],
+      "source_copies": [
+        {
+          "copy": "docs/audits/native-proxy-lifetime-files-admission-20260913/second-audit/audit.py.source",
+          "original": "docs/audits/native-proxy-lifetime-files-admission-20260913/audit.py",
+          "sha256": "eaecb93ad3680db1ba72ea4ad1c312de41b6c5fa9b42698eb186779da357e422",
+          "size_bytes": 17623
+        },
+        {
+          "copy": "docs/audits/native-proxy-lifetime-files-admission-20260913/second-audit/preflight-pins.json.source",
+          "original": "docs/audits/native-proxy-lifetime-files-admission-20260913/preflight-pins.json",
+          "sha256": "037d3914a1f6be90c7880777b79cf56f7854e7ea8d181de87900606d4ba6a289",
+          "size_bytes": 9500
+        }
+      ]
+    }
+  ],
+  "first_failure": {
+    "cause": "native optional syswrite length rejected by observer signature",
+    "corrected_signature": "*$;$$",
+    "first_exit": 2,
+    "preserved_raw_captures": 6,
+    "source_copies": 18
+  },
+  "inert": {
+    "contexts": 2,
+    "fixture_attempts": 0,
+    "independent_consumer_controls": [
+      "different_image:missing_member",
+      "different_image:changed_bytes",
+      "different_image:authority",
+      "different_image:runtime_identity",
+      "different_image:wrong_uid",
+      "different_image:wrong_mode",
+      "different_image:wrong_native_inode",
+      "different_image:wrong_bytes",
+      "different_image:wrong_absence",
+      "same_image:missing_member",
+      "same_image:changed_bytes",
+      "same_image:authority",
+      "same_image:runtime_identity",
+      "same_image:wrong_uid",
+      "same_image:wrong_mode",
+      "same_image:wrong_native_inode",
+      "same_image:wrong_bytes",
+      "same_image:wrong_absence"
+    ],
+    "perl_record_checks": 28,
+    "prefixes": 64,
+    "process_attempts": 0
+  },
+  "input_bytes": 10742899,
+  "input_files": 48,
+  "layout": {
+    "ceiling_increase": 0,
+    "nonempty_loss": 0,
+    "removed_empty_separators": 15
+  },
+  "missing_legs": [
+    "actual isolated filesystem effects",
+    "native process authentication",
+    "live canonical-store integration"
+  ],
+  "owner": "HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.12.4.1.3.6.3.1",
+  "prospective_source_admitted": true,
+  "raw_captures": [
+    {
+      "bytes_hex": "696e657274206c69666574696d6520646174613a20636f6e74657874733d322070726566697865733d36342061637475616c5f666978747572655f6f7065726174696f6e733d300a",
+      "path": ".artifacts/logs/native-proxy-lifetime-files-admission-20260913/prepare.stdout",
+      "sha256": "fe3bc5e4bb01962d10c9dcdf74174692d75167ecab69c64817c7017d9c545277",
+      "size_bytes": 72
+    },
+    {
+      "bytes_hex": "72616d2d67756172643a205049442034343430393b20686f73742036392e38253b20686f7374206375746f6666203838253b2064657363656e64616e7420525353206375746f66662034303936204d69423b20706f6c6c2032730a",
+      "path": ".artifacts/logs/native-proxy-lifetime-files-admission-20260913/prepare.stderr",
+      "sha256": "69be6ef385efc750e2d3a51a738d970c251802b56f76a974a72c6cbf0e691e98",
+      "size_bytes": 91
+    },
+    {
+      "bytes_hex": "300a",
+      "path": ".artifacts/logs/native-proxy-lifetime-files-admission-20260913/prepare.exit",
+      "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa",
+      "size_bytes": 2
+    },
+    {
+      "bytes_hex": "",
+      "path": ".artifacts/logs/native-proxy-lifetime-files-admission-20260913/main-syntax.stdout",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "size_bytes": 0
+    },
+    {
+      "bytes_hex": "72616d2d67756172643a205049442034373434313b20686f73742036392e37253b20686f7374206375746f6666203838253b2064657363656e64616e7420525353206375746f66662034303936204d69423b20706f6c6c2032730a4e6f7420656e6f75676820617267756d656e747320666f7220434f52453a3a474c4f42414c3a3a7379737772697465206174202f53797374656d2f4c6962726172792f5065726c2f352e33342f64617277696e2d7468726561642d6d756c74692d326c6576656c2f494f2f48616e646c652e706d206c696e65203436312c206e65617220225d29220a424547494e206e6f742073616665206166746572206572726f72732d2d636f6d70696c6174696f6e2061626f72746564206174202f53797374656d2f4c6962726172792f5065726c2f352e33342f64617277696e2d7468726561642d6d756c74692d326c6576656c2f494f2f48616e646c652e706d206c696e65203630392e0a436f6d70696c6174696f6e206661696c656420696e2072657175697265206174202f53797374656d2f4c6962726172792f5065726c2f352e33342f64617277696e2d7468726561642d6d756c74692d326c6576656c2f494f2f5365656b61626c652e706d206c696e65203130302e0a424547494e206661696c65642d2d636f6d70696c6174696f6e2061626f72746564206174202f53797374656d2f4c6962726172792f5065726c2f352e33342f64617277696e2d7468726561642d6d756c74692d326c6576656c2f494f2f5365656b61626c652e706d206c696e65203130302e0a436f6d70696c6174696f6e206661696c656420696e2072657175697265206174202f53797374656d2f4c6962726172792f5065726c2f352e33342f46696c652f54656d702e706d206c696e65203135312e0a424547494e206661696c65642d2d636f6d70696c6174696f6e2061626f72746564206174202f53797374656d2f4c6962726172792f5065726c2f352e33342f46696c652f54656d702e706d206c696e65203135312e0a436f6d70696c6174696f6e206661696c656420696e2072657175697265206174202f566f6c756d65732f5353442f446f63756d656e74732f6769746875622f66736d67656e2f646f63732f6175646974732f6e61746976652d70726f78792d6c69666574696d652d66696c65732d61646d697373696f6e2d32303236303931332f2e2e2f2e2e2f2e2e2f7065726c2f46534d2f50726f6a656374446174614c6f63616c6974792e706d206c696e652031322e0a424547494e206661696c65642d2d636f6d70696c6174696f6e2061626f72746564206174202f566f6c756d65732f5353442f446f63756d656e74732f6769746875622f66736d67656e2f646f63732f6175646974732f6e61746976652d70726f78792d6c69666574696d652d66696c65732d61646d697373696f6e2d32303236303931332f2e2e2f2e2e2f2e2e2f7065726c2f46534d2f50726f6a656374446174614c6f63616c6974792e706d206c696e652031322e0a436f6d70696c6174696f6e206661696c656420696e207265717569726520617420646f63732f6175646974732f6e61746976652d70726f78792d6c69666574696d652d66696c65732d61646d697373696f6e2d32303236303931332f7175616c6966792e706c206c696e652032372e0a424547494e206661696c65642d2d636f6d70696c6174696f6e2061626f7274656420617420646f63732f6175646974732f6e61746976652d70726f78792d6c69666574696d652d66696c65732d61646d697373696f6e2d32303236303931332f7175616c6966792e706c206c696e652032372e0a",
+      "path": ".artifacts/logs/native-proxy-lifetime-files-admission-20260913/main-syntax.stderr",
+      "sha256": "49ae5b92a96d08bbb8b5e729c725aa4b9af0f22de743010d3ebdaceaa45ab954",
+      "size_bytes": 1340
+    },
+    {
+      "bytes_hex": "320a",
+      "path": ".artifacts/logs/native-proxy-lifetime-files-admission-20260913/main-syntax.exit",
+      "sha256": "53c234e5e8472b6ac51c1ae1cab3fe06fad053beb8ebfd8977b010655bfdd3c3",
+      "size_bytes": 2
+    },
+    {
+      "bytes_hex": "",
+      "path": ".artifacts/logs/native-proxy-lifetime-files-admission-20260913/corrected-syntax.stdout",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "size_bytes": 0
+    },
+    {
+      "bytes_hex": "72616d2d67756172643a205049442034383635303b20686f73742037302e32253b20686f7374206375746f6666203838253b2064657363656e64616e7420525353206375746f66662034303936204d69423b20706f6c6c2032730a646f63732f6175646974732f6e61746976652d70726f78792d6c69666574696d652d66696c65732d61646d697373696f6e2d32303236303931332f7175616c6966792e706c2073796e746178204f4b0a",
+      "path": ".artifacts/logs/native-proxy-lifetime-files-admission-20260913/corrected-syntax.stderr",
+      "sha256": "997d64567484f443e97c04c90620bcc3ada2756539a0552481f045b0908d0ef0",
+      "size_bytes": 171
+    },
+    {
+      "bytes_hex": "300a",
+      "path": ".artifacts/logs/native-proxy-lifetime-files-admission-20260913/corrected-syntax.exit",
+      "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa",
+      "size_bytes": 2
+    },
+    {
+      "bytes_hex": "6f6b2031202d20646966666572656e745f696d61676520696e697469616c0a6f6b2032202d20646966666572656e745f696d61676520696e697469616c20696e7075747320756e6368616e6765640a6f6b2033202d20646966666572656e745f696d6167652072656a656374206368616e6765645f777261707065720a6f6b2034202d20646966666572656e745f696d6167652072656a656374206d697373696e675f6d656d6265720a6f6b2035202d20646966666572656e745f696d6167652072656a656374206f62736572766174696f6e5f6964656e746974790a6f6b2036202d20646966666572656e745f696d6167652072656a6563742072756e74696d655f617574686f726974790a6f6b2037202d20646966666572656e745f696d6167652072656a6563742072756e74696d655f7265636f72640a6f6b2038202d20646966666572656e745f696d6167652072656a65637420756e65787065637465645f6d656d6265720a6f6b2039202d20646966666572656e745f696d6167652072656a6563742077726f6e675f6d6f64650a6f6b203130202d20646966666572656e745f696d6167652072656a6563742077726f6e675f73746f72655f6964656e746974790a6f6b203131202d20646966666572656e745f696d6167652062696e64206172636869766520610a6f6b203132202d20646966666572656e745f696d6167652062696e6420726575736564206172636869766520620a6f6b203133202d20646966666572656e745f696d61676520617263686976652072656a656374206368616e6765645f62797465730a6f6b203134202d20646966666572656e745f696d61676520617263686976652072656a656374206368616e6765645f6964656e746974790a6f6b203135202d20646966666572656e745f696d61676520617263686976652072656a65637420756e65787065637465645f6d656d6265720a6f6b203136202d2073616d655f696d61676520696e697469616c0a6f6b203137202d2073616d655f696d61676520696e697469616c20696e7075747320756e6368616e6765640a6f6b203138202d2073616d655f696d6167652072656a656374206368616e6765645f777261707065720a6f6b203139202d2073616d655f696d6167652072656a656374206d697373696e675f6d656d6265720a6f6b203230202d2073616d655f696d6167652072656a656374206f62736572766174696f6e5f6964656e746974790a6f6b203231202d2073616d655f696d6167652072656a6563742072756e74696d655f617574686f726974790a6f6b203232202d2073616d655f696d6167652072656a6563742072756e74696d655f7265636f72640a6f6b203233202d2073616d655f696d6167652072656a65637420756e65787065637465645f6d656d6265720a6f6b203234202d2073616d655f696d6167652072656a6563742077726f6e675f6d6f64650a6f6b203235202d2073616d655f696d6167652072656a6563742077726f6e675f73746f72655f6964656e746974790a6f6b203236202d2073616d655f696d6167652062696e64206172636869766520610a6f6b203237202d2073616d655f696d6167652062696e6420726575736564206172636869766520620a6f6b203238202d2073616d655f696d61676520617263686976652072656a656374206368616e6765645f62797465730a6f6b203239202d2073616d655f696d61676520617263686976652072656a656374206368616e6765645f6964656e746974790a6f6b203330202d2073616d655f696d61676520617263686976652072656a65637420756e65787065637465645f6d656d6265720a6f6b203331202d2073616d655f72756e74696d655f66697273742070726566697820300a6f6b203332202d2073616d655f72756e74696d655f66697273742070726566697820310a6f6b203333202d2073616d655f72756e74696d655f66697273742070726566697820320a6f6b203334202d2073616d655f72756e74696d655f66697273742070726566697820330a6f6b203335202d2073616d655f72756e74696d655f66697273742070726566697820340a6f6b203336202d2073616d655f72756e74696d655f66697273742070726566697820350a6f6b203337202d2073616d655f72756e74696d655f66697273742070726566697820360a6f6b203338202d2073616d655f72756e74696d655f66697273742070726566697820370a6f6b203339202d2073616d655f6f62736572766174696f6e5f66697273742070726566697820300a6f6b203430202d2073616d655f6f62736572766174696f6e5f66697273742070726566697820310a6f6b203431202d2073616d655f6f62736572766174696f6e5f66697273742070726566697820320a6f6b203432202d2073616d655f6f62736572766174696f6e5f66697273742070726566697820330a6f6b203433202d2073616d655f6f62736572766174696f6e5f66697273742070726566697820340a6f6b203434202d2073616d655f6f62736572766174696f6e5f66697273742070726566697820350a6f6b203435202d2073616d655f6f62736572766174696f6e5f66697273742070726566697820360a6f6b203436202d2073616d655f6f62736572766174696f6e5f66697273742070726566697820370a6f6b203437202d2073616d655f617263686976655f6c6174652070726566697820300a6f6b203438202d2073616d655f617263686976655f6c6174652070726566697820310a6f6b203439202d2073616d655f617263686976655f6c6174652070726566697820320a6f6b203530202d2073616d655f617263686976655f6c6174652070726566697820330a6f6b203531202d2073616d655f617263686976655f6c6174652070726566697820340a6f6b203532202d2073616d655f617263686976655f6c6174652070726566697820350a6f6b203533202d2073616d655f617263686976655f6c6174652070726566697820360a6f6b203534202d2073616d655f617263686976655f6c6174652070726566697820370a6f6b203535202d2073616d655f6d697865642070726566697820300a6f6b203536202d2073616d655f6d697865642070726566697820310a6f6b203537202d2073616d655f6d697865642070726566697820320a6f6b203538202d2073616d655f6d697865642070726566697820330a6f6b203539202d2073616d655f6d697865642070726566697820340a6f6b203630202d2073616d655f6d697865642070726566697820350a6f6b203631202d2073616d655f6d697865642070726566697820360a6f6b203632202d2073616d655f6d697865642070726566697820370a6f6b203633202d20646966666572656e745f6c6174655f6f746865722070726566697820300a6f6b203634202d20646966666572656e745f6c6174655f6f746865722070726566697820310a6f6b203635202d20646966666572656e745f6c6174655f6f746865722070726566697820320a6f6b203636202d20646966666572656e745f6c6174655f6f746865722070726566697820330a6f6b203637202d20646966666572656e745f6c6174655f6f746865722070726566697820340a6f6b203638202d20646966666572656e745f6c6174655f6f746865722070726566697820350a6f6b203639202d20646966666572656e745f6c6174655f6f746865722070726566697820360a6f6b203730202d20646966666572656e745f6c6174655f6f746865722070726566697820370a6f6b203731202d20646966666572656e745f72756e74696d655f66697273742070726566697820300a6f6b203732202d20646966666572656e745f72756e74696d655f66697273742070726566697820310a6f6b203733202d20646966666572656e745f72756e74696d655f66697273742070726566697820320a6f6b203734202d20646966666572656e745f72756e74696d655f66697273742070726566697820330a6f6b203735202d20646966666572656e745f72756e74696d655f66697273742070726566697820340a6f6b203736202d20646966666572656e745f72756e74696d655f66697273742070726566697820350a6f6b203737202d20646966666572656e745f72756e74696d655f66697273742070726566697820360a6f6b203738202d20646966666572656e745f72756e74696d655f66697273742070726566697820370a6f6b203739202d20646966666572656e745f6f62736572766174696f6e5f66697273742070726566697820300a6f6b203830202d20646966666572656e745f6f62736572766174696f6e5f66697273742070726566697820310a6f6b203831202d20646966666572656e745f6f62736572766174696f6e5f66697273742070726566697820320a6f6b203832202d20646966666572656e745f6f62736572766174696f6e5f66697273742070726566697820330a6f6b203833202d20646966666572656e745f6f62736572766174696f6e5f66697273742070726566697820340a6f6b203834202d20646966666572656e745f6f62736572766174696f6e5f66697273742070726566697820350a6f6b203835202d20646966666572656e745f6f62736572766174696f6e5f66697273742070726566697820360a6f6b203836202d20646966666572656e745f6f62736572766174696f6e5f66697273742070726566697820370a6f6b203837202d20646966666572656e745f6d697865642070726566697820300a6f6b203838202d20646966666572656e745f6d697865642070726566697820310a6f6b203839202d20646966666572656e745f6d697865642070726566697820320a6f6b203930202d20646966666572656e745f6d697865642070726566697820330a6f6b203931202d20646966666572656e745f6d697865642070726566697820340a6f6b203932202d20646966666572656e745f6d697865642070726566697820350a6f6b203933202d20646966666572656e745f6d697865642070726566697820360a6f6b203934202d20646966666572656e745f6d697865642070726566697820370a6f6b203935202d206e6f206c6966656379636c65206f7220666978747572652066696c6573797374656d2063616c6c730a6f6b203936202d206e6f2073756270726f6365737320617474656d7074730a312e2e39360a",
+      "path": ".artifacts/logs/native-proxy-lifetime-files-admission-20260913/data.stdout",
+      "sha256": "5798585fa384120cf8e85cfd22ad604301b2997bbe8c029e72c2ee8219e3a988",
+      "size_bytes": 3800
+    },
+    {
+      "bytes_hex": "72616d2d67756172643a205049442034393031353b20686f73742037322e37253b20686f7374206375746f6666203838253b2064657363656e64616e7420525353206375746f66662034303936204d69423b20706f6c6c2032730a",
+      "path": ".artifacts/logs/native-proxy-lifetime-files-admission-20260913/data.stderr",
+      "sha256": "2b98d71c4f8262c4586e947633dbaeddabe09d1c1913aacf8a8fbd87c68fdbca",
+      "size_bytes": 91
+    },
+    {
+      "bytes_hex": "300a",
+      "path": ".artifacts/logs/native-proxy-lifetime-files-admission-20260913/data.exit",
+      "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa",
+      "size_bytes": 2
+    }
+  ],
+  "runtime_qualification": false,
+  "schema": "fsmgen.inactive_lifetime_files_admission_review.v1",
+  "selection": {
+    "cases": 8,
+    "fixture_roots": [
+      ".artifacts/tmp/native-proxy-image-custody/cases/fsmgen-LifetimeFiles20260913_same_runtime_first",
+      ".artifacts/tmp/process-supervisor-tests/fsmgen-LifetimeFiles20260913_same_runtime_first_target",
+      ".artifacts/tmp/process-supervisor-tests/fsmgen-LifetimeFiles20260913_same_runtime_first_other",
+      ".artifacts/logs/native-proxy-observation-acquisition-20260910/cases/fsmgen-LifetimeFiles20260913_same_runtime_first",
+      ".artifacts/tmp/native-proxy-image-custody/cases/fsmgen-LifetimeFiles20260913_same_observation_first",
+      ".artifacts/tmp/process-supervisor-tests/fsmgen-LifetimeFiles20260913_same_observation_first_target",
+      ".artifacts/tmp/process-supervisor-tests/fsmgen-LifetimeFiles20260913_same_observation_first_other",
+      ".artifacts/logs/native-proxy-observation-acquisition-20260910/cases/fsmgen-LifetimeFiles20260913_same_observation_first",
+      ".artifacts/tmp/native-proxy-image-custody/cases/fsmgen-LifetimeFiles20260913_same_archive_late",
+      ".artifacts/tmp/process-supervisor-tests/fsmgen-LifetimeFiles20260913_same_archive_late_target",
+      ".artifacts/tmp/process-supervisor-tests/fsmgen-LifetimeFiles20260913_same_archive_late_other",
+      ".artifacts/logs/native-proxy-observation-acquisition-20260910/cases/fsmgen-LifetimeFiles20260913_same_archive_late",
+      ".artifacts/tmp/native-proxy-image-custody/cases/fsmgen-LifetimeFiles20260913_same_mixed",
+      ".artifacts/tmp/process-supervisor-tests/fsmgen-LifetimeFiles20260913_same_mixed_target",
+      ".artifacts/tmp/process-supervisor-tests/fsmgen-LifetimeFiles20260913_same_mixed_other",
+      ".artifacts/logs/native-proxy-observation-acquisition-20260910/cases/fsmgen-LifetimeFiles20260913_same_mixed",
+      ".artifacts/tmp/native-proxy-image-custody/cases/fsmgen-LifetimeFiles20260913_different_late_other",
+      ".artifacts/tmp/process-supervisor-tests/fsmgen-LifetimeFiles20260913_different_late_other_target",
+      ".artifacts/tmp/process-supervisor-tests/fsmgen-LifetimeFiles20260913_different_late_other_other",
+      ".artifacts/logs/native-proxy-observation-acquisition-20260910/cases/fsmgen-LifetimeFiles20260913_different_late_other",
+      ".artifacts/tmp/native-proxy-image-custody/cases/fsmgen-LifetimeFiles20260913_different_runtime_first",
+      ".artifacts/tmp/process-supervisor-tests/fsmgen-LifetimeFiles20260913_different_runtime_first_target",
+      ".artifacts/tmp/process-supervisor-tests/fsmgen-LifetimeFiles20260913_different_runtime_first_other",
+      ".artifacts/logs/native-proxy-observation-acquisition-20260910/cases/fsmgen-LifetimeFiles20260913_different_runtime_first",
+      ".artifacts/tmp/native-proxy-image-custody/cases/fsmgen-LifetimeFiles20260913_different_observation_first",
+      ".artifacts/tmp/process-supervisor-tests/fsmgen-LifetimeFiles20260913_different_observation_first_target",
+      ".artifacts/tmp/process-supervisor-tests/fsmgen-LifetimeFiles20260913_different_observation_first_other",
+      ".artifacts/logs/native-proxy-observation-acquisition-20260910/cases/fsmgen-LifetimeFiles20260913_different_observation_first",
+      ".artifacts/tmp/native-proxy-image-custody/cases/fsmgen-LifetimeFiles20260913_different_mixed",
+      ".artifacts/tmp/process-supervisor-tests/fsmgen-LifetimeFiles20260913_different_mixed_target",
+      ".artifacts/tmp/process-supervisor-tests/fsmgen-LifetimeFiles20260913_different_mixed_other",
+      ".artifacts/logs/native-proxy-observation-acquisition-20260910/cases/fsmgen-LifetimeFiles20260913_different_mixed"
+    ],
+    "repeated_observations": 40,
+    "stage_count": 152,
+    "stages": [
+      {
+        "case": "same_runtime_first",
+        "names": [
+          "create_owned_roots",
+          "prepare_private_wrappers",
+          "acquire_runtime_target",
+          "acquire_runtime_other",
+          "acquire_observation_a",
+          "acquire_observation_b",
+          "reuse_a_before_archive_a",
+          "reuse_b_before_archive_a",
+          "archive_a",
+          "reuse_a_before_archive_b",
+          "reuse_b_before_archive_b",
+          "archive_b",
+          "reuse_a_before_retire_target",
+          "reuse_b_before_retire_target",
+          "retire_target",
+          "release_a",
+          "release_b",
+          "retire_other",
+          "maintain_target",
+          "owned_cleanup"
+        ]
+      },
+      {
+        "case": "same_observation_first",
+        "names": [
+          "create_owned_roots",
+          "prepare_private_wrappers",
+          "acquire_runtime_target",
+          "acquire_runtime_other",
+          "acquire_observation_a",
+          "acquire_observation_b",
+          "reuse_a_before_archive_a",
+          "reuse_b_before_archive_a",
+          "archive_a",
+          "reuse_a_before_archive_b",
+          "reuse_b_before_archive_b",
+          "archive_b",
+          "reuse_a_before_release_a",
+          "reuse_b_before_release_a",
+          "release_a",
+          "reuse_b_before_release_b",
+          "release_b",
+          "retire_target",
+          "retire_other",
+          "maintain_target",
+          "owned_cleanup"
+        ]
+      },
+      {
+        "case": "same_archive_late",
+        "names": [
+          "create_owned_roots",
+          "prepare_private_wrappers",
+          "acquire_runtime_target",
+          "acquire_runtime_other",
+          "acquire_observation_a",
+          "acquire_observation_b",
+          "reuse_a_before_retire_target",
+          "reuse_b_before_retire_target",
+          "retire_target",
+          "archive_a",
+          "archive_b",
+          "retire_other",
+          "release_a",
+          "release_b",
+          "maintain_target",
+          "owned_cleanup"
+        ]
+      },
+      {
+        "case": "same_mixed",
+        "names": [
+          "create_owned_roots",
+          "prepare_private_wrappers",
+          "acquire_runtime_target",
+          "acquire_runtime_other",
+          "acquire_observation_a",
+          "acquire_observation_b",
+          "reuse_a_before_archive_a",
+          "reuse_b_before_archive_a",
+          "archive_a",
+          "reuse_a_before_release_a",
+          "reuse_b_before_release_a",
+          "release_a",
+          "reuse_b_before_retire_target",
+          "retire_target",
+          "archive_b",
+          "retire_other",
+          "release_b",
+          "maintain_target",
+          "owned_cleanup"
+        ]
+      },
+      {
+        "case": "different_late_other",
+        "names": [
+          "create_owned_roots",
+          "prepare_private_wrappers",
+          "acquire_runtime_target",
+          "acquire_runtime_other",
+          "acquire_observation_a",
+          "acquire_observation_b",
+          "reuse_a_before_archive_a",
+          "reuse_b_before_archive_a",
+          "archive_a",
+          "reuse_a_before_archive_b",
+          "reuse_b_before_archive_b",
+          "archive_b",
+          "reuse_a_before_retire_target",
+          "reuse_b_before_retire_target",
+          "retire_target",
+          "release_a",
+          "release_b",
+          "maintain_target",
+          "retire_other",
+          "owned_cleanup"
+        ]
+      },
+      {
+        "case": "different_runtime_first",
+        "names": [
+          "create_owned_roots",
+          "prepare_private_wrappers",
+          "acquire_runtime_target",
+          "acquire_runtime_other",
+          "acquire_observation_a",
+          "acquire_observation_b",
+          "reuse_a_before_retire_target",
+          "reuse_b_before_retire_target",
+          "retire_target",
+          "archive_a",
+          "archive_b",
+          "release_a",
+          "retire_other",
+          "release_b",
+          "maintain_target",
+          "owned_cleanup"
+        ]
+      },
+      {
+        "case": "different_observation_first",
+        "names": [
+          "create_owned_roots",
+          "prepare_private_wrappers",
+          "acquire_runtime_target",
+          "acquire_runtime_other",
+          "acquire_observation_a",
+          "acquire_observation_b",
+          "reuse_a_before_archive_a",
+          "reuse_b_before_archive_a",
+          "archive_a",
+          "reuse_a_before_release_a",
+          "reuse_b_before_release_a",
+          "release_a",
+          "reuse_b_before_archive_b",
+          "archive_b",
+          "reuse_b_before_release_b",
+          "release_b",
+          "retire_target",
+          "maintain_target",
+          "retire_other",
+          "owned_cleanup"
+        ]
+      },
+      {
+        "case": "different_mixed",
+        "names": [
+          "create_owned_roots",
+          "prepare_private_wrappers",
+          "acquire_runtime_target",
+          "acquire_runtime_other",
+          "acquire_observation_a",
+          "acquire_observation_b",
+          "reuse_a_before_archive_b",
+          "reuse_b_before_archive_b",
+          "archive_b",
+          "reuse_a_before_release_b",
+          "reuse_b_before_release_b",
+          "release_b",
+          "reuse_a_before_retire_other",
+          "retire_other",
+          "reuse_a_before_retire_target",
+          "retire_target",
+          "archive_a",
+          "release_a",
+          "maintain_target",
+          "owned_cleanup"
+        ]
+      }
+    ]
+  },
+  "source": {
+    "actual_execution_requires_committed_admission": true,
+    "descriptor_ownership_before_validation": true,
+    "first_outcome_before_cleanup": true,
+    "guarded_main": true
+  },
+  "source_revision": "f451fda60b2761441deb3429bef6aac5852c458f",
+  "traces": {
+    "actual_descriptor_operations": 0,
+    "rejected": [
+      "open_at_return",
+      "recovered",
+      "failed_close",
+      "unowned_close",
+      "missing_open",
+      "wrong_path",
+      "primary_error",
+      "writable_probe"
+    ],
+    "successful_errno": 25,
+    "synthetic_positive": 1
+  }
+}

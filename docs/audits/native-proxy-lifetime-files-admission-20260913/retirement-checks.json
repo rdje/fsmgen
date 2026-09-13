@@ -1,0 +1,40 @@
+{
+  "raw_outputs": [
+    {
+      "path": ".artifacts/logs/native-proxy-lifetime-files-admission-20260913/retirement.stdout",
+      "raw_hex": "6472616674207265746972656d656e743a204f4b3b20657861637420736f757263652072657461696e65642c206c69766520617574686f72697469657320756e6368616e6765642c206e6f20616c6c6f77616e636520696e6372656173650a",
+      "sha256": "fd34cca91ea166b38fb6d21ce8219bd5eecab53cf40cf72db0a0bf5540105860",
+      "size_bytes": 95
+    },
+    {
+      "path": ".artifacts/logs/native-proxy-lifetime-files-admission-20260913/retirement.stderr",
+      "raw_hex": "72616d2d67756172643a205049442036313632343b20686f73742037342e36253b20686f7374206375746f6666203838253b2064657363656e64616e7420525353206375746f66662034303936204d69423b20706f6c6c2032730a",
+      "sha256": "260cf304c82d03b45357bd92921f812809debc2aa80fa91ecf4dc6b9f92058fc",
+      "size_bytes": 91
+    },
+    {
+      "path": ".artifacts/logs/native-proxy-lifetime-files-admission-20260913/retirement.exit",
+      "raw_hex": "300a",
+      "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa",
+      "size_bytes": 2
+    },
+    {
+      "path": ".artifacts/logs/native-proxy-lifetime-files-admission-20260913/retirement-saved.stdout",
+      "raw_hex": "6472616674207265746972656d656e743a204f4b3b20657861637420736f757263652072657461696e65642c206c69766520617574686f72697469657320756e6368616e6765642c206e6f20616c6c6f77616e636520696e6372656173650a",
+      "sha256": "fd34cca91ea166b38fb6d21ce8219bd5eecab53cf40cf72db0a0bf5540105860",
+      "size_bytes": 95
+    },
+    {
+      "path": ".artifacts/logs/native-proxy-lifetime-files-admission-20260913/retirement-saved.stderr",
+      "raw_hex": "72616d2d67756172643a205049442036323331333b20686f73742037352e38253b20686f7374206375746f6666203838253b2064657363656e64616e7420525353206375746f66662034303936204d69423b20706f6c6c2032730a",
+      "sha256": "8203f300e0001982295b4bcd47d218fec2814a62421871ff027a7f69963a14ca",
+      "size_bytes": 91
+    },
+    {
+      "path": ".artifacts/logs/native-proxy-lifetime-files-admission-20260913/retirement-saved.exit",
+      "raw_hex": "300a",
+      "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa",
+      "size_bytes": 2
+    }
+  ]
+}

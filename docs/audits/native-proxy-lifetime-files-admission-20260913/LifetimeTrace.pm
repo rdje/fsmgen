@@ -1,0 +1,215 @@
+package NativeProxyLifetimeTrace;
+
+use strict;
+use warnings;
+
+our ($ACTIVE, $ROOT, $ROOTS, $ROW, $LIMITS);
+our (%HANDLES, @HELD, @OBSERVER_HELD);
+
+# Compile these hooks before any lifecycle module. Unlike the historical
+# release-only observer, successful lower-reader opens enter the ownership
+# ledger before later validation or transfer can throw.
+BEGIN {
+    for my $name (qw(sysopen opendir close closedir mkdir unlink rmdir syswrite chmod rename link symlink)) {
+        no strict 'refs';
+        die "unexpected preexisting $name hook\n" if defined &{"CORE::GLOBAL::$name"};
+    }
+    *CORE::GLOBAL::sysopen = sub (*$$;$) {
+        _path($_[1]) if $ACTIVE;
+        my $ok = @_ == 4 ? CORE::sysopen($_[0], $_[1], $_[2], $_[3]) : CORE::sysopen($_[0], $_[1], $_[2]);
+        my $error = 0 + $!;
+        if ($ACTIVE) {
+            push @{$ROW->{calls}}, {operation => 'sysopen', path => _path($_[1]), flags => $_[2],
+                caller => scalar(caller), returned => $ok ? 1 : 0, errno => $error};
+            _register($_[0], 'file', $_[1], scalar(caller)) if $ok;
+            _call_bound();
+        }
+        $! = $error; return $ok;
+    };
+    *CORE::GLOBAL::opendir = sub (*$) {
+        _path($_[1]) if $ACTIVE;
+        my $ok = CORE::opendir($_[0], $_[1]); my $error = 0 + $!;
+        if ($ACTIVE) {
+            push @{$ROW->{calls}}, {operation => 'opendir', path => _path($_[1]),
+                caller => scalar(caller), returned => $ok ? 1 : 0, errno => $error};
+            _register($_[0], 'directory', $_[1], scalar(caller)) if $ok;
+            _call_bound();
+        }
+        $! = $error; return $ok;
+    };
+    *CORE::GLOBAL::close = sub (*) {
+        return CORE::close($_[0]) unless $ACTIVE;
+        return _close($_[0], 0, scalar(caller));
+    };
+    *CORE::GLOBAL::closedir = sub (*) {
+        return CORE::closedir($_[0]) unless $ACTIVE;
+        return _close($_[0], 1, scalar(caller));
+    };
+    *CORE::GLOBAL::mkdir = sub ($;$) {
+        my $path = _path($_[0]) if $ACTIVE;
+        my $ok = @_ == 1 ? CORE::mkdir($_[0]) : CORE::mkdir($_[0], $_[1]); my $error = 0 + $!;
+        my @created = $ACTIVE && $ok ? CORE::lstat($_[0]) : ();
+        _call({operation => 'mkdir', path => $path, mode => @_ == 2 ? $_[1] : undef,
+            returned => $ok ? 1 : 0, errno => $error, native_after => \@created}) if $ACTIVE;
+        $! = $error; return $ok;
+    };
+    *CORE::GLOBAL::unlink = sub (@) {
+        my @paths = map { _path($_) } @_ if $ACTIVE;
+        my $count = CORE::unlink(@_); my $error = 0 + $!;
+        _call({operation => 'unlink', paths => \@paths, returned => $count, errno => $error}) if $ACTIVE;
+        $! = $error; return $count;
+    };
+    *CORE::GLOBAL::rmdir = sub ($) {
+        my $path = _path($_[0]) if $ACTIVE;
+        my $ok = CORE::rmdir($_[0]); my $error = 0 + $!;
+        _call({operation => 'rmdir', path => $path, returned => $ok ? 1 : 0, errno => $error}) if $ACTIVE;
+        $! = $error; return $ok;
+    };
+    *CORE::GLOBAL::syswrite = sub (*$;$$) {
+        my $handle = _owned($_[0]) if $ACTIVE;
+        my $count = @_ == 4 ? CORE::syswrite($_[0], $_[1], $_[2], $_[3])
+            : @_ == 3 ? CORE::syswrite($_[0], $_[1], $_[2]) : CORE::syswrite($_[0], $_[1]);
+        my $error = 0 + $!;
+        _call({operation => 'syswrite', handle => $handle->{ordinal}, requested => @_ >= 3 ? $_[2] : length($_[1]),
+            offset => @_ == 4 ? $_[3] : 0, returned => $count, errno => $error}) if $ACTIVE;
+        $! = $error; return $count;
+    };
+    *CORE::GLOBAL::chmod = sub (@) {
+        my @targets = map { ref($_) ? {handle => _owned($_)->{ordinal}} : {path => _path($_)} } @_[1..$#_] if $ACTIVE;
+        my $count = CORE::chmod(@_); my $error = 0 + $!;
+        _call({operation => 'chmod', mode => $_[0], targets => \@targets,
+            returned => $count, errno => $error}) if $ACTIVE;
+        $! = $error; return $count;
+    };
+    *CORE::GLOBAL::rename = sub ($$) { die "rename outside complete lifetime domain\n" if $ACTIVE; return CORE::rename($_[0], $_[1]); };
+    *CORE::GLOBAL::link = sub ($$) { die "link outside complete lifetime domain\n" if $ACTIVE; return CORE::link($_[0], $_[1]); };
+    *CORE::GLOBAL::symlink = sub ($$) { die "symlink outside complete lifetime domain\n" if $ACTIVE; return CORE::symlink($_[0], $_[1]); };
+}
+
+use Fcntl qw(S_ISDIR S_ISREG F_GETFD FD_CLOEXEC);
+use File::Spec;
+use Scalar::Util qw(refaddr);
+
+sub _path {
+    my ($path) = @_;
+    die "expected scalar observed path\n" if !defined($path) || ref($path);
+    my $relative = File::Spec->abs2rel($path, $ROOT);
+    die "observed access outside exact owned roots\n"
+        unless grep { $relative eq $_ || index($relative, "$_/") == 0 } @$ROOTS;
+    die "noncanonical observed path\n" if grep { $_ eq '..' || $_ eq '.' || $_ eq '' } split('/', $relative, -1);
+    return $relative;
+}
+
+sub _owned {
+    my ($handle) = @_;
+    die "unregistered observed descriptor\n" unless ref($handle) && exists($HANDLES{refaddr($handle)});
+    return $HANDLES{refaddr($handle)};
+}
+
+sub _call {
+    push @{$ROW->{calls}}, $_[0];
+    _call_bound();
+}
+
+sub _call_bound {
+    # Keep the first excess call's actual result, then stop. No silently
+    # truncated trace is eligible for complete qualification.
+    die "observed call bound exceeded\n" if @{$ROW->{calls}} > $LIMITS->{calls};
+}
+
+sub _register {
+    my ($handle, $kind, $path, $caller) = @_;
+    die "expected new descriptor reference\n" unless ref($handle) && !exists($HANDLES{refaddr($handle)});
+    my $row = {handle => $handle, ordinal => scalar(@HELD), kind => $kind, path => _path($path),
+               open_caller => $caller, descriptor => fileno($handle), opening_call => $#{$ROW->{calls}}};
+    # Register before any admission check can fail, including the bound or the
+    # short-lived independent directory metadata observer.
+    $HANDLES{refaddr($handle)} = $row;
+    push @HELD, $row;
+    $ROW->{calls}[-1]{handle} = $row->{ordinal};
+    die "observed descriptor bound exceeded\n" if @HELD > $LIMITS->{handles};
+    die "missing successful descriptor\n" unless defined($row->{descriptor});
+    my @native;
+    if ($kind eq 'directory') {
+        CORE::open(my $probe, '<&', $row->{descriptor}) or die "cannot duplicate directory for observation: $!\n";
+        # Keep the observer's own ownership even if stat or close fails.
+        push @OBSERVER_HELD, {handle => $probe, parent_ordinal => $row->{ordinal}};
+        @native = stat($probe);
+        my $fd = fileno($probe);
+        my $closed = CORE::close($probe); my $error = 0 + $!;
+        $row->{metadata_observer} = {descriptor => $fd, returned => $closed ? 1 : 0,
+                                    errno => $error, closed_after_call => defined(fileno($probe)) ? 0 : 1};
+        die "directory metadata observer did not close\n" unless $closed && !defined(fileno($probe));
+        die "observed descriptor is not a directory\n" unless @native && S_ISDIR($native[2]);
+    } else {
+        @native = stat($handle);
+        die "observed descriptor is not a regular file\n" unless @native && S_ISREG($native[2]);
+    }
+    my @named = lstat($path);
+    $row->{native_at_open} = \@native;
+    die "opened descriptor differs from named identity\n"
+        unless @named && $named[0] == $native[0] && $named[1] == $native[1];
+}
+
+sub _close {
+    my ($handle, $directory, $caller) = @_;
+    my $incoming_errno = 0 + $!;
+    my $row = _owned($handle);
+    die "duplicate observed close\n" if exists($row->{close});
+    die "descriptor kind differs at close\n" unless ($row->{kind} eq 'directory') == $directory;
+    my $flags = $directory ? undef : CORE::fcntl($handle, F_GETFD, 0);
+    $! = $incoming_errno;
+    my $ok = $directory ? CORE::closedir($handle) : CORE::close($handle); my $error = 0 + $!;
+    $row->{close} = {caller => $caller, returned => $ok ? 1 : 0, errno => $error,
+                    closed_after_call => defined(fileno($handle)) ? 0 : 1,
+                    cloexec_before_close => defined($flags) ? (($flags & FD_CLOEXEC) ? 1 : 0) : undef};
+    _call({operation => $directory ? 'closedir' : 'close', handle => $row->{ordinal}, %{$row->{close}}});
+    $! = $error; return $ok;
+}
+
+sub observe {
+    die "expected root, exact owned roots, trace limits and operation\n" unless @_ == 4;
+    my ($root, $roots, $limits, $operation) = @_;
+    die "nested lifetime observation\n" if $ACTIVE;
+    die "expected positive bounded trace limits\n" unless ref($limits) eq 'HASH'
+        && keys(%$limits) == 2 && defined($limits->{handles}) && defined($limits->{calls})
+        && $limits->{handles} =~ /\A[1-9][0-9]*\z/ && $limits->{calls} =~ /\A[1-9][0-9]*\z/
+        && $limits->{handles} <= 2048 && $limits->{calls} <= 32768;
+    local ($ROOT, $ROOTS, $LIMITS) = ($root, $roots, $limits);
+    local (%HANDLES, @HELD, @OBSERVER_HELD);
+    local $ROW = {calls => [], handles => [], recovery => []};
+    my ($value, $error, $ok);
+    {
+        local $ACTIVE = 1;
+        $ok = eval { $value = $operation->(); 1; };
+        $error = $@;
+    }
+    for my $row (@HELD) {
+        my %copy = %$row; delete $copy{handle};
+        $copy{closed_at_return} = defined(fileno($row->{handle})) ? 0 : 1;
+        push @{$ROW->{handles}}, \%copy;
+    }
+    $ROW->{metadata_observers} = [map { {parent_ordinal => $_->{parent_ordinal},
+        closed_at_return => defined(fileno($_->{handle})) ? 0 : 1} } @OBSERVER_HELD];
+    # Recovery is a separate measured effect. Its need makes the primary
+    # operation incomplete even if the implementation returned successfully.
+    for my $row (@HELD) {
+        next unless defined(fileno($row->{handle}));
+        my $closed = $row->{kind} eq 'directory' ? CORE::closedir($row->{handle}) : CORE::close($row->{handle});
+        my $errno = 0 + $!;
+        push @{$ROW->{recovery}}, {owner_kind => 'implementation', ordinal => $row->{ordinal}, returned => $closed ? 1 : 0, errno => $errno,
+                                  closed_after_call => defined(fileno($row->{handle})) ? 0 : 1};
+    }
+    for my $row (@OBSERVER_HELD) {
+        next unless defined(fileno($row->{handle}));
+        my $closed = CORE::close($row->{handle}); my $errno = 0 + $!;
+        push @{$ROW->{recovery}}, {owner_kind => 'metadata_observer', parent_ordinal => $row->{parent_ordinal},
+            returned => $closed ? 1 : 0, errno => $errno, closed_after_call => defined(fileno($row->{handle})) ? 0 : 1};
+    }
+    $ROW->{returned} = $ok ? 1 : 0;
+    $ROW->{error_hex} = unpack('H*', $error);
+    $ROW->{result} = $value;
+    return $ROW;
+}
+
+1;

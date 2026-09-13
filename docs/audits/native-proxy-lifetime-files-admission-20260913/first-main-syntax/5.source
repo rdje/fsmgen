@@ -1,0 +1,24 @@
+{
+  "command": [
+    "perl",
+    "-Idocs/audits/native-proxy-lifetime-files-admission-20260913",
+    "-c",
+    "docs/audits/native-proxy-lifetime-files-admission-20260913/LifetimeFiles.pm"
+  ],
+  "owner": "HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.12.4.1.3.6.3.1",
+  "scope": "Syntax check of new observer and independent file-probe source only. No lifecycle operation or fixture-root allocation. System Perl and its standard modules are required read-only toolchain inputs.",
+  "sources": [
+    {
+      "path": "docs/audits/native-proxy-lifetime-files-admission-20260913/LifetimeTrace.pm",
+      "retained_path": "docs/audits/native-proxy-lifetime-files-admission-20260913/first-syntax/LifetimeTrace.pm.source",
+      "sha256": "4c3aedbd68bfee99d597f5ecd84f26b27acb02419a22d7389541cc83476cfdfb",
+      "size_bytes": 10267
+    },
+    {
+      "path": "docs/audits/native-proxy-lifetime-files-admission-20260913/LifetimeFiles.pm",
+      "retained_path": "docs/audits/native-proxy-lifetime-files-admission-20260913/first-syntax/LifetimeFiles.pm.source",
+      "sha256": "8d63618aa71a7776151d650125110f4bda5b6b89d9b7ffd9a1b866226f590aa2",
+      "size_bytes": 7817
+    }
+  ]
+}
