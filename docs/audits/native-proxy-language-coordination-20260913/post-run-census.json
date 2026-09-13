@@ -1,0 +1,407 @@
+{
+  "absent_objects": [
+    ".artifacts/tmp/native-proxy-image-custody/cases/fsmgen-Language20260913_perl_holds_python_handoff",
+    ".artifacts/tmp/native-proxy-image-custody/cases/fsmgen-Language20260913_python_holds_perl_handoff",
+    ".artifacts/tmp/native-proxy-image-custody/cases/fsmgen-Language20260913_perl_holds_python_deadline",
+    ".artifacts/tmp/native-proxy-image-custody/cases/fsmgen-Language20260913_python_holds_perl_deadline",
+    ".artifacts/tmp/native-proxy-image-custody/cases/fsmgen-Language20260913_perl_holds_python_cancel",
+    ".artifacts/tmp/native-proxy-image-custody/cases/fsmgen-Language20260913_python_holds_perl_cancel",
+    ".artifacts/tmp/native-proxy-image-custody/cases/fsmgen-Language20260913_perl_holds_python_replace",
+    ".artifacts/tmp/native-proxy-image-custody/cases/fsmgen-Language20260913_perl_holds_python_replace_retired.lock",
+    ".artifacts/tmp/native-proxy-image-custody/cases/fsmgen-Language20260913_python_holds_perl_replace",
+    ".artifacts/tmp/native-proxy-image-custody/cases/fsmgen-Language20260913_python_holds_perl_replace_retired.lock",
+    ".artifacts/tmp/native-proxy-image-custody/cases/fsmgen-Language20260913_perl_exec_sealed",
+    ".artifacts/tmp/native-proxy-image-custody/cases/fsmgen-Language20260913_perl_exec_omitted_seal",
+    ".artifacts/tmp/native-proxy-image-custody/cases/fsmgen-Language20260913_python_exec_sealed",
+    ".artifacts/tmp/native-proxy-image-custody/cases/fsmgen-Language20260913_python_exec_omitted_seal"
+  ],
+  "external_read_only_dependency": "/usr/lib/libproc.dylib",
+  "groups": [
+    {
+      "disposition": "numeric_group_absent",
+      "pgid": 24979
+    },
+    {
+      "disposition": "numeric_group_absent",
+      "pgid": 24985
+    },
+    {
+      "disposition": "numeric_group_absent",
+      "pgid": 25032
+    },
+    {
+      "disposition": "numeric_group_absent",
+      "pgid": 25039
+    },
+    {
+      "disposition": "numeric_group_absent",
+      "pgid": 25090
+    },
+    {
+      "disposition": "numeric_group_absent",
+      "pgid": 25124
+    },
+    {
+      "disposition": "numeric_group_absent",
+      "pgid": 26601
+    },
+    {
+      "disposition": "numeric_group_absent",
+      "pgid": 26607
+    },
+    {
+      "disposition": "numeric_group_absent",
+      "pgid": 27372
+    },
+    {
+      "disposition": "numeric_group_absent",
+      "pgid": 27373
+    },
+    {
+      "disposition": "numeric_group_absent",
+      "pgid": 27374
+    },
+    {
+      "disposition": "numeric_group_absent",
+      "pgid": 27375
+    },
+    {
+      "disposition": "numeric_group_absent",
+      "pgid": 27392
+    },
+    {
+      "disposition": "numeric_group_absent",
+      "pgid": 27406
+    },
+    {
+      "disposition": "numeric_group_absent",
+      "pgid": 27407
+    },
+    {
+      "disposition": "numeric_group_absent",
+      "pgid": 27408
+    },
+    {
+      "disposition": "numeric_group_absent",
+      "pgid": 27409
+    },
+    {
+      "disposition": "numeric_group_absent",
+      "pgid": 27411
+    },
+    {
+      "disposition": "numeric_group_absent",
+      "pgid": 27413
+    },
+    {
+      "disposition": "numeric_group_absent",
+      "pgid": 27415
+    }
+  ],
+  "native_proxy_execution": false,
+  "observation": "Read-only native identity and signal-zero group existence; no termination signal.",
+  "original_births_absent": [
+    {
+      "disposition": "native_esrch",
+      "errno": 3,
+      "original": {
+        "pid": 24567,
+        "ppid": 24501,
+        "ruid": 501,
+        "start_sec": 1789309347,
+        "start_usec": 776160,
+        "uid": 501
+      }
+    },
+    {
+      "disposition": "native_esrch",
+      "errno": 3,
+      "original": {
+        "pid": 24979,
+        "ppid": 24567,
+        "ruid": 501,
+        "start_sec": 1789309349,
+        "start_usec": 323794,
+        "uid": 501
+      }
+    },
+    {
+      "disposition": "native_esrch",
+      "errno": 3,
+      "original": {
+        "pid": 24985,
+        "ppid": 24567,
+        "ruid": 501,
+        "start_sec": 1789309349,
+        "start_usec": 361311,
+        "uid": 501
+      }
+    },
+    {
+      "disposition": "native_esrch",
+      "errno": 3,
+      "original": {
+        "pid": 25032,
+        "ppid": 24567,
+        "ruid": 501,
+        "start_sec": 1789309349,
+        "start_usec": 435574,
+        "uid": 501
+      }
+    },
+    {
+      "disposition": "native_esrch",
+      "errno": 3,
+      "original": {
+        "pid": 25039,
+        "ppid": 24567,
+        "ruid": 501,
+        "start_sec": 1789309349,
+        "start_usec": 463036,
+        "uid": 501
+      }
+    },
+    {
+      "disposition": "native_esrch",
+      "errno": 3,
+      "original": {
+        "pid": 25090,
+        "ppid": 24567,
+        "ruid": 501,
+        "start_sec": 1789309349,
+        "start_usec": 542811,
+        "uid": 501
+      }
+    },
+    {
+      "disposition": "native_esrch",
+      "errno": 3,
+      "original": {
+        "pid": 25124,
+        "ppid": 24567,
+        "ruid": 501,
+        "start_sec": 1789309349,
+        "start_usec": 578545,
+        "uid": 501
+      }
+    },
+    {
+      "disposition": "native_esrch",
+      "errno": 3,
+      "original": {
+        "pid": 26601,
+        "ppid": 24567,
+        "ruid": 501,
+        "start_sec": 1789309351,
+        "start_usec": 642078,
+        "uid": 501
+      }
+    },
+    {
+      "disposition": "native_esrch",
+      "errno": 3,
+      "original": {
+        "pid": 26607,
+        "ppid": 24567,
+        "ruid": 501,
+        "start_sec": 1789309351,
+        "start_usec": 671964,
+        "uid": 501
+      }
+    },
+    {
+      "disposition": "native_esrch",
+      "errno": 3,
+      "original": {
+        "pid": 27372,
+        "ppid": 24567,
+        "ruid": 501,
+        "start_sec": 1789309353,
+        "start_usec": 738441,
+        "uid": 501
+      }
+    },
+    {
+      "disposition": "native_esrch",
+      "errno": 3,
+      "original": {
+        "pid": 27373,
+        "ppid": 24567,
+        "ruid": 501,
+        "start_sec": 1789309353,
+        "start_usec": 773824,
+        "uid": 501
+      }
+    },
+    {
+      "disposition": "native_esrch",
+      "errno": 3,
+      "original": {
+        "pid": 27374,
+        "ppid": 24567,
+        "ruid": 501,
+        "start_sec": 1789309353,
+        "start_usec": 848453,
+        "uid": 501
+      }
+    },
+    {
+      "disposition": "native_esrch",
+      "errno": 3,
+      "original": {
+        "pid": 27375,
+        "ppid": 24567,
+        "ruid": 501,
+        "start_sec": 1789309353,
+        "start_usec": 876664,
+        "uid": 501
+      }
+    },
+    {
+      "disposition": "native_esrch",
+      "errno": 3,
+      "original": {
+        "pid": 27392,
+        "ppid": 24567,
+        "ruid": 501,
+        "start_sec": 1789309353,
+        "start_usec": 953498,
+        "uid": 501
+      }
+    },
+    {
+      "disposition": "native_esrch",
+      "errno": 3,
+      "original": {
+        "pid": 27406,
+        "ppid": 24567,
+        "ruid": 501,
+        "start_sec": 1789309353,
+        "start_usec": 990173,
+        "uid": 501
+      }
+    },
+    {
+      "disposition": "native_esrch",
+      "errno": 3,
+      "original": {
+        "pid": 27407,
+        "ppid": 24567,
+        "ruid": 501,
+        "start_sec": 1789309354,
+        "start_usec": 57145,
+        "uid": 501
+      }
+    },
+    {
+      "disposition": "native_esrch",
+      "errno": 3,
+      "original": {
+        "pid": 27408,
+        "ppid": 24567,
+        "ruid": 501,
+        "start_sec": 1789309354,
+        "start_usec": 85455,
+        "uid": 501
+      }
+    },
+    {
+      "disposition": "native_esrch",
+      "errno": 3,
+      "original": {
+        "pid": 27409,
+        "ppid": 24567,
+        "ruid": 501,
+        "start_sec": 1789309354,
+        "start_usec": 153091,
+        "uid": 501
+      }
+    },
+    {
+      "disposition": "native_esrch",
+      "errno": 3,
+      "original": {
+        "pid": 27410,
+        "ppid": 27409,
+        "ruid": 501,
+        "start_sec": 1789309354,
+        "start_usec": 188574,
+        "uid": 501
+      }
+    },
+    {
+      "disposition": "native_esrch",
+      "errno": 3,
+      "original": {
+        "pid": 27411,
+        "ppid": 24567,
+        "ruid": 501,
+        "start_sec": 1789309354,
+        "start_usec": 206007,
+        "uid": 501
+      }
+    },
+    {
+      "disposition": "native_esrch",
+      "errno": 3,
+      "original": {
+        "pid": 27412,
+        "ppid": 27411,
+        "ruid": 501,
+        "start_sec": 1789309354,
+        "start_usec": 241554,
+        "uid": 501
+      }
+    },
+    {
+      "disposition": "native_esrch",
+      "errno": 3,
+      "original": {
+        "pid": 27413,
+        "ppid": 24567,
+        "ruid": 501,
+        "start_sec": 1789309354,
+        "start_usec": 258675,
+        "uid": 501
+      }
+    },
+    {
+      "disposition": "native_esrch",
+      "errno": 3,
+      "original": {
+        "pid": 27414,
+        "ppid": 27413,
+        "ruid": 501,
+        "start_sec": 1789309354,
+        "start_usec": 286729,
+        "uid": 501
+      }
+    },
+    {
+      "disposition": "native_esrch",
+      "errno": 3,
+      "original": {
+        "pid": 27415,
+        "ppid": 24567,
+        "ruid": 501,
+        "start_sec": 1789309354,
+        "start_usec": 318028,
+        "uid": 501
+      }
+    },
+    {
+      "disposition": "native_esrch",
+      "errno": 3,
+      "original": {
+        "pid": 27416,
+        "ppid": 27415,
+        "ruid": 501,
+        "start_sec": 1789309354,
+        "start_usec": 347880,
+        "uid": 501
+      }
+    }
+  ],
+  "original_producer_replayed": false,
+  "owner": "HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.12.4.1.4.2"
+}

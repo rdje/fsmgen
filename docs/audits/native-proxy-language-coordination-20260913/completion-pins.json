@@ -1,0 +1,112 @@
+[
+  {
+    "path": "MEMORY.md",
+    "sha256": "d3d4d4f5b08b541cc60338bbd469113981bb28ce5a4afebd694c72da7f714964",
+    "size_bytes": 731
+  },
+  {
+    "path": "docs/TASK_TREE.md",
+    "sha256": "720b7d2b0d2c9faa7324fb22a0eb80ec62f416b240ac80558362075fe10ef501",
+    "size_bytes": 38924
+  },
+  {
+    "path": "docs/audits/native-proxy-language-coordination-20260913/audit-pins.json",
+    "sha256": "394f1ac53c17f64b7af3462852825909398b48078b5aa389b5db474795e6fd66",
+    "size_bytes": 1213
+  },
+  {
+    "path": "docs/audits/native-proxy-language-coordination-20260913/audit.py",
+    "sha256": "7d2f0b392ad80d352e58eb212844c06db9eceaa52296bde2020854faa6deb7fa",
+    "size_bytes": 12043
+  },
+  {
+    "path": "docs/audits/native-proxy-language-coordination-20260913/book-review.json",
+    "sha256": "8d64f8c97a624455f6bf8821b2daa93d3595adba024240644bec57ac5e59a663",
+    "size_bytes": 1351
+  },
+  {
+    "path": "docs/audits/native-proxy-language-coordination-20260913/capture.py",
+    "sha256": "c5e59c40483a925d597cf19942bfc60624617db5690e2741b7e06e21c6a39f75",
+    "size_bytes": 4891
+  },
+  {
+    "path": "docs/audits/native-proxy-language-coordination-20260913/claim-review.json",
+    "sha256": "441d5fccef3fc60a5704f8bcdfe9be21cb7869f6b181c8759dc94760d79f8da2",
+    "size_bytes": 4074
+  },
+  {
+    "path": "docs/audits/native-proxy-language-coordination-20260913/execution-task.md.source",
+    "sha256": "7d6bdf3bf0c34415c48f3e6bd38448ebf9e19b7dd4e575394a84f384a8761ead",
+    "size_bytes": 1099300
+  },
+  {
+    "path": "docs/audits/native-proxy-language-coordination-20260913/first-run.json",
+    "sha256": "78103047f2505ce40e71f7d9f595939a79310e99d2b59c0a2266c9fd14bb7809",
+    "size_bytes": 501713
+  },
+  {
+    "path": "docs/audits/native-proxy-language-coordination-20260913/inputs.json",
+    "sha256": "04321c688a3c39f9b69c4e8e41985240f27be15c7e46c7beee7ed246d31abf10",
+    "size_bytes": 19236
+  },
+  {
+    "path": "docs/audits/native-proxy-language-coordination-20260913/inspect_book.py",
+    "sha256": "38329d313a99eeccf30448cf94531cc71b86353fc235e9c58cbefde08d3214c9",
+    "size_bytes": 3455
+  },
+  {
+    "path": "docs/audits/native-proxy-language-coordination-20260913/post-run-census.json",
+    "sha256": "666d49b1cad032802f47249a4519d9362ec60ba0a36ad631995ba4fc51d04e3a",
+    "size_bytes": 9559
+  },
+  {
+    "path": "docs/audits/native-proxy-language-coordination-20260913/review.json",
+    "sha256": "c494717ddeb1464c09147cb5470f469c280256d29fefb478835aaaaa7c053104",
+    "size_bytes": 3905
+  },
+  {
+    "path": "docs/audits/native-proxy-language-coordination-20260913/review_claims.py",
+    "sha256": "b8794d50587eae2b70b4045faa9410050d675a7c6f5457400338035ea33b401a",
+    "size_bytes": 5032
+  },
+  {
+    "path": "docs/audits/native-proxy-language-coordination-20260913/review_completion.py",
+    "sha256": "ad08d3983981ff16923c9b146397597312debc0ac55a6533e4d2e4145340180d",
+    "size_bytes": 6299
+  },
+  {
+    "path": "docs/book/src/16dc-vial-portable-verilator-runtime-measurement.md",
+    "sha256": "8ed8e3ade1319b23066b23ef1afe178efdbb385a3877a855d832ddb1bcea0a87",
+    "size_bytes": 273895
+  },
+  {
+    "path": "docs/book/src/16dk-inactive-proxy-lifetimes.md",
+    "sha256": "228c35ede7713a9423e8a6527b408fa83f49e66347d2888b07e9515cb624d408",
+    "size_bytes": 17469
+  },
+  {
+    "path": "docs/knowledge/test-subprocess-policy-adapters.md",
+    "sha256": "4bb4c45fd3509ad5976555287ce9abeb2d75beac822c04fe8b8bd405836e5cb0",
+    "size_bytes": 9767
+  },
+  {
+    "path": "docs/tasks/HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.md",
+    "sha256": "0ae3663796726e0ad44bf81b3e61000c3e53d0f0e258629f1a49ff9b543f50d0",
+    "size_bytes": 1101394
+  },
+  {
+    "path": "docs/tasks/history/HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE/acceptance-history.jsonl",
+    "sha256": "c366487de156e3599fc674155b565d63fb063ad5ac84c55b502f7cff261d9893",
+    "size_bytes": 851
+  },
+  {
+    "path": "doctrine/claim_verification/inventory.jsonl",
+    "sha256": "08a9bc4b16be46144be636ea126111be443cabf8fc7b15b9a38738810a9f3760",
+    "size_bytes": 3007141
+  },
+  {
+    "path": "doctrine/live_document_size/surfaces.jsonl",
+    "sha256": "12618477b6284800515db9565a363a1b545e2566480c09b66cac520406dec868",
+    "size_bytes": 24798
+  }
+]

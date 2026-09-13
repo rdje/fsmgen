@@ -1,0 +1,32 @@
+[
+  {
+    "path": "docs/audits/native-proxy-language-coordination-20260913/audit.py",
+    "sha256": "7d2f0b392ad80d352e58eb212844c06db9eceaa52296bde2020854faa6deb7fa",
+    "size_bytes": 12043
+  },
+  {
+    "path": "docs/audits/native-proxy-language-coordination-20260913/capture.py",
+    "sha256": "c5e59c40483a925d597cf19942bfc60624617db5690e2741b7e06e21c6a39f75",
+    "size_bytes": 4891
+  },
+  {
+    "path": "docs/audits/native-proxy-language-coordination-20260913/execution-task.md.source",
+    "sha256": "7d6bdf3bf0c34415c48f3e6bd38448ebf9e19b7dd4e575394a84f384a8761ead",
+    "size_bytes": 1099300
+  },
+  {
+    "path": "docs/audits/native-proxy-language-coordination-20260913/first-run.json",
+    "sha256": "78103047f2505ce40e71f7d9f595939a79310e99d2b59c0a2266c9fd14bb7809",
+    "size_bytes": 501713
+  },
+  {
+    "path": "docs/audits/native-proxy-language-coordination-20260913/inputs.json",
+    "sha256": "04321c688a3c39f9b69c4e8e41985240f27be15c7e46c7beee7ed246d31abf10",
+    "size_bytes": 19236
+  },
+  {
+    "path": "docs/audits/native-proxy-language-coordination-20260913/post-run-census.json",
+    "sha256": "666d49b1cad032802f47249a4519d9362ec60ba0a36ad631995ba4fc51d04e3a",
+    "size_bytes": 9559
+  }
+]

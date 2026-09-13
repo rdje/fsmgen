@@ -1674,9 +1674,9 @@ descriptor lifetime, private store structure and bounded namespace counts.
 Incomplete images and reference records consume capacity; counting them does
 not admit their contents. Invalid or replaced locks reject, and final inspection
 cannot recreate a removed directory. The original busy/error/deadline controls
-were modeled. Bounded worker sources and their independent event, ownership and
-admission checks are now qualified with source and simulated data; actual worker
-execution remains pending. See the current admission and saved-evidence command
+were modeled. The admitted actual Perl/Python workers now qualify selected
+bidirectional contention, deadline, cancellation, replacement and exec-inheritance
+behavior on empty private stores. See the current scope and saved-evidence command
 in [Inactive Proxy Lifetimes](16dk-inactive-proxy-lifetimes.md).
 
 Inactive publication now creates canonical files directly under that lock and

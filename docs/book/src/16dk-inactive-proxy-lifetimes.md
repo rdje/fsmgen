@@ -225,7 +225,7 @@ domains remain separate; no timing is inferred across language boundaries.
 
 This also closes the inactive observation-custody activity together with its
 record, census, acquisition, settled-release and frozen-version children.
-Actual cooperation between language workers is next. Native authentication,
+Actual language-worker cooperation is qualified below. Native-proxy authentication,
 real receipt transport, late-launch prevention, live-store/public integration
 and the original startup/parent qualification still have explicit owners.
 
@@ -233,11 +233,11 @@ and the original startup/parent qualification still have explicit owners.
 scripts/run_with_ram_guard.sh -- python3 -B docs/audits/native-proxy-lifetime-closure-20260913/audit.py --verify-saved
 ```
 
-Cross-language coordination now has a qualified source/data admission.
+Cross-language coordination now passes its admitted actual-worker qualification.
 The selected macOS checks use preinitialized empty private stores, the current
 Perl inspection transaction and an independent Python coordination peer.
-For example, a Perl holder must keep a Python reader outside the protected
-inspection until release; the reverse direction has the same requirement.
+For example, an actual Perl holder keeps a Python reader outside the protected
+inspection until release; an actual Python holder likewise excludes the Perl reader.
 Other selected cases cover a pending reader's deadline or cancellation, rejection
 of a replaced lock and descriptor inheritance across exec. Descriptor probes run
 before lock acquisition, including a deliberate omitted-seal countercontrol.
@@ -257,14 +257,33 @@ kernel image receipt. Substituting the launcher, another path with the same
 basename, changed bytes or missing receipts rejects. This does not identify the
 cause of the historical native-proxy startup failure.
 
+The first admitted run succeeds in both language directions. A pending reader
+reaches its own admission deadline while the holder keeps the lock. Terminating
+a pending reader settles its process group before the holder is released;
+this cancellation does not claim that the reader explicitly closed its descriptor.
+Replacing the permanent lock makes both transactions reject its changed identity.
+Sealed descriptors disappear across exec; the deliberately unsealed controls
+observe the inherited descriptor and reject before lock acquisition.
+
+The independent review joins the original worker output to the journal,
+committed source admission, actual native executable receipts and exact cleanup.
+Every worker and exec probe is reaped. A separate native census finds the original
+controller and child births absent, and all worker groups absent. Only the run's
+unchanged private objects are removed; every selected fixture root is absent.
+First evidence is retained without replay, hidden recovery or discarded output.
+Changed image receipts, cancellation verdicts, inherited descriptors, cleanup
+records, raw streams or ownership-absence evidence reject.
+
 The event reader, supervisor fault states, identity controls and permit states
-pass their source/data checks. Actual worker execution and installed contention,
-cancellation and inheritance outcomes remain pending under the next execution
-leaf. These empty-store checks do not publish or execute a proxy image, exercise
-a live capture, or activate the canonical store. Recheck the retained admission:
+retain their separate source/data qualification. Actual filesystem cooperation
+now closes this selected empty-store scope. Native-proxy authentication, real
+receipt transport, late-launch prevention, live/public integration and the
+historical startup qualification remain pending. These checks do not publish or
+execute a proxy image, exercise live capture, or activate the canonical store.
+Recheck the retained actual result without launching any worker:
 
 ```sh
-scripts/run_with_ram_guard.sh -- python3 -B docs/audits/native-proxy-language-coordination-admission-20260913/audit.py --verify-saved
+scripts/run_with_ram_guard.sh -- python3 -B docs/audits/native-proxy-language-coordination-20260913/audit.py --verify-saved
 ```
 
 [Return to runtime measurement](16dc-vial-portable-verilator-runtime-measurement.md).

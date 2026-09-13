@@ -1,0 +1,40 @@
+{
+  "outputs": [
+    {
+      "bytes_hex": "41637475616c20636f6f7264696e6174696f6e20636f6d706c6574696f6e3a204f4b3b20696e61637469766520636c6f7375726520616e64206e61746976652f6c697665207072657265717569736974657320666f6c6c6f772e0a",
+      "path": ".artifacts/logs/native-proxy-language-coordination-20260913/completion.stdout",
+      "sha256": "69c45d399a45beea993c03db4594790d7d7f282076f51a82b26fa1f88aa60796",
+      "size_bytes": 91
+    },
+    {
+      "bytes_hex": "72616d2d67756172643a205049442033333833333b20686f73742038332e35253b20686f7374206375746f6666203838253b2064657363656e64616e7420525353206375746f66662034303936204d69423b20706f6c6c2032730a",
+      "path": ".artifacts/logs/native-proxy-language-coordination-20260913/completion.stderr",
+      "sha256": "f2b059d81af25e2b85eadb4f00a46acb35f19a48b2b6d8b6bbb1e8ae58ab762c",
+      "size_bytes": 91
+    },
+    {
+      "bytes_hex": "300a",
+      "path": ".artifacts/logs/native-proxy-language-coordination-20260913/completion.exit",
+      "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa",
+      "size_bytes": 2
+    },
+    {
+      "bytes_hex": "41637475616c20636f6f7264696e6174696f6e20636f6d706c6574696f6e3a204f4b3b20696e61637469766520636c6f7375726520616e64206e61746976652f6c697665207072657265717569736974657320666f6c6c6f772e0a",
+      "path": ".artifacts/logs/native-proxy-language-coordination-20260913/completion-saved.stdout",
+      "sha256": "69c45d399a45beea993c03db4594790d7d7f282076f51a82b26fa1f88aa60796",
+      "size_bytes": 91
+    },
+    {
+      "bytes_hex": "72616d2d67756172643a205049442034363235393b20686f73742037392e38253b20686f7374206375746f6666203838253b2064657363656e64616e7420525353206375746f66662034303936204d69423b20706f6c6c2032730a",
+      "path": ".artifacts/logs/native-proxy-language-coordination-20260913/completion-saved.stderr",
+      "sha256": "686d9f91798781f6910e0ca40a052cfc2f921bfa968359cb6bb6fa736b76abbe",
+      "size_bytes": 91
+    },
+    {
+      "bytes_hex": "300a",
+      "path": ".artifacts/logs/native-proxy-language-coordination-20260913/completion-saved.exit",
+      "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa",
+      "size_bytes": 2
+    }
+  ]
+}
