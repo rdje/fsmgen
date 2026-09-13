@@ -1,0 +1,19 @@
+{
+  "checked_passages": [
+    "The inactive version stages now also check a matched preparation-to-capture-to-envelope path.",
+    "A valid record is not necessarily a matching record.",
+    "The earlier formatting failure continues to fail its original independent oracle; the corrected result passes.",
+    "Public projection integration and actual collector outcomes remain separately owned.",
+    "scripts/run_with_ram_guard.sh -- python3 -B docs/audits/native-proxy-version-join-20260913/audit.py --verify-saved"
+  ],
+  "exact_output_absent": true,
+  "exit_code": 0,
+  "output": ".artifacts/tmp/native-proxy-version-join-book-20260913/book",
+  "rendered_bytes": 23544368,
+  "rendered_directories": 2,
+  "rendered_files": 98,
+  "renderer_warnings": [
+    "WARN search index is very large (13264655 bytes)"
+  ],
+  "same_volume_direct_objects": true
+}

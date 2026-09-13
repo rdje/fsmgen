@@ -1,0 +1,49 @@
+{
+  "bridge_accepted": 8,
+  "bridge_cases": 22,
+  "claim_legs": {
+    "durability": "Git-bound original evidence, prospective source pins, full new case streams, losslessly encoded raw outputs and saved-only auditor survive independently of ignored logs.",
+    "falsification": "Cross-stage mismatches remain individually admissible where intended but must reject as pairs; complete saved-result omission, corruption and hidden-launch controls reject.",
+    "rederivation": "Authenticate the complete selected Git file domain and each original source epoch; rederive all stage cases with original pure independent oracles, then independently check the matched byte/identity bindings."
+  },
+  "declared_absent": 8,
+  "join_cases": 180,
+  "joined": 36,
+  "limits": "Inactive private data compatibility only. Native authentication, current filesystem custody, real compilation/ownership transport, collector outcomes, policy records, public projection integration, combined lifetimes and historical startup/parent/full CI/push remain separately owned. No original process or archive replay.",
+  "next_action": "Close combined observation, runtime retirement, archive and maintenance lifetimes under .12.4.1.3.6.",
+  "outcome": "First new preparation, Perl bridge, matched qualification, independent audit, saved verification and book checks pass. Historical stage failures remain original. A documentation-authoring registry-row lookup stopped before its surface write and was corrected without changing ceilings. The first retention checker inspected the wrong success-output stream; exact stderr proves the earlier check succeeded, and the corrected seal preserves both streams without replay.",
+  "owner": "HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.12.4.1.3.5.5",
+  "prospective_pins": 8,
+  "raw_captures": 27,
+  "saved_result_falsifiers": [
+    "missing_preparation",
+    "changed_preparation_bytes",
+    "hidden_preparation_launch",
+    "missing_join",
+    "changed_envelope",
+    "accepted_mismatch",
+    "hidden_join_launch"
+  ],
+  "schema": "fsmgen.inactive_version_join_review.v1",
+  "source_bytes": 4938219,
+  "source_inputs": 227,
+  "source_revision": "ec55e3626ffa5377321594bf69c99dbfec999973",
+  "stages": {
+    "capture": {
+      "accepted": 24,
+      "collector_commands": 24,
+      "counterimplementations": 12,
+      "target_cases": 964
+    },
+    "first_preparation_result_still_rejected": true,
+    "layout_cases": 112,
+    "preparation_accepted": 26,
+    "preparation_cases": 129,
+    "retained": {
+      "accepted": 36,
+      "envelope_cases": 172,
+      "legacy_checks": 96,
+      "raw_controls": 24
+    }
+  }
+}

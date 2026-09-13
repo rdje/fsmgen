@@ -2771,11 +2771,11 @@ decomposes the architecture needed to move beyond that bounded foundation.
   Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.12.4.1.3.4.4.6: close finite inactive release qualification`
 
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.12.4.1.3.5`
-  Status: `active`
+  Status: `done`
   Goal: `Qualify inactive native preparation and capture version compatibility.`
   Acceptance: `Explicitly dispatch native shared-image v2 while preserving selected-Perl preparation v1 and frozen legacy command/source/archive semantics. Independently reject cross-version fields, source prefixes, incomplete references and runnable failures; preserve diagnostic ordering, target birth identity and native main-entry uncertainty.`
-  Verification: `Children pin frozen producer/reader contracts, native preparation records, target/collection dispatch, retained-format compatibility and a complete saved-source join. All remain inactive and cannot authorize native execution or rewrite frozen legacy evidence.`
-  Commit: `pending`
+  Verification: `All selected inactive version stages are source-bound and independently verified, including a matched preparation/capture/private-envelope path and rejected cross-stage mismatches. Frozen legacy bytes and reader semantics remain unchanged; original failures retain their exact epochs. Complete source applicability, bounded cleanup, durable raw evidence and scope limits are recorded in docs/audits/native-proxy-version-join-20260913/review.json. This closes private data compatibility only; live collector outcomes/public projection integration remain required under .12.4.1.5, and combined lifetimes/native authentication/transport remain separately owned.`
+  Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.12.4.1.3.5.5: join inactive version compatibility and matched records`
   Children: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.12.4.1.3.5.1, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.12.4.1.3.5.2, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.12.4.1.3.5.3, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.12.4.1.3.5.4, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.12.4.1.3.5.5`
 
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.12.4.1.3.5.1`
@@ -2815,11 +2815,11 @@ decomposes the architecture needed to move beyond that bounded foundation.
   Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.12.4.1.3.5.4: qualify private retained envelopes and frozen readers`
 
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.12.4.1.3.5.5`
-  Status: `proposed`
+  Status: `done`
   Goal: `Join complete inactive version compatibility and source applicability.`
   Acceptance: `Authenticate all version contract, preparation, target/collection and retained-format sources and saved controls. Independently rederive full selected old/new and cross-version coverage, preserve first failures and original legacy interpretation, verify every declared allocation absent and publish bounded book/fact/task closure. Combined lifetimes, actual native authentication/transport and historical startup/parent/full CI/push remain separate.`
-  Verification: `pending`
-  Commit: `pending`
+  Verification: `The complete selected Git domain authenticates 227 files and 4938219 bytes, retaining all original source epochs and first failures. Original pure independent oracles rederive layout, preparation, target/collection and private retained-format domains. New matched preparation records pass 31 Perl assertions; 180 cross-stage cases accept 36 matching paths and reject every mismatched reference, image, failure or retained capture. Seven saved-result falsifiers reject; all eight declared output/lexical roots are absent. Eight prospective pins and twenty-seven losslessly encoded raw captures preserve first qualification, audit, saved-only and documentation outcomes. No original producer, archive main, compiler, native query or collector runs. The initial retention checker incorrectly inspected stdout for a successful stderr token; its exact source and failed output are retained and corrected without replay. A surface-registry authoring lookup also stops before its surface write and is corrected without changing ceilings. Book rendering/inspection, Knowledge Map, claim identities and prior acceptance continuity pass; staged doctrines and normal hooks gate commit. Complete evidence and distinct claim legs: docs/audits/native-proxy-version-join-20260913/review.json. The selected inactive compatibility parent closes. Private envelopes exclude collector outcomes/public projections; their required live implementations stay owned under .12.4.1.5. Combined lifetimes are next; native authentication/ownership transport and historical startup/parent/full CI/push remain separate.`
+  Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.12.4.1.3.5.5: join inactive version compatibility and matched records`
 
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.12.4.1.3.6`
   Status: `proposed`
@@ -2838,7 +2838,7 @@ decomposes the architecture needed to move beyond that bounded foundation.
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.12.4.1.5`
   Status: `proposed`
   Goal: `Independently close inactive protocol qualification before native admission.`
-  Acceptance: `Re-derive current contract/prototype identities and all required boundary controls; reject omitted source, reference, snapshot, capacity, cancellation or version checks. Consume every worker outcome and prove exact owned cleanup. Preserve missing implementation/native/benefit legs and commit before activating .12.4.2. Before native admission, qualify actual compiler-workspace profiles against the selected retirement limits and bind complete returned-stage transport to actual compiler/outer/inner ownership. Synthetic receipts and inert capacity controls alone cannot discharge those prerequisites. No product activation or extra live execution.`
+  Acceptance: `Re-derive current contract/prototype identities and all required boundary controls; reject omitted source, reference, snapshot, capacity, cancellation or version checks. Consume every worker outcome and prove exact owned cleanup. Preserve missing implementation/native/benefit legs and commit before activating .12.4.2. Before native admission, qualify actual compiler-workspace profiles against the selected retirement limits and bind complete returned-stage transport to actual compiler/outer/inner ownership. Synthetic receipts and inert capacity controls alone cannot discharge those prerequisites. Private retained envelopes do not discharge live collector outcome or public projection integration; keep those required compatibility implementations explicitly owned before activation. No product activation or extra live execution.`
   Verification: `pending`
   Commit: `pending`
 
@@ -3763,7 +3763,7 @@ decomposes the architecture needed to move beyond that bounded foundation.
 
 ## Current Frontier
 
-Current frontier: .3.2.15.7.3.12.4.1.3.5.4 is done; .3.5.5 joins complete inactive version compatibility and source applicability. Retained formats, combined lifetimes, native authentication/transport and historical startup/parent/full CI/push remain open.
+Current frontier: .3.2.15.7.3.12.4.1.3.5 is done; .3.6 closes combined observation, runtime retirement, archive and maintenance lifetimes. Live collector/public-format integration, native authentication/transport and historical startup/parent/full CI/push remain open.
 
 Architecture audit `.1` is complete. Decision `0032` selects one public
 `.vial` source language, private immutable `VIALSemanticIR` and
@@ -6359,8 +6359,8 @@ Completed native-proxy feasibility through runtime-source-controls acceptance: r
 The manifest binds the immediately preceding acceptance suffix to its exact Git source. That source preserves the earlier history pointer and versioned manifest chain; current node contracts remain authoritative.
 
 
-## Acceptance Checklist (inactive retained formats .3.2.15.7.3.12.4.1.3.5.4)
+## Acceptance Checklist (inactive version join .3.2.15.7.3.12.4.1.3.5.5)
 
-- [x] **ROOT CAUSE (WHY + WHERE)** — `git log -S 'def read_receipt' -1 --format='%H %s' -- scripts/fixture_policy_publication.py` locates the frozen receipt consumer at 7e235d225ac337c53ff7e70ee044909e4cacb935. Source inspection shows that the existing association, diagnostic and archive readers bind legacy source prefixes and fixed versions; broadening a current default would reinterpret old evidence. An explicitly private shared-image envelope preserves those frozen readers and excludes collector outcomes, policy records and publication authority.
-- [x] **ADDRESSED (verified)** — The separately pinned envelope codec preserves exact root-relative snapshot/reference bindings and canonical portable bytes, rejects changed versions, limits, source families, quoting, fields, anchors and malformed encoding, and rejects oversized bytes before parsing. Unchanged independent target and legacy reader oracles agree with every declared result; cross-version and saved-result falsifiers reject. The original daemon record and all retained case streams remain unchanged. Full evidence, recovery, scope and claim legs: docs/audits/native-proxy-retained-formats-20260913/review.json.
-- [x] **NO REGRESSION** — `knowledge-map: OK` preserves the existing questions and verifies the new saved-check route. First qualification, independent audit, saved-only replay of data checks and book rendering/inspection pass; no original archive or native producer is replayed. The exact predecessor acceptance remains version-retrievable without another compaction or ceiling change. Claim identity review, staged doctrines and normal hooks gate commit. Actual authentication/custody, live integration, public artifact consumption and historical startup/parent/full CI/push remain separately gated.
+- [x] **ROOT CAUSE (WHY + WHERE)** — `git log -S 'def select_layout' -1 --format='%H %s' -- docs/audits/native-proxy-version-contracts-20260913/dispatch.py` locates explicit layout selection at 79101643fd047fd7d9fc9c7e1448f0748fc0fc35. The stage sources separately validate layouts, preparation, capture and private envelopes; their different inert examples do not prove matched source/reference identity. The new join requires equality across those interfaces, preserving the source epochs and private-format limits.
+- [x] **ADDRESSED (verified)** — The pinned new bridge runs unchanged Perl preparation decoding, explicit layout selection, target admission and retained encoding over matched inert inputs. Independent original data oracles verify every selected stage and reconstruct matched source bytes, reference identities and canonical envelopes; separately valid mismatches, failed preparation and corrupted/omitted saved results reject. Original failures remain failed, with corrected outcomes separate. Evidence, exact raw captures, retained first review correction and distinct claim legs: docs/audits/native-proxy-version-join-20260913/review.json.
+- [x] **NO REGRESSION** — `All tests successful.` from the new bridge and `knowledge-map: OK` from the focused checker support unchanged preparation bytes and question routing. First matched qualification, independent audit, saved-only check and rendered-book inspection pass. Claim identities and prior acceptance remain exact; no additional task compaction, ceiling increase or original execution. Staged doctrines and normal hooks gate closure. Actual collector/public integration, combined lifetimes, native ownership/authentication and historical startup/parent/full CI/push remain separately owned.

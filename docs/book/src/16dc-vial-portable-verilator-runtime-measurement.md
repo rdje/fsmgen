@@ -3185,6 +3185,33 @@ The format checks create no public artifact and replay no original archive.
 scripts/run_with_ram_guard.sh -- python3 -B docs/audits/native-proxy-retained-formats-20260913/audit.py --verify-saved
 ```
 
+The inactive version stages now also check a matched preparation-to-capture-to-envelope path.
+Preparation source identities and reference bytes must equal those observed by
+the capture; the retained envelope must contain that exact selected capture.
+The private compilation pair must describe the same bytes as the selected
+canonical pair. The compiler receipt in this check is a structural template,
+not evidence of a new compilation.
+
+A valid record is not necessarily a matching record. For example, a preparation
+record with a different global-reference inode can pass its own codec while
+failing the join to the capture. Preparation for another image, a failed
+preparation, or an envelope for another capture also fails the join. Changing
+the observer preserves stable target evidence when the target itself is unchanged.
+
+The saved checks preserve each earlier stage's exact source revision, cases and
+first failures. They authenticate the original legacy records without rewriting
+their versions or replaying their producers. The earlier formatting failure
+continues to fail its original independent oracle; the corrected result passes.
+
+Public projection integration and actual collector outcomes remain separately owned.
+The private format does not provide those features. Native authentication,
+current file custody, compiler ownership transport and combined lifetimes also
+retain their own prerequisites. Recheck this data-only join from retained bytes:
+
+```sh
+scripts/run_with_ram_guard.sh -- python3 -B docs/audits/native-proxy-version-join-20260913/audit.py --verify-saved
+```
+
 The inactive archive record implementation now derives a closed specification
 from the complete original acquisition and request. It keeps the ordered wrapper,
 private reference, global reference, C source and image snapshots, including

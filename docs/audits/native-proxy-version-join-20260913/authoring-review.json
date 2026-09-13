@@ -1,0 +1,7 @@
+{
+  "correction": "Select the shipped_behavior row using get; verify untouched original surface bytes before the corrected write. No policy or ceiling change.",
+  "first_error": "KeyError: 'surface_id'",
+  "outcome": "The derived book authority update completed; claim identity and staged gates still required.",
+  "owner": "HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.12.4.1.3.5.5",
+  "root_cause": "The authoring command indexed every surfaces row as a surface, but the first row declares the registry. It stopped before writing surfaces; book, card and review helper writes already completed."
+}

@@ -1,0 +1,74 @@
+{
+  "bridge_accepted": 8,
+  "bridge_cases": 22,
+  "join_cases": 180,
+  "joined": 36,
+  "limits": "Inactive private data compatibility only. Native authentication, current filesystem custody, real compilation/ownership transport, collector outcomes, policy records, public projection integration, combined lifetimes and historical startup/parent/full CI/push remain separately owned. No original process or archive replay.",
+  "provenance": {
+    "declared_absent": [
+      ".artifacts/tmp/native-proxy-version-contracts-book-20260913",
+      ".artifacts/tmp/native-proxy-preparation-records-book-20260913",
+      ".artifacts/tmp/native-proxy-capture-dispatch-book-20260913",
+      ".artifacts/tmp/native-proxy-retained-formats-book-20260913",
+      ".artifacts/tmp/inert-capture-roots",
+      ".artifacts/tmp/inert-retained-roots",
+      ".artifacts/tmp/inert-version-join-roots",
+      "../../.artifacts/tmp/native-proxy-capture-dispatch-book-20260913"
+    ],
+    "first_book_destination_failure_preserved": true,
+    "first_preparation_failure_preserved": true,
+    "first_staged_gate_failure_preserved": true,
+    "source_epochs": [
+      {
+        "inputs": 15,
+        "source_revision": "8dbea4b6a76de2417a9a66e535b574572212c481",
+        "unit": "native-proxy-version-contracts-20260913"
+      },
+      {
+        "inputs": 14,
+        "source_revision": "79101643fd047fd7d9fc9c7e1448f0748fc0fc35",
+        "unit": "native-proxy-preparation-records-20260913"
+      },
+      {
+        "inputs": 17,
+        "source_revision": "a831a879bc1effe2385e728138c2f7744b38dd82",
+        "unit": "native-proxy-capture-dispatch-20260913"
+      },
+      {
+        "inputs": 29,
+        "source_revision": "4f0fc4c115876377109c3b7f0680d2eac663119a",
+        "unit": "native-proxy-retained-formats-20260913"
+      }
+    ]
+  },
+  "saved_result_falsifiers": [
+    "missing_preparation",
+    "changed_preparation_bytes",
+    "hidden_preparation_launch",
+    "missing_join",
+    "changed_envelope",
+    "accepted_mismatch",
+    "hidden_join_launch"
+  ],
+  "schema": "fsmgen.inactive_version_join_audit.v1",
+  "source_inputs": 227,
+  "source_revision": "ec55e3626ffa5377321594bf69c99dbfec999973",
+  "stages": {
+    "capture": {
+      "accepted": 24,
+      "collector_commands": 24,
+      "counterimplementations": 12,
+      "target_cases": 964
+    },
+    "first_preparation_result_still_rejected": true,
+    "layout_cases": 112,
+    "preparation_accepted": 26,
+    "preparation_cases": 129,
+    "retained": {
+      "accepted": 36,
+      "envelope_cases": 172,
+      "legacy_checks": 96,
+      "raw_controls": 24
+    }
+  }
+}
