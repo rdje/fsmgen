@@ -1,0 +1,12 @@
+{
+  "actual_fixture_allocation": false,
+  "actual_worker_execution": false,
+  "diagnosis": "docs/audits/native-proxy-populated-workers-admission-20260913/recovery-first.json",
+  "final_admission_open": true,
+  "installed_read_only_input": "Selected Python standard-library subprocess source is read only to establish direct-child signal/wait semantics; invocation and source identity are recorded, and future execution admission must bind its selected installed interpreter.",
+  "next_owner": "HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.12.4.1.5.3.1.3",
+  "owner": "HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.12.4.1.5.3.1.2",
+  "ownership": "Single-threaded exclusive Popen child handle; no other waiter, SIGCHLD handler, ignored SIGCHLD, fork or group signaling. Native executable admission is separate.",
+  "phase": "controller source and no-process qualification",
+  "source_revision": "8e0c5f1af948b928908005a7dcd6c73e3db5c152"
+}

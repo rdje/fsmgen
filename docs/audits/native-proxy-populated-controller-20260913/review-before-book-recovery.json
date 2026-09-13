@@ -1,0 +1,22 @@
+{
+  "actual_worker_execution": false,
+  "fixed_worker_protocol_and_final_admission_open": true,
+  "next_owner": "HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.12.4.1.5.3.1.3",
+  "operational_execution_admitted": false,
+  "original_defect_preserved": true,
+  "owner": "HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.12.4.1.5.3.1.2",
+  "qualification_checks": 52,
+  "rejecting_join_controls": [
+    "hidden_original_failure",
+    "invented_native_admission",
+    "healthy_promotion",
+    "unnecessary_signal",
+    "missing_output",
+    "model_group_as_fact",
+    "omitted_case",
+    "invented_execution"
+  ],
+  "selected_previous_inputs": 8,
+  "source_revision": "8e0c5f1af948b928908005a7dcd6c73e3db5c152",
+  "terminal_recovery_repaired_in_fresh_controller": true
+}

@@ -389,14 +389,26 @@ current Perl transaction APIs; a Python controller supervises the workers.
 The earlier Python peer remains qualified only for empty-store coordination.
 These are prospective cases, not an operational execution admission.
 
-Controller recovery must be repaired before that admission. A no-process model
-found that an exited child can still have unread output. Without an admitted
-native identity, inherited recovery tries to signal it and raises before
-draining its pipes or consuming the result. Adjacent models with already-drained
-streams or a previously admitted identity complete recovery. No newly launched
-worker failed here. The original source and first result are retained, and the
-next controller slice owns the repair. Synthetic retirement and observation
-settlement records remain separate from later actual worker-cancellation proof.
+The fresh controller repairs the inherited recovery gap. A no-process model
+showed that an exited child can still have unread output: inherited recovery
+required native admission before draining it. The original source and first
+result remain preserved. The repaired controller collects that terminal result
+and output without signaling the dead child or inventing native admission.
+
+For example, a child that exits before its identity check now keeps its original
+admission failure while recovery drains its pipes. A live child that fails
+admission can receive bounded termination through its exclusively owned Popen
+handle. Native executable admission remains a separate prerequisite for commands.
+This requires a main-thread controller, default SIGCHLD handling, no other
+waiters, and a fixed worker that does not fork. A surviving group remains
+unresolved; the controller never signals an unknown surviving member.
+
+Source models exercise partial launches, parser errors, output limits, deadlines,
+cancellation and close failures. Recovery preserves the first failure; incomplete
+cleanup or missing output cannot become a successful worker result. No real
+worker has run under this new controller. Fixed transaction commands and final
+execution admission remain open. Synthetic retirement and observation settlement
+records remain separate from later actual worker-cancellation proof.
 
 | Remaining work | Required result |
 | --- | --- |
@@ -415,7 +427,7 @@ remain required before any product activation.
 scripts/run_with_ram_guard.sh -- python3 -B docs/audits/native-proxy-wrapper-compatibility-20260913/audit.py --verify-saved
 scripts/run_with_ram_guard.sh -- python3 -B docs/audits/native-proxy-compiler-profile-inventory-20260913/audit.py --verify-saved
 scripts/run_with_ram_guard.sh -- python3 -B docs/audits/native-proxy-compiler-profile-admission-20260913/epoch.py --verify-saved
-scripts/run_with_ram_guard.sh -- python3 -B docs/audits/native-proxy-populated-workers-admission-20260913/audit.py --verify-saved
+scripts/run_with_ram_guard.sh -- python3 -B docs/audits/native-proxy-populated-controller-20260913/audit.py --verify-saved
 ```
 
 [Return to runtime measurement](16dc-vial-portable-verilator-runtime-measurement.md).

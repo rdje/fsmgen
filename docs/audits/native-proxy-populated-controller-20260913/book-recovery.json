@@ -1,0 +1,516 @@
+{
+  "all_source_objects_owned_and_born_during_render": true,
+  "capture_end": 1789328745.3975637,
+  "capture_start": 1789328743.2544832,
+  "cause": "The CLI --dest-dir is relative to the invocation working directory, not docs/book. A mistaken ../../../ prefix selected a path outside the repository on the same SSD.",
+  "copied_bytes": 23684261,
+  "copied_files": 99,
+  "correct_command": "mdbook build docs/book --dest-dir .artifacts/tmp/native-proxy-populated-controller-book-20260913/book",
+  "exact_copied_bytes_verified": true,
+  "exact_original_output_absent": true,
+  "manifest": [
+    {
+      "path": "book/.nojekyll",
+      "sha256": "235d4f83c4c71612f43995dbda167720cd0c5384bf9ea64f9328b187c409b51d",
+      "size_bytes": 72
+    },
+    {
+      "path": "book/00-introduction.html",
+      "sha256": "676f1620f353ddeb5bc8e7fae81adec78355c69b3069c5de484095d2d16f214b",
+      "size_bytes": 24901
+    },
+    {
+      "path": "book/01-first-fsm.html",
+      "sha256": "6e6b727742834920b701dbc7537ce952c5fbc27336ad69d6b8e7263133e69c47",
+      "size_bytes": 24452
+    },
+    {
+      "path": "book/02-language-basics.html",
+      "sha256": "5684cc95f9e87b9a4139160bd8a8bba216902bbe0b694984a980b559c1f9b606",
+      "size_bytes": 45325
+    },
+    {
+      "path": "book/03-decision-trees-and-fsms.html",
+      "sha256": "abe3ae7efe7c19752b09831f66d4b80dffa1dc5d2e4563fb9cfcfeb4cb2d3c47",
+      "size_bytes": 43134
+    },
+    {
+      "path": "book/04-symbols-types-and-imports.html",
+      "sha256": "649f9475cc6a48abab61a4e7a2f5a19dba9a65e4f834b124cb39dca0161ebb30",
+      "size_bytes": 43166
+    },
+    {
+      "path": "book/05-composition-basics.html",
+      "sha256": "adb117d85103dfd442d083ef6bf87e1f08be10a2671fd11cdfa770cabdfffcca",
+      "size_bytes": 49024
+    },
+    {
+      "path": "book/06-composition-advanced.html",
+      "sha256": "2f7d40e484b0661d99333262a4b3f1a424ccbccfe80a9db3c460e976ecdd8adb",
+      "size_bytes": 55769
+    },
+    {
+      "path": "book/07-packages-and-sharing.html",
+      "sha256": "189865b726d21d6d06ff3ed66bed77803e268674bb494a9f9e25ba072f2e2518",
+      "size_bytes": 25783
+    },
+    {
+      "path": "book/08-type-inference-and-aggregate-data.html",
+      "sha256": "3f68e79349eb53a9d998c27930b47463e7df6a7fcb4186329118a6a8c09cd38a",
+      "size_bytes": 38510
+    },
+    {
+      "path": "book/09-generated-hdl-debugging-and-inspection.html",
+      "sha256": "1294d0a2bb960404326334273fe10c045a3ba19af953ed9a601b9219a840f8ea",
+      "size_bytes": 47437
+    },
+    {
+      "path": "book/10-errors-strict-mode-and-troubleshooting.html",
+      "sha256": "b075544d38957c02097f1856a3e206447b414d54942c7d4d472f8b171359689c",
+      "size_bytes": 52943
+    },
+    {
+      "path": "book/10a-downstream-issue-reporting.html",
+      "sha256": "e0b4ab929a5ce950b3d22d429e0861479078899b5284ac3a371652646193dd9d",
+      "size_bytes": 34443
+    },
+    {
+      "path": "book/11-extensions-and-embedding.html",
+      "sha256": "12a71fec9e008a97b255d6838321f457e2a177b97b2f4f1c2da25a70b42aa7b1",
+      "size_bytes": 225176
+    },
+    {
+      "path": "book/12-cookbook.html",
+      "sha256": "bd18cfbd69570b32386f30a28c328a8dfb48f405fcb8e9486e437520526270ee",
+      "size_bytes": 35761
+    },
+    {
+      "path": "book/13-intent-scheduling.html",
+      "sha256": "4d84c3a65f544c94a0e1461b7c78473ee579eee69b56a1e2764633b420e4ee75",
+      "size_bytes": 86877
+    },
+    {
+      "path": "book/13a-actor-interface.html",
+      "sha256": "13d030f904a5ab5119f0348838b4e8555b60acd0f4838aa039c4fb0f10fee566",
+      "size_bytes": 51850
+    },
+    {
+      "path": "book/13b-transactions.html",
+      "sha256": "1811626a5a68e029e3a042acc06a55d9cbfc6444aa14ffc9cb6f1a7e9d6728a6",
+      "size_bytes": 124073
+    },
+    {
+      "path": "book/13c-drive-blocks.html",
+      "sha256": "3800e0f1c166f2fe14440a225284991a5b6ba15adec631bfaf27dfcaaa2ff5f0",
+      "size_bytes": 25643
+    },
+    {
+      "path": "book/13d-control-flow.html",
+      "sha256": "77d67e48ac6da7b98057376cebe4331c6e9bf0302c9f0287df10fcbc738fc962",
+      "size_bytes": 111591
+    },
+    {
+      "path": "book/13e-data-manipulation.html",
+      "sha256": "8c296cb71247c05642f93187f781d4167b25a26bd27458caf253e8d18b60c4d5",
+      "size_bytes": 61223
+    },
+    {
+      "path": "book/13f-composition.html",
+      "sha256": "9bd1d862050edb4e542fd419ca08dea75ef784d21e87f6182f43640373111f25",
+      "size_bytes": 106194
+    },
+    {
+      "path": "book/13g-rules.html",
+      "sha256": "19f3fd4695d66a5b118bccd6fa937da1e3b930a6c9ed570b9d576aaa1ccbc2df",
+      "size_bytes": 48621
+    },
+    {
+      "path": "book/13h-lowering-reference.html",
+      "sha256": "fa6fa5229ba2b2f697d153b5f02ede0cd31c6ab3c51ed46bd44717af3e4fdc93",
+      "size_bytes": 130551
+    },
+    {
+      "path": "book/13i-downstream-integration.html",
+      "sha256": "489c05adefc6c8934cec0b4c9091aeba804b18ed2f5c0a3d5c00a79045c1dcd4",
+      "size_bytes": 21960
+    },
+    {
+      "path": "book/13j-type-enum-aggregate.html",
+      "sha256": "9b65f27f5ac2813b5551c26fb5d68445204687f1254e247f8daecd739c1610a2",
+      "size_bytes": 47258
+    },
+    {
+      "path": "book/13k-isf-feature-support-matrix.html",
+      "sha256": "78fa7c0a5fb74fab9c86f2e5b75d927a3dfa12aa051e0d33e1fe4a3ecc423504",
+      "size_bytes": 145636
+    },
+    {
+      "path": "book/13l-procedures.html",
+      "sha256": "d1b80949319154b4ee57d0668be47ce616c8e5cc383580fb4dd6057359a7965f",
+      "size_bytes": 30485
+    },
+    {
+      "path": "book/13m-local-variables.html",
+      "sha256": "7c69c612e99f4233f0fbf4e67e8d1bf6e5116a1486efe5af380693e5642c8d51",
+      "size_bytes": 27677
+    },
+    {
+      "path": "book/14-feature-backlog.html",
+      "sha256": "e127c69e12b513a893b503702f3afc91a7f8c725fe323032588a40fec148011e",
+      "size_bytes": 27610
+    },
+    {
+      "path": "book/14a-language-and-data.html",
+      "sha256": "e1967238565378df9ad34568e680f004fb023f633973d5328a2a0e951f593b13",
+      "size_bytes": 33614
+    },
+    {
+      "path": "book/14b-composition-backlog.html",
+      "sha256": "7d544598d5273f28e900384b47d7e5aad19f0ce073b9805b7105e18e06a833ad",
+      "size_bytes": 97502
+    },
+    {
+      "path": "book/14c-actor-network-orchestration.html",
+      "sha256": "1043330a79e6039ebe336aff30a5676643f24c2f037b5f8b00472d62139f50f0",
+      "size_bytes": 69302
+    },
+    {
+      "path": "book/14d-ial2-foundations.html",
+      "sha256": "70a72b52298d484d61883695a014c5ea2c0b8c61dd2dab41a762c5ed95f6c39b",
+      "size_bytes": 127905
+    },
+    {
+      "path": "book/14e-hial-vial-verification.html",
+      "sha256": "5377b545c3bc16e1ba2fe5a5f9cd7150b42c95e48f65aca35b8070ab22b62f5d",
+      "size_bytes": 30592
+    },
+    {
+      "path": "book/14f-axi-manager-core.html",
+      "sha256": "c0f8b98bb48bfc9779935c4ebc94d14c87ed2e5824fd57b2cbd02b179da8a678",
+      "size_bytes": 176098
+    },
+    {
+      "path": "book/14g-axi-dynamic-identity.html",
+      "sha256": "9f19bdd27921e19f8fe7fa05aefcba73187bc0e5099cc0329a5fadeac6c21f64",
+      "size_bytes": 233227
+    },
+    {
+      "path": "book/14h-protocol-profiles-and-apb.html",
+      "sha256": "3b52af3b242587b2d0b91cbb595cef0b32a5d1cc44ea4a3d1eb3fabaebfe02cf",
+      "size_bytes": 193151
+    },
+    {
+      "path": "book/14i-ahb-and-integration.html",
+      "sha256": "f787bc08153988c98023381ae3cb7c2696040d52f3ab2ab1b777b70f6373853c",
+      "size_bytes": 198859
+    },
+    {
+      "path": "book/14j-extended-axi.html",
+      "sha256": "b5289e8ba86855b9c12d5c602f6146d3fdad091f94833f6927baee17f8f625b5",
+      "size_bytes": 151227
+    },
+    {
+      "path": "book/14k-isf-language-and-scheduling.html",
+      "sha256": "8c6d6d35780719a9520e8ce72a0beaf8d02bbd5501eb886c23eef64130d1bd1b",
+      "size_bytes": 121780
+    },
+    {
+      "path": "book/14l-backends-validation-and-apis.html",
+      "sha256": "4dcc3c4a28db699647dbd40bcd9dca061bf18ca6c37053d5f74a557725bcd8b1",
+      "size_bytes": 95357
+    },
+    {
+      "path": "book/15-implementation-blueprint.html",
+      "sha256": "14ca4648df07efc8eb705f3477643eeda4eeb110e449d72cb837f33ffbaf491c",
+      "size_bytes": 29962
+    },
+    {
+      "path": "book/15a-ial2-new-protocol-support.html",
+      "sha256": "499720c06c8a8ad80a316f05efd2ac1d6254080244b8486809bc08e31ba1007e",
+      "size_bytes": 25674
+    },
+    {
+      "path": "book/16-ial2-protocol-platform-intent.html",
+      "sha256": "4ec82f2c93383dc0c7616cc6234eaf0b46935926e75b4edd72521a6fd218467a",
+      "size_bytes": 30874
+    },
+    {
+      "path": "book/16a-ial2-axi.html",
+      "sha256": "17168d3884a53a051884c6b01ba7ed26ee8ddde89c6f7e4e298a5db32fa908a8",
+      "size_bytes": 84992
+    },
+    {
+      "path": "book/16aa-ial2-axi-manager-capacity-status.html",
+      "sha256": "b009b3ab15c9b80348c17c50b443689ff39e98a82631c9c4852cb7cdfc574f07",
+      "size_bytes": 60356
+    },
+    {
+      "path": "book/16b-ial2-apb.html",
+      "sha256": "4eeaf85c8f70c4708bb19cf89cf2f5b189798119c15824c852096e00580cc293",
+      "size_bytes": 30397
+    },
+    {
+      "path": "book/16c-ial2-ahb.html",
+      "sha256": "2fc0a7e4afc948ff98a0ec414ec94d4f9b9aefce002356afb77e306344c339b6",
+      "size_bytes": 254470
+    },
+    {
+      "path": "book/16d-hial-vial-verification-architecture.html",
+      "sha256": "8fd993a0d170ed5403fdc601ab53b156e4825286d4cb567aba1d9a2dc0a63d19",
+      "size_bytes": 330493
+    },
+    {
+      "path": "book/16da-vial-balanced-portable-composition.html",
+      "sha256": "24f9e406c66b3f65857c01a4dd6700cb0fca016a634fc699961213a402f1a289",
+      "size_bytes": 46770
+    },
+    {
+      "path": "book/16db-vial-structural-backend-emission-matrix.html",
+      "sha256": "0a441a0b7e4f93b7b0afe2724ae653aceaaaf2bddc7aae1a47bdeb3cbba77365",
+      "size_bytes": 29523
+    },
+    {
+      "path": "book/16dc-vial-portable-verilator-runtime-measurement.html",
+      "sha256": "2c21369afdb4b4c375052f6342783870843d11f4d04134bffaa47a4888c6c853",
+      "size_bytes": 312930
+    },
+    {
+      "path": "book/16dd-vial-portable-vhdl-runtime-measurement.html",
+      "sha256": "b6f9d1e21d469851ffcb00de2d22e7e5a46cc07bee29ef5741c0dba3a9287dc1",
+      "size_bytes": 62575
+    },
+    {
+      "path": "book/16de-vial-osvvm-runtime-execution-plan.html",
+      "sha256": "0b5392f28d9c1499dc3f5fc008897d6b85fdc9eb1b724f03085f0c685ad0121f",
+      "size_bytes": 62366
+    },
+    {
+      "path": "book/16df-vial-architecture-scale-cap-closeout.html",
+      "sha256": "129781912a2c1e4d69bb4edb5a1a73df9913c3c758376118a06e73ca2131a028",
+      "size_bytes": 197993
+    },
+    {
+      "path": "book/16dg-vial-public-lifecycle-reference.html",
+      "sha256": "decbcd5b2b24a25a4b5b47f104b3678dcf4550d8b3f2a595f92b7f92533726b7",
+      "size_bytes": 51933
+    },
+    {
+      "path": "book/16dh-vial-ahb-end-to-end-tutorial.html",
+      "sha256": "618ca568eb5c186db8c2bdb91dd2d6ac2a03e957a202906726377139d1eae5cb",
+      "size_bytes": 38420
+    },
+    {
+      "path": "book/16di-vial-legacy-migration.html",
+      "sha256": "1f27709809de071ab303e93def7eb8a37720237fe46132568d94231a88844b84",
+      "size_bytes": 41274
+    },
+    {
+      "path": "book/16dj-vial-capability-support-reference.html",
+      "sha256": "97db02d79e91c7901b88d7dbfb9596685c708c6f530d338fb2b75b10101d25bd",
+      "size_bytes": 42960
+    },
+    {
+      "path": "book/16dk-inactive-proxy-lifetimes.html",
+      "sha256": "c1c39cec5fcc4d27c9e28534ec206aeccdcb82c05d1647264d68db9db28d4118",
+      "size_bytes": 48402
+    },
+    {
+      "path": "book/16e-nexsim-api-mcp-consumer-requirements.html",
+      "sha256": "238b7ebf9d2f9318f6bd6a0f80e3ec0f69265abd72e6d71b41ec9078ed5a7cc2",
+      "size_bytes": 144907
+    },
+    {
+      "path": "book/404.html",
+      "sha256": "aa2fd09f2ca122b6a8df32c354e426141812a536f9d154d040069840088457f0",
+      "size_bytes": 17673
+    },
+    {
+      "path": "book/90-reference-map.html",
+      "sha256": "3589ba3fb1730ae16ee66d6e87284c6ed6a7a9e187369aae027f1d6f0fa08b0d",
+      "size_bytes": 57291
+    },
+    {
+      "path": "book/91-live-document-containment-adoption.html",
+      "sha256": "7521016eb681767c813531500fccb01402f068f2b960441567c0ab5e5439c3d5",
+      "size_bytes": 45038
+    },
+    {
+      "path": "book/ayu-highlight-3fdfc3ac.css",
+      "sha256": "3fdfc3ac5e435e0cef96dafee74da487e4846ffce4dff5973bb45d68b678dd7f",
+      "size_bytes": 907
+    },
+    {
+      "path": "book/book-609e4cb8.js",
+      "sha256": "609e4cb80f92aa954a3f48869c751f6f8848433604f1297bb70fde0e3e58a569",
+      "size_bytes": 30932
+    },
+    {
+      "path": "book/clipboard-1626706a.min.js",
+      "sha256": "1626706afc88d95ebe1173b553ec732c6dc82a576989315fdf5e7779af738a44",
+      "size_bytes": 10754
+    },
+    {
+      "path": "book/css/chrome-d279d366.css",
+      "sha256": "d279d366359c0d588c9c10cb46afe2b543fc731dea722803639b4e45016d5fe2",
+      "size_bytes": 18032
+    },
+    {
+      "path": "book/css/general-e96d0476.css",
+      "sha256": "e96d0476741bfcbe8cc0ac02db00187c45a63946834361d0eab846016787c646",
+      "size_bytes": 11478
+    },
+    {
+      "path": "book/css/print-9e4910d8.css",
+      "sha256": "9e4910d8eb508863172430c60d49fd3b442e9e7f5963a18cd1d655c386ffeae9",
+      "size_bytes": 689
+    },
+    {
+      "path": "book/css/variables-8adf115d.css",
+      "sha256": "8adf115df892369c90b830767c4651a9e058b79273e219935f7c8a96c6eab9c0",
+      "size_bytes": 10422
+    },
+    {
+      "path": "book/elasticlunr-ef4e11c1.min.js",
+      "sha256": "ef4e11c157b1e2e89782d30bd726f2d5ff7834ea5e26ad02474325f8b1f126c9",
+      "size_bytes": 18051
+    },
+    {
+      "path": "book/favicon-8114d1fc.png",
+      "sha256": "8114d1fc74f4b5621ad9afde7746ed9cf7e420be317a6e29023d2298d58aa15b",
+      "size_bytes": 5679
+    },
+    {
+      "path": "book/favicon-de23e50b.svg",
+      "sha256": "de23e50b1c4dd6e052b3e21d444fcd4b13568b3840ac3c99d9be4e9263c0ef59",
+      "size_bytes": 1835
+    },
+    {
+      "path": "book/fonts/OPEN-SANS-LICENSE.txt",
+      "sha256": "cfc7749b96f63bd31c3c42b5c471bf756814053e847c10f3eb003417bc523d30",
+      "size_bytes": 11358
+    },
+    {
+      "path": "book/fonts/SOURCE-CODE-PRO-LICENSE.txt",
+      "sha256": "d1e6d465a83ba1a3be52db6484868cf5812ae9bbf91abdad3900ba0165afcf93",
+      "size_bytes": 4528
+    },
+    {
+      "path": "book/fonts/fonts-9644e21d.css",
+      "sha256": "94b5131beb9b75a55f9649fcf12de167350feae0fab2bab26c2703cd75c0c781",
+      "size_bytes": 3818
+    },
+    {
+      "path": "book/fonts/open-sans-v17-all-charsets-300-7736aa35.woff2",
+      "sha256": "7736aa3596c468515c3209f2f9d68cfae96d94c05689bcc11a5dce426a6ee2e8",
+      "size_bytes": 44352
+    },
+    {
+      "path": "book/fonts/open-sans-v17-all-charsets-300italic-2c7b95c0.woff2",
+      "sha256": "2c7b95c08df0d228caec6d4bfed06da0f7ab6b76ea5cc3f75b5c6ae416bc571b",
+      "size_bytes": 40656
+    },
+    {
+      "path": "book/fonts/open-sans-v17-all-charsets-600-486c6759.woff2",
+      "sha256": "486c67592731a0b36a89dba1fd0b97aeb73f236bbf60dbf28d7c6b5723c07989",
+      "size_bytes": 44936
+    },
+    {
+      "path": "book/fonts/open-sans-v17-all-charsets-600italic-1a3e8659.woff2",
+      "sha256": "1a3e865977024f444834a75a1b33b89b93134c93007ae3d6e14f24e6c88d8dfb",
+      "size_bytes": 42120
+    },
+    {
+      "path": "book/fonts/open-sans-v17-all-charsets-700-c22fe8c7.woff2",
+      "sha256": "c22fe8c70c36f1d862903b772eaed864d3a8fa849473c9caff224fdb852428e4",
+      "size_bytes": 44988
+    },
+    {
+      "path": "book/fonts/open-sans-v17-all-charsets-700italic-238ae959.woff2",
+      "sha256": "238ae9593944112bee8dd65f8ebc5f3d3862160a8a245fbe1ee3150bc9a2fd81",
+      "size_bytes": 40800
+    },
+    {
+      "path": "book/fonts/open-sans-v17-all-charsets-800-3d2c812a.woff2",
+      "sha256": "3d2c812adf74deb36fead3ff8469800d3c0b23eb2c858ae49310291f89490146",
+      "size_bytes": 44536
+    },
+    {
+      "path": "book/fonts/open-sans-v17-all-charsets-800italic-ba1521ec.woff2",
+      "sha256": "ba1521ec219db9bc5bfec0e3e7a897369d98b30d4e853ee4aa525322784428b8",
+      "size_bytes": 40812
+    },
+    {
+      "path": "book/fonts/open-sans-v17-all-charsets-italic-6c9463f7.woff2",
+      "sha256": "6c9463f7096c0b9d610e095ed248ac1e8a8da7e92d17e9be544f3baced7b62b2",
+      "size_bytes": 41076
+    },
+    {
+      "path": "book/fonts/open-sans-v17-all-charsets-regular-2e3b1d34.woff2",
+      "sha256": "2e3b1d34ac67763ab50652da19305d4b3694c6b6e6bf35f4b98411ce4af646d2",
+      "size_bytes": 43236
+    },
+    {
+      "path": "book/fonts/source-code-pro-v11-all-charsets-500-2bdd9410.woff2",
+      "sha256": "2bdd9410b0141db3cbbf4cfc3818cc6fad279e8e63940940e06cd6af76ccbfcf",
+      "size_bytes": 59140
+    },
+    {
+      "path": "book/highlight-493f70e1.css",
+      "sha256": "493f70e1527d895653b5ac7157abba8e2c656e43698da93b6c1997e2855a5059",
+      "size_bytes": 1209
+    },
+    {
+      "path": "book/highlight-abc7f01d.js",
+      "sha256": "abc7f01d0ce8c64e4ba9e131d651e48ae1a567b2a1254fea8aab03502288de58",
+      "size_bytes": 137537
+    },
+    {
+      "path": "book/index.html",
+      "sha256": "676f1620f353ddeb5bc8e7fae81adec78355c69b3069c5de484095d2d16f214b",
+      "size_bytes": 24901
+    },
+    {
+      "path": "book/mark-09e88c2c.min.js",
+      "sha256": "09e88c2cfaf23ea8a37b5681433eafea97033af632ecc948c8c1ee9944647743",
+      "size_bytes": 17320
+    },
+    {
+      "path": "book/print.html",
+      "sha256": "b53901afa7efbcc3f773c8fed3f0fb92cbc036aa26bc16be985b43dfc5fcde5a",
+      "size_bytes": 4090449
+    },
+    {
+      "path": "book/searcher-09f2665d.js",
+      "sha256": "1231134f57655e7c3c669a46b1de35615895dbf277807f677b70ba3a48dfcc60",
+      "size_bytes": 20294
+    },
+    {
+      "path": "book/searchindex-3d56d718.js",
+      "sha256": "3d56d718de716b96ee6a39701f290e7f52e8b04be6c4b39782ea399a239b0070",
+      "size_bytes": 13360694
+    },
+    {
+      "path": "book/toc-7727513f.js",
+      "sha256": "7727513f2246a8126695b48c218eeb52cf5eadf09d5e1d5c79420916901738e6",
+      "size_bytes": 31354
+    },
+    {
+      "path": "book/toc.html",
+      "sha256": "c5c2db87908aa220460a64cd3007bf412e8d3a483e01cd543b7ce2d784ba1041",
+      "size_bytes": 14642
+    },
+    {
+      "path": "book/tomorrow-night-4c0ae647.css",
+      "sha256": "4c0ae647a06ef1699806fb9b4b6d0ef72de026708c6e8581362641c9298cb5f7",
+      "size_bytes": 1694
+    }
+  ],
+  "original_destination_from_repository": "../../../.artifacts/tmp/native-proxy-populated-controller-book-20260913/book",
+  "other_volume_artifact_directories_untouched": true,
+  "owner": "HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.12.4.1.5.3.1.2",
+  "relocated_rendered_passages_verified": true,
+  "source_directories": 4,
+  "source_same_volume": true,
+  "target": ".artifacts/tmp/native-proxy-populated-controller-book-20260913",
+  "target_cleanup_owner": "inspect_book.py"
+}

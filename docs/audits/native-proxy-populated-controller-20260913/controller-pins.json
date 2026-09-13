@@ -1,0 +1,32 @@
+[
+  {
+    "path": "docs/audits/native-proxy-populated-controller-20260913/controller.py",
+    "sha256": "79317436887a77ac8835e1d488d80f9bb86e1163806de7e217701c0641fa74e3",
+    "size_bytes": 21755
+  },
+  {
+    "path": "docs/audits/native-proxy-populated-controller-20260913/qualify.py",
+    "sha256": "3bfc998de5e6183644e905d8dafd90903efd66617c93a925024e408d135e08d1",
+    "size_bytes": 22457
+  },
+  {
+    "path": "docs/audits/native-proxy-populated-controller-20260913/controller.py.first.source",
+    "sha256": "7090bdf32f5e38845a17097c3321259bd5d4fa61a4fcc9ccc79ca98a0df1e4ce",
+    "size_bytes": 21752
+  },
+  {
+    "path": "docs/audits/native-proxy-populated-controller-20260913/qualify.py.first.source",
+    "sha256": "364867a2a2d90e91bc9cea197ae8afe48f903fb10a83d6f66d640cd6ea89f746",
+    "size_bytes": 18951
+  },
+  {
+    "path": "docs/audits/native-proxy-populated-controller-20260913/selected-subprocess.source",
+    "sha256": "07a42f1899c6db19abc0481f7f35632ea67fdacd66fbdc38c9e9d8b7633d8728",
+    "size_bytes": 5187
+  },
+  {
+    "path": "docs/audits/native-proxy-populated-controller-20260913/stdlib-evidence.json",
+    "sha256": "e886f8fb70b1ab804fdfdbb16066ce1ec9dfc2d04ecb4c4464b2c43eee2c0a0d",
+    "size_bytes": 615
+  }
+]

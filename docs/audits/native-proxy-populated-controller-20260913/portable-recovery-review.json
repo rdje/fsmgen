@@ -1,0 +1,6 @@
+{
+  "actual_worker_execution": false,
+  "current_checks_repository_local": true,
+  "reason": "The outside-repository render was exactly removed during its recorded recovery. Reverification after moving the repository must consume that captured result, not reinterpret ../../../ against the new root and probe a different external location.",
+  "saved_original_absence": true
+}

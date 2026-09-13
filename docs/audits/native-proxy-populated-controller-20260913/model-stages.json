@@ -1,0 +1,12 @@
+{
+  "qualification-complete": {
+    "exit": "0\n",
+    "stderr": "",
+    "stdout": "{\"actual_worker_execution\": false, \"checks\": 52, \"terminal_regression_recovered\": true}\n"
+  },
+  "qualification-repaired": {
+    "exit": "0\n",
+    "stderr": "",
+    "stdout": "{\"actual_worker_execution\": false, \"checks\": 46, \"terminal_regression_recovered\": true}\n"
+  }
+}

@@ -1,0 +1,101 @@
+{
+  "actual_fixture_allocation": false,
+  "actual_signals": false,
+  "actual_worker_execution": false,
+  "checks": [
+    "terminal_unadmitted_undrained_consumes_original_failure_without_signal",
+    "fragmented_ready_native_image_and_normal_terminal_outcome",
+    "fail_owner_closes_partial_resources_without_launch_retry",
+    "fail_open_closes_partial_resources_without_launch_retry",
+    "fail_spawn_closes_partial_resources_without_launch_retry",
+    "stale_qualification-model.pl_blocks_before_resources",
+    "stale_model-invocation_blocks_before_resources",
+    "stale_model-native_blocks_before_resources",
+    "live_unadmitted_direct_child_term_recovery",
+    "live_unadmitted_direct_child_kill_recovery",
+    "partial_pipe_setup_recovers_owned_pipes_and_original_failure",
+    "fail_nonblocking_persistent_output_loss_explicit_and_child_settled",
+    "fail_read_persistent_output_loss_explicit_and_child_settled",
+    "invalid_json_preserved_without_reentering_parser",
+    "noncanonical_preserved_without_reentering_parser",
+    "partial_preserved_without_reentering_parser",
+    "overlong_preserved_without_reentering_parser",
+    "foreign_preserved_without_reentering_parser",
+    "before_ready_preserved_without_reentering_parser",
+    "aggregate_overflow_keeps_prefix_first_overflow_byte_and_discard_count",
+    "capture_write_failure_retains_bounded_memory_prefix_and_drains",
+    "capture_partial_writes_complete_but_partial_command_is_never_retried",
+    "duplicate_ready_rejects",
+    "birth_changed_rejects",
+    "path_changed_rejects",
+    "image_changed_rejects",
+    "post_finished_rejects",
+    "event_count_rejects",
+    "command_before_admission_rejects_without_write",
+    "command_unknown_rejects_without_write",
+    "command_oversize_rejects_without_write",
+    "command_deadline_rejects_without_write",
+    "command_after_finished_rejects_without_write",
+    "deadline_requires_bounded_separate_recovery",
+    "stdin_close_failure_attempts_other_resources_and_stays_unresolved",
+    "stdout_close_failure_attempts_other_resources_and_stays_unresolved",
+    "capture_close_failure_attempts_other_resources_and_stays_unresolved",
+    "group_live_cannot_be_promoted_to_settled",
+    "group_query_cannot_be_promoted_to_settled",
+    "wait_cannot_be_promoted_to_settled",
+    "signal_cannot_be_promoted_to_settled",
+    "unkillable_cannot_be_promoted_to_settled",
+    "journal_launch_failure_does_not_interrupt_cleanup",
+    "journal_capture_failure_does_not_interrupt_cleanup",
+    "journal_consumption_failure_does_not_interrupt_cleanup",
+    "admitted_cancellation_remains_separate_recovery",
+    "already_drained_unadmitted_terminal_child_needs_no_signal",
+    "production_spawn_has_exact_literal_argv_closed_environment_and_pipe_ownership",
+    "production_ownership_rejects_ignored_sigchld_and_other_threads",
+    "production_native_identity_rejects_foreign_child_uid_parent_group_and_session",
+    "configuration_rejects_invalid_bounds_aliases_escapes_and_shared_capture",
+    "restored_inherited_recovery_coupling_is_falsified_by_regression"
+  ],
+  "group_absence_in_models_is_assumed": true,
+  "no_process_models_do_not_grant_execution_admission": true,
+  "terminal_regression": {
+    "abandoned": [],
+    "cleanup_complete": true,
+    "cleanup_errors": [],
+    "discarded": {
+      "stderr": 0,
+      "stdout": 0
+    },
+    "eof": [
+      "stderr",
+      "stdout"
+    ],
+    "exit_code": 0,
+    "failed_capture_prefixes": {},
+    "failed_captures": [],
+    "first_failure": {
+      "message": "model native identity admission failed",
+      "phase": "launch",
+      "type": "ValueError"
+    },
+    "group_gone": true,
+    "healthy": false,
+    "journal_complete": true,
+    "launched": true,
+    "leader_reaped": true,
+    "native_admitted": false,
+    "output_complete": true,
+    "retained_prefixes": {
+      "stderr": {
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "size_bytes": 0
+      },
+      "stdout": {
+        "sha256": "99852f7713e12dcf313daca42b95ae673efeaebd3d182a2ecefab806719305df",
+        "size_bytes": 20
+      }
+    },
+    "separate_recovery": true,
+    "signals": []
+  }
+}

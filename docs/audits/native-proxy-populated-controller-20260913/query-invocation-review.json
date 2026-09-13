@@ -1,0 +1,14 @@
+{
+  "cause": "The Knowledge Map query CLI joins all text arguments into one substring. Passing both questions in one invocation produced an empty result with exit zero; that output is preserved and is not treated as discovery proof. Separate exact-question queries are required.",
+  "function": "run_query",
+  "raw_outputs": {
+    "exit": "0\n",
+    "stderr": "",
+    "stdout": ""
+  },
+  "source": "knowledge-map/scripts/knowledge_map.pl",
+  "verification_stages": [
+    "knowledge-recovery-query",
+    "knowledge-book-query"
+  ]
+}

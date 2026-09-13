@@ -1,0 +1,21 @@
+{
+  "actual_worker_execution": false,
+  "cause": "Command journal payload used name while the model journal named its positional event parameter name. The keyword collision occurred before any command write. Use the precise command field, consistent with the intended event schema; preserve this first source and result.",
+  "outputs": {
+    "exit": "1\n",
+    "stderr": "Traceback (most recent call last):\n  File \"/Volumes/SSD/Documents/github/fsmgen/docs/audits/native-proxy-populated-controller-20260913/qualify.py\", line 432, in <module>\n    main()\n    ~~~~^^\n  File \"/Volumes/SSD/Documents/github/fsmgen/docs/audits/native-proxy-populated-controller-20260913/qualify.py\", line 421, in main\n    result = qualify()\n  File \"/Volumes/SSD/Documents/github/fsmgen/docs/audits/native-proxy-populated-controller-20260913/qualify.py\", line 308, in qualify\n    failure(lambda: worker.send('admit'), OSError, 'never retry')\n    ~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/Volumes/SSD/Documents/github/fsmgen/docs/audits/native-proxy-populated-controller-20260913/qualify.py\", line 162, in failure\n    call()\n    ~~~~^^\n  File \"/Volumes/SSD/Documents/github/fsmgen/docs/audits/native-proxy-populated-controller-20260913/qualify.py\", line 308, in <lambda>\n    failure(lambda: worker.send('admit'), OSError, 'never retry')\n                    ~~~~~~~~~~~^^^^^^^^^\n  File \"/Volumes/SSD/Documents/github/fsmgen/docs/audits/native-proxy-populated-controller-20260913/controller.py\", line 347, in send\n    self.emit('command', name=name)\n    ~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^\n  File \"/Volumes/SSD/Documents/github/fsmgen/docs/audits/native-proxy-populated-controller-20260913/controller.py\", line 186, in emit\n    self.journal(event, **fields)\n    ~~~~~~~~~~~~^^^^^^^^^^^^^^^^^\nTypeError: model.<locals>.<lambda>() got multiple values for argument 'name'\n",
+    "stdout": ""
+  },
+  "sources": [
+    {
+      "path": "controller.py.first.source",
+      "sha256": "7090bdf32f5e38845a17097c3321259bd5d4fa61a4fcc9ccc79ca98a0df1e4ce",
+      "size_bytes": 21752
+    },
+    {
+      "path": "qualify.py.first.source",
+      "sha256": "364867a2a2d90e91bc9cea197ae8afe48f903fb10a83d6f66d640cd6ea89f746",
+      "size_bytes": 18951
+    }
+  ]
+}

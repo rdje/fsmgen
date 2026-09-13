@@ -1,0 +1,20 @@
+---
+id: mdbook-cli-destination-working-directory
+title: The mdBook CLI destination resolves from the invocation directory
+answers:
+  - "what is mdbook --dest-dir relative to?"
+  - "how should this repository select a disposable mdBook build directory?"
+date: 2026-09-13
+status: current
+tags: [mdbook, documentation, locality, artifacts]
+evidence: docs/audits/native-proxy-populated-controller-20260913/book-recovery.json; docs/audits/native-proxy-populated-controller-20260913/book-review.json; docs/tasks/HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.md
+reverify: python3 -B docs/audits/native-proxy-populated-controller-20260913/audit.py --verify-saved
+---
+
+From the repository root, pass `--dest-dir .artifacts/tmp/OWNED/book` to
+`mdbook build docs/book`. The CLI destination resolves against the invocation
+working directory. Do not prepend `../../../` as if it were book-relative.
+The selected render demonstrated that error; its exact newly created output
+was copied into the repository, byte-verified, inspected and removed. The
+original output was also removed after verified relocation. The saved audit
+checks the retained evidence and absence; it does not rebuild or repeat cleanup.

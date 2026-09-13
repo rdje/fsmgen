@@ -1,0 +1,26 @@
+{
+  "disposition": "Leave pre-existing parent directories untouched; this task created and removed only the exact child render namespace.",
+  "exact_task_output_absent": true,
+  "preexisting_parent_directories": [
+    {
+      "birth_time": 1785650061.1634357,
+      "device": 16777244,
+      "entries": [],
+      "path_from_repository": "../../../.artifacts/tmp",
+      "predates_this_render": true,
+      "uid": 501,
+      "untouched": true
+    },
+    {
+      "birth_time": 1785650061.1633773,
+      "device": 16777244,
+      "entries": [
+        "tmp"
+      ],
+      "path_from_repository": "../../../.artifacts",
+      "predates_this_render": true,
+      "uid": 501,
+      "untouched": true
+    }
+  ]
+}

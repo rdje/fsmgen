@@ -1,0 +1,9 @@
+{
+  "cause": "The completion authoring draft selected the first Acceptance Checklist heading instead of the final live footer. The exact 6370-line assertion rejected the draft before any file write. Existing historical checklists remain unchanged; the correction selects the exact final heading.",
+  "completed_source_qualification_unchanged": true,
+  "first_heading_line": 4605,
+  "live_heading_line": 6366,
+  "rejected_before_task_write": true,
+  "task_bytes_at_rejection": 1134005,
+  "task_sha256_at_rejection": "9d6d6d61a8815926ab66295a66df26b2e3d93b1f8d1313cd978c9ee7076091c5"
+}

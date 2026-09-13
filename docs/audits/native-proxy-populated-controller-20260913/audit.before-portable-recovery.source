@@ -1,0 +1,140 @@
+"""Reverify selected controller source, first failures and no-process qualification."""
+import argparse
+import ast
+import copy
+import hashlib
+import json
+from pathlib import Path
+import subprocess
+from unittest.mock import patch
+
+import qualify
+
+BASE = Path(__file__).resolve().parent
+ROOT = BASE.parents[2]
+SCOPE = json.loads((BASE / 'scope.json').read_bytes())
+REVISION = SCOPE['source_revision']
+
+
+def read(name):
+    return json.loads((BASE / name).read_bytes())
+
+
+def pin(path):
+    body = path.read_bytes()
+    return dict(path=str(path.relative_to(ROOT)), size_bytes=len(body), sha256=hashlib.sha256(body).hexdigest())
+
+
+def old(path):
+    return subprocess.check_output(['git', 'show', REVISION + ':' + path], cwd=ROOT)
+
+
+def check(result):
+    assert result['actual_worker_execution'] is False and result['actual_fixture_allocation'] is False
+    assert result['actual_signals'] is False and result['group_absence_in_models_is_assumed'] is True
+    assert result['no_process_models_do_not_grant_execution_admission'] is True
+    assert len(result['checks']) == len(set(result['checks'])) == 52
+    row = result['terminal_regression']
+    assert row['exit_code'] == 0 and row['leader_reaped'] and row['group_gone'] and row['cleanup_complete']
+    assert row['output_complete'] and not row['native_admitted'] and not row['healthy']
+    assert row['separate_recovery'] and row['first_failure'] == dict(
+        phase='launch', type='ValueError', message='model native identity admission failed')
+    assert row['signals'] == [] and row['eof'] == ['stderr', 'stdout']
+    assert row['retained_prefixes']['stdout'] == dict(size_bytes=20, sha256=hashlib.sha256(b'failed before ready\n').hexdigest())
+
+
+def verify():
+    pins = read('input-pins.json')
+    for entry in pins:
+        assert pin(ROOT / entry['path']) == entry
+        previous = old(entry['path'])
+        assert previous == (ROOT / entry['path']).read_bytes()
+    for entry in read('controller-pins.json'):
+        assert pin(ROOT / entry['path']) == entry
+    diagnosis = json.loads((ROOT / SCOPE['diagnosis']).read_bytes())
+    assert diagnosis['outputs']['exit'] == '0\n'
+    previous = diagnosis['result']
+    assert previous['defect_reproduced'] and not previous['recovery_complete']
+    assert not previous['native_identity_admitted'] and previous['terminal_model_child']
+    first = read('qualification-first.json')
+    assert first['outputs']['exit'] == '1\n' and 'multiple values for argument' in first['outputs']['stderr']
+    for source in first['sources']:
+        body = (BASE / source['path']).read_bytes()
+        assert len(body) == source['size_bytes'] and hashlib.sha256(body).hexdigest() == source['sha256']
+    # The first failing controller changes only the command journal field.
+    assert (BASE / 'controller.py.first.source').read_text().replace(
+        "self.emit('command', name=name)", "self.emit('command', command=name)") == (BASE / 'controller.py').read_text()
+    initial = read('qualification-repaired-initial.json')
+    assert len(initial['checks']) == 46
+    current = read('qualification.json')
+    assert [name for name in current['checks'] if name in initial['checks']] == initial['checks']
+    check(current)
+    forbidden = lambda *a, **k: (_ for _ in ()).throw(AssertionError('model attempted actual process/signal'))
+    with patch.object(qualify.c.subprocess, 'Popen', forbidden), patch.object(qualify.c.os, 'fork', forbidden), \
+         patch.object(qualify.c.os, 'kill', forbidden), patch.object(qualify.c.os, 'killpg', forbidden):
+        assert qualify.qualify() == current
+    tree = ast.parse((BASE / 'controller.py').read_text())
+    calls = [node for node in ast.walk(tree) if isinstance(node, ast.Call)]
+    named = lambda call: ast.unparse(call.func)
+    assert len([call for call in calls if named(call) == 'subprocess.Popen']) == 1
+    group = [call for call in calls if named(call) == 'os.killpg']
+    assert len(group) == 1 and isinstance(group[0].args[1], ast.Constant) and group[0].args[1].value == 0
+    assert not any(named(call) in ('os.kill', 'os.fork', 'os.system', 'os.execv', 'os.waitpid', 'signal.signal') for call in calls)
+    selected = read('stdlib-evidence.json')
+    assert hashlib.sha256((BASE / selected['selected_source']).read_bytes()).hexdigest() == selected['selected_sha256']
+    assert selected['read_only'] and 'no other waiters' in selected['requirement']
+    for phase, count in [('qualification-repaired', 46), ('qualification-complete', 52)]:
+        stage = read('model-stages.json')[phase]
+        assert stage['exit'] == '0\n' and json.loads(stage['stdout']) == dict(
+            actual_worker_execution=False, checks=count, terminal_regression_recovered=True)
+    rejecting = []
+    mutations = {
+        'hidden_original_failure': lambda r: r['terminal_regression'].update(first_failure=None),
+        'invented_native_admission': lambda r: r['terminal_regression'].update(native_admitted=True),
+        'healthy_promotion': lambda r: r['terminal_regression'].update(healthy=True),
+        'unnecessary_signal': lambda r: r['terminal_regression'].update(signals=[15]),
+        'missing_output': lambda r: r['terminal_regression'].update(output_complete=False),
+        'model_group_as_fact': lambda r: r.update(group_absence_in_models_is_assumed=False),
+        'omitted_case': lambda r: r['checks'].pop(),
+        'invented_execution': lambda r: r.update(actual_worker_execution=True),
+    }
+    for name, mutation in mutations.items():
+        changed = copy.deepcopy(current); mutation(changed)
+        try:
+            check(changed)
+        except AssertionError:
+            rejecting.append(name)
+        else:
+            raise AssertionError('altered evidence accepted: ' + name)
+    recovery = read('book-recovery.json')
+    book = read('book-review.json')
+    assert recovery['owner'] == SCOPE['owner']
+    assert recovery['source_same_volume'] and recovery['all_source_objects_owned_and_born_during_render']
+    assert recovery['exact_copied_bytes_verified'] and recovery['relocated_rendered_passages_verified']
+    assert recovery['exact_original_output_absent'] and recovery['other_volume_artifact_directories_untouched']
+    assert recovery['copied_files'] == len(recovery['manifest']) == book['rendered_files'] == 99
+    assert recovery['copied_bytes'] == sum(r['size_bytes'] for r in recovery['manifest']) == book['rendered_bytes']
+    assert recovery['source_directories'] == book['rendered_directories'] + 2 == 4
+    assert not (ROOT / recovery['original_destination_from_repository']).exists()
+    assert not (ROOT / recovery['target']).exists() and book['exact_output_absent']
+    assert len(book['checked_passages']) == 6 and len(book['checked_runtime_passages']) == 2
+    return dict(owner=SCOPE['owner'], source_revision=REVISION,
+                qualification_checks=len(current['checks']), rejecting_join_controls=rejecting,
+                selected_previous_inputs=len(pins), original_defect_preserved=True,
+                terminal_recovery_repaired_in_fresh_controller=True,
+                exact_book_output_recovery_complete=True,
+                operational_execution_admitted=False, actual_worker_execution=False,
+                next_owner=SCOPE['next_owner'], fixed_worker_protocol_and_final_admission_open=True)
+
+
+if __name__ == '__main__':
+    parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument('--verify-saved', action='store_true')
+    args = parser.parse_args()
+    result = verify()
+    if args.verify_saved:
+        assert result == read('review.json')
+    else:
+        with (BASE / 'review.json').open('x') as stream:
+            json.dump(result, stream, sort_keys=True, indent=2); stream.write('\n')
+    print(json.dumps(result, sort_keys=True))

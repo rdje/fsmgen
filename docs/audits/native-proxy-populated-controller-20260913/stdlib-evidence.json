@@ -1,0 +1,10 @@
+{
+  "python_version": "3.14.7 (main, Aug  5 2026, 10:29:49) [Clang 21.0.0 (clang-2100.1.1.101)]",
+  "read_only": true,
+  "requirement": "Exclusive main-thread Popen ownership; default SIGCHLD, no other waiters; only direct-child send_signal. Selected local source evidence, not actual worker qualification.",
+  "selected_sha256": "07a42f1899c6db19abc0481f7f35632ea67fdacd66fbdc38c9e9d8b7633d8728",
+  "selected_source": "selected-subprocess.source",
+  "source_relative_to_stdlib": "subprocess.py",
+  "source_sha256": "6628ffdd65c093a6c08cae01ffe82877d3ced515aac9e7be0cff16512c30a7d9",
+  "source_size_bytes": 90732
+}

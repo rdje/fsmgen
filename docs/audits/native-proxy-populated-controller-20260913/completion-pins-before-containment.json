@@ -1,0 +1,217 @@
+[
+  {
+    "path": "KNOWLEDGE_MAP.md",
+    "sha256": "bbd15d0ac34ca55f9c0aed9b398ed1edc8ad80c6c7c5ea72b25b1eda6a410196",
+    "size_bytes": 13409
+  },
+  {
+    "path": "MEMORY.md",
+    "sha256": "7d63177294e8142e45d12228b7a0e98d59c1c7e8a1f5ddf2773040fffd5c5f6b",
+    "size_bytes": 687
+  },
+  {
+    "path": "docs/TASK_TREE.md",
+    "sha256": "732c5442e41ead81b7563503ec8c926e5308159fd421d23cbcb3767ed95cbc30",
+    "size_bytes": 38856
+  },
+  {
+    "path": "docs/audits/native-proxy-populated-controller-20260913/audit.before-book-recovery.source",
+    "sha256": "1af97f06ea33a7281b95bc38768d22ee34878eddeb73ecb9309175a463915dc9",
+    "size_bytes": 6720
+  },
+  {
+    "path": "docs/audits/native-proxy-populated-controller-20260913/audit.py",
+    "sha256": "0c5a949470065b5e0aef103b481f060dd2d30ba0fc89e87e5938d9191a418752",
+    "size_bytes": 7780
+  },
+  {
+    "path": "docs/audits/native-proxy-populated-controller-20260913/book-metrics.json",
+    "sha256": "354dea0dc26f3f845e3dd6fdf2ab1a22ecee7be6acd53e77f74337e923145e8a",
+    "size_bytes": 174
+  },
+  {
+    "path": "docs/audits/native-proxy-populated-controller-20260913/book-parent-residue-census.json",
+    "sha256": "20b975faa3674dc934f155426abc3b6c37520c5d311559c957ebbab81434f456",
+    "size_bytes": 706
+  },
+  {
+    "path": "docs/audits/native-proxy-populated-controller-20260913/book-recovery.json",
+    "sha256": "6817f4d652f96e88374cb1d1555f137c767909ff719856ea73800e444666f8f4",
+    "size_bytes": 18634
+  },
+  {
+    "path": "docs/audits/native-proxy-populated-controller-20260913/book-review.json",
+    "sha256": "cdb1fb05e045d2e061a1669dac3dcafd6dfbb2349f9963fcbffe2244c44e6ca4",
+    "size_bytes": 1187
+  },
+  {
+    "path": "docs/audits/native-proxy-populated-controller-20260913/card-containment.json",
+    "sha256": "b8745df5316bdc8ae7f165f68a36be34c5db7b80a18463ccf42c802054e3ac19",
+    "size_bytes": 285
+  },
+  {
+    "path": "docs/audits/native-proxy-populated-controller-20260913/claim-review.json",
+    "sha256": "db7a0b92a72ba350090f3279106aca5ef775ffd3f2857250381c013334824fa8",
+    "size_bytes": 4065
+  },
+  {
+    "path": "docs/audits/native-proxy-populated-controller-20260913/controller-pins.json",
+    "sha256": "5316179757f3e116afdd36557d1c2a3509585e39e2b439e21468b69f4cf30506",
+    "size_bytes": 1234
+  },
+  {
+    "path": "docs/audits/native-proxy-populated-controller-20260913/controller.py",
+    "sha256": "79317436887a77ac8835e1d488d80f9bb86e1163806de7e217701c0641fa74e3",
+    "size_bytes": 21755
+  },
+  {
+    "path": "docs/audits/native-proxy-populated-controller-20260913/controller.py.first.source",
+    "sha256": "7090bdf32f5e38845a17097c3321259bd5d4fa61a4fcc9ccc79ca98a0df1e4ce",
+    "size_bytes": 21752
+  },
+  {
+    "path": "docs/audits/native-proxy-populated-controller-20260913/draft-layout-rejection.json",
+    "sha256": "c0ea32fc50f56da864414f431ca4ad55c6b27fa7e368d43ad2f19c4dcf7a10f8",
+    "size_bytes": 584
+  },
+  {
+    "path": "docs/audits/native-proxy-populated-controller-20260913/input-pins.json",
+    "sha256": "b395f21a65ab1ffea38eff7d82c9dadf370542b560d93589bf1ff4285d4e638e",
+    "size_bytes": 1696
+  },
+  {
+    "path": "docs/audits/native-proxy-populated-controller-20260913/inspect_book.py",
+    "sha256": "804071277cc1755829fa8e29b82120ddd21ba0a3c816b69760396233d7123031",
+    "size_bytes": 3289
+  },
+  {
+    "path": "docs/audits/native-proxy-populated-controller-20260913/model-stages.json",
+    "sha256": "e976261c3e8f143024a47bd3b1e903f730491e3db9002b41bfa128c4c8bf6a12",
+    "size_bytes": 371
+  },
+  {
+    "path": "docs/audits/native-proxy-populated-controller-20260913/qualification-first.json",
+    "sha256": "a7486f780850597bdc012a590d20f06393d63a10e5d26df15c84ff4d28dab393",
+    "size_bytes": 2279
+  },
+  {
+    "path": "docs/audits/native-proxy-populated-controller-20260913/qualification-repaired-initial.json",
+    "sha256": "e28988d76b8f2e1294c184b747eebf7fa074f1ba9dfe12a3a54802ea1d6243d5",
+    "size_bytes": 3737
+  },
+  {
+    "path": "docs/audits/native-proxy-populated-controller-20260913/qualification.json",
+    "sha256": "2b2d9b7d648a9e2aed933cf1553afd4cadcff3f5c74bad22133ac9bb9cff9512",
+    "size_bytes": 4176
+  },
+  {
+    "path": "docs/audits/native-proxy-populated-controller-20260913/qualify.py",
+    "sha256": "3bfc998de5e6183644e905d8dafd90903efd66617c93a925024e408d135e08d1",
+    "size_bytes": 22457
+  },
+  {
+    "path": "docs/audits/native-proxy-populated-controller-20260913/qualify.py.first.source",
+    "sha256": "364867a2a2d90e91bc9cea197ae8afe48f903fb10a83d6f66d640cd6ea89f746",
+    "size_bytes": 18951
+  },
+  {
+    "path": "docs/audits/native-proxy-populated-controller-20260913/query-invocation-review.json",
+    "sha256": "747814b0c3dff284e8c5188d5eab4fb291c35f8cbd8886c9c083b857dc8adb16",
+    "size_bytes": 532
+  },
+  {
+    "path": "docs/audits/native-proxy-populated-controller-20260913/recover_book.py",
+    "sha256": "5074939d20e2a8cd1ffa0e6976edc8b933e917bb83e6578c5645db9c824e6a6d",
+    "size_bytes": 4492
+  },
+  {
+    "path": "docs/audits/native-proxy-populated-controller-20260913/review-before-book-recovery.json",
+    "sha256": "6f24ce515e740f028fcc272abcb26516ff05fb5a9c16c018f52e71e31aebbdc8",
+    "size_bytes": 835
+  },
+  {
+    "path": "docs/audits/native-proxy-populated-controller-20260913/review.json",
+    "sha256": "714a5b57f23f2a279a28a3f42934521889ca10f8d70aaa0851eb4ebfd5da2b3f",
+    "size_bytes": 882
+  },
+  {
+    "path": "docs/audits/native-proxy-populated-controller-20260913/review_claims.py",
+    "sha256": "75d4673722778ffabffc23ee52eca090a615bb1b1102f48c3a7bcbfc46794d82",
+    "size_bytes": 5032
+  },
+  {
+    "path": "docs/audits/native-proxy-populated-controller-20260913/review_completion.py",
+    "sha256": "e81a952dea866b4e6ccaf6722f7c368768332e38fd71e00ba9a775fd6b31c3c2",
+    "size_bytes": 6151
+  },
+  {
+    "path": "docs/audits/native-proxy-populated-controller-20260913/scope.json",
+    "sha256": "5f862e8cf2657681a71e4310b5e222035cb8f72a4e67228d3dd0798ce89d6c84",
+    "size_bytes": 1012
+  },
+  {
+    "path": "docs/audits/native-proxy-populated-controller-20260913/selected-subprocess.source",
+    "sha256": "07a42f1899c6db19abc0481f7f35632ea67fdacd66fbdc38c9e9d8b7633d8728",
+    "size_bytes": 5187
+  },
+  {
+    "path": "docs/audits/native-proxy-populated-controller-20260913/stdlib-evidence.json",
+    "sha256": "e886f8fb70b1ab804fdfdbb16066ce1ec9dfc2d04ecb4c4464b2c43eee2c0a0d",
+    "size_bytes": 615
+  },
+  {
+    "path": "docs/book/src/16dk-inactive-proxy-lifetimes.md",
+    "sha256": "9d40552d48f72e69fbde426092123cf19d23c38b9dfda8e4ca38fcbf2497ac06",
+    "size_bytes": 26929
+  },
+  {
+    "path": "docs/book/src/SUMMARY.md",
+    "sha256": "db6fd112545899db52b60357940a2a4a82e2aa9c8fb38bfc509b14d1f889d67b",
+    "size_bytes": 3988
+  },
+  {
+    "path": "docs/knowledge/mdbook-cli-destination-working-directory.md",
+    "sha256": "f1fc0303f77a3386496f93a903da642c2e2b12283e2b7cdfbcf81ab90ce7e4d8",
+    "size_bytes": 1191
+  },
+  {
+    "path": "docs/knowledge/test-subprocess-policy-adapters.md",
+    "sha256": "692dcc4c3adf223392c76bd5d2201f0466fcc604423dc3f5bd7682571f271682",
+    "size_bytes": 9849
+  },
+  {
+    "path": "docs/tasks/HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.md",
+    "sha256": "14684d9d8cef82996f74a6b7e25ac48c733111a4293e5c284449b3d2d7abc0de",
+    "size_bytes": 1134780
+  },
+  {
+    "path": "docs/tasks/history/HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE/acceptance-history.jsonl",
+    "sha256": "13271087aee800a71d77746cbac9bff88edd79ebaa472beca5a80600a8257560",
+    "size_bytes": 845
+  },
+  {
+    "path": "doctrine/claim_verification/dispositions.jsonl",
+    "sha256": "eaced4b2215cf01bd76361e69488099b19a94fdf0fe45cb97c777204f30e26aa",
+    "size_bytes": 2045074
+  },
+  {
+    "path": "doctrine/claim_verification/inventory.jsonl",
+    "sha256": "6d8cf53049f17c718c61e104d884088c7c4027b0e78ca714c734ec60e597b798",
+    "size_bytes": 3015721
+  },
+  {
+    "path": "doctrine/live_document_size/surfaces.jsonl",
+    "sha256": "1acdf5832fb9ea5cebd0876f766735f0d918985fff6ea74938e17bc6ade70890",
+    "size_bytes": 25936
+  },
+  {
+    "path": "knowledge-map/generated/mdbook-cli.md",
+    "sha256": "6735a01535decca523ed4388f8e9005b2cbe9a7c26f481bca574bf25016b7721",
+    "size_bytes": 895
+  },
+  {
+    "path": "knowledge-map/generated/test-subprocess.md",
+    "sha256": "085a233bfc60d8b04607f835a742fde363e91f0e88092ebddd29ce03c830c3c4",
+    "size_bytes": 21052
+  }
+]

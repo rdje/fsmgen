@@ -1,0 +1,42 @@
+[
+  {
+    "path": "docs/audits/native-proxy-populated-workers-admission-20260913/recovery-first.json",
+    "sha256": "48dfa2e92b8c875d4eccd69d2da648bf8aa90f6a70390e090678c6e05dbd3f36",
+    "size_bytes": 3690
+  },
+  {
+    "path": "docs/audits/native-proxy-populated-workers-admission-20260913/recovery-finding.json",
+    "sha256": "25abec0b85284321c0dcbbb47e50f15419d3dda678969342ea6ce592d0250061",
+    "size_bytes": 1238
+  },
+  {
+    "path": "docs/audits/native-proxy-populated-workers-admission-20260913/reproduce_recovery.py",
+    "sha256": "22602fec0b53760f7650db7fd8c74af312195ca855dc13f4b391561a135af3d3",
+    "size_bytes": 2967
+  },
+  {
+    "path": "docs/audits/native-proxy-populated-workers-admission-20260913/recovery-controls.json",
+    "sha256": "b0ab0da680258c12caa2a7ed7ddae12c367239f9c3d501130b786da199e6854f",
+    "size_bytes": 1433
+  },
+  {
+    "path": "docs/audits/native-proxy-populated-workers-admission-20260913/scenario-proposal.json",
+    "sha256": "e9857f1f46714dc46a9eba245a57f3d159e26bfea0ebecfaa6ad24e28ef8aa94",
+    "size_bytes": 3411
+  },
+  {
+    "path": "docs/audits/native-proxy-populated-workers-admission-20260913/scope.json",
+    "sha256": "d9f63ff569d6c93ab74340e78ee8541784d15928af520e9abaddeb08006597ff",
+    "size_bytes": 1432
+  },
+  {
+    "path": "docs/audits/native-proxy-language-coordination-admission-20260913/runtime.py",
+    "sha256": "b57946ccbe38873918dd21e2e1b5e090c9eeeee964a48281e516245c200d8c49",
+    "size_bytes": 14544
+  },
+  {
+    "path": "docs/audits/native-proxy-language-coordination-admission-20260913/qualify_runtime_data.py",
+    "sha256": "bcf4d60051c63d0acacdb360c86a5ef120cd3abc965e9078d1e4d2baa64d3870",
+    "size_bytes": 8399
+  }
+]

@@ -126,12 +126,12 @@ answers:
   - "why does the closed compiler census Git preflight see local Claude settings?"
   - "why can guarded stdin Python exit successfully without running its program?"
   - "why can terminal worker recovery fail before native admission?"
+  - "how is unadmitted populated-worker recovery repaired?"
 date: 2026-09-13
 status: current
 tags: [tests, subprocess, supervision, task-acceptance, darwin, locality]
 evidence: >-
-  docs/tasks/HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.md; t/1595-agent-runtime-ram-guard-macos-metric.t; t/1811-ram-guard-fixture-runtime.t; t/lib/FSM/Test/RamGuardFixtureRuntime.pm;
-  docs/decisions/0087-test-subprocesses-use-shared-mechanism-and-sealed-policy-adapters.md; docs/tasks/DARWIN-INLINE-VERILATOR-RUNTIME-QUALIFICATION.md;
+  docs/tasks/HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.md; t/1595-agent-runtime-ram-guard-macos-metric.t; t/1811-ram-guard-fixture-runtime.t; t/lib/FSM/Test/RamGuardFixtureRuntime.pm; docs/decisions/0087-test-subprocesses-use-shared-mechanism-and-sealed-policy-adapters.md; docs/tasks/DARWIN-INLINE-VERILATOR-RUNTIME-QUALIFICATION.md;
   docs/book/src/16dc-vial-portable-verilator-runtime-measurement.md;
   t/lib/FSM/Test/ProcessSupervisor.pm; t/lib/FSM/Test/TaskAcceptanceFixtureRuntime.pm; t/lib/FSM/Test/VerilatorRuntime.pm; t/1545-task-acceptance-doctrine.t;
   t/1668-darwin-inline-verilator-test-runtime.t; scripts/fixture_kernel_sampler.py; t/python/test_fixture_kernel_sampler.py;
@@ -141,6 +141,6 @@ evidence: >-
   t/1669-task-acceptance-fixture-runtime.t; t/python/test_fixture_runtime_sources.py;
   t/lib/FSM/Test/RustProxyFixture.pm; t/1815-rust-proxy-fixture.t; t/1816-rust-proxy-integration.t; t/1817-test-supervision-architecture.t
 reverify: >-
-  scripts/run_with_ram_guard.sh -- python3 -B docs/audits/native-proxy-populated-workers-admission-20260913/audit.py --verify-saved
+  scripts/run_with_ram_guard.sh -- python3 -B docs/audits/native-proxy-populated-controller-20260913/audit.py --verify-saved
 ---
-History: `21714f2e1fce574289751baeb941f7a6ff4ace01:docs/knowledge/test-subprocess-policy-adapters.md`. Terminal recovery before admission can strand pipes; .5.3.1.2 owns repair.
+History: `8e0c5f1af948b928908005a7dcd6c73e3db5c152:docs/knowledge/test-subprocess-policy-adapters.md`. Popen owns cleanup.

@@ -1,0 +1,14 @@
+{
+  "all_previous_questions_retained": true,
+  "canonical_card": "docs/knowledge/mdbook-test-plain-text-fence-rustdoc-failure.md",
+  "current_bytes": 1854,
+  "current_lines": 29,
+  "current_questions": 7,
+  "new_destination_questions_retained": true,
+  "no_new_card_or_increased_limit": true,
+  "previous_revision": "8e0c5f1af948b928908005a7dcd6c73e3db5c152",
+  "prior_bytes": 1909,
+  "prior_lines": 32,
+  "prior_questions": 5,
+  "standalone_draft": "mdbook-destination-card.first.source"
+}

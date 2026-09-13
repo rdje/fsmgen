@@ -1,0 +1,94 @@
+"""Join completed source repair, exact first outcomes and synchronized live docs."""
+import argparse
+import hashlib
+import json
+import re
+
+import audit
+
+BASE, ROOT, REVISION = audit.BASE, audit.ROOT, audit.REVISION
+LOG = ROOT / '.artifacts/logs' / BASE.name
+STAGES = ['qualification-first', 'qualification-repaired', 'qualification-complete',
+          'controller-audit', 'controller-final-audit', 'book', 'book-recovery', 'book-inspection',
+          'knowledge-generate', 'knowledge-check', 'knowledge-final-generate',
+          'knowledge-final-check', 'knowledge-query', 'knowledge-recovery-query', 'knowledge-book-query', 'pickaxe', 'claims-write', 'claims-check', 'claims-review']
+
+
+def check(outputs):
+    for row in audit.read('completion-pins.json'):
+        assert audit.pin(ROOT / row['path']) == row
+    assert set(outputs) == set(STAGES)
+    for name, row in outputs.items():
+        assert row['exit'] == ('1\n' if name == 'qualification-first' else '0\n')
+    assert outputs['qualification-first'] == audit.read('qualification-first.json')['outputs']
+    result = audit.verify()
+    assert result == audit.read('review.json') == json.loads(outputs['controller-final-audit']['stdout'])
+    assert json.loads(outputs['controller-audit']['stdout']) == audit.read('review-before-book-recovery.json')
+    assert 'knowledge-map: OK' in outputs['knowledge-final-check']['stdout'] + outputs['knowledge-final-check']['stderr']
+    assert outputs['knowledge-query'] == audit.read('query-invocation-review.json')['raw_outputs']
+    assert outputs['knowledge-query']['stdout'] == ''
+    for card, stage in [('test-subprocess-policy-adapters', 'knowledge-recovery-query'),
+                        ('mdbook-cli-destination-working-directory', 'knowledge-book-query')]:
+        assert card + '\tdocs/knowledge/' + card + '.md' in outputs[stage]['stdout']
+    assert '295130388c20c6ee94650c610c2df6d597eeffa7' in outputs['pickaxe']['stdout']
+    book, claims = audit.read('book-review.json'), audit.read('claim-review.json')
+    assert book['same_volume_direct_objects'] and book['exact_output_absent']
+    assert not (ROOT / book['output']).exists()
+    assert claims['candidate_identities_and_semantics_unchanged'] and claims['dispositions_unchanged']
+    metrics = audit.read('book-metrics.json')
+    assert claims['book_baseline'] == metrics['baseline'] == dict(files=64, lines_total=62302, bytes_total=3420965)
+    assert claims['book_delta'] == metrics['delta'] == dict(files=0, lines_total=12, bytes_total=758)
+    card = 'docs/knowledge/test-subprocess-policy-adapters.md'
+    before, after = audit.old(card).decode(), (ROOT / card).read_text()
+    questions = lambda text: re.findall(r'^  - ".*"$', text, re.M)
+    previous, current = questions(before), questions(after)
+    assert [q for q in current if q in previous] == previous and len(previous) == 124 and len(current) == 125
+    assert set(current) - set(previous) == {'  - "how is unadmitted populated-worker recovery repaired?"'}
+    folded = lambda text: ' '.join(text.split('evidence: >-\n', 1)[1].split('reverify:', 1)[0].split())
+    assert folded(before) == folded(after)
+    assert len(after.encode()) <= len(before.encode()) and after.count('\n') == before.count('\n')
+    assert REVISION + ':' + card in after and str(BASE.relative_to(ROOT)) + '/audit.py --verify-saved' in after
+    history = ROOT / 'docs/tasks/history/HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE/acceptance-history.jsonl'
+    rows = [json.loads(line) for line in history.read_bytes().splitlines()]
+    assert len(rows) == 2
+    h = rows[1]
+    source = audit.old(h['source_path'])
+    suffix = source[source.rfind(b'## Acceptance Checklist'):]
+    assert h['source_revision'] == REVISION and h['source_sha256'] == hashlib.sha256(source).hexdigest()
+    assert h['source_bytes'] == len(source) and h['source_lines'] == source.count(b'\n')
+    assert h['history_sha256'] == hashlib.sha256(suffix).hexdigest()
+    assert h['history_bytes'] == len(suffix) and h['history_lines'] == suffix.count(b'\n') == 5
+    task = (ROOT / h['source_path']).read_text()
+    status = lambda owner: task.split('- ID: `' + owner + '`\n', 1)[1].splitlines()[0].strip()
+    assert status(audit.SCOPE['owner']) == 'Status: `done`'
+    assert status(audit.SCOPE['next_owner']) == 'Status: `proposed`'
+    parent = audit.SCOPE['owner'].rsplit('.', 1)[0]
+    assert status(parent) == 'Status: `active`' and status(parent + '.4') == 'Status: `proposed`'
+    assert task.count('\n') == 6370
+    # All prior historical acceptance sections remain exact; only the live tail changes.
+    old_history = source.decode()[source.decode().index('## Acceptance Checklist'):source.decode().rfind('## Acceptance Checklist')]
+    new_history = task[task.index('## Acceptance Checklist'):task.rfind('## Acceptance Checklist')]
+    assert old_history == new_history
+    return dict(owner=audit.SCOPE['owner'], next_owner=audit.SCOPE['next_owner'],
+                source_revision=REVISION, result=result, book=book,
+                claims=audit.pin(BASE / 'claim-review.json'), previous_acceptance=h,
+                raw_outputs=outputs, controller_source_repair_complete=True,
+                operational_admission_qualified=False, native_live_startup_qualification_open=True)
+
+
+if __name__ == '__main__':
+    parser = argparse.ArgumentParser(description=__doc__)
+    group = parser.add_mutually_exclusive_group(required=True)
+    group.add_argument('--retain', action='store_true')
+    group.add_argument('--verify-saved', action='store_true')
+    args = parser.parse_args()
+    if args.retain:
+        outputs = {stage: {ext: (LOG / (stage + '.' + ext)).read_text()
+                           for ext in ['stdout', 'stderr', 'exit']} for stage in STAGES}
+        result = check(outputs)
+        with (BASE / 'completion.json').open('x') as stream:
+            json.dump(result, stream, sort_keys=True, indent=2); stream.write('\n')
+    else:
+        saved = audit.read('completion.json')
+        assert check(saved['raw_outputs']) == saved
+    print('Populated controller source repair: OK; fixed worker protocol and final admission remain next.')

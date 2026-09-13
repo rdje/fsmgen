@@ -1,0 +1,174 @@
+{
+  "book": {
+    "checked_passages": [
+      "The fresh controller repairs the inherited recovery gap.",
+      "The repaired controller collects that terminal result and output without signaling the dead child or inventing native admission.",
+      "Native executable admission remains a separate prerequisite for commands.",
+      "A surviving group remains unresolved; the controller never signals an unknown surviving member.",
+      "No real worker has run under this new controller.",
+      "docs/audits/native-proxy-populated-controller-20260913/audit.py --verify-saved"
+    ],
+    "checked_runtime_passages": [
+      "observer lifetimes and selected empty-store coordination are qualified below; native behavior and populated-worker qualification remain open.",
+      "These are inert filesystem qualifications; real receipt transport and native behavior remain open."
+    ],
+    "exact_output_absent": true,
+    "exit_code": 0,
+    "output": ".artifacts/tmp/native-proxy-populated-controller-book-20260913/book",
+    "rendered_bytes": 23684261,
+    "rendered_directories": 2,
+    "rendered_files": 99,
+    "renderer_warnings": [
+      "WARN search index is very large (13327740 bytes)"
+    ],
+    "same_volume_direct_objects": true
+  },
+  "claims": {
+    "path": "docs/audits/native-proxy-populated-controller-20260913/claim-review.json",
+    "sha256": "db7a0b92a72ba350090f3279106aca5ef775ffd3f2857250381c013334824fa8",
+    "size_bytes": 4065
+  },
+  "controller_source_repair_complete": true,
+  "native_live_startup_qualification_open": true,
+  "next_owner": "HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.12.4.1.5.3.1.3",
+  "operational_admission_qualified": false,
+  "owner": "HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.12.4.1.5.3.1.2",
+  "previous_acceptance": {
+    "history_bytes": 1617,
+    "history_id": "through_8e0c5f1af948",
+    "history_lines": 5,
+    "history_sections": 1,
+    "history_sha256": "124635a8c934d924ce700a820312debfb5c3ba08807d66bf593e5dcb3c8a5460",
+    "live_heading": "Version-Retrievable Historical Views",
+    "record_type": "acceptance_history",
+    "retention_contract": "fsmgen_required_history",
+    "schema_version": 1,
+    "source_bytes": 1134030,
+    "source_lines": 6370,
+    "source_path": "docs/tasks/HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.md",
+    "source_revision": "8e0c5f1af948b928908005a7dcd6c73e3db5c152",
+    "source_sha256": "7df465bcf1fcb6263d8b94471f249feb93fd9112883cc1dc22a330b224255452",
+    "start_heading": "Acceptance Checklist (populated inventory .3.2.15.7.3.12.4.1.5.3.1.1)"
+  },
+  "raw_outputs": {
+    "book": {
+      "exit": "0\n",
+      "stderr": "ram-guard: PID 82394; host 77.6%; host cutoff 88%; descendant RSS cutoff 4096 MiB; poll 2s\n INFO Book building has started\n INFO Running the html backend\n WARN search index is very large (13327740 bytes)\n INFO HTML book written to `/Volumes/SSD/Documents/github/fsmgen/../../../.artifacts/tmp/native-proxy-populated-controller-book-20260913/book`\n",
+      "stdout": ""
+    },
+    "book-inspection": {
+      "exit": "0\n",
+      "stderr": "",
+      "stdout": "{\"checked_passages\": [\"The fresh controller repairs the inherited recovery gap.\", \"The repaired controller collects that terminal result and output without signaling the dead child or inventing native admission.\", \"Native executable admission remains a separate prerequisite for commands.\", \"A surviving group remains unresolved; the controller never signals an unknown surviving member.\", \"No real worker has run under this new controller.\", \"docs/audits/native-proxy-populated-controller-20260913/audit.py --verify-saved\"], \"checked_runtime_passages\": [\"observer lifetimes and selected empty-store coordination are qualified below; native behavior and populated-worker qualification remain open.\", \"These are inert filesystem qualifications; real receipt transport and native behavior remain open.\"], \"exact_output_absent\": true, \"exit_code\": 0, \"output\": \".artifacts/tmp/native-proxy-populated-controller-book-20260913/book\", \"rendered_bytes\": 23684261, \"rendered_directories\": 2, \"rendered_files\": 99, \"renderer_warnings\": [\"WARN search index is very large (13327740 bytes)\"], \"same_volume_direct_objects\": true}\n"
+    },
+    "book-recovery": {
+      "exit": "0\n",
+      "stderr": "",
+      "stdout": "{\"all_source_objects_owned_and_born_during_render\": true, \"capture_end\": 1789328745.3975637, \"capture_start\": 1789328743.2544832, \"cause\": \"The CLI --dest-dir is relative to the invocation working directory, not docs/book. A mistaken ../../../ prefix selected a path outside the repository on the same SSD.\", \"copied_bytes\": 23684261, \"copied_files\": 99, \"correct_command\": \"mdbook build docs/book --dest-dir .artifacts/tmp/native-proxy-populated-controller-book-20260913/book\", \"exact_copied_bytes_verified\": true, \"exact_original_output_absent\": true, \"original_destination_from_repository\": \"../../../.artifacts/tmp/native-proxy-populated-controller-book-20260913/book\", \"other_volume_artifact_directories_untouched\": true, \"owner\": \"HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.12.4.1.5.3.1.2\", \"relocated_rendered_passages_verified\": true, \"source_directories\": 4, \"source_same_volume\": true, \"target\": \".artifacts/tmp/native-proxy-populated-controller-book-20260913\", \"target_cleanup_owner\": \"inspect_book.py\"}\n"
+    },
+    "claims-check": {
+      "exit": "0\n",
+      "stderr": "ram-guard: PID 85449; host 73.2%; host cutoff 88%; descendant RSS cutoff 4096 MiB; poll 2s\n",
+      "stdout": "claim-inventory: current-surface census and independent census agree (numeric_lines=12631, candidates=1937, quantified=952, conservative=985, constants=2736, original_constants=615, open_migration_owners=0, untracked_producers=0, unwatched_candidates=1937)\n"
+    },
+    "claims-review": {
+      "exit": "0\n",
+      "stderr": "",
+      "stdout": "{\"claim_identity_unchanged\": true, \"shifted_candidates\": 0, \"rederived_constants\": 4}\n"
+    },
+    "claims-write": {
+      "exit": "0\n",
+      "stderr": "ram-guard: PID 84987; host 82.9%; host cutoff 88%; descendant RSS cutoff 4096 MiB; poll 2s\n",
+      "stdout": "claim-inventory: wrote doctrine/claim_verification/inventory.jsonl\nclaim-inventory: current-surface census and independent census agree (numeric_lines=12631, candidates=1937, quantified=952, conservative=985, constants=2736, original_constants=615, open_migration_owners=0, untracked_producers=0, unwatched_candidates=1937)\n"
+    },
+    "controller-audit": {
+      "exit": "0\n",
+      "stderr": "",
+      "stdout": "{\"actual_worker_execution\": false, \"fixed_worker_protocol_and_final_admission_open\": true, \"next_owner\": \"HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.12.4.1.5.3.1.3\", \"operational_execution_admitted\": false, \"original_defect_preserved\": true, \"owner\": \"HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.12.4.1.5.3.1.2\", \"qualification_checks\": 52, \"rejecting_join_controls\": [\"hidden_original_failure\", \"invented_native_admission\", \"healthy_promotion\", \"unnecessary_signal\", \"missing_output\", \"model_group_as_fact\", \"omitted_case\", \"invented_execution\"], \"selected_previous_inputs\": 8, \"source_revision\": \"8e0c5f1af948b928908005a7dcd6c73e3db5c152\", \"terminal_recovery_repaired_in_fresh_controller\": true}\n"
+    },
+    "controller-final-audit": {
+      "exit": "0\n",
+      "stderr": "",
+      "stdout": "{\"actual_worker_execution\": false, \"exact_book_output_recovery_complete\": true, \"fixed_worker_protocol_and_final_admission_open\": true, \"next_owner\": \"HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.12.4.1.5.3.1.3\", \"operational_execution_admitted\": false, \"original_defect_preserved\": true, \"owner\": \"HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.12.4.1.5.3.1.2\", \"qualification_checks\": 52, \"rejecting_join_controls\": [\"hidden_original_failure\", \"invented_native_admission\", \"healthy_promotion\", \"unnecessary_signal\", \"missing_output\", \"model_group_as_fact\", \"omitted_case\", \"invented_execution\"], \"selected_previous_inputs\": 8, \"source_revision\": \"8e0c5f1af948b928908005a7dcd6c73e3db5c152\", \"terminal_recovery_repaired_in_fresh_controller\": true}\n"
+    },
+    "knowledge-book-query": {
+      "exit": "0\n",
+      "stderr": "",
+      "stdout": "what is mdbook --dest-dir relative to?\tmdbook-cli-destination-working-directory\tdocs/knowledge/mdbook-cli-destination-working-directory.md\n"
+    },
+    "knowledge-check": {
+      "exit": "0\n",
+      "stderr": "ram-guard: PID 83024; host 81.3%; host cutoff 88%; descendant RSS cutoff 4096 MiB; poll 2s\nknowledge-map: OK (1161 facts, 6448 unique questions, 6619 answer occurrences, 139 bounded topic shards; query parity verified)\n",
+      "stdout": ""
+    },
+    "knowledge-final-check": {
+      "exit": "0\n",
+      "stderr": "ram-guard: PID 84794; host 82.6%; host cutoff 88%; descendant RSS cutoff 4096 MiB; poll 2s\nknowledge-map: OK (1162 facts, 6450 unique questions, 6621 answer occurrences, 140 bounded topic shards; query parity verified)\n",
+      "stdout": ""
+    },
+    "knowledge-final-generate": {
+      "exit": "0\n",
+      "stderr": "ram-guard: PID 84278; host 77.4%; host cutoff 88%; descendant RSS cutoff 4096 MiB; poll 2s\nknowledge-map: wrote KNOWLEDGE_MAP.md plus 140 topic shards (1162 facts, 6450 unique questions, 6621 answer occurrences)\n",
+      "stdout": ""
+    },
+    "knowledge-generate": {
+      "exit": "0\n",
+      "stderr": "ram-guard: PID 82289; host 75.3%; host cutoff 88%; descendant RSS cutoff 4096 MiB; poll 2s\nknowledge-map: wrote KNOWLEDGE_MAP.md plus 139 topic shards (1161 facts, 6448 unique questions, 6619 answer occurrences)\n",
+      "stdout": ""
+    },
+    "knowledge-query": {
+      "exit": "0\n",
+      "stderr": "",
+      "stdout": ""
+    },
+    "knowledge-recovery-query": {
+      "exit": "0\n",
+      "stderr": "",
+      "stdout": "how is unadmitted populated-worker recovery repaired?\ttest-subprocess-policy-adapters\tdocs/knowledge/test-subprocess-policy-adapters.md\n"
+    },
+    "pickaxe": {
+      "exit": "0\n",
+      "stderr": "",
+      "stdout": "295130388c20c6ee94650c610c2df6d597eeffa7 HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.12.4.1.4.1: qualify prospective language-worker coordination\n"
+    },
+    "qualification-complete": {
+      "exit": "0\n",
+      "stderr": "",
+      "stdout": "{\"actual_worker_execution\": false, \"checks\": 52, \"terminal_regression_recovered\": true}\n"
+    },
+    "qualification-first": {
+      "exit": "1\n",
+      "stderr": "Traceback (most recent call last):\n  File \"/Volumes/SSD/Documents/github/fsmgen/docs/audits/native-proxy-populated-controller-20260913/qualify.py\", line 432, in <module>\n    main()\n    ~~~~^^\n  File \"/Volumes/SSD/Documents/github/fsmgen/docs/audits/native-proxy-populated-controller-20260913/qualify.py\", line 421, in main\n    result = qualify()\n  File \"/Volumes/SSD/Documents/github/fsmgen/docs/audits/native-proxy-populated-controller-20260913/qualify.py\", line 308, in qualify\n    failure(lambda: worker.send('admit'), OSError, 'never retry')\n    ~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/Volumes/SSD/Documents/github/fsmgen/docs/audits/native-proxy-populated-controller-20260913/qualify.py\", line 162, in failure\n    call()\n    ~~~~^^\n  File \"/Volumes/SSD/Documents/github/fsmgen/docs/audits/native-proxy-populated-controller-20260913/qualify.py\", line 308, in <lambda>\n    failure(lambda: worker.send('admit'), OSError, 'never retry')\n                    ~~~~~~~~~~~^^^^^^^^^\n  File \"/Volumes/SSD/Documents/github/fsmgen/docs/audits/native-proxy-populated-controller-20260913/controller.py\", line 347, in send\n    self.emit('command', name=name)\n    ~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^\n  File \"/Volumes/SSD/Documents/github/fsmgen/docs/audits/native-proxy-populated-controller-20260913/controller.py\", line 186, in emit\n    self.journal(event, **fields)\n    ~~~~~~~~~~~~^^^^^^^^^^^^^^^^^\nTypeError: model.<locals>.<lambda>() got multiple values for argument 'name'\n",
+      "stdout": ""
+    },
+    "qualification-repaired": {
+      "exit": "0\n",
+      "stderr": "",
+      "stdout": "{\"actual_worker_execution\": false, \"checks\": 46, \"terminal_regression_recovered\": true}\n"
+    }
+  },
+  "result": {
+    "actual_worker_execution": false,
+    "exact_book_output_recovery_complete": true,
+    "fixed_worker_protocol_and_final_admission_open": true,
+    "next_owner": "HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.12.4.1.5.3.1.3",
+    "operational_execution_admitted": false,
+    "original_defect_preserved": true,
+    "owner": "HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.12.4.1.5.3.1.2",
+    "qualification_checks": 52,
+    "rejecting_join_controls": [
+      "hidden_original_failure",
+      "invented_native_admission",
+      "healthy_promotion",
+      "unnecessary_signal",
+      "missing_output",
+      "model_group_as_fact",
+      "omitted_case",
+      "invented_execution"
+    ],
+    "selected_previous_inputs": 8,
+    "source_revision": "8e0c5f1af948b928908005a7dcd6c73e3db5c152",
+    "terminal_recovery_repaired_in_fresh_controller": true
+  },
+  "source_revision": "8e0c5f1af948b928908005a7dcd6c73e3db5c152"
+}
