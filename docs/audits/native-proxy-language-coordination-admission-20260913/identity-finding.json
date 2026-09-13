@@ -1,0 +1,14 @@
+{
+  "first_observation": {
+    "actual_basename": "Python",
+    "current_python_path_matches_native": false,
+    "declared_basename": "python3.14",
+    "uid_matches": true
+  },
+  "impact": "Draft native_identity compares the process executable against the invocation path and would reject this legitimate installed interpreter.",
+  "native_proxy_startup_cause_established": false,
+  "owner": "HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.12.4.1.4.1.1",
+  "parent": "HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.12.4.1.4.1",
+  "source_phase": true,
+  "status": "investigating"
+}

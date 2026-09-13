@@ -1,0 +1,352 @@
+[
+  {
+    "path": "docs/audits/native-proxy-canonical-contract-20260910/contract.json",
+    "sha256": "f3f981398afae72540ab4ac0194b8380d4743c3d2146c1172a85365add053222",
+    "size_bytes": 21927
+  },
+  {
+    "path": "docs/audits/native-proxy-image-coordination-20260910/Coordination.pm",
+    "sha256": "a0d99769147f28ca7c35e9ac80ba88f7cf14760e3bef7b51841d8badebc060e5",
+    "size_bytes": 19061
+  },
+  {
+    "path": "docs/audits/native-proxy-image-custody-20260910/ImageCustody.pm",
+    "sha256": "927f1ab39f7f26742e36878985d1ff545ddf2dee119d4bf6b7b41bf2c9360ccc",
+    "size_bytes": 8619
+  },
+  {
+    "path": "docs/audits/native-proxy-language-coordination-admission-20260913/admit_execution.py",
+    "sha256": "20fc1ec3017df8ad6e4a6d1afe5e6ff0765553cd9fbff6af4c42b23d02451b6d",
+    "size_bytes": 5793
+  },
+  {
+    "path": "docs/audits/native-proxy-language-coordination-admission-20260913/audit-pins.json",
+    "sha256": "abe1303fef7460a2e3f7cf28537211c5ec1cb6488f6152ff1aed7073984edc0a",
+    "size_bytes": 2603
+  },
+  {
+    "path": "docs/audits/native-proxy-language-coordination-admission-20260913/audit.py",
+    "sha256": "8d09eb6f45bcc3f8b4ea9aa564da1d1c18cbb84d1d2d27c89b5b87112c0989fb",
+    "size_bytes": 9360
+  },
+  {
+    "path": "docs/audits/native-proxy-language-coordination-admission-20260913/book-review.json",
+    "sha256": "150e37f7a293e9b4165ecd03352651d1cb2434bc1196959977995df5ce556b42",
+    "size_bytes": 1416
+  },
+  {
+    "path": "docs/audits/native-proxy-language-coordination-admission-20260913/capability.py",
+    "sha256": "86674a7c2e839e2aa41f645eab7477ed336a4448abff46a50b6748905b4fab3c",
+    "size_bytes": 858
+  },
+  {
+    "path": "docs/audits/native-proxy-language-coordination-admission-20260913/claim-review.json",
+    "sha256": "f8c0e60154c40185ecda1c0197f1a3104b92341771f6ed17106003251fa7c256",
+    "size_bytes": 13492
+  },
+  {
+    "path": "docs/audits/native-proxy-language-coordination-admission-20260913/completion-checks.json",
+    "sha256": "108ad0c821f453eb1a3fdb6cc0825d32b16d18ded910d0ca9f0ea65c2a9f2ead",
+    "size_bytes": 2212
+  },
+  {
+    "path": "docs/audits/native-proxy-language-coordination-admission-20260913/completion-pins.json",
+    "sha256": "031591e22e56f0c2b5081176337299262a43c0c3ac62972ff5957e90f623e414",
+    "size_bytes": 14263
+  },
+  {
+    "path": "docs/audits/native-proxy-language-coordination-admission-20260913/completion.json",
+    "sha256": "6f19c6fee9f361e85c8db338ff72c5e56351611db55a5ec88c77786d9fdd6694",
+    "size_bytes": 19493
+  },
+  {
+    "path": "docs/audits/native-proxy-language-coordination-admission-20260913/contract.py",
+    "sha256": "880ba14322af24b2de61ac77c9739308f7ed6a9f6b6cd980d73a18c6e4e565dd",
+    "size_bytes": 2441
+  },
+  {
+    "path": "docs/audits/native-proxy-language-coordination-admission-20260913/data-review-final.json",
+    "sha256": "398a68f67633e0cd6cceb00b00a399b6483c97da5e917b977233f09626f057be",
+    "size_bytes": 1042
+  },
+  {
+    "path": "docs/audits/native-proxy-language-coordination-admission-20260913/data-review.json",
+    "sha256": "0b7f13263a17b41563771a53bbf7789430f474546ec7c2cd76c6fa506f0b24d4",
+    "size_bytes": 959
+  },
+  {
+    "path": "docs/audits/native-proxy-language-coordination-admission-20260913/data-source-pins.json",
+    "sha256": "e316ed94a00ddaaddb21e53a29992dae1bed77ca4749eb7d3b096a0c49a217c5",
+    "size_bytes": 2478
+  },
+  {
+    "path": "docs/audits/native-proxy-language-coordination-admission-20260913/final-source-check-pins.json",
+    "sha256": "70ec4b1b8354fa1b8c364b5aec74aec54acaf93270a4451ddec5822ee7610a02",
+    "size_bytes": 4824
+  },
+  {
+    "path": "docs/audits/native-proxy-language-coordination-admission-20260913/finalize_identity.py",
+    "sha256": "64550bb9b3f604f58ed10e8e12d95966367da5626ab51d02d79407f84fc79fd5",
+    "size_bytes": 4192
+  },
+  {
+    "path": "docs/audits/native-proxy-language-coordination-admission-20260913/first-source/oracle.py.source",
+    "sha256": "44ddf550878fca32874e883505cf6ffa32435ce93b5928df94daee71b3048ec0",
+    "size_bytes": 15880
+  },
+  {
+    "path": "docs/audits/native-proxy-language-coordination-admission-20260913/first-source/plan.json.identity-plan.source",
+    "sha256": "723f0c0be5f468618ef664cd41181c81c28519215c59090290f5ca35aa40f7e8",
+    "size_bytes": 20452
+  },
+  {
+    "path": "docs/audits/native-proxy-language-coordination-admission-20260913/first-source/plan.json.source",
+    "sha256": "b23dfd2138938f96d28946851f50926cc2105c8ebe69fcb8cba2d5f0b120187c",
+    "size_bytes": 19506
+  },
+  {
+    "path": "docs/audits/native-proxy-language-coordination-admission-20260913/first-source/qualify.py.identity-plan.source",
+    "sha256": "6cf0f214325d8193a6b6fc5496aff2d5d11742b77fdcf1b4435d530dff4384d6",
+    "size_bytes": 7302
+  },
+  {
+    "path": "docs/audits/native-proxy-language-coordination-admission-20260913/first-source/qualify.py.source",
+    "sha256": "58ecbe90064151a57b2418beeb14f2d6288d4c11cc894e072c8b6ddbd43fe22d",
+    "size_bytes": 7136
+  },
+  {
+    "path": "docs/audits/native-proxy-language-coordination-admission-20260913/first-source/qualify_data.py.source",
+    "sha256": "a02555208577741ffff45c042f1e4d10a98f2173b46dd63f34d6916d579d7480",
+    "size_bytes": 13170
+  },
+  {
+    "path": "docs/audits/native-proxy-language-coordination-admission-20260913/first-source/qualify_identity.py.identity-plan.source",
+    "sha256": "5c8b342eb3f08b30d49a2698b2380c60120d07029bbfd4e2c774b91b5f73e743",
+    "size_bytes": 5023
+  },
+  {
+    "path": "docs/audits/native-proxy-language-coordination-admission-20260913/first-source/runtime.py.identity-plan.source",
+    "sha256": "e07bd972c69e8bb6bb0a6f8930553adc09ed7fd32df639eba2043d3ab4df00c4",
+    "size_bytes": 13826
+  },
+  {
+    "path": "docs/audits/native-proxy-language-coordination-admission-20260913/first-source/runtime.py.source",
+    "sha256": "a0244a0d1a74e6c94610629441afd07b4f35c7ebf3147c9ef1a624b504437386",
+    "size_bytes": 13563
+  },
+  {
+    "path": "docs/audits/native-proxy-language-coordination-admission-20260913/first-source/toolchain.py.source",
+    "sha256": "d351b91b403d40d84836d98bd089a06d69771551d9b6244626932d2150d52eda",
+    "size_bytes": 2104
+  },
+  {
+    "path": "docs/audits/native-proxy-language-coordination-admission-20260913/first-source-pins.json",
+    "sha256": "6f802410155a6768c53388120955243d7530cefd0c52480e6ddc781e036c010a",
+    "size_bytes": 2266
+  },
+  {
+    "path": "docs/audits/native-proxy-language-coordination-admission-20260913/identity-disposition.json",
+    "sha256": "91ecc7de419de19164a6ef7265eb62d33523c9e0bfa83dece22b5258311251b8",
+    "size_bytes": 465
+  },
+  {
+    "path": "docs/audits/native-proxy-language-coordination-admission-20260913/identity-finding.json",
+    "sha256": "3e6508c4536871413d38ff427533e470fde301f425e605a473bcdda8a3a7caf0",
+    "size_bytes": 652
+  },
+  {
+    "path": "docs/audits/native-proxy-language-coordination-admission-20260913/identity-repair.json",
+    "sha256": "5769446248cd712a49850e3c7c172ebd59de2c82dc707d8a604731f967c978a3",
+    "size_bytes": 3139
+  },
+  {
+    "path": "docs/audits/native-proxy-language-coordination-admission-20260913/identity-review.json",
+    "sha256": "44afd7398655bd865e98cd3f5cdf8992bfce028b833a3bd8934257ce35f1b15a",
+    "size_bytes": 849
+  },
+  {
+    "path": "docs/audits/native-proxy-language-coordination-admission-20260913/identity-source-pins.json",
+    "sha256": "6571954c524efbee7d223d46a30551b8b34d52d02c126cbcffdca378efcdbf90",
+    "size_bytes": 1509
+  },
+  {
+    "path": "docs/audits/native-proxy-language-coordination-admission-20260913/image_receipts.py",
+    "sha256": "4ffbd1ab20dd0cbb7fb7e4262ab06251e42a0c8f140f7eae05af291622570bfa",
+    "size_bytes": 1461
+  },
+  {
+    "path": "docs/audits/native-proxy-language-coordination-admission-20260913/inspect_book.py",
+    "sha256": "a5f8ba527ffaae2aa8022f626c2ea79f5ea224aa7e3ae69f55e3b471b4bd2839",
+    "size_bytes": 3520
+  },
+  {
+    "path": "docs/audits/native-proxy-language-coordination-admission-20260913/local_files.py",
+    "sha256": "f72ae0dd647428e0359dca349afefa7bb7ffafb1f0a6942f32f48b44634ae643",
+    "size_bytes": 8202
+  },
+  {
+    "path": "docs/audits/native-proxy-language-coordination-admission-20260913/oracle.py",
+    "sha256": "20ff246ce3da342482a005c80eb26504e6810fde08086d3aa5945f0d5c794707",
+    "size_bytes": 16192
+  },
+  {
+    "path": "docs/audits/native-proxy-language-coordination-admission-20260913/peer.py",
+    "sha256": "deb84e4389c995bb628736bfab37ae5fb9cdddba02e800d35c06e85158a95470",
+    "size_bytes": 6882
+  },
+  {
+    "path": "docs/audits/native-proxy-language-coordination-admission-20260913/permit-state-review.json",
+    "sha256": "75bf13852b20da2c0dd314e47c2eb54ab3d615fb282654066378c466328a5f47",
+    "size_bytes": 622
+  },
+  {
+    "path": "docs/audits/native-proxy-language-coordination-admission-20260913/plan.json",
+    "sha256": "74ed9619e40ce86ff45673cde7d3baff44ccca17f5dabb440c172811138e5e55",
+    "size_bytes": 20675
+  },
+  {
+    "path": "docs/audits/native-proxy-language-coordination-admission-20260913/prepare.py",
+    "sha256": "300ba6141f3c3e284484b23f754bba618dad1d70682399d7fe8d4882a274833f",
+    "size_bytes": 6613
+  },
+  {
+    "path": "docs/audits/native-proxy-language-coordination-admission-20260913/probe.pl",
+    "sha256": "4251710c0409980f64397bf5b7031efdd61565c205801de84ee04677b8ac6f93",
+    "size_bytes": 1851
+  },
+  {
+    "path": "docs/audits/native-proxy-language-coordination-admission-20260913/probe.py",
+    "sha256": "02ef9f988b2cf6b90d845ead3de5b68abdf343dbf7c4485ffb9e395f3f146c38",
+    "size_bytes": 1164
+  },
+  {
+    "path": "docs/audits/native-proxy-language-coordination-admission-20260913/python-identity-observation.json",
+    "sha256": "7e97ab2515967a70e2c8c2ac1a7ef60f816f06a62a6abff0136932d0bc34a419",
+    "size_bytes": 1545
+  },
+  {
+    "path": "docs/audits/native-proxy-language-coordination-admission-20260913/qualify.py",
+    "sha256": "811dbc3af59555a3380fa731c477fbf2bc0e1276130621c20b86f61393d64282",
+    "size_bytes": 7454
+  },
+  {
+    "path": "docs/audits/native-proxy-language-coordination-admission-20260913/qualify_data.py",
+    "sha256": "8332c635d868652f273b20a6c7231025703e8090c8bb81e35e3c950bc54cdffc",
+    "size_bytes": 15288
+  },
+  {
+    "path": "docs/audits/native-proxy-language-coordination-admission-20260913/qualify_identity.py",
+    "sha256": "764a22d5ace80101945ff60b2e1ac2b3ff2674709bff56c162564bd808587c36",
+    "size_bytes": 7221
+  },
+  {
+    "path": "docs/audits/native-proxy-language-coordination-admission-20260913/qualify_permit.py",
+    "sha256": "cfd0f0359efe2946e54abbb2f04145adbc2055bf049aeb2ac01e23d77c22c1f2",
+    "size_bytes": 3624
+  },
+  {
+    "path": "docs/audits/native-proxy-language-coordination-admission-20260913/qualify_runtime_data.py",
+    "sha256": "bcf4d60051c63d0acacdb360c86a5ef120cd3abc965e9078d1e4d2baa64d3870",
+    "size_bytes": 8399
+  },
+  {
+    "path": "docs/audits/native-proxy-language-coordination-admission-20260913/review.json",
+    "sha256": "6a0cca304c484396773501e03a03f5731137352bff614b9de895dc57ba01cd9a",
+    "size_bytes": 40761
+  },
+  {
+    "path": "docs/audits/native-proxy-language-coordination-admission-20260913/review_claims.py",
+    "sha256": "8239b3b8ab396831c98a4d35fbeb57710ea6e37c46dd2c88beb7e1883b1807c7",
+    "size_bytes": 5032
+  },
+  {
+    "path": "docs/audits/native-proxy-language-coordination-admission-20260913/review_completion.py",
+    "sha256": "c1599381e097cf9de68cae1713a05fcd376125e084d3569c3d055c9444f07f0e",
+    "size_bytes": 6991
+  },
+  {
+    "path": "docs/audits/native-proxy-language-coordination-admission-20260913/runtime-data-review.json",
+    "sha256": "bc3d104213c0ce0ca92106d92776fa1e5246be1cbbb89cd4c9859288d6765f4b",
+    "size_bytes": 613
+  },
+  {
+    "path": "docs/audits/native-proxy-language-coordination-admission-20260913/runtime.py",
+    "sha256": "b57946ccbe38873918dd21e2e1b5e090c9eeeee964a48281e516245c200d8c49",
+    "size_bytes": 14544
+  },
+  {
+    "path": "docs/audits/native-proxy-language-coordination-admission-20260913/source-check-outputs.json",
+    "sha256": "7063c60b0cb7a4f0c6da3ca18385da4c3d6e7455756c2c93f6baf8378a2d68f0",
+    "size_bytes": 13378
+  },
+  {
+    "path": "docs/audits/native-proxy-language-coordination-admission-20260913/source-check-pins.json",
+    "sha256": "a7e387229bb21484cc151f6586f1af8d5fd496bfd3ade2a6e1acfa6d2f528812",
+    "size_bytes": 3325
+  },
+  {
+    "path": "docs/audits/native-proxy-language-coordination-admission-20260913/source-finalization.json",
+    "sha256": "cf5befc4a40b58914a7a0307a70b8c53f5027eedb4035d816230e8d855f31caa",
+    "size_bytes": 2078
+  },
+  {
+    "path": "docs/audits/native-proxy-language-coordination-admission-20260913/synthetic-carrier.json",
+    "sha256": "fb938401f50a1f4647369f13e3e029833c17739faff3ea6f7fea81a9d9e432f2",
+    "size_bytes": 220990
+  },
+  {
+    "path": "docs/audits/native-proxy-language-coordination-admission-20260913/task-layout.json",
+    "sha256": "edf28880ae1ce805b09b7a6a13f34a684f4ca45d5205896b1998e4ab307c02a3",
+    "size_bytes": 5333
+  },
+  {
+    "path": "docs/audits/native-proxy-language-coordination-admission-20260913/toolchain.py",
+    "sha256": "9f80161d39a494fef0a2abffa670f568b95c872a230830e099853868d3069315",
+    "size_bytes": 3114
+  },
+  {
+    "path": "docs/audits/native-proxy-language-coordination-admission-20260913/wire.py",
+    "sha256": "e642955170016cbe8eedab1616208dc8907dd0b53c538bec6dd2b703b909301c",
+    "size_bytes": 1141
+  },
+  {
+    "path": "docs/audits/native-proxy-language-coordination-admission-20260913/worker.pl",
+    "sha256": "7c098297062c596c886d74ce6f74f1532f6a03f35a5301957185e69ffdbe837a",
+    "size_bytes": 7538
+  },
+  {
+    "path": "docs/audits/native-proxy-lifetime-closure-20260913/plan.json",
+    "sha256": "71568f160692525b12e09ad477b434cfdfcf6b800bb10180d72ee3ac2acf0010",
+    "size_bytes": 288304
+  },
+  {
+    "path": "docs/audits/native-proxy-lifetime-closure-20260913/review.json",
+    "sha256": "eaf0a29f63bd7ffc2332d2515364d939ff048276de54072688f24180c11670ab",
+    "size_bytes": 264525
+  },
+  {
+    "path": "perl/FSM/ProjectDataLocality.pm",
+    "sha256": "14aece4a50b35956bc2585099aa8d26753942288663c641922da9d36ad4bc893",
+    "size_bytes": 6017
+  },
+  {
+    "path": "perl/FSM/Support/ProcessSupervisor.pm",
+    "sha256": "684882d91f673ea7145f43ed3aad31acf099f13508574be7b2d8911123988637",
+    "size_bytes": 27990
+  },
+  {
+    "path": "scripts/fixture_kernel_sampler.py",
+    "sha256": "50c94165893b74b758c560f561ff744f294683812a26b429071ef43009aac2dc",
+    "size_bytes": 22040
+  },
+  {
+    "path": "t/lib/FSM/Test/ProcessSupervisor.pm",
+    "sha256": "52e467023ea8a776167e227a767abdd3dddf185f1f7c539aac8ca1c4a0a06680",
+    "size_bytes": 773
+  },
+  {
+    "path": "t/lib/FSM/Test/RustProxyFixture.pm",
+    "sha256": "d9c4ab52cf8074526c59b7a5dcb9da870ca7ffdacb4eb236dacb23b5db6d8bfb",
+    "size_bytes": 11466
+  }
+]

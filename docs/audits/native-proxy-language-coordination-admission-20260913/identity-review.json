@@ -1,0 +1,24 @@
+{
+  "actual_perl_worker_identity_pending": true,
+  "native_proxy_startup_cause_established": false,
+  "native_worker_cases_executed": 0,
+  "original_rejection_reproduced": true,
+  "read_only_current_python_native_match": true,
+  "rejected_controls": [
+    "invocation_substituted_for_native_image",
+    "same_basename_elsewhere",
+    "changed_bytes_at_native_path",
+    "unknown_native_layout",
+    "launcher_promoted_to_native_image",
+    "native_digest_changed",
+    "native_identity_omitted",
+    "framework_anchor_changed",
+    "native_receipt_omitted",
+    "native_receipt_path_changed",
+    "native_receipt_bytes_changed",
+    "native_tool_identity_promoted"
+  ],
+  "rejected_owned_worker_termination_qualified_with_mocked_signal": true,
+  "schema": "fsmgen.language_coordination_identity_review.v1",
+  "simulated_native_image_receipts": 24
+}

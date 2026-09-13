@@ -233,4 +233,38 @@ and the original startup/parent qualification still have explicit owners.
 scripts/run_with_ram_guard.sh -- python3 -B docs/audits/native-proxy-lifetime-closure-20260913/audit.py --verify-saved
 ```
 
+Cross-language coordination now has a qualified source/data admission.
+The selected macOS checks use preinitialized empty private stores, the current
+Perl inspection transaction and an independent Python coordination peer.
+For example, a Perl holder must keep a Python reader outside the protected
+inspection until release; the reverse direction has the same requirement.
+Other selected cases cover a pending reader's deadline or cancellation, rejection
+of a replaced lock and descriptor inheritance across exec. Descriptor probes run
+before lock acquisition, including a deliberate omitted-seal countercontrol.
+
+Admission binds the worker sources, installed interpreters, private process
+ownership, storage, capture and wall limits. A worker receives commands only
+after its native identity is admitted. Kernel ownership is recorded separately
+so executable rejection does not strand an owned process. First outputs and
+errors remain preserved, including bounded overflow evidence; uncertain process
+or file state cannot be reported as successful cleanup.
+
+The source review caught and corrected an interpreter identity assumption.
+This installed Python uses a framework launcher and a distinct native application
+image. The corrected admission checks exact paths and bytes for each, waits for
+worker readiness before admitting the native image, and retains the observed
+kernel image receipt. Substituting the launcher, another path with the same
+basename, changed bytes or missing receipts rejects. This does not identify the
+cause of the historical native-proxy startup failure.
+
+The event reader, supervisor fault states, identity controls and permit states
+pass their source/data checks. Actual worker execution and installed contention,
+cancellation and inheritance outcomes remain pending under the next execution
+leaf. These empty-store checks do not publish or execute a proxy image, exercise
+a live capture, or activate the canonical store. Recheck the retained admission:
+
+```sh
+scripts/run_with_ram_guard.sh -- python3 -B docs/audits/native-proxy-language-coordination-admission-20260913/audit.py --verify-saved
+```
+
 [Return to runtime measurement](16dc-vial-portable-verilator-runtime-measurement.md).

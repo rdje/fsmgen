@@ -1,0 +1,71 @@
+{
+  "actual_worker_execution": false,
+  "changed_runtime_sources": [
+    {
+      "new": {
+        "path": "docs/audits/native-proxy-language-coordination-admission-20260913/runtime.py",
+        "sha256": "e07bd972c69e8bb6bb0a6f8930553adc09ed7fd32df639eba2043d3ab4df00c4",
+        "size_bytes": 13826
+      },
+      "old": {
+        "path": "docs/audits/native-proxy-language-coordination-admission-20260913/runtime.py",
+        "sha256": "a0244a0d1a74e6c94610629441afd07b4f35c7ebf3147c9ef1a624b504437386",
+        "size_bytes": 13563
+      }
+    },
+    {
+      "new": {
+        "path": "docs/audits/native-proxy-language-coordination-admission-20260913/qualify.py",
+        "sha256": "6cf0f214325d8193a6b6fc5496aff2d5d11742b77fdcf1b4435d530dff4384d6",
+        "size_bytes": 7302
+      },
+      "old": {
+        "path": "docs/audits/native-proxy-language-coordination-admission-20260913/qualify.py",
+        "sha256": "58ecbe90064151a57b2418beeb14f2d6288d4c11cc894e072c8b6ddbd43fe22d",
+        "size_bytes": 7136
+      }
+    },
+    {
+      "new": {
+        "path": "docs/audits/native-proxy-language-coordination-admission-20260913/toolchain.py",
+        "sha256": "9f80161d39a494fef0a2abffa670f568b95c872a230830e099853868d3069315",
+        "size_bytes": 3114
+      },
+      "old": {
+        "path": "docs/audits/native-proxy-language-coordination-admission-20260913/toolchain.py",
+        "sha256": "d351b91b403d40d84836d98bd089a06d69771551d9b6244626932d2150d52eda",
+        "size_bytes": 2104
+      }
+    }
+  ],
+  "corrected_plan": {
+    "path": "docs/audits/native-proxy-language-coordination-admission-20260913/plan.json",
+    "sha256": "723f0c0be5f468618ef664cd41181c81c28519215c59090290f5ca35aa40f7e8",
+    "size_bytes": 20452
+  },
+  "limit": "Upstream source explains the observed layout; it is not an attestation that the installed binary was built from unmodified upstream source.",
+  "native_proxy_startup_cause_established": false,
+  "original_plan": {
+    "path": "docs/audits/native-proxy-language-coordination-admission-20260913/first-source/plan.json.source",
+    "sha256": "b23dfd2138938f96d28946851f50926cc2105c8ebe69fcb8cba2d5f0b120187c",
+    "size_bytes": 19506
+  },
+  "owner": "HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.12.4.1.4.1.1",
+  "primary_markers": [
+    "get_python_path",
+    "Resources/Python.app/Contents/MacOS/",
+    "POSIX_SPAWN_SETEXEC",
+    "__PYVENV_LAUNCHER__"
+  ],
+  "primary_source": "https://raw.githubusercontent.com/python/cpython/v3.14.7/Mac/Tools/pythonw.c",
+  "python_native_image": {
+    "binary": {
+      "sha256": "e89d60f8ccee9db684801330198797723db2ac378cd53e5cfe523128feb76599",
+      "size_bytes": 33568
+    },
+    "kind": "python_framework"
+  },
+  "root_cause": "The initial draft equated the invocation path with the kernel executable. The observed framework installation uses distinct launcher and application-bundle images; upstream CPython explains the preserved invocation name and replacement of the process image.",
+  "schema": "fsmgen.language_coordination_identity_repair.v1",
+  "source_observation": "python-identity-observation.json"
+}

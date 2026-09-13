@@ -1,0 +1,35 @@
+{
+  "base_prefix": "/opt/homebrew/opt/python@3.14/Frameworks/Python.framework/Versions/3.14",
+  "config": {
+    "BINDIR": "/opt/homebrew/opt/python@3.14/Frameworks/Python.framework/Versions/3.14/bin",
+    "PYTHONFRAMEWORK": "Python",
+    "PYTHONFRAMEWORKINSTALLDIR": "/opt/homebrew/opt/python@3.14/Frameworks/Python.framework",
+    "PYTHONFRAMEWORKPREFIX": "/opt/homebrew/opt/python@3.14/Frameworks",
+    "prefix": "/opt/homebrew/opt/python@3.14/Frameworks/Python.framework/Versions/3.14"
+  },
+  "invocation": {
+    "device": 16777232,
+    "inode": 420073686,
+    "path": "/opt/homebrew/Cellar/python@3.14/3.14.7/Frameworks/Python.framework/Versions/3.14/bin/python3.14",
+    "sha256": "87d4df53fd91304be5bac391fb204643c36b7df2023c04a0953bcbc7d4fdf634",
+    "size_bytes": 34640
+  },
+  "native_birth": {
+    "pid": 93748,
+    "ppid": 93747,
+    "ruid": 501,
+    "start_sec": 1789306136,
+    "start_usec": 282735,
+    "uid": 501
+  },
+  "native_image": {
+    "device": 16777232,
+    "inode": 420073632,
+    "path": "/opt/homebrew/Cellar/python@3.14/3.14.7/Frameworks/Python.framework/Versions/3.14/Resources/Python.app/Contents/MacOS/Python",
+    "sha256": "e89d60f8ccee9db684801330198797723db2ac378cd53e5cfe523128feb76599",
+    "size_bytes": 33568
+  },
+  "schema": "fsmgen.installed_python_identity_observation.v1",
+  "scope": "Read-only observation of this source-phase Python process; no worker, helper, fixture, compiler or native proxy is launched.",
+  "sys_prefix": "/opt/homebrew/opt/python@3.14/Frameworks/Python.framework/Versions/3.14"
+}

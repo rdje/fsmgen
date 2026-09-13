@@ -1,0 +1,48 @@
+{
+  "added_runtime_sources": [
+    {
+      "path": "docs/audits/native-proxy-language-coordination-admission-20260913/image_receipts.py",
+      "sha256": "4ffbd1ab20dd0cbb7fb7e4262ab06251e42a0c8f140f7eae05af291622570bfa",
+      "size_bytes": 1461
+    }
+  ],
+  "changed_runtime_sources": [
+    {
+      "new": {
+        "path": "docs/audits/native-proxy-language-coordination-admission-20260913/runtime.py",
+        "sha256": "b57946ccbe38873918dd21e2e1b5e090c9eeeee964a48281e516245c200d8c49",
+        "size_bytes": 14544
+      },
+      "old": {
+        "path": "docs/audits/native-proxy-language-coordination-admission-20260913/runtime.py",
+        "sha256": "e07bd972c69e8bb6bb0a6f8930553adc09ed7fd32df639eba2043d3ab4df00c4",
+        "size_bytes": 13826
+      }
+    },
+    {
+      "new": {
+        "path": "docs/audits/native-proxy-language-coordination-admission-20260913/qualify.py",
+        "sha256": "811dbc3af59555a3380fa731c477fbf2bc0e1276130621c20b86f61393d64282",
+        "size_bytes": 7454
+      },
+      "old": {
+        "path": "docs/audits/native-proxy-language-coordination-admission-20260913/qualify.py",
+        "sha256": "6cf0f214325d8193a6b6fc5496aff2d5d11742b77fdcf1b4435d530dff4384d6",
+        "size_bytes": 7302
+      }
+    }
+  ],
+  "current_plan": {
+    "path": "docs/audits/native-proxy-language-coordination-admission-20260913/plan.json",
+    "sha256": "74ed9619e40ce86ff45673cde7d3baff44ccca17f5dabb440c172811138e5e55",
+    "size_bytes": 20675
+  },
+  "no_case_or_bound_change": true,
+  "original_plan": {
+    "path": "docs/audits/native-proxy-language-coordination-admission-20260913/first-source/plan.json.identity-plan.source",
+    "sha256": "723f0c0be5f468618ef664cd41181c81c28519215c59090290f5ca35aa40f7e8",
+    "size_bytes": 20452
+  },
+  "reason": "Separate kernel ownership for termination from native image admission at readiness. Retain each observed kernel executable path and binary hash, then independently join worker/probe image receipts to the exact selected toolchain.",
+  "schema": "fsmgen.language_coordination_source_finalization.v1"
+}

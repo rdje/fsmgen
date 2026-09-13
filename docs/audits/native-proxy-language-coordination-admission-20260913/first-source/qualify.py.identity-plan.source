@@ -1,0 +1,148 @@
+"""Run the sole committed finite worker admission; never replay old qualifiers."""
+
+import argparse
+import json
+import os
+import signal
+import sys
+import time
+import traceback
+
+from contract import BOUNDS, OUTPUT, ROOT, cases
+from local_files import Store, direct, pin, write_json
+from runtime import Journal, Worker, process_reader, until
+from toolchain import resolve
+
+
+def execute_case(case, executables, reader, journal, global_deadline, workers, stores):
+    from oracle import verify_outcomes
+
+    deadline = min(global_deadline, time.monotonic() + BOUNDS['case_seconds'])
+    journal('case_started', case=case['name'])
+    store = Store(case, lambda event, **fields: journal(event, case=case['name'], **fields))
+    stores.append(store)
+    initial = store.create()
+    journal('snapshot', case=case['name'], phase='initial', objects=initial)
+    active = []
+
+    def launch(role, language):
+        worker = Worker(case, role, language, executables[language], reader, journal, deadline)
+        workers.append(worker)
+        active.append(worker)
+        worker.launch()
+        until(active, lambda: worker.seen('ready'), deadline)
+        worker.send('admit')
+        until(active, lambda: worker.seen('opened'), deadline)
+        worker.send('lock')
+        return worker
+
+    if case['kind'] == 'pair':
+        holder = launch('holder', case['holder'])
+        until(active, lambda: holder.seen('held'), deadline)
+        waiter = launch('waiter', case['waiter'])
+        until(active, lambda: waiter.seen('busy'), deadline)
+        journal('snapshot', case=case['name'], phase='busy', objects=store.snapshot())
+        if waiter.seen('entered'):
+            raise ValueError('waiter entered while holder still awaited release')
+        if case['outcome'] == 'replace':
+            journal('snapshot', case=case['name'], phase='replacement', objects=store.replace_lock())
+        elif case['outcome'] in ('deadline', 'cancel'):
+            if case['outcome'] == 'cancel':
+                waiter.signal(signal.SIGTERM)
+            until(active, waiter.finished, deadline)
+            waiter.reap()
+        holder.send('release')
+        until(active, lambda: all(worker.finished() for worker in active), deadline)
+    else:
+        launch('inheritance', case['language'])
+        until(active, lambda: all(worker.finished() for worker in active), deadline)
+    for worker in active:
+        if not worker.reaped:
+            worker.reap()
+    # This independent reader can reject the first result before normal cleanup.
+    verify_outcomes(case, journal.rows, os.getuid())
+    journal('snapshot', case=case['name'], phase='final', objects=store.snapshot())
+    removed = store.cleanup()
+    journal('case_finished', case=case['name'], success=True, removed=removed,
+            workers=[worker.key for worker in active])
+
+
+def main():
+    parser = argparse.ArgumentParser()
+    parser.add_argument('--execute-admitted', required=True, action='store_true')
+    parser.parse_args()
+    from admit_execution import authenticate_execution
+    from oracle import verify_journal
+
+    plan, permit, executables = authenticate_execution()
+    reader = process_reader()
+    controller = reader.identity(os.getpid())
+    if controller['uid'] != os.getuid() or os.getuid() <= 0 or os.getuid() != os.geteuid():
+        raise ValueError('controller is not the admitted normal user')
+    journal = Journal()
+    workers, stores = [], []
+    first_failure = None
+    recovery_errors = []
+    started = time.monotonic()
+    try:
+        journal('run_started', schema='fsmgen.language_coordination_actual.v1',
+                admission_commit=permit['admission_commit'], controller=controller,
+                plan_sha256=permit['plan_sha256'], preflight_sha256=permit['preflight_sha256'],
+                busy_errno=plan['native_constants']['busy_errno'],
+                root_device=ROOT.stat().st_dev,
+                native_proxy_execution=False, live_store_authorized=False)
+        for case in cases():
+            if time.monotonic() - started >= BOUNDS['total_seconds']:
+                raise TimeoutError('admitted total wall expired')
+            for row in plan['runtime_pins']:
+                if pin(row['path']) != row:
+                    raise ValueError('runtime source changed before new case')
+            if resolve(plan) != executables:
+                raise ValueError('installed interpreter identity changed before new case')
+            execute_case(case, executables, reader, journal,
+                         started + BOUNDS['total_seconds'], workers, stores)
+        result = verify_journal(journal.rows, plan, os.getuid())
+        journal('run_finished', success=True, result=result)
+    except BaseException as failure:
+        first_failure = dict(type=type(failure).__name__, error=str(failure),
+                             traceback=traceback.format_exc())
+        try:
+            journal('first_failure', **first_failure)
+        except Exception as logging_failure:
+            recovery_errors.append(dict(stage='first_failure_log', error=str(logging_failure)))
+        # Retain the original failure even if separate process/file recovery fails.
+        for worker in reversed(workers):
+            try:
+                worker.recover()
+            except Exception as recovery_failure:
+                recovery_errors.append(dict(stage='worker', worker=worker.key, error=str(recovery_failure)))
+        if all(worker.reaped or (worker.process is None and worker.closed) for worker in workers):
+            for store in reversed(stores):
+                try:
+                    # Successfully retired stores are already absent.
+                    if direct(store.case['store'], absent_ok=True) is not None:
+                        store.cleanup()
+                except Exception as recovery_failure:
+                    recovery_errors.append(dict(stage='store', case=store.case['name'], error=str(recovery_failure)))
+        else:
+            recovery_errors.append(dict(stage='cleanup', error='file cleanup withheld while a process outcome remains unsettled'))
+    finally:
+        journal.close()
+    remaining = [relative for case in cases() for relative in (case['store'], case['retired_lock'])
+                 if relative and direct(relative, absent_ok=True) is not None]
+    attempt = dict(schema='fsmgen.language_coordination_first_attempt.v1',
+                   success=first_failure is None, first_failure=first_failure,
+                   separate_recovery_errors=recovery_errors, remaining_objects=remaining,
+                   launched_workers=len([worker for worker in workers if worker.process is not None]),
+                   all_worker_outcomes_consumed=all(worker.reaped for worker in workers),
+                   journal=pin(OUTPUT + '/journal.jsonl', BOUNDS['journal_bytes']),
+                   runtime_qualification=False, native_proxy_execution=False)
+    write_json(OUTPUT + '/attempt.json', attempt)
+    print(json.dumps(dict(success=attempt['success'], cases=len(stores),
+                          workers=attempt['launched_workers'], remaining_objects=len(remaining),
+                          native_proxy_execution=False), sort_keys=True))
+    return 0 if first_failure is None else 1
+
+
+if __name__ == '__main__':
+    sys.exit(main())

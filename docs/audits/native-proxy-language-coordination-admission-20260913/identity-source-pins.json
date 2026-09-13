@@ -1,0 +1,37 @@
+[
+  {
+    "path": "docs/audits/native-proxy-language-coordination-admission-20260913/finalize_identity.py",
+    "sha256": "64550bb9b3f604f58ed10e8e12d95966367da5626ab51d02d79407f84fc79fd5",
+    "size_bytes": 4192
+  },
+  {
+    "path": "docs/audits/native-proxy-language-coordination-admission-20260913/qualify_identity.py",
+    "sha256": "5c8b342eb3f08b30d49a2698b2380c60120d07029bbfd4e2c774b91b5f73e743",
+    "size_bytes": 5023
+  },
+  {
+    "path": "docs/audits/native-proxy-language-coordination-admission-20260913/runtime.py",
+    "sha256": "e07bd972c69e8bb6bb0a6f8930553adc09ed7fd32df639eba2043d3ab4df00c4",
+    "size_bytes": 13826
+  },
+  {
+    "path": "docs/audits/native-proxy-language-coordination-admission-20260913/toolchain.py",
+    "sha256": "9f80161d39a494fef0a2abffa670f568b95c872a230830e099853868d3069315",
+    "size_bytes": 3114
+  },
+  {
+    "path": "docs/audits/native-proxy-language-coordination-admission-20260913/qualify.py",
+    "sha256": "6cf0f214325d8193a6b6fc5496aff2d5d11742b77fdcf1b4435d530dff4384d6",
+    "size_bytes": 7302
+  },
+  {
+    "path": "docs/audits/native-proxy-language-coordination-admission-20260913/python-identity-observation.json",
+    "sha256": "7e97ab2515967a70e2c8c2ac1a7ef60f816f06a62a6abff0136932d0bc34a419",
+    "size_bytes": 1545
+  },
+  {
+    "path": "docs/audits/native-proxy-language-coordination-admission-20260913/first-source/plan.json.source",
+    "sha256": "b23dfd2138938f96d28946851f50926cc2105c8ebe69fcb8cba2d5f0b120187c",
+    "size_bytes": 19506
+  }
+]

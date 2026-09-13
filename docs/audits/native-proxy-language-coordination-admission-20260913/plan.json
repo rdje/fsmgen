@@ -1,0 +1,421 @@
+{
+  "bounds": {
+    "case_seconds": 20,
+    "cases": 12,
+    "children": 24,
+    "concurrent_children": 2,
+    "event_bytes": 4096,
+    "events_per_worker": 32,
+    "fixture_file_bytes": 0,
+    "fixture_nodes": 6,
+    "journal_bytes": 2097152,
+    "kill_seconds": 2,
+    "probes": 4,
+    "term_seconds": 2,
+    "total_seconds": 300,
+    "worker_output_bytes": 32768,
+    "workers": 20
+  },
+  "cases": [
+    {
+      "holder": "perl",
+      "kind": "pair",
+      "name": "perl_holds_python_handoff",
+      "outcome": "handoff",
+      "retired_lock": null,
+      "store": ".artifacts/tmp/native-proxy-image-custody/cases/fsmgen-Language20260913_perl_holds_python_handoff",
+      "waiter": "python"
+    },
+    {
+      "holder": "python",
+      "kind": "pair",
+      "name": "python_holds_perl_handoff",
+      "outcome": "handoff",
+      "retired_lock": null,
+      "store": ".artifacts/tmp/native-proxy-image-custody/cases/fsmgen-Language20260913_python_holds_perl_handoff",
+      "waiter": "perl"
+    },
+    {
+      "holder": "perl",
+      "kind": "pair",
+      "name": "perl_holds_python_deadline",
+      "outcome": "deadline",
+      "retired_lock": null,
+      "store": ".artifacts/tmp/native-proxy-image-custody/cases/fsmgen-Language20260913_perl_holds_python_deadline",
+      "waiter": "python"
+    },
+    {
+      "holder": "python",
+      "kind": "pair",
+      "name": "python_holds_perl_deadline",
+      "outcome": "deadline",
+      "retired_lock": null,
+      "store": ".artifacts/tmp/native-proxy-image-custody/cases/fsmgen-Language20260913_python_holds_perl_deadline",
+      "waiter": "perl"
+    },
+    {
+      "holder": "perl",
+      "kind": "pair",
+      "name": "perl_holds_python_cancel",
+      "outcome": "cancel",
+      "retired_lock": null,
+      "store": ".artifacts/tmp/native-proxy-image-custody/cases/fsmgen-Language20260913_perl_holds_python_cancel",
+      "waiter": "python"
+    },
+    {
+      "holder": "python",
+      "kind": "pair",
+      "name": "python_holds_perl_cancel",
+      "outcome": "cancel",
+      "retired_lock": null,
+      "store": ".artifacts/tmp/native-proxy-image-custody/cases/fsmgen-Language20260913_python_holds_perl_cancel",
+      "waiter": "perl"
+    },
+    {
+      "holder": "perl",
+      "kind": "pair",
+      "name": "perl_holds_python_replace",
+      "outcome": "replace",
+      "retired_lock": ".artifacts/tmp/native-proxy-image-custody/cases/fsmgen-Language20260913_perl_holds_python_replace_retired.lock",
+      "store": ".artifacts/tmp/native-proxy-image-custody/cases/fsmgen-Language20260913_perl_holds_python_replace",
+      "waiter": "python"
+    },
+    {
+      "holder": "python",
+      "kind": "pair",
+      "name": "python_holds_perl_replace",
+      "outcome": "replace",
+      "retired_lock": ".artifacts/tmp/native-proxy-image-custody/cases/fsmgen-Language20260913_python_holds_perl_replace_retired.lock",
+      "store": ".artifacts/tmp/native-proxy-image-custody/cases/fsmgen-Language20260913_python_holds_perl_replace",
+      "waiter": "perl"
+    },
+    {
+      "kind": "inheritance",
+      "language": "perl",
+      "name": "perl_exec_sealed",
+      "retired_lock": null,
+      "sealed": true,
+      "store": ".artifacts/tmp/native-proxy-image-custody/cases/fsmgen-Language20260913_perl_exec_sealed"
+    },
+    {
+      "kind": "inheritance",
+      "language": "perl",
+      "name": "perl_exec_omitted_seal",
+      "retired_lock": null,
+      "sealed": false,
+      "store": ".artifacts/tmp/native-proxy-image-custody/cases/fsmgen-Language20260913_perl_exec_omitted_seal"
+    },
+    {
+      "kind": "inheritance",
+      "language": "python",
+      "name": "python_exec_sealed",
+      "retired_lock": null,
+      "sealed": true,
+      "store": ".artifacts/tmp/native-proxy-image-custody/cases/fsmgen-Language20260913_python_exec_sealed"
+    },
+    {
+      "kind": "inheritance",
+      "language": "python",
+      "name": "python_exec_omitted_seal",
+      "retired_lock": null,
+      "sealed": false,
+      "store": ".artifacts/tmp/native-proxy-image-custody/cases/fsmgen-Language20260913_python_exec_omitted_seal"
+    }
+  ],
+  "execution_owner": "HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.12.4.1.4.2",
+  "external_read_only_dependencies": [
+    "Installed Perl/Python executables, their standard-library files and required OS loader/runtime files.",
+    "Darwin /usr/lib/libproc.dylib through the unchanged native identity/executable reader; no command or privileged sampler call.",
+    "The fixed Perl interpreter identity query runs only during this source phase. No coordination worker is launched."
+  ],
+  "first_failure_policy": "One finite execution only. Retain the first complete bounded output or overflow prefix, native identities and exact state; stop and separately settle owned processes before exact cleanup. No replay or guessed cleanup.",
+  "inputs": [
+    {
+      "path": "docs/audits/native-proxy-canonical-contract-20260910/contract.json",
+      "sha256": "f3f981398afae72540ab4ac0194b8380d4743c3d2146c1172a85365add053222",
+      "size_bytes": 21927
+    },
+    {
+      "path": "docs/audits/native-proxy-image-coordination-20260910/Coordination.pm",
+      "sha256": "a0d99769147f28ca7c35e9ac80ba88f7cf14760e3bef7b51841d8badebc060e5",
+      "size_bytes": 19061
+    },
+    {
+      "path": "docs/audits/native-proxy-image-custody-20260910/ImageCustody.pm",
+      "sha256": "927f1ab39f7f26742e36878985d1ff545ddf2dee119d4bf6b7b41bf2c9360ccc",
+      "size_bytes": 8619
+    },
+    {
+      "path": "t/lib/FSM/Test/RustProxyFixture.pm",
+      "sha256": "d9c4ab52cf8074526c59b7a5dcb9da870ca7ffdacb4eb236dacb23b5db6d8bfb",
+      "size_bytes": 11466
+    },
+    {
+      "path": "t/lib/FSM/Test/ProcessSupervisor.pm",
+      "sha256": "52e467023ea8a776167e227a767abdd3dddf185f1f7c539aac8ca1c4a0a06680",
+      "size_bytes": 773
+    },
+    {
+      "path": "perl/FSM/Support/ProcessSupervisor.pm",
+      "sha256": "684882d91f673ea7145f43ed3aad31acf099f13508574be7b2d8911123988637",
+      "size_bytes": 27990
+    },
+    {
+      "path": "perl/FSM/ProjectDataLocality.pm",
+      "sha256": "14aece4a50b35956bc2585099aa8d26753942288663c641922da9d36ad4bc893",
+      "size_bytes": 6017
+    },
+    {
+      "path": "scripts/fixture_kernel_sampler.py",
+      "sha256": "50c94165893b74b758c560f561ff744f294683812a26b429071ef43009aac2dc",
+      "size_bytes": 22040
+    },
+    {
+      "path": "docs/audits/native-proxy-lifetime-closure-20260913/plan.json",
+      "sha256": "71568f160692525b12e09ad477b434cfdfcf6b800bb10180d72ee3ac2acf0010",
+      "size_bytes": 288304
+    },
+    {
+      "path": "docs/audits/native-proxy-lifetime-closure-20260913/review.json",
+      "sha256": "eaf0a29f63bd7ffc2332d2515364d939ff048276de54072688f24180c11670ab",
+      "size_bytes": 264525
+    }
+  ],
+  "interpretation": {
+    "perl_clock_quantization_tolerance_ns": 1000,
+    "process_groups_counted_by_birth_not_reusable_pid": true,
+    "worker_output_overflow_evidence_extra_bytes": 1
+  },
+  "interpreter_identity_scope": "Invocation and kernel executable identities are distinct. The selected Python framework image is observed read-only in this source-phase process and separately byte-pinned. Perl retains a same-binary prospective selection; actual native worker/probe path, birth and group joins remain required during the first admitted execution. No basename or worker self-report substitutes for the selected full native image and its bytes. This does not establish a native-proxy startup cause.",
+  "missing_legs": [
+    "Actual contention, deadline, cancellation and exec-descriptor behavior under the selected worker sources.",
+    "Native-proxy authentication, real receipt/late-launch/live integration, historical startup/parent qualification and full CI/push."
+  ],
+  "native_constants": {
+    "busy_errno": [
+      35
+    ]
+  },
+  "owner": "HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.12.4.1.4.1",
+  "parent": "HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.12.4.1.4",
+  "platform": "darwin",
+  "project_storage": "All fixture stores, evidence, temporary paths and outputs derive from the current repository root; no global cache or external temporary store.",
+  "prospective_objects": [
+    ".artifacts/tmp/native-proxy-image-custody/cases/fsmgen-Language20260913_perl_holds_python_handoff",
+    ".artifacts/tmp/native-proxy-image-custody/cases/fsmgen-Language20260913_python_holds_perl_handoff",
+    ".artifacts/tmp/native-proxy-image-custody/cases/fsmgen-Language20260913_perl_holds_python_deadline",
+    ".artifacts/tmp/native-proxy-image-custody/cases/fsmgen-Language20260913_python_holds_perl_deadline",
+    ".artifacts/tmp/native-proxy-image-custody/cases/fsmgen-Language20260913_perl_holds_python_cancel",
+    ".artifacts/tmp/native-proxy-image-custody/cases/fsmgen-Language20260913_python_holds_perl_cancel",
+    ".artifacts/tmp/native-proxy-image-custody/cases/fsmgen-Language20260913_perl_holds_python_replace",
+    ".artifacts/tmp/native-proxy-image-custody/cases/fsmgen-Language20260913_perl_holds_python_replace_retired.lock",
+    ".artifacts/tmp/native-proxy-image-custody/cases/fsmgen-Language20260913_python_holds_perl_replace",
+    ".artifacts/tmp/native-proxy-image-custody/cases/fsmgen-Language20260913_python_holds_perl_replace_retired.lock",
+    ".artifacts/tmp/native-proxy-image-custody/cases/fsmgen-Language20260913_perl_exec_sealed",
+    ".artifacts/tmp/native-proxy-image-custody/cases/fsmgen-Language20260913_perl_exec_omitted_seal",
+    ".artifacts/tmp/native-proxy-image-custody/cases/fsmgen-Language20260913_python_exec_sealed",
+    ".artifacts/tmp/native-proxy-image-custody/cases/fsmgen-Language20260913_python_exec_omitted_seal"
+  ],
+  "prospective_outputs": [
+    ".artifacts/logs/native-proxy-language-coordination-20260913/journal.jsonl",
+    ".artifacts/logs/native-proxy-language-coordination-20260913/attempt.json",
+    ".artifacts/logs/native-proxy-language-coordination-20260913/perl_holds_python_handoff.holder.stdout",
+    ".artifacts/logs/native-proxy-language-coordination-20260913/perl_holds_python_handoff.holder.stderr",
+    ".artifacts/logs/native-proxy-language-coordination-20260913/perl_holds_python_handoff.waiter.stdout",
+    ".artifacts/logs/native-proxy-language-coordination-20260913/perl_holds_python_handoff.waiter.stderr",
+    ".artifacts/logs/native-proxy-language-coordination-20260913/python_holds_perl_handoff.holder.stdout",
+    ".artifacts/logs/native-proxy-language-coordination-20260913/python_holds_perl_handoff.holder.stderr",
+    ".artifacts/logs/native-proxy-language-coordination-20260913/python_holds_perl_handoff.waiter.stdout",
+    ".artifacts/logs/native-proxy-language-coordination-20260913/python_holds_perl_handoff.waiter.stderr",
+    ".artifacts/logs/native-proxy-language-coordination-20260913/perl_holds_python_deadline.holder.stdout",
+    ".artifacts/logs/native-proxy-language-coordination-20260913/perl_holds_python_deadline.holder.stderr",
+    ".artifacts/logs/native-proxy-language-coordination-20260913/perl_holds_python_deadline.waiter.stdout",
+    ".artifacts/logs/native-proxy-language-coordination-20260913/perl_holds_python_deadline.waiter.stderr",
+    ".artifacts/logs/native-proxy-language-coordination-20260913/python_holds_perl_deadline.holder.stdout",
+    ".artifacts/logs/native-proxy-language-coordination-20260913/python_holds_perl_deadline.holder.stderr",
+    ".artifacts/logs/native-proxy-language-coordination-20260913/python_holds_perl_deadline.waiter.stdout",
+    ".artifacts/logs/native-proxy-language-coordination-20260913/python_holds_perl_deadline.waiter.stderr",
+    ".artifacts/logs/native-proxy-language-coordination-20260913/perl_holds_python_cancel.holder.stdout",
+    ".artifacts/logs/native-proxy-language-coordination-20260913/perl_holds_python_cancel.holder.stderr",
+    ".artifacts/logs/native-proxy-language-coordination-20260913/perl_holds_python_cancel.waiter.stdout",
+    ".artifacts/logs/native-proxy-language-coordination-20260913/perl_holds_python_cancel.waiter.stderr",
+    ".artifacts/logs/native-proxy-language-coordination-20260913/python_holds_perl_cancel.holder.stdout",
+    ".artifacts/logs/native-proxy-language-coordination-20260913/python_holds_perl_cancel.holder.stderr",
+    ".artifacts/logs/native-proxy-language-coordination-20260913/python_holds_perl_cancel.waiter.stdout",
+    ".artifacts/logs/native-proxy-language-coordination-20260913/python_holds_perl_cancel.waiter.stderr",
+    ".artifacts/logs/native-proxy-language-coordination-20260913/perl_holds_python_replace.holder.stdout",
+    ".artifacts/logs/native-proxy-language-coordination-20260913/perl_holds_python_replace.holder.stderr",
+    ".artifacts/logs/native-proxy-language-coordination-20260913/perl_holds_python_replace.waiter.stdout",
+    ".artifacts/logs/native-proxy-language-coordination-20260913/perl_holds_python_replace.waiter.stderr",
+    ".artifacts/logs/native-proxy-language-coordination-20260913/python_holds_perl_replace.holder.stdout",
+    ".artifacts/logs/native-proxy-language-coordination-20260913/python_holds_perl_replace.holder.stderr",
+    ".artifacts/logs/native-proxy-language-coordination-20260913/python_holds_perl_replace.waiter.stdout",
+    ".artifacts/logs/native-proxy-language-coordination-20260913/python_holds_perl_replace.waiter.stderr",
+    ".artifacts/logs/native-proxy-language-coordination-20260913/perl_exec_sealed.inheritance.stdout",
+    ".artifacts/logs/native-proxy-language-coordination-20260913/perl_exec_sealed.inheritance.stderr",
+    ".artifacts/logs/native-proxy-language-coordination-20260913/perl_exec_omitted_seal.inheritance.stdout",
+    ".artifacts/logs/native-proxy-language-coordination-20260913/perl_exec_omitted_seal.inheritance.stderr",
+    ".artifacts/logs/native-proxy-language-coordination-20260913/python_exec_sealed.inheritance.stdout",
+    ".artifacts/logs/native-proxy-language-coordination-20260913/python_exec_sealed.inheritance.stderr",
+    ".artifacts/logs/native-proxy-language-coordination-20260913/python_exec_omitted_seal.inheritance.stdout",
+    ".artifacts/logs/native-proxy-language-coordination-20260913/python_exec_omitted_seal.inheritance.stderr"
+  ],
+  "runtime_pins": [
+    {
+      "path": "docs/audits/native-proxy-language-coordination-admission-20260913/contract.py",
+      "sha256": "880ba14322af24b2de61ac77c9739308f7ed6a9f6b6cd980d73a18c6e4e565dd",
+      "size_bytes": 2441
+    },
+    {
+      "path": "docs/audits/native-proxy-language-coordination-admission-20260913/wire.py",
+      "sha256": "e642955170016cbe8eedab1616208dc8907dd0b53c538bec6dd2b703b909301c",
+      "size_bytes": 1141
+    },
+    {
+      "path": "docs/audits/native-proxy-language-coordination-admission-20260913/probe.py",
+      "sha256": "02ef9f988b2cf6b90d845ead3de5b68abdf343dbf7c4485ffb9e395f3f146c38",
+      "size_bytes": 1164
+    },
+    {
+      "path": "docs/audits/native-proxy-language-coordination-admission-20260913/peer.py",
+      "sha256": "deb84e4389c995bb628736bfab37ae5fb9cdddba02e800d35c06e85158a95470",
+      "size_bytes": 6882
+    },
+    {
+      "path": "docs/audits/native-proxy-language-coordination-admission-20260913/worker.pl",
+      "sha256": "7c098297062c596c886d74ce6f74f1532f6a03f35a5301957185e69ffdbe837a",
+      "size_bytes": 7538
+    },
+    {
+      "path": "docs/audits/native-proxy-language-coordination-admission-20260913/probe.pl",
+      "sha256": "4251710c0409980f64397bf5b7031efdd61565c205801de84ee04677b8ac6f93",
+      "size_bytes": 1851
+    },
+    {
+      "path": "docs/audits/native-proxy-language-coordination-admission-20260913/local_files.py",
+      "sha256": "f72ae0dd647428e0359dca349afefa7bb7ffafb1f0a6942f32f48b44634ae643",
+      "size_bytes": 8202
+    },
+    {
+      "path": "docs/audits/native-proxy-language-coordination-admission-20260913/runtime.py",
+      "sha256": "b57946ccbe38873918dd21e2e1b5e090c9eeeee964a48281e516245c200d8c49",
+      "size_bytes": 14544
+    },
+    {
+      "path": "docs/audits/native-proxy-language-coordination-admission-20260913/qualify.py",
+      "sha256": "811dbc3af59555a3380fa731c477fbf2bc0e1276130621c20b86f61393d64282",
+      "size_bytes": 7454
+    },
+    {
+      "path": "docs/audits/native-proxy-language-coordination-admission-20260913/oracle.py",
+      "sha256": "20ff246ce3da342482a005c80eb26504e6810fde08086d3aa5945f0d5c794707",
+      "size_bytes": 16192
+    },
+    {
+      "path": "docs/audits/native-proxy-language-coordination-admission-20260913/capability.py",
+      "sha256": "86674a7c2e839e2aa41f645eab7477ed336a4448abff46a50b6748905b4fab3c",
+      "size_bytes": 858
+    },
+    {
+      "path": "docs/audits/native-proxy-language-coordination-admission-20260913/toolchain.py",
+      "sha256": "9f80161d39a494fef0a2abffa670f568b95c872a230830e099853868d3069315",
+      "size_bytes": 3114
+    },
+    {
+      "path": "docs/audits/native-proxy-language-coordination-admission-20260913/admit_execution.py",
+      "sha256": "20fc1ec3017df8ad6e4a6d1afe5e6ff0765553cd9fbff6af4c42b23d02451b6d",
+      "size_bytes": 5793
+    },
+    {
+      "path": "docs/audits/native-proxy-image-coordination-20260910/Coordination.pm",
+      "sha256": "a0d99769147f28ca7c35e9ac80ba88f7cf14760e3bef7b51841d8badebc060e5",
+      "size_bytes": 19061
+    },
+    {
+      "path": "docs/audits/native-proxy-image-custody-20260910/ImageCustody.pm",
+      "sha256": "927f1ab39f7f26742e36878985d1ff545ddf2dee119d4bf6b7b41bf2c9360ccc",
+      "size_bytes": 8619
+    },
+    {
+      "path": "t/lib/FSM/Test/RustProxyFixture.pm",
+      "sha256": "d9c4ab52cf8074526c59b7a5dcb9da870ca7ffdacb4eb236dacb23b5db6d8bfb",
+      "size_bytes": 11466
+    },
+    {
+      "path": "t/lib/FSM/Test/ProcessSupervisor.pm",
+      "sha256": "52e467023ea8a776167e227a767abdd3dddf185f1f7c539aac8ca1c4a0a06680",
+      "size_bytes": 773
+    },
+    {
+      "path": "perl/FSM/Support/ProcessSupervisor.pm",
+      "sha256": "684882d91f673ea7145f43ed3aad31acf099f13508574be7b2d8911123988637",
+      "size_bytes": 27990
+    },
+    {
+      "path": "perl/FSM/ProjectDataLocality.pm",
+      "sha256": "14aece4a50b35956bc2585099aa8d26753942288663c641922da9d36ad4bc893",
+      "size_bytes": 6017
+    },
+    {
+      "path": "scripts/fixture_kernel_sampler.py",
+      "sha256": "50c94165893b74b758c560f561ff744f294683812a26b429071ef43009aac2dc",
+      "size_bytes": 22040
+    },
+    {
+      "path": "docs/audits/native-proxy-language-coordination-admission-20260913/image_receipts.py",
+      "sha256": "4ffbd1ab20dd0cbb7fb7e4262ab06251e42a0c8f140f7eae05af291622570bfa",
+      "size_bytes": 1461
+    }
+  ],
+  "schema": "fsmgen.language_coordination_source_admission.v1",
+  "scope": "Inactive preinitialized empty stores and the current Perl inspect_store transaction. The Python peer implements only the checked empty-store coordination protocol. These workers do not publish images, compile, launch a native proxy, query a collector or use the live canonical store. Cooperative serialization does not establish protection against arbitrary noncooperating writers. Controlled lock replacement is a rejecting fault, never a normal repair. Exec probes run before lock acquisition; no worker spawns while it holds coordination. Worker-local clocks and controller clocks remain separate.",
+  "source_revision": "bac04aab6b27c90b1efe9217a8f7751005b716ab",
+  "toolchain_query": {
+    "argv": [
+      "perl",
+      "-e",
+      "print \"$^X\\n\";"
+    ],
+    "exit_code": 0,
+    "stderr_hex": "",
+    "stdout_hex": "2f7573722f62696e2f7065726c0a"
+  },
+  "toolchains": {
+    "perl": {
+      "invocation_binary": {
+        "sha256": "53bce3db7e095b596fa42626b55edc63e3388d7afecf45a0b1ecc5211721c812",
+        "size_bytes": 101648
+      },
+      "native_image": {
+        "binary": {
+          "sha256": "53bce3db7e095b596fa42626b55edc63e3388d7afecf45a0b1ecc5211721c812",
+          "size_bytes": 101648
+        },
+        "kind": "same_binary"
+      },
+      "selected_binary": {
+        "sha256": "53bce3db7e095b596fa42626b55edc63e3388d7afecf45a0b1ecc5211721c812",
+        "size_bytes": 101648
+      },
+      "selected_sibling_basename": "perl"
+    },
+    "python": {
+      "invocation_binary": {
+        "sha256": "87d4df53fd91304be5bac391fb204643c36b7df2023c04a0953bcbc7d4fdf634",
+        "size_bytes": 34640
+      },
+      "native_image": {
+        "binary": {
+          "sha256": "e89d60f8ccee9db684801330198797723db2ac378cd53e5cfe523128feb76599",
+          "size_bytes": 33568
+        },
+        "kind": "python_framework"
+      },
+      "selected_binary": {
+        "sha256": "87d4df53fd91304be5bac391fb204643c36b7df2023c04a0953bcbc7d4fdf634",
+        "size_bytes": 34640
+      },
+      "selected_sibling_basename": "python3.14"
+    }
+  }
+}

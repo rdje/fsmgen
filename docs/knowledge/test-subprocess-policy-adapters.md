@@ -119,6 +119,9 @@ answers:
   - "can post-KILL leader reaping bypass the cleanup deadline?"
   - "which ownership model is selected for nested supervision?"
   - "how does the private coordinator preserve execution bytes?"
+  - "why can Python invocation and native executable paths differ on macOS?"
+  - "why does macOS report Python instead of python3.14?"
+  - "how does coordination admit a Python framework worker?"
 date: 2026-09-13
 status: current
 tags: [tests, subprocess, supervision, task-acceptance, darwin, locality]
@@ -128,10 +131,8 @@ evidence: >-
   docs/decisions/0087-test-subprocesses-use-shared-mechanism-and-sealed-policy-adapters.md;
   docs/tasks/DARWIN-INLINE-VERILATOR-RUNTIME-QUALIFICATION.md;
   docs/book/src/16dc-vial-portable-verilator-runtime-measurement.md;
-  t/lib/FSM/Test/ProcessSupervisor.pm; t/lib/FSM/Test/TaskAcceptanceFixtureRuntime.pm; t/lib/FSM/Test/VerilatorRuntime.pm;
-  t/1545-task-acceptance-doctrine.t;
-  t/1668-darwin-inline-verilator-test-runtime.t;
-  scripts/fixture_kernel_sampler.py; t/python/test_fixture_kernel_sampler.py;
+  t/lib/FSM/Test/ProcessSupervisor.pm; t/lib/FSM/Test/TaskAcceptanceFixtureRuntime.pm; t/lib/FSM/Test/VerilatorRuntime.pm; t/1545-task-acceptance-doctrine.t;
+  t/1668-darwin-inline-verilator-test-runtime.t; scripts/fixture_kernel_sampler.py; t/python/test_fixture_kernel_sampler.py;
   scripts/observe_fixture_startup.py; t/python/test_fixture_census.py;
   scripts/analyze_fixture_policy.py; t/python/test_fixture_policy_analysis.py;
   scripts/fixture_policy_associations.py; t/python/test_fixture_policy_associations.py;
@@ -139,8 +140,7 @@ evidence: >-
   t/1669-task-acceptance-fixture-runtime.t; t/python/test_fixture_runtime_sources.py;
   t/lib/FSM/Test/RustProxyFixture.pm; t/1815-rust-proxy-fixture.t; t/1816-rust-proxy-integration.t; t/1817-test-supervision-architecture.t
 reverify: >-
-  scripts/run_with_ram_guard.sh -- python3 -B docs/audits/native-proxy-lifetime-closure-20260913/audit.py --verify-saved
+  scripts/run_with_ram_guard.sh -- python3 -B docs/audits/native-proxy-language-coordination-admission-20260913/audit.py --verify-saved
 ---
-Decisions `0087`/`0101`: `FSM::Support::ProcessSupervisor`; adapters seal local argv/capture/group cleanup. T1669 checks ownership. `exec_handoff_monotonic_ns` is EOF, not main entry; absent EOF leaves timing unknown.
-History: `e22c457ac91dc1bf6c9c97b2ac424f6275808fde:docs/knowledge/test-subprocess-policy-adapters.md`. Lifetimes close; coordination follows.
-Proxy: `t/fixtures/rust-tool-proxy.c` is C, built by Perl `t/lib/FSM/Test/RustProxyFixture.pm` and launched separately to imitate rustup. `VerilatorRuntime`: decision `0086`. HIAL/VIAL `.19.2.3.1.2.2.5.5` owns repair/hostile controls; neutral-verifier extraction stays blocked.
+History: `bac04aab6b27c90b1efe9217a8f7751005b716ab:docs/knowledge/test-subprocess-policy-adapters.md`. Proxy: C, built/launched by Perl; supervisor: decisions `0087`/`0101`.
+Python framework invocation differs from its kernel image. Admission pins both paths/hashes; ownership permits rejected-worker cleanup. Saved audit retains observation/source agreement and original rejection. No proxy startup cause follows.

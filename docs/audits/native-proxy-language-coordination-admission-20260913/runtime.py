@@ -1,0 +1,305 @@
+"""Interactive bounded worker supervision, with no shell or private API use."""
+
+import errno
+import importlib.util
+import json
+import os
+from pathlib import Path
+import selectors
+import signal
+import subprocess
+import time
+
+from contract import BASE, ROOT, BOUNDS, OUTPUT
+from local_files import exclusive, pin, write_all
+from toolchain import binary_pin
+
+
+def process_reader():
+    path = ROOT / 'scripts/fixture_kernel_sampler.py'
+    spec = importlib.util.spec_from_file_location('coordination_native_identity', path)
+    module = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(module)
+    # Only identity/executable methods are used. The privileged sampler is never run.
+    return module.NativeProcesses()
+
+
+def group_gone(group):
+    try:
+        os.killpg(group, 0)
+    except ProcessLookupError:
+        return True
+    return False
+
+
+def birth(value):
+    return tuple(value[key] for key in ('pid', 'start_sec', 'start_usec'))
+
+
+class Journal:
+    def __init__(self):
+        self.relative = OUTPUT + '/journal.jsonl'
+        self.descriptor = exclusive(self.relative)
+        self.rows = []
+        self.bytes = 0
+
+    def __call__(self, event, **fields):
+        row = dict(sequence=len(self.rows), event=event, controller_ns=time.monotonic_ns(), **fields)
+        body = (json.dumps(row, sort_keys=True, separators=(',', ':')) + '\n').encode()
+        if self.bytes + len(body) > BOUNDS['journal_bytes']:
+            raise ValueError('first journal exceeds admitted byte bound')
+        write_all(self.descriptor, body)
+        self.bytes += len(body)
+        self.rows.append(row)
+
+    def close(self):
+        os.close(self.descriptor)
+
+
+class Worker:
+    def __init__(self, case, role, language, executable, reader, journal, deadline):
+        self.case, self.role, self.language = case, role, language
+        self.executable = Path(executable['invocation']).resolve()
+        self.native_executable = Path(executable['native_image']).resolve()
+        self.native_binary = executable['native_binary']
+        self.reader, self.journal, self.deadline = reader, journal, deadline
+        self.events = []
+        self.buffers = dict(stdout=bytearray(), stderr=bytearray())
+        self.pending = bytearray()
+        self.native = None
+        self.probe = None
+        self.process = None
+        self.selector = selectors.DefaultSelector()
+        self.captures = {}
+        self.capture_paths = {}
+        self.closed = False
+        self.reaped = False
+        self.signal_sent = None
+        self.first_capture_error = None
+        self.discarded = dict(stdout=0, stderr=0)
+        self.key = case['name'] + '.' + role
+        for channel in ('stdout', 'stderr'):
+            relative = OUTPUT + '/' + self.key + '.' + channel
+            self.capture_paths[channel] = relative
+
+    def launch(self):
+        for channel, relative in self.capture_paths.items():
+            self.captures[channel] = exclusive(relative)
+        argv = [str(self.executable)]
+        if self.language == 'python':
+            argv += ['-B', '-s', '-E', str(BASE / 'peer.py')]
+        else:
+            argv += [str(BASE / 'worker.pl')]
+        argv += [self.case['name'], self.role]
+        self.journal('launch_intent', worker=self.key, language=self.language,
+                     script=(BASE / ('peer.py' if self.language == 'python' else 'worker.pl')).relative_to(ROOT).as_posix(),
+                     arguments=argv[-2:], start_new_session=True, close_fds=True)
+        environment = dict(PATH=os.defpath, LC_ALL='C', LANG='C',
+                           TMPDIR=str(ROOT / '.artifacts/tmp'))
+        self.process = subprocess.Popen(argv, cwd=ROOT, env=environment, stdin=subprocess.PIPE,
+                                        stdout=subprocess.PIPE, stderr=subprocess.PIPE,
+                                        start_new_session=True, close_fds=True, bufsize=0)
+        for channel in ('stdout', 'stderr'):
+            stream = getattr(self.process, channel)
+            os.set_blocking(stream.fileno(), False)
+            self.selector.register(stream, selectors.EVENT_READ, channel)
+        os.set_blocking(self.process.stdin.fileno(), False)
+        self.journal('launched', worker=self.key, pid=self.process.pid)
+        # Ownership permits termination even when executable admission rejects.
+        self.native = self.owned_identity(self.process.pid, os.getpid())
+        self.journal('native_spawned', worker=self.key, identity=self.native,
+                     pgid=self.process.pid, session_id=self.process.pid)
+        # Admit the native image only at the ready event: a framework launcher
+        # can still be replacing its own image just after Popen returns.
+
+    def owned_identity(self, pid, parent):
+        value = self.reader.identity(pid)
+        if (value['uid'] != os.getuid() or value['ruid'] != os.getuid()
+                or value['ppid'] != parent or os.getpgid(pid) != self.process.pid
+                or os.getsid(pid) != self.process.pid):
+            raise ValueError('worker native ownership differs')
+        return value
+
+    def native_identity(self, pid, parent):
+        value = self.owned_identity(pid, parent)
+        observed = self.reader.executable(pid)
+        if observed != self.native_executable:
+            raise ValueError('worker native executable differs')
+        observed_binary = binary_pin(observed)
+        if observed_binary != self.native_binary:
+            raise ValueError('worker native executable differs')
+        self.last_image_observation = dict(path=str(observed), **observed_binary)
+        return value
+
+    def observe(self, value):
+        if not isinstance(value, dict) or type(value.get('pid')) is not int:
+            raise ValueError('invalid worker event envelope')
+        if len(self.events) >= BOUNDS['events_per_worker']:
+            raise ValueError('worker event count exceeds bound')
+        event = value.get('event')
+        if event == 'ready':
+            if self.seen('ready') or value['pid'] != self.process.pid:
+                raise ValueError('duplicate or foreign ready event')
+            current = self.native_identity(self.process.pid, os.getpid())
+            if birth(current) != birth(self.native):
+                raise ValueError('worker birth changed before ready')
+            self.journal('native_admitted', worker=self.key, identity=self.native,
+                         native_image=self.last_image_observation,
+                         pgid=self.process.pid, session_id=self.process.pid)
+        elif event == 'probe_ready':
+            if self.probe is not None or value['pid'] == self.process.pid:
+                raise ValueError('duplicate or invalid probe event')
+            if self.case['kind'] != 'inheritance':
+                raise ValueError('probe outside declared inheritance case')
+            self.probe = self.native_identity(value['pid'], self.process.pid)
+            self.journal('probe_native_admitted', worker=self.key, identity=self.probe,
+                         native_image=self.last_image_observation,
+                         pgid=self.process.pid, session_id=self.process.pid)
+        elif value['pid'] != self.process.pid:
+            if event != 'probe_result' or self.probe is None or value['pid'] != self.probe['pid']:
+                raise ValueError('event from an unadmitted process')
+        self.events.append(value)
+        self.journal('worker_event', worker=self.key, value=value)
+        if event == 'probe_ready':
+            self.send('scan')
+
+    def pump(self, timeout=0.01, recovery=False):
+        for key, _ in self.selector.select(timeout):
+            channel = key.data
+            try:
+                data = os.read(key.fileobj.fileno(), 4096)
+            except BlockingIOError:
+                continue
+            if not data:
+                self.selector.unregister(key.fileobj)
+                key.fileobj.close()
+                continue
+            # Preserve at most the admitted prefix and its first overflow byte.
+            # Separate recovery drains pipes without re-entering a failed parser.
+            remaining = BOUNDS['worker_output_bytes'] + 1 - sum(map(len, self.buffers.values()))
+            retained = data[:max(0, remaining)]
+            write_all(self.captures[channel], retained)
+            self.buffers[channel].extend(retained)
+            self.discarded[channel] += len(data) - len(retained)
+            try:
+                if sum(map(len, self.buffers.values())) > BOUNDS['worker_output_bytes']:
+                    raise ValueError('worker output exceeds admitted aggregate bound')
+                if channel == 'stdout' and self.first_capture_error is None and not recovery:
+                    self.pending.extend(data)
+                    while b'\n' in self.pending:
+                        line, _, tail = self.pending.partition(b'\n')
+                        self.pending[:] = tail
+                        if len(line) + 1 > BOUNDS['event_bytes']:
+                            raise ValueError('worker event exceeds admitted byte bound')
+                        value = json.loads(line)
+                        if json.dumps(value, sort_keys=True, separators=(',', ':')).encode() != line:
+                            raise ValueError('worker event is not canonical JSON')
+                        self.observe(value)
+                    if len(self.pending) >= BOUNDS['event_bytes']:
+                        raise ValueError('unterminated event exceeds admitted byte bound')
+            except Exception as failure:
+                if self.first_capture_error is None:
+                    self.first_capture_error = str(failure)
+                    self.journal('capture_failed', worker=self.key, error=self.first_capture_error)
+                if not recovery:
+                    raise
+
+    def seen(self, event):
+        return any(value['event'] == event for value in self.events)
+
+    def send(self, command):
+        if self.native is None or not self.seen('ready'):
+            raise ValueError('command precedes native worker admission')
+        if command not in ('admit', 'lock', 'release', 'scan'):
+            raise ValueError('undeclared controller command')
+        body = (command + '\n').encode()
+        self.journal('command', worker=self.key, command=command)
+        written = os.write(self.process.stdin.fileno(), body)
+        if written != len(body):
+            raise OSError('controller command was not written completely')
+
+    def signal(self, number):
+        if self.native is None:
+            raise ValueError('refusing to signal a worker without admitted native ownership')
+        if self.process.poll() is None:
+            current = self.owned_identity(self.process.pid, os.getpid())
+            if birth(current) != birth(self.native):
+                raise ValueError('worker birth changed before signal')
+        elif not group_gone(self.process.pid):
+            if self.probe is None:
+                raise ValueError('live group has no independently admitted surviving member')
+            current = self.reader.identity(self.probe['pid'])
+            if (birth(current) != birth(self.probe) or current['uid'] != os.getuid()
+                    or os.getpgid(current['pid']) != self.process.pid
+                    or os.getsid(current['pid']) != self.process.pid):
+                raise ValueError('surviving probe ownership changed')
+        else:
+            return
+        self.journal('signal', worker=self.key, signal=number, identity=self.native)
+        try:
+            os.killpg(self.process.pid, number)
+        except ProcessLookupError:
+            if not group_gone(self.process.pid):
+                raise
+        self.signal_sent = number
+
+    def finished(self):
+        return self.process is not None and self.process.poll() is not None and not self.selector.get_map()
+
+    def reap(self, separate_recovery=False):
+        if self.reaped:
+            raise ValueError('worker outcome consumed twice')
+        if not self.finished() or (self.pending and self.first_capture_error is None and not separate_recovery):
+            raise ValueError('worker output or process remains in flight')
+        code = self.process.wait(timeout=0)
+        if not group_gone(self.process.pid):
+            raise ValueError('owned worker group remains alive')
+        self.process.stdin.close()
+        for descriptor in self.captures.values():
+            os.close(descriptor)
+        self.selector.close()
+        self.closed = self.reaped = True
+        value = dict(worker=self.key, pid=self.process.pid, exit_code=code,
+                     group_gone=True, leader_reaped=True,
+                     first_capture_error=self.first_capture_error, discarded=self.discarded,
+                     separate_recovery=separate_recovery,
+                     streams={channel: pin(relative, BOUNDS['worker_output_bytes'] + 1)
+                              for channel, relative in self.capture_paths.items()})
+        self.journal('reaped', **value)
+        return value
+
+    def recover(self):
+        """Consume bounded termination; never label this separate recovery a healthy run."""
+        if self.process is None:
+            for descriptor in self.captures.values():
+                os.close(descriptor)
+            self.selector.close()
+            self.closed = True
+            return
+        if self.reaped:
+            return
+        if not self.finished():
+            self.signal(signal.SIGTERM)
+            deadline = time.monotonic() + BOUNDS['term_seconds']
+            while not self.finished() and time.monotonic() < deadline:
+                self.pump(recovery=True)
+        if not self.finished():
+            self.signal(signal.SIGKILL)
+            deadline = time.monotonic() + BOUNDS['kill_seconds']
+            while not self.finished() and time.monotonic() < deadline:
+                self.pump(recovery=True)
+        if not self.finished():
+            raise TimeoutError('owned worker failed bounded termination')
+        self.reap(separate_recovery=True)
+
+
+def until(workers, predicate, deadline):
+    while not predicate():
+        if time.monotonic() >= deadline:
+            raise TimeoutError('admitted case deadline expired')
+        for worker in workers:
+            if not worker.reaped:
+                worker.pump()
+        if any(worker.finished() and not worker.seen('finished')
+               and worker.signal_sent is None for worker in workers):
+            raise RuntimeError('worker exited before its first complete outcome')

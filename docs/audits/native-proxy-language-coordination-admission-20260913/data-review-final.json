@@ -1,0 +1,41 @@
+{
+  "actual_worker_execution": false,
+  "carrier_cases": 12,
+  "carrier_records": 471,
+  "child_ready_before_parent_notice_accepted": true,
+  "expected": {
+    "cases": 12,
+    "clock_domains_kept_separate": true,
+    "exec_probes": 4,
+    "native_proxy_execution": false,
+    "removed_objects": 50,
+    "worker_leaders": 20
+  },
+  "independent_clock_offsets_accepted": true,
+  "native_process_qualification": false,
+  "raw_streams_joined": true,
+  "rejected_controls": [
+    "native_authority",
+    "missing_case",
+    "lost_busy",
+    "inherited_open_admission",
+    "lost_close",
+    "hidden_recovery",
+    "unsettled_group",
+    "wrong_native_parent",
+    "changed_worker_birth",
+    "foreign_uid",
+    "wrong_cancel_result",
+    "short_deadline",
+    "wrong_busy_errno",
+    "missing_probe",
+    "inherited_descriptor_accepted",
+    "probe_after_acquisition",
+    "lost_cleanup",
+    "changed_lock_identity",
+    "foreign_volume",
+    "unknown_event"
+  ],
+  "schema": "fsmgen.language_coordination_data_review.v1",
+  "synthetic": true
+}

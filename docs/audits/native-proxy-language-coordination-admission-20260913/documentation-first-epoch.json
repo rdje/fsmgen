@@ -1,0 +1,89 @@
+{
+  "recovery": [
+    {
+      "path": "MEMORY.md",
+      "recoverable_from": "docs/audits/native-proxy-language-coordination-admission-20260913/first-source/MEMORY.md.documentation-first.source",
+      "sha256": "9916bb6da1498cfc76aa8ace5474e858f026775cf35a59c49f55d2faed963978",
+      "size_bytes": 723
+    },
+    {
+      "path": "KNOWLEDGE_MAP.md",
+      "recoverable_from": "docs/audits/native-proxy-language-coordination-admission-20260913/first-source/KNOWLEDGE_MAP.md.documentation-first.source",
+      "sha256": "113dc2b9c343df437083117a6d143fedef9430cefb256d6da8d5dc62c15f703b",
+      "size_bytes": 13427
+    },
+    {
+      "path": "docs/knowledge/test-subprocess-policy-adapters.md",
+      "recoverable_from": "docs/audits/native-proxy-language-coordination-admission-20260913/first-source/test-subprocess-policy-adapters.md.documentation-first.source",
+      "sha256": "a2d3a79bf15c86544f4153c4a5b447475c39be67eb86cdfd088812e5f506a6a5",
+      "size_bytes": 9831
+    },
+    {
+      "path": "docs/knowledge/python-framework-native-image.md",
+      "recoverable_from": "docs/audits/native-proxy-language-coordination-admission-20260913/first-source/python-framework-native-image.md.documentation-first.source",
+      "sha256": "afd8682047ab2d5106539d471f164b30a4fd71f03524445ace26d3550a206199",
+      "size_bytes": 1778
+    },
+    {
+      "path": "knowledge-map/generated/python-framework.md",
+      "recoverable_from": "docs/audits/native-proxy-language-coordination-admission-20260913/first-source/python-framework.md.documentation-first.source",
+      "sha256": "cf8ea916321a0ebe412a2b5ad598b7666afe515f075402e535fbabd64897fd45",
+      "size_bytes": 997
+    },
+    {
+      "path": "doctrine/claim_verification/inventory.jsonl",
+      "recoverable_from": "docs/audits/native-proxy-language-coordination-admission-20260913/first-source/inventory.jsonl.documentation-first.source",
+      "sha256": "68ba978f4196d0248ee80dc4fa236e740e13511751a5ab3ab2b83df5050ee78d",
+      "size_bytes": 3007141
+    },
+    {
+      "path": "docs/audits/native-proxy-language-coordination-admission-20260913/completion.json",
+      "recoverable_from": "docs/audits/native-proxy-language-coordination-admission-20260913/first-source/completion.json.documentation-first.source",
+      "sha256": "6f19c6fee9f361e85c8db338ff72c5e56351611db55a5ec88c77786d9fdd6694",
+      "size_bytes": 19493
+    },
+    {
+      "path": "docs/audits/native-proxy-language-coordination-admission-20260913/completion-checks.json",
+      "recoverable_from": "docs/audits/native-proxy-language-coordination-admission-20260913/first-source/completion-checks.json.documentation-first.source",
+      "sha256": "108ad0c821f453eb1a3fdb6cc0825d32b16d18ded910d0ca9f0ea65c2a9f2ead",
+      "size_bytes": 2212
+    },
+    {
+      "path": "docs/audits/native-proxy-language-coordination-admission-20260913/completion-pins.json",
+      "recoverable_from": "docs/audits/native-proxy-language-coordination-admission-20260913/first-source/completion-pins.json.documentation-first.source",
+      "sha256": "031591e22e56f0c2b5081176337299262a43c0c3ac62972ff5957e90f623e414",
+      "size_bytes": 14263
+    },
+    {
+      "path": "docs/audits/native-proxy-language-coordination-admission-20260913/preflight-pins.json",
+      "recoverable_from": "docs/audits/native-proxy-language-coordination-admission-20260913/first-source/preflight-pins.json.documentation-first.source",
+      "sha256": "20a123dedd3adf0f02268eddcbaf6fc1e49458c20b0d3f868753a43644b0107a",
+      "size_bytes": 14789
+    },
+    {
+      "path": "docs/audits/native-proxy-language-coordination-admission-20260913/review_completion.py",
+      "recoverable_from": "docs/audits/native-proxy-language-coordination-admission-20260913/first-source/review_completion.py.documentation-first.source",
+      "sha256": "c1599381e097cf9de68cae1713a05fcd376125e084d3569c3d055c9444f07f0e",
+      "size_bytes": 6991
+    },
+    {
+      "path": "docs/audits/native-proxy-language-coordination-admission-20260913/review_claims.py",
+      "recoverable_from": "docs/audits/native-proxy-language-coordination-admission-20260913/first-source/review_claims.py.documentation-first.source",
+      "sha256": "8239b3b8ab396831c98a4d35fbeb57710ea6e37c46dd2c88beb7e1883b1807c7",
+      "size_bytes": 5032
+    },
+    {
+      "path": "docs/audits/native-proxy-language-coordination-admission-20260913/claim-review.json",
+      "recoverable_from": "docs/audits/native-proxy-language-coordination-admission-20260913/first-source/claim-review.json.documentation-first.source",
+      "sha256": "f8c0e60154c40185ecda1c0197f1a3104b92341771f6ed17106003251fa7c256",
+      "size_bytes": 13492
+    },
+    {
+      "path": "docs/tasks/HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.md",
+      "recoverable_from": "docs/audits/native-proxy-language-coordination-admission-20260913/first-source/task.documentation-first.source",
+      "sha256": "7b02b9f59011f45584decccde46e993408baf202863e1da3b9238db7e70a5d32",
+      "size_bytes": 1097296
+    }
+  ],
+  "source_outputs": "staged-gate-first.json"
+}

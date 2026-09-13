@@ -1,0 +1,113 @@
+"""Reproduce the draft rejection and falsify the exact native-image repair."""
+
+import argparse
+import copy
+import importlib.machinery
+import importlib.util
+import json
+import os
+from pathlib import Path
+from types import SimpleNamespace
+from unittest.mock import patch
+
+from contract import BASE
+import runtime
+from toolchain import native_candidate, resolve
+
+
+def qualify():
+    plan = json.loads((BASE / 'plan.json').read_bytes())
+    tools = resolve(plan)
+    selected = tools['python']
+    actual = runtime.process_reader().executable(os.getpid())
+    assert actual == Path(selected['native_image']) and actual != Path(selected['invocation'])
+    original_path = BASE / 'first-source/runtime.py.source'
+    loader = importlib.machinery.SourceFileLoader('first_coordination_runtime', str(original_path))
+    spec = importlib.util.spec_from_loader(loader.name, loader)
+    original = importlib.util.module_from_spec(spec)
+    loader.exec_module(original)
+    value = dict(pid=123, ppid=456, uid=os.getuid(), ruid=os.getuid(), start_sec=100, start_usec=1)
+
+    def worker(cls):
+        result = cls.__new__(cls)
+        result.process = SimpleNamespace(pid=123)
+        result.executable = Path(selected['invocation'])
+        result.native_executable = Path(selected['native_image'])
+        result.native_binary = selected['native_binary']
+        result.reader = SimpleNamespace(identity=lambda pid: dict(value), executable=lambda pid: actual)
+        return result
+
+    controls = []
+    with patch.object(runtime.os, 'getpgid', lambda pid: 123), patch.object(runtime.os, 'getsid', lambda pid: 123):
+        try:
+            worker(original.Worker).native_identity(123, 456)
+        except ValueError:
+            original_rejection_reproduced = True
+        else:
+            raise AssertionError('first draft unexpectedly admitted the observed framework image')
+        assert worker(runtime.Worker).native_identity(123, 456) == value
+        for name, changed in (
+            ('invocation_substituted_for_native_image', Path(selected['invocation'])),
+            ('same_basename_elsewhere', Path('/readonly-altered-identity/Python')),
+        ):
+            target = worker(runtime.Worker)
+            target.reader.executable = lambda pid, path=changed: path
+            try:
+                target.native_identity(123, 456)
+            except ValueError:
+                controls.append(name)
+            else:
+                raise AssertionError('native-path substitution accepted: ' + name)
+        with patch.object(runtime, 'binary_pin', lambda path: dict(size_bytes=33568, sha256='0' * 64)):
+            try:
+                worker(runtime.Worker).native_identity(123, 456)
+            except ValueError:
+                controls.append('changed_bytes_at_native_path')
+            else:
+                raise AssertionError('native image byte change accepted')
+    for name, mutate in (
+        ('unknown_native_layout', lambda row: row['native_image'].update(kind='any_python_basename')),
+        ('launcher_promoted_to_native_image', lambda row: row['native_image'].update(kind='same_binary')),
+        ('native_digest_changed', lambda row: row['native_image']['binary'].update(sha256='0' * 64)),
+        ('native_identity_omitted', lambda row: row.pop('native_image')),
+    ):
+        changed = copy.deepcopy(plan)
+        mutate(changed['toolchains']['python'])
+        try:
+            resolve(changed)
+        except (ValueError, KeyError):
+            controls.append(name)
+        else:
+            raise AssertionError('altered interpreter selection accepted: ' + name)
+    try:
+        native_candidate(Path('/readonly-altered-identity/python3.14'), 'python_framework')
+    except ValueError:
+        controls.append('framework_anchor_changed')
+    else:
+        raise AssertionError('unanchored framework image accepted')
+    return dict(schema='fsmgen.language_coordination_identity_review.v1',
+                original_rejection_reproduced=original_rejection_reproduced,
+                read_only_current_python_native_match=True, rejected_controls=controls,
+                native_worker_cases_executed=0, native_proxy_startup_cause_established=False,
+                actual_perl_worker_identity_pending=True)
+
+
+def main():
+    parser = argparse.ArgumentParser()
+    group = parser.add_mutually_exclusive_group(required=True)
+    group.add_argument('--retain', action='store_true')
+    group.add_argument('--verify-saved', action='store_true')
+    args = parser.parse_args()
+    result = qualify()
+    if args.retain:
+        with (BASE / 'identity-review.json').open('x') as stream:
+            json.dump(result, stream, sort_keys=True, indent=2)
+            stream.write('\n')
+    else:
+        assert result == json.loads((BASE / 'identity-review.json').read_bytes())
+    print(json.dumps(dict(original_rejection_reproduced=True, controls=len(result['rejected_controls']),
+                          actual_worker_execution=False), sort_keys=True))
+
+
+if __name__ == '__main__':
+    main()

@@ -1,0 +1,30 @@
+---
+id: python-framework-native-image
+title: Python framework invocation and native image identities are separate
+answers:
+  - "why can Python invocation and native executable paths differ on macOS?"
+  - "why does macOS report Python instead of python3.14?"
+  - "how does coordination admit a Python framework worker?"
+date: 2026-09-13
+status: current
+tags: [python, darwin, process-identity, coordination]
+evidence: >-
+  docs/audits/native-proxy-language-coordination-admission-20260913/python-identity-observation.json;
+  docs/audits/native-proxy-language-coordination-admission-20260913/identity-repair.json;
+  docs/audits/native-proxy-language-coordination-admission-20260913/identity-review.json
+reverify: >-
+  scripts/run_with_ram_guard.sh -- python3 -B docs/audits/native-proxy-language-coordination-admission-20260913/audit.py --verify-saved
+---
+
+The installed macOS framework Python reports its invocation launcher through
+`sys.executable`; the kernel reports the application-bundle interpreter.
+The observed distinction agrees with [CPython's framework launcher source](https://raw.githubusercontent.com/python/cpython/v3.14.7/Mac/Tools/pythonw.c),
+which replaces the process image while preserving the invocation name.
+This source-to-observation inference is not a binary-build attestation.
+
+The prospective coordination admission binds invocation and native image paths
+and hashes separately. It authenticates ownership before executable admission
+so a rejected worker remains terminable; worker readiness precedes the native
+image check. See [the qualified scope](../book/src/16dk-inactive-proxy-lifetimes.md).
+Actual worker qualification remains separately owned by the execution task.
+This observation does not establish the native-proxy startup failure's cause.

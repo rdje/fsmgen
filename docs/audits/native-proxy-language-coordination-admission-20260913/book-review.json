@@ -1,0 +1,24 @@
+{
+  "checked_passages": [
+    "Cross-language coordination now has a qualified source/data admission.",
+    "For example, a Perl holder must keep a Python reader outside the protected inspection until release; the reverse direction has the same requirement.",
+    "Kernel ownership is recorded separately so executable rejection does not strand an owned process.",
+    "The corrected admission checks exact paths and bytes for each, waits for worker readiness before admitting the native image, and retains the observed kernel image receipt.",
+    "Actual worker execution and installed contention, cancellation and inheritance outcomes remain pending under the next execution leaf.",
+    "docs/audits/native-proxy-language-coordination-admission-20260913/audit.py --verify-saved"
+  ],
+  "checked_runtime_passages": [
+    "The original busy/error/deadline controls were modeled.",
+    "Bounded worker sources and their independent event, ownership and admission checks are now qualified with source and simulated data; actual worker execution remains pending."
+  ],
+  "exact_output_absent": true,
+  "exit_code": 0,
+  "output": ".artifacts/tmp/native-proxy-language-coordination-admission-book-20260913/book",
+  "rendered_bytes": 23637686,
+  "rendered_directories": 2,
+  "rendered_files": 99,
+  "renderer_warnings": [
+    "WARN search index is very large (13303720 bytes)"
+  ],
+  "same_volume_direct_objects": true
+}

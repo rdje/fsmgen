@@ -1,0 +1,19 @@
+# Knowledge Map: `python-framework`
+
+> **AUTO-GENERATED — DO NOT EDIT.** Return to the [Knowledge Map](../../KNOWLEDGE_MAP.md).
+> **1** facts · **3** uniquely owned question entries.
+
+## Questions → facts
+
+- q="how does coordination admit a Python framework worker?" · facts=[python-framework-native-image](../../docs/knowledge/python-framework-native-image.md)
+- q="why can Python invocation and native executable paths differ on macOS?" · facts=[python-framework-native-image](../../docs/knowledge/python-framework-native-image.md)
+- q="why does macOS report Python instead of python3.14?" · facts=[python-framework-native-image](../../docs/knowledge/python-framework-native-image.md)
+
+## Facts
+
+### python-framework-native-image
+
+_Python framework invocation and native image identities are separate_
+
+- **date:** 2026-09-13 · **status:** current
+- **source and verification:** [`docs/knowledge/python-framework-native-image.md`](../../docs/knowledge/python-framework-native-image.md)

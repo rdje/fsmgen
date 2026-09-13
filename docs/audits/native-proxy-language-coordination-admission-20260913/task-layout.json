@@ -1,0 +1,34 @@
+{
+  "activation_bytes": 1093723,
+  "activation_lines": 6353,
+  "activation_sha256": "b017526abcd7730e1436185f3608b191fa8f37557e7cf8e2c7192960e9c6c8e7",
+  "first_preflight": {
+    "diagnostic": "AssertionError before first write: collapsing repeated blank lines alone did not admit two new nodes below the existing task ceiling.",
+    "exit_code": 1,
+    "resolution": "Remove only the first 24 optional blank list-item separators as well; every nonempty line remains in order. No ceiling change.",
+    "workspace_unchanged_verified": true
+  },
+  "normalization": {
+    "collapse_lf_runs_at_least": 3,
+    "remove_first_blank_node_separators": 24,
+    "to_lf_count": 2
+  },
+  "owner": "HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.12.4.1.4.1",
+  "removed_blank_lines": 28,
+  "replacements": [
+    {
+      "new": "- ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.12.4.1.4`\n  Status: `active`\n  Goal: `Admit and qualify the bounded cross-language coordination controls.`\n  Acceptance: `Before any real contention worker runs, create separate prospective admission and execution leaves that pin exact Perl/Python worker sources, normal-user process ownership, private storage, counts, walls, cancellation and cleanup. Preserve the first unexpected outcome, reject inherited or replaced locks, and qualify actual filesystem cooperation without compiling or executing a native proxy or original.`\n  Verification: `Inactive observation/lifetime closure is committed. Separate source/data admission and actual execution children now own the bounded language-worker qualification; no worker has run.`\n  Commit: `pending`\n  Children: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.12.4.1.4.1, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.12.4.1.4.2`\n\n- ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.12.4.1.4.1`\n  Status: `active`\n  Goal: `Implement and qualify prospective cross-language coordination admission.`\n  Acceptance: `Pin the current inactive lock contract and exact worker/controller/probe sources before execution. Select finite bidirectional contention, deadline, cancellation, replacement and close-on-exec controls with explicit normal-user native births, process groups, private same-volume roots, capture/count/wall bounds and exact cleanup. Independently qualify source, state/evidence readers and altered-input rejection without spawning any worker, allocating a coordination fixture or replaying an original. Preserve first outcomes, update the live book and commit an execution permit before the execution child starts.`\n  Verification: `pending`\n  Commit: `pending`\n\n- ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.12.4.1.4.2`\n  Status: `proposed`\n  Goal: `Execute and independently close admitted cross-language coordination controls.`\n  Acceptance: `Authenticate the committed admission and active execution owner before new workers or fixtures. Run each selected case once with fixed argv and private roots; retain first process/pipe/file outcomes and stop on the first unexpected result. Independently prove actual mutual exclusion, expected busy deadlines and cancellation, replacement/inheritance rejection, source/lock identity, owned group settlement and exact cleanup. Keep clock domains separate, consume every job and preserve original failures. Close this parent only within its inactive filesystem-worker scope; compiler/native proxy, live public integration and historical startup/parent/full CI/push remain gated.`\n  Verification: `pending`\n  Commit: `pending`\n\n",
+      "old": "- ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.12.4.1.4`\n  Status: `proposed`\n  Goal: `Admit and qualify the bounded cross-language coordination controls.`\n  Acceptance: `Before any real contention worker runs, create separate prospective admission and execution leaves that pin exact Perl/Python worker sources, normal-user process ownership, private storage, counts, walls, cancellation and cleanup. Preserve the first unexpected outcome, reject inherited or replaced locks, and qualify actual filesystem cooperation without compiling or executing a native proxy or original.`\n  Verification: `pending`\n  Commit: `pending`\n\n"
+    },
+    {
+      "new": "Current frontier: .3.2.15.7.3.12.4.1.4.1 is active for prospective language-worker source/data admission. Its separate .4.2 execution child remains proposed. Inactive observation custody is done; native/live and historical startup/parent/full CI/push remain gated.",
+      "old": "Current frontier: .3.2.15.7.3.12.4.1.3 observation custody is done, including .3.6 combined lifetime closure. Next .12.4.1.4 admits bounded actual language-worker coordination. Native/live and historical startup/parent/full CI/push remain gated."
+    }
+  ],
+  "schema": "fsmgen.task_activation_layout.v1",
+  "source_bytes": 1091528,
+  "source_lines": 6366,
+  "source_path": "docs/tasks/HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.md",
+  "source_revision": "bac04aab6b27c90b1efe9217a8f7751005b716ab",
+  "source_sha256": "c62c194d5e94e0524e27d655010b9de2fca8d2fc3ad82b6f2014136e3bd79c52"
+}

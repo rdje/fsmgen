@@ -1,0 +1,16 @@
+{
+  "actual_fixture_allocation": false,
+  "actual_signal_calls": false,
+  "actual_worker_execution": false,
+  "checks": [
+    "fragmented_valid_event_and_explicit_pipe_closure",
+    "first_parser_error_preserved_while_recovery_drains",
+    "partial_terminal_event_requires_separate_recovery",
+    "overflow_prefix_bounded_and_discard_count_explicit",
+    "unterminated_event_bound_fails_closed",
+    "exit_does_not_skip_remaining_stdout",
+    "bounded_term_then_kill_consumes_one_recovery_outcome"
+  ],
+  "mocked_pipe_and_process_states": true,
+  "schema": "fsmgen.language_coordination_runtime_data_review.v1"
+}

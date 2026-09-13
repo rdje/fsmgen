@@ -1,0 +1,14 @@
+{
+  "actual_worker_execution_pending": true,
+  "evidence": [
+    "python-identity-observation.json",
+    "identity-repair.json",
+    "identity-review.json",
+    "source-finalization.json",
+    "review.json"
+  ],
+  "finding_preserved": "identity-finding.json",
+  "native_proxy_startup_cause_established": false,
+  "owner": "HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.12.4.1.4.1.1",
+  "status": "source_data_repair_qualified"
+}
