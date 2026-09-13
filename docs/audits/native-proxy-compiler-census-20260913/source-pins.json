@@ -1,0 +1,32 @@
+[
+  {
+    "path": "docs/audits/native-proxy-compiler-census-admission-20260913/plan.json",
+    "sha256": "7cb3764d4023d0dcb9dc0abc3a801c73e77501027580363611d9d42736f4501b",
+    "size_bytes": 15473
+  },
+  {
+    "path": "docs/audits/native-proxy-compiler-census-admission-20260913/implementation-pins.json",
+    "sha256": "3bff70802f9d34c3e51a866ea9b7c40ce354e8f8acb3d8e59f1e999c440258d7",
+    "size_bytes": 2675
+  },
+  {
+    "path": "docs/audits/native-proxy-compiler-census-admission-20260913/admission.py",
+    "sha256": "a9db2505d2df17e67c2e83142a1679c6072600872b602b7fc262c21ebf071bab",
+    "size_bytes": 7900
+  },
+  {
+    "path": "docs/audits/native-proxy-compiler-census-admission-20260913/compile_profile.pl",
+    "sha256": "f4e643d775c7fb9ba2f315f3903368b2bbc15c38048e809134108eb80ef95c32",
+    "size_bytes": 7597
+  },
+  {
+    "path": "docs/audits/native-proxy-compiler-census-admission-20260913/execute_once.sh",
+    "sha256": "ab1ec893955a9047f206c13798b450a94fe56eb20cbbb1db0389512d587218f7",
+    "size_bytes": 720
+  },
+  {
+    "path": ".gitignore",
+    "sha256": "fccfa94b2a0577144bc504d552d722b344c790242a249c98c8d17e8834b8b4ad",
+    "size_bytes": 2279
+  }
+]

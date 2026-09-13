@@ -1,0 +1,20 @@
+{
+  "closed_environment": {
+    "LANG": "C",
+    "LC_ALL": "C",
+    "PATH": "/usr/bin:/bin",
+    "TMPDIR_root_relative": ".artifacts/tmp"
+  },
+  "command": [
+    "/usr/bin/git",
+    "check-ignore",
+    "-v",
+    "--",
+    ".claude/settings.local.json"
+  ],
+  "exit": 1,
+  "original_warning_retained": "ignore-diagnosis-first.json",
+  "scope": "Read-only Git metadata query with the actual runner temporary-directory environment. The original fallback warning does not establish a project-owned off-volume write; no shared global data is removed.",
+  "stderr_hex": "",
+  "stdout_hex": ""
+}

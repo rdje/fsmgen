@@ -347,6 +347,14 @@ additions; neither is executed. A missing entry, changed file, incomplete captur
 or failed compiler stops the sequence and preserves the workspace for diagnosis.
 These checks qualify the procedure; actual compiler profiles remain pending.
 
+The first invocation stopped at Git preflight, before permit consumption,
+workspace creation or compiler launch. Ordinary Git used a personal ignore rule
+for `.claude/settings.local.json`; the closed environment exposed that file as
+untracked work. A repository-only ignore check reproduced the difference.
+The original permit and failed output remain preserved. The next owned slice
+must make the local ignore policy explicit and commit a fresh admission before
+another invocation. No authentic compiler-workspace profile has been collected.
+
 | Remaining work | Required result |
 | --- | --- |
 | Workspace profiles | The narrow wrapper repair is qualified; establish authentic compiler-workspace profiles and capacity evidence. |
@@ -365,7 +373,7 @@ remain required before any product activation.
 scripts/run_with_ram_guard.sh -- python3 -B docs/audits/native-proxy-wrapper-compatibility-20260913/audit.py --verify-saved
 scripts/run_with_ram_guard.sh -- python3 -B docs/audits/native-proxy-compiler-profile-inventory-20260913/audit.py --verify-saved
 scripts/run_with_ram_guard.sh -- python3 -B docs/audits/native-proxy-compiler-profile-admission-20260913/epoch.py --verify-saved
-scripts/run_with_ram_guard.sh -- python3 -B docs/audits/native-proxy-compiler-census-admission-20260913/audit.py --verify-saved
+scripts/run_with_ram_guard.sh -- python3 -B docs/audits/native-proxy-compiler-census-20260913/audit.py --verify-saved
 ```
 
 [Return to runtime measurement](16dc-vial-portable-verilator-runtime-measurement.md).

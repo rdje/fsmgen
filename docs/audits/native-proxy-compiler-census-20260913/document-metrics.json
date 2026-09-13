@@ -1,0 +1,33 @@
+{
+  "authority": {
+    "authority_id": "INACTIVE-COMPILER-PREFLIGHT-REJECTION-20260913",
+    "baseline": {
+      "bytes_total": 3417722,
+      "files": 64,
+      "lines_total": 62252
+    },
+    "delta": {
+      "bytes_total": 534,
+      "files": 0,
+      "lines_total": 8
+    },
+    "owner": "HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.12.4.1.5.2.2.3.1",
+    "rationale": "Explain the preserved pre-compilation Git ignore mismatch, unconsumed permit and required exact local policy repair/fresh admission without claiming authentic compiler profiles."
+  },
+  "baseline": {
+    "bytes_total": 3417722,
+    "files": 64,
+    "lines_total": 62252
+  },
+  "current": {
+    "bytes_total": 3418256,
+    "files": 64,
+    "lines_total": 62260
+  },
+  "delta": {
+    "bytes_total": 534,
+    "files": 0,
+    "lines_total": 8
+  },
+  "source_revision": "143aafbc05ae5e15e41c4a5cccfefb3142f298d7"
+}

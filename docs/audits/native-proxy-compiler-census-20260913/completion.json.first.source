@@ -1,0 +1,146 @@
+{
+  "book": {
+    "checked_passages": [
+      "The first invocation stopped at Git preflight, before permit consumption, workspace creation or compiler launch.",
+      "Ordinary Git used a personal ignore rule for .claude/settings.local.json; the closed environment exposed that file as untracked work.",
+      "A repository-only ignore check reproduced the difference.",
+      "The original permit and failed output remain preserved.",
+      "No authentic compiler-workspace profile has been collected.",
+      "docs/audits/native-proxy-compiler-census-20260913/audit.py --verify-saved"
+    ],
+    "checked_runtime_passages": [
+      "observer lifetimes and selected empty-store coordination are qualified below; native behavior and populated-worker qualification remain open.",
+      "real receipt transport and native behavior remain open."
+    ],
+    "exact_output_absent": true,
+    "exit_code": 0,
+    "output": ".artifacts/tmp/native-proxy-compiler-preflight-book-20260913/book",
+    "rendered_bytes": 23670200,
+    "rendered_directories": 2,
+    "rendered_files": 99,
+    "renderer_warnings": [
+      "WARN search index is very large (13320712 bytes)"
+    ],
+    "same_volume_direct_objects": true
+  },
+  "claims": {
+    "path": "docs/audits/native-proxy-compiler-census-20260913/claim-review.json",
+    "sha256": "0daf292cf873574ada44aa97d998e425a9a711835427d0463fc9c3c1e44d110a",
+    "size_bytes": 3723
+  },
+  "local_policy_repair_and_fresh_admission_pending": true,
+  "next_owner": "HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.12.4.1.5.2.2.3.2",
+  "original_compiler_invocations": 0,
+  "owner": "HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.12.4.1.5.2.2.3.1",
+  "previous_acceptance": {
+    "history_bytes": 1485,
+    "history_id": "through_143aafbc05ae",
+    "history_lines": 5,
+    "history_sections": 1,
+    "history_sha256": "0d0bba52725ae3d252fcfef817af2f218fb9d39750cbddf3031fdc648d3dc781",
+    "live_heading": "Version-Retrievable Historical Views",
+    "record_type": "acceptance_history",
+    "retention_contract": "fsmgen_required_history",
+    "schema_version": 1,
+    "source_bytes": 1120413,
+    "source_lines": 6370,
+    "source_path": "docs/tasks/HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.md",
+    "source_revision": "143aafbc05ae5e15e41c4a5cccfefb3142f298d7",
+    "source_sha256": "2935af050caf6ce59e2135d0662772632b761c236b7e24075d95e9dea8da5fb7",
+    "start_heading": "Acceptance Checklist (compiler census admission .3.2.15.7.3.12.4.1.5.2.2.2)"
+  },
+  "raw_outputs": {
+    "book": {
+      "exit": "0\n",
+      "stderr": " INFO Book building has started\n INFO Running the html backend\n WARN search index is very large (13320712 bytes)\n INFO HTML book written to `/Volumes/SSD/Documents/github/fsmgen/.artifacts/tmp/native-proxy-compiler-preflight-book-20260913/book`\n",
+      "stdout": ""
+    },
+    "book-inspection-final": {
+      "exit": "0\n",
+      "stderr": "",
+      "stdout": "{\"checked_passages\": [\"The first invocation stopped at Git preflight, before permit consumption, workspace creation or compiler launch.\", \"Ordinary Git used a personal ignore rule for .claude/settings.local.json; the closed environment exposed that file as untracked work.\", \"A repository-only ignore check reproduced the difference.\", \"The original permit and failed output remain preserved.\", \"No authentic compiler-workspace profile has been collected.\", \"docs/audits/native-proxy-compiler-census-20260913/audit.py --verify-saved\"], \"checked_runtime_passages\": [\"observer lifetimes and selected empty-store coordination are qualified below; native behavior and populated-worker qualification remain open.\", \"real receipt transport and native behavior remain open.\"], \"exact_output_absent\": true, \"exit_code\": 0, \"output\": \".artifacts/tmp/native-proxy-compiler-preflight-book-20260913/book\", \"rendered_bytes\": 23670200, \"rendered_directories\": 2, \"rendered_files\": 99, \"renderer_warnings\": [\"WARN search index is very large (13320712 bytes)\"], \"same_volume_direct_objects\": true}\n"
+    },
+    "claims-check": {
+      "exit": "0\n",
+      "stderr": "",
+      "stdout": "claim-inventory: current-surface census and independent census agree (numeric_lines=12630, candidates=1937, quantified=952, conservative=985, constants=2736, original_constants=615, open_migration_owners=0, untracked_producers=0, unwatched_candidates=1937)\n"
+    },
+    "claims-review": {
+      "exit": "0\n",
+      "stderr": "",
+      "stdout": "{\"claim_identity_unchanged\": true, \"shifted_candidates\": 0, \"rederived_constants\": 4}\n"
+    },
+    "claims-write": {
+      "exit": "0\n",
+      "stderr": "",
+      "stdout": "claim-inventory: wrote doctrine/claim_verification/inventory.jsonl\nclaim-inventory: current-surface census and independent census agree (numeric_lines=12630, candidates=1937, quantified=952, conservative=985, constants=2736, original_constants=615, open_migration_owners=0, untracked_producers=0, unwatched_candidates=1937)\n"
+    },
+    "knowledge-check": {
+      "exit": "0\n",
+      "stderr": "knowledge-map: OK (1161 facts, 6445 unique questions, 6616 answer occurrences, 139 bounded topic shards; query parity verified)\n",
+      "stdout": ""
+    },
+    "knowledge-generate": {
+      "exit": "0\n",
+      "stderr": "knowledge-map: wrote KNOWLEDGE_MAP.md plus 139 topic shards (1161 facts, 6445 unique questions, 6616 answer occurrences)\n",
+      "stdout": ""
+    },
+    "knowledge-query": {
+      "exit": "0\n",
+      "stderr": "",
+      "stdout": "why does the closed compiler census Git preflight see local Claude settings?\ttest-subprocess-policy-adapters\tdocs/knowledge/test-subprocess-policy-adapters.md\n"
+    },
+    "pickaxe": {
+      "exit": "0\n",
+      "stderr": "",
+      "stdout": "143aafbc05ae5e15e41c4a5cccfefb3142f298d7 HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.12.4.1.5.2.2.2: admit finite compiler workspace census\n"
+    },
+    "rejection-audit-final": {
+      "exit": "0\n",
+      "stderr": "ram-guard: PID 57028; host 72.4%; host cutoff 88%; descendant RSS cutoff 4096 MiB; poll 2s\n",
+      "stdout": "{\"authentic_compiler_profiles\": false, \"cause\": \"ordinary Git uses a personal ignore rule for local Claude settings; closed environment does not\", \"compiler_invocations\": 0, \"compiler_workspaces\": 0, \"first_runner_exit\": 1, \"fresh_repository_local_admission_required\": true, \"hidden_path\": \".claude/settings.local.json\", \"native_live_qualification\": false, \"original_output_blocks_reuse\": true, \"original_permit_retained\": true, \"permit_consumed\": false, \"rejected_controls\": 13}\n"
+    },
+    "rejection-saved": {
+      "exit": "0\n",
+      "stderr": "",
+      "stdout": "{\"authentic_compiler_profiles\": false, \"cause\": \"ordinary Git uses a personal ignore rule for local Claude settings; closed environment does not\", \"compiler_invocations\": 0, \"compiler_workspaces\": 0, \"first_runner_exit\": 1, \"fresh_repository_local_admission_required\": true, \"hidden_path\": \".claude/settings.local.json\", \"native_live_qualification\": false, \"original_output_blocks_reuse\": true, \"original_permit_retained\": true, \"permit_consumed\": false, \"rejected_controls\": 13}\n"
+    }
+  },
+  "result": {
+    "claim_legs": {
+      "durability": "First outputs and metadata, immutable Git source pins, owned repair/fresh-admission leaves and this commit.",
+      "falsification": "Independent repository-only ignore view and altered first-outcome/source/ownership controls.",
+      "rederivation": "Exact committed invocation order and preserved terminal outputs, views and ignore-source controls."
+    },
+    "rejected_controls": [
+      "compiler_invocation_promoted",
+      "workspace_promoted",
+      "consumption_promoted",
+      "exit_promoted",
+      "root_absence_missing",
+      "missing_first_output",
+      "changed_view_bytes",
+      "shared_settings_read",
+      "shared_settings_changed",
+      "configuration_write_promoted",
+      "source_boundary_removed",
+      "initial_temp_warning_hidden",
+      "corrected_temp_root_changed"
+    ],
+    "result": {
+      "authentic_compiler_profiles": false,
+      "cause": "ordinary Git uses a personal ignore rule for local Claude settings; closed environment does not",
+      "compiler_invocations": 0,
+      "compiler_workspaces": 0,
+      "first_runner_exit": 1,
+      "fresh_repository_local_admission_required": true,
+      "hidden_path": ".claude/settings.local.json",
+      "native_live_qualification": false,
+      "original_output_blocks_reuse": true,
+      "original_permit_retained": true,
+      "permit_consumed": false
+    },
+    "source_revision": "143aafbc05ae5e15e41c4a5cccfefb3142f298d7"
+  },
+  "source_revision": "143aafbc05ae5e15e41c4a5cccfefb3142f298d7"
+}

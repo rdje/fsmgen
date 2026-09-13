@@ -1,0 +1,101 @@
+{
+  "compiler_invocations": 0,
+  "external_configuration_access": {
+    "access": "read_only_by_git",
+    "paths": [
+      "/Users/richarddje/.gitconfig",
+      "/Users/richarddje/.gitignore_global"
+    ],
+    "reason": "Diagnose the exact existing Git ignore rule responsible for ordinary versus closed-environment preflight views. Shared personal configuration is neither copied nor modified."
+  },
+  "permit_consumed": false,
+  "results": {
+    "closed_ignore": {
+      "command": [
+        "/usr/bin/env",
+        "-i",
+        "PATH=/usr/bin:/bin",
+        "LC_ALL=C",
+        "LANG=C",
+        "/usr/bin/git",
+        "check-ignore",
+        "-v",
+        "--",
+        ".claude/settings.local.json"
+      ],
+      "exit": 1,
+      "stderr_hex": "6769743a207761726e696e673a20636f6e667374722829206661696c6564207769746820636f646520353a20636f756c646e2774206765742070617468206f662044415257494e5f555345525f54454d505f4449523b207573696e67202f746d7020696e73746561640a6769743a207761726e696e673a20636f6e667374722829206661696c6564207769746820636f646520353a20636f756c646e2774206765742070617468206f662044415257494e5f555345525f54454d505f4449523b207573696e67202f746d7020696e73746561640a",
+      "stdout_hex": ""
+    },
+    "git_version": {
+      "command": [
+        "/usr/bin/git",
+        "--version"
+      ],
+      "exit": 0,
+      "stderr_hex": "",
+      "stdout_hex": "6769742076657273696f6e20322e35342e3020284170706c65204769742d313537290a"
+    },
+    "ignore_origin": {
+      "command": [
+        "git",
+        "config",
+        "--show-origin",
+        "--get",
+        "core.excludesfile"
+      ],
+      "exit": 0,
+      "stderr_hex": "",
+      "stdout_hex": "66696c653a2f55736572732f72696368617264646a652f2e676974636f6e666967092f55736572732f72696368617264646a652f2e67697469676e6f72655f676c6f62616c0a"
+    },
+    "ordinary_ignore": {
+      "command": [
+        "git",
+        "check-ignore",
+        "-v",
+        "--",
+        ".claude/settings.local.json"
+      ],
+      "exit": 0,
+      "stderr_hex": "",
+      "stdout_hex": "2f55736572732f72696368617264646a652f2e67697469676e6f72655f676c6f62616c3a363a2e636c617564652f73657474696e67732e6c6f63616c2e6a736f6e092e636c617564652f73657474696e67732e6c6f63616c2e6a736f6e0a"
+    },
+    "repository_ignore_only": {
+      "command": [
+        "git",
+        "-c",
+        "core.excludesFile=.gitignore",
+        "status",
+        "--porcelain=v1",
+        "-z"
+      ],
+      "exit": 0,
+      "stderr_hex": "",
+      "stdout_hex": "204d204d454d4f52592e6d6400204d20646f63732f5441534b5f545245452e6d6400204d20646f63732f7461736b732f4849414c2d5649414c2d564552494649434154494f4e2d464958545552452d4152434849544543545552452e6d64003f3f202e636c617564652f003f3f20646f63732f6175646974732f6e61746976652d70726f78792d636f6d70696c65722d63656e7375732d32303236303931332f00"
+    }
+  },
+  "settings_changed": false,
+  "settings_content_read": false,
+  "settings_metadata_only": [
+    {
+      "ctime_ns": 1784968113403612314,
+      "device": 16777244,
+      "inode": 129236,
+      "mode": 493,
+      "mtime_ns": 1783867551095701328,
+      "path": ".claude",
+      "size_bytes": 96,
+      "uid": 501
+    },
+    {
+      "ctime_ns": 1784968113403592939,
+      "device": 16777244,
+      "inode": 129237,
+      "mode": 420,
+      "mtime_ns": 1783867551094288510,
+      "path": ".claude/settings.local.json",
+      "size_bytes": 1536,
+      "uid": 501
+    }
+  ]
+}

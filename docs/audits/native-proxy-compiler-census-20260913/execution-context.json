@@ -1,0 +1,15 @@
+{
+  "admission_revision": "143aafbc05ae5e15e41c4a5cccfefb3142f298d7",
+  "authorized_compiler_modes": [
+    "proxy_nonzero",
+    "proxy_decoy"
+  ],
+  "compiler_run_limit": 2,
+  "concurrency": 1,
+  "first_failure_stops_sequence": true,
+  "outer_logs": ".artifacts/logs/native-proxy-compiler-census-execution-20260913",
+  "output": ".artifacts/logs/native-proxy-compiler-census-20260913",
+  "owner": "HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.12.4.1.5.2.2.3",
+  "procedure": "docs/audits/native-proxy-compiler-census-admission-20260913/PROCEDURE.md",
+  "proxy_wrapper_original_collector_execution": false
+}

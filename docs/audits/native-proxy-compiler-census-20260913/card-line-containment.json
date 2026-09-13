@@ -1,0 +1,11 @@
+{
+  "after_lines": 146,
+  "after_sha256": "6ece6f20d01030469ec0997b48664f8e2a0f112cc61e007a7f25efb2fa38edd1",
+  "before_lines": 147,
+  "before_sha256": "f4ed9ac701dd45022668d57eb755cf0887b98de7b58c7a022c6fe873634bf2b7",
+  "ceilings_unchanged": true,
+  "decoded_evidence_unchanged": true,
+  "questions_unchanged": true,
+  "reference_after": "  scripts/observe_fixture_startup.py; t/python/test_fixture_census.py; scripts/analyze_fixture_policy.py; t/python/test_fixture_policy_analysis.py;",
+  "reference_before": "  scripts/observe_fixture_startup.py; t/python/test_fixture_census.py;\n  scripts/analyze_fixture_policy.py; t/python/test_fixture_policy_analysis.py;"
+}

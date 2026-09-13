@@ -1,0 +1,147 @@
+[
+  {
+    "path": "KNOWLEDGE_MAP.md",
+    "sha256": "62bb6b18a06f4a9310aebff8663da995a6313122d4d39c1313ad072051309f1e",
+    "size_bytes": 13325
+  },
+  {
+    "path": "MEMORY.md",
+    "sha256": "320764e7a098bc4603183c4f97dfeeeee33e2f84ae58196fb0eafa98872c3b59",
+    "size_bytes": 749
+  },
+  {
+    "path": "docs/TASK_TREE.md",
+    "sha256": "52adbcdf5cb9725dab597e57f4fdd6d544b3d1d28879afd772fab16bbfe39429",
+    "size_bytes": 38890
+  },
+  {
+    "path": "docs/audits/native-proxy-compiler-census-20260913/audit-first.json",
+    "sha256": "c911395bfc9e3139c69fe43d5f700b8ea9975a2428f144ac5ba8d127d5d3753a",
+    "size_bytes": 17793
+  },
+  {
+    "path": "docs/audits/native-proxy-compiler-census-20260913/audit.py",
+    "sha256": "00d78d0df9159b0ac5ab98734ce2190ac3bcb67b936a336ade533af4731738f3",
+    "size_bytes": 8888
+  },
+  {
+    "path": "docs/audits/native-proxy-compiler-census-20260913/book-inspection-first.json",
+    "sha256": "f43239f11c535bd37096fe5c7032504ffc934751a9ba96406d4367dfce55a040",
+    "size_bytes": 7660
+  },
+  {
+    "path": "docs/audits/native-proxy-compiler-census-20260913/book-review.json",
+    "sha256": "053ad6524ec8ee10f284d501677e20a8d67758f5be8642eb9e1d075c61837354",
+    "size_bytes": 1152
+  },
+  {
+    "path": "docs/audits/native-proxy-compiler-census-20260913/claim-review.json",
+    "sha256": "0daf292cf873574ada44aa97d998e425a9a711835427d0463fc9c3c1e44d110a",
+    "size_bytes": 3723
+  },
+  {
+    "path": "docs/audits/native-proxy-compiler-census-20260913/closed-ignore-project-temp.json",
+    "sha256": "9d40926611679ae55d873a486291992656295dd6b9d224daa6b3354be2a296bd",
+    "size_bytes": 589
+  },
+  {
+    "path": "docs/audits/native-proxy-compiler-census-20260913/completion-layout.json",
+    "sha256": "b2ede54dd18b36da3c4e7d6892bec34b9e12471fd9ca7f48d5ea4fd8fc100636",
+    "size_bytes": 3730
+  },
+  {
+    "path": "docs/audits/native-proxy-compiler-census-20260913/document-metrics.json",
+    "sha256": "c8a895d1b8dd1c95320fd7c4ff63246ed6ee1bc99d424d6526afc91123aaf2bf",
+    "size_bytes": 922
+  },
+  {
+    "path": "docs/audits/native-proxy-compiler-census-20260913/execution-context.json",
+    "sha256": "482f9e4d31beb86622d9bf311acb56792440235dc8adf8789afe68ef6968b9ec",
+    "size_bytes": 644
+  },
+  {
+    "path": "docs/audits/native-proxy-compiler-census-20260913/first-run-rejected.json",
+    "sha256": "59ad408aa297f6965ce7ae7f3b563721a660f5275708e38b31d8ee51059f5220",
+    "size_bytes": 182080
+  },
+  {
+    "path": "docs/audits/native-proxy-compiler-census-20260913/git-view-first.json",
+    "sha256": "44370dc756e8655ff559ea49148560c6b3b744295d0bb45260a5cd34b946fb9a",
+    "size_bytes": 1232
+  },
+  {
+    "path": "docs/audits/native-proxy-compiler-census-20260913/ignore-diagnosis-first.json",
+    "sha256": "2a9150700e2b71c01e3dc394ae1ea3dc7fed796a1ab6c4cf12f0c69f5c0fbb5e",
+    "size_bytes": 3379
+  },
+  {
+    "path": "docs/audits/native-proxy-compiler-census-20260913/inspect_book.py",
+    "sha256": "f79deb1f81100d33346d24ad7de8a4aa0515b19658ed8edabdcce9157752c4ae",
+    "size_bytes": 3291
+  },
+  {
+    "path": "docs/audits/native-proxy-compiler-census-20260913/rejection-owner-layout.json",
+    "sha256": "838e9ccca5938ec65c982034cbb4485ca0b300f23d4e5ad55d91f0a0e7248272",
+    "size_bytes": 3402
+  },
+  {
+    "path": "docs/audits/native-proxy-compiler-census-20260913/review.json",
+    "sha256": "406ef7005d84bf9b827205261657081f6cbdcccac7f203f9d4ddbf054393aca3",
+    "size_bytes": 1392
+  },
+  {
+    "path": "docs/audits/native-proxy-compiler-census-20260913/review_claims.py",
+    "sha256": "906a809d8d2e6dfdd3c9ecc00159d07e4131ecbe3274fe299971e57db8d81b20",
+    "size_bytes": 5068
+  },
+  {
+    "path": "docs/audits/native-proxy-compiler-census-20260913/review_completion.py",
+    "sha256": "50a987b03f4cbe3f17fdb01405c4bdaa893ca621e1e83657bfa313836ec2ec56",
+    "size_bytes": 4836
+  },
+  {
+    "path": "docs/audits/native-proxy-compiler-census-20260913/source-pins.json",
+    "sha256": "20fcdc448d92eb7fbc03abcf153b84c56c365bbb6d762afcb027edeec31dc898",
+    "size_bytes": 1171
+  },
+  {
+    "path": "docs/audits/native-proxy-compiler-census-20260913/task-layout.json",
+    "sha256": "9f429545b03f3982a3f08614aeea095014534009d9cf6033310e38ca048892c7",
+    "size_bytes": 2960
+  },
+  {
+    "path": "docs/book/src/16dk-inactive-proxy-lifetimes.md",
+    "sha256": "0898d3138591b84c1ef5da74aebb2c1086e62304fd84634a774319cb0411486f",
+    "size_bytes": 23465
+  },
+  {
+    "path": "docs/knowledge/test-subprocess-policy-adapters.md",
+    "sha256": "f4ed9ac701dd45022668d57eb755cf0887b98de7b58c7a022c6fe873634bf2b7",
+    "size_bytes": 9887
+  },
+  {
+    "path": "docs/tasks/HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.md",
+    "sha256": "95dbee9558525dc875dc482e507218eb4321919485dd2670076f2c4570a05a87",
+    "size_bytes": 1124402
+  },
+  {
+    "path": "docs/tasks/history/HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE/acceptance-history.jsonl",
+    "sha256": "60b914e769d13d961a7e747dd06e6da123df263cb99cf06ecbedc3666df794e0",
+    "size_bytes": 851
+  },
+  {
+    "path": "doctrine/claim_verification/inventory.jsonl",
+    "sha256": "d5318be3b1a1a8b39da0c4fecb5e3434db762e55f6f0ac7c8a46aacc79397379",
+    "size_bytes": 3015720
+  },
+  {
+    "path": "doctrine/live_document_size/surfaces.jsonl",
+    "sha256": "8a24554ae3fd10bd86ca8cd1b23fe7e28d3fb75fc51804af0d2c13bdd0157a76",
+    "size_bytes": 25932
+  },
+  {
+    "path": "knowledge-map/generated/test-subprocess.md",
+    "sha256": "d76324bda74f0afccda98a4f1a4927a09067a42e9d42f1961a742f413577a4da",
+    "size_bytes": 20541
+  }
+]

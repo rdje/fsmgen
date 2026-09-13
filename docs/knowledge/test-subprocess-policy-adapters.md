@@ -123,6 +123,7 @@ answers:
   - "why does macOS report Python instead of python3.14?"
   - "how does coordination admit a Python framework worker?"
   - "why does inactive retirement reject the real Rust proxy wrapper?"
+  - "why does the closed compiler census Git preflight see local Claude settings?"
 date: 2026-09-13
 status: current
 tags: [tests, subprocess, supervision, task-acceptance, darwin, locality]
@@ -134,13 +135,12 @@ evidence: >-
   docs/book/src/16dc-vial-portable-verilator-runtime-measurement.md;
   t/lib/FSM/Test/ProcessSupervisor.pm; t/lib/FSM/Test/TaskAcceptanceFixtureRuntime.pm; t/lib/FSM/Test/VerilatorRuntime.pm; t/1545-task-acceptance-doctrine.t;
   t/1668-darwin-inline-verilator-test-runtime.t; scripts/fixture_kernel_sampler.py; t/python/test_fixture_kernel_sampler.py;
-  scripts/observe_fixture_startup.py; t/python/test_fixture_census.py;
-  scripts/analyze_fixture_policy.py; t/python/test_fixture_policy_analysis.py;
+  scripts/observe_fixture_startup.py; t/python/test_fixture_census.py; scripts/analyze_fixture_policy.py; t/python/test_fixture_policy_analysis.py;
   scripts/fixture_policy_associations.py; t/python/test_fixture_policy_associations.py;
   scripts/run_fixture_startup_policy_observation.py; scripts/run_fixture_startup_daemon_observation.py; t/python/test_fixture_startup_policy_observation.py;
   t/1669-task-acceptance-fixture-runtime.t; t/python/test_fixture_runtime_sources.py;
   t/lib/FSM/Test/RustProxyFixture.pm; t/1815-rust-proxy-fixture.t; t/1816-rust-proxy-integration.t; t/1817-test-supervision-architecture.t
 reverify: >-
-  scripts/run_with_ram_guard.sh -- python3 -B docs/audits/native-proxy-compiler-census-admission-20260913/audit.py --verify-saved
+  scripts/run_with_ram_guard.sh -- python3 -B docs/audits/native-proxy-compiler-census-20260913/audit.py --verify-saved
 ---
-History: `012adadf38a529c93233584632fbf182fd88a217:docs/knowledge/test-subprocess-policy-adapters.md`. Compiler census source admission is qualified; actual profiles need the separately owned sole execution. Revalidate the compiler/SDK epoch, consume the one-use permit and compiler settlement, compare complete workspace membership before exact cleanup. Wrapper and Cargo roles stay unexecuted. No native/live or historical startup claim follows.
+History: `143aafbc05ae5e15e41c4a5cccfefb3142f298d7:docs/knowledge/test-subprocess-policy-adapters.md`. First census preflight rejected local Claude settings hidden by ordinary Git global ignores. No permit consumption, workspace or compiler launch occurred. Exact local ignore policy and fresh admission are owned next; native/live and startup evidence remain pending.

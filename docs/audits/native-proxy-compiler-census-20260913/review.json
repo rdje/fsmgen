@@ -1,0 +1,36 @@
+{
+  "claim_legs": {
+    "durability": "First outputs and metadata, immutable Git source pins, owned repair/fresh-admission leaves and this commit.",
+    "falsification": "Independent repository-only ignore view and altered first-outcome/source/ownership controls.",
+    "rederivation": "Exact committed invocation order and preserved terminal outputs, views and ignore-source controls."
+  },
+  "rejected_controls": [
+    "compiler_invocation_promoted",
+    "workspace_promoted",
+    "consumption_promoted",
+    "exit_promoted",
+    "root_absence_missing",
+    "missing_first_output",
+    "changed_view_bytes",
+    "shared_settings_read",
+    "shared_settings_changed",
+    "configuration_write_promoted",
+    "source_boundary_removed",
+    "initial_temp_warning_hidden",
+    "corrected_temp_root_changed"
+  ],
+  "result": {
+    "authentic_compiler_profiles": false,
+    "cause": "ordinary Git uses a personal ignore rule for local Claude settings; closed environment does not",
+    "compiler_invocations": 0,
+    "compiler_workspaces": 0,
+    "first_runner_exit": 1,
+    "fresh_repository_local_admission_required": true,
+    "hidden_path": ".claude/settings.local.json",
+    "native_live_qualification": false,
+    "original_output_blocks_reuse": true,
+    "original_permit_retained": true,
+    "permit_consumed": false
+  },
+  "source_revision": "143aafbc05ae5e15e41c4a5cccfefb3142f298d7"
+}
