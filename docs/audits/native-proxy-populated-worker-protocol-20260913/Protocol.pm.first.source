@@ -1,0 +1,285 @@
+package NativeProxyPopulatedProtocol;
+use strict;
+use warnings;
+use Digest::SHA qw(sha256_hex);
+use Wire;
+
+# Fixed inactive API dispatch. Models replace this named implementation method;
+# the real worker accepts no caller callback, arbitrary operation or file path.
+sub _api {
+    my ($self, $name, @args) = @_;
+    return NativeProxyReferenceAcquisition::acquire_runtime_reference(@args) if $name eq 'publish';
+    return NativeProxyObservationAcquisition::acquire_observation_reference(@args) if $name eq 'observe';
+    return NativeProxyRuntimeRetirement::retire_runtime_reference(@args) if $name eq 'retire';
+    return NativeProxyImageMaintenance::remove_unreferenced_image(@args) if $name eq 'maintain';
+    return NativeProxyImageCoordination::inspect_store(@args) if $name eq 'hold_inspect';
+    return NativeProxyObservationArchive::archive_retained_sources(@args) if $name eq 'archive';
+    return NativeProxyObservationRelease::release_observation_reference(@args) if $name eq 'release';
+    return NativeProxyRuntimeRetirement::_request(@args) if $name eq 'validate_runtime';
+    return NativeProxyObservationAcquisition::_previous(@args) if $name eq 'validate_observation';
+    return NativeProxyImageCustody::image_key(@args) if $name eq 'image_key';
+    return NativeProxyImageCustody::manifest_bytes(@args) if $name eq 'manifest_bytes';
+    return NativeProxyObservationWorkRecord::work_selection(@args) if $name eq 'work_selection';
+    return NativeProxyObservationWorkRecord::work_settlement(@args) if $name eq 'work_settlement';
+    die "undeclared inactive API dispatch\n";
+}
+
+sub _same {
+    my ($self, $a, $b) = @_;
+    return NativeProxyPopulatedWire::same($a, $b, $self->{limits});
+}
+sub _copy {
+    my ($self, $value) = @_;
+    return NativeProxyPopulatedWire::copy($value, $self->{limits});
+}
+
+sub new {
+    my ($class, $contract, $name, $role, $activation, $execution_revision) = @_;
+    die "unexpected worker contract\n" unless $contract->{schema} eq 'fsmgen.inactive_populated_worker_contract.v1'
+        && !$contract->{execution_authorized};
+    my @cases = grep { $_->{name} eq $name } @{$contract->{cases}};
+    die "undeclared case or worker role\n" unless @cases == 1 && exists($cases[0]{roles}{$role});
+    my $self = bless {contract => $contract, case => $cases[0], role => $role,
+        limits => $contract->{protocol}, index => 0, failed => undef, state => {}, finished => 0}, $class;
+    NativeProxyPopulatedWire::fields($activation,
+        qw(schema execution_revision case store workspaces evidence births all_native_admitted));
+    die "activation does not bind this execution\n" unless $activation->{schema} eq 'fsmgen.inactive_populated_activation.v1'
+        && $activation->{execution_revision} eq $execution_revision && $execution_revision =~ /\A[0-9a-f]{40}\z/
+        && $activation->{case} eq $name && NativeProxyPopulatedWire::integer($activation->{all_native_admitted}) == 1;
+    for my $entry ([$activation->{store}, $self->{case}{store}],
+                   map { [$activation->{workspaces}{$_}, $self->{case}{workspaces}{$_}] }
+                       sort keys %{$self->{case}{workspaces}}) {
+        NativeProxyPopulatedWire::fields($entry->[0], qw(path device inode));
+        die "activation directory path differs\n" unless $entry->[0]{path} eq $entry->[1];
+        NativeProxyPopulatedWire::integer($entry->[0]{$_}) for qw(device inode);
+    }
+    NativeProxyPopulatedWire::fields($activation->{workspaces}, keys %{$self->{case}{workspaces}});
+    if (defined($self->{case}{evidence})) {
+        NativeProxyPopulatedWire::fields($activation->{evidence}, qw(path device inode));
+        die "activation evidence path differs\n" unless $activation->{evidence}{path} eq $self->{case}{evidence};
+        NativeProxyPopulatedWire::integer($activation->{evidence}{$_}) for qw(device inode);
+    } else {
+        die "unexpected evidence directory\n" if defined($activation->{evidence});
+    }
+    NativeProxyPopulatedWire::fields($activation->{births}, keys %{$self->{case}{roles}});
+    my %pids;
+    for my $birth (values %{$activation->{births}}) {
+        NativeProxyPopulatedWire::fields($birth, qw(pid ppid uid ruid start_sec start_usec));
+        NativeProxyPopulatedWire::integer($birth->{$_}) for keys %$birth;
+        die "invalid or reused native worker PID\n" unless $birth->{pid} > 0 && !$pids{$birth->{pid}}++;
+        die "invalid native birth subsecond\n" if $birth->{start_usec} >= 1_000_000;
+    }
+    for my $directory (values %{$activation->{workspaces}},
+                       defined($activation->{evidence}) ? ($activation->{evidence}) : ()) {
+        die "activation directories cross devices\n" unless $directory->{device} == $activation->{store}{device};
+    }
+    my $local = $activation->{births}{$role};
+    for my $birth (values %{$activation->{births}}) {
+        die "activation worker ownership differs\n" unless $birth->{ppid} == $local->{ppid}
+            && $birth->{uid} == $local->{uid} && $birth->{ruid} == $local->{ruid};
+    }
+    $self->{activation} = $self->_copy($activation);
+    return $self;
+}
+
+sub next_step {
+    my ($self) = @_;
+    die "failed or finished worker cannot start another step\n" if defined($self->{failed}) || $self->{finished};
+    return $self->{case}{roles}{$self->{role}}{steps}[$self->{index}];
+}
+
+sub _cleanup {
+    my $settled = sub { return {outcome => $_[0], cleanup => {leader_started => 1, leader_reaped => 1, group_gone => 1}}; };
+    return {compiler => $settled->('failed'), outer => $settled->('completed'), stages => [$settled->('cancelled')]};
+}
+
+sub _request {
+    my ($self) = @_;
+    my $target = $self->{case}{observation_target};
+    die "case has no declared observation target\n" unless defined($target);
+    return $self->_copy({workspace_identity => $self->{activation}{workspaces}{$target},
+        evidence_directory_identity => $self->{activation}{evidence},
+        observer_birth => $self->{activation}{births}{observer},
+        target_birth => $self->{activation}{births}{$target}});
+}
+
+sub _work {
+    my ($self) = @_;
+    my $state = $self->{state};
+    my @base = ($self->{case}{store}, $state->{request}, $state->{observation});
+    my $entries = [map { {work_id => "observer:$_", role => $_,
+        ownership_token => sha256_hex("inactive-populated:$self->{case}{name}:observer:$_")} } qw(capture helper query)];
+    my @outcomes = qw(completed failed cancelled);
+    my $receipts = [map { {%{$entries->[$_]}, outcome => $outcomes[$_],
+        cleanup => {leader_started => 1, leader_reaped => 1, group_gone => 1}} } 0..2];
+    # These are deliberately synthetic selection/settlement inputs, never
+    # replacements for actual compiler/outer/inner or cancelled-worker receipts.
+    $state->{selection} = $self->_api('work_selection', @base, $entries);
+    $state->{settlement} = $self->_api('work_settlement', @base, $state->{selection}, $receipts, 1);
+}
+
+sub _handoff {
+    my ($self, $kind) = @_;
+    my $value = {schema => 'fsmgen.inactive_populated_handoff.v1', case => $self->{case}{name},
+        source_role => $self->{role}, kind => $kind, acquired => $self->{state}{$kind}};
+    $value->{request} = $self->{state}{request} if $kind eq 'observation';
+    return NativeProxyPopulatedWire::retain($value, $self->{limits});
+}
+
+sub _bind_acquisition {
+    my ($self, $kind, $source_role, $acquired, $request) = @_;
+    my $store = $self->{case}{store};
+    my $target = $kind eq 'runtime' ? $source_role : $self->{case}{observation_target};
+    my $image_kind = $self->{case}{roles}{$target}{image};
+    my $c = NativeProxyPopulatedWire::hex_bytes($self->{contract}{payloads}{c_hex}, 65536);
+    my $image = NativeProxyPopulatedWire::hex_bytes($self->{contract}{payloads}{'image_'.$image_kind.'_hex'}, 65536);
+    my $key = $self->_api('image_key', $c, $image);
+    my @snapshots;
+    if ($kind eq 'runtime') {
+        $self->_api('validate_runtime', $store, $acquired, _cleanup());
+        die "runtime acquisition binds another workspace\n" unless $self->_same(
+            $acquired->{reference}{record}{workspace_identity}, $self->{activation}{workspaces}{$target});
+        die "runtime acquisition binds another image\n" unless $acquired->{image}{key} eq $key;
+        my @expected = ($c, $image, $self->_api('manifest_bytes', $c, $image));
+        my @names = qw(rustup.c rustup image.json);
+        for my $i (0..2) {
+            my $source = $acquired->{image}{snapshots}[$i];
+            die "acquired image source differs from fixed payload\n" unless $source->{bytes} eq $expected[$i]
+                && $source->{identity}{path} eq "$store/images/$key/$names[$i]";
+        }
+        @snapshots = (@{$acquired->{image}{snapshots}}, @{$acquired->{reference}}{qw(global private)});
+    } else {
+        die "observation request binds another owner\n" unless $self->_same($request, $self->_request());
+        $self->_api('validate_observation', $store, $request, $acquired);
+        my $wrapper = NativeProxyPopulatedWire::hex_bytes($self->{contract}{payloads}{wrapper_hex}, 65536);
+        die "observation binds another fixed payload\n" unless $acquired->{observation_reference}{record}{image_key} eq $key
+            && $acquired->{target_sources}[0]{bytes} eq $wrapper
+            && $acquired->{target_sources}[3]{bytes} eq $c && $acquired->{target_sources}[4]{bytes} eq $image;
+        @snapshots = ($acquired->{observation_reference}{source}, @{$acquired->{target_sources}});
+    }
+    for my $source (@snapshots) {
+        die "snapshot bytes differ from their retained identity\n"
+            unless length($source->{bytes}) == $source->{identity}{size_bytes}
+                && sha256_hex($source->{bytes}) eq $source->{identity}{sha256};
+    }
+}
+
+sub _adopt {
+    my ($self, $kind, $packet) = @_;
+    die "handoff is not declared for this worker\n" unless $self->{role} eq 'recovery_peer'
+        && defined($self->{case}{handoff_path}) && !exists($self->{state}{$kind});
+    my $value = NativeProxyPopulatedWire::restore($packet, $self->{limits});
+    my @fields = qw(schema case source_role kind acquired);
+    push @fields, 'request' if $kind eq 'observation';
+    NativeProxyPopulatedWire::fields($value, @fields);
+    my $source_role = $kind eq 'runtime' ? 'publisher' : 'observer';
+    die "handoff source or case differs\n" unless $value->{schema} eq 'fsmgen.inactive_populated_handoff.v1'
+        && $value->{case} eq $self->{case}{name} && $value->{source_role} eq $source_role && $value->{kind} eq $kind;
+    my $request = $kind eq 'observation' ? $self->_request() : undef;
+    die "handoff observation ownership differs\n" if $kind eq 'observation'
+        && !$self->_same($value->{request}, $request);
+    $self->_bind_acquisition($kind, $source_role, $value->{acquired}, $request);
+    $self->{state}{request} = $request if $kind eq 'observation';
+    $self->{state}{$kind} = $self->_copy($value->{acquired});
+    $self->_work() if $kind eq 'observation';
+    return {adopted => $kind, source_role => $source_role, filesystem_reconstruction => 0};
+}
+
+sub execute {
+    my ($self, $id, $packet) = @_;
+    my $step = $self->next_step();
+    unless (defined($step) && $step->{id} eq $id) {
+        $self->{failed} = "unexpected fixed step\n";
+        die $self->{failed};
+    }
+    my $state_before = $self->_copy($self->{state});
+    my $activation_before = $self->_copy($self->{activation});
+    my ($result, $handoff);
+    my $ok = eval {
+        my $op = $step->{operation};
+        my $store = $self->{case}{store};
+        if ($op eq 'publish') {
+            die "runtime acquisition already exists\n" if exists($self->{state}{runtime});
+            my $c = NativeProxyPopulatedWire::hex_bytes($self->{contract}{payloads}{c_hex}, 65536);
+            my $image = NativeProxyPopulatedWire::hex_bytes($self->{contract}{payloads}{'image_'.$step->{image}.'_hex'}, 65536);
+            $result = $self->_api('publish', $store, $self->{activation}{workspaces}{$self->{role}}, $c, $image);
+            $self->_bind_acquisition('runtime', $self->{role}, $result, undef);
+            $self->{state}{runtime} = $self->_copy($result);
+            $handoff = $self->_handoff('runtime');
+        } elsif ($op eq 'observe') {
+            die "observation already exists\n" if exists($self->{state}{observation});
+            $self->{state}{request} = $self->_request();
+            $result = $self->_api('observe', $store, $self->{state}{request});
+            $self->_bind_acquisition('observation', $self->{role}, $result, $self->{state}{request});
+            $self->{state}{observation} = $self->_copy($result);
+            $self->_work();
+            $handoff = $self->_handoff('observation');
+        } elsif ($op eq 'retire') {
+            die "runtime custody is unavailable\n" unless exists($self->{state}{runtime}) && !$self->{state}{retired};
+            $result = $self->_api('retire', $store, $self->{state}{runtime}, _cleanup());
+            $self->{state}{retired} = 1;
+        } elsif ($op eq 'archive') {
+            die "original observation is unavailable or already archived\n"
+                unless exists($self->{state}{observation}) && !exists($self->{state}{archive});
+            $result = $self->_api('archive', $store, $self->{state}{request}, $self->{state}{observation});
+            $self->{state}{archive} = $self->_copy($result);
+        } elsif ($op eq 'release') {
+            die "original archive or work settlement unavailable\n" unless exists($self->{state}{archive})
+                && exists($self->{state}{settlement}) && !$self->{state}{released};
+            $result = $self->_api('release', $store, @{$self->{state}}{qw(request observation archive selection settlement)});
+            NativeProxyPopulatedWire::fields($result, qw(schema runtime_authorized executable success error
+                unlink_attempted unlink_completed reference_absence_verified last_reference_check release));
+            die "observation release attempt failed\n" unless ref($result) eq 'HASH' 
+                && $result->{schema} eq 'fsmgen.inactive_observation_release_attempt.v1'
+                && NativeProxyPopulatedWire::integer($result->{success}) == 1
+                && NativeProxyPopulatedWire::integer($result->{runtime_authorized}) == 0
+                && !defined($result->{executable}) && $result->{error} eq ''
+                && $result->{unlink_attempted} == 1 && $result->{unlink_completed} == 1
+                && $result->{reference_absence_verified} == 1;
+            $self->{state}{released} = 1;
+        } elsif ($op eq 'maintain' || $op eq 'maintain_blocked') {
+            my $c = NativeProxyPopulatedWire::hex_bytes($self->{contract}{payloads}{c_hex}, 65536);
+            my $image = NativeProxyPopulatedWire::hex_bytes($self->{contract}{payloads}{'image_'.$step->{image}.'_hex'}, 65536);
+            my $key = $self->_api('image_key', $c, $image);
+            my $accepted = eval { $result = $self->_api('maintain', $store, $key); 1 };
+            my $error = $@;
+            if ($op eq 'maintain_blocked') {
+                die "expected exact conservative maintenance rejection\n" if $accepted
+                    || $error ne $self->{contract}{maintenance_rejection};
+                $result = {expected_rejection => $error, image_key => $key};
+            } else { die $error unless $accepted; }
+        } elsif ($op eq 'hold_inspect') {
+            $result = $self->_api('hold_inspect', $store);
+        } elsif ($op =~ /\Aadopt_(runtime|observation)\z/) {
+            die "original handoff packet is absent\n" unless defined($packet);
+            $result = $self->_adopt($1, $packet);
+        } else { die "undeclared fixed operation\n"; }
+        die "operation changed admitted activation inputs\n"
+            unless $self->_same($activation_before, $self->{activation});
+        # Original retained acquisitions remain byte-identical after every call.
+        for my $key (qw(runtime observation request selection settlement archive)) {
+            die "an operation changed retained input custody\n" if exists($state_before->{$key})
+                && !$self->_same($state_before->{$key}, $self->{state}{$key});
+        }
+        1;
+    };
+    my $error = $@;
+    unless ($ok) {
+        $self->{failed} = $error;
+        die $error;
+    }
+    ++$self->{index};
+    return {step => $id, operation => $step->{operation},
+        value => NativeProxyPopulatedWire::retain($result, $self->{limits}), handoff => $handoff,
+        synthetic_retirement_and_work_records => 1};
+}
+
+sub finish {
+    my ($self) = @_;
+    die "worker cannot finish before its exact protocol\n" if defined($self->next_step())
+        || $self->{case}{roles}{$self->{role}}{ending} ne 'finish';
+    $self->{finished} = 1;
+    return {complete => 1, completed_steps => $self->{index}, runtime_authorized => 0};
+}
+
+1;

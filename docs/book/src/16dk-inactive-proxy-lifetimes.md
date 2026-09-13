@@ -406,9 +406,47 @@ unresolved; the controller never signals an unknown surviving member.
 Source models exercise partial launches, parser errors, output limits, deadlines,
 cancellation and close failures. Recovery preserves the first failure; incomplete
 cleanup or missing output cannot become a successful worker result. No real
-worker has run under this new controller. Fixed transaction commands and final
-execution admission remain open. Synthetic retirement and observation settlement
-records remain separate from later actual worker-cancellation proof.
+worker has run under this new controller. Fixed transaction commands now pass
+in-memory qualification; final execution admission remains open. Synthetic
+retirement and observation settlement records remain separate from later actual
+worker-cancellation proof.
+
+The worker accepts only its declared case, role and next command. Small commands
+select fixed operations; source-bound files carry activation and original handoff
+records by digest. Snapshot bytes travel as hexadecimal octets, including NUL and
+non-ASCII bytes. A recovery peer adopts the original acquisition after the
+controller settles the cancelled owner; it never reconstructs custody from files
+that happen to survive.
+
+For example, an observer can retain the original wrapper, reference pair and
+source image while the publisher retires its private workspace. Maintenance must
+still reject that image until the observer archives those original snapshots,
+settles its selected work and releases its hold. The fixed cases exercise:
+
+| Case | In-memory lifetime check |
+| --- | --- |
+| Equal publication | Shared bytes retain independent runtime references. |
+| Different publication | Removing an unreferenced image preserves the other image. |
+| Observation across retirement | The hold survives removal of the private workspace. |
+| Equal references with an observer | Remaining runtime and observation owners prevent maintenance. |
+| Cancelled runtime owner | Its reference remains until the peer adopts and retires the original acquisition. |
+| Cancelled observer owner | Its original snapshots remain usable after publisher retirement and handoff. |
+
+Cancellation cuts occur after lock acquisition and before census or mutation.
+The model assumes native ownership and contention; the separately admitted worker
+run must observe them. Command ordering, octet transport, conservative rejection,
+original handoffs and bounded I/O are checked without starting a worker.
+
+A release success flag alone is insufficient. The worker requires the complete
+receipt to retain the original lock, image, archive and settlement bindings, plus
+the final reference-absence result. An adversarial missing-receipt check exposed
+this gap in the draft protocol; the repair and first failure are retained.
+
+Actual-wrapper observation also remains an owned integration repair. Observation
+acquisition currently requires wrapper mode `0700`, while the retained actual
+compiler profiles use `0755`. The inert worker cases keep their established mode;
+the integration task must qualify an exact compatibility exception before using
+the actual wrapper. No actual observation attempt is claimed here.
 
 | Remaining work | Required result |
 | --- | --- |
@@ -428,6 +466,7 @@ scripts/run_with_ram_guard.sh -- python3 -B docs/audits/native-proxy-wrapper-com
 scripts/run_with_ram_guard.sh -- python3 -B docs/audits/native-proxy-compiler-profile-inventory-20260913/audit.py --verify-saved
 scripts/run_with_ram_guard.sh -- python3 -B docs/audits/native-proxy-compiler-profile-admission-20260913/epoch.py --verify-saved
 scripts/run_with_ram_guard.sh -- python3 -B docs/audits/native-proxy-populated-controller-20260913/audit.py --verify-saved
+scripts/run_with_ram_guard.sh -- python3 -B docs/audits/native-proxy-populated-worker-protocol-20260913/audit.py --verify-saved
 ```
 
 [Return to runtime measurement](16dc-vial-portable-verilator-runtime-measurement.md).

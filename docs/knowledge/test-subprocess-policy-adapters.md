@@ -127,20 +127,15 @@ answers:
   - "why can guarded stdin Python exit successfully without running its program?"
   - "why can terminal worker recovery fail before native admission?"
   - "how is unadmitted populated-worker recovery repaired?"
+  - "how are fixed populated-worker commands qualified?"
+  - "why does actual-wrapper observation still need a mode repair?"
 date: 2026-09-13
 status: current
 tags: [tests, subprocess, supervision, task-acceptance, darwin, locality]
 evidence: >-
-  docs/tasks/HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.md; t/1595-agent-runtime-ram-guard-macos-metric.t; t/1811-ram-guard-fixture-runtime.t; t/lib/FSM/Test/RamGuardFixtureRuntime.pm; docs/decisions/0087-test-subprocesses-use-shared-mechanism-and-sealed-policy-adapters.md; docs/tasks/DARWIN-INLINE-VERILATOR-RUNTIME-QUALIFICATION.md;
-  docs/book/src/16dc-vial-portable-verilator-runtime-measurement.md;
-  t/lib/FSM/Test/ProcessSupervisor.pm; t/lib/FSM/Test/TaskAcceptanceFixtureRuntime.pm; t/lib/FSM/Test/VerilatorRuntime.pm; t/1545-task-acceptance-doctrine.t;
-  t/1668-darwin-inline-verilator-test-runtime.t; scripts/fixture_kernel_sampler.py; t/python/test_fixture_kernel_sampler.py;
-  scripts/observe_fixture_startup.py; t/python/test_fixture_census.py; scripts/analyze_fixture_policy.py; t/python/test_fixture_policy_analysis.py;
-  scripts/fixture_policy_associations.py; t/python/test_fixture_policy_associations.py;
-  scripts/run_fixture_startup_policy_observation.py; scripts/run_fixture_startup_daemon_observation.py; t/python/test_fixture_startup_policy_observation.py;
-  t/1669-task-acceptance-fixture-runtime.t; t/python/test_fixture_runtime_sources.py;
-  t/lib/FSM/Test/RustProxyFixture.pm; t/1815-rust-proxy-fixture.t; t/1816-rust-proxy-integration.t; t/1817-test-supervision-architecture.t
+  docs/audits/native-proxy-populated-worker-protocol-20260913/review.json;
+  docs/audits/native-proxy-populated-worker-protocol-20260913/observation-wrapper-gap.json
 reverify: >-
-  scripts/run_with_ram_guard.sh -- python3 -B docs/audits/native-proxy-populated-controller-20260913/audit.py --verify-saved
+  scripts/run_with_ram_guard.sh -- python3 -B docs/audits/native-proxy-populated-worker-protocol-20260913/audit.py --verify-saved
 ---
-History: `8e0c5f1af948b928908005a7dcd6c73e3db5c152:docs/knowledge/test-subprocess-policy-adapters.md`. Popen owns cleanup.
+History: `77f4da7ecc3bb610ce4f7851f6a6b71844fd489c:docs/knowledge/test-subprocess-policy-adapters.md`. Fixed Perl commands preserve original octets and custody in models; final execution admission remains open. Observation accepts the inert wrapper mode, while actual-wrapper mode compatibility remains owned by the integration task.

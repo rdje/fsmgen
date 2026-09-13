@@ -1,0 +1,148 @@
+package NativeProxyPopulatedWorkerIO;
+use strict;
+use warnings;
+use Digest::SHA qw(sha256_hex);
+use Fcntl qw(F_GETFD FD_CLOEXEC);
+use Wire;
+
+sub new {
+    my ($class, $root, $contract, $case, $role) = @_;
+    return bless {root => $root, contract => $contract, case => $case, role => $role,
+        count => 0, bytes => 0, last_lock => undef}, $class;
+}
+
+# Fixed syscall seams permit inert qualification of short I/O and close errors.
+# Commands cannot select these methods or supply callback implementations.
+sub _write { return syswrite(STDOUT, $_[1], $_[2], $_[3]); }
+sub _read_byte {
+    my $count = sysread(STDIN, my $byte, 1);
+    return ($count, $byte);
+}
+sub _close_source { return close($_[1]{handle}); }
+
+sub _emit {
+    my ($self, $event, %fields) = @_;
+    my $limits = $self->{contract}{protocol};
+    die "undeclared worker event\n" unless grep { $_ eq $event } @{$limits->{events}};
+    my $bytes = NativeProxyPopulatedWire::canonical({event => $event, pid => $$, %fields}) . "\n";
+    die "worker event or output bound exceeded\n" if length($bytes) > $limits->{event_bytes}
+        || $self->{count} >= $limits->{events_per_worker}
+        || $self->{bytes} + length($bytes) > $limits->{output_bytes};
+    ++$self->{count}; $self->{bytes} += length($bytes);
+    my $offset = 0;
+    while ($offset < length($bytes)) {
+        my $count = $self->_write($bytes, length($bytes) - $offset, $offset);
+        die "worker output write failed: $!\n" unless defined($count) && $count > 0;
+        $offset += $count;
+    }
+}
+
+sub _expect {
+    my ($self, $expected, $step) = @_;
+    my $limit = $self->{contract}{protocol}{command_bytes};
+    my $bytes = '';
+    while (length($bytes) < $limit) {
+        my ($count, $byte) = $self->_read_byte();
+        die "controller command ended or failed: $!\n" unless defined($count) && $count == 1;
+        $bytes .= $byte;
+        return NativeProxyPopulatedWire::command($bytes, $self->{contract}{protocol}, $expected, $step)
+            if $byte eq "\n";
+    }
+    die "controller command byte bound exceeded\n";
+}
+
+sub _read_document {
+    my ($self, $relative, $limit, $expected_digest) = @_;
+    # Paths come only from the source-bound case contract, never a command.
+    die "sealed input is outside the fixed output namespace\n"
+        unless index($relative, $self->{contract}{output} . '/') == 0;
+    NativeProxyImageCustody::_relative_path($relative);
+    my $source = NativeProxyImageCustody::_source("$self->{root}/$relative", 0400, $limit);
+    my $value;
+    my $ok = eval {
+        die "sealed input bytes differ\n" if defined($expected_digest)
+            && sha256_hex($source->{bytes}) ne $expected_digest;
+        $value = NativeProxyPopulatedWire::decode($source->{bytes}, $limit);
+        NativeProxyImageCustody::_recheck_source($source);
+        1;
+    };
+    my $error = $@;
+    my $closed = $self->_close_source($source);
+    die $error unless $ok;
+    die "cannot close sealed input: $!\n" unless $closed;
+    return $value;
+}
+
+sub read_sealed {
+    my ($self, $relative, $limit, $expected_digest) = @_;
+    NativeProxyPopulatedWire::digest($expected_digest);
+    return $self->_read_document($relative, $limit, $expected_digest);
+}
+
+sub read_start {
+    my ($self) = @_;
+    return $self->_read_document($self->{contract}{output} . '/run-start.json', 4096, undef);
+}
+
+sub _lock_state {
+    my ($self, $handle) = @_;
+    my $descriptor = fileno($handle);
+    return {descriptor_closed => 1} unless defined($descriptor);
+    my $flags = fcntl($handle, F_GETFD, 0);
+    die "cannot read lock descriptor flags: $!\n" unless defined($flags);
+    return {descriptor_closed => 0, descriptor => $descriptor,
+        close_on_exec => ($flags & FD_CLOEXEC) ? 1 : 0};
+}
+
+sub operation {
+    my ($self, $protocol, $step, $packet) = @_;
+    my ($handle, $opened, $busy) = (undef, 0, 0);
+    my $acquire = \&NativeProxyImageCoordination::_acquire;
+    my $try = \&NativeProxyImageCoordination::_try_lock;
+    my ($result, $ok, $error);
+    {
+        no warnings 'redefine';
+        local *NativeProxyImageCoordination::_try_lock = sub {
+            my $locked = $try->(@_);
+            my $error = 0 + $!;
+            if (!$locked) {
+                ++$busy;
+                $self->_emit('busy', step => $step->{id}, errno => $error) if $busy == 1;
+            }
+            $! = $error;
+            return $locked;
+        };
+        local *NativeProxyImageCoordination::_acquire = sub {
+            my ($current, $path, $identity) = @_;
+            $handle = $current;
+            ++$opened;
+            die "unexpected or repeated coordination entry\n" unless $step->{coordinated} && $opened == 1;
+            my $state = $self->_lock_state($handle);
+            die "permanent lock descriptor lacks close-on-exec seal\n"
+                if $state->{descriptor_closed} || !$state->{close_on_exec};
+            $self->_emit('opened', step => $step->{id}, device => $identity->[0], inode => $identity->[1], %$state);
+            $self->_expect('lock', $step);
+            $acquire->(@_);
+            $self->_emit('locked', step => $step->{id});
+            if ($step->{hold}) {
+                $self->_emit('held', step => $step->{id});
+                $self->_expect('release', $step);
+            }
+            return;
+        };
+        $ok = eval { $result = $protocol->execute($step->{id}, $packet); 1 };
+        $error = $@;
+    }
+    my $state;
+    my $observed = eval { $state = defined($handle) ? $self->_lock_state($handle) : {descriptor_closed => 1}; 1 };
+    my $observation_error = $@;
+    $state = {descriptor_closed => 0, close_observation_error => $observation_error} unless $observed;
+    $self->{last_lock} = {opened => $opened ? 1 : 0, busy_count => $busy, %$state};
+    die $error unless $ok;
+    die $observation_error unless $observed;
+    die "successful operation did not match its declared coordination\n"
+        if ($step->{coordinated} ? !$opened : $opened) || !$state->{descriptor_closed};
+    return {result => $result, lock => $self->{last_lock}};
+}
+
+1;

@@ -1,0 +1,375 @@
+#!/usr/bin/env perl
+use strict;
+use warnings;
+use Sub::Util qw(set_prototype);
+our $FORBIDDEN = 0;
+BEGIN {
+    no strict 'refs';
+    for my $name (qw(fork system kill sysopen flock mkdir rmdir unlink rename chmod link symlink)) {
+        *{"CORE::GLOBAL::$name"} = set_prototype(prototype("CORE::$name"),
+            sub { ++$FORBIDDEN; die "unadmitted model effect: $name\n"; });
+    }
+}
+use FindBin;
+use lib $FindBin::Bin, "$FindBin::Bin/../../../perl", "$FindBin::Bin/../../../t/lib",
+    map { "$FindBin::Bin/../$_" } qw(native-proxy-image-custody-20260910
+        native-proxy-image-coordination-20260910 native-proxy-image-publication-20260910
+        native-proxy-runtime-records-20260910 native-proxy-runtime-census-20260910
+        native-proxy-runtime-acquisition-20260910 native-proxy-runtime-retirement-20260910
+        native-proxy-image-maintenance-20260910 native-proxy-cleanup-receipts-20260910
+        native-proxy-observation-records-20260910 native-proxy-observation-acquisition-20260910
+        native-proxy-observation-archive-records-20260911 native-proxy-observation-archive-20260911
+        native-proxy-observation-work-records-20260911 native-proxy-observation-archive-release-20260911);
+use FSM::Test::RustProxyFixture ();
+BEGIN { *CORE::GLOBAL::exec = sub { ++$FORBIDDEN; die "unadmitted model exec\n"; }; }
+use Digest::SHA qw(sha256_hex);
+use JSON::PP ();
+use Errno qw(EWOULDBLOCK);
+use Coordination;
+use RuntimeRetirement;
+use ObservationAcquisition;
+use ArchiveRecord;
+use WorkRecord;
+use Wire;
+use Protocol;
+use WorkerIO;
+use ModelWorld;
+
+{
+    package ModelIO;
+    our @ISA = ('NativeProxyPopulatedWorkerIO');
+    sub _write {
+        my ($self, $bytes, $length, $offset) = @_;
+        die "model output exception\n" if $self->{write_exception};
+        return 0 if $self->{zero_write};
+        my $count = defined($self->{write_chunk}) && $length > $self->{write_chunk} ? $self->{write_chunk} : $length;
+        $self->{output} .= substr($bytes, $offset, $count);
+        return $count;
+    }
+    sub _read_byte {
+        my ($self) = @_;
+        return (0, '') unless length($self->{input});
+        return (1, substr($self->{input}, 0, 1, ''));
+    }
+    sub _lock_state {
+        my ($self, $handle) = @_;
+        die "model close observation failed\n" if $handle->{closed} && $self->{close_observation_error};
+        return {descriptor_closed => 1} if $handle->{closed};
+        return {descriptor_closed => 0, descriptor => $handle->{descriptor},
+            close_on_exec => $self->{missing_seal} ? 0 : $handle->{close_on_exec}};
+    }
+    sub _expect {
+        my ($self, $command, $step) = @_;
+        die "model cancellation at held\n" if $command eq 'release' && $self->{cancel_at_held};
+        push @{$self->{expected}}, $command;
+        return $self->SUPER::_expect($command, $step);
+    }
+    sub _close_source { ++$_[0]{source_closes}; return $_[0]{source_close_failure} ? 0 : 1; }
+}
+
+my $JSON = JSON::PP->new->canonical->ascii->pretty;
+CORE::open(my $input, '<', "$FindBin::Bin/contract.json") or die "read contract: $!\n";
+my $contract = $JSON->decode(do { local $/; <$input> });
+close($input) or die "close contract: $!\n";
+my $limits = $contract->{protocol};
+my (@checks, @cases, @rejections);
+my ($world, $fault, $busy, $errno_preserved);
+my $real_api = \&NativeProxyPopulatedProtocol::_api;
+
+sub check {
+    my ($name, $condition) = @_;
+    die "qualification assertion failed: $name\n" unless $condition;
+    die "duplicate check: $name\n" if grep { $_ eq $name } @checks;
+    push @checks, $name;
+}
+sub reject {
+    my ($name, $code, $pattern) = @_;
+    my $ok = eval { $code->(); 1 };
+    my $error = $@;
+    check($name, !$ok && defined($error) && length($error) && (!defined($pattern) || $error =~ $pattern));
+    push @rejections, {name => $name, error => $error};
+    return $error;
+}
+sub clone { return NativeProxyPopulatedWire::copy($_[0], $limits); }
+sub transport_copy { return $JSON->decode(NativeProxyPopulatedWire::canonical($_[0])); }
+sub equal { return NativeProxyPopulatedWire::same($_[0], $_[1], $limits); }
+sub command { return NativeProxyPopulatedWire::canonical({command => $_[0], payload => $_[1]}) . "\n"; }
+sub io {
+    my ($case, $role) = @_;
+    my $io = ModelIO->new('MODEL_ROOT', $contract, $case, $role);
+    @$io{qw(input output)} = ('', '');
+    $io->{expected} = [];
+    return $io;
+}
+sub setup {
+    my ($name) = @_;
+    my ($case) = grep { $_->{name} eq $name } @{$contract->{cases}};
+    $world = NativeProxyPopulatedModelWorld->new($contract, $case);
+    my %workers = map { $_ => NativeProxyPopulatedProtocol->new($contract, $name, $_,
+        $world->{activation}, $contract->{source_revision}) } sort keys %{$case->{roles}};
+    return ($case, \%workers);
+}
+sub perform {
+    my ($protocol, $id, $packet, $selected_io) = @_;
+    my $step = $protocol->next_step();
+    my $io = $selected_io // io($world->{case}, $protocol->{role});
+    $io->{input} .= command('lock', {id => $id}) if $step->{coordinated};
+    $io->{input} .= command('release', {id => $id}) if $step->{hold} && !$io->{cancel_at_held};
+    my $result = $io->operation($protocol, $step, $packet);
+    $io->_emit('result', %$result);
+    die "unconsumed model command\n" if length($io->{input});
+    return ($result, $io);
+}
+
+sub fixed_cases {
+    for my $name (map { $_->{name} } @{$contract->{cases}}) {
+        my ($case, $workers) = setup($name);
+        my (%results, %ended, $packet, @trace, @outputs);
+        for my $action (@{$case->{actions}}) {
+            if ($action->{kind} eq 'finish') {
+                for my $role (@{$action->{roles}}) {
+                    my $result = $workers->{$role}->finish();
+                    $ended{$role} = 'finished';
+                    push @trace, {kind => 'finish', role => $role, result => $result};
+                }
+                next;
+            }
+            if ($action->{kind} eq 'handoff') {
+                $packet = transport_copy($results{$action->{source_role}}{$action->{source_step}}{result}{handoff});
+                check("$name original handoff exists", defined($packet));
+                check("$name handoff bound", length(NativeProxyPopulatedWire::canonical($packet)) <= $limits->{handoff_bytes});
+                push @trace, {kind => 'handoff', sha256 => sha256_hex(NativeProxyPopulatedWire::canonical($packet))};
+                next;
+            }
+            if ($action->{kind} eq 'cancel') {
+                my $role = $action->{role};
+                my $before = clone($world->census());
+                my $calls = scalar(@{$world->{calls}});
+                my $io = io($case, $role); $io->{cancel_at_held} = 1;
+                reject("$name held cut", sub { perform($workers->{$role}, $action->{step}, undef, $io) },
+                    qr/\Amodel cancellation at held\n\z/);
+                my @events = map { $JSON->decode($_)->{event} } split(/\n/, $io->{output});
+                check("$name cut precedes census and mutation", equal($before, $world->census())
+                    && $calls == @{$world->{calls}} && equal(\@events, [qw(opened locked held)]));
+                $ended{$role} = 'model_cancelled_at_held';
+                push @outputs, $io->{output};
+                push @trace, {kind => 'cancel', role => $role, actual_signal => 0, effects => 0};
+                next;
+            }
+            my @roles = $action->{kind} eq 'contend' ? @$action{qw(holder contender)} : ($action->{role});
+            for my $index (0..$#roles) {
+                my $role = $roles[$index];
+                $busy = $action->{kind} eq 'contend' && $index == 1 ? 1 : 0;
+                my $before = clone($world->census());
+                my ($result, $io) = perform($workers->{$role}, $action->{step}, $packet);
+                my $op = $result->{result}{operation};
+                check("$name $role $action->{step} closes lock", $result->{lock}{descriptor_closed});
+                check("$name $role $action->{step} conservative rejection", equal($before, $world->census()))
+                    if $op eq 'maintain_blocked';
+                check("$name $role $action->{step} preserves image and archives", equal($before->{images}, $world->census()->{images})
+                    && equal($before->{archives}, $world->census()->{archives})) if $op eq 'retire' || $op eq 'release';
+                check("$name $role modeled busy retains errno", $errno_preserved && $result->{lock}{busy_count} == 1)
+                    if $action->{kind} eq 'contend' && $index == 1;
+                if ($op eq 'archive') {
+                    check("$name archives after workspace removal", !@{$before->{workspaces}});
+                    my $record = NativeProxyPopulatedWire::restore($result->{result}{value}, $limits);
+                    check("$name archive preserves ordered originals", @{$record->{source_bindings}} == 5);
+                }
+                $results{$role}{$action->{step}} = $result;
+                push @outputs, $io->{output};
+                push @trace, {kind => 'result', role => $role, step => $action->{step}, operation => $op,
+                    result => $result, state => $world->census()};
+            }
+        }
+        my $final = $world->census();
+        check("$name final owner and image residue empty", !@{$final->{images}} && !@{$final->{runtimes}}
+            && !@{$final->{holds}} && !@{$final->{workspaces}});
+        check("$name every worker has one declared ending", equal([sort keys %ended], [sort keys %{$case->{roles}}]));
+        check("$name archives retained", @{$final->{archives}} == (defined($case->{evidence}) ? 1 : 0));
+        push @cases, {name => $name, trace => \@trace, endings => \%ended, final => $final,
+            event_streams => \@outputs, native_ownership_and_contention_assumed => 1};
+    }
+}
+
+sub wire_controls {
+    my $bytes = "\0\xff";
+    my $upgraded = $bytes; utf8::upgrade($upgraded);
+    check('wire retains and restores octets', equal({bytes => $bytes}, clone({bytes => $upgraded}))
+        && !utf8::is_utf8(clone({bytes => $upgraded})->{bytes}) && utf8::is_utf8($upgraded));
+    reject('wire rejects non-octet characters', sub { clone({bytes => chr(256)}) }, qr/octets/);
+    reject('wire rejects ambiguous raw spelling', sub { NativeProxyPopulatedWire::retain({bytes_hex => '00'}, $limits) }, qr/ambiguous/);
+    reject('wire rejects raw bytes on transport', sub { NativeProxyPopulatedWire::restore({bytes => 'a'}, $limits) }, qr/ambiguous/);
+    for my $hex ('0', 'FF', 'gg') {
+        reject("wire rejects invalid hex $hex", sub { NativeProxyPopulatedWire::hex_bytes($hex, 2) }, qr/hex/);
+    }
+    reject('wire rejects oversized octets', sub { NativeProxyPopulatedWire::hex_bytes('00' x 3, 2) }, qr/hex/);
+    reject('wire rejects opaque reference', sub { clone(\1) }, qr/opaque/);
+    reject('wire rejects excessive depth', sub { NativeProxyPopulatedWire::retain([[[1]]], {%$limits, transport_depth => 2}) }, qr/structure/);
+    reject('wire rejects excessive nodes', sub { NativeProxyPopulatedWire::retain([1,2], {%$limits, transport_nodes => 2}) }, qr/structure/);
+    for my $raw ('{ "x":1}', '{"x":1,"x":1}', '{"x":1} ') {
+        reject("wire rejects noncanonical JSON $raw", sub { NativeProxyPopulatedWire::decode($raw, 100) }, qr/canonical/);
+    }
+    reject('wire rejects quoted integer', sub { NativeProxyPopulatedWire::integer('1') }, qr/integer/);
+    reject('wire rejects negative integer', sub { NativeProxyPopulatedWire::integer(-1) }, qr/integer/);
+    reject('wire rejects fractional integer', sub { NativeProxyPopulatedWire::integer(1.5) }, qr/integer/);
+    my $step = {id => 'adopt', operation => 'adopt_runtime'};
+    my $payload = {id => 'adopt', handoff_sha256 => 'a' x 64};
+    check('command roundtrip is exact', equal($payload, NativeProxyPopulatedWire::command(command('step', $payload), $limits, 'step', $step)));
+    reject('command rejects missing newline', sub { NativeProxyPopulatedWire::command('{}', $limits, 'step', $step) }, qr/unterminated/);
+    reject('command rejects wrong command', sub { NativeProxyPopulatedWire::command(command('lock', $payload), $limits, 'step', $step) }, qr/controller command/);
+    reject('command rejects wrong step', sub { NativeProxyPopulatedWire::command(command('step', {%$payload, id => 'another'}), $limits, 'step', $step) }, qr/different fixed step/);
+    reject('command rejects missing handoff', sub { NativeProxyPopulatedWire::command(command('step', {id => 'adopt'}), $limits, 'step', $step) }, qr/fields/);
+    reject('command rejects excess fields', sub { NativeProxyPopulatedWire::command(command('step', {%$payload, path => 'arbitrary'}), $limits, 'step', $step) }, qr/fields/);
+    reject('command rejects finish payload', sub { NativeProxyPopulatedWire::command(command('finish', {}), $limits, 'finish', undef) }, qr/unexpected payload/);
+}
+
+sub protocol_controls {
+    my ($case, $workers) = setup('cancelled_runtime_owner');
+    my $activation = clone($world->{activation});
+    my @changes = (
+        ['foreign activation epoch', sub { $_[0]{execution_revision} = '0' x 40 }],
+        ['unadmitted activation', sub { $_[0]{all_native_admitted} = 0 }],
+        ['foreign store', sub { $_[0]{store}{path} .= '_other' }],
+        ['cross-device workspace', sub { ++$_[0]{workspaces}{publisher}{device} }],
+        ['duplicate child PID', sub { $_[0]{births}{publisher}{pid} = $_[0]{births}{recovery_peer}{pid} }],
+        ['foreign parent', sub { ++$_[0]{births}{publisher}{ppid} }],
+        ['invalid birth precision', sub { $_[0]{births}{publisher}{start_usec} = 1_000_000 }],
+        ['undeclared activation field', sub { $_[0]{extra} = 1 }]);
+    for my $change (@changes) {
+        my $bad = clone($activation); $change->[1]->($bad);
+        reject($change->[0], sub { NativeProxyPopulatedProtocol->new($contract, $case->{name}, 'publisher', $bad, $contract->{source_revision}) });
+    }
+    reject('early finish rejected', sub { $workers->{publisher}->finish() }, qr/cannot finish/);
+    reject('wrong fixed step rejected', sub { $workers->{publisher}->execute('retire') }, qr/unexpected fixed step/);
+    reject('failed worker cannot resume', sub { $workers->{publisher}->execute('publish') }, qr/failed or finished/);
+    ($case, $workers) = setup('cancelled_runtime_owner');
+    my ($published) = perform($workers->{publisher}, 'publish');
+    my $packet = $published->{result}{handoff};
+    my $peer = $workers->{recovery_peer};
+    perform($peer, 'blocked');
+    my @packet_changes = (
+        ['foreign handoff case', sub { $_[0]{case} .= '_other' }],
+        ['foreign handoff source', sub { $_[0]{source_role} = 'recovery_peer' }],
+        ['handoff authority escalation', sub { $_[0]{acquired}{runtime_authorized} = 1 }],
+        ['handoff executable escalation', sub { $_[0]{acquired}{executable} = 'arbitrary' }],
+        ['handoff stale workspace', sub { ++$_[0]{acquired}{reference}{record}{workspace_identity}{inode} }],
+        ['handoff corrupted image bytes', sub { $_[0]{acquired}{image}{snapshots}[0]{bytes_hex} .= '00' }],
+        ['handoff corrupted digest', sub { $_[0]{acquired}{image}{snapshots}[2]{identity}{sha256} = '0' x 64 }],
+        ['handoff missing source', sub { pop @{$_[0]{acquired}{image}{snapshots}} }]);
+    for my $change (@packet_changes) {
+        my $bad = transport_copy($packet); $change->[1]->($bad);
+        my $fresh = NativeProxyPopulatedProtocol->new($contract, $case->{name}, 'recovery_peer', $activation, $contract->{source_revision});
+        perform($fresh, 'blocked');
+        reject($change->[0], sub { perform($fresh, 'adopt', $bad) });
+        reject($change->[0] . ' is terminal', sub { $fresh->next_step() }, qr/failed or finished/);
+    }
+    perform($peer, 'adopt', $packet);
+    check('runtime handoff preserves original bytes', equal($peer->{state}{runtime}, $workers->{publisher}{state}{runtime}));
+    reject('handoff replay rejected', sub { $peer->execute('adopt', $packet) }, qr/unexpected fixed step/);
+    ($case, $workers) = setup('equal_publication');
+    perform($workers->{publisher_a}, 'publish');
+    $fault = 'maintenance_error';
+    reject('unexpected maintenance error is not conservative success', sub { perform($workers->{publisher_a}, 'blocked_both') }, qr/expected exact/);
+    $fault = undef;
+    ($case, $workers) = setup('different_publication');
+    perform($workers->{publisher_b}, 'publish');
+    perform($workers->{publisher_b}, 'blocked');
+    $fault = 'mutate_retained';
+    reject('API mutation of original custody is terminal', sub { perform($workers->{publisher_b}, 'retire') }, qr/changed retained input/);
+    $fault = undef;
+    for my $failure (qw(release_failed release_incomplete release_missing_receipt)) {
+        ($case, $workers) = setup('observation_across_retirement');
+        perform($workers->{publisher}, 'publish');
+        perform($workers->{observer}, 'observe');
+        perform($workers->{publisher}, 'retire');
+        perform($workers->{observer}, 'archive');
+        $fault = $failure;
+        reject($failure, sub { perform($workers->{observer}, 'release') }, qr/release/);
+        $fault = undef;
+    }
+}
+
+sub io_controls {
+    my ($case, $workers) = setup('equal_publication');
+    my $io = io($case, 'publisher_a');
+    $io->{write_chunk} = 3;
+    $io->_emit('ready');
+    check('short output writes preserve full event', $io->{output} eq command('unused', undef) ? 0
+        : $JSON->decode($io->{output})->{event} eq 'ready' && $io->{count} == 1 && $io->{bytes} == length($io->{output}));
+    $io->{zero_write} = 1;
+    reject('zero output write stops', sub { $io->_emit('ready') }, qr/write failed/);
+    my $bounded = io($case, 'publisher_a');
+    $bounded->{contract} = clone($contract); $bounded->{contract}{protocol}{events_per_worker} = 1;
+    $bounded->_emit('ready');
+    reject('event count bound', sub { $bounded->_emit('ready') }, qr/bound/);
+    my $long = io($case, 'publisher_a');
+    reject('event byte bound', sub { $long->_emit('failure', error => 'x' x $limits->{event_bytes}) }, qr/bound/);
+    $long->{bytes} = $limits->{output_bytes};
+    reject('aggregate output bound', sub { $long->_emit('ready') }, qr/bound/);
+    my $reader = io($case, 'publisher_a');
+    reject('command EOF stops', sub { $reader->_expect('finish') }, qr/ended or failed/);
+    $reader->{input} = 'x' x ($limits->{command_bytes} + 1);
+    reject('command byte bound stops', sub { $reader->_expect('finish') }, qr/byte bound/);
+    check('command overrun leaves excess unread', length($reader->{input}) == 1);
+    $io = io($case, 'publisher_a'); $io->{missing_seal} = 1;
+    reject('missing lock seal stops before mutation', sub { perform($workers->{publisher_a}, 'publish', undef, $io) }, qr/close-on-exec/);
+    check('seal rejection leaves no image', !keys %{$world->{images}});
+    ($case, $workers) = setup('equal_publication');
+    $io = io($case, 'publisher_a'); $io->{close_observation_error} = 1; $fault = 'primary_error';
+    reject('primary API error survives close observation error', sub { perform($workers->{publisher_a}, 'publish', undef, $io) }, qr/\Amodel primary API failure\n\z/);
+    check('secondary close observation retained', $io->{last_lock}{close_observation_error} eq "model close observation failed\n");
+    $fault = undef;
+    my $source = {bytes => '{"a":1}', handle => 'MODEL_HANDLE'};
+    {
+        no warnings 'redefine';
+        local *NativeProxyImageCustody::_source = sub { return clone($source) };
+        local *NativeProxyImageCustody::_recheck_source = sub { return 1 };
+        my $sealed = io($case, 'publisher_a');
+        check('sealed input verifies digest and closes once', equal({a => 1}, $sealed->read_sealed(
+            $case->{activation_path}, 100, sha256_hex($source->{bytes}))) && $sealed->{source_closes} == 1);
+        $sealed->{source_close_failure} = 1;
+        reject('sealed digest error survives close failure', sub { $sealed->read_sealed($case->{activation_path}, 100, '0' x 64) }, qr/\Asealed input bytes differ\n\z/);
+        check('sealed rejection still closes once', $sealed->{source_closes} == 2);
+        reject('sealed successful parse still rejects close failure', sub { $sealed->read_sealed($case->{activation_path}, 100, sha256_hex($source->{bytes})) }, qr/cannot close/);
+        reject('sealed input cannot select another namespace', sub { $sealed->read_sealed('docs/other.json', 100, '0' x 64) }, qr/outside/);
+    }
+}
+
+my $ok;
+{
+    no warnings 'redefine';
+    local *NativeProxyPopulatedProtocol::_api = sub {
+        my ($protocol, $name, @args) = @_;
+        return $real_api->(@_) if $name =~ /\A(?:validate_runtime|validate_observation|image_key|manifest_bytes|work_selection|work_settlement)\z/;
+        die "model primary API failure\n" if ($fault // '') eq 'primary_error';
+        die "model unrelated maintenance failure\n" if $name eq 'maintain' && ($fault // '') eq 'maintenance_error';
+        my $result = $world->dispatch($protocol, $name, @args);
+        ++$args[1]{reference}{record}{workspace_identity}{inode} if $name eq 'retire' && ($fault // '') eq 'mutate_retained';
+        $result->{success} = 0 if $name eq 'release' && ($fault // '') eq 'release_failed';
+        $result->{reference_absence_verified} = 0 if $name eq 'release' && ($fault // '') eq 'release_incomplete';
+        $result->{release} = undef if $name eq 'release' && ($fault // '') eq 'release_missing_receipt';
+        return $result;
+    };
+    local *NativeProxyImageCoordination::_try_lock = sub {
+        if ($busy) { --$busy; $! = EWOULDBLOCK; return 0; }
+        return 1;
+    };
+    local *NativeProxyImageCoordination::_acquire = sub {
+        my ($handle) = @_;
+        my $locked = NativeProxyImageCoordination::_try_lock($handle);
+        $errno_preserved = !$locked && (0 + $!) == EWOULDBLOCK;
+        die "model lock did not become available\n" unless $locked || NativeProxyImageCoordination::_try_lock($handle);
+    };
+    local *FSM::Test::RustProxyFixture::supervise_process = sub { ++$FORBIDDEN; die "unadmitted compiler\n" };
+    local *FSM::Test::ProcessSupervisor::supervise_process = sub { ++$FORBIDDEN; die "unadmitted supervisor\n" };
+    $ok = eval { fixed_cases(); wire_controls(); protocol_controls(); io_controls(); check('no forbidden effect attempted', $FORBIDDEN == 0); 1 };
+    my $error = $@;
+    my $result = {schema => 'fsmgen.inactive_populated_protocol_models.v1', checks => \@checks,
+        cases => \@cases, rejections => \@rejections, success => $ok ? 1 : 0, first_error => $error,
+        actual_worker_execution => 0, actual_fixture_allocation => 0, actual_signals => 0,
+        forbidden_effect_attempts => $FORBIDDEN, synthetic_native_identities => 1,
+        modeled_contention_is_not_observed_flock_contention => 1};
+    print $JSON->encode($result);
+    print STDERR $error unless $ok;
+}
+exit($ok ? 0 : 1);

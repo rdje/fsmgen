@@ -1,0 +1,7 @@
+{
+  "cause": "The source reconstruction left an extra blank line; the required SHA-256 equality assertion rejected it before writing.",
+  "first_attempt_exit": 1,
+  "first_attempt_wrote_nothing": true,
+  "operation": "Retain the exact 198-check qualifier after adding observer handoff controls.",
+  "resolution": "Remove exactly the added block and its joining newline; each retained source now matches its previously recorded SHA-256. The subsequent model changes remain separately qualified."
+}

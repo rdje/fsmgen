@@ -1,0 +1,228 @@
+"""Reverify the fixed protocol models and their retained first failures; never run worker.pl."""
+import argparse
+import copy
+import hashlib
+import json
+from pathlib import Path
+import subprocess
+
+BASE = Path(__file__).resolve().parent
+ROOT = BASE.parents[2]
+SCOPE = json.loads((BASE / 'scope.json').read_bytes())
+REVISION = SCOPE['source_revision']
+ENV = {'PATH': '/usr/bin:/bin', 'LC_ALL': 'C', 'LANG': 'C', 'TMPDIR': str(ROOT / '.artifacts/tmp')}
+
+
+def read(name):
+    return json.loads((BASE / name).read_bytes())
+
+
+def pin(path):
+    body = path.read_bytes()
+    return dict(path=str(path.relative_to(ROOT)), size_bytes=len(body), sha256=hashlib.sha256(body).hexdigest())
+
+
+def old(path):
+    return subprocess.check_output(['git', 'show', REVISION + ':' + path], cwd=ROOT, env=ENV)
+
+
+def canonical(value):
+    return json.dumps(value, sort_keys=True, separators=(',', ':'), ensure_ascii=True).encode()
+
+
+def check(result):
+    contract = read('contract.json')
+    assert result['schema'] == 'fsmgen.inactive_populated_protocol_models.v1'
+    assert result['success'] == 1 and result['first_error'] == ''
+    for flag in ['actual_worker_execution', 'actual_fixture_allocation', 'actual_signals', 'forbidden_effect_attempts']:
+        assert result[flag] == 0
+    assert result['synthetic_native_identities'] == result['modeled_contention_is_not_observed_flock_contention'] == 1
+    assert len(result['checks']) == len(set(result['checks'])) == 206
+    assert len(result['rejections']) == 93 and all(row['error'] for row in result['rejections'])
+    assert [case['name'] for case in result['cases']] == [case['name'] for case in contract['cases']]
+    counts = dict(cases=0, workers=0, completed_steps=0, cancellation_cuts=0, finished_workers=0,
+                  largest_model_event_bytes=0, largest_model_handoff_bytes=0)
+    for case, plan in zip(result['cases'], contract['cases']):
+        counts['cases'] += 1
+        counts['workers'] += len(plan['roles'])
+        assert case['native_ownership_and_contention_assumed'] == 1
+        assert set(case['endings']) == set(plan['roles'])
+        images, runtimes, holds, archives = set(), {}, {}, set()
+        workspaces = set(plan['workspaces'].values())
+        steps = {role: iter(spec['steps']) for role, spec in plan['roles'].items()}
+        packet = None
+        streams = iter(case['event_streams'])
+        for row in case['trace']:
+            kind = row['kind']
+            if kind == 'handoff':
+                assert packet is not None and row['sha256'] == hashlib.sha256(canonical(packet)).hexdigest()
+                continue
+            role = row['role']
+            if kind == 'finish':
+                assert next(steps[role], None) is None and plan['roles'][role]['ending'] == 'finish'
+                assert row['result'] == dict(complete=1, runtime_authorized=0, completed_steps=len(plan['roles'][role]['steps']))
+                counts['finished_workers'] += 1
+                continue
+            stream = next(streams)
+            events = [json.loads(line) for line in stream.splitlines()]
+            for line, event in zip(stream.splitlines(), events):
+                assert event['pid'] == 2000 and line.encode() == canonical(event)
+                counts['largest_model_event_bytes'] = max(counts['largest_model_event_bytes'], len(line.encode()) + 1)
+            step = next(steps[role])
+            if kind == 'cancel':
+                assert step['operation'] == 'hold_inspect' and step['hold'] == 1
+                assert row['actual_signal'] == row['effects'] == 0
+                assert [event['event'] for event in events] == ['opened', 'locked', 'held']
+                assert case['endings'][role] == 'model_cancelled_at_held' and next(steps[role], None) is None
+                counts['cancellation_cuts'] += 1
+                continue
+            assert kind == 'result' and row['step'] == step['id'] and row['operation'] == step['operation']
+            assert events[-1]['event'] == 'result' and {k: v for k, v in events[-1].items() if k not in ('event', 'pid')} == row['result']
+            lock, response = row['result']['lock'], row['result']['result']
+            assert lock['descriptor_closed'] == 1 and lock['opened'] == step['coordinated']
+            assert response['step'] == step['id'] and response['operation'] == step['operation']
+            assert response['synthetic_retirement_and_work_records'] == 1
+            value, op = response['value'], step['operation']
+            if op == 'publish':
+                key = value['image']['key']
+                assert value['created'] == (0 if key in images else 1)
+                images.add(key)
+                runtimes[value['reference']['record']['reference_key']] = key
+                expected = [contract['payloads']['c_hex'], contract['payloads']['image_' + step['image'] + '_hex']]
+                assert [source['bytes_hex'] for source in value['image']['snapshots'][:2]] == expected
+            elif op == 'observe':
+                record = value['observation_reference']['record']
+                assert record['image_key'] in images
+                holds[record['reference_key']] = record['image_key']
+            elif op == 'retire':
+                key = Path(value['released_reference']).stem
+                assert key in runtimes and value['retired_workspace'] in workspaces
+                del runtimes[key]
+                workspaces.remove(value['retired_workspace'])
+            elif op == 'maintain_blocked':
+                assert value['expected_rejection'] == contract['maintenance_rejection']
+                assert value['image_key'] in set(runtimes.values()) | set(holds.values())
+            elif op == 'maintain':
+                key = value['removed_image']
+                assert key in images and key not in set(runtimes.values()) | set(holds.values())
+                images.remove(key)
+            elif op == 'archive':
+                assert not workspaces
+                key = value['observation_reference_key']
+                assert key in holds and key not in archives and len(value['source_bindings']) == 5
+                archives.add(key)
+            elif op == 'release':
+                assert value['success'] == value['unlink_attempted'] == value['unlink_completed'] == value['reference_absence_verified'] == 1
+                assert value['error'] == '' and value['last_reference_check'] == dict(phase='finish', state='absent')
+                released = value['release']
+                assert released['runtime_authorized'] == 0 and released['executable'] is None
+                key = Path(released['released_reference']).stem
+                assert key in holds and key in archives and released['image']['key'] == holds[key]
+                assert released['archive']['observation_reference_key'] == key and released['settlement']['selection_sealed'] == 1
+                del holds[key]
+            else:
+                assert op in ('adopt_runtime', 'adopt_observation')
+                assert value['filesystem_reconstruction'] == 0 and value['adopted'] == op.removeprefix('adopt_')
+            if response['handoff'] is not None:
+                packet = response['handoff']
+                assert packet['acquired'] == value and packet['case'] == plan['name'] and packet['source_role'] == role
+                counts['largest_model_handoff_bytes'] = max(counts['largest_model_handoff_bytes'], len(canonical(packet)))
+            expected_state = dict(images=sorted(images), runtimes=sorted(runtimes), holds=sorted(holds),
+                                  workspaces=sorted(workspaces), archives=sorted(archives))
+            assert row['state'] == expected_state
+            counts['completed_steps'] += 1
+        assert next(streams, None) is None
+        assert case['final'] == dict(images=[], runtimes=[], holds=[], workspaces=[], archives=sorted(archives))
+        assert len(archives) == (0 if plan['evidence'] is None else 1)
+    assert counts['completed_steps'] == 45 and counts['cancellation_cuts'] == 2 and counts['finished_workers'] == 13
+    assert sum(len(role['steps']) for plan in contract['cases'] for role in plan['roles'].values()) == 47
+    assert counts['largest_model_event_bytes'] <= contract['protocol']['event_bytes']
+    assert counts['largest_model_handoff_bytes'] <= contract['protocol']['handoff_bytes']
+    return counts
+
+
+def verify():
+    for row in read('input-pins.json'):
+        assert pin(ROOT / row['path']) == row and old(row['path']) == (ROOT / row['path']).read_bytes()
+    for row in read('protocol-pins.json'):
+        assert pin(ROOT / row['path']) == row
+    for name, code, error in [('qualification-first.json', '255\n', 'Bareword "FH"'),
+                              ('qualification-prototypes.json', '1\n', 'transport bytes spelling is ambiguous'),
+                              ('qualification-transport.json', '1\n', 'release_missing_receipt')]:
+        stage = read(name)
+        assert stage['outputs']['exit'] == code and error in stage['outputs']['stderr']
+        for source in stage['sources']:
+            body = (ROOT / source['path']).read_bytes()
+            assert len(body) == source['size_bytes'] and hashlib.sha256(body).hexdigest() == source['sha256']
+    initial = read('qualification-receipts.json')
+    assert initial['outputs']['exit'] == '0\n' and len(json.loads(initial['outputs']['stdout'])['checks']) == 198
+    for source in initial['sources']:
+        path = ROOT / source['path']
+        body = path.read_bytes()
+        if hashlib.sha256(body).hexdigest() != source['sha256']:
+            body = (BASE / (path.name + '.receipts.source')).read_bytes()
+        assert len(body) == source['size_bytes'] and hashlib.sha256(body).hexdigest() == source['sha256']
+    result = read('qualification.json')
+    counts = check(result)
+    # Re-running this pure qualifier is permitted; no actual worker or fixture
+    # producer is invoked by this audit. The model's native identity is fixed.
+    completed = subprocess.run(['/usr/bin/perl', str(BASE / 'qualify.pl')], cwd=ROOT, env=ENV,
+                               capture_output=True, timeout=30, check=True)
+    assert completed.stderr == b'' and json.loads(completed.stdout) == result
+    gap = read('observation-wrapper-gap.json')
+    assert gap['observation_mode_literal'] == '0700' and gap['actual_observation_attempted'] is False
+    assert gap['adjacent_inert_mode_accepts'] and all(not row['mode_guard_accepts'] for row in gap['actual_retained_profiles'])
+    evidence = json.loads((ROOT / gap['source_pins'][2]['path']).read_bytes())
+    for row in gap['actual_retained_profiles']:
+        node = evidence['nodes'][str(Path(row['path']).parent)][row['path']]
+        assert node == row['source_record'] and node['mode'] == 0o755
+        assert node['mode'] & 0o7777 != int(gap['observation_mode_literal'], 8)
+    assert '["$workspace->{path}/rust-tool-resolution", 0700, 65_536]' in (ROOT / gap['source_pins'][0]['path']).read_text()
+    assert gap['guard_expression'] in (ROOT / gap['source_pins'][1]['path']).read_text()
+    provenance = read('payload-provenance.json')
+    source = json.loads((ROOT / provenance['source']['path']).read_bytes())
+    assert source['payloads'] == provenance['payloads'] and source['different_image_suffix_hex'] == provenance['different_image_suffix_hex']
+    contract = read('contract.json')
+    assert contract['payloads']['image_b_hex'] == source['payloads']['image_hex'] + source['different_image_suffix_hex']
+    assert not contract['execution_authorized'] and contract['source_revision'] == REVISION
+    assert not (ROOT / contract['output']).exists()
+    rejecting = []
+    mutations = {
+        'invented_worker_execution': lambda r: r.update(actual_worker_execution=1),
+        'modeled_contention_as_observed': lambda r: r.update(modeled_contention_is_not_observed_flock_contention=0),
+        'omitted_case': lambda r: r['cases'].pop(),
+        'missing_cancelled_owner': lambda r: r['cases'][-1]['endings'].pop('observer'),
+        'missing_archive': lambda r: r['cases'][-1]['final']['archives'].clear(),
+        'premature_image_removal': lambda r: r['cases'][0]['trace'][0]['state']['images'].clear(),
+        'invented_created_image': lambda r: r['cases'][0]['trace'][1]['result']['result']['value'].update(created=1),
+        'missing_negative_control': lambda r: r['rejections'].pop(),
+    }
+    for name, mutation in mutations.items():
+        changed = copy.deepcopy(result)
+        mutation(changed)
+        try:
+            check(changed)
+        except (AssertionError, KeyError, StopIteration, TypeError):
+            rejecting.append(name)
+        else:
+            raise AssertionError('altered evidence accepted: ' + name)
+    return dict(owner=SCOPE['owner'], next_owner=SCOPE['next_owner'], source_revision=REVISION,
+                counts=counts, qualification_checks=len(result['checks']), rejecting_model_controls=len(result['rejections']),
+                rejecting_join_controls=rejecting, selected_prior_inputs=len(read('input-pins.json')),
+                release_receipt_gap_repaired=True, observation_wrapper_integration_repair_owner=gap['repair_owner'],
+                actual_worker_execution=False, final_execution_admission_open=True,
+                native_live_startup_qualification_open=True)
+
+
+if __name__ == '__main__':
+    parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument('--verify-saved', action='store_true')
+    args = parser.parse_args()
+    result = verify()
+    if args.verify_saved:
+        assert result == read('review.json')
+    else:
+        with (BASE / 'review.json').open('x') as stream:
+            json.dump(result, stream, sort_keys=True, indent=2)
+            stream.write('\n')
+    print(json.dumps(result, sort_keys=True))

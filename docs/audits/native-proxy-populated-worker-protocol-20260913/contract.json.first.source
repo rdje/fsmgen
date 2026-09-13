@@ -1,0 +1,844 @@
+{
+  "cases": [
+    {
+      "actions": [
+        {
+          "contender": "publisher_b",
+          "holder": "publisher_a",
+          "kind": "contend",
+          "step": "publish"
+        },
+        {
+          "kind": "run",
+          "role": "publisher_a",
+          "step": "blocked_both"
+        },
+        {
+          "kind": "run",
+          "role": "publisher_a",
+          "step": "retire"
+        },
+        {
+          "kind": "run",
+          "role": "publisher_b",
+          "step": "blocked_last"
+        },
+        {
+          "kind": "run",
+          "role": "publisher_b",
+          "step": "retire"
+        },
+        {
+          "kind": "run",
+          "role": "publisher_b",
+          "step": "maintain"
+        },
+        {
+          "kind": "finish",
+          "roles": [
+            "publisher_a",
+            "publisher_b"
+          ]
+        }
+      ],
+      "activation_path": ".artifacts/logs/native-proxy-populated-workers-20260913/activation.equal_publication.json",
+      "evidence": null,
+      "handoff_path": null,
+      "name": "equal_publication",
+      "observation_target": null,
+      "roles": {
+        "publisher_a": {
+          "ending": "finish",
+          "image": "a",
+          "steps": [
+            {
+              "coordinated": 1,
+              "hold": 1,
+              "id": "publish",
+              "image": "a",
+              "operation": "publish"
+            },
+            {
+              "coordinated": 1,
+              "hold": 0,
+              "id": "blocked_both",
+              "image": "a",
+              "operation": "maintain_blocked"
+            },
+            {
+              "coordinated": 1,
+              "hold": 0,
+              "id": "retire",
+              "image": "a",
+              "operation": "retire"
+            }
+          ]
+        },
+        "publisher_b": {
+          "ending": "finish",
+          "image": "a",
+          "steps": [
+            {
+              "coordinated": 1,
+              "hold": 0,
+              "id": "publish",
+              "image": "a",
+              "operation": "publish"
+            },
+            {
+              "coordinated": 1,
+              "hold": 0,
+              "id": "blocked_last",
+              "image": "a",
+              "operation": "maintain_blocked"
+            },
+            {
+              "coordinated": 1,
+              "hold": 0,
+              "id": "retire",
+              "image": "a",
+              "operation": "retire"
+            },
+            {
+              "coordinated": 1,
+              "hold": 0,
+              "id": "maintain",
+              "image": "a",
+              "operation": "maintain"
+            }
+          ]
+        }
+      },
+      "store": ".artifacts/tmp/native-proxy-image-custody/cases/fsmgen-Populated20260913_equal_publication",
+      "workspaces": {
+        "publisher_a": ".artifacts/tmp/process-supervisor-tests/fsmgen-Populated20260913_equal_publication_publisher_a",
+        "publisher_b": ".artifacts/tmp/process-supervisor-tests/fsmgen-Populated20260913_equal_publication_publisher_b"
+      }
+    },
+    {
+      "actions": [
+        {
+          "contender": "publisher_b",
+          "holder": "publisher_a",
+          "kind": "contend",
+          "step": "publish"
+        },
+        {
+          "kind": "run",
+          "role": "publisher_a",
+          "step": "retire"
+        },
+        {
+          "kind": "run",
+          "role": "publisher_a",
+          "step": "maintain"
+        },
+        {
+          "kind": "run",
+          "role": "publisher_b",
+          "step": "blocked"
+        },
+        {
+          "kind": "run",
+          "role": "publisher_b",
+          "step": "retire"
+        },
+        {
+          "kind": "run",
+          "role": "publisher_b",
+          "step": "maintain"
+        },
+        {
+          "kind": "finish",
+          "roles": [
+            "publisher_a",
+            "publisher_b"
+          ]
+        }
+      ],
+      "activation_path": ".artifacts/logs/native-proxy-populated-workers-20260913/activation.different_publication.json",
+      "evidence": null,
+      "handoff_path": null,
+      "name": "different_publication",
+      "observation_target": null,
+      "roles": {
+        "publisher_a": {
+          "ending": "finish",
+          "image": "a",
+          "steps": [
+            {
+              "coordinated": 1,
+              "hold": 1,
+              "id": "publish",
+              "image": "a",
+              "operation": "publish"
+            },
+            {
+              "coordinated": 1,
+              "hold": 0,
+              "id": "retire",
+              "image": "a",
+              "operation": "retire"
+            },
+            {
+              "coordinated": 1,
+              "hold": 0,
+              "id": "maintain",
+              "image": "a",
+              "operation": "maintain"
+            }
+          ]
+        },
+        "publisher_b": {
+          "ending": "finish",
+          "image": "b",
+          "steps": [
+            {
+              "coordinated": 1,
+              "hold": 0,
+              "id": "publish",
+              "image": "b",
+              "operation": "publish"
+            },
+            {
+              "coordinated": 1,
+              "hold": 0,
+              "id": "blocked",
+              "image": "b",
+              "operation": "maintain_blocked"
+            },
+            {
+              "coordinated": 1,
+              "hold": 0,
+              "id": "retire",
+              "image": "b",
+              "operation": "retire"
+            },
+            {
+              "coordinated": 1,
+              "hold": 0,
+              "id": "maintain",
+              "image": "b",
+              "operation": "maintain"
+            }
+          ]
+        }
+      },
+      "store": ".artifacts/tmp/native-proxy-image-custody/cases/fsmgen-Populated20260913_different_publication",
+      "workspaces": {
+        "publisher_a": ".artifacts/tmp/process-supervisor-tests/fsmgen-Populated20260913_different_publication_publisher_a",
+        "publisher_b": ".artifacts/tmp/process-supervisor-tests/fsmgen-Populated20260913_different_publication_publisher_b"
+      }
+    },
+    {
+      "actions": [
+        {
+          "kind": "run",
+          "role": "publisher",
+          "step": "publish"
+        },
+        {
+          "kind": "run",
+          "role": "observer",
+          "step": "observe"
+        },
+        {
+          "kind": "run",
+          "role": "maintainer",
+          "step": "blocked_runtime"
+        },
+        {
+          "kind": "run",
+          "role": "publisher",
+          "step": "retire"
+        },
+        {
+          "kind": "run",
+          "role": "maintainer",
+          "step": "blocked_observation"
+        },
+        {
+          "kind": "run",
+          "role": "observer",
+          "step": "archive"
+        },
+        {
+          "kind": "run",
+          "role": "observer",
+          "step": "release"
+        },
+        {
+          "kind": "run",
+          "role": "maintainer",
+          "step": "maintain"
+        },
+        {
+          "kind": "finish",
+          "roles": [
+            "publisher",
+            "observer",
+            "maintainer"
+          ]
+        }
+      ],
+      "activation_path": ".artifacts/logs/native-proxy-populated-workers-20260913/activation.observation_across_retirement.json",
+      "evidence": ".artifacts/logs/native-proxy-observation-acquisition-20260910/cases/fsmgen-Populated20260913_observation_across_retirement",
+      "handoff_path": null,
+      "name": "observation_across_retirement",
+      "observation_target": "publisher",
+      "roles": {
+        "maintainer": {
+          "ending": "finish",
+          "image": "a",
+          "steps": [
+            {
+              "coordinated": 1,
+              "hold": 0,
+              "id": "blocked_runtime",
+              "image": "a",
+              "operation": "maintain_blocked"
+            },
+            {
+              "coordinated": 1,
+              "hold": 0,
+              "id": "blocked_observation",
+              "image": "a",
+              "operation": "maintain_blocked"
+            },
+            {
+              "coordinated": 1,
+              "hold": 0,
+              "id": "maintain",
+              "image": "a",
+              "operation": "maintain"
+            }
+          ]
+        },
+        "observer": {
+          "ending": "finish",
+          "image": "a",
+          "steps": [
+            {
+              "coordinated": 1,
+              "hold": 0,
+              "id": "observe",
+              "image": "a",
+              "operation": "observe"
+            },
+            {
+              "coordinated": 0,
+              "hold": 0,
+              "id": "archive",
+              "image": "a",
+              "operation": "archive"
+            },
+            {
+              "coordinated": 1,
+              "hold": 0,
+              "id": "release",
+              "image": "a",
+              "operation": "release"
+            }
+          ]
+        },
+        "publisher": {
+          "ending": "finish",
+          "image": "a",
+          "steps": [
+            {
+              "coordinated": 1,
+              "hold": 0,
+              "id": "publish",
+              "image": "a",
+              "operation": "publish"
+            },
+            {
+              "coordinated": 1,
+              "hold": 0,
+              "id": "retire",
+              "image": "a",
+              "operation": "retire"
+            }
+          ]
+        }
+      },
+      "store": ".artifacts/tmp/native-proxy-image-custody/cases/fsmgen-Populated20260913_observation_across_retirement",
+      "workspaces": {
+        "publisher": ".artifacts/tmp/process-supervisor-tests/fsmgen-Populated20260913_observation_across_retirement_publisher"
+      }
+    },
+    {
+      "actions": [
+        {
+          "contender": "publisher_b",
+          "holder": "publisher_a",
+          "kind": "contend",
+          "step": "publish"
+        },
+        {
+          "kind": "run",
+          "role": "observer",
+          "step": "observe"
+        },
+        {
+          "kind": "run",
+          "role": "publisher_a",
+          "step": "retire"
+        },
+        {
+          "kind": "run",
+          "role": "publisher_b",
+          "step": "blocked"
+        },
+        {
+          "kind": "run",
+          "role": "publisher_b",
+          "step": "retire"
+        },
+        {
+          "kind": "run",
+          "role": "observer",
+          "step": "archive"
+        },
+        {
+          "kind": "run",
+          "role": "observer",
+          "step": "blocked"
+        },
+        {
+          "kind": "run",
+          "role": "observer",
+          "step": "release"
+        },
+        {
+          "kind": "run",
+          "role": "observer",
+          "step": "maintain"
+        },
+        {
+          "kind": "finish",
+          "roles": [
+            "publisher_a",
+            "publisher_b",
+            "observer"
+          ]
+        }
+      ],
+      "activation_path": ".artifacts/logs/native-proxy-populated-workers-20260913/activation.equal_references_with_observer.json",
+      "evidence": ".artifacts/logs/native-proxy-observation-acquisition-20260910/cases/fsmgen-Populated20260913_equal_references_with_observer",
+      "handoff_path": null,
+      "name": "equal_references_with_observer",
+      "observation_target": "publisher_a",
+      "roles": {
+        "observer": {
+          "ending": "finish",
+          "image": "a",
+          "steps": [
+            {
+              "coordinated": 1,
+              "hold": 0,
+              "id": "observe",
+              "image": "a",
+              "operation": "observe"
+            },
+            {
+              "coordinated": 0,
+              "hold": 0,
+              "id": "archive",
+              "image": "a",
+              "operation": "archive"
+            },
+            {
+              "coordinated": 1,
+              "hold": 0,
+              "id": "blocked",
+              "image": "a",
+              "operation": "maintain_blocked"
+            },
+            {
+              "coordinated": 1,
+              "hold": 0,
+              "id": "release",
+              "image": "a",
+              "operation": "release"
+            },
+            {
+              "coordinated": 1,
+              "hold": 0,
+              "id": "maintain",
+              "image": "a",
+              "operation": "maintain"
+            }
+          ]
+        },
+        "publisher_a": {
+          "ending": "finish",
+          "image": "a",
+          "steps": [
+            {
+              "coordinated": 1,
+              "hold": 1,
+              "id": "publish",
+              "image": "a",
+              "operation": "publish"
+            },
+            {
+              "coordinated": 1,
+              "hold": 0,
+              "id": "retire",
+              "image": "a",
+              "operation": "retire"
+            }
+          ]
+        },
+        "publisher_b": {
+          "ending": "finish",
+          "image": "a",
+          "steps": [
+            {
+              "coordinated": 1,
+              "hold": 0,
+              "id": "publish",
+              "image": "a",
+              "operation": "publish"
+            },
+            {
+              "coordinated": 1,
+              "hold": 0,
+              "id": "blocked",
+              "image": "a",
+              "operation": "maintain_blocked"
+            },
+            {
+              "coordinated": 1,
+              "hold": 0,
+              "id": "retire",
+              "image": "a",
+              "operation": "retire"
+            }
+          ]
+        }
+      },
+      "store": ".artifacts/tmp/native-proxy-image-custody/cases/fsmgen-Populated20260913_equal_references_with_observer",
+      "workspaces": {
+        "publisher_a": ".artifacts/tmp/process-supervisor-tests/fsmgen-Populated20260913_equal_references_with_observer_publisher_a",
+        "publisher_b": ".artifacts/tmp/process-supervisor-tests/fsmgen-Populated20260913_equal_references_with_observer_publisher_b"
+      }
+    },
+    {
+      "actions": [
+        {
+          "kind": "run",
+          "role": "publisher",
+          "step": "publish"
+        },
+        {
+          "kind": "handoff",
+          "source_role": "publisher",
+          "source_step": "publish",
+          "state": "runtime"
+        },
+        {
+          "kind": "cancel",
+          "role": "publisher",
+          "step": "hold"
+        },
+        {
+          "kind": "run",
+          "role": "recovery_peer",
+          "step": "blocked"
+        },
+        {
+          "kind": "run",
+          "role": "recovery_peer",
+          "step": "adopt"
+        },
+        {
+          "kind": "run",
+          "role": "recovery_peer",
+          "step": "retire"
+        },
+        {
+          "kind": "run",
+          "role": "recovery_peer",
+          "step": "maintain"
+        },
+        {
+          "kind": "finish",
+          "roles": [
+            "recovery_peer"
+          ]
+        }
+      ],
+      "activation_path": ".artifacts/logs/native-proxy-populated-workers-20260913/activation.cancelled_runtime_owner.json",
+      "evidence": null,
+      "handoff_path": ".artifacts/logs/native-proxy-populated-workers-20260913/handoff.cancelled_runtime_owner.json",
+      "name": "cancelled_runtime_owner",
+      "observation_target": null,
+      "roles": {
+        "publisher": {
+          "ending": "cancel_at_held",
+          "image": "a",
+          "steps": [
+            {
+              "coordinated": 1,
+              "hold": 0,
+              "id": "publish",
+              "image": "a",
+              "operation": "publish"
+            },
+            {
+              "coordinated": 1,
+              "hold": 1,
+              "id": "hold",
+              "image": "a",
+              "operation": "hold_inspect"
+            }
+          ]
+        },
+        "recovery_peer": {
+          "ending": "finish",
+          "image": "a",
+          "steps": [
+            {
+              "coordinated": 1,
+              "hold": 0,
+              "id": "blocked",
+              "image": "a",
+              "operation": "maintain_blocked"
+            },
+            {
+              "coordinated": 0,
+              "hold": 0,
+              "id": "adopt",
+              "image": "a",
+              "operation": "adopt_runtime"
+            },
+            {
+              "coordinated": 1,
+              "hold": 0,
+              "id": "retire",
+              "image": "a",
+              "operation": "retire"
+            },
+            {
+              "coordinated": 1,
+              "hold": 0,
+              "id": "maintain",
+              "image": "a",
+              "operation": "maintain"
+            }
+          ]
+        }
+      },
+      "store": ".artifacts/tmp/native-proxy-image-custody/cases/fsmgen-Populated20260913_cancelled_runtime_owner",
+      "workspaces": {
+        "publisher": ".artifacts/tmp/process-supervisor-tests/fsmgen-Populated20260913_cancelled_runtime_owner_publisher"
+      }
+    },
+    {
+      "actions": [
+        {
+          "kind": "run",
+          "role": "publisher",
+          "step": "publish"
+        },
+        {
+          "kind": "run",
+          "role": "observer",
+          "step": "observe"
+        },
+        {
+          "kind": "handoff",
+          "source_role": "observer",
+          "source_step": "observe",
+          "state": "observation"
+        },
+        {
+          "kind": "run",
+          "role": "publisher",
+          "step": "retire"
+        },
+        {
+          "kind": "cancel",
+          "role": "observer",
+          "step": "hold"
+        },
+        {
+          "kind": "run",
+          "role": "recovery_peer",
+          "step": "blocked"
+        },
+        {
+          "kind": "run",
+          "role": "recovery_peer",
+          "step": "adopt"
+        },
+        {
+          "kind": "run",
+          "role": "recovery_peer",
+          "step": "archive"
+        },
+        {
+          "kind": "run",
+          "role": "recovery_peer",
+          "step": "release"
+        },
+        {
+          "kind": "run",
+          "role": "recovery_peer",
+          "step": "maintain"
+        },
+        {
+          "kind": "finish",
+          "roles": [
+            "publisher",
+            "recovery_peer"
+          ]
+        }
+      ],
+      "activation_path": ".artifacts/logs/native-proxy-populated-workers-20260913/activation.cancelled_observer_owner.json",
+      "evidence": ".artifacts/logs/native-proxy-observation-acquisition-20260910/cases/fsmgen-Populated20260913_cancelled_observer_owner",
+      "handoff_path": ".artifacts/logs/native-proxy-populated-workers-20260913/handoff.cancelled_observer_owner.json",
+      "name": "cancelled_observer_owner",
+      "observation_target": "publisher",
+      "roles": {
+        "observer": {
+          "ending": "cancel_at_held",
+          "image": "a",
+          "steps": [
+            {
+              "coordinated": 1,
+              "hold": 0,
+              "id": "observe",
+              "image": "a",
+              "operation": "observe"
+            },
+            {
+              "coordinated": 1,
+              "hold": 1,
+              "id": "hold",
+              "image": "a",
+              "operation": "hold_inspect"
+            }
+          ]
+        },
+        "publisher": {
+          "ending": "finish",
+          "image": "a",
+          "steps": [
+            {
+              "coordinated": 1,
+              "hold": 0,
+              "id": "publish",
+              "image": "a",
+              "operation": "publish"
+            },
+            {
+              "coordinated": 1,
+              "hold": 0,
+              "id": "retire",
+              "image": "a",
+              "operation": "retire"
+            }
+          ]
+        },
+        "recovery_peer": {
+          "ending": "finish",
+          "image": "a",
+          "steps": [
+            {
+              "coordinated": 1,
+              "hold": 0,
+              "id": "blocked",
+              "image": "a",
+              "operation": "maintain_blocked"
+            },
+            {
+              "coordinated": 0,
+              "hold": 0,
+              "id": "adopt",
+              "image": "a",
+              "operation": "adopt_observation"
+            },
+            {
+              "coordinated": 0,
+              "hold": 0,
+              "id": "archive",
+              "image": "a",
+              "operation": "archive"
+            },
+            {
+              "coordinated": 1,
+              "hold": 0,
+              "id": "release",
+              "image": "a",
+              "operation": "release"
+            },
+            {
+              "coordinated": 1,
+              "hold": 0,
+              "id": "maintain",
+              "image": "a",
+              "operation": "maintain"
+            }
+          ]
+        }
+      },
+      "store": ".artifacts/tmp/native-proxy-image-custody/cases/fsmgen-Populated20260913_cancelled_observer_owner",
+      "workspaces": {
+        "publisher": ".artifacts/tmp/process-supervisor-tests/fsmgen-Populated20260913_cancelled_observer_owner_publisher"
+      }
+    }
+  ],
+  "execution_authorized": false,
+  "handoff": "The controller seals the exact original worker-exported acquisition packet at the fixed case path before cancellation. After actual child/group settlement, the recovery peer reads that packet by digest through a small command. Never reconstruct an acquisition from surviving filesystem state.",
+  "maintenance_rejection": "selected image is retained by an unresolved reference\n",
+  "nonclaims": [
+    "actual worker execution",
+    "native proxy execution",
+    "arbitrary writer safety",
+    "power-loss durability",
+    "complete real work-receipt binding"
+  ],
+  "output": ".artifacts/logs/native-proxy-populated-workers-20260913",
+  "owner": "HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.12.4.1.5.3.1.3",
+  "payloads": {
+    "c_hex": "2f2a20696e657274207175616c696669636174696f6e2062797465733b206e6576657220636f6d70696c6564202a2f0a00ff",
+    "image_a_hex": "cffaedfe0c000001000000000200000000000000000000000000000000000000696e6572742d6e6f742d612d70726f6772616d00ff",
+    "image_b_hex": "cffaedfe0c000001000000000200000000000000000000000000000000000000696e6572742d6e6f742d612d70726f6772616d00ff006c69666574696d652d6f74686572",
+    "wrapper_hex": "23212f7573722f62696e2f7065726c0a2320696e657274206f62736572766174696f6e20777261707065723b206e657665722065786563757465640a"
+  },
+  "protocol": {
+    "activation_bytes": 16384,
+    "command_bytes": 512,
+    "commands": [
+      "admit",
+      "step",
+      "lock",
+      "release",
+      "finish"
+    ],
+    "event_bytes": 65536,
+    "events": [
+      "ready",
+      "opened",
+      "locked",
+      "held",
+      "busy",
+      "result",
+      "failure",
+      "finished"
+    ],
+    "events_per_worker": 128,
+    "handoff_bytes": 65536,
+    "output_bytes": 1048576,
+    "transport_depth": 32,
+    "transport_nodes": 4096,
+    "worker_wall_seconds": 60
+  },
+  "receipts": "Runtime retirement and selected observation work records are explicitly synthetic inactive inputs. Actual worker termination remains separately joined; no compiler/outer/inner or native proxy authority is claimed.",
+  "schema": "fsmgen.inactive_populated_worker_contract.v1",
+  "source_revision": "77f4da7ecc3bb610ce4f7851f6a6b71844fd489c",
+  "synchronization": "All workers must be natively admitted before step commands. For contention, open both lock handles, hold the first admitted lock, require the other worker to report actual busy, then release. Preserve errno across hooks; compare no independent worker clocks."
+}

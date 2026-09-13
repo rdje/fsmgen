@@ -1,0 +1,44 @@
+[
+  {
+    "original": "docs/audits/native-proxy-populated-worker-protocol-20260913/Wire.pm",
+    "path": "docs/audits/native-proxy-populated-worker-protocol-20260913/Wire.pm.first.source",
+    "sha256": "18d459122591ba84ee5c5d4616adc298b1012702316952f01f57170f833abaee",
+    "size_bytes": 4380
+  },
+  {
+    "original": "docs/audits/native-proxy-populated-worker-protocol-20260913/Protocol.pm",
+    "path": "docs/audits/native-proxy-populated-worker-protocol-20260913/Protocol.pm.first.source",
+    "sha256": "4430f537014023e83f4c8fc5e3f0b075014316bb4358bb4a32795a9f3cc6a73e",
+    "size_bytes": 16843
+  },
+  {
+    "original": "docs/audits/native-proxy-populated-worker-protocol-20260913/WorkerIO.pm",
+    "path": "docs/audits/native-proxy-populated-worker-protocol-20260913/WorkerIO.pm.first.source",
+    "sha256": "8e65bc3a3ad6c84326aec39fc8464c6a67294ba459440a934900d92203530b86",
+    "size_bytes": 6049
+  },
+  {
+    "original": "docs/audits/native-proxy-populated-worker-protocol-20260913/worker.pl",
+    "path": "docs/audits/native-proxy-populated-worker-protocol-20260913/worker.pl.first.source",
+    "sha256": "df6b43714957c0405cb38f5d596af6440daff14e2146bfb4dc08d63447166d6d",
+    "size_bytes": 7268
+  },
+  {
+    "original": "docs/audits/native-proxy-populated-worker-protocol-20260913/ModelWorld.pm",
+    "path": "docs/audits/native-proxy-populated-worker-protocol-20260913/ModelWorld.pm.first.source",
+    "sha256": "2cb56f89c640a9de114e03c2eb1bfd4c3e2ac703ac58f779ce90718cfcd90246",
+    "size_bytes": 9696
+  },
+  {
+    "original": "docs/audits/native-proxy-populated-worker-protocol-20260913/qualify.pl",
+    "path": "docs/audits/native-proxy-populated-worker-protocol-20260913/qualify.pl.first.source",
+    "sha256": "4f708df76b3b620439b486b90e73cbb53df1de7388da8045f235c38c1b8952a3",
+    "size_bytes": 22672
+  },
+  {
+    "original": "docs/audits/native-proxy-populated-worker-protocol-20260913/contract.json",
+    "path": "docs/audits/native-proxy-populated-worker-protocol-20260913/contract.json.first.source",
+    "sha256": "57a903273c38fffd06d436cfd1ac640f8adb305e626ebd820fb821aee606c0d4",
+    "size_bytes": 23507
+  }
+]

@@ -1,0 +1,178 @@
+package NativeProxyPopulatedModelWorld;
+use strict;
+use warnings;
+use Digest::SHA qw(sha256_hex);
+use Wire;
+
+# Synthetic identities and in-memory effects only. Real pure record validators
+# constrain the model; no filesystem transaction or child process runs here.
+sub new {
+    my ($class, $contract, $case) = @_;
+    my $self = bless {contract => $contract, case => $case, inode => 100,
+        images => {}, runtime => {}, holds => {}, archives => {}, workspaces => {}, calls => []}, $class;
+    my $activation = {schema => 'fsmgen.inactive_populated_activation.v1',
+        execution_revision => $contract->{source_revision}, case => $case->{name},
+        store => $self->directory($case->{store}), workspaces => {}, evidence => undef,
+        births => {}, all_native_admitted => 1};
+    for my $role (sort keys %{$case->{workspaces}}) {
+        $activation->{workspaces}{$role} = $self->directory($case->{workspaces}{$role});
+        $self->{workspaces}{$case->{workspaces}{$role}} = 1;
+    }
+    $activation->{evidence} = $self->directory($case->{evidence}) if defined($case->{evidence});
+    my $pid = 1000;
+    for my $role (sort keys %{$case->{roles}}) {
+        $activation->{births}{$role} = {pid => ++$pid, ppid => 999, uid => 501, ruid => 501,
+            start_sec => 100, start_usec => $pid};
+    }
+    $self->{activation} = $activation;
+    $self->{lock} = $self->directory("$case->{store}/coordination.lock");
+    return $self;
+}
+
+sub copy { return NativeProxyPopulatedWire::copy($_[1], $_[0]{contract}{protocol}); }
+sub same { return NativeProxyPopulatedWire::same($_[1], $_[2], $_[0]{contract}{protocol}); }
+sub directory { return {path => $_[1], device => 7, inode => ++$_[0]{inode}}; }
+sub snapshot {
+    my ($self, $path, $bytes) = @_;
+    return {bytes => $bytes, identity => {%{$self->directory($path)},
+        size_bytes => length($bytes), sha256 => sha256_hex($bytes)}};
+}
+sub envelope {
+    my ($self, $kind, $value) = @_;
+    return {schema => "fsmgen.inactive_${kind}.v1", runtime_authorized => 0,
+        executable => undef, lock => $self->copy($self->{lock}), %$value};
+}
+sub census {
+    my ($self) = @_;
+    return {images => [sort keys %{$self->{images}}], runtimes => [sort keys %{$self->{runtime}}],
+        holds => [sort keys %{$self->{holds}}], workspaces => [sort keys %{$self->{workspaces}}],
+        archives => [sort keys %{$self->{archives}}]};
+}
+
+sub dispatch {
+    my ($self, $protocol, $name, @args) = @_;
+    die "model store differs\n" unless $args[0] eq $self->{case}{store};
+    my $step = $protocol->next_step();
+    my $handle = {descriptor => 12, closed => 0, close_on_exec => 1};
+    my $result;
+    my $ok = eval {
+        NativeProxyImageCoordination::_acquire($handle, $self->{lock}{path},
+            [@{$self->{lock}}{qw(device inode)}]) if $step->{coordinated};
+        push @{$self->{calls}}, {role => $protocol->{role}, step => $step->{id}, api => $name};
+        $result = $self->$name(@args);
+        1;
+    };
+    my $error = $@;
+    $handle->{closed} = 1;
+    die $error unless $ok;
+    return $self->copy($result);
+}
+
+sub publish {
+    my ($self, $store, $workspace, $c, $image) = @_;
+    my $key = NativeProxyImageCustody::image_key($c, $image);
+    die "model workspace unavailable\n" unless $self->{workspaces}{$workspace->{path}};
+    my $created = exists($self->{images}{$key}) ? 0 : 1;
+    unless (!$created) {
+        my @bytes = ($c, $image, NativeProxyImageCustody::manifest_bytes($c, $image));
+        my @names = qw(rustup.c rustup image.json);
+        $self->{images}{$key} = {key => $key,
+            snapshots => [map { $self->snapshot("$store/images/$key/$names[$_]", $bytes[$_]) } 0..2]};
+    }
+    my $runtime_key = NativeProxyImageCustody::runtime_reference_key($workspace->{path});
+    die "model runtime already exists\n" if exists($self->{runtime}{$runtime_key});
+    my $record = {schema => 'fsmgen.test.rust_proxy_image_reference.v1', reference_key => $runtime_key,
+        image_key => $key, workspace => $workspace->{path}, workspace_identity => $self->copy($workspace),
+        selected_sources => [map { $self->copy($_->{identity}) } @{$self->{images}{$key}{snapshots}}[0,1]]};
+    my $bytes = NativeProxyRuntimeRecord::encode_runtime_record($store, $record);
+    my $reference = {record => $record,
+        global => $self->snapshot("$store/references/$runtime_key.json", $bytes),
+        private => $self->snapshot("$workspace->{path}/rust-tools/image-reference.json", $bytes)};
+    my $acquired = $self->envelope('runtime_reference_acquisition',
+        {reference => $reference, created => $created, image => $self->{images}{$key}});
+    $self->{runtime}{$runtime_key} = $self->copy($acquired);
+    return $acquired;
+}
+
+sub observe {
+    my ($self, $store, $request) = @_;
+    my $workspace = $request->{workspace_identity}{path};
+    my $runtime_key = NativeProxyImageCustody::runtime_reference_key($workspace);
+    my $runtime = $self->{runtime}{$runtime_key} or die "model target runtime unavailable\n";
+    die "model target workspace absent\n" unless $self->{workspaces}{$workspace};
+    my $evidence = $request->{evidence_directory_identity};
+    my $key = NativeProxyImageCustody::observation_reference_key($evidence->{path},
+        @$request{qw(observer_birth target_birth)});
+    my $record = {schema => 'fsmgen.test.rust_proxy_image_observation_reference.v1', reference_key => $key,
+        image_key => $runtime->{image}{key}, evidence_directory => $evidence->{path},
+        evidence_directory_identity => $self->copy($evidence),
+        observer_birth => $self->copy($request->{observer_birth}), target_birth => $self->copy($request->{target_birth}),
+        selected_sources => $self->copy($runtime->{reference}{record}{selected_sources})};
+    my $bytes = NativeProxyObservationRecord::encode_observation_record($store, $record);
+    my $wrapper = pack('H*', $self->{contract}{payloads}{wrapper_hex});
+    my $acquired = $self->envelope('observation_acquisition', {
+        observation_reference => {record => $record, source => $self->snapshot("$store/references/$key.json", $bytes)},
+        target_sources => [$self->snapshot("$workspace/rust-tool-resolution", $wrapper),
+            @{$runtime->{reference}}{qw(private global)}, @{$runtime->{image}{snapshots}}[0,1]]});
+    $self->{holds}{$key} = $self->copy($acquired);
+    return $acquired;
+}
+
+sub retire {
+    my ($self, $store, $acquired, $cleanup) = @_;
+    NativeProxyRuntimeRetirement::_request($store, $acquired, $cleanup);
+    my $key = $acquired->{reference}{record}{reference_key};
+    die "model original runtime differs\n" unless exists($self->{runtime}{$key})
+        && $self->same($self->{runtime}{$key}, $acquired);
+    my $workspace = $acquired->{reference}{record}{workspace};
+    delete $self->{runtime}{$key};
+    delete $self->{workspaces}{$workspace};
+    return $self->envelope('runtime_retirement', {retired_workspace => $workspace,
+        released_reference => $acquired->{reference}{global}{identity}{path}, image => $acquired->{image},
+        removed_nodes => 4}); # Model topology only; no real node-count claim.
+}
+
+sub maintain {
+    my ($self, $store, $key) = @_;
+    die $self->{contract}{maintenance_rejection}
+        if grep { $_->{image}{key} eq $key } values %{$self->{runtime}};
+    die $self->{contract}{maintenance_rejection}
+        if grep { $_->{observation_reference}{record}{image_key} eq $key } values %{$self->{holds}};
+    my $image = delete($self->{images}{$key}) or die "model image absent\n";
+    return $self->envelope('image_maintenance', {removed_image => $key, removed_sources => $image->{snapshots}});
+}
+
+sub archive {
+    my ($self, $store, $request, $acquired) = @_;
+    my $spec = NativeProxyObservationArchiveRecord::archive_specification($store, $request, $acquired);
+    my $key = $spec->{observation_reference_key};
+    die "model archive already exists\n" if exists($self->{archives}{$key});
+    my $directory = $self->directory($spec->{archive_directory});
+    my $files = [map { $self->snapshot($_->{path}, $_->{bytes}) } @{$spec->{files}}];
+    my $receipt = NativeProxyObservationArchiveRecord::archive_receipt($store, $request, $acquired, $directory, $files);
+    $self->{archives}{$key} = {receipt => $self->copy($receipt), files => $files};
+    return $receipt;
+}
+
+sub release {
+    my ($self, $store, $request, $acquired, $archive, $selection, $settlement) = @_;
+    NativeProxyObservationArchiveRecord::validate_archive_receipt($store, $request, $acquired, $archive);
+    NativeProxyObservationWorkRecord::validate_work_settlement($store, $request, $acquired, $selection, $settlement);
+    my $key = $acquired->{observation_reference}{record}{reference_key};
+    die "model original observation differs\n" unless exists($self->{holds}{$key})
+        && $self->same($self->{holds}{$key}, $acquired);
+    die "model original archive differs\n" unless exists($self->{archives}{$key})
+        && $self->same($self->{archives}{$key}{receipt}, $archive);
+    delete $self->{holds}{$key};
+    return {schema => 'fsmgen.inactive_observation_release_attempt.v1', runtime_authorized => 0, executable => undef,
+        success => 1, error => '', unlink_attempted => 1, unlink_completed => 1, reference_absence_verified => 1,
+        last_reference_check => {phase => 'finish', state => 'absent'},
+        release => $self->envelope('observation_release', {
+            released_reference => $acquired->{observation_reference}{source}{identity}{path},
+            image => $self->{images}{$acquired->{observation_reference}{record}{image_key}},
+            archive => $archive, settlement => $settlement})};
+}
+
+sub hold_inspect { return $_[0]->census(); }
+
+1;

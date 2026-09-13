@@ -1,0 +1,14 @@
+{
+  "all_prior_questions_retained": true,
+  "current_bytes": 9049,
+  "current_lines": 141,
+  "current_questions": 127,
+  "current_sha256": "7850e8b2a7d05df736d02f2e626c2a22ad030eaddf9c656bf0ce6c5917efd8ac",
+  "previous_bytes": 9849,
+  "previous_lines": 146,
+  "previous_sha256": "692dcc4c3adf223392c76bd5d2201f0466fcc604423dc3f5bd7682571f271682",
+  "prior_evidence_and_facts_exactly_retrievable_from_git": true,
+  "prior_questions": 125,
+  "source_path": "docs/knowledge/test-subprocess-policy-adapters.md",
+  "source_revision": "77f4da7ecc3bb610ce4f7851f6a6b71844fd489c"
+}

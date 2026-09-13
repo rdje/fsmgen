@@ -1,0 +1,32 @@
+{
+  "actual_worker_execution": false,
+  "counts": {
+    "cancellation_cuts": 2,
+    "cases": 6,
+    "completed_steps": 45,
+    "finished_workers": 13,
+    "largest_model_event_bytes": 23571,
+    "largest_model_handoff_bytes": 12036,
+    "workers": 15
+  },
+  "final_execution_admission_open": true,
+  "native_live_startup_qualification_open": true,
+  "next_owner": "HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.12.4.1.5.3.1.4",
+  "observation_wrapper_integration_repair_owner": "HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.12.4.1.5.5",
+  "owner": "HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.12.4.1.5.3.1.3",
+  "qualification_checks": 206,
+  "rejecting_join_controls": [
+    "invented_worker_execution",
+    "modeled_contention_as_observed",
+    "omitted_case",
+    "missing_cancelled_owner",
+    "missing_archive",
+    "premature_image_removal",
+    "invented_created_image",
+    "missing_negative_control"
+  ],
+  "rejecting_model_controls": 93,
+  "release_receipt_gap_repaired": true,
+  "selected_prior_inputs": 21,
+  "source_revision": "77f4da7ecc3bb610ce4f7851f6a6b71844fd489c"
+}

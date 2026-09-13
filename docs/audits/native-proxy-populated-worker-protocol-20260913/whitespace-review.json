@@ -1,0 +1,19 @@
+{
+  "disposition": "Preserve the exact first failing source bytes. The sole whitespace warning belongs to that immutable original; every other staged file passes unchanged whitespace rules.",
+  "exact_original_source_excluded_check": {
+    "exit_code": 0,
+    "stderr": "",
+    "stdout": ""
+  },
+  "full_staged_check": {
+    "exit_code": 2,
+    "stderr": "",
+    "stdout": "docs/audits/native-proxy-populated-worker-protocol-20260913/Protocol.pm.first.source:232: trailing whitespace.\n+            die \"observation release attempt failed\\n\" unless ref($result) eq 'HASH' \n"
+  },
+  "retained_source": {
+    "original": "docs/audits/native-proxy-populated-worker-protocol-20260913/Protocol.pm",
+    "path": "docs/audits/native-proxy-populated-worker-protocol-20260913/Protocol.pm.first.source",
+    "sha256": "4430f537014023e83f4c8fc5e3f0b075014316bb4358bb4a32795a9f3cc6a73e",
+    "size_bytes": 16843
+  }
+}

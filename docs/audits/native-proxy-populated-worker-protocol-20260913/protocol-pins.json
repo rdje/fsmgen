@@ -1,0 +1,37 @@
+[
+  {
+    "path": "docs/audits/native-proxy-populated-worker-protocol-20260913/Wire.pm",
+    "sha256": "18d459122591ba84ee5c5d4616adc298b1012702316952f01f57170f833abaee",
+    "size_bytes": 4380
+  },
+  {
+    "path": "docs/audits/native-proxy-populated-worker-protocol-20260913/Protocol.pm",
+    "sha256": "f026b038d6069deca3fb5d18113624412acf52c193fba4a6ec6cf47aec6cfaf1",
+    "size_bytes": 19282
+  },
+  {
+    "path": "docs/audits/native-proxy-populated-worker-protocol-20260913/WorkerIO.pm",
+    "sha256": "e70d9a9f11bc630eca3401449bbe786abea72ba099747f2a75485ff5b3aa8b82",
+    "size_bytes": 6084
+  },
+  {
+    "path": "docs/audits/native-proxy-populated-worker-protocol-20260913/worker.pl",
+    "sha256": "df6b43714957c0405cb38f5d596af6440daff14e2146bfb4dc08d63447166d6d",
+    "size_bytes": 7268
+  },
+  {
+    "path": "docs/audits/native-proxy-populated-worker-protocol-20260913/ModelWorld.pm",
+    "sha256": "dc328325cf3b735ca580ad3f87097419a3bb920c32d02a7ec64f8f79c632ad6d",
+    "size_bytes": 9760
+  },
+  {
+    "path": "docs/audits/native-proxy-populated-worker-protocol-20260913/qualify.pl",
+    "sha256": "a56498bce2129411f674fbc84f74f2da0d14ba77bbe003e0c360b305bfbfa17c",
+    "size_bytes": 25258
+  },
+  {
+    "path": "docs/audits/native-proxy-populated-worker-protocol-20260913/contract.json",
+    "sha256": "57a903273c38fffd06d436cfd1ac640f8adb305e626ebd820fb821aee606c0d4",
+    "size_bytes": 23507
+  }
+]

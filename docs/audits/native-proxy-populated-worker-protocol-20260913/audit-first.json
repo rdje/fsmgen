@@ -1,0 +1,9 @@
+{
+  "cause": "The independent source assertion assumed a workspace variable spelling instead of using the recorded target path variable. Model re-derivation and source pins passed before this literal check.",
+  "outputs": {
+    "exit": "1\n",
+    "stderr": "ram-guard: PID 68676; host 83.2%; host cutoff 88%; descendant RSS cutoff 4096 MiB; poll 2s\nTraceback (most recent call last):\n  File \"/Volumes/SSD/Documents/github/fsmgen/docs/audits/native-proxy-populated-worker-protocol-20260913/audit.py\", line 221, in <module>\n    result = verify()\n  File \"/Volumes/SSD/Documents/github/fsmgen/docs/audits/native-proxy-populated-worker-protocol-20260913/audit.py\", line 180, in verify\n    assert '[\"$workspace/rust-tool-resolution\", 0700, 65_536]' in (ROOT / gap['source_pins'][0]['path']).read_text()\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError\n",
+    "stdout": ""
+  },
+  "source_sha256": "1192d53dfee251ba0b90c990dbbb2819e444650278e889b7dc7fe62b5c2d115d"
+}
