@@ -2102,49 +2102,49 @@ decomposes the architecture needed to move beyond that bounded foundation.
   Verification: `pending`
   Commit: `pending`
   Children: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.12.4.1.5.2.2.1, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.12.4.1.5.2.2.2, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.12.4.1.5.2.2.3`
-
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.12.4.1.5.2.2.1`
   Status: `done`
   Goal: `Inventory authentic retained compiler-workspace evidence before proposing any fresh execution.`
   Acceptance: `Read only existing source and retained original compiler receipts/snapshots. Pin the search scope and exact evidence paths; distinguish selected source/image identities from complete node membership, modes, depth, per-file and aggregate bytes. Re-derive any supported profile within its dated producer scope; reject missing-node transport, synthetic-profile substitution and unearned complete/capacity labels. Preserve the first inventory and own any missing evidence requirement before a separately committed prospective compiler-only admission; no compiler, fixture, native proxy, original or live collector execution, cleanup or bound change.`
   Verification: `docs/audits/native-proxy-compiler-profile-inventory-20260913/audit.py --verify-saved authenticates 67 inputs (644103 bytes) and seven retained native preparation records across original builder epochs, daemon-observed product modes and the distinct held hardlink control. Selected source pairs match original bytes; only the successful daemon observer adds the wrapper. Neither producer nor retained transport enumerates complete workspace membership, all modes, depth or aggregate bytes. Five hypothetical omitted-node witnesses preserve selected projections while violating retirement limits; nine altered-evidence controls reject. Complete authentic profiles remain unproved, so prospective compiler-only admission and sole execution are separately owned below. Exact retained-only inputs are copied durably; no original data is removed or producer rerun.`
   Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.12.4.1.5.2.2.1: inventory retained compiler profile coverage`
-
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.12.4.1.5.2.2.2`
-  Status: `proposed`
+  Status: `active`
   Goal: `Admit a finite compiler-only workspace census using the exact current producer.`
   Acceptance: `Before any new compiler or fixture operation, pin the current builder, generated C for both fixed modes, installed read-only compiler/SDK dependencies, normal-user identity and fresh repository-local roots. Admit only the fixed existing compilation through its unchanged bounds and environment; no proxy, wrapper, original or collector execution. Specify direct pre/post-settlement census of every owned directory, regular file and link, with source bytes, relative paths, mode/device/inode/uid/link count, depth, per-file and aggregate accounting, custody stability, exact outcome transport, caller-owned cleanup and first-failure retention. Include the source-derived wrapper and Cargo-link roles without executing them. Keep existing retirement limits fixed, distinguish qualification capture ceilings from supported capacity, reject omitted nodes/changed sources/authority, and commit this source/data admission before execution.`
   Verification: `pending`
   Commit: `pending`
-
+  Children: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.12.4.1.5.2.2.2.1`
+- ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.12.4.1.5.2.2.2.1`
+  Status: `done`
+  Goal: `Qualify the changed installed compiler/SDK epoch before prospective compiler census admission.`
+  Acceptance: `Preserve the first observed original MacOSX26.5.sdk versus current default MacOSX27.0.sdk difference. Re-derive exact retained original compiler/SDK pins and current installed selection without executing the compiler, xcrun, original or fixture. Pin bounded read-only compiler and SDK identity/version evidence, identify necessary off-volume OS/toolchain dependencies explicitly, and distinguish installation change from any unproved cause of historical startup or output behavior. Define current-epoch revalidation before later compiler-only execution and retain source/byte/version mismatch controls. Commit the epoch disposition before continuing the enclosing runtime admission.`
+  Verification: `docs/audits/native-proxy-compiler-profile-admission-20260913/epoch.py --verify-saved joins the original identical hardlink/daemon compiler and SDK admissions to the first current descriptor-hash and SDK-selection/version capture. Compiler bytes and default SDK changed; the old SDK label remains but its directory identity also changed. Eight altered source/byte/version/access/equivalence controls reject. Required OS-volume dependencies are explicitly read-only; no project output, compiler, xcrun, original or fixture runs off-volume. The next census must freshly revalidate current compiler/SDK identities after its own source/data admission commit; no historical environment equivalence, loaded-image attestation or startup-cause claim follows. Exact first finding and result are retained; plan names distinct claim legs.`
+  Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.12.4.1.5.2.2.2.1: qualify changed compiler and SDK epoch`
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.12.4.1.5.2.2.3`
   Status: `proposed`
   Goal: `Execute only the committed compiler-profile census and consume its complete first outcomes.`
   Acceptance: `After the exact prospective admission commit and source/native-identity checks, run only its finite compiler-only modes once under normal-user resource bounds. Preserve first compiler, census, capacity or cleanup failure without original/proxy execution, retry, normalization or silent limit inflation. Independently join full workspace metadata/bytes to compiler ownership and planned source, preserve original outputs before cleanup, and delete only exact admitted owned nodes after process settlement. Missing evidence remains a blocker to profile qualification; consume every result and commit before advancing.`
   Verification: `pending`
   Commit: `pending`
-
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.12.4.1.5.2.3`
   Status: `proposed`
   Goal: `Join current workspace compatibility and capacity before protocol composition.`
   Acceptance: `Re-derive the exact current wrapper policy and actual workspace profile evidence with preserved baseline and first outcomes. Reject path/mode normalization, incomplete node/byte transport, stale source profiles or promoted synthetic receipts. Consume all owned results and verify exact cleanup; close the workspace parent only when its actual-profile obligations are met, with process receipt authentication and native/live activation still separately gated.`
   Verification: `pending`
   Commit: `pending`
-
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.12.4.1.5.3`
   Status: `proposed`
   Goal: `Qualify concurrent populated-store publication and observation lifetimes.`
   Acceptance: `Separately admit fixed normal-user filesystem workers before execution. Cover concurrent equal/different image publication with separate complete runtime references, actual reader/observer holds through retirement/maintenance and controlled owner cancellation. Preserve the committed empty-store qualification and distinguish cooperative serialization from arbitrary-writer security or power-loss durability. Use inert image bytes without native proxy/compiler/original/live collector execution; retain first outcomes, exact owned settlement/cleanup and independent altered-evidence rejection.`
   Verification: `pending`
   Commit: `pending`
-
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.12.4.1.5.4`
   Status: `proposed`
   Goal: `Bind complete real compiler/outer/inner receipts and prevent late launches before retirement.`
   Acceptance: `Identify the complete producer/transport boundary from current runtime sources and authentic retained outcomes. Design and qualify an inactive owner-bound receipt adapter with native birth/group identity, declared stage completeness, terminal capture state and a closed launch frontier; reject missing, substituted, stale or post-settlement stages. A supplied cleanup array alone grants no authority. Separate any required actual bounded worker/compiler-only admission and execution from source/data work; no original/native-proxy/live replay.`
   Verification: `pending`
   Commit: `pending`
-
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.12.4.1.5.5`
   Status: `proposed`
   Goal: `Compose inactive canonical preparation and observation adapters before native admission.`
@@ -3768,7 +3768,7 @@ decomposes the architecture needed to move beyond that bounded foundation.
 
 ## Current Frontier
 
-Current frontier: .3.2.15.7.3.12.4.1.5.2.2.1 retained-profile inventory is done. Commit it, then activate proposed .5.2.2.2 for finite compiler-only census admission; .5.2.2.3 owns its sole execution after that commit. Actual profile/capacity and protocol/native/live/startup/full CI/push gates remain open.
+Current frontier: .3.2.15.7.3.12.4.1.5.2.2.2.1 installed-toolchain epoch qualification is done. Commit it, then continue active .5.2.2.2 with current-epoch compiler-only census source/data admission and pre-execution revalidation. No compiler/fixture execution is admitted yet; all later profile/protocol/native/live/startup/full CI/push gates remain open.
 
 Architecture audit `.1` is complete. Decision `0032` selects one public
 `.vial` source language, private immutable `VIALSemanticIR` and
@@ -6363,8 +6363,8 @@ Completed native-proxy feasibility through runtime-source-controls acceptance: r
 
 The manifest binds the immediately preceding acceptance suffix to its exact Git source. That source preserves the earlier history pointer and versioned manifest chain; current node contracts remain authoritative.
 
-## Acceptance Checklist (compiler-profile inventory .3.2.15.7.3.12.4.1.5.2.2.1)
+## Acceptance Checklist (compiler/SDK epoch .3.2.15.7.3.12.4.1.5.2.2.2.1)
 
-- [x] **ROOT CAUSE (WHY + WHERE)** — `git log -S 'my $cache = File::Spec->catdir($bin' -1 --format='%H %s' -- t/lib/FSM/Test/RustProxyFixture.pm` locates compiler-local storage creation. The current producer emits only its selected C/executable identity pair; original builder removal records and daemon wrapper/source observations do not transport complete workspace nodes, modes or byte totals. The bounded retained inventory names the exact missing capacity proof.
-- [x] **ADDRESSED (verified)** — docs/audits/native-proxy-compiler-profile-inventory-20260913/audit.py --verify-saved reconstructs pinned original receipts/bytes and source coverage. Distinct re-derivation, hypothetical omitted-node and altered-evidence falsification, and durable exact retained-input copies are named in plan.json. The resulting gap owns separate finite compiler-only admission and sole execution before parent profile closure; no original or native proxy is rerun and no ceiling changes.
-- [x] **NO REGRESSION** — `knowledge-map: OK` preserves existing questions and current wrapper-fix discovery. The prior committed wrapper saved-result audit, current inventory/saved audit, rendered book, unchanged claim identities/dispositions and exact acceptance-history recovery accompany staged doctrines and normal hooks. Selected-file byte totals remain explicitly partial; synthetic profiles and process receipts gain no authentic compiler-capacity authority.
+- [x] **ROOT CAUSE (WHY + WHERE)** — `git log -S MacOSX.sdk -1 --format='%H %s' -- t/lib/FSM/Test/RustProxyFixture.pm` identifies the fixed installed SDK selection. Original admissions match each other; direct current compiler descriptor hashes, SDK-link resolution and version records establish a changed installation epoch. The older SDK label has a different directory identity too; version names alone cannot establish unchanged historical contents.
+- [x] **ADDRESSED (verified)** — docs/audits/native-proxy-compiler-profile-admission-20260913/epoch.py --verify-saved joins exact original/current evidence and rejects source, compiler-byte, SDK selection/version/identity, access and historical-equivalence mutations. Epoch-plan.json names re-derivation, falsification and durability legs; the first finding, bounded read-only OS/toolchain access and current epoch are retained. Enclosing census admission must use the fixed current selection and revalidate it immediately before execution.
+- [x] **NO REGRESSION** — `knowledge-map: OK` preserves existing discovery and routes the epoch fact to saved evidence. Prior compiler-profile inventory remains valid within its historical scope; current epoch/saved controls, rendered book, unchanged claim identities/dispositions and exact acceptance-history recovery accompany staged doctrines and normal hooks. No compiler, xcrun, proxy, original or collector executes; no bounds or toolchain-selection policy changes and no historical startup-cause claim follow.

@@ -1,0 +1,17 @@
+{
+  "cause_or_behavior_claim": "none; installation selection differs, exact epoch checks pending",
+  "current_compiler": {
+    "device": 16777232,
+    "inode": 423039084,
+    "mode": "0755",
+    "path": "/Library/Developer/CommandLineTools/usr/bin/clang",
+    "size_bytes": 124676976,
+    "uid": 0
+  },
+  "current_selection": "/Library/Developer/CommandLineTools/SDKs/MacOSX27.0.sdk",
+  "new_compiler_execution": false,
+  "owner": "HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.12.4.1.5.2.2.2.1",
+  "retained_selection": "/Library/Developer/CommandLineTools/SDKs/MacOSX26.5.sdk",
+  "source": "read-only installed path resolution and lstat compared with retained native-final preparation argv",
+  "status": "investigating"
+}

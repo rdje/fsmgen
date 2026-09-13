@@ -1,0 +1,22 @@
+[
+  {
+    "path": "docs/audits/native-proxy-compiler-profile-admission-20260913/epoch.py",
+    "sha256": "aff3f6f026695a1fd03da4be55a32c63590b96bda600ed8c744361985686c621",
+    "size_bytes": 10096
+  },
+  {
+    "path": "docs/audits/native-proxy-compiler-profile-admission-20260913/epoch-plan.json",
+    "sha256": "72f45446f49baf388162676861aff37131b057c16860793eab8ae4e5b0119745",
+    "size_bytes": 2910
+  },
+  {
+    "path": "docs/audits/native-proxy-compiler-profile-admission-20260913/toolchain-finding.first.json",
+    "sha256": "f267f8e5778ebabbc4cf51d0942952cb8777b06f563d0efd7d5455c645e8c258",
+    "size_bytes": 760
+  },
+  {
+    "path": "docs/audits/native-proxy-compiler-profile-admission-20260913/toolchain-task-layout.json",
+    "sha256": "d91af92e5177fcaabf8d089aa5163eeb3f72473dd72147a326f837b71688f80d",
+    "size_bytes": 4605
+  }
+]

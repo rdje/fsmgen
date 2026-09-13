@@ -1,0 +1,50 @@
+{
+  "claim_legs": {
+    "durability": "Preserve first finding, exact capture and retained small version records, byte/identity pins, scoped disposition, task/book/Knowledge Map and commit.",
+    "falsification": "Reject stale compiler bytes, old or substituted SDK selection, changed SDK metadata, wrong relative product source, hidden cross-volume writes and promoted historical equivalence.",
+    "rederivation": "Exact Git-era admissions and current no-follow stable descriptor hashes, SDK symlink resolution/version metadata and OS identity."
+  },
+  "external_access_reason": "Required installed compiler, SDK selection/version/header and OS runtime dependencies for the current fixed native builder. They reside on the OS volume, are read-only inputs, and are never copied to an off-volume project cache or modified. All produced evidence stays under this repository.",
+  "external_read_only_files": [
+    "/Library/Developer/CommandLineTools/usr/bin/clang",
+    "/Library/Developer/CommandLineTools/SDKs/MacOSX27.0.sdk/SDKSettings.json",
+    "/Library/Developer/CommandLineTools/SDKs/MacOSX26.5.sdk/SDKSettings.json",
+    "/Library/Developer/CommandLineTools/SDKs/MacOSX27.0.sdk/usr/include/unistd.h",
+    "/System/Library/CoreServices/SystemVersion.plist"
+  ],
+  "inputs": [
+    {
+      "path": "t/lib/FSM/Test/RustProxyFixture.pm",
+      "sha256": "d9c4ab52cf8074526c59b7a5dcb9da870ca7ffdacb4eb236dacb23b5db6d8bfb",
+      "size_bytes": 11466
+    },
+    {
+      "path": "docs/audits/native-proxy-hardlink-20260910/admission.json",
+      "sha256": "8e01756dc4797e28ab889ded1e051f16f3e7ff6eaf621d3d7771d85433b3caaa",
+      "size_bytes": 6939
+    },
+    {
+      "path": "docs/audits/native-proxy-daemon-original-20260910/admission.json",
+      "sha256": "808ecadb137c18b0fc4501cf6eb97e6cbc4f10c58dfa4ddfc43abe128edc59ca",
+      "size_bytes": 6505
+    },
+    {
+      "path": "docs/audits/native-proxy-compiler-profile-inventory-20260913/review.json",
+      "sha256": "d922054f2fcec51d5d671064e2faae034fbfcb2ba888b376a04fa68ca33517cd",
+      "size_bytes": 11636
+    }
+  ],
+  "limits": {
+    "file_bytes": 536870912,
+    "read_chunk_bytes": 65536,
+    "total_bytes": 538968064
+  },
+  "owner": "HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.12.4.1.5.2.2.2.1",
+  "qualification_scope": "Current selection and bounded byte/metadata pins only. SDK dependency contents and compiler dynamic-library closure are not exhaustively attested. No compiler, xcrun, fixture, original, native proxy or collector invocation. No rollback to an old SDK, target/flag/bounds change or historical startup-cause claim.",
+  "sdk_entries": [
+    "/Library/Developer/CommandLineTools/SDKs/MacOSX.sdk",
+    "/Library/Developer/CommandLineTools/SDKs/MacOSX26.5.sdk",
+    "/Library/Developer/CommandLineTools/SDKs/MacOSX27.0.sdk"
+  ],
+  "source_revision": "bf970040d39492973b1222076dbd6556e246ba5a"
+}

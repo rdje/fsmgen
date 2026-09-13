@@ -1,0 +1,52 @@
+[
+  {
+    "path": "docs/audits/native-proxy-compiler-profile-admission-20260913/review_completion.py",
+    "sha256": "429a1ffc2708e99c86d2ba8b7edd45d5f51cd524f27d3ca5d847858d39cb5461",
+    "size_bytes": 5749
+  },
+  {
+    "path": "docs/audits/native-proxy-compiler-profile-admission-20260913/review_claims.py",
+    "sha256": "f2c774967efe27d3a8a72ea25d3b28847da53eb30908300e026c0a10a7175724",
+    "size_bytes": 5032
+  },
+  {
+    "path": "docs/audits/native-proxy-compiler-profile-admission-20260913/inspect_book.py",
+    "sha256": "498d3f1e4b13c1d343f47de5a3884f690787aebfd44b772915fcf22b362f350d",
+    "size_bytes": 3427
+  },
+  {
+    "path": "docs/audits/native-proxy-compiler-profile-admission-20260913/epoch-review.json",
+    "sha256": "86a97d4970e04b029e0f2dc06e6b8d97b65789c6287f68ff4e6d49e7a3d02c39",
+    "size_bytes": 4359
+  },
+  {
+    "path": "docs/audits/native-proxy-compiler-profile-admission-20260913/epoch-first.json",
+    "sha256": "fc7f6a14d7fb69b571dd7bbdbddcc2579f099a573f1374657fe3e114b0befc98",
+    "size_bytes": 99791
+  },
+  {
+    "path": "docs/audits/native-proxy-compiler-profile-admission-20260913/epoch-pins.json",
+    "sha256": "e5d57c4e85329a4a0c4639cea4e44e36501656af8325868353c6b3b6792dde8b",
+    "size_bytes": 844
+  },
+  {
+    "path": "docs/audits/native-proxy-compiler-profile-admission-20260913/epoch-plan.json",
+    "sha256": "72f45446f49baf388162676861aff37131b057c16860793eab8ae4e5b0119745",
+    "size_bytes": 2910
+  },
+  {
+    "path": "docs/audits/native-proxy-compiler-profile-admission-20260913/book-review.json",
+    "sha256": "7872dccfecbd5daab79adf6e89deaab8aa638f686522d77d00139526912003c4",
+    "size_bytes": 1323
+  },
+  {
+    "path": "docs/audits/native-proxy-compiler-profile-admission-20260913/claim-review.json",
+    "sha256": "09dd14f2b8b52847053873c0cee3df06aad29492293df815715269826e9138d3",
+    "size_bytes": 5070
+  },
+  {
+    "path": "docs/audits/native-proxy-compiler-profile-admission-20260913/document-metrics.json",
+    "sha256": "89f7f6e9c782127b14a696f23d6a516480b1b42f8372555a83060c7940f1890f",
+    "size_bytes": 206
+  }
+]

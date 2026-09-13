@@ -322,6 +322,18 @@ complete settled workspace. It must record actual files and ownership before
 cleanup while preserving current limits. It will not execute a generated proxy,
 wrapper, original test or collector.
 
+Read-only installation checks found that both the compiler bytes and the default
+SDK now differ from the original admissions. The older SDK version remains
+installed, but its directory identity also changed. A matching old version label
+does not establish identical SDK contents. The new census must use the current
+fixed builder selection and revalidate its exact epoch before execution.
+
+This establishes an installation change, not a cause for the historical startup
+failure or a prediction of new output bytes. SDK dependency contents and loaded
+compiler libraries are not exhaustively attested. The required installed OS and
+toolchain inputs are read-only dependencies on the OS volume; project evidence
+continues to stay on the repository volume.
+
 | Remaining work | Required result |
 | --- | --- |
 | Workspace profiles | The narrow wrapper repair is qualified; establish authentic compiler-workspace profiles and capacity evidence. |
@@ -339,6 +351,7 @@ remain required before any product activation.
 ```sh
 scripts/run_with_ram_guard.sh -- python3 -B docs/audits/native-proxy-wrapper-compatibility-20260913/audit.py --verify-saved
 scripts/run_with_ram_guard.sh -- python3 -B docs/audits/native-proxy-compiler-profile-inventory-20260913/audit.py --verify-saved
+scripts/run_with_ram_guard.sh -- python3 -B docs/audits/native-proxy-compiler-profile-admission-20260913/epoch.py --verify-saved
 ```
 
 [Return to runtime measurement](16dc-vial-portable-verilator-runtime-measurement.md).

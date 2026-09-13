@@ -1,0 +1,13 @@
+{
+  "book_baseline": {
+    "bytes_total": 3415841,
+    "files": 64,
+    "lines_total": 62225
+  },
+  "book_delta": {
+    "bytes_total": 883,
+    "files": 0,
+    "lines_total": 13
+  },
+  "task_lines": 6370
+}

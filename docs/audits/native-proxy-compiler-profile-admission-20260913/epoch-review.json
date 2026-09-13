@@ -1,0 +1,122 @@
+{
+  "current_revalidation_required_before_execution": true,
+  "first_capture_sha256": "fc7f6a14d7fb69b571dd7bbdbddcc2579f099a573f1374657fe3e114b0befc98",
+  "owner": "HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.12.4.1.5.2.2.2.1",
+  "rejected_controls": [
+    "old_compiler_bytes",
+    "old_sdk_selection",
+    "old_sdk_identity",
+    "modified_sdk_version_bytes",
+    "off_volume_write",
+    "compiler_invocation_promoted",
+    "producer_sdk_rollback",
+    "promoted_historical_equivalence"
+  ],
+  "result": {
+    "compiler_bytes_changed": true,
+    "current_compiler": {
+      "access": "read_only",
+      "identity": {
+        "ctime_ns": 1789079249683420528,
+        "device": 16777232,
+        "inode": 423039084,
+        "mode": 493,
+        "mtime_ns": 1787717326000000000,
+        "size_bytes": 124676976,
+        "uid": 0
+      },
+      "path": "/Library/Developer/CommandLineTools/usr/bin/clang",
+      "sha256": "1590ac950a3d627817d09ade5cb60b2115f17a72182a3141e010b4bcc482a0c9"
+    },
+    "current_os": {
+      "ProductBuildVersion": "25G83",
+      "ProductName": "macOS",
+      "ProductVersion": "26.6.2"
+    },
+    "current_sdk": {
+      "access": "read_only",
+      "identity": {
+        "ctime_ns": 1789079251899577656,
+        "device": 16777232,
+        "inode": 423158640,
+        "mode": 493,
+        "mtime_ns": 1789079238850197640,
+        "size_bytes": 14,
+        "uid": 0
+      },
+      "path": "/Library/Developer/CommandLineTools/SDKs/MacOSX.sdk",
+      "resolved": "/Library/Developer/CommandLineTools/SDKs/MacOSX27.0.sdk",
+      "resolved_identity": {
+        "ctime_ns": 1789079251899108402,
+        "device": 16777232,
+        "inode": 423042483,
+        "mode": 493,
+        "mtime_ns": 1788112159000000000,
+        "size_bytes": 224,
+        "uid": 0
+      },
+      "target": "MacOSX27.0.sdk"
+    },
+    "default_sdk_changed": true,
+    "dependency_limits": "SDK header closure, compiler libraries and OS loaded-image state are not exhaustively attested; these identity/version pins are not historical environment equivalence.",
+    "historical_startup_or_image_change_cause": "not_established",
+    "new_compiler_or_fixture_invocation": false,
+    "old_sdk_directory_identity_changed": true,
+    "old_version_label_proves_old_sdk_bytes": false,
+    "original_context": {
+      "compiler": {
+        "bytes": 290664032,
+        "path": "/Library/Developer/CommandLineTools/usr/bin/clang",
+        "sha256": "f30550eab15fdf5ab8c0dc54c52679711241e5d4b636b027e18c09fef531775d"
+      },
+      "machine": "arm64",
+      "sdk": {
+        "contents": "not_fully_censused",
+        "device": 16777232,
+        "inode": 224015058,
+        "path": "/Library/Developer/CommandLineTools/SDKs/MacOSX26.5.sdk"
+      },
+      "sysname": "Darwin"
+    },
+    "retained_sdk_label": {
+      "access": "read_only",
+      "identity": {
+        "ctime_ns": 1789079251899954367,
+        "device": 16777232,
+        "inode": 423102264,
+        "mode": 493,
+        "mtime_ns": 1778624990000000000,
+        "size_bytes": 224,
+        "uid": 0
+      },
+      "path": "/Library/Developer/CommandLineTools/SDKs/MacOSX26.5.sdk",
+      "resolved": "/Library/Developer/CommandLineTools/SDKs/MacOSX26.5.sdk",
+      "resolved_identity": {
+        "ctime_ns": 1789079251899954367,
+        "device": 16777232,
+        "inode": 423102264,
+        "mode": 493,
+        "mtime_ns": 1778624990000000000,
+        "size_bytes": 224,
+        "uid": 0
+      },
+      "target": null
+    },
+    "sdk_versions": {
+      "/Library/Developer/CommandLineTools/SDKs/MacOSX26.5.sdk": {
+        "canonical_name": "macosx26.5",
+        "display_name": "macOS 26.5",
+        "settings_sha256": "f8d005f09381389167f9e0aeaa169bc9e7dff162ef22ca2fd8e98df7ff1acafe",
+        "version": "26.5"
+      },
+      "/Library/Developer/CommandLineTools/SDKs/MacOSX27.0.sdk": {
+        "canonical_name": "macosx27.0",
+        "display_name": "macOS 27.0",
+        "settings_sha256": "7b93ad7e534cc4b31c6a4e39d19b5e0288acf2168c2649479a796d1cb51939fb",
+        "version": "27.0"
+      }
+    },
+    "selected_policy": "Use the current fixed builder selection only after a fresh committed compiler-only admission and exact epoch revalidation. No rollback or earlier-image byte expectation."
+  },
+  "source_revision": "bf970040d39492973b1222076dbd6556e246ba5a"
+}
