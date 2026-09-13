@@ -15,7 +15,7 @@ runtime and private-source custody.
 This verifies the proposed ordering domain, not the resulting runtime behavior.
 Independent enumeration rejects missing source links, missing orders, weakened
 dependencies and an incorrect dependency on another image's owner. The checks
-below qualify modeled states and selected file effects; interruptions remain open.
+below qualify modeled states, complete file lifetimes and synchronous control effects.
 No native process, original qualifier or live canonical store is accessed.
 
 ```sh
@@ -43,7 +43,7 @@ These are modeled effects, not filesystem observations. Constructed identities
 and inert byte carriers are checked by the unchanged record codecs. The first
 independent auditor failed on its own malformed-reference display assumption;
 that failure and its narrow correction remain retained. The file checks below
-qualify selected actual lifetimes; interruptions and native/live integration remain open.
+qualify selected actual lifetimes and synchronous controls; native/live integration remains open.
 
 ```sh
 scripts/run_with_ram_guard.sh -- python3 -B docs/audits/native-proxy-lifetime-model-20260913/audit_corrected.py --verify-saved
@@ -69,7 +69,7 @@ separate descriptor recovery cannot turn an incomplete operation into success.
 Admission used inert data only. The tracing hook's initial optional-argument
 signature error and the auditor's source-reconstruction errors remain retained
 with their corrections. Actual file effects required the separately owned
-execution checks below. Interruption controls remain open. Synthetic births and settled
+execution checks below. Separate synchronous controls follow. Synthetic births and settled
 work records do not authenticate a native process or authorize the live store.
 
 ```sh
@@ -124,7 +124,7 @@ These are prospective predictions checked against current source bodies,
 retained successful call prefixes and the earlier inert model. Changed
 selectors, rollback assumptions and premature maintenance are rejected by the
 matrix review. The following harness and final-admission sections qualify the
-selected source/data paths; no interruption file test has run.
+selected source/data paths. The matrix itself executes no interruption file test.
 
 ```sh
 scripts/run_with_ram_guard.sh -- python3 -B docs/audits/native-proxy-lifetime-controls-admission-20260913/audit.py --verify-saved
@@ -147,11 +147,7 @@ absence while still passing an explicit missing archive to release validation.
 The failed first check and its source remain retained alongside the correction.
 
 This qualifies the selected source/data paths and rejection checks. The final
-admission below closes reader integration; the actual interruption journal remains open.
-
-```sh
-scripts/run_with_ram_guard.sh -- python3 -B docs/audits/native-proxy-lifetime-control-harness-20260913/audit.py --verify-saved
-```
+admission below closes reader integration; actual execution is reviewed at the end of this chapter.
 
 Final control admission now selects a corrected descriptor identity reader.
 It follows recorded creation, writes and permission changes in call order,
@@ -171,12 +167,42 @@ tests and do not establish actual interruption effects.
 
 The execution permit requires committed final admission, unchanged pinned
 sources, the active execution task, a normal user and fresh fixture/journal
-paths. An existing permit cannot be overwritten. Actual interruption execution
-remains a separate task; native/live integration and startup qualification
-remain open.
+paths. An existing permit cannot be overwritten. The separately owned execution
+results follow below; native/live integration and startup qualification remain open.
+
+The new synchronous control file run now passes independent execution review.
+Runtime references and observation holds each prevent image maintenance while
+present. Releasing before archival, repeating a release, supplying unsettled
+or unsealed work, and retiring with incomplete cleanup all reject. Unknown
+reference records also block maintenance. A rejected live-source reuse after
+retirement leaves the retained archive available.
+
+The after-removal controls confirm the predicted partial effects. After private
+workspace removal, the injected error leaves the global runtime reference and
+image present. After global reference removal, the injected error leaves the
+image present until explicit maintenance removes it. The last observation-hold
+unlink likewise removes the hold while returning a failed release envelope:
+attempted remains set, while completion and verified-absence flags stay unset.
+An independently observed absence does not rewrite that original API verdict.
+
+The journal reader verifies the matching call, private-before-global order,
+resource closure and the observed state on either side of the exception.
+Only recorded descriptor closes follow each injected effect within its operation;
+subsequent maintenance and final cleanup have their own recorded stages.
+Cleanup removes only unchanged objects created by the run. Every selected
+fixture root is absent afterward, and separate descriptor recovery is unused.
+
+The complete first journal, permit, active task snapshot and raw outcomes are
+retained. Missing records, changed errors or flags, reordered effects, open
+handles and incomplete cleanup evidence reject. The current command verifies
+these saved results and authenticates the retained source-admission chain;
+it never replays the qualifier. These checks cover synchronous exceptions in
+isolated files with synthetic process ownership. Operating-system kills,
+concurrency, native process authentication and live-store integration remain
+outside this result.
 
 ```sh
-scripts/run_with_ram_guard.sh -- python3 -B docs/audits/native-proxy-lifetime-controls-final-admission-20260913/audit_final.py --verify-saved
+scripts/run_with_ram_guard.sh -- python3 -B docs/audits/native-proxy-lifetime-controls-20260913/audit.py --verify-saved
 ```
 
 [Return to runtime measurement](16dc-vial-portable-verilator-runtime-measurement.md).

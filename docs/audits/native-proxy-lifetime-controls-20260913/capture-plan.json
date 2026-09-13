@@ -1,0 +1,35 @@
+{
+  "admission_commit": "b3a1a67f71e2a3c4a8f5f496ba22e7e749b05448",
+  "first_capture_source": "8712281ab0335eef570e7c10e642c1264e182b36:docs/audits/native-proxy-lifetime-files-20260913/capture.py",
+  "maximum_journal_records": 351,
+  "owner": "HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.12.4.1.3.6.4.2",
+  "schema": "fsmgen.inactive_lifetime_control_capture_plan.v1",
+  "scope": "Capture first outputs and partial or complete journals before classification. Never rerun the qualifier.",
+  "sources": [
+    {
+      "path": "docs/audits/native-proxy-lifetime-controls-20260913/capture.py",
+      "sha256": "177059299cea3742bdca1a446ec1490b3ce3b4978091185de55dddcabccaa6f3",
+      "size_bytes": 5561
+    },
+    {
+      "path": "docs/audits/native-proxy-lifetime-control-harness-20260913/qualify_controls.pl",
+      "sha256": "9a46d6c4db654d93824263e652f1fe34dffdf3b1badc37134719eca13c556cb7",
+      "size_bytes": 35192
+    },
+    {
+      "path": "docs/audits/native-proxy-lifetime-control-harness-20260913/final-preflight-pins.json",
+      "sha256": "d8024f7bcb24bdfbd7160df15859d39da81fa8f9d51a633a78abe0f04c948fa5",
+      "size_bytes": 85096
+    },
+    {
+      "path": "docs/audits/native-proxy-lifetime-controls-final-admission-20260913/review.json",
+      "sha256": "3db29d1a5beef65666a1ab59c329e2aeb8635ad39bc305ad712c2ff7e0e2c5f5",
+      "size_bytes": 17226
+    },
+    {
+      "path": "docs/audits/native-proxy-lifetime-controls-admission-20260913/selection.json",
+      "sha256": "c0df1570442520306e78c1a2138118da1b8ad71035fa9d6efa336d2827e9fdc9",
+      "size_bytes": 22403
+    }
+  ]
+}

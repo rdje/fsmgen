@@ -1,0 +1,19 @@
+{
+  "checked_passages": [
+    "The new synchronous control file run now passes independent execution review.",
+    "After private workspace removal, the injected error leaves the global runtime reference and image present.",
+    "An independently observed absence does not rewrite that original API verdict.",
+    "Every selected fixture root is absent afterward, and separate descriptor recovery is unused.",
+    "docs/audits/native-proxy-lifetime-controls-20260913/audit.py --verify-saved"
+  ],
+  "exact_output_absent": true,
+  "exit_code": 0,
+  "output": ".artifacts/tmp/native-proxy-lifetime-controls-book-20260913/book",
+  "rendered_bytes": 23621870,
+  "rendered_directories": 2,
+  "rendered_files": 99,
+  "renderer_warnings": [
+    "WARN search index is very large (13295074 bytes)"
+  ],
+  "same_volume_direct_objects": true
+}

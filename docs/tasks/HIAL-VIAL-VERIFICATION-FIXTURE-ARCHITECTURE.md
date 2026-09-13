@@ -2778,11 +2778,11 @@ decomposes the architecture needed to move beyond that bounded foundation.
   Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.12.4.1.3.6.3.2: qualify selected inert file lifetimes`
 
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.12.4.1.3.6.4`
-  Status: `active`
+  Status: `done`
   Goal: `Qualify combined lifetime interruption and uncertain-owner retention.`
   Acceptance: `Select bounded lifecycle boundary and invalid-order controls from the qualified complete paths before execution. Preserve partial physical effects, exact primary errors and surviving ownership; do not infer hold presence from return success. Require separate admission/execution leaves for new actual-file controls. Prove stale/uncertain owners and either reference kind block maintenance; no automatic repair, original replay or native authority.`
-  Verification: `Selected complete-file lifetimes are committed at 486f980ff3d0b5206a5ee93ec5765b5f86bd00cd. Separate prospective control admission under .3.6.4.1 must commit before .3.6.4.2 allocates new inert cases. Preserve failed primary outcomes and actual partial effects independently of later cleanup; no original replay or native/live authority.`
-  Commit: `pending`
+  Verification: `Committed source/control admission and the sole new file execution now qualify selected invalid-order, uncertain-owner and synchronous after-effect controls. Either reference kind retains the selected image; unknown records block maintenance. Private-root faults preserve global ownership, while after-global and last-observation unlink faults expose the physical absence without rewriting original verdict flags; explicit maintenance remains separate. Complete first journals, call order, observed resources and exact owned cleanup pass independent review. Evidence: docs/audits/native-proxy-lifetime-controls-20260913/review.json and completion.json. No original replay or native/live authority; combined closure remains .3.6.5.`
+  Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.12.4.1.3.6.4.2: qualify first synchronous lifetime controls`
   Children: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.12.4.1.3.6.4.1, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.12.4.1.3.6.4.2`
 
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.12.4.1.3.6.4.1`
@@ -2815,11 +2815,11 @@ decomposes the architecture needed to move beyond that bounded foundation.
   Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.12.4.1.3.6.4.1.3: close lifetime control execution admission`
 
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.12.4.1.3.6.4.2`
-  Status: `proposed`
+  Status: `done`
   Goal: `Execute the newly admitted lifetime controls once and verify partial effects and retained ownership.`
   Acceptance: `Authenticate committed control admission and the active owner before exclusive new allocation. Execute only selected new cases once; preserve expected rejections, actual post-call effects, surviving references and original primary errors before cleanup. Independently verify stale/uncertain owners and either reference kind prevent maintenance where required. Keep reported return values distinct from physical presence, prove exact owned cleanup or retain uncertain objects, consume every result and commit. No original replay or native/live authority.`
-  Verification: `pending`
-  Commit: `pending`
+  Verification: `Final admission b3a1a67f71e2a3c4a8f5f496ba22e7e749b05448 precedes the exact one-use permit and sole new harness execution. All fourteen controls and 232 stages pass independent review. The first journal retains 351 records and 43,693,680 bytes. Its 710 traces account for 26,621 primary handles (15,302 file and 11,319 directory), 11,319 directory metadata observers and 54,155 recorded source-level calls. Every observed handle closes without separate recovery; all 56 fixture roots are absent. Eleven altered-journal controls reject, including a coherently relocated global-unlink hit. Actual after-effect witnesses are records 283/private root, 314/global reference and 344/last observation hold; only recorded closes follow the selected call inside each operation. First outputs, permit and the active task snapshot remain unchanged in docs/audits/native-proxy-lifetime-controls-20260913/capture.json and review.json. Source/permit provenance, physical states, receipt flags, exact cleanup, saved-only review, rendered book, unchanged claim identities/dispositions, Knowledge Map questions and prior acceptance recovery join in completion.json and completion-checks.json. No original replay, compiler, collector, native proxy or live store. Combined closure and native/live/startup prerequisites remain separate.`
+  Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.12.4.1.3.6.4.2: qualify first synchronous lifetime controls`
 
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.12.4.1.3.6.5`
   Status: `proposed`
@@ -3763,7 +3763,7 @@ decomposes the architecture needed to move beyond that bounded foundation.
 
 ## Current Frontier
 
-Current frontier: .3.2.15.7.3.12.4.1.3.6.4.1 is done; .3.6.4.2 next executes the newly admitted controls once. Only .3.6.4.2 executes after admission commits. Native/live and historical startup/parent/full CI/push remain gated.
+Current frontier: .3.2.15.7.3.12.4.1.3.6.4 is done; .3.6.5 next joins combined lifetime applicability and cleanup. The sole admitted control run is retained. Native/live and historical startup/parent/full CI/push remain gated.
 
 Architecture audit `.1` is complete. Decision `0032` selects one public
 `.vial` source language, private immutable `VIALSemanticIR` and
@@ -6359,8 +6359,8 @@ Completed native-proxy feasibility through runtime-source-controls acceptance: r
 The manifest binds the immediately preceding acceptance suffix to its exact Git source. That source preserves the earlier history pointer and versioned manifest chain; current node contracts remain authoritative.
 
 
-## Acceptance Checklist (final control admission .3.2.15.7.3.12.4.1.3.6.4.1.3)
+## Acceptance Checklist (actual synchronous controls .3.2.15.7.3.12.4.1.3.6.4.2)
 
-- [x] **ROOT CAUSE (WHY + WHERE)** — `git log -S 'O_RDWR | O_CREAT | O_EXCL | O_NOFOLLOW, 0400' -1 --format='%H %s' -- docs/audits/native-proxy-image-publication-20260910/Publication.pm` identifies the original read-only creation contract at 3618546c64ff0b2071b07c9822b3fbfae3605b01. The first setup calibration fails at the new reader's universal writable-mode assumption. First preparation also preserved the existing payload carrier's _hex key suffix instead of translating the reader's byte keys; both exact failures remain retained.
-- [x] **ADDRESSED (verified)** — The explicit corrected reader derives creation modes from the current writers and follows recorded writes and permission changes before matching each native open and final state. Original harness and descriptor-closure source remain unchanged. Retained complete journals and synthetic full streams pass, while changed metadata, writes, seals, inputs, verdicts and cleanup reject. The inert permit validator requires final committed ownership, clean scoped state and fresh paths. Re-derivation, falsification and durability: docs/audits/native-proxy-lifetime-controls-final-admission-20260913/plan.json, integration-review.json, permit-review.json, first-preparation-failure.json, first-integration-failure.json, review.json and completion.json. Actual control execution remains separately owned.
-- [x] **NO REGRESSION** — `knowledge-map: OK` preserves the exact question set and routes to final admission. Original source/evidence joins, corrected full reader checks, inert permit countermodels, saved-only admission, rendered book inspection, unchanged claim identities/dispositions and prior acceptance recovery pass before staged doctrines and normal hooks. No original producer, actual permit, fixture controls, compiler, collector or native process runs. Native/live and historical startup/parent/full CI/push remain gated.
+- [x] **ROOT CAUSE (WHY + WHERE)** — `git log -S 'unlink_attempted} = 1' -1 --format='%H %s' -- docs/audits/native-proxy-observation-archive-release-20260911/ObservationRelease.pm` locates the original exact-effect contract at da27b5cbaf01af7cbe294c8f851c8273dd750856. Source/data admission predicts partial removals, but actual combined interruption effects and original return flags still required independent first-run evidence.
+- [x] **ADDRESSED (verified)** — The committed permit precedes the sole new control execution. Actual rejections, partial removals, retained owners, explicit maintenance and exact cleanup pass the independently selected reader; only recorded descriptor closes follow the injected effect. First outcomes and the active execution task remain byte-retained. Eleven altered-journal controls reject, including coherent hit relocation. Re-derivation, falsification and durability: docs/audits/native-proxy-lifetime-controls-20260913/capture-plan.json, capture.json, review.json and completion.json. All observed resources close without separate recovery and every selected fixture root is absent.
+- [x] **NO REGRESSION** — `knowledge-map: OK` preserves the exact question set and current saved-evidence route. Independent and saved control review, rendered book inspection, unchanged claim identities/dispositions and exact prior acceptance recovery pass before staged doctrines and normal hooks. Earlier admission evidence remains intact; obsolete prospective-only commands are replaced by the current execution review. No original producer or native proxy is replayed. Combined closure, native/live integration and historical startup/parent/full CI/push remain gated.

@@ -1,0 +1,17 @@
+[
+  {
+    "path": "docs/audits/native-proxy-lifetime-controls-20260913/audit.py",
+    "sha256": "25112f53b8ca02833c85185a08849e40eed6a21189ec3cc0fbdb176e1fbe0103",
+    "size_bytes": 10235
+  },
+  {
+    "path": "docs/audits/native-proxy-lifetime-controls-20260913/capture-plan.json",
+    "sha256": "8cd368ee2f780678e20ba46c09f24f7084544fdb6ff173e88d93c12c41bc8c54",
+    "size_bytes": 1629
+  },
+  {
+    "path": "docs/audits/native-proxy-lifetime-controls-20260913/capture.json",
+    "sha256": "05206305d8a1a9b0478bbb2982bbbacaa4e21bcaad90d001d21641e5da5a546a",
+    "size_bytes": 177975
+  }
+]

@@ -1,0 +1,1 @@
+{"kind":"case-primary","monotonic_ns":651084422442000,"schema":"fsmgen.inactive_lifetime_controls_event.v1","sequence":130,"value":{"case":"release_before_archive","error_hex":"","returned":1}}

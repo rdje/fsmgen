@@ -1,0 +1,38 @@
+[
+  {
+    "bytes_hex": "41637475616c206c69666574696d6520636f6e74726f6c20636f6d706c6574696f6e3a204f4b3b20666972737420657865637574696f6e2072657461696e65643b20636f6d62696e656420636c6f7375726520666f6c6c6f77732e0a",
+    "path": ".artifacts/logs/native-proxy-lifetime-controls-20260913/completion.stdout",
+    "sha256": "46d4dc64068ef1bfb91b664e207c34dd5e027113de7d2a9b14cd0fe8787ba8d1",
+    "size_bytes": 92
+  },
+  {
+    "bytes_hex": "72616d2d67756172643a205049442031313139383b20686f73742037322e36253b20686f7374206375746f6666203838253b2064657363656e64616e7420525353206375746f66662034303936204d69423b20706f6c6c2032730a",
+    "path": ".artifacts/logs/native-proxy-lifetime-controls-20260913/completion.stderr",
+    "sha256": "217d0b231ecdcfe2a405dabc5a01751b0137737a5d171f31572685aa4a4ac4c2",
+    "size_bytes": 91
+  },
+  {
+    "bytes_hex": "300a",
+    "path": ".artifacts/logs/native-proxy-lifetime-controls-20260913/completion.exit",
+    "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa",
+    "size_bytes": 2
+  },
+  {
+    "bytes_hex": "41637475616c206c69666574696d6520636f6e74726f6c20636f6d706c6574696f6e3a204f4b3b20666972737420657865637574696f6e2072657461696e65643b20636f6d62696e656420636c6f7375726520666f6c6c6f77732e0a",
+    "path": ".artifacts/logs/native-proxy-lifetime-controls-20260913/completion-saved.stdout",
+    "sha256": "46d4dc64068ef1bfb91b664e207c34dd5e027113de7d2a9b14cd0fe8787ba8d1",
+    "size_bytes": 92
+  },
+  {
+    "bytes_hex": "72616d2d67756172643a205049442031313938303b20686f73742037322e37253b20686f7374206375746f6666203838253b2064657363656e64616e7420525353206375746f66662034303936204d69423b20706f6c6c2032730a",
+    "path": ".artifacts/logs/native-proxy-lifetime-controls-20260913/completion-saved.stderr",
+    "sha256": "8f87ef7a792175ce51a58292b8d1127c702a09830f38d69a84a40d6a9d2f6a70",
+    "size_bytes": 91
+  },
+  {
+    "bytes_hex": "300a",
+    "path": ".artifacts/logs/native-proxy-lifetime-controls-20260913/completion-saved.exit",
+    "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa",
+    "size_bytes": 2
+  }
+]

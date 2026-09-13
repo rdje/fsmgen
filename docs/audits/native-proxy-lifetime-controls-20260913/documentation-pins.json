@@ -1,0 +1,42 @@
+[
+  {
+    "path": "docs/book/src/16dk-inactive-proxy-lifetimes.md",
+    "sha256": "da0c1075ed349062ef7604c4392115cff7e90ae55257ed6adfaea47e146ee0ea",
+    "size_bytes": 12382
+  },
+  {
+    "path": "doctrine/live_document_size/surfaces.jsonl",
+    "sha256": "dabecc1295c9966b645d83ae8a4c93a9bd2fb715d3f7608c1d3ed3c88f1bb9e0",
+    "size_bytes": 24776
+  },
+  {
+    "path": "doctrine/claim_verification/inventory.jsonl",
+    "sha256": "b9dca0cdc1b4522be596226ed1689bf90de960609b73e72e395310af409408f2",
+    "size_bytes": 3007141
+  },
+  {
+    "path": "doctrine/claim_verification/dispositions.jsonl",
+    "sha256": "eaced4b2215cf01bd76361e69488099b19a94fdf0fe45cb97c777204f30e26aa",
+    "size_bytes": 2045074
+  },
+  {
+    "path": "docs/knowledge/test-subprocess-policy-adapters.md",
+    "sha256": "4fbf4b51a610c74bb5f98d15c34966e6d44187f4eca99c70c841eafcd9365a98",
+    "size_bytes": 9814
+  },
+  {
+    "path": "docs/tasks/history/HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE/acceptance-history.jsonl",
+    "sha256": "e23eb826657617c1ae2ee67a7177ce02056e74ea2229a800e1bae8abf8b8002d",
+    "size_bytes": 851
+  },
+  {
+    "path": "docs/audits/native-proxy-lifetime-controls-20260913/review_claims.py",
+    "sha256": "5444a9a204a2535d1a49892f920af67cf8ff24af57b4f549c2e5ebbab4f18137",
+    "size_bytes": 4867
+  },
+  {
+    "path": "docs/audits/native-proxy-lifetime-controls-20260913/inspect_book.py",
+    "sha256": "77cb16ec02873f0ee6d22e3a1048fd19260d910ab6e79cef0e3480b093ff7774",
+    "size_bytes": 2623
+  }
+]
