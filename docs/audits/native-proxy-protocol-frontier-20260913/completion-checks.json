@@ -1,0 +1,40 @@
+{
+  "outputs": [
+    {
+      "bytes_hex": "50726f746f636f6c2066726f6e7469657220636f6d706c6574696f6e3a204f4b3b206f776e656420776f726b737061636520636f6d7061746962696c69747920666978206973206e6578742e0a",
+      "path": ".artifacts/logs/native-proxy-protocol-frontier-20260913/completion.stdout",
+      "sha256": "29f147f5a458ad2d684127347f5c65acbf353c0666b393b82352b40d9eecb143",
+      "size_bytes": 77
+    },
+    {
+      "bytes_hex": "72616d2d67756172643a205049442033303832313b20686f73742037352e36253b20686f7374206375746f6666203838253b2064657363656e64616e7420525353206375746f66662034303936204d69423b20706f6c6c2032730a",
+      "path": ".artifacts/logs/native-proxy-protocol-frontier-20260913/completion.stderr",
+      "sha256": "932808b832f059fc1f4dd440bc712d52e09f1848f1d21bff6caa31f8a906c5f2",
+      "size_bytes": 91
+    },
+    {
+      "bytes_hex": "300a",
+      "path": ".artifacts/logs/native-proxy-protocol-frontier-20260913/completion.exit",
+      "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa",
+      "size_bytes": 2
+    },
+    {
+      "bytes_hex": "50726f746f636f6c2066726f6e7469657220636f6d706c6574696f6e3a204f4b3b206f776e656420776f726b737061636520636f6d7061746962696c69747920666978206973206e6578742e0a",
+      "path": ".artifacts/logs/native-proxy-protocol-frontier-20260913/completion-saved.stdout",
+      "sha256": "29f147f5a458ad2d684127347f5c65acbf353c0666b393b82352b40d9eecb143",
+      "size_bytes": 77
+    },
+    {
+      "bytes_hex": "72616d2d67756172643a205049442033343337373b20686f73742037362e37253b20686f7374206375746f6666203838253b2064657363656e64616e7420525353206375746f66662034303936204d69423b20706f6c6c2032730a",
+      "path": ".artifacts/logs/native-proxy-protocol-frontier-20260913/completion-saved.stderr",
+      "sha256": "318b380add0f17320242ea6dd032e6b7c3a6b4554e0d1d3d0d3b9dd2257e41ce",
+      "size_bytes": 91
+    },
+    {
+      "bytes_hex": "300a",
+      "path": ".artifacts/logs/native-proxy-protocol-frontier-20260913/completion-saved.exit",
+      "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa",
+      "size_bytes": 2
+    }
+  ]
+}

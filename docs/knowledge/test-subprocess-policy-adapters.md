@@ -122,6 +122,7 @@ answers:
   - "why can Python invocation and native executable paths differ on macOS?"
   - "why does macOS report Python instead of python3.14?"
   - "how does coordination admit a Python framework worker?"
+  - "why does inactive retirement reject the real Rust proxy wrapper?"
 date: 2026-09-13
 status: current
 tags: [tests, subprocess, supervision, task-acceptance, darwin, locality]
@@ -140,7 +141,6 @@ evidence: >-
   t/1669-task-acceptance-fixture-runtime.t; t/python/test_fixture_runtime_sources.py;
   t/lib/FSM/Test/RustProxyFixture.pm; t/1815-rust-proxy-fixture.t; t/1816-rust-proxy-integration.t; t/1817-test-supervision-architecture.t
 reverify: >-
-  scripts/run_with_ram_guard.sh -- python3 -B docs/audits/native-proxy-language-coordination-20260913/audit.py --verify-saved
+  scripts/run_with_ram_guard.sh -- python3 -B docs/audits/native-proxy-protocol-frontier-20260913/audit.py --verify-saved
 ---
-History: `295130388c20c6ee94650c610c2df6d597eeffa7:docs/knowledge/test-subprocess-policy-adapters.md`. Proxy: C, built/launched by Perl; supervisor: decisions `0087`/`0101`.
-Python framework invocation differs from its kernel image. Admission pins both paths/hashes; ownership permits rejected-worker cleanup. Actual empty-store cooperation and owned cleanup pass. No proxy startup cause follows.
+History: `2f144f7a18f9a4023b697c58cc5866480343d8c5:docs/knowledge/test-subprocess-policy-adapters.md`. Proxy: C, built/launched by Perl; supervisor: decisions `0087`/`0101`. Python framework invocation differs from its kernel image. Admission pins both paths/hashes; ownership permits rejected-worker cleanup. Wrapper permissions mismatch retirement; next: workspace compatibility. No proxy startup cause follows.

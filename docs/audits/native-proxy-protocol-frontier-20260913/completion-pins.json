@@ -1,0 +1,127 @@
+[
+  {
+    "path": "KNOWLEDGE_MAP.md",
+    "sha256": "210b8244d637838d77342fc6dad4ed0ffa0a1935ae0d730c43f188bc951a44c3",
+    "size_bytes": 13325
+  },
+  {
+    "path": "MEMORY.md",
+    "sha256": "3ca31260ae9a6158b3c792d0e2a1c5ff042f6aba2a2e162263e1f49b44cc3a1f",
+    "size_bytes": 736
+  },
+  {
+    "path": "docs/TASK_TREE.md",
+    "sha256": "35a6d13c503a74e30bb0cebfb8b27d5c9f2c8ae61b4822a5dd01e7dac3d4226c",
+    "size_bytes": 38928
+  },
+  {
+    "path": "docs/audits/native-proxy-protocol-frontier-20260913/audit-pins.json",
+    "sha256": "5d0d3dae2b8cc92adfc1039eef624b1a39e80eacba0f0e5bdf8e22271778e65a",
+    "size_bytes": 1452
+  },
+  {
+    "path": "docs/audits/native-proxy-protocol-frontier-20260913/audit.py",
+    "sha256": "21ac1ca39982aff6ece720a6c86e7973c13c795ab765b0874b54bb442dbb88b9",
+    "size_bytes": 10877
+  },
+  {
+    "path": "docs/audits/native-proxy-protocol-frontier-20260913/book-review.json",
+    "sha256": "b59a4858d4501f792cfb93e94c0c59e36a39a38b3f75b756ea6b432d6b195b28",
+    "size_bytes": 1316
+  },
+  {
+    "path": "docs/audits/native-proxy-protocol-frontier-20260913/claim-review.json",
+    "sha256": "2b8c6642641a72e3a17b7f03ebd0353113bd8e2663978a17502a0a7443229490",
+    "size_bytes": 13411
+  },
+  {
+    "path": "docs/audits/native-proxy-protocol-frontier-20260913/frontier-task.md.source",
+    "sha256": "2767f175c4433e55ccd3858c1215f072c498bc777d289a155e983ea8a8394047",
+    "size_bytes": 1107418
+  },
+  {
+    "path": "docs/audits/native-proxy-protocol-frontier-20260913/inspect_book.py",
+    "sha256": "ca59cf143a96b9a94e60768842a172ac6f4b1c935e613eca3d3cacf90c858da7",
+    "size_bytes": 3420
+  },
+  {
+    "path": "docs/audits/native-proxy-protocol-frontier-20260913/plan.json",
+    "sha256": "e3ceaa0e3c5c74dcccc5ae1e754ef4a796ea15249307597d97d3a810e49ae47a",
+    "size_bytes": 18825
+  },
+  {
+    "path": "docs/audits/native-proxy-protocol-frontier-20260913/prerequisite-task-layout.json",
+    "sha256": "91f86723bb226e749e53b1c50c0ea0c798a4de28d3d734497a1fb64ec698e644",
+    "size_bytes": 5081
+  },
+  {
+    "path": "docs/audits/native-proxy-protocol-frontier-20260913/review.json",
+    "sha256": "be9875361f987c57f621e97c56cc11b9941f6c5824f0fb42ad4822ceac46c66d",
+    "size_bytes": 3055
+  },
+  {
+    "path": "docs/audits/native-proxy-protocol-frontier-20260913/review_claims.py",
+    "sha256": "312c66a6d3bd7071c2ff89946594c5de9cdc77e7363f67946b7de0049afb1462",
+    "size_bytes": 5032
+  },
+  {
+    "path": "docs/audits/native-proxy-protocol-frontier-20260913/review_completion.py",
+    "sha256": "0f6eef49be28ba163d50011ab238de43c6c446becfac9911b54db7a4a15cc3d4",
+    "size_bytes": 6609
+  },
+  {
+    "path": "docs/audits/native-proxy-protocol-frontier-20260913/task-layout.json",
+    "sha256": "e4462f6aea1503f7fae25a94cce04abf0a3f78b1697ab8c9412b4acacd266b51",
+    "size_bytes": 4603
+  },
+  {
+    "path": "docs/audits/native-proxy-protocol-frontier-20260913/workspace-compatibility-finding.first.json.source",
+    "sha256": "24079ded3bcbd05652d14a3313d3246142d1b59248e1719bd17a8582e27cb668",
+    "size_bytes": 2910
+  },
+  {
+    "path": "docs/audits/native-proxy-protocol-frontier-20260913/workspace-compatibility-finding.json",
+    "sha256": "ff55acd632efe685ca871009078632ed532740fb2450e9ebb14174dd7189ccdf",
+    "size_bytes": 3628
+  },
+  {
+    "path": "docs/book/src/16dc-vial-portable-verilator-runtime-measurement.md",
+    "sha256": "eec52469fcaa9b9d8f475621cca7e62e98bb5e47b420b1214eca3d548e47faa5",
+    "size_bytes": 273966
+  },
+  {
+    "path": "docs/book/src/16dk-inactive-proxy-lifetimes.md",
+    "sha256": "04e626d80b23eb261466dc6e412fab7e65f296ad0a6827948050d61bd518ac64",
+    "size_bytes": 19424
+  },
+  {
+    "path": "docs/knowledge/test-subprocess-policy-adapters.md",
+    "sha256": "dcf8660000c1b6de171f2b10e68349b8cf1f4ecab2d0d6187afbde44fd0bfa09",
+    "size_bytes": 9851
+  },
+  {
+    "path": "docs/tasks/HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.md",
+    "sha256": "62deda2354937ce8ae9a07c78836af7713aaf3cf7fa1f7c746b08697f939fcc9",
+    "size_bytes": 1109705
+  },
+  {
+    "path": "docs/tasks/history/HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE/acceptance-history.jsonl",
+    "sha256": "6aeeadca200d8d5e6dace250a1bfc6718af5cd9a6693264198271a6d699ae318",
+    "size_bytes": 850
+  },
+  {
+    "path": "doctrine/claim_verification/inventory.jsonl",
+    "sha256": "32f6a75ae49577c7491d05bd92fb7ec021ff1ae5f8a73d561fb536e1c8e5060e",
+    "size_bytes": 3007141
+  },
+  {
+    "path": "doctrine/live_document_size/surfaces.jsonl",
+    "sha256": "5411c200d08ebb27419c9de64a9874c019edaf7974fce5610215e5b0ba07877d",
+    "size_bytes": 24788
+  },
+  {
+    "path": "knowledge-map/generated/test-subprocess.md",
+    "sha256": "fae9b7ffec94801eae463cacfb7bb6db34ca6448a06b0cce874a88ba0f95258c",
+    "size_bytes": 20358
+  }
+]

@@ -286,4 +286,34 @@ Recheck the retained actual result without launching any worker:
 scripts/run_with_ram_guard.sh -- python3 -B docs/audits/native-proxy-language-coordination-20260913/audit.py --verify-saved
 ```
 
+The remaining protocol requirements now have an explicit source/evidence map.
+Passing empty-store coordination does not establish populated publication,
+authentic runtime receipts or canonical native execution. The closure audit
+keeps these scopes distinct and assigns the missing work before activation.
+
+The next concrete fix is workspace compatibility. The current test wrapper
+requests executable permissions that the inactive retirement profile rejects;
+its inert wrapper fixture used a more restrictive mode. The source audit
+reproduces that mismatch and rejects confusing the wrapper with the proxy's
+separately sealed executable. Existing cleanup behavior is unchanged, and actual
+compiler-workspace capacity is still unqualified.
+
+| Remaining work | Required result |
+| --- | --- |
+| Workspace compatibility | Admit the exact real producer profile with ownership checks and authentic compiler-workspace capacity evidence. |
+| Populated-store workers | Qualify equal/different publication, separate references and observation holds through actual cancellation and retirement. |
+| Real receipt binding | Prove complete compiler/outer/inner ownership and prevent launches after settlement. |
+| Inactive adapter composition | Join preparation, native path/reference admission and observation custody before the separate native experiment. |
+| Final protocol join | Check current evidence together and retain native, live/public and startup/benefit gates. |
+
+The current builder still returns private preparation records, the live sampler
+still admits private proxy paths, and path-scoped collection still uses the
+private fixture prefix. Qualified private format codecs do not change those
+consumers. Live collector outcomes, policy records and public projection support
+remain required before any product activation.
+
+```sh
+scripts/run_with_ram_guard.sh -- python3 -B docs/audits/native-proxy-protocol-frontier-20260913/audit.py --verify-saved
+```
+
 [Return to runtime measurement](16dc-vial-portable-verilator-runtime-measurement.md).

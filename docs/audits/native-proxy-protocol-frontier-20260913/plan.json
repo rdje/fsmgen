@@ -1,0 +1,343 @@
+{
+  "claim_legs": {
+    "durability": "Pinned inputs, task epoch, first mistaken fixture-mode annotation and corrected finding, review and current task/book/knowledge records.",
+    "falsification": "Altered mode labels, missing clauses/owners, promoted worker/public/native authority and omitted prerequisite mappings must reject.",
+    "rederivation": "Exact current/Git source pins, complete required-falsifier indexing, source-derived wrapper modes and fixed actual worker scope."
+  },
+  "coverage": [
+    {
+      "closure": "partial_or_pending",
+      "contract_pointer": "/required_falsifiers/0",
+      "established_scope": "Selected inert byte/identity, publication and lifetime controls are retained; native loaded-image authority is excluded.",
+      "evidence": [
+        "docs/audits/native-proxy-lifetime-closure-20260913/review.json",
+        "docs/audits/native-proxy-runtime-closure-20260910/review.json"
+      ],
+      "id": "custody",
+      "missing_scope": "Current composition and native admission remain required.",
+      "required_owners": [
+        "HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.12.4.1.5.5",
+        "HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.12.4.1.5.6",
+        "HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.12.4.2"
+      ],
+      "requirement": "Wrong mode bytes, same-key changed output, source/image collision, invalid manifest field/type, wrong permissions, hard-link alias, symlink ancestry, oversized file and changed descriptor/named inode must fail before returning an executable."
+    },
+    {
+      "closure": "partial_or_pending",
+      "contract_pointer": "/required_falsifiers/1",
+      "established_scope": "Actual empty-store lock cooperation is qualified.",
+      "evidence": [
+        "docs/audits/native-proxy-language-coordination-20260913/review.json",
+        "docs/audits/native-proxy-lifetime-closure-20260913/review.json"
+      ],
+      "id": "publishers",
+      "missing_scope": "Equal/different populated publishers with separate complete references have not been established by that worker domain.",
+      "required_owners": [
+        "HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.12.4.1.5.3"
+      ],
+      "requirement": "Concurrent equal-image publishers must produce one canonical immutable identity and separate complete references; different-image publishers must not overwrite each other. A waiting or failed publisher cannot launch an original or inherit coordination into a child."
+    },
+    {
+      "closure": "partial_or_pending",
+      "contract_pointer": "/required_falsifiers/2",
+      "established_scope": "Selected real-file synchronous call cuts and serial lifetime models retain original partial effects.",
+      "evidence": [
+        "docs/audits/native-proxy-lifetime-closure-20260913/review.json",
+        "docs/audits/native-proxy-runtime-closure-20260910/review.json"
+      ],
+      "id": "interruption",
+      "missing_scope": "Actual worker interruption/observation holding is a separate selected qualification; arbitrary kernel crash and power-loss durability are not promised.",
+      "required_owners": [
+        "HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.12.4.1.5.3",
+        "HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.12.4.1.5.6"
+      ],
+      "requirement": "Interrupt publication after each file/write/seal boundary, reference creation between global/private records, and retirement before/after workspace removal. Partial state remains failed and conservatively retained; no reference is silently lost."
+    },
+    {
+      "closure": "partial_or_pending",
+      "contract_pointer": "/required_falsifiers/3",
+      "established_scope": "Selected inert namespace and workspace guards are qualified within their declared profiles.",
+      "evidence": [
+        "docs/audits/native-proxy-lifetime-closure-20260913/review.json",
+        "docs/audits/native-proxy-runtime-retirement-20260910/review.json"
+      ],
+      "id": "capacity",
+      "missing_scope": "Actual producer wrapper mode and authentic compiler workspace capacity must qualify before native admission.",
+      "required_owners": [
+        "HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.12.4.1.5.2",
+        "HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.12.4.1.5.6"
+      ],
+      "requirement": "Fill the exact image/reference limits and exceed them. No partial capacity accounting, unbounded census, eviction or fallback may convert the boundary failure into success."
+    },
+    {
+      "closure": "partial_or_pending",
+      "contract_pointer": "/required_falsifiers/4",
+      "established_scope": "Selected runtime/observation/maintenance serial models and file lifetimes preserve reference custody.",
+      "evidence": [
+        "docs/audits/native-proxy-lifetime-closure-20260913/review.json",
+        "docs/audits/native-proxy-language-coordination-20260913/review.json"
+      ],
+      "id": "references",
+      "missing_scope": "Populated worker interleavings and complete real owner receipts must join that custody.",
+      "required_owners": [
+        "HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.12.4.1.5.3",
+        "HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.12.4.1.5.4"
+      ],
+      "requirement": "Interleave acquisition, active observation, retirement and maintenance. Referenced bytes and identities must survive; failed/dead owners remain pinned until separate proven recovery. Lock replacement, stale workspace reuse and absent-parent-only release reject."
+    },
+    {
+      "closure": "partial_or_pending",
+      "contract_pointer": "/required_falsifiers/5",
+      "established_scope": "Inactive snapshot/archive/release custody and deterministic cancellation cuts are retained.",
+      "evidence": [
+        "docs/audits/native-proxy-lifetime-closure-20260913/review.json",
+        "docs/audits/native-proxy-version-join-20260913/review.json"
+      ],
+      "id": "observation",
+      "missing_scope": "Actual observer ownership, command/capture settlement and closed launch frontier require composition; native execution remains separately admitted.",
+      "required_owners": [
+        "HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.12.4.1.5.3",
+        "HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.12.4.1.5.4",
+        "HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.12.4.1.5.5",
+        "HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.12.4.2",
+        "HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.12.4.3"
+      ],
+      "requirement": "Force runtime retirement between native admission, source snapshot, archival and capture completion. An observation hold must retain the image and the admitted snapshot bytes; killing the observer retains its unresolved reference. Repeated same-birth scans must not fail merely because the observer owns storage. No command-query timeout may retain the global coordination lock."
+    },
+    {
+      "closure": "partial_or_pending",
+      "contract_pointer": "/required_falsifiers/6",
+      "established_scope": "Selected old/new private data families and matched retained envelopes are qualified.",
+      "evidence": [
+        "docs/audits/native-proxy-version-join-20260913/review.json"
+      ],
+      "id": "formats",
+      "missing_scope": "Actual preparation/native integration and live collector outcome, policy record and public projection consumers remain distinct required implementations.",
+      "required_owners": [
+        "HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.12.4.1.5.5",
+        "HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.12.4.4"
+      ],
+      "requirement": "Exercise old and new capture/retained-format families independently, including mixed prefixes, incorrect versions, two simultaneous births using one image, tampered private/global references and stale native identity."
+    },
+    {
+      "closure": "partial_or_pending",
+      "contract_pointer": "/required_falsifiers/7",
+      "established_scope": "The prior first failures remain failed; no new canonical native feasibility experiment has run.",
+      "evidence": [
+        "docs/audits/native-proxy-language-coordination-20260913/review.json"
+      ],
+      "id": "native_experiment",
+      "missing_scope": "Commit exact native admission, execute its finite controlled sequence once and decide the first result before activation.",
+      "required_owners": [
+        "HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.12.4.2",
+        "HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.12.4.3",
+        "HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.12.4.4"
+      ],
+      "requirement": "After an exact prospective checkpoint, a finite distinct held control must prove first-use and reuse native canonical paths, source custody and lifetime. Preserve the first unexpected outcome and stop; do not run the original to compensate."
+    },
+    {
+      "closure": "partial_or_pending",
+      "contract_pointer": "/required_falsifiers/8",
+      "established_scope": "No startup repair or scan-avoidance benefit is established by inert or coordination results.",
+      "evidence": [
+        "docs/audits/native-proxy-lifetime-closure-20260913/review.json",
+        "docs/audits/native-proxy-language-coordination-20260913/review.json"
+      ],
+      "id": "benefit",
+      "missing_scope": "Positive attributable evidence and independent counterexamples are required for any eventual improvement claim.",
+      "required_owners": [
+        "HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.12.4.4"
+      ],
+      "requirement": "Any eventual scan or startup improvement claim needs positive attributable evidence and its own independent counterexample, with unchanged original bounds and explicit host/delivery/cold-state limits."
+    }
+  ],
+  "disposition_and_activation_owner": "HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.12.4.4",
+  "inputs": [
+    {
+      "path": "docs/audits/native-proxy-canonical-contract-20260910/contract.json",
+      "sha256": "f3f981398afae72540ab4ac0194b8380d4743c3d2146c1172a85365add053222",
+      "size_bytes": 21927
+    },
+    {
+      "path": "docs/audits/native-proxy-capture-dispatch-20260913/capture_contract.py",
+      "sha256": "1b4a9ed369aa35cf9443caebb6249961334cfa0118f3bdf4cc9544078eaa783b",
+      "size_bytes": 13623
+    },
+    {
+      "path": "docs/audits/native-proxy-capture-dispatch-20260913/review.json",
+      "sha256": "517320c0aab4dbd0d8f4c2978a3ca485f9833509fecca9afcb7385eccb2c3bc3",
+      "size_bytes": 1867
+    },
+    {
+      "path": "docs/audits/native-proxy-cleanup-receipts-20260910/CleanupReceipts.pm",
+      "sha256": "5b22cecf6ff131f62fdeb237a3e77b67b5b29a172ff82320a67772b03cd24de0",
+      "size_bytes": 1300
+    },
+    {
+      "path": "docs/audits/native-proxy-cleanup-receipts-20260910/review.json",
+      "sha256": "9b3d6ef9c887e8a7ff704232a1fcbb0f46ec733db6f733d8ff04b2773740a8b5",
+      "size_bytes": 4472
+    },
+    {
+      "path": "docs/audits/native-proxy-image-coordination-20260910/Coordination.pm",
+      "sha256": "a0d99769147f28ca7c35e9ac80ba88f7cf14760e3bef7b51841d8badebc060e5",
+      "size_bytes": 19061
+    },
+    {
+      "path": "docs/audits/native-proxy-image-custody-20260910/ImageCustody.pm",
+      "sha256": "927f1ab39f7f26742e36878985d1ff545ddf2dee119d4bf6b7b41bf2c9360ccc",
+      "size_bytes": 8619
+    },
+    {
+      "path": "docs/audits/native-proxy-image-publication-20260910/Publication.pm",
+      "sha256": "34ca8717856492a09ebf16af8810f04b1dea4c6c8c84ff7b3f5c11c07e7dc2bf",
+      "size_bytes": 5371
+    },
+    {
+      "path": "docs/audits/native-proxy-language-coordination-20260913/review.json",
+      "sha256": "c494717ddeb1464c09147cb5470f469c280256d29fefb478835aaaaa7c053104",
+      "size_bytes": 3905
+    },
+    {
+      "path": "docs/audits/native-proxy-language-coordination-admission-20260913/plan.json",
+      "sha256": "74ed9619e40ce86ff45673cde7d3baff44ccca17f5dabb440c172811138e5e55",
+      "size_bytes": 20675
+    },
+    {
+      "path": "docs/audits/native-proxy-language-coordination-admission-20260913/worker.pl",
+      "sha256": "7c098297062c596c886d74ce6f74f1532f6a03f35a5301957185e69ffdbe837a",
+      "size_bytes": 7538
+    },
+    {
+      "path": "docs/audits/native-proxy-lifetime-closure-20260913/review.json",
+      "sha256": "eaf0a29f63bd7ffc2332d2515364d939ff048276de54072688f24180c11670ab",
+      "size_bytes": 264525
+    },
+    {
+      "path": "docs/audits/native-proxy-preparation-records-20260913/PreparationRecord.pm",
+      "sha256": "ebcdfbb89d244b88bd6e29067ccc49e6af3818aaf599df70c0a6343ddbf47e3a",
+      "size_bytes": 14826
+    },
+    {
+      "path": "docs/audits/native-proxy-preparation-records-20260913/review.json",
+      "sha256": "a5eba1a1814fd0f6685b581549b455dfe51c4df7baa875015b902c14c36d6f8f",
+      "size_bytes": 2279
+    },
+    {
+      "path": "docs/audits/native-proxy-retained-formats-20260913/retained_contract.py",
+      "sha256": "258008458fea2fbee9b3e020f74966803e899f00dabcf362feec129818a1a95a",
+      "size_bytes": 6961
+    },
+    {
+      "path": "docs/audits/native-proxy-retained-formats-20260913/review.json",
+      "sha256": "4167b203ad215d0820e7eaf7cd6a8f00ee731171ac0cca9a126314e8c07dcd62",
+      "size_bytes": 1686
+    },
+    {
+      "path": "docs/audits/native-proxy-runtime-acquisition-20260910/ReferenceAcquisition.pm",
+      "sha256": "b751c88d709e102f7f9b9dd17e0222c39e0a81acc16d7194f7f7c3f4c8535b57",
+      "size_bytes": 6565
+    },
+    {
+      "path": "docs/audits/native-proxy-runtime-closure-20260910/review.json",
+      "sha256": "bf5cbbcbff52531a470a9c47f4501071d93e32b83ee63bd1dc77d582429b1917",
+      "size_bytes": 4503
+    },
+    {
+      "path": "docs/audits/native-proxy-runtime-retirement-20260910/PrivateWorkspace.pm",
+      "sha256": "fb87393846eb10147f868aa40ba444f5e5d56cef7f0aaf6a1ff295216a90e9c1",
+      "size_bytes": 6080
+    },
+    {
+      "path": "docs/audits/native-proxy-runtime-retirement-20260910/RuntimeRetirement.pm",
+      "sha256": "766348d16243d3868ca5f8b653f757f8f2eaf5c1aba8ec27fd2d9c67e9fd0bcc",
+      "size_bytes": 8727
+    },
+    {
+      "path": "docs/audits/native-proxy-runtime-retirement-20260910/audit.py",
+      "sha256": "21423cf7aec3b3625ef791e6b594421cb5c118a11673a6f7fb6eeb2c0e82fa82",
+      "size_bytes": 16362
+    },
+    {
+      "path": "docs/audits/native-proxy-runtime-retirement-20260910/review.json",
+      "sha256": "fa1c5a7dddb9fb21bd086130113b8ee70acc4576ec9ea6b3fd47430005861409",
+      "size_bytes": 7504
+    },
+    {
+      "path": "docs/audits/native-proxy-version-join-20260913/review.json",
+      "sha256": "db20a6bc59f2bbb97aa820246d9267db29bcc482e2747b7e50aa8ffc07aeda1a",
+      "size_bytes": 2671
+    },
+    {
+      "path": "perl/FSM/Support/ProcessSupervisor.pm",
+      "sha256": "684882d91f673ea7145f43ed3aad31acf099f13508574be7b2d8911123988637",
+      "size_bytes": 27990
+    },
+    {
+      "path": "scripts/analyze_fixture_policy.py",
+      "sha256": "25a98f7b8bcdac695455a64121e88637a46599552f992eb530726eec8f07b40a",
+      "size_bytes": 17432
+    },
+    {
+      "path": "scripts/fixture_kernel_sampler.py",
+      "sha256": "50c94165893b74b758c560f561ff744f294683812a26b429071ef43009aac2dc",
+      "size_bytes": 22040
+    },
+    {
+      "path": "scripts/fixture_policy_associations.py",
+      "sha256": "921fb245ca7882559753bed04fdfa33d3a71bb1c30f54e7eea510da6dd54da3f",
+      "size_bytes": 19916
+    },
+    {
+      "path": "scripts/fixture_policy_log.py",
+      "sha256": "ed3db21b5fffbed8073fbbe7d80982062e914c974f2f5512e781ce4f9eb8812c",
+      "size_bytes": 12764
+    },
+    {
+      "path": "scripts/fixture_policy_publication.py",
+      "sha256": "34d0bc53b4c28b41e1b489480799caaac30ffa02d92881f765ef2fdc556562b9",
+      "size_bytes": 6792
+    },
+    {
+      "path": "scripts/observe_fixture_startup.py",
+      "sha256": "05144eb1ebd86ebf132ad36b86b4c93b23687db928fc369f633615f0b870fe06",
+      "size_bytes": 25563
+    },
+    {
+      "path": "t/1669-task-acceptance-fixture-runtime.t",
+      "sha256": "bdebbf03308cd5e0699324f9ab96a249c11c9ab05634309569d33874391a196f",
+      "size_bytes": 67582
+    },
+    {
+      "path": "t/lib/FSM/Test/ProcessSupervisor.pm",
+      "sha256": "52e467023ea8a776167e227a767abdd3dddf185f1f7c539aac8ca1c4a0a06680",
+      "size_bytes": 773
+    },
+    {
+      "path": "t/lib/FSM/Test/RustParityRuntime.pm",
+      "sha256": "10441706cb8b189f14b791b92f75f6e37f8d72aeb8b722457bac79ebda149eaa",
+      "size_bytes": 10526
+    },
+    {
+      "path": "t/lib/FSM/Test/RustProxyFixture.pm",
+      "sha256": "d9c4ab52cf8074526c59b7a5dcb9da870ca7ffdacb4eb236dacb23b5db6d8bfb",
+      "size_bytes": 11466
+    }
+  ],
+  "native_admission_owner": "HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.12.4.2",
+  "native_execution_owner": "HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.12.4.3",
+  "new_worker_compiler_native_or_collector_run": false,
+  "next_owner": "HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.12.4.1.5.2",
+  "owner": "HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.12.4.1.5.1",
+  "parent": "HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.12.4.1.5",
+  "prerequisite_owners": {
+    "final_join": "HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.12.4.1.5.6",
+    "inactive_composition": "HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.12.4.1.5.5",
+    "owner_receipts": "HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.12.4.1.5.4",
+    "populated_workers": "HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.12.4.1.5.3",
+    "workspace_profile": "HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.12.4.1.5.2"
+  },
+  "schema": "fsmgen.native_proxy_protocol_frontier_plan.v1",
+  "scope": "Source and existing-evidence prerequisite audit only; not a final protocol qualification, real workspace census, native experiment or product activation.",
+  "source_revision": "2f144f7a18f9a4023b697c58cc5866480343d8c5"
+}

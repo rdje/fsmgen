@@ -1,0 +1,66 @@
+{
+  "first_wrong_fixture_annotation_preserved": true,
+  "indexed_contract_clauses": 9,
+  "next_owner": "HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.12.4.1.5.2",
+  "owner": "HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.12.4.1.5.1",
+  "prerequisite_owners": {
+    "final_join": "HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.12.4.1.5.6",
+    "inactive_composition": "HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.12.4.1.5.5",
+    "owner_receipts": "HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.12.4.1.5.4",
+    "populated_workers": "HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.12.4.1.5.3",
+    "workspace_profile": "HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.12.4.1.5.2"
+  },
+  "rejected_controls": [
+    "omitted_contract_clause",
+    "changed_contract_requirement",
+    "missing_required_owner",
+    "untracked_required_owner",
+    "source_scope_promoted_to_complete",
+    "omitted_workspace_prerequisite",
+    "new_live_execution_promoted",
+    "inert_exec_mode_substituted_for_wrapper",
+    "producer_mode_normalized_to_fixture",
+    "unqualified_capacity_promoted"
+  ],
+  "remaining_native_owners": [
+    "HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.12.4.2",
+    "HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.12.4.3",
+    "HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.12.4.4"
+  ],
+  "result": {
+    "actual_populated_worker_qualification_established": false,
+    "final_protocol_closure_established": false,
+    "live_native_path": "private_workspace",
+    "live_path_filter": "private_workspace",
+    "new_live_execution": false,
+    "production_preparation_schema": "fsmgen.test.rust_proxy_fixture.v1",
+    "public_collector_projection_integration_established": false,
+    "selected_actual_empty_store_cases": 12,
+    "shared_preparation_native_observer_integration_established": false,
+    "supplied_receipts_authenticate_owners": false,
+    "workspace_profile": {
+      "accepted_modes": [
+        "0400",
+        "0500",
+        "0600",
+        "0700"
+      ],
+      "actual_compiler_capacity_established": false,
+      "inert_wrapper_mode": "0700",
+      "inert_wrapper_mode_accepted": true,
+      "producer_mode": "0755",
+      "producer_mode_rejected": true,
+      "selected_policy_limits": {
+        "depth_limit": 8,
+        "file_limit": 65536,
+        "node_limit": 256,
+        "total_limit": 4194304
+      }
+    }
+  },
+  "schema": "fsmgen.native_proxy_protocol_frontier_review.v1",
+  "scope": "Source and existing-evidence prerequisite audit only; not a final protocol qualification, real workspace census, native experiment or product activation.",
+  "source_bytes": 673891,
+  "source_inputs": 34,
+  "source_revision": "2f144f7a18f9a4023b697c58cc5866480343d8c5"
+}

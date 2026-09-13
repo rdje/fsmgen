@@ -1,0 +1,99 @@
+{
+  "accepted_prototype_modes": [
+    "0400",
+    "0500",
+    "0600",
+    "0700"
+  ],
+  "actual_fixture_or_compiler_run": false,
+  "correction": {
+    "actual_fixture_or_compiler_run": false,
+    "cause": "Initial annotation confused the rustup executable tuple (0500) with the rust-tool-resolution wrapper tuple (0700). Direct source tuple review corrects the fixture mode; the real 0755 wrapper remains excluded by the current guard.",
+    "original_annotation": "workspace-compatibility-finding.first.json.source",
+    "original_sha256": "24079ded3bcbd05652d14a3313d3246142d1b59248e1719bd17a8582e27cb668"
+  },
+  "evidence": [
+    {
+      "loci": [
+        {
+          "line": 176,
+          "text": "    write_executable($probe, <<'PROBE');"
+        },
+        {
+          "line": 335,
+          "text": "    write_executable($probe, <<'PROBE');"
+        },
+        {
+          "line": 391,
+          "text": "    write_executable($probe, <<'PROBE');"
+        },
+        {
+          "line": 496,
+          "text": "    write_executable($probe, <<'PROBE');"
+        },
+        {
+          "line": 753,
+          "text": "        my $probe = File::Spec->catfile($mode_workspace, 'rust-tool-resolution');"
+        },
+        {
+          "line": 754,
+          "text": "        write_executable($probe, <<'PROBE');"
+        },
+        {
+          "line": 1396,
+          "text": "    chmod 0755, $path or die \"cannot make $path executable: $!\";"
+        }
+      ],
+      "path": "t/1669-task-acceptance-fixture-runtime.t",
+      "sha256": "bdebbf03308cd5e0699324f9ab96a249c11c9ab05634309569d33874391a196f",
+      "size_bytes": 67582
+    },
+    {
+      "loci": [
+        {
+          "line": 56,
+          "text": "    my $mode = $metadata[2] & 07777;"
+        },
+        {
+          "line": 58,
+          "text": "        && ($mode == 0400 || $mode == 0500 || $mode == 0600 || $mode == 0700);"
+        }
+      ],
+      "path": "docs/audits/native-proxy-runtime-retirement-20260910/PrivateWorkspace.pm",
+      "sha256": "fb87393846eb10147f868aa40ba444f5e5d56cef7f0aaf6a1ff295216a90e9c1",
+      "size_bytes": 6080
+    },
+    {
+      "loci": [
+        {
+          "line": 71,
+          "text": "    for name, raw, mode in [('rustup.c', c, 0o400), ('rustup', executable, 0o500), ('image.json', manifest, 0o400)]:"
+        },
+        {
+          "line": 96,
+          "text": "    for path, raw, mode in [('rust-tool-resolution', b'inert wrapper; never executed', 0o700),"
+        },
+        {
+          "line": 99,
+          "text": "                            ('rust-tools/rustup.c', c, 0o400), ('rust-tools/rustup', executable, 0o500),"
+        }
+      ],
+      "path": "docs/audits/native-proxy-runtime-retirement-20260910/audit.py",
+      "sha256": "21423cf7aec3b3625ef791e6b594421cb5c118a11673a6f7fb6eeb2c0e82fa82",
+      "size_bytes": 16362
+    }
+  ],
+  "inert_wrapper_locus": {
+    "line": 96,
+    "path": "docs/audits/native-proxy-runtime-retirement-20260910/audit.py",
+    "text": "    for path, raw, mode in [('rust-tool-resolution', b'inert wrapper; never executed', 0o700),"
+  },
+  "inert_wrapper_mode": "0700",
+  "mechanism": "The current producer wrapper mode cannot pass the current inactive workspace file-mode guard; the inert profile used a different mode.",
+  "observed_producer_mode": "0755",
+  "owner": "HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.12.4.1.5.2",
+  "retirement_capacity_still_unqualified": true,
+  "schema": "fsmgen.native_proxy_workspace_compatibility_finding.v1",
+  "selected_empty_store_coordination_invalidated": false,
+  "status": "owned_fix_pending"
+}

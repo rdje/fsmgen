@@ -1731,7 +1731,8 @@ references and images fail. An interrupted or incomplete acquisition retains
 uncertain global references; it cannot silently repair or reacquire them.
 Even complete inactive results keep `runtime_authorized: 0` and
 `executable: null`. Inactive retirement and maintenance qualify below; complete
-observer lifetimes, actual contention and native behavior remain open. Replay:
+observer lifetimes and selected empty-store coordination are qualified below;
+native behavior and populated-worker qualification remain open. Replay:
 
 ```bash
 scripts/run_with_ram_guard.sh -- perl docs/audits/native-proxy-runtime-acquisition-20260910/qualify.t
