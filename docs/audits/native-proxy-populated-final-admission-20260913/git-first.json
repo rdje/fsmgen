@@ -1,0 +1,61 @@
+{
+  "outputs": {
+    "exit": "0\n",
+    "stderr": "ram-guard: PID 93263; host 69.9%; host cutoff 88%; descendant RSS cutoff 4096 MiB; poll 2s\n",
+    "stdout": "{\n  \"actual_fixture_allocation\": false,\n  \"actual_worker_execution\": false,\n  \"complete_loaded_git_dependency_closure\": false,\n  \"locality_exception\": \"Required installed read-only Git launcher; no project data is written outside the repository volume.\",\n  \"observed\": {\n    \"device\": 16777232,\n    \"inode\": 1152921500312571562,\n    \"installed_path\": \"/usr/bin/git\",\n    \"mode\": 493,\n    \"read_only\": true,\n    \"sha256\": \"b8763cf250e607a778bb4603cecb5b90338814d0a3dfcba0d57b1de242f610e9\",\n    \"size_bytes\": 118640,\n    \"uid\": 0\n  },\n  \"prior_selected_source\": \"docs/audits/native-proxy-compiler-census-policy-admission-20260913/plan.json\",\n  \"schema\": \"fsmgen.inactive_populated_selected_git_input.v1\",\n  \"selected\": {\n    \"sha256\": \"b8763cf250e607a778bb4603cecb5b90338814d0a3dfcba0d57b1de242f610e9\",\n    \"size_bytes\": 118640\n  }\n}\n"
+  },
+  "result": {
+    "actual_fixture_allocation": false,
+    "actual_worker_execution": false,
+    "complete_loaded_git_dependency_closure": false,
+    "locality_exception": "Required installed read-only Git launcher; no project data is written outside the repository volume.",
+    "observed": {
+      "device": 16777232,
+      "inode": 1152921500312571562,
+      "installed_path": "/usr/bin/git",
+      "mode": 493,
+      "read_only": true,
+      "sha256": "b8763cf250e607a778bb4603cecb5b90338814d0a3dfcba0d57b1de242f610e9",
+      "size_bytes": 118640,
+      "uid": 0
+    },
+    "prior_selected_source": "docs/audits/native-proxy-compiler-census-policy-admission-20260913/plan.json",
+    "schema": "fsmgen.inactive_populated_selected_git_input.v1",
+    "selected": {
+      "sha256": "b8763cf250e607a778bb4603cecb5b90338814d0a3dfcba0d57b1de242f610e9",
+      "size_bytes": 118640
+    }
+  },
+  "sources": [
+    {
+      "original": "docs/audits/native-proxy-populated-final-admission-20260913/capture_git.py",
+      "path": "docs/audits/native-proxy-populated-final-admission-20260913/capture_git.py.git-first.source",
+      "sha256": "d992edc709956c69b59eacc21512feb509e80dcf777764e7fc3650a84f651d7b",
+      "size_bytes": 954
+    },
+    {
+      "original": "docs/audits/native-proxy-populated-final-admission-20260913/installed_inputs.py",
+      "path": "docs/audits/native-proxy-populated-final-admission-20260913/installed_inputs.py.git-first.source",
+      "sha256": "d401d42cc3d4ae2cf0ae489b0fe43f0e6bf422cfe539ed0af312e188ef9d0a7f",
+      "size_bytes": 5709
+    },
+    {
+      "original": "docs/audits/native-proxy-populated-final-admission-20260913/local_files.py",
+      "path": "docs/audits/native-proxy-populated-final-admission-20260913/local_files.py.git-first.source",
+      "sha256": "3e18cc9b24131d8f22ccc02caa88ea1578242c6af4a82b974e3144724598ac55",
+      "size_bytes": 5430
+    },
+    {
+      "original": "docs/audits/native-proxy-populated-final-admission-20260913/contract.py",
+      "path": "docs/audits/native-proxy-populated-final-admission-20260913/contract.py.git-first.source",
+      "sha256": "f34321c5e6a489cf6c2457968e0702770bb098b295e7bbaa74a03f0fd6861e5d",
+      "size_bytes": 5282
+    },
+    {
+      "original": "docs/audits/native-proxy-populated-final-admission-20260913/records.py",
+      "path": "docs/audits/native-proxy-populated-final-admission-20260913/records.py.git-first.source",
+      "sha256": "c420e9cdd008e9bce96a581969de6ce4ffa2636510f96a2e8354ce57c5d3e675",
+      "size_bytes": 7313
+    }
+  ]
+}

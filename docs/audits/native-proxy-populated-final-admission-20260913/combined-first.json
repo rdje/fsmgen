@@ -1,0 +1,100 @@
+{
+  "outputs": {
+    "exit": "0\n",
+    "stderr": "ram-guard: PID 63978; host 78.0%; host cutoff 88%; descendant RSS cutoff 4096 MiB; poll 2s\n",
+    "stdout": "{\n  \"actual_fixture_allocation\": false,\n  \"actual_permit_issued\": false,\n  \"actual_worker_execution\": false,\n  \"counts\": {\n    \"archives\": 3,\n    \"cancelled_workers\": 2,\n    \"cases\": 6,\n    \"cleanup_nodes\": 42,\n    \"commands\": 120,\n    \"completed_operations\": 45,\n    \"workers\": 15\n  },\n  \"native_live_startup_qualification_open\": true,\n  \"next_owner\": \"HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.12.4.1.5.3.2\",\n  \"owner\": \"HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.12.4.1.5.3.1.4\",\n  \"prospective_geometry\": {\n    \"journal_bytes\": 1273868,\n    \"journal_rows\": 1045,\n    \"largest_activation\": 1488,\n    \"largest_handoff\": 13692,\n    \"largest_owned_depth\": 3,\n    \"largest_owned_file\": 1692,\n    \"largest_owned_file_total\": 7393,\n    \"largest_owned_tree\": 22,\n    \"largest_worker_event\": 27186,\n    \"largest_worker_event_count\": 15,\n    \"largest_worker_output\": 45553,\n    \"reviewed_files\": 47,\n    \"run_files\": 46,\n    \"scope\": \"Conservative maximum-width encodings of fixed successful model shapes. These widened records are not valid native acquisitions. Failure outputs remain separately bounded by the controller, journal and local I/O ceilings.\",\n    \"source_epoch\": \"6663b09682c2b7461a2573900c187dcfff6fd9b0\",\n    \"source_epoch_frontier_bytes\": 1143836,\n    \"start_marker\": 226,\n    \"worker_authority\": 5003\n  },\n  \"qualification_checks\": {\n    \"admission\": 20,\n    \"bounds\": 4,\n    \"envelope\": 11,\n    \"files\": 16,\n    \"lifetime_results\": 235,\n    \"oracle\": 0,\n    \"owned_tree\": 58,\n    \"records\": 13,\n    \"source_authentication\": 2\n  },\n  \"qualification_sha256\": \"3d2557a6d29ebbc4526ec3694a531e33b963ae986f660b5eae8fe98d7a89d5e0\",\n  \"rejecting_controls\": {\n    \"admission\": 31,\n    \"bounds\": 11,\n    \"envelope\": 18,\n    \"files\": 24,\n    \"lifetime_results\": 183,\n    \"oracle\": 18,\n    \"owned_tree\": 79,\n    \"records\": 66,\n    \"source_authentication\": 18\n  },\n  \"repaired_first_cleanup_defects\": 2,\n  \"retained_first_sources\": 89,\n  \"selected_installed_perl_modules\": 47,\n  \"selected_prior_revision\": \"6663b09682c2b7461a2573900c187dcfff6fd9b0\",\n  \"selected_worker_sources\": 25,\n  \"source_pins_sha256\": \"08bc06b023293bcdbd939bebe0a905552a7d908aa9ca054758b55094202dff12\",\n  \"synthetic_retirement_and_work_records\": true\n}\n"
+  },
+  "result": {
+    "actual_fixture_allocation": false,
+    "actual_permit_issued": false,
+    "actual_worker_execution": false,
+    "counts": {
+      "archives": 3,
+      "cancelled_workers": 2,
+      "cases": 6,
+      "cleanup_nodes": 42,
+      "commands": 120,
+      "completed_operations": 45,
+      "workers": 15
+    },
+    "native_live_startup_qualification_open": true,
+    "next_owner": "HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.12.4.1.5.3.2",
+    "owner": "HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.12.4.1.5.3.1.4",
+    "prospective_geometry": {
+      "journal_bytes": 1273868,
+      "journal_rows": 1045,
+      "largest_activation": 1488,
+      "largest_handoff": 13692,
+      "largest_owned_depth": 3,
+      "largest_owned_file": 1692,
+      "largest_owned_file_total": 7393,
+      "largest_owned_tree": 22,
+      "largest_worker_event": 27186,
+      "largest_worker_event_count": 15,
+      "largest_worker_output": 45553,
+      "reviewed_files": 47,
+      "run_files": 46,
+      "scope": "Conservative maximum-width encodings of fixed successful model shapes. These widened records are not valid native acquisitions. Failure outputs remain separately bounded by the controller, journal and local I/O ceilings.",
+      "source_epoch": "6663b09682c2b7461a2573900c187dcfff6fd9b0",
+      "source_epoch_frontier_bytes": 1143836,
+      "start_marker": 226,
+      "worker_authority": 5003
+    },
+    "qualification_checks": {
+      "admission": 20,
+      "bounds": 4,
+      "envelope": 11,
+      "files": 16,
+      "lifetime_results": 235,
+      "oracle": 0,
+      "owned_tree": 58,
+      "records": 13,
+      "source_authentication": 2
+    },
+    "qualification_sha256": "3d2557a6d29ebbc4526ec3694a531e33b963ae986f660b5eae8fe98d7a89d5e0",
+    "rejecting_controls": {
+      "admission": 31,
+      "bounds": 11,
+      "envelope": 18,
+      "files": 24,
+      "lifetime_results": 183,
+      "oracle": 18,
+      "owned_tree": 79,
+      "records": 66,
+      "source_authentication": 18
+    },
+    "repaired_first_cleanup_defects": 2,
+    "retained_first_sources": 89,
+    "selected_installed_perl_modules": 47,
+    "selected_prior_revision": "6663b09682c2b7461a2573900c187dcfff6fd9b0",
+    "selected_worker_sources": 25,
+    "source_pins_sha256": "08bc06b023293bcdbd939bebe0a905552a7d908aa9ca054758b55094202dff12",
+    "synthetic_retirement_and_work_records": true
+  },
+  "sources": [
+    {
+      "original": "docs/audits/native-proxy-populated-final-admission-20260913/audit.py",
+      "path": "docs/audits/native-proxy-populated-final-admission-20260913/audit.py.combined-first.source",
+      "sha256": "c774230c2f2b9be94c95d9d8f584c26ef0dd311b0362ac4a8c924cd228bbec47",
+      "size_bytes": 6495
+    },
+    {
+      "original": "docs/audits/native-proxy-populated-final-admission-20260913/source_inventory.py",
+      "path": "docs/audits/native-proxy-populated-final-admission-20260913/source_inventory.py.combined-first.source",
+      "sha256": "1ab7ffe8f752479b6ee9001b55c884a563b960848543a22e0e5d8fd0a2b3e1f8",
+      "size_bytes": 2882
+    },
+    {
+      "original": "docs/audits/native-proxy-populated-final-admission-20260913/execution-source-pins.json",
+      "path": "docs/audits/native-proxy-populated-final-admission-20260913/execution-source-pins.json.combined-first.source",
+      "sha256": "08bc06b023293bcdbd939bebe0a905552a7d908aa9ca054758b55094202dff12",
+      "size_bytes": 36650
+    },
+    {
+      "original": "docs/audits/native-proxy-populated-final-admission-20260913/plan.json",
+      "path": "docs/audits/native-proxy-populated-final-admission-20260913/plan.json.combined-first.source",
+      "sha256": "39e9efd13191087f33bcc3340eb8c33715ad5f2707bfb96dbd76accd4db0d77b",
+      "size_bytes": 50654
+    }
+  ]
+}

@@ -129,13 +129,13 @@ answers:
   - "how is unadmitted populated-worker recovery repaired?"
   - "how are fixed populated-worker commands qualified?"
   - "why does actual-wrapper observation still need a mode repair?"
-date: 2026-09-13
+date: 2026-09-14
 status: current
 tags: [tests, subprocess, supervision, task-acceptance, darwin, locality]
 evidence: >-
-  docs/audits/native-proxy-populated-worker-protocol-20260913/review.json;
+  docs/audits/native-proxy-populated-final-admission-20260913/review.json;
   docs/audits/native-proxy-populated-worker-protocol-20260913/observation-wrapper-gap.json
 reverify: >-
-  scripts/run_with_ram_guard.sh -- python3 -B docs/audits/native-proxy-populated-worker-protocol-20260913/audit.py --verify-saved
+  scripts/run_with_ram_guard.sh -- python3 -B docs/audits/native-proxy-populated-final-admission-20260913/audit.py --verify-saved
 ---
-History: `77f4da7ecc3bb610ce4f7851f6a6b71844fd489c:docs/knowledge/test-subprocess-policy-adapters.md`. Fixed Perl commands preserve original octets and custody in models; final execution admission remains open. Observation accepts the inert wrapper mode, while actual-wrapper mode compatibility remains owned by the integration task.
+History: `6663b09682c2b7461a2573900c187dcfff6fd9b0:docs/knowledge/test-subprocess-policy-adapters.md`. Admission and lifetime models pass; actual workers remain next. Original inode/mode checks reject replacement. Retirement/work receipts stay synthetic; actual-wrapper observation repair remains owned by integration.

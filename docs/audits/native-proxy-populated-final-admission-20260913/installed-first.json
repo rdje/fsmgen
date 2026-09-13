@@ -1,0 +1,68 @@
+{
+  "outputs": {
+    "exit": "0\n",
+    "stderr": "ram-guard: PID 4597; host 82.2%; host cutoff 88%; descendant RSS cutoff 4096 MiB; poll 2s\n",
+    "stdout": "{\n  \"actual_probe_execution\": false,\n  \"actual_worker_execution\": false,\n  \"complete_native_dependency_closure\": false,\n  \"current_python_identity\": {\n    \"pid\": 4597,\n    \"ppid\": 4532,\n    \"ruid\": 501,\n    \"start_sec\": 1789335021,\n    \"start_usec\": 480587,\n    \"uid\": 501\n  },\n  \"locality_exception\": \"Selected installed interpreters, standard modules and libproc are required read-only OS/toolchain dependencies. No project data is written outside the repository volume.\",\n  \"native_reader_dependency\": \"/usr/lib/libproc.dylib\",\n  \"platform\": \"darwin\",\n  \"project_device\": 16777244,\n  \"schema\": \"fsmgen.inactive_populated_installed_inputs.v1\",\n  \"toolchains\": {\n    \"perl\": {\n      \"invocation_binary\": {\n        \"sha256\": \"53bce3db7e095b596fa42626b55edc63e3388d7afecf45a0b1ecc5211721c812\",\n        \"size_bytes\": 101648\n      },\n      \"invocation_path\": \"/usr/bin/perl\",\n      \"native_image\": {\n        \"binary\": {\n          \"sha256\": \"53bce3db7e095b596fa42626b55edc63e3388d7afecf45a0b1ecc5211721c812\",\n          \"size_bytes\": 101648\n        },\n        \"kind\": \"same_binary\"\n      },\n      \"native_path\": \"/usr/bin/perl\",\n      \"read_only_toolchain_input\": true,\n      \"selected_sibling_basename\": \"perl\"\n    },\n    \"python\": {\n      \"invocation_binary\": {\n        \"sha256\": \"87d4df53fd91304be5bac391fb204643c36b7df2023c04a0953bcbc7d4fdf634\",\n        \"size_bytes\": 34640\n      },\n      \"invocation_path\": \"/opt/homebrew/Cellar/python@3.14/3.14.7/Frameworks/Python.framework/Versions/3.14/bin/python3.14\",\n      \"native_image\": {\n        \"binary\": {\n          \"sha256\": \"e89d60f8ccee9db684801330198797723db2ac378cd53e5cfe523128feb76599\",\n          \"size_bytes\": 33568\n        },\n        \"kind\": \"python_framework\"\n      },\n      \"native_path\": \"/opt/homebrew/Cellar/python@3.14/3.14.7/Frameworks/Python.framework/Versions/3.14/Resources/Python.app/Contents/MacOS/Python\",\n      \"read_only_toolchain_input\": true,\n      \"selected_sibling_basename\": \"python3.14\"\n    }\n  },\n  \"uname\": {\n    \"machine\": \"arm64\",\n    \"release\": \"25.6.0\",\n    \"system\": \"Darwin\",\n    \"version\": \"Darwin Kernel Version 25.6.0: Fri Jul 31 19:17:26 PDT 2026; root:xnu-12377.161.14~5/RELEASE_ARM64_T6041\"\n  }\n}\n"
+  },
+  "result": {
+    "actual_probe_execution": false,
+    "actual_worker_execution": false,
+    "complete_native_dependency_closure": false,
+    "current_python_identity": {
+      "pid": 4597,
+      "ppid": 4532,
+      "ruid": 501,
+      "start_sec": 1789335021,
+      "start_usec": 480587,
+      "uid": 501
+    },
+    "locality_exception": "Selected installed interpreters, standard modules and libproc are required read-only OS/toolchain dependencies. No project data is written outside the repository volume.",
+    "native_reader_dependency": "/usr/lib/libproc.dylib",
+    "platform": "darwin",
+    "project_device": 16777244,
+    "schema": "fsmgen.inactive_populated_installed_inputs.v1",
+    "toolchains": {
+      "perl": {
+        "invocation_binary": {
+          "sha256": "53bce3db7e095b596fa42626b55edc63e3388d7afecf45a0b1ecc5211721c812",
+          "size_bytes": 101648
+        },
+        "invocation_path": "/usr/bin/perl",
+        "native_image": {
+          "binary": {
+            "sha256": "53bce3db7e095b596fa42626b55edc63e3388d7afecf45a0b1ecc5211721c812",
+            "size_bytes": 101648
+          },
+          "kind": "same_binary"
+        },
+        "native_path": "/usr/bin/perl",
+        "read_only_toolchain_input": true,
+        "selected_sibling_basename": "perl"
+      },
+      "python": {
+        "invocation_binary": {
+          "sha256": "87d4df53fd91304be5bac391fb204643c36b7df2023c04a0953bcbc7d4fdf634",
+          "size_bytes": 34640
+        },
+        "invocation_path": "/opt/homebrew/Cellar/python@3.14/3.14.7/Frameworks/Python.framework/Versions/3.14/bin/python3.14",
+        "native_image": {
+          "binary": {
+            "sha256": "e89d60f8ccee9db684801330198797723db2ac378cd53e5cfe523128feb76599",
+            "size_bytes": 33568
+          },
+          "kind": "python_framework"
+        },
+        "native_path": "/opt/homebrew/Cellar/python@3.14/3.14.7/Frameworks/Python.framework/Versions/3.14/Resources/Python.app/Contents/MacOS/Python",
+        "read_only_toolchain_input": true,
+        "selected_sibling_basename": "python3.14"
+      }
+    },
+    "uname": {
+      "machine": "arm64",
+      "release": "25.6.0",
+      "system": "Darwin",
+      "version": "Darwin Kernel Version 25.6.0: Fri Jul 31 19:17:26 PDT 2026; root:xnu-12377.161.14~5/RELEASE_ARM64_T6041"
+    }
+  },
+  "source_sha256": "41f8c9bb771d8f4299d876dc4524dfef30063f8f64e6109c8b58bc99d9350370"
+}

@@ -1,0 +1,32 @@
+[
+  {
+    "original": "docs/audits/native-proxy-populated-final-admission-20260913/capture_git.py",
+    "path": "docs/audits/native-proxy-populated-final-admission-20260913/capture_git.py.git-first.source",
+    "sha256": "d992edc709956c69b59eacc21512feb509e80dcf777764e7fc3650a84f651d7b",
+    "size_bytes": 954
+  },
+  {
+    "original": "docs/audits/native-proxy-populated-final-admission-20260913/installed_inputs.py",
+    "path": "docs/audits/native-proxy-populated-final-admission-20260913/installed_inputs.py.git-first.source",
+    "sha256": "d401d42cc3d4ae2cf0ae489b0fe43f0e6bf422cfe539ed0af312e188ef9d0a7f",
+    "size_bytes": 5709
+  },
+  {
+    "original": "docs/audits/native-proxy-populated-final-admission-20260913/local_files.py",
+    "path": "docs/audits/native-proxy-populated-final-admission-20260913/local_files.py.git-first.source",
+    "sha256": "3e18cc9b24131d8f22ccc02caa88ea1578242c6af4a82b974e3144724598ac55",
+    "size_bytes": 5430
+  },
+  {
+    "original": "docs/audits/native-proxy-populated-final-admission-20260913/contract.py",
+    "path": "docs/audits/native-proxy-populated-final-admission-20260913/contract.py.git-first.source",
+    "sha256": "f34321c5e6a489cf6c2457968e0702770bb098b295e7bbaa74a03f0fd6861e5d",
+    "size_bytes": 5282
+  },
+  {
+    "original": "docs/audits/native-proxy-populated-final-admission-20260913/records.py",
+    "path": "docs/audits/native-proxy-populated-final-admission-20260913/records.py.git-first.source",
+    "sha256": "c420e9cdd008e9bce96a581969de6ce4ffa2636510f96a2e8354ce57c5d3e675",
+    "size_bytes": 7313
+  }
+]

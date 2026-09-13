@@ -1,0 +1,21 @@
+{
+  "outputs": {
+    "exit": "1\n",
+    "stderr": "ram-guard: PID 7584; host 75.5%; host cutoff 88%; descendant RSS cutoff 4096 MiB; poll 2s\nTraceback (most recent call last):\n  File \"/Volumes/SSD/Documents/github/fsmgen/docs/audits/native-proxy-populated-final-admission-20260913/qualify_owned_case.py\", line 321, in <module>\n    print(json.dumps(qualify(), sort_keys=True, indent=2))\n                     ~~~~~~~^^\n  File \"/Volumes/SSD/Documents/github/fsmgen/docs/audits/native-proxy-populated-final-admission-20260913/qualify_owned_case.py\", line 163, in qualify\n    reject(label + 'retained image cannot lose its final seal', fixture.snapshot, owned.UnresolvedTree)\n    ~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/Volumes/SSD/Documents/github/fsmgen/docs/audits/native-proxy-populated-final-admission-20260913/qualify_owned_case.py\", line 106, in reject\n    raise AssertionError(name + ': unexpectedly accepted')\nAssertionError: equal_publication: retained image cannot lose its final seal: unexpectedly accepted\n",
+    "stdout": ""
+  },
+  "sources": [
+    {
+      "original": "docs/audits/native-proxy-populated-final-admission-20260913/owned_case.py",
+      "path": "docs/audits/native-proxy-populated-final-admission-20260913/owned_case.py.owned-expanded.source",
+      "sha256": "92b0b0754a6647c748b2f580d197039146123f0d2d6c304d90c1dc3ad6468d60",
+      "size_bytes": 13027
+    },
+    {
+      "original": "docs/audits/native-proxy-populated-final-admission-20260913/qualify_owned_case.py",
+      "path": "docs/audits/native-proxy-populated-final-admission-20260913/qualify_owned_case.py.owned-expanded.source",
+      "sha256": "733467c210d3bfc2360cd4e4c9621d00830b922c3412de772c80c470f1442cde",
+      "size_bytes": 17311
+    }
+  ]
+}

@@ -1,0 +1,6 @@
+{
+  "executed": false,
+  "finding": "Before running the first model, source inspection showed retained snapshot identities do not carry mode or uid. The model installer now derives fixed payload modes and keeps its own uid; wrapper rebinding changes only device/inode.",
+  "implementation_changed": false,
+  "source_pins": "owned-first-source-pins.json"
+}

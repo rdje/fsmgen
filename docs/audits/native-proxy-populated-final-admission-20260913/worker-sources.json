@@ -1,0 +1,127 @@
+[
+  {
+    "path": "docs/audits/native-proxy-cleanup-receipts-20260910/CleanupReceipts.pm",
+    "sha256": "5b22cecf6ff131f62fdeb237a3e77b67b5b29a172ff82320a67772b03cd24de0",
+    "size_bytes": 1300
+  },
+  {
+    "path": "docs/audits/native-proxy-image-coordination-20260910/Coordination.pm",
+    "sha256": "a0d99769147f28ca7c35e9ac80ba88f7cf14760e3bef7b51841d8badebc060e5",
+    "size_bytes": 19061
+  },
+  {
+    "path": "docs/audits/native-proxy-image-custody-20260910/ImageCustody.pm",
+    "sha256": "927f1ab39f7f26742e36878985d1ff545ddf2dee119d4bf6b7b41bf2c9360ccc",
+    "size_bytes": 8619
+  },
+  {
+    "path": "docs/audits/native-proxy-image-maintenance-20260910/ImageMaintenance.pm",
+    "sha256": "1295957d97737e764c0e800885a2c3f9adfa327a0d41b35d122dde3e21698cac",
+    "size_bytes": 5678
+  },
+  {
+    "path": "docs/audits/native-proxy-image-publication-20260910/Publication.pm",
+    "sha256": "34ca8717856492a09ebf16af8810f04b1dea4c6c8c84ff7b3f5c11c07e7dc2bf",
+    "size_bytes": 5371
+  },
+  {
+    "path": "docs/audits/native-proxy-observation-acquisition-20260910/ObservationAcquisition.pm",
+    "sha256": "809c013255ab6973a2d0dabcfd5b0ae5c55c97696d7acc77b10cf68149006470",
+    "size_bytes": 16517
+  },
+  {
+    "path": "docs/audits/native-proxy-observation-archive-20260911/ObservationArchive.pm",
+    "sha256": "79454039421822af31f9891d0a3d3ebe1b4c1ebcc6f6c8decd1f78e081736e87",
+    "size_bytes": 6196
+  },
+  {
+    "path": "docs/audits/native-proxy-observation-archive-records-20260911/ArchiveRecord.pm",
+    "sha256": "38fb47a97157d1b052b3e0f4e148fa6cacd27f4d8defb63ca469133ac6ec1af1",
+    "size_bytes": 9873
+  },
+  {
+    "path": "docs/audits/native-proxy-observation-archive-release-20260911/ObservationRelease.pm",
+    "sha256": "08236265e6e6973ab23e9e31ee26071272f39e8879c2d420ab2382fc800345ab",
+    "size_bytes": 10294
+  },
+  {
+    "path": "docs/audits/native-proxy-observation-records-20260910/ObservationRecord.pm",
+    "sha256": "35445ee951c8f5e7dc204f58cffe1b2f6273286cc3e7715953d705b33e7158d5",
+    "size_bytes": 4369
+  },
+  {
+    "path": "docs/audits/native-proxy-observation-work-records-20260911/WorkRecord.pm",
+    "sha256": "3f0f1351bc44a2a8b42502b7b814544f9d756ae8c39e17db470b312635a6e56d",
+    "size_bytes": 8126
+  },
+  {
+    "path": "docs/audits/native-proxy-populated-worker-protocol-20260913/Protocol.pm",
+    "sha256": "f026b038d6069deca3fb5d18113624412acf52c193fba4a6ec6cf47aec6cfaf1",
+    "size_bytes": 19282
+  },
+  {
+    "path": "docs/audits/native-proxy-populated-worker-protocol-20260913/Wire.pm",
+    "sha256": "18d459122591ba84ee5c5d4616adc298b1012702316952f01f57170f833abaee",
+    "size_bytes": 4380
+  },
+  {
+    "path": "docs/audits/native-proxy-populated-worker-protocol-20260913/WorkerIO.pm",
+    "sha256": "e70d9a9f11bc630eca3401449bbe786abea72ba099747f2a75485ff5b3aa8b82",
+    "size_bytes": 6084
+  },
+  {
+    "path": "docs/audits/native-proxy-populated-worker-protocol-20260913/contract.json",
+    "sha256": "57a903273c38fffd06d436cfd1ac640f8adb305e626ebd820fb821aee606c0d4",
+    "size_bytes": 23507
+  },
+  {
+    "path": "docs/audits/native-proxy-populated-worker-protocol-20260913/worker.pl",
+    "sha256": "df6b43714957c0405cb38f5d596af6440daff14e2146bfb4dc08d63447166d6d",
+    "size_bytes": 7268
+  },
+  {
+    "path": "docs/audits/native-proxy-runtime-acquisition-20260910/ReferenceAcquisition.pm",
+    "sha256": "b751c88d709e102f7f9b9dd17e0222c39e0a81acc16d7194f7f7c3f4c8535b57",
+    "size_bytes": 6565
+  },
+  {
+    "path": "docs/audits/native-proxy-runtime-census-20260910/ReferenceCensus.pm",
+    "sha256": "9fd74767e8c10831f2732fa8ad426b7e4fff8c17bab06584aa671cdd013b6247",
+    "size_bytes": 8024
+  },
+  {
+    "path": "docs/audits/native-proxy-runtime-records-20260910/RuntimeRecord.pm",
+    "sha256": "013c0a02e7df59dc3a5af944b603cd44121252a02ca0228d6fdc3e1dd28e6745",
+    "size_bytes": 4078
+  },
+  {
+    "path": "docs/audits/native-proxy-runtime-retirement-20260910/PrivateWorkspace.pm",
+    "sha256": "98e324cf9ef89471ffb4ede683ce21a8e09fc02329739a0856285ecea067e18f",
+    "size_bytes": 6425
+  },
+  {
+    "path": "docs/audits/native-proxy-runtime-retirement-20260910/RuntimeRetirement.pm",
+    "sha256": "766348d16243d3868ca5f8b653f757f8f2eaf5c1aba8ec27fd2d9c67e9fd0bcc",
+    "size_bytes": 8727
+  },
+  {
+    "path": "perl/FSM/ProjectDataLocality.pm",
+    "sha256": "14aece4a50b35956bc2585099aa8d26753942288663c641922da9d36ad4bc893",
+    "size_bytes": 6017
+  },
+  {
+    "path": "perl/FSM/Support/ProcessSupervisor.pm",
+    "sha256": "684882d91f673ea7145f43ed3aad31acf099f13508574be7b2d8911123988637",
+    "size_bytes": 27990
+  },
+  {
+    "path": "t/lib/FSM/Test/ProcessSupervisor.pm",
+    "sha256": "52e467023ea8a776167e227a767abdd3dddf185f1f7c539aac8ca1c4a0a06680",
+    "size_bytes": 773
+  },
+  {
+    "path": "t/lib/FSM/Test/RustProxyFixture.pm",
+    "sha256": "d9c4ab52cf8074526c59b7a5dcb9da870ca7ffdacb4eb236dacb23b5db6d8bfb",
+    "size_bytes": 11466
+  }
+]

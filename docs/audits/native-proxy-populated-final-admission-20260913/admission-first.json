@@ -1,0 +1,113 @@
+{
+  "outputs": {
+    "exit": "0\n",
+    "stderr": "ram-guard: PID 95597; host 74.3%; host cutoff 88%; descendant RSS cutoff 4096 MiB; poll 2s\n",
+    "stdout": "{\n  \"actual_fixture_allocation\": false,\n  \"actual_permit_issued\": false,\n  \"actual_worker_execution\": false,\n  \"checks\": [\n    \"exact committed admission and separately active execution accepted\",\n    \"Git policy returns the exact selected output\",\n    \"Git launcher and repository ignore policy are fixed\",\n    \"Git environment has no inherited global or personal settings\",\n    \"installed input preserves exact bounded bytes and identity\",\n    \"digest mismatch closes its owned descriptor\",\n    \"installed input retains its additional close error\",\n    \"success journal retains complete original rows\",\n    \"partial_write journal retains complete original rows\",\n    \"zero_write freezes the first journal failure\",\n    \"zero_write preserves its exact bounded intended prefix\",\n    \"close_error freezes the first journal failure\",\n    \"close_error preserves its exact bounded intended prefix\",\n    \"event_bound freezes the first journal failure\",\n    \"event_bound preserves its exact bounded intended prefix\",\n    \"byte_bound freezes the first journal failure\",\n    \"rejected oversize journal row is not retained as a completed write\",\n    \"byte_bound preserves its exact bounded intended prefix\",\n    \"envelope freezes the first journal failure\",\n    \"envelope preserves its exact bounded intended prefix\"\n  ],\n  \"full_preflight_and_driver_models_still_pending\": true,\n  \"rejected\": [\n    \"admission rejects abbreviated commit\",\n    \"admission rejects nonhex commit\",\n    \"admission rejects wrong commit owner\",\n    \"admission rejects unfinished committed admission\",\n    \"admission rejects unfinished current admission\",\n    \"admission rejects execution already active in admission commit\",\n    \"admission rejects execution not separately activated\",\n    \"admission rejects duplicate owner\",\n    \"admission rejects wrong memory owner\",\n    \"admission rejects duplicate memory pointer\",\n    \"admission rejects dirty implementation\",\n    \"admission rejects staged live pointer\",\n    \"admission rejects untracked implementation\",\n    \"admission rejects root identity\",\n    \"admission rejects elevated identity\",\n    \"admission rejects boolean identity\",\n    \"admission rejects wrong platform\",\n    \"installed input rejects changed digest\",\n    \"installed input rejects foreign owner\",\n    \"installed input rejects changing file identity\",\n    \"installed read failure survives close failure\",\n    \"zero_write journal failure is explicit\",\n    \"zero_write cannot resume normal journaling\",\n    \"journal close failure remains explicit\",\n    \"close_error cannot resume normal journaling\",\n    \"event_bound journal failure is explicit\",\n    \"event_bound cannot resume normal journaling\",\n    \"byte_bound journal failure is explicit\",\n    \"byte_bound cannot resume normal journaling\",\n    \"envelope journal failure is explicit\",\n    \"envelope cannot resume normal journaling\"\n  ],\n  \"schema\": \"fsmgen.inactive_populated_admission_models.v1\"\n}\n"
+  },
+  "result": {
+    "actual_fixture_allocation": false,
+    "actual_permit_issued": false,
+    "actual_worker_execution": false,
+    "checks": [
+      "exact committed admission and separately active execution accepted",
+      "Git policy returns the exact selected output",
+      "Git launcher and repository ignore policy are fixed",
+      "Git environment has no inherited global or personal settings",
+      "installed input preserves exact bounded bytes and identity",
+      "digest mismatch closes its owned descriptor",
+      "installed input retains its additional close error",
+      "success journal retains complete original rows",
+      "partial_write journal retains complete original rows",
+      "zero_write freezes the first journal failure",
+      "zero_write preserves its exact bounded intended prefix",
+      "close_error freezes the first journal failure",
+      "close_error preserves its exact bounded intended prefix",
+      "event_bound freezes the first journal failure",
+      "event_bound preserves its exact bounded intended prefix",
+      "byte_bound freezes the first journal failure",
+      "rejected oversize journal row is not retained as a completed write",
+      "byte_bound preserves its exact bounded intended prefix",
+      "envelope freezes the first journal failure",
+      "envelope preserves its exact bounded intended prefix"
+    ],
+    "full_preflight_and_driver_models_still_pending": true,
+    "rejected": [
+      "admission rejects abbreviated commit",
+      "admission rejects nonhex commit",
+      "admission rejects wrong commit owner",
+      "admission rejects unfinished committed admission",
+      "admission rejects unfinished current admission",
+      "admission rejects execution already active in admission commit",
+      "admission rejects execution not separately activated",
+      "admission rejects duplicate owner",
+      "admission rejects wrong memory owner",
+      "admission rejects duplicate memory pointer",
+      "admission rejects dirty implementation",
+      "admission rejects staged live pointer",
+      "admission rejects untracked implementation",
+      "admission rejects root identity",
+      "admission rejects elevated identity",
+      "admission rejects boolean identity",
+      "admission rejects wrong platform",
+      "installed input rejects changed digest",
+      "installed input rejects foreign owner",
+      "installed input rejects changing file identity",
+      "installed read failure survives close failure",
+      "zero_write journal failure is explicit",
+      "zero_write cannot resume normal journaling",
+      "journal close failure remains explicit",
+      "close_error cannot resume normal journaling",
+      "event_bound journal failure is explicit",
+      "event_bound cannot resume normal journaling",
+      "byte_bound journal failure is explicit",
+      "byte_bound cannot resume normal journaling",
+      "envelope journal failure is explicit",
+      "envelope cannot resume normal journaling"
+    ],
+    "schema": "fsmgen.inactive_populated_admission_models.v1"
+  },
+  "sources": [
+    {
+      "original": "docs/audits/native-proxy-populated-final-admission-20260913/admission.py",
+      "path": "docs/audits/native-proxy-populated-final-admission-20260913/admission.py.admission-first.source",
+      "sha256": "687744fdf105a1b3691b05353928bd39f815f96d44933cbfa024d1c2c1a40ed0",
+      "size_bytes": 8593
+    },
+    {
+      "original": "docs/audits/native-proxy-populated-final-admission-20260913/installed_inputs.py",
+      "path": "docs/audits/native-proxy-populated-final-admission-20260913/installed_inputs.py.admission-first.source",
+      "sha256": "bdabc08df49a14d57a3d967635144c3a30a0dc988b023e6b3d56d9e983e58ece",
+      "size_bytes": 5542
+    },
+    {
+      "original": "docs/audits/native-proxy-populated-final-admission-20260913/journal.py",
+      "path": "docs/audits/native-proxy-populated-final-admission-20260913/journal.py.admission-first.source",
+      "sha256": "06b5ccebd2c0a80d96fe98b728eae729e07ab2a1941cbb25c0f93b8b648f4a85",
+      "size_bytes": 2719
+    },
+    {
+      "original": "docs/audits/native-proxy-populated-final-admission-20260913/qualify_admission.py",
+      "path": "docs/audits/native-proxy-populated-final-admission-20260913/qualify_admission.py.admission-first.source",
+      "sha256": "05db864f22cfabbb423ca84ff709d4d9e4f9602555b28bfbb77a79ea4d593942",
+      "size_bytes": 8685
+    },
+    {
+      "original": "docs/audits/native-proxy-populated-final-admission-20260913/qualify_files.py",
+      "path": "docs/audits/native-proxy-populated-final-admission-20260913/qualify_files.py.admission-first.source",
+      "sha256": "61b3913b826032ad01655af93d44f5c6019a0fc97b525a86136b6761e7d01f5d",
+      "size_bytes": 9582
+    },
+    {
+      "original": "docs/audits/native-proxy-populated-final-admission-20260913/local_files.py",
+      "path": "docs/audits/native-proxy-populated-final-admission-20260913/local_files.py.admission-first.source",
+      "sha256": "3e18cc9b24131d8f22ccc02caa88ea1578242c6af4a82b974e3144724598ac55",
+      "size_bytes": 5430
+    },
+    {
+      "original": "docs/audits/native-proxy-populated-final-admission-20260913/contract.py",
+      "path": "docs/audits/native-proxy-populated-final-admission-20260913/contract.py.admission-first.source",
+      "sha256": "c9294d7d1c43f852e6dd1a15cf8ac9d1b8f710d41f5f2fb4e10d8ccefaf08666",
+      "size_bytes": 4854
+    }
+  ]
+}

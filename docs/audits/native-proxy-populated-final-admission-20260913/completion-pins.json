@@ -1,0 +1,117 @@
+[
+  {
+    "path": "MEMORY.md",
+    "sha256": "e2d14d3f9c0ab4c156cf524941623663a713e7873a29a9a35eafb0eb452bec22",
+    "size_bytes": 695
+  },
+  {
+    "path": "docs/TASK_TREE.md",
+    "sha256": "6ae2061b2f440732660fdc60911f5025ef2b4b0237f80ab92dcae39db8bd9085",
+    "size_bytes": 38800
+  },
+  {
+    "path": "docs/audits/native-proxy-populated-final-admission-20260913/book-metrics.json",
+    "sha256": "45e7dcbece2e48ead162325111e97e9d6f57aeddf578dbd181bc01f05d79ee22",
+    "size_bytes": 175
+  },
+  {
+    "path": "docs/audits/native-proxy-populated-final-admission-20260913/book-review.json",
+    "sha256": "9cbebb28a66809ed7c7110b8706eca2cc13cb86247a5940cb905a4e32c1dad4f",
+    "size_bytes": 1092
+  },
+  {
+    "path": "docs/audits/native-proxy-populated-final-admission-20260913/claim-legs.json",
+    "sha256": "540471bc3647c8764611859178d445bd7799973529c0b863a693665795b29380",
+    "size_bytes": 1258
+  },
+  {
+    "path": "docs/audits/native-proxy-populated-final-admission-20260913/claim-review.json",
+    "sha256": "80ae7f0f55d7b519d58ae14d9c93bdd8940e6988eac48393c32e6b1fa08dd7e9",
+    "size_bytes": 13942
+  },
+  {
+    "path": "docs/audits/native-proxy-populated-final-admission-20260913/design.json",
+    "sha256": "17c90be623ea5285216e518139a52d14f1d5ec2e960cac3b9fbfef4a9038c944",
+    "size_bytes": 2640
+  },
+  {
+    "path": "docs/audits/native-proxy-populated-final-admission-20260913/inspect_book.py",
+    "sha256": "18937e336e61869d22abf6a62fc33b5ac10a3f678c7c32621f9ea4a80eecb69a",
+    "size_bytes": 3194
+  },
+  {
+    "path": "docs/audits/native-proxy-populated-final-admission-20260913/knowledge-route.json",
+    "sha256": "5fa55f4d671d992f9d157ffc8d52e56dc3483e73dd56f25d31e2201ba906a4a9",
+    "size_bytes": 345
+  },
+  {
+    "path": "docs/audits/native-proxy-populated-final-admission-20260913/owned-repair-findings.json",
+    "sha256": "8bde13c603cef2b041963f020b590b0dd71db573612a4c77fda625e07f5ca78e",
+    "size_bytes": 1037
+  },
+  {
+    "path": "docs/audits/native-proxy-populated-final-admission-20260913/pickaxe.json",
+    "sha256": "fa6ebb18635fcc072619bf5c9fc5444b3183b322a81fba6e7c864729f96bd98b",
+    "size_bytes": 640
+  },
+  {
+    "path": "docs/audits/native-proxy-populated-final-admission-20260913/progress.json",
+    "sha256": "a123c8a2bfc158f7f35fed024a234787c05741aedd4d3f1c97a66b6b3be9fe56",
+    "size_bytes": 1021
+  },
+  {
+    "path": "docs/audits/native-proxy-populated-final-admission-20260913/review_claims.py",
+    "sha256": "76370cb287dcf65b93c550f93e9533767864a600e1ea2f56c2a2dc788394064b",
+    "size_bytes": 5032
+  },
+  {
+    "path": "docs/audits/native-proxy-populated-final-admission-20260913/review_completion.py",
+    "sha256": "dc9e0c90b49776a02b935654a675bdb17d62b4eb28b7ba976cb7da71da0c3833",
+    "size_bytes": 6001
+  },
+  {
+    "path": "docs/audits/native-proxy-populated-final-admission-20260913/task-layout.json",
+    "sha256": "67092ec078255174f09986e4a281b9729ab44b625a7a1522c206919164b0fc16",
+    "size_bytes": 1360
+  },
+  {
+    "path": "docs/book/src/16dc-vial-portable-verilator-runtime-measurement.md",
+    "sha256": "af1a43fbbfb4de42619365dc95cfd97f287bea7c4ae334869379623054f6d1b9",
+    "size_bytes": 273994
+  },
+  {
+    "path": "docs/book/src/16dk-inactive-proxy-lifetimes.md",
+    "sha256": "4b36e9015a4f64e3ec074d08a954ec027f3336d5918d33afb21533a71b19f413",
+    "size_bytes": 31265
+  },
+  {
+    "path": "docs/knowledge/test-subprocess-policy-adapters.md",
+    "sha256": "fd5a742cb65f1be4c40b63b2a7f4e93db63633398ce98ea47e08a3df3c896cc3",
+    "size_bytes": 9034
+  },
+  {
+    "path": "docs/tasks/HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.md",
+    "sha256": "7a893fd6da564905e79c0fef3fd7641288224e2e8747e511b67bded1e35664e3",
+    "size_bytes": 1137386
+  },
+  {
+    "path": "docs/tasks/history/HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE/acceptance-history.jsonl",
+    "sha256": "e1c6100794549be9bf6b991ebeabc00eff94ccf1747f7b6cbe89a9cbb1d4972b",
+    "size_bytes": 851
+  },
+  {
+    "path": "doctrine/claim_verification/inventory.jsonl",
+    "sha256": "4b16e3ce0df9129c1816c5a4b40e69cc694ecd8c0e00429d33d7577c41b73aa7",
+    "size_bytes": 3015722
+  },
+  {
+    "path": "doctrine/live_document_size/surfaces.jsonl",
+    "sha256": "9e4b9b6e1607cf4a36d313307cf2ed8009183036c2b7e9f5412304fb2620d54b",
+    "size_bytes": 25975
+  },
+  {
+    "path": "knowledge-map/generated/test-subprocess.md",
+    "sha256": "174b4dafca63aa2a42534e10470ffca1a34a1bca84263785fd1cf65411c04525",
+    "size_bytes": 21377
+  }
+]

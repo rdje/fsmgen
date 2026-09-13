@@ -1,0 +1,448 @@
+"""One fixed populated-store execution; all runtime authority is commit-bound."""
+import argparse
+from collections import deque
+import copy
+import errno
+import os
+from pathlib import Path
+import signal
+import time
+
+import admission
+from contract import ROOT, OUTPUT, WORKER, WORKER_CONTRACT, SCOPE, CONTRACT, bounds, canonical, cases, worker_sources
+import installed_inputs
+from journal import Journal
+import local_files as files
+from owned_case import OwnedCase
+import records
+from result_state import CaseState, equal
+
+C = installed_inputs.module('populated_frozen_controller', SCOPE['controller'])
+
+
+class PlannedCancellation(RuntimeError):
+    pass
+
+
+class StopRequested(RuntimeError):
+    pass
+
+
+def failure(error):
+    return dict(type=type(error).__name__, message=str(error)[:65536],
+                notes=[str(note)[:4096] for note in getattr(error, '__notes__', [])[:16]])
+
+
+class StopSignals:
+    """Defer SIGINT/SIGTERM exceptions until controlled ownership boundaries."""
+    def __init__(self):
+        self.requested, self.previous = [], {}
+
+    def __enter__(self):
+        try:
+            for number in (signal.SIGINT, signal.SIGTERM):
+                self.previous[number] = signal.signal(number, self.receive)
+        except BaseException:
+            self.__exit__(None, None, None)
+            raise
+        return self
+
+    def receive(self, number, frame):
+        if not self.requested:
+            self.requested.append(number)
+
+    def check(self):
+        if self.requested:
+            raise StopRequested('controller received signal ' + str(self.requested[0]))
+
+    def __exit__(self, *unused):
+        for number, handler in self.previous.items():
+            signal.signal(number, handler)
+        self.previous.clear()
+
+
+class CaseDriver:
+    def __init__(self, case, plan, revision, reader, journal, stop, deadline,
+                 worker_factory=C.Worker, fixture_factory=OwnedCase, now=time.monotonic):
+        self.case, self.plan, self.revision = copy.deepcopy((case, plan, revision))
+        self.reader, self.journal, self.stop, self.deadline, self.now = reader, journal, stop, deadline, now
+        self.worker_factory = worker_factory
+        self.fixture = fixture_factory(case, journal)
+        self.workers, self.expected, self.inbox, self.cursors, self.indices, self.outcomes = {}, {}, {}, {}, {}, {}
+        self.activation = self.state = self.handoff = None
+        self.cleanup_result, self.first_error, self.recovery_errors = None, None, []
+        self.terminal_roles = set()
+        self.limits = bounds()
+
+    def check_time(self):
+        self.stop.check()
+        if self.now() >= self.deadline:
+            raise TimeoutError('fixed case work deadline expired')
+
+    def log(self, event, **fields):
+        self.journal(event, case=self.case['name'], **fields)
+
+    def expect(self, role, name, step=None, busy=False):
+        self.expected[role].append((name, step, busy))
+
+    def collect(self, role):
+        worker = self.workers[role]
+        while self.cursors[role] < len(worker.events):
+            event = worker.events[self.cursors[role]]
+            self.cursors[role] += 1
+            if not self.expected[role]:
+                raise ValueError('unsolicited worker event for ' + role)
+            name, step, busy = self.expected[role].popleft()
+            if event.get('event') != name or event.get('pid') != worker.process.pid:
+                raise ValueError('worker event violates the fixed controller schedule')
+            if name == 'ready':
+                records.fields(event, 'event pid')
+            elif name == 'opened':
+                records.fields(event, 'event pid step device inode descriptor_closed descriptor close_on_exec')
+                records.integer(event['descriptor'])
+                lock = self.fixture.permanent_lock()
+                equal({key: event[key] for key in ('device', 'inode', 'descriptor_closed', 'close_on_exec')},
+                    dict(device=lock['device'], inode=lock['inode'], descriptor_closed=0, close_on_exec=1),
+                    'opened permanent lock differs from admitted inode or descriptor seal')
+            elif name in ('locked', 'held'):
+                records.fields(event, 'event pid step')
+            elif name == 'busy':
+                records.fields(event, 'event pid step errno')
+                if type(event['errno']) is not int or event['errno'] != errno.EWOULDBLOCK:
+                    raise ValueError('contention is not the selected actual lock-busy errno')
+            elif name == 'result':
+                records.fields(event, 'event pid result lock')
+                records.fields(event['lock'], 'opened busy_count descriptor_closed')
+                observed = event['lock']
+                if (type(observed['opened']) is not int or observed['opened'] != step['coordinated']
+                        or type(observed['descriptor_closed']) is not int or observed['descriptor_closed'] != 1
+                        or (records.integer(observed['busy_count']) > 0) != busy):
+                    raise ValueError('operation lock closure or contention count differs')
+                records.fields(event['result'], 'step operation value handoff synthetic_retirement_and_work_records')
+                if event['result']['step'] != step['id'] or event['result']['operation'] != step['operation']:
+                    raise ValueError('result names a different selected operation')
+            elif name == 'finished':
+                equal(event, dict(event='finished', pid=worker.process.pid, complete=1,
+                    completed_steps=len(self.case['roles'][role]['steps']), runtime_authorized=0, forbidden_process_attempts=0),
+                    'worker finished without its complete inactive protocol')
+            else:
+                raise ValueError('undeclared scheduled event')
+            if name in ('opened', 'locked', 'held', 'busy') and event['step'] != step['id']:
+                raise ValueError('lock event names a different selected step')
+            self.inbox[role].append(copy.deepcopy(event))
+
+    def pump(self):
+        self.check_time()
+        # Drain every live role while waiting for any role; no pipe may starve
+        # behind a peer's event or terminal wait.
+        for role, worker in self.workers.items():
+            if role not in self.outcomes:
+                worker.pump()
+                self.collect(role)
+
+    def take(self, role, name):
+        while not self.inbox[role]:
+            self.pump()
+            worker = self.workers[role]
+            if worker.finished() and not self.inbox[role]:
+                raise ValueError('worker ended before its required event')
+        self.check_time()
+        event = self.inbox[role].popleft()
+        if event['event'] != name:
+            raise ValueError('controller consumed an event out of order')
+        return event
+
+    def send(self, role, command, payload=None):
+        self.check_time()
+        if role in self.outcomes:
+            raise ValueError('settled role cannot receive another command')
+        self.log('command_intent', role=role, command=command, payload=payload)
+        self.workers[role].send(command, payload)
+        self.log('command_sent', role=role, command=command, payload=payload)
+
+    def start(self):
+        self.check_time()
+        directories = self.fixture.allocate()
+        limits = C.Limits(self.limits['worker_output_bytes'], self.limits['worker_event_bytes'], self.limits['worker_events'],
+                          self.limits['command_bytes'], self.limits['worker_term_seconds'], self.limits['worker_kill_seconds'])
+        tool = self.plan['toolchains']['perl']
+        sources = {row['path']: {key: row[key] for key in ('size_bytes', 'sha256')} for row in self.plan['worker_sources']}
+        for role in self.case['roles']:
+            self.check_time()
+            captures = {channel: OUTPUT + '/' + self.case['name'] + '.' + role + '.' + channel for channel in ('stdout', 'stderr')}
+            spec = C.Spawn(ROOT, WORKER, (self.case['name'], role), Path(tool['invocation_path']), Path(tool['native_path']),
+                tool['invocation_binary'], tool['native_image']['binary'], sources, captures,
+                frozenset(CONTRACT['protocol']['events']), frozenset(CONTRACT['protocol']['commands']))
+            self.expected[role], self.inbox[role] = deque(), deque()
+            self.cursors[role] = self.indices[role] = 0
+            callback = lambda event, role=role, **fields: self.log('controller_' + event, role=role, **fields)
+            worker = self.worker_factory(spec, limits, self.reader, callback, self.deadline)
+            self.workers[role] = worker
+            self.expect(role, 'ready')
+            worker.launch()
+        for role in self.workers:
+            self.take(role, 'ready')
+        if not all(worker.native_admitted for worker in self.workers.values()):
+            raise ValueError('case activation requires every selected native child')
+        births = {role: installed_inputs.identity(worker.native, worker.process.pid, os.getpid()) for role, worker in self.workers.items()}
+        if len({(value['pid'], value['start_sec'], value['start_usec']) for value in births.values()}) != len(births):
+            raise ValueError('selected roles share a native owner')
+        self.activation = dict(schema='fsmgen.inactive_populated_activation.v1', execution_revision=self.revision,
+            case=self.case['name'], **directories, births=births, all_native_admitted=1)
+        if self.case['evidence']:
+            self.fixture.allow_observation(self.activation)
+        self.state = CaseState(self.case, self.activation, self.fixture.permanent_lock())
+        receipt = files.write_document(self.case['activation_path'], self.activation, self.limits['activation_bytes'])
+        self.log('case_activated', activation=self.activation, source=receipt)
+        for role in self.workers:
+            self.send(role, 'admit', dict(activation_sha256=receipt['sha256']))
+        self.snapshot('activated')
+
+    def snapshot(self, phase):
+        value = self.fixture.snapshot()
+        self.state.check_snapshot(value)
+        self.log('case_snapshot', phase=phase, snapshot=value)
+        return value
+
+    def begin_step(self, role, name):
+        steps = self.case['roles'][role]['steps']
+        index = self.indices[role]
+        if index >= len(steps) or steps[index]['id'] != name:
+            raise ValueError('controller attempted an undeclared or repeated step')
+        step = steps[index]
+        payload = dict(id=name)
+        if step['operation'].startswith('adopt_'):
+            if self.handoff is None or self.handoff['source_role'] not in self.outcomes:
+                raise ValueError('adoption precedes original handoff and actual owner settlement')
+            payload['handoff_sha256'] = self.handoff['source']['sha256']
+        self.expect(role, 'opened' if step['coordinated'] else 'result', step)
+        self.send(role, 'step', payload)
+        self.indices[role] += 1
+        if step['coordinated']:
+            self.take(role, 'opened')
+        return step
+
+    def lock_step(self, role, step, busy=False):
+        if busy:
+            self.expect(role, 'busy', step)
+        self.expect(role, 'locked', step)
+        self.expect(role, 'held' if step['hold'] else 'result', step, busy)
+        self.send(role, 'lock', dict(id=step['id']))
+
+    def accept(self, role, step):
+        event = self.take(role, 'result')
+        value = self.state.accept(role, step, event['result'])
+        if step['operation'] in ('publish', 'observe'):
+            self.fixture.remember(value)
+        elif step['operation'] == 'archive':
+            self.fixture.remember_archive(value, self.state.observations[role])
+        self.log('operation_accepted', role=role, step=step['id'], operation=step['operation'])
+
+    def run_step(self, role, name):
+        step = self.begin_step(role, name)
+        if step['hold']:
+            raise ValueError('ordinary step cannot select a held action')
+        if step['coordinated']:
+            self.lock_step(role, step)
+            self.take(role, 'locked')
+        self.accept(role, step)
+        self.snapshot(role + ':' + name)
+
+    def contend(self, action):
+        holder, contender = action['holder'], action['contender']
+        first = self.begin_step(holder, action['step'])
+        second = self.begin_step(contender, action['step'])
+        if not first['coordinated'] or not second['coordinated'] or not first['hold'] or second['hold']:
+            raise ValueError('contention does not match the fixed holder/contender contract')
+        self.lock_step(holder, first)
+        self.take(holder, 'locked')
+        self.take(holder, 'held')
+        self.lock_step(contender, second, busy=True)
+        self.take(contender, 'busy')
+        self.log('contention_observed', holder=holder, contender=contender, step=action['step'])
+        self.expect(holder, 'result', first)
+        self.send(holder, 'release', dict(id=first['id']))
+        self.accept(holder, first)
+        self.take(contender, 'locked')
+        self.accept(contender, second)
+        self.snapshot('contention_complete')
+
+    def seal_handoff(self, action):
+        if self.handoff is not None:
+            raise ValueError('handoff is one use')
+        packet = self.state.packets[(action['source_role'], action['source_step'])]
+        if packet['kind'] != action['state']:
+            raise ValueError('handoff kind differs from the fixed source acquisition')
+        source = files.write_document(self.case['handoff_path'], packet, self.limits['handoff_bytes'])
+        self.handoff = dict(source_role=action['source_role'], source=source)
+        self.log('handoff_sealed', **self.handoff)
+
+    def outcome(self, role, value, planned=False):
+        self.outcomes[role] = copy.deepcopy(value)
+        self.log('worker_outcome', role=role, planned_cancellation=planned, outcome=value)
+
+    def check_outcome(self, role, planned):
+        value, worker = self.outcomes[role], self.workers[role]
+        if (not all(value[key] is True for key in ('launched', 'leader_reaped', 'group_gone', 'native_admitted', 'cleanup_complete', 'journal_complete', 'output_complete'))
+                or value['cleanup_errors'] or value['abandoned'] or value['failed_captures']
+                or any(value['discarded'].values()) or worker.buffers['stderr']
+                or bytes(worker.buffers['stdout']) != b''.join(canonical(event) + b'\n' for event in worker.events)):
+            raise ValueError('worker lacks complete native settlement and original terminal output')
+        if planned:
+            expected_error = dict(phase='recovery', type='PlannedCancellation', message='fixed held cancellation: ' + role)
+            if (value['healthy'] is not False or value['separate_recovery'] is not True or value['first_failure'] != expected_error
+                    or value['exit_code'] not in (-signal.SIGTERM, -signal.SIGKILL)
+                    or -value['exit_code'] not in value['signals']):
+                raise ValueError('held cancellation lacks its separate actual signal-exit receipt')
+        elif value['healthy'] is not True or value['separate_recovery'] is not False or value['first_failure'] is not None or value['exit_code'] != 0 or value['signals']:
+            raise ValueError('ordinary worker did not finish successfully')
+
+    def cancel(self, role, name):
+        if self.handoff is None or self.handoff['source_role'] != role:
+            raise ValueError('held cancellation precedes the original sealed acquisition')
+        step = self.begin_step(role, name)
+        if step['operation'] != 'hold_inspect' or not step['hold'] or self.case['roles'][role]['ending'] != 'cancel_at_held':
+            raise ValueError('cancellation cut differs from the fixed held inspection')
+        self.lock_step(role, step)
+        self.take(role, 'locked')
+        self.take(role, 'held')
+        before = self.snapshot('before_held_cancellation')
+        self.log('held_cancellation_intent', role=role, step=name)
+        value = self.workers[role].recover(PlannedCancellation('fixed held cancellation: ' + role))
+        self.outcome(role, value, planned=True)
+        self.check_outcome(role, True)
+        equal(self.snapshot('after_held_cancellation'), before, 'held cancellation changed owned fixture custody')
+        self.terminal_roles.add(role)
+
+    def finish_roles(self, roles):
+        for role in roles:
+            if self.indices[role] != len(self.case['roles'][role]['steps']) or self.case['roles'][role]['ending'] != 'finish':
+                raise ValueError('finish precedes the complete selected role')
+            self.expect(role, 'finished')
+            self.send(role, 'finish')
+        for role in roles:
+            self.take(role, 'finished')
+        while not all(self.workers[role].finished() for role in roles):
+            self.pump()
+        for role in roles:
+            self.outcome(role, self.workers[role].finish())
+            self.check_outcome(role, False)
+            self.terminal_roles.add(role)
+
+    def recover(self, error):
+        self.first_error = failure(error)
+        # Every constructed Worker is retained before launch. Recovery continues
+        # through later roles even if one child, capture or journal cannot settle.
+        for role, worker in self.workers.items():
+            if role in self.outcomes:
+                continue
+            try:
+                value = worker.recover(error)
+            except C.RecoveryIncomplete as incomplete:
+                value = incomplete.outcome
+                self.recovery_errors.append(dict(role=role, **failure(incomplete)))
+            except BaseException as secondary:
+                self.recovery_errors.append(dict(role=role, **failure(secondary)))
+                if worker.outcome is None:
+                    continue
+                value = worker.outcome
+            self.outcomes[role] = copy.deepcopy(value)
+            try:
+                self.log('worker_outcome', role=role, planned_cancellation=False, outcome=value)
+            except BaseException as secondary:
+                self.recovery_errors.append(dict(role=role, **failure(secondary)))
+
+    def run(self):
+        try:
+            self.start()
+            for index, action in enumerate(self.case['actions']):
+                self.log('action_started', index=index, action=action)
+                kind = action['kind']
+                if kind == 'run':
+                    self.run_step(action['role'], action['step'])
+                elif kind == 'contend':
+                    self.contend(action)
+                elif kind == 'handoff':
+                    self.seal_handoff(action)
+                elif kind == 'cancel':
+                    self.cancel(action['role'], action['step'])
+                elif kind == 'finish':
+                    self.finish_roles(action['roles'])
+                else:
+                    raise ValueError('undeclared fixed action')
+                self.log('action_completed', index=index)
+            if self.terminal_roles != set(self.case['roles']) or any(self.expected.values()) or any(self.inbox.values()):
+                raise ValueError('case lacks complete selected terminal roles')
+            self.snapshot('workers_settled')
+            self.cleanup_result = self.fixture.cleanup(True)
+        except BaseException as error:
+            self.recover(error)
+            settled = len(self.outcomes) == len(self.workers) and all(value['cleanup_complete'] for value in self.outcomes.values())
+            if settled and not self.fixture.cleaned:
+                try:
+                    self.cleanup_result = self.fixture.cleanup(True, recovery=True)
+                except BaseException as secondary:
+                    self.recovery_errors.append(dict(phase='owned_fixture_recovery', **failure(secondary)))
+        return dict(case=self.case['name'], success=self.first_error is None, first_error=self.first_error,
+            recovery_errors=self.recovery_errors, outcomes=self.outcomes, cleanup=self.cleanup_result,
+            worker_roles=list(self.workers), activation=self.activation)
+
+
+def execute():
+    reader = installed_inputs.native_reader()
+    plan, permit, installed = admission.preflight('consume', reader)
+    limits, revision = bounds(), permit['admission_commit']
+    authority = dict(schema='fsmgen.inactive_populated_worker_authority.v1', source_revision=revision,
+        controller_pid=os.getpid(), contract_sha256=files.pin(WORKER_CONTRACT)['sha256'], source_pins=worker_sources(),
+        worker_wall_seconds=limits['worker_wall_seconds'], output=OUTPUT)
+    selected = files.write_document(OUTPUT + '/worker-authority.json', authority, 65536)
+    files.write_document(OUTPUT + '/run-start.json', dict(schema='fsmgen.inactive_populated_run_start.v1',
+        source_revision=revision, controller_pid=os.getpid(), worker_authority_sha256=selected['sha256']), 4096)
+    files.write_document(OUTPUT + '/driver-inputs.json', installed, 65536)
+    journal = Journal()
+    results, first_error, secondary, journal_receipt = [], None, [], None
+    deadline = time.monotonic() + limits['driver_wall_seconds']
+    try:
+        journal.open()
+        with StopSignals() as stop:
+            journal('run_admitted', admission=permit, controller=installed['controller'])
+            for case in cases():
+                stop.check()
+                case_deadline = min(deadline, time.monotonic() + limits['case_work_seconds'])
+                runner = CaseDriver(case, plan, revision, reader, journal, stop, case_deadline)
+                result = runner.run()
+                results.append(result)
+                journal('case_outcome', result=result)
+                if not result['success']:
+                    raise RuntimeError('fixed case failed: ' + case['name'])
+            journal('run_completed', cases=len(results))
+    except BaseException as error:
+        first_error = failure(error)
+    finally:
+        try:
+            journal_receipt = journal.close()
+        except BaseException as error:
+            if first_error is None:
+                first_error = failure(error)
+            else:
+                secondary.append(failure(error))
+        if journal.failed is not None:
+            try:
+                journal_receipt = dict(failed=journal.failed, intended_prefix=journal.preserve_failed_prefix())
+            except BaseException as error:
+                secondary.append(failure(error))
+    result = dict(schema='fsmgen.inactive_populated_execution_result.v1', admission=permit,
+        success=first_error is None, first_error=first_error, secondary_errors=secondary,
+        cases=results, journal=journal_receipt, synthetic_retirement_and_work_records=True,
+        compiler_execution=False, proxy_execution=False, live_collector_execution=False)
+    files.write_document(OUTPUT + '/result.json', result, 4 * 1024 * 1024)
+    return result
+
+
+if __name__ == '__main__':
+    parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument('--execute', action='store_true', required=True)
+    parser.parse_args()
+    result = execute()
+    print(canonical(dict(success=result['success'], cases=len(result['cases']), output=OUTPUT)).decode())
+    raise SystemExit(0 if result['success'] else 1)

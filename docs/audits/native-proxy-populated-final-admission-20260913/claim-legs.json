@@ -1,0 +1,17 @@
+{
+  "durability": [
+    "Exact first source copies and raw outputs are retained in this audit directory.",
+    "execution-source-pins.json, qualification.json and review.json are authenticated against the final admission commit before any future permit."
+  ],
+  "falsification": [
+    "qualification.json retains component-specific rejecting controls; oracle.py independently reconstructs complete original lifetime and command records.",
+    "bounds controls reject smaller ceilings; source controls reject altered committed inputs; first inode/mode and inventory failures remain exact."
+  ],
+  "missing_leg": "Actual worker execution, contention, cancellation and native cleanup remain unexecuted; prospective model sizes are not runtime measurements.",
+  "owner": "HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.12.4.1.5.3.1.4",
+  "re_derivation": [
+    "audit.py --verify-saved reconstructs fixed current models, selected source inventory and conservative maximum-width shapes.",
+    "review_claims.py independently compares published claim identities and Git-derived book metrics."
+  ],
+  "scope": "Source-only model and bound qualification; no native worker acquisition, fixture allocation or execution authority."
+}

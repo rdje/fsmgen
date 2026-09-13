@@ -1,0 +1,111 @@
+"""Fresh selected read-only toolchain admission, without launching a probe."""
+import hashlib
+import importlib.util
+import os
+from pathlib import Path
+import stat
+import sys
+
+from contract import ROOT
+import local_files as files
+import records
+
+
+def module(name, relative):
+    spec = importlib.util.spec_from_file_location(name, ROOT / relative)
+    value = importlib.util.module_from_spec(spec)
+    sys.modules[name] = value
+    spec.loader.exec_module(value)
+    return value
+
+
+def native_reader():
+    return module('populated_admitted_native_reader', 'scripts/fixture_kernel_sampler.py').NativeProcesses()
+
+
+def read_pin(name, expected):
+    """Selected installed input: absolute paths are explicit read-only exceptions."""
+    path = Path(name)
+    if not path.is_absolute() or path.is_relative_to(ROOT) or path.resolve(strict=True) != path:
+        raise ValueError('installed input is not the exact selected external path')
+    before = path.lstat()
+    limit = records.integer(expected['size_bytes'])
+    if (not stat.S_ISREG(before.st_mode) or before.st_uid not in (0, os.getuid())
+            or before.st_size != limit or not 0 < limit <= 64 * 1024 * 1024):
+        raise ValueError('installed input type, owner or size differs')
+    descriptor = os.open(path, os.O_RDONLY | os.O_NOFOLLOW | os.O_NONBLOCK | os.O_CLOEXEC)
+    primary = None
+    try:
+        if files.identity(before) != files.identity(os.fstat(descriptor)):
+            raise ValueError('installed input name differs from its opened file')
+        count, digest = 0, hashlib.sha256()
+        while count <= limit:
+            part = os.read(descriptor, min(65536, limit + 1 - count))
+            if not part:
+                break
+            count += len(part)
+            digest.update(part)
+        if count != limit or any(files.identity(before) != files.identity(current)
+                for current in (os.fstat(descriptor), path.lstat())):
+            raise ValueError('installed input changed during read')
+        observed = dict(size_bytes=count, sha256=digest.hexdigest())
+        if observed != expected:
+            raise ValueError('installed input bytes differ from selection')
+        return dict(installed_path=name, **observed, device=before.st_dev, inode=before.st_ino,
+                    mode=stat.S_IMODE(before.st_mode), uid=before.st_uid, read_only=True)
+    except BaseException as error:
+        primary = error
+        raise
+    finally:
+        files.close_descriptor(descriptor, primary)
+
+
+def identity(value, pid, ppid=None):
+    records.fields(value, 'pid ppid uid ruid start_sec start_usec')
+    for number in value.values():
+        records.integer(number)
+    if (value['pid'] != pid or value['uid'] != os.getuid() or value['ruid'] != os.getuid()
+            or not 0 < value['pid'] <= 2147483647 or not 0 < value['ppid'] <= 2147483647
+            or value['start_sec'] == 0 or value['start_usec'] >= 1000000
+            or (ppid is not None and value['ppid'] != ppid)):
+        raise ValueError('native process birth or ownership differs')
+    return value
+
+
+def resolve(plan, reader):
+    if sys.platform != 'darwin' or os.getuid() == 0 or os.geteuid() != os.getuid():
+        raise ValueError('ordinary-user Darwin execution required')
+    current = os.uname()
+    if dict(system=current.sysname, release=current.release, version=current.version, machine=current.machine) != plan['uname']:
+        raise ValueError('selected operating-system epoch changed')
+    selected = plan['toolchains']
+    python = selected['python']
+    if Path(sys.executable).resolve(strict=True) != Path(python['invocation_path']):
+        raise ValueError('current Python invocation differs from selection')
+    birth = identity(reader.identity(os.getpid()), os.getpid(), os.getppid())
+    if reader.executable(os.getpid()) != Path(python['native_path']):
+        raise ValueError('current Python native image differs from selection')
+    observed = {}
+    observed['/usr/bin/git'] = read_pin('/usr/bin/git', plan['git_launcher'])
+    for language in ('python', 'perl'):
+        tool = selected[language]
+        invocation, image = tool['invocation_path'], tool['native_path']
+        if language == 'perl' and (invocation != '/usr/bin/perl' or image != invocation or tool['native_image']['kind'] != 'same_binary'):
+            raise ValueError('Perl native layout differs from the selected actual evidence')
+        if language == 'python' and (tool['native_image']['kind'] != 'python_framework'
+                or Path(invocation).parent.name != 'bin'
+                or Path(image) != Path(invocation).parent.parent / 'Resources/Python.app/Contents/MacOS/Python'):
+            raise ValueError('Python framework native layout differs')
+        for name, expected in [(invocation, tool['invocation_binary']), (image, tool['native_image']['binary'])]:
+            row = read_pin(name, expected)
+            if name in observed and observed[name] != row:
+                raise ValueError('shared installed input changed between reads')
+            observed[name] = row
+    for source in plan['installed_modules']:
+        name = source['installed_path']
+        if not name.startswith('/System/Library/Perl/') or source['read_only_toolchain_input'] != 1:
+            raise ValueError('undeclared installed Perl module path')
+        observed[name] = read_pin(name, {key: source[key] for key in ('size_bytes', 'sha256')})
+    return dict(schema='fsmgen.inactive_populated_fresh_installed_inputs.v1', controller=birth,
+        inputs=[observed[name] for name in sorted(observed)], project_device=ROOT.stat().st_dev,
+        complete_native_dependency_closure=False, native_reader_dependency='/usr/lib/libproc.dylib')

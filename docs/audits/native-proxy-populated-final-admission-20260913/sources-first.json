@@ -1,0 +1,123 @@
+{
+  "outputs": {
+    "exit": "0\n",
+    "stderr": "ram-guard: PID 61503; host 80.7%; host cutoff 88%; descendant RSS cutoff 4096 MiB; poll 2s\n",
+    "stdout": "{\n  \"actual_fixture_allocation\": false,\n  \"actual_git_source_admission\": false,\n  \"actual_worker_execution\": false,\n  \"checks\": [\n    \"exact source closure reconstructs its committed inactive plan\",\n    \"rejected source variants do not alter the accepted baseline\"\n  ],\n  \"rejecting_controls\": [\n    {\n      \"error\": \"source authentication requires a complete literal Git revision\",\n      \"name\": \"nonliteral admission revision '--output=undeclared'\"\n    },\n    {\n      \"error\": \"source authentication requires a complete literal Git revision\",\n      \"name\": \"nonliteral admission revision 'aaaaaaaaaaaa'\"\n    },\n    {\n      \"error\": \"source authentication requires a complete literal Git revision\",\n      \"name\": \"nonliteral admission revision 'gggggggggggggggggggggggggggggggggggggggg'\"\n    },\n    {\n      \"error\": \"source authentication requires a complete literal Git revision\",\n      \"name\": \"nonliteral admission revision ''\"\n    },\n    {\n      \"error\": \"source authentication requires a complete literal Git revision\",\n      \"name\": \"nonliteral admission revision None\"\n    },\n    {\n      \"error\": \"model input byte bound exceeded\",\n      \"name\": \"changed runtime source bytes\"\n    },\n    {\n      \"error\": \"admission omits worker or driver source closure\",\n      \"name\": \"omitted driver source\"\n    },\n    {\n      \"error\": \"source set has duplicate or unbounded entries\",\n      \"name\": \"duplicate selected source\"\n    },\n    {\n      \"error\": \"project path must be canonical and root-relative\",\n      \"name\": \"absolute project input\"\n    },\n    {\n      \"error\": \"expected bounded nonnegative integer\",\n      \"name\": \"boolean source size\"\n    },\n    {\n      \"error\": \"source set has duplicate or unbounded entries\",\n      \"name\": \"unbounded source size\"\n    },\n    {\n      \"error\": \"admission source differs from committed selected bytes\",\n      \"name\": \"changed source digest\"\n    },\n    {\n      \"error\": \"plan differs from the exact inactive source contract\",\n      \"name\": \"plan omits fixed driver imports\"\n    },\n    {\n      \"error\": \"plan differs from the exact inactive source contract\",\n      \"name\": \"plan changes fixed worker count\"\n    },\n    {\n      \"error\": \"plan differs from the exact inactive source contract\",\n      \"name\": \"plan grants execution authority\"\n    },\n    {\n      \"error\": \"plan differs from the exact inactive source contract\",\n      \"name\": \"plan changes an owned root\"\n    },\n    {\n      \"error\": \"source qualification evidence differs from its commit\",\n      \"name\": \"changed committed qualification.json\"\n    },\n    {\n      \"error\": \"source qualification evidence differs from its commit\",\n      \"name\": \"changed committed review.json\"\n    }\n  ],\n  \"schema\": \"fsmgen.inactive_populated_source_authentication_models.v1\"\n}\n"
+  },
+  "result": {
+    "actual_fixture_allocation": false,
+    "actual_git_source_admission": false,
+    "actual_worker_execution": false,
+    "checks": [
+      "exact source closure reconstructs its committed inactive plan",
+      "rejected source variants do not alter the accepted baseline"
+    ],
+    "rejecting_controls": [
+      {
+        "error": "source authentication requires a complete literal Git revision",
+        "name": "nonliteral admission revision '--output=undeclared'"
+      },
+      {
+        "error": "source authentication requires a complete literal Git revision",
+        "name": "nonliteral admission revision 'aaaaaaaaaaaa'"
+      },
+      {
+        "error": "source authentication requires a complete literal Git revision",
+        "name": "nonliteral admission revision 'gggggggggggggggggggggggggggggggggggggggg'"
+      },
+      {
+        "error": "source authentication requires a complete literal Git revision",
+        "name": "nonliteral admission revision ''"
+      },
+      {
+        "error": "source authentication requires a complete literal Git revision",
+        "name": "nonliteral admission revision None"
+      },
+      {
+        "error": "model input byte bound exceeded",
+        "name": "changed runtime source bytes"
+      },
+      {
+        "error": "admission omits worker or driver source closure",
+        "name": "omitted driver source"
+      },
+      {
+        "error": "source set has duplicate or unbounded entries",
+        "name": "duplicate selected source"
+      },
+      {
+        "error": "project path must be canonical and root-relative",
+        "name": "absolute project input"
+      },
+      {
+        "error": "expected bounded nonnegative integer",
+        "name": "boolean source size"
+      },
+      {
+        "error": "source set has duplicate or unbounded entries",
+        "name": "unbounded source size"
+      },
+      {
+        "error": "admission source differs from committed selected bytes",
+        "name": "changed source digest"
+      },
+      {
+        "error": "plan differs from the exact inactive source contract",
+        "name": "plan omits fixed driver imports"
+      },
+      {
+        "error": "plan differs from the exact inactive source contract",
+        "name": "plan changes fixed worker count"
+      },
+      {
+        "error": "plan differs from the exact inactive source contract",
+        "name": "plan grants execution authority"
+      },
+      {
+        "error": "plan differs from the exact inactive source contract",
+        "name": "plan changes an owned root"
+      },
+      {
+        "error": "source qualification evidence differs from its commit",
+        "name": "changed committed qualification.json"
+      },
+      {
+        "error": "source qualification evidence differs from its commit",
+        "name": "changed committed review.json"
+      }
+    ],
+    "schema": "fsmgen.inactive_populated_source_authentication_models.v1"
+  },
+  "sources": [
+    {
+      "original": "docs/audits/native-proxy-populated-final-admission-20260913/qualify_sources.py",
+      "path": "docs/audits/native-proxy-populated-final-admission-20260913/qualify_sources.py.sources-first.source",
+      "sha256": "bcdec3826c4c745bbb8a4c094e04c5efcde9c52d7ce041520bd36d0258ac2476",
+      "size_bytes": 5566
+    },
+    {
+      "original": "docs/audits/native-proxy-populated-final-admission-20260913/admission.py",
+      "path": "docs/audits/native-proxy-populated-final-admission-20260913/admission.py.sources-first.source",
+      "sha256": "a068b979b136b67ffe90568d35a80f3ac62397ad8515deafe37126762c294903",
+      "size_bytes": 10607
+    },
+    {
+      "original": "docs/audits/native-proxy-populated-final-admission-20260913/contract.py",
+      "path": "docs/audits/native-proxy-populated-final-admission-20260913/contract.py.sources-first.source",
+      "sha256": "1b225947a2b6e6f66a32ecbb7aec439dcb5b9cca5b6e4d6e76fcbd296da77fcf",
+      "size_bytes": 5638
+    },
+    {
+      "original": "docs/audits/native-proxy-populated-final-admission-20260913/build_plan.py",
+      "path": "docs/audits/native-proxy-populated-final-admission-20260913/build_plan.py.sources-first.source",
+      "sha256": "8086a6a3dce9bbf602c6098ebfd59c8dca469e7e4db3e063b6053a328888118d",
+      "size_bytes": 1797
+    },
+    {
+      "original": "docs/audits/native-proxy-populated-final-admission-20260913/plan.json",
+      "path": "docs/audits/native-proxy-populated-final-admission-20260913/plan.json.sources-first.source",
+      "sha256": "39e9efd13191087f33bcc3340eb8c33715ad5f2707bfb96dbd76accd4db0d77b",
+      "size_bytes": 50654
+    }
+  ]
+}

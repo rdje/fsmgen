@@ -1,0 +1,185 @@
+{
+  "outputs": {
+    "exit": "0\n",
+    "stderr": "ram-guard: PID 96996; host 76.3%; host cutoff 88%; descendant RSS cutoff 4096 MiB; poll 2s\n",
+    "stdout": "{\n  \"actual_fixture_allocation\": false,\n  \"actual_permit_issued\": false,\n  \"actual_signals\": false,\n  \"actual_worker_execution\": false,\n  \"checks\": [\n    \"whole-run envelope reconstructs every fixed original worker\",\n    \"whole-run envelope retains the original file census\",\n    \"native ESRCH independently proves original absence\",\n    \"different native birth keeps PID reuse distinct\",\n    \"group query ESRCH proves absence without sending a signal\",\n    \"full review retains all original process and group absence rows\",\n    \"saved review rederives without repeating native queries\",\n    \"issuer retains exactly the original frontier and input authority\",\n    \"consumer reauthenticates the exact one-use original state\"\n  ],\n  \"joined_files\": 46,\n  \"journal_bytes\": 1138201,\n  \"journal_rows\": 1043,\n  \"rejecting_controls\": [\n    {\n      \"error\": \"saved execution frontier names a different admission or owner\",\n      \"name\": \"changed saved execution owner\"\n    },\n    {\n      \"error\": \"permit does not bind the exact retained frontier and selected input admission\",\n      \"name\": \"changed saved task bytes\"\n    },\n    {\n      \"error\": \"installed inputs changed between issue and consume\",\n      \"name\": \"incomplete installed inputs\"\n    },\n    {\n      \"error\": \"installed inputs changed between issue and consume\",\n      \"name\": \"changed native interpreter bytes\"\n    },\n    {\n      \"error\": \"worker authority differs from the exact committed source closure\",\n      \"name\": \"changed worker source closure\"\n    },\n    {\n      \"error\": \"one-use start marker is not bound to the original controller and authority\",\n      \"name\": \"changed one-use controller\"\n    },\n    {\n      \"error\": \"run omitted or repeated a selected case\",\n      \"name\": \"missing selected case\"\n    },\n    {\n      \"error\": \"execution report promotes inactive records into broader native authority\",\n      \"name\": \"promoted native proxy authority\"\n    },\n    {\n      \"error\": \"an original admitted native process is still present\",\n      \"name\": \"still-live original controller\"\n    },\n    {\n      \"error\": \"[Errno 1] model denied\",\n      \"name\": \"native permission error is not absence\"\n    },\n    {\n      \"error\": \"a selected worker group is present during independent review\",\n      \"name\": \"present group is not absence\"\n    },\n    {\n      \"error\": \"model review output is not exclusive or bounded\",\n      \"name\": \"independent review output is one use\"\n    },\n    {\n      \"error\": \"review changes an original process identity\",\n      \"name\": \"saved review cannot promote missing native absence\"\n    },\n    {\n      \"error\": \"execution output was already used\",\n      \"name\": \"issuer cannot reuse its output\"\n    },\n    {\n      \"error\": \"execution permit differs from this exact commit and activated frontier\",\n      \"name\": \"consumer rejects changed live frontier bytes\"\n    },\n    {\n      \"error\": \"selected installed inputs changed after permit issue\",\n      \"name\": \"consumer rejects changed installed identity after issue\"\n    },\n    {\n      \"error\": \"execution output is not the exact unconsumed permit state\",\n      \"name\": \"consumer cannot reuse a consumed start state\"\n    }\n  ],\n  \"schema\": \"fsmgen.inactive_populated_envelope_qualification.v1\",\n  \"source_authentication_and_bounds_qualification_still_pending\": true\n}\n"
+  },
+  "result": {
+    "actual_fixture_allocation": false,
+    "actual_permit_issued": false,
+    "actual_signals": false,
+    "actual_worker_execution": false,
+    "checks": [
+      "whole-run envelope reconstructs every fixed original worker",
+      "whole-run envelope retains the original file census",
+      "native ESRCH independently proves original absence",
+      "different native birth keeps PID reuse distinct",
+      "group query ESRCH proves absence without sending a signal",
+      "full review retains all original process and group absence rows",
+      "saved review rederives without repeating native queries",
+      "issuer retains exactly the original frontier and input authority",
+      "consumer reauthenticates the exact one-use original state"
+    ],
+    "joined_files": 46,
+    "journal_bytes": 1138201,
+    "journal_rows": 1043,
+    "rejecting_controls": [
+      {
+        "error": "saved execution frontier names a different admission or owner",
+        "name": "changed saved execution owner"
+      },
+      {
+        "error": "permit does not bind the exact retained frontier and selected input admission",
+        "name": "changed saved task bytes"
+      },
+      {
+        "error": "installed inputs changed between issue and consume",
+        "name": "incomplete installed inputs"
+      },
+      {
+        "error": "installed inputs changed between issue and consume",
+        "name": "changed native interpreter bytes"
+      },
+      {
+        "error": "worker authority differs from the exact committed source closure",
+        "name": "changed worker source closure"
+      },
+      {
+        "error": "one-use start marker is not bound to the original controller and authority",
+        "name": "changed one-use controller"
+      },
+      {
+        "error": "run omitted or repeated a selected case",
+        "name": "missing selected case"
+      },
+      {
+        "error": "execution report promotes inactive records into broader native authority",
+        "name": "promoted native proxy authority"
+      },
+      {
+        "error": "an original admitted native process is still present",
+        "name": "still-live original controller"
+      },
+      {
+        "error": "[Errno 1] model denied",
+        "name": "native permission error is not absence"
+      },
+      {
+        "error": "a selected worker group is present during independent review",
+        "name": "present group is not absence"
+      },
+      {
+        "error": "model review output is not exclusive or bounded",
+        "name": "independent review output is one use"
+      },
+      {
+        "error": "review changes an original process identity",
+        "name": "saved review cannot promote missing native absence"
+      },
+      {
+        "error": "execution output was already used",
+        "name": "issuer cannot reuse its output"
+      },
+      {
+        "error": "execution permit differs from this exact commit and activated frontier",
+        "name": "consumer rejects changed live frontier bytes"
+      },
+      {
+        "error": "selected installed inputs changed after permit issue",
+        "name": "consumer rejects changed installed identity after issue"
+      },
+      {
+        "error": "execution output is not the exact unconsumed permit state",
+        "name": "consumer cannot reuse a consumed start state"
+      }
+    ],
+    "schema": "fsmgen.inactive_populated_envelope_qualification.v1",
+    "source_authentication_and_bounds_qualification_still_pending": true
+  },
+  "sources": [
+    {
+      "original": "docs/audits/native-proxy-populated-final-admission-20260913/qualify_envelope.py",
+      "path": "docs/audits/native-proxy-populated-final-admission-20260913/qualify_envelope.py.envelope-first.source",
+      "sha256": "6b75aaf969c9b112153f55888e937a56cc0d004f21acfdc7ae7d9bb587136f2a",
+      "size_bytes": 15791
+    },
+    {
+      "original": "docs/audits/native-proxy-populated-final-admission-20260913/review_run.py",
+      "path": "docs/audits/native-proxy-populated-final-admission-20260913/review_run.py.envelope-first.source",
+      "sha256": "a81c3811a6084950517640841fefe6825027d1436390aa9537d79cbb785c9ce7",
+      "size_bytes": 16345
+    },
+    {
+      "original": "docs/audits/native-proxy-populated-final-admission-20260913/oracle.py",
+      "path": "docs/audits/native-proxy-populated-final-admission-20260913/oracle.py.envelope-first.source",
+      "sha256": "ab4a4b37c5a4597a679df552b9d1399243489f2532ec57cb1eebc5e76005f09b",
+      "size_bytes": 31435
+    },
+    {
+      "original": "docs/audits/native-proxy-populated-final-admission-20260913/qualify_driver.py",
+      "path": "docs/audits/native-proxy-populated-final-admission-20260913/qualify_driver.py.envelope-first.source",
+      "sha256": "13e107e2087e6dfc09659e9b68d56160984254827f3393b1edcb5346d77ef328",
+      "size_bytes": 23065
+    },
+    {
+      "original": "docs/audits/native-proxy-populated-final-admission-20260913/driver.py",
+      "path": "docs/audits/native-proxy-populated-final-admission-20260913/driver.py.envelope-first.source",
+      "sha256": "76ff87539b1071ab68e95ea943981f511f7614d4241b601e47a52517eec65062",
+      "size_bytes": 23397
+    },
+    {
+      "original": "docs/audits/native-proxy-populated-final-admission-20260913/result_state.py",
+      "path": "docs/audits/native-proxy-populated-final-admission-20260913/result_state.py.envelope-first.source",
+      "sha256": "b5ae4b83f1c0bc981966a61dd46832d7e3849028ae14fa3ed46d74ea36cabdc7",
+      "size_bytes": 14215
+    },
+    {
+      "original": "docs/audits/native-proxy-populated-final-admission-20260913/owned_case.py",
+      "path": "docs/audits/native-proxy-populated-final-admission-20260913/owned_case.py.envelope-first.source",
+      "sha256": "9bd0512c19029e2bc91b7d9d8eddfd44dedd7354e1e00f007a7c573b52e02fb4",
+      "size_bytes": 14557
+    },
+    {
+      "original": "docs/audits/native-proxy-populated-final-admission-20260913/contract.py",
+      "path": "docs/audits/native-proxy-populated-final-admission-20260913/contract.py.envelope-first.source",
+      "sha256": "f34321c5e6a489cf6c2457968e0702770bb098b295e7bbaa74a03f0fd6861e5d",
+      "size_bytes": 5282
+    },
+    {
+      "original": "docs/audits/native-proxy-populated-final-admission-20260913/records.py",
+      "path": "docs/audits/native-proxy-populated-final-admission-20260913/records.py.envelope-first.source",
+      "sha256": "c420e9cdd008e9bce96a581969de6ce4ffa2636510f96a2e8354ce57c5d3e675",
+      "size_bytes": 7313
+    },
+    {
+      "original": "docs/audits/native-proxy-populated-final-admission-20260913/admission.py",
+      "path": "docs/audits/native-proxy-populated-final-admission-20260913/admission.py.envelope-first.source",
+      "sha256": "441c3676d6377220ffde8ae0b5358427875bb9bbeb57943edc25a9dcda3f2f7f",
+      "size_bytes": 9797
+    },
+    {
+      "original": "docs/audits/native-proxy-populated-final-admission-20260913/installed_inputs.py",
+      "path": "docs/audits/native-proxy-populated-final-admission-20260913/installed_inputs.py.envelope-first.source",
+      "sha256": "d401d42cc3d4ae2cf0ae489b0fe43f0e6bf422cfe539ed0af312e188ef9d0a7f",
+      "size_bytes": 5709
+    },
+    {
+      "original": "docs/audits/native-proxy-populated-final-admission-20260913/journal.py",
+      "path": "docs/audits/native-proxy-populated-final-admission-20260913/journal.py.envelope-first.source",
+      "sha256": "3a40007b8ada5d46116ebe4176228ebe9bea2f4d28163506e048e6e29647dcbe",
+      "size_bytes": 2766
+    },
+    {
+      "original": "docs/audits/native-proxy-populated-final-admission-20260913/build_plan.py",
+      "path": "docs/audits/native-proxy-populated-final-admission-20260913/build_plan.py.envelope-first.source",
+      "sha256": "8086a6a3dce9bbf602c6098ebfd59c8dca469e7e4db3e063b6053a328888118d",
+      "size_bytes": 1797
+    },
+    {
+      "original": "docs/audits/native-proxy-populated-final-admission-20260913/plan.json",
+      "path": "docs/audits/native-proxy-populated-final-admission-20260913/plan.json.envelope-first.source",
+      "sha256": "81209394a534af619375bfd3428e0996b4123b2b846514533f532ae1a3400093",
+      "size_bytes": 49386
+    }
+  ]
+}

@@ -1,0 +1,478 @@
+{
+  "installed_scope": "Only interpreter source modules observed during this compile-only invocation; required read-only OS/toolchain inputs. This is not the complete native library/SDK dependency closure.",
+  "inventory": {
+    "compile_only": 1,
+    "complete_installed_native_dependency_closure": 0,
+    "installed_modules": [
+      {
+        "device": 16777232,
+        "installed_path": "/System/Library/Perl/5.34/Carp.pm",
+        "read_only_toolchain_input": 1,
+        "sha256": "020bba236b44c482c8a401b5f6676c0b5d27a76caaf7cae41dfb7a63b00488b3",
+        "size_bytes": 35985
+      },
+      {
+        "device": 16777232,
+        "installed_path": "/System/Library/Perl/5.34/Carp/Heavy.pm",
+        "read_only_toolchain_input": 1,
+        "sha256": "18d60cdd00207b238ef28d11f55a6cc45119cfe0eaed19b85b17ac0e1f167f25",
+        "size_bytes": 773
+      },
+      {
+        "device": 16777232,
+        "installed_path": "/System/Library/Perl/5.34/Digest/base.pm",
+        "read_only_toolchain_input": 1,
+        "sha256": "06367faa5fb46a5794d3d7603d52075ab1533ad848184a5309a1cfac1058281a",
+        "size_bytes": 1984
+      },
+      {
+        "device": 16777232,
+        "installed_path": "/System/Library/Perl/5.34/Exporter.pm",
+        "read_only_toolchain_input": 1,
+        "sha256": "073f49928a471678e14ce5c314aef306a93a58870dba423ff2f630d1de782cad",
+        "size_bytes": 18774
+      },
+      {
+        "device": 16777232,
+        "installed_path": "/System/Library/Perl/5.34/Exporter/Heavy.pm",
+        "read_only_toolchain_input": 1,
+        "sha256": "e53ad090aaa655b01ad1cff2af2daf6c92020ed349f9d48d55109cd1d142f6a0",
+        "size_bytes": 6530
+      },
+      {
+        "device": 16777232,
+        "installed_path": "/System/Library/Perl/5.34/File/Basename.pm",
+        "read_only_toolchain_input": 1,
+        "sha256": "43b664feca2c9d14cfc90d3527fc0bf6931c75000cf941d1f8c914e83dfb21ba",
+        "size_bytes": 11194
+      },
+      {
+        "device": 16777232,
+        "installed_path": "/System/Library/Perl/5.34/File/Path.pm",
+        "read_only_toolchain_input": 1,
+        "sha256": "a1aa35a2f08a57e1b2684733c32e435cadbcac7be6652b0a5a528a6a122211aa",
+        "size_bytes": 43254
+      },
+      {
+        "device": 16777232,
+        "installed_path": "/System/Library/Perl/5.34/File/Temp.pm",
+        "read_only_toolchain_input": 1,
+        "sha256": "6d8149ddd738ccf19b694f5d8efb6ba5d85a943b6ee4de7a96c1991f3ac089c1",
+        "size_bytes": 118877
+      },
+      {
+        "device": 16777232,
+        "installed_path": "/System/Library/Perl/5.34/FindBin.pm",
+        "read_only_toolchain_input": 1,
+        "sha256": "d5576f3c9d0f2f04018b219a8f5c82eafcd1eb6a5b82e46a65b290cfd51fdd64",
+        "size_bytes": 4648
+      },
+      {
+        "device": 16777232,
+        "installed_path": "/System/Library/Perl/5.34/JSON/PP.pm",
+        "read_only_toolchain_input": 1,
+        "sha256": "b256804d959880439ce3e5b82497d01c080228276ae55979d3ababee48293a89",
+        "size_bytes": 100527
+      },
+      {
+        "device": 16777232,
+        "installed_path": "/System/Library/Perl/5.34/JSON/PP/Boolean.pm",
+        "read_only_toolchain_input": 1,
+        "sha256": "264db0a8de27d592dceb964bbaab9a05a65197855a7bfd4f10ed20d14f86f379",
+        "size_bytes": 810
+      },
+      {
+        "device": 16777232,
+        "installed_path": "/System/Library/Perl/5.34/SelectSaver.pm",
+        "read_only_toolchain_input": 1,
+        "sha256": "b951b99c894f701eac08b79265ff2ccbede0954f97a537d03fb78801ed645861",
+        "size_bytes": 1076
+      },
+      {
+        "device": 16777232,
+        "installed_path": "/System/Library/Perl/5.34/Symbol.pm",
+        "read_only_toolchain_input": 1,
+        "sha256": "bd0e0df0aa0b830f87c2a991b3989abae21c9e9dce4edb2abc7125c3c7693621",
+        "size_bytes": 4905
+      },
+      {
+        "device": 16777232,
+        "installed_path": "/System/Library/Perl/5.34/Tie/Hash.pm",
+        "read_only_toolchain_input": 1,
+        "sha256": "12e565ea59a4a3a332d8fefa40a654f9482014c145f165bef3d065a59daee55a",
+        "size_bytes": 7639
+      },
+      {
+        "device": 16777232,
+        "installed_path": "/System/Library/Perl/5.34/XSLoader.pm",
+        "read_only_toolchain_input": 1,
+        "sha256": "c6efc1f25e87fb1c2343d471b868af1a755df601985065dbd22e22273d6b2192",
+        "size_bytes": 11398
+      },
+      {
+        "device": 16777232,
+        "installed_path": "/System/Library/Perl/5.34/bytes.pm",
+        "read_only_toolchain_input": 1,
+        "sha256": "7e3a78b180565c3caafa7f3dd5913acb91b06fe7c9f802bf948eb5a962df00f0",
+        "size_bytes": 3782
+      },
+      {
+        "device": 16777232,
+        "installed_path": "/System/Library/Perl/5.34/constant.pm",
+        "read_only_toolchain_input": 1,
+        "sha256": "e67cdfa533d42cbe5265bcf3c270f055620cba38a9295b5d584b7efc37a0c156",
+        "size_bytes": 14724
+      },
+      {
+        "device": 16777232,
+        "installed_path": "/System/Library/Perl/5.34/darwin-thread-multi-2level/Config.pm",
+        "read_only_toolchain_input": 1,
+        "sha256": "d80c71b7e8cf1da579ab3c68bae0d1d4112079d858189efa9d4d87a5269dc0ff",
+        "size_bytes": 3886
+      },
+      {
+        "device": 16777232,
+        "installed_path": "/System/Library/Perl/5.34/darwin-thread-multi-2level/Cwd.pm",
+        "read_only_toolchain_input": 1,
+        "sha256": "b165853f24884497b35f4adac509c4119d19806f2d972899b9c24b1831fb710c",
+        "size_bytes": 21942
+      },
+      {
+        "device": 16777232,
+        "installed_path": "/System/Library/Perl/5.34/darwin-thread-multi-2level/Digest/SHA.pm",
+        "read_only_toolchain_input": 1,
+        "sha256": "15efed6020da9028a7a5b2d41d7e6d8e6b1719aeae365bc592ffb4025f76d33d",
+        "size_bytes": 22174
+      },
+      {
+        "device": 16777232,
+        "installed_path": "/System/Library/Perl/5.34/darwin-thread-multi-2level/Encode.pm",
+        "read_only_toolchain_input": 1,
+        "sha256": "134fddc376de04a40dea58e6055f7ce28bc4159487a47c260ac8feaf04201a54",
+        "size_bytes": 32075
+      },
+      {
+        "device": 16777232,
+        "installed_path": "/System/Library/Perl/5.34/darwin-thread-multi-2level/Encode/Alias.pm",
+        "read_only_toolchain_input": 1,
+        "sha256": "9ec57c436578d4c67b269c53dcb70db64bf845b7ba294da2b8fb998bc00a45ea",
+        "size_bytes": 12545
+      },
+      {
+        "device": 16777232,
+        "installed_path": "/System/Library/Perl/5.34/darwin-thread-multi-2level/Encode/Config.pm",
+        "read_only_toolchain_input": 1,
+        "sha256": "a15072cf84ac4a431b91b1a893a7c8d4c4dd48adefa077cd3a9b271cf0aba3bf",
+        "size_bytes": 6065
+      },
+      {
+        "device": 16777232,
+        "installed_path": "/System/Library/Perl/5.34/darwin-thread-multi-2level/Encode/Encoding.pm",
+        "read_only_toolchain_input": 1,
+        "sha256": "1daaf4400c4462c24d785b7eb91fbebc6eb868192aad410df48019fe7af6e39d",
+        "size_bytes": 9063
+      },
+      {
+        "device": 16777232,
+        "installed_path": "/System/Library/Perl/5.34/darwin-thread-multi-2level/Encode/MIME/Name.pm",
+        "read_only_toolchain_input": 1,
+        "sha256": "1cabed37ee26cfd763999649f9ac9a5f1e5a81cbc5125b8d85ff19d60b72f906",
+        "size_bytes": 3821
+      },
+      {
+        "device": 16777232,
+        "installed_path": "/System/Library/Perl/5.34/darwin-thread-multi-2level/Errno.pm",
+        "read_only_toolchain_input": 1,
+        "sha256": "288fd082af293976f25f9d2cd9d76473d8ccb1130eea234c1ccbae0578f2c7e5",
+        "size_bytes": 6419
+      },
+      {
+        "device": 16777232,
+        "installed_path": "/System/Library/Perl/5.34/darwin-thread-multi-2level/Fcntl.pm",
+        "read_only_toolchain_input": 1,
+        "sha256": "80511e494fc719cb63d252a95987ba24c04557947c1bf1584f5eeb6704786e9b",
+        "size_bytes": 4044
+      },
+      {
+        "device": 16777232,
+        "installed_path": "/System/Library/Perl/5.34/darwin-thread-multi-2level/File/Spec.pm",
+        "read_only_toolchain_input": 1,
+        "sha256": "00fd749943a9ee1e13cccbfc2f060849bf121faa7b8c879ec8bc1646c4c0a9ee",
+        "size_bytes": 10571
+      },
+      {
+        "device": 16777232,
+        "installed_path": "/System/Library/Perl/5.34/darwin-thread-multi-2level/File/Spec/Unix.pm",
+        "read_only_toolchain_input": 1,
+        "sha256": "f9bff323ae1f68ff8fcd2c5ccacc6750e6eac085100c44b6cd372304eef4f2b1",
+        "size_bytes": 15889
+      },
+      {
+        "device": 16777232,
+        "installed_path": "/System/Library/Perl/5.34/darwin-thread-multi-2level/IO.pm",
+        "read_only_toolchain_input": 1,
+        "sha256": "d1db057bb61c36632e97e7216733ddf70ccd367f1f32393f9d7a4248cc4ec07e",
+        "size_bytes": 1462
+      },
+      {
+        "device": 16777232,
+        "installed_path": "/System/Library/Perl/5.34/darwin-thread-multi-2level/IO/Handle.pm",
+        "read_only_toolchain_input": 1,
+        "sha256": "af3d3b9f9bc2132644248480d21b2e7e5c1a7e0d7a3c1f121e89888a2153b9f1",
+        "size_bytes": 16641
+      },
+      {
+        "device": 16777232,
+        "installed_path": "/System/Library/Perl/5.34/darwin-thread-multi-2level/IO/Seekable.pm",
+        "read_only_toolchain_input": 1,
+        "sha256": "ce170c83abf1a599320c0f4369c8e6e123310b4603ac3791bee0e733d9e8e533",
+        "size_bytes": 2891
+      },
+      {
+        "device": 16777232,
+        "installed_path": "/System/Library/Perl/5.34/darwin-thread-multi-2level/IO/Select.pm",
+        "read_only_toolchain_input": 1,
+        "sha256": "a6804f44f8c90c88f8cc60cdd38538f65f3f92ce533fcda6933887c7228ad5d7",
+        "size_bytes": 9263
+      },
+      {
+        "device": 16777232,
+        "installed_path": "/System/Library/Perl/5.34/darwin-thread-multi-2level/List/Util.pm",
+        "read_only_toolchain_input": 1,
+        "sha256": "0d3135c14b4d4156a0de8156f2d33f54c6f0b6233b2f6fe5d4b9122e9fef1a5a",
+        "size_bytes": 24055
+      },
+      {
+        "device": 16777232,
+        "installed_path": "/System/Library/Perl/5.34/darwin-thread-multi-2level/POSIX.pm",
+        "read_only_toolchain_input": 1,
+        "sha256": "d941cf37b6dee5253b859cbb703a5785629a0bcdd86f61d1ec96fa464d69df90",
+        "size_bytes": 20384
+      },
+      {
+        "device": 16777232,
+        "installed_path": "/System/Library/Perl/5.34/darwin-thread-multi-2level/Scalar/Util.pm",
+        "read_only_toolchain_input": 1,
+        "sha256": "9ba58fcbefc535a73d3fc0da949d0fb1e524411dea4e8bee97529700607a98a4",
+        "size_bytes": 10189
+      },
+      {
+        "device": 16777232,
+        "installed_path": "/System/Library/Perl/5.34/darwin-thread-multi-2level/Storable.pm",
+        "read_only_toolchain_input": 1,
+        "sha256": "4a9ab42a68de934079da007e8df0ae3c66f33477c3f3218782596a83e3ea508c",
+        "size_bytes": 49923
+      },
+      {
+        "device": 16777232,
+        "installed_path": "/System/Library/Perl/5.34/darwin-thread-multi-2level/Time/HiRes.pm",
+        "read_only_toolchain_input": 1,
+        "sha256": "9bc6ece12a90e5c01d784a4efd672c49b8a7551ce6871b620efbd38cd4960f34",
+        "size_bytes": 25689
+      },
+      {
+        "device": 16777232,
+        "installed_path": "/System/Library/Perl/5.34/darwin-thread-multi-2level/lib.pm",
+        "read_only_toolchain_input": 1,
+        "sha256": "2c5b260587d0d063ce0ae72d1d6f161e17eef31b801c7e1ac08267114c7f5c6b",
+        "size_bytes": 6136
+      },
+      {
+        "device": 16777232,
+        "installed_path": "/System/Library/Perl/5.34/integer.pm",
+        "read_only_toolchain_input": 1,
+        "sha256": "eb62cc3ee22a592bc673e07158927d1a6536075d33258fc67ff91e3f720cf463",
+        "size_bytes": 3254
+      },
+      {
+        "device": 16777232,
+        "installed_path": "/System/Library/Perl/5.34/overload.pm",
+        "read_only_toolchain_input": 1,
+        "sha256": "3ea7fb212172cb9c01dacee5f7d90aa04da396f5bca442eca84ad2e94a200d99",
+        "size_bytes": 53349
+      },
+      {
+        "device": 16777232,
+        "installed_path": "/System/Library/Perl/5.34/overloading.pm",
+        "read_only_toolchain_input": 1,
+        "sha256": "5bba56c0acdcc449ca3b73500862a5750c907d97d652978038dbc7809c4fcd07",
+        "size_bytes": 1808
+      },
+      {
+        "device": 16777232,
+        "installed_path": "/System/Library/Perl/5.34/parent.pm",
+        "read_only_toolchain_input": 1,
+        "sha256": "046169e129cfb7d4b302567de268409f175652192914abd33245cb9939f16626",
+        "size_bytes": 2702
+      },
+      {
+        "device": 16777232,
+        "installed_path": "/System/Library/Perl/5.34/strict.pm",
+        "read_only_toolchain_input": 1,
+        "sha256": "f1296224730dceb5dd308ee1e72c452c8b13ced7f3bf742ccd16e1e1c416bcb5",
+        "size_bytes": 4783
+      },
+      {
+        "device": 16777232,
+        "installed_path": "/System/Library/Perl/5.34/vars.pm",
+        "read_only_toolchain_input": 1,
+        "sha256": "84de23fb5d39572d2b0dc5d4e1cd6363017fae8f54eff90d4c8121eb1edeeb57",
+        "size_bytes": 2458
+      },
+      {
+        "device": 16777232,
+        "installed_path": "/System/Library/Perl/5.34/warnings.pm",
+        "read_only_toolchain_input": 1,
+        "sha256": "7aa17d79aa23ee3635aa145902944e6dad909c0f5d6ca47d27bce7be864e42d2",
+        "size_bytes": 53221
+      },
+      {
+        "device": 16777232,
+        "installed_path": "/System/Library/Perl/5.34/warnings/register.pm",
+        "read_only_toolchain_input": 1,
+        "sha256": "ce25ec34358642703ff05b546b2ac42b4f2081ab7610d8373dd94c6b78040cf4",
+        "size_bytes": 759
+      }
+    ],
+    "inventory_only_module": "docs/audits/native-proxy-populated-final-admission-20260913/CompileInventory.pm",
+    "project_sources": [
+      {
+        "path": "docs/audits/native-proxy-cleanup-receipts-20260910/CleanupReceipts.pm",
+        "sha256": "5b22cecf6ff131f62fdeb237a3e77b67b5b29a172ff82320a67772b03cd24de0",
+        "size_bytes": 1300
+      },
+      {
+        "path": "docs/audits/native-proxy-image-coordination-20260910/Coordination.pm",
+        "sha256": "a0d99769147f28ca7c35e9ac80ba88f7cf14760e3bef7b51841d8badebc060e5",
+        "size_bytes": 19061
+      },
+      {
+        "path": "docs/audits/native-proxy-image-custody-20260910/ImageCustody.pm",
+        "sha256": "927f1ab39f7f26742e36878985d1ff545ddf2dee119d4bf6b7b41bf2c9360ccc",
+        "size_bytes": 8619
+      },
+      {
+        "path": "docs/audits/native-proxy-image-maintenance-20260910/ImageMaintenance.pm",
+        "sha256": "1295957d97737e764c0e800885a2c3f9adfa327a0d41b35d122dde3e21698cac",
+        "size_bytes": 5678
+      },
+      {
+        "path": "docs/audits/native-proxy-image-publication-20260910/Publication.pm",
+        "sha256": "34ca8717856492a09ebf16af8810f04b1dea4c6c8c84ff7b3f5c11c07e7dc2bf",
+        "size_bytes": 5371
+      },
+      {
+        "path": "docs/audits/native-proxy-observation-acquisition-20260910/ObservationAcquisition.pm",
+        "sha256": "809c013255ab6973a2d0dabcfd5b0ae5c55c97696d7acc77b10cf68149006470",
+        "size_bytes": 16517
+      },
+      {
+        "path": "docs/audits/native-proxy-observation-archive-20260911/ObservationArchive.pm",
+        "sha256": "79454039421822af31f9891d0a3d3ebe1b4c1ebcc6f6c8decd1f78e081736e87",
+        "size_bytes": 6196
+      },
+      {
+        "path": "docs/audits/native-proxy-observation-archive-records-20260911/ArchiveRecord.pm",
+        "sha256": "38fb47a97157d1b052b3e0f4e148fa6cacd27f4d8defb63ca469133ac6ec1af1",
+        "size_bytes": 9873
+      },
+      {
+        "path": "docs/audits/native-proxy-observation-archive-release-20260911/ObservationRelease.pm",
+        "sha256": "08236265e6e6973ab23e9e31ee26071272f39e8879c2d420ab2382fc800345ab",
+        "size_bytes": 10294
+      },
+      {
+        "path": "docs/audits/native-proxy-observation-records-20260910/ObservationRecord.pm",
+        "sha256": "35445ee951c8f5e7dc204f58cffe1b2f6273286cc3e7715953d705b33e7158d5",
+        "size_bytes": 4369
+      },
+      {
+        "path": "docs/audits/native-proxy-observation-work-records-20260911/WorkRecord.pm",
+        "sha256": "3f0f1351bc44a2a8b42502b7b814544f9d756ae8c39e17db470b312635a6e56d",
+        "size_bytes": 8126
+      },
+      {
+        "path": "docs/audits/native-proxy-populated-final-admission-20260913/CompileInventory.pm",
+        "sha256": "1801bc483e9d1aec0f71811c7cf40bca06e4a83063051727e6a37dae5359a05e",
+        "size_bytes": 2449
+      },
+      {
+        "path": "docs/audits/native-proxy-populated-worker-protocol-20260913/Protocol.pm",
+        "sha256": "f026b038d6069deca3fb5d18113624412acf52c193fba4a6ec6cf47aec6cfaf1",
+        "size_bytes": 19282
+      },
+      {
+        "path": "docs/audits/native-proxy-populated-worker-protocol-20260913/Wire.pm",
+        "sha256": "18d459122591ba84ee5c5d4616adc298b1012702316952f01f57170f833abaee",
+        "size_bytes": 4380
+      },
+      {
+        "path": "docs/audits/native-proxy-populated-worker-protocol-20260913/WorkerIO.pm",
+        "sha256": "e70d9a9f11bc630eca3401449bbe786abea72ba099747f2a75485ff5b3aa8b82",
+        "size_bytes": 6084
+      },
+      {
+        "path": "docs/audits/native-proxy-populated-worker-protocol-20260913/worker.pl",
+        "sha256": "df6b43714957c0405cb38f5d596af6440daff14e2146bfb4dc08d63447166d6d",
+        "size_bytes": 7268
+      },
+      {
+        "path": "docs/audits/native-proxy-runtime-acquisition-20260910/ReferenceAcquisition.pm",
+        "sha256": "b751c88d709e102f7f9b9dd17e0222c39e0a81acc16d7194f7f7c3f4c8535b57",
+        "size_bytes": 6565
+      },
+      {
+        "path": "docs/audits/native-proxy-runtime-census-20260910/ReferenceCensus.pm",
+        "sha256": "9fd74767e8c10831f2732fa8ad426b7e4fff8c17bab06584aa671cdd013b6247",
+        "size_bytes": 8024
+      },
+      {
+        "path": "docs/audits/native-proxy-runtime-records-20260910/RuntimeRecord.pm",
+        "sha256": "013c0a02e7df59dc3a5af944b603cd44121252a02ca0228d6fdc3e1dd28e6745",
+        "size_bytes": 4078
+      },
+      {
+        "path": "docs/audits/native-proxy-runtime-retirement-20260910/PrivateWorkspace.pm",
+        "sha256": "98e324cf9ef89471ffb4ede683ce21a8e09fc02329739a0856285ecea067e18f",
+        "size_bytes": 6425
+      },
+      {
+        "path": "docs/audits/native-proxy-runtime-retirement-20260910/RuntimeRetirement.pm",
+        "sha256": "766348d16243d3868ca5f8b653f757f8f2eaf5c1aba8ec27fd2d9c67e9fd0bcc",
+        "size_bytes": 8727
+      },
+      {
+        "path": "perl/FSM/ProjectDataLocality.pm",
+        "sha256": "14aece4a50b35956bc2585099aa8d26753942288663c641922da9d36ad4bc893",
+        "size_bytes": 6017
+      },
+      {
+        "path": "perl/FSM/Support/ProcessSupervisor.pm",
+        "sha256": "684882d91f673ea7145f43ed3aad31acf099f13508574be7b2d8911123988637",
+        "size_bytes": 27990
+      },
+      {
+        "path": "t/lib/FSM/Test/ProcessSupervisor.pm",
+        "sha256": "52e467023ea8a776167e227a767abdd3dddf185f1f7c539aac8ca1c4a0a06680",
+        "size_bytes": 773
+      },
+      {
+        "path": "t/lib/FSM/Test/RustProxyFixture.pm",
+        "sha256": "d9c4ab52cf8074526c59b7a5dcb9da870ca7ffdacb4eb236dacb23b5db6d8bfb",
+        "size_bytes": 11466
+      }
+    ],
+    "schema": "fsmgen.inactive_populated_compile_inventory.v1",
+    "worker": "docs/audits/native-proxy-populated-worker-protocol-20260913/worker.pl",
+    "worker_runtime_entered": 0
+  },
+  "inventory_module_excluded_from_worker_runtime": true,
+  "outputs": {
+    "exit": "0\n",
+    "stderr": "ram-guard: PID 91593; host 84.9%; host cutoff 88%; descendant RSS cutoff 4096 MiB; poll 2s\ndocs/audits/native-proxy-populated-worker-protocol-20260913/worker.pl syntax OK\n",
+    "stdout": "{\n   \"compile_only\" : 1,\n   \"complete_installed_native_dependency_closure\" : 0,\n   \"installed_modules\" : [\n      {\n         \"device\" : 16777232,\n         \"installed_path\" : \"/System/Library/Perl/5.34/Carp.pm\",\n         \"read_only_toolchain_input\" : 1,\n         \"sha256\" : \"020bba236b44c482c8a401b5f6676c0b5d27a76caaf7cae41dfb7a63b00488b3\",\n         \"size_bytes\" : 35985\n      },\n      {\n         \"device\" : 16777232,\n         \"installed_path\" : \"/System/Library/Perl/5.34/Carp/Heavy.pm\",\n         \"read_only_toolchain_input\" : 1,\n         \"sha256\" : \"18d60cdd00207b238ef28d11f55a6cc45119cfe0eaed19b85b17ac0e1f167f25\",\n         \"size_bytes\" : 773\n      },\n      {\n         \"device\" : 16777232,\n         \"installed_path\" : \"/System/Library/Perl/5.34/Digest/base.pm\",\n         \"read_only_toolchain_input\" : 1,\n         \"sha256\" : \"06367faa5fb46a5794d3d7603d52075ab1533ad848184a5309a1cfac1058281a\",\n         \"size_bytes\" : 1984\n      },\n      {\n         \"device\" : 16777232,\n         \"installed_path\" : \"/System/Library/Perl/5.34/Exporter.pm\",\n         \"read_only_toolchain_input\" : 1,\n         \"sha256\" : \"073f49928a471678e14ce5c314aef306a93a58870dba423ff2f630d1de782cad\",\n         \"size_bytes\" : 18774\n      },\n      {\n         \"device\" : 16777232,\n         \"installed_path\" : \"/System/Library/Perl/5.34/Exporter/Heavy.pm\",\n         \"read_only_toolchain_input\" : 1,\n         \"sha256\" : \"e53ad090aaa655b01ad1cff2af2daf6c92020ed349f9d48d55109cd1d142f6a0\",\n         \"size_bytes\" : 6530\n      },\n      {\n         \"device\" : 16777232,\n         \"installed_path\" : \"/System/Library/Perl/5.34/File/Basename.pm\",\n         \"read_only_toolchain_input\" : 1,\n         \"sha256\" : \"43b664feca2c9d14cfc90d3527fc0bf6931c75000cf941d1f8c914e83dfb21ba\",\n         \"size_bytes\" : 11194\n      },\n      {\n         \"device\" : 16777232,\n         \"installed_path\" : \"/System/Library/Perl/5.34/File/Path.pm\",\n         \"read_only_toolchain_input\" : 1,\n         \"sha256\" : \"a1aa35a2f08a57e1b2684733c32e435cadbcac7be6652b0a5a528a6a122211aa\",\n         \"size_bytes\" : 43254\n      },\n      {\n         \"device\" : 16777232,\n         \"installed_path\" : \"/System/Library/Perl/5.34/File/Temp.pm\",\n         \"read_only_toolchain_input\" : 1,\n         \"sha256\" : \"6d8149ddd738ccf19b694f5d8efb6ba5d85a943b6ee4de7a96c1991f3ac089c1\",\n         \"size_bytes\" : 118877\n      },\n      {\n         \"device\" : 16777232,\n         \"installed_path\" : \"/System/Library/Perl/5.34/FindBin.pm\",\n         \"read_only_toolchain_input\" : 1,\n         \"sha256\" : \"d5576f3c9d0f2f04018b219a8f5c82eafcd1eb6a5b82e46a65b290cfd51fdd64\",\n         \"size_bytes\" : 4648\n      },\n      {\n         \"device\" : 16777232,\n         \"installed_path\" : \"/System/Library/Perl/5.34/JSON/PP.pm\",\n         \"read_only_toolchain_input\" : 1,\n         \"sha256\" : \"b256804d959880439ce3e5b82497d01c080228276ae55979d3ababee48293a89\",\n         \"size_bytes\" : 100527\n      },\n      {\n         \"device\" : 16777232,\n         \"installed_path\" : \"/System/Library/Perl/5.34/JSON/PP/Boolean.pm\",\n         \"read_only_toolchain_input\" : 1,\n         \"sha256\" : \"264db0a8de27d592dceb964bbaab9a05a65197855a7bfd4f10ed20d14f86f379\",\n         \"size_bytes\" : 810\n      },\n      {\n         \"device\" : 16777232,\n         \"installed_path\" : \"/System/Library/Perl/5.34/SelectSaver.pm\",\n         \"read_only_toolchain_input\" : 1,\n         \"sha256\" : \"b951b99c894f701eac08b79265ff2ccbede0954f97a537d03fb78801ed645861\",\n         \"size_bytes\" : 1076\n      },\n      {\n         \"device\" : 16777232,\n         \"installed_path\" : \"/System/Library/Perl/5.34/Symbol.pm\",\n         \"read_only_toolchain_input\" : 1,\n         \"sha256\" : \"bd0e0df0aa0b830f87c2a991b3989abae21c9e9dce4edb2abc7125c3c7693621\",\n         \"size_bytes\" : 4905\n      },\n      {\n         \"device\" : 16777232,\n         \"installed_path\" : \"/System/Library/Perl/5.34/Tie/Hash.pm\",\n         \"read_only_toolchain_input\" : 1,\n         \"sha256\" : \"12e565ea59a4a3a332d8fefa40a654f9482014c145f165bef3d065a59daee55a\",\n         \"size_bytes\" : 7639\n      },\n      {\n         \"device\" : 16777232,\n         \"installed_path\" : \"/System/Library/Perl/5.34/XSLoader.pm\",\n         \"read_only_toolchain_input\" : 1,\n         \"sha256\" : \"c6efc1f25e87fb1c2343d471b868af1a755df601985065dbd22e22273d6b2192\",\n         \"size_bytes\" : 11398\n      },\n      {\n         \"device\" : 16777232,\n         \"installed_path\" : \"/System/Library/Perl/5.34/bytes.pm\",\n         \"read_only_toolchain_input\" : 1,\n         \"sha256\" : \"7e3a78b180565c3caafa7f3dd5913acb91b06fe7c9f802bf948eb5a962df00f0\",\n         \"size_bytes\" : 3782\n      },\n      {\n         \"device\" : 16777232,\n         \"installed_path\" : \"/System/Library/Perl/5.34/constant.pm\",\n         \"read_only_toolchain_input\" : 1,\n         \"sha256\" : \"e67cdfa533d42cbe5265bcf3c270f055620cba38a9295b5d584b7efc37a0c156\",\n         \"size_bytes\" : 14724\n      },\n      {\n         \"device\" : 16777232,\n         \"installed_path\" : \"/System/Library/Perl/5.34/darwin-thread-multi-2level/Config.pm\",\n         \"read_only_toolchain_input\" : 1,\n         \"sha256\" : \"d80c71b7e8cf1da579ab3c68bae0d1d4112079d858189efa9d4d87a5269dc0ff\",\n         \"size_bytes\" : 3886\n      },\n      {\n         \"device\" : 16777232,\n         \"installed_path\" : \"/System/Library/Perl/5.34/darwin-thread-multi-2level/Cwd.pm\",\n         \"read_only_toolchain_input\" : 1,\n         \"sha256\" : \"b165853f24884497b35f4adac509c4119d19806f2d972899b9c24b1831fb710c\",\n         \"size_bytes\" : 21942\n      },\n      {\n         \"device\" : 16777232,\n         \"installed_path\" : \"/System/Library/Perl/5.34/darwin-thread-multi-2level/Digest/SHA.pm\",\n         \"read_only_toolchain_input\" : 1,\n         \"sha256\" : \"15efed6020da9028a7a5b2d41d7e6d8e6b1719aeae365bc592ffb4025f76d33d\",\n         \"size_bytes\" : 22174\n      },\n      {\n         \"device\" : 16777232,\n         \"installed_path\" : \"/System/Library/Perl/5.34/darwin-thread-multi-2level/Encode.pm\",\n         \"read_only_toolchain_input\" : 1,\n         \"sha256\" : \"134fddc376de04a40dea58e6055f7ce28bc4159487a47c260ac8feaf04201a54\",\n         \"size_bytes\" : 32075\n      },\n      {\n         \"device\" : 16777232,\n         \"installed_path\" : \"/System/Library/Perl/5.34/darwin-thread-multi-2level/Encode/Alias.pm\",\n         \"read_only_toolchain_input\" : 1,\n         \"sha256\" : \"9ec57c436578d4c67b269c53dcb70db64bf845b7ba294da2b8fb998bc00a45ea\",\n         \"size_bytes\" : 12545\n      },\n      {\n         \"device\" : 16777232,\n         \"installed_path\" : \"/System/Library/Perl/5.34/darwin-thread-multi-2level/Encode/Config.pm\",\n         \"read_only_toolchain_input\" : 1,\n         \"sha256\" : \"a15072cf84ac4a431b91b1a893a7c8d4c4dd48adefa077cd3a9b271cf0aba3bf\",\n         \"size_bytes\" : 6065\n      },\n      {\n         \"device\" : 16777232,\n         \"installed_path\" : \"/System/Library/Perl/5.34/darwin-thread-multi-2level/Encode/Encoding.pm\",\n         \"read_only_toolchain_input\" : 1,\n         \"sha256\" : \"1daaf4400c4462c24d785b7eb91fbebc6eb868192aad410df48019fe7af6e39d\",\n         \"size_bytes\" : 9063\n      },\n      {\n         \"device\" : 16777232,\n         \"installed_path\" : \"/System/Library/Perl/5.34/darwin-thread-multi-2level/Encode/MIME/Name.pm\",\n         \"read_only_toolchain_input\" : 1,\n         \"sha256\" : \"1cabed37ee26cfd763999649f9ac9a5f1e5a81cbc5125b8d85ff19d60b72f906\",\n         \"size_bytes\" : 3821\n      },\n      {\n         \"device\" : 16777232,\n         \"installed_path\" : \"/System/Library/Perl/5.34/darwin-thread-multi-2level/Errno.pm\",\n         \"read_only_toolchain_input\" : 1,\n         \"sha256\" : \"288fd082af293976f25f9d2cd9d76473d8ccb1130eea234c1ccbae0578f2c7e5\",\n         \"size_bytes\" : 6419\n      },\n      {\n         \"device\" : 16777232,\n         \"installed_path\" : \"/System/Library/Perl/5.34/darwin-thread-multi-2level/Fcntl.pm\",\n         \"read_only_toolchain_input\" : 1,\n         \"sha256\" : \"80511e494fc719cb63d252a95987ba24c04557947c1bf1584f5eeb6704786e9b\",\n         \"size_bytes\" : 4044\n      },\n      {\n         \"device\" : 16777232,\n         \"installed_path\" : \"/System/Library/Perl/5.34/darwin-thread-multi-2level/File/Spec.pm\",\n         \"read_only_toolchain_input\" : 1,\n         \"sha256\" : \"00fd749943a9ee1e13cccbfc2f060849bf121faa7b8c879ec8bc1646c4c0a9ee\",\n         \"size_bytes\" : 10571\n      },\n      {\n         \"device\" : 16777232,\n         \"installed_path\" : \"/System/Library/Perl/5.34/darwin-thread-multi-2level/File/Spec/Unix.pm\",\n         \"read_only_toolchain_input\" : 1,\n         \"sha256\" : \"f9bff323ae1f68ff8fcd2c5ccacc6750e6eac085100c44b6cd372304eef4f2b1\",\n         \"size_bytes\" : 15889\n      },\n      {\n         \"device\" : 16777232,\n         \"installed_path\" : \"/System/Library/Perl/5.34/darwin-thread-multi-2level/IO.pm\",\n         \"read_only_toolchain_input\" : 1,\n         \"sha256\" : \"d1db057bb61c36632e97e7216733ddf70ccd367f1f32393f9d7a4248cc4ec07e\",\n         \"size_bytes\" : 1462\n      },\n      {\n         \"device\" : 16777232,\n         \"installed_path\" : \"/System/Library/Perl/5.34/darwin-thread-multi-2level/IO/Handle.pm\",\n         \"read_only_toolchain_input\" : 1,\n         \"sha256\" : \"af3d3b9f9bc2132644248480d21b2e7e5c1a7e0d7a3c1f121e89888a2153b9f1\",\n         \"size_bytes\" : 16641\n      },\n      {\n         \"device\" : 16777232,\n         \"installed_path\" : \"/System/Library/Perl/5.34/darwin-thread-multi-2level/IO/Seekable.pm\",\n         \"read_only_toolchain_input\" : 1,\n         \"sha256\" : \"ce170c83abf1a599320c0f4369c8e6e123310b4603ac3791bee0e733d9e8e533\",\n         \"size_bytes\" : 2891\n      },\n      {\n         \"device\" : 16777232,\n         \"installed_path\" : \"/System/Library/Perl/5.34/darwin-thread-multi-2level/IO/Select.pm\",\n         \"read_only_toolchain_input\" : 1,\n         \"sha256\" : \"a6804f44f8c90c88f8cc60cdd38538f65f3f92ce533fcda6933887c7228ad5d7\",\n         \"size_bytes\" : 9263\n      },\n      {\n         \"device\" : 16777232,\n         \"installed_path\" : \"/System/Library/Perl/5.34/darwin-thread-multi-2level/List/Util.pm\",\n         \"read_only_toolchain_input\" : 1,\n         \"sha256\" : \"0d3135c14b4d4156a0de8156f2d33f54c6f0b6233b2f6fe5d4b9122e9fef1a5a\",\n         \"size_bytes\" : 24055\n      },\n      {\n         \"device\" : 16777232,\n         \"installed_path\" : \"/System/Library/Perl/5.34/darwin-thread-multi-2level/POSIX.pm\",\n         \"read_only_toolchain_input\" : 1,\n         \"sha256\" : \"d941cf37b6dee5253b859cbb703a5785629a0bcdd86f61d1ec96fa464d69df90\",\n         \"size_bytes\" : 20384\n      },\n      {\n         \"device\" : 16777232,\n         \"installed_path\" : \"/System/Library/Perl/5.34/darwin-thread-multi-2level/Scalar/Util.pm\",\n         \"read_only_toolchain_input\" : 1,\n         \"sha256\" : \"9ba58fcbefc535a73d3fc0da949d0fb1e524411dea4e8bee97529700607a98a4\",\n         \"size_bytes\" : 10189\n      },\n      {\n         \"device\" : 16777232,\n         \"installed_path\" : \"/System/Library/Perl/5.34/darwin-thread-multi-2level/Storable.pm\",\n         \"read_only_toolchain_input\" : 1,\n         \"sha256\" : \"4a9ab42a68de934079da007e8df0ae3c66f33477c3f3218782596a83e3ea508c\",\n         \"size_bytes\" : 49923\n      },\n      {\n         \"device\" : 16777232,\n         \"installed_path\" : \"/System/Library/Perl/5.34/darwin-thread-multi-2level/Time/HiRes.pm\",\n         \"read_only_toolchain_input\" : 1,\n         \"sha256\" : \"9bc6ece12a90e5c01d784a4efd672c49b8a7551ce6871b620efbd38cd4960f34\",\n         \"size_bytes\" : 25689\n      },\n      {\n         \"device\" : 16777232,\n         \"installed_path\" : \"/System/Library/Perl/5.34/darwin-thread-multi-2level/lib.pm\",\n         \"read_only_toolchain_input\" : 1,\n         \"sha256\" : \"2c5b260587d0d063ce0ae72d1d6f161e17eef31b801c7e1ac08267114c7f5c6b\",\n         \"size_bytes\" : 6136\n      },\n      {\n         \"device\" : 16777232,\n         \"installed_path\" : \"/System/Library/Perl/5.34/integer.pm\",\n         \"read_only_toolchain_input\" : 1,\n         \"sha256\" : \"eb62cc3ee22a592bc673e07158927d1a6536075d33258fc67ff91e3f720cf463\",\n         \"size_bytes\" : 3254\n      },\n      {\n         \"device\" : 16777232,\n         \"installed_path\" : \"/System/Library/Perl/5.34/overload.pm\",\n         \"read_only_toolchain_input\" : 1,\n         \"sha256\" : \"3ea7fb212172cb9c01dacee5f7d90aa04da396f5bca442eca84ad2e94a200d99\",\n         \"size_bytes\" : 53349\n      },\n      {\n         \"device\" : 16777232,\n         \"installed_path\" : \"/System/Library/Perl/5.34/overloading.pm\",\n         \"read_only_toolchain_input\" : 1,\n         \"sha256\" : \"5bba56c0acdcc449ca3b73500862a5750c907d97d652978038dbc7809c4fcd07\",\n         \"size_bytes\" : 1808\n      },\n      {\n         \"device\" : 16777232,\n         \"installed_path\" : \"/System/Library/Perl/5.34/parent.pm\",\n         \"read_only_toolchain_input\" : 1,\n         \"sha256\" : \"046169e129cfb7d4b302567de268409f175652192914abd33245cb9939f16626\",\n         \"size_bytes\" : 2702\n      },\n      {\n         \"device\" : 16777232,\n         \"installed_path\" : \"/System/Library/Perl/5.34/strict.pm\",\n         \"read_only_toolchain_input\" : 1,\n         \"sha256\" : \"f1296224730dceb5dd308ee1e72c452c8b13ced7f3bf742ccd16e1e1c416bcb5\",\n         \"size_bytes\" : 4783\n      },\n      {\n         \"device\" : 16777232,\n         \"installed_path\" : \"/System/Library/Perl/5.34/vars.pm\",\n         \"read_only_toolchain_input\" : 1,\n         \"sha256\" : \"84de23fb5d39572d2b0dc5d4e1cd6363017fae8f54eff90d4c8121eb1edeeb57\",\n         \"size_bytes\" : 2458\n      },\n      {\n         \"device\" : 16777232,\n         \"installed_path\" : \"/System/Library/Perl/5.34/warnings.pm\",\n         \"read_only_toolchain_input\" : 1,\n         \"sha256\" : \"7aa17d79aa23ee3635aa145902944e6dad909c0f5d6ca47d27bce7be864e42d2\",\n         \"size_bytes\" : 53221\n      },\n      {\n         \"device\" : 16777232,\n         \"installed_path\" : \"/System/Library/Perl/5.34/warnings/register.pm\",\n         \"read_only_toolchain_input\" : 1,\n         \"sha256\" : \"ce25ec34358642703ff05b546b2ac42b4f2081ab7610d8373dd94c6b78040cf4\",\n         \"size_bytes\" : 759\n      }\n   ],\n   \"inventory_only_module\" : \"docs/audits/native-proxy-populated-final-admission-20260913/CompileInventory.pm\",\n   \"project_sources\" : [\n      {\n         \"path\" : \"docs/audits/native-proxy-cleanup-receipts-20260910/CleanupReceipts.pm\",\n         \"sha256\" : \"5b22cecf6ff131f62fdeb237a3e77b67b5b29a172ff82320a67772b03cd24de0\",\n         \"size_bytes\" : 1300\n      },\n      {\n         \"path\" : \"docs/audits/native-proxy-image-coordination-20260910/Coordination.pm\",\n         \"sha256\" : \"a0d99769147f28ca7c35e9ac80ba88f7cf14760e3bef7b51841d8badebc060e5\",\n         \"size_bytes\" : 19061\n      },\n      {\n         \"path\" : \"docs/audits/native-proxy-image-custody-20260910/ImageCustody.pm\",\n         \"sha256\" : \"927f1ab39f7f26742e36878985d1ff545ddf2dee119d4bf6b7b41bf2c9360ccc\",\n         \"size_bytes\" : 8619\n      },\n      {\n         \"path\" : \"docs/audits/native-proxy-image-maintenance-20260910/ImageMaintenance.pm\",\n         \"sha256\" : \"1295957d97737e764c0e800885a2c3f9adfa327a0d41b35d122dde3e21698cac\",\n         \"size_bytes\" : 5678\n      },\n      {\n         \"path\" : \"docs/audits/native-proxy-image-publication-20260910/Publication.pm\",\n         \"sha256\" : \"34ca8717856492a09ebf16af8810f04b1dea4c6c8c84ff7b3f5c11c07e7dc2bf\",\n         \"size_bytes\" : 5371\n      },\n      {\n         \"path\" : \"docs/audits/native-proxy-observation-acquisition-20260910/ObservationAcquisition.pm\",\n         \"sha256\" : \"809c013255ab6973a2d0dabcfd5b0ae5c55c97696d7acc77b10cf68149006470\",\n         \"size_bytes\" : 16517\n      },\n      {\n         \"path\" : \"docs/audits/native-proxy-observation-archive-20260911/ObservationArchive.pm\",\n         \"sha256\" : \"79454039421822af31f9891d0a3d3ebe1b4c1ebcc6f6c8decd1f78e081736e87\",\n         \"size_bytes\" : 6196\n      },\n      {\n         \"path\" : \"docs/audits/native-proxy-observation-archive-records-20260911/ArchiveRecord.pm\",\n         \"sha256\" : \"38fb47a97157d1b052b3e0f4e148fa6cacd27f4d8defb63ca469133ac6ec1af1\",\n         \"size_bytes\" : 9873\n      },\n      {\n         \"path\" : \"docs/audits/native-proxy-observation-archive-release-20260911/ObservationRelease.pm\",\n         \"sha256\" : \"08236265e6e6973ab23e9e31ee26071272f39e8879c2d420ab2382fc800345ab\",\n         \"size_bytes\" : 10294\n      },\n      {\n         \"path\" : \"docs/audits/native-proxy-observation-records-20260910/ObservationRecord.pm\",\n         \"sha256\" : \"35445ee951c8f5e7dc204f58cffe1b2f6273286cc3e7715953d705b33e7158d5\",\n         \"size_bytes\" : 4369\n      },\n      {\n         \"path\" : \"docs/audits/native-proxy-observation-work-records-20260911/WorkRecord.pm\",\n         \"sha256\" : \"3f0f1351bc44a2a8b42502b7b814544f9d756ae8c39e17db470b312635a6e56d\",\n         \"size_bytes\" : 8126\n      },\n      {\n         \"path\" : \"docs/audits/native-proxy-populated-final-admission-20260913/CompileInventory.pm\",\n         \"sha256\" : \"1801bc483e9d1aec0f71811c7cf40bca06e4a83063051727e6a37dae5359a05e\",\n         \"size_bytes\" : 2449\n      },\n      {\n         \"path\" : \"docs/audits/native-proxy-populated-worker-protocol-20260913/Protocol.pm\",\n         \"sha256\" : \"f026b038d6069deca3fb5d18113624412acf52c193fba4a6ec6cf47aec6cfaf1\",\n         \"size_bytes\" : 19282\n      },\n      {\n         \"path\" : \"docs/audits/native-proxy-populated-worker-protocol-20260913/Wire.pm\",\n         \"sha256\" : \"18d459122591ba84ee5c5d4616adc298b1012702316952f01f57170f833abaee\",\n         \"size_bytes\" : 4380\n      },\n      {\n         \"path\" : \"docs/audits/native-proxy-populated-worker-protocol-20260913/WorkerIO.pm\",\n         \"sha256\" : \"e70d9a9f11bc630eca3401449bbe786abea72ba099747f2a75485ff5b3aa8b82\",\n         \"size_bytes\" : 6084\n      },\n      {\n         \"path\" : \"docs/audits/native-proxy-populated-worker-protocol-20260913/worker.pl\",\n         \"sha256\" : \"df6b43714957c0405cb38f5d596af6440daff14e2146bfb4dc08d63447166d6d\",\n         \"size_bytes\" : 7268\n      },\n      {\n         \"path\" : \"docs/audits/native-proxy-runtime-acquisition-20260910/ReferenceAcquisition.pm\",\n         \"sha256\" : \"b751c88d709e102f7f9b9dd17e0222c39e0a81acc16d7194f7f7c3f4c8535b57\",\n         \"size_bytes\" : 6565\n      },\n      {\n         \"path\" : \"docs/audits/native-proxy-runtime-census-20260910/ReferenceCensus.pm\",\n         \"sha256\" : \"9fd74767e8c10831f2732fa8ad426b7e4fff8c17bab06584aa671cdd013b6247\",\n         \"size_bytes\" : 8024\n      },\n      {\n         \"path\" : \"docs/audits/native-proxy-runtime-records-20260910/RuntimeRecord.pm\",\n         \"sha256\" : \"013c0a02e7df59dc3a5af944b603cd44121252a02ca0228d6fdc3e1dd28e6745\",\n         \"size_bytes\" : 4078\n      },\n      {\n         \"path\" : \"docs/audits/native-proxy-runtime-retirement-20260910/PrivateWorkspace.pm\",\n         \"sha256\" : \"98e324cf9ef89471ffb4ede683ce21a8e09fc02329739a0856285ecea067e18f\",\n         \"size_bytes\" : 6425\n      },\n      {\n         \"path\" : \"docs/audits/native-proxy-runtime-retirement-20260910/RuntimeRetirement.pm\",\n         \"sha256\" : \"766348d16243d3868ca5f8b653f757f8f2eaf5c1aba8ec27fd2d9c67e9fd0bcc\",\n         \"size_bytes\" : 8727\n      },\n      {\n         \"path\" : \"perl/FSM/ProjectDataLocality.pm\",\n         \"sha256\" : \"14aece4a50b35956bc2585099aa8d26753942288663c641922da9d36ad4bc893\",\n         \"size_bytes\" : 6017\n      },\n      {\n         \"path\" : \"perl/FSM/Support/ProcessSupervisor.pm\",\n         \"sha256\" : \"684882d91f673ea7145f43ed3aad31acf099f13508574be7b2d8911123988637\",\n         \"size_bytes\" : 27990\n      },\n      {\n         \"path\" : \"t/lib/FSM/Test/ProcessSupervisor.pm\",\n         \"sha256\" : \"52e467023ea8a776167e227a767abdd3dddf185f1f7c539aac8ca1c4a0a06680\",\n         \"size_bytes\" : 773\n      },\n      {\n         \"path\" : \"t/lib/FSM/Test/RustProxyFixture.pm\",\n         \"sha256\" : \"d9c4ab52cf8074526c59b7a5dcb9da870ca7ffdacb4eb236dacb23b5db6d8bfb\",\n         \"size_bytes\" : 11466\n      }\n   ],\n   \"schema\" : \"fsmgen.inactive_populated_compile_inventory.v1\",\n   \"worker\" : \"docs/audits/native-proxy-populated-worker-protocol-20260913/worker.pl\",\n   \"worker_runtime_entered\" : 0\n}\n"
+  },
+  "selected_project_source_closure_verified": true,
+  "source_revision": "6663b09682c2b7461a2573900c187dcfff6fd9b0",
+  "worker_runtime_entered": false
+}

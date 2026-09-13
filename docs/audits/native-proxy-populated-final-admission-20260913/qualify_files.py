@@ -1,0 +1,200 @@
+"""No-filesystem models for bounded admission I/O and primary-error retention."""
+import copy
+from contextlib import ExitStack
+import errno
+import json
+import os
+import stat
+from types import SimpleNamespace
+from unittest.mock import patch
+
+import local_files as files
+
+
+class ModelPath:
+    def __init__(self, world, path=''):
+        self.world, self.path = world, path
+
+    def __truediv__(self, name):
+        return ModelPath(self.world, self.path + ('/' if self.path else '') + str(name))
+
+    def stat(self):
+        return self.world.metadata(self.path)
+
+    lstat = stat
+
+
+class World:
+    def __init__(self):
+        self.nodes, self.fds, self.closed = {}, {}, []
+        self.next_inode, self.next_fd, self.tick = 100, 10, 1
+        self.write_chunk = None
+        self.zero_write = self.read_error = self.corrupt_read = self.change_on_read = False
+        self.close_errors = set()
+        self.events = []
+        for name in ['', '.artifacts', '.artifacts/logs', '.artifacts/logs/model']:
+            self.add(name, stat.S_IFDIR | 0o700)
+
+    def add(self, path, mode, body=b''):
+        self.next_inode += 1
+        self.nodes[path] = dict(st_dev=7, st_ino=self.next_inode, st_mode=mode, st_uid=os.getuid(),
+            st_nlink=1, st_mtime_ns=self.tick, st_ctime_ns=self.tick, body=body)
+
+    def metadata(self, path):
+        if path not in self.nodes:
+            raise FileNotFoundError(path)
+        node = self.nodes[path]
+        return SimpleNamespace(**{key: value for key, value in node.items() if key != 'body'}, st_size=len(node['body']))
+
+    def open(self, path, flags, mode=0):
+        path = path.path
+        self.events.append(('open', path, flags))
+        if flags & os.O_CREAT:
+            if path in self.nodes and flags & os.O_EXCL:
+                raise FileExistsError(path)
+            self.add(path, stat.S_IFREG | mode)
+        elif path not in self.nodes:
+            raise FileNotFoundError(path)
+        descriptor = self.next_fd
+        self.next_fd += 1
+        self.fds[descriptor] = dict(path=path, offset=0, flags=flags)
+        return descriptor
+
+    def fstat(self, descriptor):
+        return self.metadata(self.fds[descriptor]['path'])
+
+    def read(self, descriptor, count):
+        if self.read_error:
+            raise OSError(errno.EIO, 'model read failure')
+        entry = self.fds[descriptor]
+        node = self.nodes[entry['path']]
+        body = node['body'][entry['offset']:entry['offset'] + count]
+        entry['offset'] += len(body)
+        if self.change_on_read:
+            node['st_mtime_ns'] += 1
+        return b'x' * len(body) if self.corrupt_read else body
+
+    def write(self, descriptor, body):
+        if self.zero_write:
+            return 0
+        entry = self.fds[descriptor]
+        count = min(len(body), self.write_chunk) if self.write_chunk else len(body)
+        node = self.nodes[entry['path']]
+        offset = entry['offset']
+        node['body'] = node['body'][:offset] + bytes(body[:count]) + node['body'][offset + count:]
+        entry['offset'] += count
+        self.tick += 1
+        node['st_mtime_ns'] = node['st_ctime_ns'] = self.tick
+        return count
+
+    def fchmod(self, descriptor, mode):
+        node = self.nodes[self.fds[descriptor]['path']]
+        node['st_mode'] = stat.S_IFREG | mode
+        self.tick += 1
+        node['st_ctime_ns'] = self.tick
+
+    def close(self, descriptor):
+        self.closed.append(descriptor)
+        if descriptor in self.close_errors:
+            raise OSError(errno.EIO, 'model close failure')
+        del self.fds[descriptor]
+
+    def mkdir(self, path, mode):
+        if path.path in self.nodes:
+            raise FileExistsError(path.path)
+        self.add(path.path, stat.S_IFDIR | mode)
+
+    def activate(self, stack):
+        stack.enter_context(patch.object(files, 'ROOT', ModelPath(self)))
+        for name in ('open', 'fstat', 'read', 'write', 'fchmod', 'close', 'mkdir'):
+            stack.enter_context(patch.object(files.os, name, getattr(self, name)))
+
+
+def qualify():
+    checks, rejected = [], []
+
+    def check(name, condition):
+        if not condition or name in checks:
+            raise AssertionError(name)
+        checks.append(name)
+
+    def reject(name, operation, expected, contains=None):
+        try:
+            operation()
+        except expected as error:
+            if contains and contains not in str(error):
+                raise AssertionError(name + ': wrong primary failure') from error
+            rejected.append(name)
+            return error
+        raise AssertionError(name + ': unexpectedly accepted')
+
+    path = '.artifacts/logs/model/input'
+    for bad in ('/absolute', '../parent', 'a//b', 'a/./b', 'a/../b', 'a\\b', 'a\0b', 'a\nb', ''):
+        reject('noncanonical path ' + repr(bad), lambda bad=bad: files.relative(bad), ValueError)
+    world = World()
+    with ExitStack() as stack:
+        world.activate(stack)
+        world.add(path, stat.S_IFREG | 0o400, b'\0\xffretained')
+        check('bounded read preserves octets', files.read_bytes(path, 32, 0o400) == b'\0\xffretained')
+        check('read closes its owned descriptor', not world.fds and world.closed == [10])
+        opened = world.events[0][2]
+        check('read descriptor is no-follow and close-on-exec', opened & os.O_NOFOLLOW and opened & os.O_CLOEXEC)
+        reject('read rejects wrong mode', lambda: files.read_bytes(path, 32, 0o600), ValueError)
+        reject('read rejects oversize', lambda: files.read_bytes(path, 1), ValueError)
+        reject('read rejects boolean limit', lambda: files.read_bytes(path, True), ValueError)
+        for field, value in [('st_nlink', 2), ('st_uid', os.getuid() + 1), ('st_dev', 8), ('st_mode', stat.S_IFLNK | 0o777)]:
+            prior = world.nodes[path][field]
+            world.nodes[path][field] = value
+            reject('read rejects foreign ' + field, lambda: files.read_bytes(path, 32), ValueError)
+            world.nodes[path][field] = prior
+        check('metadata rejections do not open descriptors', len(world.events) == 1)
+        world.change_on_read = True
+        reject('read rejects identity change during read', lambda: files.read_bytes(path, 32), ValueError, 'changed')
+        check('changed read still closes', not world.fds)
+    world = World()
+    with ExitStack() as stack:
+        world.activate(stack)
+        world.add(path, stat.S_IFREG | 0o400, b'retained')
+        world.read_error = True
+        world.close_errors = {10}
+        error = reject('primary read failure survives close failure', lambda: files.read_bytes(path, 32), OSError, 'model read failure')
+        check('secondary read close failure remains explicit', len(error.__notes__) == 1 and 'model close failure' in error.__notes__[0])
+        check('failed close attempted once', world.closed == [10])
+    world = World()
+    with ExitStack() as stack:
+        world.activate(stack)
+        world.write_chunk = 2
+        result = files.write_bytes(path, b'\0\xffretained', 0o400, 32)
+        check('short writes retain all original bytes', world.nodes[path]['body'] == b'\0\xffretained' and result['size_bytes'] == 10)
+        check('write seals its original inode', stat.S_IMODE(world.nodes[path]['st_mode']) == 0o400)
+        check('write and readback descriptors close', not world.fds and world.closed == [11, 10])
+        before = copy.deepcopy(world.nodes)
+        reject('exclusive write never replaces prior bytes', lambda: files.write_bytes(path, b'other', 0o400, 32), FileExistsError)
+        check('exclusive rejection preserves original objects', world.nodes == before)
+        reject('write rejects oversize before allocation', lambda: files.write_bytes(path + '_big', b'xx', 0o400, 1), ValueError)
+        reject('write rejects unselected mode before allocation', lambda: files.write_bytes(path + '_mode', b'x', 0o777, 1), ValueError)
+        check('invalid outputs allocate nothing', world.nodes == before)
+        directory = files.make_directory('.artifacts/logs/model/child')
+        check('directory identity is rooted in created object', directory['path'] == '.artifacts/logs/model/child' and directory['device'] == 7)
+        reject('directory creation remains exclusive', lambda: files.make_directory('.artifacts/logs/model/child'), FileExistsError)
+    world = World()
+    with ExitStack() as stack:
+        world.activate(stack)
+        world.zero_write = True
+        reject('zero write stops without retry', lambda: files.write_bytes(path, b'original', 0o400, 32), OSError, 'invalid progress')
+        check('failed write remains visible and closes', world.nodes[path]['body'] == b'' and not world.fds and world.closed == [10])
+    world = World()
+    with ExitStack() as stack:
+        world.activate(stack)
+        world.corrupt_read = True
+        world.close_errors = {10}
+        error = reject('readback mismatch survives writer close failure', lambda: files.write_bytes(path, b'original', 0o400, 32), ValueError, 'bytes differ')
+        check('writer close error is retained as secondary', len(error.__notes__) == 1 and 'model close failure' in error.__notes__[0])
+        check('failed readback does not erase the original output', world.nodes[path]['body'] == b'original' and world.closed == [11, 10])
+    return dict(schema='fsmgen.inactive_populated_io_qualification.v1', checks=checks, rejected=rejected,
+                actual_worker_execution=False, actual_fixture_allocation=False,
+                scope='Bounded local I/O in memory; no actual fixture cleanup or child process.')
+
+
+if __name__ == '__main__':
+    print(json.dumps(qualify(), sort_keys=True, indent=2))

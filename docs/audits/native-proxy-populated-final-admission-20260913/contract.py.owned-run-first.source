@@ -1,0 +1,91 @@
+"""Fixed prospective populated-worker admission; this module grants no execution."""
+import json
+from pathlib import Path
+
+BASE = Path(__file__).resolve().parent
+ROOT = BASE.parents[2]
+SCOPE = json.loads((BASE / 'scope.json').read_bytes())
+OWNER, EXECUTION_OWNER = SCOPE['owner'], SCOPE['next_owner']
+WORKER = SCOPE['worker']
+WORKER_CONTRACT = SCOPE['contract']
+OUTPUT = SCOPE['planned_output']
+TASK = 'docs/tasks/HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.md'
+CASE_PREFIX = '.artifacts/tmp/native-proxy-image-custody/cases/'
+WORKSPACE_PREFIX = '.artifacts/tmp/process-supervisor-tests/'
+EVIDENCE_PREFIX = '.artifacts/logs/native-proxy-observation-acquisition-20260910/cases/'
+CONTRACT = json.loads((ROOT / WORKER_CONTRACT).read_bytes())
+
+
+def canonical(value):
+    return json.dumps(value, sort_keys=True, separators=(',', ':'), ensure_ascii=True, allow_nan=False).encode()
+
+
+def worker_sources():
+    return json.loads((BASE / 'worker-sources.json').read_bytes())
+
+
+def cases():
+    return json.loads(canonical(CONTRACT['cases']))
+
+
+def roots():
+    return [path for case in cases() for path in (
+        [case['store'], *case['workspaces'].values()] + ([case['evidence']] if case['evidence'] else []))]
+
+
+def command(step, name):
+    payload = {'id': step['id']}
+    if name == 'step' and step['operation'].startswith('adopt_'):
+        payload['handoff_sha256'] = 'a' * 64
+    return canonical(dict(command=name, payload=payload)) + b'\n'
+
+
+def bounds():
+    """Source bounds; the full driver/oracle must also qualify these before issue."""
+    plans = cases()
+    steps = [step for case in plans for role in case['roles'].values() for step in role['steps']]
+    command_sizes = [len(command(step, name)) for step in steps for name in ('step', 'lock', 'release')]
+    command_sizes += [len(canonical(dict(command='admit', payload={'activation_sha256': 'a' * 64}))) + 1,
+                      len(canonical(dict(command='finish', payload=None))) + 1]
+    return dict(case_count=len(plans), workers=sum(len(case['roles']) for case in plans),
+        maximum_concurrent_workers=max(len(case['roles']) for case in plans),
+        declared_steps=len(steps), held_cancellations=sum(role['ending'] == 'cancel_at_held'
+            for case in plans for role in case['roles'].values()),
+        largest_command_bytes=max(command_sizes), command_bytes=CONTRACT['protocol']['command_bytes'],
+        worker_event_bytes=CONTRACT['protocol']['event_bytes'], worker_events=CONTRACT['protocol']['events_per_worker'],
+        worker_output_bytes=CONTRACT['protocol']['output_bytes'],
+        handoff_bytes=CONTRACT['protocol']['handoff_bytes'], activation_bytes=CONTRACT['protocol']['activation_bytes'],
+        worker_wall_seconds=CONTRACT['protocol']['worker_wall_seconds'],
+        # Main-thread driver pumps every selected worker and settles each case
+        # before starting another. Cleanup grace is separate from work time.
+        case_work_seconds=60, worker_term_seconds=2, worker_kill_seconds=2,
+        driver_wall_seconds=600, journal_bytes=32 * 1024 * 1024, journal_events=4096,
+        owned_tree_nodes=256, owned_tree_depth=8, owned_file_bytes=65536, owned_tree_bytes=4 * 1024 * 1024)
+
+
+def validate_fixed_contract():
+    if CONTRACT['schema'] != 'fsmgen.inactive_populated_worker_contract.v1' or CONTRACT['execution_authorized']:
+        raise ValueError('worker source contract grants unexpected authority')
+    if CONTRACT['output'] != OUTPUT:
+        raise ValueError('worker output differs from the final admission')
+    names, selected_roots = set(), roots()
+    if len(selected_roots) != len(set(selected_roots)):
+        raise ValueError('case roots overlap')
+    for case in cases():
+        if case['name'] in names:
+            raise ValueError('duplicate fixed case')
+        names.add(case['name'])
+        if not case['store'].startswith(CASE_PREFIX + 'fsmgen-Populated20260913_'):
+            raise ValueError('undeclared store root')
+        if any(not path.startswith(WORKSPACE_PREFIX + 'fsmgen-Populated20260913_') for path in case['workspaces'].values()):
+            raise ValueError('undeclared private workspace root')
+        if case['evidence'] and not case['evidence'].startswith(EVIDENCE_PREFIX + 'fsmgen-Populated20260913_'):
+            raise ValueError('undeclared observation evidence root')
+        if case['activation_path'] != OUTPUT + '/activation.' + case['name'] + '.json':
+            raise ValueError('activation path differs from the fixed case')
+        if case['handoff_path'] and case['handoff_path'] != OUTPUT + '/handoff.' + case['name'] + '.json':
+            raise ValueError('handoff path differs from the fixed case')
+    result = bounds()
+    if result['largest_command_bytes'] > result['command_bytes']:
+        raise ValueError('a fixed command exceeds the worker input bound')
+    return result

@@ -1,0 +1,26 @@
+[
+  {
+    "original": "docs/audits/native-proxy-populated-final-admission-20260913/contract.py",
+    "path": "docs/audits/native-proxy-populated-final-admission-20260913/contract.py.records-first.source",
+    "sha256": "c9294d7d1c43f852e6dd1a15cf8ac9d1b8f710d41f5f2fb4e10d8ccefaf08666",
+    "size_bytes": 4854
+  },
+  {
+    "original": "docs/audits/native-proxy-populated-final-admission-20260913/records.py",
+    "path": "docs/audits/native-proxy-populated-final-admission-20260913/records.py.records-first.source",
+    "sha256": "c420e9cdd008e9bce96a581969de6ce4ffa2636510f96a2e8354ce57c5d3e675",
+    "size_bytes": 7313
+  },
+  {
+    "original": "docs/audits/native-proxy-populated-final-admission-20260913/qualify_records.py",
+    "path": "docs/audits/native-proxy-populated-final-admission-20260913/qualify_records.py.records-first.source",
+    "sha256": "3ca1a15224953d0dbcc6ab324ca99007a6b615b71259291f21ecc8e9b9009767",
+    "size_bytes": 6013
+  },
+  {
+    "original": "docs/audits/native-proxy-populated-final-admission-20260913/worker-sources.json",
+    "path": "docs/audits/native-proxy-populated-final-admission-20260913/worker-sources.json.records-first.source",
+    "sha256": "f2ffa29bdd4ab2636b2417006705d71cacfd616ab305f398503f4671e8b278b5",
+    "size_bytes": 4904
+  }
+]

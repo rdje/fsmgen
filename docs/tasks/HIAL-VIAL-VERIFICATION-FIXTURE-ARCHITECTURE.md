@@ -2160,11 +2160,11 @@ decomposes the architecture needed to move beyond that bounded foundation.
   Commit: `pending`
   Children: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.12.4.1.5.3.1, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.12.4.1.5.3.2, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.12.4.1.5.3.3`
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.12.4.1.5.3.1`
-  Status: `active`
+  Status: `done`
   Goal: `Admit a fixed populated-store worker protocol before any worker execution.`
   Acceptance: `Inventory the qualified empty-store controller, exact current populated publication/reference/observation/retirement APIs and retained sources. Specify finite normal-user workers with inert image bytes, distinct owned roots, closed commands/environments, complete source/image identity, bounded events/output/walls, synchronization, cancellation settlement, exact cleanup and one-use committed admission. Cover equal/different publication, separate references and observation holds; qualify source/data order and altered-evidence rejection without compiler/native proxy/original/live collector or unadmitted fixture/worker execution. Preserve cooperative-writer and non-power-loss limits.`
-  Verification: `pending`
-  Commit: `pending`
+  Verification: `Children .1-.4 complete the inventory, controller, worker protocol and exact final admission. Their retained source-only evidence is joined by docs/audits/native-proxy-populated-final-admission-20260913/review.json. Actual worker execution and the final cooperative-lifetime join remain separate .5.3.2-.3 obligations; synthetic-receipt, native/live/startup and full CI/push gates remain.`
+  Commit: `this commit`
   Children: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.12.4.1.5.3.1.1, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.12.4.1.5.3.1.2, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.12.4.1.5.3.1.3, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.12.4.1.5.3.1.4`
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.12.4.1.5.3.1.1`
   Status: `done`
@@ -2185,11 +2185,11 @@ decomposes the architecture needed to move beyond that bounded foundation.
   Verification: `docs/audits/native-proxy-populated-worker-protocol-20260913/audit.py --verify-saved joins 21 selected committed inputs, 206 no-process checks, 93 rejecting model controls and eight altered-evidence controls. Six cases model 15 workers, 45 completed operations and two held cancellation cuts; the independent trace oracle preserves every remaining owner and archive. Fixed Perl commands retain original octets and reject changed ownership, receipt, command and I/O data. The first missing-release-receipt defect is repaired with complete custody binding; exact first guard/transport/receipt/audit outcomes remain retained. Worker syntax, rendered book, Knowledge Map and bounded history pass. Actual-wrapper observation mode compatibility remains explicitly owned by .5.5; final one-use admission .1.4 and actual workers remain open.`
   Commit: `this commit`
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.12.4.1.5.3.1.4`
-  Status: `proposed`
+  Status: `done`
   Goal: `Commit the exact populated-worker execution admission.`
   Acceptance: `Join the qualified controller, worker protocol, selected installed inputs and fixed scenarios into a one-use committed-source admission with fresh repository-local outputs/roots. Re-derive all bounds, expected files/events/ownership, independent evidence and exact cleanup/recovery; reject stale or incomplete authority. Keep actual execution .5.3.2 and final join .5.3.3 separate and inactive until this admission commit; preserve every first source-model outcome.`
-  Verification: `pending`
-  Commit: `pending`
+  Verification: `docs/audits/native-proxy-populated-final-admission-20260913/audit.py --verify-saved re-derives the fixed admission, exact source authentication, original custody, independent result join and conservative bounds from retained models. All component checks and rejecting controls are explicit in qualification.json/review.json; claim-legs.json separates re-derivation, falsification and durability. The first missing retained inode/final-mode defects and inventory-build failure remain exact after repair. One-use commit/frontier/source gates, busy-before-release scheduling, sealed cancellation handoffs, all-child recovery and conservative owned cleanup pass without a permit, worker or fixture. Book rendering and Knowledge Map parity pass; actual worker execution remains .5.3.2 and the observation-wrapper repair remains .5.5.`
+  Commit: `this commit`
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.12.4.1.5.3.2`
   Status: `proposed`
   Goal: `Execute the separately committed populated-store worker protocol once.`
@@ -3768,7 +3768,7 @@ decomposes the architecture needed to move beyond that bounded foundation.
 
 ## Current Frontier
 
-Current frontier: .3.2.15.7.3.12.4.1.5.3.1.3 is done: fixed populated-worker commands and inert lifetime models are qualified. Next is final one-use admission .1.4; actual execution is not admitted. Preserve the owned observation-wrapper repair, synthetic-receipt, native/live, startup and full CI/push gates.
+Current frontier: .3.2.15.7.3.12.4.1.5.3.1 admission is done. Next .5.3.2 is proposed: activate only after this clean admission commit, then issue and consume the fixed populated-worker permission once. Preserve original results and the observation-wrapper, synthetic-receipt, native/live/startup and full CI/push gates.
 
 Architecture audit `.1` is complete. Decision `0032` selects one public
 `.vial` source language, private immutable `VIALSemanticIR` and
@@ -6363,8 +6363,8 @@ Completed native-proxy feasibility through runtime-source-controls acceptance: r
 
 The manifest binds the immediately preceding acceptance suffix to its exact Git source. That source preserves the earlier history pointer and versioned manifest chain; current node contracts remain authoritative.
 
-## Acceptance Checklist (populated worker protocol .3.2.15.7.3.12.4.1.5.3.1.3)
+## Acceptance Checklist (populated final admission .3.2.15.7.3.12.4.1.5.3.1.4)
 
-- [x] **ROOT CAUSE (WHY + WHERE)** — `git log -S '0700, 65_536' -1 --format='%H %s' -- docs/audits/native-proxy-observation-acquisition-20260910/ObservationAcquisition.pm` identifies `6081e5815b5aa80b1f3f78b43dc4ab0be1688ed6`; the exact source guard and retained actual-wrapper profiles expose the separately owned .5.5 compatibility gap. The current draft Protocol::execute also accepted a missing nested release receipt despite successful outer flags; its first adversarial rejection failure and exact source are retained before repair.
-- [x] **ADDRESSED (verified)** — docs/audits/native-proxy-populated-worker-protocol-20260913/audit.py --verify-saved re-derives fixed command ordering, original octet handoffs, conservative reference retention, archive continuity and complete release receipt binding. Six in-memory case traces and independent state reconstruction agree; altered commands, ownership, bytes, receipts, I/O and saved evidence reject. First model guard, transport and receipt failures remain exact; no worker or fixture was launched. The final worker source compiles without execution.
-- [x] **NO REGRESSION** — `knowledge-map: OK` retains every earlier question and routes current protocol and observation-mode facts through exact history. The rendered book, selected source pins, original acceptance retrieval, claim identity/disposition review and containment checks accompany staged doctrines and normal hooks. Final one-use admission, actual populated-worker execution, real receipt binding, the owned observation-wrapper repair, native/live/startup qualification and full CI/push remain open.
+- [x] **ROOT CAUSE (WHY + WHERE)** — `git log -S 'fsmgen.inactive_populated_worker_authority.v1' -1 --format='%H %s' -- docs/audits/native-proxy-populated-worker-protocol-20260913/worker.pl` identifies the qualified protocol commit 6663b09682c2b7461a2573900c187dcfff6fd9b0 and its required final-admission authority/start-marker producer. This slice supplies that missing boundary. The first cleanup models additionally exposed omitted retained inode and final-mode checks; exact failed sources/results and the inventory-build failure remain in the final-admission audit directory.
+- [x] **ADDRESSED (verified)** — docs/audits/native-proxy-populated-final-admission-20260913/audit.py --verify-saved exactly reproduces qualification.json/review.json: closed one-use commit/frontier/source admission, bounded files and ownership, actual-busy prerequisites, original handoff before cancellation, settlement before adoption, all-child recovery and independent lifetime/cleanup review pass source models. Source/record/ordering/ownership/receipt/limit mutations reject; first defects are fixed without normalizing their evidence. claim-legs.json names independent re-derivation, falsification, durability and the missing actual-execution leg. No permit, worker or case fixture was created.
+- [x] **NO REGRESSION** — `knowledge-map: OK` preserves every existing question, answer route and shard. The rendered book, Git-derived aggregate metrics, claim identity/disposition review, exact prior acceptance retrieval, containment and staged doctrine checks accompany the normal commit hooks. Actual populated workers, real receipt transport, the owned actual-wrapper observation repair, native/live/startup qualification and full CI/push remain open.

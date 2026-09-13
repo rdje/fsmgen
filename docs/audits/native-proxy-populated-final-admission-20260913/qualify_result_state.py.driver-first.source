@@ -1,0 +1,100 @@
+"""Re-derive committed Perl model results and reject altered lifetime evidence."""
+import copy
+import json
+
+from contract import ROOT, WORKER_CONTRACT, cases
+from result_state import CaseState
+
+
+def activation_for(plan, prior):
+    publications = {row['role']: row['result']['result']['value'] for row in prior['trace']
+        if row['kind'] == 'result' and row['operation'] == 'publish'}
+    observation = next((row['result']['result']['value'] for row in prior['trace']
+        if row['kind'] == 'result' and row['operation'] == 'observe'), None)
+    activation = dict(store=dict(path=plan['store'], device=7, inode=101),
+        workspaces={role: value['reference']['record']['workspace_identity'] for role, value in publications.items()},
+        evidence=None, births={})
+    if observation:
+        record = observation['observation_reference']['record']
+        activation.update(evidence=record['evidence_directory_identity'], births={
+            'observer': record['observer_birth'], plan['observation_target']: record['target_birth']})
+    return activation, next(iter(publications.values()))['lock']
+
+
+def qualify():
+    checks, rejected = [], []
+    prior = json.loads((ROOT / WORKER_CONTRACT).with_name('qualification.json').read_bytes())
+
+    def check(name, value):
+        if not value or name in checks:
+            raise AssertionError(name)
+        checks.append(name)
+
+    def reject(name, state, role, step, original, mutation):
+        value, selected = copy.deepcopy(original), copy.deepcopy(state)
+        mutation(value)
+        before = copy.deepcopy(selected.__dict__)
+        try:
+            selected.accept(role, step, value)
+        except (ValueError, KeyError, StopIteration):
+            check(name + ' rejection preserves prior custody', selected.__dict__ == before)
+            rejected.append(name)
+        else:
+            raise AssertionError('altered result accepted: ' + name)
+
+    count = 0
+    for plan, model in zip(cases(), prior['cases']):
+        activation, lock = activation_for(plan, model)
+        state = CaseState(plan, activation, lock)
+        for row in model['trace']:
+            if row['kind'] != 'result':
+                continue
+            role = row['role']
+            step = next(step for step in plan['roles'][role]['steps'] if step['id'] == row['step'])
+            response = row['result']['result']
+            label = plan['name'] + ':' + role + ':' + step['id']
+            reject(label + ' extra field', state, role, step, response, lambda value: value.update(extra=1))
+            reject(label + ' false receipt boundary', state, role, step, response,
+                   lambda value: value.update(synthetic_retirement_and_work_records=True))
+            reject(label + ' stale step', state, role, step, response, lambda value: value.update(step='undeclared'))
+            if step['operation'] == 'release':
+                for name, mutation in [
+                    ('missing release receipt', lambda value: value['value'].update(release=None)),
+                    ('unsettled selected work', lambda value: value['value']['release']['settlement']['receipts'][0]['cleanup'].update(group_gone=0)),
+                    ('different work owner', lambda value: value['value']['release']['settlement']['receipts'][1].update(ownership_token='0' * 64)),
+                    ('different release image inode', lambda value: value['value']['release']['image']['snapshots'][0]['identity'].update(inode=0)),
+                    ('replaced original archive', lambda value: value['value']['release']['archive']['source_bindings'][0]['archive'].update(inode=0))]:
+                    reject(label + ' ' + name, state, role, step, response, mutation)
+            elif step['operation'] == 'archive':
+                for name, mutation in [
+                    ('changed retained source', lambda value: value['value']['source_bindings'][0]['source'].update(inode=0)),
+                    ('missing original role', lambda value: value['value']['source_bindings'].pop()),
+                    ('lost shared archive inode', lambda value: value['value']['source_bindings'][2]['archive'].update(inode=0)),
+                    ('different evidence directory', lambda value: value['value']['evidence_directory_identity'].update(inode=0))]:
+                    reject(label + ' ' + name, state, role, step, response, mutation)
+            elif step['operation'] in ('publish', 'observe'):
+                reject(label + ' substituted handoff', state, role, step, response,
+                       lambda value: value['handoff'].update(source_role='undeclared'))
+            elif step['operation'] == 'retire':
+                reject(label + ' incomplete workspace retirement', state, role, step, response,
+                       lambda value: value['value'].update(removed_nodes=3))
+            state.accept(role, step, response)
+            expected = row['state']
+            check(label + ' original images and owners agree with the prior independent model',
+                sorted(state.images) == expected['images']
+                and sorted(value['reference']['record']['reference_key'] for name, value in state.original_runtime.items() if name not in state.retired) == expected['runtimes']
+                and sorted(path for name, path in plan['workspaces'].items() if name not in state.retired) == expected['workspaces']
+                and sorted(value['observation_reference_key'] for value in state.archives.values()) == expected['archives'])
+            count += 1
+        check(plan['name'] + ' terminal closure keeps only store and required archives',
+            not state.images and set(state.retired) == set(plan['workspaces'])
+            and (state.original_observation is None or bool(state.released))
+            and len(state.expected_paths()) == (10 if plan['evidence'] else 4))
+    check('all fixed completed operations independently rederived', count == 45)
+    return dict(schema='fsmgen.inactive_populated_result_state_qualification.v1', checks=checks, rejected=rejected,
+        completed_operations=count, actual_fixture_allocation=False, actual_worker_execution=False,
+        actual_native_receipt_and_driver_qualification_still_pending=True)
+
+
+if __name__ == '__main__':
+    print(json.dumps(qualify(), sort_keys=True, indent=2))

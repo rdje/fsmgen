@@ -1,0 +1,10 @@
+{
+  "actual_fixture_allocation": false,
+  "actual_worker_execution": false,
+  "first_failure": "owned-first.json",
+  "owner": "HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.12.4.1.5.3.1.4",
+  "repair": "Compare retained path/device/inode/size/digest and the fixed final mode, plus controller-created path/device/inode/mode. Partial known prefixes remain recoverable only before a complete original acquisition was retained.",
+  "root_cause": "Draft cleanup distinguished known bytes from unknown bytes but omitted the full custody transition: worker-created retained inode and final image mode were not enforced; controller-created objects also needed their original mode.",
+  "second_failure": "owned-expanded.json",
+  "verification": "owned-archives.json and the combined qualification.json/review.json prove original worker/archive identities, final modes, atomic custody updates and conservative failed-publication cleanup in source models; actual worker cleanup remains separately unexecuted."
+}

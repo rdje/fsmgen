@@ -1,0 +1,24 @@
+{
+  "checked_passages": [
+    "The final admission binds the exact committed controller, worker, installed interpreters and selected modules to the active execution task.",
+    "An equal-byte replacement does not inherit custody.",
+    "Unknown objects remain unresolved and owned.",
+    "The source qualification creates no permit, case workspace or worker.",
+    "No actual observation attempt is claimed here.",
+    "docs/audits/native-proxy-populated-final-admission-20260913/audit.py --verify-saved"
+  ],
+  "checked_runtime_passages": [
+    "source admission is qualified; actual populated workers and native behavior remain open.",
+    "These are inert filesystem qualifications; real receipt transport and native behavior remain open."
+  ],
+  "exact_output_absent": true,
+  "exit_code": 0,
+  "output": ".artifacts/tmp/native-proxy-populated-final-admission-book-20260913/book",
+  "rendered_bytes": 23700197,
+  "rendered_directories": 2,
+  "rendered_files": 99,
+  "renderer_warnings": [
+    "WARN search index is very large (13334341 bytes)"
+  ],
+  "same_volume_direct_objects": true
+}

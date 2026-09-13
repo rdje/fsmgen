@@ -1,0 +1,162 @@
+"""Exact one-use admission; imports cannot allocate a fixture or issue authority."""
+import argparse
+import hashlib
+import json
+import os
+import re
+import subprocess
+import sys
+
+from contract import BASE, ROOT, OWNER, EXECUTION_OWNER, OUTPUT, TASK, bounds, canonical, cases, roots, worker_sources
+import installed_inputs
+import local_files as files
+import records
+
+BASE_RELATIVE = BASE.relative_to(ROOT).as_posix()
+ALLOWED_DIRTY = {'MEMORY.md', 'docs/TASK_TREE.md', TASK}
+
+
+def git(*arguments):
+    return subprocess.check_output(['/usr/bin/git', '-c', 'core.excludesFile=.gitignore', *arguments],
+        cwd=ROOT, env=dict(PATH='/usr/bin:/bin', LC_ALL='C', LANG='C', TMPDIR=str(ROOT / '.artifacts/tmp')), timeout=30)
+
+
+def owner_status(text, owner):
+    marker = '- ID: `' + owner + '`\n'
+    if text.count(marker) != 1:
+        raise ValueError('task owner is missing or duplicated')
+    return text.split(marker, 1)[1].splitlines()[0].strip()
+
+
+def validate_state(state):
+    if not isinstance(state['revision'], str) or re.fullmatch('[0-9a-f]{40}', state['revision']) is None:
+        raise ValueError('admission revision is not a complete Git commit')
+    if not state['subject'].startswith(OWNER + ':'):
+        raise ValueError('HEAD is not the exact final admission commit')
+    for text in (state['committed_task'], state['current_task']):
+        if owner_status(text, OWNER) != 'Status: `done`':
+            raise ValueError('final admission owner is not complete')
+    if (owner_status(state['committed_task'], EXECUTION_OWNER) != 'Status: `proposed`'
+            or owner_status(state['current_task'], EXECUTION_OWNER) != 'Status: `active`'):
+        raise ValueError('execution owner was not separately activated after admission')
+    pointer = '- active_work_unit: `' + EXECUTION_OWNER + '`'
+    if state['memory'].splitlines().count(pointer) != 1:
+        raise ValueError('memory does not select this exact execution owner')
+    if (not set(state['dirty_paths']) <= ALLOWED_DIRTY or state['staged_paths'] or state['untracked_paths']):
+        raise ValueError('execution requires only unstaged live frontier changes')
+    if type(state['uid']) is not int or state['uid'] <= 0 or state['uid'] != state['euid'] or state['platform'] != 'darwin':
+        raise ValueError('execution requires the selected ordinary-user platform')
+    return state['revision']
+
+
+def current_state():
+    revision = git('rev-parse', 'HEAD').decode().strip()
+    paths = lambda raw: [value.decode() for value in raw.split(b'\0') if value]
+    return dict(revision=revision, subject=git('log', '-1', '--format=%s').decode().strip(),
+        committed_task=git('show', revision + ':' + TASK).decode(), current_task=files.read_bytes(TASK, 2 * 1024 * 1024).decode(),
+        memory=files.read_bytes('MEMORY.md', 32768).decode(),
+        dirty_paths=paths(git('diff', '--name-only', '-z', 'HEAD')),
+        staged_paths=paths(git('diff', '--cached', '--name-only', '-z')),
+        untracked_paths=paths(git('ls-files', '--others', '--exclude-standard', '-z')),
+        uid=os.getuid(), euid=os.geteuid(), platform=sys.platform)
+
+
+def load_document(relative, limit, mode=None):
+    body = files.read_bytes(relative, limit, mode)
+    value = json.loads(body)
+    if body not in (canonical(value), canonical(value) + b'\n'):
+        # Plan/pin files use a human-reviewable canonical pretty representation;
+        # execution authority always uses the compact representation below.
+        if body != (json.dumps(value, sort_keys=True, indent=2, allow_nan=False) + '\n').encode():
+            raise ValueError('admission document is not in a declared canonical encoding')
+    return value, body
+
+
+def authenticated_sources(revision):
+    plan, plan_bytes = load_document(BASE_RELATIVE + '/plan.json', 262144)
+    pins, pins_bytes = load_document(BASE_RELATIVE + '/execution-source-pins.json', 65536)
+    for name, body in [('plan.json', plan_bytes), ('execution-source-pins.json', pins_bytes)]:
+        if git('show', revision + ':' + BASE_RELATIVE + '/' + name) != body:
+            raise ValueError('final admission document differs from its commit')
+    names = set()
+    for row in pins:
+        records.fields(row, 'path size_bytes sha256')
+        files.relative(row['path'])
+        records.integer(row['size_bytes'])
+        records.digest(row['sha256'])
+        if row['path'] in names or row['size_bytes'] > 4 * 1024 * 1024:
+            raise ValueError('source set has duplicate or unbounded entries')
+        names.add(row['path'])
+        body = files.read_bytes(row['path'], row['size_bytes'])
+        if records.file_pin(body) != {key: row[key] for key in ('size_bytes', 'sha256')} or git('show', revision + ':' + row['path']) != body:
+            raise ValueError('admission source differs from committed selected bytes')
+    if (plan['owner'] != OWNER or plan['execution_owner'] != EXECUTION_OWNER or plan['output'] != OUTPUT
+            or plan['cases'] != cases() or plan['roots'] != roots() or plan['bounds'] != bounds()
+            or plan['worker_sources'] != worker_sources() or plan['execution_authorized'] is not False):
+        raise ValueError('plan differs from the exact inactive source contract')
+    if not {row['path'] for row in plan['worker_sources']} <= names or not set(plan['driver_sources']) <= names:
+        raise ValueError('admission omits worker or driver source closure')
+    expected = dict(schema='fsmgen.inactive_populated_execution_permit.v1', admission_commit=revision,
+        execution_owner=EXECUTION_OWNER, output=OUTPUT,
+        plan_sha256=hashlib.sha256(plan_bytes).hexdigest(), source_pins_sha256=hashlib.sha256(pins_bytes).hexdigest(),
+        reusable=False, compiler_execution=False, proxy_execution=False, live_collector_execution=False)
+    return plan, expected
+
+
+def output_members():
+    files.directory_identity(OUTPUT)
+    with os.scandir(ROOT / OUTPUT) as stream:
+        result = set()
+        for entry in stream:
+            if len(result) >= 8:
+                raise ValueError('pre-execution output contains undeclared entries')
+            files.relative(entry.name)
+            result.add(entry.name)
+    return result
+
+
+def preflight(action, reader):
+    if action not in ('emit', 'consume'):
+        raise ValueError('unknown admission action')
+    state = current_state()
+    revision = validate_state(state)
+    plan, expected = authenticated_sources(revision)
+    expected['task_sha256'] = hashlib.sha256(state['current_task'].encode()).hexdigest()
+    expected['memory_sha256'] = hashlib.sha256(state['memory'].encode()).hexdigest()
+    expected['uid'], expected['project_device'] = state['uid'], ROOT.stat().st_dev
+    for root in roots():
+        files.direct(str((ROOT / root).parent.relative_to(ROOT)))
+        if files.direct(root, absent_ok=True) is not None:
+            raise FileExistsError('a fixed fixture root is not fresh: ' + root)
+    if action == 'emit':
+        if files.direct(OUTPUT, absent_ok=True) is not None:
+            raise FileExistsError('execution output was already used')
+    else:
+        if output_members() != {'execution-admission.json', 'issuer-inputs.json'}:
+            raise ValueError('execution output is not the exact unconsumed permit state')
+        permit, raw = load_document(OUTPUT + '/execution-admission.json', 4096, 0o400)
+        if permit != expected or raw != canonical(expected):
+            raise ValueError('execution permit differs from this exact commit and activated frontier')
+        prior, raw = load_document(OUTPUT + '/issuer-inputs.json', 65536, 0o400)
+        if raw != canonical(prior):
+            raise ValueError('issuer input receipt lost its canonical seal')
+    installed = installed_inputs.resolve(plan, reader)
+    if action == 'consume' and any(installed[key] != prior[key]
+            for key in ('inputs', 'project_device', 'native_reader_dependency', 'complete_native_dependency_closure')):
+        raise ValueError('selected installed inputs changed after permit issue')
+    return plan, expected, installed
+
+
+def issue():
+    plan, permit, installed = preflight('emit', installed_inputs.native_reader())
+    files.make_directory(OUTPUT)
+    files.write_document(OUTPUT + '/issuer-inputs.json', installed, 65536)
+    files.write_document(OUTPUT + '/execution-admission.json', permit, 4096)
+    return permit
+
+
+if __name__ == '__main__':
+    parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument('--emit', action='store_true', required=True)
+    parser.parse_args()
+    print(json.dumps(issue(), sort_keys=True, indent=2))

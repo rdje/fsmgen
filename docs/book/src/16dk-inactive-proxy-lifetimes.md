@@ -387,7 +387,7 @@ independent runtime references, observation holds across retirement, and
 cancellation of runtime or observer owners. They use inert bytes through the
 current Perl transaction APIs; a Python controller supervises the workers.
 The earlier Python peer remains qualified only for empty-store coordination.
-These are prospective cases, not an operational execution admission.
+The committed admission fixes these cases; its one-use run remains separate.
 
 The fresh controller repairs the inherited recovery gap. A no-process model
 showed that an exited child can still have unread output: inherited recovery
@@ -407,9 +407,9 @@ Source models exercise partial launches, parser errors, output limits, deadlines
 cancellation and close failures. Recovery preserves the first failure; incomplete
 cleanup or missing output cannot become a successful worker result. No real
 worker has run under this new controller. Fixed transaction commands now pass
-in-memory qualification; final execution admission remains open. Synthetic
-retirement and observation settlement records remain separate from later actual
-worker-cancellation proof.
+in-memory qualification. Final source admission is qualified; actual worker
+execution remains next. Synthetic retirement and observation settlement records
+remain separate from later actual worker-cancellation proof.
 
 The worker accepts only its declared case, role and next command. Small commands
 select fixed operations; source-bound files carry activation and original handoff
@@ -442,6 +442,31 @@ receipt to retain the original lock, image, archive and settlement bindings, plu
 the final reference-absence result. An adversarial missing-receipt check exposed
 this gap in the draft protocol; the repair and first failure are retained.
 
+The final admission binds the exact committed controller, worker, installed
+interpreters and selected modules to the active execution task. It retains the
+authorizing task and memory bytes with the permit, so later pointer updates do
+not erase the original authorization. Existing output, changed source, stale
+frontiers or incomplete qualification reject before fixture allocation.
+
+During equal publication, the driver must observe the peer report a busy lock
+before releasing the first publisher. Before a cancelled-owner handoff, it seals
+the original acquisition and settles the actual child and process group. Only
+then may the recovery peer adopt that acquisition. Source models test this
+ordering; the separate run must supply the actual contention and process proof.
+
+Cleanup requires the original object identity and final mode as well as known
+bytes. An equal-byte replacement does not inherit custody. Model checks exposed
+missing inode and final-mode checks in the draft cleanup; both are repaired with
+their first failures retained. Unknown objects remain unresolved and owned.
+Known partial publication bytes are removable only before complete custody was
+retained, and only after every constructed worker has settled.
+
+An independent reviewer reconstructs the command order, original snapshots,
+remaining references, archives and cleanup from the complete retained records.
+It separately checks actual native births and terminal/group-absence evidence.
+The source qualification creates no permit, case workspace or worker. Its
+prospective bounds describe widened model encodings, not measured executions.
+
 Actual-wrapper observation also remains an owned integration repair. Observation
 acquisition currently requires wrapper mode `0700`, while the retained actual
 compiler profiles use `0755`. The inert worker cases keep their established mode;
@@ -467,6 +492,7 @@ scripts/run_with_ram_guard.sh -- python3 -B docs/audits/native-proxy-compiler-pr
 scripts/run_with_ram_guard.sh -- python3 -B docs/audits/native-proxy-compiler-profile-admission-20260913/epoch.py --verify-saved
 scripts/run_with_ram_guard.sh -- python3 -B docs/audits/native-proxy-populated-controller-20260913/audit.py --verify-saved
 scripts/run_with_ram_guard.sh -- python3 -B docs/audits/native-proxy-populated-worker-protocol-20260913/audit.py --verify-saved
+scripts/run_with_ram_guard.sh -- python3 -B docs/audits/native-proxy-populated-final-admission-20260913/audit.py --verify-saved
 ```
 
 [Return to runtime measurement](16dc-vial-portable-verilator-runtime-measurement.md).

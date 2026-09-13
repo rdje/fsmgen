@@ -1,0 +1,26 @@
+[
+  {
+    "original": "docs/audits/native-proxy-populated-final-admission-20260913/result_state.py",
+    "path": "docs/audits/native-proxy-populated-final-admission-20260913/result_state.py.state-first.source",
+    "sha256": "b5ae4b83f1c0bc981966a61dd46832d7e3849028ae14fa3ed46d74ea36cabdc7",
+    "size_bytes": 14215
+  },
+  {
+    "original": "docs/audits/native-proxy-populated-final-admission-20260913/qualify_result_state.py",
+    "path": "docs/audits/native-proxy-populated-final-admission-20260913/qualify_result_state.py.state-first.source",
+    "sha256": "4c7ebb3c536054519f30e1bdcbca4baa975458b805378539df9993b9d00f804f",
+    "size_bytes": 6315
+  },
+  {
+    "original": "docs/audits/native-proxy-populated-final-admission-20260913/records.py",
+    "path": "docs/audits/native-proxy-populated-final-admission-20260913/records.py.state-first.source",
+    "sha256": "c420e9cdd008e9bce96a581969de6ce4ffa2636510f96a2e8354ce57c5d3e675",
+    "size_bytes": 7313
+  },
+  {
+    "original": "docs/audits/native-proxy-populated-final-admission-20260913/contract.py",
+    "path": "docs/audits/native-proxy-populated-final-admission-20260913/contract.py.state-first.source",
+    "sha256": "c9294d7d1c43f852e6dd1a15cf8ac9d1b8f710d41f5f2fb4e10d8ccefaf08666",
+    "size_bytes": 4854
+  }
+]

@@ -1,0 +1,254 @@
+{
+  "outputs": {
+    "exit": "0\n",
+    "stderr": "ram-guard: PID 85369; host 77.3%; host cutoff 88%; descendant RSS cutoff 4096 MiB; poll 2s\n",
+    "stdout": "{\n  \"actual_fixture_allocation\": false,\n  \"actual_worker_execution\": false,\n  \"cases\": [\n    {\n      \"cancelled_workers\": 0,\n      \"case\": \"equal_publication\",\n      \"cleanup_nodes\": 4,\n      \"commands\": 19,\n      \"completed_operations\": 7,\n      \"journal_bytes\": 142840,\n      \"journal_rows\": 156,\n      \"retained_archives\": 0,\n      \"snapshots\": 8,\n      \"worker_bytes\": 44131,\n      \"workers\": 2\n    },\n    {\n      \"cancelled_workers\": 0,\n      \"case\": \"different_publication\",\n      \"cleanup_nodes\": 4,\n      \"commands\": 19,\n      \"completed_operations\": 7,\n      \"journal_bytes\": 146955,\n      \"journal_rows\": 156,\n      \"retained_archives\": 0,\n      \"snapshots\": 8,\n      \"worker_bytes\": 46753,\n      \"workers\": 2\n    },\n    {\n      \"cancelled_workers\": 0,\n      \"case\": \"observation_across_retirement\",\n      \"cleanup_nodes\": 10,\n      \"commands\": 21,\n      \"completed_operations\": 8,\n      \"journal_bytes\": 210564,\n      \"journal_rows\": 183,\n      \"retained_archives\": 1,\n      \"snapshots\": 10,\n      \"worker_bytes\": 61295,\n      \"workers\": 3\n    },\n    {\n      \"cancelled_workers\": 0,\n      \"case\": \"equal_references_with_observer\",\n      \"cleanup_nodes\": 10,\n      \"commands\": 26,\n      \"completed_operations\": 10,\n      \"journal_bytes\": 275843,\n      \"journal_rows\": 218,\n      \"retained_archives\": 1,\n      \"snapshots\": 11,\n      \"worker_bytes\": 82389,\n      \"workers\": 3\n    },\n    {\n      \"cancelled_workers\": 1,\n      \"case\": \"cancelled_runtime_owner\",\n      \"cleanup_nodes\": 4,\n      \"commands\": 14,\n      \"completed_operations\": 5,\n      \"journal_bytes\": 116855,\n      \"journal_rows\": 130,\n      \"retained_archives\": 0,\n      \"snapshots\": 9,\n      \"worker_bytes\": 24138,\n      \"workers\": 2\n    },\n    {\n      \"cancelled_workers\": 1,\n      \"case\": \"cancelled_observer_owner\",\n      \"cleanup_nodes\": 10,\n      \"commands\": 21,\n      \"completed_operations\": 8,\n      \"journal_bytes\": 217968,\n      \"journal_rows\": 192,\n      \"retained_archives\": 1,\n      \"snapshots\": 12,\n      \"worker_bytes\": 60242,\n      \"workers\": 3\n    }\n  ],\n  \"complete_actual_output_admission_and_native_absence_join_still_pending\": true,\n  \"counts\": {\n    \"archives\": 3,\n    \"cancelled_workers\": 2,\n    \"cases\": 6,\n    \"cleanup_nodes\": 42,\n    \"commands\": 120,\n    \"completed_operations\": 45,\n    \"workers\": 15\n  },\n  \"driver_checks\": 57,\n  \"driver_rejecting_cases\": 7,\n  \"prospective_bounds\": {\n    \"activation_bytes\": 16384,\n    \"case_count\": 6,\n    \"case_work_seconds\": 60,\n    \"command_bytes\": 512,\n    \"declared_steps\": 47,\n    \"driver_wall_seconds\": 600,\n    \"handoff_bytes\": 65536,\n    \"held_cancellations\": 2,\n    \"journal_bytes\": 33554432,\n    \"journal_events\": 4096,\n    \"largest_command_bytes\": 128,\n    \"maximum_concurrent_workers\": 3,\n    \"owned_file_bytes\": 65536,\n    \"owned_tree_bytes\": 4194304,\n    \"owned_tree_depth\": 8,\n    \"owned_tree_nodes\": 256,\n    \"worker_event_bytes\": 65536,\n    \"worker_events\": 128,\n    \"worker_kill_seconds\": 2,\n    \"worker_output_bytes\": 1048576,\n    \"worker_term_seconds\": 2,\n    \"worker_wall_seconds\": 60,\n    \"workers\": 15\n  },\n  \"rejecting_controls\": [\n    {\n      \"error\": \"journal changed, omitted or invented original worker stream bytes\",\n      \"name\": \"missing original worker stream line\"\n    },\n    {\n      \"error\": \"successful worker has unaccounted stderr\",\n      \"name\": \"unaccounted worker stderr\"\n    },\n    {\n      \"error\": \"native worker executable differs from the selected interpreter bytes\",\n      \"name\": \"changed admitted native executable\"\n    },\n    {\n      \"error\": \"native worker receipt loses the selected script, role or original birth\",\n      \"name\": \"changed original worker birth\"\n    },\n    {\n      \"error\": \"result lacks original lock closure or contention\",\n      \"name\": \"boolean lock closure with matching raw stream hashes\"\n    },\n    {\n      \"error\": \"worker opened a different or unsealed permanent lock\",\n      \"name\": \"different lock inode with matching raw stream hashes\"\n    },\n    {\n      \"error\": \"busy event does not record selected lock contention\",\n      \"name\": \"wrong busy errno with matching raw stream hashes\"\n    },\n    {\n      \"error\": \"publication creation flag disagrees with original image lifetime\",\n      \"name\": \"missing original operation acceptance\"\n    },\n    {\n      \"error\": \"case omitted or invented a required ownership snapshot\",\n      \"name\": \"missing settled fixture snapshot\"\n    },\n    {\n      \"error\": \"cleanup omission or order differs from the exact remaining closure\",\n      \"name\": \"missing original cleanup node\"\n    },\n    {\n      \"error\": \"cleanup outcome differs from exact retained removal records\",\n      \"name\": \"invented extra removal\"\n    },\n    {\n      \"error\": \"snapshot changed original file bytes, identity or final mode\",\n      \"name\": \"changed retained file mode in snapshot\"\n    },\n    {\n      \"error\": \"snapshot changed original file bytes, identity or final mode\",\n      \"name\": \"changed retained inode in snapshot\"\n    },\n    {\n      \"error\": \"observed tree differs from independently reconstructed original owners\",\n      \"name\": \"observation archive omitted from terminal closure\"\n    },\n    {\n      \"error\": \"controller command transcript differs from the fixed schedule\",\n      \"name\": \"handoff reconstructed from changed bytes\"\n    },\n    {\n      \"error\": \"ordinary completion and separate recovery were conflated\",\n      \"name\": \"cancelled worker promoted to ordinary completion\"\n    },\n    {\n      \"error\": \"planned cancellation lacks a matching actual signal exit\",\n      \"name\": \"requested signal without matching terminal signal exit\"\n    },\n    {\n      \"error\": \"worker native settlement or terminal evidence is incomplete\",\n      \"name\": \"unsettled cancelled process group\"\n    }\n  ],\n  \"schema\": \"fsmgen.inactive_populated_oracle_qualification.v1\",\n  \"synthetic_native_records\": true\n}\n"
+  },
+  "result": {
+    "actual_fixture_allocation": false,
+    "actual_worker_execution": false,
+    "cases": [
+      {
+        "cancelled_workers": 0,
+        "case": "equal_publication",
+        "cleanup_nodes": 4,
+        "commands": 19,
+        "completed_operations": 7,
+        "journal_bytes": 142840,
+        "journal_rows": 156,
+        "retained_archives": 0,
+        "snapshots": 8,
+        "worker_bytes": 44131,
+        "workers": 2
+      },
+      {
+        "cancelled_workers": 0,
+        "case": "different_publication",
+        "cleanup_nodes": 4,
+        "commands": 19,
+        "completed_operations": 7,
+        "journal_bytes": 146955,
+        "journal_rows": 156,
+        "retained_archives": 0,
+        "snapshots": 8,
+        "worker_bytes": 46753,
+        "workers": 2
+      },
+      {
+        "cancelled_workers": 0,
+        "case": "observation_across_retirement",
+        "cleanup_nodes": 10,
+        "commands": 21,
+        "completed_operations": 8,
+        "journal_bytes": 210564,
+        "journal_rows": 183,
+        "retained_archives": 1,
+        "snapshots": 10,
+        "worker_bytes": 61295,
+        "workers": 3
+      },
+      {
+        "cancelled_workers": 0,
+        "case": "equal_references_with_observer",
+        "cleanup_nodes": 10,
+        "commands": 26,
+        "completed_operations": 10,
+        "journal_bytes": 275843,
+        "journal_rows": 218,
+        "retained_archives": 1,
+        "snapshots": 11,
+        "worker_bytes": 82389,
+        "workers": 3
+      },
+      {
+        "cancelled_workers": 1,
+        "case": "cancelled_runtime_owner",
+        "cleanup_nodes": 4,
+        "commands": 14,
+        "completed_operations": 5,
+        "journal_bytes": 116855,
+        "journal_rows": 130,
+        "retained_archives": 0,
+        "snapshots": 9,
+        "worker_bytes": 24138,
+        "workers": 2
+      },
+      {
+        "cancelled_workers": 1,
+        "case": "cancelled_observer_owner",
+        "cleanup_nodes": 10,
+        "commands": 21,
+        "completed_operations": 8,
+        "journal_bytes": 217968,
+        "journal_rows": 192,
+        "retained_archives": 1,
+        "snapshots": 12,
+        "worker_bytes": 60242,
+        "workers": 3
+      }
+    ],
+    "complete_actual_output_admission_and_native_absence_join_still_pending": true,
+    "counts": {
+      "archives": 3,
+      "cancelled_workers": 2,
+      "cases": 6,
+      "cleanup_nodes": 42,
+      "commands": 120,
+      "completed_operations": 45,
+      "workers": 15
+    },
+    "driver_checks": 57,
+    "driver_rejecting_cases": 7,
+    "prospective_bounds": {
+      "activation_bytes": 16384,
+      "case_count": 6,
+      "case_work_seconds": 60,
+      "command_bytes": 512,
+      "declared_steps": 47,
+      "driver_wall_seconds": 600,
+      "handoff_bytes": 65536,
+      "held_cancellations": 2,
+      "journal_bytes": 33554432,
+      "journal_events": 4096,
+      "largest_command_bytes": 128,
+      "maximum_concurrent_workers": 3,
+      "owned_file_bytes": 65536,
+      "owned_tree_bytes": 4194304,
+      "owned_tree_depth": 8,
+      "owned_tree_nodes": 256,
+      "worker_event_bytes": 65536,
+      "worker_events": 128,
+      "worker_kill_seconds": 2,
+      "worker_output_bytes": 1048576,
+      "worker_term_seconds": 2,
+      "worker_wall_seconds": 60,
+      "workers": 15
+    },
+    "rejecting_controls": [
+      {
+        "error": "journal changed, omitted or invented original worker stream bytes",
+        "name": "missing original worker stream line"
+      },
+      {
+        "error": "successful worker has unaccounted stderr",
+        "name": "unaccounted worker stderr"
+      },
+      {
+        "error": "native worker executable differs from the selected interpreter bytes",
+        "name": "changed admitted native executable"
+      },
+      {
+        "error": "native worker receipt loses the selected script, role or original birth",
+        "name": "changed original worker birth"
+      },
+      {
+        "error": "result lacks original lock closure or contention",
+        "name": "boolean lock closure with matching raw stream hashes"
+      },
+      {
+        "error": "worker opened a different or unsealed permanent lock",
+        "name": "different lock inode with matching raw stream hashes"
+      },
+      {
+        "error": "busy event does not record selected lock contention",
+        "name": "wrong busy errno with matching raw stream hashes"
+      },
+      {
+        "error": "publication creation flag disagrees with original image lifetime",
+        "name": "missing original operation acceptance"
+      },
+      {
+        "error": "case omitted or invented a required ownership snapshot",
+        "name": "missing settled fixture snapshot"
+      },
+      {
+        "error": "cleanup omission or order differs from the exact remaining closure",
+        "name": "missing original cleanup node"
+      },
+      {
+        "error": "cleanup outcome differs from exact retained removal records",
+        "name": "invented extra removal"
+      },
+      {
+        "error": "snapshot changed original file bytes, identity or final mode",
+        "name": "changed retained file mode in snapshot"
+      },
+      {
+        "error": "snapshot changed original file bytes, identity or final mode",
+        "name": "changed retained inode in snapshot"
+      },
+      {
+        "error": "observed tree differs from independently reconstructed original owners",
+        "name": "observation archive omitted from terminal closure"
+      },
+      {
+        "error": "controller command transcript differs from the fixed schedule",
+        "name": "handoff reconstructed from changed bytes"
+      },
+      {
+        "error": "ordinary completion and separate recovery were conflated",
+        "name": "cancelled worker promoted to ordinary completion"
+      },
+      {
+        "error": "planned cancellation lacks a matching actual signal exit",
+        "name": "requested signal without matching terminal signal exit"
+      },
+      {
+        "error": "worker native settlement or terminal evidence is incomplete",
+        "name": "unsettled cancelled process group"
+      }
+    ],
+    "schema": "fsmgen.inactive_populated_oracle_qualification.v1",
+    "synthetic_native_records": true
+  },
+  "sources": [
+    {
+      "original": "docs/audits/native-proxy-populated-final-admission-20260913/oracle.py",
+      "path": "docs/audits/native-proxy-populated-final-admission-20260913/oracle.py.oracle-first.source",
+      "sha256": "ab4a4b37c5a4597a679df552b9d1399243489f2532ec57cb1eebc5e76005f09b",
+      "size_bytes": 31435
+    },
+    {
+      "original": "docs/audits/native-proxy-populated-final-admission-20260913/qualify_oracle.py",
+      "path": "docs/audits/native-proxy-populated-final-admission-20260913/qualify_oracle.py.oracle-first.source",
+      "sha256": "ad10f099611d6312b286e8fbd0254e43c58e45aa287a60351e292fd648071e91",
+      "size_bytes": 7837
+    },
+    {
+      "original": "docs/audits/native-proxy-populated-final-admission-20260913/qualify_driver.py",
+      "path": "docs/audits/native-proxy-populated-final-admission-20260913/qualify_driver.py.oracle-first.source",
+      "sha256": "77048ad54c3f48f0f3c68203ff52789bf7c49ac065634d9dc8430310f35ecb67",
+      "size_bytes": 22983
+    },
+    {
+      "original": "docs/audits/native-proxy-populated-final-admission-20260913/driver.py",
+      "path": "docs/audits/native-proxy-populated-final-admission-20260913/driver.py.oracle-first.source",
+      "sha256": "37907001603b2446db22ceb80d59fc391c777d129820e79583840bbe1eaa3467",
+      "size_bytes": 23387
+    },
+    {
+      "original": "docs/audits/native-proxy-populated-final-admission-20260913/result_state.py",
+      "path": "docs/audits/native-proxy-populated-final-admission-20260913/result_state.py.oracle-first.source",
+      "sha256": "b5ae4b83f1c0bc981966a61dd46832d7e3849028ae14fa3ed46d74ea36cabdc7",
+      "size_bytes": 14215
+    },
+    {
+      "original": "docs/audits/native-proxy-populated-final-admission-20260913/owned_case.py",
+      "path": "docs/audits/native-proxy-populated-final-admission-20260913/owned_case.py.oracle-first.source",
+      "sha256": "9bd0512c19029e2bc91b7d9d8eddfd44dedd7354e1e00f007a7c573b52e02fb4",
+      "size_bytes": 14557
+    },
+    {
+      "original": "docs/audits/native-proxy-populated-final-admission-20260913/contract.py",
+      "path": "docs/audits/native-proxy-populated-final-admission-20260913/contract.py.oracle-first.source",
+      "sha256": "f34321c5e6a489cf6c2457968e0702770bb098b295e7bbaa74a03f0fd6861e5d",
+      "size_bytes": 5282
+    },
+    {
+      "original": "docs/audits/native-proxy-populated-final-admission-20260913/records.py",
+      "path": "docs/audits/native-proxy-populated-final-admission-20260913/records.py.oracle-first.source",
+      "sha256": "c420e9cdd008e9bce96a581969de6ce4ffa2636510f96a2e8354ce57c5d3e675",
+      "size_bytes": 7313
+    }
+  ]
+}

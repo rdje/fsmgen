@@ -1,0 +1,38 @@
+[
+  {
+    "original": "docs/audits/native-proxy-populated-final-admission-20260913/owned_case.py",
+    "path": "docs/audits/native-proxy-populated-final-admission-20260913/owned_case.py.owned-first.source",
+    "sha256": "c4d51ae402abb848c631fa08d70a55e0f55cfe291aba6de8a3464239136ff52d",
+    "size_bytes": 12727
+  },
+  {
+    "original": "docs/audits/native-proxy-populated-final-admission-20260913/qualify_owned_case.py",
+    "path": "docs/audits/native-proxy-populated-final-admission-20260913/qualify_owned_case.py.owned-first.source",
+    "sha256": "35a4b74d987ed19039e0a8ba702261c4171febfff65d956284d217b79a2147c1",
+    "size_bytes": 11270
+  },
+  {
+    "original": "docs/audits/native-proxy-populated-final-admission-20260913/qualify_files.py",
+    "path": "docs/audits/native-proxy-populated-final-admission-20260913/qualify_files.py.owned-first.source",
+    "sha256": "61b3913b826032ad01655af93d44f5c6019a0fc97b525a86136b6761e7d01f5d",
+    "size_bytes": 9582
+  },
+  {
+    "original": "docs/audits/native-proxy-populated-final-admission-20260913/local_files.py",
+    "path": "docs/audits/native-proxy-populated-final-admission-20260913/local_files.py.owned-first.source",
+    "sha256": "3e18cc9b24131d8f22ccc02caa88ea1578242c6af4a82b974e3144724598ac55",
+    "size_bytes": 5430
+  },
+  {
+    "original": "docs/audits/native-proxy-populated-final-admission-20260913/records.py",
+    "path": "docs/audits/native-proxy-populated-final-admission-20260913/records.py.owned-first.source",
+    "sha256": "c420e9cdd008e9bce96a581969de6ce4ffa2636510f96a2e8354ce57c5d3e675",
+    "size_bytes": 7313
+  },
+  {
+    "original": "docs/audits/native-proxy-populated-final-admission-20260913/contract.py",
+    "path": "docs/audits/native-proxy-populated-final-admission-20260913/contract.py.owned-first.source",
+    "sha256": "c9294d7d1c43f852e6dd1a15cf8ac9d1b8f710d41f5f2fb4e10d8ccefaf08666",
+    "size_bytes": 4854
+  }
+]

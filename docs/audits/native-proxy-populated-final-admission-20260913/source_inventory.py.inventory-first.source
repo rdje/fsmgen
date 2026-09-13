@@ -1,0 +1,47 @@
+"""Explicit runtime and qualification source selection; no implicit file glob."""
+import hashlib
+import json
+
+from contract import BASE, ROOT, driver_sources, worker_sources
+
+PROGRAMS = ('CompileInventory.pm', 'capture_installed.py', 'capture_git.py', 'build_plan.py',
+    'qualify_records.py', 'qualify_files.py', 'qualify_owned_case.py', 'qualify_result_state.py',
+    'qualify_admission.py', 'qualify_driver.py', 'qualify_oracle.py', 'qualify_envelope.py',
+    'qualify_sources.py', 'qualify_bounds.py', 'source_inventory.py', 'oracle.py', 'review_run.py', 'audit.py')
+EVIDENCE = ('scope.json', 'worker-sources.json', 'compile-inventory-first.json', 'installed-first.json',
+    'git-first.json', 'records-first.json', 'files-first.json', 'owned-draft-review.json', 'owned-first.json',
+    'owned-custody.json', 'owned-expanded.json', 'owned-seals.json', 'owned-archives.json',
+    'state-first.json', 'admission-first.json', 'driver-first.json', 'oracle-first.json', 'envelope-first.json',
+    'sources-first.json', 'bounds-first.json')
+
+
+def selection():
+    names = set(driver_sources()) | {row['path'] for row in worker_sources()} | {'.gitignore'}
+    for name in PROGRAMS + EVIDENCE + ('CompileInventory.pm.first.source', 'capture_installed.py.first.source'):
+        names.add((BASE / name).relative_to(ROOT).as_posix())
+    # The immutable first-source copies are selected by their already retained
+    # evidence manifests, including failed models. Never substitute current
+    # implementation bytes for a historical first-source record.
+    for name in EVIDENCE:
+        value = json.loads((BASE / name).read_bytes())
+        for row in value.get('sources', []):
+            names.add(row['path'])
+    for name in ('native-proxy-populated-worker-protocol-20260913/qualification.json',
+                 'native-proxy-image-custody-20260910/vectors.json',
+                 'native-proxy-compiler-census-policy-admission-20260913/plan.json'):
+        names.add('docs/audits/' + name)
+    return sorted(names)
+
+
+def pins():
+    result = []
+    for name in selection():
+        body = (ROOT / name).read_bytes()
+        result.append(dict(path=name, size_bytes=len(body), sha256=hashlib.sha256(body).hexdigest()))
+    return result
+
+
+if __name__ == '__main__':
+    with (BASE / 'execution-source-pins.json').open('x') as stream:
+        json.dump(pins(), stream, sort_keys=True, indent=2)
+        stream.write('\n')

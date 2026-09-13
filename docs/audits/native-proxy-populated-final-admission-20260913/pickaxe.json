@@ -1,0 +1,16 @@
+{
+  "command": [
+    "git",
+    "log",
+    "-S",
+    "fsmgen.inactive_populated_worker_authority.v1",
+    "-1",
+    "--format=%H %s",
+    "--",
+    "docs/audits/native-proxy-populated-worker-protocol-20260913/worker.pl"
+  ],
+  "exit_code": 0,
+  "interpretation": "The qualified worker requires the final admission-owned authority and start marker; this leaf supplies and authenticates that previously unimplemented producer.",
+  "stderr": "",
+  "stdout": "6663b09682c2b7461a2573900c187dcfff6fd9b0 HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.12.4.1.5.3.1.3: qualify fixed populated-worker protocol\n"
+}

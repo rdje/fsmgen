@@ -1,0 +1,77 @@
+{
+  "outputs": {
+    "exit": "0\n",
+    "stderr": "ram-guard: PID 76759; host 73.5%; host cutoff 88%; descendant RSS cutoff 4096 MiB; poll 2s\n",
+    "stdout": "{\n  \"actual_fixture_allocation\": false,\n  \"actual_worker_execution\": false,\n  \"checks\": [\n    \"bounded read preserves octets\",\n    \"read closes its owned descriptor\",\n    \"read descriptor is no-follow and close-on-exec\",\n    \"metadata rejections do not open descriptors\",\n    \"changed read still closes\",\n    \"secondary read close failure remains explicit\",\n    \"failed close attempted once\",\n    \"short writes retain all original bytes\",\n    \"write seals its original inode\",\n    \"write and readback descriptors close\",\n    \"exclusive rejection preserves original objects\",\n    \"invalid outputs allocate nothing\",\n    \"directory identity is rooted in created object\",\n    \"failed write remains visible and closes\",\n    \"writer close error is retained as secondary\",\n    \"failed readback does not erase the original output\"\n  ],\n  \"owned_tree_and_driver_qualification_still_pending\": true,\n  \"rejected\": [\n    \"noncanonical path '/absolute'\",\n    \"noncanonical path '../parent'\",\n    \"noncanonical path 'a//b'\",\n    \"noncanonical path 'a/./b'\",\n    \"noncanonical path 'a/../b'\",\n    \"noncanonical path 'a\\\\\\\\b'\",\n    \"noncanonical path 'a\\\\x00b'\",\n    \"noncanonical path 'a\\\\nb'\",\n    \"noncanonical path ''\",\n    \"read rejects wrong mode\",\n    \"read rejects oversize\",\n    \"read rejects boolean limit\",\n    \"read rejects foreign st_nlink\",\n    \"read rejects foreign st_uid\",\n    \"read rejects foreign st_dev\",\n    \"read rejects foreign st_mode\",\n    \"read rejects identity change during read\",\n    \"primary read failure survives close failure\",\n    \"exclusive write never replaces prior bytes\",\n    \"write rejects oversize before allocation\",\n    \"write rejects unselected mode before allocation\",\n    \"directory creation remains exclusive\",\n    \"zero write stops without retry\",\n    \"readback mismatch survives writer close failure\"\n  ],\n  \"schema\": \"fsmgen.inactive_populated_io_qualification.v1\"\n}\n"
+  },
+  "result": {
+    "actual_fixture_allocation": false,
+    "actual_worker_execution": false,
+    "checks": [
+      "bounded read preserves octets",
+      "read closes its owned descriptor",
+      "read descriptor is no-follow and close-on-exec",
+      "metadata rejections do not open descriptors",
+      "changed read still closes",
+      "secondary read close failure remains explicit",
+      "failed close attempted once",
+      "short writes retain all original bytes",
+      "write seals its original inode",
+      "write and readback descriptors close",
+      "exclusive rejection preserves original objects",
+      "invalid outputs allocate nothing",
+      "directory identity is rooted in created object",
+      "failed write remains visible and closes",
+      "writer close error is retained as secondary",
+      "failed readback does not erase the original output"
+    ],
+    "owned_tree_and_driver_qualification_still_pending": true,
+    "rejected": [
+      "noncanonical path '/absolute'",
+      "noncanonical path '../parent'",
+      "noncanonical path 'a//b'",
+      "noncanonical path 'a/./b'",
+      "noncanonical path 'a/../b'",
+      "noncanonical path 'a\\\\b'",
+      "noncanonical path 'a\\x00b'",
+      "noncanonical path 'a\\nb'",
+      "noncanonical path ''",
+      "read rejects wrong mode",
+      "read rejects oversize",
+      "read rejects boolean limit",
+      "read rejects foreign st_nlink",
+      "read rejects foreign st_uid",
+      "read rejects foreign st_dev",
+      "read rejects foreign st_mode",
+      "read rejects identity change during read",
+      "primary read failure survives close failure",
+      "exclusive write never replaces prior bytes",
+      "write rejects oversize before allocation",
+      "write rejects unselected mode before allocation",
+      "directory creation remains exclusive",
+      "zero write stops without retry",
+      "readback mismatch survives writer close failure"
+    ],
+    "schema": "fsmgen.inactive_populated_io_qualification.v1"
+  },
+  "sources": [
+    {
+      "original": "docs/audits/native-proxy-populated-final-admission-20260913/local_files.py",
+      "path": "docs/audits/native-proxy-populated-final-admission-20260913/local_files.py.files-first.source",
+      "sha256": "3e18cc9b24131d8f22ccc02caa88ea1578242c6af4a82b974e3144724598ac55",
+      "size_bytes": 5430
+    },
+    {
+      "original": "docs/audits/native-proxy-populated-final-admission-20260913/qualify_files.py",
+      "path": "docs/audits/native-proxy-populated-final-admission-20260913/qualify_files.py.files-first.source",
+      "sha256": "61b3913b826032ad01655af93d44f5c6019a0fc97b525a86136b6761e7d01f5d",
+      "size_bytes": 9582
+    },
+    {
+      "original": "docs/audits/native-proxy-populated-final-admission-20260913/contract.py",
+      "path": "docs/audits/native-proxy-populated-final-admission-20260913/contract.py.files-first.source",
+      "sha256": "c9294d7d1c43f852e6dd1a15cf8ac9d1b8f710d41f5f2fb4e10d8ccefaf08666",
+      "size_bytes": 4854
+    }
+  ]
+}

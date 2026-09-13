@@ -1,0 +1,134 @@
+{
+  "outputs": {
+    "exit": "0\n",
+    "stderr": "ram-guard: PID 61415; host 80.0%; host cutoff 88%; descendant RSS cutoff 4096 MiB; poll 2s\n",
+    "stdout": "{\n  \"actual_fixture_allocation\": false,\n  \"actual_signals\": false,\n  \"actual_worker_execution\": false,\n  \"checks\": [\n    \"every fixed maximum-width shape fits its declared ceiling\",\n    \"signals defer exceptions until a controlled ownership boundary\",\n    \"stop handlers restore both original dispositions and preserve SIGCHLD\",\n    \"expired work deadline rejects before any worker allocation\"\n  ],\n  \"declared\": {\n    \"activation_bytes\": 16384,\n    \"case_count\": 6,\n    \"case_work_seconds\": 60,\n    \"command_bytes\": 512,\n    \"declared_steps\": 47,\n    \"driver_wall_seconds\": 600,\n    \"handoff_bytes\": 65536,\n    \"held_cancellations\": 2,\n    \"journal_bytes\": 33554432,\n    \"journal_events\": 4096,\n    \"largest_command_bytes\": 128,\n    \"maximum_concurrent_workers\": 3,\n    \"owned_file_bytes\": 65536,\n    \"owned_tree_bytes\": 4194304,\n    \"owned_tree_depth\": 8,\n    \"owned_tree_nodes\": 256,\n    \"worker_event_bytes\": 65536,\n    \"worker_events\": 128,\n    \"worker_kill_seconds\": 2,\n    \"worker_output_bytes\": 1048576,\n    \"worker_term_seconds\": 2,\n    \"worker_wall_seconds\": 60,\n    \"workers\": 15\n  },\n  \"derived\": {\n    \"journal_bytes\": 1273868,\n    \"journal_rows\": 1045,\n    \"largest_activation\": 1488,\n    \"largest_handoff\": 13692,\n    \"largest_owned_depth\": 3,\n    \"largest_owned_file\": 1692,\n    \"largest_owned_file_total\": 7393,\n    \"largest_owned_tree\": 22,\n    \"largest_worker_event\": 27186,\n    \"largest_worker_event_count\": 15,\n    \"largest_worker_output\": 45553,\n    \"reviewed_files\": 47,\n    \"run_files\": 46,\n    \"scope\": \"Conservative maximum-width encodings of fixed successful model shapes. These widened records are not valid native acquisitions. Failure outputs remain separately bounded by the controller, journal and local I/O ceilings.\",\n    \"source_epoch\": \"6663b09682c2b7461a2573900c187dcfff6fd9b0\",\n    \"source_epoch_frontier_bytes\": 1143836,\n    \"start_marker\": 226,\n    \"worker_authority\": 5003\n  },\n  \"rejecting_controls\": [\n    \"insufficient worker_event_bytes\",\n    \"insufficient worker_output_bytes\",\n    \"insufficient worker_events\",\n    \"insufficient activation_bytes\",\n    \"insufficient handoff_bytes\",\n    \"insufficient owned_tree_nodes\",\n    \"insufficient owned_tree_depth\",\n    \"insufficient owned_file_bytes\",\n    \"insufficient owned_tree_bytes\",\n    \"insufficient journal_events\",\n    \"insufficient journal_bytes\"\n  ],\n  \"schema\": \"fsmgen.inactive_populated_bounds_qualification.v1\",\n  \"source_geometry_is_not_native_execution_evidence\": true\n}\n"
+  },
+  "result": {
+    "actual_fixture_allocation": false,
+    "actual_signals": false,
+    "actual_worker_execution": false,
+    "checks": [
+      "every fixed maximum-width shape fits its declared ceiling",
+      "signals defer exceptions until a controlled ownership boundary",
+      "stop handlers restore both original dispositions and preserve SIGCHLD",
+      "expired work deadline rejects before any worker allocation"
+    ],
+    "declared": {
+      "activation_bytes": 16384,
+      "case_count": 6,
+      "case_work_seconds": 60,
+      "command_bytes": 512,
+      "declared_steps": 47,
+      "driver_wall_seconds": 600,
+      "handoff_bytes": 65536,
+      "held_cancellations": 2,
+      "journal_bytes": 33554432,
+      "journal_events": 4096,
+      "largest_command_bytes": 128,
+      "maximum_concurrent_workers": 3,
+      "owned_file_bytes": 65536,
+      "owned_tree_bytes": 4194304,
+      "owned_tree_depth": 8,
+      "owned_tree_nodes": 256,
+      "worker_event_bytes": 65536,
+      "worker_events": 128,
+      "worker_kill_seconds": 2,
+      "worker_output_bytes": 1048576,
+      "worker_term_seconds": 2,
+      "worker_wall_seconds": 60,
+      "workers": 15
+    },
+    "derived": {
+      "journal_bytes": 1273868,
+      "journal_rows": 1045,
+      "largest_activation": 1488,
+      "largest_handoff": 13692,
+      "largest_owned_depth": 3,
+      "largest_owned_file": 1692,
+      "largest_owned_file_total": 7393,
+      "largest_owned_tree": 22,
+      "largest_worker_event": 27186,
+      "largest_worker_event_count": 15,
+      "largest_worker_output": 45553,
+      "reviewed_files": 47,
+      "run_files": 46,
+      "scope": "Conservative maximum-width encodings of fixed successful model shapes. These widened records are not valid native acquisitions. Failure outputs remain separately bounded by the controller, journal and local I/O ceilings.",
+      "source_epoch": "6663b09682c2b7461a2573900c187dcfff6fd9b0",
+      "source_epoch_frontier_bytes": 1143836,
+      "start_marker": 226,
+      "worker_authority": 5003
+    },
+    "rejecting_controls": [
+      "insufficient worker_event_bytes",
+      "insufficient worker_output_bytes",
+      "insufficient worker_events",
+      "insufficient activation_bytes",
+      "insufficient handoff_bytes",
+      "insufficient owned_tree_nodes",
+      "insufficient owned_tree_depth",
+      "insufficient owned_file_bytes",
+      "insufficient owned_tree_bytes",
+      "insufficient journal_events",
+      "insufficient journal_bytes"
+    ],
+    "schema": "fsmgen.inactive_populated_bounds_qualification.v1",
+    "source_geometry_is_not_native_execution_evidence": true
+  },
+  "sources": [
+    {
+      "original": "docs/audits/native-proxy-populated-final-admission-20260913/qualify_bounds.py",
+      "path": "docs/audits/native-proxy-populated-final-admission-20260913/qualify_bounds.py.bounds-first.source",
+      "sha256": "69262f02496636c158a333b7aa44ab7feda6c22810df435da5f6882e96c71b5f",
+      "size_bytes": 9004
+    },
+    {
+      "original": "docs/audits/native-proxy-populated-final-admission-20260913/qualify_envelope.py",
+      "path": "docs/audits/native-proxy-populated-final-admission-20260913/qualify_envelope.py.bounds-first.source",
+      "sha256": "f1ab3f37260d1f780f6bdfd567cabb0d95450716e2d52e354c440d13989c70d6",
+      "size_bytes": 16383
+    },
+    {
+      "original": "docs/audits/native-proxy-populated-final-admission-20260913/qualify_driver.py",
+      "path": "docs/audits/native-proxy-populated-final-admission-20260913/qualify_driver.py.bounds-first.source",
+      "sha256": "13e107e2087e6dfc09659e9b68d56160984254827f3393b1edcb5346d77ef328",
+      "size_bytes": 23065
+    },
+    {
+      "original": "docs/audits/native-proxy-populated-final-admission-20260913/driver.py",
+      "path": "docs/audits/native-proxy-populated-final-admission-20260913/driver.py.bounds-first.source",
+      "sha256": "76ff87539b1071ab68e95ea943981f511f7614d4241b601e47a52517eec65062",
+      "size_bytes": 23397
+    },
+    {
+      "original": "docs/audits/native-proxy-populated-final-admission-20260913/contract.py",
+      "path": "docs/audits/native-proxy-populated-final-admission-20260913/contract.py.bounds-first.source",
+      "sha256": "1b225947a2b6e6f66a32ecbb7aec439dcb5b9cca5b6e4d6e76fcbd296da77fcf",
+      "size_bytes": 5638
+    },
+    {
+      "original": "docs/audits/native-proxy-populated-final-admission-20260913/build_plan.py",
+      "path": "docs/audits/native-proxy-populated-final-admission-20260913/build_plan.py.bounds-first.source",
+      "sha256": "8086a6a3dce9bbf602c6098ebfd59c8dca469e7e4db3e063b6053a328888118d",
+      "size_bytes": 1797
+    },
+    {
+      "original": "docs/audits/native-proxy-populated-final-admission-20260913/plan.json",
+      "path": "docs/audits/native-proxy-populated-final-admission-20260913/plan.json.bounds-first.source",
+      "sha256": "39e9efd13191087f33bcc3340eb8c33715ad5f2707bfb96dbd76accd4db0d77b",
+      "size_bytes": 50654
+    },
+    {
+      "original": "docs/audits/native-proxy-populated-final-admission-20260913/journal.py",
+      "path": "docs/audits/native-proxy-populated-final-admission-20260913/journal.py.bounds-first.source",
+      "sha256": "3a40007b8ada5d46116ebe4176228ebe9bea2f4d28163506e048e6e29647dcbe",
+      "size_bytes": 2766
+    },
+    {
+      "original": "docs/audits/native-proxy-populated-final-admission-20260913/admission.py",
+      "path": "docs/audits/native-proxy-populated-final-admission-20260913/admission.py.bounds-first.source",
+      "sha256": "a068b979b136b67ffe90568d35a80f3ac62397ad8515deafe37126762c294903",
+      "size_bytes": 10607
+    }
+  ]
+}

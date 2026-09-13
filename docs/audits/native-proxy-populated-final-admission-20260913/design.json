@@ -1,0 +1,27 @@
+{
+  "pending_files": [],
+  "recovery_note": "Do not generalize the old empty-store cleanup. The populated driver needs a bounded byte/identity inventory and explicit handling of partially completed publication, retained references and archived snapshots.",
+  "schema": "fsmgen.inactive_populated_admission_design.v1",
+  "scope_limits": [
+    "No invocation of old permit issuers, old worker runners, compiler fixtures, proxies, originals, collectors or privileged sampler functions.",
+    "Use only NativeProcesses.identity and NativeProcesses.executable from the sampler module.",
+    "Keep Q worker/controller sources immutable; unexpected integration findings must become owned pre-execution repairs.",
+    "Retirement and selected observation work receipts remain synthetic; the actual cancelled worker receipt is distinct.",
+    "Prove selected cooperative-writer behavior only; no arbitrary-writer or power-loss claim."
+  ],
+  "sequence": [
+    "Validate the final admission commit, active execution leaf and exact allowed dirty live pointers.",
+    "Authenticate all committed driver/worker/source pins and current selected installed interpreter bytes before issuing any permit.",
+    "Create the output and canonical sealed one-use permit exclusively only in the later execution leaf.",
+    "The executing driver consumes a separate exclusive start marker, binds its own native identity and writes the exact worker authority.",
+    "Create only the fixed case store, publisher workspaces and optional evidence directory; initialize private modes and inert wrapper bytes.",
+    "Launch fixed Perl workers through the committed controller, admit all native images and births, then seal each case activation.",
+    "Pump all current worker pipes while following the fixed action schedule; require an actual busy event before releasing a contended lock.",
+    "Before cancellation seal the original acquisition packet by digest; settle the actual child/group before the peer adopts it.",
+    "Finish ordinary workers, recover every launched child on any failure, and preserve the first error and full bounded captures.",
+    "Independently inspect and record the bounded owned trees; remove only exact admitted objects after all workers settle.",
+    "Retain raw outcomes, the state/identity join and exact cleanup. Any unknown node or incomplete native cleanup is an owned failure, never silently removed or promoted."
+  ],
+  "source_bounds": "review.json re-derives the conservative fixed model shapes and rejects undersized ceilings; these encodings are not native execution evidence.",
+  "status": "source_qualification_complete"
+}

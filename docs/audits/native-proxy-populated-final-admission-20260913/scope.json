@@ -1,0 +1,22 @@
+{
+  "actual_fixture_allocation": false,
+  "actual_worker_execution": false,
+  "constraints": [
+    "Keep the qualified controller and worker source immutable.",
+    "Compile-only source inventory and explicitly identified read-only installed inputs are allowed.",
+    "Do not issue or consume execution authority before the exact admission commit.",
+    "Actual worker execution belongs to the separately activated .5.3.2 leaf.",
+    "Retirement and selected observation-work receipts remain synthetic; actual worker cancellation is separate.",
+    "No compiler, proxy, original fixture or live collector execution.",
+    "Preserve every first source-model result and exact owned recovery."
+  ],
+  "contract": "docs/audits/native-proxy-populated-worker-protocol-20260913/contract.json",
+  "controller": "docs/audits/native-proxy-populated-controller-20260913/controller.py",
+  "issuer_consumed": false,
+  "next_owner": "HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.12.4.1.5.3.2",
+  "owner": "HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.12.4.1.5.3.1.4",
+  "phase": "Final source-only populated-worker execution admission",
+  "planned_output": ".artifacts/logs/native-proxy-populated-workers-20260913",
+  "source_revision": "6663b09682c2b7461a2573900c187dcfff6fd9b0",
+  "worker": "docs/audits/native-proxy-populated-worker-protocol-20260913/worker.pl"
+}

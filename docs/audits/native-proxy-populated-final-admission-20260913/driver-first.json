@@ -1,0 +1,301 @@
+{
+  "outputs": {
+    "exit": "0\n",
+    "stderr": "ram-guard: PID 7217; host 78.5%; host cutoff 88%; descendant RSS cutoff 4096 MiB; poll 2s\n",
+    "stdout": "{\n  \"actual_fixture_allocation\": false,\n  \"actual_signals\": false,\n  \"actual_worker_execution\": false,\n  \"checks\": [\n    \"equal_publication completes its exact selected schedule\",\n    \"equal_publication joins every committed original operation\",\n    \"equal_publication remembers every original acquisition\",\n    \"equal_publication records original archive custody\",\n    \"equal_publication performs one settled fixture cleanup\",\n    \"equal_publication uses recovery only for declared held cancellation\",\n    \"different_publication completes its exact selected schedule\",\n    \"different_publication joins every committed original operation\",\n    \"different_publication remembers every original acquisition\",\n    \"different_publication records original archive custody\",\n    \"different_publication performs one settled fixture cleanup\",\n    \"different_publication uses recovery only for declared held cancellation\",\n    \"observation_across_retirement completes its exact selected schedule\",\n    \"observation_across_retirement joins every committed original operation\",\n    \"observation_across_retirement remembers every original acquisition\",\n    \"observation_across_retirement records original archive custody\",\n    \"observation_across_retirement performs one settled fixture cleanup\",\n    \"observation_across_retirement uses recovery only for declared held cancellation\",\n    \"equal_references_with_observer completes its exact selected schedule\",\n    \"equal_references_with_observer joins every committed original operation\",\n    \"equal_references_with_observer remembers every original acquisition\",\n    \"equal_references_with_observer records original archive custody\",\n    \"equal_references_with_observer performs one settled fixture cleanup\",\n    \"equal_references_with_observer uses recovery only for declared held cancellation\",\n    \"cancelled_runtime_owner completes its exact selected schedule\",\n    \"cancelled_runtime_owner joins every committed original operation\",\n    \"cancelled_runtime_owner remembers every original acquisition\",\n    \"cancelled_runtime_owner records original archive custody\",\n    \"cancelled_runtime_owner performs one settled fixture cleanup\",\n    \"cancelled_runtime_owner uses recovery only for declared held cancellation\",\n    \"cancelled_observer_owner completes its exact selected schedule\",\n    \"cancelled_observer_owner joins every committed original operation\",\n    \"cancelled_observer_owner remembers every original acquisition\",\n    \"cancelled_observer_owner records original archive custody\",\n    \"cancelled_observer_owner performs one settled fixture cleanup\",\n    \"cancelled_observer_owner uses recovery only for declared held cancellation\",\n    \"('launch', 'maintainer') stops on its first actual model failure\",\n    \"('launch', 'maintainer') consumes every created worker outcome\",\n    \"('launch', 'maintainer') preserves the owned cleanup outcome\",\n    \"('ready', 'maintainer') stops on its first actual model failure\",\n    \"('ready', 'maintainer') consumes every created worker outcome\",\n    \"('ready', 'maintainer') preserves the owned cleanup outcome\",\n    \"('command', 'maintainer') stops on its first actual model failure\",\n    \"('command', 'maintainer') consumes every created worker outcome\",\n    \"('command', 'maintainer') preserves the owned cleanup outcome\",\n    \"('lock_inode', 'publisher') stops on its first actual model failure\",\n    \"('lock_inode', 'publisher') consumes every created worker outcome\",\n    \"('lock_inode', 'publisher') preserves the owned cleanup outcome\",\n    \"('release_receipt', 'observer') stops on its first actual model failure\",\n    \"('release_receipt', 'observer') consumes every created worker outcome\",\n    \"('release_receipt', 'observer') preserves the owned cleanup outcome\",\n    \"('cleanup', None) stops on its first actual model failure\",\n    \"('cleanup', None) consumes every created worker outcome\",\n    \"('cleanup', None) preserves the owned cleanup outcome\",\n    \"incomplete recovery does not strand later roles\",\n    \"incomplete recovery never starts fixture removal\",\n    \"incomplete recovery preserves both missing and unresolved outcomes\"\n  ],\n  \"completed_cases\": [\n    {\n      \"case\": \"equal_publication\",\n      \"commands\": 19,\n      \"completed_operations\": 7,\n      \"declared_cancellations\": 0,\n      \"snapshots\": 8,\n      \"workers\": 2\n    },\n    {\n      \"case\": \"different_publication\",\n      \"commands\": 19,\n      \"completed_operations\": 7,\n      \"declared_cancellations\": 0,\n      \"snapshots\": 8,\n      \"workers\": 2\n    },\n    {\n      \"case\": \"observation_across_retirement\",\n      \"commands\": 21,\n      \"completed_operations\": 8,\n      \"declared_cancellations\": 0,\n      \"snapshots\": 10,\n      \"workers\": 3\n    },\n    {\n      \"case\": \"equal_references_with_observer\",\n      \"commands\": 26,\n      \"completed_operations\": 10,\n      \"declared_cancellations\": 0,\n      \"snapshots\": 11,\n      \"workers\": 3\n    },\n    {\n      \"case\": \"cancelled_runtime_owner\",\n      \"commands\": 14,\n      \"completed_operations\": 5,\n      \"declared_cancellations\": 1,\n      \"snapshots\": 9,\n      \"workers\": 2\n    },\n    {\n      \"case\": \"cancelled_observer_owner\",\n      \"commands\": 21,\n      \"completed_operations\": 8,\n      \"declared_cancellations\": 1,\n      \"snapshots\": 12,\n      \"workers\": 3\n    }\n  ],\n  \"filesystem_bytes_and_native_outcomes_qualified_separately\": true,\n  \"independent_actual_result_oracle_still_pending\": true,\n  \"native_ownership_assumed\": true,\n  \"rejecting_cases\": [\n    {\n      \"fault\": [\n        \"launch\",\n        \"maintainer\"\n      ],\n      \"first_error\": {\n        \"message\": \"model setup failed after child creation\",\n        \"notes\": [],\n        \"type\": \"OSError\"\n      },\n      \"recovered_roles\": [\n        \"maintainer\"\n      ]\n    },\n    {\n      \"fault\": [\n        \"ready\",\n        \"maintainer\"\n      ],\n      \"first_error\": {\n        \"message\": \"record has unexpected fields\",\n        \"notes\": [],\n        \"type\": \"ValueError\"\n      },\n      \"recovered_roles\": [\n        \"maintainer\",\n        \"observer\",\n        \"publisher\"\n      ]\n    },\n    {\n      \"fault\": [\n        \"command\",\n        \"maintainer\"\n      ],\n      \"first_error\": {\n        \"message\": \"model command failed without retry\",\n        \"notes\": [],\n        \"type\": \"OSError\"\n      },\n      \"recovered_roles\": [\n        \"maintainer\",\n        \"observer\",\n        \"publisher\"\n      ]\n    },\n    {\n      \"fault\": [\n        \"lock_inode\",\n        \"publisher\"\n      ],\n      \"first_error\": {\n        \"message\": \"opened permanent lock differs from admitted inode or descriptor seal\",\n        \"notes\": [],\n        \"type\": \"ValueError\"\n      },\n      \"recovered_roles\": [\n        \"maintainer\",\n        \"observer\",\n        \"publisher\"\n      ]\n    },\n    {\n      \"fault\": [\n        \"release_receipt\",\n        \"observer\"\n      ],\n      \"first_error\": {\n        \"message\": \"record has unexpected fields\",\n        \"notes\": [],\n        \"type\": \"ValueError\"\n      },\n      \"recovered_roles\": [\n        \"maintainer\",\n        \"observer\",\n        \"publisher\"\n      ]\n    },\n    {\n      \"fault\": [\n        \"cleanup\",\n        null\n      ],\n      \"first_error\": {\n        \"message\": \"model cleanup remains unresolved\",\n        \"notes\": [],\n        \"type\": \"OSError\"\n      },\n      \"recovered_roles\": []\n    },\n    {\n      \"fault\": [\n        \"ready plus incomplete recovery\",\n        \"maintainer\"\n      ],\n      \"first_error\": {\n        \"message\": \"record has unexpected fields\",\n        \"notes\": [],\n        \"type\": \"ValueError\"\n      },\n      \"recovered_roles\": [\n        \"maintainer\",\n        \"observer\",\n        \"publisher\"\n      ]\n    }\n  ],\n  \"schema\": \"fsmgen.inactive_populated_driver_models.v1\"\n}\n"
+  },
+  "result": {
+    "actual_fixture_allocation": false,
+    "actual_signals": false,
+    "actual_worker_execution": false,
+    "checks": [
+      "equal_publication completes its exact selected schedule",
+      "equal_publication joins every committed original operation",
+      "equal_publication remembers every original acquisition",
+      "equal_publication records original archive custody",
+      "equal_publication performs one settled fixture cleanup",
+      "equal_publication uses recovery only for declared held cancellation",
+      "different_publication completes its exact selected schedule",
+      "different_publication joins every committed original operation",
+      "different_publication remembers every original acquisition",
+      "different_publication records original archive custody",
+      "different_publication performs one settled fixture cleanup",
+      "different_publication uses recovery only for declared held cancellation",
+      "observation_across_retirement completes its exact selected schedule",
+      "observation_across_retirement joins every committed original operation",
+      "observation_across_retirement remembers every original acquisition",
+      "observation_across_retirement records original archive custody",
+      "observation_across_retirement performs one settled fixture cleanup",
+      "observation_across_retirement uses recovery only for declared held cancellation",
+      "equal_references_with_observer completes its exact selected schedule",
+      "equal_references_with_observer joins every committed original operation",
+      "equal_references_with_observer remembers every original acquisition",
+      "equal_references_with_observer records original archive custody",
+      "equal_references_with_observer performs one settled fixture cleanup",
+      "equal_references_with_observer uses recovery only for declared held cancellation",
+      "cancelled_runtime_owner completes its exact selected schedule",
+      "cancelled_runtime_owner joins every committed original operation",
+      "cancelled_runtime_owner remembers every original acquisition",
+      "cancelled_runtime_owner records original archive custody",
+      "cancelled_runtime_owner performs one settled fixture cleanup",
+      "cancelled_runtime_owner uses recovery only for declared held cancellation",
+      "cancelled_observer_owner completes its exact selected schedule",
+      "cancelled_observer_owner joins every committed original operation",
+      "cancelled_observer_owner remembers every original acquisition",
+      "cancelled_observer_owner records original archive custody",
+      "cancelled_observer_owner performs one settled fixture cleanup",
+      "cancelled_observer_owner uses recovery only for declared held cancellation",
+      "('launch', 'maintainer') stops on its first actual model failure",
+      "('launch', 'maintainer') consumes every created worker outcome",
+      "('launch', 'maintainer') preserves the owned cleanup outcome",
+      "('ready', 'maintainer') stops on its first actual model failure",
+      "('ready', 'maintainer') consumes every created worker outcome",
+      "('ready', 'maintainer') preserves the owned cleanup outcome",
+      "('command', 'maintainer') stops on its first actual model failure",
+      "('command', 'maintainer') consumes every created worker outcome",
+      "('command', 'maintainer') preserves the owned cleanup outcome",
+      "('lock_inode', 'publisher') stops on its first actual model failure",
+      "('lock_inode', 'publisher') consumes every created worker outcome",
+      "('lock_inode', 'publisher') preserves the owned cleanup outcome",
+      "('release_receipt', 'observer') stops on its first actual model failure",
+      "('release_receipt', 'observer') consumes every created worker outcome",
+      "('release_receipt', 'observer') preserves the owned cleanup outcome",
+      "('cleanup', None) stops on its first actual model failure",
+      "('cleanup', None) consumes every created worker outcome",
+      "('cleanup', None) preserves the owned cleanup outcome",
+      "incomplete recovery does not strand later roles",
+      "incomplete recovery never starts fixture removal",
+      "incomplete recovery preserves both missing and unresolved outcomes"
+    ],
+    "completed_cases": [
+      {
+        "case": "equal_publication",
+        "commands": 19,
+        "completed_operations": 7,
+        "declared_cancellations": 0,
+        "snapshots": 8,
+        "workers": 2
+      },
+      {
+        "case": "different_publication",
+        "commands": 19,
+        "completed_operations": 7,
+        "declared_cancellations": 0,
+        "snapshots": 8,
+        "workers": 2
+      },
+      {
+        "case": "observation_across_retirement",
+        "commands": 21,
+        "completed_operations": 8,
+        "declared_cancellations": 0,
+        "snapshots": 10,
+        "workers": 3
+      },
+      {
+        "case": "equal_references_with_observer",
+        "commands": 26,
+        "completed_operations": 10,
+        "declared_cancellations": 0,
+        "snapshots": 11,
+        "workers": 3
+      },
+      {
+        "case": "cancelled_runtime_owner",
+        "commands": 14,
+        "completed_operations": 5,
+        "declared_cancellations": 1,
+        "snapshots": 9,
+        "workers": 2
+      },
+      {
+        "case": "cancelled_observer_owner",
+        "commands": 21,
+        "completed_operations": 8,
+        "declared_cancellations": 1,
+        "snapshots": 12,
+        "workers": 3
+      }
+    ],
+    "filesystem_bytes_and_native_outcomes_qualified_separately": true,
+    "independent_actual_result_oracle_still_pending": true,
+    "native_ownership_assumed": true,
+    "rejecting_cases": [
+      {
+        "fault": [
+          "launch",
+          "maintainer"
+        ],
+        "first_error": {
+          "message": "model setup failed after child creation",
+          "notes": [],
+          "type": "OSError"
+        },
+        "recovered_roles": [
+          "maintainer"
+        ]
+      },
+      {
+        "fault": [
+          "ready",
+          "maintainer"
+        ],
+        "first_error": {
+          "message": "record has unexpected fields",
+          "notes": [],
+          "type": "ValueError"
+        },
+        "recovered_roles": [
+          "maintainer",
+          "observer",
+          "publisher"
+        ]
+      },
+      {
+        "fault": [
+          "command",
+          "maintainer"
+        ],
+        "first_error": {
+          "message": "model command failed without retry",
+          "notes": [],
+          "type": "OSError"
+        },
+        "recovered_roles": [
+          "maintainer",
+          "observer",
+          "publisher"
+        ]
+      },
+      {
+        "fault": [
+          "lock_inode",
+          "publisher"
+        ],
+        "first_error": {
+          "message": "opened permanent lock differs from admitted inode or descriptor seal",
+          "notes": [],
+          "type": "ValueError"
+        },
+        "recovered_roles": [
+          "maintainer",
+          "observer",
+          "publisher"
+        ]
+      },
+      {
+        "fault": [
+          "release_receipt",
+          "observer"
+        ],
+        "first_error": {
+          "message": "record has unexpected fields",
+          "notes": [],
+          "type": "ValueError"
+        },
+        "recovered_roles": [
+          "maintainer",
+          "observer",
+          "publisher"
+        ]
+      },
+      {
+        "fault": [
+          "cleanup",
+          null
+        ],
+        "first_error": {
+          "message": "model cleanup remains unresolved",
+          "notes": [],
+          "type": "OSError"
+        },
+        "recovered_roles": []
+      },
+      {
+        "fault": [
+          "ready plus incomplete recovery",
+          "maintainer"
+        ],
+        "first_error": {
+          "message": "record has unexpected fields",
+          "notes": [],
+          "type": "ValueError"
+        },
+        "recovered_roles": [
+          "maintainer",
+          "observer",
+          "publisher"
+        ]
+      }
+    ],
+    "schema": "fsmgen.inactive_populated_driver_models.v1"
+  },
+  "sources": [
+    {
+      "original": "docs/audits/native-proxy-populated-final-admission-20260913/driver.py",
+      "path": "docs/audits/native-proxy-populated-final-admission-20260913/driver.py.driver-first.source",
+      "sha256": "37907001603b2446db22ceb80d59fc391c777d129820e79583840bbe1eaa3467",
+      "size_bytes": 23387
+    },
+    {
+      "original": "docs/audits/native-proxy-populated-final-admission-20260913/qualify_driver.py",
+      "path": "docs/audits/native-proxy-populated-final-admission-20260913/qualify_driver.py.driver-first.source",
+      "sha256": "bb2dba928a996addac621deef000f963a2d0028b5dce556a73176ecb36b140f1",
+      "size_bytes": 18751
+    },
+    {
+      "original": "docs/audits/native-proxy-populated-final-admission-20260913/qualify_result_state.py",
+      "path": "docs/audits/native-proxy-populated-final-admission-20260913/qualify_result_state.py.driver-first.source",
+      "sha256": "4c7ebb3c536054519f30e1bdcbca4baa975458b805378539df9993b9d00f804f",
+      "size_bytes": 6315
+    },
+    {
+      "original": "docs/audits/native-proxy-populated-final-admission-20260913/result_state.py",
+      "path": "docs/audits/native-proxy-populated-final-admission-20260913/result_state.py.driver-first.source",
+      "sha256": "b5ae4b83f1c0bc981966a61dd46832d7e3849028ae14fa3ed46d74ea36cabdc7",
+      "size_bytes": 14215
+    },
+    {
+      "original": "docs/audits/native-proxy-populated-final-admission-20260913/owned_case.py",
+      "path": "docs/audits/native-proxy-populated-final-admission-20260913/owned_case.py.driver-first.source",
+      "sha256": "9bd0512c19029e2bc91b7d9d8eddfd44dedd7354e1e00f007a7c573b52e02fb4",
+      "size_bytes": 14557
+    },
+    {
+      "original": "docs/audits/native-proxy-populated-final-admission-20260913/installed_inputs.py",
+      "path": "docs/audits/native-proxy-populated-final-admission-20260913/installed_inputs.py.driver-first.source",
+      "sha256": "bdabc08df49a14d57a3d967635144c3a30a0dc988b023e6b3d56d9e983e58ece",
+      "size_bytes": 5542
+    },
+    {
+      "original": "docs/audits/native-proxy-populated-final-admission-20260913/admission.py",
+      "path": "docs/audits/native-proxy-populated-final-admission-20260913/admission.py.driver-first.source",
+      "sha256": "096f222992ea0baabc056d0d2b5257218ba6fcba8e504853b343e71df3d1b52d",
+      "size_bytes": 8788
+    },
+    {
+      "original": "docs/audits/native-proxy-populated-final-admission-20260913/contract.py",
+      "path": "docs/audits/native-proxy-populated-final-admission-20260913/contract.py.driver-first.source",
+      "sha256": "f34321c5e6a489cf6c2457968e0702770bb098b295e7bbaa74a03f0fd6861e5d",
+      "size_bytes": 5282
+    },
+    {
+      "original": "docs/audits/native-proxy-populated-final-admission-20260913/journal.py",
+      "path": "docs/audits/native-proxy-populated-final-admission-20260913/journal.py.driver-first.source",
+      "sha256": "06b5ccebd2c0a80d96fe98b728eae729e07ab2a1941cbb25c0f93b8b648f4a85",
+      "size_bytes": 2719
+    },
+    {
+      "original": "docs/audits/native-proxy-populated-final-admission-20260913/records.py",
+      "path": "docs/audits/native-proxy-populated-final-admission-20260913/records.py.driver-first.source",
+      "sha256": "c420e9cdd008e9bce96a581969de6ce4ffa2636510f96a2e8354ce57c5d3e675",
+      "size_bytes": 7313
+    },
+    {
+      "original": "docs/audits/native-proxy-populated-final-admission-20260913/local_files.py",
+      "path": "docs/audits/native-proxy-populated-final-admission-20260913/local_files.py.driver-first.source",
+      "sha256": "3e18cc9b24131d8f22ccc02caa88ea1578242c6af4a82b974e3144724598ac55",
+      "size_bytes": 5430
+    }
+  ]
+}
