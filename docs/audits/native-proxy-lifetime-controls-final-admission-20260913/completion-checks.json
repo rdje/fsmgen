@@ -1,0 +1,38 @@
+[
+  {
+    "bytes_hex": "46696e616c2061646d697373696f6e20636f6d706c6574696f6e3a204f4b3b20636f6d6d6974207072656365646573207468652073657061726174656c79206f776e65642061637475616c20657865637574696f6e2e0a",
+    "path": ".artifacts/logs/native-proxy-lifetime-controls-final-admission-20260913/completion.stdout",
+    "sha256": "cf1dd7a70551d120318d293cdea2c60b22d3b887146a7df7563354dc179fa92b",
+    "size_bytes": 87
+  },
+  {
+    "bytes_hex": "72616d2d67756172643a205049442032363434363b20686f73742037312e30253b20686f7374206375746f6666203838253b2064657363656e64616e7420525353206375746f66662034303936204d69423b20706f6c6c2032730a",
+    "path": ".artifacts/logs/native-proxy-lifetime-controls-final-admission-20260913/completion.stderr",
+    "sha256": "0325c86c6f9bcbe9a6d02be249956253df24caef0257945afc62f59642057df1",
+    "size_bytes": 91
+  },
+  {
+    "bytes_hex": "300a",
+    "path": ".artifacts/logs/native-proxy-lifetime-controls-final-admission-20260913/completion.exit",
+    "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa",
+    "size_bytes": 2
+  },
+  {
+    "bytes_hex": "46696e616c2061646d697373696f6e20636f6d706c6574696f6e3a204f4b3b20636f6d6d6974207072656365646573207468652073657061726174656c79206f776e65642061637475616c20657865637574696f6e2e0a",
+    "path": ".artifacts/logs/native-proxy-lifetime-controls-final-admission-20260913/completion-saved.stdout",
+    "sha256": "cf1dd7a70551d120318d293cdea2c60b22d3b887146a7df7563354dc179fa92b",
+    "size_bytes": 87
+  },
+  {
+    "bytes_hex": "72616d2d67756172643a205049442036313230383b20686f73742037312e38253b20686f7374206375746f6666203838253b2064657363656e64616e7420525353206375746f66662034303936204d69423b20706f6c6c2032730a",
+    "path": ".artifacts/logs/native-proxy-lifetime-controls-final-admission-20260913/completion-saved.stderr",
+    "sha256": "7df2ef27537ba10e1315467de6fc6a8f7f3b636d68141b02229358fe70ab0c87",
+    "size_bytes": 91
+  },
+  {
+    "bytes_hex": "300a",
+    "path": ".artifacts/logs/native-proxy-lifetime-controls-final-admission-20260913/completion-saved.exit",
+    "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa",
+    "size_bytes": 2
+  }
+]

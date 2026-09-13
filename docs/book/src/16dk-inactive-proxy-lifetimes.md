@@ -123,8 +123,8 @@ completion flags must not be promoted from an independently observed absence.
 These are prospective predictions checked against current source bodies,
 retained successful call prefixes and the earlier inert model. Changed
 selectors, rollback assumptions and premature maintenance are rejected by the
-matrix review. The new harness, independent journal reader and final execution
-admission remain open; no interruption file test has run.
+matrix review. The following harness and final-admission sections qualify the
+selected source/data paths; no interruption file test has run.
 
 ```sh
 scripts/run_with_ram_guard.sh -- python3 -B docs/audits/native-proxy-lifetime-controls-admission-20260913/audit.py --verify-saved
@@ -146,11 +146,37 @@ member to the original context. The corrected caller-input copy preserves
 absence while still passing an explicit missing archive to release validation.
 The failed first check and its source remain retained alongside the correction.
 
-This qualifies the selected source/data paths and rejection checks. Final
-execution admission and the actual interruption file journal remain open.
+This qualifies the selected source/data paths and rejection checks. The final
+admission below closes reader integration; the actual interruption journal remains open.
 
 ```sh
 scripts/run_with_ram_guard.sh -- python3 -B docs/audits/native-proxy-lifetime-control-harness-20260913/audit.py --verify-saved
+```
+
+Final control admission now selects a corrected descriptor identity reader.
+It follows recorded creation, writes and permission changes in call order,
+then joins each open to the independently observed object and final state.
+For example, publication creates a payload with read-only file permissions,
+writes through its already opened descriptor, and later seals the executable
+permissions. The reader must recognize the earlier mode while checking a
+reread before sealing; assuming every new file starts writable is incorrect.
+
+The first setup check exposed that assumption. Its failure and original reader
+remain retained. The corrected reader passes the retained complete file
+journals, including setup, archival and cleanup. Synthetic complete journals
+also exercise rejected release, rejected retirement, retained ownership and
+final cleanup. Altered creation metadata, missing writes, changed sealing and
+incorrect cleanup evidence are rejected. These synthetic journals are reader
+tests and do not establish actual interruption effects.
+
+The execution permit requires committed final admission, unchanged pinned
+sources, the active execution task, a normal user and fresh fixture/journal
+paths. An existing permit cannot be overwritten. Actual interruption execution
+remains a separate task; native/live integration and startup qualification
+remain open.
+
+```sh
+scripts/run_with_ram_guard.sh -- python3 -B docs/audits/native-proxy-lifetime-controls-final-admission-20260913/audit_final.py --verify-saved
 ```
 
 [Return to runtime measurement](16dc-vial-portable-verilator-runtime-measurement.md).

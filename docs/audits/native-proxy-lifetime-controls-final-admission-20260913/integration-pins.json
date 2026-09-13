@@ -1,0 +1,97 @@
+[
+  {
+    "path": "docs/audits/native-proxy-lifetime-controls-final-admission-20260913/prepare_integration.py",
+    "sha256": "2336d59c55cc3dfdefecd8d2a9a50252fe1dda363866f3bffb08c8b80e6c1b85",
+    "size_bytes": 5657
+  },
+  {
+    "path": "docs/audits/native-proxy-lifetime-controls-final-admission-20260913/support_final.py",
+    "sha256": "d51723b4570c8c9bee59ab29f5381b6b8880efa714824fc53244fa35214de4c6",
+    "size_bytes": 1041
+  },
+  {
+    "path": "docs/audits/native-proxy-lifetime-controls-final-admission-20260913/audit_integration.py",
+    "sha256": "cf5b385253406f308d567c401d995f834553821bceaf085c78ba78653a8c8ad2",
+    "size_bytes": 5731
+  },
+  {
+    "path": "docs/audits/native-proxy-lifetime-files-20260913/records/event-000000.json",
+    "sha256": "a24f53202ff811bd08a8cc9c4f4186b9f77c6a91e3aff05870033ac8a3dab06a",
+    "size_bytes": 887
+  },
+  {
+    "path": "docs/audits/native-proxy-lifetime-files-20260913/records/event-000067.json",
+    "sha256": "f666cc2c74c7613ec5c39fcc64983132351535c474bba49d5f1e8e90b5e3d5cf",
+    "size_bytes": 12727
+  },
+  {
+    "path": "docs/audits/native-proxy-lifetime-files-20260913/records/event-000068.json",
+    "sha256": "b32b5e30ff005377cd27570396ed62253eaaecee0a463044a6af9f9eae1f0e2b",
+    "size_bytes": 30160
+  },
+  {
+    "path": "docs/audits/native-proxy-lifetime-files-20260913/records/event-000069.json",
+    "sha256": "99de3663973398f70e045713fbf7332c71ef739acc3994051482bf3d0d897e1f",
+    "size_bytes": 112251
+  },
+  {
+    "path": "docs/audits/native-proxy-lifetime-files-20260913/records/event-000070.json",
+    "sha256": "98d284a5fd1a96a9582acc43bc60f4341850b4ac68df353d198b3d76b93dfa15",
+    "size_bytes": 155163
+  },
+  {
+    "path": "docs/audits/native-proxy-lifetime-files-20260913/records/event-000071.json",
+    "sha256": "ffdcc390439e665c4e43997a85d10f1afa8335dce1166155d3a41f5ca6c6522b",
+    "size_bytes": 186007
+  },
+  {
+    "path": "docs/audits/native-proxy-lifetime-files-20260913/records/event-000072.json",
+    "sha256": "ba77cf9411248f729f325f1f365a49bc8b8b2e009da174547aac8b99ca17fcb9",
+    "size_bytes": 200828
+  },
+  {
+    "path": "docs/audits/native-proxy-lifetime-files-20260913/records/event-000073.json",
+    "sha256": "7d7153effe59b6ed4303bce981d0018d2986c16f31f7af0293781e3f02fcb0fc",
+    "size_bytes": 103326
+  },
+  {
+    "path": "docs/audits/native-proxy-lifetime-files-20260913/records/event-000092.json",
+    "sha256": "f2206c508511c14855eb457de77e24c66bc504fd0fb75639a827165b50c1c4c7",
+    "size_bytes": 70575
+  },
+  {
+    "path": "docs/audits/native-proxy-lifetime-control-harness-20260913/consume_controls.py",
+    "sha256": "0cadbb1510dc1ede66e07493e2df1baae14f14d2bce75855bbf0633687ffac0b",
+    "size_bytes": 16291
+  },
+  {
+    "path": "docs/audits/native-proxy-lifetime-control-harness-20260913/resources.py",
+    "sha256": "298b91fc76b3f1e13c13d29b895be06ba509898eca70c799162f8695b5604071",
+    "size_bytes": 5713
+  },
+  {
+    "path": "docs/audits/native-proxy-lifetime-control-harness-20260913/support_controls.py",
+    "sha256": "4da2f8ed8499bfaaf1574ce090fe026a5a04d4c81d294f9c97500fbda25fa5fa",
+    "size_bytes": 1083
+  },
+  {
+    "path": "docs/audits/native-proxy-lifetime-control-harness-20260913/prepared.json",
+    "sha256": "1e67db43ceac843e5ffaaf1e49d27d99ca8c1d0d6d641b58250c2916f88817a0",
+    "size_bytes": 2541451
+  },
+  {
+    "path": "docs/audits/native-proxy-lifetime-controls-admission-20260913/selection.json",
+    "sha256": "c0df1570442520306e78c1a2138118da1b8ad71035fa9d6efa336d2827e9fdc9",
+    "size_bytes": 22403
+  },
+  {
+    "path": "docs/audits/native-proxy-lifetime-controls-final-admission-20260913/prepare_integration_corrected.py",
+    "sha256": "2690e806b2229db9e44b1391ef80415f9818933fa792e615cd26b08cfc397527",
+    "size_bytes": 5678
+  },
+  {
+    "path": "docs/audits/native-proxy-lifetime-controls-final-admission-20260913/integration-carrier.json",
+    "sha256": "1b12b11794414d8f061484358b210efa7f5c02f248164303f3fd7e3049afe132",
+    "size_bytes": 4246768
+  }
+]

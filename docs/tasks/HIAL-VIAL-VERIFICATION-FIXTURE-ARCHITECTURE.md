@@ -2786,11 +2786,11 @@ decomposes the architecture needed to move beyond that bounded foundation.
   Children: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.12.4.1.3.6.4.1, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.12.4.1.3.6.4.2`
 
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.12.4.1.3.6.4.1`
-  Status: `active`
+  Status: `done`
   Goal: `Admit bounded combined-lifetime interruption and uncertain-owner controls without execution.`
   Acceptance: `Read the qualified complete journals, exact current call boundaries and retained inert negative domain. Select explicit invalid-order, stale/uncertain-owner and after-effect controls with matched setup prefixes. Pin the new harness, fault selectors, independent effects/receipt oracle, fresh same-volume roots, ordinary wall and evidence bounds, descriptor ownership and first-failure cleanup before execution. Use source and inert data only; commit admission before any new control-file allocation. No original producer, native payload, compiler, collector or live store.`
-  Verification: `The Knowledge Map routes prior after-call release evidence to the current adapter fact and its exact predecessor history. Complete actual lifetimes and first journals are now retained. Control selection, source pinning and pure-data qualification are the current work; no new interruption control has executed.`
-  Commit: `pending`
+  Verification: `Source-bound matrix and harness qualification now join final reader/setup integration and a committed-admission permit contract. Final admission corrects the created-file mode/length assumption using recorded creation, writes and sealing; retained complete journals and synthetic rejection-to-cleanup streams pass. Source/data and permit-state countermodels remain distinct from actual control execution. Evidence: docs/audits/native-proxy-lifetime-controls-final-admission-20260913/review.json, integration-review.json and permit-review.json. Only .3.6.4.2 may execute the new controls after this admission commits; native/live and historical startup/parent/full CI/push remain gated.`
+  Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.12.4.1.3.6.4.1.3: close lifetime control execution admission`
   Children: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.12.4.1.3.6.4.1.1, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.12.4.1.3.6.4.1.2, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.12.4.1.3.6.4.1.3`
 
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.12.4.1.3.6.4.1.1`
@@ -2808,11 +2808,11 @@ decomposes the architecture needed to move beyond that bounded foundation.
   Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.12.4.1.3.6.4.1.2: qualify lifetime control harness source`
 
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.12.4.1.3.6.4.1.3`
-  Status: `proposed`
+  Status: `done`
   Goal: `Close prospective control admission and pin the execution permit.`
   Acceptance: `Join selected source contracts, new harness and independent consumer, source/data checks and falsifiers. Qualify complete reader stream/setup integration, including newly created-file descriptor joins, before pinning every runtime dependency and one-use committed-admission permit, verify fresh roots absent, update live book and continuity, and commit before activating the actual execution owner.`
-  Verification: `pending`
-  Commit: `pending`
+  Verification: `Final source/data admission authenticates 393 prior Git inputs and 413 preflight dependencies. The original execution harness and control consumer remain byte-identical; an explicit adapter selects the corrected identity reader while preserving original descriptor-closure checks. Retained setup exposed valid publication opens at read-only mode; the correction follows source-bound creation modes, recorded writes and sealing through all 152 retained healthy stages. Two complete synthetic rejection-to-cleanup journals pass and eighteen altered-reader carriers reject; fourteen invalid permit states reject. first-preparation-failure.json retains the payload-key adapter failure, and first-integration-failure.json retains the original mode-assumption failure. No actual permit or fixture is created. Source, countermodels, first epochs and durability join in docs/audits/native-proxy-lifetime-controls-final-admission-20260913/review.json, integration-review.json and permit-review.json; book, claims, Knowledge Map and prior acceptance recovery are completion.json. Actual synchronous controls remain .3.6.4.2 after final admission commits. No original producer, compiler, native process, collector or live store.`
+  Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.12.4.1.3.6.4.1.3: close lifetime control execution admission`
 
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.12.4.1.3.6.4.2`
   Status: `proposed`
@@ -3763,7 +3763,7 @@ decomposes the architecture needed to move beyond that bounded foundation.
 
 ## Current Frontier
 
-Current frontier: .3.2.15.7.3.12.4.1.3.6.4.1.2 is done; .3.6.4.1.3 next closes complete reader/setup integration and the final execution permit. Only .3.6.4.2 executes after admission commits. Native/live and historical startup/parent/full CI/push remain gated.
+Current frontier: .3.2.15.7.3.12.4.1.3.6.4.1 is done; .3.6.4.2 next executes the newly admitted controls once. Only .3.6.4.2 executes after admission commits. Native/live and historical startup/parent/full CI/push remain gated.
 
 Architecture audit `.1` is complete. Decision `0032` selects one public
 `.vial` source language, private immutable `VIALSemanticIR` and
@@ -6359,8 +6359,8 @@ Completed native-proxy feasibility through runtime-source-controls acceptance: r
 The manifest binds the immediately preceding acceptance suffix to its exact Git source. That source preserves the earlier history pointer and versioned manifest chain; current node contracts remain authoritative.
 
 
-## Acceptance Checklist (control harness source/data .3.2.15.7.3.12.4.1.3.6.4.1.2)
+## Acceptance Checklist (final control admission .3.2.15.7.3.12.4.1.3.6.4.1.3)
 
-- [x] **ROOT CAUSE (WHY + WHERE)** — `git log -S 'sub clone' -1 --format='%H %s' -- docs/audits/native-proxy-observation-reuse-20260910/FixtureClone.pm` traces the unchanged byte-preserving clone helper to 33b1c0b4cb41227034f3a8b369c9cacefdc27c32. The first new inert test reports release_before_archive original context unchanged as failed at qualify_data.t line 39. A scalar-only Perl diagnostic shows map aliases a missing archive hash slot and creates a null member; an exists guard preserves its absence.
-- [x] **ADDRESSED (verified)** — The new guarded input copier preserves the original context and the explicit missing-archive API input. The scoped after-effect harness and independent reader preserve first return/error channels, closed descriptors, exact call hits, physical effects and explicit maintenance. Corrected Perl controls and altered-evidence rejection checks pass; exact failed sources, first outputs and the failed report remain retained. Re-derivation, falsification and durability: docs/audits/native-proxy-lifetime-control-harness-20260913/harness-plan.json, first-data-failure.json, archive-alias-correction.json, data-review.json, harness-review.json and completion.json. Final admission still owns complete reader/setup integration and the execution permit; actual controls remain separate.
-- [x] **NO REGRESSION** — `knowledge-map: OK` preserves the exact question set and saved-only harness review route. Compile-only, corrected inert Perl, independent/saved source/data reviews, rendered book inspection, unchanged claim identities/dispositions and exact prior acceptance recovery pass before staged doctrines and normal hooks. No original producer, actual control fixture, compiler, collector or native process executes. Final admission, actual file effects, native/live integration and historical startup/parent/full CI/push remain open.
+- [x] **ROOT CAUSE (WHY + WHERE)** — `git log -S 'O_RDWR | O_CREAT | O_EXCL | O_NOFOLLOW, 0400' -1 --format='%H %s' -- docs/audits/native-proxy-image-publication-20260910/Publication.pm` identifies the original read-only creation contract at 3618546c64ff0b2071b07c9822b3fbfae3605b01. The first setup calibration fails at the new reader's universal writable-mode assumption. First preparation also preserved the existing payload carrier's _hex key suffix instead of translating the reader's byte keys; both exact failures remain retained.
+- [x] **ADDRESSED (verified)** — The explicit corrected reader derives creation modes from the current writers and follows recorded writes and permission changes before matching each native open and final state. Original harness and descriptor-closure source remain unchanged. Retained complete journals and synthetic full streams pass, while changed metadata, writes, seals, inputs, verdicts and cleanup reject. The inert permit validator requires final committed ownership, clean scoped state and fresh paths. Re-derivation, falsification and durability: docs/audits/native-proxy-lifetime-controls-final-admission-20260913/plan.json, integration-review.json, permit-review.json, first-preparation-failure.json, first-integration-failure.json, review.json and completion.json. Actual control execution remains separately owned.
+- [x] **NO REGRESSION** — `knowledge-map: OK` preserves the exact question set and routes to final admission. Original source/evidence joins, corrected full reader checks, inert permit countermodels, saved-only admission, rendered book inspection, unchanged claim identities/dispositions and prior acceptance recovery pass before staged doctrines and normal hooks. No original producer, actual permit, fixture controls, compiler, collector or native process runs. Native/live and historical startup/parent/full CI/push remain gated.

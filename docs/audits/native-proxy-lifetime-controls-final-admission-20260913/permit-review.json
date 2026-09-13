@@ -1,0 +1,22 @@
+{
+  "actual_fixture_operations": 0,
+  "actual_permits_written": 0,
+  "rejected_states": [
+    "wrong_commit_shape",
+    "wrong_commit_owner",
+    "admission_not_committed",
+    "current_admission_reopened",
+    "execution_not_active",
+    "wrong_memory_owner",
+    "unrelated_dirty_source",
+    "staged_work",
+    "untracked_work",
+    "root_user",
+    "different_effective_user",
+    "existing_fixture_root",
+    "existing_journal",
+    "existing_permit"
+  ],
+  "schema": "fsmgen.lifetime_final_permit_data_qualification.v1",
+  "synthetic_accepted_state": true
+}

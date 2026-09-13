@@ -1,0 +1,17 @@
+[
+  {
+    "path": "docs/audits/native-proxy-lifetime-controls-final-admission-20260913/admit_execution.py",
+    "sha256": "ec9af10986eb29efdeaba147066144995174e3e0597e3b2db18ff52337239019",
+    "size_bytes": 4330
+  },
+  {
+    "path": "docs/audits/native-proxy-lifetime-controls-final-admission-20260913/qualify_permit.py",
+    "sha256": "c7f0eee9d9190e436568b386a6ae4818a2b3fb65c916b6248e48f61380ad1ef8",
+    "size_bytes": 2854
+  },
+  {
+    "path": "docs/audits/native-proxy-lifetime-controls-final-admission-20260913/plan.json",
+    "sha256": "3d8c6fc57ca1abe474f7d0a9314c18e882a79c440bb99114df82ce3475055823",
+    "size_bytes": 92567
+  }
+]

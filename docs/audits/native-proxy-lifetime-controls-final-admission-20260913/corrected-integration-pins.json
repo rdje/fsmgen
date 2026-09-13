@@ -1,0 +1,1317 @@
+[
+  {
+    "path": "docs/audits/native-proxy-lifetime-controls-final-admission-20260913/prepare_integration.py",
+    "sha256": "2336d59c55cc3dfdefecd8d2a9a50252fe1dda363866f3bffb08c8b80e6c1b85",
+    "size_bytes": 5657
+  },
+  {
+    "path": "docs/audits/native-proxy-lifetime-controls-final-admission-20260913/support_final.py",
+    "sha256": "d51723b4570c8c9bee59ab29f5381b6b8880efa714824fc53244fa35214de4c6",
+    "size_bytes": 1041
+  },
+  {
+    "path": "docs/audits/native-proxy-lifetime-controls-final-admission-20260913/audit_integration.py",
+    "sha256": "cf5b385253406f308d567c401d995f834553821bceaf085c78ba78653a8c8ad2",
+    "size_bytes": 5731
+  },
+  {
+    "path": "docs/audits/native-proxy-lifetime-files-20260913/records/event-000000.json",
+    "sha256": "a24f53202ff811bd08a8cc9c4f4186b9f77c6a91e3aff05870033ac8a3dab06a",
+    "size_bytes": 887
+  },
+  {
+    "path": "docs/audits/native-proxy-lifetime-files-20260913/records/event-000067.json",
+    "sha256": "f666cc2c74c7613ec5c39fcc64983132351535c474bba49d5f1e8e90b5e3d5cf",
+    "size_bytes": 12727
+  },
+  {
+    "path": "docs/audits/native-proxy-lifetime-files-20260913/records/event-000068.json",
+    "sha256": "b32b5e30ff005377cd27570396ed62253eaaecee0a463044a6af9f9eae1f0e2b",
+    "size_bytes": 30160
+  },
+  {
+    "path": "docs/audits/native-proxy-lifetime-files-20260913/records/event-000069.json",
+    "sha256": "99de3663973398f70e045713fbf7332c71ef739acc3994051482bf3d0d897e1f",
+    "size_bytes": 112251
+  },
+  {
+    "path": "docs/audits/native-proxy-lifetime-files-20260913/records/event-000070.json",
+    "sha256": "98d284a5fd1a96a9582acc43bc60f4341850b4ac68df353d198b3d76b93dfa15",
+    "size_bytes": 155163
+  },
+  {
+    "path": "docs/audits/native-proxy-lifetime-files-20260913/records/event-000071.json",
+    "sha256": "ffdcc390439e665c4e43997a85d10f1afa8335dce1166155d3a41f5ca6c6522b",
+    "size_bytes": 186007
+  },
+  {
+    "path": "docs/audits/native-proxy-lifetime-files-20260913/records/event-000072.json",
+    "sha256": "ba77cf9411248f729f325f1f365a49bc8b8b2e009da174547aac8b99ca17fcb9",
+    "size_bytes": 200828
+  },
+  {
+    "path": "docs/audits/native-proxy-lifetime-files-20260913/records/event-000073.json",
+    "sha256": "7d7153effe59b6ed4303bce981d0018d2986c16f31f7af0293781e3f02fcb0fc",
+    "size_bytes": 103326
+  },
+  {
+    "path": "docs/audits/native-proxy-lifetime-files-20260913/records/event-000092.json",
+    "sha256": "f2206c508511c14855eb457de77e24c66bc504fd0fb75639a827165b50c1c4c7",
+    "size_bytes": 70575
+  },
+  {
+    "path": "docs/audits/native-proxy-lifetime-control-harness-20260913/consume_controls.py",
+    "sha256": "0cadbb1510dc1ede66e07493e2df1baae14f14d2bce75855bbf0633687ffac0b",
+    "size_bytes": 16291
+  },
+  {
+    "path": "docs/audits/native-proxy-lifetime-control-harness-20260913/resources.py",
+    "sha256": "298b91fc76b3f1e13c13d29b895be06ba509898eca70c799162f8695b5604071",
+    "size_bytes": 5713
+  },
+  {
+    "path": "docs/audits/native-proxy-lifetime-control-harness-20260913/support_controls.py",
+    "sha256": "4da2f8ed8499bfaaf1574ce090fe026a5a04d4c81d294f9c97500fbda25fa5fa",
+    "size_bytes": 1083
+  },
+  {
+    "path": "docs/audits/native-proxy-lifetime-control-harness-20260913/prepared.json",
+    "sha256": "1e67db43ceac843e5ffaaf1e49d27d99ca8c1d0d6d641b58250c2916f88817a0",
+    "size_bytes": 2541451
+  },
+  {
+    "path": "docs/audits/native-proxy-lifetime-controls-admission-20260913/selection.json",
+    "sha256": "c0df1570442520306e78c1a2138118da1b8ad71035fa9d6efa336d2827e9fdc9",
+    "size_bytes": 22403
+  },
+  {
+    "path": "docs/audits/native-proxy-lifetime-controls-final-admission-20260913/prepare_integration_corrected.py",
+    "sha256": "2690e806b2229db9e44b1391ef80415f9818933fa792e615cd26b08cfc397527",
+    "size_bytes": 5678
+  },
+  {
+    "path": "docs/audits/native-proxy-lifetime-controls-final-admission-20260913/integration-carrier.json",
+    "sha256": "1b12b11794414d8f061484358b210efa7f5c02f248164303f3fd7e3049afe132",
+    "size_bytes": 4246768
+  },
+  {
+    "path": "docs/audits/native-proxy-lifetime-controls-final-admission-20260913/support_final_corrected.py",
+    "sha256": "6630301ab9e27422015672c2bd355c233eb7cef062ecca927a825050271d85ea",
+    "size_bytes": 1481
+  },
+  {
+    "path": "docs/audits/native-proxy-lifetime-controls-final-admission-20260913/resources_final.py",
+    "sha256": "ff4614d7d67ca65f24257105be1c62951b24ae12653d145b78d731db3b84a3be",
+    "size_bytes": 3554
+  },
+  {
+    "path": "docs/audits/native-proxy-lifetime-controls-final-admission-20260913/audit_integration_corrected.py",
+    "sha256": "a202ee767825c4427c58a162eedf1a0a0e8061e4ef3b0981b0f328f38bd2a91f",
+    "size_bytes": 7033
+  },
+  {
+    "path": "docs/audits/native-proxy-lifetime-files-20260913/records/event-000232.json",
+    "sha256": "58246343d43841ea11bbbbfdd844565fc97ece33efb7d7ce603f97cc19f27dc2",
+    "size_bytes": 286
+  },
+  {
+    "path": "docs/audits/native-proxy-lifetime-files-20260913/records/event-000009.json",
+    "sha256": "3acb8327ea380c300b98aefee2d43ce8177cbb2d3ffd517c47eea9368baee27a",
+    "size_bytes": 233281
+  },
+  {
+    "path": "docs/audits/native-proxy-lifetime-files-20260913/records/event-000048.json",
+    "sha256": "e5977a75a42193656c4986d9aa73394fd75ef257d332770e484c928dfd81268e",
+    "size_bytes": 292
+  },
+  {
+    "path": "docs/audits/native-proxy-lifetime-files-20260913/records/event-000224.json",
+    "sha256": "1423598f40779ec5c4fbe69e04f6040525ddabb0c42b3cb1cab44f6e5e0e376b",
+    "size_bytes": 110078
+  },
+  {
+    "path": "docs/audits/native-proxy-lifetime-files-20260913/records/event-000176.json",
+    "sha256": "b3b147232b82595615af95d9db2d523cc1c49fc546ec7030b934d31959a22362",
+    "size_bytes": 337
+  },
+  {
+    "path": "docs/audits/native-proxy-lifetime-files-20260913/records/event-000033.json",
+    "sha256": "a50d2f385ad5f5216af6447118932077c9ecdd5dfc77701c6926727aca67d783",
+    "size_bytes": 1258
+  },
+  {
+    "path": "docs/audits/native-proxy-lifetime-files-20260913/records/event-000199.json",
+    "sha256": "a57d73bdf9d1a5d510fb7036e5cd82331fbd03ec87c56afc381e727ab66fb550",
+    "size_bytes": 381990
+  },
+  {
+    "path": "docs/audits/native-proxy-lifetime-files-20260913/records/event-000121.json",
+    "sha256": "671605b7db684fa45084cb2480cc406dc3ce37e5e0d33b0cd8e62eb8fec27bd7",
+    "size_bytes": 179
+  },
+  {
+    "path": "docs/audits/native-proxy-lifetime-files-20260913/records/event-000064.json",
+    "sha256": "17d996dd88bcfc8ce15ece80251111d211e7ea959ffae2eb5645d958d1d7265b",
+    "size_bytes": 71610
+  },
+  {
+    "path": "docs/audits/native-proxy-lifetime-files-20260913/records/event-000208.json",
+    "sha256": "ed4ac1c242ad0d85502f45c8f099ac51b340c2de66840254be0727924b3e00e8",
+    "size_bytes": 338
+  },
+  {
+    "path": "docs/audits/native-proxy-lifetime-files-20260913/records/event-000137.json",
+    "sha256": "ab51ab784b9a3ce0d07a21d9ad3152787592adafc6ce23c3085030637805a1b5",
+    "size_bytes": 304791
+  },
+  {
+    "path": "docs/audits/native-proxy-lifetime-files-20260913/records/event-000160.json",
+    "sha256": "310655dd5782ee471bf785be540d007d3047ce2bae7aac98c88f37edcbf3e836",
+    "size_bytes": 113884
+  },
+  {
+    "path": "docs/audits/native-proxy-lifetime-files-20260913/records/event-000025.json",
+    "sha256": "019a96d02d0bb1950b22b6c1d891072e56860ff7c16e8b1793fa13e4bade72a9",
+    "size_bytes": 170673
+  },
+  {
+    "path": "docs/audits/native-proxy-lifetime-files-20260913/records/event-000249.json",
+    "sha256": "64fb9dfea17756b2ed127ebe5800561cf65b6979489c79729901ab7eb036a724",
+    "size_bytes": 19784
+  },
+  {
+    "path": "docs/audits/native-proxy-lifetime-files-20260913/records/event-000052.json",
+    "sha256": "d5cfcd7047b0a831dce651c752fb5a47a6666127eb9d8bbccd8ed0ae413a2611",
+    "size_bytes": 304
+  },
+  {
+    "path": "docs/audits/native-proxy-lifetime-files-20260913/records/event-000117.json",
+    "sha256": "7c572bd1793ad4e677e498d9a0301cf1121b7f889acf91cdca9bc2bc314e947b",
+    "size_bytes": 206543
+  },
+  {
+    "path": "docs/audits/native-proxy-lifetime-files-20260913/records/event-000005.json",
+    "sha256": "922e972644c91f68b9d623ca315718f84b731c44cc0e03f7a5337f745d17fa48",
+    "size_bytes": 155542
+  },
+  {
+    "path": "docs/audits/native-proxy-lifetime-files-20260913/records/event-000140.json",
+    "sha256": "6fe89a91dcc1322ecd8bd71e10f728d0d8ac02556502a6147dabd0ba6ae588f6",
+    "size_bytes": 291
+  },
+  {
+    "path": "docs/audits/native-proxy-lifetime-files-20260913/records/event-000013.json",
+    "sha256": "762c4c52dd1eeba880e2aae0c3b41b83067a6bd208cfaadd1d77ce5602f6b0ab",
+    "size_bytes": 258012
+  },
+  {
+    "path": "docs/audits/native-proxy-lifetime-files-20260913/records/event-000156.json",
+    "sha256": "bc03d5df2dc02171a5477b0cba468424a111f6a53371e3bd272c3577c9ddb7b3",
+    "size_bytes": 2941
+  },
+  {
+    "path": "docs/audits/native-proxy-lifetime-files-20260913/records/event-000228.json",
+    "sha256": "e42650d6974499316120b48bf62457992c0f7d1cc45a3b40113043bf76c07823",
+    "size_bytes": 274
+  },
+  {
+    "path": "docs/audits/native-proxy-lifetime-files-20260913/records/event-000044.json",
+    "sha256": "4aaa90e45e37f0233494502f22726c8ef0b29bdd6ab26d21f0144385fd9699c6",
+    "size_bytes": 280
+  },
+  {
+    "path": "docs/audits/native-proxy-lifetime-files-20260913/records/event-000101.json",
+    "sha256": "a51766af8fb5a93b862e1b8ef65c3ebaf644e08e272ef909140f7814327171d7",
+    "size_bytes": 101066
+  },
+  {
+    "path": "docs/audits/native-proxy-lifetime-files-20260913/records/event-000195.json",
+    "sha256": "08ac41449924f9ccd98fe6d5820b93409b4dce5ec26e85e11270da9f028a2698",
+    "size_bytes": 199595
+  },
+  {
+    "path": "docs/audits/native-proxy-lifetime-files-20260913/records/event-000204.json",
+    "sha256": "a0d2907f017421396fd5ecf2f4e512c573c16cf946b4c889db79352f08eec5f6",
+    "size_bytes": 294773
+  },
+  {
+    "path": "docs/audits/native-proxy-lifetime-files-20260913/records/event-000087.json",
+    "sha256": "982a3a59a4fd284b8bc483f21700a36e4f37abd4efd2b000a93248cb899d5dd1",
+    "size_bytes": 342
+  },
+  {
+    "path": "docs/audits/native-proxy-lifetime-files-20260913/records/event-000212.json",
+    "sha256": "e15fba98f24e65149e9cdfa0d693fd28f93e52762511cec0478ab94e5b75d21f",
+    "size_bytes": 371
+  },
+  {
+    "path": "docs/audits/native-proxy-lifetime-files-20260913/records/event-000091.json",
+    "sha256": "7040c7b65fe41b9db5264f83dbf99a9bfc565477c654ef2dbfff2f9c4070b262",
+    "size_bytes": 32598
+  },
+  {
+    "path": "docs/audits/native-proxy-lifetime-files-20260913/records/event-000245.json",
+    "sha256": "6b8b5ade981212e7bf34795234837e2281d3c97ca3824d8fe37f15bd319f657f",
+    "size_bytes": 184
+  },
+  {
+    "path": "docs/audits/native-proxy-lifetime-files-20260913/records/event-000029.json",
+    "sha256": "e47cf04539ded410a62b4b93ce5bed30f9fd73922ecfdd3716679875655b6ef0",
+    "size_bytes": 186
+  },
+  {
+    "path": "docs/audits/native-proxy-lifetime-files-20260913/records/event-000183.json",
+    "sha256": "74aaa929cb749ed36e79105ccc00f2744a8df04d50b22be8d86f7ed8f46c8d47",
+    "size_bytes": 98818
+  },
+  {
+    "path": "docs/audits/native-proxy-lifetime-files-20260913/records/event-000028.json",
+    "sha256": "1702625f9482e84769353672121e69f61dbd14259986a079e4f4790e921d0a9f",
+    "size_bytes": 361
+  },
+  {
+    "path": "docs/audits/native-proxy-lifetime-files-20260913/records/event-000182.json",
+    "sha256": "ef7f011a05fcbed94c559e1b099be80e902a8d0df9d0ddd93191400ae46e0951",
+    "size_bytes": 43770
+  },
+  {
+    "path": "docs/audits/native-proxy-lifetime-files-20260913/records/event-000244.json",
+    "sha256": "9a63fb94e598d381c8f74f19c8df527262a1a32e73cf8009f3d2c8cb6ff27cb2",
+    "size_bytes": 359
+  },
+  {
+    "path": "docs/audits/native-proxy-lifetime-files-20260913/records/event-000090.json",
+    "sha256": "449d51302da871f064d055ad2f30710e99d47788a186641416c4e8e6e98ebcbb",
+    "size_bytes": 185
+  },
+  {
+    "path": "docs/audits/native-proxy-lifetime-files-20260913/records/event-000213.json",
+    "sha256": "a9437adf166e5d45c446c74317bcc64775f6ad44b68d11a31fcc28e1ce256017",
+    "size_bytes": 196
+  },
+  {
+    "path": "docs/audits/native-proxy-lifetime-files-20260913/records/event-000086.json",
+    "sha256": "4e8959ace07e313436db5d18f567ffc1029699c4a3ff9bcc882676f02a0cfa72",
+    "size_bytes": 209944
+  },
+  {
+    "path": "docs/audits/native-proxy-lifetime-files-20260913/records/event-000205.json",
+    "sha256": "74b515ae0ee699f3d49cd4f38e6f21c9c25f6da00c6cade19312eb3fc900f13f",
+    "size_bytes": 363814
+  },
+  {
+    "path": "docs/audits/native-proxy-lifetime-files-20260913/records/event-000194.json",
+    "sha256": "a88f5c4134bf1ea4a5d2a4173ff6ba4cb0ce0f2822ee0fe5088280705e94b930",
+    "size_bytes": 284705
+  },
+  {
+    "path": "docs/audits/native-proxy-lifetime-files-20260913/records/event-000045.json",
+    "sha256": "d9c1b93d487a8a325f3ce83c726e0f4cad688b76de925b4ae46e908dd96e1f50",
+    "size_bytes": 260604
+  },
+  {
+    "path": "docs/audits/native-proxy-lifetime-files-20260913/records/event-000100.json",
+    "sha256": "52798c34fc59235947cd5c36e2f280a7a8bba292dd04819181d0ad77fcad3bc7",
+    "size_bytes": 197357
+  },
+  {
+    "path": "docs/audits/native-proxy-lifetime-files-20260913/records/event-000229.json",
+    "sha256": "b9789bf1a74b84bcfd1d74638abdcd0b47d27caf82edab69c65282f1d39a1e18",
+    "size_bytes": 301095
+  },
+  {
+    "path": "docs/audits/native-proxy-lifetime-files-20260913/records/event-000012.json",
+    "sha256": "055d01a34e8b4f8ba79ab6489db7ae9a79057c78d97a0e77252120903e0a3879",
+    "size_bytes": 276
+  },
+  {
+    "path": "docs/audits/native-proxy-lifetime-files-20260913/records/event-000157.json",
+    "sha256": "044f14d6bb88a26868c7e7ffb79ae4504fa0f930ddb737345759b51efe9aaab6",
+    "size_bytes": 1273
+  },
+  {
+    "path": "docs/audits/native-proxy-lifetime-files-20260913/records/event-000004.json",
+    "sha256": "4301812962789e9396f5cf4be4409513d44d69eac95b40967a5a4f94888ef71d",
+    "size_bytes": 112522
+  },
+  {
+    "path": "docs/audits/native-proxy-lifetime-files-20260913/records/event-000141.json",
+    "sha256": "9b7b2fb3e4d75da6848c0b91e91644ca5727c6a3939af82dfac8fbd38d128b87",
+    "size_bytes": 304795
+  },
+  {
+    "path": "docs/audits/native-proxy-lifetime-files-20260913/records/event-000053.json",
+    "sha256": "7a2bdd99c6e86770240b9201f575e86c9184300e0ca21d9ac0379714530584f2",
+    "size_bytes": 245604
+  },
+  {
+    "path": "docs/audits/native-proxy-lifetime-files-20260913/records/event-000116.json",
+    "sha256": "76bdf863c5706705253b7546a2eeaffeb6b1f8a03dff5e4bf61d5d8ad724ecd0",
+    "size_bytes": 324
+  },
+  {
+    "path": "docs/audits/native-proxy-lifetime-files-20260913/records/event-000248.json",
+    "sha256": "412c80d1422e76d3c615ddb62907c14b15ec70a435046e55014dd28f8d668fa6",
+    "size_bytes": 2846
+  },
+  {
+    "path": "docs/audits/native-proxy-lifetime-files-20260913/records/event-000161.json",
+    "sha256": "ae3428fc64a56c437ef4a8b308ae7dc0f2c5d49f71a1a630a903f7d6b65e4e20",
+    "size_bytes": 187105
+  },
+  {
+    "path": "docs/audits/native-proxy-lifetime-files-20260913/records/event-000024.json",
+    "sha256": "6be440e859d77cac9145ea5fe0c0920cdcb93b37885f192ebf0e963212ef2552",
+    "size_bytes": 328
+  },
+  {
+    "path": "docs/audits/native-proxy-lifetime-files-20260913/records/event-000136.json",
+    "sha256": "2064b4db1d5fe5f9e617e3d8ff7d6faed4803070a08ff4fb7aaba58422c6c874",
+    "size_bytes": 279
+  },
+  {
+    "path": "docs/audits/native-proxy-lifetime-files-20260913/records/event-000209.json",
+    "sha256": "ccee8e211087c5505da2b3c767d112434d72429c0c5e7a90360ed6b5906cfe18",
+    "size_bytes": 209695
+  },
+  {
+    "path": "docs/audits/native-proxy-lifetime-files-20260913/records/event-000120.json",
+    "sha256": "d7c8807b3ea48dbae4972998a569128ce6854c12a511b5df5dfc91fdb521dff2",
+    "size_bytes": 354
+  },
+  {
+    "path": "docs/audits/native-proxy-lifetime-files-20260913/records/event-000065.json",
+    "sha256": "6f6a3bd54f81a9e738aa2d50461547a841a47b16ad66636c7d20cd6ddbbab424",
+    "size_bytes": 2255
+  },
+  {
+    "path": "docs/audits/native-proxy-lifetime-files-20260913/records/event-000177.json",
+    "sha256": "52bd80af55b211ebeebee61a3059adb05502c83eb6f27b1741bd776c205b7d69",
+    "size_bytes": 230472
+  },
+  {
+    "path": "docs/audits/native-proxy-lifetime-files-20260913/records/event-000032.json",
+    "sha256": "140a21d0b256112ff2fbc340382516e3eb17b87f414e083ce583ee86b3b3657e",
+    "size_bytes": 2195
+  },
+  {
+    "path": "docs/audits/native-proxy-lifetime-files-20260913/records/event-000198.json",
+    "sha256": "74dc382c798d5b5a5cd9a4245d791affc39976748159d20eb8866198eb9c603b",
+    "size_bytes": 309975
+  },
+  {
+    "path": "docs/audits/native-proxy-lifetime-files-20260913/records/event-000225.json",
+    "sha256": "17bed2eaa61736bb22a7588129419123bf1ace166481a103b7c13f9e4d5c421b",
+    "size_bytes": 276545
+  },
+  {
+    "path": "docs/audits/native-proxy-lifetime-files-20260913/records/event-000049.json",
+    "sha256": "6583ceb7c214974f36d2ec892dfce34821860183e642018e4d218570348a53e8",
+    "size_bytes": 260604
+  },
+  {
+    "path": "docs/audits/native-proxy-lifetime-files-20260913/records/event-000008.json",
+    "sha256": "ab58409263e67e50d813bc49568a68d75478fb2f9cce1b8c71f0b250e08df8cf",
+    "size_bytes": 103648
+  },
+  {
+    "path": "docs/audits/native-proxy-lifetime-files-20260913/records/event-000233.json",
+    "sha256": "53c51f9374eb39044ecb61e6e79ffea1366ae59d0bb5546badd3561e75899900",
+    "size_bytes": 286328
+  },
+  {
+    "path": "docs/audits/native-proxy-lifetime-files-20260913/records/event-000238.json",
+    "sha256": "3a027575533c0c2665dab95d671949a0add46dc59d943ef117b4654462e278bc",
+    "size_bytes": 317
+  },
+  {
+    "path": "docs/audits/native-proxy-lifetime-files-20260913/records/event-000054.json",
+    "sha256": "2af5798e2ec123400b9b46657b69453e591d730cfcf25a4da8957eea1579fa5e",
+    "size_bytes": 299898
+  },
+  {
+    "path": "docs/audits/native-proxy-lifetime-files-20260913/records/event-000111.json",
+    "sha256": "41bd39bb5a12649174ff25adf5420bfbab8f42c65df40f1280e20b9ecbdb931b",
+    "size_bytes": 234142
+  },
+  {
+    "path": "docs/audits/native-proxy-lifetime-files-20260913/records/event-000003.json",
+    "sha256": "b6d394502ed3367b86f379bee3852095f6c5037e24c2e72f1c3fc25a3260e206",
+    "size_bytes": 30242
+  },
+  {
+    "path": "docs/audits/native-proxy-lifetime-files-20260913/records/event-000146.json",
+    "sha256": "b990c9105aa23c02af591e2e9e6a625e24ecf5f2c06457802f5618d174828591",
+    "size_bytes": 319
+  },
+  {
+    "path": "docs/audits/native-proxy-lifetime-files-20260913/records/event-000015.json",
+    "sha256": "8f5ea55bea51cd8763d21c41bd701c5419c0242dd2c8fcc014bc5ce5f9e69ae5",
+    "size_bytes": 176792
+  },
+  {
+    "path": "docs/audits/native-proxy-lifetime-files-20260913/records/event-000150.json",
+    "sha256": "bc673b89b8669ca53f43b949f02719de7431d0a9a69b0da70ed8687277992f99",
+    "size_bytes": 349
+  },
+  {
+    "path": "docs/audits/native-proxy-lifetime-files-20260913/records/event-000042.json",
+    "sha256": "d2ae4cd8e7b56832d28250f34bb06e098796f410f08647f06df4ef4ca3a847be",
+    "size_bytes": 235634
+  },
+  {
+    "path": "docs/audits/native-proxy-lifetime-files-20260913/records/event-000107.json",
+    "sha256": "25531050edb31b9358c7b2a6c74e853856c53937ee4dc3a1cc7c44dbd1820421",
+    "size_bytes": 252829
+  },
+  {
+    "path": "docs/audits/native-proxy-lifetime-files-20260913/records/event-000193.json",
+    "sha256": "976131c1f1608971fffae1dc4a12a87cc24dc229728b4c584718629f66c622a0",
+    "size_bytes": 284705
+  },
+  {
+    "path": "docs/audits/native-proxy-lifetime-files-20260913/records/event-000039.json",
+    "sha256": "56567ed71ed86ab6c33ad1ea5edf5d02e36ca53e5101dee6d26d70eabed7ea35",
+    "size_bytes": 203308
+  },
+  {
+    "path": "docs/audits/native-proxy-lifetime-files-20260913/records/event-000202.json",
+    "sha256": "bf00166cfe6ef2f48808ff48d5bfa397d722bcd9800882305bc091b45e76204c",
+    "size_bytes": 189546
+  },
+  {
+    "path": "docs/audits/native-proxy-lifetime-files-20260913/records/event-000081.json",
+    "sha256": "b7d574836d9df00fda3cc6bb269b73a976e3662887d32d092ee2977940edc0b2",
+    "size_bytes": 303
+  },
+  {
+    "path": "docs/audits/native-proxy-lifetime-files-20260913/records/event-000214.json",
+    "sha256": "53706171d8075eae194caa8ba0ebd196bd00e7bfd528ce696902bb8d04be9dad",
+    "size_bytes": 44326
+  },
+  {
+    "path": "docs/audits/native-proxy-lifetime-files-20260913/records/event-000097.json",
+    "sha256": "fae1d7ebf409293e3ef7120d1b6a639d2e4d0fb445696da21de7ce4d4514838b",
+    "size_bytes": 110347
+  },
+  {
+    "path": "docs/audits/native-proxy-lifetime-files-20260913/records/event-000078.json",
+    "sha256": "1ef7a3929c8a5c5c322175239084d6559dcc1117e7ecf7a95be120eb031564db",
+    "size_bytes": 149672
+  },
+  {
+    "path": "docs/audits/native-proxy-lifetime-files-20260913/records/event-000243.json",
+    "sha256": "99a03857947a10a3892829a0b7d6a241dfa4a77c93cbb688f6831493ae6482a9",
+    "size_bytes": 126628
+  },
+  {
+    "path": "docs/audits/native-proxy-lifetime-files-20260913/records/event-000185.json",
+    "sha256": "b3d16cef7a996dacf34d6f8598241c4c242f72623f364461c824c5ba0aa29d7b",
+    "size_bytes": 1309
+  },
+  {
+    "path": "docs/audits/native-proxy-lifetime-files-20260913/records/event-000058.json",
+    "sha256": "484bd5d8ab325f90884ffc3f689348151c29503710c3ff66cdb39dc32f51d98b",
+    "size_bytes": 172309
+  },
+  {
+    "path": "docs/audits/native-proxy-lifetime-files-20260913/records/event-000234.json",
+    "sha256": "844b70b52865faa9ff19084e939706f7a7065bb1064f03669c6ff7fc7b9e81d3",
+    "size_bytes": 282128
+  },
+  {
+    "path": "docs/audits/native-proxy-lifetime-files-20260913/records/event-000019.json",
+    "sha256": "2c307229effa3d819065f936e5b7183d5cbcabfc238c277ab1f14e03016de2c4",
+    "size_bytes": 256540
+  },
+  {
+    "path": "docs/audits/native-proxy-lifetime-files-20260913/records/event-000222.json",
+    "sha256": "d8d8e259aa9ba360557bc82a131beca6116f404eef673792f5a306ed6d935e41",
+    "size_bytes": 230073
+  },
+  {
+    "path": "docs/audits/native-proxy-lifetime-files-20260913/records/event-000170.json",
+    "sha256": "613472e2faf5cd5307589fbd82897f4527b8d0ff247c36342f89cb0f662aaddb",
+    "size_bytes": 298
+  },
+  {
+    "path": "docs/audits/native-proxy-lifetime-files-20260913/records/event-000035.json",
+    "sha256": "6ac178f08e0bda0fc7d9acd98885f9171d8ceff82a2daf63adf646db458a1c54",
+    "size_bytes": 30575
+  },
+  {
+    "path": "docs/audits/native-proxy-lifetime-files-20260913/records/event-000127.json",
+    "sha256": "61ae4dcf7367a07e8b51b1f05dc06445c59a0fcaedd3e6968bef1163783323bc",
+    "size_bytes": 30410
+  },
+  {
+    "path": "docs/audits/native-proxy-lifetime-files-20260913/records/event-000062.json",
+    "sha256": "f4827e5e1f3e605b352e1cf1787ec07bd46ce9371a06507b34afa5e1af26ff06",
+    "size_bytes": 190
+  },
+  {
+    "path": "docs/audits/native-proxy-lifetime-files-20260913/records/event-000131.json",
+    "sha256": "5a4e9d3be7bcb0baf02218605c0b8065ab5c17321b8231f0e1fe4da626f7e824",
+    "size_bytes": 247780
+  },
+  {
+    "path": "docs/audits/native-proxy-lifetime-files-20260913/records/event-000074.json",
+    "sha256": "a79c5c24d4ca7bb084bbc7861f57c22c171cad72e58cdd8aead9028a5f70cfbc",
+    "size_bytes": 232698
+  },
+  {
+    "path": "docs/audits/native-proxy-lifetime-files-20260913/records/event-000218.json",
+    "sha256": "9016b000b3d07081cea83ff0b1344ff8d1d62fac3cd2503e52eaf888ec2f09d1",
+    "size_bytes": 12638
+  },
+  {
+    "path": "docs/audits/native-proxy-lifetime-files-20260913/records/event-000166.json",
+    "sha256": "f9731530e48fbbb72b0f3a4f42006d43739236756ed445df88827a0664a1202e",
+    "size_bytes": 281987
+  },
+  {
+    "path": "docs/audits/native-proxy-lifetime-files-20260913/records/event-000189.json",
+    "sha256": "c8baa6b4ef7102602db722b66daa9cf514560936116ef3190bc915e4fe7c8948",
+    "size_bytes": 188861
+  },
+  {
+    "path": "docs/audits/native-proxy-lifetime-files-20260913/records/event-000023.json",
+    "sha256": "3382896959b57b85b66820165a93a9c4c3475be5953172122fa253ee957bf298",
+    "size_bytes": 260699
+  },
+  {
+    "path": "docs/audits/native-proxy-lifetime-files-20260913/records/event-000167.json",
+    "sha256": "46ae128659d27e3a366e0d6070359386b455fe411eb0f1508a6dc7eba5c7a9e2",
+    "size_bytes": 294477
+  },
+  {
+    "path": "docs/audits/native-proxy-lifetime-files-20260913/records/event-000188.json",
+    "sha256": "63eb8b5b514c4a3f1039b1dd0b9a130f20079ba096d9a8aaf26d5d79b1011493",
+    "size_bytes": 114972
+  },
+  {
+    "path": "docs/audits/native-proxy-lifetime-files-20260913/records/event-000022.json",
+    "sha256": "f77bc96a1b4ac92b3b9ee20043b140c739a34dda6aa2db962ba546280a97f10c",
+    "size_bytes": 316
+  },
+  {
+    "path": "docs/audits/native-proxy-lifetime-files-20260913/records/event-000219.json",
+    "sha256": "d0e80dc09c71451e4e0468efa307b8b4a5f2e13ab8d4c35db0fffb543639bf25",
+    "size_bytes": 29995
+  },
+  {
+    "path": "docs/audits/native-proxy-lifetime-files-20260913/records/event-000130.json",
+    "sha256": "e329850794273d83b985681a8616592fe980660a7ef43438f6616c2af47f8e5b",
+    "size_bytes": 232833
+  },
+  {
+    "path": "docs/audits/native-proxy-lifetime-files-20260913/records/event-000075.json",
+    "sha256": "88ff3e552fbe1dbabcd6ef4a01f1aa639b699b0ba855511aad42ba6cdb65b4f3",
+    "size_bytes": 232698
+  },
+  {
+    "path": "docs/audits/native-proxy-lifetime-files-20260913/records/event-000126.json",
+    "sha256": "10274df6f967956f9be32832022c7907b3b763baa8fef1891c9e05c1816b2297",
+    "size_bytes": 12863
+  },
+  {
+    "path": "docs/audits/native-proxy-lifetime-files-20260913/records/event-000063.json",
+    "sha256": "b27711657d2a3c4c6f2db919bbe5f64905cab5c7e5ca18b5a8d12221ccfc9016",
+    "size_bytes": 33163
+  },
+  {
+    "path": "docs/audits/native-proxy-lifetime-files-20260913/records/event-000171.json",
+    "sha256": "72da0afe9dda66e33e72eff375468c92008d36c7abfcb0adaf063cc8297d490e",
+    "size_bytes": 168778
+  },
+  {
+    "path": "docs/audits/native-proxy-lifetime-files-20260913/records/event-000034.json",
+    "sha256": "356a4b81fc6747e5871b41d59c66438c133119b68f3d81c42be07b9fc951c8cd",
+    "size_bytes": 12952
+  },
+  {
+    "path": "docs/audits/native-proxy-lifetime-files-20260913/records/event-000223.json",
+    "sha256": "fb99f929fed06c9d5688cea63d958b21e3d6a055c861716c692ced50da2edfc9",
+    "size_bytes": 244842
+  },
+  {
+    "path": "docs/audits/native-proxy-lifetime-files-20260913/records/event-000018.json",
+    "sha256": "801a7744054c1a9e93d44a9114e81ea68c7722f3e4d11643d7f90ae6bff6f79b",
+    "size_bytes": 258016
+  },
+  {
+    "path": "docs/audits/native-proxy-lifetime-files-20260913/records/event-000235.json",
+    "sha256": "45c1191867f8a23de4dbd960fbd8208bb64ce0cf399ffabced05e39f468a05e9",
+    "size_bytes": 301
+  },
+  {
+    "path": "docs/audits/native-proxy-lifetime-files-20260913/records/event-000059.json",
+    "sha256": "8e5124a757d3ed45fdec1687b1f689a0bb3d64b57e2c9618999f7135b550ed5a",
+    "size_bytes": 347
+  },
+  {
+    "path": "docs/audits/native-proxy-lifetime-files-20260913/records/event-000184.json",
+    "sha256": "4e91a56794a8598f68c1ea78ec55a80c2a3ba9e626bf6eb078797e12a5ed2057",
+    "size_bytes": 2998
+  },
+  {
+    "path": "docs/audits/native-proxy-lifetime-files-20260913/records/event-000242.json",
+    "sha256": "622db5591e65e0c5a1ca151ca0d805b2cdff928987b8f07acb65cf5322b2ef38",
+    "size_bytes": 341
+  },
+  {
+    "path": "docs/audits/native-proxy-lifetime-files-20260913/records/event-000096.json",
+    "sha256": "df3ab74bf7812cd2e933aa94cfe85da4e957d33f54b1f3a961dc826d2d40e277",
+    "size_bytes": 29579
+  },
+  {
+    "path": "docs/audits/native-proxy-lifetime-files-20260913/records/event-000079.json",
+    "sha256": "7ac773e38a0069b9da74b0ab79b94daa607c183acbfd6aa28ed1c9fa01a87662",
+    "size_bytes": 291
+  },
+  {
+    "path": "docs/audits/native-proxy-lifetime-files-20260913/records/event-000215.json",
+    "sha256": "a7ca26364a0a2ae29e284106444159fa9e6798006356fc484e0d948504328844",
+    "size_bytes": 99886
+  },
+  {
+    "path": "docs/audits/native-proxy-lifetime-files-20260913/records/event-000080.json",
+    "sha256": "89030483e31b5f38eae107d9f1599c50aecfb08398606c78257f2733bd944e11",
+    "size_bytes": 148811
+  },
+  {
+    "path": "docs/audits/native-proxy-lifetime-files-20260913/records/event-000203.json",
+    "sha256": "1a855212d21ef2d067bd1f47c2c4ce41894e973dd4ef1970d210f2d8af78da85",
+    "size_bytes": 310
+  },
+  {
+    "path": "docs/audits/native-proxy-lifetime-files-20260913/records/event-000192.json",
+    "sha256": "bc3f02c1384e118f8fccb9e1ab816fa3b21fea833184d2ae6f58e68393c58887",
+    "size_bytes": 114146
+  },
+  {
+    "path": "docs/audits/native-proxy-lifetime-files-20260913/records/event-000038.json",
+    "sha256": "9c78175388f10c4154852e7d672958d76e934c4dd1b14f789a539e0eaf370ab6",
+    "size_bytes": 188307
+  },
+  {
+    "path": "docs/audits/native-proxy-lifetime-files-20260913/records/event-000043.json",
+    "sha256": "90fe4da20c1fb5f3e9c398370301c6e56d4e7dca7e1c4e8c280bf50e6d0266e3",
+    "size_bytes": 179512
+  },
+  {
+    "path": "docs/audits/native-proxy-lifetime-files-20260913/records/event-000106.json",
+    "sha256": "8118f16ef8bf2fa97a240c4aad7a423342d5de3ccb492d56258ba3026b674c6e",
+    "size_bytes": 252829
+  },
+  {
+    "path": "docs/audits/native-proxy-lifetime-files-20260913/records/event-000014.json",
+    "sha256": "29e65b46f49445c6d2da126d94a530d6a7d2b4485b105462030142db7f1bd7bb",
+    "size_bytes": 258012
+  },
+  {
+    "path": "docs/audits/native-proxy-lifetime-files-20260913/records/event-000151.json",
+    "sha256": "872955b4821d67615acf90e8cfef02393106885eb394b2657c08550aa5e6e5d6",
+    "size_bytes": 171642
+  },
+  {
+    "path": "docs/audits/native-proxy-lifetime-files-20260913/records/event-000002.json",
+    "sha256": "3364b6ae1afb59aa08a2cdd268a28c6d8b69327fc75a090c9c9c6ff66054745c",
+    "size_bytes": 12771
+  },
+  {
+    "path": "docs/audits/native-proxy-lifetime-files-20260913/records/event-000147.json",
+    "sha256": "3668f40c2fc536d5450de91112089f52618db03c6b57e64a600d1c97bc8509ab",
+    "size_bytes": 307455
+  },
+  {
+    "path": "docs/audits/native-proxy-lifetime-files-20260913/records/event-000055.json",
+    "sha256": "efb54b006e6fbb33b422857c8be13d6c8ccd098c27d73f2d647404348d2ec1f3",
+    "size_bytes": 316
+  },
+  {
+    "path": "docs/audits/native-proxy-lifetime-files-20260913/records/event-000110.json",
+    "sha256": "3b88ad9af430256c79de5d64ce980e421cb0b1306512cc5dcd6a745296c037bb",
+    "size_bytes": 238265
+  },
+  {
+    "path": "docs/audits/native-proxy-lifetime-files-20260913/records/event-000239.json",
+    "sha256": "d50783ad05bfc4a5425d9cd3728541cd8d0faabf8cc511cc6265fd5b770f5e2f",
+    "size_bytes": 129092
+  },
+  {
+    "path": "docs/audits/native-proxy-lifetime-files-20260913/records/event-000187.json",
+    "sha256": "58857e25149baf92df474af2783c8dda0d038532c6f3f9fa14099c9d98251f79",
+    "size_bytes": 30991
+  },
+  {
+    "path": "docs/audits/native-proxy-lifetime-files-20260913/records/event-000168.json",
+    "sha256": "ccf48ff4bd6ea259c1c5ca98f9c66c33a74bc0cbad7035cf61e4370d556df4aa",
+    "size_bytes": 286
+  },
+  {
+    "path": "docs/audits/native-proxy-lifetime-files-20260913/records/event-000241.json",
+    "sha256": "831f9de43e3c6861684bc425f615878b26c9835461b50f3097f08d3681a870e1",
+    "size_bytes": 226296
+  },
+  {
+    "path": "docs/audits/native-proxy-lifetime-files-20260913/records/event-000095.json",
+    "sha256": "c35d9d15e07978c8646fbd9f5384a1291bbefa820b2d9c3d4d540cbdfbd3822e",
+    "size_bytes": 12412
+  },
+  {
+    "path": "docs/audits/native-proxy-lifetime-files-20260913/records/event-000216.json",
+    "sha256": "64f2349f76fff1bf82355b534ed18ad0a567f590475ec076aedda1f7317594a1",
+    "size_bytes": 3074
+  },
+  {
+    "path": "docs/audits/native-proxy-lifetime-files-20260913/records/event-000129.json",
+    "sha256": "212fa60983ecc9c04873fe2e0ee91d9829e932ab76d7a15528affcfbdd38a2c2",
+    "size_bytes": 185788
+  },
+  {
+    "path": "docs/audits/native-proxy-lifetime-files-20260913/records/event-000083.json",
+    "sha256": "6cc0ba5224212dae78e2e56e591fae5bb3de6085e1c9d9c088df10eb220043aa",
+    "size_bytes": 318
+  },
+  {
+    "path": "docs/audits/native-proxy-lifetime-files-20260913/records/event-000200.json",
+    "sha256": "c38b6300bdb1987829ccf4d2396863a81c22b2181be4fdc610f3107b16145438",
+    "size_bytes": 298
+  },
+  {
+    "path": "docs/audits/native-proxy-lifetime-files-20260913/records/event-000191.json",
+    "sha256": "54d8feea73a04fa231217f78bd324cb362441e107df6a85f604cb846a82bbe5e",
+    "size_bytes": 251898
+  },
+  {
+    "path": "docs/audits/native-proxy-lifetime-files-20260913/records/event-000105.json",
+    "sha256": "747ab517958c54261e411c4ef5849d259b4757213ef78219be28c1eeaed9f187",
+    "size_bytes": 269
+  },
+  {
+    "path": "docs/audits/native-proxy-lifetime-files-20260913/records/event-000040.json",
+    "sha256": "4b53d87b2e4044a80dd4d765f8431cba0a08706c783dfabf5c3c61895d49ec5e",
+    "size_bytes": 104941
+  },
+  {
+    "path": "docs/audits/native-proxy-lifetime-files-20260913/records/event-000152.json",
+    "sha256": "f1be97198ac32153642fcb503c82b3235355186e3f14da6db47541ea3ab75621",
+    "size_bytes": 364
+  },
+  {
+    "path": "docs/audits/native-proxy-lifetime-files-20260913/records/event-000017.json",
+    "sha256": "7c15a8961beace5549cb9faceb60605ad21e3f976501a87f8d7b9efd2c33f9fa",
+    "size_bytes": 258016
+  },
+  {
+    "path": "docs/audits/native-proxy-lifetime-files-20260913/records/event-000144.json",
+    "sha256": "f6360f63558106c47d0d3ffad825098bb50cf91407f4de32a57337b3cce6dea4",
+    "size_bytes": 307
+  },
+  {
+    "path": "docs/audits/native-proxy-lifetime-files-20260913/records/event-000001.json",
+    "sha256": "36ac63470eeaa48df658a3a35628f178ebeb174ac2dc63e5d6fa2c7f4dfe5205",
+    "size_bytes": 1221
+  },
+  {
+    "path": "docs/audits/native-proxy-lifetime-files-20260913/records/event-000113.json",
+    "sha256": "34347c54a30a4066ec811ffc0cdc916ca611f0ab5aa0464075828fb8dd11a4f4",
+    "size_bytes": 137231
+  },
+  {
+    "path": "docs/audits/native-proxy-lifetime-files-20260913/records/event-000056.json",
+    "sha256": "305432edeb921c93e7f6670e39ed98d1ff050c9b13a38e3fe4902e45edcdec3a",
+    "size_bytes": 223078
+  },
+  {
+    "path": "docs/audits/native-proxy-lifetime-files-20260913/records/event-000021.json",
+    "sha256": "29a47ff08f6a5cab3d043216b90e936bca4615c0a30307b43d8b689bbf8c9827",
+    "size_bytes": 278508
+  },
+  {
+    "path": "docs/audits/native-proxy-lifetime-files-20260913/records/event-000164.json",
+    "sha256": "27055af54298ec0b4e26f7ee4962845997c09b95f8054b8720eb7237dc0e3ac1",
+    "size_bytes": 112790
+  },
+  {
+    "path": "docs/audits/native-proxy-lifetime-files-20260913/records/event-000076.json",
+    "sha256": "e6d88ba8f7c94f2f8cad99c158216f9e7adc9f9bc3cf4bb67d22555324b5d0c5",
+    "size_bytes": 231253
+  },
+  {
+    "path": "docs/audits/native-proxy-lifetime-files-20260913/records/event-000133.json",
+    "sha256": "c5b5ac6da250941e7c3a4bbd5655bdf03a86997331032e92be46119d4f699735",
+    "size_bytes": 279941
+  },
+  {
+    "path": "docs/audits/native-proxy-lifetime-files-20260913/records/event-000099.json",
+    "sha256": "1d2a1bfc775d6afafa10632a257f88112d7dc57c12df417fc056f15bf0ee74e9",
+    "size_bytes": 182787
+  },
+  {
+    "path": "docs/audits/native-proxy-lifetime-files-20260913/records/event-000060.json",
+    "sha256": "438d5663641ffe259755dab6f8e0d3f1577c11a3f452473cf65eb1a316157588",
+    "size_bytes": 90085
+  },
+  {
+    "path": "docs/audits/native-proxy-lifetime-files-20260913/records/event-000125.json",
+    "sha256": "f40e3b76336d55b23cec3ce83ac46cccb4d75db3992510bfac88ec8ca7153a8a",
+    "size_bytes": 1246
+  },
+  {
+    "path": "docs/audits/native-proxy-lifetime-files-20260913/records/event-000037.json",
+    "sha256": "ae0f89c13b9cc22ecc80aacdb094d66d9d70ebb3d999392397a5cde06f7fa73a",
+    "size_bytes": 157063
+  },
+  {
+    "path": "docs/audits/native-proxy-lifetime-files-20260913/records/event-000172.json",
+    "sha256": "04234d1fc053e35a38eb1bdf37847c1983ef6a667e788d3463b7f46f1ca7654b",
+    "size_bytes": 310
+  },
+  {
+    "path": "docs/audits/native-proxy-lifetime-files-20260913/records/event-000220.json",
+    "sha256": "ee21be0ffae471c17a5d023cce58dea0a0ee1a483b74dee08829f9ba2a67f172",
+    "size_bytes": 111708
+  },
+  {
+    "path": "docs/audits/native-proxy-lifetime-files-20260913/records/event-000109.json",
+    "sha256": "96dff6d0c850d06e204e1bffa544c6c4b3b9bf480ec7b2b564850957e496c171",
+    "size_bytes": 281
+  },
+  {
+    "path": "docs/audits/native-proxy-lifetime-files-20260913/records/event-000148.json",
+    "sha256": "4ed537b187c65045b9a18df223804fdd393cda66d3807923863c51efe36a6549",
+    "size_bytes": 331
+  },
+  {
+    "path": "docs/audits/native-proxy-lifetime-files-20260913/records/event-000236.json",
+    "sha256": "4f956b6254375ef231bcc79788df32d911f1e2da7381b8f14b92f65ed30aa9d3",
+    "size_bytes": 225549
+  },
+  {
+    "path": "docs/audits/native-proxy-lifetime-files-20260913/records/event-000237.json",
+    "sha256": "12f99570723d2ad4ef7309bebe2aa63759a0cbaf265af7b46ea96ba5fdc458fd",
+    "size_bytes": 218322
+  },
+  {
+    "path": "docs/audits/native-proxy-lifetime-files-20260913/records/event-000149.json",
+    "sha256": "f4f54f559ea586ba627192bc99ce95e7b876b07a52763984369d96e558a050a7",
+    "size_bytes": 206412
+  },
+  {
+    "path": "docs/audits/native-proxy-lifetime-files-20260913/records/event-000108.json",
+    "sha256": "04c363ebe9ffd12851b9d6458817a02ab2684ff54723eef60ddd6df73ab5f6c1",
+    "size_bytes": 308891
+  },
+  {
+    "path": "docs/audits/native-proxy-lifetime-files-20260913/records/event-000221.json",
+    "sha256": "e88d0047afbe3416608904d7d6bdd6a717e6e6c56a1c2b50157756a71a4f7259",
+    "size_bytes": 183593
+  },
+  {
+    "path": "docs/audits/native-proxy-lifetime-files-20260913/records/event-000036.json",
+    "sha256": "c3489e2584b62c1121518d6ca3686e61dd30ad7d3209fb60952addfdc13d5445",
+    "size_bytes": 113611
+  },
+  {
+    "path": "docs/audits/native-proxy-lifetime-files-20260913/records/event-000173.json",
+    "sha256": "420646e9c051e2e0634a94480d5ad8c428be0066633423e9fbe286a8ac8dbd33",
+    "size_bytes": 341674
+  },
+  {
+    "path": "docs/audits/native-proxy-lifetime-files-20260913/records/event-000061.json",
+    "sha256": "24237bca635bcdb5c9e28decf572f64b0300486dd73ad87c2f8da8e828af26fc",
+    "size_bytes": 365
+  },
+  {
+    "path": "docs/audits/native-proxy-lifetime-files-20260913/records/event-000124.json",
+    "sha256": "7bb992bddb640cf1dac9171572bcb982d24040d51c4016bf3c0636107d60f72a",
+    "size_bytes": 2076
+  },
+  {
+    "path": "docs/audits/native-proxy-lifetime-files-20260913/records/event-000077.json",
+    "sha256": "2927fb0c017f65a22351139ba0ff59c25e766c08a486b18f4bad37b6cbf02f7e",
+    "size_bytes": 279
+  },
+  {
+    "path": "docs/audits/native-proxy-lifetime-files-20260913/records/event-000132.json",
+    "sha256": "ccb6072d95f16bcdf2ee626ddd0319d7710b1e7302fc4fc14ce562ee174cfc0b",
+    "size_bytes": 111773
+  },
+  {
+    "path": "docs/audits/native-proxy-lifetime-files-20260913/records/event-000098.json",
+    "sha256": "2e1852fd712f0c44209eb9015b587e9db69d12c18763ed55ca4d05b5f4cc152a",
+    "size_bytes": 152503
+  },
+  {
+    "path": "docs/audits/native-proxy-lifetime-files-20260913/records/event-000020.json",
+    "sha256": "d78716114be3f1f4ecda19185d536ac6a442794e48cf40d987fc996c9b10157b",
+    "size_bytes": 304
+  },
+  {
+    "path": "docs/audits/native-proxy-lifetime-files-20260913/records/event-000165.json",
+    "sha256": "964d418ecd89357d8337bf145fbb29f015eca2823f3ba5826733f50555a29bf6",
+    "size_bytes": 281987
+  },
+  {
+    "path": "docs/audits/native-proxy-lifetime-files-20260913/records/event-000112.json",
+    "sha256": "ab713d02bbebbdd51ec90c8170db952d67603ed44d472324a3f3cf5316536e75",
+    "size_bytes": 297
+  },
+  {
+    "path": "docs/audits/native-proxy-lifetime-files-20260913/records/event-000057.json",
+    "sha256": "1312edbf3150c39964914a906923c9aa4ea299c48eeeee187a0fcf2dd39f8f8a",
+    "size_bytes": 332
+  },
+  {
+    "path": "docs/audits/native-proxy-lifetime-files-20260913/records/event-000145.json",
+    "sha256": "b4ed89b080854ef1d22f934050e4ce90bafc92378a3a3846036f52d002bf005b",
+    "size_bytes": 339358
+  },
+  {
+    "path": "docs/audits/native-proxy-lifetime-files-20260913/records/event-000153.json",
+    "sha256": "23649ce2775773a85a861c518c8bdb6528256ab541d34c7b37837bba5a7658aa",
+    "size_bytes": 189
+  },
+  {
+    "path": "docs/audits/native-proxy-lifetime-files-20260913/records/event-000016.json",
+    "sha256": "77bb62c1119c54645d75e23cadb12fc4a9231eb839940c87b5725a5f6a7b05c2",
+    "size_bytes": 288
+  },
+  {
+    "path": "docs/audits/native-proxy-lifetime-files-20260913/records/event-000104.json",
+    "sha256": "b34b2fc0c9480788474ed1bda3d7176af8411436384ad331bca75443806c7cd9",
+    "size_bytes": 173921
+  },
+  {
+    "path": "docs/audits/native-proxy-lifetime-files-20260913/records/event-000041.json",
+    "sha256": "e38eb13bcc0c229099abc579d14657c2972e590e1a7bd34f324a794f3c20ad89",
+    "size_bytes": 235634
+  },
+  {
+    "path": "docs/audits/native-proxy-lifetime-files-20260913/records/event-000190.json",
+    "sha256": "118dc39d6c9edbe038ac580d4f2350eb2aedd646e444a552886033c8b1b7a3fa",
+    "size_bytes": 236697
+  },
+  {
+    "path": "docs/audits/native-proxy-lifetime-files-20260913/records/event-000201.json",
+    "sha256": "1e3a71b16077ba78033c727d159fc4d2aa582e76fca0aa9347b0d66c8ae8e6d3",
+    "size_bytes": 294773
+  },
+  {
+    "path": "docs/audits/native-proxy-lifetime-files-20260913/records/event-000128.json",
+    "sha256": "8ad92152d651cedfe41cdc04bab5785ee70312e20ec885deffebc762ede4069f",
+    "size_bytes": 113068
+  },
+  {
+    "path": "docs/audits/native-proxy-lifetime-files-20260913/records/event-000082.json",
+    "sha256": "897bc7832656fd2f14fd286e1b90bc2b861c27103f1049581f212859d5f989c4",
+    "size_bytes": 219622
+  },
+  {
+    "path": "docs/audits/native-proxy-lifetime-files-20260913/records/event-000217.json",
+    "sha256": "42c14dced9f4beb5e073a8095e88e53938743e259d1fc5913688ef6a6fbdf7f2",
+    "size_bytes": 1201
+  },
+  {
+    "path": "docs/audits/native-proxy-lifetime-files-20260913/records/event-000094.json",
+    "sha256": "82d8b916fcca0be8e4e9020e1b8097bfe5de9370590bb52279a30c76198dc17f",
+    "size_bytes": 1150
+  },
+  {
+    "path": "docs/audits/native-proxy-lifetime-files-20260913/records/event-000240.json",
+    "sha256": "64cf6e6db0e8cf38eb541619ffeae2965509c4d4dd6f376421f5f87580caf339",
+    "size_bytes": 329
+  },
+  {
+    "path": "docs/audits/native-proxy-lifetime-files-20260913/records/event-000186.json",
+    "sha256": "7c6d39e4c0fb1db973062afe6dabc266921f7cf157ba468d90d488f394443064",
+    "size_bytes": 13178
+  },
+  {
+    "path": "docs/audits/native-proxy-lifetime-files-20260913/records/event-000169.json",
+    "sha256": "ca37763937f89c8a9ca06f1cf1fc94ab81fb76ba187933842c5d4fa256053fc9",
+    "size_bytes": 169609
+  },
+  {
+    "path": "docs/audits/native-proxy-lifetime-files-20260913/records/event-000027.json",
+    "sha256": "9400d89f26f9595f6ffa2e3926360980ff44fb5071f8eeeee2806afb858ec923",
+    "size_bytes": 89241
+  },
+  {
+    "path": "docs/audits/native-proxy-lifetime-files-20260913/records/event-000162.json",
+    "sha256": "6d086920390c4ed3de111142b8c6a2bad2424d72d0553250883a7a777cccd1ed",
+    "size_bytes": 234489
+  },
+  {
+    "path": "docs/audits/native-proxy-lifetime-files-20260913/records/event-000135.json",
+    "sha256": "a378a6d7dee40f892901f420e5c8f117bf7b3fa31bf91cfb2a706cad8f4a97fe",
+    "size_bytes": 196081
+  },
+  {
+    "path": "docs/audits/native-proxy-lifetime-files-20260913/records/event-000066.json",
+    "sha256": "c169e4570a81dccf9db0e6a9a420904fa8c53d88b6d6aad451dda9c7a258e583",
+    "size_bytes": 1213
+  },
+  {
+    "path": "docs/audits/native-proxy-lifetime-files-20260913/records/event-000089.json",
+    "sha256": "d0751cdc70ce8cb26956fc7c348c60f9440d6c7b3972da64d143f20b44746b4f",
+    "size_bytes": 360
+  },
+  {
+    "path": "docs/audits/native-proxy-lifetime-files-20260913/records/event-000123.json",
+    "sha256": "e2a5cef4df62c622fcdd94f1198a46ef537f0b960e59ce1bf23840f6bb66b7ed",
+    "size_bytes": 69127
+  },
+  {
+    "path": "docs/audits/native-proxy-lifetime-files-20260913/records/event-000031.json",
+    "sha256": "4b511f3d27ecbd4dda11f98027839de5b7c0a0736ca54d9d963f7e066491c4ac",
+    "size_bytes": 70782
+  },
+  {
+    "path": "docs/audits/native-proxy-lifetime-files-20260913/records/event-000174.json",
+    "sha256": "a978e7f4654e6d748c0873420617dad36699e3e38de619605c092597a35995a2",
+    "size_bytes": 322
+  },
+  {
+    "path": "docs/audits/native-proxy-lifetime-files-20260913/records/event-000226.json",
+    "sha256": "4a10a245d31f372202b4da52f4320c47b5c55b894845dcb50f26a5a049a185d7",
+    "size_bytes": 276545
+  },
+  {
+    "path": "docs/audits/native-proxy-lifetime-files-20260913/records/event-000158.json",
+    "sha256": "3528c56008493fa1c97bedce92646157cd7f92aa7e8d8d1818bdab804d24472f",
+    "size_bytes": 12998
+  },
+  {
+    "path": "docs/audits/native-proxy-lifetime-files-20260913/records/event-000230.json",
+    "sha256": "74b9c18eece0a3d840f383259b0f65700f2381a0ef4a4c73e10bfdac30de5292",
+    "size_bytes": 301095
+  },
+  {
+    "path": "docs/audits/native-proxy-lifetime-files-20260913/records/event-000119.json",
+    "sha256": "0fb23891eed59d8987697ad4efc54f89ddf23c57e6cc40e2dbf000ec5a0758ba",
+    "size_bytes": 87554
+  },
+  {
+    "path": "docs/audits/native-proxy-lifetime-files-20260913/records/event-000181.json",
+    "sha256": "455c75b79b163d2dc2546e55862f4e473f4f2c5c9ec4c110a7b06194bf95d09c",
+    "size_bytes": 192
+  },
+  {
+    "path": "docs/audits/native-proxy-lifetime-files-20260913/records/event-000247.json",
+    "sha256": "876a444668d39cab76e7cd7217efb9944d83ebfaee8f5776d0e486da7ce3725e",
+    "size_bytes": 96682
+  },
+  {
+    "path": "docs/audits/native-proxy-lifetime-files-20260913/records/event-000093.json",
+    "sha256": "22aec5d29795dfe1bb9e39f8ee8ecc1b8a6a3f5a15d70046feb87450cce7426b",
+    "size_bytes": 2180
+  },
+  {
+    "path": "docs/audits/native-proxy-lifetime-files-20260913/records/event-000139.json",
+    "sha256": "cc092ea7bb6e27f361ae2a18be885e60e3eea023e635dd20d36a8364101f7846",
+    "size_bytes": 195235
+  },
+  {
+    "path": "docs/audits/native-proxy-lifetime-files-20260913/records/event-000210.json",
+    "sha256": "2c106329dfb4117bbcdfdc2409eaea34f637a34e7a2bcc6bdc8e2818d2c4893f",
+    "size_bytes": 356
+  },
+  {
+    "path": "docs/audits/native-proxy-lifetime-files-20260913/records/event-000085.json",
+    "sha256": "d22eb93e15c191095804a92f79eaf02e8a614cc2bdef9b3a4673e014a35794c5",
+    "size_bytes": 330
+  },
+  {
+    "path": "docs/audits/native-proxy-lifetime-files-20260913/records/event-000206.json",
+    "sha256": "980bbc6b8a286eb4521b78b9a3c3facf2aebd77199a934da79b78d448f150249",
+    "size_bytes": 322
+  },
+  {
+    "path": "docs/audits/native-proxy-lifetime-files-20260913/records/event-000197.json",
+    "sha256": "2179c7610a8213edb5f28880218a33c764f9f304e93de6582ccd3c1cee925ed1",
+    "size_bytes": 309975
+  },
+  {
+    "path": "docs/audits/native-proxy-lifetime-files-20260913/records/event-000178.json",
+    "sha256": "fc8b9abd5271999bac8962aabf4e3e34fa18679b91fd1aa73244779133ee9690",
+    "size_bytes": 349
+  },
+  {
+    "path": "docs/audits/native-proxy-lifetime-files-20260913/records/event-000103.json",
+    "sha256": "b0c13209443d3c171a8051acb437c2ca2e950614ddd06495a346e9145dee56bd",
+    "size_bytes": 228579
+  },
+  {
+    "path": "docs/audits/native-proxy-lifetime-files-20260913/records/event-000046.json",
+    "sha256": "567594630188cee9f35592b4e8ba7ab8dee237d9dd7a6bbc900a7540ec779eb1",
+    "size_bytes": 260604
+  },
+  {
+    "path": "docs/audits/native-proxy-lifetime-files-20260913/records/event-000154.json",
+    "sha256": "1d77ae90e6c6a2b1d012ef85430830be9723db80e22942ca0dbd5501059eb4df",
+    "size_bytes": 43353
+  },
+  {
+    "path": "docs/audits/native-proxy-lifetime-files-20260913/records/event-000011.json",
+    "sha256": "a89078f934d787b4458504e8fdbd25e41eb3c68306c87de8f1df8788f96e8ca2",
+    "size_bytes": 177648
+  },
+  {
+    "path": "docs/audits/native-proxy-lifetime-files-20260913/records/event-000142.json",
+    "sha256": "cb1fbc6a555f8f29c55123eb3c54f5e9dcc29205074a4c6bc68281be690b913f",
+    "size_bytes": 304795
+  },
+  {
+    "path": "docs/audits/native-proxy-lifetime-files-20260913/records/event-000007.json",
+    "sha256": "704216482a01c1c82f89f8291377fa00a903ce42ee0da408166f60e9a9acf99a",
+    "size_bytes": 201323
+  },
+  {
+    "path": "docs/audits/native-proxy-lifetime-files-20260913/records/event-000115.json",
+    "sha256": "fb29f73cfbe255d589c57fa10db5bbfb85ee6270db48f16f401a40616f96656e",
+    "size_bytes": 198517
+  },
+  {
+    "path": "docs/audits/native-proxy-lifetime-files-20260913/records/event-000050.json",
+    "sha256": "6fd6ebdeb79eae08b0ca7d0cf4502b2eb1fba6bf92ea399b9a5f07522e9d2c02",
+    "size_bytes": 260604
+  },
+  {
+    "path": "docs/audits/native-proxy-lifetime-files-20260913/records/event-000114.json",
+    "sha256": "e7c7d8038920dfe900a750b3ae7b03001b6a890a317e70564f922fcbd85107a6",
+    "size_bytes": 309
+  },
+  {
+    "path": "docs/audits/native-proxy-lifetime-files-20260913/records/event-000051.json",
+    "sha256": "d78a4592554649f3920eeb58f02ab249c1a4d34a96a0b636ecd6d91e43319806",
+    "size_bytes": 317866
+  },
+  {
+    "path": "docs/audits/native-proxy-lifetime-files-20260913/records/event-000143.json",
+    "sha256": "6c49274f16f004f88c7961124f95f2dd61576de2c731085e33838b85480b13b2",
+    "size_bytes": 317292
+  },
+  {
+    "path": "docs/audits/native-proxy-lifetime-files-20260913/records/event-000006.json",
+    "sha256": "b4d4aa1692df1ed77cf91741bcb692c6f0dd80be4281c2a06369a9d7e40302bd",
+    "size_bytes": 186466
+  },
+  {
+    "path": "docs/audits/native-proxy-lifetime-files-20260913/records/event-000155.json",
+    "sha256": "3aa64f7473df7f04085aff09ad573c05bf8029aab5d0ab9934c44a11b1107348",
+    "size_bytes": 98017
+  },
+  {
+    "path": "docs/audits/native-proxy-lifetime-files-20260913/records/event-000010.json",
+    "sha256": "46100478fc2f71a52056a4dce1f62d6a9e1b77d970133452aa78bc9b4b89ad24",
+    "size_bytes": 233282
+  },
+  {
+    "path": "docs/audits/native-proxy-lifetime-files-20260913/records/event-000102.json",
+    "sha256": "b925e71665b3d195df9a0d34493ba0d2e19e2c058720ed98fa1f9ade6ff4d823",
+    "size_bytes": 228579
+  },
+  {
+    "path": "docs/audits/native-proxy-lifetime-files-20260913/records/event-000047.json",
+    "sha256": "4b53eeaf84237aae34d17ef98b0f9a41b74cc3b9ac2557c640938822d86f7c16",
+    "size_bytes": 178676
+  },
+  {
+    "path": "docs/audits/native-proxy-lifetime-files-20260913/records/event-000196.json",
+    "sha256": "561bbf74d7827c5e549dafbdd88d8cfd608a6dee5efadbcea0640fb06fdb3211",
+    "size_bytes": 286
+  },
+  {
+    "path": "docs/audits/native-proxy-lifetime-files-20260913/records/event-000179.json",
+    "sha256": "8a397217adfbf610564e96b692e7596056902a67a207be15dd0bc2a367b25353",
+    "size_bytes": 128940
+  },
+  {
+    "path": "docs/audits/native-proxy-lifetime-files-20260913/records/event-000207.json",
+    "sha256": "c70246a97488c424ee40b3bfd4ec9706c6b2777e4732a2aed70925a3f14538f9",
+    "size_bytes": 271885
+  },
+  {
+    "path": "docs/audits/native-proxy-lifetime-files-20260913/records/event-000084.json",
+    "sha256": "62c86a50b7ac3991f6606c1b913ad68be533aa0704cfa5fc630f69eb0cbffd6d",
+    "size_bytes": 241633
+  },
+  {
+    "path": "docs/audits/native-proxy-lifetime-files-20260913/records/event-000211.json",
+    "sha256": "6104e616540a11c932863959ac09c7bac6a7a6e7da171377f40ca0797ccec47f",
+    "size_bytes": 174505
+  },
+  {
+    "path": "docs/audits/native-proxy-lifetime-files-20260913/records/event-000138.json",
+    "sha256": "74515482b734cce2fc904331b27c39c25028083115f957b8d5334e3c201b7f60",
+    "size_bytes": 304791
+  },
+  {
+    "path": "docs/audits/native-proxy-lifetime-files-20260913/records/event-000246.json",
+    "sha256": "cc1079ef74cafb28673926450a0fccd455e813828e30b401f909d275a169588c",
+    "size_bytes": 42658
+  },
+  {
+    "path": "docs/audits/native-proxy-lifetime-files-20260913/records/event-000180.json",
+    "sha256": "358dbb9275f560b430fd504de311bdf5deda7387de6f93c61e50d85f42d3f7be",
+    "size_bytes": 367
+  },
+  {
+    "path": "docs/audits/native-proxy-lifetime-files-20260913/records/event-000118.json",
+    "sha256": "c4bcd0f1d809aa797143789ff82cb072828d43a4590764809e722a64fb79a25a",
+    "size_bytes": 336
+  },
+  {
+    "path": "docs/audits/native-proxy-lifetime-files-20260913/records/event-000231.json",
+    "sha256": "265e980fb3513fec6246da9f0d7f5abaa8385efe406900d8ab97e62f2de9dd56",
+    "size_bytes": 371574
+  },
+  {
+    "path": "docs/audits/native-proxy-lifetime-files-20260913/records/event-000159.json",
+    "sha256": "f24a15b1b5bc3ff8b65a7f16542280dead5ce03afb4c768d8395a82cca263981",
+    "size_bytes": 30659
+  },
+  {
+    "path": "docs/audits/native-proxy-lifetime-files-20260913/records/event-000227.json",
+    "sha256": "dc5e865503e16554dc1d7eebd6f5a59cfadc23fc066f794dbadfe5fceb53efa2",
+    "size_bytes": 193571
+  },
+  {
+    "path": "docs/audits/native-proxy-lifetime-files-20260913/records/event-000030.json",
+    "sha256": "94ea019821a2a678b605692f2e99b9c9639987ce906313d945476406e13eebfe",
+    "size_bytes": 32711
+  },
+  {
+    "path": "docs/audits/native-proxy-lifetime-files-20260913/records/event-000175.json",
+    "sha256": "f9aff1e86d171ed977ae9423d53374e162d75201a6ea8ab25d3677685a6b9a0b",
+    "size_bytes": 250607
+  },
+  {
+    "path": "docs/audits/native-proxy-lifetime-files-20260913/records/event-000088.json",
+    "sha256": "6dbdb8a3cf54c7e942792ceeeab1b91ac037ca962c422081b23e89c72c54f9fd",
+    "size_bytes": 89030
+  },
+  {
+    "path": "docs/audits/native-proxy-lifetime-files-20260913/records/event-000122.json",
+    "sha256": "4b502eb378d6b02825d2a76aea0419f8bf66d28a059e27d2733c358240736628",
+    "size_bytes": 31808
+  },
+  {
+    "path": "docs/audits/native-proxy-lifetime-files-20260913/records/event-000134.json",
+    "sha256": "e2080dceb87986398ee88748c7bb91f46bf22e26ead3ce00a89e51f1c672377b",
+    "size_bytes": 279941
+  },
+  {
+    "path": "docs/audits/native-proxy-lifetime-files-20260913/records/event-000026.json",
+    "sha256": "5562975bb112be651d05c9422e553bed397bfe9630cf31284ac5d41b437f1943",
+    "size_bytes": 343
+  },
+  {
+    "path": "docs/audits/native-proxy-lifetime-files-20260913/records/event-000163.json",
+    "sha256": "e4c59e4220a90e9a8d9666539504cce5fbf4f6ce6c1c3d155452f2aa5be1488a",
+    "size_bytes": 249546
+  }
+]

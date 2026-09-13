@@ -1,0 +1,19 @@
+{
+  "checked_passages": [
+    "Final control admission now selects a corrected descriptor identity reader.",
+    "It follows recorded creation, writes and permission changes in call order, then joins each open to the independently observed object and final state.",
+    "These synthetic journals are reader tests and do not establish actual interruption effects.",
+    "An existing permit cannot be overwritten.",
+    "docs/audits/native-proxy-lifetime-controls-final-admission-20260913/audit_final.py --verify-saved"
+  ],
+  "exact_output_absent": true,
+  "exit_code": 0,
+  "output": ".artifacts/tmp/native-proxy-lifetime-controls-final-admission-book-20260913/book",
+  "rendered_bytes": 23614921,
+  "rendered_directories": 2,
+  "rendered_files": 99,
+  "renderer_warnings": [
+    "WARN search index is very large (13291885 bytes)"
+  ],
+  "same_volume_direct_objects": true
+}
