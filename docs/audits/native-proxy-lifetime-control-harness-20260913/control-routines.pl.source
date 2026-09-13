@@ -1,0 +1,96 @@
+sub closed_trace {
+    my ($trace) = @_;
+    return 0 if length($trace->{ownership_registration_error_hex}) || @{$trace->{recovery}};
+    for my $handle (@{$trace->{handles}}) {
+        return 0 unless $handle->{closed_at_return} && $handle->{close}
+            && $handle->{close}{returned} && $handle->{close}{closed_after_call};
+        return 0 if $handle->{kind} eq 'file' && !$handle->{close}{cloexec_before_close};
+    }
+    return 0 if grep { !$_->{closed_at_return} } @{$trace->{metadata_observers}};
+    return 1;
+}
+
+sub invoke_control {
+    my ($event, $inputs) = @_;
+    return NativeProxyImageMaintenance::remove_unreferenced_image(@$inputs{qw(store image_key)})
+        if $event eq 'maintain_target';
+    return NativeProxyRuntimeRetirement::retire_runtime_reference(@$inputs{qw(store acquired cleanup)})
+        if $event eq 'retire_target';
+    return NativeProxyObservationAcquisition::reuse_observation_reference(@$inputs{qw(store request acquired)})
+        if $event eq 'reuse_a';
+    return NativeProxyObservationRelease::release_observation_reference(
+        @$inputs{qw(store request acquired archive selection settlement)}) if $event =~ /\Arelease_[ab]\z/;
+    die "unadmitted control invocation\n";
+}
+
+sub measure_control {
+    my ($context, $name, $event, $inputs, $selector, $success, $error, $effect, $release_effect) = @_;
+    my $input_before = clone($inputs);
+    my $before = probe($context);
+    unless (complete_trace($before)) {
+        journal('stage', {case => $context->{name}, name => $name, before => $before, operation => undef, after => undef,
+            input_before => $input_before, input_after => $inputs});
+        die "independent pre-control probe failed: $name\n";
+    }
+    my @hits;
+    my $started = now_ns();
+    my $trace = observe($context, sub {
+        NativeProxyLifetimeControls::with_fault($selector, \@hits, sub { invoke_control($event, $inputs) });
+    });
+    my $ended = now_ns();
+    my $after = probe($context);
+    # Preserve the exact first operation verdict and observed effects before
+    # asserting the expected failure, hit count, resource closure or cleanup.
+    journal('stage', {case => $context->{name}, name => $name, before => $before, operation => $trace, after => $after,
+        input_before => $input_before, input_after => $inputs, started_monotonic_ns => $started, ended_monotonic_ns => $ended,
+        control => {event => $event, selector => $selector, hits => \@hits}});
+    die "control caller inputs changed: $name\n" unless same($input_before, $inputs);
+    die "independent post-control probe failed: $name\n" unless complete_trace($after);
+    die "primary control descriptors incomplete: $name\n" unless closed_trace($trace);
+    die "selected after-effect hit count differs: $name\n" unless @hits == (defined($selector) ? 1 : 0);
+    if (defined($release_effect)) {
+        die "release failure was not returned as an envelope: $name\n"
+            unless $trace->{returned} && $trace->{error_hex} eq '';
+        my $expected = {schema => 'fsmgen.inactive_observation_release_attempt.v1', runtime_authorized => 0,
+            executable => undef, success => 0, error => $error, %$release_effect, release => undef};
+        die "release failure envelope differs: $name\n" unless same($trace->{result}, $expected);
+    } elsif ($success) {
+        die "expected successful control did not complete: $name\n" unless complete_trace($trace);
+    } else {
+        die "control rejection differs from exact primary diagnostic: $name\n"
+            unless !$trace->{returned} && !defined($trace->{result}) && $trace->{error_hex} eq unpack('H*', $error);
+    }
+    my $expected = NativeProxyLifetimeControls::expected_nodes(
+        NativeProxyLifetimeFiles::stable($before->{result}), $context, $effect);
+    die "control physical effects differ: $name\n" unless same($expected, NativeProxyLifetimeFiles::stable($after->{result}));
+    $context->{current} = $after->{result};
+    return $trace->{result};
+}
+
+sub execute_control {
+    my ($context, $case) = @_;
+    if (($case->{mutation} // '') eq 'unknown_reference') {
+        my $path = "$context->{paths}{store}/references/" . ('f' x 64) . '.json';
+        my $before = clone(NativeProxyLifetimeFiles::stable($context->{current}));
+        measure($context, 'create_unknown_reference', sub {
+            NativeProxyLifetimeFiles::write_exclusive($path, "{}\n", 0400, 4096);
+            return {created_unknown_reference => $path};
+        }, {path => $path, bytes_hex => unpack('H*', "{}\n"), mode => 0400});
+        my $after = clone(NativeProxyLifetimeFiles::stable($context->{current}));
+        my $added = delete $after->{$path};
+        die "unknown-reference setup changed other custody\n" unless same($before, $after);
+        die "unknown-reference setup differs from exact owned bytes\n" unless $added && $added->{kind} eq 'file'
+            && $added->{mode} == 0400 && $added->{bytes_hex} eq unpack('H*', "{}\n");
+    }
+    my $inputs = NativeProxyLifetimeControls::inputs($context, $case);
+    my $selector = NativeProxyLifetimeControls::selector($context, $case);
+    measure_control($context, 'selected_control', $case->{event}, $inputs, $selector, 0,
+        NativeProxyLifetimeControls::expected_error($case), $case->{fault} // 'none', $case->{release_effect});
+    if (defined($case->{followup_maintenance})) {
+        my $maintenance = {store => $context->{paths}{store}, image_key => $context->{runtimes}{target}{image}{key}};
+        measure_control($context, 'followup_maintenance', 'maintain_target', $maintenance, undef,
+            $case->{followup_maintenance}, "selected image is retained by an unresolved reference\n",
+            $case->{followup_maintenance} ? 'maintenance' : 'none', undef);
+    }
+}
+

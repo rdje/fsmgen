@@ -1,0 +1,81 @@
+{
+  "raw_captures": [
+    {
+      "bytes_hex": "",
+      "path": ".artifacts/logs/native-proxy-lifetime-control-harness-20260913/first-syntax.stdout",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "size_bytes": 0
+    },
+    {
+      "bytes_hex": "72616d2d67756172643a205049442032333736383b20686f73742037352e36253b20686f7374206375746f6666203838253b2064657363656e64616e7420525353206375746f66662034303936204d69423b20706f6c6c2032730a646f63732f6175646974732f6e61746976652d70726f78792d6c69666574696d652d636f6e74726f6c2d6861726e6573732d32303236303931332f7175616c6966795f636f6e74726f6c732e706c2073796e746178204f4b0a",
+      "path": ".artifacts/logs/native-proxy-lifetime-control-harness-20260913/first-syntax.stderr",
+      "sha256": "67ebb28dc20ec6289c7bbafac9db37cb976248b90e2293dc779562c624bd8094",
+      "size_bytes": 180
+    },
+    {
+      "bytes_hex": "300a",
+      "path": ".artifacts/logs/native-proxy-lifetime-control-harness-20260913/first-syntax.exit",
+      "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa",
+      "size_bytes": 2
+    }
+  ],
+  "scope": "Exact source snapshot for the first compile-only harness check; no main or fixture execution.",
+  "sources": [
+    {
+      "retained_path": "docs/audits/native-proxy-lifetime-control-harness-20260913/first-syntax/0.source",
+      "source": {
+        "path": "docs/audits/native-proxy-lifetime-control-harness-20260913/Controls.pm",
+        "sha256": "94eeb9730331bdc7bd1f54eb251a3b597113a7ed98c28fd8e71ace5768246598",
+        "size_bytes": 6186
+      }
+    },
+    {
+      "retained_path": "docs/audits/native-proxy-lifetime-control-harness-20260913/first-syntax/1.source",
+      "source": {
+        "path": "docs/audits/native-proxy-lifetime-control-harness-20260913/consume_controls.py",
+        "sha256": "cd26ab6b349afda8c69e570284f41438fbae7ce0f06ce3e7b2ff885dd252c7b5",
+        "size_bytes": 16149
+      }
+    },
+    {
+      "retained_path": "docs/audits/native-proxy-lifetime-control-harness-20260913/first-syntax/2.source",
+      "source": {
+        "path": "docs/audits/native-proxy-lifetime-control-harness-20260913/control-routines.pl.source",
+        "sha256": "23e76982c4d6c3bfb68d6e18ae5c3bb61f395d467032a0346da6b8eb24e56ea7",
+        "size_bytes": 5777
+      }
+    },
+    {
+      "retained_path": "docs/audits/native-proxy-lifetime-control-harness-20260913/first-syntax/3.source",
+      "source": {
+        "path": "docs/audits/native-proxy-lifetime-control-harness-20260913/harness-plan.json",
+        "sha256": "6de1377be4ad4eb0ee5bbcd382a2d9ca4a457df904b7fd08665976c87dca2cf0",
+        "size_bytes": 19734
+      }
+    },
+    {
+      "retained_path": "docs/audits/native-proxy-lifetime-control-harness-20260913/first-syntax/4.source",
+      "source": {
+        "path": "docs/audits/native-proxy-lifetime-control-harness-20260913/qualify_controls.pl",
+        "sha256": "9a46d6c4db654d93824263e652f1fe34dffdf3b1badc37134719eca13c556cb7",
+        "size_bytes": 35192
+      }
+    },
+    {
+      "retained_path": "docs/audits/native-proxy-lifetime-control-harness-20260913/first-syntax/5.source",
+      "source": {
+        "path": "docs/audits/native-proxy-lifetime-control-harness-20260913/resources.py",
+        "sha256": "f2c57b242fc8581a359c916de1f14e80170c79999edc596c6f31b953c946f31b",
+        "size_bytes": 4199
+      }
+    },
+    {
+      "retained_path": "docs/audits/native-proxy-lifetime-control-harness-20260913/first-syntax/6.source",
+      "source": {
+        "path": "docs/audits/native-proxy-lifetime-control-harness-20260913/support_controls.py",
+        "sha256": "4da2f8ed8499bfaaf1574ce090fe026a5a04d4c81d294f9c97500fbda25fa5fa",
+        "size_bytes": 1083
+      }
+    }
+  ]
+}

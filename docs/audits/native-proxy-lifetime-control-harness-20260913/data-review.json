@@ -1,0 +1,139 @@
+{
+  "actual_fixture_operations": 0,
+  "cases": [
+    {
+      "case": "runtime_pins",
+      "effect_sha256": "26d270fa14e704945049dea15b12eebbaa7d3d634bf4a2e8f284a6af41fc8af5",
+      "stream_records": 32
+    },
+    {
+      "case": "observation_a_pins",
+      "effect_sha256": "98eba2bd627f0cb55348559ddd23059a5e3a32e268c7aebe080b5fc111613600",
+      "stream_records": 29
+    },
+    {
+      "case": "observation_b_pins",
+      "effect_sha256": "4904697f15eecf67d5233cbfffe7d63a093f952f13276654ce6f6d00468880a6",
+      "stream_records": 29
+    },
+    {
+      "case": "other_runtime_pins",
+      "effect_sha256": "c8a29d6bcc12d799f9d36fd51356e26b5635f3c5ab9d69f0759d8404ed20c62a",
+      "stream_records": 29
+    },
+    {
+      "case": "release_before_archive",
+      "effect_sha256": "36702838076a5cc9acacf07e0329b05d285cb83872a1a0756d4a86e77566f039",
+      "stream_records": 14
+    },
+    {
+      "case": "repeated_release",
+      "effect_sha256": "4394c7ec100e6a785672c5553219774e9bbc3d9082badcad213b5fe81c4ef850",
+      "stream_records": 22
+    },
+    {
+      "case": "unreaped_runtime",
+      "effect_sha256": "36702838076a5cc9acacf07e0329b05d285cb83872a1a0756d4a86e77566f039",
+      "stream_records": 14
+    },
+    {
+      "case": "unsettled_work",
+      "effect_sha256": "989db386a9ee6cb9a3cd2caebebf96e8076c8755404ee16be2d572d37fc4ccd9",
+      "stream_records": 18
+    },
+    {
+      "case": "unsealed_work",
+      "effect_sha256": "989db386a9ee6cb9a3cd2caebebf96e8076c8755404ee16be2d572d37fc4ccd9",
+      "stream_records": 18
+    },
+    {
+      "case": "reuse_after_retirement",
+      "effect_sha256": "f2a3c7433172e5b688f576df41398048ea7dadd7e27f38591d38ce0a795d5884",
+      "stream_records": 20
+    },
+    {
+      "case": "unknown_reference",
+      "effect_sha256": "4453d4a6892d14d955f577c5d3567ad65766bd6a24b648302f3acaf91792d7c4",
+      "stream_records": 32
+    },
+    {
+      "case": "after_private_rmdir",
+      "effect_sha256": "f7b9a8a94b203f102cd45d9b8737737d33704e10222927685a97830d3c6cd53b",
+      "stream_records": 31
+    },
+    {
+      "case": "after_global_unlink",
+      "effect_sha256": "c777f3b55dccb4344c16e01de1a8a220b6e4d45a4c5ac0cb29371f06cee14d05",
+      "stream_records": 31
+    },
+    {
+      "case": "after_last_observation_unlink",
+      "effect_sha256": "c777f3b55dccb4344c16e01de1a8a220b6e4d45a4c5ac0cb29371f06cee14d05",
+      "stream_records": 30
+    }
+  ],
+  "corrected_perl_checks": 96,
+  "full_actual_journal_not_executed": true,
+  "original_inert_failure_preserved": [
+    "release_before_archive original context unchanged"
+  ],
+  "rejected_countermodels": [
+    "runtime_pins:return-channel",
+    "runtime_pins:input-mutation",
+    "observation_a_pins:return-channel",
+    "observation_a_pins:input-mutation",
+    "observation_b_pins:return-channel",
+    "observation_b_pins:input-mutation",
+    "other_runtime_pins:return-channel",
+    "other_runtime_pins:input-mutation",
+    "release_before_archive:return-channel",
+    "release_before_archive:input-mutation",
+    "repeated_release:return-channel",
+    "repeated_release:input-mutation",
+    "unreaped_runtime:return-channel",
+    "unreaped_runtime:input-mutation",
+    "unsettled_work:return-channel",
+    "unsettled_work:input-mutation",
+    "unsealed_work:return-channel",
+    "unsealed_work:input-mutation",
+    "reuse_after_retirement:return-channel",
+    "reuse_after_retirement:input-mutation",
+    "unknown_reference:return-channel",
+    "unknown_reference:input-mutation",
+    "after_private_rmdir:return-channel",
+    "after_private_rmdir:input-mutation",
+    "after_private_rmdir:missing-hit",
+    "after_private_rmdir:rollback",
+    "after_global_unlink:return-channel",
+    "after_global_unlink:input-mutation",
+    "after_global_unlink:missing-hit",
+    "after_global_unlink:rollback",
+    "after_last_observation_unlink:return-channel",
+    "after_last_observation_unlink:input-mutation",
+    "after_last_observation_unlink:missing-hit",
+    "after_last_observation_unlink:rollback",
+    "after_last_observation_unlink:promoted-flag",
+    "docs/audits/native-proxy-lifetime-files-20260913/records/event-000076.json:wrong-open-uid",
+    "docs/audits/native-proxy-lifetime-files-20260913/records/event-000076.json:wrong-open-inode",
+    "docs/audits/native-proxy-lifetime-files-20260913/records/event-000076.json:open-primary",
+    "docs/audits/native-proxy-lifetime-files-20260913/records/event-000086.json:wrong-open-uid",
+    "docs/audits/native-proxy-lifetime-files-20260913/records/event-000086.json:wrong-open-inode",
+    "docs/audits/native-proxy-lifetime-files-20260913/records/event-000086.json:open-primary"
+  ],
+  "retained_healthy_resource_traces": [
+    {
+      "calls": 235,
+      "handles": 115,
+      "original_interruption": false,
+      "retained_record": "docs/audits/native-proxy-lifetime-files-20260913/records/event-000076.json"
+    },
+    {
+      "calls": 195,
+      "handles": 97,
+      "original_interruption": false,
+      "retained_record": "docs/audits/native-proxy-lifetime-files-20260913/records/event-000086.json"
+    }
+  ],
+  "runtime_qualification": false,
+  "schema": "fsmgen.inactive_lifetime_control_reader_data_review.v1"
+}

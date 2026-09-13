@@ -130,4 +130,27 @@ admission remain open; no interruption file test has run.
 scripts/run_with_ram_guard.sh -- python3 -B docs/audits/native-proxy-lifetime-controls-admission-20260913/audit.py --verify-saved
 ```
 
+The control harness and independent reader now pass source and inert-data
+qualification. The harness records each selected operation's exact return or
+failure envelope, before/after file state and descriptor outcomes before
+checking the expected rejection or beginning cleanup. Each opened object's
+identity also joins an independently observed named object.
+
+The planned fault mechanism raises a synchronous Perl exception after the
+observer records the original successful removal call. Its scope ends
+before subsequent probes, explicit maintenance and cleanup. This mechanism
+does not simulate an operating-system kill or concurrent process interference.
+
+Inert checks caught and corrected a missing-archive lookup that added a null
+member to the original context. The corrected caller-input copy preserves
+absence while still passing an explicit missing archive to release validation.
+The failed first check and its source remain retained alongside the correction.
+
+This qualifies the selected source/data paths and rejection checks. Final
+execution admission and the actual interruption file journal remain open.
+
+```sh
+scripts/run_with_ram_guard.sh -- python3 -B docs/audits/native-proxy-lifetime-control-harness-20260913/audit.py --verify-saved
+```
+
 [Return to runtime measurement](16dc-vial-portable-verilator-runtime-measurement.md).

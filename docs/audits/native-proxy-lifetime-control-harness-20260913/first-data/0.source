@@ -1,0 +1,130 @@
+package NativeProxyLifetimeControls;
+use strict;
+use warnings;
+use FixtureClone;
+
+sub clone { return NativeProxyObservationFixtureClone::clone($_[0]); }
+
+# These inputs are new caller-owned copies. A negative receipt never changes
+# the retained original acquisition, selection or settlement in the context.
+sub inputs {
+    my ($context, $case) = @_;
+    my $event = $case->{event};
+    my $value = {store => $context->{paths}{store}};
+    if ($event eq 'maintain_target') {
+        $value->{image_key} = $context->{runtimes}{target}{image}{key};
+    } elsif ($event eq 'retire_target') {
+        $value->{acquired} = clone($context->{runtimes}{target});
+        $value->{cleanup} = {compiler => _settled('failed'), outer => _settled('completed'),
+            stages => [_settled('cancelled')]};
+    } elsif ($event =~ /\A(?:release|reuse)_([ab])\z/) {
+        my $name = $1;
+        @$value{qw(request acquired)} = map { clone($_) }
+            ($context->{requests}{$name}, $context->{observations}{$name});
+        if ($event =~ /\Arelease_/) {
+            @$value{qw(archive selection settlement)} = map { clone($_) }
+                ($context->{archives}{$name}, $context->{selections}{$name}, $context->{settlements}{$name});
+        }
+    } else { die "control operation outside selected domain\n"; }
+    my $mutation = $case->{mutation} // '';
+    if ($mutation eq 'unreaped_runtime') {
+        $value->{cleanup}{stages}[0]{cleanup}{leader_reaped} = 0;
+    } elsif ($mutation eq 'unsettled_work') {
+        $value->{settlement}{receipts}[0]{cleanup}{group_gone} = 0;
+    } elsif ($mutation eq 'unsealed_work') {
+        $value->{settlement}{selection_sealed} = 0;
+    } elsif ($mutation ne '' && $mutation ne 'unknown_reference') {
+        die "control mutation outside selected domain\n";
+    }
+    return $value;
+}
+
+sub _settled {
+    return {outcome => $_[0], cleanup => {leader_started => 1, leader_reaped => 1, group_gone => 1}};
+}
+
+sub selector {
+    my ($context, $case) = @_;
+    return undef unless defined($case->{fault});
+    my $role = $case->{fault};
+    my ($operation, $path);
+    if ($role eq 'private_root') {
+        ($operation, $path) = ('rmdir', $context->{paths}{target});
+    } elsif ($role eq 'runtime_global') {
+        ($operation, $path) = ('unlink', $context->{runtimes}{target}{reference}{global}{identity}{path});
+    } elsif ($role eq 'observation_hold') {
+        ($operation, $path) = ('unlink', $context->{observations}{b}{observation_reference}{source}{identity}{path});
+    } else { die "fault role outside selected domain\n"; }
+    die "invalid control name\n" unless $case->{name} =~ /\A[a-z][a-z_]{0,63}\z/;
+    return {role => $role, operation => $operation, path => $path,
+        error => "INJECTED_LIFETIME_AFTER_EFFECT:$case->{name}\n"};
+}
+
+sub matches {
+    my ($selector, $call) = @_;
+    return 0 unless ref($selector) eq 'HASH' && ref($call) eq 'HASH'
+        && defined($call->{returned}) && $call->{returned} == 1
+        && $call->{operation} eq $selector->{operation};
+    return defined($call->{path}) && $call->{path} eq $selector->{path}
+        if $selector->{operation} eq 'rmdir';
+    return ref($call->{paths}) eq 'ARRAY' && @{$call->{paths}} == 1 && $call->{paths}[0] eq $selector->{path}
+        if $selector->{operation} eq 'unlink';
+    return 0;
+}
+
+sub with_fault {
+    my ($selector, $hits, $operation) = @_;
+    return $operation->() unless defined($selector);
+    die "fault hit carrier is not fresh\n" unless ref($hits) eq 'ARRAY' && !@$hits;
+    my $original = \&NativeProxyLifetimeTrace::_call;
+    no warnings 'redefine';
+    local *NativeProxyLifetimeTrace::_call = sub {
+        my ($call) = @_;
+        # The syscall has already happened. Preserve its original observer row
+        # and bounds check before injecting a synchronous Perl exception.
+        $original->(@_);
+        return unless matches($selector, $call);
+        push @$hits, {ordinal => $#{$NativeProxyLifetimeTrace::ROW->{calls}}, call => clone($call)};
+        die "duplicate selected after-effect hit\n" if @$hits > 1;
+        die $selector->{error};
+    };
+    return $operation->();
+}
+
+sub expected_error {
+    my ($case) = @_;
+    return "INJECTED_LIFETIME_AFTER_EFFECT:$case->{name}\n" if defined($case->{fault});
+    my %errors = (
+        runtime_pins => 'selected image is retained by an unresolved reference',
+        observation_a_pins => 'selected image is retained by an unresolved reference',
+        observation_b_pins => 'selected image is retained by an unresolved reference',
+        other_runtime_pins => 'selected image is retained by an unresolved reference',
+        release_before_archive => 'expected closed record fields',
+        repeated_release => 'original observation hold is absent or changed',
+        unreaped_runtime => 'complete compiler, outer and inner cleanup is unproved',
+        unsettled_work => 'selected work cleanup is incomplete',
+        unsealed_work => 'selected work is not sealed',
+        reuse_after_retirement => 'observation runtime reference is absent',
+        unknown_reference => 'expected explicit reference schema');
+    die "missing selected rejection diagnostic\n" unless exists($errors{$case->{name}});
+    return "$errors{$case->{name}}\n";
+}
+
+sub expected_nodes {
+    my ($before, $context, $effect) = @_;
+    my $nodes = clone($before);
+    if ($effect eq 'private_root' || $effect eq 'runtime_global') {
+        my $root = $context->{paths}{target};
+        delete $nodes->{$_} for grep { $_ eq $root || index($_, "$root/") == 0 } keys %$nodes;
+        delete $nodes->{$context->{runtimes}{target}{reference}{global}{identity}{path}}
+            if $effect eq 'runtime_global';
+    } elsif ($effect eq 'observation_hold') {
+        delete $nodes->{$context->{observations}{b}{observation_reference}{source}{identity}{path}};
+    } elsif ($effect eq 'maintenance') {
+        my $root = "$context->{paths}{store}/images/$context->{runtimes}{target}{image}{key}";
+        delete $nodes->{$_} for grep { $_ eq $root || index($_, "$root/") == 0 } keys %$nodes;
+    } elsif ($effect ne 'none') { die "physical effect outside selected domain\n"; }
+    return $nodes;
+}
+
+1;

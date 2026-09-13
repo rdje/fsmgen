@@ -1,0 +1,296 @@
+{
+  "actual_interruption_qualification": false,
+  "book": {
+    "checked_passages": [
+      "The control harness and independent reader now pass source and inert-data qualification.",
+      "Each opened object's identity also joins an independently observed named object.",
+      "The planned fault mechanism raises a synchronous Perl exception after the observer records the original successful removal call.",
+      "Final execution admission and the actual interruption file journal remain open.",
+      "docs/audits/native-proxy-lifetime-control-harness-20260913/audit.py --verify-saved"
+    ],
+    "exact_output_absent": true,
+    "exit_code": 0,
+    "output": ".artifacts/tmp/native-proxy-lifetime-control-harness-book-20260913/book",
+    "rendered_bytes": 23607911,
+    "rendered_directories": 2,
+    "rendered_files": 99,
+    "renderer_warnings": [
+      "WARN search index is very large (13288075 bytes)"
+    ],
+    "same_volume_direct_objects": true
+  },
+  "claims": {
+    "path": "docs/audits/native-proxy-lifetime-control-harness-20260913/claim-review.json",
+    "sha256": "ac4680f5bb95cffd1929df308b3ec7845b386ce690b04c1613e0070bea6cd0ff",
+    "size_bytes": 5058
+  },
+  "final_admission_pending": true,
+  "first_inert_failure_retained": true,
+  "owner": "HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.12.4.1.3.6.4.1.2",
+  "prior_acceptance": {
+    "history_bytes": 1801,
+    "history_id": "through_c8f87dd884da",
+    "history_lines": 5,
+    "history_sections": 1,
+    "history_sha256": "641cd90dd72ce6f50cca516a7ae2174ea4d2f3ec592d8d1d6bfa0d6ee6bbc4b5",
+    "live_heading": "Version-Retrievable Historical Views",
+    "record_type": "acceptance_history",
+    "retention_contract": "fsmgen_required_history",
+    "schema_version": 1,
+    "source_bytes": 1083873,
+    "source_lines": 6366,
+    "source_path": "docs/tasks/HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.md",
+    "source_revision": "c8f87dd884da1396dcc22653d7c52b0278b85302",
+    "source_sha256": "faf84c4205e2e58900a33d37b290cb2593c19f3710ba10e5a8c8339c92b1561c",
+    "start_heading": "Acceptance Checklist (source-bound interruption matrix .3.2.15.7.3.12.4.1.3.6.4.1.1)"
+  },
+  "prospective_roots_absent": [
+    ".artifacts/logs/native-proxy-observation-acquisition-20260910/cases/fsmgen-LifetimeControls20260913_runtime_pins",
+    ".artifacts/tmp/process-supervisor-tests/fsmgen-LifetimeControls20260913_runtime_pins_other",
+    ".artifacts/tmp/native-proxy-image-custody/cases/fsmgen-LifetimeControls20260913_runtime_pins",
+    ".artifacts/tmp/process-supervisor-tests/fsmgen-LifetimeControls20260913_runtime_pins_target",
+    ".artifacts/logs/native-proxy-observation-acquisition-20260910/cases/fsmgen-LifetimeControls20260913_observation_a_pins",
+    ".artifacts/tmp/process-supervisor-tests/fsmgen-LifetimeControls20260913_observation_a_pins_other",
+    ".artifacts/tmp/native-proxy-image-custody/cases/fsmgen-LifetimeControls20260913_observation_a_pins",
+    ".artifacts/tmp/process-supervisor-tests/fsmgen-LifetimeControls20260913_observation_a_pins_target",
+    ".artifacts/logs/native-proxy-observation-acquisition-20260910/cases/fsmgen-LifetimeControls20260913_observation_b_pins",
+    ".artifacts/tmp/process-supervisor-tests/fsmgen-LifetimeControls20260913_observation_b_pins_other",
+    ".artifacts/tmp/native-proxy-image-custody/cases/fsmgen-LifetimeControls20260913_observation_b_pins",
+    ".artifacts/tmp/process-supervisor-tests/fsmgen-LifetimeControls20260913_observation_b_pins_target",
+    ".artifacts/logs/native-proxy-observation-acquisition-20260910/cases/fsmgen-LifetimeControls20260913_other_runtime_pins",
+    ".artifacts/tmp/process-supervisor-tests/fsmgen-LifetimeControls20260913_other_runtime_pins_other",
+    ".artifacts/tmp/native-proxy-image-custody/cases/fsmgen-LifetimeControls20260913_other_runtime_pins",
+    ".artifacts/tmp/process-supervisor-tests/fsmgen-LifetimeControls20260913_other_runtime_pins_target",
+    ".artifacts/logs/native-proxy-observation-acquisition-20260910/cases/fsmgen-LifetimeControls20260913_release_before_archive",
+    ".artifacts/tmp/process-supervisor-tests/fsmgen-LifetimeControls20260913_release_before_archive_other",
+    ".artifacts/tmp/native-proxy-image-custody/cases/fsmgen-LifetimeControls20260913_release_before_archive",
+    ".artifacts/tmp/process-supervisor-tests/fsmgen-LifetimeControls20260913_release_before_archive_target",
+    ".artifacts/logs/native-proxy-observation-acquisition-20260910/cases/fsmgen-LifetimeControls20260913_repeated_release",
+    ".artifacts/tmp/process-supervisor-tests/fsmgen-LifetimeControls20260913_repeated_release_other",
+    ".artifacts/tmp/native-proxy-image-custody/cases/fsmgen-LifetimeControls20260913_repeated_release",
+    ".artifacts/tmp/process-supervisor-tests/fsmgen-LifetimeControls20260913_repeated_release_target",
+    ".artifacts/logs/native-proxy-observation-acquisition-20260910/cases/fsmgen-LifetimeControls20260913_unreaped_runtime",
+    ".artifacts/tmp/process-supervisor-tests/fsmgen-LifetimeControls20260913_unreaped_runtime_other",
+    ".artifacts/tmp/native-proxy-image-custody/cases/fsmgen-LifetimeControls20260913_unreaped_runtime",
+    ".artifacts/tmp/process-supervisor-tests/fsmgen-LifetimeControls20260913_unreaped_runtime_target",
+    ".artifacts/logs/native-proxy-observation-acquisition-20260910/cases/fsmgen-LifetimeControls20260913_unsettled_work",
+    ".artifacts/tmp/process-supervisor-tests/fsmgen-LifetimeControls20260913_unsettled_work_other",
+    ".artifacts/tmp/native-proxy-image-custody/cases/fsmgen-LifetimeControls20260913_unsettled_work",
+    ".artifacts/tmp/process-supervisor-tests/fsmgen-LifetimeControls20260913_unsettled_work_target",
+    ".artifacts/logs/native-proxy-observation-acquisition-20260910/cases/fsmgen-LifetimeControls20260913_unsealed_work",
+    ".artifacts/tmp/process-supervisor-tests/fsmgen-LifetimeControls20260913_unsealed_work_other",
+    ".artifacts/tmp/native-proxy-image-custody/cases/fsmgen-LifetimeControls20260913_unsealed_work",
+    ".artifacts/tmp/process-supervisor-tests/fsmgen-LifetimeControls20260913_unsealed_work_target",
+    ".artifacts/logs/native-proxy-observation-acquisition-20260910/cases/fsmgen-LifetimeControls20260913_reuse_after_retirement",
+    ".artifacts/tmp/process-supervisor-tests/fsmgen-LifetimeControls20260913_reuse_after_retirement_other",
+    ".artifacts/tmp/native-proxy-image-custody/cases/fsmgen-LifetimeControls20260913_reuse_after_retirement",
+    ".artifacts/tmp/process-supervisor-tests/fsmgen-LifetimeControls20260913_reuse_after_retirement_target",
+    ".artifacts/logs/native-proxy-observation-acquisition-20260910/cases/fsmgen-LifetimeControls20260913_unknown_reference",
+    ".artifacts/tmp/process-supervisor-tests/fsmgen-LifetimeControls20260913_unknown_reference_other",
+    ".artifacts/tmp/native-proxy-image-custody/cases/fsmgen-LifetimeControls20260913_unknown_reference",
+    ".artifacts/tmp/process-supervisor-tests/fsmgen-LifetimeControls20260913_unknown_reference_target",
+    ".artifacts/logs/native-proxy-observation-acquisition-20260910/cases/fsmgen-LifetimeControls20260913_after_private_rmdir",
+    ".artifacts/tmp/process-supervisor-tests/fsmgen-LifetimeControls20260913_after_private_rmdir_other",
+    ".artifacts/tmp/native-proxy-image-custody/cases/fsmgen-LifetimeControls20260913_after_private_rmdir",
+    ".artifacts/tmp/process-supervisor-tests/fsmgen-LifetimeControls20260913_after_private_rmdir_target",
+    ".artifacts/logs/native-proxy-observation-acquisition-20260910/cases/fsmgen-LifetimeControls20260913_after_global_unlink",
+    ".artifacts/tmp/process-supervisor-tests/fsmgen-LifetimeControls20260913_after_global_unlink_other",
+    ".artifacts/tmp/native-proxy-image-custody/cases/fsmgen-LifetimeControls20260913_after_global_unlink",
+    ".artifacts/tmp/process-supervisor-tests/fsmgen-LifetimeControls20260913_after_global_unlink_target",
+    ".artifacts/logs/native-proxy-observation-acquisition-20260910/cases/fsmgen-LifetimeControls20260913_after_last_observation_unlink",
+    ".artifacts/tmp/process-supervisor-tests/fsmgen-LifetimeControls20260913_after_last_observation_unlink_other",
+    ".artifacts/tmp/native-proxy-image-custody/cases/fsmgen-LifetimeControls20260913_after_last_observation_unlink",
+    ".artifacts/tmp/process-supervisor-tests/fsmgen-LifetimeControls20260913_after_last_observation_unlink_target"
+  ],
+  "qualified_report": {
+    "path": "docs/audits/native-proxy-lifetime-control-harness-20260913/harness-review.json",
+    "sha256": "790c83734ab1e44942f27935809dc806453babedc91c67661a90c0792ceb7a55",
+    "size_bytes": 35405
+  },
+  "raw_output_count": 30,
+  "raw_outputs": [
+    {
+      "bytes_hex": "7b2261637475616c5f666978747572655f6f7065726174696f6e73223a20302c20226361736573223a2031342c20227065726c5f636865636b73223a2039362c20227265616465725f636f756e7465726d6f64656c73223a2034312c202273756363657373223a20747275657d0a",
+      "path": ".artifacts/logs/native-proxy-lifetime-control-harness-20260913/harness-review.stdout",
+      "sha256": "a376734ee679b608054e4d15495eaccf0f200b203c9ea437ae930a3174ff62f1",
+      "size_bytes": 110
+    },
+    {
+      "bytes_hex": "72616d2d67756172643a205049442031363537383b20686f73742036392e34253b20686f7374206375746f6666203838253b2064657363656e64616e7420525353206375746f66662034303936204d69423b20706f6c6c2032730a",
+      "path": ".artifacts/logs/native-proxy-lifetime-control-harness-20260913/harness-review.stderr",
+      "sha256": "c9a3f8ca579d4bee93a0285eebdedae8d477db946a15436b899876293c6f1535",
+      "size_bytes": 91
+    },
+    {
+      "bytes_hex": "300a",
+      "path": ".artifacts/logs/native-proxy-lifetime-control-harness-20260913/harness-review.exit",
+      "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa",
+      "size_bytes": 2
+    },
+    {
+      "bytes_hex": "7b2261637475616c5f666978747572655f6f7065726174696f6e73223a20302c20226361736573223a2031342c20227065726c5f636865636b73223a2039362c20227265616465725f636f756e7465726d6f64656c73223a2034312c202273756363657373223a20747275657d0a",
+      "path": ".artifacts/logs/native-proxy-lifetime-control-harness-20260913/harness-saved.stdout",
+      "sha256": "a376734ee679b608054e4d15495eaccf0f200b203c9ea437ae930a3174ff62f1",
+      "size_bytes": 110
+    },
+    {
+      "bytes_hex": "72616d2d67756172643a205049442031373534313b20686f73742036382e37253b20686f7374206375746f6666203838253b2064657363656e64616e7420525353206375746f66662034303936204d69423b20706f6c6c2032730a",
+      "path": ".artifacts/logs/native-proxy-lifetime-control-harness-20260913/harness-saved.stderr",
+      "sha256": "2168bef9be1de587961e46564c8bcb27cee4c1291e52ca23d17395961b2f49eb",
+      "size_bytes": 91
+    },
+    {
+      "bytes_hex": "300a",
+      "path": ".artifacts/logs/native-proxy-lifetime-control-harness-20260913/harness-saved.exit",
+      "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa",
+      "size_bytes": 2
+    },
+    {
+      "bytes_hex": "",
+      "path": ".artifacts/logs/native-proxy-lifetime-control-harness-20260913/book.stdout",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "size_bytes": 0
+    },
+    {
+      "bytes_hex": "72616d2d67756172643a205049442031383833323b20686f73742037342e32253b20686f7374206375746f6666203838253b2064657363656e64616e7420525353206375746f66662034303936204d69423b20706f6c6c2032730a20494e464f20426f6f6b206275696c64696e672068617320737461727465640a20494e464f2052756e6e696e67207468652068746d6c206261636b656e640a205741524e2073656172636820696e6465782069732076657279206c6172676520283133323838303735206279746573290a20494e464f2048544d4c20626f6f6b207772697474656e20746f20602f566f6c756d65732f5353442f446f63756d656e74732f6769746875622f66736d67656e2f2e6172746966616374732f746d702f6e61746976652d70726f78792d6c69666574696d652d636f6e74726f6c2d6861726e6573732d626f6f6b2d32303236303931332f626f6f6b600a",
+      "path": ".artifacts/logs/native-proxy-lifetime-control-harness-20260913/book.stderr",
+      "sha256": "d5ccc77dce13f6b3ac126168d10944680510cc8c0e39aada0b1b99fd631fef5a",
+      "size_bytes": 342
+    },
+    {
+      "bytes_hex": "300a",
+      "path": ".artifacts/logs/native-proxy-lifetime-control-harness-20260913/book.exit",
+      "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa",
+      "size_bytes": 2
+    },
+    {
+      "bytes_hex": "7b22636865636b65645f7061737361676573223a205b2254686520636f6e74726f6c206861726e65737320616e6420696e646570656e64656e7420726561646572206e6f77207061737320736f7572636520616e6420696e6572742d64617461207175616c696669636174696f6e2e222c202245616368206f70656e6564206f626a6563742773206964656e7469747920616c736f206a6f696e7320616e20696e646570656e64656e746c79206f62736572766564206e616d6564206f626a6563742e222c202254686520706c616e6e6564206661756c74206d656368616e69736d2072616973657320612073796e6368726f6e6f7573205065726c20657863657074696f6e20616674657220746865206f62736572766572207265636f72647320746865206f726967696e616c207375636365737366756c2072656d6f76616c2063616c6c2e222c202246696e616c20657865637574696f6e2061646d697373696f6e20616e64207468652061637475616c20696e74657272757074696f6e2066696c65206a6f75726e616c2072656d61696e206f70656e2e222c2022646f63732f6175646974732f6e61746976652d70726f78792d6c69666574696d652d636f6e74726f6c2d6861726e6573732d32303236303931332f61756469742e7079202d2d7665726966792d7361766564225d2c202265786163745f6f75747075745f616273656e74223a20747275652c2022657869745f636f6465223a20302c20226f7574707574223a20222e6172746966616374732f746d702f6e61746976652d70726f78792d6c69666574696d652d636f6e74726f6c2d6861726e6573732d626f6f6b2d32303236303931332f626f6f6b222c202272656e64657265645f6279746573223a2032333630373931312c202272656e64657265645f6469726563746f72696573223a20322c202272656e64657265645f66696c6573223a2039392c202272656e64657265725f7761726e696e6773223a205b225741524e2073656172636820696e6465782069732076657279206c617267652028313332383830373520627974657329225d2c202273616d655f766f6c756d655f6469726563745f6f626a65637473223a20747275657d0a",
+      "path": ".artifacts/logs/native-proxy-lifetime-control-harness-20260913/book-inspection.stdout",
+      "sha256": "566e0a0d74ab5249e4ded4625a5a0a9058dca465b72c28487e87335000b8f6fa",
+      "size_bytes": 818
+    },
+    {
+      "bytes_hex": "72616d2d67756172643a205049442031393534313b20686f73742037322e36253b20686f7374206375746f6666203838253b2064657363656e64616e7420525353206375746f66662034303936204d69423b20706f6c6c2032730a",
+      "path": ".artifacts/logs/native-proxy-lifetime-control-harness-20260913/book-inspection.stderr",
+      "sha256": "db5152c1016bb147212e188502c694cad4642c6274873128db6b3e61f39727c9",
+      "size_bytes": 91
+    },
+    {
+      "bytes_hex": "300a",
+      "path": ".artifacts/logs/native-proxy-lifetime-control-harness-20260913/book-inspection.exit",
+      "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa",
+      "size_bytes": 2
+    },
+    {
+      "bytes_hex": "636c61696d2d696e76656e746f72793a2077726f746520646f637472696e652f636c61696d5f766572696669636174696f6e2f696e76656e746f72792e6a736f6e6c0a636c61696d2d696e76656e746f72793a2063757272656e742d737572666163652063656e73757320616e6420696e646570656e64656e742063656e73757320616772656520286e756d657269635f6c696e65733d31323632372c2063616e646964617465733d313933372c207175616e7469666965643d3935322c20636f6e7365727661746976653d3938352c20636f6e7374616e74733d323732322c206f726967696e616c5f636f6e7374616e74733d3631352c206f70656e5f6d6967726174696f6e5f6f776e6572733d302c20756e747261636b65645f70726f6475636572733d302c20756e776174636865645f63616e646964617465733d31393337290a636c61696d2d696e76656e746f72793a20706172746974696f6e2061646f7074696f6e5f7265666572656e63655f6f725f7374727563747572653d3133350a636c61696d2d696e76656e746f72793a20706172746974696f6e20636f64655f6f725f646174615f6578616d706c653d333037330a636c61696d2d696e76656e746f72793a20706172746974696f6e20646572697665645f616e645f776174636865645f70726f6a656374696f6e3d3134300a636c61696d2d696e76656e746f72793a20706172746974696f6e206964656e7469666965725f6c69746572616c5f6f725f6e617669676174696f6e3d373334320a",
+      "path": ".artifacts/logs/native-proxy-lifetime-control-harness-20260913/claims-write.stdout",
+      "sha256": "f54f52ca4731cedd22f8d9efbfde4687908ce0920bcc33f8f64ce7346ae39727",
+      "size_bytes": 567
+    },
+    {
+      "bytes_hex": "72616d2d67756172643a205049442031383734343b20686f73742037332e36253b20686f7374206375746f6666203838253b2064657363656e64616e7420525353206375746f66662034303936204d69423b20706f6c6c2032730a",
+      "path": ".artifacts/logs/native-proxy-lifetime-control-harness-20260913/claims-write.stderr",
+      "sha256": "7d5b9c828a770ec9d0adafd3d36fc5bda5d7d5fd6ce7020eb42cb587e61f0f63",
+      "size_bytes": 91
+    },
+    {
+      "bytes_hex": "300a",
+      "path": ".artifacts/logs/native-proxy-lifetime-control-harness-20260913/claims-write.exit",
+      "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa",
+      "size_bytes": 2
+    },
+    {
+      "bytes_hex": "636c61696d2d696e76656e746f72793a2063757272656e742d737572666163652063656e73757320616e6420696e646570656e64656e742063656e73757320616772656520286e756d657269635f6c696e65733d31323632372c2063616e646964617465733d313933372c207175616e7469666965643d3935322c20636f6e7365727661746976653d3938352c20636f6e7374616e74733d323732322c206f726967696e616c5f636f6e7374616e74733d3631352c206f70656e5f6d6967726174696f6e5f6f776e6572733d302c20756e747261636b65645f70726f6475636572733d302c20756e776174636865645f63616e646964617465733d31393337290a636c61696d2d696e76656e746f72793a20706172746974696f6e2061646f7074696f6e5f7265666572656e63655f6f725f7374727563747572653d3133350a636c61696d2d696e76656e746f72793a20706172746974696f6e20636f64655f6f725f646174615f6578616d706c653d333037330a636c61696d2d696e76656e746f72793a20706172746974696f6e20646572697665645f616e645f776174636865645f70726f6a656374696f6e3d3134300a636c61696d2d696e76656e746f72793a20706172746974696f6e206964656e7469666965725f6c69746572616c5f6f725f6e617669676174696f6e3d373334320a",
+      "path": ".artifacts/logs/native-proxy-lifetime-control-harness-20260913/claims-check.stdout",
+      "sha256": "6549a29a71ef6ee55aafcc65e1bd6ac2866844f646ca4f5e96f261a27bf60084",
+      "size_bytes": 500
+    },
+    {
+      "bytes_hex": "72616d2d67756172643a205049442031393632363b20686f73742037322e36253b20686f7374206375746f6666203838253b2064657363656e64616e7420525353206375746f66662034303936204d69423b20706f6c6c2032730a",
+      "path": ".artifacts/logs/native-proxy-lifetime-control-harness-20260913/claims-check.stderr",
+      "sha256": "e887ae7d11e25424a42edad3c354ff3cb4cd31bf2d3c794b0d7cefc8e73a3bd3",
+      "size_bytes": 91
+    },
+    {
+      "bytes_hex": "300a",
+      "path": ".artifacts/logs/native-proxy-lifetime-control-harness-20260913/claims-check.exit",
+      "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa",
+      "size_bytes": 2
+    },
+    {
+      "bytes_hex": "7b22636c61696d5f6964656e746974795f756e6368616e676564223a20747275652c2022736869667465645f63616e64696461746573223a20302c20227265646572697665645f636f6e7374616e7473223a20347d0a",
+      "path": ".artifacts/logs/native-proxy-lifetime-control-harness-20260913/claims-review.stdout",
+      "sha256": "503beabaaa05420a9c3ba0ca8fed073f2383d931aa6673d56f4d3ab072c41b38",
+      "size_bytes": 86
+    },
+    {
+      "bytes_hex": "72616d2d67756172643a205049442032363938313b20686f73742037362e37253b20686f7374206375746f6666203838253b2064657363656e64616e7420525353206375746f66662034303936204d69423b20706f6c6c2032730a",
+      "path": ".artifacts/logs/native-proxy-lifetime-control-harness-20260913/claims-review.stderr",
+      "sha256": "d116ef27b9500c93e16b1bb8b7bad3c558e8a4650a3099163e35d9dee207e796",
+      "size_bytes": 91
+    },
+    {
+      "bytes_hex": "300a",
+      "path": ".artifacts/logs/native-proxy-lifetime-control-harness-20260913/claims-review.exit",
+      "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa",
+      "size_bytes": 2
+    },
+    {
+      "bytes_hex": "",
+      "path": ".artifacts/logs/native-proxy-lifetime-control-harness-20260913/knowledge-generate.stdout",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "size_bytes": 0
+    },
+    {
+      "bytes_hex": "72616d2d67756172643a205049442031383633383b20686f73742037332e32253b20686f7374206375746f6666203838253b2064657363656e64616e7420525353206375746f66662034303936204d69423b20706f6c6c2032730a6b6e6f776c656467652d6d61703a2077726f7465204b4e4f574c454447455f4d41502e6d6420706c75732031333920746f706963207368617264732028313136312066616374732c203634343020756e69717565207175657374696f6e732c203636313120616e73776572206f6363757272656e636573290a",
+      "path": ".artifacts/logs/native-proxy-lifetime-control-harness-20260913/knowledge-generate.stderr",
+      "sha256": "4501580f059c1c7801f0fa2012ffa3a61c9b1e69305dada8afaaa10d9bb328a1",
+      "size_bytes": 212
+    },
+    {
+      "bytes_hex": "300a",
+      "path": ".artifacts/logs/native-proxy-lifetime-control-harness-20260913/knowledge-generate.exit",
+      "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa",
+      "size_bytes": 2
+    },
+    {
+      "bytes_hex": "",
+      "path": ".artifacts/logs/native-proxy-lifetime-control-harness-20260913/knowledge-check.stdout",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "size_bytes": 0
+    },
+    {
+      "bytes_hex": "72616d2d67756172643a205049442031393732373b20686f73742037322e39253b20686f7374206375746f6666203838253b2064657363656e64616e7420525353206375746f66662034303936204d69423b20706f6c6c2032730a6b6e6f776c656467652d6d61703a204f4b2028313136312066616374732c203634343020756e69717565207175657374696f6e732c203636313120616e73776572206f6363757272656e6365732c2031333920626f756e64656420746f706963207368617264733b20717565727920706172697479207665726966696564290a",
+      "path": ".artifacts/logs/native-proxy-lifetime-control-harness-20260913/knowledge-check.stderr",
+      "sha256": "b6e31e962d456f40a859e136f9e8db6344203a1d97f4ea65d9caa4ced0b2ec21",
+      "size_bytes": 219
+    },
+    {
+      "bytes_hex": "300a",
+      "path": ".artifacts/logs/native-proxy-lifetime-control-harness-20260913/knowledge-check.exit",
+      "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa",
+      "size_bytes": 2
+    },
+    {
+      "bytes_hex": "33336231633062346362343132323730333466336138623336396339636163656664633237633332204849414c2d5649414c2d564552494649434154494f4e2d464958545552452d4152434849544543545552452e31392e322e332e312e322e322e352e352e322e332e312e322e322e332e322e31352e372e332e31322e342e312e332e332e322e313a207175616c69667920737461626c65206f62736572766174696f6e2072657573650a",
+      "path": ".artifacts/logs/native-proxy-lifetime-control-harness-20260913/pickaxe.stdout",
+      "sha256": "8c3e907c3d4314b97f607b38c4f62b05a1fc8dc6b4e4a8a343d98b5e789e8535",
+      "size_bytes": 172
+    },
+    {
+      "bytes_hex": "",
+      "path": ".artifacts/logs/native-proxy-lifetime-control-harness-20260913/pickaxe.stderr",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "size_bytes": 0
+    },
+    {
+      "bytes_hex": "300a",
+      "path": ".artifacts/logs/native-proxy-lifetime-control-harness-20260913/pickaxe.exit",
+      "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa",
+      "size_bytes": 2
+    }
+  ],
+  "schema": "fsmgen.inactive_lifetime_control_harness_completion.v1",
+  "source_revision": "c8f87dd884da1396dcc22653d7c52b0278b85302",
+  "unchanged_questions": 117
+}

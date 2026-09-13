@@ -1,0 +1,37 @@
+[
+  {
+    "path": "docs/audits/native-proxy-lifetime-control-harness-20260913/Controls.pm",
+    "sha256": "94eeb9730331bdc7bd1f54eb251a3b597113a7ed98c28fd8e71ace5768246598",
+    "size_bytes": 6186
+  },
+  {
+    "path": "docs/audits/native-proxy-lifetime-control-harness-20260913/consume_controls.py",
+    "sha256": "cd26ab6b349afda8c69e570284f41438fbae7ce0f06ce3e7b2ff885dd252c7b5",
+    "size_bytes": 16149
+  },
+  {
+    "path": "docs/audits/native-proxy-lifetime-control-harness-20260913/control-routines.pl.source",
+    "sha256": "23e76982c4d6c3bfb68d6e18ae5c3bb61f395d467032a0346da6b8eb24e56ea7",
+    "size_bytes": 5777
+  },
+  {
+    "path": "docs/audits/native-proxy-lifetime-control-harness-20260913/harness-plan.json",
+    "sha256": "6de1377be4ad4eb0ee5bbcd382a2d9ca4a457df904b7fd08665976c87dca2cf0",
+    "size_bytes": 19734
+  },
+  {
+    "path": "docs/audits/native-proxy-lifetime-control-harness-20260913/qualify_controls.pl",
+    "sha256": "9a46d6c4db654d93824263e652f1fe34dffdf3b1badc37134719eca13c556cb7",
+    "size_bytes": 35192
+  },
+  {
+    "path": "docs/audits/native-proxy-lifetime-control-harness-20260913/resources.py",
+    "sha256": "f2c57b242fc8581a359c916de1f14e80170c79999edc596c6f31b953c946f31b",
+    "size_bytes": 4199
+  },
+  {
+    "path": "docs/audits/native-proxy-lifetime-control-harness-20260913/support_controls.py",
+    "sha256": "4da2f8ed8499bfaaf1574ce090fe026a5a04d4c81d294f9c97500fbda25fa5fa",
+    "size_bytes": 1083
+  }
+]

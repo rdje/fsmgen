@@ -2801,16 +2801,16 @@ decomposes the architecture needed to move beyond that bounded foundation.
   Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.12.4.1.3.6.4.1.1: bind lifetime interruption control matrix`
 
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.12.4.1.3.6.4.1.2`
-  Status: `proposed`
+  Status: `done`
   Goal: `Implement the selected interruption harness and independent journal consumer.`
   Acceptance: `Implement only the committed control matrix with source-level after-effect selectors, complete first-result journals, independent physical and receipt checks, same-volume ownership, descriptor tracking and bounded exact cleanup. Qualify new code using source and inert carriers only; do not run actual fixture controls.`
-  Verification: `pending`
-  Commit: `pending`
+  Verification: `The new harness and independent reader are source/data qualified against 89 exact Git inputs. Source joins preserve twenty complete-harness functions, adapt journal/main and add four control routines. Fourteen inert cases and both retained healthy resource traces pass independent checks; forty-one altered-evidence controls reject. The first Perl bridge exposes the missing-archive map alias at one of 96 checks; exact original sources, carriers, failed report and outputs remain in first-data-failure.json. A scalar-only diagnostic isolates null-member creation; the guarded input copy passes all 96 corrected checks with zero fixture/process attempts. Actual controls remain unexecuted and all 56 prospective roots are absent. Exact source/data, first-epoch, descriptor and ownership review is docs/audits/native-proxy-lifetime-control-harness-20260913/harness-review.json; documentation, claims, saved-only review and prior acceptance recovery are completion.json and completion-checks.json. source-finalization.json preserves the first reviewer epoch while removing only an inappropriate future-preflight absence assumption; execution guards are unchanged. Complete reader/setup integration and the committed permit remain .3.6.4.1.3 before .3.6.4.2 executes. No original replay, compiler, collector, native process or live store.`
+  Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.12.4.1.3.6.4.1.2: qualify lifetime control harness source`
 
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.12.4.1.3.6.4.1.3`
   Status: `proposed`
   Goal: `Close prospective control admission and pin the execution permit.`
-  Acceptance: `Join selected source contracts, new harness and independent consumer, source/data checks and falsifiers. Pin every runtime dependency and one-use committed-admission permit, verify fresh roots absent, update live book and continuity, and commit before activating the actual execution owner.`
+  Acceptance: `Join selected source contracts, new harness and independent consumer, source/data checks and falsifiers. Qualify complete reader stream/setup integration, including newly created-file descriptor joins, before pinning every runtime dependency and one-use committed-admission permit, verify fresh roots absent, update live book and continuity, and commit before activating the actual execution owner.`
   Verification: `pending`
   Commit: `pending`
 
@@ -3763,7 +3763,7 @@ decomposes the architecture needed to move beyond that bounded foundation.
 
 ## Current Frontier
 
-Current frontier: .3.2.15.7.3.12.4.1.3.6.4.1.1 is done; .3.6.4.1.2 next implements its harness and independent reader, followed by final admission .3.6.4.1.3. Only .3.6.4.2 executes after admission commits. Native/live and historical startup/parent/full CI/push remain gated.
+Current frontier: .3.2.15.7.3.12.4.1.3.6.4.1.2 is done; .3.6.4.1.3 next closes complete reader/setup integration and the final execution permit. Only .3.6.4.2 executes after admission commits. Native/live and historical startup/parent/full CI/push remain gated.
 
 Architecture audit `.1` is complete. Decision `0032` selects one public
 `.vial` source language, private immutable `VIALSemanticIR` and
@@ -6359,8 +6359,8 @@ Completed native-proxy feasibility through runtime-source-controls acceptance: r
 The manifest binds the immediately preceding acceptance suffix to its exact Git source. That source preserves the earlier history pointer and versioned manifest chain; current node contracts remain authoritative.
 
 
-## Acceptance Checklist (source-bound interruption matrix .3.2.15.7.3.12.4.1.3.6.4.1.1)
+## Acceptance Checklist (control harness source/data .3.2.15.7.3.12.4.1.3.6.4.1.2)
 
-- [x] **ROOT CAUSE (WHY + WHERE)** — `git log -S 'sub _unlink_exact' -1 --format='%H %s' -- docs/audits/native-proxy-observation-archive-release-20260911/ObservationRelease.pm` locates exact release at da27b5cbaf01af7cbe294c8f851c8273dd750856. Complete file lifetimes do not establish interrupted effects: current source marks attempted unlink before the syscall and completion after its return. Retained successful call prefixes expose the private-root, runtime-global and last-observation boundaries without running an interruption.
-- [x] **ADDRESSED (verified)** — Source-bound selection and independent matrix review cover invalid ordering, unsettled work, each retained reference kind, unknown owners, post-retirement reuse and partial removals. Wrong selectors, rollback, premature maintenance and promoted completion flags reject. Exact first import failure and unchanged renamed author survive. Re-derivation, falsification and durability: docs/audits/native-proxy-lifetime-controls-admission-20260913/plan.json, source-contracts.json, call-witnesses.json, review.json and completion.json. Harness/consumer implementation, final admission and actual execution remain separately owned.
-- [x] **NO REGRESSION** — `knowledge-map: OK` preserves the exact question set and saved-only matrix review route. Source/data reviews, rendered book inspection, unchanged claim identities/dispositions and exact prior acceptance recovery pass before staged doctrines and normal hooks. Only empty task separators are removed; no ceiling changes. No original producer, new fixture controls, native process, compiler, collector or live canonical store runs; historical startup/parent/full CI/push gates remain open.
+- [x] **ROOT CAUSE (WHY + WHERE)** — `git log -S 'sub clone' -1 --format='%H %s' -- docs/audits/native-proxy-observation-reuse-20260910/FixtureClone.pm` traces the unchanged byte-preserving clone helper to 33b1c0b4cb41227034f3a8b369c9cacefdc27c32. The first new inert test reports release_before_archive original context unchanged as failed at qualify_data.t line 39. A scalar-only Perl diagnostic shows map aliases a missing archive hash slot and creates a null member; an exists guard preserves its absence.
+- [x] **ADDRESSED (verified)** — The new guarded input copier preserves the original context and the explicit missing-archive API input. The scoped after-effect harness and independent reader preserve first return/error channels, closed descriptors, exact call hits, physical effects and explicit maintenance. Corrected Perl controls and altered-evidence rejection checks pass; exact failed sources, first outputs and the failed report remain retained. Re-derivation, falsification and durability: docs/audits/native-proxy-lifetime-control-harness-20260913/harness-plan.json, first-data-failure.json, archive-alias-correction.json, data-review.json, harness-review.json and completion.json. Final admission still owns complete reader/setup integration and the execution permit; actual controls remain separate.
+- [x] **NO REGRESSION** — `knowledge-map: OK` preserves the exact question set and saved-only harness review route. Compile-only, corrected inert Perl, independent/saved source/data reviews, rendered book inspection, unchanged claim identities/dispositions and exact prior acceptance recovery pass before staged doctrines and normal hooks. No original producer, actual control fixture, compiler, collector or native process executes. Final admission, actual file effects, native/live integration and historical startup/parent/full CI/push remain open.

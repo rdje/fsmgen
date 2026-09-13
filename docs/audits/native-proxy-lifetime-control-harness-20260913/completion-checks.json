@@ -1,0 +1,38 @@
+[
+  {
+    "bytes_hex": "636f6e74726f6c206861726e65737320636f6d706c6574696f6e3a204f4b3b20736f757263652f64617461207175616c69666965643b2066696e616c2061646d697373696f6e20616e642061637475616c20636f6e74726f6c732070656e64696e670a",
+    "path": ".artifacts/logs/native-proxy-lifetime-control-harness-20260913/completion.stdout",
+    "sha256": "680d8aadd0da27af8dd9d9da0dac3787dfcb66a48142b5a35e40997785b335ca",
+    "size_bytes": 99
+  },
+  {
+    "bytes_hex": "72616d2d67756172643a205049442033373632303b20686f73742037322e32253b20686f7374206375746f6666203838253b2064657363656e64616e7420525353206375746f66662034303936204d69423b20706f6c6c2032730a",
+    "path": ".artifacts/logs/native-proxy-lifetime-control-harness-20260913/completion.stderr",
+    "sha256": "82fd87f26306fd1a6d961f7f1372bf00d952b3deabb8004edae2aa58865064e2",
+    "size_bytes": 91
+  },
+  {
+    "bytes_hex": "300a",
+    "path": ".artifacts/logs/native-proxy-lifetime-control-harness-20260913/completion.exit",
+    "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa",
+    "size_bytes": 2
+  },
+  {
+    "bytes_hex": "636f6e74726f6c206861726e65737320636f6d706c6574696f6e3a204f4b3b20736f757263652f64617461207175616c69666965643b2066696e616c2061646d697373696f6e20616e642061637475616c20636f6e74726f6c732070656e64696e670a",
+    "path": ".artifacts/logs/native-proxy-lifetime-control-harness-20260913/completion-saved.stdout",
+    "sha256": "680d8aadd0da27af8dd9d9da0dac3787dfcb66a48142b5a35e40997785b335ca",
+    "size_bytes": 99
+  },
+  {
+    "bytes_hex": "72616d2d67756172643a205049442036373535343b20686f73742037302e35253b20686f7374206375746f6666203838253b2064657363656e64616e7420525353206375746f66662034303936204d69423b20706f6c6c2032730a",
+    "path": ".artifacts/logs/native-proxy-lifetime-control-harness-20260913/completion-saved.stderr",
+    "sha256": "1aaaca0e9fc3e99a490a695de96f8199de419795460d92e554c2addd0099bb72",
+    "size_bytes": 91
+  },
+  {
+    "bytes_hex": "300a",
+    "path": ".artifacts/logs/native-proxy-lifetime-control-harness-20260913/completion-saved.exit",
+    "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa",
+    "size_bytes": 2
+  }
+]

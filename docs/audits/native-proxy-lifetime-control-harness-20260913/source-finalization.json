@@ -1,0 +1,25 @@
+{
+  "after_source": {
+    "path": "docs/audits/native-proxy-lifetime-control-harness-20260913/audit.py",
+    "sha256": "fcec83c9e3e1e32e569c2fec8466820178bcf213b8d579568cf82d13cf0cbb56",
+    "size_bytes": 9551
+  },
+  "before_manifest": {
+    "path": "docs/audits/native-proxy-lifetime-control-harness-20260913/first-review-harness-pins.json.source",
+    "sha256": "ebdf945591985a227b185f010d0a837f17b3cffa968be641cccd783baa81ae2a",
+    "size_bytes": 8606
+  },
+  "before_source": {
+    "path": "docs/audits/native-proxy-lifetime-control-harness-20260913/first-review-audit.py.source",
+    "sha256": "8bb1f504c0c579fbd51de13eb8913d79f963fd326bd19bd020cba64823f27436",
+    "size_bytes": 9610
+  },
+  "execution_harness_unchanged": {
+    "path": "docs/audits/native-proxy-lifetime-control-harness-20260913/qualify_controls.pl",
+    "sha256": "9a46d6c4db654d93824263e652f1fe34dffdf3b1badc37134719eca13c556cb7",
+    "size_bytes": 35192
+  },
+  "reason": "A historical source/data review must remain verifiable after the separately owned final preflight is created. Its presence is not a source/data invariant. The executable still requires the pinned final permit, exact active execution owner and task identity.",
+  "removed_line_hex": "20202020617373657274206e6f742028424153452f2766696e616c2d707265666c696768742d70696e732e6a736f6e27292e65786973747328290a",
+  "scope": "Source review finalization before commit; no test or producer replay."
+}
