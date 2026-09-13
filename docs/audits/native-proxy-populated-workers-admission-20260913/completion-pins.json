@@ -1,0 +1,162 @@
+[
+  {
+    "path": "KNOWLEDGE_MAP.md",
+    "sha256": "e2e801f6af7b0f8926e098474568bc0d3f7ae112a91b7321388948098a3004ba",
+    "size_bytes": 13325
+  },
+  {
+    "path": "MEMORY.md",
+    "sha256": "bbfe2b6be7d2fcefed2dcfb5088e4a2ffab6107a2467f5bcdc5c427d516f86a1",
+    "size_bytes": 684
+  },
+  {
+    "path": "docs/TASK_TREE.md",
+    "sha256": "748016ef3b697bd760560aeed58394d106105d1b15f5ead18aa197258b23effe",
+    "size_bytes": 38858
+  },
+  {
+    "path": "docs/audits/native-proxy-populated-workers-admission-20260913/admission-task-refinement.json",
+    "sha256": "8c0c5be4b16a2cbe60e44e2ff209fb66151d01395fcb2f42c20f8e1f694d2683",
+    "size_bytes": 7565
+  },
+  {
+    "path": "docs/audits/native-proxy-populated-workers-admission-20260913/api-inventory.json",
+    "sha256": "80c1794f81bc2d850fe32db3a9423c35a95be989a57558f5dfabd84296e4e063",
+    "size_bytes": 4817
+  },
+  {
+    "path": "docs/audits/native-proxy-populated-workers-admission-20260913/audit.py",
+    "sha256": "c75e900d20baa02bf71ee210c03cdec7202c3cd0e1b218ec9280aa66014b99d4",
+    "size_bytes": 8200
+  },
+  {
+    "path": "docs/audits/native-proxy-populated-workers-admission-20260913/book-metrics.json",
+    "sha256": "8a599821817a187800477ca2da18f8c172e28f0d0801399c64dd33a4266dfa55",
+    "size_bytes": 175
+  },
+  {
+    "path": "docs/audits/native-proxy-populated-workers-admission-20260913/book-review.json",
+    "sha256": "5b6fb4563d52ec012766e84b62e56ea9396cdaf90761beca1829b34e5645bdfb",
+    "size_bytes": 1107
+  },
+  {
+    "path": "docs/audits/native-proxy-populated-workers-admission-20260913/card-containment.json",
+    "sha256": "38d5cb8cf3864716f078c289128afcc8b34e386b9cb13845aafcc97272ba39b4",
+    "size_bytes": 286
+  },
+  {
+    "path": "docs/audits/native-proxy-populated-workers-admission-20260913/claim-review.json",
+    "sha256": "a08ddb8de1819d534f256f8a5525035fbe10ef6c4f0f31f81ef0f5e990425884",
+    "size_bytes": 4099
+  },
+  {
+    "path": "docs/audits/native-proxy-populated-workers-admission-20260913/completion-layout.json",
+    "sha256": "5a124e4092c0d82d9311572f35a2f48366da0a7926a8bccf90723440e7ca5091",
+    "size_bytes": 1309
+  },
+  {
+    "path": "docs/audits/native-proxy-populated-workers-admission-20260913/input-pins.json",
+    "sha256": "5a9e84cad675b4acbe184a699107c02af80e1020aa4022139c9eeace12d60e30",
+    "size_bytes": 3882
+  },
+  {
+    "path": "docs/audits/native-proxy-populated-workers-admission-20260913/inspect_book.py",
+    "sha256": "562e6c75b3ae33e79f47aa5f249383771905c5a33d920c988b772330a1474bb2",
+    "size_bytes": 3209
+  },
+  {
+    "path": "docs/audits/native-proxy-populated-workers-admission-20260913/qualify_recovery_controls.py",
+    "sha256": "21628aecb463edefd3412c44a8bc5bf729674701f40f1fefd31128272797c3b7",
+    "size_bytes": 2907
+  },
+  {
+    "path": "docs/audits/native-proxy-populated-workers-admission-20260913/recovery-controls.json",
+    "sha256": "b0ab0da680258c12caa2a7ed7ddae12c367239f9c3d501130b786da199e6854f",
+    "size_bytes": 1433
+  },
+  {
+    "path": "docs/audits/native-proxy-populated-workers-admission-20260913/recovery-finding.json",
+    "sha256": "25abec0b85284321c0dcbbb47e50f15419d3dda678969342ea6ce592d0250061",
+    "size_bytes": 1238
+  },
+  {
+    "path": "docs/audits/native-proxy-populated-workers-admission-20260913/recovery-first.json",
+    "sha256": "48dfa2e92b8c875d4eccd69d2da648bf8aa90f6a70390e090678c6e05dbd3f36",
+    "size_bytes": 3690
+  },
+  {
+    "path": "docs/audits/native-proxy-populated-workers-admission-20260913/reproduce_recovery.py",
+    "sha256": "22602fec0b53760f7650db7fd8c74af312195ca855dc13f4b391561a135af3d3",
+    "size_bytes": 2967
+  },
+  {
+    "path": "docs/audits/native-proxy-populated-workers-admission-20260913/review.json",
+    "sha256": "537ea7eae70aa2ebeacef3b082b1165b3c3d8ebd0518e9046c8bb7c5a233e38b",
+    "size_bytes": 1254
+  },
+  {
+    "path": "docs/audits/native-proxy-populated-workers-admission-20260913/review_claims.py",
+    "sha256": "eb7b514a19d4ab51231f658ea51310dbbf2a5d997100116bbfb48184f66ffa5d",
+    "size_bytes": 5032
+  },
+  {
+    "path": "docs/audits/native-proxy-populated-workers-admission-20260913/review_completion.py",
+    "sha256": "afe1fc9a02b1bbe52fce1fdf03a381f523a310692207e3357d2f1a9e77cd2c52",
+    "size_bytes": 5339
+  },
+  {
+    "path": "docs/audits/native-proxy-populated-workers-admission-20260913/scenario-proposal.json",
+    "sha256": "e9857f1f46714dc46a9eba245a57f3d159e26bfea0ebecfaa6ad24e28ef8aa94",
+    "size_bytes": 3411
+  },
+  {
+    "path": "docs/audits/native-proxy-populated-workers-admission-20260913/scope.before-refinement.source",
+    "sha256": "f7a960d6095ece0f34067d791137f6706b5cdd8bd75a494cb25f4da30d6567a3",
+    "size_bytes": 939
+  },
+  {
+    "path": "docs/audits/native-proxy-populated-workers-admission-20260913/scope.json",
+    "sha256": "d9f63ff569d6c93ab74340e78ee8541784d15928af520e9abaddeb08006597ff",
+    "size_bytes": 1432
+  },
+  {
+    "path": "docs/audits/native-proxy-populated-workers-admission-20260913/task-layout.json",
+    "sha256": "673b57bb0e29548057a3ce7c5dc4f77bdba307941fc7acd019c3d2cf5727a4cc",
+    "size_bytes": 7205
+  },
+  {
+    "path": "docs/book/src/16dk-inactive-proxy-lifetimes.md",
+    "sha256": "630e060e1b5674ff73d8ef39dcca6d863f49f8b55d56c56012239a17be567dc5",
+    "size_bytes": 26171
+  },
+  {
+    "path": "docs/knowledge/test-subprocess-policy-adapters.md",
+    "sha256": "0286500fa3156460ccdf111ea98705d7e2dbf6508cac011b6cb06d5d84475df9",
+    "size_bytes": 9853
+  },
+  {
+    "path": "docs/tasks/HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.md",
+    "sha256": "7df465bcf1fcb6263d8b94471f249feb93fd9112883cc1dc22a330b224255452",
+    "size_bytes": 1134030
+  },
+  {
+    "path": "docs/tasks/history/HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE/acceptance-history.jsonl",
+    "sha256": "2900f0d590e14899e306f7dcbffc86a52342dfd16829314571b09c7e8e1935cd",
+    "size_bytes": 846
+  },
+  {
+    "path": "doctrine/claim_verification/inventory.jsonl",
+    "sha256": "164cdcdca17de681134c51a3f9cb5eb47d0295115b79b1fc841afcfacc8dacd5",
+    "size_bytes": 3015722
+  },
+  {
+    "path": "doctrine/live_document_size/surfaces.jsonl",
+    "sha256": "421a6eea6408a49e5a78a471aeb6f219a97c5fa44a7e6f6712692e9f07c6d047",
+    "size_bytes": 25930
+  },
+  {
+    "path": "knowledge-map/generated/test-subprocess.md",
+    "sha256": "779e58a7d84ab02c2b27874e77249adbf9bf194e5f63d10c9ba127957c543510",
+    "size_bytes": 20892
+  }
+]

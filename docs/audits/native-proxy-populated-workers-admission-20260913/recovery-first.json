@@ -1,0 +1,57 @@
+{
+  "outputs": {
+    "exit": "0\n",
+    "stderr": "ram-guard: PID 20814; host 76.8%; host cutoff 88%; descendant RSS cutoff 4096 MiB; poll 2s\n",
+    "stdout": "{\"actual_os_operations\": [], \"compiler_invocations\": 0, \"defect_reproduced\": true, \"failure\": \"refusing to signal a worker without admitted native ownership\", \"fixture_allocations\": 0, \"frames\": [{\"function\": \"reproduce\", \"line\": 35, \"path\": \"docs/audits/native-proxy-populated-workers-admission-20260913/reproduce_recovery.py\"}, {\"function\": \"recover\", \"line\": 282, \"path\": \"docs/audits/native-proxy-language-coordination-admission-20260913/runtime.py\"}, {\"function\": \"signal\", \"line\": 223, \"path\": \"docs/audits/native-proxy-language-coordination-admission-20260913/runtime.py\"}], \"historical_actual_runs_reclassified\": false, \"native_identity_admitted\": false, \"pending_model_chunks\": 3, \"pending_model_streams\": 2, \"recovery_complete\": false, \"required_resolution\": \"The fresh populated controller must consume terminal output and its failed outcome without first requiring a signal or promoting native admission.\", \"scope\": \"In-memory terminal child before native admission, with undrained pipes.\", \"sources\": [{\"path\": \"docs/audits/native-proxy-language-coordination-admission-20260913/runtime.py\", \"sha256\": \"b57946ccbe38873918dd21e2e1b5e090c9eeeee964a48281e516245c200d8c49\", \"size_bytes\": 14544}, {\"path\": \"docs/audits/native-proxy-language-coordination-admission-20260913/qualify_runtime_data.py\", \"sha256\": \"bcf4d60051c63d0acacdb360c86a5ef120cd3abc965e9078d1e4d2baa64d3870\", \"size_bytes\": 8399}], \"terminal_model_child\": true, \"worker_invocations\": 0}\n"
+  },
+  "reproducer": {
+    "path": "docs/audits/native-proxy-populated-workers-admission-20260913/reproduce_recovery.py",
+    "sha256": "22602fec0b53760f7650db7fd8c74af312195ca855dc13f4b391561a135af3d3",
+    "size_bytes": 2967
+  },
+  "result": {
+    "actual_os_operations": [],
+    "compiler_invocations": 0,
+    "defect_reproduced": true,
+    "failure": "refusing to signal a worker without admitted native ownership",
+    "fixture_allocations": 0,
+    "frames": [
+      {
+        "function": "reproduce",
+        "line": 35,
+        "path": "docs/audits/native-proxy-populated-workers-admission-20260913/reproduce_recovery.py"
+      },
+      {
+        "function": "recover",
+        "line": 282,
+        "path": "docs/audits/native-proxy-language-coordination-admission-20260913/runtime.py"
+      },
+      {
+        "function": "signal",
+        "line": 223,
+        "path": "docs/audits/native-proxy-language-coordination-admission-20260913/runtime.py"
+      }
+    ],
+    "historical_actual_runs_reclassified": false,
+    "native_identity_admitted": false,
+    "pending_model_chunks": 3,
+    "pending_model_streams": 2,
+    "recovery_complete": false,
+    "required_resolution": "The fresh populated controller must consume terminal output and its failed outcome without first requiring a signal or promoting native admission.",
+    "scope": "In-memory terminal child before native admission, with undrained pipes.",
+    "sources": [
+      {
+        "path": "docs/audits/native-proxy-language-coordination-admission-20260913/runtime.py",
+        "sha256": "b57946ccbe38873918dd21e2e1b5e090c9eeeee964a48281e516245c200d8c49",
+        "size_bytes": 14544
+      },
+      {
+        "path": "docs/audits/native-proxy-language-coordination-admission-20260913/qualify_runtime_data.py",
+        "sha256": "bcf4d60051c63d0acacdb360c86a5ef120cd3abc965e9078d1e4d2baa64d3870",
+        "size_bytes": 8399
+      }
+    ],
+    "terminal_model_child": true,
+    "worker_invocations": 0
+  }
+}

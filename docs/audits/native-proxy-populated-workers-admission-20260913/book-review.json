@@ -1,0 +1,24 @@
+{
+  "checked_passages": [
+    "The earlier Python peer remains qualified only for empty-store coordination.",
+    "These are prospective cases, not an operational execution admission.",
+    "Controller recovery must be repaired before that admission.",
+    "A no-process model found that an exited child can still have unread output.",
+    "No newly launched worker failed here.",
+    "docs/audits/native-proxy-populated-workers-admission-20260913/audit.py --verify-saved"
+  ],
+  "checked_runtime_passages": [
+    "observer lifetimes and selected empty-store coordination are qualified below; native behavior and populated-worker qualification remain open.",
+    "These are inert filesystem qualifications; real receipt transport and native behavior remain open."
+  ],
+  "exact_output_absent": true,
+  "exit_code": 0,
+  "output": ".artifacts/tmp/native-proxy-populated-inventory-book-20260913/book",
+  "rendered_bytes": 23681011,
+  "rendered_directories": 2,
+  "rendered_files": 99,
+  "renderer_warnings": [
+    "WARN search index is very large (13326038 bytes)"
+  ],
+  "same_volume_direct_objects": true
+}

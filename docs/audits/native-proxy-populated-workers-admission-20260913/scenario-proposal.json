@@ -1,0 +1,93 @@
+{
+  "cases": [
+    {
+      "name": "equal_publication",
+      "obligations": [
+        "actual contended acquisition of equal bytes",
+        "one shared image with distinct complete runtime references",
+        "retiring one workspace preserves the other reference and image",
+        "maintenance rejects until the last runtime reference is retired"
+      ],
+      "workers": [
+        "publisher_a",
+        "publisher_b"
+      ]
+    },
+    {
+      "name": "different_publication",
+      "obligations": [
+        "actual contended acquisition of different bytes",
+        "distinct complete images and runtime references",
+        "retirement and maintenance of one image preserve the other image and reference"
+      ],
+      "workers": [
+        "publisher_a",
+        "publisher_b"
+      ]
+    },
+    {
+      "name": "observation_across_retirement",
+      "obligations": [
+        "actual observer acquires original target snapshots and hold",
+        "runtime retirement preserves the observation hold and image",
+        "archive uses retained bytes after private workspace removal",
+        "maintenance rejects until observation release"
+      ],
+      "workers": [
+        "publisher",
+        "observer",
+        "maintainer"
+      ]
+    },
+    {
+      "name": "equal_references_with_observer",
+      "obligations": [
+        "equal publication retains separate runtime references",
+        "observer holds the shared image while each runtime retires",
+        "last observation release preserves the unreferenced image until explicit maintenance"
+      ],
+      "workers": [
+        "publisher_a",
+        "publisher_b",
+        "observer"
+      ]
+    },
+    {
+      "name": "cancelled_runtime_owner",
+      "obligations": [
+        "cancel the admitted publisher while it holds a populated inspection transaction before mutation",
+        "consume actual terminal worker and group results",
+        "the cancelled owner reference remains conservative custody",
+        "explicit inert retirement uses preserved acquisition data only after worker settlement"
+      ],
+      "workers": [
+        "publisher",
+        "recovery_peer"
+      ]
+    },
+    {
+      "name": "cancelled_observer_owner",
+      "obligations": [
+        "cancel the admitted observer after retaining its complete hold and snapshots",
+        "consume actual terminal worker and group results",
+        "maintenance still rejects the unresolved observation reference",
+        "archive and release use exact retained observation data without recreating target state"
+      ],
+      "workers": [
+        "publisher",
+        "observer",
+        "recovery_peer"
+      ]
+    }
+  ],
+  "compiler_proxy_original_collector_invocations": 0,
+  "execution_authorized": false,
+  "final_bounds_and_protocol_owner": "HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.12.4.1.5.3.1.4",
+  "first_failure_rule": "Retain first error and owned settlement; no producer replay or successful-run promotion.",
+  "inert_images_only": true,
+  "maximum_simultaneous_workers": 3,
+  "ordering_rule": "Use controller commands and lock/transaction dependencies. Do not compare independent worker clocks or require arbitrary cross-stream arrival order.",
+  "owner": "HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.12.4.1.5.3.1.1",
+  "planned_worker_instances": 15,
+  "proposal_only": true
+}

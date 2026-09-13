@@ -1,0 +1,142 @@
+{
+  "book": {
+    "checked_passages": [
+      "The earlier Python peer remains qualified only for empty-store coordination.",
+      "These are prospective cases, not an operational execution admission.",
+      "Controller recovery must be repaired before that admission.",
+      "A no-process model found that an exited child can still have unread output.",
+      "No newly launched worker failed here.",
+      "docs/audits/native-proxy-populated-workers-admission-20260913/audit.py --verify-saved"
+    ],
+    "checked_runtime_passages": [
+      "observer lifetimes and selected empty-store coordination are qualified below; native behavior and populated-worker qualification remain open.",
+      "These are inert filesystem qualifications; real receipt transport and native behavior remain open."
+    ],
+    "exact_output_absent": true,
+    "exit_code": 0,
+    "output": ".artifacts/tmp/native-proxy-populated-inventory-book-20260913/book",
+    "rendered_bytes": 23681011,
+    "rendered_directories": 2,
+    "rendered_files": 99,
+    "renderer_warnings": [
+      "WARN search index is very large (13326038 bytes)"
+    ],
+    "same_volume_direct_objects": true
+  },
+  "claims": {
+    "path": "docs/audits/native-proxy-populated-workers-admission-20260913/claim-review.json",
+    "sha256": "a08ddb8de1819d534f256f8a5525035fbe10ef6c4f0f31f81ef0f5e990425884",
+    "size_bytes": 4099
+  },
+  "inventory_complete": true,
+  "native_live_startup_qualification_open": true,
+  "next_owner": "HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.12.4.1.5.3.1.2",
+  "operational_admission_qualified": false,
+  "owner": "HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.12.4.1.5.3.1.1",
+  "previous_acceptance": {
+    "history_bytes": 1486,
+    "history_id": "through_21714f2e1fce",
+    "history_lines": 5,
+    "history_sections": 1,
+    "history_sha256": "cd8fcd8b2f4e7092edda0617c36b0e461e0ee17016563e3beb5923cf02e8f855",
+    "live_heading": "Version-Retrievable Historical Views",
+    "record_type": "acceptance_history",
+    "retention_contract": "fsmgen_required_history",
+    "schema_version": 1,
+    "source_bytes": 1126633,
+    "source_lines": 6370,
+    "source_path": "docs/tasks/HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.md",
+    "source_revision": "21714f2e1fce574289751baeb941f7a6ff4ace01",
+    "source_sha256": "e8790bf8d6e857e9c9d9897e5a4cfc68f32a106a1599daecad99cfa052e4e7a2",
+    "start_heading": "Acceptance Checklist (workspace profile join .3.2.15.7.3.12.4.1.5.2.3)"
+  },
+  "raw_outputs": {
+    "book": {
+      "exit": "0\n",
+      "stderr": "ram-guard: PID 85173; host 74.8%; host cutoff 88%; descendant RSS cutoff 4096 MiB; poll 2s\n INFO Book building has started\n INFO Running the html backend\n WARN search index is very large (13326038 bytes)\n INFO HTML book written to `/Volumes/SSD/Documents/github/fsmgen/.artifacts/tmp/native-proxy-populated-inventory-book-20260913/book`\n",
+      "stdout": ""
+    },
+    "book-inspection": {
+      "exit": "0\n",
+      "stderr": "ram-guard: PID 86595; host 80.0%; host cutoff 88%; descendant RSS cutoff 4096 MiB; poll 2s\n",
+      "stdout": "{\"checked_passages\": [\"The earlier Python peer remains qualified only for empty-store coordination.\", \"These are prospective cases, not an operational execution admission.\", \"Controller recovery must be repaired before that admission.\", \"A no-process model found that an exited child can still have unread output.\", \"No newly launched worker failed here.\", \"docs/audits/native-proxy-populated-workers-admission-20260913/audit.py --verify-saved\"], \"checked_runtime_passages\": [\"observer lifetimes and selected empty-store coordination are qualified below; native behavior and populated-worker qualification remain open.\", \"These are inert filesystem qualifications; real receipt transport and native behavior remain open.\"], \"exact_output_absent\": true, \"exit_code\": 0, \"output\": \".artifacts/tmp/native-proxy-populated-inventory-book-20260913/book\", \"rendered_bytes\": 23681011, \"rendered_directories\": 2, \"rendered_files\": 99, \"renderer_warnings\": [\"WARN search index is very large (13326038 bytes)\"], \"same_volume_direct_objects\": true}\n"
+    },
+    "claims-check": {
+      "exit": "0\n",
+      "stderr": "ram-guard: PID 10397; host 77.0%; host cutoff 88%; descendant RSS cutoff 4096 MiB; poll 2s\n",
+      "stdout": "claim-inventory: current-surface census and independent census agree (numeric_lines=12630, candidates=1937, quantified=952, conservative=985, constants=2736, original_constants=615, open_migration_owners=0, untracked_producers=0, unwatched_candidates=1937)\n"
+    },
+    "claims-review": {
+      "exit": "0\n",
+      "stderr": "ram-guard: PID 12068; host 76.9%; host cutoff 88%; descendant RSS cutoff 4096 MiB; poll 2s\n",
+      "stdout": "{\"claim_identity_unchanged\": true, \"shifted_candidates\": 0, \"rederived_constants\": 4}\n"
+    },
+    "claims-write": {
+      "exit": "0\n",
+      "stderr": "ram-guard: PID 8688; host 76.1%; host cutoff 88%; descendant RSS cutoff 4096 MiB; poll 2s\n",
+      "stdout": "claim-inventory: wrote doctrine/claim_verification/inventory.jsonl\nclaim-inventory: current-surface census and independent census agree (numeric_lines=12630, candidates=1937, quantified=952, conservative=985, constants=2736, original_constants=615, open_migration_owners=0, untracked_producers=0, unwatched_candidates=1937)\n"
+    },
+    "inventory-audit": {
+      "exit": "0\n",
+      "stderr": "ram-guard: PID 53535; host 83.6%; host cutoff 88%; descendant RSS cutoff 4096 MiB; poll 2s\n",
+      "stdout": "{\"claim_legs\": {\"durability\": \"Tracked source inventory, proposal, first reproducer/output, controls and owned next repair.\", \"falsify\": \"Adjacent terminal states and altered inventory, source, ownership, counts and execution claims.\", \"rederive\": \"Pinned public source coordinates and exact first recovery-model source/result.\"}, \"fixture_allocations\": 0, \"next_action\": \"Repair and qualify the fresh controller before any populated-worker operational admission.\", \"owner\": \"HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.12.4.1.5.3.1.1\", \"rejected_controls\": [\"stale_source_epoch\", \"lost_public_api\", \"moved_api_coordinate\", \"unowned_case\", \"worker_count_changed\", \"proposal_promoted\", \"defect_hidden\", \"repair_owner_lost\", \"actual_failure_invented\", \"adjacent_control_lost\"], \"result\": {\"adjacent_state_controls\": 2, \"api_roles\": 8, \"operational_admission_qualified\": false, \"planned_worker_instances\": 15, \"proposed_cases\": 6, \"public_functions\": 11, \"recovery_defect_reproduced\": true, \"repair_owner\": \"HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.12.4.1.5.3.1.2\"}, \"selected_inputs\": 19, \"source_revision\": \"21714f2e1fce574289751baeb941f7a6ff4ace01\", \"worker_invocations\": 0}\n"
+    },
+    "knowledge-check": {
+      "exit": "0\n",
+      "stderr": "ram-guard: PID 87251; host 79.8%; host cutoff 88%; descendant RSS cutoff 4096 MiB; poll 2s\nknowledge-map: OK (1161 facts, 6447 unique questions, 6618 answer occurrences, 139 bounded topic shards; query parity verified)\n",
+      "stdout": ""
+    },
+    "knowledge-generate": {
+      "exit": "0\n",
+      "stderr": "ram-guard: PID 87120; host 81.3%; host cutoff 88%; descendant RSS cutoff 4096 MiB; poll 2s\nknowledge-map: wrote KNOWLEDGE_MAP.md plus 139 topic shards (1161 facts, 6447 unique questions, 6618 answer occurrences)\n",
+      "stdout": ""
+    },
+    "knowledge-query": {
+      "exit": "0\n",
+      "stderr": "ram-guard: PID 87445; host 80.4%; host cutoff 88%; descendant RSS cutoff 4096 MiB; poll 2s\n",
+      "stdout": "why can terminal worker recovery fail before native admission?\ttest-subprocess-policy-adapters\tdocs/knowledge/test-subprocess-policy-adapters.md\n"
+    },
+    "pickaxe": {
+      "exit": "0\n",
+      "stderr": "ram-guard: PID 87543; host 81.4%; host cutoff 88%; descendant RSS cutoff 4096 MiB; poll 2s\n",
+      "stdout": "295130388c20c6ee94650c610c2df6d597eeffa7 HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.12.4.1.4.1: qualify prospective language-worker coordination\n"
+    }
+  },
+  "recovery_defect_fixed": false,
+  "result": {
+    "claim_legs": {
+      "durability": "Tracked source inventory, proposal, first reproducer/output, controls and owned next repair.",
+      "falsify": "Adjacent terminal states and altered inventory, source, ownership, counts and execution claims.",
+      "rederive": "Pinned public source coordinates and exact first recovery-model source/result."
+    },
+    "fixture_allocations": 0,
+    "next_action": "Repair and qualify the fresh controller before any populated-worker operational admission.",
+    "owner": "HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.12.4.1.5.3.1.1",
+    "rejected_controls": [
+      "stale_source_epoch",
+      "lost_public_api",
+      "moved_api_coordinate",
+      "unowned_case",
+      "worker_count_changed",
+      "proposal_promoted",
+      "defect_hidden",
+      "repair_owner_lost",
+      "actual_failure_invented",
+      "adjacent_control_lost"
+    ],
+    "result": {
+      "adjacent_state_controls": 2,
+      "api_roles": 8,
+      "operational_admission_qualified": false,
+      "planned_worker_instances": 15,
+      "proposed_cases": 6,
+      "public_functions": 11,
+      "recovery_defect_reproduced": true,
+      "repair_owner": "HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.12.4.1.5.3.1.2"
+    },
+    "selected_inputs": 19,
+    "source_revision": "21714f2e1fce574289751baeb941f7a6ff4ace01",
+    "worker_invocations": 0
+  },
+  "source_revision": "21714f2e1fce574289751baeb941f7a6ff4ace01"
+}

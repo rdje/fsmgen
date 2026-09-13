@@ -1,0 +1,11 @@
+{
+  "after_bytes": 9853,
+  "after_lines": 146,
+  "before_bytes": 9856,
+  "before_lines": 146,
+  "ceilings_unchanged": true,
+  "current_questions": 124,
+  "folded_evidence_line_join_only": true,
+  "prior_questions": 123,
+  "source_revision": "21714f2e1fce574289751baeb941f7a6ff4ace01"
+}

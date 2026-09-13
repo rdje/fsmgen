@@ -382,6 +382,22 @@ wrapper test's cleanup receipts remain synthetic; they do not authenticate real
 compiler, outer or inner ownership. This join runs no compiler or fixture.
 Populated-store worker qualification is next.
 
+The proposed populated-worker cases cover equal and different publication,
+independent runtime references, observation holds across retirement, and
+cancellation of runtime or observer owners. They use inert bytes through the
+current Perl transaction APIs; a Python controller supervises the workers.
+The earlier Python peer remains qualified only for empty-store coordination.
+These are prospective cases, not an operational execution admission.
+
+Controller recovery must be repaired before that admission. A no-process model
+found that an exited child can still have unread output. Without an admitted
+native identity, inherited recovery tries to signal it and raises before
+draining its pipes or consuming the result. Adjacent models with already-drained
+streams or a previously admitted identity complete recovery. No newly launched
+worker failed here. The original source and first result are retained, and the
+next controller slice owns the repair. Synthetic retirement and observation
+settlement records remain separate from later actual worker-cancellation proof.
+
 | Remaining work | Required result |
 | --- | --- |
 | Populated-store workers | Qualify equal/different publication, separate references and observation holds through actual cancellation and retirement. |
@@ -399,7 +415,7 @@ remain required before any product activation.
 scripts/run_with_ram_guard.sh -- python3 -B docs/audits/native-proxy-wrapper-compatibility-20260913/audit.py --verify-saved
 scripts/run_with_ram_guard.sh -- python3 -B docs/audits/native-proxy-compiler-profile-inventory-20260913/audit.py --verify-saved
 scripts/run_with_ram_guard.sh -- python3 -B docs/audits/native-proxy-compiler-profile-admission-20260913/epoch.py --verify-saved
-scripts/run_with_ram_guard.sh -- python3 -B docs/audits/native-proxy-workspace-profile-join-20260913/audit.py --verify-saved
+scripts/run_with_ram_guard.sh -- python3 -B docs/audits/native-proxy-populated-workers-admission-20260913/audit.py --verify-saved
 ```
 
 [Return to runtime measurement](16dc-vial-portable-verilator-runtime-measurement.md).

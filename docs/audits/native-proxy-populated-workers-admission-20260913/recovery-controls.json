@@ -1,0 +1,30 @@
+{
+  "outputs": {
+    "exit": "0\n",
+    "stderr": "ram-guard: PID 71483; host 85.4%; host cutoff 88%; descendant RSS cutoff 4096 MiB; poll 2s\n",
+    "stdout": "{\"controls\": [{\"group_absence\": \"test-double assumption, not a kernel observation\", \"initial_streams_drained\": true, \"native_admission_modeled\": false, \"recovered\": true, \"signal_operations\": 0, \"terminal_result_consumed\": true}, {\"group_absence\": \"test-double assumption, not a kernel observation\", \"initial_streams_drained\": false, \"native_admission_modeled\": true, \"recovered\": true, \"signal_operations\": 0, \"terminal_result_consumed\": true}], \"fixture_allocations\": 0, \"original_defect_retained\": true, \"worker_invocations\": 0}\n"
+  },
+  "result": {
+    "controls": [
+      {
+        "group_absence": "test-double assumption, not a kernel observation",
+        "initial_streams_drained": true,
+        "native_admission_modeled": false,
+        "recovered": true,
+        "signal_operations": 0,
+        "terminal_result_consumed": true
+      },
+      {
+        "group_absence": "test-double assumption, not a kernel observation",
+        "initial_streams_drained": false,
+        "native_admission_modeled": true,
+        "recovered": true,
+        "signal_operations": 0,
+        "terminal_result_consumed": true
+      }
+    ],
+    "fixture_allocations": 0,
+    "original_defect_retained": true,
+    "worker_invocations": 0
+  }
+}

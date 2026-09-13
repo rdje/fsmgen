@@ -1,0 +1,97 @@
+[
+  {
+    "path": "docs/audits/native-proxy-image-coordination-20260910/Coordination.pm",
+    "sha256": "a0d99769147f28ca7c35e9ac80ba88f7cf14760e3bef7b51841d8badebc060e5",
+    "size_bytes": 19061
+  },
+  {
+    "path": "docs/audits/native-proxy-image-custody-20260910/vectors.json",
+    "sha256": "60992f01705436d9c7efbc280d6de73f4c132d91ffea9359852c10c9afb7890d",
+    "size_bytes": 1373
+  },
+  {
+    "path": "docs/audits/native-proxy-image-maintenance-20260910/ImageMaintenance.pm",
+    "sha256": "1295957d97737e764c0e800885a2c3f9adfa327a0d41b35d122dde3e21698cac",
+    "size_bytes": 5678
+  },
+  {
+    "path": "docs/audits/native-proxy-language-coordination-20260913/review.json",
+    "sha256": "c494717ddeb1464c09147cb5470f469c280256d29fefb478835aaaaa7c053104",
+    "size_bytes": 3905
+  },
+  {
+    "path": "docs/audits/native-proxy-language-coordination-admission-20260913/contract.py",
+    "sha256": "880ba14322af24b2de61ac77c9739308f7ed6a9f6b6cd980d73a18c6e4e565dd",
+    "size_bytes": 2441
+  },
+  {
+    "path": "docs/audits/native-proxy-language-coordination-admission-20260913/peer.py",
+    "sha256": "deb84e4389c995bb628736bfab37ae5fb9cdddba02e800d35c06e85158a95470",
+    "size_bytes": 6882
+  },
+  {
+    "path": "docs/audits/native-proxy-language-coordination-admission-20260913/plan.json",
+    "sha256": "74ed9619e40ce86ff45673cde7d3baff44ccca17f5dabb440c172811138e5e55",
+    "size_bytes": 20675
+  },
+  {
+    "path": "docs/audits/native-proxy-language-coordination-admission-20260913/qualify_runtime_data.py",
+    "sha256": "bcf4d60051c63d0acacdb360c86a5ef120cd3abc965e9078d1e4d2baa64d3870",
+    "size_bytes": 8399
+  },
+  {
+    "path": "docs/audits/native-proxy-language-coordination-admission-20260913/runtime.py",
+    "sha256": "b57946ccbe38873918dd21e2e1b5e090c9eeeee964a48281e516245c200d8c49",
+    "size_bytes": 14544
+  },
+  {
+    "path": "docs/audits/native-proxy-language-coordination-admission-20260913/worker.pl",
+    "sha256": "7c098297062c596c886d74ce6f74f1532f6a03f35a5301957185e69ffdbe837a",
+    "size_bytes": 7538
+  },
+  {
+    "path": "docs/audits/native-proxy-lifetime-files-admission-20260913/qualify.pl",
+    "sha256": "370d9ca6313d914b2fb65f4f356464a6557caefc9ada550ab2b526e646b89b4f",
+    "size_bytes": 29118
+  },
+  {
+    "path": "docs/audits/native-proxy-observation-acquisition-20260910/ObservationAcquisition.pm",
+    "sha256": "809c013255ab6973a2d0dabcfd5b0ae5c55c97696d7acc77b10cf68149006470",
+    "size_bytes": 16517
+  },
+  {
+    "path": "docs/audits/native-proxy-observation-archive-20260911/ObservationArchive.pm",
+    "sha256": "79454039421822af31f9891d0a3d3ebe1b4c1ebcc6f6c8decd1f78e081736e87",
+    "size_bytes": 6196
+  },
+  {
+    "path": "docs/audits/native-proxy-observation-archive-release-20260911/ObservationRelease.pm",
+    "sha256": "08236265e6e6973ab23e9e31ee26071272f39e8879c2d420ab2382fc800345ab",
+    "size_bytes": 10294
+  },
+  {
+    "path": "docs/audits/native-proxy-observation-work-records-20260911/WorkRecord.pm",
+    "sha256": "3f0f1351bc44a2a8b42502b7b814544f9d756ae8c39e17db470b312635a6e56d",
+    "size_bytes": 8126
+  },
+  {
+    "path": "docs/audits/native-proxy-runtime-acquisition-20260910/ReferenceAcquisition.pm",
+    "sha256": "b751c88d709e102f7f9b9dd17e0222c39e0a81acc16d7194f7f7c3f4c8535b57",
+    "size_bytes": 6565
+  },
+  {
+    "path": "docs/audits/native-proxy-runtime-retirement-20260910/PrivateWorkspace.pm",
+    "sha256": "98e324cf9ef89471ffb4ede683ce21a8e09fc02329739a0856285ecea067e18f",
+    "size_bytes": 6425
+  },
+  {
+    "path": "docs/audits/native-proxy-runtime-retirement-20260910/RuntimeRetirement.pm",
+    "sha256": "766348d16243d3868ca5f8b653f757f8f2eaf5c1aba8ec27fd2d9c67e9fd0bcc",
+    "size_bytes": 8727
+  },
+  {
+    "path": "docs/audits/native-proxy-workspace-profile-join-20260913/review.json",
+    "sha256": "2cbe7af73aa505fb80a994f9cf5df71c5f16352fb2b4a9b5f9ecb1b3ab69c73b",
+    "size_bytes": 2132
+  }
+]

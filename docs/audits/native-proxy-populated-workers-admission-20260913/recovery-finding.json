@@ -1,0 +1,13 @@
+{
+  "actual_worker_launched": false,
+  "evidence": "docs/audits/native-proxy-populated-workers-admission-20260913/recovery-first.json",
+  "existing_actual_qualification_reclassified": false,
+  "owner": "HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.12.4.1.5.3.1.1",
+  "repair_contract": "The fresh controller must distinguish child termination from stream completion, preserve the failed admission, drain within bounds and consume the terminal outcome without signaling a dead child or fabricating native authority.",
+  "repair_owner": "HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.12.4.1.5.3.1.2",
+  "result": "A terminal child with undrained pipes reaches signal before native identity was admitted. signal rejects, so recovery leaves the modeled streams and failed outcome unconsumed.",
+  "root_cause": "Worker.finished includes pipe EOF. recover therefore treats terminal-but-undrained as needing a signal; signal requires self.native even though no live child needs termination.",
+  "runtime_effect_observed": false,
+  "source_revision": "21714f2e1fce574289751baeb941f7a6ff4ace01",
+  "status": "reproduced; repair required before populated-worker admission"
+}
