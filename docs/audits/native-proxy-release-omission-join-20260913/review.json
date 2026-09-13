@@ -1,0 +1,82 @@
+{
+  "assertions": 716,
+  "book_review": "docs/audits/native-proxy-release-omission-join-20260913/book-review.json",
+  "claim_legs": {
+    "durability": "All original profile sources and exact copies are Git-bound. The complete join, prospective pins, source proof paths, domain digest and raw first-run outputs survive in exact tracked copies with saved-only join/recovery verification and book/Knowledge Map routes.",
+    "falsify": "Missing, duplicate or misbound domain cases reject. Original closure rewrites with coherent snapshot digests, lost witnesses, duplicate/wrong-object/incomplete recovery, changed original snapshots and duplicate/overlapping roots reject. Original closure oracles still reject every actual omitted handle.",
+    "rederive": "Original source-owned baseline close selection reconstructs the full selected case domain. Every original source epoch, profile row/state oracle and native source-adaptation proof is checked; a separate raw-record counter agrees with all retained profile totals."
+  },
+  "commit_gate": "Staged doctrines and normal commit hooks must pass before this slice is committed.",
+  "continuity_review": "docs/audits/native-proxy-release-omission-join-20260913/continuity-review.json",
+  "documentation_review": "docs/audits/native-proxy-release-omission-join-20260913/documentation-review.json",
+  "domain_sha256": "bff6c8359182cf29e6ee037f365228b3416f4afc9f938eef86bccb3e5ba47ea4",
+  "first_executions": {
+    "admission": true,
+    "book": true,
+    "book-inspection": true,
+    "history": true,
+    "join": true,
+    "knowledge": true,
+    "knowledge-generate": true,
+    "prepare": true,
+    "recovery": true,
+    "saved-join": true,
+    "saved-recovery": true,
+    "task-integrity": true
+  },
+  "knowledge_aggregate": {
+    "bytes_total": 3492388,
+    "files": 1160,
+    "lines_total": 47288
+  },
+  "knowledge_questions_preserved": 117,
+  "limits": "Representative cleanup-scope omission qualification is complete. Final release, native/lifetime and historical startup/parent/full CI/push remain separate.",
+  "omission_kinds": {
+    "directory_omissions": 8,
+    "lock_omissions": 4,
+    "source_omissions": 28
+  },
+  "owner": "HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.12.4.1.3.4.4.5.6",
+  "raw_output_records": 34,
+  "raw_verification_outputs": "docs/audits/native-proxy-release-omission-join-20260913/verification-outputs.json",
+  "recovery": {
+    "bytes": 15866,
+    "copies": 10,
+    "falsifiers": [
+      "missing-copy",
+      "foreign-destination",
+      "corrupt-copy-digest"
+    ],
+    "source_reaccess": false,
+    "success": true
+  },
+  "result": "docs/audits/native-proxy-release-omission-join-20260913/result/join.json",
+  "schema": "fsmgen.release_omission_join_review.v1",
+  "scope": "Join every selected genuine release omission profile from original retained rows. Revalidate source epochs, selected cleanup scopes, actual native liveness, unchanged original rejection, exact separate recovery, file effects and profile state without fixture replay or old main calls. Selection is representative per cleanup scope, not every possible omission or ambiguous OS close failure. Final release, native/lifetime and historical startup/parent/full CI/push remain separate gates.",
+  "selection_proofs": [
+    "docs/audits/native-proxy-observation-archive-release-omissions-ordinary-20260913/native-trace-source-review.json",
+    "docs/audits/native-proxy-observation-archive-release-omissions-active-20260913/row-source-review.json",
+    "docs/audits/native-proxy-observation-archive-release-omissions-last-20260913/row-source-review.json"
+  ],
+  "source_revision": "1f86e946c075c641cd49c51d61c342fa02936df8",
+  "success": true,
+  "totals": {
+    "active_state_cases": 11,
+    "calls": 26191,
+    "cases": 44,
+    "directories": 2156,
+    "equal_identity_cases": 11,
+    "events": 84381,
+    "handles": 7315,
+    "healthy": 4,
+    "last_state_cases": 11,
+    "locks": 44,
+    "original_auditor_rejections": 40,
+    "original_open_verdicts": 40,
+    "reads": 5115,
+    "separately_recovered": 40,
+    "sources": 5115,
+    "unlinks": 44,
+    "unreferenced_image_cases": 11
+  }
+}

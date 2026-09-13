@@ -3001,7 +3001,25 @@ files. Verify the saved cases:
 python3 -B docs/audits/native-proxy-observation-archive-release-omissions-last-20260913/audit.py --verify-saved
 ```
 
-The complete omission join and final release applicability remain pending.
+The combined omission review now passes. It reconstructs the selected cleanup
+scopes from original source ownership and baseline close events, authenticates
+each profile at its recorded Git version, and verifies the saved ordinary,
+equal-reference, active-runtime and last-observation cases together.
+
+Independent counts agree with the profile verifiers. Each selected omission
+preserves actual native liveness and the original rejected closure verdict;
+exact later recovery stays separate. Healthy cases close through the
+implementation. The review rejects missing or duplicated cases, changed scope
+or baseline witnesses, rewritten original closure, substituted recovery and
+overlapping fixture roots. All selected and predecessor roots remain absent.
+Verify the combined evidence without replaying a fixture:
+
+```sh
+python3 -B docs/audits/native-proxy-release-omission-join-20260913/audit.py --verify-saved
+```
+
+Coverage remains bounded to the selected representative cleanup scopes. Final
+release applicability and the later native/lifetime gates remain pending.
 These deliberate faults do not qualify ambiguous operating-system close
 failures or authorize native execution.
 

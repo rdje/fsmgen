@@ -1,0 +1,21 @@
+{
+  "book_actual": {
+    "bytes_total": 3383708,
+    "files": 63,
+    "lines_total": 61697
+  },
+  "book_baseline": {
+    "bytes_total": 3382716,
+    "files": 63,
+    "lines_total": 61679
+  },
+  "knowledge_aggregate": {
+    "bytes_total": 3492388,
+    "files": 1160,
+    "lines_total": 47288
+  },
+  "knowledge_byte_delta": -31,
+  "questions_preserved": 117,
+  "rejected_card_candidates": 0,
+  "scope": "Qualitative complete selected omission join; exact quantitative results remain directly available through saved verification. Final release and native/lifetime qualifications remain separate. No containment ceiling changes."
+}

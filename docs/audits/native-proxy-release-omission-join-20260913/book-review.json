@@ -1,0 +1,21 @@
+{
+  "checked_passages": [
+    "The combined omission review now passes.",
+    "Independent counts agree with the profile verifiers.",
+    "Each selected omission preserves actual native liveness and the original rejected closure verdict; exact later recovery stays separate.",
+    "All selected and predecessor roots remain absent.",
+    "Coverage remains bounded to the selected representative cleanup scopes.",
+    "Final release applicability and the later native/lifetime gates remain pending.",
+    "python3 -B docs/audits/native-proxy-release-omission-join-20260913/audit.py --verify-saved"
+  ],
+  "exact_output_absent": true,
+  "exit_code": 0,
+  "output": ".artifacts/tmp/native-proxy-release-omission-join-book-20260913/book",
+  "rendered_bytes": 23504676,
+  "rendered_directories": 3,
+  "rendered_files": 98,
+  "renderer_warnings": [
+    "WARN search index is very large (13248435 bytes)"
+  ],
+  "same_volume_direct_objects": true
+}

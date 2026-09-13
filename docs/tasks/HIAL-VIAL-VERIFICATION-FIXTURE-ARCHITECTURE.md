@@ -2761,11 +2761,11 @@ decomposes the architecture needed to move beyond that bounded foundation.
   Commit: `this commit`
 
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.12.4.1.3.4.4.5`
-  Status: `active`
+  Status: `done`
   Goal: `Falsify omitted release closure through retained live handles.`
   Acceptance: `Deliberately omit declared source, lock and directory closes under uniquely identified counterimplementations. Retain actual descriptor aliases through the original verdict, independently detect every open handle even when the prototype returns success, and only then close each exact live object once through separately recorded observer recovery. Preserve original failed verdicts, before/after unlink facts, other-owner/archive/image state and disjoint absent allocations. Do not count recovery as implementation closure or rerun historical producers.`
-  Verification: `pending`
-  Commit: `pending`
+  Verification: `Selection, ordinary/equal/active/last execution and complete joined qualification are done under .5.1 through .5.6. The complete saved domain preserves every original failed closure verdict, actual open native alias, exact later recovery, profile state and absent root, with independent counts and source-epoch checks. Evidence and explicit representative-scope limits are retained in docs/audits/native-proxy-release-omission-join-20260913/result/join.json; this does not close final release, native/lifetime or historical startup/parent/full CI/push.`
+  Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.12.4.1.3.4.4.5.6: join complete selected release omission evidence`
 
   Children: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.12.4.1.3.4.4.5.1, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.12.4.1.3.4.4.5.2, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.12.4.1.3.4.4.5.3, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.12.4.1.3.4.4.5.4, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.12.4.1.3.4.4.5.5, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.12.4.1.3.4.4.5.6`
 
@@ -2805,11 +2805,11 @@ decomposes the architecture needed to move beyond that bounded foundation.
   Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.12.4.1.3.4.4.5.5: qualify last-observation release omissions and separate recovery`
 
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.12.4.1.3.4.4.5.6`
-  Status: `proposed`
+  Status: `done`
   Goal: `Join complete selected genuine omission evidence.`
   Acceptance: `Authenticate every selected omission counterimplementation and original failure verdict, source/profile binding, actual descriptor liveness and exact later observer recovery. Independently join complete bounded coverage and all absent roots from recoverable first evidence. Close this parent only after all selected children pass; final release, native/lifetime and historical startup/parent/full CI/push remain separate.`
-  Verification: `pending`
-  Commit: `pending`
+  Verification: `First complete omission admission and join pass from 1753 Git-bound inputs. Independent source-owned baseline selection matches all 44 actual cases across four profiles: 4 healthy controls and 40 omissions, comprising 28 source, 8 directory and 4 lock omissions. Original native liveness, unchanged original-auditor rejection and exact separate recovery remain distinct. Independent counts agree on 7315 handles, 26191 calls, 84381 events, 5115 reads and 44 unlinks, with 716 original TAP assertions. Equal, active and last-state oracles pass; the final-hold cases preserve 11 unreferenced images. All 13 join falsifiers reject; 176 selected and 28076 prior roots are absent. Original source-adaptation proofs, every profile epoch and exact recovery copies are rechecked. Ten exact join copies and saved-only join/recovery pass. Book rendering, question retention, exact acceptance history and task/claim gates accompany docs/audits/native-proxy-release-omission-join-20260913/review.json. No fixture, original main or native execution occurs; finite final release applicability is next.`
+  Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.12.4.1.3.4.4.5.6: join complete selected release omission evidence`
 
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.12.4.1.3.4.4.6`
   Status: `proposed`
@@ -3767,7 +3767,7 @@ decomposes the architecture needed to move beyond that bounded foundation.
 
 ## Current Frontier
 
-Current frontier: .3.2.15.7.3.12.4.1.3.4.4.5.5 is done; .5.6 joins complete selected genuine omission evidence. Final release applicability, native/lifetime and historical startup/parent/full CI/push remain open.
+Current frontier: .3.2.15.7.3.12.4.1.3.4.4.5 is done; .4.4.6 joins complete finite release evidence and source applicability. Final release applicability, native/lifetime and historical startup/parent/full CI/push remain open.
 
 Architecture audit `.1` is complete. Decision `0032` selects one public
 `.vial` source language, private immutable `VIALSemanticIR` and
@@ -6363,8 +6363,8 @@ Completed native-proxy feasibility through runtime-source-controls acceptance: r
 The manifest binds the immediately preceding acceptance suffix to its exact Git source. That source preserves the earlier history pointer and versioned manifest chain; current node contracts remain authoritative.
 
 
-## Acceptance Checklist (last-observation genuine release omissions .3.2.15.7.3.12.4.1.3.4.4.5.5)
+## Acceptance Checklist (complete selected release omissions .3.2.15.7.3.12.4.1.3.4.4.5.6)
 
-- [x] **ROOT CAUSE (WHY + WHERE)** — `git log -S 'all_observed_handles_closed' -1 --format='%H %s' -- docs/audits/native-proxy-observation-archive-release-20260911/ReleaseTrace.pm` identifies the original closure observer. Last-observation omissions must preserve original setup ownership, actual final-hold removal and the unreferenced canonical image. `docs/audits/native-proxy-observation-archive-release-omissions-last-20260913/source-review.json` binds the unchanged controlled setup and last-state oracle; the row-source proof preserves every ordinary assertion outside the declared extra setup-receipt field.
-- [x] **ADDRESSED (verified)** — The first last-observation `qualify.t` and independent `audit.py` pass with original setup, exact final-hold effects and unchanged unreferenced images. Every actual omission retains its original open-handle verdict and unchanged original-auditor rejection, then exact separate recovery closes the same object. Misidentified setup, restored final references and altered image files reject alongside native witness and recovery controls. Exact copies and saved-only audit/recovery pass; `docs/audits/native-proxy-observation-archive-release-omissions-last-20260913/review.json` records distinct claim legs and first-run evidence.
-- [x] **NO REGRESSION** — `knowledge-map: OK` preserves all original questions and routes to saved last-observation evidence. The healthy control passes the original closure oracle without recovery; unselected handles retain the qualified source and closure checks. The inspected book describes canonical image custody and keeps the complete omission join pending. Exact generated output is removed, earlier acceptance bodies remain byte-exact, and task integrity, claim census, staged doctrines and normal hooks gate this last-observation slice. Final release and historical startup/parent/full CI/push remain open.
+- [x] **ROOT CAUSE (WHY + WHERE)** — `git log -S 'all_observed_handles_closed' -1 --format='%H %s' -- docs/audits/native-proxy-observation-archive-release-20260911/ReleaseTrace.pm` identifies the original pre-recovery closure verdict. A complete omission claim requires the original selected domain, every profile source epoch and actual native records to agree without counting later recovery as implementation closure. `docs/audits/native-proxy-release-omission-join-20260913/audit.py` reconstructs source-owned selection and source adaptations, then independently counts original open handles and separate recovery.
+- [x] **ADDRESSED (verified)** — The first combined admission and join pass; every selected case matches its original scope and baseline witness. Each original profile row oracle and state oracle passes, while independent native/event counts reproduce retained totals. Missing/duplicated cases, changed scope/baseline, rewritten original closure with coherent digests, substituted recovery and overlapping roots reject. Exact join copies and saved-only verification pass. `docs/audits/native-proxy-release-omission-join-20260913/review.json` retains distinct claim legs, source proofs and first-run evidence; no original fixture or main is replayed.
+- [x] **NO REGRESSION** — `knowledge-map: OK` preserves every original question and routes to the complete saved omission verifier. Healthy implementation closure and all unselected physical-source checks remain qualified; original failure verdicts and later cleanup stay separate. The inspected book records representative-scope completion and retains final release/native limits. Exact generated output is removed, older acceptance bodies remain byte-exact, and task integrity, claim census, staged doctrines and normal hooks gate this complete omission join. Historical startup/parent/full CI/push remain separate.

@@ -1,0 +1,32 @@
+[
+  {
+    "path": "docs/audits/native-proxy-release-omission-join-20260913/prepare.py",
+    "sha256": "1199cbdea3392b5c28ff1789a3492b3634a5b64fbf77418ce6bc15b00b4fd698",
+    "size_bytes": 4103
+  },
+  {
+    "path": "docs/audits/native-proxy-release-omission-join-20260913/prepare-pins.json",
+    "sha256": "02466a56e3bebee0f8f13a01c43757f3d0f59e87cb10bbeb4696b5f6350d528a",
+    "size_bytes": 199
+  },
+  {
+    "path": "docs/audits/native-proxy-release-omission-join-20260913/plan.json",
+    "sha256": "c090bf7f022830fe1cdc1e78829904aa1c11fa6252fde86115171b58b465f0ca",
+    "size_bytes": 528666
+  },
+  {
+    "path": "docs/audits/native-proxy-release-omission-join-20260913/audit.py",
+    "sha256": "91ba7aead26c91d8ab7f4b0c19ba9795346740eaeed4566b5bb43ee8361f0b88",
+    "size_bytes": 19257
+  },
+  {
+    "path": "docs/audits/native-proxy-release-omission-join-20260913/recover.py",
+    "sha256": "442051efd2bd2bedc6d410221e1786a2065f1a106fae09dbe3eb457f972c250c",
+    "size_bytes": 3922
+  },
+  {
+    "path": "docs/audits/native-proxy-release-omission-join-20260913/recovery-pins.json",
+    "sha256": "62222616de52b650f5591b9f2baa8bc8aac82c6f2b5a417be7addaea7d7c94a1",
+    "size_bytes": 199
+  }
+]
