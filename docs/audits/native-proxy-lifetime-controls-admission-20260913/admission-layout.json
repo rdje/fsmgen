@@ -1,0 +1,42 @@
+{
+  "ceilings_changed": false,
+  "expanded_sha256": "b8f456c24556cb3d837a299268eca4d02c08caf8146de28a0d90cdd5917b61f7",
+  "live_lines": 6366,
+  "nonempty_normalization_loss": 0,
+  "normalized_sha256": "850e3fe2032c07455b66ded3a1dbb320c9e22b49a6ad7e79656122fe703c9f93",
+  "owner": "HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.12.4.1.3.6.4.1.1",
+  "removed_separator_offsets": [
+    252422,
+    254666,
+    257454,
+    259758,
+    262195,
+    265248,
+    267693,
+    270722,
+    273358,
+    275704,
+    278524,
+    280875,
+    282744,
+    286194,
+    286970,
+    305095,
+    307002,
+    309174,
+    311388,
+    314169,
+    316775,
+    319541
+  ],
+  "source_edits": [
+    {
+      "end": 759829,
+      "replacement": "- ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.12.4.1.3.6.4.1`\n  Status: `active`\n  Goal: `Admit bounded combined-lifetime interruption and uncertain-owner controls without execution.`\n  Acceptance: `Read the qualified complete journals, exact current call boundaries and retained inert negative domain. Select explicit invalid-order, stale/uncertain-owner and after-effect controls with matched setup prefixes. Pin the new harness, fault selectors, independent effects/receipt oracle, fresh same-volume roots, ordinary wall and evidence bounds, descriptor ownership and first-failure cleanup before execution. Use source and inert data only; commit admission before any new control-file allocation. No original producer, native payload, compiler, collector or live store.`\n  Verification: `The Knowledge Map routes prior after-call release evidence to the current adapter fact and its exact predecessor history. Complete actual lifetimes and first journals are now retained. Control selection, source pinning and pure-data qualification are the current work; no new interruption control has executed.`\n  Commit: `pending`\n  Children: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.12.4.1.3.6.4.1.1, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.12.4.1.3.6.4.1.2, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.12.4.1.3.6.4.1.3`\n\n- ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.12.4.1.3.6.4.1.1`\n  Status: `active`\n  Goal: `Select source-bound interruption controls and exact expected partial effects.`\n  Acceptance: `Bind a finite control matrix to current producer functions, retained complete-call witnesses and existing inert negative controls. Pin prospective roots and bounds, separate API rejection from actual removals, and qualify the selector/effect domain with inert positive and negative evidence. Preserve exact task reconstruction. No new lifecycle or control-file execution; harness and final admission remain separately owned.`\n  Verification: `pending`\n  Commit: `pending`\n\n- ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.12.4.1.3.6.4.1.2`\n  Status: `proposed`\n  Goal: `Implement the selected interruption harness and independent journal consumer.`\n  Acceptance: `Implement only the committed control matrix with source-level after-effect selectors, complete first-result journals, independent physical and receipt checks, same-volume ownership, descriptor tracking and bounded exact cleanup. Qualify new code using source and inert carriers only; do not run actual fixture controls.`\n  Verification: `pending`\n  Commit: `pending`\n\n- ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.12.4.1.3.6.4.1.3`\n  Status: `proposed`\n  Goal: `Close prospective control admission and pin the execution permit.`\n  Acceptance: `Join selected source contracts, new harness and independent consumer, source/data checks and falsifiers. Pin every runtime dependency and one-use committed-admission permit, verify fresh roots absent, update live book and continuity, and commit before activating the actual execution owner.`\n  Verification: `pending`\n  Commit: `pending`\n\n",
+      "start": 758663
+    }
+  ],
+  "source_kind": "reconstruct prior activation from task-layout.json",
+  "source_path": "docs/audits/native-proxy-lifetime-controls-admission-20260913/task-layout.json",
+  "source_sha256": "07ea72dec28765fc6dd090ce955c23f04931eedb4588fd30eaa1976d43f249c3"
+}

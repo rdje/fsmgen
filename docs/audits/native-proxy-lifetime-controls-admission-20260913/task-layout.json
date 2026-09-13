@@ -1,0 +1,42 @@
+{
+  "ceilings_changed": false,
+  "expanded_sha256": "5573d4df4da3d055f6e2b7438c55d33af48099d047fe27097289b5042c1897d9",
+  "live_lines": 6366,
+  "nonempty_normalization_loss": 0,
+  "normalized_sha256": "07ea72dec28765fc6dd090ce955c23f04931eedb4588fd30eaa1976d43f249c3",
+  "offset_units": "Unicode codepoints in the expanded snapshot; each offset selects the first LF of LF LF - ID.",
+  "owner": "HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.12.4.1.3.6.4.1",
+  "removed_separator_offsets": [
+    111059,
+    129662,
+    221423,
+    223912,
+    228237,
+    230511,
+    232552,
+    234484,
+    235957,
+    238489,
+    240720,
+    242936,
+    245225,
+    247264,
+    249809
+  ],
+  "scope": "Exact activation/decomposition snapshot; later verification/frontier updates have their own task diff.",
+  "source_edits": [
+    {
+      "end": 758141,
+      "replacement": "- ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.12.4.1.3.6.4`\n  Status: `active`\n  Goal: `Qualify combined lifetime interruption and uncertain-owner retention.`\n  Acceptance: `Select bounded lifecycle boundary and invalid-order controls from the qualified complete paths before execution. Preserve partial physical effects, exact primary errors and surviving ownership; do not infer hold presence from return success. Require separate admission/execution leaves for new actual-file controls. Prove stale/uncertain owners and either reference kind block maintenance; no automatic repair, original replay or native authority.`\n  Verification: `Selected complete-file lifetimes are committed at 486f980ff3d0b5206a5ee93ec5765b5f86bd00cd. Separate prospective control admission under .3.6.4.1 must commit before .3.6.4.2 allocates new inert cases. Preserve failed primary outcomes and actual partial effects independently of later cleanup; no original replay or native/live authority.`\n  Commit: `pending`\n  Children: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.12.4.1.3.6.4.1, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.12.4.1.3.6.4.2`\n\n- ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.12.4.1.3.6.4.1`\n  Status: `active`\n  Goal: `Admit bounded combined-lifetime interruption and uncertain-owner controls without execution.`\n  Acceptance: `Read the qualified complete journals, exact current call boundaries and retained inert negative domain. Select explicit invalid-order, stale/uncertain-owner and after-effect controls with matched setup prefixes. Pin the new harness, fault selectors, independent effects/receipt oracle, fresh same-volume roots, ordinary wall and evidence bounds, descriptor ownership and first-failure cleanup before execution. Use source and inert data only; commit admission before any new control-file allocation. No original producer, native payload, compiler, collector or live store.`\n  Verification: `The Knowledge Map routes prior after-call release evidence to the current adapter fact and its exact predecessor history. Complete actual lifetimes and first journals are now retained. Control selection, source pinning and pure-data qualification are the current work; no new interruption control has executed.`\n  Commit: `pending`\n\n- ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.12.4.1.3.6.4.2`\n  Status: `proposed`\n  Goal: `Execute the newly admitted lifetime controls once and verify partial effects and retained ownership.`\n  Acceptance: `Authenticate committed control admission and the active owner before exclusive new allocation. Execute only selected new cases once; preserve expected rejections, actual post-call effects, surviving references and original primary errors before cleanup. Independently verify stale/uncertain owners and either reference kind prevent maintenance where required. Keep reported return values distinct from physical presence, prove exact owned cleanup or retain uncertain objects, consume every result and commit. No original replay or native/live authority.`\n  Verification: `pending`\n  Commit: `pending`\n\n",
+      "start": 757426
+    },
+    {
+      "end": 887202,
+      "replacement": "Current frontier: .3.2.15.7.3.12.4.1.3.6.3 is done; .3.6.4.1 is active for source/data admission of bounded lifetime interruption controls. Only .3.6.4.2 executes after admission commits. Final closure, native/live integration and historical startup/parent/full CI/push remain open.",
+      "start": 886942
+    }
+  ],
+  "source_revision": "486f980ff3d0b5206a5ee93ec5765b5f86bd00cd",
+  "source_sha256": "40ea6e06980136e6f5b2d0bff4996eba083a5fcd77720eddf0f3cb15fa40379d",
+  "source_task": "docs/tasks/HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.md"
+}

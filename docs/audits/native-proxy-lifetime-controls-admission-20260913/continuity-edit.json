@@ -1,0 +1,14 @@
+{
+  "after_lines": 6366,
+  "after_sha256": "b30da0383b92460f2dc06c96ba3f75abce8a2f05e0dce300e45159734621c27e",
+  "before_lines": 6367,
+  "before_sha256": "2dadc08ab8049067bfc4a6596d5f24e642927980e2685ec07d40c11919712a49",
+  "cause": "The authored acceptance footer ended with two LF bytes; the retained predecessor ended with one.",
+  "ceilings_changed": false,
+  "correction": "Remove only the final extra LF; all nonempty lines and task semantics unchanged.",
+  "first_assertion": "Expected 6366 task lines after replacing the acceptance footer; actual 6367.",
+  "nonempty_loss": 0,
+  "precorrection_footer": "## Acceptance Checklist (source-bound interruption matrix .3.2.15.7.3.12.4.1.3.6.4.1.1)\n\n- [ ] **ROOT CAUSE (WHY + WHERE)** \u2014 `git log -S 'sub _unlink_exact' -1 --format='%H %s' -- docs/audits/native-proxy-observation-archive-release-20260911/ObservationRelease.pm` locates exact release at da27b5cbaf01af7cbe294c8f851c8273dd750856. Complete file lifetimes do not establish interrupted effects: current source marks attempted unlink before the syscall and completion after its return. Retained successful call prefixes expose the private-root, runtime-global and last-observation boundaries without running an interruption.\n- [ ] **ADDRESSED (verified)** \u2014 Source-bound selection and independent matrix review cover invalid ordering, unsettled work, each retained reference kind, unknown owners, post-retirement reuse and partial removals. Wrong selectors, rollback, premature maintenance and promoted completion flags reject. Exact first import failure and unchanged renamed author survive. Re-derivation, falsification and durability: docs/audits/native-proxy-lifetime-controls-admission-20260913/plan.json, source-contracts.json, call-witnesses.json, review.json and completion.json. Harness/consumer implementation, final admission and actual execution remain separately owned.\n- [ ] **NO REGRESSION** \u2014 `knowledge-map: OK` preserves the exact question set and saved-only matrix review route. Source/data reviews, rendered book inspection, unchanged claim identities/dispositions and exact prior acceptance recovery pass before staged doctrines and normal hooks. Only empty task separators are removed; no ceiling changes. No original producer, new fixture controls, native process, compiler, collector or live canonical store runs; historical startup/parent/full CI/push gates remain open.\n\n",
+  "removed_hex": "0a",
+  "scope": "Fresh acceptance authoring only; not a control or qualification failure."
+}

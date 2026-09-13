@@ -106,4 +106,28 @@ interruption behavior, native process authentication or live-store integration.
 scripts/run_with_ram_guard.sh -- python3 -B docs/audits/native-proxy-lifetime-files-20260913/audit.py --verify-saved
 ```
 
+The interruption-control matrix now has source and retained-call evidence.
+The selected cases distinguish runtime references from observation holds,
+reject release before archival or with unsettled work, and keep unknown owners
+from making an image eligible for maintenance. A rejected repeated observation
+after retirement is paired with successful archival from retained bytes.
+
+The planned after-removal controls preserve the physical effect separately
+from the API verdict. An interruption after private workspace removal should
+leave the global runtime reference retaining the image. An interruption after
+that global reference or the last observation hold is unlinked should expose
+its absence while leaving image removal to explicit maintenance. A release
+attempt can return a failure envelope after the unlink has happened; its
+completion flags must not be promoted from an independently observed absence.
+
+These are prospective predictions checked against current source bodies,
+retained successful call prefixes and the earlier inert model. Changed
+selectors, rollback assumptions and premature maintenance are rejected by the
+matrix review. The new harness, independent journal reader and final execution
+admission remain open; no interruption file test has run.
+
+```sh
+scripts/run_with_ram_guard.sh -- python3 -B docs/audits/native-proxy-lifetime-controls-admission-20260913/audit.py --verify-saved
+```
+
 [Return to runtime measurement](16dc-vial-portable-verilator-runtime-measurement.md).

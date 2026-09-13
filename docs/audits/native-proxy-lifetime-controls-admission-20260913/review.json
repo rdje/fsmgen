@@ -1,0 +1,336 @@
+{
+  "actual_controls_executed": 0,
+  "call_witnesses": [
+    {
+      "ordinal": 102,
+      "role": "private_root",
+      "successful_prefix_removals": 4
+    },
+    {
+      "ordinal": 163,
+      "role": "runtime_global",
+      "successful_prefix_removals": 5
+    },
+    {
+      "ordinal": 147,
+      "role": "observation_hold",
+      "successful_prefix_removals": 1
+    }
+  ],
+  "cases": [
+    {
+      "actual_control_executed": false,
+      "case": "runtime_pins",
+      "exact_original_receipt_changes": [],
+      "expected_after": {
+        "image_present": true,
+        "references": [
+          "target"
+        ],
+        "workspaces": [
+          "target"
+        ]
+      },
+      "prefix_events": 5
+    },
+    {
+      "actual_control_executed": false,
+      "case": "observation_a_pins",
+      "exact_original_receipt_changes": [],
+      "expected_after": {
+        "image_present": true,
+        "references": [
+          "a"
+        ],
+        "workspaces": []
+      },
+      "prefix_events": 5
+    },
+    {
+      "actual_control_executed": false,
+      "case": "observation_b_pins",
+      "exact_original_receipt_changes": [],
+      "expected_after": {
+        "image_present": true,
+        "references": [
+          "b"
+        ],
+        "workspaces": []
+      },
+      "prefix_events": 5
+    },
+    {
+      "actual_control_executed": false,
+      "case": "other_runtime_pins",
+      "exact_original_receipt_changes": [],
+      "expected_after": {
+        "image_present": true,
+        "references": [
+          "other"
+        ],
+        "workspaces": [
+          "other"
+        ]
+      },
+      "prefix_events": 5
+    },
+    {
+      "actual_control_executed": false,
+      "case": "release_before_archive",
+      "exact_original_receipt_changes": [],
+      "expected_after": {
+        "image_present": true,
+        "references": [
+          "a",
+          "b",
+          "other",
+          "target"
+        ],
+        "workspaces": [
+          "other",
+          "target"
+        ]
+      },
+      "prefix_events": 0
+    },
+    {
+      "actual_control_executed": false,
+      "case": "repeated_release",
+      "exact_original_receipt_changes": [],
+      "expected_after": {
+        "image_present": true,
+        "references": [
+          "b",
+          "other",
+          "target"
+        ],
+        "workspaces": [
+          "other",
+          "target"
+        ]
+      },
+      "prefix_events": 2
+    },
+    {
+      "actual_control_executed": false,
+      "case": "unreaped_runtime",
+      "exact_original_receipt_changes": [
+        {
+          "op": "set",
+          "path": [
+            "seed",
+            "runtimes",
+            "target",
+            "cleanup",
+            2,
+            0,
+            "cleanup",
+            "leader_reaped"
+          ],
+          "value": 0
+        }
+      ],
+      "expected_after": {
+        "image_present": true,
+        "references": [
+          "a",
+          "b",
+          "other",
+          "target"
+        ],
+        "workspaces": [
+          "other",
+          "target"
+        ]
+      },
+      "prefix_events": 0
+    },
+    {
+      "actual_control_executed": false,
+      "case": "unsettled_work",
+      "exact_original_receipt_changes": [
+        {
+          "op": "set",
+          "path": [
+            "seed",
+            "observers",
+            "a",
+            "settlement",
+            "receipts",
+            0,
+            "cleanup",
+            "group_gone"
+          ],
+          "value": 0
+        }
+      ],
+      "expected_after": {
+        "image_present": true,
+        "references": [
+          "a",
+          "b",
+          "other",
+          "target"
+        ],
+        "workspaces": [
+          "other",
+          "target"
+        ]
+      },
+      "prefix_events": 1
+    },
+    {
+      "actual_control_executed": false,
+      "case": "unsealed_work",
+      "exact_original_receipt_changes": [
+        {
+          "op": "set",
+          "path": [
+            "seed",
+            "observers",
+            "a",
+            "settlement",
+            "selection_sealed"
+          ],
+          "value": 0
+        }
+      ],
+      "expected_after": {
+        "image_present": true,
+        "references": [
+          "a",
+          "b",
+          "other",
+          "target"
+        ],
+        "workspaces": [
+          "other",
+          "target"
+        ]
+      },
+      "prefix_events": 1
+    },
+    {
+      "actual_control_executed": false,
+      "case": "reuse_after_retirement",
+      "exact_original_receipt_changes": [],
+      "expected_after": {
+        "image_present": true,
+        "references": [
+          "a",
+          "b",
+          "other"
+        ],
+        "workspaces": [
+          "other"
+        ]
+      },
+      "prefix_events": 2
+    },
+    {
+      "actual_control_executed": false,
+      "case": "unknown_reference",
+      "exact_original_receipt_changes": [
+        {
+          "op": "set",
+          "path": [
+            "state",
+            "references",
+            "unclassified"
+          ],
+          "value": {}
+        }
+      ],
+      "expected_after": {
+        "image_present": true,
+        "references": [
+          "unknown"
+        ],
+        "workspaces": []
+      },
+      "prefix_events": 6
+    },
+    {
+      "actual_control_executed": false,
+      "case": "after_private_rmdir",
+      "exact_original_receipt_changes": [],
+      "expected_after": {
+        "image_present": true,
+        "references": [
+          "target"
+        ],
+        "workspaces": []
+      },
+      "prefix_events": 5
+    },
+    {
+      "actual_control_executed": false,
+      "case": "after_global_unlink",
+      "exact_original_receipt_changes": [],
+      "expected_after": {
+        "image_present": true,
+        "references": [],
+        "workspaces": []
+      },
+      "prefix_events": 5
+    },
+    {
+      "actual_control_executed": false,
+      "case": "after_last_observation_unlink",
+      "exact_original_receipt_changes": [],
+      "expected_after": {
+        "image_present": true,
+        "references": [],
+        "workspaces": []
+      },
+      "prefix_events": 5
+    }
+  ],
+  "layout": {
+    "ceilings_changed": false,
+    "live_lines": 6366,
+    "nonempty_normalization_loss": 0
+  },
+  "missing_legs": [
+    "New harness and independent journal reader source/data qualification",
+    "Committed final execution permit",
+    "Actual interruption effects and descriptor closure"
+  ],
+  "native_process_authentication": false,
+  "raw_captures": [
+    {
+      "bytes_hex": "7b2261637475616c5f636f6e74726f6c735f6578656375746564223a20302c202263616c6c5f7769746e6573736573223a20332c20226361736573223a2031342c2022736f757263655f66756e6374696f6e73223a2031342c2022736f757263655f696e70757473223a2035397d0a",
+      "path": ".artifacts/logs/native-proxy-lifetime-controls-admission-20260913/corrected-selection.stdout",
+      "sha256": "684b112bbba8cef98a0dbb432ff5d6ebebb7b941b136fae8a78989df7360fec5",
+      "size_bytes": 111
+    },
+    {
+      "bytes_hex": "72616d2d67756172643a205049442038373731343b20686f73742037312e30253b20686f7374206375746f6666203838253b2064657363656e64616e7420525353206375746f66662034303936204d69423b20706f6c6c2032730a",
+      "path": ".artifacts/logs/native-proxy-lifetime-controls-admission-20260913/corrected-selection.stderr",
+      "sha256": "745cd94a877dbb22242de4d140bb5997f367c1f6fea054c6ca2992b99556ab44",
+      "size_bytes": 91
+    },
+    {
+      "bytes_hex": "300a",
+      "path": ".artifacts/logs/native-proxy-lifetime-controls-admission-20260913/corrected-selection.exit",
+      "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa",
+      "size_bytes": 2
+    }
+  ],
+  "rejected_countermodels": [
+    "missing_case",
+    "failure_rolls_back",
+    "implicit_image_removal",
+    "stale_runtime_does_not_pin",
+    "release_failure_is_throw",
+    "post_unlink_flag_promoted",
+    "original_root_reuse",
+    "wrong_call_ordinal",
+    "missing_partial_effect",
+    "claim_actual_interruption"
+  ],
+  "runtime_qualification": false,
+  "schema": "fsmgen.inactive_lifetime_control_matrix_review.v1",
+  "source_functions": 14,
+  "source_inputs": 59
+}

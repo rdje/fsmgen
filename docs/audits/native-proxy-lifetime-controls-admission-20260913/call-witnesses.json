@@ -1,0 +1,76 @@
+[
+  {
+    "actual_interruption_observed": false,
+    "call": {
+      "errno": 2,
+      "operation": "rmdir",
+      "path": ".artifacts/tmp/process-supervisor-tests/fsmgen-LifetimeFiles20260913_same_archive_late_target",
+      "returned": 1
+    },
+    "case": "same_archive_late",
+    "ordinal": 102,
+    "record": {
+      "path": "docs/audits/native-proxy-lifetime-files-20260913/records/event-000076.json",
+      "sha256": "e6d88ba8f7c94f2f8cad99c158216f9e7adc9f9bc3cf4bb67d22555324b5d0c5",
+      "size_bytes": 231253
+    },
+    "role": "private_root",
+    "stage": "retire_target",
+    "successful_prefix_removals": [
+      ".artifacts/tmp/process-supervisor-tests/fsmgen-LifetimeFiles20260913_same_archive_late_target/rust-tools/image-reference.json",
+      ".artifacts/tmp/process-supervisor-tests/fsmgen-LifetimeFiles20260913_same_archive_late_target/rust-tools",
+      ".artifacts/tmp/process-supervisor-tests/fsmgen-LifetimeFiles20260913_same_archive_late_target/rust-tool-resolution",
+      ".artifacts/tmp/process-supervisor-tests/fsmgen-LifetimeFiles20260913_same_archive_late_target"
+    ]
+  },
+  {
+    "actual_interruption_observed": false,
+    "call": {
+      "errno": 0,
+      "operation": "unlink",
+      "paths": [
+        ".artifacts/tmp/native-proxy-image-custody/cases/fsmgen-LifetimeFiles20260913_same_archive_late/references/af8b1da66fe208265c7658ea175ea05b2d362d81c711f74bfb8de66f7973c7c7.json"
+      ],
+      "returned": 1
+    },
+    "case": "same_archive_late",
+    "ordinal": 163,
+    "record": {
+      "path": "docs/audits/native-proxy-lifetime-files-20260913/records/event-000076.json",
+      "sha256": "e6d88ba8f7c94f2f8cad99c158216f9e7adc9f9bc3cf4bb67d22555324b5d0c5",
+      "size_bytes": 231253
+    },
+    "role": "runtime_global",
+    "stage": "retire_target",
+    "successful_prefix_removals": [
+      ".artifacts/tmp/process-supervisor-tests/fsmgen-LifetimeFiles20260913_same_archive_late_target/rust-tools/image-reference.json",
+      ".artifacts/tmp/process-supervisor-tests/fsmgen-LifetimeFiles20260913_same_archive_late_target/rust-tools",
+      ".artifacts/tmp/process-supervisor-tests/fsmgen-LifetimeFiles20260913_same_archive_late_target/rust-tool-resolution",
+      ".artifacts/tmp/process-supervisor-tests/fsmgen-LifetimeFiles20260913_same_archive_late_target",
+      ".artifacts/tmp/native-proxy-image-custody/cases/fsmgen-LifetimeFiles20260913_same_archive_late/references/af8b1da66fe208265c7658ea175ea05b2d362d81c711f74bfb8de66f7973c7c7.json"
+    ]
+  },
+  {
+    "actual_interruption_observed": false,
+    "call": {
+      "errno": 0,
+      "operation": "unlink",
+      "paths": [
+        ".artifacts/tmp/native-proxy-image-custody/cases/fsmgen-LifetimeFiles20260913_same_archive_late/references/b1fc7a608b3a35a66bed0d0369e93d91bd4b225c0f9969af55b23b89d8f7b934.json"
+      ],
+      "returned": 1
+    },
+    "case": "same_archive_late",
+    "ordinal": 147,
+    "record": {
+      "path": "docs/audits/native-proxy-lifetime-files-20260913/records/event-000086.json",
+      "sha256": "4e8959ace07e313436db5d18f567ffc1029699c4a3ff9bcc882676f02a0cfa72",
+      "size_bytes": 209944
+    },
+    "role": "observation_hold",
+    "stage": "release_b",
+    "successful_prefix_removals": [
+      ".artifacts/tmp/native-proxy-image-custody/cases/fsmgen-LifetimeFiles20260913_same_archive_late/references/b1fc7a608b3a35a66bed0d0369e93d91bd4b225c0f9969af55b23b89d8f7b934.json"
+    ]
+  }
+]

@@ -1,0 +1,37 @@
+[
+  {
+    "path": "docs/audits/native-proxy-lifetime-controls-admission-20260913/review_completion.py",
+    "sha256": "9ce4b2c7319f96cbbe52f9fd2fc45e97eb41d7c5a250b2950987c97dc27fa010",
+    "size_bytes": 6101
+  },
+  {
+    "path": "docs/audits/native-proxy-lifetime-controls-admission-20260913/matrix-pins.json",
+    "sha256": "067c934c9fe16af42f475dfcdc6291264e81c49adedec89a706c5f71198827a6",
+    "size_bytes": 2103
+  },
+  {
+    "path": "docs/audits/native-proxy-lifetime-controls-admission-20260913/review.json",
+    "sha256": "25e2dd33a319c58a678add8b0a50f7655991057ec7a483b24b135296eee23431",
+    "size_bytes": 8115
+  },
+  {
+    "path": "docs/audits/native-proxy-lifetime-controls-admission-20260913/book-review.json",
+    "sha256": "862db49788148f4deeacd47d95b3789322137c2aa74cc81ebafbedb016bf71a5",
+    "size_bytes": 797
+  },
+  {
+    "path": "docs/audits/native-proxy-lifetime-controls-admission-20260913/claim-review.json",
+    "sha256": "823e7e21098377e7b330536975ea6c56089edc5642109606b249ad1fd4e98e90",
+    "size_bytes": 5146
+  },
+  {
+    "path": "docs/audits/native-proxy-lifetime-controls-admission-20260913/continuity-edit.json",
+    "sha256": "aa113576ce1f4b569d79c43196880410c513543c12198f61316e2b2bd660688b",
+    "size_bytes": 2543
+  },
+  {
+    "path": "docs/audits/native-proxy-lifetime-controls-admission-20260913/documentation-pins.json",
+    "sha256": "564e41d6858bbfb0b7cedb9413be9611846ed56a01b6d90c2b4f19d19bd46d71",
+    "size_bytes": 1301
+  }
+]

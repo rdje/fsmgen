@@ -1,0 +1,676 @@
+{
+  "bounds": {
+    "case_wall_seconds": 30,
+    "cases": 14,
+    "cleanup_wall_seconds": 10,
+    "file_bytes": 65536,
+    "fixture_roots": 56,
+    "record_bytes": 4194304,
+    "total_record_bytes": 134217728,
+    "total_wall_seconds": 600,
+    "tree_bytes": 4194304,
+    "tree_depth": 8,
+    "tree_nodes": 128
+  },
+  "cases": [
+    {
+      "after": {
+        "image_present": true,
+        "references": [
+          "target"
+        ],
+        "workspaces": [
+          "target"
+        ]
+      },
+      "before": {
+        "image_present": true,
+        "references": [
+          "target"
+        ],
+        "workspaces": [
+          "target"
+        ]
+      },
+      "event": "maintain_target",
+      "expected_call_returned": false,
+      "expected_success": false,
+      "fault": null,
+      "followup_maintenance": null,
+      "mutation": null,
+      "name": "runtime_pins",
+      "prefix": [
+        "archive_a",
+        "archive_b",
+        "retire_other",
+        "release_a",
+        "release_b"
+      ],
+      "prior_model_control": "runtime_holds_image",
+      "profile": "same_image",
+      "release_effect": null,
+      "roots": {
+        "evidence": ".artifacts/logs/native-proxy-observation-acquisition-20260910/cases/fsmgen-LifetimeControls20260913_runtime_pins",
+        "other": ".artifacts/tmp/process-supervisor-tests/fsmgen-LifetimeControls20260913_runtime_pins_other",
+        "store": ".artifacts/tmp/native-proxy-image-custody/cases/fsmgen-LifetimeControls20260913_runtime_pins",
+        "target": ".artifacts/tmp/process-supervisor-tests/fsmgen-LifetimeControls20260913_runtime_pins_target"
+      }
+    },
+    {
+      "after": {
+        "image_present": true,
+        "references": [
+          "a"
+        ],
+        "workspaces": []
+      },
+      "before": {
+        "image_present": true,
+        "references": [
+          "a"
+        ],
+        "workspaces": []
+      },
+      "event": "maintain_target",
+      "expected_call_returned": false,
+      "expected_success": false,
+      "fault": null,
+      "followup_maintenance": null,
+      "mutation": null,
+      "name": "observation_a_pins",
+      "prefix": [
+        "archive_a",
+        "archive_b",
+        "retire_target",
+        "retire_other",
+        "release_b"
+      ],
+      "prior_model_control": "observation_a_holds_image",
+      "profile": "same_image",
+      "release_effect": null,
+      "roots": {
+        "evidence": ".artifacts/logs/native-proxy-observation-acquisition-20260910/cases/fsmgen-LifetimeControls20260913_observation_a_pins",
+        "other": ".artifacts/tmp/process-supervisor-tests/fsmgen-LifetimeControls20260913_observation_a_pins_other",
+        "store": ".artifacts/tmp/native-proxy-image-custody/cases/fsmgen-LifetimeControls20260913_observation_a_pins",
+        "target": ".artifacts/tmp/process-supervisor-tests/fsmgen-LifetimeControls20260913_observation_a_pins_target"
+      }
+    },
+    {
+      "after": {
+        "image_present": true,
+        "references": [
+          "b"
+        ],
+        "workspaces": []
+      },
+      "before": {
+        "image_present": true,
+        "references": [
+          "b"
+        ],
+        "workspaces": []
+      },
+      "event": "maintain_target",
+      "expected_call_returned": false,
+      "expected_success": false,
+      "fault": null,
+      "followup_maintenance": null,
+      "mutation": null,
+      "name": "observation_b_pins",
+      "prefix": [
+        "archive_a",
+        "archive_b",
+        "retire_target",
+        "retire_other",
+        "release_a"
+      ],
+      "prior_model_control": "observation_b_holds_image",
+      "profile": "same_image",
+      "release_effect": null,
+      "roots": {
+        "evidence": ".artifacts/logs/native-proxy-observation-acquisition-20260910/cases/fsmgen-LifetimeControls20260913_observation_b_pins",
+        "other": ".artifacts/tmp/process-supervisor-tests/fsmgen-LifetimeControls20260913_observation_b_pins_other",
+        "store": ".artifacts/tmp/native-proxy-image-custody/cases/fsmgen-LifetimeControls20260913_observation_b_pins",
+        "target": ".artifacts/tmp/process-supervisor-tests/fsmgen-LifetimeControls20260913_observation_b_pins_target"
+      }
+    },
+    {
+      "after": {
+        "image_present": true,
+        "references": [
+          "other"
+        ],
+        "workspaces": [
+          "other"
+        ]
+      },
+      "before": {
+        "image_present": true,
+        "references": [
+          "other"
+        ],
+        "workspaces": [
+          "other"
+        ]
+      },
+      "event": "maintain_target",
+      "expected_call_returned": false,
+      "expected_success": false,
+      "fault": null,
+      "followup_maintenance": null,
+      "mutation": null,
+      "name": "other_runtime_pins",
+      "prefix": [
+        "archive_a",
+        "archive_b",
+        "retire_target",
+        "release_a",
+        "release_b"
+      ],
+      "prior_model_control": "other_runtime_holds_same_image",
+      "profile": "same_image",
+      "release_effect": null,
+      "roots": {
+        "evidence": ".artifacts/logs/native-proxy-observation-acquisition-20260910/cases/fsmgen-LifetimeControls20260913_other_runtime_pins",
+        "other": ".artifacts/tmp/process-supervisor-tests/fsmgen-LifetimeControls20260913_other_runtime_pins_other",
+        "store": ".artifacts/tmp/native-proxy-image-custody/cases/fsmgen-LifetimeControls20260913_other_runtime_pins",
+        "target": ".artifacts/tmp/process-supervisor-tests/fsmgen-LifetimeControls20260913_other_runtime_pins_target"
+      }
+    },
+    {
+      "after": {
+        "image_present": true,
+        "references": [
+          "a",
+          "b",
+          "other",
+          "target"
+        ],
+        "workspaces": [
+          "other",
+          "target"
+        ]
+      },
+      "before": {
+        "image_present": true,
+        "references": [
+          "a",
+          "b",
+          "other",
+          "target"
+        ],
+        "workspaces": [
+          "other",
+          "target"
+        ]
+      },
+      "event": "release_a",
+      "expected_call_returned": true,
+      "expected_success": false,
+      "fault": null,
+      "followup_maintenance": false,
+      "mutation": null,
+      "name": "release_before_archive",
+      "prefix": [],
+      "prior_model_control": "release_before_archive",
+      "profile": "same_image",
+      "release_effect": {
+        "last_reference_check": null,
+        "reference_absence_verified": 0,
+        "unlink_attempted": 0,
+        "unlink_completed": 0
+      },
+      "roots": {
+        "evidence": ".artifacts/logs/native-proxy-observation-acquisition-20260910/cases/fsmgen-LifetimeControls20260913_release_before_archive",
+        "other": ".artifacts/tmp/process-supervisor-tests/fsmgen-LifetimeControls20260913_release_before_archive_other",
+        "store": ".artifacts/tmp/native-proxy-image-custody/cases/fsmgen-LifetimeControls20260913_release_before_archive",
+        "target": ".artifacts/tmp/process-supervisor-tests/fsmgen-LifetimeControls20260913_release_before_archive_target"
+      }
+    },
+    {
+      "after": {
+        "image_present": true,
+        "references": [
+          "b",
+          "other",
+          "target"
+        ],
+        "workspaces": [
+          "other",
+          "target"
+        ]
+      },
+      "before": {
+        "image_present": true,
+        "references": [
+          "b",
+          "other",
+          "target"
+        ],
+        "workspaces": [
+          "other",
+          "target"
+        ]
+      },
+      "event": "release_a",
+      "expected_call_returned": true,
+      "expected_success": false,
+      "fault": null,
+      "followup_maintenance": false,
+      "mutation": null,
+      "name": "repeated_release",
+      "prefix": [
+        "archive_a",
+        "release_a"
+      ],
+      "prior_model_control": "repeated_release_rejects_absence",
+      "profile": "same_image",
+      "release_effect": {
+        "last_reference_check": null,
+        "reference_absence_verified": 0,
+        "unlink_attempted": 0,
+        "unlink_completed": 0
+      },
+      "roots": {
+        "evidence": ".artifacts/logs/native-proxy-observation-acquisition-20260910/cases/fsmgen-LifetimeControls20260913_repeated_release",
+        "other": ".artifacts/tmp/process-supervisor-tests/fsmgen-LifetimeControls20260913_repeated_release_other",
+        "store": ".artifacts/tmp/native-proxy-image-custody/cases/fsmgen-LifetimeControls20260913_repeated_release",
+        "target": ".artifacts/tmp/process-supervisor-tests/fsmgen-LifetimeControls20260913_repeated_release_target"
+      }
+    },
+    {
+      "after": {
+        "image_present": true,
+        "references": [
+          "a",
+          "b",
+          "other",
+          "target"
+        ],
+        "workspaces": [
+          "other",
+          "target"
+        ]
+      },
+      "before": {
+        "image_present": true,
+        "references": [
+          "a",
+          "b",
+          "other",
+          "target"
+        ],
+        "workspaces": [
+          "other",
+          "target"
+        ]
+      },
+      "event": "retire_target",
+      "expected_call_returned": false,
+      "expected_success": false,
+      "fault": null,
+      "followup_maintenance": false,
+      "mutation": "unreaped_runtime",
+      "name": "unreaped_runtime",
+      "prefix": [],
+      "prior_model_control": "unreaped_runtime_leader",
+      "profile": "same_image",
+      "release_effect": null,
+      "roots": {
+        "evidence": ".artifacts/logs/native-proxy-observation-acquisition-20260910/cases/fsmgen-LifetimeControls20260913_unreaped_runtime",
+        "other": ".artifacts/tmp/process-supervisor-tests/fsmgen-LifetimeControls20260913_unreaped_runtime_other",
+        "store": ".artifacts/tmp/native-proxy-image-custody/cases/fsmgen-LifetimeControls20260913_unreaped_runtime",
+        "target": ".artifacts/tmp/process-supervisor-tests/fsmgen-LifetimeControls20260913_unreaped_runtime_target"
+      }
+    },
+    {
+      "after": {
+        "image_present": true,
+        "references": [
+          "a",
+          "b",
+          "other",
+          "target"
+        ],
+        "workspaces": [
+          "other",
+          "target"
+        ]
+      },
+      "before": {
+        "image_present": true,
+        "references": [
+          "a",
+          "b",
+          "other",
+          "target"
+        ],
+        "workspaces": [
+          "other",
+          "target"
+        ]
+      },
+      "event": "release_a",
+      "expected_call_returned": true,
+      "expected_success": false,
+      "fault": null,
+      "followup_maintenance": false,
+      "mutation": "unsettled_work",
+      "name": "unsettled_work",
+      "prefix": [
+        "archive_a"
+      ],
+      "prior_model_control": "unknown_worker_group",
+      "profile": "same_image",
+      "release_effect": {
+        "last_reference_check": null,
+        "reference_absence_verified": 0,
+        "unlink_attempted": 0,
+        "unlink_completed": 0
+      },
+      "roots": {
+        "evidence": ".artifacts/logs/native-proxy-observation-acquisition-20260910/cases/fsmgen-LifetimeControls20260913_unsettled_work",
+        "other": ".artifacts/tmp/process-supervisor-tests/fsmgen-LifetimeControls20260913_unsettled_work_other",
+        "store": ".artifacts/tmp/native-proxy-image-custody/cases/fsmgen-LifetimeControls20260913_unsettled_work",
+        "target": ".artifacts/tmp/process-supervisor-tests/fsmgen-LifetimeControls20260913_unsettled_work_target"
+      }
+    },
+    {
+      "after": {
+        "image_present": true,
+        "references": [
+          "a",
+          "b",
+          "other",
+          "target"
+        ],
+        "workspaces": [
+          "other",
+          "target"
+        ]
+      },
+      "before": {
+        "image_present": true,
+        "references": [
+          "a",
+          "b",
+          "other",
+          "target"
+        ],
+        "workspaces": [
+          "other",
+          "target"
+        ]
+      },
+      "event": "release_a",
+      "expected_call_returned": true,
+      "expected_success": false,
+      "fault": null,
+      "followup_maintenance": false,
+      "mutation": "unsealed_work",
+      "name": "unsealed_work",
+      "prefix": [
+        "archive_a"
+      ],
+      "prior_model_control": "unsealed_work",
+      "profile": "same_image",
+      "release_effect": {
+        "last_reference_check": null,
+        "reference_absence_verified": 0,
+        "unlink_attempted": 0,
+        "unlink_completed": 0
+      },
+      "roots": {
+        "evidence": ".artifacts/logs/native-proxy-observation-acquisition-20260910/cases/fsmgen-LifetimeControls20260913_unsealed_work",
+        "other": ".artifacts/tmp/process-supervisor-tests/fsmgen-LifetimeControls20260913_unsealed_work_other",
+        "store": ".artifacts/tmp/native-proxy-image-custody/cases/fsmgen-LifetimeControls20260913_unsealed_work",
+        "target": ".artifacts/tmp/process-supervisor-tests/fsmgen-LifetimeControls20260913_unsealed_work_target"
+      }
+    },
+    {
+      "after": {
+        "image_present": true,
+        "references": [
+          "a",
+          "b",
+          "other"
+        ],
+        "workspaces": [
+          "other"
+        ]
+      },
+      "before": {
+        "image_present": true,
+        "references": [
+          "a",
+          "b",
+          "other"
+        ],
+        "workspaces": [
+          "other"
+        ]
+      },
+      "event": "reuse_a",
+      "expected_call_returned": false,
+      "expected_success": false,
+      "fault": null,
+      "followup_maintenance": false,
+      "mutation": null,
+      "name": "reuse_after_retirement",
+      "prefix": [
+        "retire_target",
+        "archive_a"
+      ],
+      "prior_model_control": "archive_after_retirement",
+      "profile": "same_image",
+      "release_effect": null,
+      "roots": {
+        "evidence": ".artifacts/logs/native-proxy-observation-acquisition-20260910/cases/fsmgen-LifetimeControls20260913_reuse_after_retirement",
+        "other": ".artifacts/tmp/process-supervisor-tests/fsmgen-LifetimeControls20260913_reuse_after_retirement_other",
+        "store": ".artifacts/tmp/native-proxy-image-custody/cases/fsmgen-LifetimeControls20260913_reuse_after_retirement",
+        "target": ".artifacts/tmp/process-supervisor-tests/fsmgen-LifetimeControls20260913_reuse_after_retirement_target"
+      }
+    },
+    {
+      "after": {
+        "image_present": true,
+        "references": [
+          "unknown"
+        ],
+        "workspaces": []
+      },
+      "before": {
+        "image_present": true,
+        "references": [
+          "unknown"
+        ],
+        "workspaces": []
+      },
+      "event": "maintain_target",
+      "expected_call_returned": false,
+      "expected_success": false,
+      "fault": null,
+      "followup_maintenance": null,
+      "mutation": "unknown_reference",
+      "name": "unknown_reference",
+      "prefix": [
+        "archive_a",
+        "archive_b",
+        "retire_target",
+        "retire_other",
+        "release_a",
+        "release_b"
+      ],
+      "prior_model_control": "unknown_reference_blocks_maintenance",
+      "profile": "same_image",
+      "release_effect": null,
+      "roots": {
+        "evidence": ".artifacts/logs/native-proxy-observation-acquisition-20260910/cases/fsmgen-LifetimeControls20260913_unknown_reference",
+        "other": ".artifacts/tmp/process-supervisor-tests/fsmgen-LifetimeControls20260913_unknown_reference_other",
+        "store": ".artifacts/tmp/native-proxy-image-custody/cases/fsmgen-LifetimeControls20260913_unknown_reference",
+        "target": ".artifacts/tmp/process-supervisor-tests/fsmgen-LifetimeControls20260913_unknown_reference_target"
+      }
+    },
+    {
+      "after": {
+        "image_present": true,
+        "references": [
+          "target"
+        ],
+        "workspaces": []
+      },
+      "before": {
+        "image_present": true,
+        "references": [
+          "target"
+        ],
+        "workspaces": [
+          "target"
+        ]
+      },
+      "event": "retire_target",
+      "expected_call_returned": false,
+      "expected_success": false,
+      "fault": "private_root",
+      "followup_maintenance": false,
+      "mutation": null,
+      "name": "after_private_rmdir",
+      "prefix": [
+        "archive_a",
+        "archive_b",
+        "release_a",
+        "release_b",
+        "retire_other"
+      ],
+      "prior_model_control": null,
+      "profile": "same_image",
+      "release_effect": null,
+      "roots": {
+        "evidence": ".artifacts/logs/native-proxy-observation-acquisition-20260910/cases/fsmgen-LifetimeControls20260913_after_private_rmdir",
+        "other": ".artifacts/tmp/process-supervisor-tests/fsmgen-LifetimeControls20260913_after_private_rmdir_other",
+        "store": ".artifacts/tmp/native-proxy-image-custody/cases/fsmgen-LifetimeControls20260913_after_private_rmdir",
+        "target": ".artifacts/tmp/process-supervisor-tests/fsmgen-LifetimeControls20260913_after_private_rmdir_target"
+      }
+    },
+    {
+      "after": {
+        "image_present": true,
+        "references": [],
+        "workspaces": []
+      },
+      "before": {
+        "image_present": true,
+        "references": [
+          "target"
+        ],
+        "workspaces": [
+          "target"
+        ]
+      },
+      "event": "retire_target",
+      "expected_call_returned": false,
+      "expected_success": false,
+      "fault": "runtime_global",
+      "followup_maintenance": true,
+      "mutation": null,
+      "name": "after_global_unlink",
+      "prefix": [
+        "archive_a",
+        "archive_b",
+        "release_a",
+        "release_b",
+        "retire_other"
+      ],
+      "prior_model_control": null,
+      "profile": "same_image",
+      "release_effect": null,
+      "roots": {
+        "evidence": ".artifacts/logs/native-proxy-observation-acquisition-20260910/cases/fsmgen-LifetimeControls20260913_after_global_unlink",
+        "other": ".artifacts/tmp/process-supervisor-tests/fsmgen-LifetimeControls20260913_after_global_unlink_other",
+        "store": ".artifacts/tmp/native-proxy-image-custody/cases/fsmgen-LifetimeControls20260913_after_global_unlink",
+        "target": ".artifacts/tmp/process-supervisor-tests/fsmgen-LifetimeControls20260913_after_global_unlink_target"
+      }
+    },
+    {
+      "after": {
+        "image_present": true,
+        "references": [],
+        "workspaces": []
+      },
+      "before": {
+        "image_present": true,
+        "references": [
+          "b"
+        ],
+        "workspaces": []
+      },
+      "event": "release_b",
+      "expected_call_returned": true,
+      "expected_success": false,
+      "fault": "observation_hold",
+      "followup_maintenance": true,
+      "mutation": null,
+      "name": "after_last_observation_unlink",
+      "prefix": [
+        "archive_a",
+        "archive_b",
+        "retire_target",
+        "retire_other",
+        "release_a"
+      ],
+      "prior_model_control": "post_unlink_failure",
+      "profile": "same_image",
+      "release_effect": {
+        "last_reference_check": null,
+        "reference_absence_verified": 0,
+        "unlink_attempted": 1,
+        "unlink_completed": 0
+      },
+      "roots": {
+        "evidence": ".artifacts/logs/native-proxy-observation-acquisition-20260910/cases/fsmgen-LifetimeControls20260913_after_last_observation_unlink",
+        "other": ".artifacts/tmp/process-supervisor-tests/fsmgen-LifetimeControls20260913_after_last_observation_unlink_other",
+        "store": ".artifacts/tmp/native-proxy-image-custody/cases/fsmgen-LifetimeControls20260913_after_last_observation_unlink",
+        "target": ".artifacts/tmp/process-supervisor-tests/fsmgen-LifetimeControls20260913_after_last_observation_unlink_target"
+      }
+    }
+  ],
+  "cleanup": "Stop starting cases on first unexpected result. Retain first outcome before cleanup. Check exact owned roots and fresh closure; remove only observed matching owned members, bottom-up. Preserve unknown or changed objects and primary errors. Record any descriptor recovery separately. Never retry a case implicitly.",
+  "execution_admitted": false,
+  "execution_owner": "HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.12.4.1.3.6.4.2",
+  "journal": ".artifacts/logs/native-proxy-lifetime-controls-20260913/records",
+  "observer_scope": "New source-level hooks observe successful descriptor ownership at every compiled sysopen/opendir in the pinned implementation closure, actual closes and explicit observer duplicates. Library-internal native allocations are not attested. Observer recovery remains separate and cannot turn a primary incomplete operation into success.",
+  "owner": "HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.12.4.1.3.6.4.1.1",
+  "payload_source": {
+    "different_image_suffix_hex": "006c69666574696d652d6f74686572",
+    "path": "docs/audits/native-proxy-lifetime-model-20260913/prepared.json",
+    "profile": "same_image",
+    "target_observer": "a",
+    "target_sources": {
+      "c": 3,
+      "image": 4,
+      "wrapper": 0
+    }
+  },
+  "repeated_observations": "Healthy prefix follows the complete-file policy; the selected negative operation and explicit maintenance follow-up do not add implicit reuse calls.",
+  "runtime_qualification": false,
+  "schema": "fsmgen.inactive_lifetime_control_selection.v1",
+  "scope": "Prospective source-bound selection only. Harness, independent journal reader and final execution admission are still unqualified.",
+  "setup": [
+    "acquire_runtime_target",
+    "acquire_runtime_other",
+    "acquire_observation_a",
+    "acquire_observation_b"
+  ],
+  "shared_base_policy": "Execution establishes these common project artifact bases through the existing locality helper. They are shared infrastructure and are excluded from exclusive case-root cleanup; no existing shared contents are deleted.",
+  "shared_bases": [
+    ".artifacts/tmp/native-proxy-image-custody/cases",
+    ".artifacts/tmp/process-supervisor-tests",
+    ".artifacts/logs/native-proxy-observation-acquisition-20260910/cases"
+  ],
+  "source_revision": "486f980ff3d0b5206a5ee93ec5765b5f86bd00cd",
+  "trace_limits": {
+    "calls": 32768,
+    "handles": 2048
+  },
+  "wall_scope": "Perl case and cleanup alarms plus an overall monotonic budget check bound ordinary execution. Journal failure preserves fixture roots. This does not certify cleanup after interpreter loss or a kernel-uninterruptible call; such incomplete outcomes remain failures."
+}

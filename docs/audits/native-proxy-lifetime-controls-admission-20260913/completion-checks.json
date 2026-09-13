@@ -1,0 +1,40 @@
+{
+  "raw_captures": [
+    {
+      "bytes_hex": "636f6e74726f6c206d617472697820636f6d706c6574696f6e3a204f4b3b20736f757263652f64617461206f6e6c793b2061637475616c20696e74657272757074696f6e7320756e7175616c69666965640a",
+      "path": ".artifacts/logs/native-proxy-lifetime-controls-admission-20260913/completion.stdout",
+      "sha256": "fd43d59834dcf6efbb4fada282df8cdfe0c4b11d0b683f7f51503f44ddd1f2b9",
+      "size_bytes": 82
+    },
+    {
+      "bytes_hex": "72616d2d67756172643a205049442039383334343b20686f73742037352e36253b20686f7374206375746f6666203838253b2064657363656e64616e7420525353206375746f66662034303936204d69423b20706f6c6c2032730a",
+      "path": ".artifacts/logs/native-proxy-lifetime-controls-admission-20260913/completion.stderr",
+      "sha256": "25e27f03a5fa7f6c4665a03dddaf1782de3565f27651c92af11ef420c18521c1",
+      "size_bytes": 91
+    },
+    {
+      "bytes_hex": "300a",
+      "path": ".artifacts/logs/native-proxy-lifetime-controls-admission-20260913/completion.exit",
+      "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa",
+      "size_bytes": 2
+    },
+    {
+      "bytes_hex": "636f6e74726f6c206d617472697820636f6d706c6574696f6e3a204f4b3b20736f757263652f64617461206f6e6c793b2061637475616c20696e74657272757074696f6e7320756e7175616c69666965640a",
+      "path": ".artifacts/logs/native-proxy-lifetime-controls-admission-20260913/completion-saved.stdout",
+      "sha256": "fd43d59834dcf6efbb4fada282df8cdfe0c4b11d0b683f7f51503f44ddd1f2b9",
+      "size_bytes": 82
+    },
+    {
+      "bytes_hex": "72616d2d67756172643a2050494420353330333b20686f73742037352e30253b20686f7374206375746f6666203838253b2064657363656e64616e7420525353206375746f66662034303936204d69423b20706f6c6c2032730a",
+      "path": ".artifacts/logs/native-proxy-lifetime-controls-admission-20260913/completion-saved.stderr",
+      "sha256": "d8ea6c0a0ff21e63065d7c3241b1b0fa8c02b3f1624c8649840d4b6f951d20d8",
+      "size_bytes": 90
+    },
+    {
+      "bytes_hex": "300a",
+      "path": ".artifacts/logs/native-proxy-lifetime-controls-admission-20260913/completion-saved.exit",
+      "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa",
+      "size_bytes": 2
+    }
+  ]
+}

@@ -1,0 +1,38 @@
+[
+  {
+    "bytes_hex": "636f6e74726f6c206d6174726978206d657461646174613a204f4b3b2065786163742066697273742065706f63682072657461696e65643b2063757272656e7420636f6d706c6574696f6e207374696c6c20686f6c64730a",
+    "path": ".artifacts/logs/native-proxy-lifetime-controls-admission-20260913/metadata-review.stdout",
+    "sha256": "5d3c489721e5480d211ad3d02108c4223b7f5d5956f7b1ca6d71f32c81d55f59",
+    "size_bytes": 88
+  },
+  {
+    "bytes_hex": "72616d2d67756172643a2050494420373835363b20686f73742037312e34253b20686f7374206375746f6666203838253b2064657363656e64616e7420525353206375746f66662034303936204d69423b20706f6c6c2032730a",
+    "path": ".artifacts/logs/native-proxy-lifetime-controls-admission-20260913/metadata-review.stderr",
+    "sha256": "24d5a0dffa79d2e254a7d826c2e76f597b00b4fb9bb41b86a893525fe707feb0",
+    "size_bytes": 90
+  },
+  {
+    "bytes_hex": "300a",
+    "path": ".artifacts/logs/native-proxy-lifetime-controls-admission-20260913/metadata-review.exit",
+    "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa",
+    "size_bytes": 2
+  },
+  {
+    "bytes_hex": "636f6e74726f6c206d6174726978206d657461646174613a204f4b3b2065786163742066697273742065706f63682072657461696e65643b2063757272656e7420636f6d706c6574696f6e207374696c6c20686f6c64730a",
+    "path": ".artifacts/logs/native-proxy-lifetime-controls-admission-20260913/metadata-saved.stdout",
+    "sha256": "5d3c489721e5480d211ad3d02108c4223b7f5d5956f7b1ca6d71f32c81d55f59",
+    "size_bytes": 88
+  },
+  {
+    "bytes_hex": "72616d2d67756172643a205049442031303633343b20686f73742037322e36253b20686f7374206375746f6666203838253b2064657363656e64616e7420525353206375746f66662034303936204d69423b20706f6c6c2032730a",
+    "path": ".artifacts/logs/native-proxy-lifetime-controls-admission-20260913/metadata-saved.stderr",
+    "sha256": "7b77011819f51657eb519190bf1be934119fd3b07d7e49ff99d862f4ca06f429",
+    "size_bytes": 91
+  },
+  {
+    "bytes_hex": "300a",
+    "path": ".artifacts/logs/native-proxy-lifetime-controls-admission-20260913/metadata-saved.exit",
+    "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa",
+    "size_bytes": 2
+  }
+]

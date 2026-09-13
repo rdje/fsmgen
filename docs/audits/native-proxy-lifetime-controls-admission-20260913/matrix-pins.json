@@ -1,0 +1,52 @@
+[
+  {
+    "path": "docs/audits/native-proxy-lifetime-controls-admission-20260913/author_matrix.py",
+    "sha256": "8bd8bdae66e6d6d82080268e9d293b8a256605fc86f6d28710e4258500567b1b",
+    "size_bytes": 10199
+  },
+  {
+    "path": "docs/audits/native-proxy-lifetime-controls-admission-20260913/audit.py",
+    "sha256": "cc492053f87636b748ebdb282842c981f01bdea356c8cae12db8c3174a68fdd9",
+    "size_bytes": 15730
+  },
+  {
+    "path": "docs/audits/native-proxy-lifetime-controls-admission-20260913/selection.json",
+    "sha256": "c0df1570442520306e78c1a2138118da1b8ad71035fa9d6efa336d2827e9fdc9",
+    "size_bytes": 22403
+  },
+  {
+    "path": "docs/audits/native-proxy-lifetime-controls-admission-20260913/source-contracts.json",
+    "sha256": "992eea1d5b015d66f7acb35355b48d1ee202f4eff62789557559716a86d35acc",
+    "size_bytes": 33976
+  },
+  {
+    "path": "docs/audits/native-proxy-lifetime-controls-admission-20260913/call-witnesses.json",
+    "sha256": "7ded028947d8256ef3b7f560eff187a51d4b76564f78e15cf8228973af78e543",
+    "size_bytes": 3415
+  },
+  {
+    "path": "docs/audits/native-proxy-lifetime-controls-admission-20260913/plan.json",
+    "sha256": "bbca98c22aa56045733ed47e20e62bcab0cd1637655ce3b9fe96e2bf08204d9c",
+    "size_bytes": 14284
+  },
+  {
+    "path": "docs/audits/native-proxy-lifetime-controls-admission-20260913/task-layout.json",
+    "sha256": "bca7c0fef3785780dceaafff140bb6e09129f9da2dca25a57f61f7793e2c20f4",
+    "size_bytes": 4821
+  },
+  {
+    "path": "docs/audits/native-proxy-lifetime-controls-admission-20260913/admission-layout.json",
+    "sha256": "8398c86c34622760dfd4a71890e52f2dd9b08ecbf3c14205de1457620910d9ef",
+    "size_bytes": 4413
+  },
+  {
+    "path": "docs/audits/native-proxy-lifetime-controls-admission-20260913/first-selection.source",
+    "sha256": "8bd8bdae66e6d6d82080268e9d293b8a256605fc86f6d28710e4258500567b1b",
+    "size_bytes": 10199
+  },
+  {
+    "path": "docs/audits/native-proxy-lifetime-controls-admission-20260913/first-selection-failure.json",
+    "sha256": "ae05f9ba36d883dbf8b05573a123bfcc0176656bef304c31b783332474b45311",
+    "size_bytes": 3788
+  }
+]
