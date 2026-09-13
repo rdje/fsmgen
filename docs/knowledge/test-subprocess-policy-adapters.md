@@ -141,6 +141,6 @@ evidence: >-
   t/1669-task-acceptance-fixture-runtime.t; t/python/test_fixture_runtime_sources.py;
   t/lib/FSM/Test/RustProxyFixture.pm; t/1815-rust-proxy-fixture.t; t/1816-rust-proxy-integration.t; t/1817-test-supervision-architecture.t
 reverify: >-
-  scripts/run_with_ram_guard.sh -- python3 -B docs/audits/native-proxy-compiler-census-policy-admission-20260913/audit.py --verify-saved
+  scripts/run_with_ram_guard.sh -- python3 -B docs/audits/native-proxy-compiler-census-policy-execution-20260913/audit.py --verify-saved
 ---
-History: `bff742d12e4288a44748f2a320fc88b8e1a4b452:docs/knowledge/test-subprocess-policy-adapters.md`. Local Git policy is explicit; compiler profiles and native/live/startup remain pending. Guarded stdin Python ran no code: pass a named script and verify its artifact.
+History: `25a4a19646e1786d854d826ae11958ca4f495ae6:docs/knowledge/test-subprocess-policy-adapters.md`. Selected compiler profiles and exact cleanup are qualified; native/live/startup remain open. Use named scripts under the RAM guard and require their artifacts.

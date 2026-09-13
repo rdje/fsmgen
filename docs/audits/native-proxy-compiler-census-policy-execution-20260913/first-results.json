@@ -1,0 +1,130 @@
+{
+  "admission_revision": "25a4a19646e1786d854d826ae11958ca4f495ae6",
+  "files": [
+    {
+      "path": "docs/audits/native-proxy-compiler-census-policy-execution-20260913/first-results/inner/accepted-profile.json",
+      "sha256": "6aa9c05fdae01a8c2da5d1a9d8f86072f480112a7879227c3890e2ffb24a4bdd",
+      "size_bytes": 1009,
+      "source_path": ".artifacts/logs/native-proxy-compiler-census-policy-20260913/accepted-profile.json"
+    },
+    {
+      "path": "docs/audits/native-proxy-compiler-census-policy-execution-20260913/first-results/inner/cleanup.jsonl",
+      "sha256": "ceca28a48ba1fd3dfd58410bf6b2593dc266c87349a1b53c42e614400b005a92",
+      "size_bytes": 8460,
+      "source_path": ".artifacts/logs/native-proxy-compiler-census-policy-20260913/cleanup.jsonl"
+    },
+    {
+      "path": "docs/audits/native-proxy-compiler-census-policy-execution-20260913/first-results/inner/epoch-before.json",
+      "sha256": "abcdf8febd51d7d1fb2ff8ff16a279646d3c1a2188611f11f1a85671587b496e",
+      "size_bytes": 84095,
+      "source_path": ".artifacts/logs/native-proxy-compiler-census-policy-20260913/epoch-before.json"
+    },
+    {
+      "path": "docs/audits/native-proxy-compiler-census-policy-execution-20260913/first-results/inner/independent-first.json",
+      "sha256": "5cb13e3214ad9c111eccd139f4d01493caf1f3a453f077b53e260fcd350a170a",
+      "size_bytes": 89571,
+      "source_path": ".artifacts/logs/native-proxy-compiler-census-policy-20260913/independent-first.json"
+    },
+    {
+      "path": "docs/audits/native-proxy-compiler-census-policy-execution-20260913/first-results/inner/journal.jsonl",
+      "sha256": "13fb81de49b173879de9a9e0d476b88e0da529e6b6a010c558516985647cbf69",
+      "size_bytes": 611220,
+      "source_path": ".artifacts/logs/native-proxy-compiler-census-policy-20260913/journal.jsonl"
+    },
+    {
+      "path": "docs/audits/native-proxy-compiler-census-policy-execution-20260913/first-results/inner/permit.json",
+      "sha256": "e25c75b0397b6af2ee4564452f68092931882a0fc0fe4f99d90e18d85c8c9a0b",
+      "size_bytes": 4591,
+      "source_path": ".artifacts/logs/native-proxy-compiler-census-policy-20260913/permit.json"
+    },
+    {
+      "path": "docs/audits/native-proxy-compiler-census-policy-execution-20260913/first-results/inner/reviewed.json",
+      "sha256": "f0e2d4f0ae2074b2cb9e88e6f0fa2b1f7a30bacee8f1b144233250f266b3175d",
+      "size_bytes": 1299,
+      "source_path": ".artifacts/logs/native-proxy-compiler-census-policy-20260913/reviewed.json"
+    },
+    {
+      "path": "docs/audits/native-proxy-compiler-census-policy-execution-20260913/first-results/inner/run-start.json",
+      "sha256": "a9032a8cf167c1cd9350c4fab9111a797a8f63628eace905c9d4d90bcbd0659c",
+      "size_bytes": 4387,
+      "source_path": ".artifacts/logs/native-proxy-compiler-census-policy-20260913/run-start.json"
+    },
+    {
+      "path": "docs/audits/native-proxy-compiler-census-policy-execution-20260913/first-results/inner/runner.exit",
+      "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa",
+      "size_bytes": 2,
+      "source_path": ".artifacts/logs/native-proxy-compiler-census-policy-20260913/runner.exit"
+    },
+    {
+      "path": "docs/audits/native-proxy-compiler-census-policy-execution-20260913/first-results/inner/runner.stderr",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "size_bytes": 0,
+      "source_path": ".artifacts/logs/native-proxy-compiler-census-policy-20260913/runner.stderr"
+    },
+    {
+      "path": "docs/audits/native-proxy-compiler-census-policy-execution-20260913/first-results/inner/runner.stdout",
+      "sha256": "7ef9802f05406e69461d21c04c84c6f312d32214cb435ba3f9f63453aaf6ec57",
+      "size_bytes": 136,
+      "source_path": ".artifacts/logs/native-proxy-compiler-census-policy-20260913/runner.stdout"
+    },
+    {
+      "path": "docs/audits/native-proxy-compiler-census-policy-execution-20260913/first-results/outer/issuer.exit",
+      "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa",
+      "size_bytes": 2,
+      "source_path": ".artifacts/logs/native-proxy-compiler-census-policy-execution-20260913/issuer.exit"
+    },
+    {
+      "path": "docs/audits/native-proxy-compiler-census-policy-execution-20260913/first-results/outer/issuer.stderr",
+      "sha256": "721aa1ff70f9491b2f4f89a6ab2ed2935f70bf5763aa6915f1b5da3730b2f760",
+      "size_bytes": 91,
+      "source_path": ".artifacts/logs/native-proxy-compiler-census-policy-execution-20260913/issuer.stderr"
+    },
+    {
+      "path": "docs/audits/native-proxy-compiler-census-policy-execution-20260913/first-results/outer/issuer.stdout",
+      "sha256": "45e31aaac6545e38391b224c23c2c56ae4f8cba3c277ffdd48e8703a8ed6dcbe",
+      "size_bytes": 131,
+      "source_path": ".artifacts/logs/native-proxy-compiler-census-policy-execution-20260913/issuer.stdout"
+    },
+    {
+      "path": "docs/audits/native-proxy-compiler-census-policy-execution-20260913/first-results/outer/review.exit",
+      "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa",
+      "size_bytes": 2,
+      "source_path": ".artifacts/logs/native-proxy-compiler-census-policy-execution-20260913/review.exit"
+    },
+    {
+      "path": "docs/audits/native-proxy-compiler-census-policy-execution-20260913/first-results/outer/review.stderr",
+      "sha256": "8e494591b48a2846d6fdaa1ff880f2be7a902938a6ee7a9ff369cae5c5e55e1f",
+      "size_bytes": 91,
+      "source_path": ".artifacts/logs/native-proxy-compiler-census-policy-execution-20260913/review.stderr"
+    },
+    {
+      "path": "docs/audits/native-proxy-compiler-census-policy-execution-20260913/first-results/outer/review.stdout",
+      "sha256": "29e2665e132d47a9f561a364bee2b61050c6dfaa4e6f54040483b1355864fda3",
+      "size_bytes": 785,
+      "source_path": ".artifacts/logs/native-proxy-compiler-census-policy-execution-20260913/review.stdout"
+    },
+    {
+      "path": "docs/audits/native-proxy-compiler-census-policy-execution-20260913/first-results/outer/runner.exit",
+      "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa",
+      "size_bytes": 2,
+      "source_path": ".artifacts/logs/native-proxy-compiler-census-policy-execution-20260913/runner.exit"
+    },
+    {
+      "path": "docs/audits/native-proxy-compiler-census-policy-execution-20260913/first-results/outer/runner.stderr",
+      "sha256": "87fa070105bfaab1fe251ba597981b7dad3f6dad51ec00df6cb7a8a32e764b53",
+      "size_bytes": 91,
+      "source_path": ".artifacts/logs/native-proxy-compiler-census-policy-execution-20260913/runner.stderr"
+    },
+    {
+      "path": "docs/audits/native-proxy-compiler-census-policy-execution-20260913/first-results/outer/runner.stdout",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "size_bytes": 0,
+      "source_path": ".artifacts/logs/native-proxy-compiler-census-policy-execution-20260913/runner.stdout"
+    }
+  ],
+  "original_outputs_preserved": true,
+  "roots_absent": {
+    ".artifacts/tmp/process-supervisor-tests/fsmgen-CompilerProfile20260913_decoy": true,
+    ".artifacts/tmp/process-supervisor-tests/fsmgen-CompilerProfile20260913_nonzero": true
+  }
+}

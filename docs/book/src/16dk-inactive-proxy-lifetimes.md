@@ -317,10 +317,10 @@ original records and tests hypothetical omitted files that leave the selected
 identities unchanged while violating cleanup policy. These examples demonstrate
 missing evidence; they are not observed compiler defects.
 
-The next step is a separately admitted, finite compiler-only census of the
-complete settled workspace. It must record actual files and ownership before
-cleanup while preserving current limits. It will not execute a generated proxy,
-wrapper, original test or collector.
+The separately admitted compiler-only census now retains complete settled
+workspaces for the fixed nonzero and decoy modes. It records actual files and
+ownership before cleanup while preserving current limits. It does not execute
+a generated proxy, wrapper, original test or collector.
 
 Read-only installation checks found that both the compiler bytes and the default
 SDK now differ from the original admissions. The older SDK version remains
@@ -334,10 +334,10 @@ compiler libraries are not exhaustively attested. The required installed OS and
 toolchain inputs are read-only dependencies on the OS volume; project evidence
 continues to stay on the repository volume.
 
-The compiler-only census procedure is now qualified as source and model checks.
-Execution requires a committed admission, a separately active execution task
-and fresh installed-input checks before a one-use permit can run.
-The original builder keeps its existing arguments, environment and limits.
+The compiler-only census completed after its committed source admission and
+fresh installed-input checks. Its one-use permit is consumed. The original
+builder kept its existing arguments, environment and supervision limits.
+Do not repeat the issuer, runner or cleanup commands; use the saved audit below.
 
 The procedure records the original compiler exit and settled process group,
 then accounts for every workspace directory, file and link. A separate reader
@@ -345,7 +345,7 @@ compares complete membership, identities, permissions and file contents before
 exact cleanup. The source-derived wrapper and relative Cargo link are controlled
 additions; neither is executed. A missing entry, changed file, incomplete capture
 or failed compiler stops the sequence and preserves the workspace for diagnosis.
-These checks qualify the procedure; actual compiler profiles remain pending.
+The actual profiles now agree with the independent complete-node census.
 
 The first invocation stopped at Git preflight, before permit consumption,
 workspace creation or compiler launch. Ordinary Git used a personal ignore rule
@@ -356,8 +356,8 @@ The repaired admission selects repository-local Git ignore policy explicitly.
 Only the exact local settings file is ignored; shared configuration remains
 visible. Ordinary and closed Git views now agree. The installed Git launcher is
 pinned and checked before admission queries; this does not attest its loaded
-image or libraries. A fresh committed admission and separate execution owner
-are still required. No authentic compiler-workspace profile has been collected.
+image or libraries. The fresh committed admission subsequently produced the
+selected authentic profiles without consuming or clearing the original permit.
 
 Source checks must also produce their required evidence. An stdin-fed Python
 check returned success without running its program because the RAM guard starts
@@ -365,9 +365,19 @@ its command asynchronously with empty default stdin. The corrected invocation
 passes a tracked script by filename and verifies the resulting installed-input
 record. The original empty output remains retained as a failed qualification.
 
+Original compiler receipts record successful exits and settled process groups.
+The retained full-byte captures and independent node maps agree on every owned
+entry. Both selected profiles fit the existing node, depth, per-file and total
+byte limits. Cache and temporary directories contain no leftover entries.
+
+Independent review also reconstructs every recorded remaining-workspace hash
+through the exact removal sequence. Both private roots are absent. This proves
+these selected compiler profiles and their controlled unexecuted roles; it does
+not qualify generated-proxy execution, populated workers or live integration.
+
 | Remaining work | Required result |
 | --- | --- |
-| Workspace profiles | The narrow wrapper repair is qualified; establish authentic compiler-workspace profiles and capacity evidence. |
+| Workspace profiles | The narrow wrapper repair and selected authentic compiler profiles are qualified; join their current evidence before composition. |
 | Populated-store workers | Qualify equal/different publication, separate references and observation holds through actual cancellation and retirement. |
 | Real receipt binding | Prove complete compiler/outer/inner ownership and prevent launches after settlement. |
 | Inactive adapter composition | Join preparation, native path/reference admission and observation custody before the separate native experiment. |
@@ -383,7 +393,7 @@ remain required before any product activation.
 scripts/run_with_ram_guard.sh -- python3 -B docs/audits/native-proxy-wrapper-compatibility-20260913/audit.py --verify-saved
 scripts/run_with_ram_guard.sh -- python3 -B docs/audits/native-proxy-compiler-profile-inventory-20260913/audit.py --verify-saved
 scripts/run_with_ram_guard.sh -- python3 -B docs/audits/native-proxy-compiler-profile-admission-20260913/epoch.py --verify-saved
-scripts/run_with_ram_guard.sh -- python3 -B docs/audits/native-proxy-compiler-census-policy-admission-20260913/audit.py --verify-saved
+scripts/run_with_ram_guard.sh -- python3 -B docs/audits/native-proxy-compiler-census-policy-execution-20260913/audit.py --verify-saved
 ```
 
 [Return to runtime measurement](16dc-vial-portable-verilator-runtime-measurement.md).

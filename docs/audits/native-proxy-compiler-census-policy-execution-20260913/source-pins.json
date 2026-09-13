@@ -1,0 +1,197 @@
+[
+  {
+    "path": ".gitignore",
+    "sha256": "f627c631db773c437fa2e11fceab182014f60512ce7aeeb33a368f3a544e7dfe",
+    "size_bytes": 2379
+  },
+  {
+    "path": "docs/audits/native-proxy-compiler-census-20260913/audit.py",
+    "sha256": "00d78d0df9159b0ac5ab98734ce2190ac3bcb67b936a336ade533af4731738f3",
+    "size_bytes": 8888
+  },
+  {
+    "path": "docs/audits/native-proxy-compiler-census-20260913/first-run-rejected.json",
+    "sha256": "59ad408aa297f6965ce7ae7f3b563721a660f5275708e38b31d8ee51059f5220",
+    "size_bytes": 182080
+  },
+  {
+    "path": "docs/audits/native-proxy-compiler-census-20260913/review.json",
+    "sha256": "406ef7005d84bf9b827205261657081f6cbdcccac7f203f9d4ddbf054393aca3",
+    "size_bytes": 1392
+  },
+  {
+    "path": "docs/audits/native-proxy-compiler-census-20260913/source-pins.json",
+    "sha256": "20fcdc448d92eb7fbc03abcf153b84c56c365bbb6d762afcb027edeec31dc898",
+    "size_bytes": 1171
+  },
+  {
+    "path": "docs/audits/native-proxy-compiler-census-admission-20260913/admission.py",
+    "sha256": "a9db2505d2df17e67c2e83142a1679c6072600872b602b7fc262c21ebf071bab",
+    "size_bytes": 7900
+  },
+  {
+    "path": "docs/audits/native-proxy-compiler-census-policy-admission-20260913/CompilerProfile.pm",
+    "sha256": "00ffeefa1e75d8f28d61455ca36d91bc8a5c42cf7a03e3d266edb89c4b0a8a30",
+    "size_bytes": 4394
+  },
+  {
+    "path": "docs/audits/native-proxy-compiler-census-policy-admission-20260913/PROCEDURE.md",
+    "sha256": "4c87b7fb4c4ba31e8e1921617768681bc1f59b955482c430eac4aff3a7238406",
+    "size_bytes": 4945
+  },
+  {
+    "path": "docs/audits/native-proxy-compiler-census-policy-admission-20260913/admission.py",
+    "sha256": "55a327075f0aae7b5ae7c4c20e357d78bbe7f4fbe36db97f850afd9fed987d74",
+    "size_bytes": 8348
+  },
+  {
+    "path": "docs/audits/native-proxy-compiler-census-policy-admission-20260913/audit.py",
+    "sha256": "78a1b4cec9ca99f70cb87c0a932938acc4e4a0e4abb9081a7ffa86e9b767e429",
+    "size_bytes": 5432
+  },
+  {
+    "path": "docs/audits/native-proxy-compiler-census-policy-admission-20260913/capture_installed.py",
+    "sha256": "a25b99175ba44d1e5241f2ba76ebe5f55293dfc99175e1f2c97bda3390509a42",
+    "size_bytes": 715
+  },
+  {
+    "path": "docs/audits/native-proxy-compiler-census-policy-admission-20260913/compile_profile.pl",
+    "sha256": "f4e643d775c7fb9ba2f315f3903368b2bbc15c38048e809134108eb80ef95c32",
+    "size_bytes": 7597
+  },
+  {
+    "path": "docs/audits/native-proxy-compiler-census-policy-admission-20260913/execute_once.sh",
+    "sha256": "982d081cb78683f7f8696fc0d668cfec9e6f7d44e813a522cc09cc1a8d752719",
+    "size_bytes": 734
+  },
+  {
+    "path": "docs/audits/native-proxy-compiler-census-policy-admission-20260913/ignore_policy.py",
+    "sha256": "f2d9956037f768d0d248b21fe32ebb155baff0231e433d1827559b625f952cb9",
+    "size_bytes": 6115
+  },
+  {
+    "path": "docs/audits/native-proxy-compiler-census-policy-admission-20260913/implementation-pins.json",
+    "sha256": "ed39b7084727991748c6ea849da5c775af863761224123e87a9c1349ba5fee50",
+    "size_bytes": 3620
+  },
+  {
+    "path": "docs/audits/native-proxy-compiler-census-policy-admission-20260913/inherited-sources.json",
+    "sha256": "e7803b22a66955358fcfb6985588fdd5dbc6e96c796b77bec55cd7230f3ab684",
+    "size_bytes": 3816
+  },
+  {
+    "path": "docs/audits/native-proxy-compiler-census-policy-admission-20260913/plan.json",
+    "sha256": "d715669d00b00219cf55bd534b658114b51c3d5d00d42c6925ee769a87409a1c",
+    "size_bytes": 18369
+  },
+  {
+    "path": "docs/audits/native-proxy-compiler-census-policy-admission-20260913/profile_files.py",
+    "sha256": "10c50217b5a2ee745c3232a9305969757e730811166ad1d0a7c987dc736f5ae9",
+    "size_bytes": 5939
+  },
+  {
+    "path": "docs/audits/native-proxy-compiler-census-policy-admission-20260913/projection-model.json",
+    "sha256": "841dc5a561bfd0290b9d7a4e6202a3bdb51201596a6b83678b4a53487c271b20",
+    "size_bytes": 3422
+  },
+  {
+    "path": "docs/audits/native-proxy-compiler-census-policy-admission-20260913/qualify_compiler.t",
+    "sha256": "a9beaf30b44ac7afc12b6f83ab2bfb4c6eb99af5effc9dfcea32d41d33de4025",
+    "size_bytes": 5714
+  },
+  {
+    "path": "docs/audits/native-proxy-compiler-census-policy-admission-20260913/qualify_profile.py",
+    "sha256": "40b787e0a98df56c6ba1be7b0ee8c61f869210b41f8acf1ca7bf6885d6caeab9",
+    "size_bytes": 14165
+  },
+  {
+    "path": "docs/audits/native-proxy-compiler-census-policy-admission-20260913/review_profile.py",
+    "sha256": "a9b5152c9894e7f8201cb90e864d92f1d37306d0f9ecdea986a9761babba5583",
+    "size_bytes": 10653
+  },
+  {
+    "path": "docs/audits/native-proxy-compiler-census-policy-admission-20260913/scope.json",
+    "sha256": "608e390f3723e3b20e346a74c77b0861065bdca4718273ad1004b1141a191e2f",
+    "size_bytes": 840
+  },
+  {
+    "path": "docs/audits/native-proxy-compiler-census-policy-admission-20260913/source_contract.py",
+    "sha256": "34ce5f61d319b5d706dde1ad4d208723b4da0f6b226eff896c8a1b1bb0b1d783",
+    "size_bytes": 2437
+  },
+  {
+    "path": "docs/audits/native-proxy-compiler-profile-admission-20260913/epoch-first.json",
+    "sha256": "fc7f6a14d7fb69b571dd7bbdbddcc2579f099a573f1374657fe3e114b0befc98",
+    "size_bytes": 99791
+  },
+  {
+    "path": "docs/audits/native-proxy-compiler-profile-admission-20260913/epoch-plan.json",
+    "sha256": "72f45446f49baf388162676861aff37131b057c16860793eab8ae4e5b0119745",
+    "size_bytes": 2910
+  },
+  {
+    "path": "docs/audits/native-proxy-compiler-profile-admission-20260913/epoch-review.json",
+    "sha256": "86a97d4970e04b029e0f2dc06e6b8d97b65789c6287f68ff4e6d49e7a3d02c39",
+    "size_bytes": 4359
+  },
+  {
+    "path": "docs/audits/native-proxy-compiler-profile-admission-20260913/epoch.py",
+    "sha256": "aff3f6f026695a1fd03da4be55a32c63590b96bda600ed8c744361985686c621",
+    "size_bytes": 10096
+  },
+  {
+    "path": "docs/audits/native-proxy-image-coordination-20260910/Coordination.pm",
+    "sha256": "a0d99769147f28ca7c35e9ac80ba88f7cf14760e3bef7b51841d8badebc060e5",
+    "size_bytes": 19061
+  },
+  {
+    "path": "docs/audits/native-proxy-image-custody-20260910/ImageCustody.pm",
+    "sha256": "927f1ab39f7f26742e36878985d1ff545ddf2dee119d4bf6b7b41bf2c9360ccc",
+    "size_bytes": 8619
+  },
+  {
+    "path": "docs/audits/native-proxy-runtime-retirement-20260910/PrivateWorkspace.pm",
+    "sha256": "98e324cf9ef89471ffb4ede683ce21a8e09fc02329739a0856285ecea067e18f",
+    "size_bytes": 6425
+  },
+  {
+    "path": "docs/audits/native-proxy-wrapper-compatibility-20260913/files.py",
+    "sha256": "d06b7dbea0179ce2f585e2e76da568cb00072f7c97134b89f273a252dd5503da",
+    "size_bytes": 6031
+  },
+  {
+    "path": "docs/audits/native-proxy-wrapper-compatibility-20260913/plan.json",
+    "sha256": "8ebc70a62967aafd6593716ffda9f72c5a88dd0ea61e9486de66235510b7bff9",
+    "size_bytes": 6133
+  },
+  {
+    "path": "perl/FSM/ProjectDataLocality.pm",
+    "sha256": "14aece4a50b35956bc2585099aa8d26753942288663c641922da9d36ad4bc893",
+    "size_bytes": 6017
+  },
+  {
+    "path": "perl/FSM/Support/ProcessSupervisor.pm",
+    "sha256": "684882d91f673ea7145f43ed3aad31acf099f13508574be7b2d8911123988637",
+    "size_bytes": 27990
+  },
+  {
+    "path": "t/1669-task-acceptance-fixture-runtime.t",
+    "sha256": "bdebbf03308cd5e0699324f9ab96a249c11c9ab05634309569d33874391a196f",
+    "size_bytes": 67582
+  },
+  {
+    "path": "t/fixtures/rust-tool-proxy.c",
+    "sha256": "be8b66690a93c8432c0f33094ac15c26f7fef0940c18f6935fd5b0994d9f4ede",
+    "size_bytes": 721
+  },
+  {
+    "path": "t/lib/FSM/Test/ProcessSupervisor.pm",
+    "sha256": "52e467023ea8a776167e227a767abdd3dddf185f1f7c539aac8ca1c4a0a06680",
+    "size_bytes": 773
+  },
+  {
+    "path": "t/lib/FSM/Test/RustProxyFixture.pm",
+    "sha256": "d9c4ab52cf8074526c59b7a5dcb9da870ca7ffdacb4eb236dacb23b5db6d8bfb",
+    "size_bytes": 11466
+  }
+]

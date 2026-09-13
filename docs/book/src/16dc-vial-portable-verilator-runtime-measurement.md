@@ -1771,8 +1771,8 @@ ordinary retirement preserves shared images and other owners. Partial removal
 retains the pin for recovery. An interruption after the final reference unlink
 can leave release completed without a success return, while preserving the image.
 There is no automatic retry or recreation of missing coordination state.
-These are inert filesystem qualifications; actual compiler-workspace capacity,
-real receipt transport and native behavior remain open. Selected inactive
+These are inert filesystem qualifications; real receipt transport and native
+behavior remain open. Selected authentic compiler-workspace profiles, inactive
 observer lifetimes and current saved-evidence checks are documented in
 [Inactive Proxy Lifetimes](16dk-inactive-proxy-lifetimes.md).
 

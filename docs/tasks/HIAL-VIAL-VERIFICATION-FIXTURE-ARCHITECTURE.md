@@ -2096,11 +2096,11 @@ decomposes the architecture needed to move beyond that bounded foundation.
   Verification: `docs/audits/native-proxy-wrapper-compatibility-20260913/audit.py --verify-saved joins 21 pinned inputs, exact baseline/current guard, 15 inert profiles (30 reader calls), unchanged original retirement rejection, complete repaired removal of 10 workspace nodes, 109 closed transferred handles, eight rejecting altered-evidence controls and 17 absent owned roots. First outcomes and exact cleanup are retained. Only the exact generated wrapper gains 0755; actual compiler capacity, authenticated cleanup, native/live behavior remain unqualified. Re-derivation, falsification and durability legs are fixed in plan.json; book/knowledge/claim checks and staged doctrines accompany this slice.`
   Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.12.4.1.5.2.1: repair exact generated-wrapper retirement mode`
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.12.4.1.5.2.2`
-  Status: `active`
+  Status: `done`
   Goal: `Qualify authentic compiler-workspace profiles against retirement limits.`
   Acceptance: `First inventory existing authenticated compiler-workspace evidence and its complete node/mode/depth/per-file/aggregate coverage. Preserve absent proof explicitly. If fresh compiler evidence is necessary, own separate prospective source admission and sole compiler-only execution with fixed inputs, normal-user ownership, private storage, bounded output/walls and exact cleanup before running it. Never rerun originals or native proxies, substitute synthetic capacity for actual profiles, relax ceilings silently or bypass the enclosing execution gates.`
-  Verification: `pending`
-  Commit: `pending`
+  Verification: `Retained selected-file evidence was inventoried before separate current-epoch source admission. The first failed preflight and exact local-policy repair are preserved; the sole fresh compiler census now establishes complete selected profiles within unchanged limits and exactly removes its workspaces. docs/audits/native-proxy-compiler-census-policy-execution-20260913/completion.json closes all children; final workspace compatibility join remains .5.2.3.`
+  Commit: `this commit`
   Children: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.12.4.1.5.2.2.1, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.12.4.1.5.2.2.2, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.12.4.1.5.2.2.3`
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.12.4.1.5.2.2.1`
   Status: `done`
@@ -2122,11 +2122,11 @@ decomposes the architecture needed to move beyond that bounded foundation.
   Verification: `docs/audits/native-proxy-compiler-profile-admission-20260913/epoch.py --verify-saved joins the original identical hardlink/daemon compiler and SDK admissions to the first current descriptor-hash and SDK-selection/version capture. Compiler bytes and default SDK changed; the old SDK label remains but its directory identity also changed. Eight altered source/byte/version/access/equivalence controls reject. Required OS-volume dependencies are explicitly read-only; no project output, compiler, xcrun, original or fixture runs off-volume. The next census must freshly revalidate current compiler/SDK identities after its own source/data admission commit; no historical environment equivalence, loaded-image attestation or startup-cause claim follows. Exact first finding and result are retained; plan names distinct claim legs.`
   Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.12.4.1.5.2.2.2.1: qualify changed compiler and SDK epoch`
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.12.4.1.5.2.2.3`
-  Status: `active`
+  Status: `done`
   Goal: `Execute only the committed compiler-profile census and consume its complete first outcomes.`
   Acceptance: `After the exact prospective admission commit and source/native-identity checks, run only its finite compiler-only modes once under normal-user resource bounds. Preserve first compiler, census, capacity or cleanup failure without original/proxy execution, retry, normalization or silent limit inflation. Independently join full workspace metadata/bytes to compiler ownership and planned source, preserve original outputs before cleanup, and delete only exact admitted owned nodes after process settlement. Missing evidence remains a blocker to profile qualification; consume every result and commit before advancing.`
-  Verification: `pending`
-  Commit: `pending`
+  Verification: `Children preserve the original unused-permit rejection, commit the exact local Git repair and complete its fresh compiler-only census. docs/audits/native-proxy-compiler-census-policy-execution-20260913/completion.json closes the successful actual-profile obligation with no original permit reuse or proxy execution.`
+  Commit: `this commit`
   Children: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.12.4.1.5.2.2.3.1, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.12.4.1.5.2.2.3.2, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.12.4.1.5.2.2.3.3`
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.12.4.1.5.2.2.3.1`
   Status: `done`
@@ -2141,11 +2141,11 @@ decomposes the architecture needed to move beyond that bounded foundation.
   Verification: `docs/audits/native-proxy-compiler-census-policy-admission-20260913/completion.json joins exact local ignore scope, equal Git views, fixed closed Git request controls, unchanged compiler model, named installed-input capture, retained first check failures, rendered book and claim review. Re-derive saved source/output joins; falsify policy/request/profile mutations; retain all sources and raw results in Git. Authentic compiler profiles remain pending.`
   Commit: `this commit`
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.12.4.1.5.2.2.3.3`
-  Status: `proposed`
+  Status: `done`
   Goal: `Execute the freshly admitted compiler census after the preflight repair.`
   Acceptance: `Only after the repair/admission commit, revalidate exact inputs and consume its fresh one-use permit. Preserve first compiler/census/cleanup outcomes, stop on any unexpected result and never rerun a generated proxy, wrapper, original test or collector. Join full native compiler-workspace profiles to exact source and settlement evidence, preserve outputs before exact cleanup and commit before advancing; no silent bounds changes or promotion of the earlier rejected preflight.`
-  Verification: `pending`
-  Commit: `pending`
+  Verification: `docs/audits/native-proxy-compiler-census-policy-execution-20260913/audit.py --verify-saved joins the sole fresh permit, original successful compiler receipts, complete original byte captures and independent node maps for both fixed modes. Each profile has eight nodes, depth two, three files totaling 50925 bytes and a 49992-byte maximum file; controlled wrapper/link roles remain unexecuted. All 16 remaining-map hashes and exact removals re-derive; both roots are absent. Eleven altered actual-evidence controls reject. Twenty first-output files totaling 805965 bytes and 39 committed input pins are durable. Completion.json joins book, claim and doctrine checks; no native/live/startup promotion.`
+  Commit: `this commit`
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.12.4.1.5.2.3`
   Status: `proposed`
   Goal: `Join current workspace compatibility and capacity before protocol composition.`
@@ -3768,7 +3768,7 @@ decomposes the architecture needed to move beyond that bounded foundation.
 
 ## Current Frontier
 
-Current frontier: .3.2.15.7.3.12.4.1.5.2.2.3.2 is done; .3.3 remains proposed until this source admission is committed. Activate .3.3, revalidate the installed inputs, issue its fresh permit and consume each compiler-census result exactly once. Preserve the old failed output and unused permit. Native/live, startup/parent and full CI/push remain gated.
+Current frontier: .3.2.15.7.3.12.4.1.5.2.2.3.3 and its compiler-profile parents are done. After this commit activate .5.2.3 to join the exact wrapper repair and authentic selected compiler profiles against unchanged workspace limits. Keep populated workers, authentic receipt binding, inactive composition and native/live/startup gates open. Never repeat a consumed producer.
 
 Architecture audit `.1` is complete. Decision `0032` selects one public
 `.vial` source language, private immutable `VIALSemanticIR` and
@@ -6363,8 +6363,8 @@ Completed native-proxy feasibility through runtime-source-controls acceptance: r
 
 The manifest binds the immediately preceding acceptance suffix to its exact Git source. That source preserves the earlier history pointer and versioned manifest chain; current node contracts remain authoritative.
 
-## Acceptance Checklist (local compiler admission .3.2.15.7.3.12.4.1.5.2.2.3.2)
+## Acceptance Checklist (actual compiler census .3.2.15.7.3.12.4.1.5.2.2.3.3)
 
-- [x] **ROOT CAUSE (WHY + WHERE)** — `git log -S 'env -i PATH=/usr/bin:/bin' -1 --format='%H %s' -- docs/audits/native-proxy-compiler-census-admission-20260913/execute_once.sh` binds the original closed invocation. Its preserved first Git preflight exposed a personal ignore dependency. The exact root-local rule and explicit Git configuration repair that mismatch. The guard's asynchronous launch also explains the retained empty-stdin source-check outcome; a named tracked script produces the required evidence.
-- [x] **ADDRESSED (verified)** — docs/audits/native-proxy-compiler-census-policy-admission-20260913/audit.py --verify-saved joins unchanged compiler/request boundaries, fixed Git input/environment, equal actual Git views, negative path controls and source model mutations. Qualification retains the installed-input artifact and rejects empty success as evidence. The fresh output and proposed execution owner preserve the old unused permit and failed streams. Source admission only; actual compiler profiles remain pending.
-- [x] **NO REGRESSION** — `knowledge-map: OK` preserves prior questions and adds the guarded-stdin fact. Rendered book inspection, exact procedure handoff, unchanged claim identities/dispositions, previous acceptance recovery, staged doctrines and normal hooks accompany the source checks. No compiler, proxy, wrapper or fixture allocation occurred; personal settings contents and all existing limits remain unchanged.
+- [x] **ROOT CAUSE (WHY + WHERE)** — `git log -S 'core.excludesFile' -1 --format='%H %s' -- docs/audits/native-proxy-compiler-census-policy-admission-20260913/admission.py` binds the committed repaired admission. Existing historical receipts selected only source/image identities and could not establish full workspace capacity. The separately activated finite census preserves the original builder, installed-input checks, supervision and retirement bounds while collecting every settled workspace node.
+- [x] **ADDRESSED (verified)** — docs/audits/native-proxy-compiler-census-policy-execution-20260913/audit.py --verify-saved re-derives actual fixed-mode profiles from full original bytes, independent maps, successful compiler settlement and every remaining-map cleanup digest. Changed permit, epoch, output, image, membership and removal evidence rejects. Complete first outputs and committed source pins are retained; both roots are absent. Source/model checks are not substituted for these actual profiles, and no generated proxy or wrapper was executed.
+- [x] **NO REGRESSION** — `knowledge-map: OK` retains the complete prior answer set and routes current profile evidence. Rendered book, unchanged claim identities/dispositions, exact prior acceptance recovery, staged doctrines and normal hooks accompany completion. Original rejected output and unused permit remain untouched. Workspace-profile parents close; wrapper/profile join, populated workers, receipt binding, native/live and startup qualification stay separately owned.

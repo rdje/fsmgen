@@ -1,0 +1,43 @@
+{
+  "cleanup_sha256": "ceca28a48ba1fd3dfd58410bf6b2593dc266c87349a1b53c42e614400b005a92",
+  "journal_sha256": "13fb81de49b173879de9a9e0d476b88e0da529e6b6a010c558516985647cbf69",
+  "result": {
+    "authority": "complete current compiler profiles plus controlled unexecuted roles only",
+    "cases": [
+      {
+        "compiler_pid": 60339,
+        "mode": "proxy_nonzero",
+        "native_wait_status": 0,
+        "profile": {
+          "depth": 2,
+          "directories": 4,
+          "file_bytes": 50925,
+          "files": 3,
+          "maximum_file_bytes": 49992,
+          "nodes": 8,
+          "symlinks": 1
+        },
+        "workspace": ".artifacts/tmp/process-supervisor-tests/fsmgen-CompilerProfile20260913_nonzero"
+      },
+      {
+        "compiler_pid": 60342,
+        "mode": "proxy_decoy",
+        "native_wait_status": 0,
+        "profile": {
+          "depth": 2,
+          "directories": 4,
+          "file_bytes": 50925,
+          "files": 3,
+          "maximum_file_bytes": 49992,
+          "nodes": 8,
+          "symlinks": 1
+        },
+        "workspace": ".artifacts/tmp/process-supervisor-tests/fsmgen-CompilerProfile20260913_decoy"
+      }
+    ],
+    "compiler_invocations": 2,
+    "native_proxy_invocations": 0,
+    "wrapper_invocations": 0
+  },
+  "roots_absent": true
+}

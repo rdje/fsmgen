@@ -1,0 +1,178 @@
+{
+  "admission_revision": "25a4a19646e1786d854d826ae11958ca4f495ae6",
+  "book": {
+    "checked_passages": [
+      "Its one-use permit is consumed.",
+      "The actual profiles now agree with the independent complete-node census.",
+      "Original compiler receipts record successful exits and settled process groups.",
+      "Both selected profiles fit the existing node, depth, per-file and total byte limits.",
+      "Both private roots are absent.",
+      "docs/audits/native-proxy-compiler-census-policy-execution-20260913/audit.py --verify-saved"
+    ],
+    "checked_runtime_passages": [
+      "observer lifetimes and selected empty-store coordination are qualified below; native behavior and populated-worker qualification remain open.",
+      "These are inert filesystem qualifications; real receipt transport and native behavior remain open."
+    ],
+    "exact_output_absent": true,
+    "exit_code": 0,
+    "output": ".artifacts/tmp/native-proxy-compiler-executed-book-20260913/book",
+    "rendered_bytes": 23675839,
+    "rendered_directories": 2,
+    "rendered_files": 99,
+    "renderer_warnings": [
+      "WARN search index is very large (13323561 bytes)"
+    ],
+    "same_volume_direct_objects": true
+  },
+  "claims": {
+    "path": "docs/audits/native-proxy-compiler-census-policy-execution-20260913/claim-review.json",
+    "sha256": "c5e25de3e3e69f979ff83ac77e22c791e7bf94f0d96ee27d27f93bfe7d4ce252",
+    "size_bytes": 4014
+  },
+  "compiler_profile_parents_complete": true,
+  "native_live_startup_qualification_open": true,
+  "next_owner": "HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.12.4.1.5.2.3",
+  "owner": "HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.12.4.1.5.2.2.3.3",
+  "previous_acceptance": {
+    "history_bytes": 1544,
+    "history_id": "through_25a4a19646e1",
+    "history_lines": 5,
+    "history_sections": 1,
+    "history_sha256": "1c08777efad1dab680d266a82680449d18a82d38ffb190edc577a4f5dd33d04e",
+    "live_heading": "Version-Retrievable Historical Views",
+    "record_type": "acceptance_history",
+    "retention_contract": "fsmgen_required_history",
+    "schema_version": 1,
+    "source_bytes": 1124625,
+    "source_lines": 6370,
+    "source_path": "docs/tasks/HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.md",
+    "source_revision": "25a4a19646e1786d854d826ae11958ca4f495ae6",
+    "source_sha256": "c02d5e62a0cb76179ce3887df032ee7b1a899b71777ccff34f6a2afc6a9c9ba9",
+    "start_heading": "Acceptance Checklist (local compiler admission .3.2.15.7.3.12.4.1.5.2.2.3.2)"
+  },
+  "raw_outputs": {
+    "book": {
+      "exit": "0\n",
+      "stderr": "ram-guard: PID 87345; host 84.7%; host cutoff 88%; descendant RSS cutoff 4096 MiB; poll 2s\n INFO Book building has started\n INFO Running the html backend\n WARN search index is very large (13323561 bytes)\n INFO HTML book written to `/Volumes/SSD/Documents/github/fsmgen/.artifacts/tmp/native-proxy-compiler-executed-book-20260913/book`\n",
+      "stdout": ""
+    },
+    "book-inspection": {
+      "exit": "0\n",
+      "stderr": "ram-guard: PID 43608; host 85.1%; host cutoff 88%; descendant RSS cutoff 4096 MiB; poll 2s\n",
+      "stdout": "{\"checked_passages\": [\"Its one-use permit is consumed.\", \"The actual profiles now agree with the independent complete-node census.\", \"Original compiler receipts record successful exits and settled process groups.\", \"Both selected profiles fit the existing node, depth, per-file and total byte limits.\", \"Both private roots are absent.\", \"docs/audits/native-proxy-compiler-census-policy-execution-20260913/audit.py --verify-saved\"], \"checked_runtime_passages\": [\"observer lifetimes and selected empty-store coordination are qualified below; native behavior and populated-worker qualification remain open.\", \"These are inert filesystem qualifications; real receipt transport and native behavior remain open.\"], \"exact_output_absent\": true, \"exit_code\": 0, \"output\": \".artifacts/tmp/native-proxy-compiler-executed-book-20260913/book\", \"rendered_bytes\": 23675839, \"rendered_directories\": 2, \"rendered_files\": 99, \"renderer_warnings\": [\"WARN search index is very large (13323561 bytes)\"], \"same_volume_direct_objects\": true}\n"
+    },
+    "claims-check": {
+      "exit": "0\n",
+      "stderr": "ram-guard: PID 59225; host 85.9%; host cutoff 88%; descendant RSS cutoff 4096 MiB; poll 2s\n",
+      "stdout": "claim-inventory: current-surface census and independent census agree (numeric_lines=12630, candidates=1937, quantified=952, conservative=985, constants=2736, original_constants=615, open_migration_owners=0, untracked_producers=0, unwatched_candidates=1937)\n"
+    },
+    "claims-review": {
+      "exit": "0\n",
+      "stderr": "ram-guard: PID 59430; host 85.8%; host cutoff 88%; descendant RSS cutoff 4096 MiB; poll 2s\n",
+      "stdout": "{\"claim_identity_unchanged\": true, \"shifted_candidates\": 0, \"rederived_constants\": 3}\n"
+    },
+    "claims-write": {
+      "exit": "0\n",
+      "stderr": "ram-guard: PID 58942; host 85.6%; host cutoff 88%; descendant RSS cutoff 4096 MiB; poll 2s\n",
+      "stdout": "claim-inventory: wrote doctrine/claim_verification/inventory.jsonl\nclaim-inventory: current-surface census and independent census agree (numeric_lines=12630, candidates=1937, quantified=952, conservative=985, constants=2736, original_constants=615, open_migration_owners=0, untracked_producers=0, unwatched_candidates=1937)\n"
+    },
+    "knowledge-check": {
+      "exit": "0\n",
+      "stderr": "ram-guard: PID 46985; host 85.3%; host cutoff 88%; descendant RSS cutoff 4096 MiB; poll 2s\nknowledge-map: OK (1161 facts, 6446 unique questions, 6617 answer occurrences, 139 bounded topic shards; query parity verified)\n",
+      "stdout": ""
+    },
+    "knowledge-generate": {
+      "exit": "0\n",
+      "stderr": "ram-guard: PID 45359; host 85.0%; host cutoff 88%; descendant RSS cutoff 4096 MiB; poll 2s\nknowledge-map: wrote KNOWLEDGE_MAP.md plus 139 topic shards (1161 facts, 6446 unique questions, 6617 answer occurrences)\n",
+      "stdout": ""
+    },
+    "knowledge-query": {
+      "exit": "0\n",
+      "stderr": "ram-guard: PID 47525; host 85.5%; host cutoff 88%; descendant RSS cutoff 4096 MiB; poll 2s\n",
+      "stdout": "how are native Rust proxy fixtures built and qualified?\ttest-subprocess-policy-adapters\tdocs/knowledge/test-subprocess-policy-adapters.md\n"
+    },
+    "pickaxe": {
+      "exit": "0\n",
+      "stderr": "ram-guard: PID 47703; host 85.1%; host cutoff 88%; descendant RSS cutoff 4096 MiB; poll 2s\n",
+      "stdout": "25a4a19646e1786d854d826ae11958ca4f495ae6 HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.12.4.1.5.2.2.3.2: qualify explicit local Git admission policy\n"
+    },
+    "saved-audit": {
+      "exit": "0\n",
+      "stderr": "ram-guard: PID 63981; host 85.8%; host cutoff 88%; descendant RSS cutoff 4096 MiB; poll 2s\n",
+      "stdout": "{\"admission_revision\": \"25a4a19646e1786d854d826ae11958ca4f495ae6\", \"claim_legs\": {\"durability\": \"Exact first inner and outer bytes plus immutable admission source pins retained in Git.\", \"falsify\": \"Altered actual permit, epoch, output, membership, image and cleanup evidence.\", \"rederive\": \"Original full bytes, independent node maps, original compiler settlement and every remaining-map digest.\"}, \"cleanup_events\": 34, \"complete_remaining_map_hashes_verified\": 16, \"journal_events\": 18, \"limits\": \"Selected compiler workspaces and unexecuted controlled roles only; native/live, loaded-image receipt binding and startup qualification remain open.\", \"rederived_file_bytes\": [50925, 50925], \"rejected_controls\": [\"outer_runner_failure\", \"inner_error_output\", \"permit_revision\", \"installed_epoch\", \"missing_independent_node\", \"changed_image_size\", \"omitted_cleanup\", \"changed_remaining_map_hash\", \"cleanup_foreign_path\", \"cleanup_remaining_count\", \"hidden_root_residue\"], \"removed_nodes\": 16, \"result\": {\"authority\": \"complete current compiler profiles plus controlled unexecuted roles only\", \"cases\": [{\"compiler_pid\": 60339, \"mode\": \"proxy_nonzero\", \"native_wait_status\": 0, \"profile\": {\"depth\": 2, \"directories\": 4, \"file_bytes\": 50925, \"files\": 3, \"maximum_file_bytes\": 49992, \"nodes\": 8, \"symlinks\": 1}, \"workspace\": \".artifacts/tmp/process-supervisor-tests/fsmgen-CompilerProfile20260913_nonzero\"}, {\"compiler_pid\": 60342, \"mode\": \"proxy_decoy\", \"native_wait_status\": 0, \"profile\": {\"depth\": 2, \"directories\": 4, \"file_bytes\": 50925, \"files\": 3, \"maximum_file_bytes\": 49992, \"nodes\": 8, \"symlinks\": 1}, \"workspace\": \".artifacts/tmp/process-supervisor-tests/fsmgen-CompilerProfile20260913_decoy\"}], \"compiler_invocations\": 2, \"native_proxy_invocations\": 0, \"wrapper_invocations\": 0}, \"retained_bytes\": 805965, \"retained_files\": 20, \"roots_absent\": true, \"source_pins\": 39}\n"
+    }
+  },
+  "result": {
+    "admission_revision": "25a4a19646e1786d854d826ae11958ca4f495ae6",
+    "claim_legs": {
+      "durability": "Exact first inner and outer bytes plus immutable admission source pins retained in Git.",
+      "falsify": "Altered actual permit, epoch, output, membership, image and cleanup evidence.",
+      "rederive": "Original full bytes, independent node maps, original compiler settlement and every remaining-map digest."
+    },
+    "cleanup_events": 34,
+    "complete_remaining_map_hashes_verified": 16,
+    "journal_events": 18,
+    "limits": "Selected compiler workspaces and unexecuted controlled roles only; native/live, loaded-image receipt binding and startup qualification remain open.",
+    "rederived_file_bytes": [
+      50925,
+      50925
+    ],
+    "rejected_controls": [
+      "outer_runner_failure",
+      "inner_error_output",
+      "permit_revision",
+      "installed_epoch",
+      "missing_independent_node",
+      "changed_image_size",
+      "omitted_cleanup",
+      "changed_remaining_map_hash",
+      "cleanup_foreign_path",
+      "cleanup_remaining_count",
+      "hidden_root_residue"
+    ],
+    "removed_nodes": 16,
+    "result": {
+      "authority": "complete current compiler profiles plus controlled unexecuted roles only",
+      "cases": [
+        {
+          "compiler_pid": 60339,
+          "mode": "proxy_nonzero",
+          "native_wait_status": 0,
+          "profile": {
+            "depth": 2,
+            "directories": 4,
+            "file_bytes": 50925,
+            "files": 3,
+            "maximum_file_bytes": 49992,
+            "nodes": 8,
+            "symlinks": 1
+          },
+          "workspace": ".artifacts/tmp/process-supervisor-tests/fsmgen-CompilerProfile20260913_nonzero"
+        },
+        {
+          "compiler_pid": 60342,
+          "mode": "proxy_decoy",
+          "native_wait_status": 0,
+          "profile": {
+            "depth": 2,
+            "directories": 4,
+            "file_bytes": 50925,
+            "files": 3,
+            "maximum_file_bytes": 49992,
+            "nodes": 8,
+            "symlinks": 1
+          },
+          "workspace": ".artifacts/tmp/process-supervisor-tests/fsmgen-CompilerProfile20260913_decoy"
+        }
+      ],
+      "compiler_invocations": 2,
+      "native_proxy_invocations": 0,
+      "wrapper_invocations": 0
+    },
+    "retained_bytes": 805965,
+    "retained_files": 20,
+    "roots_absent": true,
+    "source_pins": 39
+  },
+  "wrapper_profile_join_pending": true
+}
