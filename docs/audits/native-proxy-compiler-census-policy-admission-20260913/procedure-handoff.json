@@ -1,0 +1,90 @@
+{
+  "destination": "docs/audits/native-proxy-compiler-census-policy-admission-20260913/PROCEDURE.md",
+  "existing_ceilings_unchanged": true,
+  "single_current_procedure": true,
+  "source_path": "docs/audits/native-proxy-compiler-census-admission-20260913/PROCEDURE.md",
+  "source_revision": "bff742d12e4288a44748f2a320fc88b8e1a4b452",
+  "source_sha256": "49790949277cbba328b9df0859670b204561ce5eb17280c81256522714186909",
+  "surface_after": {
+    "baseline": null,
+    "canonical_inputs": [],
+    "classification": {
+      "audience": "compiler census implementers and reviewers",
+      "rationale": "One exact current prospective compiler-only procedure, with no appended chronology. The 128-line review bound and 64-byte line-density allowance derive the 8192-byte cap; 512 bytes bounds individual lines. Git preserves exact predecessors. This registration grants no general audit-document growth.",
+      "role": "current_qualification_procedure"
+    },
+    "containment_status": "steady",
+    "enforcement_ceilings": {
+      "bytes_each": 8192,
+      "bytes_total": 8192,
+      "files": 1,
+      "line_bytes_each": 512,
+      "lines_each": 128,
+      "lines_total": 128
+    },
+    "health_targets": {
+      "bytes_each": 8192,
+      "bytes_total": 8192,
+      "files": 1,
+      "line_bytes_each": 512,
+      "lines_each": 128,
+      "lines_total": 128
+    },
+    "index": null,
+    "lifecycle": "bounded_snapshot",
+    "locator": "file",
+    "milestones": {
+      "rollover_pct": 90,
+      "warning_pct": 80
+    },
+    "owner": "HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.12.4.1.5.2.2.3.2",
+    "routes_to": [],
+    "state": "normal",
+    "surface_id": "compiler_census_procedure",
+    "targets": [
+      "docs/audits/native-proxy-compiler-census-policy-admission-20260913/PROCEDURE.md"
+    ],
+    "verifier": "builtin:budget"
+  },
+  "surface_before": {
+    "baseline": null,
+    "canonical_inputs": [],
+    "classification": {
+      "audience": "compiler census implementers and reviewers",
+      "rationale": "One exact current prospective compiler-only procedure, with no appended chronology. The 128-line review bound and 64-byte line-density allowance derive the 8192-byte cap; 512 bytes bounds individual lines. Git preserves exact predecessors. This registration grants no general audit-document growth.",
+      "role": "current_qualification_procedure"
+    },
+    "containment_status": "steady",
+    "enforcement_ceilings": {
+      "bytes_each": 8192,
+      "bytes_total": 8192,
+      "files": 1,
+      "line_bytes_each": 512,
+      "lines_each": 128,
+      "lines_total": 128
+    },
+    "health_targets": {
+      "bytes_each": 8192,
+      "bytes_total": 8192,
+      "files": 1,
+      "line_bytes_each": 512,
+      "lines_each": 128,
+      "lines_total": 128
+    },
+    "index": null,
+    "lifecycle": "bounded_snapshot",
+    "locator": "file",
+    "milestones": {
+      "rollover_pct": 90,
+      "warning_pct": 80
+    },
+    "owner": "HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.12.4.1.5.2.2.2",
+    "routes_to": [],
+    "state": "normal",
+    "surface_id": "compiler_census_procedure",
+    "targets": [
+      "docs/audits/native-proxy-compiler-census-admission-20260913/PROCEDURE.md"
+    ],
+    "verifier": "builtin:budget"
+  }
+}

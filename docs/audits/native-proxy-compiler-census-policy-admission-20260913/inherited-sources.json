@@ -1,0 +1,72 @@
+[
+  {
+    "path": "docs/audits/native-proxy-compiler-census-policy-admission-20260913/CompilerProfile.pm",
+    "sha256": "00ffeefa1e75d8f28d61455ca36d91bc8a5c42cf7a03e3d266edb89c4b0a8a30",
+    "size_bytes": 4394,
+    "source_path": "docs/audits/native-proxy-compiler-census-admission-20260913/CompilerProfile.pm",
+    "source_revision": "143aafbc05ae5e15e41c4a5cccfefb3142f298d7"
+  },
+  {
+    "path": "docs/audits/native-proxy-compiler-census-policy-admission-20260913/compile_profile.pl",
+    "sha256": "f4e643d775c7fb9ba2f315f3903368b2bbc15c38048e809134108eb80ef95c32",
+    "size_bytes": 7597,
+    "source_path": "docs/audits/native-proxy-compiler-census-admission-20260913/compile_profile.pl",
+    "source_revision": "143aafbc05ae5e15e41c4a5cccfefb3142f298d7"
+  },
+  {
+    "path": "docs/audits/native-proxy-compiler-census-policy-admission-20260913/profile_files.py",
+    "sha256": "10c50217b5a2ee745c3232a9305969757e730811166ad1d0a7c987dc736f5ae9",
+    "size_bytes": 5939,
+    "source_path": "docs/audits/native-proxy-compiler-census-admission-20260913/profile_files.py",
+    "source_revision": "143aafbc05ae5e15e41c4a5cccfefb3142f298d7"
+  },
+  {
+    "path": "docs/audits/native-proxy-compiler-census-policy-admission-20260913/review_profile.py",
+    "sha256": "f8254b237958db5067a15a36b0ab2187473363bcc4b35acc3822aeb067512921",
+    "size_bytes": 10653,
+    "source_path": "docs/audits/native-proxy-compiler-census-admission-20260913/review_profile.py",
+    "source_revision": "143aafbc05ae5e15e41c4a5cccfefb3142f298d7"
+  },
+  {
+    "path": "docs/audits/native-proxy-compiler-census-policy-admission-20260913/admission.py",
+    "sha256": "a9db2505d2df17e67c2e83142a1679c6072600872b602b7fc262c21ebf071bab",
+    "size_bytes": 7900,
+    "source_path": "docs/audits/native-proxy-compiler-census-admission-20260913/admission.py",
+    "source_revision": "143aafbc05ae5e15e41c4a5cccfefb3142f298d7"
+  },
+  {
+    "path": "docs/audits/native-proxy-compiler-census-policy-admission-20260913/source_contract.py",
+    "sha256": "34ce5f61d319b5d706dde1ad4d208723b4da0f6b226eff896c8a1b1bb0b1d783",
+    "size_bytes": 2437,
+    "source_path": "docs/audits/native-proxy-compiler-census-admission-20260913/source_contract.py",
+    "source_revision": "143aafbc05ae5e15e41c4a5cccfefb3142f298d7"
+  },
+  {
+    "path": "docs/audits/native-proxy-compiler-census-policy-admission-20260913/qualify_compiler.t",
+    "sha256": "a9beaf30b44ac7afc12b6f83ab2bfb4c6eb99af5effc9dfcea32d41d33de4025",
+    "size_bytes": 5714,
+    "source_path": "docs/audits/native-proxy-compiler-census-admission-20260913/qualify_compiler.t",
+    "source_revision": "143aafbc05ae5e15e41c4a5cccfefb3142f298d7"
+  },
+  {
+    "path": "docs/audits/native-proxy-compiler-census-policy-admission-20260913/qualify_profile.py",
+    "sha256": "703e88d61550ada12f1666daa550d0edc266d85dd98cc3ae33ee4f481e98dc66",
+    "size_bytes": 12106,
+    "source_path": "docs/audits/native-proxy-compiler-census-admission-20260913/qualify_profile.py",
+    "source_revision": "143aafbc05ae5e15e41c4a5cccfefb3142f298d7"
+  },
+  {
+    "path": "docs/audits/native-proxy-compiler-census-policy-admission-20260913/projection-model.json",
+    "sha256": "841dc5a561bfd0290b9d7a4e6202a3bdb51201596a6b83678b4a53487c271b20",
+    "size_bytes": 3422,
+    "source_path": "docs/audits/native-proxy-compiler-census-admission-20260913/projection-model.json",
+    "source_revision": "143aafbc05ae5e15e41c4a5cccfefb3142f298d7"
+  },
+  {
+    "path": "docs/audits/native-proxy-compiler-census-policy-admission-20260913/execute_once.sh",
+    "sha256": "ab1ec893955a9047f206c13798b450a94fe56eb20cbbb1db0389512d587218f7",
+    "size_bytes": 720,
+    "source_path": "docs/audits/native-proxy-compiler-census-admission-20260913/execute_once.sh",
+    "source_revision": "143aafbc05ae5e15e41c4a5cccfefb3142f298d7"
+  }
+]

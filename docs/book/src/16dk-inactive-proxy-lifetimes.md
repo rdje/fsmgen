@@ -335,8 +335,8 @@ toolchain inputs are read-only dependencies on the OS volume; project evidence
 continues to stay on the repository volume.
 
 The compiler-only census procedure is now qualified as source and model checks.
-It still requires its admission commit, a separately active execution task and
-fresh checks of the installed compiler and SDK before a one-use permit can run.
+Execution requires a committed admission, a separately active execution task
+and fresh installed-input checks before a one-use permit can run.
 The original builder keeps its existing arguments, environment and limits.
 
 The procedure records the original compiler exit and settled process group,
@@ -351,9 +351,19 @@ The first invocation stopped at Git preflight, before permit consumption,
 workspace creation or compiler launch. Ordinary Git used a personal ignore rule
 for `.claude/settings.local.json`; the closed environment exposed that file as
 untracked work. A repository-only ignore check reproduced the difference.
-The original permit and failed output remain preserved. The next owned slice
-must make the local ignore policy explicit and commit a fresh admission before
-another invocation. No authentic compiler-workspace profile has been collected.
+The original permit and failed output remain preserved and cannot be reused.
+The repaired admission selects repository-local Git ignore policy explicitly.
+Only the exact local settings file is ignored; shared configuration remains
+visible. Ordinary and closed Git views now agree. The installed Git launcher is
+pinned and checked before admission queries; this does not attest its loaded
+image or libraries. A fresh committed admission and separate execution owner
+are still required. No authentic compiler-workspace profile has been collected.
+
+Source checks must also produce their required evidence. An stdin-fed Python
+check returned success without running its program because the RAM guard starts
+its command asynchronously with empty default stdin. The corrected invocation
+passes a tracked script by filename and verifies the resulting installed-input
+record. The original empty output remains retained as a failed qualification.
 
 | Remaining work | Required result |
 | --- | --- |
@@ -373,7 +383,7 @@ remain required before any product activation.
 scripts/run_with_ram_guard.sh -- python3 -B docs/audits/native-proxy-wrapper-compatibility-20260913/audit.py --verify-saved
 scripts/run_with_ram_guard.sh -- python3 -B docs/audits/native-proxy-compiler-profile-inventory-20260913/audit.py --verify-saved
 scripts/run_with_ram_guard.sh -- python3 -B docs/audits/native-proxy-compiler-profile-admission-20260913/epoch.py --verify-saved
-scripts/run_with_ram_guard.sh -- python3 -B docs/audits/native-proxy-compiler-census-20260913/audit.py --verify-saved
+scripts/run_with_ram_guard.sh -- python3 -B docs/audits/native-proxy-compiler-census-policy-admission-20260913/audit.py --verify-saved
 ```
 
 [Return to runtime measurement](16dc-vial-portable-verilator-runtime-measurement.md).

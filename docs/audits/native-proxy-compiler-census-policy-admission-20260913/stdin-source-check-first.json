@@ -1,0 +1,27 @@
+{
+  "diagnosis": "The guard launches the command asynchronously. With job control inactive, Bash gives that command empty default stdin, so Python exits without executing the stdin-supplied program. Exit status alone is insufficient.",
+  "guard": {
+    "launch_line": 280,
+    "path": "scripts/run_with_ram_guard.sh",
+    "sha256": "ade1e6930d696a3abba0899244b1dd0ef4fc289f3b5c33ac2ff8ead96c1312af",
+    "source_revision": "bff742d12e4288a44748f2a320fc88b8e1a4b452"
+  },
+  "invocation": "scripts/run_with_ram_guard.sh -- python3 -B - with program supplied on stdin",
+  "manual": {
+    "access": "read_only",
+    "path": "/usr/share/man/man1/bash.1",
+    "reason": "Required installed-shell semantics for the observed guarded invocation.",
+    "relevant_lines": [
+      3823,
+      3824
+    ],
+    "sha256": "f20bfaa1a29cf61800622a892d97b9a736c605d4eb30ecbbf2b553e40597e931"
+  },
+  "outputs": {
+    "exit": "0\n",
+    "stderr": "ram-guard: PID 21890; host 72.9%; host cutoff 88%; descendant RSS cutoff 4096 MiB; poll 2s\n",
+    "stdout": ""
+  },
+  "required_artifact_absent": true,
+  "resolution": "Use capture_installed.py as an explicit command argument; require the named output and its validated content before admission."
+}

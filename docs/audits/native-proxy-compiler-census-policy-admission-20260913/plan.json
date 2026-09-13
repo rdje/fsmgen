@@ -1,0 +1,296 @@
+{
+  "capture": {
+    "admission": "No compiler or fixture operation before the owning admission commit, exact source and required current installed-epoch revalidation, separately active execution owner and exclusively consumed one-use permit.",
+    "cleanup": "Only after the sole runner exits and its direct compiler owners are proved settled: independent exact before/after census, same-volume/UID/identity/byte equality, exact per-node unlink/rmdir receipts and final absence. Unknown or changed nodes remain retained.",
+    "compiler_membership": "After successful native preparation and before controlled roles, record the canonical ASCII JSON SHA-256 of the complete metadata projection, node count and aggregate. Reconstruct that projection from the single final full-byte capture excluding exactly the controlled wrapper and Cargo link; do not duplicate a full metadata or byte census in the journal.",
+    "failure": "Every first compiler return and failed preparation is retained. An incomplete or unproved compiler outcome stops the run with no further case or cleanup; the first failed prototype walk preserves its error/prefix when available. Any blocked workspace needs separately owned read-only diagnosis, never an automatic replay.",
+    "ownership": "Record exclusive root creation before compilation; archive the first compiler return before role additions or prototype census. Stop on first unexpected outcome; never replay or silently normalize.",
+    "perl": "Use the current inactive PrivateWorkspace::_walk on each settled workspace; preserve its original result/error and node prefix. It grants no runtime authority.",
+    "python": "Independently census every current direct owned node under the declared roots using the pinned qualified file reader plus explicit no-follow link custody; compare full membership, identities, modes, sizes, hashes and link targets before any exact cleanup.",
+    "shell_boundary": "The fixed execute_once.sh uses the installed read-only /bin/bash and /usr/bin/env to invoke the pinned Perl in a closed environment. Consume its terminal tool result and runner.exit before independent review; the shell receipt is not native driver-image attestation."
+  },
+  "cargo_role": {
+    "path_suffix": "rust-tools/cargo",
+    "relative_target": "rustup",
+    "scope": "Controlled resolver-link role only; the production test derives an absolute target at runtime. This census uses an equivalent workspace-local relative target to keep persisted project paths relocatable. No wrapper or Cargo link is executed; this does not qualify actual native resolution."
+  },
+  "cases": [
+    {
+      "generated_c": {
+        "bytes_hex": "23646566696e652050524f58595f4e4f4e5a45524f20310a2f2a204669786564206e65676174697665207265736f6c76657220636f6e74726f6c733b206e6f2066696c65732c206368696c642070726f636573736573206f7220686561702e202a2f0a23696e636c756465203c756e697374642e683e0a0a73746174696320696e7420657175616c28636f6e73742063686172202a6c6566742c20636f6e73742063686172202a7269676874290a7b0a202020207768696c6520282a6c656674202626202a6c656674203d3d202a726967687429207b0a20202020202020202b2b6c6566743b0a20202020202020202b2b72696768743b0a202020207d0a2020202072657475726e202a6c656674203d3d202a72696768743b0a7d0a0a696e74206d61696e28696e7420617267632c2063686172202a2a61726776290a7b0a20202020696620286172676320213d2033207c7c2021657175616c28617267765b315d2c202277686963682229207c7c2021657175616c28617267765b325d2c2022636172676f2229290a202020202020202072657475726e2039373b0a2369662050524f58595f4e4f4e5a45524f0a2020202073746174696320636f6e73742063686172206d6573736167655b5d203d20227265736f6c7574696f6e2d6661696c65645c6e223b0a2020202072657475726e20777269746528322c206d6573736167652c2073697a656f66286d65737361676529202d203129203d3d20287373697a655f74292873697a656f66286d65737361676529202d203129203f2039203a2039343b0a23656c73650a2020202073746174696320636f6e73742063686172206d6573736167655b5d203d202272656c61746976652d636172676f5c6e223b0a2020202072657475726e20777269746528312c206d6573736167652c2073697a656f66286d65737361676529202d203129203d3d20287373697a655f74292873697a656f66286d65737361676529202d203129203f2030203a2039343b0a23656e6469660a7d0a",
+        "sha256": "b689e2f7ee42bf7cac62f272a36d5313a272dddef15a75f8c66b126568fbf276",
+        "size_bytes": 745
+      },
+      "mode": "proxy_nonzero",
+      "workspace": ".artifacts/tmp/process-supervisor-tests/fsmgen-CompilerProfile20260913_nonzero"
+    },
+    {
+      "generated_c": {
+        "bytes_hex": "23646566696e652050524f58595f4e4f4e5a45524f20300a2f2a204669786564206e65676174697665207265736f6c76657220636f6e74726f6c733b206e6f2066696c65732c206368696c642070726f636573736573206f7220686561702e202a2f0a23696e636c756465203c756e697374642e683e0a0a73746174696320696e7420657175616c28636f6e73742063686172202a6c6566742c20636f6e73742063686172202a7269676874290a7b0a202020207768696c6520282a6c656674202626202a6c656674203d3d202a726967687429207b0a20202020202020202b2b6c6566743b0a20202020202020202b2b72696768743b0a202020207d0a2020202072657475726e202a6c656674203d3d202a72696768743b0a7d0a0a696e74206d61696e28696e7420617267632c2063686172202a2a61726776290a7b0a20202020696620286172676320213d2033207c7c2021657175616c28617267765b315d2c202277686963682229207c7c2021657175616c28617267765b325d2c2022636172676f2229290a202020202020202072657475726e2039373b0a2369662050524f58595f4e4f4e5a45524f0a2020202073746174696320636f6e73742063686172206d6573736167655b5d203d20227265736f6c7574696f6e2d6661696c65645c6e223b0a2020202072657475726e20777269746528322c206d6573736167652c2073697a656f66286d65737361676529202d203129203d3d20287373697a655f74292873697a656f66286d65737361676529202d203129203f2039203a2039343b0a23656c73650a2020202073746174696320636f6e73742063686172206d6573736167655b5d203d202272656c61746976652d636172676f5c6e223b0a2020202072657475726e20777269746528312c206d6573736167652c2073697a656f66286d65737361676529202d203129203d3d20287373697a655f74292873697a656f66286d65737361676529202d203129203f2030203a2039343b0a23656e6469660a7d0a",
+        "sha256": "a2ff3cf129d8c01d2b05c33b2df2ca18b68048972dcc86c00222786a6751defc",
+        "size_bytes": 745
+      },
+      "mode": "proxy_decoy",
+      "workspace": ".artifacts/tmp/process-supervisor-tests/fsmgen-CompilerProfile20260913_decoy"
+    }
+  ],
+  "claim_legs": {
+    "durability": "Preserve the earlier rejected invocation and unused permit, first policy probes and corrections, source qualification, canonical procedure handoff and this admission commit before a distinct one-use execution epoch.",
+    "falsification": "Reject wider ignore policy, hidden shared paths, ambient Git overrides, changed source/permit/limits, incomplete workspace or process settlement, and promotion of source models to actual compiler profiles.",
+    "rederivation": "Exact inherited compiler/prototype inputs, first rejection, current installed compiler/SDK/interpreter/Git pins, direct ordinary/closed/repository Git views and fixed request/census models."
+  },
+  "compiler": {
+    "capture_limit_bytes": 4096,
+    "concurrency": 1,
+    "containment": "rust_proxy_compiler_group",
+    "invocations": 2,
+    "selection": "Unmodified prepare_rust_proxy current native selection and exact fixed compilation request/environment; no source seam, compiler override, argv or deadline changes.",
+    "timeout_seconds": 10
+  },
+  "evidence_limits": {
+    "depth": 8,
+    "independent_file_bytes": 65537,
+    "journal_bytes": 67108864,
+    "journal_derivation": {
+      "conservative_required_bytes": 64368640,
+      "global_allowance_bytes": 65536,
+      "maximum_json_byte_escape": 6,
+      "meaning": "Includes both full workspace records, worst-case escaped regular bytes and symlink targets, paths and metadata; no duplicated full census record.",
+      "metadata_allowance_per_node": 512,
+      "symlink_target_bytes": 4096
+    },
+    "meaning": "The independently qualified reader can observe one extra file-boundary byte; this grants no retirement capacity. Any capture ceiling or membership failure is retained as incomplete evidence and prevents cleanup/qualification.",
+    "nodes": 256,
+    "root_relative_path_bytes": 2200,
+    "stderr_bytes": 32768,
+    "stdout_bytes": 4096,
+    "total_file_bytes": 4194304
+  },
+  "execution_evidence": "docs/audits/native-proxy-compiler-census-policy-execution-20260913",
+  "execution_owner": "HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.12.4.1.5.2.2.3.3",
+  "git_policy": {
+    "closed_environment": {
+      "LANG": "C",
+      "LC_ALL": "C",
+      "PATH": "/usr/bin:/bin",
+      "TMPDIR_root_relative": ".artifacts/tmp"
+    },
+    "configuration": {
+      "core.excludesFile": ".gitignore"
+    },
+    "executable": "/usr/bin/git",
+    "pin": {
+      "access": "read_only",
+      "identity": {
+        "ctime_ns": 1786589515000000000,
+        "device": 16777232,
+        "inode": 1152921500312571562,
+        "mode": 493,
+        "mtime_ns": 1786589515000000000,
+        "size_bytes": 118640,
+        "uid": 0
+      },
+      "path": "/usr/bin/git",
+      "sha256": "b8763cf250e607a778bb4603cecb5b90338814d0a3dfcba0d57b1de242f610e9"
+    },
+    "scope": "Required installed read-only Git launcher. Every admission Git command uses this exact binary, repository-local ignore input, root-derived temporary directory and closed environment; personal Git configuration is not required. Loaded Git image and dynamic dependencies are not exhaustively attested."
+  },
+  "inputs": [
+    {
+      "path": "t/lib/FSM/Test/RustProxyFixture.pm",
+      "sha256": "d9c4ab52cf8074526c59b7a5dcb9da870ca7ffdacb4eb236dacb23b5db6d8bfb",
+      "size_bytes": 11466
+    },
+    {
+      "path": "t/lib/FSM/Test/ProcessSupervisor.pm",
+      "sha256": "52e467023ea8a776167e227a767abdd3dddf185f1f7c539aac8ca1c4a0a06680",
+      "size_bytes": 773
+    },
+    {
+      "path": "perl/FSM/Support/ProcessSupervisor.pm",
+      "sha256": "684882d91f673ea7145f43ed3aad31acf099f13508574be7b2d8911123988637",
+      "size_bytes": 27990
+    },
+    {
+      "path": "perl/FSM/ProjectDataLocality.pm",
+      "sha256": "14aece4a50b35956bc2585099aa8d26753942288663c641922da9d36ad4bc893",
+      "size_bytes": 6017
+    },
+    {
+      "path": "t/fixtures/rust-tool-proxy.c",
+      "sha256": "be8b66690a93c8432c0f33094ac15c26f7fef0940c18f6935fd5b0994d9f4ede",
+      "size_bytes": 721
+    },
+    {
+      "path": "t/1669-task-acceptance-fixture-runtime.t",
+      "sha256": "bdebbf03308cd5e0699324f9ab96a249c11c9ab05634309569d33874391a196f",
+      "size_bytes": 67582
+    },
+    {
+      "path": "docs/audits/native-proxy-runtime-retirement-20260910/PrivateWorkspace.pm",
+      "sha256": "98e324cf9ef89471ffb4ede683ce21a8e09fc02329739a0856285ecea067e18f",
+      "size_bytes": 6425
+    },
+    {
+      "path": "docs/audits/native-proxy-image-custody-20260910/ImageCustody.pm",
+      "sha256": "927f1ab39f7f26742e36878985d1ff545ddf2dee119d4bf6b7b41bf2c9360ccc",
+      "size_bytes": 8619
+    },
+    {
+      "path": "docs/audits/native-proxy-image-coordination-20260910/Coordination.pm",
+      "sha256": "a0d99769147f28ca7c35e9ac80ba88f7cf14760e3bef7b51841d8badebc060e5",
+      "size_bytes": 19061
+    },
+    {
+      "path": "docs/audits/native-proxy-wrapper-compatibility-20260913/files.py",
+      "sha256": "d06b7dbea0179ce2f585e2e76da568cb00072f7c97134b89f273a252dd5503da",
+      "size_bytes": 6031
+    },
+    {
+      "path": "docs/audits/native-proxy-wrapper-compatibility-20260913/plan.json",
+      "sha256": "8ebc70a62967aafd6593716ffda9f72c5a88dd0ea61e9486de66235510b7bff9",
+      "size_bytes": 6133
+    },
+    {
+      "path": "docs/audits/native-proxy-compiler-profile-admission-20260913/epoch.py",
+      "sha256": "aff3f6f026695a1fd03da4be55a32c63590b96bda600ed8c744361985686c621",
+      "size_bytes": 10096
+    },
+    {
+      "path": "docs/audits/native-proxy-compiler-profile-admission-20260913/epoch-plan.json",
+      "sha256": "72f45446f49baf388162676861aff37131b057c16860793eab8ae4e5b0119745",
+      "size_bytes": 2910
+    },
+    {
+      "path": "docs/audits/native-proxy-compiler-profile-admission-20260913/epoch-first.json",
+      "sha256": "fc7f6a14d7fb69b571dd7bbdbddcc2579f099a573f1374657fe3e114b0befc98",
+      "size_bytes": 99791
+    },
+    {
+      "path": "docs/audits/native-proxy-compiler-profile-admission-20260913/epoch-review.json",
+      "sha256": "86a97d4970e04b029e0f2dc06e6b8d97b65789c6287f68ff4e6d49e7a3d02c39",
+      "size_bytes": 4359
+    },
+    {
+      "path": ".gitignore",
+      "sha256": "f627c631db773c437fa2e11fceab182014f60512ce7aeeb33a368f3a544e7dfe",
+      "size_bytes": 2379
+    },
+    {
+      "path": "docs/audits/native-proxy-compiler-census-20260913/audit.py",
+      "sha256": "00d78d0df9159b0ac5ab98734ce2190ac3bcb67b936a336ade533af4731738f3",
+      "size_bytes": 8888
+    },
+    {
+      "path": "docs/audits/native-proxy-compiler-census-20260913/source-pins.json",
+      "sha256": "20fcdc448d92eb7fbc03abcf153b84c56c365bbb6d762afcb027edeec31dc898",
+      "size_bytes": 1171
+    },
+    {
+      "path": "docs/audits/native-proxy-compiler-census-20260913/first-run-rejected.json",
+      "sha256": "59ad408aa297f6965ce7ae7f3b563721a660f5275708e38b31d8ee51059f5220",
+      "size_bytes": 182080
+    },
+    {
+      "path": "docs/audits/native-proxy-compiler-census-20260913/review.json",
+      "sha256": "406ef7005d84bf9b827205261657081f6cbdcccac7f203f9d4ddbf054393aca3",
+      "size_bytes": 1392
+    },
+    {
+      "path": "docs/audits/native-proxy-compiler-census-admission-20260913/admission.py",
+      "sha256": "a9db2505d2df17e67c2e83142a1679c6072600872b602b7fc262c21ebf071bab",
+      "size_bytes": 7900
+    }
+  ],
+  "interpreter_access": "Required installed read-only Perl and user-owned Homebrew Python runtimes. Explicit off-volume inputs with stable identity and byte pins; no off-volume outputs. Dynamic libraries and actual loaded images are not exhaustively attested. Compiler/SDK root-owned checks remain unchanged.",
+  "interpreters": [
+    {
+      "access": "read_only",
+      "identity": {
+        "ctime_ns": 1786589515000000000,
+        "device": 16777232,
+        "inode": 1152921500312572526,
+        "mode": 493,
+        "mtime_ns": 1786589515000000000,
+        "size_bytes": 101648,
+        "uid": 0
+      },
+      "path": "/usr/bin/perl",
+      "sha256": "53bce3db7e095b596fa42626b55edc63e3388d7afecf45a0b1ecc5211721c812"
+    },
+    {
+      "access": "read_only",
+      "identity": {
+        "ctime_ns": 1788566686413693388,
+        "device": 16777232,
+        "inode": 420073686,
+        "mode": 493,
+        "mtime_ns": 1788566686413693388,
+        "size_bytes": 34640,
+        "uid": 501
+      },
+      "path": "/opt/homebrew/Cellar/python@3.14/3.14.7/Frameworks/Python.framework/Versions/3.14/bin/python3.14",
+      "sha256": "87d4df53fd91304be5bac391fb204643c36b7df2023c04a0953bcbc7d4fdf634"
+    }
+  ],
+  "non_compiler_phase_wall_seconds": 30,
+  "nonclaims": [
+    "No native execution, canonical publication or product activation.",
+    "No historical startup cause or performance benefit.",
+    "No complete SDK/header/library or loaded-image attestation.",
+    "Real compiler subtree evidence is distinct from the controlled wrapper/Cargo roles and from failed/incomplete capture."
+  ],
+  "normal_user": {
+    "project_device": 16777244,
+    "uid": 501
+  },
+  "output": ".artifacts/logs/native-proxy-compiler-census-policy-20260913",
+  "owner": "HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.12.4.1.5.2.2.3.2",
+  "prior_rejection": {
+    "case_roots_previously_allocated": false,
+    "evidence": "docs/audits/native-proxy-compiler-census-20260913/review.json",
+    "previous_compiler_invocations": 0,
+    "previous_output": ".artifacts/logs/native-proxy-compiler-census-20260913",
+    "previous_permit_consumed": false,
+    "rule": "Retain the original rejected invocation and unused permit; never recreate or consume them. These fixed compiler roots remain fresh because the first runner stopped before creation. Use only this distinct newly committed output/permit epoch.",
+    "source_revision": "bff742d12e4288a44748f2a320fc88b8e1a4b452"
+  },
+  "process_receipt": {
+    "failure": "Any missing original terminal state or unsettled result blocks cleanup and all later launches; preserve first returned failure and ownership evidence.",
+    "meaning": "Record direct-child PID, raw wait status and final original supervisor state/result after settlement. Direct fork ownership is protected until reap; this is not a general authenticated compiler/outer/inner receipt adapter or loaded-compiler-image attestation.",
+    "seam": "Observe the exact state reference returned by FSM::Support::ProcessSupervisor::_start_supervision without changing its arguments, result, control flow or doing I/O in that post-fork observer."
+  },
+  "runtime_interpreters": [
+    {
+      "path": "/usr/bin/perl",
+      "role": "perl"
+    },
+    {
+      "path": "/opt/homebrew/Cellar/python@3.14/3.14.7/Frameworks/Python.framework/Versions/3.14/bin/python3.14",
+      "role": "python"
+    }
+  ],
+  "schema": "fsmgen.compiler_workspace_census_admission.v1",
+  "selection": {
+    "compiler": "/Library/Developer/CommandLineTools/usr/bin/clang",
+    "implementation": "native",
+    "reason": "darwin_arm64_command_line_tools",
+    "sdk": "/Library/Developer/CommandLineTools/SDKs/MacOSX27.0.sdk"
+  },
+  "source_qualification": "Syntax and data/mocked-I/O/request/settlement/permit controls only before the admission commit; no real compiler, proxy, wrapper, original, collector or fixture operation.",
+  "source_revision": "bff742d12e4288a44748f2a320fc88b8e1a4b452",
+  "workspace_policy": {
+    "depth": 8,
+    "file_bytes": 65536,
+    "meaning": "Unchanged inactive retirement policy; only actual complete accepted profiles can qualify this selected domain.",
+    "nodes": 256,
+    "total_file_bytes": 4194304
+  },
+  "wrapper": {
+    "bytes_hex": "757365207374726963743b0a757365207761726e696e67733b0a757365204a534f4e3a3a505020717728656e636f64655f6a736f6e293b0a24454e567b504154487d203d2073686966742040415247563b0a726571756972652046534d3a3a546573743a3a5275737450617269747952756e74696d653b0a7072696e7420656e636f64655f6a736f6e2846534d3a3a546573743a3a5275737450617269747952756e74696d653a3a72756e5f727573745f7061726974792829293b0a",
+    "mode": 493,
+    "path_suffix": "rust-tool-resolution",
+    "sha256": "df525c2166853a62c81b9a5aa70eea9606e3bd96c88c46f1844c1b4c55c7d2b0",
+    "size_bytes": 188
+  }
+}

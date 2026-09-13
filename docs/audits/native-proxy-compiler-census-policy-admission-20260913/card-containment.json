@@ -1,0 +1,12 @@
+{
+  "added_question": "- \"why can guarded stdin Python exit successfully without running its program?\"",
+  "after_bytes": 9883,
+  "after_lines": 146,
+  "before_bytes": 9885,
+  "before_lines": 146,
+  "ceilings_unchanged": true,
+  "folded_evidence_line_join_only": true,
+  "retained_questions": 122,
+  "source_path": "docs/knowledge/test-subprocess-policy-adapters.md",
+  "source_revision": "bff742d12e4288a44748f2a320fc88b8e1a4b452"
+}

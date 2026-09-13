@@ -137,6 +137,8 @@ docs/book/book/
 .vscode/settings.json
 .vscode/launch.json
 .vscode/tasks.json
+# Local harness permissions; keep shared Claude configuration visible.
+/.claude/settings.local.json
 
 ## Performance and Profiling
 # Perl profiling

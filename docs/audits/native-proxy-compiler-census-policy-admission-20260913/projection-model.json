@@ -1,0 +1,90 @@
+{
+  "nodes": [
+    {
+      "identity": {
+        "device": 17,
+        "inode": 100,
+        "mode": 448,
+        "path": ".artifacts/tmp/process-supervisor-tests/fsmgen-CompilerProfile20260913_nonzero",
+        "uid": 501
+      },
+      "kind": "directory"
+    },
+    {
+      "identity": {
+        "device": 17,
+        "inode": 101,
+        "mode": 448,
+        "path": ".artifacts/tmp/process-supervisor-tests/fsmgen-CompilerProfile20260913_nonzero/rust-tools",
+        "uid": 501
+      },
+      "kind": "directory"
+    },
+    {
+      "identity": {
+        "device": 17,
+        "inode": 102,
+        "mode": 448,
+        "path": ".artifacts/tmp/process-supervisor-tests/fsmgen-CompilerProfile20260913_nonzero/rust-tools/compiler-cache",
+        "uid": 501
+      },
+      "kind": "directory"
+    },
+    {
+      "identity": {
+        "device": 17,
+        "inode": 103,
+        "mode": 448,
+        "path": ".artifacts/tmp/process-supervisor-tests/fsmgen-CompilerProfile20260913_nonzero/rust-tools/compiler-temp",
+        "uid": 501
+      },
+      "kind": "directory"
+    },
+    {
+      "bytes": "#define PROXY_NONZERO 1\n/* Fixed negative resolver controls; no files, child processes or heap. */\n#include <unistd.h>\n\nstatic int equal(const char *left, const char *right)\n{\n    while (*left && *left == *right) {\n        ++left;\n        ++right;\n    }\n    return *left == *right;\n}\n\nint main(int argc, char **argv)\n{\n    if (argc != 3 || !equal(argv[1], \"which\") || !equal(argv[2], \"cargo\"))\n        return 97;\n#if PROXY_NONZERO\n    static const char message[] = \"resolution-failed\\n\";\n    return write(2, message, sizeof(message) - 1) == (ssize_t)(sizeof(message) - 1) ? 9 : 94;\n#else\n    static const char message[] = \"relative-cargo\\n\";\n    return write(1, message, sizeof(message) - 1) == (ssize_t)(sizeof(message) - 1) ? 0 : 94;\n#endif\n}\n",
+      "identity": {
+        "device": 17,
+        "inode": 104,
+        "mode": 256,
+        "path": ".artifacts/tmp/process-supervisor-tests/fsmgen-CompilerProfile20260913_nonzero/rust-tools/rustup.c",
+        "uid": 501
+      },
+      "kind": "file"
+    },
+    {
+      "bytes": "in-memory image placeholder; never native evidence",
+      "identity": {
+        "device": 17,
+        "inode": 105,
+        "mode": 320,
+        "path": ".artifacts/tmp/process-supervisor-tests/fsmgen-CompilerProfile20260913_nonzero/rust-tools/rustup",
+        "uid": 501
+      },
+      "kind": "file"
+    },
+    {
+      "bytes": "use strict;\nuse warnings;\nuse JSON::PP qw(encode_json);\n$ENV{PATH} = shift @ARGV;\nrequire FSM::Test::RustParityRuntime;\nprint encode_json(FSM::Test::RustParityRuntime::run_rust_parity());\n",
+      "identity": {
+        "device": 17,
+        "inode": 106,
+        "mode": 493,
+        "path": ".artifacts/tmp/process-supervisor-tests/fsmgen-CompilerProfile20260913_nonzero/rust-tool-resolution",
+        "uid": 501
+      },
+      "kind": "file"
+    },
+    {
+      "identity": {
+        "device": 17,
+        "inode": 107,
+        "mode": 493,
+        "path": ".artifacts/tmp/process-supervisor-tests/fsmgen-CompilerProfile20260913_nonzero/rust-tools/cargo",
+        "uid": 501
+      },
+      "kind": "symlink",
+      "target": "rustup"
+    }
+  ],
+  "projection_sha256": "d71b497d63da06472eecb3b197f3c62e4c2f5912bc6a3fa9a3b5670fd62f19f4",
+  "scope": "In-memory nodes only, never compiler or filesystem capacity evidence"
+}

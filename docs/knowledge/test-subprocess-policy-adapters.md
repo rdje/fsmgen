@@ -124,12 +124,12 @@ answers:
   - "how does coordination admit a Python framework worker?"
   - "why does inactive retirement reject the real Rust proxy wrapper?"
   - "why does the closed compiler census Git preflight see local Claude settings?"
+  - "why can guarded stdin Python exit successfully without running its program?"
 date: 2026-09-13
 status: current
 tags: [tests, subprocess, supervision, task-acceptance, darwin, locality]
 evidence: >-
-  docs/tasks/HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.md;
-  t/1595-agent-runtime-ram-guard-macos-metric.t; t/1811-ram-guard-fixture-runtime.t; t/lib/FSM/Test/RamGuardFixtureRuntime.pm;
+  docs/tasks/HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.md; t/1595-agent-runtime-ram-guard-macos-metric.t; t/1811-ram-guard-fixture-runtime.t; t/lib/FSM/Test/RamGuardFixtureRuntime.pm;
   docs/decisions/0087-test-subprocesses-use-shared-mechanism-and-sealed-policy-adapters.md;
   docs/tasks/DARWIN-INLINE-VERILATOR-RUNTIME-QUALIFICATION.md;
   docs/book/src/16dc-vial-portable-verilator-runtime-measurement.md;
@@ -141,6 +141,6 @@ evidence: >-
   t/1669-task-acceptance-fixture-runtime.t; t/python/test_fixture_runtime_sources.py;
   t/lib/FSM/Test/RustProxyFixture.pm; t/1815-rust-proxy-fixture.t; t/1816-rust-proxy-integration.t; t/1817-test-supervision-architecture.t
 reverify: >-
-  scripts/run_with_ram_guard.sh -- python3 -B docs/audits/native-proxy-compiler-census-20260913/audit.py --verify-saved
+  scripts/run_with_ram_guard.sh -- python3 -B docs/audits/native-proxy-compiler-census-policy-admission-20260913/audit.py --verify-saved
 ---
-History: `143aafbc05ae5e15e41c4a5cccfefb3142f298d7:docs/knowledge/test-subprocess-policy-adapters.md`. First census preflight rejected local Claude settings hidden by ordinary Git global ignores. No permit consumption, workspace or compiler launch occurred. Exact local ignore policy and fresh admission are owned next; native/live and startup evidence remain pending.
+History: `bff742d12e4288a44748f2a320fc88b8e1a4b452:docs/knowledge/test-subprocess-policy-adapters.md`. Local Git policy is explicit; compiler profiles and native/live/startup remain pending. Guarded stdin Python ran no code: pass a named script and verify its artifact.

@@ -1,0 +1,171 @@
+{
+  "baseline_sha256": "fccfa94b2a0577144bc504d552d722b344c790242a249c98c8d17e8834b8b4ad",
+  "capture": {
+    "cases": {
+      ".claude/AGENTS.md": {
+        "argv": [
+          "/usr/bin/git",
+          "-c",
+          "core.excludesFile=.gitignore",
+          "check-ignore",
+          "--no-index",
+          "-v",
+          "--",
+          ".claude/AGENTS.md"
+        ],
+        "environment": "closed_repository_temp",
+        "exit": 0,
+        "stderr_hex": "",
+        "stdout_hex": "2e67697469676e6f72653a3137323a212a2e6d64092e636c617564652f4147454e54532e6d640a"
+      },
+      ".claude/nested/settings.local.json": {
+        "argv": [
+          "/usr/bin/git",
+          "-c",
+          "core.excludesFile=.gitignore",
+          "check-ignore",
+          "--no-index",
+          "-v",
+          "--",
+          ".claude/nested/settings.local.json"
+        ],
+        "environment": "closed_repository_temp",
+        "exit": 1,
+        "stderr_hex": "",
+        "stdout_hex": ""
+      },
+      ".claude/settings.json": {
+        "argv": [
+          "/usr/bin/git",
+          "-c",
+          "core.excludesFile=.gitignore",
+          "check-ignore",
+          "--no-index",
+          "-v",
+          "--",
+          ".claude/settings.json"
+        ],
+        "environment": "closed_repository_temp",
+        "exit": 1,
+        "stderr_hex": "",
+        "stdout_hex": ""
+      },
+      ".claude/settings.local.json": {
+        "argv": [
+          "/usr/bin/git",
+          "-c",
+          "core.excludesFile=.gitignore",
+          "check-ignore",
+          "--no-index",
+          "-v",
+          "--",
+          ".claude/settings.local.json"
+        ],
+        "environment": "closed_repository_temp",
+        "exit": 0,
+        "stderr_hex": "",
+        "stdout_hex": "2e67697469676e6f72653a3134313a2f2e636c617564652f73657474696e67732e6c6f63616c2e6a736f6e092e636c617564652f73657474696e67732e6c6f63616c2e6a736f6e0a"
+      },
+      ".claude/settings.local.json.extra": {
+        "argv": [
+          "/usr/bin/git",
+          "-c",
+          "core.excludesFile=.gitignore",
+          "check-ignore",
+          "--no-index",
+          "-v",
+          "--",
+          ".claude/settings.local.json.extra"
+        ],
+        "environment": "closed_repository_temp",
+        "exit": 1,
+        "stderr_hex": "",
+        "stdout_hex": ""
+      },
+      "nested/.claude/settings.local.json": {
+        "argv": [
+          "/usr/bin/git",
+          "-c",
+          "core.excludesFile=.gitignore",
+          "check-ignore",
+          "--no-index",
+          "-v",
+          "--",
+          "nested/.claude/settings.local.json"
+        ],
+        "environment": "closed_repository_temp",
+        "exit": 1,
+        "stderr_hex": "",
+        "stdout_hex": ""
+      }
+    },
+    "compiler_invocations": 0,
+    "fixture_allocations": 0,
+    "settings_changed": false,
+    "settings_content_read": false,
+    "views": {
+      "closed": {
+        "argv": [
+          "/usr/bin/git",
+          "status",
+          "--porcelain=v1",
+          "-z"
+        ],
+        "environment": "closed_repository_temp",
+        "exit": 0,
+        "stderr_hex": "",
+        "stdout_hex": "204d202e67697469676e6f726500204d204d454d4f52592e6d6400204d20646f63732f5441534b5f545245452e6d6400204d20646f63732f7461736b732f4849414c2d5649414c2d564552494649434154494f4e2d464958545552452d4152434849544543545552452e6d64003f3f20646f63732f6175646974732f6e61746976652d70726f78792d636f6d70696c65722d63656e7375732d706f6c6963792d61646d697373696f6e2d32303236303931332f00"
+      },
+      "fixed": {
+        "argv": [
+          "/usr/bin/git",
+          "-c",
+          "core.excludesFile=.gitignore",
+          "status",
+          "--porcelain=v1",
+          "-z"
+        ],
+        "environment": "closed_repository_temp",
+        "exit": 0,
+        "stderr_hex": "",
+        "stdout_hex": "204d202e67697469676e6f726500204d204d454d4f52592e6d6400204d20646f63732f5441534b5f545245452e6d6400204d20646f63732f7461736b732f4849414c2d5649414c2d564552494649434154494f4e2d464958545552452d4152434849544543545552452e6d64003f3f20646f63732f6175646974732f6e61746976652d70726f78792d636f6d70696c65722d63656e7375732d706f6c6963792d61646d697373696f6e2d32303236303931332f00"
+      },
+      "ordinary": {
+        "argv": [
+          "/usr/bin/git",
+          "status",
+          "--porcelain=v1",
+          "-z"
+        ],
+        "environment": "ordinary",
+        "exit": 0,
+        "stderr_hex": "",
+        "stdout_hex": "204d202e67697469676e6f726500204d204d454d4f52592e6d6400204d20646f63732f5441534b5f545245452e6d6400204d20646f63732f7461736b732f4849414c2d5649414c2d564552494649434154494f4e2d464958545552452d4152434849544543545552452e6d64003f3f20646f63732f6175646974732f6e61746976652d70726f78792d636f6d70696c65722d63656e7375732d706f6c6963792d61646d697373696f6e2d32303236303931332f00"
+      }
+    }
+  },
+  "current_sha256": "f627c631db773c437fa2e11fceab182014f60512ce7aeeb33a368f3a544e7dfe",
+  "rejected_controls": [
+    "global_view_mismatch",
+    "ambient_fixed_environment",
+    "compiler_invocation_promoted",
+    "fixture_allocation_promoted",
+    "settings_read_promoted",
+    "settings_edit_promoted",
+    "shared_config_hidden",
+    "nested_config_hidden",
+    "markdown_negation_lost",
+    "broad_directory_ignore"
+  ],
+  "result": {
+    "compiler_invocations": 0,
+    "equal_git_views": 3,
+    "exact_ignored_path": ".claude/settings.local.json",
+    "fixture_allocations": 0,
+    "negative_path_controls": 5,
+    "settings_contents_untouched": true,
+    "shared_configuration_visible": true,
+    "source_only": true
+  },
+  "source_revision": "bff742d12e4288a44748f2a320fc88b8e1a4b452"
+}

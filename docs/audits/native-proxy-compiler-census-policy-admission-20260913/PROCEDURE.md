@@ -1,4 +1,4 @@
-# Compiler workspace census admission
+# Compiler workspace census with local Git policy
 
 This directory owns source qualification only. The parent task must be committed
 as done before the separate execution owner in `plan.json` becomes active. The
@@ -10,9 +10,9 @@ The future procedure is fixed; these commands are not source-qualification
 checks. Run them only in the separately activated execution leaf, in order:
 
 ```bash
-scripts/run_with_ram_guard.sh -- python3 -B docs/audits/native-proxy-compiler-census-admission-20260913/admission.py emit
-scripts/run_with_ram_guard.sh -- /bin/bash docs/audits/native-proxy-compiler-census-admission-20260913/execute_once.sh
-scripts/run_with_ram_guard.sh -- python3 -B docs/audits/native-proxy-compiler-census-admission-20260913/review_profile.py --review-and-clean
+scripts/run_with_ram_guard.sh -- python3 -B docs/audits/native-proxy-compiler-census-policy-admission-20260913/admission.py emit
+scripts/run_with_ram_guard.sh -- /bin/bash docs/audits/native-proxy-compiler-census-policy-admission-20260913/execute_once.sh
+scripts/run_with_ram_guard.sh -- python3 -B docs/audits/native-proxy-compiler-census-policy-admission-20260913/review_profile.py --review-and-clean
 ```
 
 Retain each command's first outer stdout, stderr and exit status in fresh
@@ -22,6 +22,20 @@ output directory; RAM-guard diagnostics stay in the outer logs. A nonzero exit,
 missing terminal result, missing capture or unexpected node blocks review and
 the next command. Preserve all outputs and roots, then own the diagnosis. Do not
 repeat an issuer, runner or cleanup entrypoint after a partial outcome.
+
+The earlier invocation stopped in Git preflight. Its permit, rejected streams
+and absence evidence remain preserved under their original output names. This
+admission uses a distinct output and permit epoch. The fixed compiler workspace
+names remain fresh because the earlier runner created none; preflight must
+still prove their absence. Never clear or consume the earlier permit.
+
+Every admission Git command selects the pinned installed `/usr/bin/git`, sets
+`core.excludesFile=.gitignore`, and supplies a closed environment with
+repository-derived temporary storage. The repository ignores only the exact
+local `.claude/settings.local.json`; shared configuration stays visible.
+Caller Git environment overrides and personal ignore configuration do not
+define the admission view. Both permit preflights revalidate installed inputs
+before querying Git; the independent cleanup review does the same.
 
 `compile_profile.pl` rechecks the existing permit and exclusively consumes it
 before creating a workspace. It uses the original native fixture builder for
@@ -61,5 +75,5 @@ synthetic image and process identities are explicitly in-memory data.
 Read-only repeatable source/data check after qualification:
 
 ```bash
-scripts/run_with_ram_guard.sh -- python3 -B docs/audits/native-proxy-compiler-census-admission-20260913/audit.py --verify-saved
+scripts/run_with_ram_guard.sh -- python3 -B docs/audits/native-proxy-compiler-census-policy-admission-20260913/audit.py --verify-saved
 ```

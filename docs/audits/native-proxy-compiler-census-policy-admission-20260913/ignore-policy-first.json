@@ -1,0 +1,144 @@
+{
+  "cases": {
+    ".claude/AGENTS.md": {
+      "argv": [
+        "/usr/bin/git",
+        "-c",
+        "core.excludesFile=.gitignore",
+        "check-ignore",
+        "--no-index",
+        "-v",
+        "--",
+        ".claude/AGENTS.md"
+      ],
+      "environment": "closed_repository_temp",
+      "exit": 0,
+      "stderr_hex": "",
+      "stdout_hex": "2e67697469676e6f72653a3137323a212a2e6d64092e636c617564652f4147454e54532e6d640a"
+    },
+    ".claude/nested/settings.local.json": {
+      "argv": [
+        "/usr/bin/git",
+        "-c",
+        "core.excludesFile=.gitignore",
+        "check-ignore",
+        "--no-index",
+        "-v",
+        "--",
+        ".claude/nested/settings.local.json"
+      ],
+      "environment": "closed_repository_temp",
+      "exit": 1,
+      "stderr_hex": "",
+      "stdout_hex": ""
+    },
+    ".claude/settings.json": {
+      "argv": [
+        "/usr/bin/git",
+        "-c",
+        "core.excludesFile=.gitignore",
+        "check-ignore",
+        "--no-index",
+        "-v",
+        "--",
+        ".claude/settings.json"
+      ],
+      "environment": "closed_repository_temp",
+      "exit": 1,
+      "stderr_hex": "",
+      "stdout_hex": ""
+    },
+    ".claude/settings.local.json": {
+      "argv": [
+        "/usr/bin/git",
+        "-c",
+        "core.excludesFile=.gitignore",
+        "check-ignore",
+        "--no-index",
+        "-v",
+        "--",
+        ".claude/settings.local.json"
+      ],
+      "environment": "closed_repository_temp",
+      "exit": 0,
+      "stderr_hex": "",
+      "stdout_hex": "2e67697469676e6f72653a3134313a2f2e636c617564652f73657474696e67732e6c6f63616c2e6a736f6e092e636c617564652f73657474696e67732e6c6f63616c2e6a736f6e0a"
+    },
+    ".claude/settings.local.json.extra": {
+      "argv": [
+        "/usr/bin/git",
+        "-c",
+        "core.excludesFile=.gitignore",
+        "check-ignore",
+        "--no-index",
+        "-v",
+        "--",
+        ".claude/settings.local.json.extra"
+      ],
+      "environment": "closed_repository_temp",
+      "exit": 1,
+      "stderr_hex": "",
+      "stdout_hex": ""
+    },
+    "nested/.claude/settings.local.json": {
+      "argv": [
+        "/usr/bin/git",
+        "-c",
+        "core.excludesFile=.gitignore",
+        "check-ignore",
+        "--no-index",
+        "-v",
+        "--",
+        "nested/.claude/settings.local.json"
+      ],
+      "environment": "closed_repository_temp",
+      "exit": 1,
+      "stderr_hex": "",
+      "stdout_hex": ""
+    }
+  },
+  "compiler_invocations": 0,
+  "fixture_allocations": 0,
+  "settings_changed": false,
+  "settings_content_read": false,
+  "views": {
+    "closed": {
+      "argv": [
+        "/usr/bin/git",
+        "status",
+        "--porcelain=v1",
+        "-z"
+      ],
+      "environment": "closed_repository_temp",
+      "exit": 0,
+      "stderr_hex": "",
+      "stdout_hex": "204d202e67697469676e6f726500204d204d454d4f52592e6d6400204d20646f63732f5441534b5f545245452e6d6400204d20646f63732f7461736b732f4849414c2d5649414c2d564552494649434154494f4e2d464958545552452d4152434849544543545552452e6d64003f3f20646f63732f6175646974732f6e61746976652d70726f78792d636f6d70696c65722d63656e7375732d706f6c6963792d61646d697373696f6e2d32303236303931332f00"
+    },
+    "fixed": {
+      "argv": [
+        "/usr/bin/git",
+        "-c",
+        "core.excludesFile=.gitignore",
+        "status",
+        "--porcelain=v1",
+        "-z"
+      ],
+      "environment": "closed_repository_temp",
+      "exit": 0,
+      "stderr_hex": "",
+      "stdout_hex": "204d202e67697469676e6f726500204d204d454d4f52592e6d6400204d20646f63732f5441534b5f545245452e6d6400204d20646f63732f7461736b732f4849414c2d5649414c2d564552494649434154494f4e2d464958545552452d4152434849544543545552452e6d64003f3f20646f63732f6175646974732f6e61746976652d70726f78792d636f6d70696c65722d63656e7375732d706f6c6963792d61646d697373696f6e2d32303236303931332f00"
+    },
+    "ordinary": {
+      "argv": [
+        "/usr/bin/git",
+        "status",
+        "--porcelain=v1",
+        "-z"
+      ],
+      "environment": "ordinary",
+      "exit": 0,
+      "stderr_hex": "",
+      "stdout_hex": "204d202e67697469676e6f726500204d204d454d4f52592e6d6400204d20646f63732f5441534b5f545245452e6d6400204d20646f63732f7461736b732f4849414c2d5649414c2d564552494649434154494f4e2d464958545552452d4152434849544543545552452e6d64003f3f20646f63732f6175646974732f6e61746976652d70726f78792d636f6d70696c65722d63656e7375732d706f6c6963792d61646d697373696f6e2d32303236303931332f00"
+    }
+  }
+}

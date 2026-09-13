@@ -2135,11 +2135,11 @@ decomposes the architecture needed to move beyond that bounded foundation.
   Verification: `docs/audits/native-proxy-compiler-census-20260913/audit.py --verify-saved joins six immutable admission/Git-policy inputs, the first issuer and rejected runner outputs, unconsumed permit, absent start/journal/workspaces, ordinary versus closed Git views and an independent repository-ignore-only view. The exact personal ignore rule hides .claude/settings.local.json only in the ordinary environment; source order proves failure before consumption or compiler preparation. Thirteen altered evidence/source/ownership/environment controls reject. The auxiliary missing-TMPDIR warning and corrected repository-local query are both retained. No compiler launched or workspace was allocated; the original output prevents reuse. Exact local policy repair and fresh source admission are owned by .3.2, with execution separately owned by .3.3.`
   Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.12.4.1.5.2.2.3.1: preserve rejected closed-environment preflight`
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.12.4.1.5.2.2.3.2`
-  Status: `proposed`
+  Status: `done`
   Goal: `Repair the environment-dependent Git admission and qualify a fresh compiler-only permit.`
   Acceptance: `Preserve the first rejected invocation and original unconsumed permit. Pin repository-local ignore policy for the exact existing local harness settings path without touching those settings or hiding unrelated work. Make ordinary and closed-environment admission views agree; qualify extra/unowned path rejection, exact source inputs and first-failure boundaries. Specify a new output/permit epoch before another runner invocation, prove that no prior compiler workspace or launch occurred, preserve unchanged compiler requests/limits and commit source admission before executing.`
-  Verification: `pending`
-  Commit: `pending`
+  Verification: `docs/audits/native-proxy-compiler-census-policy-admission-20260913/completion.json joins exact local ignore scope, equal Git views, fixed closed Git request controls, unchanged compiler model, named installed-input capture, retained first check failures, rendered book and claim review. Re-derive saved source/output joins; falsify policy/request/profile mutations; retain all sources and raw results in Git. Authentic compiler profiles remain pending.`
+  Commit: `this commit`
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.12.4.1.5.2.2.3.3`
   Status: `proposed`
   Goal: `Execute the freshly admitted compiler census after the preflight repair.`
@@ -3768,7 +3768,7 @@ decomposes the architecture needed to move beyond that bounded foundation.
 
 ## Current Frontier
 
-Current frontier: .3.2.15.7.3.12.4.1.5.2.2.3.1 first-preflight rejection disposition is done. Commit it, then activate .3.2 for exact local Git ignore policy and fresh source admission; .3.3 owns execution afterward. The original permit remains unused and blocked from reuse, no compiler workspace or launch occurred, and authentic/native/live/startup/full CI/push gates remain open.
+Current frontier: .3.2.15.7.3.12.4.1.5.2.2.3.2 is done; .3.3 remains proposed until this source admission is committed. Activate .3.3, revalidate the installed inputs, issue its fresh permit and consume each compiler-census result exactly once. Preserve the old failed output and unused permit. Native/live, startup/parent and full CI/push remain gated.
 
 Architecture audit `.1` is complete. Decision `0032` selects one public
 `.vial` source language, private immutable `VIALSemanticIR` and
@@ -6363,8 +6363,8 @@ Completed native-proxy feasibility through runtime-source-controls acceptance: r
 
 The manifest binds the immediately preceding acceptance suffix to its exact Git source. That source preserves the earlier history pointer and versioned manifest chain; current node contracts remain authoritative.
 
-## Acceptance Checklist (compiler preflight rejection .3.2.15.7.3.12.4.1.5.2.2.3.1)
+## Acceptance Checklist (local compiler admission .3.2.15.7.3.12.4.1.5.2.2.3.2)
 
-- [x] **ROOT CAUSE (WHY + WHERE)** — `git log -S 'env -i PATH=/usr/bin:/bin' -1 --format='%H %s' -- docs/audits/native-proxy-compiler-census-admission-20260913/execute_once.sh` identifies the isolated invocation. `git show 143aafbc05ae5e15e41c4a5cccfefb3142f298d7:docs/audits/native-proxy-compiler-census-admission-20260913/compile_profile.pl` binds preflight before permit consumption and compiler preparation. Exact first stderr identifies Git status membership rejection; ordinary, closed and repository-ignore-only views isolate the personal rule for .claude/settings.local.json. No compiler or workspace boundary was reached.
-- [x] **ADDRESSED (verified)** — docs/audits/native-proxy-compiler-census-20260913/audit.py --verify-saved preserves original outputs, unused permit, absent start/journal/workspaces, immutable source order and independent ignore controls, with altered evidence and environment rejection. Review.json names re-derivation, falsification and durability legs. The missing-TMPDIR diagnostic warning and corrected local query are retained. This leaf completes failure disposition; .3.2 owns the required exact repository-local policy repair and fresh admission before .3.3 execution.
-- [x] **NO REGRESSION** — `knowledge-map: OK` preserves prior discovery and adds the exact preflight fact. Saved first-rejection checks, rendered book, claim identity/disposition review and exact previous acceptance recovery accompany staged doctrines and normal hooks. No issuer or runner replay, compiler/proxy/wrapper/original/collector execution, personal-settings edit, workspace cleanup or bound change occurs in the disposition.
+- [x] **ROOT CAUSE (WHY + WHERE)** — `git log -S 'env -i PATH=/usr/bin:/bin' -1 --format='%H %s' -- docs/audits/native-proxy-compiler-census-admission-20260913/execute_once.sh` binds the original closed invocation. Its preserved first Git preflight exposed a personal ignore dependency. The exact root-local rule and explicit Git configuration repair that mismatch. The guard's asynchronous launch also explains the retained empty-stdin source-check outcome; a named tracked script produces the required evidence.
+- [x] **ADDRESSED (verified)** — docs/audits/native-proxy-compiler-census-policy-admission-20260913/audit.py --verify-saved joins unchanged compiler/request boundaries, fixed Git input/environment, equal actual Git views, negative path controls and source model mutations. Qualification retains the installed-input artifact and rejects empty success as evidence. The fresh output and proposed execution owner preserve the old unused permit and failed streams. Source admission only; actual compiler profiles remain pending.
+- [x] **NO REGRESSION** — `knowledge-map: OK` preserves prior questions and adds the guarded-stdin fact. Rendered book inspection, exact procedure handoff, unchanged claim identities/dispositions, previous acceptance recovery, staged doctrines and normal hooks accompany the source checks. No compiler, proxy, wrapper or fixture allocation occurred; personal settings contents and all existing limits remain unchanged.

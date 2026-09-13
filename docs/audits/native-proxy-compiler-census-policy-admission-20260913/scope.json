@@ -1,0 +1,12 @@
+{
+  "compiler_invocations": 0,
+  "fixture_allocations": 0,
+  "fresh_execution_owner": "HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.12.4.1.5.2.2.3.3",
+  "fresh_output": ".artifacts/logs/native-proxy-compiler-census-policy-20260913",
+  "owner": "HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.12.4.1.5.2.2.3.2",
+  "policy": "Ignore only the root-local .claude/settings.local.json. Use pinned /usr/bin/git with core.excludesFile=.gitignore for both admission environments. Preserve all other source and dirty-work checks.",
+  "previous_admission": "143aafbc05ae5e15e41c4a5cccfefb3142f298d7",
+  "rejection_evidence": "docs/audits/native-proxy-compiler-census-20260913/review.json",
+  "source_only": true,
+  "source_revision": "bff742d12e4288a44748f2a320fc88b8e1a4b452"
+}

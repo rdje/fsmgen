@@ -1,0 +1,7 @@
+{
+  "cause": "The first JSONL row is the registry, not a surface.",
+  "correction": "Select surface rows with get(surface_id); no configured ceiling change.",
+  "error": "KeyError: 'surface_id'",
+  "mutation_before_error": "Book and card authored; aggregate not yet written.",
+  "stage": "authoring book aggregate update"
+}

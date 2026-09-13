@@ -1,0 +1,23 @@
+{
+  "after_sha256": "c02d5e62a0cb76179ce3887df032ee7b1a899b71777ccff34f6a2afc6a9c9ba9",
+  "before_sha256": "6957f66e66dd97d0733890fec6febc511b3d43fe7e06e3798fa3f2739c0b2379",
+  "lines": 6370,
+  "previous_acceptance": {
+    "history_bytes": 1736,
+    "history_id": "through_bff742d12e42",
+    "history_lines": 5,
+    "history_sections": 1,
+    "history_sha256": "3770fee993bcafa96f3cd45161cade73c2f2e7b701465450d13b63b57091d485",
+    "live_heading": "Version-Retrievable Historical Views",
+    "record_type": "acceptance_history",
+    "retention_contract": "fsmgen_required_history",
+    "schema_version": 1,
+    "source_bytes": 1124402,
+    "source_lines": 6370,
+    "source_path": "docs/tasks/HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.md",
+    "source_revision": "bff742d12e4288a44748f2a320fc88b8e1a4b452",
+    "source_sha256": "95dbee9558525dc875dc482e507218eb4321919485dd2670076f2c4570a05a87",
+    "start_heading": "Acceptance Checklist (compiler preflight rejection .3.2.15.7.3.12.4.1.5.2.2.3.1)"
+  },
+  "source_revision": "bff742d12e4288a44748f2a320fc88b8e1a4b452"
+}
