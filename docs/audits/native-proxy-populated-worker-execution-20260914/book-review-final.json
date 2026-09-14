@@ -1,0 +1,24 @@
+{
+  "checked_passages": [
+    "The one-use run is complete; its first records and independent review are retained.",
+    "The selected actual run records native ownership and busy-lock events before commands advance.",
+    "The final cooperative-lifetime evidence join is next.",
+    "All selected worker groups settled and every case root was removed.",
+    "No actual-wrapper observation attempt is claimed here.",
+    "docs/audits/native-proxy-populated-worker-execution-20260914/audit.py --verify-saved"
+  ],
+  "checked_runtime_passages": [
+    "selected populated workers completed; native behavior and the final lifetime join remain open.",
+    "These are inert filesystem qualifications; real receipt transport and native behavior remain open."
+  ],
+  "exact_output_absent": true,
+  "exit_code": 0,
+  "output": ".artifacts/tmp/native-proxy-populated-worker-execution-book-final-20260914/book",
+  "rendered_bytes": 23701138,
+  "rendered_directories": 2,
+  "rendered_files": 99,
+  "renderer_warnings": [
+    "WARN search index is very large (13334735 bytes)"
+  ],
+  "same_volume_direct_objects": true
+}

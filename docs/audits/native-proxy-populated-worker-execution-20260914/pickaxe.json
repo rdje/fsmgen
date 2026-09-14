@@ -1,0 +1,16 @@
+{
+  "command": [
+    "git",
+    "log",
+    "-S",
+    "def execute()",
+    "-1",
+    "--format=%H %s",
+    "--",
+    "docs/audits/native-proxy-populated-final-admission-20260913/driver.py"
+  ],
+  "exit_code": 0,
+  "interpretation": "The final admission commit introduced the qualified driver but deliberately left actual worker execution open; this leaf records that first separately activated execution.",
+  "stderr": "",
+  "stdout": "266e8a99f407b0cc1649c5791ee8c5c4edc3b50c HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.12.4.1.5.3.1.4: qualify one-use populated-worker admission\n"
+}

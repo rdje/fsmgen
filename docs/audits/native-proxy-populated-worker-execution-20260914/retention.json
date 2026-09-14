@@ -1,0 +1,21 @@
+{
+  "outputs": {
+    "exit": "0\n",
+    "stderr": "ram-guard: PID 73298; host 74.8%; host cutoff 88%; descendant RSS cutoff 4096 MiB; poll 2s\n",
+    "stdout": "{\"actual_cases\": 6, \"actual_workers\": 15, \"original_bytes_unchanged\": true, \"producer_invoked\": false, \"retained_bytes\": 2745395, \"retained_files\": 47, \"same_volume_verified\": true}\n"
+  },
+  "result": {
+    "actual_cases": 6,
+    "actual_workers": 15,
+    "original_bytes_unchanged": true,
+    "producer_invoked": false,
+    "retained_bytes": 2745395,
+    "retained_files": 47,
+    "same_volume_verified": true
+  },
+  "source": {
+    "path": "docs/audits/native-proxy-populated-worker-execution-20260914/retain.py",
+    "sha256": "a98a8886ff3243ebb3e5c014ccd28832c4a367aea75cd5655b871599049e263e",
+    "size_bytes": 4105
+  }
+}

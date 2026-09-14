@@ -133,9 +133,9 @@ date: 2026-09-14
 status: current
 tags: [tests, subprocess, supervision, task-acceptance, darwin, locality]
 evidence: >-
-  docs/audits/native-proxy-populated-final-admission-20260913/review.json;
+  docs/audits/native-proxy-populated-worker-execution-20260914/review.json;
   docs/audits/native-proxy-populated-worker-protocol-20260913/observation-wrapper-gap.json
 reverify: >-
-  scripts/run_with_ram_guard.sh -- python3 -B docs/audits/native-proxy-populated-final-admission-20260913/audit.py --verify-saved
+  scripts/run_with_ram_guard.sh -- python3 -B docs/audits/native-proxy-populated-worker-execution-20260914/audit.py --verify-saved
 ---
-History: `6663b09682c2b7461a2573900c187dcfff6fd9b0:docs/knowledge/test-subprocess-policy-adapters.md`. Admission and lifetime models pass; actual workers remain next. Original inode/mode checks reject replacement. Retirement/work receipts stay synthetic; actual-wrapper observation repair remains owned by integration.
+History: `266e8a99f407b0cc1649c5791ee8c5c4edc3b50c:docs/knowledge/test-subprocess-policy-adapters.md`. Selected actual workers and cleanup pass; final lifetime join remains open. Retirement/work receipts stay synthetic; actual-wrapper observation repair remains owned by integration.

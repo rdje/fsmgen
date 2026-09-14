@@ -1,0 +1,13 @@
+{
+  "copy_directory_allocated": false,
+  "original_worker_run_unchanged": true,
+  "outputs": {
+    "exit": "1\n",
+    "stderr": "ram-guard: PID 66020; host 74.8%; host cutoff 88%; descendant RSS cutoff 4096 MiB; poll 2s\nTraceback (most recent call last):\n  File \"/Volumes/SSD/Documents/github/fsmgen/docs/audits/native-proxy-populated-worker-execution-20260914/retain.py\", line 87, in <module>\n    retain()\n    ~~~~~~^^\n  File \"/Volumes/SSD/Documents/github/fsmgen/docs/audits/native-proxy-populated-worker-execution-20260914/retain.py\", line 33, in retain\n    outputs = review_run.read_outputs(saved=True)\nTypeError: read_outputs() got an unexpected keyword argument 'saved'\n",
+    "stdout": ""
+  },
+  "producer_replay": false,
+  "root_cause": "The retention wrapper passed saved as a keyword to read_outputs, whose keyword is review. The saved-result verification completed first; the failure preceded any copy directory allocation.",
+  "source_path": "docs/audits/native-proxy-populated-worker-execution-20260914/retain.py.first.source",
+  "source_sha256": "ff60c524b11a34c3de31f3a0562189b4d95f62cac32a751a216f14a26146a84e"
+}

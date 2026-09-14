@@ -1,0 +1,25 @@
+{
+  "current_lines": 6370,
+  "next_owner_proposed": "HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.12.4.1.5.3.3",
+  "owner_done": "HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.12.4.1.5.3.2",
+  "previous_acceptance": {
+    "history_bytes": 1828,
+    "history_id": "through_266e8a99f407",
+    "history_lines": 5,
+    "history_sections": 1,
+    "history_sha256": "146ac76eca136596603a1ba01551da3287cc0fa15b2a1ccc82da7ebe81361326",
+    "live_heading": "Version-Retrievable Historical Views",
+    "record_type": "acceptance_history",
+    "retention_contract": "fsmgen_required_history",
+    "schema_version": 1,
+    "source_bytes": 1137386,
+    "source_lines": 6370,
+    "source_path": "docs/tasks/HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.md",
+    "source_revision": "266e8a99f407b0cc1649c5791ee8c5c4edc3b50c",
+    "source_sha256": "7a893fd6da564905e79c0fef3fd7641288224e2e8747e511b67bded1e35664e3",
+    "start_heading": "Acceptance Checklist (populated final admission .3.2.15.7.3.12.4.1.5.3.1.4)"
+  },
+  "source_lines": 6370,
+  "source_path": "docs/tasks/HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.md",
+  "source_revision": "266e8a99f407b0cc1649c5791ee8c5c4edc3b50c"
+}

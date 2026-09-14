@@ -380,14 +380,14 @@ compiler profiles to the same unchanged retirement source. It preserves the
 exact wrapper mode exception and all existing capacity limits. The inert
 wrapper test's cleanup receipts remain synthetic; they do not authenticate real
 compiler, outer or inner ownership. This join runs no compiler or fixture.
-Populated-store worker qualification is next.
+The populated-store worker results below extend that inactive evidence.
 
-The proposed populated-worker cases cover equal and different publication,
+The selected populated-worker cases cover equal and different publication,
 independent runtime references, observation holds across retirement, and
 cancellation of runtime or observer owners. They use inert bytes through the
 current Perl transaction APIs; a Python controller supervises the workers.
 The earlier Python peer remains qualified only for empty-store coordination.
-The committed admission fixes these cases; its one-use run remains separate.
+The one-use run is complete; its first records and independent review are retained.
 
 The fresh controller repairs the inherited recovery gap. A no-process model
 showed that an exited child can still have unread output: inherited recovery
@@ -405,11 +405,11 @@ unresolved; the controller never signals an unknown surviving member.
 
 Source models exercise partial launches, parser errors, output limits, deadlines,
 cancellation and close failures. Recovery preserves the first failure; incomplete
-cleanup or missing output cannot become a successful worker result. No real
-worker has run under this new controller. Fixed transaction commands now pass
-in-memory qualification. Final source admission is qualified; actual worker
-execution remains next. Synthetic retirement and observation settlement records
-remain separate from later actual worker-cancellation proof.
+cleanup or missing output cannot become a successful worker result. The admitted
+workers completed the fixed cases, and independent review confirms their
+original records and cleanup. The final cooperative-lifetime evidence join is
+next. Retirement and observation-work settlement records remain synthetic; the
+worker cancellations now have separate actual process evidence.
 
 The worker accepts only its declared case, role and next command. Small commands
 select fixed operations; source-bound files carry activation and original handoff
@@ -423,7 +423,7 @@ source image while the publisher retires its private workspace. Maintenance must
 still reject that image until the observer archives those original snapshots,
 settles its selected work and releases its hold. The fixed cases exercise:
 
-| Case | In-memory lifetime check |
+| Case | Selected actual lifetime check |
 | --- | --- |
 | Equal publication | Shared bytes retain independent runtime references. |
 | Different publication | Removing an unreferenced image preserves the other image. |
@@ -433,9 +433,9 @@ settles its selected work and releases its hold. The fixed cases exercise:
 | Cancelled observer owner | Its original snapshots remain usable after publisher retirement and handoff. |
 
 Cancellation cuts occur after lock acquisition and before census or mutation.
-The model assumes native ownership and contention; the separately admitted worker
-run must observe them. Command ordering, octet transport, conservative rejection,
-original handoffs and bounded I/O are checked without starting a worker.
+The selected actual run records native ownership and busy-lock events before
+commands advance. Original handoffs survive the held cancellation cuts; recovery
+peers adopt them only after the cancelled owners settle.
 
 A release success flag alone is insufficient. The worker requires the complete
 receipt to retain the original lock, image, archive and settlement bindings, plus
@@ -451,8 +451,8 @@ frontiers or incomplete qualification reject before fixture allocation.
 During equal publication, the driver must observe the peer report a busy lock
 before releasing the first publisher. Before a cancelled-owner handoff, it seals
 the original acquisition and settles the actual child and process group. Only
-then may the recovery peer adopt that acquisition. Source models test this
-ordering; the separate run must supply the actual contention and process proof.
+then may the recovery peer adopt that acquisition. The selected run supplies
+actual contention and process records, which the independent reviewer joins.
 
 Cleanup requires the original object identity and final mode as well as known
 bytes. An equal-byte replacement does not inherit custody. Model checks exposed
@@ -464,18 +464,21 @@ retained, and only after every constructed worker has settled.
 An independent reviewer reconstructs the command order, original snapshots,
 remaining references, archives and cleanup from the complete retained records.
 It separately checks actual native births and terminal/group-absence evidence.
-The source qualification creates no permit, case workspace or worker. Its
-prospective bounds describe widened model encodings, not measured executions.
+All selected worker groups settled and every case root was removed. Original
+snapshots and archive bytes survive in the retained result records. The cancelled
+workers exited on the requested termination signal; their terminal captures and
+group-absence checks are complete. Source bounds remain prospective model
+encodings; the actual run has separately retained measured records.
 
 Actual-wrapper observation also remains an owned integration repair. Observation
 acquisition currently requires wrapper mode `0700`, while the retained actual
 compiler profiles use `0755`. The inert worker cases keep their established mode;
 the integration task must qualify an exact compatibility exception before using
-the actual wrapper. No actual observation attempt is claimed here.
+the actual wrapper. No actual-wrapper observation attempt is claimed here.
 
 | Remaining work | Required result |
 | --- | --- |
-| Populated-store workers | Qualify equal/different publication, separate references and observation holds through actual cancellation and retirement. |
+| Populated-store result join | Join the completed actual cases with the preserved empty-store qualification and retain the exact cooperative-writer boundary. |
 | Real receipt binding | Prove complete compiler/outer/inner ownership and prevent launches after settlement. |
 | Inactive adapter composition | Join preparation, native path/reference admission and observation custody before the separate native experiment. |
 | Final protocol join | Check current evidence together and retain native, live/public and startup/benefit gates. |
@@ -491,7 +494,7 @@ scripts/run_with_ram_guard.sh -- python3 -B docs/audits/native-proxy-wrapper-com
 scripts/run_with_ram_guard.sh -- python3 -B docs/audits/native-proxy-compiler-profile-inventory-20260913/audit.py --verify-saved
 scripts/run_with_ram_guard.sh -- python3 -B docs/audits/native-proxy-compiler-profile-admission-20260913/epoch.py --verify-saved
 scripts/run_with_ram_guard.sh -- python3 -B docs/audits/native-proxy-populated-controller-20260913/audit.py --verify-saved
-scripts/run_with_ram_guard.sh -- python3 -B docs/audits/native-proxy-populated-worker-protocol-20260913/audit.py --verify-saved
+scripts/run_with_ram_guard.sh -- python3 -B docs/audits/native-proxy-populated-worker-execution-20260914/audit.py --verify-saved
 scripts/run_with_ram_guard.sh -- python3 -B docs/audits/native-proxy-populated-final-admission-20260913/audit.py --verify-saved
 ```
 

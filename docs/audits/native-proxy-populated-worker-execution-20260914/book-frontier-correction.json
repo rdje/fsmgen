@@ -1,0 +1,10 @@
+{
+  "actual_worker_run_unchanged": true,
+  "first_source_copy": "docs/audits/native-proxy-populated-worker-execution-20260914/book-before-frontier-correction.source",
+  "first_source_sha256": "1a2a58f19a01645f68f833e747f6b36081d41364e44d2cff0b6b5634d122347c",
+  "new": "The populated-store worker results below extend that inactive evidence.",
+  "old": "Populated-store worker qualification is next.",
+  "repair": "Correct the transition and explicitly reject its stale wording in the final rendered inspection.",
+  "root_cause": "The preceding compiler-profile join retained a forward transition after the selected worker-result paragraphs were updated. The first rendering checked those paragraphs, but not this transition.",
+  "source_path": "docs/book/src/16dk-inactive-proxy-lifetimes.md"
+}
