@@ -408,7 +408,7 @@ cancellation and close failures. Recovery preserves the first failure; incomplet
 cleanup or missing output cannot become a successful worker result. The admitted
 workers completed the fixed cases, and independent review confirms their
 original records and cleanup. The final cooperative-lifetime evidence join is
-next. Retirement and observation-work settlement records remain synthetic; the
+complete. Retirement and observation-work settlement records remain synthetic; the
 worker cancellations now have separate actual process evidence.
 
 The worker accepts only its declared case, role and next command. Small commands
@@ -470,6 +470,20 @@ workers exited on the requested termination signal; their terminal captures and
 group-absence checks are complete. Source bounds remain prospective model
 encodings; the actual run has separately retained measured records.
 
+The selected populated-worker activity is complete. Its results are joined with
+the earlier empty-store qualification through the same coordination and custody
+code and recorded interpreter byte identities. Each run keeps its own process
+and clock records. The Python peer remains qualified only for empty-store
+coordination; populated publication and observation use the fixed Perl worker.
+
+The final review also challenges altered actual records. For example, changing
+the lock inode in a handoff and updating the file and command digests still
+rejects: it no longer describes the original acquisition. Changing a cancelled
+worker's terminal exit to successful completion also rejects, even with matching
+controller receipt copies. Missing source archives, release custody, native
+absence, process-group closure or owned-root evidence cannot become success.
+These checks use retained records without repeating the worker run.
+
 Actual-wrapper observation also remains an owned integration repair. Observation
 acquisition currently requires wrapper mode `0700`, while the retained actual
 compiler profiles use `0755`. The inert worker cases keep their established mode;
@@ -478,7 +492,6 @@ the actual wrapper. No actual-wrapper observation attempt is claimed here.
 
 | Remaining work | Required result |
 | --- | --- |
-| Populated-store result join | Join the completed actual cases with the preserved empty-store qualification and retain the exact cooperative-writer boundary. |
 | Real receipt binding | Prove complete compiler/outer/inner ownership and prevent launches after settlement. |
 | Inactive adapter composition | Join preparation, native path/reference admission and observation custody before the separate native experiment. |
 | Final protocol join | Check current evidence together and retain native, live/public and startup/benefit gates. |
@@ -495,7 +508,7 @@ scripts/run_with_ram_guard.sh -- python3 -B docs/audits/native-proxy-compiler-pr
 scripts/run_with_ram_guard.sh -- python3 -B docs/audits/native-proxy-compiler-profile-admission-20260913/epoch.py --verify-saved
 scripts/run_with_ram_guard.sh -- python3 -B docs/audits/native-proxy-populated-controller-20260913/audit.py --verify-saved
 scripts/run_with_ram_guard.sh -- python3 -B docs/audits/native-proxy-populated-worker-execution-20260914/audit.py --verify-saved
-scripts/run_with_ram_guard.sh -- python3 -B docs/audits/native-proxy-populated-final-admission-20260913/audit.py --verify-saved
+scripts/run_with_ram_guard.sh -- python3 -B docs/audits/native-proxy-populated-lifetime-join-20260914/audit.py --verify-saved
 ```
 
 [Return to runtime measurement](16dc-vial-portable-verilator-runtime-measurement.md).

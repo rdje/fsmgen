@@ -1,0 +1,16 @@
+{
+  "outputs": {
+    "exit": "0\n",
+    "stderr": "ram-guard: PID 56548; host 78.0%; host cutoff 88%; descendant RSS cutoff 4096 MiB; poll 2s\n",
+    "stdout": "{\"cases\": 12, \"journal_records\": 472, \"original_producer_replayed\": false, \"rejected_controls\": 10, \"success\": true}\n"
+  },
+  "producer_replayed": false,
+  "result": {
+    "cases": 12,
+    "journal_records": 472,
+    "original_producer_replayed": false,
+    "rejected_controls": 10,
+    "success": true
+  },
+  "source_revision": "2f144f7a18f9a4023b697c58cc5866480343d8c5"
+}

@@ -1,0 +1,182 @@
+"""Challenge retained actual worker evidence without running a producer."""
+import copy
+import hashlib
+import json
+from pathlib import Path
+import sys
+from unittest.mock import patch
+
+BASE = Path(__file__).resolve().parent
+ROOT = BASE.parents[2]
+SCOPE = json.loads((BASE / 'scope.json').read_bytes())
+FINAL = ROOT / 'docs/audits/native-proxy-populated-final-admission-20260913'
+sys.path.insert(0, str(FINAL))
+import admission
+import contract
+import oracle
+import records
+import review_run
+
+
+def load_actual():
+    directory = ROOT / SCOPE['populated_directory']
+    manifest = json.loads((directory / 'first-results.json').read_bytes())
+    result = {}
+    for row in manifest['first_results']:
+        selected = row['copy']
+        path = ROOT / selected['path']
+        body = path.read_bytes()
+        if len(body) != selected['size_bytes'] or hashlib.sha256(body).hexdigest() != selected['sha256']:
+            raise ValueError('original actual copy changed: ' + selected['path'])
+        if path.parent != directory / 'first-results' or path.name in result:
+            raise ValueError('original copy inventory is ambiguous')
+        result[path.name] = body
+    if set(result) != review_run.expected_files(True):
+        raise ValueError('original actual output set is incomplete')
+    return result
+
+
+def check_case(value):
+    return oracle.check_case(value['case'], value['activation'], value['rows'],
+        value['streams'], value['outcome'], value['interpreter'], value['handoff'])
+
+
+def change_event(value, role, event_name, mutate, step=None):
+    row = next(row for row in value['rows'] if row['event'] == 'controller_worker_event'
+        and row['role'] == role and row['value']['event'] == event_name
+        and (step is None or row['value'].get('result', {}).get('step') == step))
+    mutate(row['value'])
+    body = b''.join(contract.canonical(row['value']) + b'\n' for row in value['rows']
+        if row['event'] == 'controller_worker_event' and row['role'] == role)
+    value['streams'][role]['stdout'] = body
+    value['outcome']['outcomes'][role]['retained_prefixes']['stdout'] = records.file_pin(body)
+    terminal = oracle.one(value['rows'], 'worker_outcome', role)
+    terminal['outcome'] = copy.deepcopy(value['outcome']['outcomes'][role])
+
+
+def change_receipt(value, role, **changes):
+    receipt = value['outcome']['outcomes'][role]
+    receipt.update(changes)
+    oracle.one(value['rows'], 'worker_outcome', role)['outcome'] = copy.deepcopy(receipt)
+    consumed = oracle.one(value['rows'], 'controller_consumed', role)
+    for key in ('separate_recovery', 'exit_code', 'leader_reaped', 'group_gone', 'cleanup_complete'):
+        consumed[key] = receipt[key]
+
+
+def qualify():
+    outputs = load_actual()
+    plan, expected = admission.authenticated_sources(SCOPE['populated_admission_commit'])
+    joined = review_run.join(outputs, plan, expected)
+    saved = json.loads(outputs['independent-review.json'])
+    if joined != saved['join']:
+        raise ValueError('unaltered actual run differs from its original independent review')
+    rows = oracle.journal_rows(outputs['journal.jsonl'])
+    result = json.loads(outputs['result.json'])
+    inputs = []
+    for case, outcome in zip(contract.cases(), result['cases']):
+        relative = lambda path: path.removeprefix(contract.OUTPUT + '/')
+        inputs.append(dict(case=case, activation=outputs[relative(case['activation_path'])],
+            handoff=outputs[relative(case['handoff_path'])] if case['handoff_path'] else None,
+            rows=[copy.deepcopy(row) for row in rows if row.get('case') == case['name']],
+            streams={role: {channel: outputs[case['name'] + '.' + role + '.' + channel]
+                for channel in ('stdout', 'stderr')} for role in case['roles']},
+            outcome=copy.deepcopy(outcome), interpreter=plan['toolchains']['perl']))
+    baseline = [check_case(value) for value in inputs]
+    if baseline != joined['cases']:
+        raise ValueError('original case reconstruction disagrees with the whole actual run')
+    rejected = []
+
+    def reject(name, original, mutate):
+        value = copy.deepcopy(original)
+        mutate(value)
+        try:
+            check_case(value)
+        except (ValueError, KeyError, TypeError, StopIteration) as error:
+            rejected.append(dict(name=name, error=str(error)))
+        else:
+            raise AssertionError('altered actual case accepted: ' + name)
+
+    first, observation, cancelled = inputs[0], inputs[2], inputs[5]
+    reject('missing actual stream line', first, lambda value:
+        value['streams']['publisher_a'].update(stdout=value['streams']['publisher_a']['stdout'].split(b'\n', 1)[1]))
+    reject('unaccounted actual stderr', first, lambda value: value['streams']['publisher_b'].update(stderr=b'failure\n'))
+    reject('changed actual native image', first, lambda value:
+        oracle.one(value['rows'], 'controller_native_admitted', 'publisher_a')['image'].update(sha256='0' * 64))
+    reject('changed original native birth', first, lambda value:
+        oracle.one(value['rows'], 'controller_native_owned', 'publisher_a')['identity'].update(start_usec=1000000))
+    reject('boolean closure with coherent stream receipts', first, lambda value:
+        change_event(value, 'publisher_a', 'result', lambda event: event['lock'].update(descriptor_closed=True)))
+    reject('different permanent lock with coherent stream receipts', first, lambda value:
+        change_event(value, 'publisher_a', 'opened', lambda event: event.update(inode=event['inode'] + 1)))
+    reject('wrong actual busy errno with coherent stream receipts', first, lambda value:
+        change_event(value, 'publisher_b', 'busy', lambda event: event.update(errno=2)))
+    reject('missing actual operation acceptance', first, lambda value:
+        value['rows'].remove(next(row for row in value['rows'] if row['event'] == 'operation_accepted')))
+    reject('missing actual terminal snapshot', first, lambda value:
+        value['rows'].remove(next(row for row in value['rows'] if row['event'] == 'case_snapshot' and row['phase'] == 'workers_settled')))
+    reject('missing actual removal', first, lambda value:
+        value['rows'].remove(next(row for row in value['rows'] if row['event'] == 'removed')))
+    reject('invented removal', first, lambda value: value['outcome']['cleanup']['removed'].append('undeclared'))
+    reject('changed original image mode', first, lambda value:
+        next(node for row in value['rows'] if row['event'] == 'case_snapshot'
+             for node in row['snapshot']['nodes'].values() if node['identity']['path'].endswith('/rustup'))['identity'].update(mode=0o400))
+    reject('changed original image inode', first, lambda value:
+        next(node for row in value['rows'] if row['event'] == 'case_snapshot'
+             for node in row['snapshot']['nodes'].values() if node['identity']['path'].endswith('/rustup'))['identity'].update(inode=1))
+    reject('missing archived source at terminal closure', observation, lambda value:
+        next(row for row in value['rows'] if row['event'] == 'case_snapshot' and row['phase'] == 'workers_settled')['snapshot']['nodes'].pop(
+            next(path for path in value['outcome']['cleanup']['removed'] if path.endswith('.source'))))
+    reject('changed original handoff bytes', cancelled, lambda value: value.update(handoff=value['handoff'] + b'\n'))
+    reject('cancelled worker promoted to ordinary completion', cancelled, lambda value:
+        change_receipt(value, 'observer', healthy=True, separate_recovery=False))
+    reject('signal request without matching actual terminal exit', cancelled, lambda value:
+        change_receipt(value, 'observer', exit_code=0))
+    reject('unsettled actual cancellation group', cancelled, lambda value:
+        change_receipt(value, 'observer', group_gone=False))
+    reject('missing nested release receipt with coherent stream receipts', observation, lambda value:
+        change_event(value, 'observer', 'result', lambda event: event['result']['value'].pop('release'), step='release'))
+    reject('changed original release image with coherent stream receipts', observation, lambda value:
+        change_event(value, 'observer', 'result', lambda event: event['result']['value']['release']['image'].update(key='0' * 64), step='release'))
+
+    def verify_saved_bytes(values):
+        def reader(review=False):
+            if review is not True or set(values) != review_run.expected_files(True):
+                raise ValueError('saved actual output census is incomplete')
+            return dict(values)
+        # Reuse the already authenticated immutable source selection only.
+        # All modified original-result bytes still pass through the original
+        # saved-review validator, including native/group-absence evidence.
+        with patch.object(review_run, 'read_outputs', reader), patch.object(
+                admission, 'authenticated_sources', return_value=(plan, expected)):
+            return review_run.verify(saved=True)
+
+    if verify_saved_bytes(outputs) != saved:
+        raise ValueError('unaltered saved actual review changed')
+    whole_rejected = []
+
+    def reject_document(name, filename, mutate):
+        changed = dict(outputs)
+        value = json.loads(changed[filename])
+        mutate(value)
+        changed[filename] = contract.canonical(value)
+        try:
+            verify_saved_bytes(changed)
+        except (ValueError, KeyError, TypeError, StopIteration) as error:
+            whole_rejected.append(dict(name=name, error=str(error)))
+        else:
+            raise AssertionError('altered actual run accepted: ' + name)
+
+    reject_document('missing original native absence', 'independent-review.json', lambda value: value['native_absence'].pop())
+    reject_document('original native owner still present', 'independent-review.json', lambda value: value['native_absence'][0].update(original_absent=False))
+    reject_document('missing original group absence', 'independent-review.json', lambda value: value['groups'].pop())
+    reject_document('missing original removed root', 'independent-review.json', lambda value: value['absent_roots'].pop())
+    reject_document('synthetic receipts promoted to real', 'result.json', lambda value: value.update(synthetic_retirement_and_work_records=False))
+    reject_document('native proxy authority promoted', 'result.json', lambda value: value.update(proxy_execution=True))
+    return dict(schema='fsmgen.populated_actual_evidence_qualification.v1', cases=baseline,
+        case_rejections=rejected, whole_run_rejections=whole_rejected,
+        original_clock_values_preserved=True, original_actual_bytes_verified=True,
+        producer_replayed=False, native_resampled=False, fixture_mutated=False)
+
+
+if __name__ == '__main__':
+    print(json.dumps(qualify(), sort_keys=True, indent=2))

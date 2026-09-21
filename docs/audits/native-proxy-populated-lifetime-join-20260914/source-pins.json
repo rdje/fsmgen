@@ -1,0 +1,57 @@
+[
+  {
+    "path": "docs/audits/native-proxy-populated-lifetime-join-20260914/actual-final.json",
+    "sha256": "7ea7712bf09be006ff5fa099f0fecc6428ff36e5f454420e78c2d0b59d34ef54",
+    "size_bytes": 12440
+  },
+  {
+    "path": "docs/audits/native-proxy-populated-lifetime-join-20260914/actual-first-source.json",
+    "sha256": "516def92b04c057acedf0e8b7091799d42dc44ed61b7995f403646b18dda2371",
+    "size_bytes": 208
+  },
+  {
+    "path": "docs/audits/native-proxy-populated-lifetime-join-20260914/actual-first.json",
+    "sha256": "d8ce3c9d6e63749afa61f1dc158700b096462ced3f38adc4cece1d3401fad987",
+    "size_bytes": 12097
+  },
+  {
+    "path": "docs/audits/native-proxy-populated-lifetime-join-20260914/audit.py",
+    "sha256": "b82335338d2d2b365b2553e227087c8eaaa9f1797737349b182b90e2d98a63af",
+    "size_bytes": 8754
+  },
+  {
+    "path": "docs/audits/native-proxy-populated-lifetime-join-20260914/empty-store-first.json",
+    "sha256": "c80af4b18ec2b45136e6b54b05f523aecdde51e32a140f3ac67ab3826906c4c8",
+    "size_bytes": 546
+  },
+  {
+    "path": "docs/audits/native-proxy-populated-lifetime-join-20260914/input-pins.json",
+    "sha256": "54eafe956d6cb878519ab514e799b65b1e86787b7dd1f89035a00dead0a68fed",
+    "size_bytes": 106621
+  },
+  {
+    "path": "docs/audits/native-proxy-populated-lifetime-join-20260914/inventory-first.json",
+    "sha256": "6c65aee608d91638fe6bf8ef2fc9a3f5de58cb5b119da481f0ee8a7ea4c46a85",
+    "size_bytes": 517
+  },
+  {
+    "path": "docs/audits/native-proxy-populated-lifetime-join-20260914/inventory.py",
+    "sha256": "8f5393e21aa74541929b6e6f9ef4f7e1fec40776aa1aacc8192377801674b545",
+    "size_bytes": 3298
+  },
+  {
+    "path": "docs/audits/native-proxy-populated-lifetime-join-20260914/qualify_actual.py",
+    "sha256": "ff2d859c013681e671e3619b76775b160aa765e84bbe1389ad55ff45ace11f01",
+    "size_bytes": 11683
+  },
+  {
+    "path": "docs/audits/native-proxy-populated-lifetime-join-20260914/qualify_actual.py.first.source",
+    "sha256": "726b09827f49acccd8cc473f161ed81a3f9a1daa440911fdc8b82992a7397ba0",
+    "size_bytes": 10851
+  },
+  {
+    "path": "docs/audits/native-proxy-populated-lifetime-join-20260914/scope.json",
+    "sha256": "cffa006be9d320b502eaeaa78b1ba30099f3e987362c060b6eca32f4f4afc716",
+    "size_bytes": 2323
+  }
+]

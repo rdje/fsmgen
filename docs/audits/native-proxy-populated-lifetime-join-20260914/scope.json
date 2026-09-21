@@ -1,0 +1,27 @@
+{
+  "constraints": [
+    "No permit issuer, execution driver, worker, compiler, proxy, original fixture or collector invocation.",
+    "No native identity/executable resampling or fixture cleanup; retained original absence evidence remains dated.",
+    "Private Python audit stacks use overlapping module names and must not be imported together.",
+    "Retirement and observation-work receipts remain synthetic; actual worker cancellation is distinct.",
+    "Do not promote cooperative serialization into arbitrary-writer, power-loss, native/live or startup qualification."
+  ],
+  "durability": "Pin all selected committed source/result inputs and retain first validation sources, output and rejected controls before synchronization and commit.",
+  "empty_store_admission_commit": "295130388c20c6ee94650c610c2df6d597eeffa7",
+  "empty_store_directory": "docs/audits/native-proxy-language-coordination-20260913",
+  "empty_store_execution_commit": "2f144f7a18f9a4023b697c58cc5866480343d8c5",
+  "falsification": "Challenge retained actual populated case and whole-run evidence in memory, with coherent carriers where needed; retain the original empty-store altered-evidence controls separately.",
+  "missing_legs": [
+    "Real compiler/outer/inner receipts and late-launch prevention.",
+    "Actual-wrapper observation compatibility and inactive native composition.",
+    "Separately owned native/live/public and startup qualification."
+  ],
+  "next_owner": "HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.12.4.1.5.4",
+  "owner": "HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.12.4.1.5.3.3",
+  "parent_owner": "HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.12.4.1.5.3",
+  "populated_admission_commit": "266e8a99f407b0cc1649c5791ee8c5c4edc3b50c",
+  "populated_directory": "docs/audits/native-proxy-populated-worker-execution-20260914",
+  "re_derivation": "Run each qualified saved-result reviewer in its own Python process, preserving its private module namespace; compare exact common source pins and reconstruct actual populated case records.",
+  "scope": "Evidence-only closure of the selected cooperative empty-store and populated-worker lifetimes.",
+  "source_revision": "c1d9593991599074f658543b7f2036239794919b"
+}

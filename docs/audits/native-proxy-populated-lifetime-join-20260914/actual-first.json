@@ -1,0 +1,190 @@
+{
+  "outputs": {
+    "exit": "0\n",
+    "stderr": "ram-guard: PID 44233; host 83.3%; host cutoff 88%; descendant RSS cutoff 4096 MiB; poll 2s\n",
+    "stdout": "{\n  \"case_rejections\": [\n    {\n      \"error\": \"journal changed, omitted or invented original worker stream bytes\",\n      \"name\": \"missing actual stream line\"\n    },\n    {\n      \"error\": \"successful worker has unaccounted stderr\",\n      \"name\": \"unaccounted actual stderr\"\n    },\n    {\n      \"error\": \"native worker executable differs from the selected interpreter bytes\",\n      \"name\": \"changed actual native image\"\n    },\n    {\n      \"error\": \"native worker receipt loses the selected script, role or original birth\",\n      \"name\": \"changed original native birth\"\n    },\n    {\n      \"error\": \"result lacks original lock closure or contention\",\n      \"name\": \"boolean closure with coherent stream receipts\"\n    },\n    {\n      \"error\": \"worker opened a different or unsealed permanent lock\",\n      \"name\": \"different permanent lock with coherent stream receipts\"\n    },\n    {\n      \"error\": \"busy event does not record selected lock contention\",\n      \"name\": \"wrong actual busy errno with coherent stream receipts\"\n    },\n    {\n      \"error\": \"publication creation flag disagrees with original image lifetime\",\n      \"name\": \"missing actual operation acceptance\"\n    },\n    {\n      \"error\": \"case omitted or invented a required ownership snapshot\",\n      \"name\": \"missing actual terminal snapshot\"\n    },\n    {\n      \"error\": \"cleanup omission or order differs from the exact remaining closure\",\n      \"name\": \"missing actual removal\"\n    },\n    {\n      \"error\": \"cleanup outcome differs from exact retained removal records\",\n      \"name\": \"invented removal\"\n    },\n    {\n      \"error\": \"snapshot changed original file bytes, identity or final mode\",\n      \"name\": \"changed original image mode\"\n    },\n    {\n      \"error\": \"snapshot changed original file bytes, identity or final mode\",\n      \"name\": \"changed original image inode\"\n    },\n    {\n      \"error\": \"observed tree differs from independently reconstructed original owners\",\n      \"name\": \"missing archived source at terminal closure\"\n    },\n    {\n      \"error\": \"controller command transcript differs from the fixed schedule\",\n      \"name\": \"changed original handoff bytes\"\n    },\n    {\n      \"error\": \"ordinary completion and separate recovery were conflated\",\n      \"name\": \"cancelled worker promoted to ordinary completion\"\n    },\n    {\n      \"error\": \"planned cancellation lacks a matching actual signal exit\",\n      \"name\": \"signal request without matching actual terminal exit\"\n    },\n    {\n      \"error\": \"worker native settlement or terminal evidence is incomplete\",\n      \"name\": \"unsettled actual cancellation group\"\n    },\n    {\n      \"error\": \"'release'\",\n      \"name\": \"missing nested release receipt with coherent stream receipts\"\n    },\n    {\n      \"error\": \"release receipt replaced original custody\",\n      \"name\": \"changed original release image with coherent stream receipts\"\n    }\n  ],\n  \"cases\": [\n    {\n      \"cancelled_workers\": 0,\n      \"case\": \"equal_publication\",\n      \"cleanup_nodes\": 4,\n      \"commands\": 19,\n      \"completed_operations\": 7,\n      \"retained_archives\": 0,\n      \"snapshots\": 8,\n      \"workers\": 2\n    },\n    {\n      \"cancelled_workers\": 0,\n      \"case\": \"different_publication\",\n      \"cleanup_nodes\": 4,\n      \"commands\": 19,\n      \"completed_operations\": 7,\n      \"retained_archives\": 0,\n      \"snapshots\": 8,\n      \"workers\": 2\n    },\n    {\n      \"cancelled_workers\": 0,\n      \"case\": \"observation_across_retirement\",\n      \"cleanup_nodes\": 10,\n      \"commands\": 21,\n      \"completed_operations\": 8,\n      \"retained_archives\": 1,\n      \"snapshots\": 10,\n      \"workers\": 3\n    },\n    {\n      \"cancelled_workers\": 0,\n      \"case\": \"equal_references_with_observer\",\n      \"cleanup_nodes\": 10,\n      \"commands\": 26,\n      \"completed_operations\": 10,\n      \"retained_archives\": 1,\n      \"snapshots\": 11,\n      \"workers\": 3\n    },\n    {\n      \"cancelled_workers\": 1,\n      \"case\": \"cancelled_runtime_owner\",\n      \"cleanup_nodes\": 4,\n      \"commands\": 14,\n      \"completed_operations\": 5,\n      \"retained_archives\": 0,\n      \"snapshots\": 9,\n      \"workers\": 2\n    },\n    {\n      \"cancelled_workers\": 1,\n      \"case\": \"cancelled_observer_owner\",\n      \"cleanup_nodes\": 10,\n      \"commands\": 21,\n      \"completed_operations\": 8,\n      \"retained_archives\": 1,\n      \"snapshots\": 12,\n      \"workers\": 3\n    }\n  ],\n  \"fixture_mutated\": false,\n  \"native_resampled\": false,\n  \"original_actual_bytes_verified\": true,\n  \"original_clock_values_preserved\": true,\n  \"producer_replayed\": false,\n  \"schema\": \"fsmgen.populated_actual_evidence_qualification.v1\",\n  \"whole_run_rejections\": [\n    {\n      \"error\": \"native absence review is incomplete\",\n      \"name\": \"missing original native absence\"\n    },\n    {\n      \"error\": \"review changes an original process identity\",\n      \"name\": \"original native owner still present\"\n    },\n    {\n      \"error\": \"review loses its exact original native or filesystem closure\",\n      \"name\": \"missing original group absence\"\n    },\n    {\n      \"error\": \"review loses its exact original native or filesystem closure\",\n      \"name\": \"missing original removed root\"\n    },\n    {\n      \"error\": \"execution report promotes inactive records into broader native authority\",\n      \"name\": \"synthetic receipts promoted to real\"\n    },\n    {\n      \"error\": \"execution report promotes inactive records into broader native authority\",\n      \"name\": \"native proxy authority promoted\"\n    }\n  ]\n}\n"
+  },
+  "result": {
+    "case_rejections": [
+      {
+        "error": "journal changed, omitted or invented original worker stream bytes",
+        "name": "missing actual stream line"
+      },
+      {
+        "error": "successful worker has unaccounted stderr",
+        "name": "unaccounted actual stderr"
+      },
+      {
+        "error": "native worker executable differs from the selected interpreter bytes",
+        "name": "changed actual native image"
+      },
+      {
+        "error": "native worker receipt loses the selected script, role or original birth",
+        "name": "changed original native birth"
+      },
+      {
+        "error": "result lacks original lock closure or contention",
+        "name": "boolean closure with coherent stream receipts"
+      },
+      {
+        "error": "worker opened a different or unsealed permanent lock",
+        "name": "different permanent lock with coherent stream receipts"
+      },
+      {
+        "error": "busy event does not record selected lock contention",
+        "name": "wrong actual busy errno with coherent stream receipts"
+      },
+      {
+        "error": "publication creation flag disagrees with original image lifetime",
+        "name": "missing actual operation acceptance"
+      },
+      {
+        "error": "case omitted or invented a required ownership snapshot",
+        "name": "missing actual terminal snapshot"
+      },
+      {
+        "error": "cleanup omission or order differs from the exact remaining closure",
+        "name": "missing actual removal"
+      },
+      {
+        "error": "cleanup outcome differs from exact retained removal records",
+        "name": "invented removal"
+      },
+      {
+        "error": "snapshot changed original file bytes, identity or final mode",
+        "name": "changed original image mode"
+      },
+      {
+        "error": "snapshot changed original file bytes, identity or final mode",
+        "name": "changed original image inode"
+      },
+      {
+        "error": "observed tree differs from independently reconstructed original owners",
+        "name": "missing archived source at terminal closure"
+      },
+      {
+        "error": "controller command transcript differs from the fixed schedule",
+        "name": "changed original handoff bytes"
+      },
+      {
+        "error": "ordinary completion and separate recovery were conflated",
+        "name": "cancelled worker promoted to ordinary completion"
+      },
+      {
+        "error": "planned cancellation lacks a matching actual signal exit",
+        "name": "signal request without matching actual terminal exit"
+      },
+      {
+        "error": "worker native settlement or terminal evidence is incomplete",
+        "name": "unsettled actual cancellation group"
+      },
+      {
+        "error": "'release'",
+        "name": "missing nested release receipt with coherent stream receipts"
+      },
+      {
+        "error": "release receipt replaced original custody",
+        "name": "changed original release image with coherent stream receipts"
+      }
+    ],
+    "cases": [
+      {
+        "cancelled_workers": 0,
+        "case": "equal_publication",
+        "cleanup_nodes": 4,
+        "commands": 19,
+        "completed_operations": 7,
+        "retained_archives": 0,
+        "snapshots": 8,
+        "workers": 2
+      },
+      {
+        "cancelled_workers": 0,
+        "case": "different_publication",
+        "cleanup_nodes": 4,
+        "commands": 19,
+        "completed_operations": 7,
+        "retained_archives": 0,
+        "snapshots": 8,
+        "workers": 2
+      },
+      {
+        "cancelled_workers": 0,
+        "case": "observation_across_retirement",
+        "cleanup_nodes": 10,
+        "commands": 21,
+        "completed_operations": 8,
+        "retained_archives": 1,
+        "snapshots": 10,
+        "workers": 3
+      },
+      {
+        "cancelled_workers": 0,
+        "case": "equal_references_with_observer",
+        "cleanup_nodes": 10,
+        "commands": 26,
+        "completed_operations": 10,
+        "retained_archives": 1,
+        "snapshots": 11,
+        "workers": 3
+      },
+      {
+        "cancelled_workers": 1,
+        "case": "cancelled_runtime_owner",
+        "cleanup_nodes": 4,
+        "commands": 14,
+        "completed_operations": 5,
+        "retained_archives": 0,
+        "snapshots": 9,
+        "workers": 2
+      },
+      {
+        "cancelled_workers": 1,
+        "case": "cancelled_observer_owner",
+        "cleanup_nodes": 10,
+        "commands": 21,
+        "completed_operations": 8,
+        "retained_archives": 1,
+        "snapshots": 12,
+        "workers": 3
+      }
+    ],
+    "fixture_mutated": false,
+    "native_resampled": false,
+    "original_actual_bytes_verified": true,
+    "original_clock_values_preserved": true,
+    "producer_replayed": false,
+    "schema": "fsmgen.populated_actual_evidence_qualification.v1",
+    "whole_run_rejections": [
+      {
+        "error": "native absence review is incomplete",
+        "name": "missing original native absence"
+      },
+      {
+        "error": "review changes an original process identity",
+        "name": "original native owner still present"
+      },
+      {
+        "error": "review loses its exact original native or filesystem closure",
+        "name": "missing original group absence"
+      },
+      {
+        "error": "review loses its exact original native or filesystem closure",
+        "name": "missing original removed root"
+      },
+      {
+        "error": "execution report promotes inactive records into broader native authority",
+        "name": "synthetic receipts promoted to real"
+      },
+      {
+        "error": "execution report promotes inactive records into broader native authority",
+        "name": "native proxy authority promoted"
+      }
+    ]
+  },
+  "source": {
+    "path": "docs/audits/native-proxy-populated-lifetime-join-20260914/qualify_actual.py.first.source",
+    "sha256": "726b09827f49acccd8cc473f161ed81a3f9a1daa440911fdc8b82992a7397ba0",
+    "size_bytes": 10851
+  }
+}

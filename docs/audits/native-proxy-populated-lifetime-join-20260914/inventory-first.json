@@ -1,0 +1,16 @@
+{
+  "outputs": {
+    "exit": "0\n",
+    "stderr": "ram-guard: PID 78855; host 75.5%; host cutoff 88%; descendant RSS cutoff 4096 MiB; poll 2s\n",
+    "stdout": "{\"common_original_inputs\": 7, \"selected_inputs\": 318}\n"
+  },
+  "result": {
+    "common_original_inputs": 7,
+    "selected_inputs": 318
+  },
+  "source": {
+    "path": "docs/audits/native-proxy-populated-lifetime-join-20260914/inventory.py",
+    "sha256": "8f5393e21aa74541929b6e6f9ef4f7e1fec40776aa1aacc8192377801674b545",
+    "size_bytes": 3298
+  }
+}

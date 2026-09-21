@@ -1,0 +1,24 @@
+{
+  "checked_passages": [
+    "The selected populated-worker activity is complete.",
+    "The final cooperative-lifetime evidence join is complete.",
+    "The Python peer remains qualified only for empty-store coordination; populated publication and observation use the fixed Perl worker.",
+    "These checks use retained records without repeating the worker run.",
+    "No actual-wrapper observation attempt is claimed here.",
+    "docs/audits/native-proxy-populated-lifetime-join-20260914/audit.py --verify-saved"
+  ],
+  "checked_runtime_passages": [
+    "selected populated-worker lifetime evidence is joined; native behavior remains open.",
+    "These are inert filesystem qualifications; real receipt transport and native behavior remain open."
+  ],
+  "exact_output_absent": true,
+  "exit_code": 0,
+  "output": ".artifacts/tmp/native-proxy-populated-lifetime-join-book-20260914/book",
+  "rendered_bytes": 23703561,
+  "rendered_directories": 2,
+  "rendered_files": 99,
+  "renderer_warnings": [
+    "WARN search index is very large (13335640 bytes)"
+  ],
+  "same_volume_direct_objects": true
+}

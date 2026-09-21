@@ -1,0 +1,7 @@
+{
+  "durability": "Exact committed source/result input pins, first qualifier versions/results, original raw execution data in prior commits and this combined review survive session loss. Clock values and process identities remain in their original domains.",
+  "falsification": "The preserved empty-store review retains its ten altered actual-evidence controls. qualify_actual.py independently challenges actual populated case and whole-run records; valid alternate birth, coherent handoff and stream/receipt carriers force semantic original-custody rejection.",
+  "limits": "Selected cooperative inactive-byte lifetimes only; Python is qualified for empty-store coordination. Real compiler/outer/inner receipt ownership, late-launch prevention, actual-wrapper observation, native/live/public integration and startup qualification remain owned future work. No producer or native sampler is replayed.",
+  "owner": "HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.12.4.1.5.3.3",
+  "re_derivation": "audit.py revalidates the committed input union, runs both original saved reviewers in separate module namespaces, reconstructs actual populated cases and measured output bounds, and compares original shared APIs and recorded interpreter selections."
+}

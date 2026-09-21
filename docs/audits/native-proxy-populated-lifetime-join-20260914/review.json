@@ -1,0 +1,335 @@
+{
+  "common_original_inputs": [
+    {
+      "path": "docs/audits/native-proxy-image-coordination-20260910/Coordination.pm",
+      "sha256": "a0d99769147f28ca7c35e9ac80ba88f7cf14760e3bef7b51841d8badebc060e5",
+      "size_bytes": 19061
+    },
+    {
+      "path": "docs/audits/native-proxy-image-custody-20260910/ImageCustody.pm",
+      "sha256": "927f1ab39f7f26742e36878985d1ff545ddf2dee119d4bf6b7b41bf2c9360ccc",
+      "size_bytes": 8619
+    },
+    {
+      "path": "perl/FSM/ProjectDataLocality.pm",
+      "sha256": "14aece4a50b35956bc2585099aa8d26753942288663c641922da9d36ad4bc893",
+      "size_bytes": 6017
+    },
+    {
+      "path": "perl/FSM/Support/ProcessSupervisor.pm",
+      "sha256": "684882d91f673ea7145f43ed3aad31acf099f13508574be7b2d8911123988637",
+      "size_bytes": 27990
+    },
+    {
+      "path": "scripts/fixture_kernel_sampler.py",
+      "sha256": "50c94165893b74b758c560f561ff744f294683812a26b429071ef43009aac2dc",
+      "size_bytes": 22040
+    },
+    {
+      "path": "t/lib/FSM/Test/ProcessSupervisor.pm",
+      "sha256": "52e467023ea8a776167e227a767abdd3dddf185f1f7c539aac8ca1c4a0a06680",
+      "size_bytes": 773
+    },
+    {
+      "path": "t/lib/FSM/Test/RustProxyFixture.pm",
+      "sha256": "d9c4ab52cf8074526c59b7a5dcb9da870ca7ffdacb4eb236dacb23b5db6d8bfb",
+      "size_bytes": 11466
+    }
+  ],
+  "compiler_execution": false,
+  "cooperative_populated_lifetime_qualified": true,
+  "empty_store": {
+    "admission_commit": "295130388c20c6ee94650c610c2df6d597eeffa7",
+    "execution_commit": "2f144f7a18f9a4023b697c58cc5866480343d8c5",
+    "rejected_controls": [
+      "lost_group_settlement",
+      "changed_native_image",
+      "cancellation_promoted_to_success",
+      "omission_control_promoted_to_sealed",
+      "missing_removal",
+      "hidden_recovery",
+      "native_proxy_authority_promoted",
+      "missing_retained_stream",
+      "changed_retained_stream",
+      "missing_owner_absence"
+    ],
+    "result": {
+      "case_controller_ns": {
+        "perl_exec_omitted_seal": 50465084,
+        "perl_exec_sealed": 50286417,
+        "perl_holds_python_cancel": 107866250,
+        "perl_holds_python_deadline": 2096902291,
+        "perl_holds_python_handoff": 109965458,
+        "perl_holds_python_replace": 101481375,
+        "python_exec_omitted_seal": 58859792,
+        "python_exec_sealed": 56904208,
+        "python_holds_perl_cancel": 102774000,
+        "python_holds_perl_deadline": 2094253166,
+        "python_holds_perl_handoff": 104934125,
+        "python_holds_perl_replace": 93681500
+      },
+      "cases": 12,
+      "clock_domains_kept_separate": true,
+      "exec_probes": 4,
+      "first_outcome_success": true,
+      "journal_bytes": 169425,
+      "journal_records": 472,
+      "native_groups_absent": 20,
+      "native_image_records": 24,
+      "native_owner_births_absent": 25,
+      "native_proxy_execution": false,
+      "original_producer_replayed": false,
+      "removed_objects": 50,
+      "total_controller_ns": 5063123875,
+      "worker_leaders": 20,
+      "worker_stream_bytes": 11259
+    },
+    "roots_absent": [
+      ".artifacts/tmp/native-proxy-image-custody/cases/fsmgen-Language20260913_perl_holds_python_handoff",
+      ".artifacts/tmp/native-proxy-image-custody/cases/fsmgen-Language20260913_python_holds_perl_handoff",
+      ".artifacts/tmp/native-proxy-image-custody/cases/fsmgen-Language20260913_perl_holds_python_deadline",
+      ".artifacts/tmp/native-proxy-image-custody/cases/fsmgen-Language20260913_python_holds_perl_deadline",
+      ".artifacts/tmp/native-proxy-image-custody/cases/fsmgen-Language20260913_perl_holds_python_cancel",
+      ".artifacts/tmp/native-proxy-image-custody/cases/fsmgen-Language20260913_python_holds_perl_cancel",
+      ".artifacts/tmp/native-proxy-image-custody/cases/fsmgen-Language20260913_perl_holds_python_replace",
+      ".artifacts/tmp/native-proxy-image-custody/cases/fsmgen-Language20260913_perl_holds_python_replace_retired.lock",
+      ".artifacts/tmp/native-proxy-image-custody/cases/fsmgen-Language20260913_python_holds_perl_replace",
+      ".artifacts/tmp/native-proxy-image-custody/cases/fsmgen-Language20260913_python_holds_perl_replace_retired.lock",
+      ".artifacts/tmp/native-proxy-image-custody/cases/fsmgen-Language20260913_perl_exec_sealed",
+      ".artifacts/tmp/native-proxy-image-custody/cases/fsmgen-Language20260913_perl_exec_omitted_seal",
+      ".artifacts/tmp/native-proxy-image-custody/cases/fsmgen-Language20260913_python_exec_sealed",
+      ".artifacts/tmp/native-proxy-image-custody/cases/fsmgen-Language20260913_python_exec_omitted_seal"
+    ],
+    "scope": "Inactive preinitialized empty stores and the current Perl inspect_store transaction. The Python peer implements only the checked empty-store coordination protocol. These workers do not publish images, compile, launch a native proxy, query a collector or use the live canonical store. Cooperative serialization does not establish protection against arbitrary noncooperating writers. Controlled lock replacement is a rejecting fault, never a normal repair. Exec probes run before lock acquisition; no worker spawns while it holds coordination. Worker-local clocks and controller clocks remain separate."
+  },
+  "fixture_mutated": false,
+  "live_collector_execution": false,
+  "native_live_startup_qualification_open": true,
+  "native_resampled": false,
+  "next_owner": "HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.12.4.1.5.4",
+  "owner": "HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.12.4.1.5.3.3",
+  "parent_owner": "HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.12.4.1.5.3",
+  "populated": {
+    "actual_geometry": {
+      "journal_bytes": 1167931,
+      "journal_rows": 1043,
+      "largest_worker_event": 24436,
+      "largest_worker_event_count": 15,
+      "largest_worker_output": 41189
+    },
+    "admission_commit": "266e8a99f407b0cc1649c5791ee8c5c4edc3b50c",
+    "case_rejections": [
+      {
+        "error": "journal changed, omitted or invented original worker stream bytes",
+        "name": "missing actual stream line"
+      },
+      {
+        "error": "successful worker has unaccounted stderr",
+        "name": "unaccounted actual stderr"
+      },
+      {
+        "error": "native worker executable differs from the selected interpreter bytes",
+        "name": "changed actual native image"
+      },
+      {
+        "error": "native worker receipt loses the selected script, role or original birth",
+        "name": "different valid original native birth"
+      },
+      {
+        "error": "result lacks original lock closure or contention",
+        "name": "boolean closure with coherent stream receipts"
+      },
+      {
+        "error": "worker opened a different or unsealed permanent lock",
+        "name": "different permanent lock with coherent stream receipts"
+      },
+      {
+        "error": "busy event does not record selected lock contention",
+        "name": "wrong actual busy errno with coherent stream receipts"
+      },
+      {
+        "error": "publication creation flag disagrees with original image lifetime",
+        "name": "missing actual operation acceptance"
+      },
+      {
+        "error": "case omitted or invented a required ownership snapshot",
+        "name": "missing actual terminal snapshot"
+      },
+      {
+        "error": "cleanup omission or order differs from the exact remaining closure",
+        "name": "missing actual removal"
+      },
+      {
+        "error": "cleanup outcome differs from exact retained removal records",
+        "name": "invented removal"
+      },
+      {
+        "error": "snapshot changed original file bytes, identity or final mode",
+        "name": "changed original image mode"
+      },
+      {
+        "error": "snapshot changed original file bytes, identity or final mode",
+        "name": "changed original image inode"
+      },
+      {
+        "error": "observed tree differs from independently reconstructed original owners",
+        "name": "missing archived source at terminal closure"
+      },
+      {
+        "error": "controller command transcript differs from the fixed schedule",
+        "name": "changed original handoff bytes"
+      },
+      {
+        "error": "handoff file replaced original acquisition bytes",
+        "name": "changed original handoff with coherent file and command digests"
+      },
+      {
+        "error": "ordinary completion and separate recovery were conflated",
+        "name": "cancelled worker promoted to ordinary completion"
+      },
+      {
+        "error": "planned cancellation lacks a matching actual signal exit",
+        "name": "signal request without matching actual terminal exit"
+      },
+      {
+        "error": "worker native settlement or terminal evidence is incomplete",
+        "name": "unsettled actual cancellation group"
+      },
+      {
+        "error": "'release'",
+        "name": "missing nested release receipt with coherent stream receipts"
+      },
+      {
+        "error": "release receipt replaced original custody",
+        "name": "changed original release image with coherent stream receipts"
+      }
+    ],
+    "cases": 6,
+    "counts": {
+      "cancelled_workers": 2,
+      "cleanup_nodes": 42,
+      "commands": 120,
+      "completed_operations": 45,
+      "retained_archives": 3,
+      "snapshots": 58,
+      "workers": 15
+    },
+    "execution_commit": "c1d9593991599074f658543b7f2036239794919b",
+    "group_absence_receipts": 15,
+    "native_absence_receipts": 16,
+    "retained_bytes": 2745395,
+    "retained_files": 47,
+    "roots_absent": [
+      ".artifacts/tmp/native-proxy-image-custody/cases/fsmgen-Populated20260913_equal_publication",
+      ".artifacts/tmp/process-supervisor-tests/fsmgen-Populated20260913_equal_publication_publisher_a",
+      ".artifacts/tmp/process-supervisor-tests/fsmgen-Populated20260913_equal_publication_publisher_b",
+      ".artifacts/tmp/native-proxy-image-custody/cases/fsmgen-Populated20260913_different_publication",
+      ".artifacts/tmp/process-supervisor-tests/fsmgen-Populated20260913_different_publication_publisher_a",
+      ".artifacts/tmp/process-supervisor-tests/fsmgen-Populated20260913_different_publication_publisher_b",
+      ".artifacts/tmp/native-proxy-image-custody/cases/fsmgen-Populated20260913_observation_across_retirement",
+      ".artifacts/tmp/process-supervisor-tests/fsmgen-Populated20260913_observation_across_retirement_publisher",
+      ".artifacts/logs/native-proxy-observation-acquisition-20260910/cases/fsmgen-Populated20260913_observation_across_retirement",
+      ".artifacts/tmp/native-proxy-image-custody/cases/fsmgen-Populated20260913_equal_references_with_observer",
+      ".artifacts/tmp/process-supervisor-tests/fsmgen-Populated20260913_equal_references_with_observer_publisher_a",
+      ".artifacts/tmp/process-supervisor-tests/fsmgen-Populated20260913_equal_references_with_observer_publisher_b",
+      ".artifacts/logs/native-proxy-observation-acquisition-20260910/cases/fsmgen-Populated20260913_equal_references_with_observer",
+      ".artifacts/tmp/native-proxy-image-custody/cases/fsmgen-Populated20260913_cancelled_runtime_owner",
+      ".artifacts/tmp/process-supervisor-tests/fsmgen-Populated20260913_cancelled_runtime_owner_publisher",
+      ".artifacts/tmp/native-proxy-image-custody/cases/fsmgen-Populated20260913_cancelled_observer_owner",
+      ".artifacts/tmp/process-supervisor-tests/fsmgen-Populated20260913_cancelled_observer_owner_publisher",
+      ".artifacts/logs/native-proxy-observation-acquisition-20260910/cases/fsmgen-Populated20260913_cancelled_observer_owner"
+    ],
+    "whole_run_rejections": [
+      {
+        "error": "native absence review is incomplete",
+        "name": "missing original native absence"
+      },
+      {
+        "error": "review changes an original process identity",
+        "name": "original native owner still present"
+      },
+      {
+        "error": "review loses its exact original native or filesystem closure",
+        "name": "missing original group absence"
+      },
+      {
+        "error": "review loses its exact original native or filesystem closure",
+        "name": "missing original removed root"
+      },
+      {
+        "error": "execution report promotes inactive records into broader native authority",
+        "name": "synthetic receipts promoted to real"
+      },
+      {
+        "error": "execution report promotes inactive records into broader native authority",
+        "name": "native proxy authority promoted"
+      }
+    ]
+  },
+  "producer_replayed": false,
+  "proxy_execution": false,
+  "python_populated_api_qualified": false,
+  "remaining": [
+    "Real compiler/outer/inner receipts and late-launch prevention.",
+    "Actual-wrapper observation compatibility and inactive native composition.",
+    "Separately owned native/live/public and startup qualification."
+  ],
+  "reviewer_outputs": {
+    "empty_store": {
+      "argv": [
+        "/opt/homebrew/opt/python@3.14/bin/python3.14",
+        "-B",
+        "docs/audits/native-proxy-language-coordination-20260913/audit.py",
+        "--verify-saved"
+      ],
+      "exit_code": 0,
+      "stderr": "",
+      "stdout": "{\"cases\": 12, \"journal_records\": 472, \"original_producer_replayed\": false, \"rejected_controls\": 10, \"success\": true}\n"
+    },
+    "populated": {
+      "argv": [
+        "/opt/homebrew/opt/python@3.14/bin/python3.14",
+        "-B",
+        "docs/audits/native-proxy-populated-worker-execution-20260914/audit.py",
+        "--verify-saved"
+      ],
+      "exit_code": 0,
+      "stderr": "",
+      "stdout": "{\n  \"absent_roots\": [\n    \".artifacts/tmp/native-proxy-image-custody/cases/fsmgen-Populated20260913_equal_publication\",\n    \".artifacts/tmp/process-supervisor-tests/fsmgen-Populated20260913_equal_publication_publisher_a\",\n    \".artifacts/tmp/process-supervisor-tests/fsmgen-Populated20260913_equal_publication_publisher_b\",\n    \".artifacts/tmp/native-proxy-image-custody/cases/fsmgen-Populated20260913_different_publication\",\n    \".artifacts/tmp/process-supervisor-tests/fsmgen-Populated20260913_different_publication_publisher_a\",\n    \".artifacts/tmp/process-supervisor-tests/fsmgen-Populated20260913_different_publication_publisher_b\",\n    \".artifacts/tmp/native-proxy-image-custody/cases/fsmgen-Populated20260913_observation_across_retirement\",\n    \".artifacts/tmp/process-supervisor-tests/fsmgen-Populated20260913_observation_across_retirement_publisher\",\n    \".artifacts/logs/native-proxy-observation-acquisition-20260910/cases/fsmgen-Populated20260913_observation_across_retirement\",\n    \".artifacts/tmp/native-proxy-image-custody/cases/fsmgen-Populated20260913_equal_references_with_observer\",\n    \".artifacts/tmp/process-supervisor-tests/fsmgen-Populated20260913_equal_references_with_observer_publisher_a\",\n    \".artifacts/tmp/process-supervisor-tests/fsmgen-Populated20260913_equal_references_with_observer_publisher_b\",\n    \".artifacts/logs/native-proxy-observation-acquisition-20260910/cases/fsmgen-Populated20260913_equal_references_with_observer\",\n    \".artifacts/tmp/native-proxy-image-custody/cases/fsmgen-Populated20260913_cancelled_runtime_owner\",\n    \".artifacts/tmp/process-supervisor-tests/fsmgen-Populated20260913_cancelled_runtime_owner_publisher\",\n    \".artifacts/tmp/native-proxy-image-custody/cases/fsmgen-Populated20260913_cancelled_observer_owner\",\n    \".artifacts/tmp/process-supervisor-tests/fsmgen-Populated20260913_cancelled_observer_owner_publisher\",\n    \".artifacts/logs/native-proxy-observation-acquisition-20260910/cases/fsmgen-Populated20260913_cancelled_observer_owner\"\n  ],\n  \"actual_selected_worker_execution_reviewed\": true,\n  \"admission_commit\": \"266e8a99f407b0cc1649c5791ee8c5c4edc3b50c\",\n  \"cases\": 6,\n  \"compiler_execution\": false,\n  \"counts\": {\n    \"cancelled_workers\": 2,\n    \"cleanup_nodes\": 42,\n    \"commands\": 120,\n    \"completed_operations\": 45,\n    \"retained_archives\": 3,\n    \"snapshots\": 58,\n    \"workers\": 15\n  },\n  \"final_cross_boundary_join_open\": true,\n  \"group_absence_receipts\": 15,\n  \"journal_bytes\": 1167931,\n  \"journal_rows\": 1043,\n  \"live_collector_execution\": false,\n  \"native_absence_receipts\": 16,\n  \"native_live_startup_qualification_open\": true,\n  \"next_owner\": \"HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.12.4.1.5.3.3\",\n  \"owner\": \"HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.12.4.1.5.3.2\",\n  \"producer_replayed\": false,\n  \"proxy_execution\": false,\n  \"retained_bytes\": 2745395,\n  \"retained_files\": 47,\n  \"synthetic_retirement_and_work_records\": true\n}\n"
+    }
+  },
+  "schema": "fsmgen.cooperative_populated_lifetime_join.v1",
+  "selected_inputs": 318,
+  "shared_recorded_interpreter_selection": {
+    "perl": {
+      "invocation_binary": {
+        "sha256": "53bce3db7e095b596fa42626b55edc63e3388d7afecf45a0b1ecc5211721c812",
+        "size_bytes": 101648
+      },
+      "native_image": {
+        "binary": {
+          "sha256": "53bce3db7e095b596fa42626b55edc63e3388d7afecf45a0b1ecc5211721c812",
+          "size_bytes": 101648
+        },
+        "kind": "same_binary"
+      },
+      "selected_sibling_basename": "perl"
+    },
+    "python": {
+      "invocation_binary": {
+        "sha256": "87d4df53fd91304be5bac391fb204643c36b7df2023c04a0953bcbc7d4fdf634",
+        "size_bytes": 34640
+      },
+      "native_image": {
+        "binary": {
+          "sha256": "e89d60f8ccee9db684801330198797723db2ac378cd53e5cfe523128feb76599",
+          "size_bytes": 33568
+        },
+        "kind": "python_framework"
+      },
+      "selected_sibling_basename": "python3.14"
+    }
+  },
+  "source_revision": "c1d9593991599074f658543b7f2036239794919b",
+  "synthetic_retirement_and_work_records": true
+}

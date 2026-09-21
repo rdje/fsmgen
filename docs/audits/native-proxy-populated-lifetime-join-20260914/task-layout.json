@@ -1,0 +1,26 @@
+{
+  "current_lines": 6370,
+  "next_owner_proposed": "HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.12.4.1.5.4",
+  "owner_done": "HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.12.4.1.5.3.3",
+  "parent_done": "HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.12.4.1.5.3",
+  "previous_acceptance": {
+    "history_bytes": 1887,
+    "history_id": "through_c1d959399159",
+    "history_lines": 5,
+    "history_sections": 1,
+    "history_sha256": "c9e2cdf6a7e56a72312be624da3defc22c7b32a34832ea53819290ac39089183",
+    "live_heading": "Version-Retrievable Historical Views",
+    "record_type": "acceptance_history",
+    "retention_contract": "fsmgen_required_history",
+    "schema_version": 1,
+    "source_bytes": 1138454,
+    "source_lines": 6370,
+    "source_path": "docs/tasks/HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.md",
+    "source_revision": "c1d9593991599074f658543b7f2036239794919b",
+    "source_sha256": "f461fc0d8216b544ccef419580e50426b60a2d1bfb5f48486176a5e4a0075cde",
+    "start_heading": "Acceptance Checklist (actual populated workers .3.2.15.7.3.12.4.1.5.3.2)"
+  },
+  "source_lines": 6370,
+  "source_path": "docs/tasks/HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.md",
+  "source_revision": "c1d9593991599074f658543b7f2036239794919b"
+}

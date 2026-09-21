@@ -1,0 +1,192 @@
+[
+  {
+    "path": "MEMORY.md",
+    "sha256": "4cc5cbf7347dabcf9de85e84427d1445a19d19b274d84fc6b2b479f8f38b21ca",
+    "size_bytes": 690
+  },
+  {
+    "path": "docs/TASK_TREE.md",
+    "sha256": "d974f649598c11652e5919abc794275e651ad9376438e166c12a671219f0fd2d",
+    "size_bytes": 38824
+  },
+  {
+    "path": "KNOWLEDGE_MAP.md",
+    "sha256": "ca8de48679e0124c7c8bd62bc1d875aa588fc7b325d872053676c15d88993aea",
+    "size_bytes": 13325
+  },
+  {
+    "path": "knowledge-map/generated/test-subprocess.md",
+    "sha256": "42c0132d98f71c9456f6091df1de6336e38eb723fe140579f5f75e962985cff8",
+    "size_bytes": 21540
+  },
+  {
+    "path": "docs/book/src/16dk-inactive-proxy-lifetimes.md",
+    "sha256": "d8427233af6310e82e81bfc45779ffed7e281f48f242a0113a3bf1748638cf09",
+    "size_bytes": 32301
+  },
+  {
+    "path": "docs/book/src/16dc-vial-portable-verilator-runtime-measurement.md",
+    "sha256": "a939e62cf6db720d99bee0e818acc597f78a08f2fe00e5e932082fa6b6acf6db",
+    "size_bytes": 273990
+  },
+  {
+    "path": "docs/knowledge/test-subprocess-policy-adapters.md",
+    "sha256": "6180fbdc57097c930fc1a9768a0de0342f77860334a57097d7482c2ee7461c63",
+    "size_bytes": 9102
+  },
+  {
+    "path": "docs/tasks/HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.md",
+    "sha256": "bd2ddcf781abc21525715c8c6aa72cc91ed9e01bf13623c231542d0041b54e62",
+    "size_bytes": 1140027
+  },
+  {
+    "path": "docs/tasks/history/HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE/acceptance-history.jsonl",
+    "sha256": "70dbe1d002060830b38a31042be59d5f4b16a6896d178eb12dd2f42663a24edb",
+    "size_bytes": 848
+  },
+  {
+    "path": "doctrine/live_document_size/surfaces.jsonl",
+    "sha256": "69d11543f4bb0fb857a79bb4db73bfb22e0bfd4c3fe079a689d6028ef6412ecf",
+    "size_bytes": 25992
+  },
+  {
+    "path": "doctrine/claim_verification/inventory.jsonl",
+    "sha256": "a921ed7b92e6a3dfa4f0200cd337768936553cc9cae2366df256f607324e8a4a",
+    "size_bytes": 3015721
+  },
+  {
+    "path": "doctrine/claim_verification/dispositions.jsonl",
+    "sha256": "eaced4b2215cf01bd76361e69488099b19a94fdf0fe45cb97c777204f30e26aa",
+    "size_bytes": 2045074
+  },
+  {
+    "path": "docs/audits/native-proxy-populated-lifetime-join-20260914/actual-final.json",
+    "sha256": "7ea7712bf09be006ff5fa099f0fecc6428ff36e5f454420e78c2d0b59d34ef54",
+    "size_bytes": 12440
+  },
+  {
+    "path": "docs/audits/native-proxy-populated-lifetime-join-20260914/actual-first-source.json",
+    "sha256": "516def92b04c057acedf0e8b7091799d42dc44ed61b7995f403646b18dda2371",
+    "size_bytes": 208
+  },
+  {
+    "path": "docs/audits/native-proxy-populated-lifetime-join-20260914/actual-first.json",
+    "sha256": "d8ce3c9d6e63749afa61f1dc158700b096462ced3f38adc4cece1d3401fad987",
+    "size_bytes": 12097
+  },
+  {
+    "path": "docs/audits/native-proxy-populated-lifetime-join-20260914/audit.py",
+    "sha256": "b82335338d2d2b365b2553e227087c8eaaa9f1797737349b182b90e2d98a63af",
+    "size_bytes": 8754
+  },
+  {
+    "path": "docs/audits/native-proxy-populated-lifetime-join-20260914/audit.py.first.source",
+    "sha256": "b82335338d2d2b365b2553e227087c8eaaa9f1797737349b182b90e2d98a63af",
+    "size_bytes": 8754
+  },
+  {
+    "path": "docs/audits/native-proxy-populated-lifetime-join-20260914/book-metrics.json",
+    "sha256": "2a90b39a312a4c8a23c75e7f6c5a3de2e597532144bf65942241d7724a624d94",
+    "size_bytes": 174
+  },
+  {
+    "path": "docs/audits/native-proxy-populated-lifetime-join-20260914/book-review.json",
+    "sha256": "abe618ab54906d01196e399a865ae77b12e25480e1a72ee84736c35e7f6c0939",
+    "size_bytes": 1097
+  },
+  {
+    "path": "docs/audits/native-proxy-populated-lifetime-join-20260914/claim-legs.json",
+    "sha256": "e62543957de23985f69fca000f509c48c2075d2c3b0e9155aec71b209749b08b",
+    "size_bytes": 1283
+  },
+  {
+    "path": "docs/audits/native-proxy-populated-lifetime-join-20260914/claim-review.json",
+    "sha256": "bafc1529e9ec2c3dc2a607059fbd7de78d86b883480f72818d1ebee04f842284",
+    "size_bytes": 4563
+  },
+  {
+    "path": "docs/audits/native-proxy-populated-lifetime-join-20260914/combined-first.json",
+    "sha256": "9c73bbd3c07bc962bb6ce1807f9421a049166cfe46ac230ee98018f804d3fee0",
+    "size_bytes": 38116
+  },
+  {
+    "path": "docs/audits/native-proxy-populated-lifetime-join-20260914/empty-store-first.json",
+    "sha256": "c80af4b18ec2b45136e6b54b05f523aecdde51e32a140f3ac67ab3826906c4c8",
+    "size_bytes": 546
+  },
+  {
+    "path": "docs/audits/native-proxy-populated-lifetime-join-20260914/input-pins.json",
+    "sha256": "54eafe956d6cb878519ab514e799b65b1e86787b7dd1f89035a00dead0a68fed",
+    "size_bytes": 106621
+  },
+  {
+    "path": "docs/audits/native-proxy-populated-lifetime-join-20260914/inspect_book.py",
+    "sha256": "440d11b1f8b15c5b19d41f4090eff517a6d5756cab5396f7c180cc5d5975a1ae",
+    "size_bytes": 3199
+  },
+  {
+    "path": "docs/audits/native-proxy-populated-lifetime-join-20260914/inventory-first.json",
+    "sha256": "6c65aee608d91638fe6bf8ef2fc9a3f5de58cb5b119da481f0ee8a7ea4c46a85",
+    "size_bytes": 517
+  },
+  {
+    "path": "docs/audits/native-proxy-populated-lifetime-join-20260914/inventory.py",
+    "sha256": "8f5393e21aa74541929b6e6f9ef4f7e1fec40776aa1aacc8192377801674b545",
+    "size_bytes": 3298
+  },
+  {
+    "path": "docs/audits/native-proxy-populated-lifetime-join-20260914/knowledge-route.json",
+    "sha256": "4c34081cd2b8375fb7a7f36004b0f323c24c50f854d85a46f3c5d0352949d268",
+    "size_bytes": 460
+  },
+  {
+    "path": "docs/audits/native-proxy-populated-lifetime-join-20260914/pickaxe.json",
+    "sha256": "b6ace09aabe655110a142346510bbaabbc4883f7766cbb37134534388036758e",
+    "size_bytes": 656
+  },
+  {
+    "path": "docs/audits/native-proxy-populated-lifetime-join-20260914/progress.json",
+    "sha256": "761756afbaa8673bcdd49a2162065109d1d8a67e17cc53bcfe848718846e45ed",
+    "size_bytes": 1233
+  },
+  {
+    "path": "docs/audits/native-proxy-populated-lifetime-join-20260914/qualify_actual.py",
+    "sha256": "ff2d859c013681e671e3619b76775b160aa765e84bbe1389ad55ff45ace11f01",
+    "size_bytes": 11683
+  },
+  {
+    "path": "docs/audits/native-proxy-populated-lifetime-join-20260914/qualify_actual.py.first.source",
+    "sha256": "726b09827f49acccd8cc473f161ed81a3f9a1daa440911fdc8b82992a7397ba0",
+    "size_bytes": 10851
+  },
+  {
+    "path": "docs/audits/native-proxy-populated-lifetime-join-20260914/review.json",
+    "sha256": "5adac8642d99bd192167c4ac26d115b6a7d1b23d2167ebb2a64378a2cb570e8d",
+    "size_bytes": 17897
+  },
+  {
+    "path": "docs/audits/native-proxy-populated-lifetime-join-20260914/review_claims.py",
+    "sha256": "ae16ca00cc63b0e663790e76d7461a9c026f5d04019d9631f1889aa2b0251b3b",
+    "size_bytes": 5032
+  },
+  {
+    "path": "docs/audits/native-proxy-populated-lifetime-join-20260914/review_completion.py",
+    "sha256": "bbca9109dbf1392c97a55ce5fddf01fdeba4fac968ae6ab35c22e021f94ad153",
+    "size_bytes": 6971
+  },
+  {
+    "path": "docs/audits/native-proxy-populated-lifetime-join-20260914/scope.json",
+    "sha256": "cffa006be9d320b502eaeaa78b1ba30099f3e987362c060b6eca32f4f4afc716",
+    "size_bytes": 2323
+  },
+  {
+    "path": "docs/audits/native-proxy-populated-lifetime-join-20260914/source-pins.json",
+    "sha256": "29d7ca406e5e700ee79b019ca3e53065bdf40581113c821033aa7a4116c0318e",
+    "size_bytes": 2266
+  },
+  {
+    "path": "docs/audits/native-proxy-populated-lifetime-join-20260914/task-layout.json",
+    "sha256": "3fdd95315ba486aaa2de1981ced43fdbd81637e5b6d11d8d9e3f62c6b5d3deb5",
+    "size_bytes": 1351
+  }
+]

@@ -1,0 +1,16 @@
+{
+  "command": [
+    "git",
+    "log",
+    "-S",
+    "final_cross_boundary_join_open",
+    "-1",
+    "--format=%H %s",
+    "--",
+    "docs/audits/native-proxy-populated-worker-execution-20260914/audit.py"
+  ],
+  "exit_code": 0,
+  "interpretation": "The original actual-execution review explicitly left its final cross-boundary join open. This leaf closes that selected evidence obligation while retaining later receipt and native/live gates.",
+  "stderr": "",
+  "stdout": "c1d9593991599074f658543b7f2036239794919b HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.12.4.1.5.3.2: retain actual populated-worker execution\n"
+}

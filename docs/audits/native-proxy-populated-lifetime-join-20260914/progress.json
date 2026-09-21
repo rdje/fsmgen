@@ -1,0 +1,21 @@
+{
+  "background_jobs": [],
+  "completed": [
+    "Original empty-store saved review and its ten actual-evidence rejections pass.",
+    "Actual populated case reconstruction passes; twenty-one case and six whole-run mutations reject.",
+    "The coherent changed handoff reaches the original-acquisition comparison; valid alternate native birth rejects.",
+    "Exact input inventory joins 318 committed inputs and seven independently shared original source pins.",
+    "Combined source/interpreter/actual-evidence review passes; shared source and actual output limits agree.",
+    "The book is synchronized and its retained rendering review passes.",
+    "The Knowledge Map is regenerated, checked and routes the new question to the canonical card.",
+    "The staged claim inventory and document containment gates pass."
+  ],
+  "fixture_mutated": false,
+  "handoff_request_date": "2026-09-21",
+  "native_resampled": false,
+  "owner": "HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.12.4.1.5.3.3",
+  "pending": [
+    "Complete the normal staged doctrine/commit workflow, verify clean state and stop for the director-requested /exit; do not activate the next owner."
+  ],
+  "producer_replayed": false
+}
