@@ -2244,9 +2244,9 @@ decomposes the architecture needed to move beyond that bounded foundation.
   Status: `active`
   Goal: `Execute the admitted compiler-only receipt capture once and preserve the first outcome.`
   Acceptance: `After the admission commit, consume its one-use permit, retain the first private states, and stop on disagreement. Never retry a producer or replace a missing field.`
-  Verification: `Child .5.4.3.3.1 records that the current supervisor makes the leader its own group. Child .5.4.3.3.2 aligns the inactive adapter so a finished private state is accepted only when its group identity equals its leader birth. Copied cleanup hashes, caller arrays, missing stages, unfinished capture, unreaped leaders, reused births and a closed launch frontier still reject. The capture itself remains closed under .5.4.3.3.3.`
+  Verification: `Child .5.4.3.3.1 records the supervisor own-group contract. Child .5.4.3.3.2 aligns the inactive adapter with that identity. Child .5.4.3.3.3 records that the public supervisor result still omits pid, birth clock and cleanup identity, so a capture cannot retain the private state the adapter requires. Capture stays closed under .5.4.3.3.4 until that return exists.`
   Commit: `pending`
-  Children: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.12.4.1.5.4.3.3.1, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.12.4.1.5.4.3.3.2, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.12.4.1.5.4.3.3.3`
+  Children: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.12.4.1.5.4.3.3.1, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.12.4.1.5.4.3.3.2, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.12.4.1.5.4.3.3.3, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.12.4.1.5.4.3.3.4`
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.12.4.1.5.4.3.3.1`
   Status: `done`
   Goal: `Record that a real supervisor group cannot satisfy the distinct-group rule.`
@@ -2260,9 +2260,15 @@ decomposes the architecture needed to move beyond that bounded foundation.
   Verification: `perl docs/audits/native-proxy-receipt-adapter-20260922/qualify.t passes 17 assertions. A closed frontier accepts three finished compiler/outer/inner states only when each group identity equals its leader birth and each cleanup hash is the private state member. A group that is not the leader, a copied cleanup hash, a caller-supplied cleanup array, a missing or extra stage, an unfinished capture, an unreaped leader, a reused birth and a closed launch frontier reject. Launch permission remains the inverse of frontier closure. Forbidden fork, system, exec and kill stay zero. No process runs. Actual capture remains .5.4.3.3.3.`
   Commit: `this commit`
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.12.4.1.5.4.3.3.3`
+  Status: `done`
+  Goal: `Record that a public supervisor result cannot retain the private receipt the aligned adapter requires.`
+  Acceptance: `Read the current public finish result and private start state before any launch. If the returned result omits pid, birth clock or the original cleanup identity, do not launch a capture that cannot preserve the first private state. Leave the return-contract correction separately owned.`
+  Verification: `ProcessSupervisor._finish_result returns schema, stage, status, captured bytes, wait classification, timing and a copied cleanup hash. It does not return pid, start_sec, start_usec or cleanup_identity. Private _start_supervision retains pid and the original cleanup hash, and still omits the birth clock. A capture that keeps only the public result cannot satisfy receipts_bound. No process runs.`
+  Commit: `this commit`
+- ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.12.4.1.5.4.3.3.4`
   Status: `proposed`
-  Goal: `Execute one admitted compiler-only capture after the group contract is aligned.`
-  Acceptance: `After the aligned adapter commits, consume one fresh permit, retain the first private states, and stop on disagreement. Never retry a producer or replace a missing field.`
+  Goal: `Return the private receipt identity from the caller-sealed supervisor before capture.`
+  Acceptance: `Add the finished private pid, birth clock, own-group identity and original cleanup identity to the public result, or expose one sealed observation that preserves those fields without copying the cleanup hash. Keep caller sealing and existing cleanup behavior. Do not launch a compiler, probe or tool-resolution process in that slice.`
   Verification: `pending`
   Commit: `pending`
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.12.4.1.5.5`
@@ -6419,6 +6425,12 @@ Completed native-proxy feasibility through runtime-source-controls acceptance: r
 - Acceptance history manifest: `docs/tasks/history/HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE/acceptance-history.jsonl`
 
 The manifest binds the immediately preceding acceptance suffix to its exact Git source. That source preserves the earlier history pointer and versioned manifest chain; current node contracts remain authoritative.
+
+## Acceptance Checklist (public receipt return gap .3.2.15.7.3.12.4.1.5.4.3.3.3)
+
+- [x] **ROOT CAUSE (WHY + WHERE)** — `git log -S 'sub _finish_result' -1 --format='%H %s' -- perl/FSM/Support/ProcessSupervisor.pm` identifies d1235212cd7b15d4867edf9f8f08e3937fae6cc6. The public result copies cleanup flags and omits pid, start_sec, start_usec and cleanup_identity. Private start state retains pid and the original cleanup hash, and still omits the birth clock.
+- [x] **ADDRESSED (verified)** — A capture that keeps only the public result cannot satisfy receipts_bound. Capture stays closed. Returning the private identity remains .5.4.3.3.4. No compiler, probe, worker, proxy or collector runs.
+- [x] **NO REGRESSION** — `knowledge-map: OK` preserves every earlier question and adds the public-result gap. The rendered book states that capture must wait for a private-identity return; claim identity/dispositions, containment and staged doctrines accompany the normal hooks. Execution, actual-wrapper observation, native/live/startup qualification and full CI/push remain open.
 
 ## Acceptance Checklist (own-group contract alignment .3.2.15.7.3.12.4.1.5.4.3.3.2)
 

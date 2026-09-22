@@ -531,6 +531,14 @@ hash, a caller-supplied cleanup array, a missing stage and a closed frontier
 that tries to launch again. No compiler, probe or tool-resolution process has
 run under this contract.
 
+That capture still cannot start. The public supervisor result copies cleanup
+flags and omits the process id, birth clock and original cleanup identity.
+Private start state retains the process id and the original cleanup hash, but
+it does not record the birth clock. A capture that keeps only the public
+result cannot satisfy the aligned review. The caller-sealed supervisor has to
+return that private identity before any compiler, probe or tool-resolution
+process runs.
+
 ```sh
 python3 -B docs/audits/native-proxy-receipt-ownership-inventory-20260922/audit.py --verify-saved
 perl docs/audits/native-proxy-receipt-adapter-20260922/qualify.t
@@ -539,7 +547,7 @@ perl docs/audits/native-proxy-receipt-admission-20260922/qualify.t
 
 | Remaining work | Required result |
 | --- | --- |
-| Real receipt binding | Execute one admitted capture against the aligned own-group contract. |
+| Real receipt binding | Return private receipt identity from the caller-sealed supervisor, then execute one admitted capture. |
 | Inactive adapter composition | Join preparation, native path/reference admission and observation custody before the separate native experiment. |
 | Final protocol join | Check current evidence together and retain native, live/public and startup/benefit gates. |
 

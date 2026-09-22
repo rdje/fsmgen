@@ -136,6 +136,7 @@ answers:
   - "what does the closed compiler-only receipt admission require?"
   - "why does the receipt adapter reject a real supervisor group?"
   - "how does the inactive receipt adapter accept a supervisor own-group identity?"
+  - "why cannot a public supervisor result settle the receipt adapter?"
 date: 2026-09-22
 status: current
 tags: [tests, subprocess, supervision, task-acceptance, darwin, locality]
@@ -145,4 +146,4 @@ evidence: >-
 reverify: >-
   perl docs/audits/native-proxy-receipt-adapter-20260922/qualify.t
 ---
-History: `e8e778ad572e68b08344e574cd462a4c6d72f8d9:docs/knowledge/test-subprocess-policy-adapters.md`. The supervisor makes the child its own group leader. The inactive adapter now accepts that equal identity and rejects a group that names another process. Copied cleanup hashes and a closed launch frontier still fail. No process runs.
+History: `8ecc5800fb27b341f99c995903e17cf21e7a2503:docs/knowledge/test-subprocess-policy-adapters.md`. The inactive adapter accepts the supervisor own-group identity. The public finish result still omits pid, birth clock and cleanup identity, so a capture cannot retain the private state that review requires. No process runs.
