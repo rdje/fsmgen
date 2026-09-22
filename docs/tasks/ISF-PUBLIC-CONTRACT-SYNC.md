@@ -258,8 +258,9 @@ intentionally unchanged.
   semantics, diagnostics, report shape, or explicit deferrals change.
 - Update the relevant `docs/book/src/13*.md` chapter when a user-visible ISF
   behavior, generated artifact, or review workflow changes.
-- Update `docs/book/src/13i-downstream-integration.md` only to keep its include
-  wrapper valid; the actual downstream integration content lives in
+- Update `docs/book/src/13i-downstream-integration.md` only to keep its
+  includes valid. The chapter includes the four contract parts under
+  `docs/isf-spec/`; the landing page remains
   `docs/ISF_DOWNSTREAM_INTEGRATION_SPEC.md`.
 - Update `docs/book/src/13h-lowering-reference.md` when emitted `.fsm` or
   schedule-report examples need to show the new behavior.

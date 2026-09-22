@@ -253,10 +253,10 @@ registries, requires fresh one-file ROOT CAUSE / ADDRESSED / NO REGRESSION
 boxes for matching implementation changes, and leaves actual behavioral proof
 to the cited focused and CI oracles.
 
-`ISF_DOWNSTREAM_INTEGRATION_SPEC.md` is the canonical human handoff contract
-for SPECFORGE-style downstream consumers. The book includes that file directly
-in the ISF downstream integration chapter, so edits to the handoff document and
-the book view cannot drift apart.
+`ISF_DOWNSTREAM_INTEGRATION_SPEC.md` is the canonical human handoff landing
+for every downstream consumer. The book downstream integration chapter includes
+its four contract parts, so edits to those parts and the published chapter
+cannot drift apart.
 
 `BACKEND_LANGUAGE_MDBOOK_BLUEPRINT_SELECTION.md` records the selected
 implementation-blueprint structure for future backend-language variants. The

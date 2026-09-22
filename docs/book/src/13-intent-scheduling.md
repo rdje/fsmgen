@@ -363,9 +363,10 @@ Scheduling book chapter set from [Summary](SUMMARY.md), plus the canonical
 [Reference Map](90-reference-map.md), so downstream consumers can discover the
 same user-facing ISF documentation surface from the manifest.
 
-The self-contained SPECFORGE-style integration handoff is
-[docs/ISF_DOWNSTREAM_INTEGRATION_SPEC.md](../../ISF_DOWNSTREAM_INTEGRATION_SPEC.md)
-and is included later in this book as the downstream integration chapter.
+The downstream integration handoff is
+[docs/ISF_DOWNSTREAM_INTEGRATION_SPEC.md](../../ISF_DOWNSTREAM_INTEGRATION_SPEC.md).
+Its four contract parts are included later in this book as the downstream
+integration chapter.
 
 It must stay synchronized with the live spec, this book, public contract,
 manifest metadata, tests, and implementation behavior.

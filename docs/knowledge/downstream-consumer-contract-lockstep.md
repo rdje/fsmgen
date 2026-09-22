@@ -46,3 +46,9 @@ repaired CI push and separated this independent compatibility decision into
 proposed tree `DOWNSTREAM-SOURCE-PROVENANCE-CONTRACT`; its `.1` leaf must select
 a compatible relative-path migration or narrow explicit exemption before any
 field-semantic implementation change.
+
+The published downstream chapter once included only the handoff landing page.
+Its part links resolved outside the book, so a book reader did not receive the
+contract. `DOWNSTREAM-BOOK-CONTRACT-INCLUDE` includes the canonical parts in
+that chapter. The landing page remains the GitHub index and keeps its
+repository-relative part links.

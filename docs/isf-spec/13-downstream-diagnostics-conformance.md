@@ -756,7 +756,7 @@ For a downstream producer:
 - Emit only the source forms listed in this document.
 - If FSMGen behavior looks wrong, follow the strict, format-agnostic
   reproduction bundle flow in
-  [docs/DOWNSTREAM_ISSUE_REPORTING.md](../DOWNSTREAM_ISSUE_REPORTING.md). Do not
+  `docs/DOWNSTREAM_ISSUE_REPORTING.md`. Do not
   guess whether the root cause is source syntax, lowering, reporting, HDL, or
   public API behavior; provide the exact FSMGen-facing artifacts and command
   transcript.
@@ -801,10 +801,12 @@ For a downstream analyzer:
 
 ## 20. Source Of Truth And Evolution
 
-This file is the canonical human downstream integration document for `.isf`
-and the IAL2-to-IAL1 lowering stack used by `.ppif`. It is intentionally
-duplicated into the mdBook by include, not by a second copy. It must always
-remain synchronized with the live docs, the book, the machine-readable public
+This file is the diagnostics, conformance, discovery, and evolution part of
+the canonical human downstream integration document for `.isf` and the
+IAL2-to-IAL1 lowering stack used by `.ppif`. The landing page is
+`docs/ISF_DOWNSTREAM_INTEGRATION_SPEC.md`. This part is included in the mdBook
+downstream chapter, not copied into a second source. It must always remain
+synchronized with the live docs, the book, the machine-readable public
 contracts, manifest metadata, support-accounting catalog, and shipped
 implementation.
 

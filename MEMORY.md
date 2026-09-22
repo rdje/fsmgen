@@ -7,7 +7,7 @@ Status and evidence: `docs/tasks/`. The system itself: `MEMORY_ARCHITECTURE.md`.
 
 - repository_revision: derive with `git log -1 --format='%H %s'`; never shadow `HEAD` here.
 - active_work_unit: `HOSTED-VIAL-REGRESSION-GATE-RESULT.1`
-- next_action: Diagnose the failed hosted VIAL gate command and align the published unavailable-host contract with that result.
+- next_action: Record the released-log diagnosis that the hosted vial-gate command fails because the ignored calibration-closure publication is absent on a fresh checkout.
 - in_flight_uncommitted: none.
 - in_flight_background: none.
 - blockers: Historical startup/parent qualification and full CI/push remain gated.
