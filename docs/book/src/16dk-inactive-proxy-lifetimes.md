@@ -503,11 +503,11 @@ worker, proxy or collector is rerun.
 
 The inactive adapter now reviews private supervisor states rather than a
 caller-built cleanup array. Compiler, outer and inner roles must appear in
-that order, each with a distinct birth, a separate group identity, a finished
-capture and the original cleanup hash stored by that state. Copying the flags
-into a new hash fails. An open frontier cannot count as settled ownership, and
-a closed frontier rejects another launch. This check launches nothing. It does
-not prove that a live compiler or worker produced the state.
+that order, each with a distinct birth, a finished capture and the original
+cleanup hash stored by that state. Copying the flags into a new hash fails.
+An open frontier cannot count as settled ownership, and a closed frontier
+rejects another launch. This check launches nothing. It does not prove that a
+live compiler or worker produced the state.
 
 Retained compiler journals do not close that proof. Each settled row keeps a
 process id, a finished phase and copied cleanup flags for compilation only.
@@ -519,16 +519,17 @@ they cannot settle the adapter.
 
 The next capture is now admitted and still closed. It must observe the current
 public compiler, probe and tool-resolution stages, in that order, and retain
-each private process id, birth clock, separate group identity and cleanup
-identity. Opening execution, issuing a permit early, or replaying an original,
-proxy or live collector rejects. The admission itself launches nothing.
+each private process id, birth clock, group identity and cleanup identity.
+Opening execution, issuing a permit early, or replaying an original, proxy or
+live collector rejects. The admission itself launches nothing.
 
-That capture must not start against the current adapter. The supervisor makes
-each child its own process-group leader, then checks group absence with that
-same identity. The adapter currently rejects a group identity equal to the
-leader birth. A real finished stage would therefore fail the review even with
-the original cleanup hash. The contract has to accept that own-group identity
-before any compiler, probe or tool-resolution process runs.
+The current supervisor makes each child its own process-group leader, then
+checks group absence with that same identity. The inactive adapter now accepts
+a finished private state only when its group identity equals its leader birth.
+A group that names a different process still fails, as do a copied cleanup
+hash, a caller-supplied cleanup array, a missing stage and a closed frontier
+that tries to launch again. No compiler, probe or tool-resolution process has
+run under this contract.
 
 ```sh
 python3 -B docs/audits/native-proxy-receipt-ownership-inventory-20260922/audit.py --verify-saved
@@ -538,7 +539,7 @@ perl docs/audits/native-proxy-receipt-admission-20260922/qualify.t
 
 | Remaining work | Required result |
 | --- | --- |
-| Real receipt binding | Align the adapter with the supervisor's own-group identity, then execute one admitted capture. |
+| Real receipt binding | Execute one admitted capture against the aligned own-group contract. |
 | Inactive adapter composition | Join preparation, native path/reference admission and observation custody before the separate native experiment. |
 | Final protocol join | Check current evidence together and retain native, live/public and startup/benefit gates. |
 

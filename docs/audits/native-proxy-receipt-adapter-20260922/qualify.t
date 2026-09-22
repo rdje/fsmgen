@@ -28,7 +28,7 @@ sub receipt {
     return {
         role => $role,
         birth => birth($pid),
-        group => birth($pid + 1000),
+        group => birth($pid),
         stage => $stage,
         phase => 'finished',
         leader_reaped => 1,
@@ -75,9 +75,9 @@ reject('unreaped leader', $unreaped, $closed);
 my $same = [map { {%$_} } @good];
 $same->[2]{birth} = {%{$same->[0]{birth}}};
 reject('reused birth', $same, $closed);
-my $aliased = [map { {%$_} } @good];
-$aliased->[0]{group} = {%{$aliased->[0]{birth}}};
-reject('group aliases leader birth', $aliased, $closed);
+my $foreign = [map { {%$_} } @good];
+$foreign->[0]{group} = birth($foreign->[0]{birth}{pid} + 1000);
+reject('group is not the leader', $foreign, $closed);
 my $array = [map { {%$_} } @good];
 $array->[0]{cleanup_array} = [{leader_started => 1, leader_reaped => 1, group_gone => 1}];
 reject('supplied cleanup array grants no authority', $array, $closed);

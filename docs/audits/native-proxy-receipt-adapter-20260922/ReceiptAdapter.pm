@@ -21,7 +21,11 @@ sub receipts_bound {
             && $state->{role} eq $ROLES[$index];
         return 0 unless _identity($state->{birth});
         return 0 unless _identity($state->{group});
-        return 0 if _same_identity($state->{birth}, $state->{group});
+        # The current supervisor calls setpgid(0, 0) and admits the child
+        # only when getpgrp(0) equals its pid. Group absence is later
+        # checked with kill(0, -$pid). A real finished stage therefore
+        # carries one identity for both leader and group.
+        return 0 unless _same_identity($state->{birth}, $state->{group});
         my $key = join ':', map { $state->{birth}{$_} } qw(pid start_sec start_usec);
         return 0 if $seen{$key}++;
         return 0 unless defined($state->{stage}) && !ref($state->{stage})

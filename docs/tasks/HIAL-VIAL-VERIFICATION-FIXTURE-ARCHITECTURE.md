@@ -2244,7 +2244,7 @@ decomposes the architecture needed to move beyond that bounded foundation.
   Status: `active`
   Goal: `Execute the admitted compiler-only receipt capture once and preserve the first outcome.`
   Acceptance: `After the admission commit, consume its one-use permit, retain the first private states, and stop on disagreement. Never retry a producer or replace a missing field.`
-  Verification: `Child .5.4.3.3.1 records that the current supervisor makes the leader its own group, so the adapter's distinct-group rule cannot be satisfied by a real capture. Child .5.4.3.3.2 aligns that contract before any launch. The capture itself remains closed.`
+  Verification: `Child .5.4.3.3.1 records that the current supervisor makes the leader its own group. Child .5.4.3.3.2 aligns the inactive adapter so a finished private state is accepted only when its group identity equals its leader birth. Copied cleanup hashes, caller arrays, missing stages, unfinished capture, unreaped leaders, reused births and a closed launch frontier still reject. The capture itself remains closed under .5.4.3.3.3.`
   Commit: `pending`
   Children: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.12.4.1.5.4.3.3.1, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.12.4.1.5.4.3.3.2, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.12.4.1.5.4.3.3.3`
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.12.4.1.5.4.3.3.1`
@@ -2254,11 +2254,11 @@ decomposes the architecture needed to move beyond that bounded foundation.
   Verification: `ProcessSupervisor._child_group_admission_error requires setpgid(0, 0) and membership expected equal to the child pid. _group_alive then signals that same pid as a group. The committed adapter rejects a group identity equal to the leader birth. A real three-stage capture would therefore fail receipts_bound. No process runs.`
   Commit: `this commit`
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.12.4.1.5.4.3.3.2`
-  Status: `proposed`
+  Status: `done`
   Goal: `Align the inactive adapter with the supervisor's own-group identity before capture.`
   Acceptance: `Accept a finished private state whose group identity equals its leader birth, because that is the current supervisor contract. Keep copied cleanup hashes, caller arrays, missing stages and a closed launch frontier rejected. Do not launch a process.`
-  Verification: `pending`
-  Commit: `pending`
+  Verification: `perl docs/audits/native-proxy-receipt-adapter-20260922/qualify.t passes 17 assertions. A closed frontier accepts three finished compiler/outer/inner states only when each group identity equals its leader birth and each cleanup hash is the private state member. A group that is not the leader, a copied cleanup hash, a caller-supplied cleanup array, a missing or extra stage, an unfinished capture, an unreaped leader, a reused birth and a closed launch frontier reject. Launch permission remains the inverse of frontier closure. Forbidden fork, system, exec and kill stay zero. No process runs. Actual capture remains .5.4.3.3.3.`
+  Commit: `this commit`
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.12.4.1.5.4.3.3.3`
   Status: `proposed`
   Goal: `Execute one admitted compiler-only capture after the group contract is aligned.`
@@ -6419,6 +6419,12 @@ Completed native-proxy feasibility through runtime-source-controls acceptance: r
 - Acceptance history manifest: `docs/tasks/history/HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE/acceptance-history.jsonl`
 
 The manifest binds the immediately preceding acceptance suffix to its exact Git source. That source preserves the earlier history pointer and versioned manifest chain; current node contracts remain authoritative.
+
+## Acceptance Checklist (own-group contract alignment .3.2.15.7.3.12.4.1.5.4.3.3.2)
+
+- [x] **ROOT CAUSE (WHY + WHERE)** — `git log -S 'setpgid(0, 0)' -1 --format='%H %s' -- perl/FSM/Support/ProcessSupervisor.pm` identifies d1235212cd7b15d4867edf9f8f08e3937fae6cc6. The child must become its own group leader, and group absence is later checked with that same pid. `git log -S '_same_identity' -1 --format='%H %s' -- docs/audits/native-proxy-receipt-adapter-20260922/ReceiptAdapter.pm` identifies b74122f9f967dd7cdb4b29f17aed4a2ba4be6b3b, which rejected a group equal to the leader birth.
+- [x] **ADDRESSED (verified)** — perl docs/audits/native-proxy-receipt-adapter-20260922/qualify.t passes 17 assertions. A closed frontier accepts ordered compiler/outer/inner states only when each group identity equals its leader birth and each cleanup hash is the private state member. A group that is not the leader, a copied cleanup hash, a caller-supplied array, a missing stage, unfinished capture, an unreaped leader, a reused birth and a closed launch frontier reject. Forbidden fork, system, exec and kill stay zero. No process runs. Capture remains .5.4.3.3.3.
+- [x] **NO REGRESSION** — `knowledge-map: OK` preserves every earlier question and adds the own-group acceptance route. The rendered book states that the adapter now requires the supervisor's own-group identity; claim identity/dispositions, containment and staged doctrines accompany the normal hooks. Execution, actual-wrapper observation, native/live/startup qualification and full CI/push remain open.
 
 ## Acceptance Checklist (own-group contract gap .3.2.15.7.3.12.4.1.5.4.3.3.1)
 

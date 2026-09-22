@@ -135,6 +135,7 @@ answers:
   - "why cannot retained compiler journals settle the receipt adapter?"
   - "what does the closed compiler-only receipt admission require?"
   - "why does the receipt adapter reject a real supervisor group?"
+  - "how does the inactive receipt adapter accept a supervisor own-group identity?"
 date: 2026-09-22
 status: current
 tags: [tests, subprocess, supervision, task-acceptance, darwin, locality]
@@ -142,6 +143,6 @@ evidence: >-
   docs/audits/native-proxy-receipt-adapter-20260922/ReceiptAdapter.pm;
   docs/audits/native-proxy-receipt-ownership-inventory-20260922/review.json
 reverify: >-
-  perl docs/audits/native-proxy-receipt-admission-20260922/qualify.t
+  perl docs/audits/native-proxy-receipt-adapter-20260922/qualify.t
 ---
-History: `413a76daac6182ce08ca13c42c53a422ac35e859:docs/knowledge/test-subprocess-policy-adapters.md`. The supervisor makes the child its own group leader. The adapter rejects that equal identity, so a real capture cannot settle until the contract is aligned. No process runs.
+History: `e8e778ad572e68b08344e574cd462a4c6d72f8d9:docs/knowledge/test-subprocess-policy-adapters.md`. The supervisor makes the child its own group leader. The inactive adapter now accepts that equal identity and rejects a group that names another process. Copied cleanup hashes and a closed launch frontier still fail. No process runs.
