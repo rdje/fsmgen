@@ -2241,9 +2241,28 @@ decomposes the architecture needed to move beyond that bounded foundation.
   Verification: `perl docs/audits/native-proxy-receipt-admission-20260922/qualify.t passes 28 assertions. The admitted plan names compile_proxy, probe and tool_resolution in that order and requires pid, birth clock, separate group identity and cleanup identity. Open execution, an issued permit, a missing or substituted stage, a dropped private field and any original, proxy or live-collector replay reject. execution_allowed remains false. Forbidden fork, system, exec and kill stay zero. Actual capture remains .5.4.3.3.`
   Commit: `this commit`
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.12.4.1.5.4.3.3`
-  Status: `proposed`
+  Status: `active`
   Goal: `Execute the admitted compiler-only receipt capture once and preserve the first outcome.`
   Acceptance: `After the admission commit, consume its one-use permit, retain the first private states, and stop on disagreement. Never retry a producer or replace a missing field.`
+  Verification: `Child .5.4.3.3.1 records that the current supervisor makes the leader its own group, so the adapter's distinct-group rule cannot be satisfied by a real capture. Child .5.4.3.3.2 aligns that contract before any launch. The capture itself remains closed.`
+  Commit: `pending`
+  Children: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.12.4.1.5.4.3.3.1, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.12.4.1.5.4.3.3.2, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.12.4.1.5.4.3.3.3`
+- ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.12.4.1.5.4.3.3.1`
+  Status: `done`
+  Goal: `Record that a real supervisor group cannot satisfy the distinct-group rule.`
+  Acceptance: `Read the current supervisor group admission and the committed adapter before any launch. If the child becomes its own group leader, do not launch a capture that the adapter must reject. Leave the contract correction separately owned.`
+  Verification: `ProcessSupervisor._child_group_admission_error requires setpgid(0, 0) and membership expected equal to the child pid. _group_alive then signals that same pid as a group. The committed adapter rejects a group identity equal to the leader birth. A real three-stage capture would therefore fail receipts_bound. No process runs.`
+  Commit: `this commit`
+- ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.12.4.1.5.4.3.3.2`
+  Status: `proposed`
+  Goal: `Align the inactive adapter with the supervisor's own-group identity before capture.`
+  Acceptance: `Accept a finished private state whose group identity equals its leader birth, because that is the current supervisor contract. Keep copied cleanup hashes, caller arrays, missing stages and a closed launch frontier rejected. Do not launch a process.`
+  Verification: `pending`
+  Commit: `pending`
+- ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.12.4.1.5.4.3.3.3`
+  Status: `proposed`
+  Goal: `Execute one admitted compiler-only capture after the group contract is aligned.`
+  Acceptance: `After the aligned adapter commits, consume one fresh permit, retain the first private states, and stop on disagreement. Never retry a producer or replace a missing field.`
   Verification: `pending`
   Commit: `pending`
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.12.4.1.5.5`
@@ -6400,6 +6419,12 @@ Completed native-proxy feasibility through runtime-source-controls acceptance: r
 - Acceptance history manifest: `docs/tasks/history/HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE/acceptance-history.jsonl`
 
 The manifest binds the immediately preceding acceptance suffix to its exact Git source. That source preserves the earlier history pointer and versioned manifest chain; current node contracts remain authoritative.
+
+## Acceptance Checklist (own-group contract gap .3.2.15.7.3.12.4.1.5.4.3.3.1)
+
+- [x] **ROOT CAUSE (WHY + WHERE)** — `git log -S 'setpgid(0, 0)' -1 --format='%H %s' -- perl/FSM/Support/ProcessSupervisor.pm` identifies d1235212cd7b15d4867edf9f8f08e3937fae6cc6. The child must become its own group leader, and group absence is later checked with that same pid. `git log -S '_same_identity' -1 --format='%H %s' -- docs/audits/native-proxy-receipt-adapter-20260922/ReceiptAdapter.pm` identifies b74122f9f967dd7cdb4b29f17aed4a2ba4be6b3b, which rejects a group equal to the leader birth.
+- [x] **ADDRESSED (verified)** — The current supervisor and adapter sources disagree before any launch. A real finished stage would carry one process identity for both leader and group, so receipts_bound would reject it. Capture stays closed. Contract alignment remains .5.4.3.3.2. No compiler, probe, worker, proxy or collector runs.
+- [x] **NO REGRESSION** — `knowledge-map: OK` preserves every earlier question and adds the own-group rejection route. The rendered book states that capture must wait for the aligned contract; claim identity/dispositions, containment and staged doctrines accompany the normal hooks. Execution, actual-wrapper observation, native/live/startup qualification and full CI/push remain open.
 
 ## Acceptance Checklist (compiler-only receipt admission .3.2.15.7.3.12.4.1.5.4.3.2)
 

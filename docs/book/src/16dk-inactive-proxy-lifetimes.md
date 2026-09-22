@@ -523,6 +523,13 @@ each private process id, birth clock, separate group identity and cleanup
 identity. Opening execution, issuing a permit early, or replaying an original,
 proxy or live collector rejects. The admission itself launches nothing.
 
+That capture must not start against the current adapter. The supervisor makes
+each child its own process-group leader, then checks group absence with that
+same identity. The adapter currently rejects a group identity equal to the
+leader birth. A real finished stage would therefore fail the review even with
+the original cleanup hash. The contract has to accept that own-group identity
+before any compiler, probe or tool-resolution process runs.
+
 ```sh
 python3 -B docs/audits/native-proxy-receipt-ownership-inventory-20260922/audit.py --verify-saved
 perl docs/audits/native-proxy-receipt-adapter-20260922/qualify.t
@@ -531,7 +538,7 @@ perl docs/audits/native-proxy-receipt-admission-20260922/qualify.t
 
 | Remaining work | Required result |
 | --- | --- |
-| Real receipt binding | Execute the admitted compiler-only capture once and preserve its first private states. |
+| Real receipt binding | Align the adapter with the supervisor's own-group identity, then execute one admitted capture. |
 | Inactive adapter composition | Join preparation, native path/reference admission and observation custody before the separate native experiment. |
 | Final protocol join | Check current evidence together and retain native, live/public and startup/benefit gates. |
 

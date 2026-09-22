@@ -134,6 +134,7 @@ answers:
   - "how does the inactive receipt adapter reject a copied cleanup hash?"
   - "why cannot retained compiler journals settle the receipt adapter?"
   - "what does the closed compiler-only receipt admission require?"
+  - "why does the receipt adapter reject a real supervisor group?"
 date: 2026-09-22
 status: current
 tags: [tests, subprocess, supervision, task-acceptance, darwin, locality]
@@ -143,4 +144,4 @@ evidence: >-
 reverify: >-
   perl docs/audits/native-proxy-receipt-admission-20260922/qualify.t
 ---
-History: `465611e73869ea6d8684a84b06bfdb3671404aeb:docs/knowledge/test-subprocess-policy-adapters.md`. The closed admission requires compile_proxy, probe and tool_resolution, plus private birth, group and cleanup identity. It still refuses execution.
+History: `413a76daac6182ce08ca13c42c53a422ac35e859:docs/knowledge/test-subprocess-policy-adapters.md`. The supervisor makes the child its own group leader. The adapter rejects that equal identity, so a real capture cannot settle until the contract is aligned. No process runs.
