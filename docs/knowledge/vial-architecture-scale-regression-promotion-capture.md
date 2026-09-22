@@ -52,7 +52,8 @@ answers:
   - "where is the machine-readable VIAL architecture-scale regression capability?"
   - "where is the human VIAL architecture-scale regression operator guide?"
   - "how is VIAL architecture-scale regression public truth closed independently?"
-date: 2026-09-04
+  - "why did the first hosted VIAL regression gate fail its real command?"
+date: 2026-09-22
 status: current
 tags: [hial, vial, scalability, regression, measurement, publication]
 evidence: >-

@@ -6426,6 +6426,12 @@ Completed native-proxy feasibility through runtime-source-controls acceptance: r
 
 The manifest binds the immediately preceding acceptance suffix to its exact Git source. That source preserves the earlier history pointer and versioned manifest chain; current node contracts remain authoritative.
 
+## Acceptance Checklist (hosted gate contract contradiction HOSTED-VIAL-REGRESSION-GATE-RESULT.1)
+
+- [x] **ROOT CAUSE (WHY + WHERE)** — `git log -S 'unavailable aggregate' -1 --format='%H %s' -- docs/book/src/16df-vial-architecture-scale-cap-closeout.md` identifies bc6796d01803fb662cfadd506fabc5bc79427a88. That placement requires an unavailable hosted aggregate. The first hosted run of `./bin/ci-regression vial-gate --no-book` failed its real command, and the independent verifier was skipped.
+- [x] **ADDRESSED (verified)** — The contradiction is owned by HOSTED-VIAL-REGRESSION-GATE-RESULT.1. Local exact-pinned success stays distinct from the failed hosted step. No support or capacity claim is inferred from either result. Diagnosis continues when the failed-step log is released.
+- [x] **NO REGRESSION** — `knowledge-map: OK` preserves the earlier gate questions and adds the hosted failure route. The rendered book states the contradiction outside the registered placement claim; claim identity/dispositions, containment and staged doctrines accompany the normal hooks. The receipt-return leaf remains separately owned.
+
 ## Acceptance Checklist (public receipt return gap .3.2.15.7.3.12.4.1.5.4.3.3.3)
 
 - [x] **ROOT CAUSE (WHY + WHERE)** — `git log -S 'sub _finish_result' -1 --format='%H %s' -- perl/FSM/Support/ProcessSupervisor.pm` identifies d1235212cd7b15d4867edf9f8f08e3937fae6cc6. The public result copies cleanup flags and omits pid, start_sec, start_usec and cleanup_identity. Private start state retains pid and the original cleanup hash, and still omits the birth clock.

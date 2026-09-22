@@ -1913,6 +1913,15 @@ guard, and staging mutations all reject with no partial acceptance output.
 - Durability: Retain the regression workflow and README, hosted-result verifier, t1183, t1792, Decision 0098, owning task, Knowledge Map card, mdBook chapters, bounded claim record, doctrine gates, and work-unit commit. `.17.5.4.4` independently owns real gate execution and residue closeout.
 <!-- CLAIM-VERIFICATION:END vial-regression-promotion-hosted-ci-placement-v1 -->
 
+The first hosted execution of that placement did not complete cleanly.
+Push `54ac1c22d` ran the public `vial-gate` command and that step failed.
+The independent verifier was skipped. The published hosted contract still
+requires an unavailable aggregate, while the local exact-pinned observation
+passed every selected profile. Those two statements are not yet one hosted
+result. `HOSTED-VIAL-REGRESSION-GATE-RESULT` owns the diagnosis and the
+contract alignment. A failed or unavailable hosted run remains neither
+support nor capacity.
+
 ### Exact-pinned production gate observation
 
 From clean execution revision

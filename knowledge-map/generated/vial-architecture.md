@@ -1,7 +1,7 @@
 # Knowledge Map: `vial-architecture`
 
 > **AUTO-GENERATED — DO NOT EDIT.** Return to the [Knowledge Map](../../KNOWLEDGE_MAP.md).
-> **3** facts · **139** uniquely owned question entries.
+> **3** facts · **140** uniquely owned question entries.
 
 ## Questions → facts
 
@@ -128,6 +128,7 @@
 - q="why did VIAL regression gate ordinals 8-10 report correctness changed?" · facts=[vial-architecture-scale-regression-promotion-capture](../../docs/knowledge/vial-architecture-scale-regression-promotion-capture.md)
 - q="why did execution checking matrix resume stop before profile twenty?" · facts=[vial-architecture-scale-proof](../../docs/knowledge/vial-architecture-scale-proof.md)
 - q="why did portable Verilator runtime reachability expose a phase-order defect?" · facts=[vial-architecture-scale-proof](../../docs/knowledge/vial-architecture-scale-proof.md)
+- q="why did the first hosted VIAL regression gate fail its real command?" · facts=[vial-architecture-scale-regression-promotion-capture](../../docs/knowledge/vial-architecture-scale-regression-promotion-capture.md)
 - q="why did the portable SystemVerilog scale oracle move to revision 2?" · facts=[vial-architecture-scale-proof](../../docs/knowledge/vial-architecture-scale-proof.md)
 - q="why does VIAL complete-corpus validation isolate each whole profile operation?" · facts=[vial-architecture-scale-regression-promotion-capture](../../docs/knowledge/vial-architecture-scale-regression-promotion-capture.md)
 - q="why does VIAL complete-corpus validation separate capture and execution revisions?" · facts=[vial-architecture-scale-regression-promotion-capture](../../docs/knowledge/vial-architecture-scale-regression-promotion-capture.md)
@@ -165,5 +166,5 @@ _VIAL architecture scale is proved by orthogonal families with stage-local oracl
 
 _VIAL regression promotion captures eleven current profiles through isolated v2 publication_
 
-- **date:** 2026-09-04 · **status:** current
+- **date:** 2026-09-22 · **status:** current
 - **source and verification:** [`docs/knowledge/vial-architecture-scale-regression-promotion-capture.md`](../../docs/knowledge/vial-architecture-scale-regression-promotion-capture.md)
