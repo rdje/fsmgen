@@ -1,0 +1,27 @@
+{
+  "book": {
+    "checked_passages": [
+      "The receipt-ownership inventory is now explicit.",
+      "The public supervisor result records cleanup flags",
+      "No launch frontier is closed by this inventory",
+      "docs/audits/native-proxy-receipt-ownership-inventory-20260922/audit.py --verify-saved"
+    ],
+    "exact_output_absent": true,
+    "rendered_bytes": 23707347,
+    "rendered_files": 99,
+    "same_volume_direct_objects": true
+  },
+  "claim_legs": {
+    "durability": "Selected source pins, saved inventory, task, book, Knowledge Map and Git retain the boundary.",
+    "falsification": "Ten altered inventories reject promoted identity, cleanup authority, synthetic receipts, a closed frontier, an adapter and execution.",
+    "rederivation": "audit.py --verify-saved reconstructs 15 current sources and two retained compiler receipts."
+  },
+  "knowledge_map": "knowledge-map: OK",
+  "owner": "HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.12.4.1.5.4.1",
+  "process_or_compiler_executed": false,
+  "rejected_controls": 10,
+  "schema": "fsmgen.receipt_ownership_inventory_completion.v1",
+  "selected_bytes": 803079,
+  "selected_inputs": 15,
+  "source_revision": "44419ba85268106b63c12838ffc2d67c330014a3"
+}

@@ -490,9 +490,24 @@ compiler profiles use `0755`. The inert worker cases keep their established mode
 the integration task must qualify an exact compatibility exception before using
 the actual wrapper. No actual-wrapper observation attempt is claimed here.
 
+The receipt-ownership inventory is now explicit. The public supervisor result
+records cleanup flags, wait classification and timing, but not the process or
+group identity used to settle the child. That identity remains in private
+supervisor state. The compiler census observer reads that private state and
+retains two direct-fork receipts; their public results still omit the identity.
+Retirement of the proxy workspace inspects only the caller-supplied cleanup
+flags. The populated worker constructs a fixed compiler/outer/inner tuple, so
+those records remain synthetic and distinct from its actual worker absence
+receipts. No launch frontier is closed by this inventory, and no compiler,
+worker, proxy or collector is rerun.
+
+```sh
+python3 -B docs/audits/native-proxy-receipt-ownership-inventory-20260922/audit.py --verify-saved
+```
+
 | Remaining work | Required result |
 | --- | --- |
-| Real receipt binding | Prove complete compiler/outer/inner ownership and prevent launches after settlement. |
+| Real receipt binding | Bind compiler/outer/inner receipts to private birth and group identity, then reject post-settlement launches. |
 | Inactive adapter composition | Join preparation, native path/reference admission and observation custody before the separate native experiment. |
 | Final protocol join | Check current evidence together and retain native, live/public and startup/benefit gates. |
 

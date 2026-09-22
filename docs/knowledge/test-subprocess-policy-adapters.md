@@ -130,13 +130,14 @@ answers:
   - "how are fixed populated-worker commands qualified?"
   - "why does actual-wrapper observation still need a mode repair?"
   - "how are empty-store and populated-worker results joined?"
-date: 2026-09-14
+  - "where does real compiler receipt ownership stop?"
+date: 2026-09-22
 status: current
 tags: [tests, subprocess, supervision, task-acceptance, darwin, locality]
 evidence: >-
-  docs/audits/native-proxy-populated-lifetime-join-20260914/review.json;
-  docs/audits/native-proxy-populated-worker-protocol-20260913/observation-wrapper-gap.json
+  docs/audits/native-proxy-receipt-ownership-inventory-20260922/review.json;
+  docs/audits/native-proxy-populated-lifetime-join-20260914/review.json
 reverify: >-
-  scripts/run_with_ram_guard.sh -- python3 -B docs/audits/native-proxy-populated-lifetime-join-20260914/audit.py --verify-saved
+  python3 -B docs/audits/native-proxy-receipt-ownership-inventory-20260922/audit.py --verify-saved
 ---
-History: `c1d9593991599074f658543b7f2036239794919b:docs/knowledge/test-subprocess-policy-adapters.md`. Selected cooperative worker lifetimes are joined; altered actual custody, cancellation and cleanup reject. Python covers empty stores only. Real receipts, actual-wrapper observation and native/live qualification remain open.
+History: `44419ba85268106b63c12838ffc2d67c330014a3:docs/knowledge/test-subprocess-policy-adapters.md`. Public supervisor results omit process identity; private state and two retained compiler journals keep it. Caller-supplied cleanup arrays and synthetic retirement tuples grant no ownership. The launch frontier remains open.

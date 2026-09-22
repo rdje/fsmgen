@@ -1,0 +1,20 @@
+{
+  "constraints": [
+    "Read committed sources and retained outcomes only.",
+    "Do not launch a compiler, worker, proxy, original fixture, collector or native sampler.",
+    "Do not treat a supplied cleanup array, synthetic retirement tuple or dated absence receipt as current ownership.",
+    "Keep the inactive receipt adapter, actual admission and execution separately owned."
+  ],
+  "durability": "Pin the selected current sources, dated retained outcomes and first inventory result before any adapter implementation.",
+  "falsification": "Reject omitted producers, hidden public process identity, promoted cleanup arrays, synthetic receipts and closed launch frontiers.",
+  "missing_legs": [
+    "Inactive owner-bound receipt adapter with native birth and group identity.",
+    "Declared stage completeness and a closed post-settlement launch frontier.",
+    "Separately admitted actual bounded compiler or worker execution."
+  ],
+  "next_owner": "HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.12.4.1.5.4.2",
+  "owner": "HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.12.4.1.5.4.1",
+  "parent_owner": "HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.12.4.1.5.4",
+  "re_derivation": "Extract the current public result keys, private supervisor identity, producer assembly and retained receipt scopes without executing them.",
+  "source_revision": "44419ba85268106b63c12838ffc2d67c330014a3"
+}

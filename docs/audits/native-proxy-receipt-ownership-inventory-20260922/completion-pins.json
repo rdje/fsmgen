@@ -1,0 +1,27 @@
+[
+  {
+    "path": "docs/audits/native-proxy-receipt-ownership-inventory-20260922/audit.py",
+    "sha256": "464aa13885d21111282e3c510bda3d7f6742d46c7f95acef3db48f5985edb72e",
+    "size_bytes": 4676
+  },
+  {
+    "path": "docs/audits/native-proxy-receipt-ownership-inventory-20260922/inventory.py",
+    "sha256": "9af2deb89f93c68ade852f89d26e52d36fcbf006aa4b4d86045282e0c1d9fa7b",
+    "size_bytes": 7151
+  },
+  {
+    "path": "docs/audits/native-proxy-receipt-ownership-inventory-20260922/review.json",
+    "sha256": "99dac7be68544648f6e06252818c34108764e329eddab2bc95879fabe21ab094",
+    "size_bytes": 3426
+  },
+  {
+    "path": "docs/audits/native-proxy-receipt-ownership-inventory-20260922/scope.json",
+    "sha256": "94612367f70b7c9796e8ec4f120c8b7bb5568227bad92a692cdd1fcb63ab9481",
+    "size_bytes": 1504
+  },
+  {
+    "path": "docs/audits/native-proxy-receipt-ownership-inventory-20260922/completion.json",
+    "size_bytes": 1260,
+    "sha256": "bf46628c8bafe775a556d52b550952428f44b33a68284582d5b7d20a9aef4fff"
+  }
+]

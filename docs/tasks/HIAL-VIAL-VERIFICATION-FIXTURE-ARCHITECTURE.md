@@ -6,7 +6,7 @@
 - Status: `active`
 - Roadmap lane: `Verification code generation / intent architecture`
 - Created: `2026-07-29`
-- Last updated: `2026-09-13`
+- Last updated: `2026-09-22`
 - Owner: repo-local workflow
 - Segment manifest: `docs/tasks/segments/HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE/manifest.jsonl`
 
@@ -2203,9 +2203,28 @@ decomposes the architecture needed to move beyond that bounded foundation.
   Verification: `docs/audits/native-proxy-populated-lifetime-join-20260914/audit.py --verify-saved joins 318 exact committed source/result inputs and seven independently shared original input pins, including the same coordination/custody APIs. Separate saved reviewers preserve the empty-store 12-case/20-leader/four-probe scope and the six-case/15-worker populated scope. Both recorded interpreter byte selections agree; original process/clock domains stay separate. Twenty-one actual populated case controls and six whole-run controls reject, including valid alternate birth and changed handoff with coherent file/command digests; ten original empty-store controls remain distinct. Actual populated events peak at 24436 bytes, worker output at 41189 bytes and event count at 15; the 1043-row/1167931-byte journal fits the admitted bounds. All 32 distinct owned fixture roots remain absent. First source/results and claim legs are retained. No producer, fixture or native sampler is replayed; real receipts, actual-wrapper observation and native/live/startup qualification remain.`
   Commit: `this commit`
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.12.4.1.5.4`
-  Status: `proposed`
+  Status: `active`
   Goal: `Bind complete real compiler/outer/inner receipts and prevent late launches before retirement.`
   Acceptance: `Identify the complete producer/transport boundary from current runtime sources and authentic retained outcomes. Design and qualify an inactive owner-bound receipt adapter with native birth/group identity, declared stage completeness, terminal capture state and a closed launch frontier; reject missing, substituted, stale or post-settlement stages. A supplied cleanup array alone grants no authority. Separate any required actual bounded worker/compiler-only admission and execution from source/data work; no original/native-proxy/live replay.`
+  Verification: `Child .5.4.1 inventories the current producer/transport boundary. The public supervisor result omits process identity, while private state and two retained compiler journals keep it. Cleanup predicates and populated retirement still accept caller-supplied arrays; the launch frontier remains open. The inactive adapter and any actual execution stay separately owned.`
+  Commit: `pending`
+  Children: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.12.4.1.5.4.1, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.12.4.1.5.4.2, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.12.4.1.5.4.3`
+- ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.12.4.1.5.4.1`
+  Status: `done`
+  Goal: `Inventory real receipt ownership and the closed launch frontier before designing an adapter.`
+  Acceptance: `Read current supervisor, builder, parity, cleanup, retirement and compiler-observer sources plus retained compiler and populated-worker outcomes. Name every producer that can supply compiler, outer and inner ownership, and record whether public results carry native birth or group identity. Prove that a supplied cleanup array and the populated synthetic retirement tuple grant no authority. Leave the launch frontier open until an inactive adapter exists; do not launch a compiler, worker, proxy, original fixture or collector.`
+  Verification: `docs/audits/native-proxy-receipt-ownership-inventory-20260922/audit.py --verify-saved authenticates 15 current sources totaling 803,079 bytes at 44419ba85268106b63c12838ffc2d67c330014a3. Public _finish_result returns 31 keys and no pid; private _start_supervision records pid. CleanupReceipts and RuntimeRetirement still require a caller-supplied compiler/outer/stages array. The compiler census observer reads private supervisor state and retains two direct-fork receipts, PIDs 60339 and 60342, whose public results omit pid. T1669 retirement inspects cleanup flags only. Populated Protocol._cleanup emits a fixed synthetic tuple; its 15 worker absence receipts remain distinct. Ten altered inventories reject promoted identity, cleanup authority, synthetic receipts, a closed frontier, an implemented adapter and execution. No process or compiler runs. The inactive adapter is .5.4.2; actual admission and execution remain .5.4.3.`
+  Commit: `this commit`
+- ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.12.4.1.5.4.2`
+  Status: `proposed`
+  Goal: `Qualify an inactive owner-bound receipt adapter and a closed launch frontier.`
+  Acceptance: `Use the inventory's public-result gap: bind compiler, outer and inner receipts to private supervisor birth, group and terminal capture state rather than a caller-supplied cleanup array. Require the declared stage set and reject missing, substituted, stale or post-settlement stages. Keep the adapter inactive; separate any actual compiler or worker execution under .5.4.3.`
+  Verification: `pending`
+  Commit: `pending`
+- ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.12.4.1.5.4.3`
+  Status: `proposed`
+  Goal: `Separately admit and execute only the bounded actual receipt evidence the inactive adapter still lacks.`
+  Acceptance: `After the inactive adapter commits, decide whether retained direct-fork compiler receipts and populated absence records already discharge its actual leg. If not, admit one bounded compiler-only or worker-only execution with a fresh permit, preserve the first outcome and never replay an original, proxy or live collector.`
   Verification: `pending`
   Commit: `pending`
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.12.4.1.5.5`
@@ -6362,6 +6381,12 @@ Completed native-proxy feasibility through runtime-source-controls acceptance: r
 - Acceptance history manifest: `docs/tasks/history/HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE/acceptance-history.jsonl`
 
 The manifest binds the immediately preceding acceptance suffix to its exact Git source. That source preserves the earlier history pointer and versioned manifest chain; current node contracts remain authoritative.
+
+## Acceptance Checklist (receipt ownership inventory .3.2.15.7.3.12.4.1.5.4.1)
+
+- [x] **ROOT CAUSE (WHY + WHERE)** — `git log -S 'sub _finish_result' -1 --format='%H %s' -- perl/FSM/Support/ProcessSupervisor.pm` identifies d1235212cd7b15d4867edf9f8f08e3937fae6cc6. The public result returns cleanup flags and timing while private `_start_supervision` retains `pid`. `CleanupReceipts` and `RuntimeRetirement` still accept a caller-supplied compiler/outer/stages array. The compiler census observer separately reads that private state; T1669 retirement and populated `Protocol._cleanup` do not.
+- [x] **ADDRESSED (verified)** — docs/audits/native-proxy-receipt-ownership-inventory-20260922/audit.py --verify-saved reconstructs 15 pinned sources and 803,079 bytes at 44419ba85268106b63c12838ffc2d67c330014a3. It retains two direct-fork compiler receipts, PIDs 60339 and 60342, whose public results omit pid, and keeps 15 populated absence receipts distinct from the synthetic retirement tuple. Ten altered inventories reject promoted public identity, hidden private identity, cleanup authority, synthetic receipts, a closed frontier, an implemented adapter and execution. No compiler, worker, proxy, original fixture or collector runs.
+- [x] **NO REGRESSION** — `knowledge-map: OK` preserves every earlier question and adds the receipt-ownership route. The rendered book states the public/private identity boundary and leaves late-launch prevention open; claim identity/dispositions, containment and staged doctrines accompany the normal hooks. The inactive adapter, actual execution, actual-wrapper observation, native/live/startup qualification and full CI/push remain open.
 
 ## Acceptance Checklist (populated lifetime join .3.2.15.7.3.12.4.1.5.3.3)
 

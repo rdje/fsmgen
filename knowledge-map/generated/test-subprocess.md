@@ -1,7 +1,7 @@
 # Knowledge Map: `test-subprocess`
 
 > **AUTO-GENERATED — DO NOT EDIT.** Return to the [Knowledge Map](../../KNOWLEDGE_MAP.md).
-> **1** facts · **128** uniquely owned question entries.
+> **1** facts · **129** uniquely owned question entries.
 
 ## Questions → facts
 
@@ -102,6 +102,7 @@
 - q="where does T1545 preserve empty-output checker failure diagnostics?" · facts=[test-subprocess-policy-adapters](../../docs/knowledge/test-subprocess-policy-adapters.md)
 - q="where does T1545 retain actual checker PID and startup observations?" · facts=[test-subprocess-policy-adapters](../../docs/knowledge/test-subprocess-policy-adapters.md)
 - q="where does T1669 retain failed legacy main entry diagnostics?" · facts=[test-subprocess-policy-adapters](../../docs/knowledge/test-subprocess-policy-adapters.md)
+- q="where does real compiler receipt ownership stop?" · facts=[test-subprocess-policy-adapters](../../docs/knowledge/test-subprocess-policy-adapters.md)
 - q="which call delayed the native library load?" · facts=[test-subprocess-policy-adapters](../../docs/knowledge/test-subprocess-policy-adapters.md)
 - q="which cleanup receipts must settle before proxy retirement?" · facts=[test-subprocess-policy-adapters](../../docs/knowledge/test-subprocess-policy-adapters.md)
 - q="which fixture bands wrongly ran live collectors?" · facts=[test-subprocess-policy-adapters](../../docs/knowledge/test-subprocess-policy-adapters.md)
@@ -140,5 +141,5 @@
 
 _Test subprocesses share one mechanism behind sealed policy adapters_
 
-- **date:** 2026-09-14 · **status:** current
+- **date:** 2026-09-22 · **status:** current
 - **source and verification:** [`docs/knowledge/test-subprocess-policy-adapters.md`](../../docs/knowledge/test-subprocess-policy-adapters.md)

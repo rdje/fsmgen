@@ -1,0 +1,99 @@
+{
+  "adapter_implemented": false,
+  "cleanup_predicate_authenticates_owner": false,
+  "cleanup_predicate_requires_caller_supplied_array": true,
+  "compiler_observer_reads_private_supervisor_state": true,
+  "compiler_receipt_scope": "original direct fork and wait state; not loaded-image or general receipt authentication",
+  "cooperative_join_still_marks_receipts_synthetic": true,
+  "current_builder_returns_public_compilation_only": false,
+  "launch_frontier_closed": false,
+  "missing_legs": [
+    "Inactive owner-bound receipt adapter with native birth and group identity.",
+    "Declared stage completeness and a closed post-settlement launch frontier.",
+    "Separately admitted actual bounded compiler or worker execution."
+  ],
+  "next_owner": "HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.12.4.1.5.4.2",
+  "owner": "HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.12.4.1.5.4.1",
+  "parent_owner": "HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.12.4.1.5.4",
+  "parity_stages_are_public_results": true,
+  "populated_worker_evidence": {
+    "compiler_execution": false,
+    "group_absence_receipts": 15,
+    "native_absence_receipts": 16,
+    "synthetic_retirement_and_work_records": true,
+    "workers": 15
+  },
+  "populated_worker_retirement_tuple_is_synthetic": false,
+  "private_supervisor_state_records_pid": true,
+  "process_or_compiler_executed": false,
+  "public_result_carries_process_identity": false,
+  "public_result_keys": [
+    "schema",
+    "schema_version",
+    "stage",
+    "ok",
+    "status",
+    "diagnostic",
+    "stdout",
+    "stderr",
+    "stdout_bytes",
+    "stderr_bytes",
+    "exit_code",
+    "signal",
+    "timed_out",
+    "output_limited",
+    "exec_failed",
+    "exec_error",
+    "timeout_seconds",
+    "capture_limit_bytes",
+    "started_monotonic_ns",
+    "exec_handoff_monotonic_ns",
+    "first_output_monotonic_ns",
+    "finished_monotonic_ns",
+    "spawn_to_exec_ns",
+    "execution_ns",
+    "exec_to_first_output_ns",
+    "first_output_to_exit_ns",
+    "cleanup"
+  ],
+  "retained_compiler_receipts": [
+    {
+      "cleanup_flags": {
+        "containment": "rust_proxy_compiler_group",
+        "group_gone": 1,
+        "kill_sent": 0,
+        "leader_reaped": 1,
+        "leader_started": 1,
+        "surviving_descendants": 0,
+        "term_sent": 0
+      },
+      "mode": "nonzero",
+      "ownership_scope": "original direct fork and wait state; not loaded-image or general receipt authentication",
+      "private_pid": 60339,
+      "public_result_has_pid": false
+    },
+    {
+      "cleanup_flags": {
+        "containment": "rust_proxy_compiler_group",
+        "group_gone": 1,
+        "kill_sent": 0,
+        "leader_reaped": 1,
+        "leader_started": 1,
+        "surviving_descendants": 0,
+        "term_sent": 0
+      },
+      "mode": "decoy",
+      "ownership_scope": "original direct fork and wait state; not loaded-image or general receipt authentication",
+      "private_pid": 60342,
+      "public_result_has_pid": false
+    }
+  ],
+  "retirement_accepts_caller_cleanup_array": true,
+  "retirement_transport_uses_cleanup_flags_only": true,
+  "schema": "fsmgen.receipt_ownership_inventory.v1",
+  "source_revision": "44419ba85268106b63c12838ffc2d67c330014a3",
+  "supervisor_callers": [
+    "FSM::Support::HDLExternalValidation",
+    "FSM::Test::ProcessSupervisor"
+  ]
+}
