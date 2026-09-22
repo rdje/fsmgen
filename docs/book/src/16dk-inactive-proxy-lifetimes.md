@@ -517,14 +517,21 @@ general receipt. The populated worker still emits a fixed synthetic
 compiler/outer/inner tuple. Those records remain evidence of earlier runs;
 they cannot settle the adapter.
 
+The next capture is now admitted and still closed. It must observe the current
+public compiler, probe and tool-resolution stages, in that order, and retain
+each private process id, birth clock, separate group identity and cleanup
+identity. Opening execution, issuing a permit early, or replaying an original,
+proxy or live collector rejects. The admission itself launches nothing.
+
 ```sh
 python3 -B docs/audits/native-proxy-receipt-ownership-inventory-20260922/audit.py --verify-saved
 perl docs/audits/native-proxy-receipt-adapter-20260922/qualify.t
+perl docs/audits/native-proxy-receipt-admission-20260922/qualify.t
 ```
 
 | Remaining work | Required result |
 | --- | --- |
-| Real receipt binding | Admit one fresh compiler-only capture that records private birth, group and cleanup identity; retained journals cannot settle the adapter. |
+| Real receipt binding | Execute the admitted compiler-only capture once and preserve its first private states. |
 | Inactive adapter composition | Join preparation, native path/reference admission and observation custody before the separate native experiment. |
 | Final protocol join | Check current evidence together and retain native, live/public and startup/benefit gates. |
 

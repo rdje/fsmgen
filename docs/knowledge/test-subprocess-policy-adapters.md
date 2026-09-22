@@ -133,6 +133,7 @@ answers:
   - "where does real compiler receipt ownership stop?"
   - "how does the inactive receipt adapter reject a copied cleanup hash?"
   - "why cannot retained compiler journals settle the receipt adapter?"
+  - "what does the closed compiler-only receipt admission require?"
 date: 2026-09-22
 status: current
 tags: [tests, subprocess, supervision, task-acceptance, darwin, locality]
@@ -140,6 +141,6 @@ evidence: >-
   docs/audits/native-proxy-receipt-adapter-20260922/ReceiptAdapter.pm;
   docs/audits/native-proxy-receipt-ownership-inventory-20260922/review.json
 reverify: >-
-  perl docs/audits/native-proxy-receipt-adapter-20260922/qualify.t
+  perl docs/audits/native-proxy-receipt-admission-20260922/qualify.t
 ---
-History: `b74122f9f967dd7cdb4b29f17aed4a2ba4be6b3b:docs/knowledge/test-subprocess-policy-adapters.md`. Retained compiler journals keep a pid and copied cleanup flags, but omit birth clock, group identity and private cleanup identity. They cannot settle the adapter. No new process runs.
+History: `465611e73869ea6d8684a84b06bfdb3671404aeb:docs/knowledge/test-subprocess-policy-adapters.md`. The closed admission requires compile_proxy, probe and tool_resolution, plus private birth, group and cleanup identity. It still refuses execution.

@@ -2225,7 +2225,7 @@ decomposes the architecture needed to move beyond that bounded foundation.
   Status: `active`
   Goal: `Separately admit and execute only the bounded actual receipt evidence the inactive adapter still lacks.`
   Acceptance: `After the inactive adapter commits, decide whether retained direct-fork compiler receipts and populated absence records already discharge its actual leg. If not, admit one bounded compiler-only or worker-only execution with a fresh permit, preserve the first outcome and never replay an original, proxy or live collector.`
-  Verification: `Child .5.4.3.1 shows retained compiler journals and populated records cannot bind the adapter: no birth tuple or private cleanup identity survives. Child .5.4.3.2 admits one bounded compiler-only execution. Child .5.4.3.3 preserves that first outcome. No original, proxy or live collector is replayed.`
+  Verification: `Child .5.4.3.1 shows retained compiler journals and populated records cannot bind the adapter: no birth tuple or private cleanup identity survives. Child .5.4.3.2 admits one bounded compiler-only capture and keeps execution closed. Child .5.4.3.3 preserves that first outcome. No original, proxy or live collector is replayed.`
   Commit: `pending`
   Children: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.12.4.1.5.4.3.1, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.12.4.1.5.4.3.2, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.12.4.1.5.4.3.3`
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.12.4.1.5.4.3.1`
@@ -2235,11 +2235,11 @@ decomposes the architecture needed to move beyond that bounded foundation.
   Verification: `Retained compiler_settled rows keep pid, phase finished, leader_reaped and copied cleanup flags for compile_proxy only. They omit start_sec, start_usec, group identity and cleanup_identity, and their ownership_scope excludes general receipt authentication. Populated Protocol._cleanup returns a fixed synthetic compiler/outer/stages tuple. No retained record can satisfy receipts_bound. No process runs.`
   Commit: `this commit`
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.12.4.1.5.4.3.2`
-  Status: `proposed`
+  Status: `done`
   Goal: `Admit one bounded compiler-only receipt capture before execution.`
   Acceptance: `Write a one-use admission for a fresh compiler-only capture that records private birth, group and cleanup identity for compiler, outer and inner stages. Keep execution closed until that admission commits. Do not replay an original, proxy or live collector.`
-  Verification: `pending`
-  Commit: `pending`
+  Verification: `perl docs/audits/native-proxy-receipt-admission-20260922/qualify.t passes 28 assertions. The admitted plan names compile_proxy, probe and tool_resolution in that order and requires pid, birth clock, separate group identity and cleanup identity. Open execution, an issued permit, a missing or substituted stage, a dropped private field and any original, proxy or live-collector replay reject. execution_allowed remains false. Forbidden fork, system, exec and kill stay zero. Actual capture remains .5.4.3.3.`
+  Commit: `this commit`
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.12.4.1.5.4.3.3`
   Status: `proposed`
   Goal: `Execute the admitted compiler-only receipt capture once and preserve the first outcome.`
@@ -6400,6 +6400,12 @@ Completed native-proxy feasibility through runtime-source-controls acceptance: r
 - Acceptance history manifest: `docs/tasks/history/HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE/acceptance-history.jsonl`
 
 The manifest binds the immediately preceding acceptance suffix to its exact Git source. That source preserves the earlier history pointer and versioned manifest chain; current node contracts remain authoritative.
+
+## Acceptance Checklist (compiler-only receipt admission .3.2.15.7.3.12.4.1.5.4.3.2)
+
+- [x] **ROOT CAUSE (WHY + WHERE)** — `git log -S 'stage => '"'"'compile_proxy'"'"'' -1 --format='%H %s' -- t/lib/FSM/Test/RustProxyFixture.pm` identifies e0d74bb051465ba641227acc11975e25e5d879a7. The probe and tool-resolution stages are the current public outer and inner requests. Retained journals omit the private birth, group and cleanup identity those stages must keep.
+- [x] **ADDRESSED (verified)** — perl docs/audits/native-proxy-receipt-admission-20260922/qualify.t passes 28 assertions. Admission requires compile_proxy, probe and tool_resolution, plus pid, birth clock, separate group identity and cleanup identity. Open execution, an issued permit, a missing or substituted stage, a dropped private field and original, proxy or live-collector replay reject. execution_allowed stays false. Forbidden fork, system, exec and kill stay zero. Actual capture remains .5.4.3.3.
+- [x] **NO REGRESSION** — `knowledge-map: OK` preserves every earlier question and adds the closed-admission route. The rendered book states that the capture is admitted and still closed; claim identity/dispositions, containment and staged doctrines accompany the normal hooks. Execution, actual-wrapper observation, native/live/startup qualification and full CI/push remain open.
 
 ## Acceptance Checklist (retained receipt gap .3.2.15.7.3.12.4.1.5.4.3.1)
 
