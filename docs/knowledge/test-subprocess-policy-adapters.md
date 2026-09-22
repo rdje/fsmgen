@@ -131,13 +131,14 @@ answers:
   - "why does actual-wrapper observation still need a mode repair?"
   - "how are empty-store and populated-worker results joined?"
   - "where does real compiler receipt ownership stop?"
+  - "how does the inactive receipt adapter reject a copied cleanup hash?"
 date: 2026-09-22
 status: current
 tags: [tests, subprocess, supervision, task-acceptance, darwin, locality]
 evidence: >-
-  docs/audits/native-proxy-receipt-ownership-inventory-20260922/review.json;
-  docs/audits/native-proxy-populated-lifetime-join-20260914/review.json
+  docs/audits/native-proxy-receipt-adapter-20260922/ReceiptAdapter.pm;
+  docs/audits/native-proxy-receipt-ownership-inventory-20260922/review.json
 reverify: >-
-  python3 -B docs/audits/native-proxy-receipt-ownership-inventory-20260922/audit.py --verify-saved
+  perl docs/audits/native-proxy-receipt-adapter-20260922/qualify.t
 ---
-History: `44419ba85268106b63c12838ffc2d67c330014a3:docs/knowledge/test-subprocess-policy-adapters.md`. Public supervisor results omit process identity; private state and two retained compiler journals keep it. Caller-supplied cleanup arrays and synthetic retirement tuples grant no ownership. The launch frontier remains open.
+History: `b3b80081a759fdae652235cb6b91b18479dfef92:docs/knowledge/test-subprocess-policy-adapters.md`. The inactive adapter requires the private cleanup hash, distinct births and a closed frontier. A copied cleanup hash, caller array or later launch rejects. No live process is authenticated.

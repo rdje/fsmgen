@@ -501,13 +501,22 @@ those records remain synthetic and distinct from its actual worker absence
 receipts. No launch frontier is closed by this inventory, and no compiler,
 worker, proxy or collector is rerun.
 
+The inactive adapter now reviews private supervisor states rather than a
+caller-built cleanup array. Compiler, outer and inner roles must appear in
+that order, each with a distinct birth, a separate group identity, a finished
+capture and the original cleanup hash stored by that state. Copying the flags
+into a new hash fails. An open frontier cannot count as settled ownership, and
+a closed frontier rejects another launch. This check launches nothing. It does
+not prove that a live compiler or worker produced the state.
+
 ```sh
 python3 -B docs/audits/native-proxy-receipt-ownership-inventory-20260922/audit.py --verify-saved
+perl docs/audits/native-proxy-receipt-adapter-20260922/qualify.t
 ```
 
 | Remaining work | Required result |
 | --- | --- |
-| Real receipt binding | Bind compiler/outer/inner receipts to private birth and group identity, then reject post-settlement launches. |
+| Real receipt binding | Join the inactive adapter to an actual compiler or worker admission; retained journals alone do not close that leg. |
 | Inactive adapter composition | Join preparation, native path/reference admission and observation custody before the separate native experiment. |
 | Final protocol join | Check current evidence together and retain native, live/public and startup/benefit gates. |
 

@@ -2206,7 +2206,7 @@ decomposes the architecture needed to move beyond that bounded foundation.
   Status: `active`
   Goal: `Bind complete real compiler/outer/inner receipts and prevent late launches before retirement.`
   Acceptance: `Identify the complete producer/transport boundary from current runtime sources and authentic retained outcomes. Design and qualify an inactive owner-bound receipt adapter with native birth/group identity, declared stage completeness, terminal capture state and a closed launch frontier; reject missing, substituted, stale or post-settlement stages. A supplied cleanup array alone grants no authority. Separate any required actual bounded worker/compiler-only admission and execution from source/data work; no original/native-proxy/live replay.`
-  Verification: `Child .5.4.1 inventories the current producer/transport boundary. The public supervisor result omits process identity, while private state and two retained compiler journals keep it. Cleanup predicates and populated retirement still accept caller-supplied arrays; the launch frontier remains open. The inactive adapter and any actual execution stay separately owned.`
+  Verification: `Child .5.4.1 inventories the current producer/transport boundary. Child .5.4.2 qualifies an inactive adapter over private supervisor state: copied cleanup hashes and caller arrays grant no authority, and a closed frontier rejects later launches. No process runs. Actual compiler or worker admission remains .5.4.3.`
   Commit: `pending`
   Children: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.12.4.1.5.4.1, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.12.4.1.5.4.2, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.12.4.1.5.4.3`
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.12.4.1.5.4.1`
@@ -2216,11 +2216,11 @@ decomposes the architecture needed to move beyond that bounded foundation.
   Verification: `docs/audits/native-proxy-receipt-ownership-inventory-20260922/audit.py --verify-saved authenticates 15 current sources totaling 803,079 bytes at 44419ba85268106b63c12838ffc2d67c330014a3. Public _finish_result returns 31 keys and no pid; private _start_supervision records pid. CleanupReceipts and RuntimeRetirement still require a caller-supplied compiler/outer/stages array. The compiler census observer reads private supervisor state and retains two direct-fork receipts, PIDs 60339 and 60342, whose public results omit pid. T1669 retirement inspects cleanup flags only. Populated Protocol._cleanup emits a fixed synthetic tuple; its 15 worker absence receipts remain distinct. Ten altered inventories reject promoted identity, cleanup authority, synthetic receipts, a closed frontier, an implemented adapter and execution. No process or compiler runs. The inactive adapter is .5.4.2; actual admission and execution remain .5.4.3.`
   Commit: `this commit`
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.12.4.1.5.4.2`
-  Status: `proposed`
+  Status: `done`
   Goal: `Qualify an inactive owner-bound receipt adapter and a closed launch frontier.`
   Acceptance: `Use the inventory's public-result gap: bind compiler, outer and inner receipts to private supervisor birth, group and terminal capture state rather than a caller-supplied cleanup array. Require the declared stage set and reject missing, substituted, stale or post-settlement stages. Keep the adapter inactive; separate any actual compiler or worker execution under .5.4.3.`
-  Verification: `pending`
-  Commit: `pending`
+  Verification: `perl docs/audits/native-proxy-receipt-adapter-20260922/qualify.t passes 17 assertions. A closed frontier accepts three distinct finished compiler/outer/inner states only when each cleanup hash is the private state member. An open frontier, missing or extra stage, substituted role, unfinished capture, copied cleanup hash, unreaped leader, reused birth, aliased group, supplied cleanup array and non-boolean frontier reject. Launch permission is the inverse of frontier closure. Forbidden fork, system, exec and kill counters stay zero. This does not authenticate a live process or discharge .5.4.3.`
+  Commit: `this commit`
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.12.4.1.5.4.3`
   Status: `proposed`
   Goal: `Separately admit and execute only the bounded actual receipt evidence the inactive adapter still lacks.`
@@ -6381,6 +6381,12 @@ Completed native-proxy feasibility through runtime-source-controls acceptance: r
 - Acceptance history manifest: `docs/tasks/history/HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE/acceptance-history.jsonl`
 
 The manifest binds the immediately preceding acceptance suffix to its exact Git source. That source preserves the earlier history pointer and versioned manifest chain; current node contracts remain authoritative.
+
+## Acceptance Checklist (inactive receipt adapter .3.2.15.7.3.12.4.1.5.4.2)
+
+- [x] **ROOT CAUSE (WHY + WHERE)** — `git log -S 'sub cleanup_receipts_settled' -1 --format='%H %s' -- docs/audits/native-proxy-cleanup-receipts-20260910/CleanupReceipts.pm` identifies a2d0fa26b976ecdc2faf5dbe1cdbf5ca69bf5424. That review requires a caller-supplied compiler, outer and stages array and does not authenticate the private cleanup member. The committed inventory at b3b80081a759fdae652235cb6b91b18479dfef92 shows public `_finish_result` omits pid while private supervisor state retains it.
+- [x] **ADDRESSED (verified)** — perl docs/audits/native-proxy-receipt-adapter-20260922/qualify.t passes 17 assertions. Closed-frontier acceptance requires ordered compiler/outer/inner states, distinct births, separate groups, finished capture, reaped leaders and the original cleanup hash. Open frontier, missing or extra stage, substituted role, unfinished capture, copied cleanup, unreaped leader, reused birth, aliased group, supplied cleanup array and non-boolean frontier reject. Launch permission is the inverse of frontier closure. Forbidden fork, system, exec and kill stay at zero. No live process is authenticated.
+- [x] **NO REGRESSION** — `knowledge-map: OK` preserves every earlier question and adds the copied-cleanup rejection route. The rendered book states the inactive adapter and leaves actual compiler or worker admission open; claim identity/dispositions, containment and staged doctrines accompany the normal hooks. Actual execution .5.4.3, actual-wrapper observation, native/live/startup qualification and full CI/push remain open.
 
 ## Acceptance Checklist (receipt ownership inventory .3.2.15.7.3.12.4.1.5.4.1)
 
