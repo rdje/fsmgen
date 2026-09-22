@@ -132,6 +132,7 @@ answers:
   - "how are empty-store and populated-worker results joined?"
   - "where does real compiler receipt ownership stop?"
   - "how does the inactive receipt adapter reject a copied cleanup hash?"
+  - "why cannot retained compiler journals settle the receipt adapter?"
 date: 2026-09-22
 status: current
 tags: [tests, subprocess, supervision, task-acceptance, darwin, locality]
@@ -141,4 +142,4 @@ evidence: >-
 reverify: >-
   perl docs/audits/native-proxy-receipt-adapter-20260922/qualify.t
 ---
-History: `b3b80081a759fdae652235cb6b91b18479dfef92:docs/knowledge/test-subprocess-policy-adapters.md`. The inactive adapter requires the private cleanup hash, distinct births and a closed frontier. A copied cleanup hash, caller array or later launch rejects. No live process is authenticated.
+History: `b74122f9f967dd7cdb4b29f17aed4a2ba4be6b3b:docs/knowledge/test-subprocess-policy-adapters.md`. Retained compiler journals keep a pid and copied cleanup flags, but omit birth clock, group identity and private cleanup identity. They cannot settle the adapter. No new process runs.

@@ -509,6 +509,14 @@ into a new hash fails. An open frontier cannot count as settled ownership, and
 a closed frontier rejects another launch. This check launches nothing. It does
 not prove that a live compiler or worker produced the state.
 
+Retained compiler journals do not close that proof. Each settled row keeps a
+process id, a finished phase and copied cleanup flags for compilation only.
+It omits the birth clock, the group identity and the private cleanup identity
+the adapter requires. Its recorded scope is the original direct fork, not a
+general receipt. The populated worker still emits a fixed synthetic
+compiler/outer/inner tuple. Those records remain evidence of earlier runs;
+they cannot settle the adapter.
+
 ```sh
 python3 -B docs/audits/native-proxy-receipt-ownership-inventory-20260922/audit.py --verify-saved
 perl docs/audits/native-proxy-receipt-adapter-20260922/qualify.t
@@ -516,7 +524,7 @@ perl docs/audits/native-proxy-receipt-adapter-20260922/qualify.t
 
 | Remaining work | Required result |
 | --- | --- |
-| Real receipt binding | Join the inactive adapter to an actual compiler or worker admission; retained journals alone do not close that leg. |
+| Real receipt binding | Admit one fresh compiler-only capture that records private birth, group and cleanup identity; retained journals cannot settle the adapter. |
 | Inactive adapter composition | Join preparation, native path/reference admission and observation custody before the separate native experiment. |
 | Final protocol join | Check current evidence together and retain native, live/public and startup/benefit gates. |
 

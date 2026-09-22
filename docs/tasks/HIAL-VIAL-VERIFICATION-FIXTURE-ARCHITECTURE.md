@@ -2222,9 +2222,28 @@ decomposes the architecture needed to move beyond that bounded foundation.
   Verification: `perl docs/audits/native-proxy-receipt-adapter-20260922/qualify.t passes 17 assertions. A closed frontier accepts three distinct finished compiler/outer/inner states only when each cleanup hash is the private state member. An open frontier, missing or extra stage, substituted role, unfinished capture, copied cleanup hash, unreaped leader, reused birth, aliased group, supplied cleanup array and non-boolean frontier reject. Launch permission is the inverse of frontier closure. Forbidden fork, system, exec and kill counters stay zero. This does not authenticate a live process or discharge .5.4.3.`
   Commit: `this commit`
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.12.4.1.5.4.3`
-  Status: `proposed`
+  Status: `active`
   Goal: `Separately admit and execute only the bounded actual receipt evidence the inactive adapter still lacks.`
   Acceptance: `After the inactive adapter commits, decide whether retained direct-fork compiler receipts and populated absence records already discharge its actual leg. If not, admit one bounded compiler-only or worker-only execution with a fresh permit, preserve the first outcome and never replay an original, proxy or live collector.`
+  Verification: `Child .5.4.3.1 shows retained compiler journals and populated records cannot bind the adapter: no birth tuple or private cleanup identity survives. Child .5.4.3.2 admits one bounded compiler-only execution. Child .5.4.3.3 preserves that first outcome. No original, proxy or live collector is replayed.`
+  Commit: `pending`
+  Children: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.12.4.1.5.4.3.1, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.12.4.1.5.4.3.2, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.12.4.1.5.4.3.3`
+- ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.12.4.1.5.4.3.1`
+  Status: `done`
+  Goal: `Decide whether retained receipts already discharge the inactive adapter.`
+  Acceptance: `Compare retained compiler census journals and populated worker records with the committed adapter contract. A discharge requires three ordered private states, distinct birth tuples, separate group identities, finished capture and the original cleanup hash. If any required field is absent, leave actual execution separately owned and do not reconstruct it.`
+  Verification: `Retained compiler_settled rows keep pid, phase finished, leader_reaped and copied cleanup flags for compile_proxy only. They omit start_sec, start_usec, group identity and cleanup_identity, and their ownership_scope excludes general receipt authentication. Populated Protocol._cleanup returns a fixed synthetic compiler/outer/stages tuple. No retained record can satisfy receipts_bound. No process runs.`
+  Commit: `this commit`
+- ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.12.4.1.5.4.3.2`
+  Status: `proposed`
+  Goal: `Admit one bounded compiler-only receipt capture before execution.`
+  Acceptance: `Write a one-use admission for a fresh compiler-only capture that records private birth, group and cleanup identity for compiler, outer and inner stages. Keep execution closed until that admission commits. Do not replay an original, proxy or live collector.`
+  Verification: `pending`
+  Commit: `pending`
+- ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.12.4.1.5.4.3.3`
+  Status: `proposed`
+  Goal: `Execute the admitted compiler-only receipt capture once and preserve the first outcome.`
+  Acceptance: `After the admission commit, consume its one-use permit, retain the first private states, and stop on disagreement. Never retry a producer or replace a missing field.`
   Verification: `pending`
   Commit: `pending`
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.12.4.1.5.5`
@@ -6381,6 +6400,12 @@ Completed native-proxy feasibility through runtime-source-controls acceptance: r
 - Acceptance history manifest: `docs/tasks/history/HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE/acceptance-history.jsonl`
 
 The manifest binds the immediately preceding acceptance suffix to its exact Git source. That source preserves the earlier history pointer and versioned manifest chain; current node contracts remain authoritative.
+
+## Acceptance Checklist (retained receipt gap .3.2.15.7.3.12.4.1.5.4.3.1)
+
+- [x] **ROOT CAUSE (WHY + WHERE)** — `git log -S 'sub state_receipt' -1 --format='%H %s' -- docs/audits/native-proxy-compiler-census-policy-admission-20260913/CompilerProfile.pm` identifies 25a4a19646e1786d854d826ae11958ca4f495ae6. It records pid, phase, leader_reaped and the public result, and labels ownership as the original direct fork. It does not record start_sec, start_usec, group identity or cleanup_identity. Populated Protocol._cleanup returns a fixed synthetic tuple.
+- [x] **ADDRESSED (verified)** — The committed adapter requires ordered compiler/outer/inner private states, distinct birth tuples, separate groups and the original cleanup hash. Retained compiler_settled rows supply compile_proxy only, with copied cleanup flags and no birth clock. No retained record can satisfy receipts_bound. No compiler, worker, proxy or collector runs. Fresh compiler-only admission remains .5.4.3.2.
+- [x] **NO REGRESSION** — `knowledge-map: OK` preserves every earlier question and adds the retained-journal gap. The rendered book states that earlier journals cannot settle the adapter; claim identity/dispositions, containment and staged doctrines accompany the normal hooks. Execution, actual-wrapper observation, native/live/startup qualification and full CI/push remain open.
 
 ## Acceptance Checklist (inactive receipt adapter .3.2.15.7.3.12.4.1.5.4.2)
 
