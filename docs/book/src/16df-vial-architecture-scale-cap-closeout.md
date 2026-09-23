@@ -1954,8 +1954,8 @@ families, and the terminal build job failed because those families failed:
   carry.
 - `t/350-support-contract-builder-audit.t` now admits the regression-gate
   status because that contract already carries guidance. The semantic-family
-  contract still has a status and no guidance field, so the audit still
-  rejects that module.
+  envelope stays outside the guidance assertion because its own nonclaims
+  already exclude support classification.
 
 Those families are not one defect, and none of them is support or capacity.
 The parse messages that appear before passing language-contract tests are

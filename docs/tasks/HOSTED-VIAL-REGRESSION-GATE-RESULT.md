@@ -32,7 +32,7 @@ Make the hosted VIAL regression gate agree with one published result.
   Acceptance: `Diagnose the failed hosted command, then align the workflow and published contract with the result that command produces.`
   Verification: `pending`
   Commit: `pending`
-  Children: `HOSTED-VIAL-REGRESSION-GATE-RESULT.1, HOSTED-VIAL-REGRESSION-GATE-RESULT.2, HOSTED-VIAL-REGRESSION-GATE-RESULT.3, HOSTED-VIAL-REGRESSION-GATE-RESULT.4, HOSTED-VIAL-REGRESSION-GATE-RESULT.5`
+  Children: `HOSTED-VIAL-REGRESSION-GATE-RESULT.1, HOSTED-VIAL-REGRESSION-GATE-RESULT.2, HOSTED-VIAL-REGRESSION-GATE-RESULT.3, HOSTED-VIAL-REGRESSION-GATE-RESULT.4, HOSTED-VIAL-REGRESSION-GATE-RESULT.5, HOSTED-VIAL-REGRESSION-GATE-RESULT.6`
 - ID: `HOSTED-VIAL-REGRESSION-GATE-RESULT.1`
   Status: `done`
   Goal: `Diagnose the first hosted gate failure and own the contract contradiction.`
@@ -58,9 +58,15 @@ Make the hosted VIAL regression gate agree with one published result.
   Verification: `prove -Iperl t/350-support-contract-builder-audit.t reports Files=1, Tests=57 and fails only subtest 54, FSM::Support::VIALSemanticFamilyContract. The regression contract is no longer in the failure. That remaining contract is HOSTED-VIAL-REGRESSION-GATE-RESULT.5.`
   Commit: `this commit`
 - ID: `HOSTED-VIAL-REGRESSION-GATE-RESULT.5`
-  Status: `active`
+  Status: `done`
   Goal: `Give the semantic-family support contract the guidance field its audit requires, or record why that contract is outside the audit.`
   Acceptance: `Do not invent guidance. Either add the field the contract's own shape requires, or exclude that module from the guidance assertion with a recorded reason.`
+  Verification: `prove -Iperl t/350-support-contract-builder-audit.t reports All tests successful at Files=1, Tests=57. The semantic-family module stays outside the guidance assertion because its own nonclaims already exclude support_classification and its key list omits guidance.`
+  Commit: `this commit`
+- ID: `HOSTED-VIAL-REGRESSION-GATE-RESULT.6`
+  Status: `active`
+  Goal: `Stop the hosted regression-promotion tests from requiring ignored qualification paths on a fresh checkout.`
+  Acceptance: `Public tests that still read ignored .artifacts/qualification/vial-scale paths either use a tracked publication or skip that ignored input with a recorded reason. Do not invent a hosted pass.`
   Verification: `pending`
   Commit: `pending`
 
@@ -87,4 +93,9 @@ Make the hosted VIAL regression gate agree with one published result.
 - [x] **ROOT CAUSE (WHY + WHERE)** — Before this slice, `prove -Iperl t/350-support-contract-builder-audit.t` failed at `t/350-support-contract-builder-audit.t line 64` because the allow-list omitted `shipped_bounded_regression_gate`. `git log -S 'shipped_bounded_regression_gate' -- perl/FSM/Support/VIALArchitectureScaleRegressionContract.pm` shows that status is already shipped, and the same module already returns a non-empty guidance array.
 - [x] **ADDRESSED (verified)** — The allow-list now admits only that status. Focused prove reports Files=1, Tests=57 and fails only subtest 54, `FSM::Support::VIALSemanticFamilyContract`, at `t/350-support-contract-builder-audit.t line 65` and line 73. The regression contract is no longer in the failure. The semantic-family contract remains HOSTED-VIAL-REGRESSION-GATE-RESULT.5.
 - [x] **NO REGRESSION** — `knowledge-map: OK` preserves the four hosted families and records that the regression status is now admitted. Unrelated statuses stay omitted. A failed or unavailable hosted run remains neither support nor capacity.
-- [x] **NO REGRESSION** — `knowledge-map: OK` preserves the four hosted families and records that the regression status is now admitted. Unrelated statuses stay omitted. A failed or unavailable hosted run remains neither support nor capacity.
+
+## Acceptance Checklist (semantic-family guidance exemption HOSTED-VIAL-REGRESSION-GATE-RESULT.5)
+
+- [x] **ROOT CAUSE (WHY + WHERE)** — After the regression status was admitted, `prove -Iperl t/350-support-contract-builder-audit.t` still failed at `t/350-support-contract-builder-audit.t line 73` because `FSM::Support::VIALSemanticFamilyContract` returns no guidance array. `git log -S 'support_classification' -- perl/FSM/Support/VIALSemanticFamilyContract.pm` shows that module already names support_classification as an explicit nonclaim and omits guidance from its own key list.
+- [x] **ADDRESSED (verified)** — The audit now exempts that module from the guidance assertion and requires the recorded nonclaim instead of inventing guidance. Focused prove reports All tests successful at Files=1, Tests=57.
+- [x] **NO REGRESSION** — `knowledge-map: OK` keeps the hosted census and records the exemption. Every other support contract still requires non-empty guidance. A failed or unavailable hosted run remains neither support nor capacity.

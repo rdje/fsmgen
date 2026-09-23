@@ -6,8 +6,8 @@ Status and evidence: `docs/tasks/`. The system itself: `MEMORY_ARCHITECTURE.md`.
 ## Resume
 
 - repository_revision: derive with `git log -1 --format='%H %s'`; never shadow `HEAD` here.
-- active_work_unit: `HOSTED-VIAL-REGRESSION-GATE-RESULT.5`
-- next_action: Give the semantic-family support contract the guidance its audit requires, or record why that contract is outside the guidance assertion. Do not invent guidance.
+- active_work_unit: `HOSTED-VIAL-REGRESSION-GATE-RESULT.6`
+- next_action: Stop hosted regression-promotion tests from requiring ignored qualification paths on a fresh checkout. Do not invent a hosted pass.
 - in_flight_uncommitted: none.
 - in_flight_background: none.
 - blockers: Historical startup/parent qualification and full CI/push remain gated.
