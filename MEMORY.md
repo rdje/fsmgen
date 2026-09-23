@@ -6,8 +6,8 @@ Status and evidence: `docs/tasks/`. The system itself: `MEMORY_ARCHITECTURE.md`.
 ## Resume
 
 - repository_revision: derive with `git log -1 --format='%H %s'`; never shadow `HEAD` here.
-- active_work_unit: `HOSTED-VIAL-REGRESSION-GATE-RESULT.25`
-- next_action: Skip the semantic/bridge isolation audit when the ignored revision-1 profile publication is absent. Do not invent a hosted pass.
+- active_work_unit: `HOSTED-VIAL-REGRESSION-GATE-RESULT.26`
+- next_action: Record that run 35782532228 has no remaining unowned released failure family. Do not invent a hosted pass.
 - in_flight_uncommitted: none.
 - in_flight_background: none.
 - blockers: Historical startup/parent qualification and full CI/push remain gated.

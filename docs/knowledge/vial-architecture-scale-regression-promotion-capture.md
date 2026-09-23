@@ -193,6 +193,9 @@ follows the command the host runs: Linux stalls `ps`, and Darwin stalls
 cluster, including Inactive Proxy Lifetimes. The semantic/bridge
 isolation audit skips its current-profile controls when the ignored
 revision-1 publication is absent and still runs them when it is present.
+Run 35782532228 has no remaining unowned released failure family. Its
+Test Summary names only families already owned, and its gate log dies in
+the ignored closure loader that public derivation no longer calls.
 The released ordinary OSVVM
 artifact-graph readers now fail closed. The
 eleven paired-busy tests that stopped at the sealed 120-second Yosys

@@ -178,15 +178,15 @@ Make the hosted VIAL regression gate agree with one published result.
   Verification: `Focused prove reports All tests successful at Files=1, Tests=4.`
   Commit: `bc92d1b2e`
 - ID: `HOSTED-VIAL-REGRESSION-GATE-RESULT.25`
-  Status: `active`
+  Status: `done`
   Goal: `Stop the semantic/bridge isolation audit from dying when the ignored revision-1 publication is absent.`
   Acceptance: `t/1770 skips the publication-dependent controls when .artifacts/qualification/vial-scale/v1/semantic-catalog-v1.imports.gate-candidate-v1 is absent and still runs them when that directory is present. The caller-surface checks stay. Do not invent a hosted pass.`
-  Verification: `pending`
-  Commit: `pending`
+  Verification: `Focused prove with the publication present reports All tests successful at Files=1, Tests=4. The same command with the publication hidden and restored also passes.`
+  Commit: `c00deda5d`
 - ID: `HOSTED-VIAL-REGRESSION-GATE-RESULT.26`
-  Status: `pending`
-  Goal: `Diagnose the next released Perl-file failure family after the semantic/bridge isolation audit.`
-  Acceptance: `Name the next released family from the hosted logs and make that ordinary path fail closed without inventing a hosted pass.`
+  Status: `active`
+  Goal: `Record that run 35782532228 has no remaining unowned released failure family.`
+  Acceptance: `The released Test Summary names only families already owned through .25. The gate log dies in the ignored closure loader that public derive no longer calls. Do not invent a hosted pass.`
   Verification: `pending`
   Commit: `pending`
 
@@ -339,3 +339,9 @@ Make the hosted VIAL regression gate agree with one published result.
 - [x] **ROOT CAUSE (WHY + WHERE)** — Run 35782532228 failed `direct semantic-catalog-v1.imports.gate-candidate-v1 audit accepts` at `t/1770-vial-semantic-bridge-profile-isolation-audit.t line 55` with got `2` expected `0`. Hiding that ignored profile reproduces `unexpected semantic/bridge validation failure` because `semantic/bridge matrix publication root is absent` at `ArchitectureScaleSemanticBridgeMeasurementMatrix.pm line 778`. `git log -S '_load_report_publication' -- scripts/audit_vial_semantic_bridge_profile_isolation.pl` shows the current-profile control still loads that ignored publication.
 - [x] **ADDRESSED (verified)** — The current-profile controls now skip when `.artifacts/qualification/vial-scale/v1/semantic-catalog-v1.imports.gate-candidate-v1` is absent and still run when it is present. The caller-surface checks stay. Focused prove with the publication present reports All tests successful at Files=1, Tests=4. The same command with the publication hidden and restored also passes.
 - [x] **NO REGRESSION** — `knowledge-map: OK` keeps the book entry path and records this publication skip. The next released family stays HOSTED-VIAL-REGRESSION-GATE-RESULT.26. A failed or unavailable hosted run remains neither support nor capacity.
+
+## Acceptance Checklist (released failure census closeout HOSTED-VIAL-REGRESSION-GATE-RESULT.26)
+
+- [x] **ROOT CAUSE (WHY + WHERE)** — The released Test Summary for run 35782532228 names only families already owned through HOSTED-VIAL-REGRESSION-GATE-RESULT.25. The gate log dies at `ArchitectureScaleRegressionPromotionPolicy.pm line 236` inside `validate_complete_publication`. `git log -S '_load_sealed_policy' -- perl/FSM/VIAL/ArchitectureScaleRegressionPromotionPolicy.pm` shows public `derive` now loads the tracked seal.
+- [x] **ADDRESSED (verified)** — The book and knowledge card record that this run has no remaining unowned released failure family. The census names the owned tests and the already-repaired gate path. A failed or unavailable hosted run remains neither support nor capacity.
+- [x] **NO REGRESSION** — `knowledge-map: OK` keeps the semantic/bridge publication skip and records this census closeout. No later released family remains in that run.

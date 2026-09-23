@@ -1965,6 +1965,7 @@ families, and the terminal build job failed because those families failed:
   cluster, including Inactive Proxy Lifetimes. The semantic/bridge
   isolation audit skips its current-profile controls when the ignored
   revision-1 publication is absent and still runs them when it is present.
+  Run 35782532228 has no remaining unowned released failure family.
 - Several regression-promotion tests still read ignored
   `.artifacts/qualification/vial-scale` paths that a fresh checkout does not
   carry. The policy and capture-plan mutation checks now skip that ignored
