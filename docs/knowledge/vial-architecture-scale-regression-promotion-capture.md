@@ -172,6 +172,7 @@ tests that still read ignored `.artifacts/qualification/vial-scale` paths, and
 the support-contract audit. The policy and capture-plan mutation checks now
 skip that ignored closure when it is absent and still run when it is present.
 The profile-store checks skip that same closure the same way. The
+revision-1 publication census skips that ignored tree the same way. The
 current-corpus verifier and its mutation checks skip that ignored corpus
 the same way. The remaining ignored-path readers are still open. The semantic-family
 envelope stays outside the guidance assertion because its own nonclaims

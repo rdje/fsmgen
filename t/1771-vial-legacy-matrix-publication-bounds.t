@@ -64,6 +64,8 @@ END {
 }
 
 subtest 'immutable revision-1 census independently supports containment ceilings' => sub {
+    plan skip_all => 'ignored revision-1 publication is absent on a fresh checkout'
+        unless -d repo_path($repo_root, $publication_base);
     my $census = immutable_publication_census();
     is_deeply($census->{semantic_bridge}, {
         count => 111,
@@ -291,6 +293,7 @@ sub exercise_publisher {
 
 sub immutable_publication_census {
     my $base = repo_path($repo_root, $publication_base);
+    die "ignored revision-1 publication is absent\n" unless -d $base;
     my @root_stat = stat($repo_root);
     my %census = map {
         $_ => {

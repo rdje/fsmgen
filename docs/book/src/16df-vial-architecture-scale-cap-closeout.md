@@ -1953,7 +1953,8 @@ families, and the terminal build job failed because those families failed:
   `.artifacts/qualification/vial-scale` paths that a fresh checkout does not
   carry. The policy and capture-plan mutation checks now skip that ignored
   closure when it is absent. The profile-store checks skip that same closure
-  the same way. The current-corpus verifier and its mutation checks skip that
+  the same way. The revision-1 publication census skips that ignored tree the
+  same way. The current-corpus verifier and its mutation checks skip that
   ignored corpus the same way. Those checks still run when the ignored input
   is present.
 - `t/350-support-contract-builder-audit.t` now admits the regression-gate
