@@ -2,6 +2,7 @@
 id: test-subprocess-policy-adapters
 title: Test subprocesses share one mechanism behind sealed policy adapters
 answers:
+  - "what happens when a reserved process group reservation dies?"
   - "why can reserved cleanup miss an unjoined command?"
   - "how do I decode a stopped child native wait status?"
   - "how are genuine omitted release closes selected?"
@@ -166,9 +167,8 @@ answers:
   - "why must a receipt accept zero microseconds?"
   - "where is the first actual compiler receipt retained?"
 date: 2026-09-23
-status: current
 tags: [tests, subprocess, supervision, task-acceptance, darwin, locality]
-evidence: t/1829-process-unjoined-closure.t; t/1818-process-supervisor-receipt-observation.t; t/1821-native-proxy-receipt-stage-contract.t; docs/audits/native-proxy-receipt-capture-20260923/result/review.json; docs/audits/native-proxy-receipt-capture-20260923/result/artifacts.json
-reverify: scripts/run_with_ram_guard.sh -- prove -Iperl -It/lib t/1823-process-group-reservation.t t/1824-process-gated-pair.t t/1826-process-group-closure.t t/1827-process-reserved-job.t t/1828-process-reserved-receipt.t t/1829-process-unjoined-closure.t t/1818-process-supervisor-receipt-observation.t t/1821-native-proxy-receipt-stage-contract.t && python3 -B docs/audits/native-proxy-receipt-capture-20260923/review.py --verify-saved
+evidence: t/1830-process-reservation-death.t; t/1829-process-unjoined-closure.t; t/1818-process-supervisor-receipt-observation.t; t/1821-native-proxy-receipt-stage-contract.t; docs/audits/native-proxy-receipt-capture-20260923/result/review.json; docs/audits/native-proxy-receipt-capture-20260923/result/artifacts.json
+reverify: scripts/run_with_ram_guard.sh -- prove -Iperl -It/lib t/1823-process-group-reservation.t t/1824-process-gated-pair.t t/1826-process-group-closure.t t/1827-process-reserved-job.t t/1828-process-reserved-receipt.t t/1829-process-unjoined-closure.t t/1830-process-reservation-death.t t/1818-process-supervisor-receipt-observation.t t/1821-native-proxy-receipt-stage-contract.t && python3 -B docs/audits/native-proxy-receipt-capture-20260923/review.py --verify-saved
 ---
-History: `4141c7ad25047b5be5b74fb465cdb94ec2d10180:docs/knowledge/test-subprocess-policy-adapters.md`; prior policy/capture/receipt facts remain verbatim there. Preserve the spent compiler workspace and `docs/audits/native-proxy-receipt-capture-20260923/result/`; startup, routing/nested and Linux qualification stay open. Cancellation may move a reservation before command join: retain its owned unharvested positive PID through KILL until join acknowledgment (T1829). Decode stops with `${^CHILD_ERROR_NATIVE}` and POSIX macros; normalized `$?` was zero here. Observe native group absence before reservation retirement and retain that result for final assertions; post-reap numeric PID/PGID probes can address reused identities (T1823/T1826/T1827).
+Current facts; history: `73fb05125b4ef0e4d29e80ed988351b2f607a028:docs/knowledge/test-subprocess-policy-adapters.md` retains prior policy/capture/receipt, unjoined-KILL, native-status and observer-lifetime facts with their earlier recovery route. Preserve the spent compiler workspace and `docs/audits/native-proxy-receipt-capture-20260923/result/`; startup, routing/nested and Linux remain open. T1830 observes reservation death around departure: before acknowledgment, both child waits settle but group closure remains unproved; after acknowledgment, actual ESRCH can close resources without erasing the host failure. Native fork/wait/signal/descriptor observations precede identity retirement; no retired numeric target is probed. Current-host component qualification admits inactive coordinator integration only.

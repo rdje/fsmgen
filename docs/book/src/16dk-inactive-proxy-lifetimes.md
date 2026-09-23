@@ -688,6 +688,13 @@ the native result for final assertions. After reaping, a numeric PID or PGID
 may be reused; probing it cannot prove the earlier closure. Exact child-wait
 consumption remains a separate check and requires ECHILD after the owned wait.
 
+Native controls also kill the retained reservation on both sides of departure.
+Before acknowledgment, both child waits can settle while group closure remains
+unproved. After acknowledgment, actual group disappearance can close resources
+even though reservation death remains the job's original host failure. A stopped,
+joined command forces escalation in both cases; independent EOF proves it never
+executes. These checks observe the dead reservation without reaping it early.
+
 The inactive reserved job now composes launch, capture, cleanup and terminal
 results. Its invocation wall includes admission and launch; a ready command
 still waits for explicit publication-controlled release. Separate binary output
@@ -721,7 +728,7 @@ Their tests exercise the current host; Linux qualification remains open.
 Re-run the bounded component controls with:
 
 ```bash
-scripts/run_with_ram_guard.sh -- prove -Iperl -It/lib t/1823-process-group-reservation.t t/1824-process-gated-pair.t t/1825-process-capture-stream-ownership.t t/1826-process-group-closure.t t/1827-process-reserved-job.t t/1828-process-reserved-receipt.t t/1829-process-unjoined-closure.t
+scripts/run_with_ram_guard.sh -- prove -Iperl -It/lib t/1823-process-group-reservation.t t/1824-process-gated-pair.t t/1825-process-capture-stream-ownership.t t/1826-process-group-closure.t t/1827-process-reserved-job.t t/1828-process-reserved-receipt.t t/1829-process-unjoined-closure.t t/1830-process-reservation-death.t
 ```
 
 For native stopped-child observations, decode `${^CHILD_ERROR_NATIVE}` with
