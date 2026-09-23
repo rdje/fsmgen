@@ -81,10 +81,25 @@ sub consume_permit {
     return 1;
 }
 
+# One consumed permit can admit one later capture. The caller must already
+# hold the finished private job from the named sealed return. This does not
+# launch a compiler, probe or tool-resolution process.
 sub execution_allowed {
-    my ($plan) = @_;
-    return 0 unless @_ == 1 && admitted($plan);
-    return 0;
+    my ($plan, $token, $job) = @_;
+    return 0 unless @_ == 3 && _closed_plan($plan) && ref($token) eq 'HASH';
+    return 0 unless defined $permit && $permit->{uses_remaining} == 0;
+    return 0 unless defined($token->{schema}) && $token->{schema} eq $permit->{schema};
+    return 0 unless defined($token->{source_revision})
+        && $token->{source_revision} eq $permit->{source_revision}
+        && $token->{source_revision} eq $plan->{source_revision};
+    return 0 unless defined($token->{sealed_return})
+        && $token->{sealed_return} eq $permit->{sealed_return};
+    return 0 unless defined($plan->{sealed_return}) && $plan->{sealed_return} eq $SEALED_RETURN;
+    return 0 unless ref($job) eq 'HASH' && ($job->{phase} // '') eq 'finished';
+    return 0 unless exists $job->{cleanup} && exists $job->{stage} && exists $job->{result};
+    return 0 unless defined($job->{receipt_observation})
+        && ref($job->{receipt_observation}) eq 'HASH';
+    return 1;
 }
 
 sub required_roles { return [map { {%$_} } @ROLES]; }

@@ -150,6 +150,7 @@ answers:
   - "how does one receipt permit name the sealed private return?"
   - "how is the issued receipt permit consumed?"
   - "why does a consumed receipt permit still refuse execution?"
+  - "when does a consumed receipt permit admit one finished job?"
 date: 2026-09-23
 status: current
 tags: [tests, subprocess, supervision, task-acceptance, darwin, locality]
@@ -159,4 +160,4 @@ evidence: >-
 reverify: >-
   perl docs/audits/native-proxy-receipt-adapter-20260922/qualify.t
 ---
-History: `58c4b1d1964c16baecb44ad1126580be04f3b75a:docs/knowledge/test-subprocess-policy-adapters.md`. A consumed receipt permit still leaves `execution_allowed` false. The gate returns 0 after every admitted plan. No compiler, probe or tool-resolution process runs.
+History: `cf69ad570a6ffbad0569e9e4ee40952e294bacf9:docs/knowledge/test-subprocess-policy-adapters.md`. One consumed permit admits one finished private job and refuses an unfinished job or a public supervisor name. No compiler, probe or tool-resolution process runs.

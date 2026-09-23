@@ -98,6 +98,17 @@ $live_consume->{live_collector} = 1;
 ok(!$consume->($live_consume, $token), 'a live collector cannot consume the permit');
 ok($consume->($good, $token), 'the matching closed plan consumes the issued permit');
 ok(!$consume->($good, $token), 'the same token cannot be consumed again');
-is($execute->($good), 0, 'a consumed permit still refuses execution');
+is($execute->($good), 0, 'a consumed permit without a private job still refuses execution');
+is($execute->($good, $token), 0, 'a consumed permit without a finished job still refuses execution');
+my $job = {
+    phase => 'finished', stage => 'proof_exit', cleanup => {}, result => {},
+    receipt_observation => {phase => 'finished'},
+};
+is($execute->($good, $token, $job), 1, 'one consumed permit admits one finished private job');
+my $open_job = {%$job, phase => 'running'};
+is($execute->($good, $token, $open_job), 0, 'an unfinished job still refuses execution');
+my $public_name = admission();
+$public_name->{sealed_return} = 'FSM::Support::ProcessSupervisor::supervise_process';
+is($execute->($public_name, $token, $job), 0, 'a public supervisor name still refuses execution');
 is($forbidden, 0, 'no process or signal attempt');
 done_testing;

@@ -2281,9 +2281,9 @@ decomposes the architecture needed to move beyond that bounded foundation.
   Status: `active`
   Goal: `Preserve the first private receipt from one admitted compiler-only capture.`
   Acceptance: `After this cleanup-copy commit, consume one fresh permit and retain the first private compiler, outer and inner states. Stop on disagreement. Never retry a producer or replay an original, proxy or live collector.`
-  Verification: `Child .5.4.3.3.6.1 records that supervise_process returns only the public result. Child .5.4.3.3.6.2 returns a caller-held finished job to a sealed caller. Child .5.4.3.3.6.4 returns the private job after one proof process. Child .5.4.3.3.6.3 consumes one permit naming that return. Child .5.4.3.3.6.5 records that execution stays refused after that consume. Opening execution remains .5.4.3.3.6.6.`
+  Verification: `Child .5.4.3.3.6.1 records that supervise_process returns only the public result. Child .5.4.3.3.6.2 returns a caller-held finished job to a sealed caller. Child .5.4.3.3.6.4 returns the private job after one proof process. Child .5.4.3.3.6.3 consumes one permit naming that return. Child .5.4.3.3.6.6 admits one finished private job after that consume. The compiler, probe and tool-resolution launch remains .5.4.3.3.6.7.`
   Commit: `pending`
-  Children: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.12.4.1.5.4.3.3.6.1, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.12.4.1.5.4.3.3.6.2, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.12.4.1.5.4.3.3.6.3, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.12.4.1.5.4.3.3.6.4, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.12.4.1.5.4.3.3.6.5, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.12.4.1.5.4.3.3.6.6`
+  Children: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.12.4.1.5.4.3.3.6.1, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.12.4.1.5.4.3.3.6.2, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.12.4.1.5.4.3.3.6.3, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.12.4.1.5.4.3.3.6.4, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.12.4.1.5.4.3.3.6.5, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.12.4.1.5.4.3.3.6.6, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.12.4.1.5.4.3.3.6.7`
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.12.4.1.5.4.3.3.6.1`
   Status: `done`
   Goal: `Record that a sealed supervisor launch still returns only the public result.`
@@ -2328,9 +2328,15 @@ decomposes the architecture needed to move beyond that bounded foundation.
   Verification: `NativeProxyReceiptAdmission::execution_allowed returns 0 after admitted. The consumed permit does not change that return. No process runs. Opening execution remains .5.4.3.3.6.6.`
   Commit: `this commit`
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.12.4.1.5.4.3.3.6.6`
-  Status: `pending`
+  Status: `done`
   Goal: `Open one admitted capture only after the consumed permit names a finished private return.`
   Acceptance: `Change the execution gate so one consumed permit can admit one capture that retains the sealed private return. Keep replay and live-collector rejection. Do not launch a compiler, probe or tool-resolution process until that gate is committed and the next leaf owns the launch.`
+  Verification: `perl docs/audits/native-proxy-receipt-admission-20260922/qualify.t passes 47 assertions. One consumed permit admits one finished private job and refuses an unfinished job, a missing job and a public supervisor name. Replay and live-collector plans still cannot consume the permit. Forbidden fork, system, exec and kill stay zero. The compiler, probe and tool-resolution launch remains .5.4.3.3.6.7.`
+  Commit: `this commit`
+- ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.12.4.1.5.4.3.3.6.7`
+  Status: `pending`
+  Goal: `Launch one admitted compiler, probe and tool-resolution capture and retain the first private states.`
+  Acceptance: `After this gate commit, consume one fresh permit and retain the first private compiler, outer and inner states. Stop on disagreement. Never retry a producer or replay an original, proxy or live collector.`
   Verification: `pending`
   Commit: `pending`
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.12.4.1.5.4.3.3.6.3.1`
@@ -6537,6 +6543,12 @@ The manifest binds the immediately preceding acceptance suffix to its exact Git 
 - [x] **ROOT CAUSE (WHY + WHERE)** — `git log -S 'unavailable aggregate' -1 --format='%H %s' -- docs/book/src/16df-vial-architecture-scale-cap-closeout.md` identifies bc6796d01803fb662cfadd506fabc5bc79427a88. That placement requires an unavailable hosted aggregate. The first hosted run of `./bin/ci-regression vial-gate --no-book` failed its real command, and the independent verifier was skipped.
 - [x] **ADDRESSED (verified)** — The contradiction is owned by HOSTED-VIAL-REGRESSION-GATE-RESULT.1. Local exact-pinned success stays distinct from the failed hosted step. No support or capacity claim is inferred from either result. Diagnosis continues when the failed-step log is released.
 - [x] **NO REGRESSION** — `knowledge-map: OK` preserves the earlier gate questions and adds the hosted failure route. The rendered book states the contradiction outside the registered placement claim; claim identity/dispositions, containment and staged doctrines accompany the normal hooks. The receipt-return leaf remains separately owned.
+
+## Acceptance Checklist (opened finished-job gate .3.2.15.7.3.12.4.1.5.4.3.3.6.6)
+
+- [x] **ROOT CAUSE (WHY + WHERE)** — `git log -S 'sub execution_allowed' -1 --format='%H %s' -- docs/audits/native-proxy-receipt-admission-20260922/Admission.pm` identifies 413a76daac6182ce08ca13c42c53a422ac35e859. `execution_allowed` returned 0 after every admitted plan, so a consumed permit could not admit a finished private job.
+- [x] **ADDRESSED (verified)** — perl docs/audits/native-proxy-receipt-admission-20260922/qualify.t passes 47 assertions. One consumed permit admits one finished private job and refuses an unfinished job, a missing job and a public supervisor name. No compiler, probe or tool-resolution process runs.
+- [x] **NO REGRESSION** — `knowledge-map: OK` preserves the closed execution record and adds the finished-job gate. The rendered book states that the compiler, probe and tool-resolution launch remains next; claim identity/dispositions, containment and staged doctrines accompany the normal hooks. That launch, native/live/startup qualification and full CI/push remain open.
 
 ## Acceptance Checklist (closed execution after consumed permit .3.2.15.7.3.12.4.1.5.4.3.3.6.5)
 
