@@ -2281,9 +2281,9 @@ decomposes the architecture needed to move beyond that bounded foundation.
   Status: `active`
   Goal: `Preserve the first private receipt from one admitted compiler-only capture.`
   Acceptance: `After this cleanup-copy commit, consume one fresh permit and retain the first private compiler, outer and inner states. Stop on disagreement. Never retry a producer or replay an original, proxy or live collector.`
-  Verification: `Child .5.4.3.3.6.1 records that supervise_process returns only the public result. Child .5.4.3.3.6.2 returns the finished private job to a sealed caller. Capture remains .5.4.3.3.6.3. No compiler, probe or tool-resolution process runs.`
+  Verification: `Child .5.4.3.3.6.1 records that supervise_process returns only the public result. Child .5.4.3.3.6.2 returns a caller-held finished job to a sealed caller. Child .5.4.3.3.6.3 records that the launch still does not return that job. No compiler, probe or tool-resolution process runs.`
   Commit: `pending`
-  Children: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.12.4.1.5.4.3.3.6.1, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.12.4.1.5.4.3.3.6.2, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.12.4.1.5.4.3.3.6.3`
+  Children: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.12.4.1.5.4.3.3.6.1, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.12.4.1.5.4.3.3.6.2, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.12.4.1.5.4.3.3.6.3, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.12.4.1.5.4.3.3.6.4`
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.12.4.1.5.4.3.3.6.1`
   Status: `done`
   Goal: `Record that a sealed supervisor launch still returns only the public result.`
@@ -2297,9 +2297,22 @@ decomposes the architecture needed to move beyond that bounded foundation.
   Verification: `perl t/1818-process-supervisor-receipt-observation.t passes 47 assertions. A sealed caller receives the finished job, its private pid, birth clock, own-group identity and the original cleanup hash. An unsealed caller and an unfinished job reject. The public result still copies cleanup flags and omits pid. The neighboring coordinator, adapter and admission tests pass with it: Files=4, Tests=103. No compiler, probe or tool-resolution process runs. Capture remains .5.4.3.3.6.3.`
   Commit: `this commit`
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.12.4.1.5.4.3.3.6.3`
-  Status: `pending`
+  Status: `active`
   Goal: `Preserve the first private receipt from one admitted compiler-only capture.`
   Acceptance: `After the sealed private return commits, consume one fresh permit and retain the first private compiler, outer and inner states. Stop on disagreement. Never retry a producer or replay an original, proxy or live collector.`
+  Verification: `Child .5.4.3.3.6.3.1 records that supervise_process still returns only the public result. A capture that keeps that result cannot preserve the private state. No compiler, probe or tool-resolution process runs.`
+  Commit: `pending`
+  Children: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.12.4.1.5.4.3.3.6.3.1`
+- ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.12.4.1.5.4.3.3.6.3.1`
+  Status: `done`
+  Goal: `Record that the sealed launch still returns only the public result after the private hand-back.`
+  Acceptance: `Read the current sealed launch return before any capture. If it still returns only the public result, do not launch a capture that cannot preserve the first private state. Leave the launch-return correction separately owned.`
+  Verification: `supervise_process still returns _supervise, and that path returns only state result. sealed_finished_job reads a finished job the caller already holds; the launch does not return that job. A capture that keeps only the public result cannot satisfy receipts_bound. No process runs. The launch return remains .5.4.3.3.6.4.`
+  Commit: `this commit`
+- ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.12.4.1.5.4.3.3.6.4`
+  Status: `pending`
+  Goal: `Return the finished private supervisor job from the sealed launch before capture.`
+  Acceptance: `Change the sealed launch so its caller receives the finished job, including pid, birth clock, own-group identity and the original cleanup hash, while existing public-result readers keep the public result. Do not launch a compiler, probe or tool-resolution process in that slice.`
   Verification: `pending`
   Commit: `pending`
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.12.4.1.5.5`
@@ -6462,6 +6475,12 @@ The manifest binds the immediately preceding acceptance suffix to its exact Git 
 - [x] **ROOT CAUSE (WHY + WHERE)** — `git log -S 'unavailable aggregate' -1 --format='%H %s' -- docs/book/src/16df-vial-architecture-scale-cap-closeout.md` identifies bc6796d01803fb662cfadd506fabc5bc79427a88. That placement requires an unavailable hosted aggregate. The first hosted run of `./bin/ci-regression vial-gate --no-book` failed its real command, and the independent verifier was skipped.
 - [x] **ADDRESSED (verified)** — The contradiction is owned by HOSTED-VIAL-REGRESSION-GATE-RESULT.1. Local exact-pinned success stays distinct from the failed hosted step. No support or capacity claim is inferred from either result. Diagnosis continues when the failed-step log is released.
 - [x] **NO REGRESSION** — `knowledge-map: OK` preserves the earlier gate questions and adds the hosted failure route. The rendered book states the contradiction outside the registered placement claim; claim identity/dispositions, containment and staged doctrines accompany the normal hooks. The receipt-return leaf remains separately owned.
+
+## Acceptance Checklist (launch still returns public result .3.2.15.7.3.12.4.1.5.4.3.3.6.3.1)
+
+- [x] **ROOT CAUSE (WHY + WHERE)** — `git log -S 'return $state->{result}' -1 --format='%H %s' -- perl/FSM/Support/ProcessSupervisor.pm` identifies 51a3a3914ff4c6f2c14df02620682eb20c6ab129. `_supervise` still returns only the public result. `sealed_finished_job` reads a finished job the caller already holds, and the sealed launch does not return that job.
+- [x] **ADDRESSED (verified)** — A capture that keeps only the public result cannot preserve pid, birth clock or cleanup identity. Capture stays closed. Returning the finished job from the sealed launch remains .5.4.3.3.6.4. No compiler, probe, worker, proxy or collector runs.
+- [x] **NO REGRESSION** — `knowledge-map: OK` preserves the sealed private hand-back and adds the remaining launch-return gap. The rendered book states that capture must wait for the launch itself to return the private job; claim identity/dispositions, containment and staged doctrines accompany the normal hooks. Execution, actual-wrapper observation, native/live/startup qualification and full CI/push remain open.
 
 ## Acceptance Checklist (sealed private return .3.2.15.7.3.12.4.1.5.4.3.3.6.2)
 

@@ -541,11 +541,13 @@ fails the aligned review. An unsealed caller and an unfinished job are
 rejected. No compiler, probe or tool-resolution process runs to produce the
 observation.
 
-A sealed caller can now receive the finished private job. That return carries
-the process id, birth clock and own-group identity, and it keeps the original
-cleanup hash. The public result still copies cleanup flags and omits that
-identity. An unsealed caller and an unfinished job are rejected. No compiler,
-probe or tool-resolution process runs to produce this return.
+A sealed caller can receive a finished private job it already holds. That
+hand-back carries the process id, birth clock and own-group identity, and it
+keeps the original cleanup hash. The sealed launch itself still returns only
+the public result, which copies cleanup flags and omits that identity. A
+capture that keeps only the launch result therefore cannot preserve the private
+state. No compiler, probe or tool-resolution process runs until the launch
+returns the private job.
 
 ```sh
 python3 -B docs/audits/native-proxy-receipt-ownership-inventory-20260922/audit.py --verify-saved
@@ -556,7 +558,7 @@ perl t/1818-process-supervisor-receipt-observation.t
 
 | Remaining work | Required result |
 | --- | --- |
-| Real receipt binding | A sealed caller can receive the finished private job. Execute one admitted capture. |
+| Real receipt binding | The sealed launch still returns only the public result. Return the private job from that launch before one admitted capture. |
 | Inactive adapter composition | Join preparation, native path/reference admission and observation custody before the separate native experiment. |
 | Final protocol join | Check current evidence together and retain native, live/public and startup/benefit gates. |
 
