@@ -2491,11 +2491,35 @@ decomposes the architecture needed to move beyond that bounded foundation.
   Commit: `this commit`
 
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.12.4.1.5.4.3.3.6.7.2`
-  Status: `pending`
+  Status: `active`
   Goal: `Launch one admitted probe and tool-resolution capture and retain their first private states.`
   Acceptance: `After the compiler capture commits, launch the probe and tool-resolution stages through the sealed private return and retain those first private states. Stop on disagreement. Never retry a producer or replay an original, proxy or live collector.`
   Verification: `pending`
   Commit: `pending`
+
+  Children: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.12.4.1.5.4.3.3.6.7.2.1, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.12.4.1.5.4.3.3.6.7.2.2, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.12.4.1.5.4.3.3.6.7.2.3`
+
+- ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.12.4.1.5.4.3.3.6.7.2.1`
+  Status: `done`
+  Goal: `Align inactive receipt admission with the actual tool-resolution containment contract.`
+  Acceptance: `Observe the real RustParityRuntime tool-resolution request through an inert supervisor. Correct the inner role policy while preserving compiler and outer contracts; reject the former wrong containment and every altered role. Prove RED before the repair and GREEN afterward without executing a compiler, probe or proxy.`
+  Verification: `T1821 intercepts the actual RustParityRuntime tool-resolution request without a process. Its old-module RED exposes the inner containment mismatch and the incorrect plan still receiving a compiler grant. Admission now uses rust_parity_process_group for the inner stage while retaining the outer and compiler policies. Independent field mutations reject; the remaining matching grant is still single-use. The guarded fixture/integration/admission/capture/stage band passes Files=5, Tests=130; saved compiler review still passes. Nested ownership and stage capture remain sibling .2 before execution .3.`
+  Commit: `this commit`
+
+- ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.12.4.1.5.4.3.3.6.7.2.2`
+  Status: `pending`
+  Goal: `Qualify a fixed probe and inner receipt capture with explicit nested cleanup ownership.`
+  Acceptance: `Preserve the spent compiler attempt and exact retained image. Resolve nested process ownership before admission; provide bounded first-state retention, persistent one-use launch records and process-free failure controls. Serialized compiler or inner cleanup addresses never confer live authority. Commit the driver and admission before actual execution; split any remaining unsafe scope before launch.`
+  Verification: `pending`
+  Commit: `pending`
+
+- ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.12.4.1.5.4.3.3.6.7.2.3`
+  Status: `pending`
+  Goal: `Execute the admitted probe and tool-resolution receipt capture once and retain its first result.`
+  Acceptance: `Start only from the committed driver and a clean pinned revision, after nested cleanup and image custody are qualified. Capture the first outer and inner private states, review independently, stop on disagreement and never replay a producer. Preserve the original compiler evidence and all unresolved ownership.`
+  Verification: `pending`
+  Commit: `pending`
+
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.12.4.1.5.4.3.3.6.3.1`
   Status: `done`
   Goal: `Record that the sealed launch still returns only the public result after the private hand-back.`
@@ -6910,3 +6934,9 @@ The manifest binds the immediately preceding acceptance suffix to its exact Git 
 - [x] **ROOT CAUSE (WHY + WHERE)** — `git log -S 'begin_compiler_capture'` identifies `9ceca1e13`. A real compiler result was still missing after private-return and prelaunch repairs. The committed fixed driver now ran once from clean `28834c3278aec40fd597a1bd7af06be9fa345061`, retaining its first sealed state instead of the public-only fixture return.
 - [x] **ADDRESSED (verified)** — The guarded compiler runner exits 0. First native wait/public exit/signal agree at success; leader reaping, group absence and original cleanup sharing pass in the live driver. Independent saved-source/state review and dated read-only process-table absence agree. First evidence, generated C and unexecuted executable bytes are retained in `docs/audits/native-proxy-receipt-capture-20260923/result/`; the spent attempt and required original workspace remain unchanged for later owned work. No probe, tool-resolution, proxy image, original fixture or collector is executed.
 - [x] **NO REGRESSION** — The preceding guarded receipt/driver band reports `All tests successful`, `Files=4, Tests=206`; no runtime source changes after that qualification. `python3 -B docs/audits/native-proxy-receipt-capture-20260923/review.py --verify-saved` passes. `qualify_review.py` passes its fresh-control hostile mutations and archived-byte corruption check. Re-derive: tracked fixed driver and exact saved records; falsify: independent native-wait/public/source/ps checks plus deliberately rejected local mutations; durability: committed first records and exact artifact archive with read-only verifier. The historical capture is not rerunnable permission, a timing estimate, kernel-birth authentication, complete stage ownership or startup qualification.
+
+## Acceptance Checklist (actual receipt stage policy .6.7.2.1)
+
+- [x] **ROOT CAUSE (WHY + WHERE)** — `git log -S "stage => 'tool_resolution', containment => 'rust_tool_resolution_probe_group'"` identifies `413a76daa`. The admission table copied the outer policy into the inner stage. T1821 observes the real runtime request through an inert supervisor and reports `not ok 6`, plus rejection/grant failures against the old table. Earlier controls derived both their input and expectation from that table.
+- [x] **ADDRESSED (verified)** — The inner role now requires `rust_parity_process_group`. The actual producer request, unchanged bounds and argument transfer agree; independent mutations of every role/stage/containment field reject, including the old inner value. Rejected plans leave the sole correct compiler grant available, and its repeat rejects. No compiler, probe, tool-resolution or signal attempt occurs.
+- [x] **NO REGRESSION** — RAM-guarded `prove -Iperl t/1815-rust-proxy-fixture.t t/1816-rust-proxy-integration.t t/1819-native-proxy-receipt-admission.t t/1820-native-proxy-receipt-capture.t t/1821-native-proxy-receipt-stage-contract.t`: `All tests successful`, `Files=5, Tests=130`. Saved compiler review passes without replay. Re-derive: actual intercepted runtime request; falsify: observed old-table RED and independently changed fields; durability: ordinary T1821 discovery and the tracked policy. This corrects admission data only; nested cleanup, new stage launch admission and real probe/inner receipts remain explicitly open.

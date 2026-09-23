@@ -519,8 +519,14 @@ they cannot settle the adapter.
 
 The admission plan names the current compiler, probe and tool-resolution
 stages in order, with private process identity and cleanup identity required
-for review. Replay of an original fixture or proxy and live collection remain
-rejected. The admission module itself launches nothing.
+for review. The compiler uses `rust_proxy_compiler_group`, the outer probe uses
+`rust_tool_resolution_probe_group`, and the inner stage uses
+`rust_parity_process_group`. Admission rejects the formerly mistaken inner
+policy that copied the outer probe. A process-free test intercepts the actual
+Rust parity stage request to keep admission aligned with its producer.
+Replay of an original fixture or proxy and live collection remain rejected.
+The admission module itself launches nothing. These policy names do not prove
+nested cleanup: an outer group's absence cannot settle a separate inner group.
 
 The current supervisor makes each child its own process-group leader, then
 checks group absence with that same identity. The inactive adapter now accepts
@@ -592,6 +598,7 @@ perl docs/audits/native-proxy-receipt-adapter-20260922/qualify.t
 perl docs/audits/native-proxy-receipt-admission-20260922/qualify.t
 perl t/1818-process-supervisor-receipt-observation.t
 perl t/1820-native-proxy-receipt-capture.t
+perl t/1821-native-proxy-receipt-stage-contract.t
 python3 -B docs/audits/native-proxy-receipt-capture-20260923/review.py --verify-saved
 python3 -B docs/audits/native-proxy-receipt-capture-20260923/qualify_review.py
 ```

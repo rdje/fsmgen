@@ -166,9 +166,9 @@ answers:
 date: 2026-09-23
 status: current
 tags: [tests, subprocess, supervision, task-acceptance, darwin, locality]
-evidence: docs/audits/native-proxy-receipt-capture-20260923/result/review.json; docs/audits/native-proxy-receipt-capture-20260923/result/artifacts.json
-reverify: >-
-  python3 -B docs/audits/native-proxy-receipt-capture-20260923/review.py --verify-saved
+evidence: t/1821-native-proxy-receipt-stage-contract.t; docs/audits/native-proxy-receipt-capture-20260923/result/review.json; docs/audits/native-proxy-receipt-capture-20260923/result/artifacts.json
+reverify: perl -Iperl t/1821-native-proxy-receipt-stage-contract.t && python3 -B docs/audits/native-proxy-receipt-capture-20260923/review.py --verify-saved
 ---
 History: `05f8ada76457e6b0ae16a7f783020869dd687019:docs/knowledge/test-subprocess-policy-adapters.md`. `FSM::Test::RustProxyFixture::prepare_rust_proxy` calls `FSM::Test::ProcessSupervisor::supervise_process` with stage `compile_proxy` and no `private_job`. That call returns only the public result. No compiler, probe or tool-resolution process runs.
 `begin_compiler_capture` burns the launch grant; `execution_allowed` only reviews a returned job. The fixed driver at `docs/audits/native-proxy-receipt-capture-20260923/capture.pl` completed its first compiler capture from clean 28834c327: native wait/public success, reaping, group absence and original cleanup sharing agree. `result/` preserves first records and exact unexecuted bytes; `review.py --verify-saved` reloads them without replay. The original workspace and spent attempt remain for later owned stages. Probe/tool-resolution are still unqualified. T1818 covers valid zero microseconds; T1819/T1820 cover grant and capture failures. Birth is a supervisor clock observation, not kernel authentication; serialized addresses confer no reusable authority.
+The receipt admission now matches the actual RustParityRuntime inner request: `tool_resolution` uses `rust_parity_process_group`, distinct from the outer probe policy. T1821 intercepts that producer without execution and rejects the former wrong containment and altered role fields. This does not settle nested cleanup or authorize either later stage.

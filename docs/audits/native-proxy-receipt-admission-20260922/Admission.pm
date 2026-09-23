@@ -9,7 +9,7 @@ use warnings;
 my @ROLES = (
     {role => 'compiler', stage => 'compile_proxy', containment => 'rust_proxy_compiler_group'},
     {role => 'outer', stage => 'probe', containment => 'rust_tool_resolution_probe_group'},
-    {role => 'inner', stage => 'tool_resolution', containment => 'rust_tool_resolution_probe_group'},
+    {role => 'inner', stage => 'tool_resolution', containment => 'rust_parity_process_group'},
 );
 my @PRIVATE = qw(pid start_sec start_usec group_pid group_start_sec group_start_usec cleanup_identity);
 my $SEALED_RETURN = 'FSM::Test::ProcessSupervisor::sealed_supervise_process';
