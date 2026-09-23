@@ -3633,9 +3633,32 @@ decomposes the architecture needed to move beyond that bounded foundation.
   Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.4.2.3.3.1: bind retained run resources to admission grants`
 
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.4.2.3.3.2`
-  Status: `pending`
+  Status: `active`
   Goal: `Bind retained job preparation and gated start to aggregate grants.`
   Acceptance: `Retain root/nested native job records and original request ownership before allocation; derive complete foreign descriptor inventories and bind resource-free prepare_record/allocate/start to original Admission phases and deadlines. Reconcile actual handles and child outcomes conservatively, including interrupted returns and cancel-after-record-before-fork. Qualify root/nested real gated handoff, capacity refusal and descendant-first cleanup without exec release; preserve original signal state.`
+  Verification: `Three bounded children preserve reviewable scope: completed acceptance-history rollover, retained root preparation with per-pipe grants and cleanup, then root/nested gated forks with refreshed foreign inventories and exact child reconciliation. Publication remains separately owned.`
+  Commit: `pending`
+
+  Children: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.4.2.3.3.2.1, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.4.2.3.3.2.2, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.4.2.3.3.2.3`
+
+- ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.4.2.3.3.2.1`
+  Status: `done`
+  Goal: `Roll completed acceptance evidence before native job binding.`
+  Acceptance: `Authenticate the exact committed predecessor and completed acceptance suffix in the existing finite history manifest. Preserve every live node and existing history chain; independently rederive hashes/counts and prove changed-digest rejection before removing only that suffix.`
+  Verification: `The existing finite manifest authenticates exact ea2424e72 source (7143 lines/1254713 bytes) and its completed suffix (188 lines/13266 bytes/five headings). Independent git cat-file reconstruction matches both SHA-256 values and the versioned predecessor manifest at 3d5b80e06; all current node IDs are unchanged by removal. The unchanged task checker accepts an isolated complete fixture and rejects only its changed suffix digest. Fixture teardown is complete. Current integrity, Knowledge Map, claims and staged doctrines cover the bounded resulting tree; no source or user-visible behavior changes.`
+  Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.4.2.3.3.2.1: roll completed acceptance history before job binding`
+
+- ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.4.2.3.3.2.2`
+  Status: `pending`
+  Goal: `Bind retained root preparation to original job grants.`
+  Acceptance: `Retain the native root job graph before each pipe; check original identity, liveness, phase and aggregate credit at every allocation. Reconcile actual handles only after successful publication. Qualify native partial failure, cancellation/expiry and pending-signal returns, and close unstarted ownership without forks. Nested admission and native start remain child .3.`
+  Verification: `pending`
+  Commit: `pending`
+
+- ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.4.2.3.3.2.3`
+  Status: `pending`
+  Goal: `Bind gated root/nested forks and child reconciliation.`
+  Acceptance: `Admit retained nested snapshots from an active original parent; refresh complete foreign inventories immediately before both masked forks. Preserve original exec signal state and ledger child credit through partial/interrupted starts. Qualify real root/nested gated handoff, capacity refusal, cancellation before fork and descendant-first cleanup with exact waits; no exec release or caller routing.`
   Verification: `pending`
   Commit: `pending`
 
@@ -4358,7 +4381,7 @@ decomposes the architecture needed to move beyond that bounded foundation.
 
 ## Current Frontier
 
-Current frontier: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.4.2.3.3.2` binds native job preparation/start to original Admission grants and retained coordinator resources. Sibling .3 then binds accepted peers and qualifies the joined native admission lifecycle. Publication, streaming, fair lifecycle composition and independent qualification remain separate integration children. Preserve original failures, the spent compiler workspace, source-only driver commit and full-CI/push gates.
+Current frontier: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.4.2.3.3.2.2` binds retained root preparation to original job grants; native root/nested start remains child .3. Sibling .3 then binds accepted peers and qualifies the joined native admission lifecycle. Publication, streaming, fair lifecycle composition and independent qualification remain separate integration children. Preserve original failures, the spent compiler workspace, source-only driver commit and full-CI/push gates.
 
 Architecture audit `.1` is complete. Decision `0032` selects one public
 `.vial` source language, private immutable `VIALSemanticIR` and
@@ -6953,191 +6976,24 @@ Completed native-proxy feasibility through runtime-source-controls acceptance: r
 
 The manifest binds the completed acceptance suffix and independent reserved-process evidence join to their exact Git source. That source preserves the earlier history pointer and versioned manifest chain; current node contracts remain authoritative.
 
-## Acceptance Checklist (.19.2.3.1.2.2.5.5.2.3.4.2.1)
+## Acceptance Checklist (.19.2.3.1.2.2.5.5.2.3.4.2.3.3.2.1)
 
-- [x] **ROOT CAUSE (WHY + WHERE)** — `git log -S` identifies ca8ea0365
-  as the task's bounded acceptance-history introduction. The completed
-  predecessor reaches 7173 live lines; further admission decomposition and
-  evidence would cross the existing rollover milestone. Completed acceptance
-  narration, including its component evidence join, is the removable suffix;
-  live ownership and the selected protocol must stay immediately available.
-- [x] **ADDRESSED (verified)** — Re-derive the complete predecessor and suffix
-  using independent Git blob retrieval and SHA-256/line/byte/heading counts.
-  The finite manifest authenticates exact 3d5b80e06, preserves its earlier
-  versioned manifest chain and leaves every prior node ID in the live graph.
-  Completed-node status and contracts stay intact; references to the evidence
-  join now point at version-retrievable history. Falsification: the unchanged
-  production checker accepts an isolated same-volume fixture, then rejects its
-  changed suffix digest with acceptance-history suffix digest mismatch. The
-  real manifest is untouched by that negative control. Durability: tracked
-  manifest, exact Git source, live pointer, checker and this work-unit commit;
-  .artifacts/admission-history-fixture-*.log remain an explicit raw-log gap.
-  The isolated fixture is removed after all outcomes are consumed.
-- [x] **NO REGRESSION** — Current task integrity passes the complete live and
-  retained graph. `knowledge-map: OK` confirms canonical question routing;
-  claim inventory/disposition and staged doctrine gates cover the resulting
-  documentation tree. No runtime code or mdBook behavior changes, and no
-  broader CI or original capture executes. The next leaf implements pure
-  admission records and resource grants before native preparation integration.
-
-## Acceptance Checklist (.19.2.3.1.2.2.5.5.2.3.4.2.2)
-
-- [x] **ROOT CAUSE (WHY + WHERE)** — `git log -S resource_cost` identifies
-  f2c808399 as the gated-pair peak-cost introduction. Its preparer validates
-  one caller inventory but cannot retain aggregate coordinator job, child or
-  descriptor credit. The service only admits transport requests. Admission
-  must establish original timing, logical ancestry and retained resource
-  reservations before their native composition can allocate or fork.
-- [x] **ADDRESSED (verified)** — Re-derive with T1832's literal timing and
-  independent resource census: root plus seven jobs consumes eight slots and
-  sixteen possible direct children; depth eight admits and depth nine rejects.
-  The job and child bounds are coupled by the fixed pair cost; no fabricated
-  seventeenth child is passed to a syscall. Root peak sixteen plus external
-  credit 112 reaches descriptor bound 128; one more rejects. Actual reports,
-  outstanding reservations and pending-delivery job slots remain distinct.
-  Replayed transitions, copied/foreign/inherited ownership, expired original
-  walls, cancellation before allocation, non-monotonic resource release and
-  u32 identity exhaustion reject. Descendants retire before their parent.
-  Falsification: isolated module copies disable only the external capacity
-  comparison or replace unknown job-grant rejection with root lookup. The
-  first fails excess/census assertions; the second fails foreign/copy
-  assertions. Further transition/retirement failures stop those mutated
-  models, which own no native resources. An earlier broad identity-matching
-  mutation also failed by misidentifying a child; the narrowed control above
-  directly exercises the intended ownership boundary. Durability: source,
-  model test, book, canonical fact and this commit preserve the contract and
-  exact mutation recipes. Raw .artifacts/admission-*.log files are local,
-  not durable qualification artifacts. Native accounting/closure proof and
-  signal-safe integration remain a missing leg, owned by sibling .3.
-- [x] **NO REGRESSION** — The selected connection, service, architecture,
-  gated-pair and admission band reports `All tests successful`,
-  `Files=5, Tests=46`. The first band command named a nonexistent wire-test
-  path and stopped before execution; the corrected band uses existing wire
-  consumers. Perl syntax, mdBook render, Knowledge Map, task integrity, claim
-  inventory/dispositions and staged doctrine gates cover the final slice.
-  Browser visual QA remains blocked as recorded in Memory. No original
-  compiler/startup producer or full CI executes, and normal routing is unchanged.
-
-## Acceptance Checklist (.19.2.3.1.2.2.5.5.2.3.4.2.3.1)
-
-- [x] **ROOT CAUSE (WHY + WHERE)** — `git log -S` locates 467a40261's
-  constructor, where entropy and mkdir precede the returned endpoint owner.
-  Its caller cannot retain that owner before effects or recover it after an
-  interrupted successful return. Aggregate native admission needs separate
-  preparation/start custody and an allowance for transient directory handles.
-- [x] **ADDRESSED (verified)** — Re-derive with T1833's independent native
-  allocation census: prepared owners hold no resource; ready runs hold the
-  listener and directory anchor; saved cwd plus entries iterator reaches four
-  descriptors during construction. Cleanup reaches three after the listener
-  closes, retaining two scratch descriptors beside the directory anchor. Weak
-  observers inspect actual live handles without prolonging local scopes on
-  exception. Six seal-failure cuts retain the first cause, original cwd and
-  cleanup, with no new endpoint path or observed live handle. Real creator
-  USR1 queued at entropy, listener and saved-cwd cuts executes only after
-  publication; the interrupted owner retains both handles and removes its
-  exact path. Copied observations cannot change cleanup evidence. Falsify:
-  isolated suppression of only construction SIG_BLOCK fails seven signal
-  publication assertions; a declared peak of three fails the independent
-  four-handle census. Both mutated tests finish with endpoint rescue/cleanup
-  consumed. Initial sandbox-only controls stopped at socket bind and are
-  excluded; admitted guarded reruns reached the intended oracles. Durability:
-  Endpoint, T1833, book, canonical fact and this commit retain the derivation
-  and exact mutation substitutions. Local .artifacts/retained-endpoint-*.log
-  files are not durable artifacts. Ledger grant binding, original admission
-  wall checks and full native owner composition remain sibling .3; Linux
-  execution is still a missing platform leg.
-- [x] **NO REGRESSION** — The selected endpoint/connection/service, architecture,
-  descriptor-inventory, admission and retained-endpoint band reports
-  `All tests successful`, `Files=7, Tests=118`. A final sequential endpoint
-  pair avoids shared-directory census overlap with the mutation controls and
-  passes Files=2, Tests=16. Existing convenience-constructor, context, cwd,
-  umask, signal selection and hostile filesystem controls remain green.
-  Syntax, book render, task/Knowledge Map/claim checks and staged doctrines
-  cover the final slice. No original capture or full CI runs; browser visual
-  QA remains blocked separately in Memory.
-
-## Acceptance Checklist (.19.2.3.1.2.2.5.5.2.3.4.2.3.2)
-
-- [x] **ROOT CAUSE (WHY + WHERE)** — `git log -S` identifies ec277e682's
-  ReservedJob preparation, which receives an already allocated pair before
-  constructing its own state. GatedPair likewise receives an already allocated
-  reservation. A coordinator cannot retain the complete graph before native
-  effects through those convenience calls alone. Original deadline checking
-  also preceded a sequence of allocations rather than every individual pipe.
-- [x] **ADDRESSED (verified)** — Re-derive with T1834: all original records
-  are unallocated and observable before the first pipe; allocation preserves
-  their reference identities. Eight native pipe operations leave fifteen open
-  ends after stdin-writer closure, within the unchanged conservative pair
-  reservation. Every allocation failure cut and every before-next-pipe expiry
-  closes independently retained actual handles and preserves the first cause.
-  Closed borrowed inventory rejects before owned allocation; cancellation
-  before allocation starts no resource. Actual creator USR1 at command and
-  reservation cuts sees all levels prepared before restoration interrupts
-  return. The retained job rejects start and settles bounded cleanup. Each
-  convenience constructor also closes its local effects after an interrupted
-  return. Fork/wait/child-signal operations are trapped in this descriptor
-  test, while T1831 now independently observes both real children and exact
-  waits through the retained-record path. Falsify: disable only the shared
-  per-allocation deadline comparison, producing sixteen failed expiry/count
-  assertions; suppress only preparation SIG_BLOCK, producing five failed
-  publication assertions and six failed convenience-return controls. The
-  latter's independent observer explicitly closes its remaining actual
-  handles before reset/exit. Initial fixture failures came from a helper
-  named reset resolving to CORE::reset; renaming it restores the intended
-  per-case counters, and no trapped fork ever reached the kernel. Durability:
-  native components, T1834/T1831, book, canonical fact and this commit retain
-  the contract and mutation recipes. Local .artifacts/retained-job-*.log files
-  remain a raw-log durability gap. Aggregate ledger/service binding and Linux
-  execution are still missing legs with their existing owners.
-- [x] **NO REGRESSION** — The selected architecture, receipt-observation,
-  reservation, gated-pair, capture, closure, reserved-job/receipt, hostile
-  command/reservation, descriptor, admission and preparation band reports
-  `All tests successful`, `Files=13, Tests=310`. The final preparation test
-  and explicit mutation-rescue revision pass Files=1, Tests=5. Perl syntax,
-  book render, task/Knowledge Map/claim checks and staged doctrine gates cover
-  the final slice. No original producer, caller routing or full CI runs.
-  Browser visual QA remains separately blocked in Memory.
-
-## Acceptance Checklist (.19.2.3.1.2.2.5.5.2.3.4.2.3.3.1)
-
-- [x] **ROOT CAUSE (WHY + WHERE)** — `git log -S` locates 17da1dd47's
-  retained endpoint start and 83c0647e2's pure admission grants. Neither alone
-  binds native run allocation to the original root record or accounts for
-  steady descriptors together with retained cleanup scratch. Coordinator now
-  supplies that creator-bound composition without any process launch path.
-- [x] **ADDRESSED (verified)** — Re-derive with T1835's native descriptor and
-  bind observers, which require a fresh admitted operation check before each
-  observed effect. Root preparation initially charges sixteen descriptors;
-  two steady and two distinct scratch credits raise the conservative total
-  to twenty before native effects. Native peak is four, steady actual usage
-  is two, and unused root/scratch reservations remain eighteen. Failure holds
-  all charges until exact endpoint cleanup and root retirement. An unexpected
-  native directory entry makes closure fail and retains charges/root ownership
-  even after descriptor closure; identity-checked fixture teardown cannot forge
-  completion. Capacity
-  refusal after one credit leaves its declared outstanding reservation.
-  Copies, aliased resource roles, inherited ownership and cancellation reject
-  before effects. Original expiry is checked inclusively at entropy open/read,
-  run mkdir, anchor/socket/cwd/entries creation and bind; cleanup keeps the
-  original deadline plus the selected shared grace when execution has expired.
-  Actual pending creator USR1 sees open native ownership and reconciled
-  grants before interrupting return. The owner rejects context afterward and
-  removes its exact endpoint. Falsification: omitted Endpoint allocation
-  checks fail the independent fresh-entropy guard; a no-op Admission liveness
-  check fails revoked/expired-root controls; accepting copied descriptor
-  grants fails the independent zero-allocation expectation. The bounded
-  controls consume all endpoint cleanup, with fork paths trapped. The initial
-  context assertion assumed an incorrect prefix; it now decodes only the
-  parent predicate, and temporary identities in that local failed log were
-  redacted. Durability: Coordinator/Endpoint/Admission, T1835, book, canonical
-  fact and this commit retain the derivation and precise mutation mechanisms.
-  Local .artifacts/coordinator-run-*.log files remain a raw-log durability gap.
-  Native jobs, accepted peers, full lifecycle and Linux remain separate open
-  qualification legs; no complete coordinator guarantee is inferred.
-- [x] **NO REGRESSION** — The sequential endpoint, connection, service,
-  architecture, native descriptor, admission, retained endpoint/preparation
-  and run-ownership band reports `All tests successful`,
-  `Files=9, Tests=130`. Syntax, rendered book inspection, task/Knowledge Map,
-  claim inventory/dispositions and staged doctrine checks cover the slice.
-  No original producer, normal caller route, full CI or push executes.
-  Browser visual QA remains separately blocked in Memory.
+- [x] **ROOT CAUSE (WHY + WHERE)** — `git log -S` identifies b803ba269
+  as the preceding bounded rollover. The committed task is now 7143 lines;
+  native job decomposition and evidence need room before the existing rollover
+  milestone. Only completed acceptance narration moves to exact Git retrieval.
+- [x] **ADDRESSED (verified)** — Re-derivation through independent git cat-file
+  reconstruction matches the manifest's complete source and suffix hashes,
+  bytes, lines and five headings. The 188-line suffix is 13266 bytes; every
+  live node remains, and the exact predecessor retains the earlier manifest
+  chain. Falsification: the unchanged production checker accepts a complete
+  isolated fixture and rejects its altered suffix hash as the sole failure.
+  Initial fixture preflights lacked the archive registry and correct Git root;
+  neither counts as the digest control. The corrected fixture is removed.
+  Durability: tracked finite manifest, exact Git objects, current ownership,
+  checker and this commit; local coordinator-job-history logs are a raw-log gap.
+- [x] **NO REGRESSION** — Task integrity passes with the full retained graph;
+  `knowledge-map: OK`, claim inventory/dispositions and staged doctrines check
+  current routing and bounded documents. No runtime, book behavior, compiler
+  capture, full CI or push changes. The native job owner now separates root
+  preparation from gated root/nested fork qualification without dropping scope.
