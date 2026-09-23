@@ -300,6 +300,18 @@ sub listener {
     return $self->{listener};
 }
 
+# Borrowed inventory, including the directory anchor that must not leak into
+# either child role. Inspection grants no cleanup authority or new descriptor.
+sub handles {
+    my ($self) = @_;
+    _fail('unexpected handles arguments') unless @_ == 1;
+    _fail('invalid or inherited endpoint inventory')
+        unless ref($self) eq __PACKAGE__ && $self->{owner_pid} == $$;
+    return [grep { defined(fileno($_)) }
+        map { $self->{$_} } grep { defined($self->{$_}) }
+        qw(listener socket directory_handle)];
+}
+
 sub connect_context {
     _fail('expected one inherited context') unless @_ == 1;
     my $context = FSM::Support::ProcessSupervisor::Wire::decode_context($_[0]);

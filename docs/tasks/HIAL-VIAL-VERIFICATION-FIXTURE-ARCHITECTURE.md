@@ -3555,10 +3555,54 @@ decomposes the architecture needed to move beyond that bounded foundation.
   Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.3.5.2.2: qualify reservation death around handoff`
 
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.4`
-  Status: `pending`
+  Status: `active`
   Goal: `Integrate bounded root ownership records, admission service and fair process advancement.`
   Acceptance: `After .3, compose the qualified codec, endpoints and gated shared engine into the selected private root coordinator. Validate parent/run authority, reserve all resources before fork, publish ACCEPT before exec release and service all job control/stream/deadline work without starvation. Reject lost or malformed admission without unregistered execution, preserve adapter policy and first failure, and prove private service partial-publication cleanup. Do not enable nested caller routing until sibling .5.5.2.4; complete closure and independent end-to-end qualification remain .5.5.2.5 and .5.5.3.`
-  Verification: `The gated reserved-group mechanisms and independent current-host handoff qualification in sibling .3 are complete. Decompose this integration leaf into retained admission/publication and fair lifecycle work before implementation; no caller routing is enabled.`
+  Verification: `Sibling .3 is independently qualified on the current host. Children separately own descriptor inventory, bounded retained admission, ACCEPT delivery, streaming capture, fair owner integration and hostile qualification. Service currently stops at taken requests, Connection at bounded frames and ReservedJob at retained full capture; composition must add the selected ownership/streaming interfaces before any routing.`
+  Commit: `pending`
+
+  Children: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.4.1, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.4.2, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.4.3, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.4.4, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.4.5, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.4.6`
+
+- ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.4.1`
+  Status: `done`
+  Goal: `Expose complete borrowed run-private descriptor inventories for admission and child closure.`
+  Acceptance: `Add creator-bound inventories for endpoint, service and reserved jobs that include every owned live descriptor, including endpoint directory handles and transferred capture, while excluding closed handles and borrowed close inventories. No new authority, close or duplication occurs on inspection. Qualify real handles through prepare/launch/transfer/retire, independent descriptor/EOF observations and inherited-owner rejection; preserve inactive and legacy behavior.`
+  Verification: `Endpoint, Service and ReservedJob now return creator-bound borrowed inventories of retained live handles, including directory anchors, accepted peers and transferred capture. Closed records/handles and borrowed close inventories do not add entries. T1831 independently records actual sealing/pipe allocations and native fork/wait outcomes, compares handle identities through preparation/transfer/closure, and requires both real child roles to close the full foreign inventory before handoff acknowledgment. Inherited objects reject inspection; the parent retains its own descriptors, every actual wait is consumed and the exact endpoint disappears. Removing the directory anchor fails census and native pre-exec handoff; omitting transferred capture fails the ready-job oracle. The combined focused band passes Files=15, Tests=362. Inspection adds no authority or resource reservation; bounded admission remains sibling .2.`
+  Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.4.1: expose owned private descriptor inventories`
+
+- ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.4.2`
+  Status: `pending`
+  Goal: `Retain bounded root and nested job admission before resource creation.`
+  Acceptance: `After .1, create private root ownership records with monotonic nonreused IDs, logical parents/depth and ancestor-clipped original deadlines. Reserve child and descriptor capacity before token generation, allocation or fork; include listener/directory/accepted sockets and concurrent job handles in peak accounting. Failed admission retains ownership through exact cleanup; terminal delivery jobs retain their job slots. Prove each selected inclusive bound and excess without actual fake-identity syscalls; no exec release or caller routing.`
+  Verification: `Pending the preceding integration child.`
+  Commit: `pending`
+
+- ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.4.3`
+  Status: `pending`
+  Goal: `Bind accepted connection ownership to complete ACCEPT delivery before exec.`
+  Acceptance: `After .2, extend private service/connection lifecycle with explicit retained job association, admission rechecks and complete publication observation. Register new parent authority and replace only the private environment context in the execution snapshot. Partial ACCEPT, EOF, cancellation, repeated/foreign messages and expired admission cancel the recorded gated job without release. Separate closing admission from final endpoint removal and preserve original execution versus bounded closure/delivery walls. Qualify actual sockets and command witnesses; no nested adapter routing.`
+  Verification: `Pending the preceding integration child.`
+  Commit: `pending`
+
+- ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.4.4`
+  Status: `pending`
+  Goal: `Forward bounded nested streams without retaining a second complete transcript.`
+  Acceptance: `After .3, extend shared reserved capture with explicit bounded stream ownership/credit while root capture keeps the closed public facade. Count every raw byte once, preserve separate offsets and aggregate admitted prefix, pause only backpressured stream reads, and retain control/deadline progress. Deliver stream endings before terminal metadata without resetting the original wall or duplicating nested full stdout/stderr. Qualify binary chunks, exact limits, truncation/reordering refusals and first-failure truth; legacy capture remains unchanged.`
+  Verification: `Pending the preceding integration child.`
+  Commit: `pending`
+
+- ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.4.5`
+  Status: `pending`
+  Goal: `Compose fair inactive root advancement and finite process ownership.`
+  Acceptance: `After .4, compose retained records, service, gated jobs and stream transport into one creator-owned root loop. Rotate jobs, bound per-pass accept/read/write work, poll every execution/ancestor/cancellation deadline and caught signal, and revoke authority before cleanup. All affected jobs share one remaining TERM/KILL envelope; retirement/delivery/endpoint cleanup preserve separate process, subtree and client facts. Restore original signal behavior after finite cleanup; do not activate sealed caller routing.`
+  Verification: `Pending the preceding integration child.`
+  Commit: `pending`
+
+- ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.4.6`
+  Status: `pending`
+  Goal: `Independently qualify inactive coordinator admission and lifecycle cuts.`
+  Acceptance: `After .5, use independent real fork/wait/group/descriptor/output/socket oracles for full and partial publication, saturated output with control progress, root/nested admission and parent loss, first failure and exact resource closure. Use models only for identity exhaustion/reuse/unreapable targets and finite boundary excess. Falsify lost publication, leaked descriptors, reordered/truncated streams and serial cleanup grace. Keep original startup, Linux and end-to-end routed adapters separate; only completed evidence admits sibling .5.5.2.4.`
+  Verification: `Pending the preceding integration child.`
   Commit: `pending`
 
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.4`
@@ -4245,7 +4289,7 @@ decomposes the architecture needed to move beyond that bounded foundation.
 
 ## Current Frontier
 
-Current frontier: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.4` integrates the qualified inactive process components with bounded root ownership, admission publication and fair advancement. Decompose this coordinator leaf before implementation; current-host component handoff qualification is complete. Complete nested cleanup and independent qualification before the fixed capture driver resumes. Preserve original failures, the spent compiler workspace, source-only driver commit and full-CI/push gates.
+Current frontier: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.4.2` implements retained root/nested admission with original deadlines and pre-fork resource capacity, using the qualified descriptor inventories. Publication, stream forwarding, fair lifecycle composition and independent qualification remain separate integration children; current-host component handoff qualification is complete. Complete nested cleanup and independent qualification before the fixed capture driver resumes. Preserve original failures, the spent compiler workspace, source-only driver commit and full-CI/push gates.
 
 Architecture audit `.1` is complete. Decision `0032` selects one public
 `.vial` source language, private immutable `VIALSemanticIR` and
@@ -7095,3 +7139,35 @@ review passes. Original startup, Linux and complete nested closure stay open.
   doctrines gate this qualification. No production code or caller routing
   changes. Inactive coordinator integration is next; original startup, Linux,
   nested qualification and full CI/push remain gated.
+
+## Acceptance Checklist (.19.2.3.1.2.2.5.5.2.3.4.1)
+
+- [x] **ROOT CAUSE (WHY + WHERE)** — `git log -S` identifies 5f8be37f1
+  as the inactive service request-handoff introduction. Service owns its
+  endpoint and accepted sockets but exposed no complete handle inventory;
+  ReservedJob capture transfer also moves handles out of GatedPair. Counting
+  or closing only the listener and pair would omit the directory anchor,
+  accepted peers and transferred capture at the next integration boundary.
+- [x] **ADDRESSED (verified)** — Re-derive from T1831's independently retained
+  actual seal/pipe handles and native fork/wait outcomes. Inventories borrow
+  original references through preparation, accepted peers, transfer and closure.
+  Real reservation and command children inspect the complete independently
+  retained foreign set before handoff acknowledgment; every inherited inventory
+  API rejects while the parent keeps its descriptors. Actual output, consumed
+  waits, final handle closure and exact endpoint absence complete the oracle.
+  Falsification: omitting the directory anchor fails both the retained census
+  and pre-exec child handoff; omitting transferred capture fails the ready-job
+  descriptor/reference assertions. The failed anchor control still settles its
+  exact child before bounded fixture cleanup; neither mutation creates foreign
+  signal targets. Durability: tracked interfaces/T1831, book/fact and this
+  work-unit commit. Ignored mutation source and logs under
+  .artifacts/private-descriptors-* remain a named raw-evidence archive gap.
+- [x] **NO REGRESSION** — The guarded combined band reports
+  `All tests successful`, `Files=15, Tests=362` in
+  .artifacts/private-descriptors-final-band.log. Syntax, book HTML, task/claim
+  joins, Knowledge Map and staged doctrines gate this slice. Legacy routing,
+  protocol limits and retained compiler/proxy evidence are unchanged. Borrowed
+  inventory is neither admission credit nor closure proof; the next child owns
+  bounded resource accounting before any coordinator launch. Initial doc
+  preflight rejects an overlong card line and an unclosed task-field delimiter;
+  both are corrected before staging, without widening document bounds.

@@ -297,6 +297,16 @@ sub counts {
     return {parents => scalar keys %{$self->{parents}}, connections => scalar @{$self->{order}},
         open => scalar grep { $_->{state} ne 'closed' } values %{$self->{records}}};
 }
+
+# The service owns the endpoint and accepted sockets, including peers whose
+# requests have been handed off. Closed outcomes retain slots but no handle.
+sub handles {
+    _error('unexpected handles arguments') unless @_ == 1;
+    my ($self) = @_; _owner($self);
+    return [@{$self->{run}->handles}, grep { defined($_) && defined(fileno($_)) }
+        map { $self->{records}{$_}{io}->handle } @{$self->{order}}];
+}
+
 sub failure {
     _error('unexpected failure arguments') unless @_ == 1;
     my ($self) = @_; _owner($self);

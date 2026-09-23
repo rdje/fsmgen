@@ -720,6 +720,14 @@ grants no launch or release authority. Stage models and an ordinary Perl child
 qualify this boundary; they do not authenticate kernel birth, establish complete
 stage transport or qualify the retained compiler/proxy captures.
 
+The coordinator can now borrow creator-bound descriptor inventories from the
+endpoint, service and reserved job. They include the endpoint directory anchor,
+accepted sockets and transferred capture streams, and exclude closed handles
+and borrowed close lists. Independent children verify the complete foreign set
+is closed before handoff acknowledgment. Inspection duplicates no handle and
+grants no admission credit or cleanup authority. Aggregate resource reservation
+still belongs to the next coordinator integration step.
+
 Normal callers retain the existing own-group supervisor. Aggregate coordinator
 admission, nested routing and complete
 subtree qualification still have separate open owners. These private components
@@ -728,7 +736,7 @@ Their tests exercise the current host; Linux qualification remains open.
 Re-run the bounded component controls with:
 
 ```bash
-scripts/run_with_ram_guard.sh -- prove -Iperl -It/lib t/1823-process-group-reservation.t t/1824-process-gated-pair.t t/1825-process-capture-stream-ownership.t t/1826-process-group-closure.t t/1827-process-reserved-job.t t/1828-process-reserved-receipt.t t/1829-process-unjoined-closure.t t/1830-process-reservation-death.t
+scripts/run_with_ram_guard.sh -- prove -Iperl -It/lib t/1823-process-group-reservation.t t/1824-process-gated-pair.t t/1825-process-capture-stream-ownership.t t/1826-process-group-closure.t t/1827-process-reserved-job.t t/1828-process-reserved-receipt.t t/1829-process-unjoined-closure.t t/1830-process-reservation-death.t t/1831-process-private-descriptors.t
 ```
 
 For native stopped-child observations, decode `${^CHILD_ERROR_NATIVE}` with

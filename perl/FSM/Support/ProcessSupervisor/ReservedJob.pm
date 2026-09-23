@@ -224,6 +224,15 @@ sub observation {
             ? {%{$self->{state}{first_failure}}} : undef};
 }
 
+# Return only this job's owned live handles. Pair close_handles and the shared
+# reader's streams are borrowed aliases; transferred capture belongs here.
+sub handles {
+    my ($self) = @_; _owner($self);
+    _error('unexpected handles arguments') unless @_ == 1;
+    return [grep { defined(fileno($_)) } @{$self->{pair}->handles},
+        @{$self->{pair}->reservation->handles}, values %{$self->{received}}];
+}
+
 sub finished_job {
     my ($self) = @_; _owner($self);
     _error('result requires a finished job')
