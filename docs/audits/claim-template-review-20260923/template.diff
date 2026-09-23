@@ -1,0 +1,154 @@
+--- local-neutral-body
++++ selected-template
+@@ -34,6 +34,13 @@
+ If you remember one rule: **re-derive · falsify · make durable — three different questions, in that
+ order.**
+ 
++⛔ **State every rule in domain-free terms first; an example is an instance, never the statement.**
++If an illustration needs machinery a reader may not have — a scheduler, a GPU, a query planner — the
++rule above it must already be complete without it, and the illustration must be *labelled* as an
++instance so a reader in another domain knows they may skip it. This applies to the rules you write
++from this standard as much as to the ones in it: a rule stated only through an example is a rule only
++its author can apply.
++
+ ---
+ 
+ ## 1. The problem: "check it again" does not work
+@@ -71,6 +78,7 @@
+ | a hash of the inputs | stale inputs | ❌ every logic bug downstream of them |
+ | tests written from the spec, over an implementation written from the same spec | typos | ❌ **every misreading of the spec** |
+ | a ticked checklist box | "I forgot the step" | ❌ the step being done wrong |
++| **a per-X fact checked against per-Y data**, where Y *contains* X | dropped items, wrong values | ❌ **every item whose own answer differs from its container's** — and the check reproduces perfectly while getting it wrong |
+ | **per-bucket agreement with an independent source** | ✅ misassignment, redistribution, wrong bucketing | genuinely little |
+ 
+ **The general form: a check and the thing it checks must not share a parent.** When the test and the
+@@ -86,6 +94,18 @@
+ 
+ Not *"do I remember measuring this"*, and not *"is it written consistently in three places"* —
+ consistency propagates errors faithfully. Run the command; keep the output.
++
++- ⛔ **Before re-deriving, ask what you are re-deriving.** A command that reproduces reliably still
++  answers only the question it was given. When your claim is about an item and your data is about
++  that item's **container** — a row and its table, a test and its suite, a member and its group — the
++  container's answer is an over-approximation, and the check will confirm it faithfully. **Match the
++  granularity of the evidence to the granularity of the claim, and say which level you used.**
++  Measured in the reference deployment: a per-item property checked against its container's attribute
++  reported **8 failures, all 8 false**; moved to the item's own level, the same population reported
++  **0**. Every leg passed. The defect was upstream of all three.
++- **When a check goes red, attribute it by revert-and-re-apply, not by reading.** Restore the prior
++  state, confirm the check passes, re-apply, confirm it fails. One minute, and it replaces an
++  argument about whose change it was with a fact — including the case where the answer is *yours*.
+ 
+ - Applies to numbers you are **quoting from your own project's documentation**. In the reference
+   deployment a live status line had been stale in **two of its three numbers** for days: everyone
+@@ -95,12 +115,27 @@
+ 
+ ### Leg 2 — FALSIFY. What would make this false, and is there an oracle you did not build?
+ 
+-- **Name the competing hypothesis, then find evidence that separates them.** "10 families, 1 symbol"
+-  is equally consistent with *the linker merged them* and *this family's copy was inlined away*. A
+-  symbol census cannot separate those; a **call-target address** can. ⛔ If your evidence is
+-  consistent with both hypotheses, you have not tested — you have illustrated.
+-- **Prefer an oracle you did not build.** A profiler's own per-symbol table caught an 8× error that
+-  the author's own control had passed. Look for one already sitting in your inputs; it is free.
++- **Name the competing hypothesis, then find evidence that separates them.** Two explanations that
++  predict the same observation are not distinguished by *more* of that observation. ⛔ If your
++  evidence is consistent with both hypotheses, you have not tested — you have **illustrated**.
++  *Instance (reference deployment): "10 units, 1 emitted definition" is equally consistent with "the
++  toolchain merged them" and "this unit's copy was eliminated". A census of definitions cannot
++  separate those; a record of which definition each call actually reaches can.*
++- ⛔ **A claim about a SET carries its enumeration, in BOTH directions.** *"Nothing checks X"*, *"no
++  test covers Y"*, *"this is the only caller"* — each is refuted by a single counterexample, so it is
++  a census, not an impression, and the command that enumerated it belongs beside it. **The mirror is
++  equally wrong**: a search returning N hits gives you a **population**, not a count of defects.
++  Classify the N before publishing it, or you have traded a false negative for a false positive.
++  Measured in the reference deployment: the same session published *"nothing does X"* (refuted by an
++  existing mechanism found on the first look) and nearly published a raw search count of **62** as a
++  defect class that classification reduced to **3**, of which **1** was actionable.
++- **Prefer an oracle you did not build.** Look for one already sitting in your inputs; it is free.
++  An independent instrument's own breakdown caught an 8× error that the author's own control had
++  passed. ⭐ **The cheapest such oracle is your own project's history**: before publishing a finding,
++  check whether a case of the same shape has already been adjudicated. If it was ruled the other way,
++  your finding must **name the difference** — and if you cannot name one, the earlier ruling wins.
++  Measured: a finding was published about one item while its **sibling items under the same parent**
++  had been adjudicated the opposite way one commit earlier, and nothing distinguished them.
+ - **Make the control go RED on purpose.** A control never observed failing is not known to work. A
+   21-case suite became trustworthy only once it was run against the *old, broken* predicate and
+   correctly missed **8 of 21**.
+@@ -138,6 +173,46 @@
+   once; the thing it contradicts has at least been read. A reviewer who forgets this writes *"your
+   number is wrong"* when the correct sentence is *"one of these two is wrong, and it might be mine."*
+ 
++### 4.1 How a published claim is GRADED when it is challenged
++
++Agreed with the director, 2026-08-30, and the reason it is written down is that the legs above say
++how to *check* a claim and said nothing about how to *score* one that has already shipped.
++
++**The acceptance test the author must be able to pass in one word.** When asked *"do you stand by
++it?"*, the answer is **yes**, immediately, with no keyboard. A re-audit triggered by that question
++is itself the evidence the claim was published before it was earned — the cost of the gap is paid by
++the reader, in trust, not by the author.
++
++**The three grading axes**, in the order a challenge exposes them:
++
++| axis | standard | why |
++|---|---|---|
++| **PROSE** | must stay true across every re-verification | it is the claim; the numbers are only its evidence. Prose that flips was never established |
++| **NUMBER** | must stay **close on the aspect it measures** | a judgement number supports a qualitative call, and re-deriving it a different-but-defensible way should not move the decision |
++| **NAMED INSTANCE** | **exact — no tolerance band** | an aggregate may be an estimate; a named row is an assertion, and it is the first thing a reader checks |
++
++⛔ **Grade a re-audit on all three, separately.** *"Two of five were wrong"* is the lazy score and it
++is usually the wrong one: it over-punishes a finding whose rate moved 3.6 points and under-punishes
++the one that named a row which disagrees with nothing.
++
++**Two riders, and the first is a correction to the usual framing of *why* numbers move.**
++
++1. ⛔ **Model-authored numbers here are DEFINITIONAL, not stochastic.** *"Re-verify N times and you
++   get N values"* is true of generated prose and **false** of a number produced by a command:
++   `git grep` returns the same count every run. When such a number moves, it is because the
++   POPULATION or the PATTERN changed — the two numbers answer **different questions**, and one of
++   them is not the reader's. ⇒ the author's own acceptance test stays **same question,
++   re-derivable, deterministic**; *close enough* is the READER's tolerance, never the author's
++   target, because an author who aims at *close enough* stops noticing when a number silently
++   changes meaning.
++2. ⭐ **Tolerance is TIERED, because two classes of number live in a repository like this.**
++   A **judgement** number supports a call and ±a few points changes no decision — trajectory-grade.
++   A **contract** number *is* the claim: a corpus pass count behind a release statement, a doctrine
++   count two meta-checks hold equal, an AST-dump schema version in a shipped integration contract.
++   For that class a small error is the entire defect — the founding example is a parser book
++   publishing schema `10` and `13` while its contract carried `26`. **Trajectory-grade is never
++   extended to a contract number: those are exact and gate-held, or they are not published.**
++
+ ---
+ 
+ ## 5. Mechanizing it
+@@ -165,7 +240,7 @@
+ ```
+ 
+ ⛔ **Name every input the ARTIFACT depends on, not every input the HEADLINE METRIC depends on.** A
+-baseline whose identity covered grammar + binary + inputs was still silently staled by a change to
++baseline whose identity covered its source inputs and the binary that consumed them was still silently staled by a change to
+ *the instrument that wrote it* — the identity was sound for the headline number and insufficient for
+ the file.
+ 
+@@ -181,6 +256,9 @@
+ - ❌ Correcting a stale constant to a fresh constant and changing nothing about *why* it went stale.
+ - ❌ A comment reading *"do not edit by hand — re-derive it"*. That is prose; write the check.
+ - ❌ A point estimate for a stochastic quantity.
++- ❌ *"Nothing checks X"* published without the command that enumerated the checkers.
++- ❌ A search hit-count published as a defect count, unclassified.
++- ❌ A claim about an item, evidenced by data about that item's container.
+ - ❌ Treating your own re-derivation as automatically authoritative over the thing it contradicts.
+ 
+ ---
+@@ -195,6 +273,10 @@
+ 4. **Fire every control**: run each against a known-bad input and confirm it goes RED. Delete or fix
+    any that cannot.
+ 5. Add the claim tag (§5A) to your review or pull-request template.
++6. ⭐ **Read §1–§6 substituting your own domain for every example.** Any rule you cannot restate in
++   your project's terms is **under-specified for you** — the example is carrying weight the rule
++   should carry. Rewrite that rule for yourself before adopting it, or you will apply it only to
++   cases that happen to look like the illustration.
+ 
+ ---
+ 

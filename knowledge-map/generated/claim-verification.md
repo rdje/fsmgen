@@ -1,7 +1,7 @@
 # Knowledge Map: `claim-verification`
 
 > **AUTO-GENERATED — DO NOT EDIT.** Return to the [Knowledge Map](../../KNOWLEDGE_MAP.md).
-> **4** facts · **52** uniquely owned question entries.
+> **4** facts · **53** uniquely owned question entries.
 
 ## Questions → facts
 
@@ -47,6 +47,7 @@
 - q="where are inventoried claim candidates dispositioned?" · facts=[claim-verification-candidate-dispositions](../../docs/knowledge/claim-verification-candidate-dispositions.md)
 - q="where are missing claim-evidence legs assigned to repair tasks?" · facts=[claim-verification-candidate-dispositions](../../docs/knowledge/claim-verification-candidate-dispositions.md)
 - q="where are unwatched claims and untracked producers inventoried?" · facts=[claim-verification-current-surface-inventory](../../docs/knowledge/claim-verification-current-surface-inventory.md)
+- q="where is the claim template review?" · facts=[claim-verification-record-enforcement](../../docs/knowledge/claim-verification-record-enforcement.md)
 - q="where is the claim verification registry?" · facts=[claim-verification-record-enforcement](../../docs/knowledge/claim-verification-record-enforcement.md)
 - q="where is the current-surface quantitative claim inventory?" · facts=[claim-verification-current-surface-inventory](../../docs/knowledge/claim-verification-current-surface-inventory.md)
 - q="which backlog numerals are identifiers or example values?" · facts=[claim-verification-candidate-dispositions](../../docs/knowledge/claim-verification-candidate-dispositions.md)
@@ -83,7 +84,7 @@ _Claim records use one finite manifest-addressed registry set_
 
 ### claim-verification-record-enforcement
 
-_Claim records are bounded exact blocks with three structurally distinct legs_
+_Claim records bind exact blocks to three structurally distinct legs_
 
-- **date:** 2026-08-20 · **status:** current
+- **date:** 2026-09-23 · **status:** current
 - **source and verification:** [`docs/knowledge/claim-verification-record-enforcement.md`](../../docs/knowledge/claim-verification-record-enforcement.md)

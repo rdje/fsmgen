@@ -1,0 +1,212 @@
+{
+  "checker_changed": false,
+  "date": "2026-09-23",
+  "diff_path": "template.diff",
+  "dispositions": [
+    {
+      "hunks": [
+        "H1",
+        "H8"
+      ],
+      "id": "domain_free_rules",
+      "rationale": "State portable rules completely before labeled examples; apply the same rule to local adoption text.",
+      "selection": "accept"
+    },
+    {
+      "hunks": [
+        "H2",
+        "H3",
+        "H7"
+      ],
+      "id": "evidence_granularity",
+      "rationale": "Name the observation unit and population. Suite, group or container evidence cannot establish a claim about each member without a proven mapping.",
+      "selection": "accept"
+    },
+    {
+      "hunks": [
+        "H3"
+      ],
+      "id": "reversible_attribution",
+      "rationale": "Use controlled before/after or isolated reconstruction when safe and meaningful. Preserve user work and first-failure evidence; do not replay a spent or forbidden capture. If the contrast cannot be obtained, state the attribution gap. No mandatory one-minute timing claim.",
+      "selection": "adapt"
+    },
+    {
+      "hunks": [
+        "H4"
+      ],
+      "id": "separating_hypotheses",
+      "rationale": "State the competing hypotheses in domain-free terms and choose evidence that separates them; label the toolchain example as an illustration.",
+      "selection": "accept"
+    },
+    {
+      "hunks": [
+        "H4",
+        "H7"
+      ],
+      "id": "bidirectional_set_census",
+      "rationale": "Retain the scoped enumeration and classify each candidate before claiming absence, uniqueness or a defect count. Hits are a population, not automatically defects.",
+      "selection": "accept"
+    },
+    {
+      "hunks": [
+        "H4"
+      ],
+      "id": "history_as_oracle",
+      "rationale": "Consult prior adjudications and explain differences in source revision, scope, evidence or contract. History raises the burden of proof but does not immunize a demonstrated old error against correction.",
+      "selection": "adapt"
+    },
+    {
+      "hunks": [
+        "H5"
+      ],
+      "id": "instant_affirmation",
+      "rationale": "Do not require an immediate unconditional yes without rechecking. Stand behind the recorded scope, revision, evidence and named gaps; new evidence or a changed context can justify re-audit and correction. Confidence is not verification.",
+      "selection": "reject_literal_wording"
+    },
+    {
+      "hunks": [
+        "H5"
+      ],
+      "id": "challenged_claim_axes",
+      "rationale": "Review prose, the measured quantity and each named instance separately. Evaluate the original claim under its recorded scope and conditions. Exact instance and contract claims require exact evidence; judgment tolerances must be stated and justified before comparison.",
+      "selection": "adapt"
+    },
+    {
+      "hunks": [
+        "H5"
+      ],
+      "id": "deterministic_vs_stochastic",
+      "rationale": "Fixed-input censuses should reproduce exactly. Changed populations, predicates, instruments or environments must be identified. Runtime measurements can be stochastic and still need intervals and sampling; being emitted by a command does not make a quantity deterministic.",
+      "selection": "adapt"
+    },
+    {
+      "hunks": [
+        "H5"
+      ],
+      "id": "tiered_tolerance",
+      "rationale": "Keep contract values and named identities exact; do not silently substitute a nearby value. Qualitative estimates may have an explicit justified tolerance. Preserve decision 0074 incidental-numeral exclusions while retaining their exact semantic contracts.",
+      "selection": "adapt"
+    },
+    {
+      "hunks": [
+        "H6"
+      ],
+      "id": "artifact_inputs_and_examples",
+      "rationale": "Use source-input language instead of grammar-specific language; preserve the requirement to bind the producing instrument as well as every artifact input.",
+      "selection": "accept"
+    },
+    {
+      "hunks": [
+        "H2",
+        "H3",
+        "H4",
+        "H5"
+      ],
+      "id": "reference_deployment_provenance",
+      "rationale": "Do not import another director's assent or deployment measurements as FSMGen authority. Reference examples remain labeled external illustrations; no unobserved local outcome, cost or support claim is adopted.",
+      "selection": "adapt"
+    }
+  ],
+  "hunks": [
+    {
+      "id": "H1",
+      "new_lines": [
+        34,
+        46
+      ],
+      "old_lines": [
+        34,
+        39
+      ]
+    },
+    {
+      "id": "H2",
+      "new_lines": [
+        78,
+        84
+      ],
+      "old_lines": [
+        71,
+        76
+      ]
+    },
+    {
+      "id": "H3",
+      "new_lines": [
+        94,
+        111
+      ],
+      "old_lines": [
+        86,
+        91
+      ]
+    },
+    {
+      "id": "H4",
+      "new_lines": [
+        115,
+        141
+      ],
+      "old_lines": [
+        95,
+        106
+      ]
+    },
+    {
+      "id": "H5",
+      "new_lines": [
+        173,
+        218
+      ],
+      "old_lines": [
+        138,
+        143
+      ]
+    },
+    {
+      "id": "H6",
+      "new_lines": [
+        240,
+        246
+      ],
+      "old_lines": [
+        165,
+        171
+      ]
+    },
+    {
+      "id": "H7",
+      "new_lines": [
+        256,
+        264
+      ],
+      "old_lines": [
+        181,
+        186
+      ]
+    },
+    {
+      "id": "H8",
+      "new_lines": [
+        273,
+        282
+      ],
+      "old_lines": [
+        195,
+        200
+      ]
+    }
+  ],
+  "limits": "Mechanical coverage proves source/diff identity and a declared disposition for each changed hunk; it does not prove semantic judgment or policy implementation.",
+  "local_neutral_sha256": "8f194574ec718749e90a402cf6e4dc6650e44f6185dd194853a54482eef68643",
+  "local_path": "CLAIM_VERIFICATION.md",
+  "local_policy_changed": false,
+  "local_revision": "8542aafd66505ee6e72c318d8d1ae85a166d6b8f",
+  "matches_source_hash_recorded_on": "2026-09-06",
+  "owner": "CLAIM-VERIFICATION-TEMPLATE-REVIEW.1",
+  "schema": "fsmgen.claim_template_review.v1",
+  "selected_sha256": "9f99df25209c43afb74d77e348dd2d0cdb68ce96cf17a4f272ede8328f6046bd",
+  "selected_snapshot": "template.txt",
+  "selected_source": "../pgen/docs/CLAIM_VERIFICATION.md",
+  "selected_source_access": "caller-authorized read-only same-volume input"
+}

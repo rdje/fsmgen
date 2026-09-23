@@ -48,6 +48,7 @@ Only `active` rows are PNT-eligible. Live `docs/tasks/` nodes are authoritative;
 | --- | --- | --- | --- | --- |
 | `LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION` | `active` | `infra/continuity` | `.29` is done; `.12` remains behind director-deferred `.26` | [task](docs/tasks/LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.md) |
 | `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE` | `active` | `verification architecture` | `.6.7.2.2.1` completes independent private receipt review. `.6.7.2.2.2` must resolve nested cleanup/startup ordering before a fixed capture driver; compiler evidence remains retained. | [task](docs/tasks/HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.md) |
+| `CLAIM-VERIFICATION-TEMPLATE-REVIEW` | `active` | `evidence architecture` | `.2` applies the reviewed local evidence rules and contributor guidance | [task](docs/tasks/CLAIM-VERIFICATION-TEMPLATE-REVIEW.md) |
 | `HOSTED-VIAL-REGRESSION-GATE-RESULT` | `active` | `verification architecture` | `.26` retains the failure census and `.28` fixes local/hosted Yosys selection. `.27` awaits exact hosted requalification after startup/full-CI gates and an authorized push | [task](docs/tasks/HOSTED-VIAL-REGRESSION-GATE-RESULT.md) |
 
 | `ISF-SPEC-TEST-INDEX-SYNC` | `active` | `R14` | `.3.2` is blocked on complete guarded-CI qualification after HIAL startup resolution; exact transformation is committed at `f3e7f94dc`. `.3.1` is done with the stale commit/frontier pointer corrected | [task](docs/tasks/ISF-SPEC-TEST-INDEX-SYNC.md) |
@@ -60,7 +61,6 @@ PNT-eligible until explicitly activated or until the roadmap selects that lane.
 
 | Tree | Status | Roadmap lane | Proposed first leaf | File |
 | --- | --- | --- | --- | --- |
-| `CLAIM-VERIFICATION-TEMPLATE-REVIEW` | `proposed` | `evidence architecture` | `.1` reviews the changed director-selected template before any local adoption | [task](docs/tasks/CLAIM-VERIFICATION-TEMPLATE-REVIEW.md) |
 | `DOWNSTREAM-SOURCE-PROVENANCE-CONTRACT` | `proposed` | `downstream paths` | `.1` contract choice | [task](docs/tasks/DOWNSTREAM-SOURCE-PROVENANCE-CONTRACT.md) |
 | `MDBOOK-PARAGRAPH-SPACING` | `proposed` | `rendered readability` | `.5` audits rendered spacing before any formatting repair | [task](docs/tasks/MDBOOK-PARAGRAPH-SPACING.md) |
 | `XIAL-NATIVE-DEVELOPMENT-FRAMEWORK` | `proposed` | `HIAL/VIAL native framework` | `.1` defines the native xIAL framework and signoff boundary | [task](docs/tasks/XIAL-NATIVE-DEVELOPMENT-FRAMEWORK.md) |
