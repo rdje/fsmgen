@@ -147,6 +147,7 @@ answers:
   - "how does an executable program return a private job before fork?"
   - "how does one proof process return a private supervisor job?"
   - "why does receipt admission still issue no permit?"
+  - "how does one receipt permit name the sealed private return?"
 date: 2026-09-23
 status: current
 tags: [tests, subprocess, supervision, task-acceptance, darwin, locality]
@@ -156,4 +157,4 @@ evidence: >-
 reverify: >-
   perl docs/audits/native-proxy-receipt-adapter-20260922/qualify.t
 ---
-History: `1cda3d905723443a353c8ec71b9cd30d6adfc80d:docs/knowledge/test-subprocess-policy-adapters.md`. A sealed private launch returns the finished job after one proof process. Receipt admission still accepts only a closed plan with an unissued permit and refuses execution. No compiler, probe or tool-resolution process runs.
+History: `6213be8fa8029d748a0c789e46b5ca4236d8bffb:docs/knowledge/test-subprocess-policy-adapters.md`. One fresh permit names `FSM::Test::ProcessSupervisor::sealed_supervise_process`, binds the current source revision, and can be consumed once. A second issue and a second consume reject. Replay and live-collector plans issue nothing. Execution stays refused. No compiler, probe or tool-resolution process runs.

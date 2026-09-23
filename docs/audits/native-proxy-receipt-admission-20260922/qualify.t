@@ -15,6 +15,8 @@ use Admission;
 
 my $admit = \&NativeProxyReceiptAdmission::admitted;
 my $execute = \&NativeProxyReceiptAdmission::execution_allowed;
+my $issue = \&NativeProxyReceiptAdmission::issue_permit;
+my $consume = \&NativeProxyReceiptAdmission::consume_permit;
 my $revision = 'b' x 40;
 
 sub admission {
@@ -22,6 +24,7 @@ sub admission {
         source_revision => $revision,
         execution => 'closed',
         permit => 'unissued',
+        sealed_return => NativeProxyReceiptAdmission::sealed_return_name(),
         roles => NativeProxyReceiptAdmission::required_roles(),
         private_fields => NativeProxyReceiptAdmission::required_private_fields(),
         replay_original => 0,
@@ -65,5 +68,27 @@ my $live = admission(); $live->{live_collector} = 1;
 reject('live collector', $live);
 reject('missing plan', undef);
 is(scalar(@rejected), 11, 'every declared rejection remains distinct');
+
+my $unnamed = admission();
+delete $unnamed->{sealed_return};
+is($issue->($unnamed), undef, 'a plan that omits the sealed return issues nothing');
+my $renamed = admission();
+$renamed->{sealed_return} = 'FSM::Support::ProcessSupervisor::supervise_process';
+is($issue->($renamed), undef, 'a public supervisor name issues nothing');
+my $replayed = admission();
+$replayed->{replay_original} = 1;
+is($issue->($replayed), undef, 'original replay issues nothing');
+is($admit->($good), 1, 'issuing nothing leaves the closed plan admitted');
+
+my $token = $issue->($good);
+is(ref($token), 'HASH', 'one fresh permit is issued');
+is($token->{sealed_return}, NativeProxyReceiptAdmission::sealed_return_name(),
+    'the permit names the sealed private return');
+is($token->{source_revision}, $revision, 'the permit binds the current source revision');
+is($token->{uses_remaining}, 1, 'the fresh permit has one use');
+is($issue->($good), undef, 'a second issue is rejected');
+ok($consume->($token), 'the issued token is consumed once');
+ok(!$consume->($token), 'the same token cannot be consumed again');
+is($execute->($good), 0, 'a consumed permit still refuses execution');
 is($forbidden, 0, 'no process or signal attempt');
 done_testing;
