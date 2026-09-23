@@ -3587,11 +3587,11 @@ decomposes the architecture needed to move beyond that bounded foundation.
   Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.4.2.1: seal completed acceptance history before admission`
 
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.4.2.2`
-  Status: `pending`
+  Status: `done`
   Goal: `Implement pure retained job admission and resource grants.`
   Acceptance: `After .1, retain creator-owned root/nested records with monotonic u32 identity, valid logical parents/depth and original ancestor-clipped deadlines. Reserve selected job/child/descriptor capacity before any process or descriptor allocation; distinguish actual retained handles, outstanding reservations and closed outcomes that still occupy job slots. Grants cannot be copied, replayed or transferred to another owner. Qualify inclusive limits, excess, expiry, invalid parent, cancellation and identity exhaustion with independent models and no native fake-PID operations.`
-  Verification: `pending`
-  Commit: `pending`
+  Verification: `Admission now retains creator-bound root/nested job and external descriptor grants before native work. Original ancestor-clipped deadlines, monotonic u32 identities, one-use preparation/start phases, subtree revocation and child-first result retirement are model-qualified. Counts separate outstanding reservations, reported actual resources and retained result slots. T1832 checks selected inclusive limits, excess, expiry, ownership, cancellation and identity exhaustion without native fake-identity operations; disabling descriptor capacity or accepting foreign/copied grants fails its independent expectations. The selected connection/service/architecture/gated-pair/admission band passes Files=5, Tests=46. Native effects, signal-safe binding and interrupted returns remain sibling .3.`
+  Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.4.2.2: retain bounded pure coordinator admission`
 
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.4.2.3`
   Status: `pending`
@@ -4312,7 +4312,7 @@ decomposes the architecture needed to move beyond that bounded foundation.
 
 ## Current Frontier
 
-Current frontier: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.4.2.2` qualifies pure retained admission records and grants after exact acceptance-history rollover. Native preparation/fork custody then joins the qualified descriptor inventories in sibling `.3`. Publication, stream forwarding, fair lifecycle composition and independent qualification remain separate integration children; current-host component handoff qualification is complete. Complete nested cleanup and independent qualification before the fixed capture driver resumes. Preserve original failures, the spent compiler workspace, source-only driver commit and full-CI/push gates.
+Current frontier: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.4.2.3` binds actual preparation and fork custody to pure retained grants and qualified descriptor inventories. Publication, stream forwarding, fair lifecycle composition and independent qualification remain separate integration children. Complete nested cleanup and independent qualification before the fixed capture driver resumes. Preserve original failures, the spent compiler workspace, source-only driver commit and full-CI/push gates.
 
 Architecture audit `.1` is complete. Decision `0032` selects one public
 `.vial` source language, private immutable `VIALSemanticIR` and
@@ -6933,3 +6933,41 @@ The manifest binds the completed acceptance suffix and independent reserved-proc
   documentation tree. No runtime code or mdBook behavior changes, and no
   broader CI or original capture executes. The next leaf implements pure
   admission records and resource grants before native preparation integration.
+
+## Acceptance Checklist (.19.2.3.1.2.2.5.5.2.3.4.2.2)
+
+- [x] **ROOT CAUSE (WHY + WHERE)** — `git log -S resource_cost` identifies
+  f2c808399 as the gated-pair peak-cost introduction. Its preparer validates
+  one caller inventory but cannot retain aggregate coordinator job, child or
+  descriptor credit. The service only admits transport requests. Admission
+  must establish original timing, logical ancestry and retained resource
+  reservations before their native composition can allocate or fork.
+- [x] **ADDRESSED (verified)** — Re-derive with T1832's literal timing and
+  independent resource census: root plus seven jobs consumes eight slots and
+  sixteen possible direct children; depth eight admits and depth nine rejects.
+  The job and child bounds are coupled by the fixed pair cost; no fabricated
+  seventeenth child is passed to a syscall. Root peak sixteen plus external
+  credit 112 reaches descriptor bound 128; one more rejects. Actual reports,
+  outstanding reservations and pending-delivery job slots remain distinct.
+  Replayed transitions, copied/foreign/inherited ownership, expired original
+  walls, cancellation before allocation, non-monotonic resource release and
+  u32 identity exhaustion reject. Descendants retire before their parent.
+  Falsification: isolated module copies disable only the external capacity
+  comparison or replace unknown job-grant rejection with root lookup. The
+  first fails excess/census assertions; the second fails foreign/copy
+  assertions. Further transition/retirement failures stop those mutated
+  models, which own no native resources. An earlier broad identity-matching
+  mutation also failed by misidentifying a child; the narrowed control above
+  directly exercises the intended ownership boundary. Durability: source,
+  model test, book, canonical fact and this commit preserve the contract and
+  exact mutation recipes. Raw .artifacts/admission-*.log files are local,
+  not durable qualification artifacts. Native accounting/closure proof and
+  signal-safe integration remain a missing leg, owned by sibling .3.
+- [x] **NO REGRESSION** — The selected connection, service, architecture,
+  gated-pair and admission band reports `All tests successful`,
+  `Files=5, Tests=46`. The first band command named a nonexistent wire-test
+  path and stopped before execution; the corrected band uses existing wire
+  consumers. Perl syntax, mdBook render, Knowledge Map, task integrity, claim
+  inventory/dispositions and staged doctrine gates cover the final slice.
+  Browser visual QA remains blocked as recorded in Memory. No original
+  compiler/startup producer or full CI executes, and normal routing is unchanged.

@@ -725,8 +725,36 @@ endpoint, service and reserved job. They include the endpoint directory anchor,
 accepted sockets and transferred capture streams, and exclude closed handles
 and borrowed close lists. Independent children verify the complete foreign set
 is closed before handoff acknowledgment. Inspection duplicates no handle and
-grants no admission credit or cleanup authority. Aggregate resource reservation
-still belongs to the next coordinator integration step.
+grants no admission credit or cleanup authority.
+
+The inactive admission ledger now retains the root and nested jobs before any
+native preparation. Each job reserves a job slot, two direct-child slots and
+the pair's peak of sixteen descriptors. Run and connection owners reserve
+additional descriptor capacity from the same total. The ledger distinguishes
+unallocated reservations from reported live resources; a reduction cannot
+silently reacquire released capacity. These are trusted owner reports, not
+kernel observations or proof of cleanup.
+
+The selected inclusive bounds remain eight jobs, eight logical levels, sixteen
+direct children and 128 descriptors. Closed results retain their job slots
+until delivery is settled. For example, eight retained jobs still block another
+job even if one has closed all its resources but its result remains pending.
+Parent retirement also waits for every descendant outcome to retire.
+
+Original invocation time determines the wall, including admission. A root
+starting at second 99 with a twenty-second timeout expires at second 119.
+A child starting at second 100 with a thirty-second timeout also expires at
+119 because its ancestor expires first. Preparation and launch cannot renew
+either deadline. Cancellation revokes the retained subtree before cleanup;
+possible partial effects remain charged until the owner reconciles them.
+
+Only the creator's original retained grants authorize ledger transitions.
+Copied grants, another ledger's grants, inherited owners and replayed starts
+reject. Wire job numbers are monotonic and never reused after retirement;
+exhausting the unsigned identity range rejects further admission. This pure
+model creates no descriptors or processes. Binding actual allocation, forks
+and interrupted returns to these reservations is still the next integration
+step, followed by publication and nested transport.
 
 Normal callers retain the existing own-group supervisor. Aggregate coordinator
 admission, nested routing and complete
@@ -737,6 +765,7 @@ Re-run the bounded component controls with:
 
 ```bash
 scripts/run_with_ram_guard.sh -- prove -Iperl -It/lib t/1823-process-group-reservation.t t/1824-process-gated-pair.t t/1825-process-capture-stream-ownership.t t/1826-process-group-closure.t t/1827-process-reserved-job.t t/1828-process-reserved-receipt.t t/1829-process-unjoined-closure.t t/1830-process-reservation-death.t t/1831-process-private-descriptors.t
+scripts/run_with_ram_guard.sh -- prove -Iperl -It/lib t/1832-process-coordinator-admission.t
 ```
 
 For native stopped-child observations, decode `${^CHILD_ERROR_NATIVE}` with
