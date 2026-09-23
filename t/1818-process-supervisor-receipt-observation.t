@@ -214,4 +214,27 @@ is(refaddr($ready->{receipt_observation}{cleanup}),
 like($ready->{result}{diagnostic}, qr/not executable/,
     'the rejection names the missing program');
 
+my $held = do {
+    package FSM::Test::ProcessSupervisor;
+    sealed_supervise_process(
+        schema => 'fsmgen.process_supervisor.receipt_observation.v1',
+        stage => 'tool_resolution',
+        bounds => {timeout_seconds => 1, capture_limit_bytes => 64},
+        containment => 'receipt_observation',
+        cwd => '.',
+        argv => [$^X],
+    );
+};
+is($held->{phase}, 'finished',
+    'an executable program returns a finished private job');
+is($held->{stage}, 'tool_resolution', 'the held launch keeps its stage');
+is($held->{result}{status}, 'invocation_error',
+    'the held launch stops before a process');
+ok(!defined $held->{pid}, 'the held launch starts no process');
+is(refaddr($held->{receipt_observation}{cleanup}),
+    refaddr($held->{cleanup}),
+    'the held launch keeps the original cleanup hash');
+like($held->{result}{diagnostic}, qr/stopped before fork/,
+    'the rejection names the fork boundary');
+
 done_testing;

@@ -7,7 +7,7 @@ Status and evidence: `docs/tasks/`. The system itself: `MEMORY_ARCHITECTURE.md`.
 
 - repository_revision: derive with `git log -1 --format='%H %s'`; never shadow `HEAD` here.
 - active_work_unit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.12.4.1.5.4.3.3.6`
-- next_action: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.12.4.1.5.4.3.3.6.4.2.2` returns the finished private job from a sealed launch whose program is executable. Do not launch a compiler, probe or tool-resolution process in that slice.
+- next_action: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.12.4.1.5.4.3.3.6.4.2.3` returns the finished private job after a sealed launch crosses the fork. That launch must be a proof process, not a compiler, probe or tool-resolution process.
 - in_flight_uncommitted: none.
 - in_flight_background: none.
 - blockers: Historical startup/parent qualification and full CI/push remain gated.

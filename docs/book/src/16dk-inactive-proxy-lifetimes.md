@@ -547,9 +547,9 @@ keeps the original cleanup hash. The ordinary sealed launch still returns only
 the public result, which copies cleanup flags and omits that identity. A
 separate sealed launch now returns the finished private job when the request
 fails before a process starts, including a named program that is not
-executable. An executable program still has no private launch return, so a
-capture that needs a real compiler, probe or tool-resolution process still
-cannot preserve that job. No such process runs in this proof.
+executable. An executable program now returns that job and stops before
+fork, so its process id stays absent. Crossing the fork, and any compiler,
+probe or tool-resolution process, remains closed.
 
 ```sh
 python3 -B docs/audits/native-proxy-receipt-ownership-inventory-20260922/audit.py --verify-saved
@@ -560,7 +560,7 @@ perl t/1818-process-supervisor-receipt-observation.t
 
 | Remaining work | Required result |
 | --- | --- |
-| Real receipt binding | The sealed launch returns the private job for a missing program. Return that job from a launch whose program is executable before one admitted capture. |
+| Real receipt binding | The sealed launch returns the private job and stops before fork. Return that job after the launch crosses the fork, before one admitted capture. |
 | Inactive adapter composition | Join preparation, native path/reference admission and observation custody before the separate native experiment. |
 | Final protocol join | Check current evidence together and retain native, live/public and startup/benefit gates. |
 

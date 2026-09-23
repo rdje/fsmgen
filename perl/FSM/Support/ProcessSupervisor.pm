@@ -168,11 +168,14 @@ sub supervise_process {
     }
     if (!defined($state) && $args{private_job}) {
         my $program = $request->{argv}[0];
+        my $executable = defined($program) && !ref($program) && -x $program
+            && !-d $program;
         $state = _failed_supervision_start(
             $request, "supervised program is not executable: $program", undef,
             'invocation_error',
-        ) unless defined($program) && !ref($program) && -x $program
-            && !-d $program;
+        ) unless $executable;
+        # A private proof may reach the fork boundary. It must not cross it.
+        $request->{hold_before_fork} = 1 if $executable;
     }
     $state = _supervise($request) unless defined $state;
     return $caller eq 'FSM::Test::ProcessSupervisor' && $args{private_job}
@@ -352,6 +355,16 @@ sub _start_supervision {
 
     my $started = clock_gettime(CLOCK_MONOTONIC);
     my ($birth_sec, $birth_usec) = gettimeofday();
+    if ($request->{hold_before_fork}) {
+        _close_handles(
+            $stdin_reader, $stdin_writer, $stdout_reader, $stdout_writer,
+            $stderr_reader, $stderr_writer, $control_reader, $control_writer,
+        );
+        return _failed_supervision_start(
+            $request, 'supervised launch stopped before fork', $started,
+            'invocation_error',
+        );
+    }
     my $pid = fork();
     unless (defined $pid) {
         _close_handles(
