@@ -2326,7 +2326,7 @@ decomposes the architecture needed to move beyond that bounded foundation.
   Status: `active`
   Goal: `Return the finished private job from a sealed launch that is ready to start a process.`
   Acceptance: `Extend the sealed private return from the pre-process failure to one request whose argument vector is ready, while existing public-result readers keep the public result. Do not launch a compiler, probe or tool-resolution process in that slice.`
-  Verification: `Child .5.4.3.3.6.4.2.1 returns the finished private job when the named program is not executable. Child .5.4.3.3.6.4.2.2 returns it for an executable program that stops before fork. No compiler, probe or tool-resolution process runs.`
+  Verification: `Child .5.4.3.3.6.4.2.1 returns the finished private job when the named program is not executable. Child .5.4.3.3.6.4.2.2 returns it before fork. Child .5.4.3.3.6.4.2.3 returns it after one proof process exits. No compiler, probe or tool-resolution process runs.`
   Commit: `pending`
   Children: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.12.4.1.5.4.3.3.6.4.2.1, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.12.4.1.5.4.3.3.6.4.2.2, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.12.4.1.5.4.3.3.6.4.2.3`
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.12.4.1.5.4.3.3.6.4.2.1`
@@ -2342,11 +2342,11 @@ decomposes the architecture needed to move beyond that bounded foundation.
   Verification: `perl t/1818-process-supervisor-receipt-observation.t passes 70 assertions. An executable program returns the finished private job and stops before fork. Its pid stays undefined and its cleanup hash stays original. The ordinary launch still returns only the public result. No compiler, probe or tool-resolution process runs. Crossing the fork remains .5.4.3.3.6.4.2.3.`
   Commit: `this commit`
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.12.4.1.5.4.3.3.6.4.2.3`
-  Status: `pending`
+  Status: `done`
   Goal: `Return the finished private job after a sealed launch crosses the fork.`
   Acceptance: `Remove the pre-fork hold for one sealed private launch and return the finished job after the process starts, while existing public-result readers keep the public result. That launch must still be a proof process, not a compiler, probe or tool-resolution process, until the capture leaf owns those stages.`
-  Verification: `pending`
-  Commit: `pending`
+  Verification: `perl t/1818-process-supervisor-receipt-observation.t passes 77 assertions. One proof process forks once, exits successfully, and returns the finished private job with its pid, own-group identity and original cleanup hash. The public result still omits pid. No terminating signal is sent. No compiler, probe or tool-resolution process runs. Those stages remain .5.4.3.3.6.3.`
+  Commit: `this commit`
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.12.4.1.5.5`
   Status: `proposed`
   Goal: `Compose inactive canonical preparation and observation adapters before native admission.`
@@ -6507,6 +6507,12 @@ The manifest binds the immediately preceding acceptance suffix to its exact Git 
 - [x] **ROOT CAUSE (WHY + WHERE)** — `git log -S 'unavailable aggregate' -1 --format='%H %s' -- docs/book/src/16df-vial-architecture-scale-cap-closeout.md` identifies bc6796d01803fb662cfadd506fabc5bc79427a88. That placement requires an unavailable hosted aggregate. The first hosted run of `./bin/ci-regression vial-gate --no-book` failed its real command, and the independent verifier was skipped.
 - [x] **ADDRESSED (verified)** — The contradiction is owned by HOSTED-VIAL-REGRESSION-GATE-RESULT.1. Local exact-pinned success stays distinct from the failed hosted step. No support or capacity claim is inferred from either result. Diagnosis continues when the failed-step log is released.
 - [x] **NO REGRESSION** — `knowledge-map: OK` preserves the earlier gate questions and adds the hosted failure route. The rendered book states the contradiction outside the registered placement claim; claim identity/dispositions, containment and staged doctrines accompany the normal hooks. The receipt-return leaf remains separately owned.
+
+## Acceptance Checklist (proof process private return .3.2.15.7.3.12.4.1.5.4.3.3.6.4.2.3)
+
+- [x] **ROOT CAUSE (WHY + WHERE)** — `git log -S 'hold_before_fork' -1 --format='%H %s' -- perl/FSM/Support/ProcessSupervisor.pm` identifies 11ea52449503788f4de2a52b4a97207dcf54ab54. A sealed private launch stopped before fork, so an executable program could not return a finished job that had actually started.
+- [x] **ADDRESSED (verified)** — perl t/1818-process-supervisor-receipt-observation.t passes 77 assertions. One proof process forks once, exits successfully, and returns the finished private job with its pid, own-group identity and original cleanup hash. The public result still omits pid. No terminating signal is sent. No compiler, probe or tool-resolution process runs.
+- [x] **NO REGRESSION** — `knowledge-map: OK` preserves the pre-fork return and adds the proof-process return. The rendered book states that compiler, probe and tool-resolution execution remains closed; claim identity/dispositions, containment and staged doctrines accompany the normal hooks. Capture, native/live/startup qualification and full CI/push remain open.
 
 ## Acceptance Checklist (executable pre-fork private return .3.2.15.7.3.12.4.1.5.4.3.3.6.4.2.2)
 

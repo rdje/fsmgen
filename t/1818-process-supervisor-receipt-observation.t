@@ -2,10 +2,16 @@
 use strict;
 use warnings;
 
+my $FORKS = 0;
+my $SIGNALS = 0;
 BEGIN {
-    *CORE::GLOBAL::fork = sub { die 'receipt observation must not fork'; };
+    *CORE::GLOBAL::fork = sub { $FORKS++; CORE::fork(); };
     *CORE::GLOBAL::system = sub { die 'receipt observation must not spawn'; };
-    *CORE::GLOBAL::kill = sub { die 'receipt observation must not signal'; };
+    *CORE::GLOBAL::kill = sub {
+        my ($signal, $pid) = @_;
+        $SIGNALS++ if $signal;
+        return CORE::kill($signal, $pid);
+    };
 }
 
 use FindBin;
@@ -214,27 +220,35 @@ is(refaddr($ready->{receipt_observation}{cleanup}),
 like($ready->{result}{diagnostic}, qr/not executable/,
     'the rejection names the missing program');
 
+is($FORKS, 0, 'the pre-fork cases start no process');
 my $held = do {
     package FSM::Test::ProcessSupervisor;
     sealed_supervise_process(
         schema => 'fsmgen.process_supervisor.receipt_observation.v1',
-        stage => 'tool_resolution',
+        stage => 'proof_exit',
         bounds => {timeout_seconds => 1, capture_limit_bytes => 64},
         containment => 'receipt_observation',
         cwd => '.',
-        argv => [$^X],
+        argv => [$^X, '-e', 'exit 0'],
     );
 };
+is($FORKS, 1, 'the proof launch forks once');
 is($held->{phase}, 'finished',
-    'an executable program returns a finished private job');
-is($held->{stage}, 'tool_resolution', 'the held launch keeps its stage');
-is($held->{result}{status}, 'invocation_error',
-    'the held launch stops before a process');
-ok(!defined $held->{pid}, 'the held launch starts no process');
+    'an executable proof returns a finished private job');
+is($held->{stage}, 'proof_exit', 'the proof launch is not a capture stage');
+ok($held->{result}{ok}, 'the proof process exits successfully');
+ok(!exists $held->{result}{pid}, 'the proof public result still omits pid');
+ok(defined($held->{pid}) && $held->{pid} > 0, 'the proof launch records its pid');
+is($held->{receipt_observation}{birth}{pid}, $held->{pid},
+    'the proof launch carries its private pid');
+is_deeply($held->{receipt_observation}{group},
+    $held->{receipt_observation}{birth},
+    'the proof launch group equals its leader birth');
 is(refaddr($held->{receipt_observation}{cleanup}),
     refaddr($held->{cleanup}),
-    'the held launch keeps the original cleanup hash');
-like($held->{result}{diagnostic}, qr/stopped before fork/,
-    'the rejection names the fork boundary');
+    'the proof launch keeps the original cleanup hash');
+is($held->{cleanup}{leader_reaped}, 1, 'the proof leader is reaped');
+is($held->{cleanup}{group_gone}, 1, 'the proof group is gone');
+is($SIGNALS, 0, 'the proof launch sends no terminating signal');
 
 done_testing;

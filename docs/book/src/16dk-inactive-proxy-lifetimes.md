@@ -548,8 +548,9 @@ the public result, which copies cleanup flags and omits that identity. A
 separate sealed launch now returns the finished private job when the request
 fails before a process starts, including a named program that is not
 executable. An executable program now returns that job and stops before
-fork, so its process id stays absent. Crossing the fork, and any compiler,
-probe or tool-resolution process, remains closed.
+fork. One proof process now crosses that fork, exits, and returns the
+private job with its process id. A compiler, probe or tool-resolution
+process remains closed.
 
 ```sh
 python3 -B docs/audits/native-proxy-receipt-ownership-inventory-20260922/audit.py --verify-saved
@@ -560,7 +561,7 @@ perl t/1818-process-supervisor-receipt-observation.t
 
 | Remaining work | Required result |
 | --- | --- |
-| Real receipt binding | The sealed launch returns the private job and stops before fork. Return that job after the launch crosses the fork, before one admitted capture. |
+| Real receipt binding | The sealed launch returns the private job after one proof process exits. Return that job from one admitted compiler, probe and tool-resolution capture. |
 | Inactive adapter composition | Join preparation, native path/reference admission and observation custody before the separate native experiment. |
 | Final protocol join | Check current evidence together and retain native, live/public and startup/benefit gates. |
 
