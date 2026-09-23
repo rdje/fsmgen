@@ -3,12 +3,15 @@ id: push-cadence-is-300-commits
 title: Normal push cadence is 300 accumulated local commits
 answers: ["how often should this repository push commits?", "how many commits should accumulate before pushing?", "should every commit be pushed immediately?", "does an explicitly requested early push change the normal cadence?", "how is the push cadence counter calculated and reset?"]
 date: 2026-08-29
-status: current
+status: superseded
 supersedes: push-cadence-is-200-commits
-reverify: rg -n '300 accumulated local|rev-list --count|early push' COMMIT.md
+superseded_by: push-cadence-is-500-commits
+reverify: rg -n 'superseded by.*0102' docs/decisions/0091-push-cadence-is-300-commits.md
 ---
 
 # 0091 — Push cadence is 300 commits
+
+- Status: superseded by [0102](0102-push-cadence-is-500-commits.md)
 
 ## Context
 
