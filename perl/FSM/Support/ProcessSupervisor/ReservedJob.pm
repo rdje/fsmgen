@@ -168,7 +168,11 @@ sub _close_capture {
 sub _begin_cleanup {
     my ($self, $cancel, $deadline) = @_;
     my $s = $self->{state};
-    return if $s->{phase} eq 'cleanup' || $s->{phase} eq 'finished';
+    return if $s->{phase} eq 'finished';
+    if ($s->{phase} eq 'cleanup') {
+        $self->{closure}->shorten_deadline($deadline) if defined $deadline;
+        return;
+    }
     $deadline //= _minimum($s->{deadline}, _now()) + $TERM_GRACE + $KILL_GRACE;
     $self->{closure} = FSM::Support::ProcessSupervisor::GroupClosure::prepare(
         pair => $self->{pair}, cancel => $cancel, deadline => $deadline);

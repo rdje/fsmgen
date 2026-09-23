@@ -374,7 +374,16 @@ sub retire {
     $deadline = _time($deadline);
     _error('retirement cannot extend the existing cleanup envelope')
         if $deadline > _minimum($self->{deadline}, _now()) + $TERM_GRACE + $KILL_GRACE;
-    return if $self->{retired};
+    if ($self->{retired}) {
+        if ($self->{phase} ne 'finished' && $deadline < $self->{closure_deadline}) {
+            _masked_preparation(sub {
+                return if $self->{phase} eq 'finished' || $deadline >= $self->{closure_deadline};
+                $self->{closure_deadline} = $deadline;
+                $self->{kill_at} = _minimum($self->{kill_at}, $deadline - $KILL_GRACE);
+            });
+        }
+        return;
+    }
     # This transition revokes all group operations before any release, kill or
     # wait. The coordinator must finish its last owned group signal first.
     $self->{retired} = 1;

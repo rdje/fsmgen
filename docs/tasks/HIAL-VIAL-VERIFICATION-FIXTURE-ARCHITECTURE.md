@@ -3672,9 +3672,25 @@ decomposes the architecture needed to move beyond that bounded foundation.
   Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.4.2.3.3.2.3.1: qualify admitted forks with fresh native inventories`
 
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.4.2.3.3.2.3.2`
-  Status: `pending`
+  Status: `active`
   Goal: `Bind coordinator gated root/nested native lifecycle.`
   Acceptance: `Retain nested snapshots and original grants; bind preparing/starting/active phases to the qualified allocation/fork hooks and actual descriptors/child outcomes. Preserve conservative credit through interrupted returns; cancel descendants before parent retirement using one shared remaining wall. Qualify real root/nested gated handoff, capacity refusal and cancel-before-fork with exact native waits. Replace unstarted-only close safely; no ACCEPT/exec release or caller routing.`
+  Verification: `In progress. Retain nested snapshots/grants under the preparation mask, but never wrap native start/advance in that mask. Fork callbacks must check the original starting grant and derive all current foreign handles excluding the original native job. Hold conservative child/descriptor credit through partial start and activate only after native ready; cancellation revokes the subtree before native closure and clips one shared wall to original affected deadlines and existing cleanup walls. Consume actual handles/waits conservatively; incomplete native cleanup cannot retire ownership. Close advances bounded cleanup without sleeping and retires descendants before parent only after exact closure. Closed outcomes retain logical slots until the explicit whole-run close consumes them in this pre-exec scope; delivery/release and fair root scheduling remain later owners. Qualify root/nested real gated handoff, original grant/capacity refusal, cancel-before-fork and interrupted returns with independently retained native observations.`
+  Commit: `pending`
+
+  Children: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.4.2.3.3.2.3.2.1, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.4.2.3.3.2.3.2.2`
+
+- ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.4.2.3.3.2.3.2.1`
+  Status: `done`
+  Goal: `Clip already-running native cleanup to an earlier shared wall.`
+  Acceptance: `Expose owner-checked deadline shortening for group closure and repeated reservation retirement, propagate it through repeated ReservedJob cancellation, and never extend any original cleanup wall. Preserve first failure, signal retirement and exact waits; qualify real cleanup shortened before and during reservation retirement plus later-wall refusal/no renewal. This prerequisite lets ancestor cancellation impose one earlier shared subtree wall.`
+  Verification: `GroupClosure can shorten an existing cleanup deadline and KILL threshold; repeated Reservation retirement clips its remaining wall without reviving retired signal authority. Repeated ReservedJob cancellation forwards that earlier wall while preserving first failure. Masked comparisons recheck after possible pre-mask handlers so stale requests cannot extend a newly shortened deadline. T1838 uses real stopped command/reservation children, observed KILL timestamps and exact waits, group absence before retirement, pending return interruption and real pre-mask reentrancy. Later/invalid walls cannot renew cleanup. Missing propagation, group escalation clipping, reservation clipping or masked rechecks fail distinct controls; native residue in the broken group control is consumed by bounded independent positive-PID rescue. The final selected band passes Files=17, Tests=172. The coordinator lifecycle join remains child .2; no start/release route activates.`
+  Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.4.2.3.3.2.3.2.1: clip retained native cleanup to earlier shared walls`
+
+- ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.4.2.3.3.2.3.2.2`
+  Status: `pending`
+  Goal: `Join coordinator gated root/nested ownership and cleanup.`
+  Acceptance: `After native wall clipping, retain nested snapshots/grants, check original starting grants at both qualified native fork hooks, reconcile actual retained handles/children and bound interrupted returns. Revoke subtrees before cancellation, clip a common remaining wall including already-running cleanup, and retire descendants only after exact resources close. Qualify root/nested native handoff, capacity/identity refusal and cancel-before-fork without execution release or accepted-peer integration.`
   Verification: `pending`
   Commit: `pending`
 
@@ -4397,7 +4413,7 @@ decomposes the architecture needed to move beyond that bounded foundation.
 
 ## Current Frontier
 
-Current frontier: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.4.2.3.3.2.3.2` joins coordinator root/nested start, original grants, retained native reconciliation and descendant-first cleanup using the qualified fork hooks. Sibling .3 then binds accepted peers and qualifies the joined native admission lifecycle. Publication, streaming, fair lifecycle composition and independent qualification remain separate integration children. Preserve original failures, the spent compiler workspace, source-only driver commit and full-CI/push gates.
+Current frontier: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.4.2.3.3.2.3.2.2` joins coordinator root/nested lifecycle against the qualified allocation, fork and monotonic cleanup-wall hooks. Sibling .3 then binds accepted peers and qualifies the joined native admission lifecycle. Publication, streaming, fair lifecycle composition and independent qualification remain separate integration children. Preserve original failures, the spent compiler workspace, source-only driver commit and full-CI/push gates.
 
 Architecture audit `.1` is complete. Decision `0032` selects one public
 `.vial` source language, private immutable `VIALSemanticIR` and
@@ -7089,3 +7105,39 @@ The manifest binds the completed acceptance suffix and independent reserved-proc
   render, task/Knowledge Map, claims and staged doctrines cover the change.
   No normal caller route, coordinator start, original producer, full CI or push
   executes; historical startup and browser-visual qualification stay gated.
+
+## Acceptance Checklist (.19.2.3.1.2.2.5.5.2.3.4.2.3.3.2.3.2.1)
+
+- [x] **ROOT CAUSE (WHY + WHERE)** — `git log -S` identifies ec277e682's
+  ReservedJob cleanup composition and aa3bcf39a's repeated-retirement return.
+  Already-running cleanup ignored an earlier ancestor cancellation deadline.
+  Native coordinator composition therefore lacked a way to impose one smaller
+  shared remaining wall after a descendant had already begun cleanup.
+- [x] **ADDRESSED (verified)** — T1838 re-derives actual stopped command and
+  retiring-reservation lifetimes with independently observed native KILL times,
+  exact waits and group absence captured before identity retirement. Repeated
+  cancellation moves both the closure wall and escalation threshold earlier;
+  a retiring reservation receives the same smaller wall. Native escalation
+  occurs before the former threshold and within the clipped deadline; no
+  command executes. Later requests, invalid input and finished-object calls
+  cannot renew grace or restore signal authority. Real pending USR1 observes
+  both published walls before interrupted return. Real pre-mask handlers impose
+  an even smaller deadline; masked rechecks prevent stale outer requests from
+  overwriting it. Falsification: omitted job forwarding fails wall/publication
+  assertions; omitted group escalation clipping fails native KILL, resource and
+  exact-wait checks before bounded direct-child rescue; omitted reservation
+  clipping fails its published wall and actual KILL timing. Omitting the masked
+  comparisons fails both real pre-mask races. All outcomes are consumed and
+  exact mutant source trees removed. Durability: components, T1838, book, fact,
+  this task and commit retain the derivation and exact controls; local
+  .artifacts/cleanup-wall-*.log files are an explicit raw-log durability gap.
+  Coordinator subtree binding and Linux remain separate missing legs.
+- [x] **NO REGRESSION** — The final sequential architecture, native handoff,
+  capture/closure/job/receipt, descriptor/admission and retained ownership band
+  reports `All tests successful`, `Files=17, Tests=172`. Syntax, inspected book,
+  task/Knowledge Map, claims and staged doctrine gates cover the slice.
+  The initial staged gate caught accumulated fact-list growth; the current
+  evidence/reverify list now covers active native owners, with earlier complete
+  lists retained at the card's exact history pointer. Questions and aggregate
+  fact allowance are unchanged.
+  No normal caller, coordinator start, original producer, full CI or push runs.

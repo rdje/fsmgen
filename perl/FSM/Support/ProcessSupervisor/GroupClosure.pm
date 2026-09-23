@@ -49,6 +49,24 @@ sub prepare {
 
 sub _failure { $_[0]->{failure} //= $_[1]; return; }
 
+# An ancestor cancellation may impose an earlier shared wall after this job
+# has already begun cleanup. This operation can only shorten existing credit.
+sub shorten_deadline {
+    my ($self, $deadline) = @_; _owner($self);
+    _error('deadline shortening requires one remaining closure wall') unless @_ == 2;
+    $deadline = FSM::Support::ProcessSupervisor::Reservation::_time($deadline);
+    return if $self->{phase} eq 'finished' || $deadline >= $self->{deadline};
+    FSM::Support::ProcessSupervisor::Reservation::_masked_preparation(sub {
+        # A caller handler may have shortened the wall before masking began.
+        return if $self->{phase} eq 'finished' || $deadline >= $self->{deadline};
+        $self->{deadline} = $deadline;
+        $self->{kill_at} = _minimum($self->{kill_at}, $deadline - $KILL_GRACE);
+        my $reservation = $self->{pair}->reservation;
+        $reservation->retire($deadline) if $reservation->observation->{retired};
+    });
+    return;
+}
+
 sub _signal_remaining {
     my ($self, $command, $reservation, $signal) = @_;
     my $pair = $self->{pair};

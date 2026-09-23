@@ -841,6 +841,21 @@ closure. A reported mask-restoration failure remains a separate native failure.
 The coordinator's root/nested start and subtree cleanup still need to bind these
 hooks to their original grants; these component hooks grant no exec release.
 
+Repeated cancellation can now shorten cleanup that is already running. An
+earlier shared ancestor wall advances the group escalation threshold and any
+pending reservation retirement to that same deadline. Later requests cannot
+renew the original grace. The masked update rechecks the current wall, so an
+earlier deadline installed by a handler just before masking cannot be
+overwritten. First failure, retired signal authority and exact wait ownership
+remain unchanged. A pending creator signal observes both clipped
+walls before it can interrupt the return.
+
+For example, a stopped command or a stopped reservation already being retired
+must receive KILL under the shorter wall, then have its exact wait consumed.
+Independent native controls observe that escalation and retain group absence
+before identity retirement. These operations prepare the coordinator's subtree
+join; they do not themselves activate root/nested start or execution release.
+
 Normal callers retain the existing own-group supervisor. Aggregate coordinator
 admission, nested routing and complete
 subtree qualification still have separate open owners. These private components
@@ -856,6 +871,7 @@ scripts/run_with_ram_guard.sh -- prove -Iperl -It/lib t/1834-process-retained-pr
 scripts/run_with_ram_guard.sh -- prove -Iperl -It/lib t/1835-process-coordinator-run-ownership.t
 scripts/run_with_ram_guard.sh -- prove -Iperl -It/lib t/1836-process-coordinator-job-preparation.t
 scripts/run_with_ram_guard.sh -- prove -Iperl -It/lib t/1837-process-admitted-forks.t
+scripts/run_with_ram_guard.sh -- prove -Iperl -It/lib t/1838-process-cleanup-wall-clipping.t
 ```
 
 For native stopped-child observations, decode `${^CHILD_ERROR_NATIVE}` with
