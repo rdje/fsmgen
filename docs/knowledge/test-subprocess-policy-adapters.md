@@ -159,6 +159,7 @@ answers:
   - "why cannot one retained compiler job bind?"
   - "how does one finished compiler receipt bind?"
   - "how does a compiler stage carry its receipt role?"
+  - "why does the public compiler fixture still discard the private job?"
 date: 2026-09-23
 status: current
 tags: [tests, subprocess, supervision, task-acceptance, darwin, locality]
@@ -168,4 +169,4 @@ evidence: >-
 reverify: >-
   perl docs/audits/native-proxy-receipt-adapter-20260922/qualify.t
 ---
-History: `7329bc8e987fa79f33acd3bed57d30edb3bad0f0:docs/knowledge/test-subprocess-policy-adapters.md`. `FSM::Support::ProcessSupervisor` derives the receipt role from the stage. A compiler stage carries compiler. One compiler observation binds without another stage. No compiler, probe or tool-resolution process runs.
+History: `05f8ada76457e6b0ae16a7f783020869dd687019:docs/knowledge/test-subprocess-policy-adapters.md`. `FSM::Test::RustProxyFixture::prepare_rust_proxy` calls `FSM::Test::ProcessSupervisor::supervise_process` with stage `compile_proxy` and no `private_job`. That call returns only the public result. No compiler, probe or tool-resolution process runs.

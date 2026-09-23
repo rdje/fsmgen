@@ -562,8 +562,9 @@ environment replaces the child environment and stays on the private job.
 One proof process reads that environment. The sealed observation now carries the receipt role for its stage.
 A compiler stage carries compiler, and one such observation binds
 without another stage. The complete compiler, outer and inner receipt
-still binds. No compiler, probe or tool-resolution process runs in
-this step.
+still binds. The public compiler fixture still returns only the public
+result, so it cannot retain that private state. No compiler, probe or
+tool-resolution process runs in this step.
 
 ```sh
 python3 -B docs/audits/native-proxy-receipt-ownership-inventory-20260922/audit.py --verify-saved
@@ -574,7 +575,7 @@ perl t/1818-process-supervisor-receipt-observation.t
 
 | Remaining work | Required result |
 | --- | --- |
-| Real receipt binding | The sealed observation carries the compiler receipt role. The compiler launch remains the next capture. |
+| Real receipt binding | The public compiler fixture still discards the private job. The sealed compiler launch remains the next capture. |
 | Inactive adapter composition | Join preparation, native path/reference admission and observation custody before the separate native experiment. |
 | Final protocol join | Check current evidence together and retain native, live/public and startup/benefit gates. |
 
