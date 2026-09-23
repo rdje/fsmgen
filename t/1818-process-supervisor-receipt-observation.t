@@ -81,6 +81,58 @@ is($observation->{stage}, $job->{stage}, "stage $index is preserved");
 ok($bound->(\@states, {closed => 1}),
     'sealed observations satisfy the aligned receipt review');
 
+my $single = sub {
+    return NativeProxyReceiptAdapter->can('receipt_bound')
+        ? NativeProxyReceiptAdapter::receipt_bound(@_) : 0;
+};
+for my $index (0 .. $#states) {
+    my $state = $states[$index];
+    my $role = (qw(compiler outer inner))[$index];
+    ok($single->($state, $role, {closed => 1}),
+        "the original $role observation binds independently");
+    ok(!$single->($state, $role, {closed => 0}),
+        "an open frontier cannot settle $role");
+    ok(!$single->($state, 'unknown', {closed => 1}),
+        "an unknown expected role cannot settle $role");
+    ok(!$single->($state, [], {closed => 1}),
+        "a reference cannot select an expected $role");
+    my %copy = %$state;
+    $copy{cleanup} = {%{$state->{cleanup}}};
+    ok(!$single->(\%copy, $role, {closed => 1}),
+        "a copied $role cleanup hash cannot bind independently");
+    for my $mutation (
+        sub { $_[0]{leader_reaped} = '1junk' },
+        sub { $_[0]{cleanup_identity} .= 'junk' },
+        sub { $_[0]{cleanup}{group_gone} = 0 },
+        sub { $_[0]{birth}{start_usec} = -1 },
+    ) {
+        my $fresh = $observe->('FSM::Test::ProcessSupervisor',
+            finished_job($state->{stage}, 41 + $index));
+        ok($single->($fresh, $role, {closed => 1}),
+            "$role terminal-state control binds before mutation");
+        $mutation->($fresh);
+        ok(!$single->($fresh, $role, {closed => 1}),
+            "$role independent review rejects invalid terminal state");
+    }
+    for my $stage ('unrelated', (qw(compile_proxy probe tool_resolution))) {
+        next if $stage eq $state->{stage};
+        my %wrong = (%$state, stage => $stage);
+        my @prefix = @states[0 .. $index];
+        $prefix[-1] = \%wrong;
+        ok(!$bound->(\@prefix, {closed => 1}),
+            "$role prefix rejects substituted stage $stage");
+        ok(!$single->(\%wrong, $role, {closed => 1}),
+            "$role independent review rejects substituted stage $stage");
+    }
+}
+ok(!$single->($states[1], 'inner', {closed => 1}),
+    'an outer receipt cannot satisfy an expected inner stage');
+ok(!$single->($states[2], 'outer', {closed => 1}),
+    'an inner receipt cannot satisfy an expected outer stage');
+ok(!$single->($states[1], 'outer'), 'missing frontier rejects isolated review');
+ok(!$single->($states[1], 'outer', {closed => 1}, 'extra'),
+    'unexpected arguments reject isolated review');
+
 for my $microsecond (0, 999_999) {
     my $job = finished_job('compile_proxy', 31);
     $job->{birth_usec} = $microsecond;

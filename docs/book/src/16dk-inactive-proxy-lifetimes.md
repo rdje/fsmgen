@@ -554,6 +554,15 @@ stage: compiler, outer probe, or inner tool resolution. A finished compiler
 observation can bind on its own; the complete ordered receipt set also binds.
 These paths have proof-process coverage, without a compiler capture.
 
+`receipt_bound` also reviews one original outer or inner observation against
+its expected role while the issuing supervisor still holds its private state.
+Each role must match its exact stage; an outer receipt labelled with an inner
+stage rejects. The existing `receipts_bound` ordered-prefix review uses the
+same checks and rejects reused identities. Both require a closed frontier,
+settled cleanup and the original cleanup hash. Independent stage acceptance
+does not prove a complete stage set, authenticate a process, authorize another
+launch or make a serialized cleanup address reusable in a later process.
+
 Launch admission and finished-job review are separate. After issuing and
 consuming a matching revision-bound permit, `begin_compiler_capture` grants a
 compiler attempt before a job exists. It burns that grant before returning;

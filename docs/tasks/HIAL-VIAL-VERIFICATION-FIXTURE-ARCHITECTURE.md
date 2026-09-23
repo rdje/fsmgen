@@ -2507,10 +2507,26 @@ decomposes the architecture needed to move beyond that bounded foundation.
   Commit: `this commit`
 
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.12.4.1.5.4.3.3.6.7.2.2`
-  Status: `pending`
+  Status: `active`
   Goal: `Qualify a fixed probe and inner receipt capture with explicit nested cleanup ownership.`
   Acceptance: `Preserve the spent compiler attempt and exact retained image. Resolve nested process ownership before admission; provide bounded first-state retention, persistent one-use launch records and process-free failure controls. Serialized compiler or inner cleanup addresses never confer live authority. Commit the driver and admission before actual execution; split any remaining unsafe scope before launch.`
   Verification: `pending`
+  Commit: `pending`
+
+  Children: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.12.4.1.5.4.3.3.6.7.2.2.1, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.12.4.1.5.4.3.3.6.7.2.2.2`
+
+- ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.12.4.1.5.4.3.3.6.7.2.2.1`
+  Status: `done`
+  Goal: `Review each live private receipt independently with exact role and stage agreement.`
+  Acceptance: `Add closed-frontier single-stage review for compiler, outer and inner original observations without requiring previously serialized states. Preserve ordered prefix review; reject role-stage mismatches, copied cleanup, unsettled states and invalid identity. Prove the old predicate accepts a wrong stage and cannot review an isolated later receipt, then pass sealed-observation and compiler-driver regressions without a capture.`
+  Verification: `Old-module T1818 rejects isolated valid observations and accepts unrelated stages in otherwise valid prefixes. receipt_bound now checks one expected role against its exact stage and original cleanup, independently of earlier serialized records; receipts_bound retains its ordered-prefix and distinct-identity rules through the same predicate. Every hostile state starts from a separately valid sealed observation, and the reused-birth control now keeps leader/group agreement so it actually exercises duplication. The guarded observation/admission/capture/stage/adapter band passes Files=5, Tests=297. Saved compiler evidence remains valid and no producer runs. Capture ownership and the nested-startup dependency remain sibling .2.`
+  Commit: `this commit`
+
+- ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.12.4.1.5.4.3.3.6.7.2.2.2`
+  Status: `pending`
+  Goal: `Resolve capture ownership and implement its fixed one-use driver before real admission.`
+  Acceptance: `Use the selected root ownership architecture or an independently qualified equivalent within the existing launch gates. Never rely on the outer timeout or serialized addresses to settle an inner group. The current general coordinator launch leaf .19.2.3.1.2.2.5.5.2.3.3 is blocked by startup qualification that contains this capture; explicitly resolve that dependency before a real nested launch. Keep any source-only work and real-process qualification distinct, preserve prior director restrictions and first evidence, and commit the process-free driver before capture .6.7.2.3.`
+  Verification: `Source and current book confirm independent inner groups can survive outer termination. General root coordinator launch remains explicitly blocked under .19.2.3.1.2.2.5.5.2.3.3 by the startup activity that contains this capture. The director is asked whether to reorder these dependencies and qualify nested cleanup first while preserving all process bounds, original failures and full-CI/push gates. That answer is pending; no launch prerequisite is waived and no real capture runs.`
   Commit: `pending`
 
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.12.4.1.5.4.3.3.6.7.2.3`
@@ -6940,3 +6956,9 @@ The manifest binds the immediately preceding acceptance suffix to its exact Git 
 - [x] **ROOT CAUSE (WHY + WHERE)** — `git log -S "stage => 'tool_resolution', containment => 'rust_tool_resolution_probe_group'"` identifies `413a76daa`. The admission table copied the outer policy into the inner stage. T1821 observes the real runtime request through an inert supervisor and reports `not ok 6`, plus rejection/grant failures against the old table. Earlier controls derived both their input and expectation from that table.
 - [x] **ADDRESSED (verified)** — The inner role now requires `rust_parity_process_group`. The actual producer request, unchanged bounds and argument transfer agree; independent mutations of every role/stage/containment field reject, including the old inner value. Rejected plans leave the sole correct compiler grant available, and its repeat rejects. No compiler, probe, tool-resolution or signal attempt occurs.
 - [x] **NO REGRESSION** — RAM-guarded `prove -Iperl t/1815-rust-proxy-fixture.t t/1816-rust-proxy-integration.t t/1819-native-proxy-receipt-admission.t t/1820-native-proxy-receipt-capture.t t/1821-native-proxy-receipt-stage-contract.t`: `All tests successful`, `Files=5, Tests=130`. Saved compiler review passes without replay. Re-derive: actual intercepted runtime request; falsify: observed old-table RED and independently changed fields; durability: ordinary T1821 discovery and the tracked policy. This corrects admission data only; nested cleanup, new stage launch admission and real probe/inner receipts remain explicitly open.
+
+## Acceptance Checklist (independent private receipt review .6.7.2.2.1)
+
+- [x] **ROOT CAUSE (WHY + WHERE)** — `git log -S 'sub receipts_bound'` identifies `b74122f9f`. The predicate requires a compiler-first prefix and checks only stage spelling, so it cannot bind an isolated outer/inner observation and accepts a role carrying another stage. Old-module T1818 reports `not ok 29` on independent compiler review and rejects the wrong-stage negative controls at `not ok 33`, `35`, `37` and corresponding later roles.
+- [x] **ADDRESSED (verified)** — `receipt_bound` reviews one original observation against a fixed expected role/stage pair. Ordered-prefix review reuses the same validation and retains distinct births. Open frontiers, wrong roles/stages, copied cleanup, unsettled state, invalid identity and loosely numeric terminal/address fields reject. Fresh hostile controls bind before mutation; the duplicate-birth control now preserves its own-group identity to reach the uniqueness predicate. No address is reconstructed from saved JSON and no process launch is authorized.
+- [x] **NO REGRESSION** — RAM-guarded `prove -Iperl t/1818-process-supervisor-receipt-observation.t t/1819-native-proxy-receipt-admission.t t/1820-native-proxy-receipt-capture.t t/1821-native-proxy-receipt-stage-contract.t docs/audits/native-proxy-receipt-adapter-20260922/qualify.t`: `All tests successful`, `Files=5, Tests=297`. Adapter syntax and saved compiler review pass. Re-derive: sealed private observations through both predicates; falsify: old-module stage/isolated RED and independent hostile inputs; durability: normal T1818 discovery plus tracked adapter controls. These are shape and live-reference checks, not process authentication, complete stage ownership or nested cleanup qualification.

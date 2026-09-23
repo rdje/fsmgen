@@ -5,10 +5,11 @@ use warnings;
 use Scalar::Util qw(refaddr);
 
 my @ROLES = qw(compiler outer inner);
+my %STAGE = (compiler => 'compile_proxy', outer => 'probe', inner => 'tool_resolution');
 
-# Inactive review of owner-bound receipts. The caller supplies private
-# supervisor states, not a cleanup array. A copied cleanup hash is not the
-# state member and grants no authority. No process is launched or signalled.
+# Inactive review of an ordered prefix of owner-bound receipts. The caller
+# supplies original private observations, never a serialized cleanup address.
+# This predicate does not authenticate a process or grant launch authority.
 sub receipts_bound {
     my ($states, $frontier) = @_;
     return 0 unless @_ == 2 && ref($states) eq 'ARRAY' && @$states >= 1
@@ -17,31 +18,46 @@ sub receipts_bound {
     my %seen;
     for my $index (0 .. $#$states) {
         my $state = $states->[$index];
-        return 0 unless ref($state) eq 'HASH';
-        return 0 unless defined($state->{role}) && !ref($state->{role})
-            && $state->{role} eq $ROLES[$index];
-        return 0 unless _identity($state->{birth});
-        return 0 unless _identity($state->{group});
-        # The current supervisor calls setpgid(0, 0) and admits the child
-        # only when getpgrp(0) equals its pid. Group absence is later
-        # checked with kill(0, -$pid). A real finished stage therefore
-        # carries one identity for both leader and group.
-        return 0 unless _same_identity($state->{birth}, $state->{group});
+        return 0 unless _receipt_bound($state, $ROLES[$index]);
         my $key = join ':', map { $state->{birth}{$_} } qw(pid start_sec start_usec);
         return 0 if $seen{$key}++;
-        return 0 unless defined($state->{stage}) && !ref($state->{stage})
-            && $state->{stage} =~ /\A[A-Za-z0-9_]{1,64}\z/;
-        return 0 unless defined($state->{phase}) && !ref($state->{phase})
-            && $state->{phase} eq 'finished';
-        return 0 unless defined($state->{leader_reaped}) && $state->{leader_reaped} == 1;
-        my $cleanup = $state->{cleanup};
-        return 0 unless _cleanup($cleanup);
-        # The public result copies cleanup. Only the private member counts.
-        return 0 unless refaddr($cleanup) == ($state->{cleanup_identity} // -1);
-        return 0 unless $cleanup->{leader_started} && $cleanup->{leader_reaped}
-            && $cleanup->{group_gone};
-        return 0 if exists $state->{cleanup_array};
     }
+    return 1;
+}
+
+# Review a later stage while its own supervisor still holds the original
+# cleanup member. Previously completed stages need not be resurrected in this
+# process. Independent acceptance never implies the complete stage set exists.
+sub receipt_bound {
+    my ($state, $expected_role, $frontier) = @_;
+    return 0 unless @_ == 3 && _frontier($frontier) && $frontier->{closed};
+    return _receipt_bound($state, $expected_role);
+}
+
+sub _receipt_bound {
+    my ($state, $expected_role) = @_;
+    return 0 unless defined($expected_role) && !ref($expected_role) && exists $STAGE{$expected_role};
+    return 0 unless ref($state) eq 'HASH';
+    return 0 unless defined($state->{role}) && !ref($state->{role})
+        && $state->{role} eq $expected_role;
+    return 0 unless defined($state->{stage}) && !ref($state->{stage})
+        && $state->{stage} eq $STAGE{$expected_role};
+    return 0 unless _identity($state->{birth}) && _identity($state->{group});
+    # The supervisor admits setpgid(0, 0) only when getpgrp(0) equals its pid,
+    # and later checks absence with kill(0, -$pid). This is its own group.
+    return 0 unless _same_identity($state->{birth}, $state->{group});
+    return 0 unless defined($state->{phase}) && !ref($state->{phase})
+        && $state->{phase} eq 'finished';
+    return 0 unless defined($state->{leader_reaped}) && !ref($state->{leader_reaped})
+        && $state->{leader_reaped} eq '1';
+    my $cleanup = $state->{cleanup};
+    return 0 unless _cleanup($cleanup);
+    # Public result cleanup is copied; only the original private member counts.
+    return 0 unless defined($state->{cleanup_identity}) && !ref($state->{cleanup_identity})
+        && $state->{cleanup_identity} eq refaddr($cleanup);
+    return 0 unless $cleanup->{leader_started} && $cleanup->{leader_reaped}
+        && $cleanup->{group_gone};
+    return 0 if exists $state->{cleanup_array};
     return 1;
 }
 

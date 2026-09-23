@@ -87,6 +87,7 @@ $unreaped->[0]{cleanup}{leader_reaped} = 0;
 reject('unreaped leader', $unreaped, $closed);
 my $same = control();
 $same->[2]{birth} = {%{$same->[0]{birth}}};
+$same->[2]{group} = {%{$same->[0]{group}}};
 reject('reused birth', $same, $closed);
 my $foreign = control();
 $foreign->[0]{group} = birth($foreign->[0]{birth}{pid} + 1000);
