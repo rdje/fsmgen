@@ -3470,10 +3470,25 @@ decomposes the architecture needed to move beyond that bounded foundation.
   Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.3.3: qualify gated command handoff`
 
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.3.4`
-  Status: `pending`
+  Status: `active`
   Goal: `Integrate the private gated pair with bounded capture, first failure and terminal identity.`
   Acceptance: `After .3, use the reserved group in nonblocking capture and TERM/KILL advancement without changing the synchronous default or public result schema. Preserve command wait truth, earliest failure, original cleanup ownership and actual group absence; retain distinct command/reservation observations. Share the fixed cleanup envelope, retire group signalling before releasing identity, and reject uncertain cleanup. Qualify compatibility through focused engine/receipt/adapter controls; compiler and real capture remain unadmitted.`
-  Verification: `Pending gated command-pair qualification in sibling .3.`
+  Verification: `Qualified sibling .3 is committed at f2c808399. First extract reusable bounded stream reads and explicit descriptor transfer; then integrate the reserved launch/capture/cleanup lifecycle and distinct private identities. Seal the completed acceptance suffix at that exact predecessor before adding the next implementation evidence; retain every live node and the selected coordinator protocol.`
+  Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.3.4: select capture integration sequence`
+  Children: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.3.4.1, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.3.4.2`
+
+- ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.3.4.1`
+  Status: `pending`
+  Goal: `Give the shared capture reader explicit ownership of transferred gated-command streams.`
+  Acceptance: `Extract the existing bounded nonblocking stream read pass without changing legacy capture ordering, aggregate-prefix limits, control observations or closed results. Add a one-use gated-pair stream transfer only after its recorded command fork and acknowledged handoff, so capture and retirement cannot close the same descriptor. Qualify both transfer refusals and legacy reader behavior without enabling routing or launching original captures.`
+  Verification: `Pending implementation after the committed capture-integration decomposition.`
+  Commit: `pending`
+
+- ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.3.4.2`
+  Status: `pending`
+  Goal: `Integrate gated launch, shared capture and finite reservation-aware cleanup into the private engine.`
+  Acceptance: `After .1, prepare and retain the pair before starting it, expose explicit publication-controlled release, advance capture and cancellation without blocking, and share one fixed TERM/KILL envelope. Retain exact command waits, first failure, actual reserved-group absence and separate reservation closure; retire all signals before identity release. Preserve legacy callers and public schema, private cleanup identity and stage receipt compatibility. Focused real and model controls must pass before independent hostile sibling .3.5 or coordinator integration proceeds.`
+  Verification: `Pending the stream ownership seam in sibling .1.`
   Commit: `pending`
 
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.3.5`
@@ -4174,7 +4189,7 @@ decomposes the architecture needed to move beyond that bounded foundation.
 
 ## Current Frontier
 
-Current frontier: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.3.4` integrates bounded capture and terminal identity after the qualified gated command pair in `.3`. Complete nested cleanup and independent qualification before the fixed capture driver resumes. Preserve original failures, the spent compiler workspace, source-only driver commit and full-CI/push gates.
+Current frontier: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.3.4.1` establishes shared stream ownership before `.4.2` integrates the gated lifecycle and terminal identity. Complete nested cleanup and independent qualification before the fixed capture driver resumes. Preserve original failures, the spent compiler workspace, source-only driver commit and full-CI/push gates.
 
 Architecture audit `.1` is complete. Decision `0032` selects one public
 `.vial` source language, private immutable `VIALSemanticIR` and
@@ -6769,382 +6784,24 @@ Completed native-proxy feasibility through runtime-source-controls acceptance: r
 
 The manifest binds the immediately preceding acceptance suffix to its exact Git source. That source preserves the earlier history pointer and versioned manifest chain; current node contracts remain authoritative.
 
-## Acceptance Checklist (hosted gate contract contradiction HOSTED-VIAL-REGRESSION-GATE-RESULT.1)
-
-- [x] **ROOT CAUSE (WHY + WHERE)** — `git log -S 'unavailable aggregate' -1 --format='%H %s' -- docs/book/src/16df-vial-architecture-scale-cap-closeout.md` identifies bc6796d01803fb662cfadd506fabc5bc79427a88. That placement requires an unavailable hosted aggregate. The first hosted run of `./bin/ci-regression vial-gate --no-book` failed its real command, and the independent verifier was skipped.
-- [x] **ADDRESSED (verified)** — The contradiction is owned by HOSTED-VIAL-REGRESSION-GATE-RESULT.1. Local exact-pinned success stays distinct from the failed hosted step. No support or capacity claim is inferred from either result. Diagnosis continues when the failed-step log is released.
-- [x] **NO REGRESSION** — `knowledge-map: OK` preserves the earlier gate questions and adds the hosted failure route. The rendered book states the contradiction outside the registered placement claim; claim identity/dispositions, containment and staged doctrines accompany the normal hooks. The receipt-return leaf remains separately owned.
-
-## Acceptance Checklist (public compiler fixture discards private job .3.2.15.7.3.12.4.1.5.4.3.3.6.7.1.2.2.2.3.4.1)
-
-- [x] **ROOT CAUSE (WHY + WHERE)** — `git log -S 'stage => '"'"'compile_proxy'"'"'' -1 --format='%H %s' -- t/lib/FSM/Test/RustProxyFixture.pm` identifies e0d74bb051465ba641227acc11975e25e5d879a7. `prepare_rust_proxy` calls `FSM::Test::ProcessSupervisor::supervise_process` with no `private_job`. That call returns only the public result, so a compiler capture cannot retain the first private state.
-- [x] **ADDRESSED (verified)** — The public compiler fixture remains unchanged and still discards the private job. Capture stays closed. The sealed compiler launch remains .5.4.3.3.6.7.1.2.2.2.3.4.2. No compiler, probe, worker, proxy or collector runs.
-- [x] **NO REGRESSION** — `knowledge-map: OK` preserves the sealed receipt role and adds the public-fixture discard. The rendered book states that the sealed compiler launch remains next; claim identity/dispositions, containment and staged doctrines accompany the normal hooks. That launch, probe, tool-resolution, native/live/startup qualification and full CI/push remain open.
-
-## Acceptance Checklist (compiler receipt role .3.2.15.7.3.12.4.1.5.4.3.3.6.7.1.2.2.2.3.3)
-
-- [x] **ROOT CAUSE (WHY + WHERE)** — `git log -S 'my @ROLES = qw(compiler outer inner)' -1 --format='%H %s' -- docs/audits/native-proxy-receipt-adapter-20260922/ReceiptAdapter.pm` identifies b74122f9f967dd7cdb4b29f17aed4a2ba4be6b3b. The receipt review requires a role, and the sealed observation previously added none.
-- [x] **ADDRESSED (verified)** — perl t/1818-process-supervisor-receipt-observation.t passes 92 assertions. The compiler stage carries the compiler receipt role. One compiler observation binds without another stage. No compiler, probe or tool-resolution process runs.
-- [x] **NO REGRESSION** — `knowledge-map: OK` preserves the one-compiler receipt acceptance and adds the sealed receipt role. The rendered book states that the compiler launch remains next; claim identity/dispositions, containment and staged doctrines accompany the normal hooks. That launch, probe, tool-resolution, native/live/startup qualification and full CI/push remain open.
-
-## Acceptance Checklist (one compiler receipt .3.2.15.7.3.12.4.1.5.4.3.3.6.7.1.2.2.2.3.2)
-
-- [x] **ROOT CAUSE (WHY + WHERE)** — `git log -S 'return 0 unless @_ == 2 && ref($states) eq '"'"'ARRAY'"'"' && @$states == @ROLES' -1 --format='%H %s' -- docs/audits/native-proxy-receipt-adapter-20260922/ReceiptAdapter.pm` identifies b74122f9f967dd7cdb4b29f17aed4a2ba4be6b3b. `receipts_bound` required compiler, outer and inner receipts together, so one finished compiler receipt could not bind.
-- [x] **ADDRESSED (verified)** — perl docs/audits/native-proxy-receipt-adapter-20260922/qualify.t passes 18 assertions. One finished compiler receipt binds. The complete three-stage receipt still binds. A compiler role omitted from the first state rejects. No compiler, probe or tool-resolution process runs.
-- [x] **NO REGRESSION** — `knowledge-map: OK` preserves the retained-job binding record and adds the one-compiler acceptance. The rendered book states that the compiler launch remains next; claim identity/dispositions, containment and staged doctrines accompany the normal hooks. That launch, probe, tool-resolution, native/live/startup qualification and full CI/push remain open.
-
-## Acceptance Checklist (retained compiler job binding .3.2.15.7.3.12.4.1.5.4.3.3.6.7.1.2.2.2.3.1)
-
-- [x] **ROOT CAUSE (WHY + WHERE)** — `git log -S 'my @ROLES = qw(compiler outer inner)' -1 --format='%H %s' -- docs/audits/native-proxy-receipt-adapter-20260922/ReceiptAdapter.pm` identifies b74122f9f967dd7cdb4b29f17aed4a2ba4be6b3b. `receipts_bound` still requires three roles, and `sealed_finished_job` still adds none. One retained compiler job therefore cannot bind.
-- [x] **ADDRESSED (verified)** — The receipt adapter and sealed private return remain unchanged. One retained compiler job still cannot bind. Capture stays closed. The compiler launch remains .5.4.3.3.6.7.1.2.2.2.3.2. No compiler, probe, worker, proxy or collector runs.
-- [x] **NO REGRESSION** — `knowledge-map: OK` preserves the sealed environment acceptance and adds the retained-job binding refusal. The rendered book states that the compiler launch remains next; claim identity/dispositions, containment and staged doctrines accompany the normal hooks. That launch, probe, tool-resolution, native/live/startup qualification and full CI/push remain open.
-
-## Acceptance Checklist (sealed supervisor environment .3.2.15.7.3.12.4.1.5.4.3.3.6.7.1.2.2.2.2)
-
-- [x] **ROOT CAUSE (WHY + WHERE)** — `git log -S 'argv bounds containment cwd private_job schema stage' -1 --format='%H %s' -- perl/FSM/Support/ProcessSupervisor.pm` identifies dbd520b28940b12f30234d19ed717d6a4418a8dd. The sealed supervisor accepted no environment, so a compiler launch would inherit the caller environment.
-- [x] **ADDRESSED (verified)** — perl t/1818-process-supervisor-receipt-observation.t passes 87 assertions. One proof process reads the supplied environment marker and exits successfully. The parent environment stays unchanged. A non-hash environment is rejected before a process. No compiler, probe or tool-resolution process runs.
-- [x] **NO REGRESSION** — `knowledge-map: OK` preserves the missing receipt role and adds the sealed environment argument. The rendered book states that the compiler launch remains next; claim identity/dispositions, containment and staged doctrines accompany the normal hooks. That launch, probe, tool-resolution, native/live/startup qualification and full CI/push remain open.
-
-## Acceptance Checklist (sealed private job role .3.2.15.7.3.12.4.1.5.4.3.3.6.7.1.2.2.2.1)
-
-- [x] **ROOT CAUSE (WHY + WHERE)** — `git log -S 'my @ROLES = qw(compiler outer inner)' -1 --format='%H %s' -- docs/audits/native-proxy-receipt-adapter-20260922/ReceiptAdapter.pm` identifies b74122f9f967dd7cdb4b29f17aed4a2ba4be6b3b. `sealed_finished_job` returns the finished job and adds no role. A retained compiler job therefore cannot bind until that role is owned.
-- [x] **ADDRESSED (verified)** — The sealed private job remains unchanged and still carries no receipt role. Capture stays closed. The sealed compiler launch remains .5.4.3.3.6.7.1.2.2.2.2. No compiler, probe, worker, proxy or collector runs.
-- [x] **NO REGRESSION** — `knowledge-map: OK` preserves the missing compiler environment and adds the missing receipt role. The rendered book states that the sealed compiler launch remains next; claim identity/dispositions, containment and staged doctrines accompany the normal hooks. That launch, probe, tool-resolution, native/live/startup qualification and full CI/push remain open.
-
-## Acceptance Checklist (sealed compiler environment .3.2.15.7.3.12.4.1.5.4.3.3.6.7.1.2.2.1)
-
-- [x] **ROOT CAUSE (WHY + WHERE)** — `git log -S 'argv bounds containment cwd private_job schema stage' -1 --format='%H %s' -- perl/FSM/Support/ProcessSupervisor.pm` identifies dbd520b28940b12f30234d19ed717d6a4418a8dd. `supervise_process` accepts those arguments and rejects an environment. A sealed compiler launch would inherit the caller environment.
-- [x] **ADDRESSED (verified)** — The sealed supervisor remains unchanged and still accepts no environment. Capture stays closed. The sealed compiler launch remains .5.4.3.3.6.7.1.2.2.2. No compiler, probe, worker, proxy or collector runs.
-- [x] **NO REGRESSION** — `knowledge-map: OK` preserves the one-compiler binding refusal and adds the missing environment argument. The rendered book states that the sealed compiler launch remains next; claim identity/dispositions, containment and staged doctrines accompany the normal hooks. That launch, probe, tool-resolution, native/live/startup qualification and full CI/push remain open.
-
-## Acceptance Checklist (compiler receipt binding .3.2.15.7.3.12.4.1.5.4.3.3.6.7.1.2.1)
-
-- [x] **ROOT CAUSE (WHY + WHERE)** — `git log -S 'return 0 unless @_ == 2 && ref($states) eq '"'"'ARRAY'"'"' && @$states == @ROLES' -1 --format='%H %s' -- docs/audits/native-proxy-receipt-adapter-20260922/ReceiptAdapter.pm` identifies b74122f9f967dd7cdb4b29f17aed4a2ba4be6b3b. `receipts_bound` requires compiler, outer and inner receipts together. One compiler receipt fails that binding, so a compiler-only capture cannot retain its first private state.
-- [x] **ADDRESSED (verified)** — The receipt adapter remains unchanged and still rejects one compiler receipt. Capture stays closed. The sealed compiler launch remains .5.4.3.3.6.7.1.2.2. No compiler, probe, worker, proxy or collector runs.
-- [x] **NO REGRESSION** — `knowledge-map: OK` preserves the public compiler request and adds the one-compiler binding refusal. The rendered book states that the sealed compiler launch remains next; claim identity/dispositions, containment and staged doctrines accompany the normal hooks. That launch, probe, tool-resolution, native/live/startup qualification and full CI/push remain open.
-
-## Acceptance Checklist (public compiler launch .3.2.15.7.3.12.4.1.5.4.3.3.6.7.1.1)
-
-- [x] **ROOT CAUSE (WHY + WHERE)** — `git log -S 'stage => '"'"'compile_proxy'"'"'' -1 --format='%H %s' -- t/lib/FSM/Test/RustProxyFixture.pm` identifies e0d74bb051465ba641227acc11975e25e5d879a7. `prepare_rust_proxy` calls `FSM::Test::ProcessSupervisor::supervise_process`, and that call returns only the public result. A compiler capture that keeps only that result cannot retain the first private state.
-- [x] **ADDRESSED (verified)** — The public compiler request remains unchanged and still returns only the public result. Capture stays closed. The sealed compiler launch remains .5.4.3.3.6.7.1.2. No compiler, probe, worker, proxy or collector runs.
-- [x] **NO REGRESSION** — `knowledge-map: OK` preserves the finished-job gate and adds the public compiler request. The rendered book states that the sealed compiler launch remains next; claim identity/dispositions, containment and staged doctrines accompany the normal hooks. That launch, probe, tool-resolution, native/live/startup qualification and full CI/push remain open.
-
-## Acceptance Checklist (opened finished-job gate .3.2.15.7.3.12.4.1.5.4.3.3.6.6)
-
-- [x] **ROOT CAUSE (WHY + WHERE)** — `git log -S 'sub execution_allowed' -1 --format='%H %s' -- docs/audits/native-proxy-receipt-admission-20260922/Admission.pm` identifies 413a76daac6182ce08ca13c42c53a422ac35e859. `execution_allowed` returned 0 after every admitted plan, so a consumed permit could not admit a finished private job.
-- [x] **ADDRESSED (verified)** — perl docs/audits/native-proxy-receipt-admission-20260922/qualify.t passes 47 assertions. One consumed permit admits one finished private job and refuses an unfinished job, a missing job and a public supervisor name. No compiler, probe or tool-resolution process runs.
-- [x] **NO REGRESSION** — `knowledge-map: OK` preserves the closed execution record and adds the finished-job gate. The rendered book states that the compiler, probe and tool-resolution launch remains next; claim identity/dispositions, containment and staged doctrines accompany the normal hooks. That launch, native/live/startup qualification and full CI/push remain open.
-
-## Acceptance Checklist (closed execution after consumed permit .3.2.15.7.3.12.4.1.5.4.3.3.6.5)
-
-- [x] **ROOT CAUSE (WHY + WHERE)** — `git log -S 'sub execution_allowed' -1 --format='%H %s' -- docs/audits/native-proxy-receipt-admission-20260922/Admission.pm` identifies 413a76daac6182ce08ca13c42c53a422ac35e859. `execution_allowed` still returns 0 after `admitted`. A consumed permit therefore cannot open a compiler, probe or tool-resolution process.
-- [x] **ADDRESSED (verified)** — The closed plan remains admitted and execution stays refused after the consumed permit. Capture stays closed. Opening that gate remains .5.4.3.3.6.6. No compiler, probe, worker, proxy or collector runs.
-- [x] **NO REGRESSION** — `knowledge-map: OK` preserves the consumed permit and adds the closed execution gate. The rendered book states that the consumed permit still refuses execution; claim identity/dispositions, containment and staged doctrines accompany the normal hooks. Opening execution, capture, native/live/startup qualification and full CI/push remain open.
-
-## Acceptance Checklist (consumed receipt permit .3.2.15.7.3.12.4.1.5.4.3.3.6.3.4)
-
-- [x] **ROOT CAUSE (WHY + WHERE)** — `git log -S 'sub issue_permit' -1 --format='%H %s' -- docs/audits/native-proxy-receipt-admission-20260922/Admission.pm` identifies d36f5284815d6226d2e26b3bce1115c73003c521. That issue returns a token, and the first consume accepted the token without the closed plan. A capture could therefore spend the permit without binding the current revision.
-- [x] **ADDRESSED (verified)** — perl docs/audits/native-proxy-receipt-admission-20260922/qualify.t passes 43 assertions. The matching closed plan consumes the issued permit once. A different source revision, proxy replay, a live collector and a second consume reject. execution_allowed stays 0. No compiler, probe or tool-resolution process runs.
-- [x] **NO REGRESSION** — `knowledge-map: OK` preserves the issued permit and adds its one closed consume. The rendered book states that execution stays refused; claim identity/dispositions, containment and staged doctrines accompany the normal hooks. Capture, native/live/startup qualification and full CI/push remain open.
-
-## Acceptance Checklist (sealed return permit .3.2.15.7.3.12.4.1.5.4.3.3.6.3.3)
-
-- [x] **ROOT CAUSE (WHY + WHERE)** — `git log -S 'sub execution_allowed' -1 --format='%H %s' -- docs/audits/native-proxy-receipt-admission-20260922/Admission.pm` identifies 413a76daac6182ce08ca13c42c53a422ac35e859. `execution_allowed` returns 0 after `admitted`, and an issued permit is rejected. A capture therefore has no fresh permit to consume.
-- [x] **ADDRESSED (verified)** — perl docs/audits/native-proxy-receipt-admission-20260922/qualify.t passes 40 assertions. One fresh permit names FSM::Test::ProcessSupervisor::sealed_supervise_process, binds the current source revision, and is consumed once. A second issue and a second consume reject. Replay and live-collector plans issue nothing. execution_allowed stays 0. No compiler, probe or tool-resolution process runs.
-- [x] **NO REGRESSION** — `knowledge-map: OK` preserves the unissued-permit record and adds the one-use sealed return. The rendered book states that execution stays refused; claim identity/dispositions, containment and staged doctrines accompany the normal hooks. Capture, native/live/startup qualification and full CI/push remain open.
-
-## Acceptance Checklist (unissued receipt permit .3.2.15.7.3.12.4.1.5.4.3.3.6.3.2)
-
-- [x] **ROOT CAUSE (WHY + WHERE)** — `git log -S 'sub execution_allowed' -1 --format='%H %s' -- docs/audits/native-proxy-receipt-admission-20260922/Admission.pm` identifies 413a76daac6182ce08ca13c42c53a422ac35e859. `execution_allowed` returns 0 after `admitted`, and an issued permit is rejected. A capture therefore has no fresh permit to consume.
-- [x] **ADDRESSED (verified)** — The closed plan remains admitted and execution stays refused. Capture stays closed. Issuing one permit that names the sealed private return remains .5.4.3.3.6.3.3. No compiler, probe, worker, proxy or collector runs.
-- [x] **NO REGRESSION** — `knowledge-map: OK` preserves the proof-process return and adds the unissued-permit gap. The rendered book states that admission still refuses execution; claim identity/dispositions, containment and staged doctrines accompany the normal hooks. The permit, capture, native/live/startup qualification and full CI/push remain open.
-
-## Acceptance Checklist (proof process private return .3.2.15.7.3.12.4.1.5.4.3.3.6.4.2.3)
-
-- [x] **ROOT CAUSE (WHY + WHERE)** — `git log -S 'hold_before_fork' -1 --format='%H %s' -- perl/FSM/Support/ProcessSupervisor.pm` identifies 11ea52449503788f4de2a52b4a97207dcf54ab54. A sealed private launch stopped before fork, so an executable program could not return a finished job that had actually started.
-- [x] **ADDRESSED (verified)** — perl t/1818-process-supervisor-receipt-observation.t passes 77 assertions. One proof process forks once, exits successfully, and returns the finished private job with its pid, own-group identity and original cleanup hash. The public result still omits pid. No terminating signal is sent. No compiler, probe or tool-resolution process runs.
-- [x] **NO REGRESSION** — `knowledge-map: OK` preserves the pre-fork return and adds the proof-process return. The rendered book states that compiler, probe and tool-resolution execution remains closed; claim identity/dispositions, containment and staged doctrines accompany the normal hooks. Capture, native/live/startup qualification and full CI/push remain open.
-
-## Acceptance Checklist (executable pre-fork private return .3.2.15.7.3.12.4.1.5.4.3.3.6.4.2.2)
-
-- [x] **ROOT CAUSE (WHY + WHERE)** — `git log -S 'supervised program is not executable' -1 --format='%H %s' -- perl/FSM/Support/ProcessSupervisor.pm` identifies c1c17200ecffb593c48d1e752a6431f8fddc9f2d. A private launch whose program was executable continued into `_supervise` and would fork. The sealed return therefore stopped at a missing program.
-- [x] **ADDRESSED (verified)** — perl t/1818-process-supervisor-receipt-observation.t passes 70 assertions. An executable program returns the finished private job, stops before fork, keeps an undefined pid and keeps the original cleanup hash. The ordinary launch still returns only the public result. No compiler, probe or tool-resolution process runs.
-- [x] **NO REGRESSION** — `knowledge-map: OK` preserves the missing-program return and adds the pre-fork executable return. The rendered book states that crossing the fork remains closed; claim identity/dispositions, containment and staged doctrines accompany the normal hooks. A post-fork return, capture, native/live/startup qualification and full CI/push remain open.
-
-## Acceptance Checklist (missing program private launch return .3.2.15.7.3.12.4.1.5.4.3.3.6.4.2.1)
-
-- [x] **ROOT CAUSE (WHY + WHERE)** — `git log -S 'private_job proves only a pre-process failure' -1 --format='%H %s' -- perl/FSM/Support/ProcessSupervisor.pm` identifies dbd520b28940b12f30234d19ed717d6a4418a8dd. A non-empty argument vector rejected before supervision, so a named missing program could not return the finished private job.
-- [x] **ADDRESSED (verified)** — perl t/1818-process-supervisor-receipt-observation.t passes 64 assertions. A named missing program returns the finished job, its private pid, birth clock, own-group identity and the original cleanup hash. The public result is invocation_error and the pid stays undefined. No compiler, probe or tool-resolution process runs.
-- [x] **NO REGRESSION** — `knowledge-map: OK` preserves the pre-process private return and adds the missing-program return. The rendered book states that an executable program still has no private return; claim identity/dispositions, containment and staged doctrines accompany the normal hooks. An executable launch, capture, native/live/startup qualification and full CI/push remain open.
-
-## Acceptance Checklist (pre-process private launch return .3.2.15.7.3.12.4.1.5.4.3.3.6.4.1)
-
-- [x] **ROOT CAUSE (WHY + WHERE)** — `git log -S 'return $state->{result}' -1 --format='%H %s' -- perl/FSM/Support/ProcessSupervisor.pm` identifies 51a3a3914ff4c6f2c14df02620682eb20c6ab129. `_supervise` returned only the public result. A sealed caller that kept that result could not preserve pid, birth clock or the original cleanup hash.
-- [x] **ADDRESSED (verified)** — perl t/1818-process-supervisor-receipt-observation.t passes 60 assertions. A sealed launch that fails before a process returns the finished job, its private pid, birth clock, own-group identity and the original cleanup hash. The ordinary launch still returns only the public result. A ready argument vector rejects before a process. No compiler, probe or tool-resolution process runs.
-- [x] **NO REGRESSION** — `knowledge-map: OK` preserves the public-result gap and adds the pre-process private launch return. The rendered book states that a ready launch still has no private return; claim identity/dispositions, containment and staged doctrines accompany the normal hooks. A launch ready to start a process, capture, native/live/startup qualification and full CI/push remain open.
-
-## Acceptance Checklist (launch still returns public result .3.2.15.7.3.12.4.1.5.4.3.3.6.3.1)
-
-- [x] **ROOT CAUSE (WHY + WHERE)** — `git log -S 'return $state->{result}' -1 --format='%H %s' -- perl/FSM/Support/ProcessSupervisor.pm` identifies 51a3a3914ff4c6f2c14df02620682eb20c6ab129. `_supervise` still returns only the public result. `sealed_finished_job` reads a finished job the caller already holds, and the sealed launch does not return that job.
-- [x] **ADDRESSED (verified)** — A capture that keeps only the public result cannot preserve pid, birth clock or cleanup identity. Capture stays closed. Returning the finished job from the sealed launch remains .5.4.3.3.6.4. No compiler, probe, worker, proxy or collector runs.
-- [x] **NO REGRESSION** — `knowledge-map: OK` preserves the sealed private hand-back and adds the remaining launch-return gap. The rendered book states that capture must wait for the launch itself to return the private job; claim identity/dispositions, containment and staged doctrines accompany the normal hooks. Execution, actual-wrapper observation, native/live/startup qualification and full CI/push remain open.
-
-## Acceptance Checklist (sealed private return .3.2.15.7.3.12.4.1.5.4.3.3.6.2)
-
-- [x] **ROOT CAUSE (WHY + WHERE)** — `git log -S 'return $state->{result}' -1 --format='%H %s' -- perl/FSM/Support/ProcessSupervisor.pm` identifies 51a3a3914ff4c6f2c14df02620682eb20c6ab129. `_supervise` returns only the public result. `receipt_observation` reads a finished job the caller already holds, and the sealed launch does not return that job.
-- [x] **ADDRESSED (verified)** — perl t/1818-process-supervisor-receipt-observation.t passes 47 assertions. A sealed caller receives the finished job with pid, birth clock, own-group identity and the original cleanup hash. An unsealed caller and an unfinished job reject. The public result still omits pid and keeps schema version 1. No compiler, probe or tool-resolution process runs.
-- [x] **NO REGRESSION** — `knowledge-map: OK` preserves the sealed-launch return gap and adds the sealed private return. Files=4, Tests=103. The rendered book states that a sealed caller can receive the finished private job; claim identity/dispositions, containment and staged doctrines accompany the normal hooks. Capture, native/live/startup qualification and full CI/push remain open.
-
-## Acceptance Checklist (sealed launch return gap .3.2.15.7.3.12.4.1.5.4.3.3.6.1)
-
-- [x] **ROOT CAUSE (WHY + WHERE)** — `git log -S 'return $state->{result}' -1 --format='%H %s' -- perl/FSM/Support/ProcessSupervisor.pm` identifies 51a3a3914ff4c6f2c14df02620682eb20c6ab129. `_supervise` returns only the public result. `receipt_observation` reads a finished job the caller already holds, and the sealed launch does not return that job.
-- [x] **ADDRESSED (verified)** — A capture that keeps only the public result cannot preserve pid, birth clock or cleanup identity. Capture stays closed. Returning the private state from the sealed launch remains .5.4.3.3.6.2. No compiler, probe, worker, proxy or collector runs.
-- [x] **NO REGRESSION** — `knowledge-map: OK` preserves the sealed observation route and adds the sealed-launch return gap. The rendered book states that capture must wait for a private return from the sealed launch; claim identity/dispositions, containment and staged doctrines accompany the normal hooks. Execution, actual-wrapper observation, native/live/startup qualification and full CI/push remain open.
-
-## Acceptance Checklist (public cleanup copy .3.2.15.7.3.12.4.1.5.4.3.3.5)
-
-- [x] **ROOT CAUSE (WHY + WHERE)** — `git log -S 'sub _finish_result' -1 --format='%H %s' -- perl/FSM/Support/ProcessSupervisor.pm` identifies d1235212cd7b15d4867edf9f8f08e3937fae6cc6. The public result returned the private cleanup hash. A caller could change its flags and change the hash a sealed observation binds.
-- [x] **ADDRESSED (verified)** — perl t/1818-process-supervisor-receipt-observation.t passes 36 assertions. The public result returns the same flags through a different hash. Mutating that copy leaves the private hash unchanged. Schema version 1 still omits pid and cleanup identity. No compiler, probe or tool-resolution process runs.
-- [x] **NO REGRESSION** — `knowledge-map: OK` preserves the sealed observation route and adds the public cleanup copy. Files=4, Tests=92. The rendered book states that the public result copies cleanup flags; claim identity/dispositions, containment and staged doctrines accompany the normal hooks. Capture, native/live/startup qualification and full CI/push remain open.
-
-## Acceptance Checklist (private receipt observation .3.2.15.7.3.12.4.1.5.4.3.3.4)
-
-- [x] **ROOT CAUSE (WHY + WHERE)** — `git log -S 'sub _finish_result' -1 --format='%H %s' -- perl/FSM/Support/ProcessSupervisor.pm` identifies d1235212cd7b15d4867edf9f8f08e3937fae6cc6. The public result copies cleanup flags and omits pid, birth clock and cleanup identity. `perl/FSM/Support/ProcessSupervisor/Wire.pm` requires that exact public key set at schema version 1.
-- [x] **ADDRESSED (verified)** — perl t/1818-process-supervisor-receipt-observation.t passes 33 assertions. A sealed caller reads a finished job and receives pid, birth clock, own-group identity and the original cleanup hash. A copied cleanup hash, an unsealed caller and an unfinished job reject. The public result still omits pid and cleanup identity. No compiler, probe or tool-resolution process runs.
-- [x] **NO REGRESSION** — `knowledge-map: OK` preserves the public-result gap and adds the sealed observation route. Capture remains closed. Native/live/startup qualification and full CI/push remain open.
-
-## Acceptance Checklist (public receipt return gap .3.2.15.7.3.12.4.1.5.4.3.3.3)
-
-- [x] **ROOT CAUSE (WHY + WHERE)** — `git log -S 'sub _finish_result' -1 --format='%H %s' -- perl/FSM/Support/ProcessSupervisor.pm` identifies d1235212cd7b15d4867edf9f8f08e3937fae6cc6. The public result copies cleanup flags and omits pid, start_sec, start_usec and cleanup_identity. Private start state retains pid and the original cleanup hash, and still omits the birth clock.
-- [x] **ADDRESSED (verified)** — A capture that keeps only the public result cannot satisfy receipts_bound. Capture stays closed. Returning the private identity remains .5.4.3.3.4. No compiler, probe, worker, proxy or collector runs.
-- [x] **NO REGRESSION** — `knowledge-map: OK` preserves every earlier question and adds the public-result gap. The rendered book states that capture must wait for a private-identity return; claim identity/dispositions, containment and staged doctrines accompany the normal hooks. Execution, actual-wrapper observation, native/live/startup qualification and full CI/push remain open.
-
-## Acceptance Checklist (own-group contract alignment .3.2.15.7.3.12.4.1.5.4.3.3.2)
-
-- [x] **ROOT CAUSE (WHY + WHERE)** — `git log -S 'setpgid(0, 0)' -1 --format='%H %s' -- perl/FSM/Support/ProcessSupervisor.pm` identifies d1235212cd7b15d4867edf9f8f08e3937fae6cc6. The child must become its own group leader, and group absence is later checked with that same pid. `git log -S '_same_identity' -1 --format='%H %s' -- docs/audits/native-proxy-receipt-adapter-20260922/ReceiptAdapter.pm` identifies b74122f9f967dd7cdb4b29f17aed4a2ba4be6b3b, which rejected a group equal to the leader birth.
-- [x] **ADDRESSED (verified)** — perl docs/audits/native-proxy-receipt-adapter-20260922/qualify.t passes 17 assertions. A closed frontier accepts ordered compiler/outer/inner states only when each group identity equals its leader birth and each cleanup hash is the private state member. A group that is not the leader, a copied cleanup hash, a caller-supplied array, a missing stage, unfinished capture, an unreaped leader, a reused birth and a closed launch frontier reject. Forbidden fork, system, exec and kill stay zero. No process runs. Capture remains .5.4.3.3.3.
-- [x] **NO REGRESSION** — `knowledge-map: OK` preserves every earlier question and adds the own-group acceptance route. The rendered book states that the adapter now requires the supervisor's own-group identity; claim identity/dispositions, containment and staged doctrines accompany the normal hooks. Execution, actual-wrapper observation, native/live/startup qualification and full CI/push remain open.
-
-## Acceptance Checklist (own-group contract gap .3.2.15.7.3.12.4.1.5.4.3.3.1)
-
-- [x] **ROOT CAUSE (WHY + WHERE)** — `git log -S 'setpgid(0, 0)' -1 --format='%H %s' -- perl/FSM/Support/ProcessSupervisor.pm` identifies d1235212cd7b15d4867edf9f8f08e3937fae6cc6. The child must become its own group leader, and group absence is later checked with that same pid. `git log -S '_same_identity' -1 --format='%H %s' -- docs/audits/native-proxy-receipt-adapter-20260922/ReceiptAdapter.pm` identifies b74122f9f967dd7cdb4b29f17aed4a2ba4be6b3b, which rejects a group equal to the leader birth.
-- [x] **ADDRESSED (verified)** — The current supervisor and adapter sources disagree before any launch. A real finished stage would carry one process identity for both leader and group, so receipts_bound would reject it. Capture stays closed. Contract alignment remains .5.4.3.3.2. No compiler, probe, worker, proxy or collector runs.
-- [x] **NO REGRESSION** — `knowledge-map: OK` preserves every earlier question and adds the own-group rejection route. The rendered book states that capture must wait for the aligned contract; claim identity/dispositions, containment and staged doctrines accompany the normal hooks. Execution, actual-wrapper observation, native/live/startup qualification and full CI/push remain open.
-
-## Acceptance Checklist (compiler-only receipt admission .3.2.15.7.3.12.4.1.5.4.3.2)
-
-- [x] **ROOT CAUSE (WHY + WHERE)** — `git log -S 'stage => '"'"'compile_proxy'"'"'' -1 --format='%H %s' -- t/lib/FSM/Test/RustProxyFixture.pm` identifies e0d74bb051465ba641227acc11975e25e5d879a7. The probe and tool-resolution stages are the current public outer and inner requests. Retained journals omit the private birth, group and cleanup identity those stages must keep.
-- [x] **ADDRESSED (verified)** — perl docs/audits/native-proxy-receipt-admission-20260922/qualify.t passes 28 assertions. Admission requires compile_proxy, probe and tool_resolution, plus pid, birth clock, separate group identity and cleanup identity. Open execution, an issued permit, a missing or substituted stage, a dropped private field and original, proxy or live-collector replay reject. execution_allowed stays false. Forbidden fork, system, exec and kill stay zero. Actual capture remains .5.4.3.3.
-- [x] **NO REGRESSION** — `knowledge-map: OK` preserves every earlier question and adds the closed-admission route. The rendered book states that the capture is admitted and still closed; claim identity/dispositions, containment and staged doctrines accompany the normal hooks. Execution, actual-wrapper observation, native/live/startup qualification and full CI/push remain open.
-
-## Acceptance Checklist (retained receipt gap .3.2.15.7.3.12.4.1.5.4.3.1)
-
-- [x] **ROOT CAUSE (WHY + WHERE)** — `git log -S 'sub state_receipt' -1 --format='%H %s' -- docs/audits/native-proxy-compiler-census-policy-admission-20260913/CompilerProfile.pm` identifies 25a4a19646e1786d854d826ae11958ca4f495ae6. It records pid, phase, leader_reaped and the public result, and labels ownership as the original direct fork. It does not record start_sec, start_usec, group identity or cleanup_identity. Populated Protocol._cleanup returns a fixed synthetic tuple.
-- [x] **ADDRESSED (verified)** — The committed adapter requires ordered compiler/outer/inner private states, distinct birth tuples, separate groups and the original cleanup hash. Retained compiler_settled rows supply compile_proxy only, with copied cleanup flags and no birth clock. No retained record can satisfy receipts_bound. No compiler, worker, proxy or collector runs. Fresh compiler-only admission remains .5.4.3.2.
-- [x] **NO REGRESSION** — `knowledge-map: OK` preserves every earlier question and adds the retained-journal gap. The rendered book states that earlier journals cannot settle the adapter; claim identity/dispositions, containment and staged doctrines accompany the normal hooks. Execution, actual-wrapper observation, native/live/startup qualification and full CI/push remain open.
-
-## Acceptance Checklist (inactive receipt adapter .3.2.15.7.3.12.4.1.5.4.2)
-
-- [x] **ROOT CAUSE (WHY + WHERE)** — `git log -S 'sub cleanup_receipts_settled' -1 --format='%H %s' -- docs/audits/native-proxy-cleanup-receipts-20260910/CleanupReceipts.pm` identifies a2d0fa26b976ecdc2faf5dbe1cdbf5ca69bf5424. That review requires a caller-supplied compiler, outer and stages array and does not authenticate the private cleanup member. The committed inventory at b3b80081a759fdae652235cb6b91b18479dfef92 shows public `_finish_result` omits pid while private supervisor state retains it.
-- [x] **ADDRESSED (verified)** — perl docs/audits/native-proxy-receipt-adapter-20260922/qualify.t passes 17 assertions. Closed-frontier acceptance requires ordered compiler/outer/inner states, distinct births, separate groups, finished capture, reaped leaders and the original cleanup hash. Open frontier, missing or extra stage, substituted role, unfinished capture, copied cleanup, unreaped leader, reused birth, aliased group, supplied cleanup array and non-boolean frontier reject. Launch permission is the inverse of frontier closure. Forbidden fork, system, exec and kill stay at zero. No live process is authenticated.
-- [x] **NO REGRESSION** — `knowledge-map: OK` preserves every earlier question and adds the copied-cleanup rejection route. The rendered book states the inactive adapter and leaves actual compiler or worker admission open; claim identity/dispositions, containment and staged doctrines accompany the normal hooks. Actual execution .5.4.3, actual-wrapper observation, native/live/startup qualification and full CI/push remain open.
-
-## Acceptance Checklist (receipt ownership inventory .3.2.15.7.3.12.4.1.5.4.1)
-
-- [x] **ROOT CAUSE (WHY + WHERE)** — `git log -S 'sub _finish_result' -1 --format='%H %s' -- perl/FSM/Support/ProcessSupervisor.pm` identifies d1235212cd7b15d4867edf9f8f08e3937fae6cc6. The public result returns cleanup flags and timing while private `_start_supervision` retains `pid`. `CleanupReceipts` and `RuntimeRetirement` still accept a caller-supplied compiler/outer/stages array. The compiler census observer separately reads that private state; T1669 retirement and populated `Protocol._cleanup` do not.
-- [x] **ADDRESSED (verified)** — docs/audits/native-proxy-receipt-ownership-inventory-20260922/audit.py --verify-saved reconstructs 15 pinned sources and 803,079 bytes at 44419ba85268106b63c12838ffc2d67c330014a3. It retains two direct-fork compiler receipts, PIDs 60339 and 60342, whose public results omit pid, and keeps 15 populated absence receipts distinct from the synthetic retirement tuple. Ten altered inventories reject promoted public identity, hidden private identity, cleanup authority, synthetic receipts, a closed frontier, an implemented adapter and execution. No compiler, worker, proxy, original fixture or collector runs.
-- [x] **NO REGRESSION** — `knowledge-map: OK` preserves every earlier question and adds the receipt-ownership route. The rendered book states the public/private identity boundary and leaves late-launch prevention open; claim identity/dispositions, containment and staged doctrines accompany the normal hooks. The inactive adapter, actual execution, actual-wrapper observation, native/live/startup qualification and full CI/push remain open.
-
-## Acceptance Checklist (populated lifetime join .3.2.15.7.3.12.4.1.5.3.3)
-
-- [x] **ROOT CAUSE (WHY + WHERE)** — `git log -S 'final_cross_boundary_join_open' -1 --format='%H %s' -- docs/audits/native-proxy-populated-worker-execution-20260914/audit.py` identifies c1d9593991599074f658543b7f2036239794919b and the deliberately open join after actual execution. Source selection now establishes the unchanged shared coordination/custody APIs while separate reviewer processes preserve their private module namespaces and original evidence domains.
-- [x] **ADDRESSED (verified)** — docs/audits/native-proxy-populated-lifetime-join-20260914/audit.py --verify-saved re-derives both original saved reviews, exact committed inputs, shared recorded interpreter selections, actual operation/cleanup counts and measured output bounds. Independent actual-record mutations reject changed custody, valid alternate birth, cancellation, archives, release and terminal absence; the coherent handoff reaches the original-acquisition guard. First qualifier versions/results remain exact, and claim-legs.json separates re-derivation, falsification, durability and remaining boundaries. No worker, compiler, proxy, original fixture, collector or native sampler runs.
-- [x] **NO REGRESSION** — `knowledge-map: OK` preserves every earlier question and adds the exact joint-evidence route. The rendered book closes only the selected cooperative populated-worker activity; claim identity/dispositions, source-derived aggregate metrics, exact prior acceptance retrieval, containment and staged doctrines accompany normal hooks. Real compiler/outer/inner receipt ownership, late-launch prevention, actual-wrapper observation, inactive native composition, native/live/startup qualification and full CI/push remain open.
-
-## Acceptance Checklist (compiler prelaunch grant .3.4.2.1)
-
-- [x] **ROOT CAUSE (WHY + WHERE)** — `git log -S 'sub execution_allowed'` identifies `413a76daac6182ce08ca13c42c53a422ac35e859`. Admission required a finished job and supplied no prelaunch authority. The added admission test reports `not ok 53` against the old module; its process interceptors report no launch attempt. Adjacent receipt controls shared nested cleanup hashes, allowing the unreaped mutation to contaminate later negative cases.
-- [x] **ADDRESSED (verified)** — `begin_compiler_capture` consumes the process-local compiler attempt before returning success, independently of post-launch review. Changed plans/tokens, replay, live collection and repeated grants reject. Independent receipt fixtures each bind before mutation and leave the original positive case valid. Actual capture and its persistent exclusive attempt record remain separately owned by `.3.4.2.2`.
-- [x] **NO REGRESSION** — RAM-guarded `prove -Iperl t/1818-process-supervisor-receipt-observation.t t/1819-native-proxy-receipt-admission.t docs/audits/native-proxy-receipt-adapter-20260922/qualify.t`: `All tests successful`, `Files=3, Tests=192`. `perl -c` reports `syntax OK`; `mdbook build docs/book -d .artifacts/mdbook-compiler-prelaunch` succeeds. Re-derivation: these tracked tests; falsification: old-module RED plus independently valid hostile controls; durability: T1819 discovery and tracked audit controls. No authentic compiler receipt or restart-replay proof is claimed.
-
-## Acceptance Checklist (persistent compiler driver .3.4.2.2.1)
-
-- [x] **ROOT CAUSE (WHY + WHERE)** — `git log -S 'begin_compiler_capture'` identifies `9ceca1e13`. The grant is process-local and the public fixture discards private state; neither alone preserves an attempt across restart. The audit-only wrapper consumes the grant and uses the sealed return without changing the fixture's public contract.
-- [x] **ADDRESSED (verified)** — T1820 proves a persistent exclusive attempt precedes admission, a synced request precedes the supervisor call, and first private/public outcomes survive rejection. Repeating the invocation fails at the existing attempt before another grant; refusal produces no fabricated private state. Tests use modeled compiler returns and explicitly forbid fork/system/signal activity. Real execution is owned by `.3.4.2.2.2`.
-- [x] **NO REGRESSION** — RAM-guarded `prove -Iperl t/1815-rust-proxy-fixture.t t/1817-test-supervision-architecture.t t/1818-process-supervisor-receipt-observation.t t/1819-native-proxy-receipt-admission.t t/1820-native-proxy-receipt-capture.t`: `All tests successful`, `Files=5, Tests=181`. Driver `perl -c`: `syntax OK`. Re-derivation: fixed driver and T1820; falsification: existing-marker rejection and independently injected bad outcomes; durability: tracked driver and ordinary test discovery. Actual compiler and kernel-birth qualification remain missing legs, not modeled claims.
-
-## Acceptance Checklist (zero-microsecond receipt .3.4.2.2.2.1)
-
-- [x] **ROOT CAUSE (WHY + WHERE)** — `git log -S 'sub _identity'` identifies `b74122f9f967dd7cdb4b29f17aed4a2ba4be6b3b`. The same positive-integer expression was used for PID, seconds and fractional microseconds. T1818 reproduces `not ok 29 - sealed receipt accepts microsecond boundary 0` against that code.
-- [x] **ADDRESSED (verified)** — The receipt adapter now treats the fractional field independently: zero and the upper valid microsecond bind through a sealed observation; negative, fractional, referenced, absent and out-of-range fields reject. PID and seconds retain their positive constraints. No compiler, probe or tool-resolution capture runs.
-- [x] **NO REGRESSION** — RAM-guarded `prove -Iperl t/1818-process-supervisor-receipt-observation.t t/1819-native-proxy-receipt-admission.t t/1820-native-proxy-receipt-capture.t docs/audits/native-proxy-receipt-adapter-20260922/qualify.t`: `All tests successful`, `Files=4, Tests=206`. Re-derive: producer gettimeofday fields through T1818; falsify: observed old-predicate RED and invalid boundary controls; durability: ordinary T1818 regression and the tracked adapter. Actual compiler and kernel-birth authentication remain unclaimed.
-
-## Acceptance Checklist (first actual compiler receipt .3.4.2.2.2.2)
-
-- [x] **ROOT CAUSE (WHY + WHERE)** — `git log -S 'begin_compiler_capture'` identifies `9ceca1e13`. A real compiler result was still missing after private-return and prelaunch repairs. The committed fixed driver now ran once from clean `28834c3278aec40fd597a1bd7af06be9fa345061`, retaining its first sealed state instead of the public-only fixture return.
-- [x] **ADDRESSED (verified)** — The guarded compiler runner exits 0. First native wait/public exit/signal agree at success; leader reaping, group absence and original cleanup sharing pass in the live driver. Independent saved-source/state review and dated read-only process-table absence agree. First evidence, generated C and unexecuted executable bytes are retained in `docs/audits/native-proxy-receipt-capture-20260923/result/`; the spent attempt and required original workspace remain unchanged for later owned work. No probe, tool-resolution, proxy image, original fixture or collector is executed.
-- [x] **NO REGRESSION** — The preceding guarded receipt/driver band reports `All tests successful`, `Files=4, Tests=206`; no runtime source changes after that qualification. `python3 -B docs/audits/native-proxy-receipt-capture-20260923/review.py --verify-saved` passes. `qualify_review.py` passes its fresh-control hostile mutations and archived-byte corruption check. Re-derive: tracked fixed driver and exact saved records; falsify: independent native-wait/public/source/ps checks plus deliberately rejected local mutations; durability: committed first records and exact artifact archive with read-only verifier. The historical capture is not rerunnable permission, a timing estimate, kernel-birth authentication, complete stage ownership or startup qualification.
-
-## Acceptance Checklist (actual receipt stage policy .6.7.2.1)
-
-- [x] **ROOT CAUSE (WHY + WHERE)** — `git log -S "stage => 'tool_resolution', containment => 'rust_tool_resolution_probe_group'"` identifies `413a76daa`. The admission table copied the outer policy into the inner stage. T1821 observes the real runtime request through an inert supervisor and reports `not ok 6`, plus rejection/grant failures against the old table. Earlier controls derived both their input and expectation from that table.
-- [x] **ADDRESSED (verified)** — The inner role now requires `rust_parity_process_group`. The actual producer request, unchanged bounds and argument transfer agree; independent mutations of every role/stage/containment field reject, including the old inner value. Rejected plans leave the sole correct compiler grant available, and its repeat rejects. No compiler, probe, tool-resolution or signal attempt occurs.
-- [x] **NO REGRESSION** — RAM-guarded `prove -Iperl t/1815-rust-proxy-fixture.t t/1816-rust-proxy-integration.t t/1819-native-proxy-receipt-admission.t t/1820-native-proxy-receipt-capture.t t/1821-native-proxy-receipt-stage-contract.t`: `All tests successful`, `Files=5, Tests=130`. Saved compiler review passes without replay. Re-derive: actual intercepted runtime request; falsify: observed old-table RED and independently changed fields; durability: ordinary T1821 discovery and the tracked policy. This corrects admission data only; nested cleanup, new stage launch admission and real probe/inner receipts remain explicitly open.
-
-## Acceptance Checklist (independent private receipt review .6.7.2.2.1)
-
-- [x] **ROOT CAUSE (WHY + WHERE)** — `git log -S 'sub receipts_bound'` identifies `b74122f9f`. The predicate requires a compiler-first prefix and checks only stage spelling, so it cannot bind an isolated outer/inner observation and accepts a role carrying another stage. Old-module T1818 reports `not ok 29` on independent compiler review and rejects the wrong-stage negative controls at `not ok 33`, `35`, `37` and corresponding later roles.
-- [x] **ADDRESSED (verified)** — `receipt_bound` reviews one original observation against a fixed expected role/stage pair. Ordered-prefix review reuses the same validation and retains distinct births. Open frontiers, wrong roles/stages, copied cleanup, unsettled state, invalid identity and loosely numeric terminal/address fields reject. Fresh hostile controls bind before mutation; the duplicate-birth control now preserves its own-group identity to reach the uniqueness predicate. No address is reconstructed from saved JSON and no process launch is authorized.
-- [x] **NO REGRESSION** — RAM-guarded `prove -Iperl t/1818-process-supervisor-receipt-observation.t t/1819-native-proxy-receipt-admission.t t/1820-native-proxy-receipt-capture.t t/1821-native-proxy-receipt-stage-contract.t docs/audits/native-proxy-receipt-adapter-20260922/qualify.t`: `All tests successful`, `Files=5, Tests=297`. Adapter syntax and saved compiler review pass. Re-derive: sealed private observations through both predicates; falsify: old-module stage/isolated RED and independent hostile inputs; durability: normal T1818 discovery plus tracked adapter controls. These are shape and live-reference checks, not process authentication, complete stage ownership or nested cleanup qualification.
-
-## Cleanup-first director amendment (2026-09-23)
-
-The director answered the precise dependency question with “Yes—qualify nested
-cleanup first (Recommended)”. This supersedes only the earlier launch/startup
-ordering in .19.2.3.1.2.2.5.5.2.3.3: cleanup implementation and independent
-qualification now precede the startup capture that needs them. The earlier
-inactive-endpoint amendment remains historical evidence, not the latest order.
-The selected protocol is retained in the exact .5.5.2.1 version object above.
-Its resource ceilings, handoff acknowledgments, identity retirement, first
-failure, descriptor ownership and finite cleanup envelopes remain binding.
-
-Implementation proceeds through the reserved-group leaves, coordinator
-integration, nested routing and cancellation, then independent end-to-end
-qualification. The compiler attempt at 28834c3278aec40fd597a1bd7af06be9fa345061
-is spent: preserve its workspace and retained result; do not replay its driver
-or execute the retained proxy. Qualification controls need their own bounded
-identities and evidence. The fixed real-capture driver remains a separate,
-process-free committed slice before its one-use launch admission. Historical
-startup/parent failures and full-CI/push gates stay open until their own evidence
-closes them. This amendment makes no runtime or containment claim.
-
-## Acceptance Checklist (.19.2.3.1.2.2.5.5.2.3.3.1)
-
-- [x] **ROOT CAUSE (WHY + WHERE)** — `git log -S` for
-  `does not waive the launch prerequisite` locates `5f8be37f1`; the current
-  .5.5.2.3.3 prerequisite points back to the startup capture that needs nested
-  cleanup. The director's explicit cleanup-first answer resolves that cycle.
-- [x] **ADDRESSED (verified)** — `scripts/check_task_tree_integrity.pl` reports
-  all active task-tree invariants hold. The launch gate now has explicit
-  reservation, command, capture and hostile-qualification owners; the fixed
-  capture is blocked on their nested closure rather than a pending answer.
-  Diff review preserves process implementation and the spent compiler records.
-- [x] **NO REGRESSION** — `mdbook build docs/book -d
-  .artifacts/cleanup-first-book` succeeds; rendered HTML retains the own-group
-  limitation and presents the approved qualification order. Claim inventory
-  and independent census agree, and the disposition join holds. The completed
-  README/containment gate reports `readme-entrypoint: all README entry-point invariants hold`.
-  The first staged gate rejected this box for missing a declared output token;
-  its actual passed gate output is now recorded here before the required rerun.
-  No compiler, proxy, startup capture or full CI was run.
-
-## Reservation-child implementation scope (.19.2.3.1.2.2.5.5.2.3.3.2)
-
-The private `ProcessSupervisor::Reservation` component owns no executable,
-request routing or public facade. Preparation allocates bounded pipes without
-forking; the coordinator must retain that object and reserve its job/child
-slots before calling start. The recorded object owns its exact fork before
-signals are restored. Acknowledged group creation and departure are separate
-states. Before retirement, the child remains unreaped even after unexpected
-EOF; group operations require acknowledged ownership. Retirement irreversibly
-ends group signalling before positive-child termination and exact nonblocking
-reaping. Unknown wait status cannot become reaped or successful.
-
-The caller supplies its original execution deadline and all other run-private
-handles to close in the reservation. Handshakes are clipped to the existing
-private handshake ceiling; retirement consumes a caller-selected remaining
-closure deadline within the existing TERM/KILL envelope. The later coordinator
-must qualify complete descriptor/slot accounting and shared cleanup timing.
-No sealed caller starts this component until the following integration owners
-close. Independent controls belong in a new focused test, not a replay of the
-original T1669/startup compiler/probe. Loading the component creates no process.
-
-## Acceptance Checklist (.19.2.3.1.2.2.5.5.2.3.3.2)
-
-- [x] **ROOT CAUSE (WHY + WHERE)** — `git log -S` for
-  `sub _start_supervision` identifies `51a3a3914`, the asynchronous extraction.
-  That legacy path forks and releases its command immediately; it supplies no
-  independent reserved identity or acknowledged departure. The retained
-  .5.5.2.1 protocol requires those facts before gated coordinator launch.
-  The new component implements that separately owned lifetime prerequisite.
-- [x] **ADDRESSED (verified)** — T1823 uses an independently forked member,
-  direct kernel group queries, actual positive-child waits and pipe EOF. It
-  rejects pre-ack signals, observes the reservation alive after group absence,
-  and verifies retirement forbids later group operations. Silent acknowledgment,
-  stuck release, failed group creation/departure, malformed acknowledgment,
-  failed allocation/fork/write and mask-restoration failures retain wait/failure
-  truth. Model-only tests prove unknown waits and uncertain absence fail closed;
-  no unrelated identity is signalled. The tracked test is the durable watcher;
-  .artifacts/reservation-expanded-test.log retains this execution. Current-host
-  execution is established; Linux and complete coordinator closure remain gaps.
-- [x] **NO REGRESSION** — The guarded endpoint, connection, service, supervision
-  architecture, receipt-observation, receipt-stage and reservation band reports
-  `All tests successful`, `Files=7, Tests=237`; complete output is retained at
-  .artifacts/reservation-final-band.log, including child environment isolation.
-  The book build and rendered description/test command pass. Syntax checks
-  pass for the component and test. The shared engine only exposes its existing private cleanup graces;
-  no normal caller loads the new strategy. Original compiler/probe/startup
-  attempts and full CI were not replayed.
-
-## Gated-command implementation scope (.19.2.3.1.2.2.5.5.2.3.3.3)
-
-Preparation retains a bounded execution snapshot, both child-role slots and
-all command/reservation pipe ends before either fork. The inactive component
-publishes its resource cost; the coordinator must charge that cost against
-its aggregate ledger and retain the prepared object before calling start.
-Aggregate admission is still owned by coordinator integration. The command's
-join byte is sent only after its exact PID is recorded and signals restored.
-Join acknowledgment permits reservation departure; departure acknowledgment
-permits a separate release call. The command receives the admitted environment,
-argument bytes, cwd, EOF stdin, umask and original exec-relevant signal state.
-
-This slice exposes nonblocking streams, positive-command signaling, exact wait
-polling and explicit reservation retirement to the later capture owner. It does
-not yet combine them into a production cleanup/result loop. T1824's independent
-bounded driver closes partial starts and retains output through EOF before
-retirement. Group retirement precedes reservation reaping; unknown command waits
-revoke positive-PID authority without inventing a consumed status. The original
-synchronous engine, sealed adapters and spent startup/compiler evidence remain
-unchanged.
-
-## Acceptance Checklist (.19.2.3.1.2.2.5.5.2.3.3.3)
-
-- [x] **ROOT CAUSE (WHY + WHERE)** — `git log -S` for
-  `sub _start_supervision` identifies `51a3a3914`. That path immediately execs
-  its own-group command; the qualified Reservation component supplies only
-  the separate identity lifetime. Neither provides the selected recorded join,
-  acknowledged departure and publication-controlled exec sequence. GatedPair
-  composes that missing inactive launch strategy without routing callers.
-- [x] **ADDRESSED (verified)** — Re-derive with T1824: actual kernel groups,
-  child-reported parent/identity, complete pipe EOF and exact wait status
-  confirm the handoff. Falsify with the deliberately bypassed exec gate: it
-  produces `EXECUTED` before release despite a false internal release flag.
-  Real partial-start and silent-join controls plus model-only ECHILD controls
-  fail closed. Durability is the tracked component/test, book, fact card and
-  work-unit commit. Linux and production capture/subtree closure remain missing
-  qualification legs under their existing owners. The sandbox could not inspect
-  processes, so the required guard refused before tests; the approved guarded
-  host executions passed and remain in .artifacts/gated-pair-first-process.log,
-  .artifacts/gated-pair-expanded.log and .artifacts/gated-pair-final-band.log.
-- [x] **NO REGRESSION** — The guarded endpoint, connection, service,
-  architecture, receipt-observation, receipt-stage, reservation and gated-pair
-  band reports `All tests successful`, `Files=8, Tests=251`. The new component
-  and test pass Perl syntax checks. The repository-local mdBook build succeeds;
-  its HTML contains the gated handoff and runnable component command. The initial
-  fact-card edit exceeded its line-width bound and introduced trailing spaces;
-  reflow preserves the exact facts and fixes both before the final gates.
-  The staged doctrine gate then caught an old census fingerprint after Knowledge
-  Map regeneration; regenerating the inventory restores exact source agreement.
-  Containment then rejected ordinary growth in rollover-debt book/card surfaces.
-  The complete component reference moves unchanged to the existing directly
-  indexed private-lifetimes chapter; its original location retains a link.
-  The fact card keeps every question and receipt, replacing only its superseded
-  reservation-only boundary. Rollover allowances and all ceilings stay unchanged.
-  Task evidence is warning debt: its measured growth gains the prescribed
-  ratchet step with the active tree as owner. No existing engine, public result
-  schema, process bound, original capture or submodule implementation changed.
-  Final review reproduced a cached-ready release after reservation retirement
-  in .artifacts/gated-pair-retired-red.log. Release and advancement now both
-  require the live reservation. The paired advancement model initially omitted
-  its deadline; that fixture was corrected independently of the valid release
-  failure. The repaired focused band is .artifacts/gated-pair-retired-final-band.log.
+## Acceptance Checklist (.19.2.3.1.2.2.5.5.2.3.3.4 decomposition)
+
+- [x] **ROOT CAUSE (WHY + WHERE)** — `git log -S` identifies
+  `f2c808399` as the qualified GatedPair introduction. Shared capture currently
+  closes its own stream handles, while GatedPair retirement also owns its
+  handles. Capture integration must select one owner before composing cleanup.
+  The task's completed suffix is exact history, not a required live read.
+- [x] **ADDRESSED (verified)** — The selected children first establish the
+  shared read/transfer seam, then reserved lifecycle and terminal identity.
+  Re-derive the historical suffix from the full f2c808399 source named by the
+  manifest. Independent byte comparison proves the removed suffix is identical
+  to that source, and all predecessor node bodies except the explicitly split
+  parent remain unchanged. The live node graph and coordinator protocol remain
+  in place. Durability is the exact-source manifest under fsmgen_required_history
+  and its unconditional retrieval/digest/count verifier; the source preserves
+  the preceding versioned manifest chain. No process implementation changed.
+- [x] **NO REGRESSION** — `scripts/check_task_tree_integrity.pl` verifies the
+  complete live graph and retrieves the source/suffix. The staged doctrine gate
+  requires `knowledge-map: OK`, exact claim inventory, current task-index
+  alignment and unchanged book reference. No runtime or original capture runs
+  are needed for this source-free decomposition and history rollover.
