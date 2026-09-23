@@ -8,12 +8,14 @@ use Time::HiRes qw(CLOCK_MONOTONIC clock_gettime);
 use FSM::Support::ProcessSupervisor::Admission ();
 use FSM::Support::ProcessSupervisor::Endpoint ();
 use FSM::Support::ProcessSupervisor::Reservation ();
+use FSM::Support::ProcessSupervisor::ReservedJob ();
 use FSM::Support::ProcessSupervisor::Wire ();
 
-# Inactive native owner. This first composition owns only run construction;
-# job allocation/start, accepted peers and fair advancement are later layers.
+# Inactive native owner. Run and unstarted job preparation are retained here;
+# job start, accepted peers and fair advancement are later layers.
 # Preparing this object allocates no descriptor, token, path or process.
 my $COST = FSM::Support::ProcessSupervisor::Endpoint::resource_cost();
+my $JOB_COST = FSM::Support::ProcessSupervisor::GatedPair::resource_cost();
 my $LIMIT = FSM::Support::ProcessSupervisor::Wire::limits();
 my ($TERM, $KILL) = FSM::Support::ProcessSupervisor::_termination_graces();
 sub _error { die "private process coordinator: $_[0]\n" }
@@ -115,10 +117,76 @@ sub context {
     $self->{ledger}->check_live($self->{jobs}{1}{grant});
     return $self->{run}->context;
 }
+sub root {
+    my ($self) = @_; _owner($self);
+    _error('unexpected root arguments') unless @_ == 1;
+    return $self->{ledger}->root;
+}
+sub _job {
+    my ($self, $grant) = @_;
+    my $record = $self->{ledger}->describe($grant);
+    my $entry = $self->{jobs}{$record->{id}};
+    _error('job grant has no original retained owner') unless $entry
+        && refaddr($entry->{grant}) == refaddr($grant);
+    return ($entry, $record);
+}
+sub _before_job_allocation {
+    my ($self, $grant) = @_; _owner($self);
+    _error('run is no longer open for job preparation') unless $self->{phase} eq 'open';
+    my ($entry, $record) = $self->_job($grant);
+    $self->{ledger}->check_live($grant);
+    _error('native job must be retained under preparing admission')
+        unless $entry->{native} && $record->{phase} eq 'preparing';
+    _error('job peak credit is no longer retained')
+        unless $record->{reserved_descriptors} == $JOB_COST->{descriptors}
+            && $record->{reserved_children} == $JOB_COST->{children};
+    my $usage = $self->{ledger}->usage;
+    _error('aggregate job capacity exceeded')
+        if $usage->{charged_descriptors} > $LIMIT->{descriptors}
+            || $usage->{charged_children} > $LIMIT->{children};
+    return;
+}
+sub prepare_job {
+    my ($self, $grant) = @_; _owner($self);
+    _error('job preparation requires an open run and original grant')
+        unless @_ == 2 && $self->{phase} eq 'open';
+    my ($entry, $record) = $self->_job($grant);
+    _error('job preparation is single-use') unless $record->{phase} eq 'reserved';
+    my $ok = eval {
+        FSM::Support::ProcessSupervisor::Reservation::_masked_preparation(sub {
+            $self->{ledger}->begin_prepare($grant);
+            # The constructor is resource-free. Publish its entire graph before
+            # allocate; the caller's original snapshot is then owned by the pair.
+            $entry->{native} = FSM::Support::ProcessSupervisor::ReservedJob::prepare_record(
+                snapshot => $entry->{snapshot}, deadline => $record->{deadline_ns} / 1_000_000_000,
+                close_handles => $self->handles);
+            delete $entry->{snapshot};
+            $entry->{native}->allocate(sub { $self->_before_job_allocation($grant) });
+            $self->{ledger}->prepared($grant, scalar @{$entry->{native}->handles});
+        });
+        1;
+    };
+    unless ($ok) {
+        my $error = $@;
+        $self->_failure($error);
+        $self->{phase} = 'failed';
+        $self->{ledger}->cancel($grant);
+        die $error;
+    }
+    return;
+}
+sub job_observation {
+    my ($self, $grant) = @_; _owner($self);
+    _error('job observation requires an original grant') unless @_ == 2;
+    my ($entry, $record) = $self->_job($grant);
+    return {admission => $record,
+        native => $entry->{native} ? $entry->{native}->observation : undef};
+}
 sub handles {
     my ($self) = @_; _owner($self);
     _error('unexpected inventory arguments') unless @_ == 1;
-    return $self->{run} ? $self->{run}->handles : [];
+    return [$self->{run} ? @{$self->{run}->handles} : (),
+        map { $_->{native} ? @{$_->{native}->handles} : () } values %{$self->{jobs}}];
 }
 sub observation {
     my ($self) = @_; _owner($self);
@@ -137,6 +205,22 @@ sub close {
             $self->{phase} = 'closing';
             $self->_begin_cleanup;
             $self->{ledger}->cancel($self->{jobs}{1}{grant});
+            for my $entry (values %{$self->{jobs}}) {
+                my $native = $entry->{native} or next;
+                my $observed = $native->observation;
+                # Fail closed if a future integration starts a child without
+                # first replacing this unstarted-only cleanup contract.
+                _error('started native cleanup is not integrated')
+                    if $observed->{command}{command_pid} || $observed->{reservation}{pid};
+                unless ($observed->{phase} eq 'finished') {
+                    $native->cancel('coordinator closes unstarted job',
+                        $self->{cleanup_deadline_ns} / 1_000_000_000);
+                    $native->advance;
+                }
+                _error('unstarted native job cleanup incomplete')
+                    unless $native->observation->{phase} eq 'finished'
+                        && $native->finished_job->{resources_closed} && !@{$native->handles};
+            }
             my $cleanup = $self->{run} ? $self->{run}->close
                 : {ok => 1, socket_removed => 0, directory_removed => 0, diagnostic => 'unopened run closed'};
             $cleanup = {%$cleanup, ok => 0, diagnostic => 'run descriptor cleanup incomplete'}
@@ -147,7 +231,7 @@ sub close {
                 $self->{phase} = 'close_failed';
                 return;
             }
-            # No job or accepted peer can allocate through this initial layer.
+            # Every unstarted job and the endpoint are now actually closed.
             # Keep all charges if native cleanup was incomplete; otherwise
             # release even a reservation whose producer return was interrupted.
             $self->{ledger}->release_descriptors($_, 0) for @{$self->{ledger}->descriptor_grants};

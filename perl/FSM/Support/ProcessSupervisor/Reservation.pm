@@ -86,8 +86,9 @@ sub _inventory {
 }
 
 sub _check_allocation_deadline {
-    my ($deadline) = @_;
+    my ($deadline, $check) = @_;
     _error('execution deadline expired before allocation') if _now() >= $deadline;
+    $check->() if defined $check;
 }
 
 # Shared preparation transaction only; never wrap a fork in this helper.
@@ -130,9 +131,10 @@ sub prepare_record {
 }
 
 sub allocate {
-    my ($self, $additional) = @_; _owner($self);
+    my ($self, $additional, $check) = @_; _owner($self);
     _error('allocation requires an unallocated retained reservation and close inventory')
-        unless @_ == 2 && $self->{phase} eq 'unallocated' && !$self->{retired};
+        unless (@_ == 2 || (@_ == 3 && ref($check) eq 'CODE'))
+            && $self->{phase} eq 'unallocated' && !$self->{retired};
     my $ok = eval {
         _masked_preparation(sub {
             $self->{phase} = 'allocating';
@@ -140,10 +142,10 @@ sub allocate {
                 $additional = _inventory($additional, $LIMIT->{descriptors} - 4);
                 $self->{close_handles} = _inventory(
                     [@{$self->{close_handles}}, @$additional], $LIMIT->{descriptors} - 4);
-                _check_allocation_deadline($self->{deadline});
+                _check_allocation_deadline($self->{deadline}, $check);
                 _pipe(\$self->{child_read}, \$self->{write})
                     or _error('cannot create reservation instruction pipe');
-                _check_allocation_deadline($self->{deadline});
+                _check_allocation_deadline($self->{deadline}, $check);
                 _pipe(\$self->{read}, \$self->{child_write})
                     or _error('cannot create reservation acknowledgment pipe');
                 _seal($self->{$_}, 0) for qw(child_read child_write);

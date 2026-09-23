@@ -88,9 +88,10 @@ sub prepare_record {
 }
 
 sub allocate {
-    my ($self) = @_; _owner($self);
+    my ($self, $check) = @_; _owner($self);
     _error('allocation requires a retained unallocated pair')
-        unless @_ == 1 && $self->{phase} eq 'unallocated' && !$self->{retired};
+        unless (@_ == 1 || (@_ == 2 && ref($check) eq 'CODE'))
+            && $self->{phase} eq 'unallocated' && !$self->{retired};
     my $ok = eval {
         FSM::Support::ProcessSupervisor::Reservation::_masked_preparation(sub {
             $self->{phase} = 'allocating';
@@ -98,7 +99,7 @@ sub allocate {
                 FSM::Support::ProcessSupervisor::Reservation::_inventory(
                     $self->{close_handles}, $LIMIT->{descriptors} - resource_cost()->{descriptors});
                 for my $pair (@PAIRS) {
-                    FSM::Support::ProcessSupervisor::Reservation::_check_allocation_deadline($self->{deadline});
+                    FSM::Support::ProcessSupervisor::Reservation::_check_allocation_deadline($self->{deadline}, $check);
                     FSM::Support::ProcessSupervisor::Reservation::_pipe(
                         \$self->{$pair->[0]}, \$self->{$pair->[1]}) or _error('cannot allocate command pipe');
                     for my $name (@$pair) {
@@ -109,7 +110,7 @@ sub allocate {
                 # stdin is the read end; no child may inherit its writer.
                 $self->_close('child_stdin');
                 _error($self->{failure}) if $self->{failure};
-                $self->{reservation}->allocate($self->handles);
+                $self->{reservation}->allocate($self->handles, defined($check) ? ($check) : ());
                 $self->{phase} = 'prepared';
                 1;
             };

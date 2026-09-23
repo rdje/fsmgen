@@ -57,13 +57,14 @@ sub prepare_record {
 }
 
 sub allocate {
-    my ($self) = @_; _owner($self);
+    my ($self, $check) = @_; _owner($self);
     _error('allocation requires a retained unallocated job')
-        unless @_ == 1 && $self->{state}{phase} eq 'unallocated';
+        unless (@_ == 1 || (@_ == 2 && ref($check) eq 'CODE'))
+            && $self->{state}{phase} eq 'unallocated';
     my $ok = eval {
         FSM::Support::ProcessSupervisor::Reservation::_masked_preparation(sub {
             $self->{state}{phase} = 'allocating';
-            my $allocated = eval { $self->{pair}->allocate; 1 };
+            my $allocated = eval { $self->{pair}->allocate(defined($check) ? ($check) : ()); 1 };
             unless ($allocated) {
                 my $error = $@;
                 $self->_latch('host_error', FSM::Support::ProcessSupervisor::_sanitize_control($error));

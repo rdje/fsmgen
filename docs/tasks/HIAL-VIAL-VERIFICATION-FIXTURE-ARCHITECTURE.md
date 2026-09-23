@@ -3649,11 +3649,11 @@ decomposes the architecture needed to move beyond that bounded foundation.
   Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.4.2.3.3.2.1: roll completed acceptance history before job binding`
 
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.4.2.3.3.2.2`
-  Status: `pending`
+  Status: `done`
   Goal: `Bind retained root preparation to original job grants.`
   Acceptance: `Retain the native root job graph before each pipe; check original identity, liveness, phase and aggregate credit at every allocation. Reconcile actual handles only after successful publication. Qualify native partial failure, cancellation/expiry and pending-signal returns, and close unstarted ownership without forks. Nested admission and native start remain child .3.`
-  Verification: `pending`
-  Commit: `pending`
+  Verification: `Coordinator retains the native root graph before pipe allocation and transfers its detached snapshot without a second retained copy. Every pipe checks the original grant, preparing phase, liveness and peak/aggregate credit. Successful masked publication reconciles actual descriptors while future child slots and cleanup scratch stay charged; interrupted return revokes admission without losing the graph. Aggregate inventories include native jobs. Unstarted cleanup requires the original finished native closure and empty handles before endpoint/root retirement. T1836 qualifies all eight failure/cancellation/expiry boundaries, native handle identity/census, copied grants, exact capacity, pending creator signals and incomplete closure. The selected band passes Files=18, Tests=199, followed by final T1836 Files=1, Tests=6. Omitted grant callback, foreign inventory, ledger publication and outer mask fail distinct controls. Native forks/nested jobs remain child .3; no exec release or routing.`
+  Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.4.2.3.3.2.2: bind retained root preparation to admission grants`
 
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.4.2.3.3.2.3`
   Status: `pending`
@@ -4381,7 +4381,7 @@ decomposes the architecture needed to move beyond that bounded foundation.
 
 ## Current Frontier
 
-Current frontier: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.4.2.3.3.2.2` binds retained root preparation to original job grants; native root/nested start remains child .3. Sibling .3 then binds accepted peers and qualifies the joined native admission lifecycle. Publication, streaming, fair lifecycle composition and independent qualification remain separate integration children. Preserve original failures, the spent compiler workspace, source-only driver commit and full-CI/push gates.
+Current frontier: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.4.2.3.3.2.3` binds gated root/nested forks to original grants, refreshed foreign inventories and retained child reconciliation. Sibling .3 then binds accepted peers and qualifies the joined native admission lifecycle. Publication, streaming, fair lifecycle composition and independent qualification remain separate integration children. Preserve original failures, the spent compiler workspace, source-only driver commit and full-CI/push gates.
 
 Architecture audit `.1` is complete. Decision `0032` selects one public
 `.vial` source language, private immutable `VIALSemanticIR` and
@@ -6997,3 +6997,40 @@ The manifest binds the completed acceptance suffix and independent reserved-proc
   current routing and bounded documents. No runtime, book behavior, compiler
   capture, full CI or push changes. The native job owner now separates root
   preparation from gated root/nested fork qualification without dropping scope.
+
+## Acceptance Checklist (.19.2.3.1.2.2.5.5.2.3.4.2.3.3.2.2)
+
+- [x] **ROOT CAUSE (WHY + WHERE)** — `git log -S` joins 4af301a55's
+  resource-free native preparation with ea2424e72's run-only coordinator.
+  Native pipe allocation previously checked its local wall but had no original
+  aggregate job-grant check, retained coordinator graph or ledger publication.
+  Reusing run-only close after adding job handles would drop their ownership.
+- [x] **ADDRESSED (verified)** — T1836 re-derives actual pipe allocations,
+  original object/foreign-handle identity and aggregate inventory independently
+  of ledger reports. Eight guarded pipe operations retain fifteen live ends;
+  the run plus job report seventeen actual descriptors, two scratch credits
+  and two unused child slots. Exact aggregate reservation 128 permits existing
+  root credit to allocate; actual preparation then charges 127 when the test
+  retains 108 outstanding external credits. Failure keeps the original peak
+  until cleanup; an incomplete native closure report cannot retire the root
+  even after actual pipe closure. All eight allocation-failure, cancelled
+  and inclusive-expiry cuts retain their original owner and first cause.
+  Actual pending USR1 at the selected pipe cuts observes native and ledger
+  publication before interrupted return revokes admission. Fork/wait/signal
+  paths are trapped in the new preparation test. Falsification: skipping the
+  per-pipe callback fails the independent fresh-check observer; omitting run
+  inventory fails original-handle equality; omitting ledger reconciliation
+  fails actual/count and pending-handler checks; omitting only the coordinator
+  mask fails the pending handler's prepared-ledger and reconciled-credit checks.
+  All control cleanup is consumed and isolated mutation sources are removed.
+  Durability: native components, Coordinator, T1836, book, current fact and this
+  commit retain derivation and exact mutation mechanisms; local
+  coordinator-job-preparation logs remain a raw-log durability gap. Native
+  forks, nested ownership, peers and Linux remain separately owned missing legs.
+- [x] **NO REGRESSION** — The sequential endpoint/service, architecture,
+  reservation/pair/capture/closure/job/receipt, native descriptor, admission and
+  retained preparation/run band reports `All tests successful`,
+  `Files=18, Tests=199`. After adding incomplete-closure refusal, final T1836
+  passes `Files=1, Tests=6`. Syntax, inspected mdBook render, task/Knowledge Map,
+  claim inventory/dispositions and staged doctrines cover this slice.
+  No normal caller routing, original producer, full CI or push executes.

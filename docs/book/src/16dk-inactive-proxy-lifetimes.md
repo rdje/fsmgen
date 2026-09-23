@@ -752,9 +752,9 @@ Only the creator's original retained grants authorize ledger transitions.
 Copied grants, another ledger's grants, inherited owners and replayed starts
 reject. Wire job numbers are monotonic and never reused after retirement;
 exhausting the unsigned identity range rejects further admission. This pure
-model creates no descriptors or processes. Binding actual allocation, forks
-and interrupted returns to these reservations is still the next integration
-step, followed by publication and nested transport.
+model creates no descriptors or processes. The coordinator binds native run
+construction and root preparation to these reservations. Forks and nested job
+ownership remain open, followed by publication and nested transport.
 
 Endpoint construction now offers a resource-free prepared run and a separate,
 single-use start. The owner can retain that run before entropy, directory or
@@ -768,8 +768,8 @@ The run descriptor budget includes the saved caller directory and the directory
 iterator beside the listener and directory anchor. Native allocation observers
 qualify this peak and the temporary cleanup handles. Aggregate integration must
 reserve this scratch capacity as well as the steady descriptors. This retained
-endpoint interface creates no process and does not yet bind the native run to
-the admission ledger; the combined owner follows.
+endpoint interface creates no process; the coordinator owner described below
+binds it to the admission ledger.
 
 The reserved job, gated pair and group reservation also expose resource-free
 records before pipe allocation. Their original objects survive allocation;
@@ -787,7 +787,8 @@ If a signal is queued while a pipe is created, the handler runs after the full
 job, pair and reservation are published. The interrupted job cannot start,
 and its owner can finish cleanup using the existing bounded closure driver.
 Independent native handoff checks now also use this retained-record path;
-aggregate ledger binding remains the next integration step.
+the coordinator now binds root allocation to the ledger, while native start
+and nested admission remain open.
 
 The inactive coordinator now binds native run construction to the original
 root admission record. It retains separate credits for the steady endpoint
@@ -806,8 +807,22 @@ success.
 Actual pending-signal controls observe both the retained endpoint and its
 reconciled descriptor charges before the coordinator return is interrupted.
 The coordinator then refuses context publication and can close the exact run.
-Native job preparation/start and accepted-connection accounting are still
-separate open integration steps; this owner cannot fork or release execution.
+Native start and accepted-connection accounting remain separate open
+integration steps; this owner cannot fork or release execution.
+
+Root preparation now retains the complete native job before creating any pipe.
+Each pipe checks the original grant, its preparation phase, remaining lifetime
+and aggregate capacity. Successful preparation replaces descriptor reservations
+with actual retained handles while keeping future child slots and cleanup
+scratch reserved. The coordinator includes those job handles in its aggregate
+inventory; the native job borrows the run handles for later child closure.
+
+For example, cancellation between pipes refuses the next allocation and keeps
+the original job reachable for cleanup. A pending creator signal sees both the
+prepared native graph and reconciled ledger before it can interrupt the return.
+That interruption revokes future admission. Unstarted cleanup consumes the
+original native closure result before retiring the root and endpoint; neither
+a copied observation nor closed pipe ends alone can release its ownership.
 
 Normal callers retain the existing own-group supervisor. Aggregate coordinator
 admission, nested routing and complete
@@ -822,6 +837,7 @@ scripts/run_with_ram_guard.sh -- prove -Iperl -It/lib t/1832-process-coordinator
 scripts/run_with_ram_guard.sh -- prove -Iperl -It/lib t/1833-process-retained-endpoint.t
 scripts/run_with_ram_guard.sh -- prove -Iperl -It/lib t/1834-process-retained-preparation.t
 scripts/run_with_ram_guard.sh -- prove -Iperl -It/lib t/1835-process-coordinator-run-ownership.t
+scripts/run_with_ram_guard.sh -- prove -Iperl -It/lib t/1836-process-coordinator-job-preparation.t
 ```
 
 For native stopped-child observations, decode `${^CHILD_ERROR_NATIVE}` with
