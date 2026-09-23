@@ -1504,7 +1504,7 @@ The MCP surface is for safe, discoverable agent operability. It should make
 common semantic work natural while preserving the native API's identities,
 schemas, status distinctions, security boundaries, and snapshot guarantees.
 
-### 35.1 Initialization and negotiation
+### 36.1 Initialization and negotiation
 
 `NXMCP-INIT-001` Initialization MUST report NEXSIM product/build identity,
 native API schema versions, MCP projection version, supported MCP features,
@@ -1520,7 +1520,7 @@ MUST be discoverable without restarting the client.
 `NXMCP-INIT-004` Stdio and streamable network transports MAY be supported. The
 transport choice MUST NOT change semantic results or authorization meaning.
 
-### 35.2 Resources
+### 36.2 Resources
 
 MCP resources are best suited to stable or snapshot-addressed read views.
 Suggested URI families include:
@@ -1554,7 +1554,7 @@ deployment policy.
 `NXMCP-RES-005` Resource change notifications MAY be offered, but high-rate
 simulation data MUST use a bounded subscription/stream contract.
 
-### 35.3 Tools
+### 36.3 Tools
 
 MCP tools are best suited to parameterized queries, asynchronous work, control,
 and authorized mutation. The recommended tool families are listed in section
@@ -1582,7 +1582,7 @@ structured details; they must not collapse into conversational prose.
 `NXMCP-TOOL-007` Tool descriptions MUST state result bounds, default limits,
 side effects, persistence, cancellation behavior, and whether replay is safe.
 
-### 35.4 Roots and locality
+### 36.4 Roots and locality
 
 `NXMCP-ROOT-001` Client-provided roots MUST be treated as candidate authorized
 workspaces, not blanket filesystem access.
@@ -1598,7 +1598,7 @@ appropriate.
 remain within the selected project or deployment-owned storage root unless an
 explicit external artifact store is authorized.
 
-### 35.5 Progress, cancellation, and notifications
+### 36.5 Progress, cancellation, and notifications
 
 `NXMCP-PROG-001` Builds, elaborations, long queries, simulations, comparisons,
 coverage merges, exports, and bundle creation MUST support progress tokens or
@@ -1614,7 +1614,7 @@ by a terminal state that says what valid evidence remains.
 assertion, report, framework, resource-pressure, and subscription-gap events
 subject to client filters.
 
-### 35.6 Prompt and context hygiene
+### 36.6 Prompt and context hygiene
 
 `NXMCP-CONTEXT-001` MCP operations SHOULD return compact summaries plus IDs for
 drill-down. They MUST NOT flood the client context with complete hierarchies,
@@ -1637,7 +1637,7 @@ from natural-language content inside the simulated design or logs.
 Names below are conceptual and may be adapted to NEXSIM naming conventions.
 The separation and semantics matter more than spelling.
 
-### 36.1 Foundation and workspace
+### 37.1 Foundation and workspace
 
 | Native operation family | Suggested MCP tool | Purpose |
 | --- | --- | --- |
@@ -1650,7 +1650,7 @@ The separation and semantics matter more than spelling.
 | `source.read` | `nexsim_source_read` | Read an authorized, bounded source range with digest and provenance. |
 | `source.overlay.create` | `nexsim_source_overlay_create` | Create a content-addressed candidate source view without overwriting files. |
 
-### 36.2 Build and elaboration
+### 37.2 Build and elaboration
 
 | Native operation family | Suggested MCP tool | Purpose |
 | --- | --- | --- |
@@ -1662,7 +1662,7 @@ The separation and semantics matter more than spelling.
 | `elaboration.create` | `nexsim_elaboration_create` | Elaborate explicit tops/configurations/parameter values. |
 | `elaboration.describe` | `nexsim_elaboration_describe` | Read fingerprints, roots, boundaries, and status. |
 
-### 36.3 Static semantic introspection
+### 37.3 Static semantic introspection
 
 | Native operation family | Suggested MCP tool | Purpose |
 | --- | --- | --- |
@@ -1678,7 +1678,7 @@ The separation and semantics matter more than spelling.
 | `power.query` | `nexsim_power_query` | Query power-intent objects, runtime power state, and corruption causes. |
 | `mixed_boundary.query` | `nexsim_mixed_boundary_query` | Inspect cross-language bindings, conversions, and scheduler boundaries. |
 
-### 36.4 Runtime and explanation
+### 37.4 Runtime and explanation
 
 | Native operation family | Suggested MCP tool | Purpose |
 | --- | --- | --- |
@@ -1695,7 +1695,7 @@ The separation and semantics matter more than spelling.
 | `runtime.mutate` | `nexsim_runtime_mutate` | Apply separately authorized deposits, forces, releases, or faults. |
 | `interactive.invoke` | `nexsim_interactive_invoke` | Invoke one testbench-registered typed endpoint under lifecycle and replay controls. |
 
-### 36.5 Replay, verification, and evidence
+### 37.5 Replay, verification, and evidence
 
 | Native operation family | Suggested MCP tool | Purpose |
 | --- | --- | --- |
@@ -1713,7 +1713,7 @@ The separation and semantics matter more than spelling.
 | `artifact.list` | `nexsim_artifact_list` | Enumerate typed, digested artifacts. |
 | `artifact.read` | `nexsim_artifact_read` | Read metadata or bounded content/ranges under policy. |
 
-### 36.6 Operation design rules
+### 37.6 Operation design rules
 
 The catalog MUST NOT become one universal `query` tool with an untyped command
 string. Common high-value operations need typed schemas, stable errors, accurate
@@ -1732,7 +1732,7 @@ of scope.
 These examples illustrate semantics, not fixed wire spelling. IDs are opaque.
 Field names may evolve through the versioning rules in section 42.
 
-### 37.1 Capability discovery
+### 38.1 Capability discovery
 
 ```json
 {
@@ -1768,7 +1768,7 @@ Field names may evolve through the versioning rules in section 42.
 The placeholder values are intentional. This requirements document must not
 pretend to know NEXSIM's current version or support state.
 
-### 37.2 Bounded hierarchy query
+### 38.2 Bounded hierarchy query
 
 ```json
 {
@@ -1800,7 +1800,7 @@ pretend to know NEXSIM's current version or support state.
 }
 ```
 
-### 37.3 Snapshot-consistent value and causality query
+### 38.3 Snapshot-consistent value and causality query
 
 ```json
 {
@@ -1850,7 +1850,7 @@ process activation, sampled condition, clock/event, preceding drivers, and
 source spans. If an opaque region prevents that chain, the result must name the
 opaque boundary and mark the explanation incomplete.
 
-### 37.4 Authorized control and mutation
+### 38.4 Authorized control and mutation
 
 ```json
 {
@@ -1888,7 +1888,7 @@ The mutation must either be rejected before application or return an exact
 audit record, before/after snapshots, effective scheduler semantics, and
 automatic-release outcome. Natural-language intent alone is never authority.
 
-### 37.5 MCP structured result
+### 38.5 MCP structured result
 
 An MCP tool response should provide compact text for a person and the complete
 bounded machine result separately:
@@ -2022,7 +2022,7 @@ language/framework profile.
 
 ## 41. Conformance and acceptance test requirements
 
-### 40.1 Test fixture classes
+### 41.1 Test fixture classes
 
 The conformance suite SHOULD include small, deterministic fixtures for:
 
@@ -2048,7 +2048,7 @@ The conformance suite SHOULD include small, deterministic fixtures for:
 - pagination stability and resource-limit behavior; and
 - differential first-divergence localization.
 
-### 40.2 Positive, negative, and adversarial evidence
+### 41.2 Positive, negative, and adversarial evidence
 
 `NXAPI-TEST-001` Every supported operation MUST have positive tests, invalid
 input tests, unsupported/applicability tests, authorization tests, limit tests,
@@ -2077,7 +2077,7 @@ content embedded in source/log data.
 parity, status/error parity, bounds, redaction, cancellation, and side-effect
 annotations.
 
-### 40.3 Determinism and oracle policy
+### 41.3 Determinism and oracle policy
 
 `NXAPI-TEST-008` Each deterministic fixture MUST state its source/configuration
 digest, expected semantic checkpoints, expected terminal result, and allowed
@@ -2093,7 +2093,7 @@ proof. Tool disagreement must remain classified until root-caused.
 `NXAPI-TEST-011` Nondeterministic tests MUST state the distributional or
 invariant claim and retain seeds/manifests for every failure.
 
-### 40.4 Performance and robustness evidence
+### 41.4 Performance and robustness evidence
 
 `NXAPI-TEST-012` Each release SHOULD run scale fixtures covering object count,
 hierarchy depth, source size, event rate, trace rate, coverage count, concurrent
@@ -2107,7 +2107,7 @@ and resource-limit behavior under declared hardware/configuration.
 check leaks, stale resources, ID reuse, dropped events, and retained workspace
 data.
 
-### 40.5 Support-claim evidence
+### 41.5 Support-claim evidence
 
 For every declared supported capability, the capability response SHOULD link
 to a conformance record containing:
@@ -2127,7 +2127,7 @@ This makes support machine-verifiable rather than marketing prose.
 
 ## 42. Schema evolution, compatibility, and amendment protocol
 
-### 41.1 Stable requirement identities
+### 42.1 Stable requirement identities
 
 Requirement IDs in this document are durable. Amendments SHOULD add new IDs or
 clarify existing text without silently repurposing an ID to mean something
@@ -2136,7 +2136,7 @@ incompatible.
 If a requirement is retired, its ID remains in history with replacement or
 rationale. It is not reassigned.
 
-### 41.2 API and MCP schema evolution
+### 42.2 API and MCP schema evolution
 
 `NXAPI-EVOL-001` Schemas MUST use explicit version identifiers and published
 compatibility rules.
@@ -2161,7 +2161,7 @@ support separately from the live API.
 `NXAPI-EVOL-007` Native API and MCP projection versions MAY advance separately,
 but their compatibility mapping and semantic parity coverage MUST be published.
 
-### 41.3 Amending this requirements document
+### 42.3 Amending this requirements document
 
 An amendment should be made when one of the following occurs:
 
