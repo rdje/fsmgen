@@ -3594,9 +3594,32 @@ decomposes the architecture needed to move beyond that bounded foundation.
   Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.4.2.2: retain bounded pure coordinator admission`
 
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.4.2.3`
-  Status: `pending`
+  Status: `active`
   Goal: `Bind native preparation and fork to retained admission grants.`
   Acceptance: `After .2, retain every run/job/resource owner before creation, token generation or fork and use qualified descriptor inventories for peak admission and child closure. Record partial allocation/start effects under signal-safe ownership; failed or interrupted admission remains retained until exact cleanup. Check actual run/connection/job descriptor accounting and original deadlines before every allocation, then qualify root and admitted nested gated preparation without exec release. Include cancel-after-record-before-fork and capacity refusal; publication remains sibling .3.4.3.`
+  Verification: `Native integration is split by retained owner: child .1 exposes pre-allocation endpoint custody; child .2 exposes pre-allocation job/pair/reservation custody; child .3 binds both to aggregate ledger grants, actual descriptor accounting and retained service acceptance. Each child qualifies its own failures and interruption cuts; the joined owner must prove root/nested gated preparation before this parent closes.`
+  Commit: `pending`
+
+  Children: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.4.2.3.1, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.4.2.3.2, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.4.2.3.3`
+
+- ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.4.2.3.1`
+  Status: `done`
+  Goal: `Retain endpoint ownership before construction effects.`
+  Acceptance: `Expose a creator-owned, resource-free run preparation and separate one-use native start; retain directory/socket identities and cleanup results through partial errors and pending-signal interruption. Preserve the existing convenience constructor and exact endpoint removal contract. Derive the transient descriptor peak from actual allocation observations, with no process launch; aggregate grant binding belongs sibling .3.`
+  Verification: `Endpoint now separates resource-free prepare_run from one-use start_run. The caller retains the owner before entropy, mkdir or descriptors; construction masks signals until identities and live handles are published. Partial errors retain their cause and cleanup result, and a real pending signal can interrupt return while the original owner still closes its exact endpoint. Prepared/failed runs cannot publish context or listener, start rechecks SIGCHLD and convenience construction still cleans interrupted returns. T1833 observes steady two/peak four descriptors and cleanup scratch, injects six sealing failures and three actual pending-signal cuts; no process starts. Removing construction masking or understating the peak fails independent controls. The selected band passes Files=7, Tests=118, followed by sequential endpoint controls; native ledger binding remains sibling .3.`
+  Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.4.2.3.1: retain endpoint ownership before construction`
+
+- ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.4.2.3.2`
+  Status: `pending`
+  Goal: `Retain job and pair ownership before native preparation.`
+  Acceptance: `Expose prepared owner records before any reservation/command pipe allocation, with bounded partial-failure cleanup and per-allocation original-wall checks. Keep both fork identities published before signal restoration and preserve exec-relevant signal state. Qualify failed and interrupted preparation with independent actual-handle and child-wait inventories; no exec release or routing.`
+  Verification: `pending`
+  Commit: `pending`
+
+- ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.4.2.3.3`
+  Status: `pending`
+  Goal: `Bind aggregate native ownership to admission grants.`
+  Acceptance: `Compose retained run/job owners and qualified inventories with Admission. Reserve run steady/transient, accepted-peer and job peak capacity before effects; validate original deadlines and creator grants before each allocation/fork. Retain service acceptance under signals, preserve partial failures until exact cleanup, and qualify root/nested gated preparation, capacity refusal and cancellation before fork. Publication remains sibling .3.4.3.`
   Verification: `pending`
   Commit: `pending`
 
@@ -4312,7 +4335,7 @@ decomposes the architecture needed to move beyond that bounded foundation.
 
 ## Current Frontier
 
-Current frontier: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.4.2.3` binds actual preparation and fork custody to pure retained grants and qualified descriptor inventories. Publication, stream forwarding, fair lifecycle composition and independent qualification remain separate integration children. Complete nested cleanup and independent qualification before the fixed capture driver resumes. Preserve original failures, the spent compiler workspace, source-only driver commit and full-CI/push gates.
+Current frontier: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.4.2.3.2` retains job/pair preparation before native effects. Sibling .3 then binds aggregate native ownership to the pure admission ledger, retained endpoint and qualified inventories. Publication, streaming, fair lifecycle composition and independent qualification remain separate integration children. Preserve original failures, the spent compiler workspace, source-only driver commit and full-CI/push gates.
 
 Architecture audit `.1` is complete. Decision `0032` selects one public
 `.vial` source language, private immutable `VIALSemanticIR` and
@@ -6971,3 +6994,41 @@ The manifest binds the completed acceptance suffix and independent reserved-proc
   inventory/dispositions and staged doctrine gates cover the final slice.
   Browser visual QA remains blocked as recorded in Memory. No original
   compiler/startup producer or full CI executes, and normal routing is unchanged.
+
+## Acceptance Checklist (.19.2.3.1.2.2.5.5.2.3.4.2.3.1)
+
+- [x] **ROOT CAUSE (WHY + WHERE)** — `git log -S` locates 467a40261's
+  constructor, where entropy and mkdir precede the returned endpoint owner.
+  Its caller cannot retain that owner before effects or recover it after an
+  interrupted successful return. Aggregate native admission needs separate
+  preparation/start custody and an allowance for transient directory handles.
+- [x] **ADDRESSED (verified)** — Re-derive with T1833's independent native
+  allocation census: prepared owners hold no resource; ready runs hold the
+  listener and directory anchor; saved cwd plus entries iterator reaches four
+  descriptors during construction. Cleanup reaches three after the listener
+  closes, retaining two scratch descriptors beside the directory anchor. Weak
+  observers inspect actual live handles without prolonging local scopes on
+  exception. Six seal-failure cuts retain the first cause, original cwd and
+  cleanup, with no new endpoint path or observed live handle. Real creator
+  USR1 queued at entropy, listener and saved-cwd cuts executes only after
+  publication; the interrupted owner retains both handles and removes its
+  exact path. Copied observations cannot change cleanup evidence. Falsify:
+  isolated suppression of only construction SIG_BLOCK fails seven signal
+  publication assertions; a declared peak of three fails the independent
+  four-handle census. Both mutated tests finish with endpoint rescue/cleanup
+  consumed. Initial sandbox-only controls stopped at socket bind and are
+  excluded; admitted guarded reruns reached the intended oracles. Durability:
+  Endpoint, T1833, book, canonical fact and this commit retain the derivation
+  and exact mutation substitutions. Local .artifacts/retained-endpoint-*.log
+  files are not durable artifacts. Ledger grant binding, original admission
+  wall checks and full native owner composition remain sibling .3; Linux
+  execution is still a missing platform leg.
+- [x] **NO REGRESSION** — The selected endpoint/connection/service, architecture,
+  descriptor-inventory, admission and retained-endpoint band reports
+  `All tests successful`, `Files=7, Tests=118`. A final sequential endpoint
+  pair avoids shared-directory census overlap with the mutation controls and
+  passes Files=2, Tests=16. Existing convenience-constructor, context, cwd,
+  umask, signal selection and hostile filesystem controls remain green.
+  Syntax, book render, task/Knowledge Map/claim checks and staged doctrines
+  cover the final slice. No original capture or full CI runs; browser visual
+  QA remains blocked separately in Memory.

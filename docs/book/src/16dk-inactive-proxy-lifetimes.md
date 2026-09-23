@@ -756,6 +756,21 @@ model creates no descriptors or processes. Binding actual allocation, forks
 and interrupted returns to these reservations is still the next integration
 step, followed by publication and nested transport.
 
+Endpoint construction now offers a resource-free prepared run and a separate,
+single-use start. The owner can retain that run before entropy, directory or
+socket effects begin. Signals stay masked through construction publication;
+a pending handler may interrupt the return, but the original owner still holds
+the endpoint and its cleanup state. Partial failures preserve their first
+cause, while the existing convenience constructor closes its local owner if
+its return is interrupted. A prepared or failed run cannot publish authority.
+
+The run descriptor budget includes the saved caller directory and the directory
+iterator beside the listener and directory anchor. Native allocation observers
+qualify this peak and the temporary cleanup handles. Aggregate integration must
+reserve this scratch capacity as well as the steady descriptors. This retained
+endpoint interface creates no process and does not yet bind the native run to
+the admission ledger; retained job preparation and the combined owner follow.
+
 Normal callers retain the existing own-group supervisor. Aggregate coordinator
 admission, nested routing and complete
 subtree qualification still have separate open owners. These private components
@@ -766,6 +781,7 @@ Re-run the bounded component controls with:
 ```bash
 scripts/run_with_ram_guard.sh -- prove -Iperl -It/lib t/1823-process-group-reservation.t t/1824-process-gated-pair.t t/1825-process-capture-stream-ownership.t t/1826-process-group-closure.t t/1827-process-reserved-job.t t/1828-process-reserved-receipt.t t/1829-process-unjoined-closure.t t/1830-process-reservation-death.t t/1831-process-private-descriptors.t
 scripts/run_with_ram_guard.sh -- prove -Iperl -It/lib t/1832-process-coordinator-admission.t
+scripts/run_with_ram_guard.sh -- prove -Iperl -It/lib t/1833-process-retained-endpoint.t
 ```
 
 For native stopped-child observations, decode `${^CHILD_ERROR_NATIVE}` with

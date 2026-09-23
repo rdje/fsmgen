@@ -23,6 +23,12 @@ my $DIRECTORY = '.artifacts/tmp/process-coordinator';
 my $LIMIT = FSM::Support::ProcessSupervisor::Wire::limits();
 
 sub _fail { die "private process endpoint: $_[0]\n" }
+sub _mask { return POSIX::sigprocmask(@_) }
+
+# The directory transaction temporarily opens a saved cwd and an entries
+# iterator beside the listener and directory anchor. Entropy uses one handle
+# before these exist. A coordinator must retain the transient cleanup credit.
+sub resource_cost { return {descriptors => 4, steady_descriptors => 2, transient_descriptors => 2} }
 
 sub _seal_handle {
     my ($handle, $nonblocking) = @_;
@@ -129,8 +135,9 @@ sub _open_run_directory {
     return ($handle, $identity);
 }
 
+sub _open_entries { return opendir(${$_[0]}, '.') }
 sub _entries {
-    opendir(my $directory, '.') or _fail('cannot inspect endpoint directory');
+    _open_entries(\my $directory) or _fail('cannot inspect endpoint directory');
     my @entries;
     while (defined(my $entry = readdir $directory)) {
         next if $entry eq '.' || $entry eq '..';
@@ -228,8 +235,7 @@ sub _directory_operation {
     return $connecting ? 1 : 0;
 }
 
-sub create_run {
-    _fail('unexpected create arguments') if @_;
+sub _check_child_disposition {
     my $children = POSIX::SigAction->new;
     _fail('cannot inspect child-reaping disposition')
         unless defined POSIX::sigaction(SIGCHLD, undef, $children);
@@ -237,17 +243,39 @@ sub create_run {
         unless defined($children->handler) && !ref($children->handler)
             && $children->handler eq 'DEFAULT'
             && !($children->flags & SA_NOCLDWAIT);
-    my $run = _random_bytes(16);
-    my $token = new_job_token();
-    # Directory entropy is separate from the run/job authority: paths can be
-    # inspected without publishing either protocol token.
-    my $relative = "$DIRECTORY/run_" . unpack('H*', _random_bytes(32));
-    _make_ancestry();
-    my $absolute = File::Spec->catdir($ROOT, split m{/}, $relative);
-    mkdir($absolute, 0700) or _fail('cannot exclusively create endpoint directory');
-    my $state = bless {kind => 'run', owner_pid => $$, directory => $relative,
-        run => $run, root_token => $token, socket_removed => 0, directory_removed => 0}, __PACKAGE__;
+    return;
+}
+
+sub prepare_run {
+    _fail('unexpected preparation arguments') if @_;
+    _check_child_disposition();
+    return bless {kind => 'run', owner_pid => $$, phase => 'prepared',
+        socket_removed => 0, directory_removed => 0}, __PACKAGE__;
+}
+
+sub start_run {
+    my ($state) = @_;
+    _fail('unexpected start arguments') unless @_ == 1;
+    _require_owner($state, 'run');
+    _fail('run start is single-use') unless $state->{phase} eq 'prepared';
+    _check_child_disposition();
+    # The caller retains this resource-free owner before entry. Mask through
+    # publication of every construction effect, including mkdir's identity.
+    # A pending handler may throw at restoration; the caller still owns state.
+    my $all = POSIX::SigSet->new; $all->fillset;
+    my $previous = POSIX::SigSet->new;
+    defined(_mask(SIG_BLOCK, $all, $previous)) or _fail('cannot mask run construction signals');
+    $state->{phase} = 'starting';
     my $ok = eval {
+        $state->{run} = _random_bytes(16);
+        $state->{root_token} = new_job_token();
+        # Path entropy never discloses protocol authority.
+        my $relative = "$DIRECTORY/run_" . unpack('H*', _random_bytes(32));
+        $state->{directory} = $relative;
+        _make_ancestry();
+        my $absolute = File::Spec->catdir($ROOT, split m{/}, $relative);
+        mkdir($absolute, 0700) or _fail('cannot exclusively create endpoint directory');
+        $state->{directory_created} = 1;
         my $initial = _identity($absolute, 'directory', undef);
         $state->{directory_identity} = $initial;
         chmod(0700, $absolute) == 1 or _fail('cannot secure endpoint directory');
@@ -260,8 +288,35 @@ sub create_run {
         $state->{listener} = $socket;
         _seal_handle($socket, 1);
         _directory_operation($state, 'bind', $socket);
+        $state->{phase} = 'ready';
         1;
     };
+    my $error = $@;
+    unless ($ok) {
+        $state->{failure} //= $error;
+        # Preserve the first construction error separately from the retained
+        # cleanup result. The convenience constructor also reports incomplete
+        # cleanup in its exception because it cannot return this owner.
+        $state->close;
+    }
+    my ($restored, $interrupted);
+    { local $@;
+      eval { $restored = defined _mask(SIG_SETMASK, $previous); 1 } or $interrupted = $@; }
+    if ($interrupted || !$restored) {
+        $state->{failure} //= $interrupted || 'fatal run signal-mask restoration failure';
+        $state->{phase} = 'failed' unless $state->{closed};
+        die $interrupted if $interrupted;
+        _fail('fatal run signal-mask restoration failure');
+    }
+    die $error unless $ok;
+    return;
+}
+
+sub create_run {
+    _fail('unexpected create arguments') if @_;
+    my $state = prepare_run();
+    # Preserve convenience-constructor cleanup if its return is interrupted.
+    my $ok = eval { $state->start_run; 1 };
     unless ($ok) {
         my $error = $@;
         my $cleanup = $state->close;
@@ -288,6 +343,7 @@ sub context_for {
     my ($self, $parent, $token) = @_;
     _fail('unexpected authority arguments') unless @_ == 3;
     _require_owner($self, 'run');
+    _fail('run is not ready') unless $self->{phase} eq 'ready';
     return FSM::Support::ProcessSupervisor::Wire::encode_context({
         directory => $self->{directory}, run => $self->{run}, parent => $parent, token => $token,
     });
@@ -297,7 +353,16 @@ sub listener {
     my ($self) = @_;
     _fail('unexpected listener arguments') unless @_ == 1;
     _require_owner($self, 'run');
+    _fail('run is not ready') unless $self->{phase} eq 'ready';
     return $self->{listener};
+}
+
+sub observation {
+    my ($self) = @_;
+    _fail('invalid run observation') unless @_ == 1 && ref($self) eq __PACKAGE__
+        && $self->{owner_pid} == $$ && $self->{kind} eq 'run';
+    return {phase => $self->{phase}, closed => $self->{closed} ? 1 : 0,
+        failure => $self->{failure}, cleanup => $self->{cleanup} ? {%{$self->{cleanup}}} : undef};
 }
 
 # Borrowed inventory, including the directory anchor that must not leak into
@@ -376,7 +441,7 @@ sub close {
     for my $key (qw(listener socket)) {
         push @error, 'socket close failed' if $self->{$key} && !close(delete $self->{$key});
     }
-    if ($self->{kind} eq 'run') {
+    if ($self->{kind} eq 'run' && $self->{directory_created}) {
         if ($self->{directory_handle}) {
             eval { _directory_operation($self, 'remove'); 1 } or push @error, $@;
         }
@@ -398,6 +463,7 @@ sub close {
     push @error, 'directory handle close failed'
         if $self->{directory_handle} && !close(delete $self->{directory_handle});
     $self->{closed} = 1;
+    $self->{phase} = 'closed' if $self->{kind} eq 'run';
     $self->{cleanup} = {ok => @error ? 0 : 1,
         socket_removed => $self->{socket_removed} ? 1 : 0,
         directory_removed => $self->{directory_removed} ? 1 : 0,
