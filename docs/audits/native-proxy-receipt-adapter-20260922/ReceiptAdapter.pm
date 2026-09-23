@@ -11,10 +11,11 @@ my @ROLES = qw(compiler outer inner);
 # state member and grants no authority. No process is launched or signalled.
 sub receipts_bound {
     my ($states, $frontier) = @_;
-    return 0 unless @_ == 2 && ref($states) eq 'ARRAY' && @$states == @ROLES;
+    return 0 unless @_ == 2 && ref($states) eq 'ARRAY' && @$states >= 1
+        && @$states <= @ROLES;
     return 0 unless _frontier($frontier) && $frontier->{closed};
     my %seen;
-    for my $index (0 .. $#ROLES) {
+    for my $index (0 .. $#$states) {
         my $state = $states->[$index];
         return 0 unless ref($state) eq 'HASH';
         return 0 unless defined($state->{role}) && !ref($state->{role})

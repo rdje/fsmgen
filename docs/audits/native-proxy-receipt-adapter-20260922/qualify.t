@@ -46,6 +46,7 @@ my @good = (
 );
 ok(!$bound->([map { {%$_} } @good], $open), 'open frontier rejects settled ownership');
 ok($bound->([map { {%$_} } @good], $closed), 'closed frontier accepts complete owner-bound receipts');
+ok($bound->([$good[0]], $closed), 'one finished compiler receipt binds');
 ok($launch->($open), 'open frontier still allows a launch decision');
 ok(!$launch->($closed), 'closed frontier rejects a later launch');
 
@@ -58,7 +59,8 @@ sub reject {
 
 my $missing = [map { {%$_} } @good];
 pop @$missing;
-reject('missing inner stage', $missing, $closed);
+$missing->[0]{role} = 'outer';
+reject('compiler role omitted', $missing, $closed);
 my $extra = [map { {%$_} } @good, receipt('inner', 14, 'extra')];
 reject('extra stage', $extra, $closed);
 my $swapped = [map { {%$_} } @good[1, 0, 2]];
