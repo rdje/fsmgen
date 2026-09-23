@@ -531,23 +531,25 @@ hash, a caller-supplied cleanup array, a missing stage and a closed frontier
 that tries to launch again. No compiler, probe or tool-resolution process has
 run under this contract.
 
-That capture still cannot start. The public supervisor result copies cleanup
-flags and omits the process id, birth clock and original cleanup identity.
-Private start state retains the process id and the original cleanup hash, but
-it does not record the birth clock. A capture that keeps only the public
-result cannot satisfy the aligned review. The caller-sealed supervisor has to
-return that private identity before any compiler, probe or tool-resolution
-process runs.
+The public supervisor result still copies cleanup flags and omits the process
+id, birth clock and original cleanup identity. That key set stays on schema
+version 1. A sealed caller can now read a finished job and receive one
+observation that returns the private process id, birth clock and own-group
+identity while keeping the original cleanup hash. Copying that hash still
+fails the aligned review. An unsealed caller and an unfinished job are
+rejected. No compiler, probe or tool-resolution process runs to produce the
+observation.
 
 ```sh
 python3 -B docs/audits/native-proxy-receipt-ownership-inventory-20260922/audit.py --verify-saved
 perl docs/audits/native-proxy-receipt-adapter-20260922/qualify.t
 perl docs/audits/native-proxy-receipt-admission-20260922/qualify.t
+perl t/1818-process-supervisor-receipt-observation.t
 ```
 
 | Remaining work | Required result |
 | --- | --- |
-| Real receipt binding | Return private receipt identity from the caller-sealed supervisor, then execute one admitted capture. |
+| Real receipt binding | The caller-sealed supervisor now returns private receipt identity. Execute one admitted capture. |
 | Inactive adapter composition | Join preparation, native path/reference admission and observation custody before the separate native experiment. |
 | Final protocol join | Check current evidence together and retain native, live/public and startup/benefit gates. |
 

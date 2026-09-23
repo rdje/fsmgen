@@ -25,7 +25,8 @@ use File::Basename qw(dirname);
 use File::Spec;
 use IO::Select;
 use POSIX qw(WNOHANG _exit setpgid);
-use Time::HiRes qw(CLOCK_MONOTONIC clock_gettime sleep);
+use Scalar::Util qw(refaddr);
+use Time::HiRes qw(CLOCK_MONOTONIC clock_gettime gettimeofday sleep);
 
 use FSM::ProjectDataLocality ();
 
@@ -228,7 +229,20 @@ sub _supervise {
 }
 
 sub _failed_supervision_start {
-    return {phase => 'finished', result => _host_failure(@_)};
+    my ($request, $diagnostic, $started) = @_;
+    my $finished = defined($started) ? clock_gettime(CLOCK_MONOTONIC) : undef;
+    my ($birth_sec, $birth_usec) = defined($started) ? gettimeofday() : (undef, undef);
+    my $state = {
+        %$request,
+        phase => 'finished', pid => undef,
+        birth_sec => $birth_sec, birth_usec => $birth_usec,
+        started => $started, finished => $finished,
+        leader_reaped => 0,
+        cleanup => _new_cleanup(0, $request->{containment}),
+        result => _host_failure($request, $diagnostic, $started),
+    };
+    $state->{receipt_observation} = _receipt_observation($state);
+    return $state;
 }
 
 sub _supervision_poll_delay {
@@ -303,6 +317,7 @@ sub _start_supervision {
     }
 
     my $started = clock_gettime(CLOCK_MONOTONIC);
+    my ($birth_sec, $birth_usec) = gettimeofday();
     my $pid = fork();
     unless (defined $pid) {
         _close_handles(
@@ -363,6 +378,7 @@ sub _start_supervision {
     my $state = {
         %$request,
         phase => 'capture', pid => $pid, started => $started,
+        birth_sec => $birth_sec, birth_usec => $birth_usec,
         stdout => '', stderr => '', exec_error => '',
         exec_handoff => undef, first_output => undef,
         leader_reaped => 0, leader_status => undef,
@@ -570,6 +586,7 @@ sub _complete_supervision {
         exec_error => length($exec_error) ? $exec_error : undef,
         exec_failed => length($exec_error) ? 1 : 0,
     });
+    $state->{receipt_observation} = _receipt_observation($state);
     $state->{phase} = 'finished';
 }
 
@@ -625,6 +642,44 @@ sub _finish_result {
             ? $finished_ns - $first_ns : undef,
         cleanup => $state->{cleanup},
     };
+}
+
+# The public result copies cleanup flags and stays on schema version 1. This
+# observation keeps the original cleanup hash so a later capture can bind the
+# private member the receipt adapter requires. It does not launch a process.
+sub _receipt_observation {
+    my ($state) = @_;
+    return {
+        schema => 'fsmgen.process_supervisor.receipt_observation.v1',
+        stage => $state->{stage},
+        phase => 'finished',
+        leader_reaped => $state->{leader_reaped} ? 1 : 0,
+        birth => _receipt_identity($state),
+        group => _receipt_identity($state),
+        cleanup => $state->{cleanup},
+        cleanup_identity => refaddr($state->{cleanup}),
+    };
+}
+
+sub _receipt_identity {
+    my ($state) = @_;
+    return {
+        pid => $state->{pid},
+        start_sec => $state->{birth_sec},
+        start_usec => $state->{birth_usec},
+    };
+}
+
+sub receipt_observation {
+    my ($caller, $job) = @_;
+    die "FSM::Support::ProcessSupervisor is caller-sealed; '$caller' cannot observe a receipt\n"
+        unless defined($caller) && $SUPERVISION_CALLER{$caller};
+    die "supervisor receipt observation requires one finished job\n"
+        unless ref($job) eq 'HASH' && ($job->{phase} // '') eq 'finished'
+            && exists $job->{cleanup} && exists $job->{stage};
+    $job->{receipt_observation} = _receipt_observation($job)
+        unless defined $job->{receipt_observation};
+    return $job->{receipt_observation};
 }
 
 sub _new_cleanup {

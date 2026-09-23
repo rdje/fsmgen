@@ -137,7 +137,8 @@ answers:
   - "why does the receipt adapter reject a real supervisor group?"
   - "how does the inactive receipt adapter accept a supervisor own-group identity?"
   - "why cannot a public supervisor result settle the receipt adapter?"
-date: 2026-09-22
+  - "how does the caller-sealed supervisor return private receipt identity?"
+date: 2026-09-23
 status: current
 tags: [tests, subprocess, supervision, task-acceptance, darwin, locality]
 evidence: >-
@@ -146,4 +147,4 @@ evidence: >-
 reverify: >-
   perl docs/audits/native-proxy-receipt-adapter-20260922/qualify.t
 ---
-History: `8ecc5800fb27b341f99c995903e17cf21e7a2503:docs/knowledge/test-subprocess-policy-adapters.md`. The inactive adapter accepts the supervisor own-group identity. The public finish result still omits pid, birth clock and cleanup identity, so a capture cannot retain the private state that review requires. No process runs.
+History: `8ecc5800fb27b341f99c995903e17cf21e7a2503:docs/knowledge/test-subprocess-policy-adapters.md`. The inactive adapter accepts the supervisor own-group identity. The public finish result still omits pid, birth clock and cleanup identity. A sealed caller can read those fields from a finished job through one observation that keeps the original cleanup hash. No process runs.
