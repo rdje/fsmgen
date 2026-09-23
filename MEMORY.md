@@ -6,9 +6,9 @@ Status and evidence: `docs/tasks/`. The system itself: `MEMORY_ARCHITECTURE.md`.
 ## Resume
 
 - repository_revision: derive with `git log -1 --format='%H %s'`; never shadow `HEAD` here.
-- active_work_unit: `NEXSIM-REQUIREMENTS-HEADING-NUMBERING-REPAIR.2`
-- next_action: Correct the historical NEXSIM requirement-ID census under .2 using the original snapshot, complete definition sets and the nested UVM namespace omission.
-  HIAL sequencing remains pending; preserve the spent compiler workspace and `docs/audits/native-proxy-receipt-capture-20260923/result/` evidence.
+- active_work_unit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.12.4.1.5.4.3.3.6.7.2.2.2`
+- next_action: Resolve the pending HIAL nested-cleanup/startup decision; meanwhile select the owned Chapter 11 current-status truth repair from the clean workspace.
+  Preserve the spent compiler attempt, original workspace and `docs/audits/native-proxy-receipt-capture-20260923/result/` evidence.
 - in_flight_uncommitted: none.
 - in_flight_background: none.
 - blockers: Director sequencing question pending: qualify nested cleanup before startup, or retain the explicit coordinator launch prerequisite. Historical startup/parent qualification and full CI/push remain gated.

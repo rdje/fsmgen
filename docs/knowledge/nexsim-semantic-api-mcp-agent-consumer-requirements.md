@@ -1,7 +1,8 @@
 ---
 id: nexsim-semantic-api-mcp-agent-consumer-requirements
-title: NEXSIM has a versioned implementation-neutral agent-consumer API and MCP requirements baseline
+title: NEXSIM has a versioned consumer API and MCP requirements baseline
 answers:
+  - "how many NEXSIM requirement IDs exist?"
   - "do NEXSIM section numbers change requirement IDs?"
   - "what should the NEXSIM semantic API let an engineering agent do?"
   - "what should NEXSIM expose through MCP?"
@@ -30,20 +31,20 @@ reverify: >-
   scripts/check_task_tree_integrity.pl
 ---
 
-`docs/NEXSIM_API_MCP_AGENT_CONSUMER_REQUIREMENTS.md` is the canonical consumer baseline.
-It requests observable API/MCP capabilities for engineering agents without prescribing simulator
-internals or requiring client-private architecture.
+`docs/NEXSIM_API_MCP_AGENT_CONSUMER_REQUIREMENTS.md` is the canonical consumer baseline. It requests observable
+API/MCP capabilities for engineering agents without prescribing simulator internals or requiring client-private
+architecture.
 
-The native typed semantic API is the authority. MCP is a faithful, bounded, secure projection for
-agent operability. The contract covers configuration, build, elaboration, semantic graphs, exact
-runtime values, scheduler state, causality, controlled execution, authorized mutation,
-checkpoints/replay, UVM, assertions, coverage, traces, orchestration, comparison, reduction,
-security, performance, error behavior, conformance, and schema evolution.
+The native typed semantic API is the authority. MCP is a faithful, bounded, secure projection for agent
+operability. The contract covers configuration, build, elaboration, semantic graphs, exact runtime values,
+scheduler state, causality, controlled execution, authorized mutation, checkpoints/replay, UVM, assertions,
+coverage, traces, orchestration, comparison, reduction, security, performance, error behavior, conformance, and
+schema evolution.
 
-The document is a request, not evidence that NEXSIM implements any capability. Capability
-negotiation must keep requested, accepted, implemented, and verified states distinct. The baseline
-remains canonical; its director-deferred task tree requires explicit reactivation and concrete
-evidence before amendment.
+The baseline requests capabilities; it does not establish NEXSIM support. Requested, accepted, implemented and
+verified states remain distinct. Its director-deferred amendment tree requires explicit reactivation and concrete
+evidence.
 
-The heading repair aligns subsection labels with their parent sections while preserving every
-requirement ID and all requirement text.
+The baseline has 393 unique requirement IDs, including 28 with nested UVM namespaces. Original and current
+definition lists agree; the repair owner's .2 Python block reproduces the census. Heading-label corrections
+preserve every requirement ID and all requirement text.

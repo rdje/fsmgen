@@ -48,7 +48,6 @@ Only `active` rows are PNT-eligible. Live `docs/tasks/` nodes are authoritative;
 | --- | --- | --- | --- | --- |
 | `LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION` | `active` | `infra/continuity` | `.29` is done; `.12` remains behind director-deferred `.26` | [task](docs/tasks/LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.md) |
 | `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE` | `active` | `verification architecture` | `.6.7.2.2.1` completes independent private receipt review. `.6.7.2.2.2` must resolve nested cleanup/startup ordering before a fixed capture driver; compiler evidence remains retained. | [task](docs/tasks/HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.md) |
-| `NEXSIM-REQUIREMENTS-HEADING-NUMBERING-REPAIR` | `active` | `NEXSIM document integrity` | `.1` fixes heading labels; `.2` corrects the historical requirement-ID census without changing the requirements | [task](docs/tasks/NEXSIM-REQUIREMENTS-HEADING-NUMBERING-REPAIR.md) |
 | `HOSTED-VIAL-REGRESSION-GATE-RESULT` | `active` | `verification architecture` | `.26` retains the failure census and `.28` fixes local/hosted Yosys selection. `.27` awaits exact hosted requalification after startup/full-CI gates and an authorized push | [task](docs/tasks/HOSTED-VIAL-REGRESSION-GATE-RESULT.md) |
 
 | `ISF-SPEC-TEST-INDEX-SYNC` | `active` | `R14` | `.3.2` is blocked on complete guarded-CI qualification after HIAL startup resolution; exact transformation is committed at `f3e7f94dc`. `.3.1` is done with the stale commit/frontier pointer corrected | [task](docs/tasks/ISF-SPEC-TEST-INDEX-SYNC.md) |

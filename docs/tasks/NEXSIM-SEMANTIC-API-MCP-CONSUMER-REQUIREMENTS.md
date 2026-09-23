@@ -51,6 +51,15 @@ FSMGEN-private intent-language or reference-simulator architecture.
   synchronized; focused documentation and doctrine gates pass.
 - Each completed leaf is committed through `COMMIT.md`.
 
+Census correction (2026-09-23), owned by
+`NEXSIM-REQUIREMENTS-HEADING-NUMBERING-REPAIR.2`: the earlier 365-ID report
+matches a single-namespace-only census, which excludes 28 nested UVM namespace
+IDs. The original published snapshot `d37b2920e` already contains 393 unique
+definitions, as does the current source. The two baseline counts below are
+corrected; requirement text, qualification history and director deferral are
+unchanged. The complete reproducible census and exact snapshot identity are in
+[the repair owner](NEXSIM-REQUIREMENTS-HEADING-NUMBERING-REPAIR.md#historical-requirement-census-reverify-2).
+
 ## Task Tree
 
 - ID: `NEXSIM-SEMANTIC-API-MCP-CONSUMER-REQUIREMENTS`
@@ -62,7 +71,7 @@ FSMGEN-private intent-language or reference-simulator architecture.
   Status: `done`
   Goal: `Publish the complete version-1 agent-consumer requirements baseline.`
   Acceptance: `The canonical document and its mdBook rendering cover the full bounded API/MCP feature set, priorities, examples, security/performance constraints, conformance gates, non-claims, and amendment protocol without exposing FSMGEN-private internals.`
-  Verification: `The 2,251-line/99,361-byte baseline contains 365 unique requirement IDs in 45 numbered sections and 51 recommended MCP operation mappings. It contains no xIAL/IASIM vocabulary; native API authority, bounded MCP projection, requested/accepted/implemented/verified separation, typed values, snapshots, causality, control, mutation, replay, UVM, assertions, coverage, timing/power/mixed-language, safe overlays/experiments, security, scale, conformance, priorities, and amendment rules are explicit. The focused regression passes Files=9/Tests=94 after synchronizing the exact 1,021-member index fixture. Knowledge Map passes at 1,105 facts/5,681 questions/5,847 occurrences/118 shards. All 50 mdBook chapters test; the repository-local HTML build contains 86 files/17,564 KiB, and the included chapter contains 463 balanced paragraph elements with a longest 451-character paragraph. The exact build is removed; the rejected wrong destination and correct destination are both absent. Live-document containment passes all 22 surfaces with two exact file-ceiling authorities and one maintained-reference change.`
+  Verification: `The 2,251-line/99,361-byte baseline contains 393 unique requirement IDs in 45 numbered sections and 51 recommended MCP operation mappings. It contains no xIAL/IASIM vocabulary; native API authority, bounded MCP projection, requested/accepted/implemented/verified separation, typed values, snapshots, causality, control, mutation, replay, UVM, assertions, coverage, timing/power/mixed-language, safe overlays/experiments, security, scale, conformance, priorities, and amendment rules are explicit. The focused regression passes Files=9/Tests=94 after synchronizing the exact 1,021-member index fixture. Knowledge Map passes at 1,105 facts/5,681 questions/5,847 occurrences/118 shards. All 50 mdBook chapters test; the repository-local HTML build contains 86 files/17,564 KiB, and the included chapter contains 463 balanced paragraph elements with a longest 451-character paragraph. The exact build is removed; the rejected wrong destination and correct destination are both absent. Live-document containment passes all 22 surfaces with two exact file-ceiling authorities and one maintained-reference change.`
   Commit: `this commit (NEXSIM-SEMANTIC-API-MCP-CONSUMER-REQUIREMENTS.1: publish agent-consumer contract)`
 
 - ID: `NEXSIM-SEMANTIC-API-MCP-CONSUMER-REQUIREMENTS.2`
@@ -151,7 +160,7 @@ FSMGEN-private intent-language or reference-simulator architecture.
   semantic API/MCP direction and did not give NEXSIM a complete implementation-
   neutral consumer specification.
 - [x] **ADDRESSED (verified)** — The canonical 2,251-line contract now carries
-  365 unique requirement IDs, 45 numbered sections, 51 suggested MCP operation
+  393 unique requirement IDs, 45 numbered sections, 51 suggested MCP operation
   mappings, explicit non-claims, four delivery priorities, four conformance
   levels, examples, and an amendment protocol. Decision `0052`, roadmap,
   mdBook include/SUMMARY, fact card/Knowledge Map, generated focused index,

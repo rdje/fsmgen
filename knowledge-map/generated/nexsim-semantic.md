@@ -1,13 +1,14 @@
 # Knowledge Map: `nexsim-semantic`
 
 > **AUTO-GENERATED — DO NOT EDIT.** Return to the [Knowledge Map](../../KNOWLEDGE_MAP.md).
-> **1** facts · **16** uniquely owned question entries.
+> **1** facts · **17** uniquely owned question entries.
 
 ## Questions → facts
 
 - q="do NEXSIM section numbers change requirement IDs?" · facts=[nexsim-semantic-api-mcp-agent-consumer-requirements](../../docs/knowledge/nexsim-semantic-api-mcp-agent-consumer-requirements.md)
 - q="does the NEXSIM agent-consumer document claim current implementation support?" · facts=[nexsim-semantic-api-mcp-agent-consumer-requirements](../../docs/knowledge/nexsim-semantic-api-mcp-agent-consumer-requirements.md)
 - q="how is the NEXSIM API MCP consumer contract amended?" · facts=[nexsim-semantic-api-mcp-agent-consumer-requirements](../../docs/knowledge/nexsim-semantic-api-mcp-agent-consumer-requirements.md)
+- q="how many NEXSIM requirement IDs exist?" · facts=[nexsim-semantic-api-mcp-agent-consumer-requirements](../../docs/knowledge/nexsim-semantic-api-mcp-agent-consumer-requirements.md)
 - q="how should NEXSIM authorize runtime mutation through API or MCP?" · facts=[nexsim-semantic-api-mcp-agent-consumer-requirements](../../docs/knowledge/nexsim-semantic-api-mcp-agent-consumer-requirements.md)
 - q="how should NEXSIM bound large semantic queries and streams?" · facts=[nexsim-semantic-api-mcp-agent-consumer-requirements](../../docs/knowledge/nexsim-semantic-api-mcp-agent-consumer-requirements.md)
 - q="how should NEXSIM explain why a simulated value or event occurred?" · facts=[nexsim-semantic-api-mcp-agent-consumer-requirements](../../docs/knowledge/nexsim-semantic-api-mcp-agent-consumer-requirements.md)
@@ -26,7 +27,7 @@
 
 ### nexsim-semantic-api-mcp-agent-consumer-requirements
 
-_NEXSIM has a versioned implementation-neutral agent-consumer API and MCP requirements baseline_
+_NEXSIM has a versioned consumer API and MCP requirements baseline_
 
 - **date:** 2026-09-23 · **status:** current
 - **source and verification:** [`docs/knowledge/nexsim-semantic-api-mcp-agent-consumer-requirements.md`](../../docs/knowledge/nexsim-semantic-api-mcp-agent-consumer-requirements.md)
