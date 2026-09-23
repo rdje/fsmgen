@@ -2281,7 +2281,7 @@ decomposes the architecture needed to move beyond that bounded foundation.
   Status: `active`
   Goal: `Preserve the first private receipt from one admitted compiler-only capture.`
   Acceptance: `After this cleanup-copy commit, consume one fresh permit and retain the first private compiler, outer and inner states. Stop on disagreement. Never retry a producer or replay an original, proxy or live collector.`
-  Verification: `Child .5.4.3.3.6.1 records that supervise_process returns only the public result. Child .5.4.3.3.6.2 returns a caller-held finished job to a sealed caller. Child .5.4.3.3.6.4 returns the private job after one proof process. Child .5.4.3.3.6.3 consumes one permit naming that return. Child .5.4.3.3.6.6 admits one finished private job after that consume. The compiler, probe and tool-resolution launch remains .5.4.3.3.6.7.`
+  Verification: `Child .5.4.3.3.6.1 records that supervise_process returns only the public result. Child .5.4.3.3.6.2 returns a caller-held finished job to a sealed caller. Child .5.4.3.3.6.4 returns the private job after one proof process. Child .5.4.3.3.6.3 consumes one permit naming that return. Child .5.4.3.3.6.6 admits one finished private job after that consume. Child .5.4.3.3.6.7.1.1 records the public compiler launch contract. Probe and tool-resolution remain closed.`
   Commit: `pending`
   Children: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.12.4.1.5.4.3.3.6.1, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.12.4.1.5.4.3.3.6.2, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.12.4.1.5.4.3.3.6.3, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.12.4.1.5.4.3.3.6.4, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.12.4.1.5.4.3.3.6.5, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.12.4.1.5.4.3.3.6.6, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.12.4.1.5.4.3.3.6.7`
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.12.4.1.5.4.3.3.6.1`
@@ -2334,9 +2334,35 @@ decomposes the architecture needed to move beyond that bounded foundation.
   Verification: `perl docs/audits/native-proxy-receipt-admission-20260922/qualify.t passes 47 assertions. One consumed permit admits one finished private job and refuses an unfinished job, a missing job and a public supervisor name. Replay and live-collector plans still cannot consume the permit. Forbidden fork, system, exec and kill stay zero. The compiler, probe and tool-resolution launch remains .5.4.3.3.6.7.`
   Commit: `this commit`
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.12.4.1.5.4.3.3.6.7`
-  Status: `pending`
+  Status: `active`
   Goal: `Launch one admitted compiler, probe and tool-resolution capture and retain the first private states.`
   Acceptance: `After this gate commit, consume one fresh permit and retain the first private compiler, outer and inner states. Stop on disagreement. Never retry a producer or replay an original, proxy or live collector.`
+  Verification: `Child .5.4.3.3.6.7.1.1 records the public compiler launch contract before any compiler process. Probe and tool-resolution remain separately owned.`
+  Commit: `pending`
+  Children: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.12.4.1.5.4.3.3.6.7.1, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.12.4.1.5.4.3.3.6.7.2`
+- ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.12.4.1.5.4.3.3.6.7.1`
+  Status: `active`
+  Goal: `Launch one admitted compiler capture and retain its first private state.`
+  Acceptance: `Consume one fresh permit, launch only the compiler stage through the sealed private return, and retain that first private state. Stop on disagreement. Do not launch a probe or tool-resolution process in that slice.`
+  Verification: `Child .5.4.3.3.6.7.1.1 records the public compiler launch contract. The sealed compiler launch remains .5.4.3.3.6.7.1.2. Probe and tool-resolution remain closed.`
+  Commit: `pending`
+  Children: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.12.4.1.5.4.3.3.6.7.1.1, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.12.4.1.5.4.3.3.6.7.1.2`
+- ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.12.4.1.5.4.3.3.6.7.1.1`
+  Status: `done`
+  Goal: `Record the public compiler launch contract before a sealed compiler capture.`
+  Acceptance: `Read the current public compiler request before any compiler launch. If it still returns only the public result, do not launch a capture that cannot retain the first private state. Leave the sealed compiler launch separately owned.`
+  Verification: `FSM::Test::RustProxyFixture::prepare_rust_proxy calls FSM::Test::ProcessSupervisor::supervise_process with stage compile_proxy and containment rust_proxy_compiler_group. That call returns only the public result. No compiler, probe or tool-resolution process runs. The sealed compiler launch remains .5.4.3.3.6.7.1.2.`
+  Commit: `this commit`
+- ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.12.4.1.5.4.3.3.6.7.1.2`
+  Status: `pending`
+  Goal: `Launch one compiler stage through the sealed private return and retain its first private state.`
+  Acceptance: `Consume one fresh permit and launch only the compiler stage through the sealed private return. Retain that first private state. Stop on disagreement. Do not launch a probe or tool-resolution process in that slice.`
+  Verification: `pending`
+  Commit: `pending`
+- ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.12.4.1.5.4.3.3.6.7.2`
+  Status: `pending`
+  Goal: `Launch one admitted probe and tool-resolution capture and retain their first private states.`
+  Acceptance: `After the compiler capture commits, launch the probe and tool-resolution stages through the sealed private return and retain those first private states. Stop on disagreement. Never retry a producer or replay an original, proxy or live collector.`
   Verification: `pending`
   Commit: `pending`
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.12.4.1.5.4.3.3.6.3.1`
@@ -6543,6 +6569,12 @@ The manifest binds the immediately preceding acceptance suffix to its exact Git 
 - [x] **ROOT CAUSE (WHY + WHERE)** — `git log -S 'unavailable aggregate' -1 --format='%H %s' -- docs/book/src/16df-vial-architecture-scale-cap-closeout.md` identifies bc6796d01803fb662cfadd506fabc5bc79427a88. That placement requires an unavailable hosted aggregate. The first hosted run of `./bin/ci-regression vial-gate --no-book` failed its real command, and the independent verifier was skipped.
 - [x] **ADDRESSED (verified)** — The contradiction is owned by HOSTED-VIAL-REGRESSION-GATE-RESULT.1. Local exact-pinned success stays distinct from the failed hosted step. No support or capacity claim is inferred from either result. Diagnosis continues when the failed-step log is released.
 - [x] **NO REGRESSION** — `knowledge-map: OK` preserves the earlier gate questions and adds the hosted failure route. The rendered book states the contradiction outside the registered placement claim; claim identity/dispositions, containment and staged doctrines accompany the normal hooks. The receipt-return leaf remains separately owned.
+
+## Acceptance Checklist (public compiler launch .3.2.15.7.3.12.4.1.5.4.3.3.6.7.1.1)
+
+- [x] **ROOT CAUSE (WHY + WHERE)** — `git log -S 'stage => '"'"'compile_proxy'"'"'' -1 --format='%H %s' -- t/lib/FSM/Test/RustProxyFixture.pm` identifies e0d74bb051465ba641227acc11975e25e5d879a7. `prepare_rust_proxy` calls `FSM::Test::ProcessSupervisor::supervise_process`, and that call returns only the public result. A compiler capture that keeps only that result cannot retain the first private state.
+- [x] **ADDRESSED (verified)** — The public compiler request remains unchanged and still returns only the public result. Capture stays closed. The sealed compiler launch remains .5.4.3.3.6.7.1.2. No compiler, probe, worker, proxy or collector runs.
+- [x] **NO REGRESSION** — `knowledge-map: OK` preserves the finished-job gate and adds the public compiler request. The rendered book states that the sealed compiler launch remains next; claim identity/dispositions, containment and staged doctrines accompany the normal hooks. That launch, probe, tool-resolution, native/live/startup qualification and full CI/push remain open.
 
 ## Acceptance Checklist (opened finished-job gate .3.2.15.7.3.12.4.1.5.4.3.3.6.6)
 

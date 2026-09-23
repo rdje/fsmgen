@@ -555,7 +555,8 @@ return and the current source revision. The matching closed plan consumes
 that permit once. A different revision, a replay, a live collector and a
 second consume are rejected. One consumed permit now admits one finished
 private job. An unfinished job and a public supervisor name still refuse.
-No compiler, probe or tool-resolution process runs in this step.
+The public compiler request still returns only the public result. No
+compiler, probe or tool-resolution process runs in this step.
 
 ```sh
 python3 -B docs/audits/native-proxy-receipt-ownership-inventory-20260922/audit.py --verify-saved
@@ -566,7 +567,7 @@ perl t/1818-process-supervisor-receipt-observation.t
 
 | Remaining work | Required result |
 | --- | --- |
-| Real receipt binding | One consumed permit admits one finished private job. The compiler, probe and tool-resolution launch remains the next capture. |
+| Real receipt binding | The public compiler request still returns only the public result. The sealed compiler launch remains the next capture. |
 | Inactive adapter composition | Join preparation, native path/reference admission and observation custody before the separate native experiment. |
 | Final protocol join | Check current evidence together and retain native, live/public and startup/benefit gates. |
 
