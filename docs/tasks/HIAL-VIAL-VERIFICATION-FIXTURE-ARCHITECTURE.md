@@ -3485,10 +3485,26 @@ decomposes the architecture needed to move beyond that bounded foundation.
   Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.3.4.1: establish capture stream ownership`
 
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.3.4.2`
-  Status: `pending`
+  Status: `active`
   Goal: `Integrate gated launch, shared capture and finite reservation-aware cleanup into the private engine.`
   Acceptance: `After .1, prepare and retain the pair before starting it, expose explicit publication-controlled release, advance capture and cancellation without blocking, and share one fixed TERM/KILL envelope. Retain exact command waits, first failure, actual reserved-group absence and separate reservation closure; retire all signals before identity release. Preserve legacy callers and public schema, private cleanup identity and stage receipt compatibility. Focused real and model controls must pass before independent hostile sibling .3.5 or coordinator integration proceeds.`
-  Verification: `Pending the stream ownership seam in sibling .1.`
+  Verification: `Stream ownership is committed at 8729ab944. Separate finite group/reservation closure from the launch/capture/result facade so each lifecycle has independently reviewable real and modeled controls.`
+  Commit: `pending`
+
+  Children: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.3.4.2.1, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.3.4.2.2`
+
+- ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.3.4.2.1`
+  Status: `done`
+  Goal: `Compose finite nonblocking command-group and reservation closure.`
+  Acceptance: `Retain the pair before cleanup starts; cancel exec before any signal, stop gated commands before requesting reservation departure, and use acknowledged group authority only. Share one caller-supplied bounded TERM/KILL envelope, retire group signalling before reservation release, and preserve exact waits and uncertain absence. Qualify actual success, cancellation and escalation plus modeled unknown waits and expired deadlines. No launch routing or original capture.`
+  Verification: `GroupClosure composes cancellation, exact command polling, acknowledged group signals and reservation retirement without blocking or renewing the shared deadline. Real T1826 controls prove gate cancellation, separate waits, descriptor ownership, TERM/KILL escalation and surviving-descendant cleanup. The first run caught a pre-wait group probe returning native EPERM and an incorrect successful-exit requirement for reservation closure; exact command wait now precedes absence probing, and reservation wait/failure stays distinct from resource closure. Models reject uncertain absence, unknown waits, unacknowledged departure and renewed grace. Three deliberate source mutations fail independent ordering, wait-truth and newly available group-signal assertions. The focused band passes Files=10, Tests=261. Capture/result integration remains sibling .2; Linux and complete nested closure remain unqualified.`
+  Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.3.4.2.1: qualify finite group closure`
+
+- ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.3.4.2.2`
+  Status: `pending`
+  Goal: `Join gated launch, shared capture, closure and terminal result identities.`
+  Acceptance: `After sibling .1, retain the pair before start, expose publication-controlled release, preserve the original execution wall and first failure, and compose the shared reader and closure driver. Keep command/group/reservation identities distinct, public schemas and cleanup identity unchanged, and sealed callers on the legacy strategy. Qualify focused real and modeled result/receipt compatibility before independent hostile qualification.`
+  Verification: `Sibling .1 qualifies finite closure; retain its separate command, group and reservation facts when composing the result facade.`
   Commit: `pending`
 
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.3.5`
@@ -4189,7 +4205,7 @@ decomposes the architecture needed to move beyond that bounded foundation.
 
 ## Current Frontier
 
-Current frontier: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.3.4.2` integrates the gated lifecycle and terminal identity after the qualified shared stream ownership seam in `.4.1`. Complete nested cleanup and independent qualification before the fixed capture driver resumes. Preserve original failures, the spent compiler workspace, source-only driver commit and full-CI/push gates.
+Current frontier: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.3.4.2.2` joins gated launch, shared capture and terminal identities after sibling `.1` qualifies finite nonblocking group/reservation closure. Complete nested cleanup and independent qualification before the fixed capture driver resumes. Preserve original failures, the spent compiler workspace, source-only driver commit and full-CI/push gates.
 
 Architecture audit `.1` is complete. Decision `0032` selects one public
 `.vial` source language, private immutable `VIALSemanticIR` and
@@ -6829,3 +6845,35 @@ The manifest binds the immediately preceding acceptance suffix to its exact Git 
   .artifacts/capture-stream-final-band.log. Both modified modules pass syntax
   checks. The book documents transfer ownership while preserving open lifecycle
   integration, aggregate admission, routing and nested-closure boundaries.
+
+## Acceptance Checklist (.19.2.3.1.2.2.5.5.2.3.3.4.2.1)
+
+- [x] **ROOT CAUSE (WHY + WHERE)** — `git log -S` identifies aa3bcf39a
+  as Reservation retirement's introduction. GatedPair and Reservation own
+  distinct children; no production component yet composes their cancellation
+  and closure under one wall. The first new driver test exposed two mistakes:
+  probing before exact command wait produced native EPERM (errno 1), and
+  requiring a zero reservation exit conflated successful exit with exact
+  reaping. The existing ESRCH-only absence rule remains unchanged.
+- [x] **ADDRESSED (verified)** — Re-derive with T1826's actual child waits,
+  independent kernel group queries, real EOF, TERM-ignoring command and live
+  descendant. Cancellation closes the gate before signalling; only acknowledged
+  departure admits group signals. Command wait precedes absence probing, and
+  group retirement precedes reservation wait. The original shared deadline
+  cannot renew. Forced reservation status remains visible even when all owned
+  resources are closed; result success remains a separate facade obligation.
+  Falsification: source mutations restoring early probing, requiring zero
+  reservation exit, or suppressing group TERM after positive TERM each fail
+  the corresponding independent assertion. Models retain unknown waits,
+  uncertain absence, missed departure and expired-wall incompleteness; no fake
+  PID reaches a native syscall. Durability: tracked component, T1826, book,
+  fact route and this work-unit commit. First and diagnostic logs and altered
+  scratch sources under .artifacts/group-closure-* are ignored evidence, not
+  a durable archive. Linux, result integration and nested closure remain open.
+- [x] **NO REGRESSION** — The guarded focused band reports
+  `All tests successful`, `Files=10, Tests=261` in
+  .artifacts/group-closure-final-band.log. Component/test syntax and book build
+  pass; generated HTML includes the separate wait/closure contract. The first
+  book command used a wrong relative destination and was refused before
+  output; the corrected repository-local destination builds and is removed
+  after review. Legacy routing, original captures and full-CI/push stay gated.

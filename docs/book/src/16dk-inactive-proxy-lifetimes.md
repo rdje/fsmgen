@@ -660,6 +660,21 @@ interrupted return leaves the receiver available for cleanup. Pair retirement
 cannot close those transferred handles again. The shared reader keeps the
 existing separate-stream, aggregate-prefix and control-EOF behavior.
 
+The private group-closure driver now cancels exec before signalling, stops an
+unjoined command by its owned PID, and uses the reserved group only after
+acknowledged departure. All affected jobs can receive the same remaining
+cleanup deadline. TERM, KILL and reservation release/reaping share that wall;
+advancement never waits synchronously or starts a second cleanup allowance.
+
+For example, after a command ignores TERM, group KILL can finish the command
+while its reservation still needs release or termination. Exact reservation
+reaping proves that resource closed even if its wait reports a signal; its
+original status and failure remain separate observations. Successful resource
+closure cannot erase command failure or surviving descendants. The driver
+harvests the direct command before probing group absence, requires actual
+ESRCH, and retires group signalling before releasing the reservation. Unknown
+waits, uncertain absence and missed closure deadlines remain incomplete.
+
 Normal callers retain the existing own-group supervisor. Capture/result
 integration, aggregate coordinator admission, nested routing and complete
 subtree qualification still have separate open owners. These private components
@@ -668,5 +683,5 @@ Their tests exercise the current host; Linux qualification remains open.
 Re-run the bounded component controls with:
 
 ```bash
-scripts/run_with_ram_guard.sh -- prove -Iperl -It/lib t/1823-process-group-reservation.t t/1824-process-gated-pair.t t/1825-process-capture-stream-ownership.t
+scripts/run_with_ram_guard.sh -- prove -Iperl -It/lib t/1823-process-group-reservation.t t/1824-process-gated-pair.t t/1825-process-capture-stream-ownership.t t/1826-process-group-closure.t
 ```

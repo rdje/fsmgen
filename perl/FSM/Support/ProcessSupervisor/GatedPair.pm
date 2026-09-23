@@ -319,7 +319,7 @@ sub observation {
     my ($self) = @_; _owner($self);
     _error('unexpected observation arguments') unless @_ == 1;
     return {map { $_ => $self->{$_} } qw(phase command_pid birth_sec birth_usec
-        command_reaped command_status joined released retired failure)};
+        command_reaped command_status command_authority joined released retired failure)};
 }
 
 sub reservation { my ($self) = @_; _owner($self); return $self->{reservation}; }
