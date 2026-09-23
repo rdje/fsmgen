@@ -570,8 +570,15 @@ proxy or clean up the workspace automatically.
 
 The capture test models success, launch refusal, compiler failure, copied
 cleanup, unsettled cleanup and native-wait disagreement. These controls launch
-no compiler. Actual execution still requires a clean committed revision,
-independent Git preflight and the separately owned capture step. Recorded birth
+no compiler. The separate compiler-only capture has now completed from a clean
+committed revision. Its first native wait status and public result agree on
+success; leader reaping, group absence and original cleanup sharing passed.
+An independent read-only process-table observation confirmed dated absence.
+The first records and exact unexecuted output bytes are retained under
+`docs/audits/native-proxy-receipt-capture-20260923/result/`. The original
+workspace remains for later owned stages; its compiler attempt is permanently
+spent. Saved review checks the original Git sources and artifact bytes without
+rerunning the producer. This proves only the compiler stage. Recorded birth
 values are the supervisor's wall-clock observations, not kernel-authenticated
 births. Zero microseconds at a second boundary are valid; negative, fractional
 and out-of-range microseconds reject. A serialized cleanup address cannot
@@ -585,11 +592,13 @@ perl docs/audits/native-proxy-receipt-adapter-20260922/qualify.t
 perl docs/audits/native-proxy-receipt-admission-20260922/qualify.t
 perl t/1818-process-supervisor-receipt-observation.t
 perl t/1820-native-proxy-receipt-capture.t
+python3 -B docs/audits/native-proxy-receipt-capture-20260923/review.py --verify-saved
+python3 -B docs/audits/native-proxy-receipt-capture-20260923/qualify_review.py
 ```
 
 | Remaining work | Required result |
 | --- | --- |
-| Real receipt binding | Run the committed fixed driver once after clean-Git preflight and review its first actual compiler receipt. Probe and tool-resolution admission remain closed. |
+| Real receipt binding | Compiler evidence is retained. Admit and capture the probe and tool-resolution stages without replaying the compiler or borrowing serialized receipt authority. |
 | Inactive adapter composition | Join preparation, native path/reference admission and observation custody before the separate native experiment. |
 | Final protocol join | Check current evidence together and retain native, live/public and startup/benefit gates. |
 

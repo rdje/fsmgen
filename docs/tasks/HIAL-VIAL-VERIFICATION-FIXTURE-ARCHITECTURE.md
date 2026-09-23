@@ -2341,11 +2341,11 @@ decomposes the architecture needed to move beyond that bounded foundation.
   Commit: `pending`
   Children: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.12.4.1.5.4.3.3.6.7.1, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.12.4.1.5.4.3.3.6.7.2`
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.12.4.1.5.4.3.3.6.7.1`
-  Status: `active`
+  Status: `done`
   Goal: `Launch one admitted compiler capture and retain its first private state.`
   Acceptance: `Consume one fresh permit, launch only the compiler stage through the sealed private return, and retain that first private state. Stop on disagreement. Do not launch a probe or tool-resolution process in that slice.`
-  Verification: `Child .5.4.3.3.6.7.1.2.2.2.3.4.1 records that the public compiler fixture still discards the private job. The sealed compiler launch remains .5.4.3.3.6.7.1.2.2.2.3.4.2. Probe and tool-resolution remain closed.`
-  Commit: `pending`
+  Verification: `All compiler children are terminal. The first sealed compiler capture and exact byte archive are verified under descendant .3.4.2.2.2.2; saved evidence is docs/audits/native-proxy-receipt-capture-20260923/result/. Probe and tool-resolution stages remain separately owned by .6.7.2.`
+  Commit: `this commit`
   Children: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.12.4.1.5.4.3.3.6.7.1.1, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.12.4.1.5.4.3.3.6.7.1.2`
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.12.4.1.5.4.3.3.6.7.1.1`
   Status: `done`
@@ -2354,11 +2354,11 @@ decomposes the architecture needed to move beyond that bounded foundation.
   Verification: `FSM::Test::RustProxyFixture::prepare_rust_proxy calls FSM::Test::ProcessSupervisor::supervise_process with stage compile_proxy and containment rust_proxy_compiler_group. That call returns only the public result. No compiler, probe or tool-resolution process runs. The sealed compiler launch remains .5.4.3.3.6.7.1.2.`
   Commit: `this commit`
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.12.4.1.5.4.3.3.6.7.1.2`
-  Status: `active`
+  Status: `done`
   Goal: `Launch one compiler stage through the sealed private return and retain its first private state.`
   Acceptance: `Consume one fresh permit and launch only the compiler stage through the sealed private return. Retain that first private state. Stop on disagreement. Do not launch a probe or tool-resolution process in that slice.`
-  Verification: `Child .5.4.3.3.6.7.1.2.2.1 records that the sealed supervisor accepts no compiler environment. The sealed compiler launch remains .5.4.3.3.6.7.1.2.2.2. Probe and tool-resolution remain closed.`
-  Commit: `pending`
+  Verification: `All compiler children are terminal. The first sealed compiler capture and exact byte archive are verified under descendant .3.4.2.2.2.2; saved evidence is docs/audits/native-proxy-receipt-capture-20260923/result/. Probe and tool-resolution stages remain separately owned by .6.7.2.`
+  Commit: `this commit`
   Children: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.12.4.1.5.4.3.3.6.7.1.2.1, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.12.4.1.5.4.3.3.6.7.1.2.2`
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.12.4.1.5.4.3.3.6.7.1.2.1`
   Status: `done`
@@ -2367,11 +2367,11 @@ decomposes the architecture needed to move beyond that bounded foundation.
   Verification: `NativeProxyReceiptAdapter::receipts_bound requires compiler, outer and inner receipts together. One compiler receipt fails that binding. No compiler, probe or tool-resolution process runs. The sealed compiler launch remains .5.4.3.3.6.7.1.2.2.`
   Commit: `this commit`
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.12.4.1.5.4.3.3.6.7.1.2.2`
-  Status: `active`
+  Status: `done`
   Goal: `Launch one compiler stage through the sealed private return and retain its first private state.`
   Acceptance: `After the binding record commits, consume one fresh permit and launch only the compiler stage through the sealed private return. Retain that first private state. Stop on disagreement. Do not launch a probe or tool-resolution process in that slice.`
-  Verification: `Child .5.4.3.3.6.7.1.2.2.2.3.4.1 records that the public compiler fixture still discards the private job. The sealed compiler launch remains .5.4.3.3.6.7.1.2.2.2.3.4.2. Probe and tool-resolution remain closed.`
-  Commit: `pending`
+  Verification: `All compiler children are terminal. The first sealed compiler capture and exact byte archive are verified under descendant .3.4.2.2.2.2; saved evidence is docs/audits/native-proxy-receipt-capture-20260923/result/. Probe and tool-resolution stages remain separately owned by .6.7.2.`
+  Commit: `this commit`
   Children: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.12.4.1.5.4.3.3.6.7.1.2.2.1, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.12.4.1.5.4.3.3.6.7.1.2.2.2`
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.12.4.1.5.4.3.3.6.7.1.2.2.1`
   Status: `done`
@@ -2380,11 +2380,11 @@ decomposes the architecture needed to move beyond that bounded foundation.
   Verification: `FSM::Support::ProcessSupervisor::supervise_process accepts argv, bounds, containment, cwd, private_job, schema and stage. It accepts no environment. The admitted compiler request supplies PATH, locale and repository-local temporary and cache directories. No compiler, probe or tool-resolution process runs. The sealed compiler launch remains .5.4.3.3.6.7.1.2.2.2.`
   Commit: `this commit`
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.12.4.1.5.4.3.3.6.7.1.2.2.2`
-  Status: `active`
+  Status: `done`
   Goal: `Launch one compiler stage through the sealed private return and retain its first private state.`
   Acceptance: `After the environment record commits, consume one fresh permit and launch only the compiler stage through the sealed private return. Retain that first private state. Stop on disagreement. Do not launch a probe or tool-resolution process in that slice.`
-  Verification: `Child .5.4.3.3.6.7.1.2.2.2.3.4.1 records that the public compiler fixture still discards the private job. The sealed compiler launch remains .5.4.3.3.6.7.1.2.2.2.3.4.2. Probe and tool-resolution remain closed.`
-  Commit: `pending`
+  Verification: `All compiler children are terminal. The first sealed compiler capture and exact byte archive are verified under descendant .3.4.2.2.2.2; saved evidence is docs/audits/native-proxy-receipt-capture-20260923/result/. Probe and tool-resolution stages remain separately owned by .6.7.2.`
+  Commit: `this commit`
   Children: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.12.4.1.5.4.3.3.6.7.1.2.2.2.1, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.12.4.1.5.4.3.3.6.7.1.2.2.2.2, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.12.4.1.5.4.3.3.6.7.1.2.2.2.3`
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.12.4.1.5.4.3.3.6.7.1.2.2.2.1`
   Status: `done`
@@ -2399,11 +2399,11 @@ decomposes the architecture needed to move beyond that bounded foundation.
   Verification: `perl t/1818-process-supervisor-receipt-observation.t passes 87 assertions. One proof process reads the supplied environment marker and exits successfully. The parent environment stays unchanged. A non-hash environment is rejected before a process. No compiler, probe or tool-resolution process runs. The compiler launch remains .5.4.3.3.6.7.1.2.2.2.3.`
   Commit: `this commit`
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.12.4.1.5.4.3.3.6.7.1.2.2.2.3`
-  Status: `active`
+  Status: `done`
   Goal: `Launch one compiler stage through the sealed private return and retain its first private state.`
   Acceptance: `After the environment acceptance commits, consume one fresh permit and launch only the compiler stage through the sealed private return. Retain that first private state. Stop on disagreement. Do not launch a probe or tool-resolution process in that slice.`
-  Verification: `Child .5.4.3.3.6.7.1.2.2.2.3.4.1 records that the public compiler fixture still discards the private job. The sealed compiler launch remains .5.4.3.3.6.7.1.2.2.2.3.4.2. Probe and tool-resolution remain closed.`
-  Commit: `pending`
+  Verification: `All compiler children are terminal. The first sealed compiler capture and exact byte archive are verified under descendant .3.4.2.2.2.2; saved evidence is docs/audits/native-proxy-receipt-capture-20260923/result/. Probe and tool-resolution stages remain separately owned by .6.7.2.`
+  Commit: `this commit`
   Children: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.12.4.1.5.4.3.3.6.7.1.2.2.2.3.1, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.12.4.1.5.4.3.3.6.7.1.2.2.2.3.2, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.12.4.1.5.4.3.3.6.7.1.2.2.2.3.3, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.12.4.1.5.4.3.3.6.7.1.2.2.2.3.4`
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.12.4.1.5.4.3.3.6.7.1.2.2.2.3.1`
   Status: `done`
@@ -2424,11 +2424,11 @@ decomposes the architecture needed to move beyond that bounded foundation.
   Verification: `perl t/1818-process-supervisor-receipt-observation.t passes 92 assertions. The compiler stage carries the compiler receipt role. One compiler observation binds without another stage. No compiler, probe or tool-resolution process runs. The compiler launch remains .5.4.3.3.6.7.1.2.2.2.3.4.`
   Commit: `this commit`
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.12.4.1.5.4.3.3.6.7.1.2.2.2.3.4`
-  Status: `active`
+  Status: `done`
   Goal: `Launch one compiler stage through the sealed private return and retain its first private state.`
   Acceptance: `After the receipt-role commit, consume one fresh permit and launch only the compiler stage through the sealed private return. Retain that first private state. Stop on disagreement. Do not launch a probe or tool-resolution process in that slice.`
-  Verification: `Child .5.4.3.3.6.7.1.2.2.2.3.4.1 records that the public compiler fixture still discards the private job. The sealed compiler launch remains .5.4.3.3.6.7.1.2.2.2.3.4.2. Probe and tool-resolution remain closed.`
-  Commit: `pending`
+  Verification: `All compiler children are terminal. The first sealed compiler capture and exact byte archive are verified under descendant .3.4.2.2.2.2; saved evidence is docs/audits/native-proxy-receipt-capture-20260923/result/. Probe and tool-resolution stages remain separately owned by .6.7.2.`
+  Commit: `this commit`
   Children: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.12.4.1.5.4.3.3.6.7.1.2.2.2.3.4.1, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.12.4.1.5.4.3.3.6.7.1.2.2.2.3.4.2`
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.12.4.1.5.4.3.3.6.7.1.2.2.2.3.4.1`
   Status: `done`
@@ -2437,11 +2437,11 @@ decomposes the architecture needed to move beyond that bounded foundation.
   Verification: `FSM::Test::RustProxyFixture::prepare_rust_proxy calls FSM::Test::ProcessSupervisor::supervise_process with stage compile_proxy and no private_job. That call returns only the public result. No compiler, probe or tool-resolution process runs. The sealed compiler launch remains .5.4.3.3.6.7.1.2.2.2.3.4.2.`
   Commit: `this commit`
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.12.4.1.5.4.3.3.6.7.1.2.2.2.3.4.2`
-  Status: `active`
+  Status: `done`
   Goal: `Launch one compiler stage through the sealed private return and retain its first private state.`
   Acceptance: `After the public-fixture record commits, consume one fresh permit and launch only the compiler stage through the sealed private return. Retain that first private state. Stop on disagreement. Do not launch a probe or tool-resolution process in that slice. Split again if inspection finds another contract gap before any process starts.`
-  Verification: `Prelaunch inspection found execution_allowed requires a finished job and does not consume launch authority. Child .1 adds a single-use prelaunch compiler grant without executing a process; child .2 owns the later capture.`
-  Commit: `pending`
+  Verification: `All compiler children are terminal. The first sealed compiler capture and exact byte archive are verified under descendant .3.4.2.2.2.2; saved evidence is docs/audits/native-proxy-receipt-capture-20260923/result/. Probe and tool-resolution stages remain separately owned by .6.7.2.`
+  Commit: `this commit`
   Children: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.12.4.1.5.4.3.3.6.7.1.2.2.2.3.4.2.1, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.12.4.1.5.4.3.3.6.7.1.2.2.2.3.4.2.2`
 
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.12.4.1.5.4.3.3.6.7.1.2.2.2.3.4.2.1`
@@ -2452,11 +2452,11 @@ decomposes the architecture needed to move beyond that bounded foundation.
   Commit: `this commit`
 
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.12.4.1.5.4.3.3.6.7.1.2.2.2.3.4.2.2`
-  Status: `active`
+  Status: `done`
   Goal: `Capture one compiler stage using committed single-use launch admission and the sealed private return.`
   Acceptance: `Consume one fresh permit, acquire the compiler-only launch grant, retain the first private state and outcome, and stop on disagreement. Persist the attempt before launch so a restarted driver cannot replay it. No probe, tool-resolution, original, proxy or collector launch. Split a further contract gap before any process starts.`
-  Verification: `The launch guard is committed at 9ceca1e13. The persistent attempt driver must itself be committed before capturing a clean source revision. Child .1 implements and models the fixed driver; child .2 alone executes it after clean preflight.`
-  Commit: `pending`
+  Verification: `All compiler children are terminal. The first sealed compiler capture and exact byte archive are verified under descendant .3.4.2.2.2.2; saved evidence is docs/audits/native-proxy-receipt-capture-20260923/result/. Probe and tool-resolution stages remain separately owned by .6.7.2.`
+  Commit: `this commit`
 
   Children: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.12.4.1.5.4.3.3.6.7.1.2.2.2.3.4.2.2.1, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.12.4.1.5.4.3.3.6.7.1.2.2.2.3.4.2.2.2`
 
@@ -2468,11 +2468,11 @@ decomposes the architecture needed to move beyond that bounded foundation.
   Commit: `this commit`
 
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.12.4.1.5.4.3.3.6.7.1.2.2.2.3.4.2.2.2`
-  Status: `active`
+  Status: `done`
   Goal: `Execute the committed compiler receipt driver once from a clean revision and retain the first result.`
   Acceptance: `Independently verify clean Git state and pass that exact revision to the guarded fixed driver. Consume the terminal result, review first private/public state and raw wait outcome, stop on disagreement, and commit bounded sanitized evidence. Do not replay or launch a probe, tool-resolution process, generated proxy, original fixture or collector. Own exact workspace cleanup only after settled ownership is verified.`
-  Verification: `The driver is committed at cd8d8e68d. Prelaunch review found ReceiptAdapter::_identity incorrectly requires positive start_usec even though the supervisor clock may produce zero. Child .1 repairs and tests that boundary before child .2 executes the compiler capture.`
-  Commit: `pending`
+  Verification: `All compiler children are terminal. The first sealed compiler capture and exact byte archive are verified under descendant .3.4.2.2.2.2; saved evidence is docs/audits/native-proxy-receipt-capture-20260923/result/. Probe and tool-resolution stages remain separately owned by .6.7.2.`
+  Commit: `this commit`
 
   Children: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.12.4.1.5.4.3.3.6.7.1.2.2.2.3.4.2.2.2.1, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.12.4.1.5.4.3.3.6.7.1.2.2.2.3.4.2.2.2.2`
 
@@ -2484,11 +2484,11 @@ decomposes the architecture needed to move beyond that bounded foundation.
   Commit: `this commit`
 
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.12.4.1.5.4.3.3.6.7.1.2.2.2.3.4.2.2.2.2`
-  Status: `pending`
+  Status: `done`
   Goal: `Execute the committed compiler receipt driver once after the identity-boundary repair.`
   Acceptance: `Verify clean Git state, pass the exact revision to the guarded fixed driver, retain the first terminal evidence and stop on disagreement. Never replay or launch probes, tool-resolution, generated proxies, original fixtures or collectors. Review actual private/public state and native wait independently; own workspace cleanup only after settlement.`
-  Verification: `pending`
-  Commit: `pending`
+  Verification: `Clean revision 28834c3278aec40fd597a1bd7af06be9fa345061 produced the first compiler capture with native wait status 0, public success, reaped leader, absent group and original cleanup sharing accepted in the live driver. Guarded runner exited 0. Independent Python review checks original Git source hashes, first private/public state, native wait, request/environment and retained preparation; read-only ps separately observed leader and group absent. Saved review and hostile local-copy mutations pass without producer replay. Exact generated source and unexecuted compiler bytes are archived in docs/audits/native-proxy-receipt-capture-20260923/result/artifacts.json. Required workspace .artifacts/tmp/process-supervisor-tests/fsmgen-CompilerReceipt20260923 is retained for the next owned stages, not cleaned or executed. The persistent attempt marker remains spent. These are dated direct-fork observations, not kernel birth or reusable cleanup-address authority. Probe/tool-resolution remains .6.7.2.`
+  Commit: `this commit`
 
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.12.4.1.5.4.3.3.6.7.2`
   Status: `pending`
@@ -6904,3 +6904,9 @@ The manifest binds the immediately preceding acceptance suffix to its exact Git 
 - [x] **ROOT CAUSE (WHY + WHERE)** — `git log -S 'sub _identity'` identifies `b74122f9f967dd7cdb4b29f17aed4a2ba4be6b3b`. The same positive-integer expression was used for PID, seconds and fractional microseconds. T1818 reproduces `not ok 29 - sealed receipt accepts microsecond boundary 0` against that code.
 - [x] **ADDRESSED (verified)** — The receipt adapter now treats the fractional field independently: zero and the upper valid microsecond bind through a sealed observation; negative, fractional, referenced, absent and out-of-range fields reject. PID and seconds retain their positive constraints. No compiler, probe or tool-resolution capture runs.
 - [x] **NO REGRESSION** — RAM-guarded `prove -Iperl t/1818-process-supervisor-receipt-observation.t t/1819-native-proxy-receipt-admission.t t/1820-native-proxy-receipt-capture.t docs/audits/native-proxy-receipt-adapter-20260922/qualify.t`: `All tests successful`, `Files=4, Tests=206`. Re-derive: producer gettimeofday fields through T1818; falsify: observed old-predicate RED and invalid boundary controls; durability: ordinary T1818 regression and the tracked adapter. Actual compiler and kernel-birth authentication remain unclaimed.
+
+## Acceptance Checklist (first actual compiler receipt .3.4.2.2.2.2)
+
+- [x] **ROOT CAUSE (WHY + WHERE)** — `git log -S 'begin_compiler_capture'` identifies `9ceca1e13`. A real compiler result was still missing after private-return and prelaunch repairs. The committed fixed driver now ran once from clean `28834c3278aec40fd597a1bd7af06be9fa345061`, retaining its first sealed state instead of the public-only fixture return.
+- [x] **ADDRESSED (verified)** — The guarded compiler runner exits 0. First native wait/public exit/signal agree at success; leader reaping, group absence and original cleanup sharing pass in the live driver. Independent saved-source/state review and dated read-only process-table absence agree. First evidence, generated C and unexecuted executable bytes are retained in `docs/audits/native-proxy-receipt-capture-20260923/result/`; the spent attempt and required original workspace remain unchanged for later owned work. No probe, tool-resolution, proxy image, original fixture or collector is executed.
+- [x] **NO REGRESSION** — The preceding guarded receipt/driver band reports `All tests successful`, `Files=4, Tests=206`; no runtime source changes after that qualification. `python3 -B docs/audits/native-proxy-receipt-capture-20260923/review.py --verify-saved` passes. `qualify_review.py` passes its fresh-control hostile mutations and archived-byte corruption check. Re-derive: tracked fixed driver and exact saved records; falsify: independent native-wait/public/source/ps checks plus deliberately rejected local mutations; durability: committed first records and exact artifact archive with read-only verifier. The historical capture is not rerunnable permission, a timing estimate, kernel-birth authentication, complete stage ownership or startup qualification.

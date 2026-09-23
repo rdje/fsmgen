@@ -1,0 +1,18 @@
+{
+  "absence_observation": {
+    "captured_utc": "2026-09-23T14:06:17.518165+00:00",
+    "meaning": "Dated independent absence, not a reusable identity receipt.",
+    "oracle": "/bin/ps -axo pid=,pgid=",
+    "pid_and_group_absent": true
+  },
+  "compiler_pid": 63989,
+  "record_sha256": {
+    "attempt.json": "e44acb09d22c43a7cd511405490b67d1fba9020cbe00c6ffbf3e47fd8dd4745b",
+    "first-state.json": "ebe1622d1cc800dc1fd25dec775575e54d728ad128869e44aeaabe5c7c91e172",
+    "launch.json": "7c3e3697fad92fef7c222dbe49ab219cccca86ae4a0df43898add62115cc7eab",
+    "preflight.json": "76db92394dd396762a612c4c1688a021e40540cd3c890c6e34847f24e52266c8",
+    "preparation.json": "090f62bfa1783e329b5dc5f61af0e59e546b2574c697aeededed149ae41c3aa3"
+  },
+  "scope": "One dated direct-fork compiler result. In-process cleanup sharing is the driver's retained observation; serialized addresses are not live ownership. No kernel birth, probe, proxy runtime, live collector or startup qualification.",
+  "source_revision": "28834c3278aec40fd597a1bd7af06be9fa345061"
+}

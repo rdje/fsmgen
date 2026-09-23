@@ -162,13 +162,13 @@ answers:
   - "why does the public compiler fixture still discard the private job?"
   - "how is compiler launch admission separated from finished-job review?"
   - "why must a receipt accept zero microseconds?"
+  - "where is the first actual compiler receipt retained?"
 date: 2026-09-23
 status: current
 tags: [tests, subprocess, supervision, task-acceptance, darwin, locality]
-evidence: >-
-  docs/audits/native-proxy-receipt-adapter-20260922/ReceiptAdapter.pm; docs/audits/native-proxy-receipt-ownership-inventory-20260922/review.json
+evidence: docs/audits/native-proxy-receipt-capture-20260923/result/review.json; docs/audits/native-proxy-receipt-capture-20260923/result/artifacts.json
 reverify: >-
-  prove -Iperl t/1819-native-proxy-receipt-admission.t
+  python3 -B docs/audits/native-proxy-receipt-capture-20260923/review.py --verify-saved
 ---
 History: `05f8ada76457e6b0ae16a7f783020869dd687019:docs/knowledge/test-subprocess-policy-adapters.md`. `FSM::Test::RustProxyFixture::prepare_rust_proxy` calls `FSM::Test::ProcessSupervisor::supervise_process` with stage `compile_proxy` and no `private_job`. That call returns only the public result. No compiler, probe or tool-resolution process runs.
-`NativeProxyReceiptAdmission::begin_compiler_capture` burns one compiler grant before launch; `execution_allowed` only reviews a returned job. T1819 covers admission without processes. The fixed `docs/audits/native-proxy-receipt-capture-20260923/capture.pl` driver persists and syncs an exclusive attempt before preparation, retains the sealed private state before accepting success, and never retries or executes the proxy. T1820 models success, refusal, failed compilation, copied/unsettled cleanup, wait disagreement and restart-marker rejection. Actual clean-revision execution remains separately owned. Zero microseconds are valid. Birth fields are supervisor clock observations, not kernel authentication; serialized cleanup addresses confer no reusable authority.
+`begin_compiler_capture` burns the launch grant; `execution_allowed` only reviews a returned job. The fixed driver at `docs/audits/native-proxy-receipt-capture-20260923/capture.pl` completed its first compiler capture from clean 28834c327: native wait/public success, reaping, group absence and original cleanup sharing agree. `result/` preserves first records and exact unexecuted bytes; `review.py --verify-saved` reloads them without replay. The original workspace and spent attempt remain for later owned stages. Probe/tool-resolution are still unqualified. T1818 covers valid zero microseconds; T1819/T1820 cover grant and capture failures. Birth is a supervisor clock observation, not kernel authentication; serialized addresses confer no reusable authority.

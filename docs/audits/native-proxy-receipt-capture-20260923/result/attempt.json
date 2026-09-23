@@ -1,0 +1,59 @@
+{
+   "mode" : "proxy_nonzero",
+   "plan" : {
+      "execution" : "closed",
+      "live_collector" : 0,
+      "permit" : "unissued",
+      "private_fields" : [
+         "pid",
+         "start_sec",
+         "start_usec",
+         "group_pid",
+         "group_start_sec",
+         "group_start_usec",
+         "cleanup_identity"
+      ],
+      "replay_original" : 0,
+      "replay_proxy" : 0,
+      "roles" : [
+         {
+            "containment" : "rust_proxy_compiler_group",
+            "role" : "compiler",
+            "stage" : "compile_proxy"
+         },
+         {
+            "containment" : "rust_tool_resolution_probe_group",
+            "role" : "outer",
+            "stage" : "probe"
+         },
+         {
+            "containment" : "rust_tool_resolution_probe_group",
+            "role" : "inner",
+            "stage" : "tool_resolution"
+         }
+      ],
+      "sealed_return" : "FSM::Test::ProcessSupervisor::sealed_supervise_process",
+      "source_revision" : "28834c3278aec40fd597a1bd7af06be9fa345061"
+   },
+   "revision_authority" : "Caller clean-Git preflight; source_files are captured bytes.",
+   "schema" : "fsmgen.compiler_receipt_attempt.v1",
+   "selection" : {
+      "compiler" : "/Library/Developer/CommandLineTools/usr/bin/clang",
+      "implementation" : "native",
+      "reason" : "darwin_arm64_command_line_tools",
+      "sdk" : "/Library/Developer/CommandLineTools/SDKs/MacOSX27.0.sdk"
+   },
+   "source_files" : {
+      "docs/audits/native-proxy-compiler-census-policy-admission-20260913/CompilerProfile.pm" : "00ffeefa1e75d8f28d61455ca36d91bc8a5c42cf7a03e3d266edb89c4b0a8a30",
+      "docs/audits/native-proxy-receipt-adapter-20260922/ReceiptAdapter.pm" : "2d6e607080cb14a92706249c2933126f1c569af1d7048745c4cb75e22d8f4d38",
+      "docs/audits/native-proxy-receipt-admission-20260922/Admission.pm" : "836646b47c81c8d2d1bd27973f0050d5b1f4ab0d046b58d4f4bc6c863f51ef7b",
+      "docs/audits/native-proxy-receipt-capture-20260923/Capture.pm" : "40d49a3c0d1c8cc771b9ab874f437d8bcb5b71390dcb9a42a11289a7b1322f28",
+      "docs/audits/native-proxy-receipt-capture-20260923/capture.pl" : "e7284c274ac2f5c5b1f1a92316b375edaf5bac0b4059849cc925822ef6b75058",
+      "perl/FSM/ProjectDataLocality.pm" : "14aece4a50b35956bc2585099aa8d26753942288663c641922da9d36ad4bc893",
+      "perl/FSM/Support/ProcessSupervisor.pm" : "7d00e736ee194b1e38536fcbc5ac724ab90e0730fcb370bab2433f8f39060b44",
+      "t/fixtures/rust-tool-proxy.c" : "be8b66690a93c8432c0f33094ac15c26f7fef0940c18f6935fd5b0994d9f4ede",
+      "t/lib/FSM/Test/ProcessSupervisor.pm" : "d52a014ce7c242a97a5fbcf27a76db48be64eee0959a2b701e88fbc78f0be9f1",
+      "t/lib/FSM/Test/RustProxyFixture.pm" : "d9c4ab52cf8074526c59b7a5dcb9da870ca7ffdacb4eb236dacb23b5db6d8bfb"
+   },
+   "workspace" : ".artifacts/tmp/process-supervisor-tests/fsmgen-CompilerReceipt20260923"
+}

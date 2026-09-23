@@ -1,0 +1,92 @@
+{
+   "observation" : {
+      "birth" : {
+         "pid" : 63989,
+         "start_sec" : 1790172225,
+         "start_usec" : 529285
+      },
+      "cleanup" : {
+         "containment" : "rust_proxy_compiler_group",
+         "group_gone" : 1,
+         "kill_sent" : 0,
+         "leader_reaped" : 1,
+         "leader_started" : 1,
+         "surviving_descendants" : 0,
+         "term_sent" : 0
+      },
+      "cleanup_identity" : 518632970472,
+      "group" : {
+         "pid" : 63989,
+         "start_sec" : 1790172225,
+         "start_usec" : 529285
+      },
+      "leader_reaped" : 1,
+      "phase" : "finished",
+      "role" : "compiler",
+      "schema" : "fsmgen.process_supervisor.receipt_observation.v1",
+      "stage" : "compile_proxy"
+   },
+   "private_state" : {
+      "birth_sec" : 1790172225,
+      "birth_usec" : 529285,
+      "cleanup" : {
+         "containment" : "rust_proxy_compiler_group",
+         "group_gone" : 1,
+         "kill_sent" : 0,
+         "leader_reaped" : 1,
+         "leader_started" : 1,
+         "surviving_descendants" : 0,
+         "term_sent" : 0
+      },
+      "leader_reaped" : 1,
+      "leader_status" : 0,
+      "phase" : "finished",
+      "pid" : 63989,
+      "stage" : "compile_proxy"
+   },
+   "result" : {
+      "capture_limit_bytes" : 4096,
+      "cleanup" : {
+         "containment" : "rust_proxy_compiler_group",
+         "group_gone" : 1,
+         "kill_sent" : 0,
+         "leader_reaped" : 1,
+         "leader_started" : 1,
+         "surviving_descendants" : 0,
+         "term_sent" : 0
+      },
+      "diagnostic" : "supervised process completed successfully",
+      "exec_error" : null,
+      "exec_failed" : 0,
+      "exec_handoff_monotonic_ns" : 110045608560000,
+      "exec_to_first_output_ns" : null,
+      "execution_ns" : 140416000,
+      "exit_code" : 0,
+      "finished_monotonic_ns" : 110045748976000,
+      "first_output_monotonic_ns" : null,
+      "first_output_to_exit_ns" : null,
+      "ok" : 1,
+      "output_limited" : 0,
+      "schema" : "fsmgen.test.rust_proxy_compilation.v1",
+      "schema_version" : 1,
+      "signal" : 0,
+      "spawn_to_exec_ns" : 2836000,
+      "stage" : "compile_proxy",
+      "started_monotonic_ns" : 110045605724000,
+      "status" : "success",
+      "stderr" : "",
+      "stderr_bytes" : 0,
+      "stdout" : "",
+      "stdout_bytes" : 0,
+      "timed_out" : 0,
+      "timeout_seconds" : 10
+   },
+   "review" : {
+      "finished_job_accepted" : 1,
+      "original_cleanup_shared" : 1,
+      "raw_wait_matches" : 1,
+      "receipt_bound" : 1
+   },
+   "schema" : "fsmgen.compiler_receipt_capture.v1",
+   "scope" : "Direct supervised fork and wait; birth is the supervisor wall-clock observation, not kernel birth authentication. Serialized cleanup identity is evidence, not reusable authority."
+}

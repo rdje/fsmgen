@@ -1,0 +1,40 @@
+{
+   "environment" : {
+      "CLANG_MODULE_CACHE_PATH" : ".artifacts/tmp/process-supervisor-tests/fsmgen-CompilerReceipt20260923/rust-tools/compiler-cache",
+      "LANG" : "C",
+      "LC_ALL" : "C",
+      "PATH" : "/Library/Developer/CommandLineTools/usr/bin:/usr/bin:/bin",
+      "TEMP" : ".artifacts/tmp/process-supervisor-tests/fsmgen-CompilerReceipt20260923/rust-tools/compiler-temp",
+      "TMP" : ".artifacts/tmp/process-supervisor-tests/fsmgen-CompilerReceipt20260923/rust-tools/compiler-temp",
+      "TMPDIR" : ".artifacts/tmp/process-supervisor-tests/fsmgen-CompilerReceipt20260923/rust-tools/compiler-temp",
+      "XDG_CACHE_HOME" : ".artifacts/tmp/process-supervisor-tests/fsmgen-CompilerReceipt20260923/rust-tools/compiler-cache"
+   },
+   "request" : {
+      "argv" : [
+         "/Library/Developer/CommandLineTools/usr/bin/clang",
+         "--no-default-config",
+         "-isysroot",
+         "/Library/Developer/CommandLineTools/SDKs/MacOSX27.0.sdk",
+         "-arch",
+         "arm64",
+         "-mmacosx-version-min=11.0",
+         "-O2",
+         "-Wall",
+         "-Wextra",
+         "-Werror",
+         "-fno-builtin",
+         "-fno-modules",
+         ".artifacts/tmp/process-supervisor-tests/fsmgen-CompilerReceipt20260923/rust-tools/rustup.c",
+         "-o",
+         ".artifacts/tmp/process-supervisor-tests/fsmgen-CompilerReceipt20260923/rust-tools/rustup"
+      ],
+      "bounds" : {
+         "capture_limit_bytes" : 4096,
+         "timeout_seconds" : 10
+      },
+      "containment" : "rust_proxy_compiler_group",
+      "cwd" : ".",
+      "schema" : "fsmgen.test.rust_proxy_compilation.v1",
+      "stage" : "compile_proxy"
+   }
+}

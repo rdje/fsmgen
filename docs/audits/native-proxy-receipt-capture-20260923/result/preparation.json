@@ -1,0 +1,81 @@
+{
+   "compilation" : {
+      "capture_limit_bytes" : 4096,
+      "cleanup" : {
+         "containment" : "rust_proxy_compiler_group",
+         "group_gone" : 1,
+         "kill_sent" : 0,
+         "leader_reaped" : 1,
+         "leader_started" : 1,
+         "surviving_descendants" : 0,
+         "term_sent" : 0
+      },
+      "diagnostic" : "supervised process completed successfully",
+      "exec_error" : null,
+      "exec_failed" : 0,
+      "exec_handoff_monotonic_ns" : 110045608560000,
+      "exec_to_first_output_ns" : null,
+      "execution_ns" : 140416000,
+      "exit_code" : 0,
+      "finished_monotonic_ns" : 110045748976000,
+      "first_output_monotonic_ns" : null,
+      "first_output_to_exit_ns" : null,
+      "ok" : 1,
+      "output_limited" : 0,
+      "schema" : "fsmgen.test.rust_proxy_compilation.v1",
+      "schema_version" : 1,
+      "signal" : 0,
+      "spawn_to_exec_ns" : 2836000,
+      "stage" : "compile_proxy",
+      "started_monotonic_ns" : 110045605724000,
+      "status" : "success",
+      "stderr" : "",
+      "stderr_bytes" : 0,
+      "stdout" : "",
+      "stdout_bytes" : 0,
+      "timed_out" : 0,
+      "timeout_seconds" : 10
+   },
+   "compilation_argv" : [
+      "/Library/Developer/CommandLineTools/usr/bin/clang",
+      "--no-default-config",
+      "-isysroot",
+      "/Library/Developer/CommandLineTools/SDKs/MacOSX27.0.sdk",
+      "-arch",
+      "arm64",
+      "-mmacosx-version-min=11.0",
+      "-O2",
+      "-Wall",
+      "-Wextra",
+      "-Werror",
+      "-fno-builtin",
+      "-fno-modules",
+      ".artifacts/tmp/process-supervisor-tests/fsmgen-CompilerReceipt20260923/rust-tools/rustup.c",
+      "-o",
+      ".artifacts/tmp/process-supervisor-tests/fsmgen-CompilerReceipt20260923/rust-tools/rustup"
+   ],
+   "diagnostic" : "immutable proxy fixture prepared",
+   "executable" : ".artifacts/tmp/process-supervisor-tests/fsmgen-CompilerReceipt20260923/rust-tools/rustup",
+   "failure_stage" : null,
+   "implementation" : "native",
+   "ok" : 1,
+   "schema" : "fsmgen.test.rust_proxy_fixture.v1",
+   "selection_reason" : "darwin_arm64_command_line_tools",
+   "sources" : [
+      {
+         "device" : 16777244,
+         "inode" : 120740323,
+         "path" : ".artifacts/tmp/process-supervisor-tests/fsmgen-CompilerReceipt20260923/rust-tools/rustup.c",
+         "sha256" : "b689e2f7ee42bf7cac62f272a36d5313a272dddef15a75f8c66b126568fbf276",
+         "size_bytes" : 745
+      },
+      {
+         "device" : 16777244,
+         "inode" : 120740329,
+         "path" : ".artifacts/tmp/process-supervisor-tests/fsmgen-CompilerReceipt20260923/rust-tools/rustup",
+         "sha256" : "317fe971598884b6b5f7ed6f84e0f65257178057ebdc75751e166e8e877b6346",
+         "size_bytes" : 49992
+      }
+   ],
+   "status" : "success"
+}
