@@ -48,8 +48,12 @@ my $production_script = repo_path($root, $production_relative);
 my $publication = repo_path($root, $publication_relative);
 my $corpus = repo_path($root, $corpus_relative);
 my $json = JSON::PP->new->canonical(1)->utf8(1);
-my $publication_before = tree_census($publication);
-my $corpus_before = tree_census($corpus);
+my $ignored_inputs_present = -d $publication && !-l $publication
+    && -d $corpus && !-l $corpus;
+my $publication_before = $ignored_inputs_present
+    ? tree_census($publication) : undef;
+my $corpus_before = $ignored_inputs_present
+    ? tree_census($corpus) : undef;
 my ($independent, $production);
 
 subtest 'final evidence commands are closed repository executables' => sub {
@@ -73,6 +77,8 @@ subtest 'final evidence commands are closed repository executables' => sub {
 };
 
 subtest 'independent and production reconstruction agree exactly' => sub {
+    plan skip_all => 'ignored budget qualification inputs are absent on a fresh checkout'
+        unless $ignored_inputs_present;
     my $independent_run = run_command($^X, $independent_script);
     is($independent_run->{status}, 0, 'independent verification succeeds')
         or diag($independent_run->{stderr});
@@ -188,6 +194,8 @@ subtest 'independent and production reconstruction agree exactly' => sub {
 };
 
 subtest 'real artifacts and all owned residue remain exact' => sub {
+    plan skip_all => 'ignored budget qualification inputs are absent on a fresh checkout'
+        unless $ignored_inputs_present;
     is_deeply(tree_census($publication), $publication_before,
         'real qualification retains its exact inode-aware census');
     is_deeply(tree_census($corpus), $corpus_before,
@@ -261,6 +269,7 @@ sub decode_canonical {
 
 sub tree_census {
     my ($base) = @_;
+    die "ignored budget qualification input is absent\n" unless -d $base;
     my @entries;
     find({
         no_chdir => 1,
