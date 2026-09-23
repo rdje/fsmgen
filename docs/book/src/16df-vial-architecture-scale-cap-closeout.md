@@ -1949,9 +1949,10 @@ families, and the terminal build job failed because those families failed:
 - OSVVM runtime admission stopped at
   `ArchitectureScaleOSVVMRuntimeMaterialization` because the artifact graph
   failed its exact oracle. Ordinary shards do not materialize the ignored
-  OSVVM 2026.05 provider cache. The runtime materialization test now skips
-  its provider-backed checks when that cache is absent and still runs them
-  when the cache is present.
+  OSVVM 2026.05 provider cache. The runtime materialization test skips its
+  provider-backed checks when that cache is absent and still runs them when
+  the cache is present. The runtime execution-plan test skips that same
+  ignored cache the same way.
 - Several regression-promotion tests still read ignored
   `.artifacts/qualification/vial-scale` paths that a fresh checkout does not
   carry. The policy and capture-plan mutation checks now skip that ignored

@@ -47,8 +47,16 @@ my %expected = (
     },
 );
 my %report;
+my $provider_root = File::Spec->catdir(
+    $repo_root, '.artifacts', 'cache', 'providers', 'osvvm', '2026.05', 'source',
+);
+my $provider_present = -d $provider_root && !-l $provider_root
+    && -e File::Spec->catfile($provider_root, '.git')
+    && !-l File::Spec->catfile($provider_root, '.git');
 
 subtest 'three materialized roles own one exact closed provider/tool plan' => sub {
+    plan skip_all => 'exact OSVVM 2026.05 provider cache is absent on an ordinary checkout'
+        unless $provider_present;
     is_deeply($class->owned_shapes, [map {{
         backend_profile => 'vhdl_osvvm_qualified', level => $_,
     }} @levels], 'plan authority owns only the three materialized roles');
@@ -102,6 +110,8 @@ subtest 'three materialized roles own one exact closed provider/tool plan' => su
 };
 
 subtest 'source order, commands, limits, paths, and reports are exact' => sub {
+    plan skip_all => 'exact OSVVM 2026.05 provider cache is absent on an ordinary checkout'
+        unless $provider_present;
     my $reference = $report{reference_v1};
     is($reference->{tool_authority}{archive}{bytes}, 37_155_806,
         'official archive byte identity is sealed');
@@ -161,6 +171,8 @@ subtest 'source order, commands, limits, paths, and reports are exact' => sub {
 };
 
 subtest 'the checked qualifier remains the byte-exact executable oracle' => sub {
+    plan skip_all => 'exact OSVVM 2026.05 provider cache is absent on an ordinary checkout'
+        unless $provider_present;
     my $oracle = $report{reference_v1}{qualifier_oracle};
     is($oracle->{status}, 'byte_exact_executable_oracle',
         'oracle status is explicit');
@@ -180,6 +192,8 @@ subtest 'the checked qualifier remains the byte-exact executable oracle' => sub 
 };
 
 subtest 'caller substitution, mutation, preflight, and invocant bypass fail' => sub {
+    plan skip_all => 'exact OSVVM 2026.05 provider cache is absent on an ordinary checkout'
+        unless $provider_present;
     my $validated = $class->validate_report({
         repository_root => $repo_root,
         report => $report{reference_v1},
