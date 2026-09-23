@@ -1945,7 +1945,8 @@ The same push failed every Perl-file shard. The released logs name separate
 families, and the terminal build job failed because those families failed:
 
 - Paired-busy alias tests reached `yosys_synthesis` and stopped with
-  `status=timed_out`.
+  `status=timed_out`. Decision 0101 keeps that step sealed at 120 seconds.
+  Those eleven tests now record the deadline and do not treat it as a pass.
 - OSVVM runtime admission stopped at
   `ArchitectureScaleOSVVMRuntimeMaterialization` because the artifact graph
   failed its exact oracle. Ordinary shards do not materialize the ignored

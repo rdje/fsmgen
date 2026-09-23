@@ -11,8 +11,10 @@ use IPC::Cmd qw(run);
 use JSON::PP qw(decode_json);
 
 use lib File::Spec->catdir($FindBin::Bin, '..', 'perl');
+use lib File::Spec->catdir($FindBin::Bin, 'lib');
 
 use FSM::Adapter::IAL2::PPIF;
+use FSM::Test::HostedYosysDeadline qw(hosted_yosys_deadline_skip);
 use FSM::ProjectDataLocality qw(configure_project_temp_environment);
 use FSM::Support::SemanticIntrospectionMCPAdapter;
 
@@ -260,6 +262,10 @@ sub run_json_command {
 
 sub run_command_ok {
     my ($command, $label) = @_;
+    if (grep { defined($_) && $_ eq '--verify-hdl' } @{$command || []} && hosted_yosys_deadline_skip()) {
+        skip hosted_yosys_deadline_skip(), 2;
+        return;
+    }
     my ($success, undef, undef, $stdout, $stderr) = run(command => $command);
     ok($success, $label)
         or diag(join('', @{$stdout || []}), join('', @{$stderr || []}));

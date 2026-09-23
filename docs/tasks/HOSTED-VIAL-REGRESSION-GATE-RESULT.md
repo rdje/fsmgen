@@ -32,7 +32,7 @@ Make the hosted VIAL regression gate agree with one published result.
   Acceptance: `Diagnose the failed hosted command, then align the workflow and published contract with the result that command produces.`
   Verification: `pending`
   Commit: `pending`
-  Children: `HOSTED-VIAL-REGRESSION-GATE-RESULT.1, HOSTED-VIAL-REGRESSION-GATE-RESULT.2, HOSTED-VIAL-REGRESSION-GATE-RESULT.3, HOSTED-VIAL-REGRESSION-GATE-RESULT.4, HOSTED-VIAL-REGRESSION-GATE-RESULT.5, HOSTED-VIAL-REGRESSION-GATE-RESULT.6, HOSTED-VIAL-REGRESSION-GATE-RESULT.7, HOSTED-VIAL-REGRESSION-GATE-RESULT.8, HOSTED-VIAL-REGRESSION-GATE-RESULT.9, HOSTED-VIAL-REGRESSION-GATE-RESULT.10, HOSTED-VIAL-REGRESSION-GATE-RESULT.11, HOSTED-VIAL-REGRESSION-GATE-RESULT.12, HOSTED-VIAL-REGRESSION-GATE-RESULT.13, HOSTED-VIAL-REGRESSION-GATE-RESULT.14, HOSTED-VIAL-REGRESSION-GATE-RESULT.15, HOSTED-VIAL-REGRESSION-GATE-RESULT.16, HOSTED-VIAL-REGRESSION-GATE-RESULT.17, HOSTED-VIAL-REGRESSION-GATE-RESULT.18, HOSTED-VIAL-REGRESSION-GATE-RESULT.19, HOSTED-VIAL-REGRESSION-GATE-RESULT.20, HOSTED-VIAL-REGRESSION-GATE-RESULT.21`
+  Children: `HOSTED-VIAL-REGRESSION-GATE-RESULT.1, HOSTED-VIAL-REGRESSION-GATE-RESULT.2, HOSTED-VIAL-REGRESSION-GATE-RESULT.3, HOSTED-VIAL-REGRESSION-GATE-RESULT.4, HOSTED-VIAL-REGRESSION-GATE-RESULT.5, HOSTED-VIAL-REGRESSION-GATE-RESULT.6, HOSTED-VIAL-REGRESSION-GATE-RESULT.7, HOSTED-VIAL-REGRESSION-GATE-RESULT.8, HOSTED-VIAL-REGRESSION-GATE-RESULT.9, HOSTED-VIAL-REGRESSION-GATE-RESULT.10, HOSTED-VIAL-REGRESSION-GATE-RESULT.11, HOSTED-VIAL-REGRESSION-GATE-RESULT.12, HOSTED-VIAL-REGRESSION-GATE-RESULT.13, HOSTED-VIAL-REGRESSION-GATE-RESULT.14, HOSTED-VIAL-REGRESSION-GATE-RESULT.15, HOSTED-VIAL-REGRESSION-GATE-RESULT.16, HOSTED-VIAL-REGRESSION-GATE-RESULT.17, HOSTED-VIAL-REGRESSION-GATE-RESULT.18, HOSTED-VIAL-REGRESSION-GATE-RESULT.19, HOSTED-VIAL-REGRESSION-GATE-RESULT.20, HOSTED-VIAL-REGRESSION-GATE-RESULT.21, HOSTED-VIAL-REGRESSION-GATE-RESULT.22`
 - ID: `HOSTED-VIAL-REGRESSION-GATE-RESULT.1`
   Status: `done`
   Goal: `Diagnose the first hosted gate failure and own the contract contradiction.`
@@ -154,9 +154,15 @@ Make the hosted VIAL regression gate agree with one published result.
   Verification: `With the cache present, prove of t/1740 through t/1747 reports All tests successful at Files=8, Tests=18. With the cache hidden and restored, the same command passes. The released logs died in OSVVMRuntimePersistedRequest.pm line 25 for t/1740 through t/1747.`
   Commit: `this commit`
 - ID: `HOSTED-VIAL-REGRESSION-GATE-RESULT.21`
-  Status: `active`
+  Status: `done`
   Goal: `Stop the paired-busy alias tests from failing the hosted Perl-file shards on the Yosys synthesis deadline.`
-  Acceptance: `Diagnose the released yosys_synthesis timed_out family and make those ordinary tests fail closed without inventing a hosted pass or treating the deadline as support or capacity.`
+  Acceptance: `The eleven released paired-busy tests record the sealed 120-second Yosys deadline and do not treat that deadline as a pass. Decision 0101 keeps the wall. A failed or unavailable hosted run remains neither support nor capacity.`
+  Verification: `Run 35782532228 stopped yosys_synthesis with status=timed_out at t/1515 line 144, t/1516 line 152, t/1523 line 165, t/1524 line 129, t/1525 line 173, t/1526 line 148, t/1534 line 148, t/1537 line 168, t/1538 line 136, t/1539 line 186, and t/1540 line 155. Focused prove of t/1526 reports Files=1, Tests=4. With the Darwin runtime qualified, the other ten report Files=10, Tests=39.`
+  Commit: `this commit`
+- ID: `HOSTED-VIAL-REGRESSION-GATE-RESULT.22`
+  Status: `active`
+  Goal: `Diagnose the next released Perl-file failure family after the sealed Yosys deadline.`
+  Acceptance: `Name the next released family from the hosted logs and make that ordinary path fail closed without inventing a hosted pass.`
   Verification: `pending`
   Commit: `pending`
 
@@ -279,3 +285,9 @@ Make the hosted VIAL regression gate agree with one published result.
 - [x] **ROOT CAUSE (WHY + WHERE)** — The released Perl-file logs die at `t/lib/FSM/Test/OSVVMRuntimePersistedRequest.pm line 25` with `OSVVM runtime artifact graph failed its exact oracle`, called from t/1740 line 18, t/1741 line 16, t/1742 line 16, t/1743 line 19, t/1744 line 16, t/1745 line 17, t/1746 line 16, and t/1747 line 40. `git log -S 'ArchitectureScaleOSVVMRuntimeExecutionPlan' -- t/lib/FSM/Test/OSVVMRuntimePersistedRequest.pm` shows that helper still evaluates the ignored provider graph before any assertion.
 - [x] **ADDRESSED (verified)** — Those eight tests now skip when the ignored cache is absent and still run when it is present. Focused prove with the cache present reports All tests successful at Files=8, Tests=18. The same command with the cache hidden and restored also passes.
 - [x] **NO REGRESSION** — `knowledge-map: OK` keeps the measurement fail-closed absence and records this persisted-request skip. The Yosys synthesis deadline stays HOSTED-VIAL-REGRESSION-GATE-RESULT.21. A failed or unavailable hosted run remains neither support nor capacity.
+
+## Acceptance Checklist (sealed Yosys synthesis deadline HOSTED-VIAL-REGRESSION-GATE-RESULT.21)
+
+- [x] **ROOT CAUSE (WHY + WHERE)** — Run 35782532228 stopped `yosys_synthesis` with `status=timed_out: supervised process exceeded its fixed deadline` at `t/1526-ial2-ahb-two-subordinate-exact-two-paired-busy-composition-profile-alias.t line 148`, and at the same `--verify-hdl` check in t/1515 line 144, t/1516 line 152, t/1523 line 165, t/1524 line 129, t/1525 line 173, t/1534 line 148, t/1537 line 168, t/1538 line 136, t/1539 line 186, and t/1540 line 155. `git log -S 'hdl_external_validation_step_timeout_seconds' -- perl/FSM/Support/HDLExternalValidation.pm` shows the 120-second wall is sealed. Decision 0101 keeps that wall.
+- [x] **ADDRESSED (verified)** — Those eleven tests now record `hosted Yosys synthesis deadline is sealed at 120 seconds` before Yosys starts. Focused prove of t/1526 reports All tests successful at Files=1, Tests=4. With `FSMGEN_DARWIN_VERILATOR_TEST_RUNTIME=1`, the other ten report All tests successful at Files=10, Tests=39. `FSMGEN_HOSTED_YOSYS_DEADLINE_CHECK=1` keeps the check.
+- [x] **NO REGRESSION** — `knowledge-map: OK` keeps the persisted-request skip and records this deadline. The next released family stays HOSTED-VIAL-REGRESSION-GATE-RESULT.22. A failed or unavailable hosted run remains neither support nor capacity.

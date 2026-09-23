@@ -187,7 +187,9 @@ recorded absence before the artifact-graph oracle, so the runtime
 measurement test fails closed on that absence or on the active RAM guard.
 The persisted-request tests skip that same ignored cache the same way.
 The released ordinary OSVVM artifact-graph readers now fail closed. The
-Yosys synthesis deadline remains open. The semantic-family
+eleven paired-busy tests that stopped at the sealed 120-second Yosys
+deadline now record that deadline and do not treat it as a pass. The
+semantic-family
 envelope stays outside the guidance assertion because its own nonclaims
 already exclude support classification, and the regression-gate status is
 admitted because that contract already carries guidance. The terminal build

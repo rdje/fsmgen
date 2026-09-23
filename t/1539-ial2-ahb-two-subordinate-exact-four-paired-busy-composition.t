@@ -13,6 +13,7 @@ use JSON::PP qw(decode_json);
 use lib File::Spec->catdir($FindBin::Bin, '..', 'perl');
 use lib File::Spec->catdir($FindBin::Bin, 'lib');
 
+use FSM::Test::HostedYosysDeadline qw(hosted_yosys_deadline_skip);
 use FSM::Test::ProjectDataLocality;
 use FSM::Test::VerilatorRuntime qw(
     darwin_verilator_runtime_qualified
@@ -178,11 +179,14 @@ subtest 'strict CLI, semantic, MCP, review-artifact, and HDL surfaces agree' => 
     like(slurp($hdl), qr/\bmodule\s+ahb_tb\b/, 'generated HDL contains ahb_tb');
     like(slurp($hdl), qr/\bahb_interconnect\s+fabric\b/, 'generated HDL keeps legal fabric instance');
 
-    my ($verify_ok, undef, undef, $verify_stdout, $verify_stderr) = run(
-        command => ['./bin/fsmgen', '--quiet', '--strict', '--verify-hdl', sample_path()],
-    );
-    ok($verify_ok, 'public verify-hdl accepts source')
-        or diag(join('', @{$verify_stdout || []}), join('', @{$verify_stderr || []}));
+    SKIP: {
+        skip hosted_yosys_deadline_skip(), 1 if hosted_yosys_deadline_skip();
+        my ($verify_ok, undef, undef, $verify_stdout, $verify_stderr) = run(
+            command => ['./bin/fsmgen', '--quiet', '--strict', '--verify-hdl', sample_path()],
+        );
+        ok($verify_ok, 'public verify-hdl accepts source')
+            or diag(join('', @{$verify_stdout || []}), join('', @{$verify_stderr || []}));
+    }
 };
 
 subtest 'generated HDL pairs exact-four requester BUSY with both subordinate windows' => sub {
