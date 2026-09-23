@@ -148,6 +148,7 @@ answers:
   - "how does one proof process return a private supervisor job?"
   - "why does receipt admission still issue no permit?"
   - "how does one receipt permit name the sealed private return?"
+  - "how is the issued receipt permit consumed?"
 date: 2026-09-23
 status: current
 tags: [tests, subprocess, supervision, task-acceptance, darwin, locality]
@@ -157,4 +158,4 @@ evidence: >-
 reverify: >-
   perl docs/audits/native-proxy-receipt-adapter-20260922/qualify.t
 ---
-History: `6213be8fa8029d748a0c789e46b5ca4236d8bffb:docs/knowledge/test-subprocess-policy-adapters.md`. One fresh permit names `FSM::Test::ProcessSupervisor::sealed_supervise_process`, binds the current source revision, and can be consumed once. A second issue and a second consume reject. Replay and live-collector plans issue nothing. Execution stays refused. No compiler, probe or tool-resolution process runs.
+History: `d36f5284815d6226d2e26b3bce1115c73003c521:docs/knowledge/test-subprocess-policy-adapters.md`. The matching closed plan consumes the issued permit once. A different source revision, a proxy replay, a live collector and a second consume reject. Execution stays refused. No compiler, probe or tool-resolution process runs.

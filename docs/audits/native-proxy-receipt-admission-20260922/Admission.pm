@@ -64,8 +64,12 @@ sub issue_permit {
 }
 
 sub consume_permit {
-    my ($token) = @_;
-    return 0 unless @_ == 1 && ref($token) eq 'HASH' && defined $permit;
+    my ($plan, $token) = @_;
+    return 0 unless @_ == 2 && _closed_plan($plan) && ref($token) eq 'HASH' && defined $permit;
+    return 0 unless defined($plan->{permit}) && $plan->{permit} eq 'unissued';
+    return 0 unless defined($plan->{sealed_return}) && !ref($plan->{sealed_return})
+        && $plan->{sealed_return} eq $SEALED_RETURN;
+    return 0 unless $plan->{source_revision} eq $permit->{source_revision};
     return 0 unless defined($token->{schema}) && $token->{schema} eq $permit->{schema};
     return 0 unless defined($token->{source_revision})
         && $token->{source_revision} eq $permit->{source_revision};
