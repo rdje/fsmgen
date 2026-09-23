@@ -149,6 +149,7 @@ answers:
   - "why does receipt admission still issue no permit?"
   - "how does one receipt permit name the sealed private return?"
   - "how is the issued receipt permit consumed?"
+  - "why does a consumed receipt permit still refuse execution?"
 date: 2026-09-23
 status: current
 tags: [tests, subprocess, supervision, task-acceptance, darwin, locality]
@@ -158,4 +159,4 @@ evidence: >-
 reverify: >-
   perl docs/audits/native-proxy-receipt-adapter-20260922/qualify.t
 ---
-History: `d36f5284815d6226d2e26b3bce1115c73003c521:docs/knowledge/test-subprocess-policy-adapters.md`. The matching closed plan consumes the issued permit once. A different source revision, a proxy replay, a live collector and a second consume reject. Execution stays refused. No compiler, probe or tool-resolution process runs.
+History: `58c4b1d1964c16baecb44ad1126580be04f3b75a:docs/knowledge/test-subprocess-policy-adapters.md`. A consumed receipt permit still leaves `execution_allowed` false. The gate returns 0 after every admitted plan. No compiler, probe or tool-resolution process runs.

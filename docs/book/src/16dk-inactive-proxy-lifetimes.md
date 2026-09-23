@@ -553,7 +553,7 @@ private job with its process id. A compiler, probe or tool-resolution
 process remains closed. One fresh permit names the sealed private
 return and the current source revision. The matching closed plan consumes
 that permit once. A different revision, a replay, a live collector and a
-second consume are rejected, and execution stays refused.
+second consume are rejected. The consumed permit still refuses execution.
 
 ```sh
 python3 -B docs/audits/native-proxy-receipt-ownership-inventory-20260922/audit.py --verify-saved
@@ -564,7 +564,7 @@ perl t/1818-process-supervisor-receipt-observation.t
 
 | Remaining work | Required result |
 | --- | --- |
-| Real receipt binding | The matching closed plan consumes the issued permit once. Compiler, probe and tool-resolution execution remains closed. |
+| Real receipt binding | The consumed permit still refuses execution. Opening one admitted capture remains a separate step. |
 | Inactive adapter composition | Join preparation, native path/reference admission and observation custody before the separate native experiment. |
 | Final protocol join | Check current evidence together and retain native, live/public and startup/benefit gates. |
 
