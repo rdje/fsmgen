@@ -34,6 +34,7 @@ change.
    [balanced composition](16da-vial-balanced-portable-composition.md),
    [structural emission](16db-vial-structural-backend-emission-matrix.md),
    [Verilator runtime](16dc-vial-portable-verilator-runtime-measurement.md),
+   [inactive proxy lifetimes](16dk-inactive-proxy-lifetimes.md),
    [VHDL runtime](16dd-vial-portable-vhdl-runtime-measurement.md),
    [OSVVM runtime](16de-vial-osvvm-runtime-execution-plan.md), or
    [scale-gate evidence](16df-vial-architecture-scale-cap-closeout.md) only

@@ -56,6 +56,7 @@ subtest 'README and SUMMARY provide one bounded reader entry path' => sub {
     - [Balanced Portable Composition](16da-vial-balanced-portable-composition.md)
     - [Structural Backend-Emission Matrix](16db-vial-structural-backend-emission-matrix.md)
     - [Portable Verilator Runtime Measurement](16dc-vial-portable-verilator-runtime-measurement.md)
+    - [Inactive Proxy Lifetimes](16dk-inactive-proxy-lifetimes.md)
     - [Portable VHDL Runtime Measurement](16dd-vial-portable-vhdl-runtime-measurement.md)
     - [OSVVM Runtime Execution Plan](16de-vial-osvvm-runtime-execution-plan.md)
     - [Architecture-Scale Cap Closeout](16df-vial-architecture-scale-cap-closeout.md)
@@ -81,6 +82,7 @@ MARKDOWN
         16da-vial-balanced-portable-composition.md
         16db-vial-structural-backend-emission-matrix.md
         16dc-vial-portable-verilator-runtime-measurement.md
+        16dk-inactive-proxy-lifetimes.md
         16dd-vial-portable-vhdl-runtime-measurement.md
         16de-vial-osvvm-runtime-execution-plan.md
         16df-vial-architecture-scale-cap-closeout.md

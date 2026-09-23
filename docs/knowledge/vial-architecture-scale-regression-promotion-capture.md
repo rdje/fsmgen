@@ -189,7 +189,8 @@ The persisted-request tests skip that same ignored cache the same way.
 The OSVVM VHDL gallery refresh records that same absence before emission
 and does not report a current gallery. The selected-tool observer stall
 follows the command the host runs: Linux stalls `ps`, and Darwin stalls
-`lsof`. The released ordinary OSVVM
+`lsof`. The HIAL/VIAL book entry check requires the current nested SUMMARY
+cluster, including Inactive Proxy Lifetimes. The released ordinary OSVVM
 artifact-graph readers now fail closed. The
 eleven paired-busy tests that stopped at the sealed 120-second Yosys
 deadline now record that deadline and do not treat it as a pass. The

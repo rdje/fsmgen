@@ -1961,6 +1961,8 @@ families, and the terminal build job failed because those families failed:
   and does not report a current gallery.
   The selected-tool observer stall follows the command the host runs:
   Linux stalls `ps`, and Darwin stalls `lsof`.
+  The HIAL/VIAL book entry check requires the current nested SUMMARY
+  cluster, including Inactive Proxy Lifetimes.
 - Several regression-promotion tests still read ignored
   `.artifacts/qualification/vial-scale` paths that a fresh checkout does not
   carry. The policy and capture-plan mutation checks now skip that ignored
