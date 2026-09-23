@@ -2452,9 +2452,25 @@ decomposes the architecture needed to move beyond that bounded foundation.
   Commit: `this commit`
 
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.12.4.1.5.4.3.3.6.7.1.2.2.2.3.4.2.2`
-  Status: `pending`
+  Status: `active`
   Goal: `Capture one compiler stage using committed single-use launch admission and the sealed private return.`
   Acceptance: `Consume one fresh permit, acquire the compiler-only launch grant, retain the first private state and outcome, and stop on disagreement. Persist the attempt before launch so a restarted driver cannot replay it. No probe, tool-resolution, original, proxy or collector launch. Split a further contract gap before any process starts.`
+  Verification: `The launch guard is committed at 9ceca1e13. The persistent attempt driver must itself be committed before capturing a clean source revision. Child .1 implements and models the fixed driver; child .2 alone executes it after clean preflight.`
+  Commit: `pending`
+
+  Children: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.12.4.1.5.4.3.3.6.7.1.2.2.2.3.4.2.2.1, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.12.4.1.5.4.3.3.6.7.1.2.2.2.3.4.2.2.2`
+
+- ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.12.4.1.5.4.3.3.6.7.1.2.2.2.3.4.2.2.1`
+  Status: `done`
+  Goal: `Implement a fixed compiler receipt driver with persistent replay rejection and first-outcome retention.`
+  Acceptance: `Use the current native fixture command through an audit-only sealed-return wrapper. Persist an exclusive fixed attempt before preparation or launch; consume the compiler grant before the only supervisor call; write its private observation before interpreting success. Preserve the public fixture result, explicit local environment, fixed bounds and first failures. Model success, refusal, retained failure, duplicate attempt and bad receipt without a compiler. Commit the driver before real execution.`
+  Verification: `T1820 models the fixed fixture wrapper with the real permit lifecycle on success, independently injected failure returns, an exclusive synced attempt marker and retained first state. Fork/system/signal interceptors observe no attempt. The RAM-guarded fixture/architecture/receipt band passes Files=5, Tests=181; driver syntax passes. Real compiler execution remains child .2 after clean preflight. No original, proxy, live collector or compiler capture ran. The first model compile failure was an exec-interceptor syntax incompatibility; fork denial makes child exec unreachable, and the corrected model suite passes.`
+  Commit: `this commit`
+
+- ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.12.4.1.5.4.3.3.6.7.1.2.2.2.3.4.2.2.2`
+  Status: `pending`
+  Goal: `Execute the committed compiler receipt driver once from a clean revision and retain the first result.`
+  Acceptance: `Independently verify clean Git state and pass that exact revision to the guarded fixed driver. Consume the terminal result, review first private/public state and raw wait outcome, stop on disagreement, and commit bounded sanitized evidence. Do not replay or launch a probe, tool-resolution process, generated proxy, original fixture or collector. Own exact workspace cleanup only after settled ownership is verified.`
   Verification: `pending`
   Commit: `pending`
 
@@ -6860,3 +6876,9 @@ The manifest binds the immediately preceding acceptance suffix to its exact Git 
 - [x] **ROOT CAUSE (WHY + WHERE)** — `git log -S 'sub execution_allowed'` identifies `413a76daac6182ce08ca13c42c53a422ac35e859`. Admission required a finished job and supplied no prelaunch authority. The added admission test reports `not ok 53` against the old module; its process interceptors report no launch attempt. Adjacent receipt controls shared nested cleanup hashes, allowing the unreaped mutation to contaminate later negative cases.
 - [x] **ADDRESSED (verified)** — `begin_compiler_capture` consumes the process-local compiler attempt before returning success, independently of post-launch review. Changed plans/tokens, replay, live collection and repeated grants reject. Independent receipt fixtures each bind before mutation and leave the original positive case valid. Actual capture and its persistent exclusive attempt record remain separately owned by `.3.4.2.2`.
 - [x] **NO REGRESSION** — RAM-guarded `prove -Iperl t/1818-process-supervisor-receipt-observation.t t/1819-native-proxy-receipt-admission.t docs/audits/native-proxy-receipt-adapter-20260922/qualify.t`: `All tests successful`, `Files=3, Tests=192`. `perl -c` reports `syntax OK`; `mdbook build docs/book -d .artifacts/mdbook-compiler-prelaunch` succeeds. Re-derivation: these tracked tests; falsification: old-module RED plus independently valid hostile controls; durability: T1819 discovery and tracked audit controls. No authentic compiler receipt or restart-replay proof is claimed.
+
+## Acceptance Checklist (persistent compiler driver .3.4.2.2.1)
+
+- [x] **ROOT CAUSE (WHY + WHERE)** — `git log -S 'begin_compiler_capture'` identifies `9ceca1e13`. The grant is process-local and the public fixture discards private state; neither alone preserves an attempt across restart. The audit-only wrapper consumes the grant and uses the sealed return without changing the fixture's public contract.
+- [x] **ADDRESSED (verified)** — T1820 proves a persistent exclusive attempt precedes admission, a synced request precedes the supervisor call, and first private/public outcomes survive rejection. Repeating the invocation fails at the existing attempt before another grant; refusal produces no fabricated private state. Tests use modeled compiler returns and explicitly forbid fork/system/signal activity. Real execution is owned by `.3.4.2.2.2`.
+- [x] **NO REGRESSION** — RAM-guarded `prove -Iperl t/1815-rust-proxy-fixture.t t/1817-test-supervision-architecture.t t/1818-process-supervisor-receipt-observation.t t/1819-native-proxy-receipt-admission.t t/1820-native-proxy-receipt-capture.t`: `All tests successful`, `Files=5, Tests=181`. Driver `perl -c`: `syntax OK`. Re-derivation: fixed driver and T1820; falsification: existing-marker rejection and independently injected bad outcomes; durability: tracked driver and ordinary test discovery. Actual compiler and kernel-birth qualification remain missing legs, not modeled claims.

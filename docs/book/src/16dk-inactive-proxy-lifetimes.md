@@ -557,23 +557,37 @@ is rejected. Failure or later receipt review never restores the grant.
 already returned; it does not authorize a process launch or prove receipt
 ownership. The separate receipt adapter still owns that review.
 
-This grant is process-local. The capture driver must persist an exclusive
-attempt record before launch to prevent replay after a restart, use the sealed
-private return, and retain the first outcome even on failure. That driver and
-the actual compiler capture remain the next owned work. The public compiler
-fixture still returns only the public result. Probe and tool-resolution launch
-admission, native proxy execution and live collection remain closed.
+This grant is process-local. The fixed audit driver in
+`docs/audits/native-proxy-receipt-capture-20260923/capture.pl` adds an exclusive
+attempt record before preparation and a launch record before the supervisor
+call. Records are flushed and synced, including their directory entries. A
+restart encounters the original attempt and rejects before another grant.
+The driver wraps the existing compiler fixture, preserving its command,
+environment and public result while retaining the sealed private observation.
+It writes that first observation before accepting cleanup or success, and
+keeps evidence and the workspace on failure. It does not execute the generated
+proxy or clean up the workspace automatically.
+
+The capture test models success, launch refusal, compiler failure, copied
+cleanup, unsettled cleanup and native-wait disagreement. These controls launch
+no compiler. Actual execution still requires a clean committed revision,
+independent Git preflight and the separately owned capture step. Recorded birth
+values are the supervisor's wall-clock observations, not kernel-authenticated
+births; a serialized cleanup address cannot restore live receipt authority.
+Probe and tool-resolution admission, native proxy execution and live collection
+remain closed.
 
 ```sh
 python3 -B docs/audits/native-proxy-receipt-ownership-inventory-20260922/audit.py --verify-saved
 perl docs/audits/native-proxy-receipt-adapter-20260922/qualify.t
 perl docs/audits/native-proxy-receipt-admission-20260922/qualify.t
 perl t/1818-process-supervisor-receipt-observation.t
+perl t/1820-native-proxy-receipt-capture.t
 ```
 
 | Remaining work | Required result |
 | --- | --- |
-| Real receipt binding | Use the compiler grant with an exclusive attempt record and retain the sealed private return. Probe and tool-resolution admission remain closed. |
+| Real receipt binding | Run the committed fixed driver once after clean-Git preflight and review its first actual compiler receipt. Probe and tool-resolution admission remain closed. |
 | Inactive adapter composition | Join preparation, native path/reference admission and observation custody before the separate native experiment. |
 | Final protocol join | Check current evidence together and retain native, live/public and startup/benefit gates. |
 
