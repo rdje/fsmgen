@@ -1958,7 +1958,9 @@ families, and the terminal build job failed because those families failed:
   way. The current-corpus verifier and its mutation checks skip that ignored
   corpus the same way. The budget-qualification verifier, its mutation
   checks, and its closeout skip that ignored publication and source corpus
-  the same way. Those checks still run when the ignored input is present.
+  the same way. The failed-prefix verifier skips its ignored history archive
+  and current corpus the same way. Those checks still run when the ignored
+  input is present.
 - `t/350-support-contract-builder-audit.t` now admits the regression-gate
   status because that contract already carries guidance. The semantic-family
   envelope stays outside the guidance assertion because its own nonclaims

@@ -42,30 +42,43 @@ END {
         if defined($fixture) && -d($fixture) && !-l($fixture);
 }
 
+my $source_archive = File::Spec->catdir($root, split m{/}, $archive_relative);
+my $source_active = File::Spec->catdir($root, split m{/}, $active_relative);
+my $ignored_inputs_present = -d $source_archive && !-l $source_archive
+    && -d $source_active && !-l $source_active;
+
 copy_file(
     File::Spec->catfile($root, split m{/}, $script_relative),
     File::Spec->catfile($fixture, split m{/}, $script_relative),
 );
-copy_tree(
-    File::Spec->catdir($root, split m{/}, $archive_relative),
-    File::Spec->catdir($fixture, split m{/}, $archive_relative),
-);
-copy_tree(
-    File::Spec->catdir($root, split m{/}, $active_relative),
-    File::Spec->catdir($fixture, split m{/}, $active_relative),
-);
+if ($ignored_inputs_present) {
+    copy_tree(
+        $source_archive,
+        File::Spec->catdir($fixture, split m{/}, $archive_relative),
+    );
+    copy_tree(
+        $source_active,
+        File::Spec->catdir($fixture, split m{/}, $active_relative),
+    );
+}
 
 my $script = File::Spec->catfile($fixture, split m{/}, $script_relative);
 my $active = File::Spec->catdir($fixture, split m{/}, $active_relative);
 my $archive = File::Spec->catdir($fixture, split m{/}, $archive_relative);
-my $current_profile = first_matching_file(
-    $active, qr{/profiles/01-[^/]+/measurement-report[.]json\z},
-);
-my $archived_profile = first_matching_file(
-    $archive, qr{/profiles/01-[^/]+/measurement-report[.]json\z},
-);
+my $current_profile = $ignored_inputs_present
+    ? first_matching_file(
+        $active, qr{/profiles/01-[^/]+/measurement-report[.]json\z},
+    )
+    : undef;
+my $archived_profile = $ignored_inputs_present
+    ? first_matching_file(
+        $archive, qr{/profiles/01-[^/]+/measurement-report[.]json\z},
+    )
+    : undef;
 
 subtest 'real current corpus and historical prefix authenticate separately' => sub {
+    plan skip_all => 'ignored failed-prefix qualification inputs are absent on a fresh checkout'
+        unless $ignored_inputs_present;
     my $result = run_verifier($script);
     is($result->{exit}, 0, 'verifier accepts copied exact evidence')
         or diag($result->{stderr});
@@ -82,6 +95,8 @@ subtest 'real current corpus and historical prefix authenticate separately' => s
 };
 
 subtest 'current content, census, and archive alias controls fail closed' => sub {
+    plan skip_all => 'ignored failed-prefix qualification inputs are absent on a fresh checkout'
+        unless $ignored_inputs_present;
     my $original = read_raw($current_profile);
     write_raw($current_profile, $original . " ");
     my $mutated = run_verifier($script);
@@ -115,6 +130,8 @@ subtest 'current content, census, and archive alias controls fail closed' => sub
 };
 
 subtest 'archive mutation still rejects and archive-only replay remains valid' => sub {
+    plan skip_all => 'ignored failed-prefix qualification inputs are absent on a fresh checkout'
+        unless $ignored_inputs_present;
     my $original = read_raw($archived_profile);
     write_raw($archived_profile, $original . " ");
     my $mutated = run_verifier($script);
@@ -137,7 +154,7 @@ done_testing();
 
 sub copy_tree {
     my ($source, $destination) = @_;
-    die "verifier fixture source tree is unavailable\n"
+    die "ignored failed-prefix qualification input is absent\n"
         unless -d $source && !-l $source;
     find({
         no_chdir => 1,

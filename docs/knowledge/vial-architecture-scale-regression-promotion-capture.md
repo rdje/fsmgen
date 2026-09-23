@@ -176,7 +176,9 @@ way. The revision-1 publication census skips that ignored tree the same
 way. The current-corpus verifier and its mutation checks skip that ignored
 corpus the same way. The budget-qualification verifier, its mutation
 checks, and its closeout skip that ignored publication and source corpus
-the same way. The remaining ignored-path readers are still open. The semantic-family
+the same way. The failed-prefix verifier skips its ignored history archive
+and current corpus the same way. The remaining ignored-path readers are still
+open. The semantic-family
 envelope stays outside the guidance assertion because its own nonclaims
 already exclude support classification, and the regression-gate status is
 admitted because that contract already carries guidance. The terminal build
