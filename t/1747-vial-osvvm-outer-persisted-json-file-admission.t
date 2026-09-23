@@ -13,7 +13,9 @@ use Test::More;
 use lib 'perl';
 use lib 't/lib';
 
-use FSM::Test::OSVVMRuntimePersistedRequest qw(exact_inputs);
+use FSM::Test::OSVVMRuntimePersistedRequest qw(
+    exact_inputs provider_cache_present provider_cache_skip
+);
 use FSM::VIAL::ArchitectureScaleOSVVMRuntimeMeasurement;
 
 my $JSON = JSON::PP->new->canonical(1);
@@ -37,7 +39,8 @@ END {
         if defined($owned_root) && -d $owned_root && !-l $owned_root;
 }
 
-my (undef, undef, $envelope) = exact_inputs();
+my $provider_present = provider_cache_present();
+my (undef, undef, $envelope) = $provider_present ? exact_inputs() : ();
 my $request_content = $JSON->encode($envelope) . "\n";
 my $handle_content = $JSON->encode({
     schema => 'focused.osvvm.outer.handle.v1',
@@ -46,6 +49,7 @@ my $handle_content = $JSON->encode({
 }) . "\n";
 
 subtest 'outer lifecycle request file is admitted before decode' => sub {
+    plan skip_all => provider_cache_skip() unless $provider_present;
     my $path = request_path();
     make_path(File::Spec->catdir($stage_abs, 'outputs', 'emit'));
     cmp_ok(bytes::length($request_content), '<=', $REQUEST_MAX_BYTES,
@@ -164,6 +168,7 @@ subtest 'outer predecessor handle file is admitted before resume' => sub {
 };
 
 subtest 'outer JSON writer normalizes exact private modes' => sub {
+    plan skip_all => provider_cache_skip() unless $provider_present;
     my $root = File::Spec->catdir($stage_abs, 'writer');
     my $old_umask = umask 0000;
     my $result = eval {

@@ -9,10 +9,12 @@ use Test::More;
 use lib 'perl', 't/lib';
 
 use FSM::Test::OSVVMRuntimePersistedRequest qw(
-    exact_inputs rehash_request validate_envelope
+    exact_inputs provider_cache_present provider_cache_skip rehash_request
+    validate_envelope
 );
 
 subtest 'selected persisted command and source plan admits' => sub {
+    plan skip_all => provider_cache_skip() unless provider_cache_present();
     my ($raw, $route, $envelope) = exact_inputs();
     is(scalar(@{$envelope->{request}{source_set}}), 68,
         'fixture carries the complete selected lifecycle source set');
@@ -26,6 +28,7 @@ subtest 'selected persisted command and source plan admits' => sub {
 };
 
 subtest 'self-consistent provider order change rejects at reload' => sub {
+    plan skip_all => provider_cache_skip() unless provider_cache_present();
     my ($raw, $route, $envelope) = exact_inputs();
     my $request = $envelope->{request};
     @{$request->{commands}{provider_analyze}}[0, 1] =

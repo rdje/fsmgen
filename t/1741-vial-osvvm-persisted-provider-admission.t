@@ -8,11 +8,12 @@ use Test::More;
 use lib 'perl', 't/lib';
 
 use FSM::Test::OSVVMRuntimePersistedRequest qw(
-    exact_inputs validate_envelope
+    exact_inputs provider_cache_present provider_cache_skip validate_envelope
 );
 use FSM::VIAL::ArchitectureScaleOSVVMRuntimeMeasurement;
 
 subtest 'persisted provider verification matches the selected plan' => sub {
+    plan skip_all => provider_cache_skip() unless provider_cache_present();
     my ($raw, $route, $envelope) = exact_inputs();
     is_deeply(
         $envelope->{provider_verification},
@@ -24,6 +25,7 @@ subtest 'persisted provider verification matches the selected plan' => sub {
 };
 
 subtest 'foreign persisted provider evidence rejects at reload' => sub {
+    plan skip_all => provider_cache_skip() unless provider_cache_present();
     my @control = (
         [provider => 'ForeignVerificationProvider'],
         [version => '2026.06'],

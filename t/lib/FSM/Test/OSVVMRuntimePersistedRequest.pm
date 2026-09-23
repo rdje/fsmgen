@@ -7,6 +7,7 @@ use bytes ();
 use Cwd qw(abs_path);
 use Digest::SHA qw(sha256_hex);
 use Exporter qw(import);
+use File::Spec;
 use JSON::PP ();
 
 use FSM::VIAL::ArchitectureScaleOSVVMRuntimeExecutionPlan;
@@ -14,13 +15,34 @@ use FSM::VIAL::ArchitectureScaleOSVVMRuntimeMaterialization;
 use FSM::VIAL::ArchitectureScaleOSVVMRuntimeMeasurement;
 use FSM::VIAL::Backend::VHDLPortableTraceValidator;
 
-our @EXPORT_OK = qw(exact_inputs rehash_request validate_envelope);
+our @EXPORT_OK = qw(
+    exact_inputs provider_cache_present provider_cache_skip rehash_request
+    validate_envelope
+);
+my $PROVIDER_SKIP =
+    'exact OSVVM 2026.05 provider cache is absent on an ordinary checkout';
 
 my $JSON = JSON::PP->new->canonical(1);
 my $EXACT_TEMPLATE;
 
+sub provider_cache_present {
+    my $repository_root = abs_path('.');
+    my $provider_root = File::Spec->catdir(
+        $repository_root, '.artifacts', 'cache', 'providers', 'osvvm',
+        '2026.05', 'source',
+    );
+    return -d $provider_root && !-l $provider_root
+        && -e File::Spec->catfile($provider_root, '.git')
+        && !-l File::Spec->catfile($provider_root, '.git');
+}
+
+sub provider_cache_skip {
+    return $PROVIDER_SKIP;
+}
+
 sub exact_inputs {
     return map { _clone($_) } @$EXACT_TEMPLATE if $EXACT_TEMPLATE;
+    die "$PROVIDER_SKIP\n" unless provider_cache_present();
     my $repository_root = abs_path('.');
     my $plan =
         FSM::VIAL::ArchitectureScaleOSVVMRuntimeExecutionPlan->evaluate({

@@ -10,12 +10,13 @@ use Test::More;
 use lib 'perl', 't/lib';
 
 use FSM::Test::OSVVMRuntimePersistedRequest qw(
-    exact_inputs validate_envelope
+    exact_inputs provider_cache_present provider_cache_skip validate_envelope
 );
 
 my $JSON = JSON::PP->new->canonical(1);
 
 subtest 'persisted emission identity binds its exact authority' => sub {
+    plan skip_all => provider_cache_skip() unless provider_cache_present();
     my ($raw, $route, $envelope) = exact_inputs();
     is(
         $envelope->{request}{emission_identity},
@@ -27,6 +28,7 @@ subtest 'persisted emission identity binds its exact authority' => sub {
 };
 
 subtest 'foreign persisted emission identity rejects at reload' => sub {
+    plan skip_all => provider_cache_skip() unless provider_cache_present();
     my ($raw, $route, $envelope) = exact_inputs();
     my $foreign = 'emission/' . ('f' x 64);
     isnt($envelope->{request}{emission_identity}, $foreign,

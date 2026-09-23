@@ -185,8 +185,9 @@ when that cache is present. The runtime execution-plan test skips that same
 ignored cache the same way. Materialized evaluation now stops with a
 recorded absence before the artifact-graph oracle, so the runtime
 measurement test fails closed on that absence or on the active RAM guard.
-The remaining ordinary OSVVM readers and the Yosys synthesis deadline
-remain open. The semantic-family
+The persisted-request tests skip that same ignored cache the same way.
+The released ordinary OSVVM artifact-graph readers now fail closed. The
+Yosys synthesis deadline remains open. The semantic-family
 envelope stays outside the guidance assertion because its own nonclaims
 already exclude support classification, and the regression-gate status is
 admitted because that contract already carries guidance. The terminal build

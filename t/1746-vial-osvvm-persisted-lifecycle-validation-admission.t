@@ -9,10 +9,11 @@ use Test::More;
 use lib 'perl', 't/lib';
 
 use FSM::Test::OSVVMRuntimePersistedRequest qw(
-    exact_inputs validate_envelope
+    exact_inputs provider_cache_present provider_cache_skip validate_envelope
 );
 
 subtest 'selected persisted lifecycle validation admits' => sub {
+    plan skip_all => provider_cache_skip() unless provider_cache_present();
     my ($raw, $route, $envelope) = exact_inputs();
     my $validation = $envelope->{request}{validation};
     is_deeply(
@@ -33,6 +34,7 @@ subtest 'selected persisted lifecycle validation admits' => sub {
 };
 
 subtest 'foreign lifecycle-validation authority rejects at reload' => sub {
+    plan skip_all => provider_cache_skip() unless provider_cache_present();
     my @cases = (
         [
             'record count',

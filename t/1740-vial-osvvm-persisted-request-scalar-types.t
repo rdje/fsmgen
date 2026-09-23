@@ -9,12 +9,13 @@ use Test::More;
 use lib 'perl', 't/lib';
 
 use FSM::Test::OSVVMRuntimePersistedRequest qw(
-    exact_inputs validate_envelope
+    exact_inputs provider_cache_present provider_cache_skip validate_envelope
 );
 
 my $JSON = JSON::PP->new->canonical(1);
 
 subtest 'persisted request retains canonical JSON integers' => sub {
+    plan skip_all => provider_cache_skip() unless provider_cache_present();
     my ($raw, $route, $envelope) = exact_inputs();
     is($JSON->encode($envelope->{schema_version}), '1',
         'envelope schema version is a JSON number');
@@ -29,6 +30,7 @@ subtest 'persisted request retains canonical JSON integers' => sub {
 };
 
 subtest 'numeric-looking persisted values do not impersonate numbers' => sub {
+    plan skip_all => provider_cache_skip() unless provider_cache_present();
     my @control = (
         ['envelope schema-version string', '"1"', sub {
             $_[0]{schema_version} = sprintf('%d', 1);

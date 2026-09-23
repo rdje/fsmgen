@@ -8,11 +8,12 @@ use Test::More;
 use lib 'perl', 't/lib';
 
 use FSM::Test::OSVVMRuntimePersistedRequest qw(
-    exact_inputs validate_envelope
+    exact_inputs provider_cache_present provider_cache_skip validate_envelope
 );
 use FSM::VIAL::ArchitectureScaleOSVVMRuntimeMeasurement;
 
 subtest 'persisted GHDL provider matches the selected plan' => sub {
+    plan skip_all => provider_cache_skip() unless provider_cache_present();
     my ($raw, $route, $envelope) = exact_inputs();
     is_deeply(
         $envelope->{request}{provider},
@@ -24,6 +25,7 @@ subtest 'persisted GHDL provider matches the selected plan' => sub {
 };
 
 subtest 'foreign persisted GHDL provider rejects at reload' => sub {
+    plan skip_all => provider_cache_skip() unless provider_cache_present();
     my @control = (
         [root => '.artifacts/cache/tools/ghdl/foreign'],
         [archive => '.artifacts/cache/downloads/ghdl-foreign.tar.gz'],

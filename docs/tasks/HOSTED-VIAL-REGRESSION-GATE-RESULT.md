@@ -32,7 +32,7 @@ Make the hosted VIAL regression gate agree with one published result.
   Acceptance: `Diagnose the failed hosted command, then align the workflow and published contract with the result that command produces.`
   Verification: `pending`
   Commit: `pending`
-  Children: `HOSTED-VIAL-REGRESSION-GATE-RESULT.1, HOSTED-VIAL-REGRESSION-GATE-RESULT.2, HOSTED-VIAL-REGRESSION-GATE-RESULT.3, HOSTED-VIAL-REGRESSION-GATE-RESULT.4, HOSTED-VIAL-REGRESSION-GATE-RESULT.5, HOSTED-VIAL-REGRESSION-GATE-RESULT.6, HOSTED-VIAL-REGRESSION-GATE-RESULT.7, HOSTED-VIAL-REGRESSION-GATE-RESULT.8, HOSTED-VIAL-REGRESSION-GATE-RESULT.9, HOSTED-VIAL-REGRESSION-GATE-RESULT.10, HOSTED-VIAL-REGRESSION-GATE-RESULT.11, HOSTED-VIAL-REGRESSION-GATE-RESULT.12, HOSTED-VIAL-REGRESSION-GATE-RESULT.13, HOSTED-VIAL-REGRESSION-GATE-RESULT.14, HOSTED-VIAL-REGRESSION-GATE-RESULT.15, HOSTED-VIAL-REGRESSION-GATE-RESULT.16, HOSTED-VIAL-REGRESSION-GATE-RESULT.17, HOSTED-VIAL-REGRESSION-GATE-RESULT.18, HOSTED-VIAL-REGRESSION-GATE-RESULT.19, HOSTED-VIAL-REGRESSION-GATE-RESULT.20`
+  Children: `HOSTED-VIAL-REGRESSION-GATE-RESULT.1, HOSTED-VIAL-REGRESSION-GATE-RESULT.2, HOSTED-VIAL-REGRESSION-GATE-RESULT.3, HOSTED-VIAL-REGRESSION-GATE-RESULT.4, HOSTED-VIAL-REGRESSION-GATE-RESULT.5, HOSTED-VIAL-REGRESSION-GATE-RESULT.6, HOSTED-VIAL-REGRESSION-GATE-RESULT.7, HOSTED-VIAL-REGRESSION-GATE-RESULT.8, HOSTED-VIAL-REGRESSION-GATE-RESULT.9, HOSTED-VIAL-REGRESSION-GATE-RESULT.10, HOSTED-VIAL-REGRESSION-GATE-RESULT.11, HOSTED-VIAL-REGRESSION-GATE-RESULT.12, HOSTED-VIAL-REGRESSION-GATE-RESULT.13, HOSTED-VIAL-REGRESSION-GATE-RESULT.14, HOSTED-VIAL-REGRESSION-GATE-RESULT.15, HOSTED-VIAL-REGRESSION-GATE-RESULT.16, HOSTED-VIAL-REGRESSION-GATE-RESULT.17, HOSTED-VIAL-REGRESSION-GATE-RESULT.18, HOSTED-VIAL-REGRESSION-GATE-RESULT.19, HOSTED-VIAL-REGRESSION-GATE-RESULT.20, HOSTED-VIAL-REGRESSION-GATE-RESULT.21`
 - ID: `HOSTED-VIAL-REGRESSION-GATE-RESULT.1`
   Status: `done`
   Goal: `Diagnose the first hosted gate failure and own the contract contradiction.`
@@ -148,9 +148,15 @@ Make the hosted VIAL regression gate agree with one published result.
   Verification: `With the cache present, prove of t/1676, t/1677, and t/1679 reports All tests successful at Files=3, Tests=17. With the cache hidden and restored, the same command passes. The released log failed t/1679 line 161 because the artifact-graph oracle preceded the RAM-guard check.`
   Commit: `this commit`
 - ID: `HOSTED-VIAL-REGRESSION-GATE-RESULT.20`
+  Status: `done`
+  Goal: `Stop the persisted-request tests from dying when the ignored OSVVM provider cache is absent.`
+  Acceptance: `t/1740 through t/1747 skip with a recorded reason when the ignored cache is absent, and still run when it is present. Do not inspect the OSVVM submodule or invent a hosted pass.`
+  Verification: `With the cache present, prove of t/1740 through t/1747 reports All tests successful at Files=8, Tests=18. With the cache hidden and restored, the same command passes. The released logs died in OSVVMRuntimePersistedRequest.pm line 25 for t/1740 through t/1747.`
+  Commit: `this commit`
+- ID: `HOSTED-VIAL-REGRESSION-GATE-RESULT.21`
   Status: `active`
-  Goal: `Stop the next ordinary hosted OSVVM reader from dying when the ignored provider cache is absent.`
-  Acceptance: `The next released-log reader of the OSVVM artifact-graph oracle skips that ignored cache with a recorded reason when it is absent, and still runs when it is present. Do not inspect the OSVVM submodule or invent a hosted pass.`
+  Goal: `Stop the paired-busy alias tests from failing the hosted Perl-file shards on the Yosys synthesis deadline.`
+  Acceptance: `Diagnose the released yosys_synthesis timed_out family and make those ordinary tests fail closed without inventing a hosted pass or treating the deadline as support or capacity.`
   Verification: `pending`
   Commit: `pending`
 
@@ -267,3 +273,9 @@ Make the hosted VIAL regression gate agree with one published result.
 - [x] **ROOT CAUSE (WHY + WHERE)** — The released Perl-file log fails `t/1679-vial-architecture-scale-osvvm-runtime-measurement.t line 161` because `validate_profile` reaches `ArchitectureScaleOSVVMRuntimeMaterialization.pm line 249` before the RAM-guard check. `git log -S 'OSVVM runtime artifact graph failed its exact oracle' -- perl/FSM/VIAL/ArchitectureScaleOSVVMRuntimeMaterialization.pm` shows that oracle still runs for every materialized level. Decision 0088 materializes exact OSVVM 2026.05 only for dedicated coordinates t/1598, t/1648, and t/1650.
 - [x] **ADDRESSED (verified)** — Materialized evaluation now stops with `exact OSVVM 2026.05 provider cache is absent` before the oracle. The measurement guard check accepts that recorded absence and still requires the active RAM guard when the cache is present. Focused prove of t/1676, t/1677, and t/1679 with the cache present reports All tests successful at Files=3, Tests=17. The same command with the cache hidden and restored also passes.
 - [x] **NO REGRESSION** — `knowledge-map: OK` keeps the execution-plan skip and records this measurement fail-closed absence. Remaining ordinary OSVVM readers stay HOSTED-VIAL-REGRESSION-GATE-RESULT.20. A failed or unavailable hosted run remains neither support nor capacity.
+
+## Acceptance Checklist (absent OSVVM persisted-request cache HOSTED-VIAL-REGRESSION-GATE-RESULT.20)
+
+- [x] **ROOT CAUSE (WHY + WHERE)** — The released Perl-file logs die at `t/lib/FSM/Test/OSVVMRuntimePersistedRequest.pm line 25` with `OSVVM runtime artifact graph failed its exact oracle`, called from t/1740 line 18, t/1741 line 16, t/1742 line 16, t/1743 line 19, t/1744 line 16, t/1745 line 17, t/1746 line 16, and t/1747 line 40. `git log -S 'ArchitectureScaleOSVVMRuntimeExecutionPlan' -- t/lib/FSM/Test/OSVVMRuntimePersistedRequest.pm` shows that helper still evaluates the ignored provider graph before any assertion.
+- [x] **ADDRESSED (verified)** — Those eight tests now skip when the ignored cache is absent and still run when it is present. Focused prove with the cache present reports All tests successful at Files=8, Tests=18. The same command with the cache hidden and restored also passes.
+- [x] **NO REGRESSION** — `knowledge-map: OK` keeps the measurement fail-closed absence and records this persisted-request skip. The Yosys synthesis deadline stays HOSTED-VIAL-REGRESSION-GATE-RESULT.21. A failed or unavailable hosted run remains neither support nor capacity.
