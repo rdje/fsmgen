@@ -152,6 +152,7 @@ answers:
   - "why does a consumed receipt permit still refuse execution?"
   - "when does a consumed receipt permit admit one finished job?"
   - "why does the public compiler request omit the private receipt?"
+  - "why cannot one compiler receipt bind?"
 date: 2026-09-23
 status: current
 tags: [tests, subprocess, supervision, task-acceptance, darwin, locality]
@@ -161,4 +162,4 @@ evidence: >-
 reverify: >-
   perl docs/audits/native-proxy-receipt-adapter-20260922/qualify.t
 ---
-History: `4a8d2a30a8db3cef51d70c9af031532360859af2:docs/knowledge/test-subprocess-policy-adapters.md`. The public compiler request calls `FSM::Test::ProcessSupervisor::supervise_process` with stage `compile_proxy` and returns only the public result. No compiler, probe or tool-resolution process runs.
+History: `08889ce00ea061d475bf7d5692e80c80266de10b:docs/knowledge/test-subprocess-policy-adapters.md`. `NativeProxyReceiptAdapter::receipts_bound` requires compiler, outer and inner receipts together. One compiler receipt fails that binding. No compiler, probe or tool-resolution process runs.
