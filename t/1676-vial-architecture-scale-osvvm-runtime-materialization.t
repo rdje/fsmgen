@@ -83,6 +83,12 @@ my %expected = (
     },
 );
 my %report;
+my $provider_root = File::Spec->catdir(
+    $repo_root, '.artifacts', 'cache', 'providers', 'osvvm', '2026.05', 'source',
+);
+my $provider_present = -d $provider_root && !-l $provider_root
+    && -e File::Spec->catfile($provider_root, '.git')
+    && !-l File::Spec->catfile($provider_root, '.git');
 
 END {
     remove_tree($mirror_root)
@@ -109,6 +115,8 @@ subtest 'ownership and construction select only exact OSVVM runtime roles' => su
 };
 
 subtest 'all five reports close the exact materialization boundary' => sub {
+    plan skip_all => 'exact OSVVM 2026.05 provider cache is absent on an ordinary checkout'
+        unless $provider_present;
     for my $level (@levels) {
         my $actual;
         if ($level eq 'reference_v1') {
@@ -183,6 +191,8 @@ subtest 'preflight roles are provider-free as well as tool-free' => sub {
 };
 
 subtest 'reports, private seams, relocation, and source identities fail closed' => sub {
+    plan skip_all => 'exact OSVVM 2026.05 provider cache is absent on an ordinary checkout'
+        unless $provider_present;
     my $validated = $class->validate_report({
         repository_root => $repo_root,
         report => $report{limit_v1},
@@ -263,6 +273,8 @@ subtest 'reports, private seams, relocation, and source identities fail closed' 
 };
 
 subtest 'same-volume staging cleans success, failure, and preflight denial' => sub {
+    plan skip_all => 'exact OSVVM 2026.05 provider cache is absent on an ordinary checkout'
+        unless $provider_present;
     my $seen;
     my $success = $class->with_staging({
         repository_root => $repo_root,

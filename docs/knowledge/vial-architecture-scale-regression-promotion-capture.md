@@ -179,8 +179,10 @@ checks, and its closeout skip that ignored publication and source corpus
 the same way. The failed-prefix verifier skips its ignored history archive
 and current corpus the same way. The hosted-result verifier test captures
 its child with core IPC::Open3 because the hosted Perl image does not provide
-IPC::Run3. The OSVVM artifact-graph oracle and the Yosys synthesis deadline
-remain open. The semantic-family
+IPC::Run3. The OSVVM runtime materialization test skips its provider-backed
+checks when the ignored OSVVM 2026.05 cache is absent and still runs them
+when that cache is present. The remaining ordinary OSVVM readers and the
+Yosys synthesis deadline remain open. The semantic-family
 envelope stays outside the guidance assertion because its own nonclaims
 already exclude support classification, and the regression-gate status is
 admitted because that contract already carries guidance. The terminal build
