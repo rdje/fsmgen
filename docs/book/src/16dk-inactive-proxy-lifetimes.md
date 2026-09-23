@@ -769,7 +769,25 @@ iterator beside the listener and directory anchor. Native allocation observers
 qualify this peak and the temporary cleanup handles. Aggregate integration must
 reserve this scratch capacity as well as the steady descriptors. This retained
 endpoint interface creates no process and does not yet bind the native run to
-the admission ledger; retained job preparation and the combined owner follow.
+the admission ledger; the combined owner follows.
+
+The reserved job, gated pair and group reservation also expose resource-free
+records before pipe allocation. Their original objects survive allocation;
+there is no returned replacement that the coordinator must recover after a
+signal. Allocation rechecks borrowed descriptor inventories and the original
+wall before each pipe, and publishes every prepared state before unmasking
+signals. A preparation failure remains the first cause through cancellation.
+An interrupted successful allocation leaves its live handles with the retained
+owner; the convenience preparers close their local owners before propagating
+such an interruption. None of these preparation paths may fork or release exec.
+
+For example, if the original wall expires between two pipes, the second pipe
+is not created and the already retained ends close during failure cleanup.
+If a signal is queued while a pipe is created, the handler runs after the full
+job, pair and reservation are published. The interrupted job cannot start,
+and its owner can finish cleanup using the existing bounded closure driver.
+Independent native handoff checks now also use this retained-record path;
+aggregate ledger binding remains the next integration step.
 
 Normal callers retain the existing own-group supervisor. Aggregate coordinator
 admission, nested routing and complete
@@ -782,6 +800,7 @@ Re-run the bounded component controls with:
 scripts/run_with_ram_guard.sh -- prove -Iperl -It/lib t/1823-process-group-reservation.t t/1824-process-gated-pair.t t/1825-process-capture-stream-ownership.t t/1826-process-group-closure.t t/1827-process-reserved-job.t t/1828-process-reserved-receipt.t t/1829-process-unjoined-closure.t t/1830-process-reservation-death.t t/1831-process-private-descriptors.t
 scripts/run_with_ram_guard.sh -- prove -Iperl -It/lib t/1832-process-coordinator-admission.t
 scripts/run_with_ram_guard.sh -- prove -Iperl -It/lib t/1833-process-retained-endpoint.t
+scripts/run_with_ram_guard.sh -- prove -Iperl -It/lib t/1834-process-retained-preparation.t
 ```
 
 For native stopped-child observations, decode `${^CHILD_ERROR_NATIVE}` with

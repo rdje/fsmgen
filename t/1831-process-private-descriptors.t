@@ -97,9 +97,12 @@ sub prepare_job {
         schema => 'private.descriptor.fixture.v1', stage => 'probe', containment => 'fixture-group',
         bounds => {timeout_seconds => 15, capture_limit_bytes => 64},
     }, ns(now()));
-    return FSM::Support::ProcessSupervisor::ReservedJob::prepare(
+    my $job = FSM::Support::ProcessSupervisor::ReservedJob::prepare_record(
         snapshot => $snapshot, deadline => $snapshot->{started_ns} / 1e9 + 15,
         close_handles => $foreign);
+    is_deeply($job->handles, [], 'retained native job record precedes every owned descriptor');
+    $job->allocate;
+    return $job;
 }
 sub drive {
     my ($job, $phase) = @_;

@@ -3610,11 +3610,11 @@ decomposes the architecture needed to move beyond that bounded foundation.
   Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.4.2.3.1: retain endpoint ownership before construction`
 
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.4.2.3.2`
-  Status: `pending`
+  Status: `done`
   Goal: `Retain job and pair ownership before native preparation.`
   Acceptance: `Expose prepared owner records before any reservation/command pipe allocation, with bounded partial-failure cleanup and per-allocation original-wall checks. Keep both fork identities published before signal restoration and preserve exec-relevant signal state. Qualify failed and interrupted preparation with independent actual-handle and child-wait inventories; no exec release or routing.`
-  Verification: `pending`
-  Commit: `pending`
+  Verification: `ReservedJob, GatedPair and Reservation now expose resource-free prepare_record and one-use allocate while preserving convenience prepare. The original complete owner graph exists before every pipe. Allocation revalidates borrowed inventories and original deadline before each pipe; nested preparation masking publishes all prepared states before pending handlers run. First failure and partial effects remain retained through cancellation; convenience wrappers retire local resources on interrupted return. T1834 qualifies all eight allocation failure/expiry cuts and actual pending-signal cuts with real retained handles and native process operations trapped. T1831 now exercises actual two-child handoff from retained records. The selected band passes Files=13, Tests=310; missing deadline checks and masking fail independent controls. Aggregate native grant binding remains sibling .3.`
+  Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.4.2.3.2: retain job owners before pipe allocation`
 
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.4.2.3.3`
   Status: `pending`
@@ -4335,7 +4335,7 @@ decomposes the architecture needed to move beyond that bounded foundation.
 
 ## Current Frontier
 
-Current frontier: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.4.2.3.2` retains job/pair preparation before native effects. Sibling .3 then binds aggregate native ownership to the pure admission ledger, retained endpoint and qualified inventories. Publication, streaming, fair lifecycle composition and independent qualification remain separate integration children. Preserve original failures, the spent compiler workspace, source-only driver commit and full-CI/push gates.
+Current frontier: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.4.2.3.3` binds aggregate native ownership to the pure admission ledger, retained endpoint/job records and qualified inventories. Publication, streaming, fair lifecycle composition and independent qualification remain separate integration children. Preserve original failures, the spent compiler workspace, source-only driver commit and full-CI/push gates.
 
 Architecture audit `.1` is complete. Decision `0032` selects one public
 `.vial` source language, private immutable `VIALSemanticIR` and
@@ -7032,3 +7032,45 @@ The manifest binds the completed acceptance suffix and independent reserved-proc
   Syntax, book render, task/Knowledge Map/claim checks and staged doctrines
   cover the final slice. No original capture or full CI runs; browser visual
   QA remains blocked separately in Memory.
+
+## Acceptance Checklist (.19.2.3.1.2.2.5.5.2.3.4.2.3.2)
+
+- [x] **ROOT CAUSE (WHY + WHERE)** — `git log -S` identifies ec277e682's
+  ReservedJob preparation, which receives an already allocated pair before
+  constructing its own state. GatedPair likewise receives an already allocated
+  reservation. A coordinator cannot retain the complete graph before native
+  effects through those convenience calls alone. Original deadline checking
+  also preceded a sequence of allocations rather than every individual pipe.
+- [x] **ADDRESSED (verified)** — Re-derive with T1834: all original records
+  are unallocated and observable before the first pipe; allocation preserves
+  their reference identities. Eight native pipe operations leave fifteen open
+  ends after stdin-writer closure, within the unchanged conservative pair
+  reservation. Every allocation failure cut and every before-next-pipe expiry
+  closes independently retained actual handles and preserves the first cause.
+  Closed borrowed inventory rejects before owned allocation; cancellation
+  before allocation starts no resource. Actual creator USR1 at command and
+  reservation cuts sees all levels prepared before restoration interrupts
+  return. The retained job rejects start and settles bounded cleanup. Each
+  convenience constructor also closes its local effects after an interrupted
+  return. Fork/wait/child-signal operations are trapped in this descriptor
+  test, while T1831 now independently observes both real children and exact
+  waits through the retained-record path. Falsify: disable only the shared
+  per-allocation deadline comparison, producing sixteen failed expiry/count
+  assertions; suppress only preparation SIG_BLOCK, producing five failed
+  publication assertions and six failed convenience-return controls. The
+  latter's independent observer explicitly closes its remaining actual
+  handles before reset/exit. Initial fixture failures came from a helper
+  named reset resolving to CORE::reset; renaming it restores the intended
+  per-case counters, and no trapped fork ever reached the kernel. Durability:
+  native components, T1834/T1831, book, canonical fact and this commit retain
+  the contract and mutation recipes. Local .artifacts/retained-job-*.log files
+  remain a raw-log durability gap. Aggregate ledger/service binding and Linux
+  execution are still missing legs with their existing owners.
+- [x] **NO REGRESSION** — The selected architecture, receipt-observation,
+  reservation, gated-pair, capture, closure, reserved-job/receipt, hostile
+  command/reservation, descriptor, admission and preparation band reports
+  `All tests successful`, `Files=13, Tests=310`. The final preparation test
+  and explicit mutation-rescue revision pass Files=1, Tests=5. Perl syntax,
+  book render, task/Knowledge Map/claim checks and staged doctrine gates cover
+  the final slice. No original producer, caller routing or full CI runs.
+  Browser visual QA remains separately blocked in Memory.

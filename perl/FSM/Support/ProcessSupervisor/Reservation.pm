@@ -72,7 +72,48 @@ sub _seal {
         && fcntl($fh, F_SETFL, $flags | O_NONBLOCK);
 }
 
-sub prepare {
+sub _inventory {
+    my ($handles, $cap) = @_;
+    _error('expected a bounded descriptor inventory') unless ref($handles) eq 'ARRAY'
+        && @$handles <= $cap;
+    my %seen;
+    for my $fh (@$handles) {
+        my $fd = eval { fileno($fh) };
+        _error('descriptor inventory contains a closed, standard or duplicate handle')
+            unless defined($fd) && $fd >= 3 && !$seen{$fd}++;
+    }
+    return [@$handles];
+}
+
+sub _check_allocation_deadline {
+    my ($deadline) = @_;
+    _error('execution deadline expired before allocation') if _now() >= $deadline;
+}
+
+# Shared preparation transaction only; never wrap a fork in this helper.
+# The operation publishes its retained state before restoration can run a
+# pending handler. Both operation failure and restoration are consumed.
+sub _masked_preparation {
+    my ($operation) = @_;
+    my $all = POSIX::SigSet->new; $all->fillset;
+    my $old = POSIX::SigSet->new;
+    defined(_mask(SIG_BLOCK, $all, $old)) or _error('cannot mask preparation signals');
+    my $ok = eval { $operation->(); 1 };
+    my $error = $@;
+    my ($restored, $interrupted);
+    { local $@; eval { $restored = defined _mask(SIG_SETMASK, $old); 1 } or $interrupted = $@; }
+    unless ($ok) {
+        $error .= $interrupted if $interrupted;
+        $error .= "private process reservation: fatal preparation signal-mask restoration failure\n"
+            unless $restored || $interrupted;
+        die $error;
+    }
+    die $interrupted if $interrupted;
+    _error('fatal preparation signal-mask restoration failure') unless $restored;
+    return;
+}
+
+sub prepare_record {
     my (%args) = @_;
     _error('expected deadline and close_handles') unless keys(%args) == 2
         && exists $args{deadline} && exists $args{close_handles};
@@ -80,32 +121,58 @@ sub prepare {
     my $now = _now();
     _error('execution deadline is expired or exceeds the private wall domain')
         unless $deadline > $now && $deadline <= $now + 4_294_967_295;
-    my $handles = $args{close_handles};
-    _error('expected a bounded descriptor inventory') unless ref($handles) eq 'ARRAY'
-        && @$handles <= $LIMIT->{descriptors} - 4;
-    my %seen;
-    for my $fh (@$handles) {
-        my $fd = eval { fileno($fh) };
-        _error('descriptor inventory contains a closed, standard or duplicate handle')
-            unless defined($fd) && $fd >= 3 && !$seen{$fd}++;
-    }
-    my $self = bless {
-        owner_pid => $$, phase => 'prepared', deadline => $deadline,
+    my $handles = _inventory($args{close_handles}, $LIMIT->{descriptors} - 4);
+    return bless {
+        owner_pid => $$, phase => 'unallocated', deadline => $deadline,
         close_handles => [@$handles], reaped => 0, retired => 0,
         group_ready => 0, moved => 0, positive_authority => 0,
     }, __PACKAGE__;
+}
+
+sub allocate {
+    my ($self, $additional) = @_; _owner($self);
+    _error('allocation requires an unallocated retained reservation and close inventory')
+        unless @_ == 2 && $self->{phase} eq 'unallocated' && !$self->{retired};
     my $ok = eval {
-        _pipe(\$self->{child_read}, \$self->{write})
-            or _error('cannot create reservation instruction pipe');
-        _pipe(\$self->{read}, \$self->{child_write})
-            or _error('cannot create reservation acknowledgment pipe');
-        _seal($self->{$_}, 0) for qw(child_read child_write);
-        _seal($self->{$_}, 1) for qw(read write);
+        _masked_preparation(sub {
+            $self->{phase} = 'allocating';
+            my $allocated = eval {
+                $additional = _inventory($additional, $LIMIT->{descriptors} - 4);
+                $self->{close_handles} = _inventory(
+                    [@{$self->{close_handles}}, @$additional], $LIMIT->{descriptors} - 4);
+                _check_allocation_deadline($self->{deadline});
+                _pipe(\$self->{child_read}, \$self->{write})
+                    or _error('cannot create reservation instruction pipe');
+                _check_allocation_deadline($self->{deadline});
+                _pipe(\$self->{read}, \$self->{child_write})
+                    or _error('cannot create reservation acknowledgment pipe');
+                _seal($self->{$_}, 0) for qw(child_read child_write);
+                _seal($self->{$_}, 1) for qw(read write);
+                $self->{phase} = 'prepared';
+                1;
+            };
+            unless ($allocated) {
+                my $error = $@; $self->_failure($error);
+                $self->_close(qw(child_read child_write read write));
+                die $error;
+            }
+        });
         1;
     };
     unless ($ok) {
         my $error = $@;
-        $self->_close(qw(child_read child_write read write));
+        $self->_failure($error);
+        die $error;
+    }
+    return;
+}
+
+sub prepare {
+    my $self = prepare_record(@_);
+    my $ok = eval { $self->allocate([]); 1 };
+    unless ($ok) {
+        my $error = $@;
+        $self->retire(_minimum($self->{deadline}, _now()));
         die $error;
     }
     return $self;
@@ -216,7 +283,7 @@ sub _write_pending {
 sub advance {
     my ($self) = @_; _owner($self);
     _error('unexpected advance arguments') unless @_ == 1;
-    return if $self->{phase} eq 'finished' || $self->{phase} eq 'prepared';
+    return if $self->{phase} eq 'unallocated' || $self->{phase} eq 'finished' || $self->{phase} eq 'prepared';
     if ($self->{retired}) { $self->_advance_retirement; return; }
     return if $self->{failure};
     my $pending = $self->{phase} eq 'group_pending' || $self->{phase} eq 'move_pending';

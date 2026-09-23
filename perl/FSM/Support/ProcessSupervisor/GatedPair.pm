@@ -13,6 +13,8 @@ use FSM::Support::ProcessSupervisor::Wire ();
 # Inactive launch strategy. Preparation owns both child slots and all pipe
 # ends before start; the future coordinator must charge resource_cost against
 # its aggregate ledger and retain this object before allowing either fork.
+# prepare_record creates the complete owner graph without descriptors;
+# allocate creates pipes only after that graph is retained by its caller.
 # Capture, subtree closure and public results remain with the shared engine.
 my $LIMIT = FSM::Support::ProcessSupervisor::Wire::limits();
 my @PAIRS = ([qw(stdin child_stdin)], [qw(stdout child_stdout)],
@@ -56,7 +58,7 @@ sub _fail {
     $self->_close('gate');
 }
 
-sub prepare {
+sub prepare_record {
     my (%args) = @_;
     _error('expected snapshot, deadline and close_handles') unless keys(%args) == 3
         && exists($args{snapshot}) && exists($args{deadline}) && exists($args{close_handles});
@@ -75,36 +77,65 @@ sub prepare {
         _error('invalid inherited descriptor inventory') unless defined($fd)
             && $fd >= 3 && !$seen{$fd}++;
     }
-    my $self = bless {owner_pid => $$, phase => 'prepared', snapshot => $snapshot,
+    my $self = bless {owner_pid => $$, phase => 'unallocated', snapshot => $snapshot,
         cwd => $cwd, deadline => $args{deadline}, close_handles => [@$handles],
         reserved_children => 2, command_reaped => 0, command_authority => 0,
         joined => 0, released => 0, retired => 0,
         dispositions => {%SIG}}, __PACKAGE__;
+    $self->{reservation} = FSM::Support::ProcessSupervisor::Reservation::prepare_record(
+        deadline => $args{deadline}, close_handles => $handles);
+    return $self;
+}
+
+sub allocate {
+    my ($self) = @_; _owner($self);
+    _error('allocation requires a retained unallocated pair')
+        unless @_ == 1 && $self->{phase} eq 'unallocated' && !$self->{retired};
     my $ok = eval {
-        # Validate the deadline before allocating. Reservation performs the
-        # same original-wall validation when it takes the complete inventory.
-        my $deadline = FSM::Support::ProcessSupervisor::Reservation::_time($args{deadline});
-        _error('execution deadline is expired') if $deadline <= _now();
-        for my $pair (@PAIRS) {
-            FSM::Support::ProcessSupervisor::Reservation::_pipe(
-                \$self->{$pair->[0]}, \$self->{$pair->[1]}) or _error('cannot allocate command pipe');
-            for my $name (@$pair) {
-                FSM::Support::ProcessSupervisor::Reservation::_seal(
-                    $self->{$name}, $name =~ /\A(?:stdout|stderr|ack|gate|control)\z/ ? 1 : 0);
+        FSM::Support::ProcessSupervisor::Reservation::_masked_preparation(sub {
+            $self->{phase} = 'allocating';
+            my $allocated = eval {
+                FSM::Support::ProcessSupervisor::Reservation::_inventory(
+                    $self->{close_handles}, $LIMIT->{descriptors} - resource_cost()->{descriptors});
+                for my $pair (@PAIRS) {
+                    FSM::Support::ProcessSupervisor::Reservation::_check_allocation_deadline($self->{deadline});
+                    FSM::Support::ProcessSupervisor::Reservation::_pipe(
+                        \$self->{$pair->[0]}, \$self->{$pair->[1]}) or _error('cannot allocate command pipe');
+                    for my $name (@$pair) {
+                        FSM::Support::ProcessSupervisor::Reservation::_seal(
+                            $self->{$name}, $name =~ /\A(?:stdout|stderr|ack|gate|control)\z/ ? 1 : 0);
+                    }
+                }
+                # stdin is the read end; no child may inherit its writer.
+                $self->_close('child_stdin');
+                _error($self->{failure}) if $self->{failure};
+                $self->{reservation}->allocate($self->handles);
+                $self->{phase} = 'prepared';
+                1;
+            };
+            unless ($allocated) {
+                my $why = $@; $self->_fail($why);
+                $self->_close(@HANDLES);
+                $self->{reservation}->retire(
+                    FSM::Support::ProcessSupervisor::Reservation::_minimum($self->{deadline}, _now()));
+                die $why;
             }
-        }
-        # stdin is the read end; no child may inherit its writer.
-        $self->_close('child_stdin');
-        _error($self->{failure}) if $self->{failure};
-        $self->{reservation} = FSM::Support::ProcessSupervisor::Reservation::prepare(
-            deadline => $deadline, close_handles => [@$handles, @{$self->handles}]);
+        });
         1;
     };
     unless ($ok) {
-        my $why = $@;
-        $self->_close(@HANDLES);
-        if ($self->{reservation}) { $self->{reservation}->retire(_now()); }
-        die $why;
+        my $error = $@; $self->_fail($error); die $error;
+    }
+    return;
+}
+
+sub prepare {
+    my $self = prepare_record(@_);
+    my $ok = eval { $self->allocate; 1 };
+    unless ($ok) {
+        my $error = $@;
+        $self->retire(FSM::Support::ProcessSupervisor::Reservation::_minimum($self->{deadline}, _now()));
+        die $error;
     }
     return $self;
 }
@@ -204,7 +235,7 @@ sub _child {
 sub advance {
     my ($self) = @_; _owner($self);
     _error('unexpected advance arguments') unless @_ == 1;
-    return if $self->{phase} eq 'prepared' || $self->{retired};
+    return if $self->{phase} eq 'unallocated' || $self->{phase} eq 'prepared' || $self->{retired};
     my $r = $self->{reservation};
     $r->advance;
     my $o = $r->observation;

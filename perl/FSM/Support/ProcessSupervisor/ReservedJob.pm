@@ -11,6 +11,8 @@ use FSM::Support::ProcessSupervisor::GroupClosure ();
 # retains this prepared job BEFORE start. Only explicit release may follow
 # complete ownership publication. Public/sealed callers still use the legacy
 # engine; this component owns no connection, subtree or receipt-review policy.
+# prepare_record/allocate also let that coordinator retain every native owner
+# before descriptor creation; prepare remains the convenience composition.
 my ($TERM_GRACE, $KILL_GRACE) = FSM::Support::ProcessSupervisor::_termination_graces();
 
 sub _error { die "private reserved process: $_[0]\n" }
@@ -22,16 +24,15 @@ sub _owner {
         && $self->{owner_pid} == $$;
 }
 
-sub prepare {
+sub prepare_record {
     my (%args) = @_;
     _error('expected snapshot, deadline and close_handles') unless keys(%args) == 3
         && exists($args{snapshot}) && exists($args{deadline}) && exists($args{close_handles});
-    my $pair = FSM::Support::ProcessSupervisor::GatedPair::prepare(%args);
+    my $pair = FSM::Support::ProcessSupervisor::GatedPair::prepare_record(%args);
     my $snapshot = $pair->{snapshot};
     my $started = $snapshot->{started_ns} / 1_000_000_000;
     my $now = _now();
     if ($started > $now || $args{deadline} > $started + $snapshot->{timeout_seconds}) {
-        $pair->retire($now);
         _error('deadline must preserve the original invocation wall');
     }
     my $self = bless {
@@ -39,7 +40,7 @@ sub prepare {
         state => {
             map({ $_ => $snapshot->{$_} } qw(schema stage containment)),
             bounds => {map { $_ => $snapshot->{$_} } qw(timeout_seconds capture_limit_bytes)},
-            phase => 'prepared', deadline => 0 + $args{deadline}, started => $started,
+            phase => 'unallocated', deadline => 0 + $args{deadline}, started => $started,
             stdout => '', stderr => '', exec_error => '',
             exec_handoff => undef, first_output => undef,
             leader_reaped => 0, leader_status => undef,
@@ -52,6 +53,44 @@ sub prepare {
     $self->{original_stage} = $snapshot->{stage};
     $self->{original_containment} = $snapshot->{containment};
     $self->_sync_identity;
+    return $self;
+}
+
+sub allocate {
+    my ($self) = @_; _owner($self);
+    _error('allocation requires a retained unallocated job')
+        unless @_ == 1 && $self->{state}{phase} eq 'unallocated';
+    my $ok = eval {
+        FSM::Support::ProcessSupervisor::Reservation::_masked_preparation(sub {
+            $self->{state}{phase} = 'allocating';
+            my $allocated = eval { $self->{pair}->allocate; 1 };
+            unless ($allocated) {
+                my $error = $@;
+                $self->_latch('host_error', FSM::Support::ProcessSupervisor::_sanitize_control($error));
+                $self->{state}{phase} = 'preparation_failed';
+                die $error;
+            }
+            $self->{state}{phase} = 'prepared';
+        });
+        1;
+    };
+    unless ($ok) {
+        my $error = $@;
+        $self->_latch('host_error', FSM::Support::ProcessSupervisor::_sanitize_control($error));
+        $self->{state}{phase} = 'preparation_failed';
+        die $error;
+    }
+    return;
+}
+
+sub prepare {
+    my $self = prepare_record(@_);
+    my $ok = eval { $self->allocate; 1 };
+    unless ($ok) {
+        my $error = $@;
+        $self->{pair}->retire(_minimum($self->{state}{deadline}, _now()));
+        die $error;
+    }
     return $self;
 }
 
@@ -191,7 +230,7 @@ sub advance {
     my ($self) = @_; _owner($self);
     _error('unexpected advance arguments') unless @_ == 1;
     my $s = $self->{state};
-    return if $s->{phase} eq 'prepared' || $s->{phase} eq 'finished';
+    return if $s->{phase} eq 'unallocated' || $s->{phase} eq 'prepared' || $s->{phase} eq 'finished';
     if ($s->{phase} eq 'cleanup') {
         $self->{closure}->advance;
         $self->_finish if $self->{closure}->observation->{phase} eq 'finished';
