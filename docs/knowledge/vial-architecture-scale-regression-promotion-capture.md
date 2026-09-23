@@ -169,13 +169,15 @@ hosted run.
 The same push failed every Perl-file shard in four families: Yosys synthesis
 deadline on paired-busy alias tests, the OSVVM runtime artifact-graph oracle,
 tests that still read ignored `.artifacts/qualification/vial-scale` paths, and
-`t/350` rejecting the semantic-family envelope, which has a status and no
-guidance field. That envelope is now outside the guidance assertion because
-its own nonclaims already exclude support classification, and the
-regression-gate status is admitted because that contract already carries
-guidance. The terminal build job failed
-because those families failed. Parse messages before passing language-contract
-tests are expected diagnostics. None of these families is support or capacity.
+the support-contract audit. The policy and capture-plan mutation checks now
+skip that ignored closure when it is absent and still run when it is present.
+The remaining ignored-path readers are still open. The semantic-family
+envelope stays outside the guidance assertion because its own nonclaims
+already exclude support classification, and the regression-gate status is
+admitted because that contract already carries guidance. The terminal build
+job failed because those families failed. Parse messages before passing
+language-contract tests are expected diagnostics. None of these families is
+support or capacity.
 
 Related: [[vial-architecture-scale-proof]], [[vial-common-worker-output-census-admission]],
 [[vial-portable-vhdl-runtime-scale]], [[vial-vhdl-osvvm-qualified-tier]],

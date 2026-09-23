@@ -122,6 +122,8 @@ subtest 'performance applicability separates provenance from enforcement' => sub
 };
 
 subtest 'representative corpus is exact, current-only, and narrower' => sub {
+    plan skip_all => 'ignored calibration closure is absent on a fresh checkout'
+        unless -f $source_path;
     my $report = read_json($source_path);
     my $derive = $class->can('_derive_from_report');
     my $policy = $derive->($report);
@@ -195,6 +197,8 @@ subtest 'representative corpus is exact, current-only, and narrower' => sub {
 };
 
 subtest 'source and selection mutations fail closed' => sub {
+    plan skip_all => 'ignored calibration closure is absent on a fresh checkout'
+        unless -f $source_path;
     my $derive = $class->can('_derive_from_report');
 
     my $changed_timing = read_json($source_path);

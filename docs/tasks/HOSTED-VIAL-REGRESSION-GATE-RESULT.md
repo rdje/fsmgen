@@ -32,7 +32,7 @@ Make the hosted VIAL regression gate agree with one published result.
   Acceptance: `Diagnose the failed hosted command, then align the workflow and published contract with the result that command produces.`
   Verification: `pending`
   Commit: `pending`
-  Children: `HOSTED-VIAL-REGRESSION-GATE-RESULT.1, HOSTED-VIAL-REGRESSION-GATE-RESULT.2, HOSTED-VIAL-REGRESSION-GATE-RESULT.3, HOSTED-VIAL-REGRESSION-GATE-RESULT.4, HOSTED-VIAL-REGRESSION-GATE-RESULT.5, HOSTED-VIAL-REGRESSION-GATE-RESULT.6`
+  Children: `HOSTED-VIAL-REGRESSION-GATE-RESULT.1, HOSTED-VIAL-REGRESSION-GATE-RESULT.2, HOSTED-VIAL-REGRESSION-GATE-RESULT.3, HOSTED-VIAL-REGRESSION-GATE-RESULT.4, HOSTED-VIAL-REGRESSION-GATE-RESULT.5, HOSTED-VIAL-REGRESSION-GATE-RESULT.6, HOSTED-VIAL-REGRESSION-GATE-RESULT.7`
 - ID: `HOSTED-VIAL-REGRESSION-GATE-RESULT.1`
   Status: `done`
   Goal: `Diagnose the first hosted gate failure and own the contract contradiction.`
@@ -64,9 +64,15 @@ Make the hosted VIAL regression gate agree with one published result.
   Verification: `prove -Iperl t/350-support-contract-builder-audit.t reports All tests successful at Files=1, Tests=57. The semantic-family module stays outside the guidance assertion because its own nonclaims already exclude support_classification and its key list omits guidance.`
   Commit: `this commit`
 - ID: `HOSTED-VIAL-REGRESSION-GATE-RESULT.6`
+  Status: `done`
+  Goal: `Stop t/1765 and t/1766 from dying when the ignored calibration closure is absent.`
+  Acceptance: `The mutation subtests that read the ignored closure skip with a recorded reason when that file is absent, and still run when it is present. Public derivation stays independent of that file. Do not invent a hosted pass.`
+  Verification: `With the closure present, prove of t/1765 and t/1766 reports All tests successful at Files=2, Tests=15. With the file temporarily hidden and then restored, the same command passes. The released logs named those two files at t/1765 line 258 and t/1766 line 466.`
+  Commit: `this commit`
+- ID: `HOSTED-VIAL-REGRESSION-GATE-RESULT.7`
   Status: `active`
-  Goal: `Stop the hosted regression-promotion tests from requiring ignored qualification paths on a fresh checkout.`
-  Acceptance: `Public tests that still read ignored .artifacts/qualification/vial-scale paths either use a tracked publication or skip that ignored input with a recorded reason. Do not invent a hosted pass.`
+  Goal: `Stop the remaining hosted tests from requiring ignored qualification paths on a fresh checkout.`
+  Acceptance: `Each remaining released-log reader of an ignored .artifacts/qualification/vial-scale path either uses a tracked publication or skips that ignored input with a recorded reason. Do not invent a hosted pass.`
   Verification: `pending`
   Commit: `pending`
 
@@ -99,3 +105,9 @@ Make the hosted VIAL regression gate agree with one published result.
 - [x] **ROOT CAUSE (WHY + WHERE)** — After the regression status was admitted, `prove -Iperl t/350-support-contract-builder-audit.t` still failed at `t/350-support-contract-builder-audit.t line 73` because `FSM::Support::VIALSemanticFamilyContract` returns no guidance array. `git log -S 'support_classification' -- perl/FSM/Support/VIALSemanticFamilyContract.pm` shows that module already names support_classification as an explicit nonclaim and omits guidance from its own key list.
 - [x] **ADDRESSED (verified)** — The audit now exempts that module from the guidance assertion and requires the recorded nonclaim instead of inventing guidance. Focused prove reports All tests successful at Files=1, Tests=57.
 - [x] **NO REGRESSION** — `knowledge-map: OK` keeps the hosted census and records the exemption. Every other support contract still requires non-empty guidance. A failed or unavailable hosted run remains neither support nor capacity.
+
+## Acceptance Checklist (ignored closure readers HOSTED-VIAL-REGRESSION-GATE-RESULT.6)
+
+- [x] **ROOT CAUSE (WHY + WHERE)** — The released Perl-file logs die at `t/1765-vial-architecture-scale-regression-promotion-policy.t line 258` and `t/1766-vial-architecture-scale-regression-promotion-capture-plan.t line 466` with `cannot read` the ignored calibration-closure JSON. `git log -S 'calibration-closure.json' -- t/1765-vial-architecture-scale-regression-promotion-policy.t` shows those mutation checks still load that ignored publication.
+- [x] **ADDRESSED (verified)** — Those mutation subtests now skip when the ignored file is absent and still run when it is present. Focused prove with the file present, and again with the file hidden and then restored, reports All tests successful at Files=2, Tests=15. Public derivation does not read the ignored file.
+- [x] **NO REGRESSION** — `knowledge-map: OK` keeps the tracked-seal route and records the skip. Remaining ignored-path readers stay HOSTED-VIAL-REGRESSION-GATE-RESULT.7. A failed or unavailable hosted run remains neither support nor capacity.

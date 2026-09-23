@@ -68,6 +68,8 @@ subtest 'plan exposes one caller-sealed metadata-only contract' => sub {
 };
 
 subtest 'eleven selected profiles map to exact public dispatch' => sub {
+    plan skip_all => 'ignored calibration closure is absent on a fresh checkout'
+        unless -f $source_path;
     my $plan = derive_plan();
     is($plan->{schema},
         'fsmgen.vial_architecture_scale_regression_promotion_capture_plan.v2',
@@ -236,6 +238,8 @@ subtest 'eleven selected profiles map to exact public dispatch' => sub {
 };
 
 subtest 'derivation reads metadata but executes no work' => sub {
+    plan skip_all => 'ignored calibration closure is absent on a fresh checkout'
+        unless -f $source_path;
     no warnings 'redefine';
     local *FSM::VIAL::ArchitectureScaleSemanticBridgeMeasurement::measure_profile =
         sub { die "semantic producer executed\n" };
@@ -260,6 +264,8 @@ subtest 'derivation reads metadata but executes no work' => sub {
 };
 
 subtest 'policy and adapter drift fail closed' => sub {
+    plan skip_all => 'ignored calibration closure is absent on a fresh checkout'
+        unless -f $source_path;
     my $derive = $class->can('_derive_from_policy');
 
     my $missing = derive_policy();
@@ -389,6 +395,8 @@ subtest 'policy and adapter drift fail closed' => sub {
 };
 
 subtest 'returned plans are defensive and deterministic' => sub {
+    plan skip_all => 'ignored calibration closure is absent on a fresh checkout'
+        unless -f $source_path;
     my $first = derive_plan();
     my $identity = $first->{plan_identity};
     my $path = $first->{entries}[0]{publication_relative_path};
@@ -434,6 +442,8 @@ sub derive_plan {
 }
 
 sub derive_policy {
+    die "cannot read $source_path: ignored calibration closure is absent\n"
+        unless -f $source_path;
     my $report = read_json($source_path);
     my $derive = $policy_class->can('_derive_from_report');
     return $derive->($report);
