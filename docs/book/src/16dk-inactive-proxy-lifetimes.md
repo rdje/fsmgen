@@ -531,10 +531,11 @@ hash, a caller-supplied cleanup array, a missing stage and a closed frontier
 that tries to launch again. No compiler, probe or tool-resolution process has
 run under this contract.
 
-The public supervisor result still copies cleanup flags and omits the process
-id, birth clock and original cleanup identity. That key set stays on schema
-version 1. A sealed caller can now read a finished job and receive one
-observation that returns the private process id, birth clock and own-group
+The public supervisor result still omits the process id, birth clock and
+original cleanup identity. It now returns a copy of the cleanup flags, so a
+caller cannot mutate the private hash the receipt review binds. That key set
+stays on schema version 1. A sealed caller can read a finished job and receive
+one observation that returns the private process id, birth clock and own-group
 identity while keeping the original cleanup hash. Copying that hash still
 fails the aligned review. An unsealed caller and an unfinished job are
 rejected. No compiler, probe or tool-resolution process runs to produce the
@@ -549,7 +550,7 @@ perl t/1818-process-supervisor-receipt-observation.t
 
 | Remaining work | Required result |
 | --- | --- |
-| Real receipt binding | The caller-sealed supervisor now returns private receipt identity. Execute one admitted capture. |
+| Real receipt binding | The public result now copies cleanup flags and still omits private identity. Execute one admitted capture. |
 | Inactive adapter composition | Join preparation, native path/reference admission and observation custody before the separate native experiment. |
 | Final protocol join | Check current evidence together and retain native, live/public and startup/benefit gates. |
 

@@ -2244,9 +2244,9 @@ decomposes the architecture needed to move beyond that bounded foundation.
   Status: `active`
   Goal: `Execute the admitted compiler-only receipt capture once and preserve the first outcome.`
   Acceptance: `After the admission commit, consume its one-use permit, retain the first private states, and stop on disagreement. Never retry a producer or replace a missing field.`
-  Verification: `Child .5.4.3.3.1 records the supervisor own-group contract. Child .5.4.3.3.2 aligns the inactive adapter with that identity. Child .5.4.3.3.3 records that the public supervisor result still omits pid, birth clock and cleanup identity. Child .5.4.3.3.4 returns that identity through one sealed observation and keeps capture closed.`
+  Verification: `Child .5.4.3.3.1 records the supervisor own-group contract. Child .5.4.3.3.2 aligns the inactive adapter with that identity. Child .5.4.3.3.3 records that the public supervisor result still omits pid, birth clock and cleanup identity. Child .5.4.3.3.4 returns that identity through one sealed observation and keeps capture closed. Child .5.4.3.3.5 copies public cleanup flags so the private hash stays unchanged. Child .5.4.3.3.6 preserves the first private receipt from one admitted capture.`
   Commit: `pending`
-  Children: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.12.4.1.5.4.3.3.1, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.12.4.1.5.4.3.3.2, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.12.4.1.5.4.3.3.3, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.12.4.1.5.4.3.3.4`
+  Children: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.12.4.1.5.4.3.3.1, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.12.4.1.5.4.3.3.2, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.12.4.1.5.4.3.3.3, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.12.4.1.5.4.3.3.4, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.12.4.1.5.4.3.3.5, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.12.4.1.5.4.3.3.6`
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.12.4.1.5.4.3.3.1`
   Status: `done`
   Goal: `Record that a real supervisor group cannot satisfy the distinct-group rule.`
@@ -2271,6 +2271,18 @@ decomposes the architecture needed to move beyond that bounded foundation.
   Acceptance: `Add the finished private pid, birth clock, own-group identity and original cleanup identity to the public result, or expose one sealed observation that preserves those fields without copying the cleanup hash. Keep caller sealing and existing cleanup behavior. Do not launch a compiler, probe or tool-resolution process in that slice.`
   Verification: `perl t/1818-process-supervisor-receipt-observation.t passes 33 assertions. A sealed caller reads three finished jobs and receives pid, birth clock and own-group identity while the original cleanup hash stays the private member. Those observations satisfy receipts_bound. A copied cleanup hash, an unsealed caller and an unfinished job reject. Public _finish_result still omits pid and cleanup_identity and keeps schema version 1. No compiler, probe or tool-resolution process runs.`
   Commit: `this commit`
+- ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.12.4.1.5.4.3.3.5`
+  Status: `done`
+  Goal: `Copy public supervisor cleanup flags before capture.`
+  Acceptance: `Return the same cleanup flags from the public result without sharing the private hash. Keep schema version 1 and the omitted pid, birth clock and cleanup identity. Do not launch a compiler, probe or tool-resolution process.`
+  Verification: `perl t/1818-process-supervisor-receipt-observation.t passes 36 assertions. The public result returns the same flags, a different hash, and a mutation of that copy leaves the private hash unchanged. Sealed observations still satisfy receipts_bound. The neighboring coordinator, adapter and admission tests pass with it: Files=4, Tests=92. No compiler, probe or tool-resolution process runs.`
+  Commit: `this commit`
+- ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.12.4.1.5.4.3.3.6`
+  Status: `active`
+  Goal: `Preserve the first private receipt from one admitted compiler-only capture.`
+  Acceptance: `After this cleanup-copy commit, consume one fresh permit and retain the first private compiler, outer and inner states. Stop on disagreement. Never retry a producer or replay an original, proxy or live collector.`
+  Verification: `pending`
+  Commit: `pending`
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.12.4.1.5.5`
   Status: `proposed`
   Goal: `Compose inactive canonical preparation and observation adapters before native admission.`
@@ -6431,6 +6443,12 @@ The manifest binds the immediately preceding acceptance suffix to its exact Git 
 - [x] **ROOT CAUSE (WHY + WHERE)** — `git log -S 'unavailable aggregate' -1 --format='%H %s' -- docs/book/src/16df-vial-architecture-scale-cap-closeout.md` identifies bc6796d01803fb662cfadd506fabc5bc79427a88. That placement requires an unavailable hosted aggregate. The first hosted run of `./bin/ci-regression vial-gate --no-book` failed its real command, and the independent verifier was skipped.
 - [x] **ADDRESSED (verified)** — The contradiction is owned by HOSTED-VIAL-REGRESSION-GATE-RESULT.1. Local exact-pinned success stays distinct from the failed hosted step. No support or capacity claim is inferred from either result. Diagnosis continues when the failed-step log is released.
 - [x] **NO REGRESSION** — `knowledge-map: OK` preserves the earlier gate questions and adds the hosted failure route. The rendered book states the contradiction outside the registered placement claim; claim identity/dispositions, containment and staged doctrines accompany the normal hooks. The receipt-return leaf remains separately owned.
+
+## Acceptance Checklist (public cleanup copy .3.2.15.7.3.12.4.1.5.4.3.3.5)
+
+- [x] **ROOT CAUSE (WHY + WHERE)** — `git log -S 'sub _finish_result' -1 --format='%H %s' -- perl/FSM/Support/ProcessSupervisor.pm` identifies d1235212cd7b15d4867edf9f8f08e3937fae6cc6. The public result returned the private cleanup hash. A caller could change its flags and change the hash a sealed observation binds.
+- [x] **ADDRESSED (verified)** — perl t/1818-process-supervisor-receipt-observation.t passes 36 assertions. The public result returns the same flags through a different hash. Mutating that copy leaves the private hash unchanged. Schema version 1 still omits pid and cleanup identity. No compiler, probe or tool-resolution process runs.
+- [x] **NO REGRESSION** — `knowledge-map: OK` preserves the sealed observation route and adds the public cleanup copy. Files=4, Tests=92. The rendered book states that the public result copies cleanup flags; claim identity/dispositions, containment and staged doctrines accompany the normal hooks. Capture, native/live/startup qualification and full CI/push remain open.
 
 ## Acceptance Checklist (private receipt observation .3.2.15.7.3.12.4.1.5.4.3.3.4)
 

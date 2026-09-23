@@ -103,5 +103,12 @@ ok(!exists $public->{pid}, 'the public result still omits pid');
 ok(!exists $public->{cleanup_identity},
     'the public result still omits cleanup identity');
 is($public->{schema_version}, 1, 'the public result keeps schema version 1');
+is_deeply($public->{cleanup}, $jobs[0]{cleanup},
+    'the public result returns the same cleanup flags');
+ok(refaddr($public->{cleanup}) != refaddr($jobs[0]{cleanup}),
+    'the public result does not share the private cleanup hash');
+$public->{cleanup}{leader_reaped} = 0;
+is($jobs[0]{cleanup}{leader_reaped}, 1,
+    'mutating the public cleanup copy leaves the private hash unchanged');
 
 done_testing;

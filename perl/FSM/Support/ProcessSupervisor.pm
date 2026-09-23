@@ -640,7 +640,9 @@ sub _finish_result {
             ? $first_ns - $exec_ns : undef,
         first_output_to_exit_ns => defined($first_ns) && defined($finished_ns)
             ? $finished_ns - $first_ns : undef,
-        cleanup => $state->{cleanup},
+        # Callers read flags only. Sharing the private hash would let a
+        # public result mutate the cleanup identity a later receipt binds.
+        cleanup => {%{$state->{cleanup}}},
     };
 }
 
