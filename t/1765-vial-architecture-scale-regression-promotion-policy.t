@@ -4,6 +4,7 @@ use strict;
 use warnings;
 
 use Digest::SHA qw(sha256_hex);
+use File::Path qw(make_path remove_tree);
 use File::Spec;
 use FindBin;
 use JSON::PP ();
@@ -233,23 +234,39 @@ subtest 'source and selection mutations fail closed' => sub {
         'missing selected route is rejected');
 };
 
-SKIP: {
-    skip 'exact guarded publication authentication is opt-in', 5
-        unless $ENV{FSMGEN_VIAL_SCALE_PROMOTION_POLICY_EXACT};
+subtest 'public derivation loads the tracked sealed policy' => sub {
+    local $ENV{FSMGEN_RAM_GUARD_ACTIVE} = 1;
+    local $ENV{FSMGEN_RAM_GUARD_EFFECTIVE_HOST_MAX_PCT} = 88;
+    local $ENV{FSMGEN_RAM_GUARD_EFFECTIVE_PROCESS_MAX_RSS_MB} = 4096;
     my $policy = $class->derive({repository_root => $repo_root});
+    is($policy->{policy_identity},
+        'regression-promotion-policy/'
+        . '19cf41056da86d95c266597e7db76eff3810ee29511a005e1051053009a65ece',
+        'public derivation returns the sealed policy identity');
     is($policy->{source_evidence}{disposition},
         'explicitly_versioned_historical',
-        'exact derivation retains the historical disposition');
+        'sealed policy retains the historical disposition');
     is($policy->{source_evidence}{current_performance_eligible}, 0,
-        'historical closure is not current performance evidence');
+        'sealed historical evidence is not current performance evidence');
     is(scalar @{$policy->{selected_profiles}}, 11,
-        'exact authenticated derivation returns all selected profiles');
+        'sealed policy returns all selected profiles');
     is($policy->{capture_contract}{profile_count}, 11,
         'capture contract agrees with the selected profile count');
-    like($policy->{policy_identity},
-        qr{\Aregression-promotion-policy/[0-9a-f]{64}\z},
-        'exact authenticated policy remains content-addressed');
-}
+    $policy->{selected_profiles}[0]{authority} = 'mutated';
+    my $fresh = $class->derive({repository_root => $repo_root});
+    is($fresh->{selected_profiles}[0]{authority}, 'semantic_bridge',
+        'sealed policy data is defensive');
+
+    my $bare = File::Spec->catdir(
+        $repo_root, qw(.artifacts tmp policy-sealed-missing),
+    );
+    remove_tree($bare);
+    make_path(File::Spec->catdir($bare, '.git'));
+    like(dies(sub { $class->derive({repository_root => $bare}) }),
+        qr/sealed document is missing/,
+        'a checkout without the sealed policy fails closed');
+    remove_tree($bare);
+};
 
 done_testing;
 

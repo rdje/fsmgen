@@ -13,12 +13,16 @@ use Scalar::Util qw(blessed);
 use feature qw(signatures postderef);
 no warnings 'experimental::signatures';
 
-use FSM::VIAL::ArchitectureScaleCalibrationClosurePublication;
-
-my $PUBLICATION =
-    'FSM::VIAL::ArchitectureScaleCalibrationClosurePublication';
 my $SCHEMA =
     'fsmgen.vial_architecture_scale_regression_promotion_policy.v1';
+my $SEALED_POLICY = join '/', qw(
+    vial qualification regression_promotion_policy
+    regression-promotion-policy-v1.json
+);
+my $SEALED_POLICY_IDENTITY =
+    'regression-promotion-policy/'
+    . '19cf41056da86d95c266597e7db76eff3810ee29511a005e1051053009a65ece';
+my $SEALED_POLICY_BYTES = 9019;
 my $SOURCE_REPORT = join '/', qw(
     .artifacts qualification vial-scale v1 calibration-closure-v1
     calibration-closure.json
@@ -233,13 +237,7 @@ sub derive($class, @args) {
     _require_active_guard();
     my ($repo_root, $root_device) =
         _repository_root($raw->{repository_root});
-    my $manifest = $PUBLICATION->validate_complete_publication({
-        repository_root => $repo_root,
-    });
-    my $report = _load_authenticated_report(
-        $repo_root, $root_device, $manifest,
-    );
-    return _clone(_derive_from_report($report, $manifest));
+    return _clone(_load_sealed_policy($repo_root, $root_device));
 }
 
 sub _derive_from_report($report, $manifest = undef) {
@@ -375,6 +373,43 @@ sub _derive_from_report($report, $manifest = undef) {
         . sha256_hex(_canonical_json($report_out));
     _validate_policy_report($report_out);
     return $report_out;
+}
+
+sub _load_sealed_policy($repo_root, $root_device) {
+    my $path = File::Spec->catfile(
+        $repo_root, split m{/}, $SEALED_POLICY,
+    );
+    my @lstat = lstat($path);
+    confess "promotion policy sealed document is missing\n" unless @lstat;
+    confess "promotion policy sealed document must be a regular file\n"
+        unless -f _ && !-l _;
+    confess "promotion policy sealed document left the repository volume\n"
+        unless $lstat[0] == $root_device;
+    confess "promotion policy sealed document byte count changed\n"
+        unless $lstat[7] == $SEALED_POLICY_BYTES;
+
+    open my $fh, '<:raw', $path
+        or confess "cannot read promotion policy sealed document\n";
+    local $/;
+    my $bytes = <$fh>;
+    close $fh or confess "cannot close promotion policy sealed document\n";
+    confess "promotion policy sealed document changed while reading\n"
+        unless bytes::length($bytes) == $SEALED_POLICY_BYTES;
+    my $policy = eval { $JSON->decode($bytes) };
+    confess "promotion policy sealed document is not canonical JSON\n"
+        if $@ || !defined($policy) || ref($policy) ne 'HASH'
+            || _canonical_json($policy) . "\n" ne $bytes;
+    _validate_policy_report($policy);
+    confess "promotion policy sealed identity changed\n"
+        unless ($policy->{policy_identity} // '') eq $SEALED_POLICY_IDENTITY;
+    confess "promotion policy sealed source disposition changed\n"
+        unless ($policy->{source_evidence}{disposition} // '') eq
+            'explicitly_versioned_historical';
+    confess "promotion policy sealed source became current performance\n"
+        unless _json_false(
+            $policy->{source_evidence}{current_performance_eligible},
+        );
+    return $policy;
 }
 
 sub _load_authenticated_report($repo_root, $root_device, $manifest) {
@@ -708,6 +743,10 @@ sub _exact_invocant($class, $method) {
 
 sub _positive_integer($value) {
     return _nonnegative_integer($value) && $value > 0;
+}
+
+sub _json_false($value) {
+    return JSON::PP::is_bool($value) && !$value;
 }
 
 sub _json_integer_equals($value, $expected) {

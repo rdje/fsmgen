@@ -2,7 +2,7 @@
 
 > **AUTO-GENERATED — DO NOT EDIT.** Regenerate with `knowledge-map/scripts/gen_knowledge_map.sh`.
 > Canonical facts remain in `docs/knowledge docs/decisions`; shards are bounded derived views, and `.artifacts/` query caches are disposable.
-> **1162** facts · **6462** unique questions · **6638** answer occurrences · **139** topic shards.
+> **1163** facts · **6467** unique questions · **6643** answer occurrences · **140** topic shards.
 
 Query first:
 
@@ -122,6 +122,7 @@ The query is a case-insensitive fixed-substring search. Add `--no-cache` to read
 | `project-document` | 1 | 7 | [`project-document.md`](knowledge-map/generated/project-document.md) |
 | `protocol-composition` | 1 | 10 | [`protocol-composition.md`](knowledge-map/generated/protocol-composition.md) |
 | `protocol-platform` | 1 | 7 | [`protocol-platform.md`](knowledge-map/generated/protocol-platform.md) |
+| `public-regression` | 1 | 4 | [`public-regression.md`](knowledge-map/generated/public-regression.md) |
 | `public-sync` | 1 | 3 | [`public-sync.md`](knowledge-map/generated/public-sync.md) |
 | `push-cadence` | 3 | 5 | [`push-cadence.md`](knowledge-map/generated/push-cadence.md) |
 | `ram-guard` | 1 | 7 | [`ram-guard.md`](knowledge-map/generated/ram-guard.md) |
@@ -138,7 +139,7 @@ The query is a case-insensitive fixed-substring search. Add `--no-cache` to read
 | `vhdl-deferred` | 1 | 19 | [`vhdl-deferred.md`](knowledge-map/generated/vhdl-deferred.md) |
 | `vhdl-external` | 1 | 1 | [`vhdl-external.md`](knowledge-map/generated/vhdl-external.md) |
 | `vhdl-package` | 1 | 5 | [`vhdl-package.md`](knowledge-map/generated/vhdl-package.md) |
-| `vial-architecture` | 3 | 141 | [`vial-architecture.md`](knowledge-map/generated/vial-architecture.md) |
+| `vial-architecture` | 3 | 142 | [`vial-architecture.md`](knowledge-map/generated/vial-architecture.md) |
 | `vial-checking` | 1 | 13 | [`vial-checking.md`](knowledge-map/generated/vial-checking.md) |
 | `vial-common` | 1 | 13 | [`vial-common.md`](knowledge-map/generated/vial-common.md) |
 | `vial-execution` | 4 | 76 | [`vial-execution.md`](knowledge-map/generated/vial-execution.md) |

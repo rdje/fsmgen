@@ -1923,17 +1923,23 @@ completed. The guarded gate step then failed before any profile result existed:
 calibration closure publication root is absent
 ```
 
-`ArchitectureScaleRegressionPromotionPolicy->derive` asks
+`ArchitectureScaleRegressionPromotionPolicy->derive` asked
 `validate_complete_publication` for the historical closure at ignored
 `.artifacts/qualification/vial-scale/v1/calibration-closure-v1`. A fresh
-checkout does not carry that publication, so the isolated worker stops in
+checkout does not carry that publication, so the isolated worker stopped in
 `_publication_metadata`. The independent
 verifier was skipped. That absence is the released-log cause. It is distinct
 from the published contract, which still requires an unavailable aggregate,
 and from the local exact-pinned observation, which passed every selected
-profile. Those statements are not yet one hosted result.
-`HOSTED-VIAL-REGRESSION-GATE-RESULT.2` owns the alignment. A failed or
-unavailable hosted run remains neither support nor capacity.
+profile.
+
+Public derivation now loads the tracked seal at
+`vial/qualification/regression_promotion_policy/regression-promotion-policy-v1.json`.
+That document is the already-pinned policy object. It keeps the historical
+disposition and does not make historical evidence current. A fresh checkout
+can load it without the ignored publication. The published hosted contract
+still names an unavailable aggregate; this alignment does not invent a hosted
+pass. A failed or unavailable hosted run remains neither support nor capacity.
 
 ### Exact-pinned production gate observation
 
@@ -2133,17 +2139,19 @@ native UVM runtime, full-language coverage, synthesis capacity, arbitrary-tool
 capacity, support promotion, general cross-backend parity, performance
 enforcement on unmatched hosts, or a pass when a provider is unavailable.
 
-Re-derive the authenticated transport, hostile closure, and policy comparison
-with:
+Re-derive the authenticated transport and the tracked policy seal with:
 
 ```sh
 perl scripts/verify_vial_regression_promotion_evidence_transport.pl
 prove -Iperl t/1790-vial-regression-promotion-evidence-transport.t
-scripts/run_with_ram_guard.sh -- env \
-  FSMGEN_VIAL_SCALE_PROMOTION_POLICY_EXACT=1 \
-  prove -Iperl \
-  t/1765-vial-architecture-scale-regression-promotion-policy.t
+prove -Iperl t/1765-vial-architecture-scale-regression-promotion-policy.t
 ```
+
+Public policy derivation loads
+`vial/qualification/regression_promotion_policy/regression-promotion-policy-v1.json`
+under the repository RAM guard. It does not read the ignored historical
+closure. Local comparison subtests still recompute that comparison when the
+closure is present on the machine.
 
 Current capture, budget qualification/publication, independent agreement,
 profile and aggregate gate execution, latest-result storage, explicit CLI,

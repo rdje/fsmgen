@@ -72,18 +72,22 @@ availability must therefore be an admission result; absence can never pass.
    gate run at the full pre-push/selected-important-step cadence, not on every
    ordinary slice commit.
 9. `FSM::VIAL::ArchitectureScaleRegressionPromotionPolicy` is the caller-sealed
-   executable authority. It authenticates the immutable closure, independently
-   recomputes complete and selected metrics, requires every coordinate exactly
-   once, rejects caller evidence and drift, emits the capture/enforcement
-   contract, and returns defensive content-addressed data.
+   executable authority. Historical comparison independently recomputes
+   complete and selected metrics, requires every coordinate exactly once,
+   rejects caller evidence and drift, emits the capture/enforcement contract,
+   and returns defensive content-addressed data. Public derivation loads the
+   tracked seal from decision 0103 and does not require the ignored closure
+   publication.
 
 ## Verification legs
 
 - **Re-derive:** run
-  `scripts/run_with_ram_guard.sh -- env FSMGEN_VIAL_SCALE_PROMOTION_POLICY_EXACT=1 prove -Iperl t/1765-vial-architecture-scale-regression-promotion-policy.t`.
-  The exact path authenticates the v1 publication and independently recomputes
-  the 216/92/356 complete census, eleven-profile/33-record selection, raw-wall
-  sums, maximum RSS values, reductions, and 44-invocation current contract.
+  `prove -Iperl t/1765-vial-architecture-scale-regression-promotion-policy.t`.
+  Public derivation loads the tracked seal from decision 0103. When the local
+  historical closure is present, the comparison subtests independently
+  recompute the 216/92/356 complete census, eleven-profile/33-record selection,
+  raw-wall sums, maximum RSS values, reductions, and 44-invocation current
+  contract.
 - **Falsify:** the focused watcher changes a raw timing, pre-promotes a
   historical candidate budget, duplicates one selected coordinate, and removes
   another. Each competing hypothesis fails closed; caller evidence, a borrowed
