@@ -109,7 +109,7 @@ subtest 'original retained root preparation reconciles actual native handles' =>
         'actual preparation replaces only job descriptor credit; future children and cleanup remain reserved');
     my $view = $owner->job_observation($grant);
     is($view->{admission}{phase}, 'prepared', 'ledger publication follows actual allocation');
-    is($view->{native}{phase}, 'prepared', 'original native job is prepared but cannot start through coordinator');
+    is($view->{native}{phase}, 'prepared', 'original native job is prepared without starting');
     $view->{admission}{descriptors} = 0;
     is($owner->job_observation($grant)->{admission}{descriptors}, 15, 'copied observation cannot release resources');
     like(error_from(sub { $owner->prepare_job($grant) }), qr/single-use/, 'root allocation cannot replay');
@@ -178,7 +178,7 @@ subtest 'incomplete native closure cannot release a prepared root' => sub {
         local *FSM::Support::ProcessSupervisor::ReservedJob::finished_job = sub {
             my $result = $finished->(@_); return {%$result, resources_closed => 0};
         };
-        like(error_from(sub { $owner->close }), qr/unstarted native job cleanup incomplete/,
+        like(error_from(sub { $owner->close }), qr/native job cleanup incomplete/,
             'a producer reporting incomplete closure prevents retirement');
     }
     ok(!live(), 'actual pipe ends are closed even though completion was refused');

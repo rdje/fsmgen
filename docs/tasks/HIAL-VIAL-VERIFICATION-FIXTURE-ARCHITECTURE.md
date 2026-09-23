@@ -3633,11 +3633,11 @@ decomposes the architecture needed to move beyond that bounded foundation.
   Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.4.2.3.3.1: bind retained run resources to admission grants`
 
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.4.2.3.3.2`
-  Status: `active`
+  Status: `done`
   Goal: `Bind retained job preparation and gated start to aggregate grants.`
   Acceptance: `Retain root/nested native job records and original request ownership before allocation; derive complete foreign descriptor inventories and bind resource-free prepare_record/allocate/start to original Admission phases and deadlines. Reconcile actual handles and child outcomes conservatively, including interrupted returns and cancel-after-record-before-fork. Qualify root/nested real gated handoff, capacity refusal and descendant-first cleanup without exec release; preserve original signal state.`
-  Verification: `Three bounded children preserve reviewable scope: completed acceptance-history rollover, retained root preparation with per-pipe grants and cleanup, then root/nested gated forks with refreshed foreign inventories and exact child reconciliation. Publication remains separately owned.`
-  Commit: `pending`
+  Verification: `The bounded history rollover, retained root preparation and gated root/nested start children are complete. Original snapshots/grants own allocation and both fork boundaries; actual handles/children reconcile only after native publication. Partial returns preserve first cause and conservative credit through exact bounded cleanup. Native root/nested qualification and final selected band pass; accepted transports remain sibling .3.`
+  Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.4.2.3.3.2.3.2.2: bind retained coordinator root and nested lifecycle`
 
   Children: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.4.2.3.3.2.1, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.4.2.3.3.2.2, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.4.2.3.3.2.3`
 
@@ -3656,11 +3656,11 @@ decomposes the architecture needed to move beyond that bounded foundation.
   Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.4.2.3.3.2.2: bind retained root preparation to admission grants`
 
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.4.2.3.3.2.3`
-  Status: `active`
+  Status: `done`
   Goal: `Bind gated root/nested forks and child reconciliation.`
   Acceptance: `Admit retained nested snapshots from an active original parent; refresh complete foreign inventories immediately before both masked forks. Preserve original exec signal state and ledger child credit through partial/interrupted starts. Qualify real root/nested gated handoff, capacity refusal, cancellation before fork and descendant-first cleanup with exact waits; no exec release or caller routing.`
-  Verification: `First qualify optional original-admission hooks and refreshed foreign inventories at both native fork boundaries, including failure and original signal-state restoration. Then bind the coordinator root/nested start phases, actual child reconciliation and descendant-first cleanup to those qualified hooks. No callback check can substitute for original ledger ownership in the joined child.`
-  Commit: `pending`
+  Verification: `The native hook child qualifies original exec signal state, fresh descriptor closure and retained fork identities. The joined coordinator child binds original grants, root/nested ready handoff, conservative partial starts and descendant-first cleanup, including stopped-child clipping. All declared pre-exec lifecycle checks pass on the current host; accepted peers and execution publication remain later owners.`
+  Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.4.2.3.3.2.3.2.2: bind retained coordinator root and nested lifecycle`
 
   Children: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.4.2.3.3.2.3.1, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.4.2.3.3.2.3.2`
 
@@ -3672,11 +3672,11 @@ decomposes the architecture needed to move beyond that bounded foundation.
   Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.4.2.3.3.2.3.1: qualify admitted forks with fresh native inventories`
 
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.4.2.3.3.2.3.2`
-  Status: `active`
+  Status: `done`
   Goal: `Bind coordinator gated root/nested native lifecycle.`
   Acceptance: `Retain nested snapshots and original grants; bind preparing/starting/active phases to the qualified allocation/fork hooks and actual descriptors/child outcomes. Preserve conservative credit through interrupted returns; cancel descendants before parent retirement using one shared remaining wall. Qualify real root/nested gated handoff, capacity refusal and cancel-before-fork with exact native waits. Replace unstarted-only close safely; no ACCEPT/exec release or caller routing.`
-  Verification: `In progress. Retain nested snapshots/grants under the preparation mask, but never wrap native start/advance in that mask. Fork callbacks must check the original starting grant and derive all current foreign handles excluding the original native job. Hold conservative child/descriptor credit through partial start and activate only after native ready; cancellation revokes the subtree before native closure and clips one shared wall to original affected deadlines and existing cleanup walls. Consume actual handles/waits conservatively; incomplete native cleanup cannot retire ownership. Close advances bounded cleanup without sleeping and retires descendants before parent only after exact closure. Closed outcomes retain logical slots until the explicit whole-run close consumes them in this pre-exec scope; delivery/release and fair root scheduling remain later owners. Qualify root/nested real gated handoff, original grant/capacity refusal, cancel-before-fork and interrupted returns with independently retained native observations.`
-  Commit: `pending`
+  Verification: `Children .1/.2 qualify monotonic native cleanup and join retained root/nested grants, original fork admission, actual ready pairs, interruption recovery and shared subtree cleanup. T1838/T1839 and the final selected component band establish current-host pre-exec ownership. Accepted peers, result delivery, exec publication, routing and complete fair-loop qualification remain separately owned.`
+  Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.4.2.3.3.2.3.2.2: bind retained coordinator root and nested lifecycle`
 
   Children: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.4.2.3.3.2.3.2.1, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.4.2.3.3.2.3.2.2`
 
@@ -3688,11 +3688,11 @@ decomposes the architecture needed to move beyond that bounded foundation.
   Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.4.2.3.3.2.3.2.1: clip retained native cleanup to earlier shared walls`
 
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.4.2.3.3.2.3.2.2`
-  Status: `pending`
+  Status: `done`
   Goal: `Join coordinator gated root/nested ownership and cleanup.`
   Acceptance: `After native wall clipping, retain nested snapshots/grants, check original starting grants at both qualified native fork hooks, reconcile actual retained handles/children and bound interrupted returns. Revoke subtrees before cancellation, clip a common remaining wall including already-running cleanup, and retire descendants only after exact resources close. Qualify root/nested native handoff, capacity/identity refusal and cancel-before-fork without execution release or accepted-peer integration.`
-  Verification: `pending`
-  Commit: `pending`
+  Verification: `Coordinator now retains nested requests/grants under the preparation mask, rechecks original starting credit and fresh foreign inventories inside both native fork masks, and activates only actual ready pairs. Partial failures retain conservative resources; nested failures preserve healthy root/sibling admission. Subtree cancellation revokes first and clips one remaining native wall, including earlier running cleanup but excluding consumed descendant clocks. Bounded close keeps endpoint, credits and logical slots until exact native closure, then retires descendants before parents. T1839 independently observes real root/nested handoff, waits, gated EOF, capacity/copied-grant refusal, cancellation/expiry/native-fork failure, pending publication returns and stopped-child cleanup. Four final-source falsifiers reject inventory, wall, masking and order omissions. The final selected band passes Files=18, Tests=179. Fixture-only endpoint rescue now verifies original identities after an exhausted native wall; no failed coordinator verdict is promoted. Accepted-peer binding remains sibling .3; no exec release, routing or Linux qualification.`
+  Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.4.2.3.3.2.3.2.2: bind retained coordinator root and nested lifecycle`
 
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.4.2.3.3.3`
   Status: `pending`
@@ -4413,7 +4413,7 @@ decomposes the architecture needed to move beyond that bounded foundation.
 
 ## Current Frontier
 
-Current frontier: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.4.2.3.3.2.3.2.2` joins coordinator root/nested lifecycle against the qualified allocation, fork and monotonic cleanup-wall hooks. Sibling .3 then binds accepted peers and qualifies the joined native admission lifecycle. Publication, streaming, fair lifecycle composition and independent qualification remain separate integration children. Preserve original failures, the spent compiler workspace, source-only driver commit and full-CI/push gates.
+Current frontier: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.4.2.3.3.3` binds accepted transport descriptors and retained tickets, then qualifies their join with root/nested native admission. Native gated lifecycle is complete through .2. Publication, streaming, fair lifecycle composition and independent qualification remain separate integration children. Preserve original failures, the spent compiler workspace, source-only driver commit and full-CI/push gates.
 
 Architecture audit `.1` is complete. Decision `0032` selects one public
 `.vial` source language, private immutable `VIALSemanticIR` and
@@ -7141,3 +7141,43 @@ The manifest binds the completed acceptance suffix and independent reserved-proc
   lists retained at the card's exact history pointer. Questions and aggregate
   fact allowance are unchanged.
   No normal caller, coordinator start, original producer, full CI or push runs.
+
+## Acceptance Checklist (.19.2.3.1.2.2.5.5.2.3.4.2.3.3.2.3.2.2)
+
+- [x] **ROOT CAUSE (WHY + WHERE)** — `git log -S` identifies de32706ad's
+  Coordinator unstarted-only guard. The retained run/root preparer had no
+  nested snapshot owner, native start transition or started-job close path;
+  component fork and clipping hooks alone could not establish coordinator
+  admission. This leaf replaces that explicit integration boundary.
+- [x] **ADDRESSED (verified)** — T1839 re-derives actual root, nested and
+  grandchild gated handoffs using independent native fork/wait/pipe observations,
+  child-side foreign-handle checks and separately retained output EOF witnesses.
+  Original grants and detached requests survive real pending signals; actual
+  ready pairs reconcile child credit while interrupted starts retain capacity.
+  Refusal checks cover inclusive job/descriptor capacity, copied grants,
+  cancellation/expiry at both forks and actual fork failure. A real stopped
+  TERM-ignoring child leaves close pending with all charges/endpoint retained;
+  its independently waited KILL settles within shared clipped cleanup. Already
+  consumed descendant clocks are excluded using an explicit parent-clock
+  control, without synthetic native identities. Falsification: final-source
+  omitted foreign inventory yields the independently waited child exit 91;
+  omitted native wall propagation fails the ancestor wall assertion; parent-first
+  retirement rejects retained descendants; omitted reservation masking exposes
+  a missing retained owner to the real handler. All outcomes are consumed.
+  Durability: implementation, T1839, book, bounded fact, task and commit retain
+  the derivation and named controls. Local .artifacts/coordinator-lifecycle-*.log
+  files are an explicit raw-log durability gap; Linux and accepted-peer/full
+  publication qualification remain separately owned missing legs.
+- [x] **NO REGRESSION** — The final sequential architecture/native component
+  and coordinator band reports `All tests successful`, `Files=18, Tests=179`.
+  Syntax, inspected built book, claims, Knowledge Map and staged doctrine gates
+  cover the slice. The first stopped-child fixture expected KILL without ignoring
+  TERM and observed signal 15; corrected disposition establishes the intended
+  escalation control. An initial misspelled T1817 path supplied no test evidence.
+  The foreign-inventory falsifier exposed exhausted-wall fixture teardown;
+  exact original identity-checked teardown now removes its own endpoint while
+  preserving the failed owner verdict. The initial singleton residue was
+  recorded, checked unused, removed exactly and followed by an empty census.
+  Final falsifiers leave an empty endpoint census; isolated source trees and
+  rendered scratch book are removed. Normal callers and retained original
+  producers are unchanged; no execution release, full CI or push runs.

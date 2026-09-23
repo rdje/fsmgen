@@ -11,8 +11,8 @@ use FSM::Support::ProcessSupervisor::Reservation ();
 use FSM::Support::ProcessSupervisor::ReservedJob ();
 use FSM::Support::ProcessSupervisor::Wire ();
 
-# Inactive native owner. Run and unstarted job preparation are retained here;
-# job start, accepted peers and fair advancement are later layers.
+# Inactive native owner. Original grants retain root/nested gated jobs through
+# bounded cleanup. Accepted peers, execution release and fair scheduling follow.
 # Preparing this object allocates no descriptor, token, path or process.
 my $COST = FSM::Support::ProcessSupervisor::Endpoint::resource_cost();
 my $JOB_COST = FSM::Support::ProcessSupervisor::GatedPair::resource_cost();
@@ -65,7 +65,9 @@ sub _before_run_allocation {
         # Partial startup also uses this branch before open_run has returned.
         $self->_begin_cleanup;
         _error('original cleanup envelope expired')
-            if Math::BigInt->new(_now_ns())->bcmp($self->{cleanup_deadline_ns}) >= 0;
+            if Math::BigInt->new(_now_ns())->bcmp($self->{cleanup_deadline_ns}) >= 0
+                || (defined($self->{native_cleanup_deadline})
+                    && _now_ns() / 1_000_000_000 >= $self->{native_cleanup_deadline});
     }
     else { _error('unknown run allocation role'); }
     for my $entry (['run_grant', 'steady_descriptors'], ['scratch_grant', 'transient_descriptors']) {
@@ -130,6 +132,61 @@ sub _job {
         && refaddr($entry->{grant}) == refaddr($grant);
     return ($entry, $record);
 }
+sub grants {
+    my ($self) = @_; _owner($self);
+    _error('unexpected grant inventory arguments') unless @_ == 1;
+    return $self->{ledger}->grants;
+}
+sub reserve_job {
+    my ($self, %args) = @_; _owner($self);
+    FSM::Support::ProcessSupervisor::Wire::_keys(\%args, qw(parent snapshot));
+    _error('nested admission requires an open run') unless $self->{phase} eq 'open';
+    $self->_job($args{parent});
+    my $snapshot = FSM::Support::ProcessSupervisor::Wire::decode_frame('client',
+        FSM::Support::ProcessSupervisor::Wire::encode_frame('client', $args{snapshot}));
+    _error('expected nested execution snapshot') unless $snapshot->{type} eq 'SPAWN';
+    my $grant;
+    my $ok = eval {
+        FSM::Support::ProcessSupervisor::Reservation::_masked_preparation(sub {
+            $grant = $self->{ledger}->reserve_job(parent => $args{parent},
+                map { $_ => $snapshot->{$_} } qw(started_ns timeout_seconds));
+            my $id = $self->{ledger}->describe($grant)->{id};
+            $self->{jobs}{$id} = {grant => $grant, snapshot => $snapshot};
+        });
+        1;
+    };
+    unless ($ok) {
+        my $error = $@;
+        $self->_job_failed($grant, $error) if $grant;
+        die $error;
+    }
+    # If a pending handler interrupts this return, grants still exposes the
+    # original record and its detached snapshot. No native effect has occurred.
+    return $grant;
+}
+sub _job_failed {
+    my ($self, $grant, $error) = @_;
+    my ($entry, $record) = $self->_job($grant);
+    # Keep the original error if cleanup itself is interrupted. Revocation and
+    # all native owners remain retained for the next bounded cleanup call.
+    my $ok = eval {
+        FSM::Support::ProcessSupervisor::Reservation::_masked_preparation(sub {
+            $entry->{failure} //= FSM::Support::ProcessSupervisor::_sanitize_control($error);
+            if ($record->{id} == 1) {
+                $self->_failure($error);
+                $self->{phase} = 'failed' unless $self->{phase} eq 'closing' || $self->{phase} eq 'closed';
+            }
+            $self->cancel_job($grant, $entry->{failure});
+        });
+        1;
+    };
+    unless ($ok) {
+        my $cleanup_error = $@;
+        $entry->{failure} //= FSM::Support::ProcessSupervisor::_sanitize_control($error);
+        $entry->{cleanup_error} //= FSM::Support::ProcessSupervisor::_sanitize_control($cleanup_error);
+    }
+    return;
+}
 sub _before_job_allocation {
     my ($self, $grant) = @_; _owner($self);
     _error('run is no longer open for job preparation') unless $self->{phase} eq 'open';
@@ -168,18 +225,130 @@ sub prepare_job {
     };
     unless ($ok) {
         my $error = $@;
-        $self->_failure($error);
-        $self->{phase} = 'failed';
-        $self->{ledger}->cancel($grant);
+        $self->_job_failed($grant, $error);
         die $error;
     }
     return;
+}
+sub _before_job_fork {
+    my ($self, $grant, $role) = @_; _owner($self);
+    _error('unknown native fork role') unless defined($role) && !ref($role)
+        && ($role eq 'reservation' || $role eq 'command');
+    _error('run is no longer open for job start') unless $self->{phase} eq 'open';
+    my ($entry, $record) = $self->_job($grant);
+    $self->{ledger}->check_live($grant);
+    _error('native fork requires original starting credit')
+        unless $entry->{native} && $record->{phase} eq 'starting'
+            && $record->{reserved_children} == $JOB_COST->{children}
+            && $record->{descriptors} >= scalar @{$entry->{native}->handles};
+    my $usage = $self->{ledger}->usage;
+    _error('aggregate fork capacity exceeded')
+        if $usage->{charged_children} > $LIMIT->{children}
+            || $usage->{charged_descriptors} > $LIMIT->{descriptors};
+    my %own = map { refaddr($_) => 1 } @{$entry->{native}->handles};
+    return [grep { !$own{refaddr($_)} } @{$self->handles}];
+}
+sub start_job {
+    my ($self, $grant) = @_; _owner($self);
+    _error('job start requires an open run and original grant')
+        unless @_ == 2 && $self->{phase} eq 'open';
+    my ($entry, $record) = $self->_job($grant);
+    _error('job start is single-use') unless $record->{phase} eq 'prepared';
+    my $ok = eval {
+        $self->{ledger}->begin_start($grant);
+        # The native fork mask captures the original exec signal state. Do not
+        # surround this or advance with the broader preparation mask.
+        $entry->{native}->start(sub { $self->_before_job_fork($grant, @_) });
+        1;
+    };
+    unless ($ok) { my $error = $@; $self->_job_failed($grant, $error); die $error; }
+    return;
+}
+sub cancel_job {
+    my ($self, $grant, $diagnostic) = @_; _owner($self);
+    _error('cancellation requires an original grant and diagnostic')
+        unless @_ == 3 && defined($diagnostic) && !ref($diagnostic) && length($diagnostic);
+    my (undef, $record) = $self->_job($grant);
+    FSM::Support::ProcessSupervisor::Reservation::_masked_preparation(sub {
+        $self->{ledger}->cancel($grant);
+        my %affected;
+        my @entries;
+        my $wall = _now_ns() / 1_000_000_000 + $TERM + $KILL;
+        for my $g (@{$self->{ledger}->grants}) {
+            my ($entry, $r) = $self->_job($g);
+            next unless $r->{id} == $record->{id} || $affected{$r->{parent}};
+            $affected{$r->{id}} = 1;
+            push @entries, $entry;
+            # A settled descendant retains a result slot, not a live cleanup
+            # clock. Its spent wall cannot expire later cleanup of a sibling.
+            next unless $entry->{native};
+            my $observed = $entry->{native}->observation;
+            next if $observed->{phase} eq 'finished'
+                && $entry->{native}->finished_job->{resources_closed} && !@{$entry->{native}->handles};
+            my $original = $r->{deadline_ns} / 1_000_000_000 + $TERM + $KILL;
+            $wall = $original if $original < $wall;
+            $wall = $entry->{cleanup_deadline}
+                if defined($entry->{cleanup_deadline}) && $entry->{cleanup_deadline} < $wall;
+            my $held = $observed->{cleanup_deadline};
+            $wall = $held if defined($held) && $held < $wall;
+        }
+        if (defined $self->{cleanup_deadline_ns}) {
+            my $run_wall = $self->{cleanup_deadline_ns} / 1_000_000_000;
+            $wall = $run_wall if $run_wall < $wall;
+        }
+        if ($record->{id} == 1) {
+            $wall = $self->{native_cleanup_deadline}
+                if defined($self->{native_cleanup_deadline}) && $self->{native_cleanup_deadline} < $wall;
+            $self->{native_cleanup_deadline} = $wall;
+        }
+        # Publish the common remaining wall everywhere before native cleanup.
+        for my $entry (@entries) {
+            $entry->{cleanup_deadline} = $wall
+                unless defined($entry->{cleanup_deadline}) && $entry->{cleanup_deadline} < $wall;
+        }
+        for my $entry (@entries) {
+            $entry->{failure} //= FSM::Support::ProcessSupervisor::_sanitize_control($diagnostic);
+            $entry->{native}->cancel($entry->{failure}, $wall) if $entry->{native};
+        }
+    });
+    return;
+}
+sub advance_job {
+    my ($self, $grant) = @_; _owner($self);
+    _error('job advancement requires an original grant') unless @_ == 2;
+    my ($entry, $record) = $self->_job($grant);
+    _error('job is not starting, active or closing')
+        unless $record->{phase} =~ /\A(?:starting|active|closing)\z/;
+    my $ok = eval {
+        $self->{ledger}->check_live($grant) unless $record->{phase} eq 'closing';
+        $self->cancel_job($grant, $entry->{failure} // 'job admission revoked')
+            if $record->{phase} eq 'closing';
+        if ($entry->{native}) {
+            $entry->{native}->advance;
+            my $observed = $entry->{native}->observation;
+            if ($observed->{first_failure} && $record->{phase} ne 'closing') {
+                $self->_job_failed($grant, $observed->{first_failure}{diagnostic});
+            }
+            elsif ($observed->{phase} eq 'ready' && $record->{phase} eq 'starting') {
+                FSM::Support::ProcessSupervisor::Reservation::_masked_preparation(sub {
+                    _error('ready native pair lacks retained direct children')
+                        unless $observed->{command}{command_pid} && !$observed->{command}{command_reaped}
+                            && $observed->{reservation}{pid} && !$observed->{reservation}{reaped};
+                    $self->{ledger}->activate($grant, scalar @{$entry->{native}->handles});
+                });
+            }
+        }
+        1;
+    };
+    unless ($ok) { my $error = $@; $self->_job_failed($grant, $error); die $error; }
+    return $self->job_observation($grant);
 }
 sub job_observation {
     my ($self, $grant) = @_; _owner($self);
     _error('job observation requires an original grant') unless @_ == 2;
     my ($entry, $record) = $self->_job($grant);
-    return {admission => $record,
+    return {admission => $record, failure => $entry->{failure}, cleanup_error => $entry->{cleanup_error},
+        cleanup_deadline => $entry->{cleanup_deadline},
         native => $entry->{native} ? $entry->{native}->observation : undef};
 }
 sub handles {
@@ -193,6 +362,7 @@ sub observation {
     _error('unexpected observation arguments') unless @_ == 1;
     return {phase => $self->{phase}, failure => $self->{failure}, usage => $self->{ledger}->usage,
         cleanup_deadline_ns => $self->{cleanup_deadline_ns},
+        native_cleanup_deadline => $self->{native_cleanup_deadline},
         endpoint => $self->{run} ? $self->{run}->observation : undef,
         cleanup => $self->{cleanup} ? {%{$self->{cleanup}}} : undef};
 }
@@ -204,22 +374,21 @@ sub close {
         FSM::Support::ProcessSupervisor::Reservation::_masked_preparation(sub {
             $self->{phase} = 'closing';
             $self->_begin_cleanup;
-            $self->{ledger}->cancel($self->{jobs}{1}{grant});
+            $self->cancel_job($self->{jobs}{1}{grant}, 'coordinator closes unreleased jobs');
+            my $pending = 0;
             for my $entry (values %{$self->{jobs}}) {
                 my $native = $entry->{native} or next;
                 my $observed = $native->observation;
-                # Fail closed if a future integration starts a child without
-                # first replacing this unstarted-only cleanup contract.
-                _error('started native cleanup is not integrated')
-                    if $observed->{command}{command_pid} || $observed->{reservation}{pid};
                 unless ($observed->{phase} eq 'finished') {
-                    $native->cancel('coordinator closes unstarted job',
-                        $self->{cleanup_deadline_ns} / 1_000_000_000);
                     $native->advance;
                 }
-                _error('unstarted native job cleanup incomplete')
-                    unless $native->observation->{phase} eq 'finished'
-                        && $native->finished_job->{resources_closed} && !@{$native->handles};
+                if ($native->observation->{phase} ne 'finished') { $pending = 1; next; }
+                _error('native job cleanup incomplete')
+                    unless $native->finished_job->{resources_closed} && !@{$native->handles};
+            }
+            if ($pending) {
+                $self->{cleanup} = {ok => 0, pending => 1, diagnostic => 'native cleanup remains pending'};
+                return;
             }
             my $cleanup = $self->{run} ? $self->{run}->close
                 : {ok => 1, socket_removed => 0, directory_removed => 0, diagnostic => 'unopened run closed'};
@@ -231,14 +400,15 @@ sub close {
                 $self->{phase} = 'close_failed';
                 return;
             }
-            # Every unstarted job and the endpoint are now actually closed.
+            # Every job and the endpoint are now actually closed.
             # Keep all charges if native cleanup was incomplete; otherwise
             # release even a reservation whose producer return was interrupted.
             $self->{ledger}->release_descriptors($_, 0) for @{$self->{ledger}->descriptor_grants};
-            my $root = $self->{jobs}{1}{grant};
-            $self->{ledger}->release_resources($root, children => 0, descriptors => 0);
-            $self->{ledger}->finish($root);
-            $self->{ledger}->retire($root);
+            for my $grant (reverse @{$self->{ledger}->grants}) {
+                $self->{ledger}->release_resources($grant, children => 0, descriptors => 0);
+                $self->{ledger}->finish($grant);
+                $self->{ledger}->retire($grant);
+            }
             $self->{phase} = 'closed';
         });
         1;

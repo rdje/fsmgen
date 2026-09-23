@@ -275,6 +275,7 @@ sub observation {
     _error('unexpected observation arguments') unless @_ == 1;
     my ($c, $r) = $self->_sync_identity;
     return {phase => $self->{state}{phase}, command => $c, reservation => $r,
+        cleanup_deadline => $self->{closure} ? $self->{closure}->observation->{deadline} : undef,
         first_failure => $self->{state}{first_failure}
             ? {%{$self->{state}{first_failure}}} : undef};
 }

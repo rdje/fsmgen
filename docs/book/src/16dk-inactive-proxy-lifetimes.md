@@ -787,8 +787,7 @@ If a signal is queued while a pipe is created, the handler runs after the full
 job, pair and reservation are published. The interrupted job cannot start,
 and its owner can finish cleanup using the existing bounded closure driver.
 Independent native handoff checks now also use this retained-record path;
-the coordinator now binds root allocation to the ledger, while native start
-and nested admission remain open.
+the coordinator now binds root and nested gated jobs to original ledger grants.
 
 The inactive coordinator now binds native run construction to the original
 root admission record. It retains separate credits for the steady endpoint
@@ -807,8 +806,8 @@ success.
 Actual pending-signal controls observe both the retained endpoint and its
 reconciled descriptor charges before the coordinator return is interrupted.
 The coordinator then refuses context publication and can close the exact run.
-Native start and accepted-connection accounting remain separate open
-integration steps; this owner cannot fork or release execution.
+Accepted-connection accounting remains a separate integration step. The
+coordinator can now create gated jobs but cannot release execution.
 
 Root preparation now retains the complete native job before creating any pipe.
 Each pipe checks the original grant, its preparation phase, remaining lifetime
@@ -838,8 +837,9 @@ published before restoring signals. A pending creator interruption remains the
 job's first error while cleanup retains the recorded reservation's handshake.
 Treating that interruption as a failed native handshake would prevent group
 closure. A reported mask-restoration failure remains a separate native failure.
-The coordinator's root/nested start and subtree cleanup still need to bind these
-hooks to their original grants; these component hooks grant no exec release.
+The coordinator now binds these hooks to original starting grants. Each fork
+checks admission, ancestor lifetimes and retained capacity again. These checks
+grant no exec release.
 
 Repeated cancellation can now shorten cleanup that is already running. An
 earlier shared ancestor wall advances the group escalation threshold and any
@@ -853,12 +853,35 @@ walls before it can interrupt the return.
 For example, a stopped command or a stopped reservation already being retired
 must receive KILL under the shorter wall, then have its exact wait consumed.
 Independent native controls observe that escalation and retain group absence
-before identity retirement. These operations prepare the coordinator's subtree
-join; they do not themselves activate root/nested start or execution release.
+before identity retirement. The coordinator uses this clipping when cancellation
+joins already-running cleanup into an affected subtree.
 
-Normal callers retain the existing own-group supervisor. Aggregate coordinator
-admission, nested routing and complete
-subtree qualification still have separate open owners. These private components
+The inactive coordinator now retains detached nested requests and their original
+grants under a signal mask before returning admission. An interrupted return
+revokes the request while leaving its grant reachable for cleanup. A nested
+preparation or start failure preserves healthy root and sibling admission.
+Native start and advancement use each fork's own mask so the command retains
+the original caller's exec signal state. Only the actual ready handoff changes
+reserved child credit into retained child accounting.
+
+For example, preparing a sibling after a reservation fork adds descriptors that
+the later command fork must close. Each fork gets a fresh aggregate inventory
+excluding only its own job. Copied grants and excess capacity cannot reach a
+native effect. Cancellation revokes the entire selected subtree before native
+cleanup and publishes a common remaining wall, including any earlier native
+cleanup already in progress. A settled descendant retains its result slot;
+its spent cleanup clock cannot expire a later live sibling or parent.
+
+Whole-run close advances bounded cleanup without sleeping. It reports pending
+while a child remains and retains resource charges and the endpoint. Once exact
+native closure is established, it closes the endpoint and retires descendants
+before parents. Closed descriptors alone cannot release an incomplete native
+closure. In this pre-exec scope, cancelled outcomes keep their logical slots
+until whole-run close consumes them; result delivery belongs to later work.
+
+Normal callers retain the existing own-group supervisor. Accepted-peer
+accounting, publication, nested routing and complete subtree qualification
+still have separate open owners. These private components
 establish no nested result or permission to run the retained startup proxy.
 Their tests exercise the current host; Linux qualification remains open.
 Re-run the bounded component controls with:
@@ -872,6 +895,7 @@ scripts/run_with_ram_guard.sh -- prove -Iperl -It/lib t/1835-process-coordinator
 scripts/run_with_ram_guard.sh -- prove -Iperl -It/lib t/1836-process-coordinator-job-preparation.t
 scripts/run_with_ram_guard.sh -- prove -Iperl -It/lib t/1837-process-admitted-forks.t
 scripts/run_with_ram_guard.sh -- prove -Iperl -It/lib t/1838-process-cleanup-wall-clipping.t
+scripts/run_with_ram_guard.sh -- prove -Iperl -It/lib t/1839-process-coordinator-lifecycle.t
 ```
 
 For native stopped-child observations, decode `${^CHILD_ERROR_NATIVE}` with
