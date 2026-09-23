@@ -60,7 +60,6 @@ PNT-eligible until explicitly activated or until the roadmap selects that lane.
 
 | Tree | Status | Roadmap lane | Proposed first leaf | File |
 | --- | --- | --- | --- | --- |
-| `CLI-APB-DEFAULT-OUTPUT-NAMING` | `proposed` | `R10 / CLI consistency` | `.2` qualifies and repairs the bare APB alias default-output naming observation | [task](docs/tasks/CLI-APB-DEFAULT-OUTPUT-NAMING.md) |
 | `CLAIM-VERIFICATION-TEMPLATE-REVIEW` | `proposed` | `evidence architecture` | `.1` reviews the changed director-selected template before any local adoption | [task](docs/tasks/CLAIM-VERIFICATION-TEMPLATE-REVIEW.md) |
 | `MDBOOK-CROSS-LAYER-CURRENT-STATUS-TRUTH-REPAIR` | `proposed` | `cross-layer book truth` | `.1` repairs stale Chapter 11 status prose after an evidence audit | [task](docs/tasks/MDBOOK-CROSS-LAYER-CURRENT-STATUS-TRUTH-REPAIR.md) |
 | `NEXSIM-REQUIREMENTS-HEADING-NUMBERING-REPAIR` | `proposed` | `NEXSIM document integrity` | `.1` aligns lagging subsection numbers without semantic change | [task](docs/tasks/NEXSIM-REQUIREMENTS-HEADING-NUMBERING-REPAIR.md) |

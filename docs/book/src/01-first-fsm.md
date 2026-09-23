@@ -24,6 +24,18 @@ Without `--output`, FSMGen writes generated HDL under the git-ignored
 inside the repository, but FSMGen rejects a destination that escapes the
 repository or resolves through an off-repository symlink.
 
+The default filename uses the source basename with its supported source suffix
+removed, whether you supply a path or find the source with `--path`. For example,
+both commands below write `.artifacts/sv/apb_requester_transfer.sv`:
+
+```bash
+./bin/fsmgen --quiet --strict --path ppif apb_requester_transfer.apb
+./bin/fsmgen --quiet --strict ppif/apb_requester_transfer.apb
+```
+
+The same naming rule handles uppercase `.APB`; `--output` selects the exact
+filename you provide.
+
 ## A Small First FSM
 
 ```lisp

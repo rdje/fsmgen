@@ -42,6 +42,73 @@ subtest 'implicit generated SystemVerilog lands under repository artifacts direc
     unlink $expected or die "cannot remove focused-test generated HDL '$expected': $!";
 };
 
+# Retain exact ownership even when an assertion fails or generation dies.
+my @alias_outputs;
+END {
+    for my $path (@alias_outputs) {
+        unlink $path or warn "cannot remove alias-test HDL '$path': $!" if -f $path;
+    }
+}
+
+subtest 'APB default filenames agree across source lookup forms' => sub {
+    my $workdir = tempdir(CLEANUP => 1);
+    my $sample = File::Spec->catfile($repo_root, 'ppif', 'apb_requester_transfer.apb');
+    my $stem = "${unique}_apb";
+    my %source;
+    for my $suffix (qw(apb APB ppif)) {
+        # Separate stems avoid case-insensitive-filesystem collisions.
+        my $name = "${stem}_${suffix}.$suffix";
+        $name = "${stem}_uppercase.APB" if $suffix eq 'APB';
+        my $path = File::Spec->catfile($source_dir, $name);
+        copy($sample, $path) or die "cannot copy APB naming fixture: $!";
+        $source{$suffix} = $path;
+    }
+    my $default = File::Spec->catfile($repo_root, '.artifacts', 'sv', "${stem}_apb.sv");
+    my $wrong = File::Spec->catfile($repo_root, '.artifacts', 'sv', "${stem}_apb.apb.sv");
+    my $upper = File::Spec->catfile($repo_root, '.artifacts', 'sv', "${stem}_uppercase.sv");
+    my $wrong_upper = File::Spec->catfile($repo_root, '.artifacts', 'sv', "${stem}_uppercase.APB.sv");
+    my $generic = File::Spec->catfile($repo_root, '.artifacts', 'sv', "${stem}_ppif.sv");
+    my $explicit = File::Spec->catfile($workdir, 'selected.sv');
+    for my $path ($default, $wrong, $upper, $wrong_upper, $generic) {
+        die "refusing to replace existing naming-test output '$path'" if -e $path;
+        push @alias_outputs, $path;
+    }
+    my @cases = (
+        ['bare alias', [basename($source{apb})], $default, $wrong],
+        ['absolute alias path', [$source{apb}], $default, $wrong],
+        ['relative alias path', [File::Spec->abs2rel($source{apb}, $workdir)], $default, $wrong],
+        ['uppercase alias suffix', [basename($source{APB})], $upper, $wrong_upper],
+        ['generic APB source', [basename($source{ppif})], $generic, undef],
+        ['explicit output', ['--output', $explicit, basename($source{apb})], $explicit, $default],
+    );
+    for my $case (@cases) {
+        my ($label, $args, $expected, $unexpected) = @$case;
+        subtest $label => sub {
+            in_directory($workdir, sub {
+                local $ENV{FSMLIB} = '';
+                my ($success, undef, undef, $stdout, $stderr) = run(
+                    command => [$fsmgen, '--quiet', '--strict', '--path', $source_dir, @$args],
+                );
+                ok($success, 'the real CLI lowers and generates APB HDL')
+                    or diag(join('', @{$stdout || []}), join('', @{$stderr || []}));
+                is(join('', @{$stderr || []}), '', 'generation keeps stderr clean');
+            });
+            ok(-f $expected, 'HDL uses the selected filename');
+            ok(!-e $unexpected, 'generation does not leave the unintended filename') if defined $unexpected;
+            if (-f $expected) {
+                open my $fh, '<', $expected or die "cannot read '$expected': $!";
+                my $hdl = do { local $/; <$fh> };
+                close $fh or die "cannot close '$expected': $!";
+                like($hdl, qr/\bmodule\s+apb_requester\b/, 'filename choice preserves the APB module');
+            }
+            for my $path (@alias_outputs, $explicit) {
+                unlink $path or die "cannot remove naming-test output '$path': $!" if -f $path;
+            }
+        };
+    }
+    ok(!(grep { -e $_ } @alias_outputs), 'every exact generated default output is removed');
+};
+
 subtest 'implicit generated VHDL lands under repository artifacts directory' => sub {
     my $workdir = tempdir(CLEANUP => 1);
     my $expected = File::Spec->catfile($repo_root, '.artifacts', 'vhd', "${unique}_vhdl.vhd");

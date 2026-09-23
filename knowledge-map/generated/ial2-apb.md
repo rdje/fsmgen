@@ -1,7 +1,7 @@
 # Knowledge Map: `ial2-apb`
 
 > **AUTO-GENERATED — DO NOT EDIT.** Return to the [Knowledge Map](../../KNOWLEDGE_MAP.md).
-> **107** facts · **493** uniquely owned question entries.
+> **107** facts · **494** uniquely owned question entries.
 
 ## Questions → facts
 
@@ -97,6 +97,7 @@
 - q="how are APB multi-register reports shaped?" · facts=[ial2-apb-multi-register-decode-behavior](../../docs/knowledge/ial2-apb-multi-register-decode-behavior.md)
 - q="how are APB peripherals listed in the multi-peripheral contract?" · facts=[ial2-apb-multi-peripheral-interconnect-contract-selection](../../docs/knowledge/ial2-apb-multi-peripheral-interconnect-contract-selection.md)
 - q="how are APB register count and adjacent excess boundaries proved?" · facts=[ial2-apb-generalized-register-set-claim-evidence](../../docs/knowledge/ial2-apb-generalized-register-set-claim-evidence.md)
+- q="how are default HDL filenames chosen for bare APB aliases?" · facts=[ial2-apb-profile-alias-behavior](../../docs/knowledge/ial2-apb-profile-alias-behavior.md)
 - q="how are foundational APB completer and multi-register claims verified?" · facts=[ial2-apb-foundational-claim-evidence](../../docs/knowledge/ial2-apb-foundational-claim-evidence.md)
 - q="how do denied APB PPROT policy accesses behave?" · facts=[ial2-apb-pprot-effects-contract-selection](../../docs/knowledge/ial2-apb-pprot-effects-contract-selection.md)
 - q="how does APB PSTRB write masking work?" · facts=[ial2-apb-sideband-strobe-behavior](../../docs/knowledge/ial2-apb-sideband-strobe-behavior.md)
@@ -988,7 +989,7 @@ _APB PPROT effects readiness selects public policy contract selection_
 
 _.apb is the bounded APB IAL2 profile-alias suffix_
 
-- **date:** 2026-06-26 · **status:** current
+- **date:** 2026-09-23 · **status:** current
 - **source and verification:** [`docs/knowledge/ial2-apb-profile-alias-behavior.md`](../../docs/knowledge/ial2-apb-profile-alias-behavior.md)
 
 ### ial2-apb-profile-alias-completer-composition-contract-selection

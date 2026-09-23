@@ -1312,13 +1312,13 @@ if (!$check_mode && !$emit_semantic_json && !$output_file) {
     # Extract FSM bare name from the original input
     my $fsm_bare_name;
     if ($fsm_input =~ m{/}) {
-        # Path provided - extract basename and remove .fsm extension
+        # Path provided - extract basename and remove the source extension
         my ($name, $path, $suffix) = fileparse($fsm_input, qr/\.[^.]*/);
         $fsm_bare_name = $name;
     } else {
-        # Bare name or name.fsm provided - extract bare name
+        # Bare name or source filename provided - extract bare name
         $fsm_bare_name = $fsm_input;
-        $fsm_bare_name =~ s/\.(?:fsm|isf|ppif|axi|ahb)$//i;  # Remove source extension if present
+        $fsm_bare_name =~ s/\.(?:fsm|isf|ppif|axi|ahb|apb)$//i;  # Remove source extension if present
     }
     
     # Keep implicit generated HDL out of the repository root.
