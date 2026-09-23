@@ -88,9 +88,9 @@ result.
 - ID: `MDBOOK-PARAGRAPH-SPACING.5.2`
   Status: `blocked`
   Goal: `Complete the actual browser DOM, CSS and visual spacing audit.`
-  Acceptance: `Serve the recorded build on loopback; inspect mandatory Chapter 12/14 and shortlist candidates with actual DOM metrics and screenshots in the in-app browser; record viewport, theme and computed CSS for ordinary paragraphs and list-contained prose. Select a bounded formatting-only repair only if a rendered defect is confirmed. Stop the server and close audit resources before handoff; no HTML-only visual signoff.`
-  Verification: `On 2026-09-23 the director enabled full CDP and selected @Browser. A reset followed by cua.getState still failed with CUA_REPL_ENABLED_SURFACES is required before any surface opened. No browser review, viewport, effective CSS or screenshot evidence exists.`
-  Blocked by: `Browser runtime initialization still fails after the director enabled full CDP and selected Browser. Chrome via the documented Computer Use extension is the next proposed connection attempt; no connection is yet verified. HIAL cleanup-first ordering is separately approved.`
+  Acceptance: `Rebuild and rebind candidates if recorded source identities have moved, preserving the original capture. Serve the admitted build on loopback; inspect mandatory Chapter 12/14 and shortlist candidates with actual DOM metrics and screenshots in the in-app browser; record viewport, theme and computed CSS for ordinary paragraphs and list-contained prose. Select a bounded formatting-only repair only if a rendered defect is confirmed. Stop the server and close audit resources before handoff; no HTML-only visual signoff.`
+  Verification: `On 2026-09-23 the director reported enabling full CDP, then Computer Use and the Chrome extension. Each fresh reset followed by cua.getState still failed with CUA_REPL_ENABLED_SURFACES is required before browser discovery. No browser review, viewport, effective CSS or screenshot evidence exists.`
+  Blocked by: `Browser runtime initialization still fails after the reported Computer Use and Chrome setup. No connection is verified. A fresh chat or app restart is documented connection troubleshooting, not a confirmed remedy for this exact error. HIAL cleanup-first ordering is separately approved.`
   Commit: `pending`
 
 - ID: `MDBOOK-PARAGRAPH-SPACING.5.3`
@@ -123,10 +123,11 @@ result.
 
 ## Open Questions
 
-- The director enabled full CDP and selected Browser on 2026-09-23; the runtime
-  error persists. Official setup offers Chrome through Settings > Computer Use
-  and the browser extension: https://learn.chatgpt.com/docs/chrome-extension.
-  No documented fix for this exact initialization error was found.
+- The director reports full CDP, Computer Use and Chrome extension setup on
+  2026-09-23; the runtime error persists before browser discovery. Official
+  connection troubleshooting includes a new chat or app restart:
+  https://learn.chatgpt.com/docs/chrome-extension. Neither is verified as a
+  remedy for this exact error. No visual signoff is available.
 
 ## Blockers
 

@@ -3456,11 +3456,11 @@ decomposes the architecture needed to move beyond that bounded foundation.
   Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.3.1: admit cleanup-first qualification`
 
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.3.2`
-  Status: `pending`
+  Status: `done`
   Goal: `Implement and qualify the private reservation-child lifetime before command launch.`
   Acceptance: `Inside the shared process owner, implement bounded asynchronous reservation creation, acknowledged group establishment, acknowledged departure to the caller group, retirement and exact reaping. Record the fork under masked signals, retain identity through the last permitted group signal, close unrelated descriptors and fail closed on EOF or unknown status. Qualify success and partial-start/departure failures with independent bounded child observations and model-only retirement controls; do not route sealed callers or launch the startup probe.`
-  Verification: `Pending implementation against the exact .5.5.2.1 protocol retained at 49a4d1f50cec77149eeadf799501d0ee33447f12. Existing adapter limits and the legacy default remain unchanged.`
-  Commit: `pending`
+  Verification: `The private Reservation component prepares bounded pipes, records its fork before restoring signals, admits group creation/departure only by acknowledgment, and retains the child until explicit signal retirement and exact nonblocking reaping. T1823 independently checks kernel membership, command wait truth, caller isolation, inherited-descriptor EOF, real silent/stuck children and partial failures. Model-only controls reject retired targets, ECHILD, unreapable children and uncertain absence. The focused endpoint/connection/service/architecture/receipt band passes Files=7, Tests=237. Initial test syntax exposed a fixture lexical-scope error, fixed before execution; all real controls passed on their first executed run. Normal callers, original capture, adapter limits and result schemas remain unchanged; Linux and complete nested closure are still unqualified.`
+  Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.3.2: qualify private reservation lifetime`
 
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.3.3`
   Status: `pending`
@@ -4174,7 +4174,7 @@ decomposes the architecture needed to move beyond that bounded foundation.
 
 ## Current Frontier
 
-Current frontier: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.3.2` implements the reservation-child lifetime after the director-approved sequencing amendment in `.1`. Complete nested cleanup and independent qualification before the fixed capture driver resumes. Preserve original failures, the spent compiler workspace, source-only driver commit and full-CI/push gates.
+Current frontier: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.3.3` composes the gated command child after the qualified reservation lifetime in `.2`. Complete nested cleanup and independent qualification before the fixed capture driver resumes. Preserve original failures, the spent compiler workspace, source-only driver commit and full-CI/push gates.
 
 Architecture audit `.1` is complete. Decision `0032` selects one public
 `.vial` source language, private immutable `VIALSemanticIR` and
@@ -7037,3 +7037,51 @@ closes them. This amendment makes no runtime or containment claim.
   The first staged gate rejected this box for missing a declared output token;
   its actual passed gate output is now recorded here before the required rerun.
   No compiler, proxy, startup capture or full CI was run.
+
+## Reservation-child implementation scope (.19.2.3.1.2.2.5.5.2.3.3.2)
+
+The private `ProcessSupervisor::Reservation` component owns no executable,
+request routing or public facade. Preparation allocates bounded pipes without
+forking; the coordinator must retain that object and reserve its job/child
+slots before calling start. The recorded object owns its exact fork before
+signals are restored. Acknowledged group creation and departure are separate
+states. Before retirement, the child remains unreaped even after unexpected
+EOF; group operations require acknowledged ownership. Retirement irreversibly
+ends group signalling before positive-child termination and exact nonblocking
+reaping. Unknown wait status cannot become reaped or successful.
+
+The caller supplies its original execution deadline and all other run-private
+handles to close in the reservation. Handshakes are clipped to the existing
+private handshake ceiling; retirement consumes a caller-selected remaining
+closure deadline within the existing TERM/KILL envelope. The later coordinator
+must qualify complete descriptor/slot accounting and shared cleanup timing.
+No sealed caller starts this component until the following integration owners
+close. Independent controls belong in a new focused test, not a replay of the
+original T1669/startup compiler/probe. Loading the component creates no process.
+
+## Acceptance Checklist (.19.2.3.1.2.2.5.5.2.3.3.2)
+
+- [x] **ROOT CAUSE (WHY + WHERE)** — `git log -S` for
+  `sub _start_supervision` identifies `51a3a3914`, the asynchronous extraction.
+  That legacy path forks and releases its command immediately; it supplies no
+  independent reserved identity or acknowledged departure. The retained
+  .5.5.2.1 protocol requires those facts before gated coordinator launch.
+  The new component implements that separately owned lifetime prerequisite.
+- [x] **ADDRESSED (verified)** — T1823 uses an independently forked member,
+  direct kernel group queries, actual positive-child waits and pipe EOF. It
+  rejects pre-ack signals, observes the reservation alive after group absence,
+  and verifies retirement forbids later group operations. Silent acknowledgment,
+  stuck release, failed group creation/departure, malformed acknowledgment,
+  failed allocation/fork/write and mask-restoration failures retain wait/failure
+  truth. Model-only tests prove unknown waits and uncertain absence fail closed;
+  no unrelated identity is signalled. The tracked test is the durable watcher;
+  .artifacts/reservation-expanded-test.log retains this execution. Current-host
+  execution is established; Linux and complete coordinator closure remain gaps.
+- [x] **NO REGRESSION** — The guarded endpoint, connection, service, supervision
+  architecture, receipt-observation, receipt-stage and reservation band reports
+  `All tests successful`, `Files=7, Tests=237`; complete output is retained at
+  .artifacts/reservation-final-band.log, including child environment isolation.
+  The book build and rendered description/test command pass. Syntax checks
+  pass for the component and test. The shared engine only exposes its existing private cleanup graces;
+  no normal caller loads the new strategy. Original compiler/probe/startup
+  attempts and full CI were not replayed.

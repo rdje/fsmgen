@@ -4051,6 +4051,25 @@ capture that depends on it. That ordering does not establish cleanup support:
 the fixed capture driver, original failure evidence, existing process limits
 and full-CI/push gates retain their separate acceptance requirements.
 
+A private reservation component now establishes a process group and can move
+back to its caller's group while retaining its unreaped child identity. Its
+owner explicitly retires group signalling before releasing and reaping that
+child. Unexpected departure or EOF preserves the first failure; unknown wait
+status and uncertain group absence cannot count as cleanup. The focused
+controls use independent child membership and wait observations, including a
+silent handoff and a stuck release. They exercise the current host; Linux
+execution remains a missing qualification leg.
+
+Normal callers retain the existing own-group supervisor. Command handoffs,
+coordinator integration, nested routing and complete subtree qualification
+still have separate open owners. Reservation observations alone establish no
+nested result or permission to run the retained startup proxy. Re-run this
+component's bounded controls with:
+
+```bash
+scripts/run_with_ram_guard.sh -- prove -Iperl -It/lib t/1823-process-group-reservation.t
+```
+
 ## Selected authored runtime activity
 
 The runtime-stream axis measures the cost of producing, validating, and

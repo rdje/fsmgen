@@ -42,6 +42,11 @@ my $READ_CHUNK_BYTES = 65_536;
 my $CONTROL_LIMIT_BYTES = 2_048;
 my $TERM_GRACE_SECONDS = 2;
 my $KILL_GRACE_SECONDS = 2;
+
+# Private lifecycle components share the existing cleanup envelope. This is
+# not a caller override and does not activate the coordinator strategy.
+sub _termination_graces { return ($TERM_GRACE_SECONDS, $KILL_GRACE_SECONDS) }
+
 my %SUPERVISION_CALLER = map { $_ => 1 } qw(
     FSM::Support::HDLExternalValidation
     FSM::Test::ProcessSupervisor
