@@ -8,8 +8,9 @@ use File::Copy qw(copy);
 use File::Path qw(make_path);
 use File::Spec;
 use File::Temp qw(tempdir);
-use IPC::Run3 qw(run3);
+use IPC::Open3 qw(open3);
 use JSON::PP ();
+use Symbol qw(gensym);
 use Test::More;
 
 my $json = JSON::PP->new->canonical(1)->utf8(1);
@@ -159,15 +160,7 @@ sub run_verifier {
     local $ENV{FSMGEN_RAM_GUARD_ACTIVE} = 1;
     local $ENV{FSMGEN_RAM_GUARD_EFFECTIVE_HOST_MAX_PCT} = 88;
     local $ENV{FSMGEN_RAM_GUARD_EFFECTIVE_PROCESS_MAX_RSS_MB} = 4096;
-    my ($stdout, $stderr) = ('', '');
-    run3([$^X, $script, @args], undef, \$stdout, \$stderr);
-    my $status = $?;
-    return {
-        success => $status == 0 ? 1 : 0,
-        status => $status >> 8,
-        stdout => $stdout,
-        stderr => $stderr,
-    };
+    return capture_verifier($^X, $script, @args);
 }
 
 subtest 'exact hosted outcome is independently accepted' => sub {
@@ -263,9 +256,13 @@ subtest 'guard and publication-staging boundaries fail closed' => sub {
     write_result(fixture_result());
     local $ENV{FSMGEN_RAM_GUARD_ACTIVE};
     delete $ENV{FSMGEN_RAM_GUARD_ACTIVE};
-    my ($stdout, $stderr) = ('', '');
-    run3([$^X, $script], undef, \$stdout, \$stderr);
-    ok($? != 0, 'unguarded invocation rejects');
+    local $ENV{FSMGEN_RAM_GUARD_EFFECTIVE_HOST_MAX_PCT};
+    delete $ENV{FSMGEN_RAM_GUARD_EFFECTIVE_HOST_MAX_PCT};
+    local $ENV{FSMGEN_RAM_GUARD_EFFECTIVE_PROCESS_MAX_RSS_MB};
+    delete $ENV{FSMGEN_RAM_GUARD_EFFECTIVE_PROCESS_MAX_RSS_MB};
+    my $unguarded = capture_verifier($^X, $script);
+    my ($stdout, $stderr) = @{$unguarded}{qw(stdout stderr)};
+    ok($unguarded->{status} != 0, 'unguarded invocation rejects');
     is($stdout, '', 'unguarded invocation emits no result');
     like($stderr, qr/active repository RAM guard is required/,
         'guard diagnostic is exact');
@@ -282,3 +279,21 @@ subtest 'guard and publication-staging boundaries fail closed' => sub {
 };
 
 done_testing;
+
+sub capture_verifier {
+    my (@command) = @_;
+    my $stderr = gensym;
+    my $pid = open3(my $stdin, my $stdout, $stderr, @command);
+    close $stdin;
+    local $/;
+    my $out = <$stdout> // '';
+    my $err = <$stderr> // '';
+    waitpid($pid, 0);
+    my $status = $? >> 8;
+    return {
+        success => $status == 0 ? 1 : 0,
+        status => $status,
+        stdout => $out,
+        stderr => $err,
+    };
+}

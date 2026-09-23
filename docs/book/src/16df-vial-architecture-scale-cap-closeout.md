@@ -1960,7 +1960,9 @@ families, and the terminal build job failed because those families failed:
   checks, and its closeout skip that ignored publication and source corpus
   the same way. The failed-prefix verifier skips its ignored history archive
   and current corpus the same way. Those checks still run when the ignored
-  input is present.
+  input is present. The hosted-result verifier test captures its child
+  with core `IPC::Open3` because the hosted Perl image does not provide
+  `IPC::Run3`.
 - `t/350-support-contract-builder-audit.t` now admits the regression-gate
   status because that contract already carries guidance. The semantic-family
   envelope stays outside the guidance assertion because its own nonclaims

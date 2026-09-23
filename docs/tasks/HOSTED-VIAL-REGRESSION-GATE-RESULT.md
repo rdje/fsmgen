@@ -32,7 +32,7 @@ Make the hosted VIAL regression gate agree with one published result.
   Acceptance: `Diagnose the failed hosted command, then align the workflow and published contract with the result that command produces.`
   Verification: `pending`
   Commit: `pending`
-  Children: `HOSTED-VIAL-REGRESSION-GATE-RESULT.1, HOSTED-VIAL-REGRESSION-GATE-RESULT.2, HOSTED-VIAL-REGRESSION-GATE-RESULT.3, HOSTED-VIAL-REGRESSION-GATE-RESULT.4, HOSTED-VIAL-REGRESSION-GATE-RESULT.5, HOSTED-VIAL-REGRESSION-GATE-RESULT.6, HOSTED-VIAL-REGRESSION-GATE-RESULT.7, HOSTED-VIAL-REGRESSION-GATE-RESULT.8, HOSTED-VIAL-REGRESSION-GATE-RESULT.9, HOSTED-VIAL-REGRESSION-GATE-RESULT.10, HOSTED-VIAL-REGRESSION-GATE-RESULT.11, HOSTED-VIAL-REGRESSION-GATE-RESULT.12, HOSTED-VIAL-REGRESSION-GATE-RESULT.13, HOSTED-VIAL-REGRESSION-GATE-RESULT.14, HOSTED-VIAL-REGRESSION-GATE-RESULT.15, HOSTED-VIAL-REGRESSION-GATE-RESULT.16`
+  Children: `HOSTED-VIAL-REGRESSION-GATE-RESULT.1, HOSTED-VIAL-REGRESSION-GATE-RESULT.2, HOSTED-VIAL-REGRESSION-GATE-RESULT.3, HOSTED-VIAL-REGRESSION-GATE-RESULT.4, HOSTED-VIAL-REGRESSION-GATE-RESULT.5, HOSTED-VIAL-REGRESSION-GATE-RESULT.6, HOSTED-VIAL-REGRESSION-GATE-RESULT.7, HOSTED-VIAL-REGRESSION-GATE-RESULT.8, HOSTED-VIAL-REGRESSION-GATE-RESULT.9, HOSTED-VIAL-REGRESSION-GATE-RESULT.10, HOSTED-VIAL-REGRESSION-GATE-RESULT.11, HOSTED-VIAL-REGRESSION-GATE-RESULT.12, HOSTED-VIAL-REGRESSION-GATE-RESULT.13, HOSTED-VIAL-REGRESSION-GATE-RESULT.14, HOSTED-VIAL-REGRESSION-GATE-RESULT.15, HOSTED-VIAL-REGRESSION-GATE-RESULT.16, HOSTED-VIAL-REGRESSION-GATE-RESULT.17`
 - ID: `HOSTED-VIAL-REGRESSION-GATE-RESULT.1`
   Status: `done`
   Goal: `Diagnose the first hosted gate failure and own the contract contradiction.`
@@ -124,9 +124,15 @@ Make the hosted VIAL regression gate agree with one published result.
   Verification: `With both inputs present, prove of t/1775 reports All tests successful at Files=1, Tests=3. With both trees hidden and restored, the same command passes. The released log died before any subtest with verifier fixture source tree is unavailable.`
   Commit: `this commit`
 - ID: `HOSTED-VIAL-REGRESSION-GATE-RESULT.16`
+  Status: `done`
+  Goal: `Stop t/1792 from requiring the unshipped IPC::Run3 module.`
+  Acceptance: `The hosted-result verifier test captures the verifier with core IPC::Open3. Focused prove passes. Do not invent a hosted pass.`
+  Verification: `prove -Iperl t/1792-vial-regression-promotion-hosted-result-verifier.t reports All tests successful at Files=1, Tests=5. The released log died at t/1792 line 11 because IPC/Run3.pm is absent from the hosted Perl image.`
+  Commit: `this commit`
+- ID: `HOSTED-VIAL-REGRESSION-GATE-RESULT.17`
   Status: `active`
-  Goal: `Stop the next hosted test from requiring an ignored qualification path on a fresh checkout.`
-  Acceptance: `The next released-log reader of an ignored .artifacts/qualification/vial-scale path either uses a tracked publication or skips that ignored input with a recorded reason. Do not invent a hosted pass.`
+  Goal: `Own the next hosted Perl-file family after the ignored-path readers and the missing IPC::Run3 dependency.`
+  Acceptance: `The next released-log family is either the OSVVM artifact-graph oracle in FSMGen code or the Yosys synthesis deadline, and the repair does not inspect the OSVVM submodule or change a deadline without measurement. Do not invent a hosted pass.`
   Verification: `pending`
   Commit: `pending`
 
@@ -219,3 +225,9 @@ Make the hosted VIAL regression gate agree with one published result.
 - [x] **ROOT CAUSE (WHY + WHERE)** — The released Perl-file log dies before any subtest with `verifier fixture source tree is unavailable` at `t/1775-vial-regression-promotion-failed-prefix-verifier.t line 140`. `git log -S 'regression-promotion-report-coordinate-failure-ordinal-5-v1' -- t/1775-vial-regression-promotion-failed-prefix-verifier.t` shows the fixture still copies that ignored history archive and the ignored current corpus before any subtest.
 - [x] **ADDRESSED (verified)** — The three evidence subtests now skip when either ignored tree is absent and still run when both are present. Focused prove with both inputs present reports All tests successful at Files=1, Tests=3. The same command with both trees hidden and restored also passes.
 - [x] **NO REGRESSION** — `knowledge-map: OK` keeps the earlier budget-closeout skip and records this failed-prefix skip. Remaining ignored-path readers stay HOSTED-VIAL-REGRESSION-GATE-RESULT.16. A failed or unavailable hosted run remains neither support nor capacity.
+
+## Acceptance Checklist (hosted-result core capture HOSTED-VIAL-REGRESSION-GATE-RESULT.16)
+
+- [x] **ROOT CAUSE (WHY + WHERE)** — The released Perl-file log dies at `t/1792-vial-regression-promotion-hosted-result-verifier.t line 11` with `Can't locate IPC/Run3.pm`. `git log -S 'IPC::Run3' -- t/1792-vial-regression-promotion-hosted-result-verifier.t` shows that test was the only repository reader of the unshipped module.
+- [x] **ADDRESSED (verified)** — The test now captures the verifier with core `IPC::Open3`, matching the sibling failed-prefix verifier. Focused prove reports All tests successful at Files=1, Tests=5.
+- [x] **NO REGRESSION** — `knowledge-map: OK` keeps the failed-prefix skip and records this core capture. The OSVVM artifact-graph oracle and the Yosys synthesis deadline stay HOSTED-VIAL-REGRESSION-GATE-RESULT.17. A failed or unavailable hosted run remains neither support nor capacity.
