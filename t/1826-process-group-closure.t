@@ -5,6 +5,7 @@ use warnings;
 use Errno qw(EAGAIN ECHILD EINTR EPERM ESRCH);
 use IO::Select;
 use POSIX qw(WNOHANG);
+use Scalar::Util qw(refaddr);
 use Time::HiRes qw(CLOCK_MONOTONIC clock_gettime sleep);
 use Test::More;
 use lib 'perl', 't/lib';
@@ -12,7 +13,25 @@ use FSM::Test::ProjectDataLocality;
 use FSM::Support::ProcessSupervisor::GroupClosure ();
 
 my @pairs;
+my %group_observations;
 my $owner = $$;
+
+# Observe independently before the reservation relinquishes its identity.
+# The final assertions use this retained kernel result, never a recycled PGID.
+my $retire = FSM::Support::ProcessSupervisor::Reservation->can('retire');
+no warnings 'redefine';
+local *FSM::Support::ProcessSupervisor::Reservation::retire = sub {
+    my ($r) = @_;
+    my ($pair) = grep { $_->reservation == $r } @pairs;
+    if ($pair && $r->{pid} && $r->{moved} && !$r->{retired}) {
+        die 'absence observer lost reservation identity' if $r->{reaped};
+        local $! = 0;
+        my $present = CORE::kill(0, -$r->{pid});
+        $group_observations{refaddr($r)} = [$present, 0 + $!];
+    }
+    return $retire->(@_);
+};
+use warnings 'redefine';
 sub now { return clock_gettime(CLOCK_MONOTONIC) }
 sub error { my ($code) = @_; local $@; eval { $code->(); 1 }; return $@; }
 sub prepare {
@@ -82,13 +101,14 @@ sub exact_closed {
     my $r = $pair->reservation->observation;
     for my $pid ($c->{command_pid}, $r->{pid}) {
         next unless $pid;
-        is(waitpid($pid, WNOHANG), -1, "$label has no remaining exact wait");
-        is(0 + $!, ECHILD, "$label exact wait was consumed");
+        my $waited = waitpid($pid, WNOHANG);
+        my $error = 0 + $!;
+        is($waited, -1, "$label has no remaining exact wait");
+        is($error, ECHILD, "$label exact wait was consumed");
     }
     if ($r->{pid}) {
-        local $! = 0;
-        is(kill(0, -$r->{pid}), 0, "$label kernel group is absent");
-        is(0 + $!, ESRCH, "$label group absence is actual ESRCH");
+        is_deeply($group_observations{refaddr($pair->reservation)}, [0, ESRCH],
+            "$label kernel proves group absence before identity retirement");
     }
     ok(!@{$pair->handles} && !@{$pair->reservation->handles}, "$label pair descriptors are closed");
 }

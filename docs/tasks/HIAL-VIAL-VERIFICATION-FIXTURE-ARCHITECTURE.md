@@ -3531,10 +3531,26 @@ decomposes the architecture needed to move beyond that bounded foundation.
   Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.3.5.1: retain unjoined command kill authority`
 
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.3.5.2`
-  Status: `pending`
+  Status: `active`
   Goal: `Complete independent reserved-group handoff and cancellation qualification.`
-  Acceptance: `After child .1, join the existing component evidence with independent native process identities, caller isolation, descriptor closure, real wait/group absence and failure ordering across the complete launch/cancellation domain. Qualify safe model-only reused/retired/unreapable identities, keep Linux and original startup gaps explicit, and require all owned outcomes consumed before admitting coordinator integration.`
-  Verification: `Sibling .1 closes the native missed-KILL defect with an independent stopped-child oracle. Complete the remaining handoff/cancellation domain before coordinator integration.`
+  Acceptance: `After child .1, join the existing component evidence with independent native process identities, caller isolation, descriptor closure, real wait/group absence and failure ordering across the complete launch/cancellation domain. Qualify safe model-only reused/retired/unreapable identities, keep Linux and original startup gaps explicit, and require all owned outcomes consumed before admitting coordinator integration. Add native reservation-death cuts before and after departure acknowledgment, retaining exact fork/wait/signal inventories, untouched caller group, closed descriptors and independently observed absence or explicitly unproved closure. Use bounded rescue only for recorded direct children; no replay of spent captures.`
+  Verification: `The independent review finds post-reap numeric PID/group probes in T1823/T1826/T1827. Child .1 must move native absence observation before retirement and retain exact wait checks; child .2 then owns native reservation-death cuts and the complete evidence join.`
+  Commit: `pending`
+
+  Children: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.3.5.2.1, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.3.5.2.2`
+
+- ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.3.5.2.1`
+  Status: `done`
+  Goal: `Remove post-retirement numeric probes from reserved-process qualification.`
+  Acceptance: `Independently observe actual group absence while the recorded reservation identity remains unreaped and unretired; retain that observation for final assertions. Replace post-reap PID probes with exact child-wait consumption checks. Reject any observer attempt to probe retired or unowned identities, keep model-only fake identities away from native calls, and preserve all existing closure and failure assertions.`
+  Verification: `T1823 now requires exact ECHILD after the consumed wait without a retired PID probe. T1826/T1827 independently query group absence immediately before the recorded reservation retires, retain native result/errno and use them in final assertions. Only registered real reservations that moved and remain unreaped/unretired may be queried; synthetic controls stay outside that inventory. The guarded focused band passes Files=3, Tests=24. A changed retained observation reporting presence fails four closure subtests without any unowned syscall. Production code, captures and protocol bounds are unchanged. Native death cuts and evidence join remain sibling .2.`
+  Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.3.5.2.1: observe group absence before retirement`
+
+- ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.3.5.2.2`
+  Status: `pending`
+  Goal: `Qualify native reservation death around departure and join the handoff evidence.`
+  Acceptance: `After child .1, kill only independently recorded reservation children before and after departure acknowledgment. Require native membership and EOF, exact command/reservation waits, pre-retirement group facts, closed descriptors, failure ordering and no exec release; rescue only actual unharvested direct children. Join existing real and modeled controls against the selected protocol without claiming Linux, original startup or nested qualification.`
+  Verification: `Pending the observer repair in sibling .1.`
   Commit: `pending`
 
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.4`
@@ -4228,7 +4244,7 @@ decomposes the architecture needed to move beyond that bounded foundation.
 
 ## Current Frontier
 
-Current frontier: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.3.5.2` completes independent handoff/cancellation qualification after sibling `.1` fixes and natively proves positive KILL for an unjoined command after reservation departure. Complete nested cleanup and independent qualification before the fixed capture driver resumes. Preserve original failures, the spent compiler workspace, source-only driver commit and full-CI/push gates.
+Current frontier: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.3.5.2.2` qualifies native reservation-death cuts and joins the independent handoff evidence after sibling `.1` removes post-retirement numeric probes from the component tests. Complete nested cleanup and independent qualification before the fixed capture driver resumes. Preserve original failures, the spent compiler workspace, source-only driver commit and full-CI/push gates.
 
 Architecture audit `.1` is complete. Decision `0032` selects one public
 `.vial` source language, private immutable `VIALSemanticIR` and
@@ -6997,3 +7013,27 @@ The manifest binds the immediately preceding acceptance suffix to its exact Git 
   requires an unharvested owned command; group operations require acknowledged
   departure and stop before identity retirement. Linux and wider independent
   handoff qualification remain open; no original capture or routing was enabled.
+
+## Acceptance Checklist (.19.2.3.1.2.2.5.5.2.3.3.5.2.1)
+
+- [x] **ROOT CAUSE (WHY + WHERE)** — `git log -S` identifies aa3bcf39a,
+  1a211ba85 and ec277e682 as the T1823/T1826/T1827 post-reap numeric-probe
+  introductions. A completed wait relinquishes PID/PGID lifetime ownership;
+  a later kill-zero query can address a reused identity and cannot strengthen
+  the prior closure result. The existing assertions crossed that boundary.
+- [x] **ADDRESSED (verified)** — Re-derive through actual kernel group queries
+  immediately before the retained reservation retires, preserving native result
+  and errno for terminal assertions. Only registered real reservations with
+  acknowledged movement and unreaped/unretired identity reach that query.
+  T1823 instead pairs its exact post-consumption wait with ECHILD, without a
+  retired PID query. Falsification: the altered retained observation in
+  .artifacts/reserved-observer-absence-mutation.t reports presence and rejects
+  four closure subtests; its actual syscalls remain inside the owned lifetime.
+  Durability: tracked tests, book/fact and this task commit. Ignored mutation
+  source and .artifacts/reserved-observer-*.log remain a named archive gap.
+- [x] **NO REGRESSION** — The guarded affected band reports
+  `All tests successful`, `Files=3, Tests=24` in
+  .artifacts/reserved-observer-focused.log. Test syntax, book HTML and staged
+  doctrine checks gate this test-only repair. Production engine, original
+  captures and bounds are unchanged; native death cuts, Linux and complete
+  nested qualification remain open in their existing owners.

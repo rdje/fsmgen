@@ -6,8 +6,8 @@ Status and evidence: `docs/tasks/`. The system itself: `MEMORY_ARCHITECTURE.md`.
 ## Resume
 
 - repository_revision: derive with `git log -1 --format='%H %s'`; never shadow `HEAD` here.
-- active_work_unit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.3.5.2` (pending)
-- next_action: Complete independent reserved-group handoff/cancellation qualification after the native unjoined-command cleanup repair.
+- active_work_unit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.3.5.2.2` (pending)
+- next_action: Qualify native reservation death before and after acknowledged departure, then join independent reserved-group handoff/cancellation evidence.
   Preserve the spent compiler workspace and `docs/audits/native-proxy-receipt-capture-20260923/result/` evidence.
 - in_flight_uncommitted: none.
 - in_flight_background: none.

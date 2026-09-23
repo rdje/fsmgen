@@ -183,8 +183,10 @@ subtest 'kernel membership, wait truth and caller isolation' => sub {
         is($closed->{wait_status}, 0, "$mode normal reservation release is exit zero");
         is($closed->{failure}, undef, "$mode reservation closure has no failure");
         local $! = 0;
-        ok(!kill(0, $pid) && $! == ESRCH, "$mode independent PID probe proves absence after return");
-        is(waitpid($pid, WNOHANG), -1, "$mode no unconsumed direct-child wait remains");
+        my $waited = waitpid($pid, WNOHANG);
+        my $error = 0 + $!;
+        is($waited, -1, "$mode no unconsumed direct-child wait remains");
+        is($error, ECHILD, "$mode exact child wait was consumed without probing a retired PID");
         ok(!grep(defined(fileno($_)), @owned), "$mode all captured handles are closed");
         like(error(sub { $r->signal_group('KILL') }), qr/live reservation identity/, "$mode retired group cannot be signalled");
         like(error(sub { $r->group_absent }), qr/live reservation identity/, "$mode retired numeric group cannot be probed");

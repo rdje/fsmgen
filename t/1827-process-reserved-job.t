@@ -15,7 +15,25 @@ use FSM::Support::ProcessSupervisor::ReservedJob ();
 use ReceiptAdapter;
 
 my @jobs;
+my %group_observations;
 my $owner = $$;
+
+# Retain the independent kernel observation while the real reservation still
+# owns the identity. Final result checks must not probe its retired numeric PGID.
+my $retire = FSM::Support::ProcessSupervisor::Reservation->can('retire');
+no warnings 'redefine';
+local *FSM::Support::ProcessSupervisor::Reservation::retire = sub {
+    my ($r) = @_;
+    my ($job) = grep { $_->{pair}->reservation == $r } @jobs;
+    if ($job && $r->{pid} && $r->{moved} && !$r->{retired}) {
+        die 'absence observer lost reservation identity' if $r->{reaped};
+        local $! = 0;
+        my $present = CORE::kill(0, -$r->{pid});
+        $group_observations{refaddr($r)} = [$present, 0 + $!];
+    }
+    return $retire->(@_);
+};
+use warnings 'redefine';
 sub now { return clock_gettime(CLOCK_MONOTONIC) }
 sub error { my ($code) = @_; local $@; eval { $code->(); 1 }; return $@; }
 sub prepare {
@@ -55,12 +73,13 @@ sub closed {
     ok($state->{cleanup}{leader_reaped} && $state->{cleanup}{group_gone}
         && $state->{reservation_reaped}, 'distinct closure facts are all actual');
     for my $pid ($state->{pid}, $state->{group_identity}{pid}) {
-        is(waitpid($pid, WNOHANG), -1, 'no exact child wait remains');
-        is(0 + $!, ECHILD, 'the exact wait was consumed');
+        my $waited = waitpid($pid, WNOHANG);
+        my $error = 0 + $!;
+        is($waited, -1, 'no exact child wait remains');
+        is($error, ECHILD, 'the exact wait was consumed');
     }
-    local $! = 0;
-    is(kill(0, -$state->{group_identity}{pid}), 0, 'kernel reports no reserved group');
-    is(0 + $!, ESRCH, 'group absence is ESRCH');
+    is_deeply($group_observations{refaddr($job->{pair}->reservation)}, [0, ESRCH],
+        'kernel proves group absence before identity retirement');
     return $state;
 }
 

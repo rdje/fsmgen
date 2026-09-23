@@ -683,6 +683,11 @@ harvests the direct command before probing group absence, requires actual
 ESRCH, and retires group signalling before releasing the reservation. Unknown
 waits, uncertain absence and missed closure deadlines remain incomplete.
 
+Independent tests query group absence before reservation retirement and retain
+the native result for final assertions. After reaping, a numeric PID or PGID
+may be reused; probing it cannot prove the earlier closure. Exact child-wait
+consumption remains a separate check and requires ECHILD after the owned wait.
+
 The inactive reserved job now composes launch, capture, cleanup and terminal
 results. Its invocation wall includes admission and launch; a ready command
 still waits for explicit publication-controlled release. Separate binary output
