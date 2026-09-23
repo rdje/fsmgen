@@ -1966,6 +1966,21 @@ families, and the terminal build job failed because those families failed:
   isolation audit skips its current-profile controls when the ignored
   revision-1 publication is absent and still runs them when it is present.
   Run 35782532228 has no remaining unowned released failure family.
+  The retained summary projections and ownership review are available below.
+  They distinguish public policy-derivation failures from tests that explicitly
+  read ignored fixtures. This closes historical ownership, not hosted repair
+  qualification. The next authorized push still needs exact-revision workflow
+  and job checks. The deadline workaround currently also skips local Yosys
+  checks; `HOSTED-VIAL-REGRESSION-GATE-RESULT.28` owns that scope repair.
+
+  ```sh
+  python3 -B docs/audits/hosted-failure-census-20260923/audit.py --verify-saved
+  python3 -B docs/audits/hosted-failure-census-20260923/audit.py --qualify
+  ```
+
+  Saved review does not rerun tests or contact GitHub. `--verify-raw` also
+  compares the retained ignored logs when available; their full raw bytes are
+  not archived by this bounded projection.
 - Several regression-promotion tests still read ignored
   `.artifacts/qualification/vial-scale` paths that a fresh checkout does not
   carry. The policy and capture-plan mutation checks now skip that ignored

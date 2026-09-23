@@ -32,7 +32,7 @@ Make the hosted VIAL regression gate agree with one published result.
   Acceptance: `Diagnose the failed hosted command, then align the workflow and published contract with the result that command produces.`
   Verification: `pending`
   Commit: `pending`
-  Children: `HOSTED-VIAL-REGRESSION-GATE-RESULT.1, HOSTED-VIAL-REGRESSION-GATE-RESULT.2, HOSTED-VIAL-REGRESSION-GATE-RESULT.3, HOSTED-VIAL-REGRESSION-GATE-RESULT.4, HOSTED-VIAL-REGRESSION-GATE-RESULT.5, HOSTED-VIAL-REGRESSION-GATE-RESULT.6, HOSTED-VIAL-REGRESSION-GATE-RESULT.7, HOSTED-VIAL-REGRESSION-GATE-RESULT.8, HOSTED-VIAL-REGRESSION-GATE-RESULT.9, HOSTED-VIAL-REGRESSION-GATE-RESULT.10, HOSTED-VIAL-REGRESSION-GATE-RESULT.11, HOSTED-VIAL-REGRESSION-GATE-RESULT.12, HOSTED-VIAL-REGRESSION-GATE-RESULT.13, HOSTED-VIAL-REGRESSION-GATE-RESULT.14, HOSTED-VIAL-REGRESSION-GATE-RESULT.15, HOSTED-VIAL-REGRESSION-GATE-RESULT.16, HOSTED-VIAL-REGRESSION-GATE-RESULT.17, HOSTED-VIAL-REGRESSION-GATE-RESULT.18, HOSTED-VIAL-REGRESSION-GATE-RESULT.19, HOSTED-VIAL-REGRESSION-GATE-RESULT.20, HOSTED-VIAL-REGRESSION-GATE-RESULT.21, HOSTED-VIAL-REGRESSION-GATE-RESULT.22, HOSTED-VIAL-REGRESSION-GATE-RESULT.23, HOSTED-VIAL-REGRESSION-GATE-RESULT.24, HOSTED-VIAL-REGRESSION-GATE-RESULT.25, HOSTED-VIAL-REGRESSION-GATE-RESULT.26`
+  Children: `HOSTED-VIAL-REGRESSION-GATE-RESULT.1, HOSTED-VIAL-REGRESSION-GATE-RESULT.2, HOSTED-VIAL-REGRESSION-GATE-RESULT.3, HOSTED-VIAL-REGRESSION-GATE-RESULT.4, HOSTED-VIAL-REGRESSION-GATE-RESULT.5, HOSTED-VIAL-REGRESSION-GATE-RESULT.6, HOSTED-VIAL-REGRESSION-GATE-RESULT.7, HOSTED-VIAL-REGRESSION-GATE-RESULT.8, HOSTED-VIAL-REGRESSION-GATE-RESULT.9, HOSTED-VIAL-REGRESSION-GATE-RESULT.10, HOSTED-VIAL-REGRESSION-GATE-RESULT.11, HOSTED-VIAL-REGRESSION-GATE-RESULT.12, HOSTED-VIAL-REGRESSION-GATE-RESULT.13, HOSTED-VIAL-REGRESSION-GATE-RESULT.14, HOSTED-VIAL-REGRESSION-GATE-RESULT.15, HOSTED-VIAL-REGRESSION-GATE-RESULT.16, HOSTED-VIAL-REGRESSION-GATE-RESULT.17, HOSTED-VIAL-REGRESSION-GATE-RESULT.18, HOSTED-VIAL-REGRESSION-GATE-RESULT.19, HOSTED-VIAL-REGRESSION-GATE-RESULT.20, HOSTED-VIAL-REGRESSION-GATE-RESULT.21, HOSTED-VIAL-REGRESSION-GATE-RESULT.22, HOSTED-VIAL-REGRESSION-GATE-RESULT.23, HOSTED-VIAL-REGRESSION-GATE-RESULT.24, HOSTED-VIAL-REGRESSION-GATE-RESULT.25, HOSTED-VIAL-REGRESSION-GATE-RESULT.26, HOSTED-VIAL-REGRESSION-GATE-RESULT.27, HOSTED-VIAL-REGRESSION-GATE-RESULT.28`
 - ID: `HOSTED-VIAL-REGRESSION-GATE-RESULT.1`
   Status: `done`
   Goal: `Diagnose the first hosted gate failure and own the contract contradiction.`
@@ -184,11 +184,27 @@ Make the hosted VIAL regression gate agree with one published result.
   Verification: `Focused prove with the publication present reports All tests successful at Files=1, Tests=4. The same command with the publication hidden and restored also passes.`
   Commit: `c00deda5d`
 - ID: `HOSTED-VIAL-REGRESSION-GATE-RESULT.26`
-  Status: `active`
+  Status: `done`
   Goal: `Record that run 35782532228 has no remaining unowned released failure family.`
   Acceptance: `The released Test Summary names only families already owned through .25. The gate log dies in the ignored closure loader that public derive no longer calls. Do not invent a hosted pass.`
-  Verification: `pending`
+  Verification: `The saved and original-log reviews agree on 43 failed test files across all 16 released Perl jobs, each with an exact fixing owner. Complete saved summaries, gate/build projections, original byte identities and released job IDs are retained in docs/audits/hosted-failure-census-20260923/. Ten independently altered census controls reject. Original callstacks correct the initial mapping of t/1768, t/1769 and t/1773: they failed through public policy derive, owned by .2, rather than direct fixture-mutation reads. Current derive uses the tracked seal. This closes historical diagnostic ownership only; raw-log durability is explicitly missing, exact repaired hosted qualification remains .27, and the newly observed unconditional local deadline skip is owned by .28.`
+  Commit: `this commit`
+
+- ID: `HOSTED-VIAL-REGRESSION-GATE-RESULT.27`
+  Status: `blocked`
+  Goal: `Consume exact repaired-revision hosted qualification after the next authorized push.`
+  Acceptance: `After HIAL startup/full-CI prerequisites and COMMIT.md push cadence permit publication, prove local/upstream/remote SHA equality and every expected workflow and required job terminal-successful for that exact pushed revision. Own and repair any new failure instead of treating a repaired local test or unavailable result as hosted success.`
+  Verification: `Pending an authorized repaired-revision push; run 35782532228 remains failed historical evidence.`
   Commit: `pending`
+  Blocked by: `HIAL startup and full-CI gates plus COMMIT.md push cadence; local repair .28 can proceed without lifting them.`
+
+- ID: `HOSTED-VIAL-REGRESSION-GATE-RESULT.28`
+  Status: `pending`
+  Goal: `Restrict the hosted Yosys deadline workaround to its declared hosted scope.`
+  Acceptance: `Reproduce that HostedYosysDeadline currently skips local checks without consulting host context. Make ordinary local bounded verification run again while keeping explicit deadline-check opt-in and the existing hosted limitation. Prove environment selection independently and retain the sealed 120-second tool limit; qualify a focused real local synthesis check without touching HIAL capture or submodule internals. Own any further real timeout repair rather than broadening skips or deadlines.`
+  Verification: `Source inspection shows hosted_yosys_deadline_skip returns its skip reason on every host unless FSMGEN_HOSTED_YOSYS_DEADLINE_CHECK=1. No host predicate exists. The original hosted timeout remains evidence of a qualification limit; it cannot justify suppressing unrelated local checks.`
+  Commit: `pending`
+
 
 ## Acceptance Checklist (hosted gate released-log diagnosis HOSTED-VIAL-REGRESSION-GATE-RESULT.1)
 
@@ -342,6 +358,6 @@ Make the hosted VIAL regression gate agree with one published result.
 
 ## Acceptance Checklist (released failure census closeout HOSTED-VIAL-REGRESSION-GATE-RESULT.26)
 
-- [x] **ROOT CAUSE (WHY + WHERE)** — The released Test Summary for run 35782532228 names only families already owned through HOSTED-VIAL-REGRESSION-GATE-RESULT.25. The gate log dies at `ArchitectureScaleRegressionPromotionPolicy.pm line 236` inside `validate_complete_publication`. `git log -S '_load_sealed_policy' -- perl/FSM/VIAL/ArchitectureScaleRegressionPromotionPolicy.pm` shows public `derive` now loads the tracked seal.
-- [x] **ADDRESSED (verified)** — The book and knowledge card record that this run has no remaining unowned released failure family. The census names the owned tests and the already-repaired gate path. A failed or unavailable hosted run remains neither support nor capacity.
-- [x] **NO REGRESSION** — `knowledge-map: OK` keeps the semantic/bridge publication skip and records this census closeout. No later released family remains in that run.
+- [x] **ROOT CAUSE (WHY + WHERE)** — `git log -S '_load_sealed_policy'` identifies `13fae8b2d`. The index and book declared diagnostic ownership closed while the live .26 node remained active without retained census data. Original released summaries and public-derive callstacks identify every failed test; the gate failed in the ignored calibration loader that current public derive no longer invokes.
+- [x] **ADDRESSED (verified)** — `audit.py --verify-raw` and `--verify-saved` agree on 16 released Perl jobs, 43 failed test files and zero unowned failed tests. Exact original summaries, job IDs, log byte identities, gate/build projections and public-derive stack excerpts are retained in the tracked census. The initial t/1768/t/1769/t/1773 owner assignment is corrected from fixture skips to public-derive owner .2. Historical failure remains failure; .27 owns exact hosted requalification and .28 owns the helper's unintended blanket local skip.
+- [x] **NO REGRESSION** — `knowledge-map: OK` retains every canonical route; the saved and raw census reviews pass, and `audit.py --qualify` rejects missing/reordered shards, mismatched jobs, changed runs, unowned/substituted tests, missing/altered derive evidence, a false gate success and an injected hosted-pass claim. Re-derive: original retained logs plus current public derive; falsify: saved-summary parsing, exact job/test sets and ten independent altered inputs; durability: committed summary/stack projections, original byte hashes, reviewer, owner tree and book. Full raw log availability and repaired hosted execution remain explicit missing legs. No producer, provider, test suite, remote query or push runs.
