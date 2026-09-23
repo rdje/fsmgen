@@ -559,7 +559,10 @@ The public compiler request still returns only the public result. One
 compiler receipt cannot bind: the review still requires the compiler,
 outer and inner receipts together. The sealed supervisor accepts no
 compiler environment, so a launch would inherit the caller environment.
-No compiler, probe or tool-resolution process runs in this step.
+The sealed private job also carries no receipt role. The current
+observation proof supplies compiler, outer and inner outside the
+supervisor. No compiler, probe or tool-resolution process runs in this
+step.
 
 ```sh
 python3 -B docs/audits/native-proxy-receipt-ownership-inventory-20260922/audit.py --verify-saved
@@ -570,7 +573,7 @@ perl t/1818-process-supervisor-receipt-observation.t
 
 | Remaining work | Required result |
 | --- | --- |
-| Real receipt binding | The sealed supervisor accepts no compiler environment. The sealed compiler launch remains the next capture. |
+| Real receipt binding | The sealed private job carries no receipt role. The sealed compiler launch remains the next capture. |
 | Inactive adapter composition | Join preparation, native path/reference admission and observation custody before the separate native experiment. |
 | Final protocol join | Check current evidence together and retain native, live/public and startup/benefit gates. |
 
