@@ -32,7 +32,7 @@ Make the hosted VIAL regression gate agree with one published result.
   Acceptance: `Diagnose the failed hosted command, then align the workflow and published contract with the result that command produces.`
   Verification: `pending`
   Commit: `pending`
-  Children: `HOSTED-VIAL-REGRESSION-GATE-RESULT.1, HOSTED-VIAL-REGRESSION-GATE-RESULT.2, HOSTED-VIAL-REGRESSION-GATE-RESULT.3, HOSTED-VIAL-REGRESSION-GATE-RESULT.4, HOSTED-VIAL-REGRESSION-GATE-RESULT.5, HOSTED-VIAL-REGRESSION-GATE-RESULT.6, HOSTED-VIAL-REGRESSION-GATE-RESULT.7, HOSTED-VIAL-REGRESSION-GATE-RESULT.8, HOSTED-VIAL-REGRESSION-GATE-RESULT.9, HOSTED-VIAL-REGRESSION-GATE-RESULT.10, HOSTED-VIAL-REGRESSION-GATE-RESULT.11`
+  Children: `HOSTED-VIAL-REGRESSION-GATE-RESULT.1, HOSTED-VIAL-REGRESSION-GATE-RESULT.2, HOSTED-VIAL-REGRESSION-GATE-RESULT.3, HOSTED-VIAL-REGRESSION-GATE-RESULT.4, HOSTED-VIAL-REGRESSION-GATE-RESULT.5, HOSTED-VIAL-REGRESSION-GATE-RESULT.6, HOSTED-VIAL-REGRESSION-GATE-RESULT.7, HOSTED-VIAL-REGRESSION-GATE-RESULT.8, HOSTED-VIAL-REGRESSION-GATE-RESULT.9, HOSTED-VIAL-REGRESSION-GATE-RESULT.10, HOSTED-VIAL-REGRESSION-GATE-RESULT.11, HOSTED-VIAL-REGRESSION-GATE-RESULT.12`
 - ID: `HOSTED-VIAL-REGRESSION-GATE-RESULT.1`
   Status: `done`
   Goal: `Diagnose the first hosted gate failure and own the contract contradiction.`
@@ -94,6 +94,12 @@ Make the hosted VIAL regression gate agree with one published result.
   Verification: `With the publication present, prove of t/1771 reports All tests successful at Files=1, Tests=3. With the tree hidden and restored, the same command passes. The released log failed the census at t/1771 line 69 after Can't stat vial-scale/v1.`
   Commit: `this commit`
 - ID: `HOSTED-VIAL-REGRESSION-GATE-RESULT.11`
+  Status: `done`
+  Goal: `Stop t/1772 from dying when the ignored calibration closure is absent.`
+  Acceptance: `Every corpus-store subtest and the trailing cleanup check skip with a recorded reason when the ignored closure is absent, and still run when it is present. Do not invent a hosted pass.`
+  Verification: `With the closure present, prove of t/1772 reports All tests successful at Files=1, Tests=9. With the closure hidden and restored, the same command passes. The released log died with cannot read calibration-closure.json before any subtest.`
+  Commit: `this commit`
+- ID: `HOSTED-VIAL-REGRESSION-GATE-RESULT.12`
   Status: `active`
   Goal: `Stop the next hosted test from requiring an ignored qualification path on a fresh checkout.`
   Acceptance: `The next released-log reader of an ignored .artifacts/qualification/vial-scale path either uses a tracked publication or skips that ignored input with a recorded reason. Do not invent a hosted pass.`
@@ -159,3 +165,9 @@ Make the hosted VIAL regression gate agree with one published result.
 - [x] **ROOT CAUSE (WHY + WHERE)** — The released Perl-file log fails the census at `t/1771-vial-legacy-matrix-publication-bounds.t line 69` after `Can't stat` ignored `.artifacts/qualification/vial-scale/v1` at line 360. `git log -S 'vial-scale/v1' -- t/1771-vial-legacy-matrix-publication-bounds.t` shows that census still walks the ignored publication.
 - [x] **ADDRESSED (verified)** — The census now skips when that tree is absent and still runs when it is present. The synthetic publisher checks stay. Focused prove with the publication present reports All tests successful at Files=1, Tests=3. The same command with the tree hidden and restored also passes.
 - [x] **NO REGRESSION** — `knowledge-map: OK` keeps the earlier profile-store skip and records this census skip. Remaining ignored-path readers stay HOSTED-VIAL-REGRESSION-GATE-RESULT.11. A failed or unavailable hosted run remains neither support nor capacity.
+
+## Acceptance Checklist (ignored corpus-store closure HOSTED-VIAL-REGRESSION-GATE-RESULT.11)
+
+- [x] **ROOT CAUSE (WHY + WHERE)** — The released Perl-file log dies before any subtest with `cannot read` the ignored calibration-closure JSON. `git log -S 'calibration-closure.json' -- t/1772-vial-regression-promotion-corpus-store.t` shows the sealed plan still loads that ignored publication.
+- [x] **ADDRESSED (verified)** — Every corpus-store subtest and the trailing cleanup check now skip when that file is absent and still run when it is present. Focused prove with the closure present reports All tests successful at Files=1, Tests=9. The same command with the closure hidden and restored also passes.
+- [x] **NO REGRESSION** — `knowledge-map: OK` keeps the earlier census skip and records this corpus-store skip. Remaining ignored-path readers stay HOSTED-VIAL-REGRESSION-GATE-RESULT.12. A failed or unavailable hosted run remains neither support nor capacity.
