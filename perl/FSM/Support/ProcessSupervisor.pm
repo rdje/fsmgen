@@ -727,10 +727,23 @@ sub _finish_result {
 # The public result copies cleanup flags and stays on schema version 1. This
 # observation keeps the original cleanup hash so a later capture can bind the
 # private member the receipt adapter requires. It does not launch a process.
+my %RECEIPT_ROLE = (
+    compile_proxy => 'compiler',
+    probe => 'outer',
+    tool_resolution => 'inner',
+);
+
+sub _receipt_role {
+    my ($stage) = @_;
+    return undef unless defined($stage) && !ref($stage);
+    return $RECEIPT_ROLE{$stage};
+}
+
 sub _receipt_observation {
     my ($state) = @_;
     return {
         schema => 'fsmgen.process_supervisor.receipt_observation.v1',
+        role => _receipt_role($state->{stage}),
         stage => $state->{stage},
         phase => 'finished',
         leader_reaped => $state->{leader_reaped} ? 1 : 0,

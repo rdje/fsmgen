@@ -52,7 +52,9 @@ my @states;
 for my $index (0 .. $#jobs) {
     my $job = $jobs[$index];
     my $observation = $observe->('FSM::Test::ProcessSupervisor', $job);
-    is($observation->{stage}, $job->{stage}, "stage $index is preserved");
+    is($observation->{role}, (qw(compiler outer inner))[$index],
+    "stage $index carries its receipt role");
+is($observation->{stage}, $job->{stage}, "stage $index is preserved");
     is($observation->{phase}, 'finished', "stage $index is finished");
     is($observation->{birth}{pid}, $job->{pid}, "stage $index returns its pid");
     is($observation->{birth}{start_sec}, $job->{birth_sec},
@@ -66,7 +68,7 @@ for my $index (0 .. $#jobs) {
     is(refaddr($observation->{cleanup}), refaddr($job->{cleanup}),
         "stage $index does not copy the cleanup hash");
     push @states, {
-        role => (qw(compiler outer inner))[$index],
+        role => $observation->{role},
         birth => $observation->{birth},
         group => $observation->{group},
         stage => $observation->{stage},
@@ -310,5 +312,19 @@ ok(!exists $supplied->{result}{pid},
 is($ENV{FSMGEN_RECEIPT_OBSERVATION}, undef,
     'the parent environment remains unchanged');
 is($SIGNALS, 0, 'the environment proof sends no terminating signal');
+
+my $compiler_role = $build->(finished_job('compile_proxy', 31));
+is($compiler_role->{role}, 'compiler',
+    'a compiler stage carries the compiler receipt role');
+ok($bound->([{
+    role => $compiler_role->{role},
+    birth => $compiler_role->{birth},
+    group => $compiler_role->{group},
+    stage => $compiler_role->{stage},
+    phase => $compiler_role->{phase},
+    leader_reaped => $compiler_role->{leader_reaped},
+    cleanup => $compiler_role->{cleanup},
+    cleanup_identity => $compiler_role->{cleanup_identity},
+}], {closed => 1}), 'one compiler observation binds without another stage');
 
 done_testing;
