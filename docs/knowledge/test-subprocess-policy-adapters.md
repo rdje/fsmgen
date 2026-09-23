@@ -142,6 +142,7 @@ answers:
   - "why cannot a sealed supervisor launch preserve a private receipt?"
   - "how does a sealed caller receive the finished private supervisor job?"
   - "why does the sealed supervisor launch still omit the private receipt?"
+  - "how does the sealed supervisor launch return a private job before a process?"
 date: 2026-09-23
 status: current
 tags: [tests, subprocess, supervision, task-acceptance, darwin, locality]
@@ -151,4 +152,4 @@ evidence: >-
 reverify: >-
   perl docs/audits/native-proxy-receipt-adapter-20260922/qualify.t
 ---
-History: `e16bd8fa0ab603975b5b2ec1a39356ff0468de5f:docs/knowledge/test-subprocess-policy-adapters.md`. The public finish result returns a copy of the cleanup flags and still omits pid, birth clock and cleanup identity. A sealed caller can receive a finished private job it already holds. `supervise_process` still returns only the public result, so a capture cannot preserve that job. No process runs.
+History: `ab0e32a5f2cfb9c34e1f986717d1e17ed9defc15:docs/knowledge/test-subprocess-policy-adapters.md`. The ordinary sealed launch still returns only the public result. A sealed launch that fails before a process starts now returns the finished private job, including pid, birth clock and the original cleanup hash. A ready argument vector has no private launch return. No compiler, probe or tool-resolution process runs.

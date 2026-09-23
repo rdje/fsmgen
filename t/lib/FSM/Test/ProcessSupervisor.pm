@@ -30,6 +30,12 @@ sub supervise_process {
     return FSM::Support::ProcessSupervisor::supervise_process(@_);
 }
 
+sub sealed_supervise_process {
+    return FSM::Support::ProcessSupervisor::supervise_process(
+        @_, private_job => 1,
+    );
+}
+
 sub sealed_finished_job {
     return FSM::Support::ProcessSupervisor::sealed_finished_job(
         'FSM::Test::ProcessSupervisor', @_,

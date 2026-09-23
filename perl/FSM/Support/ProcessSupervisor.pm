@@ -116,8 +116,13 @@ sub supervise_process {
     die "FSM::Support::ProcessSupervisor is caller-sealed; '$caller' cannot launch a process\n"
         unless defined($caller) && $SUPERVISION_CALLER{$caller};
     my %allowed = map { $_ => 1 } qw(
-        argv bounds containment cwd schema stage
+        argv bounds containment cwd private_job schema stage
     );
+    die "supervise_process private_job is sealed to the test supervisor\n"
+        if $args{private_job} && $caller ne 'FSM::Test::ProcessSupervisor';
+    die "supervise_process private_job proves only a pre-process failure\n"
+        if $args{private_job} && !defined validate_argument_vector($args{argv});
+    $args{private_job} = $args{private_job} ? 1 : 0;
     die "unknown supervise_process argument: $_\n"
         for sort grep { !$allowed{$_} } keys %args;
     _require_config_scalar(\%args, $_) for qw(schema stage containment cwd);
@@ -135,35 +140,37 @@ sub supervise_process {
         $bounds{$field} = 0 + $bounds{$field};
     }
 
-    my $argument_error = validate_argument_vector($args{argv});
-    return process_failure(
-        schema => $args{schema}, stage => $args{stage}, bounds => \%bounds,
-        containment => $args{containment}, status => 'invocation_error',
-        diagnostic => $argument_error,
-    ) if defined $argument_error;
-
-    my ($cwd, $cwd_error) = repository_contained_path(
-        $args{cwd}, must_exist => 1,
-    );
-    return process_failure(
-        schema => $args{schema}, stage => $args{stage}, bounds => \%bounds,
-        containment => $args{containment}, status => 'invocation_error',
-        diagnostic => "supervised cwd is invalid: $cwd_error",
-    ) if defined $cwd_error;
-    return process_failure(
-        schema => $args{schema}, stage => $args{stage}, bounds => \%bounds,
-        containment => $args{containment}, status => 'invocation_error',
-        diagnostic => 'supervised cwd must be a directory',
-    ) unless -d $cwd;
-
-    return _supervise({
+    my $request = {
         schema => $args{schema},
         stage => $args{stage},
         bounds => \%bounds,
         containment => $args{containment},
-        cwd => $cwd,
-        argv => [@{$args{argv}}],
-    });
+        cwd => $args{cwd},
+        argv => ref($args{argv}) eq 'ARRAY' ? [@{$args{argv}}] : $args{argv},
+    };
+    my $argument_error = validate_argument_vector($args{argv});
+    my $state = defined $argument_error
+        ? _failed_supervision_start(
+            $request, $argument_error, undef, 'invocation_error',
+        )
+        : undef;
+    unless (defined $state) {
+        my ($cwd, $cwd_error) = repository_contained_path(
+            $args{cwd}, must_exist => 1,
+        );
+        $state = _failed_supervision_start(
+            $request, "supervised cwd is invalid: $cwd_error", undef,
+            'invocation_error',
+        ) if defined $cwd_error;
+        $state = _failed_supervision_start(
+            $request, 'supervised cwd must be a directory', undef,
+            'invocation_error',
+        ) if !defined($state) && !-d $cwd;
+        $request->{cwd} = $cwd if !defined $state;
+    }
+    $state = _supervise($request) unless defined $state;
+    return $caller eq 'FSM::Test::ProcessSupervisor' && $args{private_job}
+        ? sealed_finished_job($caller, $state) : $state->{result};
 }
 
 sub process_failure {
@@ -225,13 +232,14 @@ sub _supervise {
             sleep($wait) if $wait > 0;
         }
     }
-    return $state->{result};
+    return $state;
 }
 
 sub _failed_supervision_start {
-    my ($request, $diagnostic, $started) = @_;
+    my ($request, $diagnostic, $started, $status) = @_;
     my $finished = defined($started) ? clock_gettime(CLOCK_MONOTONIC) : undef;
     my ($birth_sec, $birth_usec) = defined($started) ? gettimeofday() : (undef, undef);
+    $status //= 'host_error';
     my $state = {
         %$request,
         phase => 'finished', pid => undef,
@@ -239,7 +247,11 @@ sub _failed_supervision_start {
         started => $started, finished => $finished,
         leader_reaped => 0,
         cleanup => _new_cleanup(0, $request->{containment}),
-        result => _host_failure($request, $diagnostic, $started),
+        result => process_failure(
+            schema => $request->{schema}, stage => $request->{stage},
+            bounds => $request->{bounds}, containment => $request->{containment},
+            status => $status, diagnostic => $diagnostic, started => $started,
+        ),
     };
     $state->{receipt_observation} = _receipt_observation($state);
     return $state;

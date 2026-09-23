@@ -2281,7 +2281,7 @@ decomposes the architecture needed to move beyond that bounded foundation.
   Status: `active`
   Goal: `Preserve the first private receipt from one admitted compiler-only capture.`
   Acceptance: `After this cleanup-copy commit, consume one fresh permit and retain the first private compiler, outer and inner states. Stop on disagreement. Never retry a producer or replay an original, proxy or live collector.`
-  Verification: `Child .5.4.3.3.6.1 records that supervise_process returns only the public result. Child .5.4.3.3.6.2 returns a caller-held finished job to a sealed caller. Child .5.4.3.3.6.3 records that the launch still does not return that job. No compiler, probe or tool-resolution process runs.`
+  Verification: `Child .5.4.3.3.6.1 records that supervise_process returns only the public result. Child .5.4.3.3.6.2 returns a caller-held finished job to a sealed caller. Child .5.4.3.3.6.3 records that the ordinary launch still does not return that job. Child .5.4.3.3.6.4 returns it only for a failure before any process. No compiler, probe or tool-resolution process runs.`
   Commit: `pending`
   Children: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.12.4.1.5.4.3.3.6.1, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.12.4.1.5.4.3.3.6.2, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.12.4.1.5.4.3.3.6.3, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.12.4.1.5.4.3.3.6.4`
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.12.4.1.5.4.3.3.6.1`
@@ -2300,7 +2300,7 @@ decomposes the architecture needed to move beyond that bounded foundation.
   Status: `active`
   Goal: `Preserve the first private receipt from one admitted compiler-only capture.`
   Acceptance: `After the sealed private return commits, consume one fresh permit and retain the first private compiler, outer and inner states. Stop on disagreement. Never retry a producer or replay an original, proxy or live collector.`
-  Verification: `Child .5.4.3.3.6.3.1 records that supervise_process still returns only the public result. A capture that keeps that result cannot preserve the private state. No compiler, probe or tool-resolution process runs.`
+  Verification: `Child .5.4.3.3.6.3.1 records that supervise_process still returns only the public result. Child .5.4.3.3.6.4 returns the private job only before a process starts. A capture that needs a real process still cannot preserve that job. No compiler, probe or tool-resolution process runs.`
   Commit: `pending`
   Children: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.12.4.1.5.4.3.3.6.3.1`
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.12.4.1.5.4.3.3.6.3.1`
@@ -2310,9 +2310,22 @@ decomposes the architecture needed to move beyond that bounded foundation.
   Verification: `supervise_process still returns _supervise, and that path returns only state result. sealed_finished_job reads a finished job the caller already holds; the launch does not return that job. A capture that keeps only the public result cannot satisfy receipts_bound. No process runs. The launch return remains .5.4.3.3.6.4.`
   Commit: `this commit`
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.12.4.1.5.4.3.3.6.4`
-  Status: `pending`
+  Status: `active`
   Goal: `Return the finished private supervisor job from the sealed launch before capture.`
   Acceptance: `Change the sealed launch so its caller receives the finished job, including pid, birth clock, own-group identity and the original cleanup hash, while existing public-result readers keep the public result. Do not launch a compiler, probe or tool-resolution process in that slice.`
+  Verification: `Child .5.4.3.3.6.4.1 returns the finished private job when the sealed launch fails before a process starts. A ready argument vector has no private launch return. Existing public-result readers keep the public result. No compiler, probe or tool-resolution process runs.`
+  Commit: `pending`
+  Children: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.12.4.1.5.4.3.3.6.4.1, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.12.4.1.5.4.3.3.6.4.2`
+- ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.12.4.1.5.4.3.3.6.4.1`
+  Status: `done`
+  Goal: `Return the finished private job from a sealed launch that fails before any process.`
+  Acceptance: `Return pid, birth clock, own-group identity and the original cleanup hash from that pre-process failure. Keep the ordinary public result for existing readers. Reject a request that is ready to start a process. Do not launch a compiler, probe or tool-resolution process.`
+  Verification: `perl t/1818-process-supervisor-receipt-observation.t passes 60 assertions. The sealed pre-process launch returns the finished job and its original cleanup hash. The ordinary launch still returns only the public result. A ready argument vector rejects before a process. No compiler, probe or tool-resolution process runs. A launch that is ready to start a process remains .5.4.3.3.6.4.2.`
+  Commit: `this commit`
+- ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.12.4.1.5.4.3.3.6.4.2`
+  Status: `pending`
+  Goal: `Return the finished private job from a sealed launch that is ready to start a process.`
+  Acceptance: `Extend the sealed private return from the pre-process failure to one request whose argument vector is ready, while existing public-result readers keep the public result. Do not launch a compiler, probe or tool-resolution process in that slice.`
   Verification: `pending`
   Commit: `pending`
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.12.4.1.5.5`
@@ -6475,6 +6488,12 @@ The manifest binds the immediately preceding acceptance suffix to its exact Git 
 - [x] **ROOT CAUSE (WHY + WHERE)** — `git log -S 'unavailable aggregate' -1 --format='%H %s' -- docs/book/src/16df-vial-architecture-scale-cap-closeout.md` identifies bc6796d01803fb662cfadd506fabc5bc79427a88. That placement requires an unavailable hosted aggregate. The first hosted run of `./bin/ci-regression vial-gate --no-book` failed its real command, and the independent verifier was skipped.
 - [x] **ADDRESSED (verified)** — The contradiction is owned by HOSTED-VIAL-REGRESSION-GATE-RESULT.1. Local exact-pinned success stays distinct from the failed hosted step. No support or capacity claim is inferred from either result. Diagnosis continues when the failed-step log is released.
 - [x] **NO REGRESSION** — `knowledge-map: OK` preserves the earlier gate questions and adds the hosted failure route. The rendered book states the contradiction outside the registered placement claim; claim identity/dispositions, containment and staged doctrines accompany the normal hooks. The receipt-return leaf remains separately owned.
+
+## Acceptance Checklist (pre-process private launch return .3.2.15.7.3.12.4.1.5.4.3.3.6.4.1)
+
+- [x] **ROOT CAUSE (WHY + WHERE)** — `git log -S 'return $state->{result}' -1 --format='%H %s' -- perl/FSM/Support/ProcessSupervisor.pm` identifies 51a3a3914ff4c6f2c14df02620682eb20c6ab129. `_supervise` returned only the public result. A sealed caller that kept that result could not preserve pid, birth clock or the original cleanup hash.
+- [x] **ADDRESSED (verified)** — perl t/1818-process-supervisor-receipt-observation.t passes 60 assertions. A sealed launch that fails before a process returns the finished job, its private pid, birth clock, own-group identity and the original cleanup hash. The ordinary launch still returns only the public result. A ready argument vector rejects before a process. No compiler, probe or tool-resolution process runs.
+- [x] **NO REGRESSION** — `knowledge-map: OK` preserves the public-result gap and adds the pre-process private launch return. The rendered book states that a ready launch still has no private return; claim identity/dispositions, containment and staged doctrines accompany the normal hooks. A launch ready to start a process, capture, native/live/startup qualification and full CI/push remain open.
 
 ## Acceptance Checklist (launch still returns public result .3.2.15.7.3.12.4.1.5.4.3.3.6.3.1)
 

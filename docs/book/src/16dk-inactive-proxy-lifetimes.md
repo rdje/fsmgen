@@ -543,11 +543,13 @@ observation.
 
 A sealed caller can receive a finished private job it already holds. That
 hand-back carries the process id, birth clock and own-group identity, and it
-keeps the original cleanup hash. The sealed launch itself still returns only
+keeps the original cleanup hash. The ordinary sealed launch still returns only
 the public result, which copies cleanup flags and omits that identity. A
-capture that keeps only the launch result therefore cannot preserve the private
-state. No compiler, probe or tool-resolution process runs until the launch
-returns the private job.
+separate sealed launch now returns the finished private job when the request
+fails before a process starts. A request that is ready to start a process has
+no private launch return yet, so a capture that needs a real compiler, probe
+or tool-resolution process still cannot preserve that job. No such process
+runs in this proof.
 
 ```sh
 python3 -B docs/audits/native-proxy-receipt-ownership-inventory-20260922/audit.py --verify-saved
@@ -558,7 +560,7 @@ perl t/1818-process-supervisor-receipt-observation.t
 
 | Remaining work | Required result |
 | --- | --- |
-| Real receipt binding | The sealed launch still returns only the public result. Return the private job from that launch before one admitted capture. |
+| Real receipt binding | The sealed launch returns the private job only for a failure before any process. Return that job from a launch that is ready to start one admitted capture. |
 | Inactive adapter composition | Join preparation, native path/reference admission and observation custody before the separate native experiment. |
 | Final protocol join | Check current evidence together and retain native, live/public and startup/benefit gates. |
 

@@ -145,4 +145,66 @@ my $unfinished_return = eval {
 ok(!$unfinished_return, 'an unfinished job has no private return');
 like("$@", qr/finished job/, 'the private-return rejection names the finished job');
 
+my $launch = do {
+    package FSM::Test::ProcessSupervisor;
+    sealed_supervise_process(
+    schema => 'fsmgen.process_supervisor.receipt_observation.v1',
+    stage => 'compile_proxy',
+    bounds => {timeout_seconds => 1, capture_limit_bytes => 64},
+    containment => 'receipt_observation',
+    cwd => '.',
+    argv => [],
+    );
+};
+is($launch->{phase}, 'finished', 'the sealed launch returns a finished job');
+is($launch->{stage}, 'compile_proxy', 'the sealed launch keeps its stage');
+is($launch->{result}{status}, 'invocation_error',
+    'an empty argument vector fails before a process');
+ok(!exists $launch->{result}{pid},
+    'the launch public result still omits pid');
+is(refaddr($launch->{receipt_observation}{cleanup}),
+    refaddr($launch->{cleanup}),
+    'the sealed launch keeps the original cleanup hash');
+is($launch->{receipt_observation}{birth}{pid}, $launch->{pid},
+    'the sealed launch carries the private pid');
+is_deeply($launch->{receipt_observation}{group},
+    $launch->{receipt_observation}{birth},
+    'the sealed launch group equals its leader birth');
+ok(!defined $launch->{pid},
+    'the pre-fork failure has no process id');
+
+my $public_launch = do {
+    package FSM::Test::ProcessSupervisor;
+    __PACKAGE__->can('supervise_process')->(
+        schema => 'fsmgen.process_supervisor.receipt_observation.v1',
+        stage => 'compile_proxy',
+        bounds => {timeout_seconds => 1, capture_limit_bytes => 64},
+        containment => 'receipt_observation',
+        cwd => '.',
+        argv => [],
+    );
+};
+ok(!exists $public_launch->{phase},
+    'the public launch still returns only the public result');
+is($public_launch->{status}, 'invocation_error',
+    'the public launch keeps the invocation failure');
+ok(!exists $public_launch->{pid},
+    'the public launch still omits pid');
+
+my $ready = eval {
+    package FSM::Test::ProcessSupervisor;
+    sealed_supervise_process(
+        schema => 'fsmgen.process_supervisor.receipt_observation.v1',
+        stage => 'compile_proxy',
+        bounds => {timeout_seconds => 1, capture_limit_bytes => 64},
+        containment => 'receipt_observation',
+        cwd => '.',
+        argv => ['/bin/true'],
+    );
+    1;
+};
+ok(!$ready, 'a ready argument vector has no private launch return');
+like("$@", qr/pre-process failure/,
+    'the rejection names the pre-process proof boundary');
+
 done_testing;
