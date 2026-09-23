@@ -61,7 +61,11 @@ sub _signal_remaining {
             $self->{"${phase}_sent"} = 1 if $sent;
         }
     }
-    elsif (!$reservation->{moved} && $command->{command_authority}) {
+    # Departure can complete during cancellation even when the command never
+    # joined. Its positive target remains necessary as well as the reserved
+    # group; a stopped/TERM-ignoring child cannot consume gate EOF itself.
+    if ($command->{command_authority}
+            && (!$reservation->{moved} || !$command->{joined})) {
         unless ($self->{attempted}{$phase}{command}++) {
             my $sent = $pair->signal_command($signal);
             $self->{"${phase}_sent"} = 1 if $sent;

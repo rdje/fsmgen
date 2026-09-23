@@ -2,6 +2,8 @@
 id: test-subprocess-policy-adapters
 title: Test subprocesses share one mechanism behind sealed policy adapters
 answers:
+  - "why can reserved cleanup miss an unjoined command?"
+  - "how do I decode a stopped child native wait status?"
   - "how are genuine omitted release closes selected?"
   - "how do equal-reference release compositions preserve ownership?"
   - "how do ordinary release compositions preserve primary errors?"
@@ -166,9 +168,7 @@ answers:
 date: 2026-09-23
 status: current
 tags: [tests, subprocess, supervision, task-acceptance, darwin, locality]
-evidence: t/1828-process-reserved-receipt.t; t/1818-process-supervisor-receipt-observation.t; t/1821-native-proxy-receipt-stage-contract.t; docs/audits/native-proxy-receipt-capture-20260923/result/review.json; docs/audits/native-proxy-receipt-capture-20260923/result/artifacts.json
-reverify: scripts/run_with_ram_guard.sh -- prove -Iperl -It/lib t/1823-process-group-reservation.t t/1824-process-gated-pair.t t/1826-process-group-closure.t t/1827-process-reserved-job.t t/1828-process-reserved-receipt.t t/1818-process-supervisor-receipt-observation.t t/1821-native-proxy-receipt-stage-contract.t && python3 -B docs/audits/native-proxy-receipt-capture-20260923/review.py --verify-saved
+evidence: t/1829-process-unjoined-closure.t; t/1818-process-supervisor-receipt-observation.t; t/1821-native-proxy-receipt-stage-contract.t; docs/audits/native-proxy-receipt-capture-20260923/result/review.json; docs/audits/native-proxy-receipt-capture-20260923/result/artifacts.json
+reverify: scripts/run_with_ram_guard.sh -- prove -Iperl -It/lib t/1823-process-group-reservation.t t/1824-process-gated-pair.t t/1826-process-group-closure.t t/1827-process-reserved-job.t t/1828-process-reserved-receipt.t t/1829-process-unjoined-closure.t t/1818-process-supervisor-receipt-observation.t t/1821-native-proxy-receipt-stage-contract.t && python3 -B docs/audits/native-proxy-receipt-capture-20260923/review.py --verify-saved
 ---
-History: `05f8ada76457e6b0ae16a7f783020869dd687019:docs/knowledge/test-subprocess-policy-adapters.md`. `FSM::Test::RustProxyFixture::prepare_rust_proxy` omits `private_job` from `compile_proxy`, retaining only public results. `ProcessSupervisor::Reservation` holds identity through group handoff; signalling retires before reaping. T1823 covers kernel/EOF/wait, partial failures and modeled retired/uncertain identities. ReservedJob/Receipt: capture and owner-bound review (T1827/T1828); routing/nesting/Linux open.
-`begin_compiler_capture` burns the grant; `execution_allowed` only reviews returned jobs. `docs/audits/native-proxy-receipt-capture-20260923/capture.pl` ran once at clean 28834c327: native wait/public success, reaping, group absence and original cleanup agree. `result/` retains first records/unexecuted bytes; `review.py --verify-saved` replays no producer. Keep the spent attempt/workspace. Probe/tool-resolution unqualified. T1818 admits zero microseconds; T1819/T1820 cover grant/capture failures. Birth uses the supervisor clock, not kernel identity; serialized addresses grant no authority.
-RustParityRuntime `tool_resolution` uses `rust_parity_process_group`, distinct from the outer probe policy. T1821 intercepts without execution, rejecting the former wrong containment and altered roles. `receipt_bound` independently checks original compiler/outer/inner roles/stages. Prefix review shares it and requires distinct births; wrong stages/copied cleanup reject. T1818 qualifies both without execution. Stage review grants no launch, process authentication, full stage set or nested cleanup.
+History: `4141c7ad25047b5be5b74fb465cdb94ec2d10180:docs/knowledge/test-subprocess-policy-adapters.md`. Prior policy, capture and receipt facts remain verbatim there; all question routes and reverify controls are retained. Preserve the spent compiler attempt/workspace and `docs/audits/native-proxy-receipt-capture-20260923/result/`; original probe/tool-resolution, routing/nested and Linux qualification remain open. Cancellation can move a reservation before command join: keep the owned unharvested positive PID eligible through KILL until join acknowledgment; group-only signalling misses a stopped command (T1829). Decode native stops with `${^CHILD_ERROR_NATIVE}` and POSIX wait macros; normalized `$?` was zero for the native stop on this host.

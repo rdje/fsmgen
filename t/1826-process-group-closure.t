@@ -225,7 +225,8 @@ sub model {
     $r->{moved} = 0 if $args{no_move} || $args{move_on_advance};
     my $p = bless {owner_pid => $$, deadline => 101, phase => 'released',
         command_pid => 80001, command_authority => 1, command_reaped => 0,
-        released => 1, reservation => $r}, 'FSM::Support::ProcessSupervisor::GatedPair';
+        released => 1, joined => $args{unjoined} ? 0 : 1, reservation => $r},
+        'FSM::Support::ProcessSupervisor::GatedPair';
     no warnings 'redefine';
     local *FSM::Support::ProcessSupervisor::Reservation::_now = sub { $clock };
     local *FSM::Support::ProcessSupervisor::GatedPair::cancel = sub { push @events, 'cancel'; $_[0]{failure} //= 'command cancelled' };
@@ -245,7 +246,7 @@ sub model {
         die 'unowned group signal' if $r->{retired} || !$r->{moved}; push @events, "group_$_[1]"; return 1;
     };
     local *FSM::Support::ProcessSupervisor::GatedPair::signal_command = sub {
-        die 'unowned command signal' if $r->{moved} || !$p->{command_authority};
+        die 'unowned command signal' if ($r->{moved} && $p->{joined}) || !$p->{command_authority};
         push @events, "command_$_[1]"; return 1;
     };
     local *FSM::Support::ProcessSupervisor::GatedPair::retire = sub {
@@ -299,6 +300,10 @@ subtest 'modeled incomplete cleanup preserves actual facts and signal retirement
     my (undef, $handoff) = model(move_on_advance => 1);
     is_deeply([grep { /_(?:TERM|KILL)$/ } @$handoff], ['command_TERM', 'group_TERM', 'group_KILL'],
         'a prior positive TERM does not suppress newly available group authority');
+    my (undef, $unjoined) = model(move_on_advance => 1, unjoined => 1);
+    is_deeply([grep { /_(?:TERM|KILL)$/ } @$unjoined],
+        ['command_TERM', 'group_TERM', 'group_KILL', 'command_KILL'],
+        'reservation departure cannot suppress positive KILL of an unjoined command');
     my ($expired, $last) = model(start => 105);
     ok(!$expired->{complete}, 'expired shared wall cannot grant another grace');
     is_deeply([grep { /_(?:TERM|KILL)$/ } @$last], ['group_KILL'],

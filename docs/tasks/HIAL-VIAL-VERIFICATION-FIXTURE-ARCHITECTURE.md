@@ -3515,10 +3515,26 @@ decomposes the architecture needed to move beyond that bounded foundation.
   Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.3.4.2.3: qualify reserved receipt ownership`
 
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.3.5`
-  Status: `pending`
+  Status: `active`
   Goal: `Independently qualify every reserved-group handoff and cancellation boundary.`
   Acceptance: `After .4, prove real command/reservation identities, caller-group isolation, descriptor closure, actual wait truth and group absence across success, timeout, signal, overflow and partial launch failures. Use model-only controls for reused/retired identities and unreapable children; never signal unrelated targets. Keep original startup failures and Linux qualification gaps explicit. Only completed evidence admits coordinator integration .5.5.2.3.4; full nested closure still requires .5.5.2.4, .5.5.2.5 and .5.5.3.`
-  Verification: `Siblings .2 through .4 now supply the private mechanisms and focused qualification. Independently qualify the complete handoff/cancellation domain before coordinator integration; original captures remain gated.`
+  Verification: `Siblings .2 through .4 supply the private mechanisms and focused qualification. Independent native observation confirms that the 4141c7ad2 closure dropped positive KILL for a stopped unjoined command after reservation departure. Child .1 repairs and proves exact cleanup; child .2 still owns the remaining independent handoff/cancellation domain before coordinator integration. Original captures remain gated.`
+  Commit: `pending`
+
+  Children: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.3.5.1, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.3.5.2`
+
+- ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.3.5.1`
+  Status: `done`
+  Goal: `Reproduce and repair cancellation of an unjoined command after reservation departure.`
+  Acceptance: `Use a recorded direct child stopped before its join gate and independent native membership/stop observations. Cancel under the original finite envelope, prove whether reservation movement suppresses positive KILL, and rescue only independently retained unharvested direct children. Fix any missed target while retaining acknowledged group authority, exact waits, first failure, caller-group isolation and signal retirement. Add native and modeled controls before continuing the independent matrix; no original capture or unrelated target.`
+  Verification: `The native stopped child remains in the caller group while its reservation departs. The predecessor sends command TERM, reserved-group TERM/KILL and reservation KILL, but no command KILL; it returns with unknown command wait and incomplete cleanup. The independent owner safely rescues both recorded children. GroupClosure now retains the positive target until command join acknowledgment as well as any owned group target. Native membership, signal and exact-wait observers prove the fixed engine kills/reaps the unjoined command and reaps its reservation before rescue, preserving the caller group and first cancellation. The exact 4141c7ad2 predecessor fails five final native assertions; the fixed focused band passes Files=13, Tests=289. The first fixture mistakenly decoded normalized Perl status for a stopped child; documented CHILD_ERROR_NATIVE establishes the actual stop before defect reproduction. All native outcomes are consumed. Wider independent qualification remains sibling .2; no original capture or routing changed.`
+  Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.3.5.1: retain unjoined command kill authority`
+
+- ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.3.5.2`
+  Status: `pending`
+  Goal: `Complete independent reserved-group handoff and cancellation qualification.`
+  Acceptance: `After child .1, join the existing component evidence with independent native process identities, caller isolation, descriptor closure, real wait/group absence and failure ordering across the complete launch/cancellation domain. Qualify safe model-only reused/retired/unreapable identities, keep Linux and original startup gaps explicit, and require all owned outcomes consumed before admitting coordinator integration.`
+  Verification: `Sibling .1 closes the native missed-KILL defect with an independent stopped-child oracle. Complete the remaining handoff/cancellation domain before coordinator integration.`
   Commit: `pending`
 
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.4`
@@ -4212,7 +4228,7 @@ decomposes the architecture needed to move beyond that bounded foundation.
 
 ## Current Frontier
 
-Current frontier: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.3.5` independently qualifies the complete reserved-group handoff/cancellation domain after the capture/result and receipt composition in `.4`. Complete nested cleanup and independent qualification before the fixed capture driver resumes. Preserve original failures, the spent compiler workspace, source-only driver commit and full-CI/push gates.
+Current frontier: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.3.5.2` completes independent handoff/cancellation qualification after sibling `.1` fixes and natively proves positive KILL for an unjoined command after reservation departure. Complete nested cleanup and independent qualification before the fixed capture driver resumes. Preserve original failures, the spent compiler workspace, source-only driver commit and full-CI/push gates.
 
 Architecture audit `.1` is complete. Decision `0032` selects one public
 `.vial` source language, private immutable `VIALSemanticIR` and
@@ -6943,3 +6959,41 @@ The manifest binds the immediately preceding acceptance suffix to its exact Git 
   comparison proves the historical own-group adapter and retained capture
   source/result directory unchanged. Public schema and legacy routing remain
   unchanged; independent handoff qualification is the next frontier.
+
+## Acceptance Checklist (.19.2.3.1.2.2.5.5.2.3.3.5.1)
+
+- [x] **ROOT CAUSE (WHY + WHERE)** — `git log -S` identifies 1a211ba85
+  as the mutually exclusive target-selection introduction. Cancellation can
+  move the reservation before an unjoined command exits. GroupClosure then
+  selected only its empty reserved group, dropping positive KILL for a stopped
+  command still in the caller group. The old model also implicitly conflated
+  departure with membership. T1829 reproduces this from native fork identities,
+  stopped-child status, actual memberships and observed signal targets.
+- [x] **ADDRESSED (verified)** — Positive command authority now remains usable
+  until join acknowledgment, independently of reservation movement and group
+  signalling. T1826 models both handoff dimensions. T1829 independently proves
+  real stopped/unjoined membership, reservation departure, command KILL, both
+  engine-consumed native waits, unchanged caller group and original cancellation.
+  Its rescue accepts only independently recorded, still-unharvested direct
+  children and consumes every outcome even when testing the broken source.
+  Falsification: loading the exact 4141c7ad2 GroupClosure into the final native
+  oracle fails five assertions, including the independent wait inventory;
+  the repaired source passes. Initial fixture setup read normalized `$?` and
+  saw zero for a stop; local `perldoc -T -v '${^CHILD_ERROR_NATIVE}'` identifies
+  the native field for POSIX stop macros, and corrected setup establishes the
+  actual failure. This is no exit-status change to the production supervisor.
+  Durability: tracked repair, model/native tests, book and fact card. That card
+  retains all prior questions and routes its earlier policy/capture/receipt facts
+  verbatim to exact source 4141c7ad25047b5be5b74fb465cdb94ec2d10180. Ignored
+  diagnostic/predecessor logs and scratch source under .artifacts/unjoined-closure-*
+  remain named archive gaps; original retained captures are unchanged. The
+  first doctrine gate rejects extra fact-card lines; its complete prior body
+  remains in that exact source while a bounded current pointer retains every
+  question, both new facts and the original reverify controls.
+- [x] **NO REGRESSION** — The guarded focused band reports
+  `All tests successful`, `Files=13, Tests=289` in
+  .artifacts/unjoined-closure-final-band.log. Syntax, book HTML, task/claim joins,
+  Knowledge Map and staged doctrines gate commit. Positive signalling still
+  requires an unharvested owned command; group operations require acknowledged
+  departure and stop before identity retirement. Linux and wider independent
+  handoff qualification remain open; no original capture or routing was enabled.

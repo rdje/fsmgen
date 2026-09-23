@@ -666,7 +666,15 @@ acknowledged departure. All affected jobs can receive the same remaining
 cleanup deadline. TERM, KILL and reservation release/reaping share that wall;
 advancement never waits synchronously or starts a second cleanup allowance.
 
-For example, after a command ignores TERM, group KILL can finish the command
+Cancellation can move the reservation even when the command has not joined.
+A stopped command can therefore remain in the caller's group after the reserved
+group becomes empty. Cleanup keeps the owned positive command PID eligible for
+KILL until join acknowledgment; it also handles any remaining reserved group.
+Group-only escalation would miss that command. The native control observes
+both memberships and requires the engine to consume both child waits before
+its independent rescue can run. Caller-group signalling is never substituted.
+
+For example, after a joined command ignores TERM, group KILL can finish it
 while its reservation still needs release or termination. Exact reservation
 reaping proves that resource closed even if its wait reports a signal; its
 original status and failure remain separate observations. Successful resource
@@ -708,5 +716,10 @@ Their tests exercise the current host; Linux qualification remains open.
 Re-run the bounded component controls with:
 
 ```bash
-scripts/run_with_ram_guard.sh -- prove -Iperl -It/lib t/1823-process-group-reservation.t t/1824-process-gated-pair.t t/1825-process-capture-stream-ownership.t t/1826-process-group-closure.t t/1827-process-reserved-job.t t/1828-process-reserved-receipt.t
+scripts/run_with_ram_guard.sh -- prove -Iperl -It/lib t/1823-process-group-reservation.t t/1824-process-gated-pair.t t/1825-process-capture-stream-ownership.t t/1826-process-group-closure.t t/1827-process-reserved-job.t t/1828-process-reserved-receipt.t t/1829-process-unjoined-closure.t
 ```
+
+For native stopped-child observations, decode `${^CHILD_ERROR_NATIVE}` with
+POSIX `WIFSTOPPED` and `WSTOPSIG`. The control initially read Perl's normalized
+`$?`, which was zero for this stopped child on the current host; it did not
+establish the stop until corrected to the native status field.
