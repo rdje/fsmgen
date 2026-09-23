@@ -47,7 +47,7 @@ Only `active` rows are PNT-eligible. Live `docs/tasks/` nodes are authoritative;
 | Tree | Status | Roadmap lane | Current frontier | File |
 | --- | --- | --- | --- | --- |
 | `LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION` | `active` | `infra/continuity` | `.29` is done; `.12` remains behind director-deferred `.26` | [task](docs/tasks/LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.md) |
-| `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE` | `active` | `verification architecture` | `.6.7.2.2.1` completes independent private receipt review. `.6.7.2.2.2` must resolve nested cleanup/startup ordering before a fixed capture driver; compiler evidence remains retained. | [task](docs/tasks/HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.md) |
+| `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE` | `active` | `verification architecture` | Director approves cleanup-first ordering; `.19.2.3.1.2.2.5.5.2.3.3.2` next implements the reservation lifetime. Fixed capture and full-CI/push gates remain closed. | [task](docs/tasks/HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.md) |
 | `MDBOOK-PARAGRAPH-SPACING` | `active` | `rendered readability` | `.5.1` retains HTML candidates; `.5.2` is blocked on browser access and `.5.3` owns the resulting formatting repair | [task](docs/tasks/MDBOOK-PARAGRAPH-SPACING.md) |
 | `HOSTED-VIAL-REGRESSION-GATE-RESULT` | `active` | `verification architecture` | `.26` retains the failure census and `.28` fixes local/hosted Yosys selection. `.27` awaits exact hosted requalification after startup/full-CI gates and an authorized push | [task](docs/tasks/HOSTED-VIAL-REGRESSION-GATE-RESULT.md) |
 

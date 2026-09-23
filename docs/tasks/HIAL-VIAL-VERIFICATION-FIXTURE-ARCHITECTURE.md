@@ -2523,10 +2523,11 @@ decomposes the architecture needed to move beyond that bounded foundation.
   Commit: `this commit`
 
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.12.4.1.5.4.3.3.6.7.2.2.2`
-  Status: `pending`
-  Goal: `Resolve capture ownership and implement its fixed one-use driver before real admission.`
-  Acceptance: `Use the selected root ownership architecture or an independently qualified equivalent within the existing launch gates. Never rely on the outer timeout or serialized addresses to settle an inner group. The current general coordinator launch leaf .19.2.3.1.2.2.5.5.2.3.3 is blocked by startup qualification that contains this capture; explicitly resolve that dependency before a real nested launch. Keep any source-only work and real-process qualification distinct, preserve prior director restrictions and first evidence, and commit the process-free driver before capture .6.7.2.3.`
-  Verification: `Source and current book confirm independent inner groups can survive outer termination. General root coordinator launch remains explicitly blocked under .19.2.3.1.2.2.5.5.2.3.3 by the startup activity that contains this capture. The director is asked whether to reorder these dependencies and qualify nested cleanup first while preserving all process bounds, original failures and full-CI/push gates. That answer is pending; no launch prerequisite is waived and no real capture runs.`
+  Status: `blocked`
+  Goal: `Implement the fixed one-use capture driver after nested cleanup qualification.`
+  Acceptance: `The director approved cleanup-first ordering on 2026-09-23. Complete the selected root ownership implementation and independent nested qualification before this driver can admit a real probe. Never rely on the outer timeout or serialized addresses to settle an inner group. Preserve prior restrictions, original failure evidence and spent compiler attempt; commit the process-free fixed driver separately before capture .6.7.2.3.`
+  Verification: `The launch/startup dependency cycle is resolved by the director answer: Yes—qualify nested cleanup first (Recommended). This permits the qualified cleanup path to precede startup; it does not qualify nested containment, authorize compiler replay or open full CI/push. Production cleanup implementation is selected under .19.2.3.1.2.2.5.5.2.3.3; the actual capture remains unrun.`
+  Blocked by: `Selected nested cleanup implementation .5.5.2.3.3 through .5.5.2.5 and independent qualification .5.5.3 before any real nested capture; then the separate source-only fixed-driver commit.`
   Commit: `pending`
 
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.12.4.1.5.4.3.3.6.7.2.3`
@@ -3441,13 +3442,46 @@ decomposes the architecture needed to move beyond that bounded foundation.
   Commit: `e0cfaecedbfb44f757e44660fa940bf15df47e6b`
 
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.3`
-  Status: `blocked`
+  Status: `active`
   Goal: `Add asynchronous reserved-group launch gates inside the shared process owner.`
-  Acceptance: `After .2, reserve both child slots and record each exact fork before release; qualify reservation group creation, command membership, reservation departure, exec gating and failed partial-start cleanup. Preserve the default synchronous legacy path while internal coordinator launches use the explicit private strategy. Never reap a group reservation before its last signal or infer group authority from an unacknowledged handoff. Prove descriptor closure, actual wait truth and caller-group isolation with independent real-process and model-only retirement controls.`
-  Verification: `Pending endpoint/context qualification in sibling .2; existing T1669 reservation feasibility is a prerequisite, not production handoff proof.`
+  Acceptance: `After completed endpoint sibling .2, reserve both child slots and record each exact fork before release; qualify group creation, command membership, reservation departure, exec gating and partial-start cleanup. Preserve the synchronous legacy path and sealed public contract. Never reap a reservation before its last group signal or infer authority from an unacknowledged handoff. The 2026-09-23 director approval permits cleanup-first implementation and qualification before startup; it changes no process bound or real-capture admission.`
+  Verification: `Existing T1669 reservation feasibility remains historical prerequisite evidence, not production handoff proof. Children separately own the director amendment, reservation lifetime, gated command pair, capture/result integration and independent hostile qualification. Full Wire/startup qualification remains open; implementation must preserve its original evidence and cannot substitute model checks for real process closure.`
+  Children: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.3.1, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.3.2, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.3.3, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.3.4, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.3.5`
+
+- ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.3.1`
+  Status: `done`
+  Goal: `Record the director-approved cleanup-first dependency and bounded implementation sequence.`
+  Acceptance: `Replace the launch/startup cycle with cleanup implementation and qualification preceding the fixed capture driver. Preserve the selected protocol, original failures and spent compiler attempt, separate source-only driver commit, full-CI/push gates and unchanged adapter bounds. Name independently reviewable child leaves before any process change; synchronize live resume and browser-blocker facts.`
+  Verification: `Director answer on 2026-09-23: Yes—qualify nested cleanup first (Recommended). The task-tree integrity check and mdBook build pass; diff review confirms only task/resume/book boundary and associated containment/inventory records changed. The approval preserves process bounds, original failures, spent compiler evidence, the source-only driver commit and full-CI/push gates.`
+  Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.3.1: admit cleanup-first qualification`
+
+- ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.3.2`
+  Status: `pending`
+  Goal: `Implement and qualify the private reservation-child lifetime before command launch.`
+  Acceptance: `Inside the shared process owner, implement bounded asynchronous reservation creation, acknowledged group establishment, acknowledged departure to the caller group, retirement and exact reaping. Record the fork under masked signals, retain identity through the last permitted group signal, close unrelated descriptors and fail closed on EOF or unknown status. Qualify success and partial-start/departure failures with independent bounded child observations and model-only retirement controls; do not route sealed callers or launch the startup probe.`
+  Verification: `Pending implementation against the exact .5.5.2.1 protocol retained at 49a4d1f50cec77149eeadf799501d0ee33447f12. Existing adapter limits and the legacy default remain unchanged.`
   Commit: `pending`
 
-  Blocked by: `Startup causal repair and full private Wire qualification in sibling .1 remain open. The director amendment in .2.1 admits inactive endpoints only; it does not waive the launch prerequisite. Endpoint completion does not qualify reserved-group command launch.`
+- ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.3.3`
+  Status: `pending`
+  Goal: `Compose a recorded command child with the reserved group and explicit exec release.`
+  Acceptance: `After .2, reserve both child slots before fork and create the command as the same owner's direct child. Require join acknowledgment before reservation departure and departure acknowledgment before exec becomes releasable. An explicit private release follows complete ownership publication; failure or cancellation before release cannot execute the command. Qualify fork, pipe, join, move, release and descriptor failures without touching original startup attempts or enabling routing.`
+  Verification: `Pending reservation lifetime qualification in sibling .2.`
+  Commit: `pending`
+
+- ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.3.4`
+  Status: `pending`
+  Goal: `Integrate the private gated pair with bounded capture, first failure and terminal identity.`
+  Acceptance: `After .3, use the reserved group in nonblocking capture and TERM/KILL advancement without changing the synchronous default or public result schema. Preserve command wait truth, earliest failure, original cleanup ownership and actual group absence; retain distinct command/reservation observations. Share the fixed cleanup envelope, retire group signalling before releasing identity, and reject uncertain cleanup. Qualify compatibility through focused engine/receipt/adapter controls; compiler and real capture remain unadmitted.`
+  Verification: `Pending gated command-pair qualification in sibling .3.`
+  Commit: `pending`
+
+- ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.3.5`
+  Status: `pending`
+  Goal: `Independently qualify every reserved-group handoff and cancellation boundary.`
+  Acceptance: `After .4, prove real command/reservation identities, caller-group isolation, descriptor closure, actual wait truth and group absence across success, timeout, signal, overflow and partial launch failures. Use model-only controls for reused/retired identities and unreapable children; never signal unrelated targets. Keep original startup failures and Linux qualification gaps explicit. Only completed evidence admits coordinator integration .5.5.2.3.4; full nested closure still requires .5.5.2.4, .5.5.2.5 and .5.5.3.`
+  Verification: `Pending implementation and focused qualification in siblings .2 through .4.`
+  Commit: `pending`
 
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.4`
   Status: `pending`
@@ -4140,7 +4174,7 @@ decomposes the architecture needed to move beyond that bounded foundation.
 
 ## Current Frontier
 
-Current frontier: .3.2.15.7.3.12.4.1.5.3 selected populated-worker lifetimes are done. Next .5.4 is proposed: bind complete real compiler/outer/inner receipts and prevent launches after settlement. Preserve the owned observation-wrapper repair, inactive native composition, native/live/startup and full CI/push gates; no earlier producer is replayable.
+Current frontier: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.3.2` implements the reservation-child lifetime after the director-approved sequencing amendment in `.1`. Complete nested cleanup and independent qualification before the fixed capture driver resumes. Preserve original failures, the spent compiler workspace, source-only driver commit and full-CI/push gates.
 
 Architecture audit `.1` is complete. Decision `0032` selects one public
 `.vial` source language, private immutable `VIALSemanticIR` and
@@ -6962,3 +6996,44 @@ The manifest binds the immediately preceding acceptance suffix to its exact Git 
 - [x] **ROOT CAUSE (WHY + WHERE)** — `git log -S 'sub receipts_bound'` identifies `b74122f9f`. The predicate requires a compiler-first prefix and checks only stage spelling, so it cannot bind an isolated outer/inner observation and accepts a role carrying another stage. Old-module T1818 reports `not ok 29` on independent compiler review and rejects the wrong-stage negative controls at `not ok 33`, `35`, `37` and corresponding later roles.
 - [x] **ADDRESSED (verified)** — `receipt_bound` reviews one original observation against a fixed expected role/stage pair. Ordered-prefix review reuses the same validation and retains distinct births. Open frontiers, wrong roles/stages, copied cleanup, unsettled state, invalid identity and loosely numeric terminal/address fields reject. Fresh hostile controls bind before mutation; the duplicate-birth control now preserves its own-group identity to reach the uniqueness predicate. No address is reconstructed from saved JSON and no process launch is authorized.
 - [x] **NO REGRESSION** — RAM-guarded `prove -Iperl t/1818-process-supervisor-receipt-observation.t t/1819-native-proxy-receipt-admission.t t/1820-native-proxy-receipt-capture.t t/1821-native-proxy-receipt-stage-contract.t docs/audits/native-proxy-receipt-adapter-20260922/qualify.t`: `All tests successful`, `Files=5, Tests=297`. Adapter syntax and saved compiler review pass. Re-derive: sealed private observations through both predicates; falsify: old-module stage/isolated RED and independent hostile inputs; durability: normal T1818 discovery plus tracked adapter controls. These are shape and live-reference checks, not process authentication, complete stage ownership or nested cleanup qualification.
+
+## Cleanup-first director amendment (2026-09-23)
+
+The director answered the precise dependency question with “Yes—qualify nested
+cleanup first (Recommended)”. This supersedes only the earlier launch/startup
+ordering in .19.2.3.1.2.2.5.5.2.3.3: cleanup implementation and independent
+qualification now precede the startup capture that needs them. The earlier
+inactive-endpoint amendment remains historical evidence, not the latest order.
+The selected protocol is retained in the exact .5.5.2.1 version object above.
+Its resource ceilings, handoff acknowledgments, identity retirement, first
+failure, descriptor ownership and finite cleanup envelopes remain binding.
+
+Implementation proceeds through the reserved-group leaves, coordinator
+integration, nested routing and cancellation, then independent end-to-end
+qualification. The compiler attempt at 28834c3278aec40fd597a1bd7af06be9fa345061
+is spent: preserve its workspace and retained result; do not replay its driver
+or execute the retained proxy. Qualification controls need their own bounded
+identities and evidence. The fixed real-capture driver remains a separate,
+process-free committed slice before its one-use launch admission. Historical
+startup/parent failures and full-CI/push gates stay open until their own evidence
+closes them. This amendment makes no runtime or containment claim.
+
+## Acceptance Checklist (.19.2.3.1.2.2.5.5.2.3.3.1)
+
+- [x] **ROOT CAUSE (WHY + WHERE)** — `git log -S` for
+  `does not waive the launch prerequisite` locates `5f8be37f1`; the current
+  .5.5.2.3.3 prerequisite points back to the startup capture that needs nested
+  cleanup. The director's explicit cleanup-first answer resolves that cycle.
+- [x] **ADDRESSED (verified)** — `scripts/check_task_tree_integrity.pl` reports
+  all active task-tree invariants hold. The launch gate now has explicit
+  reservation, command, capture and hostile-qualification owners; the fixed
+  capture is blocked on their nested closure rather than a pending answer.
+  Diff review preserves process implementation and the spent compiler records.
+- [x] **NO REGRESSION** — `mdbook build docs/book -d
+  .artifacts/cleanup-first-book` succeeds; rendered HTML retains the own-group
+  limitation and presents the approved qualification order. Claim inventory
+  and independent census agree, and the disposition join holds. The completed
+  README/containment gate reports `readme-entrypoint: all README entry-point invariants hold`.
+  The first staged gate rejected this box for missing a declared output token;
+  its actual passed gate output is now recorded here before the required rerun.
+  No compiler, proxy, startup capture or full CI was run.

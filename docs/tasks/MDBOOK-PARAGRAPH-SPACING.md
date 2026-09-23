@@ -89,8 +89,8 @@ result.
   Status: `blocked`
   Goal: `Complete the actual browser DOM, CSS and visual spacing audit.`
   Acceptance: `Serve the recorded build on loopback; inspect mandatory Chapter 12/14 and shortlist candidates with actual DOM metrics and screenshots in the in-app browser; record viewport, theme and computed CSS for ordinary paragraphs and list-contained prose. Select a bounded formatting-only repair only if a rendered defect is confirmed. Stop the server and close audit resources before handoff; no HTML-only visual signoff.`
-  Verification: `Pending functioning browser access; no browser review, viewport, effective CSS or screenshot evidence exists.`
-  Blocked by: `Browser runtime initialization fails before selecting a surface; the director enablement question is pending. HIAL sequencing is a separate unchanged blocker.`
+  Verification: `On 2026-09-23 the director enabled full CDP and selected @Browser. A reset followed by cua.getState still failed with CUA_REPL_ENABLED_SURFACES is required before any surface opened. No browser review, viewport, effective CSS or screenshot evidence exists.`
+  Blocked by: `Browser runtime initialization still fails after the director enabled full CDP and selected Browser. Chrome via the documented Computer Use extension is the next proposed connection attempt; no connection is yet verified. HIAL cleanup-first ordering is separately approved.`
   Commit: `pending`
 
 - ID: `MDBOOK-PARAGRAPH-SPACING.5.3`
@@ -123,7 +123,10 @@ result.
 
 ## Open Questions
 
-- Browser enablement was requested on 2026-09-23; no answer yet.
+- The director enabled full CDP and selected Browser on 2026-09-23; the runtime
+  error persists. Official setup offers Chrome through Settings > Computer Use
+  and the browser extension: https://learn.chatgpt.com/docs/chrome-extension.
+  No documented fix for this exact initialization error was found.
 
 ## Blockers
 

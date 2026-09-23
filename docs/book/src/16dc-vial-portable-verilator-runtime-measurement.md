@@ -4045,6 +4045,12 @@ blocked on the owned containment repair in HIAL/VIAL task
 `.19.2.3.1.2.2.5.5`. Do not treat an outer group's disappearance as proof that
 independently supervised inner groups have stopped.
 
+The director-approved qualification order now implements and independently
+checks the selected root coordinator's nested cleanup before the startup
+capture that depends on it. That ordering does not establish cleanup support:
+the fixed capture driver, original failure evidence, existing process limits
+and full-CI/push gates retain their separate acceptance requirements.
+
 ## Selected authored runtime activity
 
 The runtime-stream axis measures the cost of producing, validating, and
