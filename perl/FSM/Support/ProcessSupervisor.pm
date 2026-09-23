@@ -120,8 +120,6 @@ sub supervise_process {
     );
     die "supervise_process private_job is sealed to the test supervisor\n"
         if $args{private_job} && $caller ne 'FSM::Test::ProcessSupervisor';
-    die "supervise_process private_job proves only a pre-process failure\n"
-        if $args{private_job} && !defined validate_argument_vector($args{argv});
     $args{private_job} = $args{private_job} ? 1 : 0;
     die "unknown supervise_process argument: $_\n"
         for sort grep { !$allowed{$_} } keys %args;
@@ -167,6 +165,14 @@ sub supervise_process {
             'invocation_error',
         ) if !defined($state) && !-d $cwd;
         $request->{cwd} = $cwd if !defined $state;
+    }
+    if (!defined($state) && $args{private_job}) {
+        my $program = $request->{argv}[0];
+        $state = _failed_supervision_start(
+            $request, "supervised program is not executable: $program", undef,
+            'invocation_error',
+        ) unless defined($program) && !ref($program) && -x $program
+            && !-d $program;
     }
     $state = _supervise($request) unless defined $state;
     return $caller eq 'FSM::Test::ProcessSupervisor' && $args{private_job}

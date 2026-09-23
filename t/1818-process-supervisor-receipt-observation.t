@@ -191,20 +191,27 @@ is($public_launch->{status}, 'invocation_error',
 ok(!exists $public_launch->{pid},
     'the public launch still omits pid');
 
-my $ready = eval {
+my $ready = do {
     package FSM::Test::ProcessSupervisor;
     sealed_supervise_process(
         schema => 'fsmgen.process_supervisor.receipt_observation.v1',
-        stage => 'compile_proxy',
+        stage => 'probe',
         bounds => {timeout_seconds => 1, capture_limit_bytes => 64},
         containment => 'receipt_observation',
         cwd => '.',
-        argv => ['/bin/true'],
+        argv => ['receipt-observation-missing'],
     );
-    1;
 };
-ok(!$ready, 'a ready argument vector has no private launch return');
-like("$@", qr/pre-process failure/,
-    'the rejection names the pre-process proof boundary');
+is($ready->{phase}, 'finished',
+    'a named missing program returns a finished private job');
+is($ready->{stage}, 'probe', 'the ready launch keeps its stage');
+is($ready->{result}{status}, 'invocation_error',
+    'a missing program fails before a process');
+ok(!defined $ready->{pid}, 'the missing program starts no process');
+is(refaddr($ready->{receipt_observation}{cleanup}),
+    refaddr($ready->{cleanup}),
+    'the ready launch keeps the original cleanup hash');
+like($ready->{result}{diagnostic}, qr/not executable/,
+    'the rejection names the missing program');
 
 done_testing;

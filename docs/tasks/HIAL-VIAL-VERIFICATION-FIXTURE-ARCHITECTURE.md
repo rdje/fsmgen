@@ -2313,7 +2313,7 @@ decomposes the architecture needed to move beyond that bounded foundation.
   Status: `active`
   Goal: `Return the finished private supervisor job from the sealed launch before capture.`
   Acceptance: `Change the sealed launch so its caller receives the finished job, including pid, birth clock, own-group identity and the original cleanup hash, while existing public-result readers keep the public result. Do not launch a compiler, probe or tool-resolution process in that slice.`
-  Verification: `Child .5.4.3.3.6.4.1 returns the finished private job when the sealed launch fails before a process starts. A ready argument vector has no private launch return. Existing public-result readers keep the public result. No compiler, probe or tool-resolution process runs.`
+  Verification: `Child .5.4.3.3.6.4.1 returns the finished private job when the sealed launch fails before a process starts. Child .5.4.3.3.6.4.2 returns it for a named program that is not executable. An executable program still has no private launch return. No compiler, probe or tool-resolution process runs.`
   Commit: `pending`
   Children: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.12.4.1.5.4.3.3.6.4.1, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.12.4.1.5.4.3.3.6.4.2`
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.12.4.1.5.4.3.3.6.4.1`
@@ -2323,9 +2323,22 @@ decomposes the architecture needed to move beyond that bounded foundation.
   Verification: `perl t/1818-process-supervisor-receipt-observation.t passes 60 assertions. The sealed pre-process launch returns the finished job and its original cleanup hash. The ordinary launch still returns only the public result. A ready argument vector rejects before a process. No compiler, probe or tool-resolution process runs. A launch that is ready to start a process remains .5.4.3.3.6.4.2.`
   Commit: `this commit`
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.12.4.1.5.4.3.3.6.4.2`
-  Status: `pending`
+  Status: `active`
   Goal: `Return the finished private job from a sealed launch that is ready to start a process.`
   Acceptance: `Extend the sealed private return from the pre-process failure to one request whose argument vector is ready, while existing public-result readers keep the public result. Do not launch a compiler, probe or tool-resolution process in that slice.`
+  Verification: `Child .5.4.3.3.6.4.2.1 returns the finished private job when the named program is not executable. An executable program remains .5.4.3.3.6.4.2.2. No compiler, probe or tool-resolution process runs.`
+  Commit: `pending`
+  Children: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.12.4.1.5.4.3.3.6.4.2.1, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.12.4.1.5.4.3.3.6.4.2.2`
+- ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.12.4.1.5.4.3.3.6.4.2.1`
+  Status: `done`
+  Goal: `Return the finished private job when a sealed launch names a program that is not executable.`
+  Acceptance: `Accept one non-empty argument vector whose program is absent. Return the finished job, including pid, birth clock, own-group identity and the original cleanup hash, and keep the public result copy. Do not launch a compiler, probe or tool-resolution process.`
+  Verification: `perl t/1818-process-supervisor-receipt-observation.t passes 64 assertions. A named missing program returns the finished private job and invocation_error. Its pid stays undefined and its cleanup hash stays original. No compiler, probe or tool-resolution process runs. An executable program remains .5.4.3.3.6.4.2.2.`
+  Commit: `this commit`
+- ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.12.4.1.5.4.3.3.6.4.2.2`
+  Status: `pending`
+  Goal: `Return the finished private job from a sealed launch whose program is executable.`
+  Acceptance: `Extend the sealed private return to one executable program while existing public-result readers keep the public result. Do not launch a compiler, probe or tool-resolution process in that slice.`
   Verification: `pending`
   Commit: `pending`
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.12.4.1.5.5`
@@ -6488,6 +6501,12 @@ The manifest binds the immediately preceding acceptance suffix to its exact Git 
 - [x] **ROOT CAUSE (WHY + WHERE)** — `git log -S 'unavailable aggregate' -1 --format='%H %s' -- docs/book/src/16df-vial-architecture-scale-cap-closeout.md` identifies bc6796d01803fb662cfadd506fabc5bc79427a88. That placement requires an unavailable hosted aggregate. The first hosted run of `./bin/ci-regression vial-gate --no-book` failed its real command, and the independent verifier was skipped.
 - [x] **ADDRESSED (verified)** — The contradiction is owned by HOSTED-VIAL-REGRESSION-GATE-RESULT.1. Local exact-pinned success stays distinct from the failed hosted step. No support or capacity claim is inferred from either result. Diagnosis continues when the failed-step log is released.
 - [x] **NO REGRESSION** — `knowledge-map: OK` preserves the earlier gate questions and adds the hosted failure route. The rendered book states the contradiction outside the registered placement claim; claim identity/dispositions, containment and staged doctrines accompany the normal hooks. The receipt-return leaf remains separately owned.
+
+## Acceptance Checklist (missing program private launch return .3.2.15.7.3.12.4.1.5.4.3.3.6.4.2.1)
+
+- [x] **ROOT CAUSE (WHY + WHERE)** — `git log -S 'private_job proves only a pre-process failure' -1 --format='%H %s' -- perl/FSM/Support/ProcessSupervisor.pm` identifies dbd520b28940b12f30234d19ed717d6a4418a8dd. A non-empty argument vector rejected before supervision, so a named missing program could not return the finished private job.
+- [x] **ADDRESSED (verified)** — perl t/1818-process-supervisor-receipt-observation.t passes 64 assertions. A named missing program returns the finished job, its private pid, birth clock, own-group identity and the original cleanup hash. The public result is invocation_error and the pid stays undefined. No compiler, probe or tool-resolution process runs.
+- [x] **NO REGRESSION** — `knowledge-map: OK` preserves the pre-process private return and adds the missing-program return. The rendered book states that an executable program still has no private return; claim identity/dispositions, containment and staged doctrines accompany the normal hooks. An executable launch, capture, native/live/startup qualification and full CI/push remain open.
 
 ## Acceptance Checklist (pre-process private launch return .3.2.15.7.3.12.4.1.5.4.3.3.6.4.1)
 

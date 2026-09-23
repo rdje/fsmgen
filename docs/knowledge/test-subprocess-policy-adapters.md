@@ -143,6 +143,7 @@ answers:
   - "how does a sealed caller receive the finished private supervisor job?"
   - "why does the sealed supervisor launch still omit the private receipt?"
   - "how does the sealed supervisor launch return a private job before a process?"
+  - "how does a missing program return a private supervisor job?"
 date: 2026-09-23
 status: current
 tags: [tests, subprocess, supervision, task-acceptance, darwin, locality]
@@ -152,4 +153,4 @@ evidence: >-
 reverify: >-
   perl docs/audits/native-proxy-receipt-adapter-20260922/qualify.t
 ---
-History: `ab0e32a5f2cfb9c34e1f986717d1e17ed9defc15:docs/knowledge/test-subprocess-policy-adapters.md`. The ordinary sealed launch still returns only the public result. A sealed launch that fails before a process starts now returns the finished private job, including pid, birth clock and the original cleanup hash. A ready argument vector has no private launch return. No compiler, probe or tool-resolution process runs.
+History: `dbd520b28940b12f30234d19ed717d6a4418a8dd:docs/knowledge/test-subprocess-policy-adapters.md`. The ordinary sealed launch still returns only the public result. A sealed launch now returns the finished private job when its program is missing, including pid, birth clock and the original cleanup hash. An executable program still has no private launch return. No compiler, probe or tool-resolution process runs.

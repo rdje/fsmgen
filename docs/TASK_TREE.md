@@ -47,7 +47,7 @@ Only `active` rows are PNT-eligible. Live `docs/tasks/` nodes are authoritative;
 | Tree | Status | Roadmap lane | Current frontier | File |
 | --- | --- | --- | --- | --- |
 | `LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION` | `active` | `infra/continuity` | `.29` is done; `.12` remains behind director-deferred `.26` | [task](docs/tasks/LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.md) |
-| `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE` | `active` | `verification architecture` | `.5.4.3.3.6.4.1` returns the private job before a process starts. `.5.4.3.3.6.4.2` returns it from a launch that is ready to start. | [task](docs/tasks/HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.md) |
+| `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE` | `active` | `verification architecture` | `.5.4.3.3.6.4.2.1` returns the private job for a missing program. `.5.4.3.3.6.4.2.2` returns it when the program is executable. | [task](docs/tasks/HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.md) |
 | `HOSTED-VIAL-REGRESSION-GATE-RESULT` | `active` | `verification architecture` | `.26` is done; run 35782532228 has no remaining unowned released failure family | [task](docs/tasks/HOSTED-VIAL-REGRESSION-GATE-RESULT.md) |
 | `DOWNSTREAM-BOOK-CONTRACT-INCLUDE` | `active` | `downstream integration` | `.1` is done; the rendered chapter includes the four contract parts | [task](docs/tasks/DOWNSTREAM-BOOK-CONTRACT-INCLUDE.md) |
 | `PUSH-CADENCE-500-ADOPTION` | `active` | `infra/continuity` | `.1` is done; the standing interval is 500 accumulated local commits | [task](docs/tasks/PUSH-CADENCE-500-ADOPTION.md) |
