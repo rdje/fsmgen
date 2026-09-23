@@ -3695,9 +3695,32 @@ decomposes the architecture needed to move beyond that bounded foundation.
   Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.4.2.3.3.2.3.2.2: bind retained coordinator root and nested lifecycle`
 
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.4.2.3.3.3`
-  Status: `pending`
+  Status: `active`
   Goal: `Bind accepted transport resources and qualify joined native admission.`
   Acceptance: `Reserve a connection descriptor before accept and retain ticket, handle and original grant under signals before restoring callbacks. Keep failed/closed outcomes until consumed, release only actual closed resources and include run/jobs/accepted peers in aggregate peak accounting. Join real root/nested gated admission with partial connection/start failure, original deadlines and exact cleanup. No ACCEPT release or caller routing; those remain subsequent siblings.`
+  Verification: `Clean predecessor 97ca91b09 completes root/nested gated lifecycle. Before further evidence reaches the task rollover milestone, child .1 preserves the completed suffix in exact Git history. Child .2 retains native accepted sockets/tickets under signals and separates shared endpoint retirement; child .3 binds original descriptor grants and qualifies joined native admission. No execution publication or routing is admitted.`
+  Commit: `pending`
+
+  Children: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.4.2.3.3.3.1, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.4.2.3.3.3.2, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.4.2.3.3.3.3`
+
+- ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.4.2.3.3.3.1`
+  Status: `done`
+  Goal: `Roll completed acceptance evidence before accepted-peer binding.`
+  Acceptance: `Authenticate the exact committed predecessor and completed acceptance suffix in the existing finite history manifest. Preserve every live node and earlier history chain; independently rederive hashes/counts and reject an altered digest before removing only the completed suffix. No source behavior or document ceiling changes.`
+  Verification: `The existing finite manifest authenticates exact predecessor 97ca91b09: full task 7183 lines/1266022 bytes, completed suffix 173 lines/12493 bytes across five headings. Independent git cat-file reconstruction matches both SHA-256 identities and the prior versioned manifest chain. All task node IDs survive removal. The unchanged production checker accepts the isolated same-volume fixture and rejects only its changed suffix digest. Fixture cleanup is complete. Source behavior, book content and ceilings are unchanged; native accepted transport retention is next.`
+  Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.4.2.3.3.3.1: seal completed lifecycle acceptance history`
+
+- ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.4.2.3.3.3.2`
+  Status: `pending`
+  Goal: `Retain native accepted transport ownership through interruption.`
+  Acceptance: `Retain the original ticket and socket owner before accept/sealing effects under a signal mask. Provide original-owner admission hooks before native accept and recoverable inventories through interrupted returns, transient accept failure and partial connection construction. Allow the aggregate coordinator to retain the shared endpoint until native jobs close; preserve standalone service behavior, original authentication walls and bounded closed outcomes. Qualify actual sockets and signals without command release.`
+  Verification: `pending`
+  Commit: `pending`
+
+- ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.4.2.3.3.3.3`
+  Status: `pending`
+  Goal: `Bind accepted peers to aggregate original grants and qualify the native join.`
+  Acceptance: `After .2, reserve actual accepted-peer descriptor capacity before every accept, reconcile only original retained sockets and keep interrupted/closed outcomes reachable until consumed. Include run/jobs/peers in current foreign inventories, revoke admission before subtree cleanup and retain the endpoint until every native owner settles. Qualify real root/nested gated handoff with partial transport/start failure, original deadlines, capacity refusal and exact cleanup; no ACCEPT/exec publication or caller routing.`
   Verification: `pending`
   Commit: `pending`
 
@@ -4413,7 +4436,7 @@ decomposes the architecture needed to move beyond that bounded foundation.
 
 ## Current Frontier
 
-Current frontier: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.4.2.3.3.3` binds accepted transport descriptors and retained tickets, then qualifies their join with root/nested native admission. Native gated lifecycle is complete through .2. Publication, streaming, fair lifecycle composition and independent qualification remain separate integration children. Preserve original failures, the spent compiler workspace, source-only driver commit and full-CI/push gates.
+Current frontier: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.4.2.3.3.3.2` retains accepted native sockets/tickets through interruption and preserves aggregate endpoint lifetime. Child .3 then binds original descriptor grants and qualifies the joined native admission lifecycle. Publication, streaming, fair composition and independent qualification remain separate integration children. Preserve original failures, the spent compiler workspace, source-only driver commit and full-CI/push gates.
 
 Architecture audit `.1` is complete. Decision `0032` selects one public
 `.vial` source language, private immutable `VIALSemanticIR` and
@@ -7008,176 +7031,28 @@ Completed native-proxy feasibility through runtime-source-controls acceptance: r
 
 The manifest binds the completed acceptance suffix and independent reserved-process evidence join to their exact Git source. That source preserves the earlier history pointer and versioned manifest chain; current node contracts remain authoritative.
 
-## Acceptance Checklist (.19.2.3.1.2.2.5.5.2.3.4.2.3.3.2.1)
+## Acceptance Checklist (.19.2.3.1.2.2.5.5.2.3.4.2.3.3.3.1)
 
-- [x] **ROOT CAUSE (WHY + WHERE)** — `git log -S` identifies b803ba269
-  as the preceding bounded rollover. The committed task is now 7143 lines;
-  native job decomposition and evidence need room before the existing rollover
-  milestone. Only completed acceptance narration moves to exact Git retrieval.
-- [x] **ADDRESSED (verified)** — Re-derivation through independent git cat-file
-  reconstruction matches the manifest's complete source and suffix hashes,
-  bytes, lines and five headings. The 188-line suffix is 13266 bytes; every
-  live node remains, and the exact predecessor retains the earlier manifest
-  chain. Falsification: the unchanged production checker accepts a complete
-  isolated fixture and rejects its altered suffix hash as the sole failure.
-  Initial fixture preflights lacked the archive registry and correct Git root;
-  neither counts as the digest control. The corrected fixture is removed.
-  Durability: tracked finite manifest, exact Git objects, current ownership,
-  checker and this commit; local coordinator-job-history logs are a raw-log gap.
-- [x] **NO REGRESSION** — Task integrity passes with the full retained graph;
-  `knowledge-map: OK`, claim inventory/dispositions and staged doctrines check
-  current routing and bounded documents. No runtime, book behavior, compiler
-  capture, full CI or push changes. The native job owner now separates root
-  preparation from gated root/nested fork qualification without dropping scope.
-
-## Acceptance Checklist (.19.2.3.1.2.2.5.5.2.3.4.2.3.3.2.2)
-
-- [x] **ROOT CAUSE (WHY + WHERE)** — `git log -S` joins 4af301a55's
-  resource-free native preparation with ea2424e72's run-only coordinator.
-  Native pipe allocation previously checked its local wall but had no original
-  aggregate job-grant check, retained coordinator graph or ledger publication.
-  Reusing run-only close after adding job handles would drop their ownership.
-- [x] **ADDRESSED (verified)** — T1836 re-derives actual pipe allocations,
-  original object/foreign-handle identity and aggregate inventory independently
-  of ledger reports. Eight guarded pipe operations retain fifteen live ends;
-  the run plus job report seventeen actual descriptors, two scratch credits
-  and two unused child slots. Exact aggregate reservation 128 permits existing
-  root credit to allocate; actual preparation then charges 127 when the test
-  retains 108 outstanding external credits. Failure keeps the original peak
-  until cleanup; an incomplete native closure report cannot retire the root
-  even after actual pipe closure. All eight allocation-failure, cancelled
-  and inclusive-expiry cuts retain their original owner and first cause.
-  Actual pending USR1 at the selected pipe cuts observes native and ledger
-  publication before interrupted return revokes admission. Fork/wait/signal
-  paths are trapped in the new preparation test. Falsification: skipping the
-  per-pipe callback fails the independent fresh-check observer; omitting run
-  inventory fails original-handle equality; omitting ledger reconciliation
-  fails actual/count and pending-handler checks; omitting only the coordinator
-  mask fails the pending handler's prepared-ledger and reconciled-credit checks.
-  All control cleanup is consumed and isolated mutation sources are removed.
-  Durability: native components, Coordinator, T1836, book, current fact and this
-  commit retain derivation and exact mutation mechanisms; local
-  coordinator-job-preparation logs remain a raw-log durability gap. Native
-  forks, nested ownership, peers and Linux remain separately owned missing legs.
-- [x] **NO REGRESSION** — The sequential endpoint/service, architecture,
-  reservation/pair/capture/closure/job/receipt, native descriptor, admission and
-  retained preparation/run band reports `All tests successful`,
-  `Files=18, Tests=199`. After adding incomplete-closure refusal, final T1836
-  passes `Files=1, Tests=6`. Syntax, inspected mdBook render, task/Knowledge Map,
-  claim inventory/dispositions and staged doctrines cover this slice.
-  No normal caller routing, original producer, full CI or push executes.
-
-## Acceptance Checklist (.19.2.3.1.2.2.5.5.2.3.4.2.3.3.2.3.1)
-
-- [x] **ROOT CAUSE (WHY + WHERE)** — `git log -S` identifies f2c808399's
-  command fork and 4af301a55's retained preparation transaction. Their fixed
-  borrowed inventories cannot account for other jobs allocated after preparation
-  or between forks. An outer preparation mask would also substitute blocked
-  signals for the command's original exec mask. Admission must run inside the
-  existing native fork transaction and retain effects before restoration.
-- [x] **ADDRESSED (verified)** — Re-derive T1837's actual two-role native
-  handoff with descriptors created after preparation and between forks. Each
-  child checks the independently retained foreign handles before acknowledgment;
-  exact observed waits and a retained stdout EOF witness prove closure without
-  release. The selected original exec-mask/disposition checks run in the real
-  command child; the existing T1824 regression also executes its original-mask
-  witness. Native ownership reaches the inclusive 128-descriptor union and
-  refuses 129 before any fork. Denial, expiry, duplicate, own-handle overlap
-  and closed inventories reject at both roles; direct mask observations confirm
-  restoration. Pending USR1 observes the independently recorded PID before
-  interrupting either return. Job first failure survives later cancellation.
-  An interrupted successful reservation return must retain its handshake for
-  cleanup; a declared restoration failure remains a native protocol failure.
-  Falsification: a fresh callback whose command inventory is discarded yields
-  independent wait 23296 (exit 91); substituting an empty exec mask yields
-  23552 (exit 92). Poisoning the interrupted reservation handshake fails exact
-  closure and wait assertions; bounded independent positive-PID rescue consumes
-  the remaining actual child. All mutant outcomes are consumed and sources
-  removed. Durability: native components, T1837, task, book, canonical fact and
-  this commit retain derivation and exact mutation mechanisms. Local admitted-
-  fork logs are a raw-log durability gap. These callbacks are a qualified native
-  interface; original coordinator grant binding, nested cleanup and Linux are
-  still separate missing integration/qualification legs.
-- [x] **NO REGRESSION** — The selected architecture, native handoff, capture,
-  closure, job/receipt, descriptor, admission and retained preparation/run band
-  reports `All tests successful`, `Files=16, Tests=170`. Final T1837 with direct
-  refusal-mask observations passes `Files=1, Tests=4`. Syntax, inspected book
-  render, task/Knowledge Map, claims and staged doctrines cover the change.
-  No normal caller route, coordinator start, original producer, full CI or push
-  executes; historical startup and browser-visual qualification stay gated.
-
-## Acceptance Checklist (.19.2.3.1.2.2.5.5.2.3.4.2.3.3.2.3.2.1)
-
-- [x] **ROOT CAUSE (WHY + WHERE)** — `git log -S` identifies ec277e682's
-  ReservedJob cleanup composition and aa3bcf39a's repeated-retirement return.
-  Already-running cleanup ignored an earlier ancestor cancellation deadline.
-  Native coordinator composition therefore lacked a way to impose one smaller
-  shared remaining wall after a descendant had already begun cleanup.
-- [x] **ADDRESSED (verified)** — T1838 re-derives actual stopped command and
-  retiring-reservation lifetimes with independently observed native KILL times,
-  exact waits and group absence captured before identity retirement. Repeated
-  cancellation moves both the closure wall and escalation threshold earlier;
-  a retiring reservation receives the same smaller wall. Native escalation
-  occurs before the former threshold and within the clipped deadline; no
-  command executes. Later requests, invalid input and finished-object calls
-  cannot renew grace or restore signal authority. Real pending USR1 observes
-  both published walls before interrupted return. Real pre-mask handlers impose
-  an even smaller deadline; masked rechecks prevent stale outer requests from
-  overwriting it. Falsification: omitted job forwarding fails wall/publication
-  assertions; omitted group escalation clipping fails native KILL, resource and
-  exact-wait checks before bounded direct-child rescue; omitted reservation
-  clipping fails its published wall and actual KILL timing. Omitting the masked
-  comparisons fails both real pre-mask races. All outcomes are consumed and
-  exact mutant source trees removed. Durability: components, T1838, book, fact,
-  this task and commit retain the derivation and exact controls; local
-  .artifacts/cleanup-wall-*.log files are an explicit raw-log durability gap.
-  Coordinator subtree binding and Linux remain separate missing legs.
-- [x] **NO REGRESSION** — The final sequential architecture, native handoff,
-  capture/closure/job/receipt, descriptor/admission and retained ownership band
-  reports `All tests successful`, `Files=17, Tests=172`. Syntax, inspected book,
-  task/Knowledge Map, claims and staged doctrine gates cover the slice.
-  The initial staged gate caught accumulated fact-list growth; the current
-  evidence/reverify list now covers active native owners, with earlier complete
-  lists retained at the card's exact history pointer. Questions and aggregate
-  fact allowance are unchanged.
-  No normal caller, coordinator start, original producer, full CI or push runs.
-
-## Acceptance Checklist (.19.2.3.1.2.2.5.5.2.3.4.2.3.3.2.3.2.2)
-
-- [x] **ROOT CAUSE (WHY + WHERE)** — `git log -S` identifies de32706ad's
-  Coordinator unstarted-only guard. The retained run/root preparer had no
-  nested snapshot owner, native start transition or started-job close path;
-  component fork and clipping hooks alone could not establish coordinator
-  admission. This leaf replaces that explicit integration boundary.
-- [x] **ADDRESSED (verified)** — T1839 re-derives actual root, nested and
-  grandchild gated handoffs using independent native fork/wait/pipe observations,
-  child-side foreign-handle checks and separately retained output EOF witnesses.
-  Original grants and detached requests survive real pending signals; actual
-  ready pairs reconcile child credit while interrupted starts retain capacity.
-  Refusal checks cover inclusive job/descriptor capacity, copied grants,
-  cancellation/expiry at both forks and actual fork failure. A real stopped
-  TERM-ignoring child leaves close pending with all charges/endpoint retained;
-  its independently waited KILL settles within shared clipped cleanup. Already
-  consumed descendant clocks are excluded using an explicit parent-clock
-  control, without synthetic native identities. Falsification: final-source
-  omitted foreign inventory yields the independently waited child exit 91;
-  omitted native wall propagation fails the ancestor wall assertion; parent-first
-  retirement rejects retained descendants; omitted reservation masking exposes
-  a missing retained owner to the real handler. All outcomes are consumed.
-  Durability: implementation, T1839, book, bounded fact, task and commit retain
-  the derivation and named controls. Local .artifacts/coordinator-lifecycle-*.log
-  files are an explicit raw-log durability gap; Linux and accepted-peer/full
-  publication qualification remain separately owned missing legs.
-- [x] **NO REGRESSION** — The final sequential architecture/native component
-  and coordinator band reports `All tests successful`, `Files=18, Tests=179`.
-  Syntax, inspected built book, claims, Knowledge Map and staged doctrine gates
-  cover the slice. The first stopped-child fixture expected KILL without ignoring
-  TERM and observed signal 15; corrected disposition establishes the intended
-  escalation control. An initial misspelled T1817 path supplied no test evidence.
-  The foreign-inventory falsifier exposed exhausted-wall fixture teardown;
-  exact original identity-checked teardown now removes its own endpoint while
-  preserving the failed owner verdict. The initial singleton residue was
-  recorded, checked unused, removed exactly and followed by an empty census.
-  Final falsifiers leave an empty endpoint census; isolated source trees and
-  rendered scratch book are removed. Normal callers and retained original
-  producers are unchanged; no execution release, full CI or push runs.
+- [x] **ROOT CAUSE (WHY + WHERE)** — `git log -S` identifies 97ca91b09 as the
+  latest completed acceptance addition; Git-blob reconstruction measures 7183
+  lines, approaching the existing 7200-line rollover milestone. Completed
+  acceptance evidence can leave the live suffix without removing any node.
+- [x] **ADDRESSED (verified)** — The finite manifest binds the full predecessor
+  (1266022 bytes) and its five-section suffix (173 lines/12493 bytes) to exact
+  SHA-256 identities. Independent `git cat-file` reconstruction matches those
+  identities and counts, all current node IDs, and the predecessor manifest's
+  retained source chain. The unchanged task checker accepts a complete isolated
+  fixture; changing only its suffix digest produces only the expected digest
+  mismatch. Durability: the exact committed source, existing versioned manifest
+  chain, current manifest and this task preserve the evidence; local
+  .artifacts/accepted-peer-history-*.log files have an explicit raw-log gap.
+  No source reconstruction or original runtime replay is required.
+- [x] **NO REGRESSION** — `knowledge-map: OK` confirms current fact routing;
+  `task-tree-integrity` reports all active task-tree
+  invariants hold for the positive fixture; its negative result is consumed
+  and the fixture is removed. Current claims, Knowledge Map and staged
+  doctrine gates verify the resulting tree. The current book remains accurate
+  and unchanged because this slice changes history routing only. No source
+  behavior, limits, ceiling, original producer, full CI or push changes.
+  The first staged gate rejected unregistered evidence phrases; actual pickaxe
+  and Knowledge Map outputs now supply its box-scoped declared signatures.
