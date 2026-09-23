@@ -153,6 +153,7 @@ answers:
   - "when does a consumed receipt permit admit one finished job?"
   - "why does the public compiler request omit the private receipt?"
   - "why cannot one compiler receipt bind?"
+  - "why does the sealed supervisor accept no compiler environment?"
 date: 2026-09-23
 status: current
 tags: [tests, subprocess, supervision, task-acceptance, darwin, locality]
@@ -162,4 +163,4 @@ evidence: >-
 reverify: >-
   perl docs/audits/native-proxy-receipt-adapter-20260922/qualify.t
 ---
-History: `08889ce00ea061d475bf7d5692e80c80266de10b:docs/knowledge/test-subprocess-policy-adapters.md`. `NativeProxyReceiptAdapter::receipts_bound` requires compiler, outer and inner receipts together. One compiler receipt fails that binding. No compiler, probe or tool-resolution process runs.
+History: `b6e2e05fb1a4a3ba9c4098b5dbcf8621677a5301:docs/knowledge/test-subprocess-policy-adapters.md`. `FSM::Support::ProcessSupervisor::supervise_process` accepts argv, bounds, containment, cwd, private_job, schema and stage. It accepts no environment. No compiler, probe or tool-resolution process runs.
