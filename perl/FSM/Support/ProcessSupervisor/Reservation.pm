@@ -96,21 +96,35 @@ sub _check_allocation_deadline {
 # pending handler. Both operation failure and restoration are consumed.
 sub _masked_preparation {
     my ($operation) = @_;
+    return _masked_operation(sub { $operation->() }, \&_mask,
+        'cannot mask preparation signals', 'fatal preparation signal-mask restoration failure');
+}
+
+# Fork transactions receive the caller's original mask explicitly. A command
+# child must retain that mask for exec; a preparation mask is never a substitute.
+sub _masked_fork {
+    my ($operation, $mask, $role, $outcome) = @_;
+    return _masked_operation($operation, $mask,
+        "cannot mask $role fork signals", "fatal $role signal-mask restoration failure", $outcome);
+}
+sub _masked_operation {
+    my ($operation, $mask, $block_error, $restore_error, $outcome) = @_;
     my $all = POSIX::SigSet->new; $all->fillset;
     my $old = POSIX::SigSet->new;
-    defined(_mask(SIG_BLOCK, $all, $old)) or _error('cannot mask preparation signals');
-    my $ok = eval { $operation->(); 1 };
+    defined($mask->(SIG_BLOCK, $all, $old)) or _error($block_error);
+    my $ok = eval { $operation->($old); 1 };
     my $error = $@;
     my ($restored, $interrupted);
-    { local $@; eval { $restored = defined _mask(SIG_SETMASK, $old); 1 } or $interrupted = $@; }
+    { local $@; eval { $restored = defined $mask->(SIG_SETMASK, $old); 1 } or $interrupted = $@; }
+    $outcome->{restoration_failed} = !$restored && !$interrupted ? 1 : 0 if $outcome;
     unless ($ok) {
         $error .= $interrupted if $interrupted;
-        $error .= "private process reservation: fatal preparation signal-mask restoration failure\n"
+        $error .= "private process reservation: $restore_error\n"
             unless $restored || $interrupted;
         die $error;
     }
     die $interrupted if $interrupted;
-    _error('fatal preparation signal-mask restoration failure') unless $restored;
+    _error($restore_error) unless $restored;
     return;
 }
 
@@ -181,8 +195,9 @@ sub prepare {
 }
 
 sub start {
-    my ($self) = @_; _owner($self);
-    _error('unexpected start arguments or state') unless @_ == 1
+    my ($self, $check) = @_; _owner($self);
+    _error('unexpected start arguments or state')
+        unless (@_ == 1 || (@_ == 2 && ref($check) eq 'CODE'))
         && $self->{phase} eq 'prepared' && !$self->{retired};
     if (_now() >= $self->{deadline}) {
         $self->_failure('execution deadline expired before reservation fork');
@@ -196,28 +211,44 @@ sub start {
     $self->{caller_group} = _group(0);
     _error('cannot establish caller process group')
         unless defined($self->{caller_group}) && $self->{caller_group} > 0;
-    my $all = POSIX::SigSet->new; $all->fillset;
-    my $old = POSIX::SigSet->new;
-    _error('cannot mask reservation fork signals')
-        unless defined _mask(SIG_BLOCK, $all, $old);
-    # No callback or I/O separates fork from publication into the retained
-    # object. The caller still owns this object if a pending signal interrupts
-    # the method when its original mask is restored.
-    @{$self}{qw(birth_sec birth_usec)} = gettimeofday();
-    my $pid = _fork();
-    if (defined($pid) && $pid == 0) { _child($self); _exit(126); }
-    if (defined $pid) {
-        $self->{pid} = $pid;
-        $self->{positive_authority} = 1;
-        $self->{phase} = 'group_pending';
-        $self->{handshake_deadline} = _minimum($self->{deadline}, _now() + $LIMIT->{handshake_seconds});
-    }
-    else { $self->_failure('cannot fork reservation child'); }
-    $self->_close(qw(child_read child_write));
-    delete $self->{close_handles};
-    unless (defined _mask(SIG_SETMASK, $old)) {
-        $self->_failure('fatal reservation signal-mask restoration failure');
-        _error($self->{failure});
+    my $outcome = {};
+    my $ok = eval {
+        _masked_fork(sub {
+            my $admitted = eval {
+                $self->{close_handles} = _inventory($check->('reservation'), $LIMIT->{descriptors} - 4)
+                    if defined $check;
+                _inventory([@{$self->handles}, @{$self->{close_handles}}], $LIMIT->{descriptors});
+                _error('execution deadline expired before reservation fork') if _now() >= $self->{deadline};
+                1;
+            };
+            unless ($admitted) {
+                my $error = $@; $self->_failure(FSM::Support::ProcessSupervisor::_sanitize_control($error)); die $error;
+            }
+            # No callback or I/O separates fork from retained PID publication.
+            @{$self}{qw(birth_sec birth_usec)} = gettimeofday();
+            my $pid = _fork();
+            if (defined($pid) && $pid == 0) { _child($self); _exit(126); }
+            if (defined $pid) {
+                $self->{pid} = $pid;
+                $self->{positive_authority} = 1;
+                $self->{phase} = 'group_pending';
+                $self->{handshake_deadline} = _minimum($self->{deadline}, _now() + $LIMIT->{handshake_seconds});
+            }
+            else { $self->_failure('cannot fork reservation child'); }
+            $self->_close(qw(child_read child_write));
+            delete $self->{close_handles};
+        }, \&_mask, 'reservation', $outcome);
+        1;
+    };
+    unless ($ok) {
+        my $error = $@;
+        # An interrupted successful return retains a usable reservation
+        # handshake for cleanup. The composing job keeps the interruption as
+        # its first cause; marking this native protocol failed would prevent
+        # it from acknowledging group creation/departure during cancellation.
+        $self->_failure(FSM::Support::ProcessSupervisor::_sanitize_control($error))
+            unless $self->{pid} && !$outcome->{restoration_failed};
+        die $error;
     }
     return;
 }

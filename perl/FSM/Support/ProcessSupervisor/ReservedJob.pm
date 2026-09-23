@@ -111,11 +111,17 @@ sub _sync_identity {
 }
 
 sub start {
-    my ($self) = @_; _owner($self);
+    my ($self, $check) = @_; _owner($self);
     _error('start requires a retained prepared job')
-        unless @_ == 1 && $self->{state}{phase} eq 'prepared';
+        unless (@_ == 1 || (@_ == 2 && ref($check) eq 'CODE'))
+            && $self->{state}{phase} eq 'prepared';
     $self->{state}{phase} = 'launch';
-    $self->{pair}->start;
+    my $ok = eval { $self->{pair}->start(defined($check) ? ($check) : ()); 1 };
+    unless ($ok) {
+        my $error = $@;
+        $self->_latch('host_error', FSM::Support::ProcessSupervisor::_sanitize_control($error));
+        die $error;
+    }
     $self->_sync_identity;
 }
 
@@ -243,7 +249,12 @@ sub advance {
         $self->_begin_cleanup(1);
         return;
     }
-    $self->{pair}->advance;
+    my $advanced = eval { $self->{pair}->advance; 1 };
+    unless ($advanced) {
+        my $error = $@;
+        $self->_latch('host_error', FSM::Support::ProcessSupervisor::_sanitize_control($error));
+        die $error;
+    }
     my ($c) = $self->_sync_identity;
     if (defined($c->{failure})) {
         $self->_latch('host_error', $c->{failure});

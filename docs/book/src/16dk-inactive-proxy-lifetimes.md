@@ -824,6 +824,23 @@ That interruption revokes future admission. Unstarted cleanup consumes the
 original native closure result before retiring the root and endpoint; neither
 a copied observation nor closed pipe ends alone can release its ownership.
 
+Native start now accepts an optional owner check at each fork. The check runs
+inside that fork's signal mask and returns the current foreign descriptor set.
+The component validates the actual union with its own handles, including
+closed or duplicated entries, before forking. For example, a descriptor added
+after preparation or between reservation and command creation must appear in
+the corresponding fresh inventory. Independent children check those actual
+handles are closed before acknowledging handoff.
+
+The command retains the caller's original exec mask and prepared dispositions;
+it does not inherit the temporary admission mask. Both child identities are
+published before restoring signals. A pending creator interruption remains the
+job's first error while cleanup retains the recorded reservation's handshake.
+Treating that interruption as a failed native handshake would prevent group
+closure. A reported mask-restoration failure remains a separate native failure.
+The coordinator's root/nested start and subtree cleanup still need to bind these
+hooks to their original grants; these component hooks grant no exec release.
+
 Normal callers retain the existing own-group supervisor. Aggregate coordinator
 admission, nested routing and complete
 subtree qualification still have separate open owners. These private components
@@ -838,6 +855,7 @@ scripts/run_with_ram_guard.sh -- prove -Iperl -It/lib t/1833-process-retained-en
 scripts/run_with_ram_guard.sh -- prove -Iperl -It/lib t/1834-process-retained-preparation.t
 scripts/run_with_ram_guard.sh -- prove -Iperl -It/lib t/1835-process-coordinator-run-ownership.t
 scripts/run_with_ram_guard.sh -- prove -Iperl -It/lib t/1836-process-coordinator-job-preparation.t
+scripts/run_with_ram_guard.sh -- prove -Iperl -It/lib t/1837-process-admitted-forks.t
 ```
 
 For native stopped-child observations, decode `${^CHILD_ERROR_NATIVE}` with

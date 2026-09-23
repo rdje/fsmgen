@@ -54,6 +54,7 @@ sub _fail {
     $self->{failure} //= $why;
     $self->{phase} = 'failed';
     delete $self->{outgoing};
+    delete $self->{fork_check};
     # EOF can only abort a child waiting at either gate, never release it.
     $self->_close('gate');
 }
@@ -142,41 +143,67 @@ sub prepare {
 }
 
 sub start {
-    my ($self) = @_; _owner($self);
-    _error('unexpected start state') unless @_ == 1 && $self->{phase} eq 'prepared';
+    my ($self, $check) = @_; _owner($self);
+    _error('unexpected start state')
+        unless (@_ == 1 || (@_ == 2 && ref($check) eq 'CODE')) && $self->{phase} eq 'prepared';
+    $self->{fork_check} = $check if defined $check;
     $self->{phase} = 'group_pending';
-    $self->{reservation}->start;
+    my $ok = eval {
+        $self->{reservation}->start(defined($check) ? (sub {
+            return [@{$self->_fork_inventory('reservation')}, @{$self->handles}];
+        }) : ());
+        1;
+    };
+    unless ($ok) {
+        my $error = $@; $self->_fail(FSM::Support::ProcessSupervisor::_sanitize_control($error)); die $error;
+    }
+}
+
+sub _fork_inventory {
+    my ($self, $role) = @_;
+    my $foreign = $self->{fork_check} ? $self->{fork_check}->($role) : $self->{close_handles};
+    $foreign = FSM::Support::ProcessSupervisor::Reservation::_inventory($foreign, $LIMIT->{descriptors});
+    # Fresh foreign descriptors may have appeared since preparation. Validate
+    # the actual current union, including overlap with this pair's own handles.
+    FSM::Support::ProcessSupervisor::Reservation::_inventory(
+        [@$foreign, @{$self->handles}, @{$self->{reservation}->handles}], $LIMIT->{descriptors});
+    return $foreign;
 }
 
 sub _start_command {
     my ($self) = @_;
-    my $all = POSIX::SigSet->new; $all->fillset;
-    my $old = POSIX::SigSet->new;
-    unless (defined _mask(SIG_BLOCK, $all, $old)) {
-        $self->_fail('cannot mask command fork signals'); return;
-    }
-    $self->{exec_mask} = $old;
-    $self->{reservation_handles} = $self->{reservation}->handles;
-    @{$self}{qw(birth_sec birth_usec)} = gettimeofday();
-    my $pid = _fork();
-    if (defined($pid) && !$pid) { eval { _child($self) }; _exit(126); }
-    if (defined $pid) {
-        $self->{command_pid} = $pid;
-        $self->{command_authority} = 1;
-        $self->{phase} = 'join_pending';
-        $self->{outgoing} = 'J';
-        $self->{handshake_deadline} = FSM::Support::ProcessSupervisor::Reservation::_minimum(
-            $self->{deadline}, _now() + $LIMIT->{handshake_seconds});
-    }
-    else { $self->_fail('cannot fork command child'); }
-    $self->_close(qw(stdin child_stdout child_stderr child_ack child_gate child_control));
-    delete $self->{close_handles};
-    delete $self->{dispositions};
-    delete $self->{exec_mask};
-    delete $self->{reservation_handles};
-    unless (defined _mask(SIG_SETMASK, $old)) {
-        $self->_fail('fatal command signal-mask restoration failure');
-        _error($self->{failure});
+    my $ok = eval {
+        FSM::Support::ProcessSupervisor::Reservation::_masked_fork(sub {
+            my ($old) = @_;
+            my $admitted = eval {
+                $self->{close_handles} = $self->_fork_inventory('command');
+                _error('execution deadline expired before command fork') if _now() >= $self->{deadline};
+                1;
+            };
+            unless ($admitted) {
+                my $error = $@; $self->_fail(FSM::Support::ProcessSupervisor::_sanitize_control($error)); die $error;
+            }
+            $self->{exec_mask} = $old;
+            $self->{reservation_handles} = $self->{reservation}->handles;
+            @{$self}{qw(birth_sec birth_usec)} = gettimeofday();
+            my $pid = _fork();
+            if (defined($pid) && !$pid) { eval { _child($self) }; _exit(126); }
+            if (defined $pid) {
+                $self->{command_pid} = $pid;
+                $self->{command_authority} = 1;
+                $self->{phase} = 'join_pending';
+                $self->{outgoing} = 'J';
+                $self->{handshake_deadline} = FSM::Support::ProcessSupervisor::Reservation::_minimum(
+                    $self->{deadline}, _now() + $LIMIT->{handshake_seconds});
+            }
+            else { $self->_fail('cannot fork command child'); }
+            $self->_close(qw(stdin child_stdout child_stderr child_ack child_gate child_control));
+            delete @{$self}{qw(close_handles dispositions exec_mask reservation_handles fork_check)};
+        }, \&_mask, 'command');
+        1;
+    };
+    unless ($ok) {
+        my $error = $@; $self->_fail(FSM::Support::ProcessSupervisor::_sanitize_control($error)); die $error;
     }
     $self->_fail($self->{failure}) if $self->{failure};
 }

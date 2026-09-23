@@ -3656,9 +3656,25 @@ decomposes the architecture needed to move beyond that bounded foundation.
   Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.4.2.3.3.2.2: bind retained root preparation to admission grants`
 
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.4.2.3.3.2.3`
-  Status: `pending`
+  Status: `active`
   Goal: `Bind gated root/nested forks and child reconciliation.`
   Acceptance: `Admit retained nested snapshots from an active original parent; refresh complete foreign inventories immediately before both masked forks. Preserve original exec signal state and ledger child credit through partial/interrupted starts. Qualify real root/nested gated handoff, capacity refusal, cancellation before fork and descendant-first cleanup with exact waits; no exec release or caller routing.`
+  Verification: `First qualify optional original-admission hooks and refreshed foreign inventories at both native fork boundaries, including failure and original signal-state restoration. Then bind the coordinator root/nested start phases, actual child reconciliation and descendant-first cleanup to those qualified hooks. No callback check can substitute for original ledger ownership in the joined child.`
+  Commit: `pending`
+
+  Children: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.4.2.3.3.2.3.1, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.4.2.3.3.2.3.2`
+
+- ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.4.2.3.3.2.3.1`
+  Status: `done`
+  Goal: `Qualify admitted native forks with fresh foreign inventories.`
+  Acceptance: `Add optional original-owner checks inside each native fork mask and refresh bounded complete foreign descriptor inventories immediately before the fork. Preserve the command original exec mask/dispositions, retained PID publication and first failure through callback rejection or pending creator interruption. Qualify actual child closure, exact waits, cancellation/expiry refusal and dynamic inventories after preparation; no coordinator start or exec release.`
+  Verification: `Reservation and GatedPair now invoke optional owner admission inside each native fork mask, refresh complete foreign inventories and validate their actual descriptor union before effects. The command receives the original caller exec mask; both PID records precede restoration. ReservedJob latches thrown start/advance errors before later cancellation. An interrupted recorded reservation keeps its cleanup handshake usable unless restoration itself reports failure. T1837 independently checks child-side descriptor closure, selected original exec state, exact waits/EOF, refusal at both roles, native 128/129 descriptor boundaries and real pending creator interruption. The final component band passes Files=16, Tests=170; final focused T1837 passes Files=1, Tests=4. Omitted command foreign closure and wrong exec-mask mutants yield independently waited exits 91/92; poisoned interruption fails native closure/exact waits before bounded rescue. Coordinator grants/start, subtree cleanup and Linux remain open under the joined child.`
+  Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.4.2.3.3.2.3.1: qualify admitted forks with fresh native inventories`
+
+- ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.4.2.3.3.2.3.2`
+  Status: `pending`
+  Goal: `Bind coordinator gated root/nested native lifecycle.`
+  Acceptance: `Retain nested snapshots and original grants; bind preparing/starting/active phases to the qualified allocation/fork hooks and actual descriptors/child outcomes. Preserve conservative credit through interrupted returns; cancel descendants before parent retirement using one shared remaining wall. Qualify real root/nested gated handoff, capacity refusal and cancel-before-fork with exact native waits. Replace unstarted-only close safely; no ACCEPT/exec release or caller routing.`
   Verification: `pending`
   Commit: `pending`
 
@@ -4381,7 +4397,7 @@ decomposes the architecture needed to move beyond that bounded foundation.
 
 ## Current Frontier
 
-Current frontier: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.4.2.3.3.2.3` binds gated root/nested forks to original grants, refreshed foreign inventories and retained child reconciliation. Sibling .3 then binds accepted peers and qualifies the joined native admission lifecycle. Publication, streaming, fair lifecycle composition and independent qualification remain separate integration children. Preserve original failures, the spent compiler workspace, source-only driver commit and full-CI/push gates.
+Current frontier: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.4.2.3.3.2.3.2` joins coordinator root/nested start, original grants, retained native reconciliation and descendant-first cleanup using the qualified fork hooks. Sibling .3 then binds accepted peers and qualifies the joined native admission lifecycle. Publication, streaming, fair lifecycle composition and independent qualification remain separate integration children. Preserve original failures, the spent compiler workspace, source-only driver commit and full-CI/push gates.
 
 Architecture audit `.1` is complete. Decision `0032` selects one public
 `.vial` source language, private immutable `VIALSemanticIR` and
@@ -7034,3 +7050,42 @@ The manifest binds the completed acceptance suffix and independent reserved-proc
   passes `Files=1, Tests=6`. Syntax, inspected mdBook render, task/Knowledge Map,
   claim inventory/dispositions and staged doctrines cover this slice.
   No normal caller routing, original producer, full CI or push executes.
+
+## Acceptance Checklist (.19.2.3.1.2.2.5.5.2.3.4.2.3.3.2.3.1)
+
+- [x] **ROOT CAUSE (WHY + WHERE)** — `git log -S` identifies f2c808399's
+  command fork and 4af301a55's retained preparation transaction. Their fixed
+  borrowed inventories cannot account for other jobs allocated after preparation
+  or between forks. An outer preparation mask would also substitute blocked
+  signals for the command's original exec mask. Admission must run inside the
+  existing native fork transaction and retain effects before restoration.
+- [x] **ADDRESSED (verified)** — Re-derive T1837's actual two-role native
+  handoff with descriptors created after preparation and between forks. Each
+  child checks the independently retained foreign handles before acknowledgment;
+  exact observed waits and a retained stdout EOF witness prove closure without
+  release. The selected original exec-mask/disposition checks run in the real
+  command child; the existing T1824 regression also executes its original-mask
+  witness. Native ownership reaches the inclusive 128-descriptor union and
+  refuses 129 before any fork. Denial, expiry, duplicate, own-handle overlap
+  and closed inventories reject at both roles; direct mask observations confirm
+  restoration. Pending USR1 observes the independently recorded PID before
+  interrupting either return. Job first failure survives later cancellation.
+  An interrupted successful reservation return must retain its handshake for
+  cleanup; a declared restoration failure remains a native protocol failure.
+  Falsification: a fresh callback whose command inventory is discarded yields
+  independent wait 23296 (exit 91); substituting an empty exec mask yields
+  23552 (exit 92). Poisoning the interrupted reservation handshake fails exact
+  closure and wait assertions; bounded independent positive-PID rescue consumes
+  the remaining actual child. All mutant outcomes are consumed and sources
+  removed. Durability: native components, T1837, task, book, canonical fact and
+  this commit retain derivation and exact mutation mechanisms. Local admitted-
+  fork logs are a raw-log durability gap. These callbacks are a qualified native
+  interface; original coordinator grant binding, nested cleanup and Linux are
+  still separate missing integration/qualification legs.
+- [x] **NO REGRESSION** — The selected architecture, native handoff, capture,
+  closure, job/receipt, descriptor, admission and retained preparation/run band
+  reports `All tests successful`, `Files=16, Tests=170`. Final T1837 with direct
+  refusal-mask observations passes `Files=1, Tests=4`. Syntax, inspected book
+  render, task/Knowledge Map, claims and staged doctrines cover the change.
+  No normal caller route, coordinator start, original producer, full CI or push
+  executes; historical startup and browser-visual qualification stay gated.
