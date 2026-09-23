@@ -26,6 +26,8 @@ my $corpus = File::Spec->catdir(
 my $json = JSON::PP->new->canonical(1)->utf8(1);
 
 subtest 'verifier is producer-independent and read-only' => sub {
+    plan skip_all => 'ignored current corpus is absent on a fresh checkout'
+        unless -d $corpus;
     my $source = read_raw($script);
     unlike(
         $source,
@@ -50,6 +52,8 @@ subtest 'verifier is producer-independent and read-only' => sub {
 };
 
 subtest 'bounded canonical result reports the exact independent census' => sub {
+    plan skip_all => 'ignored current corpus is absent on a fresh checkout'
+        unless -d $corpus;
     my $result = run_verifier();
     is($result->{exit}, 0, 'verifier succeeds for result inspection')
         or diag($result->{stderr});
@@ -138,6 +142,7 @@ done_testing();
 
 sub corpus_census {
     my ($base) = @_;
+    die "ignored current corpus is absent\n" unless -d $base;
     my @entries;
     find({
         no_chdir => 1,

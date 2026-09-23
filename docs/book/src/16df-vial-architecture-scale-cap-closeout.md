@@ -1952,7 +1952,9 @@ families, and the terminal build job failed because those families failed:
 - Several regression-promotion tests still read ignored
   `.artifacts/qualification/vial-scale` paths that a fresh checkout does not
   carry. The policy and capture-plan mutation checks now skip that ignored
-  closure when it is absent and still run when it is present.
+  closure when it is absent, and the current-corpus verifier skips that
+  ignored corpus the same way. Both still run when the ignored input is
+  present.
 - `t/350-support-contract-builder-audit.t` now admits the regression-gate
   status because that contract already carries guidance. The semantic-family
   envelope stays outside the guidance assertion because its own nonclaims
