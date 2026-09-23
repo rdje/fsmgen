@@ -550,7 +550,8 @@ fails before a process starts, including a named program that is not
 executable. An executable program now returns that job and stops before
 fork. One proof process now crosses that fork, exits, and returns the
 private job with its process id. A compiler, probe or tool-resolution
-process remains closed.
+process remains closed. Admission still accepts only a closed plan with an
+unissued permit, and it still refuses execution.
 
 ```sh
 python3 -B docs/audits/native-proxy-receipt-ownership-inventory-20260922/audit.py --verify-saved
@@ -561,7 +562,7 @@ perl t/1818-process-supervisor-receipt-observation.t
 
 | Remaining work | Required result |
 | --- | --- |
-| Real receipt binding | The sealed launch returns the private job after one proof process exits. Return that job from one admitted compiler, probe and tool-resolution capture. |
+| Real receipt binding | The sealed launch returns the private job after one proof process. Issue one permit naming that return before one admitted capture. |
 | Inactive adapter composition | Join preparation, native path/reference admission and observation custody before the separate native experiment. |
 | Final protocol join | Check current evidence together and retain native, live/public and startup/benefit gates. |
 

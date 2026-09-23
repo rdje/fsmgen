@@ -146,6 +146,7 @@ answers:
   - "how does a missing program return a private supervisor job?"
   - "how does an executable program return a private job before fork?"
   - "how does one proof process return a private supervisor job?"
+  - "why does receipt admission still issue no permit?"
 date: 2026-09-23
 status: current
 tags: [tests, subprocess, supervision, task-acceptance, darwin, locality]
@@ -155,4 +156,4 @@ evidence: >-
 reverify: >-
   perl docs/audits/native-proxy-receipt-adapter-20260922/qualify.t
 ---
-History: `11ea52449503788f4de2a52b4a97207dcf54ab54:docs/knowledge/test-subprocess-policy-adapters.md`. The ordinary sealed launch still returns only the public result. A sealed private launch returns the finished job after one proof process exits, including pid, own-group identity and the original cleanup hash. No compiler, probe or tool-resolution process runs.
+History: `1cda3d905723443a353c8ec71b9cd30d6adfc80d:docs/knowledge/test-subprocess-policy-adapters.md`. A sealed private launch returns the finished job after one proof process. Receipt admission still accepts only a closed plan with an unissued permit and refuses execution. No compiler, probe or tool-resolution process runs.
