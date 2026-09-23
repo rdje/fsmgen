@@ -1959,6 +1959,8 @@ families, and the terminal build job failed because those families failed:
   The persisted-request tests skip that same ignored cache the same way.
   The OSVVM VHDL gallery refresh records that same absence before emission
   and does not report a current gallery.
+  The selected-tool observer stall follows the command the host runs:
+  Linux stalls `ps`, and Darwin stalls `lsof`.
 - Several regression-promotion tests still read ignored
   `.artifacts/qualification/vial-scale` paths that a fresh checkout does not
   carry. The policy and capture-plan mutation checks now skip that ignored

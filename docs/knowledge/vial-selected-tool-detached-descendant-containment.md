@@ -106,7 +106,9 @@ track the child PID, so it is not a missing generic containment mechanism.
 Future daemonizing profiles require a supported non-cooperative host authority
 before admission; faster polling is not sufficient.
 
-The `ps` and Darwin `lsof` observers cannot suspend supervision. Each exact
+The `ps` and Darwin `lsof` observers cannot suspend supervision. The stall
+injection follows the observer the host actually runs: Linux stalls `ps`,
+and Darwin stalls `lsof`. Each exact
 command runs directly through an owned pipe/fork/exec path inside the existing
 supervisor containment domain. Setup pipe authentication has an independent
 deadline, live process observations share the selected-tool deadline, and

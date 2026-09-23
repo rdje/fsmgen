@@ -39,7 +39,11 @@ END {
         if defined($fixture_root) && -d($fixture_root) && !-l($fixture_root);
 }
 
-for my $observer (qw(lsof ps)) {
+my @observers = $^O eq 'linux' ? qw(ps) : $^O eq 'darwin' ? qw(lsof) : ();
+plan skip_all => "selected-tool host observer is unsupported on $^O"
+    unless @observers;
+
+for my $observer (@observers) {
     subtest "$observer cannot suspend selected-tool supervision" => sub {
         my $observer_path = File::Spec->catfile($fixture_bin, $observer);
         write_stalling_observer($observer_path);

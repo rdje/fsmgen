@@ -4246,7 +4246,8 @@ observer-cleanup interval. Each exact command is launched directly, keeps the
 supervisor's existing containment domain, drains output nonblockingly under its
 structural cap, and is terminated and reaped by its owned PID on failure. Thus
 a stalled host observer returns an explicit host or residue error and cannot
-strand a new detached helper domain. The executable stall injection is:
+strand a new detached helper domain. The stall injection follows the observer
+the host actually runs: Linux stalls `ps`, and Darwin stalls `lsof`. The executable stall injection is:
 
 ```bash
 prove -Iperl -It/lib -v \

@@ -187,7 +187,9 @@ recorded absence before the artifact-graph oracle, so the runtime
 measurement test fails closed on that absence or on the active RAM guard.
 The persisted-request tests skip that same ignored cache the same way.
 The OSVVM VHDL gallery refresh records that same absence before emission
-and does not report a current gallery. The released ordinary OSVVM
+and does not report a current gallery. The selected-tool observer stall
+follows the command the host runs: Linux stalls `ps`, and Darwin stalls
+`lsof`. The released ordinary OSVVM
 artifact-graph readers now fail closed. The
 eleven paired-busy tests that stopped at the sealed 120-second Yosys
 deadline now record that deadline and do not treat it as a pass. The
