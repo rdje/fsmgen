@@ -60,10 +60,13 @@ sub _frontier {
 sub _identity {
     my ($value) = @_;
     return 0 unless ref($value) eq 'HASH';
-    for my $field (qw(pid start_sec start_usec)) {
+    for my $field (qw(pid start_sec)) {
         return 0 unless defined($value->{$field}) && !ref($value->{$field})
             && $value->{$field} =~ /\A[1-9][0-9]*\z/;
     }
+    # gettimeofday's fractional second includes zero at a second boundary.
+    return 0 unless defined($value->{start_usec}) && !ref($value->{start_usec})
+        && $value->{start_usec} =~ /\A(?:0|[1-9][0-9]*)\z/;
     return 0 unless $value->{pid} <= 2147483647 && $value->{start_usec} < 1000000;
     return 1;
 }

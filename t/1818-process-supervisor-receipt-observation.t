@@ -81,6 +81,21 @@ is($observation->{stage}, $job->{stage}, "stage $index is preserved");
 ok($bound->(\@states, {closed => 1}),
     'sealed observations satisfy the aligned receipt review');
 
+for my $microsecond (0, 999_999) {
+    my $job = finished_job('compile_proxy', 31);
+    $job->{birth_usec} = $microsecond;
+    my $observation = $observe->('FSM::Test::ProcessSupervisor', $job);
+    ok($bound->([$observation], {closed => 1}),
+        "sealed receipt accepts microsecond boundary $microsecond");
+}
+for my $microsecond (-1, 1_000_000, '0.5', [], undef) {
+    my $job = finished_job('compile_proxy', 31);
+    $job->{birth_usec} = $microsecond;
+    my $observation = $observe->('FSM::Test::ProcessSupervisor', $job);
+    ok(!$bound->([$observation], {closed => 1}),
+        'sealed receipt rejects invalid microseconds');
+}
+
 my $copied = $build->($jobs[0]);
 $copied->{cleanup} = {%{$copied->{cleanup}}};
 ok(!$bound->([{

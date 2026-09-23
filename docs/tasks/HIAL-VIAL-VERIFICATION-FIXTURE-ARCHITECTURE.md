@@ -2468,9 +2468,25 @@ decomposes the architecture needed to move beyond that bounded foundation.
   Commit: `this commit`
 
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.12.4.1.5.4.3.3.6.7.1.2.2.2.3.4.2.2.2`
-  Status: `pending`
+  Status: `active`
   Goal: `Execute the committed compiler receipt driver once from a clean revision and retain the first result.`
   Acceptance: `Independently verify clean Git state and pass that exact revision to the guarded fixed driver. Consume the terminal result, review first private/public state and raw wait outcome, stop on disagreement, and commit bounded sanitized evidence. Do not replay or launch a probe, tool-resolution process, generated proxy, original fixture or collector. Own exact workspace cleanup only after settled ownership is verified.`
+  Verification: `The driver is committed at cd8d8e68d. Prelaunch review found ReceiptAdapter::_identity incorrectly requires positive start_usec even though the supervisor clock may produce zero. Child .1 repairs and tests that boundary before child .2 executes the compiler capture.`
+  Commit: `pending`
+
+  Children: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.12.4.1.5.4.3.3.6.7.1.2.2.2.3.4.2.2.2.1, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.12.4.1.5.4.3.3.6.7.1.2.2.2.3.4.2.2.2.2`
+
+- ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.12.4.1.5.4.3.3.6.7.1.2.2.2.3.4.2.2.2.1`
+  Status: `done`
+  Goal: `Accept valid zero microseconds in private receipt identity without weakening other identity bounds.`
+  Acceptance: `Keep positive bounded PID and positive seconds, accept integer microseconds from zero through 999999, and reject negative, fractional, referenced and out-of-range fields. Prove zero fails before the fix and passes afterward through the sealed observation and receipt adapter. No compiler launch.`
+  Verification: `T1818 reports not ok 29 against the old receipt predicate for start_usec=0, while the upper valid and invalid boundaries already behave correctly. The repair keeps PID and seconds positive and admits integer fractional microseconds including zero. The guarded observation/admission/capture/adapter band passes Files=4, Tests=206. No compiler capture runs; real execution remains sibling .2.`
+  Commit: `this commit`
+
+- ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.12.4.1.5.4.3.3.6.7.1.2.2.2.3.4.2.2.2.2`
+  Status: `pending`
+  Goal: `Execute the committed compiler receipt driver once after the identity-boundary repair.`
+  Acceptance: `Verify clean Git state, pass the exact revision to the guarded fixed driver, retain the first terminal evidence and stop on disagreement. Never replay or launch probes, tool-resolution, generated proxies, original fixtures or collectors. Review actual private/public state and native wait independently; own workspace cleanup only after settlement.`
   Verification: `pending`
   Commit: `pending`
 
@@ -6882,3 +6898,9 @@ The manifest binds the immediately preceding acceptance suffix to its exact Git 
 - [x] **ROOT CAUSE (WHY + WHERE)** — `git log -S 'begin_compiler_capture'` identifies `9ceca1e13`. The grant is process-local and the public fixture discards private state; neither alone preserves an attempt across restart. The audit-only wrapper consumes the grant and uses the sealed return without changing the fixture's public contract.
 - [x] **ADDRESSED (verified)** — T1820 proves a persistent exclusive attempt precedes admission, a synced request precedes the supervisor call, and first private/public outcomes survive rejection. Repeating the invocation fails at the existing attempt before another grant; refusal produces no fabricated private state. Tests use modeled compiler returns and explicitly forbid fork/system/signal activity. Real execution is owned by `.3.4.2.2.2`.
 - [x] **NO REGRESSION** — RAM-guarded `prove -Iperl t/1815-rust-proxy-fixture.t t/1817-test-supervision-architecture.t t/1818-process-supervisor-receipt-observation.t t/1819-native-proxy-receipt-admission.t t/1820-native-proxy-receipt-capture.t`: `All tests successful`, `Files=5, Tests=181`. Driver `perl -c`: `syntax OK`. Re-derivation: fixed driver and T1820; falsification: existing-marker rejection and independently injected bad outcomes; durability: tracked driver and ordinary test discovery. Actual compiler and kernel-birth qualification remain missing legs, not modeled claims.
+
+## Acceptance Checklist (zero-microsecond receipt .3.4.2.2.2.1)
+
+- [x] **ROOT CAUSE (WHY + WHERE)** — `git log -S 'sub _identity'` identifies `b74122f9f967dd7cdb4b29f17aed4a2ba4be6b3b`. The same positive-integer expression was used for PID, seconds and fractional microseconds. T1818 reproduces `not ok 29 - sealed receipt accepts microsecond boundary 0` against that code.
+- [x] **ADDRESSED (verified)** — The receipt adapter now treats the fractional field independently: zero and the upper valid microsecond bind through a sealed observation; negative, fractional, referenced, absent and out-of-range fields reject. PID and seconds retain their positive constraints. No compiler, probe or tool-resolution capture runs.
+- [x] **NO REGRESSION** — RAM-guarded `prove -Iperl t/1818-process-supervisor-receipt-observation.t t/1819-native-proxy-receipt-admission.t t/1820-native-proxy-receipt-capture.t docs/audits/native-proxy-receipt-adapter-20260922/qualify.t`: `All tests successful`, `Files=4, Tests=206`. Re-derive: producer gettimeofday fields through T1818; falsify: observed old-predicate RED and invalid boundary controls; durability: ordinary T1818 regression and the tracked adapter. Actual compiler and kernel-birth authentication remain unclaimed.

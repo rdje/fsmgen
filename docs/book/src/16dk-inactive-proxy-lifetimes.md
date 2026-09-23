@@ -573,7 +573,9 @@ cleanup, unsettled cleanup and native-wait disagreement. These controls launch
 no compiler. Actual execution still requires a clean committed revision,
 independent Git preflight and the separately owned capture step. Recorded birth
 values are the supervisor's wall-clock observations, not kernel-authenticated
-births; a serialized cleanup address cannot restore live receipt authority.
+births. Zero microseconds at a second boundary are valid; negative, fractional
+and out-of-range microseconds reject. A serialized cleanup address cannot
+restore live receipt authority.
 Probe and tool-resolution admission, native proxy execution and live collection
 remain closed.
 

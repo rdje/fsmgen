@@ -161,14 +161,14 @@ answers:
   - "how does a compiler stage carry its receipt role?"
   - "why does the public compiler fixture still discard the private job?"
   - "how is compiler launch admission separated from finished-job review?"
+  - "why must a receipt accept zero microseconds?"
 date: 2026-09-23
 status: current
 tags: [tests, subprocess, supervision, task-acceptance, darwin, locality]
 evidence: >-
-  docs/audits/native-proxy-receipt-adapter-20260922/ReceiptAdapter.pm;
-  docs/audits/native-proxy-receipt-ownership-inventory-20260922/review.json
+  docs/audits/native-proxy-receipt-adapter-20260922/ReceiptAdapter.pm; docs/audits/native-proxy-receipt-ownership-inventory-20260922/review.json
 reverify: >-
   prove -Iperl t/1819-native-proxy-receipt-admission.t
 ---
 History: `05f8ada76457e6b0ae16a7f783020869dd687019:docs/knowledge/test-subprocess-policy-adapters.md`. `FSM::Test::RustProxyFixture::prepare_rust_proxy` calls `FSM::Test::ProcessSupervisor::supervise_process` with stage `compile_proxy` and no `private_job`. That call returns only the public result. No compiler, probe or tool-resolution process runs.
-`NativeProxyReceiptAdmission::begin_compiler_capture` burns one compiler grant before launch; `execution_allowed` only reviews a returned job. T1819 covers admission without processes. The fixed `docs/audits/native-proxy-receipt-capture-20260923/capture.pl` driver persists and syncs an exclusive attempt before preparation, retains the sealed private state before accepting success, and never retries or executes the proxy. T1820 models success, refusal, failed compilation, copied/unsettled cleanup, wait disagreement and restart-marker rejection. Actual clean-revision execution remains separately owned. Birth fields are supervisor clock observations, not kernel authentication; serialized cleanup addresses confer no reusable authority.
+`NativeProxyReceiptAdmission::begin_compiler_capture` burns one compiler grant before launch; `execution_allowed` only reviews a returned job. T1819 covers admission without processes. The fixed `docs/audits/native-proxy-receipt-capture-20260923/capture.pl` driver persists and syncs an exclusive attempt before preparation, retains the sealed private state before accepting success, and never retries or executes the proxy. T1820 models success, refusal, failed compilation, copied/unsettled cleanup, wait disagreement and restart-marker rejection. Actual clean-revision execution remains separately owned. Zero microseconds are valid. Birth fields are supervisor clock observations, not kernel authentication; serialized cleanup addresses confer no reusable authority.
