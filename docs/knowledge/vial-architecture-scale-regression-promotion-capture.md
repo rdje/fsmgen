@@ -174,7 +174,9 @@ skip that ignored closure when it is absent and still run when it is present.
 The profile-store and corpus-store checks skip that same closure the same
 way. The revision-1 publication census skips that ignored tree the same
 way. The current-corpus verifier and its mutation checks skip that ignored
-corpus the same way. The remaining ignored-path readers are still open. The semantic-family
+corpus the same way. The budget-qualification verifier skips its ignored
+publication and source corpus the same way. The remaining ignored-path
+readers are still open. The semantic-family
 envelope stays outside the guidance assertion because its own nonclaims
 already exclude support classification, and the regression-gate status is
 admitted because that contract already carries guidance. The terminal build

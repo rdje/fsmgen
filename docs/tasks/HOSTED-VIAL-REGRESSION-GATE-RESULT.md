@@ -32,7 +32,7 @@ Make the hosted VIAL regression gate agree with one published result.
   Acceptance: `Diagnose the failed hosted command, then align the workflow and published contract with the result that command produces.`
   Verification: `pending`
   Commit: `pending`
-  Children: `HOSTED-VIAL-REGRESSION-GATE-RESULT.1, HOSTED-VIAL-REGRESSION-GATE-RESULT.2, HOSTED-VIAL-REGRESSION-GATE-RESULT.3, HOSTED-VIAL-REGRESSION-GATE-RESULT.4, HOSTED-VIAL-REGRESSION-GATE-RESULT.5, HOSTED-VIAL-REGRESSION-GATE-RESULT.6, HOSTED-VIAL-REGRESSION-GATE-RESULT.7, HOSTED-VIAL-REGRESSION-GATE-RESULT.8, HOSTED-VIAL-REGRESSION-GATE-RESULT.9, HOSTED-VIAL-REGRESSION-GATE-RESULT.10, HOSTED-VIAL-REGRESSION-GATE-RESULT.11, HOSTED-VIAL-REGRESSION-GATE-RESULT.12`
+  Children: `HOSTED-VIAL-REGRESSION-GATE-RESULT.1, HOSTED-VIAL-REGRESSION-GATE-RESULT.2, HOSTED-VIAL-REGRESSION-GATE-RESULT.3, HOSTED-VIAL-REGRESSION-GATE-RESULT.4, HOSTED-VIAL-REGRESSION-GATE-RESULT.5, HOSTED-VIAL-REGRESSION-GATE-RESULT.6, HOSTED-VIAL-REGRESSION-GATE-RESULT.7, HOSTED-VIAL-REGRESSION-GATE-RESULT.8, HOSTED-VIAL-REGRESSION-GATE-RESULT.9, HOSTED-VIAL-REGRESSION-GATE-RESULT.10, HOSTED-VIAL-REGRESSION-GATE-RESULT.11, HOSTED-VIAL-REGRESSION-GATE-RESULT.12, HOSTED-VIAL-REGRESSION-GATE-RESULT.13`
 - ID: `HOSTED-VIAL-REGRESSION-GATE-RESULT.1`
   Status: `done`
   Goal: `Diagnose the first hosted gate failure and own the contract contradiction.`
@@ -100,6 +100,12 @@ Make the hosted VIAL regression gate agree with one published result.
   Verification: `With the closure present, prove of t/1772 reports All tests successful at Files=1, Tests=9. With the closure hidden and restored, the same command passes. The released log died with cannot read calibration-closure.json before any subtest.`
   Commit: `this commit`
 - ID: `HOSTED-VIAL-REGRESSION-GATE-RESULT.12`
+  Status: `done`
+  Goal: `Stop t/1782 from dying when the ignored budget qualification inputs are absent.`
+  Acceptance: `The two input-dependent verifier subtests skip with a recorded reason when either ignored tree is absent, and still run when both are present. The closed-invocation check stays. Do not invent a hosted pass.`
+  Verification: `With both inputs present, prove of t/1782 reports All tests successful at Files=1, Tests=3. With both trees hidden and restored, the same command passes. The released log died at t/1782 line 202 with Can't stat the ignored current qualification and corpus.`
+  Commit: `this commit`
+- ID: `HOSTED-VIAL-REGRESSION-GATE-RESULT.13`
   Status: `active`
   Goal: `Stop the next hosted test from requiring an ignored qualification path on a fresh checkout.`
   Acceptance: `The next released-log reader of an ignored .artifacts/qualification/vial-scale path either uses a tracked publication or skips that ignored input with a recorded reason. Do not invent a hosted pass.`
@@ -171,3 +177,9 @@ Make the hosted VIAL regression gate agree with one published result.
 - [x] **ROOT CAUSE (WHY + WHERE)** — The released Perl-file log dies before any subtest with `cannot read` the ignored calibration-closure JSON. `git log -S 'calibration-closure.json' -- t/1772-vial-regression-promotion-corpus-store.t` shows the sealed plan still loads that ignored publication.
 - [x] **ADDRESSED (verified)** — Every corpus-store subtest and the trailing cleanup check now skip when that file is absent and still run when it is present. Focused prove with the closure present reports All tests successful at Files=1, Tests=9. The same command with the closure hidden and restored also passes.
 - [x] **NO REGRESSION** — `knowledge-map: OK` keeps the earlier census skip and records this corpus-store skip. Remaining ignored-path readers stay HOSTED-VIAL-REGRESSION-GATE-RESULT.12. A failed or unavailable hosted run remains neither support nor capacity.
+
+## Acceptance Checklist (ignored budget verifier HOSTED-VIAL-REGRESSION-GATE-RESULT.12)
+
+- [x] **ROOT CAUSE (WHY + WHERE)** — The released Perl-file log dies at `t/1782-vial-regression-promotion-budget-qualification-verifier.t line 202` with `Can't stat` the ignored current qualification and source corpus. `git log -S 'regression-promotion-budget-qualification-v1' -- t/1782-vial-regression-promotion-budget-qualification-verifier.t` shows those checks still census the ignored trees.
+- [x] **ADDRESSED (verified)** — The two input-dependent subtests now skip when either ignored tree is absent and still run when both are present. The closed-invocation check stays. Focused prove with both inputs present reports All tests successful at Files=1, Tests=3. The same command with both trees hidden and restored also passes.
+- [x] **NO REGRESSION** — `knowledge-map: OK` keeps the earlier corpus-store skip and records this budget-verifier skip. Remaining ignored-path readers stay HOSTED-VIAL-REGRESSION-GATE-RESULT.13. A failed or unavailable hosted run remains neither support nor capacity.

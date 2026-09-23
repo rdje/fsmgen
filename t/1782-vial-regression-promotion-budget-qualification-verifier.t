@@ -31,8 +31,12 @@ my $corpus = repo_path(
         . 'regression-promotion-corpus-v1',
 );
 my $json = JSON::PP->new->canonical(1)->utf8(1);
+my $ignored_inputs_present = -d $publication && !-l $publication
+    && -d $corpus && !-l $corpus;
 
 subtest 'verifier is production-independent and read-only' => sub {
+    plan skip_all => 'ignored budget qualification inputs are absent on a fresh checkout'
+        unless $ignored_inputs_present;
     ok(-f($script) && !-l($script), 'tracked verifier exists');
     ok(-x($script), 'tracked verifier is executable');
     my $source = read_raw($script);
@@ -60,6 +64,8 @@ subtest 'verifier is production-independent and read-only' => sub {
 };
 
 subtest 'bounded canonical result reports exact independent reconstruction' => sub {
+    plan skip_all => 'ignored budget qualification inputs are absent on a fresh checkout'
+        unless $ignored_inputs_present;
     my $run = run_verifier();
     is($run->{status}, 0, 'verifier succeeds for result inspection')
         or diag($run->{stderr});
@@ -174,6 +180,7 @@ sub run_verifier {
 
 sub tree_census {
     my ($base) = @_;
+    die "ignored budget qualification input is absent\n" unless -d $base;
     my @entries;
     find({
         no_chdir => 1,
