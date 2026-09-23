@@ -251,4 +251,64 @@ is($held->{cleanup}{leader_reaped}, 1, 'the proof leader is reaped');
 is($held->{cleanup}{group_gone}, 1, 'the proof group is gone');
 is($SIGNALS, 0, 'the proof launch sends no terminating signal');
 
+my $omitted = do {
+    package FSM::Test::ProcessSupervisor;
+    sealed_supervise_process(
+        schema => 'fsmgen.process_supervisor.receipt_observation.v1',
+        stage => 'proof_exit',
+        bounds => {timeout_seconds => 1, capture_limit_bytes => 64},
+        containment => 'receipt_observation',
+        cwd => '.',
+        argv => [$^X, '-e', 'exit 0'],
+    );
+};
+ok(!defined $omitted->{environment},
+    'an omitted environment stays undefined on the private job');
+
+my $bad_environment = eval {
+    package FSM::Test::ProcessSupervisor;
+    sealed_supervise_process(
+        schema => 'fsmgen.process_supervisor.receipt_observation.v1',
+        stage => 'proof_exit',
+        bounds => {timeout_seconds => 1, capture_limit_bytes => 64},
+        containment => 'receipt_observation',
+        cwd => '.',
+        argv => [$^X, '-e', 'exit 0'],
+        environment => ['PATH=/bin'],
+    );
+    1;
+};
+ok(!$bad_environment, 'a non-hash environment is rejected');
+like("$@", qr/environment must be one hash reference/,
+    'the rejection names the environment shape');
+
+my $marker = "fsmgen-receipt-observation-$$";
+my $supplied = do {
+    package FSM::Test::ProcessSupervisor;
+    sealed_supervise_process(
+        schema => 'fsmgen.process_supervisor.receipt_observation.v1',
+        stage => 'proof_environment',
+        bounds => {timeout_seconds => 1, capture_limit_bytes => 256},
+        containment => 'receipt_observation',
+        cwd => '.',
+        argv => [$^X, '-e', 'print $ENV{FSMGEN_RECEIPT_OBSERVATION}; exit 0'],
+        environment => {
+            PATH => '/usr/bin:/bin',
+            FSMGEN_RECEIPT_OBSERVATION => $marker,
+        },
+    );
+};
+is($FORKS, 3, 'the environment proof forks once');
+is($supplied->{stage}, 'proof_environment',
+    'the environment proof is not a capture stage');
+is($supplied->{environment}{FSMGEN_RECEIPT_OBSERVATION}, $marker,
+    'the private job retains the supplied environment');
+is($supplied->{result}{stdout}, $marker,
+    'the child reads the supplied environment');
+ok(!exists $supplied->{result}{pid},
+    'the environment proof public result still omits pid');
+is($ENV{FSMGEN_RECEIPT_OBSERVATION}, undef,
+    'the parent environment remains unchanged');
+is($SIGNALS, 0, 'the environment proof sends no terminating signal');
+
 done_testing;

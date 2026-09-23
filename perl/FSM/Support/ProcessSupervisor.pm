@@ -24,7 +24,7 @@ use Fcntl qw(FD_CLOEXEC F_GETFD F_GETFL F_SETFD F_SETFL O_NONBLOCK);
 use File::Basename qw(dirname);
 use File::Spec;
 use IO::Select;
-use POSIX qw(WNOHANG _exit setpgid);
+use POSIX qw(WNOHANG _exit getcwd setpgid);
 use Scalar::Util qw(refaddr);
 use Time::HiRes qw(CLOCK_MONOTONIC clock_gettime gettimeofday sleep);
 
@@ -116,7 +116,7 @@ sub supervise_process {
     die "FSM::Support::ProcessSupervisor is caller-sealed; '$caller' cannot launch a process\n"
         unless defined($caller) && $SUPERVISION_CALLER{$caller};
     my %allowed = map { $_ => 1 } qw(
-        argv bounds containment cwd private_job schema stage
+        argv bounds containment cwd environment private_job schema stage
     );
     die "supervise_process private_job is sealed to the test supervisor\n"
         if $args{private_job} && $caller ne 'FSM::Test::ProcessSupervisor';
@@ -124,6 +124,8 @@ sub supervise_process {
     die "unknown supervise_process argument: $_\n"
         for sort grep { !$allowed{$_} } keys %args;
     _require_config_scalar(\%args, $_) for qw(schema stage containment cwd);
+    my $environment_error = _validate_environment($args{environment});
+    die "supervise_process $environment_error\n" if defined $environment_error;
     die "supervise_process bounds must be one hash reference\n"
         unless ref($args{bounds}) eq 'HASH';
     my %bounds = %{$args{bounds}};
@@ -145,6 +147,7 @@ sub supervise_process {
         containment => $args{containment},
         cwd => $args{cwd},
         argv => ref($args{argv}) eq 'ARRAY' ? [@{$args{argv}}] : $args{argv},
+        environment => _environment_copy($args{environment}),
     };
     my $argument_error = validate_argument_vector($args{argv});
     my $state = defined $argument_error
@@ -168,12 +171,11 @@ sub supervise_process {
     }
     if (!defined($state) && $args{private_job}) {
         my $program = $request->{argv}[0];
-        my $executable = defined($program) && !ref($program) && -x $program
-            && !-d $program;
+        my $resolved = _resolved_program($program, $request->{cwd});
         $state = _failed_supervision_start(
             $request, "supervised program is not executable: $program", undef,
             'invocation_error',
-        ) unless $executable;
+        ) unless defined $resolved;
     }
     $state = _supervise($request) unless defined $state;
     return $caller eq 'FSM::Test::ProcessSupervisor' && $args{private_job}
@@ -207,6 +209,44 @@ sub process_failure {
         cleanup => _new_cleanup(0, $args{containment}),
         timed_out => 0, output_limited => 0, exec_failed => 0,
     });
+}
+
+sub _resolved_program {
+    my ($program, $cwd) = @_;
+    return undef unless defined($program) && !ref($program) && length($program);
+    return $program if -x $program && !-d $program;
+    return undef if $program =~ m{[\\/]} || $program eq '.' || $program eq '..';
+    my $search = defined($ENV{PATH}) ? $ENV{PATH} : '';
+    my $base = defined($cwd) && $cwd ne '' ? $cwd : (getcwd() // '.');
+    for my $directory (split /:/, $search, -1) {
+        my $candidate = $directory eq ''
+            ? File::Spec->catfile($base, $program)
+            : File::Spec->catfile($directory, $program);
+        return $candidate if -x $candidate && !-d $candidate;
+    }
+    return undef;
+}
+
+sub _validate_environment {
+    my ($environment) = @_;
+    return undef unless defined $environment;
+    return 'environment must be one hash reference'
+        unless ref($environment) eq 'HASH';
+    for my $name (sort keys %$environment) {
+        return 'environment names must be non-empty scalars without NUL or equals'
+            unless defined($name) && !ref($name) && length($name)
+                && index($name, "\0") < 0 && index($name, '=') < 0;
+        my $value = $environment->{$name};
+        return 'environment values must be defined scalars without NUL bytes'
+            unless defined($value) && !ref($value) && index($value, "\0") < 0;
+    }
+    return undef;
+}
+
+sub _environment_copy {
+    my ($environment) = @_;
+    return undef unless defined $environment;
+    return { map { $_ => $environment->{$_} } keys %$environment };
 }
 
 sub _require_config_scalar {
@@ -399,6 +439,9 @@ sub _start_supervision {
         );
         {
             no warnings 'exec';
+            if (defined $request->{environment}) {
+                %ENV = %{$request->{environment}};
+            }
             exec {$request->{argv}[0]} @{$request->{argv}};
         }
         _write_child_control($control_writer, "exec failed: $!");

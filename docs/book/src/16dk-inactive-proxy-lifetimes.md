@@ -557,9 +557,10 @@ second consume are rejected. One consumed permit now admits one finished
 private job. An unfinished job and a public supervisor name still refuse.
 The public compiler request still returns only the public result. One
 compiler receipt cannot bind: the review still requires the compiler,
-outer and inner receipts together. The sealed supervisor accepts no
-compiler environment, so a launch would inherit the caller environment.
-The sealed private job also carries no receipt role. The current
+outer and inner receipts together. The sealed supervisor now accepts one environment hash. A supplied
+environment replaces the child environment and stays on the private job.
+One proof process reads that environment. The sealed private job still
+carries no receipt role. The current
 observation proof supplies compiler, outer and inner outside the
 supervisor. No compiler, probe or tool-resolution process runs in this
 step.
@@ -573,7 +574,7 @@ perl t/1818-process-supervisor-receipt-observation.t
 
 | Remaining work | Required result |
 | --- | --- |
-| Real receipt binding | The sealed private job carries no receipt role. The sealed compiler launch remains the next capture. |
+| Real receipt binding | The sealed supervisor accepts one environment. The compiler launch remains the next capture. |
 | Inactive adapter composition | Join preparation, native path/reference admission and observation custody before the separate native experiment. |
 | Final protocol join | Check current evidence together and retain native, live/public and startup/benefit gates. |
 
