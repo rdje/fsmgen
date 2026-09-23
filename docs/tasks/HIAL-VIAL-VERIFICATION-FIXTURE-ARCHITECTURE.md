@@ -6,7 +6,7 @@
 - Status: `active`
 - Roadmap lane: `Verification code generation / intent architecture`
 - Created: `2026-07-29`
-- Last updated: `2026-09-22`
+- Last updated: `2026-09-23`
 - Owner: repo-local workflow
 - Segment manifest: `docs/tasks/segments/HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE/manifest.jsonl`
 
@@ -2437,11 +2437,27 @@ decomposes the architecture needed to move beyond that bounded foundation.
   Verification: `FSM::Test::RustProxyFixture::prepare_rust_proxy calls FSM::Test::ProcessSupervisor::supervise_process with stage compile_proxy and no private_job. That call returns only the public result. No compiler, probe or tool-resolution process runs. The sealed compiler launch remains .5.4.3.3.6.7.1.2.2.2.3.4.2.`
   Commit: `this commit`
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.12.4.1.5.4.3.3.6.7.1.2.2.2.3.4.2`
-  Status: `pending`
+  Status: `active`
   Goal: `Launch one compiler stage through the sealed private return and retain its first private state.`
   Acceptance: `After the public-fixture record commits, consume one fresh permit and launch only the compiler stage through the sealed private return. Retain that first private state. Stop on disagreement. Do not launch a probe or tool-resolution process in that slice. Split again if inspection finds another contract gap before any process starts.`
+  Verification: `Prelaunch inspection found execution_allowed requires a finished job and does not consume launch authority. Child .1 adds a single-use prelaunch compiler grant without executing a process; child .2 owns the later capture.`
+  Commit: `pending`
+  Children: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.12.4.1.5.4.3.3.6.7.1.2.2.2.3.4.2.1, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.12.4.1.5.4.3.3.6.7.1.2.2.2.3.4.2.2`
+
+- ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.12.4.1.5.4.3.3.6.7.1.2.2.2.3.4.2.1`
+  Status: `done`
+  Goal: `Separate single-use compiler launch admission from finished-job review.`
+  Acceptance: `After one matching permit consume, grant exactly one compiler launch before a job exists. Reject missing or mismatched tokens, altered plans, replay, collectors and repeated grants. Keep finished-job review separate and run only process-free admission controls; compiler capture requires the committed guard. Keep adjacent receipt controls independent so one mutation cannot invalidate later control baselines.`
+  Verification: `The prelaunch positive control fails against HEAD and passes after begin_compiler_capture is added. The grant burns before return, rejects missing/changed tokens and plans, and cannot be restored by finished-job review. T1819 brings process-free controls into normal test discovery. Adjacent receipt controls now begin with independent valid states rather than sharing a mutated cleanup hash. RAM-guarded prove passes Files=3, Tests=192; Perl syntax and mdBook build pass. No compiler, probe or tool-resolution capture runs. Claim-template read-only hashes still match the existing proposed review record; README policy is adopted, and the local containment guide already routes the current package. Next: exclusive attempt driver and capture under sibling .2.`
+  Commit: `this commit`
+
+- ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.12.4.1.5.4.3.3.6.7.1.2.2.2.3.4.2.2`
+  Status: `pending`
+  Goal: `Capture one compiler stage using committed single-use launch admission and the sealed private return.`
+  Acceptance: `Consume one fresh permit, acquire the compiler-only launch grant, retain the first private state and outcome, and stop on disagreement. Persist the attempt before launch so a restarted driver cannot replay it. No probe, tool-resolution, original, proxy or collector launch. Split a further contract gap before any process starts.`
   Verification: `pending`
   Commit: `pending`
+
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.12.4.1.5.4.3.3.6.7.2`
   Status: `pending`
   Goal: `Launch one admitted probe and tool-resolution capture and retain their first private states.`
@@ -6838,3 +6854,9 @@ The manifest binds the immediately preceding acceptance suffix to its exact Git 
 - [x] **ROOT CAUSE (WHY + WHERE)** — `git log -S 'final_cross_boundary_join_open' -1 --format='%H %s' -- docs/audits/native-proxy-populated-worker-execution-20260914/audit.py` identifies c1d9593991599074f658543b7f2036239794919b and the deliberately open join after actual execution. Source selection now establishes the unchanged shared coordination/custody APIs while separate reviewer processes preserve their private module namespaces and original evidence domains.
 - [x] **ADDRESSED (verified)** — docs/audits/native-proxy-populated-lifetime-join-20260914/audit.py --verify-saved re-derives both original saved reviews, exact committed inputs, shared recorded interpreter selections, actual operation/cleanup counts and measured output bounds. Independent actual-record mutations reject changed custody, valid alternate birth, cancellation, archives, release and terminal absence; the coherent handoff reaches the original-acquisition guard. First qualifier versions/results remain exact, and claim-legs.json separates re-derivation, falsification, durability and remaining boundaries. No worker, compiler, proxy, original fixture, collector or native sampler runs.
 - [x] **NO REGRESSION** — `knowledge-map: OK` preserves every earlier question and adds the exact joint-evidence route. The rendered book closes only the selected cooperative populated-worker activity; claim identity/dispositions, source-derived aggregate metrics, exact prior acceptance retrieval, containment and staged doctrines accompany normal hooks. Real compiler/outer/inner receipt ownership, late-launch prevention, actual-wrapper observation, inactive native composition, native/live/startup qualification and full CI/push remain open.
+
+## Acceptance Checklist (compiler prelaunch grant .3.4.2.1)
+
+- [x] **ROOT CAUSE (WHY + WHERE)** — `git log -S 'sub execution_allowed'` identifies `413a76daac6182ce08ca13c42c53a422ac35e859`. Admission required a finished job and supplied no prelaunch authority. The added admission test reports `not ok 53` against the old module; its process interceptors report no launch attempt. Adjacent receipt controls shared nested cleanup hashes, allowing the unreaped mutation to contaminate later negative cases.
+- [x] **ADDRESSED (verified)** — `begin_compiler_capture` consumes the process-local compiler attempt before returning success, independently of post-launch review. Changed plans/tokens, replay, live collection and repeated grants reject. Independent receipt fixtures each bind before mutation and leave the original positive case valid. Actual capture and its persistent exclusive attempt record remain separately owned by `.3.4.2.2`.
+- [x] **NO REGRESSION** — RAM-guarded `prove -Iperl t/1818-process-supervisor-receipt-observation.t t/1819-native-proxy-receipt-admission.t docs/audits/native-proxy-receipt-adapter-20260922/qualify.t`: `All tests successful`, `Files=3, Tests=192`. `perl -c` reports `syntax OK`; `mdbook build docs/book -d .artifacts/mdbook-compiler-prelaunch` succeeds. Re-derivation: these tracked tests; falsification: old-module RED plus independently valid hostile controls; durability: T1819 discovery and tracked audit controls. No authentic compiler receipt or restart-replay proof is claimed.

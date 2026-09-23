@@ -160,6 +160,7 @@ answers:
   - "how does one finished compiler receipt bind?"
   - "how does a compiler stage carry its receipt role?"
   - "why does the public compiler fixture still discard the private job?"
+  - "how is compiler launch admission separated from finished-job review?"
 date: 2026-09-23
 status: current
 tags: [tests, subprocess, supervision, task-acceptance, darwin, locality]
@@ -167,6 +168,7 @@ evidence: >-
   docs/audits/native-proxy-receipt-adapter-20260922/ReceiptAdapter.pm;
   docs/audits/native-proxy-receipt-ownership-inventory-20260922/review.json
 reverify: >-
-  perl docs/audits/native-proxy-receipt-adapter-20260922/qualify.t
+  prove -Iperl t/1819-native-proxy-receipt-admission.t
 ---
 History: `05f8ada76457e6b0ae16a7f783020869dd687019:docs/knowledge/test-subprocess-policy-adapters.md`. `FSM::Test::RustProxyFixture::prepare_rust_proxy` calls `FSM::Test::ProcessSupervisor::supervise_process` with stage `compile_proxy` and no `private_job`. That call returns only the public result. No compiler, probe or tool-resolution process runs.
+`NativeProxyReceiptAdmission::begin_compiler_capture` grants one compiler attempt after a matching permit is consumed, before a job exists. It burns process-local authority before returning and never restores it after failure or review. `execution_allowed` only reviews a finished job. A capture driver must persist an exclusive attempt record to prevent restart replay; that driver and actual capture remain unqualified. `t/1819-native-proxy-receipt-admission.t` runs the no-process acceptance and rejection controls in ordinary test discovery.

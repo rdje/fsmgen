@@ -17,6 +17,10 @@ my $admit = \&NativeProxyReceiptAdmission::admitted;
 my $execute = \&NativeProxyReceiptAdmission::execution_allowed;
 my $issue = \&NativeProxyReceiptAdmission::issue_permit;
 my $consume = \&NativeProxyReceiptAdmission::consume_permit;
+my $begin = sub {
+    return NativeProxyReceiptAdmission->can('begin_compiler_capture')
+        ? NativeProxyReceiptAdmission::begin_compiler_capture(@_) : 0;
+};
 my $revision = 'b' x 40;
 
 sub admission {
@@ -86,6 +90,7 @@ is($token->{sealed_return}, NativeProxyReceiptAdmission::sealed_return_name(),
     'the permit names the sealed private return');
 is($token->{source_revision}, $revision, 'the permit binds the current source revision');
 is($token->{uses_remaining}, 1, 'the fresh permit has one use');
+ok(!$begin->($good, $token), 'an unconsumed permit cannot grant a compiler launch');
 is($issue->($good), undef, 'a second issue is rejected');
 my $other_revision = admission();
 $other_revision->{source_revision} = 'c' x 40;
@@ -98,6 +103,30 @@ $live_consume->{live_collector} = 1;
 ok(!$consume->($live_consume, $token), 'a live collector cannot consume the permit');
 ok($consume->($good, $token), 'the matching closed plan consumes the issued permit');
 ok(!$consume->($good, $token), 'the same token cannot be consumed again');
+ok(!$begin->($good), 'a missing token cannot grant a compiler launch');
+ok(!$begin->($other_revision, $token), 'a changed revision cannot grant a compiler launch');
+ok(!$begin->($replay_consume, $token), 'proxy replay cannot grant a compiler launch');
+ok(!$begin->($replayed, $token), 'original replay cannot grant a compiler launch');
+ok(!$begin->($live_consume, $token), 'a live collector cannot grant a compiler launch');
+ok(!$begin->($renamed, $token), 'a public return cannot grant a compiler launch');
+ok(!$begin->($missing, $token), 'an incomplete stage plan cannot grant a compiler launch');
+ok(!$begin->($good, {%$token, source_revision => 'd' x 40}),
+    'a substituted token revision cannot grant a compiler launch');
+ok(!$begin->($good, {%$token, uses_remaining => 0}),
+    'an altered token cannot grant a compiler launch');
+for my $field (qw(schema source_revision sealed_return uses_remaining)) {
+    my %absent = %$token;
+    delete $absent{$field};
+    ok(!$begin->($good, \%absent), "token missing $field cannot grant a launch");
+    ok(!$begin->($good, {%$token, $field => []}),
+        "token reference $field cannot grant a launch");
+}
+ok(!$begin->($open, $token), 'an open execution plan cannot grant a compiler launch');
+ok(!$begin->($issued, $token), 'an altered plan permit cannot grant a compiler launch');
+ok(!$begin->($swapped, $token), 'a reordered stage plan cannot grant a compiler launch');
+ok(!$begin->($good, $token, 'probe'), 'the grant does not accept a different stage');
+ok($begin->($good, $token), 'one consumed permit grants a compiler launch before any job exists');
+ok(!$begin->($good, $token), 'a repeated compiler launch grant rejects before any job exists');
 is($execute->($good), 0, 'a consumed permit without a private job still refuses execution');
 is($execute->($good, $token), 0, 'a consumed permit without a finished job still refuses execution');
 my $job = {
@@ -105,6 +134,7 @@ my $job = {
     receipt_observation => {phase => 'finished'},
 };
 is($execute->($good, $token, $job), 1, 'one consumed permit admits one finished private job');
+ok(!$begin->($good, $token), 'finished-job review cannot restore launch authority');
 my $open_job = {%$job, phase => 'running'};
 is($execute->($good, $token, $open_job), 0, 'an unfinished job still refuses execution');
 my $public_name = admission();
@@ -112,3 +142,4 @@ $public_name->{sealed_return} = 'FSM::Support::ProcessSupervisor::supervise_proc
 is($execute->($public_name, $token, $job), 0, 'a public supervisor name still refuses execution');
 is($forbidden, 0, 'no process or signal attempt');
 done_testing;
+1;

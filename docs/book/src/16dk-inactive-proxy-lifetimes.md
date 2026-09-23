@@ -517,11 +517,10 @@ general receipt. The populated worker still emits a fixed synthetic
 compiler/outer/inner tuple. Those records remain evidence of earlier runs;
 they cannot settle the adapter.
 
-The next capture is now admitted and still closed. It must observe the current
-public compiler, probe and tool-resolution stages, in that order, and retain
-each private process id, birth clock, group identity and cleanup identity.
-Opening execution, issuing a permit early, or replaying an original, proxy or
-live collector rejects. The admission itself launches nothing.
+The admission plan names the current compiler, probe and tool-resolution
+stages in order, with private process identity and cleanup identity required
+for review. Replay of an original fixture or proxy and live collection remain
+rejected. The admission module itself launches nothing.
 
 The current supervisor makes each child its own process-group leader, then
 checks group absence with that same identity. The inactive adapter now accepts
@@ -541,30 +540,29 @@ fails the aligned review. An unsealed caller and an unfinished job are
 rejected. No compiler, probe or tool-resolution process runs to produce the
 observation.
 
-A sealed caller can receive a finished private job it already holds. That
-hand-back carries the process id, birth clock and own-group identity, and it
-keeps the original cleanup hash. The ordinary sealed launch still returns only
-the public result, which copies cleanup flags and omits that identity. A
-separate sealed launch now returns the finished private job when the request
-fails before a process starts, including a named program that is not
-executable. An executable program now returns that job and stops before
-fork. One proof process now crosses that fork, exits, and returns the
-private job with its process id. A compiler, probe or tool-resolution
-process remains closed. One fresh permit names the sealed private
-return and the current source revision. The matching closed plan consumes
-that permit once. A different revision, a replay, a live collector and a
-second consume are rejected. One consumed permit now admits one finished
-private job. An unfinished job and a public supervisor name still refuse.
-The public compiler request still returns only the public result. One
-compiler receipt cannot bind: the review still requires the compiler,
-outer and inner receipts together. The sealed supervisor now accepts one environment hash. A supplied
-environment replaces the child environment and stays on the private job.
-One proof process reads that environment. The sealed observation now carries the receipt role for its stage.
-A compiler stage carries compiler, and one such observation binds
-without another stage. The complete compiler, outer and inner receipt
-still binds. The public compiler fixture still returns only the public
-result, so it cannot retain that private state. No compiler, probe or
-tool-resolution process runs in this step.
+The sealed launch returns the finished private job for both pre-process
+failure and a completed process; ordinary callers still receive only the
+public result. A supplied environment replaces the child's environment and
+stays on the private job. The receipt observation derives its role from the
+stage: compiler, outer probe, or inner tool resolution. A finished compiler
+observation can bind on its own; the complete ordered receipt set also binds.
+These paths have proof-process coverage, without a compiler capture.
+
+Launch admission and finished-job review are separate. After issuing and
+consuming a matching revision-bound permit, `begin_compiler_capture` grants a
+compiler attempt before a job exists. It burns that grant before returning;
+a repeated request, changed revision, altered token, replay or live collector
+is rejected. Failure or later receipt review never restores the grant.
+`execution_allowed` retains its compatibility name but only reviews a job
+already returned; it does not authorize a process launch or prove receipt
+ownership. The separate receipt adapter still owns that review.
+
+This grant is process-local. The capture driver must persist an exclusive
+attempt record before launch to prevent replay after a restart, use the sealed
+private return, and retain the first outcome even on failure. That driver and
+the actual compiler capture remain the next owned work. The public compiler
+fixture still returns only the public result. Probe and tool-resolution launch
+admission, native proxy execution and live collection remain closed.
 
 ```sh
 python3 -B docs/audits/native-proxy-receipt-ownership-inventory-20260922/audit.py --verify-saved
@@ -575,7 +573,7 @@ perl t/1818-process-supervisor-receipt-observation.t
 
 | Remaining work | Required result |
 | --- | --- |
-| Real receipt binding | The public compiler fixture still discards the private job. The sealed compiler launch remains the next capture. |
+| Real receipt binding | Use the compiler grant with an exclusive attempt record and retain the sealed private return. Probe and tool-resolution admission remain closed. |
 | Inactive adapter composition | Join preparation, native path/reference admission and observation custody before the separate native experiment. |
 | Final protocol join | Check current evidence together and retain native, live/public and startup/benefit gates. |
 

@@ -3,10 +3,9 @@ package NativeProxyReceiptAdmission;
 use strict;
 use warnings;
 
-# Inactive admission for one later compiler-only capture. This module
-# launches nothing. One fresh permit names the sealed private supervisor
-# return and can be consumed once. Compiler, probe and tool-resolution
-# execution remain closed.
+# Admission for one later compiler-only capture. This module launches nothing.
+# A consumed permit grants one prelaunch compiler attempt; finished-job review
+# is separate. Probe and tool-resolution launch admission remain closed.
 my @ROLES = (
     {role => 'compiler', stage => 'compile_proxy', containment => 'rust_proxy_compiler_group'},
     {role => 'outer', stage => 'probe', containment => 'rust_tool_resolution_probe_group'},
@@ -15,6 +14,7 @@ my @ROLES = (
 my @PRIVATE = qw(pid start_sec start_usec group_pid group_start_sec group_start_usec cleanup_identity);
 my $SEALED_RETURN = 'FSM::Test::ProcessSupervisor::sealed_supervise_process';
 my $permit;
+my $compiler_attempted = 0;
 
 sub _closed_plan {
     my ($plan) = @_;
@@ -81,9 +81,34 @@ sub consume_permit {
     return 1;
 }
 
-# One consumed permit can admit one later capture. The caller must already
-# hold the finished private job from the named sealed return. This does not
-# launch a compiler, probe or tool-resolution process.
+# Claim the compiler attempt before calling the sealed supervisor. Never reset
+# this flag after a failed launch, exception or failed receipt review. This is
+# process-local admission: the capture driver must also persist an exclusive
+# attempt record before launching, so restarting it cannot replay a capture.
+sub begin_compiler_capture {
+    my ($plan, $token) = @_;
+    return 0 unless @_ == 2 && _closed_plan($plan) && ref($token) eq 'HASH';
+    return 0 unless defined $permit && $permit->{uses_remaining} == 0;
+    return 0 if $compiler_attempted;
+    return 0 unless defined($plan->{permit}) && !ref($plan->{permit})
+        && $plan->{permit} eq 'unissued';
+    return 0 unless defined($plan->{sealed_return}) && !ref($plan->{sealed_return})
+        && $plan->{sealed_return} eq $SEALED_RETURN;
+    return 0 unless $plan->{source_revision} eq $permit->{source_revision};
+    for my $field (qw(schema source_revision sealed_return)) {
+        return 0 unless defined($token->{$field}) && !ref($token->{$field})
+            && $token->{$field} eq $permit->{$field};
+    }
+    return 0 unless defined($token->{uses_remaining}) && !ref($token->{uses_remaining})
+        && $token->{uses_remaining} eq '1';
+    $compiler_attempted = 1;
+    return 1;
+}
+
+# Compatibility name for post-launch review, NOT permission to launch. The
+# caller already holds the finished job from the sealed return. Re-reading it
+# neither grants nor restores the compiler attempt above; receipt ownership
+# still needs the separate receipt adapter.
 sub execution_allowed {
     my ($plan, $token, $job) = @_;
     return 0 unless @_ == 3 && _closed_plan($plan) && ref($token) eq 'HASH';
