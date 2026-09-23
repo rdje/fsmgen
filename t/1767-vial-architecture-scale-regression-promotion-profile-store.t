@@ -42,6 +42,8 @@ my $source_closure = File::Spec->catfile(
 my $source_manifest = File::Spec->catfile(
     $repo_root, split m{/}, $manifest_rel,
 );
+my $ignored_closure_present = -f $source_closure && !-l $source_closure
+    && -f $source_manifest && !-l $source_manifest;
 my $json = JSON::PP->new->canonical(1)->utf8(1);
 my $maximum_bytes = 67_108_864;
 my $fixture_sequence = 0;
@@ -61,6 +63,8 @@ END {
 }
 
 subtest 'public storage inherits current-plan guard authentication' => sub {
+    plan skip_all => 'ignored calibration closure is absent on a fresh checkout'
+        unless $ignored_closure_present;
     my $repo = fresh_repository('guard-inheritance');
     local $ENV{FSMGEN_RAM_GUARD_ACTIVE};
     local $ENV{FSMGEN_RAM_GUARD_EFFECTIVE_HOST_MAX_PCT};
@@ -75,15 +79,18 @@ subtest 'public storage inherits current-plan guard authentication' => sub {
         'public all-profile load reaches the authenticated plan authority');
 };
 
-my $sealed_test_plan = derive_sealed_test_plan();
-{
+my $sealed_test_plan = $ignored_closure_present
+    ? derive_sealed_test_plan() : undef;
+if ($ignored_closure_present) {
     no warnings 'redefine';
     *FSM::VIAL::ArchitectureScaleRegressionPromotionCapturePlan::derive =
         sub { return clone($sealed_test_plan) };
+    $plan_stub_active = 1;
 }
-$plan_stub_active = 1;
 
 subtest 'store exposes closed caller-sealed contracts and conservative ceilings' => sub {
+    plan skip_all => 'ignored calibration closure is absent on a fresh checkout'
+        unless $ignored_closure_present;
     is_deeply([sort @{$class->publication_keys}], [sort qw(
         schema schema_version publication_identity plan_identity
         policy_identity publication_id publication_schema profile report
@@ -150,6 +157,8 @@ subtest 'store exposes closed caller-sealed contracts and conservative ceilings'
 };
 
 subtest 'all-profile load derives once, preserves order, and preflights staging' => sub {
+    plan skip_all => 'ignored calibration closure is absent on a fresh checkout'
+        unless $ignored_closure_present;
     my $repo = fresh_repository('all-profile-load');
     for my $ordinal (1 .. 11) {
         $class->publish({
@@ -243,6 +252,8 @@ subtest 'all-profile load derives once, preserves order, and preflights staging'
 };
 
 subtest 'public publication is canonical, atomic, reloadable, and producer-free' => sub {
+    plan skip_all => 'ignored calibration closure is absent on a fresh checkout'
+        unless $ignored_closure_present;
     my $repo = fresh_repository('published');
     no warnings 'redefine';
     local *FSM::VIAL::ArchitectureScaleMeasurement::measure =
@@ -302,6 +313,8 @@ subtest 'public publication is canonical, atomic, reloadable, and producer-free'
 };
 
 subtest 'an exact sole interrupted stage recovers by directory rename' => sub {
+    plan skip_all => 'ignored calibration closure is absent on a fresh checkout'
+        unless $ignored_closure_present;
     my $repo = fresh_repository('recovery');
     my ($plan, $entry, $publication, $encoded, $stage_rel) =
         prepared_publication($repo, 1, synthetic_report('recovery'));
@@ -323,6 +336,8 @@ subtest 'an exact sole interrupted stage recovers by directory rename' => sub {
 };
 
 subtest 'ambiguous and inexact recovery state fails closed in place' => sub {
+    plan skip_all => 'ignored calibration closure is absent on a fresh checkout'
+        unless $ignored_closure_present;
     my $repo = fresh_repository('ambiguous');
     my (undef, undef, undef, $encoded, $stage_rel) =
         prepared_publication($repo, 1, synthetic_report('ambiguous'));
@@ -356,6 +371,8 @@ subtest 'ambiguous and inexact recovery state fails closed in place' => sub {
 };
 
 subtest 'collisions and post-publication staging residue reject' => sub {
+    plan skip_all => 'ignored calibration closure is absent on a fresh checkout'
+        unless $ignored_closure_present;
     my $repo = fresh_repository('collision');
     $class->publish({repository_root => $repo, ordinal => 1,
         report => synthetic_report('first')});
@@ -382,6 +399,8 @@ subtest 'collisions and post-publication staging residue reject' => sub {
 };
 
 subtest 'artifact census, symlink, and hard-link mutations reject' => sub {
+    plan skip_all => 'ignored calibration closure is absent on a fresh checkout'
+        unless $ignored_closure_present;
     my $extra_repo = published_repository('extra-entry');
     my $extra_artifact = expected_artifact_absolute($extra_repo, 1);
     write_raw(File::Spec->catfile(dirname($extra_artifact), 'extra.json'), "{}\n");
@@ -465,6 +484,8 @@ subtest 'artifact census, symlink, and hard-link mutations reject' => sub {
 };
 
 subtest 'malformed, noncanonical, and oversized bytes reject before admission' => sub {
+    plan skip_all => 'ignored calibration closure is absent on a fresh checkout'
+        unless $ignored_closure_present;
     my $malformed_repo = published_repository('malformed');
     replace_artifact($malformed_repo, 1, "{not-json}\n");
     like(dies(sub {
@@ -498,6 +519,8 @@ subtest 'malformed, noncanonical, and oversized bytes reject before admission' =
 };
 
 subtest 'dispatch paths and filesystem identity remain independently sealed' => sub {
+    plan skip_all => 'ignored calibration closure is absent on a fresh checkout'
+        unless $ignored_closure_present;
     my $repo = fresh_repository('path-seal');
     my ($plan, $entry) = current_entry($repo, 1);
     my $target = $class->can('_target_directory');
@@ -550,6 +573,8 @@ sub fresh_repository {
     );
     make_path(File::Spec->catdir($repo, '.git'), {mode => 0700});
     if (!$plan_stub_active) {
+        die "ignored calibration closure is absent\n"
+            unless $ignored_closure_present;
         my $closure = repo_path($repo, $closure_rel);
         make_path(dirname($closure), {mode => 0700});
         copy($source_closure, $closure)
@@ -566,6 +591,8 @@ sub fresh_repository {
 }
 
 sub derive_sealed_test_plan {
+    die "ignored calibration closure is absent\n"
+        unless $ignored_closure_present;
     my $closure = $json->decode(read_raw($source_closure));
     my $policy =
         'FSM::VIAL::ArchitectureScaleRegressionPromotionPolicy'
