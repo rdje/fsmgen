@@ -549,6 +549,15 @@ sub _advance_supervision_capture {
         return;
     }
 
+    _read_supervision_streams($state);
+    _end_supervision_capture($state)
+        if defined($state->{host_error}) || $state->{output_limited};
+}
+
+# One nonblocking read per ready descriptor. Launch strategies retain their
+# own process/group lifecycle while sharing this exact capture policy.
+sub _read_supervision_streams {
+    my ($state) = @_;
     my @ready = $state->{select}->can_read(0);
     @ready = sort {
         (fileno($a) == $state->{control_fileno} ? 0 : 1)
@@ -599,8 +608,6 @@ sub _advance_supervision_capture {
         }
         $state->{$name} .= $chunk;
     }
-    _end_supervision_capture($state)
-        if defined($state->{host_error}) || $state->{output_limited};
 }
 
 sub _end_supervision_capture {

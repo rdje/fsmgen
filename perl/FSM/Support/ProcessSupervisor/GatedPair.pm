@@ -323,6 +323,38 @@ sub observation {
 }
 
 sub reservation { my ($self) = @_; _owner($self); return $self->{reservation}; }
+
+sub transfer_streams {
+    my ($self, $recipient) = @_; _owner($self);
+    _error('stream transfer requires one retained empty plain record')
+        unless @_ == 2 && ref($recipient) eq 'HASH' && !tied(%$recipient)
+            && !keys(%$recipient);
+    _error('stream transfer requires the acknowledged unreleased command')
+        unless $self->{phase} eq 'ready' && !$self->{failure}
+            && !$self->{retired} && !$self->{streams_transferred};
+    my $reservation = $self->{reservation}->observation;
+    _error('stream transfer requires live reservation identity')
+        if $reservation->{retired} || $reservation->{failure}
+            || $reservation->{phase} ne 'moved';
+    my @names = qw(stdout stderr control);
+    _error('stream transfer requires open capture descriptors')
+        if grep { !defined($self->{$_}) || !defined(fileno($self->{$_})) } @names;
+    my $all = POSIX::SigSet->new; $all->fillset;
+    my $old = POSIX::SigSet->new;
+    _error('cannot mask stream transfer signals') unless defined _mask(SIG_BLOCK, $all, $old);
+    # The caller retains recipient BEFORE this call. No callbacks or I/O
+    # separate publication from removal of the old ownership. A restored
+    # signal or failed return cannot strand handles in a temporary return value.
+    @{$recipient}{@names} = @{$self}{@names};
+    delete @{$self}{@names};
+    $self->{streams_transferred} = 1;
+    unless (defined _mask(SIG_SETMASK, $old)) {
+        $self->_fail('fatal stream transfer signal-mask restoration failure');
+        _error($self->{failure});
+    }
+    return;
+}
+
 sub handles {
     my ($self) = @_; _owner($self);
     return [map { $self->{$_} } grep { defined $self->{$_} } @HANDLES];

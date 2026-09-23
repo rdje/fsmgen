@@ -8,6 +8,7 @@ use Fcntl qw(FD_CLOEXEC F_GETFD);
 use IO::Select;
 use JSON::PP ();
 use POSIX qw(SIG_BLOCK SIG_SETMASK SIGUSR1 WNOHANG _exit);
+use Scalar::Util qw(refaddr);
 use Time::HiRes qw(CLOCK_MONOTONIC clock_gettime sleep);
 use Test::More;
 use lib 'perl', 't/lib';
@@ -364,6 +365,88 @@ subtest 'blocked release is revocable and signal mask survives exec' => sub {
     POSIX::sigprocmask(SIG_SETMASK, $old) or die 'caller mask restore failed';
     reap_command($p); close_pair($p);
     is($p->{test_capture}{stdout}, 'blocked', 'exec restores original caller signal mask');
+};
+
+subtest 'stream ownership publishes before signals resume and transfers once' => sub {
+    my $unused = prepare(snapshot($^X, '-e', 'exit 0'));
+    like(error(sub { $unused->transfer_streams({}) }), qr/acknowledged unreleased/, 'pre-fork transfer rejects');
+    close_pair($unused);
+    for my $mode ('normal', 'block-failure', 'restore-failure', 'signal-interrupt') {
+        my $p = prepare(snapshot($^X, '-e', 'print STDOUT "owned-output"; print STDERR "owned-error"'));
+        $p->start; until_pair($p, 'ready');
+        my $recipient = {};
+        my $mask = $class->can('_mask');
+        my $published = 0;
+        local $SIG{USR1} = sub { die "transfer interrupted by owned signal\n" };
+        {
+            no warnings 'redefine';
+            local *FSM::Support::ProcessSupervisor::GatedPair::_mask = sub {
+                return undef if $mode eq 'block-failure' && $_[0] == SIG_BLOCK;
+                if ($_[0] == SIG_SETMASK) {
+                    $published = keys(%$recipient) == 3 && !keys(%{$p->streams});
+                }
+                my $value = $mask->(@_);
+                kill('USR1', $$) == 1 or die 'cannot queue owned signal'
+                    if $mode eq 'signal-interrupt' && $_[0] == SIG_BLOCK;
+                return undef if $mode eq 'restore-failure' && $_[0] == SIG_SETMASK;
+                return $value;
+            };
+            if ($mode eq 'normal') { $p->transfer_streams($recipient); }
+            else {
+                like(error(sub { $p->transfer_streams($recipient) }),
+                    $mode eq 'block-failure' ? qr/cannot mask stream/
+                    : $mode eq 'signal-interrupt' ? qr/transfer interrupted/ : qr/fatal stream transfer/,
+                    "$mode retains explicit failure");
+            }
+        }
+        if ($mode eq 'block-failure') {
+            is_deeply($recipient, {}, 'failed masking transfers no ownership');
+            is(scalar keys %{$p->streams}, 3, 'old owner retains every stream');
+            close_pair($p); next;
+        }
+        ok($published, "$mode recipient owns every stream before signals resume");
+        like(error(sub { $p->transfer_streams({}) }), qr/acknowledged unreleased/, "$mode cannot transfer twice");
+        if ($mode eq 'normal') { $p->release; until_pair($p, 'released'); }
+        $p->cancel if $mode eq 'signal-interrupt';
+        my $command = reap_command($p);
+        is($command->{command_status}, $mode eq 'normal' ? 0 : 125 << 8, "$mode preserves actual wait status");
+        my $state = {stdout => '', stderr => '', exec_error => '',
+            bounds => {capture_limit_bytes => 4096}, select => IO::Select->new(values %$recipient),
+            streams => {map { fileno($recipient->{$_}) => [$_, $recipient->{$_}] } keys %$recipient},
+            control_fileno => fileno($recipient->{control})};
+        my $end = now() + 2;
+        while ($state->{select}->count && now() < $end) {
+            FSM::Support::ProcessSupervisor::_read_supervision_streams($state);
+            sleep(0.001);
+        }
+        is($state->{select}->count, 0, "$mode shared reader consumes actual EOF");
+        is($state->{stdout}, $mode eq 'normal' ? 'owned-output' : '', "$mode transferred stdout reaches the shared reader");
+        is($state->{stderr}, $mode eq 'normal' ? 'owned-error' : '', "$mode transferred stderr remains separate");
+        ok(!grep(defined(fileno($_)), values %$recipient), "$mode capture owner closes all transferred handles");
+        is($p->reservation->group_absent, 1, "$mode command group is gone before retirement");
+        my %capture = map { refaddr($_) => 1 } values %$recipient;
+        my $close = $class->can('_close_handle');
+        my $duplicate_close = 0;
+        {
+            no warnings 'redefine';
+            local *FSM::Support::ProcessSupervisor::GatedPair::_close_handle = sub {
+                ++$duplicate_close if $capture{refaddr($_[0])};
+                return $close->(@_);
+            };
+            $p->retire(now() + 2.5);
+        }
+        is($duplicate_close, 0, "$mode pair retirement does not revisit transferred descriptors");
+        $end = now() + 3;
+        while ($p->reservation->observation->{phase} ne 'finished' && now() < $end) {
+            $p->reservation->advance; sleep(0.001);
+        }
+        ok($p->reservation->observation->{reaped}, "$mode exact reservation is closed");
+        if ($mode eq 'normal') { is($p->observation->{failure}, undef, 'successful transfer and capture preserve failure-free retirement'); }
+        else {
+            like($p->observation->{failure}, $mode eq 'signal-interrupt' ? qr/cancelled/ : qr/fatal stream transfer/,
+                'interrupted return keeps recipient ownership available for caller cleanup');
+        }
+    }
 };
 
 subtest 'unknown wait and retired identities never authorize a signal' => sub {

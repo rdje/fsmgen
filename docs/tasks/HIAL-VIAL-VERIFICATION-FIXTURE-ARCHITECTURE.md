@@ -3478,11 +3478,11 @@ decomposes the architecture needed to move beyond that bounded foundation.
   Children: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.3.4.1, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.3.4.2`
 
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.3.4.1`
-  Status: `pending`
+  Status: `done`
   Goal: `Give the shared capture reader explicit ownership of transferred gated-command streams.`
   Acceptance: `Extract the existing bounded nonblocking stream read pass without changing legacy capture ordering, aggregate-prefix limits, control observations or closed results. Add a one-use gated-pair stream transfer only after its recorded command fork and acknowledged handoff, so capture and retirement cannot close the same descriptor. Qualify both transfer refusals and legacy reader behavior without enabling routing or launching original captures.`
-  Verification: `Pending implementation after the committed capture-integration decomposition.`
-  Commit: `pending`
+  Verification: `The existing nonblocking read body is byte-identical to predecessor 4b4cdcdd9 after extraction into the shared reader. GatedPair transfers open streams once into a retained empty plain record while signals are masked and relinquishes them before restoring signals. T1824 independently observes normal capture, failed masking, failed restoration and an actual queued signal interrupt; recipient ownership survives failed return, waits remain exact, and retirement never revisits transferred handles. T1825 uses real pipes without children to prove split binary bytes, control EOF/error distinctions, exact aggregate prefix and adjacent overflow rejection. The guarded endpoint/connection/service/architecture/receipt/reservation/capture band passes Files=9, Tests=255. Normal callers retain the same lifecycle and schema; reserved capture/cleanup integration remains .2.`
+  Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.3.4.1: establish capture stream ownership`
 
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.3.4.2`
   Status: `pending`
@@ -4189,7 +4189,7 @@ decomposes the architecture needed to move beyond that bounded foundation.
 
 ## Current Frontier
 
-Current frontier: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.3.4.1` establishes shared stream ownership before `.4.2` integrates the gated lifecycle and terminal identity. Complete nested cleanup and independent qualification before the fixed capture driver resumes. Preserve original failures, the spent compiler workspace, source-only driver commit and full-CI/push gates.
+Current frontier: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.3.4.2` integrates the gated lifecycle and terminal identity after the qualified shared stream ownership seam in `.4.1`. Complete nested cleanup and independent qualification before the fixed capture driver resumes. Preserve original failures, the spent compiler workspace, source-only driver commit and full-CI/push gates.
 
 Architecture audit `.1` is complete. Decision `0032` selects one public
 `.vial` source language, private immutable `VIALSemanticIR` and
@@ -6805,3 +6805,27 @@ The manifest binds the immediately preceding acceptance suffix to its exact Git 
   requires `knowledge-map: OK`, exact claim inventory, current task-index
   alignment and unchanged book reference. No runtime or original capture runs
   are needed for this source-free decomposition and history rollover.
+
+## Acceptance Checklist (.19.2.3.1.2.2.5.5.2.3.3.4.1)
+
+- [x] **ROOT CAUSE (WHY + WHERE)** — `git log -S` for the GatedPair stream
+  accessors identifies f2c808399. The shared reader closes its captured handles;
+  the original pair retained those same handles for retirement. Returning a
+  temporary handle collection would also leave an interruption gap before the
+  recipient records ownership. The new transfer publishes into an already-held
+  record under masked signals, then removes the old ownership.
+- [x] **ADDRESSED (verified)** — Re-derive with T1824's real pair and actual
+  SIGUSR1 interruption during restoration: the recipient retains every handle,
+  EOF and wait status remain observable, and the pair never closes a transferred
+  handle. Failed-mask and failed-restoration controls distinguish no transfer
+  from completed publication with failed return. T1825 falsifies cap acceptance
+  at adjacent excess using real pipes, separates binary streams and refuses a
+  successful control handoff after error bytes. Exact source comparison proves
+  the shared read body matches 4b4cdcdd9 byte-for-byte. Tracked tests, component,
+  book and this work-unit commit supply durability; Linux and complete reserved
+  cleanup remain separately unqualified. No original capture was run.
+- [x] **NO REGRESSION** — The guarded focused band reports
+  `All tests successful`, `Files=9, Tests=255`, retained in
+  .artifacts/capture-stream-final-band.log. Both modified modules pass syntax
+  checks. The book documents transfer ownership while preserving open lifecycle
+  integration, aggregate admission, routing and nested-closure boundaries.
