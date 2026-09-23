@@ -3470,11 +3470,11 @@ decomposes the architecture needed to move beyond that bounded foundation.
   Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.3.3: qualify gated command handoff`
 
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.3.4`
-  Status: `active`
+  Status: `done`
   Goal: `Integrate the private gated pair with bounded capture, first failure and terminal identity.`
   Acceptance: `After .3, use the reserved group in nonblocking capture and TERM/KILL advancement without changing the synchronous default or public result schema. Preserve command wait truth, earliest failure, original cleanup ownership and actual group absence; retain distinct command/reservation observations. Share the fixed cleanup envelope, retire group signalling before releasing identity, and reject uncertain cleanup. Qualify compatibility through focused engine/receipt/adapter controls; compiler and real capture remain unadmitted.`
-  Verification: `Qualified sibling .3 is committed at f2c808399. First extract reusable bounded stream reads and explicit descriptor transfer; then integrate the reserved launch/capture/cleanup lifecycle and distinct private identities. Seal the completed acceptance suffix at that exact predecessor before adding the next implementation evidence; retain every live node and the selected coordinator protocol.`
-  Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.3.4: select capture integration sequence`
+  Verification: `The shared stream owner, finite closure driver, reserved job facade and creator-bound receipt review are complete in the child leaves. Legacy callers and schemas remain unchanged. Focused real and modeled checks pass; independent hostile qualification remains sibling .5 before coordinator integration. Original startup/capture and Linux gaps remain explicit.`
+  Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.3.4.2.3: qualify reserved receipt ownership`
   Children: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.3.4.1, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.3.4.2`
 
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.3.4.1`
@@ -3485,11 +3485,11 @@ decomposes the architecture needed to move beyond that bounded foundation.
   Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.3.4.1: establish capture stream ownership`
 
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.3.4.2`
-  Status: `active`
+  Status: `done`
   Goal: `Integrate gated launch, shared capture and finite reservation-aware cleanup into the private engine.`
   Acceptance: `After .1, prepare and retain the pair before starting it, expose explicit publication-controlled release, advance capture and cancellation without blocking, and share one fixed TERM/KILL envelope. Retain exact command waits, first failure, actual reserved-group absence and separate reservation closure; retire all signals before identity release. Preserve legacy callers and public schema, private cleanup identity and stage receipt compatibility. Focused real and model controls must pass before independent hostile sibling .3.5 or coordinator integration proceeds.`
-  Verification: `Stream ownership is committed at 8729ab944. Separate finite group/reservation closure from the launch/capture/result facade so each lifecycle has independently reviewable real and modeled controls.`
-  Commit: `pending`
+  Verification: `Children separately qualify finite closure, inactive launch/capture/results and creator-bound reserved receipt review. The guarded combined band passes Files=12, Tests=273. Command waits, reserved-group disappearance, reservation reaping and original cleanup identity retain distinct meanings. Independent hostile sibling .5, coordinator routing and complete nested closure remain open.`
+  Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.3.4.2.3: qualify reserved receipt ownership`
 
   Children: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.3.4.2.1, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.3.4.2.2, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.3.4.2.3`
 
@@ -3508,17 +3508,17 @@ decomposes the architecture needed to move beyond that bounded foundation.
   Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.3.4.2.2: integrate reserved capture and results`
 
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.3.4.2.3`
-  Status: `pending`
+  Status: `done`
   Goal: `Qualify reserved-group receipt review without changing retained own-group capture sources.`
   Acceptance: `After sibling .2, preserve distinct command and reservation/group births, original cleanup identity and exact closure facts in inactive receipt review. The historical adapter only accepts own-group identity; retain it and its captured evidence unchanged. Add explicit reserved identity compatibility with copied/replaced/uncertain receipt counterexamples before closing parent .4 or admitting coordinator routing. No original capture replay or fixture grant.`
-  Verification: `Read-only preparation confirms ReceiptAdapter.pm in docs/audits/native-proxy-receipt-adapter-20260922 requires matching birth/group identity. The reserved strategy must not alias those distinct children to bypass that historical contract.`
-  Commit: `pending`
+  Verification: `ReservedJob retains its original receipt, cleanup and policy separately from replaceable returned fields. ReservedReceipt compares the creator-held basis, distinct births, exact waits, retired signals, actual closure facts and capture closure without process operations. T1828 models compiler/outer/inner roles, accepts settled failed waits, and rejects copied/replaced receipts, altered stages/identities and incomplete ownership. One ordinary real Perl child exits nonzero and binds after exact cleanup. Four weakened predicates fail independent carrier, wait, PID and cleanup controls. The guarded combined band passes Files=12, Tests=273. Original ReceiptAdapter and spent capture sources are unchanged; no actual compiler/proxy stage transport, authentication, launch, release or nested qualification is inferred.`
+  Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.3.4.2.3: qualify reserved receipt ownership`
 
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.3.5`
   Status: `pending`
   Goal: `Independently qualify every reserved-group handoff and cancellation boundary.`
   Acceptance: `After .4, prove real command/reservation identities, caller-group isolation, descriptor closure, actual wait truth and group absence across success, timeout, signal, overflow and partial launch failures. Use model-only controls for reused/retired identities and unreapable children; never signal unrelated targets. Keep original startup failures and Linux qualification gaps explicit. Only completed evidence admits coordinator integration .5.5.2.3.4; full nested closure still requires .5.5.2.4, .5.5.2.5 and .5.5.3.`
-  Verification: `Pending implementation and focused qualification in siblings .2 through .4.`
+  Verification: `Siblings .2 through .4 now supply the private mechanisms and focused qualification. Independently qualify the complete handoff/cancellation domain before coordinator integration; original captures remain gated.`
   Commit: `pending`
 
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.4`
@@ -4212,7 +4212,7 @@ decomposes the architecture needed to move beyond that bounded foundation.
 
 ## Current Frontier
 
-Current frontier: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.3.4.2.3` qualifies reserved receipt review after sibling `.2` joins gated launch, shared capture and terminal identities. Complete nested cleanup and independent qualification before the fixed capture driver resumes. Preserve original failures, the spent compiler workspace, source-only driver commit and full-CI/push gates.
+Current frontier: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.3.5` independently qualifies the complete reserved-group handoff/cancellation domain after the capture/result and receipt composition in `.4`. Complete nested cleanup and independent qualification before the fixed capture driver resumes. Preserve original failures, the spent compiler workspace, source-only driver commit and full-CI/push gates.
 
 Architecture audit `.1` is complete. Decision `0032` selects one public
 `.vial` source language, private immutable `VIALSemanticIR` and
@@ -6914,3 +6914,32 @@ The manifest binds the immediately preceding acceptance suffix to its exact Git 
   execution agree on every non-timing public result field; existing receipt
   observations and caller architecture controls pass. Syntax, book HTML,
   task/claim joins, Knowledge Map and staged doctrines gate this commit.
+
+## Acceptance Checklist (.19.2.3.1.2.2.5.5.2.3.3.4.2.3)
+
+- [x] **ROOT CAUSE (WHY + WHERE)** — `git log -S` identifies 8ecc5800f
+  as the historical adapter's own-group admission. That predicate deliberately
+  requires equal command/group identity and cannot qualify the reserved pair.
+  Changing it would also change retained capture inputs. Reserved review needs
+  the original creating job and its distinct, fully retired ownership records.
+- [x] **ADDRESSED (verified)** — Re-derive through the retained receipt basis
+  and T1828's structural stage models plus one ordinary real Perl child. Its
+  nonzero wait remains a failure while its exact cleanup can bind a receipt.
+  Copies and coordinated returned-record replacement cannot replace the
+  creator's original receipt or cleanup. Unknown waits, shared PIDs, changed
+  stages, pending signal authority, missed departure and incomplete closure
+  reject. Process-operation guards both count attempts and stop them before
+  any modeled identity reaches a native syscall. Falsification: independently
+  weakening carrier identity, reservation wait validation, distinct PID or
+  cleanup reference comparison makes the corresponding assertions fail.
+  Durability: tracked producer/checker, T1828, book/fact and this work-unit
+  commit. Ignored scratch mutations and logs under .artifacts/reserved-receipt-*
+  are not a durable archive. Pure stage models do not qualify actual compiler,
+  outer/inner transport, kernel birth authentication or nested cleanup.
+- [x] **NO REGRESSION** — The guarded focused band reports
+  `All tests successful`, `Files=12, Tests=273` in
+  .artifacts/reserved-receipt-final-guarded-band.log. Syntax, generated book HTML,
+  task/claim joins, Knowledge Map and staged doctrines gate the commit. Git
+  comparison proves the historical own-group adapter and retained capture
+  source/result directory unchanged. Public schema and legacy routing remain
+  unchanged; independent handoff qualification is the next frontier.

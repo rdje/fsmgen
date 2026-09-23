@@ -48,6 +48,9 @@ sub prepare {
             select => IO::Select->new, streams => {},
         },
     }, __PACKAGE__;
+    $self->{original_cleanup} = $self->{state}{cleanup};
+    $self->{original_stage} = $snapshot->{stage};
+    $self->{original_containment} = $snapshot->{containment};
     $self->_sync_identity;
     return $self;
 }
@@ -181,6 +184,7 @@ sub _finish {
     $self->_latch('cleanup_failed', $closed->{failure}) unless $closed->{complete};
     $self->_latch('host_error', $r->{failure}) if defined($r->{failure});
     FSM::Support::ProcessSupervisor::_publish_supervision_result($s);
+    $self->{original_receipt} = $s->{receipt_observation};
 }
 
 sub advance {
@@ -225,6 +229,24 @@ sub finished_job {
     _error('result requires a finished job')
         unless @_ == 1 && $self->{state}{phase} eq 'finished';
     return $self->{state};
+}
+
+# Read-only receipt basis held by this creator, independent of replaceable
+# fields in the returned plain job or its copied public result. This does not
+# authenticate kernel birth or establish logical subtree/delivery closure.
+sub receipt_basis {
+    my ($self) = @_; _owner($self);
+    _error('receipt basis requires a finished job')
+        unless @_ == 1 && $self->{state}{phase} eq 'finished';
+    return {
+        receipt => $self->{original_receipt}, cleanup => $self->{original_cleanup},
+        stage => $self->{original_stage}, containment => $self->{original_containment},
+        command => $self->{pair}->observation,
+        reservation => $self->{pair}->reservation->observation,
+        closure => $self->{closure}->observation,
+        capture_closed => !keys(%{$self->{received}})
+            && !keys(%{$self->{state}{streams}}) && !$self->{state}{select}->count ? 1 : 0,
+    };
 }
 
 1;

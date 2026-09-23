@@ -686,17 +686,27 @@ For example, a command's nonzero exit remains its reported failure if a later
 cleanup observation is incomplete; the result also retains false cleanup flags.
 The public result has the same closed fields. Its private receipt keeps the
 original cleanup hash and names distinct command and reservation/group births.
-The historical own-group receipt adapter correctly refuses that distinct-group
-receipt; a separate owned compatibility step must qualify reserved receipt
-review without rewriting the retained capture sources.
+The historical own-group receipt adapter still refuses that distinct-group
+receipt. Separate reserved receipt review now checks the original receipt and
+cleanup against records retained by the creating job. It requires distinct
+command/group births, exact command and reservation waits, retired signal
+authority, closed capture and proved group disappearance. Copies, replacements,
+changed stages and incomplete closure cannot substitute for those records.
 
-Normal callers retain the existing own-group supervisor. Reserved receipt
-review, aggregate coordinator admission, nested routing and complete
+For example, replacing a returned receipt and its cleanup address does not
+replace the creator's retained originals. A nonzero or signaled command may
+still have settled resources. Review itself performs no process operation and
+grants no launch or release authority. Stage models and an ordinary Perl child
+qualify this boundary; they do not authenticate kernel birth, establish complete
+stage transport or qualify the retained compiler/proxy captures.
+
+Normal callers retain the existing own-group supervisor. Aggregate coordinator
+admission, nested routing and complete
 subtree qualification still have separate open owners. These private components
 establish no nested result or permission to run the retained startup proxy.
 Their tests exercise the current host; Linux qualification remains open.
 Re-run the bounded component controls with:
 
 ```bash
-scripts/run_with_ram_guard.sh -- prove -Iperl -It/lib t/1823-process-group-reservation.t t/1824-process-gated-pair.t t/1825-process-capture-stream-ownership.t t/1826-process-group-closure.t t/1827-process-reserved-job.t
+scripts/run_with_ram_guard.sh -- prove -Iperl -It/lib t/1823-process-group-reservation.t t/1824-process-gated-pair.t t/1825-process-capture-stream-ownership.t t/1826-process-group-closure.t t/1827-process-reserved-job.t t/1828-process-reserved-receipt.t
 ```
