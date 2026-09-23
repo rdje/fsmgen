@@ -156,6 +156,7 @@ answers:
   - "why does the sealed supervisor accept no compiler environment?"
   - "why does the sealed private job carry no receipt role?"
   - "how does the sealed supervisor accept one environment?"
+  - "why cannot one retained compiler job bind?"
 date: 2026-09-23
 status: current
 tags: [tests, subprocess, supervision, task-acceptance, darwin, locality]
@@ -165,4 +166,4 @@ evidence: >-
 reverify: >-
   perl docs/audits/native-proxy-receipt-adapter-20260922/qualify.t
 ---
-History: `01cad0da35242007910c02a9c12e253fcfbd0515:docs/knowledge/test-subprocess-policy-adapters.md`. `FSM::Support::ProcessSupervisor::supervise_process` accepts one environment hash. A supplied environment replaces the child environment and stays on the private job. One proof process reads that environment. No compiler, probe or tool-resolution process runs.
+History: `7f5ae217a39a536044a841d9d4dc25bd97f1358d:docs/knowledge/test-subprocess-policy-adapters.md`. `NativeProxyReceiptAdapter::receipts_bound` still requires compiler, outer and inner receipts together. `FSM::Support::ProcessSupervisor::sealed_finished_job` still adds no receipt role. One retained compiler job therefore cannot bind. No compiler, probe or tool-resolution process runs.

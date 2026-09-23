@@ -2337,14 +2337,14 @@ decomposes the architecture needed to move beyond that bounded foundation.
   Status: `active`
   Goal: `Launch one admitted compiler, probe and tool-resolution capture and retain the first private states.`
   Acceptance: `After this gate commit, consume one fresh permit and retain the first private compiler, outer and inner states. Stop on disagreement. Never retry a producer or replay an original, proxy or live collector.`
-  Verification: `Child .5.4.3.3.6.7.1.2.2.2.2 accepts one sealed environment and proves it with a non-compiler process. The compiler launch remains .5.4.3.3.6.7.1.2.2.2.3. Probe and tool-resolution remain separately owned.`
+  Verification: `Child .5.4.3.3.6.7.1.2.2.2.3.1 records that one retained compiler job still cannot bind. The compiler launch remains .5.4.3.3.6.7.1.2.2.2.3.2. Probe and tool-resolution remain separately owned.`
   Commit: `pending`
   Children: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.12.4.1.5.4.3.3.6.7.1, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.12.4.1.5.4.3.3.6.7.2`
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.12.4.1.5.4.3.3.6.7.1`
   Status: `active`
   Goal: `Launch one admitted compiler capture and retain its first private state.`
   Acceptance: `Consume one fresh permit, launch only the compiler stage through the sealed private return, and retain that first private state. Stop on disagreement. Do not launch a probe or tool-resolution process in that slice.`
-  Verification: `Child .5.4.3.3.6.7.1.2.2.2.2 accepts one sealed environment and proves it with a non-compiler process. The compiler launch remains .5.4.3.3.6.7.1.2.2.2.3. Probe and tool-resolution remain closed.`
+  Verification: `Child .5.4.3.3.6.7.1.2.2.2.3.1 records that one retained compiler job still cannot bind. The compiler launch remains .5.4.3.3.6.7.1.2.2.2.3.2. Probe and tool-resolution remain closed.`
   Commit: `pending`
   Children: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.12.4.1.5.4.3.3.6.7.1.1, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.12.4.1.5.4.3.3.6.7.1.2`
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.12.4.1.5.4.3.3.6.7.1.1`
@@ -2370,7 +2370,7 @@ decomposes the architecture needed to move beyond that bounded foundation.
   Status: `active`
   Goal: `Launch one compiler stage through the sealed private return and retain its first private state.`
   Acceptance: `After the binding record commits, consume one fresh permit and launch only the compiler stage through the sealed private return. Retain that first private state. Stop on disagreement. Do not launch a probe or tool-resolution process in that slice.`
-  Verification: `Child .5.4.3.3.6.7.1.2.2.2.2 accepts one sealed environment and proves it with a non-compiler process. The compiler launch remains .5.4.3.3.6.7.1.2.2.2.3. Probe and tool-resolution remain closed.`
+  Verification: `Child .5.4.3.3.6.7.1.2.2.2.3.1 records that one retained compiler job still cannot bind. The compiler launch remains .5.4.3.3.6.7.1.2.2.2.3.2. Probe and tool-resolution remain closed.`
   Commit: `pending`
   Children: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.12.4.1.5.4.3.3.6.7.1.2.2.1, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.12.4.1.5.4.3.3.6.7.1.2.2.2`
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.12.4.1.5.4.3.3.6.7.1.2.2.1`
@@ -2383,7 +2383,7 @@ decomposes the architecture needed to move beyond that bounded foundation.
   Status: `active`
   Goal: `Launch one compiler stage through the sealed private return and retain its first private state.`
   Acceptance: `After the environment record commits, consume one fresh permit and launch only the compiler stage through the sealed private return. Retain that first private state. Stop on disagreement. Do not launch a probe or tool-resolution process in that slice.`
-  Verification: `Child .5.4.3.3.6.7.1.2.2.2.2 accepts one sealed environment and proves it with a non-compiler process. The compiler launch remains .5.4.3.3.6.7.1.2.2.2.3. Probe and tool-resolution remain closed.`
+  Verification: `Child .5.4.3.3.6.7.1.2.2.2.3.1 records that one retained compiler job still cannot bind. The compiler launch remains .5.4.3.3.6.7.1.2.2.2.3.2. Probe and tool-resolution remain closed.`
   Commit: `pending`
   Children: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.12.4.1.5.4.3.3.6.7.1.2.2.2.1, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.12.4.1.5.4.3.3.6.7.1.2.2.2.2, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.12.4.1.5.4.3.3.6.7.1.2.2.2.3`
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.12.4.1.5.4.3.3.6.7.1.2.2.2.1`
@@ -2399,9 +2399,22 @@ decomposes the architecture needed to move beyond that bounded foundation.
   Verification: `perl t/1818-process-supervisor-receipt-observation.t passes 87 assertions. One proof process reads the supplied environment marker and exits successfully. The parent environment stays unchanged. A non-hash environment is rejected before a process. No compiler, probe or tool-resolution process runs. The compiler launch remains .5.4.3.3.6.7.1.2.2.2.3.`
   Commit: `this commit`
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.12.4.1.5.4.3.3.6.7.1.2.2.2.3`
-  Status: `pending`
+  Status: `active`
   Goal: `Launch one compiler stage through the sealed private return and retain its first private state.`
   Acceptance: `After the environment acceptance commits, consume one fresh permit and launch only the compiler stage through the sealed private return. Retain that first private state. Stop on disagreement. Do not launch a probe or tool-resolution process in that slice.`
+  Verification: `Child .5.4.3.3.6.7.1.2.2.2.3.1 records that one retained compiler job still cannot bind. The compiler launch remains .5.4.3.3.6.7.1.2.2.2.3.2. Probe and tool-resolution remain closed.`
+  Commit: `pending`
+  Children: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.12.4.1.5.4.3.3.6.7.1.2.2.2.3.1, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.12.4.1.5.4.3.3.6.7.1.2.2.2.3.2`
+- ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.12.4.1.5.4.3.3.6.7.1.2.2.2.3.1`
+  Status: `done`
+  Goal: `Record that one retained compiler job still cannot bind before a compiler launch.`
+  Acceptance: `Read the current receipt binding after the sealed environment acceptance. If one finished compiler job still cannot bind, do not launch a compiler capture that cannot retain that state. Leave the compiler launch separately owned.`
+  Verification: `NativeProxyReceiptAdapter::receipts_bound still requires compiler, outer and inner receipts together. FSM::Support::ProcessSupervisor::sealed_finished_job still adds no receipt role. One retained compiler job therefore cannot bind. No compiler, probe or tool-resolution process runs. The compiler launch remains .5.4.3.3.6.7.1.2.2.2.3.2.`
+  Commit: `this commit`
+- ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.12.4.1.5.4.3.3.6.7.1.2.2.2.3.2`
+  Status: `pending`
+  Goal: `Launch one compiler stage through the sealed private return and retain its first private state.`
+  Acceptance: `After the retained-job binding record commits, consume one fresh permit and launch only the compiler stage through the sealed private return. Retain that first private state. Stop on disagreement. Do not launch a probe or tool-resolution process in that slice.`
   Verification: `pending`
   Commit: `pending`
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.12.4.1.5.4.3.3.6.7.2`
@@ -6614,6 +6627,12 @@ The manifest binds the immediately preceding acceptance suffix to its exact Git 
 - [x] **ROOT CAUSE (WHY + WHERE)** — `git log -S 'unavailable aggregate' -1 --format='%H %s' -- docs/book/src/16df-vial-architecture-scale-cap-closeout.md` identifies bc6796d01803fb662cfadd506fabc5bc79427a88. That placement requires an unavailable hosted aggregate. The first hosted run of `./bin/ci-regression vial-gate --no-book` failed its real command, and the independent verifier was skipped.
 - [x] **ADDRESSED (verified)** — The contradiction is owned by HOSTED-VIAL-REGRESSION-GATE-RESULT.1. Local exact-pinned success stays distinct from the failed hosted step. No support or capacity claim is inferred from either result. Diagnosis continues when the failed-step log is released.
 - [x] **NO REGRESSION** — `knowledge-map: OK` preserves the earlier gate questions and adds the hosted failure route. The rendered book states the contradiction outside the registered placement claim; claim identity/dispositions, containment and staged doctrines accompany the normal hooks. The receipt-return leaf remains separately owned.
+
+## Acceptance Checklist (retained compiler job binding .3.2.15.7.3.12.4.1.5.4.3.3.6.7.1.2.2.2.3.1)
+
+- [x] **ROOT CAUSE (WHY + WHERE)** — `git log -S 'my @ROLES = qw(compiler outer inner)' -1 --format='%H %s' -- docs/audits/native-proxy-receipt-adapter-20260922/ReceiptAdapter.pm` identifies b74122f9f967dd7cdb4b29f17aed4a2ba4be6b3b. `receipts_bound` still requires three roles, and `sealed_finished_job` still adds none. One retained compiler job therefore cannot bind.
+- [x] **ADDRESSED (verified)** — The receipt adapter and sealed private return remain unchanged. One retained compiler job still cannot bind. Capture stays closed. The compiler launch remains .5.4.3.3.6.7.1.2.2.2.3.2. No compiler, probe, worker, proxy or collector runs.
+- [x] **NO REGRESSION** — `knowledge-map: OK` preserves the sealed environment acceptance and adds the retained-job binding refusal. The rendered book states that the compiler launch remains next; claim identity/dispositions, containment and staged doctrines accompany the normal hooks. That launch, probe, tool-resolution, native/live/startup qualification and full CI/push remain open.
 
 ## Acceptance Checklist (sealed supervisor environment .3.2.15.7.3.12.4.1.5.4.3.3.6.7.1.2.2.2.2)
 
