@@ -55,6 +55,7 @@ answers:
   - "why did the first hosted VIAL regression gate fail its real command?"
   - "calibration closure publication root is absent"
   - "where does public VIAL regression-promotion policy derivation load its seal?"
+  - "what failed in the hosted Perl-file shards beside the VIAL gate?"
 date: 2026-09-23
 status: current
 tags: [hial, vial, scalability, regression, measurement, publication]
@@ -164,6 +165,13 @@ instead. That tracked seal keeps the pinned policy identity and historical
 disposition. It does not change the published unavailable-aggregate contract
 and does not infer support or capacity. A hosted result still requires a
 hosted run.
+
+The same push failed every Perl-file shard in four families: Yosys synthesis
+deadline on paired-busy alias tests, the OSVVM runtime artifact-graph oracle,
+tests that still read ignored `.artifacts/qualification/vial-scale` paths, and
+`t/350` rejecting two shipped support statuses. The terminal build job failed
+because those families failed. Parse messages before passing language-contract
+tests are expected diagnostics. None of these families is support or capacity.
 
 Related: [[vial-architecture-scale-proof]], [[vial-common-worker-output-census-admission]],
 [[vial-portable-vhdl-runtime-scale]], [[vial-vhdl-osvvm-qualified-tier]],

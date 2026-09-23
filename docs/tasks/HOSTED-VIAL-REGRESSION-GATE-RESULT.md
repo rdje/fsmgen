@@ -32,7 +32,7 @@ Make the hosted VIAL regression gate agree with one published result.
   Acceptance: `Diagnose the failed hosted command, then align the workflow and published contract with the result that command produces.`
   Verification: `pending`
   Commit: `pending`
-  Children: `HOSTED-VIAL-REGRESSION-GATE-RESULT.1, HOSTED-VIAL-REGRESSION-GATE-RESULT.2, HOSTED-VIAL-REGRESSION-GATE-RESULT.3`
+  Children: `HOSTED-VIAL-REGRESSION-GATE-RESULT.1, HOSTED-VIAL-REGRESSION-GATE-RESULT.2, HOSTED-VIAL-REGRESSION-GATE-RESULT.3, HOSTED-VIAL-REGRESSION-GATE-RESULT.4`
 - ID: `HOSTED-VIAL-REGRESSION-GATE-RESULT.1`
   Status: `done`
   Goal: `Diagnose the first hosted gate failure and own the contract contradiction.`
@@ -46,9 +46,15 @@ Make the hosted VIAL regression gate agree with one published result.
   Verification: `prove -Iperl t/1765-vial-architecture-scale-regression-promotion-policy.t passed. A copied checkout without the ignored publication derived the pinned identity and eleven profiles. Decision 0103 records the authority change.`
   Commit: `this commit`
 - ID: `HOSTED-VIAL-REGRESSION-GATE-RESULT.3`
-  Status: `active`
+  Status: `done`
   Goal: `Diagnose the hosted Perl-file shard failures from the same push.`
-  Acceptance: `Own the released-log causes of the Perl-file shard failures separately from the absent closure publication. Do not treat those failures as support or capacity.`
+  Acceptance: `Record the released-log census for run 35782532228. Separate Yosys deadline, OSVVM artifact-oracle, ignored-publication, and support-status causes. Do not treat those failures as support or capacity.`
+  Verification: `Released failed-step logs for all 16 Perl-file jobs and the terminal build job are stored under ignored .artifacts/tmp/hosted-ci-20260923. The census names the four families below. Local prove of t/350 reproduces the support-status failure.`
+  Commit: `this commit`
+- ID: `HOSTED-VIAL-REGRESSION-GATE-RESULT.4`
+  Status: `active`
+  Goal: `Admit the two shipped support-contract statuses the audit already rejects locally.`
+  Acceptance: `t/350 accepts shipped_bounded_regression_gate and private_v2_common_envelope_with_lifecycle_compiler only when each contract still has non-empty guidance. Do not widen unrelated statuses.`
   Verification: `pending`
   Commit: `pending`
 
@@ -63,3 +69,9 @@ Make the hosted VIAL regression gate agree with one published result.
 - [x] **ROOT CAUSE (WHY + WHERE)** — Public `derive` required the ignored publication at `ArchitectureScaleRegressionPromotionPolicy.pm line 236` before this slice. `git log -S 'validate_complete_publication' -- perl/FSM/VIAL/ArchitectureScaleRegressionPromotionPolicy.pm` shows that call. A fresh checkout does not carry the publication, so the public gate stopped before any profile result.
 - [x] **ADDRESSED (verified)** — Public derivation now loads `vial/qualification/regression_promotion_policy/regression-promotion-policy-v1.json` and validates the pinned identity. Focused t/1765 passed, including a same-volume checkout that lacks the sealed document. A copied checkout without the ignored publication derived the same identity. Decision 0103, the book, and the knowledge card name that route.
 - [x] **NO REGRESSION** — `knowledge-map: OK` keeps the earlier capture questions and adds the tracked-seal route. The published unavailable-aggregate contract and the local exact-pinned observation stay distinct. A failed or unavailable hosted run remains neither support nor capacity.
+
+## Acceptance Checklist (hosted Perl-file census HOSTED-VIAL-REGRESSION-GATE-RESULT.3)
+
+- [x] **ROOT CAUSE (WHY + WHERE)** — Run 35782532228 failed all 16 Perl-file jobs. The released logs name four families: `yosys_synthesis` `status=timed_out` in the paired-busy alias tests; `OSVVM runtime artifact graph failed its exact oracle` at `ArchitectureScaleOSVVMRuntimeMaterialization.pm line 249`; tests that `Can't stat` ignored `.artifacts/qualification/vial-scale` paths; and `t/350-support-contract-builder-audit.t line 64` rejecting two shipped support statuses. `git log -S 'shipped_bounded_regression_gate' -- perl/FSM/Support` shows the regression status is shipped while the audit allow-list omits it.
+- [x] **ADDRESSED (verified)** — The census is recorded here and in the book. Local `prove -Iperl t/350-support-contract-builder-audit.t` reproduces the support-status failure. The Yosys deadline, OSVVM oracle, and ignored-publication families stay separate. The terminal build job failed because those families failed. None of them is support or capacity.
+- [x] **NO REGRESSION** — `knowledge-map: OK` preserves the tracked-seal route. The parse messages that precede passing language-contract tests stay expected diagnostics. Repair of the support-status allow-list remains HOSTED-VIAL-REGRESSION-GATE-RESULT.4.

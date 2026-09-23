@@ -6,8 +6,8 @@ Status and evidence: `docs/tasks/`. The system itself: `MEMORY_ARCHITECTURE.md`.
 ## Resume
 
 - repository_revision: derive with `git log -1 --format='%H %s'`; never shadow `HEAD` here.
-- active_work_unit: `HOSTED-VIAL-REGRESSION-GATE-RESULT.3`
-- next_action: Diagnose the hosted Perl-file shard failures from the same push, from their released logs, and own each cause before repair.
+- active_work_unit: `HOSTED-VIAL-REGRESSION-GATE-RESULT.4`
+- next_action: Admit the two shipped support-contract statuses that t/350 already rejects, without widening unrelated statuses.
 - in_flight_uncommitted: none.
 - in_flight_background: none.
 - blockers: Historical startup/parent qualification and full CI/push remain gated.

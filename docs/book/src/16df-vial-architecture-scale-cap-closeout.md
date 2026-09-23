@@ -1941,6 +1941,24 @@ can load it without the ignored publication. The published hosted contract
 still names an unavailable aggregate; this alignment does not invent a hosted
 pass. A failed or unavailable hosted run remains neither support nor capacity.
 
+The same push failed every Perl-file shard. The released logs name separate
+families, and the terminal build job failed because those families failed:
+
+- Paired-busy alias tests reached `yosys_synthesis` and stopped with
+  `status=timed_out`.
+- OSVVM runtime admission stopped at
+  `ArchitectureScaleOSVVMRuntimeMaterialization` because the artifact graph
+  failed its exact oracle.
+- Several regression-promotion tests still read ignored
+  `.artifacts/qualification/vial-scale` paths that a fresh checkout does not
+  carry.
+- `t/350-support-contract-builder-audit.t` rejects shipped support statuses
+  that its allow-list omits. That failure also reproduces locally.
+
+Those families are not one defect, and none of them is support or capacity.
+The parse messages that appear before passing language-contract tests are
+expected diagnostics.
+
 ### Exact-pinned production gate observation
 
 From clean execution revision
