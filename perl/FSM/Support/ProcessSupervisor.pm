@@ -572,6 +572,7 @@ sub _read_supervision_streams {
         if (!defined $read) {
             next if $! == EINTR || $! == EAGAIN || $! == EWOULDBLOCK;
             $state->{host_error} = "$name pipe read failed: $!";
+            _latch_supervision_failure($state, 'host_error', $state->{host_error});
             last;
         }
         if ($read == 0) {
@@ -590,9 +591,11 @@ sub _read_supervision_streams {
                 - bytes::length($state->{exec_error});
             if ($remaining <= 0 || $read > $remaining) {
                 $state->{host_error} = 'exec-control message exceeded its fixed limit';
+                _latch_supervision_failure($state, 'host_error', $state->{host_error});
                 last;
             }
             $state->{exec_error} .= $chunk;
+            _latch_supervision_failure($state, 'exec_error', undef);
             next;
         }
         $state->{first_output} = clock_gettime(CLOCK_MONOTONIC)
@@ -604,6 +607,8 @@ sub _read_supervision_streams {
             $state->{$name} .= substr($chunk, 0, $remaining)
                 if $remaining > 0;
             $state->{output_limited} = 1;
+            _latch_supervision_failure($state, 'output_limited',
+                'supervised process exceeded its aggregate capture limit');
             last;
         }
         $state->{$name} .= $chunk;
@@ -645,6 +650,20 @@ sub _complete_supervision {
     my $cleanup = $state->{cleanup};
     $cleanup->{leader_reaped} = $state->{leader_reaped} ? 1 : 0;
     $cleanup->{group_gone} = _group_alive($state->{pid}) ? 0 : 1;
+    _publish_supervision_result($state);
+}
+
+# Only the inactive reserved strategy requests event-ordered failure latching.
+# Legacy callers retain their established result precedence.
+sub _latch_supervision_failure {
+    my ($state, $status, $diagnostic) = @_;
+    return unless $state->{latch_failures};
+    $state->{first_failure} //= {status => $status, diagnostic => $diagnostic};
+}
+
+sub _publish_supervision_result {
+    my ($state) = @_;
+    my $cleanup = $state->{cleanup};
     $state->{finished} = clock_gettime(CLOCK_MONOTONIC);
     # Cleanup/completion cannot supply an unobserved handoff. Keep its
     # timestamp and dependent durations unknown when capture ended first.
@@ -671,6 +690,11 @@ sub _complete_supervision {
         : $status eq 'signaled' ? 'supervised process exited after a signal'
         : $status eq 'nonzero_exit' ? 'supervised process exited nonzero'
         : 'supervised process status could not be determined';
+    if (my $first = $state->{first_failure}) {
+        $status = $first->{status};
+        $diagnostic = defined($first->{diagnostic}) ? $first->{diagnostic}
+            : $status eq 'exec_error' ? $exec_error : $diagnostic;
+    }
     $state->{result} = _finish_result({
         %$state, status => $status, diagnostic => $diagnostic,
         exec_error => length($exec_error) ? $exec_error : undef,
@@ -760,7 +784,8 @@ sub _receipt_observation {
         phase => 'finished',
         leader_reaped => $state->{leader_reaped} ? 1 : 0,
         birth => _receipt_identity($state),
-        group => _receipt_identity($state),
+        group => exists($state->{group_identity})
+            ? {%{$state->{group_identity}}} : _receipt_identity($state),
         cleanup => $state->{cleanup},
         cleanup_identity => refaddr($state->{cleanup}),
     };

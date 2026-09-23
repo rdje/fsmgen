@@ -3491,7 +3491,7 @@ decomposes the architecture needed to move beyond that bounded foundation.
   Verification: `Stream ownership is committed at 8729ab944. Separate finite group/reservation closure from the launch/capture/result facade so each lifecycle has independently reviewable real and modeled controls.`
   Commit: `pending`
 
-  Children: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.3.4.2.1, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.3.4.2.2`
+  Children: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.3.4.2.1, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.3.4.2.2, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.3.4.2.3`
 
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.3.4.2.1`
   Status: `done`
@@ -3501,10 +3501,17 @@ decomposes the architecture needed to move beyond that bounded foundation.
   Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.3.4.2.1: qualify finite group closure`
 
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.3.4.2.2`
-  Status: `pending`
+  Status: `done`
   Goal: `Join gated launch, shared capture, closure and terminal result identities.`
   Acceptance: `After sibling .1, retain the pair before start, expose publication-controlled release, preserve the original execution wall and first failure, and compose the shared reader and closure driver. Keep command/group/reservation identities distinct, public schemas and cleanup identity unchanged, and sealed callers on the legacy strategy. Qualify focused real and modeled result/receipt compatibility before independent hostile qualification.`
-  Verification: `Sibling .1 qualifies finite closure; retain its separate command, group and reservation facts when composing the result facade.`
+  Verification: `ReservedJob retains preparation before start, transfers capture before explicit release, preserves the original invocation wall, and joins finite closure with shared result publication. Only this inactive strategy latches failure by observation order; legacy precedence and routing remain unchanged. T1827 proves binary capture, success, nonzero/signal/exec/overflow/timeout failures, unexecuted publication cancellation, actual signal interruption during transfer, original cleanup identity and distinct command/group births. A modeled later closure failure retains the actual nonzero wait and separate incomplete facts. Real legacy/reserved execution agrees on every non-timing result field. Three source mutations reject changed failure precedence, aliased group identity and renewed invocation walls. Focused band passes Files=11, Tests=269. Historical own-group receipt review correctly refuses reserved births; sibling .3 owns compatible review without changing the retained sources. Coordinator/nested/Linux qualification remains open.`
+  Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.3.4.2.2: integrate reserved capture and results`
+
+- ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.3.4.2.3`
+  Status: `pending`
+  Goal: `Qualify reserved-group receipt review without changing retained own-group capture sources.`
+  Acceptance: `After sibling .2, preserve distinct command and reservation/group births, original cleanup identity and exact closure facts in inactive receipt review. The historical adapter only accepts own-group identity; retain it and its captured evidence unchanged. Add explicit reserved identity compatibility with copied/replaced/uncertain receipt counterexamples before closing parent .4 or admitting coordinator routing. No original capture replay or fixture grant.`
+  Verification: `Read-only preparation confirms ReceiptAdapter.pm in docs/audits/native-proxy-receipt-adapter-20260922 requires matching birth/group identity. The reserved strategy must not alias those distinct children to bypass that historical contract.`
   Commit: `pending`
 
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.3.5`
@@ -4205,7 +4212,7 @@ decomposes the architecture needed to move beyond that bounded foundation.
 
 ## Current Frontier
 
-Current frontier: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.3.4.2.2` joins gated launch, shared capture and terminal identities after sibling `.1` qualifies finite nonblocking group/reservation closure. Complete nested cleanup and independent qualification before the fixed capture driver resumes. Preserve original failures, the spent compiler workspace, source-only driver commit and full-CI/push gates.
+Current frontier: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.3.4.2.3` qualifies reserved receipt review after sibling `.2` joins gated launch, shared capture and terminal identities. Complete nested cleanup and independent qualification before the fixed capture driver resumes. Preserve original failures, the spent compiler workspace, source-only driver commit and full-CI/push gates.
 
 Architecture audit `.1` is complete. Decision `0032` selects one public
 `.vial` source language, private immutable `VIALSemanticIR` and
@@ -6877,3 +6884,33 @@ The manifest binds the immediately preceding acceptance suffix to its exact Git 
   book command used a wrong relative destination and was refused before
   output; the corrected repository-local destination builds and is removed
   after review. Legacy routing, original captures and full-CI/push stay gated.
+
+## Acceptance Checklist (.19.2.3.1.2.2.5.5.2.3.3.4.2.2)
+
+- [x] **ROOT CAUSE (WHY + WHERE)** — `git log -S` identifies 51a3a3914
+  as the asynchronous result-completion introduction. That path assumes the
+  command PID is its group and applies legacy status precedence. The qualified
+  gated pair instead has distinct births and an explicit release boundary;
+  its result must preserve event-ordered first failure and original ownership.
+- [x] **ADDRESSED (verified)** — Re-derive with T1827's actual command waits,
+  separate binary streams, kernel group absence and exact reservation reaping.
+  Invocation age and withheld publication spend the original wall. Actual
+  SIGUSR1 interruption during stream transfer leaves all handles reachable by
+  composed cleanup. Nonzero, signal, exec error, overflow and timeout retain
+  their original facts. A controlled later closure failure cannot replace an
+  actual nonzero wait; its own false cleanup facts and cause remain visible.
+  Falsification: three scratch source mutations disable first-failure priority,
+  alias group birth to command birth, or allow renewed/future invocation walls;
+  each fails independent assertions. Durability: tracked ReservedJob, shared
+  engine, T1827, book/fact and this work-unit commit. Ignored first/mutation logs
+  and scratch sources under .artifacts/reserved-job-* are not archived evidence.
+  The interruption fixture initially used an invalid lexical localization;
+  syntax rejected it before execution and a localized package flag fixes it.
+  Historical receipt sources are unchanged; distinct-group review is sibling
+  .3, and no original capture, compiler or nested routing was activated.
+- [x] **NO REGRESSION** — The guarded focused band reports
+  `All tests successful`, `Files=11, Tests=269` in
+  .artifacts/reserved-job-final-band.log. Real sealed legacy and reserved
+  execution agree on every non-timing public result field; existing receipt
+  observations and caller architecture controls pass. Syntax, book HTML,
+  task/claim joins, Knowledge Map and staged doctrines gate this commit.

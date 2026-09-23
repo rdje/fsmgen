@@ -675,13 +675,28 @@ harvests the direct command before probing group absence, requires actual
 ESRCH, and retires group signalling before releasing the reservation. Unknown
 waits, uncertain absence and missed closure deadlines remain incomplete.
 
-Normal callers retain the existing own-group supervisor. Capture/result
-integration, aggregate coordinator admission, nested routing and complete
+The inactive reserved job now composes launch, capture, cleanup and terminal
+results. Its invocation wall includes admission and launch; a ready command
+still waits for explicit publication-controlled release. Separate binary output
+uses the existing aggregate prefix limit. The first observed failure survives
+later cancellation or cleanup failure, while the exact command wait and later
+closure observations remain independently visible.
+
+For example, a command's nonzero exit remains its reported failure if a later
+cleanup observation is incomplete; the result also retains false cleanup flags.
+The public result has the same closed fields. Its private receipt keeps the
+original cleanup hash and names distinct command and reservation/group births.
+The historical own-group receipt adapter correctly refuses that distinct-group
+receipt; a separate owned compatibility step must qualify reserved receipt
+review without rewriting the retained capture sources.
+
+Normal callers retain the existing own-group supervisor. Reserved receipt
+review, aggregate coordinator admission, nested routing and complete
 subtree qualification still have separate open owners. These private components
 establish no nested result or permission to run the retained startup proxy.
 Their tests exercise the current host; Linux qualification remains open.
 Re-run the bounded component controls with:
 
 ```bash
-scripts/run_with_ram_guard.sh -- prove -Iperl -It/lib t/1823-process-group-reservation.t t/1824-process-gated-pair.t t/1825-process-capture-stream-ownership.t t/1826-process-group-closure.t
+scripts/run_with_ram_guard.sh -- prove -Iperl -It/lib t/1823-process-group-reservation.t t/1824-process-gated-pair.t t/1825-process-capture-stream-ownership.t t/1826-process-group-closure.t t/1827-process-reserved-job.t
 ```
