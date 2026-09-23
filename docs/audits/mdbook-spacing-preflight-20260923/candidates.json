@@ -1,0 +1,574 @@
+{
+  "candidates": [
+    {
+      "chapter": "14i-ahb-and-integration.md",
+      "characters": 28759,
+      "excerpt": "Clean behavior commit 00d71114d activates only parent selector .817 from the 323/364/47 handoff. It now selects .818, the byte-identical exact-three paired .ahb profile alias. A same-volume candidate proves strict, exact-artifact, schedule,",
+      "heading": "ahb-and-integration-backlog",
+      "index": 67,
+      "nested_items": 0,
+      "paragraphs": 0,
+      "reasons": [
+        "longest p"
+      ],
+      "selector": "main p",
+      "text_sha256": "4ebc91e7ac640a446f0caacfe681a40a72b8d5f4faa39730d18ea1d89e81951d",
+      "words": 3626
+    },
+    {
+      "chapter": "14l-backends-validation-and-apis.md",
+      "characters": 29797,
+      "excerpt": "Completed backend/API frontier leaf BACKEND-API-VALIDATION-FRONTIER.132 exhausted the active backend/API selector after .131.1 shipped direct VHDL non-signed vector positive numeric-literal literal-literal modulo, the supported-smoke .fsm c",
+      "heading": "full-normalized-semantic-export",
+      "index": 40,
+      "nested_items": 0,
+      "paragraphs": 0,
+      "reasons": [
+        "longest p"
+      ],
+      "selector": "main p",
+      "text_sha256": "e8ff537339c84139f6f11107f1423a1b23d6017ab97ac0d1840a3ce30382827c",
+      "words": 3271
+    },
+    {
+      "chapter": "16c-ial2-ahb.md",
+      "characters": 24394,
+      "excerpt": "Audit .1 now proves the combined boundary directly. Strict check, schedule, exact 4 IAL1/5 IAL0 artifacts, normalized semantic JSON, real read-only shell-disabled MCP, and public --verify-hdl pass. Verilator compiles with --timing and all g",
+      "heading": "direct-subordinate-output-arbitration",
+      "index": 203,
+      "nested_items": 0,
+      "paragraphs": 0,
+      "reasons": [
+        "longest p"
+      ],
+      "selector": "main p",
+      "text_sha256": "ae12f7904f691da16661447e52205bbfd64db302bf04802da3c9c81038a113fb",
+      "words": 3103
+    },
+    {
+      "chapter": "14i-ahb-and-integration.md",
+      "characters": 26664,
+      "excerpt": "AHB local source-reference import: IAL2_AHB_LOCAL_SOURCE_REFERENCE_IMPORT_BLOCKER records the historical .705 blocker. IAL2_AHB_LOCAL_SOURCE_REFERENCE_IMPORT records the .706 import of the user-approved Arm AMBA AHB Protocol Specification P",
+      "heading": "ahb-and-integration-backlog",
+      "index": 5,
+      "nested_items": 0,
+      "paragraphs": 0,
+      "reasons": [
+        "longest p"
+      ],
+      "selector": "main p",
+      "text_sha256": "f51964e9ae4cec7539c4cbdff61d388c0e9c682adb48f77a5bfeae32f89b23b8",
+      "words": 2706
+    },
+    {
+      "chapter": "14i-ahb-and-integration.md",
+      "characters": 17181,
+      "excerpt": "Completed .833 selects proposed no-behavior mdBook VHDL introduction boundary sync. Chapter 00\u2019s blanket VHDL non-implementation claim and Chapter 10\u2019s blanket composition-rejection wording contradict this chapter\u2019s canonical partially ship",
+      "heading": "ahb-and-integration-backlog",
+      "index": 69,
+      "nested_items": 0,
+      "paragraphs": 0,
+      "reasons": [
+        "longest p"
+      ],
+      "selector": "main p",
+      "text_sha256": "c86a67b32322afa8e1786033fbd4f5899cda297bd7f7969c2ffc72c8db3efa63",
+      "words": 2196
+    },
+    {
+      "chapter": "14i-ahb-and-integration.md",
+      "characters": 13017,
+      "excerpt": "Leaf .3 now ships that generic exact-three requester. The normalizer accepts only literal values 2..3, the source reports numeric beats=3, and shared exact-one/two/three residue now defers only counts above three plus broader policy/points.",
+      "heading": "ahb-and-integration-backlog",
+      "index": 66,
+      "nested_items": 0,
+      "paragraphs": 0,
+      "reasons": [
+        "longest p"
+      ],
+      "selector": "main p",
+      "text_sha256": "1c02fec88dbb4da2921a202c46818eb5a73eb4548eb280c400760bd17c6569ea",
+      "words": 1608
+    },
+    {
+      "chapter": "16df-vial-architecture-scale-cap-closeout.md",
+      "characters": 12062,
+      "excerpt": "Runtime, backend, checking-model, checking-fault, checking-randomness, checking-scoreboard, checking-coverage, bridge-profile-cardinality, serialized manifest, normalized-collection, execution-profile-selection, and execution-operation-card",
+      "heading": "machine-enforced-closeout-state",
+      "index": 11,
+      "nested_items": 0,
+      "paragraphs": 0,
+      "reasons": [
+        "longest p"
+      ],
+      "selector": "main p",
+      "text_sha256": "f820266827f35261068372d73fdf332d9a291375c97f2a7e8c1a7af6b4637f5c",
+      "words": 1509
+    },
+    {
+      "chapter": "14l-backends-validation-and-apis.md",
+      "characters": 7301,
+      "excerpt": "Composition VHDL now includes the bounded C3 external-RTL literal/concat top for t/corpus/composition_intent_integer_literals.fsm and the bounded C1 standalone-DT passthrough top for t/corpus/standalone_dtc_explicit_system_autowire.fsm, plu",
+      "heading": "full-vhdl-backend",
+      "index": 4,
+      "nested_items": 0,
+      "paragraphs": 0,
+      "reasons": [
+        "longest p"
+      ],
+      "selector": "main p",
+      "text_sha256": "a3aac2265b8630b17e1f6c8dbaeb7087b442808e24383d169147ea8a02528de5",
+      "words": 964
+    },
+    {
+      "chapter": "13i-downstream-integration.md",
+      "characters": 21040,
+      "excerpt": "The shipped repeat-body clause surface is named drive calls, await, sample, update, set, shift_left, shift_right, assemble, extract, actor-owned bank store and load, and shipped wait clauses. Top-level repeat bodies also accept local blocki",
+      "heading": "114-control-flow",
+      "index": 174,
+      "nested_items": 0,
+      "paragraphs": 55,
+      "reasons": [
+        "longest li"
+      ],
+      "selector": "main li",
+      "text_sha256": "c12d9ae2dd69e3a3b3fa62549100dcebce8b9fa9a293db1cd3c9d96418cc9824",
+      "words": 2944
+    },
+    {
+      "chapter": "13-intent-scheduling.md",
+      "characters": 8941,
+      "excerpt": "Width-bearing actor interface ports, transaction-local ports, and actor-owned storage entries may use scalar type aliases through (type NAME), mutually exclusive with (width N), (width PARAM), or (width CONST) or (width PACKAGE.CONSTANT) wh",
+      "heading": "current-limitations",
+      "index": 13,
+      "nested_items": 0,
+      "paragraphs": 31,
+      "reasons": [
+        "longest li"
+      ],
+      "selector": "main li",
+      "text_sha256": "9ed4bbc28555ed43cb1cb99ace8b598809afa83879000f72ed96ed385aa4fe02",
+      "words": 1144
+    },
+    {
+      "chapter": "13i-downstream-integration.md",
+      "characters": 9500,
+      "excerpt": "Actor parameter scalar defaults and scalar leaves inside actor aggregate/list parameter defaults may use declared actor constants, earlier actor-local scalar parameter defaults, local/package-qualified enum member references, or qualified i",
+      "heading": "9-reusable-libraries",
+      "index": 120,
+      "nested_items": 0,
+      "paragraphs": 0,
+      "reasons": [
+        "longest li"
+      ],
+      "selector": "main li",
+      "text_sha256": "ce9f06b318aa26f37e983cf8fca56990664f0f7002abbe2be49ae51f9d9be846",
+      "words": 1082
+    },
+    {
+      "chapter": "13i-downstream-integration.md",
+      "characters": 4754,
+      "excerpt": "Top-level repeat bodies may use that same local (do child) form when the child remains in the parent scheduled module. Repeats directly inside a top-level when body may also use local (do child) under that contract, or plain generated-child",
+      "heading": "117-blocking-do-spawn-await-sync",
+      "index": 219,
+      "nested_items": 0,
+      "paragraphs": 25,
+      "reasons": [
+        "longest li"
+      ],
+      "selector": "main li",
+      "text_sha256": "94e1d01156a4efb6e8253f99e2cf49bff4b092c105826dd1ba5783337ce2c1c4",
+      "words": 686
+    },
+    {
+      "chapter": "13-intent-scheduling.md",
+      "characters": 4085,
+      "excerpt": "Parameters are specialization defaults. Actor-level (params ...) values emit as scheduled .fsm +params and schedule-report actor_params[]; scalar defaults and aggregate/list default leaves may use declared actor constants, earlier scalar ac",
+      "heading": "design-principles",
+      "index": 5,
+      "nested_items": 0,
+      "paragraphs": 0,
+      "reasons": [
+        "longest li"
+      ],
+      "selector": "main li",
+      "text_sha256": "2b081f95cf995fae3eddc41991c1d9f2b8e295d73f9d3b0aec42ed76d07ea583",
+      "words": 525
+    },
+    {
+      "chapter": "13-intent-scheduling.md",
+      "characters": 3404,
+      "excerpt": "Reusable library imports currently ship the resolver/review-artifact slice: actor-scoped (imports ...), (use ...), exported actor resolution, use-site parameter and binding validation, specialized child scheduled .fsm artifacts, generated t",
+      "heading": "current-limitations",
+      "index": 10,
+      "nested_items": 0,
+      "paragraphs": 10,
+      "reasons": [
+        "longest li"
+      ],
+      "selector": "main li",
+      "text_sha256": "c4b6b2b1fc8e64127f438bf90426c7ffa718498f114326143478bdc0404348b2",
+      "words": 413
+    },
+    {
+      "chapter": "13i-downstream-integration.md",
+      "characters": 2354,
+      "excerpt": "Direct transaction (set target enum_member) RHS scalar values may also consume local or package enum members, transaction set RHS expressions may use enum members as scalar operands, transaction when/while/until condition expressions may us",
+      "heading": "1161-enum-type-and-aggregate-boundary",
+      "index": 217,
+      "nested_items": 0,
+      "paragraphs": 4,
+      "reasons": [
+        "longest li"
+      ],
+      "selector": "main li",
+      "text_sha256": "4c86e580e8186ce00a4172f80dd04eef9f988ce325204aedc9ab48cb7a325f03",
+      "words": 316
+    },
+    {
+      "chapter": "13-intent-scheduling.md",
+      "characters": 2503,
+      "excerpt": "(resources ...) is structurally validated by the parser and now has four enforced resource kinds for declared rule users under the priority arbiter: rule_slot, output_bundle, transaction_start, and storage_port. rule_slot, output_bundle, tr",
+      "heading": "current-limitations",
+      "index": 14,
+      "nested_items": 0,
+      "paragraphs": 7,
+      "reasons": [
+        "longest li"
+      ],
+      "selector": "main li",
+      "text_sha256": "a3497ec385287fe98deb6f334684fc8a7dafc27f6ba0b2b401c1892b74d9444d",
+      "words": 310
+    },
+    {
+      "chapter": "12-cookbook.md",
+      "characters": 717,
+      "excerpt": "Walkthrough. (input n (width 3)) adds a 3-bit input port that carries the runtime loop count. Inside parent, (repeat n body...) lowers to a counter region that loads n once on entry and decrements until zero. The body (do worker) is a local",
+      "heading": "13-repeat-body-with-generated-do",
+      "index": 24,
+      "nested_items": 0,
+      "paragraphs": 0,
+      "reasons": [
+        "required chapter p"
+      ],
+      "selector": "main p",
+      "text_sha256": "77235dee5a956ed34ed5bf660845a94da9d084489fc46d5f138e84a4f071f523",
+      "words": 122
+    },
+    {
+      "chapter": "12-cookbook.md",
+      "characters": 775,
+      "excerpt": "Walkthrough. worker is declared with (params (DELAY 4)) \u2014 a transaction-local scalar parameter whose default value is 4. The body uses it as (wait DELAY), so the schedule sleeps for DELAY cycles before completing. parent activates the worke",
+      "heading": "11-blocking-do-call-with-parameter-override",
+      "index": 18,
+      "nested_items": 0,
+      "paragraphs": 0,
+      "reasons": [
+        "required chapter p"
+      ],
+      "selector": "main p",
+      "text_sha256": "7acaf024449243f9a26a62d72dae3cc5992bed4abdae4821cb8095afe4c4955f",
+      "words": 116
+    },
+    {
+      "chapter": "12-cookbook.md",
+      "characters": 655,
+      "excerpt": "Walkthrough. Two transactions live in this actor: parent and worker. worker is a self-contained transaction that just completes \u2014 by being referenced via spawn, the lowerer marks it as a generated child and emits a separate worker.fsm plus ",
+      "heading": "10-generated-child-via-spawn",
+      "index": 16,
+      "nested_items": 0,
+      "paragraphs": 0,
+      "reasons": [
+        "required chapter p"
+      ],
+      "selector": "main p",
+      "text_sha256": "392001032f28b38b8141fa80ac1d2e4791051c709b444f87843c9b7d7391460d",
+      "words": 104
+    },
+    {
+      "chapter": "12-cookbook.md",
+      "characters": 108,
+      "excerpt": "you want a parameterized worker whose timing constants are authored once and passed through at the call site",
+      "heading": "11-blocking-do-call-with-parameter-override",
+      "index": 23,
+      "nested_items": 0,
+      "paragraphs": 0,
+      "reasons": [
+        "required chapter li"
+      ],
+      "selector": "main li",
+      "text_sha256": "c1e71806603754fc4bfdf449877fa48ff1107f3b9e0b5225981d74397f492d7b",
+      "words": 18
+    },
+    {
+      "chapter": "12-cookbook.md",
+      "characters": 127,
+      "excerpt": "the call-site value matches the child default (mismatched overrides fail closed until per-activation specialization is shipped)",
+      "heading": "11-blocking-do-call-with-parameter-override",
+      "index": 25,
+      "nested_items": 0,
+      "paragraphs": 0,
+      "reasons": [
+        "required chapter li"
+      ],
+      "selector": "main li",
+      "text_sha256": "738881e7db30125ee0ae0be16a3eef2b77166722c506084c09223ba4b52caf70",
+      "words": 16
+    },
+    {
+      "chapter": "12-cookbook.md",
+      "characters": 77,
+      "excerpt": "you want an actor-level rule to activate a transaction once per pulse on fire",
+      "heading": "12-rule-triggered-transaction",
+      "index": 26,
+      "nested_items": 0,
+      "paragraphs": 0,
+      "reasons": [
+        "required chapter li"
+      ],
+      "selector": "main li",
+      "text_sha256": "404d799b8208f19695894cbdb6ea9295372cda45566f6b2487e9000a5eec1756",
+      "words": 14
+    },
+    {
+      "chapter": "14-feature-backlog.md",
+      "characters": 329,
+      "excerpt": "Top-level backlog category ownership is tracked in docs/TASK_TREE.md. A category marked there as future task tree required is not an implementation permission slip; behavior-bearing work still has to create or activate an executable task tr",
+      "heading": "2026-05-29-status-snapshot",
+      "index": 4,
+      "nested_items": 0,
+      "paragraphs": 0,
+      "reasons": [
+        "required chapter p"
+      ],
+      "selector": "main p",
+      "text_sha256": "2485316b25dc25995c47ddd7713ff9bea407ac02f10e3ca8f1d7c4b33f9606f3",
+      "words": 46
+    },
+    {
+      "chapter": "14-feature-backlog.md",
+      "characters": 189,
+      "excerpt": "When another chapter mentions a limitation of that kind, the item must also be listed here. Local chapters may keep short contextual notes, but this chapter is the consolidated review list.",
+      "heading": "feature-backlog",
+      "index": 1,
+      "nested_items": 0,
+      "paragraphs": 0,
+      "reasons": [
+        "required chapter p"
+      ],
+      "selector": "main p",
+      "text_sha256": "86c8bb99f814b3b79993031e5f6f8b93eee01553e2f4a9f90f97812ebc0ef545",
+      "words": 31
+    },
+    {
+      "chapter": "14-feature-backlog.md",
+      "characters": 192,
+      "excerpt": "This chapter is the canonical book-facing backlog for user-visible features that are discussed elsewhere as future work, deferred, not fully shipped, or not yet a fully frozen public contract.",
+      "heading": "feature-backlog",
+      "index": 0,
+      "nested_items": 0,
+      "paragraphs": 0,
+      "reasons": [
+        "required chapter p"
+      ],
+      "selector": "main p",
+      "text_sha256": "89bf1ad4a53f48829a2c245449b9f794adba677907c299a240c5eaf46adee7b7",
+      "words": 29
+    },
+    {
+      "chapter": "14-feature-backlog.md",
+      "characters": 685,
+      "excerpt": "Depth-neutrality audit boundary: current hard requirements are the child-lifetime and loop-backedge proofs, await_any observation versus await_all drain semantics, deterministic generated-child identity, generated-top handoffs, explicit sam",
+      "heading": "2026-05-29-status-snapshot",
+      "index": 4,
+      "nested_items": 0,
+      "paragraphs": 0,
+      "reasons": [
+        "required chapter li"
+      ],
+      "selector": "main li",
+      "text_sha256": "046e890b4b8993707979705b855c17e9b1bcd974e74c36be099d73e7eb530368",
+      "words": 77
+    },
+    {
+      "chapter": "14-feature-backlog.md",
+      "characters": 554,
+      "excerpt": "Loop-contained repeat-body do/spawn: a plain local (do child) (t/1379), a same-domain generated (do child (params ...)) (t/1380, child instantiated in the _top), and the basic spawn + same-body (await_all done)/single-pending (await_any don",
+      "heading": "2026-05-29-status-snapshot",
+      "index": 1,
+      "nested_items": 0,
+      "paragraphs": 0,
+      "reasons": [
+        "required chapter li"
+      ],
+      "selector": "main li",
+      "text_sha256": "e8cc2d8a155aea988e2de716cc789479ec845b6e4bbccf9c07153fb5e495f956",
+      "words": 74
+    },
+    {
+      "chapter": "14-feature-backlog.md",
+      "characters": 464,
+      "excerpt": "Depth-neutral scheduler target: the intended compositional scheduler contract has no arbitrary nesting-depth limit. Deep mixed chains such as while -> do -> spawn -> call -> do -> while -> spawn -> spawn -> do -> do are valid in principle w",
+      "heading": "2026-05-29-status-snapshot",
+      "index": 3,
+      "nested_items": 0,
+      "paragraphs": 0,
+      "reasons": [
+        "required chapter li"
+      ],
+      "selector": "main li",
+      "text_sha256": "e4876ece75fbd471c1bc4f32271ea8b5a9b3f1b9ccd8dabe9d56828d1441c26e",
+      "words": 67
+    }
+  ],
+  "chapter_count": 63,
+  "input_sha256": {
+    "docs/DOWNSTREAM_ISSUE_REPORTING.md": "0e0e5b25cf5666ffdb98d1ccc345133d55da2ae08d3687ea7b5b201501df1717",
+    "docs/LIVE_DOCUMENT_SIZE_CONTAINMENT_ADOPTION_GUIDE.md": "8f77fa39c9bcb9cfc43166259a627a6ced64682030088400b727dccc5d674a53",
+    "docs/NEXSIM_API_MCP_AGENT_CONSUMER_REQUIREMENTS.md": "99a35e190f9085fc115a6652c0ac004dc372025ab2f1cf3242604b28af342b37",
+    "docs/book/book.toml": "f716f9c04b71ecc347e2dc88ebc94ae6c7d30b55af5daacf261228a41b44c691",
+    "docs/book/src/00-introduction.md": "d6d5b2f8c6f361f7dc0e685606849ced073f719e60406dc1d17df4dfe32095af",
+    "docs/book/src/01-first-fsm.md": "88aee0e3d497bf4b0bf01b75ed9c82e7a2faf947bb22ffd42458902c6bb3f0c3",
+    "docs/book/src/02-language-basics.md": "3f4498297bb70004656ccf51d73f9ab03ebb141da762d28a2d3e081552424ca7",
+    "docs/book/src/03-decision-trees-and-fsms.md": "b6a30500c41bcafaee05326f93687bb96ffd60e5192413a72b30a961ad015638",
+    "docs/book/src/04-symbols-types-and-imports.md": "1a7aaae10045b03bf2567765c7fb88b01f876f3a778343ed68b918a441eb9964",
+    "docs/book/src/05-composition-basics.md": "650e2b1fe12543901132eac7abd2d2efe20281c81857df4087e7d1ac95393f08",
+    "docs/book/src/06-composition-advanced.md": "969945fe7124008cd618dba1bbf6b9ac8020d4c0157aefa766796b0ec0797275",
+    "docs/book/src/07-packages-and-sharing.md": "24f0e1aefe4fb2212dd9df23297f93943440a0c3ffc6ef214798423355ba20c7",
+    "docs/book/src/08-type-inference-and-aggregate-data.md": "df96a34822e1b2a8464d95db8ac6f2d0b4f76adf80365ef7a8f3bae5bb1c5a8b",
+    "docs/book/src/09-generated-hdl-debugging-and-inspection.md": "f15e8b9aaab7dc3d8c358e2823eb4b01a20ae18c433c88dbfd4ac210f3ce21d8",
+    "docs/book/src/10-errors-strict-mode-and-troubleshooting.md": "df878c4af8ebb80c48987972ed7acacb82d000a371d4992f2db0ecf048772821",
+    "docs/book/src/10a-downstream-issue-reporting.md": "25f239eb669527079699235311c4773c887098c4732069e1e86f45e7ec654e52",
+    "docs/book/src/11-extensions-and-embedding.md": "76338efc92a5118a2414978fab516cf90701754300a9d26f791714f23ecdcff2",
+    "docs/book/src/12-cookbook.md": "c731f563a485ba7a94dd8b44c755ec3a7e77fde6c31bbe5f6410d3fa91eedac8",
+    "docs/book/src/13-intent-scheduling.md": "f46c151cade0c8fb9ef9ff81add25acfcf1938b8620b8b7c059aa8cf9566655d",
+    "docs/book/src/13a-actor-interface.md": "563c4514c63c1699fd14ab2348f3da6870c5cc7310c918fc665b778d26b5f5bc",
+    "docs/book/src/13b-transactions.md": "8167e6c33d1a737a33d9bb03215421b41230674c1738f4c4538fb969514bb425",
+    "docs/book/src/13c-drive-blocks.md": "86ee84f8ea75d8eb90db6f9c39ee7366764cb18da4041cfd5c2539d300eba307",
+    "docs/book/src/13d-control-flow.md": "7245b9cc48cd8790ab25b308439ce0e74e3350c7cd4cd2bd15f331958c1d8d3d",
+    "docs/book/src/13e-data-manipulation.md": "3376f4e33b2196693cbb95a647d10aec157c8a5f2d9b9394477c01994a2109fe",
+    "docs/book/src/13f-composition.md": "f44104098d3302eba8b36954ee4fbd506347d522599ef37aa11198d706d7f9e3",
+    "docs/book/src/13g-rules.md": "883dc241cc9e968493cadf70007a2a0fab65cae71f0ccfc93905500308a48e72",
+    "docs/book/src/13h-lowering-reference.md": "47766d2dd5c3801cc413fdfa71c12f779c68ae5518efdb0878fb0e2ca74607fd",
+    "docs/book/src/13i-downstream-integration.md": "be76e57456ef0a0c98300a8c32dbfce76ef10f423db25bf16ea57737e8d88833",
+    "docs/book/src/13j-type-enum-aggregate.md": "a62755bddbaa3621bdcfccb442b498527fa2772fcb02deff0fb29ddb5e11fcd7",
+    "docs/book/src/13k-isf-feature-support-matrix.md": "6a01739a6b6c6496e62ad8da6a206ce59fc63a66e4b6c25b2871d973124128fa",
+    "docs/book/src/13l-procedures.md": "d9ff1984bd68b09bafcbc313f6f59e1d719302e6b2093de14b52fe220c7aa49a",
+    "docs/book/src/13m-local-variables.md": "7e3978c3a5b65605efd35b6615e4ad31f59ff1e7295fc93521e533d385a1a5ac",
+    "docs/book/src/14-feature-backlog.md": "5163a9415e964f32f20842aa1f7ba9f67cf8d77caf5de16865bccc4c82b0e35a",
+    "docs/book/src/14a-language-and-data.md": "0ba9a3c7ce8150bb6178ec2af01dc388269381a696adefc0920fca9ca7ce09ea",
+    "docs/book/src/14b-composition-backlog.md": "787616f8317ed81931cded3bde2600510568c8a370af9c67528c52887d50b525",
+    "docs/book/src/14c-actor-network-orchestration.md": "1b67ce81325eac345bbc8c66dd23ae36e1bf6a407f0c1761267fd89977f8f8ae",
+    "docs/book/src/14d-ial2-foundations.md": "506fb2bac61d3ea57b45767e2e34e028ad94984cbb2f142088e419eb11b0fac6",
+    "docs/book/src/14e-hial-vial-verification.md": "cca430d70b3e6302143bcb4715961688ffb2cdcebc832bde8bd54cd0269b5bbe",
+    "docs/book/src/14f-axi-manager-core.md": "a4f5d73a22aac62319d72f78484d3014d32eeecd9caaa9013f58a846661600d2",
+    "docs/book/src/14g-axi-dynamic-identity.md": "9ed15765e68bd415e67a9a888da013e609f7d40eef587212956fa3614d5fe882",
+    "docs/book/src/14h-protocol-profiles-and-apb.md": "7a1d64ca2c64957dfcfffa7b35586a1aec1c43111aaeee84ad12fe55b7e14f74",
+    "docs/book/src/14i-ahb-and-integration.md": "50c47c571576c47bbd0d82526d42e44ecd887a819b5e9cd12c47faaafd3d9c7c",
+    "docs/book/src/14j-extended-axi.md": "3d96081c6b0ae7db2609ff12b449540d06b4807e2908dc435e0f11e7a81165ca",
+    "docs/book/src/14k-isf-language-and-scheduling.md": "8dc5f6f997918f85d0c11f1fc93a59ba7e9d4cd6a62b6d009cd40e734e8da6f0",
+    "docs/book/src/14l-backends-validation-and-apis.md": "c595e64bfcfbe3969d029c096989db2e773fa4b717a918a8aecd3aec19f6b8ee",
+    "docs/book/src/15-implementation-blueprint.md": "a34a450863e98455c727903d59bb06a56192e80a53c1834af30ed1db5bd344c2",
+    "docs/book/src/15a-ial2-new-protocol-support.md": "9eb1de2770f96047e8c1f08cd59734a660a5cc56a636a33fc562e518fbd9e3b5",
+    "docs/book/src/16-ial2-protocol-platform-intent.md": "1372f31fba0092b5c46864d10d21e5d24bd9536a41ae6b15ca40ae6037ef8ebc",
+    "docs/book/src/16a-ial2-axi.md": "10df20f3c064e668320bc4dec24f8cf276b15cf9abcdf766d89192db06764539",
+    "docs/book/src/16aa-ial2-axi-manager-capacity-status.md": "42f8c0ba93053c109d096712f817821602b562d8a2b7c840e16464b8b8b8d9a2",
+    "docs/book/src/16b-ial2-apb.md": "4022e973d742c64ed3db1114103dea8475279806bd65036ffc5f2fcbc70fdc69",
+    "docs/book/src/16c-ial2-ahb.md": "7dafd876bd921fff77bcda84652a82801a2feeb060f4ac6b4b1b8a0c56b008aa",
+    "docs/book/src/16d-hial-vial-verification-architecture.md": "7f3aedb8369d7dc381ecffe02765d74be4c739542c6c8e976cc8cc22806614e9",
+    "docs/book/src/16da-vial-balanced-portable-composition.md": "04b9a890cd354da08afbcfd8b0da8a5cc69dabb09970264ff86b4ece1227489e",
+    "docs/book/src/16db-vial-structural-backend-emission-matrix.md": "a300077e88794e4fba3bf5b59a27d1d136b903a349209316f54a5c5edc2c6231",
+    "docs/book/src/16dc-vial-portable-verilator-runtime-measurement.md": "a939e62cf6db720d99bee0e818acc597f78a08f2fe00e5e932082fa6b6acf6db",
+    "docs/book/src/16dd-vial-portable-vhdl-runtime-measurement.md": "217e5eeabd3a2d919e6a1b624bf57bfc2c8a80d0e9ab5463ef8ff99a0032a040",
+    "docs/book/src/16de-vial-osvvm-runtime-execution-plan.md": "a8336ea1d3daf3eeaf3dbf8caa8700d641645835eca04565a4af63e06b0b017d",
+    "docs/book/src/16df-vial-architecture-scale-cap-closeout.md": "342fec14b8b2a8ed4ae505fc6a9bcbf5c2e7dd19532796963be54dd845d923e9",
+    "docs/book/src/16dg-vial-public-lifecycle-reference.md": "294ff1b1923eedec67f66b206141736e1457bb808cbfdd51611f19fc1f6446c0",
+    "docs/book/src/16dh-vial-ahb-end-to-end-tutorial.md": "a52fdfc0f4d10ef37ed7fccbba330e4c034316257a4ace942f770d9b800961ba",
+    "docs/book/src/16di-vial-legacy-migration.md": "aca41cdb29b4764ffcc0af705e9b40ac7d5463451eaf3ce49e8c788cbb5de71b",
+    "docs/book/src/16dj-vial-capability-support-reference.md": "26f17b238c449eed44c8656829959e9dbe21549dcd7bb3a75dcfcfd0f4da3ddf",
+    "docs/book/src/16dk-inactive-proxy-lifetimes.md": "e04557d4792be38fe835465f3d4806b4f7df7ac84b1821a31628167176454686",
+    "docs/book/src/16e-nexsim-api-mcp-consumer-requirements.md": "931f3534651bd89f42febafff4a8352624ce01e723c51a4ebdcfb81aee14e577",
+    "docs/book/src/90-reference-map.md": "b3f1a5166994881fd3fcc06a7fcf849ec699e9d48553b86d7b6eefb498b7f1ce",
+    "docs/book/src/91-live-document-containment-adoption.md": "6b5330bd2fb49d64ce1c8b238fe78b74f3783b37ed924986e484e6481c194b96",
+    "docs/book/src/SUMMARY.md": "db6fd112545899db52b60357940a2a4a82e2aa9c8fb38bfc509b14d1f889d67b",
+    "docs/isf-spec/10-downstream-readiness-source.md": "606dbbfae16fd3d04c0d1400c80257315681b91d3f25f5803510e27fd0ad9c24",
+    "docs/isf-spec/11-downstream-actor-transactions.md": "2539c5d5d3ac3fb91762a46d42ac0176529ad2b85c34d70a1fdfe27543879984",
+    "docs/isf-spec/12-downstream-rules-artifacts-reports.md": "ad4f08355116cc8acd44edcf591fd6277cf05abe3bc81a80250d9f16f0be048e",
+    "docs/isf-spec/13-downstream-diagnostics-conformance.md": "f3300b1c3d8ef154c105b6e471e02d3114b694c131228f862907a7d16eff50a9"
+  },
+  "instrument_sha256": "c894212d945bcee92e2aa523acbcae8e450311fc3db5cf7b2feebf52bdaff26a",
+  "limits": "HTML text triage only. Paragraph and list-item populations overlap. Text inside pre/table/script/style is excluded; inline code remains. Word count is whitespace-token count, not rendered height or a defect classification. No browser DOM, viewport, theme, computed CSS or visual signoff exists.",
+  "mdbook_version": "mdbook v0.5.4",
+  "population": {
+    "li": 2147,
+    "p": 7498
+  },
+  "rendered_sha256": {
+    "00-introduction.html": "94c65950695d4145733d444c7d22db3a512ba42892cbe1c7fdc350e525944422",
+    "01-first-fsm.html": "c42b61fd8af439844fc93c8ddd60e0afd2dc9d6d85dbfc42a45b5e0389c2ae1d",
+    "02-language-basics.html": "959ad4a2ff874dc81ef904cd57a0f8c359d2ef8c48873e53608bdbc291cf23ca",
+    "03-decision-trees-and-fsms.html": "1baed1500e00192adf1ec5cd4a2fe346a6c05b540b1cd2a631dc915aadfde117",
+    "04-symbols-types-and-imports.html": "7f828474cf3d923804de1c81e0d8ea2aa909d2b5382fa6a713fce560a97c5af9",
+    "05-composition-basics.html": "5a08424655e5de6cd41477dc2f62bb8a671621fabb618fde222a4ad6ce3f8034",
+    "06-composition-advanced.html": "51adcf9424151417bfd98027e0f8a636a7619b3d1270badf6f2e1325c1a0d374",
+    "07-packages-and-sharing.html": "0e14800c754b0b3de822cec24167b75bb02e3401aaad421f97acc66b8d01954d",
+    "08-type-inference-and-aggregate-data.html": "c17875da09598aad06a0b1975ad1257283fddb18bec1da33f67388ae14c15493",
+    "09-generated-hdl-debugging-and-inspection.html": "71f706c678cab614082f4068ae04484e9e3cd749ec097c2d205f0b555e23b0ab",
+    "10-errors-strict-mode-and-troubleshooting.html": "b4095919b8d86babba11081eec51945b880833a0bb472782b7b88001094c2219",
+    "10a-downstream-issue-reporting.html": "5c9f12ffae02656dde37c3159c44158d8463cc8ef63278949741ba5ee7d3b6c4",
+    "11-extensions-and-embedding.html": "cdb9472d1c04fc117f9e3c4f279260165a684dedea6dbf186fbc9a6ebd4ff81d",
+    "12-cookbook.html": "b75c9e536cd139709e574556c55ceec8e7c486ad64cf9f00751e4a0b9fbbc59c",
+    "13-intent-scheduling.html": "421f7d174b3d0eedf400f2962169513b814c25b47f8a351c4906dbf6e95dd0ba",
+    "13a-actor-interface.html": "213bdc7065785b964bddb4d11a2d0e71ff003db25fdf0dc7f3e7b60485fdcf74",
+    "13b-transactions.html": "565981203025d9fff10a66cefce663cde2120d3f1a8bb7083e7e8047627b98fa",
+    "13c-drive-blocks.html": "3299fa3eaa78c908b3e8a50fcdd8cabd1bf447130e49690f4862388f662eec82",
+    "13d-control-flow.html": "09213df066c0157369585e88848e6175a3122db9b0e22104c5a06f6eb516615c",
+    "13e-data-manipulation.html": "ad0ab5402c3f025d0c969ed62e5ef619ecdf235b1ff397a877d4aeaeacb520d2",
+    "13f-composition.html": "d991b4e2bf4fdf3cb49368cb771a1ac719cd8b22cfc72be91ee68fa1539cd77a",
+    "13g-rules.html": "987570ab3d81207a434fe182af10184e0e8186fe80c6337388da21391bc01155",
+    "13h-lowering-reference.html": "5492d7d71bb4ad831c8c8728abfbf5dd6ca9ca04c9ee175b4587fdeeab84309d",
+    "13i-downstream-integration.html": "9b32014f8adc21d4bc52f3595c514b4f8f334bc267b2aa7261b9c1e8f42a304a",
+    "13j-type-enum-aggregate.html": "17134afd597af0ddd34b2314a3c48b85be8420b8476e259a408ecb2b21c98575",
+    "13k-isf-feature-support-matrix.html": "97c23ffb7e0170f7e04353c38fd14391fed00e1e86289471433ead63a297d03f",
+    "13l-procedures.html": "25463bcf968674cf2834518f2161781e2f92ccda9c77de3a58dfffd81baa9509",
+    "13m-local-variables.html": "3873c2ec55ba49312c9db2ec0ea5ed39feab287fc481db3b92cc4aac6f7188a2",
+    "14-feature-backlog.html": "cb782aa691e0a4611a243783806bc7e0b45535eb74c1cfee42624f7b97c41fa5",
+    "14a-language-and-data.html": "efbb758f6700db21b0b00429e26f70863087d9d776e050955f8bb3a2a013fa82",
+    "14b-composition-backlog.html": "ca29f53ab676484643b3103a8df7e9c6571e34e5e2fb201f436f515d30cf094c",
+    "14c-actor-network-orchestration.html": "cb651c81fd1c4807a91dd16ea52437ac2aa366b4eb0d59008746217b7fe8444f",
+    "14d-ial2-foundations.html": "ff8c797291348d11eb59b3b2e2ffea5fa108fbc79ff3bb3aa5fb8d0be63b7f37",
+    "14e-hial-vial-verification.html": "e7331dc138d1015fee2544b40f4e3770c9d4cfbdce2cdb2b56582bce2b7ad10f",
+    "14f-axi-manager-core.html": "89a4918bb99c3967ba7cca4491f082757adf33e9de789893df3a5e69669c45f3",
+    "14g-axi-dynamic-identity.html": "dfdbab702c529fdd27a224647ad68e7ae25c748a7b80927a311bfa8de5c771b1",
+    "14h-protocol-profiles-and-apb.html": "be58a3a8f84d8979b63875ef781a66379718541f351f4f67166e7f8ce7d5877f",
+    "14i-ahb-and-integration.html": "07e30824e8db42a11fc387eb4652c3fbb6c1546ea8978f460012a81e102b9cdf",
+    "14j-extended-axi.html": "3a38b83026fdf0a8fc117a3fcd78bc83f9d39074aa8a17a2205b995a17199b26",
+    "14k-isf-language-and-scheduling.html": "a7d516800156794c4e27b77e00e1631d6e34f3a14d8c6aeba461f3ed147865d9",
+    "14l-backends-validation-and-apis.html": "194671cec85fc3110060c836b344a72e842fe060c9b49a91e651e76f32e414ac",
+    "15-implementation-blueprint.html": "c1ff9677cae729de92779f29ff9a3018d542f7846cea4298645888f3ba96ad6d",
+    "15a-ial2-new-protocol-support.html": "cca535d2858ab45ed3689673c9d9e0418d16b77cac00c1a7635bcef0bbbc72c6",
+    "16-ial2-protocol-platform-intent.html": "2538d57778cdf0308d66b90aa7fddde1731869c9c357abb8a437f06d541dece1",
+    "16a-ial2-axi.html": "4d980df975137083275b929b71c456d8b2c59ad9db688fa5a42a19974ceb2962",
+    "16aa-ial2-axi-manager-capacity-status.html": "e31571ef3613fef4ebf63cfe4d90d31616b97db69bb72ab082d28441d6dcc288",
+    "16b-ial2-apb.html": "ddfa4dc0cd904d816fbfe1b252450fb75f18b04c32ea937519ae2ff0a79d9556",
+    "16c-ial2-ahb.html": "06decff0581def06775fd9a2ac0bf9323776d8cf80353f6f903cc214a1e3b972",
+    "16d-hial-vial-verification-architecture.html": "b199e5abf23106ed758ff68a38f0586c1abace59cecb51c3a9ea7009ad4a6d04",
+    "16da-vial-balanced-portable-composition.html": "ce76d2c51ba74841f42a880ec59f9e4affdc24246bf8c0dae575e294cb11606d",
+    "16db-vial-structural-backend-emission-matrix.html": "5a1fc7ff4ec5972bcbce6eb8797c787f0a58ccd78a13f6ba04087d47019e9150",
+    "16dc-vial-portable-verilator-runtime-measurement.html": "88ab43d1ba856489b81649c3298671150421c5c1bbc26deca0bdfe8d03aaa9e9",
+    "16dd-vial-portable-vhdl-runtime-measurement.html": "aec006629787575954cd38bc1f573f24398c1999a45f3b7d026282a1fd673d89",
+    "16de-vial-osvvm-runtime-execution-plan.html": "37f6808e4e3774682251a4993e42e618930013ae2168c24094ddcfb4fbf1482a",
+    "16df-vial-architecture-scale-cap-closeout.html": "44be2fcdb661746274f21ead29b81d69f5b65629c4500e90aea4c66588dce7a9",
+    "16dg-vial-public-lifecycle-reference.html": "20567ede788ca40f19a216f9b74f715f7bf8e26fac77c40a6e363a38b03dc6fe",
+    "16dh-vial-ahb-end-to-end-tutorial.html": "c46a43784beb5aa9b96a017c14e84bdcc56f50cb8ae91a252d4c7efb3b0b454a",
+    "16di-vial-legacy-migration.html": "dc73eeec98d974021c8df6b4a80edecdcb71b99ed0ff18ad77d5709df88070a8",
+    "16dj-vial-capability-support-reference.html": "9f6fe815cf1ab1693acb4c72b8d97d30a8befc63021bda5eafea0e65ea337279",
+    "16dk-inactive-proxy-lifetimes.html": "51ead77a8879f3fb39dea30cbfabe7252425822058ad648723c779d4cbe4d44b",
+    "16e-nexsim-api-mcp-consumer-requirements.html": "1c8f44e33416bd8c841425d0a890afb9e5a296bbcffdafc0616d01388ef82159",
+    "90-reference-map.html": "fb721d5e77ffc939506760c6d265d3d70e19063b768b0128c16e2932db8627c7",
+    "91-live-document-containment-adoption.html": "d0f0b42cf21226f03dcd72b6d9338f2b401d9e98eea03ef43e9926f6ca3f4a41"
+  },
+  "schema": "fsmgen.mdbook_spacing_triage.v1",
+  "source_revision": "9c9db81c837b18edc3c7acd6b75308ce2cd84cc4",
+  "tool_dependency": "Installed mdbook is a read-only external toolchain dependency; all generated output is repository-local."
+}
