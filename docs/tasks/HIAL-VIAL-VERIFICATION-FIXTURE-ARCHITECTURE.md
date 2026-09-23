@@ -6,7 +6,7 @@
 - Status: `active`
 - Roadmap lane: `Verification code generation / intent architecture`
 - Created: `2026-07-29`
-- Last updated: `2026-09-23`
+- Last updated: `2026-09-24`
 - Owner: repo-local workflow
 - Segment manifest: `docs/tasks/segments/HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE/manifest.jsonl`
 
@@ -3617,9 +3617,32 @@ decomposes the architecture needed to move beyond that bounded foundation.
   Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.4.2.3.2: retain job owners before pipe allocation`
 
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.4.2.3.3`
-  Status: `pending`
+  Status: `active`
   Goal: `Bind aggregate native ownership to admission grants.`
   Acceptance: `Compose retained run/job owners and qualified inventories with Admission. Reserve run steady/transient, accepted-peer and job peak capacity before effects; validate original deadlines and creator grants before each allocation/fork. Retain service acceptance under signals, preserve partial failures until exact cleanup, and qualify root/nested gated preparation, capacity refusal and cancellation before fork. Publication remains sibling .3.4.3.`
+  Verification: `Join native ownership in three bounded children: retained coordinator run resources and endpoint allocation checks; retained job preparation/start and exact native reconciliation; accepted-connection reservation and ownership publication. Each child keeps the original grants reachable through interrupted returns. The parent closes only after their combined root/nested qualification; ACCEPT/exec publication remains separately owned.`
+  Commit: `pending`
+
+  Children: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.4.2.3.3.1, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.4.2.3.3.2, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.4.2.3.3.3`
+
+- ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.4.2.3.3.1`
+  Status: `done`
+  Goal: `Bind retained run resources to original admission grants.`
+  Acceptance: `Add a private resource-free coordinator owner with the original root snapshot and Admission ledger. Retain endpoint and steady/transient descriptor grants before entropy or filesystem/socket effects; check original root admission and capacity before every creation allocation. Keep fixed cleanup scratch credit and retain partial/interrupted endpoint effects through exact cleanup. Qualify actual descriptor/path counts, copied/expired/cancelled ownership and refusal before native effects; no job fork, exec release or accepted-connection integration yet.`
+  Verification: `The inactive Coordinator retains the original detached root snapshot, Admission ledger and endpoint before effects. Distinct steady/scratch grants precede entropy, paths and descriptors; typed Endpoint creation checks consult original root liveness and original grant identities before every allocation. Actual run handles replace only steady credit; cleanup scratch and unused root capacity remain charged. Partial failure and pending-signal return preserve native ownership and first cause until exact cleanup. T1835 observes fresh checks at actual descriptor/bind effects, native peak and ledger census, capacity/copy/alias/inheritance/cancellation refusal, inclusive expiry at creation boundaries and real creator interruption after grant reconciliation. The selected sequential band passes Files=9, Tests=130; omitted allocation checks, liveness and grant identity fail independent controls. Native jobs and accepted peers remain siblings .2/.3.`
+  Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.4.2.3.3.1: bind retained run resources to admission grants`
+
+- ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.4.2.3.3.2`
+  Status: `pending`
+  Goal: `Bind retained job preparation and gated start to aggregate grants.`
+  Acceptance: `Retain root/nested native job records and original request ownership before allocation; derive complete foreign descriptor inventories and bind resource-free prepare_record/allocate/start to original Admission phases and deadlines. Reconcile actual handles and child outcomes conservatively, including interrupted returns and cancel-after-record-before-fork. Qualify root/nested real gated handoff, capacity refusal and descendant-first cleanup without exec release; preserve original signal state.`
+  Verification: `pending`
+  Commit: `pending`
+
+- ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.4.2.3.3.3`
+  Status: `pending`
+  Goal: `Bind accepted transport resources and qualify joined native admission.`
+  Acceptance: `Reserve a connection descriptor before accept and retain ticket, handle and original grant under signals before restoring callbacks. Keep failed/closed outcomes until consumed, release only actual closed resources and include run/jobs/accepted peers in aggregate peak accounting. Join real root/nested gated admission with partial connection/start failure, original deadlines and exact cleanup. No ACCEPT release or caller routing; those remain subsequent siblings.`
   Verification: `pending`
   Commit: `pending`
 
@@ -4335,7 +4358,7 @@ decomposes the architecture needed to move beyond that bounded foundation.
 
 ## Current Frontier
 
-Current frontier: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.4.2.3.3` binds aggregate native ownership to the pure admission ledger, retained endpoint/job records and qualified inventories. Publication, streaming, fair lifecycle composition and independent qualification remain separate integration children. Preserve original failures, the spent compiler workspace, source-only driver commit and full-CI/push gates.
+Current frontier: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.4.2.3.3.2` binds native job preparation/start to original Admission grants and retained coordinator resources. Sibling .3 then binds accepted peers and qualifies the joined native admission lifecycle. Publication, streaming, fair lifecycle composition and independent qualification remain separate integration children. Preserve original failures, the spent compiler workspace, source-only driver commit and full-CI/push gates.
 
 Architecture audit `.1` is complete. Decision `0032` selects one public
 `.vial` source language, private immutable `VIALSemanticIR` and
@@ -7073,4 +7096,48 @@ The manifest binds the completed acceptance suffix and independent reserved-proc
   and explicit mutation-rescue revision pass Files=1, Tests=5. Perl syntax,
   book render, task/Knowledge Map/claim checks and staged doctrine gates cover
   the final slice. No original producer, caller routing or full CI runs.
+  Browser visual QA remains separately blocked in Memory.
+
+## Acceptance Checklist (.19.2.3.1.2.2.5.5.2.3.4.2.3.3.1)
+
+- [x] **ROOT CAUSE (WHY + WHERE)** — `git log -S` locates 17da1dd47's
+  retained endpoint start and 83c0647e2's pure admission grants. Neither alone
+  binds native run allocation to the original root record or accounts for
+  steady descriptors together with retained cleanup scratch. Coordinator now
+  supplies that creator-bound composition without any process launch path.
+- [x] **ADDRESSED (verified)** — Re-derive with T1835's native descriptor and
+  bind observers, which require a fresh admitted operation check before each
+  observed effect. Root preparation initially charges sixteen descriptors;
+  two steady and two distinct scratch credits raise the conservative total
+  to twenty before native effects. Native peak is four, steady actual usage
+  is two, and unused root/scratch reservations remain eighteen. Failure holds
+  all charges until exact endpoint cleanup and root retirement. An unexpected
+  native directory entry makes closure fail and retains charges/root ownership
+  even after descriptor closure; identity-checked fixture teardown cannot forge
+  completion. Capacity
+  refusal after one credit leaves its declared outstanding reservation.
+  Copies, aliased resource roles, inherited ownership and cancellation reject
+  before effects. Original expiry is checked inclusively at entropy open/read,
+  run mkdir, anchor/socket/cwd/entries creation and bind; cleanup keeps the
+  original deadline plus the selected shared grace when execution has expired.
+  Actual pending creator USR1 sees open native ownership and reconciled
+  grants before interrupting return. The owner rejects context afterward and
+  removes its exact endpoint. Falsification: omitted Endpoint allocation
+  checks fail the independent fresh-entropy guard; a no-op Admission liveness
+  check fails revoked/expired-root controls; accepting copied descriptor
+  grants fails the independent zero-allocation expectation. The bounded
+  controls consume all endpoint cleanup, with fork paths trapped. The initial
+  context assertion assumed an incorrect prefix; it now decodes only the
+  parent predicate, and temporary identities in that local failed log were
+  redacted. Durability: Coordinator/Endpoint/Admission, T1835, book, canonical
+  fact and this commit retain the derivation and precise mutation mechanisms.
+  Local .artifacts/coordinator-run-*.log files remain a raw-log durability gap.
+  Native jobs, accepted peers, full lifecycle and Linux remain separate open
+  qualification legs; no complete coordinator guarantee is inferred.
+- [x] **NO REGRESSION** — The sequential endpoint, connection, service,
+  architecture, native descriptor, admission, retained endpoint/preparation
+  and run-ownership band reports `All tests successful`,
+  `Files=9, Tests=130`. Syntax, rendered book inspection, task/Knowledge Map,
+  claim inventory/dispositions and staged doctrine checks cover the slice.
+  No original producer, normal caller route, full CI or push executes.
   Browser visual QA remains separately blocked in Memory.

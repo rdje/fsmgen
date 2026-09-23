@@ -94,6 +94,12 @@ sub describe {
     delete $copy{grant};
     return \%copy;
 }
+sub check_live {
+    my ($self, $grant) = @_;
+    my $record = $self->_record($grant);
+    $self->_live($record, _now_ns());
+    return;
+}
 sub usage {
     my ($self) = @_; _owner($self);
     my %usage = (jobs => scalar(keys %{$self->{jobs}}), children => 0, descriptors => 0,
@@ -218,6 +224,15 @@ sub reserve_descriptors {
 sub descriptor_grants {
     my ($self) = @_; _owner($self);
     return [map { $_->{grant} } @{$self->{external}}];
+}
+sub describe_descriptors {
+    my ($self, $grant) = @_; _owner($self);
+    _error('invalid descriptor grant') unless ref($grant) eq __PACKAGE__ . '::DescriptorGrant';
+    for my $record (@{$self->{external}}) {
+        return {count => $record->{count}, reserved => $record->{reserved}}
+            if refaddr($record->{grant}) == refaddr($grant);
+    }
+    _error('foreign, copied or retired descriptor grant');
 }
 sub descriptors_prepared {
     my ($self, $grant, $count) = @_;

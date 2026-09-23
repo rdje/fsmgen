@@ -30,6 +30,12 @@ sub _mask { return POSIX::sigprocmask(@_) }
 # before these exist. A coordinator must retain the transient cleanup credit.
 sub resource_cost { return {descriptors => 4, steady_descriptors => 2, transient_descriptors => 2} }
 
+sub _check_allocation {
+    my ($check, $kind, $operation) = @_;
+    $check->($kind, $operation) if $check;
+    return;
+}
+
 sub _seal_handle {
     my ($handle, $nonblocking) = @_;
     my $flags = fcntl($handle, F_GETFD, 0);
@@ -44,9 +50,10 @@ sub _seal_handle {
 }
 
 sub _random_bytes {
-    my ($count) = @_;
+    my ($count, $check) = @_;
     # This character device is an explicit read-only OS dependency. Tokens
     # remain in memory and never appear in diagnostics, files or task evidence.
+    _check_allocation($check, 'create', 'entropy_open');
     sysopen(my $source, '/dev/urandom', O_RDONLY | O_NONBLOCK)
         or _fail('OS random source unavailable');
     _seal_handle($source, 0);
@@ -55,6 +62,7 @@ sub _random_bytes {
     for (1 .. 8) {
         last if length($bytes) == $count
             || clock_gettime(CLOCK_MONOTONIC) >= $deadline;
+        _check_allocation($check, 'create', 'entropy_read');
         my $read = sysread($source, my $part, $count - length($bytes));
         next if !defined($read) && $! == EINTR;
         last unless defined($read) && $read > 0;
@@ -108,10 +116,12 @@ sub _absolute_directory {
 }
 
 sub _make_ancestry {
+    my ($check) = @_;
     my $cursor = $ROOT;
     for my $part (split m{/}, $DIRECTORY) {
         $cursor .= "/$part";
         unless (-e $cursor || -l $cursor) {
+            _check_allocation($check, 'create', 'ancestry_mkdir');
             mkdir($cursor, 0700) or _fail('cannot create endpoint ancestry');
             # Do not mutate the caller's umask. chmod applies only to this
             # just-created directory, never an existing or foreign component.
@@ -123,9 +133,10 @@ sub _make_ancestry {
 }
 
 sub _open_run_directory {
-    my ($relative) = @_;
+    my ($relative, $check) = @_;
     my $absolute = _absolute_directory($relative);
     my $identity = _identity($absolute, 'directory', 0700);
+    _check_allocation($check, 'create', 'directory_open');
     sysopen(my $handle, $absolute, O_RDONLY | O_DIRECTORY | O_NOFOLLOW)
         or _fail('cannot open endpoint directory');
     _seal_handle($handle, 0);
@@ -137,6 +148,8 @@ sub _open_run_directory {
 
 sub _open_entries { return opendir(${$_[0]}, '.') }
 sub _entries {
+    my ($check, $kind) = @_;
+    _check_allocation($check, $kind, 'entries_open');
     _open_entries(\my $directory) or _fail('cannot inspect endpoint directory');
     my @entries;
     while (defined(my $entry = readdir $directory)) {
@@ -157,6 +170,9 @@ sub _directory_operation {
     my ($state, $operation, $socket) = @_;
     _fail('unknown directory operation')
         unless $operation eq 'bind' || $operation eq 'connect' || $operation eq 'remove';
+    my $check = $state->{allocation_check};
+    my $kind = $operation eq 'remove' ? 'cleanup' : 'create';
+    _check_allocation($check, $kind, 'cwd_open');
     sysopen(my $saved, '.', O_RDONLY | O_DIRECTORY)
         or _fail('cannot save caller directory');
     _seal_handle($saved, 0);
@@ -176,9 +192,10 @@ sub _directory_operation {
             chdir($state->{directory_handle}) or _fail('cannot enter endpoint directory');
             _fail('endpoint directory handle identity changed') unless _same_identity(
                 $state->{directory_identity}, _identity('.', 'directory', 0700));
-            my $entries = _entries();
+            my $entries = _entries($check, $kind);
             if ($operation eq 'bind') {
                 _fail('endpoint name already exists') if $entries;
+                _check_allocation($check, 'create', 'socket_bind');
                 _bind_socket($socket) or _fail('cannot bind private socket');
                 # Retain identity immediately, including before chmod/listen,
                 # so partial startup owns exactly the filesystem name it made.
@@ -218,7 +235,7 @@ sub _directory_operation {
                 _fail('endpoint directory identity changed during socket operation')
                     unless _same_identity($state->{directory_identity},
                         _identity($absolute, 'directory', 0700));
-                _entries();
+                _entries($check, $kind);
             }
             1;
         } or $error = $@ || 'private process endpoint: directory transaction failed';
@@ -254,8 +271,8 @@ sub prepare_run {
 }
 
 sub start_run {
-    my ($state) = @_;
-    _fail('unexpected start arguments') unless @_ == 1;
+    my ($state, $check) = @_;
+    _fail('unexpected start arguments') unless @_ == 1 || (@_ == 2 && ref($check) eq 'CODE');
     _require_owner($state, 'run');
     _fail('run start is single-use') unless $state->{phase} eq 'prepared';
     _check_child_disposition();
@@ -266,24 +283,27 @@ sub start_run {
     my $previous = POSIX::SigSet->new;
     defined(_mask(SIG_BLOCK, $all, $previous)) or _fail('cannot mask run construction signals');
     $state->{phase} = 'starting';
+    $state->{allocation_check} = $check if $check;
     my $ok = eval {
-        $state->{run} = _random_bytes(16);
-        $state->{root_token} = new_job_token();
+        $state->{run} = _random_bytes(16, $check);
+        $state->{root_token} = _random_bytes(32, $check);
         # Path entropy never discloses protocol authority.
-        my $relative = "$DIRECTORY/run_" . unpack('H*', _random_bytes(32));
+        my $relative = "$DIRECTORY/run_" . unpack('H*', _random_bytes(32, $check));
         $state->{directory} = $relative;
-        _make_ancestry();
+        _make_ancestry($check);
         my $absolute = File::Spec->catdir($ROOT, split m{/}, $relative);
+        _check_allocation($check, 'create', 'run_mkdir');
         mkdir($absolute, 0700) or _fail('cannot exclusively create endpoint directory');
         $state->{directory_created} = 1;
         my $initial = _identity($absolute, 'directory', undef);
         $state->{directory_identity} = $initial;
         chmod(0700, $absolute) == 1 or _fail('cannot secure endpoint directory');
         $state->{directory_identity} = _identity($absolute, 'directory', 0700);
-        my ($handle, $identity) = _open_run_directory($relative);
+        my ($handle, $identity) = _open_run_directory($relative, $check);
         _fail('new endpoint directory was replaced')
             unless $initial->[0] == $identity->[0] && $initial->[1] == $identity->[1];
         @{$state}{qw(directory_handle directory_identity)} = ($handle, $identity);
+        _check_allocation($check, 'create', 'socket_create');
         socket(my $socket, AF_UNIX, SOCK_STREAM, 0) or _fail('cannot create private socket');
         $state->{listener} = $socket;
         _seal_handle($socket, 1);
@@ -464,6 +484,7 @@ sub close {
         if $self->{directory_handle} && !close(delete $self->{directory_handle});
     $self->{closed} = 1;
     $self->{phase} = 'closed' if $self->{kind} eq 'run';
+    delete $self->{allocation_check};
     $self->{cleanup} = {ok => @error ? 0 : 1,
         socket_removed => $self->{socket_removed} ? 1 : 0,
         directory_removed => $self->{directory_removed} ? 1 : 0,

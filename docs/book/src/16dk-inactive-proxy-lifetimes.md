@@ -789,6 +789,26 @@ and its owner can finish cleanup using the existing bounded closure driver.
 Independent native handoff checks now also use this retained-record path;
 aggregate ledger binding remains the next integration step.
 
+The inactive coordinator now binds native run construction to the original
+root admission record. It retains separate credits for the steady endpoint
+and temporary construction/cleanup handles before creating any of them.
+Every creation allocation checks the original root lifetime and the creator's
+original grants. Cleanup retains its scratch credit after root admission is
+revoked and uses the original bounded closure envelope. The root job's unused
+preparation capacity remains reserved during this run-only stage.
+
+Copied or reused credits, cancellation, insufficient aggregate capacity and
+an expired root reject creation before native effects. A later failure keeps
+the original cause and all outstanding charges until cleanup is consumed.
+Unexpected directory contents prevent retirement and keep those charges, even
+when the native descriptors have closed; retry cannot turn that failure into
+success.
+Actual pending-signal controls observe both the retained endpoint and its
+reconciled descriptor charges before the coordinator return is interrupted.
+The coordinator then refuses context publication and can close the exact run.
+Native job preparation/start and accepted-connection accounting are still
+separate open integration steps; this owner cannot fork or release execution.
+
 Normal callers retain the existing own-group supervisor. Aggregate coordinator
 admission, nested routing and complete
 subtree qualification still have separate open owners. These private components
@@ -801,6 +821,7 @@ scripts/run_with_ram_guard.sh -- prove -Iperl -It/lib t/1823-process-group-reser
 scripts/run_with_ram_guard.sh -- prove -Iperl -It/lib t/1832-process-coordinator-admission.t
 scripts/run_with_ram_guard.sh -- prove -Iperl -It/lib t/1833-process-retained-endpoint.t
 scripts/run_with_ram_guard.sh -- prove -Iperl -It/lib t/1834-process-retained-preparation.t
+scripts/run_with_ram_guard.sh -- prove -Iperl -It/lib t/1835-process-coordinator-run-ownership.t
 ```
 
 For native stopped-child observations, decode `${^CHILD_ERROR_NATIVE}` with
