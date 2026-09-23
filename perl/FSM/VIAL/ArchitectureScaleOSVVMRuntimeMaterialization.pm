@@ -21,6 +21,7 @@ my $FAMILY = 'runtime_stream_v1';
 my $PROFILE = 'vhdl_osvvm_qualified';
 my $TOOL_PROFILE = 'osvvm_2026_05_ghdl_6_0_0_llvm_jit';
 my $PRIMARY_AXIS = 'runtime_trace_records';
+my $OSVVM_ROOT = '.artifacts/cache/providers/osvvm/2026.05/source';
 my @LEVELS = qw(
     reference_v1 gate_candidate_v1 qualification_candidate_v1
     limit_v1 over_limit_v1
@@ -236,6 +237,13 @@ sub _evaluate($repo_root, $level) {
             unless defined $digest;
         my $artifact_root =
             ".artifacts/vial/base-output-arbitration/$digest";
+        my $provider_root = File::Spec->catdir(
+            $repo_root, split m{/}, $OSVVM_ROOT,
+        );
+        confess "exact OSVVM 2026.05 provider cache is absent\n"
+            unless -d $provider_root && !-l $provider_root
+                && -e File::Spec->catfile($provider_root, '.git')
+                && !-l File::Spec->catfile($provider_root, '.git');
         my $evaluated =
             FSM::VIAL::ArchitectureScaleBackendEmission::OSVVM
                 ->_runtime_evaluate({

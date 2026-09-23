@@ -1952,7 +1952,9 @@ families, and the terminal build job failed because those families failed:
   OSVVM 2026.05 provider cache. The runtime materialization test skips its
   provider-backed checks when that cache is absent and still runs them when
   the cache is present. The runtime execution-plan test skips that same
-  ignored cache the same way.
+  ignored cache the same way. Materialized evaluation now stops with a
+  recorded absence before the artifact-graph oracle, so the runtime
+  measurement test fails closed on that absence or on the active RAM guard.
 - Several regression-promotion tests still read ignored
   `.artifacts/qualification/vial-scale` paths that a fresh checkout does not
   carry. The policy and capture-plan mutation checks now skip that ignored

@@ -158,8 +158,8 @@ subtest 'private seams, guard, selection, and schema fail closed' => sub {
         $class->validate_profile({
             repository_root => $repo_root, level => 'reference_v1',
         });
-    }), qr/active repository RAM guard/,
-        'applicable correctness validation requires the active guard');
+    }), qr/active repository RAM guard|exact OSVVM 2026\.05 provider cache is absent/,
+        'applicable correctness validation requires the active guard or the exact provider cache');
     like(dies(sub {
         $class->measure_profile({
             repository_root => $repo_root, level => 'gate_candidate_v1',
