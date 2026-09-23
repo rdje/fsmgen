@@ -111,4 +111,38 @@ $public->{cleanup}{leader_reaped} = 0;
 is($jobs[0]{cleanup}{leader_reaped}, 1,
     'mutating the public cleanup copy leaves the private hash unchanged');
 
+my $private = FSM::Test::ProcessSupervisor::sealed_finished_job({
+    phase => 'finished', stage => 'compile_proxy', pid => 21,
+    birth_sec => 1_700_000_021, birth_usec => 21, leader_reaped => 1,
+    cleanup => $jobs[0]{cleanup}, result => $public,
+});
+is(refaddr($private->{cleanup}), refaddr($jobs[0]{cleanup}),
+    'the sealed return keeps the original cleanup hash');
+is($private->{receipt_observation}{birth}{pid}, 21,
+    'the sealed return carries the private pid');
+is($private->{receipt_observation}{birth}{start_sec}, 1_700_000_021,
+    'the sealed return carries the birth second');
+is($private->{receipt_observation}{birth}{start_usec}, 21,
+    'the sealed return carries the birth microsecond');
+is_deeply($private->{receipt_observation}{group},
+    $private->{receipt_observation}{birth},
+    'the sealed return group equals its leader birth');
+is($private->{result}, $public, 'the sealed return keeps the public result');
+ok(!exists $private->{result}{pid},
+    'the sealed public result still omits pid');
+
+my $unsealed_return = eval {
+    FSM::Support::ProcessSupervisor::sealed_finished_job('FSM::Other', $private);
+    1;
+};
+ok(!$unsealed_return, 'an unsealed caller cannot receive the private job');
+like("$@", qr/caller-sealed/, 'the private-return rejection names the caller seal');
+
+my $unfinished_return = eval {
+    FSM::Test::ProcessSupervisor::sealed_finished_job({phase => 'capture'});
+    1;
+};
+ok(!$unfinished_return, 'an unfinished job has no private return');
+like("$@", qr/finished job/, 'the private-return rejection names the finished job');
+
 done_testing;

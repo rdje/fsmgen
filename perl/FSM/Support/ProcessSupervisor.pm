@@ -245,6 +245,22 @@ sub _failed_supervision_start {
     return $state;
 }
 
+# The public result copies cleanup flags and omits private identity. A sealed
+# caller that already holds the finished job reads that identity here. This
+# does not launch a process.
+sub sealed_finished_job {
+    my ($caller, $state) = @_;
+    die "FSM::Support::ProcessSupervisor is caller-sealed; '$caller' cannot receive a private job\n"
+        unless defined($caller) && $SUPERVISION_CALLER{$caller};
+    die "supervisor private return requires one finished job\n"
+        unless ref($state) eq 'HASH' && ($state->{phase} // '') eq 'finished'
+            && exists $state->{cleanup} && exists $state->{stage}
+            && exists $state->{result};
+    $state->{receipt_observation} = _receipt_observation($state)
+        unless defined $state->{receipt_observation};
+    return $state;
+}
+
 sub _supervision_poll_delay {
     my ($state) = @_;
     return 0 if $state->{phase} eq 'finished';

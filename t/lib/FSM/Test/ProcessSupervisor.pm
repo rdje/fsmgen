@@ -30,6 +30,12 @@ sub supervise_process {
     return FSM::Support::ProcessSupervisor::supervise_process(@_);
 }
 
+sub sealed_finished_job {
+    return FSM::Support::ProcessSupervisor::sealed_finished_job(
+        'FSM::Test::ProcessSupervisor', @_,
+    );
+}
+
 sub validate_argument_vector {
     return FSM::Support::ProcessSupervisor::validate_argument_vector(@_);
 }

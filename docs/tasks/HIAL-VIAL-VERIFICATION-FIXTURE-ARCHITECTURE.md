@@ -2281,9 +2281,9 @@ decomposes the architecture needed to move beyond that bounded foundation.
   Status: `active`
   Goal: `Preserve the first private receipt from one admitted compiler-only capture.`
   Acceptance: `After this cleanup-copy commit, consume one fresh permit and retain the first private compiler, outer and inner states. Stop on disagreement. Never retry a producer or replay an original, proxy or live collector.`
-  Verification: `Child .5.4.3.3.6.1 records that supervise_process returns only the public result. A capture that keeps that result cannot preserve pid, birth clock or cleanup identity. Child .5.4.3.3.6.2 owns the sealed return-path correction. No compiler, probe or tool-resolution process runs.`
+  Verification: `Child .5.4.3.3.6.1 records that supervise_process returns only the public result. Child .5.4.3.3.6.2 returns the finished private job to a sealed caller. Capture remains .5.4.3.3.6.3. No compiler, probe or tool-resolution process runs.`
   Commit: `pending`
-  Children: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.12.4.1.5.4.3.3.6.1, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.12.4.1.5.4.3.3.6.2`
+  Children: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.12.4.1.5.4.3.3.6.1, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.12.4.1.5.4.3.3.6.2, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.12.4.1.5.4.3.3.6.3`
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.12.4.1.5.4.3.3.6.1`
   Status: `done`
   Goal: `Record that a sealed supervisor launch still returns only the public result.`
@@ -2291,9 +2291,15 @@ decomposes the architecture needed to move beyond that bounded foundation.
   Verification: `FSM::Test::ProcessSupervisor::supervise_process returns FSM::Support::ProcessSupervisor::_supervise, and that path returns only state result. _finish_result copies cleanup flags and omits pid, start_sec, start_usec and cleanup_identity. receipt_observation reads a finished job the caller already holds; the sealed launch does not return that job. A capture that keeps only the public result cannot satisfy receipts_bound. No process runs. The sealed return remains .5.4.3.3.6.2.`
   Commit: `this commit`
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.12.4.1.5.4.3.3.6.2`
-  Status: `pending`
+  Status: `done`
   Goal: `Return the finished private supervisor state from the sealed launch before capture.`
   Acceptance: `Make the sealed launch hand back the finished job, or one equivalent private observation, including pid, birth clock, own-group identity and the original cleanup hash. Keep the public result copy and schema version 1. Do not launch a compiler, probe or tool-resolution process in that slice.`
+  Verification: `perl t/1818-process-supervisor-receipt-observation.t passes 47 assertions. A sealed caller receives the finished job, its private pid, birth clock, own-group identity and the original cleanup hash. An unsealed caller and an unfinished job reject. The public result still copies cleanup flags and omits pid. The neighboring coordinator, adapter and admission tests pass with it: Files=4, Tests=103. No compiler, probe or tool-resolution process runs. Capture remains .5.4.3.3.6.3.`
+  Commit: `this commit`
+- ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.12.4.1.5.4.3.3.6.3`
+  Status: `pending`
+  Goal: `Preserve the first private receipt from one admitted compiler-only capture.`
+  Acceptance: `After the sealed private return commits, consume one fresh permit and retain the first private compiler, outer and inner states. Stop on disagreement. Never retry a producer or replay an original, proxy or live collector.`
   Verification: `pending`
   Commit: `pending`
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.15.7.3.12.4.1.5.5`
@@ -6456,6 +6462,12 @@ The manifest binds the immediately preceding acceptance suffix to its exact Git 
 - [x] **ROOT CAUSE (WHY + WHERE)** — `git log -S 'unavailable aggregate' -1 --format='%H %s' -- docs/book/src/16df-vial-architecture-scale-cap-closeout.md` identifies bc6796d01803fb662cfadd506fabc5bc79427a88. That placement requires an unavailable hosted aggregate. The first hosted run of `./bin/ci-regression vial-gate --no-book` failed its real command, and the independent verifier was skipped.
 - [x] **ADDRESSED (verified)** — The contradiction is owned by HOSTED-VIAL-REGRESSION-GATE-RESULT.1. Local exact-pinned success stays distinct from the failed hosted step. No support or capacity claim is inferred from either result. Diagnosis continues when the failed-step log is released.
 - [x] **NO REGRESSION** — `knowledge-map: OK` preserves the earlier gate questions and adds the hosted failure route. The rendered book states the contradiction outside the registered placement claim; claim identity/dispositions, containment and staged doctrines accompany the normal hooks. The receipt-return leaf remains separately owned.
+
+## Acceptance Checklist (sealed private return .3.2.15.7.3.12.4.1.5.4.3.3.6.2)
+
+- [x] **ROOT CAUSE (WHY + WHERE)** — `git log -S 'return $state->{result}' -1 --format='%H %s' -- perl/FSM/Support/ProcessSupervisor.pm` identifies 51a3a3914ff4c6f2c14df02620682eb20c6ab129. `_supervise` returns only the public result. `receipt_observation` reads a finished job the caller already holds, and the sealed launch does not return that job.
+- [x] **ADDRESSED (verified)** — perl t/1818-process-supervisor-receipt-observation.t passes 47 assertions. A sealed caller receives the finished job with pid, birth clock, own-group identity and the original cleanup hash. An unsealed caller and an unfinished job reject. The public result still omits pid and keeps schema version 1. No compiler, probe or tool-resolution process runs.
+- [x] **NO REGRESSION** — `knowledge-map: OK` preserves the sealed-launch return gap and adds the sealed private return. Files=4, Tests=103. The rendered book states that a sealed caller can receive the finished private job; claim identity/dispositions, containment and staged doctrines accompany the normal hooks. Capture, native/live/startup qualification and full CI/push remain open.
 
 ## Acceptance Checklist (sealed launch return gap .3.2.15.7.3.12.4.1.5.4.3.3.6.1)
 
