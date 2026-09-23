@@ -1,7 +1,7 @@
 # Knowledge Map: `vial-architecture`
 
 > **AUTO-GENERATED — DO NOT EDIT.** Return to the [Knowledge Map](../../KNOWLEDGE_MAP.md).
-> **3** facts · **143** uniquely owned question entries.
+> **3** facts · **144** uniquely owned question entries.
 
 ## Questions → facts
 
@@ -96,6 +96,7 @@
 - q="when are VIAL execution profile, binding, type, and source-map caps enforced?" · facts=[vial-architecture-scale-cap-policy](../../docs/knowledge/vial-architecture-scale-cap-policy.md)
 - q="when are VIAL model-instance and scalar-state-cell caps enforced?" · facts=[vial-architecture-scale-cap-policy](../../docs/knowledge/vial-architecture-scale-cap-policy.md)
 - q="when are VIAL scoreboard-instance and aggregate-capacity caps enforced?" · facts=[vial-architecture-scale-cap-policy](../../docs/knowledge/vial-architecture-scale-cap-policy.md)
+- q="when do paired-busy HDL checks skip the hosted Yosys deadline?" · facts=[vial-architecture-scale-regression-promotion-capture](../../docs/knowledge/vial-architecture-scale-regression-promotion-capture.md)
 - q="when does OSVVM verify its provider relative to the portable VHDL foundation?" · facts=[vial-architecture-scale-cap-policy](../../docs/knowledge/vial-architecture-scale-cap-policy.md)
 - q="when does VIAL random-attempt exhaustion stop plan construction?" · facts=[vial-architecture-scale-cap-policy](../../docs/knowledge/vial-architecture-scale-cap-policy.md)
 - q="when does a VIAL regression-promotion gate enforce performance?" · facts=[vial-architecture-scale-regression-promotion-capture](../../docs/knowledge/vial-architecture-scale-regression-promotion-capture.md)

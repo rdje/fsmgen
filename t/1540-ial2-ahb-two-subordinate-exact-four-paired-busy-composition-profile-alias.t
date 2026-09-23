@@ -262,8 +262,9 @@ sub run_json_command {
 
 sub run_command_ok {
     my ($command, $label) = @_;
-    if (grep { defined($_) && $_ eq '--verify-hdl' } @{$command || []} && hosted_yosys_deadline_skip()) {
-        skip hosted_yosys_deadline_skip(), 2;
+    if ((grep { defined($_) && $_ eq '--verify-hdl' } @{$command || []})
+            && (my $reason = hosted_yosys_deadline_skip())) {
+        SKIP: { skip $reason, 2; }
         return;
     }
     my ($success, undef, undef, $stdout, $stderr) = run(command => $command);

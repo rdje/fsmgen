@@ -2,6 +2,7 @@
 id: vial-architecture-scale-regression-promotion-capture
 title: VIAL regression promotion captures eleven current profiles through isolated v2 publication
 answers:
+  - "when do paired-busy HDL checks skip the hosted Yosys deadline?"
   - "how will the VIAL architecture scale regression corpus be captured?"
   - "why does the VIAL current promotion corpus use eleven workers instead of 44 workers?"
   - "what does 44 invocations mean in the VIAL regression promotion policy?"
@@ -63,7 +64,7 @@ evidence: >-
   docs/decisions/0096-regression-promotion-uses-a-current-eleven-profile-corpus.md; docs/decisions/0097-regression-gates-publish-replaceable-observations-without-recalibrating.md; docs/decisions/0098-hosted-regression-gates-materialize-immutable-tracked-evidence.md; docs/decisions/0099-regression-correctness-excludes-only-sealed-process-telemetry-derivatives.md; docs/decisions/0103-public-regression-promotion-policy-loads-a-tracked-seal.md; docs/tasks/HOSTED-VIAL-REGRESSION-GATE-RESULT.md; docs/tasks/HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.md; docs/book/src/16df-vial-architecture-scale-cap-closeout.md; vial/qualification/regression_promotion_policy/regression-promotion-policy-v1.json;
   perl/FSM/Support/VIALArchitectureScaleRegressionContract.pm; perl/FSM/Support/VIALToolingContract.pm; perl/FSM/VIAL/ArchitectureScaleRegressionPromotionQualification.pm; perl/FSM/VIAL/ArchitectureScaleRegressionPromotionGateContract.pm; perl/FSM/VIAL/ArchitectureScaleRegressionPromotionGateProfile.pm; .github/workflows/regression.yml; bin/ci-regression; scripts/run_vial_regression_promotion_gate.pl; vial/qualification/regression_promotion_gate/evidence-v1/transport-manifest.json; t/1555-vial-public-source-tooling.t; t/1786-vial-regression-promotion-gate-profile.t; t/1790-vial-regression-promotion-evidence-transport.t; t/1793-vial-regression-promotion-gate-correctness-stability.t; t/1794-vial-architecture-scale-regression-capability.t; t/1795-vial-architecture-scale-regression-public-closeout.t
 reverify: >-
-  python3 -B docs/audits/hosted-failure-census-20260923/audit.py --verify-saved; scripts/verify_vial_regression_promotion_current_corpus.pl; scripts/verify_vial_regression_promotion_budget_qualification.pl; perl scripts/verify_vial_regression_promotion_evidence_transport.pl;
+  perl t/1822-hosted-yosys-deadline-scope.t; python3 -B docs/audits/hosted-failure-census-20260923/audit.py --verify-saved; scripts/verify_vial_regression_promotion_current_corpus.pl; scripts/verify_vial_regression_promotion_budget_qualification.pl; perl scripts/verify_vial_regression_promotion_evidence_transport.pl;
   env FSMGEN_VIAL_REGRESSION_GATE_CONTRACT_EXACT=1 scripts/run_with_ram_guard.sh -- prove -Iperl t/1785-vial-regression-promotion-gate-contract.t; prove -Iperl t/1786-vial-regression-promotion-gate-profile.t t/1787-vial-regression-promotion-gate-coordinator.t t/1788-vial-regression-promotion-gate-store.t t/1789-vial-regression-promotion-gate-cli.t t/1790-vial-regression-promotion-evidence-transport.t;
   scripts/run_with_ram_guard.sh -- prove -Iperl t/1791-vial-regression-promotion-evidence-materialization.t; prove -Iperl t/1183-ci-regression-tier-selection.t t/1792-vial-regression-promotion-hosted-result-verifier.t t/1793-vial-regression-promotion-gate-correctness-stability.t;
   ./bin/fsmgen vial capabilities --json; ./bin/fsmgen --capability-manifest; prove -Iperl t/1555-vial-public-source-tooling.t t/1794-vial-architecture-scale-regression-capability.t t/1795-vial-architecture-scale-regression-public-closeout.t; ./bin/ci-regression vial-gate --dry-run --no-book; scripts/run_with_ram_guard.sh -- scripts/run_vial_regression_promotion_gate.pl --validate-result
@@ -195,9 +196,8 @@ isolation audit skips its current-profile controls when the ignored
 revision-1 publication is absent and still runs them when it is present.
 Run 35782532228 has no remaining unowned released failure family. Its
 Test Summary names only families already owned, and its gate log dies in
-the ignored closure loader that public derivation no longer calls. Replay-free summary projections and owner checks are retained in `docs/audits/hosted-failure-census-20260923/`; raw-log availability remains a separate gap. Hosted requalification is `.27`, and `.28` owns the deadline helper that currently skips local checks as well.
-The released ordinary OSVVM
-artifact-graph readers now fail closed. The
+the ignored closure loader that public derivation no longer calls. Replay-free summary projections and owner checks are retained in `docs/audits/hosted-failure-census-20260923/`; raw-log availability remains a separate gap. Hosted requalification is `.27`. The helper now skips only for `GITHUB_ACTIONS=true`; local and generic CI validation run. Explicit `FSMGEN_HOSTED_YOSYS_DEADLINE_CHECK=1` also enables the hosted check. T1822 preserves this scope and the fixed deadline.
+The released ordinary OSVVM artifact-graph readers now fail closed. The
 eleven paired-busy tests that stopped at the sealed 120-second Yosys
 deadline now record that deadline and do not treat it as a pass. The
 semantic-family

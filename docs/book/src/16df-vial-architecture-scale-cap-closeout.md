@@ -1970,8 +1970,11 @@ families, and the terminal build job failed because those families failed:
   They distinguish public policy-derivation failures from tests that explicitly
   read ignored fixtures. This closes historical ownership, not hosted repair
   qualification. The next authorized push still needs exact-revision workflow
-  and job checks. The deadline workaround currently also skips local Yosys
-  checks; `HOSTED-VIAL-REGRESSION-GATE-RESULT.28` owns that scope repair.
+  and job checks. The deadline workaround applies only when
+  `GITHUB_ACTIONS=true`; ordinary local and generic CI checks execute bounded
+  HDL validation. `FSMGEN_HOSTED_YOSYS_DEADLINE_CHECK=1` also keeps validation
+  enabled in Actions. The tool deadline remains unchanged, and the recorded
+  hosted limitation remains distinct from a passing synthesis result.
 
   ```sh
   python3 -B docs/audits/hosted-failure-census-20260923/audit.py --verify-saved
