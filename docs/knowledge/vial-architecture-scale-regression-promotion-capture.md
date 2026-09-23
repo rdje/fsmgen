@@ -169,7 +169,9 @@ hosted run.
 The same push failed every Perl-file shard in four families: Yosys synthesis
 deadline on paired-busy alias tests, the OSVVM runtime artifact-graph oracle,
 tests that still read ignored `.artifacts/qualification/vial-scale` paths, and
-`t/350` rejecting two shipped support statuses. The terminal build job failed
+`t/350` rejecting the semantic-family support contract, which has a status
+and no guidance field. The regression-gate status is now admitted because that
+contract already carries guidance. The terminal build job failed
 because those families failed. Parse messages before passing language-contract
 tests are expected diagnostics. None of these families is support or capacity.
 

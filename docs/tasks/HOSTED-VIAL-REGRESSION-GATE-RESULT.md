@@ -32,7 +32,7 @@ Make the hosted VIAL regression gate agree with one published result.
   Acceptance: `Diagnose the failed hosted command, then align the workflow and published contract with the result that command produces.`
   Verification: `pending`
   Commit: `pending`
-  Children: `HOSTED-VIAL-REGRESSION-GATE-RESULT.1, HOSTED-VIAL-REGRESSION-GATE-RESULT.2, HOSTED-VIAL-REGRESSION-GATE-RESULT.3, HOSTED-VIAL-REGRESSION-GATE-RESULT.4`
+  Children: `HOSTED-VIAL-REGRESSION-GATE-RESULT.1, HOSTED-VIAL-REGRESSION-GATE-RESULT.2, HOSTED-VIAL-REGRESSION-GATE-RESULT.3, HOSTED-VIAL-REGRESSION-GATE-RESULT.4, HOSTED-VIAL-REGRESSION-GATE-RESULT.5`
 - ID: `HOSTED-VIAL-REGRESSION-GATE-RESULT.1`
   Status: `done`
   Goal: `Diagnose the first hosted gate failure and own the contract contradiction.`
@@ -52,9 +52,15 @@ Make the hosted VIAL regression gate agree with one published result.
   Verification: `Released failed-step logs for all 16 Perl-file jobs and the terminal build job are stored under ignored .artifacts/tmp/hosted-ci-20260923. The census names the four families below. Local prove of t/350 reproduces the support-status failure.`
   Commit: `this commit`
 - ID: `HOSTED-VIAL-REGRESSION-GATE-RESULT.4`
+  Status: `done`
+  Goal: `Admit the shipped regression-gate support status the audit already rejects.`
+  Acceptance: `t/350 accepts shipped_bounded_regression_gate because that contract already carries non-empty guidance. Leave the semantic-family contract, which has a status and no guidance field, for its own leaf.`
+  Verification: `prove -Iperl t/350-support-contract-builder-audit.t reports Files=1, Tests=57 and fails only subtest 54, FSM::Support::VIALSemanticFamilyContract. The regression contract is no longer in the failure. That remaining contract is HOSTED-VIAL-REGRESSION-GATE-RESULT.5.`
+  Commit: `this commit`
+- ID: `HOSTED-VIAL-REGRESSION-GATE-RESULT.5`
   Status: `active`
-  Goal: `Admit the two shipped support-contract statuses the audit already rejects locally.`
-  Acceptance: `t/350 accepts shipped_bounded_regression_gate and private_v2_common_envelope_with_lifecycle_compiler only when each contract still has non-empty guidance. Do not widen unrelated statuses.`
+  Goal: `Give the semantic-family support contract the guidance field its audit requires, or record why that contract is outside the audit.`
+  Acceptance: `Do not invent guidance. Either add the field the contract's own shape requires, or exclude that module from the guidance assertion with a recorded reason.`
   Verification: `pending`
   Commit: `pending`
 
@@ -75,3 +81,10 @@ Make the hosted VIAL regression gate agree with one published result.
 - [x] **ROOT CAUSE (WHY + WHERE)** — Run 35782532228 failed all 16 Perl-file jobs. The released logs name four families: `yosys_synthesis` `status=timed_out` in the paired-busy alias tests; `OSVVM runtime artifact graph failed its exact oracle` at `ArchitectureScaleOSVVMRuntimeMaterialization.pm line 249`; tests that `Can't stat` ignored `.artifacts/qualification/vial-scale` paths; and `t/350-support-contract-builder-audit.t line 64` rejecting two shipped support statuses. `git log -S 'shipped_bounded_regression_gate' -- perl/FSM/Support` shows the regression status is shipped while the audit allow-list omits it.
 - [x] **ADDRESSED (verified)** — The census is recorded here and in the book. Local `prove -Iperl t/350-support-contract-builder-audit.t` reproduces the support-status failure. The Yosys deadline, OSVVM oracle, and ignored-publication families stay separate. The terminal build job failed because those families failed. None of them is support or capacity.
 - [x] **NO REGRESSION** — `knowledge-map: OK` preserves the tracked-seal route. The parse messages that precede passing language-contract tests stay expected diagnostics. Repair of the support-status allow-list remains HOSTED-VIAL-REGRESSION-GATE-RESULT.4.
+
+## Acceptance Checklist (regression support status HOSTED-VIAL-REGRESSION-GATE-RESULT.4)
+
+- [x] **ROOT CAUSE (WHY + WHERE)** — Before this slice, `prove -Iperl t/350-support-contract-builder-audit.t` failed at `t/350-support-contract-builder-audit.t line 64` because the allow-list omitted `shipped_bounded_regression_gate`. `git log -S 'shipped_bounded_regression_gate' -- perl/FSM/Support/VIALArchitectureScaleRegressionContract.pm` shows that status is already shipped, and the same module already returns a non-empty guidance array.
+- [x] **ADDRESSED (verified)** — The allow-list now admits only that status. Focused prove reports Files=1, Tests=57 and fails only subtest 54, `FSM::Support::VIALSemanticFamilyContract`, at `t/350-support-contract-builder-audit.t line 65` and line 73. The regression contract is no longer in the failure. The semantic-family contract remains HOSTED-VIAL-REGRESSION-GATE-RESULT.5.
+- [x] **NO REGRESSION** — `knowledge-map: OK` preserves the four hosted families and records that the regression status is now admitted. Unrelated statuses stay omitted. A failed or unavailable hosted run remains neither support nor capacity.
+- [x] **NO REGRESSION** — `knowledge-map: OK` preserves the four hosted families and records that the regression status is now admitted. Unrelated statuses stay omitted. A failed or unavailable hosted run remains neither support nor capacity.
