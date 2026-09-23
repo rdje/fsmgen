@@ -241,6 +241,10 @@ perl scripts/refresh_vial_vhdl_portable_gallery.pl --check
 perl scripts/refresh_vial_vhdl_osvvm_gallery.pl --check
 ```
 
+The OSVVM check requires the ignored exact OSVVM 2026.05 provider cache. An
+ordinary checkout records that the cache is absent and does not report a
+current gallery.
+
 Their separate qualification reports prove only the checked profiles. They do
 not turn `vhdl-observation-package` into compiled verification behavior, and
 neither profile is a value accepted by public `fsmgen vial run` today.

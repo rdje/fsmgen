@@ -134,6 +134,10 @@ perl scripts/refresh_vial_vhdl_portable_gallery.pl --check
 perl scripts/refresh_vial_vhdl_osvvm_gallery.pl --check
 ```
 
+The OSVVM check requires the ignored exact OSVVM 2026.05 provider cache. An
+ordinary checkout records that the cache is absent and does not report a
+current gallery.
+
 Use the exact private qualification checks only when the repository-local
 provider tuple is available:
 

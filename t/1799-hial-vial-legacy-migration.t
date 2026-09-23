@@ -14,10 +14,14 @@ use Symbol qw(gensym);
 use Test::More;
 
 use lib File::Spec->catdir($FindBin::Bin, '..', 'perl');
+use lib File::Spec->catdir($FindBin::Bin, 'lib');
 
 use FSM::Support::CapabilityManifest qw(build_capability_manifest);
 use FSM::Support::VIALExecutionContract qw(build_vial_execution_contract);
 use FSM::Support::VIALToolingContract qw(build_vial_tooling_contract);
+use FSM::Test::OSVVMRuntimePersistedRequest qw(
+    provider_cache_present provider_cache_skip
+);
 use FSM::VIAL::Tool qw(execute_vial_tool_request);
 
 my $repo_root = File::Spec->rel2abs(
@@ -360,6 +364,19 @@ subtest 'parallel successors and handwritten-oracle retention stay exact' => sub
         ],
     );
     for my $case (@gallery_checks) {
+        if ($case->[0][-1] eq 'refresh_vial_vhdl_osvvm_gallery.pl'
+            && !provider_cache_present()) {
+            my ($status, $out, $err) = run_command(
+                $^X,
+                repo_path(@{$case->[0]}),
+                '--check',
+            );
+            is($status, 2, "$case->[0][-1] records the absent provider cache");
+            is($out, '', "$case->[0][-1] publishes no current census");
+            is($err, provider_cache_skip() . "\n",
+                "$case->[0][-1] names the ordinary-checkout absence");
+            next;
+        }
         my ($status, $out, $err) = run_command(
             $^X,
             repo_path(@{$case->[0]}),

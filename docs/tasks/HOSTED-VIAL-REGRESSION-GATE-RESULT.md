@@ -32,7 +32,7 @@ Make the hosted VIAL regression gate agree with one published result.
   Acceptance: `Diagnose the failed hosted command, then align the workflow and published contract with the result that command produces.`
   Verification: `pending`
   Commit: `pending`
-  Children: `HOSTED-VIAL-REGRESSION-GATE-RESULT.1, HOSTED-VIAL-REGRESSION-GATE-RESULT.2, HOSTED-VIAL-REGRESSION-GATE-RESULT.3, HOSTED-VIAL-REGRESSION-GATE-RESULT.4, HOSTED-VIAL-REGRESSION-GATE-RESULT.5, HOSTED-VIAL-REGRESSION-GATE-RESULT.6, HOSTED-VIAL-REGRESSION-GATE-RESULT.7, HOSTED-VIAL-REGRESSION-GATE-RESULT.8, HOSTED-VIAL-REGRESSION-GATE-RESULT.9, HOSTED-VIAL-REGRESSION-GATE-RESULT.10, HOSTED-VIAL-REGRESSION-GATE-RESULT.11, HOSTED-VIAL-REGRESSION-GATE-RESULT.12, HOSTED-VIAL-REGRESSION-GATE-RESULT.13, HOSTED-VIAL-REGRESSION-GATE-RESULT.14, HOSTED-VIAL-REGRESSION-GATE-RESULT.15, HOSTED-VIAL-REGRESSION-GATE-RESULT.16, HOSTED-VIAL-REGRESSION-GATE-RESULT.17, HOSTED-VIAL-REGRESSION-GATE-RESULT.18, HOSTED-VIAL-REGRESSION-GATE-RESULT.19, HOSTED-VIAL-REGRESSION-GATE-RESULT.20, HOSTED-VIAL-REGRESSION-GATE-RESULT.21, HOSTED-VIAL-REGRESSION-GATE-RESULT.22`
+  Children: `HOSTED-VIAL-REGRESSION-GATE-RESULT.1, HOSTED-VIAL-REGRESSION-GATE-RESULT.2, HOSTED-VIAL-REGRESSION-GATE-RESULT.3, HOSTED-VIAL-REGRESSION-GATE-RESULT.4, HOSTED-VIAL-REGRESSION-GATE-RESULT.5, HOSTED-VIAL-REGRESSION-GATE-RESULT.6, HOSTED-VIAL-REGRESSION-GATE-RESULT.7, HOSTED-VIAL-REGRESSION-GATE-RESULT.8, HOSTED-VIAL-REGRESSION-GATE-RESULT.9, HOSTED-VIAL-REGRESSION-GATE-RESULT.10, HOSTED-VIAL-REGRESSION-GATE-RESULT.11, HOSTED-VIAL-REGRESSION-GATE-RESULT.12, HOSTED-VIAL-REGRESSION-GATE-RESULT.13, HOSTED-VIAL-REGRESSION-GATE-RESULT.14, HOSTED-VIAL-REGRESSION-GATE-RESULT.15, HOSTED-VIAL-REGRESSION-GATE-RESULT.16, HOSTED-VIAL-REGRESSION-GATE-RESULT.17, HOSTED-VIAL-REGRESSION-GATE-RESULT.18, HOSTED-VIAL-REGRESSION-GATE-RESULT.19, HOSTED-VIAL-REGRESSION-GATE-RESULT.20, HOSTED-VIAL-REGRESSION-GATE-RESULT.21, HOSTED-VIAL-REGRESSION-GATE-RESULT.22, HOSTED-VIAL-REGRESSION-GATE-RESULT.23`
 - ID: `HOSTED-VIAL-REGRESSION-GATE-RESULT.1`
   Status: `done`
   Goal: `Diagnose the first hosted gate failure and own the contract contradiction.`
@@ -161,7 +161,13 @@ Make the hosted VIAL regression gate agree with one published result.
   Commit: `this commit`
 - ID: `HOSTED-VIAL-REGRESSION-GATE-RESULT.22`
   Status: `active`
-  Goal: `Diagnose the next released Perl-file failure family after the sealed Yosys deadline.`
+  Goal: `Stop the OSVVM gallery refresh from dying when the ignored provider cache is absent.`
+  Acceptance: `scripts/refresh_vial_vhdl_osvvm_gallery.pl records the absent exact OSVVM 2026.05 provider cache before emission and does not treat that absence as a current gallery. t/1799 and t/1800 record that absence for the OSVVM case only. Native and portable gallery checks stay. Do not inspect the OSVVM submodule or invent a hosted pass.`
+  Verification: `pending`
+  Commit: `pending`
+- ID: `HOSTED-VIAL-REGRESSION-GATE-RESULT.23`
+  Status: `pending`
+  Goal: `Diagnose the next released Perl-file failure family after the OSVVM gallery refresh.`
   Acceptance: `Name the next released family from the hosted logs and make that ordinary path fail closed without inventing a hosted pass.`
   Verification: `pending`
   Commit: `pending`
@@ -291,3 +297,9 @@ Make the hosted VIAL regression gate agree with one published result.
 - [x] **ROOT CAUSE (WHY + WHERE)** — Run 35782532228 stopped `yosys_synthesis` with `status=timed_out: supervised process exceeded its fixed deadline` at `t/1526-ial2-ahb-two-subordinate-exact-two-paired-busy-composition-profile-alias.t line 148`, and at the same `--verify-hdl` check in t/1515 line 144, t/1516 line 152, t/1523 line 165, t/1524 line 129, t/1525 line 173, t/1534 line 148, t/1537 line 168, t/1538 line 136, t/1539 line 186, and t/1540 line 155. `git log -S 'hdl_external_validation_step_timeout_seconds' -- perl/FSM/Support/HDLExternalValidation.pm` shows the 120-second wall is sealed. Decision 0101 keeps that wall.
 - [x] **ADDRESSED (verified)** — Those eleven tests now record `hosted Yosys synthesis deadline is sealed at 120 seconds` before Yosys starts. Focused prove of t/1526 reports All tests successful at Files=1, Tests=4. With `FSMGEN_DARWIN_VERILATOR_TEST_RUNTIME=1`, the other ten report All tests successful at Files=10, Tests=39. `FSMGEN_HOSTED_YOSYS_DEADLINE_CHECK=1` keeps the check.
 - [x] **NO REGRESSION** — `knowledge-map: OK` keeps the persisted-request skip and records this deadline. The next released family stays HOSTED-VIAL-REGRESSION-GATE-RESULT.22. A failed or unavailable hosted run remains neither support nor capacity.
+
+## Acceptance Checklist (absent OSVVM gallery cache HOSTED-VIAL-REGRESSION-GATE-RESULT.22)
+
+- [x] **ROOT CAUSE (WHY + WHERE)** — Run 35782532228 failed `refresh_vial_vhdl_osvvm_gallery.pl checked gallery is current` at `t/1799-hial-vial-legacy-migration.t line 368` and `refresh_vial_vhdl_osvvm_gallery.pl succeeds` at `t/1800-hial-vial-capability-support-reference.t line 231`. Both stderr texts are `cannot emit OSVVM gallery` with `VIAL_OSVVM_PROVIDER_MATERIALIZATION_ERROR` and `OSVVM dependency root is not materialized` at `OSVVM2026_05Materialization.pm line 130`. `git log -S 'OSVVM dependency root is not materialized' -- perl/FSM/VIAL/Backend/OSVVM2026_05Materialization.pm` shows emission still verifies the ignored provider root. Decision 0088 materializes exact OSVVM 2026.05 only for dedicated coordinates.
+- [x] **ADDRESSED (verified)** — `scripts/refresh_vial_vhdl_osvvm_gallery.pl` now records `exact OSVVM 2026.05 provider cache is absent on an ordinary checkout` before emission. t/1799 and t/1800 require that recorded absence for the OSVVM case and still require the current census when the cache is present. Native and portable gallery checks stay. Focused prove with the cache present reports All tests successful at Files=2, Tests=10. The same command with the cache hidden and restored also passes.
+- [x] **NO REGRESSION** — `knowledge-map: OK` keeps the sealed Yosys deadline and records this gallery absence. The next released family stays HOSTED-VIAL-REGRESSION-GATE-RESULT.23. A failed or unavailable hosted run remains neither support nor capacity.

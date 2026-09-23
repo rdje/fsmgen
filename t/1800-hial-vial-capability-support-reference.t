@@ -13,6 +13,7 @@ use Symbol qw(gensym);
 use Test::More;
 
 use lib File::Spec->catdir($FindBin::Bin, '..', 'perl');
+use lib File::Spec->catdir($FindBin::Bin, 'lib');
 
 use FSM::Support::CapabilityManifest qw(build_capability_manifest);
 use FSM::Support::VIALNativeUVMEmissionContract qw(
@@ -24,6 +25,9 @@ use FSM::Support::VIALToolingContract qw(
 );
 use FSM::Support::VIALVHDLEmissionContract qw(
     build_vial_vhdl_emission_contract
+);
+use FSM::Test::OSVVMRuntimePersistedRequest qw(
+    provider_cache_present provider_cache_skip
 );
 
 my $repo_root = File::Spec->rel2abs(
@@ -225,6 +229,18 @@ subtest 'documented checks preserve provider, scale, and cleanup boundaries' => 
         ],
     );
     for my $check (@gallery_checks) {
+        if ($check->[0][-1] eq 'refresh_vial_vhdl_osvvm_gallery.pl'
+            && !provider_cache_present()) {
+            my ($status, $out, $err) = run_command(
+                $^X, repo_path(@{$check->[0]}), '--check',
+            );
+            is($status, 2,
+                "$check->[0][-1] records the absent provider cache");
+            is($out, '', "$check->[0][-1] publishes no current census");
+            is($err, provider_cache_skip() . "\n",
+                "$check->[0][-1] names the ordinary-checkout absence");
+            next;
+        }
         my ($status, $out, $err) = run_command(
             $^X, repo_path(@{$check->[0]}), '--check',
         );

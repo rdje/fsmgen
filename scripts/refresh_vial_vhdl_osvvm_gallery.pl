@@ -26,6 +26,12 @@ my $hial_id = 'ppif/ahb_lite_subordinate.ppif';
 my $profile = 'vhdl_osvvm_qualified';
 my $backend_prefix = "backends/$profile/";
 my $dependency_root = '.artifacts/cache/providers/osvvm/2026.05/source';
+my $dependency_path = _repo_path(split m{/}, $dependency_root);
+my $dependency_git = File::Spec->catfile($dependency_path, '.git');
+unless (-d $dependency_path && !-l $dependency_path
+    && -e $dependency_git && !-l $dependency_git) {
+    die "exact OSVVM 2026.05 provider cache is absent on an ordinary checkout\n";
+}
 my $gallery_rel =
     'vial/review_gallery/vhdl_osvvm_qualified/ahb_base_output_advanced_services';
 my $gallery_root = _repo_path(split m{/}, $gallery_rel);

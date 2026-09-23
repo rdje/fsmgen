@@ -186,7 +186,9 @@ ignored cache the same way. Materialized evaluation now stops with a
 recorded absence before the artifact-graph oracle, so the runtime
 measurement test fails closed on that absence or on the active RAM guard.
 The persisted-request tests skip that same ignored cache the same way.
-The released ordinary OSVVM artifact-graph readers now fail closed. The
+The OSVVM VHDL gallery refresh records that same absence before emission
+and does not report a current gallery. The released ordinary OSVVM
+artifact-graph readers now fail closed. The
 eleven paired-busy tests that stopped at the sealed 120-second Yosys
 deadline now record that deadline and do not treat it as a pass. The
 semantic-family
