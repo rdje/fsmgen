@@ -1,12 +1,13 @@
 # Knowledge Map: `vhdl-deferred`
 
 > **AUTO-GENERATED — DO NOT EDIT.** Return to the [Knowledge Map](../../KNOWLEDGE_MAP.md).
-> **1** facts · **19** uniquely owned question entries.
+> **1** facts · **20** uniquely owned question entries.
 
 ## Questions → facts
 
 - q="can VHDL generation progress before GHDL is available?" · facts=[vhdl-deferred-until-sv-ial-complete](../../docs/knowledge/vhdl-deferred-until-sv-ial-complete.md)
 - q="did FSMGen select OSVVM or UVVM?" · facts=[vhdl-deferred-until-sv-ial-complete](../../docs/knowledge/vhdl-deferred-until-sv-ial-complete.md)
+- q="does --verify-hdl use the qualified VIAL GHDL profiles?" · facts=[vhdl-deferred-until-sv-ial-complete](../../docs/knowledge/vhdl-deferred-until-sv-ial-complete.md)
 - q="does VIAL VHDL require OSVVM?" · facts=[vhdl-deferred-until-sv-ial-complete](../../docs/knowledge/vhdl-deferred-until-sv-ial-complete.md)
 - q="does selecting GHDL imply VHDL compile support now?" · facts=[vhdl-deferred-until-sv-ial-complete](../../docs/knowledge/vhdl-deferred-until-sv-ial-complete.md)
 - q="does the VIAL VHDL backend require PSL?" · facts=[vhdl-deferred-until-sv-ial-complete](../../docs/knowledge/vhdl-deferred-until-sv-ial-complete.md)
@@ -29,7 +30,7 @@
 
 ### vhdl-deferred-until-sv-ial-complete
 
-_Direct HIAL VHDL remains separately sequenced while VIAL VHDL now has an exact provider-free and OSVVM architecture_
+_Direct HIAL VHDL sequencing and qualified VIAL profiles are separate contracts_
 
-- **date:** 2026-08-09 · **status:** current
+- **date:** 2026-09-23 · **status:** current
 - **source and verification:** [`docs/knowledge/vhdl-deferred-until-sv-ial-complete.md`](../../docs/knowledge/vhdl-deferred-until-sv-ial-complete.md)

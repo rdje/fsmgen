@@ -2522,21 +2522,12 @@ this normalized semantic shape:
 }
 ```
 
-The current active backend/API frontier is
-`BACKEND-API-VALIDATION-FRONTIER.104`, a selector for the next exact
-backend/API edge after package-import name-list metadata shipped. Completed
-leaf `BACKEND-API-VALIDATION-FRONTIER.103.1` publishes that package-import
-name-list entry metadata after runtime direct and composition semantic JSON
-probes showed scalar package-name lists under
-`semantic.symbol_contract.package_imports` and the `forward_ir.intent_hir`
-alias. Completed leaf
-`BACKEND-API-VALIDATION-FRONTIER.102.1` reconfirms that VHDL external validation
-remains blocked because `ghdl` is unavailable. Completed leaf
-`BACKEND-API-VALIDATION-FRONTIER.101.1` locks declared aggregate structural VHDL
-ports/nets/types as fail-closed before record/array emission. Completed leaf
-`BACKEND-API-VALIDATION-FRONTIER.100.1` locks package roots as import-only
-declaration containers that do not generate standalone SystemVerilog or VHDL
-package HDL directly.
+Normalized semantic export publishes scalar package-name lists under
+`semantic.symbol_contract.package_imports` and its
+`semantic.forward_ir.intent_hir.symbol_contract.package_imports` alias. These
+entries describe authored package imports; they do not expose package-spec
+objects or package internals.
+
 Package declaration and VHDL package emission, already bounded
 constant/enum/type internals, unrelated forward-IR payloads, signed scalar
 division/modulo, mixed signed/unsigned arithmetic, standalone-DT generic maps
@@ -2555,17 +2546,19 @@ generated-FSM/C4 composition VHDL beyond the exact shipped fixtures, internal
 nets/generic maps beyond APB, broader expression parity beyond the shipped
 AMBA wrap family, and full normalized semantic export stabilization remain out
 of scope until later exact leaves own them.
-Package-root direct HDL generation is locked fail-closed by
-`BACKEND-API-VALIDATION-FRONTIER.100.1`; this keeps `?pkg` roots import-only
-and still does not implement VHDL package declaration/emission.
-Declared aggregate structural VHDL ports/nets/types are locked fail-closed by
-`BACKEND-API-VALIDATION-FRONTIER.101.1`; this keeps composition tops from
-emitting VHDL record/array declarations until a future exact aggregate-lowering
-leaf owns them.
-GHDL validation blocker reconfirmation is locked by
-`BACKEND-API-VALIDATION-FRONTIER.102.1`: `ghdl` is unavailable in the current
-environment, so external HDL validation remains SystemVerilog-only until a
-future exact GHDL lane can run the tool.
+Package roots (`?pkg`) remain import-only declaration containers and do not
+generate standalone SystemVerilog or VHDL package HDL. Declared aggregate
+structural VHDL ports, nets and types fail closed before record/array emission.
+These are direct-HIAL generation boundaries.
+
+The ordinary `--verify-hdl` contract validates generated SystemVerilog with
+Verilator and Yosys. It does not expose a GHDL stage. Separately, VIAL has
+recorded qualification for its provider-free `vhdl_portable_ghdl` profile and
+its OSVVM-backed `vhdl_osvvm_qualified` profile under exact GHDL 6.0.0 LLVM-JIT;
+the latter uses OSVVM 2026.05. Those profile-specific records do not widen
+`--verify-hdl`, direct-HIAL VHDL support, or the inert legacy observation
+package. See [HIAL/VIAL verification architecture](16d-hial-vial-verification-architecture.md)
+for the qualified profiles and their limits.
 
 Do not treat the raw `HDLGenerator` result hash as a stable JSON document.
 
@@ -2900,9 +2893,8 @@ read-only profile. Optional feature families not listed as shipped above are
 deferred behind future exact task-tree leaves. Source discovery is now
 catalog-backed through the manifest support catalog: reuse existing manifest,
 support-accounting, and example surfaces; do not recursively expose arbitrary
-workspace files. The immediate semantic-introspection/MCP pass is complete
-through `SEMANTIC-INTROSPECTION-MCP-FRONTIER.30`; active roadmap priority has
-returned to `IAL2-FEATURE-COMPLETENESS-FRONTIER.197`.
+workspace files. Current task selection and sequencing live in the task-tree
+index and `MEMORY.md`; this chapter describes the shipped read-only contract.
 
 ## Downstream Tool Alignment
 
@@ -3278,10 +3270,11 @@ downstream tools can discover the bounded path-list families for
 `human_contract` and `downstream_alignment` from one place before consuming
 those documentation path lists.
 
-That validation lane is currently SystemVerilog-only. Direct VHDL generation
-has a scaffold subset, but VHDL/GHDL validation remains deferred until a
-separate validation leaf can run a real `ghdl` tool. The current environment
-blocker is reconfirmed by `BACKEND-API-VALIDATION-FRONTIER.102.1`.
+That CLI validation lane is SystemVerilog-only. Direct VHDL generation has a
+bounded scaffold, with no GHDL stage in this contract. The independently
+qualified VIAL VHDL profiles described in
+[HIAL/VIAL verification architecture](16d-hial-vial-verification-architecture.md)
+retain their own execution and evidence contracts.
 
 The bounded contract for that lane now has its own owner too:
 [perl/FSM/Support/HDLExternalValidationContract.pm](perl/FSM/Support/HDLExternalValidationContract.pm).

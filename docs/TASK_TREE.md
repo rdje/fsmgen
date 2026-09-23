@@ -61,7 +61,6 @@ PNT-eligible until explicitly activated or until the roadmap selects that lane.
 | Tree | Status | Roadmap lane | Proposed first leaf | File |
 | --- | --- | --- | --- | --- |
 | `CLAIM-VERIFICATION-TEMPLATE-REVIEW` | `proposed` | `evidence architecture` | `.1` reviews the changed director-selected template before any local adoption | [task](docs/tasks/CLAIM-VERIFICATION-TEMPLATE-REVIEW.md) |
-| `MDBOOK-CROSS-LAYER-CURRENT-STATUS-TRUTH-REPAIR` | `proposed` | `cross-layer book truth` | `.1` repairs stale Chapter 11 status prose after an evidence audit | [task](docs/tasks/MDBOOK-CROSS-LAYER-CURRENT-STATUS-TRUTH-REPAIR.md) |
 | `DOWNSTREAM-SOURCE-PROVENANCE-CONTRACT` | `proposed` | `downstream paths` | `.1` contract choice | [task](docs/tasks/DOWNSTREAM-SOURCE-PROVENANCE-CONTRACT.md) |
 | `MDBOOK-PARAGRAPH-SPACING` | `proposed` | `rendered readability` | `.5` audits rendered spacing before any formatting repair | [task](docs/tasks/MDBOOK-PARAGRAPH-SPACING.md) |
 | `XIAL-NATIVE-DEVELOPMENT-FRAMEWORK` | `proposed` | `HIAL/VIAL native framework` | `.1` defines the native xIAL framework and signoff boundary | [task](docs/tasks/XIAL-NATIVE-DEVELOPMENT-FRAMEWORK.md) |

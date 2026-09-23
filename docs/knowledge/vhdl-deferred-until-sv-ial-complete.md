@@ -1,7 +1,8 @@
 ---
 id: vhdl-deferred-until-sv-ial-complete
-title: Direct HIAL VHDL remains separately sequenced while VIAL VHDL now has an exact provider-free and OSVVM architecture
+title: Direct HIAL VHDL sequencing and qualified VIAL profiles are separate contracts
 answers:
+  - "does --verify-hdl use the qualified VIAL GHDL profiles?"
   - "should VHDL backend work happen before SV backend feature completeness?"
   - "when should direct VHDL rerouting resume?"
   - "is R11-DIRECT-STRUCTURAL-VHDL-REROUTING PNT-ready?"
@@ -21,10 +22,11 @@ answers:
   - "what happens to the legacy VHDL observation package?"
   - "does selecting GHDL imply VHDL compile support now?"
   - "can VHDL generation progress before GHDL is available?"
-date: 2026-08-09
+date: 2026-09-23
 status: current
 tags: [vhdl, hial, vial, vhdl-2008, ghdl, osvvm, uvvm, backend, verification, roadmap, four-state, psl]
 evidence: >-
+  perl/FSM/Support/HDLExternalValidationContract.pm; docs/book/src/11-extensions-and-embedding.md;
   docs/tasks/R11-DIRECT-STRUCTURAL-VHDL-REROUTING.md;
   docs/tasks/IAL2-FEATURE-COMPLETENESS-FRONTIER.md;
   docs/tasks/HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.md;
@@ -49,16 +51,15 @@ evidence: >-
   https://github.com/OSVVM/OsvvmLibraries/releases/tag/2026.05;
   https://github.com/UVVM/UVVM/releases/tag/2026.03.20
 reverify: >-
-  rg -n 'vhdl_portable_ghdl|vhdl_osvvm_qualified|6\.0\.0|2026\.05|provider-free|unchanged_not_consumed|PSL' docs/HIAL_VIAL_VERIFICATION_FIXTURE_ARCHITECTURE_AUDIT.md docs/decisions/0051-vial-vhdl-uses-a-provider-free-core-and-osvvm-qualified-tier.md docs/tasks/HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.md docs/book/src/16d-hial-vial-verification-architecture.md &&
-  perl scripts/run_vial_vhdl_portable_ghdl_qualification.pl --check &&
-  perl scripts/run_vial_vhdl_osvvm_ghdl_qualification.pl --check
+  scripts/run_with_ram_guard.sh -- prove -Iperl t/313-hdl-external-validation-contract.t t/297-capability-manifest.t &&
+  scripts/run_with_ram_guard.sh -- perl scripts/run_vial_vhdl_portable_ghdl_qualification.pl --check &&
+  scripts/run_with_ram_guard.sh -- perl scripts/run_vial_vhdl_osvvm_ghdl_qualification.pl --check
 ---
 
-The historical direct-HIAL decision remains narrow: do not promote the direct
-`StructuralRTLIR` VHDL reroute ahead of its separately owned HIAL sequencing
-and parity prerequisites. That does not defer the independent VIAL
-verification backend, whose target-neutral execution plan and portable result
-contracts are now mature enough for exact architecture selection.
+Direct HIAL `StructuralRTLIR` VHDL rerouting retains its HIAL sequencing and
+parity prerequisites. VIAL has independent target-neutral execution-plan and
+portable-result contracts. Ordinary `--verify-hdl` remains SystemVerilog-only;
+its contract has no GHDL stage. VIAL qualification does not widen that contract.
 
 Decision `0051` selects provider-free IEEE VHDL-2008 as the VIAL portable
 semantic core and OSVVM 2026.05 as its advanced methodology provider. GHDL
@@ -91,11 +92,10 @@ partial VHDL-2008 and PSL support, so any future PSL profile must name the
 exercised subset and flags independently.
 
 The legacy `vhdl-observation-package` remains an unchanged inert compatibility
-surface with no analyzer/runtime claim. Native VIAL uses a separate profile,
-artifact graph, metadata package, manifest, and source map. Completed
-`.15.1-.15.5` own provider-free emission, review, and exact GHDL
-qualification. Completed `.15.6-.15.7` own exact recursive OSVVM
-materialization and the combined provider/tool qualification. The combined
-proof directly compiles 61 OSVVM/Common sources, analyzes the emitted graph,
-and exercises randomization, coverage, scoreboard, reporting, memory, and
-barrier services without changing the portable normalized-result oracle.
+surface with no analyzer/runtime claim. Native VIAL has its own profile,
+artifact graph, metadata package, manifest and source map. `.15.1-.15.5` own
+provider-free emission/review/GHDL qualification; `.15.6-.15.7` own recursive
+OSVVM materialization and combined qualification. That proof compiles 61
+OSVVM/Common sources, analyzes the emitted graph and exercises randomization,
+coverage, scoreboard, reporting, memory and barrier services, preserving the
+portable normalized-result oracle.
