@@ -541,6 +541,12 @@ fails the aligned review. An unsealed caller and an unfinished job are
 rejected. No compiler, probe or tool-resolution process runs to produce the
 observation.
 
+The sealed launch still returns only that public result. The observation path
+reads a finished job the caller already holds, and the launch does not hand
+that job back. A capture that keeps only the returned result therefore cannot
+preserve the private process id, birth clock or cleanup identity. No compiler,
+probe or tool-resolution process runs until that return path can retain them.
+
 ```sh
 python3 -B docs/audits/native-proxy-receipt-ownership-inventory-20260922/audit.py --verify-saved
 perl docs/audits/native-proxy-receipt-adapter-20260922/qualify.t
@@ -550,7 +556,7 @@ perl t/1818-process-supervisor-receipt-observation.t
 
 | Remaining work | Required result |
 | --- | --- |
-| Real receipt binding | The public result now copies cleanup flags and still omits private identity. Execute one admitted capture. |
+| Real receipt binding | The sealed launch still returns only the public result. Return the private state before one admitted capture. |
 | Inactive adapter composition | Join preparation, native path/reference admission and observation custody before the separate native experiment. |
 | Final protocol join | Check current evidence together and retain native, live/public and startup/benefit gates. |
 
