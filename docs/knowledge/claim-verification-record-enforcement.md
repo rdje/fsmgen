@@ -26,5 +26,5 @@ single-file fixtures (decision `0094`). Each record binds an exact source block 
 or an owned gap. The checker rejects invalid bounds, unsafe/untracked paths, missing/duplicate markers and identical
 evidence/path legs. Semantic truth and conceptual oracle independence remain review judgments (`0074`).
 
-The updated template is reviewed under `CLAIM-VERIFICATION-TEMPLATE-REVIEW`; review alone changes no local
-policy/checker.
+Decision `0104` adopts the template rules under `CLAIM-VERIFICATION-TEMPLATE-REVIEW.2`; checker semantics
+are unchanged.

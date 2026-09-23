@@ -1,236 +1,218 @@
 <!-- CLAIM-VERIFICATION-LOCAL-ADOPTION:BEGIN -->
 ## Local adoption note — FSMGen
 
-- Authority: FSMGen maintainers, adopted 2026-08-20 under decision `0074`.
-- Authoritative copy: repository-root `CLAIM_VERIFICATION.md`. Bootstrap
-  files and focused references may point here, but they are not the policy's
-  authority.
-- Adoption identity: the neutral body below was imported byte-for-byte from
-  the director-selected template with SHA-256
+- Authority: FSMGen maintainers; adopted 2026-08-20 under decision `0074`,
+  deliberately revised 2026-09-23 under decision `0104`.
+- Authoritative copy: repository-root `CLAIM_VERIFICATION.md`. Bootstrap and
+  focused references point here; they do not independently define this policy.
+- Original adoption: the neutral body was imported byte-for-byte with SHA-256
   `8f194574ec718749e90a402cf6e4dc6650e44f6185dd194853a54482eef68643`.
+  The current body is a reviewed local revision, not that original byte copy.
+- Reviewed update: the director-selected template, exact diff and dispositions
+  are retained in `docs/audits/claim-template-review-20260923/` under
+  `CLAIM-VERIFICATION-TEMPLATE-REVIEW`. Its deployment measurements and other
+  project's assent are source history, not FSMGen measurements or authority.
+  Original examples remain available in the retained `template.txt`.
 - Independence: the originating template is not an upstream. Later changes
   require deliberate local review and task-tree ownership.
-- Local scope: decision `0074` distinguishes actionable quantitative claims
-  from incidental dates, versions, identifiers, HDL literals, examples, and
-  transient command output.
-- Local enforcement: `scripts/check_claim_verification.pl` validates the
-  bounded registry, exact source markers, explicit legs or owned gaps, and
-  tracked local evidence paths. `scripts/check_doctrines.sh` runs it as the
-  registered `CLAIM-VERIFICATION` doctrine.
-- Partition contract: decision `0094` makes the finite manifest-addressed
-  registry set the repository default, with aggregate, shard, and
-  global-identity bounds. Explicit `--registry` remains available for bounded
-  portable single-file fixtures and compatibility probes.
-- Original-constant membership: the bounded baseline names the exact adoption
-  commit, then derives its identity set from that versioned source. Current
-  files must retain each original identity but never rediscover the frozen
-  cohort, so later nested fields remain legitimate current-only constants.
-- Provenance boundary: quantitative examples in the neutral body describe
-  the template's reference deployment. They are retained source evidence,
-  not current measurements or support claims about FSMGen.
+- Scope: decision `0074` distinguishes actionable quantitative claims from
+  incidental dates, versions, identifiers, HDL literals, examples and transient
+  command output. Those exclusions do not weaken exact semantic contracts.
+- Enforcement: `scripts/check_claim_verification.pl` validates bounded records,
+  exact source markers, named distinct legs or owned gaps, and tracked local
+  paths. `scripts/check_doctrines.sh` runs the registered doctrine. Structural
+  checks do not prove semantic truth, statistical adequacy or oracle independence.
+- Registry contract: decision `0094` makes the finite manifest-addressed set
+  the default, with aggregate, shard and global-identity bounds. Explicit
+  `--registry` retains bounded portable single-file fixture compatibility.
+- Original-constant membership: the baseline names an exact adoption commit
+  and derives its identity set from that versioned source. Current files retain
+  every original identity without rediscovering the frozen cohort; later nested
+  fields may remain legitimate current-only constants.
 <!-- CLAIM-VERIFICATION-LOCAL-ADOPTION:END -->
 
 ---
-# Claim Verification — verify a claim three ways before you publish it
+# Claim Verification — re-derive, falsify, and make durable
 
-A portable, **project- and harness-agnostic** standard for the moment an agent (or a human) turns a
-measurement into a **claim someone else will act on**. Drop it into any repository; it assumes
-nothing but a version-control system.
-
-> One-line thesis: **checking a claim twice does not make it twice as verified — a repeated pass
-> repeats its own blind spot.** Verification must be *dimensionally different*, not merely more.
-
-This file is the **5th portable architecture** a project adopts, alongside the four it already has:
-
-| # | Portable architecture | Owns | Standard |
-|---|---|---|---|
-| 1 | **Task-trees** | per-unit work memory (goal/frontier/acceptance/verification) | `docs/TASK_TREE.md` |
-| 2 | **Memory-architecture** | durable harness-agnostic agent memory (4 layers) | `MEMORY_ARCHITECTURE.md` |
-| 3 | **Knowledge-map** | a retrieval layer over fact cards | `knowledge-map/` |
-| 4 | **Doctrine-enforcement** | turning every rule into a mechanically-gated check | `DOCTRINE_ENFORCEMENT.md` |
-| 5 | **Claim-verification** | what "checked" means before a number is published | **this file** |
-
-It is the sibling of `DOCTRINE_ENFORCEMENT.md`. That standard asks *"is this rule enforced?"*; this
-one asks *"is this **number** earned?"* — the question that comes first, because a gate built on an
-unverified measurement enforces the wrong thing precisely and forever.
-
----
+This project- and harness-neutral standard applies when a measurement becomes
+an actionable quantitative claim. It complements task ownership, durable memory,
+knowledge retrieval and doctrine enforcement: those locate and enforce records;
+this standard asks whether the evidence earns the claim.
 
 ## 0. How to use this file
 
-1. Adopt the **three legs** (§3) as the definition of "checked".
-2. Adopt the **publishing contract** (§4): a claim ships with its legs named, and a *missing* leg is
-   stated, never hidden.
-3. Mechanize what you can (§5). Prose that nothing checks is a suggestion.
-4. Run the adoption checklist (§7) once; keep §6 next to your review template.
+1. Use the distinct evidence legs in §3 as the definition of checked.
+2. Publish their evidence and any missing leg under §4.
+3. Mechanize decidable invariants under §5 and apply the review checklist in §7.
 
-If you remember one rule: **re-derive · falsify · make durable — three different questions, in that
-order.**
+State each rule in domain-free terms before any labeled illustration. The rule
+must be complete without machinery specific to an example. If an example is
+carrying an unstated assumption, clarify the rule before applying it elsewhere.
 
----
+## 1. Why repeating a check is insufficient
 
-## 1. The problem: "check it again" does not work
+A repeated pass can reproduce the same blind spot. Matching totals cannot prove
+correct allocation between categories; agreement between instruments cannot
+validate a classifier they share; a correct copied value can become stale when
+its inputs change. Ask which defect the evidence could actually expose.
 
-The instruction *"double-check your claims"* is almost always already being followed. Claims that
-fail review are rarely unchecked — they are checked by a procedure **structurally incapable of
-catching the defect**.
+*Illustration:* a suite-level success attribute does not establish a property of
+each individual test. Repeating the suite query answers the same group question.
+An item-level claim needs item-level evidence or a proven mapping to that item.
+This is an illustration, not a measurement of this project's test results.
 
-Measured in the reference deployment, within a single session, every corrected claim had already
-been checked once, carefully, by its author:
+## 2. Check limits
 
-| the claim | it was checked by… | why that check could not fail |
-|---|---|---|
-| a profiler attributing **18 %** of CPU to a subsystem | a ground-truth control, green | the control asserted **conservation** (`sum(parts) == total`); the bug was a **misassignment**, which conserves the total. Real value **2 %** — an **8×** error |
-| "this rule family is **0.68 %** of the workload" | a 10-case control suite that **refuses** on any miss | all 10 cases were drawn from the same **prose** as the classifier they tested, so they could only ever agree with it. Real value **2.74 %** |
-| "two independent instruments agree, 75 % vs 76 %" | cross-checking two measurements | the **quantities** were independent; the **classifier was shared** — and the classifier was the defect |
-| a corrected constant, freshly re-derived from source | a full re-measurement | correct — then written into a hand-carried constant guarded by a **comment**. Stale-able on day two |
+| Check | What it can detect | What it leaves open |
+| --- | --- | --- |
+| Sum of parts equals total | Omission, duplication or arithmetic errors affecting the sum | Misallocation that preserves the sum |
+| Row count equals expectation | A population-size mismatch | Wrong values within the rows |
+| Input identity hash | Changed declared inputs | Logic errors and undeclared inputs |
+| Implementation and tests from the same interpretation | Some transcription errors | A shared misunderstanding of the contract |
+| Checklist completed | A declared step is present | Whether the step was done correctly |
+| Group-level attribute | Properties of that group | Different properties of its members |
+| Independent per-category comparison | Disagreement in allocation | Defects shared by the sources or outside the compared scope |
 
-⇒ Four checks, four authors' worth of care, and **zero** chance of catching the respective defect.
-Asking for a second pass of the same kind buys nothing. ⛔ This is why restating *"be careful"* does
-not work as a remedy, and why what follows is a procedure with **named legs**: so *"did I check?"*
-becomes answerable instead of felt.
-
----
-
-## 2. The taxonomy of checks that cannot fail
-
-Before trusting a check, ask the only question that matters: **what class of bug does this still
-permit?**
-
-| the check | catches | still permits |
-|---|---|---|
-| `sum(parts) == total` | dropped rows, double counts, arithmetic slips | ❌ **any redistribution between parts** |
-| `count(rows) == expected` | truncation, a missed input | ❌ a wrong value in every row |
-| a hash of the inputs | stale inputs | ❌ every logic bug downstream of them |
-| tests written from the spec, over an implementation written from the same spec | typos | ❌ **every misreading of the spec** |
-| a ticked checklist box | "I forgot the step" | ❌ the step being done wrong |
-| **per-bucket agreement with an independent source** | ✅ misassignment, redistribution, wrong bucketing | genuinely little |
-
-**The general form: a check and the thing it checks must not share a parent.** When the test and the
-implementation descend from the same understanding, their agreement carries no information. That is
-why *"I wrote tests and they pass"* is strong evidence about a **transcription** error and nearly no
-evidence about a **specification** error.
-
----
+Independence concerns the possible defect, not the number of tools. Identify
+shared assumptions and classifiers; two commands using the same wrong predicate
+are not independent evidence about that predicate.
 
 ## 3. The three legs
 
-### Leg 1 — RE-DERIVE. Does it reproduce, by command, from the source?
+### Leg 1 — RE-DERIVE: does the source reproduce the claim?
 
-Not *"do I remember measuring this"*, and not *"is it written consistently in three places"* —
-consistency propagates errors faithfully. Run the command; keep the output.
+Run the derivation and retain its output, source revision, relevant environment
+and input identity. Consistency among copied numbers is not re-derivation.
 
-- Applies to numbers you are **quoting from your own project's documentation**. In the reference
-  deployment a live status line had been stale in **two of its three numbers** for days: everyone
-  read it, nobody re-ran it.
-- A number appearing in *N* places has *N* chances to be stale. Prefer **one derived source** over
-  *N* synchronized copies.
+- State the quantity, observation unit, population and predicate before running
+  the command. Match evidence granularity to the claim: container evidence
+  cannot establish each member's property without a demonstrated mapping.
+- Re-derive numbers quoted from the project's own documentation as well as new
+  measurements. Prefer one authoritative derivation over synchronized copies.
+- Attribute a changed result with a controlled before/after comparison or an
+  isolated reconstruction when safe and meaningful. Keep inputs and conditions
+  comparable and preserve the first failure and unrelated user work. A reversal
+  in a controlled comparison is stronger attribution evidence than reading alone.
+  Never replay a spent capture, bypass an admission prerequisite, or discard
+  evidence just to perform this check. If the comparison cannot be obtained,
+  publish the attribution gap and its owner; do not invent a timing guarantee.
 
-### Leg 2 — FALSIFY. What would make this false, and is there an oracle you did not build?
+### Leg 2 — FALSIFY: what separates the claim from a competing hypothesis?
 
-- **Name the competing hypothesis, then find evidence that separates them.** "10 families, 1 symbol"
-  is equally consistent with *the linker merged them* and *this family's copy was inlined away*. A
-  symbol census cannot separate those; a **call-target address** can. ⛔ If your evidence is
-  consistent with both hypotheses, you have not tested — you have illustrated.
-- **Prefer an oracle you did not build.** A profiler's own per-symbol table caught an 8× error that
-  the author's own control had passed. Look for one already sitting in your inputs; it is free.
-- **Make the control go RED on purpose.** A control never observed failing is not known to work. A
-  21-case suite became trustworthy only once it was run against the *old, broken* predicate and
-  correctly missed **8 of 21**.
-- **Derive classifiers, shape lists and membership tests from the PRODUCER** — the code that emits
-  the thing — never from a description of the producer. One `grep` over the emitting call sites beat
-  a carefully-reasoned pattern built from the design document's own sentence.
+Name the competing hypothesis and seek evidence that would distinguish it.
+More observations predicted equally by both explanations do not separate them.
 
-### Leg 3 — DURABILITY. Can the reader re-run it, and does anything fail when it goes stale?
+*Illustration:* one emitted definition could mean several units were merged or
+that all but one were eliminated. A definition count alone cannot distinguish
+those explanations; evidence of where each actual call resolves may do so.
 
-⭐ **This is the leg that gets skipped, and it is what separates *signoff-grade* from *true-today*.**
+- Prefer an independently established oracle. Explain which shared defect it
+  can expose, rather than calling it independent merely because it has another name.
+- A set claim carries a scoped enumeration and its command. Define the searched
+  population and exclusions before claiming absence, uniqueness or completeness.
+  A search result is a candidate population: classify its members before
+  publishing a defect count. Search hits and absence of hits both need scrutiny.
+- Consult prior project adjudications for the same case. Explain any material
+  difference in revision, scope, contract or evidence before contradicting them.
+  If no difference is established, the conflicting finding is unproved. History
+  increases the burden of proof; it cannot make a demonstrated old error correct.
+- Observe controls fail on a known-bad input when permitted. A control seen only
+  green has not demonstrated its ability to reject the relevant defect. If the
+  necessary control is unavailable, name the missing falsification evidence.
+- Derive membership and classification evidence from the authorized producer
+  contract or emitted data, not merely the prose used to implement the classifier.
+  Respect dependency black-box boundaries; source access alone is not authority
+  to inspect an implementation.
 
-- **Is the producer tracked?** A measured number whose instrument lives in a scratch or ignored
-  directory is a *"trust me"* with extra steps. Measured: four analysis instruments and eight
-  profile artifacts, `git ls-files` → **0**, leaving published intervals permanently unreproducible.
-- **Is the claim watched?** A number nothing re-derives goes stale silently. ⛔ **Replacing a wrong
-  unwatched number with a right unwatched number is not a fix.** If re-deriving costs 71 seconds,
-  "it was expensive" is not available as a reason.
+### Leg 3 — DURABILITY: can a reader reproduce it and detect staleness?
 
----
+Track the producer, relevant inputs and evidence, or name an explicit durability
+gap. Ignored scratch data cannot be the sole source of a reproducible claim.
 
-## 4. The publishing contract
+A current derived value needs a watcher that fails when the value or any relevant
+input changes. Correcting an unwatched constant without fixing its update path
+leaves the same failure mechanism. Derive inexpensive values at use; otherwise
+bind the complete artifact to its inputs and require remeasurement on change.
+Historical observations must identify their capture boundary and retention
+contract; they must not silently become claims about the current state.
 
-State the claim, then the legs that earn it. **When a leg is missing, name it.**
+## 4. Publishing contract
 
-> *"Re-derived and falsified; **not durable** — the instrument is untracked."*
+State the claim's scope, conditions and evidence legs. Name each missing leg and
+its repair owner rather than presenting absence as success.
 
-That is a signoff-grade sentence. **A claim with a named gap is usable; a claim with a hidden gap is
-the defect.** Two riders:
+*Illustration:* "Re-derived and falsified for the recorded input revision;
+durability remains unproved because the producing instrument is untracked."
 
-- **Intervals, not point estimates, for anything stochastic.** A single run per arm produced *"these
-  agree within 0.6 points"* — when the within-arm spread alone was **3.1 points**. The agreement was
-  luck, and it read as precision.
-- ⛔ **The auditor's asymmetry.** When a re-derivation disagrees with a published number, **the
-  re-derivation is the newer instrument and carries the heavier burden of proof.** It has been run
-  once; the thing it contradicts has at least been read. A reviewer who forgets this writes *"your
-  number is wrong"* when the correct sentence is *"one of these two is wrong, and it might be mine."*
+Use intervals and an explicit sampling method for stochastic measurements.
+Do not infer agreement or precision from a single run when within-condition
+variation has not been assessed. When a new derivation contradicts an existing
+claim, investigate both instruments: being newer does not make it authoritative.
 
----
+### 4.1 Reviewing a challenged claim
 
-## 5. Mechanizing it
+Stand behind the recorded scope, revision, evidence and named gaps. Rechecking
+when evidence or conditions change is legitimate; an immediate unconditional
+answer is not a verification method. Correct an error with its cause and owned
+repair, without silently rewriting the original claim's scope.
 
-Prose is discoverable, not enforceable (`DOCTRINE_ENFORCEMENT.md` §1). Two cheap mechanizations, in
-increasing strength:
+| Axis | Review obligation |
+| --- | --- |
+| Prose | Assess the statement under its original scope and conditions; explain changed context separately. |
+| Quantity | Compare the same population, predicate, instrument and conditions; justify any tolerance before evaluating agreement. |
+| Named instance | Verify that exact identity and its asserted property; aggregate evidence does not license a substitute. |
 
-**A — the claim tag.** Any published number carries an inline provenance tag naming its legs:
+A fixed-input deterministic census should reproduce exactly. A changed population,
+predicate, instrument or relevant environment may answer a different question and
+must be identified. A command can also measure stochastic behavior: runtime and
+resource samples still require the measurement treatment above.
 
-```
-throughput 2.741 %  [rederive: scripts/census.sh --family | falsify: RED-probe 8/21 | durable: NO — see #412]
-```
+Contract values and named identities are exact; a nearby value does not satisfy
+the contract. A judgment estimate may use a stated, justified tolerance when the
+underlying decision allows it. Do not choose the tolerance after seeing the
+result or use an aggregate tolerance to excuse a wrong named instance. Incidental
+numerals remain subject to their semantic contracts even when no claim record
+is required for them.
 
-Grep-able, reviewable, and it makes a missing leg **visible** instead of **absent**.
+## 5. Mechanizing the contract
 
-**B — the derived-constant rule.** Any constant that is a function of the repository is **derived or
-gated**, never carried. If deriving is too slow to run every time, gate it: hash the inputs it
-depends on and fail when they move.
+Mechanize what can be decided honestly; expose the remaining review obligations.
+A provenance tag or structured record names the derivation, falsification and
+durability evidence or their gaps. Presence and format alone cannot prove truth.
 
-```bash
-# the general shape: a cheap identity tier + an expensive re-measure on demand
-recorded=$(sed -n 's/^inputs_sha: //p' baseline.md)
-live=$(cat $(cat inputs.list) | sha256sum | cut -d' ' -f1)
-[ "$recorded" = "$live" ] || { echo "baseline no longer describes this tree — re-measure"; exit 1; }
-```
+A repository-derived constant is derived or gated. If a cheaper identity check
+stands in for remeasurement, it must cover every input affecting the complete
+artifact, including the producing instrument, and fail on identity drift.
 
-⛔ **Name every input the ARTIFACT depends on, not every input the HEADLINE METRIC depends on.** A
-baseline whose identity covered grammar + binary + inputs was still silently staled by a change to
-*the instrument that wrote it* — the identity was sound for the headline number and insufficient for
-the file.
-
----
+*Illustration:* binding source inputs and a consuming binary is insufficient
+when changing the reporting instrument changes the stored artifact. Include
+that instrument even if the headline metric appears unchanged.
 
 ## 6. Anti-patterns
 
-- ❌ "I checked it twice" — twice the same way is once.
-- ❌ A control that only ever passes; a control never seen RED.
-- ❌ Tests written from the same document as the implementation, cited as evidence about that document.
-- ❌ A conservation or checksum control on a tool whose job is **allocation between buckets**.
-- ❌ A measured number whose producing script is untracked, ad-hoc, or in a scratch directory.
-- ❌ Correcting a stale constant to a fresh constant and changing nothing about *why* it went stale.
-- ❌ A comment reading *"do not edit by hand — re-derive it"*. That is prose; write the check.
-- ❌ A point estimate for a stochastic quantity.
-- ❌ Treating your own re-derivation as automatically authoritative over the thing it contradicts.
+- Counting repeated passes as independent evidence.
+- A control never observed rejecting the relevant defect.
+- Shared interpretation presented as an independent specification oracle.
+- A conservation check presented as proof of correct allocation.
+- An actionable measurement whose producer is untracked or whose inputs are lost.
+- Fixing a copied value without a derivation or watcher for its update path.
+- Treating a comment instructing remeasurement as an executable gate.
+- A point estimate presented as adequate evidence for a stochastic quantity.
+- An absence or uniqueness claim without a scoped enumeration.
+- Raw search hits published as a classified defect count.
+- A member-level claim supported only by its container's attribute.
+- Confidence, a newer instrument or an old adjudication treated as proof by itself.
 
----
+## 7. Adoption and review checklist
 
-## 7. Adoption checklist
-
-1. Adopt §3 as the working definition of "checked" and §4 as the reporting format.
-2. **Sweep published constants**: for each, can it be re-derived by one command? If not, derive it or
-   gate it (§5B).
-3. **Sweep for untracked producers**: run your VCS's ignored-file listing over scratch/output paths.
-   Anything there that produced a *published* number is a leg-3 breach.
-4. **Fire every control**: run each against a known-bad input and confirm it goes RED. Delete or fix
-   any that cannot.
-5. Add the claim tag (§5A) to your review or pull-request template.
-
----
-
-*This document is an instance of what it describes: every quantitative claim in it was measured in a
-real deployment, and the section that matters most — leg 3 — exists because its author skipped it and
-had it caught in review.*
+1. Define the actionable-claim scope and its explicit exclusions.
+2. Require distinct evidence legs and visible owned gaps in review records.
+3. Inventory published derived constants; derive or gate them from their source.
+4. Find ignored or untracked producers and inputs behind published claims, and
+   repair their durability or disclose the gap.
+5. Exercise controls against known-bad inputs when permitted; fix ineffective
+   controls or disclose the missing evidence without bypassing prerequisites.
+6. Review the evidence's unit, population, enumerations and prior adjudications.
+7. Restate each rule without its illustration before adopting it. Keep local
+   paths, authority, measurements and adaptations in a separate adoption note.
+8. Document what mechanical gates establish and what remains semantic review.

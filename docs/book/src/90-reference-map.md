@@ -71,6 +71,36 @@ retain an open candidate. Run the five-group report with
 keeps semantic truth and oracle independence outside those structural gates'
 claims.
 
+The reviewed policy also requires evidence at the level being claimed. State
+its unit, population, predicate and input revision. A suite or group result
+cannot establish each member's property without evidence connecting the two.
+For an absence, uniqueness or completeness claim, retain the scoped enumeration
+and its command. Classify search hits before calling them defects.
+
+For example, finding a validation word in several tests identifies candidates
+to inspect; it does not prove that each test checks the same behavior. Conversely,
+finding no match for that word does not prove the behavior is untested. The
+assertions and the public behavior they exercise provide the relevant evidence.
+A claim naming one test must identify that test and its actual checked property.
+
+Consult earlier adjudications before reporting a conflicting result, and name
+any difference in source revision, contract, scope or evidence. An earlier ruling
+can be wrong, but another search result alone does not overturn it. Attribute
+a change through a safe controlled comparison or isolated reconstruction when
+possible; preserve first-failure evidence, unrelated user work and existing
+admission gates. A spent or prohibited capture stays prohibited. Publish a
+missing attribution leg and its repair owner if the comparison is unavailable.
+
+Review a challenged claim's prose, quantity and named instance separately under
+its recorded conditions. A fixed-input census should reproduce exactly; a
+contract value or named identity requires an exact match. A runtime measurement
+can vary even when a command produces it, so report its sampling method and
+interval instead of implying precision from one run. Any judgment tolerance
+must be justified before comparison. Honest rechecking and correction remain
+part of verification; confidence alone is not evidence. Decision `0104` records
+these adaptations, and incidental numerals keep their existing semantic
+contracts without becoming claim records merely because they contain digits.
+
 The regenerated inventory also consumes the canonical disposition identities:
 closed candidates carry no residual migration owner, while a new candidate
 remains visibly task-owned until it receives a disposition. A compact

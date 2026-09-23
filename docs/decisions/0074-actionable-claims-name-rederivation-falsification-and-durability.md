@@ -2,82 +2,49 @@
 
 - Date: 2026-08-20
 - Type: evidence architecture/governance
-- Status: accepted
+- Status: accepted; extended by `0104`
 - Source: director-requested adoption of the portable PGEN claim-verification standard
 - Implementation owner: `CLAIM-VERIFICATION-ADOPTION`
+- Editorial compaction: 2026-09-23 under `CLAIM-VERIFICATION-TEMPLATE-REVIEW.2`;
+  exact predecessor is available at `96711ac69` in Git. Numbered decisions retained.
 
 ## Context
 
-FSMGen already enforces task ownership, durable memory, knowledge retrieval,
-doctrine execution, current-document containment, and evidence-backed staged
-implementation acceptance. Those systems answer where work and facts live and
-whether declared repository rules execute. They do not define what makes a
-published quantitative claim earned.
-
-Repeating one measurement does not expose a shared classifier, wrong bucket,
-misread specification, untracked producer, or unwatched derived constant. A
-conservation check can pass while every bucket is wrong; a test and
-implementation derived from the same prose can agree on the same
-misinterpretation; a correct value can become stale immediately after it is
-copied into an unguarded document.
-
-The portable source at the director-specified sibling-project path names three
-different questions: can the claim be re-derived from its source, can a
-separating oracle falsify the competing hypothesis, and can a later reader
-rerun the tracked producer while a watcher detects staleness? FSMGen has not
-yet adopted that standard or registered a corresponding doctrine check.
+At adoption, existing task, memory, knowledge, doctrine, containment and staged
+acceptance systems located work and enforced declared rules, but did not define
+an earned quantitative claim. Repeated checks can share classifiers or mistaken
+interpretations; conservation can conceal misallocation, and copied values can
+become stale. The director-selected sibling template supplied re-derivation,
+separating falsification and durable tracked producers/watchers. Adoption and a
+registered claim checker were then pending.
 
 ## Decision
 
-1. FSMGen adopts **re-derive**, **falsify**, and **durability** as the three
-   required evidence legs for an actionable quantitative claim that a user,
-   maintainer, reviewer, or automated policy will act on.
-2. Each published claim record names the claim and all three legs. A genuinely
-   unavailable leg is written as an explicit gap with its owner; absence is
-   never allowed to look like success.
-3. The falsification leg must name evidence capable of separating the claim
-   from a concrete competing hypothesis. Repeating the producer, checking only
-   a conserved total, hashing only inputs, or building both sides from the same
-   interpretation does not become independent merely because it runs twice.
-4. The durability leg names tracked producers and an executable watcher or an
-   explicit gap. A repository-derived constant is derived at use or bound to
-   every input that can change the complete artifact, including the instrument
-   that produced it.
-5. Incidental numerals are outside the claim-record obligation: dates,
-   versions, work-unit IDs, schema identifiers, HDL literals, example payloads,
-   and transient command output do not become policy claims merely because
-   they contain numbers. Their existing semantic contracts still apply.
-6. FSMGen's authoritative standard will live at repository-root
-   `CLAIM_VERIFICATION.md` with a fenced local adoption note. The source copy is
-   an adoption template, not an upstream or runtime dependency.
-7. Mechanical enforcement begins with what a checker can decide honestly:
-   bounded record syntax, unique IDs, local/tracked source and producer paths,
-   named non-aliased legs or explicit gaps, registered watchers, and execution
-   through the doctrine driver. Positive fixtures and deliberately corrupted
-   RED controls must prove the checker can fail.
-8. The checker does **not** claim that formatting proves semantic truth,
-   oracle independence, sufficient statistical sampling, or human intent.
-   Those judgments stay reviewable in the record and its evidence.
-9. Existing current surfaces and repository-derived constants receive a
-   producer-derived inventory before migration. The inventory must itself name
-   its re-derivation, falsification control, and durability evidence; it is not
-   allowed to bootstrap its own completeness from the same handwritten list it
-   checks.
-10. Adoption lands as separate commits for selection, authoritative policy and
-    discovery, mechanical enforcement, inventory, migrations, and closure.
-    Product-language and HIAL/VIAL implementation remain unchanged during this
-    governance task.
+1. Actionable quantitative claims require re-derive, falsify and durability
+   evidence before a user, maintainer, reviewer or automated policy acts on them.
+2. Published records name the claim and every leg; an unavailable leg is an
+   explicit owned gap, never apparent success.
+3. Falsification separates a concrete competing hypothesis. Repetition, conserved
+   totals, input-only hashes or shared interpretation do not establish independence.
+4. Durability requires tracked producers and an executable watcher or owned gap.
+   Derive repository constants at use or bind every artifact input, including the instrument.
+5. Dates, versions, work-unit/schema IDs, HDL literals, example payloads and
+   transient output are incidental numerals; their semantic contracts still apply.
+6. Root `CLAIM_VERIFICATION.md`, with its fenced local note, is authoritative.
+   The source is a template, not an upstream or runtime dependency.
+7. Enforce bounded syntax, unique IDs, tracked local source/producer paths, distinct
+   legs or gaps, registered watchers and doctrine execution; prove positive and RED controls.
+8. Formatting proves neither semantic truth, oracle independence, sampling adequacy
+   nor intent. Keep those judgments reviewable in records and evidence.
+9. Inventory current surfaces and derived constants from producers before migration,
+   with its own legs; a duplicated handwritten list cannot bootstrap completeness.
+10. Commit selection, policy/discovery, enforcement, inventory, migrations and closure
+    separately. Product-language and HIAL/VIAL implementation stay unchanged.
 
 ## Consequences
 
-- A claim can be useful with a named evidence gap; it cannot silently present
-  that gap as verification.
-- Reviewers can distinguish three independent dimensions instead of counting
-  repeated passes.
-- Tracked derivations and watchers prevent a freshly corrected number from
-  becoming the next unwatched constant.
-- Structural gates remain honest about their limit: they enforce declared
-  evidence plumbing and visibility, not semantic understanding.
-- The requested adoption temporarily precedes the clean HIAL backend-emission
-  frontier, which resumes after this bounded adoption tree closes or reaches a
-  task-owned safe handoff.
+Named gaps remain useful; hidden gaps do not. Distinct legs replace repeated
+passes, and tracked derivations/watchers prevent recurring stale constants.
+Structural gates enforce evidence plumbing, not understanding. This adoption
+preceded the clean HIAL backend-emission frontier, which was to resume after
+bounded closure or an owned safe handoff.
