@@ -48,7 +48,7 @@ Only `active` rows are PNT-eligible. Live `docs/tasks/` nodes are authoritative;
 | --- | --- | --- | --- | --- |
 | `LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION` | `active` | `infra/continuity` | `.29` is done; `.12` remains behind director-deferred `.26` | [task](docs/tasks/LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.md) |
 | `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE` | `active` | `verification architecture` | `.5.4.3.3.4` proposed: return private receipt identity before capture. Native/live remain gated. | [task](docs/tasks/HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.md) |
-| `HOSTED-VIAL-REGRESSION-GATE-RESULT` | `active` | `verification architecture` | `.24` requires the current nested HIAL/VIAL SUMMARY cluster; `.25` diagnoses the next released family | [task](docs/tasks/HOSTED-VIAL-REGRESSION-GATE-RESULT.md) |
+| `HOSTED-VIAL-REGRESSION-GATE-RESULT` | `active` | `verification architecture` | `.25` skips the semantic/bridge isolation audit when the ignored revision-1 profile is absent; `.26` diagnoses the next released family | [task](docs/tasks/HOSTED-VIAL-REGRESSION-GATE-RESULT.md) |
 | `DOWNSTREAM-BOOK-CONTRACT-INCLUDE` | `active` | `downstream integration` | `.1` is done; the rendered chapter includes the four contract parts | [task](docs/tasks/DOWNSTREAM-BOOK-CONTRACT-INCLUDE.md) |
 | `PUSH-CADENCE-500-ADOPTION` | `active` | `infra/continuity` | `.1` is done; the standing interval is 500 accumulated local commits | [task](docs/tasks/PUSH-CADENCE-500-ADOPTION.md) |
 

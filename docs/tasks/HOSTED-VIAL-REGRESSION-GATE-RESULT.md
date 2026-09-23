@@ -32,7 +32,7 @@ Make the hosted VIAL regression gate agree with one published result.
   Acceptance: `Diagnose the failed hosted command, then align the workflow and published contract with the result that command produces.`
   Verification: `pending`
   Commit: `pending`
-  Children: `HOSTED-VIAL-REGRESSION-GATE-RESULT.1, HOSTED-VIAL-REGRESSION-GATE-RESULT.2, HOSTED-VIAL-REGRESSION-GATE-RESULT.3, HOSTED-VIAL-REGRESSION-GATE-RESULT.4, HOSTED-VIAL-REGRESSION-GATE-RESULT.5, HOSTED-VIAL-REGRESSION-GATE-RESULT.6, HOSTED-VIAL-REGRESSION-GATE-RESULT.7, HOSTED-VIAL-REGRESSION-GATE-RESULT.8, HOSTED-VIAL-REGRESSION-GATE-RESULT.9, HOSTED-VIAL-REGRESSION-GATE-RESULT.10, HOSTED-VIAL-REGRESSION-GATE-RESULT.11, HOSTED-VIAL-REGRESSION-GATE-RESULT.12, HOSTED-VIAL-REGRESSION-GATE-RESULT.13, HOSTED-VIAL-REGRESSION-GATE-RESULT.14, HOSTED-VIAL-REGRESSION-GATE-RESULT.15, HOSTED-VIAL-REGRESSION-GATE-RESULT.16, HOSTED-VIAL-REGRESSION-GATE-RESULT.17, HOSTED-VIAL-REGRESSION-GATE-RESULT.18, HOSTED-VIAL-REGRESSION-GATE-RESULT.19, HOSTED-VIAL-REGRESSION-GATE-RESULT.20, HOSTED-VIAL-REGRESSION-GATE-RESULT.21, HOSTED-VIAL-REGRESSION-GATE-RESULT.22, HOSTED-VIAL-REGRESSION-GATE-RESULT.23, HOSTED-VIAL-REGRESSION-GATE-RESULT.24, HOSTED-VIAL-REGRESSION-GATE-RESULT.25`
+  Children: `HOSTED-VIAL-REGRESSION-GATE-RESULT.1, HOSTED-VIAL-REGRESSION-GATE-RESULT.2, HOSTED-VIAL-REGRESSION-GATE-RESULT.3, HOSTED-VIAL-REGRESSION-GATE-RESULT.4, HOSTED-VIAL-REGRESSION-GATE-RESULT.5, HOSTED-VIAL-REGRESSION-GATE-RESULT.6, HOSTED-VIAL-REGRESSION-GATE-RESULT.7, HOSTED-VIAL-REGRESSION-GATE-RESULT.8, HOSTED-VIAL-REGRESSION-GATE-RESULT.9, HOSTED-VIAL-REGRESSION-GATE-RESULT.10, HOSTED-VIAL-REGRESSION-GATE-RESULT.11, HOSTED-VIAL-REGRESSION-GATE-RESULT.12, HOSTED-VIAL-REGRESSION-GATE-RESULT.13, HOSTED-VIAL-REGRESSION-GATE-RESULT.14, HOSTED-VIAL-REGRESSION-GATE-RESULT.15, HOSTED-VIAL-REGRESSION-GATE-RESULT.16, HOSTED-VIAL-REGRESSION-GATE-RESULT.17, HOSTED-VIAL-REGRESSION-GATE-RESULT.18, HOSTED-VIAL-REGRESSION-GATE-RESULT.19, HOSTED-VIAL-REGRESSION-GATE-RESULT.20, HOSTED-VIAL-REGRESSION-GATE-RESULT.21, HOSTED-VIAL-REGRESSION-GATE-RESULT.22, HOSTED-VIAL-REGRESSION-GATE-RESULT.23, HOSTED-VIAL-REGRESSION-GATE-RESULT.24, HOSTED-VIAL-REGRESSION-GATE-RESULT.25, HOSTED-VIAL-REGRESSION-GATE-RESULT.26`
 - ID: `HOSTED-VIAL-REGRESSION-GATE-RESULT.1`
   Status: `done`
   Goal: `Diagnose the first hosted gate failure and own the contract contradiction.`
@@ -172,14 +172,20 @@ Make the hosted VIAL regression gate agree with one published result.
   Verification: `Focused prove on Darwin reports All tests successful at Files=1, Tests=1.`
   Commit: `0ae36ce2f`
 - ID: `HOSTED-VIAL-REGRESSION-GATE-RESULT.24`
-  Status: `active`
+  Status: `done`
   Goal: `Stop the HIAL/VIAL book entry check from requiring a SUMMARY cluster that omits a nested chapter.`
   Acceptance: `t/1796 requires the current nested HIAL/VIAL SUMMARY cluster, including Inactive Proxy Lifetimes. The stable overview and future-backlog checks stay. Do not invent a hosted pass.`
+  Verification: `Focused prove reports All tests successful at Files=1, Tests=4.`
+  Commit: `bc92d1b2e`
+- ID: `HOSTED-VIAL-REGRESSION-GATE-RESULT.25`
+  Status: `active`
+  Goal: `Stop the semantic/bridge isolation audit from dying when the ignored revision-1 publication is absent.`
+  Acceptance: `t/1770 skips the publication-dependent controls when .artifacts/qualification/vial-scale/v1/semantic-catalog-v1.imports.gate-candidate-v1 is absent and still runs them when that directory is present. The caller-surface checks stay. Do not invent a hosted pass.`
   Verification: `pending`
   Commit: `pending`
-- ID: `HOSTED-VIAL-REGRESSION-GATE-RESULT.25`
+- ID: `HOSTED-VIAL-REGRESSION-GATE-RESULT.26`
   Status: `pending`
-  Goal: `Diagnose the next released Perl-file failure family after the book entry path.`
+  Goal: `Diagnose the next released Perl-file failure family after the semantic/bridge isolation audit.`
   Acceptance: `Name the next released family from the hosted logs and make that ordinary path fail closed without inventing a hosted pass.`
   Verification: `pending`
   Commit: `pending`
@@ -327,3 +333,9 @@ Make the hosted VIAL regression gate agree with one published result.
 - [x] **ROOT CAUSE (WHY + WHERE)** — Run 35782532228 failed `SUMMARY nests specialist evidence beneath the stable overview` at `t/1796-hial-vial-book-entry-path.t line 63`. The expected cluster omitted the nested chapter already present in `docs/book/src/SUMMARY.md`. `git log -S '16dk-inactive-proxy-lifetimes.md' -- docs/book/src/SUMMARY.md` shows Inactive Proxy Lifetimes is part of that nested entry path.
 - [x] **ADDRESSED (verified)** — The entry check now requires that current nested cluster, including Inactive Proxy Lifetimes. The overview names the same chapter. Focused prove reports All tests successful at Files=1, Tests=4.
 - [x] **NO REGRESSION** — `knowledge-map: OK` keeps the host-observer stall and records this entry path. The next released family stays HOSTED-VIAL-REGRESSION-GATE-RESULT.25. A failed or unavailable hosted run remains neither support nor capacity.
+
+## Acceptance Checklist (absent semantic/bridge publication HOSTED-VIAL-REGRESSION-GATE-RESULT.25)
+
+- [x] **ROOT CAUSE (WHY + WHERE)** — Run 35782532228 failed `direct semantic-catalog-v1.imports.gate-candidate-v1 audit accepts` at `t/1770-vial-semantic-bridge-profile-isolation-audit.t line 55` with got `2` expected `0`. Hiding that ignored profile reproduces `unexpected semantic/bridge validation failure` because `semantic/bridge matrix publication root is absent` at `ArchitectureScaleSemanticBridgeMeasurementMatrix.pm line 778`. `git log -S '_load_report_publication' -- scripts/audit_vial_semantic_bridge_profile_isolation.pl` shows the current-profile control still loads that ignored publication.
+- [x] **ADDRESSED (verified)** — The current-profile controls now skip when `.artifacts/qualification/vial-scale/v1/semantic-catalog-v1.imports.gate-candidate-v1` is absent and still run when it is present. The caller-surface checks stay. Focused prove with the publication present reports All tests successful at Files=1, Tests=4. The same command with the publication hidden and restored also passes.
+- [x] **NO REGRESSION** — `knowledge-map: OK` keeps the book entry path and records this publication skip. The next released family stays HOSTED-VIAL-REGRESSION-GATE-RESULT.26. A failed or unavailable hosted run remains neither support nor capacity.

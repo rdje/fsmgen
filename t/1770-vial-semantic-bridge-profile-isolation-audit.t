@@ -15,6 +15,10 @@ my $script = File::Spec->catfile(
     $repo_root, 'scripts',
     'audit_vial_semantic_bridge_profile_isolation.pl',
 );
+my $current_profile_publication = File::Spec->catdir(
+    $repo_root, '.artifacts', 'qualification', 'vial-scale', 'v1',
+    'semantic-catalog-v1.imports.gate-candidate-v1',
+);
 my $disposition = File::Spec->catfile(
     $repo_root, 'perl', 'FSM', 'VIAL',
     'ArchitectureScaleCalibrationDisposition.pm',
@@ -42,6 +46,9 @@ subtest 'audit drift partition is pinned to the canonical disposition' => sub {
 };
 
 subtest 'direct and isolated modes agree on current and drift controls' => sub {
+    plan skip_all =>
+        'ignored revision-1 semantic/bridge publication is absent on a fresh checkout'
+        unless -d $current_profile_publication;
     my @controls = (
         ['semantic-catalog-v1.imports.gate-candidate-v1', 1, 0],
         ['bridge-fanout-v1.configurations.limit-v1', 0, 1],
@@ -81,6 +88,9 @@ subtest 'direct and isolated modes agree on current and drift controls' => sub {
 };
 
 subtest 'bounded synthetic allocation crosses both process modes' => sub {
+    plan skip_all =>
+        'ignored revision-1 semantic/bridge publication is absent on a fresh checkout'
+        unless -d $current_profile_publication;
     for my $mode (qw(direct isolated)) {
         my ($status, $output) = capture_command(
             $script,
