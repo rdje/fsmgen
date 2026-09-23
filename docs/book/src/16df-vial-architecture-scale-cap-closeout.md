@@ -1914,13 +1914,26 @@ guard, and staging mutations all reject with no partial acceptance output.
 <!-- CLAIM-VERIFICATION:END vial-regression-promotion-hosted-ci-placement-v1 -->
 
 The first hosted execution of that placement did not complete cleanly.
-Push `54ac1c22d` ran the public `vial-gate` command and that step failed.
-The independent verifier was skipped. The published hosted contract still
-requires an unavailable aggregate, while the local exact-pinned observation
-passed every selected profile. Those two statements are not yet one hosted
-result. `HOSTED-VIAL-REGRESSION-GATE-RESULT` owns the diagnosis and the
-contract alignment. A failed or unavailable hosted run remains neither
-support nor capacity.
+Push `54ac1c22d` ran the public `vial-gate` command in
+[Perl FSM Regression run 35782532228](https://github.com/rdje/fsmgen/actions/runs/35782532228),
+job `106931292867`. Evidence materialization and both production validators
+completed. The guarded gate step then failed before any profile result existed:
+
+```text
+calibration closure publication root is absent
+```
+
+`ArchitectureScaleRegressionPromotionPolicy->derive` asks
+`validate_complete_publication` for the historical closure at ignored
+`.artifacts/qualification/vial-scale/v1/calibration-closure-v1`. A fresh
+checkout does not carry that publication, so the isolated worker stops in
+`_publication_metadata`. The independent
+verifier was skipped. That absence is the released-log cause. It is distinct
+from the published contract, which still requires an unavailable aggregate,
+and from the local exact-pinned observation, which passed every selected
+profile. Those statements are not yet one hosted result.
+`HOSTED-VIAL-REGRESSION-GATE-RESULT.2` owns the alignment. A failed or
+unavailable hosted run remains neither support nor capacity.
 
 ### Exact-pinned production gate observation
 

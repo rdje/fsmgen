@@ -53,11 +53,12 @@ answers:
   - "where is the human VIAL architecture-scale regression operator guide?"
   - "how is VIAL architecture-scale regression public truth closed independently?"
   - "why did the first hosted VIAL regression gate fail its real command?"
-date: 2026-09-22
+  - "calibration closure publication root is absent"
+date: 2026-09-23
 status: current
 tags: [hial, vial, scalability, regression, measurement, publication]
 evidence: >-
-  docs/decisions/0096-regression-promotion-uses-a-current-eleven-profile-corpus.md; docs/decisions/0097-regression-gates-publish-replaceable-observations-without-recalibrating.md; docs/decisions/0098-hosted-regression-gates-materialize-immutable-tracked-evidence.md; docs/decisions/0099-regression-correctness-excludes-only-sealed-process-telemetry-derivatives.md; docs/tasks/HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.md; docs/book/src/16df-vial-architecture-scale-cap-closeout.md;
+  docs/decisions/0096-regression-promotion-uses-a-current-eleven-profile-corpus.md; docs/decisions/0097-regression-gates-publish-replaceable-observations-without-recalibrating.md; docs/decisions/0098-hosted-regression-gates-materialize-immutable-tracked-evidence.md; docs/decisions/0099-regression-correctness-excludes-only-sealed-process-telemetry-derivatives.md; docs/tasks/HOSTED-VIAL-REGRESSION-GATE-RESULT.md; docs/tasks/HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.md; docs/book/src/16df-vial-architecture-scale-cap-closeout.md;
   perl/FSM/Support/VIALArchitectureScaleRegressionContract.pm; perl/FSM/Support/VIALToolingContract.pm; perl/FSM/VIAL/ArchitectureScaleRegressionPromotionQualification.pm; perl/FSM/VIAL/ArchitectureScaleRegressionPromotionGateContract.pm; perl/FSM/VIAL/ArchitectureScaleRegressionPromotionGateProfile.pm; .github/workflows/regression.yml; bin/ci-regression; scripts/run_vial_regression_promotion_gate.pl; vial/qualification/regression_promotion_gate/evidence-v1/transport-manifest.json; t/1555-vial-public-source-tooling.t; t/1786-vial-regression-promotion-gate-profile.t; t/1790-vial-regression-promotion-evidence-transport.t; t/1793-vial-regression-promotion-gate-correctness-stability.t; t/1794-vial-architecture-scale-regression-capability.t; t/1795-vial-architecture-scale-regression-public-closeout.t
 reverify: >-
   scripts/verify_vial_regression_promotion_current_corpus.pl; scripts/verify_vial_regression_promotion_budget_qualification.pl; perl scripts/verify_vial_regression_promotion_evidence_transport.pl;
@@ -150,6 +151,15 @@ canonical result `f4b022fa...f5f97` has SHA-256 `d9d8788c...54729` and exact
 11/33/44/0 topology. Independent joins and the full hostile band passed; all
 evidence stayed immutable and atomic publication left no owned residue. This is
 one revision/environment observation, not recalibration, support, or capacity.
+
+Hosted run 35782532228, job 106931292867, failed the public `vial-gate` command
+after both validators because the ignored historical publication
+`.artifacts/qualification/vial-scale/v1/calibration-closure-v1` is absent on a
+fresh checkout. The worker message is `calibration closure publication root is
+absent` at `ArchitectureScaleCalibrationClosurePublication.pm` line 1046. The
+independent verifier was skipped. That diagnosis does not change the published
+unavailable-aggregate contract and does not infer support or capacity.
+`HOSTED-VIAL-REGRESSION-GATE-RESULT.2` owns the alignment.
 
 Related: [[vial-architecture-scale-proof]], [[vial-common-worker-output-census-admission]],
 [[vial-portable-vhdl-runtime-scale]], [[vial-vhdl-osvvm-qualified-tier]],

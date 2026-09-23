@@ -1,12 +1,13 @@
 # Knowledge Map: `vial-architecture`
 
 > **AUTO-GENERATED — DO NOT EDIT.** Return to the [Knowledge Map](../../KNOWLEDGE_MAP.md).
-> **3** facts · **140** uniquely owned question entries.
+> **3** facts · **141** uniquely owned question entries.
 
 ## Questions → facts
 
 - q="are VIAL declared resource limits public capacity claims?" · facts=[vial-architecture-scale-cap-policy](../../docs/knowledge/vial-architecture-scale-cap-policy.md)
 - q="are VIAL scale gate and qualification candidates supported capacity?" · facts=[vial-architecture-scale-proof](../../docs/knowledge/vial-architecture-scale-proof.md)
+- q="calibration closure publication root is absent" · facts=[vial-architecture-scale-regression-promotion-capture](../../docs/knowledge/vial-architecture-scale-regression-promotion-capture.md)
 - q="can a prior VIAL gate result influence qualification or execution?" · facts=[vial-architecture-scale-regression-promotion-capture](../../docs/knowledge/vial-architecture-scale-regression-promotion-capture.md)
 - q="did the exact-pinned VIAL regression promotion gate pass?" · facts=[vial-architecture-scale-regression-promotion-capture](../../docs/knowledge/vial-architecture-scale-regression-promotion-capture.md)
 - q="did the repaired VIAL regression-promotion current corpus complete?" · facts=[vial-architecture-scale-regression-promotion-capture](../../docs/knowledge/vial-architecture-scale-regression-promotion-capture.md)
@@ -166,5 +167,5 @@ _VIAL architecture scale is proved by orthogonal families with stage-local oracl
 
 _VIAL regression promotion captures eleven current profiles through isolated v2 publication_
 
-- **date:** 2026-09-22 · **status:** current
+- **date:** 2026-09-23 · **status:** current
 - **source and verification:** [`docs/knowledge/vial-architecture-scale-regression-promotion-capture.md`](../../docs/knowledge/vial-architecture-scale-regression-promotion-capture.md)
