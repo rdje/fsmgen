@@ -49,23 +49,31 @@ my @staging_relatives = (
 my $json = JSON::PP->new->canonical(1)->utf8(1);
 
 my $real_active = repo_path($root, $active_relative);
-my $real_before = corpus_census($real_active, 1);
-my $real_content = corpus_census($real_active, 0);
+my $ignored_corpus_present = -d $real_active && !-l $real_active;
+my $real_before = $ignored_corpus_present
+    ? corpus_census($real_active, 1) : undef;
+my $real_content = $ignored_corpus_present
+    ? corpus_census($real_active, 0) : undef;
 
-die "current-corpus mutation fixture root already exists\n"
-    if -e $fixture || -l $fixture;
-make_path($fixture, {mode => 0700});
+if ($ignored_corpus_present) {
+    die "current-corpus mutation fixture root already exists\n"
+        if -e $fixture || -l $fixture;
+    make_path($fixture, {mode => 0700});
+}
 
 END {
     remove_tree($fixture)
-        if defined($fixture) && -d($fixture) && !-l($fixture);
+        if $ignored_corpus_present
+            && defined($fixture) && -d($fixture) && !-l($fixture);
 }
 
-copy_file(
-    repo_path($root, $script_relative),
-    repo_path($fixture, $script_relative),
-);
-copy_tree($real_active, repo_path($fixture, $active_relative));
+if ($ignored_corpus_present) {
+    copy_file(
+        repo_path($root, $script_relative),
+        repo_path($fixture, $script_relative),
+    );
+    copy_tree($real_active, repo_path($fixture, $active_relative));
+}
 
 my $script = repo_path($fixture, $script_relative);
 my $active = repo_path($fixture, $active_relative);
@@ -73,14 +81,18 @@ my $report = repo_path(
     $active, 'complete/regression-promotion-corpus.json',
 );
 my $manifest = repo_path($active, 'complete/corpus-manifest.json');
-my $profile = first_matching_file(
+my $profile = $ignored_corpus_present ? first_matching_file(
     $active, qr{/profiles/01-[^/]+/measurement-report[.]json\z},
-);
-my $profile_mode = (lstat($profile))[2] & 07777;
+) : undef;
+my $profile_mode = $ignored_corpus_present
+    ? ((lstat($profile))[2] & 07777) : undef;
 my $historical = repo_path($root, $historical_relative);
-my $fixture_baseline = corpus_census($active, 0);
+my $fixture_baseline = $ignored_corpus_present
+    ? corpus_census($active, 0) : undef;
 
 subtest 'copied exact publication is same-volume and authentic' => sub {
+    plan skip_all => 'ignored current corpus is absent on a fresh checkout'
+        unless $ignored_corpus_present;
     my @root_stat = lstat($root);
     my @fixture_stat = lstat($fixture);
     my @active_stat = lstat($active);
@@ -100,6 +112,8 @@ subtest 'copied exact publication is same-volume and authentic' => sub {
 };
 
 subtest 'content and semantic-coordinate mutations fail closed' => sub {
+    plan skip_all => 'ignored current corpus is absent on a fresh checkout'
+        unless $ignored_corpus_present;
     exercise_json_mutation('complete report content', $report, sub {
         $_[0]{common_identity}{git_revision} = '0' x 40;
     });
@@ -131,6 +145,8 @@ subtest 'content and semantic-coordinate mutations fail closed' => sub {
 };
 
 subtest 'canonicality, link, and file-shape mutations fail closed' => sub {
+    plan skip_all => 'ignored current corpus is absent on a fresh checkout'
+        unless $ignored_corpus_present;
     my $manifest_bytes = read_raw($manifest);
     exercise_mutation(
         'noncanonical manifest bytes',
@@ -178,6 +194,8 @@ subtest 'canonicality, link, and file-shape mutations fail closed' => sub {
 };
 
 subtest 'namespace, staging, and historical mutations fail closed' => sub {
+    plan skip_all => 'ignored current corpus is absent on a fresh checkout'
+        unless $ignored_corpus_present;
     my $extra = File::Spec->catfile($active, 'foreign.json');
     exercise_mutation(
         'extra namespace path',
@@ -215,6 +233,8 @@ subtest 'namespace, staging, and historical mutations fail closed' => sub {
 };
 
 subtest 'owner and device enforcement remains explicit' => sub {
+    plan skip_all => 'ignored current corpus is absent on a fresh checkout'
+        unless $ignored_corpus_present;
     my $source = read_raw($script);
     like(
         $source,
@@ -226,13 +246,17 @@ subtest 'owner and device enforcement remains explicit' => sub {
     pass('unsafe owner/device controls are declared unavailable, not fabricated');
 };
 
-is_deeply(
-    corpus_census($real_active, 1), $real_before,
-    'all copied controls leave the real namespace byte/file-identical',
-);
-remove_tree($fixture);
-ok(!-e($fixture) && !-l($fixture),
-    'repository-local mutation fixture is removed deterministically');
+SKIP: {
+    skip 'ignored current corpus is absent on a fresh checkout', 2
+        unless $ignored_corpus_present;
+    is_deeply(
+        corpus_census($real_active, 1), $real_before,
+        'all copied controls leave the real namespace byte/file-identical',
+    );
+    remove_tree($fixture);
+    ok(!-e($fixture) && !-l($fixture),
+        'repository-local mutation fixture is removed deterministically');
+}
 
 done_testing();
 

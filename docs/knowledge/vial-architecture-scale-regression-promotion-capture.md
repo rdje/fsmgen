@@ -171,8 +171,8 @@ deadline on paired-busy alias tests, the OSVVM runtime artifact-graph oracle,
 tests that still read ignored `.artifacts/qualification/vial-scale` paths, and
 the support-contract audit. The policy and capture-plan mutation checks now
 skip that ignored closure when it is absent and still run when it is present.
-The current-corpus verifier skips its ignored corpus the same way. The
-remaining ignored-path readers are still open. The semantic-family
+The current-corpus verifier and its mutation checks skip that ignored
+corpus the same way. The remaining ignored-path readers are still open. The semantic-family
 envelope stays outside the guidance assertion because its own nonclaims
 already exclude support classification, and the regression-gate status is
 admitted because that contract already carries guidance. The terminal build
