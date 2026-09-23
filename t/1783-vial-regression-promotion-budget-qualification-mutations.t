@@ -55,33 +55,44 @@ my $json = JSON::PP->new->canonical(1)->utf8(1);
 
 my $real_qualification = repo_path($root, $qualification_relative);
 my $real_corpus = repo_path($root, $corpus_relative);
-my $real_qualification_before = tree_census($real_qualification, 1);
-my $real_corpus_before = tree_census($real_corpus, 1);
-my $real_qualification_content = tree_census($real_qualification, 0);
-my $real_corpus_content = tree_census($real_corpus, 0);
+my $ignored_inputs_present = -d $real_qualification && !-l $real_qualification
+    && -d $real_corpus && !-l $real_corpus;
+my $real_qualification_before = $ignored_inputs_present
+    ? tree_census($real_qualification, 1) : undef;
+my $real_corpus_before = $ignored_inputs_present
+    ? tree_census($real_corpus, 1) : undef;
+my $real_qualification_content = $ignored_inputs_present
+    ? tree_census($real_qualification, 0) : undef;
+my $real_corpus_content = $ignored_inputs_present
+    ? tree_census($real_corpus, 0) : undef;
 
-die "budget-qualification mutation fixture root already exists\n"
-    if -e($fixture) || -l($fixture);
-make_path($fixture, {mode => 0700});
+if ($ignored_inputs_present) {
+    die "budget-qualification mutation fixture root already exists\n"
+        if -e($fixture) || -l($fixture);
+    make_path($fixture, {mode => 0700});
+}
 
 END {
     remove_tree($fixture)
-        if defined($fixture) && -d($fixture) && !-l($fixture);
+        if $ignored_inputs_present
+            && defined($fixture) && -d($fixture) && !-l($fixture);
 }
 
-copy_file(
-    repo_path($root, $verifier_relative),
-    repo_path($fixture, $verifier_relative),
-);
-copy_file(
-    repo_path($root, $source_verifier_relative),
-    repo_path($fixture, $source_verifier_relative),
-);
-copy_tree(
-    $real_qualification,
-    repo_path($fixture, $qualification_relative),
-);
-copy_tree($real_corpus, repo_path($fixture, $corpus_relative));
+if ($ignored_inputs_present) {
+    copy_file(
+        repo_path($root, $verifier_relative),
+        repo_path($fixture, $verifier_relative),
+    );
+    copy_file(
+        repo_path($root, $source_verifier_relative),
+        repo_path($fixture, $source_verifier_relative),
+    );
+    copy_tree(
+        $real_qualification,
+        repo_path($fixture, $qualification_relative),
+    );
+    copy_tree($real_corpus, repo_path($fixture, $corpus_relative));
+}
 
 my $verifier = repo_path($fixture, $verifier_relative);
 my $qualification = repo_path($fixture, $qualification_relative);
@@ -90,15 +101,23 @@ my $report = repo_path(
     $qualification, 'regression-promotion-budget-qualification.json',
 );
 my $manifest = repo_path($qualification, 'qualification-manifest.json');
-my $source_profile = first_matching_file(
+my $source_profile = $ignored_inputs_present ? first_matching_file(
     $corpus, qr{/profiles/01-[^/]+/measurement-report[.]json\z},
-);
+) : undef;
 my $historical = repo_path($root, $historical_relative);
-my $report_mode = (lstat($report))[2] & 07777;
-my $manifest_mode = (lstat($manifest))[2] & 07777;
-my $source_profile_mode = (lstat($source_profile))[2] & 07777;
-my $fixture_baseline = tree_census($fixture, 0);
+my $report_mode = $ignored_inputs_present
+    ? ((lstat($report))[2] & 07777) : undef;
+my $manifest_mode = $ignored_inputs_present
+    ? ((lstat($manifest))[2] & 07777) : undef;
+my $source_profile_mode = $ignored_inputs_present
+    ? ((lstat($source_profile))[2] & 07777) : undef;
+my $fixture_baseline = $ignored_inputs_present
+    ? tree_census($fixture, 0) : undef;
 my $verified;
+
+SKIP: {
+skip 'ignored budget qualification inputs are absent on a fresh checkout', 10
+    unless $ignored_inputs_present;
 
 subtest 'copied exact qualification and source corpus are authentic' => sub {
     my @root_stat = lstat($root);
@@ -393,19 +412,22 @@ subtest 'recalibration requires separately owned immutable replacement' => sub {
 };
 
 $verified = assert_accepts('all controls restored final baseline');
-is_deeply(
-    tree_census($real_qualification, 1), $real_qualification_before,
-    'all copied controls leave the real qualification byte/file-identical',
-);
-is_deeply(
-    tree_census($real_corpus, 1), $real_corpus_before,
-    'all copied controls leave the real source corpus byte/file-identical',
-);
-remove_tree($fixture);
-ok(!-e($fixture) && !-l($fixture),
-    'repository-local mutation fixture is removed deterministically');
+    is_deeply(
+        tree_census($real_qualification, 1), $real_qualification_before,
+        'all copied controls leave the real qualification byte/file-identical',
+    );
+    is_deeply(
+        tree_census($real_corpus, 1), $real_corpus_before,
+        'all copied controls leave the real source corpus byte/file-identical',
+    );
+    remove_tree($fixture);
+    ok(!-e($fixture) && !-l($fixture),
+        'repository-local mutation fixture is removed deterministically');
+}
 
 done_testing;
+
+
 
 sub exercise_json_mutation {
     my ($label, $path, $mutator) = @_;
@@ -540,6 +562,7 @@ sub run_verifier {
 
 sub tree_census {
     my ($base, $include_inode) = @_;
+    die "ignored budget qualification input is absent\n" unless -d $base;
     my @entries;
     find({
         no_chdir => 1,
