@@ -634,3 +634,33 @@ scripts/run_with_ram_guard.sh -- python3 -B docs/audits/native-proxy-populated-l
 ```
 
 [Return to runtime measurement](16dc-vial-portable-verilator-runtime-measurement.md).
+
+## Private process handoff
+
+A private reservation component now establishes a process group and can move
+back to its caller's group while retaining its unreaped child identity. Its
+owner explicitly retires group signalling before releasing and reaping that
+child. Unexpected departure or EOF preserves the first failure; unknown wait
+status and uncertain group absence cannot count as cleanup. The focused
+controls use independent child membership and wait observations, including a
+silent handoff and a stuck release. They exercise the current host; Linux
+execution remains a missing qualification leg.
+
+The private gated pair now records a direct command child before allowing it
+to join that reserved group. Join acknowledgment precedes reservation departure;
+departure acknowledgment precedes an explicit exec release. Advancing a ready
+pair alone cannot execute the command. Cancellation revokes queued release,
+and partial handoff failures preserve the original cause and actual child waits.
+The focused controls also bypass the exec gate deliberately: independent output
+observations detect that broken behavior even when the release flag stays false.
+
+Normal callers retain the existing own-group supervisor. Capture/result
+integration, aggregate coordinator admission, nested routing and complete
+subtree qualification still have separate open owners. These private components
+establish no nested result or permission to run the retained startup proxy.
+Their tests exercise the current host; Linux qualification remains open.
+Re-run the bounded component controls with:
+
+```bash
+scripts/run_with_ram_guard.sh -- prove -Iperl -It/lib t/1823-process-group-reservation.t t/1824-process-gated-pair.t
+```

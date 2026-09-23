@@ -3463,11 +3463,11 @@ decomposes the architecture needed to move beyond that bounded foundation.
   Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.3.2: qualify private reservation lifetime`
 
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.3.3`
-  Status: `pending`
+  Status: `done`
   Goal: `Compose a recorded command child with the reserved group and explicit exec release.`
   Acceptance: `After .2, reserve both child slots before fork and create the command as the same owner's direct child. Require join acknowledgment before reservation departure and departure acknowledgment before exec becomes releasable. An explicit private release follows complete ownership publication; failure or cancellation before release cannot execute the command. Qualify fork, pipe, join, move, release and descriptor failures without touching original startup attempts or enabling routing.`
-  Verification: `Pending reservation lifetime qualification in sibling .2.`
-  Commit: `pending`
+  Verification: `The inactive GatedPair prepares command pipes and its Reservation before launch, records the command under masked signals, then requires join and departure acknowledgments plus explicit exec release. T1824 observes actual group membership, separate identities/streams, EOF, environment/argument bytes, umask, signal mask and exact waits. Cancellation at each pre-exec state, all pipe allocation cuts, sealing/close/fork/join/move/write failures, silent join, queued release and unknown wait controls retain failure and prohibit execution. A deliberately bypassed gate emits an execution witness despite a false release flag, proving that the independent output oracle rejects it. Guarded focused band passes Files=8, Tests=251. Aggregate coordinator accounting and production capture/closure remain the following owners; no original capture, compiler, routing or full CI was launched.`
+  Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.3.3: qualify gated command handoff`
 
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.3.4`
   Status: `pending`
@@ -4174,7 +4174,7 @@ decomposes the architecture needed to move beyond that bounded foundation.
 
 ## Current Frontier
 
-Current frontier: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.3.3` composes the gated command child after the qualified reservation lifetime in `.2`. Complete nested cleanup and independent qualification before the fixed capture driver resumes. Preserve original failures, the spent compiler workspace, source-only driver commit and full-CI/push gates.
+Current frontier: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.3.4` integrates bounded capture and terminal identity after the qualified gated command pair in `.3`. Complete nested cleanup and independent qualification before the fixed capture driver resumes. Preserve original failures, the spent compiler workspace, source-only driver commit and full-CI/push gates.
 
 Architecture audit `.1` is complete. Decision `0032` selects one public
 `.vial` source language, private immutable `VIALSemanticIR` and
@@ -7085,3 +7085,66 @@ original T1669/startup compiler/probe. Loading the component creates no process.
   pass for the component and test. The shared engine only exposes its existing private cleanup graces;
   no normal caller loads the new strategy. Original compiler/probe/startup
   attempts and full CI were not replayed.
+
+## Gated-command implementation scope (.19.2.3.1.2.2.5.5.2.3.3.3)
+
+Preparation retains a bounded execution snapshot, both child-role slots and
+all command/reservation pipe ends before either fork. The inactive component
+publishes its resource cost; the coordinator must charge that cost against
+its aggregate ledger and retain the prepared object before calling start.
+Aggregate admission is still owned by coordinator integration. The command's
+join byte is sent only after its exact PID is recorded and signals restored.
+Join acknowledgment permits reservation departure; departure acknowledgment
+permits a separate release call. The command receives the admitted environment,
+argument bytes, cwd, EOF stdin, umask and original exec-relevant signal state.
+
+This slice exposes nonblocking streams, positive-command signaling, exact wait
+polling and explicit reservation retirement to the later capture owner. It does
+not yet combine them into a production cleanup/result loop. T1824's independent
+bounded driver closes partial starts and retains output through EOF before
+retirement. Group retirement precedes reservation reaping; unknown command waits
+revoke positive-PID authority without inventing a consumed status. The original
+synchronous engine, sealed adapters and spent startup/compiler evidence remain
+unchanged.
+
+## Acceptance Checklist (.19.2.3.1.2.2.5.5.2.3.3.3)
+
+- [x] **ROOT CAUSE (WHY + WHERE)** — `git log -S` for
+  `sub _start_supervision` identifies `51a3a3914`. That path immediately execs
+  its own-group command; the qualified Reservation component supplies only
+  the separate identity lifetime. Neither provides the selected recorded join,
+  acknowledged departure and publication-controlled exec sequence. GatedPair
+  composes that missing inactive launch strategy without routing callers.
+- [x] **ADDRESSED (verified)** — Re-derive with T1824: actual kernel groups,
+  child-reported parent/identity, complete pipe EOF and exact wait status
+  confirm the handoff. Falsify with the deliberately bypassed exec gate: it
+  produces `EXECUTED` before release despite a false internal release flag.
+  Real partial-start and silent-join controls plus model-only ECHILD controls
+  fail closed. Durability is the tracked component/test, book, fact card and
+  work-unit commit. Linux and production capture/subtree closure remain missing
+  qualification legs under their existing owners. The sandbox could not inspect
+  processes, so the required guard refused before tests; the approved guarded
+  host executions passed and remain in .artifacts/gated-pair-first-process.log,
+  .artifacts/gated-pair-expanded.log and .artifacts/gated-pair-final-band.log.
+- [x] **NO REGRESSION** — The guarded endpoint, connection, service,
+  architecture, receipt-observation, receipt-stage, reservation and gated-pair
+  band reports `All tests successful`, `Files=8, Tests=251`. The new component
+  and test pass Perl syntax checks. The repository-local mdBook build succeeds;
+  its HTML contains the gated handoff and runnable component command. The initial
+  fact-card edit exceeded its line-width bound and introduced trailing spaces;
+  reflow preserves the exact facts and fixes both before the final gates.
+  The staged doctrine gate then caught an old census fingerprint after Knowledge
+  Map regeneration; regenerating the inventory restores exact source agreement.
+  Containment then rejected ordinary growth in rollover-debt book/card surfaces.
+  The complete component reference moves unchanged to the existing directly
+  indexed private-lifetimes chapter; its original location retains a link.
+  The fact card keeps every question and receipt, replacing only its superseded
+  reservation-only boundary. Rollover allowances and all ceilings stay unchanged.
+  Task evidence is warning debt: its measured growth gains the prescribed
+  ratchet step with the active tree as owner. No existing engine, public result
+  schema, process bound, original capture or submodule implementation changed.
+  Final review reproduced a cached-ready release after reservation retirement
+  in .artifacts/gated-pair-retired-red.log. Release and advancement now both
+  require the live reservation. The paired advancement model initially omitted
+  its deadline; that fixture was corrected independently of the valid release
+  failure. The repaired focused band is .artifacts/gated-pair-retired-final-band.log.
