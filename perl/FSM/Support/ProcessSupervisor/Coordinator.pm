@@ -170,6 +170,9 @@ sub _reconcile_peers {
             $self->{ledger}->descriptors_prepared($entry->{grant}, 1) if $held->{reserved};
         }
         # Closed outcomes keep conservative credit until whole-run close.
+        $self->_request_failed($entry, $observed->{failure}{diagnostic} // 'original request peer closed')
+            if $observed->{state} =~ /\A(?:closing|closed)\z/
+                && defined($entry->{request_state}) && $entry->{request_state} ne 'failed';
     }
     return;
 }
@@ -209,9 +212,106 @@ sub peer_observation {
     my $transport = $entry->{transport};
     return {ticket => $ticket,
         transport => {%$transport, failure => $transport->{failure} ? {%{$transport->{failure}}} : undef},
+        request => defined($entry->{request_state}) ? {
+            state => $entry->{request_state}, failure => $entry->{request_failure},
+            cleanup_error => $entry->{cleanup_error},
+            parent => $entry->{request} ? $entry->{request}{parent} : undef,
+            job => $entry->{job_id},
+            deadline_ns => $entry->{request} ? $entry->{request}{deadline_ns} : undef,
+            admission_deadline_ns => $entry->{request} ? $entry->{request}{admission_deadline_ns} : undef,
+        } : undef,
         admission => $entry->{grant} && !$entry->{retired}
             ? $self->{ledger}->describe_descriptors($entry->{grant}) : undef,
         outcome => $entry->{outcome} ? {%{$entry->{outcome}}} : undef};
+}
+sub admit_request {
+    my ($self, $ticket) = @_; _owner($self);
+    _error('request admission requires one original peer ticket') unless @_ == 2;
+    $self->peer_observation($ticket);
+    my $peer = $self->{peers}{$ticket};
+    my $started = 0;
+    my $ok = eval {
+        FSM::Support::ProcessSupervisor::Reservation::_masked_preparation(sub {
+            _error('request admission requires the original open peer')
+                unless $self->{phase} eq 'open' && $self->{peers}{$ticket}
+                    && refaddr($self->{peers}{$ticket}) == refaddr($peer);
+            _error('request admission is single-use') if defined($peer->{request_state});
+            my $transport = $self->{service}->ticket_observation($ticket);
+            $peer->{transport} = $transport;
+            _error($transport->{failure}{diagnostic} // 'original peer has no pending request')
+                unless $transport->{state} eq 'request';
+            $peer->{request_state} = 'preparing'; $started = 1;
+            unless ($self->{service}->transfer_request($ticket, \$peer->{request})) {
+                my $view = $self->{service}->ticket_observation($ticket);
+                _error($view->{failure}{diagnostic} // 'original request transfer refused');
+            }
+            $peer->{request_identity} = refaddr($peer->{request});
+            my $parent = $self->{jobs}{$peer->{request}{parent}};
+            _error('request has no original retained parent job') unless $parent;
+            $peer->{parent_grant} = $parent->{grant};
+            $self->_request_live($peer);
+            # Transfer supplied a validated detached snapshot. The retained
+            # peer and job share custody until binding publishes its replacement.
+            $self->_reserve_job($peer->{parent_grant}, $peer->{request}{request}, $peer);
+            $self->_request_live($peer);
+            delete $peer->{request}{request};
+            $peer->{request_state} = 'ready';
+        });
+        1;
+    };
+    unless ($ok) {
+        my $error = $@; $self->_request_failed($peer, $error) if $started; die $error;
+    }
+    return $peer->{job_grant};
+}
+sub _request_live {
+    my ($self, $peer) = @_; _owner($self);
+    _error('request lacks its original retained peer') unless $peer
+        && $self->{peers}{$peer->{ticket}}
+        && refaddr($self->{peers}{$peer->{ticket}}) == refaddr($peer);
+    _error('request admission is no longer live') unless $self->{phase} eq 'open'
+        && ($peer->{request_state} // '') =~ /\A(?:preparing|ready)\z/;
+    my $packet = $peer->{request};
+    _error('request lacks its original transferred packet') unless $packet
+        && refaddr($packet) == ($peer->{request_identity} // 0)
+        && $packet->{ticket} == $peer->{ticket};
+    my $transport = $self->{service}->ticket_observation($peer->{ticket});
+    $peer->{transport} = $transport;
+    _error($transport->{failure}{diagnostic} // 'original request peer is no longer handed')
+        unless $transport->{state} eq 'handed' && $transport->{handles} == 1
+            && $transport->{parent} == $packet->{parent}
+            && $transport->{wall_ns} eq $packet->{admission_deadline_ns};
+    my (undef, $parent) = $self->_job($peer->{parent_grant});
+    _error('request parent is not its original active job')
+        unless $parent->{id} == $packet->{parent} && $parent->{phase} eq 'active';
+    $self->_context_live($peer->{parent_grant});
+    my $now = Math::BigInt->new(_now_ns());
+    _error('original request admission deadline expired') if grep {
+        $now->bcmp($_) >= 0
+    } $packet->{deadline_ns}, $packet->{admission_deadline_ns};
+    if ($peer->{job_grant}) {
+        my ($job, $record) = $self->_job($peer->{job_grant});
+        _error('request lacks its original child grant association') unless $job->{peer}
+            && refaddr($job->{peer}) == refaddr($peer) && $record->{id} == $peer->{job_id}
+            && $record->{parent} == $packet->{parent}
+            && $record->{deadline_ns} eq $packet->{deadline_ns};
+        $self->{ledger}->check_live($peer->{job_grant});
+    }
+    return;
+}
+sub _request_failed {
+    my ($self, $peer, $error) = @_;
+    # Mark failure before cancellation can reconcile the same peer again.
+    $peer->{request_failure} //= FSM::Support::ProcessSupervisor::_sanitize_control($error);
+    $peer->{request_state} = 'failed';
+    $self->_job_failed($peer->{job_grant}, $peer->{request_failure}) if $peer->{job_grant};
+    eval {
+        $self->{service}->retire($peer->{ticket});
+        $peer->{transport} = $self->{service}->ticket_observation($peer->{ticket});
+        1;
+    }
+        or $peer->{cleanup_error} //= FSM::Support::ProcessSupervisor::_sanitize_control($@);
+    return;
 }
 sub retire_peer {
     my ($self, $ticket) = @_; _owner($self);
@@ -280,13 +380,23 @@ sub reserve_job {
     my $snapshot = FSM::Support::ProcessSupervisor::Wire::decode_frame('client',
         FSM::Support::ProcessSupervisor::Wire::encode_frame('client', $args{snapshot}));
     _error('expected nested execution snapshot') unless $snapshot->{type} eq 'SPAWN';
+    return $self->_reserve_job($args{parent}, $snapshot);
+}
+sub _reserve_job {
+    my ($self, $parent, $snapshot, $peer) = @_; _owner($self);
     my $grant;
     my $ok = eval {
         FSM::Support::ProcessSupervisor::Reservation::_masked_preparation(sub {
-            $grant = $self->{ledger}->reserve_job(parent => $args{parent},
+            $self->_request_live($peer) if $peer;
+            $grant = $self->{ledger}->reserve_job(parent => $parent,
                 map { $_ => $snapshot->{$_} } qw(started_ns timeout_seconds));
             my $id = $self->{ledger}->describe($grant)->{id};
             $self->{jobs}{$id} = {grant => $grant, snapshot => $snapshot};
+            if ($peer) {
+                # Both original owners precede token generation and any return.
+                $peer->{job_grant} = $grant; $peer->{job_id} = $id;
+                $self->{jobs}{$id}{peer} = $peer;
+            }
             # Register in original admission order, not later native-start
             # order. A failed preparation still spends this job identity.
             $self->_bind_context($grant);
@@ -336,6 +446,7 @@ sub _before_context_allocation {
         && ($operation eq 'entropy_open' || $operation eq 'entropy_read');
     my ($entry, $record) = $self->_job($grant);
     $self->{ledger}->check_live($grant);
+    $self->_request_live($entry->{peer}) if $entry->{peer};
     _error('context entropy lacks original reserved job custody')
         unless $id == $record->{id} && $record->{phase} eq 'reserved'
             && $entry->{context_state} eq 'preparing' && $entry->{snapshot} && !$entry->{native}
@@ -358,6 +469,7 @@ sub _context_live {
     my ($entry, $record) = $self->_job($grant);
     _error('original job context is not prepared') unless ($entry->{context_state} // '') eq 'ready';
     $self->{ledger}->check_live($grant);
+    $self->_request_live($entry->{peer}) if $entry->{peer};
     return $self->{service}->parent_context($record->{id});
 }
 sub _job_failed {

@@ -973,8 +973,8 @@ returns false with an empty destination and retains the timeout cause. A signal
 that fills the destination or retires the peer before masking cannot be
 overwritten by stale state. Later EOF or repeated SPAWN closes the transport
 while the caller keeps any already-transferred packet for its own cleanup.
-This packet conveys data custody only; joining its original peer to aggregate
-job admission and ACCEPT/exec composition remains separately owned.
+This packet conveys data custody only. The aggregate now joins it to original
+peer/job admission as described below; ACCEPT/exec composition remains open.
 
 Parent registration now retains its original `preparing` record and spends
 its monotonic job identity before requesting a token from the OS random source.
@@ -1071,8 +1071,38 @@ cleanup ownership. Copied observations expose only the preparation state, not
 the context bytes. Fresh authority checks also precede native preparation,
 each pipe, each fork and live advancement. Revocation refuses the next effect.
 The original native fork masks remain responsible for the eventual exec mask.
-These changes create gated processes but do not release commands; matching
-accepted-request ownership and ACCEPT/exec composition are still open.
+These changes create gated processes but do not release commands. Original
+accepted-request ownership now joins them through the admission path below;
+matching gated readiness and ACCEPT/exec composition remain open.
+
+`Coordinator::admit_request($ticket)` explicitly selects one original accepted
+peer. Under the preparation mask, it transfers that peer's validated request
+directly into its retained record, joins the submitting parent's original active
+grant, and reserves one child grant. Both peer and child retain their association
+before the first token-source open or read. The method returns the original
+grant; the original inventory and copied peer observation also preserve its
+identity if a creator handler interrupts the return.
+
+For example, admitting the second of two pending requests cannot consume the
+first request or reuse its ticket. A repeated admission refuses without
+revoking the completed association. A handler that admits the same peer just
+before masking wins that single-use transition; the interrupted caller cannot
+overwrite or cancel it. A peer retired at that boundary creates no child grant.
+
+Each token and later native admission checks the original peer and transferred
+packet, matching parent and child grants, original source-parent authority,
+clipped execution deadline and fixed admission wall. None of these steps renews
+the handshake budget. Capacity refusal retains the transferred request without
+inventing a grant. Later failures preserve any spent original grant and their
+first cause for cleanup. Completed snapshot binding releases the redundant
+source snapshot slot; copied observations omit packet and context bytes.
+
+When service advancement observes EOF or an unexpected repeated request, or the
+owner explicitly retires the peer, reconciliation fails its request and cancels
+the associated job before further preparation. Descriptor charges remain held
+until exact whole-run cleanup. This admission method creates no job pipes or
+children and queues no ACCEPT. The following composition must match native
+gated readiness to the original peer before publication and eventual exec.
 
 Connection now offers `queue_accept($job)` for one tracked ACCEPT on the
 original connection, and `accept_publication` for a copied observation. The
