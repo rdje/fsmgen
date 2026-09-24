@@ -3444,115 +3444,14 @@ decomposes the architecture needed to move beyond that bounded foundation.
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.3`
   Status: `done`
   Goal: `Add asynchronous reserved-group launch gates inside the shared process owner.`
-  Acceptance: `After completed endpoint sibling .2, reserve both child slots and record each exact fork before release; qualify group creation, command membership, reservation departure, exec gating and partial-start cleanup. Preserve the synchronous legacy path and sealed public contract. Never reap a reservation before its last group signal or infer authority from an unacknowledged handoff. The 2026-09-23 director approval permits cleanup-first implementation and qualification before startup; it changes no process bound or real-capture admission.`
-  Verification: `The private reservation, gated command, shared capture, finite closure, reserved results/receipts and independent hostile handoff qualification are complete in the child leaves. Current-host native controls prove separate fork/wait identities, actual memberships, unreleased execution, finite escalation and descriptor closure, including unexpected reservation death around departure. Independent review repaired missed unjoined-command KILL and post-retirement test probes. This admits inactive coordinator integration only; Linux, routing, startup, full nested closure and full-CI/push qualification remain open.`
-  Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.3.5.2.2: qualify reservation death around handoff`
-  Children: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.3.1, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.3.2, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.3.3, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.3.4, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.3.5`
-
-- ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.3.1`
-  Status: `done`
-  Goal: `Record the director-approved cleanup-first dependency and bounded implementation sequence.`
-  Acceptance: `Replace the launch/startup cycle with cleanup implementation and qualification preceding the fixed capture driver. Preserve the selected protocol, original failures and spent compiler attempt, separate source-only driver commit, full-CI/push gates and unchanged adapter bounds. Name independently reviewable child leaves before any process change; synchronize live resume and browser-blocker facts.`
-  Verification: `Director answer on 2026-09-23: Yes—qualify nested cleanup first (Recommended). The task-tree integrity check and mdBook build pass; diff review confirms only task/resume/book boundary and associated containment/inventory records changed. The approval preserves process bounds, original failures, spent compiler evidence, the source-only driver commit and full-CI/push gates.`
-  Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.3.1: admit cleanup-first qualification`
-
-- ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.3.2`
-  Status: `done`
-  Goal: `Implement and qualify the private reservation-child lifetime before command launch.`
-  Acceptance: `Inside the shared process owner, implement bounded asynchronous reservation creation, acknowledged group establishment, acknowledged departure to the caller group, retirement and exact reaping. Record the fork under masked signals, retain identity through the last permitted group signal, close unrelated descriptors and fail closed on EOF or unknown status. Qualify success and partial-start/departure failures with independent bounded child observations and model-only retirement controls; do not route sealed callers or launch the startup probe.`
-  Verification: `The private Reservation component prepares bounded pipes, records its fork before restoring signals, admits group creation/departure only by acknowledgment, and retains the child until explicit signal retirement and exact nonblocking reaping. T1823 independently checks kernel membership, command wait truth, caller isolation, inherited-descriptor EOF, real silent/stuck children and partial failures. Model-only controls reject retired targets, ECHILD, unreapable children and uncertain absence. The focused endpoint/connection/service/architecture/receipt band passes Files=7, Tests=237. Initial test syntax exposed a fixture lexical-scope error, fixed before execution; all real controls passed on their first executed run. Normal callers, original capture, adapter limits and result schemas remain unchanged; Linux and complete nested closure are still unqualified.`
-  Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.3.2: qualify private reservation lifetime`
-
-- ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.3.3`
-  Status: `done`
-  Goal: `Compose a recorded command child with the reserved group and explicit exec release.`
-  Acceptance: `After .2, reserve both child slots before fork and create the command as the same owner's direct child. Require join acknowledgment before reservation departure and departure acknowledgment before exec becomes releasable. An explicit private release follows complete ownership publication; failure or cancellation before release cannot execute the command. Qualify fork, pipe, join, move, release and descriptor failures without touching original startup attempts or enabling routing.`
-  Verification: `The inactive GatedPair prepares command pipes and its Reservation before launch, records the command under masked signals, then requires join and departure acknowledgments plus explicit exec release. T1824 observes actual group membership, separate identities/streams, EOF, environment/argument bytes, umask, signal mask and exact waits. Cancellation at each pre-exec state, all pipe allocation cuts, sealing/close/fork/join/move/write failures, silent join, queued release and unknown wait controls retain failure and prohibit execution. A deliberately bypassed gate emits an execution witness despite a false release flag, proving that the independent output oracle rejects it. Guarded focused band passes Files=8, Tests=251. Aggregate coordinator accounting and production capture/closure remain the following owners; no original capture, compiler, routing or full CI was launched.`
-  Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.3.3: qualify gated command handoff`
-
-- ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.3.4`
-  Status: `done`
-  Goal: `Integrate the private gated pair with bounded capture, first failure and terminal identity.`
-  Acceptance: `After .3, use the reserved group in nonblocking capture and TERM/KILL advancement without changing the synchronous default or public result schema. Preserve command wait truth, earliest failure, original cleanup ownership and actual group absence; retain distinct command/reservation observations. Share the fixed cleanup envelope, retire group signalling before releasing identity, and reject uncertain cleanup. Qualify compatibility through focused engine/receipt/adapter controls; compiler and real capture remain unadmitted.`
-  Verification: `The shared stream owner, finite closure driver, reserved job facade and creator-bound receipt review are complete in the child leaves. Legacy callers and schemas remain unchanged. Focused real and modeled checks pass; independent hostile qualification remains sibling .5 before coordinator integration. Original startup/capture and Linux gaps remain explicit.`
-  Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.3.4.2.3: qualify reserved receipt ownership`
-  Children: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.3.4.1, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.3.4.2`
-
-- ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.3.4.1`
-  Status: `done`
-  Goal: `Give the shared capture reader explicit ownership of transferred gated-command streams.`
-  Acceptance: `Extract the existing bounded nonblocking stream read pass without changing legacy capture ordering, aggregate-prefix limits, control observations or closed results. Add a one-use gated-pair stream transfer only after its recorded command fork and acknowledged handoff, so capture and retirement cannot close the same descriptor. Qualify both transfer refusals and legacy reader behavior without enabling routing or launching original captures.`
-  Verification: `The existing nonblocking read body is byte-identical to predecessor 4b4cdcdd9 after extraction into the shared reader. GatedPair transfers open streams once into a retained empty plain record while signals are masked and relinquishes them before restoring signals. T1824 independently observes normal capture, failed masking, failed restoration and an actual queued signal interrupt; recipient ownership survives failed return, waits remain exact, and retirement never revisits transferred handles. T1825 uses real pipes without children to prove split binary bytes, control EOF/error distinctions, exact aggregate prefix and adjacent overflow rejection. The guarded endpoint/connection/service/architecture/receipt/reservation/capture band passes Files=9, Tests=255. Normal callers retain the same lifecycle and schema; reserved capture/cleanup integration remains .2.`
-  Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.3.4.1: establish capture stream ownership`
-
-- ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.3.4.2`
-  Status: `done`
-  Goal: `Integrate gated launch, shared capture and finite reservation-aware cleanup into the private engine.`
-  Acceptance: `After .1, prepare and retain the pair before starting it, expose explicit publication-controlled release, advance capture and cancellation without blocking, and share one fixed TERM/KILL envelope. Retain exact command waits, first failure, actual reserved-group absence and separate reservation closure; retire all signals before identity release. Preserve legacy callers and public schema, private cleanup identity and stage receipt compatibility. Focused real and model controls must pass before independent hostile sibling .3.5 or coordinator integration proceeds.`
-  Verification: `Children separately qualify finite closure, inactive launch/capture/results and creator-bound reserved receipt review. The guarded combined band passes Files=12, Tests=273. Command waits, reserved-group disappearance, reservation reaping and original cleanup identity retain distinct meanings. Independent hostile sibling .5, coordinator routing and complete nested closure remain open.`
-  Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.3.4.2.3: qualify reserved receipt ownership`
-
-  Children: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.3.4.2.1, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.3.4.2.2, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.3.4.2.3`
-
-- ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.3.4.2.1`
-  Status: `done`
-  Goal: `Compose finite nonblocking command-group and reservation closure.`
-  Acceptance: `Retain the pair before cleanup starts; cancel exec before any signal, stop gated commands before requesting reservation departure, and use acknowledged group authority only. Share one caller-supplied bounded TERM/KILL envelope, retire group signalling before reservation release, and preserve exact waits and uncertain absence. Qualify actual success, cancellation and escalation plus modeled unknown waits and expired deadlines. No launch routing or original capture.`
-  Verification: `GroupClosure composes cancellation, exact command polling, acknowledged group signals and reservation retirement without blocking or renewing the shared deadline. Real T1826 controls prove gate cancellation, separate waits, descriptor ownership, TERM/KILL escalation and surviving-descendant cleanup. The first run caught a pre-wait group probe returning native EPERM and an incorrect successful-exit requirement for reservation closure; exact command wait now precedes absence probing, and reservation wait/failure stays distinct from resource closure. Models reject uncertain absence, unknown waits, unacknowledged departure and renewed grace. Three deliberate source mutations fail independent ordering, wait-truth and newly available group-signal assertions. The focused band passes Files=10, Tests=261. Capture/result integration remains sibling .2; Linux and complete nested closure remain unqualified.`
-  Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.3.4.2.1: qualify finite group closure`
-
-- ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.3.4.2.2`
-  Status: `done`
-  Goal: `Join gated launch, shared capture, closure and terminal result identities.`
-  Acceptance: `After sibling .1, retain the pair before start, expose publication-controlled release, preserve the original execution wall and first failure, and compose the shared reader and closure driver. Keep command/group/reservation identities distinct, public schemas and cleanup identity unchanged, and sealed callers on the legacy strategy. Qualify focused real and modeled result/receipt compatibility before independent hostile qualification.`
-  Verification: `ReservedJob retains preparation before start, transfers capture before explicit release, preserves the original invocation wall, and joins finite closure with shared result publication. Only this inactive strategy latches failure by observation order; legacy precedence and routing remain unchanged. T1827 proves binary capture, success, nonzero/signal/exec/overflow/timeout failures, unexecuted publication cancellation, actual signal interruption during transfer, original cleanup identity and distinct command/group births. A modeled later closure failure retains the actual nonzero wait and separate incomplete facts. Real legacy/reserved execution agrees on every non-timing result field. Three source mutations reject changed failure precedence, aliased group identity and renewed invocation walls. Focused band passes Files=11, Tests=269. Historical own-group receipt review correctly refuses reserved births; sibling .3 owns compatible review without changing the retained sources. Coordinator/nested/Linux qualification remains open.`
-  Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.3.4.2.2: integrate reserved capture and results`
-
-- ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.3.4.2.3`
-  Status: `done`
-  Goal: `Qualify reserved-group receipt review without changing retained own-group capture sources.`
-  Acceptance: `After sibling .2, preserve distinct command and reservation/group births, original cleanup identity and exact closure facts in inactive receipt review. The historical adapter only accepts own-group identity; retain it and its captured evidence unchanged. Add explicit reserved identity compatibility with copied/replaced/uncertain receipt counterexamples before closing parent .4 or admitting coordinator routing. No original capture replay or fixture grant.`
-  Verification: `ReservedJob retains its original receipt, cleanup and policy separately from replaceable returned fields. ReservedReceipt compares the creator-held basis, distinct births, exact waits, retired signals, actual closure facts and capture closure without process operations. T1828 models compiler/outer/inner roles, accepts settled failed waits, and rejects copied/replaced receipts, altered stages/identities and incomplete ownership. One ordinary real Perl child exits nonzero and binds after exact cleanup. Four weakened predicates fail independent carrier, wait, PID and cleanup controls. The guarded combined band passes Files=12, Tests=273. Original ReceiptAdapter and spent capture sources are unchanged; no actual compiler/proxy stage transport, authentication, launch, release or nested qualification is inferred.`
-  Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.3.4.2.3: qualify reserved receipt ownership`
-
-- ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.3.5`
-  Status: `done`
-  Goal: `Independently qualify every reserved-group handoff and cancellation boundary.`
-  Acceptance: `After .4, prove real command/reservation identities, caller-group isolation, descriptor closure, actual wait truth and group absence across success, timeout, signal, overflow and partial launch failures. Use model-only controls for reused/retired identities and unreapable children; never signal unrelated targets. Keep original startup failures and Linux qualification gaps explicit. Only completed evidence admits coordinator integration .5.5.2.3.4; full nested closure still requires .5.5.2.4, .5.5.2.5 and .5.5.3.`
-  Verification: `The version-retrievable component evidence join covers current-host launch, handoff, cancellation, capture, wait and identity-retirement obligations. Child .1 repairs the native missed-KILL defect. Child .2 repairs test observation lifetime and adds independent reservation-death cuts. The guarded combined band passes Files=14, Tests=291; intentional false absence rejects. Coordinator integration is next, while Linux and original startup remain missing qualification legs.`
-  Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.3.5.2.2: qualify reservation death around handoff`
-
-  Children: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.3.5.1, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.3.5.2`
-
-- ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.3.5.1`
-  Status: `done`
-  Goal: `Reproduce and repair cancellation of an unjoined command after reservation departure.`
-  Acceptance: `Use a recorded direct child stopped before its join gate and independent native membership/stop observations. Cancel under the original finite envelope, prove whether reservation movement suppresses positive KILL, and rescue only independently retained unharvested direct children. Fix any missed target while retaining acknowledged group authority, exact waits, first failure, caller-group isolation and signal retirement. Add native and modeled controls before continuing the independent matrix; no original capture or unrelated target.`
-  Verification: `The native stopped child remains in the caller group while its reservation departs. The predecessor sends command TERM, reserved-group TERM/KILL and reservation KILL, but no command KILL; it returns with unknown command wait and incomplete cleanup. The independent owner safely rescues both recorded children. GroupClosure now retains the positive target until command join acknowledgment as well as any owned group target. Native membership, signal and exact-wait observers prove the fixed engine kills/reaps the unjoined command and reaps its reservation before rescue, preserving the caller group and first cancellation. The exact 4141c7ad2 predecessor fails five final native assertions; the fixed focused band passes Files=13, Tests=289. The first fixture mistakenly decoded normalized Perl status for a stopped child; documented CHILD_ERROR_NATIVE establishes the actual stop before defect reproduction. All native outcomes are consumed. Wider independent qualification remains sibling .2; no original capture or routing changed.`
-  Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.3.5.1: retain unjoined command kill authority`
-
-- ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.3.5.2`
-  Status: `done`
-  Goal: `Complete independent reserved-group handoff and cancellation qualification.`
-  Acceptance: `After child .1, join the existing component evidence with independent native process identities, caller isolation, descriptor closure, real wait/group absence and failure ordering across the complete launch/cancellation domain. Qualify safe model-only reused/retired/unreapable identities, keep Linux and original startup gaps explicit, and require all owned outcomes consumed before admitting coordinator integration. Add native reservation-death cuts before and after departure acknowledgment, retaining exact fork/wait/signal inventories, untouched caller group, closed descriptors and independently observed absence or explicitly unproved closure. Use bounded rescue only for recorded direct children; no replay of spent captures.`
-  Verification: `Child .1 moves native absence evidence before reservation retirement and retains exact wait consumption. Child .2 independently observes actual reservation death before/after departure with stopped joined commands, proves both native waits and exact descriptor closure, and joins the existing component oracles. Current-host component qualification is complete; coordinator/nested/Linux/startup guarantees are not inferred.`
-  Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.3.5.2.2: qualify reservation death around handoff`
-
-  Children: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.3.5.2.1, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.3.5.2.2`
-
-- ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.3.5.2.1`
-  Status: `done`
-  Goal: `Remove post-retirement numeric probes from reserved-process qualification.`
-  Acceptance: `Independently observe actual group absence while the recorded reservation identity remains unreaped and unretired; retain that observation for final assertions. Replace post-reap PID probes with exact child-wait consumption checks. Reject any observer attempt to probe retired or unowned identities, keep model-only fake identities away from native calls, and preserve all existing closure and failure assertions.`
-  Verification: `T1823 now requires exact ECHILD after the consumed wait without a retired PID probe. T1826/T1827 independently query group absence immediately before the recorded reservation retires, retain native result/errno and use them in final assertions. Only registered real reservations that moved and remain unreaped/unretired may be queried; synthetic controls stay outside that inventory. The guarded focused band passes Files=3, Tests=24. A changed retained observation reporting presence fails four closure subtests without any unowned syscall. Production code, captures and protocol bounds are unchanged. Native death cuts and evidence join remain sibling .2.`
-  Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.3.5.2.1: observe group absence before retirement`
-
-- ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.3.5.2.2`
-  Status: `done`
-  Goal: `Qualify native reservation death around departure and join the handoff evidence.`
-  Acceptance: `After child .1, kill only independently recorded reservation children before and after departure acknowledgment. Require native membership and EOF, exact command/reservation waits, pre-retirement group facts, closed descriptors, failure ordering and no exec release; rescue only actual unharvested direct children. Join existing real and modeled controls against the selected protocol without claiming Linux, original startup or nested qualification.`
-  Verification: `T1830 independently records native fork/wait/signal outcomes and pipe handles. It stops a joined TERM-ignoring command, kills only its recorded reservation and establishes pipe EOF without reaping. Before departure delivery, cleanup uses positive command KILL and preserves unproved group closure despite consuming both waits. After departure acknowledgment, actual group KILL and ESRCH permit resource closure while the original host error survives. All engine descriptors close and the separate execution witness reaches empty EOF. A targeted false-absence mutation fails the two pre-departure closure assertions while both cases consume all child outcomes. The full focused band passes Files=14, Tests=291. Saved compiler review passes without producer replay; historical sources/results remain unchanged. The retained component evidence join closes this component scope and admits inactive coordinator integration.`
-  Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.3.5.2.2: qualify reservation death around handoff`
+  Terminal: `version_object`
+  Revision: `d484510158a6f61ac41f8a50c3ee26c604fdf555`
+  Retrieval path: `docs/tasks/HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.md`
+  Retrieved SHA256: `dabfc36567ed0d1b6b6236a9936b54b96da328e5bb2e677abd5851cf8914c2ef`
+  Archived node count: `15`
+  Retention contract: `fsmgen_required_history`
+  Verification: `Exact predecessor retains the complete flat native-component subtree, original goal and full acceptance/verification/commit contracts. No nested compact terminal or live claim owner is contained. Native fork/wait, memberships, unreleased gates, cleanup, capture and receipt qualification remains current-host-only; Linux, routing, startup, full nested closure and full-CI/push qualification remain open. All active integration nodes remain live.`
+  Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.4.3.3.5.4.4.3.3.3.1: retain native components before outcome integration`
 
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.4`
   Status: `active`
@@ -3828,7 +3727,23 @@ decomposes the architecture needed to move beyond that bounded foundation.
   Status: `active`
   Goal: `Retain complete original execution metadata before closed-outcome consumption.`
   Acceptance: `Publish matching original job and Service execution outcome metadata before take_closed can consume it. Preserve full report and admission history through cancellation, EOF, delayed reporting and lost consumption returns. Returned copies cannot mutate retained outcomes. Qualify exact native cleanup and complete outcome agreement without exposing request release.`
-  Verification: `Lifetime reconciliation is qualified; preserve complete original job/execution metadata before closed-outcome consumption next.`
+  Verification: `Lifetime reconciliation is qualified. Child .1 first retains completed native-component topology and acceptance history before rollover; child .2 then preserves complete closed-outcome metadata.`
+  Commit: `pending`
+
+  Children: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.4.3.3.5.4.4.3.3.3.1, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.4.3.3.5.4.4.3.3.3.2`
+
+- ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.4.3.3.5.4.4.3.3.3.1`
+  Status: `done`
+  Goal: `Retain native-component topology and lifetime acceptance history before outcome integration.`
+  Acceptance: `Authenticate exact committed source, completed acceptance suffix and prior versioned manifests using independent measurements. After a complete tracked live claim-owner census, compact only the closed flat native-component subtree, preserving its original goal, full source identity and current-host-only qualification limits. Preserve all other original nodes and the execution-scope correction except explicit outcome-parent decomposition. Reject altered suffix and compact-source digests with the unchanged checker; change no behavior or ceiling.`
+  Verification: `Exact d484510158a6f61ac41f8a50c3ee26c604fdf555 source and completed suffix match independent cat-file/awk/wc/shasum measurements. Prior 145e74e4e3b7, 8f359f0c93c8 and 7f693cc49e72 versioned source/suffix manifests reverify. A complete tracked JSON/JSONL owner_task census admits the closed flat fifteen-node native-component subtree: no live claim owner or earlier compact terminal. Its original goal, full source identity and current-host-only qualification limits are retained. Every other original node field and execution-scope correction remains exact except explicit outcome-parent decomposition. The unchanged checker accepts the full fixture and rejects altered suffix and compact-source digests as sole failures; executable source, tests, book and ceilings stay exact.`
+  Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.4.3.3.5.4.4.3.3.3.1: retain native components before outcome integration`
+
+- ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.4.3.3.5.4.4.3.3.3.2`
+  Status: `active`
+  Goal: `Preserve complete original execution metadata before closed-outcome consumption.`
+  Acceptance: `Retain matching original job and full Service execution observation before take_closed consumes the original record. Preserve first failure, admission and report history through cancellation, EOF and lost consumption returns. Returned copies cannot mutate retained nested metadata; verify complete outcome agreement and exact native cleanup. Keep explicit request release separate.`
+  Verification: `Native-component and acceptance-history retention is complete. Preserve complete original job/execution metadata before closed-outcome consumption next.`
   Commit: `pending`
 
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.4.3.3.5.4.4.4`
@@ -4543,7 +4458,7 @@ decomposes the architecture needed to move beyond that bounded foundation.
 
 ## Current Frontier
 
-Current frontier: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.4.3.3.5.4.4.3.3.3` retains complete original job/execution metadata before closed-outcome consumption. Outer .4 then exposes request release. Preserve original owners, walls, first failures, uncertainty, spent compiler evidence and full-CI/push gates.
+Current frontier: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.4.3.3.5.4.4.3.3.3.2` preserves complete original job/execution metadata before closed-outcome consumption. Outer .4 then exposes request release. Preserve original owners, walls, first failures, uncertainty, current-host qualification limits, spent compiler evidence and full-CI/push gates.
 
 Architecture audit `.1` is complete. Decision `0032` selects one public
 `.vial` source language, private immutable `VIALSemanticIR` and
@@ -7150,49 +7065,29 @@ whole regression band. The original startup/proxy/compiler producers, full CI
 and push did not run. Exact predecessor evidence remains unchanged; this live
 correction supplies its proper scope and is reflected in the canonical fact/book.
 
-## Acceptance Checklist (.19.2.3.1.2.2.5.5.2.3.4.3.3.5.4.4.3.3.1)
+## Acceptance Checklist (.19.2.3.1.2.2.5.5.2.3.4.3.3.5.4.4.3.3.3.1)
 
-- [x] **ROOT CAUSE (WHY + WHERE)** — Effect-history `git log -S` locates the
-  first completed suffix heading at b49dd4da487c88dd8a11d952e8ab07ed5e01bbb2.
-  Exact 145e74e4e has 7189 task lines; completed reporting evidence needs bounded
-  retention before advancement and lifetime integration expands the live tree.
-- [x] **ADDRESSED (verified)** — Effect-history re-derivation reconstructs source
-  1271333 bytes and suffix 55 lines/4095 bytes/two sections. Independent git
-  cat-file, awk, wc and shasum agree: full source SHA-256
-  8a5c38ea75e09fb9f74c78ef7cd6d43e2deb98ee8a1aba072394dc6de2168ff9;
-  suffix 31d6f2edcd265afe963a01c978041e69ea16d7477400760c32f86e1cdd581e73.
-  Prior 8f359f0c93c8, 7f693cc49e72 and 736da11ca746 source/suffix/versioned
-  manifest chains reverify. Every original node field and execution-scope
-  correction remains exact except declared integration-parent decomposition;
-  three owned children distinguish history, lifetime and outcome retention.
-  Falsification: unchanged checker accepts the full fixture and rejects altered
-  suffix and source digests separately as sole failures. Durability: committed
-  manifest and exact Git sources preserve history; ignored .artifacts/effect-history-*
-  logs/control JSON are a named gap. Consumed source/suffix copies, measurements,
-  fixture and runner are removed. Product source, tests, book and ceilings stay exact.
-- [x] **NO REGRESSION** — Effect-history task integrity and `knowledge-map: OK`
-  preserve routing; staged doctrines verify paired retention metadata. No native
-  fixture, original producer, full CI or push runs for this history-only slice.
-
-## Acceptance Checklist (.19.2.3.1.2.2.5.5.2.3.4.3.3.5.4.4.3.3.2)
-
-- [x] **ROOT CAUSE (WHY + WHERE)** — Lifetime probes fail at t/1863-process-execution-lifetime.t line 294.
-  Actual E return loss became parent-authority revocation; the adjacent retained-cause probe
-  at t/1863-process-execution-lifetime.t line 399. observes later report refusal replacing native failure.
-- [x] **ADDRESSED (verified)** — Lifetime re-derivation: T1863 passes fourteen groups.
-  Reconcile before Service, request liveness and closed consumption, including lost native returns.
-  Original confirmed native truth and matching Service wall select unchanged execution lifetime;
-  admission/ancestor limits, cancellation/EOF and uncertainty remain authoritative.
-  Caught/retained native causes precede recovery/cleanup; cleanup failure cannot replace the original call error.
-  Actual E, binary output and creator signals qualify those boundaries. The packet-order
-  regression preserves the established original-packet diagnostic; all initial native censuses close.
-  Falsification: eleven isolated defects reject at intended oracles: Service ordering, omitted
-  native report, cached lifetime, Service-only authority, consumption ordering, late native cause,
-  omitted retained cause, later error precedence, skipped ancestor, unobserved lost return and cleanup error replacement.
-  Identical positive passes and every END census closes. Durability: committed tests/book/fact/source;
-  ignored .artifacts/execution-lifetime-* logs/control JSON are a named gap owned by independent
-  qualification .19.2.3.1.2.2.5.5.2.3.4.6. Consumed runners, copies and book output are removed.
-  Complete closed-outcome metadata and explicit request release retain their separate owners.
-- [x] **NO REGRESSION** — Lifetime final band: `All tests successful.` `Files=45, Tests=423`;
-  syntax, mdBook build/HTML assertions and `knowledge-map: OK` pass; staged doctrines/hooks apply.
-  Browser visual QA, Linux, original producers, full CI and push retain their existing gates.
+- [x] **ROOT CAUSE (WHY + WHERE)** — Outcome-history `git log -S` locates the
+  first suffix heading at ee83fbe92f42b9ab782a6ea42c83a367bd11e94b.
+  Exact d48451015 has 7198 task lines; completed native-component topology and
+  lifetime evidence need exact bounded retention before outcome integration.
+- [x] **ADDRESSED (verified)** — Outcome-history re-derivation reconstructs source
+  1274794 bytes and suffix 46 lines/3756 bytes/two sections. Independent git
+  cat-file, awk, wc and shasum agree with source SHA-256
+  dabfc36567ed0d1b6b6236a9936b54b96da328e5bb2e677abd5851cf8914c2ef
+  and suffix 09d95aa1b9eab8a9e834e7d9d21f23b067283997df4b52e0842f214e38ad6bc0.
+  Prior 145e74e4e3b7, 8f359f0c93c8 and 7f693cc49e72 versioned source/suffix
+  manifest chains reverify. The complete tracked JSON/JSONL owner_task census
+  admits the closed flat fifteen-node native-component subtree; no live claim
+  owner or earlier compact terminal is contained. Original goal, source identity
+  and current-host-only qualification limits are retained. All other original
+  node fields and the execution-scope correction stay exact except explicit
+  outcome-parent decomposition. Falsification: unchanged checker accepts the full
+  fixture and rejects changed suffix and compact-source digests as sole failures.
+  Durability: committed compact terminal, manifest and exact Git sources preserve
+  history. Ignored .artifacts/outcome-history-* logs/control JSON are a named gap;
+  consumed source/suffix copies, measurements, fixture and runner are removed.
+  Product source, tests, book behavior and containment ceilings remain unchanged.
+- [x] **NO REGRESSION** — Outcome-history task integrity and `knowledge-map: OK`
+  preserve routing; staged doctrines qualify paired retention metadata. No native
+  fixture, original producer, full CI or push runs in this history-only slice.
