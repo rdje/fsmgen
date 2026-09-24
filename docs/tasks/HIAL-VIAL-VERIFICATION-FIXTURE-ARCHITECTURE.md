@@ -3714,10 +3714,26 @@ decomposes the architecture needed to move beyond that bounded foundation.
   Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.4.3.3.4.1: retain completed transport publication history`
 
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.4.3.3.4.2`
-  Status: `pending`
+  Status: `active`
   Goal: `Bind original grant contexts and snapshots before native job preparation.`
   Acceptance: `Publish root/nested contexts only for original live ledger grants and recheck retained capacity and clipped deadlines at each token allocation. Retain original Service context preparation before entropy; bind monotonic identities in admission order. Apply the qualified pure replacement before native snapshot custody moves, preserving original execution bytes and first failure. Qualify actual entropy, original identity, resource credit and interruption/cleanup; decompose component hooks from aggregate integration as needed. No exec release.`
-  Verification: `Pending the owning implementation and independent qualification; preserve spent compiler evidence and original startup/full-CI/push gates.`
+  Verification: `Child .1 now exposes and qualifies original parent token admission at each native entropy open/read under preparation masking, using weak native-handle observers that do not prolong local custody. Child .2 remains responsible for binding those effects and pure snapshots to original aggregate grants and held scratch credit before native preparation.`
+  Commit: `pending`
+
+  Children: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.4.3.3.4.2.1, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.4.3.3.4.2.2`
+
+- ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.4.3.3.4.2.1`
+  Status: `done`
+  Goal: `Admit parent token effects through original retained authority.`
+  Acceptance: `Expose an optional allocation callback through Endpoint new_job_token and Service register_parent, preserving existing no-callback APIs. Invoke caller checks with original Service/parent and existing create/entropy operation labels under preparation masking before every open/read. Recheck original retained parent, endpoint and lifetime before and after caller checks. Refusal throws before the effect, retains first preparation failure and spent identity, and releases scoped entropy handles. Qualify real native reads, weak handle observations, short reads, creator signals, expiry/revocation and argument/owner refusals without printing authority bytes. This component does not establish aggregate grant or scratch-credit binding.`
+  Verification: `Endpoint new_job_token forwards its optional existing allocation check before every entropy open/read. Service register_parent supplies original Service/id and operation under preparation masking, with original retained-parent/endpoint/lifetime checks before and after caller admission; internal checks also run without an external callback. Checks refuse by throwing, preserving existing void-return semantics, first failure and spent identity. T1849 observes compiled actual sysreads with preserved aliases, weak native handles, bounded short reads, clock cuts/revocation, actual creator signals/masks and copied/inherited refusal. The identical isolated fixture loader passes; six defects reject with unchanged endpoint census. Final selected band passes Files=20, Tests=225. Aggregate grant and scratch-credit binding remain child .2.`
+  Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.4.3.3.4.2.1: admit original parent token effects`
+
+- ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.4.3.3.4.2.2`
+  Status: `pending`
+  Goal: `Bind original aggregate grants to parent contexts and execution snapshots.`
+  Acceptance: `Use child .1 to check the original live ledger grant, monotonic admission identity, current run and separately retained scratch credit before every context entropy effect. Retain root/nested context and transformed snapshot before native preparation; preserve original invocation bytes and all inclusive bounds. Register nested identities in admission order and preserve original failure/cleanup on interrupted preparation or publication. Qualify actual entropy, root/nested grants, original/copy refusals, capacity/deadline cuts and exact closure; no exec release.`
+  Verification: `Pending the qualified token admission boundary; original accepted-request association remains sibling .4.3.`
   Commit: `pending`
 
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.4.3.3.4.3`
@@ -4446,7 +4462,7 @@ decomposes the architecture needed to move beyond that bounded foundation.
 
 ## Current Frontier
 
-Current frontier: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.4.3.3.4.2` binds original grant contexts and snapshots before native job preparation. Completed transport-publication history is exactly retrievable. Service request/job association and tracked ACCEPT through masked write admission are qualified. Original request transfer, parent-context recovery and pure snapshot replacement are qualified. Later children join aggregate gated admission and final exec rechecks. Completed native topology/history remain version-retrievable; live claim owners stay visible. Streaming, fair composition and independent qualification remain later children. Preserve original failures, spent compiler evidence and full-CI/push gates.
+Current frontier: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.4.3.3.4.2.2` binds original aggregate grants and held scratch credit to qualified token effects and detached execution snapshots. Completed transport-publication history is exactly retrievable. Service request/job association and tracked ACCEPT through masked write admission are qualified. Original request transfer, parent-context recovery and pure snapshot replacement are qualified. Later children join aggregate gated admission and final exec rechecks. Completed native topology/history remain version-retrievable; live claim owners stay visible. Streaming, fair composition and independent qualification remain later children. Preserve original failures, spent compiler evidence and full-CI/push gates.
 
 Architecture audit `.1` is complete. Decision `0032` selects one public
 `.vial` source language, private immutable `VIALSemanticIR` and
@@ -7082,3 +7098,38 @@ correction supplies its proper scope and is reflected in the canonical fact/book
   All original task IDs and the execution-scope correction stay live.
   Book, product behavior, ceilings and checker are unchanged; no native
   producer, original startup, full CI or push is run for this rollover.
+
+
+## Acceptance Checklist (.19.2.3.1.2.2.5.5.2.3.4.3.3.4.2.1)
+
+- [x] **ROOT CAUSE (WHY + WHERE)** — Parent token admission: `git log -S`
+  locates the original token helper at 467a40261313117d9450eedfa199d28d9cdf7a44
+  and Service registration at 5f8be37f1ac107cc486a9e9c435b33871391e796.
+  The retained allocation hook comes from ea2424e72b0950f18b586f9d5ce44aff9b307b19;
+  the current token/Service interfaces did not forward those effect-local checks. Whole-token lifetime checks
+  cannot replace authority and credit checks before each native open/read.
+- [x] **ADDRESSED (verified)** — Parent token re-derivation: T1849 compiles
+  actual native reads through an alias-preserving observer and weakly observes
+  source handles without extending their scopes. Literal operation traces prove
+  checks precede open/read; eight native short reads obtain separate admission
+  and the unchanged 32-byte token width. No authority bytes enter diagnostics.
+  Original Service/id, preparing state and mask are observed at every callback;
+  caller errors, selected inclusive clock cuts, revocation and no-callback expiry
+  prevent the next effect and retain first failure/spent identity. Real pending
+  creator signals observe ready context and closed entropy scope; an exact
+  inherited-child wait qualifies refusal before callbacks. Falsification uses
+  the identical positive fixture loader so CORE read interception remains active:
+  missing callback, late read check, stale post-check authority, unguarded
+  lifetime, copied owner and missing mask reject the intended assertions with
+  native exits 6, 5, 1, 2, 2 and 2. Each endpoint census is unchanged. All
+  outcomes are consumed; exact mutant/fixture sources, runner and book build
+  are removed. Durability: tracked source/test/book/fact/task preserve reruns;
+  .artifacts/parent-token-admission-* raw logs remain a named durability gap.
+- [x] **NO REGRESSION** — The guarded Endpoint/Service/aggregate band reports
+  `All tests successful. Files=20, Tests=225`; focused parent admission/context
+  and all Perl syntax checks pass. mdBook builds and generated HTML contains the
+  allocation callback and its void success contract. Knowledge Map, claim census
+  and staged doctrines cover synchronized metadata. Browser visual QA remains
+  separately blocked. Existing T1827 runs bounded fixture commands; the new
+  token API releases none. Original startup/proxy/compiler producers, full CI
+  and push remain gated; original aggregate grant/credit binding is next.

@@ -998,6 +998,28 @@ slot permits a fresh higher identity; it cannot reuse the old one. Invalid
 lifetimes refuse before spending an identity or reading entropy. Pre-mask
 re-entry also cannot overwrite a registration completed by the handler.
 
+`register_parent($id, $deadline_ns, $check)` now accepts an optional allocation
+check. Before each native token-source open or read, it receives the original
+Service, parent identity, `create` role and `entropy_open` or `entropy_read`
+operation. Registration keeps its preparation mask and rechecks the original
+parent, endpoint and lifetime both before and after that callback. These internal
+checks also run when the optional callback is absent.
+
+Allocation checks refuse by throwing; their return value is ignored, matching
+the existing endpoint allocation contract. For example, a check can reject an
+expired grant before the OS source opens, or before another short read. A check
+that revokes the parent or consumes its remaining lifetime cannot authorize the
+following effect by returning normally. Failure preserves the spent parent
+identity and first preparation cause; the local entropy scope releases its handle.
+
+The lower-level `Endpoint::new_job_token($check)` passes only role and operation;
+its caller owns authority checks and signal-mask scope. Its original no-argument
+form remains valid.
+Native read observers verify each attempt without publishing token bytes, and
+weak handle observations avoid prolonging the local source during unwinding.
+The aggregate coordinator still needs to bind these checks to its original grant
+and retained scratch descriptor credit before using the new composition.
+
 For example, expiry between token generation and context construction retains
 a timeout, not a ready authority. A lost native token return retains a host
 failure even though the OS read occurred. A signal observes the complete ready
@@ -1134,6 +1156,7 @@ scripts/run_with_ram_guard.sh -- prove -Iperl -It/lib t/1845-process-retained-pa
 scripts/run_with_ram_guard.sh -- prove -Iperl -It/lib t/1846-process-snapshot-context.t
 scripts/run_with_ram_guard.sh -- prove -Iperl -It/lib t/1847-process-write-admission.t
 scripts/run_with_ram_guard.sh -- prove -Iperl -It/lib t/1848-process-service-job-publication.t
+scripts/run_with_ram_guard.sh -- prove -Iperl -It/lib t/1849-process-parent-token-admission.t
 ```
 
 For native stopped-child observations, decode `${^CHILD_ERROR_NATIVE}` with

@@ -117,8 +117,9 @@ sub parent_observation {
 }
 
 sub register_parent {
-    _error('expected job identity and original ancestor-clipped deadline') unless @_ == 3;
-    my ($self, $id, $deadline_ns) = @_; _owner($self);
+    _error('expected job identity, original deadline and optional token admission')
+        unless @_ == 3 || (@_ == 4 && ref($_[3]) eq 'CODE');
+    my ($self, $id, $deadline_ns, $check) = @_; _owner($self);
     FSM::Support::ProcessSupervisor::Wire::_uint($id, '4294967295', 1);
     my $deadline = _time($deadline_ns);
     FSM::Support::ProcessSupervisor::Reservation::_masked_preparation(sub {
@@ -134,7 +135,13 @@ sub register_parent {
         $self->{high_parent} = 0 + $id;
         my $ok = eval {
             $self->_check_parent_live($id, $record);
-            $record->{token} = FSM::Support::ProcessSupervisor::Endpoint::new_job_token();
+            $record->{token} = FSM::Support::ProcessSupervisor::Endpoint::new_job_token(sub {
+                # Each native open/read needs current original authority. A
+                # caller check can revoke it or consume time before returning.
+                $self->_check_parent_live($id, $record);
+                $check->($self, $id, @_) if $check;
+                $self->_check_parent_live($id, $record);
+            });
             $self->_check_parent_live($id, $record);
             $record->{context} = $self->{run}->context_for($id, $record->{token});
             $self->_check_parent_live($id, $record);

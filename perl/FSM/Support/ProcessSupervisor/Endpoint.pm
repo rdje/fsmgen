@@ -74,8 +74,9 @@ sub _random_bytes {
 }
 
 sub new_job_token {
-    _fail('unexpected token arguments') if @_;
-    return _random_bytes(32);
+    _fail('expected optional token allocation admission')
+        unless @_ == 0 || (@_ == 1 && ref($_[0]) eq 'CODE');
+    return _random_bytes(32, $_[0]);
 }
 
 sub _lstat { return lstat($_[0]) }
