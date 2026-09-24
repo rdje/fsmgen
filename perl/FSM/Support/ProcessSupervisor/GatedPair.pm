@@ -480,7 +480,7 @@ sub retire {
 sub observation {
     my ($self) = @_; _owner($self);
     _error('unexpected observation arguments') unless @_ == 1;
-    return {map { $_ => $self->{$_} } qw(phase command_pid birth_sec birth_usec
+    return {map { $_ => $self->{$_} } qw(phase original_deadline command_pid birth_sec birth_usec
         command_reaped command_status command_authority joined released release_attempted release_uncertain retired failure)};
 }
 

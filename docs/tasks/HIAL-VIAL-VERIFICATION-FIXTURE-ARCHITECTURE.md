@@ -3739,11 +3739,11 @@ decomposes the architecture needed to move beyond that bounded foundation.
   Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.4.3.3.5.4.2: guard original wrapper execution admission`
 
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.4.3.3.5.4.3`
-  Status: `active`
+  Status: `done`
   Goal: `Join root execution release to original live aggregate ownership.`
   Acceptance: `Expose root release through its original retained job grant and Pair. Freshly require original root ledger/context, unchanged invocation wall, live native readiness and command custody immediately before every E attempt; retain native truth and first failure through deferred/retried/interrupted effects. Qualify actual command bytes/environment/context, copied/foreign/expired/revoked no-exec cuts and bounded cleanup without activating ordinary callers.`
-  Verification: `Child .1 retains completed wrapper evidence and eligible flat transport/context topology before the unchanged rollover milestone. Child .2 qualifies original aggregate endpoint, Service, job-entry, bound-context and native-owner associations through later checks; child .3 then joins root E release to that original live grant/context/native basis. Keep creator launch outside preparation masks and retain native truth through interruptions. Nested Service joining remains sibling .4.`
-  Commit: `pending`
+  Verification: `Completed history, original aggregate association and root-release children qualify the original ready-root execution boundary. Root queuing is single-use, every native E checks original authority and fixed walls, and confirmed/uncertain truth survives interruption. Nested Service joining remains sibling .4.`
+  Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.4.3.3.5.4.3.3: release root through original aggregate admission`
 
   Children: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.4.3.3.5.4.3.1, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.4.3.3.5.4.3.2, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.4.3.3.5.4.3.3`
 
@@ -3762,17 +3762,17 @@ decomposes the architecture needed to move beyond that bounded foundation.
   Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.4.3.3.5.4.3.2: retain original aggregate owner associations`
 
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.4.3.3.5.4.3.3`
-  Status: `active`
+  Status: `done`
   Goal: `Release the original root job through fresh aggregate execution admission.`
   Acceptance: `After original associations are qualified, expose single-use root release through its original retained grant. Before each actual E require original open aggregate/root ledger, context and unchanged invocation wall, original native wrapper/Pair readiness and live command custody; refuse copied, foreign, nested, revoked or expired inputs. Retain original confirmed/uncertain native truth and first failure through retries and interrupted returns; qualify real command bytes/environment/context, no-exec controls and exact bounded cleanup. Keep ordinary adapters inactive and nested transport joining separate.`
-  Verification: `Original association child .2 is qualified; next join single-use root release to fresh original grant/context/native checks without introducing nested release or ordinary routing.`
-  Commit: `pending`
+  Verification: `Coordinator.release_root now queues one original active ready root request under masking and forwards a retained final E check. Fresh original aggregate, root grant, bound context, native wrapper/Pair custody and unchanged queued/ledger/native walls are required at every attempt; admission is rechecked after context lookup. Refusal publication does not require another successful mask. Copied, foreign, inherited, active nested and unready inputs refuse. Original confirmed or uncertain native truth survives interrupted returns and cannot replay. T1859 verifies actual binary invocation/environment/context, cwd, umask and exec masks, deferral/transient retries, creator signals, pre-mask reentry, native command/reservation death and exact cleanup. Eight isolated defects reject at intended assertions; copied positive and every native census close. Fixture repairs explicitly restore its deliberately failed creator mask and retain reservation identity until cleanup, matching T1830. Final selected band passes 41 files/375 tests; syntax, book build/HTML and Knowledge Map pass. Ordinary callers remain inactive for this strategy; nested joining, Linux, browser visual qualification and original producer/full-CI/push gates remain open.`
+  Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.4.3.3.5.4.3.3: release root through original aggregate admission`
 
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.4.3.3.5.4.4`
-  Status: `pending`
+  Status: `active`
   Goal: `Join nested execution admission and reconcile original confirmed effects.`
   Acceptance: `Bind every nested E attempt to the original peer/grant/parent/context and Service quiet-input/full-ACCEPT checks. Publish original Service grant custody before E, retain confirmed original Pair truth through creator interruptions, and report that truth before consuming closed peer outcomes. Switch request liveness only from the original admitted effect without renewing walls or treating copied observations as permission. Qualify incomplete input/publication, native loss, cancellation/EOF/expiry, lost E returns, delayed reports and actual nested environment/output with exact bounded subtree cleanup; do not activate ordinary routed adapters.`
-  Verification: `Pending root child .3; streaming and fair-loop owners remain separate.`
+  Verification: `Root child .3 is qualified. Next retain original Service grants before nested E, reconcile confirmed original native effects before closed-peer consumption and make request liveness execution-phase-aware. Retain original admission/execution walls; streaming and fair-loop owners remain separate.`
   Commit: `pending`
 
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.4.4`
@@ -4480,7 +4480,7 @@ decomposes the architecture needed to move beyond that bounded foundation.
 
 ## Current Frontier
 
-Current frontier: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.4.3.3.5.4.3.3` joins original root execution release to the now-retained aggregate owner/context/native associations. Require fresh original ledger, fixed invocation wall, native readiness and custody before every E attempt; preserve confirmed or uncertain native truth through interruptions. Nested Service joining remains outer sibling .4. Preserve spent compiler evidence and full-CI/push gates.
+Current frontier: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.4.3.3.5.4.4` joins nested E admission to original Service grants and reconciles confirmed native effects before closed-peer consumption. Keep historical admission walls and original execution lifetimes distinct; only original confirmed effects select the latter. Root release is qualified. Retain completed root evidence before the next rollover milestone; preserve spent compiler evidence and full-CI/push gates.
 
 Architecture audit `.1` is complete. Decision `0032` selects one public
 `.vial` source language, private immutable `VIALSemanticIR` and
@@ -7155,3 +7155,37 @@ correction supplies its proper scope and is reflected in the canonical fact/book
   continuity. The active index is synchronized with the precise task frontier.
   Linux and browser visual review remain unqualified. Original startup/proxy/
   compiler producers, full CI and push did not run.
+
+
+## Acceptance Checklist (.19.2.3.1.2.2.5.5.2.3.4.3.3.5.4.3.3)
+
+- [x] **ROOT CAUSE (WHY + WHERE)** — Root release: at exact predecessor
+  5dd05e9412a98156537ea72619cb9cd8f9512fe2, a Perl can(release_root) probe
+  reports original aggregate root execution release is absent at -e line 1.
+  Native gating and aggregate associations exist, but no root API joins them.
+- [x] **ADDRESSED (verified)** — Root re-derivation: T1859 executes the original
+  bounded command and checks byte arguments/environment/context, cwd, umask and
+  exec masks. It observes single-use queuing, fresh deferral/retry admission,
+  changed/revoked/expired authority, actual native loss, creator interruptions,
+  mask failure, confirmed versus uncertain E and exact waits/pipes/endpoint cleanup.
+  Falsification: isolated ignored-check, root-kind, aggregate-phase, first-failure,
+  original-wall, stale-context-return, mask-dependent and late-first-failure
+  defects fail their intended assertions. Ignored-check exits 3; the others
+  exit 1. Copied positive exits zero; every run prints native-end-census: closed.
+  The first fixture run left its intentionally failed restoration mask blocked;
+  a real mask assertion and explicit fixture restoration repair that test state.
+  A later fixture wrongly demanded reservation reaping before cleanup; T1830 and
+  Reservation.advance establish EOF detection with retained unharvested identity.
+  The corrected fixture verifies detection before cleanup and exact waits after.
+  Durability: committed T1859, source, book and fact preserve the reverify route;
+  ignored .artifacts/root-release-* raw logs/control JSON are a named gap.
+  Consumed variant copies, runner and rendered book are removed. Normal callers
+  and nested execution remain separate owners; no original producer is replayed.
+- [x] **NO REGRESSION** — Root final guarded component band reports
+  All tests successful. Files=41, Tests=375. Coordinator, GatedPair and T1859
+  syntax pass; mdBook build and root-release HTML inspection pass. Knowledge Map
+  preserves all questions; dropping unused card tag metadata resolves the initial
+  one-line containment overage. Claim inventory, task integrity and staged doctrines
+  verify continuity.
+  Linux/browser visual qualification and original startup/proxy/compiler,
+  full CI and push remain outside this slice's verified scope.

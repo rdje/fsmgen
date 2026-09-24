@@ -974,7 +974,7 @@ that fills the destination or retires the peer before masking cannot be
 overwritten by stale state. Later EOF or repeated SPAWN closes the transport
 while the caller keeps any already-transferred packet for its own cleanup.
 This packet conveys data custody only. The aggregate now joins it to original
-peer/job admission and gated ACCEPT as described below; exec release remains open.
+peer/job admission and gated ACCEPT as described below; nested exec release remains open.
 
 Parent registration now retains its original `preparing` record and spends
 its monotonic job identity before requesting a token from the OS random source.
@@ -1073,7 +1073,7 @@ each pipe, each fork and live advancement. Revocation refuses the next effect.
 The original native fork masks remain responsible for the eventual exec mask.
 These changes create gated processes but do not release commands. Original
 accepted-request ownership now joins them through the admission and gated ACCEPT
-paths below; final exec release remains open.
+paths below; explicit root release follows below and nested release remains open.
 
 The aggregate also retains the identities of its original Endpoint, Service and
 job entries. Every later owner lookup checks the complete retained job inventory;
@@ -1348,11 +1348,32 @@ or uncertain native execution observations survive interrupted advancement.
 The fixture observes actual gate writes, binary command output, original exec
 masks, exact waits and closed pipe inventories, including its failure cleanup.
 
-This native/wrapper boundary is ready for the aggregate owner; connecting its
-checks to original root/nested grants and Service execution lifetime remains open.
+`Coordinator::release_root($grant)` now queues execution for the original active,
+ready root job. The original grant must come from that coordinator; copied,
+foreign, inherited, nested and unready owners refuse. Queuing is single-use and
+performs no E write. A creator request that wins just before masking remains
+the sole request; a later caller cannot overwrite or cancel it.
 
-Normal callers retain the existing own-group supervisor. Aggregate execution
-release, nested routing and complete subtree qualification
+Every actual E attempt rechecks the original open aggregate, active root ledger,
+bound context, native wrapper/Pair and live command/reservation custody. The
+ledger wall must still match both the queued wall and the native Pair's original
+invocation deadline. Context lookup is followed by another admission check, so
+revocation during that lookup cannot authorize E. Deferral and transient writes
+repeat these checks. Closed authority, changed walls or an existing failure
+refuse execution and retain bounded cleanup ownership.
+
+For example, after preparing and starting a root, advance it until its copied
+native phase is `ready`, call `release_root($coordinator->root)`, then continue
+`advance_job($coordinator->root)`. `release_requested` records the request only.
+Fresh original native observations retain `released` after a confirmed E, or
+`release_uncertain` after a lost syscall return; an interrupted return erases
+neither fact and never permits replay. Failed signal-mask restoration publishes
+aggregate refusal without depending on another successful mask operation.
+The root fixture checks actual argument/environment/context bytes, cwd, umask,
+exec signals, native child loss, pipe EOF and exact waits through cleanup.
+
+Normal callers retain the existing own-group supervisor. Nested execution
+release and Service lifetime reconciliation, routing and complete subtree qualification
 still have separate open owners. These private components
 establish no nested result or permission to run the retained startup proxy.
 Their tests exercise the current host; Linux qualification remains open.
@@ -1385,6 +1406,7 @@ scripts/run_with_ram_guard.sh -- prove -Iperl -It/lib t/1848-process-service-job
 scripts/run_with_ram_guard.sh -- prove -Iperl -It/lib t/1849-process-parent-token-admission.t
 scripts/run_with_ram_guard.sh -- prove -Iperl -It/lib t/1850-process-aggregate-context.t t/1851-process-request-association.t t/1852-process-gated-accept.t
 scripts/run_with_ram_guard.sh -- prove -Iperl -It/lib t/1858-process-aggregate-owners.t
+scripts/run_with_ram_guard.sh -- prove -Iperl -It/lib t/1859-process-root-execution.t
 scripts/run_with_ram_guard.sh -- prove -Iperl -It/lib t/1853-process-exec-admission.t
 scripts/run_with_ram_guard.sh -- prove -Iperl -It/lib t/1854-process-input-inspection.t
 scripts/run_with_ram_guard.sh -- prove -Iperl -It/lib t/1855-process-service-execution-admission.t

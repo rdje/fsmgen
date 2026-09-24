@@ -14,7 +14,8 @@ use FSM::Support::ProcessSupervisor::Wire ();
 
 # Inactive native owner. Original grants retain root/nested gated jobs through
 # bounded cleanup, alongside original accepted-peer descriptor grants.
-# Execution release, outcome delivery and fair scheduling follow.
+# Root execution release is explicit; nested release, outcome delivery and
+# fair scheduling follow.
 # Preparing this object allocates no descriptor, token, path or process.
 my $COST = FSM::Support::ProcessSupervisor::Endpoint::resource_cost();
 my $JOB_COST = FSM::Support::ProcessSupervisor::GatedPair::resource_cost();
@@ -710,6 +711,89 @@ sub start_job {
     unless ($ok) { my $error = $@; $self->_job_failed($grant, $error); die $error; }
     return;
 }
+sub _root_release_live {
+    my ($self, $grant, $native, $deadline, $phase) = @_;
+    my ($entry, $record) = $self->_job($grant);
+    _error('execution release requires the original active root')
+        unless $record->{id} == 1 && !$record->{parent} && $record->{phase} eq 'active'
+            && $entry->{native} && refaddr($entry->{native}) == refaddr($native);
+    _error('root execution admission is no longer open')
+        unless $self->{phase} eq 'open' && !$self->{failure} && !$entry->{failure};
+    $self->_context_live($grant);
+    my $view = $native->observation;
+    _error('root execution requires original native readiness and custody')
+        unless $view->{phase} eq $phase && !$view->{first_failure}
+            && !$view->{command}{released} && !$view->{command}{release_uncertain}
+            && $view->{command}{command_pid} && $view->{command}{command_authority}
+            && !$view->{command}{command_reaped} && !$view->{command}{retired}
+            && !$view->{command}{failure} && $view->{reservation}{phase} eq 'moved'
+            && !$view->{reservation}{reaped} && !$view->{reservation}{retired}
+            && !$view->{reservation}{failure};
+    _error('root execution changed its original invocation wall')
+        unless $record->{deadline_ns} eq $deadline
+            && $view->{command}{original_deadline} == $deadline / 1_000_000_000;
+    # Context lookup and native observation convey no lasting authority.
+    # Recheck original admission and failure state at the end of this attempt.
+    $self->{ledger}->check_live($grant);
+    ($entry, $record) = $self->_job($grant);
+    _error('root execution admission changed during its final check')
+        unless $self->{phase} eq 'open' && !$self->{failure} && !$entry->{failure}
+            && $record->{phase} eq 'active' && $record->{deadline_ns} eq $deadline;
+    return;
+}
+sub _before_root_execution {
+    my ($self, $grant, $native, $deadline, $pair) = @_;
+    # ReservedJob also checks this around its caller; require the same original
+    # Pair here so direct invocation cannot authenticate a substituted callback.
+    $native->_release_live($pair);
+    $self->_root_release_live($grant, $native, $deadline, 'releasing');
+    my ($entry) = $self->_job($grant);
+    _error('root execution was not requested') unless $entry->{release_requested};
+    return 1;
+}
+sub _root_release_failed {
+    my ($self, $entry, $grant, $error) = @_;
+    # A failed mask restoration must not prevent refusal publication. These
+    # original records block the retained E callback even if cleanup is delayed.
+    $entry->{failure} //= FSM::Support::ProcessSupervisor::_sanitize_control($error);
+    $self->_failure($error);
+    $self->{phase} = 'failed' unless $self->{phase} eq 'closing' || $self->{phase} eq 'closed';
+    eval { $self->_job_failed($grant, $entry->{failure}); 1 }
+        or $entry->{cleanup_error} //= FSM::Support::ProcessSupervisor::_sanitize_control($@);
+    return;
+}
+sub release_root {
+    my ($self, $grant) = @_; _owner($self);
+    _error('root release requires one original grant') unless @_ == 2;
+    my ($entry, $record) = $self->_job($grant);
+    _error('root execution release is single-use') if $entry->{release_requested};
+    my ($native, $deadline) = ($entry->{native}, $record->{deadline_ns});
+    $self->_root_release_live($grant, $native, $deadline, 'ready');
+    my $started = 0;
+    my $ok = eval {
+        # This ready-only transaction queues E. Launch and advancement stay
+        # outside the preparation mask so they retain the original exec mask.
+        FSM::Support::ProcessSupervisor::Reservation::_masked_preparation(sub {
+            _error('root execution release is single-use') if $entry->{release_requested};
+            $self->_root_release_live($grant, $native, $deadline, 'ready');
+            $entry->{release_requested} = 1; $started = 1;
+            my $queued = eval {
+                $native->release(sub { $self->_before_root_execution($grant, $native, $deadline, @_) });
+                1;
+            };
+            unless ($queued) {
+                my $error = $@; $self->_root_release_failed($entry, $grant, $error); die $error;
+            }
+        });
+        1;
+    };
+    unless ($ok) {
+        my $error = $@;
+        $self->_root_release_failed($entry, $grant, $error) if $started;
+        die $error;
+    }
+    return;
+}
 sub cancel_job {
     my ($self, $grant, $diagnostic) = @_; _owner($self);
     _error('cancellation requires an original grant and diagnostic')
@@ -804,6 +888,7 @@ sub job_observation {
     my ($entry, $record) = $self->_job($grant);
     return {admission => $record, failure => $entry->{failure}, cleanup_error => $entry->{cleanup_error},
         context_state => $entry->{context_state},
+        release_requested => $entry->{release_requested} ? 1 : 0,
         cleanup_deadline => $entry->{cleanup_deadline},
         native => $entry->{native} ? $entry->{native}->observation : undef};
 }

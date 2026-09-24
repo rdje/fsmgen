@@ -1,7 +1,7 @@
 # Knowledge Map: `test-subprocess`
 
 > **AUTO-GENERATED — DO NOT EDIT.** Return to the [Knowledge Map](../../KNOWLEDGE_MAP.md).
-> **1** facts · **165** uniquely owned question entries.
+> **1** facts · **166** uniquely owned question entries.
 
 ## Questions → facts
 
@@ -73,6 +73,7 @@
 - q="how does the inactive receipt adapter accept a supervisor own-group identity?" · facts=[test-subprocess-policy-adapters](../../docs/knowledge/test-subprocess-policy-adapters.md)
 - q="how does the inactive receipt adapter reject a copied cleanup hash?" · facts=[test-subprocess-policy-adapters](../../docs/knowledge/test-subprocess-policy-adapters.md)
 - q="how does the inactive reference census retain stale owners?" · facts=[test-subprocess-policy-adapters](../../docs/knowledge/test-subprocess-policy-adapters.md)
+- q="how does the original root execution release work?" · facts=[test-subprocess-policy-adapters](../../docs/knowledge/test-subprocess-policy-adapters.md)
 - q="how does the private coordinator preserve execution bytes?" · facts=[test-subprocess-policy-adapters](../../docs/knowledge/test-subprocess-policy-adapters.md)
 - q="how does the sealed supervisor accept one environment?" · facts=[test-subprocess-policy-adapters](../../docs/knowledge/test-subprocess-policy-adapters.md)
 - q="how does the sealed supervisor launch return a private job before a process?" · facts=[test-subprocess-policy-adapters](../../docs/knowledge/test-subprocess-policy-adapters.md)

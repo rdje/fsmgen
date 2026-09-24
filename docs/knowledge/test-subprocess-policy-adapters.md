@@ -2,6 +2,7 @@
 id: test-subprocess-policy-adapters
 title: Test subprocesses share one mechanism behind sealed policy adapters
 answers:
+  - "how does the original root execution release work?"
   - "what happens when a reserved process group reservation dies?"
   - "why can reserved cleanup miss an unjoined command?"
   - "how do I decode a stopped child native wait status?"
@@ -168,7 +169,6 @@ answers:
   - "where is the first actual compiler receipt retained?"
   - "how does a shared service retain its endpoint through close?"
 date: 2026-09-24
-tags: [tests, subprocess, supervision, task-acceptance, darwin, locality]
-reverify: scripts/run_with_ram_guard.sh -- prove -Iperl -It/lib t/1858-process-aggregate-owners.t t/1857-process-reserved-execution-admission.t t/1856-process-service-execution-report.t t/1855-process-service-execution-admission.t t/1854-process-input-inspection.t t/1853-process-exec-admission.t t/1852-process-gated-accept.t t/1851-process-request-association.t t/1850-process-aggregate-context.t t/1849-process-parent-token-admission.t t/1848-process-service-job-publication.t t/1847-process-write-admission.t t/1846-process-snapshot-context.t t/1845-process-retained-parent-context.t t/1839-process-coordinator-lifecycle.t t/1842-process-coordinator-accepted-peers.t t/1827-process-reserved-job.t && python3 -B docs/audits/native-proxy-receipt-capture-20260923/review.py --verify-saved
+reverify: scripts/run_with_ram_guard.sh -- prove -Iperl -It/lib t/1859-process-root-execution.t t/1858-process-aggregate-owners.t t/1857-process-reserved-execution-admission.t t/1856-process-service-execution-report.t t/1855-process-service-execution-admission.t t/1854-process-input-inspection.t t/1853-process-exec-admission.t t/1852-process-gated-accept.t t/1851-process-request-association.t t/1850-process-aggregate-context.t t/1849-process-parent-token-admission.t t/1848-process-service-job-publication.t t/1847-process-write-admission.t t/1845-process-retained-parent-context.t t/1839-process-coordinator-lifecycle.t t/1842-process-coordinator-accepted-peers.t t/1827-process-reserved-job.t && python3 -B docs/audits/native-proxy-receipt-capture-20260923/review.py --verify-saved
 ---
-History: `f8d5320903ab223f035cb3dc25df2819af81a3e7:docs/knowledge/test-subprocess-policy-adapters.md` retains wrapper admission and Service reports. Coordinator now anchors original Endpoint, Service, complete job-entry inventory and native wrappers before effects. Service retains its borrowed Endpoint identity. Context lookup requires the exact value bound into the snapshot. Copied, foreign or lost associations refuse without further native admission; creator interruptions preserve ownership and first failure. T1858 checks actual waits, pipe EOF and endpoint cleanup. Root/nested release, original producers, Linux and browser qualification remain open.
+History: `5dd05e9412a98156537ea72619cb9cd8f9512fe2:docs/knowledge/test-subprocess-policy-adapters.md` retains aggregate associations. Coordinator.release_root queues one original ready root request. Every E checks original open aggregate, active grant, bound context, native custody and unchanged ledger/native wall; context lookup is followed by fresh admission. Refusal publication survives mask failure. Confirmed or uncertain native truth survives interruption without replay. T1859 verifies actual invocation bytes/masks, native loss and exact cleanup; eight guard defects reject. Nested release and Service reconciliation, original producers, Linux and browser qualification remain open.
