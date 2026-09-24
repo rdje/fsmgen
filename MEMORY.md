@@ -6,8 +6,8 @@ Status and evidence: `docs/tasks/`. The system itself: `MEMORY_ARCHITECTURE.md`.
 ## Resume
 
 - repository_revision: derive with `git log -1 --format='%H %s'`; never shadow `HEAD` here.
-- active_work_unit: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.31.2.3` (active)
-- next_action: Expose supported protocol aliases in source discovery and query metadata, then add public VIAL query routing.
+- active_work_unit: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.31.2.4` (active)
+- next_action: Select the public VIAL check/semantic report and language-version contract, then expose it through source discovery and MCP.
   Preserve the spent compiler workspace and `docs/audits/native-proxy-receipt-capture-20260923/result/` evidence.
 - in_flight_uncommitted: none after this slice commit.
 - in_flight_background: none.

@@ -2776,13 +2776,42 @@ reserved; generated collisions receive numeric suffixes. Clients should use
 not infer those identities by splitting generated names. CLI semantic reports
 and MCP expose the same repaired producer.
 
+### Source Query Applicability
+
+Catalog discovery recognizes the supported hardware source families, including
+protocol aliases. Read `semantic_introspection.source_query_kinds` from the
+capability manifest, or `payload.source_query_kinds` from
+`fsmgen_capability_query` with `section: "semantic_introspection"`:
+
+| File kind | Available source queries |
+| --- | --- |
+| `fsm` | `check`, `semantic` |
+| `isf`, `ppif`, `axi`, `apb`, `ahb` | `check`, `semantic`, `schedule` |
+
+The native accessor
+`FSM::Support::SemanticIntrospectionContract::semantic_introspection_source_query_kinds()`
+returns the same fresh map with independent arrays. MCP discovery consumes
+this public contract. Query availability does not mean that every source
+passes: catalog support/classification and the returned report describe the
+actual source outcome. Aliases use the same layered PPIF lowering and report
+contracts; they are not separate language layers.
+
+Discover APB aliases, then inspect or preview a returned source identity:
+
+```bash
+perl bin/fsmgen-mcp --workspace-root . --request-json '{"jsonrpc":"2.0","id":11,"method":"tools/call","params":{"name":"fsmgen_discover_sources","arguments":{"file_kind":"apb","limit":5}}}'
+perl bin/fsmgen-mcp --workspace-root . --request-json '{"jsonrpc":"2.0","id":12,"method":"tools/call","params":{"name":"fsmgen_schedule_preview","arguments":{"source_id":"ppif/apb_requester_transfer.apb"}}}'
+```
+
+Use `file_kind: "axi"` or `"ahb"` for the other supported aliases. Discovery
+keeps catalog order, support identity, filtering and bounded limits; it does
+not scan arbitrary workspace directories or expose hidden/absolute paths.
+
 ### Current Source Coverage Limits
 
-Catalog discovery currently recognizes `.fsm`, `.isf`, and `.ppif`. Protocol
-aliases `.axi`, `.apb`, and `.ahb` accept semantic queries by explicit path but
-are omitted from discovery. VIAL source checks and semantic reports are
-available through `fsmgen vial check --json`; MCP does not yet route VIAL
-queries to that API. Select `--language-version 2` for VIAL v2 sources.
+VIAL source checks and semantic reports are available through
+`fsmgen vial check --json`; MCP does not yet route VIAL queries to that API.
+Select `--language-version 2` for VIAL v2 sources.
 
 Remaining source-family repairs are owned by
 [the semantic coverage frontier](../../tasks/SEMANTIC-INTROSPECTION-MCP-FRONTIER.md).

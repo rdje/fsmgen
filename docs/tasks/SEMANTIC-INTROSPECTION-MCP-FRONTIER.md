@@ -316,7 +316,7 @@ For FSMGen, the analogs are:
   Status: `active`
   Goal: `Implement current-feature semantic API and MCP coverage repairs.`
   Acceptance: `After .31.1, create exact child leaves naming affected public contracts, API producers, MCP mappings, actual feature fixtures, failure cases and book sections before source changes. Repair native semantic contracts first where needed and project them through MCP; preserve bounded JSON-safe results, diagnostics, workspace authority and read-only defaults. Commit each verified repair separately and leave no discovered defect merely parked.`
-  Verification: `Actual current queries prove discovery omissions for protocol aliases/VIAL, failed VIAL routing, lost structured negative diagnostics and repository-path leakage. The native generated-enable collision found by direct/MCP comparison is repaired under child .1; current-source and adapter repairs remain required before complete coverage qualification.`
+  Verification: `The audited native enable collision, APB source defect, simulator qualification gap, lost structured failures/path leakage and protocol-alias discovery omission are closed under children .1, .5, .6, .2 and .3. VIAL discovery/routing remains child .4 before complete coverage qualification.`
   Commit: `pending`
 
   Children: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.31.2.1, SEMANTIC-INTROSPECTION-MCP-FRONTIER.31.2.2, SEMANTIC-INTROSPECTION-MCP-FRONTIER.31.2.3, SEMANTIC-INTROSPECTION-MCP-FRONTIER.31.2.4, SEMANTIC-INTROSPECTION-MCP-FRONTIER.31.2.5, SEMANTIC-INTROSPECTION-MCP-FRONTIER.31.2.6`
@@ -336,14 +336,14 @@ For FSMGen, the analogs are:
   Commit: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.31.2.2: preserve structured MCP failure diagnostics`
 
 - ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.31.2.3`
-  Status: `active`
+  Status: `done`
   Goal: `Expose all supported protocol source aliases in MCP discovery and query metadata.`
   Acceptance: `Drive applicable source family/query mappings from an owned public contract, include catalogued .axi/.apb/.ahb aliases with accurate check/semantic/schedule support, and retain existing path/filter/limit/safety behavior. Compare discovery with current native support catalog and actual semantic queries; prevent a new supported family from being silently omitted. Sync native introspection metadata, MCP schemas and book.`
-  Verification: `Current manifest contains .axi/.apb/.ahb catalog entries and actual native/MCP semantic calls succeed; discover_sources returns zero for each alias family. _source_file_kind accepts only fsm/isf/ppif.`
-  Commit: `pending`
+  Verification: `The baseline manifest contains .axi/.apb/.ahb catalog entries and actual native/MCP semantic calls succeed, while baseline discover_sources returns zero for each alias family. The old _source_file_kind accepted only fsm/isf/ppif. The native source_query_kinds contract now owns applicability; the adapter consumes it and T1869 qualifies full alias catalog discovery plus actual representative check/semantic/schedule parity.`
+  Commit: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.31.2.3: expose protocol aliases through MCP discovery`
 
 - ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.31.2.4`
-  Status: `pending`
+  Status: `active`
   Goal: `Project current public VIAL semantic tooling through the native introspection contract and MCP.`
   Acceptance: `Select exact JSON-safe source query result/version contracts over the existing VIAL public API before implementation; expose applicable VIAL capabilities, source discovery, check and sanitized semantic reports with explicit v1/v2 selection and accurate query applicability. Preserve imported source catalogs, public diagnostics and workspace authority. Qualify actual v1/v2/invalid sources and direct/API/MCP parity; keep execution and mutation outside the existing read-only profile.`
   Verification: `Native vial check --json succeeds for the documented v1/v2 base sources. MCP semantic/check calls invoke the hardware CLI route and fail; VIAL discovery is empty although the support catalog includes VIAL sources. Native language_surface.vial_tooling advertises its closed request/result APIs.`
@@ -1015,10 +1015,10 @@ before editing code. No discovered defect is closed by this audit alone.
 
 ## Current Frontier
 
-`SEMANTIC-INTROSPECTION-MCP-FRONTIER.31.2.3` exposes supported protocol
-aliases through discovery and query metadata; `.31.2.4` then adds VIAL queries.
-Native enable identity, APB repairs, simulator qualification and structured
-MCP failure diagnostics are committed;
+`SEMANTIC-INTROSPECTION-MCP-FRONTIER.31.2.4` exposes public VIAL source
+queries through the semantic contract and MCP, including explicit language
+version selection and applicable discovery. Native/APB repairs, simulator
+qualification, structured failures and protocol-alias discovery are committed;
 `.31.3` qualifies coverage and ongoing parity after they pass.
 The read-only profile completed through `.30` remains historical evidence;
 it is not a claim that all later product features are covered.
@@ -1529,3 +1529,53 @@ harness set FindBin from its `-e` launcher, so its positive control failed
 before qualification; that result was rejected. The final harness explicitly
 sets the test directory, preloads the selected adapter and fixes its canonical
 INC entry; its positive control passes and every incomplete repair fails.
+
+## Protocol Alias Discovery Boundary — `.31.2.3`
+
+Expose a fresh public `source_query_kinds` map through the semantic-introspection
+contract and manifest section, with one exported native accessor. The adapter
+must consume that map for catalog recognition and query applicability instead
+of its separate fsm/isf/ppif suffix regex. Alias families share the current
+PPIF check/semantic/schedule contract; source support/classification remains
+catalog-derived, so query availability is not a promise of source success.
+VIAL remains explicitly outside this leaf's implemented routing and is owned
+by `.31.2.4`. T1869 will compare map membership with native shipped suffixes
+minus that explicit VIAL boundary, compare every alias catalog entry with
+filtered discovery, verify public defensive rebuilding and exclusion/filter
+controls, and exercise actual native/MCP check, semantic and schedule queries
+for each shipped alias. Update schedule/tool descriptions and user examples;
+keep traversal, hidden/absolute paths and unsupported suffixes excluded.
+
+## Acceptance Checklist — `.31.2.3` protocol-alias discovery
+
+- [x] **ROOT CAUSE (WHY + WHERE)** — Native `--emit-semantic-json` and
+  actual MCP queries already accept the shipped protocol aliases, but the
+  adapter's separate suffix regex silently excludes their catalog entries.
+  T1869's baseline fails applicability, full alias discovery and filtered
+  public-alias discovery while its real native/MCP query-parity subtest passes.
+- [x] **ADDRESSED (verified)** — The exported native
+  `semantic_introspection_source_query_kinds()` owns the fresh applicability
+  map in both contract and manifest section; adapter catalog recognition and
+  advertised query kinds consume it. Every captured alias catalog record
+  retains source/support identity and order through actual MCP CLI discovery.
+  T1869 compares the complete representative alias check/semantic/schedule
+  reports with native output after only known-root normalization. The public
+  schema snapshot gains exactly the additive applicability key, and the book
+  documents accessor/discovery/preview examples and support nonclaims.
+- [x] **NO REGRESSION** — `All tests successful. Files=11, Tests=40` across
+  the alias and source-failure regressions plus native semantic contracts,
+  roundtrip/rebuild, MCP API/CLI/protocol/support/schema and structured output.
+  Hidden, absolute, escaping and unknown-suffix catalog paths remain excluded;
+  limits, source/support filters and defensive rebuilding pass. Knowledge Map,
+  mdBook build/HTML and staged doctrine checks are required before commit.
+
+Re-derivation: current native catalog plus actual MCP CLI discovery and actual
+native/MCP representative source queries. Falsification: the unchanged adapter
+fails discovery/applicability while query parity already passes; independent
+native suffix/catalog comparisons reject omission, and path/filter/mutation
+controls preserve the boundary. Durability: T1869, the [captured discovery receipt](../audits/mcp-feature-coverage-20260924/mcp-alias-repair.json),
+public contract and this commit. Captured counts are not permanent feature
+limits. Missing leg: VIAL exposure remains `.31.2.4`, and complete per-feature
+coverage remains `.31.3`. The first broader suite correctly detected the new
+public manifest key absent from the old bounded snapshot; its exact additive
+fixture update was reviewed before the final successful band.

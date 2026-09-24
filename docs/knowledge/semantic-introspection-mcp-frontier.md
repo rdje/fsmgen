@@ -59,6 +59,8 @@ answers:
   - "does FSMGen MCP return JSON-RPC error.data?"
   - "does MCP preserve failed source check and semantic diagnostics?"
   - "how are embedded absolute paths removed from MCP errors?"
+  - "does MCP discover axi apb ahb protocol aliases?"
+  - "where is the public source query applicability map?"
   - "are FSMGen MCP error messages sanitized?"
   - "what serverInfo title does FSMGen MCP expose?"
   - "what do FSMGen MCP initialize instructions advertise?"
@@ -124,7 +126,12 @@ commit/push tools remain separately owned future work.
 
 The 2026-09-24 audit found limits that earlier profile tests did not expose:
 
-- Protocol alias sources accept semantic queries but are absent from discovery.
+- `.31.2.3` exposes `.axi`, `.apb` and `.ahb` through catalog discovery.
+  The exported `semantic_introspection_source_query_kinds()` and manifest
+  `source_query_kinds` map own applicability; aliases share PPIF's check,
+  semantic and schedule queries. T1869 compares all alias catalog records,
+  native suffix coverage and actual native/MCP reports; availability does not
+  promote a catalogued expected failure into support.
 - Native VIAL source tooling exposes JSON-safe semantic results, but MCP
   check/semantic routing uses the hardware CLI and cannot query those sources.
 - `.31.2.2` preserves native check/semantic v1 failure JSON on nonzero exit

@@ -1,7 +1,7 @@
 # Knowledge Map: `semantic-introspection`
 
 > **AUTO-GENERATED — DO NOT EDIT.** Return to the [Knowledge Map](../../KNOWLEDGE_MAP.md).
-> **1** facts · **69** uniquely owned question entries.
+> **1** facts · **71** uniquely owned question entries.
 
 ## Questions → facts
 
@@ -41,6 +41,7 @@
 - q="does FSMGen support MCP pagination?" · facts=[semantic-introspection-mcp-frontier](../../docs/knowledge/semantic-introspection-mcp-frontier.md)
 - q="does FSMGen support MCP resource subscriptions?" · facts=[semantic-introspection-mcp-frontier](../../docs/knowledge/semantic-introspection-mcp-frontier.md)
 - q="does FSMGen support MCP sampling/createMessage?" · facts=[semantic-introspection-mcp-frontier](../../docs/knowledge/semantic-introspection-mcp-frontier.md)
+- q="does MCP discover axi apb ahb protocol aliases?" · facts=[semantic-introspection-mcp-frontier](../../docs/knowledge/semantic-introspection-mcp-frontier.md)
 - q="does MCP preserve failed source check and semantic diagnostics?" · facts=[semantic-introspection-mcp-frontier](../../docs/knowledge/semantic-introspection-mcp-frontier.md)
 - q="how are embedded absolute paths removed from MCP errors?" · facts=[semantic-introspection-mcp-frontier](../../docs/knowledge/semantic-introspection-mcp-frontier.md)
 - q="how do I configure the FSMGen MCP adapter?" · facts=[semantic-introspection-mcp-frontier](../../docs/knowledge/semantic-introspection-mcp-frontier.md)
@@ -66,6 +67,7 @@
 - q="what source discovery boundary is selected for FSMGen MCP?" · facts=[semantic-introspection-mcp-frontier](../../docs/knowledge/semantic-introspection-mcp-frontier.md)
 - q="where are FSMGen MCP schema snapshots?" · facts=[semantic-introspection-mcp-frontier](../../docs/knowledge/semantic-introspection-mcp-frontier.md)
 - q="where is FSMGen semantic introspection advertised?" · facts=[semantic-introspection-mcp-frontier](../../docs/knowledge/semantic-introspection-mcp-frontier.md)
+- q="where is the public source query applicability map?" · facts=[semantic-introspection-mcp-frontier](../../docs/knowledge/semantic-introspection-mcp-frontier.md)
 - q="which FSMGen MCP tool annotations are shipped?" · facts=[semantic-introspection-mcp-frontier](../../docs/knowledge/semantic-introspection-mcp-frontier.md)
 - q="which FSMGen MCP tool discovers source identities?" · facts=[semantic-introspection-mcp-frontier](../../docs/knowledge/semantic-introspection-mcp-frontier.md)
 - q="which MCP client modes are compatible with FSMGen?" · facts=[semantic-introspection-mcp-frontier](../../docs/knowledge/semantic-introspection-mcp-frontier.md)

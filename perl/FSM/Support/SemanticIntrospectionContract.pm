@@ -37,6 +37,7 @@ our @EXPORT_OK = qw(
     semantic_introspection_query_family_names
     semantic_introspection_raw_private_surfaces_excluded
     semantic_introspection_safety_policy
+    semantic_introspection_source_query_kinds
     semantic_introspection_versioning_policy
 );
 
@@ -59,10 +60,12 @@ sub build_semantic_introspection_contract {
             in_process => [
                 'FSM::Support::CapabilityManifest::build_capability_manifest()->{semantic_introspection}',
                 'FSM::Support::SemanticIntrospectionSection::build_semantic_introspection_section()',
+                'FSM::Support::SemanticIntrospectionContract::semantic_introspection_source_query_kinds()',
             ],
         },
         mcp_adapter_entrypoints => semantic_introspection_mcp_adapter_entrypoints(),
         public_top_level_presence_keys => semantic_introspection_public_top_level_keys(),
+        source_query_kinds => semantic_introspection_source_query_kinds(),
         query_domain_names => semantic_introspection_query_domain_names(),
         query_family_names => semantic_introspection_query_family_names(),
         mcp_resource_uri_templates => semantic_introspection_mcp_resource_uri_templates(),
@@ -99,6 +102,7 @@ sub semantic_introspection_public_top_level_keys {
             contract_surface_map
             query_domains
             query_families
+            source_query_kinds
             query_domain_names
             query_family_names
             mcp_resources
@@ -123,6 +127,21 @@ sub semantic_introspection_mcp_adapter_entrypoints {
         'perl bin/fsmgen-mcp --request-json JSON --workspace-root DIR',
         'FSM::Support::SemanticIntrospectionMCPAdapter->new(workspace_root => DIR)->run_stdio()',
     ];
+}
+
+# Source applicability is independent of a catalog entry's support outcome.
+# Return fresh arrays: embedders may inspect/mutate their copy without widening
+# another source family or a subsequent adapter query.
+sub semantic_introspection_source_query_kinds {
+    my %kinds = (
+        fsm => [qw(check semantic)],
+        isf => [qw(check semantic schedule)],
+        ppif => [qw(check semantic schedule)],
+    );
+    for my $alias (qw(axi apb ahb)) {
+        $kinds{$alias} = [@{$kinds{ppif}}];
+    }
+    return \%kinds;
 }
 
 sub semantic_introspection_query_domain_names {
@@ -344,7 +363,7 @@ sub semantic_introspection_query_domains {
         ),
         _domain(
             'source_schedule',
-            'Run or read bounded schedule/lowering reports for explicit ISF or PPIF source identity.',
+            'Run or read bounded schedule/lowering reports for explicit ISF, PPIF or supported protocol-alias source identity.',
             [qw(schedule_json generated_artifacts diagnostics)],
             'fsmgen://source/{source_id}/schedule',
         ),
@@ -400,7 +419,7 @@ sub semantic_introspection_query_families {
         ),
         _query_family(
             'schedule_preview',
-            'Schedule/lowering preview over existing ISF and PPIF schedule-report surfaces.',
+            'Schedule/lowering preview over ISF, PPIF and supported protocol-alias schedule-report surfaces.',
             ['source_schedule'],
             'fsmgen_schedule_preview',
             ['fsmgen://source/{source_id}/schedule'],

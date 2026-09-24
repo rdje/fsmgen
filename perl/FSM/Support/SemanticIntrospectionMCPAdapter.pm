@@ -11,6 +11,7 @@ use IPC::Cmd qw(run);
 use JSON::PP ();
 
 use FSM::Support::CapabilityManifest qw(build_capability_manifest);
+use FSM::Support::SemanticIntrospectionContract qw(semantic_introspection_source_query_kinds);
 
 our @EXPORT_OK = qw(semantic_introspection_mcp_adapter_contract_source);
 
@@ -180,7 +181,7 @@ sub list_tools {
             ),
             _tool_descriptor(
                 'fsmgen_schedule_preview',
-                'Run read-only schedule JSON for a workspace-contained .isf or .ppif source path.',
+                'Run read-only schedule JSON for a workspace-contained ISF, PPIF or supported protocol-alias source.',
                 _source_tool_properties(),
                 [],
                 _source_query_output_schema(),
@@ -192,7 +193,7 @@ sub list_tools {
                 {
                     query => { type => 'string', description => 'Optional case-insensitive substring matched against public catalog identity and support fields.' },
                     limit => { type => 'integer', description => 'Maximum number of sources to return; default 25.' },
-                    file_kind => { type => 'string', description => 'Optional exact source file kind filter such as fsm, isf, or ppif.' },
+                    file_kind => { type => 'string', description => 'Optional exact source file kind: fsm, isf, ppif, axi, apb or ahb.' },
                     source_kind => { type => 'string', description => 'Optional exact support-catalog source_kind filter.' },
                     classification => { type => 'string', description => 'Optional exact support-catalog classification filter.' },
                 },
@@ -462,8 +463,9 @@ sub _sources_payload {
     my $source_kind_filter = lc($arguments->{source_kind} // '');
     my $classification_filter = lc($arguments->{classification} // '');
 
+    my $query_kinds = semantic_introspection_source_query_kinds();
     my @sources = grep { defined $_ } map {
-        _source_discovery_entry($_)
+        _source_discovery_entry($_, $query_kinds)
     } @{$support->{catalog_entries} || []};
 
     if (length $query) {
@@ -507,12 +509,12 @@ sub _sources_payload {
 }
 
 sub _source_discovery_entry {
-    my ($entry) = @_;
+    my ($entry, $query_kinds) = @_;
 
     my $relpath = $entry->{relpath};
     return undef unless _public_catalog_relpath($relpath);
 
-    my $file_kind = _source_file_kind($relpath);
+    my $file_kind = _source_file_kind($relpath, $query_kinds);
     return undef unless length $file_kind;
 
     my %support = map { $_ => $entry->{$_} } grep { exists $entry->{$_} } qw(
@@ -537,7 +539,7 @@ sub _source_discovery_entry {
         relpath => $relpath,
         file_kind => $file_kind,
         source_kind => $entry->{source_kind} // '',
-        available_query_kinds => _available_source_query_kinds($file_kind),
+        available_query_kinds => [@{$query_kinds->{$file_kind}}],
         support => \%support,
     };
 }
@@ -553,18 +555,10 @@ sub _public_catalog_relpath {
 }
 
 sub _source_file_kind {
-    my ($relpath) = @_;
+    my ($relpath, $query_kinds) = @_;
     return '' unless defined($relpath) && $relpath =~ /\.([A-Za-z0-9_]+)\z/;
     my $kind = lc($1);
-    return $kind if $kind =~ /\A(?:fsm|isf|ppif)\z/;
-    return '';
-}
-
-sub _available_source_query_kinds {
-    my ($file_kind) = @_;
-    my @kinds = qw(check semantic);
-    push @kinds, 'schedule' if ($file_kind // '') =~ /\A(?:isf|ppif)\z/;
-    return \@kinds;
+    return exists($query_kinds->{$kind}) ? $kind : '';
 }
 
 sub _source_discovery_entry_matches_query {

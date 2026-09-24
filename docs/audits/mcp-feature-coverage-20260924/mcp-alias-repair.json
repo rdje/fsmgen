@@ -1,0 +1,445 @@
+{
+  "actual_cli_discovery": [
+    {
+      "applicability": [
+        "check",
+        "semantic",
+        "schedule"
+      ],
+      "kind": "axi",
+      "matched_count": 1,
+      "native_catalog_count": 1,
+      "native_discovery_identity_pairs": [
+        [
+          "ppif/axi_aw_valid_ready.axi",
+          "intent.axi_profile_alias_aw_valid_ready"
+        ]
+      ],
+      "returned_count": 1,
+      "text_structured_equality": true
+    },
+    {
+      "applicability": [
+        "check",
+        "semantic",
+        "schedule"
+      ],
+      "kind": "apb",
+      "matched_count": 57,
+      "native_catalog_count": 57,
+      "native_discovery_identity_pairs": [
+        [
+          "ppif/apb_requester_transfer.apb",
+          "intent.apb_profile_alias_requester_transfer"
+        ],
+        [
+          "ppif/apb_requester_transfer_busy.apb",
+          "intent.apb_profile_alias_requester_transfer_busy"
+        ],
+        [
+          "ppif/apb_requester_transfer_status.apb",
+          "intent.apb_profile_alias_requester_transfer_status"
+        ],
+        [
+          "ppif/apb_requester_transfer_status_back_to_back.apb",
+          "intent.apb_profile_alias_requester_transfer_status_back_to_back"
+        ],
+        [
+          "ppif/apb_requester_transfer_sideband.apb",
+          "intent.apb_profile_alias_requester_transfer_sideband"
+        ],
+        [
+          "ppif/apb_requester_transfer_sideband_status_back_to_back.apb",
+          "intent.apb_profile_alias_requester_transfer_sideband_status_back_to_back"
+        ],
+        [
+          "ppif/apb_requester_transfer_sideband_data16.apb",
+          "intent.apb_profile_alias_requester_transfer_sideband_data16"
+        ],
+        [
+          "ppif/apb_requester_transfer_sideband_data16_status_back_to_back.apb",
+          "intent.apb_profile_alias_requester_transfer_sideband_data16_status_back_to_back"
+        ],
+        [
+          "ppif/apb_completer.apb",
+          "intent.apb_profile_alias_completer"
+        ],
+        [
+          "ppif/apb_completer_back_to_back.apb",
+          "intent.apb_profile_alias_completer_back_to_back"
+        ],
+        [
+          "ppif/apb_completer_sideband_back_to_back.apb",
+          "intent.apb_profile_alias_completer_sideband_back_to_back"
+        ],
+        [
+          "ppif/apb_completer_multi_register_sideband.apb",
+          "intent.apb_profile_alias_completer_multi_register_sideband"
+        ],
+        [
+          "ppif/apb_completer_multi_register_sideband_back_to_back.apb",
+          "intent.apb_profile_alias_completer_multi_register_sideband_back_to_back"
+        ],
+        [
+          "ppif/apb_completer_multi_register_sideband_protection.apb",
+          "intent.apb_profile_alias_completer_multi_register_sideband_protection"
+        ],
+        [
+          "ppif/apb_completer_multi_register_sideband_protection_back_to_back.apb",
+          "intent.apb_profile_alias_completer_multi_register_sideband_protection_back_to_back"
+        ],
+        [
+          "ppif/apb_completer_multi_register_sideband_data16.apb",
+          "intent.apb_profile_alias_completer_multi_register_sideband_data16"
+        ],
+        [
+          "ppif/apb_completer_multi_register_sideband_data16_back_to_back.apb",
+          "intent.apb_profile_alias_completer_multi_register_sideband_data16_back_to_back"
+        ],
+        [
+          "ppif/apb_completer_multi_register_sideband_data16_protection.apb",
+          "intent.apb_profile_alias_completer_multi_register_sideband_data16_protection"
+        ],
+        [
+          "ppif/apb_completer_multi_register_sideband_data16_protection_back_to_back.apb",
+          "intent.apb_profile_alias_completer_multi_register_sideband_data16_protection_back_to_back"
+        ],
+        [
+          "ppif/apb_completer_multi_register.apb",
+          "intent.apb_profile_alias_completer_multi_register"
+        ],
+        [
+          "ppif/apb_composition.apb",
+          "intent.apb_profile_alias_composition"
+        ],
+        [
+          "ppif/apb_composition_multi_register.apb",
+          "intent.apb_profile_alias_composition_multi_register"
+        ],
+        [
+          "ppif/apb_composition_multi_register_sideband.apb",
+          "intent.apb_profile_alias_composition_multi_register_sideband"
+        ],
+        [
+          "ppif/apb_composition_multi_register_sideband_status_back_to_back.apb",
+          "intent.apb_profile_alias_composition_multi_register_sideband_status_back_to_back"
+        ],
+        [
+          "ppif/apb_composition_multi_register_sideband_protection.apb",
+          "intent.apb_profile_alias_composition_multi_register_sideband_protection"
+        ],
+        [
+          "ppif/apb_composition_multi_register_sideband_protection_status_back_to_back.apb",
+          "intent.apb_profile_alias_composition_multi_register_sideband_protection_status_back_to_back"
+        ],
+        [
+          "ppif/apb_composition_multi_register_sideband_data16.apb",
+          "intent.apb_profile_alias_composition_multi_register_sideband_data16"
+        ],
+        [
+          "ppif/apb_composition_multi_register_sideband_data16_status_back_to_back.apb",
+          "intent.apb_profile_alias_composition_multi_register_sideband_data16_status_back_to_back"
+        ],
+        [
+          "ppif/apb_composition_multi_register_sideband_data16_protection.apb",
+          "intent.apb_profile_alias_composition_multi_register_sideband_data16_protection"
+        ],
+        [
+          "ppif/apb_composition_multi_register_sideband_data16_protection_status_back_to_back.apb",
+          "intent.apb_profile_alias_composition_multi_register_sideband_data16_protection_status_back_to_back"
+        ],
+        [
+          "ppif/apb_composition_multi_peripheral.apb",
+          "intent.apb_profile_alias_composition_multi_peripheral"
+        ],
+        [
+          "ppif/apb_composition_multi_peripheral_status_back_to_back.apb",
+          "intent.apb_profile_alias_composition_multi_peripheral_status_back_to_back"
+        ],
+        [
+          "ppif/apb_composition_multi_peripheral_sideband_status_back_to_back.apb",
+          "intent.apb_profile_alias_composition_multi_peripheral_sideband_status_back_to_back"
+        ],
+        [
+          "ppif/apb_composition_multi_peripheral_multi_register_sideband_status_back_to_back.apb",
+          "intent.apb_profile_alias_composition_multi_peripheral_multi_register_sideband_status_back_to_back"
+        ],
+        [
+          "ppif/apb_composition_multi_peripheral_multi_register_sideband_generalized_status_back_to_back.apb",
+          "intent.apb_profile_alias_composition_multi_peripheral_multi_register_sideband_generalized_status_back_to_back"
+        ],
+        [
+          "ppif/apb_composition_multi_peripheral_multi_register_sideband_generalized_five_register_status_back_to_back.apb",
+          "intent.apb_profile_alias_composition_multi_peripheral_multi_register_sideband_generalized_five_register_status_back_to_back"
+        ],
+        [
+          "ppif/apb_composition_multi_peripheral_multi_register_sideband_generalized_six_register_status_back_to_back.apb",
+          "intent.apb_profile_alias_composition_multi_peripheral_multi_register_sideband_generalized_six_register_status_back_to_back"
+        ],
+        [
+          "ppif/apb_composition_multi_peripheral_multi_register_sideband_protection_status_back_to_back.apb",
+          "intent.apb_profile_alias_composition_multi_peripheral_multi_register_sideband_protection_status_back_to_back"
+        ],
+        [
+          "ppif/apb_composition_multi_peripheral_multi_register_sideband_protection_generalized_status_back_to_back.apb",
+          "intent.apb_profile_alias_composition_multi_peripheral_multi_register_sideband_protection_generalized_status_back_to_back"
+        ],
+        [
+          "ppif/apb_composition_multi_peripheral_multi_register_sideband_protection_generalized_five_register_status_back_to_back.apb",
+          "intent.apb_profile_alias_composition_multi_peripheral_multi_register_sideband_protection_generalized_five_register_status_back_to_back"
+        ],
+        [
+          "ppif/apb_composition_multi_peripheral_sideband.apb",
+          "intent.apb_profile_alias_composition_multi_peripheral_sideband"
+        ],
+        [
+          "ppif/apb_composition_multi_peripheral_sideband_protection.apb",
+          "intent.apb_profile_alias_composition_multi_peripheral_sideband_protection"
+        ],
+        [
+          "ppif/apb_composition_multi_peripheral_sideband_protection_status_back_to_back.apb",
+          "intent.apb_profile_alias_composition_multi_peripheral_sideband_protection_status_back_to_back"
+        ],
+        [
+          "ppif/apb_composition_multi_peripheral_sideband_data16.apb",
+          "intent.apb_profile_alias_composition_multi_peripheral_sideband_data16"
+        ],
+        [
+          "ppif/apb_composition_multi_peripheral_sideband_data16_protection.apb",
+          "intent.apb_profile_alias_composition_multi_peripheral_sideband_data16_protection"
+        ],
+        [
+          "ppif/apb_composition_multi_peripheral_sideband_data16_protection_status_back_to_back.apb",
+          "intent.apb_profile_alias_composition_multi_peripheral_sideband_data16_protection_status_back_to_back"
+        ],
+        [
+          "ppif/apb_composition_multi_peripheral_multi_register_sideband_data16_status_back_to_back.apb",
+          "intent.apb_profile_alias_composition_multi_peripheral_multi_register_sideband_data16_status_back_to_back"
+        ],
+        [
+          "ppif/apb_composition_multi_peripheral_multi_register_sideband_data16_generalized_status_back_to_back.apb",
+          "intent.apb_profile_alias_composition_multi_peripheral_multi_register_sideband_data16_generalized_status_back_to_back"
+        ],
+        [
+          "ppif/apb_composition_multi_peripheral_multi_register_sideband_data16_generalized_five_register_status_back_to_back.apb",
+          "intent.apb_profile_alias_composition_multi_peripheral_multi_register_sideband_data16_generalized_five_register_status_back_to_back"
+        ],
+        [
+          "ppif/apb_composition_multi_peripheral_multi_register_sideband_data16_generalized_six_register_status_back_to_back.apb",
+          "intent.apb_profile_alias_composition_multi_peripheral_multi_register_sideband_data16_generalized_six_register_status_back_to_back"
+        ],
+        [
+          "ppif/apb_composition_multi_peripheral_multi_register_sideband_data16_protection_status_back_to_back.apb",
+          "intent.apb_profile_alias_composition_multi_peripheral_multi_register_sideband_data16_protection_status_back_to_back"
+        ],
+        [
+          "ppif/apb_composition_multi_peripheral_multi_register_sideband_data16_protection_generalized_status_back_to_back.apb",
+          "intent.apb_profile_alias_composition_multi_peripheral_multi_register_sideband_data16_protection_generalized_status_back_to_back"
+        ],
+        [
+          "ppif/apb_composition_multi_peripheral_multi_register_sideband_data16_protection_generalized_five_register_status_back_to_back.apb",
+          "intent.apb_profile_alias_composition_multi_peripheral_multi_register_sideband_data16_protection_generalized_five_register_status_back_to_back"
+        ],
+        [
+          "ppif/apb_composition_status.apb",
+          "intent.apb_profile_alias_composition_status"
+        ],
+        [
+          "ppif/apb_composition_status_back_to_back.apb",
+          "intent.apb_profile_alias_composition_status_back_to_back"
+        ],
+        [
+          "ppif/apb_composition_sideband_status_back_to_back.apb",
+          "intent.apb_profile_alias_composition_sideband_status_back_to_back"
+        ],
+        [
+          "ppif/apb_composition_busy.apb",
+          "intent.apb_profile_alias_composition_busy"
+        ]
+      ],
+      "returned_count": 57,
+      "text_structured_equality": true
+    },
+    {
+      "applicability": [
+        "check",
+        "semantic",
+        "schedule"
+      ],
+      "kind": "ahb",
+      "matched_count": 28,
+      "native_catalog_count": 28,
+      "native_discovery_identity_pairs": [
+        [
+          "ppif/ahb_requester.ahb",
+          "intent.ahb_profile_alias_requester"
+        ],
+        [
+          "ppif/ahb_requester_busy_insert.ahb",
+          "intent.ahb_profile_alias_requester_busy_insert"
+        ],
+        [
+          "ppif/ahb_requester_busy_insert_two.ahb",
+          "intent.ahb_profile_alias_requester_busy_insert_two"
+        ],
+        [
+          "ppif/ahb_requester_busy_insert_three.ahb",
+          "intent.ahb_profile_alias_requester_busy_insert_three"
+        ],
+        [
+          "ppif/ahb_requester_busy_insert_four.ahb",
+          "intent.ahb_profile_alias_requester_busy_insert_four"
+        ],
+        [
+          "ppif/ahb_lite_subordinate.ahb",
+          "intent.ahb_profile_alias_subordinate"
+        ],
+        [
+          "ppif/ahb_lite_subordinate_byte_lane.ahb",
+          "intent.ahb_profile_alias_subordinate_byte_lane"
+        ],
+        [
+          "ppif/ahb_lite_subordinate_byte_lane_seq.ahb",
+          "intent.ahb_profile_alias_subordinate_byte_lane_seq"
+        ],
+        [
+          "ppif/ahb_lite_subordinate_byte_lane_hburst_seq.ahb",
+          "intent.ahb_profile_alias_subordinate_byte_lane_hburst_seq"
+        ],
+        [
+          "ppif/ahb_lite_subordinate_byte_lane_hburst_seq_busy_park.ahb",
+          "intent.ahb_profile_alias_subordinate_byte_lane_hburst_seq_busy_park"
+        ],
+        [
+          "ppif/ahb_interconnect.ahb",
+          "intent.ahb_profile_alias_interconnect"
+        ],
+        [
+          "ppif/ahb_interconnect_byte_lane.ahb",
+          "intent.ahb_profile_alias_interconnect_byte_lane"
+        ],
+        [
+          "ppif/ahb_interconnect_byte_lane_seq.ahb",
+          "intent.ahb_profile_alias_interconnect_byte_lane_seq"
+        ],
+        [
+          "ppif/ahb_interconnect_two_subordinate.ahb",
+          "intent.ahb_profile_alias_interconnect_two_subordinate"
+        ],
+        [
+          "ppif/ahb_interconnect_two_subordinate_byte_lane.ahb",
+          "intent.ahb_profile_alias_interconnect_two_subordinate_byte_lane"
+        ],
+        [
+          "ppif/ahb_interconnect_two_subordinate_byte_lane_seq.ahb",
+          "intent.ahb_profile_alias_interconnect_two_subordinate_byte_lane_seq"
+        ],
+        [
+          "ppif/ahb_interconnect_byte_lane_hburst_seq.ahb",
+          "intent.ahb_profile_alias_interconnect_byte_lane_hburst_seq"
+        ],
+        [
+          "ppif/ahb_interconnect_two_subordinate_byte_lane_hburst_seq.ahb",
+          "intent.ahb_profile_alias_interconnect_two_subordinate_byte_lane_hburst_seq"
+        ],
+        [
+          "ppif/ahb_interconnect_byte_lane_hburst_seq_busy_park.ahb",
+          "intent.ahb_profile_alias_interconnect_byte_lane_hburst_seq_busy_park"
+        ],
+        [
+          "ppif/ahb_interconnect_requester_busy_insert_byte_lane_hburst_seq_busy_park.ahb",
+          "intent.ahb_profile_alias_interconnect_requester_busy_insert_byte_lane_hburst_seq_busy_park"
+        ],
+        [
+          "ppif/ahb_interconnect_requester_busy_insert_two_byte_lane_hburst_seq_busy_park.ahb",
+          "intent.ahb_profile_alias_interconnect_requester_busy_insert_two_byte_lane_hburst_seq_busy_park"
+        ],
+        [
+          "ppif/ahb_interconnect_requester_busy_insert_three_byte_lane_hburst_seq_busy_park.ahb",
+          "intent.ahb_profile_alias_interconnect_requester_busy_insert_three_byte_lane_hburst_seq_busy_park"
+        ],
+        [
+          "ppif/ahb_interconnect_requester_busy_insert_four_byte_lane_hburst_seq_busy_park.ahb",
+          "intent.ahb_profile_alias_interconnect_requester_busy_insert_four_byte_lane_hburst_seq_busy_park"
+        ],
+        [
+          "ppif/ahb_interconnect_requester_busy_insert_two_subordinate_byte_lane_hburst_seq_busy_park.ahb",
+          "intent.ahb_profile_alias_interconnect_requester_busy_insert_two_subordinate_byte_lane_hburst_seq_busy_park"
+        ],
+        [
+          "ppif/ahb_interconnect_two_subordinate_requester_busy_insert_two_byte_lane_hburst_seq_busy_park.ahb",
+          "intent.ahb_profile_alias_interconnect_two_subordinate_requester_busy_insert_two_byte_lane_hburst_seq_busy_park"
+        ],
+        [
+          "ppif/ahb_interconnect_two_subordinate_requester_busy_insert_three_byte_lane_hburst_seq_busy_park.ahb",
+          "intent.ahb_profile_alias_interconnect_two_subordinate_requester_busy_insert_three_byte_lane_hburst_seq_busy_park"
+        ],
+        [
+          "ppif/ahb_interconnect_two_subordinate_requester_busy_insert_four_byte_lane_hburst_seq_busy_park.ahb",
+          "intent.ahb_profile_alias_interconnect_two_subordinate_requester_busy_insert_four_byte_lane_hburst_seq_busy_park"
+        ],
+        [
+          "ppif/ahb_interconnect_two_subordinate_byte_lane_hburst_seq_busy_park.ahb",
+          "intent.ahb_profile_alias_interconnect_two_subordinate_byte_lane_hburst_seq_busy_park"
+        ]
+      ],
+      "returned_count": 28,
+      "text_structured_equality": true
+    }
+  ],
+  "baseline": [
+    "  Failed tests:  1-3",
+    "Files=1, Tests=4, 26 wallclock secs ( 0.01 usr  0.01 sys + 19.08 cusr  4.91 csys = 24.01 CPU)",
+    "Result: FAIL"
+  ],
+  "capture_revision": "c9fa733192ee765002d162437d0addc6e25aba5b",
+  "file_sha256": {
+    "perl/FSM/Support/SemanticIntrospectionContract.pm": "2f00b4f3e185051a7bc19f329a25aa74de94704df2a3bc777d044a702696c865",
+    "perl/FSM/Support/SemanticIntrospectionMCPAdapter.pm": "a5194b31ee1f77842df56cd40873e6efebfec8a59d9fa69f0b6b2052f123cd31",
+    "perl/FSM/Support/SemanticIntrospectionSection.pm": "34236c6afc0228f1f1157561a1d6063bab7a85edf6763c8fcfb5e08a9ee7fca5",
+    "t/1869-semantic-introspection-mcp-protocol-aliases.t": "7236791552d2433ba144105509b0928f07eb1ea5d3d2b40f7eccf0da33384231"
+  },
+  "limits": [
+    "Counts are this captured catalog, not timeless coverage limits.",
+    "VIAL routing remains owned by .31.2.4; unsupported/hidden/absolute discovery paths remain excluded.",
+    "Actual native/MCP report parity for representative aliases is exercised by T1869, not inferred from discovery alone."
+  ],
+  "owner": "SEMANTIC-INTROSPECTION-MCP-FRONTIER.31.2.3",
+  "public_source_query_kinds": {
+    "ahb": [
+      "check",
+      "semantic",
+      "schedule"
+    ],
+    "apb": [
+      "check",
+      "semantic",
+      "schedule"
+    ],
+    "axi": [
+      "check",
+      "semantic",
+      "schedule"
+    ],
+    "fsm": [
+      "check",
+      "semantic"
+    ],
+    "isf": [
+      "check",
+      "semantic",
+      "schedule"
+    ],
+    "ppif": [
+      "check",
+      "semantic",
+      "schedule"
+    ]
+  },
+  "schema": "fsmgen.mcp_alias_discovery_repair.v1",
+  "selected_band": [
+    "All tests successful.",
+    "Files=11, Tests=40, 39 wallclock secs ( 0.03 usr  0.02 sys + 29.03 cusr  7.81 csys = 36.89 CPU)",
+    "Result: PASS"
+  ]
+}

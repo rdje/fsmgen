@@ -164,6 +164,7 @@
                "safety_policy",
                "schema_version",
                "section_contract",
+               "source_query_kinds",
                "status",
                "versioning_policy",
                "write_generation_tools_enabled"

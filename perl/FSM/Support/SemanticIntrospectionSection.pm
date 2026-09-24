@@ -22,6 +22,7 @@ use FSM::Support::SemanticIntrospectionContract qw(
     semantic_introspection_query_family_names
     semantic_introspection_raw_private_surfaces_excluded
     semantic_introspection_safety_policy
+    semantic_introspection_source_query_kinds
     semantic_introspection_versioning_policy
 );
 
@@ -42,12 +43,14 @@ sub build_semantic_introspection_section {
             in_process => [
                 'FSM::Support::CapabilityManifest::build_capability_manifest()->{semantic_introspection}',
                 'FSM::Support::SemanticIntrospectionSection::build_semantic_introspection_section()',
+                'FSM::Support::SemanticIntrospectionContract::semantic_introspection_source_query_kinds()',
             ],
         },
         mcp_adapter_entrypoints => semantic_introspection_mcp_adapter_entrypoints(),
         contract_surface_map => semantic_introspection_contract_surface_map(),
         query_domains => semantic_introspection_query_domains(),
         query_families => semantic_introspection_query_families(),
+        source_query_kinds => semantic_introspection_source_query_kinds(),
         query_domain_names => semantic_introspection_query_domain_names(),
         query_family_names => semantic_introspection_query_family_names(),
         mcp_resources => semantic_introspection_mcp_resources(),
