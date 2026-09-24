@@ -27,5 +27,5 @@
 
 _VIAL public tooling uses intent commands, equivalent source views, and atomic local artifacts_
 
-- **date:** 2026-09-04 · **status:** current
+- **date:** 2026-09-24 · **status:** current
 - **source and verification:** [`docs/knowledge/vial-public-tooling-v1-contract.md`](../../docs/knowledge/vial-public-tooling-v1-contract.md)

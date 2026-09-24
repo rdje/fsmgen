@@ -468,6 +468,53 @@ The result is defensive and JSON-safe. It never exposes parser forms,
 `VIALSemanticIR`, bridge-builder objects, `VIALExecutionIR`, backend objects,
 raw exceptions, code references, filehandles, or absolute host paths.
 
+## Check a filesystem source from an embedding host
+
+Use `FSM::VIAL::Tool::check_vial_source_file($invocation)` when the host owns a
+workspace directory and wants the same complete result as `vial check --json`.
+The function returns data without printing, creating artifacts, planning, or
+running a backend. For example, from the repository root:
+
+```bash
+perl -Iperl -MFSM::VIAL::Tool=check_vial_source_file -MJSON::PP -e '
+  my $result = check_vial_source_file({
+    workspace_root => ".",
+    source_id => "vial/ahb_subordinate_base_output_arbitration_v2.vial",
+    language_version => 2,
+    source_style => "auto",
+  });
+  print JSON::PP->new->canonical->pretty->encode($result);
+  exit($result->{success} ? 0 : 1);
+'
+```
+
+The invocation is closed: `workspace_root` and `source_id` are required scalar
+strings; only `language_version` and `source_style` are optional. Version
+defaults to `1` and accepts `1` or `2`; style defaults to `auto` and accepts
+`auto`, `normal`, or `terse`. The result uses the selected
+`fsmgen.vial_tool_result.v1` or `fsmgen.vial_tool_result.v2` schema, including
+`semantic_report`, source identities, support evidence, and diagnostics.
+An invalid invocation returns a structured `VIAL_TOOL_INVOCATION_ERROR`.
+
+The source and its imports must be root-relative regular files, with no
+symlink components, on the workspace volume. Imports resolve from the workspace
+root. Loading enforces the public source byte, combined byte, and imported-file
+limits before admitting content to semantic validation, including a bounded
+stream check for growth after filesystem inspection. Combined bytes include
+the root once; the filesystem import count excludes the root and counts
+distinct loaded files. The parser additionally retains its import-edge and
+cycle checks. Excess input returns `VIAL_LIMIT_ERROR` without partial semantic
+success. Missing imports and empty source files retain the portable parser's
+diagnostics. These loading bounds cover VIAL source files, not HIAL or JSON
+inputs to other commands.
+
+Discover this additive contract with
+`FSM::Support::VIALToolingContract::build_vial_source_file_check_contract()`
+or the capability manifest at
+`semantic_introspection.contract_surface_map.vial_source_file_check.file_query_contract`.
+Its `loading_limits` gives the exact admitted bounds. The frozen v1 capability
+record and the portable text request API remain unchanged.
+
 ## Public reports and persisted schemas
 
 Use explicit schema fields rather than filenames or permissive key probing:

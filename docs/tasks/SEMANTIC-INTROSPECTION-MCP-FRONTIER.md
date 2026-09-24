@@ -349,6 +349,22 @@ For FSMGen, the analogs are:
   Verification: `Native vial check --json succeeds for the documented v1/v2 base sources. MCP semantic/check calls invoke the hardware CLI route and fail; VIAL discovery is empty although the support catalog includes VIAL sources. Native language_surface.vial_tooling advertises its closed request/result APIs.`
   Commit: `pending`
 
+  Children: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.31.2.4.1, SEMANTIC-INTROSPECTION-MCP-FRONTIER.31.2.4.2`
+
+- ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.31.2.4.1`
+  Status: `done`
+  Goal: `Expose a clean bounded filesystem VIAL source-check API before MCP routing.`
+  Acceptance: `Select a closed caller-rooted source-file check interface returning the existing public VIAL tool result with explicit language version 1 or 2 and no printing, artifact generation or execution. Reuse the native public request/result producer and import semantics; keep paths relative, regular, non-symlink and on the caller-root volume. Root-cause and repair pre-validation unbounded filesystem reads/import accumulation in the existing CLI source-loading path, with bounded source/import/combined-size controls and independent boundary tests. Preserve valid CLI/API report identity and current diagnostics where applicable; qualify real v1/v2/imported/invalid inputs, workspace escape and no-write behavior. Update public contract, book, knowledge and evidence; do not replay historical native compiler producers.`
+  Verification: `T1870 qualifies source admission, exact/excess bounds, v1/v2 native and imported portable API parity, structured diagnostics, closed invocation and no publication. The tracked vial-filesystem-repair.json receipt records the original limit-plus-one slurp and repaired pre-validation refusal. The nine-file selected band passes, including frozen v1 capability identity; the final expanded focused test also passes.`
+  Commit: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.31.2.4.1: expose bounded VIAL filesystem checks`
+
+- ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.31.2.4.2`
+  Status: `active`
+  Goal: `Project the qualified VIAL check and semantic report through MCP and discovery.`
+  Acceptance: `Use the clean filesystem source API from .1 for VIAL check and semantic queries; preserve the complete existing public result and semantic_report instead of inventing hardware-report shape. Add explicit validated language-version selection, truthful provenance/applicability, source discovery, applicable versioned resource/tool schemas and public capability guidance. Preserve import authority and structured failure reports/tool flags, qualify actual v1/v2/invalid/imported sources against native/API results, and keep scheduling, planning, backend execution and mutation unadvertised. Update tests/snapshots/book/facts and commit before .31.3 coverage qualification.`
+  Verification: `Pending the bounded native filesystem source interface.`
+  Commit: `pending`
+
 - ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.31.2.5`
   Status: `done`
   Goal: `Repair the shipped APB requester completion-phase output targets.`
@@ -1015,9 +1031,9 @@ before editing code. No discovered defect is closed by this audit alone.
 
 ## Current Frontier
 
-`SEMANTIC-INTROSPECTION-MCP-FRONTIER.31.2.4` exposes public VIAL source
-queries through the semantic contract and MCP, including explicit language
-version selection and applicable discovery. Native/APB repairs, simulator
+`SEMANTIC-INTROSPECTION-MCP-FRONTIER.31.2.4.2` connects the qualified VIAL
+filesystem source API results to MCP with
+explicit language-version selection and applicable discovery. Native/APB repairs, simulator
 qualification, structured failures and protocol-alias discovery are committed;
 `.31.3` qualifies coverage and ongoing parity after they pass.
 The read-only profile completed through `.30` remains historical evidence;
@@ -1579,3 +1595,77 @@ limits. Missing leg: VIAL exposure remains `.31.2.4`, and complete per-feature
 coverage remains `.31.3`. The first broader suite correctly detected the new
 public manifest key absent from the old bounded snapshot; its exact additive
 fixture update was reviewed before the final successful band.
+
+## VIAL Source Loading Finding — `.31.2.4.1`
+
+While selecting latest-feature MCP exposure, inspection found that the native
+VIAL filesystem CLI reads complete files and accumulates imports before its
+public in-memory producer enforces semantic limits. The source reader uses
+`local $/; my $text = <$fh>`, and import traversal has no pre-read byte/count
+budget. This is owned repair work, not an assertion of an observed host OOM.
+Before granting external-agent source access, establish bounded filesystem
+loading and a clean report-returning facade reusable by CLI/MCP. Preserve the
+existing public v1/v2 result/diagnostic identities and root-relative imported
+source catalog. Do not duplicate private parser semantics or expose plan/run
+by reusing an unconstrained CLI argument surface. This finding was surfaced
+to the director; implementation can proceed within the authorized coverage
+and defect-repair scope.
+
+### Selected Filesystem Source API — `.31.2.4.1`
+
+Add exported `FSM::VIAL::Tool::check_vial_source_file({ workspace_root,
+source_id, language_version?, source_style? })`. Required root/source are
+scalar; optional version defaults to 1 and accepts only 1/2, style defaults to
+`auto` and accepts auto/normal/terse. Return the existing complete versioned
+public tool result for action check, including structured invocation/host/limit
+failures; never print or publish artifacts. Keep the portable text API intact.
+The public wrapper delegates filesystem adaptation to ToolCLI, whose check
+command then shares this path. Other CLI VIAL actions reuse the bounded source
+reader/catalog loader without widening their action authority.
+
+Use public source/combined/import limits at filesystem admission. Bound each
+VIAL file read before parsing and reject over-limit growth; count root bytes
+once and distinct loaded imports separately, leaving the parser's edge-count,
+cycle and semantic checks authoritative. Rooted relative path, non-symlink and
+same-volume checks remain mandatory. Source-loader limit failures use the
+existing VIAL_LIMIT_ERROR family through the selected public result version;
+missing/invalid imports must still reach their original parser diagnostic
+unless admission itself fails. No new HIAL or JSON file-size promise is made
+by this VIAL-only source-loading repair. T1870 owns valid native/API parity,
+v1/v2/imported/invalid sources, exact/excess source/catalog bounds, invocation
+and path rejection, and no-output/no-artifact evidence.
+
+## Acceptance Checklist — `.31.2.4.1` filesystem VIAL checks
+
+- [x] **ROOT CAUSE (WHY + WHERE)** — The bounded tracked
+  `docs/audits/mcp-feature-coverage-20260924/probe_vial_loading.pl` observed
+  `_read_repo_source` delivering source-limit-plus-one bytes before native
+  validation returned `VIAL_LIMIT_ERROR`. Initial T1870 reported
+  `#   at t/1870-vial-filesystem-source-query.t line 85.` for returned over-limit
+  text, and rejected unbounded imported-file/combined admission. The source
+  slurp and import queue, not parser limits, owned the defect. No OOM was observed.
+- [x] **ADDRESSED (verified)** — The same probe now returns no source text
+  and a loader limit diagnostic. The public `check_vial_source_file` facade
+  and CLI check share bounded loading, closed version/style arguments and
+  complete public results. T1870 verifies exact/excess file and stream bounds,
+  v1/v2 CLI parity, imported portable-result parity, source hashes/independent
+  file sizes, structured refusals and unchanged inputs. Empty files now reach
+  the portable parser diagnostic. A separate introspection contract preserves
+  the frozen v1 capability bytes; the first attempted metadata extension was
+  rejected by T1806 and removed. Initial test assumptions about nonexistent
+  byte-length/kind fields were rejected and corrected to file sizes/hashes and
+  the actual diagnostic phase.
+- [x] **NO REGRESSION** — The RAM-guarded selected band ran T1870, T1555,
+  T1556, T1801, T1806, T1438, T1439, T1440 and T1445: `All tests successful`,
+  `Files=9, Tests=40`, `Result: PASS`. Final expanded T1870 independently passes
+  `Files=1, Tests=6` with invocation-shape and v2-limit controls. The book's
+  filesystem API example executes successfully and mdBook builds. Rendered
+  HTML is checked; browser visual qualification remains explicitly unavailable.
+
+Evidence legs and exact input identities are retained in
+`docs/audits/mcp-feature-coverage-20260924/vial-filesystem-repair.json`.
+The tracked probe re-derives admission, initial baseline failures and final
+independent boundary controls falsify the unbounded/stat-only alternatives,
+and T1870 plus T1806 watch the public behavior and frozen capability boundary.
+MCP routing/version discovery remains `.31.2.4.2`; complete current-feature
+coverage remains `.31.3`. HIAL/JSON input-size limits are not claimed here.

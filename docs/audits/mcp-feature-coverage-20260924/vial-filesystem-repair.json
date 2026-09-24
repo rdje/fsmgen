@@ -1,0 +1,78 @@
+{
+  "baseline_module_sha256": {
+    "perl/FSM/VIAL/Tool.pm": "30c2b06f0cfa1e2f5dd9c931c1bc89d9cc33ff9583611399f274414dc326fd1d",
+    "perl/FSM/VIAL/ToolCLI.pm": "b91c5b5c6a213d01955003a23e3497f74fd7940a34f5dfc276cda0a380ce3154"
+  },
+  "bounded_loading_probe": {
+    "after": {
+      "declared_source_byte_limit": 1048576,
+      "loaded_bytes_before_semantic_validation": 0,
+      "loader_error": "source 'oversize.vial' exceeds the source byte limit",
+      "native_cli_exit": 1,
+      "native_diagnostic_codes": [
+        "VIAL_LIMIT_ERROR"
+      ],
+      "source": "oversize.vial"
+    },
+    "before": {
+      "declared_source_byte_limit": 1048576,
+      "loaded_bytes_before_semantic_validation": 1048577,
+      "loader_error": null,
+      "native_cli_exit": 1,
+      "native_diagnostic_codes": [
+        "VIAL_LIMIT_ERROR"
+      ],
+      "source": "oversize.vial"
+    },
+    "command": "perl -Iperl docs/audits/mcp-feature-coverage-20260924/probe_vial_loading.pl",
+    "producer": "docs/audits/mcp-feature-coverage-20260924/probe_vial_loading.pl"
+  },
+  "capture_base_revision": "39e774943d0afa018e717c6331f222d617186502",
+  "evidence_legs": {
+    "durability": "Tracked probe, T1870 and input/module identities preserve the captured comparison. T1806 freezes the existing v1 capability bytes. Re-run targeted tests when these inputs change.",
+    "falsify": "Original source loader returns limit+1 bytes; initial T1870 rejects baseline source/import/combined admission. Final tests independently exercise exact/excess stream reads, identified source hashes/file sizes, unsafe paths, malformed invocations and absent/cyclic imports.",
+    "rederive": "Tracked probe measures bytes delivered by the loader before semantic validation. T1870 compares complete CLI/API records for shipped v1/v2 sources and independent portable request/catalog results for imported sources."
+  },
+  "file_sha256": {
+    "docs/audits/mcp-feature-coverage-20260924/probe_vial_loading.pl": "f217cc86600d4157f425342fff391ac7da42c1a877245a7499132a8a4b75bb48",
+    "perl/FSM/Support/SemanticIntrospectionContract.pm": "629e97d27c9ef9e212e1c7d623343615cf55cd9ab321755ab88e56d5d8472678",
+    "perl/FSM/Support/VIALToolingContract.pm": "cced2ab3cc1abd671bfe7e22be649c3eac86e2eff5be414cdd63fa3acb903723",
+    "perl/FSM/VIAL/Tool.pm": "f20ae02bf57d9fd92eb52b82cc33145f2f27ce29b9b9f8627a66a4834ce6cb24",
+    "perl/FSM/VIAL/ToolCLI.pm": "3d48fff9de2d80f2104293a64786217233f4507ba2881cc106e6c1c1c78286e4",
+    "t/1870-vial-filesystem-source-query.t": "969379253cb4d16756e578e84b2c2e8fdc389a33c2c52e824e5d68176b86ec5f"
+  },
+  "limits": [
+    "This is a bounded source-loading and public check API repair; MCP VIAL routing remains .31.2.4.2.",
+    "No host OOM, broad performance, hostile filesystem race-proofing or backend execution claim is made.",
+    "Initial baseline suite had four subtests; final T1870 adds exact-boundary, independent-stream and closed-invocation controls.",
+    "First implementation assertions incorrectly expected byte_length and kind fields; public identities expose hashes and v2 diagnostics expose phase. Rejected results were corrected before final qualification.",
+    "An attempted capability addition violated T1806 frozen v1 hash and was removed. The new API contract is advertised separately through semantic introspection."
+  ],
+  "owner": "SEMANTIC-INTROSPECTION-MCP-FRONTIER.31.2.4.1",
+  "qualification_logs": {
+    "vial-files-baseline": {
+      "sha256": "218de405e27edf713c9c33766ddb05c07575f5916ef543c6ed423729a240e71e",
+      "summary": [
+        "Files=1, Tests=4,  2 wallclock secs ( 0.01 usr  0.01 sys +  1.11 cusr  0.09 csys =  1.22 CPU)",
+        "Result: FAIL"
+      ]
+    },
+    "vial-files-completion-final": {
+      "sha256": "75aa8e62cd7180b58101cc669fb8f1a0e365b3cf5e883c9e31acf0904cf21705",
+      "summary": [
+        "All tests successful.",
+        "Files=1, Tests=6,  6 wallclock secs ( 0.01 usr  0.00 sys +  5.32 cusr  0.16 csys =  5.49 CPU)",
+        "Result: PASS"
+      ]
+    },
+    "vial-files-final-band": {
+      "sha256": "5666680379efb449b42aade3b755dd4ac61cd7bfe8053168ac876c887d22e97f",
+      "summary": [
+        "All tests successful.",
+        "Files=9, Tests=40, 56 wallclock secs ( 0.03 usr  0.01 sys + 52.61 cusr  2.88 csys = 55.53 CPU)",
+        "Result: PASS"
+      ]
+    }
+  },
+  "schema": "fsmgen.vial_filesystem_check_repair.v1"
+}

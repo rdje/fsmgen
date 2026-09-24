@@ -16,6 +16,7 @@ use FSM::Support::VIALSemanticFamilyRegistry qw(
 our @EXPORT_OK = qw(
     build_vial_tooling_contract
     build_vial_tooling_contract_v2
+    build_vial_source_file_check_contract
     vial_tooling_contract_keys
     vial_tooling_contract_v2_keys
     vial_tooling_contract_source
@@ -90,9 +91,7 @@ sub build_vial_tooling_contract {
             VIAL_HOST_ERROR
         )],
         limits => {
-            source_bytes => 1_048_576,
-            combined_source_bytes => 16_777_216,
-            imported_sources => 64,
+            %{_source_loading_limits()},
             tokens => 1_000_000,
             list_depth => 128,
             formatted_source_bytes => 1_048_576,
@@ -121,6 +120,35 @@ sub build_vial_tooling_contract {
             'Complete four-state observation, general cross-backend parity, UVM, VHDL methodology, mixed-language execution, whole-product big/really-big, multi-unit/domain, native-UVM runtime, full-language, synthesis, arbitrary-tool capacity, support promotion, and architecture-scale capacity remain explicit nonclaims.',
         ],
     };
+}
+
+sub build_vial_source_file_check_contract {
+    return {
+        schema_version => 1,
+        status => 'bounded_public',
+        contract_source => vial_tooling_contract_source(),
+        entrypoint => 'FSM::VIAL::Tool::check_vial_source_file($invocation)',
+        required_invocation_keys => [qw(workspace_root source_id)],
+        optional_invocation_keys => [qw(language_version source_style)],
+        defaults => {language_version => 1, source_style => 'auto'},
+        language_versions => [1, 2],
+        source_styles => [qw(auto normal terse)],
+        action => 'check',
+        result_schemas => {1 => 'fsmgen.vial_tool_result.v1', 2 => 'fsmgen.vial_tool_result.v2'},
+        writes_files => JSON::PP::false,
+        prints_output => JSON::PP::false,
+        source_identity => 'caller_root_relative_non_symlink_same_volume',
+        loading_limits => _source_loading_limits(),
+        combined_bytes_include_root => JSON::PP::true,
+        imported_file_count_excludes_root => JSON::PP::true,
+        imported_file_count_is_distinct => JSON::PP::true,
+        parser_import_edge_checks_retained => JSON::PP::true,
+        limit_diagnostic => 'VIAL_LIMIT_ERROR',
+    };
+}
+
+sub _source_loading_limits {
+    return {source_bytes => 1_048_576, combined_source_bytes => 16_777_216, imported_sources => 64};
 }
 
 sub build_vial_tooling_contract_v2 {
@@ -223,9 +251,7 @@ sub build_vial_tooling_contract_v2 {
             VIAL_HOST_ERROR
         )],
         limits => {
-            source_bytes => 1_048_576,
-            combined_source_bytes => 16_777_216,
-            imported_sources => 64,
+            %{_source_loading_limits()},
             tokens => 1_000_000,
             list_depth => 128,
             formatted_source_bytes => 1_048_576,

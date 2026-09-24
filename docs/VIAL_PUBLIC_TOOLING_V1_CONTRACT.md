@@ -300,6 +300,35 @@ objects, raw exceptions, code references, filehandles, and absolute host paths
 are forbidden. The filesystem CLI is an adapter over this exact request/result
 plus source-catalog/artifact-sink boundary.
 
+## Filesystem Check Facade
+
+`FSM::VIAL::Tool::check_vial_source_file($invocation)` is the additive
+caller-rooted check adapter for both public language versions. It returns the
+complete selected public tool result, including sanitized `semantic_report`,
+without printing, publishing artifacts, planning, or executing a backend.
+The closed invocation requires scalar `workspace_root` and `source_id`, with
+optional `language_version` (`1` by default, or `2`) and `source_style`
+(`auto` by default, or `normal`/`terse`). Extra arguments or keys fail through
+the public invocation diagnostic. Native `vial check` shares this adapter.
+
+Sources and imports resolve from the caller root as relative, regular,
+non-symlink, same-volume files. Before semantic validation the loader enforces
+the public per-source, combined-source and distinct imported-file bounds;
+bounded stream reads also reject growth after admission. Combined bytes count
+the root once, while the import-file count excludes it. Parser import-edge,
+cycle and semantic validation remain authoritative. Limit failures use
+`VIAL_LIMIT_ERROR`; missing imports and empty files retain portable source
+diagnostics. Other CLI actions reuse the VIAL loading guard, without a new
+size-limit promise for their HIAL or JSON inputs.
+
+The separate `build_vial_source_file_check_contract()` accessor in
+`FSM::Support::VIALToolingContract` publishes the exact invocation, result and
+loading-limit contract. Semantic introspection exposes it at
+`contract_surface_map.vial_source_file_check.file_query_contract`. This does
+not modify the frozen v1 tooling capability record or the portable text API.
+The [lifecycle reference](book/src/16dg-vial-public-lifecycle-reference.md#check-a-filesystem-source-from-an-embedding-host)
+contains a runnable embedding example.
+
 ## Repository-Local Artifact Layout
 
 For `plan` and `run`, the default root is:

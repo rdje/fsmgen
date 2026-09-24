@@ -3,6 +3,8 @@ package FSM::VIAL::ToolCLI;
 use strict;
 use warnings;
 
+use bytes ();
+
 use Cwd qw(abs_path);
 use File::Spec;
 use Getopt::Long qw(GetOptionsFromArray);
@@ -11,7 +13,7 @@ use Scalar::Util qw(blessed);
 
 use FSM::VIAL::ArtifactTransaction;
 use FSM::VIAL::SourceProjection;
-use FSM::VIAL::Tool qw(execute_vial_tool_request);
+use FSM::VIAL::Tool qw(execute_vial_tool_request check_vial_source_file);
 
 sub run {
     my ($class, $args) = @_;
@@ -118,13 +120,21 @@ sub run {
     }
 
     my $source_id = $argv[0];
-    my ($text, $read_error) = _read_repo_source($args->{repo_root}, $source_id, 'vial');
-    return _emit_cli_error($action, $json, 'source read', $read_error, $language_version)
+    if ($action eq 'check') {
+        return _emit_result(check_vial_source_file({
+            workspace_root => $args->{repo_root}, source_id => $source_id,
+            language_version => $language_version, source_style => $style // 'auto',
+        }), $json, $quiet);
+    }
+    my ($text, $read_error, $read_code) = _read_repo_source($args->{repo_root}, $source_id, 'vial');
+    return _emit_cli_error($action, $json, 'source read', $read_error, $language_version, $read_code)
         if defined $read_error;
-    my $catalog = _load_import_catalog(
+    my ($catalog, $catalog_error, $catalog_code) = _load_import_catalog(
         $args->{repo_root}, $source_id, $text,
         $action eq 'migrate' ? 1 : $language_version,
     );
+    return _emit_cli_error($action, $json, 'source read', $catalog_error, $language_version, $catalog_code)
+        if defined $catalog_error;
     my ($hial_source, $replay_manifest, @native_extension_catalogs);
     if ($action eq 'plan' || $action eq 'run') {
         my ($hial_text, $hial_error) = _read_repo_source($args->{repo_root}, $dut, 'hial');
@@ -193,6 +203,45 @@ sub run {
     return _emit_result($result, $json, $quiet);
 }
 
+sub _check_source_file_result {
+    my ($class, @call) = @_;
+    die "filesystem source adaptation is private to FSM::VIAL::Tool\n"
+        unless caller eq 'FSM::VIAL::Tool';
+    my $args = $call[0];
+    my $version = ref($args) eq 'HASH' && !blessed($args)
+        && defined($args->{language_version}) && !ref($args->{language_version})
+        && $args->{language_version} eq '2' ? 2 : 1;
+    my $invalid = sub {
+        return FSM::VIAL::Tool->_cli_error_result('check', 'VIAL_TOOL_INVOCATION_ERROR', $_[0], $version);
+    };
+    return $invalid->('filesystem check requires exactly one unblessed invocation hash')
+        unless @call == 1 && ref($args) eq 'HASH' && !blessed($args);
+    my %allowed = map { $_ => 1 } qw(workspace_root source_id language_version source_style);
+    return $invalid->('filesystem check received an unknown invocation key')
+        if grep { !$allowed{$_} } keys %$args;
+    for my $key (qw(workspace_root source_id)) {
+        return $invalid->("filesystem check requires scalar '$key'")
+            unless defined($args->{$key}) && !ref($args->{$key}) && length($args->{$key});
+    }
+    return $invalid->('language_version must be 1 or 2')
+        if exists($args->{language_version}) && (!defined($args->{language_version})
+            || ref($args->{language_version}) || $args->{language_version} !~ /\A[12]\z/);
+    my $style = exists($args->{source_style}) ? $args->{source_style} : 'auto';
+    return $invalid->('source_style must be auto, normal, or terse')
+        unless defined($style) && !ref($style) && $style =~ /\A(?:auto|normal|terse)\z/;
+    my ($root, $id) = @{$args}{qw(workspace_root source_id)};
+    my ($text, $error, $code) = _read_repo_source($root, $id, 'vial');
+    return FSM::VIAL::Tool->_cli_error_result('check', $code // 'VIAL_HOST_ERROR', $error, $version)
+        if defined $error;
+    my ($catalog, $catalog_error, $catalog_code) = _load_import_catalog($root, $id, $text, $version);
+    return FSM::VIAL::Tool->_cli_error_result('check', $catalog_code, $catalog_error, $version)
+        if defined $catalog_error;
+    return execute_vial_tool_request(_request(
+        action => 'check', language_version => $version,
+        source => _source_envelope($id, $text, 'vial'), source_style => $style,
+    ), {source_catalog => $catalog, artifact_sink => [], repository_root => $root});
+}
+
 sub _request {
     my (%args) = @_;
     my $version = $args{language_version} // 1;
@@ -223,30 +272,39 @@ sub _load_import_catalog {
     my %catalog = ($root_id => $root_text);
     my %queued = ($root_id => 1);
     my @queue = ([$root_id, $root_text]);
+    my $combined_bytes = bytes::length($root_text);
+    my $loaded_imports = 0;
     while (@queue) {
         my ($source_id, $text) = @{shift @queue};
         my $imports = eval {
             my $method = $language_version == 2
                 ? 'import_source_names_v2' : 'import_source_names';
             FSM::VIAL::SourceProjection->$method({
-                text => $text,
-                source_name => $source_id,
+                text => $text, source_name => $source_id,
             });
         };
         next unless $imports;
         for my $import_id (@{$imports}) {
             next if $queued{$import_id}++;
-            my ($import_text, $error) = _read_repo_source($repo_root, $import_id, 'vial');
+            return (undef, 'filesystem imported source count exceeds the limit', 'VIAL_LIMIT_ERROR')
+                if $loaded_imports >= FSM::VIAL::Parser::MAX_IMPORTS();
+            my $remaining = FSM::VIAL::Parser::MAX_COMBINED_BYTES() - $combined_bytes;
+            my ($import_text, $error, $code) = _read_repo_source($repo_root, $import_id, 'vial', $remaining);
+            # Missing or unsafe imports retain the parser's original catalog
+            # diagnostic. Resource admission must stop loading immediately.
+            return (undef, $error, $code) if defined($code) && $code eq 'VIAL_LIMIT_ERROR';
             next if defined $error;
+            $combined_bytes += bytes::length($import_text);
+            ++$loaded_imports;
             $catalog{$import_id} = $import_text;
             push @queue, [$import_id, $import_text];
         }
     }
-    return \%catalog;
+    return (\%catalog, undef, undef);
 }
 
 sub _read_repo_source {
-    my ($repo_root, $source_id, $kind) = @_;
+    my ($repo_root, $source_id, $kind, $remaining_bytes) = @_;
     my $safe = $kind eq 'vial' ? _safe_source_id($source_id)
         : $kind eq 'hial' ? _safe_hial_source_id($source_id)
         : $kind eq 'json' ? _safe_json_id($source_id)
@@ -276,12 +334,57 @@ sub _read_repo_source {
     my @source_stat = stat($path);
     return (undef, "source '$source_id' must remain on the repository filesystem volume")
         unless @source_stat && $source_stat[0] == $root_stat[0];
+    my ($byte_limit, $limit_message);
+    if ($kind eq 'vial') {
+        $byte_limit = FSM::VIAL::Parser::MAX_SOURCE_BYTES();
+        $limit_message = "source '$source_id' exceeds the source byte limit";
+        return (undef, $limit_message, 'VIAL_LIMIT_ERROR') if $source_stat[7] > $byte_limit;
+        if (defined($remaining_bytes) && $remaining_bytes < $byte_limit) {
+            $byte_limit = $remaining_bytes;
+            $limit_message = "source '$source_id' exceeds the combined source byte limit";
+        }
+        return (undef, $limit_message, 'VIAL_LIMIT_ERROR') if $source_stat[7] > $byte_limit;
+    }
     open my $fh, '<:raw', $path
         or return (undef, "cannot read repository source '$source_id'");
-    local $/;
-    my $text = <$fh>;
+    my @opened_stat = stat($fh);
+    if (!@opened_stat || !-f $fh || $opened_stat[0] != $source_stat[0] || $opened_stat[1] != $source_stat[1]) {
+        close $fh;
+        return (undef, "source '$source_id' changed filesystem identity before reading");
+    }
+    my $text = '';
+    if (defined $byte_limit) {
+        my $read_status;
+        ($text, $read_status) = _read_bounded_source_bytes($fh, $byte_limit);
+        if (defined $read_status) {
+            close $fh;
+            return (undef, $limit_message, 'VIAL_LIMIT_ERROR') if $read_status eq 'limit';
+            return (undef, "cannot read repository source '$source_id'");
+        }
+    }
+    else {
+        local $/;
+        $text = <$fh>;
+    }
     close $fh
         or return (undef, "cannot close repository source '$source_id' after reading");
+    return ($text, undef, undef);
+}
+
+# The stream guard also covers files that grow after filesystem admission.
+# Its caller owns the handle and closes it on every outcome.
+sub _read_bounded_source_bytes {
+    my ($fh, $byte_limit) = @_;
+    my $text = '';
+    while (1) {
+        my $request_bytes = $byte_limit + 1 - bytes::length($text);
+        $request_bytes = 65_536 if $request_bytes > 65_536;
+        my $count = read($fh, my $chunk, $request_bytes);
+        return (undef, 'read') unless defined $count;
+        last unless $count;
+        $text .= $chunk;
+        return (undef, 'limit') if bytes::length($text) > $byte_limit;
+    }
     return ($text, undef);
 }
 
@@ -400,10 +503,10 @@ sub _emit_result {
 }
 
 sub _emit_cli_error {
-    my ($action, $json, $label, $message, $version) = @_;
+    my ($action, $json, $label, $message, $version, $code) = @_;
     my $result = FSM::VIAL::Tool->_cli_error_result(
         $action,
-        $label eq 'source read' ? 'VIAL_HOST_ERROR' : 'VIAL_TOOL_INVOCATION_ERROR',
+        $code // ($label eq 'source read' ? 'VIAL_HOST_ERROR' : 'VIAL_TOOL_INVOCATION_ERROR'),
         $message,
         $version,
     );

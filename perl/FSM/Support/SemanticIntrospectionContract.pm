@@ -18,6 +18,7 @@ use FSM::Support::ProducerContract qw(producer_contract_source);
 use FSM::Support::ReportGeneratedOutputContract qw(report_generated_output_contract_source);
 use FSM::Support::SemanticExportsContract qw(semantic_exports_contract_source);
 use FSM::Support::SupportAccountingContract qw(support_accounting_contract_source);
+use FSM::Support::VIALToolingContract qw(build_vial_source_file_check_contract vial_tooling_contract_source);
 
 our @EXPORT_OK = qw(
     build_semantic_introspection_contract
@@ -254,6 +255,12 @@ sub semantic_introspection_contract_surface_map {
             manifest_path => ['semantic_introspection'],
             contract_source => 'FSM::Support::SemanticIntrospectionMCPAdapter',
             current_entrypoints => semantic_introspection_mcp_adapter_entrypoints(),
+        },
+        vial_source_file_check => {
+            manifest_path => ['semantic_introspection', 'contract_surface_map', 'vial_source_file_check', 'file_query_contract'],
+            contract_source => vial_tooling_contract_source(),
+            current_entrypoints => ['FSM::VIAL::Tool::check_vial_source_file($invocation)'],
+            file_query_contract => build_vial_source_file_check_contract(),
         },
         normalized_semantic_json => {
             manifest_path => ['semantic_exports', 'normalized_semantic_json'],

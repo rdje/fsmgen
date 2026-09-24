@@ -22,6 +22,7 @@ use FSM::VIAL::SourceProjection;
 
 our @EXPORT_OK = qw(
     execute_vial_tool_request
+    check_vial_source_file
     vial_tool_capabilities
     vial_tool_capabilities_v2
 );
@@ -47,6 +48,12 @@ sub vial_tool_capabilities {
 sub vial_tool_capabilities_v2 {
     die "vial_tool_capabilities_v2 accepts no arguments\n" if @_;
     return _clone(build_vial_tooling_contract_v2());
+}
+
+# Explicit filesystem adapter; the portable text request API remains separate.
+sub check_vial_source_file {
+    require FSM::VIAL::ToolCLI;
+    return FSM::VIAL::ToolCLI->_check_source_file_result(@_);
 }
 
 sub execute_vial_tool_request {
@@ -377,12 +384,12 @@ sub _cli_error_result {
     my ($class, $action, $code, $message, $version) = @_;
     die "VIAL CLI error construction is private to FSM::VIAL::ToolCLI\n"
         unless caller eq 'FSM::VIAL::ToolCLI';
-    my %allowed = map { $_ => 1 } qw(VIAL_TOOL_INVOCATION_ERROR VIAL_HOST_ERROR);
+    my %allowed = map { $_ => 1 } qw(VIAL_TOOL_INVOCATION_ERROR VIAL_HOST_ERROR VIAL_LIMIT_ERROR);
     die "unsupported VIAL CLI diagnostic code\n" unless $allowed{$code};
     if (defined($version) && $version == 2) {
         return _v2_error_result(
             $action,
-            _v2_diagnostic($code, $message, 'invocation', undef, '/'),
+            _v2_diagnostic($code, $message, $code eq 'VIAL_LIMIT_ERROR' ? 'limit' : 'invocation', undef, '/'),
         );
     }
     return _error_result($action, _diagnostic($code, $message, [], '/'));
