@@ -456,6 +456,7 @@ subtest 'unknown wait and retired identities never authorize a signal' => sub {
     local *FSM::Support::ProcessSupervisor::GatedPair::_wait = sub { $! = ECHILD; return -1; };
     my $p = bless {owner_pid => $$, phase => 'ready', command_pid => 123,
         command_authority => 1, retired => 0}, $class;
+    $p->{identity} = refaddr($p); # Explicit non-native model identity.
     $p->poll_command;
     like($p->observation->{failure}, qr/wait status is unknown/, 'unknown status is explicit failure');
     ok(!$p->observation->{command_reaped}, 'no invented reaping');
@@ -467,9 +468,13 @@ subtest 'unknown wait and retired identities never authorize a signal' => sub {
         group_ready => 1, moved => 1, reaped => 1}, $reservation_class;
     my $stale = bless {owner_pid => $$, phase => 'ready', retired => 0,
         deadline => now() + 10, reservation => $retired}, $class;
+    $stale->{identity} = refaddr($stale);
+    $stale->{reservation_identity} = refaddr($retired);
     like(error(sub { $stale->release }), qr/live reservation/, 'cached ready phase cannot release a retired reservation');
     $stale = bless {owner_pid => $$, phase => 'ready', retired => 0,
         deadline => now() + 10, reservation => $retired}, $class;
+    $stale->{identity} = refaddr($stale);
+    $stale->{reservation_identity} = refaddr($retired);
     $stale->advance;
     like($stale->observation->{failure}, qr/reservation.*retired/, 'advancement independently rejects retired reservation authority');
 };

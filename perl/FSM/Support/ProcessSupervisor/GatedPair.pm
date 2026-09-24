@@ -5,6 +5,7 @@ use warnings;
 
 use Errno qw(EAGAIN EINTR ESRCH EWOULDBLOCK);
 use POSIX qw(SIG_BLOCK SIG_SETMASK WNOHANG _exit setpgid);
+use Scalar::Util qw(refaddr);
 use Time::HiRes qw(gettimeofday);
 use FSM::Support::ProcessSupervisor ();
 use FSM::Support::ProcessSupervisor::Reservation ();
@@ -35,7 +36,7 @@ sub _close_handle { return close $_[0] }
 sub _owner {
     my ($self) = @_;
     _error('invalid or inherited pair') unless ref($self) eq __PACKAGE__
-        && $self->{owner_pid} == $$;
+        && $self->{owner_pid} == $$ && ($self->{identity} // 0) == refaddr($self);
 }
 
 sub resource_cost { return {children => 2, descriptors => 16} }
@@ -55,6 +56,7 @@ sub _fail {
     $self->{phase} = 'failed';
     delete $self->{outgoing};
     delete $self->{fork_check};
+    delete $self->{release_check};
     # EOF can only abort a child waiting at either gate, never release it.
     $self->_close('gate');
 }
@@ -79,12 +81,15 @@ sub prepare_record {
             && $fd >= 3 && !$seen{$fd}++;
     }
     my $self = bless {owner_pid => $$, phase => 'unallocated', snapshot => $snapshot,
-        cwd => $cwd, deadline => $args{deadline}, close_handles => [@$handles],
+        cwd => $cwd, deadline => $args{deadline}, original_deadline => $args{deadline},
+        close_handles => [@$handles],
         reserved_children => 2, command_reaped => 0, command_authority => 0,
-        joined => 0, released => 0, retired => 0,
+        joined => 0, released => 0, release_attempted => 0, release_uncertain => 0, retired => 0,
         dispositions => {%SIG}}, __PACKAGE__;
+    $self->{identity} = refaddr($self);
     $self->{reservation} = FSM::Support::ProcessSupervisor::Reservation::prepare_record(
         deadline => $args{deadline}, close_handles => $handles);
+    $self->{reservation_identity} = refaddr($self->{reservation});
     return $self;
 }
 
@@ -189,7 +194,7 @@ sub _start_command {
             my $pid = _fork();
             if (defined($pid) && !$pid) { eval { _child($self) }; _exit(126); }
             if (defined $pid) {
-                $self->{command_pid} = $pid;
+                $self->{command_pid} = $self->{original_command_pid} = $pid;
                 $self->{command_authority} = 1;
                 $self->{phase} = 'join_pending';
                 $self->{outgoing} = 'J';
@@ -264,6 +269,9 @@ sub advance {
     my ($self) = @_; _owner($self);
     _error('unexpected advance arguments') unless @_ == 1;
     return if $self->{phase} eq 'unallocated' || $self->{phase} eq 'prepared' || $self->{retired};
+    if (defined($self->{outgoing}) && $self->{outgoing} eq 'E') {
+        $self->_advance_release; return;
+    }
     my $r = $self->{reservation};
     $r->advance;
     my $o = $r->observation;
@@ -290,13 +298,7 @@ sub advance {
         my $n = _write($self->{gate}, $self->{outgoing});
         return if !defined($n) && ($! == EAGAIN || $! == EINTR || $! == EWOULDBLOCK);
         if (!defined($n) || $n != 1) { $self->_fail('command gate write failed'); return; }
-        my $byte = delete $self->{outgoing};
-        if ($byte eq 'E') {
-            $self->{released} = 1;
-            $self->{phase} = 'released';
-            $self->_close(qw(gate ack));
-            return;
-        }
+        delete $self->{outgoing};
     }
     return unless $self->{ack};
     my $n = sysread($self->{ack}, my $bytes, 2);
@@ -310,18 +312,119 @@ sub advance {
     else { $self->_fail('command join acknowledgment lost or invalid'); }
 }
 
-sub release {
-    my ($self) = @_; _owner($self);
-    _error('exec release requires acknowledged join and departure') unless @_ == 1
-        && $self->{phase} eq 'ready' && !$self->{failure} && !$self->{retired};
-    my $reservation = $self->{reservation}->observation;
+# Only this ready native owner may reach the irreversible execution byte.
+# Recheck after callbacks: they may cancel, spend the wall, retire a reservation
+# or harvest the command. No launch advancement (and thus no fork) occurs here.
+sub _release_live {
+    my ($self, $basis, $phase) = @_; _owner($self);
+    _error('exec release lost original pair state')
+        unless $self->{phase} eq $phase && !$self->{failure} && !$self->{retired}
+            && !$self->{released} && !$self->{release_uncertain}
+            && ref($self->{release_basis}) eq 'HASH'
+            && refaddr($self->{release_basis}) == refaddr($basis);
+    _error('exec release lost original reservation identity')
+        unless ref($self->{reservation}) eq 'FSM::Support::ProcessSupervisor::Reservation'
+            && refaddr($self->{reservation}) == $self->{reservation_identity};
+    my $r = $self->{reservation};
+    $r->advance;
+    my $o = $r->observation;
     _error('exec release requires live reservation identity')
-        if $reservation->{retired} || $reservation->{failure}
-            || $reservation->{phase} ne 'moved';
-    # The coordinator calls only after complete ownership publication. This
-    # explicit edge is intentionally absent from automatic advancement.
-    $self->{phase} = 'release_pending';
-    $self->{outgoing} = 'E';
+        unless $o->{phase} eq 'moved' && !$o->{failure} && !$o->{retired} && !$o->{reaped};
+    _error('exec release lost original command custody')
+        unless $self->{command_authority} && !$self->{command_reaped} && !$self->{failure}
+            && $self->{command_pid} == $self->{original_command_pid};
+    $self->poll_command;
+    _error('exec release lost original command custody')
+        unless $self->{command_authority} && !$self->{command_reaped} && !$self->{failure};
+    _error('exec release exceeded original invocation wall')
+        unless $self->{deadline} == $self->{original_deadline} && _now() < $self->{original_deadline};
+    for my $name (qw(gate ack)) {
+        _error('exec release lost original gate handles')
+            unless defined($self->{$name}) && defined(fileno($self->{$name}))
+                && refaddr($self->{$name}) == $basis->{$name};
+    }
+}
+
+sub _advance_release {
+    my ($self) = @_; _owner($self);
+    my $ok = eval {
+        FSM::Support::ProcessSupervisor::Reservation::_masked_preparation(sub {
+            my $admitted = eval {
+                _error('reentrant execution admission') if $self->{release_check_active};
+                local $self->{release_check_active} = 1;
+                my $basis = $self->{release_basis};
+                $self->_release_live($basis, 'release_pending');
+                my $allow = $self->{release_check} ? $self->{release_check}->($self) : 1;
+                _error('execution admission must return boolean')
+                    unless defined($allow) && !ref($allow) && "$allow" =~ /\A[01]\z/;
+                $self->_release_live($basis, 'release_pending');
+                return 1 unless $allow;
+                local $SIG{PIPE} = 'IGNORE';
+                # A thrown/lost native return cannot prove that no byte escaped.
+                # Retain that uncertainty and revoke retries on the failure path.
+                $self->{release_attempted} = $self->{release_uncertain} = 1;
+                my $n = _write($self->{gate}, 'E');
+                $self->{release_uncertain} = 0;
+                return 1 if !defined($n) && ($! == EAGAIN || $! == EINTR || $! == EWOULDBLOCK);
+                unless (defined($n) && $n == 1) {
+                    $self->_fail('command gate write failed'); return 1;
+                }
+                $self->{released} = 1;
+                $self->{phase} = 'released';
+                delete @{$self}{qw(outgoing release_check)};
+                $self->_close(qw(gate ack));
+                1;
+            };
+            unless ($admitted) {
+                my $why = $@;
+                $self->_fail(FSM::Support::ProcessSupervisor::_sanitize_control($why));
+                die $why;
+            }
+        });
+        1;
+    };
+    unless ($ok) {
+        my $why = $@;
+        $self->_fail(FSM::Support::ProcessSupervisor::_sanitize_control($why));
+        die $why;
+    }
+}
+
+sub release {
+    my ($self, $check) = @_; _owner($self);
+    my $valid = sub {
+        _error('exec release requires acknowledged join and departure')
+            unless $self->{phase} eq 'ready' && !$self->{failure} && !$self->{retired};
+    };
+    _error('exec release requires acknowledged join and departure')
+        unless @_ == 1 || (@_ == 2 && ref($check) eq 'CODE');
+    $valid->();
+    my $started = 0;
+    my $ok = eval {
+        FSM::Support::ProcessSupervisor::Reservation::_masked_preparation(sub {
+            $valid->();
+            $started = 1;
+            my $queued = eval {
+                $self->{release_basis} = {map { $_ => refaddr($self->{$_}) } qw(gate ack)};
+                $self->_release_live($self->{release_basis}, 'ready');
+                $self->{release_check} = $check if defined $check;
+                $self->{phase} = 'release_pending';
+                $self->{outgoing} = 'E';
+                1;
+            };
+            unless ($queued) {
+                my $why = $@;
+                $self->_fail(FSM::Support::ProcessSupervisor::_sanitize_control($why));
+                die $why;
+            }
+        });
+        1;
+    };
+    unless ($ok) {
+        my $why = $@;
+        $self->_fail(FSM::Support::ProcessSupervisor::_sanitize_control($why)) if $started;
+        die $why;
+    }
 }
 
 sub cancel {
@@ -370,7 +473,7 @@ sub retire {
         if $self->{command_pid} && !$self->{command_reaped};
     $self->{command_authority} = 0;
     $self->_close(@HANDLES);
-    delete $self->{close_handles};
+    delete @{$self}{qw(close_handles release_check)};
     $self->{phase} = 'retired';
 }
 
@@ -378,7 +481,7 @@ sub observation {
     my ($self) = @_; _owner($self);
     _error('unexpected observation arguments') unless @_ == 1;
     return {map { $_ => $self->{$_} } qw(phase command_pid birth_sec birth_usec
-        command_reaped command_status command_authority joined released retired failure)};
+        command_reaped command_status command_authority joined released release_attempted release_uncertain retired failure)};
 }
 
 sub reservation { my ($self) = @_; _owner($self); return $self->{reservation}; }

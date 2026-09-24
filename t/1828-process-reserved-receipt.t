@@ -51,6 +51,7 @@ sub model {
         command_status => $command_status, command_authority => 0,
         joined => 1, released => 1, retired => 1, reservation => $r},
         'FSM::Support::ProcessSupervisor::GatedPair';
+    $p->{identity} = refaddr($p); # Explicit non-native model identity.
     my $closure = bless {owner_pid => $$, pair => $p, phase => 'finished',
         complete => 1, group_gone => 1, term_sent => 0, kill_sent => 0,
         surviving_descendants => 0}, 'FSM::Support::ProcessSupervisor::GroupClosure';

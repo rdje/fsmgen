@@ -3783,24 +3783,24 @@ decomposes the architecture needed to move beyond that bounded foundation.
   Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.4.3.3.5.1: retain completed gated admission history`
 
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.4.3.3.5.2`
-  Status: `active`
+  Status: `done`
   Goal: `Admit every original native execution-gate write.`
   Acceptance: `Extend original gated release with an optional retained owner check before each actual E write, preserving the no-callback API. Keep original owner, ready reservation identity, command custody and invocation wall live through check and effect. Boolean deferral consumes no write or new deadline; errors revoke later execution. Publish actual release and closed gate handles under masking before creator interruption. Qualify real gated children, native E writes, retry/expiry/identity/closure cuts, original exec masks, exact waits and output witnesses.`
-  Verification: `release() currently queues E and advance() performs the later irreversible write, so a queue-time check alone is insufficient.`
-  Commit: `pending`
+  Verification: `T1853 independently witnesses native E bytes, original exec masks, exact command/reservation waits, weak pipe closure and inherited/copied ownership refusal. Every E attempt rechecks original Pair identity, reservation, command custody, original wall and gate handles around an optional retained callback. Deferral and transient retries renew no wall; errors revoke callbacks/gates before signals resume. Confirmed release survives interrupted write/close returns; ambiguous native returns retain uncertainty and never retry. A real queue-refusal signal reproduced late failure publication and now observes failed state plus a closed gate. Twelve isolated defects reject at intended oracles; the identical copied fixture passes. The final bounded band passes 35 files/330 tests. Syntax, mdBook build/HTML inspection and doctrines pass; Linux and browser visual qualification remain missing.`
+  Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.4.3.3.5.2: admit every original native execution write`
 
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.4.3.3.5.3`
-  Status: `pending`
+  Status: `active`
   Goal: `Preserve original request lifetimes across admitted native execution.`
   Acceptance: `Retain the original admission deadline separately from the original clipped execution deadline. Before release, freshly inspect only the matching original bound peer, complete ACCEPT, original parent/job authority and bounded incoming control; partial control cannot silently authorize execution. After an original admitted native effect, retain the execution transition without renewing a clock or erasing admission/publication history. Preserve cancellation/EOF/protocol refusal, original failure and copied observations. Qualify literal sockets, exact walls and interrupted transitions; native effect authority remains with the aggregate owner.`
-  Verification: `Pending child .2; Service currently keeps the admission wall after complete ACCEPT, and no execution-phase transport transition is implemented.`
+  Verification: `Service currently keeps the admission wall after complete ACCEPT, and no execution-phase transport transition is implemented.`
   Commit: `pending`
 
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.4.3.3.5.4`
   Status: `pending`
   Goal: `Bind root and nested execution release to original live ownership.`
   Acceptance: `Join final owner checks to each original native E write. Require matching original grant, native ready pair, live parent/peer, complete original ACCEPT and all original admission walls; root release uses its original root grant/context/deadline. Retain native execution truth before interrupted returns and reconcile Service execution lifetime from the original effect. Qualify actual command bytes/environment/context and no-exec controls for incomplete publication/control, copied/foreign authority, expiry, cancellation and native/peer loss, with exact bounded subtree cleanup. Do not activate ordinary nested adapters.`
-  Verification: `Pending native gate and Service transition children; bounded streaming, fair root composition and independent cross-platform qualification remain subsequent owners.`
+  Verification: `Pending native gate and Service transition children. Also qualify original ReservedJob wrapper identity when passing its retained release check: its current creator-PID-only guard allows a shallow wrapper copy to reach the original pair. Bounded streaming, fair root composition and independent cross-platform qualification remain subsequent owners.`
   Commit: `pending`
 
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.4.4`
@@ -4508,7 +4508,7 @@ decomposes the architecture needed to move beyond that bounded foundation.
 
 ## Current Frontier
 
-Current frontier: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.4.3.3.5.2` qualifies an original retained owner check immediately before each native E write, including deferral, refusal and masked release truth. The following children preserve original Service execution lifetimes and join root/nested release to complete original ACCEPT. Complete ACCEPT alone releases no command. Bounded streaming, fair composition, independent qualification and nested routing remain subsequent work. Preserve original failures, live claim owners and execution-scope corrections, spent compiler evidence and full-CI/push gates.
+Current frontier: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.4.3.3.5.3` separates the original admission and execution transport lifetimes without resetting either wall. Fresh matching-peer inspection must defer or refuse partial incoming control before E; retain execution transitions from original admitted effects. The native Pair gate is qualified, while aggregate root/nested release, streaming, fair composition and independent qualification remain open. Preserve live claim owners, execution-scope corrections, spent compiler evidence and full-CI/push gates.
 
 Architecture audit `.1` is complete. Decision `0032` selects one public
 `.vial` source language, private immutable `VIALSemanticIR` and
@@ -7141,3 +7141,41 @@ correction supplies its proper scope and is reflected in the canonical fact/book
   Claim census and staged doctrines verify synchronized metadata. Product code,
   book behavior and all ceilings remain unchanged. No native producer, original
   startup, full CI or push runs for this history-only slice.
+
+## Acceptance Checklist (.19.2.3.1.2.2.5.5.2.3.4.3.3.5.2)
+
+- [x] **ROOT CAUSE (WHY + WHERE)** — Native E admission: the original fixture
+  rejects the expected copied-owner refusal because PID-only ownership accepts
+  a shallow Pair. GatedPair.pm queues E in release and writes it later in advance;
+  queue-time permission cannot admit that later irreversible operation. The first
+  focused run also exposed `Died at perl/FSM/Support/ProcessSupervisor/GatedPair.pm line 381`
+  on a hard write failure; the successful internal failure path now preserves the
+  legacy failed-state API. A real pending signal reproduced two queue-refusal
+  assertions: its handler saw ready state and an open gate before failure retention.
+- [x] **ADDRESSED (verified)** — Native E re-derivation: T1853 uses actual
+  gated children, literal stdout through EOF, original exec masks, weak descriptor
+  inventory and independently recorded positive fork/wait identities. It covers
+  copied/inherited pairs, original callbacks around every E attempt, false deferral,
+  EAGAIN/EINTR, malformed/throwing/reentrant checks, changed identity/reservation/
+  command/wall/handles, cancellation, retirement, exact dead-command waits and
+  native signals at queue/write/close. A lost write return retains explicit
+  uncertainty; a confirmed write survives a lost close return. Queue refusal now
+  revokes before signal delivery. Existing pure model fixtures declare their
+  identities explicitly; no model PID reaches native operations. Falsification:
+  identical copied positive passes; twelve isolated defects reject for copied
+  ownership (3), ignored callback (3), stale post-check (255), foreign reservation
+  (1), renewed wall (1), stale command (1), unmasked effect (2), unchecked retry
+  (1), missing uncertainty (1), late confirmed effect (2), retained callback (1)
+  and late queue refusal (1). These are fixture exit codes, not native signal
+  claims. Every endpoint census is unchanged. Durability: tracked source/T1853,
+  existing fixtures, book, fact and this owner; raw .artifacts/exec-admission-*
+  logs/JSON remain a named durability gap. Variant sources, runner and book output
+  are removed after consumption. Linux and browser visual evidence remain missing.
+- [x] **NO REGRESSION** — Native E band: `All tests successful`,
+  `Files=35, Tests=330`; selected T1812–T1814/T1817 and T1823–T1853 run under the
+  RAM guard. Syntax is OK and mdBook build/HTML inspection confirms the contract.
+  An initial protocol invocation used nonexistent filenames and ran no fixtures;
+  the corrected enumerated band supplies the evidence. Knowledge Map, claim
+  census and staged doctrines verify synchronized facts and metadata. This band
+  executes bounded fixture commands; original startup/proxy/compiler producers,
+  full CI and push remain gated. Aggregate execution permission is still open.

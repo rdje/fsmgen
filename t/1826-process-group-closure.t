@@ -247,6 +247,7 @@ sub model {
         command_pid => 80001, command_authority => 1, command_reaped => 0,
         released => 1, joined => $args{unjoined} ? 0 : 1, reservation => $r},
         'FSM::Support::ProcessSupervisor::GatedPair';
+    $p->{identity} = refaddr($p); # Explicit non-native model identity.
     no warnings 'redefine';
     local *FSM::Support::ProcessSupervisor::Reservation::_now = sub { $clock };
     local *FSM::Support::ProcessSupervisor::GatedPair::cancel = sub { push @events, 'cancel'; $_[0]{failure} //= 'command cancelled' };

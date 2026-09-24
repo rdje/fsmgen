@@ -1204,7 +1204,32 @@ does not erase previously confirmed bytes. A complete ACCEPT still leaves the
 command gated. Neither its numeric job identity nor its copied publication grants
 exec permission; final live rechecks and post-exec result streaming remain open.
 
-Normal callers retain the existing own-group supervisor. Execution
+The native pair now accepts `release($check)` as well as its existing no-argument
+form. Queuing release invokes no callback. Each later attempted execution byte
+calls the retained check with the original pair, under creator signal masking.
+Only scalar `1` permits the attempt; scalar `0` defers it without resetting the
+invocation wall. A transient write repeats admission on its next attempt. For
+example, a callback that permits the first attempt must still permit a retry
+following `EAGAIN`; its earlier answer does not authorize that retry.
+
+Before and after the callback, the pair verifies its original object and
+reservation identity, held command, original deadline and gate handles. A copied
+or inherited pair cannot release the creator's command. Cancellation, stale
+custody, a thrown callback or a malformed answer revokes the pending byte and
+retains the first failure. Queue-time refusal is also retained before pending
+creator signals run. These checks never advance native launch under a mask.
+
+A confirmed execution byte and both gate closes are published before creator
+signals resume. The copied observation keeps `released` true even when a later
+close or signal interrupts the return. If the native write itself loses its
+return, `release_attempted` and `release_uncertain` preserve that ambiguity and
+prevent retries; `released == 0` then proves no absence of execution. The focused
+fixture independently observes command output, original exec masks, pipe EOF and
+exact child waits, including a deliberately lost return after a real byte.
+This native boundary is ready for the aggregate owner; connecting its checks to
+original root/nested grants and Service execution lifetime remains open.
+
+Normal callers retain the existing own-group supervisor. Aggregate execution
 release, nested routing and complete subtree qualification
 still have separate open owners. These private components
 establish no nested result or permission to run the retained startup proxy.
@@ -1237,6 +1262,7 @@ scripts/run_with_ram_guard.sh -- prove -Iperl -It/lib t/1847-process-write-admis
 scripts/run_with_ram_guard.sh -- prove -Iperl -It/lib t/1848-process-service-job-publication.t
 scripts/run_with_ram_guard.sh -- prove -Iperl -It/lib t/1849-process-parent-token-admission.t
 scripts/run_with_ram_guard.sh -- prove -Iperl -It/lib t/1850-process-aggregate-context.t t/1851-process-request-association.t t/1852-process-gated-accept.t
+scripts/run_with_ram_guard.sh -- prove -Iperl -It/lib t/1853-process-exec-admission.t
 ```
 
 For native stopped-child observations, decode `${^CHILD_ERROR_NATIVE}` with
