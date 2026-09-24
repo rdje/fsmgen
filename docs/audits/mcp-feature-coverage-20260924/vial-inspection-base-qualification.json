@@ -1,0 +1,67 @@
+{
+  "evidence_legs": {
+    "durability": "Tracked module, explicit base record definitions, T1875 and this log-digest record.",
+    "falsify": "Authored IDs, bounds, enum encodings, four-state masks, action order and source-byte substrings; unknown/missing fields, operators, scope and malformed coordinates must fail. Repeated calls remain defensive and deterministic.",
+    "rederive": "T1875 parses independently authored rich normal/terse/imported v1/v2 sources and projects exact typed records."
+  },
+  "limits": [
+    "Internal base projection only; lifecycle detail is explicitly refused until its owned next leaf. No public inspection facade or MCP tool is advertised.",
+    "No plan, random evaluation, backend, runtime, performance, capacity or exhaustive corpus claim.",
+    "Initial test-source replacement syntax error is recorded but not treated as the defect baseline.",
+    "Book rendered HTML verified; browser visual inspection unavailable.",
+    "Native declaration collections remain dependency-first for forward aliases; the projector independently restores authored order. Immediate compiler/report repair is owned by .31.3.2.7."
+  ],
+  "owner": "SEMANTIC-INTROSPECTION-MCP-FRONTIER.31.3.2.3.2.1",
+  "prior_revision": "d7e040474d093e81d0c342c25a3ea820398a7b4e",
+  "producer": "perl/FSM/VIAL/SourceInspection.pm",
+  "producer_sha256": "3c89206e474b719c09579b39595e4ef27daf3aaebf371c17539a86a135009599",
+  "schema": "fsmgen.vial_source_inspection_base_qualification.v1",
+  "tests": {
+    "inspection-base-band": {
+      "sha256": "54304ad71dd44449ebf6661e2cd025338c04f0eb6293a20ad2cd5c94094425d5",
+      "summary": [
+        "All tests successful.",
+        "Files=7, Tests=48, 34 wallclock secs ( 0.04 usr  0.01 sys + 31.46 cusr  1.35 csys = 32.86 CPU)",
+        "Result: PASS"
+      ]
+    },
+    "inspection-base-band-final": {
+      "sha256": "c5f6d0f40a1274248472a2d2547e9d3462d0bfceb14cdd97095e9520f9e673ef",
+      "summary": [
+        "All tests successful.",
+        "Files=7, Tests=51, 40 wallclock secs ( 0.04 usr  0.02 sys + 35.52 cusr  1.90 csys = 37.48 CPU)",
+        "Result: PASS"
+      ]
+    },
+    "inspection-base-final": {
+      "sha256": "ef1a72adbccf584e4a8d37816fbdd51a1708b7046a4dd25df516877f7f083c39",
+      "summary": [
+        "All tests successful.",
+        "Files=1, Tests=6,  1 wallclock secs ( 0.01 usr  0.01 sys +  0.88 cusr  0.02 csys =  0.92 CPU)",
+        "Result: PASS"
+      ]
+    },
+    "inspection-base-order-red": {
+      "sha256": "82156af68ea820bf4a48d12a5fdaabc299c2165c480cd5277d5a00b74c1ab042",
+      "summary": [
+        "Files=1, Tests=7,  2 wallclock secs ( 0.01 usr  0.01 sys +  0.95 cusr  0.02 csys =  0.99 CPU)",
+        "Result: FAIL"
+      ]
+    },
+    "inspection-base-tests": {
+      "sha256": "67e92f5bf7160e7c182eb5fbe45f7aa33c0fc8896f2b362548c97f2bda708694",
+      "summary": [
+        "Files=1, Tests=0,  0 wallclock secs ( 0.00 usr  0.00 sys +  0.03 cusr  0.00 csys =  0.03 CPU)",
+        "Result: FAIL"
+      ]
+    },
+    "inspection-base-tests-corrected": {
+      "sha256": "cdaad6e347c68f4821038b3a2d0c60f4f8c23f08ef649ea1dfe472d7f6308598",
+      "summary": [
+        "All tests successful.",
+        "Files=1, Tests=4,  1 wallclock secs ( 0.01 usr  0.00 sys +  0.78 cusr  0.01 csys =  0.80 CPU)",
+        "Result: PASS"
+      ]
+    }
+  }
+}

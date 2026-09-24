@@ -2,7 +2,7 @@
 
 Date: 2026-09-24
 Owner: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.31.3.2.3`
-Status: selected; implementation and public advertisement pending
+Status: internal base projector implemented; lifecycle, public API and advertisement pending
 
 ## Purpose and compatibility
 
@@ -80,7 +80,8 @@ The closed detail envelope is `fsmgen.vial_source_semantics.v1` with
 `sources`, `packages`, `required_capabilities`, and `unresolved_bridge_refs`.
 The public schema version is independent of the inspected language version.
 Root/import identities retain relative source names and content hashes. Package
-and member arrays retain authored order; required capabilities remain sorted.
+declarations and action arrays retain authored order; required capabilities
+remain sorted. Expanded lifecycle nodes retain their explicit semantic order.
 Bridge references are explicitly unresolved assertions, not HIAL facts.
 
 Fault detail must always expose the resolved `transaction_binding_id`. The
@@ -120,6 +121,105 @@ corresponding implementation slice ships. Mapping an entire arbitrary private
 hash recursively is insufficient: unrecognized kinds/fields must trigger
 review, never disappear or leak through unnoticed. Fresh defensive values and
 repeat-call determinism are required throughout.
+
+### Base detail record definitions
+
+These fields define the independent inspection representation. Every record is
+closed; every listed field is required, including fields whose value can be
+null. Declaration and action arrays preserve source order. Declaration order
+is recovered from source coordinates independently of compiler dependency
+construction order. `M` abbreviates `semantic_path` and
+`source_location`; `N` adds `semantic_id` and `name` to `M`. The abbreviations
+are documentation notation, not emitted keys. Locations contain `source_name`,
+`start_byte`, `end_byte_exclusive`, `start_line`, `start_column`, `end_line`,
+`end_column`. Source records contain `source_name`, `content_sha256`,
+`byte_length`, `line_ending`. Bounds/widths/counts/coordinates are JSON integers;
+flags are JSON booleans; identifiers, seed, decimal literal values and
+hexadecimal literal bit/mask strings remain strings. Existing source contracts
+own admissible numeric ranges and semantic relationships.
+
+| Record | Fields beyond `M` or `N`, where stated |
+| --- | --- |
+| Package (`N`) | `source_name`, `imports[]`, `types[]`, `transactions[]`, `models[]`, `scoreboards[]`, `fixtures[]`, `intent_families[]` (empty for base v1) |
+| Import (`M`) | `alias`, `source_name`, `package_id` |
+| Type declaration (`N`) | `declaration_kind: alias\|enum`, `type` |
+| Enum member (`N`) | `value` |
+| Transaction (`N`) | `fields[]` (typed names), `events[]` (names) |
+| Typed name (`N`) | `type` |
+| Model (`N`) | `inputs[]` (typed names), `state[]`, `rules[]` |
+| State (`N`) | `type`, `initial_value` |
+| Rule (`M`) | `input_id`, `assignments[]` |
+| Assignment (`M`) | `state_id`, `expression` |
+| Scoreboard (`N`) | `transaction_id`, `policy: in_order\|keyed`, `key` (string or null), `capacity` |
+| Fixture (`N`) | `dut`, `instances`, `coverage`, `faults[]`, `randomness`, `scenarios[]` |
+| DUT (`N`) | `unit_bridge_ref`, `domains[]`, `endpoints[]`, `transaction_bindings[]` |
+| Domain (`N`) | `bridge_ref` |
+| Endpoint (`N`) | `bridge_ref`, `type`, `access: public_port\|verification_probe` |
+| Transaction binding (`N`) | `bridge_ref`, `authored_transaction`, `transaction_id` |
+| Instances | `model_instances[]`, `scoreboard_instances[]` |
+| Model instance (`N`) | `model_id`, `bindings[]` |
+| Model binding (`M`) | `input_id`, `value` (expression or event binding) |
+| Event binding | `semantic_id`, `event_id` |
+| Scoreboard instance (`N`) | `scoreboard_id`, `transaction_id`, `actual_id` |
+| Coverage | `coverpoints[]`, `crosses[]` |
+| Coverpoint (`N`) | `domain_id`, `expression`, `bins[]` |
+| Bin (`N`) | `classification: normal\|illegal\|ignore`, `matcher` |
+| Cross (`N`) | `point_ids[]`, `max_bins` |
+| Fault (`N`) | `transaction_id`, `transaction_binding_id`, `field_name`, `substitute` (expression), `domain_id`, `duration_cycles` |
+| Randomness | `seed`, `choices[]` |
+| Choice (`N`) | `type`, `decision_id`, `distribution`, `constraints[]` (properties) |
+| Distribution | `kind: uniform`, `low`, `high` (literal values) |
+| Scenario (`N`) | `domain_id`, `timeout_cycles`, `actions[]`, `action_count`, `fiber_count` |
+| Fiber (`N`) | `actions[]` |
+| Transaction field value (`M`) | `field_id`, `value` (expression) |
+
+A bin matcher is `{kind: value, value}` or `{kind: range, low, high}`, with
+literal-value children. Type records have these exact alternatives:
+
+| Type `kind` | Additional fields |
+| --- | --- |
+| `scalar` | `family: bool\|u\|s\|logic\|slogic`, `width`, `signed`, `four_state` |
+| `reference` | `authored_name`, `semantic_id`, `resolved` (type) |
+| `record` | `fields[]`, each exactly `name`, `type` |
+| `list` | `length`, `element_type` |
+| `enum` | `semantic_id`, `base_type`, `members[]` |
+| `event` | none |
+
+Literal values have `kind` and exactly: `bool_value` → `value` (Boolean);
+`enum_value` → `enum_id`, `member_id`; `integer_value` → `width`, `signed`,
+`value_decimal`; `logic_vector` → `width`, `signed`, `value_bits`, `known_mask`,
+`z_mask`. Masks retain X/Z distinctions without evaluating them.
+
+Expressions all contain `M`, `kind`, `result_type`. A `literal` adds `value`.
+A `reference` adds `op` and `semantic_id`; admitted operators are `enum_member`,
+`symbol`, `sample`, `event`, `event_count`, `model`, `choice`. Only `model` also
+requires `model_instance_id`. An `operator` adds `op`, `operands[]`; admitted
+operators are `field`, `not`, `and`, `or`, `xor`, `same`, `value_eq`, `known`,
+`+`, `-`, `<`, `<=`, `>`, `>=`. Only `field` adds `field_name`; `+`/`-` add
+`overflow_policy: error`. A `property` adds `op: =>|next|within`, `operands[]`;
+only `within` adds `min_cycles` and `max_cycles`.
+
+Actions contain `M` and `kind`, plus exactly the corresponding fields:
+
+| Action `kind` | Additional fields |
+| --- | --- |
+| `reset` | `domain_id`, `cycles` |
+| `drive` | `endpoint_id`, `value` |
+| `start` | `handle_id`, `transaction_binding_id`, `fields[]` |
+| `await` | `property` |
+| `parallel` | `join: all\|any`, `fibers[]` |
+| `repeat` | `count`, `actions[]` |
+| `expect` | `semantic_id`, `name`, `property` |
+| `scoreboard_expect` | `scoreboard_instance_id`, `fields[]` |
+| `scoreboard_check` | `scoreboard_instance_id` |
+| `inject` | `fault_id` |
+
+Each unresolved bridge assertion contains `fixture_id`, `kind`, `alias`,
+`bridge_ref`, `expected_type`, `access`. Assertions follow fixture order, then
+unit/domain/endpoint/transaction order. Unit/domain expected type and access
+are null; endpoints carry their public type and access; transactions carry
+the declaration ID as expected type and null access. These are source assertions,
+not facts established by a DUT or backend.
 
 ### Lifecycle detail
 

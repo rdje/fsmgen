@@ -402,7 +402,7 @@ For FSMGen, the analogs are:
   Verification: `The selected guard exposed an intentional native VIAL summary boundary that does not satisfy deep feature inspection; .3 owns additive public detail before parity is called complete.`
   Commit: `pending`
 
-  Children: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.31.3.2.1, SEMANTIC-INTROSPECTION-MCP-FRONTIER.31.3.2.2, SEMANTIC-INTROSPECTION-MCP-FRONTIER.31.3.2.3, SEMANTIC-INTROSPECTION-MCP-FRONTIER.31.3.2.4, SEMANTIC-INTROSPECTION-MCP-FRONTIER.31.3.2.5, SEMANTIC-INTROSPECTION-MCP-FRONTIER.31.3.2.6`
+  Children: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.31.3.2.1, SEMANTIC-INTROSPECTION-MCP-FRONTIER.31.3.2.2, SEMANTIC-INTROSPECTION-MCP-FRONTIER.31.3.2.3, SEMANTIC-INTROSPECTION-MCP-FRONTIER.31.3.2.4, SEMANTIC-INTROSPECTION-MCP-FRONTIER.31.3.2.5, SEMANTIC-INTROSPECTION-MCP-FRONTIER.31.3.2.6, SEMANTIC-INTROSPECTION-MCP-FRONTIER.31.3.2.7`
 
 - ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.31.3.2.1`
   Status: `pending`
@@ -435,10 +435,40 @@ For FSMGen, the analogs are:
   Commit: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.31.3.2.3.1: select additive VIAL deep inspection`
 
 - ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.31.3.2.3.2`
-  Status: `pending`
+  Status: `active`
   Goal: `Implement the selected bounded public VIAL detail API and native inspection command.`
   Acceptance: `Decompose portable typed projection, filesystem adaptation and CLI into independently verifiable leaves before source changes. Use explicit public record constructors and closed field shapes, defensive fresh values, stable source identities and diagnostic behavior. Preserve base/lifecycle conditions, ordering, references and bounds with independent authored oracles; reject malformed invocation, unknown schema/family and incomplete projection. Reuse the existing bounded source loader without a second filesystem read, preserve old check/format/plan results and frozen capability hashes, and prove no artifacts or execution.`
-  Verification: `Pending .1 selection.`
+  Verification: `Decision 0105 and the inspection contract select the independent schema. Fault/model identity prerequisites are repaired; implementation is decomposed into closed base detail, lifecycle detail, public API, and CLI/discovery leaves.`
+  Commit: `pending`
+
+  Children: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.31.3.2.3.2.1, SEMANTIC-INTROSPECTION-MCP-FRONTIER.31.3.2.3.2.2, SEMANTIC-INTROSPECTION-MCP-FRONTIER.31.3.2.3.2.3, SEMANTIC-INTROSPECTION-MCP-FRONTIER.31.3.2.3.2.4`
+
+- ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.31.3.2.3.2.1`
+  Status: `done`
+  Goal: `Implement closed typed projection of base VIAL source meaning.`
+  Acceptance: `Enumerate public base record fields and discriminants, then implement explicit constructors for source/package/declaration/type/value/expression/fixture/action details. Preserve selected model and resolved fault binding identities, provenance coordinates and unresolved bridge assertions. Reject missing/unknown fields, kinds and not-yet-implemented family detail; never dump an arbitrary private hash. Prove authored observations, full source-version/style/import fidelity, defensive determinism and malformed-record refusal while preserving frozen summaries. This internal foundation remains unadvertised until the public facade and lifecycle projection are complete.`
+  Verification: `SourceInspection constructs closed typed base records for both source versions, resolves all public fault targets and preserves model scope. T1875 independently verifies rich authored declarations/actions/expressions, source coordinates, imports, styles, fresh deterministic values and malformed-record refusal. Lifecycle families deliberately fail until .2; no public facade is advertised.`
+  Commit: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.31.3.2.3.2.1: construct closed VIAL base inspection records`
+
+- ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.31.3.2.3.2.2`
+  Status: `pending`
+  Goal: `Project complete typed lifecycle-control source semantics.`
+  Acceptance: `Extend the base projector with the selected public intent-node envelope and explicit lifecycle payload/condition/detail shapes. Preserve authored and intrinsic dependencies, service state conditions, deadlines and failure cleanup. Validate registered family/revision, reject unknown and incomplete records, prove independent authored values and complete source locations, and keep the API unadvertised until the facade ships.`
+  Verification: `Pending base projection.`
+  Commit: `pending`
+
+- ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.31.3.2.3.2.3`
+  Status: `pending`
+  Goal: `Expose portable and bounded filesystem VIAL source inspection APIs.`
+  Acceptance: `Implement the selected closed invocations and independent result envelope over captured source bytes and the qualified typed projector. Preserve complete native check results, diagnostics and null-on-failure detail. Reuse bounded filesystem loading without reopening after check, preserve version/style/import provenance, prove no planning/random/backend/provider/network/publication effects and fresh values, and document runnable API examples with exact admitted behavior.`
+  Verification: `Pending complete typed projection.`
+  Commit: `pending`
+
+- ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.31.3.2.3.2.4`
+  Status: `pending`
+  Goal: `Add native VIAL inspection command and independent capability discovery.`
+  Acceptance: `Implement inspect JSON CLI and separate machine-readable inspection contract without changing frozen tooling capabilities. Reject planning/runtime/publication options, prove complete CLI/API equality and actual version/style/import/error behavior, synchronize book and discovery guidance, and commit before MCP adaptation.`
+  Verification: `Pending public APIs.`
   Commit: `pending`
 
 - ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.31.3.2.3.3`
@@ -484,6 +514,13 @@ For FSMGen, the analogs are:
   Acceptance: `Trace the preserved target through binding and ExecutionIR into applicable public/backend contracts. Use exact admitted/rejected public-interface evidence; do not assume that source checking grants runtime support. Investigate emitter selection by field name and the bounded profile's actual admission. If a legal admitted case loses target scope, own and fix the exact route with negative controls before closure. Preserve unambiguous canonical identities and spent producer boundaries, and use documented dependency surfaces only. Close the fault parent only after target handling or explicit truthful unavailability is proved, then resume typed source inspection.`
   Verification: `T1874 proves genuine canonical v1/v2 execution binding, explicit fault normalization, unresolved-alias and duplicate-reference refusal, plain-IAL1 correlation refusal and canonical SV emission without runtime. The misleading declaration_order sentence is clarified against original implementation history. The four-file binding/emission band and rendered book pass.`
   Commit: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.31.3.2.6.2: qualify VIAL fault target execution boundaries`
+
+- ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.31.3.2.7`
+  Status: `pending`
+  Goal: `Restore authored declaration order after native VIAL dependency resolution.`
+  Acceptance: `Reproduce forward aliases returning dependencies before earlier authored declarations in native SemanticIR and public summaries. Restore declared ordering without breaking recursive resolution or stable IDs, qualify both versions, imports, styles and API/MCP output, and explicitly assess affected semantic/compatibility digests while preserving unchanged canonical fixtures. Keep the inspection projector ordered independently by source provenance. Add durable positive/negative oracles and correct contract/book/facts; commit this repair immediately after the base projector before lifecycle implementation. Do not replay spent backend producers.`
+  Verification: `A source beginning with type first referring to later, followed by type later, currently projects later,first. SemanticBuilder::_build_type_declaration pushes completed dependencies into the package array before their authored owner. The native source contract describes authored-order arrays. The current base projector leaf owns its own source-order correction; this leaf owns the pre-existing compiler/report gap.`
+  Commit: `pending`
 
 - ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.31.3.3`
   Status: `pending`
@@ -1137,8 +1174,8 @@ before editing code. No discovered defect is closed by this audit alone.
 
 ## Current Frontier
 
-`SEMANTIC-INTROSPECTION-MCP-FRONTIER.31.3.2.3.2` decomposes and implements
-additive typed source inspection before MCP `.31.3.2.3.3`.
+`SEMANTIC-INTROSPECTION-MCP-FRONTIER.31.3.2.7` repairs native forward
+declaration order, then `.31.3.2.3.2.2` resumes lifecycle detail before API/CLI/MCP.
 The catalog guard, CI/signoff and exhaustive qualification follow before HIAL
 streaming. Preserve spent native compiler/startup evidence and the separate
 read-only/write horizon; source checks do not promote runtime support.
@@ -2123,3 +2160,56 @@ fixture is source-valid and reaches the actual correlation diagnostic.
   controls plus canonical success; durability: T1874, tracked applicability
   record, contracts/book/fact and historical Git objects. Browser visual
   access, external runtime and full CI are not qualified by this slice.
+
+## Acceptance Checklist — `.31.3.2.3.2.1` closed base source detail
+
+- [x] **ROOT CAUSE (WHY + WHERE)** — `git log -S 'selected bounded summary fields' --format='%h %s' -- docs/VIAL_SOURCE_AND_SEMANTIC_IR_V1_CONTRACT.md`
+  returns `08f59167b`. The tracked `.31.3.2.3.1` public CLI/MCP probe and
+  `SemanticReport::_named_summaries` / `_fixture_summary` establish deliberate
+  omission of declaration/action/expression bodies. Decision 0105 requires
+  additive typed detail, not widening those frozen summaries.
+- [x] **ADDRESSED (verified)** — `SourceInspection` uses enumerated closed
+  record constructors and explicit kind/operator dispatch. Source spans become
+  public locations; Boolean flags have explicit JSON type; decimal/bit/mask
+  values remain strings; every fault resolves its exact binding. Unknown or
+  missing fields/kinds, malformed coordinates and unresolvable scope fail.
+  T1875 independently checks authored enum encodings, nested record/list types,
+  signed model state, updates, event bindings, scoreboard keys, coverage range
+  and cross references, random seed/decision IDs, every base action kind,
+  expression operators, four-state masks and exact source-byte selection.
+  Both versions, terse equivalence, imports, unchanged inputs and fresh repeat
+  calls pass. Planner and backend runner modules remain unloaded. Families
+  remain explicitly refused until .2; public API/CLI/MCP remain unshipped.
+- [x] **NO REGRESSION** — RAM-guarded
+  `prove -Iperl t/1550-vial-semantic-ir.t t/1555-vial-public-source-tooling.t t/1801-vial-v2-source-projections.t t/1806-vial-v2-public-foundation.t t/1808-vial-v2-lifecycle-compiler-phases.t t/1873-vial-fault-target-identity.t t/1875-vial-source-inspection-base.t`
+  reports `All tests successful. Files=7, Tests=51` and `Result: PASS` after
+  the authored-order correction. This supersedes the earlier passing band;
+  forward-reference, malformed-coordinate and no-planner/runner controls are
+  included in the final run. `mdbook build docs/book -d .artifacts/inspection-base-book`
+  and rendered internal/unshipped statements pass; browser visual access
+  remains unavailable. No execution, random evaluation or runtime claim.
+
+Re-derivation uses actual parsed rich source and complete typed output;
+falsification uses independently authored IDs/values/source substrings and
+mutated-record refusal; durability is T1875, closed record definitions,
+tracked evidence and the module. The first test attempt had an unescaped
+slash in a test-source replacement; that syntax failure was fixed before
+semantic qualification and is retained by log hash, not used as defect proof.
+The Knowledge Map card is compacted without increasing its allowance. Task
+and book metadata records only this owned implementation and truthful scope.
+
+Final base-projection review adds a forward-declaration control: native type
+construction inserts `later` before an earlier authored `first` alias that
+references it. The inspection contract independently requires authored order,
+so its constructor orders declarations by their source coordinates. Native
+summary/digest repair is separately owned by `.31.3.2.7` and is the immediate
+next slice after this foundation commit, before lifecycle implementation.
+
+The final ordering regression first fails with `later` preceding `first` and
+passes after projection declarations are ordered by their source coordinates.
+The native compiler remains unchanged in this slice, with `.31.3.2.7` owning
+its separate compatibility repair. The explicit new record definitions exceed
+the prior focused-document line allowance; this leaf admits their measured
+unique contract growth within the existing enforcement ceiling, with no debt
+state or ceiling waiver. The initial doctrine failure is resolved by that
+bounded ownership update before commit.
