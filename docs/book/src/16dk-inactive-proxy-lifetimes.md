@@ -1055,7 +1055,8 @@ A completed local-write fact remains observable after later closure. It proves
 neither remote acknowledgement nor current peer health or authority to execute.
 Copied and inherited Connection records cannot inspect or change the original
 publication; inherited cleanup closes only the child's descriptors. Binding this
-observation to original Service requests and gated jobs remains the next step.
+observation to original Service requests is described below; native gated-job
+readiness and final release remain the aggregate coordinator's responsibility.
 
 `Connection::advance($write_check)` now optionally admits each socket write
 through a trusted owner's callback. It receives the original Connection under
@@ -1073,10 +1074,34 @@ refusal; a later unguarded call cannot release those queued bytes. Pending creat
 signals observe the completed write transaction and confirmed publication before
 interrupting the return. The no-callback API retains its existing behavior.
 
-This boundary allows Service to enforce its narrower original admission wall
-immediately before a write. Service job association and authority checks remain
-the next integration step; this callback alone proves no job admission or exec
-permission.
+Service now uses this boundary to enforce its narrower original admission wall
+immediately before each bound peer write. `queue_accept($ticket, $job)` requires
+an original handed request and a ready child context whose lifetime fits that
+request. It retains the association and spends the context's request binding
+before calling Connection's tracked queue. A repeated request or another ticket
+cannot reuse that binding, including after its closed outcome is consumed.
+
+For example, a signal can interrupt queue publication after the association and
+Connection record are complete. `accept_publication($ticket)` recovers a copied
+view containing the original ticket, parent, job, execution/admission deadlines,
+Service state/failure and nested Connection `write` observation. Before any queue
+record exists, `write` is explicitly undefined. Changing this view cannot change
+the original association or confirmed byte count. A queue failure closes the
+peer and preserves the association for cleanup and its eventual closed outcome.
+
+Every bound write rechecks the original request, submitting parent, job context,
+root and endpoint. The fixed admission wall remains in force after a complete
+local write; publication never renews it. A fully decoded matching CANCEL closes
+that peer before another write; an early ACK, foreign identity or repeated
+request is a protocol failure. EOF, revocation and expiry also close the original
+peer. A partial write retains its confirmed prefix and cannot become published.
+A previously completed local write remains a historical fact after closure.
+
+Service owns this transport/context association. Its trusted aggregate caller
+must still join the original ledger grant and ready gated process, revoke and
+clean up the actual job on failure, and recheck authority before exec release.
+Neither the numeric job identity nor the copied publication view establishes
+those facts. Post-exec result streaming remains separately owned.
 
 Normal callers retain the existing own-group supervisor. Execution
 publication, nested routing and complete subtree qualification
@@ -1108,6 +1133,7 @@ scripts/run_with_ram_guard.sh -- prove -Iperl -It/lib t/1844-process-retained-re
 scripts/run_with_ram_guard.sh -- prove -Iperl -It/lib t/1845-process-retained-parent-context.t
 scripts/run_with_ram_guard.sh -- prove -Iperl -It/lib t/1846-process-snapshot-context.t
 scripts/run_with_ram_guard.sh -- prove -Iperl -It/lib t/1847-process-write-admission.t
+scripts/run_with_ram_guard.sh -- prove -Iperl -It/lib t/1848-process-service-job-publication.t
 ```
 
 For native stopped-child observations, decode `${^CHILD_ERROR_NATIVE}` with

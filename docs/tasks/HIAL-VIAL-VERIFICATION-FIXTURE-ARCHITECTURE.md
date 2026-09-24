@@ -3675,11 +3675,11 @@ decomposes the architecture needed to move beyond that bounded foundation.
   Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.4.3.3.2.3: preserve bounded private snapshot context`
 
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.4.3.3.3`
-  Status: `active`
+  Status: `done`
   Goal: `Bind retained Service jobs to complete tracked ACCEPT publication.`
   Acceptance: `Associate an original handed request with its admitted job exactly once, retain the association before queueing tracked ACCEPT, and expose copied complete-publication observations. Preserve original authority/admission deadlines through partial writes. EOF, repeated/foreign messages, expiry and cancellation close the recorded peer without suggesting exec authority. Qualify actual socket bytes and interrupted returns; post-exec result streaming remains later work.`
-  Verification: `Request/context components are qualified. Connection currently rechecks only its transport deadline at the masked write boundary; child .1 adds an optional original-owner write admission guard so Service can enforce its narrower fixed wall there. Child .2 then binds original requests/jobs to the existing tracked publication. Neither child releases exec.`
-  Commit: `pending`
+  Verification: `Child .1 qualifies masked original-owner write admission. Child .2 retains original Service request/job association before tracked ACCEPT, copies its historical write result and enforces original authority/admission walls before each write. Literal socket, signal, failure and endpoint-custody controls pass. This closes transport/context composition only; original aggregate ledger/native admission and final release remain siblings .4/.5.`
+  Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.4.3.3.3.2: retain Service job and ACCEPT association`
 
   Children: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.4.3.3.3.1, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.4.3.3.3.2`
 
@@ -3691,11 +3691,11 @@ decomposes the architecture needed to move beyond that bounded foundation.
   Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.4.3.3.3.1: guard each original socket write admission`
 
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.4.3.3.3.2`
-  Status: `pending`
+  Status: `done`
   Goal: `Retain Service request/job association before tracked ACCEPT queueing.`
   Acceptance: `Bind one original handed request and ready original job context exactly once before queueing its tracked ACCEPT. Preserve copied publication and closure observations, original request/parent/job walls and job identity through interrupted returns. Invoke child .1 admission at every write boundary; EOF, repeated/foreign messages, matching cancellation, revocation and expiry close the recorded peer without exec authority. Qualify actual literal sockets, creator signals and partial publication; aggregate ledger and native command binding remain sibling .4.`
-  Verification: `Pending the masked Connection admission boundary; avoid using queue emptiness as publication proof.`
-  Commit: `pending`
+  Verification: `Service queue_accept retains the original handed ticket/job association and spends its ready child-context binding before tracked queue effects. Copied accept_publication separates Service state/failure from historical Connection write completion; absent write is scalar undef. Original request, parent, child, root and endpoint checks run at every bound write; fully decoded matching cancellation or protocol refusal closes before output. Job identity survives closure/outcome consumption without reuse. T1848 qualifies literal partial bytes, actual signals/masks, pre-mask reentry, inclusive lifetimes, EOF/revocation/messages, queue faults, shared endpoint custody and exact inherited cleanup. Seven isolated defects reject with unchanged endpoint census. Final band passes Files=17, Tests=207. Aggregate original ledger/native readiness and exec authority remain sibling .4/.5.`
+  Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.4.3.3.3.2: retain Service job and ACCEPT association`
 
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.4.3.3.4`
   Status: `pending`
@@ -4416,7 +4416,7 @@ decomposes the architecture needed to move beyond that bounded foundation.
 
 ## Current Frontier
 
-Current frontier: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.4.3.3.3.2` binds retained Service request/job association to tracked ACCEPT through the qualified masked write admission boundary. Original request transfer, parent-context recovery and pure snapshot replacement are qualified. Later children join aggregate gated admission and final exec rechecks. Completed native topology/history remain version-retrievable; live claim owners stay visible. Streaming, fair composition and independent qualification remain later children. Preserve original failures, spent compiler evidence and full-CI/push gates.
+Current frontier: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.4.3.3.4` joins original accepted requests to aggregate gated job admission. Service request/job association and tracked ACCEPT through masked write admission are qualified. Original request transfer, parent-context recovery and pure snapshot replacement are qualified. Later children join aggregate gated admission and final exec rechecks. Completed native topology/history remain version-retrievable; live claim owners stay visible. Streaming, fair composition and independent qualification remain later children. Preserve original failures, spent compiler evidence and full-CI/push gates.
 
 Architecture audit `.1` is complete. Decision `0032` selects one public
 `.vial` source language, private immutable `VIALSemanticIR` and
@@ -7111,3 +7111,39 @@ correction supplies its proper scope and is reflected in the canonical fact/book
   Map, claim census and staged doctrines cover synchronized metadata. T1827
   executes bounded fixture commands; this API releases no new command. Original
   startup/proxy/compiler producers, full CI and push remain gated.
+
+
+## Acceptance Checklist (.19.2.3.1.2.2.5.5.2.3.4.3.3.3.2)
+
+- [x] **ROOT CAUSE (WHY + WHERE)** — `git log -S 'sub transfer_request {'`
+  locates 54571a18bb3e52ab9656bcee6c91bbf6f1bf714c: Service retained handed
+  requests but had no exact job/publication association. Connection now has a
+  masked write guard, allowing the narrower original Service wall at that effect.
+  The first new test also reported `Odd number of elements in anonymous hash
+  at perl/FSM/Support/ProcessSupervisor/Service.pm line 526`: an absent
+  publication returned an empty list into the new observation hash.
+- [x] **ADDRESSED (verified)** — Re-derivation: T1848 compares literal socket
+  READY/ACCEPT and confirmed partial prefixes, independent EOF/endpoint census,
+  original request/job identities and separate admission/execution walls. Actual
+  creator signals qualify queue/write publication and pre-mask reentry; inclusive
+  request, source-parent, child-context and root expiry refuse at queue and write.
+  Decoded cancellation/foreign/repeated messages, EOF, revocation, queue failures,
+  copied/inherited handles and standalone/shared endpoint cleanup retain truth.
+  Scalar context fixes absent write without losing the Service failure fields.
+  Falsification: unmasked queue, reusable job binding, unguarded write, late
+  message handling, aliased view, expired admission and empty-list observation
+  each reject the intended assertion with native exits 2, 1, 2, 1, 3, 2 and 255.
+  Independent endpoint census agrees after each; all outcomes are consumed.
+  The final fixture adds explicit client closure and shared endpoint custody,
+  then rechecks all seven controls. Exact mutant sources/runner/book build are
+  removed. Durability: tracked tests/source/book/fact/task and Git retain reruns;
+  .artifacts/service-job-publication-* raw logs remain a named durability gap.
+- [x] **NO REGRESSION** — The final guarded band reports
+  `All tests successful. Files=17, Tests=207`; both Perl syntax checks pass.
+  Earlier focused failure is retained and receives no pass credit. mdBook builds
+  and generated HTML contains the Service association and aggregate authority
+  boundary. Visual QA remains separately blocked on browser runtime startup.
+  Knowledge Map, claim census and staged doctrines cover synchronized metadata.
+  Existing T1827 executes bounded fixture commands; this Service API grants no
+  command release. Original startup/proxy/compiler producers, full CI and push
+  remain gated; actual ledger/native binding remains the next frontier.

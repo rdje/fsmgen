@@ -15,9 +15,10 @@ use FSM::Support::ProcessSupervisor::Wire ();
 
 # Inactive transport admission only. A standalone service owns its endpoint;
 # a shared service borrows it until the aggregate native owner retires the run.
-# The trusted caller owns job admission, child slots and any later ACCEPT/exec.
-# A taken request remains subject to its original admission wall. This module
-# deliberately provides no command launch or post-ACCEPT lifecycle API.
+# The trusted caller owns ledger admission, native readiness and exec release.
+# Service binds a handed request to its ready job context and tracked ACCEPT;
+# local publication remains subject to the original admission wall. This module
+# provides no command launch or post-exec result lifecycle API.
 my $LIMIT = FSM::Support::ProcessSupervisor::Wire::limits();
 my $SECOND = 1_000_000_000;
 
@@ -194,7 +195,8 @@ sub _revoke {
     # Authority is removed before any descriptor cleanup can run.
     delete $self->{parents}{$id};
     for my $record (values %{$self->{records}}) {
-        next unless defined($record->{parent}) && $record->{parent} == $id;
+        next unless (defined($record->{parent}) && $record->{parent} == $id)
+            || (defined($record->{job}) && $record->{job} == $id);
         $self->_fail_record($record, $status, $diagnostic);
     }
 }
@@ -324,6 +326,11 @@ sub _message {
         $record->{state} = 'request';
         return;
     }
+    if ($record->{state} eq 'bound' && $message->{type} eq 'CANCEL'
+        && $message->{job} == $record->{job}) {
+        $self->_fail_record($record, 'cancelled', 'client cancelled its admitted job');
+        return;
+    }
     $self->_fail_record($record, 'protocol_error', 'unexpected or repeated client message');
 }
 
@@ -358,7 +365,10 @@ sub advance {
             $self->_fail_record($record, 'timed_out', 'fixed authentication or admission deadline expired');
             next;
         }
-        $record->{io}->advance;
+        if ($record->{state} eq 'bound') {
+            $record->{io}->advance(sub { $self->_write_admission($record, @_) });
+        }
+        else { $record->{io}->advance; }
         if (my $failure = $record->{io}->failure) {
             $self->_fail_record($record, $failure->{status}, $failure->{diagnostic});
             next;
@@ -423,6 +433,99 @@ sub _request_target {
     return;
 }
 
+# Retain only a transport/context association here. The caller must already
+# own the actual ledger grant and ready gated job; no numeric id proves those.
+sub queue_accept {
+    _error('expected original ticket and ready job identity') unless @_ == 3;
+    my ($self, $ticket, $job) = @_; _owner($self);
+    FSM::Support::ProcessSupervisor::Wire::_uint($_, '4294967295', 1) for $ticket, $job;
+    my $queued = 0;
+    FSM::Support::ProcessSupervisor::Reservation::_masked_preparation(sub {
+        my $record = $self->{records}{$ticket} or _error('unknown connection ticket');
+        _error('ACCEPT requires one unbound handed request')
+            unless $record->{state} eq 'handed' && !defined($record->{job});
+        my $context = $self->{parents}{$job};
+        _error('ACCEPT requires a ready original child context') unless $context
+            && $context->{state} eq 'ready' && $job > $record->{parent};
+        _error('job context already belongs to a request') if defined($context->{request_ticket});
+        _error('job context exceeds original request lifetime')
+            if $context->{deadline}->bcmp($record->{deadline}) > 0;
+        # Spend the association before queue effects or a thrown return. The
+        # ready context retains this ticket even after its outcome is consumed.
+        $record->{job} = 0 + $job;
+        $record->{state} = 'bound';
+        $context->{request_ticket} = 0 + $ticket;
+        my $ok = eval {
+            if ($self->_bound_live($record)) {
+                $queued = $record->{io}->queue_accept($job);
+                $self->_fail_record($record, 'host_error', 'ACCEPT queue admission failed') unless $queued;
+            }
+            1;
+        };
+        unless ($ok) {
+            my $error = $@;
+            eval { $self->_fail_record($record, 'host_error', 'ACCEPT queue publication interrupted'); 1 };
+            die $error;
+        }
+    });
+    return $queued;
+}
+
+sub _bound_live {
+    my ($self, $record) = @_;
+    return 0 if $record->{state} ne 'bound';
+    my $parent = $self->{parents}{$record->{parent}};
+    my $job = $self->{parents}{$record->{job}};
+    if ($self->{closed} || !$self->{parents}{1} || !$parent || $parent->{state} ne 'ready'
+        || !$job || $job->{state} ne 'ready' || !defined($job->{request_ticket})
+        || $job->{request_ticket} != $record->{ticket}) {
+        $self->_fail_record($record, 'authority_revoked', 'original request or job authority is no longer live');
+        return 0;
+    }
+    my $now = _time(_now_ns());
+    if (grep { $now->bcmp($_) >= 0 }
+        $record->{wall}, $record->{deadline}, $parent->{deadline}, $job->{deadline}, $self->{deadline}) {
+        $self->_fail_record($record, 'timed_out', 'original ACCEPT admission deadline expired');
+        return 0;
+    }
+    my $run = $self->{run}->observation;
+    unless ($run->{phase} eq 'ready' && !$run->{closed}) {
+        $self->_fail_record($record, 'host_error', 'original ACCEPT endpoint is no longer ready');
+        return 0;
+    }
+    return 1;
+}
+
+sub _write_admission {
+    my ($self, $record, $io) = @_; _owner($self);
+    _error('write admission requires the original retained peer')
+        unless $self->{records}{$record->{ticket}}
+            && refaddr($self->{records}{$record->{ticket}}) == refaddr($record)
+            && refaddr($record->{io}) == refaddr($io);
+    return 0 unless $self->_bound_live($record);
+    # Connection has just advanced its bounded read. A complete cancellation
+    # or foreign/repeated message must close this peer before another write.
+    if (my $message = $io->take_frame) {
+        $self->_message($record, $message, _time(_now_ns()));
+        return 0;
+    }
+    return 1;
+}
+
+sub accept_publication {
+    _error('expected one retained connection ticket') unless @_ == 2;
+    my ($self, $ticket) = @_; _owner($self);
+    FSM::Support::ProcessSupervisor::Wire::_uint($ticket, '4294967295', 1);
+    my $record = $self->{records}{$ticket} or _error('unknown connection ticket');
+    return unless defined($record->{job});
+    # Both layers are copied historical observations, never live exec authority.
+    return {ticket => $record->{ticket}, parent => $record->{parent}, job => $record->{job},
+        state => $record->{state}, deadline_ns => $record->{deadline}->bstr,
+        admission_deadline_ns => $record->{wall}->bstr,
+        write => scalar($record->{io}->accept_publication),
+        failure => $record->{failure} ? {%{$record->{failure}}} : undef};
+}
+
 sub take_request {
     _error('unexpected request arguments') unless @_ == 1;
     my ($self) = @_; _owner($self);
@@ -462,6 +565,7 @@ sub take_closed {
             next unless $record->{state} eq 'closed';
             _error('closed outcome still owns native handles') if @{_record_handles($record)};
             $outcome = {ticket => $ticket, parent => $record->{parent}, %{$record->{failure}},
+                defined($record->{job}) ? (job => $record->{job}) : (),
                 resources_closed => $record->{close_failed} ? 0 : 1};
             $self->_forget_empty($record);
             last;
@@ -481,6 +585,7 @@ sub ticket_observation {
     FSM::Support::ProcessSupervisor::Wire::_uint($ticket, '4294967295', 1);
     my $record = $self->{records}{$ticket} or _error('unknown connection ticket');
     return {ticket => $record->{ticket}, state => $record->{state}, parent => $record->{parent},
+        defined($record->{job}) ? (job => $record->{job}) : (),
         wall_ns => $record->{wall}->bstr, handles => scalar @{_record_handles($record)},
         resources_closed => $record->{state} eq 'closed' && !$record->{close_failed}
             && !@{_record_handles($record)} ? 1 : 0,
