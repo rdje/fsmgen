@@ -3786,7 +3786,23 @@ decomposes the architecture needed to move beyond that bounded foundation.
   Status: `active`
   Goal: `Bind final nested E admission to original Service grant custody.`
   Acceptance: `Use the qualified native parent check and original peer/job/wrapper/Pair/context associations at each final E attempt. Require full matching ACCEPT, quiet current input and unchanged admission/execution walls; retain the original Service execution grant in the peer before effects. Refuse lost/copied/foreign authority and qualify creator interruptions, deferrals/transient writes, actual native effects and exact cleanup without adding the explicit request-release API.`
-  Verification: `Native custody child .1 is qualified; effect reconciliation and explicit request release remain subsequent outer children.`
+  Verification: `Native custody is qualified. Child .1 retains the completed acceptance suffix before the next implementation crosses the task-file rollover; child .2 then binds original nested admission. Effect reconciliation and explicit request release remain subsequent outer children.`
+  Commit: `pending`
+
+  Children: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.4.3.3.5.4.4.2.2.1, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.4.3.3.5.4.4.2.2.2`
+
+- ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.4.3.3.5.4.4.2.2.1`
+  Status: `done`
+  Goal: `Retain completed native custody acceptance history before nested admission.`
+  Acceptance: `Bind the exact committed completed suffix to its original full source, dimensions, digest and prior versioned manifest. Preserve every original node, live owner and execution-scope correction; only decompose the current admission frontier. Re-derive independently, reject altered source and suffix identities, and keep all product code, tests and book behavior unchanged.`
+  Verification: `Exact 7f693cc49 source and completed suffix are bound by full identities, dimensions and retained manifest. Independent git cat-file/awk/wc/shasum agree. Prior 736da11ca746 and f8d5320903ab source/suffix chains reverify. Every original node except the explicit admission-parent decomposition, each live owner and the execution-scope correction remain exact. The unchanged checker accepts the complete fixture and rejects each altered source/suffix digest as its sole failure. Product code, tests, book behavior and ceilings remain unchanged.`
+  Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.4.3.3.5.4.4.2.2.1: retain native custody acceptance history`
+
+- ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.4.3.3.5.4.4.2.2.2`
+  Status: `active`
+  Goal: `Join each nested E attempt to original live Service grant custody.`
+  Acceptance: `Use the qualified native parent check and original peer/job/wrapper/Pair/context associations at each final E attempt. Require full matching ACCEPT, quiet current input and unchanged admission/execution walls; retain the original Service execution grant before effects. Refuse lost/copied/foreign authority; qualify interruptions, deferrals, native effects and exact cleanup without exposing request release.`
+  Verification: `History child .1 is complete; native custody is qualified and final nested admission is next.`
   Commit: `pending`
 
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.4.3.3.5.4.4.3`
@@ -4508,7 +4524,7 @@ decomposes the architecture needed to move beyond that bounded foundation.
 
 ## Current Frontier
 
-Current frontier: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.4.3.3.5.4.4.2.2` binds final nested E to original Service grant custody using fresh non-executing parent inspection. Outer .3 reconciles confirmed effects before transport consumption and .4 exposes request release. Preserve original walls, native truth, spent compiler evidence and full-CI/push gates.
+Current frontier: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.4.3.3.5.4.4.2.2.2` binds final nested E to original Service grant custody using fresh non-executing parent inspection. Outer .3 reconciles confirmed effects before transport consumption and .4 exposes request release. Preserve original walls, native truth, spent compiler evidence and full-CI/push gates.
 
 Architecture audit `.1` is complete. Decision `0032` selects one public
 `.vial` source language, private immutable `VIALSemanticIR` and
@@ -7120,64 +7136,26 @@ correction supplies its proper scope and is reflected in the canonical fact/book
 
 
 
-## Acceptance Checklist (.19.2.3.1.2.2.5.5.2.3.4.3.3.5.4.4.1)
+## Acceptance Checklist (.19.2.3.1.2.2.5.5.2.3.4.3.3.5.4.4.2.2.1)
 
-- [x] **ROOT CAUSE (WHY + WHERE)** — Nested-root history: `git log -S`
-  locates the first suffix heading at 7710fe7abed5876a944603ba8f3147dfdabce233.
-  Exact 736da11ca746 has 7191 task lines; closed root topology and repeated
-  completed checklists need bounded retention before nested integration.
-- [x] **ADDRESSED (verified)** — Nested-history re-derivation reconstructs
-  source 1271714 bytes and suffix 97 lines/6904 bytes/three sections. Independent
-  git cat-file, awk, wc and shasum agree with complete-source SHA-256
-  967c474a50c1f9515dcd3e25d9092e7d4846b8f0819b754d8537dfb43c6bd71b
-  and suffix cba90420ef2f5d9417e07297393c774502daffdc1a745ba3cb63df7fbf18aa73.
-  Prior f8d5320903ab and 3a9eb15d63d9 manifests/source/suffixes reverify.
-  Complete live claim-owner census admits the closed flat four-node root subtree;
-  no earlier compact terminal or live claim owner is contained. Exact goal and
-  source identity remain retrievable; every other original node/terminal remains
-  exact except explicit nested-parent decomposition. The live execution-scope
-  correction is unchanged. Falsification: the unchanged checker accepts the
-  complete fixture and independently rejects changed suffix and compact-source
-  digests as sole failures. Durability: committed manifest, compact terminal and
-  exact Git source retain the history chain. Ignored .artifacts/nested-root-history-*
-  logs are a named gap; consumed source/suffix copies, measurements, fixture and
-  runner are removed. No executable behavior or ceiling changes.
-- [x] **NO REGRESSION** — Nested-history `knowledge-map: OK` preserves routing;
-  task-tree-integrity validates 6 trees/1512 nodes, 3 segments and 44 compact
-  terminals. Claim inventory and staged doctrines verify paired metadata.
-  Product source, tests and book behavior are unchanged; no native fixture,
-  original producer, full CI or push runs for this history slice.
-
-
-## Acceptance Checklist (.19.2.3.1.2.2.5.5.2.3.4.3.3.5.4.4.2.1)
-
-- [x] **ROOT CAUSE (WHY + WHERE)** — Native-custody prerequisite:
-  exact 2d9ee292f8d51b066f846966e980e2aaa3329669 reports
-  `original native custody inspection is absent at -e line 1.`
-  Copied observations can be stale; ordinary advancement can write queued E.
-  The first uncommitted prototype consumed terminal waits as host_error;
-  actual exits 0/23 failed T1860 classification assertions before repair.
-- [x] **ADDRESSED (verified)** — Native-custody re-derivation: T1860 uses
-  actual stop/continue barriers, original positive waits, literal output, pipe EOF,
-  creator signals and weak-handle inventories. Completed exit zero, exit 23 and
-  SIGTERM preserve their exact success/nonzero/signaled results after inspection.
-  Ready/queued/executing checks preserve phase and native effects; no allocation,
-  fork, Pair advancement or E occurs. Native loss, original identity/wall changes,
-  inherited custody, cancellation and restoration failure refuse safely.
-  Falsification: eight isolated defects omit completion handling, no-advancement,
-  native wait, fresh unmasked return, early failure, masking, fixed wrapper wall
-  or mask-independent refusal. Each fails its intended assertion; identical copy
-  passes and every final native census closes. An initial unmasked control failed
-  earlier than its intended oracle; reordering the fixture exposes that exact cut.
-  Durability: tracked fixture, implementation, book and fact retain semantics;
-  ignored .artifacts/native-custody-* raw logs/control runner are a named evidence
-  gap owned by later independent qualification. Prototype failure remains named;
-  scratch copies, runner and rendered book are removed after consuming results.
-- [x] **NO REGRESSION** — Native-custody selected band: All tests successful;
-  Files=42, Tests=385. Both modules and T1860 report syntax OK. mdBook
-  builds and generated HTML contains the API, completion semantics and runnable
-  fixture. Knowledge Map and staged doctrines qualify paired metadata. Linux
-  and browser visual qualification remain missing; original producers, full CI
-  and push do not run. Nested release and Service reconciliation remain open.
-  The first doctrine run found the new exit-23 book clause undispositioned;
-  its tracked native fixture and exact result contract now back a derived gate.
+- [x] **ROOT CAUSE (WHY + WHERE)** — Admission-history `git log -S`
+  locates the first retained heading at 2d9ee292f8d51b066f846966e980e2aaa3329669.
+  Exact 7f693cc49 has 7183 task lines; retain its completed suffix before the
+  next implementation crosses the declared task-file rollover.
+- [x] **ADDRESSED (verified)** — Admission-history re-derivation reconstructs
+  source 1270505 bytes and suffix 61 lines/4370 bytes/two sections. Independent
+  git cat-file, awk, wc and shasum agree: full-source SHA-256
+  bd24dc2b2476963fa3e477415cfdf0070a8df8fecd3456446e7518525c7ffe53;
+  suffix 27cc6672d0361c46a29d3969e525e944e2ee3ab18d024f151bbfb98fb9aa40ba.
+  Prior 736da11ca746 and f8d5320903ab sources/suffixes reverify through their
+  versioned manifests. Every original node except explicit admission-parent
+  decomposition remains exact; all live owners and the execution-scope correction
+  survive. Falsification: the unchanged integrity checker accepts the complete
+  fixture and separately rejects altered source and suffix digests as sole failures.
+  Durability: committed manifest and exact source retain the evidence chain;
+  ignored .artifacts/nested-admission-history-* logs are a named gap. Consumed
+  scratch source/suffix copies, measurements, fixture and runner are removed.
+  Every original node stays live; product code, tests, book and ceilings are unchanged.
+- [x] **NO REGRESSION** — Admission-history `knowledge-map: OK` retains routing;
+  task-tree integrity and staged doctrines qualify paired retention metadata.
+  No native fixture, original producer, full CI or push runs for this slice.
