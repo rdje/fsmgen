@@ -226,6 +226,12 @@ operands to be known; an unknown operand becomes a typed runtime check error,
 not false or target-language X. Arithmetic rejects four-state values and
 overflow; later execution may not silently wrap.
 
+`(model MODEL_INSTANCE STATE_NAME)` selects state in that particular fixture
+instance. Its typed reference retains both the state declaration `semantic_id`
+and `model_instance_id`; instances of one declaration do not share state merely
+because their declaration IDs match. The same rule applies to inherited v2
+expressions and survives target-neutral execution normalization.
+
 A property is a Boolean expression or exactly one of the repository's
 canonical property forms selected by decision `0008`:
 

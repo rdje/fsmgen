@@ -1376,7 +1376,12 @@ sub _expr {
         my $state = _find_named($instance->{model}{state}, $state_name);
         _fail('VIAL_REFERENCE_ERROR', 'resolve', "unknown model state '$state_name'", $items->[2]{span}, "$path/state") unless $state;
         $self->_require_type($state->{type}, $expected_type, $node, $path) if $expected_type;
-        return { %{$self->_meta($path, $node)}, kind => 'reference', op => 'model', result_type => _clone($state->{type}), semantic_id => $state->{semantic_id} };
+        return {
+            %{$self->_meta($path, $node)}, kind => 'reference', op => 'model',
+            result_type => _clone($state->{type}),
+            semantic_id => $state->{semantic_id},
+            model_instance_id => $instance->{semantic_id},
+        };
     }
     if ($op eq 'choice') {
         _shape($items, 2, 2, $node, $path, $op);

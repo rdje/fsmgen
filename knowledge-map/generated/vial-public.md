@@ -1,7 +1,7 @@
 # Knowledge Map: `vial-public`
 
 > **AUTO-GENERATED — DO NOT EDIT.** Return to the [Knowledge Map](../../KNOWLEDGE_MAP.md).
-> **1** facts · **15** uniquely owned question entries.
+> **1** facts · **16** uniquely owned question entries.
 
 ## Questions → facts
 
@@ -20,6 +20,7 @@
 - q="what public VIAL command is selected?" · facts=[vial-public-tooling-v1-contract](../../docs/knowledge/vial-public-tooling-v1-contract.md)
 - q="where do VIAL artifacts live?" · facts=[vial-public-tooling-v1-contract](../../docs/knowledge/vial-public-tooling-v1-contract.md)
 - q="where is the public VIAL source to result lifecycle documented?" · facts=[vial-public-tooling-v1-contract](../../docs/knowledge/vial-public-tooling-v1-contract.md)
+- q="why did different VIAL model instances share a semantic digest?" · facts=[vial-public-tooling-v1-contract](../../docs/knowledge/vial-public-tooling-v1-contract.md)
 
 ## Facts
 

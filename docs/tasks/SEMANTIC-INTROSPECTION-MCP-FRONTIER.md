@@ -402,7 +402,7 @@ For FSMGen, the analogs are:
   Verification: `The selected guard exposed an intentional native VIAL summary boundary that does not satisfy deep feature inspection; .3 owns additive public detail before parity is called complete.`
   Commit: `pending`
 
-  Children: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.31.3.2.1, SEMANTIC-INTROSPECTION-MCP-FRONTIER.31.3.2.2, SEMANTIC-INTROSPECTION-MCP-FRONTIER.31.3.2.3, SEMANTIC-INTROSPECTION-MCP-FRONTIER.31.3.2.4`
+  Children: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.31.3.2.1, SEMANTIC-INTROSPECTION-MCP-FRONTIER.31.3.2.2, SEMANTIC-INTROSPECTION-MCP-FRONTIER.31.3.2.3, SEMANTIC-INTROSPECTION-MCP-FRONTIER.31.3.2.4, SEMANTIC-INTROSPECTION-MCP-FRONTIER.31.3.2.5`
 
 - ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.31.3.2.1`
   Status: `pending`
@@ -454,6 +454,13 @@ For FSMGen, the analogs are:
   Acceptance: `T1569 must check maintained references against current structural/link contracts, and prove historical activation equality in a separately reconstructed repository-local fixture. Preserve the activation verifier and negative controls; do not revert legitimate downstream-book edits or loosen production validation. Demonstrate the failure predates this selection, retain exact activation reconstruction and corruption detection, run the repaired focused test and doctrines, then resume VIAL typed inspection.`
   Verification: `T1569 now checks current structural/link contracts and independently reconstructs exact declared Git activation sources in an isolated repository-local fixture. Historical equality passes before a controlled edit and rejects that edit afterward; current structure still passes and all live source hashes remain unchanged. T1560/T1561/T1569 and rendered book guidance pass.`
   Commit: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.31.3.2.4: separate live reference checks from activation equality`
+
+- ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.31.3.2.5`
+  Status: `done`
+  Goal: `Preserve the selected model instance in VIAL typed state references and meaning identity.`
+  Acceptance: `Reproduce the actual public check digest collision between reads of distinct instances of one model declaration. Preserve both declaration-state and selected-instance identity in typed references, prove distinct meanings plus same-meaning style stability for v1/v2 and migration, and retain downstream propagation without backend execution. Treat changed digests for affected model reads as an explicit bug correction; do not change summary/result/capability shapes or unaffected frozen fixtures. Add authored independent identity assertions, missing-instance negative controls, public/native/MCP evidence, contract/book/fact updates and a separate commit before deep inspection resumes.`
+  Verification: `The controlled old/current compiler probe reproduces then removes the v1/v2 digest collision with identical input bytes and source identities. Model references now retain model_instance_id plus the state semantic_id. T1872 independently verifies authored bindings, style/migration equivalence, execution propagation, complete native/filesystem/MCP parity and unknown-reference refusal. Unchanged base reports remain identical; the focused nine-file band passes.`
+  Commit: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.31.3.2.5: preserve VIAL model instance meaning identity`
 
 - ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.31.3.3`
   Status: `pending`
@@ -1108,11 +1115,10 @@ before editing code. No discovered defect is closed by this audit alone.
 ## Current Frontier
 
 `SEMANTIC-INTROSPECTION-MCP-FRONTIER.31.3.2.3.2` decomposes and implements
-additive VIAL source inspection selected by decision `0105`; `.31.3.2.3.3`
-then adapts MCP. Resume the catalog guard, CI/signoff and exhaustive
-qualification afterward, before HIAL streaming. The reference-test prerequisite
-is complete. Preserve spent native compiler/startup evidence and the
-read-only/write horizon.
+additive typed VIAL inspection; `.31.3.2.3.3` adapts MCP, followed by the
+catalog guard, CI/signoff and exhaustive qualification before HIAL streaming.
+The model-instance identity and reference-test prerequisites are complete.
+Preserve spent native compiler/startup evidence and the read-only/write horizon.
 
 ## Decisions
 
@@ -1952,3 +1958,64 @@ relaxed in this selection.
   negative controls; durability: T1569, the unchanged manifest/checker and
   exact prior commit. Browser visual access remains unavailable. This repairs
   verification and does not change product semantics or qualify full CI.
+
+## Model-instance meaning repair — `.31.3.2.5`
+
+Projection review found that `(model MODEL_INSTANCE STATE)` resolved the chosen
+instance, then retained only the shared model declaration's state identity.
+Thus reads of `accepts.count` and `completions.count` produced equal public
+meaning digests even though their authored instance bindings select different
+transaction events. This is native semantic information loss, not a hash
+algorithm collision or MCP truncation. The existing summary API cannot repair
+it after the compiler has discarded the identity.
+
+`SemanticBuilder::_expr` now carries `model_instance_id` beside the unchanged
+state `semantic_id`. The shared builder applies the correction to both language
+versions. Existing normalization carries the field into typed ExecutionIR;
+source/compatibility projections now distinguish the selected scope. This is
+an explicit bug correction for affected digests, not a v2-only reinterpretation
+or a widening of summary/result/capability shapes. The book tells consumers to
+refresh affected cached identities. No runtime profile is promoted.
+
+`probe_vial_model_identity.pl` and `vial-model-identity-repair.json` retain a
+controlled comparison against the exact compiler Git object at `eb2b8f2a1`.
+Both runs use identical generated source bytes and source IDs; the probe checks
+which compiler module was loaded. Different authored instances collide before
+and differ after, while complete unmodified base reports stay equal. Source
+hashes remain equal across the controlled before/after comparison. The earlier
+inline probe used the maintained fixture's source ID, so its digest differs
+from the durable probe's fixed `model_reference.vial`; neither is a global
+content-only identity claim.
+
+The initial T1872 assumed public plans retained model expressions. That
+expectation was rejected: `ExecutionReport` deliberately summarizes operations.
+The corrected baseline checks the actual typed ExecutionIR carrier and keeps
+public planning success separate. No missing public plan detail is disguised
+as a repaired source compiler defect. Deep source inspection remains owned by
+`.31.3.2.3`, and source-only inspection needs no planner or backend.
+
+## Acceptance Checklist — `.31.3.2.5` model-reference meaning identity
+
+- [x] **ROOT CAUSE (WHY + WHERE)** — The corrected pre-fix T1872 reports
+  `#   at t/1872-vial-model-reference-identity.t line 94.` with `got: undef`
+  for the selected instance and equal digests for distinct model reads.
+  `SemanticBuilder::_expr` resolves the instance but emitted only the state
+  declaration ID. The tracked controlled probe verifies the exact old compiler
+  module and reproduces equal public digests in both language versions.
+- [x] **ADDRESSED (verified)** — T1872 passes after adding only the selected
+  `model_instance_id` to the typed reference. Independent authored IDs and
+  accepted/completed event bindings establish the intended difference; normal
+  and terse forms and v1-to-v2 migration preserve each meaning. Native typed
+  execution retains scope; portable/filesystem/native ToolCLI/MCP reports agree
+  completely, source files stay unchanged, and unknown model/state names fail
+  with the existing diagnostic. Controlled before/after probes confirm unequal
+  affected meanings and identical complete base reports. Re-derivation: exact
+  compiler/input comparison; falsification: selected-instance and same-meaning
+  controls; durability: T1872, tracked probe/result and baseline Git object.
+- [x] **NO REGRESSION** — RAM-guarded
+  `prove -Iperl t/1550-vial-semantic-ir.t t/1555-vial-public-source-tooling.t t/1556-vial-public-planning-artifacts.t t/1801-vial-v2-source-projections.t t/1806-vial-v2-public-foundation.t t/1808-vial-v2-lifecycle-compiler-phases.t t/1870-vial-filesystem-source-query.t t/1871-semantic-introspection-mcp-vial.t t/1872-vial-model-reference-identity.t`
+  reports `All tests successful. Files=9, Tests=59` and `Result: PASS`.
+  `mdbook build docs/book -d .artifacts/model-identity-book` succeeds, and
+  rendered cache-refresh/runtime-scope statements pass. Frozen fixture/API
+  metadata, loading and lifecycle routes pass. Visual browser inspection,
+  broader runtime and full CI qualification are not claimed.

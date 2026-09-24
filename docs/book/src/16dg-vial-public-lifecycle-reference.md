@@ -329,6 +329,15 @@ source identities and spans remain different. `check --style normal` or
 `check --style terse` makes the expected authored projection explicit, and a
 mismatch fails with `VIAL_SOURCE_STYLE_ERROR`.
 
+A model-state read selects an instance: `(model accepts count)` and
+`(model completions count)` refer to different counters even when both
+instances use the same model declaration. Their semantic meaning digests now
+distinguish that choice in both VIAL versions, while formatting preserves each
+choice. Earlier tooling lost the instance identity in these references; rerun
+checking to refresh cached semantic or compatibility digests for affected
+sources. Public summary/result shapes are unchanged. This correction does not
+extend the bounded runtime backend profile.
+
 ## Plan through a reviewable HIAL route
 
 VIAL source describes verification intent. `--dut` separately names the HIAL

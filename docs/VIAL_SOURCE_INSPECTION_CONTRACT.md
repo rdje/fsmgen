@@ -19,6 +19,11 @@ digests retain their current shapes and values. Neither the private SemanticIR
 object nor its `as_hashref` record becomes a public API. Compiler changes must
 adapt to the inspection contract, not silently redefine it.
 
+The separate native bug correction `.31.3.2.5` preserves selected model-instance
+identity and corrects affected meaning digests in both language versions.
+Inspection must retain that identity alongside the shared state declaration;
+the existing projection bug is not a compatibility promise.
+
 ## Selected entrypoints
 
 The following interfaces are selected, **not yet callable**:

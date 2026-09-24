@@ -7,6 +7,7 @@ answers:
   - "how will I bind VIAL to a HIAL DUT?"
   - "what is the difference between terse and normal VIAL?"
   - "does terse VIAL change semantics?"
+  - "why did different VIAL model instances share a semantic digest?"
   - "what does fsmgen vial plan write?"
   - "where do VIAL artifacts live?"
   - "what is the VIAL public in-memory API?"
@@ -22,17 +23,16 @@ date: 2026-09-24
 status: current
 tags: [vial, public-tooling, cli, api, terse, normal-form, artifacts, manifests, data-locality, compatibility]
 evidence: >-
-  t/1870-vial-filesystem-source-query.t; perl/FSM/Support/SemanticIntrospectionContract.pm;
+  t/1872-vial-model-reference-identity.t; t/1870-vial-filesystem-source-query.t; perl/FSM/Support/SemanticIntrospectionContract.pm;
   docs/VIAL_PUBLIC_TOOLING_V1_CONTRACT.md; perl/FSM/VIAL/SourceProjection.pm; perl/FSM/VIAL/Tool.pm; perl/FSM/VIAL/ToolCLI.pm; perl/FSM/VIAL/PlanBuilder.pm; perl/FSM/VIAL/ArtifactTransaction.pm; perl/FSM/VIAL/Backend/SVPortableVerilator.pm; perl/FSM/VIAL/Backend/Runner.pm; perl/FSM/VIAL/Backend/TraceValidator.pm; perl/FSM/VIAL/Backend/ResultProducer.pm; perl/FSM/VIAL/Parity/AHBBaseOutput.pm; perl/FSM/Support/VIALToolingContract.pm; t/1555-vial-public-source-tooling.t; t/1556-vial-public-planning-artifacts.t; t/1557-vial-portable-sv-backend-emission.t; t/1558-vial-verilator-run-integration.t; t/1559-vial-ahb-runtime-parity.t; docs/VIAL_PORTABLE_SYSTEMVERILOG_BACKEND_V1_CONTRACT.md; docs/decisions/0039-vial-public-tooling-is-intent-oriented-and-artifact-atomic.md;
   docs/decisions/0043-vial-portable-systemverilog-is-a-deterministic-known-value-profile.md; docs/VIAL_SOURCE_AND_SEMANTIC_IR_V1_CONTRACT.md; docs/VIAL_EXECUTION_IR_V1_CONTRACT.md; docs/HIAL_VIAL_VERIFICATION_FIXTURE_ARCHITECTURE_AUDIT.md; docs/tasks/HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.md; docs/book/src/16d-hial-vial-verification-architecture.md; docs/book/src/16dg-vial-public-lifecycle-reference.md; t/1797-hial-vial-public-lifecycle-reference.t; ROADMAP_V2.md
-reverify: ./bin/fsmgen vial capabilities --json && ./bin/fsmgen vial check vial/ahb_subordinate_base_output_arbitration.vial && prove -Iperl t/1555-vial-public-source-tooling.t t/1556-vial-public-planning-artifacts.t t/1557-vial-portable-sv-backend-emission.t t/1558-vial-verilator-run-integration.t t/1559-vial-ahb-runtime-parity.t t/1797-hial-vial-public-lifecycle-reference.t
+reverify: ./bin/fsmgen vial capabilities --json && ./bin/fsmgen vial check vial/ahb_subordinate_base_output_arbitration.vial && prove -Iperl t/1872-vial-model-reference-identity.t t/1555-vial-public-source-tooling.t t/1556-vial-public-planning-artifacts.t t/1557-vial-portable-sv-backend-emission.t t/1558-vial-verilator-run-integration.t t/1559-vial-ahb-runtime-parity.t t/1797-hial-vial-public-lifecycle-reference.t
 ---
 
-Decision `0039` selects `fsmgen vial capabilities|check|format|plan|run` as the
-public tool family. `plan` takes separate `.vial` and `--dut` HIAL sources; the
-DUT follows direct IAL0, direct IAL1, or IAL2 only through generated/reparsed
-IAL1 and generated IAL0 review routes. Private SemanticIR, bridge objects, and
-ExecutionIR never cross the public boundary.
+Decision `0039` owns `fsmgen vial capabilities|check|format|plan|run`.
+`plan` takes separate `.vial` and `--dut` HIAL sources: direct IAL0/IAL1 or
+IAL2 through generated/reparsed IAL1 and generated IAL0. SemanticIR,
+ExecutionIR and bridge objects remain private.
 
 `normal_v1` is the fully explicit current source shape. `terse_v1` removes only
 the selected version/declaration-section/scenario wrappers. It cannot infer a
@@ -40,13 +40,11 @@ type, value, clock, timeout, seed, binding, event, or target behavior. Both
 forms must format/reparse to the same provenance-excluding semantic meaning
 digest; source hashes and spans remain distinct.
 
-The portable API uses closed `fsmgen.vial_tool_request.v1` and
-`fsmgen.vial_tool_result.v1` records. Completed `.10.1` ships capabilities,
-check, and normal/terse format over caller-owned source text and source
-catalogs. Completed `.10.2` adds defensive public planning and an ordered
-virtual artifact sink without callbacks, filehandles, private objects, or host
-paths. The filesystem CLI accepts only repository-root-relative, non-symlink,
-same-volume inputs and atomically publishes that same graph.
+The closed `fsmgen.vial_tool_request.v1` / `fsmgen.vial_tool_result.v1` API
+checks/formats caller-owned text/catalogs and plans defensive ordered virtual
+artifacts without callbacks, filehandles, private objects or host paths.
+The CLI admits root-relative, non-symlink, same-volume inputs and publishes
+the same graph atomically. Capabilities describe its qualified scope.
 
 Shipped filesystem `plan` output defaults below
 `.artifacts/vial/<fixture>/<full-plan-digest>/`, stays repository-local and
@@ -75,9 +73,9 @@ the frozen v1 capability record. `prove -Iperl
 t/1870-vial-filesystem-source-query.t` qualifies both versions, imports,
 exact/excess limits, closed invocation, native parity and no publication.
 
-The selected user reference,
-`docs/book/src/16dg-vial-public-lifecycle-reference.md`, presents discovery,
-source projections, HIAL review, planning, backend execution, public schemas,
-artifacts, diagnostics, atomicity, and cleanup as one path. T1797 derives and
-executes that path from current machine contracts and the independent runtime
-watcher.
+The user lifecycle is `docs/book/src/16dg-vial-public-lifecycle-reference.md`;
+T1797 checks it against machine contracts and the independent runtime watcher.
+
+Model reads retain `model_instance_id` plus state `semantic_id`. `.31.3.2.5`
+corrects earlier false meaning-digest equality between instances in v1/v2.
+Recompute affected cached digests; T1872 guards identity and format/migration.

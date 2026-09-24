@@ -1,0 +1,180 @@
+{
+  "after": {
+    "producer_path": "perl/FSM/VIAL/SemanticBuilder.pm",
+    "producer_sha256": "65f30df83f9b317a485509e0a70f048e46307c1263044928929e8e216c5154e7",
+    "rows": [
+      {
+        "complete_report_sha256": "a46e0f21f5ac644e7cb0caadca8b13957da19b53ef13ce0cfe80858805b8ab38",
+        "diagnostics": [],
+        "language_version": 1,
+        "selected_instance": "base",
+        "semantic_projection_sha256": "4418c5729def458746e200768e7a01502ce51181576c04e54735084c1184ae31",
+        "source_id": "model_reference.vial",
+        "source_sha256": "2205b3b4f073a61374b19cb72f06afe31d75fc4d88f903c414b9b28a744ca4cd",
+        "success": true
+      },
+      {
+        "complete_report_sha256": "0259f6d209aef021eb35da80688b9dce2a8ce386da376afe443410d03673b6ef",
+        "diagnostics": [],
+        "language_version": 1,
+        "selected_instance": "accepts",
+        "semantic_projection_sha256": "a4576ea760a8dcdc837f62b34c71106894cfc32f4339564646fbf77fc5af85b0",
+        "source_id": "model_reference.vial",
+        "source_sha256": "f0c8ba3833013031e05b279291441cd19a8ac9f039cb2ea4960d3f4b21a62c2b",
+        "success": true
+      },
+      {
+        "complete_report_sha256": "0c6b5c6b68e65b0252354e885c9ea0e6a1a4bbf77560349812b52e89e54e8b1a",
+        "diagnostics": [],
+        "language_version": 1,
+        "selected_instance": "completions",
+        "semantic_projection_sha256": "1d3a769ddd5835381293ad7a0b1d1c9cb0029eadeef6d854561f89c67779fbd5",
+        "source_id": "model_reference.vial",
+        "source_sha256": "dd5465da4a1d37917852971590f09265e0f921518d8e8672a25beb285eb22ace",
+        "success": true
+      },
+      {
+        "complete_report_sha256": "cd04aa0c77c2a692cf71960b6b6df59863e73e083744bcb844847b77f46c2f4f",
+        "diagnostics": [],
+        "language_version": 2,
+        "selected_instance": "base",
+        "semantic_projection_sha256": "30336731622c8374fac2fd3a483bea77220efd0b52063145d8ae61d0d61ab77a",
+        "source_id": "model_reference.vial",
+        "source_sha256": "921049c612e699f3db70ffcb5cf564e7f8a76ff10d84d4df26401207ba0c13b0",
+        "success": true
+      },
+      {
+        "complete_report_sha256": "66f19886b3f8f8ee1b82cf4d25bac08e8519263603f49411f7854b3194d43c8f",
+        "diagnostics": [],
+        "language_version": 2,
+        "selected_instance": "accepts",
+        "semantic_projection_sha256": "c7f998257aaba80ce89826242abcdc18f2fa517ea6826f3def01c86557e5c9d5",
+        "source_id": "model_reference.vial",
+        "source_sha256": "df50459ca930e1e8ceba6ea0c0e90d0d0a706cd740f55a325055f1cb1ed4e39a",
+        "success": true
+      },
+      {
+        "complete_report_sha256": "74ea0e4411e8c88b0e9c944635e7e6e037c397c351451a52d80450b730040b30",
+        "diagnostics": [],
+        "language_version": 2,
+        "selected_instance": "completions",
+        "semantic_projection_sha256": "a381347712506b03105bc95c51776675851200d87382f08b5ad8885ca1775c53",
+        "source_id": "model_reference.vial",
+        "source_sha256": "1218ef2000d633d6068127aac75ca749e790b591c98a42fce953700e628d72da",
+        "success": true
+      }
+    ]
+  },
+  "baseline_compiler_blob": "b584bcca304d07d0fa3567ead0949ff505e7a459",
+  "baseline_revision": "eb2b8f2a1babfb81ec66622ad71c41590d6b37ab",
+  "before": {
+    "producer_path": ".artifacts/mcp-feature-coverage/model-identity-baseline-perl/FSM/VIAL/SemanticBuilder.pm",
+    "producer_sha256": "099192825b392b9c42fc870105be456988a109ad47206aeb1caa7f299dc7f164",
+    "rows": [
+      {
+        "complete_report_sha256": "a46e0f21f5ac644e7cb0caadca8b13957da19b53ef13ce0cfe80858805b8ab38",
+        "diagnostics": [],
+        "language_version": 1,
+        "selected_instance": "base",
+        "semantic_projection_sha256": "4418c5729def458746e200768e7a01502ce51181576c04e54735084c1184ae31",
+        "source_id": "model_reference.vial",
+        "source_sha256": "2205b3b4f073a61374b19cb72f06afe31d75fc4d88f903c414b9b28a744ca4cd",
+        "success": true
+      },
+      {
+        "complete_report_sha256": "dc62e57291d22cf0d0f3ee19a22857fe7575c5731a8b11e77828a19b83efcea0",
+        "diagnostics": [],
+        "language_version": 1,
+        "selected_instance": "accepts",
+        "semantic_projection_sha256": "7a7e8468868a81ae86223ccd17c2c2e2815f9e190184f90990e592d09daf568c",
+        "source_id": "model_reference.vial",
+        "source_sha256": "f0c8ba3833013031e05b279291441cd19a8ac9f039cb2ea4960d3f4b21a62c2b",
+        "success": true
+      },
+      {
+        "complete_report_sha256": "ab7fbbe224dc6e4fb8a2afe01a06bc2c5f52f3ae81632197c25de0cc184db4cd",
+        "diagnostics": [],
+        "language_version": 1,
+        "selected_instance": "completions",
+        "semantic_projection_sha256": "7a7e8468868a81ae86223ccd17c2c2e2815f9e190184f90990e592d09daf568c",
+        "source_id": "model_reference.vial",
+        "source_sha256": "dd5465da4a1d37917852971590f09265e0f921518d8e8672a25beb285eb22ace",
+        "success": true
+      },
+      {
+        "complete_report_sha256": "cd04aa0c77c2a692cf71960b6b6df59863e73e083744bcb844847b77f46c2f4f",
+        "diagnostics": [],
+        "language_version": 2,
+        "selected_instance": "base",
+        "semantic_projection_sha256": "30336731622c8374fac2fd3a483bea77220efd0b52063145d8ae61d0d61ab77a",
+        "source_id": "model_reference.vial",
+        "source_sha256": "921049c612e699f3db70ffcb5cf564e7f8a76ff10d84d4df26401207ba0c13b0",
+        "success": true
+      },
+      {
+        "complete_report_sha256": "a5e99db7bf50a26152e88764a47c22aecc1c29b59dfe8cfa51a5920ba5f4d26d",
+        "diagnostics": [],
+        "language_version": 2,
+        "selected_instance": "accepts",
+        "semantic_projection_sha256": "2d94c20071ff3c17e809b92591e569b3d3ae35f8858d9c619df67dc9bbebf814",
+        "source_id": "model_reference.vial",
+        "source_sha256": "df50459ca930e1e8ceba6ea0c0e90d0d0a706cd740f55a325055f1cb1ed4e39a",
+        "success": true
+      },
+      {
+        "complete_report_sha256": "f2c2698bc943ae6249a6c0ad0508022884a643d42a1acfdbb951a7d4996bfb80",
+        "diagnostics": [],
+        "language_version": 2,
+        "selected_instance": "completions",
+        "semantic_projection_sha256": "2d94c20071ff3c17e809b92591e569b3d3ae35f8858d9c619df67dc9bbebf814",
+        "source_id": "model_reference.vial",
+        "source_sha256": "1218ef2000d633d6068127aac75ca749e790b591c98a42fce953700e628d72da",
+        "success": true
+      }
+    ]
+  },
+  "evidence_legs": {
+    "durability": "Tracked probe, this record, T1872, contracts/book and the exact baseline compiler Git object reproduce the comparison.",
+    "falsify": "Distinct authored instance bindings select accepted versus completed events. Earlier semantic digests collide and current digests differ; complete unchanged-base reports remain equal. T1872 independently checks typed identities, format/migration stability, execution propagation, native/filesystem/MCP equality and unknown names.",
+    "rederive": "Public text check probe with identical source bytes, IDs and surrounding code. The baseline loader verifies the exact first-party compiler module selected from Git."
+  },
+  "limits": [
+    "No runtime/backend execution or broader performance claim. Public plan is a summary; typed expression propagation is checked on native ExecutionIR, not inferred from its public plan projection.",
+    "Initial regression incorrectly expected model expressions in the public plan; that expectation was rejected and corrected to the documented native typed carrier before accepting the baseline.",
+    "Affected model-reference digests change as a bug correction. Summary/result/capability shapes and complete base-source reports remain unchanged."
+  ],
+  "owner": "SEMANTIC-INTROSPECTION-MCP-FRONTIER.31.3.2.5",
+  "schema": "fsmgen.vial_model_reference_identity_repair.v1",
+  "tests": {
+    "model-identity-band": {
+      "sha256": "a0925aa87270ad84d8df46d4e7b92eb9c2e4be52fc5a0d9025e6b2a236dfe7d4",
+      "summary": [
+        "All tests successful.",
+        "Files=9, Tests=59, 99 wallclock secs ( 0.05 usr  0.02 sys + 89.43 cusr  4.63 csys = 94.13 CPU)",
+        "Result: PASS"
+      ]
+    },
+    "model-identity-baseline": {
+      "sha256": "61dc3a068e60ca06c0da812c5ad4764a59e2daefe423f4f2cd40c511262e0763",
+      "summary": [
+        "Files=1, Tests=4, 13 wallclock secs ( 0.01 usr  0.01 sys + 11.83 cusr  0.46 csys = 12.31 CPU)",
+        "Result: FAIL"
+      ]
+    },
+    "model-identity-baseline-corrected": {
+      "sha256": "bc4fe9d7ff662457ae16bacb046a801b42641c9232cd46802b6da631ca8db5db",
+      "summary": [
+        "Files=1, Tests=4, 21 wallclock secs ( 0.01 usr  0.01 sys + 19.39 cusr  0.50 csys = 19.91 CPU)",
+        "Result: FAIL"
+      ]
+    },
+    "model-identity-repair": {
+      "sha256": "ef9666fc4d1bf524d296a5730a67997bc80a386acfc3634ea84dce3b2ae6e339",
+      "summary": [
+        "All tests successful.",
+        "Files=1, Tests=4, 21 wallclock secs ( 0.01 usr  0.00 sys + 19.41 cusr  0.46 csys = 19.88 CPU)",
+        "Result: PASS"
+      ]
+    }
+  }
+}

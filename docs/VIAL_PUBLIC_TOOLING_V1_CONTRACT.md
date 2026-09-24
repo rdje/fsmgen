@@ -109,6 +109,15 @@ sources. Reparse must produce equal `fsmgen.vial_semantic_projection.v1`
 meaning digests. Raw source digests and source spans are expected to differ and
 remain honest provenance; they are excluded from the meaning digest.
 
+Model-state reads include the selected fixture instance in their meaning.
+The correction owned by `SEMANTIC-INTROSPECTION-MCP-FRONTIER.31.3.2.5` changes
+semantic and compatibility digests for sources containing `(model INSTANCE
+STATE)` reads: earlier projections omitted the instance and could equate
+different counters. Recompute affected cached digests with current checking;
+old equality is not evidence of equivalent model selection. Both language
+versions use the correction. Summary/result/capability shapes and unaffected
+source projections remain unchanged; normal/terse equivalence still holds.
+
 Formatting is deterministic UTF-8 with LF endings, two-space indentation,
 lowercase reserved words/literal digits where the lexical contract permits,
 one final newline, declaration/action order preserved, and no comment
