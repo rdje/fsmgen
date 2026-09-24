@@ -6,12 +6,13 @@ answers:
   - "does areset support active_high reset polarity?"
   - "how do agents discover and inspect explicit reset polarity over MCP?"
   - "what defaults and strict checks apply when reset polarity is omitted?"
-  - "does the explicit FSM reset carrier fix ISF lowering automatically?"
-date: 2026-09-24
+  - "does ISF lowering preserve synchronous active-low and asynchronous active-high reset?"
+  - "why do generated domain resets agree with CDC metadata?"
+date: 2026-09-25
 status: current
-tags: [fsm, reset, polarity, semantics, mcp, systemverilog, verilog, vhdl]
-evidence: docs/decisions/0106-reset-polarity-is-an-explicit-system-carrier.md; docs/book/src/03-decision-trees-and-fsms.md; t/1891-explicit-system-reset-polarity.t; t/1892-explicit-reset-hdl-behavior.t; docs/audits/specforge-rule-admission-20260924/reset-polarity-carrier.json
-reverify: scripts/run_with_ram_guard.sh -- prove -Iperl -It/lib t/1891-explicit-system-reset-polarity.t t/1892-explicit-reset-hdl-behavior.t
+tags: [fsm, isf, reset, polarity, semantics, mcp, systemverilog, verilog, vhdl]
+evidence: docs/decisions/0106-reset-polarity-is-an-explicit-system-carrier.md; docs/book/src/03-decision-trees-and-fsms.md; t/1891-explicit-system-reset-polarity.t; t/1892-explicit-reset-hdl-behavior.t; docs/audits/specforge-rule-admission-20260924/reset-polarity-carrier.json; docs/audits/specforge-rule-admission-20260924/isf-reset-polarity.json; t/1893-isf-reset-polarity-lowering.t; t/1894-isf-domain-reset-event-behavior.t
+reverify: scripts/run_with_ram_guard.sh -- prove -Iperl -It/lib t/1891-explicit-system-reset-polarity.t t/1892-explicit-reset-hdl-behavior.t t/1893-isf-reset-polarity-lowering.t t/1894-isf-domain-reset-event-behavior.t
 ---
 
 Canonical `sreset` and `areset` accept an optional literal `active_high` or
@@ -28,7 +29,7 @@ capabilities publish `system_contracts.explicit_reset_polarity_forms`; native
 reports, the public adapter API and actual newline MCP have complete success
 and failure equality in T1891.
 
-T1892 independently drives nonzero reset values, clocked updates and reset
+T1892 independently drives direct FSM and ordinary ISF nonzero reset values, clocked updates and reset
 pulses wholly between clock edges for every kind/polarity combination in
 SystemVerilog, Verilog and VHDL. Hardware qualification requires real tools,
 not a skipped provider: on Darwin set `FSMGEN_DARWIN_VERILATOR_TEST_RUNTIME=1`
@@ -37,5 +38,18 @@ GHDL executable when it is absent from PATH. The captured receipt records the
 actual providers and non-skipped outcomes.
 
 This carrier is owned by `SEMANTIC-INTROSPECTION-MCP-FRONTIER.32.1.3.2.1`.
-ISF emission still needs its separately owned `.32.1.3.2.2` repair; accepting
-the FSM modifier alone does not fix a domain/CDC reset contradiction.
+The subsequent `.32.1.3.2.2` repair makes ISF emission use that carrier whenever
+keyword defaults or strict FSM naming would lose the parsed policy. Existing
+strict-supported spellings remain stable. Flat ISF `_n`/`_b` inference is
+case-sensitive and differs from FSM's final-n strict convention; emission
+preserves ISF intent rather than reinterpreting the identifier.
+
+T1893 qualifies ordinary parsed/lowered policy and complete public queries;
+T1890 covers original and explicit-policy domain fixtures through native/API/
+newline MCP. T1894 drives real events around source-only, destination-only and
+joint resets on the original topology for each timing/level combination.
+The preserved baseline HDL fails both independent reset-value and event
+oracles; repaired HDL passes the identical oracles. Capture boundaries,
+producer hashes and unchanged control HDL are retained in the ISF audit.
+No generated-top VHDL support, reset-tree glue or broader activation-runtime
+qualification is implied.

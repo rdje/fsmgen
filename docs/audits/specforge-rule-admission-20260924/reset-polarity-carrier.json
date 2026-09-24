@@ -137,6 +137,12 @@
         }
       },
       "stderr": ""
+    },
+    "validation_correction": {
+      "date": "2026-09-25",
+      "evidence": "docs/audits/specforge-rule-admission-20260924/book-output-recovery.json",
+      "finding": "The recorded relative destination resolved outside the repository. The rendered assertions consumed the prior valid repository-local build of the same carrier prose, not the recorded second build output. Recovered second-build HTML was separately checked during copy/verify/delete cleanup. Historical argv and assertions are retained; the current publication workflow uses a fresh runtime-derived absolute local destination.",
+      "owner": "SEMANTIC-INTROSPECTION-MCP-FRONTIER.32.1.3.2.2"
     }
   },
   "limits": [

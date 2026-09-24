@@ -125,12 +125,19 @@ sub _emit_system($self, $ir) {
     push @l, '  (+system';
     push @l, "    (clock $ir->{clock})";
     my $r = $ir->{reset};
-    if ($r && $r->{kind} eq 'async' && ($r->{polarity} // '') eq 'active_low') {
-        push @l, "    (areset $r->{name})";
-    } elsif ($r && $r->{kind} eq 'async') {
-        push @l, "    (areset $r->{name})";
-    } elsif ($r) {
-        push @l, "    (sreset $r->{name})";
+    if ($r) {
+        my $async = $r->{kind} eq 'async';
+        my $keyword = $async ? 'areset' : 'sreset';
+        my $default_polarity = $async ? 'active_low' : 'active_high';
+        my $polarity = $r->{polarity} // $default_polarity;
+        # Keep already strict-supported carriers unchanged. The FSM grammar's
+        # legacy name convention differs from ISF's _n/_b inference, so an
+        # explicit level is also needed when the name disagrees with it.
+        my $name_looks_low = $r->{name} =~ /n\z/i;
+        my $legacy_name_matches = $async ? $name_looks_low : !$name_looks_low;
+        my $modifier = $polarity eq $default_polarity && $legacy_name_matches
+            ? '' : " $polarity";
+        push @l, "    ($keyword $r->{name}$modifier)";
     }
     push @l, '  )';
     return join("\n", @l);

@@ -78,7 +78,7 @@ answers:
   - "is the immediate FSMGen MCP semantic-introspection pass complete?"
   - "what did SEMANTIC-INTROSPECTION-MCP-FRONTIER.30 select?"
   - "what is the active priority after FSMGen MCP source discovery?"
-date: 2026-09-24
+date: 2026-09-25
 status: current
 tags: [mcp, ai, llm, semantic-json, embedding, public-api, task-tree]
 evidence: >-
@@ -181,4 +181,4 @@ intact. Exact evidence is in
 
 ISF/PPIF CLI failures map registered lowered sources to authored paths; direct/external child paths remain physical. T1889 checks clean width reasons, retained/domain artifacts and native/API/MCP equality; no line/column map.
 
-T1890 qualifies canonical multi-clock wiring with supported resets. Original sync active-low reset lowering loses polarity; .32.1.3.2 owns repair before behavioral signoff.
+T1890 qualifies canonical multi-clock wiring and all reset policies through native/API/MCP. ISF emission preserves explicit polarity; direct/domain behavior and exact controls are in docs/knowledge/explicit-system-reset-polarity.md. Broader activation qualification remains owned by .32.1.3.3.

@@ -1633,6 +1633,11 @@ Selected reset ownership model and current implementation status:
 - Domain reset payloads reuse the shipped reset value rules: flat
   `(reset name)` is synchronous with inferred polarity; list forms may include
   `async`, `active_low`, or `active_high`; and reset names must be scalar.
+  Scheduled FSMs preserve that resolved policy with an explicit reset-polarity
+  modifier whenever keyword defaults or strict FSM name conventions would
+  lose it. For example, flat `rst_n` emits `(sreset rst_n active_low)`;
+  `(reset (rst async))` emits `(areset rst active_high)`. The domain FSM and
+  CDC metadata therefore interpret the same reset net consistently.
 - A synchronous reset is sampled only on the owning domain clock edge.
 - An asynchronous reset is a direct external reset pin for the owning domain's
   clocked state. It is not a data signal, handshake, or CDC primitive.

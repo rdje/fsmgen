@@ -23,10 +23,13 @@ my @cases;
 for my $name (qw(clock_domain_event_crossing clock_domain_dual_event_crossing clock_domain_no_reset_event_crossing)) {
     open my $fh, '<', "isf/$name.isf" or die $!;
     my $text = do {local $/; <$fh>}; close $fh;
-    # Use an already faithful reset carrier for syntax qualification. The
-    # original synchronous active-low fixture behavior is owned by .32.1.3.2.
-    $text =~ s/\(reset (\w+_n)\)/(reset ($1 async active_low))/g;
     push @cases, [$name, $text];
+}
+for my $policy (['sync', 'active_high'], ['async', 'active_low'], ['async', 'active_high']) {
+    my $text = $cases[0][1];
+    my $options = ($policy->[0] eq 'async' ? 'async ' : '') . $policy->[1];
+    $text =~ s/\(reset (\w+_n)\)/(reset ($1 $options))/g;
+    push @cases, ["event_$policy->[0]_$policy->[1]", $text];
 }
 push @cases, ['activation_wiring', <<'ISF'];
 (actor activation_wiring

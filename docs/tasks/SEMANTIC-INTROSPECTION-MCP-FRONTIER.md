@@ -6,7 +6,7 @@
 - Status: `active`
 - Roadmap lane: `Embedding And Public APIs / AI integration`
 - Created: `2026-06-14`
-- Last updated: `2026-09-24`
+- Last updated: `2026-09-25`
 - Owner: repo-local workflow
 
 ## Goal
@@ -656,7 +656,7 @@ For FSMGen, the analogs are:
   Commit: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.32.1.3.1: emit canonical multi-clock wiring`
 
 - ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.32.1.3.2`
-  Status: `active`
+  Status: `done`
   Goal: `Preserve authored ISF reset polarity through ordinary and multi-clock FSM lowering.`
   Acceptance: `Trace the full public reset carrier contract and repair polarity loss without combinational reset-tree glue or changing authored intent. Cover sync/async and active-high/active-low choices, flat-name defaults, explicit declarations, no-reset, report metadata and generated domain/CDC agreement. Prove actual reset behavior with independent HDL oracles; qualify API/MCP and update source/book contracts.`
   Verification: `Before any wiring repair, clock_domain_event_crossing.isf emits domain always_ff blocks with if (bus_rst_n)/if (core_rst_n), but its CDC module uses if (!source_reset)/if (!dest_reset) on the same nets. Parser::_parse_reset correctly infers active_low from _n; Scheduler::ISF::Emitter::FSM::_emit_system ignores polarity for sync and also emits areset for both async polarities. The core public contract says sreset is synchronous active-high and areset asynchronous active-low. Baseline design.sv and generated top metadata under .artifacts/isf-multiclock-strict/before/ preserve the contradiction. This affects more than strict syntax; do not qualify these reset-declared designs behaviorally until repaired.`
@@ -671,11 +671,11 @@ For FSMGen, the analogs are:
   Commit: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.32.1.3.2.1: preserve explicit reset polarity`
 
 - ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.32.1.3.2.2`
-  Status: `pending`
+  Status: `done`
   Goal: `Lower authored ISF reset kind/polarity faithfully through the qualified public FSM carrier.`
-  Acceptance: `Use the explicit modifier for combinations not represented by legacy keyword defaults, preserving supported existing output spellings. Cover flat-name inference, explicit sync/async high/low declarations, no-reset, ordinary and multi-clock actors, generated domain/CDC agreement, independent reset/event behavior, and complete native/API/MCP reports. Requalify original event-crossing fixture, update misleading book mappings and facts, and commit before naming/explicit-route repairs.`
-  Verification: `Depends on committed .32.1.3.2.1. The original contradictory HDL is retained in the .32.1.3.1 audit; successful syntax admission does not discharge its behavior obligation.`
-  Commit: `pending`
+  Acceptance: `Use the explicit modifier when keyword defaults or strict naming heuristics cannot represent the authored policy, preserving already strict-supported output spellings. ISF flat-name inference and direct FSM strict naming differ (including _b and bare n suffixes); never reinterpret authored polarity from the emitted identifier. Cover flat-name inference, explicit sync/async high/low declarations, no-reset, ordinary and multi-clock actors, generated domain/CDC agreement, independent reset/event behavior, and complete native/API/MCP reports. Requalify original event-crossing fixture, update misleading book mappings and facts, and commit before naming/explicit-route repairs.`
+  Verification: `The public carrier is committed at 07f7e8333. Scheduler::ISF::Emitter::FSM::_emit_system emits sreset for every sync policy and areset for every async policy without retaining polarity. SourceFrontend strict name policy treats final n case-insensitively as low-active; ISF flat inference uses case-sensitive _n/_b. The original contradictory HDL is retained in the .32.1.3.1 audit. The repair preserves authored policy with explicit modifiers where necessary. Ordinary and domain/CDC simulations pass for every timing/level combination; the exact baseline HDL fails the same independent oracles. T1890/T1893 qualify complete native/API/newline equality, and the focused regression band passes. Tracked reports, HDL, oracles and replay: docs/audits/specforge-rule-admission-20260924/isf-reset-polarity.json. The mdBook output-path mistake is fully recovered with copied/hash-verified renders and exact old-root residue census; see book-output-recovery.json.`
+  Commit: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.32.1.3.2.2: preserve ISF reset policy through lowering`
 
 - ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.32.1.3.3`
   Status: `pending`
@@ -1367,14 +1367,14 @@ before editing code. No discovered defect is closed by this audit alone.
 
 ## Current Frontier
 
-`SEMANTIC-INTROSPECTION-MCP-FRONTIER.32.1.3.2.2` is next: preserve ISF reset
-polarity through the explicit FSM carrier qualified by `.32.1.3.2.1`. Canonical
-wiring is repaired; naming/explicit-route collisions follow under `.32.1.3.4`,
-then `.32.1.3.3` completes behavioral/API/MCP qualification. Rule admission and
-width provenance are repaired. Bundle provenance, generated interconnect
-lowering and derived widths follow under `.32.2`, `.32.4` and `.32.3`.
-Preserve spent native compiler/startup evidence and the separate read-only/write
-horizon; source checks do not promote runtime support.
+`SEMANTIC-INTROSPECTION-MCP-FRONTIER.32.1.3.4` is next: decompose generated
+domain-name and explicit-route collisions into independently committed repairs.
+Canonical wiring, explicit FSM polarity and faithful ISF reset emission are
+qualified; `.32.1.3.3` then completes broader multi-clock/activation behavior
+and API/MCP signoff. Rule admission and authored width provenance are repaired.
+Bundle provenance, interconnect lowering and derived widths follow under
+`.32.2`, `.32.4` and `.32.3`. Preserve spent native compiler/startup evidence;
+source checks do not promote runtime support.
 
 ## Decisions
 
@@ -3171,3 +3171,79 @@ The first staged doctrine pass identifies the reset table's binary active
 levels as new claim-review candidates. Each is now explicitly reviewed as an
 exact syntax value, backed by the semantic and independent HDL tests; no
 measured claim or missing evidence is hidden by that classification.
+
+
+### `.32.1.3.2.2` verification-output locality recovery — verified
+
+The mdBook publisher returned success but the expected repository-local HTML
+was absent. Read-only inspection locates both this slice's book and the prior
+carrier slice's book under `../../.artifacts/`, outside the repository.
+The helper incorrectly assumed a relative mdBook destination was relative to
+`docs/book`; mdBook resolves it against the invocation working directory.
+The prior slice's second rendered check read the valid earlier local build,
+not the second build's output. The initial local build did verify the same
+carrier prose, but the second command's output-locality claim is incorrect.
+
+This current verification repair owns both exact generated directories. Keep
+all implementation work in place; copy each exact book into a fresh owned
+repository-local recovery directory, verify its complete file/byte/hash
+manifest and same-volume identity, then delete only the proven old directory
+and census the exact residues. Correct current build commands to derive an
+absolute destination at runtime while recording repository-relative output
+identity; build into a fresh destination and verify that output. Preserve the
+initial failures, correction and manifests in tracked evidence. Do not rerun
+spent native producers or remove unrelated `.artifacts` contents. The replay
+probe launched before the publisher artifact existed failed at file-open and
+performed no HDL compilation; it is not qualification.
+
+
+## Acceptance Checklist — `.32.1.3.2.2` faithful ISF reset emission
+
+- [x] **ROOT CAUSE (WHY + WHERE)** — At `07f7e8333`, native strict
+  `--check --json` rejects the original flat active-low event fixture, while
+  ordinary async active-high can pass check and still emit active-low HDL.
+  `Scheduler::ISF::Emitter::FSM::_emit_system` chooses only the keyword and
+  ignores the parsed polarity. ISF `_n`/`_b` inference also differs from the
+  direct FSM strict final-n convention. Retained original HDL fails the
+  independent reset-value and event-delivery oracles; successful admission
+  alone would conceal the behavior defect.
+- [x] **ADDRESSED (verified)** — The emitter retains the resolved policy,
+  adding an explicit modifier when defaults or strict naming would lose it.
+  Already strict-supported carriers keep their spelling. T1893 proves parser,
+  independently checked scheduled carrier and full native/API/newline policy
+  equality, including flat/default/opposite-name controls. T1892 applies the
+  same independent nonzero-reset/between-edge oracle to direct FSM and ISF in
+  SV, Verilog and VHDL. T1894 proves domain/CDC agreement and real events around
+  source-only, destination-only and joint resets in both Verilog-family
+  targets. T1890 now uses the original fixture and additional reset policies.
+  The exact preserved baseline and repaired HDL fail/pass identical oracles;
+  the tracked replay reproduces those outcomes from hash-bound retained data.
+- [x] **NO REGRESSION** — The RAM-guarded ordinary feature tests report
+  `All tests successful. Files=2, Tests=11`; domain behavior reports
+  `Files=1, Tests=4`, without skipped providers. The header/reset metadata,
+  timing/defaults, domain/activation, output-reset, provenance and full-query
+  band reports `All tests successful. Files=9, Tests=58`. Unaffected ordinary
+  sync-high/async-low, original dual-event and reset-free HDL remain identical
+  after excluding only date headers. A fresh absolute-destination mdBook build
+  and rendered contract checks pass; the bounded destination probe confirms
+  both CLI path modes and cleans its local fixture. Browser visual review is
+  unavailable; full CI/push remains gated.
+
+Re-derivation uses exact original/variant sources, native reports and emitted
+hardware. Falsification is the observed before/after reversal in independent
+reset and event oracles, flat/name-policy controls, no-reset and unchanged-HDL
+controls, and complete transport comparisons. Durability is T1890/T1892–T1894,
+the tracked HDL testbenches, `isf-reset-polarity.json` and its replay driver,
+updated book/spec/facts and this task. No report-field expansion, reset-tree
+glue, generated-top VHDL or broad activation-runtime promotion is implied.
+
+The publication helper's relative-output mistake is root-caused and repaired,
+not counted as successful local verification. Both exact misplaced books were
+copied, completely hash-verified and consumed before their old roots were
+removed; `book-output-recovery.json` retains each manifest and absence census.
+The earlier carrier receipt preserves its original command and explicitly
+records the corrected attribution. `verify-book-output-locality.py` now
+reproduces the path semantics safely inside an owned temporary workspace.
+All compiler workspaces in this slice were fresh; spent native producers are
+untouched. Development receipts remain separate from the successful final
+publication and replay evidence.

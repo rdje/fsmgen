@@ -1,0 +1,1058 @@
+{
+  "cause": "mdBook --dest-dir is relative to invocation cwd, not the book source directory",
+  "fresh_current_book": {
+    "build_and_rendered_checks": "pass",
+    "destination": ".artifacts/isf-reset-polarity/book-verified",
+    "path_resolution": "absolute at runtime from repository root",
+    "receipt": "docs/audits/specforge-rule-admission-20260924/isf-reset-polarity.json"
+  },
+  "owner": "SEMANTIC-INTROSPECTION-MCP-FRONTIER.32.1.3.2.2",
+  "records": [
+    {
+      "copy_verified": true,
+      "deleted": true,
+      "destination": ".artifacts/isf-reset-polarity/recovered-books/reset-polarity-carrier",
+      "label": "reset-polarity-carrier",
+      "manifest": {
+        "bytes": 25484294,
+        "file_count": 99,
+        "files": [
+          {
+            "bytes": 72,
+            "path": ".nojekyll",
+            "sha256": "235d4f83c4c71612f43995dbda167720cd0c5384bf9ea64f9328b187c409b51d"
+          },
+          {
+            "bytes": 24901,
+            "path": "00-introduction.html",
+            "sha256": "6328322ce86b79a8f74a3f263ba5e1b0740b4f2d85ac01c595ad70f29e51e918"
+          },
+          {
+            "bytes": 25490,
+            "path": "01-first-fsm.html",
+            "sha256": "26a9e7f12b8d1ffe086c39d2337cb9e98e94ef3b7fd303935599a9d7a0239df1"
+          },
+          {
+            "bytes": 45325,
+            "path": "02-language-basics.html",
+            "sha256": "9cc80493b2a2855715792d3e3e00caaca4c80e7e0520828e17a39ae6db03edd3"
+          },
+          {
+            "bytes": 45911,
+            "path": "03-decision-trees-and-fsms.html",
+            "sha256": "e7f3c9f335b23a115fa37f0b156803e0c06c4ed84fbefbc1191844fc4eed6f84"
+          },
+          {
+            "bytes": 43166,
+            "path": "04-symbols-types-and-imports.html",
+            "sha256": "617ba718b27b7bc18032cd18d019439d3af20e8be9651686f0eeaaa5869ec225"
+          },
+          {
+            "bytes": 49024,
+            "path": "05-composition-basics.html",
+            "sha256": "ec73481fadd5199e73d327c5e3c882f08271bdc4276259c23866e27f44ab8334"
+          },
+          {
+            "bytes": 55769,
+            "path": "06-composition-advanced.html",
+            "sha256": "3be4010f58f098f7fcb222a1d8e236da6eedcf2393dc20bf68e4747f965deda5"
+          },
+          {
+            "bytes": 25783,
+            "path": "07-packages-and-sharing.html",
+            "sha256": "c1aa69410f128b9737068eb8a4c8ed1f40948df66971b7cfbe6a8119e7b727c9"
+          },
+          {
+            "bytes": 38510,
+            "path": "08-type-inference-and-aggregate-data.html",
+            "sha256": "f6b2457264048bf68d4b2ae511d6e584649161269898e06541ed9c2be87274ab"
+          },
+          {
+            "bytes": 49505,
+            "path": "09-generated-hdl-debugging-and-inspection.html",
+            "sha256": "3a9746014d185e459926a2ba2c3ebfd6cf6daad5b6afc5b5fe18959cef93c14f"
+          },
+          {
+            "bytes": 55178,
+            "path": "10-errors-strict-mode-and-troubleshooting.html",
+            "sha256": "1667599786f6278b9d507b07df97ae4f783c528de5f2e84f2ac456532aaf9f3b"
+          },
+          {
+            "bytes": 34443,
+            "path": "10a-downstream-issue-reporting.html",
+            "sha256": "a786c76f549d18fdb5649184a3fd2ecbb37ecfebf02ef45e872597544934ad92"
+          },
+          {
+            "bytes": 253586,
+            "path": "11-extensions-and-embedding.html",
+            "sha256": "fadd529b70b52a6eb2a47359a8ae3ce7cebb8a1d71ae16c827db7d097e68128c"
+          },
+          {
+            "bytes": 35761,
+            "path": "12-cookbook.html",
+            "sha256": "5cf06d763eb1a5005e27f4270a55eb1af5378d7c681ed830782294838b9a3f50"
+          },
+          {
+            "bytes": 87095,
+            "path": "13-intent-scheduling.html",
+            "sha256": "8ad0619f8a30bd7f511b1a30919d32482617bb78ed5dc8beb57ec78abba741c2"
+          },
+          {
+            "bytes": 51850,
+            "path": "13a-actor-interface.html",
+            "sha256": "34da432501b6d34cea31603af3c2ab692e1ad069765f049dcaa0491150b3335d"
+          },
+          {
+            "bytes": 124073,
+            "path": "13b-transactions.html",
+            "sha256": "74fa12fa1014e787b1dd67d0a02f2028f33e41c8f802d11d55a60dca5eb0820b"
+          },
+          {
+            "bytes": 26934,
+            "path": "13c-drive-blocks.html",
+            "sha256": "1551352341b208e400258ed0fc2458b66b4401b0f056da4d2e5cbbd1247c0d9c"
+          },
+          {
+            "bytes": 111591,
+            "path": "13d-control-flow.html",
+            "sha256": "e870711a3516fe4df8a78ac7669f0efb3803a33cb3ef2aa62c6ed109762bd372"
+          },
+          {
+            "bytes": 61223,
+            "path": "13e-data-manipulation.html",
+            "sha256": "ca9f72de5e800af0d9dfb00faa179f9ebc5de9b31a3d07bafb9cf00133f5be80"
+          },
+          {
+            "bytes": 106194,
+            "path": "13f-composition.html",
+            "sha256": "a5950af8e653a6d7a11a3f700cc97d3bc43101e91acaa75711503b6a6e9e957a"
+          },
+          {
+            "bytes": 50216,
+            "path": "13g-rules.html",
+            "sha256": "77c1bb2b443f9850f73be9fbb4c95634209104e51b8e06e9b8f54f9b32548b73"
+          },
+          {
+            "bytes": 131866,
+            "path": "13h-lowering-reference.html",
+            "sha256": "80f95bdd7bbda428fde7d172666e973b6d1caf3f62e0e9ac7a74ec853c0fdf7a"
+          },
+          {
+            "bytes": 277562,
+            "path": "13i-downstream-integration.html",
+            "sha256": "ef0c13d34e551dfc21092851a0c48a6a21658c3962fae29bf2912cba46ee97bf"
+          },
+          {
+            "bytes": 47258,
+            "path": "13j-type-enum-aggregate.html",
+            "sha256": "e84dff052d6f9e6a45c7b0f867a11c209c42a5a0cf7a9c2f06f85a96081feb88"
+          },
+          {
+            "bytes": 145636,
+            "path": "13k-isf-feature-support-matrix.html",
+            "sha256": "6008b4eca146b6896f3053c5a5178369dd35d96ded656b90b50395f05330141b"
+          },
+          {
+            "bytes": 30485,
+            "path": "13l-procedures.html",
+            "sha256": "079157b29c33f41bd06557455ebab44a89386983c74d6a892df9c50ee73f6f11"
+          },
+          {
+            "bytes": 27677,
+            "path": "13m-local-variables.html",
+            "sha256": "820ae534319a7ef4f48b8af7c25fda7541367e3339b225a9407bc2a8f752c708"
+          },
+          {
+            "bytes": 27610,
+            "path": "14-feature-backlog.html",
+            "sha256": "d2cd0888bbcdb904283518a6512321679659ba17580ebabf94cead5678a44cee"
+          },
+          {
+            "bytes": 33614,
+            "path": "14a-language-and-data.html",
+            "sha256": "768644ce0d713b3aecd3a2cb46455773620c5037b87b1b676e7683ccd33bbf90"
+          },
+          {
+            "bytes": 97502,
+            "path": "14b-composition-backlog.html",
+            "sha256": "848f10bb9a3f20b9b5b5479b02cb9aa623a4f75b927a572f101d491001dc0c5e"
+          },
+          {
+            "bytes": 69302,
+            "path": "14c-actor-network-orchestration.html",
+            "sha256": "dbada47bf358915ed0223d249d8e4c42b78ff5f03be7c738bb96058a160fb504"
+          },
+          {
+            "bytes": 127905,
+            "path": "14d-ial2-foundations.html",
+            "sha256": "c07aebbbc985811c0cb31ce0f1b34d069a0a434d3f7cf579f95bfa25c54078e9"
+          },
+          {
+            "bytes": 30592,
+            "path": "14e-hial-vial-verification.html",
+            "sha256": "82cc7392ec5141d0d4bd88ae990de221400e488951ff4e7a254b17038d860686"
+          },
+          {
+            "bytes": 176098,
+            "path": "14f-axi-manager-core.html",
+            "sha256": "72b7fedf23d06467d85b3446f8f1d44d3311da205a47c1c17911b9d7f33341e7"
+          },
+          {
+            "bytes": 233227,
+            "path": "14g-axi-dynamic-identity.html",
+            "sha256": "c3ff3780d1ed98c14a89145ff5b8d6d9ca7114aba905a11b5783d909a69397d4"
+          },
+          {
+            "bytes": 193151,
+            "path": "14h-protocol-profiles-and-apb.html",
+            "sha256": "3d3f00b716fbb46184f6d2d0ef4b80b6c2ac166029752156d0d3177655c199ad"
+          },
+          {
+            "bytes": 199527,
+            "path": "14i-ahb-and-integration.html",
+            "sha256": "e008fa0f7bd0df305912fdd1e6fb219c542ee1335677bc7d4fd6bffac9940caf"
+          },
+          {
+            "bytes": 151227,
+            "path": "14j-extended-axi.html",
+            "sha256": "1afd121887526d463ef41f6da2e733617d393f7d4961dfc7f9916aee5ad17c21"
+          },
+          {
+            "bytes": 121780,
+            "path": "14k-isf-language-and-scheduling.html",
+            "sha256": "5e977df85cd3e925210eb001ff20a2ee8c65b2a509684da770a1288df595e8ee"
+          },
+          {
+            "bytes": 95357,
+            "path": "14l-backends-validation-and-apis.html",
+            "sha256": "44a1379d45309d0c091802edf7248eea99ab0c18af8bf3252709587446fc175d"
+          },
+          {
+            "bytes": 29962,
+            "path": "15-implementation-blueprint.html",
+            "sha256": "2f784275c3f7e4df66e7f2a237b859368b64fd15cb9a7ede05691397e97892ee"
+          },
+          {
+            "bytes": 25674,
+            "path": "15a-ial2-new-protocol-support.html",
+            "sha256": "6acc56539be5d9715c2a86d7d1ea738b301b51693d57c6b63d787e503c92f09e"
+          },
+          {
+            "bytes": 30874,
+            "path": "16-ial2-protocol-platform-intent.html",
+            "sha256": "3f252a7b47b9b7f14058f59c17097b3772c8aa7fc77eba1992a76b3568e7d89a"
+          },
+          {
+            "bytes": 84992,
+            "path": "16a-ial2-axi.html",
+            "sha256": "b63a5571c0d0e7c3093815dcac26046dc2ece5e2ace0cfe512816e1ab9845999"
+          },
+          {
+            "bytes": 60356,
+            "path": "16aa-ial2-axi-manager-capacity-status.html",
+            "sha256": "45f106eff80d7c8090bb7960eba3eba3f3743ee1e52a360028d90c4ce4b692de"
+          },
+          {
+            "bytes": 30397,
+            "path": "16b-ial2-apb.html",
+            "sha256": "f3b89d91b85421c8c586c4973b71e64f529f01055f335350f5822c54ecc28461"
+          },
+          {
+            "bytes": 254470,
+            "path": "16c-ial2-ahb.html",
+            "sha256": "ffa9ff90ef1a315c5055388f08563a2cbbb18afbb2c321b16bcb139b03448db3"
+          },
+          {
+            "bytes": 330700,
+            "path": "16d-hial-vial-verification-architecture.html",
+            "sha256": "ee0d3baacd9044097695639f8fabdb2b645fdb2c6799305c86beb3f9cb5564fc"
+          },
+          {
+            "bytes": 46770,
+            "path": "16da-vial-balanced-portable-composition.html",
+            "sha256": "f77c9d8a843b2bab03e3cc620c01e78f89ef2c535a627aa1d205817facb6731f"
+          },
+          {
+            "bytes": 29523,
+            "path": "16db-vial-structural-backend-emission-matrix.html",
+            "sha256": "1f917a8ff43bbc471bc68748d7d756543d57babab9e1adfd2e0edf067f338f76"
+          },
+          {
+            "bytes": 313611,
+            "path": "16dc-vial-portable-verilator-runtime-measurement.html",
+            "sha256": "3bffb61d9d9b74a1c5d004ee2603e01e0591f4b0dfe0fefb673f086b04a477b1"
+          },
+          {
+            "bytes": 62575,
+            "path": "16dd-vial-portable-vhdl-runtime-measurement.html",
+            "sha256": "c5a8946506f9fe2d3c32d7b72eb3fbee2824cde06bab55d412f2baeae2d82cc9"
+          },
+          {
+            "bytes": 62366,
+            "path": "16de-vial-osvvm-runtime-execution-plan.html",
+            "sha256": "82188cd05a47368a9168d8b5485c687d9c9bbb39e784e855fb224c3af49d98c8"
+          },
+          {
+            "bytes": 204125,
+            "path": "16df-vial-architecture-scale-cap-closeout.html",
+            "sha256": "d9be0b398384298b813d4d5820655eac828e24f21cc8f28627629338b3403d3f"
+          },
+          {
+            "bytes": 56938,
+            "path": "16dg-vial-public-lifecycle-reference.html",
+            "sha256": "5075058f4dc4671c10decd36698b370cd08a53d01c39d749f4ba5432226b65bf"
+          },
+          {
+            "bytes": 38420,
+            "path": "16dh-vial-ahb-end-to-end-tutorial.html",
+            "sha256": "5a72e1b6d6224980191e5d9af29d290e21cffd277f236e9431cedb9872b5a6e0"
+          },
+          {
+            "bytes": 41447,
+            "path": "16di-vial-legacy-migration.html",
+            "sha256": "15f156fad527befc808bfcd39c5b62b20a6e2588151e1adfc852d65f32b02aa2"
+          },
+          {
+            "bytes": 43133,
+            "path": "16dj-vial-capability-support-reference.html",
+            "sha256": "f203a7fe6ff53c0ba6f7bf061468f9de9b23ad0d2f27e2e8e56aeda153eb6075"
+          },
+          {
+            "bytes": 127215,
+            "path": "16dk-inactive-proxy-lifetimes.html",
+            "sha256": "67858a401a1e2ef7acde56afd5b63ab2b77b93bdcb2d41689890efddfcbdfa08"
+          },
+          {
+            "bytes": 144907,
+            "path": "16e-nexsim-api-mcp-consumer-requirements.html",
+            "sha256": "abac3402d3a0eba0410befe03b8a2c9cea69569f373621b93b9588b7cb26f187"
+          },
+          {
+            "bytes": 17673,
+            "path": "404.html",
+            "sha256": "a74857ef3efdcd50ad005e60ed679608313c6e499fa1d746c0019b76831badd9"
+          },
+          {
+            "bytes": 59328,
+            "path": "90-reference-map.html",
+            "sha256": "937a301b191226d3dfb7aa668cf53c8ff96ebe3bb787568b565f146efd06a2de"
+          },
+          {
+            "bytes": 45608,
+            "path": "91-live-document-containment-adoption.html",
+            "sha256": "5448644a356e589c77efba7e53a44119c6804a85b8b2ed5570318aa63040d8f4"
+          },
+          {
+            "bytes": 907,
+            "path": "ayu-highlight-3fdfc3ac.css",
+            "sha256": "3fdfc3ac5e435e0cef96dafee74da487e4846ffce4dff5973bb45d68b678dd7f"
+          },
+          {
+            "bytes": 30932,
+            "path": "book-609e4cb8.js",
+            "sha256": "609e4cb80f92aa954a3f48869c751f6f8848433604f1297bb70fde0e3e58a569"
+          },
+          {
+            "bytes": 10754,
+            "path": "clipboard-1626706a.min.js",
+            "sha256": "1626706afc88d95ebe1173b553ec732c6dc82a576989315fdf5e7779af738a44"
+          },
+          {
+            "bytes": 18032,
+            "path": "css/chrome-d279d366.css",
+            "sha256": "d279d366359c0d588c9c10cb46afe2b543fc731dea722803639b4e45016d5fe2"
+          },
+          {
+            "bytes": 11478,
+            "path": "css/general-e96d0476.css",
+            "sha256": "e96d0476741bfcbe8cc0ac02db00187c45a63946834361d0eab846016787c646"
+          },
+          {
+            "bytes": 689,
+            "path": "css/print-9e4910d8.css",
+            "sha256": "9e4910d8eb508863172430c60d49fd3b442e9e7f5963a18cd1d655c386ffeae9"
+          },
+          {
+            "bytes": 10422,
+            "path": "css/variables-8adf115d.css",
+            "sha256": "8adf115df892369c90b830767c4651a9e058b79273e219935f7c8a96c6eab9c0"
+          },
+          {
+            "bytes": 18051,
+            "path": "elasticlunr-ef4e11c1.min.js",
+            "sha256": "ef4e11c157b1e2e89782d30bd726f2d5ff7834ea5e26ad02474325f8b1f126c9"
+          },
+          {
+            "bytes": 5679,
+            "path": "favicon-8114d1fc.png",
+            "sha256": "8114d1fc74f4b5621ad9afde7746ed9cf7e420be317a6e29023d2298d58aa15b"
+          },
+          {
+            "bytes": 1835,
+            "path": "favicon-de23e50b.svg",
+            "sha256": "de23e50b1c4dd6e052b3e21d444fcd4b13568b3840ac3c99d9be4e9263c0ef59"
+          },
+          {
+            "bytes": 11358,
+            "path": "fonts/OPEN-SANS-LICENSE.txt",
+            "sha256": "cfc7749b96f63bd31c3c42b5c471bf756814053e847c10f3eb003417bc523d30"
+          },
+          {
+            "bytes": 4528,
+            "path": "fonts/SOURCE-CODE-PRO-LICENSE.txt",
+            "sha256": "d1e6d465a83ba1a3be52db6484868cf5812ae9bbf91abdad3900ba0165afcf93"
+          },
+          {
+            "bytes": 3818,
+            "path": "fonts/fonts-9644e21d.css",
+            "sha256": "94b5131beb9b75a55f9649fcf12de167350feae0fab2bab26c2703cd75c0c781"
+          },
+          {
+            "bytes": 44352,
+            "path": "fonts/open-sans-v17-all-charsets-300-7736aa35.woff2",
+            "sha256": "7736aa3596c468515c3209f2f9d68cfae96d94c05689bcc11a5dce426a6ee2e8"
+          },
+          {
+            "bytes": 40656,
+            "path": "fonts/open-sans-v17-all-charsets-300italic-2c7b95c0.woff2",
+            "sha256": "2c7b95c08df0d228caec6d4bfed06da0f7ab6b76ea5cc3f75b5c6ae416bc571b"
+          },
+          {
+            "bytes": 44936,
+            "path": "fonts/open-sans-v17-all-charsets-600-486c6759.woff2",
+            "sha256": "486c67592731a0b36a89dba1fd0b97aeb73f236bbf60dbf28d7c6b5723c07989"
+          },
+          {
+            "bytes": 42120,
+            "path": "fonts/open-sans-v17-all-charsets-600italic-1a3e8659.woff2",
+            "sha256": "1a3e865977024f444834a75a1b33b89b93134c93007ae3d6e14f24e6c88d8dfb"
+          },
+          {
+            "bytes": 44988,
+            "path": "fonts/open-sans-v17-all-charsets-700-c22fe8c7.woff2",
+            "sha256": "c22fe8c70c36f1d862903b772eaed864d3a8fa849473c9caff224fdb852428e4"
+          },
+          {
+            "bytes": 40800,
+            "path": "fonts/open-sans-v17-all-charsets-700italic-238ae959.woff2",
+            "sha256": "238ae9593944112bee8dd65f8ebc5f3d3862160a8a245fbe1ee3150bc9a2fd81"
+          },
+          {
+            "bytes": 44536,
+            "path": "fonts/open-sans-v17-all-charsets-800-3d2c812a.woff2",
+            "sha256": "3d2c812adf74deb36fead3ff8469800d3c0b23eb2c858ae49310291f89490146"
+          },
+          {
+            "bytes": 40812,
+            "path": "fonts/open-sans-v17-all-charsets-800italic-ba1521ec.woff2",
+            "sha256": "ba1521ec219db9bc5bfec0e3e7a897369d98b30d4e853ee4aa525322784428b8"
+          },
+          {
+            "bytes": 41076,
+            "path": "fonts/open-sans-v17-all-charsets-italic-6c9463f7.woff2",
+            "sha256": "6c9463f7096c0b9d610e095ed248ac1e8a8da7e92d17e9be544f3baced7b62b2"
+          },
+          {
+            "bytes": 43236,
+            "path": "fonts/open-sans-v17-all-charsets-regular-2e3b1d34.woff2",
+            "sha256": "2e3b1d34ac67763ab50652da19305d4b3694c6b6e6bf35f4b98411ce4af646d2"
+          },
+          {
+            "bytes": 59140,
+            "path": "fonts/source-code-pro-v11-all-charsets-500-2bdd9410.woff2",
+            "sha256": "2bdd9410b0141db3cbbf4cfc3818cc6fad279e8e63940940e06cd6af76ccbfcf"
+          },
+          {
+            "bytes": 1209,
+            "path": "highlight-493f70e1.css",
+            "sha256": "493f70e1527d895653b5ac7157abba8e2c656e43698da93b6c1997e2855a5059"
+          },
+          {
+            "bytes": 137537,
+            "path": "highlight-abc7f01d.js",
+            "sha256": "abc7f01d0ce8c64e4ba9e131d651e48ae1a567b2a1254fea8aab03502288de58"
+          },
+          {
+            "bytes": 24901,
+            "path": "index.html",
+            "sha256": "6328322ce86b79a8f74a3f263ba5e1b0740b4f2d85ac01c595ad70f29e51e918"
+          },
+          {
+            "bytes": 17320,
+            "path": "mark-09e88c2c.min.js",
+            "sha256": "09e88c2cfaf23ea8a37b5681433eafea97033af632ecc948c8c1ee9944647743"
+          },
+          {
+            "bytes": 4481213,
+            "path": "print.html",
+            "sha256": "1a20c6ea796582a1ef4f34b3894f99926656634724bd07339be76d67c7c6fbfa"
+          },
+          {
+            "bytes": 20294,
+            "path": "searcher-09f2665d.js",
+            "sha256": "7925354a883b01c3dfae7911e17220cc7b16519e52e8a1e5532fbe4c35222693"
+          },
+          {
+            "bytes": 14378955,
+            "path": "searchindex-63a3c240.js",
+            "sha256": "63a3c2406b8ecfa7a99db5b8dc7248bab3ea0fe4503a73cdb81f0853b91946e0"
+          },
+          {
+            "bytes": 31354,
+            "path": "toc-7727513f.js",
+            "sha256": "7727513f2246a8126695b48c218eeb52cf5eadf09d5e1d5c79420916901738e6"
+          },
+          {
+            "bytes": 14642,
+            "path": "toc.html",
+            "sha256": "c5c2db87908aa220460a64cd3007bf412e8d3a483e01cd543b7ce2d784ba1041"
+          },
+          {
+            "bytes": 1694,
+            "path": "tomorrow-night-4c0ae647.css",
+            "sha256": "4c0ae647a06ef1699806fb9b4b6d0ef72de026708c6e8581362641c9298cb5f7"
+          }
+        ]
+      },
+      "recovered_render_consumed": true,
+      "residue_census": {
+        "exact_old_root_exists": false
+      },
+      "source": "../../.artifacts/reset-polarity-carrier/book",
+      "source_same_volume": true
+    },
+    {
+      "copy_verified": true,
+      "deleted": true,
+      "destination": ".artifacts/isf-reset-polarity/recovered-books/isf-reset-polarity",
+      "label": "isf-reset-polarity",
+      "manifest": {
+        "bytes": 25496528,
+        "file_count": 99,
+        "files": [
+          {
+            "bytes": 72,
+            "path": ".nojekyll",
+            "sha256": "235d4f83c4c71612f43995dbda167720cd0c5384bf9ea64f9328b187c409b51d"
+          },
+          {
+            "bytes": 24901,
+            "path": "00-introduction.html",
+            "sha256": "2fb4f011f1e1e89c59dff25e1602cb0c5447e5654db9847cc72cc5a20b4b26ad"
+          },
+          {
+            "bytes": 25490,
+            "path": "01-first-fsm.html",
+            "sha256": "6bece38416aac7ced9ccd69b44f022f18f1462fdd99d6b38d90cb14d8fc1dba7"
+          },
+          {
+            "bytes": 45325,
+            "path": "02-language-basics.html",
+            "sha256": "dede85b93c99d7bddaac61be4033fa1ec2f9e84d050ec3f07a63c5c55a41d636"
+          },
+          {
+            "bytes": 45911,
+            "path": "03-decision-trees-and-fsms.html",
+            "sha256": "d08901834c8db5ec12caa8e131ad1666e6ece1ddfa9b0a97aab4956e4fcc3dce"
+          },
+          {
+            "bytes": 43166,
+            "path": "04-symbols-types-and-imports.html",
+            "sha256": "39f0c9347654ad43389b9ea5de391e355eae4dde5f99f489ea94fbddea33867f"
+          },
+          {
+            "bytes": 49024,
+            "path": "05-composition-basics.html",
+            "sha256": "078646a00bc70c0013b16b9d36c498085e15ccba75afb3829cfc5545a1674648"
+          },
+          {
+            "bytes": 55769,
+            "path": "06-composition-advanced.html",
+            "sha256": "b232266ae4124d171773c88dcff698a5414175ae06ec3347b83990dd0da8bc46"
+          },
+          {
+            "bytes": 25783,
+            "path": "07-packages-and-sharing.html",
+            "sha256": "bf7a53f4f584b5357da32469ddcdde86462937eb9dcace19365f62a6493e5786"
+          },
+          {
+            "bytes": 38510,
+            "path": "08-type-inference-and-aggregate-data.html",
+            "sha256": "c1f6516606dcb3d1b4bf097f9817c9a02096a18fd43fcfe74b78477ff1b4df14"
+          },
+          {
+            "bytes": 49505,
+            "path": "09-generated-hdl-debugging-and-inspection.html",
+            "sha256": "c777a719f23f367f44b975a90d63e8f85c89b2d4126c68761cf7f1ae2ada0d22"
+          },
+          {
+            "bytes": 55178,
+            "path": "10-errors-strict-mode-and-troubleshooting.html",
+            "sha256": "aa95a98970f1973cb9ca2acc92162085e74677bc9831404b37e1c4345a1c2764"
+          },
+          {
+            "bytes": 34443,
+            "path": "10a-downstream-issue-reporting.html",
+            "sha256": "98d481478dfd7517ae31bdede6bdd84f12ec86bd09e60aa228768e9943ff243c"
+          },
+          {
+            "bytes": 253586,
+            "path": "11-extensions-and-embedding.html",
+            "sha256": "4349bbd30b006d354cd2adff0d64bf01e78d03545eb631ec8469ad3191bdea40"
+          },
+          {
+            "bytes": 35761,
+            "path": "12-cookbook.html",
+            "sha256": "f73edf7a0b63201743db0c5616f8c5d8cc639c0cc748bc69d52a941553f050f6"
+          },
+          {
+            "bytes": 87095,
+            "path": "13-intent-scheduling.html",
+            "sha256": "41540d94b93ec2792b1a9c7fe2deb2c1b874e719937bfd8511281547da288919"
+          },
+          {
+            "bytes": 53800,
+            "path": "13a-actor-interface.html",
+            "sha256": "5aab0873e606f7bbdf4b17bacd04c8625870d0feedd45e16fa3185c7e695ea12"
+          },
+          {
+            "bytes": 124073,
+            "path": "13b-transactions.html",
+            "sha256": "573971fce4348d25adcad7ef336fccf8fa28fc4ac0745167bd1a5a89ad15d3c9"
+          },
+          {
+            "bytes": 26934,
+            "path": "13c-drive-blocks.html",
+            "sha256": "4c5c92f6efaa208b4a40ccf7673737f226233d8b67c7818888802f1335b5ed0d"
+          },
+          {
+            "bytes": 111591,
+            "path": "13d-control-flow.html",
+            "sha256": "3918916f23d788eb6cbc2f79e0ed1a1e45c2f8970fa9628d1df08ada36e5ce4d"
+          },
+          {
+            "bytes": 61223,
+            "path": "13e-data-manipulation.html",
+            "sha256": "9a6dc55789d24ea46d473ff3af0a2e1ea2370055978e10583744bb891acd425c"
+          },
+          {
+            "bytes": 106194,
+            "path": "13f-composition.html",
+            "sha256": "3d60eb7f5503efa80279f3d475d7721ca415317b093db581874c9dbbb34ed8f4"
+          },
+          {
+            "bytes": 50216,
+            "path": "13g-rules.html",
+            "sha256": "c112629c1b417a56a8b44bb72e3ffb13b37479a1e44e56dcc73b81dcc7a0e744"
+          },
+          {
+            "bytes": 131977,
+            "path": "13h-lowering-reference.html",
+            "sha256": "c71fdeaebcbec869a1067f1f9d882351b96b18f58a7619819f62c0d183649405"
+          },
+          {
+            "bytes": 277922,
+            "path": "13i-downstream-integration.html",
+            "sha256": "3f459219b7603bd47e6e93c1342ac3671e25ddad703bde944ba52add2cc80c8b"
+          },
+          {
+            "bytes": 47258,
+            "path": "13j-type-enum-aggregate.html",
+            "sha256": "deced6d9c8ac96e613ff1e2af57609cf9d1cf3c7bc78186d0a4659e380b5ab39"
+          },
+          {
+            "bytes": 145636,
+            "path": "13k-isf-feature-support-matrix.html",
+            "sha256": "7d138a8bb2033ee352694d147d27a3b7cc6ebc5cb5796c872908ee8247202099"
+          },
+          {
+            "bytes": 30485,
+            "path": "13l-procedures.html",
+            "sha256": "9a0a30d6ead685d0c6b759e56c21f99059666c12ca928bce333de341425a25f5"
+          },
+          {
+            "bytes": 27677,
+            "path": "13m-local-variables.html",
+            "sha256": "17a7b3bd625cc892ab50f40a054202d87898b2a1234859c276d2da8a39077bbf"
+          },
+          {
+            "bytes": 27610,
+            "path": "14-feature-backlog.html",
+            "sha256": "44ed1b5ae99165d6aceeae6c1bd7f37e54248cf367346ff9ea64ba2ca3fb3dc2"
+          },
+          {
+            "bytes": 33614,
+            "path": "14a-language-and-data.html",
+            "sha256": "651aeed8f250ee62ae486cb6dc6dcbd67924e4ac473036b521e49bcda8e2aef9"
+          },
+          {
+            "bytes": 97502,
+            "path": "14b-composition-backlog.html",
+            "sha256": "a2064d45976d403747a067ef103b4a7667a418a0ac7a808428e42174f2bb5a13"
+          },
+          {
+            "bytes": 69302,
+            "path": "14c-actor-network-orchestration.html",
+            "sha256": "212525a3e4b98ba3f67c4a41eb557fc07047dea1e5111879aa3530a964fa8006"
+          },
+          {
+            "bytes": 127905,
+            "path": "14d-ial2-foundations.html",
+            "sha256": "5374d742be97f4d993a6ee5f8d22032f8b4f818134f9d59e6ec5d3ae918abf15"
+          },
+          {
+            "bytes": 30592,
+            "path": "14e-hial-vial-verification.html",
+            "sha256": "9559d2994113d08b515dd0ac6bad3880377b78ec0b077d48a55b4045699b05e6"
+          },
+          {
+            "bytes": 176098,
+            "path": "14f-axi-manager-core.html",
+            "sha256": "9a2b20e7238433fe3b279a82bde64d96b30dea330f895c928ba394d531b7f9da"
+          },
+          {
+            "bytes": 233227,
+            "path": "14g-axi-dynamic-identity.html",
+            "sha256": "4af84aabf7e7f06843660ebcf7e90636de977f4a19ed153e0d5055d86e99d5e4"
+          },
+          {
+            "bytes": 193151,
+            "path": "14h-protocol-profiles-and-apb.html",
+            "sha256": "c8b4f30b223ac217cb6a1e42d76f9b8dca046dd20b3afbf54fa61fab0a578709"
+          },
+          {
+            "bytes": 199527,
+            "path": "14i-ahb-and-integration.html",
+            "sha256": "f5ebdeb4c2b6548a07c132ee53e5d4469e19967b82eabf2cbbad9963d82a704e"
+          },
+          {
+            "bytes": 151227,
+            "path": "14j-extended-axi.html",
+            "sha256": "b051fa0e50fbd29ce35ab7c5665f74c64d5db0c0854b5efbc8f2a55e949332ce"
+          },
+          {
+            "bytes": 121780,
+            "path": "14k-isf-language-and-scheduling.html",
+            "sha256": "7873661063838085e457f229bc2b66e459812694033e271cdbf4729c3cc76c3c"
+          },
+          {
+            "bytes": 95357,
+            "path": "14l-backends-validation-and-apis.html",
+            "sha256": "bc594cf55220d9f9b52166d8d2a3aadd044ad572468d029062aad6171583c523"
+          },
+          {
+            "bytes": 29962,
+            "path": "15-implementation-blueprint.html",
+            "sha256": "2e41b363ecd9afe89d2738aeadd3d50d74299f3efc641947c1026655be5d9477"
+          },
+          {
+            "bytes": 25674,
+            "path": "15a-ial2-new-protocol-support.html",
+            "sha256": "a4b636b4afc0f4d06a2878f6fbb549f6f314bc9b8b55524307c463d321f8b727"
+          },
+          {
+            "bytes": 30874,
+            "path": "16-ial2-protocol-platform-intent.html",
+            "sha256": "9a9d5a7eef7da57ed01a33d5cd9c6dde43ea4d5aa3a34ec487f8988b88905a24"
+          },
+          {
+            "bytes": 84992,
+            "path": "16a-ial2-axi.html",
+            "sha256": "a924e347371081ba25a297fed96695236b7ddf06d91ac921fda9e9ee7c53df87"
+          },
+          {
+            "bytes": 60356,
+            "path": "16aa-ial2-axi-manager-capacity-status.html",
+            "sha256": "e320592a75cd4a23be13564860208e9109b60e4af8468ed7fa4535aeeaba8eb0"
+          },
+          {
+            "bytes": 30397,
+            "path": "16b-ial2-apb.html",
+            "sha256": "b8389a9b580e8abd0eca1097c7695f5832e5ae78da86dab0884cf8b92ebac3f2"
+          },
+          {
+            "bytes": 254470,
+            "path": "16c-ial2-ahb.html",
+            "sha256": "42c29f0403209e89ae24f9bad21fea22d8a66d5cdaa959f6810721e3fd416a43"
+          },
+          {
+            "bytes": 330700,
+            "path": "16d-hial-vial-verification-architecture.html",
+            "sha256": "c45c8279623a3d6561670909f10bf71175a171d625ab453f49ad1048542ebaa8"
+          },
+          {
+            "bytes": 46770,
+            "path": "16da-vial-balanced-portable-composition.html",
+            "sha256": "75759c49ed8ce53bd0fc6deda614239fe7847a3cf4acdfcaf8e8443bb4111e3a"
+          },
+          {
+            "bytes": 29523,
+            "path": "16db-vial-structural-backend-emission-matrix.html",
+            "sha256": "7a69f46b85ca240ef5ff62a313b60ff2c8e8aee1747899fbd477560c9794738f"
+          },
+          {
+            "bytes": 313611,
+            "path": "16dc-vial-portable-verilator-runtime-measurement.html",
+            "sha256": "b7452ee22c60d60362aaa374e4e0e6995a790403ca21fe30a37910af761bab73"
+          },
+          {
+            "bytes": 62575,
+            "path": "16dd-vial-portable-vhdl-runtime-measurement.html",
+            "sha256": "69eea1acb602b4fa123dec3a926df0fb1593d869d785a9f9a81e9ca296123b5b"
+          },
+          {
+            "bytes": 62366,
+            "path": "16de-vial-osvvm-runtime-execution-plan.html",
+            "sha256": "247748a23f9ca6d3f04fb534cad2f1fe5385adb8bf3990412459c6721f4baad8"
+          },
+          {
+            "bytes": 204125,
+            "path": "16df-vial-architecture-scale-cap-closeout.html",
+            "sha256": "8903494c0c32a2ae396d23f272eaf37edf60e8da3305a0af3e92f7600d85b1eb"
+          },
+          {
+            "bytes": 56938,
+            "path": "16dg-vial-public-lifecycle-reference.html",
+            "sha256": "89ab4debad9ea30c4d4a3693a441c4bab0f58cf3cc9995d2b4a17c0b7bbec108"
+          },
+          {
+            "bytes": 38420,
+            "path": "16dh-vial-ahb-end-to-end-tutorial.html",
+            "sha256": "dea5ded85545983444100e3ec90c42cccaab20383b3c2835dbe634d3465443d6"
+          },
+          {
+            "bytes": 41447,
+            "path": "16di-vial-legacy-migration.html",
+            "sha256": "033fc02b6b4462e8aa2615fce9e67715ab53d2c5d10eae10bafbb4743086cae3"
+          },
+          {
+            "bytes": 43133,
+            "path": "16dj-vial-capability-support-reference.html",
+            "sha256": "d61d4b7e649b3190556faaf408f8285b37f42812dadf872b2b47e4006294e8f4"
+          },
+          {
+            "bytes": 127215,
+            "path": "16dk-inactive-proxy-lifetimes.html",
+            "sha256": "bf00710b676a6b3c185210d64374bf4d9f261350fa147e29465252e0521efbfd"
+          },
+          {
+            "bytes": 144907,
+            "path": "16e-nexsim-api-mcp-consumer-requirements.html",
+            "sha256": "d420a77fdd6f396192ceffcb03d6ea4b707e47ca639628ecbc1dc3abae734555"
+          },
+          {
+            "bytes": 17673,
+            "path": "404.html",
+            "sha256": "89af4e9eb8a4579a5d44774ed05b60d3e0014080cbf5aa7fbc765ea2c328dd9d"
+          },
+          {
+            "bytes": 59328,
+            "path": "90-reference-map.html",
+            "sha256": "1dab2d49e747f4cb284a25811abd96c3964c391e3f1d71b2a322f0f51556cbcc"
+          },
+          {
+            "bytes": 45608,
+            "path": "91-live-document-containment-adoption.html",
+            "sha256": "fd93d9ce63d4e46db308c78f0209600850b43496fd17e7d6d5371f383a0cda40"
+          },
+          {
+            "bytes": 907,
+            "path": "ayu-highlight-3fdfc3ac.css",
+            "sha256": "3fdfc3ac5e435e0cef96dafee74da487e4846ffce4dff5973bb45d68b678dd7f"
+          },
+          {
+            "bytes": 30932,
+            "path": "book-609e4cb8.js",
+            "sha256": "609e4cb80f92aa954a3f48869c751f6f8848433604f1297bb70fde0e3e58a569"
+          },
+          {
+            "bytes": 10754,
+            "path": "clipboard-1626706a.min.js",
+            "sha256": "1626706afc88d95ebe1173b553ec732c6dc82a576989315fdf5e7779af738a44"
+          },
+          {
+            "bytes": 18032,
+            "path": "css/chrome-d279d366.css",
+            "sha256": "d279d366359c0d588c9c10cb46afe2b543fc731dea722803639b4e45016d5fe2"
+          },
+          {
+            "bytes": 11478,
+            "path": "css/general-e96d0476.css",
+            "sha256": "e96d0476741bfcbe8cc0ac02db00187c45a63946834361d0eab846016787c646"
+          },
+          {
+            "bytes": 689,
+            "path": "css/print-9e4910d8.css",
+            "sha256": "9e4910d8eb508863172430c60d49fd3b442e9e7f5963a18cd1d655c386ffeae9"
+          },
+          {
+            "bytes": 10422,
+            "path": "css/variables-8adf115d.css",
+            "sha256": "8adf115df892369c90b830767c4651a9e058b79273e219935f7c8a96c6eab9c0"
+          },
+          {
+            "bytes": 18051,
+            "path": "elasticlunr-ef4e11c1.min.js",
+            "sha256": "ef4e11c157b1e2e89782d30bd726f2d5ff7834ea5e26ad02474325f8b1f126c9"
+          },
+          {
+            "bytes": 5679,
+            "path": "favicon-8114d1fc.png",
+            "sha256": "8114d1fc74f4b5621ad9afde7746ed9cf7e420be317a6e29023d2298d58aa15b"
+          },
+          {
+            "bytes": 1835,
+            "path": "favicon-de23e50b.svg",
+            "sha256": "de23e50b1c4dd6e052b3e21d444fcd4b13568b3840ac3c99d9be4e9263c0ef59"
+          },
+          {
+            "bytes": 11358,
+            "path": "fonts/OPEN-SANS-LICENSE.txt",
+            "sha256": "cfc7749b96f63bd31c3c42b5c471bf756814053e847c10f3eb003417bc523d30"
+          },
+          {
+            "bytes": 4528,
+            "path": "fonts/SOURCE-CODE-PRO-LICENSE.txt",
+            "sha256": "d1e6d465a83ba1a3be52db6484868cf5812ae9bbf91abdad3900ba0165afcf93"
+          },
+          {
+            "bytes": 3818,
+            "path": "fonts/fonts-9644e21d.css",
+            "sha256": "94b5131beb9b75a55f9649fcf12de167350feae0fab2bab26c2703cd75c0c781"
+          },
+          {
+            "bytes": 44352,
+            "path": "fonts/open-sans-v17-all-charsets-300-7736aa35.woff2",
+            "sha256": "7736aa3596c468515c3209f2f9d68cfae96d94c05689bcc11a5dce426a6ee2e8"
+          },
+          {
+            "bytes": 40656,
+            "path": "fonts/open-sans-v17-all-charsets-300italic-2c7b95c0.woff2",
+            "sha256": "2c7b95c08df0d228caec6d4bfed06da0f7ab6b76ea5cc3f75b5c6ae416bc571b"
+          },
+          {
+            "bytes": 44936,
+            "path": "fonts/open-sans-v17-all-charsets-600-486c6759.woff2",
+            "sha256": "486c67592731a0b36a89dba1fd0b97aeb73f236bbf60dbf28d7c6b5723c07989"
+          },
+          {
+            "bytes": 42120,
+            "path": "fonts/open-sans-v17-all-charsets-600italic-1a3e8659.woff2",
+            "sha256": "1a3e865977024f444834a75a1b33b89b93134c93007ae3d6e14f24e6c88d8dfb"
+          },
+          {
+            "bytes": 44988,
+            "path": "fonts/open-sans-v17-all-charsets-700-c22fe8c7.woff2",
+            "sha256": "c22fe8c70c36f1d862903b772eaed864d3a8fa849473c9caff224fdb852428e4"
+          },
+          {
+            "bytes": 40800,
+            "path": "fonts/open-sans-v17-all-charsets-700italic-238ae959.woff2",
+            "sha256": "238ae9593944112bee8dd65f8ebc5f3d3862160a8a245fbe1ee3150bc9a2fd81"
+          },
+          {
+            "bytes": 44536,
+            "path": "fonts/open-sans-v17-all-charsets-800-3d2c812a.woff2",
+            "sha256": "3d2c812adf74deb36fead3ff8469800d3c0b23eb2c858ae49310291f89490146"
+          },
+          {
+            "bytes": 40812,
+            "path": "fonts/open-sans-v17-all-charsets-800italic-ba1521ec.woff2",
+            "sha256": "ba1521ec219db9bc5bfec0e3e7a897369d98b30d4e853ee4aa525322784428b8"
+          },
+          {
+            "bytes": 41076,
+            "path": "fonts/open-sans-v17-all-charsets-italic-6c9463f7.woff2",
+            "sha256": "6c9463f7096c0b9d610e095ed248ac1e8a8da7e92d17e9be544f3baced7b62b2"
+          },
+          {
+            "bytes": 43236,
+            "path": "fonts/open-sans-v17-all-charsets-regular-2e3b1d34.woff2",
+            "sha256": "2e3b1d34ac67763ab50652da19305d4b3694c6b6e6bf35f4b98411ce4af646d2"
+          },
+          {
+            "bytes": 59140,
+            "path": "fonts/source-code-pro-v11-all-charsets-500-2bdd9410.woff2",
+            "sha256": "2bdd9410b0141db3cbbf4cfc3818cc6fad279e8e63940940e06cd6af76ccbfcf"
+          },
+          {
+            "bytes": 1209,
+            "path": "highlight-493f70e1.css",
+            "sha256": "493f70e1527d895653b5ac7157abba8e2c656e43698da93b6c1997e2855a5059"
+          },
+          {
+            "bytes": 137537,
+            "path": "highlight-abc7f01d.js",
+            "sha256": "abc7f01d0ce8c64e4ba9e131d651e48ae1a567b2a1254fea8aab03502288de58"
+          },
+          {
+            "bytes": 24901,
+            "path": "index.html",
+            "sha256": "2fb4f011f1e1e89c59dff25e1602cb0c5447e5654db9847cc72cc5a20b4b26ad"
+          },
+          {
+            "bytes": 17320,
+            "path": "mark-09e88c2c.min.js",
+            "sha256": "09e88c2cfaf23ea8a37b5681433eafea97033af632ecc948c8c1ee9944647743"
+          },
+          {
+            "bytes": 4483579,
+            "path": "print.html",
+            "sha256": "26865dce4d0618355c0a87fda60370a1bbbd56484622b46da15e8603224621bd"
+          },
+          {
+            "bytes": 20294,
+            "path": "searcher-09f2665d.js",
+            "sha256": "b888669bcf76043e2d1bca884558bcbd472fca5c7d6c8984b951cc0c09bbe60d"
+          },
+          {
+            "bytes": 14386402,
+            "path": "searchindex-38d6baab.js",
+            "sha256": "38d6baab2baac0b2cd18fa5ff0766d48cfc4b2360a71674236da072d8a6f1de9"
+          },
+          {
+            "bytes": 31354,
+            "path": "toc-7727513f.js",
+            "sha256": "7727513f2246a8126695b48c218eeb52cf5eadf09d5e1d5c79420916901738e6"
+          },
+          {
+            "bytes": 14642,
+            "path": "toc.html",
+            "sha256": "c5c2db87908aa220460a64cd3007bf412e8d3a483e01cd543b7ce2d784ba1041"
+          },
+          {
+            "bytes": 1694,
+            "path": "tomorrow-night-4c0ae647.css",
+            "sha256": "4c0ae647a06ef1699806fb9b4b6d0ef72de026708c6e8581362641c9298cb5f7"
+          }
+        ]
+      },
+      "recovered_render_consumed": true,
+      "residue_census": {
+        "exact_old_root_exists": false
+      },
+      "source": "../../.artifacts/isf-reset-polarity/book",
+      "source_same_volume": true
+    }
+  ],
+  "reverification": {
+    "mdbook_version": "mdbook v0.5.4",
+    "probes": [
+      {
+        "exit_code": 0,
+        "fresh_render_contains_marker": true,
+        "mode": "relative",
+        "repository_local_same_volume": true,
+        "resolved_against_invocation_cwd": true
+      },
+      {
+        "exit_code": 0,
+        "fresh_render_contains_marker": true,
+        "mode": "absolute",
+        "repository_local_same_volume": true,
+        "resolved_against_invocation_cwd": true
+      }
+    ],
+    "temporary_workspace_removed": true
+  }
+}

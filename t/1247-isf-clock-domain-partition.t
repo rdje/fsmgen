@@ -91,7 +91,7 @@ ISF
     my $core_fsm = $lowered->{files}{'clock_domain_partition__domain_core.fsm'};
     like($core_fsm, qr/\A\(\?fsm:clock_domain_partition__domain_core\b/, 'core artifact uses the domain module name');
     like($core_fsm, qr/\(clock clk\)/, 'core artifact uses the core clock');
-    like($core_fsm, qr/\(sreset rst_n\)/, 'core artifact uses the core reset');
+    like($core_fsm, qr/\(sreset rst_n active_low\)/, 'core artifact preserves the core reset polarity');
     like($core_fsm, qr/\(start 1\)/, 'core artifact contains the core input');
     like($core_fsm, qr/\(core_reg 1\)/, 'core artifact contains core-owned storage');
     like($core_fsm, qr/\bh0_start\b/, 'core artifact contains same-domain generated activation helpers');
@@ -417,7 +417,7 @@ ISF
     my $fsm = $lowered->{files}{'single_domain_clock_domains.fsm'};
     ok(defined($fsm), 'single-domain clock-domains actor still emits the normal scheduled .fsm');
     like($fsm, qr/\(clock clk\)/, 'scheduled .fsm uses the domain clock');
-    like($fsm, qr/\(sreset rst_n\)/, 'scheduled .fsm uses the domain reset');
+    like($fsm, qr/\(sreset rst_n active_low\)/, 'scheduled .fsm preserves the domain reset polarity');
 };
 
 subtest 'multi-domain CLI HDL generation emits the generated top and CDC child' => sub {

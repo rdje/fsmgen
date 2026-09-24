@@ -37,15 +37,17 @@ actors emit validated per-domain scheduled `.fsm` artifacts named
 Generated wiring uses canonical `(source destination)` pairs, so strict mode
 does not reject the wrapper for legacy slash links. Event, dual-event,
 no-reset and activation routes are checked through strict artifact admission
-and native/API/MCP queries using explicit supported reset forms.
+and native/API/MCP queries, including the original flat active-low resets.
 
-**Tracked reset limitation:** synchronous active-low resets in
-`isf/clock_domain_event_crossing.isf` still lower to active-high `sreset` in domain
-FSMs while the CDC metadata retains active-low intent. Strict mode rejects
-that misleading reset carrier. Compatibility-mode HDL emission is not proof
-of correct reset behavior. The polarity repair is owned by
-`SEMANTIC-INTROSPECTION-MCP-FRONTIER.32.1.3.2`; behavioral qualification follows
-under `.32.1.3.3`. Logical domain names are currently reused as generated
+Reset lowering preserves synchronous/asynchronous timing and either active
+level, adding an explicit FSM polarity when needed. Domain FSMs and CDC
+metadata agree; `isf/clock_domain_event_crossing.isf` uses synchronous
+active-low reset throughout. Independent HDL tests exercise ordinary reset
+timing and event delivery around source-only, destination-only and joint
+resets. [Reset forms and queries](13a-actor-interface.md#reset) gives examples.
+Broader multi-clock/activation qualification remains owned by `.32.1.3.3`.
+
+**Tracked naming/wiring limitations:** logical domain names are currently reused as generated
 instance names, so a keyword such as `bus` also fails portable HDL admission;
 `.32.1.3.4` owns that boundary. Use portable non-keyword domain names.
 A public input named `ready` can also collide with CDC `ready` outputs despite

@@ -77,6 +77,12 @@ SystemVerilog/Verilog-family event-crossing actors now emits the generated top
 and a concrete generated acknowledged-event CDC child when each emitted domain
 artifact satisfies the current scheduled `.fsm` HDL contract, including
 clock-only no-reset domain artifacts.
+Scheduled FSM reset declarations preserve the parser's kind and polarity,
+using explicit `active_high`/`active_low` modifiers where needed. Domain and
+CDC reset policy agree even for synchronous active-low or asynchronous
+active-high intent. Public actor/schedule reset metadata and report field
+families remain unchanged; check, semantic and schedule queries retain the
+same complete reports through the public API and MCP.
 No-reset event-crossing actors are accepted for lowering, in-process
 `report(...)`, and `--emit-schedule-json`; their generated CDC interface
 metadata publishes `SOURCE_RESET_PRESENT 0d0` and `DEST_RESET_PRESENT 0d0`.

@@ -88,5 +88,5 @@
 
 _Deep semantic introspection is an active first-class FSMGen feature_
 
-- **date:** 2026-09-24 · **status:** current
+- **date:** 2026-09-25 · **status:** current
 - **source and verification:** [`docs/knowledge/semantic-introspection-mcp-frontier.md`](../../docs/knowledge/semantic-introspection-mcp-frontier.md)

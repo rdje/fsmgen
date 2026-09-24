@@ -39,6 +39,11 @@ The current integration status is `bounded_public`:
   artifacts and can reach SystemVerilog/Verilog-family HDL with concrete CDC
   child modules when the emitted domain artifacts satisfy the scheduled `.fsm`
   HDL contract, including clock-only no-reset domains.
+- Reset kind and polarity survive scheduled FSM emission for ordinary actors
+  and domains. Explicit FSM polarity modifiers carry combinations that legacy
+  keyword defaults or strict naming conventions cannot represent; generated
+  domain reset behavior agrees with its CDC metadata. Schedule reset shapes
+  and native/API/MCP report schemas remain unchanged.
 - Public syntax, public lower-result shape, and public schedule-report key
   families are regression-backed.
 

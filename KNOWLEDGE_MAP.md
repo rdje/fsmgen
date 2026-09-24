@@ -2,7 +2,7 @@
 
 > **AUTO-GENERATED — DO NOT EDIT.** Regenerate with `knowledge-map/scripts/gen_knowledge_map.sh`.
 > Canonical facts remain in `docs/knowledge docs/decisions`; shards are bounded derived views, and `.artifacts/` query caches are disposable.
-> **1164** facts · **6529** unique questions · **6705** answer occurrences · **141** topic shards.
+> **1165** facts · **6533** unique questions · **6709** answer occurrences · **142** topic shards.
 
 Query first:
 
@@ -44,7 +44,7 @@ The query is a case-insensitive fixed-substring search. Add `--no-cache` to read
 | `doc-paths` | 1 | 6 | [`doc-paths.md`](knowledge-map/generated/doc-paths.md) |
 | `doctrine-enforcement` | 1 | 6 | [`doctrine-enforcement.md`](knowledge-map/generated/doctrine-enforcement.md) |
 | `downstream-consumer` | 1 | 6 | [`downstream-consumer.md`](knowledge-map/generated/downstream-consumer.md) |
-| `explicit-system` | 1 | 5 | [`explicit-system.md`](knowledge-map/generated/explicit-system.md) |
+| `explicit-system` | 1 | 6 | [`explicit-system.md`](knowledge-map/generated/explicit-system.md) |
 | `flattened-generation` | 1 | 5 | [`flattened-generation.md`](knowledge-map/generated/flattened-generation.md) |
 | `fsmgen-end` | 1 | 4 | [`fsmgen-end.md`](knowledge-map/generated/fsmgen-end.md) |
 | `fsmgen-hir` | 1 | 6 | [`fsmgen-hir.md`](knowledge-map/generated/fsmgen-hir.md) |
@@ -113,6 +113,7 @@ The query is a case-insensitive fixed-substring search. Add `--no-cache` to read
 | `live-document` | 4 | 93 | [`live-document.md`](knowledge-map/generated/live-document.md) |
 | `loop-early` | 1 | 5 | [`loop-early.md`](knowledge-map/generated/loop-early.md) |
 | `lte-digital` | 1 | 5 | [`lte-digital.md`](knowledge-map/generated/lte-digital.md) |
+| `mdbook-build` | 1 | 3 | [`mdbook-build.md`](knowledge-map/generated/mdbook-build.md) |
 | `mdbook-test` | 1 | 7 | [`mdbook-test.md`](knowledge-map/generated/mdbook-test.md) |
 | `memory-pointer` | 1 | 6 | [`memory-pointer.md`](knowledge-map/generated/memory-pointer.md) |
 | `nexsim-semantic` | 1 | 17 | [`nexsim-semantic.md`](knowledge-map/generated/nexsim-semantic.md) |

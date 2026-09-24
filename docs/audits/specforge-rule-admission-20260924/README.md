@@ -33,8 +33,7 @@ FSM. Historical "review artifact" wording does not prove an executable
 `IAL2 -> IAL1 -> IAL0` path. `.32.4` owns the complete affected-artifact census,
 protocol-specific lowering repair and independent behavior verification.
 
-The initial broad strict-generation scan was deliberately stopped when its
-work exceeded the changed parser boundary. Completed results are additional
+The initial broad strict-generation scan was deliberately stopped when its work exceeded the changed parser boundary. Completed results are additional
 evidence only; interrupted children and unvisited sources are not passes.
 The first replay probe failed at the retained interconnect artifact. Neither
 attempt is reported as complete compatibility qualification.
@@ -99,4 +98,5 @@ boundary.
 compatibility HDL hashes. T1890 checks canonical event/activation wiring, generated artifacts and full API/MCP parity.
 The reset-polarity contradiction, domain `bus` keyword refusal and explicit `ready` route collision are retained with
 owners `.32.1.3.2` and `.32.1.3.4`; none is closed by syntax admission. `reset-polarity-carrier.json` records the
-`.32.1.3.2.1` public FSM extension, native/API/MCP tests and independent SV/Verilog/VHDL reset oracles; ISF repair remains separate.
+`.32.1.3.2.1` public FSM extension and its native/API/MCP/HDL oracles. `isf-reset-polarity.json` records `.32.1.3.2.2` ISF
+emission, matching domain/CDC policy, independent reset/event before→after controls and complete public query equality.

@@ -311,8 +311,37 @@ the shipped synchronous reset shorthand.
 | ISF | .fsm |
 |-----|------|
 | `(reset (rst_n async active_low))` | `(areset rst_n)` |
-| `(reset (rst async))` | `(areset rst)` |
-| `(reset rst_n)` | `(sreset rst_n)` |
+| `(reset (rst async))` | `(areset rst active_high)` |
+| `(reset rst_n)` | `(sreset rst_n active_low)` |
+| `(reset rst_b)` | `(sreset rst_b active_low)` |
+| `(reset reset)` | `(sreset reset)` |
+| `(reset (rst_n active_high))` | `(sreset rst_n active_high)` |
+
+The emitter preserves the normalized ISF kind and polarity. It writes an
+explicit FSM polarity when the legacy keyword default or strict FSM name
+convention would misrepresent that policy. For example, ISF's flat `resetn`
+has no `_n`/`_b` suffix and remains synchronous active-high, lowering to
+`(sreset resetn active_high)`. The FSM naming heuristic does not reinterpret it.
+Already strict-supported legacy carriers keep their spelling. See
+[explicit FSM reset polarity](03-decision-trees-and-fsms.md#explicit-reset-polarity).
+
+The same rule applies to ordinary actors and every scheduled domain. Domain
+FSMs and generated CDC metadata use the same authored policy; active-low
+reset on the original event-crossing fixture now reaches strict HDL faithfully.
+Clock-only domains still have no reset port or reset logic. Inspect the
+original fixture through the CLI:
+
+```bash
+./bin/fsmgen --strict --check --json isf/clock_domain_event_crossing.isf
+./bin/fsmgen --strict --emit-semantic-json isf/clock_domain_event_crossing.isf
+./bin/fsmgen --emit-schedule-json isf/clock_domain_event_crossing.isf
+```
+
+Schedule `reset` and `clock_domains[].reset` retain `name`, `kind` and
+`polarity`. Ordinary normalized FSM contracts retain `reset_kind` and
+`reset_active_level`. The public APIs and MCP check, semantic and schedule
+queries preserve the complete native reports, including non-default reset
+policies. No report schema or field family changes for this repair.
 
 For the multi-domain source model, reset ownership lives inside each domain
 entry:
