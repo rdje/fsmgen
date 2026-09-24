@@ -1,7 +1,7 @@
 # Knowledge Map: `task-tree`
 
 > **AUTO-GENERATED — DO NOT EDIT.** Return to the [Knowledge Map](../../KNOWLEDGE_MAP.md).
-> **4** facts · **28** uniquely owned question entries.
+> **4** facts · **29** uniquely owned question entries.
 
 ## Questions → facts
 
@@ -20,6 +20,7 @@
 - q="how do I recheck stale task-tree status drift?" · facts=[task-tree-stale-status-drift-repair](../../docs/knowledge/task-tree-stale-status-drift-repair.md)
 - q="how does PNT select the next leaf?" · facts=[task-tree-in-file-secondary-views-are-historical](../../docs/knowledge/task-tree-in-file-secondary-views-are-historical.md)
 - q="how is active task-tree node integrity checked?" · facts=[task-tree-live-node-integrity](../../docs/knowledge/task-tree-live-node-integrity.md)
+- q="how is completed task acceptance history retained?" · facts=[task-tree-sealed-segments-and-compact-terminals](../../docs/knowledge/task-tree-sealed-segments-and-compact-terminals.md)
 - q="how is task-tree migration completeness proved?" · facts=[task-tree-sealed-segments-and-compact-terminals](../../docs/knowledge/task-tree-sealed-segments-and-compact-terminals.md)
 - q="what does TASK-TREE-INTEGRITY enforce?" · facts=[task-tree-live-node-integrity](../../docs/knowledge/task-tree-live-node-integrity.md)
 - q="what is a compact completed task-tree terminal?" · facts=[task-tree-sealed-segments-and-compact-terminals](../../docs/knowledge/task-tree-sealed-segments-and-compact-terminals.md)
@@ -54,7 +55,7 @@ _Active task-tree live-node structure is mechanically enforced_
 
 _Long-running task trees use exact-provenance sealed segments or compact terminals_
 
-- **date:** 2026-09-11 · **status:** current
+- **date:** 2026-09-24 · **status:** current
 - **source and verification:** [`docs/knowledge/task-tree-sealed-segments-and-compact-terminals.md`](../../docs/knowledge/task-tree-sealed-segments-and-compact-terminals.md)
 
 ### task-tree-stale-status-drift-repair
