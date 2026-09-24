@@ -3770,7 +3770,23 @@ decomposes the architecture needed to move beyond that bounded foundation.
   Status: `active`
   Goal: `Retain original nested execution admission at the native gate.`
   Acceptance: `Bind a retained final native check to the original peer, job grant, wrapper/Pair, submitting parent and bound contexts. Require original live authority, fixed walls, complete matching ACCEPT and Service quiet-input admission at each E attempt. Publish the original Service grant into the retained peer before effects and reject copied or substituted grant custody. Qualify real gated jobs, deferred/transient checks, control and authority loss, creator interruptions and exact cleanup; do not add the request-release API or ordinary routing yet.`
-  Verification: `History child .1 is qualified. Next retain the original Service execution grant and final nested admission basis before native E, without adding the explicit request-release API; original-effect reconciliation remains child .3.`
+  Verification: `Child .1 first qualifies non-executing native parent custody inspection: observing copied state is stale, while ordinary advancement can write an already queued E. Child .2 then binds original Service grant custody and final nested admission. Original-effect reconciliation remains outer child .3; explicit release remains outer child .4.`
+  Commit: `pending`
+
+  Children: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.4.3.3.5.4.4.2.1, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.4.3.3.5.4.4.2.2`
+
+- ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.4.3.3.5.4.4.2.1`
+  Status: `done`
+  Goal: `Inspect original native parent custody without advancing execution.`
+  Acceptance: `Provide a fresh original-wrapper custody check for ready, releasing and executing parents that cannot fork or write queued E. Require original Pair/reservation/command identity, unchanged fixed wall and current native custody; poll only the exact retained command and inspect reservation control without harvesting its identity before cleanup. Mask wait publication, preserve original first failure and confirmed/uncertain execution truth through creator interruption and mask failure, and leave cleanup bounded. A known completed released command is not live; preserve its exact status for normal capture classification. Qualify actual ready/queued/executing parents, native loss, copied/inherited owners, exact waits and pipe closure. Keep nested E integration and ordinary routing separate.`
+  Verification: `T1860 verifies original ready, queued and executing parents without allocation, fork, Pair advancement or E. Actual command loss is reaped only through its retained positive PID; reservation EOF refuses while its identity stays unharvested until cleanup. Original identity/wall, inherited-owner, creator cancellation, terminal-wait publication and failed-remask controls retain first failure and confirmed/uncertain native truth. The first uncommitted prototype misclassified actual exits 0/23 as host_error; known completed released commands now return false while normal capture preserves exact exit or signal classification. Eight isolated defects fail their intended assertions; identical copied fixture passes and every native END census closes. Final selected band: 42 files/385 tests. Syntax, mdBook build/HTML and staged doctrines qualify this host; Linux and browser visual evidence remain missing. Nested admission remains child .2.`
+  Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.4.3.3.5.4.4.2.1: inspect original native custody without execution`
+
+- ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.4.3.3.5.4.4.2.2`
+  Status: `active`
+  Goal: `Bind final nested E admission to original Service grant custody.`
+  Acceptance: `Use the qualified native parent check and original peer/job/wrapper/Pair/context associations at each final E attempt. Require full matching ACCEPT, quiet current input and unchanged admission/execution walls; retain the original Service execution grant in the peer before effects. Refuse lost/copied/foreign authority and qualify creator interruptions, deferrals/transient writes, actual native effects and exact cleanup without adding the explicit request-release API.`
+  Verification: `Native custody child .1 is qualified; effect reconciliation and explicit request release remain subsequent outer children.`
   Commit: `pending`
 
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.4.3.3.5.4.4.3`
@@ -4492,7 +4508,7 @@ decomposes the architecture needed to move beyond that bounded foundation.
 
 ## Current Frontier
 
-Current frontier: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.4.3.3.5.4.4.2` retains original Service execution-grant custody and final nested native admission. Child .3 then reconciles original confirmed effects before closed-peer consumption; child .4 exposes explicit request release. Keep original admission/execution walls distinct and preserve spent compiler evidence and full-CI/push gates.
+Current frontier: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.4.3.3.5.4.4.2.2` binds final nested E to original Service grant custody using fresh non-executing parent inspection. Outer .3 reconciles confirmed effects before transport consumption and .4 exposes request release. Preserve original walls, native truth, spent compiler evidence and full-CI/push gates.
 
 Architecture audit `.1` is complete. Decision `0032` selects one public
 `.vial` source language, private immutable `VIALSemanticIR` and
@@ -7131,3 +7147,37 @@ correction supplies its proper scope and is reflected in the canonical fact/book
   terminals. Claim inventory and staged doctrines verify paired metadata.
   Product source, tests and book behavior are unchanged; no native fixture,
   original producer, full CI or push runs for this history slice.
+
+
+## Acceptance Checklist (.19.2.3.1.2.2.5.5.2.3.4.3.3.5.4.4.2.1)
+
+- [x] **ROOT CAUSE (WHY + WHERE)** — Native-custody prerequisite:
+  exact 2d9ee292f8d51b066f846966e980e2aaa3329669 reports
+  `original native custody inspection is absent at -e line 1.`
+  Copied observations can be stale; ordinary advancement can write queued E.
+  The first uncommitted prototype consumed terminal waits as host_error;
+  actual exits 0/23 failed T1860 classification assertions before repair.
+- [x] **ADDRESSED (verified)** — Native-custody re-derivation: T1860 uses
+  actual stop/continue barriers, original positive waits, literal output, pipe EOF,
+  creator signals and weak-handle inventories. Completed exit zero, exit 23 and
+  SIGTERM preserve their exact success/nonzero/signaled results after inspection.
+  Ready/queued/executing checks preserve phase and native effects; no allocation,
+  fork, Pair advancement or E occurs. Native loss, original identity/wall changes,
+  inherited custody, cancellation and restoration failure refuse safely.
+  Falsification: eight isolated defects omit completion handling, no-advancement,
+  native wait, fresh unmasked return, early failure, masking, fixed wrapper wall
+  or mask-independent refusal. Each fails its intended assertion; identical copy
+  passes and every final native census closes. An initial unmasked control failed
+  earlier than its intended oracle; reordering the fixture exposes that exact cut.
+  Durability: tracked fixture, implementation, book and fact retain semantics;
+  ignored .artifacts/native-custody-* raw logs/control runner are a named evidence
+  gap owned by later independent qualification. Prototype failure remains named;
+  scratch copies, runner and rendered book are removed after consuming results.
+- [x] **NO REGRESSION** — Native-custody selected band: All tests successful;
+  Files=42, Tests=385. Both modules and T1860 report syntax OK. mdBook
+  builds and generated HTML contains the API, completion semantics and runnable
+  fixture. Knowledge Map and staged doctrines qualify paired metadata. Linux
+  and browser visual qualification remain missing; original producers, full CI
+  and push do not run. Nested release and Service reconciliation remain open.
+  The first doctrine run found the new exit-23 book clause undispositioned;
+  its tracked native fixture and exact result contract now back a derived gate.

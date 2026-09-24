@@ -1348,6 +1348,27 @@ or uncertain native execution observations survive interrupted advancement.
 The fixture observes actual gate writes, binary command output, original exec
 masks, exact waits and closed pipe inventories, including its failure cleanup.
 
+`ReservedJob::check_custody()` inspects an original ready, queued or executing
+parent without advancing launch, capture or a pending E. Under creator signal
+masking it checks the original wrapper, Pair, reservation, command identity and
+fixed wall, inspects reservation control and polls only the original command.
+A positive answer describes that inspection only; every later dependent effect
+must make its own fresh check. An observation copy grants no authority.
+
+For example, after `release()` queues E, `check_custody()` can still return `1`
+while leaving the command gated. It returns `0` for cancellation, expired custody,
+uncertain execution or a completed released command. Invalid ownership or native
+loss throws and retains the first failure; a dead reservation stays unharvested
+until group cleanup. Creator cancellation at signal restoration revokes a positive
+answer, and restoration failure revokes pending E without requiring another mask.
+
+An actual completed command keeps its original terminal status. Inspection returns
+`0`; subsequent ordinary capture still classifies exit zero as success, exit 23 as
+nonzero exit, or termination by a signal as signaled. Inspection itself introduces
+no host error for that completion. Confirmed or uncertain execution truth remains
+unchanged. The fixture uses actual stop/continue barriers, terminal waits, pipe EOF,
+creator signals and independent cleanup censuses to check these boundaries.
+
 `Coordinator::release_root($grant)` now queues execution for the original active,
 ready root job. The original grant must come from that coordinator; copied,
 foreign, inherited, nested and unready owners refuse. Queuing is single-use and
@@ -1407,6 +1428,7 @@ scripts/run_with_ram_guard.sh -- prove -Iperl -It/lib t/1849-process-parent-toke
 scripts/run_with_ram_guard.sh -- prove -Iperl -It/lib t/1850-process-aggregate-context.t t/1851-process-request-association.t t/1852-process-gated-accept.t
 scripts/run_with_ram_guard.sh -- prove -Iperl -It/lib t/1858-process-aggregate-owners.t
 scripts/run_with_ram_guard.sh -- prove -Iperl -It/lib t/1859-process-root-execution.t
+scripts/run_with_ram_guard.sh -- prove -Iperl -It/lib t/1860-process-native-custody.t
 scripts/run_with_ram_guard.sh -- prove -Iperl -It/lib t/1853-process-exec-admission.t
 scripts/run_with_ram_guard.sh -- prove -Iperl -It/lib t/1854-process-input-inspection.t
 scripts/run_with_ram_guard.sh -- prove -Iperl -It/lib t/1855-process-service-execution-admission.t

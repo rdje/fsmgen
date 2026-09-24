@@ -198,6 +198,58 @@ sub _release_failed {
     return;
 }
 
+sub _custody_state {
+    my ($self) = @_; _owner($self);
+    return 0 if $self->{state}{first_failure}
+        || $self->{state}{phase} =~ /\A(?:cleanup|finished)\z/;
+    _error('custody inspection requires the original live published job')
+        unless $self->{state}{phase} =~ /\A(?:ready|releasing|capture)\z/;
+    _error('custody inspection changed original invocation wall')
+        unless $self->{state}{deadline} == $self->{pair}{original_deadline};
+    my $native = $self->{pair}->observation;
+    return 0 if $native->{failure} || $native->{retired} || $native->{release_uncertain};
+    _error('custody inspection lost original published Pair state')
+        unless $native->{phase} =~ /\A(?:ready|release_pending|released)\z/;
+    return _now() < $self->{state}{deadline} ? 1 : 0;
+}
+
+sub check_custody {
+    my ($self) = @_; _owner($self);
+    _error('unexpected custody inspection arguments') unless @_ == 1;
+    return 0 unless $self->_custody_state;
+    my $pair = $self->{pair};
+    my ($started, $live) = (0, 0);
+    my $ok = eval {
+        # Poll publication is atomic with respect to creator signals. This
+        # ready-or-executing inspection never advances launch, capture or E.
+        FSM::Support::ProcessSupervisor::Reservation::_masked_preparation(sub {
+            return unless $self->_custody_state;
+            $started = 1;
+            my $checked = eval {
+                $live = $pair->_check_custody('custody inspection', 1);
+                $live = 0 unless $self->_custody_state;
+                $self->_sync_identity;
+                1;
+            };
+            unless ($checked) {
+                my $error = $@;
+                # The same pure failure latch also revokes any queued E;
+                # it preserves a native effect that was already confirmed.
+                eval { $self->_release_failed($pair, $error); 1 };
+                die $error;
+            }
+        });
+        $live = 0 unless $self->_custody_state;
+        1;
+    };
+    unless ($ok) {
+        my $error = $@;
+        eval { $self->_release_failed($pair, $error); 1 } if $started;
+        die $error;
+    }
+    return $live ? 1 : 0;
+}
+
 sub _latch {
     my ($self, $status, $diagnostic) = @_;
     FSM::Support::ProcessSupervisor::_latch_supervision_failure(

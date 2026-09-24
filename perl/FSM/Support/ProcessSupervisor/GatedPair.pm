@@ -322,27 +322,47 @@ sub _release_live {
             && !$self->{released} && !$self->{release_uncertain}
             && ref($self->{release_basis}) eq 'HASH'
             && refaddr($self->{release_basis}) == refaddr($basis);
-    _error('exec release lost original reservation identity')
-        unless ref($self->{reservation}) eq 'FSM::Support::ProcessSupervisor::Reservation'
-            && refaddr($self->{reservation}) == $self->{reservation_identity};
-    my $r = $self->{reservation};
-    $r->advance;
-    my $o = $r->observation;
-    _error('exec release requires live reservation identity')
-        unless $o->{phase} eq 'moved' && !$o->{failure} && !$o->{retired} && !$o->{reaped};
-    _error('exec release lost original command custody')
-        unless $self->{command_authority} && !$self->{command_reaped} && !$self->{failure}
-            && $self->{command_pid} == $self->{original_command_pid};
-    $self->poll_command;
-    _error('exec release lost original command custody')
-        unless $self->{command_authority} && !$self->{command_reaped} && !$self->{failure};
-    _error('exec release exceeded original invocation wall')
-        unless $self->{deadline} == $self->{original_deadline} && _now() < $self->{original_deadline};
+    $self->_check_custody('exec release');
     for my $name (qw(gate ack)) {
         _error('exec release lost original gate handles')
             unless defined($self->{$name}) && defined(fileno($self->{$name}))
                 && refaddr($self->{$name}) == $basis->{$name};
     }
+}
+
+# The masked release transaction and original wrapper's custody inspection use
+# this same native check. It never advances this Pair or writes its pending E.
+sub _check_custody {
+    my ($self, $purpose, $allow_completed) = @_; _owner($self);
+    _error("$purpose lost original native state")
+        unless $self->{phase} =~ /\A(?:ready|release_pending|released)\z/
+            && !$self->{failure} && !$self->{retired} && !$self->{release_uncertain};
+    _error("$purpose lost original reservation identity")
+        unless ref($self->{reservation}) eq 'FSM::Support::ProcessSupervisor::Reservation'
+            && refaddr($self->{reservation}) == $self->{reservation_identity};
+    my $r = $self->{reservation};
+    my $o = $r->observation;
+    _error("$purpose requires live reservation identity")
+        unless $o->{phase} eq 'moved' && !$o->{failure} && !$o->{retired} && !$o->{reaped};
+    $r->advance;
+    $o = $r->observation;
+    _error("$purpose requires live reservation identity")
+        unless $o->{phase} eq 'moved' && !$o->{failure} && !$o->{retired} && !$o->{reaped};
+    return 0 if $allow_completed && $self->{released} && $self->{command_reaped}
+        && !$self->{command_authority} && defined($self->{command_status});
+    _error("$purpose lost original command custody")
+        unless $self->{command_authority} && !$self->{command_reaped} && !$self->{failure}
+            && $self->{command_pid} == $self->{original_command_pid};
+    $self->poll_command;
+    # Inspection may observe ordinary completion of an already released
+    # command. Preserve its exact status for capture to classify normally.
+    return 0 if $allow_completed && $self->{released} && $self->{command_reaped}
+        && !$self->{command_authority} && defined($self->{command_status});
+    _error("$purpose lost original command custody")
+        unless $self->{command_authority} && !$self->{command_reaped} && !$self->{failure};
+    _error("$purpose exceeded original invocation wall")
+        unless $self->{deadline} == $self->{original_deadline} && _now() < $self->{original_deadline};
+    return 1;
 }
 
 sub _advance_release {
