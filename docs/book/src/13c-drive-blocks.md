@@ -7,9 +7,10 @@ target behavior. Current drive bodies use `<-`, so driven ports update on the
 next clock.
 
 Drive definitions are parser-validated before lowering. Each body entry must be
-a scalar `(port value)` pair; malformed scalar body entries, nested ports,
-missing values, extra operands, and expression-valued drive body assignments
-are rejected before the actor shell is returned.
+a `(port value)` pair with a scalar target and a scalar or expression RHS.
+Malformed scalar entries, nested targets, missing values and extra operands
+are rejected before the actor shell is returned. Parameter references inside
+RHS expressions are substituted recursively during lowering.
 
 ## Simple Drives
 
@@ -98,6 +99,34 @@ temporary variables for simple argument-level composition:
   (<- (scl> 1)      <start_condition_start)
   (<- (sda_out> 0)  <start_condition_start)
   (<- (PENABLE> 1)  <start_condition_start))
+```
+
+## APB Completion Example
+
+In `isf/apb_requester.isf`, the completion drive clears both public bus
+outputs in the same phase and publishes the sampled response:
+
+```lisp
+(drive done_phase
+  (PSEL 0)
+  (PENABLE 0)
+  (last_read_data rdata)
+  (last_error slverr))
+```
+
+Body pairs are signal assignments, not nested drive calls. Targets retain
+case: `(penable 0)` writes a different signal from `(PENABLE 0)`, even if a
+drive named `penable` exists. A transaction calls a named drive using
+`(drive penable 0)`, which schedules its own cycle. Use a multi-assignment
+phase when outputs must change together.
+
+The shipped APB sample uses setup, access and completion phases, with no
+unused drive helpers exposing extra start/value inputs. Inspect its scheduled
+assignments and public semantic port/driver records from the repository root:
+
+```bash
+./bin/fsmgen --strict --emit-schedule-json isf/apb_requester.isf
+./bin/fsmgen --strict --emit-semantic-json isf/apb_requester.isf
 ```
 
 ## Cycle Semantics

@@ -1,0 +1,226 @@
+{
+  "assertions_enabled": true,
+  "baseline_behavior": {
+    "exit": 1,
+    "output": "[126] %Fatal: apb-original-tb.sv:38: Assertion failed in tb.transfer: completion left bus selected/enabled\n%Error: .artifacts/mcp-feature-coverage/apb-original-tb.sv:38: Verilog $stop\nAborting...\n"
+  },
+  "baseline_revision": "e274cb98a15fe36f12bd8428d9f55450f2e46f5a",
+  "baseline_source_sha256": "f3498dd44b301b0b47af5bc5a60d9102ba2163811d42ce2d69be4284df27226e",
+  "baseline_testbench_adaptation": "Only the original source extra penable_start/penable_val/psel_start/psel_val input wires are tied low; transfer oracle unchanged.",
+  "excluded_icarus_run": {
+    "followup_owner": "SEMANTIC-INTROSPECTION-MCP-FRONTIER.31.2.6",
+    "output": "a=0 b=0 concat=1 vector=1 literal=1\na=0 b=1 concat=0 vector=1 literal=1\na=1 b=1 concat=0 vector=0 literal=0\n.artifacts/mcp-feature-coverage/onehot-probe.sv:11: $finish called at 3 (1s)\n",
+    "probe": "docs/audits/mcp-feature-coverage-20260924/onehot-probe.sv",
+    "reason": "Equivalent concatenated and packed onehot values disagree; noisy APB run is not accepted as a clean simulation.",
+    "version": "Icarus Verilog 13.0 stable v13_0"
+  },
+  "fixed_behavior": "APB completion, wait and repeated-transfer behavior PASS\n- t/fixtures/isf_apb_completion/transfer_tb.sv:53: Verilog $finish\n- S i m u l a t i o n   R e p o r t: Verilator 5.050 2026-07-01\n- Verilator: $finish at 226ps; walltime 0.000 s; speed 3.229 us/s\n- Verilator: cpu 0.000 s on 1 threads; allocated 2 MB\n",
+  "fixed_source_sha256": "82f0113741b602862c9425b2ab2eb8a5dd6d127c66a66ded86b87bb581e937bd",
+  "limits": [
+    "Bounded valid request/wait/completion/repeated-transfer checks; this is not full APB protocol certification.",
+    "Complete latest-feature semantic/MCP coverage remains open."
+  ],
+  "owner": "SEMANTIC-INTROSPECTION-MCP-FRONTIER.31.2.5",
+  "parity": {
+    "check_support": {
+      "classification": "supported_smoke",
+      "coverage": "isf_pipeline_cli",
+      "entry_id": "intent.isf_apb_requester",
+      "family": "protocol_fixture",
+      "matched": true,
+      "source_kind": "isf",
+      "strict_supported": true
+    },
+    "completion_drivers": [
+      {
+        "kind": "continuous_assign",
+        "lhs": {
+          "kind": "signal_ref",
+          "name": "done_phase_penable_0_en"
+        },
+        "provenance": {
+          "dt_name": "-done_phase",
+          "dte_gate_signal": "done_phase_en",
+          "family": "generated_enable",
+          "lhs_signal": "PENABLE",
+          "rhs_value": "0",
+          "role": "dt_specific_enable"
+        },
+        "rendered": "  assign done_phase_penable_0_en = done_phase_en & (|done_phase_start);  // PENABLE <- 0",
+        "rhs": {
+          "ast": {
+            "class": "FSM::AST::BinaryOp",
+            "kind": "binary_op",
+            "left": {
+              "class": "FSM::AST::SignalRef",
+              "kind": "signal_ref",
+              "name": "done_phase_en"
+            },
+            "operator": "&&",
+            "right": {
+              "class": "FSM::AST::BinaryOp",
+              "kind": "binary_op",
+              "left": {
+                "class": "FSM::AST::SignalRef",
+                "kind": "signal_ref",
+                "name": "done_phase_start"
+              },
+              "operator": "!=",
+              "right": {
+                "class": "FSM::AST::Literal",
+                "kind": "literal",
+                "value": "0"
+              }
+            }
+          },
+          "kind": "expression",
+          "language": "systemverilog",
+          "text": "done_phase_en & (|done_phase_start)"
+        }
+      },
+      {
+        "kind": "continuous_assign",
+        "lhs": {
+          "kind": "signal_ref",
+          "name": "done_phase_psel_0_en"
+        },
+        "provenance": {
+          "dt_name": "-done_phase",
+          "dte_gate_signal": "done_phase_en",
+          "family": "generated_enable",
+          "lhs_signal": "PSEL",
+          "rhs_value": "0",
+          "role": "dt_specific_enable"
+        },
+        "rendered": "  assign done_phase_psel_0_en = done_phase_en & (|done_phase_start);  // PSEL <- 0",
+        "rhs": {
+          "ast": {
+            "class": "FSM::AST::BinaryOp",
+            "kind": "binary_op",
+            "left": {
+              "class": "FSM::AST::SignalRef",
+              "kind": "signal_ref",
+              "name": "done_phase_en"
+            },
+            "operator": "&&",
+            "right": {
+              "class": "FSM::AST::BinaryOp",
+              "kind": "binary_op",
+              "left": {
+                "class": "FSM::AST::SignalRef",
+                "kind": "signal_ref",
+                "name": "done_phase_start"
+              },
+              "operator": "!=",
+              "right": {
+                "class": "FSM::AST::Literal",
+                "kind": "literal",
+                "value": "0"
+              }
+            }
+          },
+          "kind": "expression",
+          "language": "systemverilog",
+          "text": "done_phase_en & (|done_phase_start)"
+        }
+      }
+    ],
+    "inputs": [
+      "PRDATA",
+      "PREADY",
+      "PSLVERR",
+      "req_addr",
+      "req_wdata",
+      "req_write",
+      "start"
+    ],
+    "queries": [
+      {
+        "command": [
+          "./bin/fsmgen",
+          "--strict",
+          "--emit-semantic-json",
+          "isf/apb_requester.isf"
+        ],
+        "exit": 0,
+        "kind": "native",
+        "stdout_sha256": "cf3c039d5db0fc517bf3ee1ce96604191254249965db2c5b4d74c2363ab5a8bf"
+      },
+      {
+        "command": [
+          "perl",
+          "bin/fsmgen-mcp",
+          "--workspace-root",
+          ".",
+          "--request-json",
+          "{\"jsonrpc\":\"2.0\",\"id\":1,\"method\":\"tools/call\",\"params\":{\"name\":\"fsmgen_semantic_introspect\",\"arguments\":{\"source_path\":\"isf/apb_requester.isf\"}}}"
+        ],
+        "exit": 0,
+        "kind": "mcp",
+        "stdout_sha256": "0345abb0a9157b5b20db50839acb7b90d2297ef28e9d0e5a8d7c348aa8b60dba"
+      },
+      {
+        "command": [
+          "./bin/fsmgen",
+          "--strict",
+          "--check",
+          "--json",
+          "isf/apb_requester.isf"
+        ],
+        "exit": 0,
+        "kind": "check",
+        "stdout_sha256": "5346a72fcfff13a159e9d40284aa2431c2b4656710a6da8f7259dac5c81fb738"
+      }
+    ],
+    "source": "isf/apb_requester.isf",
+    "source_sha256": "82f0113741b602862c9425b2ab2eb8a5dd6d127c66a66ded86b87bb581e937bd"
+  },
+  "regression": {
+    "apb-selected": {
+      "failure_oracles": [],
+      "sha256": "8c169a80e3a7a3b48a130e337cf40c8152e1ac78c8a7554fb3ccf772e1b8d1cd",
+      "summary": [
+        "All tests successful.",
+        "Files=17, Tests=7156, 16 wallclock secs ( 0.13 usr  0.03 sys + 11.49 cusr  3.43 csys = 15.08 CPU)",
+        "Result: PASS"
+      ]
+    },
+    "apb-source-baseline": {
+      "failure_oracles": [
+        "completion writes zero to public PSEL",
+        "completion writes zero to public PENABLE",
+        "completion does not write accidental lowercase internal signals",
+        "unused drive helpers cannot expose external start/value controls",
+        "completion clears public bus outputs in one drive phase",
+        "input ports have no accidental helper controls",
+        "generated public ports match the authored APB interface",
+        "one completion clear driver for PSEL",
+        "one completion clear driver for PENABLE",
+        "semantic driver provenance retains both completion clears"
+      ],
+      "sha256": "395bae45866c8be93e41c6d135fb828d154ce1b62f8adc903795aac745f15321",
+      "summary": [
+        "Files=1, Tests=3,  2 wallclock secs ( 0.00 usr  0.00 sys +  0.85 cusr  0.24 csys =  1.09 CPU)",
+        "Result: FAIL"
+      ]
+    },
+    "apb-source-focused": {
+      "failure_oracles": [],
+      "sha256": "b318433c1f4fe85540e4a3509179543f2ac52d5fa79ea0e04aaa65f7f0fd9a1b",
+      "summary": [
+        "All tests successful.",
+        "Files=6, Tests=19,  6 wallclock secs ( 0.01 usr  0.01 sys +  3.66 cusr  1.19 csys =  4.87 CPU)",
+        "Result: PASS"
+      ]
+    }
+  },
+  "reproduce_commands": [
+    "./bin/fsmgen --quiet --strict --output .artifacts/apb-fixed.sv isf/apb_requester.isf",
+    "scripts/run_with_ram_guard.sh -- verilator --binary --timing --assert -Wno-fatal --Mdir .artifacts/apb-completion-verilator --top-module tb .artifacts/apb-fixed.sv t/fixtures/isf_apb_completion/transfer_tb.sv",
+    ".artifacts/apb-completion-verilator/Vtb"
+  ],
+  "schema": "fsmgen.apb_completion_repair.v1",
+  "simulator": "Verilator 5.050 2026-07-01",
+  "test_sha256": "714f5bdf92d7f10a14801675f57058a10b344f46c55a188fbaa9d8ab7f3da26a",
+  "testbench": "t/fixtures/isf_apb_completion/transfer_tb.sv"
+}

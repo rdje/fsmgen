@@ -319,7 +319,7 @@ For FSMGen, the analogs are:
   Verification: `Actual current queries prove discovery omissions for protocol aliases/VIAL, failed VIAL routing, lost structured negative diagnostics and repository-path leakage. The native generated-enable collision found by direct/MCP comparison is repaired under child .1; current-source and adapter repairs remain required before complete coverage qualification.`
   Commit: `pending`
 
-  Children: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.31.2.1, SEMANTIC-INTROSPECTION-MCP-FRONTIER.31.2.2, SEMANTIC-INTROSPECTION-MCP-FRONTIER.31.2.3, SEMANTIC-INTROSPECTION-MCP-FRONTIER.31.2.4, SEMANTIC-INTROSPECTION-MCP-FRONTIER.31.2.5`
+  Children: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.31.2.1, SEMANTIC-INTROSPECTION-MCP-FRONTIER.31.2.2, SEMANTIC-INTROSPECTION-MCP-FRONTIER.31.2.3, SEMANTIC-INTROSPECTION-MCP-FRONTIER.31.2.4, SEMANTIC-INTROSPECTION-MCP-FRONTIER.31.2.5, SEMANTIC-INTROSPECTION-MCP-FRONTIER.31.2.6`
 
 - ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.31.2.1`
   Status: `done`
@@ -350,10 +350,17 @@ For FSMGen, the analogs are:
   Commit: `pending`
 
 - ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.31.2.5`
-  Status: `active`
+  Status: `done`
   Goal: `Repair the shipped APB requester completion-phase output targets.`
   Acceptance: `Use the public drive-body assignment contract to correct done_phase in isf/apb_requester.isf so completion clears PSEL/PENABLE, with a lowered-output and generated-behavior regression. Do not invent nested drive-call semantics. Keep the separate compiler collision fixture so repairing the example cannot hide that native defect; synchronize support evidence and book.`
   Verification: `Native lowering emits (<- (psel 0) <done_phase_start) and (<- (penable 0) <done_phase_start), while public outputs are uppercase PSEL/PENABLE. docs/isf-spec/02-interface-transactions.md defines body pairs as assignments, not nested drive calls. This source defect is independent of the generated-enable alias collision.`
+  Commit: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.31.2.5: clear APB completion outputs`
+
+- ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.31.2.6`
+  Status: `active`
+  Goal: `Resolve selector assertion errors exposed by APB behavior qualification.`
+  Acceptance: `Root-cause actual generated selector assertion failures under the installed simulator, distinguishing real conflicting drivers, scheduling artifacts and tool behavior through bounded public HDL counterexamples. Preserve original failure logs, qualify a supported simulator and implement any compiler-owned repair with negative controls before accepting simulation success. If tool-owned, retain a minimal public-interface reproduction and an explicit integration boundary; do not mask errors or count a printed PASS as a clean simulation.`
+  Verification: `During .31.2.5, Icarus behavior checks reach the final APB PASS but generated $onehot0 selector assertions repeatedly print ERROR, including apparently independent families. A standalone source with no FSMGen output reproduces concat=0 versus packed=1 for the same onehot value under installed Icarus 13.0; assertion-enabled Verilator 5.050 passes the APB behavior oracle. Own the bounded simulator qualification and integration disposition next; do not accept the Icarus run as clean.`
   Commit: `pending`
 
 - ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.31.3`
@@ -927,6 +934,26 @@ For FSMGen, the analogs are:
 - Phase 5: AI workflows for diagnostic triage, support discovery, example
   matching, migration advice, and bug-report/reproducer packaging.
 
+## APB Source Repair Boundary — `.31.2.5`
+
+Correct `done_phase` body assignments to public `PSEL` and `PENABLE` and
+remove the unused parameterized `psel`/`penable` definitions. Actual current
+semantic input ports include their undriven `psel_start`, `psel_val`,
+`penable_start` and `penable_val` controls, beyond the declared APB interface.
+Retain the same transaction states and response-sampling order; do not invent
+nested drive calls or alter the language's drive lowering contract. Rename
+the sample comment to describe its explicit output phases.
+
+Own a focused source/lowering/structural-port regression in T1867, update the
+existing deterministic DT summary expectation after unused definitions are
+removed, and simulate generated HDL through wait, completion and repeat
+transfers with both read-data and error results. Recheck actual native/MCP
+semantic parity and support-accounted strict checks. The drive-block chapter
+must show concurrent direct output assignments and clarify that body pairs
+are not calls; also correct its stale expression-valued-body rejection claim
+against the existing T1194 public contract. Compiler collision regressions
+remain independent in T1866.
+
 ## Compiler Repair Boundary — `.31.2.1`
 
 The selected change is module-wide deterministic allocation of assignment
@@ -988,9 +1015,9 @@ before editing code. No discovered defect is closed by this audit alone.
 
 ## Current Frontier
 
-`SEMANTIC-INTROSPECTION-MCP-FRONTIER.31.2.5` repairs the APB sample completion
-outputs after the committed native enable-identity repair. The audit selected
-the remaining source/adapter repair leaves;
+`SEMANTIC-INTROSPECTION-MCP-FRONTIER.31.2.6` closes the simulator qualification
+discrepancy exposed by the APB check, then `.31.2.2` repairs MCP failure
+diagnostics. Native enable identity and APB source repairs are committed;
 `.31.3` qualifies coverage and ongoing parity after they pass.
 The read-only profile completed through `.30` remains historical evidence;
 it is not a claim that all later product features are covered.
@@ -1346,3 +1373,41 @@ repair also reserves effective system clock/reset ports and module parameters.
 T1866 now covers this source boundary, and isolated missing-system/parameter
 controls fail. The final selected band and CLI/MCP comparison were repeated
 after that correction; the receipt supersedes intermediate qualification.
+
+## Acceptance Checklist — `.31.2.5` APB completion and interface
+
+- [x] **ROOT CAUSE (WHY + WHERE)** — `--emit-semantic-json` exposes unused
+  helper start/value inputs beyond the authored interface; native scheduled
+  `-done_phase` writes lowercase `psel`/`penable` rather than public outputs.
+  Drive bodies are assignments, not nested calls. T1867 fails on the original
+  source's completion writes, generated interface and driver provenance.
+- [x] **ADDRESSED (verified)** — `done_phase` directly clears `PSEL`/`PENABLE`
+  and unused helper definitions are removed without changing transaction state
+  order or response-sampling timing. The schedule now truthfully exposes setup
+  and completion as compatible PENABLE-zero sources; updated report oracles
+  preserve both. T1867 and actual native/MCP semantic equality verify the
+  corrected ports and original driver provenance. Assertion-enabled Verilator
+  checks waits, separate write/read requests, data/error capture, bus clearing
+  and completion pulse/idle behavior. The exact original source fails the
+  same completion oracle with only its obsolete extra controls tied low.
+- [x] **NO REGRESSION** — `All tests successful. Files=17, Tests=7156` in the
+  selected ISF public-interface/CLI, schedule, corpus-accounting and independent
+  compiler identity band. The drive-body chapter and embedding limits build
+  and pass rendered HTML checks. Full CI remains separately gated; staged
+  doctrines and normal commit hooks remain required before this commit.
+
+Re-derivation and durability: the [tracked repair receipt](../audits/mcp-feature-coverage-20260924/apb-completion-repair.json)
+retains source/test identities, actual native/MCP queries, strict support,
+original/repaired behavior outputs and test summaries; the testbench is tracked.
+Falsification: the exact original source fails the transfer oracle and the
+source/IR test. The initial broader run found old DT/helper-storage and fan-in
+expectations; they were corrected against the changed source, including an
+explicit new PENABLE fan-in assertion, then the full selected band passed.
+
+The noisy Icarus run is excluded, even though it printed the testbench PASS.
+A standalone [public HDL probe](../audits/mcp-feature-coverage-20260924/onehot-probe.sv)
+reproduces the installed tool's concatenation/packed-vector `$onehot0`
+disagreement without FSMGen. `.31.2.6` owns qualification/disposition; no
+upstream implementation was inspected or changed. Missing leg: this bounded
+simulation is not full protocol certification, and latest-feature MCP coverage
+remains open under the remaining `.31` leaves.

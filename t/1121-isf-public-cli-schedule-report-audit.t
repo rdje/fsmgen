@@ -34,7 +34,7 @@ subtest 'CLI schedule JSON matches the in-process scheduler report' => sub {
     );
     is_deeply(
         [map { $_->{name} } @{$cli_report->{dt_blocks}}],
-        [qw(apb_transfer_cc_inc access_phase done_phase penable psel setup_phase)],
+        [qw(apb_transfer_cc_inc access_phase done_phase setup_phase)],
         'CLI schedule report preserves deterministic DT block order',
     );
 };

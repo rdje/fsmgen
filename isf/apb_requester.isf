@@ -1,4 +1,4 @@
-;; APB requester with parameterized drives
+;; APB requester with explicit setup, access, and completion output phases
 (actor apb_requester
   (clock clk)
   (reset (rst_n async active_low))
@@ -21,9 +21,6 @@
     (input  PRDATA  (width 32))
     (input  PSLVERR))
 
-  (drive (psel val)   (PSEL val))
-  (drive (penable val) (PENABLE val))
-
   (drive setup_phase
     (PADDR addr)
     (PWRITE is_write)
@@ -35,8 +32,8 @@
     (PENABLE 1))
 
   (drive done_phase
-    (psel 0)
-    (penable 0)
+    (PSEL 0)
+    (PENABLE 0)
     (last_read_data rdata)
     (last_error slverr))
 

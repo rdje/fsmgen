@@ -43,9 +43,9 @@ subtest 'schedule JSON report describes APB requester lowering IR' => sub {
     is($report->{inputs},      7, 'input count');
     is($report->{outputs},     8, 'output count');
     is($report->{state_count}, 7, 'state count');
-    is(scalar(@{$report->{compatible_fanin_groups}}), 1, 'one compatible fan-in group reported');
+    is(scalar(@{$report->{compatible_fanin_groups}}), 2, 'bus clear and done fan-in groups reported');
     is($report->{generated_composition}, undef, 'APB report has no generated composition top');
-    my $done_fanin = $report->{compatible_fanin_groups}[0];
+    my ($done_fanin) = grep { $_->{target} eq 'done' } @{$report->{compatible_fanin_groups}};
     is($done_fanin->{kind}, 'pulse', 'done compatible fan-in group is a pulse group');
     is($done_fanin->{target}, 'done', 'done compatible fan-in group names the done target');
     is_deeply(
@@ -56,6 +56,14 @@ subtest 'schedule JSON report describes APB requester lowering IR' => sub {
         ],
         ['apb_transfer:complete_pulse:done', 'apb_transfer:timeout_pulse:done'],
         'done compatible fan-in group reports completion and timeout pulse sources',
+    );
+    my ($penable_fanin) = grep { $_->{target} eq 'PENABLE' } @{$report->{compatible_fanin_groups}};
+    is($penable_fanin->{kind}, 'same_target_value', 'setup and completion share a compatible bus-clear value');
+    is($penable_fanin->{rhs}, '0', 'both phases clear PENABLE');
+    is_deeply(
+        [sort map { $_->{owner} } @{$penable_fanin->{sources}}],
+        [qw(done_phase setup_phase)],
+        'semantic fan-in retains both original bus-clear phases',
     );
     is_deeply($report->{compile_issues}, [], 'no compile issues reported');
 
@@ -79,7 +87,7 @@ subtest 'schedule JSON report describes APB requester lowering IR' => sub {
 
     is_deeply(
         [names_by_key($report->{dt_blocks}, 'name')],
-        [qw(access_phase apb_transfer_cc_inc done_phase penable psel setup_phase)],
+        [qw(access_phase apb_transfer_cc_inc done_phase setup_phase)],
         'dt block names',
     );
 
@@ -101,10 +109,6 @@ subtest 'schedule JSON report describes APB requester lowering IR' => sub {
           done
           is_write
           last_error
-          penable_start
-          penable_val
-          psel_start
-          psel_val
           rdata
           slverr
           wdata
@@ -112,9 +116,8 @@ subtest 'schedule JSON report describes APB requester lowering IR' => sub {
         'inferred storage names',
     );
 
-    my $penable_start = entry_by_name($report->{inferred_storage}, 'penable_start');
-    is($penable_start->{kind},  'counter', 'drive start is reported as counter storage');
-    is($penable_start->{width}, 1,         'drive start width');
+    ok(!grep(/^(?:psel|penable)_(?:start|val)$/, @$storage_names),
+        'unused helper controls do not survive in inferred storage');
 
     my $done = entry_by_name($report->{inferred_storage}, 'done');
     is($done->{kind}, 'register', 'completion pulse storage is reported as register storage');

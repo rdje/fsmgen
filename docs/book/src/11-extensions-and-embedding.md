@@ -2786,9 +2786,7 @@ queries to that API. Select `--language-version 2` for VIAL v2 sources.
 
 Expected compiler failures can currently become opaque MCP errors instead of
 returning the native structured diagnostics, and those errors can contain
-absolute command paths. The APB ISF sample completion phase also still writes
-lowercase internal signals instead of clearing its uppercase bus outputs.
-These are tracked repairs in
+absolute command paths. These are tracked repairs in
 [the semantic coverage frontier](../../tasks/SEMANTIC-INTROSPECTION-MCP-FRONTIER.md),
 with source and adapter repairs preceding complete parity qualification.
 Successful profile tests alone do not establish coverage of every current feature.

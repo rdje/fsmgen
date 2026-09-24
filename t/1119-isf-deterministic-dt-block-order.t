@@ -23,8 +23,6 @@ subtest 'APB lowering emits public DT summaries in deterministic order' => sub {
           apb_transfer_cc_inc
           access_phase
           done_phase
-          penable
-          psel
           setup_phase
         ),
     ];

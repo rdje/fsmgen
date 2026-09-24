@@ -132,8 +132,11 @@ The 2026-09-24 audit found limits that earlier profile tests did not expose:
   deterministic assignment-enable allocation keeps original driver identity.
   The recorded actual CLI/MCP reports agree after source-path normalization;
   this bounded check does not establish parity for all other features.
-- The APB sample completion phase assigns lowercase internal signals rather
-  than its uppercase public outputs; this is a separate source repair.
+- The APB sample completion/output-interface defect is repaired under
+  `.31.2.5`: direct uppercase clears and removal of unused helper definitions
+  preserve the declared ports. T1867 and assertion-enabled Verilator transfer
+  checks guard behavior; native/MCP semantic results agree. An independent
+  Icarus concat/packed `$onehot0` discrepancy is owned by `.31.2.6`.
 
 Durable capture and limits:
 `docs/audits/mcp-feature-coverage-20260924/evidence.json` and the `.31.1` task
