@@ -386,6 +386,29 @@ For FSMGen, the analogs are:
   Verification: `Pending owned repairs.`
   Commit: `pending`
 
+  Children: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.31.3.1, SEMANTIC-INTROSPECTION-MCP-FRONTIER.31.3.2, SEMANTIC-INTROSPECTION-MCP-FRONTIER.31.3.3`
+
+- ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.31.3.1`
+  Status: `done`
+  Goal: `Define current feature-family coverage from canonical public contracts and select representative semantic queries.`
+  Acceptance: `Census current public capability/support families and recent user-visible feature owners, distinguish source semantics from planning/runtime-only or internal workflow capabilities, and map each applicable family to exact native/API/MCP evidence or a concrete repair owner. Select truthful source/version/search-path expectations and independent feature observations before building the parity guard. Preserve original compiler/startup evidence and dependency black-box boundaries. Do not claim full feature coverage from suffix discovery or identical success flags.`
+  Verification: `Canonical native corpus/capability census and ten actual native/MCP pilot queries are captured in feature-coverage-selection.json. Authored ISF field/observation identities are retained on schedule reports, and direct/composition/complex AXI semantic reports match completely after only repository-prefix normalization. The exhaustive source/query cohort and explicit VIAL versions are selected; ongoing guard and full qualification remain .2 and .3.`
+  Commit: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.31.3.1: select current-feature MCP qualification`
+
+- ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.31.3.2`
+  Status: `active`
+  Goal: `Implement the selected current-feature parity guard and close coverage gaps.`
+  Acceptance: `After .1 selects the population and observations, introduce a bounded maintainable guard that detects unaccounted public feature additions and tests actual native/MCP semantic parity with feature-specific assertions. Decompose every demonstrated gap into an exact repair leaf before code changes, commit repairs separately, and ensure new-feature acceptance requires API/MCP evidence or an explicit owned applicability boundary.`
+  Verification: `Pending .1 selection.`
+  Commit: `pending`
+
+- ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.31.3.3`
+  Status: `pending`
+  Goal: `Qualify the complete selected feature population and resume the roadmap from a clean durable handoff.`
+  Acceptance: `After all owned repairs and the coverage guard pass, execute the selected actual feature queries, schema/provenance and negative controls. Update capability/book/fact guidance and feature signoff rules, state exact coverage and remaining intentional boundaries, and commit before resuming the existing bounded HIAL streaming frontier. Do not treat internal/native backend qualification as MCP execution authority or replay spent native compiler producers.`
+  Verification: `Pending .1 and .2.`
+  Commit: `pending`
+
 ## Implementation Notes From `.4`
 
 - `.4` ships a repo-local read-only JSON-RPC stdio adapter:
@@ -1031,11 +1054,11 @@ before editing code. No discovered defect is closed by this audit alone.
 
 ## Current Frontier
 
-`SEMANTIC-INTROSPECTION-MCP-FRONTIER.31.3` qualifies current feature coverage
-and introduces an ongoing semantic API/MCP parity signoff guard. The audited
-native, diagnostic, discovery and VIAL API/MCP repair leaves are committed.
-Preserve the separate read-only/write horizon and spent native compiler
-qualification boundaries; resume bounded HIAL streaming after this activity.
+`SEMANTIC-INTROSPECTION-MCP-FRONTIER.31.3.2` implements the selected
+catalog-driven native/API/MCP parity guard, with explicit VIAL version
+mapping and independent feature observations. `.31.3.3` then runs exhaustive
+qualification and resumes bounded HIAL streaming. Preserve spent native
+compiler/startup evidence and the separate read-only/write horizon.
 
 ## Decisions
 
@@ -1731,3 +1754,62 @@ additions retain the contract; T1869 now guards every shipped suffix and
 T1806 retains byte-exact v1 capability evidence. The first broader invocation
 used a nonexistent T1868 filename and was rejected; only the corrected band
 counts. Full current-feature qualification and future signoff remain `.31.3`.
+
+## Current-Feature Coverage Selection — `.31.3.1`
+
+The native corpus has broad family labels that are too coarse to establish
+feature completeness. The immutable
+`docs/audits/mcp-feature-coverage-20260924/feature-coverage-selection.json`
+therefore retains every selected source, catalog identity and coverage bucket,
+plus its public applicable query kinds and explicit VIAL version. The capture
+boundary is the recorded base revision and catalog digest, not a current-state
+shadow or a count of independent product features.
+
+Select all supported-smoke source contracts, deduplicate execution by source
+while retaining each contract ID, and use native strict check/semantic plus
+schedule where advertised. VIAL check/semantic use the documented explicit
+source/version map. All current supported hardware entries are strict-backed
+and require no additional source search roots. Unknown future suffixes or
+unmapped VIAL sources must fail the guard rather than disappear. Source
+selection may narrow ordinary focused checks only when the returned scope is
+explicit; final qualification uses the complete derived population.
+
+The selected scope is catalog-wide transport parity plus independent named
+feature observations. It is not a claim that identical producers prove all
+source semantics correct. Native feature tests remain their semantic oracles.
+The existing ISF storage and passive-observation records explicitly place their
+metadata on schedule JSON, not the normalized lowered machine; respecting
+that adjudication avoids a false new defect and a false coverage claim.
+Keep backend/runtime/private workflow capabilities discoverable without
+promoting them to MCP execution tools or replaying spent native producers.
+
+The tracked `docs/audits/mcp-feature-coverage-20260924/feature_pilot.py` ran
+actual native and newline-stdio MCP semantic queries for width expressions,
+concatenation, computed selectors, standalone-DT composition, ISF storage,
+ISF observations and the complex AXI multi-group queue-head burst-length
+runtime-assertion fixture. Applicable ISF/AXI schedule queries also matched.
+Full reports agree after independent repository-prefix normalization; the
+ISF schedule reports additionally preserve the fixture-authored field and
+observation identities. All selected queries passed; no new concrete defect
+was established by this pilot. The recorded cohort is not yet exhaustively
+qualified: `.31.3.2` owns the durable guard and `.31.3.3` its complete run.
+
+## Acceptance Checklist — `.31.3.1` coverage selection
+
+- [x] **ROOT CAUSE (WHY + WHERE)** — Native `--emit-semantic-json` describes
+  lowered `.isf` hardware; the canonical storage/observation fact cards and
+  actual `--emit-schedule-json` queries locate source-only field/observation
+  metadata. Suffix presence and broad corpus family labels cannot establish
+  latest-feature detail coverage. The corpus and public applicability census
+  select exact sources and query surfaces rather than repeating that blind spot.
+- [x] **ADDRESSED (verified)** — The tracked census selects the complete
+  supported source/query cohort and explicit VIAL versions. Actual pilot
+  reports match across native/MCP, and independent authored storage-field
+  and observation names are present on their canonical schedule surface.
+  Selection, exclusions, source identities and pending qualification are durable.
+- [x] **NO REGRESSION** — The tracked pilot parses with Python `compile`
+  without writing bytecode; every selected executed query reports PASS.
+  The RAM-guarded native contract and MCP snapshot checks report
+  `All tests successful`, `Files=2, Tests=6`, `Result: PASS`. The mdBook
+  builds and rendered report-selection guidance is present. No compiler or
+  adapter behavior is changed by this selection slice.

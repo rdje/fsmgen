@@ -1,0 +1,5469 @@
+{
+  "capture_base_revision": "308677c9f975e4a9dab94cf417d7a84198f50173",
+  "catalog_producer": "FSM::Support::RegressionCorpus::regression_corpus_entries",
+  "catalog_projection_keys": [
+    "classification",
+    "coverage",
+    "expected_module_name",
+    "expected_semantic_source_root_kind",
+    "expected_top_name",
+    "family",
+    "id",
+    "relpath",
+    "required_capabilities",
+    "search_path_relpaths",
+    "source_kind",
+    "strict_supported",
+    "supported_phases",
+    "target_language"
+  ],
+  "catalog_source_sha256": "39992271dd71c755e75fa58e32876d47cfc47d02a3f29fabbf1ecda539d38a0e",
+  "cohort": [
+    {
+      "catalog_ids": [
+        "protocol.ahb_lite_subordinate"
+      ],
+      "coverage_buckets": [
+        "direct_root_pipeline_cli"
+      ],
+      "query_kinds": [
+        "check",
+        "semantic"
+      ],
+      "source": "fsm/ahb_lite_subordinate.fsm"
+    },
+    {
+      "catalog_ids": [
+        "protocol.amba_requester"
+      ],
+      "coverage_buckets": [
+        "direct_root_pipeline_cli"
+      ],
+      "query_kinds": [
+        "check",
+        "semantic"
+      ],
+      "source": "fsm/amba_requester.fsm"
+    },
+    {
+      "catalog_ids": [
+        "protocol.apb_completer"
+      ],
+      "coverage_buckets": [
+        "direct_root_pipeline_cli"
+      ],
+      "query_kinds": [
+        "check",
+        "semantic"
+      ],
+      "source": "fsm/apb_completer.fsm"
+    },
+    {
+      "catalog_ids": [
+        "protocol.apb_requester"
+      ],
+      "coverage_buckets": [
+        "direct_root_pipeline_cli"
+      ],
+      "query_kinds": [
+        "check",
+        "semantic"
+      ],
+      "source": "fsm/apb_requester.fsm"
+    },
+    {
+      "catalog_ids": [
+        "protocol.apb_tb"
+      ],
+      "coverage_buckets": [
+        "composition_top_pipeline_cli"
+      ],
+      "query_kinds": [
+        "check",
+        "semantic"
+      ],
+      "source": "fsm/apb_tb.fsm"
+    },
+    {
+      "catalog_ids": [
+        "intent.isf_apb_requester"
+      ],
+      "coverage_buckets": [
+        "isf_pipeline_cli"
+      ],
+      "query_kinds": [
+        "check",
+        "semantic",
+        "schedule"
+      ],
+      "source": "isf/apb_requester.isf"
+    },
+    {
+      "catalog_ids": [
+        "feature.isf_storage_field_metadata"
+      ],
+      "coverage_buckets": [
+        "isf_pipeline_cli"
+      ],
+      "query_kinds": [
+        "check",
+        "semantic",
+        "schedule"
+      ],
+      "source": "isf/storage_fields.isf"
+    },
+    {
+      "catalog_ids": [
+        "feature.isf_verification_observation_metadata",
+        "feature.isf_verification_observation_uvm_passive_monitor_skeleton",
+        "feature.isf_verification_observation_vhdl_package_skeleton"
+      ],
+      "coverage_buckets": [
+        "isf_pipeline_cli",
+        "isf_verification_output_uvm_passive_monitor_skeleton_cli",
+        "isf_verification_output_vhdl_observation_package_skeleton_cli"
+      ],
+      "query_kinds": [
+        "check",
+        "semantic",
+        "schedule"
+      ],
+      "source": "isf/verification_observation_metadata.isf"
+    },
+    {
+      "catalog_ids": [
+        "intent.ahb_profile_alias_interconnect"
+      ],
+      "coverage_buckets": [
+        "ial2_ahb_profile_alias_interconnect_pipeline_cli"
+      ],
+      "query_kinds": [
+        "check",
+        "semantic",
+        "schedule"
+      ],
+      "source": "ppif/ahb_interconnect.ahb"
+    },
+    {
+      "catalog_ids": [
+        "intent.ppif_ahb_interconnect"
+      ],
+      "coverage_buckets": [
+        "ial2_ppif_ahb_interconnect_pipeline_cli"
+      ],
+      "query_kinds": [
+        "check",
+        "semantic",
+        "schedule"
+      ],
+      "source": "ppif/ahb_interconnect.ppif"
+    },
+    {
+      "catalog_ids": [
+        "intent.ahb_profile_alias_interconnect_byte_lane"
+      ],
+      "coverage_buckets": [
+        "ial2_ahb_profile_alias_interconnect_byte_lane_pipeline_cli"
+      ],
+      "query_kinds": [
+        "check",
+        "semantic",
+        "schedule"
+      ],
+      "source": "ppif/ahb_interconnect_byte_lane.ahb"
+    },
+    {
+      "catalog_ids": [
+        "intent.ppif_ahb_interconnect_byte_lane"
+      ],
+      "coverage_buckets": [
+        "ial2_ppif_ahb_interconnect_byte_lane_pipeline_cli"
+      ],
+      "query_kinds": [
+        "check",
+        "semantic",
+        "schedule"
+      ],
+      "source": "ppif/ahb_interconnect_byte_lane.ppif"
+    },
+    {
+      "catalog_ids": [
+        "intent.ahb_profile_alias_interconnect_byte_lane_hburst_seq"
+      ],
+      "coverage_buckets": [
+        "ial2_ahb_profile_alias_interconnect_byte_lane_hburst_seq_pipeline_cli"
+      ],
+      "query_kinds": [
+        "check",
+        "semantic",
+        "schedule"
+      ],
+      "source": "ppif/ahb_interconnect_byte_lane_hburst_seq.ahb"
+    },
+    {
+      "catalog_ids": [
+        "intent.ppif_ahb_interconnect_byte_lane_hburst_seq"
+      ],
+      "coverage_buckets": [
+        "ial2_ppif_ahb_interconnect_byte_lane_hburst_seq_pipeline_cli"
+      ],
+      "query_kinds": [
+        "check",
+        "semantic",
+        "schedule"
+      ],
+      "source": "ppif/ahb_interconnect_byte_lane_hburst_seq.ppif"
+    },
+    {
+      "catalog_ids": [
+        "intent.ahb_profile_alias_interconnect_byte_lane_hburst_seq_busy_park"
+      ],
+      "coverage_buckets": [
+        "ial2_ahb_profile_alias_interconnect_byte_lane_hburst_seq_busy_park_pipeline_cli"
+      ],
+      "query_kinds": [
+        "check",
+        "semantic",
+        "schedule"
+      ],
+      "source": "ppif/ahb_interconnect_byte_lane_hburst_seq_busy_park.ahb"
+    },
+    {
+      "catalog_ids": [
+        "intent.ppif_ahb_interconnect_byte_lane_hburst_seq_busy_park"
+      ],
+      "coverage_buckets": [
+        "ial2_ppif_ahb_interconnect_byte_lane_hburst_seq_busy_park_pipeline_cli"
+      ],
+      "query_kinds": [
+        "check",
+        "semantic",
+        "schedule"
+      ],
+      "source": "ppif/ahb_interconnect_byte_lane_hburst_seq_busy_park.ppif"
+    },
+    {
+      "catalog_ids": [
+        "intent.ahb_profile_alias_interconnect_byte_lane_seq"
+      ],
+      "coverage_buckets": [
+        "ial2_ahb_profile_alias_interconnect_byte_lane_seq_pipeline_cli"
+      ],
+      "query_kinds": [
+        "check",
+        "semantic",
+        "schedule"
+      ],
+      "source": "ppif/ahb_interconnect_byte_lane_seq.ahb"
+    },
+    {
+      "catalog_ids": [
+        "intent.ppif_ahb_interconnect_byte_lane_seq"
+      ],
+      "coverage_buckets": [
+        "ial2_ppif_ahb_interconnect_byte_lane_seq_pipeline_cli"
+      ],
+      "query_kinds": [
+        "check",
+        "semantic",
+        "schedule"
+      ],
+      "source": "ppif/ahb_interconnect_byte_lane_seq.ppif"
+    },
+    {
+      "catalog_ids": [
+        "intent.ahb_profile_alias_interconnect_requester_busy_insert_byte_lane_hburst_seq_busy_park"
+      ],
+      "coverage_buckets": [
+        "ial2_ahb_profile_alias_interconnect_requester_busy_insert_byte_lane_hburst_seq_busy_park_pipeline_cli"
+      ],
+      "query_kinds": [
+        "check",
+        "semantic",
+        "schedule"
+      ],
+      "source": "ppif/ahb_interconnect_requester_busy_insert_byte_lane_hburst_seq_busy_park.ahb"
+    },
+    {
+      "catalog_ids": [
+        "intent.ppif_ahb_interconnect_requester_busy_insert_byte_lane_hburst_seq_busy_park"
+      ],
+      "coverage_buckets": [
+        "ial2_ppif_ahb_interconnect_requester_busy_insert_byte_lane_hburst_seq_busy_park_pipeline_cli"
+      ],
+      "query_kinds": [
+        "check",
+        "semantic",
+        "schedule"
+      ],
+      "source": "ppif/ahb_interconnect_requester_busy_insert_byte_lane_hburst_seq_busy_park.ppif"
+    },
+    {
+      "catalog_ids": [
+        "intent.ahb_profile_alias_interconnect_requester_busy_insert_four_byte_lane_hburst_seq_busy_park"
+      ],
+      "coverage_buckets": [
+        "ial2_ahb_profile_alias_interconnect_requester_busy_insert_four_byte_lane_hburst_seq_busy_park_pipeline_cli"
+      ],
+      "query_kinds": [
+        "check",
+        "semantic",
+        "schedule"
+      ],
+      "source": "ppif/ahb_interconnect_requester_busy_insert_four_byte_lane_hburst_seq_busy_park.ahb"
+    },
+    {
+      "catalog_ids": [
+        "intent.ppif_ahb_interconnect_requester_busy_insert_four_byte_lane_hburst_seq_busy_park"
+      ],
+      "coverage_buckets": [
+        "ial2_ppif_ahb_interconnect_requester_busy_insert_four_byte_lane_hburst_seq_busy_park_pipeline_cli"
+      ],
+      "query_kinds": [
+        "check",
+        "semantic",
+        "schedule"
+      ],
+      "source": "ppif/ahb_interconnect_requester_busy_insert_four_byte_lane_hburst_seq_busy_park.ppif"
+    },
+    {
+      "catalog_ids": [
+        "intent.ahb_profile_alias_interconnect_requester_busy_insert_three_byte_lane_hburst_seq_busy_park"
+      ],
+      "coverage_buckets": [
+        "ial2_ahb_profile_alias_interconnect_requester_busy_insert_three_byte_lane_hburst_seq_busy_park_pipeline_cli"
+      ],
+      "query_kinds": [
+        "check",
+        "semantic",
+        "schedule"
+      ],
+      "source": "ppif/ahb_interconnect_requester_busy_insert_three_byte_lane_hburst_seq_busy_park.ahb"
+    },
+    {
+      "catalog_ids": [
+        "intent.ppif_ahb_interconnect_requester_busy_insert_three_byte_lane_hburst_seq_busy_park"
+      ],
+      "coverage_buckets": [
+        "ial2_ppif_ahb_interconnect_requester_busy_insert_three_byte_lane_hburst_seq_busy_park_pipeline_cli"
+      ],
+      "query_kinds": [
+        "check",
+        "semantic",
+        "schedule"
+      ],
+      "source": "ppif/ahb_interconnect_requester_busy_insert_three_byte_lane_hburst_seq_busy_park.ppif"
+    },
+    {
+      "catalog_ids": [
+        "intent.ahb_profile_alias_interconnect_requester_busy_insert_two_byte_lane_hburst_seq_busy_park"
+      ],
+      "coverage_buckets": [
+        "ial2_ahb_profile_alias_interconnect_requester_busy_insert_two_byte_lane_hburst_seq_busy_park_pipeline_cli"
+      ],
+      "query_kinds": [
+        "check",
+        "semantic",
+        "schedule"
+      ],
+      "source": "ppif/ahb_interconnect_requester_busy_insert_two_byte_lane_hburst_seq_busy_park.ahb"
+    },
+    {
+      "catalog_ids": [
+        "intent.ppif_ahb_interconnect_requester_busy_insert_two_byte_lane_hburst_seq_busy_park"
+      ],
+      "coverage_buckets": [
+        "ial2_ppif_ahb_interconnect_requester_busy_insert_two_byte_lane_hburst_seq_busy_park_pipeline_cli"
+      ],
+      "query_kinds": [
+        "check",
+        "semantic",
+        "schedule"
+      ],
+      "source": "ppif/ahb_interconnect_requester_busy_insert_two_byte_lane_hburst_seq_busy_park.ppif"
+    },
+    {
+      "catalog_ids": [
+        "intent.ahb_profile_alias_interconnect_requester_busy_insert_two_subordinate_byte_lane_hburst_seq_busy_park"
+      ],
+      "coverage_buckets": [
+        "ial2_ahb_profile_alias_interconnect_requester_busy_insert_two_subordinate_byte_lane_hburst_seq_busy_park_pipeline_cli"
+      ],
+      "query_kinds": [
+        "check",
+        "semantic",
+        "schedule"
+      ],
+      "source": "ppif/ahb_interconnect_requester_busy_insert_two_subordinate_byte_lane_hburst_seq_busy_park.ahb"
+    },
+    {
+      "catalog_ids": [
+        "intent.ppif_ahb_interconnect_requester_busy_insert_two_subordinate_byte_lane_hburst_seq_busy_park"
+      ],
+      "coverage_buckets": [
+        "ial2_ppif_ahb_interconnect_requester_busy_insert_two_subordinate_byte_lane_hburst_seq_busy_park_pipeline_cli"
+      ],
+      "query_kinds": [
+        "check",
+        "semantic",
+        "schedule"
+      ],
+      "source": "ppif/ahb_interconnect_requester_busy_insert_two_subordinate_byte_lane_hburst_seq_busy_park.ppif"
+    },
+    {
+      "catalog_ids": [
+        "intent.ahb_profile_alias_interconnect_two_subordinate"
+      ],
+      "coverage_buckets": [
+        "ial2_ahb_profile_alias_interconnect_two_subordinate_pipeline_cli"
+      ],
+      "query_kinds": [
+        "check",
+        "semantic",
+        "schedule"
+      ],
+      "source": "ppif/ahb_interconnect_two_subordinate.ahb"
+    },
+    {
+      "catalog_ids": [
+        "intent.ppif_ahb_interconnect_two_subordinate"
+      ],
+      "coverage_buckets": [
+        "ial2_ppif_ahb_interconnect_two_subordinate_pipeline_cli"
+      ],
+      "query_kinds": [
+        "check",
+        "semantic",
+        "schedule"
+      ],
+      "source": "ppif/ahb_interconnect_two_subordinate.ppif"
+    },
+    {
+      "catalog_ids": [
+        "intent.ahb_profile_alias_interconnect_two_subordinate_byte_lane"
+      ],
+      "coverage_buckets": [
+        "ial2_ahb_profile_alias_interconnect_two_subordinate_byte_lane_pipeline_cli"
+      ],
+      "query_kinds": [
+        "check",
+        "semantic",
+        "schedule"
+      ],
+      "source": "ppif/ahb_interconnect_two_subordinate_byte_lane.ahb"
+    },
+    {
+      "catalog_ids": [
+        "intent.ppif_ahb_interconnect_two_subordinate_byte_lane"
+      ],
+      "coverage_buckets": [
+        "ial2_ppif_ahb_interconnect_two_subordinate_byte_lane_pipeline_cli"
+      ],
+      "query_kinds": [
+        "check",
+        "semantic",
+        "schedule"
+      ],
+      "source": "ppif/ahb_interconnect_two_subordinate_byte_lane.ppif"
+    },
+    {
+      "catalog_ids": [
+        "intent.ahb_profile_alias_interconnect_two_subordinate_byte_lane_hburst_seq"
+      ],
+      "coverage_buckets": [
+        "ial2_ahb_profile_alias_interconnect_two_subordinate_byte_lane_hburst_seq_pipeline_cli"
+      ],
+      "query_kinds": [
+        "check",
+        "semantic",
+        "schedule"
+      ],
+      "source": "ppif/ahb_interconnect_two_subordinate_byte_lane_hburst_seq.ahb"
+    },
+    {
+      "catalog_ids": [
+        "intent.ppif_ahb_interconnect_two_subordinate_byte_lane_hburst_seq"
+      ],
+      "coverage_buckets": [
+        "ial2_ppif_ahb_interconnect_two_subordinate_byte_lane_hburst_seq_pipeline_cli"
+      ],
+      "query_kinds": [
+        "check",
+        "semantic",
+        "schedule"
+      ],
+      "source": "ppif/ahb_interconnect_two_subordinate_byte_lane_hburst_seq.ppif"
+    },
+    {
+      "catalog_ids": [
+        "intent.ahb_profile_alias_interconnect_two_subordinate_byte_lane_hburst_seq_busy_park"
+      ],
+      "coverage_buckets": [
+        "ial2_ahb_profile_alias_interconnect_two_subordinate_byte_lane_hburst_seq_busy_park_pipeline_cli"
+      ],
+      "query_kinds": [
+        "check",
+        "semantic",
+        "schedule"
+      ],
+      "source": "ppif/ahb_interconnect_two_subordinate_byte_lane_hburst_seq_busy_park.ahb"
+    },
+    {
+      "catalog_ids": [
+        "intent.ppif_ahb_interconnect_two_subordinate_byte_lane_hburst_seq_busy_park"
+      ],
+      "coverage_buckets": [
+        "ial2_ppif_ahb_interconnect_two_subordinate_byte_lane_hburst_seq_busy_park_pipeline_cli"
+      ],
+      "query_kinds": [
+        "check",
+        "semantic",
+        "schedule"
+      ],
+      "source": "ppif/ahb_interconnect_two_subordinate_byte_lane_hburst_seq_busy_park.ppif"
+    },
+    {
+      "catalog_ids": [
+        "intent.ahb_profile_alias_interconnect_two_subordinate_byte_lane_seq"
+      ],
+      "coverage_buckets": [
+        "ial2_ahb_profile_alias_interconnect_two_subordinate_byte_lane_seq_pipeline_cli"
+      ],
+      "query_kinds": [
+        "check",
+        "semantic",
+        "schedule"
+      ],
+      "source": "ppif/ahb_interconnect_two_subordinate_byte_lane_seq.ahb"
+    },
+    {
+      "catalog_ids": [
+        "intent.ppif_ahb_interconnect_two_subordinate_byte_lane_seq"
+      ],
+      "coverage_buckets": [
+        "ial2_ppif_ahb_interconnect_two_subordinate_byte_lane_seq_pipeline_cli"
+      ],
+      "query_kinds": [
+        "check",
+        "semantic",
+        "schedule"
+      ],
+      "source": "ppif/ahb_interconnect_two_subordinate_byte_lane_seq.ppif"
+    },
+    {
+      "catalog_ids": [
+        "intent.ahb_profile_alias_interconnect_two_subordinate_requester_busy_insert_four_byte_lane_hburst_seq_busy_park"
+      ],
+      "coverage_buckets": [
+        "ial2_ahb_profile_alias_interconnect_two_subordinate_requester_busy_insert_four_byte_lane_hburst_seq_busy_park_pipeline_cli"
+      ],
+      "query_kinds": [
+        "check",
+        "semantic",
+        "schedule"
+      ],
+      "source": "ppif/ahb_interconnect_two_subordinate_requester_busy_insert_four_byte_lane_hburst_seq_busy_park.ahb"
+    },
+    {
+      "catalog_ids": [
+        "intent.ppif_ahb_interconnect_two_subordinate_requester_busy_insert_four_byte_lane_hburst_seq_busy_park"
+      ],
+      "coverage_buckets": [
+        "ial2_ppif_ahb_interconnect_two_subordinate_requester_busy_insert_four_byte_lane_hburst_seq_busy_park_pipeline_cli"
+      ],
+      "query_kinds": [
+        "check",
+        "semantic",
+        "schedule"
+      ],
+      "source": "ppif/ahb_interconnect_two_subordinate_requester_busy_insert_four_byte_lane_hburst_seq_busy_park.ppif"
+    },
+    {
+      "catalog_ids": [
+        "intent.ahb_profile_alias_interconnect_two_subordinate_requester_busy_insert_three_byte_lane_hburst_seq_busy_park"
+      ],
+      "coverage_buckets": [
+        "ial2_ahb_profile_alias_interconnect_two_subordinate_requester_busy_insert_three_byte_lane_hburst_seq_busy_park_pipeline_cli"
+      ],
+      "query_kinds": [
+        "check",
+        "semantic",
+        "schedule"
+      ],
+      "source": "ppif/ahb_interconnect_two_subordinate_requester_busy_insert_three_byte_lane_hburst_seq_busy_park.ahb"
+    },
+    {
+      "catalog_ids": [
+        "intent.ppif_ahb_interconnect_two_subordinate_requester_busy_insert_three_byte_lane_hburst_seq_busy_park"
+      ],
+      "coverage_buckets": [
+        "ial2_ppif_ahb_interconnect_two_subordinate_requester_busy_insert_three_byte_lane_hburst_seq_busy_park_pipeline_cli"
+      ],
+      "query_kinds": [
+        "check",
+        "semantic",
+        "schedule"
+      ],
+      "source": "ppif/ahb_interconnect_two_subordinate_requester_busy_insert_three_byte_lane_hburst_seq_busy_park.ppif"
+    },
+    {
+      "catalog_ids": [
+        "intent.ahb_profile_alias_interconnect_two_subordinate_requester_busy_insert_two_byte_lane_hburst_seq_busy_park"
+      ],
+      "coverage_buckets": [
+        "ial2_ahb_profile_alias_interconnect_two_subordinate_requester_busy_insert_two_byte_lane_hburst_seq_busy_park_pipeline_cli"
+      ],
+      "query_kinds": [
+        "check",
+        "semantic",
+        "schedule"
+      ],
+      "source": "ppif/ahb_interconnect_two_subordinate_requester_busy_insert_two_byte_lane_hburst_seq_busy_park.ahb"
+    },
+    {
+      "catalog_ids": [
+        "intent.ppif_ahb_interconnect_two_subordinate_requester_busy_insert_two_byte_lane_hburst_seq_busy_park"
+      ],
+      "coverage_buckets": [
+        "ial2_ppif_ahb_interconnect_two_subordinate_requester_busy_insert_two_byte_lane_hburst_seq_busy_park_pipeline_cli"
+      ],
+      "query_kinds": [
+        "check",
+        "semantic",
+        "schedule"
+      ],
+      "source": "ppif/ahb_interconnect_two_subordinate_requester_busy_insert_two_byte_lane_hburst_seq_busy_park.ppif"
+    },
+    {
+      "catalog_ids": [
+        "intent.ahb_profile_alias_subordinate"
+      ],
+      "coverage_buckets": [
+        "ial2_ahb_profile_alias_subordinate_pipeline_cli"
+      ],
+      "query_kinds": [
+        "check",
+        "semantic",
+        "schedule"
+      ],
+      "source": "ppif/ahb_lite_subordinate.ahb"
+    },
+    {
+      "catalog_ids": [
+        "intent.ppif_ahb_lite_subordinate"
+      ],
+      "coverage_buckets": [
+        "ial2_ppif_ahb_lite_subordinate_pipeline_cli"
+      ],
+      "query_kinds": [
+        "check",
+        "semantic",
+        "schedule"
+      ],
+      "source": "ppif/ahb_lite_subordinate.ppif"
+    },
+    {
+      "catalog_ids": [
+        "intent.ahb_profile_alias_subordinate_byte_lane"
+      ],
+      "coverage_buckets": [
+        "ial2_ahb_profile_alias_subordinate_byte_lane_pipeline_cli"
+      ],
+      "query_kinds": [
+        "check",
+        "semantic",
+        "schedule"
+      ],
+      "source": "ppif/ahb_lite_subordinate_byte_lane.ahb"
+    },
+    {
+      "catalog_ids": [
+        "intent.ppif_ahb_lite_subordinate_byte_lane"
+      ],
+      "coverage_buckets": [
+        "ial2_ppif_ahb_lite_subordinate_byte_lane_pipeline_cli"
+      ],
+      "query_kinds": [
+        "check",
+        "semantic",
+        "schedule"
+      ],
+      "source": "ppif/ahb_lite_subordinate_byte_lane.ppif"
+    },
+    {
+      "catalog_ids": [
+        "intent.ahb_profile_alias_subordinate_byte_lane_hburst_seq"
+      ],
+      "coverage_buckets": [
+        "ial2_ahb_profile_alias_subordinate_byte_lane_hburst_seq_pipeline_cli"
+      ],
+      "query_kinds": [
+        "check",
+        "semantic",
+        "schedule"
+      ],
+      "source": "ppif/ahb_lite_subordinate_byte_lane_hburst_seq.ahb"
+    },
+    {
+      "catalog_ids": [
+        "intent.ppif_ahb_lite_subordinate_byte_lane_hburst_seq"
+      ],
+      "coverage_buckets": [
+        "ial2_ppif_ahb_lite_subordinate_byte_lane_hburst_seq_pipeline_cli"
+      ],
+      "query_kinds": [
+        "check",
+        "semantic",
+        "schedule"
+      ],
+      "source": "ppif/ahb_lite_subordinate_byte_lane_hburst_seq.ppif"
+    },
+    {
+      "catalog_ids": [
+        "intent.ahb_profile_alias_subordinate_byte_lane_hburst_seq_busy_park"
+      ],
+      "coverage_buckets": [
+        "ial2_ahb_profile_alias_subordinate_byte_lane_hburst_seq_busy_park_pipeline_cli"
+      ],
+      "query_kinds": [
+        "check",
+        "semantic",
+        "schedule"
+      ],
+      "source": "ppif/ahb_lite_subordinate_byte_lane_hburst_seq_busy_park.ahb"
+    },
+    {
+      "catalog_ids": [
+        "intent.ppif_ahb_lite_subordinate_byte_lane_hburst_seq_busy_park"
+      ],
+      "coverage_buckets": [
+        "ial2_ppif_ahb_lite_subordinate_byte_lane_hburst_seq_busy_park_pipeline_cli"
+      ],
+      "query_kinds": [
+        "check",
+        "semantic",
+        "schedule"
+      ],
+      "source": "ppif/ahb_lite_subordinate_byte_lane_hburst_seq_busy_park.ppif"
+    },
+    {
+      "catalog_ids": [
+        "intent.ahb_profile_alias_subordinate_byte_lane_seq"
+      ],
+      "coverage_buckets": [
+        "ial2_ahb_profile_alias_subordinate_byte_lane_seq_pipeline_cli"
+      ],
+      "query_kinds": [
+        "check",
+        "semantic",
+        "schedule"
+      ],
+      "source": "ppif/ahb_lite_subordinate_byte_lane_seq.ahb"
+    },
+    {
+      "catalog_ids": [
+        "intent.ppif_ahb_lite_subordinate_byte_lane_seq"
+      ],
+      "coverage_buckets": [
+        "ial2_ppif_ahb_lite_subordinate_byte_lane_seq_pipeline_cli"
+      ],
+      "query_kinds": [
+        "check",
+        "semantic",
+        "schedule"
+      ],
+      "source": "ppif/ahb_lite_subordinate_byte_lane_seq.ppif"
+    },
+    {
+      "catalog_ids": [
+        "intent.ahb_profile_alias_requester"
+      ],
+      "coverage_buckets": [
+        "ial2_ahb_profile_alias_requester_pipeline_cli"
+      ],
+      "query_kinds": [
+        "check",
+        "semantic",
+        "schedule"
+      ],
+      "source": "ppif/ahb_requester.ahb"
+    },
+    {
+      "catalog_ids": [
+        "intent.ppif_ahb_requester"
+      ],
+      "coverage_buckets": [
+        "ial2_ppif_ahb_requester_pipeline_cli"
+      ],
+      "query_kinds": [
+        "check",
+        "semantic",
+        "schedule"
+      ],
+      "source": "ppif/ahb_requester.ppif"
+    },
+    {
+      "catalog_ids": [
+        "intent.ahb_profile_alias_requester_busy_insert"
+      ],
+      "coverage_buckets": [
+        "ial2_ahb_profile_alias_requester_busy_insert_pipeline_cli"
+      ],
+      "query_kinds": [
+        "check",
+        "semantic",
+        "schedule"
+      ],
+      "source": "ppif/ahb_requester_busy_insert.ahb"
+    },
+    {
+      "catalog_ids": [
+        "intent.ppif_ahb_requester_busy_insert"
+      ],
+      "coverage_buckets": [
+        "ial2_ppif_ahb_requester_busy_insert_pipeline_cli"
+      ],
+      "query_kinds": [
+        "check",
+        "semantic",
+        "schedule"
+      ],
+      "source": "ppif/ahb_requester_busy_insert.ppif"
+    },
+    {
+      "catalog_ids": [
+        "intent.ahb_profile_alias_requester_busy_insert_four"
+      ],
+      "coverage_buckets": [
+        "ial2_ahb_profile_alias_requester_busy_insert_four_pipeline_cli"
+      ],
+      "query_kinds": [
+        "check",
+        "semantic",
+        "schedule"
+      ],
+      "source": "ppif/ahb_requester_busy_insert_four.ahb"
+    },
+    {
+      "catalog_ids": [
+        "intent.ppif_ahb_requester_busy_insert_four"
+      ],
+      "coverage_buckets": [
+        "ial2_ppif_ahb_requester_busy_insert_four_pipeline_cli"
+      ],
+      "query_kinds": [
+        "check",
+        "semantic",
+        "schedule"
+      ],
+      "source": "ppif/ahb_requester_busy_insert_four.ppif"
+    },
+    {
+      "catalog_ids": [
+        "intent.ahb_profile_alias_requester_busy_insert_three"
+      ],
+      "coverage_buckets": [
+        "ial2_ahb_profile_alias_requester_busy_insert_three_pipeline_cli"
+      ],
+      "query_kinds": [
+        "check",
+        "semantic",
+        "schedule"
+      ],
+      "source": "ppif/ahb_requester_busy_insert_three.ahb"
+    },
+    {
+      "catalog_ids": [
+        "intent.ppif_ahb_requester_busy_insert_three"
+      ],
+      "coverage_buckets": [
+        "ial2_ppif_ahb_requester_busy_insert_three_pipeline_cli"
+      ],
+      "query_kinds": [
+        "check",
+        "semantic",
+        "schedule"
+      ],
+      "source": "ppif/ahb_requester_busy_insert_three.ppif"
+    },
+    {
+      "catalog_ids": [
+        "intent.ahb_profile_alias_requester_busy_insert_two"
+      ],
+      "coverage_buckets": [
+        "ial2_ahb_profile_alias_requester_busy_insert_two_pipeline_cli"
+      ],
+      "query_kinds": [
+        "check",
+        "semantic",
+        "schedule"
+      ],
+      "source": "ppif/ahb_requester_busy_insert_two.ahb"
+    },
+    {
+      "catalog_ids": [
+        "intent.ppif_ahb_requester_busy_insert_two"
+      ],
+      "coverage_buckets": [
+        "ial2_ppif_ahb_requester_busy_insert_two_pipeline_cli"
+      ],
+      "query_kinds": [
+        "check",
+        "semantic",
+        "schedule"
+      ],
+      "source": "ppif/ahb_requester_busy_insert_two.ppif"
+    },
+    {
+      "catalog_ids": [
+        "intent.apb_profile_alias_completer"
+      ],
+      "coverage_buckets": [
+        "ial2_apb_profile_alias_completer_pipeline_cli"
+      ],
+      "query_kinds": [
+        "check",
+        "semantic",
+        "schedule"
+      ],
+      "source": "ppif/apb_completer.apb"
+    },
+    {
+      "catalog_ids": [
+        "intent.ppif_apb_completer"
+      ],
+      "coverage_buckets": [
+        "ial2_ppif_apb_completer_pipeline_cli"
+      ],
+      "query_kinds": [
+        "check",
+        "semantic",
+        "schedule"
+      ],
+      "source": "ppif/apb_completer.ppif"
+    },
+    {
+      "catalog_ids": [
+        "intent.apb_profile_alias_completer_back_to_back"
+      ],
+      "coverage_buckets": [
+        "ial2_apb_profile_alias_completer_back_to_back_pipeline_cli"
+      ],
+      "query_kinds": [
+        "check",
+        "semantic",
+        "schedule"
+      ],
+      "source": "ppif/apb_completer_back_to_back.apb"
+    },
+    {
+      "catalog_ids": [
+        "intent.ppif_apb_completer_back_to_back"
+      ],
+      "coverage_buckets": [
+        "ial2_ppif_apb_completer_back_to_back_pipeline_cli"
+      ],
+      "query_kinds": [
+        "check",
+        "semantic",
+        "schedule"
+      ],
+      "source": "ppif/apb_completer_back_to_back.ppif"
+    },
+    {
+      "catalog_ids": [
+        "intent.apb_profile_alias_completer_multi_register"
+      ],
+      "coverage_buckets": [
+        "ial2_apb_profile_alias_completer_multi_register_pipeline_cli"
+      ],
+      "query_kinds": [
+        "check",
+        "semantic",
+        "schedule"
+      ],
+      "source": "ppif/apb_completer_multi_register.apb"
+    },
+    {
+      "catalog_ids": [
+        "intent.ppif_apb_completer_multi_register"
+      ],
+      "coverage_buckets": [
+        "ial2_ppif_apb_completer_multi_register_pipeline_cli"
+      ],
+      "query_kinds": [
+        "check",
+        "semantic",
+        "schedule"
+      ],
+      "source": "ppif/apb_completer_multi_register.ppif"
+    },
+    {
+      "catalog_ids": [
+        "intent.apb_profile_alias_completer_multi_register_sideband"
+      ],
+      "coverage_buckets": [
+        "ial2_apb_profile_alias_completer_multi_register_sideband_pipeline_cli"
+      ],
+      "query_kinds": [
+        "check",
+        "semantic",
+        "schedule"
+      ],
+      "source": "ppif/apb_completer_multi_register_sideband.apb"
+    },
+    {
+      "catalog_ids": [
+        "intent.ppif_apb_completer_multi_register_sideband"
+      ],
+      "coverage_buckets": [
+        "ial2_ppif_apb_completer_multi_register_sideband_pipeline_cli"
+      ],
+      "query_kinds": [
+        "check",
+        "semantic",
+        "schedule"
+      ],
+      "source": "ppif/apb_completer_multi_register_sideband.ppif"
+    },
+    {
+      "catalog_ids": [
+        "intent.apb_profile_alias_completer_multi_register_sideband_back_to_back"
+      ],
+      "coverage_buckets": [
+        "ial2_apb_profile_alias_completer_multi_register_sideband_back_to_back_pipeline_cli"
+      ],
+      "query_kinds": [
+        "check",
+        "semantic",
+        "schedule"
+      ],
+      "source": "ppif/apb_completer_multi_register_sideband_back_to_back.apb"
+    },
+    {
+      "catalog_ids": [
+        "intent.ppif_apb_completer_multi_register_sideband_back_to_back"
+      ],
+      "coverage_buckets": [
+        "ial2_ppif_apb_completer_multi_register_sideband_back_to_back_pipeline_cli"
+      ],
+      "query_kinds": [
+        "check",
+        "semantic",
+        "schedule"
+      ],
+      "source": "ppif/apb_completer_multi_register_sideband_back_to_back.ppif"
+    },
+    {
+      "catalog_ids": [
+        "intent.apb_profile_alias_completer_multi_register_sideband_data16"
+      ],
+      "coverage_buckets": [
+        "ial2_apb_profile_alias_completer_multi_register_sideband_data16_pipeline_cli"
+      ],
+      "query_kinds": [
+        "check",
+        "semantic",
+        "schedule"
+      ],
+      "source": "ppif/apb_completer_multi_register_sideband_data16.apb"
+    },
+    {
+      "catalog_ids": [
+        "intent.ppif_apb_completer_multi_register_sideband_data16"
+      ],
+      "coverage_buckets": [
+        "ial2_ppif_apb_completer_multi_register_sideband_data16_pipeline_cli"
+      ],
+      "query_kinds": [
+        "check",
+        "semantic",
+        "schedule"
+      ],
+      "source": "ppif/apb_completer_multi_register_sideband_data16.ppif"
+    },
+    {
+      "catalog_ids": [
+        "intent.apb_profile_alias_completer_multi_register_sideband_data16_back_to_back"
+      ],
+      "coverage_buckets": [
+        "ial2_apb_profile_alias_completer_multi_register_sideband_data16_back_to_back_pipeline_cli"
+      ],
+      "query_kinds": [
+        "check",
+        "semantic",
+        "schedule"
+      ],
+      "source": "ppif/apb_completer_multi_register_sideband_data16_back_to_back.apb"
+    },
+    {
+      "catalog_ids": [
+        "intent.ppif_apb_completer_multi_register_sideband_data16_back_to_back"
+      ],
+      "coverage_buckets": [
+        "ial2_ppif_apb_completer_multi_register_sideband_data16_back_to_back_pipeline_cli"
+      ],
+      "query_kinds": [
+        "check",
+        "semantic",
+        "schedule"
+      ],
+      "source": "ppif/apb_completer_multi_register_sideband_data16_back_to_back.ppif"
+    },
+    {
+      "catalog_ids": [
+        "intent.apb_profile_alias_completer_multi_register_sideband_data16_protection"
+      ],
+      "coverage_buckets": [
+        "ial2_apb_profile_alias_completer_multi_register_sideband_data16_protection_pipeline_cli"
+      ],
+      "query_kinds": [
+        "check",
+        "semantic",
+        "schedule"
+      ],
+      "source": "ppif/apb_completer_multi_register_sideband_data16_protection.apb"
+    },
+    {
+      "catalog_ids": [
+        "intent.ppif_apb_completer_multi_register_sideband_data16_protection"
+      ],
+      "coverage_buckets": [
+        "ial2_ppif_apb_completer_multi_register_sideband_data16_protection_pipeline_cli"
+      ],
+      "query_kinds": [
+        "check",
+        "semantic",
+        "schedule"
+      ],
+      "source": "ppif/apb_completer_multi_register_sideband_data16_protection.ppif"
+    },
+    {
+      "catalog_ids": [
+        "intent.apb_profile_alias_completer_multi_register_sideband_data16_protection_back_to_back"
+      ],
+      "coverage_buckets": [
+        "ial2_apb_profile_alias_completer_multi_register_sideband_data16_protection_back_to_back_pipeline_cli"
+      ],
+      "query_kinds": [
+        "check",
+        "semantic",
+        "schedule"
+      ],
+      "source": "ppif/apb_completer_multi_register_sideband_data16_protection_back_to_back.apb"
+    },
+    {
+      "catalog_ids": [
+        "intent.ppif_apb_completer_multi_register_sideband_data16_protection_back_to_back"
+      ],
+      "coverage_buckets": [
+        "ial2_ppif_apb_completer_multi_register_sideband_data16_protection_back_to_back_pipeline_cli"
+      ],
+      "query_kinds": [
+        "check",
+        "semantic",
+        "schedule"
+      ],
+      "source": "ppif/apb_completer_multi_register_sideband_data16_protection_back_to_back.ppif"
+    },
+    {
+      "catalog_ids": [
+        "intent.apb_profile_alias_completer_multi_register_sideband_protection"
+      ],
+      "coverage_buckets": [
+        "ial2_apb_profile_alias_completer_multi_register_sideband_protection_pipeline_cli"
+      ],
+      "query_kinds": [
+        "check",
+        "semantic",
+        "schedule"
+      ],
+      "source": "ppif/apb_completer_multi_register_sideband_protection.apb"
+    },
+    {
+      "catalog_ids": [
+        "intent.ppif_apb_completer_multi_register_sideband_protection"
+      ],
+      "coverage_buckets": [
+        "ial2_ppif_apb_completer_multi_register_sideband_protection_pipeline_cli"
+      ],
+      "query_kinds": [
+        "check",
+        "semantic",
+        "schedule"
+      ],
+      "source": "ppif/apb_completer_multi_register_sideband_protection.ppif"
+    },
+    {
+      "catalog_ids": [
+        "intent.apb_profile_alias_completer_multi_register_sideband_protection_back_to_back"
+      ],
+      "coverage_buckets": [
+        "ial2_apb_profile_alias_completer_multi_register_sideband_protection_back_to_back_pipeline_cli"
+      ],
+      "query_kinds": [
+        "check",
+        "semantic",
+        "schedule"
+      ],
+      "source": "ppif/apb_completer_multi_register_sideband_protection_back_to_back.apb"
+    },
+    {
+      "catalog_ids": [
+        "intent.ppif_apb_completer_multi_register_sideband_protection_back_to_back"
+      ],
+      "coverage_buckets": [
+        "ial2_ppif_apb_completer_multi_register_sideband_protection_back_to_back_pipeline_cli"
+      ],
+      "query_kinds": [
+        "check",
+        "semantic",
+        "schedule"
+      ],
+      "source": "ppif/apb_completer_multi_register_sideband_protection_back_to_back.ppif"
+    },
+    {
+      "catalog_ids": [
+        "intent.apb_profile_alias_completer_sideband_back_to_back"
+      ],
+      "coverage_buckets": [
+        "ial2_apb_profile_alias_completer_sideband_back_to_back_pipeline_cli"
+      ],
+      "query_kinds": [
+        "check",
+        "semantic",
+        "schedule"
+      ],
+      "source": "ppif/apb_completer_sideband_back_to_back.apb"
+    },
+    {
+      "catalog_ids": [
+        "intent.ppif_apb_completer_sideband_back_to_back"
+      ],
+      "coverage_buckets": [
+        "ial2_ppif_apb_completer_sideband_back_to_back_pipeline_cli"
+      ],
+      "query_kinds": [
+        "check",
+        "semantic",
+        "schedule"
+      ],
+      "source": "ppif/apb_completer_sideband_back_to_back.ppif"
+    },
+    {
+      "catalog_ids": [
+        "intent.apb_profile_alias_composition"
+      ],
+      "coverage_buckets": [
+        "ial2_apb_profile_alias_composition_pipeline_cli"
+      ],
+      "query_kinds": [
+        "check",
+        "semantic",
+        "schedule"
+      ],
+      "source": "ppif/apb_composition.apb"
+    },
+    {
+      "catalog_ids": [
+        "intent.ppif_apb_composition"
+      ],
+      "coverage_buckets": [
+        "ial2_ppif_apb_composition_pipeline_cli"
+      ],
+      "query_kinds": [
+        "check",
+        "semantic",
+        "schedule"
+      ],
+      "source": "ppif/apb_composition.ppif"
+    },
+    {
+      "catalog_ids": [
+        "intent.apb_profile_alias_composition_busy"
+      ],
+      "coverage_buckets": [
+        "ial2_apb_profile_alias_composition_busy_pipeline_cli"
+      ],
+      "query_kinds": [
+        "check",
+        "semantic",
+        "schedule"
+      ],
+      "source": "ppif/apb_composition_busy.apb"
+    },
+    {
+      "catalog_ids": [
+        "intent.ppif_apb_composition_busy"
+      ],
+      "coverage_buckets": [
+        "ial2_ppif_apb_composition_busy_pipeline_cli"
+      ],
+      "query_kinds": [
+        "check",
+        "semantic",
+        "schedule"
+      ],
+      "source": "ppif/apb_composition_busy.ppif"
+    },
+    {
+      "catalog_ids": [
+        "intent.apb_profile_alias_composition_multi_peripheral"
+      ],
+      "coverage_buckets": [
+        "ial2_apb_profile_alias_composition_multi_peripheral_pipeline_cli"
+      ],
+      "query_kinds": [
+        "check",
+        "semantic",
+        "schedule"
+      ],
+      "source": "ppif/apb_composition_multi_peripheral.apb"
+    },
+    {
+      "catalog_ids": [
+        "intent.ppif_apb_composition_multi_peripheral"
+      ],
+      "coverage_buckets": [
+        "ial2_ppif_apb_composition_multi_peripheral_pipeline_cli"
+      ],
+      "query_kinds": [
+        "check",
+        "semantic",
+        "schedule"
+      ],
+      "source": "ppif/apb_composition_multi_peripheral.ppif"
+    },
+    {
+      "catalog_ids": [
+        "intent.apb_profile_alias_composition_multi_peripheral_multi_register_sideband_data16_generalized_five_register_status_back_to_back"
+      ],
+      "coverage_buckets": [
+        "ial2_apb_profile_alias_composition_multi_peripheral_multi_register_sideband_data16_generalized_five_register_status_back_to_back_pipeline_cli"
+      ],
+      "query_kinds": [
+        "check",
+        "semantic",
+        "schedule"
+      ],
+      "source": "ppif/apb_composition_multi_peripheral_multi_register_sideband_data16_generalized_five_register_status_back_to_back.apb"
+    },
+    {
+      "catalog_ids": [
+        "intent.ppif_apb_composition_multi_peripheral_multi_register_sideband_data16_generalized_five_register_status_back_to_back"
+      ],
+      "coverage_buckets": [
+        "ial2_ppif_apb_composition_multi_peripheral_multi_register_sideband_data16_generalized_five_register_status_back_to_back_pipeline_cli"
+      ],
+      "query_kinds": [
+        "check",
+        "semantic",
+        "schedule"
+      ],
+      "source": "ppif/apb_composition_multi_peripheral_multi_register_sideband_data16_generalized_five_register_status_back_to_back.ppif"
+    },
+    {
+      "catalog_ids": [
+        "intent.apb_profile_alias_composition_multi_peripheral_multi_register_sideband_data16_generalized_six_register_status_back_to_back"
+      ],
+      "coverage_buckets": [
+        "ial2_apb_profile_alias_composition_multi_peripheral_multi_register_sideband_data16_generalized_six_register_status_back_to_back_pipeline_cli"
+      ],
+      "query_kinds": [
+        "check",
+        "semantic",
+        "schedule"
+      ],
+      "source": "ppif/apb_composition_multi_peripheral_multi_register_sideband_data16_generalized_six_register_status_back_to_back.apb"
+    },
+    {
+      "catalog_ids": [
+        "intent.ppif_apb_composition_multi_peripheral_multi_register_sideband_data16_generalized_six_register_status_back_to_back"
+      ],
+      "coverage_buckets": [
+        "ial2_ppif_apb_composition_multi_peripheral_multi_register_sideband_data16_generalized_six_register_status_back_to_back_pipeline_cli"
+      ],
+      "query_kinds": [
+        "check",
+        "semantic",
+        "schedule"
+      ],
+      "source": "ppif/apb_composition_multi_peripheral_multi_register_sideband_data16_generalized_six_register_status_back_to_back.ppif"
+    },
+    {
+      "catalog_ids": [
+        "intent.apb_profile_alias_composition_multi_peripheral_multi_register_sideband_data16_generalized_status_back_to_back"
+      ],
+      "coverage_buckets": [
+        "ial2_apb_profile_alias_composition_multi_peripheral_multi_register_sideband_data16_generalized_status_back_to_back_pipeline_cli"
+      ],
+      "query_kinds": [
+        "check",
+        "semantic",
+        "schedule"
+      ],
+      "source": "ppif/apb_composition_multi_peripheral_multi_register_sideband_data16_generalized_status_back_to_back.apb"
+    },
+    {
+      "catalog_ids": [
+        "intent.ppif_apb_composition_multi_peripheral_multi_register_sideband_data16_generalized_status_back_to_back"
+      ],
+      "coverage_buckets": [
+        "ial2_ppif_apb_composition_multi_peripheral_multi_register_sideband_data16_generalized_status_back_to_back_pipeline_cli"
+      ],
+      "query_kinds": [
+        "check",
+        "semantic",
+        "schedule"
+      ],
+      "source": "ppif/apb_composition_multi_peripheral_multi_register_sideband_data16_generalized_status_back_to_back.ppif"
+    },
+    {
+      "catalog_ids": [
+        "intent.apb_profile_alias_composition_multi_peripheral_multi_register_sideband_data16_protection_generalized_five_register_status_back_to_back"
+      ],
+      "coverage_buckets": [
+        "ial2_apb_profile_alias_composition_multi_peripheral_multi_register_sideband_data16_protection_generalized_five_register_status_back_to_back_pipeline_cli"
+      ],
+      "query_kinds": [
+        "check",
+        "semantic",
+        "schedule"
+      ],
+      "source": "ppif/apb_composition_multi_peripheral_multi_register_sideband_data16_protection_generalized_five_register_status_back_to_back.apb"
+    },
+    {
+      "catalog_ids": [
+        "intent.ppif_apb_composition_multi_peripheral_multi_register_sideband_data16_protection_generalized_five_register_status_back_to_back"
+      ],
+      "coverage_buckets": [
+        "ial2_ppif_apb_composition_multi_peripheral_multi_register_sideband_data16_protection_generalized_five_register_status_back_to_back_pipeline_cli"
+      ],
+      "query_kinds": [
+        "check",
+        "semantic",
+        "schedule"
+      ],
+      "source": "ppif/apb_composition_multi_peripheral_multi_register_sideband_data16_protection_generalized_five_register_status_back_to_back.ppif"
+    },
+    {
+      "catalog_ids": [
+        "intent.apb_profile_alias_composition_multi_peripheral_multi_register_sideband_data16_protection_generalized_status_back_to_back"
+      ],
+      "coverage_buckets": [
+        "ial2_apb_profile_alias_composition_multi_peripheral_multi_register_sideband_data16_protection_generalized_status_back_to_back_pipeline_cli"
+      ],
+      "query_kinds": [
+        "check",
+        "semantic",
+        "schedule"
+      ],
+      "source": "ppif/apb_composition_multi_peripheral_multi_register_sideband_data16_protection_generalized_status_back_to_back.apb"
+    },
+    {
+      "catalog_ids": [
+        "intent.ppif_apb_composition_multi_peripheral_multi_register_sideband_data16_protection_generalized_status_back_to_back"
+      ],
+      "coverage_buckets": [
+        "ial2_ppif_apb_composition_multi_peripheral_multi_register_sideband_data16_protection_generalized_status_back_to_back_pipeline_cli"
+      ],
+      "query_kinds": [
+        "check",
+        "semantic",
+        "schedule"
+      ],
+      "source": "ppif/apb_composition_multi_peripheral_multi_register_sideband_data16_protection_generalized_status_back_to_back.ppif"
+    },
+    {
+      "catalog_ids": [
+        "intent.apb_profile_alias_composition_multi_peripheral_multi_register_sideband_data16_protection_status_back_to_back"
+      ],
+      "coverage_buckets": [
+        "ial2_apb_profile_alias_composition_multi_peripheral_multi_register_sideband_data16_protection_status_back_to_back_pipeline_cli"
+      ],
+      "query_kinds": [
+        "check",
+        "semantic",
+        "schedule"
+      ],
+      "source": "ppif/apb_composition_multi_peripheral_multi_register_sideband_data16_protection_status_back_to_back.apb"
+    },
+    {
+      "catalog_ids": [
+        "intent.ppif_apb_composition_multi_peripheral_multi_register_sideband_data16_protection_status_back_to_back"
+      ],
+      "coverage_buckets": [
+        "ial2_ppif_apb_composition_multi_peripheral_multi_register_sideband_data16_protection_status_back_to_back_pipeline_cli"
+      ],
+      "query_kinds": [
+        "check",
+        "semantic",
+        "schedule"
+      ],
+      "source": "ppif/apb_composition_multi_peripheral_multi_register_sideband_data16_protection_status_back_to_back.ppif"
+    },
+    {
+      "catalog_ids": [
+        "intent.apb_profile_alias_composition_multi_peripheral_multi_register_sideband_data16_status_back_to_back"
+      ],
+      "coverage_buckets": [
+        "ial2_apb_profile_alias_composition_multi_peripheral_multi_register_sideband_data16_status_back_to_back_pipeline_cli"
+      ],
+      "query_kinds": [
+        "check",
+        "semantic",
+        "schedule"
+      ],
+      "source": "ppif/apb_composition_multi_peripheral_multi_register_sideband_data16_status_back_to_back.apb"
+    },
+    {
+      "catalog_ids": [
+        "intent.ppif_apb_composition_multi_peripheral_multi_register_sideband_data16_status_back_to_back"
+      ],
+      "coverage_buckets": [
+        "ial2_ppif_apb_composition_multi_peripheral_multi_register_sideband_data16_status_back_to_back_pipeline_cli"
+      ],
+      "query_kinds": [
+        "check",
+        "semantic",
+        "schedule"
+      ],
+      "source": "ppif/apb_composition_multi_peripheral_multi_register_sideband_data16_status_back_to_back.ppif"
+    },
+    {
+      "catalog_ids": [
+        "intent.apb_profile_alias_composition_multi_peripheral_multi_register_sideband_generalized_five_register_status_back_to_back"
+      ],
+      "coverage_buckets": [
+        "ial2_apb_profile_alias_composition_multi_peripheral_multi_register_sideband_generalized_five_register_status_back_to_back_pipeline_cli"
+      ],
+      "query_kinds": [
+        "check",
+        "semantic",
+        "schedule"
+      ],
+      "source": "ppif/apb_composition_multi_peripheral_multi_register_sideband_generalized_five_register_status_back_to_back.apb"
+    },
+    {
+      "catalog_ids": [
+        "intent.ppif_apb_composition_multi_peripheral_multi_register_sideband_generalized_five_register_status_back_to_back"
+      ],
+      "coverage_buckets": [
+        "ial2_ppif_apb_composition_multi_peripheral_multi_register_sideband_generalized_five_register_status_back_to_back_pipeline_cli"
+      ],
+      "query_kinds": [
+        "check",
+        "semantic",
+        "schedule"
+      ],
+      "source": "ppif/apb_composition_multi_peripheral_multi_register_sideband_generalized_five_register_status_back_to_back.ppif"
+    },
+    {
+      "catalog_ids": [
+        "intent.apb_profile_alias_composition_multi_peripheral_multi_register_sideband_generalized_six_register_status_back_to_back"
+      ],
+      "coverage_buckets": [
+        "ial2_apb_profile_alias_composition_multi_peripheral_multi_register_sideband_generalized_six_register_status_back_to_back_pipeline_cli"
+      ],
+      "query_kinds": [
+        "check",
+        "semantic",
+        "schedule"
+      ],
+      "source": "ppif/apb_composition_multi_peripheral_multi_register_sideband_generalized_six_register_status_back_to_back.apb"
+    },
+    {
+      "catalog_ids": [
+        "intent.ppif_apb_composition_multi_peripheral_multi_register_sideband_generalized_six_register_status_back_to_back"
+      ],
+      "coverage_buckets": [
+        "ial2_ppif_apb_composition_multi_peripheral_multi_register_sideband_generalized_six_register_status_back_to_back_pipeline_cli"
+      ],
+      "query_kinds": [
+        "check",
+        "semantic",
+        "schedule"
+      ],
+      "source": "ppif/apb_composition_multi_peripheral_multi_register_sideband_generalized_six_register_status_back_to_back.ppif"
+    },
+    {
+      "catalog_ids": [
+        "intent.apb_profile_alias_composition_multi_peripheral_multi_register_sideband_generalized_status_back_to_back"
+      ],
+      "coverage_buckets": [
+        "ial2_apb_profile_alias_composition_multi_peripheral_multi_register_sideband_generalized_status_back_to_back_pipeline_cli"
+      ],
+      "query_kinds": [
+        "check",
+        "semantic",
+        "schedule"
+      ],
+      "source": "ppif/apb_composition_multi_peripheral_multi_register_sideband_generalized_status_back_to_back.apb"
+    },
+    {
+      "catalog_ids": [
+        "intent.ppif_apb_composition_multi_peripheral_multi_register_sideband_generalized_status_back_to_back"
+      ],
+      "coverage_buckets": [
+        "ial2_ppif_apb_composition_multi_peripheral_multi_register_sideband_generalized_status_back_to_back_pipeline_cli"
+      ],
+      "query_kinds": [
+        "check",
+        "semantic",
+        "schedule"
+      ],
+      "source": "ppif/apb_composition_multi_peripheral_multi_register_sideband_generalized_status_back_to_back.ppif"
+    },
+    {
+      "catalog_ids": [
+        "intent.apb_profile_alias_composition_multi_peripheral_multi_register_sideband_protection_generalized_five_register_status_back_to_back"
+      ],
+      "coverage_buckets": [
+        "ial2_apb_profile_alias_composition_multi_peripheral_multi_register_sideband_protection_generalized_five_register_status_back_to_back_pipeline_cli"
+      ],
+      "query_kinds": [
+        "check",
+        "semantic",
+        "schedule"
+      ],
+      "source": "ppif/apb_composition_multi_peripheral_multi_register_sideband_protection_generalized_five_register_status_back_to_back.apb"
+    },
+    {
+      "catalog_ids": [
+        "intent.ppif_apb_composition_multi_peripheral_multi_register_sideband_protection_generalized_five_register_status_back_to_back"
+      ],
+      "coverage_buckets": [
+        "ial2_ppif_apb_composition_multi_peripheral_multi_register_sideband_protection_generalized_five_register_status_back_to_back_pipeline_cli"
+      ],
+      "query_kinds": [
+        "check",
+        "semantic",
+        "schedule"
+      ],
+      "source": "ppif/apb_composition_multi_peripheral_multi_register_sideband_protection_generalized_five_register_status_back_to_back.ppif"
+    },
+    {
+      "catalog_ids": [
+        "intent.apb_profile_alias_composition_multi_peripheral_multi_register_sideband_protection_generalized_status_back_to_back"
+      ],
+      "coverage_buckets": [
+        "ial2_apb_profile_alias_composition_multi_peripheral_multi_register_sideband_protection_generalized_status_back_to_back_pipeline_cli"
+      ],
+      "query_kinds": [
+        "check",
+        "semantic",
+        "schedule"
+      ],
+      "source": "ppif/apb_composition_multi_peripheral_multi_register_sideband_protection_generalized_status_back_to_back.apb"
+    },
+    {
+      "catalog_ids": [
+        "intent.ppif_apb_composition_multi_peripheral_multi_register_sideband_protection_generalized_status_back_to_back"
+      ],
+      "coverage_buckets": [
+        "ial2_ppif_apb_composition_multi_peripheral_multi_register_sideband_protection_generalized_status_back_to_back_pipeline_cli"
+      ],
+      "query_kinds": [
+        "check",
+        "semantic",
+        "schedule"
+      ],
+      "source": "ppif/apb_composition_multi_peripheral_multi_register_sideband_protection_generalized_status_back_to_back.ppif"
+    },
+    {
+      "catalog_ids": [
+        "intent.apb_profile_alias_composition_multi_peripheral_multi_register_sideband_protection_status_back_to_back"
+      ],
+      "coverage_buckets": [
+        "ial2_apb_profile_alias_composition_multi_peripheral_multi_register_sideband_protection_status_back_to_back_pipeline_cli"
+      ],
+      "query_kinds": [
+        "check",
+        "semantic",
+        "schedule"
+      ],
+      "source": "ppif/apb_composition_multi_peripheral_multi_register_sideband_protection_status_back_to_back.apb"
+    },
+    {
+      "catalog_ids": [
+        "intent.ppif_apb_composition_multi_peripheral_multi_register_sideband_protection_status_back_to_back"
+      ],
+      "coverage_buckets": [
+        "ial2_ppif_apb_composition_multi_peripheral_multi_register_sideband_protection_status_back_to_back_pipeline_cli"
+      ],
+      "query_kinds": [
+        "check",
+        "semantic",
+        "schedule"
+      ],
+      "source": "ppif/apb_composition_multi_peripheral_multi_register_sideband_protection_status_back_to_back.ppif"
+    },
+    {
+      "catalog_ids": [
+        "intent.apb_profile_alias_composition_multi_peripheral_multi_register_sideband_status_back_to_back"
+      ],
+      "coverage_buckets": [
+        "ial2_apb_profile_alias_composition_multi_peripheral_multi_register_sideband_status_back_to_back_pipeline_cli"
+      ],
+      "query_kinds": [
+        "check",
+        "semantic",
+        "schedule"
+      ],
+      "source": "ppif/apb_composition_multi_peripheral_multi_register_sideband_status_back_to_back.apb"
+    },
+    {
+      "catalog_ids": [
+        "intent.ppif_apb_composition_multi_peripheral_multi_register_sideband_status_back_to_back"
+      ],
+      "coverage_buckets": [
+        "ial2_ppif_apb_composition_multi_peripheral_multi_register_sideband_status_back_to_back_pipeline_cli"
+      ],
+      "query_kinds": [
+        "check",
+        "semantic",
+        "schedule"
+      ],
+      "source": "ppif/apb_composition_multi_peripheral_multi_register_sideband_status_back_to_back.ppif"
+    },
+    {
+      "catalog_ids": [
+        "intent.apb_profile_alias_composition_multi_peripheral_sideband"
+      ],
+      "coverage_buckets": [
+        "ial2_apb_profile_alias_composition_multi_peripheral_sideband_pipeline_cli"
+      ],
+      "query_kinds": [
+        "check",
+        "semantic",
+        "schedule"
+      ],
+      "source": "ppif/apb_composition_multi_peripheral_sideband.apb"
+    },
+    {
+      "catalog_ids": [
+        "intent.ppif_apb_composition_multi_peripheral_sideband"
+      ],
+      "coverage_buckets": [
+        "ial2_ppif_apb_composition_multi_peripheral_sideband_pipeline_cli"
+      ],
+      "query_kinds": [
+        "check",
+        "semantic",
+        "schedule"
+      ],
+      "source": "ppif/apb_composition_multi_peripheral_sideband.ppif"
+    },
+    {
+      "catalog_ids": [
+        "intent.apb_profile_alias_composition_multi_peripheral_sideband_data16"
+      ],
+      "coverage_buckets": [
+        "ial2_apb_profile_alias_composition_multi_peripheral_sideband_data16_pipeline_cli"
+      ],
+      "query_kinds": [
+        "check",
+        "semantic",
+        "schedule"
+      ],
+      "source": "ppif/apb_composition_multi_peripheral_sideband_data16.apb"
+    },
+    {
+      "catalog_ids": [
+        "intent.ppif_apb_composition_multi_peripheral_sideband_data16"
+      ],
+      "coverage_buckets": [
+        "ial2_ppif_apb_composition_multi_peripheral_sideband_data16_pipeline_cli"
+      ],
+      "query_kinds": [
+        "check",
+        "semantic",
+        "schedule"
+      ],
+      "source": "ppif/apb_composition_multi_peripheral_sideband_data16.ppif"
+    },
+    {
+      "catalog_ids": [
+        "intent.apb_profile_alias_composition_multi_peripheral_sideband_data16_protection"
+      ],
+      "coverage_buckets": [
+        "ial2_apb_profile_alias_composition_multi_peripheral_sideband_data16_protection_pipeline_cli"
+      ],
+      "query_kinds": [
+        "check",
+        "semantic",
+        "schedule"
+      ],
+      "source": "ppif/apb_composition_multi_peripheral_sideband_data16_protection.apb"
+    },
+    {
+      "catalog_ids": [
+        "intent.ppif_apb_composition_multi_peripheral_sideband_data16_protection"
+      ],
+      "coverage_buckets": [
+        "ial2_ppif_apb_composition_multi_peripheral_sideband_data16_protection_pipeline_cli"
+      ],
+      "query_kinds": [
+        "check",
+        "semantic",
+        "schedule"
+      ],
+      "source": "ppif/apb_composition_multi_peripheral_sideband_data16_protection.ppif"
+    },
+    {
+      "catalog_ids": [
+        "intent.apb_profile_alias_composition_multi_peripheral_sideband_data16_protection_status_back_to_back"
+      ],
+      "coverage_buckets": [
+        "ial2_apb_profile_alias_composition_multi_peripheral_sideband_data16_protection_status_back_to_back_pipeline_cli"
+      ],
+      "query_kinds": [
+        "check",
+        "semantic",
+        "schedule"
+      ],
+      "source": "ppif/apb_composition_multi_peripheral_sideband_data16_protection_status_back_to_back.apb"
+    },
+    {
+      "catalog_ids": [
+        "intent.ppif_apb_composition_multi_peripheral_sideband_data16_protection_status_back_to_back"
+      ],
+      "coverage_buckets": [
+        "ial2_ppif_apb_composition_multi_peripheral_sideband_data16_protection_status_back_to_back_pipeline_cli"
+      ],
+      "query_kinds": [
+        "check",
+        "semantic",
+        "schedule"
+      ],
+      "source": "ppif/apb_composition_multi_peripheral_sideband_data16_protection_status_back_to_back.ppif"
+    },
+    {
+      "catalog_ids": [
+        "intent.apb_profile_alias_composition_multi_peripheral_sideband_protection"
+      ],
+      "coverage_buckets": [
+        "ial2_apb_profile_alias_composition_multi_peripheral_sideband_protection_pipeline_cli"
+      ],
+      "query_kinds": [
+        "check",
+        "semantic",
+        "schedule"
+      ],
+      "source": "ppif/apb_composition_multi_peripheral_sideband_protection.apb"
+    },
+    {
+      "catalog_ids": [
+        "intent.ppif_apb_composition_multi_peripheral_sideband_protection"
+      ],
+      "coverage_buckets": [
+        "ial2_ppif_apb_composition_multi_peripheral_sideband_protection_pipeline_cli"
+      ],
+      "query_kinds": [
+        "check",
+        "semantic",
+        "schedule"
+      ],
+      "source": "ppif/apb_composition_multi_peripheral_sideband_protection.ppif"
+    },
+    {
+      "catalog_ids": [
+        "intent.apb_profile_alias_composition_multi_peripheral_sideband_protection_status_back_to_back"
+      ],
+      "coverage_buckets": [
+        "ial2_apb_profile_alias_composition_multi_peripheral_sideband_protection_status_back_to_back_pipeline_cli"
+      ],
+      "query_kinds": [
+        "check",
+        "semantic",
+        "schedule"
+      ],
+      "source": "ppif/apb_composition_multi_peripheral_sideband_protection_status_back_to_back.apb"
+    },
+    {
+      "catalog_ids": [
+        "intent.ppif_apb_composition_multi_peripheral_sideband_protection_status_back_to_back"
+      ],
+      "coverage_buckets": [
+        "ial2_ppif_apb_composition_multi_peripheral_sideband_protection_status_back_to_back_pipeline_cli"
+      ],
+      "query_kinds": [
+        "check",
+        "semantic",
+        "schedule"
+      ],
+      "source": "ppif/apb_composition_multi_peripheral_sideband_protection_status_back_to_back.ppif"
+    },
+    {
+      "catalog_ids": [
+        "intent.apb_profile_alias_composition_multi_peripheral_sideband_status_back_to_back"
+      ],
+      "coverage_buckets": [
+        "ial2_apb_profile_alias_composition_multi_peripheral_sideband_status_back_to_back_pipeline_cli"
+      ],
+      "query_kinds": [
+        "check",
+        "semantic",
+        "schedule"
+      ],
+      "source": "ppif/apb_composition_multi_peripheral_sideband_status_back_to_back.apb"
+    },
+    {
+      "catalog_ids": [
+        "intent.ppif_apb_composition_multi_peripheral_sideband_status_back_to_back"
+      ],
+      "coverage_buckets": [
+        "ial2_ppif_apb_composition_multi_peripheral_sideband_status_back_to_back_pipeline_cli"
+      ],
+      "query_kinds": [
+        "check",
+        "semantic",
+        "schedule"
+      ],
+      "source": "ppif/apb_composition_multi_peripheral_sideband_status_back_to_back.ppif"
+    },
+    {
+      "catalog_ids": [
+        "intent.apb_profile_alias_composition_multi_peripheral_status_back_to_back"
+      ],
+      "coverage_buckets": [
+        "ial2_apb_profile_alias_composition_multi_peripheral_status_back_to_back_pipeline_cli"
+      ],
+      "query_kinds": [
+        "check",
+        "semantic",
+        "schedule"
+      ],
+      "source": "ppif/apb_composition_multi_peripheral_status_back_to_back.apb"
+    },
+    {
+      "catalog_ids": [
+        "intent.ppif_apb_composition_multi_peripheral_status_back_to_back"
+      ],
+      "coverage_buckets": [
+        "ial2_ppif_apb_composition_multi_peripheral_status_back_to_back_pipeline_cli"
+      ],
+      "query_kinds": [
+        "check",
+        "semantic",
+        "schedule"
+      ],
+      "source": "ppif/apb_composition_multi_peripheral_status_back_to_back.ppif"
+    },
+    {
+      "catalog_ids": [
+        "intent.apb_profile_alias_composition_multi_register"
+      ],
+      "coverage_buckets": [
+        "ial2_apb_profile_alias_composition_multi_register_pipeline_cli"
+      ],
+      "query_kinds": [
+        "check",
+        "semantic",
+        "schedule"
+      ],
+      "source": "ppif/apb_composition_multi_register.apb"
+    },
+    {
+      "catalog_ids": [
+        "intent.ppif_apb_composition_multi_register"
+      ],
+      "coverage_buckets": [
+        "ial2_ppif_apb_composition_multi_register_pipeline_cli"
+      ],
+      "query_kinds": [
+        "check",
+        "semantic",
+        "schedule"
+      ],
+      "source": "ppif/apb_composition_multi_register.ppif"
+    },
+    {
+      "catalog_ids": [
+        "intent.apb_profile_alias_composition_multi_register_sideband"
+      ],
+      "coverage_buckets": [
+        "ial2_apb_profile_alias_composition_multi_register_sideband_pipeline_cli"
+      ],
+      "query_kinds": [
+        "check",
+        "semantic",
+        "schedule"
+      ],
+      "source": "ppif/apb_composition_multi_register_sideband.apb"
+    },
+    {
+      "catalog_ids": [
+        "intent.ppif_apb_composition_multi_register_sideband"
+      ],
+      "coverage_buckets": [
+        "ial2_ppif_apb_composition_multi_register_sideband_pipeline_cli"
+      ],
+      "query_kinds": [
+        "check",
+        "semantic",
+        "schedule"
+      ],
+      "source": "ppif/apb_composition_multi_register_sideband.ppif"
+    },
+    {
+      "catalog_ids": [
+        "intent.apb_profile_alias_composition_multi_register_sideband_data16"
+      ],
+      "coverage_buckets": [
+        "ial2_apb_profile_alias_composition_multi_register_sideband_data16_pipeline_cli"
+      ],
+      "query_kinds": [
+        "check",
+        "semantic",
+        "schedule"
+      ],
+      "source": "ppif/apb_composition_multi_register_sideband_data16.apb"
+    },
+    {
+      "catalog_ids": [
+        "intent.ppif_apb_composition_multi_register_sideband_data16"
+      ],
+      "coverage_buckets": [
+        "ial2_ppif_apb_composition_multi_register_sideband_data16_pipeline_cli"
+      ],
+      "query_kinds": [
+        "check",
+        "semantic",
+        "schedule"
+      ],
+      "source": "ppif/apb_composition_multi_register_sideband_data16.ppif"
+    },
+    {
+      "catalog_ids": [
+        "intent.apb_profile_alias_composition_multi_register_sideband_data16_protection"
+      ],
+      "coverage_buckets": [
+        "ial2_apb_profile_alias_composition_multi_register_sideband_data16_protection_pipeline_cli"
+      ],
+      "query_kinds": [
+        "check",
+        "semantic",
+        "schedule"
+      ],
+      "source": "ppif/apb_composition_multi_register_sideband_data16_protection.apb"
+    },
+    {
+      "catalog_ids": [
+        "intent.ppif_apb_composition_multi_register_sideband_data16_protection"
+      ],
+      "coverage_buckets": [
+        "ial2_ppif_apb_composition_multi_register_sideband_data16_protection_pipeline_cli"
+      ],
+      "query_kinds": [
+        "check",
+        "semantic",
+        "schedule"
+      ],
+      "source": "ppif/apb_composition_multi_register_sideband_data16_protection.ppif"
+    },
+    {
+      "catalog_ids": [
+        "intent.apb_profile_alias_composition_multi_register_sideband_data16_protection_status_back_to_back"
+      ],
+      "coverage_buckets": [
+        "ial2_apb_profile_alias_composition_multi_register_sideband_data16_protection_status_back_to_back_pipeline_cli"
+      ],
+      "query_kinds": [
+        "check",
+        "semantic",
+        "schedule"
+      ],
+      "source": "ppif/apb_composition_multi_register_sideband_data16_protection_status_back_to_back.apb"
+    },
+    {
+      "catalog_ids": [
+        "intent.ppif_apb_composition_multi_register_sideband_data16_protection_status_back_to_back"
+      ],
+      "coverage_buckets": [
+        "ial2_ppif_apb_composition_multi_register_sideband_data16_protection_status_back_to_back_pipeline_cli"
+      ],
+      "query_kinds": [
+        "check",
+        "semantic",
+        "schedule"
+      ],
+      "source": "ppif/apb_composition_multi_register_sideband_data16_protection_status_back_to_back.ppif"
+    },
+    {
+      "catalog_ids": [
+        "intent.apb_profile_alias_composition_multi_register_sideband_data16_status_back_to_back"
+      ],
+      "coverage_buckets": [
+        "ial2_apb_profile_alias_composition_multi_register_sideband_data16_status_back_to_back_pipeline_cli"
+      ],
+      "query_kinds": [
+        "check",
+        "semantic",
+        "schedule"
+      ],
+      "source": "ppif/apb_composition_multi_register_sideband_data16_status_back_to_back.apb"
+    },
+    {
+      "catalog_ids": [
+        "intent.ppif_apb_composition_multi_register_sideband_data16_status_back_to_back"
+      ],
+      "coverage_buckets": [
+        "ial2_ppif_apb_composition_multi_register_sideband_data16_status_back_to_back_pipeline_cli"
+      ],
+      "query_kinds": [
+        "check",
+        "semantic",
+        "schedule"
+      ],
+      "source": "ppif/apb_composition_multi_register_sideband_data16_status_back_to_back.ppif"
+    },
+    {
+      "catalog_ids": [
+        "intent.apb_profile_alias_composition_multi_register_sideband_protection"
+      ],
+      "coverage_buckets": [
+        "ial2_apb_profile_alias_composition_multi_register_sideband_protection_pipeline_cli"
+      ],
+      "query_kinds": [
+        "check",
+        "semantic",
+        "schedule"
+      ],
+      "source": "ppif/apb_composition_multi_register_sideband_protection.apb"
+    },
+    {
+      "catalog_ids": [
+        "intent.ppif_apb_composition_multi_register_sideband_protection"
+      ],
+      "coverage_buckets": [
+        "ial2_ppif_apb_composition_multi_register_sideband_protection_pipeline_cli"
+      ],
+      "query_kinds": [
+        "check",
+        "semantic",
+        "schedule"
+      ],
+      "source": "ppif/apb_composition_multi_register_sideband_protection.ppif"
+    },
+    {
+      "catalog_ids": [
+        "intent.apb_profile_alias_composition_multi_register_sideband_protection_status_back_to_back"
+      ],
+      "coverage_buckets": [
+        "ial2_apb_profile_alias_composition_multi_register_sideband_protection_status_back_to_back_pipeline_cli"
+      ],
+      "query_kinds": [
+        "check",
+        "semantic",
+        "schedule"
+      ],
+      "source": "ppif/apb_composition_multi_register_sideband_protection_status_back_to_back.apb"
+    },
+    {
+      "catalog_ids": [
+        "intent.ppif_apb_composition_multi_register_sideband_protection_status_back_to_back"
+      ],
+      "coverage_buckets": [
+        "ial2_ppif_apb_composition_multi_register_sideband_protection_status_back_to_back_pipeline_cli"
+      ],
+      "query_kinds": [
+        "check",
+        "semantic",
+        "schedule"
+      ],
+      "source": "ppif/apb_composition_multi_register_sideband_protection_status_back_to_back.ppif"
+    },
+    {
+      "catalog_ids": [
+        "intent.apb_profile_alias_composition_multi_register_sideband_status_back_to_back"
+      ],
+      "coverage_buckets": [
+        "ial2_apb_profile_alias_composition_multi_register_sideband_status_back_to_back_pipeline_cli"
+      ],
+      "query_kinds": [
+        "check",
+        "semantic",
+        "schedule"
+      ],
+      "source": "ppif/apb_composition_multi_register_sideband_status_back_to_back.apb"
+    },
+    {
+      "catalog_ids": [
+        "intent.ppif_apb_composition_multi_register_sideband_status_back_to_back"
+      ],
+      "coverage_buckets": [
+        "ial2_ppif_apb_composition_multi_register_sideband_status_back_to_back_pipeline_cli"
+      ],
+      "query_kinds": [
+        "check",
+        "semantic",
+        "schedule"
+      ],
+      "source": "ppif/apb_composition_multi_register_sideband_status_back_to_back.ppif"
+    },
+    {
+      "catalog_ids": [
+        "intent.apb_profile_alias_composition_sideband_status_back_to_back"
+      ],
+      "coverage_buckets": [
+        "ial2_apb_profile_alias_composition_sideband_status_back_to_back_pipeline_cli"
+      ],
+      "query_kinds": [
+        "check",
+        "semantic",
+        "schedule"
+      ],
+      "source": "ppif/apb_composition_sideband_status_back_to_back.apb"
+    },
+    {
+      "catalog_ids": [
+        "intent.ppif_apb_composition_sideband_status_back_to_back"
+      ],
+      "coverage_buckets": [
+        "ial2_ppif_apb_composition_sideband_status_back_to_back_pipeline_cli"
+      ],
+      "query_kinds": [
+        "check",
+        "semantic",
+        "schedule"
+      ],
+      "source": "ppif/apb_composition_sideband_status_back_to_back.ppif"
+    },
+    {
+      "catalog_ids": [
+        "intent.apb_profile_alias_composition_status"
+      ],
+      "coverage_buckets": [
+        "ial2_apb_profile_alias_composition_status_pipeline_cli"
+      ],
+      "query_kinds": [
+        "check",
+        "semantic",
+        "schedule"
+      ],
+      "source": "ppif/apb_composition_status.apb"
+    },
+    {
+      "catalog_ids": [
+        "intent.ppif_apb_composition_status"
+      ],
+      "coverage_buckets": [
+        "ial2_ppif_apb_composition_status_pipeline_cli"
+      ],
+      "query_kinds": [
+        "check",
+        "semantic",
+        "schedule"
+      ],
+      "source": "ppif/apb_composition_status.ppif"
+    },
+    {
+      "catalog_ids": [
+        "intent.apb_profile_alias_composition_status_back_to_back"
+      ],
+      "coverage_buckets": [
+        "ial2_apb_profile_alias_composition_status_back_to_back_pipeline_cli"
+      ],
+      "query_kinds": [
+        "check",
+        "semantic",
+        "schedule"
+      ],
+      "source": "ppif/apb_composition_status_back_to_back.apb"
+    },
+    {
+      "catalog_ids": [
+        "intent.ppif_apb_composition_status_back_to_back"
+      ],
+      "coverage_buckets": [
+        "ial2_ppif_apb_composition_status_back_to_back_pipeline_cli"
+      ],
+      "query_kinds": [
+        "check",
+        "semantic",
+        "schedule"
+      ],
+      "source": "ppif/apb_composition_status_back_to_back.ppif"
+    },
+    {
+      "catalog_ids": [
+        "intent.apb_profile_alias_requester_transfer"
+      ],
+      "coverage_buckets": [
+        "ial2_apb_profile_alias_requester_transfer_pipeline_cli"
+      ],
+      "query_kinds": [
+        "check",
+        "semantic",
+        "schedule"
+      ],
+      "source": "ppif/apb_requester_transfer.apb"
+    },
+    {
+      "catalog_ids": [
+        "intent.ppif_apb_requester_transfer"
+      ],
+      "coverage_buckets": [
+        "ial2_ppif_apb_requester_transfer_pipeline_cli"
+      ],
+      "query_kinds": [
+        "check",
+        "semantic",
+        "schedule"
+      ],
+      "source": "ppif/apb_requester_transfer.ppif"
+    },
+    {
+      "catalog_ids": [
+        "intent.apb_profile_alias_requester_transfer_busy"
+      ],
+      "coverage_buckets": [
+        "ial2_apb_profile_alias_requester_transfer_busy_pipeline_cli"
+      ],
+      "query_kinds": [
+        "check",
+        "semantic",
+        "schedule"
+      ],
+      "source": "ppif/apb_requester_transfer_busy.apb"
+    },
+    {
+      "catalog_ids": [
+        "intent.ppif_apb_requester_transfer_busy"
+      ],
+      "coverage_buckets": [
+        "ial2_ppif_apb_requester_transfer_busy_pipeline_cli"
+      ],
+      "query_kinds": [
+        "check",
+        "semantic",
+        "schedule"
+      ],
+      "source": "ppif/apb_requester_transfer_busy.ppif"
+    },
+    {
+      "catalog_ids": [
+        "intent.apb_profile_alias_requester_transfer_sideband"
+      ],
+      "coverage_buckets": [
+        "ial2_apb_profile_alias_requester_transfer_sideband_pipeline_cli"
+      ],
+      "query_kinds": [
+        "check",
+        "semantic",
+        "schedule"
+      ],
+      "source": "ppif/apb_requester_transfer_sideband.apb"
+    },
+    {
+      "catalog_ids": [
+        "intent.ppif_apb_requester_transfer_sideband"
+      ],
+      "coverage_buckets": [
+        "ial2_ppif_apb_requester_transfer_sideband_pipeline_cli"
+      ],
+      "query_kinds": [
+        "check",
+        "semantic",
+        "schedule"
+      ],
+      "source": "ppif/apb_requester_transfer_sideband.ppif"
+    },
+    {
+      "catalog_ids": [
+        "intent.apb_profile_alias_requester_transfer_sideband_data16"
+      ],
+      "coverage_buckets": [
+        "ial2_apb_profile_alias_requester_transfer_sideband_data16_pipeline_cli"
+      ],
+      "query_kinds": [
+        "check",
+        "semantic",
+        "schedule"
+      ],
+      "source": "ppif/apb_requester_transfer_sideband_data16.apb"
+    },
+    {
+      "catalog_ids": [
+        "intent.ppif_apb_requester_transfer_sideband_data16"
+      ],
+      "coverage_buckets": [
+        "ial2_ppif_apb_requester_transfer_sideband_data16_pipeline_cli"
+      ],
+      "query_kinds": [
+        "check",
+        "semantic",
+        "schedule"
+      ],
+      "source": "ppif/apb_requester_transfer_sideband_data16.ppif"
+    },
+    {
+      "catalog_ids": [
+        "intent.apb_profile_alias_requester_transfer_sideband_data16_status_back_to_back"
+      ],
+      "coverage_buckets": [
+        "ial2_apb_profile_alias_requester_transfer_sideband_data16_status_back_to_back_pipeline_cli"
+      ],
+      "query_kinds": [
+        "check",
+        "semantic",
+        "schedule"
+      ],
+      "source": "ppif/apb_requester_transfer_sideband_data16_status_back_to_back.apb"
+    },
+    {
+      "catalog_ids": [
+        "intent.ppif_apb_requester_transfer_sideband_data16_status_back_to_back"
+      ],
+      "coverage_buckets": [
+        "ial2_ppif_apb_requester_transfer_sideband_data16_status_back_to_back_pipeline_cli"
+      ],
+      "query_kinds": [
+        "check",
+        "semantic",
+        "schedule"
+      ],
+      "source": "ppif/apb_requester_transfer_sideband_data16_status_back_to_back.ppif"
+    },
+    {
+      "catalog_ids": [
+        "intent.apb_profile_alias_requester_transfer_sideband_status_back_to_back"
+      ],
+      "coverage_buckets": [
+        "ial2_apb_profile_alias_requester_transfer_sideband_status_back_to_back_pipeline_cli"
+      ],
+      "query_kinds": [
+        "check",
+        "semantic",
+        "schedule"
+      ],
+      "source": "ppif/apb_requester_transfer_sideband_status_back_to_back.apb"
+    },
+    {
+      "catalog_ids": [
+        "intent.ppif_apb_requester_transfer_sideband_status_back_to_back"
+      ],
+      "coverage_buckets": [
+        "ial2_ppif_apb_requester_transfer_sideband_status_back_to_back_pipeline_cli"
+      ],
+      "query_kinds": [
+        "check",
+        "semantic",
+        "schedule"
+      ],
+      "source": "ppif/apb_requester_transfer_sideband_status_back_to_back.ppif"
+    },
+    {
+      "catalog_ids": [
+        "intent.apb_profile_alias_requester_transfer_status"
+      ],
+      "coverage_buckets": [
+        "ial2_apb_profile_alias_requester_transfer_status_pipeline_cli"
+      ],
+      "query_kinds": [
+        "check",
+        "semantic",
+        "schedule"
+      ],
+      "source": "ppif/apb_requester_transfer_status.apb"
+    },
+    {
+      "catalog_ids": [
+        "intent.ppif_apb_requester_transfer_status"
+      ],
+      "coverage_buckets": [
+        "ial2_ppif_apb_requester_transfer_status_pipeline_cli"
+      ],
+      "query_kinds": [
+        "check",
+        "semantic",
+        "schedule"
+      ],
+      "source": "ppif/apb_requester_transfer_status.ppif"
+    },
+    {
+      "catalog_ids": [
+        "intent.apb_profile_alias_requester_transfer_status_back_to_back"
+      ],
+      "coverage_buckets": [
+        "ial2_apb_profile_alias_requester_transfer_status_back_to_back_pipeline_cli"
+      ],
+      "query_kinds": [
+        "check",
+        "semantic",
+        "schedule"
+      ],
+      "source": "ppif/apb_requester_transfer_status_back_to_back.apb"
+    },
+    {
+      "catalog_ids": [
+        "intent.ppif_apb_requester_transfer_status_back_to_back"
+      ],
+      "coverage_buckets": [
+        "ial2_ppif_apb_requester_transfer_status_back_to_back_pipeline_cli"
+      ],
+      "query_kinds": [
+        "check",
+        "semantic",
+        "schedule"
+      ],
+      "source": "ppif/apb_requester_transfer_status_back_to_back.ppif"
+    },
+    {
+      "catalog_ids": [
+        "intent.ppif_axi_ar_driver"
+      ],
+      "coverage_buckets": [
+        "ial2_ppif_axi_ar_driver_pipeline_cli"
+      ],
+      "query_kinds": [
+        "check",
+        "semantic",
+        "schedule"
+      ],
+      "source": "ppif/axi_ar_driver.ppif"
+    },
+    {
+      "catalog_ids": [
+        "intent.ppif_axi_aw_driver"
+      ],
+      "coverage_buckets": [
+        "ial2_ppif_axi_aw_driver_pipeline_cli"
+      ],
+      "query_kinds": [
+        "check",
+        "semantic",
+        "schedule"
+      ],
+      "source": "ppif/axi_aw_driver.ppif"
+    },
+    {
+      "catalog_ids": [
+        "intent.axi_profile_alias_aw_valid_ready"
+      ],
+      "coverage_buckets": [
+        "ial2_axi_profile_alias_aw_valid_ready_pipeline_cli"
+      ],
+      "query_kinds": [
+        "check",
+        "semantic",
+        "schedule"
+      ],
+      "source": "ppif/axi_aw_valid_ready.axi"
+    },
+    {
+      "catalog_ids": [
+        "intent.ppif_axi_aw_valid_ready"
+      ],
+      "coverage_buckets": [
+        "ial2_ppif_pipeline_cli"
+      ],
+      "query_kinds": [
+        "check",
+        "semantic",
+        "schedule"
+      ],
+      "source": "ppif/axi_aw_valid_ready.ppif"
+    },
+    {
+      "catalog_ids": [
+        "intent.ppif_axi_aw_w_valid_ready_bundle"
+      ],
+      "coverage_buckets": [
+        "ial2_ppif_bundle_pipeline_cli"
+      ],
+      "query_kinds": [
+        "check",
+        "semantic",
+        "schedule"
+      ],
+      "source": "ppif/axi_aw_w_valid_ready_bundle.ppif"
+    },
+    {
+      "catalog_ids": [
+        "intent.ppif_axi_b_response_acceptor"
+      ],
+      "coverage_buckets": [
+        "ial2_ppif_axi_b_response_acceptor_pipeline_cli"
+      ],
+      "query_kinds": [
+        "check",
+        "semantic",
+        "schedule"
+      ],
+      "source": "ppif/axi_b_response_acceptor.ppif"
+    },
+    {
+      "catalog_ids": [
+        "intent.ppif_axi_manager_capacity_status"
+      ],
+      "coverage_buckets": [
+        "ial2_ppif_manager_capacity_status_pipeline_cli"
+      ],
+      "query_kinds": [
+        "check",
+        "semantic",
+        "schedule"
+      ],
+      "source": "ppif/axi_manager_capacity_status.ppif"
+    },
+    {
+      "catalog_ids": [
+        "intent.ppif_axi_manager_capacity_status_auto_id_lifecycle"
+      ],
+      "coverage_buckets": [
+        "ial2_ppif_manager_capacity_status_auto_id_lifecycle_pipeline_cli"
+      ],
+      "query_kinds": [
+        "check",
+        "semantic",
+        "schedule"
+      ],
+      "source": "ppif/axi_manager_capacity_status_auto_id_lifecycle.ppif"
+    },
+    {
+      "catalog_ids": [
+        "intent.ppif_axi_manager_capacity_status_dynamic_read_burst_last_depth3_same_id_issue_order_queue"
+      ],
+      "coverage_buckets": [
+        "ial2_ppif_manager_capacity_status_dynamic_read_burst_last_depth3_same_id_issue_order_queue_pipeline_cli"
+      ],
+      "query_kinds": [
+        "check",
+        "semantic",
+        "schedule"
+      ],
+      "source": "ppif/axi_manager_capacity_status_dynamic_read_burst_last_depth3_same_id_issue_order_queue.ppif"
+    },
+    {
+      "catalog_ids": [
+        "intent.ppif_axi_manager_capacity_status_dynamic_read_burst_last_depth3_same_id_issue_order_queue_read_data"
+      ],
+      "coverage_buckets": [
+        "ial2_ppif_manager_capacity_status_dynamic_read_burst_last_depth3_same_id_issue_order_queue_read_data_pipeline_cli"
+      ],
+      "query_kinds": [
+        "check",
+        "semantic",
+        "schedule"
+      ],
+      "source": "ppif/axi_manager_capacity_status_dynamic_read_burst_last_depth3_same_id_issue_order_queue_read_data.ppif"
+    },
+    {
+      "catalog_ids": [
+        "intent.ppif_axi_manager_capacity_status_dynamic_read_burst_last_depth3_same_id_issue_order_queue_read_data_burst_length"
+      ],
+      "coverage_buckets": [
+        "ial2_ppif_manager_capacity_status_dynamic_read_burst_last_depth3_same_id_issue_order_queue_read_data_burst_length_pipeline_cli"
+      ],
+      "query_kinds": [
+        "check",
+        "semantic",
+        "schedule"
+      ],
+      "source": "ppif/axi_manager_capacity_status_dynamic_read_burst_last_depth3_same_id_issue_order_queue_read_data_burst_length.ppif"
+    },
+    {
+      "catalog_ids": [
+        "intent.ppif_axi_manager_capacity_status_dynamic_read_burst_last_depth3_same_id_issue_order_queue_read_data_burst_length_runtime_assertion"
+      ],
+      "coverage_buckets": [
+        "ial2_ppif_manager_capacity_status_dynamic_read_burst_last_depth3_same_id_issue_order_queue_read_data_burst_length_runtime_assertion_pipeline_cli"
+      ],
+      "query_kinds": [
+        "check",
+        "semantic",
+        "schedule"
+      ],
+      "source": "ppif/axi_manager_capacity_status_dynamic_read_burst_last_depth3_same_id_issue_order_queue_read_data_burst_length_runtime_assertion.ppif"
+    },
+    {
+      "catalog_ids": [
+        "intent.ppif_axi_manager_capacity_status_dynamic_read_burst_last_depth3_same_id_issue_order_queue_read_data_multi_beat"
+      ],
+      "coverage_buckets": [
+        "ial2_ppif_manager_capacity_status_dynamic_read_burst_last_depth3_same_id_issue_order_queue_read_data_multi_beat_pipeline_cli"
+      ],
+      "query_kinds": [
+        "check",
+        "semantic",
+        "schedule"
+      ],
+      "source": "ppif/axi_manager_capacity_status_dynamic_read_burst_last_depth3_same_id_issue_order_queue_read_data_multi_beat.ppif"
+    },
+    {
+      "catalog_ids": [
+        "intent.ppif_axi_manager_capacity_status_dynamic_read_burst_last_same_id_issue_order_queue"
+      ],
+      "coverage_buckets": [
+        "ial2_ppif_manager_capacity_status_dynamic_read_burst_last_same_id_issue_order_queue_pipeline_cli"
+      ],
+      "query_kinds": [
+        "check",
+        "semantic",
+        "schedule"
+      ],
+      "source": "ppif/axi_manager_capacity_status_dynamic_read_burst_last_same_id_issue_order_queue.ppif"
+    },
+    {
+      "catalog_ids": [
+        "intent.ppif_axi_manager_capacity_status_dynamic_read_burst_last_same_id_issue_order_queue_read_data"
+      ],
+      "coverage_buckets": [
+        "ial2_ppif_manager_capacity_status_dynamic_read_burst_last_same_id_issue_order_queue_read_data_pipeline_cli"
+      ],
+      "query_kinds": [
+        "check",
+        "semantic",
+        "schedule"
+      ],
+      "source": "ppif/axi_manager_capacity_status_dynamic_read_burst_last_same_id_issue_order_queue_read_data.ppif"
+    },
+    {
+      "catalog_ids": [
+        "intent.ppif_axi_manager_capacity_status_dynamic_read_burst_last_same_id_issue_order_queue_read_data_burst_length"
+      ],
+      "coverage_buckets": [
+        "ial2_ppif_manager_capacity_status_dynamic_read_burst_last_same_id_issue_order_queue_read_data_burst_length_pipeline_cli"
+      ],
+      "query_kinds": [
+        "check",
+        "semantic",
+        "schedule"
+      ],
+      "source": "ppif/axi_manager_capacity_status_dynamic_read_burst_last_same_id_issue_order_queue_read_data_burst_length.ppif"
+    },
+    {
+      "catalog_ids": [
+        "intent.ppif_axi_manager_capacity_status_dynamic_read_burst_last_same_id_issue_order_queue_read_data_burst_length_runtime_assertion"
+      ],
+      "coverage_buckets": [
+        "ial2_ppif_manager_capacity_status_dynamic_read_burst_last_same_id_issue_order_queue_read_data_burst_length_runtime_assertion_pipeline_cli"
+      ],
+      "query_kinds": [
+        "check",
+        "semantic",
+        "schedule"
+      ],
+      "source": "ppif/axi_manager_capacity_status_dynamic_read_burst_last_same_id_issue_order_queue_read_data_burst_length_runtime_assertion.ppif"
+    },
+    {
+      "catalog_ids": [
+        "intent.ppif_axi_manager_capacity_status_dynamic_read_burst_last_same_id_issue_order_queue_read_data_multi_beat"
+      ],
+      "coverage_buckets": [
+        "ial2_ppif_manager_capacity_status_dynamic_read_burst_last_same_id_issue_order_queue_read_data_multi_beat_pipeline_cli"
+      ],
+      "query_kinds": [
+        "check",
+        "semantic",
+        "schedule"
+      ],
+      "source": "ppif/axi_manager_capacity_status_dynamic_read_burst_last_same_id_issue_order_queue_read_data_multi_beat.ppif"
+    },
+    {
+      "catalog_ids": [
+        "intent.ppif_axi_manager_capacity_status_dynamic_read_data"
+      ],
+      "coverage_buckets": [
+        "ial2_ppif_manager_capacity_status_dynamic_read_data_pipeline_cli"
+      ],
+      "query_kinds": [
+        "check",
+        "semantic",
+        "schedule"
+      ],
+      "source": "ppif/axi_manager_capacity_status_dynamic_read_data.ppif"
+    },
+    {
+      "catalog_ids": [
+        "intent.ppif_axi_manager_capacity_status_dynamic_read_data_burst_length"
+      ],
+      "coverage_buckets": [
+        "ial2_ppif_manager_capacity_status_dynamic_read_data_burst_length_pipeline_cli"
+      ],
+      "query_kinds": [
+        "check",
+        "semantic",
+        "schedule"
+      ],
+      "source": "ppif/axi_manager_capacity_status_dynamic_read_data_burst_length.ppif"
+    },
+    {
+      "catalog_ids": [
+        "intent.ppif_axi_manager_capacity_status_dynamic_read_data_burst_length_runtime_assertion"
+      ],
+      "coverage_buckets": [
+        "ial2_ppif_manager_capacity_status_dynamic_read_data_burst_length_runtime_assertion_pipeline_cli"
+      ],
+      "query_kinds": [
+        "check",
+        "semantic",
+        "schedule"
+      ],
+      "source": "ppif/axi_manager_capacity_status_dynamic_read_data_burst_length_runtime_assertion.ppif"
+    },
+    {
+      "catalog_ids": [
+        "intent.ppif_axi_manager_capacity_status_dynamic_read_data_last_beat"
+      ],
+      "coverage_buckets": [
+        "ial2_ppif_manager_capacity_status_dynamic_read_data_last_beat_pipeline_cli"
+      ],
+      "query_kinds": [
+        "check",
+        "semantic",
+        "schedule"
+      ],
+      "source": "ppif/axi_manager_capacity_status_dynamic_read_data_last_beat.ppif"
+    },
+    {
+      "catalog_ids": [
+        "intent.ppif_axi_manager_capacity_status_dynamic_read_data_multi"
+      ],
+      "coverage_buckets": [
+        "ial2_ppif_manager_capacity_status_dynamic_read_data_multi_pipeline_cli"
+      ],
+      "query_kinds": [
+        "check",
+        "semantic",
+        "schedule"
+      ],
+      "source": "ppif/axi_manager_capacity_status_dynamic_read_data_multi.ppif"
+    },
+    {
+      "catalog_ids": [
+        "intent.ppif_axi_manager_capacity_status_dynamic_read_data_multi_beat"
+      ],
+      "coverage_buckets": [
+        "ial2_ppif_manager_capacity_status_dynamic_read_data_multi_beat_pipeline_cli"
+      ],
+      "query_kinds": [
+        "check",
+        "semantic",
+        "schedule"
+      ],
+      "source": "ppif/axi_manager_capacity_status_dynamic_read_data_multi_beat.ppif"
+    },
+    {
+      "catalog_ids": [
+        "intent.ppif_axi_manager_capacity_status_dynamic_read_data_multi_burst_length"
+      ],
+      "coverage_buckets": [
+        "ial2_ppif_manager_capacity_status_dynamic_read_data_multi_burst_length_pipeline_cli"
+      ],
+      "query_kinds": [
+        "check",
+        "semantic",
+        "schedule"
+      ],
+      "source": "ppif/axi_manager_capacity_status_dynamic_read_data_multi_burst_length.ppif"
+    },
+    {
+      "catalog_ids": [
+        "intent.ppif_axi_manager_capacity_status_dynamic_read_data_multi_burst_length_runtime_assertion"
+      ],
+      "coverage_buckets": [
+        "ial2_ppif_manager_capacity_status_dynamic_read_data_multi_burst_length_runtime_assertion_pipeline_cli"
+      ],
+      "query_kinds": [
+        "check",
+        "semantic",
+        "schedule"
+      ],
+      "source": "ppif/axi_manager_capacity_status_dynamic_read_data_multi_burst_length_runtime_assertion.ppif"
+    },
+    {
+      "catalog_ids": [
+        "intent.ppif_axi_manager_capacity_status_dynamic_read_data_multi_last_beat"
+      ],
+      "coverage_buckets": [
+        "ial2_ppif_manager_capacity_status_dynamic_read_data_multi_last_beat_pipeline_cli"
+      ],
+      "query_kinds": [
+        "check",
+        "semantic",
+        "schedule"
+      ],
+      "source": "ppif/axi_manager_capacity_status_dynamic_read_data_multi_last_beat.ppif"
+    },
+    {
+      "catalog_ids": [
+        "intent.ppif_axi_manager_capacity_status_dynamic_read_data_multi_transaction_multi_beat"
+      ],
+      "coverage_buckets": [
+        "ial2_ppif_manager_capacity_status_dynamic_read_data_multi_transaction_multi_beat_pipeline_cli"
+      ],
+      "query_kinds": [
+        "check",
+        "semantic",
+        "schedule"
+      ],
+      "source": "ppif/axi_manager_capacity_status_dynamic_read_data_multi_transaction_multi_beat.ppif"
+    },
+    {
+      "catalog_ids": [
+        "intent.ppif_axi_manager_capacity_status_dynamic_read_depth3_same_id_issue_order_queue"
+      ],
+      "coverage_buckets": [
+        "ial2_ppif_manager_capacity_status_dynamic_read_depth3_same_id_issue_order_queue_pipeline_cli"
+      ],
+      "query_kinds": [
+        "check",
+        "semantic",
+        "schedule"
+      ],
+      "source": "ppif/axi_manager_capacity_status_dynamic_read_depth3_same_id_issue_order_queue.ppif"
+    },
+    {
+      "catalog_ids": [
+        "intent.ppif_axi_manager_capacity_status_dynamic_read_response_demux"
+      ],
+      "coverage_buckets": [
+        "ial2_ppif_manager_capacity_status_dynamic_read_response_demux_pipeline_cli"
+      ],
+      "query_kinds": [
+        "check",
+        "semantic",
+        "schedule"
+      ],
+      "source": "ppif/axi_manager_capacity_status_dynamic_read_response_demux.ppif"
+    },
+    {
+      "catalog_ids": [
+        "intent.ppif_axi_manager_capacity_status_dynamic_read_response_demux_burst_last"
+      ],
+      "coverage_buckets": [
+        "ial2_ppif_manager_capacity_status_dynamic_read_response_demux_burst_last_pipeline_cli"
+      ],
+      "query_kinds": [
+        "check",
+        "semantic",
+        "schedule"
+      ],
+      "source": "ppif/axi_manager_capacity_status_dynamic_read_response_demux_burst_last.ppif"
+    },
+    {
+      "catalog_ids": [
+        "intent.ppif_axi_manager_capacity_status_dynamic_read_response_demux_multi"
+      ],
+      "coverage_buckets": [
+        "ial2_ppif_manager_capacity_status_dynamic_read_response_demux_multi_pipeline_cli"
+      ],
+      "query_kinds": [
+        "check",
+        "semantic",
+        "schedule"
+      ],
+      "source": "ppif/axi_manager_capacity_status_dynamic_read_response_demux_multi.ppif"
+    },
+    {
+      "catalog_ids": [
+        "intent.ppif_axi_manager_capacity_status_dynamic_read_response_demux_multi_burst_last"
+      ],
+      "coverage_buckets": [
+        "ial2_ppif_manager_capacity_status_dynamic_read_response_demux_multi_burst_last_pipeline_cli"
+      ],
+      "query_kinds": [
+        "check",
+        "semantic",
+        "schedule"
+      ],
+      "source": "ppif/axi_manager_capacity_status_dynamic_read_response_demux_multi_burst_last.ppif"
+    },
+    {
+      "catalog_ids": [
+        "intent.ppif_axi_manager_capacity_status_dynamic_read_response_demux_multi_same_id_reject"
+      ],
+      "coverage_buckets": [
+        "ial2_ppif_manager_capacity_status_dynamic_read_response_demux_multi_same_id_reject_pipeline_cli"
+      ],
+      "query_kinds": [
+        "check",
+        "semantic",
+        "schedule"
+      ],
+      "source": "ppif/axi_manager_capacity_status_dynamic_read_response_demux_multi_same_id_reject.ppif"
+    },
+    {
+      "catalog_ids": [
+        "intent.ppif_axi_manager_capacity_status_dynamic_read_response_demux_same_id_reject"
+      ],
+      "coverage_buckets": [
+        "ial2_ppif_manager_capacity_status_dynamic_read_response_demux_same_id_reject_pipeline_cli"
+      ],
+      "query_kinds": [
+        "check",
+        "semantic",
+        "schedule"
+      ],
+      "source": "ppif/axi_manager_capacity_status_dynamic_read_response_demux_same_id_reject.ppif"
+    },
+    {
+      "catalog_ids": [
+        "intent.ppif_axi_manager_capacity_status_dynamic_read_same_id_issue_order_queue"
+      ],
+      "coverage_buckets": [
+        "ial2_ppif_manager_capacity_status_dynamic_read_same_id_issue_order_queue_pipeline_cli"
+      ],
+      "query_kinds": [
+        "check",
+        "semantic",
+        "schedule"
+      ],
+      "source": "ppif/axi_manager_capacity_status_dynamic_read_same_id_issue_order_queue.ppif"
+    },
+    {
+      "catalog_ids": [
+        "intent.ppif_axi_manager_capacity_status_dynamic_read_same_id_issue_order_queue_read_data"
+      ],
+      "coverage_buckets": [
+        "ial2_ppif_manager_capacity_status_dynamic_read_same_id_issue_order_queue_read_data_pipeline_cli"
+      ],
+      "query_kinds": [
+        "check",
+        "semantic",
+        "schedule"
+      ],
+      "source": "ppif/axi_manager_capacity_status_dynamic_read_same_id_issue_order_queue_read_data.ppif"
+    },
+    {
+      "catalog_ids": [
+        "intent.ppif_axi_manager_capacity_status_dynamic_same_id_issue_order_queue_policy"
+      ],
+      "coverage_buckets": [
+        "ial2_ppif_manager_capacity_status_dynamic_same_id_issue_order_queue_policy_pipeline_cli"
+      ],
+      "query_kinds": [
+        "check",
+        "semantic",
+        "schedule"
+      ],
+      "source": "ppif/axi_manager_capacity_status_dynamic_same_id_issue_order_queue_policy.ppif"
+    },
+    {
+      "catalog_ids": [
+        "intent.ppif_axi_manager_capacity_status_dynamic_same_id_reject_policy"
+      ],
+      "coverage_buckets": [
+        "ial2_ppif_manager_capacity_status_dynamic_same_id_reject_policy_pipeline_cli"
+      ],
+      "query_kinds": [
+        "check",
+        "semantic",
+        "schedule"
+      ],
+      "source": "ppif/axi_manager_capacity_status_dynamic_same_id_reject_policy.ppif"
+    },
+    {
+      "catalog_ids": [
+        "intent.ppif_axi_manager_capacity_status_dynamic_transaction_id"
+      ],
+      "coverage_buckets": [
+        "ial2_ppif_manager_capacity_status_dynamic_transaction_id_pipeline_cli"
+      ],
+      "query_kinds": [
+        "check",
+        "semantic",
+        "schedule"
+      ],
+      "source": "ppif/axi_manager_capacity_status_dynamic_transaction_id.ppif"
+    },
+    {
+      "catalog_ids": [
+        "intent.ppif_axi_manager_capacity_status_dynamic_write_depth3_same_id_issue_order_queue"
+      ],
+      "coverage_buckets": [
+        "ial2_ppif_manager_capacity_status_dynamic_write_depth3_same_id_issue_order_queue_pipeline_cli"
+      ],
+      "query_kinds": [
+        "check",
+        "semantic",
+        "schedule"
+      ],
+      "source": "ppif/axi_manager_capacity_status_dynamic_write_depth3_same_id_issue_order_queue.ppif"
+    },
+    {
+      "catalog_ids": [
+        "intent.ppif_axi_manager_capacity_status_dynamic_write_response_demux"
+      ],
+      "coverage_buckets": [
+        "ial2_ppif_manager_capacity_status_dynamic_write_response_demux_pipeline_cli"
+      ],
+      "query_kinds": [
+        "check",
+        "semantic",
+        "schedule"
+      ],
+      "source": "ppif/axi_manager_capacity_status_dynamic_write_response_demux.ppif"
+    },
+    {
+      "catalog_ids": [
+        "intent.ppif_axi_manager_capacity_status_dynamic_write_response_demux_multi"
+      ],
+      "coverage_buckets": [
+        "ial2_ppif_manager_capacity_status_dynamic_write_response_demux_multi_pipeline_cli"
+      ],
+      "query_kinds": [
+        "check",
+        "semantic",
+        "schedule"
+      ],
+      "source": "ppif/axi_manager_capacity_status_dynamic_write_response_demux_multi.ppif"
+    },
+    {
+      "catalog_ids": [
+        "intent.ppif_axi_manager_capacity_status_dynamic_write_same_id_issue_order_queue"
+      ],
+      "coverage_buckets": [
+        "ial2_ppif_manager_capacity_status_dynamic_write_same_id_issue_order_queue_pipeline_cli"
+      ],
+      "query_kinds": [
+        "check",
+        "semantic",
+        "schedule"
+      ],
+      "source": "ppif/axi_manager_capacity_status_dynamic_write_same_id_issue_order_queue.ppif"
+    },
+    {
+      "catalog_ids": [
+        "intent.ppif_axi_manager_capacity_status_id_family"
+      ],
+      "coverage_buckets": [
+        "ial2_ppif_manager_capacity_status_id_family_pipeline_cli"
+      ],
+      "query_kinds": [
+        "check",
+        "semantic",
+        "schedule"
+      ],
+      "source": "ppif/axi_manager_capacity_status_id_family.ppif"
+    },
+    {
+      "catalog_ids": [
+        "intent.ppif_axi_manager_capacity_status_read_burst_last_depth3_same_id_queue_head_burst_length"
+      ],
+      "coverage_buckets": [
+        "ial2_ppif_manager_capacity_status_read_burst_last_depth3_same_id_queue_head_burst_length_pipeline_cli"
+      ],
+      "query_kinds": [
+        "check",
+        "semantic",
+        "schedule"
+      ],
+      "source": "ppif/axi_manager_capacity_status_read_burst_last_depth3_same_id_queue_head_burst_length.ppif"
+    },
+    {
+      "catalog_ids": [
+        "intent.ppif_axi_manager_capacity_status_read_burst_last_depth3_same_id_queue_head_burst_length_runtime_assertion"
+      ],
+      "coverage_buckets": [
+        "ial2_ppif_manager_capacity_status_read_burst_last_depth3_same_id_queue_head_burst_length_runtime_assertion_pipeline_cli"
+      ],
+      "query_kinds": [
+        "check",
+        "semantic",
+        "schedule"
+      ],
+      "source": "ppif/axi_manager_capacity_status_read_burst_last_depth3_same_id_queue_head_burst_length_runtime_assertion.ppif"
+    },
+    {
+      "catalog_ids": [
+        "intent.ppif_axi_manager_capacity_status_read_burst_last_depth3_same_id_queue_head_multi_beat_read_data"
+      ],
+      "coverage_buckets": [
+        "ial2_ppif_manager_capacity_status_read_burst_last_depth3_same_id_queue_head_multi_beat_read_data_pipeline_cli"
+      ],
+      "query_kinds": [
+        "check",
+        "semantic",
+        "schedule"
+      ],
+      "source": "ppif/axi_manager_capacity_status_read_burst_last_depth3_same_id_queue_head_multi_beat_read_data.ppif"
+    },
+    {
+      "catalog_ids": [
+        "intent.ppif_axi_manager_capacity_status_read_burst_last_depth3_same_id_queue_head_read_data"
+      ],
+      "coverage_buckets": [
+        "ial2_ppif_manager_capacity_status_read_burst_last_depth3_same_id_queue_head_read_data_pipeline_cli"
+      ],
+      "query_kinds": [
+        "check",
+        "semantic",
+        "schedule"
+      ],
+      "source": "ppif/axi_manager_capacity_status_read_burst_last_depth3_same_id_queue_head_read_data.ppif"
+    },
+    {
+      "catalog_ids": [
+        "intent.ppif_axi_manager_capacity_status_read_burst_last_depth3_same_id_queue_head_response_demux"
+      ],
+      "coverage_buckets": [
+        "ial2_ppif_manager_capacity_status_read_burst_last_depth3_same_id_queue_head_response_demux_pipeline_cli"
+      ],
+      "query_kinds": [
+        "check",
+        "semantic",
+        "schedule"
+      ],
+      "source": "ppif/axi_manager_capacity_status_read_burst_last_depth3_same_id_queue_head_response_demux.ppif"
+    },
+    {
+      "catalog_ids": [
+        "intent.ppif_axi_manager_capacity_status_read_burst_last_mixed_auto_id_same_id_queue_head_burst_length"
+      ],
+      "coverage_buckets": [
+        "ial2_ppif_manager_capacity_status_read_burst_last_mixed_auto_id_same_id_queue_head_burst_length_pipeline_cli"
+      ],
+      "query_kinds": [
+        "check",
+        "semantic",
+        "schedule"
+      ],
+      "source": "ppif/axi_manager_capacity_status_read_burst_last_mixed_auto_id_same_id_queue_head_burst_length.ppif"
+    },
+    {
+      "catalog_ids": [
+        "intent.ppif_axi_manager_capacity_status_read_burst_last_mixed_auto_id_same_id_queue_head_burst_length_runtime_assertion"
+      ],
+      "coverage_buckets": [
+        "ial2_ppif_manager_capacity_status_read_burst_last_mixed_auto_id_same_id_queue_head_burst_length_runtime_assertion_pipeline_cli"
+      ],
+      "query_kinds": [
+        "check",
+        "semantic",
+        "schedule"
+      ],
+      "source": "ppif/axi_manager_capacity_status_read_burst_last_mixed_auto_id_same_id_queue_head_burst_length_runtime_assertion.ppif"
+    },
+    {
+      "catalog_ids": [
+        "intent.ppif_axi_manager_capacity_status_read_burst_last_mixed_auto_id_same_id_queue_head_multi_beat_read_data"
+      ],
+      "coverage_buckets": [
+        "ial2_ppif_manager_capacity_status_read_burst_last_mixed_auto_id_same_id_queue_head_multi_beat_read_data_pipeline_cli"
+      ],
+      "query_kinds": [
+        "check",
+        "semantic",
+        "schedule"
+      ],
+      "source": "ppif/axi_manager_capacity_status_read_burst_last_mixed_auto_id_same_id_queue_head_multi_beat_read_data.ppif"
+    },
+    {
+      "catalog_ids": [
+        "intent.ppif_axi_manager_capacity_status_read_burst_last_mixed_auto_id_same_id_queue_head_read_data"
+      ],
+      "coverage_buckets": [
+        "ial2_ppif_manager_capacity_status_read_burst_last_mixed_auto_id_same_id_queue_head_read_data_pipeline_cli"
+      ],
+      "query_kinds": [
+        "check",
+        "semantic",
+        "schedule"
+      ],
+      "source": "ppif/axi_manager_capacity_status_read_burst_last_mixed_auto_id_same_id_queue_head_read_data.ppif"
+    },
+    {
+      "catalog_ids": [
+        "intent.ppif_axi_manager_capacity_status_read_burst_last_mixed_auto_id_same_id_queue_head_response_demux"
+      ],
+      "coverage_buckets": [
+        "ial2_ppif_manager_capacity_status_read_burst_last_mixed_auto_id_same_id_queue_head_response_demux_pipeline_cli"
+      ],
+      "query_kinds": [
+        "check",
+        "semantic",
+        "schedule"
+      ],
+      "source": "ppif/axi_manager_capacity_status_read_burst_last_mixed_auto_id_same_id_queue_head_response_demux.ppif"
+    },
+    {
+      "catalog_ids": [
+        "intent.ppif_axi_manager_capacity_status_read_burst_last_mixed_depth3_depth2_same_id_queue_head_burst_length"
+      ],
+      "coverage_buckets": [
+        "ial2_ppif_manager_capacity_status_read_burst_last_mixed_depth3_depth2_same_id_queue_head_burst_length_pipeline_cli"
+      ],
+      "query_kinds": [
+        "check",
+        "semantic",
+        "schedule"
+      ],
+      "source": "ppif/axi_manager_capacity_status_read_burst_last_mixed_depth3_depth2_same_id_queue_head_burst_length.ppif"
+    },
+    {
+      "catalog_ids": [
+        "intent.ppif_axi_manager_capacity_status_read_burst_last_mixed_depth3_depth2_same_id_queue_head_burst_length_runtime_assertion"
+      ],
+      "coverage_buckets": [
+        "ial2_ppif_manager_capacity_status_read_burst_last_mixed_depth3_depth2_same_id_queue_head_burst_length_runtime_assertion_pipeline_cli"
+      ],
+      "query_kinds": [
+        "check",
+        "semantic",
+        "schedule"
+      ],
+      "source": "ppif/axi_manager_capacity_status_read_burst_last_mixed_depth3_depth2_same_id_queue_head_burst_length_runtime_assertion.ppif"
+    },
+    {
+      "catalog_ids": [
+        "intent.ppif_axi_manager_capacity_status_read_burst_last_mixed_depth3_depth2_same_id_queue_head_multi_beat_read_data"
+      ],
+      "coverage_buckets": [
+        "ial2_ppif_manager_capacity_status_read_burst_last_mixed_depth3_depth2_same_id_queue_head_multi_beat_read_data_pipeline_cli"
+      ],
+      "query_kinds": [
+        "check",
+        "semantic",
+        "schedule"
+      ],
+      "source": "ppif/axi_manager_capacity_status_read_burst_last_mixed_depth3_depth2_same_id_queue_head_multi_beat_read_data.ppif"
+    },
+    {
+      "catalog_ids": [
+        "intent.ppif_axi_manager_capacity_status_read_burst_last_mixed_depth3_depth2_same_id_queue_head_read_data"
+      ],
+      "coverage_buckets": [
+        "ial2_ppif_manager_capacity_status_read_burst_last_mixed_depth3_depth2_same_id_queue_head_read_data_pipeline_cli"
+      ],
+      "query_kinds": [
+        "check",
+        "semantic",
+        "schedule"
+      ],
+      "source": "ppif/axi_manager_capacity_status_read_burst_last_mixed_depth3_depth2_same_id_queue_head_read_data.ppif"
+    },
+    {
+      "catalog_ids": [
+        "intent.ppif_axi_manager_capacity_status_read_burst_last_mixed_depth3_depth2_same_id_queue_head_response_demux"
+      ],
+      "coverage_buckets": [
+        "ial2_ppif_manager_capacity_status_read_burst_last_mixed_depth3_depth2_same_id_queue_head_response_demux_pipeline_cli"
+      ],
+      "query_kinds": [
+        "check",
+        "semantic",
+        "schedule"
+      ],
+      "source": "ppif/axi_manager_capacity_status_read_burst_last_mixed_depth3_depth2_same_id_queue_head_response_demux.ppif"
+    },
+    {
+      "catalog_ids": [
+        "intent.ppif_axi_manager_capacity_status_read_burst_last_multi_depth3_same_id_queue_head_burst_length"
+      ],
+      "coverage_buckets": [
+        "ial2_ppif_manager_capacity_status_read_burst_last_multi_depth3_same_id_queue_head_burst_length_pipeline_cli"
+      ],
+      "query_kinds": [
+        "check",
+        "semantic",
+        "schedule"
+      ],
+      "source": "ppif/axi_manager_capacity_status_read_burst_last_multi_depth3_same_id_queue_head_burst_length.ppif"
+    },
+    {
+      "catalog_ids": [
+        "intent.ppif_axi_manager_capacity_status_read_burst_last_multi_depth3_same_id_queue_head_burst_length_runtime_assertion"
+      ],
+      "coverage_buckets": [
+        "ial2_ppif_manager_capacity_status_read_burst_last_multi_depth3_same_id_queue_head_burst_length_runtime_assertion_pipeline_cli"
+      ],
+      "query_kinds": [
+        "check",
+        "semantic",
+        "schedule"
+      ],
+      "source": "ppif/axi_manager_capacity_status_read_burst_last_multi_depth3_same_id_queue_head_burst_length_runtime_assertion.ppif"
+    },
+    {
+      "catalog_ids": [
+        "intent.ppif_axi_manager_capacity_status_read_burst_last_multi_depth3_same_id_queue_head_multi_beat_read_data"
+      ],
+      "coverage_buckets": [
+        "ial2_ppif_manager_capacity_status_read_burst_last_multi_depth3_same_id_queue_head_multi_beat_read_data_pipeline_cli"
+      ],
+      "query_kinds": [
+        "check",
+        "semantic",
+        "schedule"
+      ],
+      "source": "ppif/axi_manager_capacity_status_read_burst_last_multi_depth3_same_id_queue_head_multi_beat_read_data.ppif"
+    },
+    {
+      "catalog_ids": [
+        "intent.ppif_axi_manager_capacity_status_read_burst_last_multi_depth3_same_id_queue_head_read_data"
+      ],
+      "coverage_buckets": [
+        "ial2_ppif_manager_capacity_status_read_burst_last_multi_depth3_same_id_queue_head_read_data_pipeline_cli"
+      ],
+      "query_kinds": [
+        "check",
+        "semantic",
+        "schedule"
+      ],
+      "source": "ppif/axi_manager_capacity_status_read_burst_last_multi_depth3_same_id_queue_head_read_data.ppif"
+    },
+    {
+      "catalog_ids": [
+        "intent.ppif_axi_manager_capacity_status_read_burst_last_multi_depth3_same_id_queue_head_response_demux"
+      ],
+      "coverage_buckets": [
+        "ial2_ppif_manager_capacity_status_read_burst_last_multi_depth3_same_id_queue_head_response_demux_pipeline_cli"
+      ],
+      "query_kinds": [
+        "check",
+        "semantic",
+        "schedule"
+      ],
+      "source": "ppif/axi_manager_capacity_status_read_burst_last_multi_depth3_same_id_queue_head_response_demux.ppif"
+    },
+    {
+      "catalog_ids": [
+        "intent.ppif_axi_manager_capacity_status_read_data"
+      ],
+      "coverage_buckets": [
+        "ial2_ppif_manager_capacity_status_read_data_pipeline_cli"
+      ],
+      "query_kinds": [
+        "check",
+        "semantic",
+        "schedule"
+      ],
+      "source": "ppif/axi_manager_capacity_status_read_data.ppif"
+    },
+    {
+      "catalog_ids": [
+        "intent.ppif_axi_manager_capacity_status_read_data_burst_length"
+      ],
+      "coverage_buckets": [
+        "ial2_ppif_manager_capacity_status_read_data_burst_length_pipeline_cli"
+      ],
+      "query_kinds": [
+        "check",
+        "semantic",
+        "schedule"
+      ],
+      "source": "ppif/axi_manager_capacity_status_read_data_burst_length.ppif"
+    },
+    {
+      "catalog_ids": [
+        "intent.ppif_axi_manager_capacity_status_read_data_burst_length_runtime_assertion"
+      ],
+      "coverage_buckets": [
+        "ial2_ppif_manager_capacity_status_read_data_burst_length_runtime_assertion_pipeline_cli"
+      ],
+      "query_kinds": [
+        "check",
+        "semantic",
+        "schedule"
+      ],
+      "source": "ppif/axi_manager_capacity_status_read_data_burst_length_runtime_assertion.ppif"
+    },
+    {
+      "catalog_ids": [
+        "intent.ppif_axi_manager_capacity_status_read_data_last_beat"
+      ],
+      "coverage_buckets": [
+        "ial2_ppif_manager_capacity_status_read_data_last_beat_pipeline_cli"
+      ],
+      "query_kinds": [
+        "check",
+        "semantic",
+        "schedule"
+      ],
+      "source": "ppif/axi_manager_capacity_status_read_data_last_beat.ppif"
+    },
+    {
+      "catalog_ids": [
+        "intent.ppif_axi_manager_capacity_status_read_data_multi_beat"
+      ],
+      "coverage_buckets": [
+        "ial2_ppif_manager_capacity_status_read_data_multi_beat_pipeline_cli"
+      ],
+      "query_kinds": [
+        "check",
+        "semantic",
+        "schedule"
+      ],
+      "source": "ppif/axi_manager_capacity_status_read_data_multi_beat.ppif"
+    },
+    {
+      "catalog_ids": [
+        "intent.ppif_axi_manager_capacity_status_read_last_beat_same_id_queue_head_burst_length"
+      ],
+      "coverage_buckets": [
+        "ial2_ppif_manager_capacity_status_read_last_beat_same_id_queue_head_burst_length_pipeline_cli"
+      ],
+      "query_kinds": [
+        "check",
+        "semantic",
+        "schedule"
+      ],
+      "source": "ppif/axi_manager_capacity_status_read_last_beat_same_id_queue_head_burst_length.ppif"
+    },
+    {
+      "catalog_ids": [
+        "intent.ppif_axi_manager_capacity_status_read_last_beat_same_id_queue_head_burst_length_runtime_assertion"
+      ],
+      "coverage_buckets": [
+        "ial2_ppif_manager_capacity_status_read_last_beat_same_id_queue_head_burst_length_runtime_assertion_pipeline_cli"
+      ],
+      "query_kinds": [
+        "check",
+        "semantic",
+        "schedule"
+      ],
+      "source": "ppif/axi_manager_capacity_status_read_last_beat_same_id_queue_head_burst_length_runtime_assertion.ppif"
+    },
+    {
+      "catalog_ids": [
+        "intent.ppif_axi_manager_capacity_status_read_last_beat_same_id_queue_head_read_data"
+      ],
+      "coverage_buckets": [
+        "ial2_ppif_manager_capacity_status_read_last_beat_same_id_queue_head_read_data_pipeline_cli"
+      ],
+      "query_kinds": [
+        "check",
+        "semantic",
+        "schedule"
+      ],
+      "source": "ppif/axi_manager_capacity_status_read_last_beat_same_id_queue_head_read_data.ppif"
+    },
+    {
+      "catalog_ids": [
+        "intent.ppif_axi_manager_capacity_status_read_mixed_dynamic_static_burst_last_same_id_issue_order_queue"
+      ],
+      "coverage_buckets": [
+        "ial2_ppif_manager_capacity_status_read_mixed_dynamic_static_burst_last_same_id_issue_order_queue_pipeline_cli"
+      ],
+      "query_kinds": [
+        "check",
+        "semantic",
+        "schedule"
+      ],
+      "source": "ppif/axi_manager_capacity_status_read_mixed_dynamic_static_burst_last_same_id_issue_order_queue.ppif"
+    },
+    {
+      "catalog_ids": [
+        "intent.ppif_axi_manager_capacity_status_read_mixed_dynamic_static_burst_last_same_id_issue_order_queue_read_data"
+      ],
+      "coverage_buckets": [
+        "ial2_ppif_manager_capacity_status_read_mixed_dynamic_static_burst_last_same_id_issue_order_queue_read_data_pipeline_cli"
+      ],
+      "query_kinds": [
+        "check",
+        "semantic",
+        "schedule"
+      ],
+      "source": "ppif/axi_manager_capacity_status_read_mixed_dynamic_static_burst_last_same_id_issue_order_queue_read_data.ppif"
+    },
+    {
+      "catalog_ids": [
+        "intent.ppif_axi_manager_capacity_status_read_mixed_dynamic_static_burst_last_same_id_issue_order_queue_read_data_burst_length"
+      ],
+      "coverage_buckets": [
+        "ial2_ppif_manager_capacity_status_read_mixed_dynamic_static_burst_last_same_id_issue_order_queue_read_data_burst_length_pipeline_cli"
+      ],
+      "query_kinds": [
+        "check",
+        "semantic",
+        "schedule"
+      ],
+      "source": "ppif/axi_manager_capacity_status_read_mixed_dynamic_static_burst_last_same_id_issue_order_queue_read_data_burst_length.ppif"
+    },
+    {
+      "catalog_ids": [
+        "intent.ppif_axi_manager_capacity_status_read_mixed_dynamic_static_burst_last_same_id_issue_order_queue_read_data_burst_length_runtime_assertion"
+      ],
+      "coverage_buckets": [
+        "ial2_ppif_manager_capacity_status_read_mixed_dynamic_static_burst_last_same_id_issue_order_queue_read_data_burst_length_runtime_assertion_pipeline_cli"
+      ],
+      "query_kinds": [
+        "check",
+        "semantic",
+        "schedule"
+      ],
+      "source": "ppif/axi_manager_capacity_status_read_mixed_dynamic_static_burst_last_same_id_issue_order_queue_read_data_burst_length_runtime_assertion.ppif"
+    },
+    {
+      "catalog_ids": [
+        "intent.ppif_axi_manager_capacity_status_read_mixed_dynamic_static_burst_last_same_id_issue_order_queue_read_data_multi_beat"
+      ],
+      "coverage_buckets": [
+        "ial2_ppif_manager_capacity_status_read_mixed_dynamic_static_burst_last_same_id_issue_order_queue_read_data_multi_beat_pipeline_cli"
+      ],
+      "query_kinds": [
+        "check",
+        "semantic",
+        "schedule"
+      ],
+      "source": "ppif/axi_manager_capacity_status_read_mixed_dynamic_static_burst_last_same_id_issue_order_queue_read_data_multi_beat.ppif"
+    },
+    {
+      "catalog_ids": [
+        "intent.ppif_axi_manager_capacity_status_read_mixed_dynamic_static_response_demux"
+      ],
+      "coverage_buckets": [
+        "ial2_ppif_manager_capacity_status_read_mixed_dynamic_static_response_demux_pipeline_cli"
+      ],
+      "query_kinds": [
+        "check",
+        "semantic",
+        "schedule"
+      ],
+      "source": "ppif/axi_manager_capacity_status_read_mixed_dynamic_static_response_demux.ppif"
+    },
+    {
+      "catalog_ids": [
+        "intent.ppif_axi_manager_capacity_status_read_mixed_dynamic_static_response_demux_burst_last"
+      ],
+      "coverage_buckets": [
+        "ial2_ppif_manager_capacity_status_read_mixed_dynamic_static_response_demux_burst_last_pipeline_cli"
+      ],
+      "query_kinds": [
+        "check",
+        "semantic",
+        "schedule"
+      ],
+      "source": "ppif/axi_manager_capacity_status_read_mixed_dynamic_static_response_demux_burst_last.ppif"
+    },
+    {
+      "catalog_ids": [
+        "intent.ppif_axi_manager_capacity_status_read_mixed_dynamic_static_response_demux_burst_last_read_data"
+      ],
+      "coverage_buckets": [
+        "ial2_ppif_manager_capacity_status_read_mixed_dynamic_static_response_demux_burst_last_read_data_pipeline_cli"
+      ],
+      "query_kinds": [
+        "check",
+        "semantic",
+        "schedule"
+      ],
+      "source": "ppif/axi_manager_capacity_status_read_mixed_dynamic_static_response_demux_burst_last_read_data.ppif"
+    },
+    {
+      "catalog_ids": [
+        "intent.ppif_axi_manager_capacity_status_read_mixed_dynamic_static_response_demux_burst_last_read_data_burst_length"
+      ],
+      "coverage_buckets": [
+        "ial2_ppif_manager_capacity_status_read_mixed_dynamic_static_response_demux_burst_last_read_data_burst_length_pipeline_cli"
+      ],
+      "query_kinds": [
+        "check",
+        "semantic",
+        "schedule"
+      ],
+      "source": "ppif/axi_manager_capacity_status_read_mixed_dynamic_static_response_demux_burst_last_read_data_burst_length.ppif"
+    },
+    {
+      "catalog_ids": [
+        "intent.ppif_axi_manager_capacity_status_read_mixed_dynamic_static_response_demux_burst_last_read_data_burst_length_runtime_assertion"
+      ],
+      "coverage_buckets": [
+        "ial2_ppif_manager_capacity_status_read_mixed_dynamic_static_response_demux_burst_last_read_data_burst_length_runtime_assertion_pipeline_cli"
+      ],
+      "query_kinds": [
+        "check",
+        "semantic",
+        "schedule"
+      ],
+      "source": "ppif/axi_manager_capacity_status_read_mixed_dynamic_static_response_demux_burst_last_read_data_burst_length_runtime_assertion.ppif"
+    },
+    {
+      "catalog_ids": [
+        "intent.ppif_axi_manager_capacity_status_read_mixed_dynamic_static_response_demux_burst_last_read_data_multi_beat"
+      ],
+      "coverage_buckets": [
+        "ial2_ppif_manager_capacity_status_read_mixed_dynamic_static_response_demux_burst_last_read_data_multi_beat_pipeline_cli"
+      ],
+      "query_kinds": [
+        "check",
+        "semantic",
+        "schedule"
+      ],
+      "source": "ppif/axi_manager_capacity_status_read_mixed_dynamic_static_response_demux_burst_last_read_data_multi_beat.ppif"
+    },
+    {
+      "catalog_ids": [
+        "intent.ppif_axi_manager_capacity_status_read_mixed_dynamic_static_response_demux_multi_dynamic"
+      ],
+      "coverage_buckets": [
+        "ial2_ppif_manager_capacity_status_read_mixed_dynamic_static_response_demux_multi_dynamic_pipeline_cli"
+      ],
+      "query_kinds": [
+        "check",
+        "semantic",
+        "schedule"
+      ],
+      "source": "ppif/axi_manager_capacity_status_read_mixed_dynamic_static_response_demux_multi_dynamic.ppif"
+    },
+    {
+      "catalog_ids": [
+        "intent.ppif_axi_manager_capacity_status_read_mixed_dynamic_static_response_demux_multi_dynamic_burst_last"
+      ],
+      "coverage_buckets": [
+        "ial2_ppif_manager_capacity_status_read_mixed_dynamic_static_response_demux_multi_dynamic_burst_last_pipeline_cli"
+      ],
+      "query_kinds": [
+        "check",
+        "semantic",
+        "schedule"
+      ],
+      "source": "ppif/axi_manager_capacity_status_read_mixed_dynamic_static_response_demux_multi_dynamic_burst_last.ppif"
+    },
+    {
+      "catalog_ids": [
+        "intent.ppif_axi_manager_capacity_status_read_mixed_dynamic_static_response_demux_multi_dynamic_burst_last_read_data"
+      ],
+      "coverage_buckets": [
+        "ial2_ppif_manager_capacity_status_read_mixed_dynamic_static_response_demux_multi_dynamic_burst_last_read_data_pipeline_cli"
+      ],
+      "query_kinds": [
+        "check",
+        "semantic",
+        "schedule"
+      ],
+      "source": "ppif/axi_manager_capacity_status_read_mixed_dynamic_static_response_demux_multi_dynamic_burst_last_read_data.ppif"
+    },
+    {
+      "catalog_ids": [
+        "intent.ppif_axi_manager_capacity_status_read_mixed_dynamic_static_response_demux_multi_dynamic_burst_last_read_data_burst_length"
+      ],
+      "coverage_buckets": [
+        "ial2_ppif_manager_capacity_status_read_mixed_dynamic_static_response_demux_multi_dynamic_burst_last_read_data_burst_length_pipeline_cli"
+      ],
+      "query_kinds": [
+        "check",
+        "semantic",
+        "schedule"
+      ],
+      "source": "ppif/axi_manager_capacity_status_read_mixed_dynamic_static_response_demux_multi_dynamic_burst_last_read_data_burst_length.ppif"
+    },
+    {
+      "catalog_ids": [
+        "intent.ppif_axi_manager_capacity_status_read_mixed_dynamic_static_response_demux_multi_dynamic_burst_last_read_data_burst_length_runtime_assertion"
+      ],
+      "coverage_buckets": [
+        "ial2_ppif_manager_capacity_status_read_mixed_dynamic_static_response_demux_multi_dynamic_burst_last_read_data_burst_length_runtime_assertion_pipeline_cli"
+      ],
+      "query_kinds": [
+        "check",
+        "semantic",
+        "schedule"
+      ],
+      "source": "ppif/axi_manager_capacity_status_read_mixed_dynamic_static_response_demux_multi_dynamic_burst_last_read_data_burst_length_runtime_assertion.ppif"
+    },
+    {
+      "catalog_ids": [
+        "intent.ppif_axi_manager_capacity_status_read_mixed_dynamic_static_response_demux_multi_dynamic_burst_last_read_data_multi_beat"
+      ],
+      "coverage_buckets": [
+        "ial2_ppif_manager_capacity_status_read_mixed_dynamic_static_response_demux_multi_dynamic_burst_last_read_data_multi_beat_pipeline_cli"
+      ],
+      "query_kinds": [
+        "check",
+        "semantic",
+        "schedule"
+      ],
+      "source": "ppif/axi_manager_capacity_status_read_mixed_dynamic_static_response_demux_multi_dynamic_burst_last_read_data_multi_beat.ppif"
+    },
+    {
+      "catalog_ids": [
+        "intent.ppif_axi_manager_capacity_status_read_mixed_dynamic_static_response_demux_multi_dynamic_read_data"
+      ],
+      "coverage_buckets": [
+        "ial2_ppif_manager_capacity_status_read_mixed_dynamic_static_response_demux_multi_dynamic_read_data_pipeline_cli"
+      ],
+      "query_kinds": [
+        "check",
+        "semantic",
+        "schedule"
+      ],
+      "source": "ppif/axi_manager_capacity_status_read_mixed_dynamic_static_response_demux_multi_dynamic_read_data.ppif"
+    },
+    {
+      "catalog_ids": [
+        "intent.ppif_axi_manager_capacity_status_read_mixed_dynamic_static_response_demux_multi_static"
+      ],
+      "coverage_buckets": [
+        "ial2_ppif_manager_capacity_status_read_mixed_dynamic_static_response_demux_multi_static_pipeline_cli"
+      ],
+      "query_kinds": [
+        "check",
+        "semantic",
+        "schedule"
+      ],
+      "source": "ppif/axi_manager_capacity_status_read_mixed_dynamic_static_response_demux_multi_static.ppif"
+    },
+    {
+      "catalog_ids": [
+        "intent.ppif_axi_manager_capacity_status_read_mixed_dynamic_static_response_demux_multi_static3"
+      ],
+      "coverage_buckets": [
+        "ial2_ppif_manager_capacity_status_read_mixed_dynamic_static_response_demux_multi_static3_pipeline_cli"
+      ],
+      "query_kinds": [
+        "check",
+        "semantic",
+        "schedule"
+      ],
+      "source": "ppif/axi_manager_capacity_status_read_mixed_dynamic_static_response_demux_multi_static3.ppif"
+    },
+    {
+      "catalog_ids": [
+        "intent.ppif_axi_manager_capacity_status_read_mixed_dynamic_static_response_demux_multi_static3_burst_last"
+      ],
+      "coverage_buckets": [
+        "ial2_ppif_manager_capacity_status_read_mixed_dynamic_static_response_demux_multi_static3_burst_last_pipeline_cli"
+      ],
+      "query_kinds": [
+        "check",
+        "semantic",
+        "schedule"
+      ],
+      "source": "ppif/axi_manager_capacity_status_read_mixed_dynamic_static_response_demux_multi_static3_burst_last.ppif"
+    },
+    {
+      "catalog_ids": [
+        "intent.ppif_axi_manager_capacity_status_read_mixed_dynamic_static_response_demux_multi_static3_burst_last_read_data"
+      ],
+      "coverage_buckets": [
+        "ial2_ppif_manager_capacity_status_read_mixed_dynamic_static_response_demux_multi_static3_burst_last_read_data_pipeline_cli"
+      ],
+      "query_kinds": [
+        "check",
+        "semantic",
+        "schedule"
+      ],
+      "source": "ppif/axi_manager_capacity_status_read_mixed_dynamic_static_response_demux_multi_static3_burst_last_read_data.ppif"
+    },
+    {
+      "catalog_ids": [
+        "intent.ppif_axi_manager_capacity_status_read_mixed_dynamic_static_response_demux_multi_static3_burst_last_read_data_burst_length"
+      ],
+      "coverage_buckets": [
+        "ial2_ppif_manager_capacity_status_read_mixed_dynamic_static_response_demux_multi_static3_burst_last_read_data_burst_length_pipeline_cli"
+      ],
+      "query_kinds": [
+        "check",
+        "semantic",
+        "schedule"
+      ],
+      "source": "ppif/axi_manager_capacity_status_read_mixed_dynamic_static_response_demux_multi_static3_burst_last_read_data_burst_length.ppif"
+    },
+    {
+      "catalog_ids": [
+        "intent.ppif_axi_manager_capacity_status_read_mixed_dynamic_static_response_demux_multi_static3_burst_last_read_data_burst_length_runtime_assertion"
+      ],
+      "coverage_buckets": [
+        "ial2_ppif_manager_capacity_status_read_mixed_dynamic_static_response_demux_multi_static3_burst_last_read_data_burst_length_runtime_assertion_pipeline_cli"
+      ],
+      "query_kinds": [
+        "check",
+        "semantic",
+        "schedule"
+      ],
+      "source": "ppif/axi_manager_capacity_status_read_mixed_dynamic_static_response_demux_multi_static3_burst_last_read_data_burst_length_runtime_assertion.ppif"
+    },
+    {
+      "catalog_ids": [
+        "intent.ppif_axi_manager_capacity_status_read_mixed_dynamic_static_response_demux_multi_static3_burst_last_read_data_multi_beat"
+      ],
+      "coverage_buckets": [
+        "ial2_ppif_manager_capacity_status_read_mixed_dynamic_static_response_demux_multi_static3_burst_last_read_data_multi_beat_pipeline_cli"
+      ],
+      "query_kinds": [
+        "check",
+        "semantic",
+        "schedule"
+      ],
+      "source": "ppif/axi_manager_capacity_status_read_mixed_dynamic_static_response_demux_multi_static3_burst_last_read_data_multi_beat.ppif"
+    },
+    {
+      "catalog_ids": [
+        "intent.ppif_axi_manager_capacity_status_read_mixed_dynamic_static_response_demux_multi_static3_read_data"
+      ],
+      "coverage_buckets": [
+        "ial2_ppif_manager_capacity_status_read_mixed_dynamic_static_response_demux_multi_static3_read_data_pipeline_cli"
+      ],
+      "query_kinds": [
+        "check",
+        "semantic",
+        "schedule"
+      ],
+      "source": "ppif/axi_manager_capacity_status_read_mixed_dynamic_static_response_demux_multi_static3_read_data.ppif"
+    },
+    {
+      "catalog_ids": [
+        "intent.ppif_axi_manager_capacity_status_read_mixed_dynamic_static_response_demux_multi_static_burst_last"
+      ],
+      "coverage_buckets": [
+        "ial2_ppif_manager_capacity_status_read_mixed_dynamic_static_response_demux_multi_static_burst_last_pipeline_cli"
+      ],
+      "query_kinds": [
+        "check",
+        "semantic",
+        "schedule"
+      ],
+      "source": "ppif/axi_manager_capacity_status_read_mixed_dynamic_static_response_demux_multi_static_burst_last.ppif"
+    },
+    {
+      "catalog_ids": [
+        "intent.ppif_axi_manager_capacity_status_read_mixed_dynamic_static_response_demux_multi_static_burst_last_read_data"
+      ],
+      "coverage_buckets": [
+        "ial2_ppif_manager_capacity_status_read_mixed_dynamic_static_response_demux_multi_static_burst_last_read_data_pipeline_cli"
+      ],
+      "query_kinds": [
+        "check",
+        "semantic",
+        "schedule"
+      ],
+      "source": "ppif/axi_manager_capacity_status_read_mixed_dynamic_static_response_demux_multi_static_burst_last_read_data.ppif"
+    },
+    {
+      "catalog_ids": [
+        "intent.ppif_axi_manager_capacity_status_read_mixed_dynamic_static_response_demux_multi_static_burst_last_read_data_burst_length"
+      ],
+      "coverage_buckets": [
+        "ial2_ppif_manager_capacity_status_read_mixed_dynamic_static_response_demux_multi_static_burst_last_read_data_burst_length_pipeline_cli"
+      ],
+      "query_kinds": [
+        "check",
+        "semantic",
+        "schedule"
+      ],
+      "source": "ppif/axi_manager_capacity_status_read_mixed_dynamic_static_response_demux_multi_static_burst_last_read_data_burst_length.ppif"
+    },
+    {
+      "catalog_ids": [
+        "intent.ppif_axi_manager_capacity_status_read_mixed_dynamic_static_response_demux_multi_static_burst_last_read_data_burst_length_runtime_assertion"
+      ],
+      "coverage_buckets": [
+        "ial2_ppif_manager_capacity_status_read_mixed_dynamic_static_response_demux_multi_static_burst_last_read_data_burst_length_runtime_assertion_pipeline_cli"
+      ],
+      "query_kinds": [
+        "check",
+        "semantic",
+        "schedule"
+      ],
+      "source": "ppif/axi_manager_capacity_status_read_mixed_dynamic_static_response_demux_multi_static_burst_last_read_data_burst_length_runtime_assertion.ppif"
+    },
+    {
+      "catalog_ids": [
+        "intent.ppif_axi_manager_capacity_status_read_mixed_dynamic_static_response_demux_multi_static_burst_last_read_data_multi_beat"
+      ],
+      "coverage_buckets": [
+        "ial2_ppif_manager_capacity_status_read_mixed_dynamic_static_response_demux_multi_static_burst_last_read_data_multi_beat_pipeline_cli"
+      ],
+      "query_kinds": [
+        "check",
+        "semantic",
+        "schedule"
+      ],
+      "source": "ppif/axi_manager_capacity_status_read_mixed_dynamic_static_response_demux_multi_static_burst_last_read_data_multi_beat.ppif"
+    },
+    {
+      "catalog_ids": [
+        "intent.ppif_axi_manager_capacity_status_read_mixed_dynamic_static_response_demux_multi_static_read_data"
+      ],
+      "coverage_buckets": [
+        "ial2_ppif_manager_capacity_status_read_mixed_dynamic_static_response_demux_multi_static_read_data_pipeline_cli"
+      ],
+      "query_kinds": [
+        "check",
+        "semantic",
+        "schedule"
+      ],
+      "source": "ppif/axi_manager_capacity_status_read_mixed_dynamic_static_response_demux_multi_static_read_data.ppif"
+    },
+    {
+      "catalog_ids": [
+        "intent.ppif_axi_manager_capacity_status_read_mixed_dynamic_static_response_demux_read_data"
+      ],
+      "coverage_buckets": [
+        "ial2_ppif_manager_capacity_status_read_mixed_dynamic_static_response_demux_read_data_pipeline_cli"
+      ],
+      "query_kinds": [
+        "check",
+        "semantic",
+        "schedule"
+      ],
+      "source": "ppif/axi_manager_capacity_status_read_mixed_dynamic_static_response_demux_read_data.ppif"
+    },
+    {
+      "catalog_ids": [
+        "intent.ppif_axi_manager_capacity_status_read_mixed_dynamic_static_same_id_issue_order_queue"
+      ],
+      "coverage_buckets": [
+        "ial2_ppif_manager_capacity_status_read_mixed_dynamic_static_same_id_issue_order_queue_pipeline_cli"
+      ],
+      "query_kinds": [
+        "check",
+        "semantic",
+        "schedule"
+      ],
+      "source": "ppif/axi_manager_capacity_status_read_mixed_dynamic_static_same_id_issue_order_queue.ppif"
+    },
+    {
+      "catalog_ids": [
+        "intent.ppif_axi_manager_capacity_status_read_mixed_dynamic_static_same_id_issue_order_queue_read_data"
+      ],
+      "coverage_buckets": [
+        "ial2_ppif_manager_capacity_status_read_mixed_dynamic_static_same_id_issue_order_queue_read_data_pipeline_cli"
+      ],
+      "query_kinds": [
+        "check",
+        "semantic",
+        "schedule"
+      ],
+      "source": "ppif/axi_manager_capacity_status_read_mixed_dynamic_static_same_id_issue_order_queue_read_data.ppif"
+    },
+    {
+      "catalog_ids": [
+        "intent.ppif_axi_manager_capacity_status_read_multi_beat_same_id_queue_head_read_data"
+      ],
+      "coverage_buckets": [
+        "ial2_ppif_manager_capacity_status_read_multi_beat_same_id_queue_head_read_data_pipeline_cli"
+      ],
+      "query_kinds": [
+        "check",
+        "semantic",
+        "schedule"
+      ],
+      "source": "ppif/axi_manager_capacity_status_read_multi_beat_same_id_queue_head_read_data.ppif"
+    },
+    {
+      "catalog_ids": [
+        "intent.ppif_axi_manager_capacity_status_read_multi_group_last_beat_same_id_queue_head_burst_length"
+      ],
+      "coverage_buckets": [
+        "ial2_ppif_manager_capacity_status_read_multi_group_last_beat_same_id_queue_head_burst_length_pipeline_cli"
+      ],
+      "query_kinds": [
+        "check",
+        "semantic",
+        "schedule"
+      ],
+      "source": "ppif/axi_manager_capacity_status_read_multi_group_last_beat_same_id_queue_head_burst_length.ppif"
+    },
+    {
+      "catalog_ids": [
+        "intent.ppif_axi_manager_capacity_status_read_multi_group_last_beat_same_id_queue_head_burst_length_runtime_assertion"
+      ],
+      "coverage_buckets": [
+        "ial2_ppif_manager_capacity_status_read_multi_group_last_beat_same_id_queue_head_burst_length_runtime_assertion_pipeline_cli"
+      ],
+      "query_kinds": [
+        "check",
+        "semantic",
+        "schedule"
+      ],
+      "source": "ppif/axi_manager_capacity_status_read_multi_group_last_beat_same_id_queue_head_burst_length_runtime_assertion.ppif"
+    },
+    {
+      "catalog_ids": [
+        "intent.ppif_axi_manager_capacity_status_read_multi_group_last_beat_same_id_queue_head_read_data"
+      ],
+      "coverage_buckets": [
+        "ial2_ppif_manager_capacity_status_read_multi_group_last_beat_same_id_queue_head_read_data_pipeline_cli"
+      ],
+      "query_kinds": [
+        "check",
+        "semantic",
+        "schedule"
+      ],
+      "source": "ppif/axi_manager_capacity_status_read_multi_group_last_beat_same_id_queue_head_read_data.ppif"
+    },
+    {
+      "catalog_ids": [
+        "intent.ppif_axi_manager_capacity_status_read_multi_group_same_id_queue_head_read_data"
+      ],
+      "coverage_buckets": [
+        "ial2_ppif_manager_capacity_status_read_multi_group_same_id_queue_head_read_data_pipeline_cli"
+      ],
+      "query_kinds": [
+        "check",
+        "semantic",
+        "schedule"
+      ],
+      "source": "ppif/axi_manager_capacity_status_read_multi_group_same_id_queue_head_read_data.ppif"
+    },
+    {
+      "catalog_ids": [
+        "intent.ppif_axi_manager_capacity_status_read_multi_group_same_id_queue_head_response_demux"
+      ],
+      "coverage_buckets": [
+        "ial2_ppif_manager_capacity_status_read_multi_group_same_id_queue_head_response_demux_pipeline_cli"
+      ],
+      "query_kinds": [
+        "check",
+        "semantic",
+        "schedule"
+      ],
+      "source": "ppif/axi_manager_capacity_status_read_multi_group_same_id_queue_head_response_demux.ppif"
+    },
+    {
+      "catalog_ids": [
+        "intent.ppif_axi_manager_capacity_status_read_response_demux"
+      ],
+      "coverage_buckets": [
+        "ial2_ppif_manager_capacity_status_read_response_demux_pipeline_cli"
+      ],
+      "query_kinds": [
+        "check",
+        "semantic",
+        "schedule"
+      ],
+      "source": "ppif/axi_manager_capacity_status_read_response_demux.ppif"
+    },
+    {
+      "catalog_ids": [
+        "intent.ppif_axi_manager_capacity_status_read_response_demux_burst_last"
+      ],
+      "coverage_buckets": [
+        "ial2_ppif_manager_capacity_status_read_response_demux_burst_last_pipeline_cli"
+      ],
+      "query_kinds": [
+        "check",
+        "semantic",
+        "schedule"
+      ],
+      "source": "ppif/axi_manager_capacity_status_read_response_demux_burst_last.ppif"
+    },
+    {
+      "catalog_ids": [
+        "intent.ppif_axi_manager_capacity_status_read_single_beat_depth3_same_id_queue_head_read_data"
+      ],
+      "coverage_buckets": [
+        "ial2_ppif_manager_capacity_status_read_single_beat_depth3_same_id_queue_head_read_data_pipeline_cli"
+      ],
+      "query_kinds": [
+        "check",
+        "semantic",
+        "schedule"
+      ],
+      "source": "ppif/axi_manager_capacity_status_read_single_beat_depth3_same_id_queue_head_read_data.ppif"
+    },
+    {
+      "catalog_ids": [
+        "intent.ppif_axi_manager_capacity_status_read_single_beat_depth3_same_id_queue_head_response_demux"
+      ],
+      "coverage_buckets": [
+        "ial2_ppif_manager_capacity_status_read_single_beat_depth3_same_id_queue_head_response_demux_pipeline_cli"
+      ],
+      "query_kinds": [
+        "check",
+        "semantic",
+        "schedule"
+      ],
+      "source": "ppif/axi_manager_capacity_status_read_single_beat_depth3_same_id_queue_head_response_demux.ppif"
+    },
+    {
+      "catalog_ids": [
+        "intent.ppif_axi_manager_capacity_status_read_single_beat_mixed_auto_id_same_id_queue_head_read_data"
+      ],
+      "coverage_buckets": [
+        "ial2_ppif_manager_capacity_status_read_single_beat_mixed_auto_id_same_id_queue_head_read_data_pipeline_cli"
+      ],
+      "query_kinds": [
+        "check",
+        "semantic",
+        "schedule"
+      ],
+      "source": "ppif/axi_manager_capacity_status_read_single_beat_mixed_auto_id_same_id_queue_head_read_data.ppif"
+    },
+    {
+      "catalog_ids": [
+        "intent.ppif_axi_manager_capacity_status_read_single_beat_mixed_auto_id_same_id_queue_head_response_demux"
+      ],
+      "coverage_buckets": [
+        "ial2_ppif_manager_capacity_status_read_single_beat_mixed_auto_id_same_id_queue_head_response_demux_pipeline_cli"
+      ],
+      "query_kinds": [
+        "check",
+        "semantic",
+        "schedule"
+      ],
+      "source": "ppif/axi_manager_capacity_status_read_single_beat_mixed_auto_id_same_id_queue_head_response_demux.ppif"
+    },
+    {
+      "catalog_ids": [
+        "intent.ppif_axi_manager_capacity_status_read_single_beat_mixed_depth3_depth2_same_id_queue_head_read_data"
+      ],
+      "coverage_buckets": [
+        "ial2_ppif_manager_capacity_status_read_single_beat_mixed_depth3_depth2_same_id_queue_head_read_data_pipeline_cli"
+      ],
+      "query_kinds": [
+        "check",
+        "semantic",
+        "schedule"
+      ],
+      "source": "ppif/axi_manager_capacity_status_read_single_beat_mixed_depth3_depth2_same_id_queue_head_read_data.ppif"
+    },
+    {
+      "catalog_ids": [
+        "intent.ppif_axi_manager_capacity_status_read_single_beat_mixed_depth3_depth2_same_id_queue_head_response_demux"
+      ],
+      "coverage_buckets": [
+        "ial2_ppif_manager_capacity_status_read_single_beat_mixed_depth3_depth2_same_id_queue_head_response_demux_pipeline_cli"
+      ],
+      "query_kinds": [
+        "check",
+        "semantic",
+        "schedule"
+      ],
+      "source": "ppif/axi_manager_capacity_status_read_single_beat_mixed_depth3_depth2_same_id_queue_head_response_demux.ppif"
+    },
+    {
+      "catalog_ids": [
+        "intent.ppif_axi_manager_capacity_status_read_single_beat_multi_depth3_same_id_queue_head_read_data"
+      ],
+      "coverage_buckets": [
+        "ial2_ppif_manager_capacity_status_read_single_beat_multi_depth3_same_id_queue_head_read_data_pipeline_cli"
+      ],
+      "query_kinds": [
+        "check",
+        "semantic",
+        "schedule"
+      ],
+      "source": "ppif/axi_manager_capacity_status_read_single_beat_multi_depth3_same_id_queue_head_read_data.ppif"
+    },
+    {
+      "catalog_ids": [
+        "intent.ppif_axi_manager_capacity_status_read_single_beat_multi_depth3_same_id_queue_head_response_demux"
+      ],
+      "coverage_buckets": [
+        "ial2_ppif_manager_capacity_status_read_single_beat_multi_depth3_same_id_queue_head_response_demux_pipeline_cli"
+      ],
+      "query_kinds": [
+        "check",
+        "semantic",
+        "schedule"
+      ],
+      "source": "ppif/axi_manager_capacity_status_read_single_beat_multi_depth3_same_id_queue_head_response_demux.ppif"
+    },
+    {
+      "catalog_ids": [
+        "intent.ppif_axi_manager_capacity_status_read_single_beat_multi_group_same_id_queue_head_read_data"
+      ],
+      "coverage_buckets": [
+        "ial2_ppif_manager_capacity_status_read_single_beat_multi_group_same_id_queue_head_read_data_pipeline_cli"
+      ],
+      "query_kinds": [
+        "check",
+        "semantic",
+        "schedule"
+      ],
+      "source": "ppif/axi_manager_capacity_status_read_single_beat_multi_group_same_id_queue_head_read_data.ppif"
+    },
+    {
+      "catalog_ids": [
+        "intent.ppif_axi_manager_capacity_status_read_single_beat_multi_group_same_id_queue_head_response_demux"
+      ],
+      "coverage_buckets": [
+        "ial2_ppif_manager_capacity_status_read_single_beat_multi_group_same_id_queue_head_response_demux_pipeline_cli"
+      ],
+      "query_kinds": [
+        "check",
+        "semantic",
+        "schedule"
+      ],
+      "source": "ppif/axi_manager_capacity_status_read_single_beat_multi_group_same_id_queue_head_response_demux.ppif"
+    },
+    {
+      "catalog_ids": [
+        "intent.ppif_axi_manager_capacity_status_read_single_beat_same_id_queue_head_read_data"
+      ],
+      "coverage_buckets": [
+        "ial2_ppif_manager_capacity_status_read_single_beat_same_id_queue_head_read_data_pipeline_cli"
+      ],
+      "query_kinds": [
+        "check",
+        "semantic",
+        "schedule"
+      ],
+      "source": "ppif/axi_manager_capacity_status_read_single_beat_same_id_queue_head_read_data.ppif"
+    },
+    {
+      "catalog_ids": [
+        "intent.ppif_axi_manager_capacity_status_read_single_beat_same_id_queue_head_response_demux"
+      ],
+      "coverage_buckets": [
+        "ial2_ppif_manager_capacity_status_read_single_beat_same_id_queue_head_response_demux_pipeline_cli"
+      ],
+      "query_kinds": [
+        "check",
+        "semantic",
+        "schedule"
+      ],
+      "source": "ppif/axi_manager_capacity_status_read_single_beat_same_id_queue_head_response_demux.ppif"
+    },
+    {
+      "catalog_ids": [
+        "intent.ppif_axi_manager_capacity_status_response_demux"
+      ],
+      "coverage_buckets": [
+        "ial2_ppif_manager_capacity_status_response_demux_pipeline_cli"
+      ],
+      "query_kinds": [
+        "check",
+        "semantic",
+        "schedule"
+      ],
+      "source": "ppif/axi_manager_capacity_status_response_demux.ppif"
+    },
+    {
+      "catalog_ids": [
+        "intent.ppif_axi_manager_capacity_status_same_id_issue_order_queue_policy"
+      ],
+      "coverage_buckets": [
+        "ial2_ppif_manager_capacity_status_same_id_issue_order_queue_policy_pipeline_cli"
+      ],
+      "query_kinds": [
+        "check",
+        "semantic",
+        "schedule"
+      ],
+      "source": "ppif/axi_manager_capacity_status_same_id_issue_order_queue_policy.ppif"
+    },
+    {
+      "catalog_ids": [
+        "intent.ppif_axi_manager_capacity_status_same_id_queue_head_response_demux"
+      ],
+      "coverage_buckets": [
+        "ial2_ppif_manager_capacity_status_same_id_queue_head_response_demux_pipeline_cli"
+      ],
+      "query_kinds": [
+        "check",
+        "semantic",
+        "schedule"
+      ],
+      "source": "ppif/axi_manager_capacity_status_same_id_queue_head_response_demux.ppif"
+    },
+    {
+      "catalog_ids": [
+        "intent.ppif_axi_manager_capacity_status_same_id_reject_policy"
+      ],
+      "coverage_buckets": [
+        "ial2_ppif_manager_capacity_status_same_id_reject_policy_pipeline_cli"
+      ],
+      "query_kinds": [
+        "check",
+        "semantic",
+        "schedule"
+      ],
+      "source": "ppif/axi_manager_capacity_status_same_id_reject_policy.ppif"
+    },
+    {
+      "catalog_ids": [
+        "intent.ppif_axi_manager_capacity_status_transaction_envelope"
+      ],
+      "coverage_buckets": [
+        "ial2_ppif_manager_capacity_status_transaction_envelope_pipeline_cli"
+      ],
+      "query_kinds": [
+        "check",
+        "semantic",
+        "schedule"
+      ],
+      "source": "ppif/axi_manager_capacity_status_transaction_envelope.ppif"
+    },
+    {
+      "catalog_ids": [
+        "intent.ppif_axi_manager_capacity_status_transaction_event_dispatch"
+      ],
+      "coverage_buckets": [
+        "ial2_ppif_manager_capacity_status_transaction_event_dispatch_pipeline_cli"
+      ],
+      "query_kinds": [
+        "check",
+        "semantic",
+        "schedule"
+      ],
+      "source": "ppif/axi_manager_capacity_status_transaction_event_dispatch.ppif"
+    },
+    {
+      "catalog_ids": [
+        "intent.ppif_axi_manager_capacity_status_write_depth3_same_id_queue_head_response_demux"
+      ],
+      "coverage_buckets": [
+        "ial2_ppif_manager_capacity_status_write_depth3_same_id_queue_head_response_demux_pipeline_cli"
+      ],
+      "query_kinds": [
+        "check",
+        "semantic",
+        "schedule"
+      ],
+      "source": "ppif/axi_manager_capacity_status_write_depth3_same_id_queue_head_response_demux.ppif"
+    },
+    {
+      "catalog_ids": [
+        "intent.ppif_axi_manager_capacity_status_write_mixed_auto_id_same_id_queue_head_response_demux"
+      ],
+      "coverage_buckets": [
+        "ial2_ppif_manager_capacity_status_write_mixed_auto_id_same_id_queue_head_response_demux_pipeline_cli"
+      ],
+      "query_kinds": [
+        "check",
+        "semantic",
+        "schedule"
+      ],
+      "source": "ppif/axi_manager_capacity_status_write_mixed_auto_id_same_id_queue_head_response_demux.ppif"
+    },
+    {
+      "catalog_ids": [
+        "intent.ppif_axi_manager_capacity_status_write_mixed_depth3_depth2_same_id_queue_head_response_demux"
+      ],
+      "coverage_buckets": [
+        "ial2_ppif_manager_capacity_status_write_mixed_depth3_depth2_same_id_queue_head_response_demux_pipeline_cli"
+      ],
+      "query_kinds": [
+        "check",
+        "semantic",
+        "schedule"
+      ],
+      "source": "ppif/axi_manager_capacity_status_write_mixed_depth3_depth2_same_id_queue_head_response_demux.ppif"
+    },
+    {
+      "catalog_ids": [
+        "intent.ppif_axi_manager_capacity_status_write_mixed_dynamic_static_response_demux"
+      ],
+      "coverage_buckets": [
+        "ial2_ppif_manager_capacity_status_write_mixed_dynamic_static_response_demux_pipeline_cli"
+      ],
+      "query_kinds": [
+        "check",
+        "semantic",
+        "schedule"
+      ],
+      "source": "ppif/axi_manager_capacity_status_write_mixed_dynamic_static_response_demux.ppif"
+    },
+    {
+      "catalog_ids": [
+        "intent.ppif_axi_manager_capacity_status_write_mixed_dynamic_static_response_demux_multi_dynamic"
+      ],
+      "coverage_buckets": [
+        "ial2_ppif_manager_capacity_status_write_mixed_dynamic_static_response_demux_multi_dynamic_pipeline_cli"
+      ],
+      "query_kinds": [
+        "check",
+        "semantic",
+        "schedule"
+      ],
+      "source": "ppif/axi_manager_capacity_status_write_mixed_dynamic_static_response_demux_multi_dynamic.ppif"
+    },
+    {
+      "catalog_ids": [
+        "intent.ppif_axi_manager_capacity_status_write_mixed_dynamic_static_response_demux_multi_static"
+      ],
+      "coverage_buckets": [
+        "ial2_ppif_manager_capacity_status_write_mixed_dynamic_static_response_demux_multi_static_pipeline_cli"
+      ],
+      "query_kinds": [
+        "check",
+        "semantic",
+        "schedule"
+      ],
+      "source": "ppif/axi_manager_capacity_status_write_mixed_dynamic_static_response_demux_multi_static.ppif"
+    },
+    {
+      "catalog_ids": [
+        "intent.ppif_axi_manager_capacity_status_write_mixed_dynamic_static_response_demux_multi_static3"
+      ],
+      "coverage_buckets": [
+        "ial2_ppif_manager_capacity_status_write_mixed_dynamic_static_response_demux_multi_static3_pipeline_cli"
+      ],
+      "query_kinds": [
+        "check",
+        "semantic",
+        "schedule"
+      ],
+      "source": "ppif/axi_manager_capacity_status_write_mixed_dynamic_static_response_demux_multi_static3.ppif"
+    },
+    {
+      "catalog_ids": [
+        "intent.ppif_axi_manager_capacity_status_write_mixed_dynamic_static_same_id_issue_order_queue"
+      ],
+      "coverage_buckets": [
+        "ial2_ppif_manager_capacity_status_write_mixed_dynamic_static_same_id_issue_order_queue_pipeline_cli"
+      ],
+      "query_kinds": [
+        "check",
+        "semantic",
+        "schedule"
+      ],
+      "source": "ppif/axi_manager_capacity_status_write_mixed_dynamic_static_same_id_issue_order_queue.ppif"
+    },
+    {
+      "catalog_ids": [
+        "intent.ppif_axi_manager_capacity_status_write_mixed_dynamic_static_same_id_issue_order_queue_multi_static"
+      ],
+      "coverage_buckets": [
+        "ial2_ppif_manager_capacity_status_write_mixed_dynamic_static_same_id_issue_order_queue_multi_static_pipeline_cli"
+      ],
+      "query_kinds": [
+        "check",
+        "semantic",
+        "schedule"
+      ],
+      "source": "ppif/axi_manager_capacity_status_write_mixed_dynamic_static_same_id_issue_order_queue_multi_static.ppif"
+    },
+    {
+      "catalog_ids": [
+        "intent.ppif_axi_manager_capacity_status_write_multi_depth3_same_id_queue_head_response_demux"
+      ],
+      "coverage_buckets": [
+        "ial2_ppif_manager_capacity_status_write_multi_depth3_same_id_queue_head_response_demux_pipeline_cli"
+      ],
+      "query_kinds": [
+        "check",
+        "semantic",
+        "schedule"
+      ],
+      "source": "ppif/axi_manager_capacity_status_write_multi_depth3_same_id_queue_head_response_demux.ppif"
+    },
+    {
+      "catalog_ids": [
+        "intent.ppif_axi_manager_capacity_status_write_multi_group_same_id_queue_head_response_demux"
+      ],
+      "coverage_buckets": [
+        "ial2_ppif_manager_capacity_status_write_multi_group_same_id_queue_head_response_demux_pipeline_cli"
+      ],
+      "query_kinds": [
+        "check",
+        "semantic",
+        "schedule"
+      ],
+      "source": "ppif/axi_manager_capacity_status_write_multi_group_same_id_queue_head_response_demux.ppif"
+    },
+    {
+      "catalog_ids": [
+        "intent.ppif_axi_manager_capacity_status_write_same_id_queue_head_response_demux"
+      ],
+      "coverage_buckets": [
+        "ial2_ppif_manager_capacity_status_write_same_id_queue_head_response_demux_pipeline_cli"
+      ],
+      "query_kinds": [
+        "check",
+        "semantic",
+        "schedule"
+      ],
+      "source": "ppif/axi_manager_capacity_status_write_same_id_queue_head_response_demux.ppif"
+    },
+    {
+      "catalog_ids": [
+        "intent.ppif_axi_r_beat_acceptor"
+      ],
+      "coverage_buckets": [
+        "ial2_ppif_axi_r_beat_acceptor_pipeline_cli"
+      ],
+      "query_kinds": [
+        "check",
+        "semantic",
+        "schedule"
+      ],
+      "source": "ppif/axi_r_beat_acceptor.ppif"
+    },
+    {
+      "catalog_ids": [
+        "intent.ppif_axi_read_burst4_transaction_composition"
+      ],
+      "coverage_buckets": [
+        "ial2_ppif_axi_read_burst4_transaction_composition_pipeline_cli"
+      ],
+      "query_kinds": [
+        "check",
+        "semantic",
+        "schedule"
+      ],
+      "source": "ppif/axi_read_burst4_transaction_composition.ppif"
+    },
+    {
+      "catalog_ids": [
+        "intent.ppif_axi_read_transaction_composition"
+      ],
+      "coverage_buckets": [
+        "ial2_ppif_axi_read_transaction_composition_pipeline_cli"
+      ],
+      "query_kinds": [
+        "check",
+        "semantic",
+        "schedule"
+      ],
+      "source": "ppif/axi_read_transaction_composition.ppif"
+    },
+    {
+      "catalog_ids": [
+        "intent.ppif_axi_w_burst4_driver"
+      ],
+      "coverage_buckets": [
+        "ial2_ppif_axi_w_burst4_driver_pipeline_cli"
+      ],
+      "query_kinds": [
+        "check",
+        "semantic",
+        "schedule"
+      ],
+      "source": "ppif/axi_w_burst4_driver.ppif"
+    },
+    {
+      "catalog_ids": [
+        "intent.ppif_axi_w_driver"
+      ],
+      "coverage_buckets": [
+        "ial2_ppif_axi_w_driver_pipeline_cli"
+      ],
+      "query_kinds": [
+        "check",
+        "semantic",
+        "schedule"
+      ],
+      "source": "ppif/axi_w_driver.ppif"
+    },
+    {
+      "catalog_ids": [
+        "intent.ppif_axi_write_burst4_request_composition"
+      ],
+      "coverage_buckets": [
+        "ial2_ppif_axi_write_burst4_request_composition_pipeline_cli"
+      ],
+      "query_kinds": [
+        "check",
+        "semantic",
+        "schedule"
+      ],
+      "source": "ppif/axi_write_burst4_request_composition.ppif"
+    },
+    {
+      "catalog_ids": [
+        "intent.ppif_axi_write_request_composition"
+      ],
+      "coverage_buckets": [
+        "ial2_ppif_axi_write_request_composition_pipeline_cli"
+      ],
+      "query_kinds": [
+        "check",
+        "semantic",
+        "schedule"
+      ],
+      "source": "ppif/axi_write_request_composition.ppif"
+    },
+    {
+      "catalog_ids": [
+        "intent.ppif_axi_write_transaction_composition"
+      ],
+      "coverage_buckets": [
+        "ial2_ppif_axi_write_transaction_composition_pipeline_cli"
+      ],
+      "query_kinds": [
+        "check",
+        "semantic",
+        "schedule"
+      ],
+      "source": "ppif/axi_write_transaction_composition.ppif"
+    },
+    {
+      "catalog_ids": [
+        "intent.ppif_valid_ready_dual_channel_bundle"
+      ],
+      "coverage_buckets": [
+        "ial2_ppif_valid_ready_dual_channel_bundle_pipeline_cli"
+      ],
+      "query_kinds": [
+        "check",
+        "semantic",
+        "schedule"
+      ],
+      "source": "ppif/valid_ready_dual_channel_bundle.ppif"
+    },
+    {
+      "catalog_ids": [
+        "intent.ppif_valid_ready_handshake"
+      ],
+      "coverage_buckets": [
+        "ial2_ppif_valid_ready_handshake_pipeline_cli"
+      ],
+      "query_kinds": [
+        "check",
+        "semantic",
+        "schedule"
+      ],
+      "source": "ppif/valid_ready_handshake.ppif"
+    },
+    {
+      "catalog_ids": [
+        "feature.arithmetic_xor_operator_variants"
+      ],
+      "coverage_buckets": [
+        "direct_root_pipeline_cli"
+      ],
+      "query_kinds": [
+        "check",
+        "semantic"
+      ],
+      "source": "t/corpus/arithmetic_xor_operator_variants.fsm"
+    },
+    {
+      "catalog_ids": [
+        "feature.composition_intent_integer_literals"
+      ],
+      "coverage_buckets": [
+        "composition_top_pipeline_cli"
+      ],
+      "query_kinds": [
+        "check",
+        "semantic"
+      ],
+      "source": "t/corpus/composition_intent_integer_literals.fsm"
+    },
+    {
+      "catalog_ids": [
+        "feature.compound_update_variants"
+      ],
+      "coverage_buckets": [
+        "direct_root_pipeline_cli"
+      ],
+      "query_kinds": [
+        "check",
+        "semantic"
+      ],
+      "source": "t/corpus/compound_update_variants.fsm"
+    },
+    {
+      "catalog_ids": [
+        "feature.computed_comparison_selector"
+      ],
+      "coverage_buckets": [
+        "direct_root_pipeline_cli"
+      ],
+      "query_kinds": [
+        "check",
+        "semantic"
+      ],
+      "source": "t/corpus/computed_comparison_selector.fsm"
+    },
+    {
+      "catalog_ids": [
+        "feature.computed_test_selector"
+      ],
+      "coverage_buckets": [
+        "direct_root_pipeline_cli"
+      ],
+      "query_kinds": [
+        "check",
+        "semantic"
+      ],
+      "source": "t/corpus/computed_test_selector.fsm"
+    },
+    {
+      "catalog_ids": [
+        "feature.custom_system_clock"
+      ],
+      "coverage_buckets": [
+        "direct_root_pipeline_cli"
+      ],
+      "query_kinds": [
+        "check",
+        "semantic"
+      ],
+      "source": "t/corpus/custom_system_clock.fsm"
+    },
+    {
+      "catalog_ids": [
+        "feature.declarative_bits_symbol_widths"
+      ],
+      "coverage_buckets": [
+        "direct_root_pipeline_cli"
+      ],
+      "query_kinds": [
+        "check",
+        "semantic"
+      ],
+      "source": "t/corpus/declarative_bits_symbol_widths.fsm"
+    },
+    {
+      "catalog_ids": [
+        "feature.direct_aggregate_constant_target_autogrowth"
+      ],
+      "coverage_buckets": [
+        "direct_root_pipeline_cli"
+      ],
+      "query_kinds": [
+        "check",
+        "semantic"
+      ],
+      "source": "t/corpus/direct_aggregate_constant_target_autogrowth.fsm"
+    },
+    {
+      "catalog_ids": [
+        "feature.direct_areset_active_low"
+      ],
+      "coverage_buckets": [
+        "direct_root_pipeline_cli"
+      ],
+      "query_kinds": [
+        "check",
+        "semantic"
+      ],
+      "source": "t/corpus/direct_areset_active_low.fsm"
+    },
+    {
+      "catalog_ids": [
+        "feature.direct_assignment_pair_form"
+      ],
+      "coverage_buckets": [
+        "direct_root_pipeline_cli"
+      ],
+      "query_kinds": [
+        "check",
+        "semantic"
+      ],
+      "source": "t/corpus/direct_assignment_pair_form.fsm"
+    },
+    {
+      "catalog_ids": [
+        "feature.direct_canonical_init_directive"
+      ],
+      "coverage_buckets": [
+        "direct_root_pipeline_cli"
+      ],
+      "query_kinds": [
+        "check",
+        "semantic"
+      ],
+      "source": "t/corpus/direct_canonical_init_directive.fsm"
+    },
+    {
+      "catalog_ids": [
+        "feature.direct_intent_integer_literals"
+      ],
+      "coverage_buckets": [
+        "direct_root_pipeline_cli"
+      ],
+      "query_kinds": [
+        "check",
+        "semantic"
+      ],
+      "source": "t/corpus/direct_intent_integer_literals.fsm"
+    },
+    {
+      "catalog_ids": [
+        "feature.direct_lhs_deconstruct_pack"
+      ],
+      "coverage_buckets": [
+        "direct_root_pipeline_cli"
+      ],
+      "query_kinds": [
+        "check",
+        "semantic"
+      ],
+      "source": "t/corpus/direct_lhs_deconstruct_pack.fsm"
+    },
+    {
+      "catalog_ids": [
+        "feature.direct_rhs_concat_pack"
+      ],
+      "coverage_buckets": [
+        "direct_root_pipeline_cli"
+      ],
+      "query_kinds": [
+        "check",
+        "semantic"
+      ],
+      "source": "t/corpus/direct_rhs_concat_pack.fsm"
+    },
+    {
+      "catalog_ids": [
+        "feature.direct_rhs_concat_target_autogrowth"
+      ],
+      "coverage_buckets": [
+        "direct_root_pipeline_cli"
+      ],
+      "query_kinds": [
+        "check",
+        "semantic"
+      ],
+      "source": "t/corpus/direct_rhs_concat_target_autogrowth.fsm"
+    },
+    {
+      "catalog_ids": [
+        "feature.direct_runtime_div_mod"
+      ],
+      "coverage_buckets": [
+        "direct_root_pipeline_cli"
+      ],
+      "query_kinds": [
+        "check",
+        "semantic"
+      ],
+      "source": "t/corpus/direct_runtime_div_mod.fsm"
+    },
+    {
+      "catalog_ids": [
+        "feature.direct_size_expression_widths"
+      ],
+      "coverage_buckets": [
+        "direct_root_pipeline_cli"
+      ],
+      "query_kinds": [
+        "check",
+        "semantic"
+      ],
+      "source": "t/corpus/direct_size_expression_widths.fsm"
+    },
+    {
+      "catalog_ids": [
+        "feature.direct_sreset_active_high"
+      ],
+      "coverage_buckets": [
+        "direct_root_pipeline_cli"
+      ],
+      "query_kinds": [
+        "check",
+        "semantic"
+      ],
+      "source": "t/corpus/direct_sreset_active_high.fsm"
+    },
+    {
+      "catalog_ids": [
+        "feature.guard_shorthand"
+      ],
+      "coverage_buckets": [
+        "direct_root_pipeline_cli"
+      ],
+      "query_kinds": [
+        "check",
+        "semantic"
+      ],
+      "source": "t/corpus/guard_shorthand.fsm"
+    },
+    {
+      "catalog_ids": [
+        "feature.implicit_composition_system_autowire"
+      ],
+      "coverage_buckets": [
+        "composition_top_pipeline_cli"
+      ],
+      "query_kinds": [
+        "check",
+        "semantic"
+      ],
+      "source": "t/corpus/implicit_composition_system_autowire.fsm"
+    },
+    {
+      "catalog_ids": [
+        "feature.implicit_system_defaults"
+      ],
+      "coverage_buckets": [
+        "direct_root_pipeline_cli"
+      ],
+      "query_kinds": [
+        "check",
+        "semantic"
+      ],
+      "source": "t/corpus/implicit_system_defaults.fsm"
+    },
+    {
+      "catalog_ids": [
+        "feature.nested_compound_guards"
+      ],
+      "coverage_buckets": [
+        "direct_root_pipeline_cli"
+      ],
+      "query_kinds": [
+        "check",
+        "semantic"
+      ],
+      "source": "t/corpus/nested_compound_guards.fsm"
+    },
+    {
+      "catalog_ids": [
+        "feature.params_aggregate_comparison"
+      ],
+      "coverage_buckets": [
+        "direct_root_pipeline_cli"
+      ],
+      "query_kinds": [
+        "check",
+        "semantic"
+      ],
+      "source": "t/corpus/params_aggregate_comparison.fsm"
+    },
+    {
+      "catalog_ids": [
+        "feature.params_aggregate_unary_complement"
+      ],
+      "coverage_buckets": [
+        "direct_root_pipeline_cli"
+      ],
+      "query_kinds": [
+        "check",
+        "semantic"
+      ],
+      "source": "t/corpus/params_aggregate_unary_complement.fsm"
+    },
+    {
+      "catalog_ids": [
+        "feature.partial_lhs_inferred_width"
+      ],
+      "coverage_buckets": [
+        "direct_root_pipeline_cli"
+      ],
+      "query_kinds": [
+        "check",
+        "semantic"
+      ],
+      "source": "t/corpus/partial_lhs_inferred_width.fsm"
+    },
+    {
+      "catalog_ids": [
+        "feature.partial_lhs_with_size"
+      ],
+      "coverage_buckets": [
+        "direct_root_pipeline_cli"
+      ],
+      "query_kinds": [
+        "check",
+        "semantic"
+      ],
+      "source": "t/corpus/partial_lhs_with_size.fsm"
+    },
+    {
+      "catalog_ids": [
+        "feature.plain_test_signal_selectors"
+      ],
+      "coverage_buckets": [
+        "direct_root_pipeline_cli"
+      ],
+      "query_kinds": [
+        "check",
+        "semantic"
+      ],
+      "source": "t/corpus/plain_test_signal_selectors.fsm"
+    },
+    {
+      "catalog_ids": [
+        "feature.relational_operator_chains"
+      ],
+      "coverage_buckets": [
+        "direct_root_pipeline_cli"
+      ],
+      "query_kinds": [
+        "check",
+        "semantic"
+      ],
+      "source": "t/corpus/relational_operator_chains.fsm"
+    },
+    {
+      "catalog_ids": [
+        "feature.reset_state_aliases"
+      ],
+      "coverage_buckets": [
+        "direct_root_pipeline_cli"
+      ],
+      "query_kinds": [
+        "check",
+        "semantic"
+      ],
+      "source": "t/corpus/reset_state_aliases.fsm"
+    },
+    {
+      "catalog_ids": [
+        "feature.rhs_expression_supported_variants"
+      ],
+      "coverage_buckets": [
+        "direct_root_pipeline_cli"
+      ],
+      "query_kinds": [
+        "check",
+        "semantic"
+      ],
+      "source": "t/corpus/rhs_expression_supported_variants.fsm"
+    },
+    {
+      "catalog_ids": [
+        "feature.standalone_dt_explicit_system"
+      ],
+      "coverage_buckets": [
+        "direct_root_pipeline_cli"
+      ],
+      "query_kinds": [
+        "check",
+        "semantic"
+      ],
+      "source": "t/corpus/standalone_dt_explicit_system.fsm"
+    },
+    {
+      "catalog_ids": [
+        "feature.standalone_dt_guards"
+      ],
+      "coverage_buckets": [
+        "direct_root_pipeline_cli"
+      ],
+      "query_kinds": [
+        "check",
+        "semantic"
+      ],
+      "source": "t/corpus/standalone_dt_guards.fsm"
+    },
+    {
+      "catalog_ids": [
+        "feature.standalone_dtc_explicit_system_autowire"
+      ],
+      "coverage_buckets": [
+        "composition_top_pipeline_cli"
+      ],
+      "query_kinds": [
+        "check",
+        "semantic"
+      ],
+      "source": "t/corpus/standalone_dtc_explicit_system_autowire.fsm"
+    },
+    {
+      "catalog_ids": [
+        "feature.state_dte_guards"
+      ],
+      "coverage_buckets": [
+        "direct_root_pipeline_cli"
+      ],
+      "query_kinds": [
+        "check",
+        "semantic"
+      ],
+      "source": "t/corpus/state_dte_guards.fsm"
+    },
+    {
+      "catalog_ids": [
+        "feature.test_branch_selectors"
+      ],
+      "coverage_buckets": [
+        "direct_root_pipeline_cli"
+      ],
+      "query_kinds": [
+        "check",
+        "semantic"
+      ],
+      "source": "t/corpus/test_branch_selectors.fsm"
+    },
+    {
+      "catalog_ids": [
+        "feature.test_selector_symbolic_default"
+      ],
+      "coverage_buckets": [
+        "direct_root_pipeline_cli"
+      ],
+      "query_kinds": [
+        "check",
+        "semantic"
+      ],
+      "source": "t/corpus/test_selector_symbolic_default.fsm"
+    },
+    {
+      "catalog_ids": [
+        "feature.update_shorthand_variants"
+      ],
+      "coverage_buckets": [
+        "direct_root_pipeline_cli"
+      ],
+      "query_kinds": [
+        "check",
+        "semantic"
+      ],
+      "source": "t/corpus/update_shorthand_variants.fsm"
+    },
+    {
+      "catalog_ids": [
+        "feature.vial_ahb_base_output_runtime_parity",
+        "feature.vial_native_uvm_emission_foundation",
+        "feature.vial_public_check_format",
+        "feature.vial_public_plan",
+        "feature.vial_sv_portable_verilator_runtime",
+        "feature.vial_vhdl_portable_semantics",
+        "verification.vial_ahb_subordinate_base_output_arbitration"
+      ],
+      "coverage_buckets": [
+        "vial_ahb_handwritten_oracle_parity",
+        "vial_native_uvm_selected_matrix_review_private_api",
+        "vial_public_check_format_cli_api",
+        "vial_public_plan_cli_api",
+        "vial_semantic_report_private_api",
+        "vial_sv_portable_verilator_runtime_cli_api",
+        "vial_vhdl_ghdl_osvvm_qualified_private_api"
+      ],
+      "language_version": 1,
+      "query_kinds": [
+        "check",
+        "semantic"
+      ],
+      "source": "vial/ahb_subordinate_base_output_arbitration.vial"
+    },
+    {
+      "catalog_ids": [
+        "feature.vial_v2_public_lifecycle_plan"
+      ],
+      "coverage_buckets": [
+        "vial_v2_public_lifecycle_plan_cli_api"
+      ],
+      "language_version": 2,
+      "query_kinds": [
+        "check",
+        "semantic"
+      ],
+      "source": "vial/ahb_subordinate_base_output_arbitration_lifecycle_v2.vial"
+    },
+    {
+      "catalog_ids": [
+        "feature.vial_v2_public_empty_base_plan",
+        "feature.vial_v2_public_source_migration"
+      ],
+      "coverage_buckets": [
+        "vial_v2_public_empty_base_plan_cli_api",
+        "vial_v2_public_source_migration_cli_api"
+      ],
+      "language_version": 2,
+      "query_kinds": [
+        "check",
+        "semantic"
+      ],
+      "source": "vial/ahb_subordinate_base_output_arbitration_v2.vial"
+    }
+  ],
+  "counts": {
+    "all_catalog_entries": 557,
+    "classifications": {
+      "expected_failure": 164,
+      "legacy_out_of_scope": 10,
+      "supported_smoke": 383
+    },
+    "selected_source_queries": 1077,
+    "supported_coverage_buckets": 341,
+    "supported_unique_sources": 374
+  },
+  "evidence_legs": {
+    "durability": "This capture binds the cohort to the catalog source revision/hash and retains the pilot producer and results. The executable ongoing full-cohort watcher is .31.3.2; exhaustive qualification is .31.3.3.",
+    "falsify": "Independent authored field/observation names distinguish retained report-only metadata from empty-but-successful normalized lowering. Full pilot equality covers nested payloads; prior T1868/T1871 baseline failures establish routing/diagnostic/version controls.",
+    "rederive": "Native RegressionCorpus and capability builders produce the selected cohort and contract census; the tracked pilot compares actual native CLI and newline-stdio MCP results."
+  },
+  "limits": [
+    "This selection is not completed exhaustive qualification; only the named pilot and previously committed VIAL/alias/failure tests have run.",
+    "Catalog coverage buckets describe contracts, not independent product-feature counts; the four broad family labels are too coarse for semantic completeness.",
+    "Internal compiler/startup qualification, original spent captures and dependency implementation remain outside these source-only queries.",
+    "No new concrete coverage defect was established by the selected pilot."
+  ],
+  "owner": "SEMANTIC-INTROSPECTION-MCP-FRONTIER.31.3.1",
+  "pilot_producer_sha256": "0e62779b5ad205c9b4237de095bad32974db7b80a5bc17e5182e6fbd5dfbc726",
+  "pilot_results": [
+    {
+      "first_difference": null,
+      "kind": "semantic",
+      "mcp_exit": 0,
+      "mcp_report_sha256": "93814972e883f125cabf80ec775766929ef8263b6fbc9f1c287d66a5998a5dbb",
+      "mcp_stderr_empty": true,
+      "native_exit": 0,
+      "native_report_sha256": "93814972e883f125cabf80ec775766929ef8263b6fbc9f1c287d66a5998a5dbb",
+      "native_stderr_empty": true,
+      "source": "t/corpus/direct_size_expression_widths.fsm",
+      "source_sha256": "512d76876a7da2fd2a2556219f41f7143bf15dbc0a7c6510a7001f17c8c94064"
+    },
+    {
+      "first_difference": null,
+      "kind": "semantic",
+      "mcp_exit": 0,
+      "mcp_report_sha256": "e9771436932124f76bfe83ecc50921d09edab1b98043b868afb00e4e153815f3",
+      "mcp_stderr_empty": true,
+      "native_exit": 0,
+      "native_report_sha256": "e9771436932124f76bfe83ecc50921d09edab1b98043b868afb00e4e153815f3",
+      "native_stderr_empty": true,
+      "source": "t/corpus/direct_rhs_concat_pack.fsm",
+      "source_sha256": "4216d83c4ffc89f54f55736cf84c2962b52b7b9ba8ca79b6ac01781092559db6"
+    },
+    {
+      "first_difference": null,
+      "kind": "semantic",
+      "mcp_exit": 0,
+      "mcp_report_sha256": "f228c098f094f9b554e7849105823e2d1328bad0630787f0204937edc6a4dffb",
+      "mcp_stderr_empty": true,
+      "native_exit": 0,
+      "native_report_sha256": "f228c098f094f9b554e7849105823e2d1328bad0630787f0204937edc6a4dffb",
+      "native_stderr_empty": true,
+      "source": "t/corpus/computed_test_selector.fsm",
+      "source_sha256": "afbd4895e66c6709668b5d457ace67939b13dca943434e912b30afac62932c55"
+    },
+    {
+      "first_difference": null,
+      "kind": "semantic",
+      "mcp_exit": 0,
+      "mcp_report_sha256": "0413ac4d5286f11dcfe2bb98ca32c7221200150375bfbc896aa3666216ee19fc",
+      "mcp_stderr_empty": true,
+      "native_exit": 0,
+      "native_report_sha256": "0413ac4d5286f11dcfe2bb98ca32c7221200150375bfbc896aa3666216ee19fc",
+      "native_stderr_empty": true,
+      "source": "t/corpus/standalone_dtc_explicit_system_autowire.fsm",
+      "source_sha256": "b84a68c1cadf02468879066d1531919db6ba01d5cfdec39309915e059983daf5"
+    },
+    {
+      "first_difference": null,
+      "kind": "semantic",
+      "mcp_exit": 0,
+      "mcp_report_sha256": "a5db560b56b835f06e93d437f04079e662dd07ace890517ddf74f7f1933084ce",
+      "mcp_stderr_empty": true,
+      "native_exit": 0,
+      "native_report_sha256": "a5db560b56b835f06e93d437f04079e662dd07ace890517ddf74f7f1933084ce",
+      "native_stderr_empty": true,
+      "source": "isf/storage_fields.isf",
+      "source_sha256": "7a583f66dc9acccd4b9b2158449b74505d2b8dc0267e405baa5dca474a0fb184"
+    },
+    {
+      "authored_observation": {
+        "fields": [
+          "mode",
+          "prio",
+          "enable"
+        ],
+        "storage": "control"
+      },
+      "first_difference": null,
+      "kind": "schedule",
+      "mcp_exit": 0,
+      "mcp_report_sha256": "785c2929518c9623c4f7549ed414ecf6f4d4e2670a6176e7d6ee629fd4ed7056",
+      "mcp_stderr_empty": true,
+      "native_exit": 0,
+      "native_report_sha256": "785c2929518c9623c4f7549ed414ecf6f4d4e2670a6176e7d6ee629fd4ed7056",
+      "native_stderr_empty": true,
+      "source": "isf/storage_fields.isf",
+      "source_sha256": "7a583f66dc9acccd4b9b2158449b74505d2b8dc0267e405baa5dca474a0fb184"
+    },
+    {
+      "first_difference": null,
+      "kind": "semantic",
+      "mcp_exit": 0,
+      "mcp_report_sha256": "b72641336f9329ebc95a4694484b8b01276b86f65ce837fe372080a63baf7590",
+      "mcp_stderr_empty": true,
+      "native_exit": 0,
+      "native_report_sha256": "b72641336f9329ebc95a4694484b8b01276b86f65ce837fe372080a63baf7590",
+      "native_stderr_empty": true,
+      "source": "isf/verification_observation_metadata.isf",
+      "source_sha256": "43fab06c87254fd773666e0eb9d80a909a52a7f9137c0e506555d19d8c99d899"
+    },
+    {
+      "authored_observation": {
+        "observation": "link_rx",
+        "signals": [
+          "valid",
+          "ready",
+          "data"
+        ]
+      },
+      "first_difference": null,
+      "kind": "schedule",
+      "mcp_exit": 0,
+      "mcp_report_sha256": "b017659071e3f2c82e48162db8b4e5a26dd6234a9cb3006a0e5ffff05e549ed0",
+      "mcp_stderr_empty": true,
+      "native_exit": 0,
+      "native_report_sha256": "b017659071e3f2c82e48162db8b4e5a26dd6234a9cb3006a0e5ffff05e549ed0",
+      "native_stderr_empty": true,
+      "source": "isf/verification_observation_metadata.isf",
+      "source_sha256": "43fab06c87254fd773666e0eb9d80a909a52a7f9137c0e506555d19d8c99d899"
+    },
+    {
+      "first_difference": null,
+      "kind": "semantic",
+      "mcp_exit": 0,
+      "mcp_report_sha256": "d765212996dab1bb8fe98a489228390dd050839fb23199f192c7da7da126f240",
+      "mcp_stderr_empty": true,
+      "native_exit": 0,
+      "native_report_sha256": "d765212996dab1bb8fe98a489228390dd050839fb23199f192c7da7da126f240",
+      "native_stderr_empty": true,
+      "source": "ppif/axi_manager_capacity_status_read_multi_group_last_beat_same_id_queue_head_burst_length_runtime_assertion.ppif",
+      "source_sha256": "b36a5f9a93c77107ddf710d1d85e33f8b469ebfc2849053f0ac47c7373125a57"
+    },
+    {
+      "first_difference": null,
+      "kind": "schedule",
+      "mcp_exit": 0,
+      "mcp_report_sha256": "1a279d17ea21357f363048146352c47cf6f5e952c9f5ee2b804cd9a03afdf1dd",
+      "mcp_stderr_empty": true,
+      "native_exit": 0,
+      "native_report_sha256": "1a279d17ea21357f363048146352c47cf6f5e952c9f5ee2b804cd9a03afdf1dd",
+      "native_stderr_empty": true,
+      "source": "ppif/axi_manager_capacity_status_read_multi_group_last_beat_same_id_queue_head_burst_length_runtime_assertion.ppif",
+      "source_sha256": "b36a5f9a93c77107ddf710d1d85e33f8b469ebfc2849053f0ac47c7373125a57"
+    }
+  ],
+  "public_contract_census": {
+    "embedding_keys": [
+      "composition_report",
+      "debug_runtime",
+      "hdl_generator_facade",
+      "hdl_generator_result",
+      "isf_public_interface",
+      "section_contract",
+      "serializable_generation_result_snapshot",
+      "serializable_plan_reports",
+      "typed_extensions"
+    ],
+    "introspection_contract_surfaces": [
+      "backend_validation",
+      "capabilities",
+      "check_json",
+      "diagnostics",
+      "documentation_examples",
+      "embedding",
+      "generated_artifacts",
+      "language_surface",
+      "mcp_adapter",
+      "normalized_semantic_json",
+      "producer",
+      "schedule_json",
+      "semantic_exports",
+      "source_discovery",
+      "support_accounting",
+      "vial_source_file_check",
+      "vial_tool_capabilities"
+    ],
+    "language_surface_keys": [
+      "assignments",
+      "composition",
+      "declarations",
+      "default_mode_compatibility",
+      "expressions",
+      "file_surfaces",
+      "hial_vial_bridge",
+      "intentionally_blocked_or_not_yet_public",
+      "strict_mode",
+      "surface_contract",
+      "system_contracts",
+      "vial_execution",
+      "vial_native_uvm_emission",
+      "vial_tooling",
+      "vial_vhdl_emission"
+    ],
+    "sections": [
+      "backend_validation",
+      "diagnostics",
+      "documentation",
+      "embedding",
+      "language_surface",
+      "manifest_contract",
+      "manifest_schema_version",
+      "producer",
+      "semantic_exports",
+      "semantic_introspection",
+      "support_accounting",
+      "verification_outputs"
+    ]
+  },
+  "schema": "fsmgen.current_feature_mcp_coverage_selection.v1",
+  "selection": {
+    "capabilities": "Compare native full manifest and both VIAL public capability records with MCP access; runtime/backend availability remains discovery metadata and never grants execution through MCP.",
+    "guard": "Derive source/query coverage from the native public applicability map and corpus, reject unknown suffixes or unmapped VIAL sources, assert native success and full API/MCP report parity. Explicit source selection supports ordinary focused work; exhaustive execution is reserved for qualification/important gates.",
+    "independent_observations": "Retain fixture-authored storage field and observation identities on schedule reports; inspect direct/composition roots, aggregate protocol metadata and VIAL lifecycle records through their canonical producers instead of treating success flags as feature evidence.",
+    "negative_population": "Select representative structured source failures plus version/path/schema controls. Expected-failure catalog entries are a separate negative population, not silently promoted to successful features.",
+    "new_feature_rule": "A new public source feature needs a support-catalog case and API/MCP evidence on its actual semantic or schedule surface; new VIAL source/version pairs need explicit mapping. A supported feature must not be omitted merely because lowering drops its source-only metadata.",
+    "population": "Every supported_smoke catalog source, deduplicated by path while retaining every catalog ID and coverage bucket. Hardware uses strict check/semantic and schedule where publicly applicable. VIAL versions are explicitly mapped from the documented sources."
+  }
+}

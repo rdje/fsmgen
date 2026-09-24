@@ -164,3 +164,8 @@ Durable capture and limits:
 record. The existing reverify command above checks the historical shipped
 profile only; it is not an all-feature coverage oracle. `.31.3` owns stronger
 coverage qualification and ongoing feature-signoff integration after repairs.
+
+Current-feature query selection and its pilot are captured in
+`docs/audits/mcp-feature-coverage-20260924/feature-coverage-selection.json`.
+ISF storage fields and passive observations require schedule reports;
+normalized hardware alone does not retain that source-only metadata.

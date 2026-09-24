@@ -2812,6 +2812,28 @@ Use `file_kind: "axi"` or `"ahb"` for the other supported aliases. Discovery
 keeps catalog order, support identity, filtering and bounded limits; it does
 not scan arbitrary workspace directories or expose hidden/absolute paths.
 
+### Choose the Report That Retains the Feature
+
+Source checking, normalized hardware semantics and scheduling answer different
+questions. Use the public report that retains the authored information:
+
+| Information to inspect | MCP query | Public report location |
+| --- | --- | --- |
+| Resolved hardware expressions, symbols, assignments and composition | `fsmgen_semantic_introspect` | `report.semantic` and its declared projections |
+| ISF scalar storage fields | `fsmgen_schedule_preview` | `report.inferred_storage[].fields` |
+| ISF passive observations | `fsmgen_schedule_preview` | `report.verification_observations[]` |
+| Protocol scheduling, ordering and generated runtime assertions | `fsmgen_schedule_preview` | The source's public schedule report and protocol metadata |
+| VIAL source meaning and lifecycle intent | `fsmgen_semantic_introspect` with the explicit version | `report.semantic_report` |
+| Backend, planning or runtime availability | `fsmgen_capability_query` | The relevant public capability section; availability is not an MCP execution command |
+
+For example, query `isf/storage_fields.isf` with schedule preview to inspect
+the authored `control` fields `mode`, `prio` and `enable`. Query
+`isf/verification_observation_metadata.isf` the same way to inspect `link_rx`
+and its ordered `valid`, `ready`, `data` signals. Their normalized hardware
+reports describe the lowered machine; they do not replace these source-only
+metadata projections. A successful check or a source-discovery entry alone
+does not prove that a particular feature's details were inspected.
+
 ### VIAL Semantic Queries and Version Selection
 
 For `.vial` sources, `fsmgen_check` and `fsmgen_semantic_introspect` call the
