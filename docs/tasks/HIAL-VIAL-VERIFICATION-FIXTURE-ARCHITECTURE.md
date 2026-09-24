@@ -3698,10 +3698,40 @@ decomposes the architecture needed to move beyond that bounded foundation.
   Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.4.3.3.3.2: retain Service job and ACCEPT association`
 
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.4.3.3.4`
-  Status: `pending`
+  Status: `active`
   Goal: `Join original accepted requests to aggregate gated job admission.`
   Acceptance: `Retain each transferred request with its original peer and ledger grant before native preparation. Bind clipped request/ancestor deadlines and detached private context, then prepare/start only through existing per-allocation/per-fork checks. Advance tracked ACCEPT only for the matching ready gated job and retain partial failures until exact cleanup. Qualify real root/nested sockets, gated processes, signals and original ownership without exec release.`
-  Verification: `Pending retained Service interfaces; keep fork masks independent from preparation/publication masks.`
+  Verification: `Service association/publication is qualified. Child .1 retains completed acceptance history before the unchanged rollover threshold. Child .2 binds original grant contexts and snapshots before native preparation, including entropy allocation checks. Child .3 joins original accepted request/peer ownership to ledger grants; child .4 then composes matching gated readiness and tracked ACCEPT. Keep fork masks independent from preparation/publication masks; no exec release here.`
+  Commit: `pending`
+
+  Children: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.4.3.3.4.1, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.4.3.3.4.2, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.4.3.3.4.3, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.4.3.3.4.4`
+
+- ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.4.3.3.4.1`
+  Status: `done`
+  Goal: `Retain completed transport-publication evidence before aggregate composition.`
+  Acceptance: `Authenticate the exact completed predecessor and acceptance suffix through the existing finite manifest. Preserve all original nodes, compact terminals and the live execution-scope correction. Independently reconstruct source/suffix digests and dimensions, reverify the predecessor manifest, and prove altered-digest refusal with the unchanged checker. No code, book behavior or ceiling changes.`
+  Verification: `The finite manifest authenticates exact 27cb2e8857a2a96eaf14d5ee653404142b440659: full source 7149 lines/1264035 bytes and completed four-section suffix 122 lines/8507 bytes. Independent git cat-file, awk, wc and shasum agree with source/suffix hashes; the source revision preserves the previous manifest and its reverified 1d5a47b73 source. Every original node and compact terminal stays live; only the aggregate parent gains its planned children, and the execution-scope correction stays unchanged. The production checker accepts the complete same-volume fixture and rejects only an altered suffix digest. Scratch sources/fixture are removed. Book/source behavior and all ceilings remain unchanged.`
+  Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.4.3.3.4.1: retain completed transport publication history`
+
+- ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.4.3.3.4.2`
+  Status: `pending`
+  Goal: `Bind original grant contexts and snapshots before native job preparation.`
+  Acceptance: `Publish root/nested contexts only for original live ledger grants and recheck retained capacity and clipped deadlines at each token allocation. Retain original Service context preparation before entropy; bind monotonic identities in admission order. Apply the qualified pure replacement before native snapshot custody moves, preserving original execution bytes and first failure. Qualify actual entropy, original identity, resource credit and interruption/cleanup; decompose component hooks from aggregate integration as needed. No exec release.`
+  Verification: `Pending the owning implementation and independent qualification; preserve spent compiler evidence and original startup/full-CI/push gates.`
+  Commit: `pending`
+
+- ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.4.3.3.4.3`
+  Status: `pending`
+  Goal: `Retain original accepted request and ledger-grant association.`
+  Acceptance: `Transfer each original Service request into its already retained aggregate peer record before admission effects. Join the original submitting parent grant, clipped request/admission walls and a fresh original child grant/context exactly once. Interrupted returns, repeated/foreign tickets, capacity refusal, expiry and peer closure retain first cause and exact peer/job ownership. Qualify actual sockets and original record identity; native preparation follows only after this association is retained.`
+  Verification: `Pending the owning implementation and independent qualification; preserve spent compiler evidence and original startup/full-CI/push gates.`
+  Commit: `pending`
+
+- ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.4.3.3.4.4`
+  Status: `pending`
+  Goal: `Prepare matching gated jobs and publish their tracked ACCEPT.`
+  Acceptance: `Prepare/start the original associated job through existing allocation/fork admission and fresh foreign descriptor inventories. Advance only its matching ready gated native job and retained Service publication under original request/ancestor walls. Reject partial publication, peer loss, cancellation and expiry without exec release; retain original process/peer cleanup and copied observations. Qualify actual gated processes, native sockets, signals and exact cleanup; do not wrap forks in preparation masks.`
+  Verification: `Pending the owning implementation and independent qualification; preserve spent compiler evidence and original startup/full-CI/push gates.`
   Commit: `pending`
 
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.4.3.3.5`
@@ -4416,7 +4446,7 @@ decomposes the architecture needed to move beyond that bounded foundation.
 
 ## Current Frontier
 
-Current frontier: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.4.3.3.4` joins original accepted requests to aggregate gated job admission. Service request/job association and tracked ACCEPT through masked write admission are qualified. Original request transfer, parent-context recovery and pure snapshot replacement are qualified. Later children join aggregate gated admission and final exec rechecks. Completed native topology/history remain version-retrievable; live claim owners stay visible. Streaming, fair composition and independent qualification remain later children. Preserve original failures, spent compiler evidence and full-CI/push gates.
+Current frontier: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.4.3.3.4.2` binds original grant contexts and snapshots before native job preparation. Completed transport-publication history is exactly retrievable. Service request/job association and tracked ACCEPT through masked write admission are qualified. Original request transfer, parent-context recovery and pure snapshot replacement are qualified. Later children join aggregate gated admission and final exec rechecks. Completed native topology/history remain version-retrievable; live claim owners stay visible. Streaming, fair composition and independent qualification remain later children. Preserve original failures, spent compiler evidence and full-CI/push gates.
 
 Architecture audit `.1` is complete. Decision `0032` selects one public
 `.vial` source language, private immutable `VIALSemanticIR` and
@@ -7024,126 +7054,31 @@ and push did not run. Exact predecessor evidence remains unchanged; this live
 correction supplies its proper scope and is reflected in the canonical fact/book.
 
 
+## Acceptance Checklist (.19.2.3.1.2.2.5.5.2.3.4.3.3.4.1)
 
-## Acceptance Checklist (.19.2.3.1.2.2.5.5.2.3.4.3.3.2.2)
-
-- [x] **ROOT CAUSE (WHY + WHERE)** — `git log -S` for the first live
-  acceptance heading identifies 3eb39b23187e42083c139a842d88ba015377521a.
-  Exact 1d5a47b73c4600490b893718afe6fca495b75d21 reaches 7175 lines near
-  the existing 7200-line rollover milestone; completed prose moves to Git.
-- [x] **ADDRESSED (verified)** — Re-derivation retrieves the exact full
-  source (1261792 bytes) and six-section completed suffix (178 lines/12740
-  bytes); independent shasum matches both manifest SHA-256 identities.
-  The revision-local prior manifest and its exact 0a9ea8d6b source reverify.
-  Every node ID and existing compact terminal remains live; only this owner
-  and its parent's progress summary change outside the completed suffix.
-  Falsification: the unchanged production checker accepts the complete fixture
-  and rejects the altered suffix digest with the sole intended diagnostic.
-  Same-volume fixtures/scratch blobs are removed. Durability: exact Git source,
-  current finite manifest, predecessor manifest chain, retained nodes and this
-  task preserve reconstruction; .artifacts/context-history-*.log raw logs
-  remain a named gap. No thresholds or checker semantics change.
-- [x] **NO REGRESSION** — `task-tree-integrity` confirms all active invariants;
-  `knowledge-map: OK`, claim census and staged doctrines cover the resulting
-  metadata. Book and product source remain accurate and unchanged. No native
-  producer, original startup, full CI or push runs.
-
-
-## Acceptance Checklist (.19.2.3.1.2.2.5.5.2.3.4.3.3.2.3)
-
-- [x] **ROOT CAUSE (WHY + WHERE)** — `git log -S 'sub snapshot_request {'`
-  locates 971bc58e5cb0834e35fc53402413b00b01d77af2, the original bounded
-  wire codec. It captured execution state but had no detached private-context
-  replacement. Existing admitted snapshots can exceed limits after insertion.
-  Read-only source/history review also confirms that T1827 explicitly releases
-  fixture commands; three preserved checklist bands overstated no execution.
-- [x] **ADDRESSED (verified)** — Re-derivation: T1846 independently emits
-  literal SPAWN fields, compares original invocation/cwd/umask and unrelated
-  bytes, and verifies detached vectors without live ENV mutation. Count 4096
-  and aggregate 524288 bytes accept; their first excesses refuse after insertion
-  or context growth. Invalid incoming private entries cannot be silently repaired.
-  Falsification: six isolated variants omit context syntax, input validation,
-  source detachment or final bounds, remove a prefix, or change original start;
-  each fails the intended assertion with native exits 1, 2, 5, 2, 1 and 4.
-  All outcomes are consumed. Exact mutant directories, runner and book build
-  are removed; logs remain under .artifacts/snapshot-context-* as a named
-  raw-evidence durability gap. Tracked T1846, source, task/book/fact and Git
-  preserve the contract and deterministic re-derivation. Prior evidence stays
-  immutable; the live correction names its scope and exact predecessor commits.
-- [x] **NO REGRESSION** — The selected guarded component band reports
-  `All tests successful. Files=14, Tests=184`; both Perl syntax checks pass.
-  T1827 in that band executes bounded fixture commands and legacy checks.
-  The new pure helper adds no native effects or exec release. mdBook builds;
-  generated HTML contains both the helper contract and verification correction.
-  Visual QA remains blocked on browser runtime startup, separately owned.
-  Knowledge Map, claim census and staged doctrines cover synchronized metadata.
-  Original startup/proxy/compiler producers, full CI and push remain gated.
-
-
-## Acceptance Checklist (.19.2.3.1.2.2.5.5.2.3.4.3.3.3.1)
-
-- [x] **ROOT CAUSE (WHY + WHERE)** — `git log -S 'sub _write_ready {'`
-  locates ef450a2e618b91ffc7d767211cec5052e097854e; the fresh pre-mask
-  checks arrive in 13bf045a3838d3ba04bbe5e639ef81a47ae57959. Connection
-  checks its transport/no-progress walls but has no original Service admission
-  callback at the actual masked write boundary. A narrower owner wall must be
-  checked there before Service request/job publication can safely compose.
-- [x] **ADDRESSED (verified)** — Re-derivation: T1847 compares independent
-  literal ACCEPT bytes, byte-at-a-time writes and deferred native silence.
-  It observes original-owner callback identity, read progress, unchanged queue
-  credit/deadlines, original masks, actual pending/pre-mask creator signals,
-  inclusive expiry after callback, first failure and exact inherited-child wait.
-  Falsification: omitted guard, unmasked callback, malformed-return acceptance,
-  stale clock, open failure and copied owner each reject at the intended
-  assertion, with native exits 255, 3, 255, 255, 255 and 2; none is a signal.
-  An additional omitted closure-check variant passes because existing close
-  clears active/queued frames before returning. It proves no missed native-write
-  defect and receives no negative-control credit; its original result is kept.
-  All outcomes are consumed. Exact isolated sources/runner/book build are removed.
-  Durability: tracked source/test/book/fact and task preserve the contract and
-  rerun; .artifacts/write-admission-* raw logs are a named durability gap.
-- [x] **NO REGRESSION** — The selected guarded band reports
-  `All tests successful. Files=15, Tests=191`; focused T1847 and Perl syntax
-  pass. Initial fixture syntax warned about the built-in eof name; renaming
-  the helper to peer_eof removes the ambiguity before credited execution.
-  mdBook builds and generated HTML contains the per-advancement guard contract;
-  visual QA remains separately blocked on browser runtime startup. Knowledge
-  Map, claim census and staged doctrines cover synchronized metadata. T1827
-  executes bounded fixture commands; this API releases no new command. Original
-  startup/proxy/compiler producers, full CI and push remain gated.
-
-
-## Acceptance Checklist (.19.2.3.1.2.2.5.5.2.3.4.3.3.3.2)
-
-- [x] **ROOT CAUSE (WHY + WHERE)** — `git log -S 'sub transfer_request {'`
-  locates 54571a18bb3e52ab9656bcee6c91bbf6f1bf714c: Service retained handed
-  requests but had no exact job/publication association. Connection now has a
-  masked write guard, allowing the narrower original Service wall at that effect.
-  The first new test also reported `Odd number of elements in anonymous hash
-  at perl/FSM/Support/ProcessSupervisor/Service.pm line 526`: an absent
-  publication returned an empty list into the new observation hash.
-- [x] **ADDRESSED (verified)** — Re-derivation: T1848 compares literal socket
-  READY/ACCEPT and confirmed partial prefixes, independent EOF/endpoint census,
-  original request/job identities and separate admission/execution walls. Actual
-  creator signals qualify queue/write publication and pre-mask reentry; inclusive
-  request, source-parent, child-context and root expiry refuse at queue and write.
-  Decoded cancellation/foreign/repeated messages, EOF, revocation, queue failures,
-  copied/inherited handles and standalone/shared endpoint cleanup retain truth.
-  Scalar context fixes absent write without losing the Service failure fields.
-  Falsification: unmasked queue, reusable job binding, unguarded write, late
-  message handling, aliased view, expired admission and empty-list observation
-  each reject the intended assertion with native exits 2, 1, 2, 1, 3, 2 and 255.
-  Independent endpoint census agrees after each; all outcomes are consumed.
-  The final fixture adds explicit client closure and shared endpoint custody,
-  then rechecks all seven controls. Exact mutant sources/runner/book build are
-  removed. Durability: tracked tests/source/book/fact/task and Git retain reruns;
-  .artifacts/service-job-publication-* raw logs remain a named durability gap.
-- [x] **NO REGRESSION** — The final guarded band reports
-  `All tests successful. Files=17, Tests=207`; both Perl syntax checks pass.
-  Earlier focused failure is retained and receives no pass credit. mdBook builds
-  and generated HTML contains the Service association and aggregate authority
-  boundary. Visual QA remains separately blocked on browser runtime startup.
-  Knowledge Map, claim census and staged doctrines cover synchronized metadata.
-  Existing T1827 executes bounded fixture commands; this Service API grants no
-  command release. Original startup/proxy/compiler producers, full CI and push
-  remain gated; actual ledger/native binding remains the next frontier.
+- [x] **ROOT CAUSE (WHY + WHERE)** — Transport-history rollover: `git log -S` for the first live
+  acceptance heading locates a0a9661dd2470ff6ca58df852d365ddcf71ab922.
+  Exact 27cb2e8857a2a96eaf14d5ee653404142b440659 reaches 7149 lines near
+  the unchanged 7200-line rollover milestone; completed prose belongs in Git.
+- [x] **ADDRESSED (verified)** — Current transport-history re-derivation retrieves the exact full
+  source (1264035 bytes) and four-section completed suffix (122 lines/8507
+  bytes). Independent git cat-file, awk, wc and shasum agree with both
+  manifest SHA-256 identities. The source revision's prior manifest and its
+  original 1d5a47b73 source/suffix reverify. Every old node and compact terminal
+  remains unchanged except the aggregate parent's explicit decomposition; its
+  planned children are new owned work. The live verification-scope correction
+  is unchanged. Falsification: the unchanged production checker accepts the
+  complete fixture and rejects only an altered suffix digest. All outcomes are
+  consumed; exact scratch source/suffix/fixture/measurement files are removed.
+  Durability: current manifest, exact Git source and predecessor chain preserve
+  reconstruction; .artifacts/transport-history-*.log raw logs remain a named gap.
+- [x] **NO REGRESSION** — `task-tree-integrity` confirms all active invariants
+  (6 trees, 1509 nodes, 3 segments, 39 compact terminals and one acceptance
+  history). `knowledge-map: OK`; claim census and staged doctrines cover
+  synchronized metadata. The initial gate found a missing field delimiter and
+  no declared NO REGRESSION signature; both are repaired, with this box citing
+  the actual passed Knowledge Map result. Explicit current-slice box headers
+  also prevent diff matching from reusing the archived checklist headers.
+  All original task IDs and the execution-scope correction stay live.
+  Book, product behavior, ceilings and checker are unchanged; no native
+  producer, original startup, full CI or push is run for this rollover.
