@@ -11,6 +11,9 @@ module reset_event_tb;
   wire core_seen;
   integer observed = 0;
   clock_domain_event_crossing_top dut(
+`ifdef EXTRA_WORKER_DOMAIN
+    .worker_clk(core_clk), .worker_rst_n(core_rst_n),
+`endif
     .bus_clk(bus_clk), .bus_rst_n(bus_rst_n),
     .core_clk(core_clk), .core_rst_n(core_rst_n),
     .bus_start(bus_start), .core_seen(core_seen));

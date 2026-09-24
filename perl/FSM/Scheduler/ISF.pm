@@ -308,31 +308,29 @@ sub _emit_multi_domain_top($actor, $partition) {
     for my $domain (@{$partition->{domains} || []}) {
         push @lines, _emit_domain_instance($domain);
     }
-    for my $crossing (@{$actor->{crossings} || []}) {
+    for my $crossing (@{$partition->{crossings} || []}) {
         next unless ($crossing->{kind} // '') eq 'event';
-        push @lines, _emit_crossing_instance($actor, $crossing);
+        push @lines, "  (?rtl:$crossing->{instance} $crossing->{module})";
     }
-    for my $crossing (@{$actor->{crossings} || []}) {
+    for my $crossing (@{$partition->{crossings} || []}) {
         next unless ($crossing->{kind} // '') eq 'activation';
-        push @lines, '  (?rtl:' . _activation_start_instance_name($crossing) . ' '
-            . _activation_start_module_name($actor, $crossing) . ')';
-        push @lines, '  (?rtl:' . _activation_done_instance_name($crossing) . ' '
-            . _activation_done_module_name($actor, $crossing) . ')';
+        push @lines, "  (?rtl:$crossing->{start_instance} $crossing->{start_module})";
+        push @lines, "  (?rtl:$crossing->{done_instance} $crossing->{done_module})";
     }
     push @lines, _emit_multi_domain_wiring($actor, $partition);
     push @lines, ')';
 
-    for my $crossing (@{$actor->{crossings} || []}) {
+    for my $crossing (@{$partition->{crossings} || []}) {
         next unless ($crossing->{kind} // '') eq 'event';
         push @lines, '';
-        push @lines, _emit_crossing_rtlif($actor, $crossing, $partition);
+        push @lines, _emit_crossing_rtlif($crossing, $partition);
     }
-    for my $crossing (@{$actor->{crossings} || []}) {
+    for my $crossing (@{$partition->{crossings} || []}) {
         next unless ($crossing->{kind} // '') eq 'activation';
         push @lines, '';
-        push @lines, _emit_activation_crossing_rtlif($actor, $crossing, $partition, 'start');
+        push @lines, _emit_activation_crossing_rtlif($crossing, $partition, 'start');
         push @lines, '';
-        push @lines, _emit_activation_crossing_rtlif($actor, $crossing, $partition, 'done');
+        push @lines, _emit_activation_crossing_rtlif($crossing, $partition, 'done');
     }
 
     return join("\n", @lines) . "\n";
@@ -362,11 +360,7 @@ sub _emit_multi_domain_top_ports($actor, $partition) {
 
 sub _emit_domain_instance($domain) {
     my $module = _scheduled_module_name($domain);
-    return "  (?fsmc:$domain->{name} $module)";
-}
-
-sub _emit_crossing_instance($actor, $crossing) {
-    return "  (?rtl:" . _crossing_instance_name($crossing) . ' ' . _crossing_module_name($actor, $crossing) . ')';
+    return "  (?fsmc:$domain->{instance} $module)";
 }
 
 sub _emit_multi_domain_wiring($actor, $partition) {
@@ -374,36 +368,36 @@ sub _emit_multi_domain_wiring($actor, $partition) {
     my %domain_by_name = map { $_->{name} => $_ } @{$partition->{domains} || []};
 
     for my $input (@{$actor->{interface}{inputs} || []}) {
-        my $domain = _entry_domain($input, $partition->{default_domain});
-        push @links, _link($input->{name}, "$domain.$input->{name}");
+        my $domain = $domain_by_name{_entry_domain($input, $partition->{default_domain})};
+        push @links, _link($input->{name}, "$domain->{instance}.$input->{name}");
     }
     for my $output (@{$actor->{interface}{outputs} || []}) {
-        my $domain = _entry_domain($output, $partition->{default_domain});
-        push @links, _link("$domain.$output->{name}", $output->{name});
+        my $domain = $domain_by_name{_entry_domain($output, $partition->{default_domain})};
+        push @links, _link("$domain->{instance}.$output->{name}", $output->{name});
     }
-    for my $crossing (@{$actor->{crossings} || []}) {
+    for my $crossing (@{$partition->{crossings} || []}) {
         next unless ($crossing->{kind} // '') eq 'event';
-        my $source_domain = $domain_by_name{$crossing->{from}{domain}};
-        my $dest_domain = $domain_by_name{$crossing->{to}{domain}};
-        my $instance = _crossing_instance_name($crossing);
+        my $source_domain = $domain_by_name{$crossing->{source_domain}};
+        my $dest_domain = $domain_by_name{$crossing->{destination_domain}};
+        my $instance = $crossing->{instance};
         push @links, _link($source_domain->{clock}, "$instance.source_clk");
         push @links, _link($dest_domain->{clock}, "$instance.dest_clk");
         push @links, _link($source_domain->{reset}{name}, "$instance.source_reset")
             if ref($source_domain->{reset}) eq 'HASH';
         push @links, _link($dest_domain->{reset}{name}, "$instance.dest_reset")
             if ref($dest_domain->{reset}) eq 'HASH';
-        push @links, _link("$crossing->{from}{domain}.$crossing->{from}{signal}", "$instance.request");
-        push @links, _link("$instance.ready", "$crossing->{from}{domain}.$crossing->{ready}{signal}");
-        push @links, _link("$instance.pulse", "$crossing->{to}{domain}.$crossing->{to}{signal}");
+        push @links, _link("$source_domain->{instance}.$crossing->{source_signal}", "$instance.request");
+        push @links, _link("$instance.ready", "$source_domain->{instance}.$crossing->{ready_signal}");
+        push @links, _link("$instance.pulse", "$dest_domain->{instance}.$crossing->{destination_signal}");
     }
-    for my $crossing (@{$actor->{crossings} || []}) {
+    for my $crossing (@{$partition->{crossings} || []}) {
         next unless ($crossing->{kind} // '') eq 'activation';
-        my $src = $domain_by_name{$crossing->{from}{domain}};
-        my $dst = $domain_by_name{$crossing->{to}{domain}};
-        my $start_signal = _activation_start_signal($crossing);
-        my $done_signal = _activation_done_signal($crossing);
-        my $start = _activation_start_instance_name($crossing);
-        my $done = _activation_done_instance_name($crossing);
+        my $src = $domain_by_name{$crossing->{source_domain}};
+        my $dst = $domain_by_name{$crossing->{destination_domain}};
+        my $start_signal = $crossing->{start_signal};
+        my $done_signal = $crossing->{done_signal};
+        my $start = $crossing->{start_instance};
+        my $done = $crossing->{done_instance};
 
         # start synchronizer: SRC drives the one-cycle request -> DEST start pulse.
         push @links, _link($src->{clock}, "$start.source_clk");
@@ -412,12 +406,12 @@ sub _emit_multi_domain_wiring($actor, $partition) {
             if ref($src->{reset}) eq 'HASH';
         push @links, _link($dst->{reset}{name}, "$start.dest_reset")
             if ref($dst->{reset}) eq 'HASH';
-        push @links, _link("$src->{name}.$start_signal", "$start.request");
-        push @links, _link("$start.pulse", "$dst->{name}.$start_signal");
+        push @links, _link("$src->{instance}.$start_signal", "$start.request");
+        push @links, _link("$start.pulse", "$dst->{instance}.$start_signal");
         # The caller awaits `<start>_ready` before issuing the one-cycle request,
         # so route the start CDC `ready` back to the SRC module (the event-crossing
         # idiom). This also consumes the CDC `ready` output for the composition.
-        push @links, _link("$start.ready", "$src->{name}.${start_signal}_ready");
+        push @links, _link("$start.ready", "$src->{instance}.${start_signal}_ready");
 
         # done synchronizer: DEST drives the one-cycle done -> SRC release pulse.
         push @links, _link($dst->{clock}, "$done.source_clk");
@@ -426,11 +420,11 @@ sub _emit_multi_domain_wiring($actor, $partition) {
             if ref($dst->{reset}) eq 'HASH';
         push @links, _link($src->{reset}{name}, "$done.dest_reset")
             if ref($src->{reset}) eq 'HASH';
-        push @links, _link("$dst->{name}.$done_signal", "$done.request");
-        push @links, _link("$done.pulse", "$src->{name}.$done_signal");
+        push @links, _link("$dst->{instance}.$done_signal", "$done.request");
+        push @links, _link("$done.pulse", "$src->{instance}.$done_signal");
         # The callee awaits `<done>_ready` before pulsing `<done>`; route the done
         # CDC `ready` back to the DEST module (consuming the output).
-        push @links, _link("$done.ready", "$dst->{name}.${done_signal}_ready");
+        push @links, _link("$done.ready", "$dst->{instance}.${done_signal}_ready");
     }
 
     my @lines = ('  (?wiring:domain_wiring');
@@ -439,12 +433,12 @@ sub _emit_multi_domain_wiring($actor, $partition) {
     return join("\n", @lines);
 }
 
-sub _emit_crossing_rtlif($actor, $crossing, $partition) {
+sub _emit_crossing_rtlif($crossing, $partition) {
     my %domain_by_name = map { $_->{name} => $_ } @{$partition->{domains} || []};
     return _emit_cdc_event_rtlif(
-        _crossing_module_name($actor, $crossing),
-        $domain_by_name{$crossing->{from}{domain}},
-        $domain_by_name{$crossing->{to}{domain}},
+        $crossing->{module},
+        $domain_by_name{$crossing->{source_domain}},
+        $domain_by_name{$crossing->{destination_domain}},
     );
 }
 
@@ -473,13 +467,13 @@ sub _emit_cdc_event_rtlif($module_name, $source_domain, $dest_domain) {
 
 # The two CDC children of one activation crossing: `start` synchronizes SRC->DEST,
 # `done` synchronizes DEST->SRC (source/dest reversed).
-sub _emit_activation_crossing_rtlif($actor, $crossing, $partition, $direction) {
+sub _emit_activation_crossing_rtlif($crossing, $partition, $direction) {
     my %domain_by_name = map { $_->{name} => $_ } @{$partition->{domains} || []};
-    my $src = $domain_by_name{$crossing->{from}{domain}};
-    my $dst = $domain_by_name{$crossing->{to}{domain}};
+    my $src = $domain_by_name{$crossing->{source_domain}};
+    my $dst = $domain_by_name{$crossing->{destination_domain}};
     my ($source_domain, $dest_domain, $module_name) = $direction eq 'start'
-        ? ($src, $dst, _activation_start_module_name($actor, $crossing))
-        : ($dst, $src, _activation_done_module_name($actor, $crossing));
+        ? ($src, $dst, $crossing->{start_module})
+        : ($dst, $src, $crossing->{done_module});
     return _emit_cdc_event_rtlif($module_name, $source_domain, $dest_domain);
 }
 
@@ -523,33 +517,6 @@ sub _scheduled_module_name($domain) {
     my $module = $domain->{scheduled_fsm};
     $module =~ s/\.fsm\z//;
     return $module;
-}
-
-sub _crossing_instance_name($crossing) {
-    return "$crossing->{name}_cdc";
-}
-
-sub _crossing_module_name($actor, $crossing) {
-    return "$actor->{actor_name}__cdc_event_$crossing->{name}";
-}
-
-# Cross-domain activation (ISF-CROSS-DOMAIN-ACTIVATION-VIA-CROSSING). One
-# `(crossings (activation child (from SRC)(to DEST)))` auto-routes the activation
-# start/done handshake through TWO acknowledged-event CDC children: `start`
-# carries the caller's one-cycle `<child>_start` request SRC->DEST (pulse starts
-# `child`), `done` carries `child`'s one-cycle `<child>_done` DEST->SRC (pulse
-# releases the caller). The handshake signal names match `_wire_external_activations`.
-sub _activation_start_signal($crossing) { return "$crossing->{child}_start"; }
-sub _activation_done_signal($crossing)  { return "$crossing->{child}_done"; }
-
-sub _activation_start_instance_name($crossing) { return "$crossing->{child}_activation_start_cdc"; }
-sub _activation_done_instance_name($crossing)  { return "$crossing->{child}_activation_done_cdc"; }
-
-sub _activation_start_module_name($actor, $crossing) {
-    return "$actor->{actor_name}__cdc_activation_$crossing->{child}_start";
-}
-sub _activation_done_module_name($actor, $crossing) {
-    return "$actor->{actor_name}__cdc_activation_$crossing->{child}_done";
 }
 
 sub _entry_domain($entry, $default_domain) {

@@ -1688,8 +1688,8 @@ Selected crossing primitive and current implementation status:
   does not infer HDL for arbitrary external `?rtl` children. For no-reset
   domains, the generated `?rtlif` metadata records
   `SOURCE_RESET_PRESENT 0d0` and/or `DEST_RESET_PRESENT 0d0`; that metadata is
-  public through lower/report review artifacts even though no-reset domain HDL
-  remains fail-closed today.
+  public through lower/report review artifacts and the supported Verilog-family
+  HDL path, which omits the absent reset ports and logic.
 - An actor may declare multiple independent event crossings. Each crossing
   gets its own deterministic CDC instance/module, top wiring, report entry,
   and generated child HDL. This does not add ordering, payload, or multi-event
@@ -1708,7 +1708,19 @@ Selected lowering artifact strategy and current implementation status:
   drive reuse before emission.
 - Current multi-domain artifact emission emits one domain-local scheduled
   `.fsm` artifact per declared domain, named
-  `<actor>__domain_<domain>.fsm`.
+  `<actor>__domain_<domain>.fsm` when collision-free. Generated module/file
+  identities use case-insensitive collision allocation so case-only logical
+  domain names cannot overwrite each other's exported files. The schedule's
+  `clock_domains[].scheduled_fsm` is authoritative for the allocated filename.
+- Generated domain and CDC child labels use the portable HDL identifier policy
+  without changing authored logical names or public pins. Reserve top clocks,
+  resets and interface pins; allocate domains in declaration order, then event
+  crossings, then activation start/done crossings. Keywords gain `_instance`,
+  ordinary collisions gain `_domain` or `_cdc`, and further collisions gain a
+  numeric suffix. Module identities use a separate case-insensitive namespace.
+  Declarations, routes and public crossing reports share the same allocation.
+  A domain's scheduled filename stem joins to semantic composition-child
+  `module_name`; `instance_name` and `source_name` identify its hardware child.
 - Each domain `.fsm` remains a normal single-clock scheduled module. Its
   `+system` clause uses only the domain clock and that domain's reset policy.
 - A domain `.fsm` contains only domain-owned interface endpoints, storage,

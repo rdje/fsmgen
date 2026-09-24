@@ -1,7 +1,6 @@
 # ISF rule admission and generated-artifact evidence
 
-Owner: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.32.1.1`; the independent generated
-interconnect layering defect is owned by `.32.4` in the same task tree.
+Owner: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.32` and its exact leaves; interconnect layering: `.32.4`.
 
 `evidence.json` retains exact caller-source hashes, normalized baseline native
 reports, the inferred `VALID` input/port inventory and focused regression
@@ -100,3 +99,4 @@ The reset-polarity contradiction, domain `bus` keyword refusal and explicit `rea
 owners `.32.1.3.2` and `.32.1.3.4`; none is closed by syntax admission. `reset-polarity-carrier.json` records the
 `.32.1.3.2.1` public FSM extension and its native/API/MCP/HDL oracles. `isf-reset-polarity.json` records `.32.1.3.2.2` ISF
 emission, matching domain/CDC policy, independent reset/event before→after controls and complete public query equality.
+`generated-domain-names.json` retains naming qualification and independent defects owned by `.32.1.3.4.3` and `.32.1.3.3.1`.

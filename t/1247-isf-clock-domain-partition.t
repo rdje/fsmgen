@@ -107,9 +107,9 @@ ISF
     my $top_fsm = $lowered->{files}{'clock_domain_partition_top.fsm'};
     like($top_fsm, qr/\A\(\?top:clock_domain_partition_top\b/, 'multi-domain lower emits a generated top artifact');
     like($top_fsm, qr/\(\?fsmc:core clock_domain_partition__domain_core\)/, 'generated top instantiates the core domain module');
-    like($top_fsm, qr/\(\?fsmc:bus clock_domain_partition__domain_bus\)/, 'generated top instantiates the bus domain module');
+    like($top_fsm, qr/\(\?fsmc:bus_instance clock_domain_partition__domain_bus\)/, 'generated top instantiates the bus domain module');
     unlike($top_fsm, qr{\(clk core\.clk\)}, 'generated top leaves same-name core system ports to composition auto-wiring');
-    unlike($top_fsm, qr{\(bus_clk bus\.bus_clk\)}, 'generated top leaves same-name bus system ports to composition auto-wiring');
+    unlike($top_fsm, qr{\(bus_clk bus_instance\.bus_clk\)}, 'generated top leaves same-name bus system ports to composition auto-wiring');
 
     my $report = decode_json(FSM::Scheduler::ISF->new()->report($actor));
     is($report->{scheduled_fsm}, 'clock_domain_partition_top.fsm', 'multi-domain report describes the generated top artifact');
@@ -496,8 +496,8 @@ ISF
 
     my $top_fsm = $lowered->{files}{'event_crossing_top_top.fsm'};
     like($top_fsm, qr/\(\?rtl:rx_done_cdc event_crossing_top__cdc_event_rx_done\)/, 'top names an explicit CDC RTL child');
-    like($top_fsm, qr{\(bus\.rx_req rx_done_cdc\.request\)}, 'top wires the source request into the CDC child');
-    like($top_fsm, qr{\(rx_done_cdc\.ready bus\.rx_ready\)}, 'top wires source ready back to the source domain');
+    like($top_fsm, qr{\(bus_instance\.rx_req rx_done_cdc\.request\)}, 'top wires the source request into the CDC child');
+    like($top_fsm, qr{\(rx_done_cdc\.ready bus_instance\.rx_ready\)}, 'top wires source ready back to the source domain');
     like($top_fsm, qr{\(rx_done_cdc\.pulse core\.rx_pulse\)}, 'top wires destination pulse into the destination domain');
     like($top_fsm, qr/\(\?rtlif:event_crossing_top__cdc_event_rx_done[\s\S]*request<:data[\s\S]*ready>:data[\s\S]*pulse>:data/, 'top embeds the CDC child interface artifact');
     like($top_fsm, qr/\(FSMGEN_ISF_CDC_EVENT 0d1\)/, 'CDC interface metadata marks the generated ISF event primitive');

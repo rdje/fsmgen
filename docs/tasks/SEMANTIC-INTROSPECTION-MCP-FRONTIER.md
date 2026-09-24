@@ -678,18 +678,56 @@ For FSMGen, the analogs are:
   Commit: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.32.1.3.2.2: preserve ISF reset policy through lowering`
 
 - ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.32.1.3.3`
-  Status: `pending`
+  Status: `active`
   Goal: `Complete multi-clock behavioral and semantic-query qualification after syntax and reset repairs.`
   Acceptance: `Run independent event/activation behavior and reset controls against repaired strict HDL, preserve exact native/API/newline reports and complete emitted-artifact admission, synchronize book/facts, then close .32.1.3 and return to .32.2.`
   Verification: `Requires committed .32.1.3.1, .32.1.3.2 and .32.1.3.4; strict admission alone is insufficient.`
+  Commit: `children below`
+  Children: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.32.1.3.3.1, SEMANTIC-INTROSPECTION-MCP-FRONTIER.32.1.3.3.2`
+
+- ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.32.1.3.3.1`
+  Status: `pending`
+  Goal: `Repair independently triggered transaction reachability in a domain containing an external activation callee.`
+  Acceptance: `Use the retained event-after-activation failure and non-colliding control to establish the scheduling contract, including plain multi-transaction and existing dual-event controls; repair lost independent transaction reachability or fail closed at the documented unsupported boundary with accurate capability/report evidence. Prefer completing intended supported behavior. Require independent event and activation oracles, repeated/reset controls, public artifact/API/MCP qualification and synchronized book before closure.`
+  Verification: `The generated core FSM starts at worker_idle_ext and returns there through worker_done_ready/worker_done_req. core_consume_idle_0 and its completion state form a separate unreachable component; an event-after-do source strict-checks but its independent oracle reports expected 1 observed 0. The naming slice owns exact retained source/HDL/control evidence. No successful mixed-transaction runtime claim is made.`
+  Commit: `pending`
+
+- ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.32.1.3.3.2`
+  Status: `pending`
+  Goal: `Complete broad multi-clock event/activation behavior and public-query qualification after the owned repairs.`
+  Acceptance: `Execute the parent qualification scope with no missing repair dependency, retain independent behavior/reset controls and complete native/API/newline reports plus emitted-artifact admission, update book/facts and close the parent only from successful evidence.`
+  Verification: `Requires .32.1.3.3.1 and .32.1.3.4.3 as well as the existing wiring/reset/naming repairs; strict admission is not behavior qualification.`
   Commit: `pending`
 
 - ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.32.1.3.4`
-  Status: `pending`
+  Status: `active`
   Goal: `Preserve logical domain and public signal identities through generated top naming and wiring.`
   Acceptance: `Reproduce a public actor with domain bus, trace admission versus generated instance naming, and repair that boundary while preserving logical domain/report identities. Audit collisions and keyword/case variants; qualify actual generated tops and API/MCP behavior. Update book/facts and commit before .32.1.3.3 behavioral closure.`
   Verification: `The .32.1.3.1 activation control parses and lowers domain bus, but strict and compatibility HDL both refuse generated ?fsmc:bus as reserved in VHDL. Parser::_parse_clock_domains admits scalar identifier-shaped names; Scheduler::ISF::_emit_domain_instance copies the logical name verbatim. Initial failing focused-final.tap under .artifacts/isf-multiclock-strict/ retains native/API failure evidence. The syntax-only control uses peripheral after this independent gap is owned; no bus-domain HDL support is claimed by .32.1.3.1.`
   Collision extension: `After using portable domain peripheral, top input ready still fails despite an emitted explicit (ready peripheral.ready) link: CDC ready outputs form a mixed-direction same-name family. SameNameLinkBuilder::build_top_input_links computes explicit_sources/targets but rejects the direction family before using those exclusions. focused-verified.tap retains the public refusal. Decompose .32.1.3.4 into independent domain-name and explicit-route collision repairs before implementation; do not weaken portable identifiers or silently rename authored public ports. Syntax qualification uses work_ready to isolate this separate composition defect.`
+  Commit: `children below`
+  Children: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.32.1.3.4.1, SEMANTIC-INTROSPECTION-MCP-FRONTIER.32.1.3.4.2, SEMANTIC-INTROSPECTION-MCP-FRONTIER.32.1.3.4.3`
+
+
+- ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.32.1.3.4.1`
+  Status: `done`
+  Goal: `Allocate portable generated multi-domain child names while preserving logical ISF identities.`
+  Acceptance: `Reproduce the bus-domain refusal at the current reset-qualified revision through public parse/lower and real strict CLI. Reuse the existing portable generated-instance policy, audit domain/event/activation/public-pin and case-folded collision namespaces, and keep authored domain names and public pins stable. Carry the allocation consistently through declarations and every route; expose enough stable public report/artifact identity to relate logical domains to generated hardware. Qualify strict artifacts, unchanged non-collision controls, independent behavior and complete native/API/MCP reports. Allocate case-safe scheduled module/file identities as well as child labels; public lowering and filesystem materialization must preserve every domain. Join logical domains to physical children through existing scheduled_fsm and composition-child identity fields without leaking a private naming map. Update book/spec/facts and commit before explicit-route repair.`
+  Verification: `T1895 passes Files=1 Tests=13 with actual strict materialization, logical/physical report joins, complete native/API/newline MCP equality and non-skipped SystemVerilog/Verilog public-pin behavior. Original event, dual-event and no-reset HDL match the baseline except Date headers. The focused existing regression exposed expected stale bus-label/private-partition fixtures in T1247/T1387; corrected public-boundary tests pass Files=2 Tests=26, and the other selected tests passed unchanged. Exact before/after reports, overwritten baseline file content, fresh book render, producer hashes, commands, successful/failed receipts and owned independent defects are retained in docs/audits/specforge-rule-admission-20260924/generated-domain-names.json. Staged doctrines and normal hooks are required before commit.`
+  Commit: `this commit; subject carries SEMANTIC-INTROSPECTION-MCP-FRONTIER.32.1.3.4.1`
+
+- ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.32.1.3.4.2`
+  Status: `pending`
+  Goal: `Honor explicit top-input routes before incompatible same-name inference.`
+  Acceptance: `Reproduce the ready input collision after generated-name repair; make explicit-route ownership precede same-name family inference without weakening actual explicit-link direction/width/type/driver validation. Cover input/output name collisions, explicit source/target controls, ordinary inferred fanout and invalid explicit wiring; qualify the original activation topology and native/API/MCP success/failure identities. Preserve authored ports, synchronize book/facts and commit before broader .32.1.3.3 qualification.`
+  Verification: `SameNameLinkBuilder::build_top_input_links computes explicit_sources/targets, validates the complete same-name family first, and only later skips an explicitly routed top input. The prior generated (ready peripheral.ready) therefore fails on CDC ready outputs despite its explicit routing. Exact baseline is retained under .32.1.3.1; current reset-qualified reproduction remains pending.`
+  Commit: `pending`
+
+- ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.32.1.3.4.3`
+  Status: `pending`
+  Goal: `Preserve authored unused domain interface inputs through generated artifacts.`
+  Acceptance: `Reproduce missing unused input endpoints using collision-free domains; preserve public interface ownership in generated domain modules without changing used-port behavior. Qualify strict materialization, semantic/API/MCP and unchanged controls, synchronize the book and commit before broader runtime closure.`
+  Verification: `T1895 suffix fixture exposes top links to bus_instance_3.bus_instance while the domain FSM only has a +size declaration; signal inference omits an unused input. The non-colliding extra_one/extra_two control and exact diagnostics are retained by .32.1.3.4.1. Existing ATLGeneratedTop::mark_atl_data_link_child_interface_ports uses the explicit +interface carrier for analogous endpoints; inspect that public contract before repair.`
   Commit: `pending`
 
 - ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.32.2`
@@ -1367,14 +1405,14 @@ before editing code. No discovered defect is closed by this audit alone.
 
 ## Current Frontier
 
-`SEMANTIC-INTROSPECTION-MCP-FRONTIER.32.1.3.4` is next: decompose generated
-domain-name and explicit-route collisions into independently committed repairs.
-Canonical wiring, explicit FSM polarity and faithful ISF reset emission are
-qualified; `.32.1.3.3` then completes broader multi-clock/activation behavior
-and API/MCP signoff. Rule admission and authored width provenance are repaired.
-Bundle provenance, interconnect lowering and derived widths follow under
-`.32.2`, `.32.4` and `.32.3`. Preserve spent native compiler/startup evidence;
-source checks do not promote runtime support.
+`SEMANTIC-INTROSPECTION-MCP-FRONTIER.32.1.3.4.2` is next: repair explicit
+input-route precedence. Generated naming and case-safe artifact identities are
+qualified. Preserve unused domain interfaces under `.32.1.3.4.3`, then repair
+mixed activation/event reachability under `.32.1.3.3.1` before broader
+behavior/API/MCP signoff in `.32.1.3.3.2`. Bundle provenance, interconnect
+lowering and derived widths follow under `.32.2`, `.32.4` and `.32.3`.
+Preserve spent native compiler/startup evidence; source checks do not promote
+runtime support.
 
 ## Decisions
 
@@ -3247,3 +3285,86 @@ reproduces the path semantics safely inside an owned temporary workspace.
 All compiler workspaces in this slice were fresh; spent native producers are
 untouched. Development receipts remain separate from the successful final
 publication and replay evidence.
+
+
+### `.32.1.3.4.1` confirmed generated-artifact identity loss
+
+At `f16130a4f`, the public scheduler returns the two domain keys ending in
+`__domain_CORE.fsm` and `__domain_core.fsm`. The real CLI `--outdir` writes
+only the former path on this case-insensitive volume, and its contents begin
+with the latter module's header. The top file is separate. This is observed
+artifact replacement, not a failure inferred from a filename resemblance.
+`before/materialization.json` and `before/case-pair-public-lower.json` retain
+the exact result under `.artifacts/isf-domain-names/`; the controlled filename
+probe is removed after confirming the filesystem behavior.
+
+The current generated-name repair owns this immediately alongside the
+keyword/child collision: allocate domain module/file names in the partition
+and child instance names in the generated top, preserve logical name keys,
+route every endpoint through the chosen instance map, and qualify actual
+materialized artifacts plus complete public report identity. Both allocation
+steps reuse the established portable identifier/case-fold collision policy;
+ordinary non-collision output remains unchanged. No submodule is involved.
+
+### `.32.1.3.4.1` qualification failures requiring root cause
+
+The first T1895 run found two failures beyond successful naming admission:
+unused public inputs in the suffix-cascade fixture are linked by the top but
+absent from the emitted domain ports, and the event-after-activation oracle
+misses its first expected event. Preserve the exact initial TAP and generated
+reproducers under `.artifacts/isf-domain-names/diagnosis/`; current ownership
+includes diagnosis before any closure or fixture adjustment. Establish whether
+these are test assumptions or independent compiler defects, create precise
+repair ownership for a confirmed independent defect, and never count the
+failed behavior as qualification. Existing T1247/T1387 expectations also need
+portable `bus_instance` labels; T1387's synthetic private partition must be
+replaced with a real public parse/lower input. No production fallback to
+reconstructing unallocated names is warranted.
+
+The non-colliding controls reproduce both independent qualification failures.
+The callee's emitted FSM returns to its own idle through the done handshake;
+the independent event-consumer states have no incoming path from that
+component. Unused interface inputs have `+size` entries but no explicit
+`+interface` carrier, so top links target ports omitted by signal inference.
+Owned repairs are `.32.1.3.4.3` and `.32.1.3.3.1`. The corrected naming fixture
+uses consumed suffix-reserving inputs and a separate worker domain; all names
+still collide as intended. One intermediate fixture incorrectly used a list
+expression in `(on ...)`; its public rejection is a test-authoring error,
+corrected to ordinary scalar awaits and preflighted before the final rerun.
+
+## Acceptance Checklist — `.32.1.3.4.1` generated domain identities
+
+- [x] **ROOT CAUSE (WHY + WHERE)** — Real `--strict --check --json` probes
+  reject logical `bus`/`BUS`/`interconnect` child labels and domain/event name
+  collisions. `_emit_domain_instance` copied logical names while wiring
+  reconstructed them independently. Public lower returns case-only domain
+  filenames, but the real CLI overwrites one on this case-insensitive volume;
+  retained filename/header evidence proves replacement. The audit binds the
+  baseline revision, source hashes and exact native/lowering/materialization
+  results. This is file loss, not only a theoretical case-fold collision.
+- [x] **ADDRESSED (verified)** — `LoweringIR` allocates domain and crossing
+  physical identities once using the existing shared keyword/case-fold policy.
+  Generated declarations, files, routes and reports consume that partition;
+  logical names and public pins remain authored. T1895 passes actual export
+  and strict checks for every artifact, complete native/API/newline reports,
+  existing-field logical/physical joins, and independent event/reset oracles
+  in both Verilog-family targets with no skipped runtime qualification. The
+  case-only files both retain their correct distinct contents. No private
+  naming map is added to the public schema. Fresh mdBook output passes
+  rendered-content checks; browser visual qualification remains unavailable.
+- [x] **NO REGRESSION** — `All tests successful` for T1895, `Files=1, Tests=13`,
+  and corrected T1247/T1387, `Files=2, Tests=26`. The other selected reset,
+  module-header, identifier-policy and T1890 API/MCP checks passed in the
+  retained initial regression. Original event, dual-event and no-reset HDL are
+  unchanged apart from Date headers. Both changed modules report `syntax OK`;
+  task-tree integrity passes. The initial naming fixtures exposed independent
+  unused-input and unreachable-consumer defects; non-colliding controls prove
+  both, and exact repair leaves `.32.1.3.4.3` and `.32.1.3.3.1` own them.
+  Tests, failed controls, source/HDL evidence and the honest isolation boundary
+  survive in the audit; none is recategorized as a naming success.
+
+Claim legs: re-derivation is actual public lowering/export and full report
+comparison; falsification is the baseline replacement/refusals, unchanged HDL
+controls and independent pin-driven behavior, plus retained negative controls;
+durability is the tracked audit, tests, knowledge card, book and this task.
+Full CI/push and broader multi-clock/runtime qualification remain gated.

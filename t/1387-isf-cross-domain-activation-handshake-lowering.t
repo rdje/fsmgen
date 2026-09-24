@@ -14,13 +14,8 @@ use FSM::Scheduler::ISF;
 use FSM::Scheduler::ISF::LoweringIR;
 use FSM::Scheduler::ISF::Emitter::FSM;
 
-# ISF-CROSS-DOMAIN-ACTIVATION-VIA-CROSSING.3
-#
-# The cross-domain activation handshake-port lowering machinery (consumed by the
-# multi-domain partition through `$actor->{external_activations}`). This slice
-# builds and verifies the per-domain lowering in isolation; the live multi-domain
-# routing (validator acceptance + dual-CDC top wiring) ships in a later slice, so
-# a `(crossings (activation ...))` actor must STILL fail closed at `lower()`.
+# Cross-domain activation handshake ports, domain-local lowering and public
+# dual-CDC top routing. Unsupported activation placements fail closed.
 
 sub parse_source {
     my ($source, $label) = @_;
@@ -181,8 +176,8 @@ ISF
     like($top, qr/\(\?rtl:worker_activation_start_cdc xdom__cdc_activation_worker_start\)/, 'top instantiates the start CDC child');
     like($top, qr/\(\?rtl:worker_activation_done_cdc xdom__cdc_activation_worker_done\)/, 'top instantiates the done CDC child');
     like($top, qr{\(core\.worker_start worker_activation_start_cdc\.request\)}, 'caller start drives the start CDC request');
-    like($top, qr{\(worker_activation_start_cdc\.pulse bus\.worker_start\)}, 'start CDC pulses the child start');
-    like($top, qr{\(bus\.worker_done worker_activation_done_cdc\.request\)}, 'child done drives the done CDC request');
+    like($top, qr{\(worker_activation_start_cdc\.pulse bus_instance\.worker_start\)}, 'start CDC pulses the child start');
+    like($top, qr{\(bus_instance\.worker_done worker_activation_done_cdc\.request\)}, 'child done drives the done CDC request');
     like($top, qr{\(worker_activation_done_cdc\.pulse core\.worker_done\)}, 'done CDC pulses the caller release');
 };
 
@@ -240,39 +235,32 @@ ISF
 };
 
 subtest 'multi-domain top emits and wires the two activation CDC children' => sub {
-    my $actor = {
-        actor_name => 'act',
-        crossings  => [
-            { kind => 'activation', child => 'worker', from => { domain => 'core' }, to => { domain => 'bus' } },
-        ],
-        interface => {
-            inputs  => [ { name => 'start', width => 1, domain => 'core' } ],
-            outputs => [ { name => 'done',  width => 1, domain => 'core' } ],
-        },
-    };
-    my $partition = {
-        kind           => 'multi_domain',
-        default_domain => 'core',
-        top_fsm        => 'act_top.fsm',
-        domains        => [
-            { name => 'core', clock => 'clk',     reset => { name => 'rst_n',     kind => 'sync', polarity => 'active_low' }, scheduled_fsm => 'act__domain_core.fsm' },
-            { name => 'bus',  clock => 'bus_clk', reset => { name => 'bus_rst_n', kind => 'sync', polarity => 'active_low' }, scheduled_fsm => 'act__domain_bus.fsm' },
-        ],
-    };
-
-    my $top = FSM::Scheduler::ISF::_emit_multi_domain_top($actor, $partition);
+    # Exercise the public parse/lower boundary so allocation, validation and
+    # routing consume the same real partition as a downstream caller.
+    my $actor = parse_source(<<'ISF', 'activation-top');
+(actor act
+  (clock-domains
+    (domain core (clock clk) (reset rst_n) :default)
+    (domain bus (clock bus_clk) (reset bus_rst_n)))
+  (crossings (activation worker (from core) (to bus)))
+  (interface (input start (domain core)) (output done (domain core))
+    (output observed (domain bus)))
+  (transaction parent (domain core) (on start) (do worker) (complete done))
+  (transaction worker (domain bus) (complete observed)))
+ISF
+    my $top = FSM::Scheduler::ISF->new()->lower($actor)->{files}{'act_top.fsm'};
 
     like($top, qr/\(\?rtl:worker_activation_start_cdc act__cdc_activation_worker_start\)/, 'top instantiates the start CDC child');
     like($top, qr/\(\?rtl:worker_activation_done_cdc act__cdc_activation_worker_done\)/, 'top instantiates the done CDC child');
 
     # start synchronizer: SRC (core) request -> DEST (bus) pulse, clk->source, bus_clk->dest.
     like($top, qr{\(core\.worker_start worker_activation_start_cdc\.request\)}, 'start CDC takes the SRC one-cycle request');
-    like($top, qr{\(worker_activation_start_cdc\.pulse bus\.worker_start\)}, 'start CDC pulses the DEST start');
+    like($top, qr{\(worker_activation_start_cdc\.pulse bus_instance\.worker_start\)}, 'start CDC pulses the DEST start');
     like($top, qr{\(clk worker_activation_start_cdc\.source_clk\)}, 'start CDC source clock is the SRC domain clock');
     like($top, qr{\(bus_clk worker_activation_start_cdc\.dest_clk\)}, 'start CDC dest clock is the DEST domain clock');
 
     # done synchronizer: DEST (bus) request -> SRC (core) pulse (reversed clocks).
-    like($top, qr{\(bus\.worker_done worker_activation_done_cdc\.request\)}, 'done CDC takes the DEST one-cycle done');
+    like($top, qr{\(bus_instance\.worker_done worker_activation_done_cdc\.request\)}, 'done CDC takes the DEST one-cycle done');
     like($top, qr{\(worker_activation_done_cdc\.pulse core\.worker_done\)}, 'done CDC pulses the SRC release');
     like($top, qr{\(bus_clk worker_activation_done_cdc\.source_clk\)}, 'done CDC source clock is the DEST domain clock');
     like($top, qr{\(clk worker_activation_done_cdc\.dest_clk\)}, 'done CDC dest clock is the SRC domain clock');
@@ -281,7 +269,7 @@ subtest 'multi-domain top emits and wires the two activation CDC children' => su
     # before pulsing and the callee awaits `<done>_ready` before asserting done
     # (the event-crossing idiom; also satisfies the composition's consume rule).
     like($top, qr{\(worker_activation_start_cdc\.ready core\.worker_start_ready\)}, 'start CDC ready feeds the caller start-ready input');
-    like($top, qr{\(worker_activation_done_cdc\.ready bus\.worker_done_ready\)}, 'done CDC ready feeds the callee done-ready input');
+    like($top, qr{\(worker_activation_done_cdc\.ready bus_instance\.worker_done_ready\)}, 'done CDC ready feeds the callee done-ready input');
 
     like($top, qr/\(\?rtlif:act__cdc_activation_worker_start[\s\S]*request<:data[\s\S]*ready>:data[\s\S]*pulse>:data/, 'top embeds the start CDC interface artifact');
     like($top, qr/\(\?rtlif:act__cdc_activation_worker_done[\s\S]*request<:data[\s\S]*ready>:data[\s\S]*pulse>:data/, 'top embeds the done CDC interface artifact');

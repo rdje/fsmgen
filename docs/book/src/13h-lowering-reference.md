@@ -32,7 +32,8 @@ Schematic shape (placeholders shown with `...`):
 Single-domain `(clock-domains ...)` actors lower through the same one-clock
 scheduled `.fsm` path using the declared domain clock/reset. Multi-domain
 actors emit validated per-domain scheduled `.fsm` artifacts named
-`<actor>__domain_<domain>.fsm` plus `<actor>_top.fsm` generated top wiring.
+`<actor>__domain_<domain>.fsm` (with a suffix when needed to avoid a
+case-insensitive collision) plus `<actor>_top.fsm` generated top wiring.
 
 Generated wiring uses canonical `(source destination)` pairs, so strict mode
 does not reject the wrapper for legacy slash links. Event, dual-event,
@@ -47,12 +48,25 @@ timing and event delivery around source-only, destination-only and joint
 resets. [Reset forms and queries](13a-actor-interface.md#reset) gives examples.
 Broader multi-clock/activation qualification remains owned by `.32.1.3.3`.
 
-**Tracked naming/wiring limitations:** logical domain names are currently reused as generated
-instance names, so a keyword such as `bus` also fails portable HDL admission;
-`.32.1.3.4` owns that boundary. Use portable non-keyword domain names.
-A public input named `ready` can also collide with CDC `ready` outputs despite
-its explicit link; the same repair owns this case. Use a distinct public name
+Generated domain and crossing names are allocated consistently across
+declarations, wiring, files and reports. Keyword domains such as `bus`, public
+pin collisions and case-only domain/file collisions retain their logical ISF
+identities and receive portable generated names. See
+[logical domains and generated names](13a-actor-interface.md#logical-domains-and-generated-names)
+for allocation examples and the semantic/API/MCP identity join.
+
+**Tracked wiring limitation:** a public input named `ready` can collide with CDC `ready` outputs despite
+its explicit link; `.32.1.3.4.2` owns this case. Use a distinct public name
 such as `work_ready` until that explicit-route collision is repaired.
+
+Two additional limits are tracked before broader multi-clock signoff. An
+unused declared domain input may be omitted by inferred-port emission even
+though the top links it; `.32.1.3.4.3` owns preservation of that interface.
+An externally activated callee and an independently triggered event consumer
+in the same domain can lower into disconnected state components: strict
+admission succeeds, but the consumer never runs. `.32.1.3.3.1` owns that
+scheduling defect. Keep these transactions in separate domain FSMs until the
+repair is qualified; the generated-name regression uses that explicit topology.
 
 Accepted event crossings are represented as explicit CDC `?rtl`/`?rtlif`
 child interfaces in the generated top. Schedule reports expose the generated

@@ -2257,9 +2257,8 @@ sub _build_domain_partition($self, $actor, $pruned_transactions = undef) {
             signal => $crossing->{to}{signal},
         } if exists $groups{$crossing->{to}{domain}};
     }
-    # `(activation ...)` crossings are routed by `_emit_multi_domain_top` directly
-    # from `$actor->{crossings}`; here they are validated and summarized for the
-    # schedule report (a shape distinct from the event endpoint summary).
+    # Activation summaries carry the same validated routing identities used by
+    # the generated top and schedule report, distinct from event endpoints.
     #
     # An activation crossing must own a REAL cross-domain activation: the child
     # must live in the destination domain, and some transaction in the source
@@ -2405,13 +2404,53 @@ sub _build_domain_partition($self, $actor, $pruned_transactions = undef) {
     $self->_validate_library_use_domain_refs($actor, \%signal_domains, $default_domain);
     _validate_drive_reuse_domains(\%drive_use_domains);
 
+    my @domains = map { $groups{$_} } @domain_order;
+    _allocate_domain_artifact_names($actor, \@domains, \@crossing_summaries)
+        if @domains > 1;
+
     return {
         kind => @domain_order > 1 ? 'multi_domain' : 'single_domain',
         default_domain => $default_domain,
-        domains => [ map { $groups{$_} } @domain_order ],
+        domains => \@domains,
         top_fsm => "$actor->{actor_name}_top.fsm",
         crossings => \@crossing_summaries,
     };
+}
+
+sub _allocate_domain_artifact_names($actor, $domains, $crossings) {
+    # Child labels share a namespace with top ports. Module names have a
+    # separate namespace, also case-folded because their filenames must survive
+    # a case-insensitive filesystem. Keep logical domain/signal names intact.
+    my %instances = map { $_->{name} => 1 } (
+        @{$actor->{interface}{inputs} || []},
+        @{$actor->{interface}{outputs} || []},
+    );
+    for my $domain (@$domains) {
+        $instances{$domain->{clock}} = 1;
+        $instances{$domain->{reset}{name}} = 1
+            if ref($domain->{reset}) eq 'HASH';
+    }
+    my %modules = ("$actor->{actor_name}_top" => 1);
+    my $allocate = sub ($desired, $role, $reserved) {
+        return FSM::Support::HDLInstanceIdentifierPolicy->allocate_generated_instance_identifier(
+            desired => $desired, role => $role, reserved => $reserved,
+        );
+    };
+    for my $domain (@$domains) {
+        $domain->{instance} = $allocate->($domain->{name}, 'domain', \%instances);
+        my $module = $domain->{scheduled_fsm};
+        $module =~ s/\.fsm\z//;
+        $domain->{scheduled_fsm} = $allocate->($module, 'domain', \%modules) . '.fsm';
+    }
+    for my $crossing (@$crossings) {
+        my @prefixes = $crossing->{kind} eq 'event' ? ('') : ('start_', 'done_');
+        for my $prefix (@prefixes) {
+            my $instance = "${prefix}instance";
+            my $module = "${prefix}module";
+            $crossing->{$instance} = $allocate->($crossing->{$instance}, 'cdc', \%instances);
+            $crossing->{$module} = $allocate->($crossing->{$module}, 'cdc', \%modules);
+        }
+    }
 }
 
 sub _actor_has_clock_domains {

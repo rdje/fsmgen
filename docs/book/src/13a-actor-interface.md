@@ -91,7 +91,7 @@ shipped crossing primitive owns that path.
 The implementation is intentionally artifact-first. `lower(...)` does not turn
 one `.fsm` module into a hidden multi-clock state machine. It partitions the
 actor into one ordinary scheduled `.fsm` per declared domain, using
-`<actor>__domain_<domain>.fsm` names, then emits `<actor>_top.fsm` as a
+`<actor>__domain_<domain>.fsm` names when they are collision-free, then emits `<actor>_top.fsm` as a
 composition source. The top instantiates each domain module with `?fsmc` and
 owns only wiring plus explicit CDC child interfaces.
 
@@ -103,6 +103,41 @@ clock_domain_event_crossing__domain_source.fsm
 clock_domain_event_crossing__domain_core.fsm
 clock_domain_event_crossing_top.fsm
 ```
+
+### Logical Domains and Generated Names
+
+Domain names are logical ISF identities. A domain named `bus` is valid even
+though `bus` is an HDL keyword. The generated top uses `bus_instance` for
+that child and keeps `bus` in domain annotations and schedule metadata.
+Authored clocks, resets and interface pins keep their names.
+
+The compiler allocates domain children first in declaration order, followed
+by event children and activation start/done children. It reserves every public
+pin, compares collisions without case, and uses the shared portable HDL
+keyword policy. Keywords gain `_instance`; ordinary collisions gain `_domain`
+for domain children or `_cdc` for crossing children. Further collisions gain
+the first free numeric suffix. Existing legal, non-colliding names stay stable.
+
+For example, renaming `source` to `bus` in the complete event actor below
+changes its child label to `bus_instance`, while the public `bus_start` pin
+and event request route retain their behavior. A domain named `bus_start`
+instead becomes child `bus_start_domain` because the public pin owns that
+name. If public pins already occupy `bus_instance` and `bus_instance_2`, the
+`bus` child becomes `bus_instance_3`.
+
+Module/file identities are allocated separately with case-insensitive
+collision checks. With domains `CORE` followed by `core`, the domain files
+end in `__domain_CORE.fsm` and `__domain_core_domain.fsm`; both survive export
+on a case-insensitive filesystem. Always read `clock_domains[].scheduled_fsm`
+instead of reconstructing filenames from logical names.
+
+Agents can relate logical and physical structure using the existing APIs:
+take a schedule domain's `scheduled_fsm`, remove `.fsm`, and match the result
+to semantic `forward_ir.intent_hir.composition_children[].module_name`.
+That child supplies `instance_name` and `source_name`. Crossing reports already
+expose their allocated module/instance pairs. Native queries, the clean MCP
+adapter API and `fsmgen_schedule_preview` / `fsmgen_semantic_introspect` expose
+the same identities; no private allocation map is needed.
 
 The generated top keeps same-name domain clock/reset connections on the
 existing composition system-port auto-wiring path. That means a domain module
