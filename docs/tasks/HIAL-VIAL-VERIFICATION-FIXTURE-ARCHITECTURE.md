@@ -3770,7 +3770,37 @@ decomposes the architecture needed to move beyond that bounded foundation.
   Status: `active`
   Goal: `Release only an original live job after complete ACCEPT publication.`
   Acceptance: `Recheck original aggregate grant, matching live peer/parent, complete original ACCEPT and all original walls immediately before releasing its gated command. Qualify actual execution witnesses and no-exec controls for partial publication, EOF, cancellation, repeated/foreign messages and expiry before/after release. Preserve first failure and exact bounded subtree cleanup; no nested adapter routing.`
-  Verification: `Pending aggregate gated admission and complete publication ownership; root release and parent context must obey the same original-grant and deadline contract.`
+  Verification: `Child .1 retains completed gated-admission evidence before the unchanged rollover milestone. Child .2 qualifies admission immediately before each native E gate write and retained release truth under interruption. Child .3 separates original admission and execution transport lifetimes without resetting either clock; incomplete incoming control still defers or refuses release. Child .4 joins those boundaries to original root/nested grants and matching complete ACCEPT, with actual execution/no-exec and exact cleanup witnesses. No sealed-adapter routing here.`
+  Commit: `pending`
+
+  Children: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.4.3.3.5.1, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.4.3.3.5.2, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.4.3.3.5.3, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.4.3.3.5.4`
+
+- ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.4.3.3.5.1`
+  Status: `done`
+  Goal: `Retain completed gated-admission evidence before native exec authorization.`
+  Acceptance: `Authenticate the exact completed predecessor and acceptance suffix using the existing finite manifest. Independently reconstruct source/suffix identities and dimensions, reverify the predecessor manifest, and prove altered-digest refusal with the unchanged checker. Preserve every original node/compact terminal and live execution-scope correction. No source, book behavior or ceiling changes.`
+  Verification: `Finite history authenticates exact 8b8e903e2f2165a46622a0f4ad9b0e0586fb4ee4: source 7190 lines/1276957 bytes and three-section completed suffix 102 lines/7412 bytes. Independent git cat-file, awk, wc and shasum reproduce both SHA-256 identities. The predecessor manifest and original acb5b49ef source/suffix reverify. All original nodes and compact terminals remain unchanged except the final-exec parent now has planned children; the live execution-scope correction remains exact. The unchanged checker accepts the complete fixture and rejects only an altered suffix digest. Scratch sources, measurements, fixture and runner are removed. Product source, book behavior and ceilings remain unchanged.`
+  Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.4.3.3.5.1: retain completed gated admission history`
+
+- ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.4.3.3.5.2`
+  Status: `active`
+  Goal: `Admit every original native execution-gate write.`
+  Acceptance: `Extend original gated release with an optional retained owner check before each actual E write, preserving the no-callback API. Keep original owner, ready reservation identity, command custody and invocation wall live through check and effect. Boolean deferral consumes no write or new deadline; errors revoke later execution. Publish actual release and closed gate handles under masking before creator interruption. Qualify real gated children, native E writes, retry/expiry/identity/closure cuts, original exec masks, exact waits and output witnesses.`
+  Verification: `release() currently queues E and advance() performs the later irreversible write, so a queue-time check alone is insufficient.`
+  Commit: `pending`
+
+- ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.4.3.3.5.3`
+  Status: `pending`
+  Goal: `Preserve original request lifetimes across admitted native execution.`
+  Acceptance: `Retain the original admission deadline separately from the original clipped execution deadline. Before release, freshly inspect only the matching original bound peer, complete ACCEPT, original parent/job authority and bounded incoming control; partial control cannot silently authorize execution. After an original admitted native effect, retain the execution transition without renewing a clock or erasing admission/publication history. Preserve cancellation/EOF/protocol refusal, original failure and copied observations. Qualify literal sockets, exact walls and interrupted transitions; native effect authority remains with the aggregate owner.`
+  Verification: `Pending child .2; Service currently keeps the admission wall after complete ACCEPT, and no execution-phase transport transition is implemented.`
+  Commit: `pending`
+
+- ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.4.3.3.5.4`
+  Status: `pending`
+  Goal: `Bind root and nested execution release to original live ownership.`
+  Acceptance: `Join final owner checks to each original native E write. Require matching original grant, native ready pair, live parent/peer, complete original ACCEPT and all original admission walls; root release uses its original root grant/context/deadline. Retain native execution truth before interrupted returns and reconcile Service execution lifetime from the original effect. Qualify actual command bytes/environment/context and no-exec controls for incomplete publication/control, copied/foreign authority, expiry, cancellation and native/peer loss, with exact bounded subtree cleanup. Do not activate ordinary nested adapters.`
+  Verification: `Pending native gate and Service transition children; bounded streaming, fair root composition and independent cross-platform qualification remain subsequent owners.`
   Commit: `pending`
 
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.4.4`
@@ -4478,7 +4508,7 @@ decomposes the architecture needed to move beyond that bounded foundation.
 
 ## Current Frontier
 
-Current frontier: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.4.3.3.5` rechecks original live grant, peer/parent and complete ACCEPT immediately before the native exec-gate write, with matching root release qualification. Original gated readiness and tracked publication are qualified; complete ACCEPT alone releases no command. Bounded streaming, fair composition, independent qualification and nested routing remain subsequent work. Completed history stays exactly retrievable; live claim owners and execution-scope corrections remain. Preserve original failures, spent compiler evidence and full-CI/push gates.
+Current frontier: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.4.3.3.5.2` qualifies an original retained owner check immediately before each native E write, including deferral, refusal and masked release truth. The following children preserve original Service execution lifetimes and join root/nested release to complete original ACCEPT. Complete ACCEPT alone releases no command. Bounded streaming, fair composition, independent qualification and nested routing remain subsequent work. Preserve original failures, live claim owners and execution-scope corrections, spent compiler evidence and full-CI/push gates.
 
 Architecture audit `.1` is complete. Decision `0032` selects one public
 `.vial` source language, private immutable `VIALSemanticIR` and
@@ -7086,105 +7116,28 @@ and push did not run. Exact predecessor evidence remains unchanged; this live
 correction supplies its proper scope and is reflected in the canonical fact/book.
 
 
-## Acceptance Checklist (.19.2.3.1.2.2.5.5.2.3.4.3.3.4.3.1)
+## Acceptance Checklist (.19.2.3.1.2.2.5.5.2.3.4.3.3.5.1)
 
-- [x] **ROOT CAUSE (WHY + WHERE)** — Aggregate-history rollover: `git log -S`
-  locates the first completed suffix heading at 74ddfab11a5227dfd1e6d7d3ac41551e312a4a78.
-  The exact completed acb5b49ef source has 7169 lines, near the unchanged
-  7200-line rollover milestone; historical acceptance belongs in exact Git history.
-- [x] **ADDRESSED (verified)** — Aggregate-history re-derivation retrieves
-  the complete source (1271616 bytes) and three-section suffix (97 lines/7045
-  bytes). Independent git cat-file, awk, wc and shasum reproduce manifest
-  hashes a2291cf8c80e77e1318a25d4d51a13378c0abbbab092b6ee383daea1672938a1
-  and 15a93010d4345372a8ac647c3acf0d7391299cfb612242f5cbe52015b6dc4a78.
-  The versioned predecessor manifest and original 27cb2e885 source/suffix also
-  reverify. All original nodes and compact terminals remain unchanged except
-  the explicitly decomposed request-association parent; its children are new
-  owned work. The live execution-scope correction remains byte-for-byte present.
-  Falsification: the unchanged checker accepts the complete fixture and rejects
-  only its altered suffix digest. The first runner expected a JSON field name;
-  its corrected oracle matches the native suffix-digest diagnostic. All results
-  are consumed, and exact scratch sources/measurement/fixture/runner are removed.
-  Durability: current manifest, exact Git source and its predecessor chain;
-  .artifacts/aggregate-history-* raw logs remain a named durability gap.
-- [x] **NO REGRESSION** — Aggregate-history `task-tree-integrity` confirms
-  active invariants (6 trees, 1513 nodes, 3 segments, 39 compact terminals and
-  one acceptance history); `knowledge-map: OK` confirms unchanged fact routes.
+- [x] **ROOT CAUSE (WHY + WHERE)** — Gated-history rollover: `git log -S`
+  locates the first completed suffix heading at 1f292157fcf1ac82b79300a10b0b8b2a98ecf1ff.
+  Exact 8b8e903e2f has 7190 lines, near the unchanged 7200-line rollover milestone;
+  completed acceptance belongs in exact version history before further implementation.
+- [x] **ADDRESSED (verified)** — Gated-history re-derivation retrieves the
+  complete source (1276957 bytes) and three-section suffix (102 lines/7412
+  bytes). Independent git cat-file, awk, wc and shasum agree with manifest hashes
+  520449523e4172a9d8398ed4691cf270f6ea1638b46dbe151feff8123a96f01c
+  and 1d7433e18adbd027db404879d58e4571225d678890697326050076a9ef373650.
+  The source revision retains its predecessor manifest and the independently
+  reverified acb5b49ef source/suffix. All original nodes and compact terminals
+  remain unchanged except the final-exec parent's explicit decomposition. The
+  live execution-scope correction remains byte-for-byte present. Falsification:
+  the unchanged checker accepts the complete fixture and rejects only an altered
+  suffix digest. All results are consumed; exact sources, measurements, fixture
+  and runner are removed. Durability: current manifest, exact Git source and
+  predecessor chain; .artifacts/gated-history-* raw logs remain a named gap.
+- [x] **NO REGRESSION** — Gated-history `task-tree-integrity` confirms active
+  invariants (6 trees, 1517 nodes, 3 segments, 39 compact terminals and one
+  acceptance history); `knowledge-map: OK` confirms unchanged fact routes.
   Claim census and staged doctrines verify synchronized metadata. Product code,
   book behavior and all ceilings remain unchanged. No native producer, original
   startup, full CI or push runs for this history-only slice.
-
-
-## Acceptance Checklist (.19.2.3.1.2.2.5.5.2.3.4.3.3.4.3.2)
-
-- [x] **ROOT CAUSE (WHY + WHERE)** — Original request association: `git log -S`
-  locates Service transfer at 54571a18bb3e52ab9656bcee6c91bbf6f1bf714c.
-  The qualified transfer and aggregate context paths had no retained original
-  peer/parent/child join before token effects. Returning a grant before that
-  association would strand ownership when a creator handler interrupts return.
-- [x] **ADDRESSED (verified)** — Original request re-derivation: T1851 uses
-  independent literal HELLO/READY/SPAWN sockets, original packet references,
-  actual token-source reads, native pipe/child inventories and exact waits.
-  Selected and nested requests bind the matching original parent/grant before
-  entropy; copied observations preserve fixed walls without authority bytes.
-  Actual creator signals qualify both masked publication and pre-mask re-entry
-  or retirement. Thrown transfer/context returns, original identity/clock cuts,
-  capacity refusal and EOF/repeated-message/retirement preserve exact ownership
-  and first failure. Independent stdout EOF contains no released command output.
-  Falsification: the identical isolated fixture loader passes; late association,
-  missing mask, unchecked token, copied packet, ignored admission wall, missing
-  peer cancellation, aliased observation and copied helper reject intended
-  assertions with native exits 3, 255, 1, 1, 1, 1, 3 and 1. All endpoint censuses
-  are unchanged; 255 is a fatal Perl fixture exit, not a native signal.
-  Initial syntax review renamed a fixture helper that collided with CORE reset;
-  the first native run corrected only its expected retirement diagnostic. Those
-  initial failures are not credited. Durability: tracked source/test/book/fact/task
-  preserve reruns; .artifacts/request-association-* raw logs remain a named gap.
-  Exact mutant/fixture sources, runner and disposable book build are removed.
-- [x] **NO REGRESSION** — Original request selected guarded band reports
-  `All tests successful. Files=26, Tests=258`; focused native tests and Perl
-  syntax pass. mdBook builds and generated HTML includes original association,
-  fixed walls and peer cancellation; visual QA remains independently blocked.
-  Knowledge Map, claim census and staged doctrines cover synchronized metadata.
-  Native results are Darwin; Linux remains a later missing qualification leg.
-  T1827 runs bounded fixture commands; T1851 keeps its native commands gated.
-  Original startup/proxy/compiler producers, full CI and push remain gated.
-
-
-## Acceptance Checklist (.19.2.3.1.2.2.5.5.2.3.4.3.3.4.4)
-
-- [x] **ROOT CAUSE (WHY + WHERE)** — Gated ACCEPT composition: `git log -S`
-  locates Service write admission at 27cb2e8857a2a96eaf14d5ee653404142b440659.
-  Its transport/context checks needed original aggregate grant and native-ready
-  checks at each write. Launch advancement can fork; wrapping it in a publication
-  mask would corrupt the saved exec mask. A new exact queue-expiry cut also
-  reproduced the generic queue-refused error replacing the original timeout.
-- [x] **ADDRESSED (verified)** — Gated ACCEPT re-derivation: T1852 joins literal
-  HELLO/READY/SPAWN/ACCEPT sockets to actual root/nested gated processes, saved
-  exec masks, native writes, original grants and exact child waits. Single-byte
-  writes, creator signals, partial prefixes, actual command death, decoded
-  messages, EOF, expiry, deferral and queue faults preserve copied publication,
-  first cause and independent stdout EOF without command output. Queue expiry
-  now propagates its original Service diagnostic into retained request failure.
-  Falsification: the identical isolated loader passes; omitted owner check,
-  stale post-check wall, ignored deferral, late copy, outer launch mask, premature
-  publication, foreign job/Service, aliased view, stale native readiness and lost
-  queue cause reject intended assertions with native exits 3, 1, 2, 1, 255, 255,
-  1, 1, 1, 1 and 1. Fatal Perl exits are not native signal outcomes.
-  All endpoint censuses remain unchanged. The initial fixture assumed one-pass
-  message decoding and inherited its own client sockets into both child roles.
-  It now respects bounded prefix/body reads and discards only inherited fixture
-  client copies; an isolated omission reproduces the actual EOF failure (exit 1).
-  An early-publication observer initially required an unavailable capture handle;
-  it now observes only existing handles, exposing the intended readiness failure.
-  Initial failed controls receive no credit. Durability: source/test/book/fact/task
-  retain reruns; .artifacts/gated-accept-* raw logs remain a named gap. Exact
-  mutant/fixture sources, runner and disposable book build are removed.
-- [x] **NO REGRESSION** — Final gated ACCEPT selected guarded band reports
-  `All tests successful. Files=31, Tests=297`; Perl syntax and focused controls
-  pass. mdBook builds; HTML includes bound-write admission, original launch masks
-  and complete-but-unreleased ACCEPT. Knowledge Map, claim census and staged
-  doctrines cover metadata. Browser visual QA and Linux native qualification
-  remain separate missing legs. Existing band fixtures execute bounded commands;
-  T1852 keeps commands gated. Original startup/proxy/compiler producers, full CI
-  and push remain gated. Next is final authorization at the native exec-gate write.
