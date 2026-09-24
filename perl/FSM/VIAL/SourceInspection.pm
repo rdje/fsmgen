@@ -4,6 +4,8 @@ use strict;
 use warnings;
 use JSON::PP ();
 use Scalar::Util qw(blessed);
+use FSM::Support::VIALSemanticFamilyContract qw(validate_vial_semantic_family_collection);
+use FSM::VIAL::LifecycleControl qw(validate_vial_lifecycle_condition);
 
 # Private compiler adapter for the separately versioned public detail schema.
 # Descriptors enumerate every accepted field; they never copy arbitrary hashes.
@@ -46,6 +48,24 @@ my %RECORD = (
         action_count => 'int', fiber_count => 'int'},
     fiber => {%NAMED, actions => 'action[]'},
     field_value => {%META, field_id => 'str', value => 'expression'},
+    intent_scope => {kind => '=fixture', owner_id => 'str'},
+    intent_lifetime => {start => '=lifecycle_entered|service_started',
+        end => '=result_sealed|service_stopped', cancellation => '=required|cooperative'},
+    intent_order => {domain_id => 'str', phase => '=check', rank => 'int', before => 'str[]', after => 'str[]'},
+    intent_port => {port_id => 'str', name => '=fixture|domain|result', direction => '=input|output',
+        type_id => 'str', cardinality => '=one', required => 'flag'},
+    intent_effect => {effect_id => 'str', kind => '=ready|service_start|service_stop|stimulus_start|complete|drain|shutdown|finalize|deadline|failure',
+        target_id => 'str', visibility => '=result'},
+    intent_failure => {policy => '=fail_scope', scope => '=fixture',
+        diagnostic_code => '=VIAL_LIFECYCLE_SERVICE_ERROR|VIAL_LIFECYCLE_DEADLINE_EXPIRED|VIAL_LIFECYCLE_DRAIN_INCOMPLETE|VIAL_LIFECYCLE_CLEANUP_TIMEOUT'},
+    intent_result => {kind => '=lifecycle_record', type_id => '=type/vial_lifecycle_record_result_v1', required => 'true_flag'},
+    condition_record => {kind => '=all|configured|scenarios_terminal|transactions_terminal|scoreboards_empty|reset_inactive|lifecycle_entered|dependency_satisfied|lifecycle_point|service_started|service_ready|service_quiescent|service_stopped',
+        reference_id => '?str', domain_id => '?str', operands => 'condition_record[]'},
+    service_detail => {target => '=fixture_background', cancellation => '=cooperative',
+        map { $_ => 'condition' } qw(start_condition ready_condition quiescent_condition stop_condition)},
+    deadline_detail => {from => 'milestone', until => 'milestone', max_cycles => 'cycles', last_cycle_inclusive => 'true_flag'},
+    failure_detail => {disposition => '=fail', cleanup => '=finalize', cleanup_max_cycles => 'cycles', diagnostics => '=first|all'},
+    empty_detail => {},
 );
 my %TYPE = (
     scalar => {kind => '=scalar', family => '=bool|u|s|logic|slogic', width => 'int', signed => 'flag', four_state => 'flag'},
@@ -139,12 +159,34 @@ sub _value {
             || (defined($data) && !ref($data) && $data =~ /\A[01]\z/);
         return $data ? JSON::PP::true : JSON::PP::false;
     }
+    if ($type eq 'true_flag') {
+        my $out = _value('flag', $data, $ctx, $path);
+        _fail($path, 'expected true flag') unless $out;
+        return $out;
+    }
+    if ($type eq 'cycles') {
+        my $out = _value('int', $data, $ctx, $path);
+        _fail($path, 'expected bounded positive cycle count') unless $out >= 1 && $out <= 2_147_483_647;
+        return $out;
+    }
+    if ($type eq 'condition' || $type eq 'milestone') {
+        # Reuse the bounded condition validator, then explicitly construct the
+        # independent public record instead of returning its compiler clone.
+        validate_vial_lifecycle_condition($data);
+        my $out = _record($RECORD{condition_record}, $data, $ctx, $path);
+        _fail($path, 'expected lifecycle milestone')
+            if $type eq 'milestone' && !defined($out->{reference_id});
+        return $out;
+    }
     # Compiler-only provenance is an explicitly consumed input, never output.
     if ($type eq 'private_provenance') { _hash($data, $path); return undef; }
     return _package($data, $ctx, $path) if $type eq 'package';
     return _fixture($data, $ctx, $path) if $type eq 'fixture';
     return _fault($data, $ctx, $path) if $type eq 'fault';
     return _expression($data, $ctx, $path) if $type eq 'expression';
+    return _intent_family($data, $ctx, $path) if $type eq 'intent_family';
+    return _intent_node($data, $ctx, $path) if $type eq 'intent_node';
+    return _lifecycle_payload($data, $ctx, $path) if $type eq 'lifecycle_payload';
     if ($type eq 'binding_value') {
         _hash($data, $path);
         return exists($data->{kind}) ? _expression($data, $ctx, $path)
@@ -173,10 +215,10 @@ sub _package {
         transactions => 'transaction[]', models => 'model[]', scoreboards => 'scoreboard[]', fixtures => 'fixture[]');
     if ($ctx->{version} == 2) {
         _hash($data, $path);
-        _fail($path, 'missing or invalid intent_families')
-            unless ref($data->{intent_families}) eq 'ARRAY';
-        _fail($path, 'intent family detail is not implemented') if @{$data->{intent_families}};
-        $fields{intent_families} = 'str[]'; # Empty until the owned family projector lands.
+        # Check common collection bounds, identities and provenance before
+        # constructing the closed family-specific public representation.
+        validate_vial_semantic_family_collection('semantic_family', $data->{intent_families});
+        $fields{intent_families} = 'intent_family[]';
     }
     my $out = _record(\%fields, $data, $ctx, $path);
     # Native collection can follow dependency resolution. Inspection declaration
@@ -187,6 +229,53 @@ sub _package {
         } @{$out->{$section}}];
     }
     $out->{intent_families} = [] unless exists $out->{intent_families};
+    return $out;
+}
+
+sub _intent_family {
+    my ($data, $ctx, $path) = @_;
+    my $out = _record({%META, semantic_id => 'str', family_id => '=lifecycle_control',
+        revision => '=1', nodes => 'intent_node[]'}, $data, $ctx, $path);
+    $out->{revision} = 1;
+    return $out;
+}
+
+sub _intent_node {
+    my ($data, $ctx, $path) = @_;
+    my $out = _record({%META, schema => '=fsmgen.vial_semantic_family.v2', schema_version => '=2',
+        stage => '=semantic', semantic_id => 'str', family_id => '=lifecycle_control', revision => '=1',
+        node_id => 'str', node_kind => '=dependency|readiness|service|stimulus_start|completion|drain|shutdown|finalize|deadline|failure',
+        scope => 'intent_scope', lifetime => 'intent_lifetime', order => 'intent_order', ports => 'intent_port[]',
+        effects => 'intent_effect[]', failure => 'intent_failure', result => 'intent_result',
+        payload => 'lifecycle_payload'}, $data, $ctx, $path);
+    my $payload = $out->{payload};
+    _fail($path, 'lifecycle payload contradicts its node identity or scope')
+        unless $payload->{record_id} eq $out->{semantic_id}
+            && $out->{node_id} eq $out->{semantic_id}
+            && $payload->{record_kind} eq $out->{node_kind}
+            && $payload->{fixture_id} eq $out->{scope}{owner_id}
+            && $payload->{domain_id} eq $out->{order}{domain_id};
+    delete $out->{stage};
+    $out->{schema} = 'fsmgen.vial_intent_node.v1';
+    $out->{schema_version} = 1;
+    $out->{revision} = 1;
+    return $out;
+}
+
+sub _lifecycle_payload {
+    my ($data, $ctx, $path) = @_;
+    _hash($data, $path);
+    my $kind = _value('=dependency|readiness|service|stimulus_start|completion|drain|shutdown|finalize|deadline|failure',
+        $data->{record_kind}, $ctx, "$path/record_kind");
+    my $detail = $kind =~ /\A(?:service|deadline|failure)\z/ ? "${kind}_detail" : 'empty_detail';
+    my $no_condition = $kind eq 'deadline' || $kind eq 'failure';
+    _fail($path, 'deadline or failure condition must be null')
+        if $no_condition && defined($data->{condition});
+    my $out = _record({schema => '=fsmgen.vial_lifecycle_control.v1', schema_version => '=1',
+        lifecycle_id => 'str', fixture_id => 'str', domain_id => 'str', record_kind => "=$kind", record_id => 'str',
+        condition => $no_condition ? '?condition' : 'condition', intrinsic_after => 'str[]', additional_after => 'str[]',
+        detail => $detail}, $data, $ctx, $path);
+    $out->{schema_version} = 1;
     return $out;
 }
 

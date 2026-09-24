@@ -451,10 +451,33 @@ For FSMGen, the analogs are:
   Commit: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.31.3.2.3.2.1: construct closed VIAL base inspection records`
 
 - ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.31.3.2.3.2.2`
-  Status: `pending`
+  Status: `active`
   Goal: `Project complete typed lifecycle-control source semantics.`
   Acceptance: `Extend the base projector with the selected public intent-node envelope and explicit lifecycle payload/condition/detail shapes. Preserve authored and intrinsic dependencies, service state conditions, deadlines and failure cleanup. Validate registered family/revision, reject unknown and incomplete records, prove independent authored values and complete source locations, and keep the API unadvertised until the facade ships.`
-  Verification: `Pending base projection.`
+  Verification: `Base projection and native ordering are committed. Implement closed lifecycle envelopes and family-specific payload constructors with independent authored condition, scope, deadline and failure-policy oracles.`
+  Commit: `pending`
+
+  Children: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.31.3.2.3.2.2.1, SEMANTIC-INTROSPECTION-MCP-FRONTIER.31.3.2.3.2.2.2, SEMANTIC-INTROSPECTION-MCP-FRONTIER.31.3.2.3.2.2.3`
+
+- ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.31.3.2.3.2.2.1`
+  Status: `done`
+  Goal: `Construct closed typed lifecycle inspection detail with authored semantic oracles.`
+  Acceptance: `Implement the parent projection contract over admitted SemanticIR, preserving complete conditions, scope, ordering, service/deadline/failure policy, fresh values and source coordinates. Qualify defaults, explicit admitted policies, imports/styles and hostile records. Track and explain the discovered native start_requires failure under .2, without claiming that source form is working. Commit this coherent internal projection before the compiler prerequisite; keep public API unadvertised.`
+  Verification: `T1877 proves exact public lifecycle nodes, complete authored/default conditions and policies, independent coordinates, source styles/imports, optional service/dependency controls and hostile record refusal. The focused source/inspection band and rendered book pass. Native start_requires and empty-readiness failures are diagnosed and immediately owned by .2/.3; no public API is advertised.`
+  Commit: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.31.3.2.3.2.2.1: project typed lifecycle source detail`
+
+- ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.31.3.2.3.2.2.2`
+  Status: `pending`
+  Goal: `Repair native lifecycle service start_requires construction and qualify complete inspection coverage.`
+  Acceptance: `Reproduce public rejection of legal configured/reset start requirements, root-cause the unparenthesized map consuming the optional condition as another dependency ID, and repair construction without weakening validation. Preserve canonical source/plan identities, verify exact additional conditions and references through normal/terse/import/native/API/MCP and typed inspection, and qualify other optional clauses. Keep unknown/cyclic/excess inputs fail-closed. Record controlled baseline/current evidence, update contract/book/facts and qualify this prerequisite before .3 closes the remaining empty-readiness gap. No spent runtime producers.`
+  Verification: `Public Parser::check_source rejects legal start_requires with VIAL_SEMANTIC_ERROR; direct first-party _build_ir diagnosis reports lifecycle condition /condition/operands/3 reference_id must be a stable non-empty identity. Default, ready_requires, quiescent_requires and stop_requires controls succeed. LifecycleControl::_build_program has an unparenthesized map over dependency IDs followed by _optional(start_additional), causing Perl to map the condition record as an ID. Raw diagnostic capture is inspection-lifecycle-start-diagnosis.log.`
+  Commit: `pending`
+
+- ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.31.3.2.3.2.2.3`
+  Status: `pending`
+  Goal: `Admit configured readiness when a lifecycle has no dependencies or service.`
+  Acceptance: `Reproduce the grammar-valid empty dependency/service case and repair only its vacuous readiness normalization, retaining the configured lifecycle-entry precondition and refusing authored empty all. Prove typed inspection, source styles, native/API/MCP and target-neutral planning; preserve canonical identities and all nonempty prerequisite order. Clarify the default in the spec/book and retain controlled evidence. Commit before closing lifecycle inspection or advertising its facade; no runtime producers.`
+  Verification: `Independent public Parser::check_source of the canonical lifecycle with dependencies/services both empty returns VIAL_SEMANTIC_ERROR. Direct _build_ir exposes lifecycle condition /condition all node requires at least one operand. Each collection can be omitted separately successfully in T1877. _build_program unconditionally applies _all to the empty readiness prerequisite list, although grammar permits both empty collections and configuration is already a lifecycle-entry precondition. Evidence: inspection-lifecycle-empty-diagnosis.log.`
   Commit: `pending`
 
 - ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.31.3.2.3.2.3`
@@ -1174,8 +1197,9 @@ before editing code. No discovered defect is closed by this audit alone.
 
 ## Current Frontier
 
-`SEMANTIC-INTROSPECTION-MCP-FRONTIER.31.3.2.3.2.2` is next: lifecycle
-source detail, then portable/filesystem API, native CLI/discovery and MCP.
+`SEMANTIC-INTROSPECTION-MCP-FRONTIER.31.3.2.3.2.2.2` is next: repair native
+service start requirements, then `.2.2.3` repairs empty readiness before
+portable/filesystem API, native CLI/discovery and MCP.
 The catalog guard, CI/signoff and exhaustive qualification follow before HIAL
 streaming. Preserve spent native compiler/startup evidence and the separate
 read-only/write horizon; source checks do not promote runtime support.
@@ -2252,3 +2276,48 @@ summaries are retained there. Full CI/runtime remain outside this slice.
 Task/book containment metadata records only this owned repair; existing
 knowledge-card allowance is unchanged. No separate rationale ledger entry is
 needed because the implementation invariant belongs to the source contract.
+
+## Acceptance Checklist — `.31.3.2.3.2.2.1` typed lifecycle detail
+
+- [x] **ROOT CAUSE (WHY + WHERE)** — Pre-implementation T1877 reports
+  `VIAL source inspection projection at /packages/0: intent family detail is not implemented`
+  and `#   at t/1877-vial-source-inspection-lifecycle.t line 111.` The base
+  projector deliberately refuses every nonempty family; existing public
+  summaries contain counts rather than the selected lifecycle meaning.
+- [x] **ADDRESSED (verified)** — Explicit constructors now emit the independent
+  intent-node schema, closed common envelope and family-specific payloads.
+  Native common collection validation checks bounded identities/provenance;
+  bounded condition validation precedes explicit public condition construction.
+  No arbitrary private hash becomes output. T1877 independently verifies the
+  complete readiness record, every node's authored identity/location/rank,
+  intrinsic/additional relations, service conditions, deadlines, failure defaults
+  and explicit policies. Normal/terse/import meaning, no-service and
+  no-dependency cases separately, fresh deterministic output and unchanged
+  compiler input pass. Unknown/missing family/payload/detail/condition fields,
+  revision/kind, invalid milestone/bounds/scope and excess condition depth/width
+  fail closed. No planner or runner loads. The old lifecycle refusal assertion
+  is replaced by the substantive lifecycle and unknown-revision controls.
+- [x] **NO REGRESSION** — RAM-guarded
+  `prove -Iperl t/1550-vial-semantic-ir.t t/1555-vial-public-source-tooling.t t/1801-vial-v2-source-projections.t t/1806-vial-v2-public-foundation.t t/1808-vial-v2-lifecycle-compiler-phases.t t/1875-vial-source-inspection-base.t t/1876-vial-declaration-order.t t/1877-vial-source-inspection-lifecycle.t`
+  reports `All tests successful. Files=8, Tests=56` and `Result: PASS`.
+  `mdbook build docs/book -d .artifacts/inspection-lifecycle-book` and rendered
+  detail/unshipped/prerequisite assertions pass; disposable book output is
+  removed. Browser visual access and full CI/runtime remain unqualified.
+
+Re-derivation: actual parsed source/catalogs and typed constructor. Falsification:
+independent complete-record/coordinate oracles, changed source policies, hostile
+records and no-planner/runner controls. Durability: T1877, explicit contract,
+constructor and `vial-inspection-lifecycle-qualification.json` with raw-run hashes.
+The initial green attempt had incorrect test expectations for inclusive end
+columns and single-operand all wrappers; these were corrected from the source
+contract. The separate native rejection of legal start_requires was then
+reproduced without inspection and root-caused: an unparenthesized Perl map
+consumes the optional condition as another dependency ID. Removing both optional
+dependency/service collections exposes another native invalid empty-all
+construction. Both failures are durably captured with public diagnostics and
+underlying first-party exceptions. `.2.2.2` and `.2.2.3` own immediate repairs;
+this internal projection slice does not claim those sources are admitted or the
+public facade shipped. The lifecycle parent stays active until they are fixed.
+Task/book metadata admits only this owned detail and truthful scope; knowledge
+card compaction keeps its existing allowance. Record definitions belong to the
+inspection contract, so no separate rationale ledger entry is needed.

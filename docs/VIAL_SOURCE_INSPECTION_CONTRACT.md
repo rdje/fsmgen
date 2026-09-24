@@ -2,7 +2,7 @@
 
 Date: 2026-09-24
 Owner: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.31.3.2.3`
-Status: internal base projector implemented; lifecycle, public API and advertisement pending
+Status: internal base/lifecycle projector implemented; native lifecycle prerequisites and public API pending
 
 ## Purpose and compatibility
 
@@ -246,6 +246,47 @@ and failure disposition/cleanup bounds. A count is not a substitute for nodes.
 Unknown family revisions must fail admission rather than producing generic
 untyped payloads. Future implemented families need a public projector and
 independent semantic oracle before inspection advertises their support.
+
+The internal projector implements `lifecycle_control@1`. It validates the
+bounded common family collection and constructs these closed public records;
+schema versions, revisions, ranks and cycle counts are JSON integers, and
+required/inclusive flags are JSON booleans:
+
+| Record | Exact fields |
+| --- | --- |
+| `scope` | `kind: fixture`, `owner_id` |
+| `lifetime` | `start`, `end`, `cancellation` |
+| `order` | `domain_id`, `phase: check`, `rank`, `before[]`, `after[]` |
+| `ports[]` | `port_id`, `name`, `direction`, `type_id`, `cardinality: one`, `required` |
+| `effects[]` | `effect_id`, `kind`, `target_id`, `visibility: result` |
+| `failure` | `policy: fail_scope`, `diagnostic_code`, `scope: fixture` |
+| `result` | `kind: lifecycle_record`, `type_id: type/vial_lifecycle_record_result_v1`, `required: true` |
+| `payload` | `schema: fsmgen.vial_lifecycle_control.v1`, `schema_version: 1`, `lifecycle_id`, `fixture_id`, `domain_id`, `record_kind`, `record_id`, `condition`, `intrinsic_after[]`, `additional_after[]`, `detail` |
+| condition or milestone | `kind`, `reference_id`, `domain_id`, `operands[]` |
+| dependency/point detail | empty record |
+| service detail | `target: fixture_background`, `cancellation: cooperative`, `start_condition`, `ready_condition`, `quiescent_condition`, `stop_condition` |
+| deadline detail | `from`, `until`, `max_cycles`, `last_cycle_inclusive: true` |
+| failure detail | `disposition: fail`, `cleanup: finalize`, `cleanup_max_cycles`, `diagnostics` |
+
+Node kinds are `dependency`, `readiness`, `service`, `stimulus_start`,
+`completion`, `drain`, `shutdown`, `finalize`, `deadline`, and `failure`.
+The exact seam, port, effect and diagnostic vocabularies follow the registered
+[lifecycle expansion](vial-spec/lifecycle-control-v2.md#typed-semantic-expansion).
+Payload record identity/kind, fixture and domain must agree with the node.
+Deadline/failure `condition` is null; other nodes carry the complete condition.
+Conditions retain explicit `all` wrappers and operand order, including a
+single-operand wrapper. Unused reference/domain IDs remain null. Milestones
+must reference a lifecycle record; a terminal condition is not a milestone.
+Cycle bounds are positive and retain the existing lifecycle ceiling. Missing
+or unknown fields, kinds, policies, revisions, invalid condition bounds and
+inconsistent scope fail closed; no generic payload hash is copied into output.
+
+The independent T1877 oracle covers admitted source detail. Two native compiler
+prerequisites remain owned before the public facade ships: legal service
+`start_requires` is rejected by malformed dependency construction, and an empty
+dependency/service pair constructs invalid empty readiness. The immediate
+repair leaves are `.31.3.2.3.2.2.2` and `.31.3.2.3.2.2.3`; the projector does
+not bypass failed source admission.
 
 ## CLI and MCP selection
 

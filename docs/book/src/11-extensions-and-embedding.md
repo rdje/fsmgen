@@ -2850,19 +2850,29 @@ transport preserves the report, not that an agent can inspect those details.
 A separate typed source-inspection API and MCP route are selected under
 `SEMANTIC-INTROSPECTION-MCP-FRONTIER.31.3.2.3`, but are not yet shipped.
 
-The base typed projection is now implemented internally: it retains declaration
-bodies, expressions, nested actions, source locations and exact model/fault
-scope. Its independent record definitions are in the
+The typed projection is now implemented internally for base source meaning
+and `lifecycle_control@1`: it retains declaration bodies, expressions, nested
+actions, source locations, exact model/fault scope and complete lifecycle nodes.
+Its independent record definitions are in the
 [source-inspection contract](../../VIAL_SOURCE_INSPECTION_CONTRACT.md).
-Lifecycle detail and callable inspection APIs remain in progress; current
-MCP summary queries have not gained those bodies. An unsupported family causes
-projection refusal rather than a partial detail result. The new projection
+Lifecycle detail preserves readiness prerequisites, all service conditions,
+intrinsic and added dependencies, inclusive deadlines and failure cleanup policy.
+Deadline and cleanup bounds appear as typed cycle counts. Callable inspection APIs remain in
+progress; current MCP summary queries have not gained those bodies. Unknown
+family revisions and incomplete records cause projection refusal. The projection
 recovers authored declaration order from source locations. Native check and MCP
 summaries also preserve authored order after recursive type resolution. For
 example, `(type first (type later)) (type later (u 8))` reports `first,later`,
 with each array position matching its semantic path. Cached semantic and
 compatibility digests for sources affected by the former dependency-first
 ordering require refreshing; canonical base fixture reports remain unchanged.
+
+Qualification found two native lifecycle admission defects: legal service
+`start_requires` clauses and a lifecycle with both dependencies and services
+empty currently fail closed. Their immediate repair leaves are
+`.31.3.2.3.2.2.2` and `.31.3.2.3.2.2.3`. Inspection will not bypass source
+validation, and the API/MCP route will remain unadvertised until those repairs
+and public-interface qualification are complete.
 
 Select `language_version: 2` explicitly for VIAL v2, including the implemented
 lifecycle-control family. Omission selects v1; the adapter never guesses from

@@ -163,10 +163,7 @@ subtest 'schema drift and ambiguous missing scope fail closed' => sub {
           $ok=eval { FSM::VIAL::SourceInspection->build($ir); 1 }; $error=$@; }
         ok(!$ok, "$case->[0] is rejected"); like($error, $case->[2], 'failure names the violated projection shape');
     }
-    my $lifecycle = read_file('vial/ahb_subordinate_base_output_arbitration_lifecycle_v2.vial');
-    my $ok = eval { inspect($lifecycle); 1 };
-    ok(!$ok, 'unfinished lifecycle detail is refused rather than silently summarized');
-    like($@, qr/intent family detail is not implemented/, 'owned next slice boundary explicit');
+
 };
 
 ok(!exists($INC{'FSM/VIAL/PlanBuilder.pm'}), 'source inspection never loads a planner');

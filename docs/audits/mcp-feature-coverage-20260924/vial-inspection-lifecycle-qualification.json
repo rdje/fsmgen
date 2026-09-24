@@ -1,0 +1,182 @@
+{
+  "baseline_revision": "7153a699daa5d20292524e29b5c572e824906c14",
+  "evidence_legs": {
+    "durability": "T1877, SourceInspection constructors, public contract, book and fact card, this log-hashed capture and immediately owned native repairs.",
+    "falsify": "Changed policy/deadline/condition sources, no-service/no-dependency controls separately, malformed family/revision/payload/condition/scope/bounds rejection, untouched compiler input, deterministic fresh output, no planner/runner module load.",
+    "rederive": "T1877 parses authored normal/terse/import catalogs through the actual source compiler and calls the closed typed projector. Exact full readiness record and source coordinates have independent authored oracles."
+  },
+  "limits": [
+    "Internal projection only; public facade, CLI and MCP detail remain unshipped. Native legal start_requires and simultaneously empty dependencies/services are not yet admitted; the two owned repairs are immediate next work.",
+    "The first implementation run exposed test-oracle mistakes: end columns are inclusive and normalized all wrappers remain explicit even with one operand. Those expectations were corrected against the source contract and retained log hash. The distinct native start_requires failure was root-caused and owned, not suppressed.",
+    "No backend/runtime, performance/capacity, full CI or browser visual qualification."
+  ],
+  "native_prerequisites": {
+    "empty_readiness": {
+      "owner": "SEMANTIC-INTROSPECTION-MCP-FRONTIER.31.3.2.3.2.2.3",
+      "public": {
+        "diagnostics": [
+          {
+            "code": "VIAL_SEMANTIC_ERROR",
+            "message": "internal semantic validation failed closed",
+            "notes": [],
+            "phase": "semantic",
+            "schema_version": 1,
+            "semantic_path": "/",
+            "severity": "error",
+            "source_location": {
+              "end_byte_exclusive": 0,
+              "end_column": 1,
+              "end_line": 1,
+              "source_name": "inspect.vial",
+              "start_byte": 0,
+              "start_column": 1,
+              "start_line": 1
+            }
+          }
+        ],
+        "ok": 0
+      },
+      "reproduction": "Replace the complete dependencies and services forms in the maintained source with (dependencies) and (services).",
+      "root_cause": "Readiness unconditionally constructs all([]), contrary to normalized condition validation although both source collections permit zero entries.",
+      "underlying": "underlying: lifecycle condition /condition all node requires at least one operand"
+    },
+    "service_start_requirements": {
+      "observations": [
+        {
+          "clause": "",
+          "diagnostics": [],
+          "success": true,
+          "underlying": "success"
+        },
+        {
+          "clause": "(start_requires (configured))",
+          "diagnostics": [
+            {
+              "code": "VIAL_SEMANTIC_ERROR",
+              "message": "internal semantic validation failed closed",
+              "notes": [],
+              "phase": "semantic",
+              "schema_version": 1,
+              "semantic_path": "/",
+              "severity": "error",
+              "source_location": {
+                "end_byte_exclusive": 0,
+                "end_column": 1,
+                "end_line": 1,
+                "source_name": "inspect.vial",
+                "start_byte": 0,
+                "start_column": 1,
+                "start_line": 1
+              }
+            }
+          ],
+          "success": false,
+          "underlying": "lifecycle condition /condition/operands/3 reference_id must be a stable non-empty identity"
+        },
+        {
+          "clause": "(start_requires (reset_inactive bus))",
+          "diagnostics": [
+            {
+              "code": "VIAL_SEMANTIC_ERROR",
+              "message": "internal semantic validation failed closed",
+              "notes": [],
+              "phase": "semantic",
+              "schema_version": 1,
+              "semantic_path": "/",
+              "severity": "error",
+              "source_location": {
+                "end_byte_exclusive": 0,
+                "end_column": 1,
+                "end_line": 1,
+                "source_name": "inspect.vial",
+                "start_byte": 0,
+                "start_column": 1,
+                "start_line": 1
+              }
+            }
+          ],
+          "success": false,
+          "underlying": "lifecycle condition /condition/operands/3 reference_id must be a stable non-empty identity"
+        },
+        {
+          "clause": "(ready_requires (configured))",
+          "diagnostics": [],
+          "success": true,
+          "underlying": "success"
+        },
+        {
+          "clause": "(quiescent_requires (dependency_satisfied configured_gate))",
+          "diagnostics": [],
+          "success": true,
+          "underlying": "success"
+        },
+        {
+          "clause": "(stop_requires (transactions_terminal))",
+          "diagnostics": [],
+          "success": true,
+          "underlying": "success"
+        }
+      ],
+      "owner": "SEMANTIC-INTROSPECTION-MCP-FRONTIER.31.3.2.3.2.2.2",
+      "reproduction": "Insert each listed clause after (target fixture_background) in the unchanged maintained source; use source_name inspect.vial and empty source_catalog. Public Parser::check_source reports admission; direct first-party Parser::_build_ir diagnoses the sanitized internal exception.",
+      "root_cause": "Unparenthesized map consumes _optional(start_additional) as a dependency ID, producing an object-valued reference."
+    }
+  },
+  "owner": "SEMANTIC-INTROSPECTION-MCP-FRONTIER.31.3.2.3.2.2.1",
+  "schema": "fsmgen.vial_inspection_lifecycle_qualification.v1",
+  "source": "vial/ahb_subordinate_base_output_arbitration_lifecycle_v2.vial",
+  "source_sha256": "7d15fdba9023d88c7ddbca28b84f9d7736e1da262ed954636dabe4a9d8316ff7",
+  "tests": {
+    "inspection-lifecycle-band": {
+      "sha256": "bb72b429b48ac921872c4bc0b654ad8005d84e8f3dd577aa9e03ebb6b1cbeefc",
+      "summary": [
+        "All tests successful.",
+        "Files=8, Tests=56, 41 wallclock secs ( 0.05 usr  0.02 sys + 35.13 cusr  2.06 csys = 37.26 CPU)",
+        "Result: PASS"
+      ]
+    },
+    "inspection-lifecycle-book": {
+      "build": "PASS",
+      "rendered_scope_and_prerequisite_assertions": "PASS",
+      "sha256": "a077619cf73186e1ffa58832a9be9f2f949d83b6e97f97a65f3bd70e0dadc73d",
+      "visual": "unavailable"
+    },
+    "inspection-lifecycle-book-final": {
+      "rendered_scope_assertions": "PASS",
+      "sha256": "bba0ed2d44ae6cd46aa7e72069c875712f901a6bdf32085be76de2eccc7d8dab",
+      "summary": [
+        " INFO HTML book written to `.artifacts/inspection-lifecycle-book`"
+      ]
+    },
+    "inspection-lifecycle-final": {
+      "sha256": "9e2e5b0db13ae7b7ee30d570c630280d198a83e311238f3d4a3c5321f1e3d718",
+      "summary": [
+        "All tests successful.",
+        "Files=1, Tests=6,  2 wallclock secs ( 0.01 usr  0.01 sys +  1.63 cusr  0.04 csys =  1.69 CPU)",
+        "Result: PASS"
+      ]
+    },
+    "inspection-lifecycle-green": {
+      "sha256": "fe0ef4a6689e5ec9fa2e7907c9457bded9076570333cb2d3600ef84684d86aeb",
+      "summary": [
+        "Files=2, Tests=9,  1 wallclock secs ( 0.01 usr  0.01 sys +  1.00 cusr  0.02 csys =  1.04 CPU)",
+        "Result: FAIL"
+      ]
+    },
+    "inspection-lifecycle-green-corrected": {
+      "sha256": "c2c1cd765338e276ac610e43fa1e3549b5db0f05dacad2261f6a8d85b8cf269b",
+      "summary": [
+        "All tests successful.",
+        "Files=2, Tests=13,  2 wallclock secs ( 0.01 usr  0.01 sys +  2.30 cusr  0.05 csys =  2.37 CPU)",
+        "Result: PASS"
+      ]
+    },
+    "inspection-lifecycle-red": {
+      "sha256": "70e6aa498ccdddae289bcbd74ae8618e2c1ead4e2b0de99727715ceab749807c",
+      "summary": [
+        "Files=1, Tests=1,  0 wallclock secs ( 0.01 usr  0.01 sys +  0.09 cusr  0.01 csys =  0.12 CPU)",
+        "Result: FAIL"
+      ]
+    }
+  }
+}
