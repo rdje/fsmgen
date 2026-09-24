@@ -3748,17 +3748,17 @@ decomposes the architecture needed to move beyond that bounded foundation.
   Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.4.3.3.5.3.1: retain completed admission topology and history`
 
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.4.3.3.5.3.2`
-  Status: `active`
+  Status: `done`
   Goal: `Inspect original incoming Connection control without writing queued output.`
   Acceptance: `Expose a fresh bounded read-only inspection of the original Connection. Require original invocation/framing/delivery walls, at most one bounded read or peek, and explicit closed, pending or quiet state. Partial/complete queued control and interrupted reads cannot count as quiescence. Preserve the ordinary advance API, copied observations and creator identity. Qualify literal socket fragments, EOF, pending frames, no outgoing writes, native faults and exact deadlines.`
-  Verification: `Connection currently has bounded reads only inside combined read/write advance.`
-  Commit: `pending`
+  Verification: `Connection inspect_input now performs one masked bounded native read/peek with no output writes. Only a fresh empty EAGAIN/EWOULDBLOCK result with no buffered input/frame reports quiet; interrupted reads and pending control cannot authorize execution. Shared original invocation/framing/delivery checks run before/after inspection, retaining the old frame wall even when the read completes decoding. T1854 qualifies literal byte fragments, pipelined and large frames, native EOF/faults, fixed boundaries, lost read returns, real signals, copied/inherited refusal and exact closure. Ten isolated defects reject; identical copied positive passes. The selected bounded band passes 36 files/338 tests; syntax, mdBook build/HTML and doctrines pass. Large fixture senders advance the reader under real socket backpressure. Service execution transition, Linux and browser visual qualification remain open.`
+  Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.4.3.3.5.3.2: inspect original input without writing output`
 
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.4.3.3.5.3.3`
-  Status: `pending`
+  Status: `active`
   Goal: `Retain matching Service execution admission and original lifetimes.`
   Acceptance: `Freshly inspect only the original bound peer, complete original ACCEPT, live original parent/job authority and fixed admission wall; any pending control defers or refuses release. Retain admitted transport state so the trusted aggregate can publish an original confirmed native effect before or after an interrupted return, including historical effect after peer closure without reopening it. Preserve the original admission deadline separately from the original clipped execution lifetime; switch active checks without renewing clocks or erasing publication history. Qualify literal sockets, boundaries, cancellation/protocol refusal, copied authority and interruption. Native effect authority and root/nested integration remain with the aggregate sibling.`
-  Verification: `Pending read-only Connection inspection; Service currently keeps its admission wall after complete ACCEPT.`
+  Verification: `Read-only Connection inspection is qualified; Service currently keeps its admission wall after complete ACCEPT.`
   Commit: `pending`
 
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.4.3.3.5.4`
@@ -4473,7 +4473,7 @@ decomposes the architecture needed to move beyond that bounded foundation.
 
 ## Current Frontier
 
-Current frontier: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.4.3.3.5.3.2` qualifies bounded read-only Connection inspection before Service execution admission and lifetime transitions. Partial or complete pending control cannot authorize E, and inspection writes no queued output. The native Pair gate is qualified; aggregate root/nested release, streaming, fair composition and independent qualification remain open. Preserve live claim owners, execution-scope corrections, spent compiler evidence and full-CI/push gates.
+Current frontier: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.4.3.3.5.3.3` qualifies matching Service execution admission and original lifetime transitions using fresh read-only input inspection. Retain original admission history separately from the clipped execution deadline, and record original confirmed effects without reopening closed peers. Native Pair admission and Connection inspection are qualified; aggregate root/nested release, streaming, fair composition and independent qualification remain open. Preserve live claim owners, execution-scope corrections, spent compiler evidence and full-CI/push gates.
 
 Architecture audit `.1` is complete. Decision `0032` selects one public
 `.vial` source language, private immutable `VIALSemanticIR` and
@@ -7112,3 +7112,38 @@ correction supplies its proper scope and is reflected in the canonical fact/book
   and staged doctrines check paired metadata. Product source, tests, book behavior
   and ceilings are unchanged. No native fixture, original producer, full CI or push
   runs for this retention-only slice.
+
+## Acceptance Checklist (.19.2.3.1.2.2.5.5.2.3.4.3.3.5.3.2)
+
+- [x] **ROOT CAUSE (WHY + WHERE)** — Input inspection: the exact predecessor
+  7338ff45dfcd46ce2299b10baf27a79511d2f3d1 has only combined read/write advance.
+  Its isolated native fixture reports `Can't locate object method "inspect_input"`
+  at .artifacts/input-inspection-predecessor/fixture.t line 86. Final E admission
+  needs a fresh bounded input observation that sends no output, and buffered or
+  interrupted control cannot silently authorize execution. Completing a read also
+  clears the old frame start, so post-read validation must retain that prior wall.
+- [x] **ADDRESSED (verified)** — Input re-derivation: T1854 independently
+  sends literal fragmented, pipelined and large frames; counts each native read/
+  peek and its bounded request; observes retained frames, queued bytes, real EOF,
+  exact walls and native signal masks. It separates actual empty reads from EINTR,
+  buffers and decoded frames, preserves first failure/copies, closes lost read
+  returns, rejects copied/inherited owners and consumes the exact inherited wait.
+  The first large sender expired against actual kernel backpressure; its driver
+  now interleaves bounded read-only inspection while sending, with unchanged
+  production limits. Falsification: identical copied positive passes; ten isolated
+  defects reject for cached input (255), empty EINTR (1), ignored fragments (1),
+  ignored frame (1), omitted post-read wall (255), erased completed-frame wall
+  (255), outgoing write (3), unmasked input (2), aliased failure (1) and lost-read
+  connection reuse (255). These are Perl fixture exits, not native signals.
+  Durability: tracked source/T1854, book, canonical fact and this task; raw
+  .artifacts/input-inspection-* logs/JSON remain a named gap. Exact predecessor,
+  variant sources, runner and generated book are removed after consumption.
+  Linux and browser visual qualification remain missing.
+- [x] **NO REGRESSION** — Input-inspection band reports `All tests successful`,
+  `Files=36, Tests=338` under the RAM guard: selected T1812–T1814/T1817 and
+  T1823–T1854. Syntax is OK; mdBook build and generated HTML inspection confirm
+  read-only states and fixed completed-frame lifetime. Knowledge Map, claim
+  inventory and staged doctrines verify synchronized metadata. This broader band
+  includes bounded command fixtures; original startup/proxy/compiler producers,
+  full CI and push remain gated. Service and aggregate execution integration
+  remain subsequent work.

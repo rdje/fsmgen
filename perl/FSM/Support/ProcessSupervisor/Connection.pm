@@ -176,7 +176,10 @@ sub _read_ready {
     $needed = $LIMIT->{chunk} if $needed > $LIMIT->{chunk};
     my $read = _read_once($self->{handle}, \my $part, $needed);
     if (!defined($read)) {
-        return if $! == EAGAIN || $! == EWOULDBLOCK || $! == EINTR;
+        # Inspection may use only a completed empty nonblocking read as proof
+        # of current quiescence. An interrupted read has no such result.
+        return 1 if $! == EAGAIN || $! == EWOULDBLOCK;
+        return if $! == EINTR;
         $self->_fail('host_error', 'socket read failed');
         return;
     }
@@ -296,6 +299,67 @@ sub _write_ready_effect {
     $self->{progress_deadline} = $pending ? $now + $LIMIT->{delivery_seconds} : undef;
 }
 
+sub _check_deadlines {
+    my ($self, $now, $frame_started) = @_;
+    return 0 if $self->{closed};
+    $frame_started //= $self->{frame_started};
+    if ($now >= $self->{deadline}) {
+        $self->_fail('timed_out', 'original invocation deadline expired');
+        return 0;
+    }
+    if (defined($frame_started) && $now >= $frame_started + $LIMIT->{handshake_seconds}) {
+        $self->_fail('framing_timeout', 'fixed partial-frame deadline expired');
+        return 0;
+    }
+    if (defined($self->{progress_deadline}) && $now >= $self->{progress_deadline}) {
+        $self->_fail('write_timeout', 'queued bytes made no delivery progress');
+        return 0;
+    }
+    return 1;
+}
+
+# A fresh read-only pass for the original owner. This is an observation, not
+# authority to execute: its caller must retain and check the matching job.
+# One bounded nonblocking read/peek may retain a frame, but sends no output.
+sub inspect_input {
+    my ($self) = @_;
+    _error('unexpected input inspection arguments') unless @_ == 1;
+    _owner($self);
+    my $quiet = 0;
+    my $ok = eval {
+        FSM::Support::ProcessSupervisor::Reservation::_masked_preparation(sub {
+            my $inspected = eval {
+                _owner($self);
+                my $now = _now();
+                return 1 unless $self->_check_deadlines($now);
+                my $frame_started = $self->{frame_started};
+                my $empty = $self->_read_ready($now);
+                # Completing a frame cannot erase the wall that governed its
+                # last read; retain that start through the post-read check.
+                return 1 unless $self->_check_deadlines(_now(), $frame_started);
+                $quiet = $empty && !length($self->{input}) && !$self->{received} ? 1 : 0;
+                1;
+            };
+            unless ($inspected) {
+                my $error = $@;
+                $self->_fail('host_error', 'input inspection interrupted');
+                die $error;
+            }
+        });
+        1;
+    };
+    unless ($ok) {
+        my $error = $@;
+        # Also cover mask setup/restoration or a handler after retained input.
+        # A lost read return can never permit a later execution check.
+        eval { $self->_fail('host_error', 'input inspection interrupted'); 1 };
+        die $error;
+    }
+    return {state => $self->{closed} ? 'closed' : $quiet ? 'quiet' : 'pending',
+        buffered_bytes => length($self->{input}), frame_ready => $self->{received} ? 1 : 0,
+        failure => $self->{failure} ? {%{$self->{failure}}} : undef};
+}
+
 sub advance {
     my ($self, $check) = @_;
     _error('expected optional socket write admission')
@@ -303,18 +367,7 @@ sub advance {
     _owner($self);
     return if $self->{closed};
     my $now = _now();
-    if ($now >= $self->{deadline}) {
-        $self->_fail('timed_out', 'original invocation deadline expired');
-        return;
-    }
-    if (defined($self->{frame_started}) && $now >= $self->{frame_started} + $LIMIT->{handshake_seconds}) {
-        $self->_fail('framing_timeout', 'fixed partial-frame deadline expired');
-        return;
-    }
-    if (defined($self->{progress_deadline}) && $now >= $self->{progress_deadline}) {
-        $self->_fail('write_timeout', 'queued bytes made no delivery progress');
-        return;
-    }
+    return unless $self->_check_deadlines($now);
     my $select = IO::Select->new($self->{handle});
     $self->_read_ready($now) if $select->can_read(0);
     return if $self->{closed};

@@ -1151,6 +1151,28 @@ refusal; a later unguarded call cannot release those queued bytes. Pending creat
 signals observe the completed write transaction and confirmed publication before
 interrupting the return. The no-callback API retains its existing behavior.
 
+`Connection::inspect_input()` gives its original owner a fresh read-only pass.
+It performs at most one bounded nonblocking read or peek and returns a copied
+observation with `state`, `buffered_bytes`, `frame_ready` and `failure`. `quiet`
+means an actual empty `EAGAIN`/`EWOULDBLOCK` read with no retained input or frame;
+`pending` includes partial input, a completed frame awaiting `take_frame()`, and
+an interrupted read. `closed` retains the first failure. Inspection sends no
+queued output and confirms no ACCEPT bytes.
+
+For example, receiving part of a CANCEL header reports `pending`. A later empty
+kernel read still reports `pending` because the earlier bytes remain buffered.
+Completing CANCEL also stays pending until its owner consumes and handles that
+frame. A later fresh empty read may report quiet; the observation itself grants
+no job or execution authority. A queued ACCEPT keeps its original bytes and
+delivery deadline throughout these inspections.
+
+Inspection checks the original invocation, partial-frame and delivery walls
+before and after the read. Finishing a frame cannot erase the deadline that
+governed its final read. Read bytes and decoded frames are retained under creator
+signal masking before pending handlers run. A lost native read return or thrown
+handler closes the original Connection, preserves its first failure and cannot
+leave a later quiet result. The ordinary combined `advance()` API is unchanged.
+
 Service now uses this boundary to enforce its narrower original admission wall
 immediately before each bound peer write. `queue_accept($ticket, $job)` requires
 an original handed request and a ready child context whose lifetime fits that
@@ -1263,6 +1285,7 @@ scripts/run_with_ram_guard.sh -- prove -Iperl -It/lib t/1848-process-service-job
 scripts/run_with_ram_guard.sh -- prove -Iperl -It/lib t/1849-process-parent-token-admission.t
 scripts/run_with_ram_guard.sh -- prove -Iperl -It/lib t/1850-process-aggregate-context.t t/1851-process-request-association.t t/1852-process-gated-accept.t
 scripts/run_with_ram_guard.sh -- prove -Iperl -It/lib t/1853-process-exec-admission.t
+scripts/run_with_ram_guard.sh -- prove -Iperl -It/lib t/1854-process-input-inspection.t
 ```
 
 For native stopped-child observations, decode `${^CHILD_ERROR_NATIVE}` with
