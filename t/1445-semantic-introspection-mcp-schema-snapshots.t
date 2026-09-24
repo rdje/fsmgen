@@ -118,6 +118,13 @@ sub build_schema_snapshot {
                 }),
                 \&project_source_payload,
             ),
+            vial_inspection => project_tool_response(
+                $adapter->call_tool('fsmgen_vial_inspect', {
+                    source_id => 'vial/ahb_subordinate_base_output_arbitration_lifecycle_v2.vial',
+                    language_version => 2,
+                }),
+                \&project_source_payload,
+            ),
             schedule => project_tool_response(
                 $adapter->call_tool('fsmgen_schedule_preview', {
                     source_path => 'ppif/axi_aw_valid_ready.ppif',

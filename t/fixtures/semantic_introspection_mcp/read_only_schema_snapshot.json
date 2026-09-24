@@ -88,6 +88,12 @@
          "mimeType" : "application/json",
          "name" : "vial_source_semantic",
          "uriTemplate" : "fsmgen://vial/{language_version}/source/{source_id}/semantic"
+      },
+      {
+         "has_description" : true,
+         "mimeType" : "application/json",
+         "name" : "vial_source_inspection",
+         "uriTemplate" : "fsmgen://vial/{language_version}/source/{source_id}/inspection"
       }
    ],
    "resources" : [
@@ -147,12 +153,14 @@
                "fsmgen://source/{source_id}/schedule",
                "fsmgen://vial/{language_version}/capabilities",
                "fsmgen://vial/{language_version}/source/{source_id}/check",
-               "fsmgen://vial/{language_version}/source/{source_id}/semantic"
+               "fsmgen://vial/{language_version}/source/{source_id}/semantic",
+               "fsmgen://vial/{language_version}/source/{source_id}/inspection"
             ],
             "mcp_tool_names" : [
                "fsmgen_capability_query",
                "fsmgen_check",
                "fsmgen_semantic_introspect",
+               "fsmgen_vial_inspect",
                "fsmgen_schedule_preview",
                "fsmgen_discover_sources",
                "fsmgen_find_examples",
@@ -538,6 +546,51 @@
             "structuredContent"
          ],
          "structuredContent_matches_text" : true
+      },
+      "vial_inspection" : {
+         "content_types" : [
+            "text"
+         ],
+         "decoded_payload" : {
+            "adapter_provenance" : {
+               "command_shape" : null,
+               "contract_source" : "FSM::Support::SemanticIntrospectionMCPAdapter",
+               "read_only" : true,
+               "shell_access" : false,
+               "source_identity" : "workspace_relative",
+               "transport" : "jsonrpc_stdio",
+               "workspace_root_policy" : "caller_configured_root_not_returned"
+            },
+            "path_sanitization_keys" : [
+               "machine_local_absolute_paths",
+               "semantic_paths"
+            ],
+            "payload_keys" : [
+               "adapter_provenance",
+               "path_sanitization",
+               "query_kind",
+               "report",
+               "source_id",
+               "source_path"
+            ],
+            "query_kind" : "inspection",
+            "report_keys" : [
+               "check_result",
+               "diagnostics",
+               "inspection",
+               "schema",
+               "schema_version",
+               "success"
+            ],
+            "source_id" : "vial/ahb_subordinate_base_output_arbitration_lifecycle_v2.vial"
+         },
+         "isError" : false,
+         "response_keys" : [
+            "content",
+            "isError",
+            "structuredContent"
+         ],
+         "structuredContent_matches_text" : true
       }
    },
    "tools" : [
@@ -638,6 +691,45 @@
          },
          "readOnlyHint" : true,
          "required" : []
+      },
+      {
+         "name" : "fsmgen_vial_inspect",
+         "annotation_keys" : [
+            "openWorldHint",
+            "readOnlyHint"
+         ],
+         "openWorldHint" : false,
+         "output_property_names" : [
+            "adapter_provenance",
+            "path_sanitization",
+            "query_kind",
+            "report",
+            "source_id",
+            "source_path"
+         ],
+         "output_required" : [
+            "source_id",
+            "source_path",
+            "query_kind",
+            "adapter_provenance",
+            "path_sanitization",
+            "report"
+         ],
+         "output_schema_type" : "object",
+         "property_names" : [
+            "language_version",
+            "source_id",
+            "source_style"
+         ],
+         "property_types" : {
+            "language_version" : "integer",
+            "source_id" : "string",
+            "source_style" : "string"
+         },
+         "readOnlyHint" : true,
+         "required" : [
+            "source_id"
+         ]
       },
       {
          "name" : "fsmgen_schedule_preview",

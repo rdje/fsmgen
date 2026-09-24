@@ -419,11 +419,11 @@ For FSMGen, the analogs are:
   Commit: `pending`
 
 - ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.31.3.2.3`
-  Status: `active`
+  Status: `done`
   Goal: `Expose typed VIAL source details through a stable additive inspection API and MCP.`
   Acceptance: `Root-cause the summary-only native contract before changing it. Keep existing v1/v2 tooling results and capability records unchanged. Select a separately versioned JSON-safe read-only projection, implement bounded portable/filesystem inspection and CLI exposure, then adapt MCP and qualify independent authored lifecycle/base semantics. Do not export private SemanticIR or require DUT binding, planning, execution or publication to inspect source meaning.`
-  Verification: `SemanticReport.pm intentionally projects names/counts; the v1 contract explicitly excludes action/expression bodies and v2 lifecycle summaries retain node_count only. Exact evidence and additive compatibility selection belong to .1.`
-  Commit: `pending`
+  Verification: `The additive typed source-inspection contract, complete base/lifecycle projector, native semantic prerequisites, portable/filesystem APIs, native CLI/independent discovery and dedicated MCP tool/resource are qualified through the child commits. Existing summaries and frozen capabilities remain exact. Catalog-derived full feature coverage and future-feature signoff remain .31.3.2.1-.2 and .31.3.3.`
+  Commit: `Completed through .31.3.2.3.1-.3 child commits`
 
   Children: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.31.3.2.3.1, SEMANTIC-INTROSPECTION-MCP-FRONTIER.31.3.2.3.2, SEMANTIC-INTROSPECTION-MCP-FRONTIER.31.3.2.3.3`
 
@@ -495,11 +495,11 @@ For FSMGen, the analogs are:
   Commit: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.31.3.2.3.2.4: expose native VIAL inspection and discovery`
 
 - ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.31.3.2.3.3`
-  Status: `pending`
+  Status: `done`
   Goal: `Expose qualified VIAL detail inspection to external agents through MCP.`
-  Acceptance: `After .2, add discoverable explicitly versioned deep-inspection tool/resource contracts backed only by the clean public API. Preserve existing semantic summary queries and native/MCP parity, qualify actual v1/v2/imported/invalid/root-boundary sources and meaningful lifecycle/base detail assertions, update snapshots/book/facts and include the new query in the catalog-driven coverage guard. Keep execution and mutation outside this read-only slice.`
-  Verification: `Pending .2 API.`
-  Commit: `pending`
+  Acceptance: `After .2, add discoverable explicitly versioned deep-inspection tool/resource contracts backed only by the clean public API. Preserve existing semantic summary queries and native/MCP parity, qualify actual v1/v2/imported/invalid/root-boundary sources and meaningful lifecycle/base detail assertions, update snapshots/book/facts and expose the query in the public applicability map consumed by the subsequent .31.3.2.1 catalog-guard implementation. Keep execution and mutation outside this read-only slice.`
+  Verification: `T1882 qualifies native/API/MCP tool/resource equality, text/structured parity, explicit versions/styles/imports, authored actions and current lifecycle conditions/deadlines/policies, failed source/projection reports, protocol/authority refusal, no writes or hardware runner and actual one-shot/newline transports. All discovery inventories and schema snapshots agree; focused MCP regression and runnable/rendered book pass. Catalog guard integration remains .31.3.2.1.`
+  Commit: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.31.3.2.3.3: expose typed VIAL inspection through MCP`
 
 - ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.31.3.2.4`
   Status: `done`
@@ -1197,9 +1197,9 @@ before editing code. No discovered defect is closed by this audit alone.
 
 ## Current Frontier
 
-`SEMANTIC-INTROSPECTION-MCP-FRONTIER.31.3.2.3.3` is next: expose the
-qualified public VIAL inspection API through the dedicated MCP tool, resource
-and capability section.
+`SEMANTIC-INTROSPECTION-MCP-FRONTIER.31.3.2.1` is next: implement the
+catalog-derived actual native/API/MCP coverage guard, including the newly
+qualified VIAL inspection query and independent feature observations.
 The catalog guard, CI/signoff and exhaustive qualification follow before HIAL
 streaming. Preserve spent native compiler/startup evidence and the separate
 read-only/write horizon; source checks do not promote runtime support.
@@ -2470,3 +2470,44 @@ The API/CLI parent is complete; MCP detail is the next leaf, with its tool and
 resource still unadvertised. README and root help gain only compact discovery
 wording. Task/book metadata records the owned interface; the existing fact card
 stays within its allowance. The public contract owns CLI/discovery rationale.
+
+## Acceptance Checklist — `.31.3.2.3.3` MCP deep inspection
+
+- [x] **ROOT CAUSE (WHY + WHERE)** — Pre-implementation T1882 reports
+  `#   Failed test 'dedicated VIAL inspection tool is discoverable'` and
+  `#   at t/1882-semantic-introspection-mcp-vial-inspection.t line 25.` The
+  callable-route assertion also fails at line 27. Qualified public/native
+  inspection exists, but MCP exposes only the older VIAL summary result.
+- [x] **ADDRESSED (verified)** — The dedicated closed inspection tool,
+  versioned resource and capability section delegate to the clean public API.
+  T1882 asserts complete native/API/tool/resource and text/structured equality,
+  authored action bodies, lifecycle deadline/service/failure policy, additional
+  start conditions and exact empty-readiness normalization. Versions, imports,
+  normal/terse, native source/path/limit refusal, outer projection failure with
+  successful inner check, invalid protocol arguments, no source writes and no
+  hardware runner are qualified. Actual one-shot and newline stdio preserve the
+  entire result. The discovery test caught a missing separate name inventory;
+  domain/family/tool/resource inventories and applicability now agree. Snapshot
+  coverage includes the actual lifecycle inspection envelope and tool shape.
+- [x] **NO REGRESSION** — RAM-guarded
+  `prove -Iperl t/1438-semantic-introspection-contract.t t/1439-semantic-introspection-section-runtime-contract-audit.t t/1440-semantic-introspection-manifest-contract-roundtrip-audit.t t/1441-semantic-introspection-mcp-adapter.t t/1442-fsmgen-mcp-jsonrpc-cli.t t/1443-semantic-introspection-mcp-protocol-hardening.t t/1444-semantic-introspection-mcp-support-queries.t t/1445-semantic-introspection-mcp-schema-snapshots.t t/1455-semantic-introspection-mcp-structured-tool-output.t t/1456-semantic-introspection-mcp-tool-annotations-boundary.t t/1462-semantic-introspection-mcp-serverinfo-instructions-boundary.t t/1871-semantic-introspection-mcp-vial.t t/1880-vial-public-source-inspection.t t/1881-vial-inspection-cli-discovery.t t/1882-semantic-introspection-mcp-vial-inspection.t`
+  reports `All tests successful. Files=15, Tests=56` and `Result: PASS`.
+  The final expanded T1882 separately passes with actual newline transport.
+  `mdbook build docs/book -d .artifacts/inspection-mcp-book`, rendered guidance
+  and all documented capability/tool/resource commands pass; their inspection
+  report exactly equals the native book example. Disposable rendered output is
+  removed. No backend, spent producer or full CI is run; browser access is still
+  unavailable.
+
+Re-derivation uses actual native/one-shot/newline MCP producers and the public
+API. Falsification uses authored semantic oracles, complete report equality,
+closed-argument and root-authority controls, failed admission and injected
+projection faults; summaries and frozen capability hashes remain guarded.
+Durability is T1882, the exact baseline, snapshot, tracked
+`vial-inspection-mcp-qualification.json`, book/contract and knowledge cards.
+The deep-inspection parent is complete. Guard implementation explicitly remains
+owned by `.31.3.2.1`, avoiding a dependency cycle with the facade repair; the
+public applicability map now includes inspection. Full corpus qualification and
+future-feature signoff remain active subsequent leaves, not inferred from this
+focused band. Task/book metadata admits this interface; fact cards are compacted
+within existing allowances. The public contract owns protocol rationale.

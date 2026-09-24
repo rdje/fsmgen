@@ -139,7 +139,7 @@ sub semantic_introspection_mcp_adapter_entrypoints {
 sub semantic_introspection_source_query_kinds {
     my %kinds = (
         fsm => [qw(check semantic)],
-        vial => [qw(check semantic)],
+        vial => [qw(check semantic inspection)],
         isf => [qw(check semantic schedule)],
         ppif => [qw(check semantic schedule)],
     );
@@ -168,6 +168,7 @@ sub semantic_introspection_query_domain_names {
             vial_capabilities
             vial_source_check
             vial_source_semantic
+            vial_source_inspection
         ),
     ];
 }
@@ -179,6 +180,7 @@ sub semantic_introspection_query_family_names {
             check
             semantic_introspect
             schedule_preview
+            vial_inspect
             discover_sources
             find_examples
             explain_diagnostic
@@ -201,6 +203,7 @@ sub semantic_introspection_mcp_resource_uri_templates {
         'fsmgen://vial/{language_version}/capabilities',
         'fsmgen://vial/{language_version}/source/{source_id}/check',
         'fsmgen://vial/{language_version}/source/{source_id}/semantic',
+        'fsmgen://vial/{language_version}/source/{source_id}/inspection',
     ];
 }
 
@@ -210,6 +213,7 @@ sub semantic_introspection_mcp_tool_names {
             fsmgen_capability_query
             fsmgen_check
             fsmgen_semantic_introspect
+            fsmgen_vial_inspect
             fsmgen_schedule_preview
             fsmgen_discover_sources
             fsmgen_find_examples
@@ -441,6 +445,12 @@ sub semantic_introspection_query_domains {
             ['vial_source_file_check'],
             'fsmgen://vial/{language_version}/source/{source_id}/semantic',
         ),
+        _domain(
+            'vial_source_inspection',
+            'Read typed VIAL declaration, action, expression and lifecycle detail through the public source-inspection API.',
+            ['vial_source_inspection'],
+            'fsmgen://vial/{language_version}/source/{source_id}/inspection',
+        ),
     ];
 }
 
@@ -473,6 +483,13 @@ sub semantic_introspection_query_families {
             ['source_schedule'],
             'fsmgen_schedule_preview',
             ['fsmgen://source/{source_id}/schedule'],
+        ),
+        _query_family(
+            'vial_inspect',
+            'Typed VIAL source meaning without DUT binding, planning, execution or publication.',
+            ['vial_source_inspection'],
+            'fsmgen_vial_inspect',
+            ['fsmgen://vial/{language_version}/source/{source_id}/inspection'],
         ),
         _query_family(
             'discover_sources',
@@ -520,6 +537,7 @@ sub semantic_introspection_mcp_resources {
         _resource('fsmgen://vial/{language_version}/capabilities', 'vial_capabilities', ['vial_tool_capabilities'], vial_tooling_contract_source()),
         _resource('fsmgen://vial/{language_version}/source/{source_id}/check', 'vial_source_check', ['vial_source_file_check'], vial_tooling_contract_source(), JSON::PP::true),
         _resource('fsmgen://vial/{language_version}/source/{source_id}/semantic', 'vial_source_semantic', ['vial_source_file_check'], vial_tooling_contract_source(), JSON::PP::true),
+        _resource('fsmgen://vial/{language_version}/source/{source_id}/inspection', 'vial_source_inspection', ['vial_source_inspection'], vial_tooling_contract_source(), JSON::PP::true),
     ];
 }
 
@@ -528,6 +546,7 @@ sub semantic_introspection_mcp_tools {
         _tool('fsmgen_capability_query', 'capability_query', 'capabilities', 'capability manifest and section contracts'),
         _tool('fsmgen_check', 'check', 'source_check', 'hardware check JSON or complete public VIAL check result'),
         _tool('fsmgen_semantic_introspect', 'semantic_introspect', 'source_semantic', 'hardware normalized semantics or complete VIAL check result with semantic_report'),
+        _tool('fsmgen_vial_inspect', 'vial_inspect', 'vial_source_inspection', 'complete typed VIAL source inspection result'),
         _tool('fsmgen_schedule_preview', 'schedule_preview', 'source_schedule', 'schedule JSON'),
         _tool('fsmgen_discover_sources', 'discover_sources', 'source_discovery', 'catalog-backed source identities'),
         _tool('fsmgen_find_examples', 'find_examples', 'examples', 'repo-relative documentation and corpus examples'),

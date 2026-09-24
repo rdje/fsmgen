@@ -2823,6 +2823,7 @@ questions. Use the public report that retains the authored information:
 | ISF scalar storage fields | `fsmgen_schedule_preview` | `report.inferred_storage[].fields` |
 | ISF passive observations | `fsmgen_schedule_preview` | `report.verification_observations[]` |
 | Protocol scheduling, ordering and generated runtime assertions | `fsmgen_schedule_preview` | The source's public schedule report and protocol metadata |
+| Complete VIAL declaration/action/expression bodies and lifecycle conditions/policies | `fsmgen_vial_inspect` | `report.inspection`; selected typed source meaning |
 | VIAL declarations and lifecycle family summaries | `fsmgen_semantic_introspect` with the explicit version | `report.semantic_report`; names and counts, not action bodies or lifecycle conditions |
 | Backend, planning or runtime availability | `fsmgen_capability_query` | The relevant public capability section; availability is not an MCP execution command |
 
@@ -2848,7 +2849,8 @@ lifecycle family identity, revision and node count rather than node conditions,
 deadlines or service policies. Matching native and MCP summaries proves that
 transport preserves the report, not that an agent can inspect those details.
 The public typed source-inspection API and native `vial inspect` command supply
-those details. The dedicated MCP inspection route is the next integration step.
+those details. MCP exposes them through the dedicated `fsmgen_vial_inspect`
+tool and versioned inspection resource.
 
 The public typed projection covers base source meaning
 and `lifecycle_control@1`: it retains declaration bodies, expressions, nested
@@ -2944,10 +2946,44 @@ If typed projection itself fails, outer `success` is false, detail is null, and
 `VIAL_SOURCE_INSPECTION_ERROR` contains a fixed public message; the successful
 native check remains intact. Always test the outer success flag.
 
+### Deep VIAL Inspection Through MCP
+
+Query the independent capability contract, inspect the current lifecycle source,
+and read the equivalent versioned resource:
+
+```bash
+perl bin/fsmgen-mcp --workspace-root . --request-json '{"jsonrpc":"2.0","id":31,"method":"tools/call","params":{"name":"fsmgen_capability_query","arguments":{"section":"vial_inspection"}}}'
+perl bin/fsmgen-mcp --workspace-root . --request-json '{"jsonrpc":"2.0","id":32,"method":"tools/call","params":{"name":"fsmgen_vial_inspect","arguments":{"source_id":"vial/ahb_subordinate_base_output_arbitration_lifecycle_v2.vial","language_version":2}}}'
+perl bin/fsmgen-mcp --workspace-root . --request-json '{"jsonrpc":"2.0","id":33,"method":"resources/read","params":{"uri":"fsmgen://vial/2/source/vial/ahb_subordinate_base_output_arbitration_lifecycle_v2.vial/inspection"}}'
+```
+
+The tool accepts only required relative `source_id`, optional `language_version`
+and optional `source_style: auto|normal|terse`. It has no `source_path` alias or
+absolute-path input. Omitted version selects v1 and omitted style selects auto;
+the resource always uses auto. `tools/list`, resource templates, capability
+manifest and VIAL source-discovery query kinds all advertise this route.
+
+Both text JSON and `structuredContent` carry `query_kind: inspection` and the
+complete public result under `report`. Read `report.inspection` for typed detail
+and `report.check_result` for the complete source check. Tool `isError` follows
+the outer inspection success, including when checking succeeded but projection
+failed. Source/import/path failures retain native diagnostics and null detail;
+malformed arguments return JSON-RPC invalid params. Resource content preserves
+the same envelope. Public semantic paths retain their original identities.
+
+For example, lifecycle service nodes retain authored `start_requires` conditions
+with their domain IDs; empty readiness retains its configured precondition;
+deadline and failure nodes expose inclusive bounds and cleanup policy. Base
+expressions, actions, model-instance and fault-binding identities remain typed.
+These queries use the public filesystem inspection API without planning,
+random evaluation, backend execution, publication or the hardware command runner.
+
+### Existing VIAL Summary Queries
+
 Select `language_version: 2` explicitly for VIAL v2, including the implemented
 lifecycle-control family. Omission selects v1; the adapter never guesses from
 the filename. Version selectors are rejected on hardware queries, and VIAL
-does not support schedule preview. Source-query arguments are closed to
+does not support schedule preview. These summary-query arguments are closed to
 `source_id`, its `source_path` alias, and the applicable `language_version`.
 Invalid selectors or inapplicable query kinds return JSON-RPC invalid params;
 source validation failures retain the public report and set tool `isError`.

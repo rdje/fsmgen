@@ -69,7 +69,7 @@ subtest 'VIAL capability and catalog discovery preserve native contracts' => sub
     is($discovery->{matched_count}, scalar(@catalog), 'VIAL discovery derives full native catalog count');
     my @visible = @catalog; splice @visible, 100 if @visible > 100;
     is_deeply([map { [$_->{source_id}, $_->{support}{id}] } @{$discovery->{sources}}], [map { [$_->{relpath}, $_->{id}] } @visible], 'bounded discovery keeps catalog identities and order');
-    is_deeply($manifest->{semantic_introspection}{source_query_kinds}{vial}, [qw(check semantic)], 'native applicability excludes scheduling');
+    is_deeply($manifest->{semantic_introspection}{source_query_kinds}{vial}, [qw(check semantic inspection)], 'native applicability includes separate inspection and excludes scheduling');
     my $tools = $repo_adapter->list_tools()->{tools};
     for my $tool (grep { $_->{name} =~ /\Afsmgen_(?:check|semantic_introspect)\z/ } @$tools) {
         is_deeply($tool->{inputSchema}{properties}{language_version}{enum}, [1, 2], 'tool declares explicit version choices');

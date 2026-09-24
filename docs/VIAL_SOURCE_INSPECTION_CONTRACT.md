@@ -2,7 +2,7 @@
 
 Date: 2026-09-24
 Owner: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.31.3.2.3`
-Status: public APIs and native CLI/discovery implemented; MCP detail pending
+Status: public APIs, native CLI/discovery and dedicated MCP detail implemented
 
 ## Purpose and compatibility
 
@@ -296,8 +296,8 @@ The projector never bypasses failed source admission. The internal base and
 lifecycle foundations and public facades are qualified. T1880 guards complete
 native check preservation, closed invocations, captured-byte reuse despite
 file/caller mutation, fresh results, bounded loading and sanitized projection
-failures. T1881 qualifies native CLI and independent discovery; MCP detail
-remains a separate pending qualification.
+failures. T1881 qualifies native CLI and independent discovery; T1882 qualifies
+the dedicated MCP inspection tool, versioned resource and capability section.
 
 ## CLI and MCP selection
 
@@ -332,16 +332,23 @@ source checking. `effects` has read_only, planning, random_evaluation,
 backend_execution and artifact_publication booleans. `error_behavior` records
 complete_native_check_retained, failure_detail, projection_code and cli_exit_codes.
 Frozen tooling capability records and their advertised action lists stay exact.
-This leaf does not yet advertise an MCP inspection tool or resource.
+The MCP routes below use this same public contract.
 
-MCP will expose `fsmgen_vial_inspect` with closed `source_id`, optional
+MCP exposes `fsmgen_vial_inspect` with closed `source_id`, optional
 `language_version` and optional `source_style` arguments, backed by the public
 filesystem API. The explicit resource template is
 `fsmgen://vial/{language_version}/source/{source_id}/inspection` and uses
 automatic source style. A dedicated `vial_inspection` capability-query section
-will describe the new schema and coverage. Text/structured reports and resource
-reports must agree completely with the native API. Failed inspections set
+describes the new schema and coverage. Tool results carry the complete native
+inspection result under `report`, with `query_kind: inspection`, relative
+source identity and public API provenance. Text/structured and resource reports
+agree completely. Failed inspections set
 tool `isError`; protocol/parameter errors retain ordinary JSON-RPC behavior.
+The tool requires relative `source_id`; absolute paths, `source_path` aliases,
+unknown keys and invalid version/style selectors are invalid parameters.
+Resources select their version explicitly and use automatic source style.
+Valid-shaped source/admission failures preserve native diagnostics and null
+detail, including a successful check beneath a failed projection.
 Original semantic paths remain semantic identities. Existing `check` and
 `semantic` routes remain summary queries with unchanged results.
 

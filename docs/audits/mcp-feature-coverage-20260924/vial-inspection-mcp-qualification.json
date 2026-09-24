@@ -1,0 +1,61 @@
+{
+  "baseline_revision": "93e0c28404d6e7b765f244f39465ce4a4d96a10c",
+  "book_examples_sha256": "84c1c462f2a8b42505804977e3842366a7d0c84670b3552f80dfddb4e313ac81",
+  "evidence_legs": {
+    "durability": "Exact Git baseline, tracked T1882, schema snapshot, qualification receipt, typed public contract, mdBook, knowledge cards and owning task.",
+    "falsify": "Baseline lacks both advertised and callable routes. T1882 independently asserts authored base actions and lifecycle deadlines/service/failure policy, additional start conditions and exact empty-readiness conditions, full native/tool/resource/text equality, versions/imports/styles, malformed parameters, source/path/limit failures and injected projection failure with successful native check. Snapshot, manifest inventories and no-write/no-hardware-runner checks guard exposure.",
+    "rederive": "Actual native inspection CLI, public filesystem API, MCP one-shot and newline processes, in-process tool/resource calls and documented client commands."
+  },
+  "limits": [
+    "This qualifies the dedicated VIAL detail adapter; catalog-derived all-feature coverage, CI/signoff integration and exhaustive cohort execution remain explicitly owned subsequent leaves.",
+    "Inspection remains read-only; no backend, runtime, full-CI, performance or capacity qualification and no spent producer replay.",
+    "Browser visual audit remains unavailable; actual examples, book build and rendered assertions pass."
+  ],
+  "owner": "SEMANTIC-INTROSPECTION-MCP-FRONTIER.31.3.2.3.3",
+  "schema": "fsmgen.vial_inspection_mcp_qualification.v1",
+  "tests": {
+    "inspection-mcp-band": {
+      "sha256": "6e51e86dd7a271c1e518398b3f2a2e9c863e2a38e540265e88e8618e34fd1768",
+      "summary": [
+        "All tests successful.",
+        "Files=15, Tests=56, 34 wallclock secs ( 0.04 usr  0.02 sys + 32.77 cusr  1.04 csys = 33.87 CPU)",
+        "Result: PASS"
+      ]
+    },
+    "inspection-mcp-book": {
+      "sha256": "189e2062a8bd080b640a6d3fe2dfc72482afc308ffeff937a1c5f76ba61c85fc",
+      "summary": [
+        " INFO HTML book written to `/Volumes/SSD/Documents/github/fsmgen/.artifacts/inspection-mcp-book`"
+      ]
+    },
+    "inspection-mcp-book-examples": {
+      "sha256": "771badf38b27652df69c17e1747dfc475a6cb5ac630c8942cbd58eb2231758f7",
+      "summary": [
+        "MCP book examples PASS: actual capability/tool/resource/native equality, authored deadline, rendered scope/error assertions; disposable book output removed."
+      ]
+    },
+    "inspection-mcp-final": {
+      "sha256": "2a38b99338d3e516e11c80ebd75cc5b64f411c74e3bcd854e46dece218a9b5fa",
+      "summary": [
+        "All tests successful.",
+        "Files=1, Tests=6, 12 wallclock secs ( 0.01 usr  0.00 sys + 10.88 cusr  0.23 csys = 11.12 CPU)",
+        "Result: PASS"
+      ]
+    },
+    "inspection-mcp-green": {
+      "sha256": "9c59f8a824301b0981ffa1d50b7a45de4ad6b8b2a28ca2cb9dc57571c51b8e8d",
+      "summary": [
+        "All tests successful.",
+        "Files=1, Tests=6, 11 wallclock secs ( 0.01 usr  0.00 sys + 10.28 cusr  0.20 csys = 10.49 CPU)",
+        "Result: PASS"
+      ]
+    },
+    "inspection-mcp-red": {
+      "sha256": "475fc3398db02e73d02ab52556571aa39e9a6c4a402b4875c244d451d47a278d",
+      "summary": [
+        "Files=1, Tests=2,  0 wallclock secs ( 0.00 usr  0.00 sys +  0.25 cusr  0.02 csys =  0.27 CPU)",
+        "Result: FAIL"
+      ]
+    }
+  }
+}
