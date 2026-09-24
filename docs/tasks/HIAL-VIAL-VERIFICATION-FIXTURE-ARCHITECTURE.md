@@ -3714,11 +3714,11 @@ decomposes the architecture needed to move beyond that bounded foundation.
   Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.4.3.3.4.1: retain completed transport publication history`
 
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.4.3.3.4.2`
-  Status: `active`
+  Status: `done`
   Goal: `Bind original grant contexts and snapshots before native job preparation.`
   Acceptance: `Publish root/nested contexts only for original live ledger grants and recheck retained capacity and clipped deadlines at each token allocation. Retain original Service context preparation before entropy; bind monotonic identities in admission order. Apply the qualified pure replacement before native snapshot custody moves, preserving original execution bytes and first failure. Qualify actual entropy, original identity, resource credit and interruption/cleanup; decompose component hooks from aggregate integration as needed. No exec release.`
-  Verification: `Child .1 now exposes and qualifies original parent token admission at each native entropy open/read under preparation masking, using weak native-handle observers that do not prolong local custody. Child .2 remains responsible for binding those effects and pure snapshots to original aggregate grants and held scratch credit before native preparation.`
-  Commit: `pending`
+  Verification: `Children .1 and .2 qualify effect-local token admission and original aggregate grant/context/snapshot binding. Token effects require original authority and separate retained scratch; transformed snapshots precede native custody and survive interrupted returns. T1849/T1850 and the selected aggregate band pass; accepted request association and command release remain separately owned.`
+  Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.4.3.3.4.2.2: bind original aggregate contexts and snapshots`
 
   Children: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.4.3.3.4.2.1, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.4.3.3.4.2.2`
 
@@ -3730,14 +3730,14 @@ decomposes the architecture needed to move beyond that bounded foundation.
   Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.4.3.3.4.2.1: admit original parent token effects`
 
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.4.3.3.4.2.2`
-  Status: `pending`
+  Status: `done`
   Goal: `Bind original aggregate grants to parent contexts and execution snapshots.`
   Acceptance: `Use child .1 to check the original live ledger grant, monotonic admission identity, current run and separately retained scratch credit before every context entropy effect. Retain root/nested context and transformed snapshot before native preparation; preserve original invocation bytes and all inclusive bounds. Register nested identities in admission order and preserve original failure/cleanup on interrupted preparation or publication. Qualify actual entropy, root/nested grants, original/copy refusals, capacity/deadline cuts and exact closure; no exec release.`
-  Verification: `Pending the qualified token admission boundary; original accepted-request association remains sibling .4.3.`
-  Commit: `pending`
+  Verification: `Coordinator open_run binds its root context/snapshot before publishing open state. reserve_job retains and registers nested contexts in original admission order, checking exact Service/grant/id, original walls, full job credit and separate retained scratch before every entropy open/read. Snapshot replacement preserves original bytes and inclusive bounds; copied context_state carries no authority. Fresh context checks guard native preparation, every pipe/fork and live advancement. T1850 independently observes literal snapshots, actual entropy, original masks/signals, reversed native start order, refused identities/credit/lifetimes, exact child waits, closed handles and no released output. Seven isolated defects reject; endpoint censuses remain unchanged. Final selected band passes Files=24, Tests=176. Accepted-request association and exec release remain later leaves.`
+  Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.4.3.3.4.2.2: bind original aggregate contexts and snapshots`
 
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.4.3.3.4.3`
-  Status: `pending`
+  Status: `active`
   Goal: `Retain original accepted request and ledger-grant association.`
   Acceptance: `Transfer each original Service request into its already retained aggregate peer record before admission effects. Join the original submitting parent grant, clipped request/admission walls and a fresh original child grant/context exactly once. Interrupted returns, repeated/foreign tickets, capacity refusal, expiry and peer closure retain first cause and exact peer/job ownership. Qualify actual sockets and original record identity; native preparation follows only after this association is retained.`
   Verification: `Pending the owning implementation and independent qualification; preserve spent compiler evidence and original startup/full-CI/push gates.`
@@ -4462,7 +4462,7 @@ decomposes the architecture needed to move beyond that bounded foundation.
 
 ## Current Frontier
 
-Current frontier: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.4.3.3.4.2.2` binds original aggregate grants and held scratch credit to qualified token effects and detached execution snapshots. Completed transport-publication history is exactly retrievable. Service request/job association and tracked ACCEPT through masked write admission are qualified. Original request transfer, parent-context recovery and pure snapshot replacement are qualified. Later children join aggregate gated admission and final exec rechecks. Completed native topology/history remain version-retrievable; live claim owners stay visible. Streaming, fair composition and independent qualification remain later children. Preserve original failures, spent compiler evidence and full-CI/push gates.
+Current frontier: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.4.3.3.4.3` joins original accepted request/peer custody to one ledger grant before native preparation. Original aggregate contexts and snapshots are qualified, including per-effect token admission and fresh native authority checks. Matching gated readiness/ACCEPT and final exec rechecks remain following leaves. Completed native topology/history remain version-retrievable; live claim owners stay visible. Streaming, fair composition and independent qualification remain later children. Preserve original failures, spent compiler evidence and full-CI/push gates.
 
 Architecture audit `.1` is complete. Decision `0032` selects one public
 `.vial` source language, private immutable `VIALSemanticIR` and
@@ -7133,3 +7133,37 @@ correction supplies its proper scope and is reflected in the canonical fact/book
   separately blocked. Existing T1827 runs bounded fixture commands; the new
   token API releases none. Original startup/proxy/compiler producers, full CI
   and push remain gated; original aggregate grant/credit binding is next.
+
+
+## Acceptance Checklist (.19.2.3.1.2.2.5.5.2.3.4.3.3.4.2.2)
+
+- [x] **ROOT CAUSE (WHY + WHERE)** — Aggregate context binding: `git log -S`
+  locates retained coordinator admission at 97ca91b0916212c550e301b96dc89c3af8bcdc7c.
+  It retained detached snapshots without binding each private context to the
+  original grant. Qualified token/snapshot components needed original aggregate
+  authority and scratch-credit checks before effects and native custody transfer.
+- [x] **ADDRESSED (verified)** — Aggregate context re-derivation: T1850 uses
+  an independent literal SPAWN encoder, actual entropy reads with preserved
+  aliases, weak source handles, native pipe inventories and exact direct-child
+  waits. Original root/nested snapshots, admission-order contexts and reversed
+  native starts agree; signal handlers observe completed binding under restored
+  masks. Grant/Service/id/credit/deadline/cancellation cuts stop selected entropy
+  effects. Transformation refusal and later revocation retain first failure and
+  exact bounded cleanup; independent stdout EOF witnesses show no command output.
+  Falsification: the identical isolated loader passes; missing effect check,
+  foreign Service, wrong identity, insufficient scratch, wrong child context,
+  stale native authority and unmasked binding reject intended assertions with
+  native exits 2, 1, 1, 1, 2, 1 and 1. Every endpoint census is unchanged.
+  Initial checks exposed T1842's obsolete second registration and T1850's wrong
+  expected bounds diagnostic; both fixtures now use the unchanged canonical
+  contracts. Those failed runs are not credited. Durability: tracked source,
+  tests/book/fact/task preserve reruns; .artifacts/aggregate-context-* raw logs
+  remain a named durability gap. Exact variant sources/runner/book build are removed.
+- [x] **NO REGRESSION** — Aggregate context selected guarded band reports
+  `All tests successful. Files=24, Tests=176`; focused T1850/T1842 and Perl
+  syntax pass. mdBook builds and generated HTML contains original root/nested
+  binding and retained scratch semantics. Knowledge Map, claim census and staged
+  doctrines cover metadata. Browser visual QA remains independently blocked.
+  T1827 in this band executes bounded fixture commands; aggregate T1850 keeps
+  native commands gated. Original startup/proxy/compiler producers, full CI and
+  push remain gated. Next is original accepted request/peer/grant association.

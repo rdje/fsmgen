@@ -973,8 +973,8 @@ returns false with an empty destination and retains the timeout cause. A signal
 that fills the destination or retires the peer before masking cannot be
 overwritten by stale state. Later EOF or repeated SPAWN closes the transport
 while the caller keeps any already-transferred packet for its own cleanup.
-This packet conveys data custody only; aggregate job admission, parent context
-binding and ACCEPT/exec composition remain separately owned.
+This packet conveys data custody only; joining its original peer to aggregate
+job admission and ACCEPT/exec composition remains separately owned.
 
 Parent registration now retains its original `preparing` record and spends
 its monotonic job identity before requesting a token from the OS random source.
@@ -1017,15 +1017,15 @@ its caller owns authority checks and signal-mask scope. Its original no-argument
 form remains valid.
 Native read observers verify each attempt without publishing token bytes, and
 weak handle observations avoid prolonging the local source during unwinding.
-The aggregate coordinator still needs to bind these checks to its original grant
-and retained scratch descriptor credit before using the new composition.
+The aggregate coordinator now binds these checks to its original grant and
+separately retained scratch descriptor credit, as described below.
 
 For example, expiry between token generation and context construction retains
 a timeout, not a ready authority. A lost native token return retains a host
 failure even though the OS read occurred. A signal observes the complete ready
 record and closed entropy handle before interrupting return. Context recovery
-still grants only submission under that logical parent. Original ledger binding
-and command release remain subsequent steps.
+still grants only submission under that logical parent. Ledger binding now
+precedes native preparation; command release remains a subsequent step.
 
 `Wire::snapshot_with_context($snapshot, $context)` now creates a detached SPAWN
 snapshot with exactly `FSMGEN_PROCESS_COORDINATOR_CONTEXT` inserted or replaced.
@@ -1043,11 +1043,36 @@ exceed the aggregate execution-byte bound even when the original snapshot fits.
 Either refusal leaves the original snapshot and live environment untouched.
 
 This pure transformation checks syntax and byte bounds. A syntactically valid
-context is not evidence of live authority. The aggregate coordinator must obtain
-the original context from its admitted Service/grant and recheck those lifetimes
-before command release; that integration remains separately owned. Literal wire
+context is not evidence of live authority. The aggregate coordinator obtains
+the original context from its admitted Service/grant; final checks before command
+release remain separately owned. Literal wire
 frames and inclusive count/byte boundaries qualify the helper without an endpoint
 or command process.
+
+The coordinator now binds the root snapshot while opening its original run.
+Nested admission retains the original grant and snapshot, registers that job's
+context, then replaces only the private environment entry before native
+preparation. Registration follows admission order even when native jobs start
+in a different order. For example, jobs two and three receive their own contexts
+when reserved; preparing job three first cannot spend or substitute job two's
+identity. The caller's snapshot stays unchanged.
+
+Every nested token open/read checks the original Service, grant, job identity,
+reserved job capacity and clipped deadline. Steady run credit and unused scratch
+credit must remain separate and sufficient. Snapshot replacement then rechecks
+the ledger and original Service authority before publishing `context_state` as
+`ready`. An oversized transformed snapshot fails while its original snapshot
+and run remain owned for cleanup.
+
+The complete context/snapshot binding is retained before unmasking creator
+signals. A pending handler can interrupt the admission return, but it sees the
+matching completed state; failure revokes further job admission and preserves
+cleanup ownership. Copied observations expose only the preparation state, not
+the context bytes. Fresh authority checks also precede native preparation,
+each pipe, each fork and live advancement. Revocation refuses the next effect.
+The original native fork masks remain responsible for the eventual exec mask.
+These changes create gated processes but do not release commands; matching
+accepted-request ownership and ACCEPT/exec composition are still open.
 
 Connection now offers `queue_accept($job)` for one tracked ACCEPT on the
 original connection, and `accept_publication` for a copied observation. The

@@ -334,9 +334,9 @@ subtest 'new accepted sockets join both native fork inventories and exact cleanu
         push @witnesses, $fh;
     }
     my $child_view = $owner->job_observation($child)->{admission};
-    # Exercise the existing Service authority API with the original active job.
-    # Automatic context publication remains the separate ACCEPT/exec leaf.
-    my $context = $owner->{service}->register_parent($child_view->{id}, $child_view->{deadline_ns});
+    # Admission now registers the context before native preparation. Recover
+    # that original authority without attempting a second token publication.
+    my $context = $owner->{service}->parent_context($child_view->{id});
     my $nested_peer = client($context); my @parts = split /:/, $context;
     my $hello = pack('NCC', 54, 1, 1) . pack('H*', $parts[2]) . pack('N', $parts[3]) . pack('H*', $parts[4]);
     is(syswrite($nested_peer->handle, $hello), length($hello), 'literal nested HELLO reaches the actual socket');

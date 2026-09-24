@@ -103,6 +103,7 @@ sub open_run {
                 $self->{ledger}->descriptors_prepared($self->{run_grant}, scalar @$handles);
                 $self->{service} = FSM::Support::ProcessSupervisor::Service::new_shared_service(
                     $self->{run}, $self->{ledger}->describe($self->{jobs}{1}{grant})->{deadline_ns});
+                $self->_bind_context($self->{jobs}{1}{grant});
                 $self->{phase} = 'open';
                 1;
             };
@@ -120,8 +121,7 @@ sub open_run {
 sub context {
     my ($self) = @_; _owner($self);
     _error('root run is not open') unless @_ == 1 && $self->{phase} eq 'open';
-    $self->{ledger}->check_live($self->{jobs}{1}{grant});
-    return $self->{service}->context;
+    return $self->_context_live($self->{jobs}{1}{grant});
 }
 sub _before_peer_accept {
     my ($self, $service, $ticket) = @_; _owner($self);
@@ -287,6 +287,9 @@ sub reserve_job {
                 map { $_ => $snapshot->{$_} } qw(started_ns timeout_seconds));
             my $id = $self->{ledger}->describe($grant)->{id};
             $self->{jobs}{$id} = {grant => $grant, snapshot => $snapshot};
+            # Register in original admission order, not later native-start
+            # order. A failed preparation still spends this job identity.
+            $self->_bind_context($grant);
         });
         1;
     };
@@ -296,8 +299,66 @@ sub reserve_job {
         die $error;
     }
     # If a pending handler interrupts this return, grants still exposes the
-    # original record and its detached snapshot. No native effect has occurred.
+    # original record and snapshot. Token effects have their retained owner;
+    # native process preparation and fork have not started.
     return $grant;
+}
+sub _bind_context {
+    my ($self, $grant) = @_; _owner($self);
+    my ($entry, $record) = $self->_job($grant);
+    _error('context binding requires original reserved snapshot custody')
+        unless $record->{phase} eq 'reserved' && $entry->{snapshot} && !$entry->{native};
+    _error('context binding is single-use') if defined($entry->{context_state});
+    $entry->{context_state} = 'preparing';
+    my $ok = eval {
+        $self->{ledger}->check_live($grant);
+        my $context = $record->{id} == 1 ? $self->{service}->parent_context(1)
+            : $self->{service}->register_parent($record->{id}, $record->{deadline_ns},
+                sub { $self->_before_context_allocation($grant, @_) });
+        $self->{ledger}->check_live($grant);
+        my $snapshot = FSM::Support::ProcessSupervisor::Wire::snapshot_with_context($entry->{snapshot}, $context);
+        $self->{ledger}->check_live($grant);
+        _error('original context changed during snapshot preparation')
+            unless $self->{service}->parent_context($record->{id}) eq $context;
+        $entry->{snapshot} = $snapshot;
+        $entry->{context_state} = 'ready';
+        1;
+    };
+    unless ($ok) { my $error = $@; $entry->{context_state} = 'failed'; die $error; }
+    return;
+}
+sub _before_context_allocation {
+    my ($self, $grant, $service, $id, $kind, $operation) = @_; _owner($self);
+    _error('context entropy requires the original open Service')
+        unless $self->{phase} eq 'open' && $self->{service}
+            && refaddr($service) == refaddr($self->{service});
+    _error('unknown context allocation operation') unless $kind eq 'create'
+        && ($operation eq 'entropy_open' || $operation eq 'entropy_read');
+    my ($entry, $record) = $self->_job($grant);
+    $self->{ledger}->check_live($grant);
+    _error('context entropy lacks original reserved job custody')
+        unless $id == $record->{id} && $record->{phase} eq 'reserved'
+            && $entry->{context_state} eq 'preparing' && $entry->{snapshot} && !$entry->{native}
+            && $record->{reserved_descriptors} == $JOB_COST->{descriptors}
+            && $record->{reserved_children} == $JOB_COST->{children};
+    my $run = $self->{ledger}->describe_descriptors($self->{run_grant});
+    my $scratch = $self->{ledger}->describe_descriptors($self->{scratch_grant});
+    _error('context entropy lacks separate retained scratch credit')
+        unless refaddr($self->{run_grant}) != refaddr($self->{scratch_grant})
+            && !$run->{reserved} && $run->{count} >= $COST->{steady_descriptors}
+            && $scratch->{reserved} && $scratch->{count} >= $COST->{transient_descriptors};
+    my $usage = $self->{ledger}->usage;
+    _error('aggregate context capacity exceeded')
+        if $usage->{charged_descriptors} > $LIMIT->{descriptors}
+            || $usage->{charged_children} > $LIMIT->{children};
+    return;
+}
+sub _context_live {
+    my ($self, $grant) = @_; _owner($self);
+    my ($entry, $record) = $self->_job($grant);
+    _error('original job context is not prepared') unless ($entry->{context_state} // '') eq 'ready';
+    $self->{ledger}->check_live($grant);
+    return $self->{service}->parent_context($record->{id});
 }
 sub _job_failed {
     my ($self, $grant, $error) = @_;
@@ -326,7 +387,7 @@ sub _before_job_allocation {
     my ($self, $grant) = @_; _owner($self);
     _error('run is no longer open for job preparation') unless $self->{phase} eq 'open';
     my ($entry, $record) = $self->_job($grant);
-    $self->{ledger}->check_live($grant);
+    $self->_context_live($grant);
     _error('native job must be retained under preparing admission')
         unless $entry->{native} && $record->{phase} eq 'preparing';
     _error('job peak credit is no longer retained')
@@ -346,6 +407,7 @@ sub prepare_job {
     _error('job preparation is single-use') unless $record->{phase} eq 'reserved';
     my $ok = eval {
         FSM::Support::ProcessSupervisor::Reservation::_masked_preparation(sub {
+            $self->_context_live($grant);
             $self->{ledger}->begin_prepare($grant);
             # The constructor is resource-free. Publish its entire graph before
             # allocate; the caller's original snapshot is then owned by the pair.
@@ -371,7 +433,7 @@ sub _before_job_fork {
         && ($role eq 'reservation' || $role eq 'command');
     _error('run is no longer open for job start') unless $self->{phase} eq 'open';
     my ($entry, $record) = $self->_job($grant);
-    $self->{ledger}->check_live($grant);
+    $self->_context_live($grant);
     _error('native fork requires original starting credit')
         unless $entry->{native} && $record->{phase} eq 'starting'
             && $record->{reserved_children} == $JOB_COST->{children}
@@ -464,7 +526,7 @@ sub advance_job {
     _error('job is not starting, active or closing')
         unless $record->{phase} =~ /\A(?:starting|active|closing)\z/;
     my $ok = eval {
-        $self->{ledger}->check_live($grant) unless $record->{phase} eq 'closing';
+        $self->_context_live($grant) unless $record->{phase} eq 'closing';
         $self->cancel_job($grant, $entry->{failure} // 'job admission revoked')
             if $record->{phase} eq 'closing';
         if ($entry->{native}) {
@@ -492,6 +554,7 @@ sub job_observation {
     _error('job observation requires an original grant') unless @_ == 2;
     my ($entry, $record) = $self->_job($grant);
     return {admission => $record, failure => $entry->{failure}, cleanup_error => $entry->{cleanup_error},
+        context_state => $entry->{context_state},
         cleanup_deadline => $entry->{cleanup_deadline},
         native => $entry->{native} ? $entry->{native}->observation : undef};
 }
