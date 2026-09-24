@@ -1,0 +1,78 @@
+{
+  "baseline_revision": "37f5ace88f474b751f5cfae2bb6e94a6cd875461",
+  "evidence_legs": {
+    "durability": "Tracked pure oracle, actual-runner integration, positive/negative corruption test, source and guard hashes, exact baseline, raw test log hashes, rendered book guidance, task and knowledge card.",
+    "falsify": "T1885 gives all compared transports identical reports with deliberately lost or incorrect metadata, JSON scalar types, source/module/schema/provenance, family/revision, lifecycle conditions and policy. Ordinary parity still passes while the independent oracle fails at the named path. Missing reports and future registrations fail. Actual strict legacy-FSM and malformed VIAL refusals retain complete reports, exact native diagnostic codes and MCP isError; false success and lost diagnostics fail controls.",
+    "rederive": "Actual native, public adapter, explicit VIAL file APIs and newline MCP supply the reports consumed by T1884/T1885. Independently authored fixture expectations and public source/schema/producer contracts are checked without reading private compiler payloads."
+  },
+  "fixture_sha256": {
+    "fsm/mipicsi2_txccore_ulp.fsm": "08e2ad129570958dfb8f660873498e6bc847f0257977e393ed2575da85484882",
+    "isf/storage_fields.isf": "7a583f66dc9acccd4b9b2158449b74505d2b8dc0267e405baa5dca474a0fb184",
+    "isf/verification_observation_metadata.isf": "43fab06c87254fd773666e0eb9d80a909a52a7f9137c0e506555d19d8c99d899",
+    "t/corpus/composition_intent_integer_literals.fsm": "4e9c097ef267e6ec6b518e83ca761a51b0c316dc0a72cfb5873b5c0f0166c216",
+    "t/corpus/direct_size_expression_widths.fsm": "512d76876a7da2fd2a2556219f41f7143bf15dbc0a7c6510a7001f17c8c94064",
+    "vial/ahb_subordinate_base_output_arbitration.vial": "2205b3b4f073a61374b19cb72f06afe31d75fc4d88f903c414b9b28a744ca4cd",
+    "vial/ahb_subordinate_base_output_arbitration_lifecycle_v2.vial": "7d15fdba9023d88c7ddbca28b84f9d7736e1da262ed954636dabe4a9d8316ff7",
+    "vial/ahb_subordinate_base_output_arbitration_v2.vial": "921049c612e699f3db70ffcb5cf564e7f8a76ff10d84d4df26401207ba0c13b0"
+  },
+  "focused_query_receipt_sha256": "80045c146cdf848b3131d0b511c47d446018821618e8356855b59d3c17a9b642",
+  "guard_sha256": {
+    "t/1884-semantic-source-query-runner.t": "5c67ba76d2d652a06e1cc91ad41a2488f983a62977f07f4592a23283adbc1179",
+    "t/1885-semantic-source-query-oracles.t": "6734b0502d6ba5199c049f8b57f73f689b052593532c249f8c0910c5f5c08e0d",
+    "t/lib/FSM/Test/SourceQueryOracle.pm": "075092e2dff505d64c081b0cb25ede681a080cd704f28169933af557415d4d87",
+    "t/lib/FSM/Test/SourceQueryRunner.pm": "9ffbe9f2c2230639a2859edcc740c2245f4c0802105042203495e1c6ca4377dd"
+  },
+  "limits": [
+    "The independent witnesses cover named authored semantics and public identities, not every possible meaning in every report.",
+    "Negative cases remain outside the supported cohort. Full cohort execution and CI/future-feature signoff integration remain subsequent leaves.",
+    "No backend/runtime or spent producer is executed; full CI remains gated.",
+    "mdBook build and rendered assertions pass; browser visual qualification remains unavailable."
+  ],
+  "owner": "SEMANTIC-INTROSPECTION-MCP-FRONTIER.31.3.2.1.3",
+  "schema": "fsmgen.source_query_oracle_qualification.v1",
+  "temporary_negative_fixture": {
+    "language_version": 2,
+    "location_policy": "explicit repository t/ temporary directory with cleanup",
+    "source_bytes_hex": "28",
+    "source_kind": "vial"
+  },
+  "tests": {
+    "query-oracle-band": {
+      "sha256": "6191808f10cab0f27b7d36f5656ae4946517419199a3ec9d3d1782e241700d6d",
+      "summary": [
+        "All tests successful.",
+        "Files=6, Tests=52, 118 wallclock secs ( 0.04 usr  0.02 sys + 92.78 cusr 20.49 csys = 113.33 CPU)",
+        "Result: PASS"
+      ]
+    },
+    "query-oracle-book": {
+      "sha256": "28b650ccc30f3ea20740bf02ba4015d3cbdba5b3805f795764ba007b4c2b7428",
+      "summary": [
+        "Rendered authored-witness, corruption, refusal and qualification limits: PASS"
+      ]
+    },
+    "query-oracle-final": {
+      "sha256": "2f0d4ffd94cc9eb84826dbf3c94a811e369df4a0625685918febb21e7ec516b6",
+      "summary": [
+        "All tests successful.",
+        "Files=1, Tests=5, 28 wallclock secs ( 0.01 usr  0.01 sys + 21.44 cusr  4.56 csys = 26.02 CPU)",
+        "Result: PASS"
+      ]
+    },
+    "query-oracle-qualified": {
+      "sha256": "8513a110b9bcdc559b5c7b079fa1f91067d959a8138d9918205d13cc7a3a4952",
+      "summary": [
+        "All tests successful.",
+        "Files=2, Tests=33, 86 wallclock secs ( 0.02 usr  0.01 sys + 68.40 cusr 15.18 csys = 83.61 CPU)",
+        "Result: PASS"
+      ]
+    },
+    "query-oracle-red": {
+      "sha256": "50e49d7535e39786537be8cb803d610efa25e03afcd4a532e087d40ac528b26e",
+      "summary": [
+        "Files=1, Tests=1,  0 wallclock secs ( 0.00 usr  0.00 sys +  0.02 cusr  0.00 csys =  0.02 CPU)",
+        "Result: FAIL"
+      ]
+    }
+  }
+}

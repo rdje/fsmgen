@@ -405,11 +405,11 @@ For FSMGen, the analogs are:
   Children: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.31.3.2.1, SEMANTIC-INTROSPECTION-MCP-FRONTIER.31.3.2.2, SEMANTIC-INTROSPECTION-MCP-FRONTIER.31.3.2.3, SEMANTIC-INTROSPECTION-MCP-FRONTIER.31.3.2.4, SEMANTIC-INTROSPECTION-MCP-FRONTIER.31.3.2.5, SEMANTIC-INTROSPECTION-MCP-FRONTIER.31.3.2.6, SEMANTIC-INTROSPECTION-MCP-FRONTIER.31.3.2.7`
 
 - ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.31.3.2.1`
-  Status: `active`
+  Status: `done`
   Goal: `Implement catalog-derived actual native/API/MCP source-query coverage and focused controls.`
   Acceptance: `Build a reusable test-side coverage selector over the native supported corpus and public query applicability map, retaining all contract IDs and deduplicating source work. Reject unknown query/source/version mappings and unaccounted VIAL fixtures. Execute actual public native and MCP producers, compare complete reports after only documented root normalization, and assert independent authored ISF and VIAL observations plus source/module provenance. Provide explicit focused selection and existing hosted corpus partition compatibility without calling a focused run exhaustive. Add fast malformed/new-family/missing-report controls, prove positive and known-bad outcomes, sync book/facts and commit before CI integration.`
-  Verification: `Deep VIAL inspection is qualified. Refine the guard into catalog/query selection, actual producer execution and semantic/negative controls so each independently verified unit is committed. .31.3.1 retains the historical selection and pilot; current selectors must derive live applicability including inspection.`
-  Commit: `pending`
+  Verification: `Child commits qualify live catalog/query selection, actual native/API/newline report and provenance checks, authored feature witnesses, shared-corruption controls and representative full refusal reports. T1883-T1885 retain focused/list-only/source-partition boundaries. CI/signoff integration and full cohort execution remain .31.3.2.2 and .31.3.3; no focused run is called exhaustive.`
+  Commit: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.31.3.2.1.3: guard independent source-query semantics`
 
   Children: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.31.3.2.1.1, SEMANTIC-INTROSPECTION-MCP-FRONTIER.31.3.2.1.2, SEMANTIC-INTROSPECTION-MCP-FRONTIER.31.3.2.1.3`
 
@@ -428,17 +428,17 @@ For FSMGen, the analogs are:
   Commit: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.31.3.2.1.2: execute actual source-query parity checks`
 
 - ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.31.3.2.1.3`
-  Status: `pending`
+  Status: `done`
   Goal: `Guard independent feature semantics and representative failed source reports across adapters.`
   Acceptance: `Add authored ISF storage/observation, hardware source/module and VIAL base/lifecycle assertions to the selected query runner, with falsification that catches missing/wrong detail even when compared transports agree. Qualify representative structured failures, missing reports, unknown future families and schema/provenance mismatches. Retain exact focused evidence and update book/facts; leave complete corpus execution and CI/signoff integration to their explicit owners.`
-  Verification: `The actual runner is qualified; independent feature oracles and falsification are next.`
-  Commit: `pending`
+  Verification: `T1885 qualifies independent ISF storage/observation, hardware identity and VIAL base/lifecycle witnesses against actual public producers. Identical in-memory transport corruption fails the independent oracles for lost/wrong detail, scalar types, schema/provenance and future families/revisions. Actual strict hardware and malformed VIAL refusals preserve native/API/newline reports, stable diagnostics and isError. T1884 consumes the same pure oracles for selected supported queries. Focused regression and rendered book pass; full coverage remains explicitly pending.`
+  Commit: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.31.3.2.1.3: guard independent source-query semantics`
 
 - ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.31.3.2.2`
   Status: `pending`
   Goal: `Integrate feature-query coverage with existing regression partitioning and future-feature signoff.`
   Acceptance: `Use the repository-owned CI/regression contracts to register the new corpus coverage without repeating a full cohort in unrelated file shards. Verify exact disjoint complete partitioning, list-only/source-filter behavior and focused developer commands. Require new public source features to carry a supported corpus case and semantic/schedule API/MCP evidence or an explicit owned applicability boundary. Update maintained workflow/book guidance, run focused integration checks, and leave the full cohort run to .31.3.3 before activity closure.`
-  Verification: `Pending .1 guard.`
+  Verification: `The selector, actual runner and independent semantic/negative controls are qualified. Register the guarded corpus with closed hosted partitioning and explicit future-feature signoff next.`
   Commit: `pending`
 
 - ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.31.3.2.3`
@@ -1220,10 +1220,9 @@ before editing code. No discovered defect is closed by this audit alone.
 
 ## Current Frontier
 
-`SEMANTIC-INTROSPECTION-MCP-FRONTIER.31.3.2.1.3` is next: add independent
-feature-semantic oracles and representative failure controls to the qualified
-actual public native/API/MCP source-query runner.
-The catalog guard, CI/signoff and exhaustive qualification follow before HIAL
+`SEMANTIC-INTROSPECTION-MCP-FRONTIER.31.3.2.2` is next: integrate the qualified
+source-query guard into closed CI partitions and future-feature signoff.
+Exhaustive qualification follows before HIAL
 streaming. Preserve spent native compiler/startup evidence and the separate
 read-only/write horizon; source checks do not promote runtime support.
 
@@ -2612,3 +2611,43 @@ semantic/negative controls are next, with CI integration and full execution stil
 owned separately. The active index now points to the current frontier. Task/book
 metadata records this owned guard; fact-card allowance is unchanged. The book
 owns developer invocation rationale without a duplicate engineering ledger.
+
+## Acceptance Checklist — `.31.3.2.1.3` independent semantic controls
+
+- [x] **ROOT CAUSE (WHY + WHERE)** — The missing-oracle baseline reports
+  `#   Failed test 'independent source-query semantic oracle exists'` and
+  `#   at t/1885-semantic-source-query-oracles.t line 9.` Complete transport
+  parity cannot reveal a common loss of native semantic detail. The selected
+  runner therefore needs expectations derived from authored fixtures and public
+  contracts, independently of the compared producer results.
+- [x] **ADDRESSED (verified)** — Pure report/envelope oracles now guard
+  authored storage field ranges/reset/enums/access, passive observation signal
+  order/width/role/timing, hardware source/module/producer identity, and VIAL
+  reset actions, model expressions/instances, exact fault bindings, lifecycle
+  prerequisites, bounds and cleanup. T1885 deliberately keeps corrupted
+  transport reports identical while proving that missing/wrong detail, scalar
+  types, schema, provenance and unregistered families/revisions fail at the
+  named independent check. Oracles do not mutate evidence. Actual strict
+  hardware and malformed VIAL inputs retain complete native/public-API/newline
+  reports, exact refusal diagnostics and MCP isError; false success and missing
+  diagnostics are rejected. Negative inputs remain outside supported selection.
+  T1884 runs these same oracles for each selected supported source/query.
+- [x] **NO REGRESSION** — RAM-guarded
+  `prove -Iperl t/1885-semantic-source-query-oracles.t t/1884-semantic-source-query-runner.t t/1453-isf-storage-field-metadata.t t/1260-isf-verification-observation-metadata.t t/1868-semantic-introspection-mcp-source-failures.t t/1882-semantic-introspection-mcp-vial-inspection.t`
+  reports `All tests successful. Files=6, Tests=52` and `Result: PASS`.
+  Final T1885 also passes after adding an explicit VIAL file-API refusal
+  comparison. `mdbook build docs/book -d .artifacts/query-oracle-book` and
+  rendered witness/corruption/refusal/limit assertions pass; exact disposable
+  output is removed. No backend, spent producer or full CI is run; browser
+  visual qualification remains unavailable.
+
+Re-derivation uses actual public producers and separately authored semantic
+expectations. Falsification uses identical corrupted reports plus explicit
+negative-source admission and missing/schema/provenance/type/future-family
+controls. Durability is T1884/T1885, the pure oracle, exact source/guard hashes
+and baseline in `source-query-oracle-qualification.json`, book and knowledge
+card. The named independent witnesses do not prove every meaning in every
+report. The guard parent is complete; CI partition/future-feature signoff and
+exhaustive execution remain separate next leaves. Task/book metadata admits
+only this owned guard; the fact card is compacted within its existing allowance.
+The book owns the verification boundary without duplicate ledger narration.

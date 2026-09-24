@@ -85,7 +85,7 @@ reverify: >-
   %resources=map { $_=>1 } @{$m->{semantic_introspection}{mcp_resource_uri_templates}}; die "missing source discovery resource\n" unless $resources{"fsmgen://sources"}; print "semantic_introspection manifest adapter ok\n";' .artifacts/reverify/fsmgen_semantic_introspection_manifest.json && perl bin/fsmgen-mcp --request-json '{"jsonrpc":"2.0","id":1,"method":"tools/list"}' >.artifacts/reverify/fsmgen_mcp_tools.json && perl -MJSON::PP=decode_json -0777 -ne 'my $r=decode_json($_); my %t=map { $_->{name}=>1 } @{$r->{result}{tools}}; die "missing semantic tool\n" unless $t{fsmgen_semantic_introspect}; die "missing source discovery tool\n" unless $t{fsmgen_discover_sources}; die "unexpected cursor\n" if exists $r->{result}{nextCursor}; print "fsmgen-mcp tools ok\n";' .artifacts/reverify/fsmgen_mcp_tools.json &&
   perl bin/fsmgen-mcp --request-json '{"jsonrpc":"2.0","id":2,"method":"tools/call","params":{"name":"fsmgen_discover_sources","arguments":{"query":"axi_aw","file_kind":"ppif","limit":2}}}' >.artifacts/reverify/fsmgen_mcp_sources.json && perl -MJSON::PP=decode_json -0777 -ne 'my $r=decode_json($_); my $p=$r->{result}{structuredContent}; die "bad source discovery kind\n" unless ($p->{query_kind}||"") eq "source_discovery"; die "source discovery traversed workspace\n" if $p->{path_policy}{recursive_workspace_traversal}; die "source discovery returned no sources\n" unless @{$p->{sources}||[]}; print "fsmgen-mcp source discovery ok\n";' .artifacts/reverify/fsmgen_mcp_sources.json && prove -Iperl t/1444-semantic-introspection-mcp-support-queries.t t/1445-semantic-introspection-mcp-schema-snapshots.t
   t/1446-semantic-introspection-mcp-stdio-framing.t t/1447-semantic-introspection-mcp-roots-boundary.t t/1448-semantic-introspection-mcp-prompts-boundary.t t/1449-semantic-introspection-mcp-resource-change-boundary.t t/1450-semantic-introspection-mcp-completion-boundary.t t/1451-semantic-introspection-mcp-logging-boundary.t t/1452-semantic-introspection-mcp-pagination-boundary.t t/1453-semantic-introspection-mcp-sampling-elicitation-boundary.t t/1454-semantic-introspection-mcp-transport-boundary.t t/1455-semantic-introspection-mcp-structured-tool-output.t t/1456-semantic-introspection-mcp-tool-annotations-boundary.t t/1457-semantic-introspection-mcp-content-resource-annotations-boundary.t t/1458-semantic-introspection-mcp-progress-cancellation-boundary.t
-  t/1459-semantic-introspection-mcp-jsonrpc-batch-envelope-boundary.t t/1460-semantic-introspection-mcp-initialize-negotiation-boundary.t t/1461-semantic-introspection-mcp-error-data-sanitization-boundary.t t/1462-semantic-introspection-mcp-serverinfo-instructions-boundary.t t/1882-semantic-introspection-mcp-vial-inspection.t t/1883-semantic-source-query-cohort.t t/1884-semantic-source-query-runner.t
+  t/1459-semantic-introspection-mcp-jsonrpc-batch-envelope-boundary.t t/1460-semantic-introspection-mcp-initialize-negotiation-boundary.t t/1461-semantic-introspection-mcp-error-data-sanitization-boundary.t t/1462-semantic-introspection-mcp-serverinfo-instructions-boundary.t t/1882-semantic-introspection-mcp-vial-inspection.t t/1883-semantic-source-query-cohort.t t/1884-semantic-source-query-runner.t t/1885-semantic-source-query-oracles.t
 ---
 
 Owner: `docs/tasks/SEMANTIC-INTROSPECTION-MCP-FRONTIER.md`. Earlier history:
@@ -163,10 +163,10 @@ VIAL summaries omit action bodies and lifecycle nodes by design. Decision
 `0105` and `docs/VIAL_SOURCE_INSPECTION_CONTRACT.md` select additive typed
 inspection. `fsmgen_vial_inspect`, versioned `/inspection` and
 `vial_inspection` capabilities now use the clean public API (T1882).
-T1883 derives complete catalog IDs/buckets, versions and focus. T1884 executes
-native/API/newline queries with full report/provenance equality and explicit
-filters. ISF schedule artifacts and IAL2 protocol schemas stay distinct.
-Independent semantic controls, CI and exhaustive coverage remain owned follow-ups.
+T1883 accounts sources/queries. T1884 compares actual native/API/newline reports;
+T1885 adds authored storage, observation and VIAL oracles, shared-corruption and
+failed-source controls. ISF/IAL2 report shapes stay distinct. CI and exhaustive
+coverage remain owned follow-ups.
 
 Current-feature query selection and its pilot are captured in
 `docs/audits/mcp-feature-coverage-20260924/feature-coverage-selection.json`.

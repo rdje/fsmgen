@@ -10,6 +10,7 @@ use Test::More;
 use lib "$FindBin::Bin/../perl", "$FindBin::Bin/lib";
 use FSM::Test::SourceQueryCoverage qw(build_source_query_cohort select_source_query_cohort);
 use FSM::Test::HostedCorpusShard qw(hosted_corpus_list_only select_hosted_corpus_entries);
+use FSM::Test::SourceQueryOracle qw(source_query_semantic_errors source_query_envelope_errors);
 
 my $repo = abs_path("$FindBin::Bin/..");
 chdir $repo or die "chdir repository: $!";
@@ -94,6 +95,10 @@ for my $row (@$selected) {
             is($payload->{query_kind}, $kind, 'query identity retained');
             provenance($payload, $row, $kind);
             report_contract($report, $row, $kind, $receipt);
+            is_deeply(source_query_envelope_errors({row => $row, query_kind => $kind, result => $api}), [],
+                'independent envelope and producer provenance oracle passes');
+            is_deeply(source_query_semantic_errors({row => $row, query_kind => $kind, report => $report,
+                source_sha256 => $receipt->{source_sha256_before}}), [], 'independent source semantics oracle passes');
             push @receipts, {
                 source_id => $row->{source_id}, query_kind => $kind,
                 catalog_ids => [map {$_->{id}} @{$row->{catalog_entries}}],

@@ -3012,7 +3012,7 @@ schemas and source-object provenance. They do not share a universal wrapper.
 Run the focused representative band, or select exact source identities:
 
 ```bash
-scripts/run_with_ram_guard.sh -- prove -Iperl t/1884-semantic-source-query-runner.t
+scripts/run_with_ram_guard.sh -- prove -Iperl t/1884-semantic-source-query-runner.t t/1885-semantic-source-query-oracles.t
 FSMGEN_SOURCE_QUERY_SOURCES='["isf/storage_fields.isf","vial/ahb_subordinate_base_output_arbitration_lifecycle_v2.vial"]' scripts/run_with_ram_guard.sh -- prove -Iperl t/1884-semantic-source-query-runner.t
 ```
 
@@ -3032,11 +3032,24 @@ directory receives selected identities, per-query report/source/producer hashes
 and the test pass state. A source requiring extra search paths fails explicitly
 until MCP has a corresponding public contract; such paths are never discarded.
 
-Focused transport parity is qualified. Independent feature-semantic controls,
+The independent `SourceQueryOracle` checks authored ISF field ranges, access,
+reset and enum metadata; passive observation roles, signal order, widths and
+timing; hardware module/source identity; and VIAL actions, expressions, model
+instances, fault bindings, lifecycle prerequisites, deadlines and cleanup policy.
+These expectations come from authored fixtures and public contracts. T1885
+deliberately gives every transport identical corrupted reports: parity still
+passes, but the independent oracle rejects missing or altered detail, incorrect
+scalar types, unknown families/revisions and wrong schema or provenance.
+Representative native hardware and VIAL refusals preserve their complete
+diagnostics through actual newline MCP, with `isError` and no partial success.
+These negative cases remain outside the supported-source cohort.
+
+Focused transport parity and these selected feature witnesses are qualified.
 CI registration and exhaustive execution remain separate tracked work. Selection
-alone proves accounting, and equal reports alone do not prove semantic completeness.
-Catalog entries for plans, backends or runtime retain their identities here but
-source inspection does not execute or qualify those operations.
+alone proves accounting; independent witnesses cover named semantics, not every
+possible meaning in every report. Catalog entries for plans, backends or runtime
+retain their identities here but source inspection does not execute or qualify
+those operations.
 
 ### Existing VIAL Summary Queries
 
