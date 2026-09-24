@@ -8,6 +8,8 @@ answers:
   - "does direct HDL rerouting parse emitted HDL text?"
   - "how are case-distinct generated enable name collisions prevented?"
   - "why did PENABLE semantic drivers change across hash seeds?"
+  - "why does Icarus reject onehot selector assertions while Verilator passes?"
+  - "where is the standalone onehot simulator qualification probe?"
 date: 2026-09-24
 status: current
 tags: [direct-hdl, structural-rtl-ir, generated-enable, systemverilog]
@@ -47,3 +49,16 @@ isolated controls, actual CLI/MCP comparisons and HDL behavior evidence are in
 `docs/audits/mcp-feature-coverage-20260924/enable-identity-repair.json` under
 `SEMANTIC-INTROSPECTION-MCP-FRONTIER.31.2.1`. This is an assignment-enable
 namespace contract, not a universal generated-identifier collision claim.
+
+Simulator qualification is distinct from enable identity. The installed Icarus
+13.0 output-context probe returns a false `$onehot0` result for one-hot
+concatenations while packed/literal checks and the basic truth-table control
+pass. APB assertion diagnostics also depend on expression context. Do not
+accept a final testbench PASS after simulator ERRORs. Assertion-enabled
+Verilator 5.050 passes the bounded probe and APB transfer oracle; this is not
+universal four-state or scheduling equivalence. Compiler conflict checks stay
+unchanged; T1542's native Verilog Icarus lane has no SystemVerilog assertions.
+Reproduction, explicit expected-value checker, negative controls and versions:
+`docs/audits/mcp-feature-coverage-20260924/onehot-qualification.json` and
+`docs/book/src/09-generated-hdl-debugging-and-inspection.md` (runtime simulator
+qualification), owned by `SEMANTIC-INTROSPECTION-MCP-FRONTIER.31.2.6`.

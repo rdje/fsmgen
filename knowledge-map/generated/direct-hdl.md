@@ -1,7 +1,7 @@
 # Knowledge Map: `direct-hdl`
 
 > **AUTO-GENERATED — DO NOT EDIT.** Return to the [Knowledge Map](../../KNOWLEDGE_MAP.md).
-> **1** facts · **6** uniquely owned question entries.
+> **1** facts · **8** uniquely owned question entries.
 
 ## Questions → facts
 
@@ -9,8 +9,10 @@
 - q="does direct HDL emission use StructuralRTLIR?" · facts=[direct-hdl-generated-enable-reroute](../../docs/knowledge/direct-hdl-generated-enable-reroute.md)
 - q="does direct HDL rerouting parse emitted HDL text?" · facts=[direct-hdl-generated-enable-reroute](../../docs/knowledge/direct-hdl-generated-enable-reroute.md)
 - q="how are case-distinct generated enable name collisions prevented?" · facts=[direct-hdl-generated-enable-reroute](../../docs/knowledge/direct-hdl-generated-enable-reroute.md)
+- q="where is the standalone onehot simulator qualification probe?" · facts=[direct-hdl-generated-enable-reroute](../../docs/knowledge/direct-hdl-generated-enable-reroute.md)
 - q="which direct HDL block is rerouted through StructuralRTLIR?" · facts=[direct-hdl-generated-enable-reroute](../../docs/knowledge/direct-hdl-generated-enable-reroute.md)
 - q="why did PENABLE semantic drivers change across hash seeds?" · facts=[direct-hdl-generated-enable-reroute](../../docs/knowledge/direct-hdl-generated-enable-reroute.md)
+- q="why does Icarus reject onehot selector assertions while Verilator passes?" · facts=[direct-hdl-generated-enable-reroute](../../docs/knowledge/direct-hdl-generated-enable-reroute.md)
 
 ## Facts
 

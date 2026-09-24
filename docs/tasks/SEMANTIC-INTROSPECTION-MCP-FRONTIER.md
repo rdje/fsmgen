@@ -329,7 +329,7 @@ For FSMGen, the analogs are:
   Commit: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.31.2.1: preserve generated enable identity`
 
 - ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.31.2.2`
-  Status: `pending`
+  Status: `active`
   Goal: `Preserve structured source-query failures and prevent MCP error path leakage.`
   Acceptance: `Decode valid public failure JSON independently of child exit status and expose original diagnostics without converting an expected compiler refusal into an opaque transport error. Keep invalid/non-JSON command failures distinct, bound and sanitize error messages including embedded absolute command paths, and preserve JSON-RPC codes/message-only error policy. Qualify actual catalogued invalid sources plus runner and workspace-escape controls; update public contracts, schemas, tests and book.`
   Verification: `Actual strict check of fsm/mipicsi2_txccore_ulp.fsm returns structured diagnostic JSON with exit 1; MCP discards it and embeds absolute repository/executable/source paths in error.message. _run_fsmgen_json tests process success before decoding stdout; handle_jsonrpc_request strips only Perl location.`
@@ -357,11 +357,11 @@ For FSMGen, the analogs are:
   Commit: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.31.2.5: clear APB completion outputs`
 
 - ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.31.2.6`
-  Status: `active`
+  Status: `done`
   Goal: `Resolve selector assertion errors exposed by APB behavior qualification.`
   Acceptance: `Root-cause actual generated selector assertion failures under the installed simulator, distinguishing real conflicting drivers, scheduling artifacts and tool behavior through bounded public HDL counterexamples. Preserve original failure logs, qualify a supported simulator and implement any compiler-owned repair with negative controls before accepting simulation success. If tool-owned, retain a minimal public-interface reproduction and an explicit integration boundary; do not mask errors or count a printed PASS as a clean simulation.`
-  Verification: `During .31.2.5, Icarus behavior checks reach the final APB PASS but generated $onehot0 selector assertions repeatedly print ERROR, including apparently independent families. A standalone source with no FSMGen output reproduces concat=0 versus packed=1 for the same onehot value under installed Icarus 13.0; assertion-enabled Verilator 5.050 passes the APB behavior oracle. Own the bounded simulator qualification and integration disposition next; do not accept the Icarus run as clean.`
-  Commit: `pending`
+  Verification: `During .31.2.5, Icarus behavior checks reach the final APB PASS but generated $onehot0 selector assertions repeatedly print ERROR, including apparently independent families. A standalone source with no FSMGen output reproduces concat=0 versus packed=1 for the same onehot value under installed Icarus 13.0; assertion-enabled Verilator 5.050 passes the APB behavior oracle. The tracked bounded probe/checker and receipt qualify Verilator and document the context-specific Icarus exclusion; no compiler change or universal simulator qualification is claimed.`
+  Commit: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.31.2.6: qualify selector assertion simulation`
 
 - ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.31.3`
   Status: `pending`
@@ -1015,9 +1015,9 @@ before editing code. No discovered defect is closed by this audit alone.
 
 ## Current Frontier
 
-`SEMANTIC-INTROSPECTION-MCP-FRONTIER.31.2.6` closes the simulator qualification
-discrepancy exposed by the APB check, then `.31.2.2` repairs MCP failure
-diagnostics. Native enable identity and APB source repairs are committed;
+`SEMANTIC-INTROSPECTION-MCP-FRONTIER.31.2.2` repairs MCP failure diagnostics,
+then alias discovery and VIAL query exposure follow. Native enable identity,
+APB source repairs and bounded simulator qualification are committed;
 `.31.3` qualifies coverage and ongoing parity after they pass.
 The read-only profile completed through `.30` remains historical evidence;
 it is not a claim that all later product features are covered.
@@ -1411,3 +1411,60 @@ disagreement without FSMGen. `.31.2.6` owns qualification/disposition; no
 upstream implementation was inspected or changed. Missing leg: this bounded
 simulation is not full protocol certification, and latest-feature MCP coverage
 remains open under the remaining `.31` leaves.
+
+## Simulator Qualification Boundary — `.31.2.6`
+
+Preserve the basic truth-table control, output-context probe and independent
+checker under `docs/audits/mcp-feature-coverage-20260924/`. Qualify the
+output-context probe through installed simulators' public command interfaces,
+including intentionally wrong oracle controls. Preserve bounded output/version/command evidence, document the exact
+Icarus SystemVerilog limitation and the verified Verilator path, and keep
+native Verilog coverage distinct. A focused repository search found executable
+Icarus usage in T1542 only, where `-g2005` compiles native Verilog and an
+explicit oracle forbids `$onehot0`/SystemVerilog assertions. Other current
+source hits are tool-name exclusion or CI package-availability checks.
+Do not replay historical compiler fixture producers or change dependency
+implementations/pins; public standalone builds are fresh repository-local work.
+This leaf qualifies the integration boundary, not an upstream source repair.
+
+The first basic truth-table and small assertion probes pass under Icarus, so
+those results cannot qualify the failing context. The original display-context
+probe repeatedly reports concat=0 versus packed/literal=1 for input 01.
+In the full APB assertion context, an instrumented failure reports both
+PENABLE-zero selector inputs as 0 with pairwise conflict=0. Keeping only that
+assertion passes; selected paired contexts fail. Pairwise replacement also
+exposes delta-cycle observations, so do not conflate isolated truth-table
+success, tool expression-context behavior and stable-cycle HDL qualification.
+Keep generic compiler conflict checks unchanged. Retain a finite output-context
+probe and an independent expected-value checker, plus the passing basic probe
+as a bounded control. Qualify the identical output-context probe under
+Verilator, document exact observed scope, and preserve upstream-owned evidence.
+
+## Acceptance Checklist — `.31.2.6` simulator qualification
+
+- [x] **ROOT CAUSE (WHY + WHERE)** — The rejected APB run prints
+  `ERROR: .artifacts/mcp-feature-coverage/apb-fixed.sv:720` despite its final
+  PASS. Public standalone HDL reproduces context-specific concat/vector
+  disagreement in Icarus; the basic control passes. Instrumented APB inputs
+  are both zero at one rejected selector, and paired assertions alter the
+  outcome. This locates a tool-context qualification defect without claiming
+  universal intrinsic failure or inspecting upstream implementation.
+- [x] **ADDRESSED (verified)** — The tracked output-context probe and
+  `check_onehot_probe.py` require the explicit finite Boolean truth table.
+  Actual Verilator output passes; actual Icarus output fails. Wrong truth,
+  missing/duplicate rows, malformed input and simulator-error controls all
+  fail. The book documents the exact supported evidence and native Verilog
+  distinction. Compiler-owned changes: none; assertions remain intact.
+- [x] **NO REGRESSION** — `knowledge-map: OK`; mdBook build and rendered
+  runtime-qualification examples pass. The preceding APB assertion-enabled
+  Verilator result remains valid, as recorded in its committed receipt.
+  Staged doctrines and normal commit hooks are required before this commit.
+
+Re-derivation uses actual simulator outputs and an independent expected-value
+checker; falsification uses actual failing Icarus output and corrupted checker
+inputs; durability is the [qualification receipt](../audits/mcp-feature-coverage-20260924/onehot-qualification.json),
+tracked probes/checker and this commit. The basic control's captured original
+path predates its move into the audit directory; receipt metadata names both.
+Missing leg: no upstream source repair or general simulator, four-state or
+scheduling certification is claimed. The APB original-source failure remains
+separately preserved in the `.31.2.5` receipt. Resume adapter diagnostics.

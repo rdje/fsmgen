@@ -1,0 +1,91 @@
+{
+  "basic_controls": [
+    {
+      "captured_source_path": "t/fixtures/hdl_tool_qualification/onehot0.sv",
+      "exit": 0,
+      "output": "onehot0 concat/packed truth-table qualification PASS\nt/fixtures/hdl_tool_qualification/onehot0.sv:16: $finish called at 4 (1s)\n",
+      "source": "docs/audits/mcp-feature-coverage-20260924/onehot-basic-control.sv",
+      "tool": "icarus"
+    },
+    {
+      "captured_source_path": "t/fixtures/hdl_tool_qualification/onehot0.sv",
+      "exit": 0,
+      "output": "onehot0 concat/packed truth-table qualification PASS\n- t/fixtures/hdl_tool_qualification/onehot0.sv:16: Verilog $finish\n- S i m u l a t i o n   R e p o r t: Verilator 5.050 2026-07-01\n- Verilator: $finish at 4ps; walltime 0.000 s; speed 210.526 ns/s\n- Verilator: cpu 0.000 s on 1 threads; allocated 2 MB\n",
+      "source": "docs/audits/mcp-feature-coverage-20260924/onehot-basic-control.sv",
+      "tool": "verilator"
+    }
+  ],
+  "capture_revision": "0bf795cf04c4659076d47a0ed1979927580c33b7",
+  "checker": "docs/audits/mcp-feature-coverage-20260924/check_onehot_probe.py",
+  "checker_controls": [
+    {
+      "exit": 0,
+      "name": "positive",
+      "output": "onehot output-context qualification PASS (bounded probe only)\n"
+    },
+    {
+      "exit": 1,
+      "name": "wrong_truth",
+      "output": "onehot probe: input 11 returned 1/1/1; expected 0\n"
+    },
+    {
+      "exit": 1,
+      "name": "missing_row",
+      "output": "onehot probe: incomplete input matrix\n"
+    },
+    {
+      "exit": 1,
+      "name": "duplicate_row",
+      "output": "onehot probe: duplicate input 00\n"
+    },
+    {
+      "exit": 1,
+      "name": "diagnostic",
+      "output": "onehot probe: simulator diagnostic prevents qualification\n"
+    },
+    {
+      "exit": 1,
+      "name": "malformed",
+      "output": "onehot probe: malformed observation\n"
+    },
+    {
+      "exit": 1,
+      "name": "actual_icarus",
+      "output": "onehot probe: input 01 returned 0/1/1; expected 1\n"
+    }
+  ],
+  "checker_sha256": "5d57be4fb28578b09934a54550ba73fd59faa841f1dc25088f9a6f05526433cf",
+  "compiler_owned_changes": "none",
+  "limits": [
+    "Passing basic truth-table and small-assertion controls do not qualify this expression context.",
+    "Compiler selector assertions remain unchanged; no universal simulator or four-state/timing equivalence claim.",
+    "Existing executable Icarus repository use in T1542 is native Verilog -g2005 with an explicit no-onehot0/no-SV-assertion oracle.",
+    "Upstream implementation and dependency pins were not inspected or modified."
+  ],
+  "owner": "SEMANTIC-INTROSPECTION-MCP-FRONTIER.31.2.6",
+  "probe": "docs/audits/mcp-feature-coverage-20260924/onehot-context-qualification.sv",
+  "probe_sha256": "3d87aec7088c9ad69c3ef2ef7ac875016bfc2fa6c8a593696d103091b0547335",
+  "schema": "fsmgen.onehot_tool_qualification.v1",
+  "tools": [
+    {
+      "observations": [
+        "a=0 b=0 concat=1 vector=1 literal=1",
+        "a=0 b=1 concat=0 vector=1 literal=1",
+        "a=1 b=1 concat=0 vector=0 literal=0",
+        "a=1 b=0 concat=0 vector=1 literal=1"
+      ],
+      "qualification": "failed",
+      "version": "Icarus Verilog version 13.0 (stable) (v13_0)"
+    },
+    {
+      "observations": [
+        "a=0 b=0 concat=1 vector=1 literal=1",
+        "a=0 b=1 concat=1 vector=1 literal=1",
+        "a=1 b=1 concat=0 vector=0 literal=0",
+        "a=1 b=0 concat=1 vector=1 literal=1"
+      ],
+      "qualification": "passed_bounded_probe",
+      "version": "Verilator 5.050 2026-07-01 rev vUNKNOWN-built20260701"
+    }
+  ]
+}

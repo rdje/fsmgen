@@ -122,6 +122,41 @@ In-process callers that need an explicit mapping probe can opt in with
 abc_mapping => 1)`. That path requires optional ABC discovery and uses Yosys
 `synth -top`; the CLI remains on the ABC-free `synth -noabc` lane.
 
+### Runtime simulator qualification
+
+Lint and synthesis acceptance do not establish runtime assertion behavior.
+The captured Icarus Verilog 13.0 installation fails the standalone
+`$onehot0({a,b})` output-context probe at one-hot inputs, although its packed
+vector/literal comparisons and a basic self-checking truth table pass. The
+APB completion test also printed selector assertion errors before its final
+PASS. That noisy run is excluded from behavior evidence. These observations
+are context-specific; they do not establish a failure of every `$onehot0`
+expression or every Icarus use.
+
+Assertion-enabled Verilator 5.050 passes the same output-context probe and the
+bounded APB transfer test. Reproduce the standalone qualification from the
+repository root, keeping compiler temporary files and outputs local:
+
+```bash
+mkdir -p .artifacts/onehot-local-tmp
+TMPDIR="$PWD/.artifacts/onehot-local-tmp" scripts/run_with_ram_guard.sh -- \
+  verilator --binary --timing --assert \
+  --Mdir .artifacts/onehot-context-verilator --top-module tb \
+  docs/audits/mcp-feature-coverage-20260924/onehot-context-qualification.sv
+.artifacts/onehot-context-verilator/Vtb > .artifacts/onehot-context.log
+python3 -B docs/audits/mcp-feature-coverage-20260924/check_onehot_probe.py \
+  .artifacts/onehot-context.log
+```
+
+The checker requires every Boolean input row with the expected concatenation,
+vector and literal results, and rejects simulator errors, missing rows and
+malformed observations. Its PASS qualifies only this probe. The captured
+versions, results and negative controls are in
+`docs/audits/mcp-feature-coverage-20260924/onehot-qualification.json`.
+Compiler selector assertions remain intact. The native Verilog regression
+uses Icarus `-g2005` without SystemVerilog assertions; it is a distinct lane.
+No general four-state or event-scheduling equivalence is claimed.
+
 Direct VHDL generation now has a scaffold subset for direct single-FSM roots,
 including delayed-pulse clock-branch lowering, generic-bearing direct-root
 module headers with typed scalar/vector sized-literal defaults, scalar addition,
