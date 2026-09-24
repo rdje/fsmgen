@@ -346,6 +346,17 @@ digests. Rerun checking for affected cached results; single-binding fixtures
 retain their existing identities and public summaries keep their shape. Source
 acceptance alone does not establish backend support for multiple bindings.
 
+The fixed AHB bridge declares `transaction/ahb_write`; a second VIAL alias
+naming `transaction/alternate_write` fails planning with
+`VIAL_BIND_REFERENCE_ERROR`. Reusing `transaction/ahb_write` for both aliases
+fails source validation as a duplicate bridge reference. An ordinary IAL1
+transaction's `declaration_order` metadata is likewise insufficient: the
+execution binder requires `single_active` and reports `VIAL_BIND_EVENT_ERROR`.
+These failures return no partial plan or artifacts. The separate private
+balanced qualification route does not grant public multi-binding runtime
+support. Deep source inspection can still describe authored intent before
+binding is possible.
+
 ## Plan through a reviewable HIAL route
 
 VIAL source describes verification intent. `--dut` separately names the HIAL

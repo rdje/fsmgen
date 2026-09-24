@@ -6,8 +6,8 @@ Status and evidence: `docs/tasks/`. The system itself: `MEMORY_ARCHITECTURE.md`.
 ## Resume
 
 - repository_revision: derive with `git log -1 --format='%H %s'`; never shadow `HEAD` here.
-- active_work_unit: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.31.3.2.6.2` (pending)
-- next_action: Qualify preserved fault target scope through binding, ExecutionIR and applicable backend admission/rendering; repair any admitted gap without replaying spent producers, then resume typed inspection.
+- active_work_unit: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.31.3.2.3.2` (pending)
+- next_action: Decompose and implement the selected typed VIAL source projection, then portable/filesystem inspection and CLI; preserve frozen summaries and require exact base/lifecycle meaning before MCP exposure.
   Preserve the spent compiler workspace and `docs/audits/native-proxy-receipt-capture-20260923/result/` evidence.
 - in_flight_uncommitted: none.
 - in_flight_background: none.

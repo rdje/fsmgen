@@ -463,11 +463,11 @@ For FSMGen, the analogs are:
   Commit: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.31.3.2.5: preserve VIAL model instance meaning identity`
 
 - ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.31.3.2.6`
-  Status: `active`
+  Status: `done`
   Goal: `Preserve the selected transaction binding in VIAL fault target meaning.`
   Acceptance: `Capture actual public source checks for distinct aliases of one transaction declaration and prove the current false digest equality. Select a compatibility-safe exact target representation before implementation, preserving unambiguous existing qualified fixtures where identity is derivable. Retain selected scope through semantic/compatibility and typed execution projections, qualify v1/v2 normal/terse/import/migration and API/MCP behavior, and require future source inspection to expose an exact resolved target. Verify runtime profile applicability without replaying spent producers or inferring runtime qualification from source checks. Own any real downstream gap before closure, update contracts/book/facts and commit separately.`
-  Verification: `A public v1 check accepts a fixture with write and alternate bindings of ahb_write. Changing only the fault target between those aliases preserves semantic_projection_sha256 06c48a44ab4ad9b78668edeaf9d94c20df2f9a887aed73c37a0face70ca11ca0 despite different source hashes. SemanticBuilder::_build_faults keeps declaration transaction_id but omits the selected binding. ExecutionBuilder::_build_faults merely normalizes that record. Durable capture, applicability and compatibility selection remain next.`
-  Commit: `pending`
+  Verification: `Source identity repair .1 and downstream applicability .2 are complete. Distinct aliases retain semantic scope; actual public AHB binding rejects unmatched transactions, duplicate references cannot bypass validation, and canonical source/plan/emission remain qualified. No multi-binding runtime capability is claimed.`
+  Commit: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.31.3.2.6.2: qualify VIAL fault target execution boundaries`
 
   Children: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.31.3.2.6.1, SEMANTIC-INTROSPECTION-MCP-FRONTIER.31.3.2.6.2`
 
@@ -479,11 +479,11 @@ For FSMGen, the analogs are:
   Commit: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.31.3.2.6.1: preserve exact VIAL fault target identity`
 
 - ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.31.3.2.6.2`
-  Status: `pending`
+  Status: `done`
   Goal: `Qualify downstream fault-target applicability and repair any admitted ambiguous behavior.`
   Acceptance: `Trace the preserved target through binding and ExecutionIR into applicable public/backend contracts. Use exact admitted/rejected public-interface evidence; do not assume that source checking grants runtime support. Investigate emitter selection by field name and the bounded profile's actual admission. If a legal admitted case loses target scope, own and fix the exact route with negative controls before closure. Preserve unambiguous canonical identities and spent producer boundaries, and use documented dependency surfaces only. Close the fault parent only after target handling or explicit truthful unavailability is proved, then resume typed source inspection.`
-  Verification: `ExecutionBuilder::_build_faults normalizes the semantic record. Portable SV substitution currently selects armed faults by field name; native UVM requires one typed/bridge transaction. Actual route admission and VHDL/other applicability still require scoped verification; no runtime defect or support conclusion is claimed from source inspection alone.`
-  Commit: `pending`
+  Verification: `T1874 proves genuine canonical v1/v2 execution binding, explicit fault normalization, unresolved-alias and duplicate-reference refusal, plain-IAL1 correlation refusal and canonical SV emission without runtime. The misleading declaration_order sentence is clarified against original implementation history. The four-file binding/emission band and rendered book pass.`
+  Commit: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.31.3.2.6.2: qualify VIAL fault target execution boundaries`
 
 - ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.31.3.3`
   Status: `pending`
@@ -1137,8 +1137,8 @@ before editing code. No discovered defect is closed by this audit alone.
 
 ## Current Frontier
 
-`SEMANTIC-INTROSPECTION-MCP-FRONTIER.31.3.2.6.2` qualifies downstream fault
-target applicability before additive typed inspection `.31.3.2.3.2` and MCP `.31.3.2.3.3`.
+`SEMANTIC-INTROSPECTION-MCP-FRONTIER.31.3.2.3.2` decomposes and implements
+additive typed source inspection before MCP `.31.3.2.3.3`.
 The catalog guard, CI/signoff and exhaustive qualification follow before HIAL
 streaming. Preserve spent native compiler/startup evidence and the separate
 read-only/write horizon; source checks do not promote runtime support.
@@ -2077,3 +2077,49 @@ and correctly failed type validation. Correcting it to `lib.htrans_t.nonseq`
 produced the accepted failing baseline; both logs are hashed in the audit.
 Downstream execution admission and emitters remain owned by `.31.3.2.6.2`,
 so the source repair does not prematurely close the fault parent.
+
+## Downstream applicability investigation — `.31.3.2.6.2`
+
+The source repair does not create a second AHB bridge transaction. Actual
+public planning accepts the canonical target in both language versions and
+rejects either distinct-alias source at the unresolved bridge reference,
+without a partial plan or artifacts. The fault normalization seam retains
+explicit binding/declaration identity, but that isolated carrier check is not
+an admitted multi-binding execution claim. Canonical SV emission preserves
+both unfaulted and substituted drives without launching a backend.
+
+The public correlation probe also identifies misleading contract wording:
+`declaration_order` is valid bridge metadata for plain IAL1, but binding it
+returns `VIAL_BIND_EVENT_ERROR` requiring `single_active`. `git log -S` locates
+the wording in selection `eaf3f95dc`; implementation `44dbecd1a` already has the
+same refusal. This leaf owns clarifying the source/bridge/execution boundary
+and its regression, without inventing a newly supported execution profile.
+The initial plain fixture lacked the grammar-required endpoint; the corrected
+fixture is source-valid and reaches the actual correlation diagnostic.
+
+## Acceptance Checklist — `.31.3.2.6.2` downstream fault scope
+
+- [x] **ROOT CAUSE (WHY + WHERE)** — `git log -S declaration_order --format='%h %s' -- docs/VIAL_EXECUTION_IR_V1_CONTRACT.md`
+  locates selection `eaf3f95dc`; `git show 44dbecd1a:perl/FSM/VIAL/ExecutionBuilder.pm`
+  proves the original binder already requires `single_active`. T1874's actual
+  public plan returns `VIAL_BIND_EVENT_ERROR` for the source-valid plain IAL1
+  fixture. Actual distinct AHB aliases instead return the precise unresolved
+  transaction `VIAL_BIND_REFERENCE_ERROR`, before any partial plan/artifacts.
+- [x] **ADDRESSED (verified)** — The contract and book now separate valid
+  source/bridge metadata from execution admission. T1874 verifies independent
+  authored binding/declaration IDs and substitution values, actual canonical
+  v1/v2 ExecutionIR, preserved explicit scope at the isolated normalization
+  seam, duplicate-reference refusal, empty failure sinks and canonical SV
+  drive emission. The seam test makes no complete multi-binding plan claim.
+  VHDL/UVM admission and OSVVM delegation retain their existing bounded
+  contracts; the separate caller-sealed balanced renderer is not replayed or
+  promoted. No admitted public ambiguous-target runtime defect is established.
+- [x] **NO REGRESSION** — RAM-guarded
+  `prove -Iperl t/1552-vial-execution-ir.t t/1557-vial-portable-sv-backend-emission.t t/1593-vial-vhdl-portable-semantics.t t/1874-vial-fault-target-applicability.t`
+  returns `All tests successful. Files=4, Tests=28` and `Result: PASS`.
+  `mdbook build docs/book -d .artifacts/fault-applicability-book` and rendered
+  boundary statements pass. Re-derivation: actual public plans and original
+  implementation history; falsification: exact missing/duplicate/correlation
+  controls plus canonical success; durability: T1874, tracked applicability
+  record, contracts/book/fact and historical Git objects. Browser visual
+  access, external runtime and full CI are not qualified by this slice.

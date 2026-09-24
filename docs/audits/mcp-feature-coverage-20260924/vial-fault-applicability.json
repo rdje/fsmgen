@@ -1,0 +1,74 @@
+{
+  "contract_correction": {
+    "finding": "The execution contract wording allowed declaration_order to be read as an admitted execution correlation. The original binder already rejected it. The revised paragraph explicitly distinguishes bridge validity from execution admission.",
+    "implementation_revision": "44dbecd1a",
+    "selection_revision": "eaf3f95dc"
+  },
+  "evidence_legs": {
+    "durability": "T1874, this record, execution contract, book, fact and exact historical revisions.",
+    "falsify": "Distinct unresolved aliases, duplicate bridge refs, plain-IAL1 correlation, exact authored IDs/values and absence of partial publication distinguish valid source from admitted execution.",
+    "rederive": "T1874 executes actual public v1/v2 planning plus genuine canonical native ExecutionIR and in-memory emission. Git history locates selected wording and original correlation refusal."
+  },
+  "implementation_boundaries": [
+    "ExecutionBuilder::_build_faults recursively normalizes and preserves the explicit source transaction_binding_id; direct seam testing is not full multi-binding plan admission.",
+    "Public AHB bridge is the fixed transaction/ahb_write family. Ordinary IAL1 bridge transactions use declaration_order and are rejected by public execution binding.",
+    "SV rendering matches fault fields within its currently admitted route. This audit does not qualify that renderer for arbitrary multi-transaction execution.",
+    "Portable VHDL and native UVM explicitly require one typed and one bridge transaction. OSVVM first delegates to the portable VHDL emitter. No provider source or upstream implementation was inspected.",
+    "The balanced private route has distinct transaction declarations per binding, a caller seal and a separate structural renderer. Source review, not a producer replay or new runtime qualification, establishes that scope."
+  ],
+  "limits": [
+    "No external backend execution, compiler/startup producer replay, multi-binding runtime, capacity, performance or full CI claim.",
+    "The initial plain fixture omitted a grammar-required endpoint; its failed log is retained by hash. The corrected fixture reaches the intended correlation oracle.",
+    "Book build/rendered HTML checked; browser visual inspection unavailable."
+  ],
+  "outcomes": [
+    {
+      "result": "Public plan succeeds; real execution bindings resolve fault declaration uniquely to authored write and bridge transaction/ahb_write.",
+      "route": "canonical AHB, language v1/v2"
+    },
+    {
+      "result": "Source-valid and normalization retains selected binding. Public planning rejects transaction/alternate_write with VIAL_BIND_REFERENCE_ERROR; no partial plan, artifacts or sink entries.",
+      "route": "distinct write/alternate aliases, language v1/v2"
+    },
+    {
+      "result": "Source validation rejects duplicate transaction bridge reference.",
+      "route": "two aliases naming transaction/ahb_write"
+    },
+    {
+      "result": "Source-valid fixture reaches VIAL_BIND_EVENT_ERROR requiring single_active correlation. declaration_order is bridge metadata, not public execution support.",
+      "route": "plain IAL1 transaction/main"
+    },
+    {
+      "result": "In-memory emit succeeds; normal HSIZE 2 and selected substitution 7 remain in generated drives. No compile or runtime trace produced.",
+      "route": "canonical portable SystemVerilog emission"
+    }
+  ],
+  "owner": "SEMANTIC-INTROSPECTION-MCP-FRONTIER.31.3.2.6.2",
+  "revision_before_qualification": "caafad3754afb0c9b90243849d66a1f194a46844",
+  "schema": "fsmgen.vial_fault_target_applicability.v1",
+  "tests": {
+    "fault-applicability-band": {
+      "sha256": "a26b9118fc75606e2dbcc572d97217e20780c95906a925f0cfd27aee4e9c2949",
+      "summary": [
+        "All tests successful.",
+        "Files=4, Tests=28, 69 wallclock secs ( 0.03 usr  0.01 sys + 67.52 cusr  1.05 csys = 68.61 CPU)",
+        "Result: PASS"
+      ]
+    },
+    "fault-applicability-tests": {
+      "sha256": "3c07ef1115f541a168c703b5cc85b354a24e97b065a920b9805741962604bfd1",
+      "summary": [
+        "Files=1, Tests=3, 16 wallclock secs ( 0.01 usr  0.00 sys + 15.49 cusr  0.32 csys = 15.82 CPU)",
+        "Result: FAIL"
+      ]
+    },
+    "fault-applicability-tests-corrected": {
+      "sha256": "e3943b54430b7615eab94afd0b4b51d66cdf7f432aa3da53be9bf16423c9063b",
+      "summary": [
+        "All tests successful.",
+        "Files=1, Tests=3, 16 wallclock secs ( 0.01 usr  0.00 sys + 15.34 cusr  0.25 csys = 15.60 CPU)",
+        "Result: PASS"
+      ]
+    }
+  }
+}

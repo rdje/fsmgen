@@ -279,9 +279,19 @@ operator fails.
 
 The first profile uses the bridge's `single_active` correlation rule. Starting
 a second live handle for the same transaction binding before the first
-completes is an execution error. `declaration_order` remains valid for the
-bounded direct-IAL1 shape. Wider outstanding/correlation policies require a
-later explicit execution profile.
+completes is an execution error. `declaration_order` is valid bridge metadata
+for plain direct IAL1, but this execution binder rejects it with
+`VIAL_BIND_EVENT_ERROR`; bridge production is not execution admission. Wider
+outstanding/correlation policies require a later explicit execution profile.
+
+Fault targets retain their transaction declaration and field. A unique fixture
+binding resolves the target implicitly; otherwise source semantics retain an
+explicit `transaction_binding_id`, which fault normalization preserves. Every
+binding must still resolve against the real bridge. Adding an alias with a new
+bridge reference cannot create a transaction in the fixed AHB bridge; reusing
+an existing bridge reference is rejected by source validation. The public
+source language therefore admits target distinctions that this AHB execution
+route cannot bind. These failures publish neither a partial plan nor artifacts.
 
 ### Stable execution identities
 
