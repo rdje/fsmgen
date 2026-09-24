@@ -1,0 +1,15 @@
+(actor valid_demo
+  (clock clk)
+  (reset (rst_n async active_low))
+  (interface
+    (input start)
+    (output A (width 1))
+    (output B (width 1))
+    (output done))
+  (rule r_a
+    (A VALID))
+  (rule r_b
+    (B VALID))
+  (transaction tx
+    (on start)
+    (complete done)))

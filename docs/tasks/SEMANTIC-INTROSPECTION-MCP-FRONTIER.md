@@ -613,13 +613,31 @@ For FSMGen, the analogs are:
   Acceptance: `Read the caller-authorized bundles under ../specforge/docs/fsmgen-issues/ without modifying SPECFORGE or inspecting its submodules. Reproduce against current FSMGen in repository-local fixtures; fix confirmed defects and implement the bounded derived-width capability in separately committed leaves. Each product change includes native/API/MCP semantics and book contracts. Begin only after the active compiler repair is committed and clean; return to complete cohort qualification afterward.`
   Verification: `All three README.md reports were read on 2026-09-24. Their historical measurements and reproduction claims are supplied evidence, not current-checkout verification. Do not run bundled scripts before checking their paths and locality defaults.`
   Commit: `pending`
-  Children: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.32.1, SEMANTIC-INTROSPECTION-MCP-FRONTIER.32.2, SEMANTIC-INTROSPECTION-MCP-FRONTIER.32.3`
+  Children: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.32.1, SEMANTIC-INTROSPECTION-MCP-FRONTIER.32.2, SEMANTIC-INTROSPECTION-MCP-FRONTIER.32.4, SEMANTIC-INTROSPECTION-MCP-FRONTIER.32.3`
 
 - ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.32.1`
-  Status: `pending`
+  Status: `active`
   Goal: `Reject undeclared ISF rule operands before implicit input creation or width inference.`
   Acceptance: `Reproduce sf-isf-undeclared-rule-operand from its supplied primary, mixed-width and declared controls. Diagnose rule operand resolution, retain legitimate actor symbols, reject invalid reads with actor/rule/name provenance, and verify strict checks, semantic API/MCP and generated interfaces. Investigate and repair the report's related internal-path/stack diagnostic exposure if confirmed. Refine into safe leaves before implementation.`
-  Verification: `Caller bundle: ../specforge/docs/fsmgen-issues/sf-isf-undeclared-rule-operand/README.md; SPECFORGE owner FSMGEN-REQUESTS.2. Current reproduction pending.`
+  Verification: `Caller bundle: ../specforge/docs/fsmgen-issues/sf-isf-undeclared-rule-operand/README.md; SPECFORGE owner FSMGEN-REQUESTS.2. Structural identity repair is committed as 45c0e579c23f3c693e7537de1693e5ef6a07cccd; clean tree, empty message file and derived ahead count verified before activation. Read supplied cases without changing SPECFORGE; preserve exact hashes when copying to task-owned local fixtures. Missing-operand reproduction and repair are complete under .32.1.1; the separate width-diagnostic repair remains active under .32.1.2.`
+  Commit: `pending`
+
+  Children: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.32.1.1, SEMANTIC-INTROSPECTION-MCP-FRONTIER.32.1.2`
+
+- ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.32.1.1`
+  Status: `done`
+  Goal: `Validate declared ISF rule read operands before actor-shell return and scheduling.`
+  Acceptance: `Reject undeclared scalar and nested-expression reads in rule guards and value/index operands before IAL0 inference. Preserve declared ports/storage, actor constants/parameters, enum and aggregate leaves, and supported ATL trigger actions. Keep transaction-local inferred assignment behavior separate. Collect useful actor/rule/operand context deterministically and register the expected-failure fixture with stable FSMGEN_LANGUAGE_ISF_UNDECLARED_RULE_OPERAND metadata; qualify exact supplied cases, public API, native check/semantic/schedule, MCP and generated-port controls. Use focused rule/symbol regressions and supported-source admission checks; synchronize book/facts and commit.`
+  Verification: `At 45c0e579c, all supplied cases are copied byte-for-byte into .artifacts/specforge-undeclared-rule/ with hashes. The one-bit undeclared source passes strict check and semantic emission with VALID exposed in signal_analysis and structural_rtl_ir input ports. Both invalid variants pass schedule preview. The mixed-width variant fails late as a width mismatch on B. The baseline parser checked form and special enum/aggregate domains without rejecting an ordinary unknown scalar token. The repair refuses both supplied invalid variants before lowering, preserves declared controls and has complete evidence in docs/audits/specforge-rule-admission-20260924/.`
+  Commit: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.32.1.1: reject undeclared ISF rule reads`
+
+  Compatibility prerequisite: `The first complete public-adapter census exposes generated AXI endpoint/composition rule reads of undeclared shared state. Endpoint generators and composition coordinators now declare those captured payloads, launch/arm handoffs, active/completion flags and expected response IDs as actor storage at their intended widths. No name whitelist or promotion of transaction-private values is used. Scheduled FSM differences are explicit size declarations; endpoint and composition SV is otherwise byte-identical after removing only date headers. Both component baselines and repairs pass the existing independent protocol behavior oracles. The complete ordinary public-adapter census passes; every affected endpoint and composition passes native/API/newline MCP check, semantic and schedule comparison. See the acceptance evidence and retained receipts below.`
+
+- ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.32.1.2`
+  Status: `active`
+  Goal: `Preserve authored ISF source context in operand-contract failures without implementation diagnostics.`
+  Acceptance: `Reproduce a declared but width-invalid ISF control independently of the missing-operand repair. Trace generated-to-authored source mapping and backend exception presentation, repair confirmed leaked implementation paths/names in public diagnostics, and qualify native/API/MCP error identity with targeted direct/ISF controls. Keep this boundary separate from successful actor admission.`
+  Verification: `The supplied mixed-width baseline reports its temporary ial1-lowering FSM as source_file and exposes OperandContractValidationSupport.pm plus validate_pre_generation_operand_contract() in the message. Reproduce the remaining width-error path after .32.1.1 before editing it.`
   Commit: `pending`
 
 - ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.32.2`
@@ -634,6 +652,13 @@ For FSMGen, the analogs are:
   Goal: `Support bounded derived actor width parameters with symbolic dependency preservation.`
   Acceptance: `Audit existing public expression contracts, then decompose sf-isf-derived-width-parameter into bounded parameter resolution, symbolic lowering/emission, ceiling arithmetic and clog2, refusal diagnostics, and semantic/API/MCP qualification leaves. Verify default and overridden widths independently in emitted HDL; document derived-parameter override policy, integer division meaning and intentional optional inline-width boundary. Reject undeclared/later/cyclic/runtime operands, zero divisors and invalid widths. Preserve existing scalar/aggregate parameter behavior.`
   Verification: `Caller bundle: ../specforge/docs/fsmgen-issues/sf-isf-derived-width-parameter/README.md; SPECFORGE owner FSMGEN-REQUESTS.1. Current reproduction and contract reconciliation pending. Reported corpus counts remain externally supplied claims.`
+  Commit: `pending`
+
+- ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.32.4`
+  Status: `pending`
+  Goal: `Repair emitted protocol ISF artifacts that bypass executable IAL1 lowering.`
+  Acceptance: `Before derived-width feature work, audit generated ISF round-trip admission against published artifact contracts. Root-cause every refusal and decompose repairs by protocol and safe lowering boundary. Require generated ISF to be executable through the public ISF parser/scheduler where advertised, preserve protocol-specific behavior with independent HDL oracles, remove parallel handwritten IAL0 bypasses, and synchronize report/API/MCP/book claims. Do not introduce IAL2-only syntax into ISF or relabel executable artifacts as mere review prose to close the defect.`
+  Verification: `The .32.1.1 compatibility probe obtains ahb_interconnect.isf from the public PPIF adapter for ppif/ahb_interconnect.ppif; ISF admission fails at unknown actor clause address-map. AhbInterconnect::_build_ahb_interconnect_artifacts separately calls _build_ahb_interconnect_isf and _build_ahb_interconnect_fsm; the first emits address-map/decode/behavior clauses unsupported by Parser::_build_actor, while normal source generation uses the separately built FSM. Existing knowledge calls these review artifacts, but docs/book/src/14i-ahb-and-integration.md claims lowering through ISF and IAL2-FEATURE-COMPLETENESS-FRONTIER forbids bypassing that chain. This is a pre-existing architecture/documentation gap, not evidence that the new operand validator rejects valid rules. Root-cause evidence is retained under docs/audits/specforge-rule-admission-20260924/; full artifact census and repair remain owned here.`
   Commit: `pending`
 
 ## Implementation Notes From `.4`
@@ -1290,8 +1315,10 @@ before editing code. No discovered defect is closed by this audit alone.
 
 ## Current Frontier
 
-`SEMANTIC-INTROSPECTION-MCP-FRONTIER.31.3.3.2.1` is done; commit cleanly,
-then activate `.32.1` to reproduce and repair SPECFORGE's undeclared rule operand.
+`SEMANTIC-INTROSPECTION-MCP-FRONTIER.32.1.2` is active: repair authored-source
+provenance in independently reproduced operand-width diagnostics. Admission
+repair `.32.1.1` is done; bundle provenance, generated-interconnect lowering
+and derived widths follow under `.32.2`, `.32.4` and `.32.3`.
 Own any demonstrated gap before returning to HIAL
 streaming. Preserve spent native compiler/startup evidence and the separate
 read-only/write horizon; source checks do not promote runtime support.
@@ -2886,3 +2913,69 @@ records own the rationale without duplicate engineering-ledger prose.
 The staged doctrine gate caught a missing root child link and a pending status
 on the newly introduced `.32` container. Both are corrected; its implementation
 leaves remain pending until the clean handoff. No code verification changed.
+
+
+## Acceptance Checklist — `.32.1.1` declared rule reads
+
+- [x] **ROOT CAUSE (WHY + WHERE)** — At `45c0e579c`, native strict
+  `--check --json` and `--emit-semantic-json` accept the supplied one-bit
+  undeclared `VALID` source. Semantic signal analysis and structural ports
+  expose `VALID` as an input; generated SV has `input wire VALID`. Schedule
+  preview accepts both invalid variants; the mixed-width source instead fails
+  late with an inferred RHS width mismatch. Parser rule validation checks
+  structural and special enum/aggregate domains but does not resolve ordinary
+  reads against actor symbols. The same implicit-inference dependency hides
+  shared-state declarations in AXI endpoint and composition generators.
+- [x] **ADDRESSED (verified)** — The ISF parser collects missing reads in
+  guards, nested RHS expressions, selections and bank index/value operands
+  before returning the actor shell. Diagnostics deterministically identify
+  actor, operands and reading rules; declared symbols, enum/aggregate leaves
+  and transaction-local inference retain their separate contracts. The new
+  catalog fixture publishes `FSMGEN_LANGUAGE_ISF_UNDECLARED_RULE_OPERAND`.
+  T1888 rejects the original cases through native/API/newline MCP, keeps the
+  authored source, verifies the declared-input control and prevents invalid
+  HDL emission. AXI generators explicitly declare shared actor state rather
+  than weakening admission. Existing independent transfer/payload/stall/reset
+  oracles pass before and after; full SV matches except its date headers.
+- [x] **NO REGRESSION** — T1888 reports `All tests successful. Files=1,
+  Tests=7` and `Result: PASS`. Focused rule/enum/aggregate checks report
+  `Files=11, Tests=35`; catalog/diagnostic/cohort checks report
+  `Files=4, Tests=8264`; multi-clock/provenance/fan-in/MCP checks report
+  `Files=5, Tests=145`, all successful. Endpoint T1884 reports
+  `Files=1, Tests=21` with complete native/API/newline query equality.
+  Composition T1884 reports `Files=1, Tests=18`. The final ordinary public
+  adapter census consumes every selected source successfully; the independent
+  catalog/receipt join confirms unique complete coverage and unchanged source
+  hashes. Endpoint and composition queries cover each affected producer through
+  check/semantic/schedule, preserving complete typed reports across transports.
+  Perl/Python syntax, the exact complete book example, rendered contract checks
+  and mdBook build pass. Browser visual review remains unavailable.
+
+Re-derivation uses caller-file hashes, native reports and actual emitted ports.
+Falsification includes before/after refusal, declared/literal/enum/aggregate
+controls, transaction-private scope, absent generated handoff declarations,
+constructor collisions, full typed transport equality, independent protocol
+oracles and exact emitted-HDL comparisons. Durability is T1888, the catalog
+fixture, implementation, book/facts and
+`docs/audits/specforge-rule-admission-20260924/`.
+
+The broad strict-generation attempt was deliberately cancelled after its
+completed prefix; its interrupted children and unvisited sources are not
+passes. Actor admission is verified through ordinary public adapters. Replaying
+all generated ISF is a different contract: the discovered AHB interconnect
+review artifact bypasses executable ISF and is owned for repair by `.32.4`.
+The book names that limitation. Initial test exit-status/diagnostic wording
+assumptions and a driver print warning were corrected without changing product
+exit conventions. Icarus rejects even a minimal forward wire declaration;
+its unsuccessful attempt is not HDL qualification. Endpoint Verilator oracles
+use assertions; composition behavior oracles deliberately drive invalid
+inputs and retain their published `--no-assert` profile. An initial incorrect
+assert-enabled composition run stopped on its expected misalignment assertion
+and is not counted as a product failure. Full CI, hosted execution and browser
+visual review remain outside this signoff; spent native producers are intact.
+
+
+The first staged doctrine pass accepts fresh task evidence but finds the new
+nested audit README outside existing document surfaces. The exact replay
+procedure is now registered as `isf_rule_admission_replay`, bounded separately
+without widening existing collection ceilings or hiding the Markdown file.

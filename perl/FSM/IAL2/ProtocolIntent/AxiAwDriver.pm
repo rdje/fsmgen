@@ -133,7 +133,7 @@ sub _normalize_contract($raw) {
         $reset->{signal},
         _binding_names($command),
         _binding_names($channel),
-        qw(addr_q id_q len_q size_q burst_q),
+        qw(addr_q id_q len_q size_q burst_q active_q launch_aw_start),
     );
 
     my $source = ref($raw->{source}) eq 'HASH' ? $raw->{source} : {};
@@ -226,6 +226,15 @@ sub _emit_isf($contract) {
         _interface_line('output', $chan->{burst}),
         _interface_line('output', $chan->{busy}),
         _interface_line('output', $chan->{done}) . ")",
+        "",
+        "  (storage",
+        "    (var addr_q (width $cmd->{address}{width}))",
+        "    (var id_q (width $cmd->{id}{width}))",
+        "    (var len_q (width $cmd->{length}{width}))",
+        "    (var size_q (width $cmd->{size}{width}))",
+        "    (var burst_q (width $cmd->{burst}{width}))",
+        "    (var active_q (width 1))",
+        "    (var launch_aw_start (width 1)))",
         "",
         "  (priority accept_aw over launch_aw)",
         "",

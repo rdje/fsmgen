@@ -9,6 +9,17 @@ our @EXPORT_OK = qw(regression_corpus_entries protocol_fixture_entries);
 
 my @REGRESSION_CORPUS = (
     {
+        id => 'language.isf_undeclared_rule_operand.rejection',
+        relpath => 't/corpus/isf_undeclared_rule_operand.isf',
+        family => 'language_feature_fixture',
+        classification => 'expected_failure',
+        coverage => 'language_contract_rejection_pipeline_cli',
+        source_kind => 'isf',
+        diagnostic_code => 'FSMGEN_LANGUAGE_ISF_UNDECLARED_RULE_OPERAND',
+        expected_error_pattern => qr/actor '[^']+' has undeclared rule read operands:/,
+        expected_hint_pattern => qr/Declare rule read operands in the actor interface, storage, parameters or constants/,
+    },
+    {
         id => 'verification.vial_ahb_subordinate_base_output_arbitration',
         relpath => 'vial/ahb_subordinate_base_output_arbitration.vial',
         family => 'verification_intent_fixture',

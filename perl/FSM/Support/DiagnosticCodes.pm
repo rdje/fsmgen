@@ -13,6 +13,12 @@ our @EXPORT_OK = qw(
 );
 
 my %DIAGNOSTIC_CODES = (
+    FSMGEN_LANGUAGE_ISF_UNDECLARED_RULE_OPERAND => {
+        severity => 'error',
+        stability => 'stable',
+        family => 'language_contract',
+        summary => 'An ISF rule reads an operand that is not declared in its actor scope.',
+    },
     FSMGEN_STRICT_LEGACY_FSM_ROOT => {
         severity => 'error',
         stability => 'stable',

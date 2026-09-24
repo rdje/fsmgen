@@ -446,6 +446,8 @@ sub _transaction_coordinator_isf($contract) {
         _interface_line('output', $status->{response_last_match}) . ')',
         '',
         '  (storage',
+        '    (var active_q (width 1)) (var response_armed_q (width 1))',
+        "    (var expected_arid_q (width $cmd->{id}{width}))",
         '    (var beat_index_q (width 2) (reset 0)))',
         '',
         '  (priority finish_burst over advance_beat)',

@@ -228,6 +228,7 @@ sub _emit_isf($contract) {
         _interface_line('output', $chan->{beat_index}) . ")",
         "",
         "  (storage",
+        "    (var active_q (width 1))",
         "    (var beat_index_q (width 2) (reset 0))",
         "    (var data1_q (width 32) (reset 0))",
         "    (var data2_q (width 32) (reset 0))",

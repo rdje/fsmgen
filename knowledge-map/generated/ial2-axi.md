@@ -1095,7 +1095,7 @@ _Before the .7 correction the AXI AW driver could accept twice under held READY_
 
 _Priority-resolved ISF rules can restore one AXI AW transfer per command_
 
-- **date:** 2026-07-23 · **status:** current
+- **date:** 2026-09-24 · **status:** current
 - **source and verification:** [`docs/knowledge/ial2-axi-aw-single-transfer-correction-shape.md`](../../docs/knowledge/ial2-axi-aw-single-transfer-correction-shape.md)
 
 ### ial2-axi-aw-w-request-composition-contract-selection

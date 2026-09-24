@@ -53,6 +53,11 @@ instead of emitting only a low-level parser or backend exception.
 
 ### Direct Generation Errors
 
+ISF rule guards and read operands are checked against declared actor symbols
+before lowering. `FSMGEN_LANGUAGE_ISF_UNDECLARED_RULE_OPERAND` identifies the
+actor, missing operand and reading rules in check/semantic JSON and MCP.
+Declare or correct the operand; see [Rules and Priorities](13g-rules.md).
+
 Typical causes:
 
 - illegal combinational self-dependency

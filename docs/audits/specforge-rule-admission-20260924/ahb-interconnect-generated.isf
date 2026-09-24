@@ -1,0 +1,42 @@
+(actor ahb_interconnect
+  (clock clk)
+  (reset (rst_n async active_low))
+  (watchdog 65536)
+
+  (interface
+    (input HBUSREQ)
+    (input HLOCK)
+    (input HADDR (width 32))
+    (input HTRANS (width 2))
+    (input HWRITE)
+    (input HSIZE (width 3))
+    (input HBURST (width 3))
+    (input HPROT (width 4))
+    (input HWDATA (width 32))
+    (input HREADYOUT_REGS)
+    (input HRESP_REGS)
+    (input HRDATA_REGS (width 32))
+    (output HGRANT (reset 1) (default 1))
+    (output HREADY (reset 1) (default 1))
+    (output HRESP (width 2) (reset 0) (default 0))
+    (output HRDATA (width 32) (reset 0) (default 0))
+    (output HSEL_REGS (reset 0) (default 0))
+    (output HADDR_REGS (width 32) (reset 0) (default 0))
+  )
+
+  (address-map ahb_decode
+    (window regs
+      (base REG_BASE width 32 default 0)
+      (size REG_SIZE width 32 default 4))
+  )
+
+  (decode
+    (overlap reject)
+    (priority source-order)
+    (unmapped-address error))
+
+  (behavior
+    (grant fixed-one)
+    (request-decode active-transfer-static-window)
+    (response-mux selected-subordinate-one-bit-hresp-to-requester-two-bit-hresp)
+    (unmapped-address-error two-cycle)))

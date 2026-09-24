@@ -6,9 +6,9 @@ Status and evidence: `docs/tasks/`. The system itself: `MEMORY_ARCHITECTURE.md`.
 ## Resume
 
 - repository_revision: derive with `git log -1 --format='%H %s'`; never shadow `HEAD` here.
-- active_work_unit: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.32.1` (pending)
-- next_action: Activate the owned SPECFORGE undeclared-rule-operand repair from a clean tree; read its bundle and reproduce current strict/native/API/MCP behavior in repository-local fixtures.
+- active_work_unit: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.32.1.2` (active)
+- next_action: Reproduce a declared but width-invalid ISF source and repair authored-source provenance/backend exception presentation under .32.1.2; preserve native/API/MCP diagnostics.
   Preserve the spent compiler workspace and `docs/audits/native-proxy-receipt-capture-20260923/result/` evidence.
-- in_flight_uncommitted: none after the owning commit workflow; derive Git state before starting the next leaf.
-- in_flight_background: none; all identity-repair checks and APB query results are consumed.
+- in_flight_uncommitted: none.
+- in_flight_background: none.
 - blockers: Historical startup/parent qualification and full CI/push remain gated. mdBook visual audit still lacks browser runtime access after the director enabled full CDP, Computer Use and the Chrome extension; fresh runtime checks still fail before browser discovery.

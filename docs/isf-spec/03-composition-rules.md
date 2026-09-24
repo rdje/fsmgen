@@ -220,6 +220,16 @@ instead of letting them fall through as later composition-pipeline fallout.
 
 ## 9. Rules
 
+Rule guards and assignment RHS expressions, including nested expressions,
+bit selections and bank index/value operands, must read declared actor symbols.
+Interface ports, actor storage, parameters and constants are in scope; enum
+members and aggregate leaves retain their existing resolution contracts.
+Transaction-local inferred assignment targets remain private to transactions.
+Unknown rule reads fail before scheduling or lowering, with actor/rule/operand
+context and stable check/semantic diagnostic code
+`FSMGEN_LANGUAGE_ISF_UNDECLARED_RULE_OPERAND`. No input is inferred from an
+undeclared rule read. MCP check and semantic tools preserve this failure report.
+
 ```lisp
 (rule always_ready ready
   (valid 1)

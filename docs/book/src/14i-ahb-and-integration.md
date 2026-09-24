@@ -192,13 +192,22 @@ names from each subordinate object, report topology
 `intent.ppif_ahb_interconnect_two_subordinate`, and coverage
 `ial2_ppif_ahb_interconnect_two_subordinate_pipeline_cli`. Matching `.ahb`
 alias support remains deferred until after the generic `.ppif` behavior ships.
+**Current lowering limitation:** the generated `ahb_interconnect.isf` review
+artifact contains `address-map`, `decode` and `behavior` clauses that the ISF
+parser does not accept. Its FSM is built separately. Endpoint
+ISF artifacts use the normal actor path. Repair of this layering gap, including
+generated-artifact replay and semantic/API/MCP evidence, is tracked as
+`SEMANTIC-INTROSPECTION-MCP-FRONTIER.32.4`. Successful protocol generation does
+not establish that every emitted `.isf` can be independently compiled.
+
 `.730` ships that selected generic `.ppif` behavior. The public source
-`ppif/ahb_interconnect_two_subordinate.ppif` lowers through generated
+`ppif/ahb_interconnect_two_subordinate.ppif` generates executable endpoint ISF
 `amba_requester.isf`, `ahb_status_subordinate.isf`,
-`ahb_control_subordinate.isf`, and `ahb_interconnect.isf` before generated
+`ahb_control_subordinate.isf`, plus the interconnect review artifact
+`ahb_interconnect.isf`. Its generated IAL0 artifacts are
 `amba_requester.fsm`, `ahb_status_subordinate.fsm`,
 `ahb_control_subordinate.fsm`, `ahb_interconnect.fsm`, and aggregate
-`ahb_tb.fsm`, emits HDL module `ahb_tb`, reports topology
+`ahb_tb.fsm`. It emits HDL module `ahb_tb`, reports topology
 `one_requester_two_subordinate_static_window_interconnect`, support-accounts as
 `intent.ppif_ahb_interconnect_two_subordinate`, replaces the old
 multi-subordinate residue with `ahb_broader_interconnect_decode_deferred`, and

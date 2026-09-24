@@ -72,6 +72,35 @@ whole record member or whole list member, still fail closed.
 
 Rule actions are structurally validated before the actor shell is returned.
 
+Rule reads must resolve to the actor's declared interface, storage, parameters
+or constants. This applies to guards, nested RHS expressions, bit selections,
+and bank index/value operands. Enum members and scalar aggregate leaves retain
+their declared meaning. A transaction-local variable is private to its
+transaction; its inferred assignment target does not become an actor input.
+When a transaction samples or drives a value that a rule must read, declare
+that shared signal as actor storage. The AXI AW/AR/W drivers and B/R acceptors
+do this for their captured payloads and launch/arm handoffs; the burst W driver
+also declares its shared active flag. Their transfer timing is unchanged.
+AXI composition coordinators likewise declare their shared active/completion
+flags and expected response IDs instead of relying on inferred rule state.
+
+For example, this complete source declares every rule operand:
+
+```lisp
+(actor valid_demo
+  (interface (input start) (input VALID)
+    (output A) (output B) (output done))
+  (transaction tx (on start) (complete done))
+  (rule r_a (A VALID))
+  (rule r_b (B VALID)))
+```
+
+Removing `(input VALID)` fails before scheduling or HDL generation. The
+diagnostic names `valid_demo`, `VALID` and both reading rules; FSMGen does not
+invent an input port. Native check/semantic JSON and their MCP tools preserve
+the stable code `FSMGEN_LANGUAGE_ISF_UNDECLARED_RULE_OPERAND` and authored
+source identity. Declare the intended actor signal, or correct its spelling.
+
 The shipped `(set port expr)` action is the canonical explicit rule setter.
 
 The shorter `(port expr)` action remains supported shorthand. Both accept a

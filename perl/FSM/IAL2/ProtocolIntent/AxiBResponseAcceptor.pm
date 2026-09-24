@@ -204,6 +204,8 @@ sub _emit_isf($contract) {
         _interface_line('output', $chan->{busy}),
         _interface_line('output', $chan->{done}) . ")",
         "",
+        "  (storage (var active_q (width 1)) (var arm_b_start (width 1)))",
+        "",
         "  (priority accept_b over arm_b)",
         "",
         "  (rule arm_b arm_b_start",

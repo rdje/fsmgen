@@ -394,6 +394,7 @@ sub _build_actor($self, $actor_ast, $source_label) {
     $self->_validate_actor_literal_zero_divisors($result);
     $self->_finalize_actor_clock_domain_timing($result, \%singleton_actor_clauses);
     $self->_finalize_actor_timing_conventions($result, \%singleton_actor_clauses);
+    $self->_validate_actor_rule_operands($result);
     $self->_validate_rule_trigger_targets($result);
     $self->_validate_rule_priority_targets($result);
     $self->_validate_actor_priority_targets($result);
@@ -4873,6 +4874,78 @@ sub _actor_declared_signal_names {
             && !ref($actor->{reset}{name});
 
     return %names;
+}
+
+sub _validate_actor_rule_operands($self, $actor) {
+    my %declared = _actor_declared_signal_names($actor);
+    $declared{$_->{name}} = 1 for @{$actor->{params} || []}, @{$actor->{constants} || []};
+    for my $domain (@{($actor->{clock_domains} || {})->{domains} || []}) {
+        $declared{$domain->{clock}} = 1 if defined $domain->{clock};
+        $declared{$domain->{reset}{name}} = 1
+            if ref($domain->{reset}) eq 'HASH' && defined $domain->{reset}{name};
+    }
+    my %aggregate_roots = map { $_->{name} => $_->{type_spec} }
+        grep { _is_aggregate_type_spec($_->{type_spec}) } @{$actor->{storage} || []};
+    my (%missing, %seen);
+    my $check = sub {
+        my ($expr, $context) = @_;
+        for my $name (_rule_operand_reference_names($expr, $actor, \%aggregate_roots)) {
+            next if $declared{$name} || $seen{$name}{$context}++;
+            push @{$missing{$name}}, $context;
+        }
+    };
+    for my $rule (@{$actor->{rules} || []}) {
+        my $context = "rule '$rule->{name}'";
+        $check->($rule->{when}[1], "$context guard") if $rule->{when};
+        for my $action (@{$rule->{actions} || []}) {
+            my $head = $action->[0];
+            # Activation targets/bindings and priority/pulse targets have their
+            # own validators. They are not ordinary expression read operands.
+            next if $head =~ /\A(?:trigger|atl_trigger|atl_trigger_batch|priority|pulse)\z/;
+            if ($head eq 'store' || $head eq 'load') {
+                $check->($action->[2], "$context $head index");
+                $check->($action->[3], "$context store value") if $head eq 'store';
+            } else {
+                $check->($action->[$head eq 'set' ? 2 : 1], "$context assignment RHS");
+            }
+        }
+    }
+    return 1 unless %missing;
+    die "Error: actor '$actor->{actor_name}' has undeclared rule read operands:\n"
+        . join('', map { "  - operand '$_' read by " . join(', ', @{$missing{$_}}) . "\n" } sort keys %missing)
+        . "Declare rule read operands in the actor interface, storage, parameters or constants; transaction-local values are not rule inputs.\n";
+}
+
+sub _rule_operand_reference_names {
+    my ($expr, $actor, $aggregate_roots) = @_;
+    return () unless defined $expr;
+    if (ref($expr) eq 'ARRAY') {
+        # state_active's argument denotes a state, not a signal read. Its
+        # dedicated expression validator owns arity and state resolution.
+        return () if @$expr && !ref($expr->[0]) && $expr->[0] eq 'state_active';
+        return map { _rule_operand_reference_names($_, $actor, $aggregate_roots) }
+            @{$expr}[1 .. $#$expr];
+    }
+    return () if ref($expr);
+    $expr =~ s/^\s+|\s+$//g;
+    return () if _is_numeric_or_exact_width_literal($expr)
+        || defined FSM::Package::IntegerLiteralSupport->integer_from_scalar($expr)
+        || $expr =~ /\Aconst_\d+b[01xXzZ_]+\z/;
+    # These domains were resolved by the preceding enum/aggregate validators.
+    return () if defined _aggregate_storage_path_token($expr, $aggregate_roots);
+    return () if defined FSM::Adapter::ISF::Parser->_resolve_actor_enum_member_value($actor, $expr);
+    if ($expr =~ /\A(.+?)(?:==|!=|<=|>=|=|<|>)(.+)\z/) {
+        my ($left, $right) = ($1, $2);
+        return map { _rule_operand_reference_names($_, $actor, $aggregate_roots) } ($left, $right);
+    }
+    if ($expr =~ /\A!([A-Za-z_]\w*(?:\[[\d:]+\])?)\z/) {
+        return _rule_operand_reference_names($1, $actor, $aggregate_roots);
+    }
+    # Retain the base identity of the scalar reference forms accepted by the
+    # IAL0 expression frontend. Width/slice/member validity stays with its
+    # existing validators; a suffix cannot implicitly declare a missing base.
+    return ($1) if $expr =~ /\A([A-Za-z_]\w*)(?:\.[A-Za-z_]\w*)*(?:\[[\d:]+\])?(?:'\d+)?(?:>)?\z/;
+    return (); # Other malformed tokens remain expression-syntax diagnostics.
 }
 
 sub _actor_interface_input_widths {

@@ -1,0 +1,1547 @@
+{
+  "axi_behavior": {
+    "after": [
+      {
+        "hdl_sha256": "6d0655f7e982f90e0bd73816d902aacff2a4bf8badc2cddb9ca39cac51ea605a",
+        "oracle": "t/1499-ial2-axi-aw-driver.t",
+        "oracle_sha256": "e355fa067fc16d1bfd67e6e05d607989b2538c872678e6397ce7a493584bc0cd",
+        "source": "axi_aw_driver",
+        "stages": [
+          {
+            "argv": [
+              "./bin/fsmgen",
+              "--strict",
+              "--quiet",
+              "--output",
+              ".artifacts/specforge-undeclared-rule/axi-after/axi_aw_driver.sv",
+              ".artifacts/specforge-undeclared-rule/axi-after/axi_aw_driver.fsm"
+            ],
+            "exit": 0,
+            "stage": "generate",
+            "stdout": ""
+          },
+          {
+            "argv": [
+              "verilator",
+              "--binary",
+              "--timing",
+              "--assert",
+              "-Wno-fatal",
+              "-j",
+              "1",
+              "--top-module",
+              "axi_aw_driver_cardinality_tb",
+              "--Mdir",
+              ".artifacts/specforge-undeclared-rule/axi-after/axi_aw_driver-obj",
+              ".artifacts/specforge-undeclared-rule/axi-after/axi_aw_driver.sv",
+              ".artifacts/specforge-undeclared-rule/axi-after/axi_aw_driver-tb.sv"
+            ],
+            "exit": 0,
+            "stage": "compile",
+            "stdout": "c++ -Os  -I.  -MMD -I/opt/homebrew/Cellar/verilator/5.050/share/verilator/include -I/opt/homebrew/Cellar/verilator/5.050/share/verilator/include/vltstd -DVERILATOR=1 -DVM_COVERAGE=0 -DVM_SC=0 -DVM_TIMING=1 -DVM_TRACE=0 -DVM_TRACE_FST=0 -DVM_TRACE_VCD=0 -DVM_TRACE_SAIF=0 -DVM_VPI=0 -faligned-new -fbracket-depth=4096 -fcf-protection=none -Xclang -fno-pch-timestamp -Qunused-arguments -Wno-bool-operation -Wno-c++11-narrowing -Wno-constant-logical-operand -Wno-int-in-bool-context -Wno-non-pod-varargs -Wno-parentheses-equality -Wno-shadow -Wno-sign-compare -Wno-tautological-bitwise-compare -Wno-tautological-compare -Wno-uninitialized -Wno-unnecessary-virtual-specifier -Wno-unused-but-set-parameter -Wno-unused-but-set-variable -Wno-unused-parameter -Wno-unused-variable -Wno-vla-cxx-extension    -DVL_TIME_CONTEXT   -std=gnu++20 -c -o verilated.o /opt/homebrew/Cellar/verilator/5.050/share/verilator/include/verilated.cpp\nc++ -Os  -I.  -MMD -I/opt/homebrew/Cellar/verilator/5.050/share/verilator/include -I/opt/homebrew/Cellar/verilator/5.050/share/verilator/include/vltstd -DVERILATOR=1 -DVM_COVERAGE=0 -DVM_SC=0 -DVM_TIMING=1 -DVM_TRACE=0 -DVM_TRACE_FST=0 -DVM_TRACE_VCD=0 -DVM_TRACE_SAIF=0 -DVM_VPI=0 -faligned-new -fbracket-depth=4096 -fcf-protection=none -Xclang -fno-pch-timestamp -Qunused-arguments -Wno-bool-operation -Wno-c++11-narrowing -Wno-constant-logical-operand -Wno-int-in-bool-context -Wno-non-pod-varargs -Wno-parentheses-equality -Wno-shadow -Wno-sign-compare -Wno-tautological-bitwise-compare -Wno-tautological-compare -Wno-uninitialized -Wno-unnecessary-virtual-specifier -Wno-unused-but-set-parameter -Wno-unused-but-set-variable -Wno-unused-parameter -Wno-unused-variable -Wno-vla-cxx-extension    -DVL_TIME_CONTEXT   -std=gnu++20 -c -o verilated_timing.o /opt/homebrew/Cellar/verilator/5.050/share/verilator/include/verilated_timing.cpp\nc++ -Os  -I.  -MMD -I/opt/homebrew/Cellar/verilator/5.050/share/verilator/include -I/opt/homebrew/Cellar/verilator/5.050/share/verilator/include/vltstd -DVERILATOR=1 -DVM_COVERAGE=0 -DVM_SC=0 -DVM_TIMING=1 -DVM_TRACE=0 -DVM_TRACE_FST=0 -DVM_TRACE_VCD=0 -DVM_TRACE_SAIF=0 -DVM_VPI=0 -faligned-new -fbracket-depth=4096 -fcf-protection=none -Xclang -fno-pch-timestamp -Qunused-arguments -Wno-bool-operation -Wno-c++11-narrowing -Wno-constant-logical-operand -Wno-int-in-bool-context -Wno-non-pod-varargs -Wno-parentheses-equality -Wno-shadow -Wno-sign-compare -Wno-tautological-bitwise-compare -Wno-tautological-compare -Wno-uninitialized -Wno-unnecessary-virtual-specifier -Wno-unused-but-set-parameter -Wno-unused-but-set-variable -Wno-unused-parameter -Wno-unused-variable -Wno-vla-cxx-extension    -DVL_TIME_CONTEXT   -std=gnu++20 -c -o verilated_threads.o /opt/homebrew/Cellar/verilator/5.050/share/verilator/include/verilated_threads.cpp\npython3 /opt/homebrew/Cellar/verilator/5.050/share/verilator/bin/verilator_includer -DVL_INCLUDE_OPT=include Vaxi_aw_driver_cardinality_tb.cpp Vaxi_aw_driver_cardinality_tb___024root__0.cpp Vaxi_aw_driver_cardinality_tb__main.cpp Vaxi_aw_driver_cardinality_tb__ConstPool__0__Slow.cpp Vaxi_aw_driver_cardinality_tb___024root__Slow.cpp Vaxi_aw_driver_cardinality_tb___024root__0__Slow.cpp Vaxi_aw_driver_cardinality_tb__Syms__Slow.cpp > Vaxi_aw_driver_cardinality_tb__ALL.cpp\nc++ -Os  -I.  -MMD -I/opt/homebrew/Cellar/verilator/5.050/share/verilator/include -I/opt/homebrew/Cellar/verilator/5.050/share/verilator/include/vltstd -DVERILATOR=1 -DVM_COVERAGE=0 -DVM_SC=0 -DVM_TIMING=1 -DVM_TRACE=0 -DVM_TRACE_FST=0 -DVM_TRACE_VCD=0 -DVM_TRACE_SAIF=0 -DVM_VPI=0 -faligned-new -fbracket-depth=4096 -fcf-protection=none -Xclang -fno-pch-timestamp -Qunused-arguments -Wno-bool-operation -Wno-c++11-narrowing -Wno-constant-logical-operand -Wno-int-in-bool-context -Wno-non-pod-varargs -Wno-parentheses-equality -Wno-shadow -Wno-sign-compare -Wno-tautological-bitwise-compare -Wno-tautological-compare -Wno-uninitialized -Wno-unnecessary-virtual-specifier -Wno-unused-but-set-parameter -Wno-unused-but-set-variable -Wno-unused-parameter -Wno-unused-variable -Wno-vla-cxx-extension    -DVL_TIME_CONTEXT   -std=gnu++20 -c -o Vaxi_aw_driver_cardinality_tb__ALL.o Vaxi_aw_driver_cardinality_tb__ALL.cpp\nc++  -Wl,-U,__Z15vl_time_stamp64v,-U,__Z13sc_time_stampv,-U,_vlog_startup_routines   verilated.o verilated_timing.o verilated_threads.o Vaxi_aw_driver_cardinality_tb__ALL.a    -pthread -lpthread   -o Vaxi_aw_driver_cardinality_tb\nrm Vaxi_aw_driver_cardinality_tb__ALL.verilator_deplist.tmp\n- V e r i l a t i o n   R e p o r t: Verilator 5.050 2026-07-01 rev vUNKNOWN-built20260701\n- Verilator: Built from 0.089 MB sources in 3 modules, into 0.104 MB in 7 C++ files needing 0.000 MB\n- Verilator: Walltime 4.496 s (elab=0.005, cvt=0.013, bld=4.468); cpu 0.020 s on 1 threads; allocated 12.906 MB\n"
+          },
+          {
+            "argv": [
+              ".artifacts/specforge-undeclared-rule/axi-after/axi_aw_driver-obj/Vaxi_aw_driver_cardinality_tb"
+            ],
+            "exit": 0,
+            "stage": "simulate",
+            "stdout": "PASS handshakes=2 done_pulses=2\n- .artifacts/specforge-undeclared-rule/axi-after/axi_aw_driver-tb.sv:95: Verilog $finish\n- S i m u l a t i o n   R e p o r t: Verilator 5.050 2026-07-01\n- Verilator: $finish at 380ps; walltime 0.000 s; speed 19.000 us/s\n- Verilator: cpu 0.000 s on 1 threads; allocated 2 MB\n"
+          }
+        ]
+      },
+      {
+        "hdl_sha256": "f777f21e8c2ae5952b86d111cac7b1b802ec23ab4cfcfef2270d75763e94707d",
+        "oracle": "t/1500-ial2-axi-w-driver.t",
+        "oracle_sha256": "ae63b5d61fdd46dd3315b6371ae882c47e7848d65bc1e227f62b35af2f78a06e",
+        "source": "axi_w_driver",
+        "stages": [
+          {
+            "argv": [
+              "./bin/fsmgen",
+              "--strict",
+              "--quiet",
+              "--output",
+              ".artifacts/specforge-undeclared-rule/axi-after/axi_w_driver.sv",
+              ".artifacts/specforge-undeclared-rule/axi-after/axi_w_driver.fsm"
+            ],
+            "exit": 0,
+            "stage": "generate",
+            "stdout": ""
+          },
+          {
+            "argv": [
+              "verilator",
+              "--binary",
+              "--timing",
+              "--assert",
+              "-Wno-fatal",
+              "-j",
+              "1",
+              "--top-module",
+              "axi_w_driver_cardinality_tb",
+              "--Mdir",
+              ".artifacts/specforge-undeclared-rule/axi-after/axi_w_driver-obj",
+              ".artifacts/specforge-undeclared-rule/axi-after/axi_w_driver.sv",
+              ".artifacts/specforge-undeclared-rule/axi-after/axi_w_driver-tb.sv"
+            ],
+            "exit": 0,
+            "stage": "compile",
+            "stdout": "c++ -Os  -I.  -MMD -I/opt/homebrew/Cellar/verilator/5.050/share/verilator/include -I/opt/homebrew/Cellar/verilator/5.050/share/verilator/include/vltstd -DVERILATOR=1 -DVM_COVERAGE=0 -DVM_SC=0 -DVM_TIMING=1 -DVM_TRACE=0 -DVM_TRACE_FST=0 -DVM_TRACE_VCD=0 -DVM_TRACE_SAIF=0 -DVM_VPI=0 -faligned-new -fbracket-depth=4096 -fcf-protection=none -Xclang -fno-pch-timestamp -Qunused-arguments -Wno-bool-operation -Wno-c++11-narrowing -Wno-constant-logical-operand -Wno-int-in-bool-context -Wno-non-pod-varargs -Wno-parentheses-equality -Wno-shadow -Wno-sign-compare -Wno-tautological-bitwise-compare -Wno-tautological-compare -Wno-uninitialized -Wno-unnecessary-virtual-specifier -Wno-unused-but-set-parameter -Wno-unused-but-set-variable -Wno-unused-parameter -Wno-unused-variable -Wno-vla-cxx-extension    -DVL_TIME_CONTEXT   -std=gnu++20 -c -o verilated.o /opt/homebrew/Cellar/verilator/5.050/share/verilator/include/verilated.cpp\nc++ -Os  -I.  -MMD -I/opt/homebrew/Cellar/verilator/5.050/share/verilator/include -I/opt/homebrew/Cellar/verilator/5.050/share/verilator/include/vltstd -DVERILATOR=1 -DVM_COVERAGE=0 -DVM_SC=0 -DVM_TIMING=1 -DVM_TRACE=0 -DVM_TRACE_FST=0 -DVM_TRACE_VCD=0 -DVM_TRACE_SAIF=0 -DVM_VPI=0 -faligned-new -fbracket-depth=4096 -fcf-protection=none -Xclang -fno-pch-timestamp -Qunused-arguments -Wno-bool-operation -Wno-c++11-narrowing -Wno-constant-logical-operand -Wno-int-in-bool-context -Wno-non-pod-varargs -Wno-parentheses-equality -Wno-shadow -Wno-sign-compare -Wno-tautological-bitwise-compare -Wno-tautological-compare -Wno-uninitialized -Wno-unnecessary-virtual-specifier -Wno-unused-but-set-parameter -Wno-unused-but-set-variable -Wno-unused-parameter -Wno-unused-variable -Wno-vla-cxx-extension    -DVL_TIME_CONTEXT   -std=gnu++20 -c -o verilated_timing.o /opt/homebrew/Cellar/verilator/5.050/share/verilator/include/verilated_timing.cpp\nc++ -Os  -I.  -MMD -I/opt/homebrew/Cellar/verilator/5.050/share/verilator/include -I/opt/homebrew/Cellar/verilator/5.050/share/verilator/include/vltstd -DVERILATOR=1 -DVM_COVERAGE=0 -DVM_SC=0 -DVM_TIMING=1 -DVM_TRACE=0 -DVM_TRACE_FST=0 -DVM_TRACE_VCD=0 -DVM_TRACE_SAIF=0 -DVM_VPI=0 -faligned-new -fbracket-depth=4096 -fcf-protection=none -Xclang -fno-pch-timestamp -Qunused-arguments -Wno-bool-operation -Wno-c++11-narrowing -Wno-constant-logical-operand -Wno-int-in-bool-context -Wno-non-pod-varargs -Wno-parentheses-equality -Wno-shadow -Wno-sign-compare -Wno-tautological-bitwise-compare -Wno-tautological-compare -Wno-uninitialized -Wno-unnecessary-virtual-specifier -Wno-unused-but-set-parameter -Wno-unused-but-set-variable -Wno-unused-parameter -Wno-unused-variable -Wno-vla-cxx-extension    -DVL_TIME_CONTEXT   -std=gnu++20 -c -o verilated_threads.o /opt/homebrew/Cellar/verilator/5.050/share/verilator/include/verilated_threads.cpp\npython3 /opt/homebrew/Cellar/verilator/5.050/share/verilator/bin/verilator_includer -DVL_INCLUDE_OPT=include Vaxi_w_driver_cardinality_tb.cpp Vaxi_w_driver_cardinality_tb___024root__0.cpp Vaxi_w_driver_cardinality_tb__main.cpp Vaxi_w_driver_cardinality_tb__ConstPool__0__Slow.cpp Vaxi_w_driver_cardinality_tb___024root__Slow.cpp Vaxi_w_driver_cardinality_tb___024root__0__Slow.cpp Vaxi_w_driver_cardinality_tb__Syms__Slow.cpp > Vaxi_w_driver_cardinality_tb__ALL.cpp\nc++ -Os  -I.  -MMD -I/opt/homebrew/Cellar/verilator/5.050/share/verilator/include -I/opt/homebrew/Cellar/verilator/5.050/share/verilator/include/vltstd -DVERILATOR=1 -DVM_COVERAGE=0 -DVM_SC=0 -DVM_TIMING=1 -DVM_TRACE=0 -DVM_TRACE_FST=0 -DVM_TRACE_VCD=0 -DVM_TRACE_SAIF=0 -DVM_VPI=0 -faligned-new -fbracket-depth=4096 -fcf-protection=none -Xclang -fno-pch-timestamp -Qunused-arguments -Wno-bool-operation -Wno-c++11-narrowing -Wno-constant-logical-operand -Wno-int-in-bool-context -Wno-non-pod-varargs -Wno-parentheses-equality -Wno-shadow -Wno-sign-compare -Wno-tautological-bitwise-compare -Wno-tautological-compare -Wno-uninitialized -Wno-unnecessary-virtual-specifier -Wno-unused-but-set-parameter -Wno-unused-but-set-variable -Wno-unused-parameter -Wno-unused-variable -Wno-vla-cxx-extension    -DVL_TIME_CONTEXT   -std=gnu++20 -c -o Vaxi_w_driver_cardinality_tb__ALL.o Vaxi_w_driver_cardinality_tb__ALL.cpp\nc++  -Wl,-U,__Z15vl_time_stamp64v,-U,__Z13sc_time_stampv,-U,_vlog_startup_routines   verilated.o verilated_timing.o verilated_threads.o Vaxi_w_driver_cardinality_tb__ALL.a    -pthread -lpthread   -o Vaxi_w_driver_cardinality_tb\nrm Vaxi_w_driver_cardinality_tb__ALL.verilator_deplist.tmp\n- V e r i l a t i o n   R e p o r t: Verilator 5.050 2026-07-01 rev vUNKNOWN-built20260701\n- Verilator: Built from 0.081 MB sources in 3 modules, into 0.097 MB in 7 C++ files needing 0.000 MB\n- Verilator: Walltime 4.580 s (elab=0.001, cvt=0.009, bld=4.562); cpu 0.015 s on 1 threads; allocated 12.703 MB\n"
+          },
+          {
+            "argv": [
+              ".artifacts/specforge-undeclared-rule/axi-after/axi_w_driver-obj/Vaxi_w_driver_cardinality_tb"
+            ],
+            "exit": 0,
+            "stage": "simulate",
+            "stdout": "PASS handshakes=2 done_pulses=2\n- .artifacts/specforge-undeclared-rule/axi-after/axi_w_driver-tb.sv:85: Verilog $finish\n- S i m u l a t i o n   R e p o r t: Verilator 5.050 2026-07-01\n- Verilator: $finish at 380ps; walltime 0.000 s; speed 15.833 us/s\n- Verilator: cpu 0.000 s on 1 threads; allocated 2 MB\n"
+          }
+        ]
+      },
+      {
+        "hdl_sha256": "cdcba52e83a24964da6a3623d03d1d1e2f3d1195c65ee6ce424daf8d368b3464",
+        "oracle": "t/1501-ial2-axi-b-response-acceptor.t",
+        "oracle_sha256": "3fd06679d67a32f91e30ec59ad936d33d213e9a120959396bc03a051afd986c3",
+        "source": "axi_b_response_acceptor",
+        "stages": [
+          {
+            "argv": [
+              "./bin/fsmgen",
+              "--strict",
+              "--quiet",
+              "--output",
+              ".artifacts/specforge-undeclared-rule/axi-after/axi_b_response_acceptor.sv",
+              ".artifacts/specforge-undeclared-rule/axi-after/axi_b_response_acceptor.fsm"
+            ],
+            "exit": 0,
+            "stage": "generate",
+            "stdout": ""
+          },
+          {
+            "argv": [
+              "verilator",
+              "--binary",
+              "--timing",
+              "--assert",
+              "-Wno-fatal",
+              "-j",
+              "1",
+              "--top-module",
+              "axi_b_response_acceptor_cardinality_tb",
+              "--Mdir",
+              ".artifacts/specforge-undeclared-rule/axi-after/axi_b_response_acceptor-obj",
+              ".artifacts/specforge-undeclared-rule/axi-after/axi_b_response_acceptor.sv",
+              ".artifacts/specforge-undeclared-rule/axi-after/axi_b_response_acceptor-tb.sv"
+            ],
+            "exit": 0,
+            "stage": "compile",
+            "stdout": "c++ -Os  -I.  -MMD -I/opt/homebrew/Cellar/verilator/5.050/share/verilator/include -I/opt/homebrew/Cellar/verilator/5.050/share/verilator/include/vltstd -DVERILATOR=1 -DVM_COVERAGE=0 -DVM_SC=0 -DVM_TIMING=1 -DVM_TRACE=0 -DVM_TRACE_FST=0 -DVM_TRACE_VCD=0 -DVM_TRACE_SAIF=0 -DVM_VPI=0 -faligned-new -fbracket-depth=4096 -fcf-protection=none -Xclang -fno-pch-timestamp -Qunused-arguments -Wno-bool-operation -Wno-c++11-narrowing -Wno-constant-logical-operand -Wno-int-in-bool-context -Wno-non-pod-varargs -Wno-parentheses-equality -Wno-shadow -Wno-sign-compare -Wno-tautological-bitwise-compare -Wno-tautological-compare -Wno-uninitialized -Wno-unnecessary-virtual-specifier -Wno-unused-but-set-parameter -Wno-unused-but-set-variable -Wno-unused-parameter -Wno-unused-variable -Wno-vla-cxx-extension    -DVL_TIME_CONTEXT   -std=gnu++20 -c -o verilated.o /opt/homebrew/Cellar/verilator/5.050/share/verilator/include/verilated.cpp\nc++ -Os  -I.  -MMD -I/opt/homebrew/Cellar/verilator/5.050/share/verilator/include -I/opt/homebrew/Cellar/verilator/5.050/share/verilator/include/vltstd -DVERILATOR=1 -DVM_COVERAGE=0 -DVM_SC=0 -DVM_TIMING=1 -DVM_TRACE=0 -DVM_TRACE_FST=0 -DVM_TRACE_VCD=0 -DVM_TRACE_SAIF=0 -DVM_VPI=0 -faligned-new -fbracket-depth=4096 -fcf-protection=none -Xclang -fno-pch-timestamp -Qunused-arguments -Wno-bool-operation -Wno-c++11-narrowing -Wno-constant-logical-operand -Wno-int-in-bool-context -Wno-non-pod-varargs -Wno-parentheses-equality -Wno-shadow -Wno-sign-compare -Wno-tautological-bitwise-compare -Wno-tautological-compare -Wno-uninitialized -Wno-unnecessary-virtual-specifier -Wno-unused-but-set-parameter -Wno-unused-but-set-variable -Wno-unused-parameter -Wno-unused-variable -Wno-vla-cxx-extension    -DVL_TIME_CONTEXT   -std=gnu++20 -c -o verilated_timing.o /opt/homebrew/Cellar/verilator/5.050/share/verilator/include/verilated_timing.cpp\nc++ -Os  -I.  -MMD -I/opt/homebrew/Cellar/verilator/5.050/share/verilator/include -I/opt/homebrew/Cellar/verilator/5.050/share/verilator/include/vltstd -DVERILATOR=1 -DVM_COVERAGE=0 -DVM_SC=0 -DVM_TIMING=1 -DVM_TRACE=0 -DVM_TRACE_FST=0 -DVM_TRACE_VCD=0 -DVM_TRACE_SAIF=0 -DVM_VPI=0 -faligned-new -fbracket-depth=4096 -fcf-protection=none -Xclang -fno-pch-timestamp -Qunused-arguments -Wno-bool-operation -Wno-c++11-narrowing -Wno-constant-logical-operand -Wno-int-in-bool-context -Wno-non-pod-varargs -Wno-parentheses-equality -Wno-shadow -Wno-sign-compare -Wno-tautological-bitwise-compare -Wno-tautological-compare -Wno-uninitialized -Wno-unnecessary-virtual-specifier -Wno-unused-but-set-parameter -Wno-unused-but-set-variable -Wno-unused-parameter -Wno-unused-variable -Wno-vla-cxx-extension    -DVL_TIME_CONTEXT   -std=gnu++20 -c -o verilated_threads.o /opt/homebrew/Cellar/verilator/5.050/share/verilator/include/verilated_threads.cpp\npython3 /opt/homebrew/Cellar/verilator/5.050/share/verilator/bin/verilator_includer -DVL_INCLUDE_OPT=include Vaxi_b_response_acceptor_cardinality_tb.cpp Vaxi_b_response_acceptor_cardinality_tb___024root__0.cpp Vaxi_b_response_acceptor_cardinality_tb__main.cpp Vaxi_b_response_acceptor_cardinality_tb__ConstPool__0__Slow.cpp Vaxi_b_response_acceptor_cardinality_tb___024root__Slow.cpp Vaxi_b_response_acceptor_cardinality_tb___024root__0__Slow.cpp Vaxi_b_response_acceptor_cardinality_tb__Syms__Slow.cpp > Vaxi_b_response_acceptor_cardinality_tb__ALL.cpp\nc++ -Os  -I.  -MMD -I/opt/homebrew/Cellar/verilator/5.050/share/verilator/include -I/opt/homebrew/Cellar/verilator/5.050/share/verilator/include/vltstd -DVERILATOR=1 -DVM_COVERAGE=0 -DVM_SC=0 -DVM_TIMING=1 -DVM_TRACE=0 -DVM_TRACE_FST=0 -DVM_TRACE_VCD=0 -DVM_TRACE_SAIF=0 -DVM_VPI=0 -faligned-new -fbracket-depth=4096 -fcf-protection=none -Xclang -fno-pch-timestamp -Qunused-arguments -Wno-bool-operation -Wno-c++11-narrowing -Wno-constant-logical-operand -Wno-int-in-bool-context -Wno-non-pod-varargs -Wno-parentheses-equality -Wno-shadow -Wno-sign-compare -Wno-tautological-bitwise-compare -Wno-tautological-compare -Wno-uninitialized -Wno-unnecessary-virtual-specifier -Wno-unused-but-set-parameter -Wno-unused-but-set-variable -Wno-unused-parameter -Wno-unused-variable -Wno-vla-cxx-extension    -DVL_TIME_CONTEXT   -std=gnu++20 -c -o Vaxi_b_response_acceptor_cardinality_tb__ALL.o Vaxi_b_response_acceptor_cardinality_tb__ALL.cpp\nc++  -Wl,-U,__Z15vl_time_stamp64v,-U,__Z13sc_time_stampv,-U,_vlog_startup_routines   verilated.o verilated_timing.o verilated_threads.o Vaxi_b_response_acceptor_cardinality_tb__ALL.a    -pthread -lpthread   -o Vaxi_b_response_acceptor_cardinality_tb\nrm Vaxi_b_response_acceptor_cardinality_tb__ALL.verilator_deplist.tmp\n- V e r i l a t i o n   R e p o r t: Verilator 5.050 2026-07-01 rev vUNKNOWN-built20260701\n- Verilator: Built from 0.080 MB sources in 3 modules, into 0.105 MB in 7 C++ files needing 0.000 MB\n- Verilator: Walltime 4.612 s (elab=0.001, cvt=0.008, bld=4.596); cpu 0.014 s on 1 threads; allocated 12.672 MB\n"
+          },
+          {
+            "argv": [
+              ".artifacts/specforge-undeclared-rule/axi-after/axi_b_response_acceptor-obj/Vaxi_b_response_acceptor_cardinality_tb"
+            ],
+            "exit": 0,
+            "stage": "simulate",
+            "stdout": "PASS handshakes=2 done_pulses=2 bid=9 bresp=3\n- .artifacts/specforge-undeclared-rule/axi-after/axi_b_response_acceptor-tb.sv:102: Verilog $finish\n- S i m u l a t i o n   R e p o r t: Verilator 5.050 2026-07-01\n- Verilator: $finish at 460ps; walltime 0.000 s; speed 19.167 us/s\n- Verilator: cpu 0.000 s on 1 threads; allocated 2 MB\n"
+          }
+        ]
+      },
+      {
+        "hdl_sha256": "aec4f05a7ffff7b2867e2ff1d86edce829ed98cd94dc2e3446f42f04d759afe0",
+        "oracle": "t/1504-ial2-axi-ar-driver.t",
+        "oracle_sha256": "3b988dd5a24c614deba041441056e751031cea538fe04ca66d4ed8f3df87ead4",
+        "source": "axi_ar_driver",
+        "stages": [
+          {
+            "argv": [
+              "./bin/fsmgen",
+              "--strict",
+              "--quiet",
+              "--output",
+              ".artifacts/specforge-undeclared-rule/axi-after/axi_ar_driver.sv",
+              ".artifacts/specforge-undeclared-rule/axi-after/axi_ar_driver.fsm"
+            ],
+            "exit": 0,
+            "stage": "generate",
+            "stdout": ""
+          },
+          {
+            "argv": [
+              "verilator",
+              "--binary",
+              "--timing",
+              "--assert",
+              "-Wno-fatal",
+              "-j",
+              "1",
+              "--top-module",
+              "axi_ar_driver_cardinality_tb",
+              "--Mdir",
+              ".artifacts/specforge-undeclared-rule/axi-after/axi_ar_driver-obj",
+              ".artifacts/specforge-undeclared-rule/axi-after/axi_ar_driver.sv",
+              ".artifacts/specforge-undeclared-rule/axi-after/axi_ar_driver-tb.sv"
+            ],
+            "exit": 0,
+            "stage": "compile",
+            "stdout": "c++ -Os  -I.  -MMD -I/opt/homebrew/Cellar/verilator/5.050/share/verilator/include -I/opt/homebrew/Cellar/verilator/5.050/share/verilator/include/vltstd -DVERILATOR=1 -DVM_COVERAGE=0 -DVM_SC=0 -DVM_TIMING=1 -DVM_TRACE=0 -DVM_TRACE_FST=0 -DVM_TRACE_VCD=0 -DVM_TRACE_SAIF=0 -DVM_VPI=0 -faligned-new -fbracket-depth=4096 -fcf-protection=none -Xclang -fno-pch-timestamp -Qunused-arguments -Wno-bool-operation -Wno-c++11-narrowing -Wno-constant-logical-operand -Wno-int-in-bool-context -Wno-non-pod-varargs -Wno-parentheses-equality -Wno-shadow -Wno-sign-compare -Wno-tautological-bitwise-compare -Wno-tautological-compare -Wno-uninitialized -Wno-unnecessary-virtual-specifier -Wno-unused-but-set-parameter -Wno-unused-but-set-variable -Wno-unused-parameter -Wno-unused-variable -Wno-vla-cxx-extension    -DVL_TIME_CONTEXT   -std=gnu++20 -c -o verilated.o /opt/homebrew/Cellar/verilator/5.050/share/verilator/include/verilated.cpp\nc++ -Os  -I.  -MMD -I/opt/homebrew/Cellar/verilator/5.050/share/verilator/include -I/opt/homebrew/Cellar/verilator/5.050/share/verilator/include/vltstd -DVERILATOR=1 -DVM_COVERAGE=0 -DVM_SC=0 -DVM_TIMING=1 -DVM_TRACE=0 -DVM_TRACE_FST=0 -DVM_TRACE_VCD=0 -DVM_TRACE_SAIF=0 -DVM_VPI=0 -faligned-new -fbracket-depth=4096 -fcf-protection=none -Xclang -fno-pch-timestamp -Qunused-arguments -Wno-bool-operation -Wno-c++11-narrowing -Wno-constant-logical-operand -Wno-int-in-bool-context -Wno-non-pod-varargs -Wno-parentheses-equality -Wno-shadow -Wno-sign-compare -Wno-tautological-bitwise-compare -Wno-tautological-compare -Wno-uninitialized -Wno-unnecessary-virtual-specifier -Wno-unused-but-set-parameter -Wno-unused-but-set-variable -Wno-unused-parameter -Wno-unused-variable -Wno-vla-cxx-extension    -DVL_TIME_CONTEXT   -std=gnu++20 -c -o verilated_timing.o /opt/homebrew/Cellar/verilator/5.050/share/verilator/include/verilated_timing.cpp\nc++ -Os  -I.  -MMD -I/opt/homebrew/Cellar/verilator/5.050/share/verilator/include -I/opt/homebrew/Cellar/verilator/5.050/share/verilator/include/vltstd -DVERILATOR=1 -DVM_COVERAGE=0 -DVM_SC=0 -DVM_TIMING=1 -DVM_TRACE=0 -DVM_TRACE_FST=0 -DVM_TRACE_VCD=0 -DVM_TRACE_SAIF=0 -DVM_VPI=0 -faligned-new -fbracket-depth=4096 -fcf-protection=none -Xclang -fno-pch-timestamp -Qunused-arguments -Wno-bool-operation -Wno-c++11-narrowing -Wno-constant-logical-operand -Wno-int-in-bool-context -Wno-non-pod-varargs -Wno-parentheses-equality -Wno-shadow -Wno-sign-compare -Wno-tautological-bitwise-compare -Wno-tautological-compare -Wno-uninitialized -Wno-unnecessary-virtual-specifier -Wno-unused-but-set-parameter -Wno-unused-but-set-variable -Wno-unused-parameter -Wno-unused-variable -Wno-vla-cxx-extension    -DVL_TIME_CONTEXT   -std=gnu++20 -c -o verilated_threads.o /opt/homebrew/Cellar/verilator/5.050/share/verilator/include/verilated_threads.cpp\npython3 /opt/homebrew/Cellar/verilator/5.050/share/verilator/bin/verilator_includer -DVL_INCLUDE_OPT=include Vaxi_ar_driver_cardinality_tb.cpp Vaxi_ar_driver_cardinality_tb___024root__0.cpp Vaxi_ar_driver_cardinality_tb__main.cpp Vaxi_ar_driver_cardinality_tb__ConstPool__0__Slow.cpp Vaxi_ar_driver_cardinality_tb___024root__Slow.cpp Vaxi_ar_driver_cardinality_tb___024root__0__Slow.cpp Vaxi_ar_driver_cardinality_tb__Syms__Slow.cpp > Vaxi_ar_driver_cardinality_tb__ALL.cpp\nc++ -Os  -I.  -MMD -I/opt/homebrew/Cellar/verilator/5.050/share/verilator/include -I/opt/homebrew/Cellar/verilator/5.050/share/verilator/include/vltstd -DVERILATOR=1 -DVM_COVERAGE=0 -DVM_SC=0 -DVM_TIMING=1 -DVM_TRACE=0 -DVM_TRACE_FST=0 -DVM_TRACE_VCD=0 -DVM_TRACE_SAIF=0 -DVM_VPI=0 -faligned-new -fbracket-depth=4096 -fcf-protection=none -Xclang -fno-pch-timestamp -Qunused-arguments -Wno-bool-operation -Wno-c++11-narrowing -Wno-constant-logical-operand -Wno-int-in-bool-context -Wno-non-pod-varargs -Wno-parentheses-equality -Wno-shadow -Wno-sign-compare -Wno-tautological-bitwise-compare -Wno-tautological-compare -Wno-uninitialized -Wno-unnecessary-virtual-specifier -Wno-unused-but-set-parameter -Wno-unused-but-set-variable -Wno-unused-parameter -Wno-unused-variable -Wno-vla-cxx-extension    -DVL_TIME_CONTEXT   -std=gnu++20 -c -o Vaxi_ar_driver_cardinality_tb__ALL.o Vaxi_ar_driver_cardinality_tb__ALL.cpp\nc++  -Wl,-U,__Z15vl_time_stamp64v,-U,__Z13sc_time_stampv,-U,_vlog_startup_routines   verilated.o verilated_timing.o verilated_threads.o Vaxi_ar_driver_cardinality_tb__ALL.a    -pthread -lpthread   -o Vaxi_ar_driver_cardinality_tb\nrm Vaxi_ar_driver_cardinality_tb__ALL.verilator_deplist.tmp\n- V e r i l a t i o n   R e p o r t: Verilator 5.050 2026-07-01 rev vUNKNOWN-built20260701\n- Verilator: Built from 0.091 MB sources in 3 modules, into 0.131 MB in 7 C++ files needing 0.001 MB\n- Verilator: Walltime 4.653 s (elab=0.002, cvt=0.012, bld=4.632); cpu 0.018 s on 1 threads; allocated 13.375 MB\n"
+          },
+          {
+            "argv": [
+              ".artifacts/specforge-undeclared-rule/axi-after/axi_ar_driver-obj/Vaxi_ar_driver_cardinality_tb"
+            ],
+            "exit": 0,
+            "stage": "simulate",
+            "stdout": "PASS handshakes=3 done_pulses=3\n- .artifacts/specforge-undeclared-rule/axi-after/axi_ar_driver-tb.sv:149: Verilog $finish\n- S i m u l a t i o n   R e p o r t: Verilator 5.050 2026-07-01\n- Verilator: $finish at 680ps; walltime 0.000 s; speed 18.889 us/s\n- Verilator: cpu 0.000 s on 1 threads; allocated 2 MB\n"
+          }
+        ]
+      },
+      {
+        "hdl_sha256": "288f6ab0f1ec6655824637e04d00db502ff218f11ed2c516e8509e665bb0e522",
+        "oracle": "t/1505-ial2-axi-r-beat-acceptor.t",
+        "oracle_sha256": "fdbc7d873e0a0885b258b0636318614289a3b7ce46d5c26528096565cbf60441",
+        "source": "axi_r_beat_acceptor",
+        "stages": [
+          {
+            "argv": [
+              "./bin/fsmgen",
+              "--strict",
+              "--quiet",
+              "--output",
+              ".artifacts/specforge-undeclared-rule/axi-after/axi_r_beat_acceptor.sv",
+              ".artifacts/specforge-undeclared-rule/axi-after/axi_r_beat_acceptor.fsm"
+            ],
+            "exit": 0,
+            "stage": "generate",
+            "stdout": ""
+          },
+          {
+            "argv": [
+              "verilator",
+              "--binary",
+              "--timing",
+              "--assert",
+              "-Wno-fatal",
+              "-j",
+              "1",
+              "--top-module",
+              "axi_r_beat_acceptor_cardinality_tb",
+              "--Mdir",
+              ".artifacts/specforge-undeclared-rule/axi-after/axi_r_beat_acceptor-obj",
+              ".artifacts/specforge-undeclared-rule/axi-after/axi_r_beat_acceptor.sv",
+              ".artifacts/specforge-undeclared-rule/axi-after/axi_r_beat_acceptor-tb.sv"
+            ],
+            "exit": 0,
+            "stage": "compile",
+            "stdout": "c++ -Os  -I.  -MMD -I/opt/homebrew/Cellar/verilator/5.050/share/verilator/include -I/opt/homebrew/Cellar/verilator/5.050/share/verilator/include/vltstd -DVERILATOR=1 -DVM_COVERAGE=0 -DVM_SC=0 -DVM_TIMING=1 -DVM_TRACE=0 -DVM_TRACE_FST=0 -DVM_TRACE_VCD=0 -DVM_TRACE_SAIF=0 -DVM_VPI=0 -faligned-new -fbracket-depth=4096 -fcf-protection=none -Xclang -fno-pch-timestamp -Qunused-arguments -Wno-bool-operation -Wno-c++11-narrowing -Wno-constant-logical-operand -Wno-int-in-bool-context -Wno-non-pod-varargs -Wno-parentheses-equality -Wno-shadow -Wno-sign-compare -Wno-tautological-bitwise-compare -Wno-tautological-compare -Wno-uninitialized -Wno-unnecessary-virtual-specifier -Wno-unused-but-set-parameter -Wno-unused-but-set-variable -Wno-unused-parameter -Wno-unused-variable -Wno-vla-cxx-extension    -DVL_TIME_CONTEXT   -std=gnu++20 -c -o verilated.o /opt/homebrew/Cellar/verilator/5.050/share/verilator/include/verilated.cpp\nc++ -Os  -I.  -MMD -I/opt/homebrew/Cellar/verilator/5.050/share/verilator/include -I/opt/homebrew/Cellar/verilator/5.050/share/verilator/include/vltstd -DVERILATOR=1 -DVM_COVERAGE=0 -DVM_SC=0 -DVM_TIMING=1 -DVM_TRACE=0 -DVM_TRACE_FST=0 -DVM_TRACE_VCD=0 -DVM_TRACE_SAIF=0 -DVM_VPI=0 -faligned-new -fbracket-depth=4096 -fcf-protection=none -Xclang -fno-pch-timestamp -Qunused-arguments -Wno-bool-operation -Wno-c++11-narrowing -Wno-constant-logical-operand -Wno-int-in-bool-context -Wno-non-pod-varargs -Wno-parentheses-equality -Wno-shadow -Wno-sign-compare -Wno-tautological-bitwise-compare -Wno-tautological-compare -Wno-uninitialized -Wno-unnecessary-virtual-specifier -Wno-unused-but-set-parameter -Wno-unused-but-set-variable -Wno-unused-parameter -Wno-unused-variable -Wno-vla-cxx-extension    -DVL_TIME_CONTEXT   -std=gnu++20 -c -o verilated_timing.o /opt/homebrew/Cellar/verilator/5.050/share/verilator/include/verilated_timing.cpp\nc++ -Os  -I.  -MMD -I/opt/homebrew/Cellar/verilator/5.050/share/verilator/include -I/opt/homebrew/Cellar/verilator/5.050/share/verilator/include/vltstd -DVERILATOR=1 -DVM_COVERAGE=0 -DVM_SC=0 -DVM_TIMING=1 -DVM_TRACE=0 -DVM_TRACE_FST=0 -DVM_TRACE_VCD=0 -DVM_TRACE_SAIF=0 -DVM_VPI=0 -faligned-new -fbracket-depth=4096 -fcf-protection=none -Xclang -fno-pch-timestamp -Qunused-arguments -Wno-bool-operation -Wno-c++11-narrowing -Wno-constant-logical-operand -Wno-int-in-bool-context -Wno-non-pod-varargs -Wno-parentheses-equality -Wno-shadow -Wno-sign-compare -Wno-tautological-bitwise-compare -Wno-tautological-compare -Wno-uninitialized -Wno-unnecessary-virtual-specifier -Wno-unused-but-set-parameter -Wno-unused-but-set-variable -Wno-unused-parameter -Wno-unused-variable -Wno-vla-cxx-extension    -DVL_TIME_CONTEXT   -std=gnu++20 -c -o verilated_threads.o /opt/homebrew/Cellar/verilator/5.050/share/verilator/include/verilated_threads.cpp\npython3 /opt/homebrew/Cellar/verilator/5.050/share/verilator/bin/verilator_includer -DVL_INCLUDE_OPT=include Vaxi_r_beat_acceptor_cardinality_tb.cpp Vaxi_r_beat_acceptor_cardinality_tb___024root__0.cpp Vaxi_r_beat_acceptor_cardinality_tb__main.cpp Vaxi_r_beat_acceptor_cardinality_tb__ConstPool__0__Slow.cpp Vaxi_r_beat_acceptor_cardinality_tb___024root__Slow.cpp Vaxi_r_beat_acceptor_cardinality_tb___024root__0__Slow.cpp Vaxi_r_beat_acceptor_cardinality_tb__Syms__Slow.cpp > Vaxi_r_beat_acceptor_cardinality_tb__ALL.cpp\nc++ -Os  -I.  -MMD -I/opt/homebrew/Cellar/verilator/5.050/share/verilator/include -I/opt/homebrew/Cellar/verilator/5.050/share/verilator/include/vltstd -DVERILATOR=1 -DVM_COVERAGE=0 -DVM_SC=0 -DVM_TIMING=1 -DVM_TRACE=0 -DVM_TRACE_FST=0 -DVM_TRACE_VCD=0 -DVM_TRACE_SAIF=0 -DVM_VPI=0 -faligned-new -fbracket-depth=4096 -fcf-protection=none -Xclang -fno-pch-timestamp -Qunused-arguments -Wno-bool-operation -Wno-c++11-narrowing -Wno-constant-logical-operand -Wno-int-in-bool-context -Wno-non-pod-varargs -Wno-parentheses-equality -Wno-shadow -Wno-sign-compare -Wno-tautological-bitwise-compare -Wno-tautological-compare -Wno-uninitialized -Wno-unnecessary-virtual-specifier -Wno-unused-but-set-parameter -Wno-unused-but-set-variable -Wno-unused-parameter -Wno-unused-variable -Wno-vla-cxx-extension    -DVL_TIME_CONTEXT   -std=gnu++20 -c -o Vaxi_r_beat_acceptor_cardinality_tb__ALL.o Vaxi_r_beat_acceptor_cardinality_tb__ALL.cpp\nc++  -Wl,-U,__Z15vl_time_stamp64v,-U,__Z13sc_time_stampv,-U,_vlog_startup_routines   verilated.o verilated_timing.o verilated_threads.o Vaxi_r_beat_acceptor_cardinality_tb__ALL.a    -pthread -lpthread   -o Vaxi_r_beat_acceptor_cardinality_tb\nrm Vaxi_r_beat_acceptor_cardinality_tb__ALL.verilator_deplist.tmp\n- V e r i l a t i o n   R e p o r t: Verilator 5.050 2026-07-01 rev vUNKNOWN-built20260701\n- Verilator: Built from 0.084 MB sources in 3 modules, into 0.124 MB in 7 C++ files needing 0.001 MB\n- Verilator: Walltime 4.681 s (elab=0.001, cvt=0.009, bld=4.662); cpu 0.017 s on 1 threads; allocated 12.922 MB\n"
+          },
+          {
+            "argv": [
+              ".artifacts/specforge-undeclared-rule/axi-after/axi_r_beat_acceptor-obj/Vaxi_r_beat_acceptor_cardinality_tb"
+            ],
+            "exit": 0,
+            "stage": "simulate",
+            "stdout": "PASS handshakes=3 done_pulses=3 rid=5 rdata=badc0de rresp=0 rlast=1\n- .artifacts/specforge-undeclared-rule/axi-after/axi_r_beat_acceptor-tb.sv:140: Verilog $finish\n- S i m u l a t i o n   R e p o r t: Verilator 5.050 2026-07-01\n- Verilator: $finish at 770ps; walltime 0.000 s; speed 20.811 us/s\n- Verilator: cpu 0.000 s on 1 threads; allocated 2 MB\n"
+          }
+        ]
+      },
+      {
+        "hdl_sha256": "d3c6abb03ef84873468cff5f4816989ee327304da8c491f2972fe56c43219ead",
+        "oracle": "t/data/axi_w_burst4_driver_tb.svt",
+        "oracle_sha256": "542a9762c51e5a50ae0ec9014882666415d3127d8161002187949810a3c14d1f",
+        "source": "axi_w_burst4_driver",
+        "stages": [
+          {
+            "argv": [
+              "./bin/fsmgen",
+              "--strict",
+              "--quiet",
+              "--output",
+              ".artifacts/specforge-undeclared-rule/axi-after/axi_w_burst4_driver.sv",
+              ".artifacts/specforge-undeclared-rule/axi-after/axi_w_burst4_driver.fsm"
+            ],
+            "exit": 0,
+            "stage": "generate",
+            "stdout": ""
+          },
+          {
+            "argv": [
+              "verilator",
+              "--binary",
+              "--timing",
+              "--assert",
+              "-Wno-fatal",
+              "-j",
+              "1",
+              "--top-module",
+              "axi_w_burst4_driver_tb",
+              "--Mdir",
+              ".artifacts/specforge-undeclared-rule/axi-after/axi_w_burst4_driver-obj",
+              ".artifacts/specforge-undeclared-rule/axi-after/axi_w_burst4_driver.sv",
+              ".artifacts/specforge-undeclared-rule/axi-after/axi_w_burst4_driver-tb.sv"
+            ],
+            "exit": 0,
+            "stage": "compile",
+            "stdout": "c++ -Os  -I.  -MMD -I/opt/homebrew/Cellar/verilator/5.050/share/verilator/include -I/opt/homebrew/Cellar/verilator/5.050/share/verilator/include/vltstd -DVERILATOR=1 -DVM_COVERAGE=0 -DVM_SC=0 -DVM_TIMING=1 -DVM_TRACE=0 -DVM_TRACE_FST=0 -DVM_TRACE_VCD=0 -DVM_TRACE_SAIF=0 -DVM_VPI=0 -faligned-new -fbracket-depth=4096 -fcf-protection=none -Xclang -fno-pch-timestamp -Qunused-arguments -Wno-bool-operation -Wno-c++11-narrowing -Wno-constant-logical-operand -Wno-int-in-bool-context -Wno-non-pod-varargs -Wno-parentheses-equality -Wno-shadow -Wno-sign-compare -Wno-tautological-bitwise-compare -Wno-tautological-compare -Wno-uninitialized -Wno-unnecessary-virtual-specifier -Wno-unused-but-set-parameter -Wno-unused-but-set-variable -Wno-unused-parameter -Wno-unused-variable -Wno-vla-cxx-extension    -DVL_TIME_CONTEXT   -std=gnu++20 -c -o verilated.o /opt/homebrew/Cellar/verilator/5.050/share/verilator/include/verilated.cpp\nc++ -Os  -I.  -MMD -I/opt/homebrew/Cellar/verilator/5.050/share/verilator/include -I/opt/homebrew/Cellar/verilator/5.050/share/verilator/include/vltstd -DVERILATOR=1 -DVM_COVERAGE=0 -DVM_SC=0 -DVM_TIMING=1 -DVM_TRACE=0 -DVM_TRACE_FST=0 -DVM_TRACE_VCD=0 -DVM_TRACE_SAIF=0 -DVM_VPI=0 -faligned-new -fbracket-depth=4096 -fcf-protection=none -Xclang -fno-pch-timestamp -Qunused-arguments -Wno-bool-operation -Wno-c++11-narrowing -Wno-constant-logical-operand -Wno-int-in-bool-context -Wno-non-pod-varargs -Wno-parentheses-equality -Wno-shadow -Wno-sign-compare -Wno-tautological-bitwise-compare -Wno-tautological-compare -Wno-uninitialized -Wno-unnecessary-virtual-specifier -Wno-unused-but-set-parameter -Wno-unused-but-set-variable -Wno-unused-parameter -Wno-unused-variable -Wno-vla-cxx-extension    -DVL_TIME_CONTEXT   -std=gnu++20 -c -o verilated_timing.o /opt/homebrew/Cellar/verilator/5.050/share/verilator/include/verilated_timing.cpp\nc++ -Os  -I.  -MMD -I/opt/homebrew/Cellar/verilator/5.050/share/verilator/include -I/opt/homebrew/Cellar/verilator/5.050/share/verilator/include/vltstd -DVERILATOR=1 -DVM_COVERAGE=0 -DVM_SC=0 -DVM_TIMING=1 -DVM_TRACE=0 -DVM_TRACE_FST=0 -DVM_TRACE_VCD=0 -DVM_TRACE_SAIF=0 -DVM_VPI=0 -faligned-new -fbracket-depth=4096 -fcf-protection=none -Xclang -fno-pch-timestamp -Qunused-arguments -Wno-bool-operation -Wno-c++11-narrowing -Wno-constant-logical-operand -Wno-int-in-bool-context -Wno-non-pod-varargs -Wno-parentheses-equality -Wno-shadow -Wno-sign-compare -Wno-tautological-bitwise-compare -Wno-tautological-compare -Wno-uninitialized -Wno-unnecessary-virtual-specifier -Wno-unused-but-set-parameter -Wno-unused-but-set-variable -Wno-unused-parameter -Wno-unused-variable -Wno-vla-cxx-extension    -DVL_TIME_CONTEXT   -std=gnu++20 -c -o verilated_threads.o /opt/homebrew/Cellar/verilator/5.050/share/verilator/include/verilated_threads.cpp\npython3 /opt/homebrew/Cellar/verilator/5.050/share/verilator/bin/verilator_includer -DVL_INCLUDE_OPT=include Vaxi_w_burst4_driver_tb.cpp Vaxi_w_burst4_driver_tb___024root__0.cpp Vaxi_w_burst4_driver_tb__main.cpp Vaxi_w_burst4_driver_tb__ConstPool__0__Slow.cpp Vaxi_w_burst4_driver_tb___024root__Slow.cpp Vaxi_w_burst4_driver_tb___024root__0__Slow.cpp Vaxi_w_burst4_driver_tb__Syms__Slow.cpp > Vaxi_w_burst4_driver_tb__ALL.cpp\nc++ -Os  -I.  -MMD -I/opt/homebrew/Cellar/verilator/5.050/share/verilator/include -I/opt/homebrew/Cellar/verilator/5.050/share/verilator/include/vltstd -DVERILATOR=1 -DVM_COVERAGE=0 -DVM_SC=0 -DVM_TIMING=1 -DVM_TRACE=0 -DVM_TRACE_FST=0 -DVM_TRACE_VCD=0 -DVM_TRACE_SAIF=0 -DVM_VPI=0 -faligned-new -fbracket-depth=4096 -fcf-protection=none -Xclang -fno-pch-timestamp -Qunused-arguments -Wno-bool-operation -Wno-c++11-narrowing -Wno-constant-logical-operand -Wno-int-in-bool-context -Wno-non-pod-varargs -Wno-parentheses-equality -Wno-shadow -Wno-sign-compare -Wno-tautological-bitwise-compare -Wno-tautological-compare -Wno-uninitialized -Wno-unnecessary-virtual-specifier -Wno-unused-but-set-parameter -Wno-unused-but-set-variable -Wno-unused-parameter -Wno-unused-variable -Wno-vla-cxx-extension    -DVL_TIME_CONTEXT   -std=gnu++20 -c -o Vaxi_w_burst4_driver_tb__ALL.o Vaxi_w_burst4_driver_tb__ALL.cpp\nc++  -Wl,-U,__Z15vl_time_stamp64v,-U,__Z13sc_time_stampv,-U,_vlog_startup_routines   verilated.o verilated_timing.o verilated_threads.o Vaxi_w_burst4_driver_tb__ALL.a    -pthread -lpthread   -o Vaxi_w_burst4_driver_tb\nrm Vaxi_w_burst4_driver_tb__ALL.verilator_deplist.tmp\n- V e r i l a t i o n   R e p o r t: Verilator 5.050 2026-07-01 rev vUNKNOWN-built20260701\n- Verilator: Built from 0.103 MB sources in 3 modules, into 0.159 MB in 7 C++ files needing 0.001 MB\n- Verilator: Walltime 4.616 s (elab=0.002, cvt=0.011, bld=4.594); cpu 0.021 s on 1 threads; allocated 13.641 MB\n"
+          },
+          {
+            "argv": [
+              ".artifacts/specforge-undeclared-rule/axi-after/axi_w_burst4_driver-obj/Vaxi_w_burst4_driver_tb"
+            ],
+            "exit": 0,
+            "stage": "simulate",
+            "stdout": "PASS handshakes=14 beat=14 done=3 busy_ignored=1 reset_abort=1\n- .artifacts/specforge-undeclared-rule/axi-after/axi_w_burst4_driver-tb.sv:255: Verilog $finish\n- S i m u l a t i o n   R e p o r t: Verilator 5.050 2026-07-01\n- Verilator: $finish at 530ps; walltime 0.000 s; speed 12.045 us/s\n- Verilator: cpu 0.000 s on 1 threads; allocated 2 MB\n"
+          }
+        ]
+      }
+    ],
+    "before": [
+      {
+        "hdl_sha256": "900512c01dcddc6264c905ac7b01c0ed426d1e40b6fab5ca418ce64112a96eba",
+        "oracle": "t/1499-ial2-axi-aw-driver.t",
+        "oracle_sha256": "e355fa067fc16d1bfd67e6e05d607989b2538c872678e6397ce7a493584bc0cd",
+        "source": "axi_aw_driver",
+        "stages": [
+          {
+            "argv": [
+              "./bin/fsmgen",
+              "--strict",
+              "--quiet",
+              "--output",
+              ".artifacts/specforge-undeclared-rule/axi-before/axi_aw_driver.sv",
+              ".artifacts/specforge-undeclared-rule/axi-before/axi_aw_driver.fsm"
+            ],
+            "exit": 0,
+            "stage": "generate",
+            "stdout": ""
+          },
+          {
+            "argv": [
+              "verilator",
+              "--binary",
+              "--timing",
+              "--assert",
+              "-Wno-fatal",
+              "-j",
+              "1",
+              "--top-module",
+              "axi_aw_driver_cardinality_tb",
+              "--Mdir",
+              ".artifacts/specforge-undeclared-rule/axi-before/axi_aw_driver-obj",
+              ".artifacts/specforge-undeclared-rule/axi-before/axi_aw_driver.sv",
+              ".artifacts/specforge-undeclared-rule/axi-before/axi_aw_driver-tb.sv"
+            ],
+            "exit": 0,
+            "stage": "compile",
+            "stdout": "c++ -Os  -I.  -MMD -I/opt/homebrew/Cellar/verilator/5.050/share/verilator/include -I/opt/homebrew/Cellar/verilator/5.050/share/verilator/include/vltstd -DVERILATOR=1 -DVM_COVERAGE=0 -DVM_SC=0 -DVM_TIMING=1 -DVM_TRACE=0 -DVM_TRACE_FST=0 -DVM_TRACE_VCD=0 -DVM_TRACE_SAIF=0 -DVM_VPI=0 -faligned-new -fbracket-depth=4096 -fcf-protection=none -Xclang -fno-pch-timestamp -Qunused-arguments -Wno-bool-operation -Wno-c++11-narrowing -Wno-constant-logical-operand -Wno-int-in-bool-context -Wno-non-pod-varargs -Wno-parentheses-equality -Wno-shadow -Wno-sign-compare -Wno-tautological-bitwise-compare -Wno-tautological-compare -Wno-uninitialized -Wno-unnecessary-virtual-specifier -Wno-unused-but-set-parameter -Wno-unused-but-set-variable -Wno-unused-parameter -Wno-unused-variable -Wno-vla-cxx-extension    -DVL_TIME_CONTEXT   -std=gnu++20 -c -o verilated.o /opt/homebrew/Cellar/verilator/5.050/share/verilator/include/verilated.cpp\nc++ -Os  -I.  -MMD -I/opt/homebrew/Cellar/verilator/5.050/share/verilator/include -I/opt/homebrew/Cellar/verilator/5.050/share/verilator/include/vltstd -DVERILATOR=1 -DVM_COVERAGE=0 -DVM_SC=0 -DVM_TIMING=1 -DVM_TRACE=0 -DVM_TRACE_FST=0 -DVM_TRACE_VCD=0 -DVM_TRACE_SAIF=0 -DVM_VPI=0 -faligned-new -fbracket-depth=4096 -fcf-protection=none -Xclang -fno-pch-timestamp -Qunused-arguments -Wno-bool-operation -Wno-c++11-narrowing -Wno-constant-logical-operand -Wno-int-in-bool-context -Wno-non-pod-varargs -Wno-parentheses-equality -Wno-shadow -Wno-sign-compare -Wno-tautological-bitwise-compare -Wno-tautological-compare -Wno-uninitialized -Wno-unnecessary-virtual-specifier -Wno-unused-but-set-parameter -Wno-unused-but-set-variable -Wno-unused-parameter -Wno-unused-variable -Wno-vla-cxx-extension    -DVL_TIME_CONTEXT   -std=gnu++20 -c -o verilated_timing.o /opt/homebrew/Cellar/verilator/5.050/share/verilator/include/verilated_timing.cpp\nc++ -Os  -I.  -MMD -I/opt/homebrew/Cellar/verilator/5.050/share/verilator/include -I/opt/homebrew/Cellar/verilator/5.050/share/verilator/include/vltstd -DVERILATOR=1 -DVM_COVERAGE=0 -DVM_SC=0 -DVM_TIMING=1 -DVM_TRACE=0 -DVM_TRACE_FST=0 -DVM_TRACE_VCD=0 -DVM_TRACE_SAIF=0 -DVM_VPI=0 -faligned-new -fbracket-depth=4096 -fcf-protection=none -Xclang -fno-pch-timestamp -Qunused-arguments -Wno-bool-operation -Wno-c++11-narrowing -Wno-constant-logical-operand -Wno-int-in-bool-context -Wno-non-pod-varargs -Wno-parentheses-equality -Wno-shadow -Wno-sign-compare -Wno-tautological-bitwise-compare -Wno-tautological-compare -Wno-uninitialized -Wno-unnecessary-virtual-specifier -Wno-unused-but-set-parameter -Wno-unused-but-set-variable -Wno-unused-parameter -Wno-unused-variable -Wno-vla-cxx-extension    -DVL_TIME_CONTEXT   -std=gnu++20 -c -o verilated_threads.o /opt/homebrew/Cellar/verilator/5.050/share/verilator/include/verilated_threads.cpp\npython3 /opt/homebrew/Cellar/verilator/5.050/share/verilator/bin/verilator_includer -DVL_INCLUDE_OPT=include Vaxi_aw_driver_cardinality_tb.cpp Vaxi_aw_driver_cardinality_tb___024root__0.cpp Vaxi_aw_driver_cardinality_tb__main.cpp Vaxi_aw_driver_cardinality_tb__ConstPool__0__Slow.cpp Vaxi_aw_driver_cardinality_tb___024root__Slow.cpp Vaxi_aw_driver_cardinality_tb___024root__0__Slow.cpp Vaxi_aw_driver_cardinality_tb__Syms__Slow.cpp > Vaxi_aw_driver_cardinality_tb__ALL.cpp\nc++ -Os  -I.  -MMD -I/opt/homebrew/Cellar/verilator/5.050/share/verilator/include -I/opt/homebrew/Cellar/verilator/5.050/share/verilator/include/vltstd -DVERILATOR=1 -DVM_COVERAGE=0 -DVM_SC=0 -DVM_TIMING=1 -DVM_TRACE=0 -DVM_TRACE_FST=0 -DVM_TRACE_VCD=0 -DVM_TRACE_SAIF=0 -DVM_VPI=0 -faligned-new -fbracket-depth=4096 -fcf-protection=none -Xclang -fno-pch-timestamp -Qunused-arguments -Wno-bool-operation -Wno-c++11-narrowing -Wno-constant-logical-operand -Wno-int-in-bool-context -Wno-non-pod-varargs -Wno-parentheses-equality -Wno-shadow -Wno-sign-compare -Wno-tautological-bitwise-compare -Wno-tautological-compare -Wno-uninitialized -Wno-unnecessary-virtual-specifier -Wno-unused-but-set-parameter -Wno-unused-but-set-variable -Wno-unused-parameter -Wno-unused-variable -Wno-vla-cxx-extension    -DVL_TIME_CONTEXT   -std=gnu++20 -c -o Vaxi_aw_driver_cardinality_tb__ALL.o Vaxi_aw_driver_cardinality_tb__ALL.cpp\nc++  -Wl,-U,__Z15vl_time_stamp64v,-U,__Z13sc_time_stampv,-U,_vlog_startup_routines   verilated.o verilated_timing.o verilated_threads.o Vaxi_aw_driver_cardinality_tb__ALL.a    -pthread -lpthread   -o Vaxi_aw_driver_cardinality_tb\nrm Vaxi_aw_driver_cardinality_tb__ALL.verilator_deplist.tmp\n- V e r i l a t i o n   R e p o r t: Verilator 5.050 2026-07-01 rev vUNKNOWN-built20260701\n- Verilator: Built from 0.089 MB sources in 3 modules, into 0.104 MB in 7 C++ files needing 0.000 MB\n- Verilator: Walltime 6.354 s (elab=0.005, cvt=0.016, bld=6.317); cpu 0.023 s on 1 threads; allocated 12.984 MB\n"
+          },
+          {
+            "argv": [
+              ".artifacts/specforge-undeclared-rule/axi-before/axi_aw_driver-obj/Vaxi_aw_driver_cardinality_tb"
+            ],
+            "exit": 0,
+            "stage": "simulate",
+            "stdout": "PASS handshakes=2 done_pulses=2\n- .artifacts/specforge-undeclared-rule/axi-before/axi_aw_driver-tb.sv:95: Verilog $finish\n- S i m u l a t i o n   R e p o r t: Verilator 5.050 2026-07-01\n- Verilator: $finish at 380ps; walltime 0.000 s; speed 17.273 us/s\n- Verilator: cpu 0.000 s on 1 threads; allocated 2 MB\n"
+          }
+        ]
+      },
+      {
+        "hdl_sha256": "e83c13134a69d383a8a7fa2e721ed7396f0557d0c80526c6c74857a48d1c502c",
+        "oracle": "t/1500-ial2-axi-w-driver.t",
+        "oracle_sha256": "ae63b5d61fdd46dd3315b6371ae882c47e7848d65bc1e227f62b35af2f78a06e",
+        "source": "axi_w_driver",
+        "stages": [
+          {
+            "argv": [
+              "./bin/fsmgen",
+              "--strict",
+              "--quiet",
+              "--output",
+              ".artifacts/specforge-undeclared-rule/axi-before/axi_w_driver.sv",
+              ".artifacts/specforge-undeclared-rule/axi-before/axi_w_driver.fsm"
+            ],
+            "exit": 0,
+            "stage": "generate",
+            "stdout": ""
+          },
+          {
+            "argv": [
+              "verilator",
+              "--binary",
+              "--timing",
+              "--assert",
+              "-Wno-fatal",
+              "-j",
+              "1",
+              "--top-module",
+              "axi_w_driver_cardinality_tb",
+              "--Mdir",
+              ".artifacts/specforge-undeclared-rule/axi-before/axi_w_driver-obj",
+              ".artifacts/specforge-undeclared-rule/axi-before/axi_w_driver.sv",
+              ".artifacts/specforge-undeclared-rule/axi-before/axi_w_driver-tb.sv"
+            ],
+            "exit": 0,
+            "stage": "compile",
+            "stdout": "c++ -Os  -I.  -MMD -I/opt/homebrew/Cellar/verilator/5.050/share/verilator/include -I/opt/homebrew/Cellar/verilator/5.050/share/verilator/include/vltstd -DVERILATOR=1 -DVM_COVERAGE=0 -DVM_SC=0 -DVM_TIMING=1 -DVM_TRACE=0 -DVM_TRACE_FST=0 -DVM_TRACE_VCD=0 -DVM_TRACE_SAIF=0 -DVM_VPI=0 -faligned-new -fbracket-depth=4096 -fcf-protection=none -Xclang -fno-pch-timestamp -Qunused-arguments -Wno-bool-operation -Wno-c++11-narrowing -Wno-constant-logical-operand -Wno-int-in-bool-context -Wno-non-pod-varargs -Wno-parentheses-equality -Wno-shadow -Wno-sign-compare -Wno-tautological-bitwise-compare -Wno-tautological-compare -Wno-uninitialized -Wno-unnecessary-virtual-specifier -Wno-unused-but-set-parameter -Wno-unused-but-set-variable -Wno-unused-parameter -Wno-unused-variable -Wno-vla-cxx-extension    -DVL_TIME_CONTEXT   -std=gnu++20 -c -o verilated.o /opt/homebrew/Cellar/verilator/5.050/share/verilator/include/verilated.cpp\nc++ -Os  -I.  -MMD -I/opt/homebrew/Cellar/verilator/5.050/share/verilator/include -I/opt/homebrew/Cellar/verilator/5.050/share/verilator/include/vltstd -DVERILATOR=1 -DVM_COVERAGE=0 -DVM_SC=0 -DVM_TIMING=1 -DVM_TRACE=0 -DVM_TRACE_FST=0 -DVM_TRACE_VCD=0 -DVM_TRACE_SAIF=0 -DVM_VPI=0 -faligned-new -fbracket-depth=4096 -fcf-protection=none -Xclang -fno-pch-timestamp -Qunused-arguments -Wno-bool-operation -Wno-c++11-narrowing -Wno-constant-logical-operand -Wno-int-in-bool-context -Wno-non-pod-varargs -Wno-parentheses-equality -Wno-shadow -Wno-sign-compare -Wno-tautological-bitwise-compare -Wno-tautological-compare -Wno-uninitialized -Wno-unnecessary-virtual-specifier -Wno-unused-but-set-parameter -Wno-unused-but-set-variable -Wno-unused-parameter -Wno-unused-variable -Wno-vla-cxx-extension    -DVL_TIME_CONTEXT   -std=gnu++20 -c -o verilated_timing.o /opt/homebrew/Cellar/verilator/5.050/share/verilator/include/verilated_timing.cpp\nc++ -Os  -I.  -MMD -I/opt/homebrew/Cellar/verilator/5.050/share/verilator/include -I/opt/homebrew/Cellar/verilator/5.050/share/verilator/include/vltstd -DVERILATOR=1 -DVM_COVERAGE=0 -DVM_SC=0 -DVM_TIMING=1 -DVM_TRACE=0 -DVM_TRACE_FST=0 -DVM_TRACE_VCD=0 -DVM_TRACE_SAIF=0 -DVM_VPI=0 -faligned-new -fbracket-depth=4096 -fcf-protection=none -Xclang -fno-pch-timestamp -Qunused-arguments -Wno-bool-operation -Wno-c++11-narrowing -Wno-constant-logical-operand -Wno-int-in-bool-context -Wno-non-pod-varargs -Wno-parentheses-equality -Wno-shadow -Wno-sign-compare -Wno-tautological-bitwise-compare -Wno-tautological-compare -Wno-uninitialized -Wno-unnecessary-virtual-specifier -Wno-unused-but-set-parameter -Wno-unused-but-set-variable -Wno-unused-parameter -Wno-unused-variable -Wno-vla-cxx-extension    -DVL_TIME_CONTEXT   -std=gnu++20 -c -o verilated_threads.o /opt/homebrew/Cellar/verilator/5.050/share/verilator/include/verilated_threads.cpp\npython3 /opt/homebrew/Cellar/verilator/5.050/share/verilator/bin/verilator_includer -DVL_INCLUDE_OPT=include Vaxi_w_driver_cardinality_tb.cpp Vaxi_w_driver_cardinality_tb___024root__0.cpp Vaxi_w_driver_cardinality_tb__main.cpp Vaxi_w_driver_cardinality_tb__ConstPool__0__Slow.cpp Vaxi_w_driver_cardinality_tb___024root__Slow.cpp Vaxi_w_driver_cardinality_tb___024root__0__Slow.cpp Vaxi_w_driver_cardinality_tb__Syms__Slow.cpp > Vaxi_w_driver_cardinality_tb__ALL.cpp\nc++ -Os  -I.  -MMD -I/opt/homebrew/Cellar/verilator/5.050/share/verilator/include -I/opt/homebrew/Cellar/verilator/5.050/share/verilator/include/vltstd -DVERILATOR=1 -DVM_COVERAGE=0 -DVM_SC=0 -DVM_TIMING=1 -DVM_TRACE=0 -DVM_TRACE_FST=0 -DVM_TRACE_VCD=0 -DVM_TRACE_SAIF=0 -DVM_VPI=0 -faligned-new -fbracket-depth=4096 -fcf-protection=none -Xclang -fno-pch-timestamp -Qunused-arguments -Wno-bool-operation -Wno-c++11-narrowing -Wno-constant-logical-operand -Wno-int-in-bool-context -Wno-non-pod-varargs -Wno-parentheses-equality -Wno-shadow -Wno-sign-compare -Wno-tautological-bitwise-compare -Wno-tautological-compare -Wno-uninitialized -Wno-unnecessary-virtual-specifier -Wno-unused-but-set-parameter -Wno-unused-but-set-variable -Wno-unused-parameter -Wno-unused-variable -Wno-vla-cxx-extension    -DVL_TIME_CONTEXT   -std=gnu++20 -c -o Vaxi_w_driver_cardinality_tb__ALL.o Vaxi_w_driver_cardinality_tb__ALL.cpp\nc++  -Wl,-U,__Z15vl_time_stamp64v,-U,__Z13sc_time_stampv,-U,_vlog_startup_routines   verilated.o verilated_timing.o verilated_threads.o Vaxi_w_driver_cardinality_tb__ALL.a    -pthread -lpthread   -o Vaxi_w_driver_cardinality_tb\nrm Vaxi_w_driver_cardinality_tb__ALL.verilator_deplist.tmp\n- V e r i l a t i o n   R e p o r t: Verilator 5.050 2026-07-01 rev vUNKNOWN-built20260701\n- Verilator: Built from 0.081 MB sources in 3 modules, into 0.097 MB in 7 C++ files needing 0.000 MB\n- Verilator: Walltime 4.469 s (elab=0.001, cvt=0.008, bld=4.453); cpu 0.014 s on 1 threads; allocated 12.609 MB\n"
+          },
+          {
+            "argv": [
+              ".artifacts/specforge-undeclared-rule/axi-before/axi_w_driver-obj/Vaxi_w_driver_cardinality_tb"
+            ],
+            "exit": 0,
+            "stage": "simulate",
+            "stdout": "PASS handshakes=2 done_pulses=2\n- .artifacts/specforge-undeclared-rule/axi-before/axi_w_driver-tb.sv:85: Verilog $finish\n- S i m u l a t i o n   R e p o r t: Verilator 5.050 2026-07-01\n- Verilator: $finish at 380ps; walltime 0.000 s; speed 16.522 us/s\n- Verilator: cpu 0.000 s on 1 threads; allocated 2 MB\n"
+          }
+        ]
+      },
+      {
+        "hdl_sha256": "d7a8798795c6f80d345b48ee154c14c154535302985c3893bb6b982da53b7e94",
+        "oracle": "t/1501-ial2-axi-b-response-acceptor.t",
+        "oracle_sha256": "3fd06679d67a32f91e30ec59ad936d33d213e9a120959396bc03a051afd986c3",
+        "source": "axi_b_response_acceptor",
+        "stages": [
+          {
+            "argv": [
+              "./bin/fsmgen",
+              "--strict",
+              "--quiet",
+              "--output",
+              ".artifacts/specforge-undeclared-rule/axi-before/axi_b_response_acceptor.sv",
+              ".artifacts/specforge-undeclared-rule/axi-before/axi_b_response_acceptor.fsm"
+            ],
+            "exit": 0,
+            "stage": "generate",
+            "stdout": ""
+          },
+          {
+            "argv": [
+              "verilator",
+              "--binary",
+              "--timing",
+              "--assert",
+              "-Wno-fatal",
+              "-j",
+              "1",
+              "--top-module",
+              "axi_b_response_acceptor_cardinality_tb",
+              "--Mdir",
+              ".artifacts/specforge-undeclared-rule/axi-before/axi_b_response_acceptor-obj",
+              ".artifacts/specforge-undeclared-rule/axi-before/axi_b_response_acceptor.sv",
+              ".artifacts/specforge-undeclared-rule/axi-before/axi_b_response_acceptor-tb.sv"
+            ],
+            "exit": 0,
+            "stage": "compile",
+            "stdout": "c++ -Os  -I.  -MMD -I/opt/homebrew/Cellar/verilator/5.050/share/verilator/include -I/opt/homebrew/Cellar/verilator/5.050/share/verilator/include/vltstd -DVERILATOR=1 -DVM_COVERAGE=0 -DVM_SC=0 -DVM_TIMING=1 -DVM_TRACE=0 -DVM_TRACE_FST=0 -DVM_TRACE_VCD=0 -DVM_TRACE_SAIF=0 -DVM_VPI=0 -faligned-new -fbracket-depth=4096 -fcf-protection=none -Xclang -fno-pch-timestamp -Qunused-arguments -Wno-bool-operation -Wno-c++11-narrowing -Wno-constant-logical-operand -Wno-int-in-bool-context -Wno-non-pod-varargs -Wno-parentheses-equality -Wno-shadow -Wno-sign-compare -Wno-tautological-bitwise-compare -Wno-tautological-compare -Wno-uninitialized -Wno-unnecessary-virtual-specifier -Wno-unused-but-set-parameter -Wno-unused-but-set-variable -Wno-unused-parameter -Wno-unused-variable -Wno-vla-cxx-extension    -DVL_TIME_CONTEXT   -std=gnu++20 -c -o verilated.o /opt/homebrew/Cellar/verilator/5.050/share/verilator/include/verilated.cpp\nc++ -Os  -I.  -MMD -I/opt/homebrew/Cellar/verilator/5.050/share/verilator/include -I/opt/homebrew/Cellar/verilator/5.050/share/verilator/include/vltstd -DVERILATOR=1 -DVM_COVERAGE=0 -DVM_SC=0 -DVM_TIMING=1 -DVM_TRACE=0 -DVM_TRACE_FST=0 -DVM_TRACE_VCD=0 -DVM_TRACE_SAIF=0 -DVM_VPI=0 -faligned-new -fbracket-depth=4096 -fcf-protection=none -Xclang -fno-pch-timestamp -Qunused-arguments -Wno-bool-operation -Wno-c++11-narrowing -Wno-constant-logical-operand -Wno-int-in-bool-context -Wno-non-pod-varargs -Wno-parentheses-equality -Wno-shadow -Wno-sign-compare -Wno-tautological-bitwise-compare -Wno-tautological-compare -Wno-uninitialized -Wno-unnecessary-virtual-specifier -Wno-unused-but-set-parameter -Wno-unused-but-set-variable -Wno-unused-parameter -Wno-unused-variable -Wno-vla-cxx-extension    -DVL_TIME_CONTEXT   -std=gnu++20 -c -o verilated_timing.o /opt/homebrew/Cellar/verilator/5.050/share/verilator/include/verilated_timing.cpp\nc++ -Os  -I.  -MMD -I/opt/homebrew/Cellar/verilator/5.050/share/verilator/include -I/opt/homebrew/Cellar/verilator/5.050/share/verilator/include/vltstd -DVERILATOR=1 -DVM_COVERAGE=0 -DVM_SC=0 -DVM_TIMING=1 -DVM_TRACE=0 -DVM_TRACE_FST=0 -DVM_TRACE_VCD=0 -DVM_TRACE_SAIF=0 -DVM_VPI=0 -faligned-new -fbracket-depth=4096 -fcf-protection=none -Xclang -fno-pch-timestamp -Qunused-arguments -Wno-bool-operation -Wno-c++11-narrowing -Wno-constant-logical-operand -Wno-int-in-bool-context -Wno-non-pod-varargs -Wno-parentheses-equality -Wno-shadow -Wno-sign-compare -Wno-tautological-bitwise-compare -Wno-tautological-compare -Wno-uninitialized -Wno-unnecessary-virtual-specifier -Wno-unused-but-set-parameter -Wno-unused-but-set-variable -Wno-unused-parameter -Wno-unused-variable -Wno-vla-cxx-extension    -DVL_TIME_CONTEXT   -std=gnu++20 -c -o verilated_threads.o /opt/homebrew/Cellar/verilator/5.050/share/verilator/include/verilated_threads.cpp\npython3 /opt/homebrew/Cellar/verilator/5.050/share/verilator/bin/verilator_includer -DVL_INCLUDE_OPT=include Vaxi_b_response_acceptor_cardinality_tb.cpp Vaxi_b_response_acceptor_cardinality_tb___024root__0.cpp Vaxi_b_response_acceptor_cardinality_tb__main.cpp Vaxi_b_response_acceptor_cardinality_tb__ConstPool__0__Slow.cpp Vaxi_b_response_acceptor_cardinality_tb___024root__Slow.cpp Vaxi_b_response_acceptor_cardinality_tb___024root__0__Slow.cpp Vaxi_b_response_acceptor_cardinality_tb__Syms__Slow.cpp > Vaxi_b_response_acceptor_cardinality_tb__ALL.cpp\nc++ -Os  -I.  -MMD -I/opt/homebrew/Cellar/verilator/5.050/share/verilator/include -I/opt/homebrew/Cellar/verilator/5.050/share/verilator/include/vltstd -DVERILATOR=1 -DVM_COVERAGE=0 -DVM_SC=0 -DVM_TIMING=1 -DVM_TRACE=0 -DVM_TRACE_FST=0 -DVM_TRACE_VCD=0 -DVM_TRACE_SAIF=0 -DVM_VPI=0 -faligned-new -fbracket-depth=4096 -fcf-protection=none -Xclang -fno-pch-timestamp -Qunused-arguments -Wno-bool-operation -Wno-c++11-narrowing -Wno-constant-logical-operand -Wno-int-in-bool-context -Wno-non-pod-varargs -Wno-parentheses-equality -Wno-shadow -Wno-sign-compare -Wno-tautological-bitwise-compare -Wno-tautological-compare -Wno-uninitialized -Wno-unnecessary-virtual-specifier -Wno-unused-but-set-parameter -Wno-unused-but-set-variable -Wno-unused-parameter -Wno-unused-variable -Wno-vla-cxx-extension    -DVL_TIME_CONTEXT   -std=gnu++20 -c -o Vaxi_b_response_acceptor_cardinality_tb__ALL.o Vaxi_b_response_acceptor_cardinality_tb__ALL.cpp\nc++  -Wl,-U,__Z15vl_time_stamp64v,-U,__Z13sc_time_stampv,-U,_vlog_startup_routines   verilated.o verilated_timing.o verilated_threads.o Vaxi_b_response_acceptor_cardinality_tb__ALL.a    -pthread -lpthread   -o Vaxi_b_response_acceptor_cardinality_tb\nrm Vaxi_b_response_acceptor_cardinality_tb__ALL.verilator_deplist.tmp\n- V e r i l a t i o n   R e p o r t: Verilator 5.050 2026-07-01 rev vUNKNOWN-built20260701\n- Verilator: Built from 0.080 MB sources in 3 modules, into 0.105 MB in 7 C++ files needing 0.000 MB\n- Verilator: Walltime 4.499 s (elab=0.001, cvt=0.008, bld=4.483); cpu 0.014 s on 1 threads; allocated 12.750 MB\n"
+          },
+          {
+            "argv": [
+              ".artifacts/specforge-undeclared-rule/axi-before/axi_b_response_acceptor-obj/Vaxi_b_response_acceptor_cardinality_tb"
+            ],
+            "exit": 0,
+            "stage": "simulate",
+            "stdout": "PASS handshakes=2 done_pulses=2 bid=9 bresp=3\n- .artifacts/specforge-undeclared-rule/axi-before/axi_b_response_acceptor-tb.sv:102: Verilog $finish\n- S i m u l a t i o n   R e p o r t: Verilator 5.050 2026-07-01\n- Verilator: $finish at 460ps; walltime 0.000 s; speed 19.167 us/s\n- Verilator: cpu 0.000 s on 1 threads; allocated 2 MB\n"
+          }
+        ]
+      },
+      {
+        "hdl_sha256": "1a18db2cd2f24464bb0baf39858afb4bc5d9712070ba78f594328edbffc10cc2",
+        "oracle": "t/1504-ial2-axi-ar-driver.t",
+        "oracle_sha256": "3b988dd5a24c614deba041441056e751031cea538fe04ca66d4ed8f3df87ead4",
+        "source": "axi_ar_driver",
+        "stages": [
+          {
+            "argv": [
+              "./bin/fsmgen",
+              "--strict",
+              "--quiet",
+              "--output",
+              ".artifacts/specforge-undeclared-rule/axi-before/axi_ar_driver.sv",
+              ".artifacts/specforge-undeclared-rule/axi-before/axi_ar_driver.fsm"
+            ],
+            "exit": 0,
+            "stage": "generate",
+            "stdout": ""
+          },
+          {
+            "argv": [
+              "verilator",
+              "--binary",
+              "--timing",
+              "--assert",
+              "-Wno-fatal",
+              "-j",
+              "1",
+              "--top-module",
+              "axi_ar_driver_cardinality_tb",
+              "--Mdir",
+              ".artifacts/specforge-undeclared-rule/axi-before/axi_ar_driver-obj",
+              ".artifacts/specforge-undeclared-rule/axi-before/axi_ar_driver.sv",
+              ".artifacts/specforge-undeclared-rule/axi-before/axi_ar_driver-tb.sv"
+            ],
+            "exit": 0,
+            "stage": "compile",
+            "stdout": "c++ -Os  -I.  -MMD -I/opt/homebrew/Cellar/verilator/5.050/share/verilator/include -I/opt/homebrew/Cellar/verilator/5.050/share/verilator/include/vltstd -DVERILATOR=1 -DVM_COVERAGE=0 -DVM_SC=0 -DVM_TIMING=1 -DVM_TRACE=0 -DVM_TRACE_FST=0 -DVM_TRACE_VCD=0 -DVM_TRACE_SAIF=0 -DVM_VPI=0 -faligned-new -fbracket-depth=4096 -fcf-protection=none -Xclang -fno-pch-timestamp -Qunused-arguments -Wno-bool-operation -Wno-c++11-narrowing -Wno-constant-logical-operand -Wno-int-in-bool-context -Wno-non-pod-varargs -Wno-parentheses-equality -Wno-shadow -Wno-sign-compare -Wno-tautological-bitwise-compare -Wno-tautological-compare -Wno-uninitialized -Wno-unnecessary-virtual-specifier -Wno-unused-but-set-parameter -Wno-unused-but-set-variable -Wno-unused-parameter -Wno-unused-variable -Wno-vla-cxx-extension    -DVL_TIME_CONTEXT   -std=gnu++20 -c -o verilated.o /opt/homebrew/Cellar/verilator/5.050/share/verilator/include/verilated.cpp\nc++ -Os  -I.  -MMD -I/opt/homebrew/Cellar/verilator/5.050/share/verilator/include -I/opt/homebrew/Cellar/verilator/5.050/share/verilator/include/vltstd -DVERILATOR=1 -DVM_COVERAGE=0 -DVM_SC=0 -DVM_TIMING=1 -DVM_TRACE=0 -DVM_TRACE_FST=0 -DVM_TRACE_VCD=0 -DVM_TRACE_SAIF=0 -DVM_VPI=0 -faligned-new -fbracket-depth=4096 -fcf-protection=none -Xclang -fno-pch-timestamp -Qunused-arguments -Wno-bool-operation -Wno-c++11-narrowing -Wno-constant-logical-operand -Wno-int-in-bool-context -Wno-non-pod-varargs -Wno-parentheses-equality -Wno-shadow -Wno-sign-compare -Wno-tautological-bitwise-compare -Wno-tautological-compare -Wno-uninitialized -Wno-unnecessary-virtual-specifier -Wno-unused-but-set-parameter -Wno-unused-but-set-variable -Wno-unused-parameter -Wno-unused-variable -Wno-vla-cxx-extension    -DVL_TIME_CONTEXT   -std=gnu++20 -c -o verilated_timing.o /opt/homebrew/Cellar/verilator/5.050/share/verilator/include/verilated_timing.cpp\nc++ -Os  -I.  -MMD -I/opt/homebrew/Cellar/verilator/5.050/share/verilator/include -I/opt/homebrew/Cellar/verilator/5.050/share/verilator/include/vltstd -DVERILATOR=1 -DVM_COVERAGE=0 -DVM_SC=0 -DVM_TIMING=1 -DVM_TRACE=0 -DVM_TRACE_FST=0 -DVM_TRACE_VCD=0 -DVM_TRACE_SAIF=0 -DVM_VPI=0 -faligned-new -fbracket-depth=4096 -fcf-protection=none -Xclang -fno-pch-timestamp -Qunused-arguments -Wno-bool-operation -Wno-c++11-narrowing -Wno-constant-logical-operand -Wno-int-in-bool-context -Wno-non-pod-varargs -Wno-parentheses-equality -Wno-shadow -Wno-sign-compare -Wno-tautological-bitwise-compare -Wno-tautological-compare -Wno-uninitialized -Wno-unnecessary-virtual-specifier -Wno-unused-but-set-parameter -Wno-unused-but-set-variable -Wno-unused-parameter -Wno-unused-variable -Wno-vla-cxx-extension    -DVL_TIME_CONTEXT   -std=gnu++20 -c -o verilated_threads.o /opt/homebrew/Cellar/verilator/5.050/share/verilator/include/verilated_threads.cpp\npython3 /opt/homebrew/Cellar/verilator/5.050/share/verilator/bin/verilator_includer -DVL_INCLUDE_OPT=include Vaxi_ar_driver_cardinality_tb.cpp Vaxi_ar_driver_cardinality_tb___024root__0.cpp Vaxi_ar_driver_cardinality_tb__main.cpp Vaxi_ar_driver_cardinality_tb__ConstPool__0__Slow.cpp Vaxi_ar_driver_cardinality_tb___024root__Slow.cpp Vaxi_ar_driver_cardinality_tb___024root__0__Slow.cpp Vaxi_ar_driver_cardinality_tb__Syms__Slow.cpp > Vaxi_ar_driver_cardinality_tb__ALL.cpp\nc++ -Os  -I.  -MMD -I/opt/homebrew/Cellar/verilator/5.050/share/verilator/include -I/opt/homebrew/Cellar/verilator/5.050/share/verilator/include/vltstd -DVERILATOR=1 -DVM_COVERAGE=0 -DVM_SC=0 -DVM_TIMING=1 -DVM_TRACE=0 -DVM_TRACE_FST=0 -DVM_TRACE_VCD=0 -DVM_TRACE_SAIF=0 -DVM_VPI=0 -faligned-new -fbracket-depth=4096 -fcf-protection=none -Xclang -fno-pch-timestamp -Qunused-arguments -Wno-bool-operation -Wno-c++11-narrowing -Wno-constant-logical-operand -Wno-int-in-bool-context -Wno-non-pod-varargs -Wno-parentheses-equality -Wno-shadow -Wno-sign-compare -Wno-tautological-bitwise-compare -Wno-tautological-compare -Wno-uninitialized -Wno-unnecessary-virtual-specifier -Wno-unused-but-set-parameter -Wno-unused-but-set-variable -Wno-unused-parameter -Wno-unused-variable -Wno-vla-cxx-extension    -DVL_TIME_CONTEXT   -std=gnu++20 -c -o Vaxi_ar_driver_cardinality_tb__ALL.o Vaxi_ar_driver_cardinality_tb__ALL.cpp\nc++  -Wl,-U,__Z15vl_time_stamp64v,-U,__Z13sc_time_stampv,-U,_vlog_startup_routines   verilated.o verilated_timing.o verilated_threads.o Vaxi_ar_driver_cardinality_tb__ALL.a    -pthread -lpthread   -o Vaxi_ar_driver_cardinality_tb\nrm Vaxi_ar_driver_cardinality_tb__ALL.verilator_deplist.tmp\n- V e r i l a t i o n   R e p o r t: Verilator 5.050 2026-07-01 rev vUNKNOWN-built20260701\n- Verilator: Built from 0.091 MB sources in 3 modules, into 0.131 MB in 7 C++ files needing 0.001 MB\n- Verilator: Walltime 4.785 s (elab=0.002, cvt=0.011, bld=4.765); cpu 0.018 s on 1 threads; allocated 13.406 MB\n"
+          },
+          {
+            "argv": [
+              ".artifacts/specforge-undeclared-rule/axi-before/axi_ar_driver-obj/Vaxi_ar_driver_cardinality_tb"
+            ],
+            "exit": 0,
+            "stage": "simulate",
+            "stdout": "PASS handshakes=3 done_pulses=3\n- .artifacts/specforge-undeclared-rule/axi-before/axi_ar_driver-tb.sv:149: Verilog $finish\n- S i m u l a t i o n   R e p o r t: Verilator 5.050 2026-07-01\n- Verilator: $finish at 680ps; walltime 0.000 s; speed 18.889 us/s\n- Verilator: cpu 0.000 s on 1 threads; allocated 2 MB\n"
+          }
+        ]
+      },
+      {
+        "hdl_sha256": "c1a8072f270a96d331ad567cf3144e703a8efa73ab7676570a5cbedf259cedab",
+        "oracle": "t/1505-ial2-axi-r-beat-acceptor.t",
+        "oracle_sha256": "fdbc7d873e0a0885b258b0636318614289a3b7ce46d5c26528096565cbf60441",
+        "source": "axi_r_beat_acceptor",
+        "stages": [
+          {
+            "argv": [
+              "./bin/fsmgen",
+              "--strict",
+              "--quiet",
+              "--output",
+              ".artifacts/specforge-undeclared-rule/axi-before/axi_r_beat_acceptor.sv",
+              ".artifacts/specforge-undeclared-rule/axi-before/axi_r_beat_acceptor.fsm"
+            ],
+            "exit": 0,
+            "stage": "generate",
+            "stdout": ""
+          },
+          {
+            "argv": [
+              "verilator",
+              "--binary",
+              "--timing",
+              "--assert",
+              "-Wno-fatal",
+              "-j",
+              "1",
+              "--top-module",
+              "axi_r_beat_acceptor_cardinality_tb",
+              "--Mdir",
+              ".artifacts/specforge-undeclared-rule/axi-before/axi_r_beat_acceptor-obj",
+              ".artifacts/specforge-undeclared-rule/axi-before/axi_r_beat_acceptor.sv",
+              ".artifacts/specforge-undeclared-rule/axi-before/axi_r_beat_acceptor-tb.sv"
+            ],
+            "exit": 0,
+            "stage": "compile",
+            "stdout": "c++ -Os  -I.  -MMD -I/opt/homebrew/Cellar/verilator/5.050/share/verilator/include -I/opt/homebrew/Cellar/verilator/5.050/share/verilator/include/vltstd -DVERILATOR=1 -DVM_COVERAGE=0 -DVM_SC=0 -DVM_TIMING=1 -DVM_TRACE=0 -DVM_TRACE_FST=0 -DVM_TRACE_VCD=0 -DVM_TRACE_SAIF=0 -DVM_VPI=0 -faligned-new -fbracket-depth=4096 -fcf-protection=none -Xclang -fno-pch-timestamp -Qunused-arguments -Wno-bool-operation -Wno-c++11-narrowing -Wno-constant-logical-operand -Wno-int-in-bool-context -Wno-non-pod-varargs -Wno-parentheses-equality -Wno-shadow -Wno-sign-compare -Wno-tautological-bitwise-compare -Wno-tautological-compare -Wno-uninitialized -Wno-unnecessary-virtual-specifier -Wno-unused-but-set-parameter -Wno-unused-but-set-variable -Wno-unused-parameter -Wno-unused-variable -Wno-vla-cxx-extension    -DVL_TIME_CONTEXT   -std=gnu++20 -c -o verilated.o /opt/homebrew/Cellar/verilator/5.050/share/verilator/include/verilated.cpp\nc++ -Os  -I.  -MMD -I/opt/homebrew/Cellar/verilator/5.050/share/verilator/include -I/opt/homebrew/Cellar/verilator/5.050/share/verilator/include/vltstd -DVERILATOR=1 -DVM_COVERAGE=0 -DVM_SC=0 -DVM_TIMING=1 -DVM_TRACE=0 -DVM_TRACE_FST=0 -DVM_TRACE_VCD=0 -DVM_TRACE_SAIF=0 -DVM_VPI=0 -faligned-new -fbracket-depth=4096 -fcf-protection=none -Xclang -fno-pch-timestamp -Qunused-arguments -Wno-bool-operation -Wno-c++11-narrowing -Wno-constant-logical-operand -Wno-int-in-bool-context -Wno-non-pod-varargs -Wno-parentheses-equality -Wno-shadow -Wno-sign-compare -Wno-tautological-bitwise-compare -Wno-tautological-compare -Wno-uninitialized -Wno-unnecessary-virtual-specifier -Wno-unused-but-set-parameter -Wno-unused-but-set-variable -Wno-unused-parameter -Wno-unused-variable -Wno-vla-cxx-extension    -DVL_TIME_CONTEXT   -std=gnu++20 -c -o verilated_timing.o /opt/homebrew/Cellar/verilator/5.050/share/verilator/include/verilated_timing.cpp\nc++ -Os  -I.  -MMD -I/opt/homebrew/Cellar/verilator/5.050/share/verilator/include -I/opt/homebrew/Cellar/verilator/5.050/share/verilator/include/vltstd -DVERILATOR=1 -DVM_COVERAGE=0 -DVM_SC=0 -DVM_TIMING=1 -DVM_TRACE=0 -DVM_TRACE_FST=0 -DVM_TRACE_VCD=0 -DVM_TRACE_SAIF=0 -DVM_VPI=0 -faligned-new -fbracket-depth=4096 -fcf-protection=none -Xclang -fno-pch-timestamp -Qunused-arguments -Wno-bool-operation -Wno-c++11-narrowing -Wno-constant-logical-operand -Wno-int-in-bool-context -Wno-non-pod-varargs -Wno-parentheses-equality -Wno-shadow -Wno-sign-compare -Wno-tautological-bitwise-compare -Wno-tautological-compare -Wno-uninitialized -Wno-unnecessary-virtual-specifier -Wno-unused-but-set-parameter -Wno-unused-but-set-variable -Wno-unused-parameter -Wno-unused-variable -Wno-vla-cxx-extension    -DVL_TIME_CONTEXT   -std=gnu++20 -c -o verilated_threads.o /opt/homebrew/Cellar/verilator/5.050/share/verilator/include/verilated_threads.cpp\npython3 /opt/homebrew/Cellar/verilator/5.050/share/verilator/bin/verilator_includer -DVL_INCLUDE_OPT=include Vaxi_r_beat_acceptor_cardinality_tb.cpp Vaxi_r_beat_acceptor_cardinality_tb___024root__0.cpp Vaxi_r_beat_acceptor_cardinality_tb__main.cpp Vaxi_r_beat_acceptor_cardinality_tb__ConstPool__0__Slow.cpp Vaxi_r_beat_acceptor_cardinality_tb___024root__Slow.cpp Vaxi_r_beat_acceptor_cardinality_tb___024root__0__Slow.cpp Vaxi_r_beat_acceptor_cardinality_tb__Syms__Slow.cpp > Vaxi_r_beat_acceptor_cardinality_tb__ALL.cpp\nc++ -Os  -I.  -MMD -I/opt/homebrew/Cellar/verilator/5.050/share/verilator/include -I/opt/homebrew/Cellar/verilator/5.050/share/verilator/include/vltstd -DVERILATOR=1 -DVM_COVERAGE=0 -DVM_SC=0 -DVM_TIMING=1 -DVM_TRACE=0 -DVM_TRACE_FST=0 -DVM_TRACE_VCD=0 -DVM_TRACE_SAIF=0 -DVM_VPI=0 -faligned-new -fbracket-depth=4096 -fcf-protection=none -Xclang -fno-pch-timestamp -Qunused-arguments -Wno-bool-operation -Wno-c++11-narrowing -Wno-constant-logical-operand -Wno-int-in-bool-context -Wno-non-pod-varargs -Wno-parentheses-equality -Wno-shadow -Wno-sign-compare -Wno-tautological-bitwise-compare -Wno-tautological-compare -Wno-uninitialized -Wno-unnecessary-virtual-specifier -Wno-unused-but-set-parameter -Wno-unused-but-set-variable -Wno-unused-parameter -Wno-unused-variable -Wno-vla-cxx-extension    -DVL_TIME_CONTEXT   -std=gnu++20 -c -o Vaxi_r_beat_acceptor_cardinality_tb__ALL.o Vaxi_r_beat_acceptor_cardinality_tb__ALL.cpp\nc++  -Wl,-U,__Z15vl_time_stamp64v,-U,__Z13sc_time_stampv,-U,_vlog_startup_routines   verilated.o verilated_timing.o verilated_threads.o Vaxi_r_beat_acceptor_cardinality_tb__ALL.a    -pthread -lpthread   -o Vaxi_r_beat_acceptor_cardinality_tb\nrm Vaxi_r_beat_acceptor_cardinality_tb__ALL.verilator_deplist.tmp\n- V e r i l a t i o n   R e p o r t: Verilator 5.050 2026-07-01 rev vUNKNOWN-built20260701\n- Verilator: Built from 0.085 MB sources in 3 modules, into 0.124 MB in 7 C++ files needing 0.001 MB\n- Verilator: Walltime 4.380 s (elab=0.001, cvt=0.009, bld=4.364); cpu 0.015 s on 1 threads; allocated 12.984 MB\n"
+          },
+          {
+            "argv": [
+              ".artifacts/specforge-undeclared-rule/axi-before/axi_r_beat_acceptor-obj/Vaxi_r_beat_acceptor_cardinality_tb"
+            ],
+            "exit": 0,
+            "stage": "simulate",
+            "stdout": "PASS handshakes=3 done_pulses=3 rid=5 rdata=badc0de rresp=0 rlast=1\n- .artifacts/specforge-undeclared-rule/axi-before/axi_r_beat_acceptor-tb.sv:140: Verilog $finish\n- S i m u l a t i o n   R e p o r t: Verilator 5.050 2026-07-01\n- Verilator: $finish at 770ps; walltime 0.000 s; speed 20.263 us/s\n- Verilator: cpu 0.000 s on 1 threads; allocated 2 MB\n"
+          }
+        ]
+      },
+      {
+        "hdl_sha256": "0299069596706cd3aa31c7087ff3a5d16746680095f0e4e57c80de185448715a",
+        "oracle": "t/data/axi_w_burst4_driver_tb.svt",
+        "oracle_sha256": "542a9762c51e5a50ae0ec9014882666415d3127d8161002187949810a3c14d1f",
+        "source": "axi_w_burst4_driver",
+        "stages": [
+          {
+            "argv": [
+              "./bin/fsmgen",
+              "--strict",
+              "--quiet",
+              "--output",
+              ".artifacts/specforge-undeclared-rule/axi-before/axi_w_burst4_driver.sv",
+              ".artifacts/specforge-undeclared-rule/axi-before/axi_w_burst4_driver.fsm"
+            ],
+            "exit": 0,
+            "stage": "generate",
+            "stdout": ""
+          },
+          {
+            "argv": [
+              "verilator",
+              "--binary",
+              "--timing",
+              "--assert",
+              "-Wno-fatal",
+              "-j",
+              "1",
+              "--top-module",
+              "axi_w_burst4_driver_tb",
+              "--Mdir",
+              ".artifacts/specforge-undeclared-rule/axi-before/axi_w_burst4_driver-obj",
+              ".artifacts/specforge-undeclared-rule/axi-before/axi_w_burst4_driver.sv",
+              ".artifacts/specforge-undeclared-rule/axi-before/axi_w_burst4_driver-tb.sv"
+            ],
+            "exit": 0,
+            "stage": "compile",
+            "stdout": "c++ -Os  -I.  -MMD -I/opt/homebrew/Cellar/verilator/5.050/share/verilator/include -I/opt/homebrew/Cellar/verilator/5.050/share/verilator/include/vltstd -DVERILATOR=1 -DVM_COVERAGE=0 -DVM_SC=0 -DVM_TIMING=1 -DVM_TRACE=0 -DVM_TRACE_FST=0 -DVM_TRACE_VCD=0 -DVM_TRACE_SAIF=0 -DVM_VPI=0 -faligned-new -fbracket-depth=4096 -fcf-protection=none -Xclang -fno-pch-timestamp -Qunused-arguments -Wno-bool-operation -Wno-c++11-narrowing -Wno-constant-logical-operand -Wno-int-in-bool-context -Wno-non-pod-varargs -Wno-parentheses-equality -Wno-shadow -Wno-sign-compare -Wno-tautological-bitwise-compare -Wno-tautological-compare -Wno-uninitialized -Wno-unnecessary-virtual-specifier -Wno-unused-but-set-parameter -Wno-unused-but-set-variable -Wno-unused-parameter -Wno-unused-variable -Wno-vla-cxx-extension    -DVL_TIME_CONTEXT   -std=gnu++20 -c -o verilated.o /opt/homebrew/Cellar/verilator/5.050/share/verilator/include/verilated.cpp\nc++ -Os  -I.  -MMD -I/opt/homebrew/Cellar/verilator/5.050/share/verilator/include -I/opt/homebrew/Cellar/verilator/5.050/share/verilator/include/vltstd -DVERILATOR=1 -DVM_COVERAGE=0 -DVM_SC=0 -DVM_TIMING=1 -DVM_TRACE=0 -DVM_TRACE_FST=0 -DVM_TRACE_VCD=0 -DVM_TRACE_SAIF=0 -DVM_VPI=0 -faligned-new -fbracket-depth=4096 -fcf-protection=none -Xclang -fno-pch-timestamp -Qunused-arguments -Wno-bool-operation -Wno-c++11-narrowing -Wno-constant-logical-operand -Wno-int-in-bool-context -Wno-non-pod-varargs -Wno-parentheses-equality -Wno-shadow -Wno-sign-compare -Wno-tautological-bitwise-compare -Wno-tautological-compare -Wno-uninitialized -Wno-unnecessary-virtual-specifier -Wno-unused-but-set-parameter -Wno-unused-but-set-variable -Wno-unused-parameter -Wno-unused-variable -Wno-vla-cxx-extension    -DVL_TIME_CONTEXT   -std=gnu++20 -c -o verilated_timing.o /opt/homebrew/Cellar/verilator/5.050/share/verilator/include/verilated_timing.cpp\nc++ -Os  -I.  -MMD -I/opt/homebrew/Cellar/verilator/5.050/share/verilator/include -I/opt/homebrew/Cellar/verilator/5.050/share/verilator/include/vltstd -DVERILATOR=1 -DVM_COVERAGE=0 -DVM_SC=0 -DVM_TIMING=1 -DVM_TRACE=0 -DVM_TRACE_FST=0 -DVM_TRACE_VCD=0 -DVM_TRACE_SAIF=0 -DVM_VPI=0 -faligned-new -fbracket-depth=4096 -fcf-protection=none -Xclang -fno-pch-timestamp -Qunused-arguments -Wno-bool-operation -Wno-c++11-narrowing -Wno-constant-logical-operand -Wno-int-in-bool-context -Wno-non-pod-varargs -Wno-parentheses-equality -Wno-shadow -Wno-sign-compare -Wno-tautological-bitwise-compare -Wno-tautological-compare -Wno-uninitialized -Wno-unnecessary-virtual-specifier -Wno-unused-but-set-parameter -Wno-unused-but-set-variable -Wno-unused-parameter -Wno-unused-variable -Wno-vla-cxx-extension    -DVL_TIME_CONTEXT   -std=gnu++20 -c -o verilated_threads.o /opt/homebrew/Cellar/verilator/5.050/share/verilator/include/verilated_threads.cpp\npython3 /opt/homebrew/Cellar/verilator/5.050/share/verilator/bin/verilator_includer -DVL_INCLUDE_OPT=include Vaxi_w_burst4_driver_tb.cpp Vaxi_w_burst4_driver_tb___024root__0.cpp Vaxi_w_burst4_driver_tb__main.cpp Vaxi_w_burst4_driver_tb__ConstPool__0__Slow.cpp Vaxi_w_burst4_driver_tb___024root__Slow.cpp Vaxi_w_burst4_driver_tb___024root__0__Slow.cpp Vaxi_w_burst4_driver_tb__Syms__Slow.cpp > Vaxi_w_burst4_driver_tb__ALL.cpp\nc++ -Os  -I.  -MMD -I/opt/homebrew/Cellar/verilator/5.050/share/verilator/include -I/opt/homebrew/Cellar/verilator/5.050/share/verilator/include/vltstd -DVERILATOR=1 -DVM_COVERAGE=0 -DVM_SC=0 -DVM_TIMING=1 -DVM_TRACE=0 -DVM_TRACE_FST=0 -DVM_TRACE_VCD=0 -DVM_TRACE_SAIF=0 -DVM_VPI=0 -faligned-new -fbracket-depth=4096 -fcf-protection=none -Xclang -fno-pch-timestamp -Qunused-arguments -Wno-bool-operation -Wno-c++11-narrowing -Wno-constant-logical-operand -Wno-int-in-bool-context -Wno-non-pod-varargs -Wno-parentheses-equality -Wno-shadow -Wno-sign-compare -Wno-tautological-bitwise-compare -Wno-tautological-compare -Wno-uninitialized -Wno-unnecessary-virtual-specifier -Wno-unused-but-set-parameter -Wno-unused-but-set-variable -Wno-unused-parameter -Wno-unused-variable -Wno-vla-cxx-extension    -DVL_TIME_CONTEXT   -std=gnu++20 -c -o Vaxi_w_burst4_driver_tb__ALL.o Vaxi_w_burst4_driver_tb__ALL.cpp\nc++  -Wl,-U,__Z15vl_time_stamp64v,-U,__Z13sc_time_stampv,-U,_vlog_startup_routines   verilated.o verilated_timing.o verilated_threads.o Vaxi_w_burst4_driver_tb__ALL.a    -pthread -lpthread   -o Vaxi_w_burst4_driver_tb\nrm Vaxi_w_burst4_driver_tb__ALL.verilator_deplist.tmp\n- V e r i l a t i o n   R e p o r t: Verilator 5.050 2026-07-01 rev vUNKNOWN-built20260701\n- Verilator: Built from 0.104 MB sources in 3 modules, into 0.159 MB in 7 C++ files needing 0.001 MB\n- Verilator: Walltime 4.633 s (elab=0.002, cvt=0.012, bld=4.611); cpu 0.020 s on 1 threads; allocated 13.641 MB\n"
+          },
+          {
+            "argv": [
+              ".artifacts/specforge-undeclared-rule/axi-before/axi_w_burst4_driver-obj/Vaxi_w_burst4_driver_tb"
+            ],
+            "exit": 0,
+            "stage": "simulate",
+            "stdout": "PASS handshakes=14 beat=14 done=3 busy_ignored=1 reset_abort=1\n- .artifacts/specforge-undeclared-rule/axi-before/axi_w_burst4_driver-tb.sv:255: Verilog $finish\n- S i m u l a t i o n   R e p o r t: Verilator 5.050 2026-07-01\n- Verilator: $finish at 530ps; walltime 0.000 s; speed 16.562 us/s\n- Verilator: cpu 0.000 s on 1 threads; allocated 2 MB\n"
+          }
+        ]
+      }
+    ]
+  },
+  "axi_hdl_identity": [
+    {
+      "baseline_hdl_sha256": "1a18db2cd2f24464bb0baf39858afb4bc5d9712070ba78f594328edbffc10cc2",
+      "date_free_hdl_sha256": "8eabc190e07891da1395a53179c011e13187f91fda268135cc021a3f4c6447e4",
+      "equal": true,
+      "removed_lines_per_file": 1,
+      "repaired_hdl_sha256": "aec4f05a7ffff7b2867e2ff1d86edce829ed98cd94dc2e3446f42f04d759afe0",
+      "source": "ppif/axi_ar_driver.ppif"
+    },
+    {
+      "baseline_hdl_sha256": "900512c01dcddc6264c905ac7b01c0ed426d1e40b6fab5ca418ce64112a96eba",
+      "date_free_hdl_sha256": "2ffb905ddb3444c9be0fecc34c4fbce4d12528a839d53f2c3e9f51f7a13f87ea",
+      "equal": true,
+      "removed_lines_per_file": 1,
+      "repaired_hdl_sha256": "6d0655f7e982f90e0bd73816d902aacff2a4bf8badc2cddb9ca39cac51ea605a",
+      "source": "ppif/axi_aw_driver.ppif"
+    },
+    {
+      "baseline_hdl_sha256": "d7a8798795c6f80d345b48ee154c14c154535302985c3893bb6b982da53b7e94",
+      "date_free_hdl_sha256": "4ec169f65e2360b761dc623e4954daace83297fe7b2dd833115b8c7e5c9e4bb8",
+      "equal": true,
+      "removed_lines_per_file": 1,
+      "repaired_hdl_sha256": "cdcba52e83a24964da6a3623d03d1d1e2f3d1195c65ee6ce424daf8d368b3464",
+      "source": "ppif/axi_b_response_acceptor.ppif"
+    },
+    {
+      "baseline_hdl_sha256": "c1a8072f270a96d331ad567cf3144e703a8efa73ab7676570a5cbedf259cedab",
+      "date_free_hdl_sha256": "11cb9560ab9eb70001a6b0fa5ae317dbdaed15c8141e874174a7346b0994b413",
+      "equal": true,
+      "removed_lines_per_file": 1,
+      "repaired_hdl_sha256": "288f6ab0f1ec6655824637e04d00db502ff218f11ed2c516e8509e665bb0e522",
+      "source": "ppif/axi_r_beat_acceptor.ppif"
+    },
+    {
+      "baseline_hdl_sha256": "0299069596706cd3aa31c7087ff3a5d16746680095f0e4e57c80de185448715a",
+      "date_free_hdl_sha256": "0c9aa63cabeea6e2d1674e4a5608b3f524c791fa2ce9e1443cbbae62a15e1cc3",
+      "equal": true,
+      "removed_lines_per_file": 1,
+      "repaired_hdl_sha256": "d3c6abb03ef84873468cff5f4816989ee327304da8c491f2972fe56c43219ead",
+      "source": "ppif/axi_w_burst4_driver.ppif"
+    },
+    {
+      "baseline_hdl_sha256": "e83c13134a69d383a8a7fa2e721ed7396f0557d0c80526c6c74857a48d1c502c",
+      "date_free_hdl_sha256": "66e7003c6584c38bdaa77e25513d7158e04737611694bc7fc5eda6fe6e34cbc5",
+      "equal": true,
+      "removed_lines_per_file": 1,
+      "repaired_hdl_sha256": "f777f21e8c2ae5952b86d111cac7b1b802ec23ab4cfcfef2270d75763e94707d",
+      "source": "ppif/axi_w_driver.ppif"
+    }
+  ],
+  "baseline_component_sha256": {
+    "perl/FSM/Adapter/ISF/Parser.pm": "d993a7ed8040dff1e51bfdcddadefd7c025193a2b9c4a6a8a95f7d64e4ca4072",
+    "perl/FSM/IAL2/ProtocolIntent/AxiArDriver.pm": "55a5035be735d4e9aa0fb8b12357b3ac6fd5491753c82f438cca3a6d5aa364b9",
+    "perl/FSM/IAL2/ProtocolIntent/AxiAwDriver.pm": "e18a349ee423c10353866f9eda6be234943b5e73b5b03667cec1842745685922",
+    "perl/FSM/IAL2/ProtocolIntent/AxiBResponseAcceptor.pm": "a024850af82035c61aec0d8147f24401804db610cdf154435370974482f247d8",
+    "perl/FSM/IAL2/ProtocolIntent/AxiRBeatAcceptor.pm": "443b1c01fe8ad23450c727258197e37d986ded85d7d493100b1915b8d4609256",
+    "perl/FSM/IAL2/ProtocolIntent/AxiReadBurst4TransactionComposition.pm": "b6d26d1ffac5612ab53e7f5778f37a6c7cbf3ed989f9d3086ec7fb455ba1d453",
+    "perl/FSM/IAL2/ProtocolIntent/AxiReadTransactionComposition.pm": "09d18e60a39b35ac71341c185608527046512a931e6f8df965b22783d0672fec",
+    "perl/FSM/IAL2/ProtocolIntent/AxiWBurst4Driver.pm": "e4b01b0832a5a2b420d2602aabb56742a3646f0a64643e5abaca939c34ea8538",
+    "perl/FSM/IAL2/ProtocolIntent/AxiWDriver.pm": "d9e28649aec25f9839b466775c04d8d5ee07dd31769e2122c8571b677c47dbdc",
+    "perl/FSM/IAL2/ProtocolIntent/AxiWriteBurst4RequestComposition.pm": "58cdbc40365a27af54faaaea1aa79c7fb5f5a045407f1c1f97370c1d9f8e6b11",
+    "perl/FSM/IAL2/ProtocolIntent/AxiWriteRequestComposition.pm": "67a9ea5a07d188ed6f8ce58f03a63ff01f11afd78cde5f3a4677e1b22ba9302f",
+    "perl/FSM/IAL2/ProtocolIntent/AxiWriteTransactionComposition.pm": "a4c8c3889b225a544e3de427946231f67c3de9bc4ac4b142c00b2b328342f075"
+  },
+  "baseline_inferred_input": [
+    {
+      "direction": "input",
+      "name": "VALID",
+      "signed": 0,
+      "width": 1
+    }
+  ],
+  "baseline_inferred_port": [
+    {
+      "direction": "input",
+      "name": "VALID",
+      "signed": 0,
+      "type": "wire",
+      "width": 1
+    }
+  ],
+  "baseline_native_results": [
+    {
+      "case": "undeclared-width1",
+      "exit": 0,
+      "mode": "strict",
+      "success": true
+    },
+    {
+      "case": "undeclared-width1",
+      "exit": 0,
+      "mode": "semantic",
+      "success": true
+    },
+    {
+      "case": "undeclared-width1",
+      "exit": 0,
+      "mode": "schedule",
+      "success": null
+    },
+    {
+      "case": "undeclared-mixed",
+      "diagnostics": [
+        {
+          "code": null,
+          "expected_child_source_file": null,
+          "expected_rtl_metadata_file": null,
+          "family": "unclassified",
+          "generated_child_source": null,
+          "message": "Source file: '.artifacts/tmp/ial1-lowering/fsmgen-ApOjr8AL.fsm'\nError generating HDL: [OperandContractValidationSupport.pm][validate_pre_generation_operand_contract()] Pre-generation operand contract validation failed:\n  - assignment to 'B' uses RHS 'VALID' with incompatible width 8 for LHS width 1; the current contract blocks implicit truncation and requires an explicit width-aligned source expression before generation",
+          "migration_hint_available": false,
+          "parent_composition_source": null,
+          "rtl_metadata_file": null,
+          "severity": "error",
+          "source_file": ".artifacts/tmp/ial1-lowering/fsmgen-ApOjr8AL.fsm",
+          "stability": "unclassified",
+          "summary": "Unclassified FSMGen failure.",
+          "support_accounting": {
+            "matched": false
+          }
+        }
+      ],
+      "exit": 1,
+      "mode": "strict",
+      "success": false
+    },
+    {
+      "case": "undeclared-mixed",
+      "diagnostics": [
+        {
+          "code": null,
+          "expected_child_source_file": null,
+          "expected_rtl_metadata_file": null,
+          "family": "unclassified",
+          "generated_child_source": null,
+          "message": "Source file: '.artifacts/tmp/ial1-lowering/fsmgen-XGhzg7Og.fsm'\nError generating HDL: [OperandContractValidationSupport.pm][validate_pre_generation_operand_contract()] Pre-generation operand contract validation failed:\n  - assignment to 'B' uses RHS 'VALID' with incompatible width 8 for LHS width 1; the current contract blocks implicit truncation and requires an explicit width-aligned source expression before generation",
+          "migration_hint_available": false,
+          "parent_composition_source": null,
+          "rtl_metadata_file": null,
+          "severity": "error",
+          "source_file": ".artifacts/tmp/ial1-lowering/fsmgen-XGhzg7Og.fsm",
+          "stability": "unclassified",
+          "summary": "Unclassified FSMGen failure.",
+          "support_accounting": {
+            "matched": false
+          }
+        }
+      ],
+      "exit": 1,
+      "mode": "semantic",
+      "success": false
+    },
+    {
+      "case": "undeclared-mixed",
+      "exit": 0,
+      "mode": "schedule",
+      "success": null
+    },
+    {
+      "case": "declared-baseline",
+      "exit": 0,
+      "mode": "strict",
+      "success": true
+    },
+    {
+      "case": "declared-baseline",
+      "exit": 0,
+      "mode": "semantic",
+      "success": true
+    },
+    {
+      "case": "declared-baseline",
+      "exit": 0,
+      "mode": "schedule",
+      "success": null
+    }
+  ],
+  "baseline_revision": "45c0e579c23f3c693e7537de1693e5ef6a07cccd",
+  "caller_sources": [
+    {
+      "caller_input": "../specforge/docs/fsmgen-issues/sf-isf-undeclared-rule-operand/sources/fsmgen-input/undeclared-width1.isf",
+      "local_fixture": ".artifacts/specforge-undeclared-rule/undeclared-width1.isf",
+      "sha256": "a4da4ba500784d4add916a36190b897a0b222d11073ce188652ea2a5bce6c733"
+    },
+    {
+      "caller_input": "../specforge/docs/fsmgen-issues/sf-isf-undeclared-rule-operand/sources/fsmgen-input/undeclared-mixed.isf",
+      "local_fixture": ".artifacts/specforge-undeclared-rule/undeclared-mixed.isf",
+      "sha256": "b604ab7f6bbcc9d008f18e7d6bea1b6310927e8174d17efb2a7be17250450986"
+    },
+    {
+      "caller_input": "../specforge/docs/fsmgen-issues/sf-isf-undeclared-rule-operand/sources/fsmgen-input/declared-baseline.isf",
+      "local_fixture": ".artifacts/specforge-undeclared-rule/declared-baseline.isf",
+      "sha256": "5ab51707ce8379108fbc31a062ad184c77ffbcf88313a771b5604eb8f6dfe23a"
+    }
+  ],
+  "claim_legs": {
+    "durability": "Tracked fixture, T1888, parser/catalog/code changes, task/book/knowledge records and this evidence receipt.",
+    "falsify": "Before/after parser regression, nested/guard/index/slice cases, deterministic multiple names, declared/literal/enum/aggregate/transaction-local controls and complete public response parity.",
+    "rederive": "Native source checks, semantic input inventory and generated input wire reproduce the admission gap independently of the new helper."
+  },
+  "compatibility_before_declarations": {
+    "consumed": 329,
+    "failed": [
+      {
+        "actors": [],
+        "error": "Error: actor 'axi_aw_driver' has undeclared rule read operands:\n  - operand 'addr_q' read by rule 'launch_aw' assignment RHS\n  - operand 'burst_q' read by rule 'launch_aw' assignment RHS\n  - operand 'id_q' read by rule 'launch_aw' assignment RHS\n  - operand 'launch_aw_start' read by rule 'launch_aw' guard\n  - operand 'len_q' read by rule 'launch_aw' assignment RHS\n  - operand 'size_q' read by rule 'launch_aw' assignment RHS\nDeclare rule read operands in the actor interface, storage, parameters or constants; transaction-local values are not rule inputs.\n",
+        "passed": false,
+        "source": "ppif/axi_aw_driver.ppif",
+        "source_sha256": "5ab8009da34b92e82bf6bc6be52a40c87a0f1af914715311306421cd799b7e3b"
+      },
+      {
+        "actors": [],
+        "error": "Error: actor 'axi_ar_driver' has undeclared rule read operands:\n  - operand 'addr_q' read by rule 'launch_ar' assignment RHS\n  - operand 'burst_q' read by rule 'launch_ar' assignment RHS\n  - operand 'id_q' read by rule 'launch_ar' assignment RHS\n  - operand 'launch_ar_start' read by rule 'launch_ar' guard\n  - operand 'len_q' read by rule 'launch_ar' assignment RHS\n  - operand 'size_q' read by rule 'launch_ar' assignment RHS\nDeclare rule read operands in the actor interface, storage, parameters or constants; transaction-local values are not rule inputs.\n",
+        "passed": false,
+        "source": "ppif/axi_ar_driver.ppif",
+        "source_sha256": "3170d5b98154a83be45a41cd1f7b6c13d09ca349313511e42b21ab07b1c9d3cc"
+      },
+      {
+        "actors": [],
+        "error": "Error: actor 'axi_w_driver' has undeclared rule read operands:\n  - operand 'data_q' read by rule 'launch_w' assignment RHS\n  - operand 'launch_w_start' read by rule 'launch_w' guard\n  - operand 'strb_q' read by rule 'launch_w' assignment RHS\nDeclare rule read operands in the actor interface, storage, parameters or constants; transaction-local values are not rule inputs.\n",
+        "passed": false,
+        "source": "ppif/axi_w_driver.ppif",
+        "source_sha256": "157ddbaa5aae040d905d7ad5b8ba92b659995561724c6e3c41d2f32503d76865"
+      },
+      {
+        "actors": [],
+        "error": "Error: actor 'axi_w_burst4_driver' has undeclared rule read operands:\n  - operand 'active_q' read by rule 'admit' guard, rule 'accept_beat0' guard, rule 'accept_beat1' guard, rule 'accept_beat2' guard, rule 'accept_final' guard\nDeclare rule read operands in the actor interface, storage, parameters or constants; transaction-local values are not rule inputs.\n",
+        "passed": false,
+        "source": "ppif/axi_w_burst4_driver.ppif",
+        "source_sha256": "ad1a90b211486950ead9025adf5e949413f23798424ff11999e0fe30d20d22c5"
+      },
+      {
+        "actors": [],
+        "error": "Error: actor 'axi_aw_driver' has undeclared rule read operands:\n  - operand 'addr_q' read by rule 'launch_aw' assignment RHS\n  - operand 'burst_q' read by rule 'launch_aw' assignment RHS\n  - operand 'id_q' read by rule 'launch_aw' assignment RHS\n  - operand 'launch_aw_start' read by rule 'launch_aw' guard\n  - operand 'len_q' read by rule 'launch_aw' assignment RHS\n  - operand 'size_q' read by rule 'launch_aw' assignment RHS\nDeclare rule read operands in the actor interface, storage, parameters or constants; transaction-local values are not rule inputs.\n",
+        "passed": false,
+        "source": "ppif/axi_write_burst4_request_composition.ppif",
+        "source_sha256": "3b07130fda227ae5353a8d1ee07bf18afd2851978310c42f53c2a7fdb224cce6"
+      },
+      {
+        "actors": [],
+        "error": "Error: actor 'axi_b_response_acceptor' has undeclared rule read operands:\n  - operand 'active_q' read by rule 'accept_b' guard\n  - operand 'arm_b_start' read by rule 'arm_b' guard\nDeclare rule read operands in the actor interface, storage, parameters or constants; transaction-local values are not rule inputs.\n",
+        "passed": false,
+        "source": "ppif/axi_b_response_acceptor.ppif",
+        "source_sha256": "bf8b5200555e5bc1f990bfbb34c9c293de7d3ad9166a8eb396b22254569d63b5"
+      },
+      {
+        "actors": [],
+        "error": "Error: actor 'axi_r_beat_acceptor' has undeclared rule read operands:\n  - operand 'active_q' read by rule 'accept_r' guard\n  - operand 'arm_r_start' read by rule 'arm_r' guard\nDeclare rule read operands in the actor interface, storage, parameters or constants; transaction-local values are not rule inputs.\n",
+        "passed": false,
+        "source": "ppif/axi_r_beat_acceptor.ppif",
+        "source_sha256": "b868cd36eeec152411ff8c8462ce5a616972c6a1da88f1904190c10363a0420d"
+      },
+      {
+        "actors": [],
+        "error": "Error: actor 'axi_ar_driver' has undeclared rule read operands:\n  - operand 'addr_q' read by rule 'launch_ar' assignment RHS\n  - operand 'burst_q' read by rule 'launch_ar' assignment RHS\n  - operand 'id_q' read by rule 'launch_ar' assignment RHS\n  - operand 'launch_ar_start' read by rule 'launch_ar' guard\n  - operand 'len_q' read by rule 'launch_ar' assignment RHS\n  - operand 'size_q' read by rule 'launch_ar' assignment RHS\nDeclare rule read operands in the actor interface, storage, parameters or constants; transaction-local values are not rule inputs.\n",
+        "passed": false,
+        "source": "ppif/axi_read_transaction_composition.ppif",
+        "source_sha256": "0c616803545e603f3044d252c110eb5c581bce5ea8f50ac8a15b4a5acaa4b57c"
+      },
+      {
+        "actors": [],
+        "error": "Error: actor 'axi_ar_driver' has undeclared rule read operands:\n  - operand 'addr_q' read by rule 'launch_ar' assignment RHS\n  - operand 'burst_q' read by rule 'launch_ar' assignment RHS\n  - operand 'id_q' read by rule 'launch_ar' assignment RHS\n  - operand 'launch_ar_start' read by rule 'launch_ar' guard\n  - operand 'len_q' read by rule 'launch_ar' assignment RHS\n  - operand 'size_q' read by rule 'launch_ar' assignment RHS\nDeclare rule read operands in the actor interface, storage, parameters or constants; transaction-local values are not rule inputs.\n",
+        "passed": false,
+        "source": "ppif/axi_read_burst4_transaction_composition.ppif",
+        "source_sha256": "b9864df66c8450b3969f97035810659b5161420d4fe952c48fd759ed9cf310ed"
+      },
+      {
+        "actors": [],
+        "error": "Error: actor 'axi_aw_driver' has undeclared rule read operands:\n  - operand 'addr_q' read by rule 'launch_aw' assignment RHS\n  - operand 'burst_q' read by rule 'launch_aw' assignment RHS\n  - operand 'id_q' read by rule 'launch_aw' assignment RHS\n  - operand 'launch_aw_start' read by rule 'launch_aw' guard\n  - operand 'len_q' read by rule 'launch_aw' assignment RHS\n  - operand 'size_q' read by rule 'launch_aw' assignment RHS\nDeclare rule read operands in the actor interface, storage, parameters or constants; transaction-local values are not rule inputs.\n",
+        "passed": false,
+        "source": "ppif/axi_write_request_composition.ppif",
+        "source_sha256": "1f7aa12060ac4d1328019a96bd0ae29744bffe3fa5e32faa316fef1aa6891ae4"
+      },
+      {
+        "actors": [],
+        "error": "Error: actor 'axi_aw_driver' has undeclared rule read operands:\n  - operand 'addr_q' read by rule 'launch_aw' assignment RHS\n  - operand 'burst_q' read by rule 'launch_aw' assignment RHS\n  - operand 'id_q' read by rule 'launch_aw' assignment RHS\n  - operand 'launch_aw_start' read by rule 'launch_aw' guard\n  - operand 'len_q' read by rule 'launch_aw' assignment RHS\n  - operand 'size_q' read by rule 'launch_aw' assignment RHS\nDeclare rule read operands in the actor interface, storage, parameters or constants; transaction-local values are not rule inputs.\n",
+        "passed": false,
+        "source": "ppif/axi_write_transaction_composition.ppif",
+        "source_sha256": "21e3630f6c24ef91bb363ad9e7008095c9fe503ad9a7aff139f46739b9a188dc"
+      }
+    ],
+    "selected": 329
+  },
+  "composition_behavior": {
+    "after": [
+      {
+        "assertion_mode": "--no-assert",
+        "hdl_sha256": "fc0bebc6a98eff95d4103fd1b131ffacdbabe82ea8dd3d4565d5090e18878d6b",
+        "oracle": "t/1502-ial2-axi-write-request-composition.t",
+        "oracle_sha256": "6e8a7f808e6401a64c57836fa2af5a4d805d7bf12cec18bff0e7ff5eb339e981",
+        "source": "axi_write_request_composition",
+        "stages": [
+          {
+            "argv": [
+              "./bin/fsmgen",
+              "--strict",
+              "--quiet",
+              "--output",
+              ".artifacts/specforge-undeclared-rule/compositions-after/axi_write_request_composition/axi_write_request_composition.sv",
+              ".artifacts/specforge-undeclared-rule/compositions-after/axi_write_request_composition/axi_write_request_composition.fsm"
+            ],
+            "exit": 0,
+            "stage": "generate",
+            "stdout": ""
+          },
+          {
+            "argv": [
+              "verilator",
+              "--binary",
+              "--timing",
+              "--no-assert",
+              "-Wno-fatal",
+              "-j",
+              "1",
+              "--top-module",
+              "axi_write_request_composition_tb",
+              "--Mdir",
+              ".artifacts/specforge-undeclared-rule/compositions-after/axi_write_request_composition/axi_write_request_composition-obj",
+              ".artifacts/specforge-undeclared-rule/compositions-after/axi_write_request_composition/axi_write_request_composition.sv",
+              ".artifacts/specforge-undeclared-rule/compositions-after/axi_write_request_composition/axi_write_request_composition-tb.sv"
+            ],
+            "exit": 0,
+            "stage": "compile",
+            "stdout": "c++ -Os  -I.  -MMD -I/opt/homebrew/Cellar/verilator/5.050/share/verilator/include -I/opt/homebrew/Cellar/verilator/5.050/share/verilator/include/vltstd -DVERILATOR=1 -DVM_COVERAGE=0 -DVM_SC=0 -DVM_TIMING=1 -DVM_TRACE=0 -DVM_TRACE_FST=0 -DVM_TRACE_VCD=0 -DVM_TRACE_SAIF=0 -DVM_VPI=0 -faligned-new -fbracket-depth=4096 -fcf-protection=none -Xclang -fno-pch-timestamp -Qunused-arguments -Wno-bool-operation -Wno-c++11-narrowing -Wno-constant-logical-operand -Wno-int-in-bool-context -Wno-non-pod-varargs -Wno-parentheses-equality -Wno-shadow -Wno-sign-compare -Wno-tautological-bitwise-compare -Wno-tautological-compare -Wno-uninitialized -Wno-unnecessary-virtual-specifier -Wno-unused-but-set-parameter -Wno-unused-but-set-variable -Wno-unused-parameter -Wno-unused-variable -Wno-vla-cxx-extension    -DVL_TIME_CONTEXT   -std=gnu++20 -c -o verilated.o /opt/homebrew/Cellar/verilator/5.050/share/verilator/include/verilated.cpp\nc++ -Os  -I.  -MMD -I/opt/homebrew/Cellar/verilator/5.050/share/verilator/include -I/opt/homebrew/Cellar/verilator/5.050/share/verilator/include/vltstd -DVERILATOR=1 -DVM_COVERAGE=0 -DVM_SC=0 -DVM_TIMING=1 -DVM_TRACE=0 -DVM_TRACE_FST=0 -DVM_TRACE_VCD=0 -DVM_TRACE_SAIF=0 -DVM_VPI=0 -faligned-new -fbracket-depth=4096 -fcf-protection=none -Xclang -fno-pch-timestamp -Qunused-arguments -Wno-bool-operation -Wno-c++11-narrowing -Wno-constant-logical-operand -Wno-int-in-bool-context -Wno-non-pod-varargs -Wno-parentheses-equality -Wno-shadow -Wno-sign-compare -Wno-tautological-bitwise-compare -Wno-tautological-compare -Wno-uninitialized -Wno-unnecessary-virtual-specifier -Wno-unused-but-set-parameter -Wno-unused-but-set-variable -Wno-unused-parameter -Wno-unused-variable -Wno-vla-cxx-extension    -DVL_TIME_CONTEXT   -std=gnu++20 -c -o verilated_timing.o /opt/homebrew/Cellar/verilator/5.050/share/verilator/include/verilated_timing.cpp\nc++ -Os  -I.  -MMD -I/opt/homebrew/Cellar/verilator/5.050/share/verilator/include -I/opt/homebrew/Cellar/verilator/5.050/share/verilator/include/vltstd -DVERILATOR=1 -DVM_COVERAGE=0 -DVM_SC=0 -DVM_TIMING=1 -DVM_TRACE=0 -DVM_TRACE_FST=0 -DVM_TRACE_VCD=0 -DVM_TRACE_SAIF=0 -DVM_VPI=0 -faligned-new -fbracket-depth=4096 -fcf-protection=none -Xclang -fno-pch-timestamp -Qunused-arguments -Wno-bool-operation -Wno-c++11-narrowing -Wno-constant-logical-operand -Wno-int-in-bool-context -Wno-non-pod-varargs -Wno-parentheses-equality -Wno-shadow -Wno-sign-compare -Wno-tautological-bitwise-compare -Wno-tautological-compare -Wno-uninitialized -Wno-unnecessary-virtual-specifier -Wno-unused-but-set-parameter -Wno-unused-but-set-variable -Wno-unused-parameter -Wno-unused-variable -Wno-vla-cxx-extension    -DVL_TIME_CONTEXT   -std=gnu++20 -c -o verilated_threads.o /opt/homebrew/Cellar/verilator/5.050/share/verilator/include/verilated_threads.cpp\npython3 /opt/homebrew/Cellar/verilator/5.050/share/verilator/bin/verilator_includer -DVL_INCLUDE_OPT=include Vaxi_write_request_composition_tb.cpp Vaxi_write_request_composition_tb___024root__0.cpp Vaxi_write_request_composition_tb__main.cpp Vaxi_write_request_composition_tb__ConstPool__0__Slow.cpp Vaxi_write_request_composition_tb___024root__Slow.cpp Vaxi_write_request_composition_tb___024root__0__Slow.cpp Vaxi_write_request_composition_tb__Syms__Slow.cpp > Vaxi_write_request_composition_tb__ALL.cpp\nc++ -Os  -I.  -MMD -I/opt/homebrew/Cellar/verilator/5.050/share/verilator/include -I/opt/homebrew/Cellar/verilator/5.050/share/verilator/include/vltstd -DVERILATOR=1 -DVM_COVERAGE=0 -DVM_SC=0 -DVM_TIMING=1 -DVM_TRACE=0 -DVM_TRACE_FST=0 -DVM_TRACE_VCD=0 -DVM_TRACE_SAIF=0 -DVM_VPI=0 -faligned-new -fbracket-depth=4096 -fcf-protection=none -Xclang -fno-pch-timestamp -Qunused-arguments -Wno-bool-operation -Wno-c++11-narrowing -Wno-constant-logical-operand -Wno-int-in-bool-context -Wno-non-pod-varargs -Wno-parentheses-equality -Wno-shadow -Wno-sign-compare -Wno-tautological-bitwise-compare -Wno-tautological-compare -Wno-uninitialized -Wno-unnecessary-virtual-specifier -Wno-unused-but-set-parameter -Wno-unused-but-set-variable -Wno-unused-parameter -Wno-unused-variable -Wno-vla-cxx-extension    -DVL_TIME_CONTEXT   -std=gnu++20 -c -o Vaxi_write_request_composition_tb__ALL.o Vaxi_write_request_composition_tb__ALL.cpp\nc++  -Wl,-U,__Z15vl_time_stamp64v,-U,__Z13sc_time_stampv,-U,_vlog_startup_routines   verilated.o verilated_timing.o verilated_threads.o Vaxi_write_request_composition_tb__ALL.a    -pthread -lpthread   -o Vaxi_write_request_composition_tb\nrm Vaxi_write_request_composition_tb__ALL.verilator_deplist.tmp\n- V e r i l a t i o n   R e p o r t: Verilator 5.050 2026-07-01 rev vUNKNOWN-built20260701\n- Verilator: Built from 0.198 MB sources in 6 modules, into 0.177 MB in 7 C++ files needing 0.001 MB\n- Verilator: Walltime 4.443 s (elab=0.007, cvt=0.022, bld=4.399); cpu 0.034 s on 1 threads; allocated 15.828 MB\n"
+          },
+          {
+            "argv": [
+              ".artifacts/specforge-undeclared-rule/compositions-after/axi_write_request_composition/axi_write_request_composition-obj/Vaxi_write_request_composition_tb"
+            ],
+            "exit": 0,
+            "stage": "simulate",
+            "stdout": "PASS aw_handshakes=3 w_handshakes=3 done_pulses=3\n- .artifacts/specforge-undeclared-rule/compositions-after/axi_write_request_composition/axi_write_request_composition-tb.sv:160: Verilog $finish\n- S i m u l a t i o n   R e p o r t: Verilator 5.050 2026-07-01\n- Verilator: $finish at 750ps; walltime 0.000 s; speed 12.295 us/s\n- Verilator: cpu 0.000 s on 1 threads; allocated 2 MB\n"
+          }
+        ]
+      },
+      {
+        "assertion_mode": "--no-assert",
+        "hdl_sha256": "35e0186cb6c8264a05486edfb0044762516e9493641164eccf75c492adc98b21",
+        "oracle": "t/1503-ial2-axi-write-transaction-composition.t",
+        "oracle_sha256": "efaa226ed4df9b689fc7d10c042226a28de8a5a424d27b7d4599f1e5009638f6",
+        "source": "axi_write_transaction_composition",
+        "stages": [
+          {
+            "argv": [
+              "./bin/fsmgen",
+              "--strict",
+              "--quiet",
+              "--output",
+              ".artifacts/specforge-undeclared-rule/compositions-after/axi_write_transaction_composition/axi_write_transaction_composition.sv",
+              ".artifacts/specforge-undeclared-rule/compositions-after/axi_write_transaction_composition/axi_write_transaction_composition.fsm"
+            ],
+            "exit": 0,
+            "stage": "generate",
+            "stdout": ""
+          },
+          {
+            "argv": [
+              "verilator",
+              "--binary",
+              "--timing",
+              "--no-assert",
+              "-Wno-fatal",
+              "-j",
+              "1",
+              "--top-module",
+              "axi_write_transaction_composition_tb",
+              "--Mdir",
+              ".artifacts/specforge-undeclared-rule/compositions-after/axi_write_transaction_composition/axi_write_transaction_composition-obj",
+              ".artifacts/specforge-undeclared-rule/compositions-after/axi_write_transaction_composition/axi_write_transaction_composition.sv",
+              ".artifacts/specforge-undeclared-rule/compositions-after/axi_write_transaction_composition/axi_write_transaction_composition-tb.sv"
+            ],
+            "exit": 0,
+            "stage": "compile",
+            "stdout": "c++ -Os  -I.  -MMD -I/opt/homebrew/Cellar/verilator/5.050/share/verilator/include -I/opt/homebrew/Cellar/verilator/5.050/share/verilator/include/vltstd -DVERILATOR=1 -DVM_COVERAGE=0 -DVM_SC=0 -DVM_TIMING=1 -DVM_TRACE=0 -DVM_TRACE_FST=0 -DVM_TRACE_VCD=0 -DVM_TRACE_SAIF=0 -DVM_VPI=0 -faligned-new -fbracket-depth=4096 -fcf-protection=none -Xclang -fno-pch-timestamp -Qunused-arguments -Wno-bool-operation -Wno-c++11-narrowing -Wno-constant-logical-operand -Wno-int-in-bool-context -Wno-non-pod-varargs -Wno-parentheses-equality -Wno-shadow -Wno-sign-compare -Wno-tautological-bitwise-compare -Wno-tautological-compare -Wno-uninitialized -Wno-unnecessary-virtual-specifier -Wno-unused-but-set-parameter -Wno-unused-but-set-variable -Wno-unused-parameter -Wno-unused-variable -Wno-vla-cxx-extension    -DVL_TIME_CONTEXT   -std=gnu++20 -c -o verilated.o /opt/homebrew/Cellar/verilator/5.050/share/verilator/include/verilated.cpp\nc++ -Os  -I.  -MMD -I/opt/homebrew/Cellar/verilator/5.050/share/verilator/include -I/opt/homebrew/Cellar/verilator/5.050/share/verilator/include/vltstd -DVERILATOR=1 -DVM_COVERAGE=0 -DVM_SC=0 -DVM_TIMING=1 -DVM_TRACE=0 -DVM_TRACE_FST=0 -DVM_TRACE_VCD=0 -DVM_TRACE_SAIF=0 -DVM_VPI=0 -faligned-new -fbracket-depth=4096 -fcf-protection=none -Xclang -fno-pch-timestamp -Qunused-arguments -Wno-bool-operation -Wno-c++11-narrowing -Wno-constant-logical-operand -Wno-int-in-bool-context -Wno-non-pod-varargs -Wno-parentheses-equality -Wno-shadow -Wno-sign-compare -Wno-tautological-bitwise-compare -Wno-tautological-compare -Wno-uninitialized -Wno-unnecessary-virtual-specifier -Wno-unused-but-set-parameter -Wno-unused-but-set-variable -Wno-unused-parameter -Wno-unused-variable -Wno-vla-cxx-extension    -DVL_TIME_CONTEXT   -std=gnu++20 -c -o verilated_timing.o /opt/homebrew/Cellar/verilator/5.050/share/verilator/include/verilated_timing.cpp\nc++ -Os  -I.  -MMD -I/opt/homebrew/Cellar/verilator/5.050/share/verilator/include -I/opt/homebrew/Cellar/verilator/5.050/share/verilator/include/vltstd -DVERILATOR=1 -DVM_COVERAGE=0 -DVM_SC=0 -DVM_TIMING=1 -DVM_TRACE=0 -DVM_TRACE_FST=0 -DVM_TRACE_VCD=0 -DVM_TRACE_SAIF=0 -DVM_VPI=0 -faligned-new -fbracket-depth=4096 -fcf-protection=none -Xclang -fno-pch-timestamp -Qunused-arguments -Wno-bool-operation -Wno-c++11-narrowing -Wno-constant-logical-operand -Wno-int-in-bool-context -Wno-non-pod-varargs -Wno-parentheses-equality -Wno-shadow -Wno-sign-compare -Wno-tautological-bitwise-compare -Wno-tautological-compare -Wno-uninitialized -Wno-unnecessary-virtual-specifier -Wno-unused-but-set-parameter -Wno-unused-but-set-variable -Wno-unused-parameter -Wno-unused-variable -Wno-vla-cxx-extension    -DVL_TIME_CONTEXT   -std=gnu++20 -c -o verilated_threads.o /opt/homebrew/Cellar/verilator/5.050/share/verilator/include/verilated_threads.cpp\npython3 /opt/homebrew/Cellar/verilator/5.050/share/verilator/bin/verilator_includer -DVL_INCLUDE_OPT=include Vaxi_write_transaction_composition_tb.cpp Vaxi_write_transaction_composition_tb___024root__0.cpp Vaxi_write_transaction_composition_tb__main.cpp Vaxi_write_transaction_composition_tb__ConstPool__0__Slow.cpp Vaxi_write_transaction_composition_tb___024root__Slow.cpp Vaxi_write_transaction_composition_tb___024root__0__Slow.cpp Vaxi_write_transaction_composition_tb__Syms__Slow.cpp > Vaxi_write_transaction_composition_tb__ALL.cpp\nc++ -Os  -I.  -MMD -I/opt/homebrew/Cellar/verilator/5.050/share/verilator/include -I/opt/homebrew/Cellar/verilator/5.050/share/verilator/include/vltstd -DVERILATOR=1 -DVM_COVERAGE=0 -DVM_SC=0 -DVM_TIMING=1 -DVM_TRACE=0 -DVM_TRACE_FST=0 -DVM_TRACE_VCD=0 -DVM_TRACE_SAIF=0 -DVM_VPI=0 -faligned-new -fbracket-depth=4096 -fcf-protection=none -Xclang -fno-pch-timestamp -Qunused-arguments -Wno-bool-operation -Wno-c++11-narrowing -Wno-constant-logical-operand -Wno-int-in-bool-context -Wno-non-pod-varargs -Wno-parentheses-equality -Wno-shadow -Wno-sign-compare -Wno-tautological-bitwise-compare -Wno-tautological-compare -Wno-uninitialized -Wno-unnecessary-virtual-specifier -Wno-unused-but-set-parameter -Wno-unused-but-set-variable -Wno-unused-parameter -Wno-unused-variable -Wno-vla-cxx-extension    -DVL_TIME_CONTEXT   -std=gnu++20 -c -o Vaxi_write_transaction_composition_tb__ALL.o Vaxi_write_transaction_composition_tb__ALL.cpp\nc++  -Wl,-U,__Z15vl_time_stamp64v,-U,__Z13sc_time_stampv,-U,_vlog_startup_routines   verilated.o verilated_timing.o verilated_threads.o Vaxi_write_transaction_composition_tb__ALL.a    -pthread -lpthread   -o Vaxi_write_transaction_composition_tb\nrm Vaxi_write_transaction_composition_tb__ALL.verilator_deplist.tmp\n- V e r i l a t i o n   R e p o r t: Verilator 5.050 2026-07-01 rev vUNKNOWN-built20260701\n- Verilator: Built from 0.302 MB sources in 8 modules, into 0.243 MB in 7 C++ files needing 0.001 MB\n- Verilator: Walltime 4.806 s (elab=0.005, cvt=0.023, bld=4.764); cpu 0.041 s on 1 threads; allocated 18.000 MB\n"
+          },
+          {
+            "argv": [
+              ".artifacts/specforge-undeclared-rule/compositions-after/axi_write_transaction_composition/axi_write_transaction_composition-obj/Vaxi_write_transaction_composition_tb"
+            ],
+            "exit": 0,
+            "stage": "simulate",
+            "stdout": "PASS aw=3 w=3 b=3 request=3 transaction=3 mismatch_terminal=1\n- .artifacts/specforge-undeclared-rule/compositions-after/axi_write_transaction_composition/axi_write_transaction_composition-tb.sv:221: Verilog $finish\n- S i m u l a t i o n   R e p o r t: Verilator 5.050 2026-07-01\n- Verilator: $finish at 1ns; walltime 0.000 s; speed 27.105 us/s\n- Verilator: cpu 0.000 s on 1 threads; allocated 2 MB\n"
+          }
+        ]
+      },
+      {
+        "assertion_mode": "--no-assert",
+        "hdl_sha256": "60e52a58abec0ec0e1c6751a6a143b2c59e25dd65735d87718a6249d2e3aa1c5",
+        "oracle": "t/data/axi_write_burst4_request_composition_tb.svt",
+        "oracle_sha256": "852ae75341637374ad4a60ff1c8163e01f37c69be0c61b99ec626786bce9f9f8",
+        "source": "axi_write_burst4_request_composition",
+        "stages": [
+          {
+            "argv": [
+              "./bin/fsmgen",
+              "--strict",
+              "--quiet",
+              "--output",
+              ".artifacts/specforge-undeclared-rule/compositions-after/axi_write_burst4_request_composition/axi_write_burst4_request_composition.sv",
+              ".artifacts/specforge-undeclared-rule/compositions-after/axi_write_burst4_request_composition/axi_write_burst4_request_composition.fsm"
+            ],
+            "exit": 0,
+            "stage": "generate",
+            "stdout": ""
+          },
+          {
+            "argv": [
+              "verilator",
+              "--binary",
+              "--timing",
+              "--no-assert",
+              "-Wno-fatal",
+              "-j",
+              "1",
+              "--top-module",
+              "axi_write_burst4_request_composition_tb",
+              "--Mdir",
+              ".artifacts/specforge-undeclared-rule/compositions-after/axi_write_burst4_request_composition/axi_write_burst4_request_composition-obj",
+              ".artifacts/specforge-undeclared-rule/compositions-after/axi_write_burst4_request_composition/axi_write_burst4_request_composition.sv",
+              ".artifacts/specforge-undeclared-rule/compositions-after/axi_write_burst4_request_composition/axi_write_burst4_request_composition-tb.sv"
+            ],
+            "exit": 0,
+            "stage": "compile",
+            "stdout": "c++ -Os  -I.  -MMD -I/opt/homebrew/Cellar/verilator/5.050/share/verilator/include -I/opt/homebrew/Cellar/verilator/5.050/share/verilator/include/vltstd -DVERILATOR=1 -DVM_COVERAGE=0 -DVM_SC=0 -DVM_TIMING=1 -DVM_TRACE=0 -DVM_TRACE_FST=0 -DVM_TRACE_VCD=0 -DVM_TRACE_SAIF=0 -DVM_VPI=0 -faligned-new -fbracket-depth=4096 -fcf-protection=none -Xclang -fno-pch-timestamp -Qunused-arguments -Wno-bool-operation -Wno-c++11-narrowing -Wno-constant-logical-operand -Wno-int-in-bool-context -Wno-non-pod-varargs -Wno-parentheses-equality -Wno-shadow -Wno-sign-compare -Wno-tautological-bitwise-compare -Wno-tautological-compare -Wno-uninitialized -Wno-unnecessary-virtual-specifier -Wno-unused-but-set-parameter -Wno-unused-but-set-variable -Wno-unused-parameter -Wno-unused-variable -Wno-vla-cxx-extension    -DVL_TIME_CONTEXT   -std=gnu++20 -c -o verilated.o /opt/homebrew/Cellar/verilator/5.050/share/verilator/include/verilated.cpp\nc++ -Os  -I.  -MMD -I/opt/homebrew/Cellar/verilator/5.050/share/verilator/include -I/opt/homebrew/Cellar/verilator/5.050/share/verilator/include/vltstd -DVERILATOR=1 -DVM_COVERAGE=0 -DVM_SC=0 -DVM_TIMING=1 -DVM_TRACE=0 -DVM_TRACE_FST=0 -DVM_TRACE_VCD=0 -DVM_TRACE_SAIF=0 -DVM_VPI=0 -faligned-new -fbracket-depth=4096 -fcf-protection=none -Xclang -fno-pch-timestamp -Qunused-arguments -Wno-bool-operation -Wno-c++11-narrowing -Wno-constant-logical-operand -Wno-int-in-bool-context -Wno-non-pod-varargs -Wno-parentheses-equality -Wno-shadow -Wno-sign-compare -Wno-tautological-bitwise-compare -Wno-tautological-compare -Wno-uninitialized -Wno-unnecessary-virtual-specifier -Wno-unused-but-set-parameter -Wno-unused-but-set-variable -Wno-unused-parameter -Wno-unused-variable -Wno-vla-cxx-extension    -DVL_TIME_CONTEXT   -std=gnu++20 -c -o verilated_timing.o /opt/homebrew/Cellar/verilator/5.050/share/verilator/include/verilated_timing.cpp\nc++ -Os  -I.  -MMD -I/opt/homebrew/Cellar/verilator/5.050/share/verilator/include -I/opt/homebrew/Cellar/verilator/5.050/share/verilator/include/vltstd -DVERILATOR=1 -DVM_COVERAGE=0 -DVM_SC=0 -DVM_TIMING=1 -DVM_TRACE=0 -DVM_TRACE_FST=0 -DVM_TRACE_VCD=0 -DVM_TRACE_SAIF=0 -DVM_VPI=0 -faligned-new -fbracket-depth=4096 -fcf-protection=none -Xclang -fno-pch-timestamp -Qunused-arguments -Wno-bool-operation -Wno-c++11-narrowing -Wno-constant-logical-operand -Wno-int-in-bool-context -Wno-non-pod-varargs -Wno-parentheses-equality -Wno-shadow -Wno-sign-compare -Wno-tautological-bitwise-compare -Wno-tautological-compare -Wno-uninitialized -Wno-unnecessary-virtual-specifier -Wno-unused-but-set-parameter -Wno-unused-but-set-variable -Wno-unused-parameter -Wno-unused-variable -Wno-vla-cxx-extension    -DVL_TIME_CONTEXT   -std=gnu++20 -c -o verilated_threads.o /opt/homebrew/Cellar/verilator/5.050/share/verilator/include/verilated_threads.cpp\npython3 /opt/homebrew/Cellar/verilator/5.050/share/verilator/bin/verilator_includer -DVL_INCLUDE_OPT=include Vaxi_write_burst4_request_composition_tb.cpp Vaxi_write_burst4_request_composition_tb___024root__0.cpp Vaxi_write_burst4_request_composition_tb__main.cpp Vaxi_write_burst4_request_composition_tb__ConstPool__0__Slow.cpp Vaxi_write_burst4_request_composition_tb___024root__Slow.cpp Vaxi_write_burst4_request_composition_tb___024root__0__Slow.cpp Vaxi_write_burst4_request_composition_tb__Syms__Slow.cpp > Vaxi_write_burst4_request_composition_tb__ALL.cpp\nc++ -Os  -I.  -MMD -I/opt/homebrew/Cellar/verilator/5.050/share/verilator/include -I/opt/homebrew/Cellar/verilator/5.050/share/verilator/include/vltstd -DVERILATOR=1 -DVM_COVERAGE=0 -DVM_SC=0 -DVM_TIMING=1 -DVM_TRACE=0 -DVM_TRACE_FST=0 -DVM_TRACE_VCD=0 -DVM_TRACE_SAIF=0 -DVM_VPI=0 -faligned-new -fbracket-depth=4096 -fcf-protection=none -Xclang -fno-pch-timestamp -Qunused-arguments -Wno-bool-operation -Wno-c++11-narrowing -Wno-constant-logical-operand -Wno-int-in-bool-context -Wno-non-pod-varargs -Wno-parentheses-equality -Wno-shadow -Wno-sign-compare -Wno-tautological-bitwise-compare -Wno-tautological-compare -Wno-uninitialized -Wno-unnecessary-virtual-specifier -Wno-unused-but-set-parameter -Wno-unused-but-set-variable -Wno-unused-parameter -Wno-unused-variable -Wno-vla-cxx-extension    -DVL_TIME_CONTEXT   -std=gnu++20 -c -o Vaxi_write_burst4_request_composition_tb__ALL.o Vaxi_write_burst4_request_composition_tb__ALL.cpp\nc++  -Wl,-U,__Z15vl_time_stamp64v,-U,__Z13sc_time_stampv,-U,_vlog_startup_routines   verilated.o verilated_timing.o verilated_threads.o Vaxi_write_burst4_request_composition_tb__ALL.a    -pthread -lpthread   -o Vaxi_write_burst4_request_composition_tb\nrm Vaxi_write_burst4_request_composition_tb__ALL.verilator_deplist.tmp\n- V e r i l a t i o n   R e p o r t: Verilator 5.050 2026-07-01 rev vUNKNOWN-built20260701\n- Verilator: Built from 0.257 MB sources in 6 modules, into 0.308 MB in 7 C++ files needing 0.001 MB\n- Verilator: Walltime 5.481 s (elab=0.005, cvt=0.024, bld=5.438); cpu 0.040 s on 1 threads; allocated 17.891 MB\n"
+          },
+          {
+            "argv": [
+              ".artifacts/specforge-undeclared-rule/compositions-after/axi_write_burst4_request_composition/axi_write_burst4_request_composition-obj/Vaxi_write_burst4_request_composition_tb"
+            ],
+            "exit": 0,
+            "stage": "simulate",
+            "stdout": "PASS aw=5 w=18 beat=18 done=4 illegal=2 busy_ignored=1 reset_abort=1\n- .artifacts/specforge-undeclared-rule/compositions-after/axi_write_burst4_request_composition/axi_write_burst4_request_composition-tb.sv:295: Verilog $finish\n- S i m u l a t i o n   R e p o r t: Verilator 5.050 2026-07-01\n- Verilator: $finish at 1ns; walltime 0.000 s; speed 24.773 us/s\n- Verilator: cpu 0.000 s on 1 threads; allocated 2 MB\n"
+          }
+        ]
+      },
+      {
+        "assertion_mode": "--no-assert",
+        "hdl_sha256": "2e4d98c33271e99b41e729026044b46b02bbb67a9a8f1c33a33da0e09accc315",
+        "oracle": "t/data/axi_read_transaction_composition_tb.svt",
+        "oracle_sha256": "10dbafcf5577b312bc267acf4f5ffd22001a25d7af45cba9bb19e148bff71a26",
+        "source": "axi_read_transaction_composition",
+        "stages": [
+          {
+            "argv": [
+              "./bin/fsmgen",
+              "--strict",
+              "--quiet",
+              "--output",
+              ".artifacts/specforge-undeclared-rule/compositions-after/axi_read_transaction_composition/axi_read_transaction_composition.sv",
+              ".artifacts/specforge-undeclared-rule/compositions-after/axi_read_transaction_composition/axi_read_transaction_composition.fsm"
+            ],
+            "exit": 0,
+            "stage": "generate",
+            "stdout": ""
+          },
+          {
+            "argv": [
+              "verilator",
+              "--binary",
+              "--timing",
+              "--no-assert",
+              "-Wno-fatal",
+              "-j",
+              "1",
+              "--top-module",
+              "axi_read_transaction_composition_tb",
+              "--Mdir",
+              ".artifacts/specforge-undeclared-rule/compositions-after/axi_read_transaction_composition/axi_read_transaction_composition-obj",
+              ".artifacts/specforge-undeclared-rule/compositions-after/axi_read_transaction_composition/axi_read_transaction_composition.sv",
+              ".artifacts/specforge-undeclared-rule/compositions-after/axi_read_transaction_composition/axi_read_transaction_composition-tb.sv"
+            ],
+            "exit": 0,
+            "stage": "compile",
+            "stdout": "c++ -Os  -I.  -MMD -I/opt/homebrew/Cellar/verilator/5.050/share/verilator/include -I/opt/homebrew/Cellar/verilator/5.050/share/verilator/include/vltstd -DVERILATOR=1 -DVM_COVERAGE=0 -DVM_SC=0 -DVM_TIMING=1 -DVM_TRACE=0 -DVM_TRACE_FST=0 -DVM_TRACE_VCD=0 -DVM_TRACE_SAIF=0 -DVM_VPI=0 -faligned-new -fbracket-depth=4096 -fcf-protection=none -Xclang -fno-pch-timestamp -Qunused-arguments -Wno-bool-operation -Wno-c++11-narrowing -Wno-constant-logical-operand -Wno-int-in-bool-context -Wno-non-pod-varargs -Wno-parentheses-equality -Wno-shadow -Wno-sign-compare -Wno-tautological-bitwise-compare -Wno-tautological-compare -Wno-uninitialized -Wno-unnecessary-virtual-specifier -Wno-unused-but-set-parameter -Wno-unused-but-set-variable -Wno-unused-parameter -Wno-unused-variable -Wno-vla-cxx-extension    -DVL_TIME_CONTEXT   -std=gnu++20 -c -o verilated.o /opt/homebrew/Cellar/verilator/5.050/share/verilator/include/verilated.cpp\nc++ -Os  -I.  -MMD -I/opt/homebrew/Cellar/verilator/5.050/share/verilator/include -I/opt/homebrew/Cellar/verilator/5.050/share/verilator/include/vltstd -DVERILATOR=1 -DVM_COVERAGE=0 -DVM_SC=0 -DVM_TIMING=1 -DVM_TRACE=0 -DVM_TRACE_FST=0 -DVM_TRACE_VCD=0 -DVM_TRACE_SAIF=0 -DVM_VPI=0 -faligned-new -fbracket-depth=4096 -fcf-protection=none -Xclang -fno-pch-timestamp -Qunused-arguments -Wno-bool-operation -Wno-c++11-narrowing -Wno-constant-logical-operand -Wno-int-in-bool-context -Wno-non-pod-varargs -Wno-parentheses-equality -Wno-shadow -Wno-sign-compare -Wno-tautological-bitwise-compare -Wno-tautological-compare -Wno-uninitialized -Wno-unnecessary-virtual-specifier -Wno-unused-but-set-parameter -Wno-unused-but-set-variable -Wno-unused-parameter -Wno-unused-variable -Wno-vla-cxx-extension    -DVL_TIME_CONTEXT   -std=gnu++20 -c -o verilated_timing.o /opt/homebrew/Cellar/verilator/5.050/share/verilator/include/verilated_timing.cpp\nc++ -Os  -I.  -MMD -I/opt/homebrew/Cellar/verilator/5.050/share/verilator/include -I/opt/homebrew/Cellar/verilator/5.050/share/verilator/include/vltstd -DVERILATOR=1 -DVM_COVERAGE=0 -DVM_SC=0 -DVM_TIMING=1 -DVM_TRACE=0 -DVM_TRACE_FST=0 -DVM_TRACE_VCD=0 -DVM_TRACE_SAIF=0 -DVM_VPI=0 -faligned-new -fbracket-depth=4096 -fcf-protection=none -Xclang -fno-pch-timestamp -Qunused-arguments -Wno-bool-operation -Wno-c++11-narrowing -Wno-constant-logical-operand -Wno-int-in-bool-context -Wno-non-pod-varargs -Wno-parentheses-equality -Wno-shadow -Wno-sign-compare -Wno-tautological-bitwise-compare -Wno-tautological-compare -Wno-uninitialized -Wno-unnecessary-virtual-specifier -Wno-unused-but-set-parameter -Wno-unused-but-set-variable -Wno-unused-parameter -Wno-unused-variable -Wno-vla-cxx-extension    -DVL_TIME_CONTEXT   -std=gnu++20 -c -o verilated_threads.o /opt/homebrew/Cellar/verilator/5.050/share/verilator/include/verilated_threads.cpp\npython3 /opt/homebrew/Cellar/verilator/5.050/share/verilator/bin/verilator_includer -DVL_INCLUDE_OPT=include Vaxi_read_transaction_composition_tb.cpp Vaxi_read_transaction_composition_tb___024root__0.cpp Vaxi_read_transaction_composition_tb__main.cpp Vaxi_read_transaction_composition_tb__ConstPool__0__Slow.cpp Vaxi_read_transaction_composition_tb___024root__Slow.cpp Vaxi_read_transaction_composition_tb___024root__0__Slow.cpp Vaxi_read_transaction_composition_tb__Syms__Slow.cpp > Vaxi_read_transaction_composition_tb__ALL.cpp\nc++ -Os  -I.  -MMD -I/opt/homebrew/Cellar/verilator/5.050/share/verilator/include -I/opt/homebrew/Cellar/verilator/5.050/share/verilator/include/vltstd -DVERILATOR=1 -DVM_COVERAGE=0 -DVM_SC=0 -DVM_TIMING=1 -DVM_TRACE=0 -DVM_TRACE_FST=0 -DVM_TRACE_VCD=0 -DVM_TRACE_SAIF=0 -DVM_VPI=0 -faligned-new -fbracket-depth=4096 -fcf-protection=none -Xclang -fno-pch-timestamp -Qunused-arguments -Wno-bool-operation -Wno-c++11-narrowing -Wno-constant-logical-operand -Wno-int-in-bool-context -Wno-non-pod-varargs -Wno-parentheses-equality -Wno-shadow -Wno-sign-compare -Wno-tautological-bitwise-compare -Wno-tautological-compare -Wno-uninitialized -Wno-unnecessary-virtual-specifier -Wno-unused-but-set-parameter -Wno-unused-but-set-variable -Wno-unused-parameter -Wno-unused-variable -Wno-vla-cxx-extension    -DVL_TIME_CONTEXT   -std=gnu++20 -c -o Vaxi_read_transaction_composition_tb__ALL.o Vaxi_read_transaction_composition_tb__ALL.cpp\nc++  -Wl,-U,__Z15vl_time_stamp64v,-U,__Z13sc_time_stampv,-U,_vlog_startup_routines   verilated.o verilated_timing.o verilated_threads.o Vaxi_read_transaction_composition_tb__ALL.a    -pthread -lpthread   -o Vaxi_read_transaction_composition_tb\nrm Vaxi_read_transaction_composition_tb__ALL.verilator_deplist.tmp\n- V e r i l a t i o n   R e p o r t: Verilator 5.050 2026-07-01 rev vUNKNOWN-built20260701\n- Verilator: Built from 0.206 MB sources in 6 modules, into 0.214 MB in 7 C++ files needing 0.001 MB\n- Verilator: Walltime 4.352 s (elab=0.005, cvt=0.020, bld=4.318); cpu 0.031 s on 1 threads; allocated 16.062 MB\n"
+          },
+          {
+            "argv": [
+              ".artifacts/specforge-undeclared-rule/compositions-after/axi_read_transaction_composition/axi_read_transaction_composition-obj/Vaxi_read_transaction_composition_tb"
+            ],
+            "exit": 0,
+            "stage": "simulate",
+            "stdout": "PASS ar=5 r=4 request=5 transaction=4 mismatch_terminal=1 missing_last_terminal=1 reset_abort=2\n- .artifacts/specforge-undeclared-rule/compositions-after/axi_read_transaction_composition/axi_read_transaction_composition-tb.sv:96: Verilog $finish\n- S i m u l a t i o n   R e p o r t: Verilator 5.050 2026-07-01\n- Verilator: $finish at 1ns; walltime 0.000 s; speed 32.381 us/s\n- Verilator: cpu 0.000 s on 1 threads; allocated 2 MB\n"
+          }
+        ]
+      },
+      {
+        "assertion_mode": "--no-assert",
+        "hdl_sha256": "e122485cc998f6522ac5f353aae58e12c353aaf61ca4f7fde946a48cb6f81182",
+        "oracle": "t/data/axi_read_burst4_transaction_composition_tb.svt",
+        "oracle_sha256": "c83b7952427e96b5bdbf91c2760737ce2d66b54507052156afb8a23bcb3f34df",
+        "source": "axi_read_burst4_transaction_composition",
+        "stages": [
+          {
+            "argv": [
+              "./bin/fsmgen",
+              "--strict",
+              "--quiet",
+              "--output",
+              ".artifacts/specforge-undeclared-rule/compositions-after/axi_read_burst4_transaction_composition/axi_read_burst4_transaction_composition.sv",
+              ".artifacts/specforge-undeclared-rule/compositions-after/axi_read_burst4_transaction_composition/axi_read_burst4_transaction_composition.fsm"
+            ],
+            "exit": 0,
+            "stage": "generate",
+            "stdout": ""
+          },
+          {
+            "argv": [
+              "verilator",
+              "--binary",
+              "--timing",
+              "--no-assert",
+              "-Wno-fatal",
+              "-j",
+              "1",
+              "--top-module",
+              "axi_read_burst4_transaction_composition_tb",
+              "--Mdir",
+              ".artifacts/specforge-undeclared-rule/compositions-after/axi_read_burst4_transaction_composition/axi_read_burst4_transaction_composition-obj",
+              ".artifacts/specforge-undeclared-rule/compositions-after/axi_read_burst4_transaction_composition/axi_read_burst4_transaction_composition.sv",
+              ".artifacts/specforge-undeclared-rule/compositions-after/axi_read_burst4_transaction_composition/axi_read_burst4_transaction_composition-tb.sv"
+            ],
+            "exit": 0,
+            "stage": "compile",
+            "stdout": "c++ -Os  -I.  -MMD -I/opt/homebrew/Cellar/verilator/5.050/share/verilator/include -I/opt/homebrew/Cellar/verilator/5.050/share/verilator/include/vltstd -DVERILATOR=1 -DVM_COVERAGE=0 -DVM_SC=0 -DVM_TIMING=1 -DVM_TRACE=0 -DVM_TRACE_FST=0 -DVM_TRACE_VCD=0 -DVM_TRACE_SAIF=0 -DVM_VPI=0 -faligned-new -fbracket-depth=4096 -fcf-protection=none -Xclang -fno-pch-timestamp -Qunused-arguments -Wno-bool-operation -Wno-c++11-narrowing -Wno-constant-logical-operand -Wno-int-in-bool-context -Wno-non-pod-varargs -Wno-parentheses-equality -Wno-shadow -Wno-sign-compare -Wno-tautological-bitwise-compare -Wno-tautological-compare -Wno-uninitialized -Wno-unnecessary-virtual-specifier -Wno-unused-but-set-parameter -Wno-unused-but-set-variable -Wno-unused-parameter -Wno-unused-variable -Wno-vla-cxx-extension    -DVL_TIME_CONTEXT   -std=gnu++20 -c -o verilated.o /opt/homebrew/Cellar/verilator/5.050/share/verilator/include/verilated.cpp\nc++ -Os  -I.  -MMD -I/opt/homebrew/Cellar/verilator/5.050/share/verilator/include -I/opt/homebrew/Cellar/verilator/5.050/share/verilator/include/vltstd -DVERILATOR=1 -DVM_COVERAGE=0 -DVM_SC=0 -DVM_TIMING=1 -DVM_TRACE=0 -DVM_TRACE_FST=0 -DVM_TRACE_VCD=0 -DVM_TRACE_SAIF=0 -DVM_VPI=0 -faligned-new -fbracket-depth=4096 -fcf-protection=none -Xclang -fno-pch-timestamp -Qunused-arguments -Wno-bool-operation -Wno-c++11-narrowing -Wno-constant-logical-operand -Wno-int-in-bool-context -Wno-non-pod-varargs -Wno-parentheses-equality -Wno-shadow -Wno-sign-compare -Wno-tautological-bitwise-compare -Wno-tautological-compare -Wno-uninitialized -Wno-unnecessary-virtual-specifier -Wno-unused-but-set-parameter -Wno-unused-but-set-variable -Wno-unused-parameter -Wno-unused-variable -Wno-vla-cxx-extension    -DVL_TIME_CONTEXT   -std=gnu++20 -c -o verilated_timing.o /opt/homebrew/Cellar/verilator/5.050/share/verilator/include/verilated_timing.cpp\nc++ -Os  -I.  -MMD -I/opt/homebrew/Cellar/verilator/5.050/share/verilator/include -I/opt/homebrew/Cellar/verilator/5.050/share/verilator/include/vltstd -DVERILATOR=1 -DVM_COVERAGE=0 -DVM_SC=0 -DVM_TIMING=1 -DVM_TRACE=0 -DVM_TRACE_FST=0 -DVM_TRACE_VCD=0 -DVM_TRACE_SAIF=0 -DVM_VPI=0 -faligned-new -fbracket-depth=4096 -fcf-protection=none -Xclang -fno-pch-timestamp -Qunused-arguments -Wno-bool-operation -Wno-c++11-narrowing -Wno-constant-logical-operand -Wno-int-in-bool-context -Wno-non-pod-varargs -Wno-parentheses-equality -Wno-shadow -Wno-sign-compare -Wno-tautological-bitwise-compare -Wno-tautological-compare -Wno-uninitialized -Wno-unnecessary-virtual-specifier -Wno-unused-but-set-parameter -Wno-unused-but-set-variable -Wno-unused-parameter -Wno-unused-variable -Wno-vla-cxx-extension    -DVL_TIME_CONTEXT   -std=gnu++20 -c -o verilated_threads.o /opt/homebrew/Cellar/verilator/5.050/share/verilator/include/verilated_threads.cpp\npython3 /opt/homebrew/Cellar/verilator/5.050/share/verilator/bin/verilator_includer -DVL_INCLUDE_OPT=include Vaxi_read_burst4_transaction_composition_tb.cpp Vaxi_read_burst4_transaction_composition_tb___024root__0.cpp Vaxi_read_burst4_transaction_composition_tb__main.cpp Vaxi_read_burst4_transaction_composition_tb__ConstPool__0__Slow.cpp Vaxi_read_burst4_transaction_composition_tb___024root__Slow.cpp Vaxi_read_burst4_transaction_composition_tb___024root__0__Slow.cpp Vaxi_read_burst4_transaction_composition_tb__Syms__Slow.cpp > Vaxi_read_burst4_transaction_composition_tb__ALL.cpp\nc++ -Os  -I.  -MMD -I/opt/homebrew/Cellar/verilator/5.050/share/verilator/include -I/opt/homebrew/Cellar/verilator/5.050/share/verilator/include/vltstd -DVERILATOR=1 -DVM_COVERAGE=0 -DVM_SC=0 -DVM_TIMING=1 -DVM_TRACE=0 -DVM_TRACE_FST=0 -DVM_TRACE_VCD=0 -DVM_TRACE_SAIF=0 -DVM_VPI=0 -faligned-new -fbracket-depth=4096 -fcf-protection=none -Xclang -fno-pch-timestamp -Qunused-arguments -Wno-bool-operation -Wno-c++11-narrowing -Wno-constant-logical-operand -Wno-int-in-bool-context -Wno-non-pod-varargs -Wno-parentheses-equality -Wno-shadow -Wno-sign-compare -Wno-tautological-bitwise-compare -Wno-tautological-compare -Wno-uninitialized -Wno-unnecessary-virtual-specifier -Wno-unused-but-set-parameter -Wno-unused-but-set-variable -Wno-unused-parameter -Wno-unused-variable -Wno-vla-cxx-extension    -DVL_TIME_CONTEXT   -std=gnu++20 -c -o Vaxi_read_burst4_transaction_composition_tb__ALL.o Vaxi_read_burst4_transaction_composition_tb__ALL.cpp\nc++  -Wl,-U,__Z15vl_time_stamp64v,-U,__Z13sc_time_stampv,-U,_vlog_startup_routines   verilated.o verilated_timing.o verilated_threads.o Vaxi_read_burst4_transaction_composition_tb__ALL.a    -pthread -lpthread   -o Vaxi_read_burst4_transaction_composition_tb\nrm Vaxi_read_burst4_transaction_composition_tb__ALL.verilator_deplist.tmp\n- V e r i l a t i o n   R e p o r t: Verilator 5.050 2026-07-01 rev vUNKNOWN-built20260701\n- Verilator: Built from 0.252 MB sources in 6 modules, into 0.453 MB in 7 C++ files needing 0.002 MB\n- Verilator: Walltime 4.189 s (elab=0.004, cvt=0.021, bld=4.152); cpu 0.037 s on 1 threads; allocated 18.172 MB\n"
+          },
+          {
+            "argv": [
+              ".artifacts/specforge-undeclared-rule/compositions-after/axi_read_burst4_transaction_composition/axi_read_burst4_transaction_composition-obj/Vaxi_read_burst4_transaction_composition_tb"
+            ],
+            "exit": 0,
+            "stage": "simulate",
+            "stdout": "PASS ar=5 r=17 request=5 beat=17 transaction=4 illegal=2 busy_ignored=1 error_drain=4 reset_abort=1\n- .artifacts/specforge-undeclared-rule/compositions-after/axi_read_burst4_transaction_composition/axi_read_burst4_transaction_composition-tb.sv:279: Verilog $finish\n- S i m u l a t i o n   R e p o r t: Verilator 5.050 2026-07-01\n- Verilator: $finish at 2ns; walltime 0.000 s; speed 31.757 us/s\n- Verilator: cpu 0.000 s on 1 threads; allocated 2 MB\n"
+          }
+        ]
+      }
+    ],
+    "before": [
+      {
+        "assertion_mode": "--no-assert",
+        "hdl_sha256": "fc0bebc6a98eff95d4103fd1b131ffacdbabe82ea8dd3d4565d5090e18878d6b",
+        "oracle": "t/1502-ial2-axi-write-request-composition.t",
+        "oracle_sha256": "6e8a7f808e6401a64c57836fa2af5a4d805d7bf12cec18bff0e7ff5eb339e981",
+        "source": "axi_write_request_composition",
+        "stages": [
+          {
+            "argv": [
+              "./bin/fsmgen",
+              "--strict",
+              "--quiet",
+              "--output",
+              ".artifacts/specforge-undeclared-rule/compositions-before/axi_write_request_composition/axi_write_request_composition.sv",
+              ".artifacts/specforge-undeclared-rule/compositions-before/axi_write_request_composition/axi_write_request_composition.fsm"
+            ],
+            "exit": 0,
+            "stage": "generate",
+            "stdout": ""
+          },
+          {
+            "argv": [
+              "verilator",
+              "--binary",
+              "--timing",
+              "--no-assert",
+              "-Wno-fatal",
+              "-j",
+              "1",
+              "--top-module",
+              "axi_write_request_composition_tb",
+              "--Mdir",
+              ".artifacts/specforge-undeclared-rule/compositions-before/axi_write_request_composition/axi_write_request_composition-obj",
+              ".artifacts/specforge-undeclared-rule/compositions-before/axi_write_request_composition/axi_write_request_composition.sv",
+              ".artifacts/specforge-undeclared-rule/compositions-before/axi_write_request_composition/axi_write_request_composition-tb.sv"
+            ],
+            "exit": 0,
+            "stage": "compile",
+            "stdout": "c++ -Os  -I.  -MMD -I/opt/homebrew/Cellar/verilator/5.050/share/verilator/include -I/opt/homebrew/Cellar/verilator/5.050/share/verilator/include/vltstd -DVERILATOR=1 -DVM_COVERAGE=0 -DVM_SC=0 -DVM_TIMING=1 -DVM_TRACE=0 -DVM_TRACE_FST=0 -DVM_TRACE_VCD=0 -DVM_TRACE_SAIF=0 -DVM_VPI=0 -faligned-new -fbracket-depth=4096 -fcf-protection=none -Xclang -fno-pch-timestamp -Qunused-arguments -Wno-bool-operation -Wno-c++11-narrowing -Wno-constant-logical-operand -Wno-int-in-bool-context -Wno-non-pod-varargs -Wno-parentheses-equality -Wno-shadow -Wno-sign-compare -Wno-tautological-bitwise-compare -Wno-tautological-compare -Wno-uninitialized -Wno-unnecessary-virtual-specifier -Wno-unused-but-set-parameter -Wno-unused-but-set-variable -Wno-unused-parameter -Wno-unused-variable -Wno-vla-cxx-extension    -DVL_TIME_CONTEXT   -std=gnu++20 -c -o verilated.o /opt/homebrew/Cellar/verilator/5.050/share/verilator/include/verilated.cpp\nc++ -Os  -I.  -MMD -I/opt/homebrew/Cellar/verilator/5.050/share/verilator/include -I/opt/homebrew/Cellar/verilator/5.050/share/verilator/include/vltstd -DVERILATOR=1 -DVM_COVERAGE=0 -DVM_SC=0 -DVM_TIMING=1 -DVM_TRACE=0 -DVM_TRACE_FST=0 -DVM_TRACE_VCD=0 -DVM_TRACE_SAIF=0 -DVM_VPI=0 -faligned-new -fbracket-depth=4096 -fcf-protection=none -Xclang -fno-pch-timestamp -Qunused-arguments -Wno-bool-operation -Wno-c++11-narrowing -Wno-constant-logical-operand -Wno-int-in-bool-context -Wno-non-pod-varargs -Wno-parentheses-equality -Wno-shadow -Wno-sign-compare -Wno-tautological-bitwise-compare -Wno-tautological-compare -Wno-uninitialized -Wno-unnecessary-virtual-specifier -Wno-unused-but-set-parameter -Wno-unused-but-set-variable -Wno-unused-parameter -Wno-unused-variable -Wno-vla-cxx-extension    -DVL_TIME_CONTEXT   -std=gnu++20 -c -o verilated_timing.o /opt/homebrew/Cellar/verilator/5.050/share/verilator/include/verilated_timing.cpp\nc++ -Os  -I.  -MMD -I/opt/homebrew/Cellar/verilator/5.050/share/verilator/include -I/opt/homebrew/Cellar/verilator/5.050/share/verilator/include/vltstd -DVERILATOR=1 -DVM_COVERAGE=0 -DVM_SC=0 -DVM_TIMING=1 -DVM_TRACE=0 -DVM_TRACE_FST=0 -DVM_TRACE_VCD=0 -DVM_TRACE_SAIF=0 -DVM_VPI=0 -faligned-new -fbracket-depth=4096 -fcf-protection=none -Xclang -fno-pch-timestamp -Qunused-arguments -Wno-bool-operation -Wno-c++11-narrowing -Wno-constant-logical-operand -Wno-int-in-bool-context -Wno-non-pod-varargs -Wno-parentheses-equality -Wno-shadow -Wno-sign-compare -Wno-tautological-bitwise-compare -Wno-tautological-compare -Wno-uninitialized -Wno-unnecessary-virtual-specifier -Wno-unused-but-set-parameter -Wno-unused-but-set-variable -Wno-unused-parameter -Wno-unused-variable -Wno-vla-cxx-extension    -DVL_TIME_CONTEXT   -std=gnu++20 -c -o verilated_threads.o /opt/homebrew/Cellar/verilator/5.050/share/verilator/include/verilated_threads.cpp\npython3 /opt/homebrew/Cellar/verilator/5.050/share/verilator/bin/verilator_includer -DVL_INCLUDE_OPT=include Vaxi_write_request_composition_tb.cpp Vaxi_write_request_composition_tb___024root__0.cpp Vaxi_write_request_composition_tb__main.cpp Vaxi_write_request_composition_tb__ConstPool__0__Slow.cpp Vaxi_write_request_composition_tb___024root__Slow.cpp Vaxi_write_request_composition_tb___024root__0__Slow.cpp Vaxi_write_request_composition_tb__Syms__Slow.cpp > Vaxi_write_request_composition_tb__ALL.cpp\nc++ -Os  -I.  -MMD -I/opt/homebrew/Cellar/verilator/5.050/share/verilator/include -I/opt/homebrew/Cellar/verilator/5.050/share/verilator/include/vltstd -DVERILATOR=1 -DVM_COVERAGE=0 -DVM_SC=0 -DVM_TIMING=1 -DVM_TRACE=0 -DVM_TRACE_FST=0 -DVM_TRACE_VCD=0 -DVM_TRACE_SAIF=0 -DVM_VPI=0 -faligned-new -fbracket-depth=4096 -fcf-protection=none -Xclang -fno-pch-timestamp -Qunused-arguments -Wno-bool-operation -Wno-c++11-narrowing -Wno-constant-logical-operand -Wno-int-in-bool-context -Wno-non-pod-varargs -Wno-parentheses-equality -Wno-shadow -Wno-sign-compare -Wno-tautological-bitwise-compare -Wno-tautological-compare -Wno-uninitialized -Wno-unnecessary-virtual-specifier -Wno-unused-but-set-parameter -Wno-unused-but-set-variable -Wno-unused-parameter -Wno-unused-variable -Wno-vla-cxx-extension    -DVL_TIME_CONTEXT   -std=gnu++20 -c -o Vaxi_write_request_composition_tb__ALL.o Vaxi_write_request_composition_tb__ALL.cpp\nc++  -Wl,-U,__Z15vl_time_stamp64v,-U,__Z13sc_time_stampv,-U,_vlog_startup_routines   verilated.o verilated_timing.o verilated_threads.o Vaxi_write_request_composition_tb__ALL.a    -pthread -lpthread   -o Vaxi_write_request_composition_tb\nrm Vaxi_write_request_composition_tb__ALL.verilator_deplist.tmp\n- V e r i l a t i o n   R e p o r t: Verilator 5.050 2026-07-01 rev vUNKNOWN-built20260701\n- Verilator: Built from 0.198 MB sources in 6 modules, into 0.177 MB in 7 C++ files needing 0.001 MB\n- Verilator: Walltime 4.423 s (elab=0.003, cvt=0.017, bld=4.393); cpu 0.029 s on 1 threads; allocated 15.953 MB\n"
+          },
+          {
+            "argv": [
+              ".artifacts/specforge-undeclared-rule/compositions-before/axi_write_request_composition/axi_write_request_composition-obj/Vaxi_write_request_composition_tb"
+            ],
+            "exit": 0,
+            "stage": "simulate",
+            "stdout": "PASS aw_handshakes=3 w_handshakes=3 done_pulses=3\n- .artifacts/specforge-undeclared-rule/compositions-before/axi_write_request_composition/axi_write_request_composition-tb.sv:160: Verilog $finish\n- S i m u l a t i o n   R e p o r t: Verilator 5.050 2026-07-01\n- Verilator: $finish at 750ps; walltime 0.000 s; speed 19.231 us/s\n- Verilator: cpu 0.000 s on 1 threads; allocated 2 MB\n"
+          }
+        ]
+      },
+      {
+        "assertion_mode": "--no-assert",
+        "hdl_sha256": "1cdc06a11f695f3d9b8325b97281ff0b101936d30d71df266baa3ca55f019e5e",
+        "oracle": "t/1503-ial2-axi-write-transaction-composition.t",
+        "oracle_sha256": "efaa226ed4df9b689fc7d10c042226a28de8a5a424d27b7d4599f1e5009638f6",
+        "source": "axi_write_transaction_composition",
+        "stages": [
+          {
+            "argv": [
+              "./bin/fsmgen",
+              "--strict",
+              "--quiet",
+              "--output",
+              ".artifacts/specforge-undeclared-rule/compositions-before/axi_write_transaction_composition/axi_write_transaction_composition.sv",
+              ".artifacts/specforge-undeclared-rule/compositions-before/axi_write_transaction_composition/axi_write_transaction_composition.fsm"
+            ],
+            "exit": 0,
+            "stage": "generate",
+            "stdout": ""
+          },
+          {
+            "argv": [
+              "verilator",
+              "--binary",
+              "--timing",
+              "--no-assert",
+              "-Wno-fatal",
+              "-j",
+              "1",
+              "--top-module",
+              "axi_write_transaction_composition_tb",
+              "--Mdir",
+              ".artifacts/specforge-undeclared-rule/compositions-before/axi_write_transaction_composition/axi_write_transaction_composition-obj",
+              ".artifacts/specforge-undeclared-rule/compositions-before/axi_write_transaction_composition/axi_write_transaction_composition.sv",
+              ".artifacts/specforge-undeclared-rule/compositions-before/axi_write_transaction_composition/axi_write_transaction_composition-tb.sv"
+            ],
+            "exit": 0,
+            "stage": "compile",
+            "stdout": "c++ -Os  -I.  -MMD -I/opt/homebrew/Cellar/verilator/5.050/share/verilator/include -I/opt/homebrew/Cellar/verilator/5.050/share/verilator/include/vltstd -DVERILATOR=1 -DVM_COVERAGE=0 -DVM_SC=0 -DVM_TIMING=1 -DVM_TRACE=0 -DVM_TRACE_FST=0 -DVM_TRACE_VCD=0 -DVM_TRACE_SAIF=0 -DVM_VPI=0 -faligned-new -fbracket-depth=4096 -fcf-protection=none -Xclang -fno-pch-timestamp -Qunused-arguments -Wno-bool-operation -Wno-c++11-narrowing -Wno-constant-logical-operand -Wno-int-in-bool-context -Wno-non-pod-varargs -Wno-parentheses-equality -Wno-shadow -Wno-sign-compare -Wno-tautological-bitwise-compare -Wno-tautological-compare -Wno-uninitialized -Wno-unnecessary-virtual-specifier -Wno-unused-but-set-parameter -Wno-unused-but-set-variable -Wno-unused-parameter -Wno-unused-variable -Wno-vla-cxx-extension    -DVL_TIME_CONTEXT   -std=gnu++20 -c -o verilated.o /opt/homebrew/Cellar/verilator/5.050/share/verilator/include/verilated.cpp\nc++ -Os  -I.  -MMD -I/opt/homebrew/Cellar/verilator/5.050/share/verilator/include -I/opt/homebrew/Cellar/verilator/5.050/share/verilator/include/vltstd -DVERILATOR=1 -DVM_COVERAGE=0 -DVM_SC=0 -DVM_TIMING=1 -DVM_TRACE=0 -DVM_TRACE_FST=0 -DVM_TRACE_VCD=0 -DVM_TRACE_SAIF=0 -DVM_VPI=0 -faligned-new -fbracket-depth=4096 -fcf-protection=none -Xclang -fno-pch-timestamp -Qunused-arguments -Wno-bool-operation -Wno-c++11-narrowing -Wno-constant-logical-operand -Wno-int-in-bool-context -Wno-non-pod-varargs -Wno-parentheses-equality -Wno-shadow -Wno-sign-compare -Wno-tautological-bitwise-compare -Wno-tautological-compare -Wno-uninitialized -Wno-unnecessary-virtual-specifier -Wno-unused-but-set-parameter -Wno-unused-but-set-variable -Wno-unused-parameter -Wno-unused-variable -Wno-vla-cxx-extension    -DVL_TIME_CONTEXT   -std=gnu++20 -c -o verilated_timing.o /opt/homebrew/Cellar/verilator/5.050/share/verilator/include/verilated_timing.cpp\nc++ -Os  -I.  -MMD -I/opt/homebrew/Cellar/verilator/5.050/share/verilator/include -I/opt/homebrew/Cellar/verilator/5.050/share/verilator/include/vltstd -DVERILATOR=1 -DVM_COVERAGE=0 -DVM_SC=0 -DVM_TIMING=1 -DVM_TRACE=0 -DVM_TRACE_FST=0 -DVM_TRACE_VCD=0 -DVM_TRACE_SAIF=0 -DVM_VPI=0 -faligned-new -fbracket-depth=4096 -fcf-protection=none -Xclang -fno-pch-timestamp -Qunused-arguments -Wno-bool-operation -Wno-c++11-narrowing -Wno-constant-logical-operand -Wno-int-in-bool-context -Wno-non-pod-varargs -Wno-parentheses-equality -Wno-shadow -Wno-sign-compare -Wno-tautological-bitwise-compare -Wno-tautological-compare -Wno-uninitialized -Wno-unnecessary-virtual-specifier -Wno-unused-but-set-parameter -Wno-unused-but-set-variable -Wno-unused-parameter -Wno-unused-variable -Wno-vla-cxx-extension    -DVL_TIME_CONTEXT   -std=gnu++20 -c -o verilated_threads.o /opt/homebrew/Cellar/verilator/5.050/share/verilator/include/verilated_threads.cpp\npython3 /opt/homebrew/Cellar/verilator/5.050/share/verilator/bin/verilator_includer -DVL_INCLUDE_OPT=include Vaxi_write_transaction_composition_tb.cpp Vaxi_write_transaction_composition_tb___024root__0.cpp Vaxi_write_transaction_composition_tb__main.cpp Vaxi_write_transaction_composition_tb__ConstPool__0__Slow.cpp Vaxi_write_transaction_composition_tb___024root__Slow.cpp Vaxi_write_transaction_composition_tb___024root__0__Slow.cpp Vaxi_write_transaction_composition_tb__Syms__Slow.cpp > Vaxi_write_transaction_composition_tb__ALL.cpp\nc++ -Os  -I.  -MMD -I/opt/homebrew/Cellar/verilator/5.050/share/verilator/include -I/opt/homebrew/Cellar/verilator/5.050/share/verilator/include/vltstd -DVERILATOR=1 -DVM_COVERAGE=0 -DVM_SC=0 -DVM_TIMING=1 -DVM_TRACE=0 -DVM_TRACE_FST=0 -DVM_TRACE_VCD=0 -DVM_TRACE_SAIF=0 -DVM_VPI=0 -faligned-new -fbracket-depth=4096 -fcf-protection=none -Xclang -fno-pch-timestamp -Qunused-arguments -Wno-bool-operation -Wno-c++11-narrowing -Wno-constant-logical-operand -Wno-int-in-bool-context -Wno-non-pod-varargs -Wno-parentheses-equality -Wno-shadow -Wno-sign-compare -Wno-tautological-bitwise-compare -Wno-tautological-compare -Wno-uninitialized -Wno-unnecessary-virtual-specifier -Wno-unused-but-set-parameter -Wno-unused-but-set-variable -Wno-unused-parameter -Wno-unused-variable -Wno-vla-cxx-extension    -DVL_TIME_CONTEXT   -std=gnu++20 -c -o Vaxi_write_transaction_composition_tb__ALL.o Vaxi_write_transaction_composition_tb__ALL.cpp\nc++  -Wl,-U,__Z15vl_time_stamp64v,-U,__Z13sc_time_stampv,-U,_vlog_startup_routines   verilated.o verilated_timing.o verilated_threads.o Vaxi_write_transaction_composition_tb__ALL.a    -pthread -lpthread   -o Vaxi_write_transaction_composition_tb\nrm Vaxi_write_transaction_composition_tb__ALL.verilator_deplist.tmp\n- V e r i l a t i o n   R e p o r t: Verilator 5.050 2026-07-01 rev vUNKNOWN-built20260701\n- Verilator: Built from 0.302 MB sources in 8 modules, into 0.243 MB in 7 C++ files needing 0.001 MB\n- Verilator: Walltime 4.790 s (elab=0.005, cvt=0.024, bld=4.748); cpu 0.041 s on 1 threads; allocated 18.453 MB\n"
+          },
+          {
+            "argv": [
+              ".artifacts/specforge-undeclared-rule/compositions-before/axi_write_transaction_composition/axi_write_transaction_composition-obj/Vaxi_write_transaction_composition_tb"
+            ],
+            "exit": 0,
+            "stage": "simulate",
+            "stdout": "PASS aw=3 w=3 b=3 request=3 transaction=3 mismatch_terminal=1\n- .artifacts/specforge-undeclared-rule/compositions-before/axi_write_transaction_composition/axi_write_transaction_composition-tb.sv:221: Verilog $finish\n- S i m u l a t i o n   R e p o r t: Verilator 5.050 2026-07-01\n- Verilator: $finish at 1ns; walltime 0.000 s; speed 14.714 us/s\n- Verilator: cpu 0.000 s on 1 threads; allocated 2 MB\n"
+          }
+        ]
+      },
+      {
+        "assertion_mode": "--no-assert",
+        "hdl_sha256": "60e52a58abec0ec0e1c6751a6a143b2c59e25dd65735d87718a6249d2e3aa1c5",
+        "oracle": "t/data/axi_write_burst4_request_composition_tb.svt",
+        "oracle_sha256": "852ae75341637374ad4a60ff1c8163e01f37c69be0c61b99ec626786bce9f9f8",
+        "source": "axi_write_burst4_request_composition",
+        "stages": [
+          {
+            "argv": [
+              "./bin/fsmgen",
+              "--strict",
+              "--quiet",
+              "--output",
+              ".artifacts/specforge-undeclared-rule/compositions-before/axi_write_burst4_request_composition/axi_write_burst4_request_composition.sv",
+              ".artifacts/specforge-undeclared-rule/compositions-before/axi_write_burst4_request_composition/axi_write_burst4_request_composition.fsm"
+            ],
+            "exit": 0,
+            "stage": "generate",
+            "stdout": ""
+          },
+          {
+            "argv": [
+              "verilator",
+              "--binary",
+              "--timing",
+              "--no-assert",
+              "-Wno-fatal",
+              "-j",
+              "1",
+              "--top-module",
+              "axi_write_burst4_request_composition_tb",
+              "--Mdir",
+              ".artifacts/specforge-undeclared-rule/compositions-before/axi_write_burst4_request_composition/axi_write_burst4_request_composition-obj",
+              ".artifacts/specforge-undeclared-rule/compositions-before/axi_write_burst4_request_composition/axi_write_burst4_request_composition.sv",
+              ".artifacts/specforge-undeclared-rule/compositions-before/axi_write_burst4_request_composition/axi_write_burst4_request_composition-tb.sv"
+            ],
+            "exit": 0,
+            "stage": "compile",
+            "stdout": "c++ -Os  -I.  -MMD -I/opt/homebrew/Cellar/verilator/5.050/share/verilator/include -I/opt/homebrew/Cellar/verilator/5.050/share/verilator/include/vltstd -DVERILATOR=1 -DVM_COVERAGE=0 -DVM_SC=0 -DVM_TIMING=1 -DVM_TRACE=0 -DVM_TRACE_FST=0 -DVM_TRACE_VCD=0 -DVM_TRACE_SAIF=0 -DVM_VPI=0 -faligned-new -fbracket-depth=4096 -fcf-protection=none -Xclang -fno-pch-timestamp -Qunused-arguments -Wno-bool-operation -Wno-c++11-narrowing -Wno-constant-logical-operand -Wno-int-in-bool-context -Wno-non-pod-varargs -Wno-parentheses-equality -Wno-shadow -Wno-sign-compare -Wno-tautological-bitwise-compare -Wno-tautological-compare -Wno-uninitialized -Wno-unnecessary-virtual-specifier -Wno-unused-but-set-parameter -Wno-unused-but-set-variable -Wno-unused-parameter -Wno-unused-variable -Wno-vla-cxx-extension    -DVL_TIME_CONTEXT   -std=gnu++20 -c -o verilated.o /opt/homebrew/Cellar/verilator/5.050/share/verilator/include/verilated.cpp\nc++ -Os  -I.  -MMD -I/opt/homebrew/Cellar/verilator/5.050/share/verilator/include -I/opt/homebrew/Cellar/verilator/5.050/share/verilator/include/vltstd -DVERILATOR=1 -DVM_COVERAGE=0 -DVM_SC=0 -DVM_TIMING=1 -DVM_TRACE=0 -DVM_TRACE_FST=0 -DVM_TRACE_VCD=0 -DVM_TRACE_SAIF=0 -DVM_VPI=0 -faligned-new -fbracket-depth=4096 -fcf-protection=none -Xclang -fno-pch-timestamp -Qunused-arguments -Wno-bool-operation -Wno-c++11-narrowing -Wno-constant-logical-operand -Wno-int-in-bool-context -Wno-non-pod-varargs -Wno-parentheses-equality -Wno-shadow -Wno-sign-compare -Wno-tautological-bitwise-compare -Wno-tautological-compare -Wno-uninitialized -Wno-unnecessary-virtual-specifier -Wno-unused-but-set-parameter -Wno-unused-but-set-variable -Wno-unused-parameter -Wno-unused-variable -Wno-vla-cxx-extension    -DVL_TIME_CONTEXT   -std=gnu++20 -c -o verilated_timing.o /opt/homebrew/Cellar/verilator/5.050/share/verilator/include/verilated_timing.cpp\nc++ -Os  -I.  -MMD -I/opt/homebrew/Cellar/verilator/5.050/share/verilator/include -I/opt/homebrew/Cellar/verilator/5.050/share/verilator/include/vltstd -DVERILATOR=1 -DVM_COVERAGE=0 -DVM_SC=0 -DVM_TIMING=1 -DVM_TRACE=0 -DVM_TRACE_FST=0 -DVM_TRACE_VCD=0 -DVM_TRACE_SAIF=0 -DVM_VPI=0 -faligned-new -fbracket-depth=4096 -fcf-protection=none -Xclang -fno-pch-timestamp -Qunused-arguments -Wno-bool-operation -Wno-c++11-narrowing -Wno-constant-logical-operand -Wno-int-in-bool-context -Wno-non-pod-varargs -Wno-parentheses-equality -Wno-shadow -Wno-sign-compare -Wno-tautological-bitwise-compare -Wno-tautological-compare -Wno-uninitialized -Wno-unnecessary-virtual-specifier -Wno-unused-but-set-parameter -Wno-unused-but-set-variable -Wno-unused-parameter -Wno-unused-variable -Wno-vla-cxx-extension    -DVL_TIME_CONTEXT   -std=gnu++20 -c -o verilated_threads.o /opt/homebrew/Cellar/verilator/5.050/share/verilator/include/verilated_threads.cpp\npython3 /opt/homebrew/Cellar/verilator/5.050/share/verilator/bin/verilator_includer -DVL_INCLUDE_OPT=include Vaxi_write_burst4_request_composition_tb.cpp Vaxi_write_burst4_request_composition_tb___024root__0.cpp Vaxi_write_burst4_request_composition_tb__main.cpp Vaxi_write_burst4_request_composition_tb__ConstPool__0__Slow.cpp Vaxi_write_burst4_request_composition_tb___024root__Slow.cpp Vaxi_write_burst4_request_composition_tb___024root__0__Slow.cpp Vaxi_write_burst4_request_composition_tb__Syms__Slow.cpp > Vaxi_write_burst4_request_composition_tb__ALL.cpp\nc++ -Os  -I.  -MMD -I/opt/homebrew/Cellar/verilator/5.050/share/verilator/include -I/opt/homebrew/Cellar/verilator/5.050/share/verilator/include/vltstd -DVERILATOR=1 -DVM_COVERAGE=0 -DVM_SC=0 -DVM_TIMING=1 -DVM_TRACE=0 -DVM_TRACE_FST=0 -DVM_TRACE_VCD=0 -DVM_TRACE_SAIF=0 -DVM_VPI=0 -faligned-new -fbracket-depth=4096 -fcf-protection=none -Xclang -fno-pch-timestamp -Qunused-arguments -Wno-bool-operation -Wno-c++11-narrowing -Wno-constant-logical-operand -Wno-int-in-bool-context -Wno-non-pod-varargs -Wno-parentheses-equality -Wno-shadow -Wno-sign-compare -Wno-tautological-bitwise-compare -Wno-tautological-compare -Wno-uninitialized -Wno-unnecessary-virtual-specifier -Wno-unused-but-set-parameter -Wno-unused-but-set-variable -Wno-unused-parameter -Wno-unused-variable -Wno-vla-cxx-extension    -DVL_TIME_CONTEXT   -std=gnu++20 -c -o Vaxi_write_burst4_request_composition_tb__ALL.o Vaxi_write_burst4_request_composition_tb__ALL.cpp\nc++  -Wl,-U,__Z15vl_time_stamp64v,-U,__Z13sc_time_stampv,-U,_vlog_startup_routines   verilated.o verilated_timing.o verilated_threads.o Vaxi_write_burst4_request_composition_tb__ALL.a    -pthread -lpthread   -o Vaxi_write_burst4_request_composition_tb\nrm Vaxi_write_burst4_request_composition_tb__ALL.verilator_deplist.tmp\n- V e r i l a t i o n   R e p o r t: Verilator 5.050 2026-07-01 rev vUNKNOWN-built20260701\n- Verilator: Built from 0.257 MB sources in 6 modules, into 0.308 MB in 7 C++ files needing 0.001 MB\n- Verilator: Walltime 5.368 s (elab=0.005, cvt=0.025, bld=5.325); cpu 0.040 s on 1 threads; allocated 17.891 MB\n"
+          },
+          {
+            "argv": [
+              ".artifacts/specforge-undeclared-rule/compositions-before/axi_write_burst4_request_composition/axi_write_burst4_request_composition-obj/Vaxi_write_burst4_request_composition_tb"
+            ],
+            "exit": 0,
+            "stage": "simulate",
+            "stdout": "PASS aw=5 w=18 beat=18 done=4 illegal=2 busy_ignored=1 reset_abort=1\n- .artifacts/specforge-undeclared-rule/compositions-before/axi_write_burst4_request_composition/axi_write_burst4_request_composition-tb.sv:295: Verilog $finish\n- S i m u l a t i o n   R e p o r t: Verilator 5.050 2026-07-01\n- Verilator: $finish at 1ns; walltime 0.000 s; speed 26.585 us/s\n- Verilator: cpu 0.000 s on 1 threads; allocated 2 MB\n"
+          }
+        ]
+      },
+      {
+        "assertion_mode": "--no-assert",
+        "hdl_sha256": "2e4d98c33271e99b41e729026044b46b02bbb67a9a8f1c33a33da0e09accc315",
+        "oracle": "t/data/axi_read_transaction_composition_tb.svt",
+        "oracle_sha256": "10dbafcf5577b312bc267acf4f5ffd22001a25d7af45cba9bb19e148bff71a26",
+        "source": "axi_read_transaction_composition",
+        "stages": [
+          {
+            "argv": [
+              "./bin/fsmgen",
+              "--strict",
+              "--quiet",
+              "--output",
+              ".artifacts/specforge-undeclared-rule/compositions-before/axi_read_transaction_composition/axi_read_transaction_composition.sv",
+              ".artifacts/specforge-undeclared-rule/compositions-before/axi_read_transaction_composition/axi_read_transaction_composition.fsm"
+            ],
+            "exit": 0,
+            "stage": "generate",
+            "stdout": ""
+          },
+          {
+            "argv": [
+              "verilator",
+              "--binary",
+              "--timing",
+              "--no-assert",
+              "-Wno-fatal",
+              "-j",
+              "1",
+              "--top-module",
+              "axi_read_transaction_composition_tb",
+              "--Mdir",
+              ".artifacts/specforge-undeclared-rule/compositions-before/axi_read_transaction_composition/axi_read_transaction_composition-obj",
+              ".artifacts/specforge-undeclared-rule/compositions-before/axi_read_transaction_composition/axi_read_transaction_composition.sv",
+              ".artifacts/specforge-undeclared-rule/compositions-before/axi_read_transaction_composition/axi_read_transaction_composition-tb.sv"
+            ],
+            "exit": 0,
+            "stage": "compile",
+            "stdout": "c++ -Os  -I.  -MMD -I/opt/homebrew/Cellar/verilator/5.050/share/verilator/include -I/opt/homebrew/Cellar/verilator/5.050/share/verilator/include/vltstd -DVERILATOR=1 -DVM_COVERAGE=0 -DVM_SC=0 -DVM_TIMING=1 -DVM_TRACE=0 -DVM_TRACE_FST=0 -DVM_TRACE_VCD=0 -DVM_TRACE_SAIF=0 -DVM_VPI=0 -faligned-new -fbracket-depth=4096 -fcf-protection=none -Xclang -fno-pch-timestamp -Qunused-arguments -Wno-bool-operation -Wno-c++11-narrowing -Wno-constant-logical-operand -Wno-int-in-bool-context -Wno-non-pod-varargs -Wno-parentheses-equality -Wno-shadow -Wno-sign-compare -Wno-tautological-bitwise-compare -Wno-tautological-compare -Wno-uninitialized -Wno-unnecessary-virtual-specifier -Wno-unused-but-set-parameter -Wno-unused-but-set-variable -Wno-unused-parameter -Wno-unused-variable -Wno-vla-cxx-extension    -DVL_TIME_CONTEXT   -std=gnu++20 -c -o verilated.o /opt/homebrew/Cellar/verilator/5.050/share/verilator/include/verilated.cpp\nc++ -Os  -I.  -MMD -I/opt/homebrew/Cellar/verilator/5.050/share/verilator/include -I/opt/homebrew/Cellar/verilator/5.050/share/verilator/include/vltstd -DVERILATOR=1 -DVM_COVERAGE=0 -DVM_SC=0 -DVM_TIMING=1 -DVM_TRACE=0 -DVM_TRACE_FST=0 -DVM_TRACE_VCD=0 -DVM_TRACE_SAIF=0 -DVM_VPI=0 -faligned-new -fbracket-depth=4096 -fcf-protection=none -Xclang -fno-pch-timestamp -Qunused-arguments -Wno-bool-operation -Wno-c++11-narrowing -Wno-constant-logical-operand -Wno-int-in-bool-context -Wno-non-pod-varargs -Wno-parentheses-equality -Wno-shadow -Wno-sign-compare -Wno-tautological-bitwise-compare -Wno-tautological-compare -Wno-uninitialized -Wno-unnecessary-virtual-specifier -Wno-unused-but-set-parameter -Wno-unused-but-set-variable -Wno-unused-parameter -Wno-unused-variable -Wno-vla-cxx-extension    -DVL_TIME_CONTEXT   -std=gnu++20 -c -o verilated_timing.o /opt/homebrew/Cellar/verilator/5.050/share/verilator/include/verilated_timing.cpp\nc++ -Os  -I.  -MMD -I/opt/homebrew/Cellar/verilator/5.050/share/verilator/include -I/opt/homebrew/Cellar/verilator/5.050/share/verilator/include/vltstd -DVERILATOR=1 -DVM_COVERAGE=0 -DVM_SC=0 -DVM_TIMING=1 -DVM_TRACE=0 -DVM_TRACE_FST=0 -DVM_TRACE_VCD=0 -DVM_TRACE_SAIF=0 -DVM_VPI=0 -faligned-new -fbracket-depth=4096 -fcf-protection=none -Xclang -fno-pch-timestamp -Qunused-arguments -Wno-bool-operation -Wno-c++11-narrowing -Wno-constant-logical-operand -Wno-int-in-bool-context -Wno-non-pod-varargs -Wno-parentheses-equality -Wno-shadow -Wno-sign-compare -Wno-tautological-bitwise-compare -Wno-tautological-compare -Wno-uninitialized -Wno-unnecessary-virtual-specifier -Wno-unused-but-set-parameter -Wno-unused-but-set-variable -Wno-unused-parameter -Wno-unused-variable -Wno-vla-cxx-extension    -DVL_TIME_CONTEXT   -std=gnu++20 -c -o verilated_threads.o /opt/homebrew/Cellar/verilator/5.050/share/verilator/include/verilated_threads.cpp\npython3 /opt/homebrew/Cellar/verilator/5.050/share/verilator/bin/verilator_includer -DVL_INCLUDE_OPT=include Vaxi_read_transaction_composition_tb.cpp Vaxi_read_transaction_composition_tb___024root__0.cpp Vaxi_read_transaction_composition_tb__main.cpp Vaxi_read_transaction_composition_tb__ConstPool__0__Slow.cpp Vaxi_read_transaction_composition_tb___024root__Slow.cpp Vaxi_read_transaction_composition_tb___024root__0__Slow.cpp Vaxi_read_transaction_composition_tb__Syms__Slow.cpp > Vaxi_read_transaction_composition_tb__ALL.cpp\nc++ -Os  -I.  -MMD -I/opt/homebrew/Cellar/verilator/5.050/share/verilator/include -I/opt/homebrew/Cellar/verilator/5.050/share/verilator/include/vltstd -DVERILATOR=1 -DVM_COVERAGE=0 -DVM_SC=0 -DVM_TIMING=1 -DVM_TRACE=0 -DVM_TRACE_FST=0 -DVM_TRACE_VCD=0 -DVM_TRACE_SAIF=0 -DVM_VPI=0 -faligned-new -fbracket-depth=4096 -fcf-protection=none -Xclang -fno-pch-timestamp -Qunused-arguments -Wno-bool-operation -Wno-c++11-narrowing -Wno-constant-logical-operand -Wno-int-in-bool-context -Wno-non-pod-varargs -Wno-parentheses-equality -Wno-shadow -Wno-sign-compare -Wno-tautological-bitwise-compare -Wno-tautological-compare -Wno-uninitialized -Wno-unnecessary-virtual-specifier -Wno-unused-but-set-parameter -Wno-unused-but-set-variable -Wno-unused-parameter -Wno-unused-variable -Wno-vla-cxx-extension    -DVL_TIME_CONTEXT   -std=gnu++20 -c -o Vaxi_read_transaction_composition_tb__ALL.o Vaxi_read_transaction_composition_tb__ALL.cpp\nc++  -Wl,-U,__Z15vl_time_stamp64v,-U,__Z13sc_time_stampv,-U,_vlog_startup_routines   verilated.o verilated_timing.o verilated_threads.o Vaxi_read_transaction_composition_tb__ALL.a    -pthread -lpthread   -o Vaxi_read_transaction_composition_tb\nrm Vaxi_read_transaction_composition_tb__ALL.verilator_deplist.tmp\n- V e r i l a t i o n   R e p o r t: Verilator 5.050 2026-07-01 rev vUNKNOWN-built20260701\n- Verilator: Built from 0.206 MB sources in 6 modules, into 0.214 MB in 7 C++ files needing 0.001 MB\n- Verilator: Walltime 4.322 s (elab=0.006, cvt=0.028, bld=4.269); cpu 0.041 s on 1 threads; allocated 15.703 MB\n"
+          },
+          {
+            "argv": [
+              ".artifacts/specforge-undeclared-rule/compositions-before/axi_read_transaction_composition/axi_read_transaction_composition-obj/Vaxi_read_transaction_composition_tb"
+            ],
+            "exit": 0,
+            "stage": "simulate",
+            "stdout": "PASS ar=5 r=4 request=5 transaction=4 mismatch_terminal=1 missing_last_terminal=1 reset_abort=2\n- .artifacts/specforge-undeclared-rule/compositions-before/axi_read_transaction_composition/axi_read_transaction_composition-tb.sv:96: Verilog $finish\n- S i m u l a t i o n   R e p o r t: Verilator 5.050 2026-07-01\n- Verilator: $finish at 1ns; walltime 0.000 s; speed 34.000 us/s\n- Verilator: cpu 0.000 s on 1 threads; allocated 2 MB\n"
+          }
+        ]
+      },
+      {
+        "assertion_mode": "--no-assert",
+        "hdl_sha256": "ae6252f2e707485810f931be15101cdf5af491985d02344ea1dde09a0f610ce7",
+        "oracle": "t/data/axi_read_burst4_transaction_composition_tb.svt",
+        "oracle_sha256": "c83b7952427e96b5bdbf91c2760737ce2d66b54507052156afb8a23bcb3f34df",
+        "source": "axi_read_burst4_transaction_composition",
+        "stages": [
+          {
+            "argv": [
+              "./bin/fsmgen",
+              "--strict",
+              "--quiet",
+              "--output",
+              ".artifacts/specforge-undeclared-rule/compositions-before/axi_read_burst4_transaction_composition/axi_read_burst4_transaction_composition.sv",
+              ".artifacts/specforge-undeclared-rule/compositions-before/axi_read_burst4_transaction_composition/axi_read_burst4_transaction_composition.fsm"
+            ],
+            "exit": 0,
+            "stage": "generate",
+            "stdout": ""
+          },
+          {
+            "argv": [
+              "verilator",
+              "--binary",
+              "--timing",
+              "--no-assert",
+              "-Wno-fatal",
+              "-j",
+              "1",
+              "--top-module",
+              "axi_read_burst4_transaction_composition_tb",
+              "--Mdir",
+              ".artifacts/specforge-undeclared-rule/compositions-before/axi_read_burst4_transaction_composition/axi_read_burst4_transaction_composition-obj",
+              ".artifacts/specforge-undeclared-rule/compositions-before/axi_read_burst4_transaction_composition/axi_read_burst4_transaction_composition.sv",
+              ".artifacts/specforge-undeclared-rule/compositions-before/axi_read_burst4_transaction_composition/axi_read_burst4_transaction_composition-tb.sv"
+            ],
+            "exit": 0,
+            "stage": "compile",
+            "stdout": "c++ -Os  -I.  -MMD -I/opt/homebrew/Cellar/verilator/5.050/share/verilator/include -I/opt/homebrew/Cellar/verilator/5.050/share/verilator/include/vltstd -DVERILATOR=1 -DVM_COVERAGE=0 -DVM_SC=0 -DVM_TIMING=1 -DVM_TRACE=0 -DVM_TRACE_FST=0 -DVM_TRACE_VCD=0 -DVM_TRACE_SAIF=0 -DVM_VPI=0 -faligned-new -fbracket-depth=4096 -fcf-protection=none -Xclang -fno-pch-timestamp -Qunused-arguments -Wno-bool-operation -Wno-c++11-narrowing -Wno-constant-logical-operand -Wno-int-in-bool-context -Wno-non-pod-varargs -Wno-parentheses-equality -Wno-shadow -Wno-sign-compare -Wno-tautological-bitwise-compare -Wno-tautological-compare -Wno-uninitialized -Wno-unnecessary-virtual-specifier -Wno-unused-but-set-parameter -Wno-unused-but-set-variable -Wno-unused-parameter -Wno-unused-variable -Wno-vla-cxx-extension    -DVL_TIME_CONTEXT   -std=gnu++20 -c -o verilated.o /opt/homebrew/Cellar/verilator/5.050/share/verilator/include/verilated.cpp\nc++ -Os  -I.  -MMD -I/opt/homebrew/Cellar/verilator/5.050/share/verilator/include -I/opt/homebrew/Cellar/verilator/5.050/share/verilator/include/vltstd -DVERILATOR=1 -DVM_COVERAGE=0 -DVM_SC=0 -DVM_TIMING=1 -DVM_TRACE=0 -DVM_TRACE_FST=0 -DVM_TRACE_VCD=0 -DVM_TRACE_SAIF=0 -DVM_VPI=0 -faligned-new -fbracket-depth=4096 -fcf-protection=none -Xclang -fno-pch-timestamp -Qunused-arguments -Wno-bool-operation -Wno-c++11-narrowing -Wno-constant-logical-operand -Wno-int-in-bool-context -Wno-non-pod-varargs -Wno-parentheses-equality -Wno-shadow -Wno-sign-compare -Wno-tautological-bitwise-compare -Wno-tautological-compare -Wno-uninitialized -Wno-unnecessary-virtual-specifier -Wno-unused-but-set-parameter -Wno-unused-but-set-variable -Wno-unused-parameter -Wno-unused-variable -Wno-vla-cxx-extension    -DVL_TIME_CONTEXT   -std=gnu++20 -c -o verilated_timing.o /opt/homebrew/Cellar/verilator/5.050/share/verilator/include/verilated_timing.cpp\nc++ -Os  -I.  -MMD -I/opt/homebrew/Cellar/verilator/5.050/share/verilator/include -I/opt/homebrew/Cellar/verilator/5.050/share/verilator/include/vltstd -DVERILATOR=1 -DVM_COVERAGE=0 -DVM_SC=0 -DVM_TIMING=1 -DVM_TRACE=0 -DVM_TRACE_FST=0 -DVM_TRACE_VCD=0 -DVM_TRACE_SAIF=0 -DVM_VPI=0 -faligned-new -fbracket-depth=4096 -fcf-protection=none -Xclang -fno-pch-timestamp -Qunused-arguments -Wno-bool-operation -Wno-c++11-narrowing -Wno-constant-logical-operand -Wno-int-in-bool-context -Wno-non-pod-varargs -Wno-parentheses-equality -Wno-shadow -Wno-sign-compare -Wno-tautological-bitwise-compare -Wno-tautological-compare -Wno-uninitialized -Wno-unnecessary-virtual-specifier -Wno-unused-but-set-parameter -Wno-unused-but-set-variable -Wno-unused-parameter -Wno-unused-variable -Wno-vla-cxx-extension    -DVL_TIME_CONTEXT   -std=gnu++20 -c -o verilated_threads.o /opt/homebrew/Cellar/verilator/5.050/share/verilator/include/verilated_threads.cpp\npython3 /opt/homebrew/Cellar/verilator/5.050/share/verilator/bin/verilator_includer -DVL_INCLUDE_OPT=include Vaxi_read_burst4_transaction_composition_tb.cpp Vaxi_read_burst4_transaction_composition_tb___024root__0.cpp Vaxi_read_burst4_transaction_composition_tb__main.cpp Vaxi_read_burst4_transaction_composition_tb__ConstPool__0__Slow.cpp Vaxi_read_burst4_transaction_composition_tb___024root__Slow.cpp Vaxi_read_burst4_transaction_composition_tb___024root__0__Slow.cpp Vaxi_read_burst4_transaction_composition_tb__Syms__Slow.cpp > Vaxi_read_burst4_transaction_composition_tb__ALL.cpp\nc++ -Os  -I.  -MMD -I/opt/homebrew/Cellar/verilator/5.050/share/verilator/include -I/opt/homebrew/Cellar/verilator/5.050/share/verilator/include/vltstd -DVERILATOR=1 -DVM_COVERAGE=0 -DVM_SC=0 -DVM_TIMING=1 -DVM_TRACE=0 -DVM_TRACE_FST=0 -DVM_TRACE_VCD=0 -DVM_TRACE_SAIF=0 -DVM_VPI=0 -faligned-new -fbracket-depth=4096 -fcf-protection=none -Xclang -fno-pch-timestamp -Qunused-arguments -Wno-bool-operation -Wno-c++11-narrowing -Wno-constant-logical-operand -Wno-int-in-bool-context -Wno-non-pod-varargs -Wno-parentheses-equality -Wno-shadow -Wno-sign-compare -Wno-tautological-bitwise-compare -Wno-tautological-compare -Wno-uninitialized -Wno-unnecessary-virtual-specifier -Wno-unused-but-set-parameter -Wno-unused-but-set-variable -Wno-unused-parameter -Wno-unused-variable -Wno-vla-cxx-extension    -DVL_TIME_CONTEXT   -std=gnu++20 -c -o Vaxi_read_burst4_transaction_composition_tb__ALL.o Vaxi_read_burst4_transaction_composition_tb__ALL.cpp\nc++  -Wl,-U,__Z15vl_time_stamp64v,-U,__Z13sc_time_stampv,-U,_vlog_startup_routines   verilated.o verilated_timing.o verilated_threads.o Vaxi_read_burst4_transaction_composition_tb__ALL.a    -pthread -lpthread   -o Vaxi_read_burst4_transaction_composition_tb\nrm Vaxi_read_burst4_transaction_composition_tb__ALL.verilator_deplist.tmp\n- V e r i l a t i o n   R e p o r t: Verilator 5.050 2026-07-01 rev vUNKNOWN-built20260701\n- Verilator: Built from 0.252 MB sources in 6 modules, into 0.453 MB in 7 C++ files needing 0.002 MB\n- Verilator: Walltime 4.115 s (elab=0.004, cvt=0.022, bld=4.076); cpu 0.038 s on 1 threads; allocated 18.344 MB\n"
+          },
+          {
+            "argv": [
+              ".artifacts/specforge-undeclared-rule/compositions-before/axi_read_burst4_transaction_composition/axi_read_burst4_transaction_composition-obj/Vaxi_read_burst4_transaction_composition_tb"
+            ],
+            "exit": 0,
+            "stage": "simulate",
+            "stdout": "PASS ar=5 r=17 request=5 beat=17 transaction=4 illegal=2 busy_ignored=1 error_drain=4 reset_abort=1\n- .artifacts/specforge-undeclared-rule/compositions-before/axi_read_burst4_transaction_composition/axi_read_burst4_transaction_composition-tb.sv:279: Verilog $finish\n- S i m u l a t i o n   R e p o r t: Verilator 5.050 2026-07-01\n- Verilator: $finish at 2ns; walltime 0.000 s; speed 23.267 us/s\n- Verilator: cpu 0.000 s on 1 threads; allocated 2 MB\n"
+          }
+        ]
+      }
+    ]
+  },
+  "composition_hdl_identity": [
+    {
+      "baseline_hdl_sha256": "ae6252f2e707485810f931be15101cdf5af491985d02344ea1dde09a0f610ce7",
+      "date_free_hdl_sha256": "065a38f26b9b6c469a2467be9a8f88f290f43ea94919dc7b59a4039b84bc0909",
+      "equal": true,
+      "removed_date_headers_per_file": 3,
+      "repaired_hdl_sha256": "e122485cc998f6522ac5f353aae58e12c353aaf61ca4f7fde946a48cb6f81182",
+      "source": "ppif/axi_read_burst4_transaction_composition.ppif"
+    },
+    {
+      "baseline_hdl_sha256": "2e4d98c33271e99b41e729026044b46b02bbb67a9a8f1c33a33da0e09accc315",
+      "date_free_hdl_sha256": "ba22733c2f78db8eac156e6755aace37b934a19d1fec9f603a70a4df2fc03b53",
+      "equal": true,
+      "removed_date_headers_per_file": 3,
+      "repaired_hdl_sha256": "2e4d98c33271e99b41e729026044b46b02bbb67a9a8f1c33a33da0e09accc315",
+      "source": "ppif/axi_read_transaction_composition.ppif"
+    },
+    {
+      "baseline_hdl_sha256": "60e52a58abec0ec0e1c6751a6a143b2c59e25dd65735d87718a6249d2e3aa1c5",
+      "date_free_hdl_sha256": "68c112062852c590807e32ff1762d205333385ce9047067aa0a8a22c4cd78ac2",
+      "equal": true,
+      "removed_date_headers_per_file": 3,
+      "repaired_hdl_sha256": "60e52a58abec0ec0e1c6751a6a143b2c59e25dd65735d87718a6249d2e3aa1c5",
+      "source": "ppif/axi_write_burst4_request_composition.ppif"
+    },
+    {
+      "baseline_hdl_sha256": "fc0bebc6a98eff95d4103fd1b131ffacdbabe82ea8dd3d4565d5090e18878d6b",
+      "date_free_hdl_sha256": "dae659b83dd2a93c40bc644d75983bcb19f54166104863b6754fd0a134e48bc0",
+      "equal": true,
+      "removed_date_headers_per_file": 3,
+      "repaired_hdl_sha256": "fc0bebc6a98eff95d4103fd1b131ffacdbabe82ea8dd3d4565d5090e18878d6b",
+      "source": "ppif/axi_write_request_composition.ppif"
+    },
+    {
+      "baseline_hdl_sha256": "1cdc06a11f695f3d9b8325b97281ff0b101936d30d71df266baa3ca55f019e5e",
+      "date_free_hdl_sha256": "c327c3c7cb886239d7233d37b5314147de4d3a8d854f73f372af30a8caefac1c",
+      "equal": true,
+      "removed_date_headers_per_file": 5,
+      "repaired_hdl_sha256": "35e0186cb6c8264a05486edfb0044762516e9493641164eccf75c492adc98b21",
+      "source": "ppif/axi_write_transaction_composition.ppif"
+    }
+  ],
+  "final_admission": {
+    "all_passed": true,
+    "consumed": 329,
+    "independent_join": "Unique source identities, every selected source consumed, all success flags true, and every current source hash equals its captured hash. Selection is derived from the supported corpus; this is ordinary public-adapter admission, not standalone replay of every artifact.",
+    "receipt": "docs/audits/specforge-rule-admission-20260924/admission-receipt.jsonl",
+    "receipt_sha256": "8a71250bf86825f83375e9a651f6bcc6f42aa2c7ce8316299d3a83ed60bf8413",
+    "selected": 329
+  },
+  "focused_checks": {
+    "admission-before.log": {
+      "sha256": "57c66dcb2a6dfcb98cd1ad6829b0397828ce89ddc3f19507c1354b1325085641",
+      "summaries": [
+        "Failed 3/4 subtests ",
+        "Files=1, Tests=4,  1 wallclock secs ( 0.01 usr  0.01 sys +  0.92 cusr  0.30 csys =  1.24 CPU)",
+        "Result: FAIL"
+      ]
+    },
+    "admission-complete.log": {
+      "sha256": "bca9ee6c1d5e703ea8c402045fb9a4af33185786c8146602ae4e6021638d2df4",
+      "summaries": [
+        "All tests successful.",
+        "Files=1, Tests=7, 27 wallclock secs ( 0.02 usr  0.01 sys + 18.31 cusr  5.43 csys = 23.77 CPU)",
+        "Result: PASS"
+      ]
+    },
+    "admission-expanded.log": {
+      "sha256": "50539ecb807345dd8added3d94c9c4ba0f15bdc325346183228f33cebbb6e75b",
+      "summaries": [
+        "All tests successful.",
+        "Files=1, Tests=5, 26 wallclock secs ( 0.02 usr  0.01 sys + 16.94 cusr  5.52 csys = 22.49 CPU)",
+        "Result: PASS"
+      ]
+    },
+    "axi-public-queries.log": {
+      "sha256": "fceaa0b96aad4f0e2ba62c9bb1ebbda2b551f4121d03b50f1d12f851c32527f8",
+      "summaries": [
+        "All tests successful.",
+        "Files=1, Tests=21, 76 wallclock secs ( 0.02 usr  0.01 sys + 56.78 cusr 14.41 csys = 71.22 CPU)",
+        "Result: PASS"
+      ]
+    },
+    "catalog-band.log": {
+      "sha256": "7be4796346e31eede31a41d09668013d004b508d69196bdeeee912790bc5c354",
+      "summaries": [
+        "All tests successful.",
+        "Files=4, Tests=8264,  2 wallclock secs ( 0.15 usr  0.02 sys +  2.55 cusr  0.11 csys =  2.83 CPU)",
+        "Result: PASS"
+      ]
+    },
+    "composition-public-queries.log": {
+      "sha256": "544e6706873e11e3d3e8f9483051a4d72d4242be1ffea05baf58a17cdab65920",
+      "summaries": [
+        "All tests successful.",
+        "Files=1, Tests=18, 153 wallclock secs ( 0.02 usr  0.01 sys + 137.80 cusr 11.29 csys = 149.12 CPU)",
+        "Result: PASS"
+      ]
+    },
+    "extended-band.log": {
+      "sha256": "ac073c78e29ac8a35a68c0e6994006707e0e81dce88e2a10ceb94b522bccaa48",
+      "summaries": [
+        "All tests successful.",
+        "Files=5, Tests=145, 27 wallclock secs ( 0.02 usr  0.01 sys + 16.78 cusr  5.68 csys = 22.49 CPU)",
+        "Result: PASS"
+      ]
+    },
+    "rule-band.log": {
+      "sha256": "149f59ad997a3bc77afa6a4e5453a02813776f4a18be1ad536bb1f41f2c84e97",
+      "summaries": [
+        "All tests successful.",
+        "Files=11, Tests=35, 24 wallclock secs ( 0.02 usr  0.02 sys + 17.03 cusr  6.28 csys = 23.35 CPU)",
+        "Result: PASS"
+      ]
+    }
+  },
+  "interconnect_gap": {
+    "artifact": "docs/audits/specforge-rule-admission-20260924/ahb-interconnect-generated.isf",
+    "artifact_sha256": "32136c255a06f7f4f31aa9b55dd4bc34e425785f3195deb1c6c3357531e5edbd",
+    "first_refusal": "unknown actor clause 'address-map' in actor 'ahb_interconnect'",
+    "owner": "SEMANTIC-INTROSPECTION-MCP-FRONTIER.32.4",
+    "public_probe": "FSM::Adapter::IAL2::PPIF->new->parse_file(source); FSM::Adapter::ISF->new->parse_source(generated_ial1.items[name=ahb_interconnect.isf].text, name)",
+    "root_cause": "AhbInterconnect::_build_ahb_interconnect_artifacts constructs ISF and FSM separately; ISF includes address-map/decode/behavior unsupported by Parser::_build_actor.",
+    "runtime_effect": "Ordinary PPIF generation succeeds using the separately built FSM; emitted ISF is not independently executable.",
+    "source": "ppif/ahb_interconnect.ppif"
+  },
+  "limits": [
+    "No full CI, push, browser visual signoff or runtime support promotion.",
+    "Broad full-generation scan was deliberately cancelled; do not report full strict cohort coverage.",
+    "Generated interconnect artifact replay fails independently of the rule admission change; .32.4 owns repair."
+  ],
+  "owner": "SEMANTIC-INTROSPECTION-MCP-FRONTIER.32.1.1",
+  "producer_sha256": {
+    "perl/FSM/Adapter/ISF/Parser.pm": "3321a8f9e115aca14bc5f95b3c529ae93f6593c78b6c2e7567a14a76446596ac",
+    "perl/FSM/IAL2/ProtocolIntent/AxiArDriver.pm": "5cd55abfe1cbf882e5a6900a49fc7fe200da0fe4be2d06871f923a043e6f55df",
+    "perl/FSM/IAL2/ProtocolIntent/AxiAwDriver.pm": "af8a29a9aeec7a84d75f430896858e2d2e8a2701c9ed2a4d3f998aaa48440a6b",
+    "perl/FSM/IAL2/ProtocolIntent/AxiBResponseAcceptor.pm": "5e29c9180641be3871068a15c1a3b4fde059bf6c776dd781b51e39f42aea8dec",
+    "perl/FSM/IAL2/ProtocolIntent/AxiRBeatAcceptor.pm": "85529abc111f7084057e5fe4656bb4cb457a8194187ee2d6237c3daf7d0b7f5d",
+    "perl/FSM/IAL2/ProtocolIntent/AxiReadBurst4TransactionComposition.pm": "99def34cd5ce15a677b3575010772d1ef4f03b94daaae4e8c45ad78afd0413c9",
+    "perl/FSM/IAL2/ProtocolIntent/AxiReadTransactionComposition.pm": "544bdc1fe66afe80aac1e0cedb20c1f00c44d1b43ebf7ab437ff833f5a72796d",
+    "perl/FSM/IAL2/ProtocolIntent/AxiWBurst4Driver.pm": "cbbc72da018f767a98622dd3213e73f75616c9466b1e1e5d1c47c3ce82d34c9f",
+    "perl/FSM/IAL2/ProtocolIntent/AxiWDriver.pm": "8367bbf135beb3df0461c01aa0d0f5d44c7c309335322c617d2bc2b94e9484a2",
+    "perl/FSM/IAL2/ProtocolIntent/AxiWriteBurst4RequestComposition.pm": "e2a71610b23ee376532a6d58aecd0930835967d53f9ea2eef9d3164cd36e6471",
+    "perl/FSM/IAL2/ProtocolIntent/AxiWriteRequestComposition.pm": "d01aca8f76c90891bea47d7cd27a16dadcf1e9740bb1da0c83c2f019f1bd6d0d",
+    "perl/FSM/IAL2/ProtocolIntent/AxiWriteTransactionComposition.pm": "494d892eb7c0b7e57f51e3b7f565b4a63c587f75c32b016726323a164e6f2936",
+    "perl/FSM/Support/DiagnosticCodes.pm": "9b40190d698d89e8833d7dc3eb77d8f9b713627f4cd72fc8269b8e3078bf06c6",
+    "perl/FSM/Support/RegressionCorpus.pm": "efb53dfd01c357e9d4267aa90ab6657ae229a93d94ca22e7d33d279fa4cc4c10"
+  },
+  "public_contract": "T1888 checks missing one-bit and mixed-width operands in native strict/semantic JSON, public adapter and actual newline MCP; complete reports agree and authored source identities remain. Schedule and generation refuse with nonzero status and no emitted HDL. Declared input control succeeds with only authored data inputs.",
+  "public_query_qualification": {
+    "complete_typed_native_api_newline_parity": true,
+    "queries": 33,
+    "receipt": "docs/audits/specforge-rule-admission-20260924/public-query-receipts.json",
+    "sources": 11
+  },
+  "stable_diagnostic": "FSMGEN_LANGUAGE_ISF_UNDECLARED_RULE_OPERAND",
+  "tool_qualification": {
+    "disposition": "Do not count this tool attempt; unchanged actual SV qualified with Verilator. Composition behavior retains published no-assert profile for deliberate invalid stimuli.",
+    "observed_diagnostic": "Unable to bind wire/reg/memory both; declaration after use.",
+    "observed_exit": 2,
+    "unqualified_iverilog_probe": "module forward_wire(input wire a,b,output wire c); assign c = both; wire both; assign both = a & b; endmodule"
+  }
+}

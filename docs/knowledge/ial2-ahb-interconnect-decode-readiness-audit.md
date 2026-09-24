@@ -7,7 +7,8 @@ answers:
   - "what is the first AHB interconnect topology boundary?"
   - "why not implement AHB interconnect directly?"
   - "which AHB residue key should interconnect decode converge on?"
-date: 2026-06-29
+  - "can generated ahb_interconnect.isf be parsed independently?"
+date: 2026-09-24
 status: current
 tags: [ial2, ahb, interconnect, decode, readiness, contract-selection, task-tree]
 evidence: docs/IAL2_AHB_INTERCONNECT_DECODE_READINESS_AUDIT.md; docs/IAL2_POST_AHB_SUBORDINATE_ALIAS_NEXT_SLICE_SELECTION.md; docs/IAL2_AHB_SUBORDINATE_SOURCE_FACT_INVENTORY.md; docs/IAL2_AHB_REQUESTER_PPIF_BEHAVIOR.md; docs/IAL2_AHB_PROFILE_ALIAS_BEHAVIOR.md; docs/IAL2_AHB_SUBORDINATE_PPIF_BEHAVIOR.md; docs/IAL2_AHB_SUBORDINATE_PROFILE_ALIAS_BEHAVIOR.md; fsm/amba_requester.fsm; fsm/ahb_lite_subordinate.fsm; perl/FSM/IAL2/ProtocolIntent/AhbRequester.pm; perl/FSM/IAL2/ProtocolIntent/AhbSubordinate.pm; docs/book/src/16c-ial2-ahb.md; docs/tasks/IAL2-FEATURE-COMPLETENESS-FRONTIER.md; docs/TASK_TREE.md; MEMORY.md; README.md; ROADMAP_V2.md
@@ -17,6 +18,12 @@ reverify: ./bin/fsmgen --quiet --strict --check --json ppif/ahb_requester.ppif &
 `IAL2-FEATURE-COMPLETENESS-FRONTIER.720` finds AHB interconnect/decode ready
 for public contract selection and selects
 `IAL2-FEATURE-COMPLETENESS-FRONTIER.721`.
+
+Current caveat (2026-09-24): emitted `ahb_interconnect.isf` has unsupported
+`address-map`, `decode` and `behavior` clauses. The generator builds its FSM
+separately; normal protocol success is not generated-ISF replay proof.
+`SEMANTIC-INTROSPECTION-MCP-FRONTIER.32.4` owns repair of this layering gap;
+`docs/audits/specforge-rule-admission-20260924/` retains the public reproducer.
 
 The first boundary should stay conservative: generic `.ppif`, one requester,
 one AHB-Lite/common-AHB subordinate, one static address window, generated

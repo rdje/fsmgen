@@ -1,7 +1,7 @@
 # Knowledge Map: `ial2-ahb`
 
 > **AUTO-GENERATED — DO NOT EDIT.** Return to the [Knowledge Map](../../KNOWLEDGE_MAP.md).
-> **159** facts · **843** uniquely owned question entries.
+> **159** facts · **844** uniquely owned question entries.
 
 ## Questions → facts
 
@@ -25,6 +25,7 @@
 - q="can MCP semantically introspect the two-subordinate exact-three AHB alias?" · facts=[ial2-ahb-two-subordinate-exact-three-paired-busy-composition-profile-alias-behavior](../../docs/knowledge/ial2-ahb-two-subordinate-exact-three-paired-busy-composition-profile-alias-behavior.md)
 - q="can MCP semantically introspect the two-subordinate exact-two AHB alias?" · facts=[ial2-ahb-two-subordinate-exact-two-paired-busy-composition-profile-alias-behavior](../../docs/knowledge/ial2-ahb-two-subordinate-exact-two-paired-busy-composition-profile-alias-behavior.md)
 - q="can direct FSM register_in storage capture the next AHB phase while completing the current phase?" · facts=[ial2-ahb-direct-subordinate-completion-capture-substrate-audit](../../docs/knowledge/ial2-ahb-direct-subordinate-completion-capture-substrate-audit.md)
+- q="can generated ahb_interconnect.isf be parsed independently?" · facts=[ial2-ahb-interconnect-decode-readiness-audit](../../docs/knowledge/ial2-ahb-interconnect-decode-readiness-audit.md)
 - q="can the AHB subordinate require an IDLE boundary without deadlocking?" · facts=[ial2-ahb-pipelined-active-transfer-runtime-audit](../../docs/knowledge/ial2-ahb-pipelined-active-transfer-runtime-audit.md)
 - q="can the exact-two AHB requester compose with two BUSY-parking subordinates?" · facts=[ial2-ahb-two-subordinate-exact-two-paired-busy-composition-readiness-audit](../../docs/knowledge/ial2-ahb-two-subordinate-exact-two-paired-busy-composition-readiness-audit.md)
 - q="did .714 close the generated IAL1 output default/reset blocker?" · facts=[ial2-ahb-subordinate-generated-ial1-substrate-audit](../../docs/knowledge/ial2-ahb-subordinate-generated-ial1-substrate-audit.md)
@@ -1296,7 +1297,7 @@ _AHB interconnect generated substrate is ready for implementation_
 
 _AHB interconnect/decode is ready for contract selection_
 
-- **date:** 2026-06-29 · **status:** current
+- **date:** 2026-09-24 · **status:** current
 - **source and verification:** [`docs/knowledge/ial2-ahb-interconnect-decode-readiness-audit.md`](../../docs/knowledge/ial2-ahb-interconnect-decode-readiness-audit.md)
 
 ### ial2-ahb-interconnect-default-decode-output-arbitration-audit

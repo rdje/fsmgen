@@ -1534,8 +1534,8 @@ is(
 );
 is(
     scalar(grep { $_->{classification} eq 'expected_failure' } @entries),
-    164,
-    'catalog now records one hundred sixty-four explicit expected-failure entries',
+    165,
+    'catalog records expected failures including undeclared ISF rule reads',
 );
 is(
     scalar(grep { $_->{strict_supported} } @entries),
