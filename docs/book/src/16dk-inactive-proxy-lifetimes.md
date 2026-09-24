@@ -1393,6 +1393,37 @@ aggregate refusal without depending on another successful mask operation.
 The root fixture checks actual argument/environment/context bytes, cwd, umask,
 exec signals, native child loss, pipe EOF and exact waits through cleanup.
 
+The coordinator now has a private final check for nested E. Its focused fixture
+retains that check as the original wrapper's release callback and records the
+request's release intent. The aggregate request-release entrypoint and reporting
+of original native effects remain separate work.
+
+Each attempt verifies the original peer, transferred request, child grant,
+wrapper/Pair, submitting parent and bound contexts. Both jobs must remain active,
+the run must remain open, and the original admission and execution walls still
+apply. Fresh parent custody inspection occurs before and after Service admission.
+It can inspect a root or another nested parent while leaving that parent's own
+queued E untouched. A completed parent refuses execution without changing its
+original result classification.
+
+Service must observe quiet current input and a complete matching ACCEPT. A
+partial frame, interrupted read or incomplete publication defers the native
+attempt. On the first positive check, Service publishes its original grant
+directly into the retained peer before any E. Transient writes reuse that exact
+grant and its original issue time while repeating admission; a previous positive
+answer cannot override new cancellation or pending input. Lost, copied, foreign
+or externally populated grant custody refuses.
+
+After the last parent inspection, the check authenticates the retained grant
+again and requires its original Service peer to remain live and unreported.
+Removing or copying the grant, retiring that peer, or spending its report authority
+at this return boundary cannot authorize E. Once callback ownership is established,
+failures retain the original request cause before cleanup and signal restoration,
+including failed remasking. Confirmed and uncertain native writes retain their
+original grant; this prerequisite fabricates no execution report. The fixture
+checks literal socket frames, actual nested invocation/context bytes, native
+parent loss, creator signals, exact child waits and independent resource closure.
+
 Normal callers retain the existing own-group supervisor. Nested execution
 release and Service lifetime reconciliation, routing and complete subtree qualification
 still have separate open owners. These private components
@@ -1429,6 +1460,7 @@ scripts/run_with_ram_guard.sh -- prove -Iperl -It/lib t/1850-process-aggregate-c
 scripts/run_with_ram_guard.sh -- prove -Iperl -It/lib t/1858-process-aggregate-owners.t
 scripts/run_with_ram_guard.sh -- prove -Iperl -It/lib t/1859-process-root-execution.t
 scripts/run_with_ram_guard.sh -- prove -Iperl -It/lib t/1860-process-native-custody.t
+scripts/run_with_ram_guard.sh -- prove -Iperl -It/lib t/1861-process-nested-execution-admission.t
 scripts/run_with_ram_guard.sh -- prove -Iperl -It/lib t/1853-process-exec-admission.t
 scripts/run_with_ram_guard.sh -- prove -Iperl -It/lib t/1854-process-input-inspection.t
 scripts/run_with_ram_guard.sh -- prove -Iperl -It/lib t/1855-process-service-execution-admission.t

@@ -3767,11 +3767,11 @@ decomposes the architecture needed to move beyond that bounded foundation.
   Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.4.3.3.5.4.4.1: retain completed root execution history`
 
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.4.3.3.5.4.4.2`
-  Status: `active`
+  Status: `done`
   Goal: `Retain original nested execution admission at the native gate.`
   Acceptance: `Bind a retained final native check to the original peer, job grant, wrapper/Pair, submitting parent and bound contexts. Require original live authority, fixed walls, complete matching ACCEPT and Service quiet-input admission at each E attempt. Publish the original Service grant into the retained peer before effects and reject copied or substituted grant custody. Qualify real gated jobs, deferred/transient checks, control and authority loss, creator interruptions and exact cleanup; do not add the request-release API or ordinary routing yet.`
-  Verification: `Child .1 first qualifies non-executing native parent custody inspection: observing copied state is stale, while ordinary advancement can write an already queued E. Child .2 then binds original Service grant custody and final nested admission. Original-effect reconciliation remains outer child .3; explicit release remains outer child .4.`
-  Commit: `pending`
+  Verification: `Both prerequisites are qualified: non-executing original parent custody inspection and final nested admission with retained original Service grants. Late native-return boundaries revalidate grant and live unreported peer authority before E. Confirmed-effect reconciliation and explicit request release remain outer children .3 and .4.`
+  Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.4.3.3.5.4.4.2.2.2: bind final nested execution to original Service authority`
 
   Children: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.4.3.3.5.4.4.2.1, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.4.3.3.5.4.4.2.2`
 
@@ -3783,11 +3783,11 @@ decomposes the architecture needed to move beyond that bounded foundation.
   Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.4.3.3.5.4.4.2.1: inspect original native custody without execution`
 
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.4.3.3.5.4.4.2.2`
-  Status: `active`
+  Status: `done`
   Goal: `Bind final nested E admission to original Service grant custody.`
   Acceptance: `Use the qualified native parent check and original peer/job/wrapper/Pair/context associations at each final E attempt. Require full matching ACCEPT, quiet current input and unchanged admission/execution walls; retain the original Service execution grant in the peer before effects. Refuse lost/copied/foreign authority and qualify creator interruptions, deferrals/transient writes, actual native effects and exact cleanup without adding the explicit request-release API.`
-  Verification: `Native custody is qualified. Child .1 retains the completed acceptance suffix before the next implementation crosses the task-file rollover; child .2 then binds original nested admission. Effect reconciliation and explicit request release remain subsequent outer children.`
-  Commit: `pending`
+  Verification: `Both children are complete: exact acceptance history is retained and the final nested callback is qualified through original Service/native custody. Its fixture installs the callback explicitly; effect reconciliation and the aggregate request-release API remain subsequent outer children.`
+  Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.4.3.3.5.4.4.2.2.2: bind final nested execution to original Service authority`
 
   Children: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.4.3.3.5.4.4.2.2.1, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.4.3.3.5.4.4.2.2.2`
 
@@ -3799,17 +3799,17 @@ decomposes the architecture needed to move beyond that bounded foundation.
   Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.4.3.3.5.4.4.2.2.1: retain native custody acceptance history`
 
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.4.3.3.5.4.4.2.2.2`
-  Status: `active`
+  Status: `done`
   Goal: `Join each nested E attempt to original live Service grant custody.`
   Acceptance: `Use the qualified native parent check and original peer/job/wrapper/Pair/context associations at each final E attempt. Require full matching ACCEPT, quiet current input and unchanged admission/execution walls; retain the original Service execution grant before effects. Refuse lost/copied/foreign authority; qualify interruptions, deferrals, native effects and exact cleanup without exposing request release.`
-  Verification: `History child .1 is complete; native custody is qualified and final nested admission is next.`
-  Commit: `pending`
+  Verification: `The private callback authenticates original peer/job/wrapper/Pair/context owners and release intent, fixed child/parent walls and current native parent custody before and after Service admission. Service publishes its original grant into the retained peer before E; retries revalidate original identity and fresh input/full-ACCEPT permission. The first prototype let late lost/copied grants or peer retirement write E after parent inspection; T1861 exposed six failed assertions with closed cleanup. Final original grant, live Service and unreported-authority checks now refuse those cuts. Twelve fixture groups cover literal root/non-root socket requests and nested output, untouched queued parent E, completed-parent classification, cancellation/EOF/expiry, actual native loss, creator signals, failed remasking and uncertain E. Ten isolated guard defects reject; the identical final copied fixture passes and every native census closes. Final band passes 43 files/397 tests. Syntax, book build/HTML and doctrines qualify this host; request release, effect reconciliation, Linux and browser visual checks remain separate.`
+  Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.4.3.3.5.4.4.2.2.2: bind final nested execution to original Service authority`
 
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.4.3.3.5.4.4.3`
-  Status: `pending`
+  Status: `active`
   Goal: `Reconcile original nested native effects before transport consumption.`
   Acceptance: `Read confirmed or uncertain truth only through original retained native owners. Report confirmed E through the original Service grant before consuming closed outcomes, preserving report history through interrupted returns. Select request execution lifetime only from that original confirmed effect; preserve original admission history, first failure and cleanup. Qualify delayed reports, old admission expiry, cancellation/EOF, lost E returns and retained outcomes with exact native cleanup; do not expose request release yet.`
-  Verification: `Pending final-admission child .2.`
+  Verification: `Final admission child .2 is qualified; next retain confirmed native effects through Service report publication and closed-peer outcome consumption.`
   Commit: `pending`
 
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.4.3.3.5.4.4.4`
@@ -4524,7 +4524,7 @@ decomposes the architecture needed to move beyond that bounded foundation.
 
 ## Current Frontier
 
-Current frontier: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.4.3.3.5.4.4.2.2.2` binds final nested E to original Service grant custody using fresh non-executing parent inspection. Outer .3 reconciles confirmed effects before transport consumption and .4 exposes request release. Preserve original walls, native truth, spent compiler evidence and full-CI/push gates.
+Current frontier: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.4.3.3.5.4.4.3` reconciles original confirmed nested E before closed Service outcomes are consumed and selects the original execution lifetime. Child .4 then exposes request release. Preserve original grants, walls, first failures, native uncertainty, spent compiler evidence and full-CI/push gates.
 
 Architecture audit `.1` is complete. Decision `0032` selects one public
 `.vial` source language, private immutable `VIALSemanticIR` and
@@ -7159,3 +7159,37 @@ correction supplies its proper scope and is reflected in the canonical fact/book
 - [x] **NO REGRESSION** — Admission-history `knowledge-map: OK` retains routing;
   task-tree integrity and staged doctrines qualify paired retention metadata.
   No native fixture, original producer, full CI or push runs for this slice.
+
+
+## Acceptance Checklist (.19.2.3.1.2.2.5.5.2.3.4.3.3.5.4.4.2.2.2)
+
+- [x] **ROOT CAUSE (WHY + WHERE)** — Nested final admission: exact cbe847d4683f
+  reports `original final nested admission is absent at -e line 1, <STDIN> chunk 1.`
+  The new prototype validated grants before its final parent inspection; actual
+  late lost/copied grant and retired-peer controls each still wrote E. Their six
+  failed assertions and closed census survive in
+  .artifacts/nested-admission-late-custody-before.log.
+- [x] **ADDRESSED (verified)** — Nested-admission re-derivation: T1861 joins
+  literal socket frames, original contexts and native gate effects for root and
+  non-root submitting parents. Parent inspection leaves queued E untouched;
+  completed-parent classification stays exact. Original grants survive retries,
+  creator signals and uncertain E; cancellation, loss, expiry and changed walls
+  refuse. Final grant/live-Service/unreported checks close the late-return defect;
+  first request failure precedes cleanup and signal restoration despite mask loss.
+  Falsification: ten isolated defects omit native parent custody, advance parent E,
+  skip the post-Service native check, reuse early grant validation or a cached
+  positive, accept a foreign grant or changed parent wall, delay request failure,
+  omit final Service liveness, or reuse reported authority. Each fails its intended
+  assertion; the identical copied fixture passes and every native census closes.
+  Durability: tracked code, fixture, book and fact preserve the contract. Ignored
+  .artifacts/nested-admission-* logs/control producer are a named gap owned by
+  independent qualification `.19.2.3.1.2.2.5.5.2.3.4.6`; consumed scratch copies,
+  runner and rendered book are removed. Initial fixture timestamp followed HELLO
+  and was correctly refused; it now freezes the invocation before HELLO. The
+  predecessor diagnostic also includes its stdin locus, now checked explicitly.
+- [x] **NO REGRESSION** — Nested-admission band: All tests successful;
+  Files=43, Tests=397. Coordinator and T1861 report syntax OK; mdBook
+  builds and generated HTML retains the private boundary and runnable fixture.
+  Knowledge Map and staged doctrines qualify paired metadata. Linux and browser
+  visual proof remain missing. No original producer, full CI or push runs;
+  explicit request release, effect reporting and ordinary routing remain separate.

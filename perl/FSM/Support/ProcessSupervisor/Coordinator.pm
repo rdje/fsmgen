@@ -442,6 +442,104 @@ sub _before_accept_write {
     unless ($ok) { my $error = $@; $self->_request_failed($peer, $error); return 0; }
     return 1;
 }
+
+# Called only from the original child's masked E transaction. This parent
+# inspection must never advance its queued execution or native launch.
+sub _request_execution_live {
+    my ($self, $peer, $native, $deadline, $pair) = @_;
+    $self->_request_live($peer);
+    my ($entry, $record) = $self->_job($peer->{job_grant});
+    _error('nested execution requires its original active native job')
+        unless $record->{id} > 1 && $record->{phase} eq 'active'
+            && $entry->{native} && refaddr($entry->{native}) == refaddr($native);
+    _error('nested execution admission is no longer open')
+        unless $self->{phase} eq 'open' && !$self->{failure} && !$entry->{failure}
+            && !$peer->{request_failure} && $peer->{start_requested}
+            && $peer->{release_requested} && ($peer->{accept_state} // '') eq 'queued';
+    $self->_context_live($peer->{job_grant});
+    $native->_release_live($pair);
+    _error('nested execution changed its original invocation wall')
+        unless $record->{deadline_ns} eq $deadline
+            && $pair->{original_deadline} == $deadline / 1_000_000_000;
+    my ($parent, $parent_record) = $self->_job($peer->{parent_grant});
+    my $parent_wall = $self->{service}->parent_observation($parent_record->{id})->{deadline_ns};
+    _error('nested execution lost original parent native custody')
+        unless $parent_record->{phase} eq 'active' && !$parent->{failure} && $parent->{native}
+            && $parent_record->{deadline_ns} eq $parent_wall
+            && $parent->{native}->check_custody;
+    # Context lookup and native inspection carry no lasting ledger permission.
+    $self->{ledger}->check_live($_) for $peer->{parent_grant}, $peer->{job_grant};
+    ($entry, $record) = $self->_job($peer->{job_grant});
+    ($parent, $parent_record) = $self->_job($peer->{parent_grant});
+    _error('nested execution authority changed during its final check')
+        unless $self->{phase} eq 'open' && !$self->{failure} && !$entry->{failure}
+            && !$parent->{failure} && !$peer->{request_failure}
+            && ($peer->{request_state} // '') eq 'ready'
+            && $record->{phase} eq 'active' && $record->{deadline_ns} eq $deadline
+            && $parent_record->{phase} eq 'active' && $parent_record->{deadline_ns} eq $parent_wall;
+    return;
+}
+
+sub _request_execution_grant {
+    my ($self, $peer) = @_; _owner($self);
+    my $grant = $peer->{execution_grant};
+    _error('nested execution lost its retained original Service grant')
+        unless ref($grant) && refaddr($grant) == ($peer->{execution_grant_identity} // 0);
+    my $record = $self->{service}->_execution_grant_record($grant);
+    _error('nested execution grant names a different original request')
+        unless $grant->{ticket} == $peer->{ticket} && $grant->{job} == $peer->{job_id}
+            && $record->{ticket} == $peer->{ticket} && $record->{parent} == $peer->{request}{parent};
+    return $grant;
+}
+
+sub _before_request_execution {
+    my ($self, $peer, $native, $deadline, $pair) = @_; _owner($self);
+    _error('nested execution requires its original retained callback owners')
+        unless @_ == 5 && ref($peer) eq 'HASH' && $self->{peers}{$peer->{ticket}}
+            && refaddr($self->{peers}{$peer->{ticket}}) == refaddr($peer);
+    my ($entry) = $self->_job($peer->{job_grant});
+    _error('nested execution requires its original retained callback owners')
+        unless $entry->{peer} && refaddr($entry->{peer}) == refaddr($peer)
+            && $entry->{native} && refaddr($entry->{native}) == refaddr($native)
+            && ref($pair) && refaddr($pair) == $native->{pair_identity};
+    my $admitted = 0;
+    my $ok = eval {
+        $self->_request_execution_live($peer, $native, $deadline, $pair);
+        if (defined($peer->{execution_grant_identity})) {
+            $self->_request_execution_grant($peer);
+            $admitted = $self->{service}->execution_admission($peer->{ticket}, $peer->{job_id});
+        }
+        else {
+            _error('nested execution grant slot was populated outside original admission')
+                if defined($peer->{execution_grant});
+            # Service publishes into this retained peer before returning. If
+            # that return throws there is no E; original grant custody survives.
+            $admitted = $self->{service}->execution_admission(
+                $peer->{ticket}, $peer->{job_id}, \$peer->{execution_grant});
+            $peer->{execution_grant_identity} = refaddr($peer->{execution_grant})
+                if defined($peer->{execution_grant});
+        }
+        $self->_request_execution_grant($peer) if $admitted || defined($peer->{execution_grant_identity});
+        $self->_request_execution_live($peer, $native, $deadline, $pair);
+        if ($admitted || defined($peer->{execution_grant_identity})) {
+            # Native parent inspection is another return boundary. A grant
+            # authenticated before that call cannot authorize this E afterward.
+            my $grant = $self->_request_execution_grant($peer);
+            my $record = $self->{service}->_execution_grant_record($grant);
+            _error('nested execution grant was already reported') if $record->{execution_report};
+            _error($record->{failure}{diagnostic} // 'nested execution lost final Service authority')
+                unless $self->{service}->_bound_live($record);
+        }
+        1;
+    };
+    unless ($ok) {
+        my $error = $@;
+        # The original request cause precedes cleanup and signal restoration.
+        eval { $self->_request_failed($peer, $error); 1 };
+        die $error;
+    }
+    return $admitted;
+}
 sub retire_peer {
     my ($self, $ticket) = @_; _owner($self);
     _error('peer retirement requires one original ticket') unless @_ == 2;
