@@ -14,8 +14,8 @@ use FSM::Support::ProcessSupervisor::Wire ();
 
 # Inactive native owner. Original grants retain root/nested gated jobs through
 # bounded cleanup, alongside original accepted-peer descriptor grants.
-# Root execution release is explicit; nested release, outcome delivery and
-# fair scheduling follow.
+# Root and nested execution release are explicit; outcome delivery and fair
+# scheduling follow.
 # Preparing this object allocates no descriptor, token, path or process.
 my $COST = FSM::Support::ProcessSupervisor::Endpoint::resource_cost();
 my $JOB_COST = FSM::Support::ProcessSupervisor::GatedPair::resource_cost();
@@ -247,6 +247,7 @@ sub peer_observation {
             job => $entry->{job_id},
             deadline_ns => $entry->{request} ? $entry->{request}{deadline_ns} : undef,
             admission_deadline_ns => $entry->{request} ? $entry->{request}{admission_deadline_ns} : undef,
+            release_requested => $entry->{release_requested} ? 1 : 0,
         } : undef,
         publication => _copy_publication($entry->{publication}),
         execution => _copy_execution($entry->{execution}),
@@ -446,7 +447,7 @@ sub advance_request {
     my $ok = eval {
         $self->_request_live($peer);
         # Launch advancement may fork; only the subsequent ready publication
-        # is a preparation transaction. Nothing in this method releases exec.
+        # is a preparation transaction. This method never requests execution release.
         my $view = $self->advance_job($peer->{job_grant});
         if ($view->{admission}{phase} eq 'active' && $view->{native}{phase} eq 'ready') {
             FSM::Support::ProcessSupervisor::Reservation::_masked_preparation(sub {
@@ -482,6 +483,80 @@ sub _before_accept_write {
     my $ok = eval { $self->_ready_request($peer); 1 };
     unless ($ok) { my $error = $@; $self->_request_failed($peer, $error); return 0; }
     return 1;
+}
+
+sub _request_release_ready {
+    my ($self, $peer, $native, $deadline) = @_;
+    $self->_request_live($peer);
+    my ($entry, $record) = $self->_job($peer->{job_grant});
+    _error('request release requires its original active ready job')
+        unless $record->{id} > 1 && $record->{phase} eq 'active'
+            && $entry->{native} && refaddr($entry->{native}) == refaddr($native)
+            && $peer->{start_requested} && ($peer->{accept_state} // '') eq 'queued'
+            && $native->observation->{phase} eq 'ready';
+    _error('request release admission is no longer open')
+        if $self->{failure} || $entry->{failure} || $peer->{request_failure};
+    $self->_context_live($peer->{job_grant});
+    _error('request release lost original native custody') unless $native->check_custody;
+    # Custody inspection cannot advance E, but its return is another boundary.
+    $self->_request_live($peer);
+    ($entry, $record) = $self->_job($peer->{job_grant});
+    _error('request release changed its original readiness or wall')
+        unless $native->observation->{phase} eq 'ready'
+            && !$self->{failure} && !$entry->{failure} && !$peer->{request_failure}
+            && $record->{phase} eq 'active' && $record->{deadline_ns} eq $deadline
+            && $native->observation->{command}{original_deadline} == $deadline / 1_000_000_000;
+    return;
+}
+sub _request_release_failed {
+    my ($self, $entry, $peer, $error) = @_;
+    # Refusal must survive a failed mask restore and unavailable cleanup custody.
+    # These original records block the final E callback without another mask.
+    my $cause = FSM::Support::ProcessSupervisor::_sanitize_control($error);
+    $entry->{failure} //= $cause;
+    $peer->{request_failure} //= $cause;
+    eval { $self->_request_failed($peer, $peer->{request_failure}); 1 }
+        or $peer->{cleanup_error} //= FSM::Support::ProcessSupervisor::_sanitize_control($@);
+    return;
+}
+sub release_request {
+    my ($self, $ticket) = @_; _owner($self);
+    _error('request release requires one original ticket') unless @_ == 2;
+    my $peer = $self->_request_peer($ticket);
+    _error('request execution release is single-use') if $peer->{release_requested};
+    my ($entry, $record) = $self->_job($peer->{job_grant});
+    my ($native, $deadline) = ($entry->{native}, $record->{deadline_ns});
+    my ($started, $queued) = (0, 0);
+    my $ok = eval {
+        FSM::Support::ProcessSupervisor::Reservation::_masked_preparation(sub {
+            # A request that won before masking remains the sole owner.
+            _error('request execution release is single-use') if $peer->{release_requested};
+            $started = 1;
+            my $checked = eval {
+                $self->_request_release_ready($peer, $native, $deadline);
+                # Do not enter releasing while ACCEPT still needs ready-only
+                # write admission. This check issues no lasting execution grant.
+                my $admitted = $self->{service}->execution_admission($ticket, $peer->{job_id});
+                $self->_request_release_ready($peer, $native, $deadline);
+                if ($admitted) {
+                    $peer->{release_requested} = 1;
+                    $native->release(sub { $self->_before_request_execution($peer, $native, $deadline, @_) });
+                    $queued = 1;
+                }
+                1;
+            };
+            unless ($checked) {
+                my $error = $@; $self->_request_release_failed($entry, $peer, $error); die $error;
+            }
+        });
+        1;
+    };
+    unless ($ok) {
+        my $error = $@;
+        $self->_request_release_failed($entry, $peer, $error) if $started;
+        die $error;
+    }
+    return $queued;
 }
 
 # Called only from the original child's masked E transaction. This parent

@@ -3505,11 +3505,11 @@ decomposes the architecture needed to move beyond that bounded foundation.
   Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.4.3.2: seal completed native-binding topology`
 
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.4.3`
-  Status: `active`
+  Status: `done`
   Goal: `Bind accepted connection ownership to complete ACCEPT delivery before exec.`
   Acceptance: `After .2, extend private service/connection lifecycle with explicit retained job association, admission rechecks and complete publication observation. Register new parent authority and replace only the private environment context in the execution snapshot. Partial ACCEPT, EOF, cancellation, repeated/foreign messages and expired admission cancel the recorded gated job without release. Separate closing admission from final endpoint removal and preserve original execution versus bounded closure/delivery walls. Qualify actual sockets and command witnesses; no nested adapter routing.`
-  Verification: `Children .1 and .2 qualify retained ACCEPT frame-write completion and exact completed native-binding history. Live claim owners in .4.2.2 remain directly visible. Child .3 now composes retained requests, job/context association, original admission rechecks and complete publication before exec. Streaming and fair result delivery remain later integration children.`
-  Commit: `pending`
+  Verification: `All declared children are complete. Original root/nested release now joins full ACCEPT, original request/job/context/native authority, fixed walls, fresh final E admission, effect/lifetime reconciliation and complete consumed outcomes. T1865 integrates explicit request release with actual binary execution and exact native cleanup; selected 47-file/444-group regression passes. Bounded streams, fair composition, routing, Linux, original startup and full-CI/push qualification remain separately owned.`
+  Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.4.3.3.5.4.4.4: expose original nested request execution release`
 
   Children: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.4.3.1, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.4.3.2, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.4.3.3`
 
@@ -3528,11 +3528,11 @@ decomposes the architecture needed to move beyond that bounded foundation.
   Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.4.3.2: seal completed native-binding topology`
 
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.4.3.3`
-  Status: `active`
+  Status: `done`
   Goal: `Compose original request and gated-job ownership through complete ACCEPT publication.`
   Acceptance: `After .1 and .2, retain original accepted request/job association, detached snapshots and clipped invocation/admission walls. Bind new parent context only through original grants and replace only the private environment context. Prepare/start the retained gated job, publish its matching ACCEPT completely, then recheck original admission, peer health and deadlines before exec release. Partial publication, EOF, repeated/foreign messages, cancellation and expiry clean the recorded native job without release. Preserve separate process, publication and closure facts; qualify actual sockets and execution witnesses. Decompose implementation further when the concrete interfaces require it; no nested caller routing.`
-  Verification: `Connection publication and eligible native history are complete. Decompose the remaining composition into original retained request transfer, parent-context/snapshot preparation, transport job publication, aggregate gated admission, and final release qualification. Ordinary result delivery and slot reuse remain with later streaming/fair-owner work. Every process fork keeps its own original-mask transaction; never wrap it in a preparation mask.`
-  Commit: `pending`
+  Verification: `All declared children are complete. Original root/nested release now joins full ACCEPT, original request/job/context/native authority, fixed walls, fresh final E admission, effect/lifetime reconciliation and complete consumed outcomes. T1865 integrates explicit request release with actual binary execution and exact native cleanup; selected 47-file/444-group regression passes. Bounded streams, fair composition, routing, Linux, original startup and full-CI/push qualification remain separately owned.`
+  Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.4.3.3.5.4.4.4: expose original nested request execution release`
 
   Children: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.4.3.3.1, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.4.3.3.2, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.4.3.3.3, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.4.3.3.4, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.4.3.3.5`
 
@@ -3580,11 +3580,11 @@ decomposes the architecture needed to move beyond that bounded foundation.
   Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.4.3.3.5.3.1: retain completed admission topology and history`
 
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.4.3.3.5`
-  Status: `active`
+  Status: `done`
   Goal: `Release only an original live job after complete ACCEPT publication.`
   Acceptance: `Recheck original aggregate grant, matching live peer/parent, complete original ACCEPT and all original walls immediately before releasing its gated command. Qualify actual execution witnesses and no-exec controls for partial publication, EOF, cancellation, repeated/foreign messages and expiry before/after release. Preserve first failure and exact bounded subtree cleanup; no nested adapter routing.`
-  Verification: `Child .1 retains completed gated-admission evidence before the unchanged rollover milestone. Child .2 qualifies admission immediately before each native E gate write and retained release truth under interruption. Child .3 separates original admission and execution transport lifetimes without resetting either clock; incomplete incoming control still defers or refuses release. Child .4 joins those boundaries to original root/nested grants and matching complete ACCEPT, with actual execution/no-exec and exact cleanup witnesses. No sealed-adapter routing here.`
-  Commit: `pending`
+  Verification: `All declared children are complete. Original root/nested release now joins full ACCEPT, original request/job/context/native authority, fixed walls, fresh final E admission, effect/lifetime reconciliation and complete consumed outcomes. T1865 integrates explicit request release with actual binary execution and exact native cleanup; selected 47-file/444-group regression passes. Bounded streams, fair composition, routing, Linux, original startup and full-CI/push qualification remain separately owned.`
+  Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.4.3.3.5.4.4.4: expose original nested request execution release`
 
   Children: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.4.3.3.5.1, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.4.3.3.5.2, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.4.3.3.5.3, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.4.3.3.5.4`
 
@@ -3615,11 +3615,11 @@ decomposes the architecture needed to move beyond that bounded foundation.
   Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.4.3.3.5.4.1: retain completed Service topology and history`
 
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.4.3.3.5.4`
-  Status: `active`
+  Status: `done`
   Goal: `Bind root and nested execution release to original live ownership.`
   Acceptance: `Join final owner checks to each original native E write. Require matching original grant, native ready pair, live parent/peer, complete original ACCEPT and all original admission walls; root release uses its original root grant/context/deadline. Retain native execution truth before interrupted returns and reconcile Service execution lifetime from the original effect. Qualify actual command bytes/environment/context and no-exec controls for incomplete publication/control, copied/foreign authority, expiry, cancellation and native/peer loss, with exact bounded subtree cleanup. Do not activate ordinary nested adapters.`
-  Verification: `Prerequisite native gate and Service reports are qualified. Child .1 first retains completed Service acceptance history before the unchanged rollover milestone. Child .2 fixes original ReservedJob wrapper identity while forwarding retained E admission. Child .3 joins original root grants/context/walls; child .4 joins matching nested peers and reconciles confirmed native effects before consuming Service outcomes. Bounded streaming, fair root composition and independent cross-platform qualification remain subsequent owners.`
-  Commit: `pending`
+  Verification: `All declared children are complete. Original root/nested release now joins full ACCEPT, original request/job/context/native authority, fixed walls, fresh final E admission, effect/lifetime reconciliation and complete consumed outcomes. T1865 integrates explicit request release with actual binary execution and exact native cleanup; selected 47-file/444-group regression passes. Bounded streams, fair composition, routing, Linux, original startup and full-CI/push qualification remain separately owned.`
+  Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.4.3.3.5.4.4.4: expose original nested request execution release`
 
   Children: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.4.3.3.5.4.1, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.4.3.3.5.4.2, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.4.3.3.5.4.3, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.4.3.3.5.4.4`
 
@@ -3650,11 +3650,11 @@ decomposes the architecture needed to move beyond that bounded foundation.
   Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.4.3.3.5.4.4.1: retain completed root execution history`
 
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.4.3.3.5.4.4`
-  Status: `active`
+  Status: `done`
   Goal: `Join nested execution admission and reconcile original confirmed effects.`
   Acceptance: `Bind every nested E attempt to the original peer/grant/parent/context and Service quiet-input/full-ACCEPT checks. Publish original Service grant custody before E, retain confirmed original Pair truth through creator interruptions, and report that truth before consuming closed peer outcomes. Switch request liveness only from the original admitted effect without renewing walls or treating copied observations as permission. Qualify incomplete input/publication, native loss, cancellation/EOF/expiry, lost E returns, delayed reports and actual nested environment/output with exact bounded subtree cleanup; do not activate ordinary routed adapters.`
-  Verification: `Child .1 retains completed root evidence before rollover. Child .2 binds final nested native admission to original Service grant custody without adding the release API. Child .3 reconciles original confirmed effects before closed-peer consumption and selects execution-phase liveness. Child .4 then exposes explicit nested release and qualifies the joined behavior; ordinary routing, streaming and the fair loop remain separate.`
-  Commit: `pending`
+  Verification: `All declared children are complete. Original root/nested release now joins full ACCEPT, original request/job/context/native authority, fixed walls, fresh final E admission, effect/lifetime reconciliation and complete consumed outcomes. T1865 integrates explicit request release with actual binary execution and exact native cleanup; selected 47-file/444-group regression passes. Bounded streams, fair composition, routing, Linux, original startup and full-CI/push qualification remain separately owned.`
+  Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.4.3.3.5.4.4.4: expose original nested request execution release`
 
   Children: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.4.3.3.5.4.4.1, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.4.3.3.5.4.4.2, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.4.3.3.5.4.4.3, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.4.3.3.5.4.4.4`
 
@@ -3747,17 +3747,17 @@ decomposes the architecture needed to move beyond that bounded foundation.
   Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.4.3.3.5.4.4.3.3.3.2: retain complete closed execution outcomes`
 
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.4.3.3.5.4.4.4`
-  Status: `active`
+  Status: `done`
   Goal: `Expose and qualify explicit nested request execution release.`
   Acceptance: `After original admission and effect reconciliation are qualified, expose single-use release of the selected original ready request. Preserve first failure and retained owners through pre-mask reentry, creator signals and native return loss. Join actual nested invocation bytes/context, full matching ACCEPT, every final E check and subsequent Service lifetime under bounded cleanup. Refuse copied/foreign/reused/expired/revoked inputs; keep ordinary routed adapters inactive.`
-  Verification: `Original final admission, effect reporting, lifetime reconciliation and complete closed-outcome retention are qualified. Expose the explicit single-use original request release next, retaining the full ACCEPT and final E checks.`
-  Commit: `pending`
+  Verification: `T1865 passes twelve groups with actual native invocation bytes, context/cwd/umask/exec signals, literal sockets, parent loss and exact cleanup. Original release queues once only after ready custody and complete Service admission; partial publication/input defers without consuming intent or blocking ACCEPT. Fresh post-return checks and the original final E callback remain mandatory. Pre-mask winners survive; first queue causes precede signal restoration or unavailable cleanup. Eleven isolated defects and the exact no-API baseline reject at intended oracles with closed native censuses; identical positive and the selected 47-file/444-group band pass. Book/fact/HTML are synchronized; browser qualification remains unavailable.`
+  Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.4.3.3.5.4.4.4: expose original nested request execution release`
 
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.4.4`
-  Status: `pending`
+  Status: `active`
   Goal: `Forward bounded nested streams without retaining a second complete transcript.`
   Acceptance: `After .3, extend shared reserved capture with explicit bounded stream ownership/credit while root capture keeps the closed public facade. Count every raw byte once, preserve separate offsets and aggregate admitted prefix, pause only backpressured stream reads, and retain control/deadline progress. Deliver stream endings before terminal metadata without resetting the original wall or duplicating nested full stdout/stderr. Qualify binary chunks, exact limits, truncation/reordering refusals and first-failure truth; legacy capture remains unchanged.`
-  Verification: `Pending the preceding integration child.`
+  Verification: `Complete original ACCEPT and root/nested execution release are qualified. Before implementation, decompose bounded raw-stream ownership, credit, forwarding and terminal ordering into safe owned slices. Director semantic API/MCP coverage steering is retained below for clean-tree task selection.`
   Commit: `pending`
 
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.4.5`
@@ -4458,7 +4458,7 @@ decomposes the architecture needed to move beyond that bounded foundation.
 
 ## Current Frontier
 
-Current frontier: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.4.3.3.5.4.4.4` exposes and qualifies explicit single-use nested request release. Preserve full original ACCEPT, every final E check, original owners, walls, first failures, uncertainty, current-host qualification limits, spent compiler evidence and full-CI/push gates.
+Current frontier: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.4.4` owns bounded nested stream delivery after complete execution-release qualification. Before its implementation, follow the director semantic API/MCP coverage directive recorded below and select its exact owner from a clean tree. Preserve current-host qualification limits, spent compiler evidence and full-CI/push gates.
 
 Architecture audit `.1` is complete. Decision `0032` selects one public
 `.vial` source language, private immutable `VIALSemanticIR` and
@@ -7126,3 +7126,49 @@ correction supplies its proper scope and is reflected in the canonical fact/book
   Knowledge Map and staged doctrines qualify canonical routing and bounded
   metadata. Browser visual review remains unavailable. Original startup/proxy/
   compiler producers, Linux, full CI and push did not run; those gates stay open.
+
+## Acceptance Checklist (.19.2.3.1.2.2.5.5.2.3.4.3.3.5.4.4.4)
+
+- [x] **ROOT CAUSE (WHY + WHERE)** — The exact b9f98e2fc baseline refuses the new
+  fixture with Can't locate object method "release_request"
+  at .artifacts/request-release-control-copies/baseline-no-api/release.t line 248.
+  The original final E check existed, but no aggregate request entrypoint joined
+  it to explicit single-use intent and complete ACCEPT before leaving readiness.
+- [x] **ADDRESSED (verified)** — Re-derivation: T1865 passes twelve native groups.
+  Literal socket ACCEPT/CANCEL, actual E/output, binary argv/environment/context,
+  cwd/umask/exec masks, real parent loss, positive waits and endpoint/pipe censuses
+  establish execution and cleanup independently. Release returns deferred while
+  publication/input is partial; the original wrapper stays ready and later ACCEPT
+  can finish. Full fresh admission queues once without E/fork/pipe allocation;
+  the preflight issues no lasting E grant. Every actual attempt uses the original
+  final callback. Pre-mask winners survive, first job/peer causes precede creator
+  signals, and unavailable cleanup or failed remasking cannot erase refusal.
+  Confirmed/uncertain E and matching complete outcomes survive interrupted returns.
+  Falsification: exact no-API baseline plus eleven isolated defects reject with
+  intended oracles and closed native censuses; identical positive passes. Defects
+  omit preflight, post-return checks, final callback, reentry guard, early intent,
+  early/pure first causes, creator masking or public intent, and consume deferred
+  intent or overwrite the first cause. Durability: tracked source/test/book/fact
+  and this work-unit Git commit retain the contract. Ignored
+  .artifacts/request-release-* logs/control JSON remain a named raw-evidence gap
+  owned by independent qualification .19.2.3.1.2.2.5.5.2.3.4.6; consumed control
+  copies/runner and generated book output are removed. The first fixture assumed
+  one read consumed a fragmented CANCEL; corrected bounded polling preserves
+  the original no-E assertion. A non-unique mutation anchor failed before any
+  controls ran and was made exact. The book's earlier broad no-release statement
+  is corrected to gated preparation plus the current explicit entrypoints.
+- [x] **NO REGRESSION** — Selected coordinator band: All tests successful.
+  Files=47, Tests=444. Source/test syntax and generated mdBook HTML pass; Knowledge
+  Map and staged doctrines qualify canonical routing and bounded metadata.
+  The initial doctrine gate caught an eight-byte fact collection overrun; concise
+  wording restores the original allowance without a ceiling change. Browser
+  visual review remains unavailable. Original startup/proxy/compiler
+  producers, Linux, full CI and push did not run; those gates remain open.
+
+Director follow-up (2026-09-24): after this slice is committed and clean, select
+task-tree ownership for auditing recent product features against the public deep
+semantic-introspection API and its MCP exposure. Implement and verify owned gaps;
+feature completion must include structured external-agent access wherever the
+public contract supports it. Distinguish inspection from invocable controls, keep
+the mdBook accurate, and do not claim coverage before the audit. This direction
+takes priority over starting the next stream implementation slice.

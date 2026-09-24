@@ -807,7 +807,8 @@ Actual pending-signal controls observe both the retained endpoint and its
 reconciled descriptor charges before the coordinator return is interrupted.
 The coordinator then refuses context publication and can close the exact run.
 Accepted-connection accounting now joins the same original ledger, as described
-below. The coordinator can create gated jobs but cannot release execution.
+below. Creating gated jobs leaves execution pending; explicit root and nested
+release entrypoints are described later in this chapter.
 
 Root preparation now retains the complete native job before creating any pipe.
 Each pipe checks the original grant, its preparation phase, remaining lifetime
@@ -1393,10 +1394,33 @@ aggregate refusal without depending on another successful mask operation.
 The root fixture checks actual argument/environment/context bytes, cwd, umask,
 exec signals, native child loss, pipe EOF and exact waits through cleanup.
 
-The coordinator now has a private final check for nested E. Its focused fixture
-retains that check as the original wrapper's release callback and records the
-request's release intent. The aggregate request-release entrypoint remains
-separate work.
+`Coordinator::release_request($ticket)` queues execution for an original admitted,
+started, ready child request. It checks original native custody and the matching
+Service admission under the creator mask, then checks readiness, contexts and
+fixed walls again after that admission returns. It returns `1` only after queuing
+the original release. Queuing performs no E write, fork or pipe allocation.
+
+Incomplete ACCEPT publication, partial incoming control or an interrupted read
+returns `0` while keeping the wrapper ready and release intent unused. Continue
+bounded Service/request progress and retry the same ticket. This matters for a
+partially written ACCEPT: entering the releasing phase too early would prevent
+its remaining ready-only write checks. A completed cancellation, EOF, lost
+authority or expired wall refuses instead of becoming an execution permission.
+
+For example, after `admit_request` and `start_request`, advance the request to
+readiness and advance Service until its ACCEPT is published. Call
+`release_request($ticket)`; after it returns `1`, continue `advance_request` or
+`advance_job` to perform the actual native attempt. `request.release_requested`
+in `peer_observation` records intent only. A successful queue is single-use;
+changing a copied observation cannot reset it. A request that wins immediately
+before masking remains the winner when the later caller is refused.
+
+The queue retains the original final-check callback described below. Queue
+failures publish the first job and peer cause before signal restoration or
+cleanup can fail. A lost queue return or failed mask restoration therefore
+cannot leave usable execution intent; unavailable cleanup custody is retained
+separately. The native fixture checks real child output, argument/environment
+bytes, context, cwd, umask, inherited exec signals, parent loss and exact cleanup.
 
 Each attempt verifies the original peer, transferred request, child grant,
 wrapper/Pair, submitting parent and bound contexts. Both jobs must remain active,
@@ -1493,8 +1517,8 @@ and consumes only remaining peers. Public outcome copies detach the nested
 `report`, `latest`, `admitted` and `failure` hashes, so editing a copy cannot change
 later observations. These are historical observations, not execution authority.
 
-Normal callers retain the existing own-group supervisor. Nested execution
-release, routing and subtree qualification
+Normal callers retain the existing own-group supervisor. Bounded stream delivery,
+fair whole-run progress, routing and subtree qualification
 still have separate open owners. These private components
 establish no nested result or permission to run the retained startup proxy.
 Their tests exercise the current host; Linux qualification remains open.
@@ -1533,6 +1557,7 @@ scripts/run_with_ram_guard.sh -- prove -Iperl -It/lib t/1861-process-nested-exec
 scripts/run_with_ram_guard.sh -- prove -Iperl -It/lib t/1862-process-native-execution-report.t
 scripts/run_with_ram_guard.sh -- prove -Iperl -It/lib t/1863-process-execution-lifetime.t
 scripts/run_with_ram_guard.sh -- prove -Iperl -It/lib t/1864-process-closed-execution-outcome.t
+scripts/run_with_ram_guard.sh -- prove -Iperl -It/lib t/1865-process-request-execution.t
 scripts/run_with_ram_guard.sh -- prove -Iperl -It/lib t/1853-process-exec-admission.t
 scripts/run_with_ram_guard.sh -- prove -Iperl -It/lib t/1854-process-input-inspection.t
 scripts/run_with_ram_guard.sh -- prove -Iperl -It/lib t/1855-process-service-execution-admission.t
