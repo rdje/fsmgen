@@ -3795,17 +3795,17 @@ decomposes the architecture needed to move beyond that bounded foundation.
   Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.4.3.3.5.4.4.3.1: retain final admission history before reconciliation`
 
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.4.3.3.5.4.4.3.2`
-  Status: `active`
+  Status: `done`
   Goal: `Publish original confirmed nested native effects through retained Service grants.`
   Acceptance: `Authenticate the original peer, job, native wrapper/Pair and pre-effect Service grant. Read confirmed or uncertain effects only from those owners, publish the original confirmed-effect observation before report calls, and retain first report history through delayed or interrupted returns. Refuse copies, substitutions and fabricated confirmation; uncertainty must never report or replay. Qualify actual E and exact cleanup without adding request release or changing aggregate request liveness yet.`
-  Verification: `History child .1 is complete; original final admission is qualified and confirmed-effect report publication is next.`
-  Commit: `pending`
+  Verification: `T1862 passes twelve native groups: original confirmed/uncertain E, delayed/closed reports, detached views, copied/inherited/substituted/foreign/consumed owner refusal, lost Service returns, creator signals and failed masks. Nine isolated defects reject at intended oracles with exact native closure; identical positive passes. The selected component band passes 44 files/409 groups. Original report history is retained before signals; aggregate advancement/liveness/consumption integration remains child .3.`
+  Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.4.3.3.5.4.4.3.2: retain original nested native execution reports`
 
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.4.3.3.5.4.4.3.3`
-  Status: `pending`
+  Status: `active`
   Goal: `Join original execution lifetime and retained closed-peer outcomes.`
   Acceptance: `Reconcile original confirmed effects before any Service advancement, admission-lifetime check or closed-outcome consumption can discard them. Select execution lifetime solely from the retained confirmed native effect and original Service report; preserve admission history and fixed walls. Retain matching job/execution outcome metadata before Service consumption, including interrupted returns, cancellation and EOF. Qualify delayed reports, old admission expiry and exact native cleanup; keep explicit request release separate.`
-  Verification: `Pending original-effect report publication child .2.`
+  Verification: `Original-effect report publication child .2 is qualified. Join ordinary aggregate advancement, execution liveness and retained closed outcomes next.`
   Commit: `pending`
 
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.4.3.3.5.4.4.4`
@@ -4520,7 +4520,7 @@ decomposes the architecture needed to move beyond that bounded foundation.
 
 ## Current Frontier
 
-Current frontier: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.4.3.3.5.4.4.3.2` publishes original confirmed native-effect reports through retained Service grants. Child .3 then joins execution lifetime and closed-peer consumption; outer .4 exposes request release. Preserve original owners, walls, first failures, uncertainty, spent compiler evidence and full-CI/push gates.
+Current frontier: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.4.3.3.5.4.4.3.3` joins original effect reporting into aggregate advancement, execution lifetime and retained closed outcomes. Outer .4 then exposes request release. Preserve original owners, walls, first failures, uncertainty, spent compiler evidence and full-CI/push gates.
 
 Architecture audit `.1` is complete. Decision `0032` selects one public
 `.vial` source language, private immutable `VIALSemanticIR` and
@@ -7158,3 +7158,32 @@ correction supplies its proper scope and is reflected in the canonical fact/book
 - [x] **NO REGRESSION** — Reconciliation-history `knowledge-map: OK` retains
   routing; task integrity and staged doctrines qualify paired retention metadata.
   No native fixture, original producer, full CI or push runs in this slice.
+
+## Acceptance Checklist (.19.2.3.1.2.2.5.5.2.3.4.3.3.5.4.4.3.2)
+
+- [x] **ROOT CAUSE (WHY + WHERE)** — Native-effect predecessor probe of exact
+  b49dd4da4 Coordinator source reports `original native-effect reporting is absent at -e line 1, <STDIN> chunk 1.`
+  Final admission retained an original grant but the aggregate had no independent
+  confirmed-effect reporter; native uncertainty cannot become Service confirmation.
+- [x] **ADDRESSED (verified)** — Native-effect re-derivation: T1862 passes twelve
+  groups using literal sockets, actual gated E and binary invocation output.
+  Original effect observation precedes Service calls; captured original owners
+  retain first reports before creator signals even after lost returns or failed
+  cleanup masks. Delayed reports preserve issue/execution walls after admission
+  expiry or closure; no report reopens a peer. Copies, inherited, substituted,
+  foreign and consumed grants refuse. Uncertainty neither reports nor replays E.
+  Falsification: nine isolated controls reject at intended oracles: uncertain
+  confirmation, skipped grant authentication, repeated report, late first failure,
+  stale post-mask grant, omitted return recovery, unmasked effect, shared public
+  view and recovery through substituted Service. Identical positive passes;
+  every native END census closes. Fixture corrections use ticket_observation and
+  original aggregate outcome consumption; both initial failures closed resources.
+  Durability: committed fixture, book, fact and exact source preserve contracts.
+  Ignored .artifacts/native-effect-* logs/control JSON are a named durability gap
+  owned by independent qualification .19.2.3.1.2.2.5.5.2.3.4.6; consumed variant
+  copies, runners and book output are removed. Advancement/liveness and retained
+  closed-outcome integration remain child .3; explicit release stays separate.
+- [x] **NO REGRESSION** — Native-effect selected band: `All tests successful.`
+  `Files=44, Tests=409`; syntax, mdBook build/HTML assertions and `knowledge-map: OK`
+  pass. Staged doctrines and normal hooks enforce this slice. Browser visual QA,
+  Linux, original startup producers, full CI and push retain their existing gates.

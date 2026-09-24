@@ -248,6 +248,7 @@ sub peer_observation {
             admission_deadline_ns => $entry->{request} ? $entry->{request}{admission_deadline_ns} : undef,
         } : undef,
         publication => _copy_publication($entry->{publication}),
+        execution => _copy_execution($entry->{execution}),
         admission => $entry->{grant} && !$entry->{retired}
             ? $self->{ledger}->describe_descriptors($entry->{grant}) : undef,
         outcome => $entry->{outcome} ? {%{$entry->{outcome}}} : undef};
@@ -257,6 +258,11 @@ sub _copy_publication {
     return {%$view, failure => $view->{failure} ? {%{$view->{failure}}} : undef,
         write => $view->{write} ? {%{$view->{write}},
             failure => $view->{write}{failure} ? {%{$view->{write}{failure}}} : undef} : undef};
+}
+sub _copy_execution {
+    my ($view) = @_; return undef unless $view;
+    return {native => {%{$view->{native}}},
+        report => $view->{report} ? {%{$view->{report}}} : undef};
 }
 sub admit_request {
     my ($self, $ticket) = @_; _owner($self);
@@ -539,6 +545,112 @@ sub _before_request_execution {
         die $error;
     }
     return $admitted;
+}
+
+# Historical effect ownership deliberately does not require live contexts or
+# an unexpired admission wall: a confirmed E may need reporting after closure.
+sub _request_effect_owner {
+    my ($self, $peer) = @_; _owner($self);
+    _error('native effect requires its original retained request')
+        unless ref($peer) eq 'HASH' && $self->{peers}{$peer->{ticket}}
+            && refaddr($self->{peers}{$peer->{ticket}}) == refaddr($peer)
+            && $peer->{request} && refaddr($peer->{request}) == ($peer->{request_identity} // 0)
+            && $peer->{request}{ticket} == $peer->{ticket};
+    my ($entry, $record) = $self->_job($peer->{job_grant});
+    my (undef, $parent) = $self->_job($peer->{parent_grant});
+    _error('native effect lost its original job/parent association')
+        unless $entry->{peer} && refaddr($entry->{peer}) == refaddr($peer)
+            && $record->{id} == $peer->{job_id} && $record->{id} > 1
+            && $record->{parent} == $parent->{id} && $parent->{id} == $peer->{request}{parent}
+            && $record->{deadline_ns} eq $peer->{request}{deadline_ns};
+    return ($entry, $record);
+}
+
+sub _retain_execution_report {
+    my ($peer, $service, $grant) = @_;
+    my $record = $service->_execution_grant_record($grant);
+    my $report = $record->{execution_report} or return 0;
+    _error('native effect report lost its original association')
+        unless $record->{ticket} == $peer->{ticket} && $record->{job} == $peer->{job_id}
+            && $record->{parent} == $peer->{request}{parent}
+            && $report->{admission_issued_ns} eq $grant->{issued_ns}
+            && $report->{deadline_ns} eq $peer->{execution}{native}{deadline_ns};
+    if (my $held = $peer->{execution}{report}) {
+        _error('original execution report changed after publication') if grep {
+            !defined($held->{$_}) || $held->{$_} ne $report->{$_}
+        } qw(reported_ns admission_issued_ns deadline_ns);
+    }
+    else { $peer->{execution}{report} = {%$report}; }
+    return 1;
+}
+
+sub _record_request_execution {
+    my ($self, $peer) = @_;
+    _error('native effect reporting requires one original peer') unless @_ == 2;
+    my ($entry) = $self->_request_effect_owner($peer);
+    return 0 unless $entry->{native};
+    my $native = $entry->{native};
+    my ($started, $reported, $service, $grant) = (0, 0);
+    my $ok = eval {
+        FSM::Support::ProcessSupervisor::Reservation::_masked_preparation(sub {
+            my (undef, $record) = $self->_request_effect_owner($peer);
+            my $command = $native->observation->{command};
+            return unless $command->{released} || $command->{release_uncertain};
+            _error('native effect lacks its original execution attempt')
+                unless $peer->{release_requested} && $command->{release_attempted}
+                    && !($command->{released} && $command->{release_uncertain});
+            $grant = $self->_request_execution_grant($peer);
+            $service = $self->{service}; $started = 1;
+            my $captured = eval {
+                my $state = $command->{released} ? 'confirmed' : 'uncertain';
+                if (my $held = $peer->{execution}) {
+                    _error('original native effect changed after observation')
+                        unless $held->{native}{state} eq $state
+                            && $held->{native}{job} == $record->{id}
+                            && $held->{native}{parent} == $record->{parent}
+                            && $held->{native}{deadline_ns} eq $record->{deadline_ns};
+                }
+                else {
+                    # This is the observation time, never a native exec time.
+                    # Retain confirmed/uncertain truth before any report call.
+                    $peer->{execution} = {native => {state => $state, observed_ns => _now_ns(),
+                        job => $record->{id}, parent => $record->{parent}, deadline_ns => $record->{deadline_ns}}};
+                }
+                if ($state eq 'confirmed') {
+                    unless (_retain_execution_report($peer, $service, $grant)) {
+                        $service->record_execution($grant);
+                        _error('original Service returned without retaining its execution report')
+                            unless _retain_execution_report($peer, $service, $grant);
+                    }
+                    $reported = 1;
+                }
+                $self->_request_effect_owner($peer);
+                $self->_request_execution_grant($peer);
+                1;
+            };
+            unless ($captured) {
+                my $error = $@;
+                # A lost report return may already have published its marker.
+                # Read that original owner without needing another mask.
+                eval { _retain_execution_report($peer, $service, $grant); 1 };
+                eval { $self->_request_failed($peer, $error); 1 };
+                die $error;
+            }
+        });
+        $self->_request_effect_owner($peer);
+        $self->_request_execution_grant($peer) if $started;
+        1;
+    };
+    unless ($ok) {
+        my $error = $@;
+        if ($started) {
+            eval { _retain_execution_report($peer, $service, $grant); 1 }
+                if $peer->{execution} && $peer->{execution}{native}{state} eq 'confirmed';
+            eval { $self->_request_failed($peer, $error); 1 };
+        }
+        die $error;
+    }
+    return $reported;
 }
 sub retire_peer {
     my ($self, $ticket) = @_; _owner($self);

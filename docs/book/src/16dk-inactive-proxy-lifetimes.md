@@ -1395,8 +1395,8 @@ exec signals, native child loss, pipe EOF and exact waits through cleanup.
 
 The coordinator now has a private final check for nested E. Its focused fixture
 retains that check as the original wrapper's release callback and records the
-request's release intent. The aggregate request-release entrypoint and reporting
-of original native effects remain separate work.
+request's release intent. The aggregate request-release entrypoint remains
+separate work.
 
 Each attempt verifies the original peer, transferred request, child grant,
 wrapper/Pair, submitting parent and bound contexts. Both jobs must remain active,
@@ -1423,6 +1423,34 @@ including failed remasking. Confirmed and uncertain native writes retain their
 original grant; this prerequisite fabricates no execution report. The fixture
 checks literal socket frames, actual nested invocation/context bytes, native
 parent loss, creator signals, exact child waits and independent resource closure.
+
+The private aggregate effect reporter reads the original retained native
+wrapper and Pair, authenticates their request/job/parent association, and uses
+the original pre-effect Service grant. A ready or deferred command has nothing
+to report. A transient E write also freezes no effect observation. Once the
+original Pair confirms E, the aggregate retains that observation before calling
+Service. Its observation timestamp describes when the owner read the effect;
+it does not establish successful exec or the command's native start time.
+
+For example, if the actual E write succeeds but reporting is delayed beyond
+the admission wall, the original report still retains the frozen execution wall
+and pre-effect grant issue time. Reporting after peer closure retains history
+without reopening the peer. Repeated observations preserve the first report
+and do not issue it again. Public native, peer and Service views are detached
+observations; changing them cannot fabricate confirmation or rewrite history.
+
+A lost native E return remains uncertain. The aggregate retains that distinction,
+never reports it as confirmed, and never advances or replays E while observing
+it. If a Service report return is lost, the aggregate reads the report from the
+captured original Service and grant before restoring creator signals. It retains
+the first request failure even when cleanup cannot acquire another mask. A
+successful report followed by creator interruption likewise keeps its original
+history. Copied, inherited, replaced, foreign and consumed owners refuse.
+
+This reporter is qualified independently with actual socket traffic, native E,
+invocation output, creator signals and exact resource closure. Integrating it
+into ordinary aggregate advancement and retained closed outcomes remains the
+next boundary; request liveness still applies its existing admission checks.
 
 Normal callers retain the existing own-group supervisor. Nested execution
 release and Service lifetime reconciliation, routing and complete subtree qualification
@@ -1461,6 +1489,7 @@ scripts/run_with_ram_guard.sh -- prove -Iperl -It/lib t/1858-process-aggregate-o
 scripts/run_with_ram_guard.sh -- prove -Iperl -It/lib t/1859-process-root-execution.t
 scripts/run_with_ram_guard.sh -- prove -Iperl -It/lib t/1860-process-native-custody.t
 scripts/run_with_ram_guard.sh -- prove -Iperl -It/lib t/1861-process-nested-execution-admission.t
+scripts/run_with_ram_guard.sh -- prove -Iperl -It/lib t/1862-process-native-execution-report.t
 scripts/run_with_ram_guard.sh -- prove -Iperl -It/lib t/1853-process-exec-admission.t
 scripts/run_with_ram_guard.sh -- prove -Iperl -It/lib t/1854-process-input-inspection.t
 scripts/run_with_ram_guard.sh -- prove -Iperl -It/lib t/1855-process-service-execution-admission.t
