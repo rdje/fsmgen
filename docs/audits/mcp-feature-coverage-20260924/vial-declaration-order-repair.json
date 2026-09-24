@@ -1,0 +1,195 @@
+{
+  "after": {
+    "producer_path": "perl/FSM/VIAL/SemanticBuilder.pm",
+    "producer_sha256": "613e18e3ce5ef7c916df4b7622726b71789f291b736030d65886451cae81c472",
+    "rows": [
+      {
+        "compatibility_projection_sha256": null,
+        "complete_report_sha256": "c5befc1b27c013b950028a40e549668864891b9f2559aad9be120096af8c92ee",
+        "diagnostics": [],
+        "language_version": 1,
+        "selection": "base",
+        "semantic_projection_sha256": "674c8078660aa13f0e993362f5cfa25d6a976f26a1f84a62c98d82312709481a",
+        "source_id": "declaration_order.vial",
+        "source_sha256": "2205b3b4f073a61374b19cb72f06afe31d75fc4d88f903c414b9b28a744ca4cd",
+        "success": true,
+        "type_names": [
+          "htrans_t",
+          "address_t",
+          "data_t"
+        ]
+      },
+      {
+        "compatibility_projection_sha256": null,
+        "complete_report_sha256": "73d62531afef30953b326bffcfc7cec281dabff7ca8883abb06a0583fd234898",
+        "diagnostics": [],
+        "language_version": 1,
+        "selection": "forward",
+        "semantic_projection_sha256": "3fd1f371e5707886cec1ca9331cbc9cac33a4781624d2b57e958aea21e936926",
+        "source_id": "declaration_order.vial",
+        "source_sha256": "1b1ae64391de38e8aeebd4038f3eb4cae2b29e0bf87efbc2f3e43d2510a4148f",
+        "success": true,
+        "type_names": [
+          "first",
+          "later",
+          "htrans_t",
+          "address_t",
+          "data_t"
+        ]
+      },
+      {
+        "compatibility_projection_sha256": "d2ec00ec90d3d7b0e84daf588a3621ae64e7e932fc6a9a9b3ec13c7e694ebb29",
+        "complete_report_sha256": "565ffc27a25d1326ab954b7129b97e7603d03ff148e3dc89d2f699503483c5c3",
+        "diagnostics": [],
+        "language_version": 2,
+        "selection": "base",
+        "semantic_projection_sha256": "98228c00901703d3c315face4c9c3b372a44b69094c17e44eb08e3b9e73d8b21",
+        "source_id": "declaration_order.vial",
+        "source_sha256": "921049c612e699f3db70ffcb5cf564e7f8a76ff10d84d4df26401207ba0c13b0",
+        "success": true,
+        "type_names": [
+          "htrans_t",
+          "address_t",
+          "data_t"
+        ]
+      },
+      {
+        "compatibility_projection_sha256": "35797b60347cf491eefe82e99db3ecdebaac777a1bb232be952d2ed4bf6a00f2",
+        "complete_report_sha256": "60a05ec27a9cd280ac4d4a9d4b5ba10f4169a016a5df0f9138d7c1f55507b570",
+        "diagnostics": [],
+        "language_version": 2,
+        "selection": "forward",
+        "semantic_projection_sha256": "74c147f06c018c1954526e5246e27565c9bcc874fae46a9a112c98902ad9ee6a",
+        "source_id": "declaration_order.vial",
+        "source_sha256": "ec3f0c6e50cf976c42a537b7a92931b44dc02991db95a870493883ab93841715",
+        "success": true,
+        "type_names": [
+          "first",
+          "later",
+          "htrans_t",
+          "address_t",
+          "data_t"
+        ]
+      }
+    ]
+  },
+  "baseline_compiler_blob": "ed143b61fd23bf3e7c4168f6a9a9d457f071f51d",
+  "baseline_revision": "a84d445634ff91725ed1e3a8a4ab09363eafad8f",
+  "before": {
+    "producer_path": ".artifacts/mcp-feature-coverage/declaration-order-baseline-perl/FSM/VIAL/SemanticBuilder.pm",
+    "producer_sha256": "081ef5b0958edc296709347fd0403c98f806768677cc57fd25807acba2a9ab8a",
+    "rows": [
+      {
+        "compatibility_projection_sha256": null,
+        "complete_report_sha256": "c5befc1b27c013b950028a40e549668864891b9f2559aad9be120096af8c92ee",
+        "diagnostics": [],
+        "language_version": 1,
+        "selection": "base",
+        "semantic_projection_sha256": "674c8078660aa13f0e993362f5cfa25d6a976f26a1f84a62c98d82312709481a",
+        "source_id": "declaration_order.vial",
+        "source_sha256": "2205b3b4f073a61374b19cb72f06afe31d75fc4d88f903c414b9b28a744ca4cd",
+        "success": true,
+        "type_names": [
+          "htrans_t",
+          "address_t",
+          "data_t"
+        ]
+      },
+      {
+        "compatibility_projection_sha256": null,
+        "complete_report_sha256": "8338459549b76738a3020bd6797ff64f419ad779839c63b9069f070915754b13",
+        "diagnostics": [],
+        "language_version": 1,
+        "selection": "forward",
+        "semantic_projection_sha256": "e2bf896c0e454b88f6132544e0c27df59cebfe05b51963b69753daa9523ebf03",
+        "source_id": "declaration_order.vial",
+        "source_sha256": "1b1ae64391de38e8aeebd4038f3eb4cae2b29e0bf87efbc2f3e43d2510a4148f",
+        "success": true,
+        "type_names": [
+          "later",
+          "first",
+          "htrans_t",
+          "address_t",
+          "data_t"
+        ]
+      },
+      {
+        "compatibility_projection_sha256": "d2ec00ec90d3d7b0e84daf588a3621ae64e7e932fc6a9a9b3ec13c7e694ebb29",
+        "complete_report_sha256": "565ffc27a25d1326ab954b7129b97e7603d03ff148e3dc89d2f699503483c5c3",
+        "diagnostics": [],
+        "language_version": 2,
+        "selection": "base",
+        "semantic_projection_sha256": "98228c00901703d3c315face4c9c3b372a44b69094c17e44eb08e3b9e73d8b21",
+        "source_id": "declaration_order.vial",
+        "source_sha256": "921049c612e699f3db70ffcb5cf564e7f8a76ff10d84d4df26401207ba0c13b0",
+        "success": true,
+        "type_names": [
+          "htrans_t",
+          "address_t",
+          "data_t"
+        ]
+      },
+      {
+        "compatibility_projection_sha256": "2168da2b4888efd96f0a32e3155f386cb3b4d10d0d1e42a578a9792008bad8d1",
+        "complete_report_sha256": "6fadadd23f53f8876c7f4e5fd7455a16459f7a07f851db5d8f4d4a0fe0510ce5",
+        "diagnostics": [],
+        "language_version": 2,
+        "selection": "forward",
+        "semantic_projection_sha256": "b7f721d6495f096566330953a6fbc1c8c0bc4e0a5f4ff43056d162993f7cb28f",
+        "source_id": "declaration_order.vial",
+        "source_sha256": "ec3f0c6e50cf976c42a537b7a92931b44dc02991db95a870493883ab93841715",
+        "success": true,
+        "type_names": [
+          "later",
+          "first",
+          "htrans_t",
+          "address_t",
+          "data_t"
+        ]
+      }
+    ]
+  },
+  "evidence_legs": {
+    "durability": "Tracked probe, result, baseline Git object, T1876, source and inspection contracts, book and fact card.",
+    "falsify": "Independent authored first,later order and native array/path assertions. Unknown and recursive alias refusal, imports, formatting, migration and complete API/native/MCP parity. Unchanged canonical base complete-report hashes control unrelated behavior.",
+    "rederive": "Tracked public check probe with exact baseline compiler Git blob versus repaired compiler, identical source IDs and bytes; verifies loaded module path and hash."
+  },
+  "limits": [
+    "Forward-declaration order changes affected semantic digests and v2 compatibility digests. v1 public capability evidence has no compatibility digest; migration equivalence is independently tested in T1876.",
+    "No backend execution, runtime, performance, capacity or full-CI qualification. Canonical equality applies to the controlled base fixtures, not every possible unaffected source.",
+    "Browser visual audit remains unavailable; mdBook build and rendered text are the available documentation checks."
+  ],
+  "owner": "SEMANTIC-INTROSPECTION-MCP-FRONTIER.31.3.2.7",
+  "schema": "fsmgen.vial_declaration_order_repair.v1",
+  "tests": {
+    "declaration-order-band": {
+      "sha256": "6f2e4a74fa81c91c38ee33730c88a9f82756e34e9e57e590c5c540521bf601f0",
+      "summary": [
+        "All tests successful.",
+        "Files=8, Tests=56, 64 wallclock secs ( 0.04 usr  0.02 sys + 60.51 cusr  2.85 csys = 63.42 CPU)",
+        "Result: PASS"
+      ]
+    },
+    "declaration-order-book": {
+      "sha256": "05b2795400a01133ec9ff0ac1d6384e1bfd85d340ef96b02db11bc5567babdb7",
+      "summary": [
+        " INFO HTML book written to `.artifacts/declaration-order-book`"
+      ]
+    },
+    "declaration-order-green": {
+      "sha256": "d2b18166f43933a0e959f05f0b6dba462382255a3d97c24ec93554137ca6a7c2",
+      "summary": [
+        "All tests successful.",
+        "Files=1, Tests=4,  4 wallclock secs ( 0.01 usr  0.00 sys +  3.28 cusr  0.03 csys =  3.32 CPU)",
+        "Result: PASS"
+      ]
+    },
+    "declaration-order-red": {
+      "sha256": "9210c541bd8b1f303311405a507bcdb142d37d5d0475e6793480285cbe554c6a",
+      "summary": [
+        "Files=1, Tests=4,  5 wallclock secs ( 0.01 usr  0.01 sys +  4.46 cusr  0.12 csys =  4.60 CPU)",
+        "Result: FAIL"
+      ]
+    }
+  }
+}

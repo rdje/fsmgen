@@ -15,14 +15,15 @@ is retained in
 
 Decision `0105` selects a separate source-inspection schema. Existing v1/v2
 check, format, plan, tooling capability records, semantic summaries and meaning
-digests retain their current shapes and values. Neither the private SemanticIR
+digests are unchanged by the additive inspection API. Neither the private SemanticIR
 object nor its `as_hashref` record becomes a public API. Compiler changes must
 adapt to the inspection contract, not silently redefine it.
 
-The separate native bug correction `.31.3.2.5` preserves selected model-instance
-identity and corrects affected meaning digests in both language versions.
-Inspection must retain that identity alongside the shared state declaration;
-the existing projection bug is not a compatibility promise.
+Separate native bug corrections preserve model-instance identity (`.31.3.2.5`),
+exact fault binding (`.31.3.2.6.1`) and authored declaration order (`.31.3.2.7`).
+They correct affected meaning digests in both language versions; cached values
+for those sources require refreshing. Inspection retains the corrected scope
+and order. Existing compiler bugs are not compatibility promises.
 
 ## Selected entrypoints
 

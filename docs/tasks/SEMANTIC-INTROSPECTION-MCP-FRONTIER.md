@@ -516,11 +516,11 @@ For FSMGen, the analogs are:
   Commit: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.31.3.2.6.2: qualify VIAL fault target execution boundaries`
 
 - ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.31.3.2.7`
-  Status: `pending`
+  Status: `done`
   Goal: `Restore authored declaration order after native VIAL dependency resolution.`
   Acceptance: `Reproduce forward aliases returning dependencies before earlier authored declarations in native SemanticIR and public summaries. Restore declared ordering without breaking recursive resolution or stable IDs, qualify both versions, imports, styles and API/MCP output, and explicitly assess affected semantic/compatibility digests while preserving unchanged canonical fixtures. Keep the inspection projector ordered independently by source provenance. Add durable positive/negative oracles and correct contract/book/facts; commit this repair immediately after the base projector before lifecycle implementation. Do not replay spent backend producers.`
-  Verification: `A source beginning with type first referring to later, followed by type later, currently projects later,first. SemanticBuilder::_build_type_declaration pushes completed dependencies into the package array before their authored owner. The native source contract describes authored-order arrays. The current base projector leaf owns its own source-order correction; this leaf owns the pre-existing compiler/report gap.`
-  Commit: `pending`
+  Verification: `T1876 proves authored order and path indices in both versions, local/imported references, style/migration identity, invalid dependency refusal and complete portable/filesystem/CLI/MCP equality. Controlled baseline/current probes preserve complete base reports while correcting affected order/digests. The focused source/planning/inspection band and rendered book pass.`
+  Commit: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.31.3.2.7: preserve authored VIAL declaration order`
 
 - ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.31.3.3`
   Status: `pending`
@@ -1174,8 +1174,8 @@ before editing code. No discovered defect is closed by this audit alone.
 
 ## Current Frontier
 
-`SEMANTIC-INTROSPECTION-MCP-FRONTIER.31.3.2.7` repairs native forward
-declaration order, then `.31.3.2.3.2.2` resumes lifecycle detail before API/CLI/MCP.
+`SEMANTIC-INTROSPECTION-MCP-FRONTIER.31.3.2.3.2.2` is next: lifecycle
+source detail, then portable/filesystem API, native CLI/discovery and MCP.
 The catalog guard, CI/signoff and exhaustive qualification follow before HIAL
 streaming. Preserve spent native compiler/startup evidence and the separate
 read-only/write horizon; source checks do not promote runtime support.
@@ -2213,3 +2213,42 @@ the prior focused-document line allowance; this leaf admits their measured
 unique contract growth within the existing enforcement ceiling, with no debt
 state or ceiling waiver. The initial doctrine failure is resolved by that
 bounded ownership update before commit.
+
+## Acceptance Checklist — `.31.3.2.7` native declaration order
+
+- [x] **ROOT CAUSE (WHY + WHERE)** — The pre-repair T1876 reports
+  `#   Failed test 'native declarations follow independently authored order'`
+  and `#   at t/1876-vial-declaration-order.t line 99.` with `later` instead
+  of `first`. Recursive `_build_type_declaration` appends completed dependencies
+  before earlier authored aliases; native array positions consequently disagree
+  with their original semantic paths. Public summaries inherit that order.
+- [x] **ADDRESSED (verified)** — After successful construction, the builder
+  restores each declaration collection from its original ordered stubs. It
+  preserves dependency resolution, diagnostics, exact IDs and built records.
+  T1876 verifies native/summary order and paths for local and imported types in
+  both versions, transitive resolved identities, formatting and migration,
+  complete portable/filesystem/native CLI/MCP report equality, unchanged source
+  bytes and no publication. Unknown and cyclic aliases still fail with the
+  existing diagnostic families and no partial summary. SourceInspection keeps
+  its independent source-coordinate ordering.
+- [x] **NO REGRESSION** — RAM-guarded
+  `prove -Iperl t/1550-vial-semantic-ir.t t/1555-vial-public-source-tooling.t t/1556-vial-public-planning-artifacts.t t/1801-vial-v2-source-projections.t t/1806-vial-v2-public-foundation.t t/1808-vial-v2-lifecycle-compiler-phases.t t/1875-vial-source-inspection-base.t t/1876-vial-declaration-order.t`
+  reports `All tests successful. Files=8, Tests=56` and `Result: PASS`.
+  `mdbook build docs/book -d .artifacts/declaration-order-book` and rendered
+  order/cache guidance pass; the disposable book output is removed. Browser
+  visual access remains unavailable. No spent backend producer is replayed.
+
+The controlled public probe loads the exact pre-repair compiler from `a84d4456`
+with loaded-module path/hash verification. Identical base sources retain
+identical complete check-report hashes; forward-alias sources change order and
+semantic digests in both versions, plus the v2 public compatibility digest.
+Affected caches must refresh; source/summary shapes and canonical base behavior
+remain unchanged. This repairs a violated authored-order contract, not a hash
+collision. Re-derivation: tracked probe and native/API reports. Falsification:
+independent authored order/path/reference controls, bad dependencies and base
+report equality. Durability: T1876, exact Git baseline, tracked
+`vial-declaration-order-repair.json`, contracts/book/fact. Log hashes and final
+summaries are retained there. Full CI/runtime remain outside this slice.
+Task/book containment metadata records only this owned repair; existing
+knowledge-card allowance is unchanged. No separate rationale ledger entry is
+needed because the implementation invariant belongs to the source contract.

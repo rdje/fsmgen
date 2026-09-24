@@ -638,7 +638,9 @@ are ordered by root traversal and authored import order; duplicate canonical
 sources are represented once.
 
 Each package record contains exact identity, ordered imports, and ordered type,
-transaction, model, scoreboard, and fixture arrays. Every declaration and
+transaction, model, scoreboard, and fixture arrays in authored order, even
+when resolving a forward alias requires building a later declaration first.
+Every declaration and
 fixture-local entity has:
 
 ```text
@@ -657,6 +659,12 @@ and fiber names are unique only inside one parallel. Semantic paths contain
 normalized array indices and are the provenance lookup keys. Reordering named
 declarations changes paths/order but not their IDs; moving a fiber between
 unnamed parallel scopes necessarily changes that fiber's structural identity.
+
+The native forward-order correction tracked by `.31.3.2.7` restores this
+invariant in both language versions and their public summaries. Refresh
+semantic and compatibility digests cached for affected forward declarations;
+the canonical base fixtures retain identical complete check reports. The
+controlled comparison is `docs/audits/mcp-feature-coverage-20260924/vial-declaration-order-repair.json`.
 
 Normalized type records are closed discriminated hashes for scalar, enum,
 record, and list. References carry both authored qualified spelling and

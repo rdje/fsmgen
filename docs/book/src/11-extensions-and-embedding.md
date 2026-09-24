@@ -2857,9 +2857,12 @@ scope. Its independent record definitions are in the
 Lifecycle detail and callable inspection APIs remain in progress; current
 MCP summary queries have not gained those bodies. An unsupported family causes
 projection refusal rather than a partial detail result. The new projection
-recovers authored declaration order from source locations. Existing native
-summaries can instead list a forward-referenced type before its earlier alias;
-compiler/report correction is tracked as `.31.3.2.7` and is next.
+recovers authored declaration order from source locations. Native check and MCP
+summaries also preserve authored order after recursive type resolution. For
+example, `(type first (type later)) (type later (u 8))` reports `first,later`,
+with each array position matching its semantic path. Cached semantic and
+compatibility digests for sources affected by the former dependency-first
+ordering require refreshing; canonical base fixture reports remain unchanged.
 
 Select `language_version: 2` explicitly for VIAL v2, including the implemented
 lifecycle-control family. Omission selects v1; the adapter never guesses from

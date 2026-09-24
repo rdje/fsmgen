@@ -54,6 +54,7 @@ sub build {
     $self->_build_declarations;
     $self->_build_fixtures;
     $self->_throw_collected_diagnostics if @{$self->{diagnostics}};
+    $self->_restore_declaration_order;
 
     my ($root_source) = grep {
         $_->{source_name} eq $self->{root_source_name}
@@ -303,6 +304,21 @@ sub _build_declarations {
             $self->_capture_container($stub, sub {
                 $self->_build_scoreboard($context, $stub);
             });
+        }
+    }
+}
+
+sub _restore_declaration_order {
+    my ($self) = @_;
+    # Recursive resolution completes dependencies first. Publish declarations
+    # in their original order so array positions still match semantic paths.
+    # Wait until construction succeeds: resolution and diagnostics retain
+    # their existing traversal and all references retain their built records.
+    for my $context (@{$self->{package_contexts}}) {
+        for my $section (qw(types transactions models scoreboards fixtures)) {
+            $context->{record}{$section} = [
+                map { $_->{record} } _ordered_stubs($context, $section)
+            ];
         }
     }
 }

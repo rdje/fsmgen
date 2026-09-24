@@ -6,8 +6,8 @@ Status and evidence: `docs/tasks/`. The system itself: `MEMORY_ARCHITECTURE.md`.
 ## Resume
 
 - repository_revision: derive with `git log -1 --format='%H %s'`; never shadow `HEAD` here.
-- active_work_unit: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.31.3.2.7` (pending)
-- next_action: Repair native forward-declaration ordering with explicit digest compatibility evidence, then resume typed lifecycle projection, portable/filesystem APIs, CLI and MCP.
+- active_work_unit: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.31.3.2.3.2.2` (pending)
+- next_action: Implement complete typed lifecycle source projection, then portable/filesystem APIs, native CLI and MCP.
   Preserve the spent compiler workspace and `docs/audits/native-proxy-receipt-capture-20260923/result/` evidence.
 - in_flight_uncommitted: none.
 - in_flight_background: none.
