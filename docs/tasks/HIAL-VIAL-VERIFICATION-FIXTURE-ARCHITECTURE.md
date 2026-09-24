@@ -3571,11 +3571,11 @@ decomposes the architecture needed to move beyond that bounded foundation.
   Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.4.1: expose owned private descriptor inventories`
 
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.4.2`
-  Status: `active`
+  Status: `done`
   Goal: `Retain bounded root and nested job admission before resource creation.`
   Acceptance: `After .1, create private root ownership records with monotonic nonreused IDs, logical parents/depth and ancestor-clipped original deadlines. Reserve child and descriptor capacity before token generation, allocation or fork; include listener/directory/accepted sockets and concurrent job handles in peak accounting. Failed admission retains ownership through exact cleanup; terminal delivery jobs retain their job slots. Prove each selected inclusive bound and excess without actual fake-identity syscalls; no exec release or caller routing.`
-  Verification: `Descriptor inventories are qualified. Before additional evidence grows the task past its rollover milestone, child .1 seals the completed acceptance suffix. Child .2 owns pure bounded admission records and grants; child .3 binds real preparation and fork to those retained grants. No caller routing or complete coordinator guarantee is inferred.`
-  Commit: `pending`
+  Verification: `Pure original admission and retained native binding are complete. Root/nested grants, endpoint scratch/steady credit and accepted-peer credit precede effects; original deadlines, inclusive bounds, nonreused identities and failed/closed outcome ownership are qualified by their completed children. Joined native socket/process checks pass, while ACCEPT delivery and ordinary per-peer result acknowledgement remain the next integration child.`
+  Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.4.2.3.3.3.3.2: bind accepted peers to original aggregate grants`
 
   Children: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.4.2.1, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.4.2.2, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.4.2.3`
 
@@ -3594,11 +3594,11 @@ decomposes the architecture needed to move beyond that bounded foundation.
   Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.4.2.2: retain bounded pure coordinator admission`
 
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.4.2.3`
-  Status: `active`
+  Status: `done`
   Goal: `Bind native preparation and fork to retained admission grants.`
   Acceptance: `After .2, retain every run/job/resource owner before creation, token generation or fork and use qualified descriptor inventories for peak admission and child closure. Record partial allocation/start effects under signal-safe ownership; failed or interrupted admission remains retained until exact cleanup. Check actual run/connection/job descriptor accounting and original deadlines before every allocation, then qualify root and admitted nested gated preparation without exec release. Include cancel-after-record-before-fork and capacity refusal; publication remains sibling .3.4.3.`
-  Verification: `Native integration is split by retained owner: child .1 exposes pre-allocation endpoint custody; child .2 exposes pre-allocation job/pair/reservation custody; child .3 binds both to aggregate ledger grants, actual descriptor accounting and retained service acceptance. Each child qualifies its own failures and interruption cuts; the joined owner must prove root/nested gated preparation before this parent closes.`
-  Commit: `pending`
+  Verification: `Endpoint and job pre-allocation records plus aggregate original-grant integration are complete. Qualified callbacks recheck original deadlines and capacity before native effects; actual accepted sockets join fresh child inventories. Root/nested gated handoff, interruptions and bounded cleanup are independently qualified through the completed child records. No exec release or caller routing is inferred.`
+  Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.4.2.3.3.3.3.2: bind accepted peers to original aggregate grants`
 
   Children: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.4.2.3.1, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.4.2.3.2, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.4.2.3.3`
 
@@ -3617,11 +3617,11 @@ decomposes the architecture needed to move beyond that bounded foundation.
   Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.4.2.3.2: retain job owners before pipe allocation`
 
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.4.2.3.3`
-  Status: `active`
+  Status: `done`
   Goal: `Bind aggregate native ownership to admission grants.`
   Acceptance: `Compose retained run/job owners and qualified inventories with Admission. Reserve run steady/transient, accepted-peer and job peak capacity before effects; validate original deadlines and creator grants before each allocation/fork. Retain service acceptance under signals, preserve partial failures until exact cleanup, and qualify root/nested gated preparation, capacity refusal and cancellation before fork. Publication remains sibling .3.4.3.`
-  Verification: `Join native ownership in three bounded children: retained coordinator run resources and endpoint allocation checks; retained job preparation/start and exact native reconciliation; accepted-connection reservation and ownership publication. Each child keeps the original grants reachable through interrupted returns. The parent closes only after their combined root/nested qualification; ACCEPT/exec publication remains separately owned.`
-  Commit: `pending`
+  Verification: `All retained run, job and accepted-peer ownership children are complete. Original grants precede native allocations/forks/accept, aggregate observations reconcile actual resources under masks, and partial failure retains ownership until exact closure. Joined root/nested gated jobs and peer sockets pass T1839/T1842 and the final selected band. ACCEPT delivery remains the next sibling.`
+  Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.4.2.3.3.3.3.2: bind accepted peers to original aggregate grants`
 
   Children: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.4.2.3.3.1, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.4.2.3.3.2, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.4.2.3.3.3`
 
@@ -3695,11 +3695,11 @@ decomposes the architecture needed to move beyond that bounded foundation.
   Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.4.2.3.3.2.3.2.2: bind retained coordinator root and nested lifecycle`
 
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.4.2.3.3.3`
-  Status: `active`
+  Status: `done`
   Goal: `Bind accepted transport resources and qualify joined native admission.`
   Acceptance: `Reserve a connection descriptor before accept and retain ticket, handle and original grant under signals before restoring callbacks. Keep failed/closed outcomes until consumed, release only actual closed resources and include run/jobs/accepted peers in aggregate peak accounting. Join real root/nested gated admission with partial connection/start failure, original deadlines and exact cleanup. No ACCEPT release or caller routing; those remain subsequent siblings.`
-  Verification: `Clean predecessor 97ca91b09 completes root/nested gated lifecycle. Before further evidence reaches the task rollover milestone, child .1 preserves the completed suffix in exact Git history. Child .2 retains native accepted sockets/tickets under signals and separates shared endpoint retirement; child .3 binds original descriptor grants and qualifies joined native admission. No execution publication or routing is admitted.`
-  Commit: `pending`
+  Verification: `The history, retained native Service and aggregate peer-grant children are complete. Original tickets/raw handles precede accept, shared endpoint lifetime follows native cleanup, and the joined owner preserves partial failures and closed outcomes. Actual root/nested fork/socket qualification passes without exec release; publication is the next integration child.`
+  Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.4.2.3.3.3.3.2: bind accepted peers to original aggregate grants`
 
   Children: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.4.2.3.3.3.1, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.4.2.3.3.3.2, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.4.2.3.3.3.3`
 
@@ -3734,11 +3734,11 @@ decomposes the architecture needed to move beyond that bounded foundation.
   Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.4.2.3.3.3.2.2: retain native accepted socket ownership`
 
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.4.2.3.3.3.3`
-  Status: `active`
+  Status: `done`
   Goal: `Bind accepted peers to aggregate original grants and qualify the native join.`
   Acceptance: `After .2, reserve actual accepted-peer descriptor capacity before every accept, reconcile only original retained sockets and keep interrupted/closed outcomes reachable until consumed. Include run/jobs/peers in current foreign inventories, revoke admission before subtree cleanup and retain the endpoint until every native owner settles. Qualify real root/nested gated handoff with partial transport/start failure, original deadlines, capacity refusal and exact cleanup; no ACCEPT/exec publication or caller routing.`
-  Verification: `Clean 0a9ea8d6b completes retained native accepted ownership. The live task is 7154 lines before this decomposition, close to its existing 7200-line rollover milestone. Child .1 first authenticates the completed acceptance suffix in exact Git history without removing any node; child .2 then joins original aggregate grants, accepted sockets and native job cleanup. Publication and routing remain separate.`
-  Commit: `pending`
+  Verification: `All children are complete: exact completed-history retrieval and original accepted-peer grants joined to native job ownership. T1842 proves real sockets, root/nested forks, interruption, original capacity/deadlines and exact cleanup, with seven falsifiers and the passing selected band. Publication and routing remain separately owned.`
+  Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.4.2.3.3.3.3.2: bind accepted peers to original aggregate grants`
 
   Children: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.4.2.3.3.3.3.1, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.4.2.3.3.3.3.2`
 
@@ -3750,11 +3750,11 @@ decomposes the architecture needed to move beyond that bounded foundation.
   Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.4.2.3.3.3.3.1: retain completed accepted-ownership history`
 
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.4.2.3.3.3.3.2`
-  Status: `pending`
+  Status: `done`
   Goal: `Join accepted peers to aggregate original descriptor grants.`
   Acceptance: `After .1, reserve descriptor capacity before every native accept, reconcile only original retained sockets, preserve partial returns and closed outcomes until consumed, and include all current run/job/peer handles in fork inventories. Revoke transport admission before affected native cleanup; retain the endpoint and all unresolved charges until exact native closure. Qualify actual root/nested gated jobs with accepted peers, interruption, capacity refusal, original deadlines and cleanup uncertainty. No ACCEPT/exec publication or caller routing.`
-  Verification: `Bounded history rollover is complete in child .1; native Service retention is complete in sibling .2.2. Reserve original peer grants before accept and join returned outcomes under the aggregate owner mask next.`
-  Commit: `pending`
+  Verification: `Coordinator now retains a shared Service and original peer entries before liveness/reservation checks, then original one-descriptor grants before accept. Aggregate masking reconciles actual sockets before creator signals; empty transients release only unused credit. Fresh fork inventories include accepted peers, subtree transport authority revokes before native cancellation, and transport exceptions cannot skip native cleanup. Whole-run close retains peer outcomes before Service consumes them and releases grants/endpoint only after verified closure; pending or uncertain closure keeps ownership. Closed pre-exec slots remain bounded until whole-run consumption. T1842 independently qualifies actual sockets/EOF, grant/accept/consume signals, partial returns, original expiry, capacity, nested authentication/revocation, fresh root/nested native forks and exact waits. Seven isolated falsifiers reject broken publication/accounting/custody/inventory/revocation/cleanup. Final selected band passes Files=15, Tests=173; endpoint residue is empty. ACCEPT delivery, streaming, fair composition and routing remain separate.`
+  Commit: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.4.2.3.3.3.3.2: bind accepted peers to original aggregate grants`
 
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.4.3`
   Status: `pending`
@@ -4468,7 +4468,7 @@ decomposes the architecture needed to move beyond that bounded foundation.
 
 ## Current Frontier
 
-Current frontier: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.4.2.3.3.3.3.2` joins accepted peers to original aggregate descriptor grants and qualifies the native ownership. Completed accepted-ownership acceptance evidence is retained through the exact manifest chain. Shared endpoint lifetime, atomic close and retained native accept are complete. Publication, streaming, fair composition and independent qualification remain separate integration children. Preserve original failures, the spent compiler workspace, source-only driver commit and full-CI/push gates.
+Current frontier: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.4.3` binds original accepted requests and gated jobs to complete ACCEPT publication before exec. Bounded native admission, root/nested lifecycle and accepted-peer aggregate ownership are complete through .4.2. Streaming, fair composition and independent qualification remain separate integration children. Preserve original failures, the spent compiler workspace, source-only driver commit and full-CI/push gates.
 
 Architecture audit `.1` is complete. Decision `0032` selects one public
 `.vial` source language, private immutable `VIALSemanticIR` and
@@ -7088,3 +7088,45 @@ The manifest binds the completed acceptance suffix and independent reserved-proc
   query and retrieval explanation without increasing aggregate card lines.
   Book content remains accurate and unchanged. No source behavior, threshold,
   ceiling, original producer, full CI or push changes.
+
+## Acceptance Checklist (.19.2.3.1.2.2.5.5.2.3.4.2.3.3.3.3.2)
+
+- [x] **ROOT CAUSE (WHY + WHERE)** — `git log -S 'sub close {'` identifies
+  ea2424e72b0950f18b586f9d5ce44aff9b307b19 as the original Coordinator run
+  owner; its inventories and close originally covered run/jobs only. Service
+  now retains native peers, but no aggregate grants preceded their accept.
+  T1842 additionally reproduced callback expiry leaving a Service ticket with
+  no aggregate entry; recording that entry before liveness checks fixes it.
+- [x] **ADDRESSED (verified)** — Re-derivation uses actual accepted handles,
+  client EOF, real pending creator signals, original ledger grants, exact native
+  child waits, independent pipe EOF and endpoint census. Pre-effect peer credit
+  reconciles under the aggregate mask; copied observations confer no authority.
+  Full capacity defers effects, empty transients release only unused credit,
+  and partial grant/accept/constructor returns preserve conservative ownership.
+  Original expiry retains its resource-free failed ticket. A socket accepted
+  between native forks joins the later child inventory. Actual nested HELLO
+  authenticates an existing original Service parent; subtree cancellation
+  revokes transport authority before native cleanup. Automatic new-parent
+  context publication remains the next leaf. Closed peer slots retain credit
+  until whole-run close publishes outcomes before consumption and retires only
+  verified resources. Pending/uncertain peer closure keeps endpoint/charges;
+  even thrown transport cleanup cannot skip native cancellation or erase cause.
+  Falsification: omitted aggregate masking/reconciliation, outcome retention,
+  peer fork inventory, transport revocation, uncertainty checks or cancellation
+  after a transport exception each fails the matching independent oracle.
+  The foreign-handle child rejects with actual raw wait 23296 (exit 91).
+  All seven variant results are consumed, source variants removed and endpoint
+  residue empty. Durability: Coordinator, T1842, task, book, canonical fact and
+  this commit retain executable derivation and control loci; local
+  .artifacts/coordinator-peer*.log files have a raw-log durability gap.
+- [x] **NO REGRESSION** — The final sequential endpoint, transport, architecture,
+  admission, descriptor, run/job preparation, fork, cleanup, lifecycle and peer
+  band reports `All tests successful`, `Files=15, Tests=173`.
+  Perl syntax, inspected built book, Knowledge Map, claims and staged doctrines
+  cover the synchronized slice. Early fixture assertions referenced a nonexistent
+  stdout field and confused ledger closing with native cleanup; they now use
+  independent pipe EOF and the actual ReservedJob phase. The missing-inventory
+  control initially waited for its outer observer wall after retained failure;
+  it now stops promptly and consumes the exact child wait independently.
+  No gated command releases, original producer, full CI or push runs. Browser
+  visual review, Linux, ACCEPT delivery and complete routing remain open.

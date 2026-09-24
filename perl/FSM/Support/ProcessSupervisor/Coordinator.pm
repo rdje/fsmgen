@@ -9,10 +9,12 @@ use FSM::Support::ProcessSupervisor::Admission ();
 use FSM::Support::ProcessSupervisor::Endpoint ();
 use FSM::Support::ProcessSupervisor::Reservation ();
 use FSM::Support::ProcessSupervisor::ReservedJob ();
+use FSM::Support::ProcessSupervisor::Service ();
 use FSM::Support::ProcessSupervisor::Wire ();
 
 # Inactive native owner. Original grants retain root/nested gated jobs through
-# bounded cleanup. Accepted peers, execution release and fair scheduling follow.
+# bounded cleanup, alongside original accepted-peer descriptor grants.
+# Execution release, outcome delivery and fair scheduling follow.
 # Preparing this object allocates no descriptor, token, path or process.
 my $COST = FSM::Support::ProcessSupervisor::Endpoint::resource_cost();
 my $JOB_COST = FSM::Support::ProcessSupervisor::GatedPair::resource_cost();
@@ -39,7 +41,7 @@ sub prepare {
     my $ledger = FSM::Support::ProcessSupervisor::Admission::prepare(
         map { $_ => $snapshot->{$_} } qw(started_ns timeout_seconds));
     my $self = bless {owner_pid => $$, phase => 'prepared', ledger => $ledger,
-        jobs => {1 => {grant => $ledger->root, snapshot => $snapshot}}}, __PACKAGE__;
+        jobs => {1 => {grant => $ledger->root, snapshot => $snapshot}}, peers => {}}, __PACKAGE__;
     $self->{identity} = refaddr($self);
     return $self;
 }
@@ -99,6 +101,8 @@ sub open_run {
                 _error('native run inventory disagrees with reserved cost')
                     unless @$handles == $COST->{steady_descriptors};
                 $self->{ledger}->descriptors_prepared($self->{run_grant}, scalar @$handles);
+                $self->{service} = FSM::Support::ProcessSupervisor::Service::new_shared_service(
+                    $self->{run}, $self->{ledger}->describe($self->{jobs}{1}{grant})->{deadline_ns});
                 $self->{phase} = 'open';
                 1;
             };
@@ -117,7 +121,138 @@ sub context {
     my ($self) = @_; _owner($self);
     _error('root run is not open') unless @_ == 1 && $self->{phase} eq 'open';
     $self->{ledger}->check_live($self->{jobs}{1}{grant});
-    return $self->{run}->context;
+    return $self->{service}->context;
+}
+sub _before_peer_accept {
+    my ($self, $service, $ticket) = @_; _owner($self);
+    _error('accept requires the original shared service') unless $self->{service}
+        && refaddr($service) == refaddr($self->{service});
+    my $observed = $service->ticket_observation($ticket);
+    _error('accept ticket is not resource-free original admission')
+        unless $observed->{state} eq 'accepting' && !$observed->{handles}
+            && !exists $self->{peers}{$ticket};
+    # Service already owns this ticket. Retain it before even a liveness
+    # refusal, then before the resource-free ledger reservation. A thrown
+    # reservation return leaves any original credit in the ledger as well.
+    my $entry = $self->{peers}{$ticket} = {ticket => $ticket, transport => $observed};
+    _error('run is no longer open for accept') unless $self->{phase} eq 'open';
+    $self->{ledger}->check_live($self->{jobs}{1}{grant});
+    return 0 if $self->{ledger}->usage->{charged_descriptors} >= $LIMIT->{descriptors};
+    $entry->{grant} = $self->{ledger}->reserve_descriptors(1);
+    my $held = $self->{ledger}->describe_descriptors($entry->{grant});
+    _error('accept lacks its original reserved descriptor')
+        unless $held->{reserved} && $held->{count} == 1;
+    return 1;
+}
+sub _reconcile_peers {
+    my ($self) = @_;
+    return unless $self->{service};
+    my %retained = map { $_ => 1 } @{$self->{service}->tickets};
+    _error('native peer lacks its original aggregate owner')
+        if grep { !exists $self->{peers}{$_} } keys %retained;
+    for my $ticket (sort { $a <=> $b } keys %{$self->{peers}}) {
+        my $entry = $self->{peers}{$ticket};
+        unless ($retained{$ticket}) {
+            next if $entry->{outcome};
+            _error('accepted ticket disappeared before retained outcome consumption')
+                unless $entry->{transport}{state} eq 'accepting' && !$entry->{transport}{handles};
+            # Only an empty refused/transient attempt may disappear here.
+            $self->{ledger}->release_descriptors($entry->{grant}, 0) if $entry->{grant};
+            delete $self->{peers}{$ticket};
+            next;
+        }
+        my $observed = $self->{service}->ticket_observation($ticket);
+        $entry->{transport} = $observed;
+        _error('accepted socket exceeds its original grant') if $observed->{handles} > 1;
+        if ($observed->{handles}) {
+            my $held = $self->{ledger}->describe_descriptors($entry->{grant});
+            _error('accepted socket lost its original descriptor credit') unless $held->{count} == 1;
+            $self->{ledger}->descriptors_prepared($entry->{grant}, 1) if $held->{reserved};
+        }
+        # Closed outcomes keep conservative credit until whole-run close.
+    }
+    return;
+}
+sub advance_service {
+    my ($self) = @_; _owner($self);
+    _error('service advancement requires an open run') unless @_ == 1 && $self->{phase} eq 'open';
+    my $ok = eval {
+        FSM::Support::ProcessSupervisor::Reservation::_masked_preparation(sub {
+            my $error;
+            eval {
+                $self->{ledger}->check_live($self->{jobs}{1}{grant});
+                $self->{service}->advance(sub { $self->_before_peer_accept(@_) });
+                1;
+            } or $error = $@;
+            eval { $self->_reconcile_peers; 1 } or $error //= $@;
+            die $error if defined $error;
+            my $failure = $self->{service}->failure;
+            _error($failure->{diagnostic}) if $failure;
+        });
+        1;
+    };
+    unless ($ok) {
+        my $error = $@; $self->_job_failed($self->{jobs}{1}{grant}, $error); die $error;
+    }
+    return;
+}
+sub peer_tickets {
+    my ($self) = @_; _owner($self);
+    _error('unexpected peer inventory arguments') unless @_ == 1;
+    return [sort { $a <=> $b } keys %{$self->{peers}}];
+}
+sub peer_observation {
+    my ($self, $ticket) = @_; _owner($self);
+    _error('peer observation requires one original ticket') unless @_ == 2;
+    FSM::Support::ProcessSupervisor::Wire::_uint($ticket, '4294967295', 1);
+    my $entry = $self->{peers}{$ticket} or _error('unknown retained peer ticket');
+    my $transport = $entry->{transport};
+    return {ticket => $ticket,
+        transport => {%$transport, failure => $transport->{failure} ? {%{$transport->{failure}}} : undef},
+        admission => $entry->{grant} && !$entry->{retired}
+            ? $self->{ledger}->describe_descriptors($entry->{grant}) : undef,
+        outcome => $entry->{outcome} ? {%{$entry->{outcome}}} : undef};
+}
+sub retire_peer {
+    my ($self, $ticket) = @_; _owner($self);
+    _error('peer retirement requires one original ticket') unless @_ == 2;
+    $self->peer_observation($ticket);
+    FSM::Support::ProcessSupervisor::Reservation::_masked_preparation(sub {
+        my $error;
+        eval { $self->{service}->retire($ticket); 1 } or $error = $@;
+        eval { $self->_reconcile_peers; 1 } or $error //= $@;
+        die $error if defined $error;
+    });
+    return;
+}
+sub _consume_closed_peers {
+    my ($self) = @_;
+    return unless $self->{service};
+    $self->_reconcile_peers;
+    for my $entry (values %{$self->{peers}}) {
+        my $observed = $entry->{transport};
+        _error('accepted peer cleanup incomplete') unless $observed->{resources_closed}
+            && $observed->{state} eq 'closed' && !$observed->{handles};
+        # Retain the complete original outcome before Service consumes it.
+        # A thrown consumption return cannot strand even this pure metadata.
+        $entry->{outcome} //= {ticket => $entry->{ticket}, parent => $observed->{parent},
+            %{$observed->{failure}}, resources_closed => $observed->{resources_closed}};
+    }
+    for (1 .. $LIMIT->{connections}) {
+        last unless @{$self->{service}->tickets};
+        my $outcome = $self->{service}->take_closed;
+        _error('service has no consumable closed outcome') unless $outcome;
+        my $entry = $self->{peers}{$outcome->{ticket}};
+        _error('closed outcome lacks its original retained peer') unless $entry && $entry->{outcome};
+        for my $field (qw(ticket parent status diagnostic resources_closed)) {
+            my ($expected, $actual) = ($entry->{outcome}{$field}, $outcome->{$field});
+            _error('closed outcome disagrees with its original retained observation')
+                if defined($expected) != defined($actual)
+                    || (defined($expected) && "$expected" ne "$actual");
+        }
+    }
+    _error('service retains unconsumed outcomes') if @{$self->{service}->tickets};
+    return;
 }
 sub root {
     my ($self) = @_; _owner($self);
@@ -306,10 +441,19 @@ sub cancel_job {
             $entry->{cleanup_deadline} = $wall
                 unless defined($entry->{cleanup_deadline}) && $entry->{cleanup_deadline} < $wall;
         }
+        my $cleanup_error;
+        if ($self->{service}) {
+            for my $id (sort { $a <=> $b } keys %affected) {
+                eval { $self->{service}->revoke_parent($id); 1 } or $cleanup_error //= $@;
+            }
+            eval { $self->_reconcile_peers; 1 } or $cleanup_error //= $@;
+        }
         for my $entry (@entries) {
             $entry->{failure} //= FSM::Support::ProcessSupervisor::_sanitize_control($diagnostic);
-            $entry->{native}->cancel($entry->{failure}, $wall) if $entry->{native};
+            next unless $entry->{native};
+            eval { $entry->{native}->cancel($entry->{failure}, $wall); 1 } or $cleanup_error //= $@;
         }
+        die $cleanup_error if defined $cleanup_error;
     });
     return;
 }
@@ -354,7 +498,9 @@ sub job_observation {
 sub handles {
     my ($self) = @_; _owner($self);
     _error('unexpected inventory arguments') unless @_ == 1;
-    return [$self->{run} ? @{$self->{run}->handles} : (),
+    my %seen;
+    return [grep { !$seen{refaddr($_)}++ }
+        $self->{service} ? @{$self->{service}->handles} : $self->{run} ? @{$self->{run}->handles} : (),
         map { $_->{native} ? @{$_->{native}->handles} : () } values %{$self->{jobs}}];
 }
 sub observation {
@@ -374,7 +520,10 @@ sub close {
         FSM::Support::ProcessSupervisor::Reservation::_masked_preparation(sub {
             $self->{phase} = 'closing';
             $self->_begin_cleanup;
-            $self->cancel_job($self->{jobs}{1}{grant}, 'coordinator closes unreleased jobs');
+            my $cancel_error;
+            eval { $self->cancel_job($self->{jobs}{1}{grant}, 'coordinator closes unreleased jobs'); 1 }
+                or $cancel_error = $@;
+            $self->_failure($cancel_error) if defined $cancel_error;
             my $pending = 0;
             for my $entry (values %{$self->{jobs}}) {
                 my $native = $entry->{native} or next;
@@ -390,6 +539,16 @@ sub close {
                 $self->{cleanup} = {ok => 0, pending => 1, diagnostic => 'native cleanup remains pending'};
                 return;
             }
+            die $cancel_error if defined $cancel_error;
+            if ($self->{service}) {
+                my $closed = $self->{service}->close;
+                if ($closed->{pending}) {
+                    $self->{cleanup} = {ok => 0, pending => 1, diagnostic => 'accepted peer cleanup remains pending'};
+                    return;
+                }
+                _error('accepted peer cleanup incomplete') unless $closed->{ok};
+                $self->_consume_closed_peers;
+            }
             my $cleanup = $self->{run} ? $self->{run}->close
                 : {ok => 1, socket_removed => 0, directory_removed => 0, diagnostic => 'unopened run closed'};
             $cleanup = {%$cleanup, ok => 0, diagnostic => 'run descriptor cleanup incomplete'}
@@ -404,6 +563,7 @@ sub close {
             # Keep all charges if native cleanup was incomplete; otherwise
             # release even a reservation whose producer return was interrupted.
             $self->{ledger}->release_descriptors($_, 0) for @{$self->{ledger}->descriptor_grants};
+            $_->{retired} = 1 for values %{$self->{peers}};
             for my $grant (reverse @{$self->{ledger}->grants}) {
                 $self->{ledger}->release_resources($grant, children => 0, descriptors => 0);
                 $self->{ledger}->finish($grant);

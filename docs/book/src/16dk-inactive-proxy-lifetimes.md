@@ -752,9 +752,9 @@ Only the creator's original retained grants authorize ledger transitions.
 Copied grants, another ledger's grants, inherited owners and replayed starts
 reject. Wire job numbers are monotonic and never reused after retirement;
 exhausting the unsigned identity range rejects further admission. This pure
-model creates no descriptors or processes. The coordinator binds native run
-construction and root preparation to these reservations. Forks and nested job
-ownership remain open, followed by publication and nested transport.
+model creates no descriptors or processes. The coordinator now binds native run
+construction, root/nested gated jobs and accepted peers to these reservations.
+Execution publication and nested caller transport remain open.
 
 Endpoint construction now offers a resource-free prepared run and a separate,
 single-use start. The owner can retain that run before entropy, directory or
@@ -806,8 +806,8 @@ success.
 Actual pending-signal controls observe both the retained endpoint and its
 reconciled descriptor charges before the coordinator return is interrupted.
 The coordinator then refuses context publication and can close the exact run.
-Accepted-connection accounting remains a separate integration step. The
-coordinator can now create gated jobs but cannot release execution.
+Accepted-connection accounting now joins the same original ledger, as described
+below. The coordinator can create gated jobs but cannot release execution.
 
 Root preparation now retains the complete native job before creating any pipe.
 Each pipe checks the original grant, its preparation phase, remaining lifetime
@@ -918,11 +918,41 @@ failure. While native closure is pending, even a standalone service retains its
 endpoint. Closed outcomes occupy admission slots until explicitly consumed, and
 `take_closed` refuses any record that still owns a live handle. Its
 `resources_closed` flag also preserves an uncertain native close verdict.
-Aggregate descriptor binding and publication remain open; that integration must
-retain grants and consumed outcomes before unmasking their caller's return.
+The aggregate coordinator now retains grants and consumed outcomes before
+unmasking their caller's return.
 
-Normal callers retain the existing own-group supervisor. Accepted-peer
-accounting, publication, nested routing and complete subtree qualification
+Opening a coordinator run retains a shared service with the original root
+deadline. `advance_service` first records the service's ticket, then checks live
+authority and reserves its descriptor before native accept. Even expiry inside
+that callback leaves a recoverable failed ticket. Full descriptor capacity
+defers accept without a native effect. Empty transient attempts release only
+their own unused reservation; actual sockets become held descriptor charges
+under the same aggregate signal mask.
+
+`peer_tickets` and `peer_observation` expose copied ownership observations.
+`retire_peer` closes a selected connection, preserving its first cause. In this
+pre-execution integration, closed peer outcomes keep their slots and conservative
+descriptor credit until whole-run close, just as native job outcomes do. A
+closed slot therefore cannot admit another peer prematurely. Per-peer result
+delivery, acknowledgement and slot reuse belong to the later publication work.
+
+For example, a second socket accepted between a reservation fork and its command
+fork appears in the latter fork's fresh foreign inventory. That child closes
+the socket before its handoff acknowledgment. Subtree cancellation revokes both
+ledger and existing transport parent authority before native job cleanup; root
+cancellation closes all admission. Registering and publishing new parent
+contexts automatically still belongs to ACCEPT delivery, before exec release.
+
+Whole-run close advances native cleanup even when transport closure throws.
+The first exception survives a later successful resource cleanup. A pending or
+uncertain peer close retains the endpoint and aggregate charges. Only verified
+closure of jobs and peers allows outcome consumption and endpoint retirement.
+The coordinator stores every original peer outcome before asking the service to
+consume it, so an interrupted consumption return remains recoverable through
+`peer_observation`. Copied observations grant no native authority.
+
+Normal callers retain the existing own-group supervisor. Execution
+publication, nested routing and complete subtree qualification
 still have separate open owners. These private components
 establish no nested result or permission to run the retained startup proxy.
 Their tests exercise the current host; Linux qualification remains open.
@@ -940,6 +970,7 @@ scripts/run_with_ram_guard.sh -- prove -Iperl -It/lib t/1838-process-cleanup-wal
 scripts/run_with_ram_guard.sh -- prove -Iperl -It/lib t/1839-process-coordinator-lifecycle.t
 scripts/run_with_ram_guard.sh -- prove -Iperl -It/lib t/1840-process-service-shared-endpoint.t
 scripts/run_with_ram_guard.sh -- prove -Iperl -It/lib t/1841-process-service-retained-accept.t
+scripts/run_with_ram_guard.sh -- prove -Iperl -It/lib t/1842-process-coordinator-accepted-peers.t
 ```
 
 For native stopped-child observations, decode `${^CHILD_ERROR_NATIVE}` with
